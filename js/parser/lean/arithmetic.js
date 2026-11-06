@@ -11,6 +11,7 @@ import '../../py.js';
 import { LeanBinary, LeanUnary } from './abstract.js';
 import { Lean } from './base.js';
 import { pathCombineMulChoices, pathStripTrailingHoles, pathUniqKeepEmpty } from './pathChoices.js';
+import { holeRegexCombineArith, holeRegexCombineUnary } from './pathChoices.js';
 
 const L = Lean.classes;
 
@@ -42,6 +43,24 @@ export class LeanArithmetic extends LeanBinary {
     strArgs() {
         return this.args.map((arg) => (arg instanceof L.LeanBigOperator ? `(${arg})` : arg));
     }
+
+    /** Path/hole token tag (Mul/Add/...); null = not in hole-arith set. */
+    get holeRegexTag() {
+        return null;
+    }
+
+    /**
+     * Hole-regex for binary arith (Body t338/t344).
+     * @param {object} [opts]
+     * @returns {string|null}
+     */
+    holeRegex(opts = {}) {
+        const tag = this.holeRegexTag;
+        if (!tag) return super.holeRegex?.(opts) ?? null;
+        const mul = tag === "Mul" ? { isMul: true, subscript: this.subscript || "" } : null;
+        return holeRegexCombineArith(tag, this.lhs, this.rhs, opts, mul);
+    }
+
 }
 
 export class LeanAdd extends LeanArithmetic {
@@ -56,6 +75,11 @@ export class LeanAdd extends LeanArithmetic {
     get operator() {
         return '+';
     }
+
+    get holeRegexTag() {
+        return "Add";
+    }
+
 }
 
 export class LeanSub extends LeanArithmetic {
@@ -70,6 +94,11 @@ export class LeanSub extends LeanArithmetic {
     get operator() {
         return '-';
     }
+
+    get holeRegexTag() {
+        return "Sub";
+    }
+
 }
 
 export class LeanMul extends LeanArithmetic {
@@ -139,6 +168,11 @@ export class LeanMul extends LeanArithmetic {
         if (!this.subscript) return '*';
         return this.isLeftSubscript ? `${this.subscript}*` : `*${this.subscript}`;
     }
+
+    get holeRegexTag() {
+        return "Mul";
+    }
+
 
     latexArgs(syntax) {
         let lhs = this.lhs;
@@ -221,6 +255,11 @@ export class LeanMatMul extends LeanArithmetic {
         return this.superscript ? `@${this.superscript}` : '@';
     }
 
+    get holeRegexTag() {
+        return "Dot";
+    }
+
+
     get command() {
         if (this.superscript === 'ᵒ') return '{\\color{red}\\times}^{\\circ}';
         return '{\\color{red}\\times}';
@@ -302,6 +341,11 @@ export class LeanDiv extends LeanArithmetic {
     get operator() {
         return '/';
     }
+
+    get holeRegexTag() {
+        return "Div";
+    }
+
 
     latexArgs(syntax) {
         let lhs = this.lhs.peelLatexCoe();
@@ -521,6 +565,11 @@ export class LeanPow extends LeanArithmetic {
     get operator() {
         return '^';
     }
+
+    get holeRegexTag() {
+        return "Pow";
+    }
+
 
     get command() {
         return '^';
@@ -839,19 +888,6 @@ export class LeanCondBar extends LeanUnaryArithmeticPre {
     }
 }
 
-export class Lean_partial extends LeanUnaryArithmeticPre {
-    static { this.register(); }
-
-    static input_priority = 75;
-    get operator() {
-        return '∂';
-    }
-    insert_comma(caret) {
-        if (this.parent) return this.parent.insert_comma(this);
-        throw new Error('Lean_partial.insert_comma: unexpected');
-    }
-}
-
 /** Unary minus. */
 export class LeanNeg extends LeanUnaryArithmeticPre {
     static { this.register(); }
@@ -863,6 +899,16 @@ export class LeanNeg extends LeanUnaryArithmeticPre {
     get command() {
         return '-';
     }
+
+    /**
+     * Hole-regex: Neg(_|...).
+     * @param {object} [opts]
+     * @returns {string|null}
+     */
+    holeRegex(opts = {}) {
+        return holeRegexCombineUnary("Neg", this.arg, opts);
+    }
+
     sep() {
         return this.arg instanceof LeanNeg ? ' ' : '';
     }
@@ -914,6 +960,16 @@ export class LeanInv extends LeanUnaryArithmeticPost {
      * @param {object} [opts]
      * @returns {string[]}
      */
+
+    /**
+     * Hole-regex: Inv(_|...).
+     * @param {object} [opts]
+     * @returns {string|null}
+     */
+    holeRegex(opts = {}) {
+        return holeRegexCombineUnary("Inv", this.arg, opts);
+    }
+
     pathChoices(opts = {}) {
         const kids = this.arg?.pathChoices?.(opts) ?? [""];
         const out = [""];
@@ -1015,6 +1071,16 @@ export class Lean_sqrt extends LeanUnaryArithmeticPre {
      * @param {object} [_opts]
      * @returns {string[]}
      */
+
+    /**
+     * Hole-regex: Sqrt / Sqrt(_|...).
+     * @param {object} [opts]
+     * @returns {string|null}
+     */
+    holeRegex(opts = {}) {
+        return holeRegexCombineUnary("Sqrt", this.arg, opts);
+    }
+
     pathChoices(_opts = {}) {
         return ["Sqrt_", ""];
     }

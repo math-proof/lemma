@@ -1,5 +1,5 @@
 import Def.Analysis.Real.Limits.Basic
-import Notation.Lean.Expr.Singleton
+import Notation.Analysis.Real.Numbers
 import Lemma.Int.GeAbs
 import Lemma.Int.GeAbs_0
 import Lemma.Int.GtNeg.is.Lt_Neg

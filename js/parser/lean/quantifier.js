@@ -11,6 +11,7 @@
 import { LeanProp } from './utility.js';
 import { LeanBigOperator } from './bigops.js';
 import { Lean } from './base.js';
+import { wrapHoleOpt } from './pathChoices.js';
 
 const L = Lean.classes;
 
@@ -19,6 +20,30 @@ export class LeanQuantifier extends LeanProp(LeanBigOperator) {
     static { this.register(); }
 
     static input_priority = 24;
+
+    /** @returns {string|null} */
+    get holeRegexTag() {
+        return null;
+    }
+
+    /**
+     * Hole-regex: All_/Any_ + optional body (Body t344).
+     * opts.peelGuards peels forall-guard binders (lemmaPath peelGuardForalls).
+     * @param {object} [opts]
+     * @returns {string|null}
+     */
+    holeRegex(opts = {}) {
+        const tag = this.holeRegexTag;
+        if (!tag) return super.holeRegex?.(opts) ?? null;
+        let bodyNode = this.scope ?? this.args[this.args.length - 1];
+        if (tag === "All" && typeof opts.peelGuards === "function")
+            bodyNode = opts.peelGuards(bodyNode);
+        const body = bodyNode?.holeRegex?.(opts) ?? null;
+        if (body == null || body === "") return tag;
+        if (body === tag || body.startsWith(tag + "_")) return body;
+        return tag + "_" + wrapHoleOpt(body);
+    }
+
 
     measurePartial() {
         if (this.superscript !== 'ᵐ') return null;
@@ -56,7 +81,7 @@ export class LeanQuantifier extends LeanProp(LeanBigOperator) {
             .map((a) => a.toLatex(syntax))
             .join(' ');
         // keep the measure: `∀ᵐ a ∂μ, p` → `∀ᵐ a ∂μ, p`
-        return [`${bound}\\ \\partial {${partial.arg.toLatex(syntax)}}`, this.scope.toLatex(syntax)];
+        return [`${bound}\\ \\partial {${partial.bound.toLatex(syntax)}}`, this.scope.toLatex(syntax)];
     }
 
     get stack_priority() {
@@ -67,6 +92,11 @@ export class LeanQuantifier extends LeanProp(LeanBigOperator) {
 export class Lean_forall extends LeanQuantifier {
     static { this.register(); }
 
+    get holeRegexTag() {
+        return "All";
+    }
+
+
     get baseOperator() {
         return '∀';
     }
@@ -74,6 +104,11 @@ export class Lean_forall extends LeanQuantifier {
 
 export class Lean_exists extends LeanQuantifier {
     static { this.register(); }
+
+    get holeRegexTag() {
+        return "Any";
+    }
+
 
     unique = false;
 

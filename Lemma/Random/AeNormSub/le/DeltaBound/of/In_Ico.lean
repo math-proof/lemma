@@ -1,33 +1,15 @@
-import Def.Dynamics.PolicyTrajectory.Continuous
-import Def.Dynamics.PolicyTrajectory.Gradient
-import Lemma.Random.All_LeNorm_Abs.of.All_Eq_Joint
-import Lemma.Random.NormVk.le.MulInvSub1Abs_R.of.In_Ico
-open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
+import Lemma.Random.AeNormSub.le.DeltaBound.of.In_Ico.All_EqWithDensity
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.DensityModel Random
 
-
-private lemma V0_eq_Vk
-    [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
-    [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
-    (M : Model Θ S A) (θ : Θ) (γ : ℝ) (x : S) :
-    M.V0 θ γ x = M.Vk θ γ x := by
-  unfold Model.V0 Model.Vk
-  rfl
-
-private lemma V0_bdd
-    [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
-    [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
-    (M : Model Θ S A) (θ : Θ) {γ : ℝ} (hγ : γ ∈ Set.Ico 0 1) (x : S) :
-    ‖M.V0 θ γ x‖ ≤ (1 - γ)⁻¹ * |M.env.R| := by
-  rw [V0_eq_Vk]
-  exact NormVk.le.MulInvSub1Abs_R.of.In_Ico (M := M) hγ θ x
 
 /--
-Almost surely every temporal-difference residual `δ[j] = r[j] + γ * V0(s[j+1]) - V0(s[j])` is bounded by `(3 / (1 - γ) - 1) * |R|`.
+Almost surely every temporal-difference residual `δ[j] = r[j] + γ * V0(s[j+1]) - V0(s[j])`
+is bounded by `(3 / (1 - γ) - 1) * |R|`. Remigrated onto `DensityModel` (applies dens twin).
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S]
-  {M : Model Θ S A}
+  [MeasurableSpace S] [ReferenceMeasure A]
+  {M : DensityModel Θ S A}
   {γ : ℝ}
   {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
   {s : ℕ → (ℕ → ℝ × S × A) → S}
@@ -40,32 +22,8 @@ private lemma main
   ∀ᵐ ω ∂(M θ), ∀ j, ‖r j ω + γ * M.V0 θ γ (s (j + 1) ω) - M.V0 θ γ (s j ω)‖ ≤
     (3 / (1 - γ) - 1) * |M.env.R| := by
 -- proof
-  filter_upwards [All_LeNorm_Abs.of.All_Eq_Joint h₁ (M := M) θ] with ω hr j
-  calc
-    _ ≤ ‖r j ω‖ + ‖γ * M.V0 θ γ (s (j + 1) ω)‖ + ‖M.V0 θ γ (s j ω)‖ :=
-      (norm_sub_le _ _).trans (by gcongr; apply norm_add_le)
-    _ ≤ (3 / (1 - γ) - 1) * |M.env.R| := by
-      rw [norm_mul, Real.norm_of_nonneg h₀.1]
-      apply le_trans
-      ·
-        apply add_le_add
-        ·
-          apply add_le_add (hr j)
-          apply mul_le_mul_of_nonneg_left
-          · apply V0_bdd M θ h₀
-          · apply h₀.1
-        · apply V0_bdd M θ h₀
-      ·
-        have hpos : 0 < 1 - γ := sub_pos.mpr h₀.2
-        refine (le_of_eq (b := (2 * (1 - γ)⁻¹) * |M.env.R|) ?_).trans ?_
-        ·
-          field_simp [hpos.ne']
-          ring
-        ·
-          gcongr
-          field_simp [hpos.ne']
-          linarith [h₀.1]
+  exact AeNormSub.le.DeltaBound.of.In_Ico.All_EqWithDensity h₀ h₁ θ
 
 
--- created on 2026-10-06
--- updated on 2026-11-03
+-- created on 2026-10-21
+-- updated on 2026-11-04

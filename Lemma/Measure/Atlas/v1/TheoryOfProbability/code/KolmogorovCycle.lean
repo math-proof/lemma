@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.TheoryOfProbability.code.KolmogorovCycle.Part3
+import Def.ProbabilityTheory.KolmogorovCycle.Part3
 open MeasureTheory ProbabilityTheory Finset BigOperators StochasticMatrix
 
 

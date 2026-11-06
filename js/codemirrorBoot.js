@@ -2,7 +2,7 @@
 // Replaces the old CM5 dynamic-import chain with proper ESM imports.
 
 import { EditorState, EditorSelection, StateEffect, Transaction, Prec } from "@codemirror/state";
-import { EditorView, keymap, lineNumbers, drawSelection, highlightSpecialChars, rectangularSelection, crosshairCursor, panels } from "@codemirror/view";
+import { EditorView, keymap, lineNumbers, drawSelection, highlightSpecialChars, rectangularSelection, crosshairCursor, panels, Decoration, WidgetType, MatchDecorator, ViewPlugin } from "@codemirror/view";
 import { defaultKeymap, history, historyKeymap, indentMore } from "@codemirror/commands";
 import { bracketMatching, foldGutter, indentOnInput, StreamLanguage, HighlightStyle, syntaxHighlighting, defaultHighlightStyle } from "@codemirror/language";
 import { tags as t } from "@lezer/highlight";
@@ -68,6 +68,14 @@ const eclipseTheme = EditorView.theme({
   ".cm-content ::selection": {
     backgroundColor: "#a0c8ff",
   },
+  ".cm-guillemet-katex": {
+    display: "inline-block",
+    verticalAlign: "middle",
+    lineHeight: "1",
+  },
+  ".cm-guillemet-katex .katex": {
+    fontSize: "1em",
+  },
 }, { dark: false });
 
 // Syntax highlighting style (eclipse-like colors).
@@ -92,6 +100,68 @@ const eclipseHighlightStyle = HighlightStyle.define([
 ]);
 
 const leanLanguage = StreamLanguage.define(leanMode);
+
+
+/** «latex…» Lean identifiers → inline KaTeX (musical notes, \sf{w}, …). */
+class GuillemetKatexWidget extends WidgetType {
+  constructor(inner) {
+    super();
+    this.inner = inner;
+  }
+  eq(other) {
+    return other instanceof GuillemetKatexWidget && other.inner === this.inner;
+  }
+  toDOM() {
+    const wrap = document.createElement("span");
+    wrap.className = "cm-guillemet-katex";
+    wrap.title = "«" + this.inner + "»";
+    const katexApi = typeof katex !== "undefined" ? katex : (typeof window !== "undefined" ? window.katex : null);
+    if (!katexApi) {
+      wrap.textContent = "«" + this.inner + "»";
+      return wrap;
+    }
+    try {
+      // Same sanitization idea as js/utility.js (✝ → \dagger).
+      const latex = String(this.inner).replace(/‡/g, "\\ddagger").replace(/[†✝]/gi, "\\dagger");
+      katexApi.render(latex, wrap, { throwOnError: false, displayMode: false, errorColor: "#ff0000" });
+    } catch (e) {
+      wrap.textContent = "«" + this.inner + "»";
+    }
+    return wrap;
+  }
+  ignoreEvent() {
+    return false;
+  }
+}
+
+const guillemetKatexMatcher = new MatchDecorator({
+  regexp: /«([^»\n]*)»/g,
+  decoration: (match, view, pos) => {
+    // While the caret/selection overlaps this guillemet, show raw Lean source for editing.
+    const end = pos + match[0].length;
+    for (const r of view.state.selection.ranges) {
+      if (r.from < end && r.to > pos) return null;
+    }
+    const inner = match[1];
+    return Decoration.replace({
+      widget: new GuillemetKatexWidget(inner),
+    });
+  },
+  boundary: /[^«»]/,
+});
+
+const guillemetKatex = ViewPlugin.fromClass(
+  class {
+    constructor(view) {
+      this.decorations = guillemetKatexMatcher.createDeco(view);
+    }
+    update(update) {
+      this.decorations = guillemetKatexMatcher.updateDeco(update, this.decorations);
+    }
+  },
+  { decorations: (v) => v.decorations }
+);
+
 
 
 // One page-level Find/Replace: every EditorView shares a sticky host, and
@@ -179,6 +249,7 @@ export function createEditor(parent, options = {}) {
     EditorView.lineWrapping,
     EditorState.allowMultipleSelections.of(true),
     cmMarkField, // CM5 markText / erroneous-text underlines (render.vue focus)
+    guillemetKatex, // «λ_{…}» / «\\sf{w}» → inline KaTeX
     // Shared sticky host + search({ top }) so Find/Replace is page-level, not per-box.
     panels({ topContainer: getGlobalSearchHost() }),
     search({ top: true }),

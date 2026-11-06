@@ -631,22 +631,18 @@ export class Lean extends IndentedNode {
             case '⟧':
                 return this.parent.push_right('LeanWhiteSquareBracket');
             case '«': {
-                // `«\sf{w}»` is one identifier (w a single letter). The lexer splits
-                // `\`, `sf`, `{`, `w`, `}` ; gluing them here reprints without spaces.
+                // Guillemet names are Lean identifiers; lexer splits latex (`\`, `{`, …).
+                // Glue raw inner text into one token so latexFormat can emit KaTeX as-is
+                // (musical notes, `\sf{w}`, etc.) — same idea as py Symbol latex.
                 const t = tokens;
                 const i = self.start_idx;
-                if (
-                    t[i + 1] === '\\' &&
-                    t[i + 2] === 'sf' &&
-                    t[i + 3] === '{' &&
-                    /^[A-Za-z]$/u.test(t[i + 4] ?? '') &&
-                    t[i + 5] === '}' &&
-                    t[i + 6] === '»'
-                ) {
-                    const letter = t[i + 4];
-                    self.start_idx = i + 6;
+                let j = i + 1;
+                while (j < t.length && t[j] !== '»' && t[j] !== '\n') j++;
+                if (j < t.length && t[j] === '»') {
+                    const inner = t.slice(i + 1, j).join('');
+                    self.start_idx = j;
                     const caret = this.parent.insert_left(this, 'LeanDoubleAngleQuotation');
-                    const tok = caret.push_token(`\\sf{${letter}}`);
+                    const tok = caret.push_token(inner);
                     return tok.parent.push_right('LeanDoubleAngleQuotation');
                 }
                 return this.parent.insert_left(this, 'LeanDoubleAngleQuotation');
@@ -1232,6 +1228,8 @@ export class Lean extends IndentedNode {
                 return this.parent.insert_unary(this, 'Lean_lnot');
             case '∂':
                 return this.parent.insert_unary(this, 'Lean_partial');
+            case '∇':
+                return this.append('Lean_nabla', 'operator');
             case '~':
                 return this.parent.insert_unary(this, 'LeanConj');
             case '√':

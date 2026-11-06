@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 import Mathlib.MeasureTheory.Measure.LevyProkhorovMetric
 import Mathlib.Topology.Sequences
 import Theorem.v1.Atlas.TheoryOfProbability.code.CramerTheorem
-import Theorem.v1.Atlas.TheoryOfProbability.code.CramerRateID
+import Theorem.v1.Atlas.TheoryOfProbability.code.CramerRateIDCore
 import Theorem.v1.Atlas.TheoryOfProbability.code.LDPContraction
 import Lemma.Random.SatisfiesLDP
 import Lemma.Random.IsProbabilityMeasure.of.Gt_0
@@ -387,8 +387,11 @@ theorem satisfiesLDP_congr_eventually
     rwa [← limsup_congr hfun] at hub
 
 /-- Under Continuous + Giry-Measurable barycenter on raw `ProbabilityMeasure`, Sanov
-contracts to the empirical-mean LDP with rate `cramerRateFromSanov`. This is exactly
-the `hLDP` hypothesis of `cramer_theorem_of_HasFiniteMGF_of_forall_bddAbove`.
+contracts to the empirical-mean LDP with rate `cramerRateFromSanov`. This is the
+Sanov-mean `hLDP` half used by residual wrappers such as
+`cramer_theorem_of_HasFiniteMGF_of_forall_bddAbove_of_meanSanovLDP`.
+The public `(hMGF)(hbdd)` entry lives in
+`Lemma.Random.SatisfiesLDP_EmpiricalMeanLawPi.of.HasFiniteMGF.ForallBddAbove`.
 
 **Residual.** Continuous barycenter on all of `ProbabilityMeasure (ℝᵈ)` is false
 without moment restrictions; replace Cont/Meas by truncation
@@ -573,8 +576,9 @@ theorem satisfiesLDP_empiricalMeanLawPi_of_HasEmpiricalMeanSanovLDP {d : ℕ}
     SatisfiesLDP (fun n => empiricalMeanLawPi μ₀ n) (cramerRateFromSanov μ₀) :=
   h
 
-/-- Random-facing: `HasFiniteMGF` + `forall_bddAbove` + named residual `HasEmpiricalMeanSanovLDP`.
-Same as `cramer_theorem_of_HasFiniteMGF_of_forall_bddAbove` with `hLDP` packaged. -/
+/-- Residual: `HasFiniteMGF` + `forall_bddAbove` + named `HasEmpiricalMeanSanovLDP`.
+Public `(hMGF)(hbdd)` entry (no explicit `hLDP`) is the Lemma
+`SatisfiesLDP_EmpiricalMeanLawPi.of.HasFiniteMGF.ForallBddAbove`. -/
 theorem cramer_theorem_of_HasFiniteMGF_of_forall_bddAbove_of_HasEmpiricalMeanSanovLDP
     {d : ℕ}
     (μ₀ : Measure (EuclideanSpace ℝ (Fin d))) [IsProbabilityMeasure μ₀]
@@ -585,7 +589,7 @@ theorem cramer_theorem_of_HasFiniteMGF_of_forall_bddAbove_of_HasEmpiricalMeanSan
     (hLDP : HasEmpiricalMeanSanovLDP μ₀) :
     SatisfiesLDP (fun n => empiricalMeanLawPi μ₀ n)
       (cramerRateFunction (fun x : EuclideanSpace ℝ (Fin d) => x) μ₀) :=
-  cramer_theorem_of_HasFiniteMGF_of_forall_bddAbove μ₀ hMGF hbdd hLDP
+  cramer_theorem_of_HasFiniteMGF_of_forall_bddAbove_of_meanSanovLDP μ₀ hMGF hbdd hLDP
 
 /-! ### R→∞ Chernoff residual (scalar path; no `Continuous.sub` on `E`)
 
@@ -1297,30 +1301,1026 @@ theorem ExpEquivalentMaps_sampleMean_sampleClampMean_diagonal {d : ℕ}
     (fun R n => sampleClampMeanPi (d := d) (n := n) R)
     (EventuallyExpGoodApprox_sampleMean_sampleClampMean hMGF) R hR
 
-/-! ### Remaining gap (Dembo-Zeitouni 4.2.16 LDP transfer)
+/-! ### Specialization of DZ 4.2.16 → empirical-mean Sanov LDP -/
 
-Landed under `HasFiniteMGF` + `forall_bddAbove`: Gamma-bundle, exp-good / diagonal
-`ExpEquivalentMaps`, compact finite CRF/Sanov levels, fixed-R clamp LDP (needs `hJ`).
+/-- Clamp-contracted Sanov rate; for `R ≤ 0` reuse the `R = 1` profile. -/
+noncomputable def clampContractedRate {d : ℕ}
+    (μ₀ : Measure (EuclideanSpace ℝ (Fin d))) (R : ℝ) :
+    EuclideanSpace ℝ (Fin d) → ENNReal :=
+  fun y =>
+    contractedRate
+      (fun ν : ProbabilityMeasure (EuclideanSpace ℝ (Fin d)) =>
+        klDiv (ν : Measure _) μ₀)
+      (fun ν => ∫ x, radialClamp (if 0 < R then R else (1 : ℝ)) x ∂ν.toMeasure)
+      y
 
-New in `LDPContraction` (DZ 4.2.13 / 4.1.6): bound-only contraction
-(`limsup`/`liminf_log_map_*_iInf_contractedRate`, no `hJ`),
-`preimage_subset_cthickening_union_dist`, `limsup_inv_mul_log_add_le_max`,
-`limsup_log_map_le_iInf_cthickening_of_ExpEquivalentMaps`,
-`HasCompactFiniteLevelSets`, `iInf_cthickening_le_iInf`,
-`exists_mem_cthickening_le_ofReal_add_one`,
-`exists_mem_cthickening_le_ofReal_add`,
-**`iInf_le_iSup_iInf_cthickening` / `iSup_iInf_cthickening_eq_iInf`** (thickening recovery),
-`GammaLiminf` / `GammaLiminfReal` predicates.
+theorem clampContractedRate_eq_of_pos {d : ℕ}
+    (μ₀ : Measure (EuclideanSpace ℝ (Fin d))) {R : ℝ} (hR : 0 < R) :
+    clampContractedRate μ₀ R =
+      contractedRate
+        (fun ν : ProbabilityMeasure (EuclideanSpace ℝ (Fin d)) =>
+          klDiv (ν : Measure _) μ₀)
+        (fun ν => ∫ x, radialClamp R x ∂ν.toMeasure) := by
+  funext y; simp [clampContractedRate, hR]
 
-**Exact remaining math gap for discharging `hLDP`:**
-1. ~~thickening recovery~~ (landed);
-2. `satisfiesLDP_of_ExpEquivalentMaps` (same good rate; DZ 4.2.13): finish EReal
-   `⨅_ε (-inf_{F^ε}) = -inf_F` wire on top of recovery + open lower bounds via balls
-   with exp-equivalent error (`limsup` bot on distance sets);
-3. `satisfiesLDP_of_EventuallyExpGoodApprox` / `satisfiesLDP_of_gammaApprox`
-   (DZ 4.2.16): set-infima `liminf_R inf_G I_R >= inf_G I` from sequential Gamma-liminf
-   + coercive compact levels of `I_R` (via clamp-Legendre <= I_R + uniform MGF modulus),
-   then specialize with bound-only clamp contraction + exp-good + Gamma-bundle;
-4. drop `hLDP` from `cramer_theorem_of_HasFiniteMGF_of_forall_bddAbove`.
-Wrapper still carries `hLDP`; do not ping Random yet.
--/
+/-- Product-space clamp map paired with `clampContractedRate`. -/
+noncomputable def sampleClampMeanPi' {d n : ℕ} (R : ℝ)
+    (ω : Fin n → EuclideanSpace ℝ (Fin d)) : EuclideanSpace ℝ (Fin d) :=
+  sampleClampMeanPi (d := d) (n := n) (if 0 < R then R else (1 : ℝ)) ω
+
+theorem sampleClampMeanPi'_eq_of_pos {d n : ℕ} {R : ℝ} (hR : 0 < R) :
+    sampleClampMeanPi' (d := d) (n := n) R =
+      sampleClampMeanPi (d := d) (n := n) R := by
+  funext ω; simp [sampleClampMeanPi', hR]
+
+theorem sampleClampMeanPi'_eq_of_nonpos {d n : ℕ} {R : ℝ} (hR : ¬ 0 < R) :
+    sampleClampMeanPi' (d := d) (n := n) R =
+      sampleClampMeanPi (d := d) (n := n) 1 := by
+  funext ω; simp [sampleClampMeanPi', hR]
+
+theorem measurable_sampleMeanPi {d n : ℕ} :
+    Measurable (sampleMeanPi (d := d) (n := n)) := by
+  unfold sampleMeanPi
+  exact (measurable_const_smul _).comp (Finset.measurable_sum _ fun i _ => measurable_pi_apply i)
+
+theorem measurable_sampleClampMeanPi_of_pos {d n : ℕ} {R : ℝ} (hR : 0 < R) :
+    Measurable (sampleClampMeanPi (d := d) (n := n) R) := by
+  unfold sampleClampMeanPi
+  have hc : Measurable (radialClamp (E := EuclideanSpace ℝ (Fin d)) R) :=
+    (continuous_radialClamp hR).measurable
+  exact (measurable_const_smul _).comp
+    (Finset.measurable_sum _ fun i _ => hc.comp (measurable_pi_apply i))
+
+theorem measurable_sampleClampMeanPi' {d n : ℕ} (R : ℝ) :
+    Measurable (sampleClampMeanPi' (d := d) (n := n) R) := by
+  by_cases hR : 0 < R
+  · rw [sampleClampMeanPi'_eq_of_pos (d := d) (n := n) hR]
+    exact measurable_sampleClampMeanPi_of_pos (d := d) (n := n) hR
+  · rw [sampleClampMeanPi'_eq_of_nonpos (d := d) (n := n) hR]
+    exact measurable_sampleClampMeanPi_of_pos (d := d) (n := n) one_pos
+
+/-- Exp-good approx with the positive-radius clamp family `sampleClampMeanPi'`. -/
+theorem EventuallyExpGoodApprox_sampleMean_sampleClampMeanPi' {d : ℕ}
+    {μ₀ : Measure (EuclideanSpace ℝ (Fin d))} [IsProbabilityMeasure μ₀]
+    (hMGF : HasFiniteMGF μ₀) :
+    EventuallyExpGoodApprox
+      (fun n : ℕ => Measure.pi fun _ : Fin n => μ₀)
+      (fun n : ℕ => sampleMeanPi (d := d) (n := n))
+      (fun R : ℝ => fun n : ℕ => sampleClampMeanPi' (d := d) (n := n) R) := by
+  intro ε hε δ hδ
+  filter_upwards [eventually_expGood_sampleMean_sampleClampMean (d := d) hMGF hε hδ,
+    eventually_gt_atTop (0 : ℝ)] with R hGood hRpos
+  intro n hn
+  simpa [sampleClampMeanPi'_eq_of_pos (d := d) (n := n) hRpos] using hGood.2 n hn
+
+/-- Γ-liminf along `R = n+1` toward `cramerRateFromSanov`. -/
+theorem GammaLiminf_clampContractedRate_cramerRateFromSanov
+    {d : ℕ}
+    {μ₀ : Measure (EuclideanSpace ℝ (Fin d))} [IsProbabilityMeasure μ₀]
+    (hMGF : HasFiniteMGF μ₀)
+    (hbdd : ∀ y : EuclideanSpace ℝ (Fin d),
+      BddAbove (Set.range fun t : EuclideanSpace ℝ (Fin d) =>
+        ⟪t, y⟫_ℝ - logMGFVec (fun x : EuclideanSpace ℝ (Fin d) => x) μ₀ t)) :
+    GammaLiminf
+      (fun n : ℕ => clampContractedRate μ₀ ((n : ℝ) + 1))
+      (cramerRateFromSanov μ₀) := by
+  intro y yseq hy
+  have heq : ∀ n : ℕ,
+      clampContractedRate μ₀ ((n : ℝ) + 1) (yseq n) =
+        contractedRate
+          (fun ν : ProbabilityMeasure (EuclideanSpace ℝ (Fin d)) =>
+            klDiv (ν : Measure _) μ₀)
+          (fun ν => ∫ x, radialClamp ((n : ℝ) + 1) x ∂ν.toMeasure)
+          (yseq n) := by
+    intro n
+    rw [clampContractedRate_eq_of_pos μ₀ (Nat.cast_add_one_pos n)]
+  simp_rw [heq]
+  exact liminf_contractedRate_integral_radialClamp_ge_cramerRateFromSanov_of_HasFiniteMGF_of_forall_bddAbove
+    hMGF hbdd y yseq hy
+
+/-- Bound-only open lower bound for clamp pushforwards at fixed `R > 0`. -/
+theorem liminf_log_map_sampleClampMeanPi_ge_iInf_clampContractedRate {d : ℕ}
+    (μ₀ : Measure (EuclideanSpace ℝ (Fin d))) [IsProbabilityMeasure μ₀]
+    {R : ℝ} (hR : 0 < R) {U : Set (EuclideanSpace ℝ (Fin d))} (hU : IsOpen U) :
+    - (⨅ y ∈ U, (clampContractedRate μ₀ R y : EReal)) ≤
+      liminf (fun n => ((n : ℕ) : EReal)⁻¹ *
+        ENNReal.log
+          ((Measure.pi fun _ : Fin n => μ₀).map
+            (sampleClampMeanPi (d := d) (n := n) R) U)) atTop := by
+  let sanovLaw : ℕ → Measure (ProbabilityMeasure (EuclideanSpace ℝ (Fin d))) := fun n =>
+    Measure.map
+      (fun ω : Fin n → EuclideanSpace ℝ (Fin d) =>
+        if hn : 0 < n then empiricalProbabilityMeasure hn ω
+        else μ₀.toProbabilityMeasure)
+      (Measure.pi fun _ : Fin n => μ₀)
+  have hSanov :
+      SatisfiesLDP sanovLaw
+        (fun ν : ProbabilityMeasure (EuclideanSpace ℝ (Fin d)) =>
+          klDiv (ν : Measure _) μ₀) :=
+    satisfiesLDP_sanov_empiricalProbabilityMeasure (μ₀ := μ₀)
+  have hbound := liminf_log_map_ge_iInf_contractedRate (μ := sanovLaw) hSanov
+    (fun ν => ∫ x, radialClamp R x ∂ν.toMeasure)
+    (continuous_integral_radialClamp hR) (measurable_integral_radialClamp hR) hU
+  rw [clampContractedRate_eq_of_pos μ₀ hR]
+  have hev : ∀ᶠ n : ℕ in atTop,
+      (sanovLaw n).map (fun ν => ∫ x, radialClamp R x ∂ν.toMeasure) =
+        (Measure.pi fun _ : Fin n => μ₀).map (sampleClampMeanPi (d := d) (n := n) R) := by
+    filter_upwards [eventually_gt_atTop 0] with n hn
+    change
+        (Measure.map
+            (fun ω : Fin n → EuclideanSpace ℝ (Fin d) =>
+              if hn' : 0 < n then empiricalProbabilityMeasure hn' ω
+              else μ₀.toProbabilityMeasure)
+            (Measure.pi fun _ : Fin n => μ₀)).map
+          (fun ν => ∫ x, radialClamp R x ∂ν.toMeasure) =
+        (Measure.pi fun _ : Fin n => μ₀).map (sampleClampMeanPi (d := d) (n := n) R)
+    simp only [hn, ↓reduceDIte]
+    exact map_sanovEmpirical_integral_radialClamp_eq_map_sampleClampMeanPi (μ := μ₀) hn hR
+  have hfun :
+      (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log
+          (((sanovLaw n).map (fun ν => ∫ x, radialClamp R x ∂ν.toMeasure)) U)) =ᶠ[atTop]
+        (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log
+          ((Measure.pi fun _ : Fin n => μ₀).map
+            (sampleClampMeanPi (d := d) (n := n) R) U)) := by
+    filter_upwards [hev] with n hn; rw [hn]
+  exact (le_of_eq (by rfl)).trans ((liminf_congr hfun ▸ hbound))
+
+/-- Bound-only closed upper bound for clamp pushforwards at fixed `R > 0`. -/
+theorem limsup_log_map_sampleClampMeanPi_le_iInf_clampContractedRate {d : ℕ}
+    (μ₀ : Measure (EuclideanSpace ℝ (Fin d))) [IsProbabilityMeasure μ₀]
+    {R : ℝ} (hR : 0 < R) {F : Set (EuclideanSpace ℝ (Fin d))} (hF : IsClosed F) :
+    limsup (fun n => ((n : ℕ) : EReal)⁻¹ *
+        ENNReal.log
+          ((Measure.pi fun _ : Fin n => μ₀).map
+            (sampleClampMeanPi (d := d) (n := n) R) F)) atTop ≤
+      - (⨅ y ∈ F, (clampContractedRate μ₀ R y : EReal)) := by
+  let sanovLaw : ℕ → Measure (ProbabilityMeasure (EuclideanSpace ℝ (Fin d))) := fun n =>
+    Measure.map
+      (fun ω : Fin n → EuclideanSpace ℝ (Fin d) =>
+        if hn : 0 < n then empiricalProbabilityMeasure hn ω
+        else μ₀.toProbabilityMeasure)
+      (Measure.pi fun _ : Fin n => μ₀)
+  have hSanov :
+      SatisfiesLDP sanovLaw
+        (fun ν : ProbabilityMeasure (EuclideanSpace ℝ (Fin d)) =>
+          klDiv (ν : Measure _) μ₀) :=
+    satisfiesLDP_sanov_empiricalProbabilityMeasure (μ₀ := μ₀)
+  have hbound := limsup_log_map_le_iInf_contractedRate (μ := sanovLaw) hSanov
+    (fun ν => ∫ x, radialClamp R x ∂ν.toMeasure)
+    (continuous_integral_radialClamp hR) (measurable_integral_radialClamp hR) hF
+  rw [clampContractedRate_eq_of_pos μ₀ hR]
+  have hev : ∀ᶠ n : ℕ in atTop,
+      (sanovLaw n).map (fun ν => ∫ x, radialClamp R x ∂ν.toMeasure) =
+        (Measure.pi fun _ : Fin n => μ₀).map (sampleClampMeanPi (d := d) (n := n) R) := by
+    filter_upwards [eventually_gt_atTop 0] with n hn
+    change
+        (Measure.map
+            (fun ω : Fin n → EuclideanSpace ℝ (Fin d) =>
+              if hn' : 0 < n then empiricalProbabilityMeasure hn' ω
+              else μ₀.toProbabilityMeasure)
+            (Measure.pi fun _ : Fin n => μ₀)).map
+          (fun ν => ∫ x, radialClamp R x ∂ν.toMeasure) =
+        (Measure.pi fun _ : Fin n => μ₀).map (sampleClampMeanPi (d := d) (n := n) R)
+    simp only [hn, ↓reduceDIte]
+    exact map_sanovEmpirical_integral_radialClamp_eq_map_sampleClampMeanPi (μ := μ₀) hn hR
+  have hfun :
+      (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log
+          (((sanovLaw n).map (fun ν => ∫ x, radialClamp R x ∂ν.toMeasure)) F)) =ᶠ[atTop]
+        (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log
+          ((Measure.pi fun _ : Fin n => μ₀).map
+            (sampleClampMeanPi (d := d) (n := n) R) F)) := by
+    filter_upwards [hev] with n hn; rw [hn]
+  exact (limsup_congr hfun ▸ hbound).trans (le_of_eq (by rfl))
+
+/-! ### Γ-rate identification (`clampContractedRate` ↔ `cramerRateFromSanov`) -/
+
+/-- `liminf` along `ℝ` atTop is `≤` the discrete diagonal `n ↦ n+1`. -/
+theorem liminf_atTop_le_liminf_nat_add_one (u : ℝ → ENNReal) :
+    liminf u atTop ≤ liminf (fun n : ℕ => u ((n : ℝ) + 1)) atTop := by
+  have ht : Tendsto (fun n : ℕ => (n : ℝ) + 1) atTop atTop :=
+    tendsto_atTop_add_const_right atTop (1 : ℝ) tendsto_natCast_atTop_atTop
+  -- `ht` is `map (n ↦ n+1) atTop ≤ atTop`, so liminf_ℝ ≤ liminf on the image filter
+  have hle :
+      liminf u atTop ≤
+        liminf (u ∘ fun n : ℕ => (n : ℝ) + 1) atTop := by
+    simpa [← Filter.liminf_comp] using
+      (liminf_le_liminf_of_le (u := u) ht :
+        liminf u atTop ≤
+          liminf u ((atTop : Filter ℕ).map (fun n : ℕ => (n : ℝ) + 1)))
+  convert hle using 2
+  ext n; rfl
+
+/-- Nearly-minimizer on a metric ball (ENNReal, additive slack). -/
+theorem exists_mem_ball_le_ofReal_add
+    {X : Type*} [PseudoMetricSpace X]
+    (I : X → ENNReal) {y : X} {δ A ε : ℝ}
+    (_hδ : 0 < δ) (_hA : 0 ≤ A) (hε : 0 < ε)
+    (hinf : ⨅ z ∈ Metric.ball y δ, I z ≤ ENNReal.ofReal A) :
+    ∃ z ∈ Metric.ball y δ, I z ≤ ENNReal.ofReal (A + ε) := by
+  by_contra hnone
+  push Not at hnone
+  have hbig : ∀ z ∈ Metric.ball y δ, ENNReal.ofReal (A + ε) < I z := hnone
+  have hle : ENNReal.ofReal (A + ε) ≤ ⨅ z ∈ Metric.ball y δ, I z :=
+    le_iInf₂ fun z hz => (hbig z hz).le
+  have hlt : ENNReal.ofReal A < ENNReal.ofReal (A + ε) :=
+    (ENNReal.ofReal_lt_ofReal_iff (by linarith : 0 < A + ε)).2 (by linarith)
+  exact (not_lt_of_ge (hle.trans hinf)) hlt
+
+/-- Fiber recovery: `liminf_n inf_{ball} I_{n+1} ≤ kl` along a finite-KL fiber. -/
+theorem liminf_iInf_ball_clampContractedRate_le_klDiv
+    {d : ℕ}
+    {μ₀ : Measure (EuclideanSpace ℝ (Fin d))} [IsProbabilityMeasure μ₀]
+    (hMGF : HasFiniteMGF μ₀)
+    (ν : ProbabilityMeasure (EuclideanSpace ℝ (Fin d)))
+    (hne : klDiv (ν : Measure _) μ₀ ≠ ∞)
+    {δ : ℝ} (_hδ : 0 < δ) :
+    liminf (fun n : ℕ =>
+        ⨅ z ∈ Metric.ball (barycenter ν) δ,
+          clampContractedRate μ₀ ((n : ℝ) + 1) z) atTop ≤
+      klDiv (ν : Measure _) μ₀ := by
+  have htend :=
+    tendsto_integral_radialClamp_barycenter_of_klDiv_ne_top_of_HasFiniteMGF hMGF ν hne
+  have hball : ∀ᶠ n : ℕ in atTop,
+      ∫ x, radialClamp ((n : ℝ) + 1) x ∂ν.toMeasure ∈
+        Metric.ball (barycenter ν) δ :=
+    htend (Metric.ball_mem_nhds _ _hδ)
+  have hrec : ∀ n : ℕ,
+      clampContractedRate μ₀ ((n : ℝ) + 1)
+          (∫ x, radialClamp ((n : ℝ) + 1) x ∂ν.toMeasure) ≤
+        klDiv (ν : Measure _) μ₀ := by
+    intro n
+    simpa [clampContractedRate_eq_of_pos μ₀ (Nat.cast_add_one_pos n)] using
+      contractedRate_integral_radialClamp_recovery_le_klDiv_of_HasFiniteMGF
+        hMGF ν hne n
+  have hle : ∀ᶠ n : ℕ in atTop,
+      (⨅ z ∈ Metric.ball (barycenter ν) δ,
+          clampContractedRate μ₀ ((n : ℝ) + 1) z) ≤
+        klDiv (ν : Measure _) μ₀ := by
+    filter_upwards [hball] with n hn
+    exact (iInf₂_le _ hn).trans (hrec n)
+  exact (liminf_le_limsup).trans (limsup_le_of_le (by isBoundedDefault) hle)
+
+theorem gammaLiminfRate_clampContractedRate_le_klDiv_of_barycenter
+    {d : ℕ}
+    {μ₀ : Measure (EuclideanSpace ℝ (Fin d))} [IsProbabilityMeasure μ₀]
+    (hMGF : HasFiniteMGF μ₀)
+    (ν : ProbabilityMeasure (EuclideanSpace ℝ (Fin d)))
+    (hne : klDiv (ν : Measure _) μ₀ ≠ ∞) :
+    gammaLiminfRate (clampContractedRate μ₀) (barycenter ν) ≤
+      klDiv (ν : Measure _) μ₀ := by
+  refine iSup_le fun δ => ?_
+  have hnat := liminf_iInf_ball_clampContractedRate_le_klDiv hMGF ν hne δ.2
+  have hreal := liminf_atTop_le_liminf_nat_add_one
+    (fun R => ⨅ z ∈ Metric.ball (barycenter ν) δ.1, clampContractedRate μ₀ R z)
+  exact hreal.trans hnat
+
+
+/-- (2) Recovery: `gammaLiminfRate clampContractedRate ≤ cramerRateFromSanov`. -/
+theorem gammaLiminfRate_clampContractedRate_le_cramerRateFromSanov
+    {d : ℕ}
+    {μ₀ : Measure (EuclideanSpace ℝ (Fin d))} [IsProbabilityMeasure μ₀]
+    (hMGF : HasFiniteMGF μ₀)
+    (y : EuclideanSpace ℝ (Fin d)) :
+    gammaLiminfRate (clampContractedRate μ₀) y ≤ cramerRateFromSanov μ₀ y := by
+  unfold cramerRateFromSanov contractedRate
+  refine le_iInf₂ fun ν hν => ?_
+  have hy : barycenter ν = y := by
+    simpa [Set.mem_preimage, Set.mem_singleton_iff] using hν
+  by_cases hne : klDiv (ν : Measure _) μ₀ = ∞
+  · simp [hne]
+  · simpa [hy] using
+      gammaLiminfRate_clampContractedRate_le_klDiv_of_barycenter hMGF ν hne
+
+/-! ### (1) Pointwise real-parameter Γ-liminf toward Sanov/CRF -/
+
+/-- `radialClamp R x → x` as `R → ∞` along `ℝ`. -/
+theorem tendsto_radialClamp_atTop {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    (x : E) : Tendsto (fun R : ℝ => radialClamp R x) atTop (𝓝 x) := by
+  refine tendsto_atTop_of_eventually_const (i₀ := ‖x‖) fun R hR => ?_
+  have hR0 : 0 ≤ R := (norm_nonneg x).trans hR
+  exact radialClamp_of_norm_le hR0 hR
+
+/-- Clamp-MGF → MGF along real `R → ∞` under `HasFiniteMGF`. -/
+theorem tendsto_integral_exp_inner_radialClamp_atTop_of_HasFiniteMGF {d : ℕ}
+    {μ₀ : Measure (EuclideanSpace ℝ (Fin d))} [IsProbabilityMeasure μ₀]
+    (hMGF : HasFiniteMGF μ₀) (t : EuclideanSpace ℝ (Fin d)) :
+    Tendsto (fun R : ℝ => ∫ x, Real.exp (⟪t, radialClamp R x⟫_ℝ) ∂μ₀) atTop
+      (𝓝 (∫ x, Real.exp (⟪t, x⟫_ℝ) ∂μ₀)) := by
+  have hexp_id : Integrable (fun x : EuclideanSpace ℝ (Fin d) => Real.exp (‖t‖ * ‖x‖)) μ₀ :=
+    hMGF.integrable_exp_mul_norm ‖t‖
+  have hlim :=
+    tendsto_integral_filter_of_dominated_convergence
+      (α := EuclideanSpace ℝ (Fin d)) (G := ℝ) (μ := μ₀)
+      (l := (atTop : Filter ℝ))
+      (F := fun (R : ℝ) x => Real.exp (⟪t, radialClamp R x⟫_ℝ))
+      (f := fun x => Real.exp (⟪t, x⟫_ℝ))
+      (bound := fun x => Real.exp (‖t‖ * ‖x‖))
+      ?meas ?bound hexp_id ?pt
+  · exact hlim
+  case meas =>
+    filter_upwards [eventually_gt_atTop (0 : ℝ)] with R hR
+    exact (Real.continuous_exp.comp (continuous_inner_radialClamp t hR)).aestronglyMeasurable
+  case bound =>
+    filter_upwards [eventually_ge_atTop (0 : ℝ)] with R hR
+    exact Eventually.of_forall fun x => by
+      simpa [Real.norm_eq_abs, abs_of_pos (Real.exp_pos _)] using
+        exp_inner_radialClamp_le_exp_mul_norm t hR x
+  case pt =>
+    exact Eventually.of_forall fun x =>
+      (Real.continuous_exp.tendsto _).comp
+        (((innerSL ℝ t).continuous.tendsto _).comp (tendsto_radialClamp_atTop x))
+
+theorem tendsto_log_integral_exp_inner_radialClamp_atTop_of_HasFiniteMGF {d : ℕ}
+    {μ₀ : Measure (EuclideanSpace ℝ (Fin d))} [IsProbabilityMeasure μ₀]
+    (hMGF : HasFiniteMGF μ₀) (t : EuclideanSpace ℝ (Fin d)) :
+    Tendsto
+      (fun R : ℝ => Real.log (∫ x, Real.exp (⟪t, radialClamp R x⟫_ℝ) ∂μ₀)) atTop
+      (𝓝 (Real.log (∫ x, Real.exp (⟪t, x⟫_ℝ) ∂μ₀))) := by
+  have hpos : 0 < ∫ x, Real.exp (⟪t, x⟫_ℝ) ∂μ₀ := integral_exp_pos (hMGF t)
+  exact (Real.continuousAt_log hpos.ne').tendsto.comp
+    (tendsto_integral_exp_inner_radialClamp_atTop_of_HasFiniteMGF hMGF t)
+
+/-- Pointwise Fenchel–Young competitor ≤ liminf_R clamp-contracted rate. -/
+theorem liminf_clampContractedRate_ge_ofReal_fy_of_HasFiniteMGF {d : ℕ}
+    {μ₀ : Measure (EuclideanSpace ℝ (Fin d))} [IsProbabilityMeasure μ₀]
+    (hMGF : HasFiniteMGF μ₀)
+    (y t : EuclideanSpace ℝ (Fin d)) :
+    ENNReal.ofReal
+        (⟪t, y⟫_ℝ - logMGFVec (fun x : EuclideanSpace ℝ (Fin d) => x) μ₀ t) ≤
+      liminf (fun R : ℝ => clampContractedRate μ₀ R y) atTop := by
+  have hfy :
+      Tendsto
+        (fun R : ℝ =>
+          ⟪t, y⟫_ℝ - Real.log (∫ x, Real.exp (⟪t, radialClamp R x⟫_ℝ) ∂μ₀)) atTop
+        (𝓝 (⟪t, y⟫_ℝ - Real.log (∫ x, Real.exp (⟪t, x⟫_ℝ) ∂μ₀))) :=
+    tendsto_const_nhds.sub
+      (tendsto_log_integral_exp_inner_radialClamp_atTop_of_HasFiniteMGF hMGF t)
+  have hofReal :
+      Tendsto
+        (fun R : ℝ =>
+          ENNReal.ofReal
+            (⟪t, y⟫_ℝ - Real.log (∫ x, Real.exp (⟪t, radialClamp R x⟫_ℝ) ∂μ₀))) atTop
+        (𝓝
+          (ENNReal.ofReal
+            (⟪t, y⟫_ℝ - Real.log (∫ x, Real.exp (⟪t, x⟫_ℝ) ∂μ₀)))) :=
+    (ENNReal.continuous_ofReal.tendsto _).comp hfy
+  have hle : ∀ᶠ R : ℝ in atTop,
+      ENNReal.ofReal
+          (⟪t, y⟫_ℝ - Real.log (∫ x, Real.exp (⟪t, radialClamp R x⟫_ℝ) ∂μ₀)) ≤
+        clampContractedRate μ₀ R y := by
+    filter_upwards [eventually_gt_atTop (0 : ℝ)] with R hR
+    simpa [clampContractedRate_eq_of_pos μ₀ hR] using
+      ofReal_inner_sub_log_clampMGF_le_contractedRate_integral_radialClamp μ₀ y t hR
+  have hliminf := liminf_le_liminf hle
+  have hlogid :
+      ⟪t, y⟫_ℝ - Real.log (∫ x, Real.exp (⟪t, x⟫_ℝ) ∂μ₀) =
+        ⟪t, y⟫_ℝ - logMGFVec (fun x : EuclideanSpace ℝ (Fin d) => x) μ₀ t := by
+    simp [logMGFVec_id]
+  simpa [hofReal.liminf_eq, hlogid] using hliminf
+
+theorem liminf_clampContractedRate_ge_cramerRateFunction_of_HasFiniteMGF {d : ℕ}
+    {μ₀ : Measure (EuclideanSpace ℝ (Fin d))} [IsProbabilityMeasure μ₀]
+    (hMGF : HasFiniteMGF μ₀)
+    (y : EuclideanSpace ℝ (Fin d))
+    (hbdd : BddAbove (Set.range fun t : EuclideanSpace ℝ (Fin d) =>
+      ⟪t, y⟫_ℝ - logMGFVec (fun x : EuclideanSpace ℝ (Fin d) => x) μ₀ t)) :
+    cramerRateFunction (fun x : EuclideanSpace ℝ (Fin d) => x) μ₀ y ≤
+      liminf (fun R : ℝ => clampContractedRate μ₀ R y) atTop := by
+  refine cramerRateFunction_le_of_forall_ofReal_inner_sub_logMGF_le
+    (fun x : EuclideanSpace ℝ (Fin d) => x) μ₀ y _ hbdd fun t => ?_
+  exact liminf_clampContractedRate_ge_ofReal_fy_of_HasFiniteMGF hMGF y t
+
+/-- Pointwise: Sanov rate ≤ liminf_R clamp-contracted rate (via rate ID). -/
+theorem liminf_clampContractedRate_ge_cramerRateFromSanov_of_HasFiniteMGF_of_forall_bddAbove
+    {d : ℕ}
+    {μ₀ : Measure (EuclideanSpace ℝ (Fin d))} [IsProbabilityMeasure μ₀]
+    (hMGF : HasFiniteMGF μ₀)
+    (hbdd : ∀ y : EuclideanSpace ℝ (Fin d),
+      BddAbove (Set.range fun t : EuclideanSpace ℝ (Fin d) =>
+        ⟪t, y⟫_ℝ - logMGFVec (fun x : EuclideanSpace ℝ (Fin d) => x) μ₀ t))
+    (y : EuclideanSpace ℝ (Fin d)) :
+    cramerRateFromSanov μ₀ y ≤
+      liminf (fun R : ℝ => clampContractedRate μ₀ R y) atTop := by
+  have heq := cramerRateFromSanov_eq_cramerRateFunction_of_tiltCover_no_hid
+    μ₀ hMGF (TiltCover_of_HasFiniteMGF_of_forall_bddAbove μ₀ hMGF hbdd) hbdd y
+  rw [heq]
+  exact liminf_clampContractedRate_ge_cramerRateFunction_of_HasFiniteMGF
+    hMGF y (hbdd y)
+
+/-- Real-parameter Γ-liminf along every `R_n → ∞` diagonal. -/
+theorem GammaLiminfReal_clampContractedRate_cramerRateFromSanov
+    {d : ℕ}
+    {μ₀ : Measure (EuclideanSpace ℝ (Fin d))} [IsProbabilityMeasure μ₀]
+    (hMGF : HasFiniteMGF μ₀)
+    (hbdd : ∀ y : EuclideanSpace ℝ (Fin d),
+      BddAbove (Set.range fun t : EuclideanSpace ℝ (Fin d) =>
+        ⟪t, y⟫_ℝ - logMGFVec (fun x : EuclideanSpace ℝ (Fin d) => x) μ₀ t)) :
+    GammaLiminfReal (clampContractedRate μ₀) (cramerRateFromSanov μ₀) := by
+  intro y R hR yseq hy
+  have heq := cramerRateFromSanov_eq_cramerRateFunction_of_tiltCover_no_hid
+    μ₀ hMGF (TiltCover_of_HasFiniteMGF_of_forall_bddAbove μ₀ hMGF hbdd) hbdd y
+  rw [heq]
+  refine cramerRateFunction_le_of_forall_ofReal_inner_sub_logMGF_le
+    (fun x : EuclideanSpace ℝ (Fin d) => x) μ₀ y _ (hbdd y) fun t => ?_
+  have hRpos : ∀ᶠ n : ℕ in atTop, 0 < R n :=
+    hR.eventually (eventually_gt_atTop (0 : ℝ))
+  have hfy :
+      Tendsto
+        (fun n : ℕ =>
+          ⟪t, yseq n⟫_ℝ - Real.log (∫ x, Real.exp (⟪t, radialClamp (R n) x⟫_ℝ) ∂μ₀)) atTop
+        (𝓝 (⟪t, y⟫_ℝ - Real.log (∫ x, Real.exp (⟪t, x⟫_ℝ) ∂μ₀))) := by
+    have hinner : Tendsto (fun n : ℕ => ⟪t, yseq n⟫_ℝ) atTop (𝓝 ⟪t, y⟫_ℝ) :=
+      ((innerSL ℝ t).continuous.tendsto y).comp hy
+    have hlog :=
+      (tendsto_log_integral_exp_inner_radialClamp_atTop_of_HasFiniteMGF hMGF t).comp hR
+    exact hinner.sub hlog
+  have hofReal :
+      Tendsto
+        (fun n : ℕ =>
+          ENNReal.ofReal
+            (⟪t, yseq n⟫_ℝ -
+              Real.log (∫ x, Real.exp (⟪t, radialClamp (R n) x⟫_ℝ) ∂μ₀))) atTop
+        (𝓝
+          (ENNReal.ofReal
+            (⟪t, y⟫_ℝ - Real.log (∫ x, Real.exp (⟪t, x⟫_ℝ) ∂μ₀)))) :=
+    (ENNReal.continuous_ofReal.tendsto _).comp hfy
+  have hle : ∀ᶠ n : ℕ in atTop,
+      ENNReal.ofReal
+          (⟪t, yseq n⟫_ℝ -
+            Real.log (∫ x, Real.exp (⟪t, radialClamp (R n) x⟫_ℝ) ∂μ₀)) ≤
+        clampContractedRate μ₀ (R n) (yseq n) := by
+    filter_upwards [hRpos] with n hRn
+    simpa [clampContractedRate_eq_of_pos μ₀ hRn] using
+      ofReal_inner_sub_log_clampMGF_le_contractedRate_integral_radialClamp
+        μ₀ (yseq n) t hRn
+  have hliminf := liminf_le_liminf hle
+  have hlogid :
+      ⟪t, y⟫_ℝ - Real.log (∫ x, Real.exp (⟪t, x⟫_ℝ) ∂μ₀) =
+        ⟪t, y⟫_ℝ - logMGFVec (fun x : EuclideanSpace ℝ (Fin d) => x) μ₀ t := by
+    simp [logMGFVec_id]
+  simpa [hofReal.liminf_eq, hlogid] using hliminf
+
+/-! ### (1) `cramerRateFromSanov ≤ gammaLiminfRate` via nearly-mins + compactness -/
+
+/-- Nearly-minimizer on a ball when the ball-inf is finite. -/
+theorem exists_mem_ball_le_iInf_add
+    {X : Type*} [PseudoMetricSpace X]
+    (I : X → ENNReal) {y : X} {δ : ℝ} (_hδ : 0 < δ) {ε : ENNReal}
+    (hε : ε ≠ 0) (hfin : (⨅ z ∈ Metric.ball y δ, I z) ≠ ∞) :
+    ∃ z ∈ Metric.ball y δ, I z ≤ (⨅ w ∈ Metric.ball y δ, I w) + ε := by
+  let a := ⨅ z ∈ Metric.ball y δ, I z
+  have hlt : a < a + ε := ENNReal.lt_add_right hfin hε
+  have ha : a = ⨅ z : Metric.ball y δ, I (z : X) := by simp [a, iInf_subtype]
+  have hsub : (⨅ z : Metric.ball y δ, I (z : X)) <
+      (⨅ z : Metric.ball y δ, I (z : X)) + ε := by
+    simpa [← ha] using hlt
+  obtain ⟨⟨z, hz⟩, hzlt⟩ := iInf_lt_iff.mp hsub
+  exact ⟨z, hz, hzlt.le.trans_eq (congrArg (· + ε) ha.symm)⟩
+
+/-- Nhds liminf equals the ball expression used by `gammaLiminfRate`. -/
+theorem liminf_nhds_eq_iSup_iInf_ball {X : Type*} [PseudoMetricSpace X]
+    (f : X → ENNReal) (x : X) :
+    liminf f (𝓝 x) =
+      ⨆ δ : {δ : ℝ // 0 < δ}, ⨅ y ∈ Metric.ball x δ.1, f y := by
+  have hbas : (𝓝 x).HasBasis (fun δ : ℝ => 0 < δ) (fun δ => Metric.ball x δ) :=
+    Metric.nhds_basis_ball
+  rw [hbas.liminf_eq_iSup_iInf]
+  refine le_antisymm ?_ ?_
+  · refine iSup₂_le fun δ hδ =>
+      le_iSup (fun d : {δ : ℝ // 0 < δ} => ⨅ y ∈ Metric.ball x d.1, f y) ⟨δ, hδ⟩
+  · refine iSup_le fun δ => ?_
+    refine (le_iSup (fun _ : 0 < δ.1 => ⨅ y ∈ Metric.ball x δ.1, f y) δ.2).trans ?_
+    exact le_iSup (fun δ' => ⨆ (_ : 0 < δ'), ⨅ y ∈ Metric.ball x δ', f y) δ.1
+
+/-- Compact Γ-extraction: closed-ball inf of `J` ≤ liminf of open-ball infs of `I_R`. -/
+theorem iInf_closedBall_le_liminf_iInf_ball_of_GammaLiminfReal
+    {X : Type*} [PseudoMetricSpace X] [ProperSpace X]
+    (I : ℝ → X → ENNReal) (J : X → ENNReal)
+    (hΓ : GammaLiminfReal I J)
+    (y : X) {δ : ℝ} (hδ : 0 < δ) :
+    (⨅ z ∈ Metric.closedBall y δ, J z) ≤
+      liminf (fun R : ℝ => ⨅ z ∈ Metric.ball y δ, I R z) atTop := by
+  set c := ⨅ z ∈ Metric.closedBall y δ, J z
+  set v : ℝ → ENNReal := fun R => ⨅ z ∈ Metric.ball y δ, I R z
+  rw [le_liminf_iff (u := v)]
+  intro b hb
+  by_contra hnot
+  have hfreq : ∃ᶠ R : ℝ in atTop, v R ≤ b := by
+    have : ∃ᶠ R : ℝ in atTop, ¬b < v R := not_eventually.mp hnot
+    exact this.mono fun _ h => le_of_not_gt h
+  have hpick : ∀ n : ℕ, ∃ R : ℝ, (n : ℝ) + 1 ≤ R ∧ v R ≤ b := by
+    intro n
+    obtain ⟨R, hRge, hRv⟩ := Frequently.forall_exists_of_atTop hfreq ((n : ℝ) + 1)
+    exact ⟨R, hRge, hRv⟩
+  choose R hRge hRv using hpick
+  have hRtend : Tendsto R atTop atTop := by
+    rw [tendsto_atTop_atTop]
+    intro t
+    refine ⟨Nat.ceil t, fun n hn => ?_⟩
+    have hceil : (Nat.ceil t : ℝ) ≤ n := by exact_mod_cast hn
+    have hnR : (n : ℝ) + 1 ≤ R n := hRge n
+    have ht : t ≤ (Nat.ceil t : ℝ) := Nat.le_ceil t
+    linarith
+  have hz : ∀ n : ℕ,
+      ∃ z ∈ Metric.ball y δ,
+        I (R n) z ≤ v (R n) + ENNReal.ofReal (1 / (n + 1 : ℝ)) := by
+    intro n
+    by_cases hfin : v (R n) = ∞
+    · refine ⟨y, Metric.mem_ball_self hδ, ?_⟩
+      simp [hfin]
+    · have hε : ENNReal.ofReal (1 / (n + 1 : ℝ)) ≠ 0 :=
+        (ENNReal.ofReal_pos.2 (by positivity)).ne'
+      exact exists_mem_ball_le_iInf_add (I (R n)) hδ hε hfin
+  choose z hzball hznear using hz
+  have hzclosed : ∀ n, z n ∈ Metric.closedBall y δ :=
+    fun n => Metric.ball_subset_closedBall (hzball n)
+  have hK : IsCompact (Metric.closedBall y δ) := isCompact_closedBall y δ
+  obtain ⟨zstar, hzstar, φ, hφmono, hφtend⟩ := hK.tendsto_subseq hzclosed
+  have hRφ : Tendsto (R ∘ φ) atTop atTop := hRtend.comp hφmono.tendsto_atTop
+  have hΓz : J zstar ≤ liminf (fun k => I (R (φ k)) (z (φ k))) atTop :=
+    hΓ zstar (R ∘ φ) hRφ (z ∘ φ) hφtend
+  have hlimI :
+      liminf (fun k => I (R (φ k)) (z (φ k))) atTop ≤
+        liminf (fun k => v (R (φ k)) + ENNReal.ofReal (1 / (φ k + 1 : ℝ))) atTop :=
+    liminf_le_liminf (Eventually.of_forall fun k => hznear (φ k))
+  have hlimv :
+      liminf (fun k => v (R (φ k)) + ENNReal.ofReal (1 / (φ k + 1 : ℝ))) atTop ≤ b := by
+    have hle :
+        ∀ᶠ k : ℕ in atTop,
+          v (R (φ k)) + ENNReal.ofReal (1 / (φ k + 1 : ℝ)) ≤
+            b + ENNReal.ofReal (1 / (φ k + 1 : ℝ)) :=
+      Eventually.of_forall fun k =>
+        add_le_add (hRv (φ k)) le_rfl
+    refine (liminf_le_liminf hle).trans ?_
+    have hslack :
+        Tendsto (fun k : ℕ => ENNReal.ofReal (1 / (φ k + 1 : ℝ))) atTop (𝓝 0) := by
+      have hbase :=
+        ENNReal.tendsto_ofReal tendsto_one_div_add_atTop_nhds_zero_nat
+      change Tendsto ((fun a : ℕ => ENNReal.ofReal (1 / (a + 1 : ℝ))) ∘ φ) atTop (𝓝 0)
+      simpa [ENNReal.ofReal_zero] using hbase.comp hφmono.tendsto_atTop
+    have heq := (tendsto_const_nhds (x := b).add hslack).liminf_eq
+    simpa using heq.le
+  have hzle : J zstar ≤ b := hΓz.trans (hlimI.trans hlimv)
+  have hc : c ≤ J zstar := iInf₂_le zstar hzstar
+  exact (not_lt_of_ge (hc.trans hzle)) hb
+
+/-- LSC + GammaLiminfReal + properness ⇒ `J ≤ gammaLiminfRate I`. -/
+theorem le_gammaLiminfRate_of_GammaLiminfReal_of_lowerSemicontinuous
+    {X : Type*} [PseudoMetricSpace X] [ProperSpace X]
+    (I : ℝ → X → ENNReal) (J : X → ENNReal)
+    (hΓ : GammaLiminfReal I J)
+    (hLSC : LowerSemicontinuous J)
+    (y : X) :
+    J y ≤ gammaLiminfRate I y := by
+  have hnhds : J y ≤ liminf J (𝓝 y) := hLSC.le_liminf y
+  rw [liminf_nhds_eq_iSup_iInf_ball] at hnhds
+  refine hnhds.trans (iSup_le fun δ => ?_)
+  -- For each δ: inf_ball(δ) J ≤ inf_closedBall(δ/2) J ≤ liminf inf_ball(δ/2) I ≤ gamma
+  have hδ2 : 0 < δ.1 / 2 := half_pos δ.2
+  have hsub : Metric.closedBall y (δ.1 / 2) ⊆ Metric.ball y δ.1 := by
+    intro z hz
+    exact (Metric.mem_closedBall.mp hz).trans_lt (half_lt_self δ.2)
+  calc
+    (⨅ z ∈ Metric.ball y δ.1, J z) ≤
+        ⨅ z ∈ Metric.closedBall y (δ.1 / 2), J z :=
+      iInf_le_iInf_of_subset hsub
+    _ ≤ liminf (fun R => ⨅ z ∈ Metric.ball y (δ.1 / 2), I R z) atTop :=
+      iInf_closedBall_le_liminf_iInf_ball_of_GammaLiminfReal I J hΓ y hδ2
+    _ ≤ gammaLiminfRate I y :=
+      le_iSup (fun d : {δ : ℝ // 0 < δ} =>
+          liminf (fun R => ⨅ z ∈ Metric.ball y d.1, I R z) atTop)
+        ⟨δ.1 / 2, hδ2⟩
+
+/-- (1) Sanov ≤ Γ-rate under `HasFiniteMGF` + `forall_bddAbove`. -/
+theorem cramerRateFromSanov_le_gammaLiminfRate_clampContractedRate
+    {d : ℕ}
+    {μ₀ : Measure (EuclideanSpace ℝ (Fin d))} [IsProbabilityMeasure μ₀]
+    (hMGF : HasFiniteMGF μ₀)
+    (hbdd : ∀ y : EuclideanSpace ℝ (Fin d),
+      BddAbove (Set.range fun t : EuclideanSpace ℝ (Fin d) =>
+        ⟪t, y⟫_ℝ - logMGFVec (fun x : EuclideanSpace ℝ (Fin d) => x) μ₀ t))
+    (y : EuclideanSpace ℝ (Fin d)) :
+    cramerRateFromSanov μ₀ y ≤
+      gammaLiminfRate (clampContractedRate μ₀) y := by
+  have hΓ := GammaLiminfReal_clampContractedRate_cramerRateFromSanov hMGF hbdd
+  have heq := cramerRateFromSanov_eq_cramerRateFunction_of_tiltCover_no_hid
+    μ₀ hMGF (TiltCover_of_HasFiniteMGF_of_forall_bddAbove μ₀ hMGF hbdd) hbdd
+  have hLSC : LowerSemicontinuous (cramerRateFromSanov μ₀) :=
+    (funext heq) ▸ lowerSemicontinuous_cramerRateFunction_of_HasFiniteMGF μ₀ hMGF hbdd
+  exact le_gammaLiminfRate_of_GammaLiminfReal_of_lowerSemicontinuous
+    (clampContractedRate μ₀) (cramerRateFromSanov μ₀) hΓ hLSC y
+
+/-- Identification both ways. -/
+theorem gammaLiminfRate_clampContractedRate_eq_cramerRateFromSanov
+    {d : ℕ}
+    {μ₀ : Measure (EuclideanSpace ℝ (Fin d))} [IsProbabilityMeasure μ₀]
+    (hMGF : HasFiniteMGF μ₀)
+    (hbdd : ∀ y : EuclideanSpace ℝ (Fin d),
+      BddAbove (Set.range fun t : EuclideanSpace ℝ (Fin d) =>
+        ⟪t, y⟫_ℝ - logMGFVec (fun x : EuclideanSpace ℝ (Fin d) => x) μ₀ t))
+    (y : EuclideanSpace ℝ (Fin d)) :
+    gammaLiminfRate (clampContractedRate μ₀) y =
+      cramerRateFromSanov μ₀ y :=
+  le_antisymm
+    (gammaLiminfRate_clampContractedRate_le_cramerRateFromSanov hMGF y)
+    (cramerRateFromSanov_le_gammaLiminfRate_clampContractedRate hMGF hbdd y)
+
+
+
+/-! ### (3)+(4)+(5): hClosed, good Γ-rate, wire DZ 4.2.16 → drop `hLDP` -/
+
+/-- `R`-free dominate of the clamp dual integrand. -/
+theorem log_integral_exp_inner_radialClamp_le_log_exp_mul_norm_of_HasFiniteMGF
+    {d : ℕ} {μ₀ : Measure (EuclideanSpace ℝ (Fin d))} [IsProbabilityMeasure μ₀]
+    (hMGF : HasFiniteMGF μ₀) (t : EuclideanSpace ℝ (Fin d)) {R : ℝ} (hR : 0 < R) :
+    Real.log (∫ x, Real.exp (⟪t, radialClamp R x⟫_ℝ) ∂μ₀) ≤
+      Real.log (∫ x, Real.exp (‖t‖ * ‖x‖) ∂μ₀) := by
+  have hexp_dom : Integrable (fun x : EuclideanSpace ℝ (Fin d) =>
+      Real.exp (‖t‖ * ‖x‖)) μ₀ :=
+    hMGF.integrable_exp_mul_norm ‖t‖
+  have hpoint : ∀ x, Real.exp (⟪t, radialClamp R x⟫_ℝ) ≤ Real.exp (‖t‖ * ‖x‖) := by
+    intro x
+    refine Real.exp_le_exp.mpr ?_
+    exact (real_inner_le_norm t (radialClamp R x)).trans
+      (mul_le_mul_of_nonneg_left (norm_radialClamp_le_norm hR.le x) (norm_nonneg _))
+  have hexp_clamp : Integrable (fun x => Real.exp (⟪t, radialClamp R x⟫_ℝ)) μ₀ :=
+    Integrable.mono' hexp_dom
+      (Real.continuous_exp.comp ((innerSL ℝ t).continuous.comp
+        (continuous_radialClamp hR))).aestronglyMeasurable
+      (Eventually.of_forall fun x => by
+        simpa [Real.norm_eq_abs, abs_of_pos (Real.exp_pos _)] using hpoint x)
+  have hInt :
+      (∫ x, Real.exp (⟪t, radialClamp R x⟫_ℝ) ∂μ₀) ≤
+        ∫ x, Real.exp (‖t‖ * ‖x‖) ∂μ₀ :=
+    integral_mono hexp_clamp hexp_dom hpoint
+  have hpos_clamp : 0 < ∫ x, Real.exp (⟪t, radialClamp R x⟫_ℝ) ∂μ₀ :=
+    integral_exp_pos hexp_clamp
+  exact (Real.log_le_log_iff hpos_clamp (lt_of_lt_of_le hpos_clamp hInt)).mpr hInt
+
+/-- Coercivity: clamp-contracted finite sublevel points are norm-bounded, uniformly in `R ≥ 1`. -/
+theorem exists_norm_le_of_clampContractedRate_le_ofReal_of_HasFiniteMGF
+    {d : ℕ} {μ₀ : Measure (EuclideanSpace ℝ (Fin d))} [IsProbabilityMeasure μ₀]
+    (hMGF : HasFiniteMGF μ₀) (a : ℝ) :
+    ∃ M : ℝ, ∀ (y : EuclideanSpace ℝ (Fin d)) (R : ℝ),
+      1 ≤ R → clampContractedRate μ₀ R y ≤ ENNReal.ofReal a → ‖y‖ ≤ M := by
+  have hcont := continuous_logMGFVec_id_of_HasFiniteMGF μ₀ hMGF
+  rcases (Metric.continuousAt_iff.mp (hcont.continuousAt (x := 0))) (1 : ℝ) (by norm_num) with
+    ⟨δ, hδpos, _hδ⟩
+  have hδ2 : 0 < δ / 2 := half_pos hδpos
+  have hdom : Integrable (fun x : EuclideanSpace ℝ (Fin d) =>
+      Real.exp ((δ / 2) * ‖x‖)) μ₀ :=
+    hMGF.integrable_exp_mul_norm (δ / 2)
+  have hpos_dom : 0 < ∫ x, Real.exp ((δ / 2) * ‖x‖) ∂μ₀ := integral_exp_pos hdom
+  set C : ℝ := Real.log (∫ x, Real.exp ((δ / 2) * ‖x‖) ∂μ₀)
+  have hC0 : 0 ≤ C := by
+    have hInt1 : (1 : ℝ) ≤ ∫ x, Real.exp ((δ / 2) * ‖x‖) ∂μ₀ := by
+      have hpt : ∀ x : EuclideanSpace ℝ (Fin d),
+          (1 : ℝ) ≤ Real.exp ((δ / 2) * ‖x‖) := fun x =>
+        Real.one_le_exp (mul_nonneg hδ2.le (norm_nonneg x))
+      simpa [integral_const, measure_univ] using
+        integral_mono (integrable_const (1 : ℝ)) hdom hpt
+    exact Real.log_nonneg hInt1
+  refine ⟨(max a 0 + C + 1) / (δ / 2) + 1, ?_⟩
+  intro y R hRge hyrate
+  have hR : 0 < R := lt_of_lt_of_le zero_lt_one hRge
+  by_cases hy0 : y = 0
+  · subst hy0
+    simpa [norm_zero] using
+      (add_nonneg (div_nonneg (add_nonneg (add_nonneg (le_max_right a 0) hC0)
+        zero_le_one) hδ2.le) zero_le_one)
+  · have hx0 : 0 < ‖y‖ := norm_pos_iff.mpr hy0
+    let t : EuclideanSpace ℝ (Fin d) := ((δ / 2) / ‖y‖) • y
+    have htnorm : ‖t‖ = δ / 2 := by
+      change ‖((δ / 2) / ‖y‖) • y‖ = δ / 2
+      rw [norm_smul, Real.norm_eq_abs, abs_of_pos (div_pos hδ2 hx0),
+        div_mul_cancel₀ _ hx0.ne']
+    have hinner : ⟪t, y⟫_ℝ = (δ / 2) * ‖y‖ := by
+      change ⟪((δ / 2) / ‖y‖) • y, y⟫_ℝ = (δ / 2) * ‖y‖
+      rw [real_inner_smul_left, real_inner_self_eq_norm_sq]
+      field_simp [hx0.ne']
+    have hlog_le :
+        Real.log (∫ x, Real.exp (⟪t, radialClamp R x⟫_ℝ) ∂μ₀) ≤ C := by
+      simpa [C, htnorm] using
+        log_integral_exp_inner_radialClamp_le_log_exp_mul_norm_of_HasFiniteMGF hMGF t hR
+    have hcomp :
+        ENNReal.ofReal (⟪t, y⟫_ℝ -
+            Real.log (∫ x, Real.exp (⟪t, radialClamp R x⟫_ℝ) ∂μ₀)) ≤
+          ENNReal.ofReal a := by
+      refine (le_trans ?_ hyrate)
+      simpa [clampContractedRate_eq_of_pos μ₀ hR] using
+        ofReal_inner_sub_log_clampMGF_le_contractedRate_integral_radialClamp μ₀ y t hR
+    have harg :
+        ⟪t, y⟫_ℝ - Real.log (∫ x, Real.exp (⟪t, radialClamp R x⟫_ℝ) ∂μ₀) ≤
+          max a 0 := by
+      have hle' :
+          ENNReal.ofReal (⟪t, y⟫_ℝ -
+              Real.log (∫ x, Real.exp (⟪t, radialClamp R x⟫_ℝ) ∂μ₀)) ≤
+            ENNReal.ofReal (max a 0) :=
+        hcomp.trans (ENNReal.ofReal_le_ofReal (le_max_left a 0))
+      exact (ENNReal.ofReal_le_ofReal_iff (le_max_right a 0)).mp hle'
+    have hlin : (δ / 2) * ‖y‖ - C ≤ max a 0 := by
+      have : (δ / 2) * ‖y‖ -
+          Real.log (∫ x, Real.exp (⟪t, radialClamp R x⟫_ℝ) ∂μ₀) ≤ max a 0 := by
+        simpa [hinner] using harg
+      linarith [hlog_le]
+    have hdiv : ‖y‖ ≤ (max a 0 + C) / (δ / 2) :=
+      (le_div_iff₀ hδ2).mpr (by linarith)
+    have hstep : (max a 0 + C) / (δ / 2) ≤ (max a 0 + C + 1) / (δ / 2) + 1 := by
+      have : (max a 0 + C) / (δ / 2) ≤ (max a 0 + C + 1) / (δ / 2) :=
+        div_le_div_of_nonneg_right (by linarith) hδ2.le
+      exact this.trans (le_of_lt (lt_add_one _))
+    exact hdiv.trans hstep
+
+/-- Nearly-minimizer on an arbitrary set with finite inf. -/
+theorem exists_mem_le_iInf_add {X : Type*}
+    (I : X → ENNReal) {G : Set X} {ε : ENNReal}
+    (hε : ε ≠ 0) (hfin : (⨅ z ∈ G, I z) ≠ ∞) :
+    ∃ z ∈ G, I z ≤ (⨅ w ∈ G, I w) + ε := by
+  classical
+  let a := ⨅ z ∈ G, I z
+  have hlt : a < a + ε := ENNReal.lt_add_right hfin hε
+  have ha : a = ⨅ z : G, I (z : X) := by simp [a, iInf_subtype]
+  have hsub : (⨅ z : G, I (z : X)) < (⨅ z : G, I (z : X)) + ε := by
+    simpa [← ha] using hlt
+  obtain ⟨⟨z, hz⟩, hzlt⟩ := iInf_lt_iff.mp hsub
+  exact ⟨z, hz, hzlt.le.trans_eq (congrArg (· + ε) ha.symm)⟩
+
+
+/-- Closed-set Γ-liminf inequality (ENNReal) for clamp ↔ Sanov. -/
+theorem iInf_cramerRateFromSanov_le_liminf_iInf_clampContractedRate
+    {d : ℕ} {μ₀ : Measure (EuclideanSpace ℝ (Fin d))} [IsProbabilityMeasure μ₀]
+    (hMGF : HasFiniteMGF μ₀)
+    (hbdd : ∀ y : EuclideanSpace ℝ (Fin d),
+      BddAbove (Set.range fun t : EuclideanSpace ℝ (Fin d) =>
+        ⟪t, y⟫_ℝ - logMGFVec (fun x : EuclideanSpace ℝ (Fin d) => x) μ₀ t))
+    {G : Set (EuclideanSpace ℝ (Fin d))} (hG : IsClosed G) :
+    (⨅ y ∈ G, cramerRateFromSanov μ₀ y) ≤
+      liminf (fun R : ℝ => ⨅ y ∈ G, clampContractedRate μ₀ R y) atTop := by
+  set J := cramerRateFromSanov μ₀
+  set v : ℝ → ENNReal := fun R => ⨅ y ∈ G, clampContractedRate μ₀ R y
+  have hΓ := GammaLiminfReal_clampContractedRate_cramerRateFromSanov hMGF hbdd
+  rw [le_liminf_iff (u := v)]
+  intro b hb
+  by_contra hnot
+  have hfreq : ∃ᶠ R : ℝ in atTop, v R ≤ b :=
+    (not_eventually.mp hnot).mono fun _ h => le_of_not_gt h
+  have hpick : ∀ n : ℕ, ∃ R : ℝ, (n : ℝ) + 1 ≤ R ∧ v R ≤ b := by
+    intro n
+    obtain ⟨R, hRge, hRv⟩ := Frequently.forall_exists_of_atTop hfreq ((n : ℝ) + 1)
+    exact ⟨R, hRge, hRv⟩
+  choose R hRge hRv using hpick
+  have hRtend : Tendsto R atTop atTop := by
+    rw [tendsto_atTop_atTop]
+    intro t
+    refine ⟨Nat.ceil t, fun n hn => ?_⟩
+    have : (n : ℝ) + 1 ≤ R n := hRge n
+    have : (Nat.ceil t : ℝ) ≤ n := by exact_mod_cast hn
+    have : t ≤ (Nat.ceil t : ℝ) := Nat.le_ceil t
+    linarith
+  have hbne : b ≠ ∞ := ne_top_of_lt hb
+  set a : ℝ := b.toReal
+  have hbEq : b = ENNReal.ofReal a := (ENNReal.ofReal_toReal hbne).symm
+  have ha0 : 0 ≤ a := ENNReal.toReal_nonneg
+  obtain ⟨M, hMbound⟩ :=
+    exists_norm_le_of_clampContractedRate_le_ofReal_of_HasFiniteMGF hMGF (a + 1)
+  have hz : ∀ n : ℕ,
+      ∃ z ∈ G, clampContractedRate μ₀ (R n) z ≤
+        v (R n) + ENNReal.ofReal (1 / (n + 1 : ℝ)) := by
+    intro n
+    by_cases hfin : v (R n) = ∞
+    · have : ¬ v (R n) ≤ b := by
+        rw [hfin, hbEq]
+        exact not_le_of_gt ENNReal.ofReal_lt_top
+      exact absurd (hRv n) this
+    · exact exists_mem_le_iInf_add (clampContractedRate μ₀ (R n))
+        ((ENNReal.ofReal_pos.2 (by positivity)).ne') hfin
+  choose z hzG hznear using hz
+  let z' : ℕ → EuclideanSpace ℝ (Fin d) := fun k => z (k + 1)
+  have hz'In : ∀ k,
+      z' k ∈ Metric.closedBall (0 : EuclideanSpace ℝ (Fin d)) M ∩ G := by
+    intro k
+    have hR1 : 1 ≤ R (k + 1) := by
+      have : (1 : ℝ) ≤ ((k + 1 : ℕ) : ℝ) + 1 := by
+        exact_mod_cast (Nat.le_add_left 1 (k + 1))
+      exact this.trans (hRge (k + 1))
+    have hεle : ENNReal.ofReal (1 / ((k + 1 : ℕ) + 1 : ℝ)) ≤ ENNReal.ofReal 1 :=
+      ENNReal.ofReal_le_ofReal (by
+        have hpos : (0 : ℝ) < (k + 1 : ℕ) + 1 := by positivity
+        exact (div_le_one hpos).mpr (by exact_mod_cast Nat.le_add_left 1 (k + 1)))
+    have hsum : v (R (k + 1)) + ENNReal.ofReal (1 / ((k + 1 : ℕ) + 1 : ℝ)) ≤
+        ENNReal.ofReal a + ENNReal.ofReal 1 :=
+      add_le_add (by simpa [hbEq] using hRv (k + 1)) hεle
+    have hadd : ENNReal.ofReal a + ENNReal.ofReal 1 = ENNReal.ofReal (a + 1) :=
+      (ENNReal.ofReal_add ha0 zero_le_one).symm
+    have hyrate : clampContractedRate μ₀ (R (k + 1)) (z' k) ≤ ENNReal.ofReal (a + 1) :=
+      (hznear (k + 1)).trans (hsum.trans_eq hadd)
+    refine ⟨?_, hzG (k + 1)⟩
+    exact Metric.mem_closedBall.mpr (by
+      simpa [dist_eq_norm, z'] using hMbound (z (k + 1)) (R (k + 1)) hR1 hyrate)
+  have hK : IsCompact (Metric.closedBall (0 : EuclideanSpace ℝ (Fin d)) M ∩ G) :=
+    (isCompact_closedBall _ _).inter_right hG
+  obtain ⟨zstar, hzstar, φ, hφmono, hφtend⟩ := hK.tendsto_subseq hz'In
+  have hzstarG : zstar ∈ G := hzstar.2
+  have hφ1 : Tendsto (fun k => φ k + 1) atTop atTop := by
+    have hφtop := hφmono.tendsto_atTop
+    rw [tendsto_atTop_atTop] at hφtop ⊢
+    intro n
+    obtain ⟨N, hN⟩ := hφtop n
+    exact ⟨N, fun k hk => (hN k hk).trans (Nat.le_add_right _ 1)⟩
+  have hRφ : Tendsto (fun k => R (φ k + 1)) atTop atTop :=
+    hRtend.comp hφ1
+  have hΓz : J zstar ≤
+      liminf (fun k => clampContractedRate μ₀ (R (φ k + 1)) (z (φ k + 1))) atTop :=
+    hΓ zstar (fun k => R (φ k + 1)) hRφ (fun k => z (φ k + 1)) hφtend
+  have hlimI :
+      liminf (fun k => clampContractedRate μ₀ (R (φ k + 1)) (z (φ k + 1))) atTop ≤
+        liminf (fun k => v (R (φ k + 1)) +
+          ENNReal.ofReal (1 / ((φ k + 1 : ℕ) + 1 : ℝ))) atTop :=
+    liminf_le_liminf (Eventually.of_forall fun k => hznear (φ k + 1))
+  have hlimv :
+      liminf (fun k => v (R (φ k + 1)) +
+          ENNReal.ofReal (1 / ((φ k + 1 : ℕ) + 1 : ℝ))) atTop ≤ b := by
+    have hle :
+        ∀ᶠ k : ℕ in atTop,
+          v (R (φ k + 1)) + ENNReal.ofReal (1 / ((φ k + 1 : ℕ) + 1 : ℝ)) ≤
+            b + ENNReal.ofReal (1 / ((φ k + 1 : ℕ) + 1 : ℝ)) :=
+      Eventually.of_forall fun k => add_le_add (hRv (φ k + 1)) le_rfl
+    refine (liminf_le_liminf hle).trans ?_
+    have hslack :
+        Tendsto (fun k : ℕ =>
+          ENNReal.ofReal (1 / ((φ k + 1 : ℕ) + 1 : ℝ))) atTop (𝓝 0) := by
+      have hbase := ENNReal.tendsto_ofReal tendsto_one_div_add_atTop_nhds_zero_nat
+      have hmono : StrictMono (fun k : ℕ => φ k + 1) :=
+        fun _ _ h => Nat.add_lt_add_right (hφmono h) 1
+      change Tendsto
+        ((fun n : ℕ => ENNReal.ofReal (1 / (n + 1 : ℝ))) ∘ fun k => φ k + 1)
+        atTop (𝓝 0)
+      simpa [ENNReal.ofReal_zero] using hbase.comp hmono.tendsto_atTop
+    have heq := (tendsto_const_nhds (x := b).add hslack).liminf_eq
+    simpa using heq.le
+  have hzle : J zstar ≤ b := hΓz.trans (hlimI.trans hlimv)
+  have hc : (⨅ y ∈ G, J y) ≤ J zstar := iInf₂_le zstar hzstarG
+  exact (not_lt_of_ge (hc.trans hzle)) hb
+
+
+/-- (3) Closed-set `hClosed` for the Γ-rate.
+Uses ENNReal closed-set liminf + `EReal.liminf_coe_ennreal_eq` + `liminf_le_limsup`. -/
+theorem hClosed_gammaLiminfRate_clampContractedRate
+    {d : ℕ} {μ₀ : Measure (EuclideanSpace ℝ (Fin d))} [IsProbabilityMeasure μ₀]
+    (hMGF : HasFiniteMGF μ₀)
+    (hbdd : ∀ y : EuclideanSpace ℝ (Fin d),
+      BddAbove (Set.range fun t : EuclideanSpace ℝ (Fin d) =>
+        ⟪t, y⟫_ℝ - logMGFVec (fun x : EuclideanSpace ℝ (Fin d) => x) μ₀ t))
+    (G : Set (EuclideanSpace ℝ (Fin d))) (hG : IsClosed G) :
+    (⨅ x ∈ G, (gammaLiminfRate (clampContractedRate μ₀) x : EReal)) ≤
+      limsup (fun R : ℝ => ⨅ x ∈ G, (clampContractedRate μ₀ R x : EReal)) atTop := by
+  have hid :=
+    gammaLiminfRate_clampContractedRate_eq_cramerRateFromSanov hMGF hbdd
+  have hleft :
+      (⨅ x ∈ G, (gammaLiminfRate (clampContractedRate μ₀) x : EReal)) =
+        ((⨅ x ∈ G, cramerRateFromSanov μ₀ x : ENNReal) : EReal) := by
+    have h1 :
+        (⨅ x ∈ G, (gammaLiminfRate (clampContractedRate μ₀) x : EReal)) =
+          ⨅ x ∈ G, (cramerRateFromSanov μ₀ x : EReal) := by
+      refine iInf_congr fun x => iInf_congr fun _ => ?_
+      rw [hid x]
+    have h2 :
+        (⨅ x ∈ G, (cramerRateFromSanov μ₀ x : EReal)) =
+          ((⨅ x ∈ G, cramerRateFromSanov μ₀ x : ENNReal) : EReal) := by
+      simpa [iInf_subtype] using
+        (EReal.coe_ennreal_iInf
+          (fun x : G => cramerRateFromSanov μ₀ (x : EuclideanSpace ℝ (Fin d)))).symm
+    exact h1.trans h2
+  rw [hleft]
+  have hENN :=
+    iInf_cramerRateFromSanov_le_liminf_iInf_clampContractedRate hMGF hbdd hG
+  have hrw : ∀ R,
+      (⨅ x ∈ G, (clampContractedRate μ₀ R x : EReal)) =
+        ((⨅ y ∈ G, clampContractedRate μ₀ R y : ENNReal) : EReal) := by
+    intro R
+    simpa [iInf_subtype] using
+      (EReal.coe_ennreal_iInf
+        (fun x : G => clampContractedRate μ₀ R (x : EuclideanSpace ℝ (Fin d)))).symm
+  have hcoe_inf :
+      ((⨅ x ∈ G, cramerRateFromSanov μ₀ x : ENNReal) : EReal) ≤
+        ((liminf (fun R : ℝ => ⨅ y ∈ G, clampContractedRate μ₀ R y) atTop : ENNReal) :
+          EReal) :=
+    EReal.coe_ennreal_le_coe_ennreal_iff.mpr hENN
+  let uE : ℝ → EReal := fun R => ⨅ x ∈ G, (clampContractedRate μ₀ R x : EReal)
+  have hli_ls : liminf uE atTop ≤ limsup uE atTop :=
+    @liminf_le_limsup EReal ℝ _ (atTop : Filter ℝ) inferInstance uE (by isBoundedDefault) (by isBoundedDefault)
+  -- Align ENNReal-liminf coe with uE via hrw, then chain.
+  have heq_li' :
+      liminf uE atTop =
+        ((liminf (fun R : ℝ => ⨅ y ∈ G, clampContractedRate μ₀ R y) atTop : ENNReal) : EReal) := by
+    have hfun : uE = fun R => ((⨅ y ∈ G, clampContractedRate μ₀ R y : ENNReal) : EReal) := by
+      funext R; exact hrw R
+    simpa [hfun] using
+      (EReal.liminf_coe_ennreal_eq
+        (fun R : ℝ => ⨅ y ∈ G, clampContractedRate μ₀ R y))
+  exact hcoe_inf.trans (heq_li'.symm.le.trans hli_ls)
+
+
+/-- Non-positive radii reuse the `R = 1` clamp profile. -/
+theorem clampContractedRate_eq_of_nonpos {d : ℕ}
+    (μ₀ : Measure (EuclideanSpace ℝ (Fin d))) {R : ℝ} (hR : ¬ 0 < R) :
+    clampContractedRate μ₀ R = clampContractedRate μ₀ (1 : ℝ) := by
+  funext y
+  have h1 : (0 : ℝ) < 1 := one_pos
+  simp [clampContractedRate, hR, h1]
+
+/-- (4) Compact finite levels of the Γ-rate via Sanov ID. -/
+theorem HasCompactFiniteLevelSets_gammaLiminfRate_clampContractedRate
+    {d : ℕ} {μ₀ : Measure (EuclideanSpace ℝ (Fin d))} [IsProbabilityMeasure μ₀]
+    (hMGF : HasFiniteMGF μ₀)
+    (hbdd : ∀ y : EuclideanSpace ℝ (Fin d),
+      BddAbove (Set.range fun t : EuclideanSpace ℝ (Fin d) =>
+        ⟪t, y⟫_ℝ - logMGFVec (fun x : EuclideanSpace ℝ (Fin d) => x) μ₀ t)) :
+    HasCompactFiniteLevelSets (gammaLiminfRate (clampContractedRate μ₀)) := by
+  intro a
+  have hid := funext (gammaLiminfRate_clampContractedRate_eq_cramerRateFromSanov hMGF hbdd)
+  simpa [hid] using
+    isCompact_cramerRateFromSanov_le_ofReal_of_HasFiniteMGF_of_forall_bddAbove μ₀ hMGF hbdd a
+
+/-- (4) Γ-rate is an `IsRateFunction` via Sanov/CRF lsc + ID. -/
+theorem IsRateFunction_gammaLiminfRate_clampContractedRate
+    {d : ℕ} {μ₀ : Measure (EuclideanSpace ℝ (Fin d))} [IsProbabilityMeasure μ₀]
+    (hMGF : HasFiniteMGF μ₀)
+    (hbdd : ∀ y : EuclideanSpace ℝ (Fin d),
+      BddAbove (Set.range fun t : EuclideanSpace ℝ (Fin d) =>
+        ⟪t, y⟫_ℝ - logMGFVec (fun x : EuclideanSpace ℝ (Fin d) => x) μ₀ t)) :
+    IsRateFunction (gammaLiminfRate (clampContractedRate μ₀)) := by
+  refine ⟨?_⟩
+  have heq := cramerRateFromSanov_eq_cramerRateFunction_of_tiltCover_no_hid
+    μ₀ hMGF (TiltCover_of_HasFiniteMGF_of_forall_bddAbove μ₀ hMGF hbdd) hbdd
+  have hLSC : LowerSemicontinuous (cramerRateFromSanov μ₀) :=
+    (funext heq) ▸ lowerSemicontinuous_cramerRateFunction_of_HasFiniteMGF μ₀ hMGF hbdd
+  have hid := funext (gammaLiminfRate_clampContractedRate_eq_cramerRateFromSanov hMGF hbdd)
+  exact hid ▸ hLSC
+
+/-- Bound-only open lower bound for `sampleClampMeanPi'` at every real radius. -/
+theorem liminf_log_map_sampleClampMeanPi'_ge_iInf_clampContractedRate {d : ℕ}
+    (μ₀ : Measure (EuclideanSpace ℝ (Fin d))) [IsProbabilityMeasure μ₀]
+    (R : ℝ) {U : Set (EuclideanSpace ℝ (Fin d))} (hU : IsOpen U) :
+    - (⨅ y ∈ U, (clampContractedRate μ₀ R y : EReal)) ≤
+      liminf (fun n => ((n : ℕ) : EReal)⁻¹ *
+        ENNReal.log
+          ((Measure.pi fun _ : Fin n => μ₀).map
+            (sampleClampMeanPi' (d := d) (n := n) R) U)) atTop := by
+  by_cases hR : 0 < R
+  · have hmap : ∀ n,
+        sampleClampMeanPi' (d := d) (n := n) R =
+          sampleClampMeanPi (d := d) (n := n) R :=
+      fun n => sampleClampMeanPi'_eq_of_pos (d := d) (n := n) hR
+    simp_rw [hmap]
+    exact liminf_log_map_sampleClampMeanPi_ge_iInf_clampContractedRate μ₀ hR hU
+  · have hmap : ∀ n,
+        sampleClampMeanPi' (d := d) (n := n) R =
+          sampleClampMeanPi (d := d) (n := n) 1 :=
+      fun n => sampleClampMeanPi'_eq_of_nonpos (d := d) (n := n) hR
+    simp_rw [hmap, clampContractedRate_eq_of_nonpos μ₀ hR]
+    exact liminf_log_map_sampleClampMeanPi_ge_iInf_clampContractedRate μ₀ one_pos hU
+
+/-- Bound-only closed upper bound for `sampleClampMeanPi'` at every real radius. -/
+theorem limsup_log_map_sampleClampMeanPi'_le_iInf_clampContractedRate {d : ℕ}
+    (μ₀ : Measure (EuclideanSpace ℝ (Fin d))) [IsProbabilityMeasure μ₀]
+    (R : ℝ) {F : Set (EuclideanSpace ℝ (Fin d))} (hF : IsClosed F) :
+    limsup (fun n => ((n : ℕ) : EReal)⁻¹ *
+        ENNReal.log
+          ((Measure.pi fun _ : Fin n => μ₀).map
+            (sampleClampMeanPi' (d := d) (n := n) R) F)) atTop ≤
+      - (⨅ y ∈ F, (clampContractedRate μ₀ R y : EReal)) := by
+  by_cases hR : 0 < R
+  · have hmap : ∀ n,
+        sampleClampMeanPi' (d := d) (n := n) R =
+          sampleClampMeanPi (d := d) (n := n) R :=
+      fun n => sampleClampMeanPi'_eq_of_pos (d := d) (n := n) hR
+    simp_rw [hmap]
+    exact limsup_log_map_sampleClampMeanPi_le_iInf_clampContractedRate μ₀ hR hF
+  · have hmap : ∀ n,
+        sampleClampMeanPi' (d := d) (n := n) R =
+          sampleClampMeanPi (d := d) (n := n) 1 :=
+      fun n => sampleClampMeanPi'_eq_of_nonpos (d := d) (n := n) hR
+    simp_rw [hmap, clampContractedRate_eq_of_nonpos μ₀ hR]
+    exact limsup_log_map_sampleClampMeanPi_le_iInf_clampContractedRate μ₀ one_pos hF
+
+/-- Transfer LDP along a measure family that agrees for all `n > 0`. -/
+theorem SatisfiesLDP.congr_measure_of_eventually_eq {X : Type*}
+    [TopologicalSpace X] [MeasurableSpace X]
+    {μ ν : ℕ → Measure X} {I : X → ENNReal}
+    (h : SatisfiesLDP μ I)
+    (heq : ∀ᶠ n : ℕ in atTop, μ n = ν n) :
+    SatisfiesLDP ν I := by
+  refine ⟨h.isRateFunction, ?_, ?_⟩
+  · intro U hU
+    have hfun :
+        (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (μ n U)) =ᶠ[atTop]
+          (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (ν n U)) := by
+      filter_upwards [heq] with n hn; rw [hn]
+    simpa [liminf_congr hfun] using h.lower_bound U hU
+  · intro F hF
+    have hfun :
+        (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (μ n F)) =ᶠ[atTop]
+          (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (ν n F)) := by
+      filter_upwards [heq] with n hn; rw [hn]
+    simpa [limsup_congr hfun] using h.upper_bound F hF

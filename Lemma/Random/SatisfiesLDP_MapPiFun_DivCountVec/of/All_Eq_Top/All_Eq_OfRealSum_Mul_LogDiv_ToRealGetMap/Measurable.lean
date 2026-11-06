@@ -1,7 +1,6 @@
-import Lemma.ENNReal.SatisfiesLDP_Map_DivCountVecPi_ToMeasure.of.All_Eq_Top.All_Eq_OfRealSum_Mul_LogDiv_ToReal
+import Lemma.Measure.SatisfiesLDP_Map_DivCountVecPi_ToMeasure.of.All_Eq_Top.All_Eq_OfRealSum_Mul_LogDiv_ToReal
 import Lemma.Random.MapPi.of.Measurable
-import Initialize.Tactic.Attr.Basic
-open ENNReal MeasureTheory Random Real
+open ENNReal MeasureTheory Random Real Measure
 
 
 /--
@@ -23,9 +22,8 @@ private lemma main
   (hOn : ∀ ν, (∀ a, 0 ≤ ν a) → ∑ a, ν a = 1 → (∀ a, ((μ.map φ) {a}).toReal = 0 → ν a = 0) → I ν = ENNReal.ofReal (∑ a, ν a * log (ν a / ((μ.map φ) {a}).toReal)))
   (hOut : ∀ ν, ¬((∀ a, 0 ≤ ν a) ∧ ∑ a, ν a = 1 ∧ ∀ a, ((μ.map φ) {a}).toReal = 0 → ν a = 0) → I ν = ⊤) :
 -- imply
-  SatisfiesLDP (fun n => (Measure.pi fun _ : Fin n => μ).map (fun ω a => (countVec (fun i => φ (ω i)) a : ℝ) / n)) I :=
+  SatisfiesLDP (fun n => (Measure.pi fun _ : Fin n => μ).map (fun ω a => (countVec (fun i => φ (ω i)) a : ℝ) / n)) I := by
 -- proof
-by
   let : IsProbabilityMeasure (μ.map φ) := (Measure.isProbabilityMeasure_map_iff hφ.aemeasurable).mpr inferInstance
   let p : PMF α := (μ.map φ).toPMF
   have hto : p.toMeasure = μ.map φ := Measure.toPMF_toMeasure (μ.map φ)
@@ -64,4 +62,4 @@ by
 
 
 -- created on 2026-11-02
--- updated on 2026-11-03
+-- updated on 2026-11-05

@@ -170,6 +170,17 @@ export class LeanPairedGroup extends Closable(LeanUnary) {
             // `a[i]'(proof)` is a complete term; stay on the get-elem so `*`, `.`, `[` bind outside the proof.
             if (this.parent instanceof L.LeanGetElemQuote && this.parent.args[2] === this)
                 return this.parent;
+            // `𝔼[…](…)`, `ℙ[…](…)` / `ℙ[…]{…}`, `𝕍𝕒𝕣[…](…)` → LeanBigOperator bound+scope
+            // `max[…](…)`, `max⁻¹[…](…)`, … → LeanLimitsBigOp
+            if (
+                (this instanceof LeanParenthesis || this instanceof LeanBrace) &&
+                (L.LeanRandomBigOp || L.LeanLimitsBigOp)
+            ) {
+                const promoted =
+                    (L.LeanRandomBigOp && L.LeanRandomBigOp.tryPromote(this)) ||
+                    (L.LeanLimitsBigOp && L.LeanLimitsBigOp.tryPromote(this));
+                if (promoted) return promoted;
+            }
             return this;
         }
         if (this.parent) return this.parent.push_right(funcName);
@@ -358,6 +369,11 @@ export class LeanParenthesis extends LeanPairedGroup {
             self = p; // `….toReal`
             p = p.parent;
         }
+        // After promote: scope of Lean_Expect / Lean_Prob
+        if (p instanceof L.Lean_Expect && p.scope === self)
+            return kind !== 'prob';
+        if (p instanceof L.Lean_Prob && p.scope === self)
+            return kind !== 'expect';
         if (!(p instanceof LeanArgsSpaceSeparated)) return false;
         const i = p.args.indexOf(self);
         if (i <= 0) return false;
@@ -719,6 +735,16 @@ export class LeanParenthesis extends LeanPairedGroup {
      * @param {object} [opts]
      * @returns {string[]}
      */
+
+    /**
+     * Hole-regex: unwrap paren.
+     * @param {object} [opts]
+     * @returns {string|null}
+     */
+    holeRegex(opts = {}) {
+        return this.arg?.holeRegex?.(opts) ?? null;
+    }
+
     pathChoices(opts = {}) {
         return this.arg?.pathChoices?.(opts) ?? [""];
     }
@@ -845,11 +871,15 @@ export class LeanBracket extends LeanPairedGroup {
                 this.parent.replace(this, stack);
                 return scope;
             }
-            const lim = this.parent;
-            if (lim instanceof L.Lean_lim && lim.bound === this && !lim.scope) {
-                lim.bound = this.arg;
+            const big = this.parent;
+            if (
+                (big instanceof L.Lean_lim || big instanceof L.Lean_partial || big instanceof L.Lean_nabla) &&
+                big.bound === this &&
+                !big.scope
+            ) {
+                big.bound = this.arg;
                 const scope = new L.LeanCaret(this.indent, this.level);
-                lim.scope = scope;
+                big.scope = scope;
                 return scope;
             }
         }
@@ -1166,7 +1196,7 @@ export class LeanDoubleAngleQuotation extends LeanPairedGroup {
 
     /**
      * `«\sf{w}»` → a token whose text is `w` (for RV / sum matching).
-     * LaTeX is `\sf{w}`, not this token.
+     * LaTeX is `{\sf w}` (scoped; bare `\sf{w}` leaks in TeX), not this token.
      */
     boundValueLhs() {
         const letter = this.sfBoundLetter();
@@ -1174,12 +1204,16 @@ export class LeanDoubleAngleQuotation extends LeanPairedGroup {
         return null;
     }
     latexFormat() {
-        if (this.sfBoundLetter()) return '\\sf{%s}';
+        if (this.sfBoundLetter()) return '{\\sf %s}';
+        // Guillemet identifier (musical-note latex, etc.): emit inner as raw KaTeX.
+        if (this.arg instanceof L.LeanToken) return '%s';
         return '{\\color{red}%s}';
     }
     latexArgs(syntax) {
         const letter = this.sfBoundLetter();
         if (letter) return [letter];
+        // Bypass LeanToken.escapeSpecialsForLatex — inner is already latex source.
+        if (this.arg instanceof L.LeanToken) return [this.arg.text];
         return super.latexArgs(syntax);
     }
 }

@@ -1,4 +1,4 @@
-import Notation.Lean.Expr.Singleton
+import Notation.Analysis.Real.Numbers
 import Notation.Algebra.Power
 import Mathlib.Basic.NNReal.Defs
 

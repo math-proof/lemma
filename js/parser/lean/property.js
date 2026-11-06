@@ -7,6 +7,7 @@
  */
 import { LeanBinary } from './abstract.js';
 import { Lean } from './base.js';
+import { escapeHoleReLit, wrapHoleOpt, HOLE_RE_TRIG_FN, holeRegexDefaultNameToken } from './pathChoices.js';
 
 const L = Lean.classes;
 
@@ -130,7 +131,9 @@ export class LeanProperty extends LeanBinary {
                 case 'cos':
                 case 'sin':
                 case 'tan':
+                case 'cot':
                 case 'log':
+                case 'arctan':
                     return true;
             }
         }
@@ -160,22 +163,27 @@ export class LeanProperty extends LeanBinary {
                 case 'cos':
                 case 'sin':
                 case 'tan':
+                case 'cot':
                 case 'log':
-                    arg = '%s';
+                case 'arctan': {
+                    // `Real.sin` / `Hyperreal.sin` / `Real.arctan` — namespace prefix drops
+                    // (applied form is LeanArgs). `θ.sin` / `θ.arctan` keep the receiver.
                     if (lhs instanceof L.LeanToken) {
                         switch (lhs.text) {
                             case 'Real':
                             case 'Complex':
+                            case 'Hyperreal':
                             case 'Cos':
                             case 'Sin':
                             case 'Tan':
+                            case 'Cot':
                             case 'Log':
-                                arg = null;
+                            case 'Arctan':
+                                return [];
                         }
                     }
-                    if (arg)
-                        return [this.lhs.toLatex(syntax)];
-                    break;
+                    return [this.lhs.toLatex(syntax)];
+                }
                 case 'fmod':
                     return [this.lhs.toLatex(syntax)];
                 case 'card':
@@ -255,22 +263,32 @@ export class LeanProperty extends LeanBinary {
                 case 'cos':
                 case 'sin':
                 case 'tan':
+                case 'cot':
                 case 'log':
-                    arg = '%s';
+                case 'arctan': {
+                    // Namespace `Hyperreal.sin` / `Real.arctan` → `\sin` / `\tan^{-1}`.
+                    // Method `θ.sin` / composed `θ.arctan.sin` same commands (mirror PHP).
+                    const cmd = rhs.text === 'arctan'
+                        ? '\\tan^{-1}'
+                        : `\\${rhs.text}`;
                     if (lhs instanceof L.LeanToken) {
                         switch (lhs.text) {
                             case 'Real':
                             case 'Complex':
+                            case 'Hyperreal':
                             case 'Cos':
                             case 'Sin':
                             case 'Tan':
+                            case 'Cot':
                             case 'Log':
-                                arg = null;
+                            case 'Arctan':
+                                return rhs.text === 'arctan'
+                                    ? '\\tan^{-1}'
+                                    : `\\${rhs.text}`;
                         }
                     }
-                    if (arg)
-                        return `\\\\${rhs.text} {%s}`;
-                    break;
+                    return `${cmd} {%s}`;
+                }
                 case 'fmod':
                     return '{%s} {\\color{red}\\%%}';
                 case 'card':
@@ -360,6 +378,29 @@ export class LeanProperty extends LeanBinary {
      * @param {object} [opts]
      * @returns {string[]}
      */
+
+    /**
+     * Hole-regex: trig props Sin(_|...) / Arctan(_|...); else prop + object.
+     * @param {object} [opts]
+     * @returns {string|null}
+     */
+    holeRegex(opts = {}) {
+        const obj = this.lhs;
+        const prop = this.rhs;
+        const rawProp = prop instanceof L.LeanToken ? (prop.text || "") : "";
+        const nameToken = opts.nameToken || holeRegexDefaultNameToken;
+        const propTok = rawProp ? nameToken(rawProp) : "";
+        if (propTok && HOLE_RE_TRIG_FN.test(rawProp)) {
+            const inner = obj?.holeRegex?.({ ...opts, inTrigProp: true }) ?? null;
+            if (inner == null || inner === "") return propTok + "_";
+            return propTok + wrapHoleOpt(inner);
+        }
+        const inner = obj?.holeRegex?.(opts) ?? null;
+        if (propTok && (inner == null || inner === "")) return escapeHoleReLit(propTok);
+        if (propTok && inner) return escapeHoleReLit(propTok) + wrapHoleOpt(inner);
+        return inner;
+    }
+
     pathChoices(opts = {}) {
         if (this.rhs instanceof L.LeanToken && (this.rhs.text || "") === "sqrt")
             return ["Sqrt_", ""];

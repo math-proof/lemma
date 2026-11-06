@@ -11,8 +11,8 @@ LICENSE file in the root directory of this source tree.
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Analysis.SpecialFunctions.Complex.Circle
-import Def.v1.Atlas.TheoryOfProbability.code.BochnerTheorem
-import Def.v1.Atlas.TheoryOfProbability.code.DomainAttraction
+import Def.ProbabilityTheory.BochnerTheorem
+import Def.ProbabilityTheory.DomainAttraction
 open MeasureTheory Filter Set ProbabilityTheory
 open scoped Topology ENNReal NNReal
 

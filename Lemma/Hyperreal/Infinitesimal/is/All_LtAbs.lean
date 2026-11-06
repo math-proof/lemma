@@ -1,5 +1,5 @@
 import Def.Analysis.Real.Limits.Basic
-import Notation.Lean.Expr.Singleton
+import Notation.Analysis.Real.Numbers
 import Lemma.Int.LtAbs.is.LtNeg.Lt
 open Int ArchimedeanClass
 

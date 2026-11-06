@@ -22,7 +22,8 @@ La bibliothèque contient <label id=count>5000</label> théorèmes établis (<la
 * [Rat](../?module=Rat) Algèbre élémentaire des rationnels
 * [Real](../?module=Real) Algèbre et analyse réelle, p. ex. :
   - [inégalité de Jensen](../?module=Real.LeSum_Mul.of.EqSumRange__1.All_Ge_0.All_In_Icc.All_Gt0Deriv2.ContinuousOn_Icc)
-* [Hyperreal](../?module=Real) Analyse non standard
+* [Hyperreal](../?module=Hyperreal) Analyse non standard, p. ex. :
+  - [loi de Mersenne](../?module=Hyperreal.Eq_Mul_SqrtDiv.of.All_EqMul_Deriv_SinArctan.All_Eq_MulMul_Sin_Cos)
 * [Complex](../?module=Complex) Analyse complexe, p. ex. :
   - [équation quartique](../?module=Complex.Eq0Add_Mul_Pow_4.is.In_Ite_FinsetSSubS__SubS.of.Ne_0)
   - [forme fermée d'une récurrence linéaire homogène à coefficients constants](../?module=Complex.Any_All_Eq_Dot_MulDescFactorial.of.All_Eq_Dot)
@@ -33,16 +34,15 @@ La bibliothèque contient <label id=count>5000</label> théorèmes établis (<la
 * [Vector](../?module=Vector) Vecteurs (tenseurs unidimensionnels)
 * [Matrix](../?module=Matrix) Théorie des matrices, p. ex. :
   - [théorème d'Okishio](../?module=Matrix.Any_And_EqSMul_UpdateCol.of.IsIrreducibleUpdateColAdd_Dot.LtDot_Add_SMul.EqSMul.All_Gt_0)
-  - [décomposition de Cholesky](../?module=Finset.All.And.of.Eq_Adjoint.Imp_Gt_0.Eq_Ite.Cholesky)
-  - [décomposition PLU](../?module=Matrix.EqMul_T_1.IsLowerTriangular.IsUpperTriangular.EqMulS)
+  - [décomposition de Cholesky](../?module=Finset.All.And.of.Eq_Adjoint.Imp_Gt_0.Eq_Ite.Cholesky), [décomposition PLU](../?module=Matrix.EqMul_T_1.IsLowerTriangular.IsUpperTriangular.EqMulS)
 * [Tensor](../?module=Tensor) Calcul tensoriel formalisé, sémantiquement aligné sur **torch.Tensor**, pour la spécification et la vérification formelle d'algorithmes d'apprentissage profond, p. ex. :
   - [kv_cache](../?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)
   - [RoPE](../?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)
 * [Random](../?module=Random) Probabilités et processus stochastiques, p. ex. :
-  - [somme de gaussiennes indépendantes](../?module=Random.DistributedSum.of.All_Distributed_Gaussian.All_Indep), [𝒳²(n)](../?module=Random.Distributed_ChiSquared.of.All_Distributed_Gaussian.All_Indep), [Fisher](../?module=Random.Distributed_Fisher.of.All_And_Distributed_Gaussian.Gt_1.Gt_1), [loi faible des grands nombres](../?module=Random.Lim_ProbLtAbsSubDivSum.eq.One.of.All_EqVar.All_EqExpect.All_Indep.All_MemLp2.All_PSpace)
+  - [somme de gaussiennes indépendantes](../?module=Random.DistributedSum.of.All_Distributed_Gaussian.All_Indep), [𝒳²(n)](../?module=Random.Distributed_ChiSquared.of.All_Distributed_Gaussian.All_Indep), [Fisher](../?module=Random.Distributed_Fisher.of.All_And_Distributed_Gaussian.Gt_1.Gt_1), [loi faible des grands nombres](../?module=Random.Lim_ProbLtAbsSubDivSum.eq.One.of.All_EqVar.All_EqExpect.All_Indep.All_MemLp2.All_PSpace), [Cramér](../?module=Random.SatisfiesLDP_EmpiricalMeanLawPi.of.HasFiniteMGF.ForallBddAbove)
   - [classification de documents naïve bayésienne](../?module=Random.ArgMax_ProbCond.eq.ArgMax_Mul_Prod_ProbCond.of.NeProbJoint__0.All_CondIndep)
   - [fonction de perte CRF](../?module=Random.All_Eq_AddLogSumExpAdd.All_EqNegLogProb.of.All_Eq_LogProbCond.All_Eq_LogProbCond.Eq_LogProbJoint.All_Lt0ProbJoint.IsDiscreteHMM)
-  - [GAE](../?module=Random.GradExpectDotPow_Id.eq.ExpectDot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_LeSum.CountableMeasure.Subset_Ico)
+  - [GAE](../?module=Random.GradExpectDotPow_Id.eq.ExpectDot_FunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_NeProb_0.IsPolicyTrajectory.Subset_Ico)
 
 <br><br>
 -------

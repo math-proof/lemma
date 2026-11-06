@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Instance.v1.Atlas.TheoryOfProbability.code.MarkovChainConstruction.Part2
 import Lemma.Measure.Atlas.v1.TheoryOfProbability.code.MarkovChainConstruction
-import Def.v1.Atlas.TheoryOfProbability.code.MarkovPropertyChain
+import Def.ProbabilityTheory.MarkovPropertyChain
 open MeasureTheory ProbabilityTheory
 
 variable {Ω S : Type*} {m : MeasurableSpace Ω} [MeasurableSpace S]

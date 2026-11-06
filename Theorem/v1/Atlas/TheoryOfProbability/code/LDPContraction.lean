@@ -540,24 +540,133 @@ theorem iSup_iInf_cthickening_eq_iInf
 /-- Coercion `ENNReal → EReal` preserves nonempty-indexed suprema. -/
 theorem EReal.coe_ennreal_iSup {ι : Sort*} [Nonempty ι] (g : ι → ENNReal) :
     ((⨆ i, g i : ENNReal) : EReal) = ⨆ i, (g i : EReal) := by
-  refine le_antisymm ?_ ?_
+  apply le_antisymm
   · inhabit ι
-    have hn : (0 : EReal) ≤ ⨆ i, (g i : EReal) :=
+    have hnonneg : (0 : EReal) ≤ ⨆ i, (g i : EReal) :=
       (EReal.coe_ennreal_nonneg (g default)).trans (le_iSup (fun i => (g i : EReal)) default)
-    have hle : ⨆ i, g i ≤ (⨆ i, (g i : EReal)).toENNReal :=
-      iSup_le fun i => by
-        rw [← EReal.toENNReal_coe]
-        exact EReal.toENNReal_le_toENNReal (le_iSup (fun j => (g j : EReal)) i)
-    exact (EReal.coe_ennreal_le_coe_ennreal_iff.mpr hle).trans_eq (EReal.coe_toENNReal hn)
-  · exact Monotone.le_map_iSup (fun _ _ h => EReal.coe_ennreal_le_coe_ennreal_iff.mpr h)
+    have h : ⨆ i, g i ≤ (⨆ i, (g i : EReal)).toENNReal := by
+      refine iSup_le fun i => ?_
+      have := EReal.toENNReal_le_toENNReal (le_iSup (fun j => (g j : EReal)) i)
+      rwa [EReal.toENNReal_coe] at this
+    have := EReal.coe_ennreal_le_coe_ennreal_iff.mpr h
+    rwa [EReal.coe_toENNReal hnonneg] at this
+  · exact iSup_le fun i =>
+      EReal.coe_ennreal_le_coe_ennreal_iff.mpr (le_iSup g i)
 
 /-- Negation swaps `iSup` and `iInf` on `EReal`. -/
 theorem EReal.neg_iSup_eq_iInf_neg {ι : Sort*} (g : ι → EReal) :
     -(⨆ i, g i) = ⨅ i, -g i := by
   refine le_antisymm ?_ ?_
-  · exact le_iInf fun i => neg_le_neg (le_iSup g i)
-  · rw [le_neg]
-    exact iSup_le fun i => le_neg.mpr (iInf_le (fun j => -g j) i)
+  · exact le_iInf fun i => (EReal.neg_le_neg_iff).2 (le_iSup g i)
+  · refine EReal.le_neg.mpr ?_
+    refine iSup_le fun i => ?_
+    rw [← EReal.neg_le_neg_iff, neg_neg]
+    exact iInf_le (fun j => -g j) i
+
+/-- Dual form: `-(⨅ g) = ⨆ (-g)`. -/
+theorem EReal.neg_iInf_eq_iSup_neg {ι : Sort*} (g : ι → EReal) :
+    -(⨅ i, g i) = ⨆ i, -g i := by
+  simpa [neg_neg] using
+    congrArg (fun z : EReal => -z) (EReal.neg_iSup_eq_iInf_neg (fun i => -g i)).symm
+
+/-- `⨅ i, max (f i) c = max (⨅ i, f i) c` on `EReal` (complete linear order). -/
+theorem EReal.iInf_max_const {ι : Sort*} [Nonempty ι] (f : ι → EReal) (c : EReal) :
+    (⨅ i, max (f i) c) = max (⨅ i, f i) c := by
+  refine le_antisymm ?_ ?_
+  · by_cases h : ⨅ i, max (f i) c ≤ c
+    · exact h.trans (le_max_right _ _)
+    · have hlt : c < ⨅ i, max (f i) c := lt_of_not_ge h
+      have hfi : ∀ i, c < f i := by
+        intro i
+        have : c < max (f i) c := lt_of_lt_of_le hlt (iInf_le _ i)
+        exact (lt_max_iff.1 this).resolve_right (lt_irrefl _)
+      have hEq : ∀ i, max (f i) c = f i := fun i => max_eq_left (hfi i).le
+      simp_rw [hEq]
+      exact le_max_left _ _
+  · exact le_iInf fun i => max_le_max (iInf_le f i) le_rfl
+
+/-- `liminf (max u c) = max (liminf u) c` for constant `c`. -/
+theorem liminf_max_const (u : ℕ → EReal) (c : EReal) :
+    liminf (fun n => max (u n) c) atTop = max (liminf u atTop) c := by
+  simp only [liminf_eq_iSup_iInf_of_nat]
+  have htail : ∀ n, (⨅ i ≥ n, max (u i) c) = max (⨅ i ≥ n, u i) c := by
+    intro n
+    haveI : Nonempty {i // n ≤ i} := ⟨⟨n, le_rfl⟩⟩
+    simpa [iInf_subtype] using
+      EReal.iInf_max_const (fun i : {i // n ≤ i} => u (i : ℕ)) c
+  simp_rw [htail]
+  -- ⨆ n, max (a n) c = max (⨆ n, a n) c with a n = ⨅ i≥n u i (a increasing)
+  refine le_antisymm ?_ ?_
+  · exact iSup_le fun n => max_le_max (le_iSup (fun m => ⨅ i ≥ m, u i) n) le_rfl
+  · refine max_le ?_ ?_
+    · exact iSup_le fun n => (le_max_left _ _).trans (le_iSup (fun m => max (⨅ i ≥ m, u i) c) n)
+    · inhabit ℕ
+      exact (le_max_right _ _).trans (le_iSup (fun m => max (⨅ i ≥ m, u i) c) default)
+
+/-- When `limsup v = ⊥`, `liminf max(u,v) ≤ liminf u`. -/
+theorem liminf_max_le_of_limsup_eq_bot {u v : ℕ → EReal}
+    (hv : limsup v atTop = ⊥) :
+    liminf (fun n => max (u n) (v n)) atTop ≤ liminf u atTop := by
+  have hforall : ∀ r : ℝ,
+      liminf (fun n => max (u n) (v n)) atTop ≤
+        max (liminf u atTop) (r : EReal) := by
+    intro r
+    have hlt : limsup v atTop < (r : EReal) := by
+      rw [hv]; exact EReal.bot_lt_coe _
+    have hev : ∀ᶠ n in atTop, v n < (r : EReal) :=
+      eventually_lt_of_limsup_lt hlt
+    have hmax : ∀ᶠ n in atTop, max (u n) (v n) ≤ max (u n) (r : EReal) := by
+      filter_upwards [hev] with n hn
+      exact max_le_max le_rfl hn.le
+    exact (liminf_le_liminf (f := atTop) hmax).trans
+      (le_of_eq (liminf_max_const u (r : EReal)))
+  have hinf : liminf (fun n => max (u n) (v n)) atTop ≤
+      ⨅ r : ℝ, max (liminf u atTop) (r : EReal) :=
+    le_iInf hforall
+  refine hinf.trans (le_of_eq ?_)
+  set L := liminf u atTop
+  change (⨅ r : ℝ, max L (r : EReal)) = L
+  refine le_antisymm ?_ (le_iInf fun _ => le_max_left _ _)
+  match L with
+  | ⊤ => simp
+  | ⊥ =>
+    refine le_bot_iff.mpr ?_
+    refine (EReal.eq_bot_iff_forall_lt _).2 fun y =>
+      lt_of_le_of_lt
+        (iInf_le (fun t : ℝ => max (⊥ : EReal) (t : EReal)) (y - 1)) ?_
+    have hmaxbot :
+        max (⊥ : EReal) ((y - 1 : ℝ) : EReal) = ((y - 1 : ℝ) : EReal) :=
+      max_eq_right bot_le
+    rw [hmaxbot]
+    exact EReal.coe_lt_coe_iff.mpr (by linarith)
+  | (rL : ℝ) =>
+    exact (iInf_le (fun t : ℝ => max (rL : EReal) (t : EReal)) rL).trans (by simp)
+
+/-- If limsup of `(1/n)log b` is `-∞`, then liminf `(1/n)log(a+b) ≤` liminf `(1/n)log a`. -/
+theorem liminf_inv_mul_log_add_le_of_limsup_eq_bot
+    {a b : ℕ → ℝ≥0∞}
+    (hb : limsup (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (b n)) atTop = ⊥) :
+    liminf (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (a n + b n)) atTop ≤
+      liminf (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (a n)) atTop := by
+  set ua := fun n : ℕ => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (a n)
+  set ub := fun n : ℕ => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (b n)
+  set u2 := fun n : ℕ => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (2 : ℝ≥0∞)
+  have hmaxbound : ∀ᶠ n in atTop,
+      ((n : ℕ) : EReal)⁻¹ * ENNReal.log (a n + b n) ≤ u2 n + max (ua n) (ub n) := by
+    filter_upwards [eventually_ge_atTop 1] with n hn
+    simpa [ua, ub, u2] using inv_mul_log_add_le_log_two_add_max (a := a n) (b := b n) hn
+  refine (liminf_le_liminf hmaxbound).trans ?_
+  have hu2s : limsup u2 atTop = 0 := tendsto_inv_mul_log_two_nhds_zero.limsup_eq
+  have hsum :
+      liminf (fun n => u2 n + max (ua n) (ub n)) atTop ≤
+        limsup u2 atTop + liminf (fun n => max (ua n) (ub n)) atTop := by
+    change liminf (u2 + fun n => max (ua n) (ub n)) atTop ≤ _
+    exact EReal.liminf_add_le
+      (Or.inl (by rw [hu2s]; exact EReal.zero_ne_bot))
+      (Or.inl (by rw [hu2s]; exact EReal.zero_ne_top))
+  refine hsum.trans ?_
+  rw [hu2s, zero_add]
+  exact liminf_max_le_of_limsup_eq_bot (u := ua) (v := ub) hb
 
 /-- EReal wire: `⨅_ε (-inf_{F^ε} I) = -inf_F I` via thickening recovery. -/
 theorem iInf_neg_iInf_cthickening_eq_neg_iInf
@@ -571,14 +680,26 @@ theorem iInf_neg_iInf_cthickening_eq_neg_iInf
   set a : {ε : ℝ // 0 < ε} → ENNReal := fun ε => ⨅ x ∈ cthickening ε.1 F, I x
   have hrec : ⨆ ε, a ε = ⨅ x ∈ F, I x := iSup_iInf_cthickening_eq_iInf I hI hK hF
   have _hnonempty : Nonempty {ε : ℝ // 0 < ε} := ⟨⟨1, one_pos⟩⟩
+  -- Pointwise coe of biInf, then negate-iSup wire, then recovery
+  have hcoe_biInf : ∀ s : Set X,
+      (⨅ x ∈ s, (I x : EReal)) = ((⨅ x ∈ s, I x : ENNReal) : EReal) := by
+    intro s
+    simp_rw [← EReal.coe_ennreal_iInf]
+  have hpoint :
+      (fun ε : {ε : ℝ // 0 < ε} =>
+        (-(⨅ x ∈ cthickening ε.1 F, (I x : EReal)) : EReal)) =
+      fun ε => -(a ε : EReal) := by
+    funext ε
+    simp only [a]
+    rw [hcoe_biInf]
+  rw [hpoint]
   calc
-    (⨅ ε : {ε : ℝ // 0 < ε}, (-(⨅ x ∈ cthickening ε.1 F, (I x : EReal)) : EReal))
-        = ⨅ ε, (-(a ε : EReal)) := by
-          simp only [a, ← EReal.coe_ennreal_iInf]
-    _ = - (⨆ ε, (a ε : EReal)) := (EReal.neg_iSup_eq_iInf_neg (fun ε => (a ε : EReal))).symm
+    (⨅ ε : {ε : ℝ // 0 < ε}, (-(a ε : EReal) : EReal))
+        = - (⨆ ε, (a ε : EReal)) :=
+          (EReal.neg_iSup_eq_iInf_neg (fun ε => (a ε : EReal))).symm
     _ = - ((⨆ ε, a ε : ENNReal) : EReal) := by rw [← EReal.coe_ennreal_iSup]
     _ = - ((⨅ x ∈ F, I x : ENNReal) : EReal) := by rw [hrec]
-    _ = - (⨅ x ∈ F, (I x : EReal)) := by rw [EReal.coe_ennreal_iInf]
+    _ = - (⨅ x ∈ F, (I x : EReal)) := by rw [hcoe_biInf]
 
 /-- Closed-set limsup under exp-equivalence recovers the good rate on `F`. -/
 theorem limsup_log_map_le_neg_iInf_of_ExpEquivalentMaps
@@ -609,56 +730,6 @@ theorem limsup_log_map_le_neg_iInf_of_ExpEquivalentMaps
   refine (iInf_mono hεbound).trans (le_of_eq ?_)
   exact iInf_neg_iInf_cthickening_eq_neg_iInf I hI hK hF
 
-/-- When `limsup v = ⊥`, one has `liminf (max u v) ≤ liminf u`. -/
-theorem liminf_max_le_of_limsup_eq_bot {u v : ℕ → EReal}
-    (hv : limsup v atTop = ⊥) :
-    liminf (fun n => max (u n) (v n)) atTop ≤ liminf u atTop := by
-  have hle : liminf u atTop ≤ liminf (fun n => max (u n) (v n)) atTop :=
-    liminf_le_liminf (Eventually.of_forall fun n => le_max_left (u n) (v n))
-  -- reverse via: for all M, limsup v ≤ M → eventually v ≤ M, take M = liminf u
-  have hlim : limsup v atTop ≤ liminf u atTop := hv ▸ bot_le
-  have hev : ∀ᶠ n in atTop, v n ≤ liminf u atTop := by
-    -- limsup = ⊥ implies ∀ y, eventually v < y (if y ≠ ⊥), or use eq_bot_iff
-    refine (EReal.eq_bot_iff_forall_lt.mp hv (liminf u atTop)).mono fun n hn => hn.le
-  have hmax : ∀ᶠ n in atTop, max (u n) (v n) ≤ max (u n) (liminf u atTop) := by
-    filter_upwards [hev] with n hn
-    exact max_le_max le_rfl hn
-  refine (liminf_le_liminf hmax).trans ?_
-  have hconst :
-      liminf (fun n => max (u n) (liminf u atTop)) atTop =
-        max (liminf u atTop) (liminf u atTop) := by
-    have := liminf_const (f := atTop) (a := liminf u atTop)
-    -- max(u n, L) has liminf = max(liminf u, L) via limsup_max dual? use identity
-    -- max(x,L) = x ⊔ L, and liminf (u ⊔ const L) = liminf u ⊔ L = max(liminf u, L)
-    simpa [sup_eq_max] using (sup_liminf (liminf u atTop) (u := u)).symm
-  rw [hconst, max_self]
-
-/-- If limsup of `(1/n)log b` is `-∞`, then liminf `(1/n)log(a+b) ≤` liminf `(1/n)log a`. -/
-theorem liminf_inv_mul_log_add_le_of_limsup_eq_bot
-    {a b : ℕ → ℝ≥0∞}
-    (hb : limsup (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (b n)) atTop = ⊥) :
-    liminf (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (a n + b n)) atTop ≤
-      liminf (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (a n)) atTop := by
-  set ua := fun n : ℕ => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (a n)
-  set ub := fun n : ℕ => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (b n)
-  set u2 := fun n : ℕ => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (2 : ℝ≥0∞)
-  have hmaxbound : ∀ᶠ n in atTop,
-      ((n : ℕ) : EReal)⁻¹ * ENNReal.log (a n + b n) ≤ u2 n + max (ua n) (ub n) := by
-    filter_upwards [eventually_ge_atTop 1] with n hn
-    simpa [ua, ub, u2] using inv_mul_log_add_le_log_two_add_max (a := a n) (b := b n) hn
-  refine (liminf_le_liminf hmaxbound).trans ?_
-  have hu2s : limsup u2 atTop = 0 := tendsto_inv_mul_log_two_nhds_zero.limsup_eq
-  have hsum :
-      liminf (fun n => u2 n + max (ua n) (ub n)) atTop ≤
-        limsup u2 atTop + liminf (fun n => max (ua n) (ub n)) atTop := by
-    change liminf (u2 + fun n => max (ua n) (ub n)) atTop ≤ _
-    exact EReal.liminf_add_le
-      (Or.inl (by rw [hu2s]; exact EReal.zero_ne_bot))
-      (Or.inl (by rw [hu2s]; exact EReal.zero_ne_top))
-  refine hsum.trans ?_
-  rw [hu2s, zero_add]
-  exact liminf_max_le_of_limsup_eq_bot (u := ua) (v := ub) hb
-
 /-- Open lower bound at a point via balls under exponential equivalence. -/
 theorem liminf_log_map_ge_neg_rate_of_ExpEquivalentMaps
     {X : Type*} [PseudoMetricSpace X] [MeasurableSpace X] [OpensMeasurableSpace X]
@@ -680,8 +751,6 @@ theorem liminf_log_map_ge_neg_rate_of_ExpEquivalentMaps
     Metric.isOpen_iff.mp hU x hx
   set δ2 : ℝ := δ / 2
   have hδ2 : 0 < δ2 := half_pos hδpos
-  have hball2 : Metric.ball x δ2 ⊆ U :=
-    (Metric.ball_subset_ball (by linarith : δ2 ≤ δ)).trans hball
   have hsubset : ∀ n,
       (μ n).map (g n) (Metric.ball x δ2) ≤
         (μ n).map (f n) U + μ n {θ | δ2 ≤ dist (f n θ) (g n θ)} := by
@@ -693,12 +762,16 @@ theorem liminf_log_map_ge_neg_rate_of_ExpEquivalentMaps
     intro θ hθ
     by_cases hd : δ2 ≤ dist (f n θ) (g n θ)
     · exact Or.inr hd
-    · refine Or.inl (hball2 ?_)
+    · refine Or.inl (hball ?_)
       have hg : dist (g n θ) x < δ2 := Metric.mem_ball.mp hθ
       have hlt : dist (f n θ) (g n θ) < δ2 := lt_of_not_ge hd
       have htri : dist (f n θ) x ≤ dist (f n θ) (g n θ) + dist (g n θ) x :=
         dist_triangle _ _ _
-      exact Metric.mem_ball.mpr (lt_of_le_of_lt htri (by linarith))
+      have hsum : dist (f n θ) (g n θ) + dist (g n θ) x < δ :=
+        calc dist (f n θ) (g n θ) + dist (g n θ) x
+            < δ2 + δ2 := add_lt_add hlt hg
+          _ = δ := by dsimp [δ2]; ring
+      exact Metric.mem_ball.mpr (lt_of_le_of_lt htri hsum)
   have hle : ∀ n,
       ((n : ℕ) : EReal)⁻¹ * ENNReal.log ((μ n).map (g n) (Metric.ball x δ2)) ≤
         ((n : ℕ) : EReal)⁻¹ * ENNReal.log
@@ -709,7 +782,7 @@ theorem liminf_log_map_ge_neg_rate_of_ExpEquivalentMaps
       limsup (fun n => ((n : ℕ) : EReal)⁻¹ *
         ENNReal.log (μ n {θ | δ2 ≤ dist (f n θ) (g n θ)})) atTop = ⊥ :=
     hexp δ2 hδ2
-  have hstep := liminf_le_liminf (Eventually.of_forall hle)
+  have hstep := liminf_le_liminf (f := atTop) (Eventually.of_forall (f := atTop) hle)
   have hadd := liminf_inv_mul_log_add_le_of_limsup_eq_bot
     (a := fun n => (μ n).map (f n) U)
     (b := fun n => μ n {θ | δ2 ≤ dist (f n θ) (g n θ)}) hbot
@@ -719,7 +792,7 @@ theorem liminf_log_map_ge_neg_rate_of_ExpEquivalentMaps
           ENNReal.log ((μ n).map (g n) (Metric.ball x δ2))) atTop :=
     hlow _ Metric.isOpen_ball
   have hIx : - (I x : EReal) ≤ - (⨅ y ∈ Metric.ball x δ2, (I y : EReal)) :=
-    neg_le_neg (iInf₂_le x (Metric.mem_ball_self hδ2))
+    (EReal.neg_le_neg_iff).2 (biInf_le (fun y => (I y : EReal)) (Metric.mem_ball_self hδ2))
   exact hIx.trans (hge_ball.trans (hstep.trans hadd))
 
 /-- Full LDP transfer along exponentially equivalent maps with a common good rate
@@ -744,11 +817,14 @@ theorem satisfiesLDP_of_ExpEquivalentMaps
       fun x hx => liminf_log_map_ge_neg_rate_of_ExpEquivalentMaps
         μ f g hfMeas hgMeas hexp I hLDP.lower_bound hU x hx
     have hrew :
-        - (⨅ x ∈ U, (I x : EReal)) = ⨆ x : U, - (I x.1 : EReal) := by
-      change - (⨅ x : U, (I x.1 : EReal)) = ⨆ x : U, - (I x.1 : EReal)
-      exact (EReal.neg_iSup_eq_iInf_neg (fun x : U => (I x.1 : EReal))).symm
+        - (⨅ x ∈ U, (I x : EReal)) = ⨆ x ∈ U, - (I x : EReal) := by
+      have hcoe :
+          (⨅ x ∈ U, (I x : EReal)) = ⨅ x : U, (I (x : X) : EReal) := by
+        simp [iInf_subtype]
+      rw [hcoe, EReal.neg_iInf_eq_iSup_neg]
+      simp [iSup_subtype]
     rw [hrew]
-    exact iSup_le fun x : U => hx x.1 x.2
+    exact iSup₂_le fun x hxU => hx x hxU
   · intro F hF
     exact limsup_log_map_le_neg_iInf_of_ExpEquivalentMaps
       μ f g hfMeas hgMeas hexp I hLDP.isRateFunction.lowerSemicontinuous hK
@@ -768,3 +844,634 @@ def GammaLiminfReal {X : Type*} [TopologicalSpace X]
   ∀ y : X, ∀ (R : ℕ → ℝ), Tendsto R atTop atTop →
     ∀ yseq : ℕ → X, Tendsto yseq atTop (𝓝 y) →
       J y ≤ liminf (fun n => I (R n) (yseq n)) atTop
+
+
+/-! ### Dembo–Zeitouni 4.2.16: eventually exp-good approximations + Γ-liminf rate -/
+
+/-- Γ-liminf rate of a real-parameter family (DZ 4.2.16 (i)):
+`I(y) = ⨆_{δ>0} liminf_R (inf_{z ∈ ball(y,δ)} I_R(z))`. -/
+noncomputable def gammaLiminfRate {X : Type*} [PseudoMetricSpace X]
+    (I : ℝ → X → ENNReal) (y : X) : ENNReal :=
+  ⨆ δ : {δ : ℝ // 0 < δ},
+    liminf (fun R : ℝ => ⨅ z ∈ Metric.ball y δ.1, I R z) atTop
+
+/-- Chernoff ⇒ limsup of speed-normalized log of the distance set is `≤ -δ`. -/
+theorem limsup_log_dist_le_neg_of_expGood
+    {X : Type*} [PseudoMetricSpace X] [MeasurableSpace X]
+    {Θ : ℕ → Type*} [∀ n, MeasurableSpace (Θ n)]
+    (μ : ∀ n, Measure (Θ n)) [∀ n, IsFiniteMeasure (μ n)]
+    (f : ∀ n, Θ n → X) (g : ∀ n, Θ n → X)
+    {ε δ : ℝ} (_hε : 0 < ε) (_hδ : 0 < δ)
+    (hgood : ∀ n : ℕ, 0 < n →
+      (μ n).real {θ | ε ≤ dist (f n θ) (g n θ)} ≤ Real.exp (-δ * n)) :
+    limsup (fun n => ((n : ℕ) : EReal)⁻¹ *
+      ENNReal.log (μ n {θ | ε ≤ dist (f n θ) (g n θ)})) atTop ≤ (-δ : EReal) := by
+  have hev : ∀ᶠ n : ℕ in atTop,
+      ((n : ℕ) : EReal)⁻¹ *
+        ENNReal.log (μ n {θ | ε ≤ dist (f n θ) (g n θ)}) ≤ (-δ : EReal) := by
+    filter_upwards [eventually_gt_atTop 0] with n hn
+    exact inv_mul_log_measure_le_of_measureReal_le_exp (μ n) _ hn (hgood n hn)
+  exact limsup_le_of_le (by isBoundedDefault) hev
+
+theorem liminf_max_const_real (u : ℝ → EReal) (c : EReal) :
+    liminf (fun R : ℝ => max c (u R)) atTop = max c (liminf u atTop) := by
+  simp only [liminf_eq_iSup_iInf]
+  refine le_antisymm ?_ ?_
+  · refine iSup₂_le fun s hs => ?_
+    obtain ⟨a0, ha0⟩ := atTop_neBot.nonempty_of_mem hs
+    have : Nonempty {a // a ∈ s} := ⟨⟨a0, ha0⟩⟩
+    have hinf : (⨅ a ∈ s, max c (u a)) = max c (⨅ a ∈ s, u a) := by
+      have h := EReal.iInf_max_const (fun a : {a // a ∈ s} => u (a : ℝ)) c
+      calc (⨅ a ∈ s, max c (u a))
+          = ⨅ a : {a // a ∈ s}, max c (u (a : ℝ)) := by simp [iInf_subtype]
+        _ = ⨅ a : {a // a ∈ s}, max (u (a : ℝ)) c := by simp [max_comm]
+        _ = max (⨅ a : {a // a ∈ s}, u (a : ℝ)) c := h
+        _ = max c (⨅ a ∈ s, u a) := by rw [max_comm]; simp [iInf_subtype]
+    rw [hinf]
+    exact max_le_max le_rfl (le_iSup₂_of_le s hs le_rfl)
+  · refine max_le ?_ ?_
+    · refine le_iSup₂_of_le {R : ℝ | 0 ≤ R} (eventually_ge_atTop 0) ?_
+      have : Nonempty {a // a ∈ {R : ℝ | 0 ≤ R}} := ⟨⟨0, by simp⟩⟩
+      have hinf : (⨅ a ∈ {R : ℝ | 0 ≤ R}, max c (u a)) =
+          max c (⨅ a ∈ {R : ℝ | 0 ≤ R}, u a) := by
+        have h := EReal.iInf_max_const
+          (fun a : {a // a ∈ {R : ℝ | 0 ≤ R}} => u (a : ℝ)) c
+        calc (⨅ a ∈ {R : ℝ | 0 ≤ R}, max c (u a))
+            = ⨅ a : {a // a ∈ {R : ℝ | 0 ≤ R}}, max c (u (a : ℝ)) := by simp [iInf_subtype]
+          _ = ⨅ a : {a // a ∈ {R : ℝ | 0 ≤ R}}, max (u (a : ℝ)) c := by simp [max_comm]
+          _ = max (⨅ a : {a // a ∈ {R : ℝ | 0 ≤ R}}, u (a : ℝ)) c := h
+          _ = max c (⨅ a ∈ {R : ℝ | 0 ≤ R}, u a) := by rw [max_comm]; simp [iInf_subtype]
+      rw [hinf]; exact le_max_left _ _
+    · refine iSup₂_le fun s hs => ?_
+      obtain ⟨a0, ha0⟩ := atTop_neBot.nonempty_of_mem hs
+      have : Nonempty {a // a ∈ s} := ⟨⟨a0, ha0⟩⟩
+      have hinf : (⨅ a ∈ s, max c (u a)) = max c (⨅ a ∈ s, u a) := by
+        have h := EReal.iInf_max_const (fun a : {a // a ∈ s} => u (a : ℝ)) c
+        calc (⨅ a ∈ s, max c (u a))
+            = ⨅ a : {a // a ∈ s}, max c (u (a : ℝ)) := by simp [iInf_subtype]
+          _ = ⨅ a : {a // a ∈ s}, max (u (a : ℝ)) c := by simp [max_comm]
+          _ = max (⨅ a : {a // a ∈ s}, u (a : ℝ)) c := h
+          _ = max c (⨅ a ∈ s, u a) := by rw [max_comm]; simp [iInf_subtype]
+      exact (le_max_right c _).trans (hinf.symm ▸ le_iSup₂_of_le s hs le_rfl)
+
+
+
+/-- Closed-set limsup for `f` controlled by thickenings of approx rates plus Chernoff slack. -/
+theorem limsup_log_map_le_max_neg_cthickening_of_EventuallyExpGoodApprox
+    {X : Type*} [PseudoMetricSpace X] [MeasurableSpace X] [OpensMeasurableSpace X]
+    {Θ : ℕ → Type*} [∀ n, MeasurableSpace (Θ n)]
+    (μ : ∀ n, Measure (Θ n)) [∀ n, IsFiniteMeasure (μ n)]
+    (f : ∀ n, Θ n → X) (g : ℝ → ∀ n, Θ n → X)
+    (hfMeas : ∀ n, Measurable (f n))
+    (hgMeas : ∀ R : ℝ, ∀ n, Measurable (g R n))
+    (happrox : EventuallyExpGoodApprox μ f g)
+    (I : ℝ → X → ENNReal)
+    (hup : ∀ R : ℝ, ∀ (F : Set X), IsClosed F →
+      limsup (fun n => ((n : ℕ) : EReal)⁻¹ *
+        ENNReal.log ((μ n).map (g R n) F)) atTop ≤
+          - (⨅ x ∈ F, (I R x : EReal)))
+    {F : Set X} (hF : IsClosed F)
+    {ε δ : ℝ} (hε : 0 < ε) (hδ : 0 < δ) :
+    ∀ᶠ R : ℝ in atTop,
+      limsup (fun n => ((n : ℕ) : EReal)⁻¹ *
+        ENNReal.log ((μ n).map (f n) F)) atTop ≤
+          max (-δ : EReal)
+            (- (⨅ x ∈ cthickening ε F, (I R x : EReal))) := by
+  filter_upwards [happrox ε hε δ hδ] with R hRgood
+  have hdist :
+      limsup (fun n => ((n : ℕ) : EReal)⁻¹ *
+        ENNReal.log (μ n {θ | ε ≤ dist (f n θ) (g R n θ)})) atTop ≤ (-δ : EReal) :=
+    limsup_log_dist_le_neg_of_expGood μ f (fun n => g R n) hε hδ hRgood
+  have hsubset : ∀ n,
+      (μ n).map (f n) F ≤
+        (μ n).map (g R n) (cthickening ε F) +
+          μ n {θ | ε ≤ dist (f n θ) (g R n θ)} := by
+    intro n
+    have hmeasF : MeasurableSet F := hF.measurableSet
+    have hmeasT : MeasurableSet (cthickening ε F) := isClosed_cthickening.measurableSet
+    rw [Measure.map_apply (hfMeas n) hmeasF, Measure.map_apply (hgMeas R n) hmeasT]
+    exact (measure_mono
+      (preimage_subset_cthickening_union_dist (f n) (g R n))).trans (measure_union_le _ _)
+  have hle : ∀ n,
+      ((n : ℕ) : EReal)⁻¹ * ENNReal.log ((μ n).map (f n) F) ≤
+        ((n : ℕ) : EReal)⁻¹ * ENNReal.log
+          ((μ n).map (g R n) (cthickening ε F) +
+            μ n {θ | ε ≤ dist (f n θ) (g R n θ)}) := fun n =>
+    mul_le_mul_of_nonneg_left (ENNReal.log_le_log (hsubset n))
+      (EReal.inv_nonneg_of_nonneg (by exact_mod_cast Nat.zero_le n))
+  refine (limsup_le_limsup (Eventually.of_forall hle)).trans ?_
+  refine (limsup_inv_mul_log_add_le_max
+    (a := fun n => (μ n).map (g R n) (cthickening ε F))
+    (b := fun n => μ n {θ | ε ≤ dist (f n θ) (g R n θ)})).trans ?_
+  refine (max_le_max (hup R (cthickening ε F) isClosed_cthickening) hdist).trans ?_
+  rw [max_comm]
+
+
+/-- Upper bound half of DZ 4.2.16 (ii): closed limsup for `f` at rate `J`,
+assuming the closed-set limsup condition on approximating rates (EReal form). -/
+theorem limsup_log_map_le_neg_iInf_of_EventuallyExpGoodApprox
+    {X : Type*} [PseudoMetricSpace X] [MeasurableSpace X] [OpensMeasurableSpace X]
+    {Θ : ℕ → Type*} [∀ n, MeasurableSpace (Θ n)]
+    (μ : ∀ n, Measure (Θ n)) [∀ n, IsFiniteMeasure (μ n)]
+    (f : ∀ n, Θ n → X) (g : ℝ → ∀ n, Θ n → X)
+    (hfMeas : ∀ n, Measurable (f n))
+    (hgMeas : ∀ R : ℝ, ∀ n, Measurable (g R n))
+    (happrox : EventuallyExpGoodApprox μ f g)
+    (I : ℝ → X → ENNReal)
+    (hup : ∀ R : ℝ, ∀ (F : Set X), IsClosed F →
+      limsup (fun n => ((n : ℕ) : EReal)⁻¹ *
+        ENNReal.log ((μ n).map (g R n) F)) atTop ≤
+          - (⨅ x ∈ F, (I R x : EReal)))
+    (J : X → ENNReal) (hJ : LowerSemicontinuous J)
+    (hK : HasCompactFiniteLevelSets J)
+    (hClosed : ∀ (G : Set X), IsClosed G →
+      (⨅ x ∈ G, (J x : EReal)) ≤
+        limsup (fun R : ℝ => ⨅ x ∈ G, (I R x : EReal)) atTop)
+    {F : Set X} (hF : IsClosed F) :
+    limsup (fun n => ((n : ℕ) : EReal)⁻¹ *
+      ENNReal.log ((μ n).map (f n) F)) atTop ≤
+        - (⨅ x ∈ F, (J x : EReal)) := by
+  have hεbound : ∀ ε : {ε : ℝ // 0 < ε},
+      limsup (fun n => ((n : ℕ) : EReal)⁻¹ *
+        ENNReal.log ((μ n).map (f n) F)) atTop ≤
+          - (⨅ x ∈ cthickening ε.1 F, (J x : EReal)) := by
+    intro ε
+    have hδ : ∀ δ : ℝ, 0 < δ →
+        limsup (fun n => ((n : ℕ) : EReal)⁻¹ *
+          ENNReal.log ((μ n).map (f n) F)) atTop ≤
+            max (-δ : EReal)
+              (- (⨅ x ∈ cthickening ε.1 F, (J x : EReal))) := by
+      intro δ hδpos
+      have hev := limsup_log_map_le_max_neg_cthickening_of_EventuallyExpGoodApprox
+        μ f g hfMeas hgMeas happrox I hup hF ε.2 hδpos
+      have hL :
+          limsup (fun n => ((n : ℕ) : EReal)⁻¹ *
+            ENNReal.log ((μ n).map (f n) F)) atTop ≤
+              liminf (fun R : ℝ =>
+                max (-δ : EReal)
+                  (- (⨅ x ∈ cthickening ε.1 F, (I R x : EReal)))) atTop := by
+        refine le_liminf_of_le (by isBoundedDefault) ?_
+        filter_upwards [hev] with R hR
+        exact hR
+      refine hL.trans ?_
+      rw [liminf_max_const_real]
+      refine max_le_max le_rfl ?_
+      have hG := hClosed (cthickening ε.1 F) isClosed_cthickening
+      have hswap :
+          liminf (fun R : ℝ =>
+              - (⨅ x ∈ cthickening ε.1 F, (I R x : EReal))) atTop =
+            - limsup (fun R : ℝ =>
+                ⨅ x ∈ cthickening ε.1 F, (I R x : EReal)) atTop := by
+        exact EReal.liminf_neg
+      rw [hswap, EReal.neg_le_neg_iff]
+      exact hG
+    set c : EReal := - (⨅ x ∈ cthickening ε.1 F, (J x : EReal))
+    by_cases hLc :
+        limsup (fun n => ((n : ℕ) : EReal)⁻¹ *
+          ENNReal.log ((μ n).map (f n) F)) atTop ≤ c
+    · exact hLc
+    · have hlt : c < limsup (fun n => ((n : ℕ) : EReal)⁻¹ *
+          ENNReal.log ((μ n).map (f n) F)) atTop := lt_of_not_ge hLc
+      have hneg : ∀ δ : ℝ, 0 < δ →
+          limsup (fun n => ((n : ℕ) : EReal)⁻¹ *
+            ENNReal.log ((μ n).map (f n) F)) atTop ≤ (-δ : EReal) := by
+        intro δ hδpos
+        have hmax := hδ δ hδpos
+        cases (le_max_iff.mp hmax) with
+        | inl h => exact h
+        | inr h => exact (hlt.not_ge h).elim
+      have hbot :
+          limsup (fun n => ((n : ℕ) : EReal)⁻¹ *
+            ENNReal.log ((μ n).map (f n) F)) atTop = (⊥ : EReal) := by
+        refine (EReal.eq_bot_iff_forall_lt _).2 fun y : ℝ => ?_
+        let δ : ℝ := max 1 (1 - y)
+        have hδpos : 0 < δ := lt_of_lt_of_le zero_lt_one (le_max_left _ _)
+        have hle := hneg δ hδpos
+        have hlt' : (-δ : EReal) < (y : EReal) := by
+          refine EReal.coe_lt_coe_iff.mpr ?_
+          have : 1 - y ≤ δ := le_max_right _ _
+          linarith
+        exact lt_of_le_of_lt hle hlt'
+      exact hbot.le.trans bot_le
+  exact (le_iInf hεbound).trans
+    (le_of_eq (iInf_neg_iInf_cthickening_eq_neg_iInf J hJ hK hF))
+
+
+/-- `ENNReal → EReal` preserves `iInf` over a nonempty index. -/
+theorem ENNReal.toEReal_iInf {ι : Sort*} [Nonempty ι] (f : ι → ENNReal) :
+    ((⨅ i, f i : ENNReal) : EReal) = ⨅ i, (f i : EReal) := by
+  refine le_antisymm ?_ ?_
+  · exact le_iInf fun i => EReal.coe_ennreal_le_coe_ennreal_iff.mpr (iInf_le _ i)
+  · refine iInf_le_iff.mpr fun b hb => ?_
+    cases b with
+    | bot => exact bot_le
+    | top =>
+      have hall : ∀ i, f i = (⊤ : ENNReal) := fun i =>
+        (EReal.coe_ennreal_eq_top_iff).1 (top_unique (hb i))
+      have : ⨅ i, f i = (⊤ : ENNReal) :=
+        top_unique (le_iInf fun i => (hall i).symm.le)
+      simp [this]
+    | coe r =>
+      by_cases hr0 : 0 ≤ r
+      · have hall : ∀ i, ENNReal.ofReal r ≤ f i := by
+          intro i
+          by_cases hi : f i = ⊤
+          · simpa [hi] using (le_top : ENNReal.ofReal r ≤ ⊤)
+          · have hle : (r : EReal) ≤ (f i : EReal) := hb i
+            have heq : (f i : EReal) = ((f i).toReal : EReal) := by
+              rw [← ENNReal.ofReal_toReal hi,
+                ENNReal.ofReal_eq_coe_nnreal ENNReal.toReal_nonneg]
+              rfl
+            rw [heq] at hle
+            exact (ENNReal.ofReal_le_iff_le_toReal hi).2 (EReal.coe_le_coe_iff.mp hle)
+        have hcoe : ((ENNReal.ofReal r : ENNReal) : EReal) = (r : EReal) := by
+          rw [ENNReal.ofReal_eq_coe_nnreal hr0]; rfl
+        exact hcoe.symm.le.trans
+          (EReal.coe_ennreal_le_coe_ennreal_iff.mpr (le_iInf hall))
+      · exact (EReal.coe_le_coe_iff.mpr (le_of_not_ge hr0)).trans
+          (EReal.coe_ennreal_le_coe_ennreal_iff.mpr (bot_le : 0 ≤ ⨅ i, f i))
+
+/-- When `limsup v ≤ c`, `liminf max(u,v) ≤ max(liminf u, c)`. -/
+theorem liminf_max_le_max_of_limsup_le {u v : ℕ → EReal} {c : EReal}
+    (hv : limsup v atTop ≤ c) :
+    liminf (fun n => max (u n) (v n)) atTop ≤ max (liminf u atTop) c := by
+  set L := liminf u atTop
+  by_cases hle :
+      liminf (fun n => max (u n) (v n)) atTop ≤ max L c
+  · exact hle
+  · exfalso
+    have hlt : max L c < liminf (fun n => max (u n) (v n)) atTop :=
+      lt_of_not_ge hle
+    obtain ⟨c', hc'l, hc'r⟩ := exists_between hlt
+    have hc'v : limsup v atTop < c' :=
+      lt_of_le_of_lt hv (lt_of_le_of_lt (le_max_right L c) hc'l)
+    have hev_v : ∀ᶠ n in atTop, v n < c' := eventually_lt_of_limsup_lt hc'v
+    have hlims : limsup (fun n => -max (u n) (v n)) atTop < -c' := by
+      have : limsup (fun n => -max (u n) (v n)) atTop =
+          - liminf (fun n => max (u n) (v n)) atTop := EReal.limsup_neg
+      rw [this, EReal.neg_lt_neg_iff]
+      exact hc'r
+    have hev_m : ∀ᶠ n in atTop, -max (u n) (v n) < -c' :=
+      eventually_lt_of_limsup_lt hlims
+    have hev_m' : ∀ᶠ n in atTop, c' < max (u n) (v n) := by
+      filter_upwards [hev_m] with n hn
+      exact (EReal.neg_lt_neg_iff).1 hn
+    have hev_u : ∀ᶠ n in atTop, c' < u n := by
+      filter_upwards [hev_v, hev_m'] with n hvn hmn
+      have hmaxu : max (u n) (v n) = u n := by
+        cases le_total (u n) (v n) with
+        | inl huv =>
+          have : v n < v n := by
+            rw [max_eq_right huv] at hmn
+            exact lt_trans hvn hmn
+          exact (lt_irrefl _ this).elim
+        | inr hvu => exact max_eq_left hvu
+      rw [← hmaxu]; exact hmn
+    have : c' ≤ L :=
+      le_liminf_of_le (by isBoundedDefault)
+        (hev_u.mono fun _ hn => hn.le)
+    exact (lt_of_le_of_lt (le_max_left L c) hc'l).not_ge this
+
+/-- If limsup of `(1/n)log b ≤ c`, then
+`liminf (1/n)log(a+b) ≤ max(liminf (1/n)log a, c)`. -/
+theorem liminf_inv_mul_log_add_le_max_of_limsup_le
+    {a b : ℕ → ℝ≥0∞} {c : EReal}
+    (hb : limsup (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (b n)) atTop ≤ c) :
+    liminf (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (a n + b n)) atTop ≤
+      max (liminf (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (a n)) atTop) c := by
+  set ua := fun n : ℕ => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (a n)
+  set ub := fun n : ℕ => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (b n)
+  set u2 := fun n : ℕ => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (2 : ℝ≥0∞)
+  have hmaxbound : ∀ᶠ n in atTop,
+      ((n : ℕ) : EReal)⁻¹ * ENNReal.log (a n + b n) ≤ u2 n + max (ua n) (ub n) := by
+    filter_upwards [eventually_ge_atTop 1] with n hn
+    simpa [ua, ub, u2] using inv_mul_log_add_le_log_two_add_max (a := a n) (b := b n) hn
+  refine (liminf_le_liminf hmaxbound).trans ?_
+  have hu2s : limsup u2 atTop = 0 := tendsto_inv_mul_log_two_nhds_zero.limsup_eq
+  have hsum :
+      liminf (fun n => u2 n + max (ua n) (ub n)) atTop ≤
+        limsup u2 atTop + liminf (fun n => max (ua n) (ub n)) atTop := by
+    change liminf (u2 + fun n => max (ua n) (ub n)) atTop ≤ _
+    exact EReal.liminf_add_le
+      (Or.inl (by rw [hu2s]; exact EReal.zero_ne_bot))
+      (Or.inl (by rw [hu2s]; exact EReal.zero_ne_top))
+  refine hsum.trans ?_
+  rw [hu2s, zero_add]
+  exact liminf_max_le_max_of_limsup_le (u := ua) (v := ub) hb
+
+/-- `liminf` of coe is `≤` coe of `liminf` for `ENNReal → EReal`. -/
+theorem EReal.liminf_coe_ennreal_le {α : Type*} {f : Filter α} [NeBot f] (u : α → ENNReal) :
+    liminf (fun a => (u a : EReal)) f ≤ ((liminf u f : ENNReal) : EReal) := by
+  simp only [liminf_eq_iSup_iInf]
+  refine iSup₂_le fun s hs => ?_
+  have hne : s.Nonempty := Filter.nonempty_of_mem hs
+  have : Nonempty {a // a ∈ s} := ⟨⟨hne.some, hne.some_mem⟩⟩
+  have heq : (⨅ a ∈ s, (u a : EReal)) = ((⨅ a ∈ s, u a : ENNReal) : EReal) := by
+    have h := ENNReal.toEReal_iInf (fun a : {a // a ∈ s} => u (a : α))
+    calc (⨅ a ∈ s, (u a : EReal))
+        = ⨅ a : {a // a ∈ s}, (u (a : α) : EReal) := by simp [iInf_subtype]
+      _ = ((⨅ a : {a // a ∈ s}, u (a : α) : ENNReal) : EReal) := h.symm
+      _ = ((⨅ a ∈ s, u a : ENNReal) : EReal) := by simp [iInf_subtype]
+  rw [heq]
+  exact EReal.coe_ennreal_le_coe_ennreal_iff.mpr (le_iSup₂_of_le s hs le_rfl)
+
+/-- `liminf` of `ENNReal → EReal` coe equals coe of `liminf`.
+Uses the same `simp [liminf_eq_iSup_iInf]` goal shape as `liminf_coe_ennreal_le`
+(EReal-liminf on the left) so CompleteLattice resolves; then matches outer/inner
+sup/inf via `coe_ennreal_iSup` / `toEReal_iInf`. -/
+theorem EReal.liminf_coe_ennreal_eq {α : Type*} {f : Filter α} [NeBot f] (u : α → ENNReal) :
+    liminf (fun a => (u a : EReal)) f = ((liminf u f : ENNReal) : EReal) := by
+  simp only [liminf_eq_iSup_iInf]
+  have : Nonempty {s // s ∈ f} := ⟨⟨Set.univ, univ_mem⟩⟩
+  have houter :
+      ((⨆ s ∈ f, ⨅ a ∈ s, u a : ENNReal) : EReal) =
+        ⨆ s ∈ f, ((⨅ a ∈ s, u a : ENNReal) : EReal) := by
+    simpa [iSup_subtype] using
+      EReal.coe_ennreal_iSup (fun s : {s // s ∈ f} => ⨅ a ∈ (s : Set α), u a)
+  refine Eq.trans ?_ houter.symm
+  refine iSup_congr fun s => iSup_congr fun hs => ?_
+  have hne : s.Nonempty := Filter.nonempty_of_mem hs
+  have : Nonempty {a // a ∈ s} := ⟨⟨hne.some, hne.some_mem⟩⟩
+  have h := ENNReal.toEReal_iInf (fun a : {a // a ∈ s} => u (a : α))
+  calc (⨅ a ∈ s, (u a : EReal))
+      = ⨅ a : {a // a ∈ s}, (u (a : α) : EReal) := by simp [iInf_subtype]
+    _ = ((⨅ a : {a // a ∈ s}, u (a : α) : ENNReal) : EReal) := h.symm
+    _ = ((⨅ a ∈ s, u a : ENNReal) : EReal) := by simp [iInf_subtype]
+
+/-- Open lower bound vs EReal-Γ-liminf of approximating rates. -/
+theorem liminf_log_map_ge_neg_liminf_iInf_ball_of_EventuallyExpGoodApprox
+    {X : Type*} [PseudoMetricSpace X] [MeasurableSpace X] [OpensMeasurableSpace X]
+    {Θ : ℕ → Type*} [∀ n, MeasurableSpace (Θ n)]
+    (μ : ∀ n, Measure (Θ n)) [∀ n, IsFiniteMeasure (μ n)]
+    (f : ∀ n, Θ n → X) (g : ℝ → ∀ n, Θ n → X)
+    (hfMeas : ∀ n, Measurable (f n))
+    (hgMeas : ∀ R : ℝ, ∀ n, Measurable (g R n))
+    (happrox : EventuallyExpGoodApprox μ f g)
+    (I : ℝ → X → ENNReal)
+    (hlow : ∀ R : ℝ, ∀ (U : Set X), IsOpen U →
+      - (⨅ x ∈ U, (I R x : EReal)) ≤
+        liminf (fun n => ((n : ℕ) : EReal)⁻¹ *
+          ENNReal.log ((μ n).map (g R n) U)) atTop)
+    {U : Set X} (hU : IsOpen U) (x : X) (hx : x ∈ U)
+    {δ : ℝ} (hδ : 0 < δ) (hball : Metric.ball x δ ⊆ U) :
+    - liminf (fun R : ℝ => ⨅ z ∈ Metric.ball x (δ / 2), (I R z : EReal)) atTop ≤
+      liminf (fun n => ((n : ℕ) : EReal)⁻¹ *
+        ENNReal.log ((μ n).map (f n) U)) atTop := by
+  set δ2 : ℝ := δ / 2
+  have hδ2 : 0 < δ2 := half_pos hδ
+  set Lf := liminf (fun n => ((n : ℕ) : EReal)⁻¹ *
+      ENNReal.log ((μ n).map (f n) U)) atTop
+  set cInf := liminf (fun R : ℝ => ⨅ z ∈ Metric.ball x δ2, (I R z : EReal)) atTop
+  have hRbound : ∀ M : ℝ, 0 < M → -cInf ≤ max Lf (-M : EReal) := by
+    intro M hM
+    have hevR : ∀ᶠ R : ℝ in atTop,
+        ∀ n : ℕ, 0 < n →
+          (μ n).real {θ | δ2 ≤ dist (f n θ) (g R n θ)} ≤ Real.exp (-M * n) :=
+      happrox δ2 hδ2 M hM
+    obtain ⟨R0, hR0⟩ := Filter.eventually_atTop.mp hevR
+    have hforR : ∀ R : ℝ, R0 ≤ R →
+        - (⨅ z ∈ Metric.ball x δ2, (I R z : EReal)) ≤ max Lf (-M : EReal) := by
+      intro R hR
+      have hbot_le :
+          limsup (fun n => ((n : ℕ) : EReal)⁻¹ *
+            ENNReal.log (μ n {θ | δ2 ≤ dist (f n θ) (g R n θ)})) atTop ≤
+              (-M : EReal) := by
+        refine limsup_le_of_le (by isBoundedDefault) ?_
+        filter_upwards [eventually_gt_atTop 0] with n hn
+        exact inv_mul_log_measure_le_of_measureReal_le_exp (μ n) _ hn (hR0 R hR n hn)
+      have hsubset : ∀ n,
+          (μ n).map (g R n) (Metric.ball x δ2) ≤
+            (μ n).map (f n) U + μ n {θ | δ2 ≤ dist (f n θ) (g R n θ)} := by
+        intro n
+        have hmeasB : MeasurableSet (Metric.ball x δ2) := Metric.isOpen_ball.measurableSet
+        have hmeasU : MeasurableSet U := hU.measurableSet
+        rw [Measure.map_apply (hgMeas R n) hmeasB, Measure.map_apply (hfMeas n) hmeasU]
+        refine (measure_mono ?_).trans (measure_union_le _ _)
+        intro θ hθ
+        by_cases hd : δ2 ≤ dist (f n θ) (g R n θ)
+        · exact Or.inr hd
+        · refine Or.inl (hball ?_)
+          have hg : dist (g R n θ) x < δ2 := Metric.mem_ball.mp hθ
+          have hlt : dist (f n θ) (g R n θ) < δ2 := lt_of_not_ge hd
+          have htri : dist (f n θ) x ≤ dist (f n θ) (g R n θ) + dist (g R n θ) x :=
+            dist_triangle _ _ _
+          have hsum : dist (f n θ) (g R n θ) + dist (g R n θ) x < δ :=
+            calc dist (f n θ) (g R n θ) + dist (g R n θ) x
+                < δ2 + δ2 := add_lt_add hlt hg
+              _ = δ := by dsimp [δ2]; ring
+          exact Metric.mem_ball.mpr (lt_of_le_of_lt htri hsum)
+      have hle_n : ∀ n,
+          ((n : ℕ) : EReal)⁻¹ * ENNReal.log ((μ n).map (g R n) (Metric.ball x δ2)) ≤
+            ((n : ℕ) : EReal)⁻¹ * ENNReal.log
+              ((μ n).map (f n) U + μ n {θ | δ2 ≤ dist (f n θ) (g R n θ)}) := fun n =>
+        mul_le_mul_of_nonneg_left (ENNReal.log_le_log (hsubset n))
+          (EReal.inv_nonneg_of_nonneg (by exact_mod_cast Nat.zero_le n))
+      have hstep := liminf_le_liminf (f := atTop) (Eventually.of_forall (f := atTop) hle_n)
+      have hadd := liminf_inv_mul_log_add_le_max_of_limsup_le
+        (a := fun n => (μ n).map (f n) U)
+        (b := fun n => μ n {θ | δ2 ≤ dist (f n θ) (g R n θ)})
+        (c := (-M : EReal)) hbot_le
+      have hge_ball :
+          - (⨅ z ∈ Metric.ball x δ2, (I R z : EReal)) ≤
+            liminf (fun n => ((n : ℕ) : EReal)⁻¹ *
+              ENNReal.log ((μ n).map (g R n) (Metric.ball x δ2))) atTop :=
+        hlow R (Metric.ball x δ2) Metric.isOpen_ball
+      exact hge_ball.trans (hstep.trans (by simpa [Lf] using hadd))
+    have hlim :
+        limsup (fun R : ℝ => - (⨅ z ∈ Metric.ball x δ2, (I R z : EReal))) atTop ≤
+          max Lf (-M : EReal) := by
+      refine limsup_le_of_le (by isBoundedDefault) ?_
+      filter_upwards [eventually_ge_atTop R0] with R hR
+      exact hforR R hR
+    have hswap :
+        limsup (fun R : ℝ => - (⨅ z ∈ Metric.ball x δ2, (I R z : EReal))) atTop =
+          - liminf (fun R : ℝ => ⨅ z ∈ Metric.ball x δ2, (I R z : EReal)) atTop :=
+      EReal.limsup_neg
+    rw [hswap] at hlim
+    simpa [cInf] using hlim
+  by_cases hLf : -cInf ≤ Lf
+  · exact hLf
+  · have hlt : Lf < -cInf := lt_of_not_ge hLf
+    have hneg : ∀ M : ℝ, 0 < M → -cInf ≤ (-M : EReal) := by
+      intro M hM
+      have hm := hRbound M hM
+      cases (le_max_iff.mp hm) with
+      | inl h => exact (hlt.not_ge h).elim
+      | inr h => exact h
+    have hcInf_top : cInf = (⊤ : EReal) := by
+      refine (EReal.eq_top_iff_forall_lt _).2 fun y : ℝ => ?_
+      let M : ℝ := max 1 (y + 1)
+      have hM : 0 < M := lt_of_lt_of_le zero_lt_one (le_max_left _ _)
+      have hle := hneg M hM
+      have : (M : EReal) ≤ cInf := (EReal.neg_le_neg_iff).1 hle
+      have hMy : (y : EReal) < (M : EReal) := by
+        refine EReal.coe_lt_coe_iff.mpr ?_
+        have : y + 1 ≤ M := le_max_right _ _
+        linarith
+      exact hMy.trans_le this
+    simpa [hcInf_top] using (bot_le : (⊥ : EReal) ≤ Lf)
+
+/-- Pointwise open lower bound at the Γ-liminf rate. -/
+theorem liminf_log_map_ge_neg_gammaLiminfRate_of_EventuallyExpGoodApprox
+    {X : Type*} [PseudoMetricSpace X] [MeasurableSpace X] [OpensMeasurableSpace X]
+    {Θ : ℕ → Type*} [∀ n, MeasurableSpace (Θ n)]
+    (μ : ∀ n, Measure (Θ n)) [∀ n, IsFiniteMeasure (μ n)]
+    (f : ∀ n, Θ n → X) (g : ℝ → ∀ n, Θ n → X)
+    (hfMeas : ∀ n, Measurable (f n))
+    (hgMeas : ∀ R : ℝ, ∀ n, Measurable (g R n))
+    (happrox : EventuallyExpGoodApprox μ f g)
+    (I : ℝ → X → ENNReal)
+    (hlow : ∀ R : ℝ, ∀ (U : Set X), IsOpen U →
+      - (⨅ x ∈ U, (I R x : EReal)) ≤
+        liminf (fun n => ((n : ℕ) : EReal)⁻¹ *
+          ENNReal.log ((μ n).map (g R n) U)) atTop)
+    {U : Set X} (hU : IsOpen U) (x : X) (hx : x ∈ U) :
+    - (gammaLiminfRate I x : EReal) ≤
+      liminf (fun n => ((n : ℕ) : EReal)⁻¹ *
+        ENNReal.log ((μ n).map (f n) U)) atTop := by
+  obtain ⟨δ, hδpos, hball⟩ : ∃ δ > 0, Metric.ball x δ ⊆ U :=
+    Metric.isOpen_iff.mp hU x hx
+  have hδ2 : 0 < δ / 2 := half_pos hδpos
+  have hone := liminf_log_map_ge_neg_liminf_iInf_ball_of_EventuallyExpGoodApprox
+    μ f g hfMeas hgMeas happrox I hlow hU x hx hδpos hball
+  refine le_trans ?_ hone
+  have hne : Nonempty (Metric.ball x (δ / 2)) :=
+    ⟨⟨x, Metric.mem_ball_self hδ2⟩⟩
+  have hcoe_iInf : ∀ R,
+      (⨅ z ∈ Metric.ball x (δ / 2), (I R z : EReal)) =
+        ((⨅ z ∈ Metric.ball x (δ / 2), I R z : ENNReal) : EReal) := by
+    intro R
+    have h := ENNReal.toEReal_iInf
+      (fun z : Metric.ball x (δ / 2) => I R (z : X))
+    calc (⨅ z ∈ Metric.ball x (δ / 2), (I R z : EReal))
+        = ⨅ z : Metric.ball x (δ / 2), (I R (z : X) : EReal) := by simp [iInf_subtype]
+      _ = ((⨅ z : Metric.ball x (δ / 2), I R (z : X) : ENNReal) : EReal) := h.symm
+      _ = ((⨅ z ∈ Metric.ball x (δ / 2), I R z : ENNReal) : EReal) := by simp [iInf_subtype]
+  have h1 :
+      liminf (fun R : ℝ => ⨅ z ∈ Metric.ball x (δ / 2), I R z) atTop ≤
+        gammaLiminfRate I x :=
+    le_iSup
+      (fun ε : {ε : ℝ // 0 < ε} =>
+        liminf (fun R : ℝ => ⨅ z ∈ Metric.ball x ε.1, I R z) atTop)
+      ⟨δ / 2, hδ2⟩
+  have h2 :
+      liminf (fun R : ℝ => ⨅ z ∈ Metric.ball x (δ / 2), (I R z : EReal)) atTop ≤
+        ((liminf (fun R : ℝ => ⨅ z ∈ Metric.ball x (δ / 2), I R z) atTop : ENNReal) :
+          EReal) := by
+    simp_rw [hcoe_iInf]
+    exact EReal.liminf_coe_ennreal_le _
+  exact (EReal.neg_le_neg_iff).2 (h2.trans (EReal.coe_ennreal_le_coe_ennreal_iff.mpr h1))
+
+/-- Full LDP under eventually exp-good approximations with Γ-liminf rate
+(Dembo–Zeitouni 4.2.16). -/
+theorem satisfiesLDP_of_gammaApprox
+    {X : Type*} [PseudoMetricSpace X] [MeasurableSpace X] [OpensMeasurableSpace X]
+    {Θ : ℕ → Type*} [∀ n, MeasurableSpace (Θ n)]
+    (μ : ∀ n, Measure (Θ n)) [∀ n, IsFiniteMeasure (μ n)]
+    (f : ∀ n, Θ n → X) (g : ℝ → ∀ n, Θ n → X)
+    (hfMeas : ∀ n, Measurable (f n))
+    (hgMeas : ∀ R : ℝ, ∀ n, Measurable (g R n))
+    (happrox : EventuallyExpGoodApprox μ f g)
+    (I : ℝ → X → ENNReal)
+    (hLDP : ∀ R : ℝ, SatisfiesLDP (fun n => (μ n).map (g R n)) (I R))
+    (hK : HasCompactFiniteLevelSets (gammaLiminfRate I))
+    (hClosed : ∀ (G : Set X), IsClosed G →
+      (⨅ x ∈ G, (gammaLiminfRate I x : EReal)) ≤
+        limsup (fun R : ℝ => ⨅ x ∈ G, (I R x : EReal)) atTop)
+    (hRate : IsRateFunction (gammaLiminfRate I)) :
+    SatisfiesLDP (fun n => (μ n).map (f n)) (gammaLiminfRate I) := by
+  refine ⟨hRate, ?_, ?_⟩
+  · intro U hU
+    have hx : ∀ x ∈ U,
+        - (gammaLiminfRate I x : EReal) ≤
+          liminf (fun n => ((n : ℕ) : EReal)⁻¹ *
+            ENNReal.log ((μ n).map (f n) U)) atTop :=
+      fun x hx => liminf_log_map_ge_neg_gammaLiminfRate_of_EventuallyExpGoodApprox
+        μ f g hfMeas hgMeas happrox I
+        (fun R => (hLDP R).lower_bound) hU x hx
+    have hrew :
+        - (⨅ x ∈ U, (gammaLiminfRate I x : EReal)) =
+          ⨆ x ∈ U, - (gammaLiminfRate I x : EReal) := by
+      have hcoe :
+          (⨅ x ∈ U, (gammaLiminfRate I x : EReal)) =
+            ⨅ x : U, (gammaLiminfRate I (x : X) : EReal) := by
+        simp [iInf_subtype]
+      rw [hcoe, EReal.neg_iInf_eq_iSup_neg]
+      simp [iSup_subtype]
+    rw [hrew]
+    exact iSup₂_le fun x hxU => hx x hxU
+  · intro F hF
+    exact limsup_log_map_le_neg_iInf_of_EventuallyExpGoodApprox
+      μ f g hfMeas hgMeas happrox I
+      (fun R => (hLDP R).upper_bound)
+      (gammaLiminfRate I) hRate.lowerSemicontinuous hK hClosed hF
+
+/-- Alias: Dembo–Zeitouni 4.2.16 under eventually exp-good approximations. -/
+theorem satisfiesLDP_of_EventuallyExpGoodApprox
+    {X : Type*} [PseudoMetricSpace X] [MeasurableSpace X] [OpensMeasurableSpace X]
+    {Θ : ℕ → Type*} [∀ n, MeasurableSpace (Θ n)]
+    (μ : ∀ n, Measure (Θ n)) [∀ n, IsFiniteMeasure (μ n)]
+    (f : ∀ n, Θ n → X) (g : ℝ → ∀ n, Θ n → X)
+    (hfMeas : ∀ n, Measurable (f n))
+    (hgMeas : ∀ R : ℝ, ∀ n, Measurable (g R n))
+    (happrox : EventuallyExpGoodApprox μ f g)
+    (I : ℝ → X → ENNReal)
+    (hLDP : ∀ R : ℝ, SatisfiesLDP (fun n => (μ n).map (g R n)) (I R))
+    (hK : HasCompactFiniteLevelSets (gammaLiminfRate I))
+    (hClosed : ∀ (G : Set X), IsClosed G →
+      (⨅ x ∈ G, (gammaLiminfRate I x : EReal)) ≤
+        limsup (fun R : ℝ => ⨅ x ∈ G, (I R x : EReal)) atTop)
+    (hRate : IsRateFunction (gammaLiminfRate I)) :
+    SatisfiesLDP (fun n => (μ n).map (f n)) (gammaLiminfRate I) :=
+  satisfiesLDP_of_gammaApprox μ f g hfMeas hgMeas happrox I hLDP hK hClosed hRate
+
+/-- Bound-only DZ 4.2.16: only open/closed LDP bounds of approximants are required
+(no `IsRateFunction` of each `I R`). Callers should set `I R` for `R ≤ 0` equal to
+some positive-radius profile (e.g. `I 1`) so the `∀ R` bounds hold. -/
+theorem satisfiesLDP_of_gammaApprox_of_bounds
+    {X : Type*} [PseudoMetricSpace X] [MeasurableSpace X] [OpensMeasurableSpace X]
+    {Θ : ℕ → Type*} [∀ n, MeasurableSpace (Θ n)]
+    (μ : ∀ n, Measure (Θ n)) [∀ n, IsFiniteMeasure (μ n)]
+    (f : ∀ n, Θ n → X) (g : ℝ → ∀ n, Θ n → X)
+    (hfMeas : ∀ n, Measurable (f n))
+    (hgMeas : ∀ R : ℝ, ∀ n, Measurable (g R n))
+    (happrox : EventuallyExpGoodApprox μ f g)
+    (I : ℝ → X → ENNReal)
+    (hlow : ∀ R : ℝ, ∀ (U : Set X), IsOpen U →
+      - (⨅ x ∈ U, (I R x : EReal)) ≤
+        liminf (fun n => ((n : ℕ) : EReal)⁻¹ *
+          ENNReal.log ((μ n).map (g R n) U)) atTop)
+    (hup : ∀ R : ℝ, ∀ (F : Set X), IsClosed F →
+      limsup (fun n => ((n : ℕ) : EReal)⁻¹ *
+        ENNReal.log ((μ n).map (g R n) F)) atTop ≤
+          - (⨅ x ∈ F, (I R x : EReal)))
+    (hK : HasCompactFiniteLevelSets (gammaLiminfRate I))
+    (hClosed : ∀ (G : Set X), IsClosed G →
+      (⨅ x ∈ G, (gammaLiminfRate I x : EReal)) ≤
+        limsup (fun R : ℝ => ⨅ x ∈ G, (I R x : EReal)) atTop)
+    (hRate : IsRateFunction (gammaLiminfRate I)) :
+    SatisfiesLDP (fun n => (μ n).map (f n)) (gammaLiminfRate I) := by
+  refine ⟨hRate, ?_, ?_⟩
+  · intro U hU
+    have hx : ∀ x ∈ U,
+        - (gammaLiminfRate I x : EReal) ≤
+          liminf (fun n => ((n : ℕ) : EReal)⁻¹ *
+            ENNReal.log ((μ n).map (f n) U)) atTop :=
+      fun x hx => liminf_log_map_ge_neg_gammaLiminfRate_of_EventuallyExpGoodApprox
+        μ f g hfMeas hgMeas happrox I hlow hU x hx
+    have hrew :
+        - (⨅ x ∈ U, (gammaLiminfRate I x : EReal)) =
+          ⨆ x ∈ U, - (gammaLiminfRate I x : EReal) := by
+      have hcoe :
+          (⨅ x ∈ U, (gammaLiminfRate I x : EReal)) =
+            ⨅ x : U, (gammaLiminfRate I (x : X) : EReal) := by
+        simp [iInf_subtype]
+      rw [hcoe, EReal.neg_iInf_eq_iSup_neg]
+      simp [iSup_subtype]
+    rw [hrew]
+    exact iSup₂_le fun x hxU => hx x hxU
+  · intro F hF
+    exact limsup_log_map_le_neg_iInf_of_EventuallyExpGoodApprox
+      μ f g hfMeas hgMeas happrox I hup
+      (gammaLiminfRate I) hRate.lowerSemicontinuous hK hClosed hF
+

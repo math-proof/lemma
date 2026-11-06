@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Structure.v1.Atlas.TheoryOfProbability.code.MarkovChain
 import Mathlib.Probability.Kernel.IonescuTulcea.Traj
-import Def.v1.Atlas.TheoryOfProbability.code.MarkovChainConstruction.Part2
+import Def.ProbabilityTheory.MarkovChainConstruction.Part2
 open MeasureTheory ProbabilityTheory Kernel Set
 
 variable {S : Type*} [MeasurableSpace S]

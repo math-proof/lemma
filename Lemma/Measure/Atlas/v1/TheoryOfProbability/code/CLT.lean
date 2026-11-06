@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.TheoryOfProbability.code.CLT
+import Def.ProbabilityTheory.CLT
 open MeasureTheory ProbabilityTheory Filter
 open scoped Topology ENNReal NNReal
 

@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Mathlib.Probability.Process.Adapted
 import Mathlib.Probability.Independence.ZeroOne
-import Def.v1.Atlas.TheoryOfProbability.code.Blumenthal01
+import Def.ProbabilityTheory.Blumenthal01
 open MeasureTheory MeasurableSpace Filtration
 
 

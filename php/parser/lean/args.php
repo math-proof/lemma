@@ -272,23 +272,48 @@ class LeanArgsSpaceSeparated extends LeanArgs
         return true;
     }
 
-    /** `id (α := T) e` — identity; LaTeX prints only `e`. */
-    public function idLatexInner()
+    /**
+     * Identity sugar for LaTeX:
+     * - `id (α := T) e` / `id (α := T) e x …` → `e` / `e x …`
+     * - `@id (T) e` / `@id (T) e x …` → `e` / `e x …`
+     * Returns the operand nodes to render, or null.
+     */
+    public function idLatexOperands()
     {
         $args = $this->args;
-        if (count($args) !== 3 || !($args[0] instanceof LeanToken) || $args[0]->text !== 'id')
+        if (count($args) < 3 || !($args[0] instanceof LeanToken))
             return null;
-        $named = $args[1] instanceof LeanParenthesis ? $args[1]->arg : $args[1];
-        if (!($named instanceof LeanAssign && $named->lhs instanceof LeanToken && $named->lhs->text === 'α'))
+        $head = $args[0]->text;
+        if ($head === 'id') {
+            $named = $args[1] instanceof LeanParenthesis ? $args[1]->arg : $args[1];
+            if (!($named instanceof LeanAssign && $named->lhs instanceof LeanToken && $named->lhs->text === 'α'))
+                return null;
+        } elseif ($head === '@id') {
+            // `@id (T) e …` — typed positional; not a named `(α := …)`
+            if (!($args[1] instanceof LeanParenthesis) || $args[1]->arg instanceof LeanAssign)
+                return null;
+        } else {
             return null;
-        $inner = $args[2];
-        if (
-            $inner instanceof LeanParenthesis &&
-            !($inner->arg instanceof LeanColon) &&
-            $this->canStripIdParen($inner->arg)
-        )
-            $inner = $inner->arg;
-        return $inner;
+        }
+        $rest = array_slice($args, 2);
+        if (count($rest) === 1) {
+            $inner = $rest[0];
+            if (
+                $inner instanceof LeanParenthesis &&
+                !($inner->arg instanceof LeanColon) &&
+                $this->canStripIdParen($inner->arg)
+            )
+                $inner = $inner->arg;
+            return [$inner];
+        }
+        return $rest;
+    }
+
+    /** Single-operand identity (`id` / `@id`); null when trailing apps remain. */
+    public function idLatexInner()
+    {
+        $ops = $this->idLatexOperands();
+        return $ops && count($ops) === 1 ? $ops[0] : null;
     }
 
     /** Strip `(e)` after dropping `id` when `e` binds tighter than `id`'s parent. */
@@ -315,9 +340,14 @@ class LeanArgsSpaceSeparated extends LeanArgs
         $matrixArgs = $this->matrixLatexArgs($syntax);
         if ($matrixArgs !== null)
             return $matrixArgs;
-        $idInner = $this->idLatexInner();
-        if ($idInner)
-            return [$idInner->toLatex($syntax)];
+        $idOps = $this->idLatexOperands();
+        if ($idOps !== null) {
+            return array_map(function ($arg) use (&$syntax) {
+                if ($arg instanceof LeanParenthesis && $arg->arg instanceof LeanDiv)
+                    $arg = $arg->arg;
+                return $arg->toLatex($syntax);
+            }, $idOps);
+        }
         $args = $this->args;
         $func = $args[0];
         if ($this->is_MatProd())
@@ -444,6 +474,19 @@ class LeanArgsSpaceSeparated extends LeanArgs
             else
                 $arg = $arg->peelGroup();
             return [$arg->toLatex($syntax)];
+        } elseif (
+            $func instanceof LeanProperty &&
+            $func->lhs instanceof LeanToken &&
+            $func->rhs instanceof LeanToken &&
+            count($args) === 2 &&
+            in_array($func->lhs->text, ['Real', 'Complex', 'Hyperreal', 'Sin', 'Cos', 'Tan', 'Cot', 'Log', 'Arctan'], true) &&
+            in_array($func->rhs->text, ['sin', 'cos', 'tan', 'cot', 'log', 'arctan'], true)
+        ) {
+            // `Hyperreal.sin x` / `Real.arctan y` — drop namespace; peel like bare `sin x`.
+            $arg = $args[1];
+            if ($arg instanceof LeanParenthesis && $arg->arg instanceof LeanDiv)
+                $arg = $arg->arg;
+            return [$arg->toLatex($syntax)];
         }
         return parent::latexArgs($syntax);
     }
@@ -453,8 +496,12 @@ class LeanArgsSpaceSeparated extends LeanArgs
         $rows = $this->matrixLatexSpec();
         if ($rows)
             return LeanAppend::bmatrixFormat(count($rows), count($rows[0]));
-        if ($this->idLatexInner())
-            return '%s';
+        $idOpsFmt = $this->idLatexOperands();
+        if ($idOpsFmt !== null) {
+            if (count($idOpsFmt) === 1)
+                return '%s';
+            return implode('\\ ', array_fill(0, count($idOpsFmt), '{%s}'));
+        }
         $args = $this->args;
         $func = $args[0];
         if ($this->is_Abs())
@@ -474,12 +521,14 @@ class LeanArgsSpaceSeparated extends LeanArgs
                             return '{\color{RoyalBlue} e} ^ {%s}';
                         case 'arcsin':
                         case 'arccos':
-                        case 'arctan':
                         case 'sin':
                         case 'cos':
                         case 'tan':
                         case 'arg':
                             return "\\$func->text {%s}";
+                        case 'arctan':
+                            // Prefer `\tan^{-1}` over `\arctan` (Hyperreal/Real.arctan align).
+                            return '\\tan^{-1} {%s}';
                         case 'arcsec':
                         case 'arccsc':
                         case 'arccot':
@@ -551,6 +600,23 @@ class LeanArgsSpaceSeparated extends LeanArgs
                             count($args) === 2
                         )
                             return '\\mathcal{X}^{2}\\left(%s\\right)';
+                        break;
+                    case 'sin':
+                    case 'cos':
+                    case 'tan':
+                    case 'cot':
+                    case 'log':
+                    case 'arctan':
+                        // `Hyperreal.sin x` / `Real.arctan y` → `\sin` / `\tan^{-1}` (drop namespace).
+                        if (
+                            count($args) === 2 &&
+                            $func->lhs instanceof LeanToken &&
+                            in_array($func->lhs->text, ['Real', 'Complex', 'Hyperreal', 'Sin', 'Cos', 'Tan', 'Cot', 'Log', 'Arctan'], true)
+                        ) {
+                            if ($func->rhs->text === 'arctan')
+                                return '\\tan^{-1} {%s}';
+                            return "\\{$func->rhs->text} {%s}";
+                        }
                         break;
                 }
             }
@@ -631,6 +697,27 @@ class LeanArgsSpaceSeparated extends LeanArgs
                 return $token;
             }
         }
+    }
+
+
+    public function holeRegex($opts = [])
+    {
+        $head = $this->args[0] ?? null;
+        $rawHead = ($head instanceof LeanToken) ? ($head->text ?? "") : "";
+        $nameToken = $opts["nameToken"] ?? null;
+        $headTok = $rawHead ? (is_callable($nameToken) ? $nameToken($rawHead) : holeRegexDefaultNameToken($rawHead)) : "";
+        static $trig = null;
+        if ($trig === null) $trig = '/^(sin|cos|tan|cot|arctan|log|exp)$/i';
+        if ($headTok && preg_match($trig, $rawHead)) {
+            $inner = null;
+            foreach (array_slice($this->args, 1) as $arg) {
+                $frag = $arg ? $arg->holeRegex($opts) : null;
+                if ($frag !== null && $frag !== "") { $inner = $frag; break; }
+            }
+            if ($inner === null || $inner === "") return $headTok . "_";
+            return $headTok . wrapHoleOpt($inner);
+        }
+        return parent::holeRegex($opts);
     }
 
 }

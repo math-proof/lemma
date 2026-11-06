@@ -467,8 +467,22 @@ abstract class Lean extends IndentedNode
                 return $this->parent->insert_left($this, 'LeanFloor');
             case '⌋':
                 return $this->parent->push_right('LeanFloor');
-            case '«':
+            case '«': {
+                // Glue guillemet identifier contents into one token (raw latex).
+                $t = $tokens;
+                $i0 = $i;
+                $j = $i0 + 1;
+                $n = count($t);
+                while ($j < $n && $t[$j] !== '»' && $t[$j] !== "\n") $j++;
+                if ($j < $n && $t[$j] === '»') {
+                    $inner = implode('', array_slice($t, $i0 + 1, $j - $i0 - 1));
+                    $i = $j;
+                    $caret = $this->parent->insert_left($this, 'LeanDoubleAngleQuotation');
+                    $tok = $caret->push_token($inner);
+                    return $tok->parent->push_right('LeanDoubleAngleQuotation');
+                }
                 return $this->parent->insert_left($this, 'LeanDoubleAngleQuotation');
+            }
             case '»':
                 return $this->parent->push_right('LeanDoubleAngleQuotation');
             case '‹':
@@ -798,6 +812,8 @@ abstract class Lean extends IndentedNode
                 return $this->append('Lean_int', 'operator');
             case '∂':
                 return $this->parent->insert_unary($this, 'Lean_partial');
+            case '∇':
+                return $this->append('Lean_nabla', 'operator');
             case '¬':
                 return $this->parent->insert_unary($this, 'Lean_lnot');
             case '~':

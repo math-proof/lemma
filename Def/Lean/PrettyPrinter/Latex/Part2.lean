@@ -569,13 +569,17 @@ def Expr.latexFormat : Expr → String
       | .anonymous =>
         if let some (_, subs) := e.asSubst? then
           Expr.substLatexFormat subs.length
+        else if let some (obj, trig) := e.asTrigFieldMap? then
+          -- theta.map Real.sin -> theta.\sin (member-dot), not theta(sin)
+          let obj := level.toColor (obj.priority > func.priority || obj.toList != none || obj.is_Eye)
+          obj ++ ".\\" ++ trig
         else if let some (obj, fns) := e.asMap? then
           let obj := level.toColor (obj.priority > func.priority || obj.toList != none || obj.is_Eye)
           let fns := fns.map fun arg =>
             (0 : Nat).toColor ((arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix) && !arg.is_JointRandomSymbol)
           "\\ ".intercalate (obj :: fns)
         else if e.is_JuxtaIndexApp then
-          -- `a i` / `a i j` → `{a}_{i}` / `{a}_{i, j}` (match GetElem / toFun)
+          -- Fun-typed juxta index app only; plain arrow apps stay juxtaposition
           match args with
           | base :: indices =>
             let baseFmt := level.toColor (
@@ -646,6 +650,11 @@ def Expr.latexFormat : Expr → String
         match point with
         | none => "\\nabla_{%s} {%s}"
         | some _ => "\\left. \\nabla_{%s} {%s} \\right|_{{%s} = {%s}}"
+      else if let some (xs, _, point) := e.asDeriv? then
+        let sub := ", ".intercalate (List.replicate xs.length "%s")
+        match point with
+        | none => "\\partial_{" ++ sub ++ "} {%s}"
+        | some _ => "\\left. \\partial_{" ++ sub ++ "} {%s} \\right|_{{%s} = {%s}}"
       else if let some (_binderName, _fn, μ) := e.asIntegral? then
         if μ.isVolume then
           "\\int {%s}\\, {\\color{blue}\\mathrm{d}}{%s}"
@@ -679,6 +688,10 @@ def Expr.latexFormat : Expr → String
       else if let some (_obj, fns) := e.asProb? then
         let slots := ", ".intercalate (List.replicate fns.length "%s")
         "{\\mathbb{P}}_{%s}\\left(" ++ slots ++ "\\right)"
+      else if let some (obj, trig) := e.asTrigFieldMap? then
+        -- theta.map Real.sin -> theta.\sin (member-dot), not theta(sin)
+        let obj := level.toColor (obj.priority > func.priority || obj.toList != none || obj.is_Eye)
+        obj ++ ".\\" ++ trig
       else if let some (obj, fns) := e.asMap? then
         let obj := level.toColor (obj.priority > func.priority || obj.toList != none || obj.is_Eye)
         let fns := fns.map fun arg =>
@@ -952,6 +965,13 @@ def Expr.latexFormat : Expr → String
           match name with
           | `Complex.exp =>
             "{\\color{RoyalBlue} e} ^ %s"
+          | `Hyperreal.sin
+          | `Hyperreal.cos
+          | `Hyperreal.tan
+          | `Hyperreal.cot
+          | `Hyperreal.arctan =>
+            -- field notation theta.sin -> theta.\sin (not juxta via Germ.map)
+            s!"%s.\\{attr}"
           | `Complex.cos
           | `Complex.sin
           | `Complex.log =>
@@ -1218,6 +1238,8 @@ where
       | .anonymous =>
         if let some (body, subs) := e.asSubst? then
           Expr.substLatexArgs body subs (·.toLatex)
+        else if let some (obj, _) := e.asTrigFieldMap? then
+          [obj.toLatex]
         else if let some (obj, fns) := e.asMap? then
           obj.toLatex :: fns.map (·.toLatex)
         else
@@ -1273,6 +1295,10 @@ where
         match point with
         | none => [x, body.toLatex]
         | some p => [x, body.toLatex, x, p.toLatex]
+      else if let some (xs, body, point) := e.asDeriv? then
+        match point with
+        | none => xs ++ [body.toLatex]
+        | some p => xs ++ [body.toLatex, xs.getLast!, p.toLatex]
       else if let some (binderName, fn, μ) := e.asIntegral? then
         if μ.isVolume then [fn.toLatex, binderName] else [fn.toLatex, μ.toLatex]
       else if let some (binderName, fn, μ) := e.asLintegral? then
@@ -1291,6 +1317,8 @@ where
         [binderName, body.toLatex]
       else if let some (obj, fns) := e.asProb? then
         obj.toLatex :: fns.map (·.toLatex)
+      else if let some (obj, _) := e.asTrigFieldMap? then
+        [obj.toLatex]
       else if let some (obj, fns) := e.asMap? then
         obj.toLatex :: fns.map (·.toLatex)
       else if let some (obj, x, y) := e.asCondProb? then

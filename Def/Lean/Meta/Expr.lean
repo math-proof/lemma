@@ -7,7 +7,11 @@ open Lean (BinderInfo PPContext FormatWithInfos Expr Core.Context getEnv getMCtx
 def Lean.Expr.is_Prop (e : Expr) : MetaM Bool := do
   match e with
   | .app e_fn _ =>
-    if let .forallE _ _ body _ ← inferType e_fn then
+    -- HasEquiv.Equiv / Setoid approx: inferType yields a forall
+    -- ending in Prop whose Sort is an assigned universe mvar;
+    -- body.isProp / u.isZero is false until instantiateMVars
+    -- (prints as Prop/0 but is not concrete .zero).
+    if let .forallE _ _ body _ ← instantiateMVars (← inferType e_fn) then
       return body.isProp
 
   | .forallE (body := body) .. =>
@@ -15,11 +19,10 @@ def Lean.Expr.is_Prop (e : Expr) : MetaM Bool := do
 
   | .fvar fvarId =>
     if let some decl ← fvarId.findDecl? then
-      return decl.type.isProp
+      return (← instantiateMVars decl.type).isProp
 
   | _  =>
     pure ()
 
   return false
-
 

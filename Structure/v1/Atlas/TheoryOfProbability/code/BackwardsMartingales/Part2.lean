@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 import Mathlib.MeasureTheory.Function.ConditionalExpectation.Real
 import Mathlib.MeasureTheory.Function.UniformIntegrable
 import Mathlib.MeasureTheory.Function.ConvergenceInMeasure
-import Def.v1.Atlas.TheoryOfProbability.code.BackwardsMartingales
+import Def.ProbabilityTheory.BackwardsMartingales
 open MeasureTheory Filter
 
 open scoped NNReal ENNReal MeasureTheory ProbabilityTheory Topology

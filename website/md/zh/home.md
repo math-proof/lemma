@@ -22,7 +22,8 @@
 * [Rat](../?module=Rat) 有理数初等代数
 * [Real](../?module=Real) 实分析，例：
   - [Jensen 不等式](../?module=Real.LeSum_Mul.of.EqSumRange__1.All_Ge_0.All_In_Icc.All_Gt0Deriv2.ContinuousOn_Icc)
-* [Hyperreal](../?module=Real) 非标准分析
+* [Hyperreal](../?module=Hyperreal) 非标准分析，例：
+  - [梅森定律](../?module=Hyperreal.Eq_Mul_SqrtDiv.of.All_EqMul_Deriv_SinArctan.All_Eq_MulMul_Sin_Cos)
 * [Complex](../?module=Complex) 复分析，例：
   - [一元四次方程](../?module=Complex.Eq0Add_Mul_Pow_4.is.In_Ite_FinsetSSubS__SubS.of.Ne_0)
   - [常系数齐次线性递推通项公式](../?module=Complex.Any_All_Eq_Dot_MulDescFactorial.of.All_Eq_Dot)
@@ -33,16 +34,15 @@
 * [Vector](../?module=Vector) 向量（一维张量）理论
 * [Matrix](../?module=Matrix) 矩阵理论，例：
   - [置盐定理](../?module=Matrix.Any_And_EqSMul_UpdateCol.of.IsIrreducibleUpdateColAdd_Dot.LtDot_Add_SMul.EqSMul.All_Gt_0)
-  - [Cholesky 分解](../?module=Finset.All.And.of.Eq_Adjoint.Imp_Gt_0.Eq_Ite.Cholesky)
-  - [PLU 分解](../?module=Matrix.EqMul_T_1.IsLowerTriangular.IsUpperTriangular.EqMulS)
+  - [Cholesky 分解](../?module=Finset.All.And.of.Eq_Adjoint.Imp_Gt_0.Eq_Ite.Cholesky), [PLU 分解](../?module=Matrix.EqMul_T_1.IsLowerTriangular.IsUpperTriangular.EqMulS)
 * [Tensor](../?module=Tensor) 形式化张量演算，语义上与 **torch.Tensor** 对齐，用于深度学习算法的形式化表述与验证，例：
   - [kv_cache](../?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)
   - [RoPE](../?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)
 * [Random](../?module=Random) 概率论与随机过程，例：
-  - [独立高斯之和](../?module=Random.DistributedSum.of.All_Distributed_Gaussian.All_Indep)、[𝒳²(n)](../?module=Random.Distributed_ChiSquared.of.All_Distributed_Gaussian.All_Indep)、[Fisher](../?module=Random.Distributed_Fisher.of.All_And_Distributed_Gaussian.Gt_1.Gt_1)、[弱大数定律](../?module=Random.Lim_ProbLtAbsSubDivSum.eq.One.of.All_EqVar.All_EqExpect.All_Indep.All_MemLp2.All_PSpace)
+  - [独立高斯之和](../?module=Random.DistributedSum.of.All_Distributed_Gaussian.All_Indep)、[𝒳²(n)](../?module=Random.Distributed_ChiSquared.of.All_Distributed_Gaussian.All_Indep)、[Fisher](../?module=Random.Distributed_Fisher.of.All_And_Distributed_Gaussian.Gt_1.Gt_1)、[弱大数定律](../?module=Random.Lim_ProbLtAbsSubDivSum.eq.One.of.All_EqVar.All_EqExpect.All_Indep.All_MemLp2.All_PSpace)、[克拉默](../?module=Random.SatisfiesLDP_EmpiricalMeanLawPi.of.HasFiniteMGF.ForallBddAbove)
   - [朴素贝叶斯文档分类](../?module=Random.ArgMax_ProbCond.eq.ArgMax_Mul_Prod_ProbCond.of.NeProbJoint__0.All_CondIndep)
   - [CRF 损失函数](../?module=Random.All_Eq_AddLogSumExpAdd.All_EqNegLogProb.of.All_Eq_LogProbCond.All_Eq_LogProbCond.Eq_LogProbJoint.All_Lt0ProbJoint.IsDiscreteHMM)
-  - [广义优势估计](../?module=Random.GradExpectDotPow_Id.eq.ExpectDot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_LeSum.CountableMeasure.Subset_Ico)
+  - [广义优势估计](../?module=Random.GradExpectDotPow_Id.eq.ExpectDot_FunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_NeProb_0.IsPolicyTrajectory.Subset_Ico)
 
 <br><br>
 -------

@@ -23,7 +23,8 @@ The library currently contains <label id=count>5000</label> proved theorems (<la
 * [Rat](../?module=Rat) Elementary algebra of rationals
 * [Real](../?module=Real) Algebra and real analysis, e.g.:
   - [Jensen's inequality](../?module=Real.LeSum_Mul.of.EqSumRange__1.All_Ge_0.All_In_Icc.All_Gt0Deriv2.ContinuousOn_Icc)
-* [Hyperreal](../?module=Real) Nonstandard analysis
+* [Hyperreal](../?module=Hyperreal) Nonstandard analysis, e.g.:
+  - [Mersenne's law](../?module=Hyperreal.Eq_Mul_SqrtDiv.of.All_EqMul_Deriv_SinArctan.All_Eq_MulMul_Sin_Cos)
 * [Complex](../?module=Complex) Complex analysis, e.g.:
   - [quartic equation](../?module=Complex.Eq0Add_Mul_Pow_4.is.In_Ite_FinsetSSubS__SubS.of.Ne_0)
   - [closed form of homogeneous linear recurrence with constant coefficients](../?module=Complex.Any_All_Eq_Dot_MulDescFactorial.of.All_Eq_Dot)
@@ -34,16 +35,15 @@ The library currently contains <label id=count>5000</label> proved theorems (<la
 * [Vector](../?module=Vector) One-dimensional vector theorems
 * [Matrix](../?module=Matrix) Matrix theory, e.g.:
   - [Okishio's theorem](../?module=Matrix.Any_And_EqSMul_UpdateCol.of.IsIrreducibleUpdateColAdd_Dot.LtDot_Add_SMul.EqSMul.All_Gt_0)
-  - [Cholesky decomposition](../?module=Finset.All.And.of.Eq_Adjoint.Imp_Gt_0.Eq_Ite.Cholesky)
-  - [PLU decomposition](../?module=Matrix.EqMul_T_1.IsLowerTriangular.IsUpperTriangular.EqMulS)
+  - [Cholesky decomposition](../?module=Finset.All.And.of.Eq_Adjoint.Imp_Gt_0.Eq_Ite.Cholesky), [PLU decomposition](../?module=Matrix.EqMul_T_1.IsLowerTriangular.IsUpperTriangular.EqMulS)
 * [Tensor](../?module=Tensor) Formal tensor calculus, semantically equivalent to **torch.Tensor**, for formal verification of deep-learning algorithms, e.g.:
   - [kv_cache](../?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)
   - [RoPE](../?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)
 * [Random](../?module=Random) Probability theory and stochastic processes, e.g.:
-  - [sum of independent Gaussians](../?module=Random.DistributedSum.of.All_Distributed_Gaussian.All_Indep), [𝒳²(n)](../?module=Random.Distributed_ChiSquared.of.All_Distributed_Gaussian.All_Indep), [Fisher](../?module=Random.Distributed_Fisher.of.All_And_Distributed_Gaussian.Gt_1.Gt_1), [weak law of large numbers](../?module=Random.Lim_ProbLtAbsSubDivSum.eq.One.of.All_EqVar.All_EqExpect.All_Indep.All_MemLp2.All_PSpace)
+  - [sum of independent Gaussians](../?module=Random.DistributedSum.of.All_Distributed_Gaussian.All_Indep), [𝒳²(n)](../?module=Random.Distributed_ChiSquared.of.All_Distributed_Gaussian.All_Indep), [Fisher](../?module=Random.Distributed_Fisher.of.All_And_Distributed_Gaussian.Gt_1.Gt_1), [weak law of large numbers](../?module=Random.Lim_ProbLtAbsSubDivSum.eq.One.of.All_EqVar.All_EqExpect.All_Indep.All_MemLp2.All_PSpace), [Cramér](../?module=Random.SatisfiesLDP_EmpiricalMeanLawPi.of.HasFiniteMGF.ForallBddAbove)
   - [naive Bayes document classification](../?module=Random.ArgMax_ProbCond.eq.ArgMax_Mul_Prod_ProbCond.of.NeProbJoint__0.All_CondIndep)
   - [CRF loss function](../?module=Random.All_Eq_AddLogSumExpAdd.All_EqNegLogProb.of.All_Eq_LogProbCond.All_Eq_LogProbCond.Eq_LogProbJoint.All_Lt0ProbJoint.IsDiscreteHMM)
-  - [GAE](../?module=Random.GradExpectDotPow_Id.eq.ExpectDot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_LeSum.CountableMeasure.Subset_Ico)
+  - [GAE](../?module=Random.GradExpectDotPow_Id.eq.ExpectDot_FunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_NeProb_0.IsPolicyTrajectory.Subset_Ico)
 
 <br><br>
 -------

@@ -1,3 +1,4 @@
+import Lemma.EReal.Le_Neg.of.All_Le_Neg
 import Lemma.Random.IsProbabilityMeasure.of.Gt_0
 import Lemma.Random.Limsup_MulInvERealLog.le.NegIn.inf.KlDivMeasure.of.IsCompact
 import Lemma.Random.LowerSemicontinuous_KlDivMeasure
@@ -25,54 +26,13 @@ import Mathlib.Topology.Instances.EReal.Lemmas
 import Mathlib.Topology.MetricSpace.Polish
 import Mathlib.Topology.Metrizable.CompletelyMetrizable
 import Mathlib.Topology.Order.LiminfLimsup
-import Structure.v1.Atlas.TheoryOfProbability.code.LargeDeviations
-import Initialize.Tactic.Attr.Basic
-open Classical ENNReal Filter Finset InformationTheory MeasureTheory ProbabilityMeasure Random Set Real
+open Classical ENNReal EReal Filter Finset InformationTheory MeasureTheory ProbabilityMeasure Random Set Real
 open scoped ENNReal Topology
 set_option maxHeartbeats 800000
 
 
-universe u
-
-private lemma leNeg {a b : EReal} (h : ∀ t : ℝ, ↑t < b → a ≤ -↑t) : a ≤ -b := by
-  cases b with
-  | bot =>
-    exact le_top.trans_eq EReal.neg_bot.symm
-  | top =>
-    cases a with
-    | bot =>
-      rw [EReal.neg_top]
-    | coe q =>
-      exfalso
-      have hq : ((-q + 1 : ℝ) : EReal) < ⊤ := EReal.coe_lt_top (-q + 1)
-      have hle := h (-q + 1) hq
-      rw [← EReal.coe_neg, EReal.coe_le_coe_iff] at hle
-      linarith
-    | top =>
-      exfalso
-      have hle := h 0 (EReal.coe_lt_top 0)
-      rw [← EReal.coe_neg] at hle
-      exact not_le_of_gt (EReal.coe_lt_top _) hle
-  | coe r =>
-    cases a with
-    | bot => exact bot_le
-    | top =>
-      exfalso
-      have hle := h (r - 1) (EReal.coe_lt_coe_iff.mpr (by linarith))
-      rw [← EReal.coe_neg] at hle
-      exact not_le_of_gt (EReal.coe_lt_top _) hle
-    | coe q =>
-      rw [← EReal.coe_neg, EReal.coe_le_coe_iff]
-      by_contra hqr
-      push Not at hqr
-      have hlt : -q < r := by linarith
-      obtain ⟨t, ht1, ht2⟩ := exists_between hlt
-      have hle := h t (EReal.coe_lt_coe_iff.mpr ht2)
-      rw [← EReal.coe_neg, EReal.coe_le_coe_iff] at hle
-      linarith
-
 private lemma tight
-  {α : Type u} [TopologicalSpace α] [PolishSpace α] [MeasurableSpace α] [BorelSpace α]
+  [TopologicalSpace α] [PolishSpace α] [MeasurableSpace α] [BorelSpace α]
   {μ : Measure α} [IsProbabilityMeasure μ]
 -- given
   (M : ℝ) :
@@ -84,9 +44,8 @@ private lemma tight
           (⟨(n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
             IsProbabilityMeasure.of.Gt_0 hn⟩ : ProbabilityMeasure α)
         else μ.toProbabilityMeasure)
-        (Measure.pi fun _ : Fin n => μ)) Γᶜ)) atTop ≤ -↑M :=
+        (Measure.pi fun _ : Fin n => μ)) Γᶜ)) atTop ≤ -↑M := by
 -- proof
-by
   let emp (n : ℕ) (ω : Fin n → α) : ProbabilityMeasure α :=
     if hn : 0 < n then
       (⟨(n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
@@ -132,15 +91,16 @@ by
     have hint : Integrable (fun x => exp (g x)) μ := by
       refine ⟨(measurable_exp.comp hg).aestronglyMeasurable, ?_⟩
       refine HasFiniteIntegral.of_bounded (C := exp t) (ae_of_all _ fun x => ?_)
+      show ‖exp (g x)‖ ≤ exp t
       rw [Real.norm_eq_abs, abs_of_pos (exp_pos _)]
-      exact exp_le_exp.mpr <| by
-        simp only [g]
-        have hind : A.indicator (fun _ => (1 : ℝ)) x ≤ 1 := by
-          if hx : x ∈ A then
-            simp [hx, indicator]
-          else
-            simp [hx, indicator]
-        nlinarith [ht.le, hind]
+      apply exp_le_exp.mpr
+      simp only [g]
+      have hind : A.indicator (fun _ => (1 : ℝ)) x ≤ 1 := by
+        if hx : x ∈ A then
+          simp [hx, indicator]
+        else
+          simp [hx, indicator]
+      nlinarith [ht.le, hind]
     have hintn : Integrable (fun ω : Fin n → α => exp (∑ i, g (ω i)))
       (Measure.pi fun _ : Fin n => μ) := by
       have hrewrite : (fun ω : Fin n → α => exp (∑ i, g (ω i))) =
@@ -236,10 +196,10 @@ by
       let rhs : (Fin n → α) → ProbabilityMeasure α :=
         fun ω => (⟨(n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
           IsProbabilityMeasure.of.Gt_0 hn⟩ : ProbabilityMeasure α)
-      exact ((by
-        funext ω
-        unfold emp
-        exact dite_eq_left hn) : emp n = rhs) ▸ Measurable.of.Gt_0 (α := α) hn
+      suffices heq : emp n = rhs from heq ▸ Measurable.of.Gt_0 (α := α) hn
+      funext ω
+      unfold emp
+      exact dite_eq_left hn
     have hmono : law n {ν | ε < ν A} ≤ law n G := measure_mono hsub
     refine hmono.trans ?_
     have hmap : law n G =
@@ -260,9 +220,8 @@ by
           exact dite_eq_left hn
         rw [hempω]
         rfl
-      rw [hcoe, ← integral_indicator_one hA, integral_indicator_emp ω A hA,
+      rwa [hcoe, ← integral_indicator_one hA, integral_indicator_emp ω A hA,
         le_div_iff₀ (Nat.cast_pos.mpr hn)] at hmem
-      exact hmem
     refine (measure_mono hpre).trans ?_
     refine (indicatorChernoff A hA t (ε : ℝ) ht n).trans ?_
     have hIeq := integral_exp_indicator A hA t ht.le
@@ -314,15 +273,15 @@ by
         let rhs : (Fin n → α) → ProbabilityMeasure α :=
           fun ω => (⟨(n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
             IsProbabilityMeasure.of.Gt_0 hn⟩ : ProbabilityMeasure α)
-        exact ((by
-          funext ω
-          unfold emp
-          exact dite_eq_left hn) : emp n = rhs) ▸ Measurable.of.Gt_0 (α := α) hn
+        suffices heq : emp n = rhs from heq ▸ Measurable.of.Gt_0 (α := α) hn
+        funext ω
+        unfold emp
+        exact dite_eq_left hn
       else
-        exact ((by
-          funext ω
-          unfold emp
-          exact dite_eq_right hn) : emp n = fun _ => μ.toProbabilityMeasure) ▸ measurable_const
+        suffices heq : emp n = fun _ => μ.toProbabilityMeasure from heq ▸ measurable_const
+        funext ω
+        unfold emp
+        exact dite_eq_right hn
     unfold law
     rw [Measure.map_apply hemp MeasurableSet.univ, Set.preimage_univ, measure_univ]
   if hM : M ≤ 0 then
@@ -473,7 +432,7 @@ by
     · rw [hconst.limsup_eq, hvan.limsup_eq, add_zero]
 
 private lemma closedBound
-  {α : Type u} [TopologicalSpace α] [PolishSpace α] [MeasurableSpace α] [BorelSpace α]
+  [TopologicalSpace α] [PolishSpace α] [MeasurableSpace α] [BorelSpace α]
   {μ : Measure α} [IsProbabilityMeasure μ]
   {F : Set (ProbabilityMeasure α)}
 -- given
@@ -486,9 +445,8 @@ private lemma closedBound
           IsProbabilityMeasure.of.Gt_0 hn⟩ : ProbabilityMeasure α)
       else μ.toProbabilityMeasure)
       (Measure.pi fun _ : Fin n => μ)) F)) atTop ≤
-    -(⨅ ν ∈ F, (klDiv (ν : Measure α) μ : EReal)) :=
+    -(⨅ ν ∈ F, (klDiv (ν : Measure α) μ : EReal)) := by
 -- proof
-by
   let emp (n : ℕ) (ω : Fin n → α) : ProbabilityMeasure α :=
     if hn : 0 < n then
       (⟨(n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
@@ -500,7 +458,7 @@ by
       (Measure.pi fun _ : Fin n => μ)
   let β : EReal := ⨅ ν ∈ F, (klDiv (ν : Measure α) μ : EReal)
   change limsup (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (law n F)) atTop ≤ -β
-  apply leNeg
+  apply Le_Neg.of.All_Le_Neg
   intro t ht
   obtain ⟨Γ, hΓ, hΓc⟩ := tight (μ := μ) t
   let K := Γ ∩ F
@@ -520,12 +478,11 @@ by
           (((n : ℕ) : EReal)⁻¹ * ENNReal.log (law n Γᶜ)) := by
     intro n hn
     have hnn : 0 ≤ ((n : ℕ) : EReal) := by exact_mod_cast Nat.zero_le n
-    have hsum : law n F ≤ 2 * max (law n K) (law n Γᶜ) := by
-      calc
-        law n F ≤ law n K + law n Γᶜ := hle n
-        _ ≤ max (law n K) (law n Γᶜ) + max (law n K) (law n Γᶜ) :=
-          add_le_add (le_max_left _ _) (le_max_right _ _)
-        _ = 2 * max (law n K) (law n Γᶜ) := by rw [two_mul]
+    have hsum : law n F ≤ 2 * max (law n K) (law n Γᶜ) := calc
+      _ ≤ law n K + law n Γᶜ := hle n
+      _ ≤ max (law n K) (law n Γᶜ) + max (law n K) (law n Γᶜ) :=
+        add_le_add (le_max_left _ _) (le_max_right _ _)
+      _ = 2 * max (law n K) (law n Γᶜ) := by rw [two_mul]
     have hlog := ENNReal.log_le_log hsum
     rw [ENNReal.log_mul_add] at hlog
     have hmax : ENNReal.log (max (law n K) (law n Γᶜ)) =
@@ -536,17 +493,16 @@ by
         have h' : law n Γᶜ ≤ law n K := le_of_not_ge h
         rw [max_eq_left h', max_eq_left (ENNReal.log_le_log h')]
     rw [hmax] at hlog
-    refine (mul_le_mul_of_nonneg_left hlog (EReal.inv_nonneg_of_nonneg hnn)).trans ?_
+    refine (mul_le_mul_of_nonneg_left hlog (EReal.inv_nonneg_of_nonneg hnn)).trans (le_of_eq ?_)
     rw [EReal.left_distrib_of_nonneg_of_ne_top (EReal.inv_nonneg_of_nonneg hnn)
       (EReal.inv_lt_top _).ne]
-    exact le_of_eq <| by
-      if hlogle : ENNReal.log (law n K) ≤ ENNReal.log (law n Γᶜ) then
-        rw [max_eq_right hlogle, max_eq_right
-          (mul_le_mul_of_nonneg_left hlogle (EReal.inv_nonneg_of_nonneg hnn))]
-      else
-        have hlogle' : ENNReal.log (law n Γᶜ) ≤ ENNReal.log (law n K) := le_of_not_ge hlogle
-        rw [max_eq_left hlogle', max_eq_left
-          (mul_le_mul_of_nonneg_left hlogle' (EReal.inv_nonneg_of_nonneg hnn))]
+    if hlogle : ENNReal.log (law n K) ≤ ENNReal.log (law n Γᶜ) then
+      rw [max_eq_right hlogle, max_eq_right
+        (mul_le_mul_of_nonneg_left hlogle (EReal.inv_nonneg_of_nonneg hnn))]
+    else
+      have hlogle' : ENNReal.log (law n Γᶜ) ≤ ENNReal.log (law n K) := le_of_not_ge hlogle
+      rw [max_eq_left hlogle', max_eq_left
+        (mul_le_mul_of_nonneg_left hlogle' (EReal.inv_nonneg_of_nonneg hnn))]
   have hKlim : limsup (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (law n K)) atTop ≤
     -(⨅ ν ∈ K, (klDiv (ν : Measure α) μ : EReal)) := by
     unfold law emp
@@ -575,8 +531,8 @@ by
     exact hsplit n hn
   refine (limsup_le_limsup hev).trans ?_
   refine (EReal.limsup_add_le ?_ ?_).trans ?_
-  · exact Or.inl (by rw [hlog2.limsup_eq]; exact EReal.zero_ne_bot)
-  · exact Or.inl (by rw [hlog2.limsup_eq]; exact EReal.zero_ne_top)
+  · exact Or.inl (by simp [hlog2.limsup_eq])
+  · exact Or.inl (by simp [hlog2.limsup_eq])
   rw [hlog2.limsup_eq, zero_add, limsup_max]
   refine max_le ?_ ?_
   · exact hKlim.trans (hKβ.trans htβ)
@@ -588,7 +544,7 @@ of speed `n` with rate the Kullback–Leibler divergence from the common law.
 -/
 @[path]
 private lemma main
-  {α : Type u} [TopologicalSpace α] [PolishSpace α] [MeasurableSpace α] [BorelSpace α]
+  [TopologicalSpace α] [PolishSpace α] [MeasurableSpace α] [BorelSpace α]
   {μ : Measure α} [IsProbabilityMeasure μ] :
 -- imply
   SatisfiesLDP
@@ -599,14 +555,12 @@ private lemma main
             IsProbabilityMeasure.of.Gt_0 hn⟩ : ProbabilityMeasure α)
         else μ.toProbabilityMeasure)
         (Measure.pi fun _ : Fin n => μ))
-    (fun ν : ProbabilityMeasure α => klDiv (ν : Measure α) μ) :=
+    (fun ν : ProbabilityMeasure α => klDiv (ν : Measure α) μ) := by
 -- proof
-by
-  refine ⟨⟨LowerSemicontinuous_KlDivMeasure (μ := μ)⟩, ?_, ?_⟩
-  · intro U hU
-    exact NegIn.inf.KlDivMeasure.le.Liminf_MulInvERealLog.of.IsOpen (μ := μ) hU
-  · intro F hF
-    exact closedBound (μ := μ) hF
+  refine ⟨⟨LowerSemicontinuous_KlDivMeasure (μ := μ)⟩,
+    fun U hU => NegIn.inf.KlDivMeasure.le.Liminf_MulInvERealLog.of.IsOpen (μ := μ) hU,
+    fun F hF => closedBound (μ := μ) hF⟩
 
 
 -- created on 2026-11-03
+-- updated on 2026-11-05

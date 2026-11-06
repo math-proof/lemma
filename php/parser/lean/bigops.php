@@ -1,6 +1,6 @@
 <?php
 /**
- * Big operators (`LeanBigOperator`, `∑`, `lim`, `∏`, `∫`, `⋂`, `⋃`, `Stack`).
+ * Big operators (`LeanBigOperator`, `∑`, `lim`, `∏`, `∫`, `∂`, `∇`, `𝔼`, `ℙ`, `𝕍𝕒𝕣`, `⋂`, `⋃`, `Stack`).
  *
  * Loaded by lean.php after `fun.php` and before `quantifier.php`, because
  * `LeanQuantifier` extends `LeanBigOperator`.
@@ -403,7 +403,7 @@ class Lean_int extends LeanBigOperator
         $body = $this->integrandLatex($syntax, $partial);
         $colon = $this->binderColon();
         $x = $colon ? $colon->lhs->toLatex($syntax) : '';
-        $tail = $x ?: ($partial ? $partial->arg->toLatex($syntax) : '');
+        $tail = $x ?: ($partial ? $partial->bound->toLatex($syntax) : '');
         $dom = $this->intDomain();
         if ($dom instanceof LeanUpto)
             return [$dom->lhs->toLatex($syntax), $dom->rhs->toLatex($syntax), $body, $tail];
@@ -412,6 +412,734 @@ class Lean_int extends LeanBigOperator
         return [$body, $tail];
     }
 }
+
+/**
+ * `∂[x] body` / measure `∂μ`. Bound+scope like ∑/lim; path Deriv.
+ */
+class Lean_partial extends LeanBigOperator
+{
+    public static $input_priority = 75;
+
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'operator':
+                return '∂';
+            case 'command':
+                return '\\partial';
+            case 'stack_priority':
+                if ($this->scope)
+                    return LeanAdd::$input_priority;
+                if (!($this->bound instanceof LeanCaret))
+                    return 67;
+                return LeanColon::$input_priority - 1;
+            default:
+                return parent::__get($vname);
+        }
+    }
+
+    public function insert_comma($caret)
+    {
+        if ($this->parent)
+            return $this->parent->insert_comma($this);
+        throw new Exception(__METHOD__ . ' is unexpected for ' . get_class($this));
+    }
+
+    public function set_line($line)
+    {
+        $this->line = $line;
+        $line = $this->bound->set_line($line);
+        if (!$this->scope)
+            return $line;
+        $s = $this->sep();
+        if ($s && $s[0] === "\n")
+            $line++;
+        return $this->scope->set_line($line);
+    }
+
+    public function strFormat()
+    {
+        if (!$this->scope)
+            return "$this->operator%s";
+        return "$this->operator[%s]" . $this->sep() . "%s";
+    }
+
+    public function derivSugar()
+    {
+        if (!$this->scope)
+            return null;
+        $index = $this->bound;
+        if ($this->scope instanceof LeanArgsSpaceSeparated)
+            $body = array_values(array_filter($this->scope->args, fn($a) => !($a instanceof LeanCaret)));
+        else if ($this->scope instanceof LeanCaret)
+            $body = [];
+        else
+            $body = [$this->scope];
+        if ($index instanceof LeanEq && $index->lhs instanceof LeanToken)
+            return ['name' => $index->lhs, 'point' => $index->rhs, 'body' => $body];
+        return ['name' => $index, 'point' => null, 'body' => $body];
+    }
+
+    public function latexArgs(&$syntax = null)
+    {
+        $sugar = $this->derivSugar();
+        if (!$sugar)
+            return [$this->bound->toLatex($syntax)];
+        $body = [];
+        foreach ($sugar['body'] as $a) {
+            if ($a instanceof LeanParenthesis && $a->arg instanceof LeanDiv)
+                $a = $a->arg;
+            $body[] = $a->toLatex($syntax);
+        }
+        $name = $sugar['name']->toLatex($syntax);
+        if (!$sugar['point'])
+            return $body ? array_merge([$name], $body) : [$name];
+        $point = $sugar['point'];
+        if ($point instanceof LeanParenthesis)
+            $point = $point->arg;
+        return array_merge([$name], $body, [$name, $point->toLatex($syntax)]);
+    }
+
+    public function latexFormat()
+    {
+        $sugar = $this->derivSugar();
+        if (!$sugar)
+            return '\\partial{%s}';
+        $body = implode('\\ ', array_map(fn() => '{%s}', $sugar['body']));
+        $partial = $body ? "\\partial_{%s} {" . $body . "}" : '\\partial_{%s}';
+        if (!$sugar['point'])
+            return $partial;
+        return "\\left. " . $partial . " \\right|_{{%s} = {%s}}";
+    }
+
+    public function holeRegex($opts = [])
+    {
+        return ($this->bound !== null || $this->scope !== null) ? "Deriv_" : null;
+    }
+
+}
+
+/**
+ * `∇[θ] body` / binder-free `∇ J` / `∇ J θ`. Bound+scope like lim/∂.
+ */
+class Lean_nabla extends LeanBigOperator
+{
+    public static $input_priority = 75;
+
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'operator':
+                return '∇';
+            case 'command':
+                return '\\nabla';
+            case 'stack_priority':
+                if ($this->scope)
+                    return LeanAdd::$input_priority;
+                if (!($this->bound instanceof LeanCaret))
+                    return 67;
+                return LeanColon::$input_priority - 1;
+            default:
+                return parent::__get($vname);
+        }
+    }
+
+    public function insert_comma($caret)
+    {
+        if ($this->parent)
+            return $this->parent->insert_comma($this);
+        throw new Exception(__METHOD__ . ' is unexpected for ' . get_class($this));
+    }
+
+    public function set_line($line)
+    {
+        $this->line = $line;
+        $line = $this->bound->set_line($line);
+        if (!$this->scope)
+            return $line;
+        $s = $this->sep();
+        if ($s && $s[0] === "\n")
+            $line++;
+        return $this->scope->set_line($line);
+    }
+
+    public function strFormat()
+    {
+        if ($this->scope)
+            return "$this->operator[%s]" . $this->sep() . "%s";
+        return "$this->operator %s";
+    }
+
+    public function nablaSugar()
+    {
+        if ($this->scope) {
+            $index = $this->bound;
+            if ($this->scope instanceof LeanArgsSpaceSeparated)
+                $body = array_values(array_filter($this->scope->args, fn($a) => !($a instanceof LeanCaret)));
+            else if ($this->scope instanceof LeanCaret)
+                $body = [];
+            else
+                $body = [$this->scope];
+            if ($index instanceof LeanEq && $index->lhs instanceof LeanToken)
+                return ['kind' => 'binder', 'name' => $index->lhs, 'point' => $index->rhs, 'body' => $body];
+            return ['kind' => 'binder', 'name' => $index, 'point' => null, 'body' => $body];
+        }
+        $b = $this->bound;
+        if ($b instanceof LeanCaret)
+            return null;
+        if ($b instanceof LeanArgsSpaceSeparated)
+            return ['kind' => 'function', 'operands' => array_values(array_filter($b->args, fn($a) => !($a instanceof LeanCaret)))];
+        return ['kind' => 'function', 'operands' => [$b]];
+    }
+
+    public function latexArgs(&$syntax = null)
+    {
+        $sugar = $this->nablaSugar();
+        if (!$sugar)
+            return [$this->bound->toLatex($syntax)];
+        if ($sugar['kind'] === 'function') {
+            $out = [];
+            foreach ($sugar['operands'] as $arg) {
+                if ($arg instanceof LeanParenthesis && $arg->arg instanceof LeanDiv)
+                    $arg = $arg->arg;
+                if ($arg instanceof LeanParenthesis)
+                    $arg = $arg->arg;
+                $out[] = $arg->toLatex($syntax);
+            }
+            return $out;
+        }
+        $body = [];
+        foreach ($sugar['body'] as $a) {
+            if ($a instanceof LeanParenthesis && $a->arg instanceof LeanDiv)
+                $a = $a->arg;
+            $body[] = $a->toLatex($syntax);
+        }
+        $name = $sugar['name']->toLatex($syntax);
+        if (!$sugar['point'])
+            return $body ? array_merge([$name], $body) : [$name];
+        $point = $sugar['point'];
+        if ($point instanceof LeanParenthesis)
+            $point = $point->arg;
+        return array_merge([$name], $body, [$name, $point->toLatex($syntax)]);
+    }
+
+    public function latexFormat()
+    {
+        $sugar = $this->nablaSugar();
+        if (!$sugar)
+            return '\\nabla {%s}';
+        if ($sugar['kind'] === 'function') {
+            $ops = $sugar['operands'];
+            if (count($ops) === 1)
+                return '\\nabla {%s}';
+            $rest = implode('\\ ', array_map(fn() => '{%s}', array_slice($ops, 1)));
+            return "\\nabla {%s}\\left($rest\\right)";
+        }
+        $body = implode('\\ ', array_map(fn() => '{%s}', $sugar['body']));
+        $nabla = $body ? "\\nabla_{%s} {" . $body . "}" : '\\nabla_{%s}';
+        if (!$sugar['point'])
+            return $nabla;
+        return "\\left. " . $nabla . " \\right|_{{%s} = {%s}}";
+    }
+
+    public function holeRegex($opts = [])
+    {
+        return ($this->bound !== null || $this->scope !== null) ? "Grad_" : null;
+    }
+
+}
+
+
+
+/**
+ * Random big-ops: `𝔼[binder](body)`, `ℙ[π](event)` / `ℙ[π]{event}`, `𝕍𝕒𝕣[binder](body)`.
+ * Promoted from GetElem + Parenthesis/Brace (bound/scope like ∑/∂/∇).
+ * Mathlib `Var[Y]` stays plain GetElem.
+ */
+class LeanRandomBigOp extends LeanBigOperator
+{
+    public static $input_priority = 67;
+    /** @var string */
+    public $bodyDelim = 'paren';
+
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'stack_priority':
+                if ($this->scope)
+                    return LeanAdd::$input_priority;
+                return 67;
+            case 'pathToken':
+                return 'Expect';
+            default:
+                return parent::__get($vname);
+        }
+    }
+
+    public function set_line($line)
+    {
+        $this->line = $line;
+        $line = $this->bound->set_line($line);
+        if (!$this->scope)
+            return $line;
+        return $this->scope->set_line($line);
+    }
+
+    public function strFormat()
+    {
+        if (!$this->scope)
+            return "$this->operator[%s]";
+        return "$this->operator[%s]%s";
+    }
+
+    public function sep()
+    {
+        return '';
+    }
+
+    public function binderLatex(&$syntax = null)
+    {
+        $ix = $this->bound;
+        if ($ix instanceof LeanColon) {
+            $ty = $ix->rhs;
+            if ($ty instanceof LeanParenthesis)
+                $ty = $ty->arg;
+            if ($ty instanceof LeanBitOr)
+                return '{' . $ix->lhs->toLatex($syntax) . '} : {' . $ty->lhs->toLatex($syntax) . '}';
+        }
+        return $ix->toLatex($syntax);
+    }
+
+    public function latexArgs(&$syntax = null)
+    {
+        $binder = $this->binderLatex($syntax);
+        if (!$this->scope)
+            return [$binder];
+        return [$binder, $this->scope->toLatex($syntax)];
+    }
+
+    /**
+     * Promote GetElem(𝔼|ℙ|𝕍𝕒𝕣, binder) + closed Parenthesis/Brace → Lean_* bigop.
+     * @param LeanPairedGroup $bodyDelim
+     * @return Lean|null
+     */
+    public static function tryPromote($bodyDelim)
+    {
+        $p = $bodyDelim->parent;
+        if (!($p instanceof LeanArgsSpaceSeparated))
+            return null;
+        $i = array_search($bodyDelim, $p->args, true);
+        if ($i === false || $i <= 0)
+            return null;
+        $head = $p->args[$i - 1];
+        if (!($head instanceof LeanGetElem))
+            return null;
+        $base = $head->lhs ?? $head->args[0] ?? null;
+        if (!($base instanceof LeanToken))
+            return null;
+        $Ctor = null;
+        if ($base->text === '𝔼')
+            $Ctor = Lean_Expect::class;
+        else if ($base->text === 'ℙ')
+            $Ctor = Lean_Prob::class;
+        else if ($base->text === '𝕍𝕒𝕣')
+            $Ctor = Lean_Var::class;
+        if (!$Ctor)
+            return null;
+        $binder = $head->rhs ?? $head->args[1] ?? null;
+        $node = new $Ctor($binder, $bodyDelim->indent, $bodyDelim->level, $p);
+        $node->scope = $bodyDelim;
+        $node->bodyDelim = $bodyDelim instanceof LeanBrace ? 'brace' : 'paren';
+        array_splice($p->args, $i - 1, 2, [$node]);
+        $bodyDelim->parent = $node;
+        if ($binder)
+            $binder->parent = $node;
+        if (count($p->args) === 1 && $p->parent) {
+            $node->parent = null;
+            $p->parent->replace($p, $node);
+            return $node;
+        }
+        $node->parent = $p;
+        return $node;
+    }
+}
+
+class Lean_Expect extends LeanRandomBigOp
+{
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'operator':
+            case 'baseOperator':
+                return '𝔼';
+            case 'pathToken':
+                return 'Expect';
+            default:
+                return parent::__get($vname);
+        }
+    }
+
+    public function latexFormat()
+    {
+        if (!$this->scope)
+            return '\\mathop{{𝔼}}\\limits_{%s}';
+        return '\\mathop{{𝔼}}\\limits_{%s}\\ {%s}';
+    }
+}
+
+class Lean_Prob extends LeanRandomBigOp
+{
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'operator':
+            case 'baseOperator':
+                return 'ℙ';
+            case 'pathToken':
+                return 'Prob';
+            default:
+                return parent::__get($vname);
+        }
+    }
+
+    public function latexFormat()
+    {
+        if (!$this->scope)
+            return '{{ℙ}}_{%s}';
+        return '{{{ℙ}}_{%s}}\\ {%s}';
+    }
+}
+
+class Lean_Var extends LeanRandomBigOp
+{
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'operator':
+            case 'baseOperator':
+                return '𝕍𝕒𝕣';
+            case 'pathToken':
+                return 'Var';
+            default:
+                return parent::__get($vname);
+        }
+    }
+
+    public function latexFormat()
+    {
+        if (!$this->scope)
+            return '{{𝕍𝕒𝕣}}_{%s}';
+        return '{{{𝕍𝕒𝕣}}_{%s}}\\ {%s}';
+    }
+}
+
+
+/**
+ * Limits-style GetElem sugars: max/min/sup/inf/max⁻¹/min⁻¹[binder] body.
+ * Promoted from GetElem + body (paren/brace or SpaceSeparated juxta).
+ * Unicode ⨅/⨆ stay LeanInf/LeanSup when present in JS; not these classes.
+ */
+class LeanLimitsBigOp extends LeanBigOperator
+{
+    public static $input_priority = 67;
+
+    /** @var array<string,class-string>|null */
+    public static $LIMITS_CTOR = null;
+
+    public static function limitsCtorFor($text)
+    {
+        $map = self::$LIMITS_CTOR;
+        return $map[$text] ?? null;
+    }
+
+    public static function isLimitsGetElem($head)
+    {
+        if (!($head instanceof LeanGetElem))
+            return null;
+        $base = $head->lhs ?? $head->args[0] ?? null;
+        if (!($base instanceof LeanToken))
+            return null;
+        $Ctor = self::limitsCtorFor($base->text);
+        if (!$Ctor)
+            return null;
+        return [
+            'Ctor' => $Ctor,
+            'binder' => $head->rhs ?? $head->args[1] ?? null,
+            'base' => $base,
+        ];
+    }
+
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'stack_priority':
+                if ($this->scope)
+                    return LeanAdd::$input_priority;
+                return 67;
+            case 'pathToken':
+                return 'Max';
+            default:
+                return parent::__get($vname);
+        }
+    }
+
+    public function set_line($line)
+    {
+        $this->line = $line;
+        $line = $this->bound->set_line($line);
+        if (!$this->scope)
+            return $line;
+        $s = $this->sep();
+        if ($s && $s[0] === "\n")
+            ++$line;
+        return $this->scope->set_line($line);
+    }
+
+    public function strFormat()
+    {
+        if (!$this->scope)
+            return "$this->operator[%s]";
+        return "$this->operator[%s] %s";
+    }
+
+    public function sep()
+    {
+        return ' ';
+    }
+
+    public function binderLatex(&$syntax = null)
+    {
+        // Mirror JS LeanGetElem::expectBinderIndexLatex
+        $ix = $this->bound;
+        if ($ix instanceof LeanColon) {
+            $ty = $ix->rhs;
+            if ($ty instanceof LeanParenthesis)
+                $ty = $ty->arg;
+            if ($ty instanceof LeanBitOr)
+                return '{' . $ix->lhs->toLatex($syntax) . '} : {' . $ty->lhs->toLatex($syntax) . '}';
+        }
+        return $ix->toLatex($syntax);
+    }
+
+    public function latexArgs(&$syntax = null)
+    {
+        $binder = $this->binderLatex($syntax);
+        if (!$this->scope)
+            return [$binder];
+        return [$binder, $this->scope->toLatex($syntax)];
+    }
+
+    /**
+     * @param LeanArgsSpaceSeparated $ss
+     * @return Lean|null
+     */
+    public static function tryPromoteSpaceSeparated($ss)
+    {
+        if (!($ss instanceof LeanArgsSpaceSeparated) || count($ss->args) < 2)
+            return null;
+        $info = self::isLimitsGetElem($ss->args[0]);
+        if (!$info)
+            return null;
+        $rest = array_slice($ss->args, 1);
+        $scope = count($rest) === 1
+            ? $rest[0]
+            : new LeanArgsSpaceSeparated($rest, $ss->indent, $ss->level);
+        $Ctor = $info['Ctor'];
+        $node = new $Ctor($info['binder'], $ss->indent, $ss->level, $ss->parent);
+        $node->scope = $scope;
+        if ($info['binder'])
+            $info['binder']->parent = $node;
+        if ($scope)
+            $scope->parent = $node;
+        if ($ss->parent) {
+            $node->parent = null;
+            $ss->parent->replace($ss, $node);
+        } else {
+            $node->parent = null;
+        }
+        return $node;
+    }
+
+    /**
+     * @param LeanPairedGroup $bodyDelim
+     * @return Lean|null
+     */
+    public static function tryPromote($bodyDelim)
+    {
+        $p = $bodyDelim->parent;
+        if (!($p instanceof LeanArgsSpaceSeparated))
+            return null;
+        $i = array_search($bodyDelim, $p->args, true);
+        if ($i === false || $i <= 0)
+            return null;
+        $head = $p->args[$i - 1];
+        $info = self::isLimitsGetElem($head);
+        if (!$info)
+            return null;
+        $Ctor = $info['Ctor'];
+        $node = new $Ctor($info['binder'], $bodyDelim->indent, $bodyDelim->level, $p);
+        $node->scope = $bodyDelim;
+        array_splice($p->args, $i - 1, 2, [$node]);
+        $bodyDelim->parent = $node;
+        if ($info['binder'])
+            $info['binder']->parent = $node;
+        if (count($p->args) === 1 && $p->parent) {
+            $node->parent = null;
+            $p->parent->replace($p, $node);
+            return $node;
+        }
+        $node->parent = $p;
+        return $node;
+    }
+}
+
+class Lean_max extends LeanLimitsBigOp
+{
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'operator':
+            case 'baseOperator':
+                return 'max';
+            case 'pathToken':
+                return 'Max';
+            default:
+                return parent::__get($vname);
+        }
+    }
+
+    public function latexFormat()
+    {
+        if (!$this->scope)
+            return '\\max\\limits_{%s}';
+        return '\\max\\limits_{%s} {%s}';
+    }
+}
+
+class Lean_min extends LeanLimitsBigOp
+{
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'operator':
+            case 'baseOperator':
+                return 'min';
+            case 'pathToken':
+                return 'Min';
+            default:
+                return parent::__get($vname);
+        }
+    }
+
+    public function latexFormat()
+    {
+        if (!$this->scope)
+            return '\\min\\limits_{%s}';
+        return '\\min\\limits_{%s} {%s}';
+    }
+}
+
+class Lean_sup extends LeanLimitsBigOp
+{
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'operator':
+            case 'baseOperator':
+                return 'sup';
+            case 'pathToken':
+                return 'Sup';
+            default:
+                return parent::__get($vname);
+        }
+    }
+
+    public function latexFormat()
+    {
+        if (!$this->scope)
+            return '\\sup\\limits_{%s}';
+        return '\\sup\\limits_{%s} {%s}';
+    }
+}
+
+class Lean_inf extends LeanLimitsBigOp
+{
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'operator':
+            case 'baseOperator':
+                return 'inf';
+            case 'pathToken':
+                return 'Inf';
+            default:
+                return parent::__get($vname);
+        }
+    }
+
+    public function latexFormat()
+    {
+        if (!$this->scope)
+            return '\\inf\\limits_{%s}';
+        return '\\inf\\limits_{%s} {%s}';
+    }
+}
+
+class Lean_argmax extends LeanLimitsBigOp
+{
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'operator':
+            case 'baseOperator':
+                return 'max⁻¹';
+            case 'pathToken':
+                return 'ArgMax';
+            default:
+                return parent::__get($vname);
+        }
+    }
+
+    public function latexFormat()
+    {
+        if (!$this->scope)
+            return '\\underset{%s}{\\operatorname{max}^{-1}}';
+        return '\\underset{%s}{\\operatorname{max}^{-1}} {%s}';
+    }
+}
+
+class Lean_argmin extends LeanLimitsBigOp
+{
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'operator':
+            case 'baseOperator':
+                return 'min⁻¹';
+            case 'pathToken':
+                return 'ArgMin';
+            default:
+                return parent::__get($vname);
+        }
+    }
+
+    public function latexFormat()
+    {
+        if (!$this->scope)
+            return '\\underset{%s}{\\operatorname{min}^{-1}}';
+        return '\\underset{%s}{\\operatorname{min}^{-1}} {%s}';
+    }
+}
+
+LeanLimitsBigOp::$LIMITS_CTOR = [
+    'max' => Lean_max::class,
+    'min' => Lean_min::class,
+    'sup' => Lean_sup::class,
+    'inf' => Lean_inf::class,
+    'max⁻¹' => Lean_argmax::class,
+    'min⁻¹' => Lean_argmin::class,
+];
+
 
 class Lean_bigcap extends LeanBigOperator
 {

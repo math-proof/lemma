@@ -1,6 +1,7 @@
 /**
  * Big operators: `LeanBigOperator` and `∑` / `lim` / `∏` / `∫` /
- * `⋂` / `⋃` / `⨅` / `⨆` / `Stack`.
+ * `∂` / `∇` / `𝔼` / `ℙ` / `𝕍𝕒𝕣` / `max` / `min` / `sup` / `inf` /
+ * `max⁻¹` / `min⁻¹` / `⋂` / `⋃` / `⨅` / `⨆` / `Stack`.
  *
  * Quantifiers stay in `quantifier.js` (they extend `LeanBigOperator`).
  * `LeanAdd` is read for `input_priority` and `instanceof`.
@@ -10,6 +11,7 @@
  * call time, so the import graph follows the inheritance tree.
  */
 import { strStmt } from './utility.js';
+import { pathUniqKeepEmpty, pathStripTrailingHoles } from './pathChoices.js';
 import { LeanArgs } from './abstract.js';
 import { Lean } from './base.js';
 
@@ -785,7 +787,7 @@ export class Lean_int extends LeanBigOperator {
         const body = this.integrandLatex(syntax, partial);
         const v = this.binderVar();
         const hasBinder = v && !(v instanceof L.LeanCaret);
-        const measureTail = partial ? partial.arg.toLatex(syntax) : '';
+        const measureTail = partial ? partial.bound.toLatex(syntax) : '';
         const binderTail = hasBinder ? v.toLatex(syntax) : '';
         const dom = this.intDomain();
         if (dom instanceof L.LeanUpto) {
@@ -804,6 +806,639 @@ export class Lean_int extends LeanBigOperator {
         return [body];
     }
 }
+
+/**
+ * `∂[x] body` / `∂[x = x₀] body` (deriv sugar) and measure `∂μ`.
+ * Bound+scope like ∑/lim; path token Deriv. Created via insert_unary (so
+ * `f x ∂μ` stays a flat SpaceSeparated sibling list).
+ */
+export class Lean_partial extends LeanBigOperator {
+    static { this.register(); }
+
+    static input_priority = 75;
+
+    get baseOperator() {
+        return '∂';
+    }
+
+    get command() {
+        return '\\partial';
+    }
+
+    get stack_priority() {
+        if (this.scope) return L.LeanAdd.input_priority;
+        if (!(this.bound instanceof L.LeanCaret)) return 67;
+        return L.LeanColon.input_priority - 1;
+    }
+
+    /** Comma is not a binder separator (`∂[t, t]` commas live inside the bracket). */
+    insert_comma(caret) {
+        if (this.parent) return this.parent.insert_comma(this);
+        throw new Error('Lean_partial.insert_comma: unexpected');
+    }
+
+    set_line(line) {
+        this.line = line;
+        line = this.bound.set_line(line);
+        if (!this.scope) return line;
+        const s = this.sep();
+        if (s && s[0] === '\n') line++;
+        return this.scope.set_line(line);
+    }
+
+    strFormat() {
+        if (!this.scope) return `${this.operator}%s`;
+        return `${this.operator}[%s]${this.sep()}%s`;
+    }
+
+    /**
+     * Deriv: bound = index (`x` / `x = x₀` / `t, t`), scope = body.
+     * Measure: bound = μ, no scope → null (unary \\partial{μ} latex).
+     */
+    derivSugar() {
+        if (!this.scope) return null;
+        const index = this.bound;
+        let body;
+        if (this.scope instanceof L.LeanArgsSpaceSeparated)
+            body = this.scope.args.filter((a) => !(a instanceof L.LeanCaret));
+        else if (this.scope instanceof L.LeanCaret)
+            body = [];
+        else
+            body = [this.scope];
+        if (index instanceof L.LeanEq && index.lhs instanceof L.LeanToken)
+            return {name: index.lhs, point: index.rhs, body};
+        return {name: index, point: null, body};
+    }
+
+    latexArgs(syntax) {
+        const sugar = this.derivSugar();
+        if (!sugar) {
+            // Measure ∂μ
+            return [this.bound.toLatex(syntax)];
+        }
+        const body = sugar.body.map((a) => {
+            let arg = a;
+            if (arg instanceof L.LeanParenthesis && arg.arg instanceof L.LeanDiv) arg = arg.arg;
+            return arg.toLatex(syntax);
+        });
+        const name = sugar.name.toLatex(syntax);
+        if (!sugar.point) return body.length ? [name, ...body] : [name];
+        const point = L.LeanParenthesis.peelLatex(sugar.point);
+        return [name, ...body, name, point.toLatex(syntax)];
+    }
+
+    latexFormat() {
+        const sugar = this.derivSugar();
+        if (!sugar) return '\\partial{%s}';
+        const body = sugar.body.map(() => '{%s}').join('\\ ');
+        const partial = body ? '\\partial_{%s} {' + body + '}' : '\\partial_{%s}';
+        if (!sugar.point) return partial;
+        return '\\left. ' + partial + ' \\right|_{{%s} = {%s}}';
+    }
+
+    /** Path token Deriv (Body t350); bound/scope are holes like ∑. */
+
+    /**
+     * Hole-regex: Deriv_ when bound/scope present (Body t350/t351).
+     * @param {object} [_opts]
+     * @returns {string|null}
+     */
+    holeRegex(_opts = {}) {
+        return (this.bound != null || this.scope != null) ? "Deriv_" : null;
+    }
+
+    pathChoices(opts = {}) {
+        const kid = this.scope ?? this.bound;
+        const kids = kid?.pathChoices?.(opts) ?? [''];
+        const out = [''];
+        for (const k of kids) out.push(k ? 'Deriv' + k : 'Deriv_');
+        return pathUniqKeepEmpty(out);
+    }
+}
+
+/**
+ * `∇[θ] body` / `∇[θ = θ₀] body` (binder) and binder-free `∇ J` / `∇ J θ`.
+ * Bound+scope like lim/∂. Created via append like ∑/lim.
+ */
+export class Lean_nabla extends LeanBigOperator {
+    static { this.register(); }
+
+    static input_priority = 75;
+
+    get baseOperator() {
+        return '∇';
+    }
+
+    get command() {
+        return '\\nabla';
+    }
+
+    get stack_priority() {
+        if (this.scope) return L.LeanAdd.input_priority;
+        if (!(this.bound instanceof L.LeanCaret)) return 67;
+        return L.LeanColon.input_priority - 1;
+    }
+
+    insert_comma(caret) {
+        if (this.parent) return this.parent.insert_comma(this);
+        throw new Error('Lean_nabla.insert_comma: unexpected');
+    }
+
+    set_line(line) {
+        this.line = line;
+        line = this.bound.set_line(line);
+        if (!this.scope) return line;
+        const s = this.sep();
+        if (s && s[0] === '\n') line++;
+        return this.scope.set_line(line);
+    }
+
+    strFormat() {
+        // Binder form echoes `∇[θ] body` (glued like lim); binder-free `∇ J θ`.
+        if (this.scope) return `${this.operator}[%s]${this.sep()}%s`;
+        return `${this.operator} %s`;
+    }
+
+    /**
+     * Binder sugar when scope is set (after `∇[…]` unwrap).
+     * Binder-free `∇ J` / `∇ J θ` has no scope — bound holds the operands.
+     */
+    nablaSugar() {
+        if (this.scope) {
+            const index = this.bound;
+            let body;
+            if (this.scope instanceof L.LeanArgsSpaceSeparated)
+                body = this.scope.args.filter((a) => !(a instanceof L.LeanCaret));
+            else if (this.scope instanceof L.LeanCaret)
+                body = [];
+            else
+                body = [this.scope];
+            if (index instanceof L.LeanEq && index.lhs instanceof L.LeanToken)
+                return {kind: 'binder', name: index.lhs, point: index.rhs, body};
+            return {kind: 'binder', name: index, point: null, body};
+        }
+        // Binder-free: bound is J or SpaceSeparated(J, θ, …)
+        const b = this.bound;
+        if (b instanceof L.LeanCaret) return null;
+        if (b instanceof L.LeanArgsSpaceSeparated)
+            return {kind: 'function', operands: b.args.filter((a) => !(a instanceof L.LeanCaret))};
+        return {kind: 'function', operands: [b]};
+    }
+
+    latexArgs(syntax) {
+        const sugar = this.nablaSugar();
+        if (!sugar) return [this.bound.toLatex(syntax)];
+        if (sugar.kind === 'function') {
+            return sugar.operands.map((arg) => {
+                let a = arg;
+                if (a instanceof L.LeanParenthesis && a.arg instanceof L.LeanDiv) a = a.arg;
+                return L.LeanParenthesis.peelLatex(a).toLatex(syntax);
+            });
+        }
+        const body = sugar.body.map((arg) => {
+            let a = arg;
+            if (a instanceof L.LeanParenthesis && a.arg instanceof L.LeanDiv) a = a.arg;
+            return a.toLatex(syntax);
+        });
+        const name = sugar.name.toLatex(syntax);
+        if (!sugar.point) return body.length ? [name, ...body] : [name];
+        const point = L.LeanParenthesis.peelLatex(sugar.point);
+        return [name, ...body, name, point.toLatex(syntax)];
+    }
+
+    latexFormat() {
+        const sugar = this.nablaSugar();
+        if (!sugar) return '\\nabla {%s}';
+        if (sugar.kind === 'function') {
+            const ops = sugar.operands;
+            if (ops.length === 1) return '\\nabla {%s}';
+            const rest = ops.slice(1).map(() => '{%s}').join('\\ ');
+            return `\\nabla {%s}\\left(${rest}\\right)`;
+        }
+        const body = sugar.body.map(() => '{%s}').join('\\ ');
+        const nabla = body ? `\\nabla_{%s} {${body}}` : '\\nabla_{%s}';
+        if (!sugar.point) return nabla;
+        return `\\left. ${nabla} \\right|_{{%s} = {%s}}`;
+    }
+
+
+    /**
+     * Hole-regex: Grad_ when bound/scope present.
+     * @param {object} [_opts]
+     * @returns {string|null}
+     */
+    holeRegex(_opts = {}) {
+        return (this.bound != null || this.scope != null) ? "Grad_" : null;
+    }
+
+    pathChoices(opts = {}) {
+        const kid = this.scope ?? this.bound;
+        const kids = kid?.pathChoices?.(opts) ?? [''];
+        const out = [''];
+        for (const k of kids) out.push(k ? 'Grad' + k : 'Grad_');
+        return pathUniqKeepEmpty(out);
+    }
+}
+
+
+
+/**
+ * Random big-ops: `𝔼[binder](body)`, `ℙ[π](event)` / `ℙ[π]{event}`, `𝕍𝕒𝕣[binder](body)`.
+ * Promoted from `GetElem(op, binder)` + Parenthesis/Brace body (same bound/scope
+ * contract as ∑/∂/∇). Mathlib `Var[Y]` (no body delimiter) stays plain GetElem.
+ */
+export class LeanRandomBigOp extends LeanBigOperator {
+    static { this.register(); }
+
+    static input_priority = 67;
+
+    /** @type {'paren'|'brace'} delimiter that closed the body */
+    bodyDelim = 'paren';
+
+    get stack_priority() {
+        if (this.scope) return L.LeanAdd.input_priority;
+        return 67;
+    }
+
+    set_line(line) {
+        this.line = line;
+        line = this.bound.set_line(line);
+        if (!this.scope) return line;
+        return this.scope.set_line(line);
+    }
+
+    strFormat() {
+        if (!this.scope) return `${this.operator}[%s]`;
+        return `${this.operator}[%s]%s`;
+    }
+
+    sep() {
+        return '';
+    }
+
+    get pathToken() {
+        return 'Expect';
+    }
+
+    holeRegex(_opts = {}) {
+        return (this.bound != null || this.scope != null) ? `${this.pathToken}_` : null;
+    }
+
+    pathChoices(opts = {}) {
+        const kid = this.scope ?? this.bound;
+        const kids = kid?.pathChoices?.(opts) ?? [''];
+        const tok = this.pathToken;
+        const out = [];
+        for (const k of kids) {
+            if (!k) continue;
+            const core = pathStripTrailingHoles(k);
+            if (!core) continue;
+            out.push(core === 'Mul' && tok === 'Expect' ? `${tok}_` + k : tok + core);
+        }
+        out.push(tok, '');
+        return pathUniqKeepEmpty(out);
+    }
+
+    binderLatex(syntax) {
+        const ix = this.bound;
+        if (ix instanceof L.LeanColon) {
+            let ty = ix.rhs;
+            if (ty instanceof L.LeanParenthesis) ty = ty.arg;
+            if (ty instanceof L.LeanBitOr) {
+                return `{${ix.lhs.toLatex(syntax)}} : {${ty.lhs.toLatex(syntax)}}`;
+            }
+        }
+        return ix.toLatex(syntax);
+    }
+
+    latexArgs(syntax) {
+        // Self-mark RV colors (node may sit outside ArgsSpaceSeparated after promote peel).
+        if (this instanceof Lean_Expect)
+            L.LeanArgsSpaceSeparated.markOneExpectBinder(this, this.scope);
+        else if (this instanceof Lean_Prob)
+            L.LeanArgsSpaceSeparated.markProbBinderArgs(this.scope);
+        const binder = this.binderLatex(syntax);
+        if (!this.scope) return [binder];
+        return [binder, this.scope.toLatex(syntax)];
+    }
+
+    /**
+     * Promote `GetElem(𝔼|ℙ|𝕍𝕒𝕣, binder)` + closed Parenthesis/Brace → Lean_* bigop.
+     * @param {import('./base.js').Lean} bodyDelim
+     * @returns {import('./base.js').Lean | null}
+     */
+    static tryPromote(bodyDelim) {
+        const p = bodyDelim.parent;
+        if (!(p instanceof L.LeanArgsSpaceSeparated)) return null;
+        const i = p.args.indexOf(bodyDelim);
+        if (i <= 0) return null;
+        const head = p.args[i - 1];
+        if (!(head instanceof L.LeanGetElem)) return null;
+        const base = head.lhs ?? head.args?.[0];
+        if (!(base instanceof L.LeanToken)) return null;
+        let Ctor = null;
+        if (base.text === '𝔼') Ctor = Lean_Expect;
+        else if (base.text === 'ℙ') Ctor = Lean_Prob;
+        else if (base.text === '𝕍𝕒𝕣') Ctor = Lean_Var;
+        if (!Ctor) return null;
+        const binder = head.rhs ?? head.args?.[1];
+        const node = new Ctor(binder, bodyDelim.indent, bodyDelim.level, p);
+        node.scope = bodyDelim;
+        node.bodyDelim = bodyDelim instanceof L.LeanBrace ? 'brace' : 'paren';
+        p.args.splice(i - 1, 2, node);
+        bodyDelim.parent = node;
+        if (binder) binder.parent = node;
+        if (p.args.length === 1 && p.parent) {
+            // Drop SpaceSeparated wrapper; clear parent so replace() rebinds to the outer node.
+            node.parent = null;
+            p.parent.replace(p, node);
+            return node;
+        }
+        node.parent = p;
+        return node;
+    }
+}
+
+export class Lean_Expect extends LeanRandomBigOp {
+    static { this.register(); }
+
+    get baseOperator() {
+        return '𝔼';
+    }
+
+    get pathToken() {
+        return 'Expect';
+    }
+
+    latexFormat() {
+        if (!this.scope) return '\\mathop{{𝔼}}\\limits_{%s}';
+        return '\\mathop{{𝔼}}\\limits_{%s}\\ {%s}';
+    }
+}
+
+export class Lean_Prob extends LeanRandomBigOp {
+    static { this.register(); }
+
+    get baseOperator() {
+        return 'ℙ';
+    }
+
+    get pathToken() {
+        return 'Prob';
+    }
+
+    latexFormat() {
+        if (!this.scope) return '{{ℙ}}_{%s}';
+        return '{{{ℙ}}_{%s}}\\ {%s}';
+    }
+
+    pathChoices(opts = {}) {
+        const kid = this.scope ?? this.bound;
+        const kids = kid?.pathChoices?.(opts) ?? [''];
+        const out = [''];
+        for (const k of kids) out.push(k ? 'Prob' + k : 'Prob');
+        out.push('Prob');
+        return pathUniqKeepEmpty(out);
+    }
+}
+
+export class Lean_Var extends LeanRandomBigOp {
+    static { this.register(); }
+
+    get baseOperator() {
+        return '𝕍𝕒𝕣';
+    }
+
+    get pathToken() {
+        return 'Var';
+    }
+
+    latexFormat() {
+        if (!this.scope) return '{{𝕍𝕒𝕣}}_{%s}';
+        return '{{{𝕍𝕒𝕣}}_{%s}}\\ {%s}';
+    }
+}
+
+
+/**
+ * Limits-style GetElem sugars: `max[i] body`, `min[…]`, `sup[…]`, `inf[…]`,
+ * `max⁻¹[…] body`, `min⁻¹[…] body`. Promoted from `GetElem(op, binder)` + body
+ * (paren/brace close, or SpaceSeparated juxta / newline body). Same bound+scope
+ * contract as ∑/𝔼. Unicode `⨅`/`⨆` stay `LeanInf`/`LeanSup` (not these).
+ */
+export class LeanLimitsBigOp extends LeanBigOperator {
+    static { this.register(); }
+
+    static input_priority = 67;
+
+    static LIMITS_CTOR = null; // filled after subclasses register
+
+    static limitsCtorFor(text) {
+        const map = LeanLimitsBigOp.LIMITS_CTOR;
+        return map ? map[text] ?? null : null;
+    }
+
+    static isLimitsGetElem(head) {
+        if (!(head instanceof L.LeanGetElem)) return null;
+        const base = head.lhs ?? head.args?.[0];
+        if (!(base instanceof L.LeanToken)) return null;
+        const Ctor = LeanLimitsBigOp.limitsCtorFor(base.text);
+        if (!Ctor) return null;
+        return {Ctor, binder: head.rhs ?? head.args?.[1], base};
+    }
+
+    get stack_priority() {
+        if (this.scope) return L.LeanAdd.input_priority;
+        return 67;
+    }
+
+    set_line(line) {
+        this.line = line;
+        line = this.bound.set_line(line);
+        if (!this.scope) return line;
+        const s = this.sep();
+        if (s && s[0] === '\n') line++;
+        return this.scope.set_line(line);
+    }
+
+    strFormat() {
+        if (!this.scope) return `${this.operator}[%s]`;
+        return `${this.operator}[%s] %s`;
+    }
+
+    sep() {
+        return ' ';
+    }
+
+    get pathToken() {
+        return 'Max';
+    }
+
+    holeRegex(_opts = {}) {
+        return (this.bound != null || this.scope != null) ? `${this.pathToken}_` : null;
+    }
+
+    pathChoices(opts = {}) {
+        const kid = this.scope ?? this.bound;
+        const kids = kid?.pathChoices?.(opts) ?? [''];
+        const tok = this.pathToken;
+        const out = [];
+        for (const k of kids) {
+            if (!k) continue;
+            const core = pathStripTrailingHoles(k);
+            if (!core) continue;
+            out.push(tok + core);
+        }
+        out.push(tok, '');
+        return pathUniqKeepEmpty(out);
+    }
+
+    binderLatex(syntax) {
+        return L.LeanGetElem.expectBinderIndexLatex(this.bound, syntax);
+    }
+
+    latexArgs(syntax) {
+        const binder = this.binderLatex(syntax);
+        if (!this.scope) return [binder];
+        return [binder, this.scope.toLatex(syntax)];
+    }
+
+    /**
+     * Splice `GetElem(limitsOp, binder)` + body out of a SpaceSeparated into a limits bigop.
+     * @param {import('./args.js').LeanArgsSpaceSeparated} ss
+     * @returns {import('./base.js').Lean | null}
+     */
+    static tryPromoteSpaceSeparated(ss) {
+        if (!(ss instanceof L.LeanArgsSpaceSeparated) || ss.args.length < 2) return null;
+        const info = LeanLimitsBigOp.isLimitsGetElem(ss.args[0]);
+        if (!info) return null;
+        const rest = ss.args.slice(1);
+        const scope = rest.length === 1
+            ? rest[0]
+            : new L.LeanArgsSpaceSeparated(rest, ss.indent, ss.level);
+        const node = new info.Ctor(info.binder, ss.indent, ss.level, ss.parent);
+        node.scope = scope;
+        if (info.binder) info.binder.parent = node;
+        if (scope) scope.parent = node;
+        if (ss.parent) {
+            node.parent = null;
+            ss.parent.replace(ss, node);
+        } else {
+            node.parent = null;
+        }
+        return node;
+    }
+
+    /**
+     * Promote `GetElem(max|…|max⁻¹, binder)` + closed Parenthesis/Brace → limits bigop.
+     * @param {import('./base.js').Lean} bodyDelim
+     * @returns {import('./base.js').Lean | null}
+     */
+    static tryPromote(bodyDelim) {
+        const p = bodyDelim.parent;
+        if (!(p instanceof L.LeanArgsSpaceSeparated)) return null;
+        const i = p.args.indexOf(bodyDelim);
+        if (i <= 0) return null;
+        const head = p.args[i - 1];
+        const info = LeanLimitsBigOp.isLimitsGetElem(head);
+        if (!info) return null;
+        const node = new info.Ctor(info.binder, bodyDelim.indent, bodyDelim.level, p);
+        node.scope = bodyDelim;
+        p.args.splice(i - 1, 2, node);
+        bodyDelim.parent = node;
+        if (info.binder) info.binder.parent = node;
+        if (p.args.length === 1 && p.parent) {
+            node.parent = null;
+            p.parent.replace(p, node);
+            return node;
+        }
+        node.parent = p;
+        return node;
+    }
+}
+
+export class Lean_max extends LeanLimitsBigOp {
+    static { this.register(); }
+
+    get baseOperator() { return 'max'; }
+    get pathToken() { return 'Max'; }
+
+    latexFormat() {
+        if (!this.scope) return '\\max\\limits_{%s}';
+        return '\\max\\limits_{%s} {%s}';
+    }
+}
+
+export class Lean_min extends LeanLimitsBigOp {
+    static { this.register(); }
+
+    get baseOperator() { return 'min'; }
+    get pathToken() { return 'Min'; }
+
+    latexFormat() {
+        if (!this.scope) return '\\min\\limits_{%s}';
+        return '\\min\\limits_{%s} {%s}';
+    }
+}
+
+export class Lean_sup extends LeanLimitsBigOp {
+    static { this.register(); }
+
+    get baseOperator() { return 'sup'; }
+    get pathToken() { return 'Sup'; }
+
+    latexFormat() {
+        if (!this.scope) return '\\sup\\limits_{%s}';
+        return '\\sup\\limits_{%s} {%s}';
+    }
+}
+
+export class Lean_inf extends LeanLimitsBigOp {
+    static { this.register(); }
+
+    get baseOperator() { return 'inf'; }
+    get pathToken() { return 'Inf'; }
+
+    latexFormat() {
+        if (!this.scope) return '\\inf\\limits_{%s}';
+        return '\\inf\\limits_{%s} {%s}';
+    }
+}
+
+export class Lean_argmax extends LeanLimitsBigOp {
+    static { this.register(); }
+
+    get baseOperator() { return 'max⁻¹'; }
+    get pathToken() { return 'ArgMax'; }
+
+    latexFormat() {
+        // Do not use `\limits` on `^{-1}` (overscript bug); keep underset form.
+        if (!this.scope) return '\\underset{%s}{\\operatorname{max}^{-1}}';
+        return '\\underset{%s}{\\operatorname{max}^{-1}} {%s}';
+    }
+}
+
+export class Lean_argmin extends LeanLimitsBigOp {
+    static { this.register(); }
+
+    get baseOperator() { return 'min⁻¹'; }
+    get pathToken() { return 'ArgMin'; }
+
+    latexFormat() {
+        if (!this.scope) return '\\underset{%s}{\\operatorname{min}^{-1}}';
+        return '\\underset{%s}{\\operatorname{min}^{-1}} {%s}';
+    }
+}
+
+LeanLimitsBigOp.LIMITS_CTOR = {
+    max: Lean_max,
+    min: Lean_min,
+    sup: Lean_sup,
+    inf: Lean_inf,
+    'max⁻¹': Lean_argmax,
+    'min⁻¹': Lean_argmin,
+};
+
 
 export class Lean_bigcap extends LeanBigOperator {
     static { this.register(); }

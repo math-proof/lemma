@@ -118,7 +118,9 @@ class LeanProperty extends LeanBinary
                 case 'cos':
                 case 'sin':
                 case 'tan':
+                case 'cot':
                 case 'log':
+                case 'arctan':
                     return true;
             }
         }
@@ -149,22 +151,26 @@ class LeanProperty extends LeanBinary
                 case 'cos':
                 case 'sin':
                 case 'tan':
+                case 'cot':
                 case 'log':
-                    $arg = '%s';
+                case 'arctan':
+                    // `Real.sin` / `Hyperreal.sin` / `Real.arctan` — namespace prefix drops
+                    // (applied form is LeanArgs). `θ.sin` / `θ.arctan` keep the receiver.
                     if ($lhs instanceof LeanToken) {
                         switch ($lhs->text) {
                             case 'Real':
                             case 'Complex':
+                            case 'Hyperreal':
                             case 'Cos':
                             case 'Sin':
                             case 'Tan':
+                            case 'Cot':
                             case 'Log':
-                                $arg = null;
+                            case 'Arctan':
+                                return [];
                         }
                     }
-                    if ($arg)
-                        return [$this->lhs->toLatex($syntax)];
-                    break;
+                    return [$this->lhs->toLatex($syntax)];
                 case 'fmod':
                     return [$this->lhs->toLatex($syntax)];
                 case 'card':
@@ -236,22 +242,27 @@ class LeanProperty extends LeanBinary
                 case 'cos':
                 case 'sin':
                 case 'tan':
+                case 'cot':
                 case 'log':
-                    $arg = '%s';
+                case 'arctan':
+                    // Namespace `Hyperreal.sin` / `Real.arctan` → `\sin` / `\tan^{-1}`.
+                    // Method `θ.sin` / composed `θ.arctan.sin` same commands.
+                    $cmd = $command === 'arctan' ? '\\tan^{-1}' : "\\$command";
                     if ($lhs instanceof LeanToken) {
                         switch ($lhs->text) {
                             case 'Real':
                             case 'Complex':
+                            case 'Hyperreal':
                             case 'Cos':
                             case 'Sin':
                             case 'Tan':
+                            case 'Cot':
                             case 'Log':
-                                $arg = null;
+                            case 'Arctan':
+                                return $cmd;
                         }
                     }
-                    if ($arg)
-                        return "\\$command {%s}";
-                    break;
+                    return "$cmd {%s}";
                 case 'fmod':
                     return '{%s} {\color{red}\%%}';
                 case 'card':
@@ -318,6 +329,29 @@ class LeanProperty extends LeanBinary
     public function strFormat()
     {
         return "%s$this->operator%s";
+    }
+
+
+    public function holeRegex($opts = [])
+    {
+        $obj = $this->lhs;
+        $prop = $this->rhs;
+        $rawProp = ($prop instanceof LeanToken) ? ($prop->text ?? "") : "";
+        $nameToken = $opts["nameToken"] ?? null;
+        $propTok = $rawProp ? (is_callable($nameToken) ? $nameToken($rawProp) : holeRegexDefaultNameToken($rawProp)) : "";
+        static $trig = null;
+        if ($trig === null) $trig = '/^(sin|cos|tan|cot|arctan|log|exp)$/i';
+        if ($propTok && preg_match($trig, $rawProp)) {
+            $innerOpts = $opts;
+            $innerOpts["inTrigProp"] = true;
+            $inner = $obj ? $obj->holeRegex($innerOpts) : null;
+            if ($inner === null || $inner === "") return $propTok . "_";
+            return $propTok . wrapHoleOpt($inner);
+        }
+        $inner = $obj ? $obj->holeRegex($opts) : null;
+        if ($propTok && ($inner === null || $inner === "")) return escapeHoleReLit($propTok);
+        if ($propTok && $inner) return escapeHoleReLit($propTok) . wrapHoleOpt($inner);
+        return $inner;
     }
 
 }

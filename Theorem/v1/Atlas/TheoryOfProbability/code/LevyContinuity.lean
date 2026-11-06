@@ -8,9 +8,9 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TheoryOfProbability.code.CharacteristicFunction
+import Def.ProbabilityTheory.CharacteristicFunction
 import Lemma.Measure.Atlas.v1.TheoryOfProbability.code.CharacteristicFunction
-import Def.v1.Atlas.TheoryOfProbability.code.WeakConvergence
+import Def.ProbabilityTheory.WeakConvergence
 import Mathlib.MeasureTheory.Measure.LevyConvergence
 open MeasureTheory Complex Filter ProbabilityTheory
 open scoped Topology BoundedContinuousFunction

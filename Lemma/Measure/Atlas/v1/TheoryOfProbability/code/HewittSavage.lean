@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.TheoryOfProbability.code.HewittSavage
+import Def.ProbabilityTheory.HewittSavage
 open MeasureTheory MeasurableSpace ProbabilityTheory Filter Set
 open scoped ENNReal MeasureTheory
 

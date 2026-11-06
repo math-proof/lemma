@@ -242,22 +242,29 @@ export function LeanGetElemBase(Base) {
         }
 
         push_token(word) {
-            const {LeanToken, LeanArgsSpaceSeparated} = Lean.classes;
+            const {LeanToken, LeanArgsSpaceSeparated, LeanLimitsBigOp} = Lean.classes;
             const level = this.level;
             const newTok = new LeanToken(word, this.indent, level);
-            this.parent.replace(this, new LeanArgsSpaceSeparated([this, newTok], this.indent, level));
+            // Capture parent before SS ctor reparents `this` onto the new SS.
+            const parent = this.parent;
+            const ss = new LeanArgsSpaceSeparated([this, newTok], this.indent, level);
+            parent.replace(this, ss);
+            if (LeanLimitsBigOp) LeanLimitsBigOp.tryPromoteSpaceSeparated(ss);
             return newTok;
         }
 
         /** `Measurable[m] fun ω => …` — like `LeanToken.append`: the `fun`/`match` is the next argument. */
         append($new, $func) {
             if (typeof $new === 'string' && ($func === 'expr' || $func === 'operator')) {
-                const {LeanCaret, LeanArgsSpaceSeparated} = Lean.classes;
+                const {LeanCaret, LeanArgsSpaceSeparated, LeanLimitsBigOp} = Lean.classes;
                 const Ctor = Lean.classes[$new];
                 if (Ctor && this.parent) {
                     const c = new LeanCaret(this.indent, this.level);
                     const node = new Ctor(c, this.indent, this.level);
-                    this.parent.replace(this, new LeanArgsSpaceSeparated([this, node], this.indent, this.level));
+                    const parent = this.parent;
+                    const ss = new LeanArgsSpaceSeparated([this, node], this.indent, this.level);
+                    parent.replace(this, ss);
+                    if (LeanLimitsBigOp) LeanLimitsBigOp.tryPromoteSpaceSeparated(ss);
                     return c;
                 }
             }
@@ -286,6 +293,15 @@ export function LeanGetElemBase(Base) {
             if (!args.length || !fmt.includes('%s')) return null;
             args[0] = `{${prop.lhs.toLatex(syntax)}}_{${indexLatex}}`;
             return {format: fmt, args};
+        }
+
+        push_left(funcName, prevToken) {
+            const caret = super.push_left(funcName, prevToken);
+            const {LeanArgsSpaceSeparated, LeanLimitsBigOp} = Lean.classes;
+            const ss = this.parent;
+            if (LeanLimitsBigOp && ss instanceof LeanArgsSpaceSeparated)
+                LeanLimitsBigOp.tryPromoteSpaceSeparated(ss);
+            return caret;
         }
 
         push_right(funcName) {

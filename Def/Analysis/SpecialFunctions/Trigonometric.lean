@@ -1,8 +1,9 @@
 import Mathlib.Tactic
 import Mathlib.Analysis.Complex.Trigonometric
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
 import Instance.Analysis.Real.Numbers
 import Class.Analysis.SpecialFunctions.Trigonometric
-export Real (cos sin arccos arcsin tan cot)
+export Real (cos sin arccos arcsin tan cot arctan)
 
 
 noncomputable def Hyperreal.sin (x : ℝ*) : ℝ* :=
@@ -16,4 +17,7 @@ noncomputable def Hyperreal.cot (x : ℝ*) : ℝ* :=
 
 noncomputable def Hyperreal.tan (x : ℝ*) : ℝ* :=
   x.map Real.tan
+
+noncomputable def Hyperreal.arctan (x : ℝ*) : ℝ* :=
+  x.map Real.arctan
 

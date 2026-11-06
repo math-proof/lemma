@@ -16,7 +16,7 @@ import {
 } from './utility.js';
 import { LeanArgs, LeanBinary } from './abstract.js';
 import { Lean } from './base.js';
-import { pathStripTrailingHoles, pathUniqKeepEmpty } from './pathChoices.js';
+import { pathStripTrailingHoles, pathUniqKeepEmpty, wrapHoleOpt, HOLE_RE_TRIG_FN, holeRegexDefaultNameToken } from './pathChoices.js';
 
 const L = Lean.classes;
 
@@ -61,25 +61,32 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
      * @param {object} [opts]
      * @returns {string[]}
      */
-    pathChoices(opts = {}) {
+
+    /**
+     * Hole-regex: sin/cos/... apps decompose args; else freeze via default.
+     * @param {object} [opts]
+     * @returns {string|null}
+     */
+    holeRegex(opts = {}) {
         const head = this.args?.[0];
-        const body = this.args?.[1];
-        const expect = this.args?.length === 2
-            && head instanceof L.LeanGetElem
-            && head.lhs instanceof L.LeanToken
-            && head.lhs.text === "𝔼";
-        if (!expect) return [""];
-        const kids = body?.pathChoices?.(opts) ?? [""];
-        const out = [];
-        for (const k of kids) {
-            if (!k) continue;
-            const core = pathStripTrailingHoles(k);
-            if (!core) continue;
-            // Keep Mul's trailing holes so Eq(Expect_Mul__)(Mul) is EqExpect_Mul__Mul.
-            out.push(core === "Mul" ? "Expect_" + k : "Expect" + core);
+        const rawHead = head instanceof L.LeanToken ? (head.text || "") : "";
+        const nameToken = opts.nameToken || holeRegexDefaultNameToken;
+        const headTok = rawHead ? nameToken(rawHead) : "";
+        if (headTok && HOLE_RE_TRIG_FN.test(rawHead)) {
+            let inner = null;
+            for (let i = 1; i < (this.args || []).length; i++) {
+                const frag = this.args[i]?.holeRegex?.(opts) ?? null;
+                if (frag != null && frag !== "") { inner = frag; break; }
+            }
+            if (inner == null || inner === "") return headTok + "_";
+            return headTok + wrapHoleOpt(inner);
         }
-        out.push("Expect", "");
-        return pathUniqKeepEmpty(out);
+        return super.holeRegex?.(opts) ?? null;
+    }
+
+    pathChoices(opts = {}) {
+        // Expect/Prob/Var binder apps promote to Lean_Expect / Lean_Prob / Lean_Var (bigops).
+        return [""];
     }
 
     /**
@@ -236,25 +243,6 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         return {body: inner.lhs, bindings};
     }
 
-    gradientOperands() {
-        const {args} = this;
-        if (args.length < 2) return null;
-        const head = args[0];
-        // binder sugar: `∇[θ] body` / `∇[θ = p] body`
-        if (head instanceof L.LeanGetElem) {
-            const [base, index] = head.args;
-            if (!(base instanceof L.LeanToken) || base.text !== '∇') return null;
-            if (index instanceof L.LeanToken)
-                return {kind: 'binder', name: index, point: null, body: args.slice(1)};
-            if (index instanceof L.LeanEq && index.lhs instanceof L.LeanToken)
-                return {kind: 'binder', name: index.lhs, point: index.rhs, body: args.slice(1)};
-            return null;
-        }
-        // binder-free: `∇ J` / `∇ J θ` (= Mathlib `gradient J θ`)
-        if (head instanceof L.LeanToken && head.text === '∇')
-            return {kind: 'function', operands: args.slice(1)};
-        return null;
-    }
 
     is_Tendsto() {
         const args = this.args;
@@ -474,22 +462,46 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
      * @param {Record<string, unknown> | null} [syntax]
      * @returns {string[]}
      */
-    /** `id (α := T) e` — identity; LaTeX prints only `e`. */
-    idLatexInner() {
+    /**
+     * Identity sugar for LaTeX:
+     * - `id (α := T) e` / `id (α := T) e x …` → `e` / `e x …`
+     * - `@id (T) e` / `@id (T) e x …` → `e` / `e x …`
+     * Returns the operand nodes to render, or null.
+     */
+    idLatexOperands() {
         const {args} = this;
-        if (args.length !== 3 || !(args[0] instanceof L.LeanToken) || args[0].text !== 'id')
+        if (args.length < 3 || !(args[0] instanceof L.LeanToken))
             return null;
-        const named = args[1] instanceof L.LeanParenthesis ? args[1].arg : args[1];
-        if (!(named instanceof L.LeanAssign && named.lhs instanceof L.LeanToken && named.lhs.text === 'α'))
+        const head = args[0].text;
+        if (head === 'id') {
+            const named = args[1] instanceof L.LeanParenthesis ? args[1].arg : args[1];
+            if (!(named instanceof L.LeanAssign && named.lhs instanceof L.LeanToken && named.lhs.text === 'α'))
+                return null;
+        } else if (head === '@id') {
+            // `@id (T) e …` — typed positional; not a named `(α := …)`
+            if (!(args[1] instanceof L.LeanParenthesis) || args[1].arg instanceof L.LeanAssign)
+                return null;
+        } else {
             return null;
-        let inner = args[2];
-        if (
-            inner instanceof L.LeanParenthesis &&
-            !(inner.arg instanceof L.LeanColon) &&
-            this.canStripIdParen(inner.arg)
-        )
-            inner = inner.arg;
-        return inner;
+        }
+        const rest = args.slice(2);
+        if (rest.length === 1) {
+            let inner = rest[0];
+            if (
+                inner instanceof L.LeanParenthesis &&
+                !(inner.arg instanceof L.LeanColon) &&
+                this.canStripIdParen(inner.arg)
+            )
+                inner = inner.arg;
+            return [inner];
+        }
+        return rest;
+    }
+
+    /** Single-operand identity (`id` / `@id`); null when trailing apps remain. */
+    idLatexInner() {
+        const ops = this.idLatexOperands();
+        return ops && ops.length === 1 ? ops[0] : null;
     }
 
     /**
@@ -509,6 +521,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
     }
 
     static isProbBinderHead(node) {
+        if (node instanceof L.Lean_Prob) return true;
         return (
             node instanceof L.LeanGetElem &&
             node.args[0] instanceof L.LeanToken &&
@@ -565,6 +578,25 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             if (typeof L.Lean_land !== 'undefined' && n instanceof L.Lean_land) {
                 markFactor(n.lhs);
                 markFactor(n.rhs);
+                return;
+            }
+            // RA form `ℙ[π](x)` / `ℙ[π](x, y)` (Part7 probRA): magenta heads.
+            // Numeric events stay non-magenta via clearRandomArguments.
+            const isRATerm = (x) => {
+                x = peel(x);
+                if (x instanceof L.LeanToken) return true;
+                if (x instanceof L.LeanGetElem) return isRATerm(x.args[0]);
+                if (x instanceof LeanArgsSpaceSeparated && x.args[0] instanceof L.LeanToken)
+                    return true;
+                if (x instanceof LeanArgsCommaSeparated)
+                    return x.args.length > 0 && x.args.every(isRATerm);
+                return false;
+            };
+            if (isRATerm(n)) {
+                for (const h of Lean.headTokens(n)) {
+                    delete h.kwargs.isRandomVariable;
+                    h.kwargs.isRandomArgument = true;
+                }
                 return;
             }
             LeanArgsSpaceSeparated.clearRandomArguments(n);
@@ -624,14 +656,22 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
 
     markProbBinderColors() {
         const {args} = this;
-        // `ℙ[π](event)`, `ℙ[π](event).toReal`, and mid-juxtaposition `∇[θ] ℙ[π](event).toReal`
-        for (let i = 0; i + 1 < args.length; i++) {
+        // `ℙ[π](event)`, promoted Lean_Prob, `….toReal`, mid-juxtaposition
+        for (let i = 0; i < args.length; i++) {
+            let n = args[i];
+            while (n instanceof L.LeanProperty) n = n.args[0];
+            if (n instanceof L.Lean_Prob) {
+                LeanArgsSpaceSeparated.markProbBinderArgs(n.scope);
+                continue;
+            }
+            if (i + 1 >= args.length) continue;
             if (!LeanArgsSpaceSeparated.isProbBinderHead(args[i])) continue;
             LeanArgsSpaceSeparated.markProbBinderArgs(args[i + 1]);
         }
     }
 
     static isExpectBinderHead(node) {
+        if (node instanceof L.Lean_Expect) return true;
         return (
             node instanceof L.LeanGetElem &&
             node.args[0] instanceof L.LeanToken &&
@@ -760,15 +800,23 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
 
     markExpectBinderColors() {
         const {args} = this;
-        for (let i = 0; i + 1 < args.length; i++) {
+        for (let i = 0; i < args.length; i++) {
+            let n = args[i];
+            while (n instanceof L.LeanProperty) n = n.args[0];
+            if (n instanceof L.Lean_Expect) {
+                LeanArgsSpaceSeparated.markOneExpectBinder(n, n.scope);
+                continue;
+            }
+            if (i + 1 >= args.length) continue;
             if (!LeanArgsSpaceSeparated.isExpectBinderHead(args[i])) continue;
-            this.markOneExpectBinder(args[i], args[i + 1]);
+            LeanArgsSpaceSeparated.markOneExpectBinder(args[i], args[i + 1]);
         }
     }
 
-    /** Colour one `𝔼[head](body)` (body may be `….toReal`). */
-    markOneExpectBinder(head, body) {
-        const {bound, free} = LeanArgsSpaceSeparated.expectBinderNames(head.rhs);
+    /** Colour one `𝔼[head](body)` / Lean_Expect (body may be `….toReal`). */
+    static markOneExpectBinder(head, body) {
+        const index = head instanceof L.Lean_Expect ? head.bound : head.rhs;
+        const {bound, free} = LeanArgsSpaceSeparated.expectBinderNames(index);
         // Free RA names from the body's `| y`.
         const peel = (n) => (n instanceof L.LeanParenthesis ? n.arg : n);
         while (body instanceof L.LeanProperty) body = body.args[0]; // `𝔼[…](…).toReal`
@@ -792,7 +840,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             else if (n instanceof LeanArgsCommaSeparated)
                 for (const a of n.args) markBinderRed(a);
         };
-        markBinderRed(head.rhs);
+        markBinderRed(index);
     }
 
     latexArgs(syntax = null) {
@@ -801,25 +849,15 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         this.markMeasurableTupleColors();
         const matrixArgs = this.matrixLatexArgs(syntax);
         if (matrixArgs) return matrixArgs;
-        const idInner = this.idLatexInner();
-        if (idInner) return [idInner.toLatex(syntax)];
-        const grad = this.gradientOperands();
-        if (grad) {
-            if (grad.kind === 'function') {
-                return grad.operands.map((arg) => {
-                    if (arg instanceof L.LeanParenthesis && arg.arg instanceof L.LeanDiv) arg = arg.arg;
-                    return L.LeanParenthesis.peelLatex(arg).toLatex(syntax);
-                });
-            }
-            const body = grad.body.map((arg) => {
-                if (arg instanceof L.LeanParenthesis && arg.arg instanceof L.LeanDiv) arg = arg.arg;
+        const idOps = this.idLatexOperands();
+        if (idOps) {
+            return idOps.map((arg) => {
+                if (arg instanceof L.LeanParenthesis && arg.arg instanceof L.LeanDiv)
+                    arg = arg.arg;
                 return arg.toLatex(syntax);
             });
-            const name = grad.name.toLatex(syntax);
-            if (!grad.point) return [name, ...body];
-            const point = L.LeanParenthesis.peelLatex(grad.point);
-            return [name, ...body, name, point.toLatex(syntax)];
         }
+
         const joint = this.jointRandomSymbolOperands();
         if (joint) return joint.map((a) => L.LeanParenthesis.peelLatex(a).toLatex(syntax));
         const subst = this.substOperands();
@@ -989,8 +1027,44 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                 arg = L.LeanParenthesis.peelLatex(arg);
             return [arg.toLatex(syntax)];
         }
-        return args.map((arg) => {
+        if (
+            func instanceof L.LeanProperty &&
+            func.lhs instanceof L.LeanToken &&
+            func.rhs instanceof L.LeanToken &&
+            args.length === 2 &&
+            (
+                func.lhs.text === 'Real' ||
+                func.lhs.text === 'Complex' ||
+                func.lhs.text === 'Hyperreal' ||
+                func.lhs.text === 'Sin' ||
+                func.lhs.text === 'Cos' ||
+                func.lhs.text === 'Tan' ||
+                func.lhs.text === 'Cot' ||
+                func.lhs.text === 'Log' ||
+                func.lhs.text === 'Arctan'
+            ) &&
+            (
+                func.rhs.text === 'sin' ||
+                func.rhs.text === 'cos' ||
+                func.rhs.text === 'tan' ||
+                func.rhs.text === 'cot' ||
+                func.rhs.text === 'log' ||
+                func.rhs.text === 'arctan'
+            )
+        ) {
+            // `Hyperreal.sin x` / `Real.arctan y` — drop namespace; peel like bare `sin x`.
+            let arg = args[1];
             if (arg instanceof L.LeanParenthesis && arg.arg instanceof L.LeanDiv)
+                arg = arg.arg;
+            return [arg.toLatex(syntax)];
+        }
+        return args.map((arg) => {
+            // Keep Expect/Prob binder parens around a Div body; only peel redundant (div).
+            if (
+                arg instanceof L.LeanParenthesis &&
+                arg.arg instanceof L.LeanDiv &&
+                !arg.latexParenRequired()
+            )
                 arg = arg.arg;
             return arg.toLatex(syntax)
         });
@@ -999,22 +1073,12 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
     latexFormat() {
         const rows = this.matrixLatexSpec();
         if (rows) return L.LeanAppend.bmatrixFormat(rows.length, rows[0].length);
-        if (this.idLatexInner()) return '%s';
-        const grad = this.gradientOperands();
-        if (grad) {
-            // binder-free `∇ J` / `∇ J θ` -> `\nabla J` / `\nabla J\left(θ\right)`
-            if (grad.kind === 'function') {
-                const ops = grad.operands;
-                if (ops.length === 1) return '\\nabla {%s}';
-                const rest = ops.slice(1).map(() => '{%s}').join('\\ ');
-                return `\\nabla {%s}\\left(${rest}\\right)`;
-            }
-            // `\nabla_{θ} body`, or `\left. \nabla_{θ} body \right|_{θ = θ_0}` for `∇[θ = θ₀] body`
-            const body = grad.body.map(() => '{%s}').join('\\ ');
-            const nabla = `\\nabla_{%s} {${body}}`;
-            if (!grad.point) return nabla;
-            return `\\left. ${nabla} \\right|_{{%s} = {%s}}`;
+        const idOpsFmt = this.idLatexOperands();
+        if (idOpsFmt) {
+            if (idOpsFmt.length === 1) return '%s';
+            return Array(idOpsFmt.length).fill('{%s}').join('\\ ');
         }
+
         const joint = this.jointRandomSymbolOperands();
         if (joint) return `\\left(${joint.map(() => '{%s}').join(', ')}\\right)`; // a tuple keeps its parentheses
         const subst = this.substOperands();
@@ -1045,12 +1109,14 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                             return '{\\color{RoyalBlue} e} ^ {%s}';
                         case 'arcsin':
                         case 'arccos':
-                        case 'arctan':
                         case 'sin':
                         case 'cos':
                         case 'tan':
                         case 'arg':
                             return `\\${func.text} {%s}`;
+                        case 'arctan':
+                            // Prefer `\tan^{-1}` over `\arctan` (Hyperreal/Real.arctan align).
+                            return '\\tan^{-1} {%s}';
                         case 'arcsec':
                         case 'arccsc':
                         case 'arccot':
@@ -1105,6 +1171,33 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                 args.length === 2
             )
                 return '\\mathcal{X}^{2}\\left(%s\\right)';
+            // `Hyperreal.sin x` / `Real.arctan y` → `\sin` / `\tan^{-1}` (drop namespace).
+            if (
+                args.length === 2 &&
+                func.lhs instanceof L.LeanToken &&
+                (
+                    func.lhs.text === 'Real' ||
+                    func.lhs.text === 'Complex' ||
+                    func.lhs.text === 'Hyperreal' ||
+                    func.lhs.text === 'Sin' ||
+                    func.lhs.text === 'Cos' ||
+                    func.lhs.text === 'Tan' ||
+                    func.lhs.text === 'Cot' ||
+                    func.lhs.text === 'Log' ||
+                    func.lhs.text === 'Arctan'
+                ) &&
+                (
+                    func.rhs.text === 'sin' ||
+                    func.rhs.text === 'cos' ||
+                    func.rhs.text === 'tan' ||
+                    func.rhs.text === 'cot' ||
+                    func.rhs.text === 'log' ||
+                    func.rhs.text === 'arctan'
+                )
+            ) {
+                if (func.rhs.text === 'arctan') return '\\tan^{-1} {%s}';
+                return `\\${func.rhs.text} {%s}`;
+            }
         }
         const n = args.length;
         return Array(n)

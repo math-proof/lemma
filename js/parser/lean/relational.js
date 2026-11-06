@@ -75,6 +75,11 @@ export class Lean_gt extends LeanRelational {
     get operator() {
         return '>';
     }
+
+    get holeRegexTag() {
+        return "Gt";
+    }
+
 }
 /**
  * `≤ᵐ[μ]` / `≥ᶠ[l]` — relation with an optional `ᵐ`/`ᶠ` superscript and bracketed measure/filter.
@@ -122,6 +127,11 @@ export class Lean_ge extends LeanFilterRelational(LeanRelational) {
     get operator() {
         return '≥';
     }
+
+    get holeRegexTag() {
+        return "Ge";
+    }
+
 }
 export class Lean_lt extends LeanRelational {
     static { this.register(); }
@@ -129,6 +139,11 @@ export class Lean_lt extends LeanRelational {
     get operator() {
         return '<';
     }
+
+    get holeRegexTag() {
+        return "Lt";
+    }
+
 }
 export class Lean_le extends LeanFilterRelational(LeanRelational) {
     static { this.register(); }
@@ -136,6 +151,11 @@ export class Lean_le extends LeanFilterRelational(LeanRelational) {
     get operator() {
         return '≤';
     }
+
+    get holeRegexTag() {
+        return "Le";
+    }
+
 }
 
 export class LeanEq extends LeanRelational {
@@ -153,6 +173,11 @@ export class LeanEq extends LeanRelational {
     get operator() {
         return '=';
     }
+
+    get holeRegexTag() {
+        return "Eq";
+    }
+
 
     /** Echo operator: `=` + superscript + optional `[modifier]`. */
     opStr() {
@@ -403,6 +428,11 @@ export class Lean_ne extends LeanRelational {
     get operator() {
         return '≠';
     }
+
+    get holeRegexTag() {
+        return "Ne";
+    }
+
 }
 export class Lean_equiv extends LeanRelational {
     static { this.register(); }
@@ -520,6 +550,11 @@ export class LeanDvd extends LeanRelational {
     get operator() {
         return '∣';
     }
+
+    get holeRegexTag() {
+        return "Dvd";
+    }
+
 }
 
 export class Lean_ll extends LeanRelational {

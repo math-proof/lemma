@@ -7,8 +7,7 @@ open MeasureTheory ProbabilityTheory
 
 /--
 Bellman equations with a finite state space and a general (e.g. continuous) action space.
-`V` is the event-conditioned expected return `𝔼[… | s t = x]` (atoms of `s t`, as in
-`Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico`);
+`V` is the event-conditioned expected return `𝔼[… | s t = x]` (atoms of `s t`);
 `Q` is the σ-algebra conditional expected return `𝔼[… | s t, a t]` (`=ᵐ[π]`, as in
 `Random.MEq_ExpectCond.MEq_ExpectCond.MEq_ExpectCond.of.MEqExpectS.All_MEq_ExpectCondDot.All_MEq_ExpectCondDot.GtInftySup.In_Ico`).
 The `V`-identities are read off on atoms of `s t` (`Random.MEqCondExp_Integral.of.Integrable.Measurable`,

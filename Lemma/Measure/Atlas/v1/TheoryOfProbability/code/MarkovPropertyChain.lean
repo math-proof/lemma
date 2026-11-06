@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.TheoryOfProbability.code.MarkovPropertyChain.Part2
+import Def.ProbabilityTheory.MarkovPropertyChain.Part2
 open MeasureTheory ProbabilityTheory
 
 

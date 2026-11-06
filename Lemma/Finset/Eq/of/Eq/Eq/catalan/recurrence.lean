@@ -1,18 +1,28 @@
 import Mathlib.Combinatorics.Enumerative.Catalan.Basic
+import Notation.Fun
 import Initialize.Tactic.Attr.Basic
 
 
-@[path]
+/--
+Closed form of the Catalan recurrence: if `C` satisfies `C[0] = 1` and
+`C[n + 1] = ∑_{k < n + 1} C[k] * C[n - k]`, then
+`C[n] = (2 n).choose n / (n + 1)` (as rationals).
+| attributes | lemma |
+| :---: | :---: |
+| path | Finset.Eq.of.Eq.Eq.catalan.recurrence |
+| Fun | Finset.Eq.of.Eq.Eq.catalan.recurrence.fun |
+-/
+@[path, Fun]
 private lemma main
-  {C : ℕ → ℤ}
+  {C : ℕ ⇀ ℤ}
   {n : ℕ}
 -- given
-  (h₀ : C 0 = 1)
-  (h₁ : ∀ n, C (n + 1) = ∑ k ∈ Finset.range (n + 1), C k * C (n - k)) :
+  (h₀ : C[0] = 1)
+  (h₁ : ∀ n, C[n + 1] = ∑ k ∈ Finset.range (n + 1), C[k] * C[n - k]) :
 -- imply
-  (C n : ℚ) = ((n * 2).choose n : ℚ) / (n + 1) := by
+  (C[n] : ℚ) = ((2 * n).choose n : ℚ) / (n + 1) := by
 -- proof
-  have hc : ∀ m, C m = catalan m := by
+  have hc : ∀ m, C[m] = catalan m := by
     intro m
     induction m using Nat.strong_induction_on with
     | _ m ih =>
@@ -31,10 +41,9 @@ private lemma main
   have h := congrArg (Nat.cast : ℕ → ℚ) (succ_mul_catalan_eq_centralBinom n)
   rw [Nat.centralBinom_eq_two_mul_choose] at h
   push_cast at h
-  rw [show n * 2 = 2 * n by ring]
   push_cast
   linarith
 
 
 -- created on 2020-10-21
--- updated on 2026-10-26
+-- updated on 2026-11-06

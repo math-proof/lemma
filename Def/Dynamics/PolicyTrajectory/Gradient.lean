@@ -1,70 +1,14 @@
-import Theorem.Dynamics.PolicyTrajectory
-import Def.Dynamics.PolicyTrajectory.Continuous
-import Def.Order.Miscellaneous
-import Mathlib.Analysis.Calculus.SmoothSeries
-import Mathlib.Analysis.Calculus.LocalExtr.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Mathlib.Analysis.Calculus.Gradient.Basic
-open MeasureTheory ProbabilityTheory Finset Filter Topology
+import Def.Dynamics.PolicyTrajectory.ContinuousAction
 
 /-!
-# Definitions for the policy-gradient trajectory model
+# Retired: discrete Model value API (V0 / V / Q / Pn / P1)
 
-Definitions only (repo rule: `sympy/` holds definitions, theorems live in `Lemma/`):
+These definitions moved onto DensityModel (Def.Dynamics.PolicyTrajectory.ContinuousAction):
+* Model.V0 / Model.V -> DensityModel.V0 / DensityModel.V (tsum of gamma^k * Wkd)
+* Model.Q / Model.Q0 -> DensityModel.Q / DensityModel.Q0
+* Model.P1 / next-state densities -> DensityModel.P1kd (integral form; equals the Finset sum
+  under [CountableMeasure A])
 
-* `Pn θ n x y = ℙ(s[t+n] = y | s[t] = x)` and `P1 θ x y = ℙ(s[t+1] = y | s[t] = x)`;
-* the state / action value functions `V`, `Q` and their time-free forms `V0`, `Q0`
-  (`V0 θ γ x = ∑' k, γ ^ k * Wk θ k x`, and `V θ γ t x = V0 θ γ x`).
-
-All facts about these (Chapman–Kolmogorov, differentiability of the stage expectation / `V0`, `Q0`, the gradient of the
-Bellman equation, finite-sum forms of expectations, equality of `V0` to the conditional expectation on reachable
-states, …) live in `Lemma/Random/*`, `Lemma/Tensor/*` and `Lemma/Real/*`; see the 2026-10-06 breaking-change entries
-in `AGENTS.md` for the name maps.
+Convert a discrete Model with [CountableMeasure A] [Fintype A] via Model.toDensityModel,
+then use DensityModel.IsConditionalProbability for GAE / GradExpect leaves.
 -/
-
-
-namespace PolicyGradient
-
-namespace Model
-
-variable {Θ S A : Type*} [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
-  [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A] [DecidableEq S] [DecidableEq A]
-
-/-- `Pn θ n x y = ℙ(s[t+n] = y | s[t] = x)` (time-homogeneous `n`-step state transition) -/
-noncomputable def Pn (M : Model Θ S A) (θ : Θ) (n : ℕ) (x y : S) : ℝ :=
-  let z : ℝ × S × A → ℝ × S × A := id
-  have : PSpace (M.stageK θ x) z := { aemeasurable := measurable_id.aemeasurable }
-  𝔼[z : M.stageK θ x](M.Kf θ (fun w => if w.2.1 = y then (1:ℝ) else 0) n z)
-
-/-- `P1 θ x y = ℙ(s[t+1] = y | s[t] = x) = ∑ u, π_θ(u | x) * ℙ(s' = y | x, u)` -/
-noncomputable def P1 (M : Model Θ S A) (θ : Θ) (x y : S) : ℝ :=
-  ∑ u, M.policy.prob θ x u * (M.env.trans (x, u)).real {y}
-
-/-- Time-homogeneous state-value as the discounted `Wk` series, defined on all states:
-`V0 θ γ x = ∑' k, γ ^ k * Wk θ k x` (same formula as `Vk`).
-Agrees with the conditional expectation `𝔼[(γ ^ (id : ℕ → ℕ)) @ r[0:] | s 0 = x]` whenever
-`ℙ(s[0] = x) ≠ 0`. -/
-noncomputable def V0 (M : Model Θ S A) (θ : Θ) (γ : ℝ) (x : S) : ℝ :=
-  ∑' k, γ ^ k * M.Wk θ k x
-
-set_option linter.unusedVariables false in
-/-- Time-homogeneous state-value function:
-`V θ γ t s_t = V0 θ γ s_t` (independent of `t`, matching time-homogeneity of `Wk`). -/
-noncomputable def V (M : Model Θ S A) (θ : Θ) (γ : ℝ) (t : ℕ) (s_t : S) : ℝ :=
-  M.V0 θ γ s_t
-
-/-- Action-value function:
-`Q θ γ t s_t a_t = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = s_t ∧ a t = a_t)`,
-where `(r t ω, s t ω, a t ω) = ω t` on the trajectory space. -/
-noncomputable def Q (M : Model Θ S A) (θ : Θ) (γ : ℝ) (t : ℕ) (s_t : S) (a_t : A) : ℝ :=
-  let r : ℕ → (ℕ → ℝ × S × A) → ℝ := fun t ω => (ω t).1
-  let s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω => (ω t).2.1
-  let a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω => (ω t).2.2
-  𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = s_t ∧ a t = a_t)
-
-/-- Time-free closed form of the action-value function: `Q0 θ γ x u = Q θ γ 0 x u`. -/
-noncomputable def Q0 (M : Model Θ S A) (θ : Θ) (γ : ℝ) (x : S) (u : A) : ℝ :=
-  M.Q θ γ 0 x u
-
-end Model
-end PolicyGradient

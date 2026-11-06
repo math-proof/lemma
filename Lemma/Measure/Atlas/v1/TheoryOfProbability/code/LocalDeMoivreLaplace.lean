@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.TheoryOfProbability.code.LocalDeMoivreLaplace
+import Def.ProbabilityTheory.LocalDeMoivreLaplace
 open Asymptotics Filter Real Topology Nat ProbabilityTheory
 
 

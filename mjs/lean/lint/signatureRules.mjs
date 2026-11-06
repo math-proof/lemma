@@ -10,13 +10,16 @@ const isLemma = (d) => d.kind === 'lemma' || d.kind === 'theorem';
 const isAttrMain = (d) => /^@\[\s*main\b/.test(d.attrs || '');
 /**
  * Lemmas that use section markers (`-- imply` / `-- proof`, or `@[path] private lemma main`).
- * `-- given` is required only when an explicit binder (hypothesis or given-section expression)
- * belongs under it. An empty `-- given` is deleted, not kept as a blank marker.
+ * On Lemma/ files every `private lemma` also needs them. `-- given` is required only when an
+ * explicit binder (hypothesis or given-section expression) belongs under it; omit `-- given`
+ * when there are none. An empty `-- given` is deleted, not kept as a blank marker.
  */
-function needsSectionMarkers(d) {
+function needsSectionMarkers(d, ctx) {
     const attrs = d.attrs || '';
     if (d.name === 'main' && (/\bpath\b/.test(attrs) || isAttrMain(d))) return true;
     if (isAttrMain(d)) return true;
+    // Lemma/ private helpers: always `-- imply` / `-- proof` (standing Body rule via Random)
+    if (ctx.isLemmaFile && d.kind === 'lemma' && /\bprivate\b/.test(ctx.P.code[d.line] ?? '')) return true;
     const { given, imply, proof } = d.markers || {};
     return given != null || imply != null || proof != null;
 }
@@ -216,7 +219,7 @@ export function signatureRules(ctx) {
         const needsGiven = explicitGivenBinders(groups).length > 0;
 
         // ---- section markers (`-- given` / `-- imply` / `-- proof`) ------------------------------------------
-        if (needsSectionMarkers(d)) {
+        if (needsSectionMarkers(d, ctx)) {
             if (given == null) {
                 // omit `-- given` when nothing belongs under it (type binders stay above)
                 if (needsGiven) {
@@ -277,8 +280,77 @@ export function signatureRules(ctx) {
             }
         }
 
+        // ---- assign-by-proof: bare `:=` / `-- proof` / bare `by` -> `:= by` / `-- proof` ----------------------
+        // Lemma files only. Scans forward from the assign (not limited to `d.end`): a column-0 `by` ends the
+        // decl in findDecls before `-- proof` is recorded, so markers alone miss the anti-pattern.
+        // Term-mode (`:=` / `-- proof` / term) stays quiet.
+        if (ctx.isLemmaFile && sig.assign) {
+            const rest = P.code[sig.assign.line].slice(sig.assign.col + 2).trim();
+            if (!rest) {
+                let i = sig.assign.line + 1;
+                while (i < P.raw.length && /^\s*$/.test(P.raw[i])) i++;
+                if (i < P.raw.length && /^\s*--\s*proof\s*$/.test(P.raw[i])) {
+                    i++;
+                    while (i < P.raw.length && /^\s*$/.test(P.raw[i])) i++;
+                    if (i < P.code.length && /^by\s*$/.test(P.code[i].trim())) {
+                        ctx.warn(
+                            'assign-by-proof',
+                            sig.assign.line + 1,
+                            sig.assign.col + 1,
+                            `bare \`:=\`${where} then \`-- proof\` then \`by\`: write \`:= by\` then \`-- proof\` (keep \`by\` on the \`:=\` line)`,
+                        );
+                    }
+                }
+            }
+        }
+
         // ---- binders before `-- given` ----------------------------------------------------------------------
         const preEnd = given ?? imply ?? (sig.colon ? sig.colon.line + 1 : d.end);
+
+        // ---- NeZero + basic scalar: prefer [NeZero (n : ℕ)] over {n : ℕ} [NeZero n] ------------------------
+        // Standing Body rule via Real. Only the split style; fused `[NeZero (n : T)]` stays quiet.
+        // ASCII Nat/Int/Rat/Real/Complex match the same five types (suggestion uses Unicode).
+        const BASIC_NEZERO = new Map([
+            ['ℕ', 'ℕ'], ['Nat', 'ℕ'],
+            ['ℤ', 'ℤ'], ['Int', 'ℤ'],
+            ['ℚ', 'ℚ'], ['Rat', 'ℚ'],
+            ['ℝ', 'ℝ'], ['Real', 'ℝ'],
+            ['ℂ', 'ℂ'], ['Complex', 'ℂ'],
+        ]);
+        const neZeroOf = (t) => {
+            const m = /^NeZero\s+([\p{L}_][\p{L}\p{N}_'!?₀-₉ₐ-ₜ]*)$/u.exec(String(t || '').trim());
+            return m ? m[1] : null;
+        };
+        /** instance line:col keys that already got `binder-nezero-fuse` (suppress conflicting `binder-dep-inst`) */
+        const neZeroFusedInst = new Set();
+        if (given != null || imply != null) {
+            const basicImplicits = [];
+            for (const g of groups) {
+                if (g.line >= preEnd) continue;
+                if (g.kind !== 'implicit' && g.kind !== 'strictImplicit') continue;
+                const canon = BASIC_NEZERO.get(String(g.type || '').trim());
+                if (!canon || !g.names.length) continue;
+                for (const n of g.names) basicImplicits.push({ g, n, canon, written: String(g.type || '').trim() });
+            }
+            for (const g of groups) {
+                if (g.line >= preEnd || g.kind !== 'instImplicit') continue;
+                const tgt = neZeroOf(g.type);
+                if (!tgt) continue;
+                const hit = basicImplicits.find((x) => x.n === tgt);
+                if (!hit) continue;
+                const splitImp = hit.g.names.length === 1
+                    ? `\`{${hit.n} : ${hit.written}}\``
+                    : `\`{${hit.g.names.join(' ')} : ${hit.written}}\` (for \`${hit.n}\`)`;
+                ctx.warn(
+                    'binder-nezero-fuse',
+                    hit.g.line + 1,
+                    hit.g.col + 1,
+                    `${splitImp} with \`[${g.flat}]\`: prefer \`[NeZero (${hit.n} : ${hit.canon})]\` over a split implicit + NeZero instance`,
+                );
+                neZeroFusedInst.add(`${g.line}:${g.col}`);
+            }
+        }
+
         const byLine = new Map();
         for (const g of groups) {
             if (g.line >= preEnd || (given == null && imply == null)) continue; // without markers: no "before given" region
@@ -331,6 +403,8 @@ export function signatureRules(ctx) {
                 for (const g of gs) {
                     const dep = [...implicitNames.keys()].find((n) => hasWord(g.flat, n));
                     if (dep) {
+                        // NeZero on ℕ/ℤ/ℚ/ℝ/ℂ prefers fusion, not same-line `{n : T} [NeZero n]`
+                        if (neZeroFusedInst.has(`${g.line}:${g.col}`)) continue;
                         ctx.warn('binder-dep-inst', line + 1, g.col + 1, `instance \`[${g.flat}]\` depends on the implicit \`${dep}\` (line ${implicitNames.get(dep) + 1}); put it on that line, after the implicit binder`);
                         break;
                     }

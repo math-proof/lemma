@@ -75,6 +75,12 @@ class Lean_subseteq extends LeanBinaryBoolean
                 return parent::__get($vname);
         }
     }
+
+    public function holeRegexTag()
+    {
+        return "Subset";
+    }
+
 }
 
 class Lean_subset extends LeanBinaryBoolean

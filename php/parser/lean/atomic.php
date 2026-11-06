@@ -276,6 +276,20 @@ class LeanToken extends Lean
         return $map;
     }
 
+    public function holeRegex($opts = [])
+    {
+        $raw = $this->text ?? "";
+        if ($raw === "" || $raw === "_") return null;
+        $isLeaf = false;
+        if (isset($opts["isLeaf"]) && is_callable($opts["isLeaf"]))
+            $isLeaf = (bool)$opts["isLeaf"]($raw);
+        if ($isLeaf) return null;
+        if (preg_match('/^-?\d+$/', $raw)) return escapeHoleReLit($raw);
+        $nameToken = $opts["nameToken"] ?? null;
+        $tok = is_callable($nameToken) ? $nameToken($raw) : holeRegexDefaultNameToken($raw);
+        return $tok ? escapeHoleReLit($tok) : null;
+    }
+
     public function tokens_space_separated()
     {
         return [$this];

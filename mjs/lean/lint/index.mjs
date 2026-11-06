@@ -13,7 +13,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { listLemmaTopLevelDirs } from '../lemmaSections.mjs';
 import { prepare, findDecls } from './scan.mjs';
-import { scanImportsAndOpens, headerSpacing, maxHeartbeats, openSection, openDuplicate, openMerge, openPrefix, attrDocstring, dates, declKeywordDirText, blankSublemmas, lemmaNamespace } from './headerRules.mjs';
+import { scanImportsAndOpens, headerSpacing, maxHeartbeats, openSection, openDuplicate, openMerge, openPrefix, openHiding, attrDocstring, dates, declKeywordDirText, blankSublemmas, lemmaNamespace } from './headerRules.mjs';
 import { signatureRules } from './signatureRules.mjs';
 import { indentRules, proofRules, underscoreNameRule } from './proofRules.mjs';
 import { attrRules } from './attrRules.mjs';
@@ -61,6 +61,8 @@ export const RULES = {
     'binder-auto-bound': Q.autoBound,
     'binder-order': Q.order,
     'binder-dep-inst': Q.order,
+    // not an AGENTS.md rule yet: prefer [NeZero (n : ℕ)] over {n : ℕ} [NeZero n] for ℕ/ℤ/ℚ/ℝ/ℂ (Body via Real)
+    'binder-nezero-fuse': null,
     'default-arg-given': Q.deflt,
     'explicit-above-given': Q.explicitAbove,
     'given-prop-first': Q.propFirst,
@@ -81,11 +83,13 @@ export const RULES = {
     'section-given-empty': null,
     'section-imply': Q.imply,
     'section-proof': Q.proof,
+    // not an AGENTS.md rule yet: bare `:=` / `-- proof` / `by` → write `:= by` then `-- proof` (standing Body rule)
+    'assign-by-proof': null,
     // not an AGENTS.md rule: no empty lines inside the proof body (enforced by the linter)
     'proof-blank-line': null,
     // not an AGENTS.md rule: exactly one blank line between consecutive private lemmas
     'blank-sublemmas': null,
-    // not an AGENTS.md rule yet: namespaces/sections/variables within Lemma/ are not allowed (standing Body rule)
+    // not an AGENTS.md rule yet: namespaces/sections/variables/universes within Lemma/ are not allowed (standing Body rule)
     'lemma-namespace': null,
     'proof-binop-newline': Q.binop,
     'bullet-newline': Q.bullet,
@@ -109,6 +113,8 @@ export const RULES = {
     'paren-redundant-sum-sub': null,
     // not an AGENTS.md rule (user request via Random / @js): `((sub) ^ 2)` -> drop outer parens around pow
     'paren-redundant-pow': null,
+    // not an AGENTS.md rule (user request via Hyperreal / Body): needless arith operand parens
+    'paren-redundant-arith': null,
     'have-inline-once': Q.haveOnce,
     // not an AGENTS.md rule (Body via Tensor): lean.js/linter warning; message carries the reason
     'have-underscore': null,
@@ -139,6 +145,8 @@ export const RULES = {
     'open-section': Q.openSec,
     'open-duplicate': Q.openDup,
     'open-merge': Q.openDup,
+    // not an AGENTS.md rule (user request via Hyperreal / Body): open hiding/renaming banned under Lemma/
+    'open-hiding': null,
     'open-prefix': Q.openPrefix,
     'header-spacing': Q.headerSp,
     'max-heartbeats': Q.heartbeats,
@@ -214,7 +222,7 @@ export function lintLean(source, opts = {}) {
     // `decl-keyword-dir`: trust the tree only when it sees the same lemma/theorem declarations as the text scan
     if (tree && countLemmaTheoremNodes(tree) !== ctx.decls.filter((d) => d.kind === 'lemma' || d.kind === 'theorem').length)
         ctx.astCovered.delete('decl-keyword-dir');
-    const steps = [headerSpacing, maxHeartbeats, openSection, openDuplicate, openMerge, openPrefix, declKeywordDirText, attrDocstring, dates, blankSublemmas, lemmaNamespace, signatureRules, indentRules, proofRules, underscoreNameRule, attrRules];
+    const steps = [headerSpacing, maxHeartbeats, openSection, openDuplicate, openMerge, openPrefix, openHiding, declKeywordDirText, attrDocstring, dates, blankSublemmas, lemmaNamespace, signatureRules, indentRules, proofRules, underscoreNameRule, attrRules];
     for (const step of steps) {
         try {
             step(ctx);

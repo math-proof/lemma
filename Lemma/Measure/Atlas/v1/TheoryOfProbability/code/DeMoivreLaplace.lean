@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.TheoryOfProbability.code.DeMoivreLaplace.Part2
+import Def.ProbabilityTheory.DeMoivreLaplace.Part2
 open MeasureTheory ProbabilityTheory Filter
 open scoped unitInterval NNReal Topology Real
 

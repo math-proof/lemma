@@ -73,4 +73,10 @@ class Lean_leftrightarrow extends LeanBinaryBoolean
                 return parent::__get($vname);
         }
     }
+
+    public function holeRegexTag()
+    {
+        return "Iff";
+    }
+
 }

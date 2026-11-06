@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.TheoryOfProbability.code.Tightness
+import Def.ProbabilityTheory.Tightness
 open MeasureTheory Set MeasureTheory.Measure
 
 

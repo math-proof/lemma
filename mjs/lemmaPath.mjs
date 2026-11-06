@@ -9,6 +9,10 @@ import {
   pathCombineMulChoices,
   pathEqCombineChoices,
   pathEqFlatStem,
+  pathAndInfixChoices,
+  pathUniqKeepEmpty,
+  escapeHoleReLit,
+  wrapHoleOpt,
 } from "../js/parser/lean/pathChoices.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -554,6 +558,47 @@ function hasMeasureLawCues(node) {
   return found;
 }
 
+/**
+ * Nonstandard analysis / Hyperreal substance (not mere ℝ* casts of reals):
+ * Infinitesimal/Infinite predicates, Hyperreal.ε/ω, and Δx → 0⁺ / → 0⁻ sugar.
+ * Pins Hyperreal over Real scalars + `open Real` / π / √ (Body/Hyperreal).
+ */
+function hasHyperrealNsaCues(node) {
+  const NSA_PRED = new Set([
+    "Infinitesimal", "InfinitesimalPos", "InfinitesimalNeg",
+    "Infinite", "InfinitePos", "InfiniteNeg", "NotInfinite",
+    "stdPart",
+  ]);
+  const NSA_CONST = new Set(["epsilon", "omega"]);
+  let found = false;
+  const walk = (n) => {
+    if (!n || typeof n !== "object" || found) return;
+    if (cls(n) === "LeanToken" && typeof n.text === "string" && NSA_PRED.has(n.text)) {
+      found = true;
+      return;
+    }
+    // Hyperreal.epsilon / Hyperreal.omega / Hyperreal.stdPart
+    if (cls(n) === "LeanProperty" && cls(n.args?.[0]) === "LeanToken" && n.args[0].text === "Hyperreal") {
+      const p = n.args[1];
+      const name =
+        cls(p) === "LeanToken" ? p.text :
+        (cls(p) === "LeanArgsSpaceSeparated" && cls(p.args?.[0]) === "LeanToken" ? p.args[0].text : "");
+      if (NSA_PRED.has(name) || NSA_CONST.has(name)) { found = true; return; }
+    }
+    // Δx → 0⁺ / → 0⁻ (InfinitesimalPos/Neg sugar); not bare → ∞ / → 0 (Filter/limits).
+    if (cls(n) === "Lean_rightarrow") {
+      const rhs = unwrapParen(n.args?.[1]);
+      if (cls(rhs) === "LeanPosPart" || cls(rhs) === "LeanNegPart") {
+        const arg = unwrapParen(rhs.args?.[0] ?? rhs.arg);
+        if (cls(arg) === "LeanToken" && arg.text === "0") { found = true; return; }
+      }
+    }
+    for (const a of n.args || []) walk(a);
+  };
+  walk(node);
+  return found;
+}
+
 function conclusionLhsHeadToken(colonNode) {
   let type = colonNode?.args?.[colonNode.args.length - 1];
   while (type && (cls(type) === "LeanStatements" || cls(type) === "LeanArgsNewLineSeparated")) {
@@ -864,6 +909,13 @@ function pickSection(sigNode, sections, extra = {}) {
   if (!hasRandomAstCues(sigNode) && !hasRandomVariableCues(sigNode) &&
       scores.has("Measure") && hasMeasureLawCues(sigNode)) {
     add("Measure", 5);
+    if ((scores.get("Real") ?? 0) > 2) scores.set("Real", 2);
+  }
+  // NSA / infinitesimal structure (Δx → 0⁺, Infinitesimal*, Hyperreal.epsilon):
+  // prefer Hyperreal over Real scalars + open Real / π / √. Require some Hyperreal
+  // evidence already (ℝ* / Hyperreal / open Hyperreal) so bare Real limits stay Real.
+  if ((scores.get("Hyperreal") ?? 0) > 0 && hasHyperrealNsaCues(sigNode)) {
+    add("Hyperreal", 5);
     if ((scores.get("Real") ?? 0) > 2) scores.set("Real", 2);
   }
   // pure set identities / inclusions between set constructions ({ω | …} ∪ {ω | …} = {ω | …}) are Set lemmas
@@ -1227,7 +1279,10 @@ function sanitizePathSeg(seg) {
   // Trailing hole underscores omitted from path atoms (Body):
   // And_And__ → And_And, Any_And_And__ → Any_And_And, SMul__ → SMul.
   // Mid-segment `__` (EqSumRange__1, SMul__Dot) is kept.
-  seg = String(seg || "").replace(/_+$/, "")
+  // Binary And/Or with both arguments omitted is the segment `And__` / `Or__`.
+  seg = String(seg || "");
+  if (seg === "And__" || seg === "Or__") return seg;
+  seg = seg.replace(/_+$/, "");
   // Cond token is ExpectCond (not Expect_Cond), including mid-segment (ExpectSMulExpect_Cond).
   seg = seg.replaceAll("Expect_Cond", "ExpectCond");
   // Remaining Expect_* unary → CamelCase: Expect_Add → ExpectAdd. GradExpect_* -> GradExpect* (fuse). AddExpect_* / *_Expect untouched.
@@ -1248,6 +1303,14 @@ function sanitizePathSeg(seg) {
 function validModuleComponent(c) {
   return /^[\p{L}_][\p{L}\p{N}_'!?\u2080-\u209C\u1D62-\u1D6A\u2070-\u207F]*$/u.test(c || "");
 }
+/**
+ * Given-hypothesis hole regex (same emitter as imply).
+ * @returns {string}
+ */
+export function givenHoleRegexFromAst(typeNode, opts = {}) {
+  return implyHoleRegexFromAst(typeNode, opts);
+}
+
 function validModulePath(p) {
   return String(p).replace(/\.lean$/, "").split("/").every(validModuleComponent);
 }
@@ -1340,6 +1403,11 @@ function collectTypeBinders(indented, out = new Set()) {
   return out;
 }
 
+/** One PascalCase token (`Measure`), not a compound (`UncurryUpdate`, `DotPow_Id`). */
+function isSingleTokenName(name) {
+  return /^[A-Z][a-z0-9]*$/.test(name || "");
+}
+
 /**
  * Camel-joinable argument: a token, or an application whose arguments are type binders
  * (`IsCompactSimplex`, `RowStochasticBroadcast`) or an ascribed binder application.
@@ -1405,7 +1473,7 @@ function condExpArg(node) {
 function fnLikeHead(head) {
   const h = unwrapParen(head);
   const c = cls(h);
-  return c === "LeanPreimage" || !!condExpArg(h) || isArgMaxMinGetElem(h);
+  return c === "LeanPreimage" || !!condExpArg(h) || isArgMaxMinGetElem(h) || c === "Lean_argmax" || c === "Lean_argmin";
 }
 
 /** `AEStronglyMeasurable[m] f μ`: the bracket index is not a path atom. */
@@ -1436,6 +1504,21 @@ function isGetIndexNoise(node, opts) {
   if (c === "LeanParenthesis" || c === "LeanColon" || ARITH_OP.has(c))
     return (u.args || []).length > 0 && (u.args || []).every((a) => isGetIndexNoise(a, opts));
   return false;
+}
+
+
+/**
+ * Binder Get at a pure numeric/const literal index (`C[0]`, `f[1]`): the whole Get is a
+ * path hole for naming (`C[0] = 1` → `Eq_1`), not a bare left digit (`Eq0_1`).
+ * Offset atoms `h[k + 3]` / `h[k + 1]` stay (`Add_3`) — those indices are not pure tokens.
+ */
+function isBinderGetAtLiteral(node, opts) {
+  if (cls(node) !== "LeanGetElem") return false;
+  if (!isBinderHole(node.args?.[0], opts)) return false;
+  const idx = unwrapParen(node.args?.[1]);
+  if (!idx || cls(idx) !== "LeanToken") return false;
+  const t = idx.text || "";
+  return /^-?\d+(\.\d+)?$/.test(t) || t === "π" || t === "∞";
 }
 
 /** Binder / hole index, including `e[i]` when both the head and the index are binders. */
@@ -1669,6 +1752,7 @@ function applyEvalPrefix(head) {
   if (ARITH_OP.has(cls(unwrapParen(head)))) return "Ext";
   const h = unwrapParen(head);
   if (cls(h) === "LeanGetElem" && cls(h.args?.[0]) === "LeanToken" && (h.args[0].text === "ℙ" || h.args[0].text === "𝔼")) return "";
+  if (cls(h) === "Lean_Expect" || cls(h) === "Lean_Prob" || cls(h) === "Lean_Var") return "";
   return "Get";
 }
 
@@ -1735,6 +1819,14 @@ function argJoinAlts(acc, a, alts, opts) {
     ? uniq([...cartJoin(acc, alts, joinHeadChild), ...cartJoin(acc, alts, snake)])
     : cartJoin(acc, alts, compound && !opArg ? snake : joinHeadChild);
   if (fun && alts.includes("Fun")) next = uniq([...cartJoin(acc, ["Fun"], (h, c) => h + c), ...next]);
+  // Adjacent tokens stay apart: Integrable + Measure → Integrable_Measure (camel IntegrableMeasure stays an alt).
+  if (cls(u) === "LeanProperty") {
+    const snakeTok = [];
+    for (const h of acc) for (const c of alts) {
+      if (isSingleTokenName(h) && isSingleTokenName(c)) snakeTok.push(h + "_" + c);
+    }
+    if (snakeTok.length) next = uniq([...snakeTok, ...next]);
+  }
   // bare `fun x => f x ω` and numeric literal args (`eLpNorm f 1 μ`) may be omitted
   // lambda arguments (`Summable fun n => T n ^ 2` → Summable) and numeric literals may be omitted
   const optional = fun || (cls(u) === "LeanToken" && /^\d+$/.test(u.text || ""));
@@ -1993,12 +2085,85 @@ function mentionsUpdateCol(node) {
   return found;
 }
 
-/** `𝕍𝕒𝕣[x[k]: π](x k)` — variance sugar, same shape as `𝔼[…](…)`. */
-function isVarApp(node) {
+/**
+ * Expect / Prob / Var bigop bound+scope (Body t174 / js bigops.js).
+ * Mathlib `Var[Y]` / `Var[x | m]` stays LeanGetElem -- never Lean_Var.
+ * @returns { bound: any, scope: any, kind: string } | null
+ */
+function expectProbVarBoundScope(node) {
   const u = unwrapParen(node);
-  if (cls(u) !== "LeanArgsSpaceSeparated") return false;
-  const head = u.args?.[0];
-  return cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === "𝕍𝕒𝕣";
+  const c = cls(u);
+  if (c !== "Lean_Expect" && c !== "Lean_Prob" && c !== "Lean_Var") return null;
+  return { bound: u.bound ?? u.args?.[0] ?? null, scope: u.scope ?? null, kind: c };
+}
+
+/** Legacy GetElem(Expect|Prob|Var, binder) + SpaceSeparated body (pre-promote). */
+function legacyExpectProbVarApp(node, opText) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanArgsSpaceSeparated" || (u.args || []).length < 2) return null;
+  const head = u.args[0];
+  if (!(cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === opText))
+    return null;
+  return { bound: head.args?.[1] ?? null, scope: u.args[1], head, args: u.args };
+}
+
+/** Variance sugar as Lean_Var (or legacy GetElem+paren). Not Mathlib `Var[Y]`. */
+function isVarApp(node) {
+  if (expectProbVarBoundScope(node)?.kind === "Lean_Var") return true;
+  return !!legacyExpectProbVarApp(node, "𝕍𝕒𝕣");
+}
+
+/** Limits bigop path tokens (Body t175 / js LeanLimitsBigOp). Unicode ⨅/⨆ stay LeanInf/LeanSup. */
+const LIMITS_BIGOP_KIND = {
+  Lean_max: "Max",
+  Lean_min: "Min",
+  Lean_sup: "Sup",
+  Lean_inf: "Inf",
+  Lean_argmax: "ArgMax",
+  Lean_argmin: "ArgMin",
+};
+const LIMITS_LEGACY_OP_TEXT = {
+  max: "Max",
+  min: "Min",
+  sup: "Sup",
+  inf: "Inf",
+  "max⁻¹": "ArgMax",
+  "min⁻¹": "ArgMin",
+};
+
+/**
+ * max/min/sup/inf/max⁻¹/min⁻¹ bigop bound+scope (Body t175 / js bigops.js).
+ * @returns {{ bound: any, scope: any, kind: string, pathToken: string } | null}
+ */
+function limitsBigOpBoundScope(node) {
+  const u = unwrapParen(node);
+  const c = cls(u);
+  const pathToken = LIMITS_BIGOP_KIND[c];
+  if (!pathToken) return null;
+  return { bound: u.bound ?? u.args?.[0] ?? null, scope: u.scope ?? null, kind: c, pathToken };
+}
+
+/** Legacy GetElem(max|min|sup|inf|max⁻¹|min⁻¹, binder) + SpaceSeparated body (pre-promote). */
+function legacyLimitsBigOpApp(node, opText) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanArgsSpaceSeparated" || (u.args || []).length < 2) return null;
+  const head = u.args[0];
+  if (!(cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === opText))
+    return null;
+  const pathToken = LIMITS_LEGACY_OP_TEXT[opText] || "";
+  return { bound: head.args?.[1] ?? null, scope: u.args[1], head, args: u.args, pathToken, opText };
+}
+
+/**
+ * Path atom for a limits bigop.
+ * ArgMax/ArgMin: token only (never CamelCase-fuse body into ArgMaxProbCond).
+ * Max/Min/Sup/Inf: fuse scope like Expect (`Max` + body; `Mul` → `_Mul`).
+ */
+function limitsBigOpFuseName(tok, bodyName) {
+  if (!tok) return "";
+  if (tok === "ArgMax" || tok === "ArgMin") return tok;
+  if (!bodyName) return tok;
+  return bodyName === "Mul" ? tok + "_Mul" : tok + bodyName;
 }
 
 /** Relation alternatives: `ae` soft relations for ᵐ (`=ᵐ` reads MEq, composed like Eq), literal-left mirroring, identity. */
@@ -2477,6 +2642,8 @@ function isSupLtInfty(node) {
   if (cls(u) !== "Lean_lt" || (u.args || []).length !== 2) return false;
   if (!isInftyToken(u.args[1])) return false;
   let lhs = unwrapParen(u.args[0]);
+  // Lean_sup[…] body < ∞ (Body t175)
+  if (limitsBigOpBoundScope(lhs)?.kind === "Lean_sup") return true;
   const head = cls(lhs) === "LeanArgsSpaceSeparated" ? lhs.args?.[0] : lhs;
   return cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === "sup";
 }
@@ -2499,13 +2666,20 @@ function isBddAboveSup(node) {
   if (xs.length === 2 && cls(xs[0]) === "LeanToken" && /^(Set\.)?range$/.test(xs[0].text || "") && cls(unwrapParen(xs[1])) === "Lean_fun") return true;
   return xs.length >= 2 && cls(unwrapParen(xs[0])) === "Lean_fun" && cls(xs[1]) === "LeanToken" && xs[1].text === "''";
 }
-/** Kind of the bounded quantity of a sup-bound (sugar or elaborated): `‖…‖` → Norm, `|…|` → Abs, else "". */
+/** Kind of the bounded quantity of a sup-bound (sugar or elaborated):
+ *  Finset `∑` → Sum, Bochner/Lebesgue `∫` → Integral, `‖…‖` → Norm, `|…|` → Abs, else "".
+ *  Of-atoms distinguish ∑ vs ∫: preferred of is GtInftySup_Sum when the body is a Finset sum
+ *  (Measure/All_Integrable_Measure/GtInftySup/of/GtInftySup_Sum); Preferred imply keeps bare GtInftySup for Integral bodies; GtInftySup_Integral is an accepted alt
+ *  (consistent !== top-ranked), so All_Integrable_Measure/GtInftySup_Integral/of/GtInftySup_Sum is consistent.
+ */
 function supBoundKind(node) {
   const u = unwrapParen(node);
   let body = null;
   if (isSupLtInfty(u)) {
     const lhs = unwrapParen(u.args[0]);
-    body = cls(lhs) === "LeanArgsSpaceSeparated" ? lhs.args?.[lhs.args.length - 1] : null;
+    const lim = limitsBigOpBoundScope(lhs);
+    if (lim?.kind === "Lean_sup") body = lim.scope;
+    else body = cls(lhs) === "LeanArgsSpaceSeparated" ? lhs.args?.[lhs.args.length - 1] : null;
   } else {
     let a = unwrapParen(u.args?.[1]);
     if (cls(a) === "LeanProperty") a = a.args?.[1];
@@ -2515,12 +2689,24 @@ function supBoundKind(node) {
     body = cls(r) === "LeanRightarrow" ? r.args?.[r.args.length - 1] : null;
   }
   const k = cls(unwrapParen(body));
+  if (k === "Lean_sum") return "Sum";
+  if (k === "Lean_int") return "Integral";
   return k === "LeanNorm" ? "Norm" : k === "LeanAbs" ? "Abs" : "";
 }
-/** `sup[…] e < ∞` names: shortest first (GtInftySup), then the typed form (GtInftySup_Norm / GtInftySup_Abs). */
+/** Preferred path atom for `sup[…] e < ∞`: GtInftySup_Sum when e is Finset ∑; else bare GtInftySup. */
+function supBoundCanon(node) {
+  return supBoundKind(node) === "Sum" ? "GtInftySup_Sum" : "GtInftySup";
+}
+/** `sup[…] e < ∞` names: Sum prefers GtInftySup_Sum first; Norm/Abs/Integral keep bare first then typed
+ *  (GtInftySup_Integral / _Norm / _Abs are accepted alts — consistent without being preferred). */
 function supBoundAlts(node) {
   const k = supBoundKind(node);
-  return k ? ["GtInftySup", "GtInftySup_" + k, "LtSup__Infty"] : ["GtInftySup", "LtSup__Infty"];
+  const canon = k === "Sum" ? "GtInftySup_Sum" : "GtInftySup";
+  const out = [canon];
+  if (k && ("GtInftySup_" + k) !== canon) out.push("GtInftySup_" + k);
+  if (canon !== "GtInftySup") out.push("GtInftySup");
+  out.push("LtSup__Infty");
+  return out;
 }
 /**
  * Body of a gradient application: binder sugar or binder-free Mathlib gradient.
@@ -2615,13 +2801,12 @@ function isMulSub1DotFunDotPowRange(node) {
   return isSub1(u.args[0]) && isDotFunDotPowRangeApp(u.args[1]);
 }
 
-/** Expect of (gamma ^ id) @ ... */
+/** Expect of (gamma ^ id) @ ... -- Lean_Expect.scope (legacy GetElem+SpaceSeparated). */
 function isExpectDotPowId(node) {
-  const u = unwrapParen(node);
-  if (cls(u) !== "LeanArgsSpaceSeparated" || (u.args || []).length !== 2) return false;
-  const head = u.args[0];
-  if (!(cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === "𝔼")) return false;
-  return isDotPowIdApp(u.args[1]);
+  const bs = expectProbVarBoundScope(node);
+  if (bs?.kind === "Lean_Expect") return isDotPowIdApp(bs.scope);
+  const leg = legacyExpectProbVarApp(node, "𝔼");
+  return !!(leg && isDotPowIdApp(leg.scope));
 }
 
 /** Grad of (.log of ProbCond) */
@@ -2642,12 +2827,11 @@ function isGradLogProbCond(node) {
  * ExpectCond stays CamelCase; never Expect_Cond / Expect_SMul.
  */
 function expectSMulGradLogNames(node, canon) {
-  const u = unwrapParen(node);
-  if (cls(u) !== "LeanArgsSpaceSeparated" || (u.args || []).length !== 2) return [];
-  const head = u.args[0];
-  if (!(cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === "𝔼")) return [];
-  // Peel paren / indent / newline wrappers around multi-line • integrands (In_Ico0 RHS).
-  let body = u.args[1];
+  const bs = expectProbVarBoundScope(node);
+  const leg = bs?.kind === "Lean_Expect" ? null : legacyExpectProbVarApp(node, "𝔼");
+  if (bs?.kind !== "Lean_Expect" && !leg) return [];
+  // Peel paren / indent / newline wrappers around multi-line bullet integrands (In_Ico0 RHS).
+  let body = bs?.kind === "Lean_Expect" ? bs.scope : leg.scope;
   for (let i = 0; i < 10; i++) {
     body = unwrapParen(body);
     const c = cls(body);
@@ -2675,7 +2859,7 @@ function expectSMulGradLogNames(node, canon) {
   const right = unwrapParen(body.args[1]);
   if (!isGradLogProbCond(right)) return [];
   // RHS: 𝔼[G | C] • GradLog → ExpectSMulExpectCondDotPow_Id (GradLog omitted)
-  const condBody = isExpectCondApp(left) ? expectCondBody(unwrapParen(left).args[1]) : null;
+  const condBody = isExpectCondApp(left) ? expectCondBody(expectScope(left)) : null;
   if (condBody && isDotPowIdApp(condBody)) {
     return canon
       ? ["ExpectSMulExpectCondDotPow_Id"]
@@ -2698,6 +2882,535 @@ function expectSMulGradLogNames(node, canon) {
   return [];
 }
 
+
+
+// escapeHoleReLit / wrapHoleOpt: imported from pathChoices.js (Body t366)
+
+/**
+ * Peel paren / statement / (term : Type) ascription wrappers for hole-regex walks.
+ */
+function peelHoleExpr(node) {
+  let n = node;
+  for (let i = 0; i < 12 && n; i++) {
+    const c = cls(n);
+    if (c === "LeanParenthesis") { n = n.args?.[0]; continue; }
+    if (c === "LeanStatements" || c === "LeanArgsNewLineSeparated") { n = firstConclusion(n); continue; }
+    if (c === "LeanColon") { n = n.args?.[0]; continue; }
+    break;
+  }
+  return n;
+}
+
+
+/**
+ * Bigop bound/scope for ∂ (Lean_partial extends LeanBigOperator; Body t351/t352).
+ * bound = index in ∂[…]; scope = body. Real node.bound / node.scope from lean.js.
+ * @returns {{ bound: any, scope: any } | null}
+ */
+function partialBoundScope(node) {
+  if (!node) return null;
+  const c = cls(node);
+  if (c !== "Lean_partial" && c !== "LeanPartial") return null;
+  if (node.bound != null || node.scope != null) {
+    return { bound: node.bound ?? null, scope: node.scope ?? null };
+  }
+  // Rare legacy flat arg (pre-bigop); prefer bound/scope above.
+  const arg = node.arg ?? node.args?.[0];
+  return { bound: null, scope: arg ?? null };
+}
+
+/** Path / hole atom for ∂: Deriv. Bound+scope are holes like ∑. */
+function partialPathAtom(node) {
+  return partialBoundScope(node) ? "Deriv" : null;
+}
+
+/**
+ * Bigop bound/scope for ∇ (Lean_nabla extends LeanBigOperator).
+ * Binder: bound=θ / Eq, scope=f. Binder-free: bound=J or SpaceSeparated(J,θ), no scope.
+ * @returns {{ bound: any, scope: any } | null}
+ */
+function nablaBoundScope(node) {
+  if (!node) return null;
+  const c = cls(node);
+  if (c !== "Lean_nabla" && c !== "LeanNabla") return null;
+  if (node.bound != null || node.scope != null) {
+    return { bound: node.bound ?? null, scope: node.scope ?? null };
+  }
+  return { bound: node.args?.[0] ?? null, scope: node.args?.[1] ?? null };
+}
+
+/**
+ * Body path token for ∇ is Grad (not js pathChoices "Nabla").
+ * Map Nabla* → Grad* when consuming Lean_nabla#pathChoices.
+ */
+function nablaPathChoicesToGrad(choices) {
+  // js now emits Grad*; keep a thin Nabla→Grad map for legacy pathChoices.
+  const out = [];
+  for (const raw of choices || []) {
+    const s = String(raw ?? "");
+    if (s === "Nabla" || s.startsWith("Nabla_") || /^Nabla[A-Z0-9]/.test(s)) {
+      out.push("Grad" + s.slice("Nabla".length));
+    } else {
+      out.push(s); // already Grad*
+    }
+  }
+  return out;
+}
+
+/** Path atom list for Lean_nabla: Grad / Grad_ / GradBody… via pathChoices→Grad map. */
+function nablaGradAlts(node, opts = {}) {
+  if (!nablaBoundScope(node)) return [];
+  let ch = [];
+  if (typeof node.pathChoices === "function") {
+    ch = nablaPathChoicesToGrad(node.pathChoices(opts) || []);
+  }
+  ch = [...new Set(ch.filter((x) => x != null))];
+  if (!ch.includes("Grad") && !ch.includes("")) ch.push("Grad");
+  // Ensure bare Grad present among non-empty
+  const nonempty = ch.filter(Boolean);
+  if (!nonempty.includes("Grad")) nonempty.unshift("Grad");
+  return nonempty;
+}
+
+const HOLE_RE_ARITH = new Set(["LeanSub", "LeanAdd", "LeanMul", "LeanDiv", "LeanPow", "LeanNeg", "LeanInv", "LeanMatMul"]);
+/** Function-application trig/log heads (sin (…), cos (…)); LeanProperty method chains use the same set. */
+const HOLE_RE_TRIG_FN = /^(sin|cos|tan|cot|arctan|log|exp)$/i;
+
+/**
+ * One AST-derived optional-hole regex for an imply expression (Body).
+ * Shape mirrors parenthesized Op(LHS)(RHS) with each fillable child as (_|...),
+ * so candidates may omit structure. Full-fill tracks nameExpr for Eq/Mul/Div/Sqrt
+ * spines (MersenneFreq: Eq_MulDiv_Mul2SqrtDiv; hole: Mul(_|2)_ not Mul2).
+ *
+ * @returns {string} RegExp source (unanchored); empty when no useful pattern.
+ */
+export function implyHoleRegexFromAst(implyStmts, opts = {}) {
+  const root = peelHoleExpr(implyStmts);
+  if (!root) return "";
+  const frag = holeRegexExpr(root, opts);
+  if (frag == null || frag === "" || frag === "_") return "";
+  return frag;
+}
+
+/**
+ * Max trailing `_` fills to try for a hole-regex source (Body t375).
+ * Pattern hole slots (`(_|…)` omit-alts + bare `(_)`) set the budget, but never
+ * over-append: cap at 2 (enough for `Deriv_` completion + one omit peer, e.g.
+ * short `All_EqSubMulS_SinArctanDeriv` → `…Deriv__`). Still refuses bare
+ * `…_MulMulDeriv` and h_motion 3-underscore glued `CosAddMulMulMul2Pi` completions.
+ * Always allow at least 1 when the pattern has any hole slot / legacy t345/t347.
+ */
+export function maxTrailingUnderscoreFills(reSource) {
+  const src = String(reSource || "");
+  if (!src) return 0;
+  const omitOr = (src.match(/\(_\|/g) || []).length;
+  const bareHole = (src.match(/\(_\)/g) || []).length;
+  const slots = omitOr + bareHole;
+  if (slots <= 0) return 1;
+  return Math.min(2, slots);
+}
+
+/**
+ * Normalize a candidate stem for hole-regex consistency (Body / t365).
+ * - Digit-glue apostrophe: `Div3'2` ≡ `Div32` (ignore `'` between digits).
+ * - Do not touch mid-stem underscores (Mul2Sqrt must not become Mul_2_Sqrt).
+ */
+export function normalizeHoleMatchStem(stem) {
+  return String(stem || "").replace(/(\d)'(?=\d)/g, "$1");
+}
+
+/**
+ * Test a candidate imply stem against an imply hole-regex.
+ * Body t375/t365: normalize digit-`'`, try stem as-is and with trailing `_`
+ * stripped, then append trailing `_` until match, capped by
+ * `maxTrailingUnderscoreFills(reSource)` (pattern hole-slot bound — no runaway `__…__`).
+ * Do NOT re-insert mid-stem underscores (Mul2Sqrt must not spuriously match Mul(_|2)_).
+ */
+export function matchImplyHoleRegex(reSource, stem) {
+  const src = String(reSource || "");
+  if (!src) return false;
+  let re;
+  try { re = new RegExp("^" + src + "$"); } catch { return false; }
+  const normalized = normalizeHoleMatchStem(stem);
+  const bases = new Set([normalized]);
+  const stripped = normalized.replace(/_+$/, "");
+  if (stripped) bases.add(stripped);
+  const maxExtra = maxTrailingUnderscoreFills(src);
+  for (const base of bases) {
+    for (let i = 0; i <= maxExtra; i++) {
+      if (re.test(base + "_".repeat(i))) return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * Recursive hole-regex fragment for one expression node.
+ * null / empty = hole contribution (parent inserts _).
+ */
+function holeRegexExpr(node, opts) {
+  const u = peelHoleExpr(node);
+  if (!u) return null;
+  const peelGuardsDeep = (n) => {
+    let x = peelHoleExpr(peelGuardForalls(n));
+    // Mirror legacy holeRegexExpr: walk P → Q / P ⇒ Q to the conclusion.
+    for (let i = 0; i < 8 && x; i++) {
+      const c = cls(x);
+      if (c === "Lean_rightarrow" || c === "LeanRightarrow") {
+        x = peelHoleExpr(x.args?.[x.args.length - 1]);
+        continue;
+      }
+      break;
+    }
+    return x;
+  };
+  const holeOpts = {
+    ...opts,
+    nameToken,
+    isLeaf: (t) => isLeafName(t, opts.leaves),
+    peelGuards: peelGuardsDeep,
+    frozen: (n) => {
+      const frozen = nameExpr(n, opts);
+      return frozen ? escapeHoleReLit(sanitizePathSeg(frozen)) : null;
+    },
+  };
+  if (typeof u.holeRegex === "function") return u.holeRegex(holeOpts);
+  return holeOpts.frozen(u);
+}
+
+
+/**
+ * When Eq's LHS is Sub/Add of equal Mul_* sides, emit MulS plural hole-regex (Body t356/t363).
+ * Literal Eq/Sub/MulS (no (_| before them); Sin→Arctan→Deriv_ on MulS side; RHS Mul both-holes + Deriv_ (t373).
+ * Shape: All_(Eq(Sub(MulS_(_|Sin(_|Arctan(_|Deriv_))))(_|Mul(_|Mul(_)(_))(_|Deriv_))))
+ * (Body t373: literal Eq/Sub/MulS; RHS inside Eq with Deriv_; no trailing ?.)
+ * @returns {string|null}
+ */
+function pluralMulSHoleRegex(node, opts = {}) {
+  const u = peelHoleExpr(node);
+  if (!u) return null;
+  const c = cls(u);
+
+  if (c === "Lean_rightarrow" || c === "LeanRightarrow")
+    return pluralMulSHoleRegex(u.args?.[u.args.length - 1], opts);
+
+  if (c === "Lean_forall" || c === "Lean_exists") {
+    const tag = c === "Lean_forall" ? "All" : "Any";
+    const rawBody = u.args?.[u.args.length - 1];
+    const bodyNode = c === "Lean_forall" ? peelGuardForalls(rawBody) : rawBody;
+    const body = pluralMulSHoleRegex(bodyNode, opts);
+    if (body == null || body === "") return null;
+    if (body === tag || body.startsWith(tag + "_")) return body;
+    // Body t363: All_(Eq…) — required group, no (_| before Eq/Sub/MulS.
+    return tag + "_(" + body + ")";
+  }
+
+  const relTag = CLASS_TOKEN[c];
+  if (relTag === "Eq") {
+    const args = u.args || [];
+    const L = peelHoleExpr(args[0]);
+    const R = args[1];
+    const lc = cls(L);
+    if (lc !== "LeanSub" && lc !== "LeanAdd") return null;
+    const a = holeRegexExpr(L.args?.[0], opts);
+    const b = holeRegexExpr(L.args?.[1], opts);
+    if (!a || !b || a !== b) return null;
+    if (!/^Mul\b/.test(a) && !/^Mul_/.test(a) && a !== "Mul" && !a.startsWith("Mul(")) return null;
+    // Mul_(_|Sin…) → MulS_(_|Sin…); Mul(_|…)(_|…) → MulS(_|…)(_|…)
+    const mulS = a.replace(/^Mul/, "MulS");
+    const opTag = lc === "LeanSub" ? "Sub" : "Add";
+    // Sub(MulS_…) / Add(MulS_…) — no (_| before MulS (Body t361/t363).
+    const leftFrag = opTag + "(" + mulS + ")";
+    // Plural RHS: Mul(_|Mul(_)(_))(_|Deriv_) (Body t373).
+    const rhsFrag = normalizePluralMulRhs(holeRegexExpr(R, { ...opts, mulBothHolesBare: true }));
+    // Eq(Sub(MulS_…)(_|Mul…(_|Deriv_))) — RHS inside Eq; no trailing ? (Body t373).
+    return relTag + "(" + leftFrag + wrapHoleOpt(rhsFrag) + ")";
+  }
+  return null;
+}
+
+/** Force plural Mul RHS to Mul(_|Mul(_)(_))(_|Deriv_) (Body t373). */
+function normalizePluralMulRhs(rhs) {
+  // Canonical both-holes nested Mul + Deriv_ for plural MulS alts.
+  return "Mul(_|Mul(_)(_))(_|Deriv_)";
+}
+
+
+/**
+ * Primary + plural MulS hole-regex alternatives for one given/imply AST (Body t356).
+ * @returns {string[]}
+ */
+/**
+ * When Eq both sides are equal Mul_* with Deriv holes, emit optional MulS plural
+ * hole-regex (Body t354/t355). Shape: All_Eq(MulS(_(_|Deriv))) — literal All_Eq,
+ * no trailing `_` on Deriv. Distinct from Sub/Add pluralMulSHoleRegex; does not
+ * change the primary expanded Mul×Mul regex or pathChoices skip of bare EqMulS.
+ * @returns {string|null}
+ */
+function eqEqualMulSHoleRegex(node, opts = {}) {
+  const u = peelHoleExpr(node);
+  if (!u) return null;
+  const c = cls(u);
+
+  if (c === "Lean_rightarrow" || c === "LeanRightarrow")
+    return eqEqualMulSHoleRegex(u.args?.[u.args.length - 1], opts);
+
+  if (c === "Lean_forall" || c === "Lean_exists") {
+    const tag = c === "Lean_forall" ? "All" : "Any";
+    const rawBody = u.args?.[u.args.length - 1];
+    const bodyNode = c === "Lean_forall" ? peelGuardForalls(rawBody) : rawBody;
+    const body = eqEqualMulSHoleRegex(bodyNode, opts);
+    if (body == null || body === "") return null;
+    // Already quantified / All_Eq… / Any_Eq…
+    if (body === tag || body.startsWith(tag + "_") || body.startsWith(tag + "Eq")) return body;
+    // All_Eq(MulS…) — concatenate All_ + Eq(…) (Body t355).
+    if (body.startsWith("Eq(")) return tag + "_" + body;
+    return tag + "_(" + body + ")";
+  }
+
+  const relTag = CLASS_TOKEN[c];
+  if (relTag === "Eq") {
+    const args = u.args || [];
+    const a = holeRegexExpr(args[0], opts);
+    const b = holeRegexExpr(args[1], opts);
+    if (!a || !b || a !== b) return null;
+    if (!/^Mul\b/.test(a) && !/^Mul_/.test(a) && a !== "Mul" && !a.startsWith("Mul(")) return null;
+    // Equal Mul_(_|Deriv_) (or Mul…Deriv…) sides → Eq(MulS(_(_|Deriv))).
+    if (!/Deriv/.test(a)) return null;
+    return "Eq(MulS(_(_|Deriv)))";
+  }
+  return null;
+}
+
+/** Omit/fill stems for Eq equal-Mul Deriv → MulS (Body t354/t355). */
+function holeFillStemsEqMulS(node, opts = {}) {
+  const u = peelHoleExpr(node);
+  if (!u) return [];
+  const c = cls(u);
+  if (c === "Lean_rightarrow" || c === "LeanRightarrow")
+    return holeFillStemsEqMulS(u.args?.[u.args.length - 1], opts);
+  if (c === "Lean_forall" || c === "Lean_exists") {
+    const tag = c === "Lean_forall" ? "All" : "Any";
+    const rawBody = u.args?.[u.args.length - 1];
+    const bodyNode = c === "Lean_forall" ? peelGuardForalls(rawBody) : rawBody;
+    const bodies = holeFillStemsEqMulS(bodyNode, opts);
+    const out = [];
+    for (const b of bodies) {
+      if (!b) continue;
+      if (b === tag || b.startsWith(tag + "_")) out.push(b);
+      else out.push(tag + "_" + b);
+    }
+    return [...new Set(out)];
+  }
+  const relTag = CLASS_TOKEN[c];
+  if (relTag !== "Eq") return [];
+  const args = u.args || [];
+  const a = holeRegexExpr(args[0], opts);
+  const b = holeRegexExpr(args[1], opts);
+  if (!a || !b || a !== b) return [];
+  if (!/^Mul\b/.test(a) && !/^Mul_/.test(a) && a !== "Mul" && !a.startsWith("Mul(")) return [];
+  if (!/Deriv/.test(a)) return [];
+  // Stems admitted by All_Eq(MulS(_(_|Deriv))) (with pattern-bounded `_` fills).
+  return ["EqMulS_Deriv", "EqMulS"];
+}
+
+export function holeRegexAlternatives(typeNode, opts = {}) {
+  const primary = implyHoleRegexFromAst(typeNode, opts);
+  const out = [];
+  if (primary) out.push(primary);
+  const plural = pluralMulSHoleRegex(typeNode, opts);
+  if (plural && plural !== primary) out.push(plural);
+  const eqMulS = eqEqualMulSHoleRegex(typeNode, opts);
+  if (eqMulS && eqMulS !== primary && !out.includes(eqMulS)) out.push(eqMulS);
+  return out.length ? out : ["_"];
+}
+
+/**
+ * Omit/fill surface stems admitted by the hole-regex walk (Body t347).
+ * Used to populate token[]; every stem must match holeRegexExpr(node).
+ * @returns {string[]}
+ */
+function holeFillStems(node, opts = {}) {
+  const u = peelHoleExpr(node);
+  if (!u) return [""];
+  const c = cls(u);
+
+  const uniq = (xs) => {
+    const out = [];
+    const seen = new Set();
+    for (const x of xs || []) {
+      const k = x === "" ? "\0" : x;
+      if (seen.has(k)) continue;
+      seen.add(k);
+      out.push(x);
+    }
+    return out;
+  };
+  const cartJoin = (lefts, rights, join) => {
+    const out = [];
+    for (const l of lefts) for (const r of rights) out.push(join(l, r));
+    return uniq(out);
+  };
+
+  if (c === "LeanToken") {
+    const raw = u.text || "";
+    if (!raw || raw === "_" || isLeafName(raw, opts.leaves)) return [""];
+    if (/^-?\d+$/.test(raw)) return [raw];
+    const tok = nameToken(raw);
+    return tok ? [tok] : [""];
+  }
+  if (c === "Lean_rightarrow" || c === "LeanRightarrow")
+    return holeFillStems(u.args?.[u.args.length - 1], opts);
+  if (c === "Lean_forall" || c === "Lean_exists") {
+    const tag = c === "Lean_forall" ? "All" : "Any";
+    const rawBody = u.args?.[u.args.length - 1];
+    const bodyNode = c === "Lean_forall" ? peelGuardForalls(rawBody) : rawBody;
+    const bodies = holeFillStems(bodyNode, opts);
+    return uniq(bodies.flatMap((b) => {
+      if (!b) return [tag, ""];
+      if (b === tag || b.startsWith(tag + "_")) return [b, ""];
+      return [tag + "_" + b, ""];
+    }));
+  }
+  if (c === "Lean_partial" || c === "LeanPartial") {
+    return partialPathAtom(u) ? ["Deriv_", ""] : [""];
+  }
+  if (c === "Lean_nabla" || c === "LeanNabla") {
+    return nablaBoundScope(u) ? ["Grad_", ""] : [""];
+  }
+  if (c === "LeanProperty") {
+    const obj = u.args?.[0];
+    const prop = u.args?.[1];
+    const rawProp = cls(prop) === "LeanToken" ? (prop.text || "") : "";
+    const propTok = rawProp ? nameToken(rawProp) : "";
+    if (propTok && HOLE_RE_TRIG_FN.test(rawProp)) {
+      const inners = holeFillStems(obj, { ...opts, inTrigProp: true });
+      return uniq(inners.flatMap((inner) => inner ? [propTok + inner, ""] : [propTok + "_", ""]));
+    }
+    return holeFillStems(obj, opts);
+  }
+  if (c === "Lean_sqrt") {
+    const inners = holeFillStems(u.args?.[0], opts);
+    return uniq(inners.flatMap((inner) => inner ? ["Sqrt" + inner, ""] : ["Sqrt", ""]));
+  }
+  if (c === "LeanNeg" || c === "LeanInv") {
+    const tag = CLASS_TOKEN[c] || (c === "LeanNeg" ? "Neg" : "Inv");
+    const inners = holeFillStems(u.args?.[0], opts);
+    return uniq(inners.flatMap((inner) => inner ? [tag + inner, ""] : [tag, ""]));
+  }
+  if (HOLE_RE_ARITH.has(c)) {
+    const tag = CLASS_TOKEN[c] || c.replace(/^Lean/, "");
+    const args = u.args || [];
+    const Ls = holeFillStems(args[0], opts);
+    const Rs = args.length > 1 ? holeFillStems(args[1], opts) : [""];
+    const leftName = nameExpr(args[0], opts) || "";
+    const rightName = nameExpr(args[1], opts) || "";
+    const sqrtDiv = c === "LeanMul" && /Sqrt$/.test(leftName) && /^Div/.test(rightName);
+    const joined = cartJoin(Ls, Rs, (l, r) => {
+      if (!l && !r) {
+        // Path stem for both-hole Mul is Mul__ (matches regex Mul(_)(_)); plural bare Mul (t356).
+        if (c === "LeanMul") return opts.mulBothHolesBare ? tag : tag + "__";
+        return tag;
+      }
+      if (l && r) {
+        if (sqrtDiv) return tag + l + "_" + r;
+        return tag + l + r;
+      }
+      if (l && !r) {
+        if (c === "LeanMul" && /^(?:T|Adjoint|Conj)$/.test(l)) return tag + l + "__";
+        if (/^-?\d+$/.test(l)) return tag + l + "_";
+        return tag + l + "_";
+      }
+      return tag + "_" + r;
+    });
+    return uniq([...joined, ""]);
+  }
+  const relTag = CLASS_TOKEN[c];
+  if (relTag && ["Eq", "Ne", "Lt", "Gt", "Le", "Ge", "Iff", "Subset", "Dvd"].includes(relTag)) {
+    const args = u.args || [];
+    const Ls = holeFillStems(args[0], opts);
+    const Rs = holeFillStems(args[1], opts);
+    const joined = cartJoin(Ls, Rs, (l, r) => {
+      if (!l && !r) return relTag;
+      if (!l && r) return relTag + "_" + r;
+      if (l && !r) return relTag + l;
+      return relTag + l + r;
+    });
+    return uniq([...joined, ""]);
+  }
+  // sin (…)/cos (…) apps: omit/fill nested structure (Body t357).
+  if (c === "LeanArgsSpaceSeparated") {
+    const head = u.args?.[0];
+    const rawHead = cls(head) === "LeanToken" ? (head.text || "") : "";
+    const headTok = rawHead ? nameToken(rawHead) : "";
+    if (headTok && HOLE_RE_TRIG_FN.test(rawHead)) {
+      let inners = [""];
+      for (let i = 1; i < (u.args || []).length; i++) {
+        const got = holeFillStems(u.args[i], opts);
+        if (got.some((x) => x)) { inners = got; break; }
+      }
+      return uniq(inners.flatMap((inner) => inner ? [headTok + inner, ""] : [headTok + "_", ""]));
+    }
+  }
+
+  const frozen = nameExpr(u, opts);
+  return frozen ? [sanitizePathSeg(frozen)] : [""];
+}
+
+/** Plural-side omit/fill stems (MulS + bare Mul) when Sub/Add Mul sides match (Body t356). */
+function holeFillStemsPlural(node, opts = {}) {
+  const u = peelHoleExpr(node);
+  if (!u) return [];
+  const c = cls(u);
+  if (c === "Lean_rightarrow" || c === "LeanRightarrow")
+    return holeFillStemsPlural(u.args?.[u.args.length - 1], opts);
+  if (c === "Lean_forall" || c === "Lean_exists") {
+    const tag = c === "Lean_forall" ? "All" : "Any";
+    const rawBody = u.args?.[u.args.length - 1];
+    const bodyNode = c === "Lean_forall" ? peelGuardForalls(rawBody) : rawBody;
+    const bodies = holeFillStemsPlural(bodyNode, opts);
+    const out = [];
+    for (const b of bodies) {
+      if (!b) continue;
+      if (b === tag || b.startsWith(tag + "_")) out.push(b);
+      else out.push(tag + "_" + b);
+    }
+    return [...new Set(out)];
+  }
+  const relTag = CLASS_TOKEN[c];
+  if (relTag === "Eq") {
+    const args = u.args || [];
+    const L = peelHoleExpr(args[0]);
+    const lc = cls(L);
+    if (lc !== "LeanSub" && lc !== "LeanAdd") return [];
+    const aName = nameExpr(L.args?.[0], opts) || "";
+    const bName = nameExpr(L.args?.[1], opts) || "";
+    // Equal Mul sides → plural S (same gate as nameExpr relation).
+    if (!aName || aName !== bName || !/^Mul/.test(aName)) return [];
+    const opTag = lc === "LeanSub" ? "Sub" : "Add";
+    const sideStems = holeFillStems(L.args[0], opts).filter(Boolean);
+    const out = [];
+    // RHS omit/fill for Mul(_|Mul(_)(_))(_|Deriv_) (Body t373/t375). sanitizePathSeg strips
+    // trailing _; emit sanitize-stable stems. Short LHS (no RHS) relies on matchImplyHoleRegex
+    // pattern-bounded `_` fills; full RHS still requires MulMul__Deriv / Mul_Deriv shape.
+    const rhsPreferred = ["Mul_Deriv", "MulMul__Deriv"];
+    for (const s of sideStems) {
+      const mulS = String(s).replace(/^Mul/, "MulS").replace(/_+$/, "");
+      if (!mulS) continue;
+      const left = opTag + mulS;
+      // Body t375: short stem (LHS only); matcher appends `_` up to pattern bound.
+      out.push(relTag + left);
+      for (const r of rhsPreferred) {
+        out.push(relTag + left + "_" + r);
+      }
+    }
+    // Also surface nameExpr plural path atom when present.
+    const full = nameExpr(u, opts);
+    if (full) out.push(sanitizePathSeg(full));
+    return [...new Set(out.filter(Boolean))];
+  }
+  return [];
+}
 
 
 /** Imply stem of an on-disk Lemma leaf: drop section + `/of/…` + `.lean`. */
@@ -2731,9 +3444,8 @@ function isEqSymmToDualTSumGradLogShape(implyStmts) {
     right = firstConclusion(right);
     right = unwrapParen(right);
   }
-  // RHS must be a clean Expect (𝔼[…](…)); noisy let/TODO scaffolding → not this Body override
-  if (!(cls(right) === "LeanArgsSpaceSeparated" && cls(right.args?.[0]) === "LeanGetElem"
-      && cls(right.args[0].args?.[0]) === "LeanToken" && right.args[0].args[0].text === "𝔼")) {
+  // RHS must be a clean Expect (Lean_Expect / legacy); noisy let/TODO scaffolding -> not this Body override
+  if (!isExpectAppNode(right)) {
     return false;
   }
   let hasSymm = false, hasToDual = false, hasFderiv = false, hasLog = false;
@@ -3124,7 +3836,11 @@ export function sseEqCartesianImplyStems(houseImply = "") {
 
 /** @deprecated prefer node.pathChoices(opts) — thin compatibility wrapper. */
 export function mulInvSqrtNodeChoices(node, opts = {}) {
-  if (node && typeof node.pathChoices === "function") return node.pathChoices(opts);
+  if (node && typeof node.pathChoices === "function") {
+    const ch = node.pathChoices(opts);
+    if (cls(node) === "Lean_nabla" || cls(node) === "LeanNabla") return nablaPathChoicesToGrad(ch);
+    return ch;
+  }
   return [""];
 }
 
@@ -3211,11 +3927,8 @@ function peelImplyEq(implyStmts) {
 }
 
 function isExpectAppNode(node) {
-  const u = unwrapParen(node);
-  return cls(u) === "LeanArgsSpaceSeparated"
-    && cls(u.args?.[0]) === "LeanGetElem"
-    && cls(u.args[0].args?.[0]) === "LeanToken"
-    && u.args[0].args[0].text === "𝔼";
+  if (expectProbVarBoundScope(node)?.kind === "Lean_Expect") return true;
+  return !!legacyExpectProbVarApp(node, "𝔼");
 }
 
 function isIntegralAppNode(node) {
@@ -3385,6 +4098,7 @@ function expectSumSMulEqIntegralSumSMulBodyName(implyStmts, houseFromDisk = "") 
 
 /**
  * `max⁻¹[i : …] e` / `min⁻¹[…] e` — ArgMax / ArgMin binder ops (SYMBOL_NAME), not Get-eval.
+ * Prefer Lean_argmax / Lean_argmin `.bound` / `.scope` (Body t175); legacy GetElem+SS fallback.
  * Never fuse the body (`GetArgMaxProbCond`); ProbCond / Mul / Prod stay separate path segments.
  */
 function isArgMaxMinGetElem(node) {
@@ -3395,18 +4109,26 @@ function isArgMaxMinGetElem(node) {
 }
 function argMaxMinTokenName(node) {
   const u = unwrapParen(node);
+  const lim = limitsBigOpBoundScope(u);
+  if (lim && (lim.kind === "Lean_argmax" || lim.kind === "Lean_argmin")) return lim.pathToken;
+  if (cls(u) === "LeanArgsSpaceSeparated" && isArgMaxMinGetElem(u.args?.[0])) {
+    return argMaxMinTokenName(u.args[0]);
+  }
   const t = cls(u) === "LeanGetElem" ? u.args?.[0]?.text : "";
   return t === "max⁻¹" ? "ArgMax" : t === "min⁻¹" ? "ArgMin" : "";
 }
-/** Applied `max⁻¹[…] body` / `min⁻¹[…] body`. */
+/** Applied `max⁻¹[…] body` / `min⁻¹[…] body` (bigop or legacy SpaceSeparated). */
 function isArgMaxMinApp(node) {
   const u = unwrapParen(node);
+  const lim = limitsBigOpBoundScope(u);
+  if (lim && (lim.kind === "Lean_argmax" || lim.kind === "Lean_argmin") && lim.scope != null) return true;
   return cls(u) === "LeanArgsSpaceSeparated" && isArgMaxMinGetElem(u.args?.[0]) && (u.args || []).length >= 2;
 }
 function argMaxMinBody(node) {
   const u = unwrapParen(node);
   if (!isArgMaxMinApp(u)) return null;
-  let b = unwrapParen(u.args[1]);
+  const lim = limitsBigOpBoundScope(u);
+  let b = lim ? unwrapParen(lim.scope) : unwrapParen(u.args[1]);
   while (cls(b) === "LeanColon") b = unwrapParen(b.args?.[0]); // `(ℙ… : ℝ)`
   return b;
 }
@@ -3527,7 +4249,7 @@ function isArgMaxProbCondEqMulProdShape(implyStmts) {
   const found = findArgMaxImplyEq(implyStmts);
   if (!found) return false;
   const left = peelStmt(found.eq.args[0]);
-  if (!isArgMaxMinApp(left) || argMaxMinTokenName(left.args[0]) !== "ArgMax") return false;
+  if (!isArgMaxMinApp(left) || argMaxMinTokenName(left) !== "ArgMax") return false;
   const lb = argMaxMinBody(left);
   if (nameProbApp(lb) !== "ProbCond") return false;
   return !!found.rhsBody && isMulProbProdProbCond(found.rhsBody);
@@ -3684,12 +4406,12 @@ function detMatrixEntryEqPowSubMulBodyName(implyStmts, houseFromDisk = "") {
 
 /** Expect of DotPow_Id @ fun of (adv bullet GradLogProbCond). */
 function expectDotFunSMulGradLogName(node) {
-  const u = unwrapParen(node);
-  if (cls(u) !== "LeanArgsSpaceSeparated" || (u.args || []).length !== 2) return "";
-  const head = u.args[0];
-  if (!(cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === "𝔼")) return "";
-  if (!isDotPowIdApp(u.args[1])) return "";
-  const mat = unwrapParen(u.args[1]);
+  const bs = expectProbVarBoundScope(node);
+  const leg = bs?.kind === "Lean_Expect" ? null : legacyExpectProbVarApp(node, "𝔼");
+  const scope = bs?.kind === "Lean_Expect" ? bs.scope : leg?.scope;
+  if (scope == null) return "";
+  if (!isDotPowIdApp(scope)) return "";
+  const mat = unwrapParen(scope);
   let right = unwrapParen(mat.args[1]);
   if (cls(right) === "Lean_fun") {
     const arrow = right.args?.[right.args.length - 1];
@@ -3717,6 +4439,15 @@ function expectDotFunSMulGradLogName(node) {
 
 function gradientBody(node) {
   const u = unwrapParen(node);
+  // Preferred: Lean_nabla bigop (bound=θ / Eq / operands, scope=body).
+  if (cls(u) === "Lean_nabla" || cls(u) === "LeanNabla") {
+    const bs = nablaBoundScope(u);
+    if (!bs) return null;
+    // Binder ∇[θ] f → scope f; binder-free ∇ J θ → bound (operands are holes → null body).
+    if (bs.scope != null && cls(bs.scope) !== "LeanCaret") return bs.scope;
+    return null;
+  }
+  // Legacy flat: ∇[θ] / ∇ as GetElem/Token head of SpaceSeparated (pre-bigop).
   if (cls(u) !== "LeanArgsSpaceSeparated" || (u.args || []).length < 2) return null;
   const head = u.args[0];
   const nabla = "∇";
@@ -3726,7 +4457,6 @@ function gradientBody(node) {
   if (!isGradHead) return null;
   const rest = u.args.slice(1);
   if (rest.length === 1) return rest[0];
-  // Flat juxtaposition: Grad GetElem Expect GetElem body is 3+ space-separated args.
   return appSlice(u, rest);
 }
 
@@ -3745,7 +4475,32 @@ function preAlts(node, opts, canon) {
   if (opts.asGiven && c === "LeanArgsSpaceSeparated" && cls(args[0]) === "LeanToken" && args[0].text === "IsPolicyTrajectory") {
     return canon ? ["IsPolicyTrajectory"] : uniq(["IsPolicyTrajectory", "All_Eq"]);
   }
-  // GradExpect of Expect…: prefer GradExpectDotPow_Id over GradExpect_DotPow_Id (Body override)
+  // Lean_nabla bigop → Grad via pathChoices (map Nabla→Grad; Body).
+  if (c === "Lean_nabla" || c === "LeanNabla") {
+    const alts = nablaGradAlts(node, opts);
+    if (alts.length) {
+      const gb = gradientBody(node);
+      if (gb && isExpectDotPowId(gb)) {
+        return canon
+          ? ["GradExpectDotPow_Id"]
+          : uniq(["GradExpectDotPow_Id", "GradExpect_DotPow_Id", "GradExpect", ...alts]);
+      }
+      if (gb) {
+        const x = A(gb);
+        const ranked = [];
+        for (const y of x) {
+          ranked.push("Grad" + y);
+          if (y.startsWith("Expect") && !y.startsWith("Expect_") && /[A-Z]/.test(y.slice(6, 7) || "")) {
+            ranked.push("GradExpect_" + y.slice("Expect".length));
+          }
+          ranked.push("Grad_" + y);
+        }
+        return ranked.length ? uniq([...ranked, ...alts]) : uniq(alts);
+      }
+      return canon ? [alts[0]] : uniq(alts);
+    }
+  }
+  // GradExpect of Expect… (legacy flat ∇ head or Lean_nabla scope walk)
   {
     const gb = gradientBody(node);
     if (gb) {
@@ -3764,8 +4519,8 @@ function preAlts(node, opts, canon) {
   }
 
   // `sup[t, ω] |r t ω| < ∞` → GtInftySup (short for LtSup__Infty)
-  if (isSupLtInfty(node)) return canon ? ["GtInftySup"] : supBoundAlts(node);
-  if (isBddAboveSup(node)) return canon ? ["GtInftySup"] : uniq([...supBoundAlts(node), ...nameExprAltsBase(node, opts)]);
+  if (isSupLtInfty(node)) return canon ? [supBoundCanon(node)] : supBoundAlts(node);
+  if (isBddAboveSup(node)) return canon ? [supBoundCanon(node)] : uniq([...supBoundAlts(node), ...nameExprAltsBase(node, opts)]);
   // `{ω | P ω}` → SetOfP (Set/Union_SetOfEq_Add_1/eq/SetOfLe_Add_1)
   if (isSetBuilder(node)) {
     const p = setCondNames(node, opts, canon);
@@ -3859,7 +4614,59 @@ function preAlts(node, opts, canon) {
       return [];
     }
   }
-  if (c === "Lean_partial" || c === "LeanPartial") return [];
+  // Body t174: Lean_Expect / Lean_Var / Lean_Prob -- bound/scope bigops (not Mathlib Var[Y] GetElem).
+  if (c === "Lean_Expect") {
+    const pg = expectDotFunSMulGradLogName(node);
+    if (pg) {
+      const fun = "ExpectDot_FunSMul_GradLogProbCond";
+      const legacy = ["ExpectDotFunSMul_GradLogProbCond", "ExpectDotFunMulFunPowDot_SMul_GradLogProbCond"];
+      return canon ? [pg] : uniq([pg, fun, ...legacy]);
+    }
+    const smulPg = expectSMulGradLogNames(node, canon);
+    if (smulPg.length) return smulPg;
+    if (isExpectDotPowId(node)) return canon ? ["ExpectDotPow_Id"] : uniq(["ExpectDotPow_Id", "ExpectDot"]);
+    const body = expectCondBody(node.scope);
+    if (body) {
+      const x = A(body);
+      const cond = x.length ? x.map((y) => "ExpectCond" + y) : ["ExpectCond"];
+      return canon ? cond.slice(0, 1) : uniq([...cond.slice(0, 2), "ExpectCond", "Expect", ...cond]);
+    }
+    const b = A(node.scope);
+    const fuseExpect = (y) => y === "Mul" ? ["Expect_Mul"] : ["Expect" + y];
+    return b.length ? uniq(b.flatMap(fuseExpect)) : ["Expect"];
+  }
+  if (c === "Lean_Var") {
+    const b = A(node.scope);
+    return b.length ? uniq(b.map((y) => "Var" + y)) : ["Var"];
+  }
+  if (c === "Lean_Prob") {
+    const probName = nameProbApp(node);
+    if (probName) {
+      const ev = matchProbApp(node);
+      return canon
+        ? [probName === "ProbS" && ev && isProbJointEvent(ev) ? "ProbJoint" : probName]
+        : uniq([probName === "ProbS" && ev && isProbJointEvent(ev) ? "ProbJoint" : probName, "Prob"]);
+    }
+    return ["Prob"];
+  }
+
+  // Body t175: Lean_max / min / sup / inf / argmax / argmin -- bound/scope (ArgMax never fuses body).
+  {
+    const lim = limitsBigOpBoundScope(node);
+    if (lim) {
+      const tok = lim.pathToken;
+      if (tok === "ArgMax" || tok === "ArgMin") return [tok];
+      const b = A(lim.scope);
+      if (!b.length) return [tok];
+      return uniq(b.map((y) => limitsBigOpFuseName(tok, y)));
+    }
+  }
+
+  // Body t350/t351: ∂ → Deriv (bigop bound/scope holes, like ∑).
+  if (c === "Lean_partial" || c === "LeanPartial") {
+    const atom = partialPathAtom(node);
+    return atom ? [atom] : [];
+  }
   // named arguments `(π := X)` are elaboration hints, not path atoms
   if (c === "LeanParenthesis" && cls(args[0]) === "LeanAssign") return [];
   // `fun x => x n`: evaluation at a point → Apply (Measurable_Apply_PiLE)
@@ -4421,13 +5228,27 @@ function expectCondBody(arg) {
   return null;
 }
 
-/** `𝔼[… : π](… | …)` application (σ-algebra / condSigma sugar). */
+/** Integrand / event delimiter of Expect/Prob/Var (bigop `.scope` or legacy SpaceSeparated arg). */
+function expectScope(node) {
+  const bs = expectProbVarBoundScope(node);
+  if (bs) return bs.scope;
+  const legE = legacyExpectProbVarApp(node, "𝔼");
+  if (legE) return legE.scope;
+  const legP = legacyExpectProbVarApp(node, "ℙ");
+  if (legP) return legP.scope;
+  const legV = legacyExpectProbVarApp(node, "𝕍𝕒𝕣");
+  if (legV) return legV.scope;
+  return null;
+}
+
+/** Expect condSigma sugar -- Lean_Expect.scope with `|` (legacy GetElem+paren). */
 function isExpectCondApp(node) {
-  const u = unwrapParen(node);
-  if (cls(u) !== "LeanArgsSpaceSeparated" || (u.args || []).length !== 2) return false;
-  const head = u.args[0];
-  if (!(cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === "𝔼")) return false;
-  return !!expectCondBody(u.args[1]);
+  const sc = expectScope(node);
+  if (sc == null) return false;
+  const bs = expectProbVarBoundScope(node);
+  if (bs && bs.kind !== "Lean_Expect") return false;
+  if (!bs && !legacyExpectProbVarApp(node, "𝔼")) return false;
+  return !!expectCondBody(sc);
 }
 
 /** Bare Expect / ExpectCond heads. Legacy Expect_Cond still matched. */
@@ -4586,19 +5407,25 @@ function probEventName(event, tuples) {
 }
 
 /**
- * Match `ℙ[μ](E)` written as LeanArgsSpaceSeparated(GetElem(ℙ, μ), (E)).
- * Returns the event node, or null.
+ * Match Prob[mu](E) / Prob[mu]{E} as Lean_Prob.scope (legacy GetElem+SpaceSeparated).
+ * Returns the event node, or null. Mathlib GetElem without body delimiter is not Prob sugar.
  */
 function matchProbApp(node) {
+  const bs = expectProbVarBoundScope(node);
+  if (bs?.kind === "Lean_Prob") {
+    const sc = bs.scope;
+    if (!sc) return null;
+    if (cls(sc) === "LeanParenthesis" || cls(sc) === "LeanBrace") return unwrapParen(sc);
+    return unwrapParen(sc);
+  }
   const n = unwrapParen(node);
   if (cls(n) !== "LeanArgsSpaceSeparated") return null;
   const head = n.args?.[0];
   if (cls(head) !== "LeanGetElem") return null;
   if (cls(head.args?.[0]) !== "LeanToken" || head.args[0].text !== "ℙ") return null;
-  // Prefer the parenthesized event; ignore trailing density args like `ω`.
   for (let i = 1; i < (n.args || []).length; i++) {
     const a = n.args[i];
-    if (cls(a) === "LeanParenthesis") return unwrapParen(a);
+    if (cls(a) === "LeanParenthesis" || cls(a) === "LeanBrace") return unwrapParen(a);
   }
   return null;
 }
@@ -5011,6 +5838,15 @@ function isBvarJointEvent(event) {
 /** `max[«\sf{y}» : …] a b …` → [a, b, …] (the applied arguments), else null. */
 function maxBvarOperands(node) {
   const n = unwrapParen(node);
+  // Lean_max bigop (Body t175): scope may be a juxta SpaceSeparated of operands
+  const lim = limitsBigOpBoundScope(n);
+  if (lim?.kind === "Lean_max") {
+    const bind = lim.bound;
+    if (cls(bind) !== "LeanColon" || !isBvarQuotation(bind.args?.[0])) return null;
+    const sc = unwrapParen(lim.scope);
+    if (cls(sc) === "LeanArgsSpaceSeparated") return sc.args.slice();
+    return lim.scope != null ? [lim.scope] : [];
+  }
   if (cls(n) !== "LeanArgsSpaceSeparated") return null;
   const head = n.args?.[0];
   if (cls(head) !== "LeanGetElem" || cls(head.args?.[0]) !== "LeanToken" || head.args[0].text !== "max") return null;
@@ -5302,14 +6138,29 @@ function isCoeAscription(node) {
 function nameExprBase(node, opts = {}) {
   if (!node) return "";
   const name = cls(node);
-  if (isSupLtInfty(node) || isBddAboveSup(node)) return "GtInftySup";
+  if (isSupLtInfty(node) || isBddAboveSup(node)) return supBoundCanon(node);
   if (isCoeAscription(node)) return "Coe" + nameExpr(node.args[0], opts);
 
   // Local `have` / `let` in imply is scaffolding — never a path atom.
   // `let`-bound names are also binder leaves (collectImplyIntroducedIdents).
   if (name === "Lean_have" || name === "Lean_let") return "";
   if (isBvarQuotation(node)) return "";
-  // Grad of body: binder / point omitted
+  // Lean_nabla → Grad (Body; js pathChoices Nabla mapped to Grad)
+  if (name === "Lean_nabla" || name === "LeanNabla") {
+    const gb = gradientBody(node);
+    if (gb) {
+      if (isExpectDotPowId(gb)) return "GradExpectDotPow_Id";
+      const y = nameExpr(gb, opts);
+      if (!y) return "Grad";
+      if (y.startsWith("Expect") && !y.startsWith("Expect_") && /[A-Z]/.test(y.slice(6, 7) || "")) {
+        return "Grad" + y;
+      }
+      return joinHeadChild("Grad", y);
+    }
+    const alts = nablaGradAlts(node, opts);
+    return alts[0] || "Grad";
+  }
+  // Grad of body: legacy flat ∇ head
   {
     const gb = gradientBody(node);
     if (gb) {
@@ -5344,6 +6195,11 @@ function nameExprBase(node, opts = {}) {
 
   if (name === "LeanStatements" || name === "LeanArgsNewLineSeparated") {
     return nameExpr(firstConclusion(node), opts);
+  }
+
+  // Body t350/t351: Lean_partial → Deriv (bound=∂[…], scope=body; both holes).
+  if (name === "Lean_partial" || name === "LeanPartial") {
+    return partialPathAtom(node) || "";
   }
 
   if (CLASS_TOKEN[name]) {
@@ -5417,12 +6273,16 @@ function nameExprBase(node, opts = {}) {
       // Body: And of binder-hole conjuncts → hole slots (And_And__), but fill non-hole structure
       // inside a conjunct when present (A = L * L adjoint → Eq_Mul_Adjoint → And_And_Eq_Mul_Adjoint).
       // Not flattened All_Gt_0AndEq_Mul.
-      const left = isAtomicHoleAndConjunct(args[0], opts)
+      // Named ∧/∨ is binary like Eq/= : LHS/RHS (same as imply conjunction), not LeftAndRight.
+      const leftHole = isAtomicHoleAndConjunct(args[0], opts);
+      const rightHole = isAtomicHoleAndConjunct(args[1], opts);
+      const left = leftHole
         ? (fillHoleAndConjunct(args[0], opts) || "")
         : nameExpr(args[0], opts);
-      const right = isAtomicHoleAndConjunct(args[1], opts)
+      const right = rightHole
         ? (fillHoleAndConjunct(args[1], opts) || "")
         : nameExpr(args[1], opts);
+      if (!leftHole && !rightHole && left && right) return left + "/" + right;
       return nameAndOr(join, left, right);
     }
     return relationCanon(node, tag, opts);
@@ -5567,7 +6427,9 @@ if (name === "LeanToken") {
       return hn ? hn + "_Sub" : "UFnSub";
     }
     // max⁻¹[i] e / min⁻¹[i] e → ArgMax / ArgMin (never GetArgMaxProbCond; body is a separate segment)
+    // Also accept whole-node legacy SpaceSeparated via isArgMaxMinApp.
     {
+      if (isArgMaxMinApp(node)) return argMaxMinTokenName(node);
       const am = argMaxMinTokenName(args[0]);
       if (am && isArgMaxMinGetElem(args[0])) return am;
     }
@@ -5629,6 +6491,9 @@ if (name === "LeanToken") {
           if (ARITH_OP.has(cls(unwrapParen(argNode)))) return joinHeadChild(headName, arg);
           return headName + "_" + arg;
         }
+        // Integrable (g x) ReferenceMeasure.measure → Integrable_Measure (g is a hole; two tokens).
+        if (isSingleTokenName(headName) && isSingleTokenName(arg) && cls(unwrapParen(argNode)) === "LeanProperty")
+          return headName + "_" + arg;
         return headName + arg;
       }
       if (headName && argNames.length === 0) return headName;
@@ -5762,9 +6627,54 @@ if (name === "LeanToken") {
     }
     return "";
   }
+  // Body t174: Expect/Prob/Var bigops -- scope walk (Mathlib Var[Y] stays LeanGetElem below).
+  if (name === "Lean_Expect") {
+    const pg = expectDotFunSMulGradLogName(node);
+    if (pg) return pg;
+    const smulPg = expectSMulGradLogNames(node, true);
+    if (smulPg.length) return smulPg[0];
+    if (isExpectDotPowId(node)) return "ExpectDotPow_Id";
+    const body = expectCondBody(node.scope);
+    if (body) {
+      const x = nameExpr(body, opts);
+      return x ? "ExpectCond" + x : "ExpectCond";
+    }
+    const b = nameExpr(node.scope, opts);
+    if (!b) return "Expect";
+    return b === "Mul" ? "Expect_Mul" : "Expect" + b;
+  }
+  if (name === "Lean_Var") {
+    const b = nameExpr(node.scope, opts);
+    return b ? "Var" + b : "Var";
+  }
+  if (name === "Lean_Prob") {
+    const probName = nameProbApp(node);
+    if (probName) {
+      const ev = matchProbApp(node);
+      return probName === "ProbS" && ev && isProbJointEvent(ev) ? "ProbJoint" : probName;
+    }
+    return "Prob";
+  }
+  // Body t175: limits bigops (ArgMax/ArgMin atom-only; Max/Min/Sup/Inf fuse scope).
+  {
+    const lim = limitsBigOpBoundScope(node);
+    if (lim) {
+      const tok = lim.pathToken;
+      if (tok === "ArgMax" || tok === "ArgMin") return tok;
+      const b = nameExpr(lim.scope, opts);
+      return limitsBigOpFuseName(tok, b);
+    }
+  }
   if (name === "LeanGetElem") {
     if (cls(node.args?.[0]) === "LeanToken" && node.args[0].text === "ℙ") return "Prob";
     if (cls(node.args?.[0]) === "LeanToken" && node.args[0].text === "∇") return "Grad";
+    // Mathlib `Var[Y]` / `Var[x | m]` -- Cap Var token, not Lean_Var sugar.
+    if (cls(node.args?.[0]) === "LeanToken" && (node.args[0].text === "Var" || node.args[0].text === "variance")) {
+      const idx = nameExpr(node.args?.[1], opts);
+      return idx ? "Var" + idx : "Var";
+    }
+    // Binder Get-at-literal (`C[0]`): full hole → `C[0] = 1` names `Eq_1` (never bare `0` → `Eq0_1`)
+    if (isBinderGetAtLiteral(node, opts)) return "";
     // h[k + n] / h[k: k + n]: the index Add is not a path atom (All_Eq_Dot, not All_EqAdd_Dot_Add)
     if (isGetIndexNoise(node.args?.[1], opts)) return nameExpr(node.args?.[0], opts);
   }
@@ -5882,6 +6792,40 @@ function nameExprAltsBase(node, opts = {}) {
   }
 
   if (name === "Lean_have" || name === "Lean_let" || isBvarQuotation(node)) return [];
+  // Body t350/t351: ∂ → Deriv (bigop bound/scope holes)
+    if (name === "Lean_Expect" || name === "Lean_Var" || name === "Lean_Prob") {
+    const got = preAlts(node, opts, false);
+    return got && got.length ? got : [];
+  }
+  if (LIMITS_BIGOP_KIND[name]) {
+    const got = preAlts(node, opts, false);
+    return got && got.length ? got : [];
+  }
+if (name === "Lean_partial" || name === "LeanPartial") {
+    const atom = partialPathAtom(node);
+    return atom ? [atom] : [];
+  }
+  // Lean_nabla → Grad (map pathChoices Nabla→Grad)
+  if (name === "Lean_nabla" || name === "LeanNabla") {
+    const alts = nablaGradAlts(node, opts);
+    const gb = gradientBody(node);
+    if (gb) {
+      if (isExpectDotPowId(gb)) {
+        return uniq(["GradExpectDotPow_Id", "GradExpect_DotPow_Id", "GradExpect", ...alts]);
+      }
+      const x = nameExprAlts(gb, opts);
+      const ranked = [];
+      for (const y of x) {
+        ranked.push("Grad" + y);
+        if (y.startsWith("Expect") && !y.startsWith("Expect_") && /[A-Z]/.test(y.slice(6, 7) || "")) {
+          ranked.push("GradExpect_" + y.slice("Expect".length));
+        }
+        ranked.push("Grad_" + y);
+      }
+      return ranked.length ? uniq([...ranked, ...alts]) : uniq(alts.length ? alts : ["Grad"]);
+    }
+    return uniq(alts.length ? alts : ["Grad"]);
+  }
   {
     const gb = gradientBody(node);
     if (gb) {
@@ -6022,11 +6966,30 @@ function nameExprAltsBase(node, opts = {}) {
         const rightAlts = rightHole
           ? (() => { const f = fillHoleAndConjunctAlts(args[1], opts); return f.length ? f : [""]; })()
           : nameExprAlts(args[1], opts);
+        // Named ∧: binary like Eq — prefer LHS/RHS + pathAndInfixChoices; keep glued LeftAndRight as remigration alts.
+        if (!leftHole && !rightHole && join === "And") {
+          const namedL = leftAlts.filter(Boolean);
+          const namedR = rightAlts.filter(Boolean);
+          const binary = pathAndInfixChoices(
+            namedL.length ? namedL : [""],
+            namedR.length ? namedR : [""],
+          ).stems;
+          const glued = [];
+          for (const l of namedL) {
+            for (const r of namedR) glued.push(nameAndOr(join, l, r));
+          }
+          return uniq([...binary, ...glued].filter((x) => x != null && x !== ""));
+        }
         const out = [];
         for (const l of leftAlts) {
           for (const r of rightAlts) {
+            if (l && r && !leftHole && !rightHole) {
+              out.push(l + "/" + r);
+              out.push(l + "/" + (join === "And" ? "and" : "or") + "/" + r);
+            }
             out.push(nameAndOr(join, l, r));
-            if (l && r) out.push(l + "_" + join + "_" + r);
+            // Two named conditions: And__ between them (All_IntegrableAnd__LtSup__Infty), not Left_And_Right.
+            if (l && r) out.push(l + join + "__" + r);
             if (!l && r) out.push(join + r);
             if (l && !r) out.push(l + join);
             if (!l && !r) out.push(join);
@@ -6189,6 +7152,7 @@ function nameExprAltsBase(node, opts = {}) {
     }
     // max⁻¹[i] e / min⁻¹[i] e → ArgMax / ArgMin only (never GetArgMaxProbCond / ArgMaxProbCond fuse)
     {
+      if (isArgMaxMinApp(node)) return [argMaxMinTokenName(node)];
       const am = argMaxMinTokenName(args[0]);
       if (am && isArgMaxMinGetElem(args[0])) return [am];
     }
@@ -6519,6 +7483,8 @@ function nameExprAltsBase(node, opts = {}) {
   if (name === "LeanGetElem") {
     if (cls(node.args?.[0]) === "LeanToken" && node.args[0].text === "ℙ") return ["Prob"];
     if (cls(node.args?.[0]) === "LeanToken" && node.args[0].text === "∇") return ["Grad"];
+    // Binder Get-at-literal: empty alts so relationAlts uses Eq_1 (not child digit → Eq0_1)
+    if (isBinderGetAtLiteral(node, opts)) return [];
     if (isGetIndexNoise(node.args?.[1], opts)) return nameExprAlts(node.args?.[0], opts);
   }
   if (name === "LeanBitOr") return [];
@@ -6907,7 +7873,34 @@ export function suggest(filePath, lemmaName, options = {}) {
       (acc, a) => acc.flatMap((pfx) => a.map((x) => (pfx ? pfx + "/" + x : x))),
       [""],
     );
-    const res = uniq([...splitAlts, ...joined].map(fixJ));
+    // And is binary like Eq: side choices (name alts, plus omit) → LHS/and/RHS and And(LHS)(RHS).
+    // Not LeftAndRight / LeftAnd__Right. Both omitted → And__.
+    let topAnd = sg.implyStmts;
+    while (topAnd && (cls(topAnd) === "LeanParenthesis" || cls(topAnd) === "LeanStatements" || cls(topAnd) === "LeanArgsNewLineSeparated")) {
+      topAnd = cls(topAnd) === "LeanParenthesis" ? topAnd.args?.[0] : firstConclusion(topAnd);
+    }
+    const andBinary = !eqConj && !finishedPeer
+      && cls(topAnd) === "Lean_land"
+      && !isAtomicHoleAndConjunct(topAnd.args?.[0], no)
+      && !isAtomicHoleAndConjunct(topAnd.args?.[1], no);
+    const sideChoices = (node) => {
+      const named = nameExprAlts(node, no).filter((s) => {
+        const t = String(s || "");
+        return t && !t.includes("/") && !t.includes("And") && !t.includes("Or");
+      });
+      let walked = typeof node?.pathChoices === "function" ? node.pathChoices(no) : [];
+      // Lean_nabla pathChoices emits Nabla* — Body path token is Grad.
+      if (cls(node) === "Lean_nabla" || cls(node) === "LeanNabla"
+          || (walked || []).some((s) => String(s).startsWith("Nabla"))) {
+        walked = nablaPathChoicesToGrad(walked);
+      }
+      return pathUniqKeepEmpty([...named, ...(walked || []), ""]);
+    };
+    const andStems = andBinary
+      ? pathAndInfixChoices(sideChoices(topAnd.args[0]), sideChoices(topAnd.args[1])).stems
+      : null;
+    const joinedKept = andStems ? joined.filter((s) => !String(s).includes("And")) : joined;
+    const res = uniq([...splitAlts, ...joinedKept, ...(andStems || [])].map(fixJ));
     // Equation conjunction → prefer `Eq_A/Eq_B/Eq_C` over `Eq_AAndEq_BAndEq_C`.
     if (eqConj && splitAlts.length) {
       // each segment is that conjunct's canonical rendering (nameExpr) when it is among its alternatives
@@ -6954,6 +7947,15 @@ export function suggest(filePath, lemmaName, options = {}) {
           res.extra = uniq([...(res.extra || []), ...leftSplits.map(fixJ)]);
         }
       }
+    }
+    // A conjunction conclusion is two path tokens (`All_Integrable_Measure/GtInftySup`),
+    // not one And-glued token (`All_IntegrableMeasureAndGtInftySup`).
+    if (!res.preferred && parts.length >= 2) {
+      const canonParts = parts.map((p, i) => {
+        const c = sanitizeRelPath(nameExpr(p, no) || "");
+        return perConjunct[i].find((x) => sanitizeRelPath(x) === c) || perConjunct[i][0];
+      });
+      if (canonParts.every(Boolean)) res.preferred = fixJ(canonParts.join("/"));
     }
     if (fixJ === fixMaxProbJointName) {
       // Viterbi: second conjunct → EqMax_ProbJoint (drop `eq/<rhs>`). Prefer All_Eq_Add_MaxAdd
@@ -7537,9 +8539,13 @@ export function suggest(filePath, lemmaName, options = {}) {
       if (g.nameB && relSplitInline(g.nameB)) g.nameB = relSplitInline(g.nameB);
     }
   }
-  // Instance hyps precede `-- given`. They are not givens: do not append them after an
-  // explicit of-tail (`…/of/Indep/PSpace/PSpace`). They name the of-tail only when
-  // the lemma has no explicit given.
+  // Binder style (lint `binder-nezero-fuse`): prefer `[NeZero (n : ℕ)]` over
+  // `{n : ℕ} [NeZero n]` for ℕ/ℤ/ℚ/ℝ/ℂ (ASCII Nat/Int/Rat/Real/Complex too). Path ranking unchanged.
+  // Instance binders `[T]` stay above `-- given` (AGENTS): they are not of/ suggestion
+  // tokens. Do not cart them into displayed paths (`…/of/IsProbabilityMeasure`).
+  // When there is no explicit given, still accept ≤3 such binders in altMatch so legacy
+  // filings like `…/of/RowStochastic` from `[RowStochastic P]` stay consistent until
+  // remigrated to `(h : RowStochastic P)` under `-- given`.
   const canonGivenLists = givenAltLists.filter((g) => !g.canonSkip); // instance hyps are optional, never canonical
   let givenNames = canonGivenLists.map((g) => ({ binder: g.binder, name: pickCanon(g.alts, g.name), chain: g.chain }));
   if (preferB) givenNames = canonGivenLists.map((g) => ({ binder: g.binder, name: g.nameB || pickCanon(g.alts, g.name), chain: g.chain }));
@@ -7561,9 +8567,9 @@ export function suggest(filePath, lemmaName, options = {}) {
     return acc;
   }
   const useInstTail = instAltLists.length > 0 && instAltLists.length <= 3 && canonGivenLists.length === 0;
+  // Suggestions: only `-- given` prop hyps (never instance binders above `-- given`).
   const givenPaths = [...new Set([
     ...cartGiven(givenAltLists),
-    ...(useInstTail ? cartGiven([...givenAltLists, ...instAltLists]) : []),
   ])];
   // Displayed suggestions: capped product; membership is decided by altMatch below.
   const PATH_CAP = 20000;
@@ -7679,17 +8685,84 @@ export function suggest(filePath, lemmaName, options = {}) {
   const suggestions = validSorted.length ? validSorted : sorted;
   const moduleName = relPath.replace(/\.lean$/, "").split(/[/\\]/).join(".");
   const suggestedPath = suggestions[0] || relPath.replace(/\\/g, "/");
+  const implyHoleRegex = implyHoleRegexFromAst(sig.implyStmts, nameOpts);
+  const implyRegexAlts = holeRegexAlternatives(sig.implyStmts, nameOpts);
+  const suggestionsHoleMatch = suggestions.map((p) => {
+    const stem = implyStemFromRelPath(p);
+    return implyRegexAlts.some((re) => matchImplyHoleRegex(re, stem));
+  });
+  // Path-order `-- given` prop hyps (same order as of/ tail / givensPathOrder).
+  const pathOrderHyps = [...hyps.filter((h) => h.prop && !h.canonSkip)].reverse();
+  // Body t341/t345/t347: token[] = stems that match this entry's regex (invariant).
+  const uniqTokens = (xs) => [...new Set((xs || []).filter(Boolean).map((x) => String(x)))];
+  const tokensMatching = (reSource, candidates) => {
+    if (!reSource) return [];
+    return uniqTokens(candidates).filter((t) => matchImplyHoleRegex(reSource, t));
+  };
+  const implyAltStems = uniqTokens(implyAlts).map((a) => sanitizeRelPath(String(a)));
+  const implyHoleStems = uniqTokens([
+    ...holeFillStems(sig.implyStmts, nameOpts).filter(Boolean).map((s) => sanitizePathSeg(s)),
+    ...holeFillStemsEqMulS(sig.implyStmts, nameOpts).filter(Boolean).map((s) => sanitizePathSeg(s)),
+  ]);
+  const implyCandidates = uniqTokens([
+    ...implyHoleStems,
+    ...implyAltStems.map((stem) => {
+      const flat = stem.includes("/of/") ? stem.slice(0, stem.indexOf("/of/")) : stem;
+      return flat.includes("/") ? (implyStemFromRelPath(section + "/" + flat + ".lean") || flat) : flat;
+    }),
+    implyPath,
+  ]);
+  // Body t347/t354: one imply entry per hole-regex alternative (primary + optional MulS).
+  const implyOut = implyRegexAlts.map((re) => {
+    let toks = tokensMatching(re || "_", implyCandidates);
+    // Body t347: surface Eq_Mul_SqrtDiv when this alt admits it.
+    if (re && matchImplyHoleRegex(re, "Eq_Mul_SqrtDiv")) {
+      toks = uniqTokens(["Eq_Mul_SqrtDiv", ...toks]);
+    }
+    return { token: toks, regex: re || "_" };
+  });
+  if (!implyOut.length) implyOut.push({ token: [], regex: implyHoleRegex || "_" });
+  // Body t356: givens = list-of-lists (outer = path-order given; inner = regex alternatives).
+  const givensOut = pathOrderHyps.map((h, i) => {
+    const gList = (canonGivenLists[i] || givenAltLists[i] || {});
+    const givenOpts = { ...nameOpts, asGiven: true };
+    const regexes = holeRegexAlternatives(h.typeNode, givenOpts);
+    const holeStems = uniqTokens([
+      ...holeFillStems(h.typeNode, givenOpts).filter(Boolean).map((s) => sanitizePathSeg(s)),
+      ...holeFillStemsPlural(h.typeNode, givenOpts).filter(Boolean).map((s) => sanitizePathSeg(s)),
+      ...holeFillStems(h.typeNode, { ...givenOpts, mulBothHolesBare: true }).filter(Boolean).map((s) => sanitizePathSeg(s)),
+    ]);
+    const alts = uniqTokens([
+      (givenNames[i] && givenNames[i].name) || "",
+      ...holeStems,
+      ...(gList.alts || []),
+      ...(gList.extraAlts || []),
+    ]);
+    // Invariant: every token matches its own alternative's regex.
+    return regexes.map((re) => ({
+      token: tokensMatching(re || "_", alts),
+      regex: re || "_",
+    }));
+  });
   const result = {
+    // Body t340/t341 primary shape
+    path: currentNorm,
+    section,
+    imply: implyOut,
+    givens: givensOut,
+    suggestions,
+    // retained extras (CLI / remigration / callers)
     file: abs,
     currentPath: currentNorm,
     suggestedPath,
-    suggestions,
     moduleName,
-    section,
     sectionScore: picked.score,
     sectionTokens: picked.tokens,
-    imply: { name: implyPath, chain: implyChain },
-    givensLeanOrder: hyps.map((h) => ({ binder: h.name, prop: h.prop, name: maxLogProbJointGiven(h.typeNode, logJointFns)?.name || bvarAllLt0ProbJointName(h.typeNode) || bvarAllEqLogProbCondName(h.typeNode) || neProbJoint0GivenName(h.typeNode) || allNeProb0GivenName(h.typeNode) || allDifferentiableGivenName(h.typeNode) || nameExpr(h.typeNode, { ...nameOpts, asGiven: true }) })),
+    implyHoleRegex,
+    suggestionsHoleMatch,
+    implyName: implyPath,
+    implyChain: implyChain,
+givensLeanOrder: hyps.map((h) => ({ binder: h.name, prop: h.prop, name: maxLogProbJointGiven(h.typeNode, logJointFns)?.name || bvarAllLt0ProbJointName(h.typeNode) || bvarAllEqLogProbCondName(h.typeNode) || neProbJoint0GivenName(h.typeNode) || allNeProb0GivenName(h.typeNode) || allDifferentiableGivenName(h.typeNode) || nameExpr(h.typeNode, { ...nameOpts, asGiven: true }) })),
     givensPathOrder: givenNames,
     warnings: [],
   };
@@ -7771,6 +8844,18 @@ function pyModuleExists(mod) {
  * Strict exact-match: the current path must be literally generated by the algorithm.
  * Returns { ok, reason, existing, suggested }.
  */
+export {
+  limitsBigOpBoundScope,
+  legacyLimitsBigOpApp,
+  isArgMaxMinApp,
+  argMaxMinBody,
+  argMaxMinTokenName,
+  isArgMaxMinGetElem,
+  isSupLtInfty,
+  supBoundKind,
+  supBoundCanon,
+};
+
 export function pathsConsistent(existing, suggested) {
   const norm = (p) =>
     String(p)
@@ -7821,6 +8906,7 @@ function byBestToWorst(a, b) {
 }
 
 function printHuman(r) {
+  console.log("path:       Lemma/" + (r.path || r.currentPath));
   console.log("current:    Lemma/" + r.currentPath);
   for (const w of r.warnings || []) console.log("warning:    " + w);
   {
@@ -7835,12 +8921,37 @@ function printHuman(r) {
     const taken = s !== r.currentPath && fs.existsSync(path.join(LEMMA_ROOT, s));
     console.log("  - Lemma/" + s + "  [" + Buffer.byteLength(s, "utf8") + " B" + (taken ? ", taken" : "") + "]" + (("Lemma/" + s).length > PATH_WARN_LEN ? "  ⚠ long" : ""));
   }
-  console.log("imply:      " + r.imply.name);
-  console.log("  chain:    " + r.imply.chain.join(" → "));
-  console.log("givens (Lean order → path uses reverse):");
-  for (const g of r.givensLeanOrder) console.log("  " + (g.prop ? "✓" : "·") + " " + g.binder + ": " + (g.name || "(skip)"));
-  console.log("givens (path order):");
-  for (const g of r.givensPathOrder) console.log("  " + g.name + "   [" + g.chain.join(" → ") + "]");
+  if (Array.isArray(r.imply)) {
+    console.log("imply (" + r.imply.length + "):");
+    for (const it of r.imply) {
+      const toks = Array.isArray(it.token) ? it.token : [it.token];
+      console.log("  - token[" + toks.length + "]: " + toks.slice(0, 12).join(" | ") + (toks.length > 12 ? " ..." : ""));
+      console.log("    regex: " + (it.regex || ""));
+    }
+  } else if (r.implyHoleRegex) {
+    console.log("implyHoleRegex: " + r.implyHoleRegex);
+  }
+  if (Array.isArray(r.suggestionsHoleMatch)) {
+    const nTrue = r.suggestionsHoleMatch.filter(Boolean).length;
+    console.log("suggestionsHoleMatch: " + nTrue + "/" + r.suggestionsHoleMatch.length + " match implyHoleRegex");
+  }
+  if (Array.isArray(r.givens)) {
+    console.log("givens (" + r.givens.length + ", path order):");
+    for (const g of r.givens) {
+      const toks = Array.isArray(g.token) ? g.token : [g.token];
+      console.log("  - token[" + toks.length + "]: " + toks.slice(0, 12).join(" | ") + (toks.length > 12 ? " ..." : ""));
+      console.log("    regex: " + (g.regex || ""));
+    }
+  }
+  if (r.implyChain) console.log("imply.chain: " + r.implyChain.join(" → "));
+  if (Array.isArray(r.givensLeanOrder)) {
+    console.log("givens (Lean order → path uses reverse):");
+    for (const g of r.givensLeanOrder) console.log("  " + (g.prop ? "✓" : "·") + " " + g.binder + ": " + (g.name || "(skip)"));
+  }
+  if (Array.isArray(r.givensPathOrder)) {
+    console.log("givensPathOrder:");
+    for (const g of r.givensPathOrder) console.log("  " + g.name + "   [" + g.chain.join(" → ") + "]");
+  }
 }
 
 function cli() {

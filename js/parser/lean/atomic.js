@@ -8,6 +8,7 @@
 import { escapeSpecialsForLatex } from './utility.js';
 import { LeanBinary } from './abstract.js';
 import { Lean } from './base.js';
+import { escapeHoleReLit, holeRegexDefaultNameToken } from './pathChoices.js';
 
 const L = Lean.classes;
 
@@ -297,6 +298,25 @@ export class LeanToken extends Lean {
 
     starts_with_2_letters() {
         return /^[a-zA-Z]{2,}/.test(this.text);
+    }
+
+
+    /**
+     * Hole-regex: leaf/blank -> null; digit -> literal; else CamelCase token.
+     * @param {object} [opts]
+     * @returns {string|null}
+     */
+    holeRegex(opts = {}) {
+        const raw = this.text || "";
+        if (!raw || raw === "_") return null;
+        const isLeaf = typeof opts.isLeaf === "function"
+            ? opts.isLeaf(raw)
+            : !!(opts.leaves?.has?.(raw));
+        if (isLeaf) return null;
+        if (/^-?\d+$/.test(raw)) return escapeHoleReLit(raw);
+        const nameToken = opts.nameToken || holeRegexDefaultNameToken;
+        const tok = nameToken(raw);
+        return tok ? escapeHoleReLit(tok) : null;
     }
 
     strFormat() {

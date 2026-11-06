@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.TheoryOfProbability.code.RandomWalkDichotomy
+import Def.ProbabilityTheory.RandomWalkDichotomy
 open MeasureTheory ProbabilityTheory Filter Finset Topology
 
 

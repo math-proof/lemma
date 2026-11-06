@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.TheoryOfProbability.code.PoissonConvergence
+import Def.ProbabilityTheory.PoissonConvergence
 open MeasureTheory ProbabilityTheory Filter Real Finset
 open scoped ENNReal NNReal Topology Nat
 

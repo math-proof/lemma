@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.TheoryOfProbability.code.KolmogorovThreeSeries
+import Def.ProbabilityTheory.KolmogorovThreeSeries
 open MeasureTheory ProbabilityTheory Filter KolmogorovThreeSeries
 open KolmogorovThreeSeries
 

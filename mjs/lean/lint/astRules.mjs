@@ -9,7 +9,7 @@ import '../../../js/py.js';
 import { compile, Lean, LeanModule } from '../../../js/parser/lean.js';
 
 /** rule ids implemented here; their text-scan versions only run when the AST is unavailable */
-export const AST_RULES = new Set(['have-inline-once', 'have-underscore', 'given-prop-first', 'given-prop-consecutive', 'given-implicit-dep', 'tactic-haveI', 'tactic-letI', 'calc-after-assign', 'decl-keyword-dir', 'paren-getelem', 'fin-index-val', 'paren-apparg', 'paren-redundant-type', 'paren-redundant-sum-sub', 'paren-redundant-pow', 'prefer-unicode-type']);
+export const AST_RULES = new Set(['have-inline-once', 'have-underscore', 'given-prop-first', 'given-prop-consecutive', 'given-implicit-dep', 'tactic-haveI', 'tactic-letI', 'calc-after-assign', 'decl-keyword-dir', 'paren-getelem', 'fin-index-val', 'paren-apparg', 'paren-redundant-type', 'paren-redundant-sum-sub', 'paren-redundant-pow', 'paren-redundant-arith', 'prefer-unicode-type']);
 
 /** parse `source`, or null when the parser throws / does not return a module */
 export function parseAst(source) {
@@ -642,6 +642,64 @@ function parenRedundantPow(ctx, node) {
         1);
 }
 
+/**
+ * Needless parentheses around an arithmetic operand when dropping them does not change the
+ * parse (`(μ * Δx) * (∂[t, t] u t x)` → `μ * Δx * ∂[t, t] u t x`).
+ *
+ * - Parent is a binary `LeanArithmetic` (`*`, `/`, `+`, `-`, `^`, …).
+ * - Skip ascriptions `(e : τ)`, tuples, `·` sections (`latexParenRequired`).
+ * - Child arithmetic with strictly higher priority: both sides (`(a * b) + c`, `a + (b * c)`).
+ * - Same priority, left-assoc (`*`/`/`/`+`/`-`): only the LHS (`(a * b) * c`; not `a * (b * c)`).
+ * - Same priority, right-assoc (`^`): only the RHS (`a ^ (b ^ c)`).
+ * - `Lean_partial`: only as the RHS of `*`/`/` (LHS would swallow the operator into the partial
+ *   scope: `∂[t] u * μ` ≠ `(∂[t] u) * μ`).
+ * - Space-separated application: both sides of `*`/`/` (`(f x) * g`, `f * (g x)`).
+ *
+ * Not an AGENTS.md rule (user request via Hyperreal / Body).
+ */
+function parenRedundantArith(ctx, node) {
+    const {
+        LeanParenthesis, LeanArithmetic, LeanMul, LeanDiv, LeanPow, LeanColon,
+        Lean_partial, LeanArgsSpaceSeparated,
+    } = Lean.classes;
+    if (!(node instanceof LeanParenthesis)) return;
+    if (typeof node.latexParenRequired === 'function' && node.latexParenRequired()) return;
+    const arg = node.arg;
+    // `(μ : ℝ*)` ascriptions stay
+    if (arg instanceof LeanColon) return;
+    const parent = node.parent;
+    if (!(parent instanceof LeanArithmetic)) return;
+    // unary arith (Neg/…) keep their operand grouping decisions elsewhere
+    if (parent.lhs == null || parent.rhs == null) return;
+    const onLhs = parent.lhs === node;
+    const onRhs = parent.rhs === node;
+    if (!onLhs && !onRhs) return;
+
+    const parentPri = parent.input_priority ?? parent.constructor.input_priority ?? 0;
+    let ok = false;
+    if (arg instanceof LeanArithmetic) {
+        const childPri = arg.input_priority ?? arg.constructor.input_priority ?? 0;
+        if (childPri > parentPri) ok = true;
+        else if (childPri === parentPri) {
+            const rightAssoc = arg instanceof LeanPow || parent instanceof LeanPow;
+            ok = rightAssoc ? onRhs : onLhs;
+        }
+    } else if (arg instanceof Lean_partial) {
+        // only RHS of * / — LHS absorbs `*`/`/` into the partial body
+        ok = onRhs && (parent instanceof LeanMul || parent instanceof LeanDiv);
+    } else if (arg instanceof LeanArgsSpaceSeparated) {
+        // juxtaposition app binds tighter than * /; both sides OK
+        ok = parent instanceof LeanMul || parent instanceof LeanDiv;
+    }
+    if (!ok) return;
+
+    const text = String(arg).replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');
+    const show = (s) => (s.length > 60 ? `${s.slice(0, 57)}…` : s);
+    ctx.warnAst('paren-redundant-arith', node,
+        `\`(${show(text)})\` → \`${show(text)}\`: parentheses are redundant here`,
+        1);
+}
+
 /** is the repo-relative path a `Lemma/…` file? */
 export function isLemmaPath(file) {
     return /(^|\/)Lemma\//.test(String(file ?? '').replace(/\\/g, '/'));
@@ -718,6 +776,7 @@ export function astRules(ctx, tree) {
             parenRedundantType(sink, node);
             parenRedundantSumSub(sink, node);
             parenRedundantPow(sink, node);
+            parenRedundantArith(sink, node);
             preferUnicodeType(sink, node);
         }
     }

@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.TheoryOfProbability.code.PairwiseIndepSLLN
+import Def.ProbabilityTheory.PairwiseIndepSLLN
 open MeasureTheory ProbabilityTheory Filter Set
 open scoped ENNReal NNReal MeasureTheory
 

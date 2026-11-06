@@ -6,7 +6,7 @@
                 <template v-if="markdownComment && !commentEditMode">
                     <!-- Docstring HTML from MarkdownParser (tables etc.). Avoid the Vue AST component
                          tree here: leftover MarkdownCaret + async SFCs left /-- ... -/ blank. -->
-                    <div class="green lemma-comment-markdown" v-clipboard :data-clipboard-text=comment v-html="markdownComment.html"></div>
+                    <div class="green lemma-comment-markdown" :key="'cmd-' + commentTypesetKey" v-latex v-clipboard :data-clipboard-text=comment v-html="markdownComment.html"></div>
                     <input type=hidden :name="`lemma[${index}][comment]`" :value=comment />
                 </template>
                 <textarea v-else :ref="$refs.commentTextarea" class=green :name="`lemma[${index}][comment]`" :value=comment :rows=comment_rows :cols=comment_cols @keydown=keydown_textarea @input=inputComment></textarea>
@@ -89,6 +89,7 @@ const self = new Vue({
           postname: 'lemma',
           markdownComment: null,
           commentEditMode: false,
+          commentTypesetKey: 0,
           accessibilities: ['public', 'protected', 'private', 'public nonrec', 'protected nonrec', 'private nonrec', 'noncomputable', 'private noncomputable', 'scoped', 'nonrec'],
       };
   },
@@ -172,6 +173,8 @@ const self = new Vue({
           var markdownComment = new MarkdownParser();
           markdownComment.build(this.comment);
           this.markdownComment = markdownComment;
+          this.commentTypesetKey++;
+          this.typesetCommentMarkdown();
       }
   },
 
@@ -635,6 +638,39 @@ ${latex}
             var md = new MarkdownParser();
             md.build(this.lemma.comment);
             this.markdownComment = md;
+            this.commentTypesetKey++;
+            this.typesetCommentMarkdown();
+        },
+
+        /**
+         * Docstring path uses v-html (not MarkdownLatex SFCs). Prefer v-latex on
+         * the markdown div; also retry renderMathInElement in case the first
+         * paint races the leaf or katex auto-render.
+         */
+        typesetCommentMarkdown(tries = 0) {
+            this.$nextTick(() => {
+                requestAnimationFrame(() => {
+                    var el = this.$el && this.$el.querySelector
+                        ? this.$el.querySelector('.lemma-comment-markdown')
+                        : null;
+                    if ((!el || typeof renderMathInElement !== 'function') && tries < 90) {
+                        requestAnimationFrame(() => this.typesetCommentMarkdown(tries + 1));
+                        return;
+                    }
+                    if (!el || typeof renderMathInElement !== 'function')
+                        return;
+                    renderMathInElement(el, {
+                        delimiters: [
+                            { left: "$$", right: "$$", display: true },
+                            { left: "\\[", right: "\\]", display: true },
+                            { left: "$", right: "$", display: false },
+                            { left: "\\(", right: "\\)", display: false }
+                        ],
+                        throwOnError: false,
+                        errorColor: "#ff0000"
+                    });
+                });
+            });
         },
 
         async keydown_textarea(event) {
@@ -694,6 +730,7 @@ const {
   $refs,
   markdownComment,
   commentEditMode,
+  commentTypesetKey,
   accessibilities,
   comment_rows,
   comment_cols,

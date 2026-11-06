@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.TheoryOfProbability.code.CaratheodoryExtension
+import Def.ProbabilityTheory.CaratheodoryExtension
 open Set MeasureTheory MeasureTheory.Measure MeasurableSpace
 open scoped ENNReal
 

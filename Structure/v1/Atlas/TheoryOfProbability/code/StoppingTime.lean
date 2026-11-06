@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Mathlib.Probability.Process.Stopping
-import Def.v1.Atlas.TheoryOfProbability.code.StoppingTime
+import Def.ProbabilityTheory.StoppingTime
 open MeasureTheory
 
 variable {Ω : Type*} {m : MeasurableSpace Ω}

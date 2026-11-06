@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.TheoryOfProbability.code.CharacteristicFunction
+import Def.ProbabilityTheory.CharacteristicFunction
 open MeasureTheory Complex ProbabilityTheory
 
 

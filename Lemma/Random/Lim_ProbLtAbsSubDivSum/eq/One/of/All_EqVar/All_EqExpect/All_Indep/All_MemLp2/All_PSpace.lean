@@ -2,7 +2,7 @@ import Mathlib.Probability.Moments.Variance
 import Mathlib.Analysis.SpecificLimits.Basic
 import Notation.Fun
 import Notation.Algebra.Power
-import Notation.Lean.Expr.Singleton
+import Notation.Analysis.Real.Numbers
 import Def.Analysis.Real.Limits.Basic
 import Lemma.Random.Var.eq.Integral
 import Lemma.Random.Expect.eq.Integral

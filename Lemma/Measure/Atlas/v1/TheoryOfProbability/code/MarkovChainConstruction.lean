@@ -10,9 +10,9 @@ open MeasureTheory ProbabilityTheory Kernel Set
 @[path]
 lemma markovChainMeasure_initial_distribution
   [MeasurableSpace S]
-  {κ : Kernel S S}
+  (κ : Kernel S S)
   [IsMarkovKernel κ]
-  {μ : Measure S}
+  (μ : Measure S)
   [IsProbabilityMeasure μ] :
 -- imply
   Measure.map (fun (ω : ℕ → S) => ω 0) (markovChainMeasure κ μ) = μ := by
@@ -40,11 +40,11 @@ lemma markovChainMeasure_initial_distribution
 @[path]
 lemma markovChainMeasure_condDistrib
   [MeasurableSpace S]
-  {κ : Kernel S S}
+  (κ : Kernel S S)
   [IsMarkovKernel κ]
-  {μ : Measure S}
+  (μ : Measure S)
   [IsProbabilityMeasure μ]
-  {n : ℕ}
+  (n : ℕ)
   [StandardBorelSpace S]
   [Nonempty S] :
 -- imply
@@ -75,3 +75,4 @@ end ExistenceTheorem
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-05

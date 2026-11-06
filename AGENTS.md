@@ -19,7 +19,8 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
 - code layout strictly 2-indented
   - `import` / `open` / `set_option` are contiguous (no blank lines between them), then exactly two blank lines before the rest of the file
     - drop unused `open`s by heuristic, not a `run.mjs` warning: from the lemma AST, keep `open NS` only if some identifier would not resolve from the file’s `import`s without that namespace. Do not add a compiler rule (`open-section` / `open-duplicate` / `open-prefix` stay). Keep `open scoped` and opens that only supply instances or notation even when no AST identifier is from that namespace. Mapping an identifier to its defining namespace (`measurable_snd` → `MeasureTheory`) over-requires opens that imports / `export` / Prelude already provide, and drop-one compile is costly; a noisy unused-`open` rule would fail every run until agents delete needed opens.
-    - drop redundant type ascriptions `(v : T)` by heuristic, not a `run.mjs` warning or Lean linter (both forms elaborate; the compiler cannot flag them). Drop when `v` already has type `T`, or a coercion fills the expected type anyway (`Fin`→`ℕ`, `ℕ`→`ℂ` at `*`, `n - e` with `e : Fin`). Keep ascriptions that pick a numeral’s type (`(0 : ℂ)`), that state a `show` used as a rewrite (`show ((1 : Fin 3) : ℕ) = 1`), or that the file fails to elaborate without.
+    - drop redundant type ascriptions `(v : T)` by heuristic, not a `run.mjs` warning or Lean linter (both forms elaborate; the compiler cannot flag them). Drop when `v` already has type `T`, or a coercion fills the expected type anyway (`Fin`→`ℕ`, `ℕ`→`ℂ` at `*`, `n - e` with `e : Fin`). Same heuristic for redundant `↑` / Coe: drop when Lean inserts it by typeclass heuristics and the expected type is already clear (e.g. `ℝ*` / Hyperreal).
+    - in lemma docstrings, convert raw lemma module/path names to markdown links by heuristic, not a `run.mjs` warning or lean.js parse (raw module names are hard for lean.js to detect as links). Write `[lemma latex formula or natural language name](?module=Module.Path)` using the site's `?module=` query form (same as home.md cites). Prefer a latex formula or short natural-language name as the link text; put the dotted module in `module=`.
   - before the `given` section, omit auto-bound implicits
   - explicit binders `(…)` (hypotheses and given-section expressions) sit under `-- given`; type binders `{…}` / `⦃…⦄` and instance binders `[…]` stay above it
   - a named instance binder `[h : T]` is written `(h : T)` under `-- given`; unnamed `[T]` stays above `-- given`; never `(h : … := by infer_instance)` or any `(h : T := by tactic)`
@@ -53,6 +54,7 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
 - If that agent does not exist, ask `md` (primary) for help.
 
 ## Inter-agent communication
+- Inter-agent communication should forward necessary context to avoid misunderstanding.
 This copy-paste path is for **Cursor-like** agents, who cannot talk to other agents. Do not claim you dispatched a job, and do not wait for a colleague that never receives the message.
 
 **Grok** bots can talk to colleagues. They skip this section: send the job to @AgentName directly (do not give the user a paste prompt).

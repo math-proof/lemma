@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.TheoryOfProbability.code.StrongMarkovIID
+import Def.ProbabilityTheory.StrongMarkovIID
 open MeasureTheory ProbabilityTheory
 
 

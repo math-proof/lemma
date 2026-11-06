@@ -1,23 +1,52 @@
-import Mathlib.Algebra.BigOperators.Ring.Finset
-import Initialize.Tactic.Attr.Basic
-open Finset
+import Lemma.Random.Expect.eq.Integral_Mul_Prob
+open MeasureTheory Random
 
 
 /--
-Finite importance sampling: reweighting by the likelihood ratio `μ / ν` preserves the expectation.
+Continuous importance sampling: changing the sampling law from `π` to `π'`
+reweights by the likelihood ratio of densities `ℙ[π](x) / ℙ[π'](x)`
+(observation / pdf form `ℙ[π](x = ·)`, not a conditional `ℙ[π](· | ·)`).
+Requires the target density under `π` to vanish a.e. wherever the proposal
+density under `π'` vanishes (absolute continuity of the pushforwards).
 -/
 @[path]
 private lemma main
-  [Fintype ι]
-  {f μ ν : ι → ℝ}
+  [MeasurableSpace Ω]
+  [ReferenceMeasure α]
+  {x : Ω → α} {f : α → ENNReal}
+  {π : Measure Ω} [SinglePSpace π x]
+  {π' : Measure Ω} [SinglePSpace π' x]
 -- given
-  (h₀ : ∀ i, ν i ≠ 0) :
+  (hf : Measurable f)
+  (habs : ∀ᵐ «\sf{x}» ∂(ReferenceMeasure.measure : Measure α),
+    ℙ[π'](x = «\sf{x}») = 0 → ℙ[π](x = «\sf{x}») = 0) :
 -- imply
-  ∑ i, f i * μ i = ∑ i, f i * (μ i / ν i) * ν i := by
+  𝔼[x: π](f x) = 𝔼[x: π'](f x * ℙ[π](x) / ℙ[π'](x)) := by
 -- proof
-  refine sum_congr rfl fun i _ => ?_
-  field_simp [h₀ i]
+  have hp : Measurable (π.prob x) := Measure.measurable_rnDeriv _ _
+  have hp' : Measurable (π'.prob x) := Measure.measurable_rnDeriv _ _
+  have hg : Measurable (fun «\sf{x}» ↦ f «\sf{x}» * π.prob x «\sf{x}» / π'.prob x «\sf{x}») :=
+    (hf.mul hp).div hp'
+  have htop : ∀ᵐ «\sf{x}» ∂(ReferenceMeasure.measure : Measure α),
+      π'.prob x «\sf{x}» ≠ ⊤ :=
+    Measure.rnDeriv_ne_top _ _
+  rw [Expect.eq.Integral_Mul_Prob (π := π) (a := x) (f := f) inferInstance hf]
+  simp only [Expectation.asRV_function, Expectation.ofRV, expectation_ennreal]
+  rw [Map.eq.WithDensityProb (π := π') (x := x),
+    lintegral_withDensity_eq_lintegral_mul _ hp' hg]
+  refine lintegral_congr_ae ?_
+  filter_upwards [habs, htop] with «\sf{x}» hs hsTop
+  calc
+    _ = (f «\sf{x}» * π.prob x «\sf{x}» / π'.prob x «\sf{x}») * π'.prob x «\sf{x}» :=
+      (ENNReal.div_mul_cancel'
+        (b := f «\sf{x}» * π.prob x «\sf{x}»)
+        (fun h0 ↦ by
+          have := hs h0
+          simp [this])
+        fun hTop ↦ (hsTop hTop).elim).symm
+    _ = π'.prob x «\sf{x}» * (f «\sf{x}» * π.prob x «\sf{x}» / π'.prob x «\sf{x}») := by
+      rw [mul_comm]
 
 
 -- created on 2023-03-25
--- updated on 2026-10-26
+-- updated on 2026-11-05

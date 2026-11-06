@@ -2,24 +2,7 @@
 
 Suggest `Lemma/` path from `lean.js` AST + README naming.
 
-Steps:
-  1. Section from typeclasses/datatypes (`TYPE_TO_SECTION`).
-     Sections are data types: a folder named after a repo Prop predicate (`SolvesStateEquation`, `GeneratorMatrix`,
-     `Iterates`) or a value definition (`actor_box` → `ActorBox`) is never chosen as the section; its name is only a
-     hypothesis / conclusion token (files still filed there stay accepted). Repo type abbreviations score as their head
-     type (`EuclideanVec` → `EuclideanSpace` = `PiLp 2` → Matrix).
-     Typeclass folders (`NormedSpace`, …) likewise only keep the files already filed there; `exp (t • Q)` with
-Projections of a repo-structure binder are read through their declared (co)domain types, non-scalar only: `MRP.D : Matrix S S ℝ` → Matrix, `MDP.pi : S → ProbabilityMeasure A` → Random, chained through `FiniteMDP.MRP : FiniteMRP` (fields, `extends` parents and `namespace T` defs).
-     `Q : Matrix …` elsewhere is a Matrix lemma.
-  2. Imply from conclusion AST (root→leaf). Equality → `LHS/eq/RHS`.
-  3. Prop givens same way; path order = reverse Lean order.
-
 Usage: `node mjs/lemmaPath.mjs [--json] <path-to.lean>`
-
-Path atoms:
-  - binder leaves (`n`, `A`, …) are holes — not emitted as path segments
-  - `_/eq/One` collapses to `Eq_One`, then `Eq_1` (README `Snake_Case`; Windows-safe)
-  - bare segment `1` alone is spelled `One` (not `/1/`) so Windows `lake` can build
 
 # Lemma Naming Convention
 
@@ -72,23 +55,20 @@ Small-letter binary infix operators are short name for Capital-letter operator n
 | `X.as.Y` | `≃` | `SEq` | -- |
 | `X.ae.Y` | `=ᵐ` | `MEq` | Equal |
 | `X.ou.Y` | `∨` | `Or` | Or |
-| `X.et.Y` | `∧` | `And` | And |
+| -- | `∧` | `And` | And |
 | `X.at.Y` | `≈` | `XEq` | -- |
 | `X.to.Y` | `→` | `·.stdPart = ·` | -- |
-| `X.dvd.Y` | `\|` | `Dvd` | -- |
-| `X.sub.Y` | `⊆` | `Subset` | Subset |
-| `X.sup.Y` | `⊇` | `Superset` | Supset |
+| -- | `\|` | `Dvd` | -- |
+| -- | `⊆` | `Subset` | Subset |
+| -- | `⊇` | `Superset` | Supset |
 | `X.ll.Y` | `≪` | `AbsolutelyContinuous` | -- |
 | `X.gg.Y` | `≫` | `CategoryStruct.comp` | -- |
 
 `=ᵐ` (`MEq`, sympy `Equal`) is named inline like `Eq`, which is the preferred form:
 `MEqCondExp_Integral` (both sides named), `MEq_CondExp` (hole / lambda left side),
 `All_MEq_CondExp` (under `∀`), bare `MEq` (both sides holes). The relation form `X.ae.Y`
-(path `X/ae/Y`, e.g. `CondExpInner/ae/Inner_CondExp`) is still accepted; only the fused `AeEq…` token became `MEq…`.
-Plain `∀ᵐ` statements keep the `Ae` prefix (`AeNe_0`, `AeTendsto`).
+(path `X/ae/Y`, e.g. `CondExpInner/ae/Inner_CondExp`) is still accepted;
 
-When a relation's left side ends in a binary-operator rendering (Preimage `⁻¹'`, …), a trailing `_0` would be read as that operator's second argument (Snake_Case). Prefer the constant right after the relation: `Ne0Real_Preimage` for `(M θ).real (s t ⁻¹' {x}) ≠ 0` (hole `_` for the measure; one Preimage; no trailing S). Simple `Ne_0` / `Gt_0` stay for hole left sides.
-Namespaced constants (`Measure.count`) and type ascriptions do not introduce an underscore in asGiven relations: `EqMeasureCount` (accept `EqMeasure_Count`).
 
 ## Plural S
 

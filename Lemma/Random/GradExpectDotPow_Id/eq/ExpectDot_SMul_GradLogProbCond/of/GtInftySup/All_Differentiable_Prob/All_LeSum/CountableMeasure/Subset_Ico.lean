@@ -1,5 +1,5 @@
-import Lemma.Random.GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.Any_And_All_IntegrableMeasureAndGtInftySup.All_Differentiable_Prob.All_NeDens_0.All_Eq_JointDens.AbsContJointAS.AbsContStateMarginal.IsPolicyTrajectory.Subset_Ico
-import Lemma.Measure.All_IntegrableMeasureAndGtInftySup.of.GtInftySup
+import Lemma.Random.GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.Any_And_All_Integrable_Measure.GtInftySup.All_Differentiable_Prob.All_NeDens_0.All_Eq_JointDens.AbsContJointAS.AbsContStateMarginal.IsPolicyTrajectory.Subset_Ico
+import Lemma.Measure.All_Integrable_Measure.GtInftySup_Integral.of.GtInftySup_Sum
 import Lemma.Random.PSpace_Path.of.All_PSpace
 import Lemma.Random.EqProb
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
@@ -11,17 +11,15 @@ set_option maxHeartbeats 900000
 
 
 /--
-Generalized advantage estimation for a finite action alphabet and a general state
-(Schulman et al., arXiv 1506.02438). The action reference measure is counting measure,
-so `π_θ(· | s)` is a probability mass function: a language-model policy, with a
-continuous context as the state and the vocabulary as the action. `∑ u, g s u` is the
-action-integral bound of the continuous-action GAE, and `V_θ[t] δ k := M.V0 θ γ (δ k)`.
-- [GAE (discrete)](?module=Random.GradExpectDotPow_Id.eq.ExpectDot_FunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_NeProb_0.IsPolicyTrajectory.In_Icc.In_Ico)
-- [GAE (continuous)](?module=Random.GradExpectDotPow_Id.eq.ExpectDot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity.In_Icc.In_Ico)
-
-Special case of dens FunSMul Subset_Ico: discharge Integrable/integral bounds from the
-Finset-sum hypothesis via All_IntegrableMeasureAndGtInftySup.of.GtInftySup,
-and the score StronglyMeasurable hypothesis via StronglyMeasurable.of_discrete.
+In industry LLM / RLHF training (PPO and related policy-gradient fine-tunes),
+GAE is the usual advantage estimator for next-token updates. The state is the
+context — a continuous or otherwise general prompt / conversation embedding —
+and the action is the next token from a finite vocabulary, so the action
+reference measure is counting measure and `π_θ(· | s)` is the model's
+next-token probability mass function. With discount `γ` and GAE parameter `λ`
+in `[0, 1)`, the gradient of the discounted return equals the expected
+GAE-weighted score `∇ log π_θ(a_t | s_t)` on sampled tokens — the identity
+production trainers rely on when they backprop through log-probs.
 -/
 @[path]
 private lemma main
@@ -72,13 +70,13 @@ private lemma main
         (∀ x, Integrable (g x) ReferenceMeasure.measure) ∧
         (sup[x] (∫ u, g x u ∂ReferenceMeasure.measure) < ∞) := by
     refine ⟨g, h₂bound, ?_⟩
-    exact All_IntegrableMeasureAndGtInftySup.of.GtInftySup h₂sup
+    exact All_Integrable_Measure.GtInftySup_Integral.of.GtInftySup_Sum h₂sup
   have hφ : StronglyMeasurable
       (fun ((s0, a0) : S × A) => ∇[θ] (ℙ[M θ](a[0] = a0 | s[0] = s0) : ℝ).log) :=
     StronglyMeasurable.of_discrete
-  exact GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.Any_And_All_IntegrableMeasureAndGtInftySup.All_Differentiable_Prob.All_NeDens_0.All_Eq_JointDens.AbsContJointAS.AbsContStateMarginal.IsPolicyTrajectory.Subset_Ico
+  exact GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.Any_And_All_Integrable_Measure.GtInftySup.All_Differentiable_Prob.All_NeDens_0.All_Eq_JointDens.AbsContJointAS.AbsContStateMarginal.IsPolicyTrajectory.Subset_Ico
     h₀ hfactor h₁ h₂dens hφ hMs
 
 
 -- created on 2026-11-02
--- updated on 2026-11-03
+-- updated on 2026-11-04 13:37:57

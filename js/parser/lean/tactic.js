@@ -983,7 +983,6 @@ export class LeanCalc extends LeanUnary {
             const self = this.clone();
             const stmts = self.arg.args;
             self.arg = new L.LeanCaret(this.indent, this.level);
-            self.originalCalc = this;
             const statements = [self];
             for (const stmt of stmts) statements.push(...stmt.split(syntax));
             return statements;
@@ -994,7 +993,6 @@ export class LeanCalc extends LeanUnary {
             const a = self.arg;
             const content = a.rhs;
             a.rhs = new L.LeanCaret(content.indent, content.level);
-            self.originalCalc = this;
             const statements = [self];
             statements.push(...content.split(syntax));
             return statements;

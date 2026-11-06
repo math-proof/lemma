@@ -36,6 +36,12 @@ class Lean_gt extends LeanRelational
                 return parent::__get($vname);
         }
     }
+
+    public function holeRegexTag()
+    {
+        return "Gt";
+    }
+
 }
 
 class Lean_ge extends LeanRelational
@@ -49,6 +55,12 @@ class Lean_ge extends LeanRelational
                 return parent::__get($vname);
         }
     }
+
+    public function holeRegexTag()
+    {
+        return "Ge";
+    }
+
 }
 
 class Lean_lt extends LeanRelational
@@ -62,6 +74,12 @@ class Lean_lt extends LeanRelational
                 return parent::__get($vname);
         }
     }
+
+    public function holeRegexTag()
+    {
+        return "Lt";
+    }
+
 }
 
 class Lean_le extends LeanRelational
@@ -75,6 +93,12 @@ class Lean_le extends LeanRelational
                 return parent::__get($vname);
         }
     }
+
+    public function holeRegexTag()
+    {
+        return "Le";
+    }
+
 }
 
 class LeanEq extends LeanRelational
@@ -155,6 +179,12 @@ function try_marginal_density_latex($lhs, $rhs)
         "\\int {$densityName}({\\color{red} {x}}, {$rv})\\,dx",
         "{$densityName}({$rv})",
     ];
+
+    public function holeRegexTag()
+    {
+        return "Eq";
+    }
+
 }
 
 class LeanMEq extends LeanRelational
@@ -316,6 +346,12 @@ class Lean_ne extends LeanRelational
                 return parent::__get($vname);
         }
     }
+
+    public function holeRegexTag()
+    {
+        return "Ne";
+    }
+
 }
 
 class Lean_equiv extends LeanRelational
@@ -422,4 +458,10 @@ class LeanDvd extends LeanRelational
                 return parent::__get($vname);
         }
     }
+
+    public function holeRegexTag()
+    {
+        return "Dvd";
+    }
+
 }

@@ -14,8 +14,7 @@ import Mathlib.MeasureTheory.Measure.MeasureSpace
 import Mathlib.Topology.Instances.EReal.Lemmas
 import Mathlib.Topology.Algebra.Order.LiminfLimsup
 import Abbrev.v1.Atlas.TheoryOfProbability.code.TailSigmaAlgebra
-import Def.v1.Atlas.TheoryOfProbability.code.RandomWalkDichotomy
-import Lemma.Measure.Atlas.v1.TheoryOfProbability.code.RandomWalkDichotomy
+import Def.ProbabilityTheory.RandomWalkDichotomy
 set_option maxHeartbeats 4000000
 
 open MeasureTheory ProbabilityTheory Filter Finset Topology MeasurableSpace

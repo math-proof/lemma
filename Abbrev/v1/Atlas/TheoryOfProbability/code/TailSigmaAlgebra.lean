@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Mathlib.MeasureTheory.MeasurableSpace.Basic
-import Def.v1.Atlas.TheoryOfProbability.code.TailSigmaAlgebra
+import Def.ProbabilityTheory.TailSigmaAlgebra
 open MeasurableSpace
 
 variable {Ω : Type*}

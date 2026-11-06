@@ -13,8 +13,8 @@ import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
 import Mathlib.Topology.Semicontinuity.Basic
-import Def.v1.Atlas.TheoryOfProbability.code.CramerTheorem
-import Def.v1.Atlas.TheoryOfProbability.code.LegendreTransform
+import Def.ProbabilityTheory.CramerTheorem
+import Def.ProbabilityTheory.LegendreTransform
 import Structure.v1.Atlas.TheoryOfProbability.code.LargeDeviations
 open MeasureTheory ProbabilityTheory Real
 open scoped InnerProductSpace ENNReal Topology

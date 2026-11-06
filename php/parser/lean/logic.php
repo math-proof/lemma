@@ -158,6 +158,71 @@ class Lean_lor extends LeanLogic
 
 }
 
+/**
+ * Display-only: flatten nested `∧` of plain `=` into an eq chain when sides connect
+ * (`a = b ∧ b = c ∧ c = d` → `a = b = c = d`), matching JS `eqChainSides` / py And._latex.
+ * @param Lean_land $land
+ * @return array|null ordered side nodes, or null if not a pure connected eq chain
+ */
+function lean_eq_chain_sides(Lean_land $land)
+{
+    $flatten = function ($n) use (&$flatten) {
+        while ($n instanceof LeanParenthesis)
+            $n = $n->arg;
+        if ($n instanceof Lean_land)
+            return array_merge($flatten($n->lhs), $flatten($n->rhs));
+        return [$n];
+    };
+    $parts = $flatten($land);
+    if (count($parts) < 2)
+        return null;
+    $pairs = [];
+    foreach ($parts as $p) {
+        $n = $p;
+        while ($n instanceof LeanParenthesis)
+            $n = $n->arg;
+        // Plain `=` only (no =ᵐ / =ᶠ superscripts).
+        if (!($n instanceof LeanEq) || !empty($n->superscript))
+            return null;
+        $lhs = $n->lhs;
+        $rhs = $n->rhs;
+        while ($lhs instanceof LeanParenthesis)
+            $lhs = $lhs->arg;
+        while ($rhs instanceof LeanParenthesis)
+            $rhs = $rhs->arg;
+        $pairs[] = [$lhs, $rhs];
+    }
+    $child = [];
+    $parent = [];
+    $lastLhs = null;
+    foreach ($pairs as [$lhs, $rhs]) {
+        $lk = (string)$lhs;
+        $rk = (string)$rhs;
+        if (array_key_exists($lk, $child))
+            return null;
+        $child[$lk] = ['node' => $rhs, 'key' => $rk];
+        if (array_key_exists($rk, $parent))
+            return null;
+        $parent[$rk] = ['node' => $lhs, 'key' => $lk];
+        $lastLhs = ['node' => $lhs, 'key' => $lk];
+    }
+    if ($lastLhs === null)
+        return null;
+    $root = $lastLhs;
+    while (array_key_exists($root['key'], $parent))
+        $root = $parent[$root['key']];
+    $children = [$root['node']];
+    $nextKey = $root['key'];
+    while (array_key_exists($nextKey, $child)) {
+        $step = $child[$nextKey];
+        $children[] = $step['node'];
+        $nextKey = $step['key'];
+    }
+    if (count($children) !== count($pairs) + 1)
+        return null;
+    return $children;
+}
+
 class Lean_land extends LeanLogic
 {
     public static $input_priority = 35;
@@ -172,6 +237,21 @@ class Lean_land extends LeanLogic
             default:
                 return parent::__get($vname);
         }
+    }
+
+    /**
+     * Display latex: collapse connected plain-eq ∧-chains (py And._latex / JS Lean_land::toLatex).
+     */
+    public function toLatex(&$syntax = null)
+    {
+        $sides = lean_eq_chain_sides($this);
+        if ($sides !== null) {
+            $parts = [];
+            foreach ($sides as $s)
+                $parts[] = '{' . $s->toLatex($syntax) . '}';
+            return implode(' = ', $parts);
+        }
+        return parent::toLatex($syntax);
     }
 
     public function jsonSerialize(): mixed

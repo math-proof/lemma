@@ -65,6 +65,19 @@ abstract class LeanBinaryBoolean extends LeanBinary
         return "%s $this->operator$sep%s";
     }
 
+
+    public function holeRegexTag()
+    {
+        return null;
+    }
+
+    public function holeRegex($opts = [])
+    {
+        $tag = $this->holeRegexTag();
+        if (!$tag) return parent::holeRegex($opts);
+        return holeRegexCombineRel($tag, $this->lhs, $this->rhs, $opts);
+    }
+
 }
 
 // END OF boolean family (LeanParser stays in lean.php)

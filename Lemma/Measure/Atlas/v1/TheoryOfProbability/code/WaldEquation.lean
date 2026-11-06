@@ -36,31 +36,36 @@ lemma tsum_measure_gt_eq_lintegral
   have hmeas : ∀ i, MeasurableSet {ω : Ω | i < T ω} := fun i => hT_meas measurableSet_Ioi
   have key : ∀ ω, (T ω : ENNReal) =
     ∑' i, Set.indicator {ω | i < T ω} (fun _ => (1 : ENNReal)) ω := by
-    intro ω; simp only [Set.indicator, Set.mem_setOf_eq]
-    rw [tsum_eq_sum (s := range (T ω))]
-    · rw [Finset.sum_congr rfl (fun x hx => if_pos (Finset.mem_range.mp hx)),
+    intro ω; simp only [Set.indicator, Set.mem_ofPred_eq]
+    rw [tsum_eq_sum (L := SummationFilter.unconditional _) (s := range (T ω))
+      (fun i hi => by
+        have : ¬(i < T ω) := by simpa [Finset.mem_range] using hi
+        simp [this])]
+    rw [Finset.sum_congr rfl (fun x hx => ite_eq_left (Finset.mem_range.mp hx)),
       Finset.sum_const, nsmul_eq_mul, mul_one, Finset.card_range]
-    · intro i hi; exact if_neg (Finset.mem_range.not.mp hi)
   calc ∑' i, μ {ω | i < T ω}
-    = ∑' i, ∫⁻ a, Set.indicator {ω | i < T ω} (fun _ => 1) a ∂μ := by
-      congr 1; ext i; rw [lintegral_indicator (hmeas i), setLIntegral_one]
-    _ = ∫⁻ ω, ∑' i, Set.indicator {ω | i < T ω} (fun _ => 1) ω ∂μ := by
-      rw [lintegral_tsum (fun i => (measurable_const.indicator (hmeas i)).aemeasurable)]
-    _ = ∫⁻ ω, (T ω : ENNReal) ∂μ := by congr 1; ext ω; exact (key ω).symm
+      = ∑' i, ∫⁻ a, Set.indicator {ω | i < T ω} (fun _ => (1 : ENNReal)) a ∂μ := by
+        congr 1; ext i; rw [lintegral_indicator (hmeas i), setLIntegral_one]
+      _ = ∫⁻ ω, ∑' i, Set.indicator {ω | i < T ω} (fun _ => (1 : ENNReal)) ω ∂μ := by
+        rw [lintegral_tsum (fun i => (measurable_const.indicator (hmeas i)).aemeasurable)]
+      _ = ∫⁻ ω, (T ω : ENNReal) ∂μ := by congr 1; ext ω; exact (key ω).symm
 
 /--
 [nat_eq_tsum_indicator](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/WaldEquation.lean)
 -/
 @[path]
 lemma nat_eq_tsum_indicator
-  {k : ℕ} :
+-- given
+  (k : ℕ) :
 -- imply
   (k : ℝ) = ∑' n, (if n < k then (1 : ℝ) else 0) := by
 -- proof
-  rw [tsum_eq_sum (s := range k)]
-  · rw [Finset.sum_congr rfl (fun x hx => if_pos (Finset.mem_range.mp hx)),
+  rw [tsum_eq_sum (L := SummationFilter.unconditional _) (s := range k)
+    (fun i hi => by
+      have : ¬(i < k) := by simpa [Finset.mem_range] using hi
+      simp [this])]
+  rw [Finset.sum_congr rfl (fun x hx => ite_eq_left (Finset.mem_range.mp hx)),
     Finset.sum_const, Finset.card_range, nsmul_eq_mul, mul_one]
-  · intro i hi; exact if_neg (Finset.mem_range.not.mp hi)
 
 /--
 [integral_nat_eq_tsum_prob](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/WaldEquation.lean)
@@ -82,15 +87,15 @@ lemma integral_nat_eq_tsum_prob
   rw [heq]
   have hind : ∀ n, (fun ω => if n < T ω then (1 : ℝ) else 0) =
     Set.indicator {ω | n < T ω} (fun _ => 1) := by
-    intro n; ext ω; simp [Set.indicator, Set.mem_setOf_eq]
+    intro n; ext ω; simp [Set.indicator]
   have hmeas : ∀ n, MeasurableSet {ω : Ω | n < T ω} := fun n => hT_meas measurableSet_Ioi
   rw [integral_tsum]
   · congr 1; ext n
     rw [hind n, integral_indicator_const _ (hmeas n), smul_eq_mul, mul_one, Measure.real]
   · intro n; rw [hind n]; exact aestronglyMeasurable_const.indicator (hmeas n)
   · have h1 : ∀ i a, ‖if i < T a then (1:ℝ) else 0‖ₑ =
-    Set.indicator {ω | i < T ω} (fun _ => (1 : ENNReal)) a := by
-    intro i a; simp only [Set.indicator, Set.mem_setOf_eq]; split_ifs with h <;> simp
+      Set.indicator {ω | i < T ω} (fun _ => (1 : ENNReal)) a := by
+      intro i a; simp only [Set.indicator, Set.mem_ofPred_eq]; split_ifs with h <;> simp
     simp_rw [h1, lintegral_indicator (hmeas _), setLIntegral_one,
       tsum_measure_gt_eq_lintegral hT_meas]
     have hfi : ∫⁻ ω, ‖(T ω : ℝ)‖ₑ ∂μ < ⊤ := hT_int.2
@@ -103,14 +108,17 @@ lemma integral_nat_eq_tsum_prob
 -/
 @[path]
 lemma sum_range_eq_tsum_ite
-  {f : ℕ → ℝ}
-  {n : ℕ} :
+-- given
+  (f : ℕ → ℝ)
+  (n : ℕ) :
 -- imply
   ∑ i ∈ range n, f i = ∑' i, (if i < n then f i else 0) := by
 -- proof
-  rw [tsum_eq_sum (s := range n)]
-  · exact Finset.sum_congr rfl (fun x hx => by simp [Finset.mem_range.mp hx])
-  · intro i hi; exact if_neg (Finset.mem_range.not.mp hi)
+  rw [tsum_eq_sum (L := SummationFilter.unconditional _) (s := range n)
+    (fun i hi => by
+      have : ¬(i < n) := by simpa [Finset.mem_range] using hi
+      simp [this])]
+  exact Finset.sum_congr rfl (fun x hx => by simp [Finset.mem_range.mp hx])
 
 /--
 [indepFun_indicator_of_indep](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/WaldEquation.lean)
@@ -157,12 +165,12 @@ lemma indep_factor
   {X : ℕ → Ω → ℝ}
   {f : Filtration ℕ m}
   {T : Ω → ℕ}
-  {n : ℕ}
 -- given
   (hX_int : Integrable (X 0) μ)
   (hX_iid : ∀ i j, IdentDistrib (X i) (X j) μ μ)
   (hT : IsStoppingTime f (fun ω => (T ω : WithTop ℕ)))
-  (hXf : ∀ k, Indep (MeasurableSpace.comap (X k) inferInstance) (f k) μ) :
+  (hXf : ∀ k, Indep (MeasurableSpace.comap (X k) inferInstance) (f k) μ)
+  (n : ℕ) :
 -- imply
   ∫ ω, (if n < T ω then X n ω else 0) ∂μ = (∫ ω, X n ω ∂μ) * (μ {ω | n < T ω}).toReal := by
 -- proof
@@ -171,7 +179,7 @@ lemma indep_factor
     exact hT_meas measurableSet_Ioi
   have heq_ind : (fun ω => if n < T ω then X n ω else 0) =
     fun ω => X n ω * Set.indicator {ω | n < T ω} (fun _ => (1 : ℝ)) ω := by
-    ext ω; simp only [Set.indicator, Set.mem_setOf_eq]; split_ifs with h <;> ring
+    ext ω; simp only [Set.indicator, Set.mem_ofPred_eq]; split_ifs with h <;> ring
   rw [heq_ind]
   have hindep : IndepFun (X n) (Set.indicator {ω | n < T ω} (fun _ => (1 : ℝ))) μ := by
     apply indepFun_indicator_of_indep (hXf n)
@@ -199,14 +207,14 @@ lemma lintegral_enorm_indicator_le
   {X : ℕ → Ω → ℝ}
   {f : Filtration ℕ m}
   {T : Ω → ℕ}
-  {n : ℕ}
 -- given
   (hX_ind : iIndepFun (β := fun _ => ℝ) X μ)
   (hX_int : Integrable (X 0) μ)
   (hX_iid : ∀ i j, IdentDistrib (X i) (X j) μ μ)
   (hT : IsStoppingTime f (fun ω => (T ω : WithTop ℕ)))
   (hXf : ∀ k, Indep (MeasurableSpace.comap (X k) inferInstance) (f k) μ)
-  (hT_meas : Measurable T) :
+  (hT_meas : Measurable T)
+  (n : ℕ) :
 -- imply
   ∫⁻ a in {ω | n < T ω}, ‖X n a‖ₑ ∂μ ≤ (∫⁻ a, ‖X 0 a‖ₑ ∂μ) * μ {ω | n < T ω} := by
 -- proof
@@ -224,7 +232,7 @@ lemma lintegral_enorm_indicator_le
   have hmeas_set : MeasurableSet {ω : Ω | n < T ω} := hT_meas measurableSet_Ioi
   rw [show (fun ω => if n < T ω then ‖X n ω‖ else 0) =
     Set.indicator {ω | n < T ω} (fun ω => ‖X n ω‖) from by
-      ext ω; simp [Set.indicator, Set.mem_setOf_eq],
+      ext ω; simp [Set.indicator],
     integral_indicator hmeas_set] at hfactor
   rw [(hiid_norm n 0).integral_eq] at hfactor
   have hXn_int : Integrable (X n) μ := (hX_iid n 0).integrable_iff.mpr hX_int
@@ -261,7 +269,7 @@ lemma summability_condition
   have hT_meas : Measurable T := measurable_of_isStoppingTime hT
   have h_rewrite : ∀ n a, ‖(if n < T a then X n a else 0)‖ₑ =
     Set.indicator {ω | n < T ω} (fun ω => ‖X n ω‖ₑ) a := by
-    intro n a; simp only [Set.indicator, Set.mem_setOf_eq]
+    intro n a; simp only [Set.indicator, Set.mem_ofPred_eq]
     split_ifs with h <;> simp [enorm]
   simp_rw [h_rewrite]
   have hmeas : ∀ n, MeasurableSet {ω : Ω | n < T ω} := fun n => hT_meas measurableSet_Ioi
@@ -287,11 +295,11 @@ lemma aesm_summand
   {μ : Measure Ω}
   {X : ℕ → Ω → ℝ}
   {T : Ω → ℕ}
-  {n : ℕ}
 -- given
   (hX_iid : ∀ i j, IdentDistrib (X i) (X j) μ μ)
   (hX_int : Integrable (X 0) μ)
-  (hT_meas : Measurable T) :
+  (hT_meas : Measurable T)
+  (n : ℕ) :
 -- imply
   AEStronglyMeasurable (fun ω => if n < T ω then X n ω else 0) μ := by
 -- proof
@@ -299,7 +307,7 @@ lemma aesm_summand
     (hX_iid n 0).aestronglyMeasurable_iff.mpr hX_int.aestronglyMeasurable
   have hset : MeasurableSet {ω : Ω | n < T ω} := hT_meas measurableSet_Ioi
   have heq : (fun ω => if n < T ω then X n ω else 0) = Set.indicator {ω | n < T ω} (X n) := by
-    ext ω; simp [Set.indicator, Set.mem_setOf_eq]
+    ext ω; simp [Set.indicator]
   rw [heq]
   exact hXn_aesm.indicator hset
 
@@ -337,3 +345,4 @@ lemma wald_equation
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-05

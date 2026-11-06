@@ -6,6 +6,7 @@ import Def.Order.Miscellaneous
 import Lemma.Random.SinglePSpace.of.Eq_WithDensity.Measurable.AEMeasurable
 import Lemma.Random.SinglePSpace.of.AEMeasurable.Distributed
 import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
+import Mathlib.MeasureTheory.Integral.Bochner.SumMeasure
 import Structure.Dynamics.PolicyTrajectory.ContinuousAction.Part2
 open MeasureTheory ProbabilityTheory Finset
 open scoped ENNReal
@@ -36,8 +37,11 @@ The trajectory law `M.traj θ` / `M θ` is the Ionescu–Tulcea measure of the s
 built like `Model.traj` but with `DensityPolicy.kernel` (`Kernel.withDensity` of the reference measure of `A`)
 instead of `Policy.kernel` (`Kernel.ofFunOfCountable`).
 
-These are the continuous-action counterparts of `Model.rk`, `Model.Wk`, `Model.Vk`, `Model.Qk`, `Model.P1k`
-(`Def.Dynamics.PolicyTrajectory.Continuous`); the model is time-homogeneous, so none of them depends on `t`.
+Finite-action discrete policies are the special case of this API with counting measure:
+`Policy.toDensityPolicy` / `Model.toDensityModel` under `[CountableMeasure A]` turn `sum_eq_one` into
+`integral_eq_one` against `Measure.count`, so `Wkd` / `V0` supersede the retired `Model.Wk` / `Model.V0`.
+`DensityModel.IsConditionalProbability` applies on that counting case unchanged.
+The model is time-homogeneous, so none of the closed forms depends on `t`.
 -/
 
 
@@ -76,6 +80,37 @@ instance (p : DensityPolicy Θ S A) (θ : Θ) : IsMarkovKernel (p.kernel θ) := 
   simp [this]
 
 end DensityPolicy
+
+namespace Policy
+
+variable {Θ S A : Type*}
+  [MeasurableSpace S] [MeasurableSingletonClass S] [Countable S]
+  [CountableMeasure A] [MeasurableSingletonClass A] [Fintype A]
+
+/-- View a finite-action probability-vector policy as a `DensityPolicy` w.r.t. counting measure.
+`sum_eq_one` becomes `integral_eq_one` against `Measure.count`. -/
+noncomputable def toDensityPolicy (p : Policy Θ S A) : DensityPolicy Θ S A where
+  prob := p.prob
+  nonneg := p.nonneg
+  integral_eq_one := fun θ x => by
+    simpa [CountableMeasure.measure_eq_count, MeasureTheory.integral_count] using p.sum_eq_one θ x
+  measurable_prob := fun _ => Measurable.of_discrete
+
+end Policy
+
+namespace Model
+
+variable {Θ S A : Type*}
+  [MeasurableSpace S] [MeasurableSingletonClass S] [Countable S]
+  [CountableMeasure A] [MeasurableSingletonClass A] [Fintype A]
+
+/-- View a discrete finite-action `Model` as a `DensityModel` with action reference `Measure.count`.
+Shares `DensityModel.V0` / `Wkd` / `traj` and `DensityModel.IsConditionalProbability`. -/
+noncomputable def toDensityModel (M : Model Θ S A) : DensityModel Θ S A where
+  env := M.env
+  policy := M.policy.toDensityPolicy
+
+end Model
 
 namespace DensityModel
 

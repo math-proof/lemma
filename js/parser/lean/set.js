@@ -64,6 +64,11 @@ export class Lean_subseteq extends LeanBinaryBoolean {
     get operator() {
         return '⊆';
     }
+
+    get holeRegexTag() {
+        return "Subset";
+    }
+
 }
 
 /** `⊂`. */

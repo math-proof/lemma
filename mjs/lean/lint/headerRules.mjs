@@ -547,7 +547,33 @@ export function blankSublemmas(ctx) {
 
 
 /**
- * `lemma-namespace`: on Lemma/ files, ban top-level `namespace` / `section` / `variable(s)`.
+ * `open-hiding`: under Lemma/, ban top-level `open … hiding …` / `open … renaming …`.
+ * Selective `open NS (a b)` stays allowed. Not an AGENTS.md rule (user request via Hyperreal / Body).
+ */
+export function openHiding(ctx) {
+    if (!ctx.isLemmaFile) return;
+    const { raw, code: lines } = ctx.P;
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        if (!/^open\b/.test(line)) continue;
+        let textOpen = line.replace(/^open\b/, '');
+        const start = i;
+        while (i + 1 < lines.length && /^\s+\S/.test(lines[i + 1])) textOpen += ' ' + lines[++i];
+        textOpen = textOpen.trim();
+        const kind = /\b(hiding|renaming)\b/.exec(textOpen);
+        if (!kind) continue;
+        const shown = (raw[start] ?? '').trim();
+        ctx.warn(
+            'open-hiding',
+            start + 1,
+            1,
+            '`' + shown + '`: `open … ' + kind[1] + '` is not allowed in Lemma',
+        );
+    }
+}
+
+/**
+ * `lemma-namespace`: on Lemma/ files, ban top-level `namespace` / `section` / `variable(s)` / `universe`.
  * Comments/strings are blanked by prepare, so `-- namespace …` is clean. Non-Lemma files skip.
  */
 export function lemmaNamespace(ctx) {
@@ -560,6 +586,7 @@ export function lemmaNamespace(ctx) {
         else if (/^section\s+\S/.test(line)) kind = 'section';
         else if (/^variables\b/.test(line)) kind = 'variables';
         else if (/^variable\b/.test(line)) kind = 'variable';
+        else if (/^universe\b/.test(line)) kind = 'universe';
         if (!kind) continue;
         const shown = (P.raw[i] ?? '').trim();
         ctx.warn(

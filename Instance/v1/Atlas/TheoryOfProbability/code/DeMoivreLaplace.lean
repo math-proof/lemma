@@ -14,7 +14,7 @@ import Mathlib.MeasureTheory.Function.ConvergenceInDistribution
 import Mathlib.Probability.CDF
 import Mathlib.Probability.CentralLimitTheorem
 import Mathlib.MeasureTheory.Measure.LevyConvergence
-import Def.v1.Atlas.TheoryOfProbability.code.DeMoivreLaplace
+import Def.ProbabilityTheory.DeMoivreLaplace
 open MeasureTheory ProbabilityTheory Filter
 open scoped unitInterval NNReal Topology Real
 
@@ -26,14 +26,14 @@ namespace ProbabilityTheory
 /-- The real-valued binomial measure `Bin(ℝ, n, p)` is a probability measure. -/
 instance isProbabilityMeasure_Bin_real (n : ℕ) (p : I) :
     IsProbabilityMeasure Bin(ℝ, n, p) :=
-  Measure.isProbabilityMeasure_map measurable_from_top.aemeasurable
+  inferInstance
 
 /-- The standardized binomial measure is a probability measure (pushforward of a
 probability measure under a measurable affine map). -/
 instance isProbabilityMeasure_standardizedBinomial (n : ℕ) (p : I) :
     IsProbabilityMeasure (standardizedBinomial n p) := by
   unfold standardizedBinomial
-  exact Measure.isProbabilityMeasure_map (by fun_prop)
+  infer_instance
 
 end ProbabilityTheory
 end

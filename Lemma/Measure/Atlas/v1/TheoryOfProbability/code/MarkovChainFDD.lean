@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.TheoryOfProbability.code.MarkovChainFDD
+import Def.ProbabilityTheory.MarkovChainFDD
 open MeasureTheory ProbabilityTheory ENNReal Set
 
 

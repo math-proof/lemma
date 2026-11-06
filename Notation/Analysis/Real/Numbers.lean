@@ -7,4 +7,6 @@ export Complex (I)
 
 notation "∞" => Hyperreal.omega
 
+notation "ℝ⁺" => { x : ℝ // 0 < x }
 
+notation "ℝ⁻" => { x : ℝ // x < 0 }

@@ -20,6 +20,16 @@ export class LeanRightarrow extends LeanBinary {
         return '=>';
     }
 
+    /**
+     * Hole-regex: drop guard; path follows conclusion (rhs).
+     * @param {object} [opts]
+     * @returns {string|null}
+     */
+    holeRegex(opts = {}) {
+        return this.rhs?.holeRegex?.(opts) ?? null;
+    }
+
+
     echo() {
         const token = [];
         var {parent} = this;
@@ -164,6 +174,16 @@ export class Lean_rightarrow extends LeanBinary {
     get operator() {
         return '→';
     }
+
+    /**
+     * Hole-regex: drop guard; path follows conclusion (rhs).
+     * @param {object} [opts]
+     * @returns {string|null}
+     */
+    holeRegex(opts = {}) {
+        return this.rhs?.holeRegex?.(opts) ?? null;
+    }
+
 
     /** `→ₗ` or `→L` rendered with the subscript attached (for echo / str). */
     arrowStr() {

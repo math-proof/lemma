@@ -301,19 +301,36 @@ partial def Expr.collectToFunChain : Expr → Expr × List Expr
 def Expr.is_ToFunSubscript (e : Expr) : Bool :=
   !(e.collectToFunChain).2.isEmpty
 
+/-- True when `ty` is the `Fun ι α` structure (operator-name / typeclass / function head).
+Bare arrow types `α → β` (`Lean_forall`) are not Fun. -/
+def Expr.is_FunType : Expr → Bool
+  | Basic (.ExprWithAttr attr) _ _ =>
+    match attr with
+    | .Lean_operatorname name
+    | .Lean_typeclass name
+    | .Lean_function name =>
+      name == `Fun || name.getLast == `Fun
+    | _ => false
+  | _ => false
+
 /-- Index suitable for a tight subscript (token / get / toFun-subscript / nat literal). -/
 def Expr.is_SimpleIndex : Expr → Bool
   | Symbol ..
   | const _ => true
   | e => e.is_GetElem || e.is_GetElem? || e.is_ToFunSubscript
 
-/-- Base of a juxta index app that may print as `a_i` (variable / get / toFun-subscript). -/
+/--
+Base of a juxta index app that may print as `a_i`.
+Only Fun-typed symbols. GetElem / `*.toFun` already have their own subscript arms;
+juxta on a residual after GetElem is a normal call (Fun docstring), and ordinary
+arrow apps (`g : α → β`) must stay juxtaposition — not `g_x` / `g_{x, x}`.
+-/
 def Expr.is_SubscriptBase : Expr → Bool
-  | Symbol .. => true
-  | e => e.is_GetElem || e.is_GetElem? || e.is_ToFunSubscript
+  | Symbol _ ty => ty.is_FunType
+  | _ => false
 
 /--
-Plain application `a i` / `a i j` of a subscript base to simple indices.
+Plain application `a i` / `a i j` of a Fun-typed symbol to simple indices.
 Latex prints these like GetElem (`a_i`), so pow must not wrap them as `(a_i)^2`.
 -/
 def Expr.is_JuxtaIndexApp : Expr → Bool
@@ -399,11 +416,15 @@ def String.bvarKey (s : String) : String :=
       inner.sfBody?.getD s
   | none => s
 
-/-- Display form of an observed value.
+/-- Display form of a guillemet / observed name.
 
 `«\sf{x}»` is the LaTeX `\sf{x}` (already escaped; do not run `escape_specials`
 on it). The random variable `x` itself is rendered red elsewhere; this observed
-value stays black. -/
+value stays black.
+
+Other guillemet identifiers (e.g. `«λ_1»`, `«λ_{{^\#}1}»`) strip `«»` and keep
+the inner text as LaTeX — including embedded commands — so KaTeX is not handed
+raw guillemets. -/
 def String.bvarLatex (s : String) : String :=
   match s.guillemetInner? with
   | some inner =>
@@ -412,16 +433,17 @@ def String.bvarLatex (s : String) : String :=
     else if inner.sfBody?.isSome then
       inner
     else
-      s
+      -- Latex-embedded id: strip guillemets; do not keep `«…»` in the math string.
+      inner
   | none => s
 
-/-- `escape_specials` after `bvarLatex`. `\sf{w}` is already LaTeX, so its
-backslash and braces stay. -/
+/-- `escape_specials` after `bvarLatex`. `\sf{w}` and other embedded LaTeX
+(backslash commands inside guillemet ids) keep their backslashes and braces. -/
 def String.escapeBvarLatex (s : String) : String :=
-  if s.sfBody?.isSome then s else s.escape_specials
+  if s.sfBody?.isSome || s.contains '\\' then s else s.escape_specials
 
-/-- Name-level variant of `String.bvarLatex`. Quoted observed names use
-`bvarLatex`; other names use `escape_specials`. -/
+/-- Name-level variant of `String.bvarLatex`. Guillemet names use `bvarLatex`;
+other names use `escape_specials`. -/
 def Lean.Name.bvarLatex (name : Name) (sep : String) : String :=
   let s := name.toString
   if s.startsWith "«" && s.endsWith "»" then
@@ -657,11 +679,29 @@ partial def Expr.markAsRandomVariable : Expr → Expr
     match attr with
     | .Lean_function _ | .Lean_operatorname _ | .LeanProperty _ | .LeanMethod _ _ =>
       if args.isEmpty then
-        -- bare projection / const head `a` → wrap so latex prints `{\color{red} {a}}`
-        -- Nonempty apps (`asRV x`, `JointRandomSymbol`, `a t`) stay intact here;
-        -- `markNamesAsRVHeads` splits known RV heads (`a t`) without breaking asRV/joint.
+        -- bare projection / const head a -> wrap so latex prints color red
+        -- Nonempty apps (asRV x, a t) stay intact here unless they are a slice /
+        -- joint whose head must be marked (see below). markNamesAsRVHeads splits
+        -- known RV heads (a t) without breaking asRV/joint.
         Basic (.ExprWithAttr (.Lean_operatorname `RandomVariable)) [e] level
-      else e
+      else
+        -- Fun.getSlice / Function.getSlice / getSliceFrom are ExprWithAttr apps;
+        -- the catch-all Basic f (x :: rest) arm below never runs for them, so mark
+        -- the slice base here. Same for JointRandomSymbol and bare *.toFun
+        -- (Fun.getSlice unfolds to Function.getSlice y.toFun s).
+        match e.asNamedApp? with
+        | some ("getSlice", _)
+        | some ("getSliceFrom", _) =>
+          match args with
+          | x :: rest => Basic (.ExprWithAttr attr) (x.markAsRandomVariable :: rest) level
+          | [] => e
+        | some ("JointRandomSymbol", _) =>
+          Basic (.ExprWithAttr attr) (args.map markAsRandomVariable) level
+        | some ("toFun", _) =>
+          match args with
+          | x :: rest => Basic (.ExprWithAttr attr) (x.markAsRandomVariable :: rest) level
+          | [] => e
+        | _ => e
     | _ => e
   | e@(Basic f (x :: rest) level) =>
     match e.asNamedApp? with
@@ -733,6 +773,7 @@ partial def Expr.headName? : Expr → Option Name
     match e.asNamedApp? with
     | some ("asRV", [x]) => x.headName?
     | some ("getSlice", b :: _) | some ("getSliceFrom", b :: _) => b.headName?
+    | some ("toFun", b :: _) => b.headName?
     | _ =>
       match attr with
       | .Lean_function n | .Lean_operatorname n | .LeanProperty n
@@ -1102,6 +1143,33 @@ def Expr.asMap? : Expr → Option (Expr × List Expr)
         | _ => none
       else none
 
+/-- Peel value-level `RandomVariable` wraps (asMap marks bare `Real.sin` this way). -/
+partial def Expr.peelRandomVariable : Expr → Expr
+  | Basic (.ExprWithAttr (.Lean_operatorname `RandomVariable)) [inner] _ =>
+    inner.peelRandomVariable
+  | e => e
+
+/-- Final name of a trig / std analytic field (`sin`, `cos`, …), else `none`. -/
+def Expr.trigFieldSuffix? (e : Expr) : Option String :=
+  match e.peelRandomVariable.getAttrNameSuffix with
+  | some s =>
+    if s == "sin" || s == "cos" || s == "tan" || s == "cot" || s == "log" || s == "exp"
+      || s == "arctan" || s == "arcsin" || s == "arccos" || s == "arcsec" || s == "arccsc"
+      || s == "arccot" || s == "arcsinh" || s == "arccosh" || s == "arctanh" || s == "arccoth" then
+      some s
+    else
+      none
+  | none => none
+
+/-- `θ.map Real.sin` (Germ / Hyperreal unfold) → `(θ, "sin")` for member-dot `θ.\\sin`
+(not juxta `θ(sin)`). -/
+def Expr.asTrigFieldMap? (e : Expr) : Option (Expr × String) :=
+  match e.asMap? with
+  | some (obj, [fn]) =>
+    (fn.trigFieldSuffix?).map fun s => (obj, s)
+  | _ => none
+
+
 /-- Spine of a `Subst` application: `«Subst» f x₀` or the curried `(«Subst» f x₀) y₀ …`
 (a `Special .anonymous` application) → `(f, [x₀, y₀, …])`. -/
 def Expr.substSpine? : Expr → Option (Expr × List Expr)
@@ -1158,5 +1226,51 @@ def Expr.asGradient? (e : Expr) : Option (String × Expr × Option Expr) :=
       else
         some (name.bvarLatex "\\ ", body, some p)
     | _ => some (name.bvarLatex "\\ ", body, some p)
+  | _ => none
+
+/-- Peel nested deriv from multi-binder `∂[…]` sugar (left binders innermost).
+Returns `(binders, expr, point)`. `point` is `none` when the outermost evaluation point is the
+outermost binder and `some p` for the point form. Nested layers fold only when every inner
+layer also has `point = none`.
+
+Also peels the eta form `deriv F p` (`p` a `Symbol`) as `∂[p] (F p)`, and unsaturated
+`deriv (deriv … F) p`, so `∂[t, t] T t` (= `deriv (fun t ↦ deriv T t) t`) latexes as
+`\partial_{t, t} {T t}` rather than leaving a raw inner `deriv`. -/
+partial def Expr.asDeriv? (e : Expr) : Option (List String × Expr × Option Expr) :=
+  match e.asNamedApp? with
+  | some ("deriv", [Basic (.ExprWithLimits .Lean_lambda) [body, Binder .default name _ nil] _, p]) =>
+    let binder := name.bvarLatex "\\ "
+    let point : Option Expr :=
+      match p with
+      | Symbol pointName _ => if name == pointName then none else some p
+      | _ => some p
+    match body.asDeriv? with
+    | some (inners, core, none) =>
+      some (inners ++ [binder], core, point)
+    | _ =>
+      some ([binder], body, point)
+  | some ("deriv", [f, p]) =>
+    -- Eta / non-lambda: `deriv F p` with `p` an ident → `∂[p] (F p)` (matches unexpander).
+    match p with
+    | Symbol pointName _ =>
+      let binder := pointName.bvarLatex "\\ "
+      let juxta (fn : Expr) : Expr :=
+        Basic (.Special ⟨.anonymous⟩) [fn, p] e.level
+      match f.asNamedApp? with
+      | some ("deriv", [g]) =>
+        -- Unsaturated `deriv g` at point `p` → fold another binder (e.g. `deriv (deriv T) t`).
+        match f with
+        | Basic attr _ level =>
+          let inner := Basic attr [g, p] level
+          match inner.asDeriv? with
+          | some (inners, core, none) =>
+            some (inners ++ [binder], core, none)
+          | _ =>
+            some ([binder], juxta f, none)
+        | _ =>
+          some ([binder], juxta f, none)
+      | _ =>
+        some ([binder], juxta f, none)
+    | _ => none
   | _ => none
 

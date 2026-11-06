@@ -80,6 +80,7 @@ $token2classname = [
 preg_match_all("/'(\w+)'/", file_get_contents(dirname(__FILE__) . '/../../js/codemirror-lean-tactics.js'), $tactics);
 [, $tactics] = $tactics;
 
+require_once dirname(__FILE__) . '/lean/holeRegex.php';
 require_once dirname(__FILE__) . '/lean/base.php';
 
 require_once dirname(__FILE__) . '/lean/atomic.php';
@@ -130,6 +131,27 @@ require_once dirname(__FILE__) . '/lean/pipeline.php';
 
 trait LeanGetElemBase
 {
+    public function push_token($word)
+    {
+        $level = $this->level;
+        $newTok = new LeanToken($word, $this->indent, $level);
+        // Capture parent before SS ctor reparents `$this` onto the new SS.
+        $parent = $this->parent;
+        $ss = new LeanArgsSpaceSeparated([$this, $newTok], $this->indent, $level);
+        $parent->replace($this, $ss);
+        if (class_exists('LeanLimitsBigOp'))
+            LeanLimitsBigOp::tryPromoteSpaceSeparated($ss);
+        return $newTok;
+    }
+
+    public function push_left($func, $prev_token)
+    {
+        $caret = parent::push_left($func, $prev_token);
+        if (class_exists('LeanLimitsBigOp') && $this->parent instanceof LeanArgsSpaceSeparated)
+            LeanLimitsBigOp::tryPromoteSpaceSeparated($this->parent);
+        return $caret;
+    }
+
     public function push_right($func)
     {
         if ($func == 'LeanBracket')

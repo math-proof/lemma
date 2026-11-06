@@ -14,8 +14,8 @@ Bellman equations on general state / action spaces, stated with σ-algebra condi
 `h₃`, `h₄` define the action / state values `Q`, `V` (π-a.e.) as the conditional expected discounted
 return given `(s[t], a[t])`, resp. `s[t]`;
 `h₅` is the Markov property: given `(s[t], a[t], s[t+1])` the future return only depends on `s[t+1]`.
-The finite trajectory model (event conditioning `𝔼[… | s t = x]`) is
-`Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico`.
+The finite-state / general-action event-conditioning specialization is
+`Random.Eq_Expect.Eq_Expect.MEq_Expect.of.Expect.All_Eq_Expect.All_MEq_Expect.All_Measurable.GtInftySup.All_MeasurableJoint.In_Ico`.
 -/
 @[path]
 private lemma main

@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.TheoryOfProbability.code.FiniteMarkovChain
-import Def.v1.Atlas.TheoryOfProbability.code.KolmogorovCycle.Part2
+import Def.ProbabilityTheory.KolmogorovCycle.Part2
 open MeasureTheory ProbabilityTheory Finset BigOperators
 
 

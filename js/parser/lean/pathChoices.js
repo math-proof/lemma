@@ -151,6 +151,60 @@ export function pathEqInfixChoices(leftChoices, rightChoices, house = "") {
 
 
 /**
+ * Flat And Op(LHS)(RHS). Same hole join as Eq (`pathEqFlatStem`).
+ * Both arguments omitted → `And__` (two holes), not `And_`.
+ */
+export function pathAndFlatStem(lhs, rhs) {
+  const L = pathStripTrailingHoles(lhs);
+  const R = pathStripTrailingHoles(rhs);
+  if (!L && !R) return "And__";
+  const stem = pathEqFlatStem(lhs, rhs);
+  if (!stem || !stem.startsWith("Eq")) return null;
+  return "And" + stem.slice(2);
+}
+
+/**
+ * And infix for any side choices, including omit (`""`).
+ * Both sides named → `LHS/and/RHS`. Flat form is `And(LHS)(RHS)`.
+ * Both-omit is `And__`.
+ * @param {string[]} leftChoices
+ * @param {string[]} rightChoices
+ * @param {string} [house]
+ */
+export function pathAndInfixChoices(leftChoices, rightChoices, house = "") {
+  const leftRaw = pathUniqKeepEmpty(leftChoices || [""]);
+  const rightRaw = pathUniqKeepEmpty(rightChoices || [""]);
+  const slash = [];
+  const flats = [];
+  for (const lRaw of leftRaw) {
+    for (const rRaw of rightRaw) {
+      const l = pathStripTrailingHoles(lRaw);
+      const r = pathStripTrailingHoles(rRaw);
+      if (l && r) slash.push(l + "/and/" + r);
+      if (!l && !r) {
+        flats.push("And__");
+        continue;
+      }
+      const flat = pathAndFlatStem(lRaw, rRaw);
+      if (flat) flats.push(flat === "And__" ? flat : pathStripTrailingHoles(flat));
+    }
+  }
+  const byLen = (a, b) => a.length - b.length || (a < b ? -1 : a > b ? 1 : 0);
+  const slashU = pathUniq(slash);
+  const flatU = pathUniq(flats).filter((s) => !slashU.includes(s));
+  const houseN = String(house || "").replace(/\\/g, "/");
+  const slashRest = slashU.filter((s) => s !== houseN).sort(byLen);
+  const flatRest = flatU.filter((s) => s !== houseN).sort(byLen);
+  const head = slashU.includes(houseN) || flatU.includes(houseN) ? [houseN] : [];
+  return {
+    left: pathUniq(leftRaw.map(pathStripTrailingHoles)),
+    right: pathUniq(rightRaw.map(pathStripTrailingHoles)),
+    stems: pathUniq([...head, ...slashRest, ...flatRest]),
+    soft: "and",
+  };
+}
+
+/**
  * IndepFun `⟂ᵢ` infix combine (binary op like Mul/Eq): LHS.Indep.RHS.
  * Hole sides omit; a GetSlice operand yields Indep_GetSlice (right) /
  * IndepGetSlice (left, camel — parallel IndepJoint / Indep_Joint).
@@ -170,4 +224,149 @@ export function pathCombineIndepChoices(leftChoices, rightChoices) {
   if (L.some((x) => !x) && R.some((x) => !x)) out.push("Indep");
   if (!out.length) out.push("Indep");
   return pathUniq(out);
+}
+
+
+/* -------------------------------------------------------------------------- */
+/* holeRegex helpers (Body t366) — polymorphic Node#holeRegex composition     */
+/* lemmaPath should call `node.holeRegex(opts)` instead of a cls()-switch.    */
+/* Plural MulS alt stays in lemmaPath (`pluralMulSHoleRegex`), not here.      */
+/* -------------------------------------------------------------------------- */
+
+/** Escape a literal fragment for an imply hole-regex. */
+export function escapeHoleReLit(s) {
+  return String(s || "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/**
+ * Wrap a filled child as an optional hole alternative: (_|filled).
+ * Empty/missing children are a bare hole `_`.
+ * @param {string|null|undefined} filled
+ * @returns {string}
+ */
+export function wrapHoleOpt(filled) {
+  if (filled == null || filled === "") return "_";
+  return "(_|" + filled + ")";
+}
+
+/** Trig/log heads for LeanProperty / ArgsSpaceSeparated apps. */
+export const HOLE_RE_TRIG_FN = /^(sin|cos|tan|cot|arctan|log|exp)$/i;
+
+/**
+ * Minimal CamelCase token name (sin→Sin). lemmaPath may pass `opts.nameToken`
+ * with the full SYMBOL_NAME / TOKEN_ALIAS pass.
+ * @param {string} text
+ * @returns {string}
+ */
+export function holeRegexDefaultNameToken(text) {
+  if (!text) return "";
+  let s = String(text);
+  if (s.includes(".")) s = s.slice(s.lastIndexOf(".") + 1);
+  if (!s || s === "_" || s === "[anonymous]" || s === "anonymous") return "";
+  if (s.includes("_"))
+    s = s.split("_").map((p) => (p ? p.charAt(0).toUpperCase() + p.slice(1) : "")).join("");
+  else
+    s = s.charAt(0).toUpperCase() + s.slice(1);
+  return s.replace(/[^\x00-\x7F]/g, "").replace(/\*+$/, "");
+}
+
+/** @param {object|null|undefined} node @param {object} [opts] @returns {string|null} */
+export function holeRegexChild(node, opts = {}) {
+  if (!node || typeof node.holeRegex !== "function") return null;
+  const frag = node.holeRegex(opts);
+  return frag == null || frag === "" ? null : frag;
+}
+
+function holeRegexPeelParen(n) {
+  let x = n;
+  for (let i = 0; i < 6 && x; i++) {
+    if (x.constructor?.name === "LeanParenthesis") {
+      x = x.arg ?? x.args?.[0];
+      continue;
+    }
+    break;
+  }
+  return x;
+}
+
+/** Structural √ / `.sqrt` probe for Mul(Sqrt, Div) join underscore. */
+export function holeRegexIsSqrtNode(n) {
+  const x = holeRegexPeelParen(n);
+  if (!x) return false;
+  if (x.constructor?.name === "Lean_sqrt") return true;
+  if (x.constructor?.name === "LeanProperty") {
+    const p = x.rhs ?? x.args?.[1];
+    return (p?.text || "") === "sqrt";
+  }
+  return false;
+}
+
+/** Structural Div probe for Mul(Sqrt, Div) join underscore. */
+export function holeRegexIsDivNode(n) {
+  const x = holeRegexPeelParen(n);
+  return x?.constructor?.name === "LeanDiv";
+}
+
+/**
+ * Binary arithmetic hole-regex (Add/Sub/Mul/Div/Pow/Dot).
+ * @param {string} tag
+ * @param {object|null} leftNode
+ * @param {object|null} rightNode
+ * @param {object} [opts]
+ * @param {{ isMul?: boolean, subscript?: string }} [mul]
+ * @returns {string|null}
+ */
+export function holeRegexCombineArith(tag, leftNode, rightNode, opts = {}, mul = null) {
+  const L = holeRegexChild(leftNode, opts);
+  const R = rightNode != null ? holeRegexChild(rightNode, opts) : null;
+  const lHole = L == null || L === "";
+  const rHole = R == null || R === "";
+  const isMul = !!(mul && mul.isMul);
+  if (!lHole && !rHole) {
+    if (isMul && holeRegexIsSqrtNode(leftNode) && holeRegexIsDivNode(rightNode))
+      return tag + wrapHoleOpt(L) + "_" + wrapHoleOpt(R);
+    return tag + wrapHoleOpt(L) + wrapHoleOpt(R);
+  }
+  if (!lHole && rHole) {
+    if (isMul && /^(?:T|Adjoint|Conj)$/.test(L)) return tag + L + "__";
+    if (/^-?\d+$/.test(L)) return tag + wrapHoleOpt(L) + "_";
+    if (/[(|]/.test(L)) return tag + wrapHoleOpt(L) + "_";
+    return tag + L;
+  }
+  if (lHole && !rHole) return tag + "_" + wrapHoleOpt(R);
+  if (isMul && mul.subscript === "ᵥ") return tag + "__";
+  if (isMul) return opts.mulBothHolesBare ? tag : tag + "(_)" + "(_)";
+  return tag;
+}
+
+/**
+ * Relational / iff / subset / dvd hole-regex (Eq/Ne/Lt/…).
+ * @param {string} tag
+ * @param {object|null} leftNode
+ * @param {object|null} rightNode
+ * @param {object} [opts]
+ * @returns {string|null}
+ */
+export function holeRegexCombineRel(tag, leftNode, rightNode, opts = {}) {
+  const L = holeRegexChild(leftNode, opts);
+  const R = holeRegexChild(rightNode, opts);
+  const lHole = L == null || L === "";
+  const rHole = R == null || R === "";
+  if (lHole && !rHole) return tag + "_" + wrapHoleOpt(R);
+  if (!lHole && rHole) return tag + wrapHoleOpt(L);
+  if (!lHole && !rHole) return tag + wrapHoleOpt(L) + wrapHoleOpt(R);
+  return tag;
+}
+
+/**
+ * Unary Neg/Inv/Sqrt-style hole-regex.
+ * @param {string} tag
+ * @param {object|null} argNode
+ * @param {object} [opts]
+ * @returns {string|null}
+ */
+export function holeRegexCombineUnary(tag, argNode, opts = {}) {
+  const inner = holeRegexChild(argNode, opts);
+  if (inner == null || inner === "") return tag;
+  return tag + wrapHoleOpt(inner);
 }

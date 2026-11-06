@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Mathlib.MeasureTheory.Function.UniformIntegrable
-import Def.v1.Atlas.TheoryOfProbability.code.UIEquivalences
+import Def.ProbabilityTheory.UIEquivalences
 open scoped MeasureTheory NNReal ENNReal
 open MeasureTheory
 

@@ -10,11 +10,29 @@
 import { LeanProp } from './utility.js';
 import { LeanBinary } from './abstract.js';
 import { Lean } from './base.js';
+import { holeRegexCombineRel } from './pathChoices.js';
 
 const L = Lean.classes;
 
 export class LeanBinaryBoolean extends LeanProp(LeanBinary) {
     static { this.register(); }
+
+    /** Hole tag Eq/Ne/Lt/...; null = freeze via Node default. */
+    get holeRegexTag() {
+        return null;
+    }
+
+    /**
+     * Hole-regex for relational / iff / subset / dvd.
+     * @param {object} [opts]
+     * @returns {string|null}
+     */
+    holeRegex(opts = {}) {
+        const tag = this.holeRegexTag;
+        if (!tag) return super.holeRegex?.(opts) ?? null;
+        return holeRegexCombineRel(tag, this.lhs, this.rhs, opts);
+    }
+
 
     append(new_, type) {
         const {indent, level} = this;

@@ -30,7 +30,7 @@ export class LeanGetElem extends LeanGetElemBaseBinary(LeanBinary) {
         const ix = this.rhs;
         if (ix instanceof L.LeanColon) {
             const head = this.lhs;
-            const BIG = new Set(["𝔼", "ℙ", "∇", "max", "min", "sup", "inf", "max⁻¹", "min⁻¹"]);
+            const BIG = new Set(["𝔼", "ℙ", "𝕍𝕒𝕣", "∇", "max", "min", "sup", "inf", "max⁻¹", "min⁻¹"]);
             if (!(head instanceof L.LeanToken && BIG.has(head.text))) {
                 const bases = head?.pathChoices?.(opts) ?? [""];
                 return pathUniqKeepEmpty(bases.map((b) => (b ? `${b}GetSlice` : "GetSlice")));

@@ -1,5 +1,5 @@
 import Def.Lean.Meta.Expr.Part4
-import Notation.Lean.Expr.Singleton
+import Def.Lean.Expr.Singleton.Part2
 import Def.Lean.Expr.Part10
 open Lean.Meta
 open Lean (Name Json Level BinderInfo getMCtx)

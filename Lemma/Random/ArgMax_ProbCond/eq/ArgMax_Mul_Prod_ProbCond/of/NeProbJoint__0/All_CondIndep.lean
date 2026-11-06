@@ -56,7 +56,7 @@ private lemma main
       ((measurable_pi_apply j).comp ‹Fact (Measurable y[:m])›.out)
       ((measurable_pi_apply i).comp ‹Fact (Measurable x[:n])›.out)
   max⁻¹[i : Fin n] (ℙ[π](x[i] = «\sf{x}»[i] | y[:m] = «\sf{y}»[:m]) : ℝ) =
-    max⁻¹[i : Fin n] ((ℙ[π](x[i] = «\sf{x}»[i]) : ℝ) * ∏ j : Fin m, (ℙ[π](y[j] = «\sf{y}»[j] | x[i] = «\sf{x}»[i]) : ℝ)) := by
+    max⁻¹[i : Fin n] (ℙ[π](x[i] = «\sf{x}»[i]) : ℝ) * (∏ j : Fin m, (ℙ[π](y[j] = «\sf{y}»[j] | x[i] = «\sf{x}»[i]) : ℝ)) := by
 -- proof
   intro hxi hyj hys hsp hxy hyx
   have h1i : ∀ i : Fin n, ℙ[π](x[i] = «\sf{x}»[i] ∧ y[:m] = «\sf{y}»[:m]) ≠ 0 := by
@@ -102,8 +102,8 @@ private lemma main
     ENNReal.toReal_pos hMne hMtop
   have hpt : ∀ i : Fin n,
       (ℙ[π](x[i] = «\sf{x}»[i] | y[:m] = «\sf{y}»[:m]) : ℝ) =
-        ((ℙ[π](x[i] = «\sf{x}»[i]) : ℝ) *
-          ∏ j : Fin m, (ℙ[π](y[j] = «\sf{y}»[j] | x[i] = «\sf{x}»[i]) : ℝ)) /
+        (ℙ[π](x[i] = «\sf{x}»[i]) : ℝ) *
+          (∏ j : Fin m, (ℙ[π](y[j] = «\sf{y}»[j] | x[i] = «\sf{x}»[i]) : ℝ)) /
         (ℙ[π](y[:m] = «\sf{y}»[:m]) : ℝ) := by
     intro i
     have : Fact (Measurable x[i]) := ⟨hxi i⟩

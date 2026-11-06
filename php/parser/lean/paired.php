@@ -96,6 +96,18 @@ abstract class LeanPairedGroup extends LeanUnary
     {
         if (get_class($this) == $func) {
             $this->is_closed = true;
+            // `𝔼[…](…)`, `ℙ[…](…)` / `ℙ[…]{…}`, `𝕍𝕒𝕣[…](…)` → LeanBigOperator bound+scope
+            // `max[…](…)`, `max⁻¹[…](…)`, … → LeanLimitsBigOp
+            if (($this instanceof LeanParenthesis || $this instanceof LeanBrace) &&
+                (class_exists('LeanRandomBigOp') || class_exists('LeanLimitsBigOp'))) {
+                $promoted = null;
+                if (class_exists('LeanRandomBigOp'))
+                    $promoted = LeanRandomBigOp::tryPromote($this);
+                if (!$promoted && class_exists('LeanLimitsBigOp'))
+                    $promoted = LeanLimitsBigOp::tryPromote($this);
+                if ($promoted)
+                    return $promoted;
+            }
             return $this;
         }
         return $this->parent->push_right($func);
@@ -458,6 +470,13 @@ class LeanParenthesis extends LeanPairedGroup
         // return "\\bbox[#{$r}{$g}{$b}]{\\left(%s\\right)}";
     }
 
+
+    public function holeRegex($opts = [])
+    {
+        $arg = $this->arg;
+        return $arg ? $arg->holeRegex($opts) : null;
+    }
+
 }
 
 class LeanAngleBracket extends LeanPairedGroup
@@ -538,10 +557,10 @@ class LeanBracket extends LeanPairedGroup
             $this->parent->replace($this, $new);
             return $caret;
         }
-        if (get_class($this) == $func && ($lim = $this->parent) instanceof Lean_lim && $lim->bound === $this && !$lim->scope) {
-            $lim->bound = $this->arg;
+        if (get_class($this) == $func && ($big = $this->parent) && ($big instanceof Lean_lim || $big instanceof Lean_partial || $big instanceof Lean_nabla) && $big->bound === $this && !$big->scope) {
+            $big->bound = $this->arg;
             $caret = new LeanCaret($this->indent, $this->level);
-            $lim->scope = $caret;
+            $big->scope = $caret;
             return $caret;
         }
         return parent::push_right($func);
@@ -834,9 +853,28 @@ class LeanDoubleAngleQuotation extends LeanPairedGroup
         return false;
     }
 
+    public function sfBoundLetter()
+    {
+        $inner = $this->arg;
+        if (!($inner instanceof LeanToken)) return null;
+        if (preg_match('/^\\sf\{([A-Za-z])\}$/', $inner->text, $m))
+            return $m[1];
+        return null;
+    }
+
     public function latexFormat()
     {
-        return '{\\color{red}%s}';
+        if ($this->sfBoundLetter() !== null) return '{\\sf %s}';
+        if ($this->arg instanceof LeanToken) return '%s';
+        return '{\color{red}%s}';
+    }
+
+    public function latexArgs(&$syntax = null)
+    {
+        $letter = $this->sfBoundLetter();
+        if ($letter !== null) return [$letter];
+        if ($this->arg instanceof LeanToken) return [$this->arg->text];
+        return parent::latexArgs($syntax);
     }
 }
 

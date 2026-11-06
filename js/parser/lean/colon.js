@@ -69,6 +69,12 @@ export class LeanColon extends LeanBinary {
                 if (L.LeanGetElem.limitsOperator(base, indices))
                     return caret;
             }
+            // After promote, binder-only limits bigop still needs a newline body (rare).
+            if (
+                !(caret instanceof L.LeanCaret) && indent > this.indent &&
+                caret instanceof L.LeanLimitsBigOp && !caret.scope
+            )
+                return caret;
             if (caret instanceof L.LeanCaret && indent >= this.indent) {
                 if (indent === this.indent) indent = this.indent + 2;
                 caret.indent = indent;
@@ -154,7 +160,10 @@ export class LeanColon extends LeanBinary {
     isGetElemIndexColon() {
         const p = this.parent;
         if (p instanceof L.LeanGetElem) return true;
-        if (p instanceof L.LeanArgsCommaSeparated && p.parent instanceof L.LeanGetElem) return true;
+        if (p instanceof L.LeanLimitsBigOp) return true;
+        if (p instanceof L.LeanArgsCommaSeparated && (
+            p.parent instanceof L.LeanGetElem || p.parent instanceof L.LeanLimitsBigOp
+        )) return true;
         return false;
     }
 
@@ -196,6 +205,16 @@ export class LeanColon extends LeanBinary {
      * @param {object} [opts]
      * @returns {string[]}
      */
+
+    /**
+     * Hole-regex: walk ascription subject (lhs).
+     * @param {object} [opts]
+     * @returns {string|null}
+     */
+    holeRegex(opts = {}) {
+        return this.lhs?.holeRegex?.(opts) ?? null;
+    }
+
     pathChoices(opts = {}) {
         return this.lhs?.pathChoices?.(opts) ?? [""];
     }

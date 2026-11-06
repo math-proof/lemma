@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.TheoryOfProbability.code.HellySelection
+import Def.ProbabilityTheory.HellySelection
 open Filter Set Function
 open scoped Topology
 

@@ -647,9 +647,11 @@ function leanModuleMergeProof(proof, echo, syntax = {}) {
         }
     }
     if (last.length) {
-        let finalLatex = inlineLatex !== undefined ? inlineLatex : null;
-        if (finalLatex === null && last[0] instanceof L.LeanCalc && last[0].originalCalc)
-            finalLatex = last[0].originalCalc.toLatex(syntax);
+        // Trailing statements without an `echo` stay lean-only (CM source).
+        // Do not synthesize Def-style latex from a bare `calc` AST — that painted
+        // colorbox overlays on calc source when Body expected no echo (e.g.
+        // Hyperreal.All_EqMul_Deriv_Mul_Deriv… final T·u_xx calc).
+        const finalLatex = inlineLatex !== undefined ? inlineLatex : null;
         code.push([last, finalLatex, seps]);
     }
 
