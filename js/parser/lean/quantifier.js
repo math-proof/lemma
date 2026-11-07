@@ -11,9 +11,35 @@
 import { LeanProp } from './utility.js';
 import { LeanBigOperator } from './bigops.js';
 import { Lean } from './base.js';
-import { wrapHoleOpt } from './pathChoices.js';
+import { wrapHoleOpt, storedHoleOpt } from './pathChoices.js';
 
 const L = Lean.classes;
+
+/**
+ * Quantifier stored group. `forall` peels `k ≠ 0 →` and spells a hole body as `All__`.
+ * @param {object} node
+ * @param {string} tag
+ * @param {object} opts
+ * @param {Set<string>} binders
+ * @param {boolean} forall
+ * @returns {string|null}
+ */
+function storedQuantRegex(node, tag, opts, binders) {
+    const forall = tag === "All";
+    if (typeof opts.noteQuantBinders === "function") {
+        opts.noteQuantBinders(node, binders);
+        if (!opts.quantNames) opts.quantNames = new Set();
+        opts.noteQuantBinders(node, opts.quantNames);
+    }
+    let body = node.scope ?? node.args?.[node.args.length - 1];
+    if (forall && typeof opts.peelGuardForalls === "function") body = opts.peelGuardForalls(body);
+    if (forall && typeof opts.peelQuantRelGuard === "function") body = opts.peelQuantRelGuard(body, opts.quantNames);
+    if (forall && typeof opts.isHole === "function" && opts.isHole(body, opts, binders)) return "All__";
+    const inner = typeof opts.decomp === "function" ? opts.decomp(body, binders) : null;
+    if (!inner) return null;
+    if (inner === tag || inner.startsWith(tag + "_")) return inner;
+    return tag + "_" + storedHoleOpt(inner);
+}
 
 /** Port of `LeanQuantifier`. */
 export class LeanQuantifier extends LeanProp(LeanBigOperator) {
@@ -96,6 +122,10 @@ export class Lean_forall extends LeanQuantifier {
         return "All";
     }
 
+    /** `∀ k, P` stored as `All_(P)`. A binder guard `k ≠ 0 →` stays out. */
+    storedHoleRegex(opts, binders) {
+        return storedQuantRegex(this, "All", opts, binders);
+    }
 
     get baseOperator() {
         return '∀';
@@ -107,6 +137,11 @@ export class Lean_exists extends LeanQuantifier {
 
     get holeRegexTag() {
         return "Any";
+    }
+
+    /** `∃ x, P` stored as `Any_(P)`. */
+    storedHoleRegex(opts, binders) {
+        return storedQuantRegex(this, "Any", opts, binders);
     }
 
 

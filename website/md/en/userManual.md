@@ -10,7 +10,7 @@ The Lean 4 visualization site is served by `index.php` at the repository root (t
 
 - [../../../index.php?q=Icc&limit=100](../../../index.php?q=Icc&limit=100) — modules whose name contains `Icc`
 - [../../../index.php?q=kv_cache&limit=50](../../../index.php?q=kv_cache&limit=50) — modules whose name contains `kv_cache`
-- [../../../index.php?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T](../../../index.php?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T) — open the main KV-cache lemma directly
+- [../../../index.php?module=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T](../../../index.php?module=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T) — open the main KV-cache lemma directly
 
 The search placeholder reads `input a hint in search of a formula/theorem/axiom`. Optional flags (checkboxes or URL parameters):
 
@@ -46,30 +46,30 @@ On the hierarchy page you can switch between callee and caller views; append `#d
 
 #### Callee hierarchy (who uses this lemma)
 
-Example: the [main KV-cache lemma](../../../index.php?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T).
+Example: the [main KV-cache lemma](../../../index.php?module=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T).
 
 On the lemma page, hover the link left of **-- imply**; the tooltip is `callee hierarchy`:
 
 ![callee link](png/hierarchy/hyperlink.png)
 
-Click it to open the callee graph, e.g. [`?callee=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T`](../../../index.php?callee=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T):
+Click it to open the callee graph, e.g. [`?callee=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T`](../../../index.php?callee=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T):
 
 ![callee hierarchy](png/hierarchy/callee.png)
 
 The graph lists other lemmas whose `imports` reference this module (if any).
 
 - Click `>>>>` to expand further dependents; `<<<<` to collapse.
-- Open [`?callee=…#deep`](../../../index.php?callee=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T#deep) to expand the full callee tree at once.
+- Open [`?callee=…#deep`](../../../index.php?callee=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T#deep) to expand the full callee tree at once.
 
 #### Caller hierarchy (what this lemma uses)
 
-On the lemma page, click the link left of **-- proof** titled `caller hierarchy`, e.g. [`?caller=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T`](../../../index.php?caller=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T):
+On the lemma page, click the link left of **-- proof** titled `caller hierarchy`, e.g. [`?caller=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T`](../../../index.php?caller=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T):
 
 ![caller hierarchy](png/hierarchy/caller.png)
 
 The graph lists lemmas imported in this proof (e.g. `Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmaxDivDot_T` (lemma `gpt`), `Tensor.Stack.eq.AppendStackS`, etc.).
 
-- Open [`?caller=…#deep`](../../../index.php?caller=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T#deep) to expand the full caller tree.
+- Open [`?caller=…#deep`](../../../index.php?caller=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T#deep) to expand the full caller tree.
 
 ![deep caller hierarchy](png/hierarchy/deep/caller.png)
 

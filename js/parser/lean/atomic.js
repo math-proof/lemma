@@ -319,6 +319,13 @@ export class LeanToken extends Lean {
         return tok ? escapeHoleReLit(tok) : null;
     }
 
+    /** A grouped digit (`(1)`, `(0)`) when `opts.digitLiteral` is set. */
+    storedHoleRegex(opts) {
+        const t = this.text || "";
+        if (opts?.digitLiteral && /^-?\d+$/.test(t)) return t;
+        return null;
+    }
+
     strFormat() {
         return this.text;
     }

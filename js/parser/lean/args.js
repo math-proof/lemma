@@ -34,6 +34,30 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         return leanEvalPrefix(tokens, (arg) => arg.operand_count());
     }
 
+    /** `(M).updateCol i v`. A hole index or column is `_`, not a second `__`. */
+    storedHoleRegex(opts, binders) {
+        if (typeof opts.updateColParts !== "function" || typeof opts.decomp !== "function" || typeof opts.isHole !== "function")
+            return null;
+        const uc = opts.updateColParts(this);
+        if (!uc) return null;
+        const M = opts.decomp(uc.matrix, binders);
+        if (!M) return null;
+        let s = "UpdateCol(" + M + ")";
+        if (opts.isHole(uc.index, opts, binders)) s += "_";
+        else {
+            const I = opts.decomp(uc.index, binders);
+            if (!I) return null;
+            s += "(" + I + ")";
+        }
+        if (opts.isHole(uc.col, opts, binders)) s += "_";
+        else {
+            const C = opts.decomp(uc.col, binders);
+            if (!C) return null;
+            s += "(" + C + ")";
+        }
+        return s;
+    }
+
     get stack_priority() {
         if (this.parent instanceof L.LeanBracket) return 17;
         if (

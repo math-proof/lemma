@@ -10,10 +10,50 @@
 import '../../py.js';
 import { LeanBinary, LeanUnary } from './abstract.js';
 import { Lean } from './base.js';
-import { pathCombineMulChoices, pathStripTrailingHoles, pathUniqKeepEmpty } from './pathChoices.js';
+import { pathCombineMulChoices, pathStripTrailingHoles, pathUniqKeepEmpty, storedHoleOpt } from './pathChoices.js';
 import { holeRegexCombineArith, holeRegexCombineUnary } from './pathChoices.js';
 
 const L = Lean.classes;
+
+/** Numeric literal under parentheses, for Pow_2 / Sub1. */
+function pathDigitText(node) {
+    let n = node;
+    for (let i = 0; i < 4 && n; i++) {
+        if ((n.constructor?.name || "") === "LeanParenthesis") {
+            n = n.arg ?? n.args?.[0];
+            continue;
+        }
+        break;
+    }
+    if ((n?.constructor?.name || "") === "LeanToken" && /^-?\d+$/.test(n.text || "")) return n.text;
+    return "";
+}
+
+/**
+ * Binary stored group. `both === null` declines when every factor is a hole.
+ * `rightTrail` keeps the right-hand hole (`Add(1)_`).
+ */
+function storedArith(node, tag, opts, binders, both, rightTrail) {
+    if (typeof opts.isHole !== "function" || typeof opts.decomp !== "function") return null;
+    const lhs = node.lhs ?? node.args?.[0];
+    const rhs = node.rhs ?? node.args?.[1];
+    const lHole = opts.isHole(lhs, opts, binders);
+    const rHole = opts.isHole(rhs, opts, binders);
+    if (lHole && rHole) return both;
+    if (lHole) {
+        const R = opts.decomp(rhs, binders);
+        return R ? tag + "_" + storedHoleOpt(R) : null;
+    }
+    if (rHole) {
+        const L = opts.decomp(lhs, binders);
+        if (!L) return null;
+        return tag + storedHoleOpt(L) + (rightTrail ? "_" : "");
+    }
+    const L = opts.decomp(lhs, binders);
+    const R = opts.decomp(rhs, binders);
+    if (!L || !R) return null;
+    return tag + storedHoleOpt(L) + storedHoleOpt(R);
+}
 
 export class LeanArithmetic extends LeanBinary {
     static { this.register(); }
@@ -80,6 +120,10 @@ export class LeanAdd extends LeanArithmetic {
         return "Add";
     }
 
+    storedHoleRegex(opts, binders) {
+        return storedArith(this, "Add", opts, binders, null, true);
+    }
+
 }
 
 export class LeanSub extends LeanArithmetic {
@@ -99,6 +143,33 @@ export class LeanSub extends LeanArithmetic {
         return "Sub";
     }
 
+    storedHoleRegex(opts, binders) {
+        return storedArith(this, "Sub", opts, binders, null, true);
+    }
+
+    /**
+     * Path choices: Sub(LHS)(RHS). A numeric LHS stays (`1` → Sub1Div).
+     * Omit is `""`. One side omitted keeps the hole `_`.
+     * @param {object} [opts]
+     * @returns {string[]}
+     */
+    pathChoices(opts = {}) {
+        const lit = pathDigitText(this.lhs);
+        const L = this.lhs?.pathChoices?.(opts) ?? [""];
+        const R = this.rhs?.pathChoices?.(opts) ?? [""];
+        const left = lit ? pathUniqKeepEmpty([...L, lit]) : L;
+        const out = [""];
+        for (const l of left) {
+            for (const r of R) {
+                if (!l && !r) out.push("Sub__");
+                else if (l && r) out.push("Sub" + l + r);
+                else if (l) out.push("Sub" + l + "_");
+                else out.push("Sub_" + r);
+            }
+        }
+        return pathUniqKeepEmpty(out);
+    }
+
 }
 
 export class LeanMul extends LeanArithmetic {
@@ -109,6 +180,26 @@ export class LeanMul extends LeanArithmetic {
     /** Mathlib `Matrix.mulVec` is BinaryInfix 73; bare `*` stays 70. */
     get input_priority() {
         return this.subscript === 'ᵥ' ? 73 : this.constructor.input_priority;
+    }
+
+    /**
+     * `ᵥ*` is `VecMul_`. `A *ᵥ x` is `MulVec` (the matrix is the left factor),
+     * not hole-hole `MulVec__`.
+     */
+    storedHoleRegex(opts, binders) {
+        if (!(this.subscript === "ᵥ" || String(this.operator || "").startsWith("ᵥ"))) return null;
+        if (typeof opts.isHole !== "function" || typeof opts.decomp !== "function") return null;
+        const lhs = this.lhs ?? this.args?.[0];
+        const rhs = this.rhs ?? this.args?.[1];
+        if (!this.isLeftSubscript) {
+            const rHole = opts.isHole(rhs, opts, binders);
+            if (rHole && typeof opts.isFreeMatrixAtom === "function" && opts.isFreeMatrixAtom(lhs, opts))
+                return "MulVec";
+            if (rHole && opts.isHole(lhs, opts, binders)) return "MulVec__";
+        }
+        if (!opts.isHole(lhs, opts, binders)) return null;
+        const R = opts.decomp(rhs, binders);
+        return R ? "VecMul_" + storedHoleOpt(R) : null;
     }
 
     get command() {
@@ -259,6 +350,11 @@ export class LeanMatMul extends LeanArithmetic {
         return "Dot";
     }
 
+    /** `b @ᵒ l` stays `Dot__` when both factors are holes. */
+    storedHoleRegex(opts, binders) {
+        return storedArith(this, "Dot", opts, binders, "Dot__", false);
+    }
+
 
     get command() {
         if (this.superscript === 'ᵒ') return '{\\color{red}\\times}^{\\circ}';
@@ -277,6 +373,11 @@ export class Lean_bullet extends LeanArithmetic {
 
     get operator() {
         return '•';
+    }
+
+    /** `l • b` stays `SMul__` when both factors are holes. */
+    storedHoleRegex(opts, binders) {
+        return storedArith(this, "SMul", opts, binders, "SMul__", false);
     }
 }
 
@@ -613,6 +714,24 @@ export class LeanPow extends LeanArithmetic {
             : rhs.toLatex(syntax);
         return [lhsLatex, rhsLatex];
     }
+
+    /**
+     * Path choices: `^ n` is Pow_n (`^ 2` → Pow_2). Base hole stays the `_` in Pow_.
+     * @param {object} [opts]
+     * @returns {string[]}
+     */
+    pathChoices(opts = {}) {
+        const exp = pathDigitText(this.rhs);
+        const left = this.lhs?.pathChoices?.(opts) ?? [""];
+        const out = [""];
+        if (exp) out.push("Pow_" + exp);
+        else out.push("Pow_");
+        for (const l of left) {
+            if (!l) continue;
+            out.push(exp ? "Pow" + l + "_" + exp : "Pow" + l + "_");
+        }
+        return pathUniqKeepEmpty(out);
+    }
 }
 
 export class Lean_lll extends LeanArithmetic {
@@ -741,6 +860,11 @@ export class Lean_cdotp extends LeanArithmetic {
             .map((ch) => (map[ch] !== undefined ? map[ch] : ch))
             .join('');
         return `${base}_${inner}`;
+    }
+
+    /** Left hole is `Dot_(R)`. Both holes are `Dot__`. */
+    storedHoleRegex(opts, binders) {
+        return storedArith(this, "Dot", opts, binders, "Dot__", false);
     }
 }
 

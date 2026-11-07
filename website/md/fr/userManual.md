@@ -10,7 +10,7 @@ Le site Lean 4 est servi par `index.php` à la racine du dépôt (URL locales ty
 
 - [../../../index.php?q=Icc&limit=100](../../../index.php?q=Icc&limit=100) — modules dont le nom contient `Icc`
 - [../../../index.php?q=kv_cache&limit=50](../../../index.php?q=kv_cache&limit=50) — modules dont le nom contient `kv_cache`
-- [../../../index.php?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T](../../../index.php?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T) — ouvrir directement le lemme principal KV-cache
+- [../../../index.php?module=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T](../../../index.php?module=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T) — ouvrir directement le lemme principal KV-cache
 
 Le placeholder de recherche est `input a hint in search of a formula/theorem/axiom`. Options (cases à cocher ou paramètres d’URL) :
 
@@ -46,30 +46,30 @@ Sur la page de hiérarchie, basculez entre vues callee et caller ; ajoutez `#dee
 
 #### Hiérarchie callee (qui utilise ce lemme)
 
-Exemple : le [lemme principal KV-cache](../../../index.php?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T).
+Exemple : le [lemme principal KV-cache](../../../index.php?module=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T).
 
 Sur la page du lemme, survolez le lien à gauche de **-- imply** ; l’infobulle indique `callee hierarchy` :
 
 ![lien callee](png/hierarchy/hyperlink.png)
 
-Cliquez pour ouvrir le graphe callee, p. ex. [`?callee=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T`](../../../index.php?callee=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T) :
+Cliquez pour ouvrir le graphe callee, p. ex. [`?callee=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T`](../../../index.php?callee=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T) :
 
 ![hiérarchie callee](png/hierarchy/callee.png)
 
 Le graphe liste les lemmes dont `imports` référence ce module (le cas échéant).
 
 - `>>>>` développe les dépendants ; `<<<<` replie.
-- [`?callee=…#deep`](../../../index.php?callee=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T#deep) déplie tout l’arbre callee.
+- [`?callee=…#deep`](../../../index.php?callee=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T#deep) déplie tout l’arbre callee.
 
 #### Hiérarchie caller (ce que ce lemme utilise)
 
-Sur la page du lemme, cliquez le lien `caller hierarchy` à gauche de **-- proof**, p. ex. [`?caller=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T`](../../../index.php?caller=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T) :
+Sur la page du lemme, cliquez le lien `caller hierarchy` à gauche de **-- proof**, p. ex. [`?caller=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T`](../../../index.php?caller=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T) :
 
 ![hiérarchie caller](png/hierarchy/caller.png)
 
 Le graphe liste les lemmes importés par cette preuve (p. ex. `Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmaxDivDot_T` (lemme `gpt`), `Tensor.Stack.eq.AppendStackS`, etc.).
 
-- [`?caller=…#deep`](../../../index.php?caller=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T#deep) déplie tout l’arbre caller.
+- [`?caller=…#deep`](../../../index.php?caller=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T#deep) déplie tout l’arbre caller.
 
 ![hiérarchie caller profonde](png/hierarchy/deep/caller.png)
 

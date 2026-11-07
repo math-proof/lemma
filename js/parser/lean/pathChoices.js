@@ -303,6 +303,12 @@ export function wrapHoleOpt(filled) {
   return "(_|" + filled + ")";
 }
 
+/** Stored group `(Fill)`. Empty is the hole `_`. `consistent` expands `(` to `(_|`. */
+export function storedHoleOpt(frag) {
+  if (frag == null || frag === "") return "_";
+  return "(" + frag + ")";
+}
+
 /** Trig/log heads for LeanProperty / ArgsSpaceSeparated apps. */
 export const HOLE_RE_TRIG_FN = /^(sin|cos|tan|cot|arctan|log|exp)$/i;
 

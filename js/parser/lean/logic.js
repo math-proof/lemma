@@ -7,7 +7,7 @@
  */
 import { LeanBinaryBoolean } from './boolean.js';
 import { Lean } from './base.js';
-import { pathAndInfixChoices } from './pathChoices.js';
+import { pathAndInfixChoices, storedHoleOpt } from './pathChoices.js';
 import { strStmt } from './utility.js';
 
 const L = Lean.classes;
@@ -216,6 +216,15 @@ export class Lean_land extends LeanLogic {
 
     get operator() {
         return '∧';
+    }
+
+    /** `P ∧ Q` stored as `And(P)(Q)`. */
+    storedHoleRegex(opts, binders) {
+        if (typeof opts.decomp !== "function") return null;
+        const L = opts.decomp(this.lhs ?? this.args?.[0], binders);
+        const R = opts.decomp(this.rhs ?? this.args?.[1], binders);
+        if (!L || !R) return null;
+        return "And" + storedHoleOpt(L) + storedHoleOpt(R);
     }
 
     /**

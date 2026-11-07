@@ -109,6 +109,18 @@ export class Node {
         return null;
     }
 
+    /**
+     * Stored hole-regex for this node: groups are `(Fill)`, not `(_|Fill)`.
+     * null means this node does not spell a stored group.
+     * Subclasses override. Recurse with `opts.decomp(child, binders)`.
+     * @param {object} [_opts]
+     * @param {Set<string>} [_binders]
+     * @returns {string|null}
+     */
+    storedHoleRegex(_opts = {}, _binders = null) {
+        return null;
+    }
+
     get previousElementSibling() {
         if (!this.parent) return null;
         const index = this.parent.args.indexOf(this);
