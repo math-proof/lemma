@@ -16,14 +16,16 @@ Mathlib has no `Matrix.softmax`. Scalar `sigmoid` is
 `Def/Analysis/Matrix/Softmax.lean`.
 
 * `axis = 0` normalizes each column (sum over the row index).
-* `axis = 1` normalizes each row (sum over the column index).
+* `axis = 1`, the default, normalizes each row (sum over the column index).
+* `axis > 1` is entrywise `exp A / exp A`, the same out-of-range value as `Tensor.softmax`.
 -/
 
-/-- Softmax along `axis`, where `axis = 0` or `axis = 1`. -/
+/-- Softmax along `axis`. The default axis is `1`. -/
 def Matrix.softmax {m n α : Type*} [Fintype m] [Fintype n] [Exp α]
-    (A : Matrix m n α) (axis : ℕ) (h : axis = 0 ∨ axis = 1 := by omega) : Matrix m n α :=
-  if h0 : axis = 0 then
+    (A : Matrix m n α) (axis : ℕ := 1) : Matrix m n α :=
+  if axis = 0 then
     Matrix.of fun i j => Exp.exp (A i j) / ∑ i' : m, Exp.exp (A i' j)
-  else
-    have : axis = 1 := Or.resolve_left h h0
+  else if axis = 1 then
     Matrix.of fun i j => Exp.exp (A i j) / ∑ j' : n, Exp.exp (A i j')
+  else
+    Matrix.of fun i j => Exp.exp (A i j) / Exp.exp (A i j)
