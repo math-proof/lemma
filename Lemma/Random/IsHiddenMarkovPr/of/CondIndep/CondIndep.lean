@@ -1,6 +1,5 @@
 import Lemma.Random.Prob.eq.Mul_ProbS.Prob.eq.Mul_MulProbS.of.CondIndep.CondIndep
-open MeasureTheory
-open IsDiscreteHMM
+open MeasureTheory IsDiscreteHMM Random
 open scoped ENNReal.ToRealCoe
 
 
@@ -11,7 +10,7 @@ property `y (t + 1) ⟂ (x[:t + 1], y[:t]) | y t` give the one-step factorizatio
 -/
 @[path]
 private lemma main
-  {Ω Y X : Type*} [MeasurableSpace Ω] [StandardBorelSpace Ω]
+  [MeasurableSpace Ω] [StandardBorelSpace Ω]
   [CountableMeasure Y] [CountableMeasure X]
   [Countable Y] [MeasurableSingletonClass Y] [Countable X] [MeasurableSingletonClass X]
   {π : Measure Ω} [IsProbabilityMeasure π]
@@ -19,10 +18,12 @@ private lemma main
 -- given
   (h : IsDiscreteHMM π x y) :
 -- imply
+  have : ∀ i, SinglePSpace π (y i) := fun i => IsDiscreteHMM.singlePSpace_y (x := x) i
+  have : ∀ i j, SinglePSpace π (y i, y j) := fun i j => IsDiscreteHMM.singlePSpace_yy (x := x) i j
   IsHiddenMarkovPr π x y xo := by
 -- proof
-  intro ys
-  obtain ⟨h₀, h₁⟩ := Random.Prob.eq.Mul_ProbS.Prob.eq.Mul_MulProbS.of.CondIndep.CondIndep
+  intro hPy hPyy ys
+  obtain ⟨h₀, h₁⟩ := Prob.eq.Mul_ProbS.Prob.eq.Mul_MulProbS.of.CondIndep.CondIndep
     («\sf{x}» := xo) h ys
   simp only [fun_getElem] at h₀ h₁
   refine ⟨?_, fun t => ?_⟩
@@ -31,4 +32,4 @@ private lemma main
 
 
 -- created on 2026-10-02
--- updated on 2026-11-02
+-- updated on 2026-11-07

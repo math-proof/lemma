@@ -1,6 +1,6 @@
 import Lemma.Real.GtExp_0
 import Instance.Data.Vector.Functions.Part2
-open Real Vector
+open Real Vector Exp
 
 
 @[path]

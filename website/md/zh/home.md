@@ -21,20 +21,21 @@
 * [Int](../?module=Int) 整数初等代数
 * [Rat](../?module=Rat) 有理数初等代数
 * [Real](../?module=Real) 实分析，例：
-  - [Jensen 不等式](../?module=Real.LeSum_Mul.of.EqSumRange__1.All_Ge_0.All_In_Icc.All_Gt0Deriv2.ContinuousOn_Icc), [悬链线](../?module=Complex.Any_Eq_AddMul_CoshDivSub.of.All_EqDeriv_Mul_ExpMulIArctanDeriv.ContDiff_2.Differentiable)
+  - [Jensen 不等式](../?module=Real.LeSum_Mul.of.EqSumRange__1.All_Ge_0.All_In_Icc.All_Gt0Deriv2.ContinuousOn_Icc)
 * [Hyperreal](../?module=Hyperreal) 非标准分析
 * [Complex](../?module=Complex) 复分析，例：
   - [一元四次方程](../?module=Complex.Eq0Add_Mul_Pow_4.is.In_Ite_FinsetSSubS__SubS.of.Ne_0)
   - [常系数齐次线性递推通项公式](../?module=Complex.Any_All_Eq_Dot_MulDescFactorial.of.All_Eq_Dot)
   - [梅森定律](../?module=Complex.Eq_Mul_SqrtDiv.of.All_EqDeriv_Mul_ExpMulIArctanDeriv.All_Eq_MulMul_Sin_Cos)
+  - [悬链线](../?module=Complex.Any_Eq_AddMul_CoshDivSub.of.All_EqDeriv_Mul_ExpMulIArctanDeriv.ContDiff_2.Differentiable)
 * [Set](../?module=Set) 集合论
 * [Finset](../?module=Finset) 有限集合论，例：
   - [k-means 聚类](../?module=Finset.LtAddSumS_SquareSub_Div_Sum.of.LtAbsSSub_Div_Sum.NotIn.In.GtCard_0)
 * [List](../?module=List) 列表理论
 * [Vector](../?module=Vector) 向量（一维张量）理论
 * [Matrix](../?module=Matrix) 矩阵理论，例：
-  - [置盐定理](../?module=Matrix.Any_And_EqAdd1.of.IsIrreducibleUpdateColAdd_DotAdd.LtDot_Add_Dot_ExtAdd_Dot.EqAdd1.All_Gt_0)
-  - [Cholesky 分解](../?module=Finset.All.And.of.Eq_Adjoint.Imp_Gt_0.Eq_Ite.Cholesky), [PLU 分解](../?module=Matrix.EqMul_T_1.IsLowerTriangular.IsUpperTriangular.EqMulS)
+  - [置盐定理](../?module=Matrix.Any_And_EqSMul_VecMul_UpdateCol.of.IsIrreducibleUpdateColAdd_Dot.LtDot_Add_SMul.EqSMul.All_Gt_0)
+  - [Cholesky 分解](../?module=Matrix.Eq_Mul_Adjoint.of.All_Eq_Ite__Ite_Sqrt_0.All_Lt0Dot_MulVec.EqAdjoint), [PLU 分解](../?module=Matrix.EqMul_T_1.IsLowerTriangular.IsUpperTriangular.EqMulS)
 * [Tensor](../?module=Tensor) 形式化张量演算，语义上与 **torch.Tensor** 对齐，用于深度学习算法的形式化表述与验证，例：
   - [kv_cache](../?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)
   - [RoPE](../?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)

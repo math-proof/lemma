@@ -3,7 +3,7 @@ import Def.Data.Holor.Prod
 import Lemma.Tensor.GtSumData_0.is.GtSum_0
 import Lemma.Vector.GtSumExp_0
 import Def.Data.Holor.Sum
-open Tensor Vector
+open Exp Tensor Vector
 
 
 @[path]

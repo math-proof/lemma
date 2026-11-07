@@ -6,9 +6,7 @@ import Lemma.Fin.Snoc_Last.eq.Last
 import Lemma.Fin.Sum.eq.SumSumSnoc
 import Lemma.Random.All_Imp_Eq.of.IsHiddenMarkovFac
 import Lemma.Random.IsHiddenMarkovFac.of.All_Eq.IsHiddenMarkovPr
-open MeasureTheory Measure Random ENNReal.ToRealCoe Fin
-open IsDiscreteHMM
-open Fun
+open MeasureTheory Measure Random ENNReal.ToRealCoe Fin IsDiscreteHMM Fun
 
 
 /--
@@ -30,6 +28,9 @@ private lemma main
   {G : Y → Y → ℝ}
 -- given
   (h₀ : IsDiscreteHMM π (⇑x) (⇑y))
+  (hPy : ∀ i, SinglePSpace π ((⇑y) i) := fun i => IsDiscreteHMM.singlePSpace_y (x := ⇑x) i)
+  (hPyy : ∀ i j, SinglePSpace π ((⇑y) i, (⇑y) j) :=
+    fun i j => IsDiscreteHMM.singlePSpace_yy (x := ⇑x) i j)
   (h₁ : ∀ «\sf{y}» : ℕ ⇀ Y,
     ℙ[π](x[:n] = «\sf{x}»[:n] ∧ y[:n] = «\sf{y}»[:n]) > 0)
   (h₂ : ∀ (t : ℕ) («\sf{y}» : ℕ ⇀ Y),
@@ -55,8 +56,8 @@ private lemma main
   simp only [Nat.add_sub_cancel]
   replace hYX : SinglePSpace π ((⇑y)[:m + 1], (⇑x)[:m + 1]) := hYX
   have : ∀ k : ℕ, SinglePSpace π ((⇑x)[:k], (⇑y)[:k]) := fun k => inferInstance
-  have : ∀ i, SinglePSpace π (y i) := fun i => IsDiscreteHMM.singlePSpace_y (x := ⇑x) i
-  have : ∀ i j, SinglePSpace π (y i, y j) := fun i j => IsDiscreteHMM.singlePSpace_yy (x := ⇑x) i j
+  have := hPy
+  have := hPyy
   have hpos := h₁
   have h₃' : ∀ t a, e[t] a = (ℙ[π](x[t] = «\sf{x}»[t] | y[t] = a) : ℝ).log := fun t a => by
     simpa using h₃ t ⟨fun _ => a⟩
@@ -200,4 +201,4 @@ private lemma main
 
 
 -- created on 2026-10-22
--- updated on 2026-11-02
+-- updated on 2026-11-07

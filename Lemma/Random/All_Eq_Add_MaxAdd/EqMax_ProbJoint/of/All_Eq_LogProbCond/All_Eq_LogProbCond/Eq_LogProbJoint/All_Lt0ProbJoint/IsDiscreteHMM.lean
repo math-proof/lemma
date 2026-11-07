@@ -7,10 +7,8 @@ import Lemma.Finset.SupUniv.eq.SupUnivSupUnivSnoc
 import Lemma.Finset.SupAdd.eq.AddSup
 import Lemma.Random.All_Imp_Eq.of.IsHiddenMarkovFac
 import Lemma.Random.IsHiddenMarkovFac.of.All_Eq.IsHiddenMarkovPr
-open Fin Finset MeasureTheory Measure Random
-open IsDiscreteHMM
+open Fin Finset MeasureTheory Measure Random IsDiscreteHMM Fun
 open scoped ENNReal.ToRealCoe
-open Fun
 set_option maxHeartbeats 800000
 
 
@@ -28,6 +26,9 @@ private lemma main
   {G : Y → Y → ℝ}
 -- given
   (h₀ : IsDiscreteHMM π (⇑x) (⇑y))
+  (hPy : ∀ i, SinglePSpace π ((⇑y) i) := fun i => IsDiscreteHMM.singlePSpace_y (x := ⇑x) i)
+  (hPyy : ∀ i j, SinglePSpace π ((⇑y) i, (⇑y) j) :=
+    fun i j => IsDiscreteHMM.singlePSpace_yy (x := ⇑x) i j)
   (h₁ : ∀ t («\sf{y}» : ℕ ⇀ Y), (ℙ[π](x[:t + 1] = «\sf{x}»[:t + 1] ∧ y[:t + 1] = «\sf{y}»[:t + 1]) : ℝ) > 0)
   (h₂ : ∀ t («\sf{y}» : ℕ ⇀ Y), s[t] «\sf{y}» = (ℙ[π](x[:t + 1] = «\sf{x}»[:t + 1] ∧ y[:t + 1] = «\sf{y}»[:t + 1]) : ℝ).log)
   (h₃ : ∀ t («\sf{y}» : ℕ ⇀ Y), e[t] «\sf{y}»[t] = (ℙ[π](x[t] = «\sf{x}»[t] | y[t] = «\sf{y}»[t]) : ℝ).log)
@@ -45,8 +46,8 @@ private lemma main
     fun _ _ => rfl
   have hX : (ReferenceMeasure.measure : Measure X) = Measure.count := CountableMeasure.measure_eq_count
   have hY : (ReferenceMeasure.measure : Measure Y) = Measure.count := CountableMeasure.measure_eq_count
-  have : ∀ i : ℕ, SinglePSpace π y[i] := fun i => IsDiscreteHMM.singlePSpace_y (x := ⇑x) i
-  have : ∀ i j : ℕ, SinglePSpace π (y[i], y[j]) := fun i j => IsDiscreteHMM.singlePSpace_yy (x := ⇑x) i j
+  have := hPy
+  have := hPyy
   have : ∀ k : ℕ, SinglePSpace π ((⇑x)[:k], (⇑y)[:k]) := fun k => inferInstance
   have hQ : ∀ (ys : ℕ → Y) (k : ℕ), (ℙ[π](x[:(k : ℤ)] = «\sf{x}»[:(k : ℤ)] ∧ y[:(k : ℤ)] = ys[:(k : ℤ)]) : ENNReal) =
       π {ω | (∀ i < k, x[i] ω = «\sf{x}»[i]) ∧ ∀ i < k, y[i] ω = ys i} := by
@@ -143,4 +144,4 @@ private lemma main
 
 
 -- created on 2020-12-20
--- updated on 2026-11-02
+-- updated on 2026-11-07

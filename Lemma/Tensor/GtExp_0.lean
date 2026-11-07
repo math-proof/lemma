@@ -1,6 +1,6 @@
 import Lemma.Vector.GtExp_0
 import Theorem.Data.Holor.Functions
-open Vector
+open Exp Vector
 
 
 @[path]

@@ -1,6 +1,6 @@
 import Lemma.Int.EqAbs.of.Gt_0
 import Lemma.Real.GtExp_0
-open Int Real
+open Int Real Exp
 
 
 @[path, comm]

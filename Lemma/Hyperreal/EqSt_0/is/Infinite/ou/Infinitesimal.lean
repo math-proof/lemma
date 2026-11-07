@@ -1,5 +1,4 @@
 import Def.Analysis.Real.Limits.Basic
-import Notation.Analysis.Real.Numbers
 import Lemma.Bool.Iff.is.IffNotS
 open Bool ArchimedeanClass
 

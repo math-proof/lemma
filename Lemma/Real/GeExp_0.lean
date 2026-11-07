@@ -1,6 +1,6 @@
 import Lemma.Real.GtExp_0
 import Lemma.Nat.Ge.of.Gt
-open Real Nat
+open Real Nat Exp
 
 
 @[path]

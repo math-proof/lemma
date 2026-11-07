@@ -1,6 +1,6 @@
 import Lemma.Tensor.MapGetSlice.eq.GetSliceMap
 import Theorem.Data.Holor.Functions
-open Tensor
+open Exp Tensor
 
 
 @[path, comm]

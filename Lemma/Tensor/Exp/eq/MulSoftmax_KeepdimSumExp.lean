@@ -12,7 +12,7 @@ import Lemma.Tensor.Softmax.eq.One.of.LeLength
 import Lemma.Vector.GetRepeat.eq.Get_Mod.of.Lt_Mul
 import Lemma.Vector.GetSum.eq.Sum_Get
 import Def.Data.Holor.Sum
-open Fin List Nat Real Tensor Vector
+open Exp Fin List Nat Real Tensor Vector
 
 
 @[path]
@@ -90,4 +90,4 @@ private lemma main
 
 
 -- created on 2021-12-14
--- updated on 2026-10-26
+-- updated on 2026-11-07

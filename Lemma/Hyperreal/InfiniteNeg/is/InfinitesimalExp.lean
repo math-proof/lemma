@@ -3,7 +3,7 @@ import Lemma.Hyperreal.InfiniteNeg.is.All_Lt
 import Lemma.Real.AbsExp.eq.Exp
 import Lemma.Real.LtExpS.is.Lt
 import Lemma.Nat.Ne.of.Gt
-open Hyperreal Real Nat
+open Hyperreal Real Nat Log
 
 
 /--

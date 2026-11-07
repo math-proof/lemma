@@ -32,7 +32,7 @@ import Lemma.Tensor.GetDiv.eq.DivGetS
 import Lemma.Tensor.GetKeepdim.eq.KeepdimCast_Get.of.GtGet_0.Gt_0.GtLength
 import Lemma.Tensor.XEqGetS.of.XEq.GtLength
 import Def.Data.Holor.Sum
-open Tensor Hyperreal
+open Tensor Hyperreal Exp
 set_option maxHeartbeats 2000000
 
 
@@ -188,4 +188,4 @@ private lemma main
 
 
 -- created on 2020-12-28
--- updated on 2026-10-26
+-- updated on 2026-11-07

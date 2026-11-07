@@ -21,20 +21,21 @@ La bibliothèque contient <label id=count>5000</label> théorèmes établis (<la
 * [Int](../?module=Int) Algèbre élémentaire des entiers relatifs
 * [Rat](../?module=Rat) Algèbre élémentaire des rationnels
 * [Real](../?module=Real) Algèbre et analyse réelle, p. ex. :
-  - [inégalité de Jensen](../?module=Real.LeSum_Mul.of.EqSumRange__1.All_Ge_0.All_In_Icc.All_Gt0Deriv2.ContinuousOn_Icc), [chaînette](../?module=Complex.Any_Eq_AddMul_CoshDivSub.of.All_EqDeriv_Mul_ExpMulIArctanDeriv.ContDiff_2.Differentiable)
+  - [inégalité de Jensen](../?module=Real.LeSum_Mul.of.EqSumRange__1.All_Ge_0.All_In_Icc.All_Gt0Deriv2.ContinuousOn_Icc)
 * [Hyperreal](../?module=Hyperreal) Analyse non standard
 * [Complex](../?module=Complex) Analyse complexe, p. ex. :
   - [équation quartique](../?module=Complex.Eq0Add_Mul_Pow_4.is.In_Ite_FinsetSSubS__SubS.of.Ne_0)
   - [forme fermée d'une récurrence linéaire homogène à coefficients constants](../?module=Complex.Any_All_Eq_Dot_MulDescFactorial.of.All_Eq_Dot)
   - [loi de Mersenne](../?module=Complex.Eq_Mul_SqrtDiv.of.All_EqDeriv_Mul_ExpMulIArctanDeriv.All_Eq_MulMul_Sin_Cos)
+  - [chaînette](../?module=Complex.Any_Eq_AddMul_CoshDivSub.of.All_EqDeriv_Mul_ExpMulIArctanDeriv.ContDiff_2.Differentiable)
 * [Set](../?module=Set) Théorie des ensembles
 * [Finset](../?module=Finset) Ensembles finis, p. ex. :
   - [clustering k-means](../?module=Finset.LtAddSumS_SquareSub_Div_Sum.of.LtAbsSSub_Div_Sum.NotIn.In.GtCard_0)
 * [List](../?module=List) Théorie des listes
 * [Vector](../?module=Vector) Vecteurs (tenseurs unidimensionnels)
 * [Matrix](../?module=Matrix) Théorie des matrices, p. ex. :
-  - [théorème d'Okishio](../?module=Matrix.Any_And_EqAdd1.of.IsIrreducibleUpdateColAdd_DotAdd.LtDot_Add_Dot_ExtAdd_Dot.EqAdd1.All_Gt_0)
-  - [décomposition de Cholesky](../?module=Finset.All.And.of.Eq_Adjoint.Imp_Gt_0.Eq_Ite.Cholesky), [décomposition PLU](../?module=Matrix.EqMul_T_1.IsLowerTriangular.IsUpperTriangular.EqMulS)
+  - [théorème d'Okishio](../?module=Matrix.Any_And_EqSMul_VecMul_UpdateCol.of.IsIrreducibleUpdateColAdd_Dot.LtDot_Add_SMul.EqSMul.All_Gt_0)
+  - [décomposition de Cholesky](../?module=Matrix.Eq_Mul_Adjoint.of.All_Eq_Ite__Ite_Sqrt_0.All_Lt0Dot_MulVec.EqAdjoint), [décomposition PLU](../?module=Matrix.EqMul_T_1.IsLowerTriangular.IsUpperTriangular.EqMulS)
 * [Tensor](../?module=Tensor) Calcul tensoriel formalisé, sémantiquement aligné sur **torch.Tensor**, pour la spécification et la vérification formelle d'algorithmes d'apprentissage profond, p. ex. :
   - [kv_cache](../?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)
   - [RoPE](../?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)

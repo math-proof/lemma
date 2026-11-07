@@ -305,6 +305,23 @@ function reassociateDotProduct(root) {
       walk(dot, parent, idx);
       return;
     }
+    // `*ᵥ` binds tighter than `⬝ᵥ`. `(~x ⬝ᵥ A) *ᵥ x` is `~x ⬝ᵥ (A *ᵥ x)`.
+    if (cls(n) === "LeanMul" && n.subscript === "ᵥ" && !n.isLeftSubscript
+        && cls(args[0]) === "Lean_cdotp" && args[0].subscript === "ᵥ" && parent) {
+      const dot = args[0];
+      const [a, b] = dot.args || [];
+      const vec = args[1];
+      n.args = [b, vec];
+      if (b) b.parent = n;
+      if (vec) vec.parent = n;
+      dot.args = [a, n];
+      if (a) a.parent = dot;
+      n.parent = dot;
+      dot.parent = parent;
+      parent.args[idx] = dot;
+      walk(n, dot, 1);
+      return;
+    }
     for (let i = 0; i < args.length; i++) walk(args[i], n, i);
   })(root, null, -1);
 }
@@ -3184,8 +3201,23 @@ export function implyHoleRegexFromAst(implyStmts, opts = {}) {
  * @param {string} reSource
  * @returns {{ kind: string, v?: string, alts?: object[], kids?: object[] }[]}
  */
-export function parseHoleRegexTree(reSource) {
+/**
+ * Stored hole regex omits the `_|` prefix: `(Fill)` means `(_|Fill)`.
+ * Heads: `Any_(…)`, `All_(…)`, and `IsIrreducible(…)`.
+ * Leave a source that already has `(_|`, a house `/eq/`, or any other head alone
+ * so required groups (`Deriv_(scope)`, `(LHS)/eq/(RHS)`) stay required.
+ * @param {string} reSource
+ * @returns {string}
+ */
+export function expandSimplifiedHoleOpts(reSource) {
   const s = String(reSource || "");
+  if (!s || s.includes("(_|") || s.includes("/eq/") || s.includes(".eq.")) return s;
+  if (!/^(?:(?:Any|All)_|IsIrreducible|Lt|Eq)\(/.test(s)) return s;
+  return s.replace(/\(/g, "(_|");
+}
+
+export function parseHoleRegexTree(reSource) {
+  const s = expandSimplifiedHoleOpts(reSource);
   let i = 0;
   function parseSeq() {
     const parts = [];
@@ -3246,8 +3278,63 @@ export function holeRegexNodeDepth(node) {
 }
 
 /**
+ * Longest trailing `_` run in the language of a hole-regex node.
+ * T is that run. U is the longest all-`_` string the node can generate, or null.
+ * @param {{ kind: string, v?: string, alts?: object[], kids?: object[] }} node
+ * @returns {{ T: number, U: number|null }}
+ */
+function holeRegexNodeTrailing(node) {
+  if (!node) return { T: 0, U: null };
+  if (node.kind === "lit") {
+    const v = String(node.v || "");
+    const trail = v.match(/_*$/)[0].length;
+    return { T: trail, U: /^_*$/.test(v) ? v.length : null };
+  }
+  if (node.kind === "hole") return { T: 1, U: 1 };
+  if (node.kind === "opt") {
+    const fill = holeRegexSeqTrailing(node.alts || []);
+    return { T: Math.max(1, fill.T), U: Math.max(1, fill.U == null ? 0 : fill.U) };
+  }
+  if (node.kind === "group") return holeRegexSeqTrailing(node.kids || []);
+  return { T: 0, U: null };
+}
+
+/** Fold T/U across a sequence. Empty sequence is T = 0, U = 0. */
+function holeRegexSeqTrailing(nodes) {
+  let acc = { T: 0, U: 0 };
+  for (const n of nodes || []) {
+    const b = holeRegexNodeTrailing(n);
+    let T = b.T;
+    if (b.U != null) T = Math.max(T, acc.T + b.U);
+    const U = acc.U != null && b.U != null ? acc.U + b.U : null;
+    acc = { T, U };
+  }
+  return acc;
+}
+
+const trailingPadCache = new Map();
+
+/**
+ * Pad for `consistent`: maximum trailing-`_` run of the hole-regex language.
+ * Not `holeRegexLastNodeDepth`. Parsed after `expandSimplifiedHoleOpts`.
+ * @param {string|{ regex?: string, expr?: string, pad?: number }} reSource
+ * @returns {number}
+ */
+export function holeRegexTrailingPad(reSource) {
+  if (reSource && typeof reSource === "object") {
+    if (Number.isFinite(Number(reSource.pad))) return Number(reSource.pad);
+    reSource = reSource.regex || reSource.expr || "";
+  }
+  const key = String(reSource || "");
+  if (trailingPadCache.has(key)) return trailingPadCache.get(key);
+  const pad = holeRegexSeqTrailing(parseHoleRegexTree(key)).T;
+  trailingPadCache.set(key, pad);
+  return pad;
+}
+
+/**
  * Depth of the last (rightmost) top-level node in a hole-regex parse tree (Cosmos).
- * Used by `consistent` to decide how many trailing `_` to append to the token.
+ * Not the trailing-`_` pad (`holeRegexTrailingPad`). A literal `_` has depth 0 and run 1.
  * Catalan imply `Eq_(_|Div(_|Binom((Mul(_|2)_)_))(_|Add_(_|1)))` → last-node depth 3.
  * @param {string} reSource
  * @returns {number}
@@ -3288,16 +3375,6 @@ export function houseEqStemToPath(stem) {
   return s;
 }
 
-/**
- * Cosmos consistency: strip `'`, append `depth` trailing `_` to the token, append `_*`
- * to the regex, then test a full match. `depth` is `holeRegexLastNodeDepth(regex)` when
- * callers use the parse-derived last-node depth (do not invent a magic number).
- *
- * @param {string} token
- * @param {string} regex hole-regex source (unanchored body)
- * @param {number} depth last-node depth from the parse
- * @returns {boolean}
- */
 /**
  * Match token against hole-regex tree. Adjacent filled optional siblings may
  * glue (`I` + `Arctan` → `IArctan`, as in the regex) or take a `_` separator.
@@ -3354,12 +3431,26 @@ function matchHoleRegexTreeToken(nodes, token) {
   return ends.some((e) => e.pos <= s.length && /^_*$/.test(s.slice(e.pos)));
 }
 
-export function consistent(token, regex, depth) {
-  const src = String(regex || "");
-  if (!src) return false;
-  const d = Math.max(0, Number(depth) || 0);
+/**
+ * Strip `'`, turn `.` into `/`, append `pad` trailing `_`, then test a full match.
+ * `pad` is the language's maximum trailing-`_` run (`holeRegexTrailingPad`).
+ * Omit `pad` to use the number stored on `{ regex, pad }` or computed once for the source.
+ * A larger pad still matches; a smaller pad drops witness stems.
+ * @param {string} token
+ * @param {string|{ regex?: string, expr?: string, pad?: number }} regex
+ * @param {number} [pad]
+ * @returns {boolean}
+ */
+export function consistent(token, regex, pad) {
+  const boxed = regex && typeof regex === "object";
+  const src0 = boxed ? String(regex.regex || regex.expr || "") : String(regex || "");
+  if (!src0) return false;
+  // `(And…)` → `(_|And…)` before the tree match. `'` drops; `.` → `/` (so `.eq.` is `/eq/`).
+  const src = expandSimplifiedHoleOpts(src0);
+  const stored = boxed && Number.isFinite(Number(regex.pad)) ? Number(regex.pad) : null;
+  const d = pad == null ? (stored != null ? stored : holeRegexTrailingPad(src0)) : Math.max(0, Number(pad) || 0);
   const t =
-    normalizeHouseEqTokenToRegex(String(token || "").replace(/'/g, ""), src) +
+    normalizeHouseEqTokenToRegex(String(token || "").replace(/'/g, "").replace(/\./g, "/"), src) +
     "_".repeat(d);
   const tree = parseHoleRegexTree(src);
   if (tree.length) {
@@ -3377,19 +3468,12 @@ export function consistent(token, regex, depth) {
 }
 
 /**
- * Max trailing `_` fills (legacy Bound / CLI). Prefer `holeRegexLastNodeDepth` + `consistent`.
- * Kept for callers that still quote a numeric budget; soft-cap 8 by hole-slot count.
+ * Maximum trailing `_` run of the hole-regex language (`holeRegexTrailingPad`).
+ * @param {string|{ regex?: string, pad?: number }} reSource
+ * @returns {number}
  */
 export function maxTrailingUnderscoreFills(reSource) {
-  const depth = holeRegexLastNodeDepth(reSource);
-  if (depth > 0) return depth;
-  const src = String(reSource || "");
-  if (!src) return 0;
-  const omitOr = (src.match(/\(_\|/g) || []).length;
-  const bareHole = (src.match(/\(_\)/g) || []).length;
-  const slots = omitOr + bareHole;
-  if (slots <= 0) return 1;
-  return Math.min(8, slots);
+  return holeRegexTrailingPad(reSource);
 }
 
 /**
@@ -3404,15 +3488,18 @@ export function normalizeHoleMatchStem(stem) {
 
 /**
  * Test a candidate imply/of stem against a hole-regex (Body / Cosmos).
- * Routes through `consistent(token, regex, holeRegexLastNodeDepth(regex))` — trailing-`_`
- * completion uses last-node depth + regex `_*`, not an open-ended append heuristic.
+ * Appends the stored trailing-run pad, not `holeRegexLastNodeDepth`.
+ * @param {string|{ regex?: string, expr?: string, pad?: number }} reSource
+ * @param {string} stem
+ * @returns {boolean}
  */
 export function matchImplyHoleRegex(reSource, stem) {
-  const src = String(reSource || "");
+  const boxed = reSource && typeof reSource === "object";
+  const src = boxed ? String(reSource.regex || reSource.expr || "") : String(reSource || "");
   if (!src) return false;
-  const depth = holeRegexLastNodeDepth(src);
+  const pad = boxed && Number.isFinite(Number(reSource.pad)) ? Number(reSource.pad) : holeRegexTrailingPad(src);
   // House `.eq.` → `/eq/` normalization lives in consistent().
-  return consistent(String(stem || ""), src, depth);
+  return consistent(String(stem || ""), src, pad);
 }
 
 /**
@@ -3713,6 +3800,435 @@ function decompQuantHoleRegex(node, opts) {
   return null;
 }
 
+/** `(M).updateCol i v` as a space-separated property application. */
+function updateColParts(node) {
+  const u = peelHoleExpr(node);
+  if (cls(u) !== "LeanArgsSpaceSeparated") return null;
+  const head = u.args?.[0];
+  if (cls(head) !== "LeanProperty") return null;
+  const prop = head.args?.[1];
+  if (cls(prop) !== "LeanToken" || prop.text !== "updateCol") return null;
+  return { matrix: head.args?.[0], index: u.args?.[1], col: u.args?.[2] };
+}
+
+function implyBinderSet(opts) {
+  return new Set(opts?.leaves || []);
+}
+
+/** Binders of `∃ r' > r` / `∃ p' : …` / `∀ k` are holes, not path atoms. */
+function noteQuantBinders(node, binders) {
+  const head = node?.args?.[0];
+  const c = cls(head);
+  if (c === "LeanToken" && head.text) binders.add(head.text);
+  if (c === "LeanColon" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text)
+    binders.add(head.args[0].text);
+  if ((c === "Lean_gt" || c === "Lean_lt" || c === "Lean_ge" || c === "Lean_le")
+      && cls(head.args?.[0]) === "LeanToken" && head.args[0].text)
+    binders.add(head.args[0].text);
+}
+
+/** Operand that contributes no operator: binder, numeral, or arithmetic of only those. */
+function isImplyHole(node, opts, binders) {
+  const u = peelHoleExpr(node);
+  if (!u) return true;
+  const c = cls(u);
+  if (c === "LeanToken") {
+    const t = u.text || "";
+    if (!t || t === "_") return true;
+    // Imply treats `1 + r'` as a hole (`SMul_`). A given keeps the digit as `(1)`.
+    if (/^-?\d+$/.test(t)) return !opts?.digitLiteral;
+    return binders.has(t) || isLeafName(t, binders) || isLeafName(t, opts?.leaves);
+  }
+  if (c === "LeanArgsSpaceSeparated") {
+    if (updateColParts(u)) return false;
+    return (u.args || []).every((a) => isImplyHole(a, opts, binders));
+  }
+  if (c === "LeanMul" && (u.subscript === "ᵥ" || String(u.operator || "").startsWith("ᵥ"))) return false;
+  if ((c === "LeanConj" || c === "LeanAdjoint" || c === "LeanTranspose" || c === "LeanInv")
+      && opts?.quantNames) {
+    const inner = peelHoleExpr(u.arg ?? u.args?.[0]);
+    if (cls(inner) === "LeanToken" && opts.quantNames.has(inner.text || "")) return true;
+  }
+  // `b @ᵒ l` stays `Dot__` even when both factors are holes, so `A + …` is `Add_(Dot__)`.
+  // `l' • b` stays `SMul__`, so the new column `a + l' • b` is `Add_(SMul__)`.
+  if (c === "LeanMatMul" || c === "Lean_bullet") return false;
+  if (c === "LeanAdd" || c === "LeanSub" || c === "LeanMul" || c === "LeanDiv"
+      || c === "Lean_lt" || c === "Lean_gt" || c === "Lean_le" || c === "Lean_ge") {
+    const args = u.args || [];
+    return args.length > 0 && args.every((a) => isImplyHole(a, opts, binders));
+  }
+  return false;
+}
+
+/** `x ≠ 0 → P` on a quantifier binder is a guard. The regex keeps P. */
+function peelQuantRelGuard(node, quantNames) {
+  let n = peelHoleExpr(node);
+  const names = quantNames || new Set();
+  while (n && (cls(n) === "Lean_rightarrow" || cls(n) === "LeanRightarrow")) {
+    const ant = peelHoleExpr(n.args?.[0]);
+    const rel = cls(ant);
+    if (!["Lean_ne", "LeanNe", "Lean_lt", "Lean_gt", "Lean_le", "Lean_ge", "LeanEq"].includes(rel)) break;
+    const sides = ant.args || [];
+    const quantSide = (s) => {
+      const u = peelHoleExpr(s);
+      if (cls(u) === "LeanConj" || cls(u) === "LeanAdjoint" || cls(u) === "LeanInv" || cls(u) === "LeanTranspose") {
+        const inner = peelHoleExpr(u.arg ?? u.args?.[0]);
+        return cls(inner) === "LeanToken" && names.has(inner.text || "");
+      }
+      return cls(u) === "LeanToken" && names.has(u.text || "");
+    };
+    const digitSide = (s) => {
+      const u = peelHoleExpr(s);
+      return cls(u) === "LeanToken" && /^-?\d+$/.test(u.text || "");
+    };
+    if (!((quantSide(sides[0]) && digitSide(sides[1])) || (quantSide(sides[1]) && digitSide(sides[0])))) break;
+    n = peelHoleExpr(n.args?.[1]);
+  }
+  return n;
+}
+
+/** Signature matrix token (`A`), not the quantifier's vector. */
+function isFreeMatrixAtom(node, opts) {
+  const u = peelHoleExpr(node);
+  if (cls(u) !== "LeanToken") return false;
+  const t = u.text || "";
+  if (!t || t === "_" || /^-?\d+$/.test(t)) return false;
+  return !(opts?.quantNames?.has(t));
+}
+
+/**
+ * ∃ (P ∧ Q) whose hole-regex froze to `Any_(_|And_Eq…)`.
+ * Binary `And(left)(right)`, `•` is `SMul`, `ᵥ*` is `VecMul`, `.updateCol` stays.
+ * A hole factor is `_` on its operator (`SMul_`, `Add_`, `Eq(lhs)_`), not a glued `Add1`.
+ * Optional groups are stored as `(Fill)`; `consistent` restores `(_|Fill)`.
+ * @returns {string|null}
+ */
+function decompImplyStruct(node, opts, binders) {
+  if (!binders) binders = implyBinderSet(opts);
+  const u = peelHoleExpr(node);
+  if (!u) return null;
+  const c = cls(u);
+  const opt = (frag) => (frag == null || frag === "" ? "_" : "(" + frag + ")");
+  if (c === "Lean_exists" || c === "Lean_forall") {
+    noteQuantBinders(u, binders);
+    if (!opts.quantNames) opts.quantNames = new Set();
+    noteQuantBinders(u, opts.quantNames);
+    const tag = c === "Lean_exists" ? "Any" : "All";
+    let body = u.scope ?? u.args?.[u.args.length - 1];
+    if (c === "Lean_forall") body = peelGuardForalls(body);
+    if (c === "Lean_forall") body = peelQuantRelGuard(body, opts.quantNames);
+    if (c === "Lean_forall" && isImplyHole(body, opts, binders)) return "All__";
+    const inner = decompImplyStruct(body, opts, binders);
+    if (!inner) return null;
+    if (inner === tag || inner.startsWith(tag + "_")) return inner;
+    return tag + "_" + opt(inner);
+  }
+  if (c === "Lean_land") {
+    const L = decompImplyStruct(u.lhs ?? u.args?.[0], opts, binders);
+    const R = decompImplyStruct(u.rhs ?? u.args?.[1], opts, binders);
+    if (!L || !R) return null;
+    return "And" + opt(L) + opt(R);
+  }
+  if (c === "LeanEq") {
+    const lhs = u.lhs ?? u.args?.[0];
+    const rhs = u.rhs ?? u.args?.[1];
+    const L = decompImplyStruct(lhs, opts, binders);
+    if (!L) return null;
+    if (isImplyHole(rhs, opts, binders)) return "Eq" + opt(L) + "_";
+    const R = decompImplyStruct(rhs, opts, binders);
+    if (!R) return null;
+    return "Eq" + opt(L) + opt(R);
+  }
+  if (c === "Lean_bullet") {
+    const lhs = u.lhs ?? u.args?.[0];
+    const rhs = u.rhs ?? u.args?.[1];
+    const lHole = isImplyHole(lhs, opts, binders);
+    const rHole = isImplyHole(rhs, opts, binders);
+    if (lHole && rHole) return "SMul__";
+    if (lHole) {
+      const R = decompImplyStruct(rhs, opts, binders);
+      return R ? "SMul_" + opt(R) : null;
+    }
+    if (rHole) {
+      const L = decompImplyStruct(lhs, opts, binders);
+      return L ? "SMul" + opt(L) : null;
+    }
+    const L = decompImplyStruct(lhs, opts, binders);
+    const R = decompImplyStruct(rhs, opts, binders);
+    if (!L || !R) return null;
+    return "SMul" + opt(L) + opt(R);
+  }
+  if (c === "Lean_cdotp") {
+    const lhs = u.lhs ?? u.args?.[0];
+    const rhs = u.rhs ?? u.args?.[1];
+    const lHole = isImplyHole(lhs, opts, binders);
+    const rHole = isImplyHole(rhs, opts, binders);
+    if (lHole && rHole) return "Dot__";
+    if (lHole) {
+      const R = decompImplyStruct(rhs, opts, binders);
+      return R ? "Dot_" + opt(R) : null;
+    }
+    if (rHole) {
+      const L = decompImplyStruct(lhs, opts, binders);
+      return L ? "Dot" + opt(L) : null;
+    }
+    const L = decompImplyStruct(lhs, opts, binders);
+    const R = decompImplyStruct(rhs, opts, binders);
+    if (!L || !R) return null;
+    return "Dot" + opt(L) + opt(R);
+  }
+  if (c === "Lean_fun") {
+    let body = u.args?.length > 1 ? u.args[u.args.length - 1] : (u.arg ?? u.args?.[0]);
+    body = peelHoleExpr(body);
+    if (cls(body) === "LeanRightarrow" || cls(body) === "Lean_mapsto") {
+      const b = body.args?.[0];
+      if (cls(b) === "LeanToken" && b.text && b.text !== "_") binders.add(b.text);
+      body = peelHoleExpr(body.args?.[1]);
+    } else if (cls(u.args?.[0]) === "LeanToken" && u.args[0].text && u.args[0].text !== "_") {
+      binders.add(u.args[0].text);
+    }
+    const app = peelHoleExpr(body);
+    if (cls(app) !== "LeanArgsSpaceSeparated") return null;
+    const args = app.args || [];
+    if (args.length < 2) return null;
+    let s = "Ext";
+    for (const a of args) {
+      if (isImplyHole(a, opts, binders)) s += "_";
+      else {
+        const d = decompImplyStruct(a, opts, binders);
+        if (!d) return null;
+        s += opt(d);
+      }
+    }
+    return s;
+  }
+  if (c === "Lean_lt" || c === "Lean_gt" || c === "Lean_le" || c === "Lean_ge") {
+    const tag = CLASS_TOKEN[c];
+    const lhs = u.lhs ?? u.args?.[0];
+    const rhs = u.rhs ?? u.args?.[1];
+    const lHole = isImplyHole(lhs, opts, binders);
+    const rHole = isImplyHole(rhs, opts, binders);
+    if (lHole && rHole) return tag + "__";
+    if (lHole) {
+      const R = decompImplyStruct(rhs, opts, binders);
+      return R ? tag + "_" + opt(R) : null;
+    }
+    if (rHole) {
+      const L = decompImplyStruct(lhs, opts, binders);
+      // `0 < _` keeps the right-hand hole, same as `Add(1)_`.
+      return L ? tag + opt(L) + "_" : null;
+    }
+    const L = decompImplyStruct(lhs, opts, binders);
+    const R = decompImplyStruct(rhs, opts, binders);
+    if (!L || !R) return null;
+    return tag + opt(L) + opt(R);
+  }
+  if (c === "LeanMul" && (u.subscript === "ᵥ" || String(u.operator || "").startsWith("ᵥ"))) {
+    const lhs = u.lhs ?? u.args?.[0];
+    const rhs = u.rhs ?? u.args?.[1];
+    // `A *ᵥ x`: the matrix is the left factor, so the token is `MulVec`, not hole-hole `MulVec__`.
+    if (!u.isLeftSubscript) {
+      const rHole = isImplyHole(rhs, opts, binders);
+      if (rHole && isFreeMatrixAtom(lhs, opts)) return "MulVec";
+      if (rHole && isImplyHole(lhs, opts, binders)) return "MulVec__";
+    }
+    if (!isImplyHole(lhs, opts, binders)) return null;
+    const R = decompImplyStruct(rhs, opts, binders);
+    return R ? "VecMul_" + opt(R) : null;
+  }
+  const uc = updateColParts(u);
+  if (uc) {
+    const M = decompImplyStruct(uc.matrix, opts, binders);
+    if (!M) return null;
+    // Index `i` is the hole between the old matrix and the new column.
+    // `(a + l' • b)` is `Add_(SMul__)`, not the second `_` of `__`.
+    const indexHole = isImplyHole(uc.index, opts, binders);
+    const colHole = isImplyHole(uc.col, opts, binders);
+    let s = "UpdateCol" + opt(M);
+    if (indexHole) s += "_";
+    else {
+      const I = decompImplyStruct(uc.index, opts, binders);
+      if (!I) return null;
+      s += opt(I);
+    }
+    if (colHole) s += "_";
+    else {
+      const C = decompImplyStruct(uc.col, opts, binders);
+      if (!C) return null;
+      s += opt(C);
+    }
+    return s;
+  }
+  if (c === "LeanMatMul") {
+    const lhs = u.lhs ?? u.args?.[0];
+    const rhs = u.rhs ?? u.args?.[1];
+    const lHole = isImplyHole(lhs, opts, binders);
+    const rHole = isImplyHole(rhs, opts, binders);
+    if (lHole && rHole) return "Dot__";
+    if (lHole) {
+      const R = decompImplyStruct(rhs, opts, binders);
+      return R ? "Dot_" + opt(R) : null;
+    }
+    if (rHole) {
+      const L = decompImplyStruct(lhs, opts, binders);
+      return L ? "Dot" + opt(L) : null;
+    }
+    const L = decompImplyStruct(lhs, opts, binders);
+    const R = decompImplyStruct(rhs, opts, binders);
+    if (!L || !R) return null;
+    return "Dot" + opt(L) + opt(R);
+  }
+  if (c === "LeanAdd" || c === "LeanSub") {
+    const tag = c === "LeanAdd" ? "Add" : "Sub";
+    const lhs = u.lhs ?? u.args?.[0];
+    const rhs = u.rhs ?? u.args?.[1];
+    const lHole = isImplyHole(lhs, opts, binders);
+    const rHole = isImplyHole(rhs, opts, binders);
+    if (lHole && rHole) return null;
+    if (lHole) {
+      const R = decompImplyStruct(rhs, opts, binders);
+      return R ? tag + "_" + opt(R) : null;
+    }
+    if (rHole) {
+      const L = decompImplyStruct(lhs, opts, binders);
+      return L ? tag + opt(L) + "_" : null;
+    }
+    const L = decompImplyStruct(lhs, opts, binders);
+    const R = decompImplyStruct(rhs, opts, binders);
+    if (!L || !R) return null;
+    return tag + opt(L) + opt(R);
+  }
+  if (c === "LeanToken") {
+    const t = u.text || "";
+    if (opts?.digitLiteral && /^-?\d+$/.test(t)) return t;
+    return null;
+  }
+  return null;
+}
+
+const ITE_BINARY = {
+  Lean_lt: "Lt", Lean_gt: "Gt", Lean_le: "Le", Lean_ge: "Ge",
+  LeanEq: "Eq", Lean_ne: "Ne", LeanNe: "Ne",
+  LeanDiv: "Div", LeanMul: "Mul", LeanAdd: "Add", LeanSub: "Sub", LeanPow: "Pow",
+  Lean_land: "And", Lean_lor: "Or", Lean_leftrightarrow: "Iff",
+  Lean_cdotp: "Dot", LeanMatMul: "Dot",
+};
+const ITE_UNARY = {
+  LeanNeg: "Neg", LeanInv: "Inv", Lean_lnot: "Not", Lean_sqrt: "Sqrt",
+  LeanNorm: "Norm", LeanAbs: "Abs", LeanConj: "Conj",
+};
+
+function containsIte(node) {
+  const u = peelHoleExpr(node);
+  if (!u) return false;
+  if (cls(u) === "LeanIte") return true;
+  return (u.args || []).some((a) => containsIte(a));
+}
+
+/** Operand of an `Ite` head operator: binder algebra is a hole; a nested `if` is not. */
+function isIteOperandHole(node) {
+  const u = peelHoleExpr(node);
+  if (!u) return true;
+  if (cls(u) === "LeanIte") return false;
+  return !containsIte(u);
+}
+
+function isSqrtProp(node) {
+  const u = peelHoleExpr(node);
+  if (cls(u) !== "LeanProperty") return false;
+  const rhs = u.rhs ?? u.args?.[1];
+  return cls(rhs) === "LeanToken" && (rhs.text || "") === "sqrt";
+}
+
+/**
+ * `if c then a else b` → `Ite(c)(a)(b)`.
+ * `if h : P then …` keeps P (colon arg 1) and skips the proof binder.
+ * A numeric else is bare (`0`), not `(0)`. No `_` between `Ite` and `(`.
+ * @returns {string|null}
+ */
+function iteBranchToken(node, opts) {
+  const u = peelHoleExpr(node);
+  if (!u) return "_";
+  if (cls(u) === "LeanIte") return iteHoleRegex(u, opts);
+  if (cls(u) === "LeanToken" && /^-?\d+$/.test(u.text || "")) return u.text;
+  if (isSqrtProp(u)) {
+    const arg = u.lhs ?? u.args?.[0];
+    return "Sqrt" + (isIteOperandHole(arg, opts) ? "_" : "(" + iteBranchToken(arg, opts) + ")");
+  }
+  const bin = ITE_BINARY[cls(u)];
+  if (bin) {
+    const a = u.args || [];
+    const L = isIteOperandHole(a[0], opts) ? "_" : "(" + iteBranchToken(a[0], opts) + ")";
+    const R = isIteOperandHole(a[1], opts) ? "_" : "(" + iteBranchToken(a[1], opts) + ")";
+    return bin + L + R;
+  }
+  const un = ITE_UNARY[cls(u)];
+  if (un) {
+    const arg = u.arg ?? u.args?.[0];
+    return un + (isIteOperandHole(arg, opts) ? "_" : "(" + iteBranchToken(arg, opts) + ")");
+  }
+  return "_";
+}
+
+/**
+ * `All_(_|Eq_(_|Ite(Lt__)…))` stores as `All_(Eq_(Ite(Lt__)…))`.
+ * `expandSimplifiedHoleOpts` then rewrites every `(` under that head, so each
+ * `Ite` argument is an optional hole. Heads the expander does not rewrite stay.
+ * @param {string|null} raw
+ * @returns {string|null}
+ */
+function simplifyIteHoleRegex(raw) {
+  const s = String(raw || "");
+  if (!s.includes("Ite(") || !s.includes("(_|")) return raw;
+  const simplified = s.replace(/\(_\|/g, "(");
+  if (simplified.includes("(_|")) return raw;
+  if (!/^(?:(?:Any|All)_|IsIrreducible|Lt|Eq)\(/.test(simplified)) return raw;
+  return simplified;
+}
+
+/**
+ * `∀ k, 0 < p k` is stored as `All_(Lt(0)_)`.
+ * `holeRegexCombineRel` writes `Lt(_|0)` and drops the right-hand hole; keep that `_`.
+ * `All_(_|Lt(_|0)_)` stores as `All_(Lt(0)_)`. The mirror is `All_(Gt_(0))`, not the atom `Gt_0`.
+ * @param {string|null} raw
+ * @returns {string|null}
+ */
+function simplifyQuantRelDigit(raw) {
+  let s = String(raw || "");
+  // `All_(_|Lt(_|0))` drops the right-hand hole. It sits inside the group: `All_(_|Lt(_|0)_)`.
+  if (/^(?:Any|All)_\(_\|(?:Lt|Gt|Le|Ge)\(_\|-?\d+\)\)$/.test(s)) s = s.slice(0, -1) + "_)";
+  if (!/^(?:Any|All)_\(_\|(?:Lt|Gt|Le|Ge)\(_\|-?\d+\)_\)$/.test(s)) return raw;
+  return s.replace(/\(_\|/g, "(");
+}
+
+/** `All_(Lt(0)_)` mirrors to `All_(Gt_(0))`: hole on the left, digit on the right. */
+function quantRelDigitMirror(stored) {
+  const m = /^(Any|All)_\((Lt|Gt|Le|Ge)\((-?\d+)\)_\)$/.exec(String(stored || ""));
+  if (!m) return "";
+  const mirror = { Lt: "Gt", Gt: "Lt", Le: "Ge", Ge: "Le" }[m[2]];
+  return mirror ? m[1] + "_(" + mirror + "_(" + m[3] + "))" : "";
+}
+
+function iteHoleRegex(node, opts) {
+  const args = node.args || [];
+  let cond, th, el;
+  if (cls(args[0]) === "LeanColon") {
+    cond = args[0].args?.[1];
+    th = args[1];
+    el = args[2];
+  } else {
+    cond = args[0];
+    th = args[1];
+    el = args[2];
+  }
+  const grp = (arm, role) => {
+    const frag = iteBranchToken(arm, opts);
+    if (role === "else" && /^-?\d+$/.test(frag)) return frag;
+    return "(" + frag + ")";
+  };
+  return "Ite" + grp(cond, "cond") + grp(th, "then") + grp(el, "else");
+}
+
 /**
  * Recursive hole-regex fragment for one expression node.
  * null / empty = hole contribution (parent inserts _).
@@ -3731,6 +4247,8 @@ function holeRegexExpr(node, opts) {
     isLeaf: (t) => isLeafName(t, opts.leaves),
     peelGuards: peelGuardsDeep,
     frozen: (n) => {
+      // Ternary if: Ite(cond)(ifBranch)(elseBranch), not the condition alone.
+      if (cls(n) === "LeanIte") return iteHoleRegex(n, opts);
       // GetElem: nest Get_(_|Add_(_|1)) via getElemHoleRegexFrag (not bare Add_1 freeze).
       if (cls(n) === "LeanGetElem") {
         const ge = getElemHoleRegexFrag(n, opts);
@@ -3759,6 +4277,33 @@ function holeRegexExpr(node, opts) {
     const cd = contDiffAppHoleRegex(u, opts);
     if (cd != null) return cd;
   }
+  // `∀ x, x ≠ 0 → 0 < ~x ⬝ᵥ A *ᵥ x` → `All_(Lt(0)(Dot_(MulVec)))`. The guard stays out.
+  if (cls(u) === "Lean_forall" && opts?.asGiven) {
+    const dec = decompImplyStruct(u, { ...opts, digitLiteral: true });
+    if (dec && dec.includes("Dot_") && dec.includes("MulVec") && dec.includes("(") && !dec.includes("(_|"))
+      return dec;
+  }
+  // `(1 + r) • (p ᵥ* M) = p`: digit stays `(1)`. Stored without `_|`; `consistent` expands `(`.
+  if (cls(u) === "LeanEq" && opts?.asGiven) {
+    const dec = decompImplyStruct(u, { ...opts, digitLiteral: true });
+    if (dec && dec.includes("(") && !dec.includes("(_|")) return dec;
+  }
+  // `p ⬝ᵥ … < p ⬝ᵥ …`: grouped Dot / Add / SMul / ternary Ext, stored without `_|`.
+  if (cls(u) === "Lean_lt" || cls(u) === "Lean_gt" || cls(u) === "Lean_le" || cls(u) === "Lean_ge") {
+    const dec = decompImplyStruct(u, opts);
+    if (dec && dec.includes("(")) return dec;
+  }
+  // `.IsIrreducible` of `.updateCol`: same groups as the imply, stored without `_|`.
+  // `expandSimplifiedHoleOpts` restores `(_|…)` for this head.
+  if (cls(u) === "LeanProperty") {
+    const propNode = u.rhs ?? u.args?.[1];
+    const rawProp = cls(propNode) === "LeanToken" ? (propNode.text || "") : "";
+    const propTok = rawProp ? nameToken(rawProp) : "";
+    if (propTok && !HOLE_RE_TRIG_FN.test(rawProp)) {
+      const dec = decompImplyStruct(u.lhs ?? u.args?.[0], opts);
+      if (dec && dec.startsWith("UpdateCol")) return propTok + "(" + dec + ")";
+    }
+  }
   if (typeof u.holeRegex === "function") {
     const raw = binaryHoleDeriv(u.holeRegex(holeOpts));
     // `let` + newline freezes ∀/∃ of an equality into one `All_Eq…` atom.
@@ -3767,7 +4312,14 @@ function holeRegexExpr(node, opts) {
       const dec = decompQuantHoleRegex(u, opts);
       if (dec) return dec;
     }
-    return raw;
+    // ∃ (P ∧ eq) froze to Any_(_|And_EqAdd1). Keep • / ᵥ* / updateCol as their own groups.
+    if (/^Any_\(_\|And_[A-Za-z0-9_]+\)$/.test(String(raw || ""))) {
+      const dec = decompImplyStruct(u, opts);
+      if (dec) return dec;
+    }
+    // `Ite(Lt__)(Div__)` and `∀ k, 0 < p k` are stored as groups.
+    // `(_|` is only `consistent`'s expansion of `(`.
+    return simplifyQuantRelDigit(simplifyIteHoleRegex(raw));
   }
   return holeOpts.frozen(u);
 }
@@ -4020,6 +4572,8 @@ export function holeRegexAlternatives(typeNode, opts = {}) {
   const primary = implyHoleRegexFromAst(typeNode, opts);
   const out = [];
   if (primary) out.push(primary);
+  const relMirror = quantRelDigitMirror(primary);
+  if (relMirror && !out.includes(relMirror)) out.push(relMirror);
   const plural = pluralMulSHoleRegex(typeNode, opts);
   if (plural && plural !== primary) out.push(plural);
   const eqMulS = eqEqualMulSHoleRegex(typeNode, opts);
@@ -4035,9 +4589,15 @@ export function holeRegexAlternatives(typeNode, opts = {}) {
   const named = nameExpr(typeNode, opts);
   // A decomposed `All_(Eq(…)(…))` already spells the equality. Do not also publish
   // the glued `All_Eq…` atom. Fused givens whose primary is still `All_(_|Eq…)` stay.
-  const primaryDecomp = out.some((r) => /(?:Any|All)_\(_\|Eq/.test(String(r)) || String(r).includes("All_(Eq(") || String(r).includes("Any_(Eq("));
+  const primaryDecomp = out.some((r) => /(?:Any|All)_\(_\|Eq/.test(String(r)) || String(r).includes("All_(Eq(") || String(r).includes("Any_(Eq(") || String(r).includes("And(_|") || /(?:Any|All)_\(And\(/.test(String(r)) || String(r).includes("Ite("));
+  // `x ≠ 0 → …` is a guard. Once the body is grouped, the glued `All_Imp…` atom is not a regex.
+  const guardGlued = /Imp/.test(String(named || "")) && out.some((r) => /(?:Any|All)_\(/.test(String(r)));
+  // `All_Gt_0` is the fill of `All_(Gt_(0))`, not a second regex.
+  const admitted = out.some((re) => String(re).includes("(") && matchImplyHoleRegex(re, named));
   if (named && !named.includes("/") && !hasQuantEqSlash(named) && /^(?:Any|All)_/.test(named) && !out.includes(named)
-      && !(primaryDecomp && !named.includes("(")))
+      && !(primaryDecomp && !named.includes("("))
+      && !guardGlued
+      && !admitted)
     out.push(named);
   return out.length ? out : ["_"];
 }
@@ -7668,12 +8228,14 @@ if (name === "LeanToken") {
   if (name === "LeanDoubleAngleQuotation") {
     return "";
   }
-  // if h : P then A else B (dite): skip the proof binder/condition -- only then/else are path-relevant.
+  // if h : P then A else B: skip the proof binder. The condition (colon arg 1) stays.
   if (name === "LeanIte") {
     const args = node.args || [];
-    const start = cls(args[0]) === "LeanColon" ? 1 : 0;
-    for (let i = start; i < args.length; i++) {
-      const n = nameExpr(args[i], opts);
+    const parts = cls(args[0]) === "LeanColon"
+      ? [args[0].args?.[1], args[1], args[2]]
+      : [args[0], args[1], args[2]];
+    for (const p of parts) {
+      const n = nameExpr(p, opts);
       if (n) return n;
     }
     return "";
@@ -8581,9 +9143,11 @@ if (name === "Lean_partial" || name === "LeanPartial") {
   if (name === "LeanDoubleAngleQuotation") return [];
   if (name === "LeanIte") {
     const args = node.args || [];
-    const start = cls(args[0]) === "LeanColon" ? 1 : 0;
-    for (let i = start; i < args.length; i++) {
-      const alts = nameExprAlts(args[i], opts);
+    const parts = cls(args[0]) === "LeanColon"
+      ? [args[0].args?.[1], args[1], args[2]]
+      : [args[0], args[1], args[2]];
+    for (const p of parts) {
+      const alts = nameExprAlts(p, opts);
       if (alts.length) return alts;
     }
     return [];
@@ -8616,7 +9180,7 @@ if (name === "Lean_partial" || name === "LeanPartial") {
 function classChain(node, out = []) {
   if (!node || typeof node !== "object") return out;
   const name = cls(node);
-  if (CLASS_TOKEN[name] || name === "LeanEq" || name === "LeanConstruct" || name === "LeanProperty" || name === "LeanDistributed") out.push(name);
+  if (CLASS_TOKEN[name] || name === "LeanEq" || name === "Lean_bullet" || name === "LeanConstruct" || name === "LeanProperty" || name === "LeanDistributed") out.push(name);
   else if (name === "LeanToken" && node.text && /^[A-Z]/.test(node.text)) out.push("Token:" + node.text);
   if (name === "Lean_exists" || name === "Lean_forall") { classChain(node.args?.[node.args.length - 1], out); return out; }
   if (name === "LeanEq" || name === "Lean_lt" || name === "LeanSub") {
@@ -9723,7 +10287,10 @@ export function suggest(filePath, lemmaName, options = {}) {
     for (let i = 0; i < diskOfStems.length && i < givenRegexListsEarly.length; i++) {
       const stem = diskOfStems[i];
       if (!stem || stem.includes("/") || hasQuantEqSlash(stem) || !/^(?:Any|All)_/.test(stem)) continue;
-      if (!givenRegexListsEarly[i].includes(stem)) givenRegexListsEarly[i].push(stem);
+      if (givenRegexListsEarly[i].includes(stem)) continue;
+      // A grouped regex that already admits the stem is the regex. The bare atom is not.
+      if (stemMatchesAnyHoleRegex(stem, givenRegexListsEarly[i])) continue;
+      givenRegexListsEarly[i].push(stem);
     }
   }
   const givenOptionalFlags = givenAltLists.map((g) => !!g.optional);
@@ -9811,7 +10378,13 @@ export function suggest(filePath, lemmaName, options = {}) {
   // Membership without enumerating: section / imply alt / given alts in order (+ ≤3 instance hyps).
   const altSet = (alts) => new Set(alts.map((a) => sanitizeRelPath(a)));
   const implySet = altSet(implyExtraAlts.length ? [...implyAlts, ...implyExtraAlts] : implyAlts);
-  const gSets = givenAltLists.map((g) => { const s = g.alts.length ? altSet(g.extraAlts?.length ? [...g.alts, ...g.extraAlts] : g.alts) : new Set(["Given"]); if (g.optional) s.__optional = true; return s; });
+  // Probe the stems suggest actually emits (hole-regex language), not only nameExpr atoms.
+  const gSets = givenAltListsEmit.map((g) => {
+    const xs = [...(g.alts || []), ...(g.extraAlts || [])];
+    const s = xs.length ? altSet(xs) : new Set(["Given"]);
+    if (g.optional) s.__optional = true;
+    return s;
+  });
   const iSets = useInstTail
     ? instAltLists.map((g) => (g.alts.length ? altSet(g.alts) : new Set(["Given"])))
     : null;
@@ -9838,7 +10411,9 @@ export function suggest(filePath, lemmaName, options = {}) {
     if (casts && !bad) altSections.add("Real");
   }
   function altMatch(p) {
-    const cur = String(p).replace(/\\/g, "/").replace(/^Lemma\//, "").replace(/\.lean$/, "");
+    let cur = String(p).replace(/\\/g, "/").replace(/^Lemma\//, "").replace(/\.lean$/, "");
+    // Module spelling `Matrix.Eq_Mul….of.All_…` is the same path as slashes.
+    if (!cur.includes("/") && cur.includes(".")) cur = cur.replace(/\./g, "/");
     if (/anonymous/i.test(cur)) return false;
     if (hasQuantEqSlash(cur)) return false;
     const curSec = cur.split("/")[0];
@@ -9974,9 +10549,11 @@ export function suggest(filePath, lemmaName, options = {}) {
   const pathOrderHyps = pathOrderHypsEarly;
   // Body t341/t345/t347: token[] = stems that match this entry's regex (invariant).
   const uniqTokens = (xs) => [...new Set((xs || []).filter(Boolean).map((x) => String(x)))];
-  const tokensMatching = (reSource, candidates) => {
+  const tokensMatching = (reSource, candidates, pad) => {
     if (!reSource) return [];
-    return uniqTokens(candidates).filter((t) => matchImplyHoleRegex(reSource, t));
+    const src = typeof reSource === "object" ? String(reSource.regex || reSource.expr || "") : String(reSource);
+    const p = pad == null ? holeRegexTrailingPad(reSource) : pad;
+    return uniqTokens(candidates).filter((t) => consistent(t, src, p));
   };
   const implyAltStems = uniqTokens(implyAlts).map((a) => sanitizeRelPath(String(a)));
   const implyHoleStems = uniqTokens([
@@ -9995,14 +10572,16 @@ export function suggest(filePath, lemmaName, options = {}) {
   ]);
   // Body t347/t354: one imply entry per hole-regex alternative (primary + optional MulS).
   const implyOut = implyRegexAlts.map((re) => {
-    let toks = tokensMatching(re || "_", implyCandidates);
+    const src = re || "_";
+    const pad = holeRegexTrailingPad(src);
+    let toks = tokensMatching(src, implyCandidates, pad);
     // Body t347: surface Eq_Mul_SqrtDiv when this alt admits it.
-    if (re && matchImplyHoleRegex(re, "Eq_Mul_SqrtDiv")) {
+    if (re && matchImplyHoleRegex({ regex: src, pad }, "Eq_Mul_SqrtDiv")) {
       toks = uniqTokens(["Eq_Mul_SqrtDiv", ...toks]);
     }
-    return { token: toks, regex: re || "_" };
+    return { token: toks, regex: src, pad };
   });
-  if (!implyOut.length) implyOut.push({ token: [], regex: implyHoleRegex || "_" });
+  if (!implyOut.length) implyOut.push({ token: [], regex: implyHoleRegex || "_", pad: holeRegexTrailingPad(implyHoleRegex || "_") });
   // Body t356: givens = list-of-lists (outer = path-order given; inner = regex alternatives).
   const givensOut = pathOrderHyps.map((h, i) => {
     const gList = (canonGivenLists[i] || givenAltLists[i] || {});
@@ -10024,10 +10603,15 @@ export function suggest(filePath, lemmaName, options = {}) {
       ...(gList.extraAlts || []),
     ]);
     // Invariant: every token matches its own alternative's regex.
-    return regexes.map((re) => ({
-      token: tokensMatching(re || "_", alts),
-      regex: re || "_",
-    }));
+    return regexes.map((re) => {
+      const src = re || "_";
+      const pad = holeRegexTrailingPad(src);
+      return {
+        token: tokensMatching(src, alts, pad),
+        regex: src,
+        pad,
+      };
+    });
   });
   const result = {
     // Body t340/t341 primary shape
@@ -10043,6 +10627,7 @@ export function suggest(filePath, lemmaName, options = {}) {
     sectionScore: picked.score,
     sectionTokens: picked.tokens,
     implyHoleRegex,
+    implyHolePad: holeRegexTrailingPad(implyHoleRegex || ""),
     suggestionsHoleMatch,
     implyChain: implyChain,
 givensLeanOrder: hyps.map((h) => ({ binder: h.name, prop: h.prop, name: maxLogProbJointGiven(h.typeNode, logJointFns)?.name || bvarAllLt0ProbJointName(h.typeNode) || bvarAllEqLogProbCondName(h.typeNode) || neProbJoint0GivenName(h.typeNode) || allNeProb0GivenName(h.typeNode) || allDifferentiableGivenName(h.typeNode) || nameExpr(h.typeNode, { ...nameOpts, asGiven: true }) })),
@@ -10230,7 +10815,7 @@ function printHuman(r) {
     for (const it of r.imply) {
       const toks = Array.isArray(it.token) ? it.token : [it.token];
       console.log("  - token[" + toks.length + "]: " + toks.slice(0, 12).join(" | ") + (toks.length > 12 ? " ..." : ""));
-      console.log("    regex: " + (it.regex || ""));
+      console.log("    regex: " + (it.regex || "") + (it.pad != null ? "  pad " + it.pad : ""));
     }
   } else if (r.implyHoleRegex) {
     console.log("implyHoleRegex: " + r.implyHoleRegex);
@@ -10244,7 +10829,7 @@ function printHuman(r) {
     for (const g of r.givens) {
       const toks = Array.isArray(g.token) ? g.token : [g.token];
       console.log("  - token[" + toks.length + "]: " + toks.slice(0, 12).join(" | ") + (toks.length > 12 ? " ..." : ""));
-      console.log("    regex: " + (g.regex || ""));
+      console.log("    regex: " + (g.regex || "") + (g.pad != null ? "  pad " + g.pad : ""));
     }
   }
   if (r.implyChain) console.log("imply.chain: " + r.implyChain.join(" → "));

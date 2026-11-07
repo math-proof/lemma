@@ -1,6 +1,6 @@
 import Lemma.Real.GeExp_0
 import Instance.Data.Vector.Functions.Part2
-open Real Vector
+open Real Vector Exp
 
 
 @[path]

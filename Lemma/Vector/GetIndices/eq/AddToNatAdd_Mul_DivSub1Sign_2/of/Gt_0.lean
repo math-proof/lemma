@@ -33,7 +33,9 @@ private lemma main
       h_stop_le
       (Nat.succ_pos step)
       (by simpa [Slice.length, h_start_eq, h_stop_eq, LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt (step := step + 1) h_start_lt h_stop_le (Nat.succ_pos step), EqAdd_Mul_DivSub1Sign_2, Nat.min_eq_left, EqToNat] using i.isLt)
-    grind
+    convert h_val using 1
+    · rfl
+    · simp [mul_comm]
 
 
 -- created on 2026-08-07

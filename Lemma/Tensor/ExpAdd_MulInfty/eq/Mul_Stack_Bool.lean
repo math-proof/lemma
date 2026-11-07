@@ -15,7 +15,7 @@ import Lemma.Tensor.XEq.is.All_XEqGetS.of.GtLength_0
 import Lemma.Vector.GetExp.eq.ExpGet
 import Lemma.Vector.GetMul.eq.MulGet
 import Lemma.Vector.GetSub.eq.SubGetS
-open Hyperreal Tensor
+open Exp Hyperreal Tensor
 set_option maxHeartbeats 500000
 
 
@@ -169,4 +169,4 @@ private lemma main
 
 
 -- created on 2023-06-18
--- updated on 2026-08-28
+-- updated on 2026-11-07

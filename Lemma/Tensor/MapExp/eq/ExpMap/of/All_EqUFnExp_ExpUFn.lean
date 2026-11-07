@@ -1,7 +1,7 @@
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.DataExp.eq.ExpData
 import Lemma.Vector.MapExp.eq.ExpMap.of.All_EqUFnExp_ExpUFn
-open Tensor Vector
+open Exp Tensor Vector
 
 
 /--

@@ -9,7 +9,7 @@ import Lemma.Tensor.GetData.eq.GetDataGet.of.Lt
 import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
 import Lemma.Vector.Div.eq.Div_Replicate
 import Def.Data.Holor.Sum
-open Bool List Nat Tensor Vector
+open Bool List Nat Tensor Vector Exp
 
 
 @[path]
@@ -60,4 +60,4 @@ private lemma main
 
 
 -- created on 2025-10-11
--- updated on 2026-10-26
+-- updated on 2026-11-07

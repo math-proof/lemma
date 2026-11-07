@@ -2,9 +2,14 @@ import Structure.Fun
 import Structure.Data.List.Slice
 open Lean
 
-/-- Type sugar: `ℕ ⇀ ℝ` means `Fun ℕ ℝ` (same precedence as `→`).
-Semantic indexed-→ / function arrow (⇀, LaTeX \rightharpoonup). -/
-infixr:25 " ⇀ " => Fun
+/-- Type sugar: `ℕ ⇀ ℝ` means `Fun ℕ ℝ`, and `(k : ℕ) ⇀ α k` means `PiFun (fun k => α k)`. -/
+syntax:25 term:26 " ⇀ " term:25 : term
+
+macro_rules
+  | `($α ⇀ $β) => do
+      match α with
+      | `(($x:ident : $ι)) => `(PiFun (fun $x : $ι => $β))
+      | _ => `(Fun $α $β)
 
 namespace Fun
 

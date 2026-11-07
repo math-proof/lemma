@@ -1,5 +1,5 @@
 import Lemma.Vector.GetExp.eq.ExpGet
-open Vector
+open Exp Vector
 
 
 @[path, comm]

@@ -1,7 +1,7 @@
 import Instance.Data.Vector.Functions.Part2
 import Lemma.Vector.Sum.eq.Sum_Get
 import Lemma.Finset.Lt0Sum.of.All_Gt_0.Ne_Empty
-open Vector Finset
+open Exp Vector Finset
 
 
 @[path]
