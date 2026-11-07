@@ -2200,6 +2200,41 @@ function relSplitInline(name) {
   return REL_SPLIT_TAG[m[2]] + m[1] + "_" + m[3];
 }
 
+/**
+ * `LHS/eq/RHS` under a quantifier is one atom `EqLHS_RHS`.
+ * A walker that already prefixed `Any_`/`All_` onto the slash (`Any_LHS/eq/RHS`)
+ * folds back to `Any_EqLHS_RHS`. Dotted `.eq.` is the same house spelling.
+ * @returns {string} inline atom, or "" when `body` is not a slash equality
+ */
+function inlineSlashEq(body) {
+  const raw = String(body || "").split(".eq.").join("/eq/");
+  const m = /^([^/]+)\/eq\/([^/]+)$/.exec(raw);
+  if (!m) return "";
+  let left = m[1];
+  let prefix = "";
+  const q = /^(Any|All)_(.+)$/.exec(left);
+  if (q) {
+    prefix = q[1] + "_";
+    left = q[2];
+  }
+  if (!left || /^(?:Any|All)_/.test(left)) return "";
+  return prefix + "Eq" + left + "_" + m[2];
+}
+
+/** Imply or given stem `Any_LHS/eq/RHS` / `All_LHS/eq/RHS` (also `.eq.`). */
+function hasQuantEqSlash(p) {
+  const s = String(p || "").replace(/\\/g, "/").replace(/\.lean$/, "").split(".eq.").join("/eq/");
+  return /(?:^|\/)(?:Any|All)_[^/]+\/eq\//.test(s);
+}
+
+/** Prefix `All_`/`Any_` onto a body. Slash equality becomes `All_EqLHS_RHS`, never `All_LHS/eq/RHS`. */
+function quantWrapEqBody(tag, body) {
+  const inlined = inlineSlashEq(body);
+  if (inlined) return /^(?:Any|All)_/.test(inlined) ? inlined : tag + "_" + inlined;
+  if (hasQuantEqSlash(body)) return "";
+  return "";
+}
+
 /** `.updateCol` anywhere under this node (matrix in an equality). */
 function mentionsUpdateCol(node) {
   let found = false;
@@ -3264,8 +3299,9 @@ export function houseEqStemToPath(stem) {
  * @returns {boolean}
  */
 /**
- * Match token against hole-regex tree. Adjacent filled optional siblings require
- * a separating `_` (same rule as enumerateHoleRegexLanguage). Trailing `_` ok.
+ * Match token against hole-regex tree. Adjacent filled optional siblings may
+ * glue (`I` + `Arctan` → `IArctan`, as in the regex) or take a `_` separator.
+ * Trailing `_` ok.
  * @returns {boolean}
  */
 function matchHoleRegexTreeToken(nodes, token) {
@@ -3299,18 +3335,14 @@ function matchHoleRegexTreeToken(nodes, token) {
       if (s[pos] === "_") out.push({ pos: pos + 1, edgeFilledOpt: false });
       const tryAt = (start) => {
         for (const m of matchSeq(node.alts || [], start, false)) {
-          // Need sep before a following filled opt only if this fill does not
-          // already end in `_` (same rule as enumerateHoleRegexLanguage).
+          // A fill that already ends in `_` does not ask the next filled opt for a separator.
           const endsWithHole = m.pos > 0 && s[m.pos - 1] === "_";
           out.push({ pos: m.pos, edgeFilledOpt: !endsWithHole });
         }
       };
-      if (edgeFilledOpt) {
-        // Previous filled opt ended on a non-`_` atom — require `_` sep (no glue).
-        if (s[pos] === "_") tryAt(pos + 1);
-      } else {
-        tryAt(pos);
-      }
+      // Regex `(_|I)(_|Arctan…)` accepts `IArctan`. A `_` sep (`I_Arctan`) is also allowed.
+      tryAt(pos);
+      if (edgeFilledOpt && s[pos] === "_") tryAt(pos + 1);
       return out;
     }
     if (node.kind === "group") {
@@ -3394,8 +3426,9 @@ export function matchImplyHoleRegex(reSource, stem) {
 export function enumerateHoleRegexLanguage(reSource) {
   const parts = parseHoleRegexTree(reSource);
   /**
-   * Cartesian expand. Adjacent filled optional siblings get `_` between them
-   * (SinDiv…Pi + CosAdd… → Pi_Cos, not PiCos). Omit `_` does not invent extras.
+   * Cartesian expand. Adjacent filled optional siblings concatenate
+   * (`I` + `Arctan` → `IArctan`) and also keep a `_` separator (`I_Arctan`).
+   * Omit `_` does not invent extras.
    * Acc entries: { s, edgeFilledOpt } — edgeFilledOpt means last sibling chose opt-fill.
    */
   function cart(nodes) {
@@ -3414,7 +3447,9 @@ export function enumerateHoleRegexLanguage(reSource) {
             if (!f.s) continue;
             const sep =
               a.edgeFilledOpt && !a.s.endsWith("_") && !f.s.startsWith("_") ? "_" : "";
-            next.push({ s: a.s + sep + f.s, edgeFilledOpt: true });
+            // Regex concatenates filled opts (`I` + `Arctan` → `IArctan`). Keep `_` as an alt.
+            next.push({ s: a.s + f.s, edgeFilledOpt: true });
+            if (sep) next.push({ s: a.s + sep + f.s, edgeFilledOpt: true });
           }
         }
       } else if (p.kind === "group") {
@@ -3430,9 +3465,15 @@ export function enumerateHoleRegexLanguage(reSource) {
                 ? "_"
                 : "";
             next.push({
-              s: a.s + sep + f.s,
+              s: a.s + f.s,
               edgeFilledOpt: f.edgeFilledOpt,
             });
+            if (sep) {
+              next.push({
+                s: a.s + sep + f.s,
+                edgeFilledOpt: f.edgeFilledOpt,
+              });
+            }
           }
         }
       }
@@ -3532,6 +3573,147 @@ function getElemHoleRegexFrag(node, opts) {
 }
 
 /**
+ * `Any_(_|All_EqDeriv_…)` — the filled alternative is one glued equality atom.
+ * A nested `(_|Eq…)` is already decomposed and is left alone.
+ * @param {string} re
+ * @returns {boolean}
+ */
+function isGluedQuantEqRegex(re) {
+  const s = String(re || "");
+  return /^(?:Any|All)_\(_\|(?:Any|All)_[A-Za-z0-9_]*Eq[A-Za-z0-9_]*\)$/.test(s)
+    || /^(?:Any|All)_[A-Za-z0-9_]*Eq[A-Za-z0-9_]*$/.test(s);
+}
+
+/** Statements / newline `let` before the quantifier body (firstConclusion skips `let`). */
+function peelQuantBody(node) {
+  let n = node;
+  for (let i = 0; i < 12 && n; i++) {
+    const c = cls(n);
+    if (c === "LeanParenthesis" || c === "LeanColon") { n = n.args?.[0]; continue; }
+    if (c === "LeanStatements" || c === "LeanArgsNewLineSeparated") { n = firstConclusion(n); continue; }
+    break;
+  }
+  return n;
+}
+
+/** Binder, let-introduced name, or Inv/Neg of one: a hole, not an operator group. */
+function isQuantEqHoleNode(node, opts) {
+  const u = peelHoleExpr(node);
+  if (!u) return true;
+  const c = cls(u);
+  if (c === "LeanToken") return isLeafName(u.text, opts?.leaves);
+  if (c === "LeanArgsSpaceSeparated") return (u.args || []).every((a) => isQuantEqHoleNode(a, opts));
+  if (c === "LeanInv" || c === "LeanNeg") return isQuantEqHoleNode(u.args?.[0], opts);
+  return false;
+}
+
+/**
+ * ∂ is binary (bound, scope). Both holes → `Deriv__`. A filled scope stays
+ * `Deriv_(scope)` (the `_` is the bound). Do not turn that into `Deriv___(…)`.
+ * @param {string} re
+ * @returns {string}
+ */
+function binaryHoleDeriv(re) {
+  return String(re || "").replace(/Deriv_(?![\(_])/g, "Deriv__");
+}
+
+/** ∂[x, x] (two indices, hole scope) → `Deriv__`; a single ∂[x] → `Deriv`. */
+function quantEqPartialToken(node) {
+  const ps = partialBoundScope(node);
+  const b = ps ? peelHoleExpr(ps.bound) : null;
+  const n = b && cls(b) === "LeanArgsCommaSeparated" ? Math.max(1, (b.args || []).length) : 1;
+  return n >= 2 ? "Deriv__" : "Deriv";
+}
+
+/**
+ * Equality under ∀/∃. Every operator and argument is `(_|Token…)`, same as a given.
+ * `^ 2` is Square. A let-bound factor (`a⁻¹`) is the hole on its operator (`Mul_`).
+ * @returns {string|null}
+ */
+function decompQuantEqExpr(node, opts) {
+  const u = peelHoleExpr(node);
+  if (!u) return null;
+  const c = cls(u);
+  const opt = (frag) => wrapHoleOpt(frag);
+  if (c === "Lean_partial" || c === "LeanPartial") {
+    const ps = partialBoundScope(u);
+    if (!ps || isQuantEqHoleNode(ps.scope, opts)) return quantEqPartialToken(u);
+    const inner = decompQuantEqExpr(ps.scope, opts);
+    return inner ? "Deriv_" + opt(inner) : null;
+  }
+  if (c === "LeanPow" && cls(peelHoleExpr(u.args?.[1])) === "LeanToken" && peelHoleExpr(u.args[1]).text === "2") {
+    const base = u.args?.[0];
+    if (isQuantEqHoleNode(base, opts)) return "Square";
+    const inner = decompQuantEqExpr(base, opts);
+    return inner ? "Square" + opt(inner) : null;
+  }
+  if (c === "Lean_sqrt") {
+    const arg = u.arg ?? u.args?.[0];
+    if (isQuantEqHoleNode(arg, opts)) return "Sqrt";
+    const inner = decompQuantEqExpr(arg, opts);
+    return inner ? "Sqrt" + opt(inner) : null;
+  }
+  if (c === "LeanInv" || c === "LeanNeg") {
+    const tag = c === "LeanInv" ? "Inv" : "Neg";
+    const arg = u.arg ?? u.args?.[0];
+    if (isQuantEqHoleNode(arg, opts)) return tag;
+    const inner = decompQuantEqExpr(arg, opts);
+    return inner ? tag + opt(inner) : null;
+  }
+  if (c === "LeanAdd" || c === "LeanSub" || c === "LeanMul" || c === "LeanDiv") {
+    const tag = CLASS_TOKEN[c];
+    let s = tag;
+    for (const a of u.args || []) {
+      if (isQuantEqHoleNode(a, opts)) { s += "_"; continue; }
+      const p = decompQuantEqExpr(a, opts);
+      if (!p) return null;
+      s += opt(p);
+    }
+    return s;
+  }
+  if (c === "LeanToken") {
+    const raw = u.text || "";
+    if (isLeafName(raw, opts?.leaves)) return null;
+    if (/^-?\d+$/.test(raw)) return raw;
+    return nameToken(raw) || null;
+  }
+  if (c === "LeanEq") {
+    const L = decompQuantEqExpr(u.lhs ?? u.args?.[0], opts);
+    const R = decompQuantEqExpr(u.rhs ?? u.args?.[1], opts);
+    if (!L || !R) return null;
+    return "Eq" + opt(L) + opt(R);
+  }
+  return null;
+}
+
+/**
+ * ∀/∃ whose hole-regex froze the equality into `All_Eq…`.
+ * Each quantifier and the equality are omit-alternatives: `Any_(_|All_(_|Eq(_|…)(_|…)))`.
+ * @returns {string|null}
+ */
+function decompQuantHoleRegex(node, opts) {
+  const u = peelHoleExpr(node);
+  const c = cls(u);
+  if (c !== "Lean_forall" && c !== "Lean_exists") return null;
+  const tag = c === "Lean_forall" ? "All" : "Any";
+  let body = u.scope ?? u.args?.[u.args.length - 1];
+  if (c === "Lean_forall") body = peelGuardForalls(body);
+  body = peelQuantBody(body);
+  const bc = cls(body);
+  if (bc === "Lean_forall" || bc === "Lean_exists") {
+    const inner = decompQuantHoleRegex(body, opts);
+    if (!inner) return null;
+    return tag + "_" + wrapHoleOpt(inner);
+  }
+  if (bc === "LeanEq") {
+    const eq = decompQuantEqExpr(body, opts);
+    if (!eq || !eq.startsWith("Eq")) return null;
+    return tag + "_" + wrapHoleOpt(eq);
+  }
+  return null;
+}
+
+/**
  * Recursive hole-regex fragment for one expression node.
  * null / empty = hole contribution (parent inserts _).
  */
@@ -3560,14 +3742,14 @@ function holeRegexExpr(node, opts) {
     },
   };
   // Body h_force: walk partial.scope (js Lean_partial.holeRegex is bare Deriv_ only).
-  // Hole scope -> Deriv_; structured integrand -> Deriv_(scopeFrag) with binder leaves as holes.
+  // ∂ is binary: hole bound and hole scope → Deriv__. Filled scope → Deriv_(scopeFrag).
   {
     const pc = cls(u);
     if (pc === "Lean_partial" || pc === "LeanPartial") {
       const ps = partialBoundScope(u);
-      if (!ps) return "Deriv_";
+      if (!ps) return "Deriv__";
       const scopeFrag = holeRegexExpr(ps.scope, opts);
-      if (scopeFrag == null || scopeFrag === "" || scopeFrag === "_") return "Deriv_";
+      if (scopeFrag == null || scopeFrag === "" || scopeFrag === "_") return "Deriv__";
       return "Deriv_(" + scopeFrag + ")";
     }
   }
@@ -3577,7 +3759,16 @@ function holeRegexExpr(node, opts) {
     const cd = contDiffAppHoleRegex(u, opts);
     if (cd != null) return cd;
   }
-  if (typeof u.holeRegex === "function") return u.holeRegex(holeOpts);
+  if (typeof u.holeRegex === "function") {
+    const raw = binaryHoleDeriv(u.holeRegex(holeOpts));
+    // `let` + newline freezes ∀/∃ of an equality into one `All_Eq…` atom.
+    // Decompose each operator into its own group instead.
+    if (isGluedQuantEqRegex(raw)) {
+      const dec = decompQuantHoleRegex(u, opts);
+      if (dec) return dec;
+    }
+    return raw;
+  }
   return holeOpts.frozen(u);
 }
 
@@ -3838,6 +4029,16 @@ export function holeRegexAlternatives(typeNode, opts = {}) {
   for (const house of eqHouseHoleRegexAlts(typeNode, opts)) {
     if (house && house !== primary && !out.includes(house)) out.push(house);
   }
+  // Quantified equality's inline atom (`All_Eq…`, `Any_All_Eq…`) is its own hole regex.
+  // The expanded `Eq(_|Deriv_)(_|Mul…)` tree does not spell fused forms such as
+  // `All_EqDeriv_MulInvSqrtAdd1SquareDeriv`. Slash `Any_LHS/eq/RHS` is not an alt.
+  const named = nameExpr(typeNode, opts);
+  // A decomposed `All_(Eq(…)(…))` already spells the equality. Do not also publish
+  // the glued `All_Eq…` atom. Fused givens whose primary is still `All_(_|Eq…)` stay.
+  const primaryDecomp = out.some((r) => /(?:Any|All)_\(_\|Eq/.test(String(r)) || String(r).includes("All_(Eq(") || String(r).includes("Any_(Eq("));
+  if (named && !named.includes("/") && !hasQuantEqSlash(named) && /^(?:Any|All)_/.test(named) && !out.includes(named)
+      && !(primaryDecomp && !named.includes("(")))
+    out.push(named);
   return out.length ? out : ["_"];
 }
 
@@ -3908,6 +4109,9 @@ function holeFillStems(node, opts = {}) {
     return uniq(bodies.flatMap((b) => {
       if (!b) return [tag, ""];
       if (b === tag || b.startsWith(tag + "_")) return [b, ""];
+      const eqAtom = quantWrapEqBody(tag, b);
+      if (eqAtom) return [eqAtom, ""];
+      if (hasQuantEqSlash(b) || String(b).includes("/eq/") || String(b).includes(".eq.")) return [""];
       return [tag + "_" + b, ""];
     }));
   }
@@ -7027,6 +7231,12 @@ function nameExprBase(node, opts = {}) {
       const bodyNode = name === "Lean_forall" ? peelGuardForalls(args[args.length - 1]) : args[args.length - 1];
       const body = nameExpr(bodyNode, opts);
       if (!body) return tag;
+      // ∃/∀ of an equality is one atom (`Any_All_EqLHS_RHS`). Never keep `LHS/eq/RHS`
+      // or prefix the quantifier onto it (`Any_LHS/eq/RHS`).
+      {
+        const eqAtom = quantWrapEqBody(tag, body);
+        if (eqAtom) return eqAtom;
+      }
       // `∀ᵐ ω, HasSum ∧ ‖ExtDot…‖ ≤ bound` → All_And_LeNormExt… (drop HasSum; bound not spelled)
       if (isAeQuantifier(node) && !isMixedBvarForall(node) && node.superscript === "ᵐ") {
         const andLe = aeAndLeNormExtName(bodyNode, opts);
@@ -7067,6 +7277,9 @@ function nameExprBase(node, opts = {}) {
           }
         }
       }
+      // Slash houses other than equality stay (a relation that is not `_.eq._`).
+      // Equality was already rewritten above. A leftover `Any_LHS/eq/RHS` is not a name.
+      if (hasQuantEqSlash(body)) return tag;
       if (body.includes("/") || /^(Prob|DivProb|MulProb|Eq)/.test(body)) return body;
       // Nested ∃ _, ∃ _, P is one Any; nested ∀, ∀, P is one All. The inner quantifier already spelled the tag.
       if ((name === "Lean_exists" || name === "Lean_forall") && (body === tag || body.startsWith(tag + "_"))) return body;
@@ -7764,7 +7977,7 @@ if (name === "Lean_partial" || name === "LeanPartial") {
             ? bodyAlts.map(aeEqAtom).filter(Boolean)
             : [];
           const aeAlts = node.superscript === "ᵐ"
-            ? [...(andLe ? [andLe] : []), ...leNormAbs, ...eqAtoms, ...bodyAlts.map((b) => "Ae" + b), ...bodyAlts.map((b) => tag + "_" + b), ...bodyAlts, ...guardAlts]
+            ? [...(andLe ? [andLe] : []), ...leNormAbs, ...eqAtoms, ...bodyAlts.map((b) => "Ae" + b), ...bodyAlts.map((b) => quantWrapEqBody(tag, b) || (hasQuantEqSlash(b) || String(b).includes("/eq/") ? "" : tag + "_" + b)), ...bodyAlts.filter((b) => !String(b).includes("/eq/") && !hasQuantEqSlash(b)), ...guardAlts]
             : [...bodyAlts, ...guardAlts];
           return uniq(aeAlts);
         }
@@ -7784,12 +7997,25 @@ if (name === "Lean_partial" || name === "LeanPartial") {
           const eqT = bodyAlts.filter((b) => !b.includes("/") && /^Eq/.test(b)).flatMap((b) => withQuantTag(tag, b));
           // relational bodies usually read `A/eq/B`; a one-atom rendering may still take the tag (All_AeLeCondExp)
           const tagged = bodyAlts.filter((b) => !b.includes("/")).flatMap((b) => wrapQuant(b));
-          // Slash forms stay (A/eq/B). Bare one-atom bodies must not drop All_/Any_ (Cholesky: no of/Lt0*).
-          const relSplit = bodyAlts.filter((b) => b.includes("/"));
-          return uniq([...eqT, ...tagged.slice(0, 200), ...relSplit, ...guardAlts, ...tagged.slice(200)]);
+          // Equality under ∃/∀ is inline `All_EqLHS_RHS` / `Any_All_Eq…`. Never `Any_LHS/eq/RHS`.
+          // Other slash relations stay. Bare one-atom bodies must not drop All_/Any_ (Cholesky: no of/Lt0*).
+          const eqSlash = [];
+          const relSplit = [];
+          for (const b of bodyAlts) {
+            if (!b.includes("/") && !String(b).includes(".eq.")) continue;
+            const eqAtom = quantWrapEqBody(tag, b);
+            if (eqAtom) eqSlash.push(eqAtom);
+            else if (!hasQuantEqSlash(b) && !/\/eq\/|\.eq\./.test(b)) relSplit.push(b);
+          }
+          return uniq([...eqSlash, ...eqT, ...tagged.slice(0, 200), ...relSplit, ...guardAlts, ...tagged.slice(200)]);
         }
         const out = [];
-        for (const b of bodyAlts) out.push(...wrapQuant(b));
+        for (const b of bodyAlts) {
+          const eqAtom = quantWrapEqBody(tag, b);
+          if (eqAtom) { out.push(eqAtom); continue; }
+          if (hasQuantEqSlash(b) || /\/eq\/|\.eq\./.test(b)) continue;
+          out.push(...wrapQuant(b));
+        }
         // `∀ x, P x → Q x`: bodyAlts already carry binary Imp…; keep unary All_Imp_Q only
         // as remigration when a consequent spelling lacks Imp (legacy Random/All_Imp_*).
         if (cls(unwrapParen(bodyNode)) === "Lean_rightarrow") {
@@ -9490,6 +9716,16 @@ export function suggest(filePath, lemmaName, options = {}) {
   const givenRegexListsEarly = pathOrderHypsEarly.map((h) =>
     holeRegexAlternatives(h.typeNode, { ...nameOpts, asGiven: true }),
   );
+  // On-disk quantified given atoms stay admissible (`All_EqDeriv_MulIMulMul_…`).
+  // `All_LHS/eq/RHS` does not.
+  {
+    const diskOfStems = ofStemsFromRelPath(relCurrent);
+    for (let i = 0; i < diskOfStems.length && i < givenRegexListsEarly.length; i++) {
+      const stem = diskOfStems[i];
+      if (!stem || stem.includes("/") || hasQuantEqSlash(stem) || !/^(?:Any|All)_/.test(stem)) continue;
+      if (!givenRegexListsEarly[i].includes(stem)) givenRegexListsEarly[i].push(stem);
+    }
+  }
   const givenOptionalFlags = givenAltLists.map((g) => !!g.optional);
   const givenAltListsEmit = givenAltLists.map((g, i) => {
     const regexes = givenRegexListsEarly[i] || [];
@@ -9604,6 +9840,7 @@ export function suggest(filePath, lemmaName, options = {}) {
   function altMatch(p) {
     const cur = String(p).replace(/\\/g, "/").replace(/^Lemma\//, "").replace(/\.lean$/, "");
     if (/anonymous/i.test(cur)) return false;
+    if (hasQuantEqSlash(cur)) return false;
     const curSec = cur.split("/")[0];
     if (curSec !== section && !altSections.has(curSec) && !(sectionFree && DATA_TYPE_SECTIONS.has(curSec) && sections.includes(curSec))) return false;
     const rest = cur.slice(curSec.length + 1);
@@ -9723,7 +9960,7 @@ export function suggest(filePath, lemmaName, options = {}) {
       givenRegexListsEarly,
       { optionalFlags: givenOptionalFlags, cap: PATH_CAP },
     ).filter(validModulePath);
-    suggestions = uniq([...suggestions, ...consistent]).sort((a, b) =>
+    suggestions = uniq([...suggestions, ...consistent]).filter((p) => !hasQuantEqSlash(p)).sort((a, b) =>
       (pathTakenByOther(a) - pathTakenByOther(b)) ||
       (preferCanon ? (b === relPath) - (a === relPath) : 0) ||
       byBestToWorst(a, b));
@@ -9732,11 +9969,7 @@ export function suggest(filePath, lemmaName, options = {}) {
     suggestionPathMatchesHoles(p, implyRegexAlts, givenRegexListsEarly, holeMatchOpts),
   );
   const moduleName = relPath.replace(/\.lean$/, "").split(/[/\\]/).join(".");
-  // Preferred path must also pass the hole-regex emit invariant.
-  let suggestedPath = suggestions[0] || relPath.replace(/\\/g, "/");
-  if (!suggestionPathMatchesHoles(suggestedPath, implyRegexAlts, givenRegexListsEarly, holeMatchOpts)) {
-    suggestedPath = suggestions[0] || suggestedPath;
-  }
+  const firstSuggestion = suggestions[0] || relPath.replace(/\\/g, "/");
   // Path-order `-- given` prop hyps (same order as of/ tail / givensPathOrder).
   const pathOrderHyps = pathOrderHypsEarly;
   // Body t341/t345/t347: token[] = stems that match this entry's regex (invariant).
@@ -9806,13 +10039,11 @@ export function suggest(filePath, lemmaName, options = {}) {
     // retained extras (CLI / remigration / callers)
     file: abs,
     currentPath: currentNorm,
-    suggestedPath,
     moduleName,
     sectionScore: picked.score,
     sectionTokens: picked.tokens,
     implyHoleRegex,
     suggestionsHoleMatch,
-    implyName: implyPath,
     implyChain: implyChain,
 givensLeanOrder: hyps.map((h) => ({ binder: h.name, prop: h.prop, name: maxLogProbJointGiven(h.typeNode, logJointFns)?.name || bvarAllLt0ProbJointName(h.typeNode) || bvarAllEqLogProbCondName(h.typeNode) || neProbJoint0GivenName(h.typeNode) || allNeProb0GivenName(h.typeNode) || allDifferentiableGivenName(h.typeNode) || nameExpr(h.typeNode, { ...nameOpts, asGiven: true }) })),
     givensPathOrder: givenNames,
@@ -9821,9 +10052,9 @@ givensLeanOrder: hyps.map((h) => ({ binder: h.name, prop: h.prop, name: maxLogPr
   if (Array.isArray(options.probe)) result.probe = options.probe.map((p) => altMatch(p));
   if (sectionFree) result.warnings.push(`no section evidence (no data-type token): ${section} is the repo default for generic lemmas; Int/Real/Set/… are accepted too`);
   if (validSorted.length && validSorted.length < sorted.length) result.warnings.push(`${sorted.length - validSorted.length} alternative(s) dropped: not valid Lean module names`);
-  if (!validModulePath(suggestedPath)) result.warnings.push("suggested path has a component that is not a valid Lean module name: " + suggestedPath.replace(/\.lean$/, "").split("/").filter((c) => !validModuleComponent(c)).join(", "));
-  if (tooLong(suggestedPath)) {
-    result.warnings.push(`suggested path is ${("Lemma/" + suggestedPath).length} chars (> ${PATH_WARN_LEN}); ` +
+  if (!validModulePath(firstSuggestion)) result.warnings.push("suggestions[0] has a component that is not a valid Lean module name: " + firstSuggestion.replace(/\.lean$/, "").split("/").filter((c) => !validModuleComponent(c)).join(", "));
+  if (tooLong(firstSuggestion)) {
+    result.warnings.push(`suggestions[0] is ${("Lemma/" + firstSuggestion).length} chars (> ${PATH_WARN_LEN}); ` +
       "with build prefixes it may exceed Windows MAX_PATH (260) — consider shortening" +
       (suggestions.length > 1 ? `; shortest alternative (${("Lemma/" + [...suggestions].sort(byBestToWorst)[0]).length} chars): Lemma/${[...suggestions].sort(byBestToWorst)[0]}` : ""));
   }
@@ -9846,12 +10077,12 @@ givensLeanOrder: hyps.map((h) => ({ binder: h.name, prop: h.prop, name: maxLogPr
     ? { ok: true, reason: "exact match", existing: result.currentPath, suggested: matchedSuggestion }
     : {
       ...(currentHoleOk
-        ? pathsConsistent(result.currentPath, result.suggestedPath)
+        ? pathsConsistent(result.currentPath, firstSuggestion)
         : {
           ok: false,
           reason: "hole regex mismatch (imply/given stem)",
           existing: result.currentPath,
-          suggested: result.suggestedPath,
+          suggested: firstSuggestion,
         }),
     };
   // camel `MEqExpect_*` / bare `MEq` / chain-local `MEqExpect` as imply folders are never consistent
@@ -9867,7 +10098,7 @@ givensLeanOrder: hyps.map((h) => ({ binder: h.name, prop: h.prop, name: maxLogPr
         ok: false,
         reason: "illegal MEq imply token (use MEq_Expect_* / MEqExpectS, not MEqExpect / bare MEq)",
         existing: result.currentPath,
-        suggested: result.suggestedPath,
+        suggested: firstSuggestion,
       };
       result.warnings.push("current imply path uses illegal MEq token(s): " +
         segs.filter((s) => isIllegalMeqImplySeg(s, multi) || s === "MEq").join(", "));
@@ -9877,7 +10108,7 @@ givensLeanOrder: hyps.map((h) => ({ binder: h.name, prop: h.prop, name: maxLogPr
         ok: false,
         reason: "illegal Distributed/Add imply (use camel DistributedAdd)",
         existing: result.currentPath,
-        suggested: result.suggestedPath,
+        suggested: firstSuggestion,
       };
       result.warnings.push("current imply path uses illegal snake Distributed/Add (prefer DistributedAdd)");
     }
@@ -9886,7 +10117,7 @@ givensLeanOrder: hyps.map((h) => ({ binder: h.name, prop: h.prop, name: maxLogPr
         ok: false,
         reason: "illegal Distributed_gaussian (use Distributed_Gaussian)",
         existing: result.currentPath,
-        suggested: result.suggestedPath,
+        suggested: firstSuggestion,
       };
       result.warnings.push("current path uses lowercase Distributed_gaussian (prefer Distributed_Gaussian)");
     }
@@ -9899,7 +10130,7 @@ givensLeanOrder: hyps.map((h) => ({ binder: h.name, prop: h.prop, name: maxLogPr
   if (options.py) {
     const explicit = typeof options.py === "string" && options.py !== "auto";
     const pyName = explicit ? String(options.py).replace(/\\/g, "/").replace(/^Lemma\//, "").replace(/\.(lean|py)$/, "").replace(/\./g, "/") : pyCounterpart ? curMod : null;
-    result.py = { name: pyName, source: explicit ? "flag" : "pyLink", derived: { suggestedPath: result.suggestedPath, consistent: result.consistent } };
+    result.py = { name: pyName, source: explicit ? "flag" : "pyLink", derived: { suggestions, consistent: result.consistent } };
     if (pyName && pyName === curMod) result.consistent = { ok: true, reason: "py name", existing: result.currentPath, suggested: pyName + ".lean" };
     else if (pyName) result.consistent = { ok: false, reason: "py name mismatch: expected " + pyName, existing: result.currentPath, suggested: pyName + ".lean" };
   }
@@ -9983,10 +10214,10 @@ function printHuman(r) {
   console.log("current:    Lemma/" + r.currentPath);
   for (const w of r.warnings || []) console.log("warning:    " + w);
   {
-    const chk = r.consistent || pathsConsistent(r.currentPath, r.suggestedPath);
+    const chk = r.consistent || pathsConsistent(r.currentPath, (r.suggestions && r.suggestions[0]) || "");
     console.log("consistent: " + (chk.ok ? "yes" : "no") + (chk.ok ? "" : " (" + chk.reason + ")"));
   }
-  if (r.py) console.log("py name:    " + (r.py.name ? "Lemma/" + r.py.name + " (" + r.py.source + ")" : "— (no py counterpart)") + "; derived: Lemma/" + r.py.derived.suggestedPath + (r.py.derived.consistent.ok ? " (consistent)" : ""));
+  if (r.py) console.log("py name:    " + (r.py.name ? "Lemma/" + r.py.name + " (" + r.py.source + ")" : "— (no py counterpart)") + "; derived: Lemma/" + ((r.py.derived.suggestions && r.py.derived.suggestions[0]) || "") + (r.py.derived.consistent.ok ? " (consistent)" : ""));
   else if (r.pyCounterpart) console.log("py:         pyLink/Lemma/" + r.pyCounterpart + ".py exists (use --py to keep the py name)");
   console.log("section:    " + r.section + " (score " + r.sectionScore + "; tokens: " + (r.sectionTokens.join(", ") || "—") + ")");
   console.log("suggestions (" + r.suggestions.length + ", best→worst: free paths first, then shortest ASCII bytes):");

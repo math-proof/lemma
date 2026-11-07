@@ -1,5 +1,6 @@
 import Theorem.Data.Holor.Functions
 import Def.Data.Holor.Sum
+open Exp
 
 
 @[path]

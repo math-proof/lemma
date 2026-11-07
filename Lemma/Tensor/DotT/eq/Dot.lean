@@ -44,7 +44,7 @@ private lemma main
     apply EqCastS.of.SEq.Eq (by simp)
     erw [UnsqueezeUnsqueeze_0]
     erw [SelectRepeat.eq.Cast_RepeatSelect.of.Lt (by grind) (d := ⟨1, by grind⟩) (i := ⟨0, by simp⟩)]
-    erw [GetRepeat.eq.Cast_RepeatGet.of.GtGet_0.GtVal_0.fin (by grind) (by grind)]
+    erw [GetRepeat.eq.Cast_RepeatGet.of.GtGet_0.GtVal_0.fin (d := ⟨1, by simp⟩) (by simp) (by grind)]
     apply SEq.of.Eq
     apply EqCastS.of.SEq.Eq (by simp)
     simp
@@ -96,7 +96,7 @@ private lemma resize
     apply SEqCastS.of.SEq.Eq.Eq (by simp) (by simp)
     erw [UnsqueezeUnsqueeze_0 (Y.resize 0 (n' ⊔ n))]
     erw [SelectRepeat.eq.Cast_RepeatSelect.of.Lt (by grind) (d := ⟨1, by grind⟩) (i := ⟨0, by simp⟩)]
-    erw [GetRepeat.eq.Cast_RepeatGet.of.GtGet_0.GtVal_0.fin (by grind) (by grind)]
+    erw [GetRepeat.eq.Cast_RepeatGet.of.GtGet_0.GtVal_0.fin (d := ⟨1, by simp⟩) (by simp) (by grind)]
     apply SEqCastS.of.SEq.Eq.Eq (by simp) (by simp)
     simp
     apply SEqRepeatS.of.SEq.Val.Eq (by simp) (by simp)

@@ -1,3 +1,4 @@
+import Theorem.Data.List.List.Part2
 import Lemma.List.Permute.eq.Ite
 import Lemma.List.GetAppend.eq.Get.of.GtLength
 import Lemma.List.GetTake.eq.Get.of.GtLengthTake
@@ -32,7 +33,9 @@ private lemma main
   (h₀ : i + d < s.length)
   (h₁ : s.length > t) :
 -- imply
-  have : t < (s.permute i d).length := by simp_all
+  have : t < (s.permute i d).length := by
+    rw [List.length_permute]
+    omega
   (s.permute i d)[t] =
     if t < i then
       s[t]
@@ -119,4 +122,4 @@ private lemma main
 
 
 -- created on 2025-06-08
--- updated on 2025-06-28
+-- updated on 2026-11-07

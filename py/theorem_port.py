@@ -394,7 +394,7 @@ def rough_path_from_source(source: str, ported_root: Path) -> Path | None:
     """Phase 1: lean.js rough path from skeleton source text.
 
     Writes ``source`` to a temp ``.lean`` file, runs
-    ``mjs/lemmaPath.mjs --json``, and maps ``suggestedPath`` under
+    ``mjs/lemmaPath.mjs --json``, and maps ``suggestions[0]`` under
     ``ported_root``.  Returns ``None`` on any failure (caller falls back to
     :func:`key_to_path`).
     """
@@ -411,7 +411,7 @@ def rough_path_from_source(source: str, ported_root: Path) -> Path | None:
             fh.write(source)
             tmp = Path(fh.name)
         data = _run_node_json(SUGGEST_LEMMAPATH, str(tmp))
-        rel = str(data.get("suggestedPath") or "").replace(chr(92), "/").lstrip("/")
+        rel = str((data.get("suggestions") or [""])[0] or "").replace(chr(92), "/").lstrip("/")
         if rel.startswith("Lemma/"):
             rel = rel[len("Lemma/") :]
         if not rel.endswith(".lean"):
@@ -444,14 +444,10 @@ def _consistent_ok(result: dict) -> bool:
 
 
 def best_precise_target(result: dict, ported_root: Path) -> str | None:
-    """Pick rename target: current path if consistent, else suggestedPath / free alt."""
+    """Pick rename target: current path if consistent, else the first free suggestion."""
     if _consistent_ok(result):
         return result.get("currentPath")
-    candidates = []
-    sp = result.get("suggestedPath")
-    if sp:
-        candidates.append(sp)
-    candidates.extend(result.get("suggestions") or [])
+    candidates = list(result.get("suggestions") or [])
     for alt in candidates:
         abs_path = ported_root / Path(alt)
         if not abs_path.exists():

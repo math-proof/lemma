@@ -85,7 +85,7 @@ function checkOffline(abs) {
     file: relLemma(abs),
     method: 'lean.js',
     current: `Lemma/${r.currentPath}`,
-    want: `Lemma/${r.suggestedPath}`,
+    want: r.suggestions && r.suggestions[0] ? `Lemma/${r.suggestions[0]}` : "",
     ok: !!c.ok,
     reason: c.reason || '',
   };

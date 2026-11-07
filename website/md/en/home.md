@@ -22,19 +22,19 @@ The library currently contains <label id=count>5000</label> proved theorems (<la
 * [Int](../?module=Int) Elementary algebra of integers
 * [Rat](../?module=Rat) Elementary algebra of rationals
 * [Real](../?module=Real) Algebra and real analysis, e.g.:
-  - [Jensen's inequality](../?module=Real.LeSum_Mul.of.EqSumRange__1.All_Ge_0.All_In_Icc.All_Gt0Deriv2.ContinuousOn_Icc), [catenary](../?module=Real.Any_Eq_AddMul_CoshDivSub.of.All_EqDeriv_MulInvSqrtAdd1SquareDeriv.ContDiff_2)
-* [Hyperreal](../?module=Hyperreal) Nonstandard analysis, e.g.:
-  - [Mersenne's law](../?module=Hyperreal.Eq_Mul_SqrtDiv.of.All_EqMul_Deriv_SinArctan.All_Eq_MulMul_Sin_Cos)
+  - [Jensen's inequality](../?module=Real.LeSum_Mul.of.EqSumRange__1.All_Ge_0.All_In_Icc.All_Gt0Deriv2.ContinuousOn_Icc), [catenary](../?module=Complex.Any_Eq_AddMul_CoshDivSub.of.All_EqDeriv_Mul_ExpMulIArctanDeriv.ContDiff_2.Differentiable)
+* [Hyperreal](../?module=Hyperreal) Nonstandard analysis
 * [Complex](../?module=Complex) Complex analysis, e.g.:
   - [quartic equation](../?module=Complex.Eq0Add_Mul_Pow_4.is.In_Ite_FinsetSSubS__SubS.of.Ne_0)
   - [closed form of homogeneous linear recurrence with constant coefficients](../?module=Complex.Any_All_Eq_Dot_MulDescFactorial.of.All_Eq_Dot)
+  - [Mersenne's law](../?module=Complex.Eq_Mul_SqrtDiv.of.All_EqDeriv_Mul_ExpMulIArctanDeriv.All_Eq_MulMul_Sin_Cos)
 * [Set](../?module=Set) Set theory
 * [Finset](../?module=Finset) Finite set theory, e.g.:
   - [k-means clustering](../?module=Finset.LtAddSumS_SquareSub_Div_Sum.of.LtAbsSSub_Div_Sum.NotIn.In.GtCard_0)
 * [List](../?module=List) Finite list theorems
 * [Vector](../?module=Vector) One-dimensional vector theorems
 * [Matrix](../?module=Matrix) Matrix theory, e.g.:
-  - [Okishio's theorem](../?module=Matrix.Any_And_EqSMul_UpdateCol.of.IsIrreducibleUpdateColAdd_Dot.LtDot_Add_SMul.EqSMul.All_Gt_0)
+  - [Okishio's theorem](../?module=Matrix.Any_And_EqAdd1.of.IsIrreducibleUpdateColAdd_DotAdd.LtDot_Add_Dot_ExtAdd_Dot.EqAdd1.All_Gt_0)
   - [Cholesky decomposition](../?module=Finset.All.And.of.Eq_Adjoint.Imp_Gt_0.Eq_Ite.Cholesky), [PLU decomposition](../?module=Matrix.EqMul_T_1.IsLowerTriangular.IsUpperTriangular.EqMulS)
 * [Tensor](../?module=Tensor) Formal tensor calculus, semantically equivalent to **torch.Tensor**, for formal verification of deep-learning algorithms, e.g.:
   - [kv_cache](../?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)

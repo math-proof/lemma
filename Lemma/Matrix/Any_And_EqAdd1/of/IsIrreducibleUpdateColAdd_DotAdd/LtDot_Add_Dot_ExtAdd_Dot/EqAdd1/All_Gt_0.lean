@@ -106,7 +106,7 @@ private lemma main
     intro k _
     have := h.nonneg k i
     simp at this
-    exact mul_nonneg (hp k).le this
+    apply mul_nonneg (hp k).le this
   have hr : -1 < r := by
     have h₀ := congrFun hM i
     have h₁ : 0 < (p ᵥ* M) i := hv.trans_lt hi
@@ -118,12 +118,12 @@ private lemma main
   have h₆ : M.updateCol i v *ᵥ q = ρ • q := by rwa [h₄] at h₅
   obtain ⟨ρ₂, hρ₂, p', hp', h₇⟩ := Any_Gt_0AndAny_All_Gt_0AndEqVecMulSMul.of.All_Any_GtGetPow_0.All_Ge_0 h.nonneg ((isIrreducible_iff_exists_pow_pos h.nonneg).1 h)
   have hpq : 0 < p' ⬝ᵥ q := Finset.sum_pos (fun k _ => mul_pos (hp' k) (hq k)) Finset.univ_nonempty
-  have h₈ : ρ₂ * (p' ⬝ᵥ q) = ρ * (p' ⬝ᵥ q) := calc
-    _ = (ρ₂ • p') ⬝ᵥ q := by rw [smul_dotProduct, smul_eq_mul]
-    _ = (p' ᵥ* M.updateCol i v) ⬝ᵥ q := by rw [h₇]
-    _ = p' ⬝ᵥ (M.updateCol i v *ᵥ q) := by rw [dotProduct_mulVec]
-    _ = p' ⬝ᵥ (ρ • q) := by rw [h₆]
-    _ = ρ * (p' ⬝ᵥ q) := by rw [dotProduct_smul, smul_eq_mul]
+  have h₈ : ρ₂ * p' ⬝ᵥ q = ρ * p' ⬝ᵥ q := calc
+    _ = ρ₂ • p' ⬝ᵥ q := by rw [smul_dotProduct, smul_eq_mul]
+    _ = p' ᵥ* M.updateCol i v ⬝ᵥ q := by rw [h₇]
+    _ = p' ⬝ᵥ M.updateCol i v *ᵥ q := by rw [dotProduct_mulVec]
+    _ = p' ⬝ᵥ ρ • q := by rw [h₆]
+    _ = ρ * p' ⬝ᵥ q := by rw [dotProduct_smul, smul_eq_mul]
   have h₉ : ρ₂ = ρ := mul_right_cancel₀ hpq.ne' h₈
   have h₁₀ : (1 + (1 / ρ - 1)) * ρ = 1 := by
     rw [show 1 + (1 / ρ - 1) = 1 / ρ by ring]
@@ -134,4 +134,4 @@ private lemma main
 
 
 -- created on 2026-09-29
--- updated on 2026-10-26
+-- updated on 2026-11-07

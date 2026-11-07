@@ -1,4 +1,5 @@
 import Instance.Data.Vector.Functions.Part2
+open Exp
 
 
 @[path, fin, comm, fin.comm]

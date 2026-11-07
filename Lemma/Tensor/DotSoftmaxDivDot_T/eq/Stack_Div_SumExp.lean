@@ -9,7 +9,7 @@ import Lemma.Tensor.GetTCast_T.eq.Get
 import Lemma.Tensor.SEqExpS.of.SEq
 import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
 import Def.Data.Holor.Sum
-open Fin List Tensor
+open Exp Fin List Tensor
 set_option maxHeartbeats 1000000
 
 

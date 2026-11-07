@@ -1,3 +1,4 @@
+import Theorem.Data.List.List.Part2
 import Lemma.List.Permute.eq.Ite
 import Lemma.List.GetAppend.eq.Get.of.GtLength
 import Lemma.Nat.EqMin.of.Lt
@@ -22,7 +23,9 @@ private lemma main
   (i : Fin s.length)
   (d : ℕ):
 -- imply
-  have : t < (s.permute i (-d)).length := by simpa
+  have : t < (s.permute i (-d)).length := by
+    rw [List.length_permute]
+    exact h
   (s.permute i (-d))[t] =
     if t < i - d then
       s[t]
@@ -89,4 +92,4 @@ private lemma main
 
 
 -- created on 2025-06-21
--- updated on 2025-10-25
+-- updated on 2026-11-07

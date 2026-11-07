@@ -1,7 +1,7 @@
 import Theorem.Data.Holor.Functions
 import Lemma.Tensor.LengthExp.eq.Length
 import Lemma.Tensor.GetTensorMapData.eq.TensorMapDataGet
-open Tensor
+open Exp Tensor
 
 
 @[path, fin, comm, fin.comm]

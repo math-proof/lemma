@@ -1,4 +1,5 @@
 import Theorem.Data.Holor.Functions
+open Exp
 
 
 @[path]

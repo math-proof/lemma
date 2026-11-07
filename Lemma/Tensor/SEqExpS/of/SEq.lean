@@ -1,6 +1,6 @@
 import Lemma.Bool.SEqUFnS.of.SEq
 import Theorem.Data.Holor.Functions
-open Bool
+open Bool Exp
 
 
 @[path]

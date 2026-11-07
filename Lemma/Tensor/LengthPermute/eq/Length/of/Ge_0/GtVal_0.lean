@@ -16,7 +16,6 @@ private lemma main
 -- proof
   have := LengthPermute.eq.Length.of.GtVal_0 h_i X d.toNat
   rwa [Int.EqToNat.of.Ge_0] at this
-  assumption
 
 
 -- created on 2026-07-04
