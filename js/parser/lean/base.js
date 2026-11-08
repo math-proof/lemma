@@ -302,16 +302,41 @@ export class Lean extends IndentedNode {
     matrixLatexArgs(syntax) {
         const rows = this.matrixLatexSpec();
         if (!rows) return null;
-        return rows.flat().map((cell) => cell.peelParen().toLatex(syntax));
+        const L = Lean.classes;
+        // flattenAppend peels a grouping parenthesis, so the cell can be the inner
+        // `(V : Matrix …)` whose parent is that parenthesis rather than `++`.
+        // Render the outer factor: it is in expression position and drops the cast.
+        const factor = (cell) => {
+            let n = cell;
+            while (n.parent instanceof L.LeanParenthesis && !n.parent.latexParenRequired())
+                n = n.parent;
+            return n;
+        };
+        return rows.flat().map((cell) => {
+            const n = factor(cell);
+            if (n instanceof L.LeanParenthesis && n.isLatexArgAscription())
+                return n.toLatex(syntax);
+            return cell.peelParen().toLatex(syntax);
+        });
     }
 
     /**
-     * Block matrix (`hstack` / `hstack ++ hstack`) or a stacked vector next to `@`.
+     * Block matrix (`hstack` / `hstack ++ hstack`), a typed `++`, or a stacked
+     * vector next to `@`.
+     *
+     * `++` of matrix blocks uses the source casts (still present on the AST;
+     * LaTeX omits them). Matching column types are a row append: one bmatrix
+     * column. Matching row types are a column append: one bmatrix row.
+     * A transpose swaps the cast's axes, so `Kᵀ ++ Kᵀ` sits side by side while
+     * `V ++ V` stacks. `@` alone must not decide the axis — the key append is
+     * inside `@` and is a column append.
      * @returns {Lean[][] | null}
      */
     matrixLatexSpec() {
         const rows = this.blockMatrixRows();
         if (rows) return rows;
+        const block = this.appendBlockSpec();
+        if (block) return block;
         if (this.isMatMulOperand()) {
             const parts = this.flattenAppend();
             if (parts.length >= 2) return parts.map((p) => [p]);
@@ -320,11 +345,103 @@ export class Lean extends IndentedNode {
     }
 
     /**
-     * After an operator token, consume an optional `[…]` modifier (e.g. `→ₐ[R]`, `⊗[R]`, `≃L[ℝ]`).
-     * Leaves `self.start_idx` on `]` so the parse loop's increment advances past it.
-     * @param {{ tokens: string[], start_idx: number }} self
-     * @returns {string} bracket contents (empty when there is no `[`)
+     * Rectangular `++` from cast axes. `null` when a factor has no `Matrix` cast.
+     * @returns {Lean[][] | null}
      */
+    appendBlockSpec() {
+        const parts = this.flattenAppend();
+        if (parts.length < 2) return null;
+        const shapes = parts.map((p) => p.matrixAppendShape());
+        if (shapes.some((s) => !s)) return null;
+        const same = (which) => shapes.every((s) => s[which] === shapes[0][which]);
+        const colsSame = same('cols');
+        const rowsSame = same('rows');
+        // Row append: shared column type, different heights → one column.
+        if (colsSame && !rowsSame) return parts.map((p) => [p]);
+        // Column append: shared row type, different widths → one row.
+        if (rowsSame && !colsSame) return [parts];
+        return null;
+    }
+
+    /**
+     * Axes of a matrix factor, after a trailing `ᵀ`.
+     * A product takes its column type from the right factor (`softmax · V`
+     * has the columns of `V`) and its row type from the left factor.
+     * @returns {{ rows: string, cols: string } | null}
+     */
+    matrixAppendShape() {
+        const L = Lean.classes;
+        let n = this;
+        let transposed = false;
+        if (n instanceof L.LeanTranspose) {
+            transposed = true;
+            n = n.arg;
+        }
+        while (n instanceof L.LeanParenthesis && !(n.arg instanceof L.LeanColon))
+            n = n.arg;
+        if (n instanceof L.LeanParenthesis && n.arg instanceof L.LeanColon) {
+            const axes = Lean.matrixTypeAxes(n.arg.rhs);
+            if (!axes) return null;
+            if (!transposed) return axes;
+            return { rows: axes.cols, cols: axes.rows };
+        }
+        if (transposed) return null;
+        if (n !== this) return n.matrixAppendShape();
+        if (n instanceof L.LeanMul || n instanceof L.LeanMatMul) {
+            const right = n.rhs?.matrixAppendShape();
+            if (!right) return null;
+            const left = n.lhs?.matrixAppendShape();
+            const rows = left?.rows ?? String(n.lhs).replace(/\s+/g, ' ').trim();
+            return { rows, cols: right.cols };
+        }
+        if (n instanceof L.LeanAppend) {
+            const parts = n.flattenAppend();
+            if (parts.length < 2) return null;
+            const shapes = parts.map((p) => p.matrixAppendShape());
+            if (shapes.some((s) => !s)) return null;
+            const same = (which) => shapes.every((s) => s[which] === shapes[0][which]);
+            if (same('cols') && !same('rows'))
+                return { rows: shapes.map((s) => s.rows).join(' ++ '), cols: shapes[0].cols };
+            if (same('rows') && !same('cols'))
+                return { rows: shapes[0].rows, cols: shapes.map((s) => s.cols).join(' ++ ') };
+        }
+        return null;
+    }
+
+    /**
+     * `Matrix (Fin r) (Fin c) α` or sugar `α ^ [r, c]` → normalized row and column type text.
+     * Multiline casts are a `LeanStatements` around that application.
+     * @returns {{ rows: string, cols: string } | null}
+     */
+    static matrixTypeAxes(typeNode) {
+        const L = Lean.classes;
+        let n = typeNode;
+        for (let i = 0; i < 6 && n; i++) {
+            if (n instanceof L.LeanStatements || n instanceof L.LeanParenthesis) {
+                const kids = (n.args || [n.arg]).filter((a) =>
+                    a && a.constructor?.name !== 'LeanLineComment' && a.constructor?.name !== 'LeanCaret'
+                );
+                if (kids.length !== 1) return null;
+                n = kids[0];
+                continue;
+            }
+            break;
+        }
+        const norm = (x) => String(x).replace(/\s+/g, ' ').trim();
+        // `α ^ [m, n]` (Syntax.LinearAlgebra.Matrix.Pow) ≡ Matrix (Fin m) (Fin n) α
+        if (n instanceof L.LeanPow && n.rhs instanceof L.LeanBracket) {
+            const br = n.rhs.arg;
+            if (br instanceof L.LeanArgsCommaSeparated && (br.args?.length ?? 0) >= 2)
+                return { rows: norm(br.args[0]), cols: norm(br.args[1]) };
+            return null;
+        }
+        if (!(n instanceof L.LeanArgsSpaceSeparated)) return null;
+        const args = n.args || [];
+        if (!(args[0] instanceof L.LeanToken) || args[0].text !== 'Matrix' || args.length < 3)
+            return null;
+        return { rows: norm(args[1]), cols: norm(args[2]) };
+    }
+
     static consumeBracketModifier(self) {
         const tokens = self.tokens;
         if (tokens[self.start_idx + 1] !== '[') return '';

@@ -1,5 +1,5 @@
 /-
-GetElem for Mathlib Matrix so `L[i]` is a Fun row and `L[i][j]` reads an entry.
+GetElem for Mathlib Matrix so `L[i]` is an `n ⇀ α` row and `L[i][j]` reads an entry.
 Validity is `True` (indices are typed by `m` / `n`, e.g. `Fin`).
 
 Do not add comma GetElem sugar `L[i, j]` here: it collides with List multi-index
@@ -15,12 +15,12 @@ namespace Matrix
 
 variable {m n : Type*} {α : Type*}
 
-/-- Row of a matrix as a `Fun`, so `L[i]` / `L[i][j]` work via `Fun` GetElem. -/
-instance : GetElem (Matrix m n α) m (Fun n α) (fun _ _ => True) where
+/-- Row of a matrix as `n ⇀ α`, so `L[i]` / `L[i][j]` work via Fun GetElem. -/
+instance : GetElem (Matrix m n α) m (n ⇀ α) (fun _ _ => True) where
   getElem A i _ := ⟨A i⟩
 
 @[simp] theorem getElem_apply (A : Matrix m n α) (i : m) :
-    (A[i] : Fun n α).toFun = A i :=
+    (A[i] : n ⇀ α).toFun = A i :=
   rfl
 
 @[simp] theorem getElem_getElem (A : Matrix m n α) (i : m) (j : n) :

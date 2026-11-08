@@ -49,6 +49,7 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
 
 ## Sub-agents
 - Work on https://github.com/math-proof/lemma.
+- Grok bots may use a local coding agent on `main` (WSL `~/github/lean`); never launch Cursor cloud agents unless deliberately demanded.
 - Modify only files in your assigned folder (agent name = folder name, e.g. Tensor → `Lemma/Tensor`).
 - To modify another folder, send the task to the agent named after that folder (see Inter-agent communication).
 - If that agent does not exist, ask `md` (primary) for help.

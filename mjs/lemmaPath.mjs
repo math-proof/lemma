@@ -15,6 +15,7 @@ import {
   pathUniqKeepEmpty,
   escapeHoleReLit,
   wrapHoleOpt,
+  storedHoleOpt,
 } from "../js/parser/lean/pathChoices.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -132,6 +133,7 @@ const CLASS_TOKEN = {
   Lean_cdotp: "Dot", // x ⬝ᵥ y → Dot (FiniteMRP/DotVecMul_D)
   LeanMatMul: "Dot", // A @ x (Dot.dot) → Dot (Random/ExpectDot/eq/DotExpect, Random/ExpectCondDot/eq/DotExpectCond)
   Lean_subseteq: "Subset", // A ⊆ B → A/sub/B, Subset_B (Real/AbsorbingSet/sub/PhaseSpace, Random/Quantile/sub/QuantileLower)
+  Lean_approx: "XEq", // a approx b -> XEq (not freeze to CoeGet_Add_1)
 };
 
 function cls(n) { return n?.constructor?.name || ""; }
@@ -3315,8 +3317,11 @@ export function expandSimplifiedHoleOpts(reSource) {
  */
 export function appendHoleRegexTrailingStar(reSource) {
   const s = String(reSource || "");
-  if (!s || s.endsWith("_*")) return s;
-  return s + "_*";
+  if (!s) return s;
+  const side = (part) => (part.endsWith("_*") ? part : part + "_*");
+  // Each house side may carry spare `_` before `/eq/`. The final side still ends with `_*`.
+  if (s.includes("/eq/")) return s.split("/eq/").map(side).join("/eq/");
+  return side(s);
 }
 
 export function parseHoleRegexTree(reSource) {
@@ -3573,9 +3578,11 @@ export function consistent(token, regex, pad) {
   const matchSrc = appendHoleRegexTrailingStar(src);
   const stored = boxed && Number.isFinite(Number(regex.pad)) ? Number(regex.pad) : null;
   const d = pad == null ? (stored != null ? stored : holeRegexTrailingPad(src0)) : Math.max(0, Number(pad) || 0);
-  const t =
-    normalizeHouseEqTokenToRegex(String(token || "").replace(/'/g, "").replace(/\./g, "/"), src) +
-    "_".repeat(d);
+  const norm = normalizeHouseEqTokenToRegex(String(token || "").replace(/'/g, "").replace(/\./g, "/"), src);
+  // Pad each house side. The `__` of `DivProbS__` / `SubVarS__` sits before `/eq/`, not only at the end.
+  const t = norm.includes("/eq/")
+    ? norm.split("/eq/").map((side) => side + "_".repeat(d)).join("/eq/")
+    : norm + "_".repeat(d);
   const tree = parseHoleRegexTree(matchSrc);
   if (tree.length) {
     try {
@@ -3713,8 +3720,15 @@ export function holeRegexLanguageTokens(reSource, opts = {}) {
   const raw = enumerateHoleRegexLanguage(reSource);
   const out = [];
   const seen = new Set();
+  // `Expect_Mul_Sub1DivProbS__/eq/SubVarS__`: the `__` on each side is the pad.
+  // Strip it per side before the unfilled-hole check, or the LHS piece is dropped.
+  const publishStem = (stem) => {
+    const rawStem = String(stem || "");
+    if (!rawStem.includes("/eq/")) return sanitizePathSeg(rawStem);
+    return rawStem.split("/eq/").map((side) => sanitizePathSeg(side)).join("/eq/");
+  };
   const push = (stem) => {
-    const s = sanitizePathSeg(stem);
+    const s = publishStem(stem);
     // Only publish stems the matcher accepts (trailing-_ budget may drop over-stripped forms).
     // A piece ending in `_` (including before `.eq.`) is an unfilled hole.
     if (!s || seen.has(s) || unfilledHolePiece(s) || !matchImplyHoleRegex(reSource, s)) return;
@@ -4030,7 +4044,7 @@ function isFreeMatrixAtom(node, opts) {
  */
 function decompImplyStruct(node, opts, binders) {
   const u = peelHoleExpr(node);
-  if (!u || typeof u.storedHoleRegex !== "function") return null;
+  if (!u) return null;
   if (!binders) binders = implyBinderSet(opts);
   if (!opts.quantNames) opts.quantNames = new Set();
   opts.isHole = opts.isHole || isImplyHole;
@@ -4042,7 +4056,114 @@ function decompImplyStruct(node, opts, binders) {
   opts.peel = opts.peel || peelHoleExpr;
   // Rebind on this opts. A copied `decomp` from another walk would drop `digitLiteral`.
   opts.decomp = (n, b = binders) => decompImplyStruct(n, opts, b);
-  return u.storedHoleRegex(opts, binders);
+
+  const c = cls(u);
+
+  // approx -> XEq(L)(R) (boss: XEq(Get__)(Mul(...)) / XEq(Get__)(Append(...))).
+  // Same paren-arg style as Append/Mul; not underscore-joined XEq(L)_R.
+  // Must run before native LeanRelational#storedHoleRegex (Lt/Gt/Le/Ge only) returns null and freezes.
+  if (c === "Lean_approx") {
+    const L = decompImplyStruct(u.lhs ?? u.args?.[0], opts, binders);
+    const R = decompImplyStruct(u.rhs ?? u.args?.[1], opts, binders);
+    if (!L && !R) return "XEq";
+    if (!L) return R ? "XEq_" + storedHoleOpt(R) : "XEq_";
+    if (!R) return "XEq" + storedHoleOpt(L) + "_";
+    // Boss: XEq(Get__)(Mul(...)) / XEq(Get__)(Append(...)) — second paren group, not _R.
+    return "XEq" + storedHoleOpt(L) + storedHoleOpt(R);
+  }
+
+  // ++ -> Append(L)(R). LeanAppend has no holeRegexTag / storedHoleRegex.
+  if (c === "LeanAppend") {
+    const L = decompImplyStruct(u.lhs ?? u.args?.[0], opts, binders);
+    const R = decompImplyStruct(u.rhs ?? u.args?.[1], opts, binders);
+    if (!L && !R) return "Append__";
+    if (!L) return R ? "Append_" + storedHoleOpt(R) : "Append_";
+    if (!R) return "Append" + storedHoleOpt(L) + "_";
+    return "Append" + storedHoleOpt(L) + storedHoleOpt(R);
+  }
+
+  // GetElem: colon-slice -> GetSlice__; binder/numeral-shift get -> Get__.
+  // Index may be nested ((a:b)) or Colon under Statements; walk a few peels.
+  if (c === "LeanGetElem") {
+    let idx = u.rhs ?? u.args?.[1];
+    for (let i = 0; i < 8 && idx; i++) {
+      const ic = cls(idx);
+      if (ic === "LeanColon") return "GetSlice__";
+      if (ic === "LeanParenthesis") { idx = idx.arg ?? idx.args?.[0]; continue; }
+      if (ic === "LeanStatements" || ic === "LeanArgsNewLineSeparated") {
+        idx = (idx.args || []).find((a) => cls(a) !== "LeanLineComment") || idx.args?.[0];
+        continue;
+      }
+      idx = peelHoleExpr(idx);
+      if (idx && cls(idx) === "LeanColon") return "GetSlice__";
+      break;
+    }
+    return "Get__";
+  }
+
+  // transpose -> T(...)
+  if (c === "LeanTranspose") {
+    const inner = decompImplyStruct(u.arg ?? u.args?.[0], opts, binders);
+    return inner ? "T" + storedHoleOpt(inner) : "T_";
+  }
+
+  // @ / Dot.dot (LeanMatMul) -> Dot(...); keep decompImplyStruct recurse (Softmax/Append/Get)
+  // rather than native storedHoleRegex alone. Tag is Dot, not Mul (CLASS_TOKEN LeanMatMul).
+  if (c === "LeanMatMul") {
+    const L = decompImplyStruct(u.lhs ?? u.args?.[0], opts, binders);
+    const R = decompImplyStruct(u.rhs ?? u.args?.[1], opts, binders);
+    if (!L && !R) return "Dot__";
+    if (!L) return R ? "Dot_" + storedHoleOpt(R) : "Dot_";
+    if (!R) return "Dot" + storedHoleOpt(L) + "_";
+    return "Dot" + storedHoleOpt(L) + storedHoleOpt(R);
+  }
+
+  // Native AST storedHoleRegex (Eq/Add/Sub/Dot/...). After Append/Get/MatMul overrides.
+  if (typeof u.storedHoleRegex === "function") {
+    const native = u.storedHoleRegex(opts, binders);
+    if (native) return native;
+  }
+
+  // Softmax / .sqrt property
+  if (c === "LeanProperty") {
+    const prop = u.rhs ?? u.args?.[1];
+    const raw = cls(prop) === "LeanToken" ? (prop.text || "") : "";
+    const propTok = raw ? nameToken(raw) : "";
+    if (/^softmax$/i.test(raw) || propTok === "Softmax") {
+      const inner = decompImplyStruct(u.lhs ?? u.args?.[0], opts, binders);
+      return inner ? "Softmax" + storedHoleOpt(inner) : "Softmax_";
+    }
+    if (raw === "sqrt" || propTok === "Sqrt") {
+      const arg = u.lhs ?? u.args?.[0];
+      if (opts.isHole(arg, opts, binders)) return "Sqrt_";
+      const inner = decompImplyStruct(arg, opts, binders);
+      return inner ? "Sqrt" + storedHoleOpt(inner) : "Sqrt_";
+    }
+  }
+
+  // sqrt unicode -> Sqrt_
+  if (c === "Lean_sqrt") {
+    const arg = u.arg ?? u.args?.[0];
+    if (opts.isHole(arg, opts, binders)) return "Sqrt_";
+    const inner = decompImplyStruct(arg, opts, binders);
+    return inner ? "Sqrt" + storedHoleOpt(inner) : "Sqrt_";
+  }
+
+  // Binary arith Mul/Div/Add/Sub when native storedHoleRegex missed (plain * /).
+  if (c === "LeanMul" || c === "LeanDiv" || c === "LeanAdd" || c === "LeanSub") {
+    const tag = CLASS_TOKEN[c];
+    const L = decompImplyStruct(u.lhs ?? u.args?.[0], opts, binders);
+    const R = decompImplyStruct(u.rhs ?? u.args?.[1], opts, binders);
+    const lHole = !L;
+    const rHole = !R;
+    if (lHole && rHole) return tag === "Mul" ? "Mul__" : tag;
+    if (lHole) return tag + "_" + storedHoleOpt(R);
+    if (rHole) return tag + storedHoleOpt(L) + "_";
+    return tag + storedHoleOpt(L) + storedHoleOpt(R);
+  }
+
+  if (opts.isHole(u, opts, binders)) return null;
+  return null;
 }
 
 const ITE_BINARY = {
@@ -4194,6 +4315,11 @@ function holeRegexExpr(node, opts) {
         // undefined → Prob/Grad/Var fall through to nameExpr freeze below.
         if (ge !== undefined) return ge;
       }
+      // ≈ under All/Any (child.holeRegex → frozen): nested XEq… not glued XEqCoe…
+      if (cls(n) === "Lean_approx") {
+        const dec = decompImplyStruct(n, opts);
+        if (dec) return dec;
+      }
       const frozen = nameExpr(n, opts);
       return frozen ? escapeHoleReLit(sanitizePathSeg(frozen)) : null;
     },
@@ -4216,11 +4342,17 @@ function holeRegexExpr(node, opts) {
     const cd = contDiffAppHoleRegex(u, opts);
     if (cd != null) return cd;
   }
+  // approx -> nested XEq(Get__)(Append...) (not nameExpr freeze CoeGet_Add_1).
+  if (cls(u) === "Lean_approx") {
+    const dec = decompImplyStruct(u, opts);
+    if (dec) return dec;
+  }
   // `∀ x, x ≠ 0 → 0 < ~x ⬝ᵥ A *ᵥ x` → `All_(Lt(0)(Dot_(MulVec)))`. The guard stays out.
   // `∀ a, ℙ[π'](x = a) ≠ 0` → `All_(Ne(Prob__)(0))`. Both probability holes stay `Prob__`.
+  // Stored All_(Fill) — not All_(_|Fill). (_| is match-time only (expandSimplifiedHoleOpts).
   if (cls(u) === "Lean_forall" && opts?.asGiven) {
     const dec = decompImplyStruct(u, { ...opts, digitLiteral: true });
-    if (dec && dec.includes("Dot_") && dec.includes("MulVec") && dec.includes("(") && !dec.includes("(_|"))
+    if (dec && dec.includes("(") && !dec.includes("(_|"))
       return dec;
     if (allNeProb0GivenName(u) === "All_NeProb_0") return "All_(Ne(Prob__)(0))";
   }
@@ -4539,8 +4671,16 @@ function eqHouseHoleRegexAlts(node, opts = {}) {
   const out = [];
   for (const L of lhsForms) {
     if (!L || L === "_") continue;
+    const storedL = storeHoleGroups(L);
     const house = storeHoleGroups(houseSide(L) + "/eq/" + houseSide(R));
     if (house && !out.includes(house)) out.push(house);
+    // The simplified LHS is its own regex: `Expect_Mul_Sub1DivProbS` matches it by pad.
+    if (storedL && storedL.includes("DivProbS__") && !out.includes(storedL)) out.push(storedL);
+    // House path uses that LHS with the plural variance `SubVarS__` (no parentheses).
+    if (storedL && storedL.includes("DivProbS__")) {
+      const plural = "(" + storedL + ")/eq/(SubVarS__)";
+      if (!out.includes(plural)) out.push(plural);
+    }
   }
   // `SubVarS` is the literal `SubVarS__` (pad restores `__`). No parentheses:
   // `Sub(VarS__)` would expand to `Sub(_|VarS__)` and make the token optional.
@@ -10855,9 +10995,12 @@ function printHuman(r) {
 function cli() {
   const argv = process.argv.slice(2);
   const json = argv.includes("--json");
+  const table = argv.includes("--table");
   const lemmaIdx = argv.indexOf("--lemma");
   const lemmaName = lemmaIdx >= 0 ? argv[lemmaIdx + 1] : null;
-  // --py <Section/Name/…> keeps that py module name; bare --py (or --py=auto) uses pyLink/Lemma/<current>.py
+  const fromIdx = argv.indexOf("--from");
+  const fromPath = fromIdx >= 0 ? argv[fromIdx + 1] : null;
+  // --py <Section/Name/...> keeps that py module name; bare --py (or --py=auto) uses pyLink/Lemma/<current>.py
   let py = null;
   const pyEq = argv.find((a) => a.startsWith("--py="));
   const pyIdx = argv.indexOf("--py");
@@ -10867,12 +11010,24 @@ function cli() {
     py = v && !v.startsWith("-") && !/\.lean$/.test(v) ? v : true;
   }
   const pyVal = typeof py === "string" ? py : null;
-  const file = argv.find((a) => !a.startsWith("-") && a !== lemmaName && a !== pyVal);
+  const reserved = new Set([lemmaName, pyVal, fromPath].filter(Boolean));
+  const file = argv.find((a) => !a.startsWith("-") && !reserved.has(a));
   if (!file) {
-    console.error("Usage: node mjs/lemmaPath.mjs [--json] [--lemma <name>] [--py [<Section/Name/…>]] <path-to.lean>");
+    console.error("Usage: node mjs/lemmaPath.mjs [--json] [--lemma <name>] [--py [<Section/Name/...>]] <path-to.lean>");
+    console.error("       node mjs/lemmaPath.mjs --table [--from <statement.lean>] <Lemma/.../.lean>");
     process.exit(1);
   }
   try {
+    if (table) {
+      // Lazy import keeps the suggest() hot path free of the table helper cycle.
+      import("./implyGivenConsistencyTable.mjs").then((m) => {
+        console.log(m.implyGivenConsistencyTable(file, { from: fromPath || undefined, lemma: lemmaName || undefined }));
+      }).catch((e) => {
+        console.error(e.message || e);
+        process.exit(1);
+      });
+      return;
+    }
     const result = suggest(file, lemmaName, { py });
     if (json) console.log(JSON.stringify(result, null, 2));
     else printHuman(result);

@@ -485,7 +485,8 @@ export class LeanParenthesis extends LeanPairedGroup {
             if (arg.lhs instanceof LeanBrace) return arg.lhs.latexArgs(syntax) ?? [arg.lhs.toLatex(syntax)];
             if (arg.rhs instanceof L.LeanToken && arg.rhs.text === 'Bool') return [arg.lhs.toLatex(syntax)];
             if (arg.isZeroOneTensor()) return [arg.toLatex(syntax)];
-            if (this.isLatexArgAscription()) return [arg.lhs.toLatex(syntax)];
+            if (this.isLatexArgAscription())
+                return [LeanParenthesis.peelNestedTermAscription(arg.lhs).toLatex(syntax)];
         }
         if (this.isLatexGetElemOperand())
             return [arg.toLatex(syntax)];
@@ -512,6 +513,10 @@ export class LeanParenthesis extends LeanPairedGroup {
         if (
             String(arg).includes('\n') &&
             !(arg instanceof L.LeanArgsIndented && arg.isMultilineApplication()) &&
+            // A line-broken `(e : T)` is still one ascription. Dropping the
+            // parentheses leaves `V : Matrix … ℝ : Matrix … ℝ*` with the second
+            // colon looking like it belongs to `ℝ`.
+            !(arg instanceof L.LeanColon) &&
             !this.latexParenRequired()
         )
             // Multi-row content (e.g. `(by …)` tactic block rendering as `align*`):
@@ -619,8 +624,35 @@ export class LeanParenthesis extends LeanPairedGroup {
         return false;
     }
 
+    /**
+     * Subject of nested term casts `((e : T₁) : T₂)` after the outer cast is elided.
+     * One layer leaves `(Q[:n] : Matrix … ℝ)` when the parent of that paren is the outer colon.
+     * Stops at `(e : Bool)`, `{…}` lhs, `(0 : Tensor …)` / `(1 : Tensor …)`, and `(_ : P)`.
+     * Does not drop `↑`.
+     */
+    static peelNestedTermAscription(node) {
+        let cur = node;
+        while (cur instanceof LeanParenthesis && cur.arg instanceof L.LeanColon) {
+            const colon = cur.arg;
+            if (colon.isZeroOneTensor()) break;
+            if (colon.lhs instanceof LeanBrace) break;
+            if (colon.rhs instanceof L.LeanToken && colon.rhs.text === 'Bool') break;
+            if (
+                colon.lhs instanceof L.LeanToken &&
+                colon.lhs.text === '_' &&
+                typeof colon.rhs.isProp === 'function' &&
+                colon.rhs.isProp({})
+            ) break;
+            cur = colon.lhs;
+        }
+        return cur;
+    }
+
     isLatexArgAscription() {
-        const arg = this.arg;
+        // `(( (e : T₁) : T₂ ))` — the `++` / `*` operand is often a parenthesis
+        // whose own arg is another parenthesis, not the colon. Unwrap those
+        // grouping parentheses so the nested cast is still one term cast.
+        const arg = this.latexContentArg();
         if (!(arg instanceof L.LeanColon)) return false;
         if (arg.isZeroOneTensor()) return false;
         if (arg.lhs instanceof LeanBrace) return false;
@@ -631,8 +663,20 @@ export class LeanParenthesis extends LeanPairedGroup {
             arg.lhs.text === '_' &&
             arg.rhs.isProp({})
         ) return false;
+        // `(n : ℤ).toNat`, `((n : ℤ) + 1 - (l : ℤ)).toNat`: `.toNat` is the ℤ
+        // projection. `n` and `l` are `ℕ`, so the cast is the receiver type.
+        if (this.feedsToNat()) return false;
         const p = this.parent;
-        // Binder of a lambda (`fun s (_ : Iic 0) => s`): the type is part of the binder.
+        // Binder of a lambda (`fun s (_ : Iic 0) => s`, `fun (i : Fin n) => …`):
+        // the type is part of the binder. A cast in the body (`=> (e : T)`) is not.
+        if (p instanceof L.LeanRightarrow || p instanceof L.Lean_mapsto) {
+            if (p.lhs === this) return false;
+            if (
+                p.lhs instanceof L.LeanArgsSpaceSeparated &&
+                p.lhs.args.includes(this)
+            ) return false;
+            return true;
+        }
         if (
             p instanceof L.LeanArgsSpaceSeparated &&
             (p.parent instanceof L.LeanRightarrow || p.parent instanceof L.Lean_mapsto) &&
@@ -648,7 +692,13 @@ export class LeanParenthesis extends LeanPairedGroup {
             p instanceof L.LeanGetElemQuote ||
             p instanceof L.LeanRelational ||
             p instanceof L.LeanArithmetic ||
-            p instanceof L.LeanUnaryArithmetic
+            p instanceof L.LeanUnaryArithmetic ||
+            // `if` / `then` / `else` branches are expressions (`(0 : ℝ*)`).
+            p instanceof L.LeanIte ||
+            // `(𝟙[n, n] : Matrix …).band_part` — `band_part` is already valid on 𝟙.
+            this.projectionValidWithoutCast() ||
+            // `append_row_left \n (V : Matrix …) \n …` — a cast passed as an argument.
+            this.isApplicationArgument()
         ) return true;
         // Big-operator body: elide only in scope position —
         // a parenthesized binder (`sum (i : Fin n), ...`) keeps its type ascription.
@@ -659,6 +709,64 @@ export class LeanParenthesis extends LeanPairedGroup {
             (arg.rhs.text === 'ℝ' || arg.rhs.text === 'Real') &&
             LeanParenthesis.isProbExpectAscriptionSubject(arg.lhs)
         ) return true;
+        return false;
+    }
+
+    /**
+     * `f \n (e : T) \n arg` under `:=`. Not the lemma telescope
+     * (`lemma main \n (h : P) : …`), whose indented parent is the result colon.
+     */
+    isApplicationArgument() {
+        const p = this.parent;
+        if (!(p instanceof L.LeanArgsNewLineSeparated)) return false;
+        // `append_row_left \n (cast) \n arg` — the function is the indented lhs.
+        // The cast is often args[0] of the newline list, not the function head.
+        let list = p;
+        while (list.parent instanceof L.LeanArgsNewLineSeparated) list = list.parent;
+        const ind = list.parent;
+        if (!(ind instanceof L.LeanArgsIndented) || ind.rhs !== list) return false;
+        // Lemma telescope `lemma main \n (h : P) : …`.
+        if (ind.parent instanceof L.LeanColon) return false;
+        const fun = ind.lhs;
+        if (fun instanceof LeanParenthesis && fun.latexContentArg() instanceof L.LeanColon)
+            return false;
+        return true;
+    }
+
+    /**
+     * Dot projection that does not need the cast: `band_part` on `𝟙`.
+     * A cast that changes the receiver (`(n : ℤ).toNat`) is not this.
+     */
+    projectionValidWithoutCast() {
+        const p = this.parent;
+        if (!(p instanceof L.LeanProperty)) return false;
+        if (!(p.rhs instanceof L.LeanToken) || p.rhs.text !== 'band_part') return false;
+        let subj = this.latexContentArg().lhs;
+        while (subj instanceof LeanParenthesis && !(subj.arg instanceof L.LeanColon))
+            subj = subj.arg;
+        const head = subj instanceof L.LeanGetElem ? subj.args?.[0] : subj;
+        return head instanceof L.LeanToken && head.text === '𝟙';
+    }
+
+    /**
+     * This cast is the receiver of `.toNat`, or it sits in that receiver
+     * (`(n : ℤ)` and `(l : ℤ)` inside `((n : ℤ) + 1 - (l : ℤ)).toNat`).
+     */
+    feedsToNat() {
+        let n = this.parent;
+        while (n) {
+            if (n instanceof L.LeanProperty)
+                return n.rhs instanceof L.LeanToken && n.rhs.text === 'toNat';
+            if (
+                n instanceof L.LeanArithmetic ||
+                n instanceof L.LeanUnaryArithmetic ||
+                n instanceof LeanParenthesis
+            ) {
+                n = n.parent;
+                continue;
+            }
+            return false;
+        }
         return false;
     }
 
@@ -722,12 +830,12 @@ export class LeanParenthesis extends LeanPairedGroup {
         const g = '9f'[n & 1];
         n >>= 1;
         const r = '9f'[n & 1];
-        // Nested \\colorbox{…}{$…$} closes the outer $ and turns spanning
-        // \\left/\\right into KaTeX nulldelimiters (invisible). Tuples / · sections
-        // need delimiters in ambient math, outside the colorbox $.
-        if (this.latexParenRequired())
-            return `\\mathord{\\left({\\colorbox{#${r}${g}${b}}{$%s$}}\\right)}`;
-        return `\\colorbox{#${r}${g}${b}}{$\\mathord{\\left(%s\\right)}$}`;
+        // The color box is text mode. A nested `\\colorbox{…}{$…$}` whose `$`
+        // sits inside this box's `$` closes the outer math, so the highlight
+        // runs past `\\right` (a `(Fin d_z)` box swallows `ℝ : Matrix`).
+        // Keep `\\left` / `\\right` in the ambient math; the `$` closes on this
+        // parenthesis alone.
+        return `\\mathord{\\left({\\colorbox{#${r}${g}${b}}{$%s$}}\\right)}`;
     }
 
     /**

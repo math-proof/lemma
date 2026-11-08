@@ -681,8 +681,14 @@ export class LeanPow extends LeanArithmetic {
     }
 
     strFormat() {
-        if (this.rhs instanceof L.LeanBracket)
+        // Compact `α^[…]` is Lean `Function.iterate`. A comma list is matrix
+        // shape sugar `α ^ [m, n]` (`Syntax.LinearAlgebra.Matrix.Pow`) and must
+        // keep spaces or the echo round-trip is parsed as iterate and rejects `,`.
+        if (this.rhs instanceof L.LeanBracket) {
+            if (this.rhs.arg instanceof L.LeanArgsCommaSeparated)
+                return super.strFormat();
             return '%s^%s';
+        }
         return super.strFormat();
     }
 

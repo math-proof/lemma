@@ -24,9 +24,9 @@ instance (priority := 1000) AsPathRV.process {Ω α : Type*} :
     AsPathRV (ℕ → Ω → α) Ω (ℕ → α) where
   path f := fun ω t ↦ f t ω
 
-/-- Process-style reading of `Fun ℕ (Ω → α)` so Expectation binders / AsPathRV.path work. -/
+/-- Process-style reading of `ℕ ⇀ (Ω → α)` so Expectation binders / AsPathRV.path work. -/
 @[reducible]
 instance (priority := 1000) AsPathRV.funProcess {Ω α : Type*} :
-    AsPathRV (Fun ℕ (Ω → α)) Ω (ℕ → α) where
+    AsPathRV (ℕ ⇀ (Ω → α)) Ω (ℕ → α) where
   path f := fun ω t ↦ f.toFun t ω
 
