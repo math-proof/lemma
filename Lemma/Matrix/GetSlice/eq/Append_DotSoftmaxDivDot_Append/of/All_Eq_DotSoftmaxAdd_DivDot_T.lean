@@ -196,15 +196,15 @@ private lemma main
   (Z[n + 1] : Matrix (Fin (n + 1)) (Fin d_z) ℝ*) ≈
     (Z[n] : Matrix (Fin n) (Fin d_z) ℝ*) ++
       (Q[n] @ (((K[n + 1 - l:n] :
-            Matrix (Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat)) (Fin d_z) ℝ) :
-          Matrix (Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat)) (Fin d_z) ℝ*)ᵀ ++
+            Matrix (Fin (n - ((n : ℤ) + 1 - (l : ℤ)).toNat)) (Fin d_z) ℝ) :
+          Matrix (Fin (n - ((n : ℤ) + 1 - (l : ℤ)).toNat)) (Fin d_z) ℝ*)ᵀ ++
             ((K[n:n + 1] :
-                Matrix (Fin (((n : ℤ) + 1).toNat - (n : ℤ).toNat)) (Fin d_z) ℝ) :
-              Matrix (Fin (((n : ℤ) + 1).toNat - (n : ℤ).toNat)) (Fin d_z) ℝ*)ᵀ) / √(d_z : ℝ*)).softmax *
+                Matrix (Fin (((n : ℤ) + 1).toNat - n)) (Fin d_z) ℝ) :
+              Matrix (Fin (((n : ℤ) + 1).toNat - n)) (Fin d_z) ℝ*)ᵀ) / √(d_z : ℝ*)).softmax *
         ((((V[n + 1 - l:n] :
-              Matrix (Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat)) (Fin d_z) ℝ) :
-            Matrix (Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat)) (Fin d_z) ℝ*)) ++
-          ((V[n:n + 1] : Matrix (Fin (((n : ℤ) + 1).toNat - (n : ℤ).toNat)) (Fin d_z) ℝ) : Matrix (Fin (((n : ℤ) + 1).toNat - (n : ℤ).toNat)) (Fin d_z) ℝ*)) := by
+              Matrix (Fin (n - ((n : ℤ) + 1 - (l : ℤ)).toNat)) (Fin d_z) ℝ) :
+            Matrix (Fin (n - ((n : ℤ) + 1 - (l : ℤ)).toNat)) (Fin d_z) ℝ*)) ++
+          ((V[n:n + 1] : Matrix (Fin (((n : ℤ) + 1).toNat - n)) (Fin d_z) ℝ) : Matrix (Fin (((n : ℤ) + 1).toNat - n)) (Fin d_z) ℝ*)) := by
 -- proof
   intro i a
   have hl : 0 < l := NeZero.pos l
@@ -343,18 +343,18 @@ private lemma main
     exact XEqSumS.of.All_XEq.OrAll_NotInfinite (Or.inl hnotB) hmul
   let kT :=
     ((K[n:n + 1] :
-        Matrix (Fin (((n : ℤ) + 1).toNat - (n : ℤ).toNat)) (Fin d_z) ℝ) :
-      Matrix (Fin (((n : ℤ) + 1).toNat - (n : ℤ).toNat)) (Fin d_z) ℝ*)ᵀ
+        Matrix (Fin (((n : ℤ) + 1).toNat - n)) (Fin d_z) ℝ) :
+      Matrix (Fin (((n : ℤ) + 1).toNat - n)) (Fin d_z) ℝ*)ᵀ
   let KT :=
     ((K[n + 1 - l:n] :
-        Matrix (Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat)) (Fin d_z) ℝ) :
-      Matrix (Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat)) (Fin d_z) ℝ*)ᵀ
+        Matrix (Fin (n - ((n : ℤ) + 1 - (l : ℤ)).toNat)) (Fin d_z) ℝ) :
+      Matrix (Fin (n - ((n : ℤ) + 1 - (l : ℤ)).toNat)) (Fin d_z) ℝ*)ᵀ
   let block :=
     ((Q[n] @ (KT ++ kT) / √(d_z : ℝ*)).softmax 1 *
       ((((V[n + 1 - l:n] :
-            Matrix (Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat)) (Fin d_z) ℝ) :
-          Matrix (Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat)) (Fin d_z) ℝ*)) ++
-        ((V[n:n + 1] : Matrix (Fin (((n : ℤ) + 1).toNat - (n : ℤ).toNat)) (Fin d_z) ℝ) : Matrix (Fin (((n : ℤ) + 1).toNat - (n : ℤ).toNat)) (Fin d_z) ℝ*)))
+            Matrix (Fin (n - ((n : ℤ) + 1 - (l : ℤ)).toNat)) (Fin d_z) ℝ) :
+          Matrix (Fin (n - ((n : ℤ) + 1 - (l : ℤ)).toNat)) (Fin d_z) ℝ*)) ++
+        ((V[n:n + 1] : Matrix (Fin (((n : ℤ) + 1).toNat - n)) (Fin d_z) ℝ) : Matrix (Fin (((n : ℤ) + 1).toNat - n)) (Fin d_z) ℝ*)))
   if hlt : (i : ℕ) < n then
     have hblock :
       ((Z[n] : Matrix (Fin n) (Fin d_z) ℝ*) ++ block) i a =
@@ -406,7 +406,7 @@ private lemma main
       omega
     have hs : n + 1 - l ≤ n := by
       omega
-    have hw : ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat) = n - (n + 1 - l) := by
+    have hw : (n - ((n : ℤ) + 1 - (l : ℤ)).toNat) = n - (n + 1 - l) := by
       omega
     have hkeep_iff (j : Fin (n + 1)) :
       keep (n : ℤ) (j : ℤ) = true ↔ n + 1 - l ≤ (j : ℕ) := by
@@ -432,7 +432,7 @@ private lemma main
       simp [F, e, hkf, hi]
     have hsumF := sum_window (F := F) hs hw hF0
     have hDe :
-      D (n + 1) i = ∑ t : Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat + (((n : ℤ) + 1).toNat - (n : ℤ).toNat)), Real.exp (raw n (n + 1 - l + (t : ℕ))) := by
+      D (n + 1) i = ∑ t : Fin (n - ((n : ℤ) + 1 - (l : ℤ)).toNat + (((n : ℤ) + 1).toNat - n)), Real.exp (raw n (n + 1 - l + (t : ℕ))) := by
       simp only [D, hi]
       have h0e (j : Fin (n + 1)) (hj : (j : ℕ) < n + 1 - l) : e n (j : ℕ) = 0 := by
         have hkf : keep (n : ℤ) (j : ℤ) = false := by
@@ -446,13 +446,13 @@ private lemma main
       have hsume := sum_window (F := fun j => e n (j : ℕ)) hs hw h0e
       rw [hsume]
       have hdim :
-        ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat + 1) =
-          ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat +
-            (((n : ℤ) + 1).toNat - (n : ℤ).toNat)) := by
+        (n - ((n : ℤ) + 1 - (l : ℤ)).toNat + 1) =
+          (n - ((n : ℤ) + 1 - (l : ℤ)).toNat +
+            (((n : ℤ) + 1).toNat - n)) := by
         omega
-      suffices ∑ t : Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat + 1),
+      suffices ∑ t : Fin (n - ((n : ℤ) + 1 - (l : ℤ)).toNat + 1),
           Real.exp (raw n (n + 1 - l + (t : ℕ))) =
-          ∑ t : Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat + (((n : ℤ) + 1).toNat - (n : ℤ).toNat)),
+          ∑ t : Fin (n - ((n : ℤ) + 1 - (l : ℤ)).toNat + (((n : ℤ) + 1).toNat - n)),
             Real.exp (raw n (n + 1 - l + (t : ℕ))) by
         refine (Finset.sum_congr rfl fun t _ => ?_).trans this
         have hkt : keep (n : ℤ) (↑(n + 1 - l + (t : ℕ))) = true := by
@@ -467,10 +467,10 @@ private lemma main
         (fun t => Real.exp (raw n (n + 1 - l + (t : ℕ))))
         (fun t => ?_)
       simp [finCongr]
-    have hkey (t : Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat + (((n : ℤ) + 1).toNat - (n : ℤ).toNat))) (b : Fin d_z) :
+    have hkey (t : Fin (n - ((n : ℤ) + 1 - (l : ℤ)).toNat + (((n : ℤ) + 1).toNat - n))) (b : Fin d_z) :
       (KT ++ kT) b t = (K[n + 1 - l + (t : ℕ)][b] : ℝ*) := by
-      if ht : (t : ℕ) < ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat) then
-        have hidx : Fin.castAdd (((n : ℤ) + 1).toNat - (n : ℤ).toNat) ⟨(t : ℕ), ht⟩ = t := by
+      if ht : (t : ℕ) < (n - ((n : ℤ) + 1 - (l : ℤ)).toNat) then
+        have hidx : Fin.castAdd (((n : ℤ) + 1).toNat - n) ⟨(t : ℕ), ht⟩ = t := by
           ext
           simp
         rw [← hidx, append_col_left]
@@ -480,10 +480,10 @@ private lemma main
         refine congrArg (fun j => (K[j][b] : ℝ*)) ?_
         omega
       else
-        have htw : (t : ℕ) = ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat) := by
+        have htw : (t : ℕ) = (n - ((n : ℤ) + 1 - (l : ℤ)).toNat) := by
           have := t.isLt
           omega
-        have hidx : Fin.natAdd ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat) (⟨0, by omega⟩ : Fin (((n : ℤ) + 1).toNat - (n : ℤ).toNat)) = t := by
+        have hidx : Fin.natAdd (n - ((n : ℤ) + 1 - (l : ℤ)).toNat) (⟨0, by omega⟩ : Fin (((n : ℤ) + 1).toNat - n)) = t := by
           ext
           simp [Fin.natAdd, htw]
         rw [← hidx, append_col_right]
@@ -492,71 +492,71 @@ private lemma main
           simp [Matrix.of_apply, Matrix.ofFunSlice, Fun.getSlice, Function.getSlice, FunSlice.slice]
         refine congrArg (fun j => (K[j][b] : ℝ*)) ?_
         omega
-    have hscore (t : Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat + (((n : ℤ) + 1).toNat - (n : ℤ).toNat))) :
+    have hscore (t : Fin (n - ((n : ℤ) + 1 - (l : ℤ)).toNat + (((n : ℤ) + 1).toNat - n))) :
       (Q[n] @ (KT ++ kT) / √(d_z : ℝ*)) ⟨0, by decide⟩ t =
         ↑(raw n (n + 1 - l + (t : ℕ))) := by
       simp only [Fun.dot_matrix_apply, Matrix.div_apply, hkey t, raw]
       exact score_coe (fun b => Q[n][b]) (fun b => K[n + 1 - l + (t : ℕ)][b])
-    have hexpScore (t : Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat + (((n : ℤ) + 1).toNat - (n : ℤ).toNat))) :
+    have hexpScore (t : Fin (n - ((n : ℤ) + 1 - (l : ℤ)).toNat + (((n : ℤ) + 1).toNat - n))) :
       Exp.exp ((Q[n] @ (KT ++ kT) / √(d_z : ℝ*)) ⟨0, by decide⟩ t) =
         ↑(Real.exp (raw n (n + 1 - l + (t : ℕ)))) := by
       rw [hscore t, exp_coe]
     have hsumScore :
-      (∑ t : Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat + (((n : ℤ) + 1).toNat - (n : ℤ).toNat)),
+      (∑ t : Fin (n - ((n : ℤ) + 1 - (l : ℤ)).toNat + (((n : ℤ) + 1).toNat - n)),
           Exp.exp ((Q[n] @ (KT ++ kT) / √(d_z : ℝ*)) ⟨0, by decide⟩ t)) =
         ↑(D (n + 1) i) := by
       simp_rw [hexpScore]
       have hmap :=
         (map_sum Hyperreal.coeRingHom.toRingHom
-          (fun t : Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat + (((n : ℤ) + 1).toNat - (n : ℤ).toNat)) => Real.exp (raw n (n + 1 - l + (t : ℕ)))) Finset.univ).symm
+          (fun t : Fin (n - ((n : ℤ) + 1 - (l : ℤ)).toNat + (((n : ℤ) + 1).toNat - n)) => Real.exp (raw n (n + 1 - l + (t : ℕ)))) Finset.univ).symm
       rwa [hDe]
-    have hsm (t : Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat + (((n : ℤ) + 1).toNat - (n : ℤ).toNat))) :
+    have hsm (t : Fin (n - ((n : ℤ) + 1 - (l : ℤ)).toNat + (((n : ℤ) + 1).toNat - n))) :
       ((Q[n] @ (KT ++ kT) / √(d_z : ℝ*)).softmax 1) ⟨0, by decide⟩ t =
         Exp.exp ((Q[n] @ (KT ++ kT) / √(d_z : ℝ*)) ⟨0, by decide⟩ t) /
-          ∑ t' : Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat + (((n : ℤ) + 1).toNat - (n : ℤ).toNat)),
+          ∑ t' : Fin (n - ((n : ℤ) + 1 - (l : ℤ)).toNat + (((n : ℤ) + 1).toNat - n)),
             Exp.exp ((Q[n] @ (KT ++ kT) / √(d_z : ℝ*)) ⟨0, by decide⟩ t') := by
       unfold Matrix.softmax
       rw [ite_eq_right (by decide : (1 : ℕ) ≠ 0)]
       rw [ite_eq_left (by decide : (1 : ℕ) = 1)]
       simp [Matrix.of_apply]
-    have hVw (t : Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat + (((n : ℤ) + 1).toNat - (n : ℤ).toNat))) :
+    have hVw (t : Fin (n - ((n : ℤ) + 1 - (l : ℤ)).toNat + (((n : ℤ) + 1).toNat - n))) :
       ((((V[n + 1 - l:n] :
-          Matrix (Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat)) (Fin d_z) ℝ) :
-        Matrix (Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat)) (Fin d_z) ℝ*)) ++
-        ((V[n:n + 1] : Matrix (Fin (((n : ℤ) + 1).toNat - (n : ℤ).toNat)) (Fin d_z) ℝ) : Matrix (Fin (((n : ℤ) + 1).toNat - (n : ℤ).toNat)) (Fin d_z) ℝ*)) t a =
+          Matrix (Fin (n - ((n : ℤ) + 1 - (l : ℤ)).toNat)) (Fin d_z) ℝ) :
+        Matrix (Fin (n - ((n : ℤ) + 1 - (l : ℤ)).toNat)) (Fin d_z) ℝ*)) ++
+        ((V[n:n + 1] : Matrix (Fin (((n : ℤ) + 1).toNat - n)) (Fin d_z) ℝ) : Matrix (Fin (((n : ℤ) + 1).toNat - n)) (Fin d_z) ℝ*)) t a =
         (V[n + 1 - l + (t : ℕ)][a] : ℝ*) := by
-      if ht : (t : ℕ) < ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat) then
-        have hidx : Fin.castAdd (((n : ℤ) + 1).toNat - (n : ℤ).toNat) ⟨(t : ℕ), ht⟩ = t := by
+      if ht : (t : ℕ) < (n - ((n : ℤ) + 1 - (l : ℤ)).toNat) then
+        have hidx : Fin.castAdd (((n : ℤ) + 1).toNat - n) ⟨(t : ℕ), ht⟩ = t := by
           ext
           simp
         have hL := append_row_left
           (((V[n + 1 - l:n] :
-              Matrix (Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat)) (Fin d_z) ℝ) :
-            Matrix (Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat)) (Fin d_z) ℝ*))
-          ((V[n:n + 1] : Matrix (Fin (((n : ℤ) + 1).toNat - (n : ℤ).toNat)) (Fin d_z) ℝ) : Matrix (Fin (((n : ℤ) + 1).toNat - (n : ℤ).toNat)) (Fin d_z) ℝ*) ⟨(t : ℕ), ht⟩
+              Matrix (Fin (n - ((n : ℤ) + 1 - (l : ℤ)).toNat)) (Fin d_z) ℝ) :
+            Matrix (Fin (n - ((n : ℤ) + 1 - (l : ℤ)).toNat)) (Fin d_z) ℝ*))
+          ((V[n:n + 1] : Matrix (Fin (((n : ℤ) + 1).toNat - n)) (Fin d_z) ℝ) : Matrix (Fin (((n : ℤ) + 1).toNat - n)) (Fin d_z) ℝ*) ⟨(t : ℕ), ht⟩
         have hentry := congrFun (hidx ▸ hL) a
         conv_rhs at hentry =>
           simp [Matrix.ofFunSlice, Matrix.of_apply, Fun.getSlice, Function.getSlice, FunSlice.slice]
         refine hentry.trans (congrArg (fun j => (V[j][a] : ℝ*)) ?_)
         omega
       else
-        have htw : (t : ℕ) = ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat) := by
+        have htw : (t : ℕ) = (n - ((n : ℤ) + 1 - (l : ℤ)).toNat) := by
           have := t.isLt
           omega
-        have hidx : Fin.natAdd ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat) (⟨0, by omega⟩ : Fin (((n : ℤ) + 1).toNat - (n : ℤ).toNat)) = t := by
+        have hidx : Fin.natAdd (n - ((n : ℤ) + 1 - (l : ℤ)).toNat) (⟨0, by omega⟩ : Fin (((n : ℤ) + 1).toNat - n)) = t := by
           ext
           simp [Fin.natAdd, htw]
         have hR := append_row_right
           (((V[n + 1 - l:n] :
-              Matrix (Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat)) (Fin d_z) ℝ) :
-            Matrix (Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat)) (Fin d_z) ℝ*))
-          ((V[n:n + 1] : Matrix (Fin (((n : ℤ) + 1).toNat - (n : ℤ).toNat)) (Fin d_z) ℝ) : Matrix (Fin (((n : ℤ) + 1).toNat - (n : ℤ).toNat)) (Fin d_z) ℝ*) (⟨0, by omega⟩ : Fin (((n : ℤ) + 1).toNat - (n : ℤ).toNat))
+              Matrix (Fin (n - ((n : ℤ) + 1 - (l : ℤ)).toNat)) (Fin d_z) ℝ) :
+            Matrix (Fin (n - ((n : ℤ) + 1 - (l : ℤ)).toNat)) (Fin d_z) ℝ*))
+          ((V[n:n + 1] : Matrix (Fin (((n : ℤ) + 1).toNat - n)) (Fin d_z) ℝ) : Matrix (Fin (((n : ℤ) + 1).toNat - n)) (Fin d_z) ℝ*) (⟨0, by omega⟩ : Fin (((n : ℤ) + 1).toNat - n))
         have hentry := congrFun (hidx ▸ hR) a
         conv_rhs at hentry =>
           simp [Matrix.ofFunSlice, Matrix.of_apply, Fun.getSlice, Function.getSlice, FunSlice.slice]
         refine hentry.trans (congrArg (fun j => (V[j][a] : ℝ*)) ?_)
         omega
-    have hewin (t : Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat + (((n : ℤ) + 1).toNat - (n : ℤ).toNat))) :
+    have hewin (t : Fin (n - ((n : ℤ) + 1 - (l : ℤ)).toNat + (((n : ℤ) + 1).toNat - n))) :
       e (i : ℕ) (n + 1 - l + (t : ℕ)) = Real.exp (raw n (n + 1 - l + (t : ℕ))) := by
       have hkt : keep ((i : ℕ) : ℤ) (↑(n + 1 - l + (t : ℕ))) = true := by
         rw [hi]
@@ -566,7 +566,7 @@ private lemma main
       simp only [e]
       rw [hkt]
       simp [hi]
-    have hterm (t : Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat + (((n : ℤ) + 1).toNat - (n : ℤ).toNat))) :
+    have hterm (t : Fin (n - ((n : ℤ) + 1 - (l : ℤ)).toNat + (((n : ℤ) + 1).toNat - n))) :
       F ⟨n + 1 - l + (t : ℕ), by have := t.isLt; omega⟩ =
         ((Q[n] @ (KT ++ kT) / √(d_z : ℝ*)).softmax 1) ⟨0, by decide⟩ t *
           (V[n + 1 - l + (t : ℕ)][a] : ℝ*) := by
@@ -577,9 +577,9 @@ private lemma main
         simp [ideal, F]
       rw [hsumI, hsumF]
       have hdim :
-        ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat + 1) =
-          ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat +
-            (((n : ℤ) + 1).toNat - (n : ℤ).toNat)) := by
+        (n - ((n : ℤ) + 1 - (l : ℤ)).toNat + 1) =
+          (n - ((n : ℤ) + 1 - (l : ℤ)).toNat +
+            (((n : ℤ) + 1).toNat - n)) := by
         omega
       refine (Fintype.sum_equiv (finCongr hdim)
         (fun t => F ⟨n + 1 - l + (t : ℕ), by have := t.isLt; omega⟩)
@@ -594,3 +594,4 @@ private lemma main
 
 
 -- created on 2026-11-07
+-- updated on 2026-11-08
