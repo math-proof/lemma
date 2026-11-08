@@ -30,7 +30,6 @@ from . import DetAppendHstackS
 from . import DetBlockStack_Pow
 from . import DetBlock_Stack_Pow
 from . import DetDot
-from . import DetDotMatPowShiftMatrix
 from . import DetDotStackS
 from . import DetDot_AppendHstackS
 from . import DetMul
@@ -145,8 +144,6 @@ from . import Zero
 from . import nn
 from . import All_Ge_ReducedMin
 from . import All_Le_ReducedMax
-from . import EqDotDot_ShiftMatrix
-from . import EqDot_DotShiftMatrix
 from . import EqToMatrixStack
 from . import GeRelu
 from . import Le_LogSumExp

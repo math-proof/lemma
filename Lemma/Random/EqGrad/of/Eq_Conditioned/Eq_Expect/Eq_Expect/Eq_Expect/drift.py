@@ -34,7 +34,7 @@ def prove(Eq):
                 Equal((V[π] ^ γ)(s[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t])),
                 Equal((MDV[π, π_quote] ^ γ)(s[t].bvar), Expectation[a:π_quote]((Q[π] ^ γ)(s[t].bvar, a[t]) | s[t]) - Pr[π, π_quote](s[t]) / Pr[s:π](s[t]) * KL(Pr[a:π_quote](a[t] | s[t]), Pr[a:π](a[t] | s[t]))))
 
-    Eq << Eq[3].this.find(Expectation).apply(Random.Expect.Conditioned.importance_sampling, π)
+    Eq << Eq[3].this.find(Expectation).apply(Random.All_Eq_Expect_CondSMulDivProbS_Cond.of.All_ImpEqSProb__0, π)
 
     Eq << Real.EqGrad.of.Eq.apply(Eq[-1], (π_quote,))
 

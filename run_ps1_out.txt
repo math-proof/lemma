@@ -1,37 +1,40 @@
-self.etype.shape = (n,), other.shape = () 
-these shape might contain unsimplified expression
-self.etype.shape = (n,), other.shape = () 
-these shape might contain unsimplified expression
-warning: UniversalSet without etype is prohibited!
-warning: UniversalSet without etype is prohibited!
-{"func": "apply", "line": 4, "code": "    e, S = imply.of(NotElement)", "file": "Lemma.Set.NotIn_SDiff.given.Or", "info": "cannot unpack non-iterable NoneType object", "type": "TypeError"}
-http://localhost/py/?module=Set.SDiff.eq.Conditionset.Eq_odd
-self.etype.shape = (-i + Min(n, i + u),), other.shape = (Min(u, -i + n),) 
-these shape might contain unsimplified expression
-shape might contain unsimplified expression:
- (Min(u, -i + n),) (-i + Min(n, i + u),)
-self.etype.shape = (Min(u, -i + n),), other.shape = (-i + Min(n, i + u),) 
-these shape might contain unsimplified expression
-error info is lost!
-{"info": "maximum recursion depth exceeded", "type": "RecursionError"}
-http://localhost/py/?module=Real.Eq.series.Infty.of.Eq.coefficient
-index = 18
-unknown relationship: Eq[18] Eq[18]
-index = 18
-unknown relationship: Eq[18] Eq[18]
-index = 18
-unknown relationship: Eq[18] Eq[18]
-todo:
-index = 0
-unknown relationship: Eq[0] Eq[0]
-index = 0
-unknown relationship: Eq[0] Eq[0]
-index = 0
-unknown relationship: Eq[0] Eq[0]
-unresolved cases
 'index' object has no attribute 'indices'
 {"func": "prove", "line": 10, "code": "    hv = Eq.x_h_equality.expr.lhs.indices[0]"}
 http://localhost/py/?module=Finset.All_And.mapping.Qu2v
+unresolved cases
+unresolved cases
+self.etype.shape = (b,), other.shape = () 
+these shape might contain unsimplified expression
+self.etype.shape = (b,), other.shape = () 
+these shape might contain unsimplified expression
+self.etype.shape = (b,), other.shape = () 
+these shape might contain unsimplified expression
+self.etype.shape = (b,), other.shape = () 
+these shape might contain unsimplified expression
+self.etype.shape = (b,), other.shape = () 
+these shape might contain unsimplified expression
+self.etype.shape = (b,), other.shape = () 
+these shape might contain unsimplified expression
+self.etype.shape = (b,), other.shape = () 
+these shape might contain unsimplified expression
+self.etype.shape = (b,), other.shape = () 
+these shape might contain unsimplified expression
+self.etype.shape = (b,), other.shape = () 
+these shape might contain unsimplified expression
+self.etype.shape = (b,), other.shape = () 
+these shape might contain unsimplified expression
+self.etype.shape = (b,), other.shape = () 
+these shape might contain unsimplified expression
+E:\github\py\Lemma\Real\Lim\eq\Add.py is doubtable
+error info is lost!
+{"info": "list index out of range", "type": "IndexError"}
+http://localhost/py/?module=Finset.All_Any_Eq_Stack.factorization_general
+{"func": "apply", "line": 3, "code": "    ((fx, (x, S[1])), R), (S[x], *domain) = all_contains.of(All[Element[Derivative]])", "file": "Lemma.Real.IsContinuous.of.IsDifferentiable", "info": "cannot unpack non-iterable NoneType object", "type": "TypeError"}
+http://localhost/py/?module=Real.In.of.Le.In.In.All_gt_0
+{"func": "apply", "line": 10, "code": "    assert not Aj._has(i)", "file": "Lemma.Bool.EqSum.of.Iff.collapse", "info": "", "type": "AssertionError"}
+http://localhost/py/?module=Tensor.Le.of.Eq.Eq.kmeans.monotony
+{"func": "apply", "line": 3, "code": "    (fx, (x, d)), (S[x], domain) = all_is_positive.of(All[Derivative > 0])", "info": "too many values to unpack (expected 2)", "type": "ValueError"}
+http://localhost/py/?module=Real.All_IsPositive.of.All_Gt_0
 self.etype.shape = (i - relu(i - l + 1) + 1,), other.shape = (Min(l, i + 1),) 
 these shape might contain unsimplified expression
 shape might contain unsimplified expression:
@@ -44,21 +47,38 @@ shape might contain unsimplified expression:
  (Min(i, l - 1) + 1,) (i - relu(i - l + 1) + 1,)
 self.etype.shape = (Min(i, l - 1) + 1,), other.shape = (i - relu(i - l + 1) + 1,) 
 these shape might contain unsimplified expression
-E:\github\py\Lemma\Finset\Binom\eq\Div\Binom\__init__.py warning, not proved!
-E:\github\py\Lemma\Finset\Binom\eq\Div\Binom\__init__.py warning, not proved!
-this proof is not safe!
-this proof is not safe!
-E:\github\py\Lemma\Real\Lim\eq\Add.py is doubtable
-
+{"func": "apply", "line": 3, "code": "    e, args = given.of(NotElement[FiniteSet])", "file": "Lemma.Set.Ne.Ne.of.NotIn_Finset", "info": "cannot unpack non-iterable NoneType object", "type": "TypeError"}
+http://localhost/py/?module=Set.In_Finset.of.OrEqS
+()
+index = 0
+unknown relationship: Eq[0] Eq[0]
+index = 0
+unknown relationship: Eq[0] Eq[0]
+index = 0
+unknown relationship: Eq[0] Eq[0]
+self.etype.shape = (-i + Min(n, i + u),), other.shape = (Min(u, -i + n),) 
+these shape might contain unsimplified expression
+shape might contain unsimplified expression:
+ (Min(u, -i + n),) (-i + Min(n, i + u),)
+self.etype.shape = (Min(u, -i + n),), other.shape = (-i + Min(n, i + u),) 
+these shape might contain unsimplified expression
+self.etype.shape = (D,), other.shape = () 
+these shape might contain unsimplified expression
+self.etype.shape = (D,), other.shape = () 
+these shape might contain unsimplified expression
+self.etype.shape = (D,), other.shape = () 
+these shape might contain unsimplified expression
+unresolved cases
+unresolved cases
 rowcount = 1 from delete from axiom where user=%s and axiom = %s
-total_timing = 141.0115789204456
-average_timing = 4.406611841263925
-total timing = 141.0115789204456
+total_timing = 145.18809469781854
+average_timing = 4.537127959306829
+total timing = 145.18809469781854
 executing:  load data local infile "C:/Users/ADMINI~1/AppData/Local/Temp/axiom-0.tsv" replace into table `axiom` character set utf8mb4
-time cost = 4.521035432815552
+time cost = 0.5437259674072266
 os.remove(tsv) C:/Users/ADMINI~1/AppData/Local/Temp/axiom-0.tsv
-rowcount = 8547
-seconds cost    = 64.83616542816162
+rowcount = 8468
+seconds cost    = 53.21887469291687
 total theorems  = 4291
 total plausible = 0
 total failed    = 0
@@ -585,6 +605,7 @@ E:\github\py/Lemma\Fin
 py = E:\github\py/Lemma\Fin\All_UFn\Is\AndAll.py
 py = E:\github\py/Lemma\Fin\Any\Is\Any_Append.py
 py = E:\github\py/Lemma\Fin\Any\Is\Any_Cons.py
+py = E:\github\py/Lemma\Fin\Image_FinUniv\eq\Univ.py
 py = E:\github\py/Lemma\Fin\Sum\of\All_Eq.py
 py = E:\github\py/Lemma\Fin\Sum_BFn\comm.py
 E:\github\py/Lemma\Finset
@@ -606,6 +627,7 @@ py = E:\github\py/Lemma\Finset\Add\eq\Sum\Sub.py
 py = E:\github\py/Lemma\Finset\AddSumS\eq\Sum_Add_Sum.py
 py = E:\github\py/Lemma\Finset\AddSumS_SquareSub\eq\AddAddSumS\of\Eq_DivSum\Eq_DivSum\Eq_Div_Add.py
 py = E:\github\py/Lemma\Finset\AddSumS_SquareSub\eq\AddAddSumS\of\Eq_DivSum\Eq_DivSum\Eq_Sub\Eq_AddDiv_Add\parallel_variance.py
+py = E:\github\py/Lemma\Finset\Add_Min\In\Ico\of\Ge_0.py
 py = E:\github\py/Lemma\Finset\All\And\of\All_And\Cholesky\real.py
 py = E:\github\py/Lemma\Finset\All\And\of\All_And\Cholesky\__init__.py
 py = E:\github\py/Lemma\Finset\All\And\of\Eq_Adjoint\Imp_Gt_0\Eq_Ite\Cholesky.py
@@ -617,8 +639,7 @@ py = E:\github\py/Lemma\Finset\All_And\mapping\Qu2v.py
 py = E:\github\py/Lemma\Finset\All_Any_Eq\permutation.py
 py = E:\github\py/Lemma\Finset\All_Any_Eq_Stack\factorization_general.py
 py = E:\github\py/Lemma\Finset\All_Any_In\mapping\Qu2v.py
-py = E:\github\py/Lemma\Finset\All_GeRootSDiv_\Sigma\Binom\symmetric_mean_inequality.py
-py = E:\github\py/Lemma\Finset\All_Gt_\K\Zero.py
+py = E:\github\py/Lemma\Finset\All_GeRootSDivSigma\Binom.py
 py = E:\github\py/Lemma\Finset\All_In\of\All_In\swapn\MatProd.py
 py = E:\github\py/Lemma\Finset\All_In\of\Eq\All_In\swap2.py
 py = E:\github\py/Lemma\Finset\All_In_MatProd\permutation.py
@@ -640,7 +661,6 @@ py = E:\github\py/Lemma\Finset\And\of\Eq\index.py
 py = E:\github\py/Lemma\Finset\And\of\Eq_Adjoint\All_Gt_0\Eq_Ite\l00.py
 py = E:\github\py/Lemma\Finset\And\of\Eq_Adjoint\All_Gt_0\Eq_Ite\l11.py
 py = E:\github\py/Lemma\Finset\And\of\Eq_Adjoint\All_Gt_0\Eq_Ite\l22.py
-py = E:\github\py/Lemma\Finset\And\of\Eq_Adjoint\Imp_Gt_0\Eq_Ite\Cholesky.py
 py = E:\github\py/Lemma\Finset\And\of\Eq_Adjoint\Imp_Gt_0\Imp_Eq\All_And\Cholesky.py
 py = E:\github\py/Lemma\Finset\And\of\Eq_Sum\Ge\squeeze.py
 py = E:\github\py/Lemma\Finset\And\of\Eq_Transpose\Imp_Gt_0\Eq_Ite\Cholesky.py
@@ -649,7 +669,6 @@ py = E:\github\py/Lemma\Finset\Any\And\of\Eq_Adjoint\Imp_Gt_0\Cholesky.py
 py = E:\github\py/Lemma\Finset\Any\And\of\Eq_Transpose\Imp_Gt_0\Cholesky.py
 py = E:\github\py/Lemma\Finset\Any\Eq\of\Eq\index.py
 py = E:\github\py/Lemma\Finset\Any\Eq\of\Eq\index_general.py
-py = E:\github\py/Lemma\Finset\Any\Eq\of\Eq_Adjoint\Imp_Gt_0\Cholesky.py
 py = E:\github\py/Lemma\Finset\Any\Eq\of\Eq_Transpose\Imp_Gt_0\Cholesky.py
 py = E:\github\py/Lemma\Finset\Any_Eq_Sub_1\of\EqImageRange.py
 py = E:\github\py/Lemma\Finset\AscFactorial\eq\Inv\AscFactorial.py
@@ -705,7 +724,6 @@ py = E:\github\py/Lemma\Finset\Det\Pow\eq\Pow.py
 py = E:\github\py/Lemma\Finset\Det\Stack\eq\Mul\Prod.py
 py = E:\github\py/Lemma\Finset\Det\Stack\eq\Prod\vandermonde.py
 py = E:\github\py/Lemma\Finset\DetBlock\eq\PowNegativeOneMul.py
-py = E:\github\py/Lemma\Finset\DetBlock_Stack_MulPowS\eq\Mul_Prod_Factorial\vandermonde.py
 py = E:\github\py/Lemma\Finset\DetBlock_Stack_Pow\eq\Mul_Prod\vandermonde\ratio.py
 py = E:\github\py/Lemma\Finset\DetBlock_Stack_Pow\eq\Mul_Prod_Factorial\vandermonde.py
 py = E:\github\py/Lemma\Finset\DetBlock_Stack_PowAdd\eq\Mul_Prod_Factorial\vandermonde.py
@@ -732,7 +750,6 @@ py = E:\github\py/Lemma\Finset\Eq\Diff\Welford\of\Eq_ReducedSum\Eq_Sum\unbiased.
 py = E:\github\py/Lemma\Finset\Eq\Diff\Welford\of\Eq_ReducedSum\Eq_Sum\__init__.py
 py = E:\github\py/Lemma\Finset\Eq\given\Eq\rsolve.py
 py = E:\github\py/Lemma\Finset\Eq\of\Eq\bilinear\symm.py
-py = E:\github\py/Lemma\Finset\Eq\of\Eq\Eq\catalan\recurrence.py
 py = E:\github\py/Lemma\Finset\Eq\of\Eq\Eq\permutation\pop\Finset.py
 py = E:\github\py/Lemma\Finset\Eq\of\Eq\Eq\permutation\push.py
 py = E:\github\py/Lemma\Finset\Eq\of\Eq\index\Delta\Get.py
@@ -771,6 +788,7 @@ py = E:\github\py/Lemma\Finset\EqSum\of\Eq\Eq\unshift.py
 py = E:\github\py/Lemma\Finset\EqSum\of\Eq_Ite.py
 py = E:\github\py/Lemma\Finset\EqSwapMatrix\of\Eq\swap.py
 py = E:\github\py/Lemma\Finset\Eq_0\Diff\of\Lt.py
+py = E:\github\py/Lemma\Finset\Eq_DivBinomMul2\of\All_Eq_Sum_Mul\Eq_1.py
 py = E:\github\py/Lemma\Finset\Eq_Sum\given\Eq\rsolve.py
 py = E:\github\py/Lemma\Finset\Factorial\eq\Mul\Factorial2.py
 py = E:\github\py/Lemma\Finset\Factorial\eq\Mul\__init__.py
@@ -806,10 +824,12 @@ py = E:\github\py/Lemma\Finset\Inv\eq\Block.py
 py = E:\github\py/Lemma\Finset\K\eq\Add\definition.py
 py = E:\github\py/Lemma\Finset\K\gt\Zero\of\All_Gt_0.py
 py = E:\github\py/Lemma\Finset\K\gt\Zero\__init__.py
+py = E:\github\py/Lemma\Finset\K\Gt_0\of\All_Ge_1\Gt_0.py
 py = E:\github\py/Lemma\Finset\K\ne\Zero.py
 py = E:\github\py/Lemma\Finset\LeAbs\Sum\of\Eq_0.py
 py = E:\github\py/Lemma\Finset\LeAddSDivS\of\LeAbsSSubGet_Sub_1DivSum.py
 py = E:\github\py/Lemma\Finset\LeAddSDivS\of\LeAbsSSub_DivSum.py
+py = E:\github\py/Lemma\Finset\LeAddSumS_SquareSub_Div_Sum\of\LeAbsSSub_Div_Sum\NotIn\In\GtCard_0.py
 py = E:\github\py/Lemma\Finset\LeProd\of\All_Le.py
 py = E:\github\py/Lemma\Finset\LeProd\of\Le\Le\push.py
 py = E:\github\py/Lemma\Finset\LeProd\of\Le\Le\unshift.py
@@ -837,6 +857,7 @@ py = E:\github\py/Lemma\Finset\MatProd\limits\concat.py
 py = E:\github\py/Lemma\Finset\MatProd\limits\pop\Slice.py
 py = E:\github\py/Lemma\Finset\MatProd\limits\shift\Slice.py
 py = E:\github\py/Lemma\Finset\MatProd\limits\subst\offset.py
+py = E:\github\py/Lemma\Finset\Mod\In_IcoNeg\of\Lt_0.py
 py = E:\github\py/Lemma\Finset\Mul\DescFactorial\eq\Add.py
 py = E:\github\py/Lemma\Finset\Mul\eq\Add\HK\KH.py
 py = E:\github\py/Lemma\Finset\Mul\eq\AscFactorial\push.py
@@ -854,7 +875,7 @@ py = E:\github\py/Lemma\Finset\Mul\Sum\absorb.py
 py = E:\github\py/Lemma\Finset\MulProdS\eq\Prod_Mul.py
 py = E:\github\py/Lemma\Finset\Mul_Prod\eq\Prod.py
 py = E:\github\py/Lemma\Finset\Mul_Sum\eq\Sum_Mul.py
-py = E:\github\py/Lemma\Finset\Ne\of\Ge\fermat\last_theorem.py
+py = E:\github\py/Lemma\Finset\Ne\of\Ge.py
 py = E:\github\py/Lemma\Finset\Ne_0\Alpha\of\All_Gt_0\offset.py
 py = E:\github\py/Lemma\Finset\Ne_0\Alpha\of\All_Gt_0\__init__.py
 py = E:\github\py/Lemma\Finset\Ne_0\Inv\of\Ne_0.py
@@ -981,7 +1002,9 @@ py = E:\github\py/Lemma\Finset\Sum\lt\Zero\of\All_Lt_0.py
 py = E:\github\py/Lemma\Finset\Sum\Mul\Binom\eq\Delta.py
 py = E:\github\py/Lemma\Finset\Sum\Mul\eq\Add.py
 py = E:\github\py/Lemma\Finset\Sum\Mul\Stirling\eq\Delta.py
+py = E:\github\py/Lemma\Finset\Sum\of\AllInIco\AllLt.py
 py = E:\github\py/Lemma\Finset\Sum\of\All_Eq.py
+py = E:\github\py/Lemma\Finset\Sum\of\All_In_Ico\All_Lt.py
 py = E:\github\py/Lemma\Finset\Sum\SDiff\eq\Add.py
 py = E:\github\py/Lemma\Finset\Sum\Stirling\eq\AscFactorial.py
 py = E:\github\py/Lemma\Finset\Sum\Stirling\eq\DescFactorial.py
@@ -1005,6 +1028,7 @@ py = E:\github\py/Lemma\Finset\Sum_Mul\eq\Mul_Sum.py
 py = E:\github\py/Lemma\Finset\Sum_MulBoolAnd\eq\Sum.py
 py = E:\github\py/Lemma\Finset\Sum_MulMul_AscFactorial_Stirling\eq\Pow.py
 py = E:\github\py/Lemma\Finset\Sum_SquareSub\eq\Sub_SquareSum.py
+py = E:\github\py/Lemma\Finset\Sum_SquareSub_DivSum\eq\AddMul_Sum_SquareSubDivSSum.py
 E:\github\py/Lemma\Int
 py = E:\github\py/Lemma\Int\Abs\eq\Ite\Eq_0.py
 py = E:\github\py/Lemma\Int\Abs\eq\Ite\Le_0.py
@@ -1043,7 +1067,6 @@ py = E:\github\py/Lemma\Int\Ceil\eq\FloorDivSub_Sign.py
 py = E:\github\py/Lemma\Int\Ceil\eq\Max.py
 py = E:\github\py/Lemma\Int\Ceil\eq\Minima.py
 py = E:\github\py/Lemma\Int\Ceil\eq\NegFloorNeg.py
-py = E:\github\py/Lemma\Int\Ceil\le\Add_\Floor\One.py
 py = E:\github\py/Lemma\Int\Ceil\le\Zero\of\Lt_0.py
 py = E:\github\py/Lemma\Int\CeilAddDiv_2\eq\AddCeilSub_Div\of\Odd.py
 py = E:\github\py/Lemma\Int\CeilDivSign\eq\One\of\Ne_0.py
@@ -1231,7 +1254,7 @@ py = E:\github\py/Lemma\Int\Mul\eq\Floor.py
 py = E:\github\py/Lemma\Int\Mul\gt\Zero\given\And\Lt_0.py
 py = E:\github\py/Lemma\Int\Mul\Neg.py
 py = E:\github\py/Lemma\Int\MulAbsS\eq\AbsMul.py
-py = E:\github\py/Lemma\Int\Mul_CeilDiv\le\Sub_\Add\One.py
+py = E:\github\py/Lemma\Int\MulCeilDiv\le\SubAdd1\of\Gt_0.py
 py = E:\github\py/Lemma\Int\Mul_FloorDiv\ge\SubAdd_1\of\Gt_0.py
 py = E:\github\py/Lemma\Int\Mul_ModDiv\eq\Sub_Mod.py
 py = E:\github\py/Lemma\Int\Ne_0\given\Abs\gt\Zero.py
@@ -1257,6 +1280,26 @@ py = E:\github\py/Lemma\Int\Sub\ne\Zero\of\Ne.py
 py = E:\github\py/Lemma\Int\Sub\Square\eq\Mul.py
 py = E:\github\py/Lemma\Int\SubAbs\ge\Zero.py
 py = E:\github\py/Lemma\Int\SubCeil\eq\FracNeg.py
+E:\github\py/Lemma\Matrix
+py = E:\github\py/Lemma\Matrix\All_InDotSwapMatrix\of\Eq_SetOf_EqRange.py
+py = E:\github\py/Lemma\Matrix\Any_And_Eq_Mul_Adjoint\of\All_Lt0Dot_MulVec\EqAdjoint.py
+py = E:\github\py/Lemma\Matrix\Any_Eq_Dot_MatProd_SwapMatrix.py
+py = E:\github\py/Lemma\Matrix\AppendHstackS\eq\MatProd_SwapMatrix\of\Le.py
+py = E:\github\py/Lemma\Matrix\AppendHstackS\eq\SwapMatrix.py
+py = E:\github\py/Lemma\Matrix\DetDotMatPowShiftMatrix\eq\MulNeg_Det.py
+py = E:\github\py/Lemma\Matrix\DetMulStackS_MulPow\eq\Mul_Prod_Factorial\of\Le.py
+py = E:\github\py/Lemma\Matrix\DetStack_Sum_Ite\eq\Prod_MulMulProdS\of\EqSum.py
+py = E:\github\py/Lemma\Matrix\Dot\eq\Expr\swap\left.py
+py = E:\github\py/Lemma\Matrix\Eq\Cup\Finset\of\Eq_Dot.py
+py = E:\github\py/Lemma\Matrix\Eq\Sum\Pow\of\Eq_Dot.py
+py = E:\github\py/Lemma\Matrix\EqDotDot_ShiftMatrix.py
+py = E:\github\py/Lemma\Matrix\EqDotDot_SwapMatrix.py
+py = E:\github\py/Lemma\Matrix\EqDot_DotShiftMatrix.py
+py = E:\github\py/Lemma\Matrix\EqMul_T_1\IsLowerTriangular\IsUpperTriangular\EqMulS.py
+py = E:\github\py/Lemma\Matrix\Eq_Mul_Adjoint\of\All_Eq_Ite__Ite_Sqrt_0\All_Lt0Dot_MulVec\EqAdjoint.py
+py = E:\github\py/Lemma\Matrix\SetOfDotGetSwapMatrix\eq\Range.py
+py = E:\github\py/Lemma\Matrix\Stack\eq\Dot\swapn\helper.py
+py = E:\github\py/Lemma\Matrix\XEq_Append_MulSoftmaxDivMul_AppendTSGetSlice\of\All_XEq_MulSoftmaxAddDivMul_T\kv_cache.py
 E:\github\py/Lemma\Nat
 py = E:\github\py/Lemma\Nat\Add\eq\Max.py
 py = E:\github\py/Lemma\Nat\Add\eq\Min.py
@@ -1856,9 +1899,10 @@ py = E:\github\py/Lemma\Random\All_Eq1Integral_ProbCond.py
 py = E:\github\py/Lemma\Random\All_EqIntegral_ProbJoint\of\PSpace_Joint.py
 py = E:\github\py/Lemma\Random\All_EqProbCondJoint\cond.py
 py = E:\github\py/Lemma\Random\All_EqProbCondJoint\__init__.py
-py = E:\github\py/Lemma\Random\All_Eq_AddLogSumExpAdd\All_EqNegLogProb\of\All_Eq_Log\All_Eq_Sum_Exp\All_Eq_LogProbCond\All_Eq_LogProbCond\All_Eq_LogProbJoint\All_Lt0Prob\IsDiscreteHMM.py
-py = E:\github\py/Lemma\Random\All_Eq_Add_MaxAdd\EqMax_ProbJoint\of\All_Eq_Max\Eq_LogProbCond\Eq_LogProbCond\Eq_LogProbJoint\All_Lt0ProbJoint\IsDiscreteHMM.py
+py = E:\github\py/Lemma\Random\All_Eq_AddLogSumExpAdd\All_EqNegLogProb\of\All_Eq_Sum_Exp\Eq_LogProbCond\Eq_LogProbCond\Eq_LogProbJoint\GtProbJoint_0\IsDiscreteHMM.py
+py = E:\github\py/Lemma\Random\All_Eq_Add_MaxAdd\EqMax_ProbJoint\of\All_Eq_LogProbCond\All_Eq_LogProbCond\Eq_LogProbJoint\All_Lt0ProbJoint\IsDiscreteHMM.py
 py = E:\github\py/Lemma\Random\All_Eq_DivProbS.py
+py = E:\github\py/Lemma\Random\All_Eq_Expect_CondSMulDivProbS_Cond\of\All_ImpEqSProb__0.py
 py = E:\github\py/Lemma\Random\All_Eq_Integral_ProbJoint\of\PSpace_Joint.py
 py = E:\github\py/Lemma\Random\All_Eq_MulProbCond\of\PSpace_Joint.py
 py = E:\github\py/Lemma\Random\All_ImpNe0ProbCond.py
@@ -1869,11 +1913,10 @@ py = E:\github\py/Lemma\Random\All_NeProb_0\All_NeProb_0\of\All_Ne0ProbJoint.py
 py = E:\github\py/Lemma\Random\All_NeProb_0\of\All_Ne0ProbJoint\weighted.py
 py = E:\github\py/Lemma\Random\All_NeProb_0\of\All_Ne0ProbJoint\__init__.py
 py = E:\github\py/Lemma\Random\And\Eq\Conditioned\of\Eq.py
-py = E:\github\py/Lemma\Random\And\Eq\of\Distributed.py
-py = E:\github\py/Lemma\Random\And\Eq\of\Eq_Inv.py
 py = E:\github\py/Lemma\Random\And\Ge\of\Eq_Conditioned\Eq_Expect\Eq_Expect\Eq_Expect\Ge\drift.py
 py = E:\github\py/Lemma\Random\And\Ne_0\of\Ne_0\Gt.py
 py = E:\github\py/Lemma\Random\And\of\Eq_0\In\variance_reduction.py
+py = E:\github\py/Lemma\Random\ArgMax_ProbCond\eq\ArgMax_Mul_Prod_ProbCond\of\NeProbJoint__0\All_CondIndep.py
 py = E:\github\py/Lemma\Random\CondIndep\of\All_CondIndep\All_Measurable\forget_history.py
 py = E:\github\py/Lemma\Random\Conditioned\of\ProbCond\ne\Zero\EqConditioned\joint.py
 py = E:\github\py/Lemma\Random\Cov\Add\eq\Add\Cov.py
@@ -1885,26 +1928,23 @@ py = E:\github\py/Lemma\Random\Cov\eq\Var.py
 py = E:\github\py/Lemma\Random\Cov\Expect\eq\Sub\Expect.py
 py = E:\github\py/Lemma\Random\Cov\ReducedSum\eq\Sum\Cov.py
 py = E:\github\py/Lemma\Random\Cov\Sum\eq\Sum\Cov.py
-py = E:\github\py/Lemma\Random\Distributed\Add\of\Eq_Conditioned\Distributed\Distributed\gaussian.py
 py = E:\github\py/Lemma\Random\Distributed\ChiSquared\of\Distributed.py
-py = E:\github\py/Lemma\Random\Distributed\ChiSquared\of\Eq_Conditioned\Distributed.py
 py = E:\github\py/Lemma\Random\Distributed\given\Eq\Prob.py
 py = E:\github\py/Lemma\Random\Distributed\Is\Eq\Prob.py
 py = E:\github\py/Lemma\Random\Distributed\of\Gt_0\Distributed\scale\gaussian.py
 py = E:\github\py/Lemma\Random\Distributed\of\Lt_0\Distributed\scale\gaussian.py
 py = E:\github\py/Lemma\Random\Distributed\of\Ne_0\Distributed\scale\gaussian.py
+py = E:\github\py/Lemma\Random\DistributedAdd\of\Distributed_Gaussian\Distributed_Gaussian\Indep.py
+py = E:\github\py/Lemma\Random\Distributed_ChiSquared\of\All_Distributed_Gaussian\All_Indep.py
 py = E:\github\py/Lemma\Random\Dot\eq\Expect.py
-py = E:\github\py/Lemma\Random\Eq\ArgMax\Mul\Prod_ProbCond\of\Ne_0\Eq.py
+py = E:\github\py/Lemma\Random\Eq\Any_Eq_ExpectCondAdd_MulAndAny_Eq_ExpectCondAdd_Mul\of\All_Eq\All_Eq\All_Eq_ExpectCondDotPow\All_Eq_ExpectCondDotPow\All_Eq\In_Ico.py
 py = E:\github\py/Lemma\Random\Eq\ArgMin\Mul\Prod_ProbCond\of\Ne_0\Eq.py
 py = E:\github\py/Lemma\Random\Eq\Conditioned\Sum\Square\of\Eq_Conditioned.py
 py = E:\github\py/Lemma\Random\Eq\Expect\Bessel_correction\of\Eq_Conditioned\Eq_Expect\Eq_Var.py
 py = E:\github\py/Lemma\Random\Eq\given\Eq\Prob.py
-py = E:\github\py/Lemma\Random\Eq\Lim\Prob\of\Eq_Conditioned\Eq_Expect\Eq_Var\law_of_large_numbers.py
-py = E:\github\py/Lemma\Random\Eq\Mul\Expect\of\Eq_Conditioned.py
 py = E:\github\py/Lemma\Random\Eq\Mul\Prob\of\Eq_Conditioned.py
 py = E:\github\py/Lemma\Random\Eq\Mul\ProbCond\of\Ne_0\Eq_Conditioned\Eq_Prob.py
 py = E:\github\py/Lemma\Random\Eq\Mul\Prod\Mul\ProbCond\of\Ne_0\Eq.py
-py = E:\github\py/Lemma\Random\Eq\Mul\Prod_ProbCond\of\Ne_0\Eq.py
 py = E:\github\py/Lemma\Random\Eq\of\Eq_Conditioned\single_condition_w.py
 py = E:\github\py/Lemma\Random\Eq\of\Ne_0\Eq\independence.py
 py = E:\github\py/Lemma\Random\Eq\of\Ne_0\Eq\symm.py
@@ -1923,6 +1963,7 @@ py = E:\github\py/Lemma\Random\EqExpect\of\Eq.py
 py = E:\github\py/Lemma\Random\EqExpect\of\Eq_Conditioned\Eq_Expect\Eq_Var\unbiased.py
 py = E:\github\py/Lemma\Random\EqExpect\of\Eq_Conditioned\Eq_Expect\Eq_Var\__init__.py
 py = E:\github\py/Lemma\Random\EqGrad\of\Eq_Conditioned\Eq_Expect\Eq_Expect\Eq_Expect\drift.py
+py = E:\github\py/Lemma\Random\EqIntegralAndAll_EqCovariance\of\HasLaw_MultivariateGaussian\PosSemidef\IsProbabilityMeasure.py
 py = E:\github\py/Lemma\Random\EqMul\of\Eq\markov\first_order.py
 py = E:\github\py/Lemma\Random\EqMul\of\Eq\sliced\markov\first_order.py
 py = E:\github\py/Lemma\Random\EqProb\of\Distributed.py
@@ -1931,24 +1972,21 @@ py = E:\github\py/Lemma\Random\EqProb\of\Gt\joint.py
 py = E:\github\py/Lemma\Random\EqProd\of\Eq\markov\first_order.py
 py = E:\github\py/Lemma\Random\Eq_0\Cov\of\Eq_Conditioned.py
 py = E:\github\py/Lemma\Random\Eq_Expect\Eq_Expect\Eq_Expect\of\All_Eq_Expect\All_Eq_Expect\In_Ico.py
-py = E:\github\py/Lemma\Random\Eq_Expect_DotFunPow\of\GtInftySup\All_DifferentiableProb\Measure\eq\Count\Measure\eq\Count\All_Eq_Joint\In_Ico0.py
-py = E:\github\py/Lemma\Random\Eq_Expect_FunPowDot\of\GtInftySup\All_Differentiable\All_Eq_Expect_CondTSum_MulPow\Measure\eq\Count\Measure\eq\Count\All_Eq_Joint\In_Ico0.py
 py = E:\github\py/Lemma\Random\Eq_Prob\Is\Distributed\gaussian.py
-py = E:\github\py/Lemma\Random\Expect\Conditioned\importance_sampling.py
+py = E:\github\py/Lemma\Random\Eq_Sub_MulMul\Eq_Sub_MulMulAndEq_MulMulNegAndEqMulMulNegAndHasLaw\of\AEMeasurable\FromBlocks\IsUnit\IsUnit\IsProbabilityMeasure.py
 py = E:\github\py/Lemma\Random\Expect\Conditioned\law_of_iterated_expectation.py
 py = E:\github\py/Lemma\Random\Expect\Conditioned\law_of_total_expectation.py
 py = E:\github\py/Lemma\Random\Expect\Cov\eq\Sub\Expect.py
 py = E:\github\py/Lemma\Random\Expect\eq\Add\Var.py
+py = E:\github\py/Lemma\Random\Expect\eq\Expect_DivMul_Prob\of\All_ImpEqSProb__0\Measurable.py
 py = E:\github\py/Lemma\Random\Expect\eq\Integral\reward\state_action.py
 py = E:\github\py/Lemma\Random\Expect\eq\Integral\reward\state_action_Next_state.py
 py = E:\github\py/Lemma\Random\Expect\eq\Integral_Mul_Prob.py
 py = E:\github\py/Lemma\Random\Expect\eq\Lim.py
-py = E:\github\py/Lemma\Random\Expect\eq\Sub\Var\importance_sampling.py
 py = E:\github\py/Lemma\Random\Expect\eq\Sum_Mul_Prob.py
 py = E:\github\py/Lemma\Random\Expect\ge\Inf.py
 py = E:\github\py/Lemma\Random\Expect\Grad\eq\Grad\Expect.py
-py = E:\github\py/Lemma\Random\Expect\importance_sampling\pdf.py
-py = E:\github\py/Lemma\Random\Expect\importance_sampling\__init__.py
+py = E:\github\py/Lemma\Random\Expect\importance_sampling.py
 py = E:\github\py/Lemma\Random\Expect\law_of_iterated_expectation.py
 py = E:\github\py/Lemma\Random\Expect\law_of_total_expectation.py
 py = E:\github\py/Lemma\Random\Expect\le\ExpectAbs.py
@@ -1957,15 +1995,18 @@ py = E:\github\py/Lemma\Random\Expect\limits\desimp.py
 py = E:\github\py/Lemma\Random\Expect\limits\split\Slice\law_of_iterated_expectation.py
 py = E:\github\py/Lemma\Random\Expect\ReducedSum\eq\ReducedSum\Expect.py
 py = E:\github\py/Lemma\Random\Expect\Var\eq\Sub\Expect.py
+py = E:\github\py/Lemma\Random\ExpectAdd\eq\AddExpectS.py
+py = E:\github\py/Lemma\Random\ExpectCondDot\eq\Dot_ExpectCond.py
+py = E:\github\py/Lemma\Random\ExpectConditionedGrad_LogProb\eq\Zero.py
 py = E:\github\py/Lemma\Random\ExpectConditioned_Gt\eq\Add.py
+py = E:\github\py/Lemma\Random\ExpectDot\eq\Dot_Expect.py
 py = E:\github\py/Lemma\Random\ExpectGradLogProb\eq\Zero.py
-py = E:\github\py/Lemma\Random\Expect_Add\eq\AddExpectS.py
-py = E:\github\py/Lemma\Random\Expect_CondDot\eq\Dot_Expect_Cond.py
-py = E:\github\py/Lemma\Random\Expect_ConditionedGrad_LogProb\eq\Zero.py
-py = E:\github\py/Lemma\Random\Expect_Dot\eq\Dot_Expect.py
-py = E:\github\py/Lemma\Random\Expect_Mul\eq\Mul_Expect.py
-py = E:\github\py/Lemma\Random\Expect_Stack\eq\Stack_Expect.py
-py = E:\github\py/Lemma\Random\Expect_Sum\eq\Sum_Expect.py
+py = E:\github\py/Lemma\Random\ExpectMul\eq\Mul_Expect.py
+py = E:\github\py/Lemma\Random\ExpectSMul_GradLogProbCond\eq\ExpectSMulExpectCondDotPow_Id\of\All_Eq\In_Ico.py
+py = E:\github\py/Lemma\Random\ExpectStack\eq\Stack_Expect.py
+py = E:\github\py/Lemma\Random\ExpectSum\eq\Sum_Expect.py
+py = E:\github\py/Lemma\Random\Expect_Mul\eq\MulExpectS\of\Indep.py
+py = E:\github\py/Lemma\Random\Expect_Mul_Sub1DivProbS\eq\SubVarS\of\All_NeProb__0.py
 py = E:\github\py/Lemma\Random\Ge\of\Eq_Conditioned\Eq_Expect\Eq_Expect\Eq_Expect\Any\Eq_ArgMax\drift.py
 py = E:\github\py/Lemma\Random\GeExpect\of\Ge.py
 py = E:\github\py/Lemma\Random\GeKL\of\Ne_0\Gt.py
@@ -1973,7 +2014,12 @@ py = E:\github\py/Lemma\Random\GeKL\of\Ne_0\Ne_0\pdf.py
 py = E:\github\py/Lemma\Random\GeKL\of\Ne_0\Ne_0\__init__.py
 py = E:\github\py/Lemma\Random\Grad\eq\Add_SMul_Sum_SMul\of\Ne0Real_Preimage\GtInftySup\All_Differentiable_Prob\All_Eq_Expect\All_Eq_Expect\EqMeasureCount\EqMeasureCount\In_Ico.py
 py = E:\github\py/Lemma\Random\Grad\Expect\eq\Expect\Grad.py
+py = E:\github\py/Lemma\Random\GradExpectDotPow_Id\eq\AddExpect_Sum_SMul_GradLogProbCond\of\GtInftySup\All_Differentiable_Prob\All_Eq_ExpectCondDot\All_Eq_ExpectCondDot\EqMeasureCount\EqMeasureCount\All_Eq_Joint\In_Ico.py
+py = E:\github\py/Lemma\Random\GradExpectDotPow_Id\eq\ExpectDotFunSMul_GradLogProbCond\of\GtInftySup\All_Differentiable_Prob\All_Eq\In_Ico\advantage.py
+py = E:\github\py/Lemma\Random\GradExpectDotPow_Id\eq\ExpectDotFunSMul_GradLogProbCond\of\GtInftySup\All_Differentiable_Prob\All_Eq\In_Ico\__init__.py
+py = E:\github\py/Lemma\Random\GradExpectDotPow_Id\eq\ExpectDotFunSMul_GradLogProbCond\of\GtInftySup\All_Differentiable_Prob\All_Eq_ExpectCondDot\All_Eq_ExpectCondDot\EqMeasureCount\EqMeasureCount\All_Eq_Joint\In_Ico.py
 py = E:\github\py/Lemma\Random\GradVk\eq\Add_SMul_Integral_SMul\of\All_EqWithDensity\All_Ge_0\All_Measurable\All_Measurable_Prob\GtInftySup\All_Differentiable_Prob\In_Ico.py
+py = E:\github\py/Lemma\Random\HasLawAdd\of\HasLaw_PoissonMeasure\HasLaw_PoissonMeasure\Indep.py
 py = E:\github\py/Lemma\Random\Imp\Eq_0\Cov\of\Eq_Conditioned\using\Gt.py
 py = E:\github\py/Lemma\Random\Imp\Eq_0\Cov\of\Eq_Conditioned\using\Lt.py
 py = E:\github\py/Lemma\Random\Imp\Eq_0\Cov\of\Eq_Conditioned\__init__.py
@@ -1990,7 +2036,6 @@ py = E:\github\py/Lemma\Random\Integral\eq\One.py
 py = E:\github\py/Lemma\Random\Integral\eq\Prob.py
 py = E:\github\py/Lemma\Random\Integral\Prod\eq\One.py
 py = E:\github\py/Lemma\Random\Integral_Prod\eq\Prob.py
-py = E:\github\py/Lemma\Random\Integral_SMulGetDotFderivLog\eq\Integral_SMulQFderiv\of\All_Eq_Joint\InIco0.py
 py = E:\github\py/Lemma\Random\Integral_TSum_MulPow\eq\IntegralPreimage\of\All_Eq_TSum_MulPowIntegral\All_Eq_Joint\In_Ico0.py
 py = E:\github\py/Lemma\Random\Integral_TSum_PowMul\eq\Integral_AddMul_Integral_TSum_MulPow\of\All_Eq_Joint\In_Ico0.py
 py = E:\github\py/Lemma\Random\KL\eq\Expect.py
@@ -2001,22 +2046,23 @@ py = E:\github\py/Lemma\Random\KLProbSConditioned\ge\Zero.py
 py = E:\github\py/Lemma\Random\Le\Prob\Chebyshev_Inequality\of\Eq_Expect\Eq_Var.py
 py = E:\github\py/Lemma\Random\LeExpect\of\Le.py
 py = E:\github\py/Lemma\Random\Lim\eq\Expect.py
-py = E:\github\py/Lemma\Random\Mul_Expect\eq\Expect_Mul.py
+py = E:\github\py/Lemma\Random\Lim_ProbLtAbsSubDivSum\eq\One\of\All_EqVar\All_EqExpect\All_Indep\All_MemLp2\All_PSpace.py
+py = E:\github\py/Lemma\Random\Mul_Expect\eq\ExpectMul.py
+py = E:\github\py/Lemma\Random\NeProb_0\of\NeProb_0\Le.py
 py = E:\github\py/Lemma\Random\Ne_0\Conditioned\of\Ne_0\Ne_0.py
 py = E:\github\py/Lemma\Random\Ne_0\of\Ne_0\joint_slice.py
 py = E:\github\py/Lemma\Random\Ne_0\of\Ne_0\marginal.py
-py = E:\github\py/Lemma\Random\Ne_0\Slice\of\Ne_0.py
 py = E:\github\py/Lemma\Random\Prob\eq\Grad.py
 py = E:\github\py/Lemma\Random\Prob\eq\Integral.py
 py = E:\github\py/Lemma\Random\Prob\eq\Sub\SDiff.py
 py = E:\github\py/Lemma\Random\Prob\eq\Sum\joint.py
 py = E:\github\py/Lemma\Random\Prob\ge\Zero.py
 py = E:\github\py/Lemma\Random\Prob\Or\eq\Add.py
+py = E:\github\py/Lemma\Random\ProbCond\eq\DivMulProb_Prod_ProbCond\of\NeProbJoint__0\All_Indep.py
 py = E:\github\py/Lemma\Random\ProbCond\eq\Mul\ProbCond.py
 py = E:\github\py/Lemma\Random\ProbCond\eq\Prod_ProbCond.py
 py = E:\github\py/Lemma\Random\ProbCond_Joint\eq\DivProbSCond.py
-py = E:\github\py/Lemma\Random\ProbEqAdd\eq\Div_\Mul_\PowAdd\ExpNeg\Factorial\poisson.py
-py = E:\github\py/Lemma\Random\ProbEqAdd\eq\Mul_\Mul_\Pow\Pow_\Sub1\SubAdd\Binom.py
+py = E:\github\py/Lemma\Random\ProbEqAdd\eq\MulMulPow\PowSub1\SubAdd\Binom.py
 py = E:\github\py/Lemma\Random\ProbGeAbs\le\DivExpectAbs\Markov_Inequality.py
 py = E:\github\py/Lemma\Random\ProbJoint\eq\Mul_Prod_MulProbSCond\of\IsDiscreteHMM\mdp.py
 py = E:\github\py/Lemma\Random\ProbJoint\eq\Mul_Prod_MulProbSCond\of\IsDiscreteHMM\__init__.py
@@ -2024,18 +2070,16 @@ py = E:\github\py/Lemma\Random\ProbSlice\eq\Prod_ProbCond.py
 py = E:\github\py/Lemma\Random\Prod_ProbCond\eq\ProbCond.py
 py = E:\github\py/Lemma\Random\Prod_ProbCond\eq\ProbGetSlice.py
 py = E:\github\py/Lemma\Random\ReducedSum\Expect\eq\Expect\ReducedSum.py
-py = E:\github\py/Lemma\Random\Stack_Expect\eq\Expect_Stack.py
+py = E:\github\py/Lemma\Random\Stack_Expect\eq\ExpectStack.py
 py = E:\github\py/Lemma\Random\Subs_Grad_KL\eq\Zero.py
 py = E:\github\py/Lemma\Random\Sum\eq\Expect.py
 py = E:\github\py/Lemma\Random\Sum\eq\KL.py
 py = E:\github\py/Lemma\Random\Sum\eq\One\Conditioned.py
 py = E:\github\py/Lemma\Random\Sum\eq\One\__init__.py
 py = E:\github\py/Lemma\Random\Sum\eq\Prob.py
-py = E:\github\py/Lemma\Random\Sum_Expect\eq\Expect_Sum.py
+py = E:\github\py/Lemma\Random\Sum_Expect\eq\ExpectSum.py
 py = E:\github\py/Lemma\Random\Sup\ge\Expect.py
 py = E:\github\py/Lemma\Random\TSum_MulPow_IntegralInterPreimage_Preimage\eq\IntegralAddMul_Integral_TSum_MulPow\of\All_Eq_Joint\In_Ico1.py
-py = E:\github\py/Lemma\Random\TSum_SMulPowFderiv\eq\Integral_AddSum_SMul_SMulPowIntegral_Fderiv\of\GtInftySup\All_Differentiable\All_Eq_Expect_CondDot\All_Eq_Expect_CondDot\Measure\eq\Count\Measure\eq\Count\All_Eq_Joint\In_Ico0.py
-py = E:\github\py/Lemma\Random\TSum_SMulPowFderiv\eq\TSum_SMulPow_Integral_SMul\of\GtInftySup\All_Differentiable\All_Eq_Expect_CondDot\All_Eq_Expect_CondDot\Measure\eq\Count\Measure\eq\Count\All_Eq_Joint\In_Ico0.py
 py = E:\github\py/Lemma\Random\Var\Add\eq\Add\Cov.py
 py = E:\github\py/Lemma\Random\Var\eq\Add\Var\Expect\law_of_total_variance.py
 py = E:\github\py/Lemma\Random\Var\eq\Cov.py
@@ -2048,7 +2092,7 @@ py = E:\github\py/Lemma\Random\Var\offset.py
 py = E:\github\py/Lemma\Random\Var\ReducedSum\eq\Sum\Cov.py
 py = E:\github\py/Lemma\Random\Var\Sum\eq\Add\Sum.py
 py = E:\github\py/Lemma\Random\Var\Sum\eq\Sum\Cov.py
-py = E:\github\py/Lemma\Random\Zero\eq\AddSum_SMulPowSum_SMul_SMulPow_Sum_SMul\of\Real\ne\Zero\GtInftySup\All_Differentiable\All_Eq_Expect_CondDot\All_Eq_Expect_CondDot\Measure\eq\Count\Measure\eq\Count\All_Eq_Joint\In_Ico0.py
+py = E:\github\py/Lemma\Random\Zero\eq\AddSum_SMulPowSum_SMul_SMulPow_Sum_SMul\of\Real\ne\Zero\GtInftySup\All_Differentiable\All_Eq_ExpectCondDot\All_Eq_ExpectCondDot\EqMeasureCount\EqMeasureCount\All_Eq_Joint\In_Ico0.py
 E:\github\py/Lemma\Rat
 py = E:\github\py/Lemma\Rat\Add\eq\Add\square_completing.py
 py = E:\github\py/Lemma\Rat\AddFloorSub\eq\FloorAdd.py
@@ -2135,7 +2179,6 @@ py = E:\github\py/Lemma\Rat\Sum\Inv\eq\Add\telescope.py
 py = E:\github\py/Lemma\Rat\Sum\Square\eq\Div\Sum\Square.py
 py = E:\github\py/Lemma\Rat\Sum\Square\eq\Mul.py
 py = E:\github\py/Lemma\Rat\Sum_Mul\eq\Sub_DivSumSquare.py
-py = E:\github\py/Lemma\Rat\Sum_SquareSub_DivSum\eq\AddMul_SumSquareSubDivSSum.py
 E:\github\py/Lemma\Real
 py = E:\github\py/Lemma\Real\AbsIntegral\le\IntegralAbs.py
 py = E:\github\py/Lemma\Real\AbsIntegral\le\Integral_Abs.py
@@ -2147,7 +2190,7 @@ py = E:\github\py/Lemma\Real\Add\eq\Log.py
 py = E:\github\py/Lemma\Real\Add\eq\Sin.py
 py = E:\github\py/Lemma\Real\AddArcsinS\eq\DivPi2\of\Ge_0.py
 py = E:\github\py/Lemma\Real\AddMulS\eq\CosSub.py
-py = E:\github\py/Lemma\Real\Add_\SquareCos\SquareSin\eq\One.py
+py = E:\github\py/Lemma\Real\AddSquareCosSquareSin\eq\One.py
 py = E:\github\py/Lemma\Real\All\Any\Eq\of\All_Eq\intermediate_value_theorem.py
 py = E:\github\py/Lemma\Real\All\Any\Gt\of\GeSup.py
 py = E:\github\py/Lemma\Real\All\Any\Lt\of\LeInf.py
@@ -2265,11 +2308,12 @@ py = E:\github\py/Lemma\Real\Arcsin\In\Icc.py
 py = E:\github\py/Lemma\Real\Arctan\eq\Ite.py
 py = E:\github\py/Lemma\Real\Block\eq\Cot.py
 py = E:\github\py/Lemma\Real\Block\eq\Tan.py
+py = E:\github\py/Lemma\Real\Ceil\le\AddFloor1.py
 py = E:\github\py/Lemma\Real\Cos\eq\Add\ExpMulI.py
 py = E:\github\py/Lemma\Real\Cos\eq\Cosh.py
 py = E:\github\py/Lemma\Real\Cos\eq\Inv\Sec.py
 py = E:\github\py/Lemma\Real\Cos\eq\Mul\Cot.py
-py = E:\github\py/Lemma\Real\Cos\eq\Mul_\Sin\Cot.py
+py = E:\github\py/Lemma\Real\Cos\eq\MulCotSin\of\NeSin_0.py
 py = E:\github\py/Lemma\Real\Cos\eq\Re.py
 py = E:\github\py/Lemma\Real\Cos\eq\Sub\double.py
 py = E:\github\py/Lemma\Real\Cos\eq\Sub\Square\Sin.py
@@ -2296,6 +2340,7 @@ py = E:\github\py/Lemma\Real\Coth\eq\Inv\Tanh.py
 py = E:\github\py/Lemma\Real\Csc\eq\Inv\Sin.py
 py = E:\github\py/Lemma\Real\Csch\eq\Div.py
 py = E:\github\py/Lemma\Real\Csch\eq\Inv\Sinh.py
+py = E:\github\py/Lemma\Real\Deriv\eq\LimDivSubSubX\of\DifferentiableAt.py
 py = E:\github\py/Lemma\Real\Dot\eq\Integral.py
 py = E:\github\py/Lemma\Real\Dot\Grad\eq\Grad\Dot.py
 py = E:\github\py/Lemma\Real\Dot\Grad\eq\Stack.py
@@ -2539,6 +2584,7 @@ py = E:\github\py/Lemma\Real\Integral\doit\Bool.py
 py = E:\github\py/Lemma\Real\Integral\eq\Add\by_parts.py
 py = E:\github\py/Lemma\Real\Integral\eq\Add\split.py
 py = E:\github\py/Lemma\Real\Integral\eq\Grad.py
+py = E:\github\py/Lemma\Real\Integral\eq\Integral_Mul\of\Gt_0.py
 py = E:\github\py/Lemma\Real\Integral\eq\Integral_UFnProd.py
 py = E:\github\py/Lemma\Real\Integral\eq\Ite\Lim\Lebesgue\of\Ge_0.py
 py = E:\github\py/Lemma\Real\Integral\eq\Ite\__init__.py
@@ -2561,7 +2607,6 @@ py = E:\github\py/Lemma\Real\Integral\limits\domain_defined.py
 py = E:\github\py/Lemma\Real\Integral\limits\offset.py
 py = E:\github\py/Lemma\Real\Integral\limits\pop\Slice.py
 py = E:\github\py/Lemma\Real\Integral\limits\separate.py
-py = E:\github\py/Lemma\Real\Integral\limits\subst.py
 py = E:\github\py/Lemma\Real\Integral\limits\swap.py
 py = E:\github\py/Lemma\Real\Integral\Mul\eq\Div\gamma\wallis.py
 py = E:\github\py/Lemma\Real\Integral\Mul\eq\scale\beta\wallis.py
@@ -2588,7 +2633,6 @@ py = E:\github\py/Lemma\Real\Le\of\Gt_0\monotony.py
 py = E:\github\py/Lemma\Real\Le\of\Le\Ge\quadratic.py
 py = E:\github\py/Lemma\Real\Le\of\Le\Le\quadratic.py
 py = E:\github\py/Lemma\Real\Le\of\Le_0\monotony.py
-py = E:\github\py/Lemma\Real\Le\of\Lt_0\Eq\jensen.py
 py = E:\github\py/Lemma\Real\Le\of\Lt_0\monotony.py
 py = E:\github\py/Lemma\Real\LeExp\of\Le.py
 py = E:\github\py/Lemma\Real\LeInf\given\All_Any_Lt.py
@@ -2616,6 +2660,7 @@ py = E:\github\py/Lemma\Real\LeSin\Sqrt\of\In_Icc.py
 py = E:\github\py/Lemma\Real\LeSqrt\of\Gt_0\Le.py
 py = E:\github\py/Lemma\Real\LeSqrt\of\Le.py
 py = E:\github\py/Lemma\Real\LeSqrtS\of\Le\Ge_0.py
+py = E:\github\py/Lemma\Real\LeSum_Mul\of\EqSumRange__1\All_Ge_0\All_In_Icc\All_Gt0Deriv2\ContinuousOn_Icc\jensen.py
 py = E:\github\py/Lemma\Real\LeSup\given\All\Le.py
 py = E:\github\py/Lemma\Real\LeSup\of\All_Ge.py
 py = E:\github\py/Lemma\Real\LeSup\of\All_Gt.py
@@ -2646,11 +2691,11 @@ py = E:\github\py/Lemma\Real\Lim\ge\Zero\of\Gt_0\All_GtLim__0.py
 py = E:\github\py/Lemma\Real\Lim\Ite\subst.py
 py = E:\github\py/Lemma\Real\Lim\limits\offset.py
 py = E:\github\py/Lemma\Real\Lim\limits\subst.py
-py = E:\github\py/Lemma\Real\Lim_Mul\eq\MulLimS\of\IsLimited\IsLimited\algebraic_limit_theorem\extended_real.py
+py = E:\github\py/Lemma\Real\LimMul\eq\MulLimS\of\Ne_0\EqLim\EqLim.py
 py = E:\github\py/Lemma\Real\Lim_Prod\eq\Lim_Prod_UFnNeg.py
 py = E:\github\py/Lemma\Real\Log\eq\Mul.py
 py = E:\github\py/Lemma\Real\Log\eq\Sum.py
-py = E:\github\py/Lemma\Real\Log\ge\Sub_\One\Inv.py
+py = E:\github\py/Lemma\Real\Log\ge\Sub1Div1\of\Gt_0.py
 py = E:\github\py/Lemma\Real\Log\le\Sub_1.py
 py = E:\github\py/Lemma\Real\LogMul\eq\AddLogS\of\Ne_0\Ne_0.py
 py = E:\github\py/Lemma\Real\Lt\given\Lt\Exp.py
@@ -2714,13 +2759,14 @@ py = E:\github\py/Lemma\Real\Mul\Sin\eq\Add\cos.py
 py = E:\github\py/Lemma\Real\Mul\Sin\eq\Sub\Cos.py
 py = E:\github\py/Lemma\Real\Mul\Stack\eq\Grad.py
 py = E:\github\py/Lemma\Real\Mul\Sum\eq\Sum\Sum.py
+py = E:\github\py/Lemma\Real\MulCotTan\eq\One\of\NeCos_0\NeSin_0.py
+py = E:\github\py/Lemma\Real\MulCscSin\eq\One\of\NeSin_0.py
 py = E:\github\py/Lemma\Real\MulExpS\eq\ExpAdd.py
 py = E:\github\py/Lemma\Real\MulPowS\eq\PowMul.py
 py = E:\github\py/Lemma\Real\MulPowS\eq\Pow_Add\of\Gt_0.py
+py = E:\github\py/Lemma\Real\MulSecCos\eq\One\of\NeCos_0.py
 py = E:\github\py/Lemma\Real\MulSin_Cos\eq\AddDivSSin.py
-py = E:\github\py/Lemma\Real\Mul_\Csc\Sin\eq\One.py
-py = E:\github\py/Lemma\Real\Mul_\Sec\Cos\eq\One.py
-py = E:\github\py/Lemma\Real\Mul_\Tan\Cot\eq\One.py
+py = E:\github\py/Lemma\Real\MulSub1_Dot_FunDotPow_Range\eq\DotPow_Id\of\GtInftySup\Subset_Ico.py
 py = E:\github\py/Lemma\Real\Mul_Integral\eq\Integral_Mul.py
 py = E:\github\py/Lemma\Real\Neg\eq\Integral.py
 py = E:\github\py/Lemma\Real\NeSin\of\Gt_0.py
@@ -2742,10 +2788,10 @@ py = E:\github\py/Lemma\Real\Sin\eq\Mul\double.py
 py = E:\github\py/Lemma\Real\Sin\eq\Mul\Eye.py
 py = E:\github\py/Lemma\Real\Sin\eq\Mul\Sinh.py
 py = E:\github\py/Lemma\Real\Sin\eq\Mul\Tan.py
-py = E:\github\py/Lemma\Real\Sin\eq\Mul_\Cos\Tan.py
+py = E:\github\py/Lemma\Real\Sin\eq\MulTanCos\of\NeCos_0.py
 py = E:\github\py/Lemma\Real\Sin\eq\Neg\Sin.py
 py = E:\github\py/Lemma\Real\Sin\eq\Sum.py
-py = E:\github\py/Lemma\Real\Sin\ge\Mul_Sub_\One\Div_Pi\quadratic.py
+py = E:\github\py/Lemma\Real\Sin\ge\Mul_Sub1Div_Pi.py
 py = E:\github\py/Lemma\Real\Sin\In\Icc.py
 py = E:\github\py/Lemma\Real\Sin\of\Eq.py
 py = E:\github\py/Lemma\Real\SinAdd\eq\AddMulSSin_Cos.py
@@ -2776,7 +2822,6 @@ py = E:\github\py/Lemma\Real\Sub\eq\Integral.py
 py = E:\github\py/Lemma\Real\SubArcsinS\eq\DivPi2\of\Le_0.py
 py = E:\github\py/Lemma\Real\SubArcsinS\eq\DivPi2\of\Lt_0.py
 py = E:\github\py/Lemma\Real\SubMulSSin_Cos\eq\SinSub.py
-py = E:\github\py/Lemma\Real\Subs\eq\Lim.py
 py = E:\github\py/Lemma\Real\Sum\Binom\eq\Mul.py
 py = E:\github\py/Lemma\Real\Sum\Binom\eq\Pow.py
 py = E:\github\py/Lemma\Real\Sum\eq\Grad.py
@@ -2819,7 +2864,6 @@ py = E:\github\py/Lemma\Set\Abs_Lt_Infty\given\IsReal.py
 py = E:\github\py/Lemma\Set\Abs_Lt_Infty\Is\IsReal.py
 py = E:\github\py/Lemma\Set\Add\eq\One\of\Finset.py
 py = E:\github\py/Lemma\Set\Add\In\Ioc\of\In\In.py
-py = E:\github\py/Lemma\Set\AddClip\In\Ico_Add_\Mul2\One.py
 py = E:\github\py/Lemma\Set\AddIteS\eq\Ite\of\Inter\eq\Empty.py
 py = E:\github\py/Lemma\Set\All\And\of\All.py
 py = E:\github\py/Lemma\Set\All\given\All\And.py
@@ -3115,7 +3159,7 @@ py = E:\github\py/Lemma\Set\Eq_Empty\Stirling\of\Eq\Eq.py
 py = E:\github\py/Lemma\Set\Eq_Floor\given\In\Icc.py
 py = E:\github\py/Lemma\Set\Eq_Ite\of\In\expr_swap.py
 py = E:\github\py/Lemma\Set\Eq_Sum\In_CartesianSpace\Is\And.py
-py = E:\github\py/Lemma\Set\Eq_Union_\Inter\SDiff.py
+py = E:\github\py/Lemma\Set\Eq_UnionInter.py
 py = E:\github\py/Lemma\Set\Finset\eq\Ite.py
 py = E:\github\py/Lemma\Set\Finset\of\Eq.py
 py = E:\github\py/Lemma\Set\Floor\eq\Zero\of\In_Ico.py
@@ -3382,7 +3426,7 @@ py = E:\github\py/Lemma\Set\Inter\eq\Cup.py
 py = E:\github\py/Lemma\Set\Inter\eq\Empty\given\NotIn.py
 py = E:\github\py/Lemma\Set\Inter\eq\Empty\of\All_Ne.py
 py = E:\github\py/Lemma\Set\Inter\eq\Empty\of\All_NotIn.py
-py = E:\github\py/Lemma\Set\Inter\eq\Ite_\ExprCondPair_\Finset\In\ExprCondPairEmpty.py
+py = E:\github\py/Lemma\Set\Inter\eq\Ite_Singleton.py
 py = E:\github\py/Lemma\Set\InterFinsetS\eq\IteEq.py
 py = E:\github\py/Lemma\Set\InterFinsetS\subset\Icc.py
 py = E:\github\py/Lemma\Set\Inter_Finset\eq\Empty\of\NotIn.py
@@ -3396,7 +3440,7 @@ py = E:\github\py/Lemma\Set\In_Finset\given\OrEqS.py
 py = E:\github\py/Lemma\Set\In_Finset\Is\Or\Eq.py
 py = E:\github\py/Lemma\Set\In_Finset\of\Eq.py
 py = E:\github\py/Lemma\Set\In_Finset\of\OrEqS.py
-py = E:\github\py/Lemma\Set\In_Icc\Even\Is\In_Setof_In_IccDiv_2.py
+py = E:\github\py/Lemma\Set\In_Icc\Even\Is\In_SetOf_In_IccDiv_2.py
 py = E:\github\py/Lemma\Set\In_Icc\Even\of\In_SetOf_In_IccDiv_2.py
 py = E:\github\py/Lemma\Set\In_Icc\given\In\Icc\restrict.py
 py = E:\github\py/Lemma\Set\In_Icc\given\InAdd.py
@@ -3545,7 +3589,6 @@ py = E:\github\py/Lemma\Set\Le\symbol\domain_defined.py
 py = E:\github\py/Lemma\Set\LeAbs\given\In\Icc.py
 py = E:\github\py/Lemma\Set\LeAbs_MaxAbsS\of\In_Icc.py
 py = E:\github\py/Lemma\Set\LeAdd\of\Le\In.py
-py = E:\github\py/Lemma\Set\LeAddSSumS_SquareSub_Sum\of\In\NotIn\LeAbsSSub_Sum.py
 py = E:\github\py/Lemma\Set\LeAddSSumS_SquareSub_Sum\of\Le\Ge\In\NotIn.py
 py = E:\github\py/Lemma\Set\LeDiv\of\IsNegative\Ge.py
 py = E:\github\py/Lemma\Set\LeDiv\of\IsPositive\Le.py
@@ -3606,7 +3649,6 @@ py = E:\github\py/Lemma\Set\Lt_0\of\IsNegative.py
 py = E:\github\py/Lemma\Set\Lt_Infty\Abs\of\IsReal.py
 py = E:\github\py/Lemma\Set\Measure\eq\Mul\Abs.py
 py = E:\github\py/Lemma\Set\Measure\offset.py
-py = E:\github\py/Lemma\Set\Mod\In\Ico_\Add_1\One\negative.py
 py = E:\github\py/Lemma\Set\Mod\In\Range\of\Gt_0.py
 py = E:\github\py/Lemma\Set\Ne\given\NotIn.py
 py = E:\github\py/Lemma\Set\Ne\Is\In.py
@@ -3713,7 +3755,6 @@ py = E:\github\py/Lemma\Set\SDiff\of\Eq.py
 py = E:\github\py/Lemma\Set\SDiffUnion\eq\UnionSDiffS.py
 py = E:\github\py/Lemma\Set\SDiff_Finset\ne\Empty.py
 py = E:\github\py/Lemma\Set\SDiff_SDiff\eq\UnionInter.py
-py = E:\github\py/Lemma\Set\SetOfDotGetSwapMatrix\eq\Range.py
 py = E:\github\py/Lemma\Set\SetOf_In_Range\of\All_Eq.py
 py = E:\github\py/Lemma\Set\SInfImage\eq\Inf.py
 py = E:\github\py/Lemma\Set\Sqrt\ge\Zero\of\In.py
@@ -3860,7 +3901,6 @@ py = E:\github\py/Lemma\Tensor\All_Ge\Is\Ge\Stack.py
 py = E:\github\py/Lemma\Tensor\All_Ge_ReducedMin.py
 py = E:\github\py/Lemma\Tensor\All_Gt\given\Gt\Stack.py
 py = E:\github\py/Lemma\Tensor\All_Gt\Is\Gt\Stack.py
-py = E:\github\py/Lemma\Tensor\All_InDotSwapMatrix\of\Eq_SetOf_EqRange.py
 py = E:\github\py/Lemma\Tensor\All_InStack\of\All_InDotSwapMatrix.py
 py = E:\github\py/Lemma\Tensor\All_InStack\of\All_InStack_Get_DotGetSwapMatrix.py
 py = E:\github\py/Lemma\Tensor\All_Le\given\Le\Stack.py
@@ -3869,7 +3909,6 @@ py = E:\github\py/Lemma\Tensor\All_Le_ReducedMax.py
 py = E:\github\py/Lemma\Tensor\All_Lt\given\Lt\Stack.py
 py = E:\github\py/Lemma\Tensor\All_Lt\Is\Lt\Stack.py
 py = E:\github\py/Lemma\Tensor\And\Eq\Expect\of\Eq_Conditioned\Eq_Expect\Eq_Expect\Bellman\normalized.py
-py = E:\github\py/Lemma\Tensor\And\Eq\Expect\of\Eq_Conditioned\Eq_Expect\Eq_Expect\Bellman\optimality.py
 py = E:\github\py/Lemma\Tensor\And\Eq\of\Eq\reward_using_KL.py
 py = E:\github\py/Lemma\Tensor\And\Eq\of\Eq_Add\Eq_Ite\Eq\Eq_Add\Eq\Eq_Softmax\mega_byte.py
 py = E:\github\py/Lemma\Tensor\And\Ge\of\GeBlock.py
@@ -3884,12 +3923,9 @@ py = E:\github\py/Lemma\Tensor\And\Lt\of\LtBlock.py
 py = E:\github\py/Lemma\Tensor\And\Lt\of\Lt_Block.py
 py = E:\github\py/Lemma\Tensor\And\of\Eq\split\Tensor.py
 py = E:\github\py/Lemma\Tensor\Any\limits\pop\Slice.py
-py = E:\github\py/Lemma\Tensor\Any_Eq_Dot_MatProd_SwapMatrix.py
 py = E:\github\py/Lemma\Tensor\AppendAddS\eq\AddAppendS.py
 py = E:\github\py/Lemma\Tensor\AppendCosS\eq\CosAppend.py
 py = E:\github\py/Lemma\Tensor\AppendHstackS\eq\Eye.py
-py = E:\github\py/Lemma\Tensor\AppendHstackS\eq\MatProd_SwapMatrix\of\Le.py
-py = E:\github\py/Lemma\Tensor\AppendHstackS\eq\SwapMatrix.py
 py = E:\github\py/Lemma\Tensor\AppendMulS\eq\MulAppendS.py
 py = E:\github\py/Lemma\Tensor\AppendSinS\eq\SinAppend.py
 py = E:\github\py/Lemma\Tensor\BandPart\Min\rewrite.py
@@ -3910,7 +3946,6 @@ py = E:\github\py/Lemma\Tensor\CosAppend\eq\AppendCosS.py
 py = E:\github\py/Lemma\Tensor\Cup\Finset\Dot.py
 py = E:\github\py/Lemma\Tensor\DescFactorial\eq\Dot\Delta.py
 py = E:\github\py/Lemma\Tensor\Det\Dot\eq\Mul\Prod\vandermonde\col_transform.py
-py = E:\github\py/Lemma\Tensor\Det\Dot\Stack\eq\Mul\Prod\vandermonde.py
 py = E:\github\py/Lemma\Tensor\Det\of\Eq.py
 py = E:\github\py/Lemma\Tensor\DetAppendHstackS\eq\MulPowNeg1Mul.py
 py = E:\github\py/Lemma\Tensor\DetBlockStack_Pow\eq\Mul_Prod\vandermonde\n4.py
@@ -3919,7 +3954,6 @@ py = E:\github\py/Lemma\Tensor\DetBlock_Stack_Pow\eq\Mul_Prod_Factorial\vandermo
 py = E:\github\py/Lemma\Tensor\DetDot\eq\MulDetS\trois.py
 py = E:\github\py/Lemma\Tensor\DetDot\eq\MulDetS\__init__.py
 py = E:\github\py/Lemma\Tensor\DetDot\eq\MulPowNeg1Mul.py
-py = E:\github\py/Lemma\Tensor\DetDotMatPowShiftMatrix\eq\MulNeg_Det.py
 py = E:\github\py/Lemma\Tensor\DetDotStackS\eq\Mul_Prod\vandermonde\col_transform.py
 py = E:\github\py/Lemma\Tensor\DetDot_AppendHstackS\eq\Det.py
 py = E:\github\py/Lemma\Tensor\DetMul\eq\MulPow.py
@@ -3936,8 +3970,6 @@ py = E:\github\py/Lemma\Tensor\Dot\eq\Expr\AddMatrix\left.py
 py = E:\github\py/Lemma\Tensor\Dot\eq\Expr\AddMatrix\right.py
 py = E:\github\py/Lemma\Tensor\Dot\eq\Expr\multiplication\left.py
 py = E:\github\py/Lemma\Tensor\Dot\eq\Expr\multiplication\right.py
-py = E:\github\py/Lemma\Tensor\Dot\eq\Expr\swap\left.py
-py = E:\github\py/Lemma\Tensor\Dot\eq\Expr\swap\right.py
 py = E:\github\py/Lemma\Tensor\Dot\eq\Ite\of\Eq_Dot.py
 py = E:\github\py/Lemma\Tensor\Dot\eq\MatProd\unshift.py
 py = E:\github\py/Lemma\Tensor\Dot\eq\Mul\adjugate.py
@@ -3990,14 +4022,11 @@ py = E:\github\py/Lemma\Tensor\DotT_RotaryMatrix\eq\Eye\interleave.py
 py = E:\github\py/Lemma\Tensor\DotT_RotaryMatrix\eq\Eye\__init__.py
 py = E:\github\py/Lemma\Tensor\DotT_RotaryMatrix\eq\Stack_IteEven_SubMulS\interleave.py
 py = E:\github\py/Lemma\Tensor\DotT_RotaryMatrix\eq\Stack_IteEven_SubMulS\__init__.py
-py = E:\github\py/Lemma\Tensor\Dot_\Stack\MatProd\In\Conditionset\permutation.py
 py = E:\github\py/Lemma\Tensor\Eq\Add\Square\eq\Mul\of\Eq_ReducedSum.py
-py = E:\github\py/Lemma\Tensor\Eq\Cup\Finset\of\Eq_Dot.py
 py = E:\github\py/Lemma\Tensor\Eq\Dot\Eye\of\GtInftySup.py
 py = E:\github\py/Lemma\Tensor\Eq\Dot\Grad\Expect\of\Eq_Conditioned\Eq_Expect\Eq_Expect\Eq_Sub\GtInftySup\A_Function\importance_sampling.py
 py = E:\github\py/Lemma\Tensor\Eq\Dot\Grad\Expect\of\Eq_Conditioned\Eq_Expect\Eq_Expect\Eq_Sub\GtInftySup\A_Function\__init__.py
 py = E:\github\py/Lemma\Tensor\Eq\Dot\Grad\Expect\of\Eq_Conditioned\Eq_Expect\GtInftySup\temporal_difference_residual.py
-py = E:\github\py/Lemma\Tensor\Eq\Dot\PLU\of\Eq\Eq_Dot\Eq_Ite.py
 py = E:\github\py/Lemma\Tensor\Eq\Dot\Softmax\eq\Stack\Sum\of\Eq_Mul\Eq_Mul\Eq_Mul\Eq_Block\space.py
 py = E:\github\py/Lemma\Tensor\Eq\Dot\Softmax\of\Eq_Card\Subset_Cup\Eq_Clip\Eq_Clip\Eq_Clip\Eq_Clip\position_representation\relative\gather\indexed.py
 py = E:\github\py/Lemma\Tensor\Eq\Dot\Softmax\of\Eq_Card\Subset_Cup\Eq_Clip\Eq_Clip\Eq_Clip\Eq_Clip\position_representation\relative\gather\__init__.py
@@ -4056,9 +4085,6 @@ py = E:\github\py/Lemma\Tensor\Eq\ReducedArgMax\Softmax\of\Eq_Block\upper_triang
 py = E:\github\py/Lemma\Tensor\Eq\ReducedArgMax\Softmax\of\Eq_Block\upper_triangle\__init__.py
 py = E:\github\py/Lemma\Tensor\Eq\ReducedArgMax\Softmax\of\Eq_Block\__init__.py
 py = E:\github\py/Lemma\Tensor\Eq\Stack\Sum\of\Eq_Clip\Eq_Clip\position_representation\relative.py
-py = E:\github\py/Lemma\Tensor\Eq\Sum\Pow\of\Eq_Dot.py
-py = E:\github\py/Lemma\Tensor\Eq\Sum\ReducedArgMax\of\All_Lt\Subset_Cup.py
-py = E:\github\py/Lemma\Tensor\Eq\Sum\ReducedArgMin\of\All_Lt\Subset_Cup.py
 py = E:\github\py/Lemma\Tensor\Eq\Sum\Square\eq\Add\Sum\Square\of\Eq_ReducedSum.py
 py = E:\github\py/Lemma\Tensor\Eq\Sum\Square\of\Eq_Dot\double_limits.py
 py = E:\github\py/Lemma\Tensor\Eq\Sum\Square\of\Eq_Dot\offset.py
@@ -4074,11 +4100,8 @@ py = E:\github\py/Lemma\Tensor\EqDot\of\Eq_Mul\Eq_Mul\Eq_Block\position_represen
 py = E:\github\py/Lemma\Tensor\EqDot\of\Eq_Mul\Eq_Mul\Eq_Mul\Eq_Block\position_representation\space.py
 py = E:\github\py/Lemma\Tensor\EqDot\of\Eq_Tensor\plane.py
 py = E:\github\py/Lemma\Tensor\EqDot\of\Eq_Tensor\space.py
-py = E:\github\py/Lemma\Tensor\EqDot\of\GtInftySup\generalized_advantage_estimate.py
 py = E:\github\py/Lemma\Tensor\EqDot\of\Imp_Eq_0.py
 py = E:\github\py/Lemma\Tensor\EqDot\of\Ne_0\Eq.py
-py = E:\github\py/Lemma\Tensor\EqDotDot_ShiftMatrix.py
-py = E:\github\py/Lemma\Tensor\EqDot_DotShiftMatrix.py
 py = E:\github\py/Lemma\Tensor\EqExpect\of\Eq_Conditioned\Bellman\Q_Function\normalized.py
 py = E:\github\py/Lemma\Tensor\EqExpect\of\Eq_Conditioned\Bellman\V_Function\normalized.py
 py = E:\github\py/Lemma\Tensor\EqExpect\of\Eq_Conditioned\Eq_Expect\Eq_Expect\Eq_Sub\temporal_difference_residual.py
@@ -4117,7 +4140,7 @@ py = E:\github\py/Lemma\Tensor\EqSoftmax\of\Eq_Max\Eq_Min\Eq_Clip\Eq_Clip\Eq_Cli
 py = E:\github\py/Lemma\Tensor\EqSoftmax\of\Eq_Relu\Eq_Min\Eq\Eq\bert\position_representation\relative\band_part_mask.py
 py = E:\github\py/Lemma\Tensor\EqSoftmax\of\Eq_Relu\Eq_Min\Eq_Clip\Eq_Clip\Eq_Clip\Eq_Clip\bert\position_representation\relative\band_part_mask.py
 py = E:\github\py/Lemma\Tensor\EqSoftmax\of\Eq_SubAddBlockS__Stack_Mul_LogSumExp\biased_lower_triangle.py
-py = E:\github\py/Lemma\Tensor\EqSoftmaxAdd_MulInfity\of\Eq_Card\Subset_Cup\Eq_Block\Eq_Block\Eq_Block\relative_distance\lower_triangle.py
+py = E:\github\py/Lemma\Tensor\EqSoftmaxAdd_MulInfity\of\Eq_Card\Subset_Cup\Eq_Block\Eq_Block\Eq_Block.py
 py = E:\github\py/Lemma\Tensor\EqSqrt\of\Eq_Stack\Eq_Stack\unit_circle.py
 py = E:\github\py/Lemma\Tensor\EqSum\of\Eq_Adjoint.py
 py = E:\github\py/Lemma\Tensor\EqSum\of\Eq_Dot\Eq_Dot.py
@@ -4149,7 +4172,6 @@ py = E:\github\py/Lemma\Tensor\GeStack\of\All_Ge.py
 py = E:\github\py/Lemma\Tensor\Get\eq\Dot\swap.py
 py = E:\github\py/Lemma\Tensor\GetSlice\As\Stack\of\LeAdd\doit.py
 py = E:\github\py/Lemma\Tensor\GetSlice\As\Stack\of\LeAdd\__init__.py
-py = E:\github\py/Lemma\Tensor\GetSlice\eq\Append_DotSoftmaxDivDot_Append\of\All_Eq_DotSoftmaxAdd_DivDot_T\kv_cache.py
 py = E:\github\py/Lemma\Tensor\GetSlice\eq\Tensor.py
 py = E:\github\py/Lemma\Tensor\GetSlice\Get\of\Eq.py
 py = E:\github\py/Lemma\Tensor\Ge_0\Stack\of\All_Ge_0.py
@@ -4300,7 +4322,6 @@ py = E:\github\py/Lemma\Tensor\Stack\eq\Block\split.py
 py = E:\github\py/Lemma\Tensor\Stack\eq\Block\__init__.py
 py = E:\github\py/Lemma\Tensor\Stack\eq\Cos.py
 py = E:\github\py/Lemma\Tensor\Stack\eq\Cot.py
-py = E:\github\py/Lemma\Tensor\Stack\eq\Dot\swapn\helper.py
 py = E:\github\py/Lemma\Tensor\Stack\eq\Exp.py
 py = E:\github\py/Lemma\Tensor\Stack\eq\Eye.py
 py = E:\github\py/Lemma\Tensor\Stack\eq\Ite.py
@@ -4372,10 +4393,10 @@ E:\github\py/Lemma\Vector
 py = E:\github\py/Lemma\Vector\Sum\eq\Sum_Get.py
 E:\github\py/Lemma\__pycache__
 executing:  load data local infile "C:/Users/ADMINI~1/AppData/Local/Temp/hierarchy-0.tsv" ignore into table `hierarchy` character set utf8mb4
-time cost = 45.46237516403198
+time cost = 1.761220932006836
 os.remove(tsv) C:/Users/ADMINI~1/AppData/Local/Temp/hierarchy-0.tsv
 executing:  load data local infile "C:/Users/ADMINI~1/AppData/Local/Temp/hierarchy-10000.tsv" ignore into table `hierarchy` character set utf8mb4
-time cost = 57.192354679107666
+time cost = 0.8949980735778809
 os.remove(tsv) C:/Users/ADMINI~1/AppData/Local/Temp/hierarchy-10000.tsv
 axiom_directory = E:\github\py/Lemma
 E:\github\py/Lemma\Bool
@@ -4736,11 +4757,8 @@ py = E:\github\py/Lemma\Finset\All_Any_In\mapping\Qu2v.py
 py Finset.All_Any_In.mapping.Qu2v Finset.All_And.mapping.Qu2v predefined_symbols
 Finset.Sigma.eq.Add.recurrent sigma
 Finset.Sigma.eq.Add.recurrent sigma
-py = E:\github\py/Lemma\Finset\All_GeRootSDiv_\Sigma\Binom\symmetric_mean_inequality.py
-py Finset.All_GeRootSDiv_.Sigma.Binom.symmetric_mean_inequality Finset.Sigma.eq.Add.recurrent sigma
-Finset.K.eq.Add.definition K
-py = E:\github\py/Lemma\Finset\All_Gt_\K\Zero.py
-py Finset.All_Gt_.K.Zero Finset.K.eq.Add.definition K
+py = E:\github\py/Lemma\Finset\All_GeRootSDivSigma\Binom.py
+py Finset.All_GeRootSDivSigma.Binom Finset.Sigma.eq.Add.recurrent sigma
 Finset.Alpha.gt.Zero alpha
 Finset.Alpha.gt.Zero alpha
 py = E:\github\py/Lemma\Finset\Alpha\Block.py
@@ -4813,9 +4831,6 @@ py Finset.And.of.Eq_Adjoint.All_Gt_0.Eq_Ite.l11 Finset.All.And.of.Eq_Adjoint.Imp
 Finset.All.And.of.Eq_Adjoint.Imp_Gt_0.Eq_Ite.Cholesky extract
 py = E:\github\py/Lemma\Finset\And\of\Eq_Adjoint\All_Gt_0\Eq_Ite\l22.py
 py Finset.And.of.Eq_Adjoint.All_Gt_0.Eq_Ite.l22 Finset.All.And.of.Eq_Adjoint.Imp_Gt_0.Eq_Ite.Cholesky extract
-Finset.All.And.of.Eq_Adjoint.Imp_Gt_0.Eq_Ite.Cholesky extract
-py = E:\github\py/Lemma\Finset\And\of\Eq_Adjoint\Imp_Gt_0\Eq_Ite\Cholesky.py
-py Finset.And.of.Eq_Adjoint.Imp_Gt_0.Eq_Ite.Cholesky Finset.All.And.of.Eq_Adjoint.Imp_Gt_0.Eq_Ite.Cholesky extract
 Finset.All.And.of.Eq_Transpose.Imp_Gt_0.Eq_Ite.Cholesky extract
 py = E:\github\py/Lemma\Finset\And\of\Eq_Transpose\Imp_Gt_0\Eq_Ite\Cholesky.py
 py Finset.And.of.Eq_Transpose.Imp_Gt_0.Eq_Ite.Cholesky Finset.All.And.of.Eq_Transpose.Imp_Gt_0.Eq_Ite.Cholesky extract
@@ -4868,9 +4883,6 @@ py Finset.Eq.Alpha.HK.of.All_Gt_0 Finset.K.eq.Add.definition K
 Finset.And.of.Eq.index index_function
 py = E:\github\py/Lemma\Finset\Eq\Cup\Finset\of\All_Eq\All_In\Eq.py
 py Finset.Eq.Cup.Finset.of.All_Eq.All_In.Eq Finset.And.of.Eq.index index_function
-Finset.Gt_0.of.Eq.Eq.catalan is_catalan_series
-py = E:\github\py/Lemma\Finset\Eq\of\Eq\Eq\catalan\recurrence.py
-py Finset.Eq.of.Eq.Eq.catalan.recurrence Finset.Gt_0.of.Eq.Eq.catalan is_catalan_series
 Set.Eq.given.Eq.Cup.Finset of_cup_finiteset
 py = E:\github\py/Lemma\Finset\Eq\of\Eq\Eq\permutation\pop\Finset.py
 py Finset.Eq.of.Eq.Eq.permutation.pop.Finset Set.Eq.given.Eq.Cup.Finset of_cup_finiteset
@@ -4910,6 +4922,9 @@ py Finset.EqProd.of.Eq.Eq.push Finset.EqSum.of.Eq.Eq.push absorb_back
 Finset.EqSum.of.Eq.Eq.unshift absorb_front
 py = E:\github\py/Lemma\Finset\EqProd\of\Eq\Eq\unshift.py
 py Finset.EqProd.of.Eq.Eq.unshift Finset.EqSum.of.Eq.Eq.unshift absorb_front
+Finset.Gt_0.of.Eq.Eq.catalan is_catalan_series
+py = E:\github\py/Lemma\Finset\Eq_DivBinomMul2\of\All_Eq_Sum_Mul\Eq_1.py
+py Finset.Eq_DivBinomMul2.of.All_Eq_Sum_Mul.Eq_1 Finset.Gt_0.of.Eq.Eq.catalan is_catalan_series
 Finset.K.eq.Add.definition K
 Finset.K.eq.Add.definition K
 py = E:\github\py/Lemma\Finset\GeKS\of\All_Ge.py
@@ -4928,6 +4943,9 @@ py Finset.K.gt.Zero.of.All_Gt_0 Finset.K.eq.Add.definition K
 Finset.K.eq.Add.definition K
 py = E:\github\py/Lemma\Finset\K\gt\Zero\__init__.py
 py Finset.K.gt.Zero Finset.K.eq.Add.definition K
+Finset.K.eq.Add.definition K
+py = E:\github\py/Lemma\Finset\K\Gt_0\of\All_Ge_1\Gt_0.py
+py Finset.K.Gt_0.of.All_Ge_1.Gt_0 Finset.K.eq.Add.definition K
 Finset.K.eq.Add.definition K
 py = E:\github\py/Lemma\Finset\K\ne\Zero.py
 py Finset.K.ne.Zero Finset.K.eq.Add.definition K
@@ -5110,6 +5128,10 @@ py Int.Le.of.Le_Abs Int.Abs.Sum.eq.Mul.Sum dissect_distance
 Int.Abs.Sum.eq.Mul.Sum dissect_distance
 py = E:\github\py/Lemma\Int\Le_AddSum_SquareSub_DivSum\of\LeAbsSSubGet_Sub_1DivSum.py
 py Int.Le_AddSum_SquareSub_DivSum.of.LeAbsSSubGet_Sub_1DivSum Int.Abs.Sum.eq.Mul.Sum dissect_distance
+E:\github\py/Lemma\Matrix
+Finset.All.And.of.Eq_Adjoint.Imp_Gt_0.Eq_Ite.Cholesky extract
+py = E:\github\py/Lemma\Matrix\Eq_Mul_Adjoint\of\All_Eq_Ite__Ite_Sqrt_0\All_Lt0Dot_MulVec\EqAdjoint.py
+py Matrix.Eq_Mul_Adjoint.of.All_Eq_Ite__Ite_Sqrt_0.All_Lt0Dot_MulVec.EqAdjoint Finset.All.And.of.Eq_Adjoint.Imp_Gt_0.Eq_Ite.Cholesky extract
 E:\github\py/Lemma\Nat
 Bool.Ite_Ite.eq.Ite__Ite flatten
 py = E:\github\py/Lemma\Nat\AddIteS\eq\IteAnd.py
@@ -5306,12 +5328,12 @@ py = E:\github\py/Lemma\Random\All_EqIntegral_ProbJoint\of\PSpace_Joint.py
 py Random.All_EqIntegral_ProbJoint.of.PSpace_Joint Random.Sum.eq.Prob marginalize
 Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM process_assumptions
 Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM markov_assumptions
-py = E:\github\py/Lemma\Random\All_Eq_AddLogSumExpAdd\All_EqNegLogProb\of\All_Eq_Log\All_Eq_Sum_Exp\All_Eq_LogProbCond\All_Eq_LogProbCond\All_Eq_LogProbJoint\All_Lt0Prob\IsDiscreteHMM.py
-py Random.All_Eq_AddLogSumExpAdd.All_EqNegLogProb.of.All_Eq_Log.All_Eq_Sum_Exp.All_Eq_LogProbCond.All_Eq_LogProbCond.All_Eq_LogProbJoint.All_Lt0Prob.IsDiscreteHMM Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM markov_assumptions
+py = E:\github\py/Lemma\Random\All_Eq_AddLogSumExpAdd\All_EqNegLogProb\of\All_Eq_Sum_Exp\Eq_LogProbCond\Eq_LogProbCond\Eq_LogProbJoint\GtProbJoint_0\IsDiscreteHMM.py
+py Random.All_Eq_AddLogSumExpAdd.All_EqNegLogProb.of.All_Eq_Sum_Exp.Eq_LogProbCond.Eq_LogProbCond.Eq_LogProbJoint.GtProbJoint_0.IsDiscreteHMM Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM markov_assumptions
 Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM process_assumptions
 Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM markov_assumptions
-py = E:\github\py/Lemma\Random\All_Eq_Add_MaxAdd\EqMax_ProbJoint\of\All_Eq_Max\Eq_LogProbCond\Eq_LogProbCond\Eq_LogProbJoint\All_Lt0ProbJoint\IsDiscreteHMM.py
-py Random.All_Eq_Add_MaxAdd.EqMax_ProbJoint.of.All_Eq_Max.Eq_LogProbCond.Eq_LogProbCond.Eq_LogProbJoint.All_Lt0ProbJoint.IsDiscreteHMM Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM markov_assumptions
+py = E:\github\py/Lemma\Random\All_Eq_Add_MaxAdd\EqMax_ProbJoint\of\All_Eq_LogProbCond\All_Eq_LogProbCond\Eq_LogProbJoint\All_Lt0ProbJoint\IsDiscreteHMM.py
+py Random.All_Eq_Add_MaxAdd.EqMax_ProbJoint.of.All_Eq_LogProbCond.All_Eq_LogProbCond.Eq_LogProbJoint.All_Lt0ProbJoint.IsDiscreteHMM Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM markov_assumptions
 Random.Prob.eq.Sum.joint rewrite
 py = E:\github\py/Lemma\Random\All_Eq_Integral_ProbJoint\of\PSpace_Joint.py
 py Random.All_Eq_Integral_ProbJoint.of.PSpace_Joint Random.Prob.eq.Sum.joint rewrite
@@ -5319,11 +5341,11 @@ Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico extra
 py = E:\github\py/Lemma\Random\And\Ge\of\Eq_Conditioned\Eq_Expect\Eq_Expect\Eq_Expect\Ge\drift.py
 py Random.And.Ge.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Eq_Expect.Ge.drift Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico extract_QVA
 Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico extract_QVA
+py = E:\github\py/Lemma\Random\Eq\Any_Eq_ExpectCondAdd_MulAndAny_Eq_ExpectCondAdd_Mul\of\All_Eq\All_Eq\All_Eq_ExpectCondDotPow\All_Eq_ExpectCondDotPow\All_Eq\In_Ico.py
+py Random.Eq.Any_Eq_ExpectCondAdd_MulAndAny_Eq_ExpectCondAdd_Mul.of.All_Eq.All_Eq.All_Eq_ExpectCondDotPow.All_Eq_ExpectCondDotPow.All_Eq.In_Ico Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico extract_QVA
+Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico extract_QVA
 py = E:\github\py/Lemma\Random\EqGrad\of\Eq_Conditioned\Eq_Expect\Eq_Expect\Eq_Expect\drift.py
 py Random.EqGrad.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Eq_Expect.drift Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico extract_QVA
-Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico extract_QVA
-py = E:\github\py/Lemma\Random\Eq_Expect_FunPowDot\of\GtInftySup\All_Differentiable\All_Eq_Expect_CondTSum_MulPow\Measure\eq\Count\Measure\eq\Count\All_Eq_Joint\In_Ico0.py
-py Random.Eq_Expect_FunPowDot.of.GtInftySup.All_Differentiable.All_Eq_Expect_CondTSum_MulPow.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0 Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico extract_QVA
 Random.Expect.law_of_iterated_expectation rewrite
 py = E:\github\py/Lemma\Random\Expect\Conditioned\law_of_iterated_expectation.py
 py Random.Expect.Conditioned.law_of_iterated_expectation Random.Expect.law_of_iterated_expectation rewrite
@@ -5336,15 +5358,24 @@ py Random.Expect.eq.Integral_Mul_Prob Random.Expect.eq.Sum_Mul_Prob extract
 Random.Expect.ge.Inf extract
 py = E:\github\py/Lemma\Random\Expect\le\Sup.py
 py Random.Expect.le.Sup Random.Expect.ge.Inf extract
-Random.Expect_Sum.eq.Sum_Expect extract
-py = E:\github\py/Lemma\Random\Expect_Stack\eq\Stack_Expect.py
-py Random.Expect_Stack.eq.Stack_Expect Random.Expect_Sum.eq.Sum_Expect extract
+Random.ExpectSum.eq.Sum_Expect extract
+py = E:\github\py/Lemma\Random\ExpectStack\eq\Stack_Expect.py
+py Random.ExpectStack.eq.Stack_Expect Random.ExpectSum.eq.Sum_Expect extract
 Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico extract_QVA
 py = E:\github\py/Lemma\Random\Ge\of\Eq_Conditioned\Eq_Expect\Eq_Expect\Eq_Expect\Any\Eq_ArgMax\drift.py
 py Random.Ge.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Eq_Expect.Any.Eq_ArgMax.drift Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico extract_QVA
 Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico extract_QVA
 py = E:\github\py/Lemma\Random\Grad\eq\Add_SMul_Sum_SMul\of\Ne0Real_Preimage\GtInftySup\All_Differentiable_Prob\All_Eq_Expect\All_Eq_Expect\EqMeasureCount\EqMeasureCount\In_Ico.py
 py Random.Grad.eq.Add_SMul_Sum_SMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.All_Eq_Expect.All_Eq_Expect.EqMeasureCount.EqMeasureCount.In_Ico Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico extract_QVA
+Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico extract_QVA
+py = E:\github\py/Lemma\Random\GradExpectDotPow_Id\eq\AddExpect_Sum_SMul_GradLogProbCond\of\GtInftySup\All_Differentiable_Prob\All_Eq_ExpectCondDot\All_Eq_ExpectCondDot\EqMeasureCount\EqMeasureCount\All_Eq_Joint\In_Ico.py
+py Random.GradExpectDotPow_Id.eq.AddExpect_Sum_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq_ExpectCondDot.All_Eq_ExpectCondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico extract_QVA
+Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico extract_QVA
+py = E:\github\py/Lemma\Random\GradExpectDotPow_Id\eq\ExpectDotFunSMul_GradLogProbCond\of\GtInftySup\All_Differentiable_Prob\All_Eq\In_Ico\advantage.py
+py Random.GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq.In_Ico.advantage Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico extract_QVA
+Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico extract_QVA
+py = E:\github\py/Lemma\Random\GradExpectDotPow_Id\eq\ExpectDotFunSMul_GradLogProbCond\of\GtInftySup\All_Differentiable_Prob\All_Eq_ExpectCondDot\All_Eq_ExpectCondDot\EqMeasureCount\EqMeasureCount\All_Eq_Joint\In_Ico.py
+py Random.GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq_ExpectCondDot.All_Eq_ExpectCondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico extract_QVA
 Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico extract_QVA
 py = E:\github\py/Lemma\Random\GradVk\eq\Add_SMul_Integral_SMul\of\All_EqWithDensity\All_Ge_0\All_Measurable\All_Measurable_Prob\GtInftySup\All_Differentiable_Prob\In_Ico.py
 py Random.GradVk.eq.Add_SMul_Integral_SMul.of.All_EqWithDensity.All_Ge_0.All_Measurable.All_Measurable_Prob.GtInftySup.All_Differentiable_Prob.In_Ico Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico extract_QVA
@@ -5360,21 +5391,15 @@ py Random.Integral.eq.KL Random.Sum.eq.KL extract
 Random.KL.eq.Sum extract
 py = E:\github\py/Lemma\Random\KL\eq\Integral.py
 py Random.KL.eq.Integral Random.KL.eq.Sum extract
-Random.Sum_Expect.eq.Expect_Sum rewrite
-py = E:\github\py/Lemma\Random\Stack_Expect\eq\Expect_Stack.py
-py Random.Stack_Expect.eq.Expect_Stack Random.Sum_Expect.eq.Expect_Sum rewrite
+Random.Sum_Expect.eq.ExpectSum rewrite
+py = E:\github\py/Lemma\Random\Stack_Expect\eq\ExpectStack.py
+py Random.Stack_Expect.eq.ExpectStack Random.Sum_Expect.eq.ExpectSum rewrite
 Random.Expect.ge.Inf extract
 py = E:\github\py/Lemma\Random\Sup\ge\Expect.py
 py Random.Sup.ge.Expect Random.Expect.ge.Inf extract
 Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico extract_QVA
-py = E:\github\py/Lemma\Random\TSum_SMulPowFderiv\eq\Integral_AddSum_SMul_SMulPowIntegral_Fderiv\of\GtInftySup\All_Differentiable\All_Eq_Expect_CondDot\All_Eq_Expect_CondDot\Measure\eq\Count\Measure\eq\Count\All_Eq_Joint\In_Ico0.py
-py Random.TSum_SMulPowFderiv.eq.Integral_AddSum_SMul_SMulPowIntegral_Fderiv.of.GtInftySup.All_Differentiable.All_Eq_Expect_CondDot.All_Eq_Expect_CondDot.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0 Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico extract_QVA
-Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico extract_QVA
-py = E:\github\py/Lemma\Random\TSum_SMulPowFderiv\eq\TSum_SMulPow_Integral_SMul\of\GtInftySup\All_Differentiable\All_Eq_Expect_CondDot\All_Eq_Expect_CondDot\Measure\eq\Count\Measure\eq\Count\All_Eq_Joint\In_Ico0.py
-py Random.TSum_SMulPowFderiv.eq.TSum_SMulPow_Integral_SMul.of.GtInftySup.All_Differentiable.All_Eq_Expect_CondDot.All_Eq_Expect_CondDot.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0 Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico extract_QVA
-Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico extract_QVA
-py = E:\github\py/Lemma\Random\Zero\eq\AddSum_SMulPowSum_SMul_SMulPow_Sum_SMul\of\Real\ne\Zero\GtInftySup\All_Differentiable\All_Eq_Expect_CondDot\All_Eq_Expect_CondDot\Measure\eq\Count\Measure\eq\Count\All_Eq_Joint\In_Ico0.py
-py Random.Zero.eq.AddSum_SMulPowSum_SMul_SMulPow_Sum_SMul.of.Real.ne.Zero.GtInftySup.All_Differentiable.All_Eq_Expect_CondDot.All_Eq_Expect_CondDot.Measure.eq.Count.Measure.eq.Count.All_Eq_Joint.In_Ico0 Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico extract_QVA
+py = E:\github\py/Lemma\Random\Zero\eq\AddSum_SMulPowSum_SMul_SMulPow_Sum_SMul\of\Real\ne\Zero\GtInftySup\All_Differentiable\All_Eq_ExpectCondDot\All_Eq_ExpectCondDot\EqMeasureCount\EqMeasureCount\All_Eq_Joint\In_Ico0.py
+py Random.Zero.eq.AddSum_SMulPowSum_SMul_SMulPow_Sum_SMul.of.Real.ne.Zero.GtInftySup.All_Differentiable.All_Eq_ExpectCondDot.All_Eq_ExpectCondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico0 Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico extract_QVA
 E:\github\py/Lemma\Rat
 Real.Le.of.Le.Ge.quadratic quadratic_coefficient
 py = E:\github\py/Lemma\Rat\Add\eq\Add\square_completing.py
@@ -5625,8 +5650,8 @@ py Real.Le_0.Subs.Grad.of.In_Icc.IsContinuous.IsExtendedReal.All_Le Real.Any.Eq.
 py Real.Le_0.Subs.Grad.of.In_Icc.IsContinuous.IsExtendedReal.All_Le Real.Any.Le.Rolle.of.Lt.IsContinuous.IsExtendedReal.IsExtendedReal.Eq is_differentiable_at
 py Real.Le_0.Subs.Grad.of.In_Icc.IsContinuous.IsExtendedReal.All_Le Real.All.Any.Eq.of.All_Eq.intermediate_value_theorem is_continuous
 Real.Any.All.of.IsLimited.limit_definition of_limited
-py = E:\github\py/Lemma\Real\Lim_Mul\eq\MulLimS\of\IsLimited\IsLimited\algebraic_limit_theorem\extended_real.py
-py Real.Lim_Mul.eq.MulLimS.of.IsLimited.IsLimited.algebraic_limit_theorem.extended_real Real.Any.All.of.IsLimited.limit_definition of_limited
+py = E:\github\py/Lemma\Real\LimMul\eq\MulLimS\of\Ne_0\EqLim\EqLim.py
+py Real.LimMul.eq.MulLimS.of.Ne_0.EqLim.EqLim Real.Any.All.of.IsLimited.limit_definition of_limited
 Finset.AddSumS.eq.Sum_Add_Sum piece_together
 py = E:\github\py/Lemma\Real\Max\eq\Maxima.py
 py Real.Max.eq.Maxima Finset.AddSumS.eq.Sum_Add_Sum piece_together
@@ -5965,9 +5990,6 @@ py Tensor.All.limits.shift.Slice Tensor.Sum.limits.shift.Slice rewrite
 Tensor.Le.given.All.Le all_getitem
 py = E:\github\py/Lemma\Tensor\All\Lt\of\Lt.py
 py Tensor.All.Lt.of.Lt Tensor.Le.given.All.Le all_getitem
-Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico extract_QVA
-py = E:\github\py/Lemma\Tensor\And\Eq\Expect\of\Eq_Conditioned\Eq_Expect\Eq_Expect\Bellman\optimality.py
-py Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman.optimality Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico extract_QVA
 Tensor.Sum.limits.pop.Slice rewrite
 py = E:\github\py/Lemma\Tensor\Any\limits\pop\Slice.py
 py Tensor.Any.limits.pop.Slice Tensor.Sum.limits.pop.Slice rewrite
@@ -6121,8 +6143,8 @@ py Tensor.Stack.limits.swap.subst Finset.Sum.limits.swap.subst rewrite
 E:\github\py/Lemma\Vector
 E:\github\py/Lemma\__pycache__
 executing:  load data local infile "C:/Users/ADMINI~1/AppData/Local/Temp/function-0.tsv" ignore into table `function` character set utf8mb4
-time cost = 0.9273617267608643
+time cost = 0.0732431411743164
 os.remove(tsv) C:/Users/ADMINI~1/AppData/Local/Temp/function-0.tsv
 
 0 file(s) updated.
-done: updated=0 would-update=0 unchanged=3212 skipped=5358
+done: updated=0 would-update=0 unchanged=3902 skipped=8609

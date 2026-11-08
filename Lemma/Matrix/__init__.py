@@ -11,3 +11,7 @@ from . import Dot
 from . import All_InDotSwapMatrix
 from . import SetOfDotGetSwapMatrix
 from . import AppendHstackS
+from . import EqDotDot_ShiftMatrix
+from . import EqDot_DotShiftMatrix
+from . import DetDotMatPowShiftMatrix
+from . import XEq_Append_MulSoftmaxDivMul_AppendTSGetSlice

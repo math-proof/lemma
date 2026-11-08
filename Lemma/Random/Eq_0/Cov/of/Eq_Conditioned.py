@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[1].this.lhs.apply(Random.Cov.eq.Sub.Expect)
 
-    Eq << Random.Eq.Mul.Expect.of.Eq_Conditioned.apply(Eq[0])
+    Eq << Random.Expect_Mul.eq.MulExpectS.of.Indep.apply(Eq[0])
 
     Eq << Eq[-1].reversed
 

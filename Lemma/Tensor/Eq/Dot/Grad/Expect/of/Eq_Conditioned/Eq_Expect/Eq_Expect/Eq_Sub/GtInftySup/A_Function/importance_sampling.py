@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.Expect.law_of_iterated_expectation, s[t])
 
-    Eq << Eq[-1].this.rhs.find(Expectation[~Expectation]).apply(Random.Expect.Conditioned.importance_sampling, π_quote)
+    Eq << Eq[-1].this.rhs.find(Expectation[~Expectation]).apply(Random.All_Eq_Expect_CondSMulDivProbS_Cond.of.All_ImpEqSProb__0, π_quote)
 
     Eq << Eq[-1].this.rhs.find(Derivative).doit()
 

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<base href="/lean/">
+<link rel="stylesheet" href="css/style.css">
+<title>Random/Distributed/ChiSquared/of/All_Distributed_Gaussian/All_Indep</title>
+<link rel="stylesheet" href="css/codemirror-overrides.css">
+<link rel="stylesheet" href="node_modules/katex/dist/katex.min.css">
+<link rel="stylesheet" href="node_modules/prismjs/themes/prism.min.css" />
+<body></body>
+
+<script src="node_modules/axios/dist/axios.min.js"></script>
+<script src="node_modules/qs/dist/qs.js"></script>
+<script src="node_modules/clipboard/dist/clipboard.min.js" defer></script>
+<script src="node_modules/file-saver/dist/FileSaver.min.js" defer></script>
+<script src="node_modules/vue/dist/vue.global.prod.js"></script>
+<script src="node_modules/vue3-sfc-loader/dist/vue3-sfc-loader.js"></script>
+
+<script src="js/py.js?v=9"></script>
+<script src="js/std.js?v=9"></script>
+<script src="node_modules/lz-string/libs/lz-string.js" defer></script>
+<script src="node_modules/katex/dist/katex.min.js" defer></script>
+<script src="node_modules/katex/dist/contrib/auto-render.min.js" defer></script>
+<script type=module src="js/utility.js"></script>
+<script src="node_modules/prismjs/prism.js" defer></script>
+<script src="js/prism-lean.js" defer></script>
+<script type="importmap">
+{
+  "imports": {
+    "@codemirror/state": "/lean/__cm__/@codemirror/state",
+    "@codemirror/view": "/lean/__cm__/@codemirror/view",
+    "@codemirror/commands": "/lean/__cm__/@codemirror/commands",
+    "@codemirror/language": "/lean/__cm__/@codemirror/language",
+    "@codemirror/autocomplete": "/lean/__cm__/@codemirror/autocomplete",
+    "@codemirror/search": "/lean/__cm__/@codemirror/search",
+    "@codemirror/streamparser": "/lean/__cm__/@codemirror/streamparser",
+    "@lezer/common": "/lean/__cm__/@lezer/common",
+    "@lezer/highlight": "/lean/__cm__/@lezer/highlight",
+    "@lezer/lr": "/lean/__cm__/@lezer/lr",
+    "style-mod": "/lean/__cm__/style-mod",
+    "@marijn/find-cluster-break": "/lean/__cm__/@marijn/find-cluster-break",
+    "crelt": "/lean/__cm__/crelt",
+    "w3c-keyname": "/lean/__cm__/w3c-keyname"
+  }
+}
+</script>
+
+<script type="module" src="js/codemirrorBoot.js"></script>
+<script type=module>
+createApp('render', {"imports":["Mathlib.Probability.Distributions.Gaussian.Real","Mathlib.Algebra.BigOperators.Fin","Notation.Fun","Notation.Probability.HasLaw","Notation.Algebra.Power","Def.Fun","Def.Probability.ChiSquared","Instance.Fun","Instance.Probability.Process.HiddenMarkovSequence","Initialize.Tactic.Attr.Basic"],"open":[["MeasureTheory","ProbabilityTheory"],["Fun"]],"set_option":[],"preamble":[],"lemma":[{"comment":"Independent standard normals have sum of squares distributed as chi-squared with\n`n` degrees of freedom.","accessibility":"private","attribute":["path"],"name":"main","instImplicit":"[MeasurableSpace Ω]","implicit":"{n : ℕ}\n{π : Measure Ω} [IsProbabilityMeasure π]\n{x : ℕ ⇀ Ω → ℝ}","explicit":"","given":[{"lean":"(h₀ : ∀ k, x[k] ⟂ᵢ[π] x[:k])","latex":"\\forall\\ {k}, {{{{\\color{red} {x}}}_{k}} \\perp_{i} {{{\\color{red} {x}}}_{{} : {k}}}}\\tag*{$h₀$}"},{"lean":"(h₁ : ∀ k, x[k] ∼[π] gaussianReal 0 1) :","latex":"\\forall\\ {k}, {{{{\\color{red} {x}}}_{k}} \\sim {\\mathcal{N}\\left(0, 1\\right)}}\\tag*{$h₁$}"}],"default":"","imply":{"lean":"∑ i : Fin n, x[i]² ∼[π] chiSquaredReal n := by","latex":"{\\sum\\limits_{i \u003c n} {{{{\\color{red} {x}}}_{i}}^2}} \\sim {\\mathcal{X}^{2}\\left(n\\right)}\\tag*{ := {\\color{#00f}by}}"},"proof":{"by":[{"lean":"have hvec : HasLaw (fun ω (i : Fin n) ↦ x[i] ω)\n    (Measure.pi fun _ : Fin n ↦ gaussianReal 0 1) π := by","latex":null},{"lean":"  induction n with","latex":null},{"lean":"  | zero =>\n    have heq : (fun ω (i : Fin 0) ↦ x[i] ω) = fun _ ↦ (isEmptyElim : Fin 0 → ℝ) := by","latex":null},{"lean":"      funext ω i; exact i.elim0\n    rw [heq]","latex":null},{"lean":"    refine ⟨measurable_const.aemeasurable, ?_⟩","latex":null},{"lean":"    rw [Measure.map_const, Measure.pi_of_empty, measure_univ, one_smul]","latex":null},{"lean":"  | succ n ih =>\n    have hx : (x[:n] : Ω → Fin n → ℝ) = fun ω (i : Fin n) ↦ x[i] ω := by","latex":null},{"lean":"      funext ω i; rfl\n    have hprefix : HasLaw (x[:n]) (Measure.pi fun _ : Fin n ↦ gaussianReal 0 1) π := by","latex":null},{"lean":"      rwa [hx]","latex":null},{"lean":"    have hprod := (h₀ n).symm.hasLaw_prod hprefix (h₁ n)","latex":null},{"lean":"    have hY : HasLaw (Prod.swap : (Fin n → ℝ) × ℝ → ℝ × (Fin n → ℝ))\n        ((gaussianReal 0 1).prod (Measure.pi fun _ : Fin n ↦ gaussianReal 0 1))\n        ((Measure.pi fun _ : Fin n ↦ gaussianReal 0 1).prod (gaussianReal 0 1)) :=\n      ⟨measurable_swap.aemeasurable, Measure.prod_swap⟩","latex":null},{"lean":"    have hswap : HasLaw (fun ω ↦ (x[n] ω, x[:n] ω))\n        ((gaussianReal 0 1).prod (Measure.pi fun _ : Fin n ↦ gaussianReal 0 1)) π :=\n      hY.fun_comp hprod","latex":null},{"lean":"    have hmp :=\n      (measurePreserving_piFinSuccAbove\n        (fun _ : Fin (n + 1) ↦ gaussianReal 0 1) (Fin.last n)).symm","latex":null},{"lean":"    have hlaw := hmp.hasLaw.fun_comp hswap","latex":null},{"lean":"    have hsnoc : (fun ω (i : Fin (n + 1)) ↦ x[i] ω) = fun ω ↦ Fin.snoc (x[:n] ω) (x[n] ω) := by","latex":null},{"lean":"      funext ω i","latex":null},{"lean":"      refine Fin.lastCases ?_ ?_ i","latex":null},{"lean":"      · rw [Fin.snoc_last]; rfl\n      ·\n        intro j","latex":null},{"lean":"        rw [Fin.snoc_castSucc, hx]; rfl\n    rw [hsnoc]","latex":null},{"lean":"    convert hlaw using 1","latex":null},{"lean":"    funext ω","latex":null},{"lean":"    simp [MeasurableEquiv.piFinSuccAbove_symm_apply, Fin.insertNthEquiv_last]","latex":null},{"lean":"    rfl","latex":null},{"lean":"have hsq : HasLaw (fun v : Fin n → ℝ ↦ ∑ i, (v i) ^ 2) (chiSquaredReal n)\n    (Measure.pi fun _ : Fin n ↦ gaussianReal 0 1) := by","latex":null},{"lean":"  unfold chiSquaredReal","latex":null},{"lean":"  exact hasLaw_map (Continuous.aemeasurable (by continuity))","latex":null},{"lean":"have hcomp : (∑ i : Fin n, x[i]²) = (fun v : Fin n → ℝ ↦ ∑ i, (v i) ^ 2) ∘ (fun ω (i : Fin n) ↦ x[i] ω) := by","latex":null},{"lean":"  funext ω","latex":null},{"lean":"  simp [Function.comp_apply, Finset.sum_apply, Pi.pow_apply]","latex":null},{"lean":"rw [hcomp]","latex":null},{"lean":"exact hsq.fun_comp hvec","latex":null}]}}],"date":{"created":"2021-07-17","updated":"2026-10-29"},"module":"Random.Distributed.ChiSquared.of.All_Distributed_Gaussian.All_Indep","user":"lean","meta":{"error":[]}});
+</script>

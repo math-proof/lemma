@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "E:\github\py\Lemma\Matrix\DetBlock_Stack_MulPowS\eq\Mul_Prod_Factorial\of\All.py", line 40, in <module>
+    run()
+  File "E:\github\py\util\utility.py", line 626, in run
+    rowcount = MySQL.instance.execute(sql)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\github\py\sympy\MySQL.py", line 168, in execute
+    cursor.execute(sql, *args)
+  File "D:\Program Files\Python312\Lib\site-packages\mysql\connector\cursor.py", line 551, in execute
+    self._handle_result(self._connection.cmd_query(stmt))
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Program Files\Python312\Lib\site-packages\mysql\connector\connection.py", line 490, in cmd_query
+    result = self._handle_result(self._send_cmd(ServerCmd.QUERY, query))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Program Files\Python312\Lib\site-packages\mysql\connector\connection.py", line 395, in _handle_result
+    raise errors.get_exception(packet)
+mysql.connector.errors.DataError: 3140 (22032): Invalid JSON text: "Invalid encoding in string." at position 966 in value for column 'axiom.lean'.

@@ -1,0 +1,10 @@
+import os, mysql.connector
+conn=mysql.connector.connect(user=os.environ.get('USERNAME'), password=os.environ.get('MYSQL_PWD','prod'), host='localhost', database='axiom', charset='utf8mb4', auth_plugin='mysql_native_password')
+cur=conn.cursor()
+cur.execute("select axiom,state from axiom where user='py' and axiom=%s", ('Random.Distributed.ChiSquared.of.All_Distributed_Gaussian.All_Indep',))
+print('exact', cur.fetchall())
+cur.execute("select axiom,state from axiom where user='py' and axiom like %s", ('%All_Distributed_Gaussian%',))
+print('All_Distributed_Gaussian', cur.fetchall())
+cur.execute("select axiom,state from axiom where user='py' and axiom like %s", ('%ChiSquared%',))
+print('ChiSquared', cur.fetchall())
+conn.close()

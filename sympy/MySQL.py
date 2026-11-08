@@ -377,7 +377,7 @@ class MySQLConnector(Database):
         char_length = [256] * len(desc)
         dtype = [None] * len(desc)
         for i, (Field, Type, *_) in enumerate(desc):
-            dtype[i] = Type = str(Type, encoding="utf-8")
+            dtype[i] = Type = Type.decode("utf-8") if isinstance(Type, (bytes, bytearray)) else str(Type)
             if Field == 'training':
                 has_training_field = True
                 
@@ -655,7 +655,7 @@ class MySQLConnector(Database):
             table = kwargs.pop('table')
 
         desc = self.desc_table(table)
-        desc = {Field: str(Type, encoding='utf8') for Field, Type, *_ in desc}
+        desc = {Field: (Type.decode("utf-8") if isinstance(Type, (bytes, bytearray)) else str(Type)) for Field, Type, *_ in desc}
 
         table = format_table(table)
         sql = f"select %s from {table} "

@@ -88,3 +88,8 @@ from . import HasLawAdd
 from . import NeProb_0
 from . import ArgMax_ProbCond
 from . import DistributedAdd
+from . import Distributed_ChiSquared
+from . import Lim_ProbLtAbsSubDivSum
+from . import Expect_Mul
+from . import Expect_Mul_Sub1DivProbS
+from . import All_Eq_Expect_CondSMulDivProbS_Cond

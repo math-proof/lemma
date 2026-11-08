@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="static/css/style.css">
+
+<title>Matrix/DetBlock_Stack_MulPowS/eq/Mul_Prod_Factorial/of/All</title>
+<link rel=stylesheet href="static/codemirror/lib/codemirror.css">
+<link rel=stylesheet href="static/codemirror/theme/eclipse.css">
+<link rel=stylesheet href="static/codemirror/addon/hint/show-hint.css">
+<link rel=stylesheet href="static/unpkg.com/katex@0.16.21/dist/katex.min.css">
+<style>
+div {
+	caret-color: transparent;
+}
+</style>
+<body></body>
+<script src="static/unpkg.com/vue@3.2.47/dist/vue.global.prod.js"></script>
+<script src="static/unpkg.com/vue3-sfc-loader@0.8.4/dist/vue3-sfc-loader.js"></script>
+
+<script src="static/unpkg.com/axios@0.24.0/dist/axios.min.js"></script>
+<script src="static/unpkg.com/qs@6.10.2/dist/qs.js"></script>
+<script src="static/unpkg.com/clipboard@2.0.10/dist/clipboard.min.js"></script>
+
+<script src='static/js/std.js'></script>
+<script src='static/js/utility.js'></script>
+<script defer src="static/unpkg.com/katex@0.16.21/dist/katex.min.js"></script>
+<script defer src="static/unpkg.com/katex@0.16.21/dist/contrib/auto-render.min.js"></script>
+<script type=module>
+import * as codemirror from "./static/codemirror/lib/codemirror.js"
+import * as python from "./static/codemirror/mode/python/python.js"
+import * as active_line from "./static/codemirror/addon/selection/active-line.js"
+import * as show_hint from "./static/codemirror/addon/hint/show-hint.js"
+import * as matchbrackets from "./static/codemirror/addon/edit/matchbrackets.js"
+
+var logs = [];
+var error = [];
+
+for (let i = 0; i < logs.length; ++i){
+    var log = logs[i];
+    if (log.startsWith('{') && log.endsWith('}')){
+    	error.push(JSON.parse(log));
+    	logs.delete(i);
+        break;
+    }
+    
+    if (log.startsWith('[') && log.endsWith(']')){
+    	logs.delete(i);
+        error = JSON.parse(log);
+        break;
+    }
+}
+
+createApp('render', {
+	error : error,
+    logs : logs,
+    prove : [{"py":"Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[0], cond=Equal(x2, 0))","latex":"\\[{{x_{2}}={0}} \\rightarrow {{\\left|{\\left[\\begin{array}{c}{[j<{\\color{green} {m}},i<d]\\left(j^{i} x_{1}^{j}\\right)}\\\\{[j<{\\color{green} {m}},i<{\\color{green} {m}} - d]\\left(j^{i} x_{2}^{j}\\right)}\\end{array}\\right]}\\right|}={x_{1}^{{\\binom{d}{2}}} x_{2}^{{\\binom{{\\color{green} {m}} - d}{2}}} \\left(x_{2} - x_{1}\\right)^{d \\left({\\color{green} {m}} - d\\right)} \\prod\\limits_{i:d}i! \\cdot \\prod\\limits_{i=0}^{{\\color{green} {m}} - d - 1} i!}}\\tag*{Eq[1]}\\]\\[{x_{2} \\neq 0} \\rightarrow {{\\left|{\\left[\\begin{array}{c}{[j<{\\color{green} {m}},i<d]\\left(j^{i} x_{1}^{j}\\right)}\\\\{[j<{\\color{green} {m}},i<{\\color{green} {m}} - d]\\left(j^{i} x_{2}^{j}\\right)}\\end{array}\\right]}\\right|}={x_{1}^{{\\binom{d}{2}}} x_{2}^{{\\binom{{\\color{green} {m}} - d}{2}}} \\left(x_{2} - x_{1}\\right)^{d \\left({\\color{green} {m}} - d\\right)} \\prod\\limits_{i:d}i! \\cdot \\prod\\limits_{i=0}^{{\\color{green} {m}} - d - 1} i!}}\\tag*{Eq[2]}\\]"},{"py":"Eq << Eq[-1].this.lhs.apply(Finset.Eq.Det.Block.eq.Mul.Prod.of.Ne_0.vandermonde.mn, x1, m, d)","latex":"\\[\\text{True}\\]"},{"py":"Eq << Bool.Imp.given.ImpEq.apply(Eq[-2])","latex":"\\[{{x_{2}}={0}} \\rightarrow {{\\left|{\\left[\\begin{array}{c}{[j<{\\color{green} {m}},i<d]\\left(j^{i} x_{1}^{j}\\right)}\\\\{[j<{\\color{green} {m}},i<{\\color{green} {m}} - d]\\left(0^{j} j^{i}\\right)}\\end{array}\\right]}\\right|}={0}}\\tag*{Eq[3]}\\]"},{"py":"Eq << Eq[-1].this.find(Stack[2]).apply(Tensor.Stack.eq.Transpose.Block, 1)","latex":"\\[{{x_{2}}={0}} \\rightarrow {{\\left|{\\left[\\begin{array}{c}{[j<{\\color{green} {m}},i<d]\\left(j^{i} x_{1}^{j}\\right)}\\\\{\\left[\\begin{array}{cc}{[i<{\\color{green} {m}} - d]0^{i}} & {[j<{\\color{green} {m}} - 1]0^{j + 1} \\cdot [i<{\\color{green} {m}} - d]\\left([j<{\\color{green} {m}} - 1]j + 1\\right)^{i}}\\end{array}\\right]_1}\\end{array}\\right]}\\right|}={0}}\\tag*{Eq[4]}\\]"},{"py":"Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Transpose.Block, 1)","latex":"\\[{{x_{2}}={0}} \\rightarrow {{\\left|{\\left[\\begin{array}{cc}{[i<d]0^{i}} & {[j<{\\color{green} {m}} - 1]x_{1}^{j + 1} \\cdot [i<d]\\left([j<{\\color{green} {m}} - 1]j + 1\\right)^{i}}\\\\{[i<{\\color{green} {m}} - d]0^{i}} & {[j<{\\color{green} {m}} - 1]0^{j + 1} \\cdot [i<{\\color{green} {m}} - d]\\left([j<{\\color{green} {m}} - 1]j + 1\\right)^{i}}\\end{array}\\right]}\\right|}={0}}\\tag*{Eq[5]}\\]"},{"py":"Eq << Eq[-1].this.find(BlockMatrix).args[1].find((~Stack) * Stack)().expr.simplify()","latex":"\\[{{x_{2}}={0}} \\rightarrow {{\\left|{\\left[\\begin{array}{cc}{[i<d]0^{i}} & {[j<{\\color{green} {m}} - 1]x_{1}^{j + 1} \\cdot [i<d]\\left([j<{\\color{green} {m}} - 1]j + 1\\right)^{i}}\\\\{[i<{\\color{green} {m}} - d]0^{i}} & {\\mathbf{0}_{{\\color{green} {m}} - d,{\\color{green} {m}} - 1}}\\end{array}\\right]}\\right|}={0}}\\tag*{Eq[6]}\\]"},{"py":"Eq << Eq[-1].this.find(Det).apply(Finset.Det.Block.eq.Zero)","latex":"\\[\\text{True}\\]"}],
+    unused : ["\n"],
+    module: "Matrix.DetBlock_Stack_MulPowS.eq.Mul_Prod_Factorial.of.All",
+    given: {"py":"d = Symbol(integer=True, positive=True)\nm = Symbol(domain=Range(d + 2, oo))\ni, j = Symbol(integer=True)\nx1, x2 = Symbol(complex=True)\nEq << apply(Det(BlockMatrix([Stack[j:m, i:d](j ** i * x1 ** j), Stack[j:m, i:m - d](j ** i * x2 ** j)])))","latex":""},
+    imply: "\\[{\\left|{\\left[\\begin{array}{c}{[j<{\\color{green} {m}},i<d]\\left(j^{i} x_{1}^{j}\\right)}\\\\{[j<{\\color{green} {m}},i<{\\color{green} {m}} - d]\\left(j^{i} x_{2}^{j}\\right)}\\end{array}\\right]}\\right|}={x_{1}^{{\\binom{d}{2}}} x_{2}^{{\\binom{{\\color{green} {m}} - d}{2}}} \\left(x_{2} - x_{1}\\right)^{d \\left({\\color{green} {m}} - d\\right)} \\prod\\limits_{i:d}i! \\cdot \\prod\\limits_{i=0}^{{\\color{green} {m}} - d - 1} i!}\\tag*{Eq[0]}\\]",
+    where: "",
+    createdTime: `2022-07-11`,
+    updatedTime: `2023-03-18`,
+});
+
+var data = null;
+if (data) {
+    console.log(`update mysql data`);
+    console.log(data);
+
+    data = JSON.stringify(data);
+    form_post("php/request/mysql/update.php", {data}).then(res => {
+        console.log('success code = ');
+        console.log(res);
+    });
+}
+
+//http://codemirror.net/doc/manual.html
+//http://docs.mathjax.org/en/latest/
+</script>
+
+

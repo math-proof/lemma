@@ -1,4 +1,4 @@
-# 什么是lemma.cn  
+﻿# 什么是lemma.cn  
   <br>
 
 [lemma.cn](../index.php)是一个基于数学定理知识库、用于证明数学命题的网站，目前有两种语言的版本，[Python](https://github.com/math-proof/lemma/tree/master)版本的定理库主要依靠开源符号计算项目 
@@ -49,9 +49,9 @@
 [Catalan数](../?module=Finset.Eq.of.Eq.Eq.catalan.recurrence)的推导，[连分数](../?module=Finset.Add.eq.Pow.HK.recurrence)初步理论；[Cholesky矩阵分解](../?module=Finset.Any.Eq.of.Eq_Adjoint.Imp_Gt_0.Cholesky)存在定理。
 * [Probability](../?module=Probability) 概率统计学，比如[Bayes公式](../?module=Probability.Pr.eq.Div.Pr.bayes)，[大数定理](../?module=Probability.Eq.Limit.Pr.of.Eq_Conditioned.Eq_Expect.Eq_Var.law_of_large_numbers)；
 * [Tensor](../?module=Tensor) 机器学习，深度学习中的数学模型，
-[KV-Cache](../?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.GetSlice.eq.DotSoftmaxAdd_DivDot_Transpose.kv_cache)，
+[KV-Cache](../?module=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)，
 条件自由场[CRF](../?module=Tensor.Imp_Eq_Add_LogSumExp.EqNegLogProb.of.Ne0ProbJoint.Indep.y_given_x)，KMeans
-[聚类收敛性](../?module=Set.LeAddSSumS_SquareSub_Sum.of.In.NotIn.LeAbsSSub_Sum)、用于Vision Transformer的[广义旋转位置编码](../?module=Tensor.Dot.eq.Add.of.Eq_Mul.Eq_Mul.Eq_Block.position_representation.plane)、强化学习的[策略梯度定理](../?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate)的推导及证明。  
+[聚类收敛性](../?module=Finset.LeAddSumS_SquareSub_Div_Sum.of.LeAbsSSub_Div_Sum.NotIn.In.GtCard_0)、用于Vision Transformer的[广义旋转位置编码](../?module=Tensor.Dot.eq.Add.of.Eq_Mul.Eq_Mul.Eq_Block.position_representation.plane)、强化学习的[策略梯度定理](../?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate)的推导及证明。  
 
 <br><br>
 -------

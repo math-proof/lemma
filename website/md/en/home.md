@@ -1,4 +1,4 @@
-# What is lemma.cn
+﻿# What is lemma.cn
   <br>
   
 [lemma.cn](../index.php) is a website for symbolic	semi-mechanized axiomatized theorem-proving system, consisting of two versions written respectively in Python and Lean language. The [Python](https://github.com/math-proof/lemma/tree/master) version is based on open-source symbolic computation project of [sympy](https://github.com/sympy/sympy) and 
@@ -43,9 +43,9 @@ derivation for [Catalan Number](../?module=Finset.Eq.of.Eq.Eq.catalan.recurrence
 basics of [continued fraction](../?module=Finset.Add.eq.Pow.HK.recurrence); as well as the existence of [Cholesky decomposition](../?module=Finset.Any.Eq.of.Eq_Adjoint.Imp_Gt_0.Cholesky).  
 * [Probability](../?module=Probability) refers to statistics and probability theory, comprising: the derivation of the probability density formula of some common distribution (such as, binomial distribution, Gaussian distribution, poisson distribution, die distribution, Χ<sup>2</sup>distribution)，as well as propositions related to [Bayes theorem](../?module=Probability.Pr.eq.Div.Pr.bayes), and the [law of large numbers](../?module=Probability.Eq.Limit.Pr.of.Eq_Conditioned.Eq_Expect.Eq_Var.law_of_large_numbers);  
 * [Tensor](../?module=Tensor) section is related to the mathematical theories behind the contemporary deep learning / machine learning techniques, including the mathematical modeling used in natural language processing / understanding, formulae deduction or proof of
-[KV-Cache](../?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.GetSlice.eq.DotSoftmaxAdd_DivDot_Transpose.kv_cache),
+[KV-Cache](../?module=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T),
 Conditional Random Field [CRF](../?module=Tensor.Imp_Eq_Add_LogSumExp.EqNegLogProb.of.Ne0ProbJoint.Indep.y_given_x),
-KMeans [clustering convergence](../?module=Set.LeAddSSumS_SquareSub_Sum.of.In.NotIn.LeAbsSSub_Sum), [General Rotary Position Embedding](../?module=Tensor.Dot.eq.Add.of.Eq_Mul.Eq_Mul.Eq_Block.position_representation.plane) for Vision Transformer, [Policy Gradient Theorem](../?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate) from Reinforcement Learning. 
+KMeans [clustering convergence](../?module=Finset.LeAddSumS_SquareSub_Div_Sum.of.LeAbsSSub_Div_Sum.NotIn.In.GtCard_0), [General Rotary Position Embedding](../?module=Tensor.Dot.eq.Add.of.Eq_Mul.Eq_Mul.Eq_Block.position_representation.plane) for Vision Transformer, [Policy Gradient Theorem](../?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate) from Reinforcement Learning. 
 Probability theory provides the fundamental theoretical basis for machine learning so that this contemporary technique can be  explainable.  
 
 <br><br>

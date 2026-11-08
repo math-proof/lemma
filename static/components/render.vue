@@ -151,7 +151,6 @@ export default {
 			var {protocol, host, pathname, search, hash} = location;
             if (pathname.match(/\/py\/(index\.php)?/)) {
                 pathname = '/lean/';
-                search = search.replace(/(?<=[./\\][A-Z]\w*[./\\])(In|Is)(?=[.\/\\][A-Z])/g, m => m.toLowerCase());
                 search = search.replace(/(?<=[.\/\\])(given)(?=[.\/\\])/g, 'of');
                 host = host.replace(/:\d+$/, '');
             }

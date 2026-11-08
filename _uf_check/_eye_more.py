@@ -1,0 +1,10 @@
+import os, mysql.connector
+conn=mysql.connector.connect(user=os.environ.get('USERNAME'), password='prod', host='localhost', database='axiom', charset='utf8mb4', auth_plugin='mysql_native_password')
+cur=conn.cursor()
+cur.execute("select axiom,state from axiom where user='py' and (axiom like %s or axiom like %s)",('%MatProd%Eye%','%Eye%MatProd%'))
+print('cross', cur.fetchall())
+cur.execute("select axiom from axiom where user='py' and axiom like 'Tensor.MatProd%'")
+print('all Tensor.MatProd', cur.fetchall())
+cur.execute("select axiom from axiom where user='py' and axiom like 'Matrix.MatProd%'")
+print('all Matrix.MatProd', cur.fetchall())
+conn.close()

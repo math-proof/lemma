@@ -1,0 +1,12 @@
+Eq[0] : det([[i < d] [j < m] j ^ i * x1 ^ j, [i < -d + m] [j < m] j ^ i * x2 ^ j]) = x1 ^ Binomial d 2 * x2 ^ Binomial (-d + m) 2 * (-x1 + x2) ^ (d * (-d + m)) * ¡Ç i : Fin d, Factorial(i) * ¡Ç i : Fin (-d + m), Factorial(i)
+Eq[1] : x2 = 0 ¡ú det([[i < d] [j < m] j ^ i * x1 ^ j, [i < -d + m] [j < m] j ^ i * x2 ^ j]) = x1 ^ Binomial d 2 * x2 ^ Binomial (-d + m) 2 * (-x1 + x2) ^ (d * (-d + m)) * ¡Ç i : Fin d, Factorial(i) * ¡Ç i : Fin (-d + m), Factorial(i)
+Eq[2] : x2 ¡Ù 0 ¡ú det([[i < d] [j < m] j ^ i * x1 ^ j, [i < -d + m] [j < m] j ^ i * x2 ^ j]) = x1 ^ Binomial d 2 * x2 ^ Binomial (-d + m) 2 * (-x1 + x2) ^ (d * (-d + m)) * ¡Ç i : Fin d, Factorial(i) * ¡Ç i : Fin (-d + m), Factorial(i)
+Eq[3] : x2 = 0 ¡ú det([[i < d] [j < m] j ^ i * x1 ^ j, [i < -d + m] [j < m] 0 ^ j * j ^ i]) = 0
+Eq[4] : x2 = 0 ¡ú det([[i < d] [j < m] j ^ i * x1 ^ j, BlockMatrix[1]([i < -d + m] 0 ^ i, [j < m - 1] 0 ^ (j + 1) * [i < -d + m] ([j < m - 1] j + 1) ^ i)]) = 0
+Eq[5] : x2 = 0 ¡ú det([
+    [     [i < d] 0 ^ i,     [j < m - 1] x1 ^ (j + 1) * [i < d] ([j < m - 1] j + 1) ^ i],
+    [[i < -d + m] 0 ^ i, [j < m - 1] 0 ^ (j + 1) * [i < -d + m] ([j < m - 1] j + 1) ^ i]]) = 0
+Eq[6] : x2 = 0 ¡ú det([
+    [     [i < d] 0 ^ i, [j < m - 1] x1 ^ (j + 1) * [i < d] ([j < m - 1] j + 1) ^ i],
+    [[i < -d + m] 0 ^ i,                                      Zeros [-d + m, m - 1]]]) = 0
+http://localhost/py/?module=Matrix.DetBlock_Stack_MulPowS.eq.Mul_Prod_Factorial.of.All
