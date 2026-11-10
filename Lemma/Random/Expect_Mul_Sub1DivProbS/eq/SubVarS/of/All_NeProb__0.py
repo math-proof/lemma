@@ -26,9 +26,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Variance).apply(Random.Var.eq.Sub.Expect)
 
-    Eq << Eq[-1].this.find(-(~Expectation) ** 2).apply(Random.Expect.importance_sampling, θ_quote)
+    Eq << Eq[-1].this.find(-(~Expectation) ** 2).apply(Random.Expect.eq.Expect_DivMul_Prob.of.All_ImpEqSProb__0.Measurable.discontinuous, θ_quote)
 
-    Eq << Eq[-1].this.rhs.find(Expectation[Mul]).apply(Random.Expect.importance_sampling, θ)
+    Eq << Eq[-1].this.rhs.find(Expectation[Mul]).apply(Random.Expect.eq.Expect_DivMul_Prob.of.All_ImpEqSProb__0.Measurable.discontinuous, θ)
 
     Eq << Eq[-1].this.lhs.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 

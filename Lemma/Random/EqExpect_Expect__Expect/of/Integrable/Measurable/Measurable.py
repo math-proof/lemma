@@ -68,7 +68,7 @@ def prove(Eq):
     f = Function(real=True, shape=())
     Eq << apply(Expectation(f(x)), y, z)
 
-    Eq << Eq[-1].this.rhs.apply(Random.Expect.law_of_total_expectation)
+    Eq << Eq[-1].this.rhs.apply(Random.Expect_Expect_Cond.eq.Expect.of.Integrable.Measurable)
 
 
 

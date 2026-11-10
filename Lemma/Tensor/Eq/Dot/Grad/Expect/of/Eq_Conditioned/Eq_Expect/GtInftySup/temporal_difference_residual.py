@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Expectation]).apply(Random.Mul_Expect.eq.ExpectMul)
 
-    Eq << Eq[-1].this.find(Expectation[Expectation]).apply(Random.Expect.law_of_total_expectation)
+    Eq << Eq[-1].this.find(Expectation[Expectation]).apply(Random.Expect_Expect_Cond.eq.Expect.of.Integrable.Measurable)
 
 
 

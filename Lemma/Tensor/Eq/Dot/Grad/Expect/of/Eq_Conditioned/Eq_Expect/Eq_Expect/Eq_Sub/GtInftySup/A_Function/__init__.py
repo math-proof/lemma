@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq.hypothesis = Eq[-1].this.find(Expectation[Mul[NegativeOne]]).apply(Random.ExpectMul.eq.Mul_Expect)
 
-    Eq << Eq.hypothesis.rhs.find(-~Expectation).this.apply(Random.Expect.law_of_iterated_expectation, s[t])
+    Eq << Eq.hypothesis.rhs.find(-~Expectation).this.apply(Random.EqExpect_Expect__Expect.of.Integrable.Measurable.Measurable, s[t])
 
     Eq << Eq[-1].this.find(Expectation[~Expectation]).apply(Random.ExpectMul.eq.Mul_Expect)
 

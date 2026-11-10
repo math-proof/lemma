@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(MatMul).apply(Random.Dot.eq.Expect)
 
-    Eq << Eq[-1].this.rhs.apply(Random.Expect.law_of_total_expectation)
+    Eq << Eq[-1].this.rhs.apply(Random.Expect_Expect_Cond.eq.Expect.of.Integrable.Measurable)
 
     Eq << Real.EqGrad.of.Eq.apply(Eq[-1], [π])
 
@@ -91,7 +91,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Integral).apply(Random.Integral.eq.Expect)
 
-    Eq << Eq[-1].this.find(Expectation[Expectation]).apply(Random.Expect.law_of_total_expectation)
+    Eq << Eq[-1].this.find(Expectation[Expectation]).apply(Random.Expect_Expect_Cond.eq.Expect.of.Integrable.Measurable)
 
     Eq << Eq[-1].this.find(Sum[~Mul[Expectation]]).apply(Random.Mul_Expect.eq.ExpectMul)
 

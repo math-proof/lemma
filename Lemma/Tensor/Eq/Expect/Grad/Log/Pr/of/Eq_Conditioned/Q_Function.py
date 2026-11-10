@@ -32,7 +32,7 @@ def prove(Eq):
         Equal(r[t] | a[:t] & s[:t], r[t]), # history-irrelevant conditional independence assumption
         k, π)
 
-    Eq << Eq[-1].lhs.this.apply(Random.Expect.law_of_iterated_expectation, a[:t + 1], s[:t + 1])
+    Eq << Eq[-1].lhs.this.apply(Random.EqExpect_Expect__Expect.of.Integrable.Measurable.Measurable, a[:t + 1], s[:t + 1])
 
     Eq << Eq[-1].this.rhs.find(Expectation[Conditioned]).apply(Random.ExpectMul.eq.Mul_Expect)
 
