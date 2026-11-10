@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Expectation).subs(Eq[-2])
 
-    Eq << Eq[-1].this.find(Expectation[Expectation]).apply(Random.Expect_Expect_Cond.eq.Expect.of.Integrable.Measurable)
+    Eq << Eq[-1].this.find(Expectation[Expectation]).apply(Random.Expect_Cond.eq.Expect.of.Integrable.Measurable)
 
     Eq << Tensor.EqDot.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Eq_Sub.A_Function.apply(*Eq[:4], π_quote)
 

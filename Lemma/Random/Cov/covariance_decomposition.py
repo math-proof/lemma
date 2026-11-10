@@ -21,11 +21,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Random.Cov.eq.Sub.Expect)
 
-    Eq << Eq[-1].this.find(Expectation[Expectation]).apply(Random.Expect_Expect_Cond.eq.Expect.of.Integrable.Measurable)
+    Eq << Eq[-1].this.find(Expectation[Expectation]).apply(Random.Expect_Cond.eq.Expect.of.Integrable.Measurable)
 
     Eq << Eq[-1].this.find(Mul[Expectation]).apply(Random.Mul_Expect.eq.ExpectMul)
 
-    Eq << Eq[-1].this.rhs.apply(Random.Expect_Expect_Cond.eq.Expect.of.Integrable.Measurable)
+    Eq << Eq[-1].this.rhs.apply(Random.Expect_Cond.eq.Expect.of.Integrable.Measurable)
 
 
 

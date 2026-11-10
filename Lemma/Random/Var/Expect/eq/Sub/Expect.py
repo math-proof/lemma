@@ -21,10 +21,10 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Random.Var.eq.Sub.Expect)
 
-    Eq << Eq[-1].this.find(Expectation[Expectation]).apply(Random.Expect_Expect_Cond.eq.Expect.of.Integrable.Measurable)
+    Eq << Eq[-1].this.find(Expectation[Expectation]).apply(Random.Expect_Cond.eq.Expect.of.Integrable.Measurable)
 
 
-    Eq << Eq[-1].this.find(Expectation[Expectation]).apply(Random.Expect_Expect_Cond.eq.Expect.of.Integrable.Measurable)
+    Eq << Eq[-1].this.find(Expectation[Expectation]).apply(Random.Expect_Cond.eq.Expect.of.Integrable.Measurable)
 
 
 if __name__ == '__main__':

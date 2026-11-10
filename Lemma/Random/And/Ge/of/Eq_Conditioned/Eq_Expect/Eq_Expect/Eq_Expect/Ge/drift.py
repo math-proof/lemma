@@ -115,7 +115,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.find(MatMul).apply(Random.Dot.eq.Expect), Eq[-1].this.find(MatMul).apply(Random.Dot.eq.Expect)
 
-    Eq <<= Eq[-2].this.rhs.apply(Random.Expect_Expect_Cond.eq.Expect.of.Integrable.Measurable), Eq[-1].this.rhs.apply(Random.Expect_Expect_Cond.eq.Expect.of.Integrable.Measurable)
+    Eq <<= Eq[-2].this.rhs.apply(Random.Expect_Cond.eq.Expect.of.Integrable.Measurable), Eq[-1].this.rhs.apply(Random.Expect_Cond.eq.Expect.of.Integrable.Measurable)
 
     Eq <<= Eq[-2].this.rhs.apply(Random.ExpectDot.eq.Dot_Expect), Eq[-1].this.rhs.apply(Random.ExpectDot.eq.Dot_Expect)
 

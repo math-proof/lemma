@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Expectation[Mul]).apply(Random.ExpectMul.eq.Mul_Expect)
 
-    Eq << Eq[-1].this.lhs.apply(Random.Expect_Expect_Cond.eq.Expect.of.Integrable.Measurable)
+    Eq << Eq[-1].this.lhs.apply(Random.Expect_Cond.eq.Expect.of.Integrable.Measurable)
 
 
 

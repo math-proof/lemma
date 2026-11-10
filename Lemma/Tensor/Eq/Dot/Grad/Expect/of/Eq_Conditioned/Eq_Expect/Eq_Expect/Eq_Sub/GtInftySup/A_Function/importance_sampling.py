@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Derivative).doit()
 
-    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.Expect_Expect_Cond.eq.Expect.of.Integrable.Measurable)
+    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.Expect_Cond.eq.Expect.of.Integrable.Measurable)
 
     Eq << Eq.hypothesis.this.rhs.find(Expectation).simplify()
 

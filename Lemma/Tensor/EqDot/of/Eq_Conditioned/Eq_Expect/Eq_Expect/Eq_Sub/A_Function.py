@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum[~Expectation]).simplify()
 
-    Eq << Eq[-1].this.find(Sum[~Expectation]).apply(Random.Expect_Expect_Cond.eq.Expect.of.Integrable.Measurable)
+    Eq << Eq[-1].this.find(Sum[~Expectation]).apply(Random.Expect_Cond.eq.Expect.of.Integrable.Measurable)
 
     Eq << Eq[-1].this.find(Sum[Expectation]).apply(Random.Sum_Expect.eq.ExpectSum)
 
@@ -75,7 +75,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum[Mul[~Expectation]]).simplify()
 
-    Eq << Eq[-1].this.find(Sum[Mul[~Expectation]]).apply(Random.Expect_Expect_Cond.eq.Expect.of.Integrable.Measurable)
+    Eq << Eq[-1].this.find(Sum[Mul[~Expectation]]).apply(Random.Expect_Cond.eq.Expect.of.Integrable.Measurable)
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.SumIco.eq.Sum_UFnAdd, -1)
 
@@ -91,7 +91,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Expectation[MatMul]).apply(Random.ExpectDot.eq.Dot_Expect)
 
-    Eq << Eq[-1].this.find(Expectation[Expectation]).apply(Random.Expect_Expect_Cond.eq.Expect.of.Integrable.Measurable)
+    Eq << Eq[-1].this.find(Expectation[Expectation]).apply(Random.Expect_Cond.eq.Expect.of.Integrable.Measurable)
 
     Eq << Eq[-1].this.rhs.find(MatMul[~Stack]).apply(Tensor.Stack_PowGetS.eq.Pow)
 
