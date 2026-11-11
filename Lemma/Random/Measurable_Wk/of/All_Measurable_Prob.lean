@@ -8,7 +8,8 @@ If every `x ↦ π_θ(u | x)` is measurable, so is the `k`-step expected reward 
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [MeasurableSpace A] [Fintype A]
+  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
+  [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
   {M : Model Θ S A}
 -- given
   (h : ∀ θ u, Measurable (fun x => M.policy.prob θ x u))
@@ -28,3 +29,4 @@ private lemma main
 
 
 -- created on 2026-10-07
+-- updated on 2026-11-08

@@ -2,6 +2,7 @@ import Lemma.List.EqAppendDropLast.of.GtLength_0
 import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
 import Lemma.List.EqCons_Tail.of.GtLength_0
 import Lemma.Tensor.GtLengthDot.of.GeLengthS
+import Instance.Data.Vector.Basic.Dot
 open List Tensor
 
 
@@ -15,7 +16,7 @@ private lemma main
   (Y : Tensor α s')
   (i : Fin s[0]) :
 -- imply
-  i < (X @ Y).length := by
+  i < (X ⬝ᵥ Y).length := by
 -- proof
   let s_batch := s.tail.dropLast
   let batch_size' := s'.take (s'.length - 2)
@@ -37,7 +38,7 @@ private lemma main
   let X' := cast (congrArg (Tensor α) h_X) X
   let Y' := cast (congrArg (Tensor α) h_Y) Y
   have h_dot := GtLengthDot.of.GeLengthS h_batch X' Y' i
-  have h_len : (X @ Y).length = (X' @ Y').length := by
+  have h_len : (X ⬝ᵥ Y).length = (X' ⬝ᵥ Y').length := by
     dsimp [Tensor.length]
     grind
   exact h_len ▸ h_dot

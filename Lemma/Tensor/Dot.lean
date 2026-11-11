@@ -2,9 +2,10 @@ import Mathlib.Algebra.Group.ForwardDiff
 import Mathlib.Data.Matrix.ColumnRowPartitioned
 import Mathlib.LinearAlgebra.Vandermonde
 import Lemma.Tensor.Dot.eq.SumMul__0
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 import Lemma.Tensor.Sum.of.Eq
 import Lemma.Matrix.MulOfPowNegChooseOfMulPow.eq.MulOfOfChooseSum
+import Instance.Data.Vector.Basic.Dot
 open Matrix Tensor
 
 
@@ -14,7 +15,7 @@ private lemma Comm
 -- given
   (X Y : Tensor α [n]) :
 -- imply
-  X @ Y = Y @ X := by
+  X ⬝ᵥ Y = Y ⬝ᵥ X := by
 -- proof
   rw [Dot.eq.SumMul__0]
   rw [Dot.eq.SumMul__0]

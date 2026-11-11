@@ -8,16 +8,16 @@ import Lemma.List.LengthRange.eq.Length
 import Lemma.List.Prod.eq.MulProdS
 import Theorem.Algebra.Power.Part2
 import Theorem.Function
-import Instance.Data.Vector.Basic.Part4
+import Instance.Data.Vector.Basic.OuterProduct
 open Nat Lean
 open scoped BigOperators
 
 
 @[simp]
-theorem OuterProd.eq.vecMulVec [Mul α] (a : m → α) (b : n → α) : a @ᵒ b = Matrix.vecMulVec a b :=
+theorem OuterProd.eq.vecMulVec [Mul α] (a : m → α) (b : n → α) : a ⊗ᵒ b = Matrix.vecMulVec a b :=
   rfl
 
 @[simp]
-theorem OuterProd.apply [Mul α] (a : m → α) (b : n → α) (i : m) (j : n) : (a @ᵒ b) i j = a i * b j :=
+theorem OuterProd.apply [Mul α] (a : m → α) (b : n → α) (i : m) (j : n) : (a ⊗ᵒ b) i j = a i * b j :=
   rfl
 

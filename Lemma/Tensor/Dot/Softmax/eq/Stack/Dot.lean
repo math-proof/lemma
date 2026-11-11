@@ -1,5 +1,6 @@
 import Lemma.Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmax
 import Mathlib.Analysis.SpecialFunctions.Exp
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 set_option maxHeartbeats 500000
 
@@ -35,8 +36,8 @@ private lemma gpt.batched
   let Ξ := (1 : Tensor ℝ* [n, n]).band_part (n - 1) 0
   let Aᵦ : Fin m → Tensor ℝ [n, n] := fun b => A[b]
   let Vᵦ : Fin m → Tensor ℝ [n, d] := fun b => V[b]
-  [b < m] (((Aᵦ b : Tensor ℝ [n, n]) : Tensor ℝ* [n, n]) + (Ξ - 1) * ∞).softmax @ ((Vᵦ b : Tensor ℝ [n, d]) : Tensor ℝ* [n, d]) ≈
-    [b < m] [i < n] (((Aᵦ b : Tensor ℝ [n, n]) : Tensor ℝ* [n, n])[i, (i + 1 - n : ℕ):(i + 1 : ℕ)].softmax @ ((Vᵦ b : Tensor ℝ [n, d]) : Tensor ℝ* [n, d])[(i + 1 - n : ℕ):(i + 1 : ℕ)]) := by
+  [b < m] (((Aᵦ b : Tensor ℝ [n, n]) : Tensor ℝ* [n, n]) + (Ξ - 1) * ∞).softmax ⬝ᵥ ((Vᵦ b : Tensor ℝ [n, d]) : Tensor ℝ* [n, d]) ≈
+    [b < m] [i < n] (((Aᵦ b : Tensor ℝ [n, n]) : Tensor ℝ* [n, n])[i, (i + 1 - n : ℕ):(i + 1 : ℕ)].softmax ⬝ᵥ ((Vᵦ b : Tensor ℝ [n, d]) : Tensor ℝ* [n, d])[(i + 1 - n : ℕ):(i + 1 : ℕ)]) := by
 -- proof
   intro Ξ Aᵦ Vᵦ
   apply XEq.of.All_XEqGetS.fin

@@ -1,5 +1,5 @@
 import Lemma.Tensor.Matmul.as.Bmm
-import Def.Data.Holor.Bmm
+import Def.Data.Tensor.Bmm
 open Tensor
 
 

@@ -1,5 +1,5 @@
 import Lemma.Tensor.DataSelect.as.FlattenGetSliceSplitAtData.of.GtLength
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 open Tensor
 
 

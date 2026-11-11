@@ -1,4 +1,4 @@
-import Instance.Data.Holor.Tensor.Part2
+import Instance.Data.Tensor.Tensor.Part2
 open List Tensor
 
 

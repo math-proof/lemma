@@ -1,14 +1,14 @@
 import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
-import Def.Data.Holor.Unsqueeze
-import Def.Data.Holor.Repeat
-import Notation.Data.Holor.Permute
+import Def.Data.Tensor.Unsqueeze
+import Def.Data.Tensor.Repeat
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.MapMul.eq.MulMapS.of.All_Eq_Mul
 import Lemma.Tensor.RepeatMap.eq.MapRepeat
 import Lemma.Tensor.SumMap.eq.MapSum.of.All_EqUFnAdd
 import Lemma.Tensor.TMap.eq.MapT
 import Lemma.Tensor.UnsqueezeMap.eq.MapUnsqueeze
-import Def.Data.Holor.Bmm
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Bmm
+import Def.Data.Tensor.Sum
 open List Tensor
 
 

@@ -1,6 +1,6 @@
 import Lemma.Bool.EqCastS.of.SEq.Eq
-import Def.Data.Holor.Unsqueeze
-import Notation.Data.Holor.Permute
+import Def.Data.Tensor.Unsqueeze
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.Dot
 import Lemma.Tensor.Dot.eq.GetSumMul
 import Lemma.Tensor.Dot.eq.SelectSumMul
@@ -13,6 +13,7 @@ import Lemma.Tensor.SelectRepeat.as.RepeatSelect.of.Lt
 import Lemma.Tensor.SelectSum.as.SumSelect.of.Gt
 import Lemma.Tensor.SelectUnsqueeze.as.UnsqueezeSelect.of.Lt.GeLength
 import Lemma.Tensor.UnsqueezeUnsqueeze_0
+import Instance.Data.Vector.Basic.Dot
 open Bool Nat Tensor
 set_option maxHeartbeats 500000
 
@@ -24,7 +25,7 @@ private lemma main
   (X : Tensor α [n, m])
   (Y : Tensor α [n]) :
 -- imply
-  Xᵀ @ Y = Y @ X := by
+  Xᵀ ⬝ᵥ Y = Y ⬝ᵥ X := by
 -- proof
   rw [Dot.eq.GetSumMul]
   conv_lhs => erw [Dot.eq.SelectSumMul]
@@ -77,7 +78,7 @@ private lemma resize
   (X : Tensor α [n, m])
   (Y : Tensor α [n']) :
 -- imply
-  Xᵀ @ Y = Y @ X := by
+  Xᵀ ⬝ᵥ Y = Y ⬝ᵥ X := by
 -- proof
   rw [Dot.eq.GetSumMul.resize]
   erw [Dot.eq.SelectSumMul.resize]

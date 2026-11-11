@@ -25,7 +25,7 @@ private lemma main
   (y : S) :
 -- imply
   let V (θ : Θ) (t : ℕ) (x : S) : ℝ :=
-    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x);
+    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = x);
   M.policy.prob θ x u * ((M.env.trans (x, u)).real {y} * V θ (t + 1) y) =
     M.policy.prob θ x u * ((M.env.trans (x, u)).real {y} * ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z ∂(M.stageK θ y)) := by
 -- proof
@@ -40,4 +40,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-10-12
+-- updated on 2026-11-11

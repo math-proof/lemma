@@ -1,6 +1,6 @@
 import Lemma.Tensor.Sum.eq.OfVectorMapToVector
 import Lemma.Tensor.OfVectorMapToVector.eq.Stack
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Tensor
 
 

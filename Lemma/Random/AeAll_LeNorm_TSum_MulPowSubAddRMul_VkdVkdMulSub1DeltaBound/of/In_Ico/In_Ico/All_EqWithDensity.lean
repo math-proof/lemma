@@ -8,12 +8,12 @@ Almost surely the `c`-discounted sums of continuous TD residuals are bounded, un
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A}
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
   {γ c : ℝ}
-  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
-  {s : ℕ → (ℕ → ℝ × S × A) → S}
-  {a : ℕ → (ℕ → ℝ × S × A) → A}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
@@ -30,4 +30,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-02
+-- updated on 2026-11-11

@@ -1,5 +1,5 @@
-import Def.Data.Holor.Unsqueeze
-import Def.Data.Holor.Repeat
+import Def.Data.Tensor.Unsqueeze
+import Def.Data.Tensor.Repeat
 import Lemma.List.EqGetInsertIdx.of.GeLength
 import Lemma.List.EraseIdxEraseIdx.of.Gt.GtLength
 import Lemma.List.GetEraseIdx.eq.Get_Add_1.of.Le.LtAdd_1Length
@@ -10,7 +10,7 @@ import Lemma.Tensor.SelectCast.as.Select.of.Eq
 import Lemma.Tensor.SelectRepeat.as.RepeatSelect.of.Lt
 import Lemma.Tensor.SelectUnsqueeze.as.UnsqueezeSelect.of.Le
 import Lemma.Tensor.UnsqueezeCast.as.Unsqueeze.of.Eq
-import Theorem.Data.Holor.Functions
+import Theorem.Data.Tensor.Functions
 open Bool List Nat Tensor
 
 

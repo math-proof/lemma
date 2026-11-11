@@ -1,5 +1,5 @@
 import Lemma.Tensor.PermuteTail.as.Rotate
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 open Tensor
 
 

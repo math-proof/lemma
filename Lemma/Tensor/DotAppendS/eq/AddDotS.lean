@@ -1,7 +1,8 @@
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 import Lemma.Tensor.Dot.eq.TensorDotDataS
 import Lemma.Tensor.DotHstack.eq.AddDotS
 import Lemma.Vector.DotAppendS.eq.AddDotS
+import Instance.Data.Vector.Basic.Dot
 open Tensor Vector
 
 
@@ -12,7 +13,7 @@ private lemma main
   (A C : Tensor α [n])
   (B D : Tensor α [m]) :
 -- imply
-  (A ++ B) @ (C ++ D) = id (α := Tensor α []) (A @ C) + id (α := Tensor α []) (B @ D) := by
+  (A ++ B) ⬝ᵥ (C ++ D) = id (α := Tensor α []) (A ⬝ᵥ C) + id (α := Tensor α []) (B ⬝ᵥ D) := by
 -- proof
   simp only [id]
   rw [Dot.eq.TensorDotDataS]
@@ -23,7 +24,7 @@ private lemma main
   intro i
   fin_cases i
   simp [List.Vector.get]
-  change (A ++ B).data @ (C ++ D).data = A.data @ C.data + B.data @ D.data
+  change (A ++ B).data ⬝ᵥ (C ++ D).data = A.data ⬝ᵥ C.data + B.data ⬝ᵥ D.data
   rw [AddDotS.eq.DotAppendS A.data C.data B.data D.data]
   rw [Vector.Dot.eq.SumMul]
   rw [Vector.Dot.eq.SumMul (A.data ++ B.data) (C.data ++ D.data)]
@@ -43,11 +44,11 @@ private lemma vm
   (P : Tensor α [n, k])
   (Q : Tensor α [m, k]) :
 -- imply
-  (x ++ y) @ (P ++ Q) = id (α := Tensor α [k]) (x @ P) + id (α := Tensor α [k]) (y @ Q) := by
+  (x ++ y) ⬝ᵥ (P ++ Q) = id (α := Tensor α [k]) (x ⬝ᵥ P) + id (α := Tensor α [k]) (y ⬝ᵥ Q) := by
 -- proof
   apply @Tensor.Eq.of.All_EqGetS.fin
   intro j
-  trans (id (α := Tensor α [k]) (x @ P))[j] + (id (α := Tensor α [k]) (y @ Q))[j]
+  trans (id (α := Tensor α [k]) (x ⬝ᵥ P))[j] + (id (α := Tensor α [k]) (y ⬝ᵥ Q))[j]
   ·
     apply (GetDot.eq.Sum_MulGetS.une _ _ j).trans
     rw [Fin.sum_univ_add]

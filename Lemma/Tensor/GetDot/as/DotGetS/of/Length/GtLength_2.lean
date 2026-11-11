@@ -1,4 +1,5 @@
 import Lemma.Tensor.GetEinsum.as.EinsumGetS.of.Length.GtLength_2
+import Instance.Data.Vector.Basic.Dot
 open Bool List Tensor
 set_option maxHeartbeats 250000
 
@@ -14,7 +15,7 @@ private lemma main
   (Y : Tensor α s')
   (i : Fin (s[0] ⊓ s'[0])) :
 -- imply
-  (X @ Y)[i]'(by simpa [Dot.dot] using GtLengthEinsum.of.GeLengthS.GeLength_2 (by omega) (by omega) X Y ⟨i, by grind⟩) ≃ X[i]'(by rw [Length.eq.Get_0.of.GtLength_0 (by omega)]; grind) @ Y[i]'(by rw [Length.eq.Get_0.of.GtLength_0 (by omega)]; grind) := by
+  (X ⬝ᵥ Y)[i]'(by simpa [Dot.dot] using GtLengthEinsum.of.GeLengthS.GeLength_2 (by omega) (by omega) X Y ⟨i, by grind⟩) ≃ X[i]'(by rw [Length.eq.Get_0.of.GtLength_0 (by omega)]; grind) ⬝ᵥ Y[i]'(by rw [Length.eq.Get_0.of.GtLength_0 (by omega)]; grind) := by
 -- proof
   have h_X : s = s[0] :: s.tail := (EqCons_Tail.of.GtLength h_s).symm
   have h_Y : s' = s'[0] :: s'.tail := (EqCons_Tail.of.GtLength (h_slen ▸ h_s)).symm

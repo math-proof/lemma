@@ -1,6 +1,6 @@
 import Theorem.Logic.SEq
-import Def.Data.Holor.Defs.Part4
-import Notation.Data.Holor.Permute
+import Def.Data.Tensor.Defs.Part4
+import Notation.Data.Tensor.Permute
 
 
 @[path, cast]

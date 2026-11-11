@@ -1,5 +1,5 @@
 import Lemma.List.EqInsertIdx.of.LtLength
-import Def.Data.Holor.Unsqueeze
+import Def.Data.Tensor.Unsqueeze
 import Lemma.List.InsertIdx.ne.Nil.of.Ne_Nil
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Ne_Nil

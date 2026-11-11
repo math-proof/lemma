@@ -1,8 +1,8 @@
 import Lemma.Tensor.DataExp.eq.ExpData
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.Tensor.GtSumData_0.is.GtSum_0
 import Lemma.Vector.GtSumExp_0
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Exp Tensor Vector
 
 

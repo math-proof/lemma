@@ -1,6 +1,7 @@
 import Lemma.Tensor.DotBFn.eq.BFnDot.of.GeLength_2.GeLength_2.All_EqBFn0.All_EqSumMap.All_EqMapS
 import Lemma.Tensor.MulDiv.eq.DivMul
 import Lemma.Tensor.SumDiv.eq.DivSum
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
@@ -14,7 +15,7 @@ private lemma main
   (C : Tensor α s')
   (B : Tensor α []) :
 -- imply
-  (A / B) @ C = A @ C / B :=
+  (A / B) ⬝ᵥ C = A ⬝ᵥ C / B :=
 -- proof
   DotBFn.eq.BFnDot.of.GeLength_2.GeLength_2.All_EqBFn0.All_EqSumMap.All_EqMapS
     MulDiv.eq.DivMul SumDiv.eq.DivSum (fun b => zero_div b) hs hs' A C B

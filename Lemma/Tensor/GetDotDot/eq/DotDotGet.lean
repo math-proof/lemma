@@ -1,5 +1,6 @@
 import Lemma.Tensor.GetDot.eq.DotGet
 import Lemma.Tensor.GetDot.eq.DotGetS
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
@@ -13,7 +14,7 @@ private lemma main
   (i : Fin l)
   (j : Fin o) :
 -- imply
-  ((L @ M) @ N)[i][j] = (L[i] @ M) @ Nᵀ[j] := by
+  ((L ⬝ᵥ M) ⬝ᵥ N)[i][j] = (L[i] ⬝ᵥ M) ⬝ᵥ Nᵀ[j] := by
 -- proof
   simp [GetElem.getElem]
   erw [GetDot.eq.DotGetS.fin]

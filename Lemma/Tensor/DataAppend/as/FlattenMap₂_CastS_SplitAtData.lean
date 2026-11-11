@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
-import Def.Data.Holor.Prod
-import Def.Data.Holor.Defs.Part4
+import Def.Data.Tensor.Prod
+import Def.Data.Tensor.Defs.Part4
 open Bool
 
 @[path, cast]

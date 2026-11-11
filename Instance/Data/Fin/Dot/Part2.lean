@@ -4,7 +4,7 @@ import Notation.Fun
 import Def.Data.Fin.Dot
 
 
-/-- `v @ w` when `w` is a closed slice `f[a:b]`, whose `Fin` length need not be definitionally
+/-- `v ⬝ᵥ w` when `w` is a closed slice `f[a:b]`, whose `Fin` length need not be definitionally
 the length of `v`. -/
 instance (priority := low) [AddCommMonoid α] [Mul α] {m : ℕ} (s : Slice) :
     Dot ((Fin m) ⇀ α) (FunSlice.Out α s) α where

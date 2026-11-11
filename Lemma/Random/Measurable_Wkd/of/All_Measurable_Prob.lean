@@ -10,10 +10,10 @@ If every `(x, u) ↦ π_θ(u | x)` is jointly measurable, so is the `k`-step exp
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A}
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
 -- given
-  (h : ∀ θ, Measurable (fun z : S × A => M.policy.prob θ z.1 z.2))
+  (h : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.policy.prob θ z.1 z.2))
   (θ : Θ)
   (k : ℕ) :
 -- imply
@@ -21,15 +21,15 @@ private lemma main
 -- proof
   induction k with
   | zero =>
-    exact (StronglyMeasurable.integral_prod_right' (ν := (ReferenceMeasure.measure : Measure A))
-      (f := fun z : S × A => M.policy.prob θ z.1 z.2 * M.rkd z.1 z.2)
+    exact (StronglyMeasurable.integral_prod_right' (ν := (ReferenceMeasure.measure : Measure 𝒜))
+      (f := fun z : 𝒮 × 𝒜 => M.policy.prob θ z.1 z.2 * M.rkd z.1 z.2)
       ((h θ).mul (MeasurableRkd (M := M))).stronglyMeasurable).measurable
   | succ k ih =>
     have := M.env.trans_markov
-    apply (StronglyMeasurable.integral_prod_right' (ν := (ReferenceMeasure.measure : Measure A))
-      (f := fun z : S × A => M.policy.prob θ z.1 z.2 * ∫ y, M.Wkd θ k y ∂(M.env.trans z))
+    apply (StronglyMeasurable.integral_prod_right' (ν := (ReferenceMeasure.measure : Measure 𝒜))
+      (f := fun z : 𝒮 × 𝒜 => M.policy.prob θ z.1 z.2 * ∫ y, M.Wkd θ k y ∂(M.env.trans z))
       ((h θ).mul _).stronglyMeasurable).measurable
-    apply (StronglyMeasurable.integral_kernel_prod_right' (κ := M.env.trans) (f := fun z : (S × A) × S => M.Wkd θ k z.2)
+    apply (StronglyMeasurable.integral_kernel_prod_right' (κ := M.env.trans) (f := fun z : (𝒮 × 𝒜) × 𝒮 => M.Wkd θ k z.2)
       (ih.stronglyMeasurable.comp_measurable measurable_snd)).measurable
 
 

@@ -1,4 +1,5 @@
 import Lemma.Random.Fderiv_FunProbPol.eq.Zero.of.ProbPolEq0
+import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model
 
 
@@ -24,3 +25,4 @@ private lemma main
 
 
 -- created on 2026-10-06
+-- updated on 2026-11-08

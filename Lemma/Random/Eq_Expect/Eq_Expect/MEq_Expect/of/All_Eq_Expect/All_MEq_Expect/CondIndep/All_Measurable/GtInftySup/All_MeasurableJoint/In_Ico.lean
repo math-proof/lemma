@@ -12,11 +12,13 @@ Corollary of
 whose `h₆` (`𝔼[… | s t, a t, s (t + 1)] =ᵐ 𝔼[… | s (t + 1)]`) follows from conditional independence by
 `Random.MEqExpectS.of.CondIndep.Integrable.MeasurableJoint.Measurable`
 (as in `Random.MEq_Expect.MEq_Expect.MEq_Expect.of.All_MEq_Expect.All_MEq_Expect.CondIndep_Joint.GtInftySup.All_MeasurableJoint.In_Ico`).
+The `V`-identities are read off on atoms of `s t` with positive mass; the `Q`-identity stays almost sure.
 -/
 @[path]
 private lemma main
   [MeasurableSpace Ω] [StandardBorelSpace Ω] [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
-  [MeasurableSpace A]
+  [Nonempty S] [StandardBorelSpace S]
+  [MeasurableSpace A] [StandardBorelSpace A] [Nonempty A]
   {π : Measure Ω} [IsProbabilityMeasure π]
   {s : ℕ → Ω → S}
   {a : ℕ → Ω → A}
@@ -31,12 +33,14 @@ private lemma main
   (h₂ : sup[t, ω] |r t ω| < ∞)
   (h₃ : ∀ t x, Measurable (Q t x))
   (h₄ : r[t + 1:] ⟂ᵢ[π] (s t, a t) | s (t + 1))
-  (h₅ : ∀ t, Q t (s t) (a t) =ᵐ[π] 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t, a t))
-  (h₆ : ∀ t («\sf{s}» : ℕ → S), V t («\sf{s}» t) = 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t))
+  (h₅ : ∀ t, Q t (s t) (a t) =ᵐ[π] 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t, a t))
+  (h₆ : ∀ t («\sf{s}» : ℕ → S), V t («\sf{s}» t) = 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = «\sf{s}» t))
   («\sf{s}» : ℕ → S) :
 -- imply
-  V t («\sf{s}» t) = 𝔼[a: π](Q t («\sf{s}» t) (a t) | s t = «\sf{s}» t) ∧
-    V t («\sf{s}» t) = 𝔼[r, s: π](r t + γ * V (t + 1) (s (t + 1)) | s t = «\sf{s}» t) ∧
+  (π (s t ⁻¹' {«\sf{s}» t}) ≠ 0 →
+      V t («\sf{s}» t) = 𝔼[a: π](Q t («\sf{s}» t) (a t) | s t = «\sf{s}» t)) ∧
+    (π (s t ⁻¹' {«\sf{s}» t}) ≠ 0 →
+      V t («\sf{s}» t) = 𝔼[r, s: π](r t + γ * V (t + 1) (s (t + 1)) | s t = «\sf{s}» t)) ∧
     Q t (s t) (a t) =ᵐ[π] 𝔼[r, s: π](r t + γ * V (t + 1) (s (t + 1)) | s t, a t) := by
 -- proof
   have hrm : ∀ n, Measurable (r n) := fun n ↦ (Random.Measurable.Measurable.of.MeasurableJoint (h₁ n)).1
@@ -45,10 +49,10 @@ private lemma main
   have ham : ∀ n, Measurable (a n) := fun n ↦
     (Random.Measurable.Measurable.of.MeasurableJoint (Random.Measurable.Measurable.of.MeasurableJoint (h₁ n)).2).2
   -- the Markov property `h₆` of the general lemma, from conditional independence
-  have hM : 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) @ r[t + 1:] | s t, a t, s (t + 1)) =ᵐ[π]
-      𝔼[r: π]((γ ^ (id : ℕ → ℕ)) @ r[t + 1:] | s (t + 1)) := by
+  have hM : 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t + 1:] | s t, a t, s (t + 1)) =ᵐ[π]
+      𝔼[r: π]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t + 1:] | s (t + 1)) := by
     have hF : Measurable (Expectation.asRV r[t + 1:]) := Measurable.of_eval fun k ↦ hrm (t + 1 + k)
-    have hg : Measurable fun p : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) @ p :=
+    have hg : Measurable fun p : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) ⬝ᵥ p :=
       Measurable.tsum fun k ↦ (measurable_pi_apply k).const_mul _
     obtain ⟨R, hR⟩ := id h₂
     have hr : ∀ t ω, |r t ω| ≤ R := fun t ω ↦ hR (Set.mem_range_self (t, ω))
@@ -56,7 +60,7 @@ private lemma main
       rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1, Real.norm_eq_abs]
       exact mul_le_mul_of_nonneg_left ((hr _ _).trans (le_abs_self R)) (pow_nonneg h₀.1 k)
     have hgeo := (hasSum_geometric_of_lt_one h₀.1 h₀.2).mul_right |R|
-    have hint : Integrable (fun ω ↦ (γ ^ (id : ℕ → ℕ)) @ Expectation.asRV r[t + 1:] ω) π :=
+    have hint : Integrable (fun ω ↦ (γ ^ (id : ℕ → ℕ)) ⬝ᵥ Expectation.asRV r[t + 1:] ω) π :=
       Integrable.of_bound (hg.comp hF).aestronglyMeasurable ((1 - γ)⁻¹ * |R|)
         (Filter.Eventually.of_forall fun ω ↦ tsum_of_norm_bounded hgeo (hb ω))
     have h := Random.MEqExpectS.of.CondIndep.Integrable.MeasurableJoint.Measurable
@@ -74,9 +78,9 @@ private lemma main
       · apply Measurable.comap_le
         exact (show Measurable fun p : (S × A) × S ↦ (p.1.1, p.1.2, p.2) by fun_prop).comp
           (comap_measurable (JointRandomSymbol (JointRandomSymbol (s t) (a t)) (s (t + 1))))
-    show π[(fun ω ↦ (γ ^ (id : ℕ → ℕ)) @ Expectation.asRV r[t + 1:] ω) |
+    show π[(fun ω ↦ (γ ^ (id : ℕ → ℕ)) ⬝ᵥ Expectation.asRV r[t + 1:] ω) |
         MeasurableSpace.comap (JointRandomSymbol (s t) (JointRandomSymbol (a t) (s (t + 1)))) inferInstance] =ᵐ[π]
-      π[(fun ω ↦ (γ ^ (id : ℕ → ℕ)) @ Expectation.asRV r[t + 1:] ω) | MeasurableSpace.comap (s (t + 1)) inferInstance]
+      π[(fun ω ↦ (γ ^ (id : ℕ → ℕ)) ⬝ᵥ Expectation.asRV r[t + 1:] ω) | MeasurableSpace.comap (s (t + 1)) inferInstance]
     rw [← hσ]
     exact h
   exact Random.Eq_Expect.Eq_Expect.MEq_Expect.of.Expect.All_Eq_Expect.All_MEq_Expect.All_Measurable.GtInftySup.All_MeasurableJoint.In_Ico
@@ -84,4 +88,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-11-02
+-- updated on 2026-11-11

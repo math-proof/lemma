@@ -2,7 +2,8 @@ import Lemma.Tensor.HeadDataSum.eq.SumData
 import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
 import Lemma.Vector.SEqMulS.of.SEq.SEq
 import Instance.LinearAlgebra.Matrix.Matmul
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
+import Instance.Data.Vector.Basic.Dot
 open Bool Tensor Vector
 
 
@@ -13,7 +14,7 @@ private lemma main
   (A : Tensor α [n])
   (B : Tensor α [n]) :
 -- imply
-  A @ B = (A * B).sum 0 := by
+  A ⬝ᵥ B = (A * B).sum 0 := by
 -- proof
   simp [Dot.dot]
   unfold einsum

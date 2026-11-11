@@ -1,4 +1,4 @@
-import Theorem.Data.Holor.Functions
+import Theorem.Data.Tensor.Functions
 import Lemma.Tensor.Eq_Stack
 import Lemma.Tensor.MapStack.eq.Stack_Map
 open Tensor

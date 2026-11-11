@@ -3,7 +3,7 @@ open Random
 
 
 /--
-A constant matrix–vector product (@ / Dot.dot) pulls through a
+A constant matrix–vector product (⬝ᵥ / Dot.dot) pulls through a
 conditional expectation, constant-first orientation.
 
 Python: Random.Dot.eq.Expect.
@@ -26,12 +26,12 @@ private lemma main
   (hf : ∀ p : Fin k, Measurable (fun x : α ↦ (f x)[p].item))
   («\sf{s}» : γ) :
 -- imply
-  A @ 𝔼[a: π](f a | s = «\sf{s}») =
-    𝔼[a: π](A @ f a | s = «\sf{s}») :=
+  A ⬝ᵥ 𝔼[a: π](f a | s = «\sf{s}») =
+    𝔼[a: π](A ⬝ᵥ f a | s = «\sf{s}») :=
 -- proof
   (ExpectCondDot.eq.Dot_ExpectCond (A := A)
     (hf := hf) («\sf{s}» := «\sf{s}»)).symm
 
 
 -- created on 2023-04-07
--- updated on 2026-11-02
+-- updated on 2026-11-11

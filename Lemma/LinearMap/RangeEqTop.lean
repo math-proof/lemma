@@ -47,7 +47,7 @@ private lemma length_add_length_eq
   apply Module.length_eq_add_of_exact f g hf hg hfg
 
 private lemma length_eq_length_ker_add_length_range
-  {S₂ : Type u₁} {σ : S →+* S₂} [Ring S₂] [RingHomSurjective σ]
+  {S₂ : Type u₁} [Ring S₂] {σ : S →+* S₂} [RingHomSurjective σ]
   {D₁ : Type v} [AddCommGroup D₁] [Module S D₁]
   {D₂ : Type u₂} [AddCommGroup D₂] [Module S₂ D₂]
   (g : LinearMap σ D₁ D₂) :
@@ -87,6 +87,7 @@ variable {S : Type u} [Ring S] {D : Type v} [AddCommGroup D] [Module S D]
 private lemma _root_.HondaLength.length_top :
   -- imply
   Module.length S (⊤ : Submodule S D) = Module.length S D :=
+-- proof
   Module.length_top
 
 private lemma eq_top_of_length_eq
@@ -99,6 +100,7 @@ private lemma eq_top_of_length_eq
   if hN : N = ⊤ then
     apply hN
   else
+    apply False.elim
     apply (Submodule.length_lt hN).ne h
 
 private lemma length_submodule_ne_top
@@ -106,6 +108,7 @@ private lemma length_submodule_ne_top
   (N : Submodule S D) :
   -- imply
   Module.length S N ≠ ⊤ :=
+-- proof
   Module.length_ne_top
 
 end
@@ -217,7 +220,7 @@ private lemma range_sup_eq_top
   apply eq_top_of_length_eq
   have key : ∀ {a b : ENat}, a ≠ ⊤ → b ≠ ⊤ → a.toNat = b.toNat → a = b := by
     intro a b ha hb h
-    rw [← ENat.coe_toNat ha, ← ENat.coe_toNat hb, h]
+    rw [← ENat.natCast_toNat ha, ← ENat.natCast_toNat hb, h]
   refine key (fin _) hD ?_
   have hadd : ∀ N N' : Submodule S D, (Module.length S N + Module.length S N').toNat = (Module.length S N).toNat + (Module.length S N').toNat :=
     fun N N' => ENat.toNat_add (fin N) (fin N')
@@ -252,7 +255,9 @@ private lemma main
   (htors : ∀ x : D, ℓ • x = 0 → ∃ y ∈ L, ∃ z : D, V z = 0 ∧ y + z = x) :
   -- imply
   LinearMap.range F ⊔ L = ⊤ :=
+-- proof
   range_sup_eq_top F V ℓ hFV L sh1 sh3 hkerF htors
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-10

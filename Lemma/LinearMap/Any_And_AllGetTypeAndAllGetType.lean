@@ -15,18 +15,24 @@ private abbrev HomX (R : Type) [CommRing R] {M : Type} [AddCommGroup M] [Module 
 private noncomputable def cmap {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M] {k : ℕ} (x : Fin k → M) {A : Type} [CommRing A] [Algebra R A] (N : Submodule A (A ⊗[R] M)) : (Fin k → A) →ₗ[A] (A ⊗[R] M) ⧸ N :=
   Fintype.linearCombination A (fun i => N.mkQ ((1 : A) ⊗ₜ[R] x i))
 
-private lemma coe_cmap {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M] {k : ℕ} (x : Fin k → M) {A : Type} [CommRing A] [Algebra R A] (N : Submodule A (A ⊗[R] M)) : ⇑(cmap x N) = fun v : Fin k → A => ∑ i, v i • N.mkQ ((1 : A) ⊗ₜ[R] x i) := rfl
+private lemma coe_cmap {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M] {k : ℕ} (x : Fin k → M) {A : Type} [CommRing A] [Algebra R A] (N : Submodule A (A ⊗[R] M)) : ⇑(cmap x N) = fun v : Fin k → A => ∑ i, v i • N.mkQ ((1 : A) ⊗ₜ[R] x i) :=
+-- proof
+  rfl
 
 private lemma cmap_single {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M] {k : ℕ} (x : Fin k → M) {A : Type} [CommRing A] [Algebra R A] (N : Submodule A (A ⊗[R] M)) (j : Fin k) : cmap x N (Pi.single j 1) = N.mkQ ((1 : A) ⊗ₜ[R] x j) := by
+-- proof
   classical
   simp [cmap]
 
 private noncomputable def coordEquiv {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M] {k : ℕ} (x : Fin k → M) {A : Type} [CommRing A] [Algebra R A] (N : Chart R x A) : (Fin k → A) ≃ₗ[A] (A ⊗[R] M) ⧸ N.1.toSubmodule :=
   LinearEquiv.ofBijective (cmap x N.1.toSubmodule) N.2
 
-private lemma coordEquiv_apply {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M] {k : ℕ} (x : Fin k → M) {A : Type} [CommRing A] [Algebra R A] (N : Chart R x A) (v : Fin k → A) : coordEquiv x N v = cmap x N.1.toSubmodule v := rfl
+private lemma coordEquiv_apply {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M] {k : ℕ} (x : Fin k → M) {A : Type} [CommRing A] [Algebra R A] (N : Chart R x A) (v : Fin k → A) : coordEquiv x N v = cmap x N.1.toSubmodule v :=
+-- proof
+  rfl
 
 private lemma coordEquiv_symm_mkQ_x {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M] {k : ℕ} (x : Fin k → M) {A : Type} [CommRing A] [Algebra R A] (N : Chart R x A) (j : Fin k) : (coordEquiv x N).symm (N.1.toSubmodule.mkQ ((1 : A) ⊗ₜ[R] x j)) = Pi.single j 1 := by
+-- proof
   rw [LinearEquiv.symm_apply_eq, coordEquiv_apply, cmap_single]
 
 private noncomputable def toHomX {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M] {k : ℕ} (x : Fin k → M) {A : Type} [CommRing A] [Algebra R A] (N : Chart R x A) : HomX R x A :=
@@ -35,12 +41,15 @@ private noncomputable def toHomX {R : Type} [CommRing R] {M : Type} [AddCommGrou
       simp only [LinearMap.coe_comp, LinearMap.coe_restrictScalars, LinearEquiv.coe_coe, Function.comp_apply, TensorProduct.mk_apply]
       exact coordEquiv_symm_mkQ_x x N j⟩
 
-private lemma toHomX_apply {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M] {k : ℕ} (x : Fin k → M) {A : Type} [CommRing A] [Algebra R A] (N : Chart R x A) (m : M) : (toHomX x N).1 m = (coordEquiv x N).symm (N.1.toSubmodule.mkQ ((1 : A) ⊗ₜ[R] m)) := rfl
+private lemma toHomX_apply {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M] {k : ℕ} (x : Fin k → M) {A : Type} [CommRing A] [Algebra R A] (N : Chart R x A) (m : M) : (toHomX x N).1 m = (coordEquiv x N).symm (N.1.toSubmodule.mkQ ((1 : A) ⊗ₜ[R] m)) :=
+-- proof
+  rfl
 
 private abbrev ext' {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M] {k : ℕ} {A : Type} [CommRing A] [Algebra R A] (ψ : M →ₗ[R] (Fin k → A)) : A ⊗[R] M →ₗ[A] (Fin k → A) :=
   ψ.liftBaseChange A
 
 private lemma ext'_surjective {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M] {k : ℕ} (x : Fin k → M) {A : Type} [CommRing A] [Algebra R A] (ψ : HomX R x A) : Function.Surjective (ext' ψ.1) := by
+-- proof
   intro v
   refine ⟨∑ i, v i ⊗ₜ[R] x i, ?_⟩
   simp only [map_sum, LinearMap.liftBaseChange_tmul, ψ.2]
@@ -51,14 +60,17 @@ private noncomputable def quotEquiv {R : Type} [CommRing R] {M : Type} [AddCommG
   (ext' ψ.1).quotKerEquivOfSurjective (ext'_surjective x ψ)
 
 private lemma quotEquiv_mkQ {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M] {k : ℕ} (x : Fin k → M) {A : Type} [CommRing A] [Algebra R A] (ψ : HomX R x A) (p : A ⊗[R] M) : quotEquiv x ψ ((LinearMap.ker (ext' ψ.1)).mkQ p) = ext' ψ.1 p :=
+-- proof
   LinearMap.quotKerEquivOfSurjective_apply_mk _ _ _
 
 private lemma quotEquiv_cmap {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M] {k : ℕ} (x : Fin k → M) {A : Type} [CommRing A] [Algebra R A] (ψ : HomX R x A) (v : Fin k → A) : quotEquiv x ψ (cmap x (LinearMap.ker (ext' ψ.1)) v) = v := by
+-- proof
   simp only [coe_cmap, map_sum, map_smul, quotEquiv_mkQ, LinearMap.liftBaseChange_tmul, one_smul, ψ.2]
   ext i
   simp [Finset.sum_apply, Pi.single_apply]
 
 private lemma cmap_ker_eq {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M] {k : ℕ} (x : Fin k → M) {A : Type} [CommRing A] [Algebra R A] (ψ : HomX R x A) : ⇑(cmap x (LinearMap.ker (ext' ψ.1))) = (quotEquiv x ψ).symm := by
+-- proof
   funext v
   rw [eq_comm, LinearEquiv.symm_apply_eq, quotEquiv_cmap]
 
@@ -79,19 +91,24 @@ private noncomputable def ofHomX {R : Type} [CommRing R] {M : Type} [AddCommGrou
     rw [cmap_ker_eq]
     refine (quotEquiv x ψ).symm.bijective
 
-private lemma ofHomX_toSubmodule {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M] {k : ℕ} (x : Fin k → M) {A : Type} [CommRing A] [Algebra R A] (ψ : HomX R x A) : (ofHomX x ψ).1.toSubmodule = LinearMap.ker (ext' ψ.1) := rfl
+private lemma ofHomX_toSubmodule {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M] {k : ℕ} (x : Fin k → M) {A : Type} [CommRing A] [Algebra R A] (ψ : HomX R x A) : (ofHomX x ψ).1.toSubmodule = LinearMap.ker (ext' ψ.1) :=
+-- proof
+  rfl
 
 private lemma ext'_toHomX {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M] {k : ℕ} (x : Fin k → M) {A : Type} [CommRing A] [Algebra R A] (N : Chart R x A) : ext' (toHomX x N).1 = LinearMap.comp (coordEquiv x N).symm.toLinearMap N.1.toSubmodule.mkQ := by
+-- proof
   refine TensorProduct.AlgebraTensorModule.ext fun a m => ?_
   simp only [LinearMap.liftBaseChange_tmul, toHomX_apply, LinearMap.coe_comp, LinearEquiv.coe_coe, Function.comp_apply]
   rw [← map_smul, ← map_smul, TensorProduct.smul_tmul', smul_eq_mul, mul_one]
 
 private lemma ofHomX_toHomX {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M] {k : ℕ} (x : Fin k → M) {A : Type} [CommRing A] [Algebra R A] (N : Chart R x A) : ofHomX x (toHomX x N) = N := by
+-- proof
   apply Subtype.ext
   apply Module.Grassmannian.ext
   rw [ofHomX_toSubmodule, ext'_toHomX, LinearEquiv.ker_comp, Submodule.ker_mkQ]
 
 private lemma coordEquiv_ofHomX_symm {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M] {k : ℕ} (x : Fin k → M) {A : Type} [CommRing A] [Algebra R A] (ψ : HomX R x A) (y : (A ⊗[R] M) ⧸ LinearMap.ker (ext' ψ.1)) : (coordEquiv x (ofHomX x ψ)).symm y = quotEquiv x ψ y := by
+-- proof
   have h1 : (coordEquiv x (ofHomX x ψ)) ((coordEquiv x (ofHomX x ψ)).symm y) = y := LinearEquiv.apply_symm_apply _ _
   rw [coordEquiv_apply] at h1
   have h2 := congrArg (quotEquiv x ψ) h1
@@ -99,6 +116,7 @@ private lemma coordEquiv_ofHomX_symm {R : Type} [CommRing R] {M : Type} [AddComm
   rwa [quotEquiv_cmap] at h2
 
 private lemma toHomX_ofHomX {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M] {k : ℕ} (x : Fin k → M) {A : Type} [CommRing A] [Algebra R A] (ψ : HomX R x A) : toHomX x (ofHomX x ψ) = ψ := by
+-- proof
   apply Subtype.ext
   apply LinearMap.ext
   intro m
@@ -117,9 +135,12 @@ private noncomputable def pushHomX {R : Type} [CommRing R] {M : Type} [AddCommGr
     ext i
     simp [LinearMap.compLeft, ψ.2, Pi.single_apply, apply_ite φ]⟩
 
-private lemma pushHomX_apply {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M] {k : ℕ} (x : Fin k → M) {A : Type} [CommRing A] [Algebra R A] {B : Type} [CommRing B] [Algebra R B] (φ : A →ₐ[R] B) (ψ : HomX R x A) (m : M) (i : Fin k) : (pushHomX x φ ψ).1 m i = φ (ψ.1 m i) := rfl
+private lemma pushHomX_apply {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M] {k : ℕ} (x : Fin k → M) {A : Type} [CommRing A] [Algebra R A] {B : Type} [CommRing B] [Algebra R B] (φ : A →ₐ[R] B) (ψ : HomX R x A) (m : M) (i : Fin k) : (pushHomX x φ ψ).1 m i = φ (ψ.1 m i) :=
+-- proof
+  rfl
 
 private lemma map_ofHomX_toSubmodule {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M] {k : ℕ} (x : Fin k → M) {A : Type} [CommRing A] [Algebra R A] {B : Type} [CommRing B] [Algebra R B] (φ : A →ₐ[R] B) (ψ : HomX R x A) : (Module.Grassmannian.map φ (ofHomX x ψ).1).toSubmodule = LinearMap.ker (ext' (pushHomX x φ ψ).1) := by
+-- proof
   classical
   rw [Module.Grassmannian.map_toSubmodule]
   let _ : Algebra A B := φ.toAlgebra
@@ -137,14 +158,17 @@ private lemma map_ofHomX_toSubmodule {R : Type} [CommRing R] {M : Type} [AddComm
   rw [← hT, LinearEquiv.ker_comp]
 
 private lemma map_ofHomX {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M] {k : ℕ} (x : Fin k → M) {A : Type} [CommRing A] [Algebra R A] {B : Type} [CommRing B] [Algebra R B] (φ : A →ₐ[R] B) (ψ : HomX R x A) : Module.Grassmannian.map φ (ofHomX x ψ).1 = (ofHomX x (pushHomX x φ ψ)).1 :=
+-- proof
   Module.Grassmannian.ext (map_ofHomX_toSubmodule x φ ψ)
 
 private lemma map_mem_chart {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M] {k : ℕ} (x : Fin k → M) {A : Type} [CommRing A] [Algebra R A] {B : Type} [CommRing B] [Algebra R B] (φ : A →ₐ[R] B) (N : Chart R x A) : Function.Bijective fun v : Fin k → B => ∑ i, v i • (Module.Grassmannian.map φ N.1).toSubmodule.mkQ ((1 : B) ⊗ₜ[R] x i) := by
+-- proof
   have hN : N = ofHomX x (toHomX x N) := (ofHomX_toHomX x N).symm
   rw [hN, map_ofHomX]
   refine (ofHomX x (pushHomX x φ (toHomX x N))).2
 
 private lemma chartEquiv_map {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M] {k : ℕ} (x : Fin k → M) {A : Type} [CommRing A] [Algebra R A] {B : Type} [CommRing B] [Algebra R B] (φ : A →ₐ[R] B) (N : Chart R x A) : chartEquiv x ⟨Module.Grassmannian.map φ N.1, map_mem_chart x φ N⟩ = pushHomX x φ (chartEquiv x N) := by
+-- proof
   have hN : N = ofHomX x (toHomX x N) := (ofHomX_toHomX x N).symm
   have : (⟨Module.Grassmannian.map φ N.1, map_mem_chart x φ N⟩ : Chart R x B) = ofHomX x (pushHomX x φ (toHomX x N)) := by
     apply Subtype.ext
@@ -183,3 +207,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-10

@@ -1,9 +1,10 @@
 import Lemma.Fin.Sum.of.All_Eq
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 import Lemma.Tensor.Dot.eq.SumMul__0
 import Lemma.Tensor.GetMul.eq.MulGetS
 import Lemma.Tensor.Mul
 import Lemma.Tensor.Sum_0.eq.Sum_Get
+import Instance.Data.Vector.Basic.Dot
 open Fin Tensor
 
 
@@ -13,7 +14,7 @@ private lemma main
 -- given
   (A B : Tensor α [n]) :
 -- imply
-  A @ B = ∑ k : Fin n, id (α := Tensor α []) A[k] * id (α := Tensor α []) B[k] := by
+  A ⬝ᵥ B = ∑ k : Fin n, id (α := Tensor α []) A[k] * id (α := Tensor α []) B[k] := by
 -- proof
   apply (Dot.eq.SumMul__0 A B).trans
   apply (Sum_0.eq.Sum_Get (A * B)).trans

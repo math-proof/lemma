@@ -36,7 +36,7 @@ La bibliothèque contient <label id=count>5000</label> théorèmes établis (<la
 * [Matrix](../?module=Matrix) Théorie des matrices, p. ex. :
   - [théorème d'Okishio](../?module=Matrix.Any_And_EqSMul_VecMul_UpdateCol.of.IsIrreducibleUpdateColAdd_Dot.LtDot_Add_SMul.EqSMul.All_Gt_0)
   - [décomposition de Cholesky](../?module=Matrix.Eq_Mul_Adjoint.of.All_Eq_Ite__Ite_Sqrt_0.All_Lt0Dot_MulVec.EqAdjoint), [décomposition PLU](../?module=Matrix.EqMul_T_1.IsLowerTriangular.IsUpperTriangular.EqMulS)
-  - [kv_cache](../?module=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)
+  - [kv_cache](../?module=Matrix.XEq_Append_MulSoftmaxDivMul_AppendTSGetSlice.of.All_XEq_MulSoftmaxAddDivMul_T)
 * [Tensor](../?module=Tensor) Calcul tensoriel formalisé, sémantiquement aligné sur **torch.Tensor**, pour la spécification et la vérification formelle d'algorithmes d'apprentissage profond, p. ex. :
   - [RoPE](../?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)
 * [Random](../?module=Random) Probabilités et processus stochastiques, p. ex. :

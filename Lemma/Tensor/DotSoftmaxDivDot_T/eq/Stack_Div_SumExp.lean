@@ -1,4 +1,4 @@
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.Div_KeepdimSum.eq.Div_Sum
 import Lemma.Tensor.Dot.eq.Sum_MulGetS
 import Lemma.Tensor.DotDiv.eq.DivDot
@@ -8,7 +8,8 @@ import Lemma.Tensor.GetExp.eq.ExpGet
 import Lemma.Tensor.GetTCast_T.eq.Get
 import Lemma.Tensor.SEqExpS.of.SEq
 import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
+import Instance.Data.Vector.Basic.Dot
 open Exp Fin List Tensor
 set_option maxHeartbeats 1000000
 
@@ -18,7 +19,7 @@ private lemma main
 -- given
   (Q K V : Tensor ℝ [n, d_z]) :
 -- imply
-  (Q @ Kᵀ / √d_z).softmax @ V = [i < n] [j < d_z] (∑ k : Fin n, V[k][j] * exp (id (α := Tensor ℝ []) (Q[i] @ K[k] / √d_z))) / id (α := Tensor ℝ []) (exp (Q[i] @ Kᵀ / √d_z)).sum := by
+  (Q ⬝ᵥ Kᵀ / √d_z).softmax ⬝ᵥ V = [i < n] [j < d_z] (∑ k : Fin n, V[k][j] * exp (id (α := Tensor ℝ []) (Q[i] ⬝ᵥ K[k] / √d_z))) / id (α := Tensor ℝ []) (exp (Q[i] ⬝ᵥ Kᵀ / √d_z)).sum := by
 -- proof
   rw [DotSoftmaxDivDot_T.eq.Stack_Dot_GetT]
   apply Eq.of.All_EqGetS.fin
@@ -32,21 +33,21 @@ private lemma main
     erw [EqGetStack.fin (i := i)]
     erw [EqGetStack.fin (i := j)]
   let KT : Tensor ℝ [d_z, n] := cast (congrArg (Tensor ℝ) (EqSwap_0'1 n d_z)) Kᵀ
-  have hX : ((Q[i] : Tensor ℝ [d_z]) @ Kᵀ) / √d_z ≃ ((Q[i] : Tensor ℝ [d_z]) @ KT) / √d_z := by
+  have hX : ((Q[i] : Tensor ℝ [d_z]) ⬝ᵥ Kᵀ) / √d_z ≃ ((Q[i] : Tensor ℝ [d_z]) ⬝ᵥ KT) / √d_z := by
     apply Bool.SEqUFnS.of.SEq _ (fun {s} (X : Tensor ℝ s) => X / √d_z)
     apply SEqDotS.of.SEq.left
     apply Bool.SEqCast.of.Eq (EqSwap_0'1 n d_z)
-  apply Eq.trans (b := (((Q[i] : Tensor ℝ [d_z]) @ KT) / √d_z).softmax @ (Vᵀ[j] : Tensor ℝ [n]))
+  apply Eq.trans (b := (((Q[i] : Tensor ℝ [d_z]) ⬝ᵥ KT) / √d_z).softmax ⬝ᵥ (Vᵀ[j] : Tensor ℝ [n]))
   ·
     apply Bool.Eq.of.SEq
     apply SEqDotS.of.SEq
     apply SEqSoftmaxS.of.SEq hX
   ·
-    let X : Tensor ℝ [n] := ((Q[i] : Tensor ℝ [d_z]) @ KT) / √d_z
+    let X : Tensor ℝ [n] := ((Q[i] : Tensor ℝ [d_z]) ⬝ᵥ KT) / √d_z
     let v : Tensor ℝ [n] := Vᵀ[j]
     have hsoft : X.softmax = X.softmax 0 := rfl
-    apply Eq.trans (congrArg (fun t => t @ v) (hsoft.trans (Softmax.eq.DivExp_KeepdimSumExp X 0)))
-    apply Eq.trans (congrArg (fun t => t @ v) (Div_KeepdimSum.eq.Div_Sum (exp X)))
+    apply Eq.trans (congrArg (fun t : Tensor ℝ [n] => t ⬝ᵥ v) (hsoft.trans (Softmax.eq.DivExp_KeepdimSumExp X 0)))
+    apply Eq.trans (congrArg (fun t : Tensor ℝ [n] => t ⬝ᵥ v) (Div_KeepdimSum.eq.Div_Sum (exp X)))
     apply Eq.trans (DotDiv.eq.DivDot (exp X) (id (α := Tensor ℝ []) ((exp X).sum 0)) v)
     apply congrArg₂
     ·
@@ -64,7 +65,7 @@ private lemma main
         apply Eq.trans (GetExp.eq.ExpGet _ _)
         apply congrArg exp
         apply Eq.trans (GetDiv.eq.DivGet.scalar _ _ _)
-        convert congrArg (fun t : Tensor ℝ [] => t / √d_z) ((GetDot.eq.Dot_GetT _ KT _).trans (congrArg (Q[i] @ ·) (GetTCast_T.eq.Get _ _)))
+        convert congrArg (fun t : Tensor ℝ [] => t / √d_z) ((GetDot.eq.Dot_GetT _ KT _).trans (congrArg (fun t : Tensor ℝ [d_z] => (Q[i] : Tensor ℝ [d_z]) ⬝ᵥ t) (GetTCast_T.eq.Get _ _)))
         rfl
     ·
       apply Bool.Eq.of.SEq

@@ -2,14 +2,13 @@ import Mathlib.Data.Matrix.Mul
 import Mathlib.MeasureTheory.Integral.Lebesgue.Add
 import Mathlib.MeasureTheory.Measure.WithDensity
 import Theorem.Probability.CondExpectation
-import Initialize.Tactic.Attr.Basic
 
 
 /--
 Pull a constant Mathlib matrix–vector product (`*ᵥ` / `Matrix.mulVec`) through
 conditional expectation, componentwise.
 
-Renamed out of `Expect_CondDot` (which is reserved for Tensor `@` / `Dot.dot`).
+Renamed out of `Expect_CondDot` (which is reserved for Tensor `⬝ᵥ` / `Dot.dot`).
 
 | attributes | lemma |
 | :---: | :---: |
@@ -42,4 +41,4 @@ private lemma main
 
 
 -- created on 2026-09-23
--- updated on 2026-11-02
+-- updated on 2026-11-11

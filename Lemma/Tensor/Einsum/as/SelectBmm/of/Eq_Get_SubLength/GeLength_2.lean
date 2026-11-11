@@ -1,4 +1,4 @@
-import Def.Data.Holor.Reshape
+import Def.Data.Tensor.Reshape
 import Lemma.Tensor.ResizeCast.as.Resize.of.Eq
 import Lemma.Tensor.SEqBmmS.of.SEq.SEq
 import Lemma.Tensor.SEqReshapeS.of.SEq.Eq.Dvd
@@ -6,7 +6,7 @@ import Lemma.Tensor.SEqResize.of.Eq_Get
 import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
 import Lemma.Tensor.SEqSelectS.of.SEq
 import Instance.LinearAlgebra.Matrix.Matmul
-import Def.Data.Holor.Bmm
+import Def.Data.Tensor.Bmm
 open Bool List Tensor
 set_option maxHeartbeats 200000
 

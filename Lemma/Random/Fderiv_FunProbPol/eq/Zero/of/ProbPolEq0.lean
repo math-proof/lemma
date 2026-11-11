@@ -1,4 +1,5 @@
 import Def.Dynamics.PolicyTrajectory.Gradient
+import Mathlib.Analysis.Calculus.LocalExtr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model
 
 

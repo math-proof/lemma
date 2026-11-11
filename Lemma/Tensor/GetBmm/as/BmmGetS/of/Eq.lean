@@ -1,6 +1,6 @@
 import Lemma.Tensor.GetBmm.eq.BmmGetS
 import Lemma.Tensor.SEqBmmS.of.SEq.SEq
-import Def.Data.Holor.Bmm
+import Def.Data.Tensor.Bmm
 open Tensor
 
 

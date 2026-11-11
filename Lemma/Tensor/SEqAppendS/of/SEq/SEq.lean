@@ -1,5 +1,5 @@
 import Lemma.Bool.SEq.is.Eq
-import Def.Data.Holor.Defs.Part4
+import Def.Data.Tensor.Defs.Part4
 open Bool
 
 

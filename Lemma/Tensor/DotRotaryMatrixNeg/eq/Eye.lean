@@ -1,5 +1,6 @@
 import Lemma.Tensor.DotT_RotaryMatrix.eq.Eye
 import Lemma.Tensor.RotaryMatrixNeg.eq.TRotaryMatrix
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
@@ -8,7 +9,7 @@ private lemma main
 -- given
   (α : Tensor ℝ [d]) :
 -- imply
-  (-α).rotaryMatrix @ α.rotaryMatrix = Tensor.eye (d + d) := by
+  (-α).rotaryMatrix ⬝ᵥ α.rotaryMatrix = Tensor.eye (d + d) := by
 -- proof
   rw [RotaryMatrixNeg.eq.TRotaryMatrix]
   exact DotT_RotaryMatrix.eq.Eye α

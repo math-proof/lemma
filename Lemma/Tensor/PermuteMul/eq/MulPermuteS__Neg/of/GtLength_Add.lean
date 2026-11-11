@@ -1,4 +1,4 @@
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.List.Rotate_SubLength_1.eq.Cons_DropLast.of.GtLength_0
 import Lemma.Tensor.Cast_Mul.eq.MulCastS.of.Eq

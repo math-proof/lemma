@@ -118,13 +118,13 @@ private lemma fderiv_dotPow_eq_integral_finset_smul_add
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (hQ : ∀ θ t («\sf{s}» : ℕ → S) («\sf{a}» : ℕ → A),
       Q θ t («\sf{s}» t) («\sf{a}» t) =
-        𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t ∧ a t = «\sf{a}» t))
+        𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = «\sf{s}» t ∧ a t = «\sf{a}» t))
   (hV : ∀ θ t («\sf{s}» : ℕ → S),
       V θ t («\sf{s}» t) =
-        𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t))
+        𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = «\sf{s}» t))
   (h₄ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₅ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞) :
-  (γ ^ (id : ℕ → ℕ)) @ (fun t ↦ fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ) =
+  (γ ^ (id : ℕ → ℕ)) ⬝ᵥ (fun t ↦ fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ) =
     ∫ ω, ∑ t ∈ Finset.range n, (γ ^ t * Q θ t (s t ω) (a t ω)) •
         fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) +
         γ ^ n • ∫ ω, fderiv ℝ (fun θ' => V θ' n (s n ω)) θ ∂(M θ) := by
@@ -164,10 +164,10 @@ private lemma fderiv_dotPow_eq_integral_finset_smul_add
               (M := M) h₁ h₄ h₅ 0 x θ).continuousAt
           filter_upwards [hc.eventually_ne hReach] with θ' ht
           have hVθ : V θ' 0 x =
-              𝔼[r : M θ']((γ ^ (id : ℕ → ℕ)) @ r[0:] | s 0 = x) :=
+              𝔼[r : M θ']((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[0:] | s 0 = x) :=
             hV θ' 0 (fun _ => x)
           have hseries :
-              𝔼[r : M θ']((γ ^ (id : ℕ → ℕ)) @ r[0:] | s 0 = x) =
+              𝔼[r : M θ']((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[0:] | s 0 = x) =
                 ∑' k, γ ^ k * ∫ z, M.Kf θ' (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z
                   ∂(M.stageK θ' x) :=
             _root_.Random.V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico (M := M) (r := r) (s := s) (a := a)
@@ -207,7 +207,7 @@ private lemma fderiv_dotPow_eq_integral_finset_smul_add
     congr 1
     ring
 
-/-- Swap: ∫ (γ^id @ r) = (γ^id) @ (∫ r t). -/
+/-- Swap: ∫ (γ^id ⬝ᵥ r) = (γ^id) ⬝ᵥ (∫ r t). -/
 private lemma integral_extDotPow_eq_dotPow_integral
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ]
   [CountableMeasure S] [MeasurableSingletonClass S] [Fintype S]
@@ -218,8 +218,8 @@ private lemma integral_extDotPow_eq_dotPow_integral
   {a : ℕ → (ℕ → ℝ × S × A) → A}
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t)) :
-  (fun θ' ↦ ∫ ω, ((γ ^ (id : ℕ → ℕ)) @ r) ω ∂(M θ')) =
-    fun θ' ↦ (γ ^ (id : ℕ → ℕ)) @ fun t ↦ ∫ ω, r t ω ∂(M θ') := by
+  (fun θ' ↦ ∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) ω ∂(M θ')) =
+    fun θ' ↦ (γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦ ∫ ω, r t ω ∂(M θ') := by
   funext θ'
   have hrb : ∀ t, ∀ᵐ ω ∂(M θ'), ‖γ ^ t * r t ω‖ ≤ γ ^ t * |M.env.R| := fun t =>
     (All_LeNorm_Abs.of.All_Eq_Joint h₁ (M := M) θ').mono fun ω h => by
@@ -239,7 +239,7 @@ private lemma integral_extDotPow_eq_dotPow_integral
         apply le_trans
         · exact integral_mono_ae (hri t).norm (integrable_const _) (hrb t)
         · simp
-    _ = (γ ^ (id : ℕ → ℕ)) @ fun t ↦ ∫ ω, r t ω ∂(M θ') := by
+    _ = (γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦ ∫ ω, r t ω ∂(M θ') := by
       simp only [Dot.dot, Function.hPow_apply, id_eq]
 
 /-- Path-binder finset Expect of an arbitrary score = observation integral.
@@ -299,7 +299,7 @@ private lemma integral_finset_smul_score_eq_of_ae
 
 /--
 Empty.Finite-horizon policy gradient: for every `n`,
-`∇[θ] 𝔼[r]((γ ^ (id : ℕ → ℕ)) @ r) =
+`∇[θ] 𝔼[r]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) =
   𝔼[s, a](∑ t < n, γ ^ t * Q(s[t], a[t]) • ∇[θ] (log ℙ[M θ](a[t] | s[t]))) +
     γ ^ n • 𝔼[s](∇[θ] (V(s[n])))`.
 The score uses binder sugar `ℙ[M θ](a t | s t)` (option B: scalar `condProb` inside `𝔼`).
@@ -320,8 +320,8 @@ private lemma main
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (h₂ : ∀ θ t («\sf{s}» : ℕ → S) («\sf{a}» : ℕ → A), Q θ t («\sf{s}» t) («\sf{a}» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t ∧ a t = «\sf{a}» t))
-  (h₃ : ∀ θ t («\sf{s}» : ℕ → S), V θ t («\sf{s}» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t))
+  (h₂ : ∀ θ t («\sf{s}» : ℕ → S) («\sf{a}» : ℕ → A), Q θ t («\sf{s}» t) («\sf{a}» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = «\sf{s}» t ∧ a t = «\sf{a}» t))
+  (h₃ : ∀ θ t («\sf{s}» : ℕ → S), V θ t («\sf{s}» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = «\sf{s}» t))
   (h₄ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₅ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
   (n : ℕ) :
@@ -335,7 +335,7 @@ private lemma main
     PSpace_Path.of.All_PSpace (fun t ↦ ⟨(Random.Measurable.of.All_Eq.snd.snd h₁ t).aemeasurable⟩)
   have : ∀ θ, PSpace (M θ) (AsPathRV.path r) := fun _ ↦
     PSpace_Path.of.All_PSpace (fun t ↦ ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩)
-  ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) @ r) =
+  ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) =
     𝔼[s, a : M θ](∑ t ∈ Finset.range n,
         (γ ^ t * Q θ t (s t) (a t)) • ∇[θ] (ℙ[M θ](a t | s t) : ℝ).log) +
       γ ^ n • 𝔼[s : M θ](∇[θ] (V θ n (s n))) := by
@@ -350,9 +350,9 @@ private lemma main
   have h₄n := h₅
   simp only [gradient, LinearIsometryEquiv.norm_map] at h₅
   let Qloc (θ : Θ) (t : ℕ) (x : S) (u : A) : ℝ :=
-    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u)
+    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = x ∧ a t = u)
   let Vloc (θ : Θ) (t : ℕ) (x : S) : ℝ :=
-    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x)
+    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = x)
   have hQ : Q = Qloc := funext fun θ => funext fun t => funext fun x => funext fun u =>
     h₂ θ t (fun _ ↦ x) (fun _ ↦ u)
   have hV : V = Vloc := funext fun θ => funext fun t => funext fun x =>
@@ -363,14 +363,14 @@ private lemma main
   classical
   have hQ_expect : ∀ θ t («\sf{s}» : ℕ → S) («\sf{a}» : ℕ → A),
       Qloc θ t («\sf{s}» t) («\sf{a}» t) =
-        𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t ∧ a t = «\sf{a}» t) :=
+        𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = «\sf{s}» t ∧ a t = «\sf{a}» t) :=
     fun _ _ _ _ => rfl
   have hV_expect : ∀ θ t («\sf{s}» : ℕ → S),
       Vloc θ t («\sf{s}» t) =
-        𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t) :=
+        𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = «\sf{s}» t) :=
     fun _ _ _ => rfl
   have hfd :
-    (γ ^ (id : ℕ → ℕ)) @ (fun t ↦ fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ) =
+    (γ ^ (id : ℕ → ℕ)) ⬝ᵥ (fun t ↦ fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ) =
       ∫ ω, ∑ t ∈ Finset.range n, (γ ^ t * Qloc θ t (s t ω) (a t ω)) •
           fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) +
           γ ^ n • ∫ ω, fderiv ℝ (fun θ' => Vloc θ' n (s n ω)) θ ∂(M θ) :=
@@ -402,7 +402,7 @@ private lemma main
   have hIntV : Integrable (fun ω ↦ fderiv ℝ (fun θ' => Vloc θ' n (s n ω)) θ) (M θ) :=
     Random.Integrable_Fun h₁ (M := M) θ n (fun y _ => fderiv ℝ (fun θ' => Vloc θ' n y) θ)
   have hold :
-    (γ ^ (id : ℕ → ℕ)) @ (fun t ↦ ∇[θ] (∫ ω, r t ω ∂(M θ))) =
+    (γ ^ (id : ℕ → ℕ)) ⬝ᵥ (fun t ↦ ∇[θ] (∫ ω, r t ω ∂(M θ))) =
       ∫ ω, ∑ t ∈ Finset.range n,
             (γ ^ t * Qloc θ t (s t ω) (a t ω)) •
               ∇[θ] (Real.log (M.policy.prob θ (s t ω) (a t ω))) ∂(M θ) +
@@ -429,8 +429,8 @@ private lemma main
         have := hIntV
         rw [← L.integral_comp_comm]
   have hLeft :
-    ∇[θ] ((γ ^ (id : ℕ → ℕ)) @ (fun t ↦ ∫ ω, r t ω ∂(M θ))) =
-      (γ ^ (id : ℕ → ℕ)) @ (fun t ↦ ∇[θ] (∫ ω, r t ω ∂(M θ))) := by
+    ∇[θ] ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ (fun t ↦ ∫ ω, r t ω ∂(M θ))) =
+      (γ ^ (id : ℕ → ℕ)) ⬝ᵥ (fun t ↦ ∇[θ] (∫ ω, r t ω ∂(M θ))) := by
     classical
     have hGet :=
       GetTSum_SMul.of.In_Ico.GtInftySup.All_Differentiable_Prob (M := M) h₀ h₁ h₄ h₄n θ
@@ -448,23 +448,23 @@ private lemma main
       exact tsum_congr fun t => map_smul L (γ ^ t) _
     simpa [Dot.dot, Function.hPow_apply, id_eq] using hcore
   have hold_old :
-    ∇[θ] ((γ ^ (id : ℕ → ℕ)) @ (fun t ↦ ∫ ω, r t ω ∂(M θ))) =
+    ∇[θ] ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ (fun t ↦ ∫ ω, r t ω ∂(M θ))) =
       ∫ ω, ∑ t ∈ Finset.range n,
             (γ ^ t * Qloc θ t (s t ω) (a t ω)) •
               ∇[θ] (Real.log (M.policy.prob θ (s t ω) (a t ω))) ∂(M θ) +
           γ ^ n • ∫ ω, ∇[θ] (Vloc θ n (s n ω)) ∂(M θ) :=
     hLeft.trans hold
   have hLfun :
-    (fun θ' ↦ ∫ ω, ((γ ^ (id : ℕ → ℕ)) @ r) ω ∂(M θ')) =
-      fun θ' ↦ (γ ^ (id : ℕ → ℕ)) @ fun t ↦ ∫ ω, r t ω ∂(M θ') :=
+    (fun θ' ↦ ∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) ω ∂(M θ')) =
+      fun θ' ↦ (γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦ ∫ ω, r t ω ∂(M θ') :=
     integral_extDotPow_eq_dotPow_integral (M := M) (γ := γ) (r := r) (s := s) (a := a) h₀ h₁
   have hLside :
-    ∇[θ] (∫ ω, ((γ ^ (id : ℕ → ℕ)) @ r) ω ∂(M θ)) =
-      ∇[θ] ((γ ^ (id : ℕ → ℕ)) @ fun t ↦ ∫ ω, r t ω ∂(M θ)) := by
+    ∇[θ] (∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) ω ∂(M θ)) =
+      ∇[θ] ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦ ∫ ω, r t ω ∂(M θ)) := by
     simp only [gradient]
     exact congrArg (fun f ↦ (InnerProductSpace.toDual ℝ Θ).symm (fderiv ℝ f θ)) hLfun
   have hold_pol :
-    ∇[θ] (∫ ω, ((γ ^ (id : ℕ → ℕ)) @ r) ω ∂(M θ)) =
+    ∇[θ] (∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) ω ∂(M θ)) =
       ∫ ω, ∑ t ∈ Finset.range n,
             (γ ^ t * Qloc θ t (s t ω) (a t ω)) •
               ∇[θ] (Real.log (M.policy.prob θ (s t ω) (a t ω))) ∂(M θ) +
@@ -492,22 +492,22 @@ private lemma main
       (score₂ := fun t x u => ∇[θ] (ℙ[M θ]((a t) = u | (s t) = x) : ℝ).log)
       (fun t => (hscore t).mono fun ω h => h.symm)
   have hold_int :
-    ∇[θ] (∫ ω, ((γ ^ (id : ℕ → ℕ)) @ r) ω ∂(M θ)) =
+    ∇[θ] (∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) ω ∂(M θ)) =
       ∫ ω, ∑ t ∈ Finset.range n,
             (γ ^ t * Qloc θ t (s t ω) (a t ω)) •
               ∇[θ] (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log ∂(M θ) +
           γ ^ n • ∫ ω, ∇[θ] (Vloc θ n (s n ω)) ∂(M θ) :=
     hold_pol.trans hRHSpol
   have hE_Lfun :
-    (fun θ' ↦ 𝔼[r: M θ']((γ ^ (id : ℕ → ℕ)) @ r)) =
-      (fun θ' ↦ ∫ ω, ((γ ^ (id : ℕ → ℕ)) @ r) ω ∂(M θ')) := by
+    (fun θ' ↦ 𝔼[r: M θ']((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r)) =
+      (fun θ' ↦ ∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) ω ∂(M θ')) := by
     funext θ'
     have : PSpace (M θ') (AsPathRV.path r) :=
       PSpace_Path.of.All_PSpace (fun t ↦ ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩)
     exact ExpectDotPow_Id.eq.Integral_ExtDotPow_Id (M := M) (θ := θ') (γ := γ) (r := r)
   have hE_L :
-    ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) @ r) =
-      ∇[θ] (∫ ω, ((γ ^ (id : ℕ → ℕ)) @ r) ω ∂(M θ)) := by
+    ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) =
+      ∇[θ] (∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) ω ∂(M θ)) := by
     simp only [gradient]
     exact congrArg (fun f ↦ (InnerProductSpace.toDual ℝ Θ).symm (fderiv ℝ f θ)) hE_Lfun
   have : PSpace (M θ) (AsPathRV.path s) := hsP
@@ -568,4 +568,4 @@ private lemma main
 
 
 -- created on 2023-04-04
--- updated on 2026-11-03
+-- updated on 2026-11-11

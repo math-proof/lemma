@@ -7,6 +7,7 @@ import Lemma.Tensor.EqDot_0'0
 import Lemma.Tensor.EqDot_Eye
 import Lemma.Tensor.EqMul1
 import Lemma.Tensor.MulMul.eq.Mul_Mul
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
@@ -36,20 +37,20 @@ private lemma main
   let X := C.hstack A ++ B.hstack (0 : Tensor α [n, m])
   let P := (0 : Tensor α [n, m]).hstack (Tensor.eye n) ++ (Tensor.eye m).hstack (0 : Tensor α [m, n])
   let T := A.hstack C ++ (0 : Tensor α [n, m]).hstack B
-  have hC0 : id (α := Tensor α [m, m]) (C @ (0 : Tensor α [n, m])) = 0 := EqDot_0'0 C
-  have hAI : id (α := Tensor α [m, m]) (A @ Tensor.eye (α := α) m) = A := by
+  have hC0 : id (α := Tensor α [m, m]) (C ⬝ᵥ (0 : Tensor α [n, m])) = 0 := EqDot_0'0 C
+  have hAI : id (α := Tensor α [m, m]) (A ⬝ᵥ Tensor.eye (α := α) m) = A := by
     simp [id, EqDot_Eye]
-  have hCI : id (α := Tensor α [m, n]) (C @ Tensor.eye (α := α) n) = C := by
+  have hCI : id (α := Tensor α [m, n]) (C ⬝ᵥ Tensor.eye (α := α) n) = C := by
     simp [id, EqDot_Eye]
-  have hA0 : id (α := Tensor α [m, n]) (A @ (0 : Tensor α [m, n])) = 0 := EqDot_0'0 A
-  have hB0 : id (α := Tensor α [n, m]) (B @ (0 : Tensor α [n, m])) = 0 := EqDot_0'0 B
-  have h0I : id (α := Tensor α [n, m]) ((0 : Tensor α [n, m]) @ Tensor.eye (α := α) m) = 0 := by
+  have hA0 : id (α := Tensor α [m, n]) (A ⬝ᵥ (0 : Tensor α [m, n])) = 0 := EqDot_0'0 A
+  have hB0 : id (α := Tensor α [n, m]) (B ⬝ᵥ (0 : Tensor α [n, m])) = 0 := EqDot_0'0 B
+  have h0I : id (α := Tensor α [n, m]) ((0 : Tensor α [n, m]) ⬝ᵥ Tensor.eye (α := α) m) = 0 := by
     simp [id, EqDot0_0]
-  have hBI : id (α := Tensor α [n, n]) (B @ Tensor.eye (α := α) n) = B := by
+  have hBI : id (α := Tensor α [n, n]) (B ⬝ᵥ Tensor.eye (α := α) n) = B := by
     simp [id, EqDot_Eye]
-  have h00 : id (α := Tensor α [n, n]) ((0 : Tensor α [n, m]) @ (0 : Tensor α [m, n])) = 0 := by
+  have h00 : id (α := Tensor α [n, n]) ((0 : Tensor α [n, m]) ⬝ᵥ (0 : Tensor α [m, n])) = 0 := by
     simp [id, EqDot0_0]
-  have hprod : X @ P = T := by
+  have hprod : X ⬝ᵥ P = T := by
     simp [X, P, T]
     rw [DotAppendSHstackS.eq.AppendHstackSAddSDotS, hC0, hAI, hCI, hA0, hB0, h0I, hBI, h00]
     simp [zero_add, add_zero]
@@ -59,12 +60,12 @@ private lemma main
   let Xsq : Tensor α [n + m, n + m] :=
     cast (congrArg (fun t => Tensor α [t, n + m]) (Nat.add_comm m n)) X
   have hX : Xsq ≃ X := by convert Bool.SEqCast.of.Eq (Vector := Tensor α) hs X
-  have hXP : Xsq @ P ≃ X @ P := SEqDotS.of.SEq hX P
-  have hXPT : Xsq @ P ≃ T := hXP.trans (Bool.SEq.of.Eq hprod)
+  have hXP : Xsq ⬝ᵥ P ≃ X ⬝ᵥ P := SEqDotS.of.SEq hX P
+  have hXPT : Xsq ⬝ᵥ P ≃ T := hXP.trans (Bool.SEq.of.Eq hprod)
   have hdot := DetDot.eq.MulPowNeg1Mul (m := n) (n := m) Xsq
   have hXdet := (det_cast_add_comm (m := m) (n := n) X).symm
-  have hXPdet : id (α := Tensor α []) (Xsq @ P).det = id (α := Tensor α []) T.det := by
-    apply Eq.trans (det_cast_add_comm (m := n) (n := m) (Xsq @ P))
+  have hXPdet : id (α := Tensor α []) (Xsq ⬝ᵥ P).det = id (α := Tensor α []) T.det := by
+    apply Eq.trans (det_cast_add_comm (m := n) (n := m) (Xsq ⬝ᵥ P))
     apply congrArg (id (α := Tensor α []))
     apply Det.of.Eq
     apply Eq.trans _ (SEq.cast hXPT)
@@ -73,7 +74,7 @@ private lemma main
     exact (cast_heq _ _).symm
   have hneg : ((-1 : Tensor α []) ^ (2 * (m * n))) = 1 :=
     Even.neg_one_pow (even_two_mul (m * n))
-  have hdot' : id (α := Tensor α []) (Xsq @ P).det =
+  have hdot' : id (α := Tensor α []) (Xsq ⬝ᵥ P).det =
       ((-1 : Tensor α []) ^ (m * n)) * id (α := Tensor α []) X.det := by
     simp only [id] at hdot hXdet ⊢
     rw [hdot, Nat.mul_comm n m, hXdet]
@@ -99,7 +100,7 @@ private lemma main
     _ = ((-1 : Tensor α []) ^ (m * n)) *
         (((-1 : Tensor α []) ^ (m * n)) * id (α := Tensor α []) X.det) :=
       MulMul.eq.Mul_Mul _ _ _
-    _ = ((-1 : Tensor α []) ^ (m * n)) * id (α := Tensor α []) (Xsq @ P).det := by
+    _ = ((-1 : Tensor α []) ^ (m * n)) * id (α := Tensor α []) (Xsq ⬝ᵥ P).det := by
       rw [← hdot']
     _ = ((-1 : Tensor α []) ^ (m * n)) * id (α := Tensor α []) T.det := by
       rw [hXPdet]

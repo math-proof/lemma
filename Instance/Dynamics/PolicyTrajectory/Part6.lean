@@ -30,7 +30,7 @@ Lean model behind the sympy symbols used in `Tensor.*.policy_gradient_theorem`,
 * `Expectation[r, a:π](f)` is the Bochner integral `∫ ω, f ω ∂(M θ)`;
 * `Expectation[...](f | s[t] = x)` is the integral against Mathlib's conditional measure
   `(M θ)[| s t ⁻¹' {x}]`;
-* / `(γ ^ (id : ℕ → ℕ)) @ r[t:]` is `∑' k, γ ^ k * r (t + k)`;
+* / `(γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]` is `∑' k, γ ^ k * r (t + k)`;
 * `Derivative[π]` is `fderiv ℝ · θ`.
 
 The environment is a standard (time-homogeneous) MDP: `s 0 ∼ init`, `a t ∼ π_θ(· | s t)`,
@@ -45,8 +45,8 @@ they also carry `SinglePSpace`). For **public** Random lemmas prefer the HMM-sty
 `(ℙ[M θ](s[0] = x) : ℝ) ≠ 0` with no `hPs0` and no public `M.stateAt 0`. Lemmas may still bind
 `{r s a}` with `h₁ : ∀ t, (· t) = (r t, s t, a t)` (the joint random variable of
 `Function.coeProdPi3R`), or take `[IsPolicyTrajectory M r s a]` instead. State / action values are introduced locally in lemmas as
-`V`: `𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x)` and
-`Q`: `𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u)`.
+`V`: `𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = x)` and
+`Q`: `𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = x ∧ a t = u)`.
 Clamped rewards are local `rc z := clip z.1 (-M.env.R) M.env.R` (a.s. equal to the raw reward).
 The j-step stage map is local
 `W θ f j y := 𝔼[z : M.stageK θ y](M.Kf θ f j z)` (identity RV + `PSpace` on `M.stageK θ y`).
@@ -73,6 +73,22 @@ omit [MeasurableSingletonClass A] in
 /-- `M θ` is the trajectory law `M.traj θ` (it elaborates to `Model.traj M θ`). -/
 noncomputable instance instCoeFun : CoeFun (Model Θ S A) (fun _ ↦ Θ → Measure (ℕ → ℝ × S × A)) where
   coe M := M.traj
+
+omit [MeasurableSingletonClass A] in
+/-- `M[x]` is the action law `θ ↦ π_θ(· | x)`, so `M[x] θ` is `M.policy.kernel θ x`. -/
+@[reducible] noncomputable instance instGetElem :
+    GetElem (Model Θ S A) S (Θ → Measure A) (fun _ _ => True) where
+  getElem M x _ := fun θ => M.policy.kernel θ x
+
+omit [MeasurableSingletonClass A] in
+theorem getElem_apply (M : Model Θ S A) (x : S) (θ : Θ) :
+    M[x] θ = M.policy.kernel θ x :=
+  rfl
+
+omit [MeasurableSingletonClass A] in
+instance instGetElemIsProbabilityMeasure (M : Model Θ S A) (x : S) (θ : Θ) :
+    IsProbabilityMeasure (M[x] θ) :=
+  inferInstanceAs (IsProbabilityMeasure (M.policy.kernel θ x))
 
 end Model
 end PolicyGradient

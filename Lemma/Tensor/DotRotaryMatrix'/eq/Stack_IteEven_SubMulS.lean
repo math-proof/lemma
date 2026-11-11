@@ -3,8 +3,9 @@ import Lemma.Tensor.Add
 import Lemma.Tensor.AddMulS.eq.SubMulS
 import Lemma.Tensor.Dot.eq.Stack_Sum_MulGetS
 import Lemma.Tensor.GetRotaryMatrix'.eq.Ite_IteS
-import Theorem.Data.Holor.Functions
-import Def.Data.Holor.Stack.Part2
+import Theorem.Data.Tensor.Functions
+import Def.Data.Tensor.Stack.Part2
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 set_option maxHeartbeats 1000000
 
@@ -15,7 +16,7 @@ private lemma main
   (θ : Tensor ℝ [d])
   (x : Tensor ℝ [d + d]) :
 -- imply
-  θ.rotaryMatrix' @ x =
+  θ.rotaryMatrix' ⬝ᵥ x =
     [j < d + d]
       if h : (j : ℕ) is even then
         let j1 : Fin (d + d) := ⟨j + 1, by grind⟩

@@ -1,6 +1,6 @@
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.GetSelect.as.SelectGet.of.GtGet_0.GtGet_Add_1.LtAdd_1Length
-import Def.Data.Holor.Stack.Part2
+import Def.Data.Tensor.Stack.Part2
 open Tensor Bool
 
 

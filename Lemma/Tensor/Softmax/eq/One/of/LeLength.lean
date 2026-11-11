@@ -5,7 +5,7 @@ import Lemma.Tensor.EqKeepdimCast.of.LeLength
 import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
 import Lemma.Tensor.Sum.as.Sum.of.LeLength
 import Lemma.Vector.GetExp.eq.ExpGet
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Tensor Vector
 
 

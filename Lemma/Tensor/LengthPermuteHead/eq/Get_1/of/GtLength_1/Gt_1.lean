@@ -1,7 +1,7 @@
 import Lemma.List.GetRotate.eq.Ite.of.GeLength.GtLength
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Def.Data.Holor.Defs.Part4
-import Notation.Data.Holor.Permute
+import Def.Data.Tensor.Defs.Part4
+import Notation.Data.Tensor.Permute
 open List Tensor
 
 

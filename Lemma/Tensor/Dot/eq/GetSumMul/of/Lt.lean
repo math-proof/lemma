@@ -1,6 +1,6 @@
-import Def.Data.Holor.Unsqueeze
-import Def.Data.Holor.Repeat
-import Notation.Data.Holor.Permute
+import Def.Data.Tensor.Unsqueeze
+import Def.Data.Tensor.Repeat
+import Notation.Data.Tensor.Permute
 import Lemma.Nat.EqMax.of.Lt
 import Lemma.Tensor.Dot.eq.GetDotUnsqueeze_0
 import Lemma.Tensor.SEqMulS.of.SEq.SEq
@@ -9,7 +9,8 @@ import Lemma.Tensor.SEqResize.of.Eq_Get
 import Lemma.Tensor.SEqSumS.of.SEq.Eq
 import Lemma.Tensor.SEqTS.of.SEq
 import Lemma.Tensor.SEqUnsqueezeS.of.SEq.Eq
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
+import Instance.Data.Vector.Basic.Dot
 open Bool Tensor Nat
 
 
@@ -27,7 +28,7 @@ private lemma main
   let B' : Tensor α [n, k] := Bᵀ
   let B' : Tensor α [1, n, k] := B'.unsqueeze 0
   let B' : Tensor α [1, n, k] := cast (congrArg (Tensor α) (by simp)) (B'.repeat ⟨0, by grind⟩ 1)
-  A @ B = ((A' * B').sum 2).get ⟨0, by grind⟩ := by
+  A ⬝ᵥ B = ((A' * B').sum 2).get ⟨0, by grind⟩ := by
 -- proof
   simp
   rw [Dot.eq.GetDotUnsqueeze_0]

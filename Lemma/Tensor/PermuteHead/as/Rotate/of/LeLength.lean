@@ -1,6 +1,6 @@
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
-import Def.Data.Holor.Prod
-import Notation.Data.Holor.Permute
+import Def.Data.Tensor.Prod
+import Notation.Data.Tensor.Permute
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Vector.FlattenCast.as.Flatten.of.Eq.Eq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq

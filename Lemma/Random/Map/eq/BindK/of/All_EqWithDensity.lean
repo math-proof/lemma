@@ -7,8 +7,8 @@ Stage law recursion of the continuous-action trajectory model `M`: `law(ω[t+1])
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A}
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
 -- given
   (θ : Θ)
   (t : ℕ) :

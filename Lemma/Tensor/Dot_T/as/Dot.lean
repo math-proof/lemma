@@ -1,7 +1,8 @@
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.DotT.eq.Dot
 import Lemma.Tensor.EqTT
 import Lemma.Tensor.SEqDotS.of.SEq
+import Instance.Data.Vector.Basic.Dot
 open Bool Tensor
 
 
@@ -12,7 +13,7 @@ private lemma main
   (A : Tensor α [n])
   (X : Tensor α [m, n]) :
 -- imply
-  A @ Xᵀ ≃ X @ A := by
+  A ⬝ᵥ Xᵀ ≃ X ⬝ᵥ A := by
 -- proof
   have hshape : [m, n].swap ([m, n].length - 2) ([m, n].length - 1) = [n, m] := by
     simp

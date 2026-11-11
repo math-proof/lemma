@@ -1,5 +1,5 @@
-import Def.Data.Holor.Defs.Part4
-import Theorem.Data.Holor.Functions
+import Def.Data.Tensor.Defs.Part4
+import Theorem.Data.Tensor.Functions
 
 
 @[path]

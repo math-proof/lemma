@@ -1,5 +1,5 @@
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.List.ProdNil.eq.One
 import Lemma.List.EqRotate_0
 import Lemma.Bool.SEq.is.SEqCast.of.Eq

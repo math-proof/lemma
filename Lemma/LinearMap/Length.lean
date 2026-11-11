@@ -8,13 +8,17 @@ set_option backward.isDefEq.respectTransparency false
 universe u
 
 private lemma length_eq_length_submodule_add {A : Type*} [CommRing A] {M : Type*} [AddCommGroup M] [Module A M] (N : Submodule A M) : Module.length A M = Module.length A ↥N + Module.length A (M ⧸ N) :=
+-- proof
   Module.length_eq_add_of_exact N.subtype N.mkQ (Submodule.injective_subtype N) (Submodule.mkQ_surjective N) (LinearMap.exact_subtype_mkQ N)
 private lemma length_quotient_eq_add {A : Type*} [CommRing A] {M : Type*} [AddCommGroup M] [Module A M] {P Q : Submodule A M} (h : P ≤ Q) : Module.length A (M ⧸ P) = Module.length A ↥(Q.map P.mkQ) + Module.length A (M ⧸ Q) := by
+-- proof
   rw [length_eq_length_submodule_add (Q.map P.mkQ), (Submodule.quotientQuotientEquivQuotient P Q h).length_eq]
 private lemma length_map_mkQ_range {A : Type*} [CommRing A] {M : Type*} [AddCommGroup M] [Module A M] (P : Submodule A M) {N' : Type*} [AddCommGroup N'] [Module A N'] (g : N' →ₗ[A] M) : Module.length A ↥((LinearMap.range g).map P.mkQ) = Module.length A (N' ⧸ LinearMap.ker (LinearMap.comp P.mkQ g)) := by
+-- proof
   rw [← LinearMap.range_comp]
   apply (LinearMap.quotKerEquivRange (LinearMap.comp P.mkQ g)).length_eq.symm
 private lemma det_ne_zero_of_injective {A : Type*} [CommRing A] [IsDomain A] {r : ℕ} (φ : (Fin r → A) →ₗ[A] (Fin r → A)) (hφ : Function.Injective φ) : LinearMap.det φ ≠ 0 := by
+-- proof
   classical
   intro hdet
   rw [← LinearMap.det_toMatrix'] at hdet
@@ -22,6 +26,7 @@ private lemma det_ne_zero_of_injective {A : Type*} [CommRing A] [IsDomain A] {r 
   rw [LinearMap.toMatrix'_mulVec] at hv0
   apply hv (hφ (hv0.trans (map_zero φ).symm))
 private lemma smul_mem_range {A : Type*} [CommRing A] {r : ℕ} (φ : (Fin r → A) →ₗ[A] (Fin r → A)) (m : Fin r → A) : LinearMap.det φ • m ∈ LinearMap.range φ := by
+-- proof
   classical
   refine ⟨(LinearMap.toMatrix' φ).adjugate.mulVec m, ?_⟩
   rw [← LinearMap.toMatrix'_mulVec, Matrix.mulVec_mulVec, Matrix.mul_adjugate, Matrix.smul_mulVec, Matrix.one_mulVec, LinearMap.det_toMatrix']
@@ -75,3 +80,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-10

@@ -1,5 +1,5 @@
 import Lemma.Hyperreal.NotInfiniteMul.of.NotInfinite.NotInfinite
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.Tensor.DataMul.eq.MulDataS
 import Lemma.Tensor.NotInfiniteGetData
 open Hyperreal Tensor

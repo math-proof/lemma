@@ -1,7 +1,7 @@
-import Def.Data.Holor.Unsqueeze
-import Def.Data.Holor.Repeat
+import Def.Data.Tensor.Unsqueeze
+import Def.Data.Tensor.Repeat
 import Lemma.Tensor.EqSelectRepeatUnsqueeze.of.Lt.GeLength
-import Theorem.Data.Holor.Functions
+import Theorem.Data.Tensor.Functions
 open Bool List Tensor
 
 

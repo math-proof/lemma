@@ -15,17 +15,17 @@ set_option maxHeartbeats 400000
 
 
 private lemma map_s0_eq_init
-  [MeasurableSpace S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A}
-  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
-  {s : ℕ → (ℕ → ℝ × S × A) → S}
-  {a : ℕ → (ℕ → ℝ × S × A) → A}
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
   (θ : Θ) :
   (M θ).map (s 0) = M.env.init := by
   obtain rfl : s = fun t ω ↦ (ω t).2.1 :=
     funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₀ t) ω)).symm
-  set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
+  set s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮 := fun t ω ↦ (ω t).2.1
   have : (M θ).map (s 0) = ((M θ).map (fun ω ↦ ω 0)).map (fun z ↦ z.2.1) := by
     rw [Measure.map_map measurable_snd.fst (measurable_pi_apply 0)]; rfl
   rw [this, Map.eq.BindStageK.of.All_EqWithDensity,
@@ -44,11 +44,11 @@ private lemma comp_comap_eq_comp_map
   exact (lintegral_map (κ.measurable_coe hs) hf).symm
 
 private lemma map_s_succ
-  [MeasurableSpace S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A}
-  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
-  {s : ℕ → (ℕ → ℝ × S × A) → S}
-  {a : ℕ → (ℕ → ℝ × S × A) → A}
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
   (θ : Θ)
   (t : ℕ) :
@@ -60,8 +60,8 @@ private lemma map_s_succ
     funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₀ t) ω)).symm
   obtain rfl : a = fun t ω ↦ (ω t).2.2 :=
     funext₂ fun t ω ↦ (congrArg (·.2.2) (congrFun (h₀ t) ω)).symm
-  set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
-  set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
+  set s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮 := fun t ω ↦ (ω t).2.1
+  set a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜 := fun t ω ↦ (ω t).2.2
   set μ := (M θ).map (fun ω ↦ ω t)
   have hK := Map.eq.BindK.of.All_EqWithDensity (M := M) θ t
   have hmap :
@@ -74,8 +74,8 @@ private lemma map_s_succ
       (measurable_pi_apply t)]
     rfl
   have hsk :
-    (M.stageK θ).map (fun z : ℝ × S × A => z.2.1) =
-      Kernel.deterministic (id : S → S) measurable_id := by
+    (M.stageK θ).map (fun z : ℝ × 𝒮 × 𝒜 => z.2.1) =
+      Kernel.deterministic (id : 𝒮 → 𝒮) measurable_id := by
     unfold DensityModel.stageK
     rw [← Kernel.map_comp_right _ (by fun_prop) (by fun_prop)]
     show (Kernel.deterministic id measurable_id ×ₖ
@@ -88,11 +88,11 @@ private lemma map_s_succ
     comp_comap_eq_comp_map]
 
 private lemma integral_Wkd_map_s
-  [MeasurableSpace S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A}
-  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
-  {s : ℕ → (ℕ → ℝ × S × A) → S}
-  {a : ℕ → (ℕ → ℝ × S × A) → A}
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
   (θ : Θ)
   (t k : ℕ) :
@@ -100,7 +100,7 @@ private lemma integral_Wkd_map_s
     ∫ x, M.Wkd θ (t + k) x ∂M.env.init := by
   have := M.env.init_prob
   have := M.env.trans_markov
-  have hπ : ∀ θ', Measurable (fun z : S × A => M.policy.prob θ' z.1 z.2) :=
+  have hπ : ∀ θ', Measurable (fun z : 𝒮 × 𝒜 => M.policy.prob θ' z.1 z.2) :=
     fun θ' => M.policy.measurable_prob θ'
   induction t generalizing k with
   | zero =>
@@ -117,25 +117,25 @@ private lemma integral_Wkd_map_s
       exact Integrable.of_bound hmeas.aestronglyMeasurable _
         (Filter.Eventually.of_forall hbd)
     have hφ : StronglyMeasurable
-      (Function.uncurry fun (x : S) (u : A) =>
+      (Function.uncurry fun (x : 𝒮) (u : 𝒜) =>
         ∫ y, M.Wkd θ k y ∂(M.env.trans (x, u))) :=
       (StronglyMeasurable.integral_kernel_prod_right'
         (κ := M.env.trans)
-        (f := fun z : (S × A) × S => M.Wkd θ k z.2)
+        (f := fun z : (𝒮 × 𝒜) × 𝒮 => M.Wkd θ k z.2)
         (hmeas.stronglyMeasurable.comp_measurable measurable_snd)).measurable.stronglyMeasurable
     have hC : ∀ x u, ‖∫ y, M.Wkd θ k y ∂(M.env.trans (x, u))‖ ≤ |M.env.R| :=
       fun x u => by
         simpa using norm_integral_le_of_norm_le_const
           (μ := M.env.trans (x, u)) (Filter.Eventually.of_forall hbd)
-    have hsa : Measurable fun ω : ℕ → ℝ × S × A => (s t ω, a t ω) :=
+    have hsa : Measurable fun ω : ℕ → ℝ × 𝒮 × 𝒜 => (s t ω, a t ω) :=
       (Random.Measurable.of.All_Eq.snd.fst h₀ t).prodMk
         (Random.Measurable.of.All_Eq.snd.snd h₀ t)
     have hpath :
       ∫ ω, ∫ y, M.Wkd θ k y ∂(M.env.trans (s t ω, a t ω)) ∂(M θ) =
-        ∫ p : S × A, ∫ y, M.Wkd θ k y ∂(M.env.trans p)
+        ∫ p : 𝒮 × 𝒜, ∫ y, M.Wkd θ k y ∂(M.env.trans p)
           ∂((M θ).map (fun ω ↦ (s t ω, a t ω))) :=
       (integral_map (μ := M θ) hsa.aemeasurable
-        (f := fun p : S × A => ∫ y, M.Wkd θ k y ∂(M.env.trans p))
+        (f := fun p : 𝒮 × 𝒜 => ∫ y, M.Wkd θ k y ∂(M.env.trans p))
         hφ.aestronglyMeasurable).symm
     have hdecomp :=
       Integral.eq.Integral_Integral_SMul.of.All_Eq_Joint.All_EqWithDensity
@@ -147,7 +147,7 @@ private lemma integral_Wkd_map_s
       intro x
       simp only [DensityModel.Wkd, smul_eq_mul]
     calc
-      _ = ∫ p : S × A, ∫ y, M.Wkd θ k y ∂(M.env.trans p)
+      _ = ∫ p : 𝒮 × 𝒜, ∫ y, M.Wkd θ k y ∂(M.env.trans p)
         ∂((M θ).map (fun ω ↦ (s t ω, a t ω))) := by
         rw [hlaw, Integral.eq.Integral_Integral.of.Integrable_Bind hInt]
       _ = ∫ ω, ∫ y, M.Wkd θ k y ∂(M.env.trans (s t ω, a t ω)) ∂(M θ) :=
@@ -169,11 +169,11 @@ Continuous-action counterpart of `Random.Integral_R.eq.Sum_MulRealWRc`.
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A}
-  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
-  {s : ℕ → (ℕ → ℝ × S × A) → S}
-  {a : ℕ → (ℕ → ℝ × S × A) → A}
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
 -- given
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
   (θ : Θ)
@@ -185,21 +185,21 @@ private lemma main
   have := M.env.reward_markov
   obtain rfl : r = fun t ω ↦ (ω t).1 :=
     funext₂ fun t ω ↦ (congrArg Prod.fst (congrFun (h₀ t) ω)).symm
-  set r : ℕ → (ℕ → ℝ × S × A) → ℝ := fun t ω ↦ (ω t).1
+  set r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ := fun t ω ↦ (ω t).1
   have hclip := MEq_Clip.of.All_Eq.All_EqWithDensity (M := M) h₀ θ t
   have hR :
     ∫ ω, r t ω ∂(M θ) =
       ∫ ω, clip (ω t).1 (-M.env.R) M.env.R ∂(M θ) :=
     integral_congr_ae hclip
-  have hf : StronglyMeasurable fun z : ℝ × S × A =>
+  have hf : StronglyMeasurable fun z : ℝ × 𝒮 × 𝒜 =>
       clip z.1 (-M.env.R) M.env.R := by
     unfold clip
     exact ((measurable_fst.max measurable_const).min measurable_const).stronglyMeasurable
-  have hCb : ∀ z : ℝ × S × A, ‖clip z.1 (-M.env.R) M.env.R‖ ≤ |M.env.R| :=
+  have hCb : ∀ z : ℝ × 𝒮 × 𝒜, ‖clip z.1 (-M.env.R) M.env.R‖ ≤ |M.env.R| :=
     fun z => NormClip.le.Abs_R _ _
   have hmap := Map.eq.BindStageK.of.All_Eq_Joint.All_EqWithDensity (M := M) h₀ θ t
   have hInt :
-    Integrable (fun z : ℝ × S × A => clip z.1 (-M.env.R) M.env.R)
+    Integrable (fun z : ℝ × 𝒮 × 𝒜 => clip z.1 (-M.env.R) M.env.R)
       (M.stageK θ ∘ₘ (M θ).map (s t)) :=
     Integrable.of_bound hf.aestronglyMeasurable _
       (Filter.Eventually.of_forall hCb)
@@ -208,7 +208,7 @@ private lemma main
       ∫ y, ∫ z, clip z.1 (-M.env.R) M.env.R ∂(M.stageK θ y)
         ∂((M θ).map (s t)) := by
     have e := integral_map (μ := M θ) (measurable_pi_apply t).aemeasurable
-      (f := fun z : ℝ × S × A => clip z.1 (-M.env.R) M.env.R)
+      (f := fun z : ℝ × 𝒮 × 𝒜 => clip z.1 (-M.env.R) M.env.R)
       hf.aestronglyMeasurable
     refine e.symm.trans ?_
     rw [hmap, Integral.eq.Integral_Integral.of.Integrable_Bind hInt]

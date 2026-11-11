@@ -1,7 +1,7 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
-import Def.Data.Holor.Reshape
+import Def.Data.Tensor.Reshape
 import Instance.LinearAlgebra.Matrix.Matmul
-import Def.Data.Holor.Bmm
+import Def.Data.Tensor.Bmm
 open Bool List
 set_option maxHeartbeats 200000
 

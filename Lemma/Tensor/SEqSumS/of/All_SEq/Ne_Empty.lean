@@ -1,7 +1,7 @@
 import Lemma.Finset.All_EqCast.of.All_SEq.Ne_Empty
 import Lemma.Finset.Sum.of.All_Eq
 import Lemma.Tensor.Sum.as.Sum_Cast.of.Eq
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Finset Tensor
 
 

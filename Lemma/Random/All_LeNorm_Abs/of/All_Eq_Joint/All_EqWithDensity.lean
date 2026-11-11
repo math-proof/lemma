@@ -9,11 +9,11 @@ Almost surely every reward of the continuous-action trajectory model is bounded 
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A}
-  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
-  {s : ℕ → (ℕ → ℝ × S × A) → S}
-  {a : ℕ → (ℕ → ℝ × S × A) → A}
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
 -- given
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
   (θ : Θ) :

@@ -1,5 +1,5 @@
-import Def.Data.Holor.Reshape
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Reshape
+import Def.Data.Tensor.Prod
 import Lemma.List.Cons_Append_List.eq.AppendTake_Length
 import Lemma.List.TakeTake.eq.Take.of.Gt
 import Lemma.List.ZipWith_Append.eq.AppendZipWithS

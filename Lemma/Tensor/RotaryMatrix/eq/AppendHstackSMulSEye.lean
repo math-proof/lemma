@@ -1,6 +1,6 @@
-import Def.Data.Holor.BandPart
-import Def.Data.Holor.Eye
-import Theorem.Data.Holor.Functions
+import Def.Data.Tensor.BandPart
+import Def.Data.Tensor.Eye
+import Theorem.Data.Tensor.Functions
 
 
 noncomputable def Tensor.rotaryMatrix (θ : Tensor ℝ [d]) : Tensor ℝ [d + d, d + d] :=

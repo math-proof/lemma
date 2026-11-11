@@ -1,4 +1,4 @@
-import Def.Data.Holor.Reshape
+import Def.Data.Tensor.Reshape
 import Lemma.Nat.Div.eq.HDiv
 import Lemma.Tensor.DataDiv.eq.DivData
 import Lemma.Tensor.DataSum_0.as.SumSplitAtData
@@ -6,7 +6,7 @@ import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Tensor.Sum.as.OfVectorMapToVector.of.GtLength_0
 import Lemma.Tensor.ToVectorDiv.eq.DivToVector_Reshape
 import Lemma.Vector.CastSum.eq.DivCastSumSplitAt_1
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Bool Nat Tensor Vector
 
 

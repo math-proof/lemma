@@ -1,4 +1,4 @@
-import Theorem.Data.Holor.Functions
+import Theorem.Data.Tensor.Functions
 
 
 /--

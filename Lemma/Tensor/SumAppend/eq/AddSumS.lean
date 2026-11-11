@@ -1,4 +1,4 @@
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.List.TakeCons.eq.Cons_Take
 import Lemma.Tensor.DataAdd.eq.AddDataS
 import Lemma.Tensor.DataAppend.as.AppendDataS
@@ -8,7 +8,7 @@ import Lemma.Vector.GetAppend.eq.Get.of.Lt
 import Lemma.Vector.GetAppend.eq.Get_Sub.of.Lt_Add.Ge
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.SumAppend.eq.AddSumS
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Bool List Nat Tensor Vector
 
 

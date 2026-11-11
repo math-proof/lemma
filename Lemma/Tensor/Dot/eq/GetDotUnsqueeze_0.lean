@@ -1,11 +1,12 @@
-import Def.Data.Holor.Unsqueeze
-import Def.Data.Holor.Reshape
-import Def.Data.Holor.Bmm
+import Def.Data.Tensor.Unsqueeze
+import Def.Data.Tensor.Reshape
+import Def.Data.Tensor.Bmm
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 import Lemma.Tensor.Matmul.as.Bmm
 import Lemma.Tensor.ResizeUnsqueeze.as.UnsqueezeResize
 import Lemma.Tensor.Select_0.as.Get.of.GtGet_0.GtLength_0
 import Lemma.Tensor.Unsqueeze.eq.Reshape
+import Instance.Data.Vector.Basic.Dot
 open Bool Tensor
 
 
@@ -16,7 +17,7 @@ private lemma main
   (A : Tensor α [k'])
   (B : Tensor α [k, n]) :
 -- imply
-  A @ B = ((A.unsqueeze 0) @ B).get ⟨0, GtLengthDot.of.LeLengthS.Ne_Nil (by grind) (by grind) _ _ (i := ⟨0, by simp⟩)⟩ := by
+  A ⬝ᵥ B = ((A.unsqueeze 0) ⬝ᵥ B).get ⟨0, GtLengthDot.of.LeLengthS.Ne_Nil (by grind) (by grind) _ _ (i := ⟨0, by simp⟩)⟩ := by
 -- proof
   simp [Dot.dot]
   simp [Tensor.einsum]

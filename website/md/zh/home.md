@@ -36,7 +36,7 @@
 * [Matrix](../?module=Matrix) 矩阵理论，例：
   - [置盐定理](../?module=Matrix.Any_And_EqSMul_VecMul_UpdateCol.of.IsIrreducibleUpdateColAdd_Dot.LtDot_Add_SMul.EqSMul.All_Gt_0)
   - [Cholesky 分解](../?module=Matrix.Eq_Mul_Adjoint.of.All_Eq_Ite__Ite_Sqrt_0.All_Lt0Dot_MulVec.EqAdjoint), [PLU 分解](../?module=Matrix.EqMul_T_1.IsLowerTriangular.IsUpperTriangular.EqMulS)
-  - [kv_cache](../?module=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)
+  - [kv_cache](../?module=Matrix.XEq_Append_MulSoftmaxDivMul_AppendTSGetSlice.of.All_XEq_MulSoftmaxAddDivMul_T)
 * [Tensor](../?module=Tensor) 形式化张量演算，语义上与 **torch.Tensor** 对齐，用于深度学习算法的形式化表述与验证，例：
   - [RoPE](../?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)
 * [Random](../?module=Random) 概率论与随机过程，例：

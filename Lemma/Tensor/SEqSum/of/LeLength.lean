@@ -1,5 +1,5 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.FlattenCast.as.Flatten.of.Eq.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
@@ -7,7 +7,7 @@ import Lemma.Vector.GetSum.eq.SumMapGet
 import Lemma.Vector.MapCast.as.Map.of.Eq
 import Lemma.Vector.SplitAt.as.VectorList.of.LeLength
 import Lemma.Vector.Sum.eq.Head.of.Eq_1
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Bool List Tensor Vector
 
 

@@ -1,5 +1,6 @@
 import Lemma.Tensor.BandPart.of.Ge_Sub_1
 import Lemma.Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmax
+import Instance.Data.Vector.Basic.Dot
 open Nat Tensor
 
 
@@ -13,7 +14,7 @@ private lemma main
 -- imply
   let A : Tensor ℝ* [n, n] := A
   let V : Tensor ℝ* [n, d_z] := V
-  (A + ((1 : Tensor ℝ* [n, n]).band_part n 0 - 1) * ∞).softmax @ V ≈ [i < n] A[i][:i + 1].softmax @ V[:i + 1] := by
+  (A + ((1 : Tensor ℝ* [n, n]).band_part n 0 - 1) * ∞).softmax ⬝ᵥ V ≈ [i < n] A[i][:i + 1].softmax ⬝ᵥ V[:i + 1] := by
 -- proof
   simp only [BandPart.of.Ge_Sub_1 (Nat.sub_le n 1)]
   have h := DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmax (l := n) (u := 1) (n := n) (d_z := d_z) A V

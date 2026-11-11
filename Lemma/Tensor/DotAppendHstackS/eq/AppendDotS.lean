@@ -3,6 +3,7 @@ import Lemma.Tensor.DotAppendS.eq.AddDotS
 import Lemma.Tensor.Dot_Hstack.eq.AppendDotS
 import Lemma.Tensor.EqDot_0'0
 import Lemma.Tensor.EqDot_Eye
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
@@ -13,8 +14,8 @@ private lemma main
   (f : Fin (n + 1) → Tensor α [])
   (M : Tensor α [n, n]) :
 -- imply
-  ([i < n + 1] (f i)) @ (M.hstack (0 : Tensor α [n, 1]) ++ (0 : Tensor α [1, n]).hstack (eye 1)) =
-    id (α := Tensor α [n]) (([i < n] (f (i.castAdd 1))) @ M) ++ [_ < 1] (f (Fin.last n)) := by
+  ([i < n + 1] (f i)) ⬝ᵥ (M.hstack (0 : Tensor α [n, 1]) ++ (0 : Tensor α [1, n]).hstack (eye 1)) =
+    id (α := Tensor α [n]) (([i < n] (f (i.castAdd 1))) ⬝ᵥ M) ++ [_ < 1] (f (Fin.last n)) := by
 -- proof
   let g : ℕ → Tensor α [] := fun i => if h : i < n + 1 then f ⟨i, h⟩ else (0 : Tensor α [])
   have hg1 : ∀ (i : Fin (n + 1)), g (i : ℕ) = f i := by
@@ -70,8 +71,8 @@ private lemma main
   let P := M.hstack (0 : Tensor α [n, 1])
   let Q := (0 : Tensor α [1, n]).hstack (eye 1)
   apply (DotAppendS.eq.AddDotS.vm x y P Q).trans
-  have hx0 : x @ (0 : Tensor α [n, 1]) = (0 : Tensor α [1]) := EqDot_0'0 x
-  have hy0 : y @ (0 : Tensor α [1, n]) = (0 : Tensor α [n]) := EqDot_0'0 y
+  have hx0 : x ⬝ᵥ (0 : Tensor α [n, 1]) = (0 : Tensor α [1]) := EqDot_0'0 x
+  have hy0 : y ⬝ᵥ (0 : Tensor α [1, n]) = (0 : Tensor α [n]) := EqDot_0'0 y
   rw [Dot_Hstack.eq.AppendDotS, hx0, Dot_Hstack.eq.AppendDotS, hy0, EqDot_Eye.vm y]
   apply (AddAppendS.eq.AppendAddS _ _ _ _).trans
   simp only [id_eq, add_zero, zero_add]

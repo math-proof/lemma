@@ -12,23 +12,23 @@ with `∫ g x ≤ Cg` (and `π` is jointly measurable in `(x, u)`), then `θ ↦
 bounded by `(k + 1) * (Cg * |R|)`.
 Continuous-action counterpart of
 `Random.Differentiable.All_LeNormFderivMulAdd_1MulMulCardAbs_R.of.All_LeNormFderiv.All_Differentiable_Prob.All_Measurable_Prob`:
-the finite action sum becomes an integral against the reference measure of `A`, and `|A| * Cp` becomes `Cg`; both the
+the finite action sum becomes an integral against the reference measure of `𝒜`, and `|𝒜| * Cp` becomes `Cg`; both the
 action and the next-state integrals are differentiated under the integral sign.
 -/
 @[path]
 private lemma main
-  [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [FiniteDimensional ℝ Θ] [MeasurableSpace S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A}
-  {g : S → A → ℝ}
+  [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [FiniteDimensional ℝ Θ] [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
+  {g : 𝒮 → 𝒜 → ℝ}
   {Cg : ℝ}
 -- given
-  (h₀ : ∀ θ, Measurable (fun z : S × A => M.policy.prob θ z.1 z.2))
+  (h₀ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.policy.prob θ z.1 z.2))
   (h₁ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₂ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ g x u)
   (h₃ : ∀ x, Integrable (g x) ReferenceMeasure.measure)
   (h₄ : ∀ x, ∫ u, g x u ∂ReferenceMeasure.measure ≤ Cg)
   (k : ℕ)
-  (x : S) :
+  (x : 𝒮) :
 -- imply
   Differentiable ℝ (fun θ => M.Wkd θ k x) ∧
     ∀ θ, ‖fderiv ℝ (fun θ => M.Wkd θ k x) θ‖ ≤ (k + 1) * (Cg * |M.env.R|) := by
@@ -52,7 +52,7 @@ private lemma main
   | succ k ih =>
     have := M.env.trans_markov
     have hT : ∀ θ, Measurable (fun u => ∫ y, M.Wkd θ k y ∂(M.env.trans (x, u))) := fun θ =>
-      ((StronglyMeasurable.integral_kernel_prod_right' (κ := M.env.trans) (f := fun z : (S × A) × S => M.Wkd θ k z.2)
+      ((StronglyMeasurable.integral_kernel_prod_right' (κ := M.env.trans) (f := fun z : (𝒮 × 𝒜) × 𝒮 => M.Wkd θ k z.2)
         ((Measurable_Wkd.of.All_Measurable_Prob (M := M) h₀ θ k).stronglyMeasurable.comp_measurable
           measurable_snd)).measurable).comp measurable_prodMk_left
     have hI : ∀ u θ, HasFDerivAt (fun θ => ∫ y, M.Wkd θ k y ∂(M.env.trans (x, u)))

@@ -1,4 +1,4 @@
-import Def.Data.Holor.Stack.Part2
+import Def.Data.Tensor.Stack.Part2
 import Lemma.Tensor.GetToVector.eq.Get
 open Tensor List
 

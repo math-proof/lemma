@@ -1,5 +1,5 @@
 import Initialize.Tactic.Attr.Basic
-import Class.Algebra.BigOperators.PrefixSum.AllPrefixSums.Part4
+import Class.Algebra.Bullet
 
 
 -- define bullet operator

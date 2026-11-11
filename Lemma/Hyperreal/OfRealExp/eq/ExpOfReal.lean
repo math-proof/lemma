@@ -6,7 +6,7 @@ private lemma main
 -- given
   (x : ℝ) :
 -- imply
-  Hyperreal.ofReal (exp x) = exp (Hyperreal.ofReal x) := by
+  Hyperreal.ofReal (Exp.exp x) = Exp.exp (Hyperreal.ofReal x) := by
 -- proof
   rfl
 

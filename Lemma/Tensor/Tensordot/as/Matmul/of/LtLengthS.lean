@@ -1,5 +1,5 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Def.Data.Holor.Reshape
+import Def.Data.Tensor.Reshape
 import Instance.LinearAlgebra.Matrix.Matmul
 open List Bool
 

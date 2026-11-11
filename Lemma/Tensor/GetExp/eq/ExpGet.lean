@@ -1,4 +1,4 @@
-import Theorem.Data.Holor.Functions
+import Theorem.Data.Tensor.Functions
 import Lemma.Tensor.LengthExp.eq.Length
 import Lemma.Tensor.GetTensorMapData.eq.TensorMapDataGet
 open Exp Tensor

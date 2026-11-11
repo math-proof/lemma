@@ -1,7 +1,7 @@
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetMap.eq.MapGet
-import Def.Data.Holor.BandPart
+import Def.Data.Tensor.BandPart
 open Tensor
 
 

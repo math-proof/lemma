@@ -1,6 +1,7 @@
 import Lemma.Tensor.Eq.is.ToMatrix
 import Lemma.Tensor.EqToMatrix0'0
 import Lemma.Tensor.ToMatrixDot.eq.MulToMatrixS
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
@@ -10,7 +11,7 @@ private lemma main
 -- given
   (A : Tensor α [l, n]) :
 -- imply
-  (0 : Tensor α [m, l]) @ A = (0 : Tensor α [m, n]) := by
+  (0 : Tensor α [m, l]) ⬝ᵥ A = (0 : Tensor α [m, n]) := by
 -- proof
   apply Eq.of.ToMatrix
   apply Eq.trans (ToMatrixDot.eq.MulToMatrixS (0 : Tensor α [m, l]) A)

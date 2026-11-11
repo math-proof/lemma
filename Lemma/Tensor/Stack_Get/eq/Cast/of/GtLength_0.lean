@@ -1,5 +1,5 @@
 import Lemma.Tensor.SEqStack_Get.of.GtLength_0
-import Def.Data.Holor.Stack.Part2
+import Def.Data.Tensor.Stack.Part2
 open Bool List Tensor
 
 

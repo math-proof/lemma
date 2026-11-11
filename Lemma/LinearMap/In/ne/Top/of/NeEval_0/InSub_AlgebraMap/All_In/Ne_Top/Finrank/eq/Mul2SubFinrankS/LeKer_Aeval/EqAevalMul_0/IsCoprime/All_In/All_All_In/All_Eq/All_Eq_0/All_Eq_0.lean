@@ -9,6 +9,7 @@ private lemma orth_of_coprime {K V : Type*} [Field K] [AddCommGroup V] [Module K
   (Pu Pn : K[X]) (hcop : IsCoprime Pu Pn)
   (b : V) (hb : b ∈ LinearMap.ker (aeval T Pn)) (w : V) (hw : w ∈ LinearMap.ker (aeval T Pu)) :
   B b w = 0 := by
+-- proof
   obtain ⟨pa, pb, hab⟩ := hcop
   rw [LinearMap.mem_ker] at hb hw
   have hb' : b = aeval T (pa * Pu) b := by
@@ -37,6 +38,7 @@ private lemma helper_main
   (𝔪 : Ideal R) (h𝔪 : 𝔪 ≠ ⊤) (hker : ∀ r : R, φ r = 0 → r ∈ 𝔪)
   (c : K) (htc : t - algebraMap K R c ∈ 𝔪) (hc : Pn.eval c ≠ 0) :
   V₀ ⊔ (⨆ r ∈ 𝔪, LinearMap.range (φ r)) ≠ ⊤ := by
+-- proof
   intro htop
   let instRV : Module R V := Module.compHom V (φ : R →+* Module.End K V)
   have smul_def : ∀ (r : R) (v : V), r • v = φ r v := fun _ _ => rfl
@@ -297,3 +299,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-10

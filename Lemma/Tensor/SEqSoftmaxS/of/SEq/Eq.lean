@@ -1,5 +1,5 @@
 import Lemma.Tensor.SEqSoftmaxS.of.SEq
-import Theorem.Data.Holor.Functions
+import Theorem.Data.Tensor.Functions
 open Tensor
 
 

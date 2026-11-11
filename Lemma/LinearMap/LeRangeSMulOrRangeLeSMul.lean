@@ -8,6 +8,7 @@ set_option backward.isDefEq.respectTransparency false
 
 
 private lemma mem_smul_top_of_smul_mem {R : Type*} [CommRing R] {Q : Type*} [AddCommGroup Q] [Module R Q] [Module.Flat R Q] (I : Ideal R) [hI : I.IsPrime] (u : R) (hu : u ∉ I) (q : Q) (h : u • q ∈ I • (⊤ : Submodule R Q)) : q ∈ I • (⊤ : Submodule R Q) := by
+-- proof
   let _ : IsDomain (R ⧸ I) := Ideal.Quotient.isDomain I
   have hu0 : Ideal.Quotient.mk I u ≠ 0 := by
     rwa [Ne, Ideal.Quotient.eq_zero_iff_mem]
@@ -21,6 +22,7 @@ private lemma mem_smul_top_of_smul_mem {R : Type*} [CommRing R] {Q : Type*} [Add
   have h3 : (1 : R ⧸ I) ⊗ₜ[R] q = 0 := hreg h2
   rw [← Submodule.Quotient.mk_eq_zero, ← e.symm.map_eq_zero_iff, TensorProduct.quotTensorEquivQuotSMul_symm_mk, h3]
 private lemma exists_smul_mem_of_mk_mem {R : Type*} [CommRing R] (S : Submonoid R) {Q : Type*} [AddCommGroup Q] [Module R Q] (N : Submodule R Q) (q : Q) (h : LocalizedModule.mk q (1 : S) ∈ N.localized' (Localization S) S (LocalizedModule.mkLinearMap S Q)) : ∃ u : S, (u : R) • q ∈ N := by
+-- proof
   obtain ⟨m, hm, s, hms⟩ := (Submodule.mem_localized' (Localization S) S (LocalizedModule.mkLinearMap S Q) N _).1 h
   rw [IsLocalizedModule.mk'_eq_iff, LocalizedModule.mkLinearMap_apply, Submonoid.smul_def, LocalizedModule.smul'_mk, ← LocalizedModule.mkLinearMap_apply] at hms
   obtain ⟨c, hc⟩ := (IsLocalizedModule.eq_iff_exists S (LocalizedModule.mkLinearMap S Q)).1 hms
@@ -29,6 +31,7 @@ private lemma exists_smul_mem_of_mk_mem {R : Type*} [CommRing R] (S : Submonoid 
   rw [Submonoid.coe_mul, mul_smul, ← hc']
   apply N.smul_mem _ hm
 private lemma bijective_map {R : Type*} [CommRing R] {P Q : Type*} [AddCommGroup P] [Module R P] [AddCommGroup Q] [Module R Q] [Module.Invertible R P] [Module.Invertible R Q] (f : P →ₗ[R] Q) (x : PrimeSpectrum R) (hx : ¬ LinearMap.range f ≤ x.asIdeal • (⊤ : Submodule R Q)) : Function.Bijective (LocalizedModule.map x.asIdeal.primeCompl f) := by
+-- proof
   classical
   set S := x.asIdeal.primeCompl with hS
   let Rp := Localization S
@@ -108,3 +111,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-10

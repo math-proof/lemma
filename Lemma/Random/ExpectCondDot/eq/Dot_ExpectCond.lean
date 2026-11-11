@@ -2,7 +2,6 @@ import Mathlib.MeasureTheory.Integral.Lebesgue.Add
 import Mathlib.MeasureTheory.Measure.WithDensity
 import Theorem.Probability.CondExpectation
 import Instance.Probability.SymbolicMultivariateProbability
-import Def.Data.Holor.Item
 import Lemma.Tensor.GetData.eq.GetDataGet.of.Lt
 import Lemma.Tensor.GetDot.eq.Sum_MulGetS
 import Lemma.Tensor.ItemMul.eq.MulItemS
@@ -62,14 +61,14 @@ private lemma item_finsetSum
     v.get ⟨0, Nat.zero_lt_one⟩) hdata).trans hget
 
 
-/-- (A @ v)[i].item expands as the ENNReal linear form in 
+/-- (A ⬝ᵥ v)[i].item expands as the ENNReal linear form in 
 . -/
 private lemma matvec_get_item
   {m k : ℕ}
   (A : Tensor ENNReal [m, k])
   (v : Tensor ENNReal [k])
   (i : Fin m) :
-  ((A @ v)[i]'(by grind [matmul_shape])).item =
+  ((A ⬝ᵥ v)[i]'(by grind [matmul_shape])).item =
     ∑ p : Fin k, (A[i][p]).item * (v[p]).item := by
   have hrow := GetDot.eq.Sum_MulGetS.mv.fin (α := ENNReal) A v i
   calc
@@ -95,7 +94,7 @@ private lemma matvec_get_item
 
 
 /--
-Pull a constant Tensor matrix–vector product (@ / Dot.dot) through
+Pull a constant Tensor matrix–vector product (⬝ᵥ / Dot.dot) through
 conditional expectation.
 
 Python: Random.Expect_CondDot.eq.Dot_Expect_Cond.
@@ -118,29 +117,29 @@ private lemma main
   (hf : ∀ p : Fin k, Measurable (fun x : α ↦ (f x)[p].item))
   («\sf{s}» : γ) :
 -- imply
-  𝔼[a: π](A @ f a | s = «\sf{s}») =
-    A @ 𝔼[a: π](f a | s = «\sf{s}») := by
+  𝔼[a: π](A ⬝ᵥ f a | s = «\sf{s}») =
+    A ⬝ᵥ 𝔼[a: π](f a | s = «\sf{s}») := by
 -- proof
   apply Eq.of.All_EqGetS.fin
   intro i
   apply Eq.of.Item
   simp only [Expectation.asRV_function, Expectation.condEvent]
   let ν := (ProbabilityTheory.cond π (s ⁻¹' {«\sf{s}»})).map a
-  change (expectation ν fun x ↦ A @ f x)[i].item =
-    (A @ expectation ν f)[i].item
-  have hL := expect_get_item ν (fun x ↦ A @ f x) i
+  change (expectation ν fun x ↦ A ⬝ᵥ f x)[i].item =
+    (A ⬝ᵥ expectation ν f)[i].item
+  have hL := expect_get_item ν (fun x ↦ A ⬝ᵥ f x) i
   refine Eq.trans hL ?_
   have hlin :
-      expectation ν (fun x ↦ (A @ f x)[i].item) =
+      expectation ν (fun x ↦ (A ⬝ᵥ f x)[i].item) =
         ∑ p : Fin k, (A[i][p]).item *
           expectation ν (fun x ↦ (f x)[p].item) := by
     have h1 :
-        expectation ν (fun x ↦ (A @ f x)[i].item) =
+        expectation ν (fun x ↦ (A ⬝ᵥ f x)[i].item) =
           expectation ν
             (fun x ↦ ∑ p : Fin k, (A[i][p]).item * (f x)[p].item) := by
       congr 1
       funext x
-      change ((A @ f x)[i]'(by grind [matmul_shape])).item =
+      change ((A ⬝ᵥ f x)[i]'(by grind [matmul_shape])).item =
         ∑ p : Fin k, (A[i][p]).item * (f x)[p].item
       exact matvec_get_item A (f x) i
     refine h1.trans ?_
@@ -152,10 +151,10 @@ private lemma main
     exact MeasureTheory.lintegral_const_mul ((A[i][p]).item) (hf p)
   refine hlin.trans ?_
   have hR :
-      (A @ expectation ν f)[i].item =
+      (A ⬝ᵥ expectation ν f)[i].item =
         ∑ p : Fin k, (A[i][p]).item *
           (expectation ν f)[p].item := by
-    change ((A @ expectation ν f)[i]'(by grind [matmul_shape])).item =
+    change ((A ⬝ᵥ expectation ν f)[i]'(by grind [matmul_shape])).item =
       ∑ p : Fin k, (A[i][p]).item * (expectation ν f)[p].item
     exact matvec_get_item A (expectation ν f) i
   refine Eq.trans ?_ hR.symm
@@ -166,4 +165,4 @@ private lemma main
 
 
 -- created on 2026-09-23
--- updated on 2026-11-02
+-- updated on 2026-11-11

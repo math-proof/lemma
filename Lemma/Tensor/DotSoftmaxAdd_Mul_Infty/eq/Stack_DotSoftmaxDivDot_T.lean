@@ -1,12 +1,13 @@
 import Lemma.Tensor.SEqSoftmaxS.of.SEq.Eq
-import Def.Data.Holor.Bmm
-import Notation.Data.Holor.Permute
+import Def.Data.Tensor.Bmm
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmax
 import Lemma.Tensor.GetDot_TGetSlice.as.Dot_Get
 import Lemma.Tensor.GetSliceGetDiv.eq.DivGetSliceGet
 import Lemma.Tensor.GetTCast_T.eq.Get
 import Lemma.Tensor.MapBmm.eq.BmmMapS.of.All_Eq_Add.All_Eq_Mul
 import Lemma.Tensor.MapDiv.eq.DivMap.of.All_Eq_Div
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 set_option maxHeartbeats 1000000
 
@@ -22,17 +23,17 @@ private lemma gpt
   let Q : Tensor ℝ* [n, d_z] := Q
   let K : Tensor ℝ* [n, d_z] := K
   let V : Tensor ℝ* [n, d_z] := V
-  let QK : Tensor ℝ* [n, n] := Q @ Kᵀ
-  (QK / √(d_z : ℝ*) + ((1 : Tensor ℝ* [n, n]).band_part (l - 1) 0 - 1) * ∞).softmax @ V ≈ [i < n] (Q[i] @ K[(i + 1 - l : ℕ):(i + 1 : ℕ)]ᵀ / √(d_z : ℝ*)).softmax @ V[(i + 1 - l : ℕ):(i + 1 : ℕ)] := by
+  let QK : Tensor ℝ* [n, n] := Q ⬝ᵥ Kᵀ
+  (QK / √(d_z : ℝ*) + ((1 : Tensor ℝ* [n, n]).band_part (l - 1) 0 - 1) * ∞).softmax ⬝ᵥ V ≈ [i < n] (Q[i] ⬝ᵥ K[(i + 1 - l : ℕ):(i + 1 : ℕ)]ᵀ / √(d_z : ℝ*)).softmax ⬝ᵥ V[(i + 1 - l : ℕ):(i + 1 : ℕ)] := by
 -- proof
   extract_lets Q' K' V' QK'
   let KT := cast (congrArg (Tensor ℝ) (List.EqSwap_0'1 n d_z)) Kᵀ
-  let A : Tensor ℝ [n, n] := (Q @ KT) / √(d_z : ℝ)
+  let A : Tensor ℝ [n, n] := (Q ⬝ᵥ KT) / √(d_z : ℝ)
   have hKT : (KT : Tensor ℝ* [d_z, n]) = cast (congrArg (Tensor ℝ*) (List.EqSwap_0'1 n d_z)) (K : Tensor ℝ* [n, d_z])ᵀ := by
     simp only [KT]
     rw [MapCast.eq.Cast_Map.of.Eq (List.EqSwap_0'1 n d_z)]
     rw [TMap.eq.MapT]
-  have hQK : QK' = (Q : Tensor ℝ* [n, d_z]) @ (KT : Tensor ℝ* [d_z, n]) := by
+  have hQK : QK' = (Q : Tensor ℝ* [n, d_z]) ⬝ᵥ (KT : Tensor ℝ* [d_z, n]) := by
     apply Eq.of.EqDataS
     simp only [QK', Q', K', KT, hKT]
     rfl
@@ -59,14 +60,14 @@ private lemma gpt
     apply Bool.SEq.of.Eq
     rw [← hdiv, hQK]
     simp [GetElem.getElem]
-    erw [GetSliceGetDiv.eq.DivGetSliceGet.fin ((Q : Tensor ℝ* [n, d_z]) @ (KT : Tensor ℝ* [d_z, n])) (√(d_z : ℝ*)) i (i + 1 - l) (i + 1)]
+    erw [GetSliceGetDiv.eq.DivGetSliceGet.fin ((Q : Tensor ℝ* [n, d_z]) ⬝ᵥ (KT : Tensor ℝ* [d_z, n])) (√(d_z : ℝ*)) i (i + 1 - l) (i + 1)]
     apply congrArg (α := Tensor ℝ* ((⟨(i + 1 - l : ℕ), (i + 1 : ℕ), 1⟩ : Slice).length n :: [])) (fun t => t / √(d_z : ℝ*))
     apply Eq.of.All_EqGetS.fin
     intro j
     have h_j := j.isLt
     simp only [List.LengthSlice.eq.SubMin] at h_j
-    apply (GetGetSlice.eq.Get_Add.of.GtSubMin.fin h_j (X := ((Q : Tensor ℝ* [n, d_z]) @ (KT : Tensor ℝ* [d_z, n]))[i])).trans
-    apply Eq.trans (b := (((Q : Tensor ℝ* [n, d_z]).get i) @ (K : Tensor ℝ* [n, d_z]).get ⟨i + 1 - l + j, by grind⟩))
+    apply (GetGetSlice.eq.Get_Add.of.GtSubMin.fin h_j (X := ((Q : Tensor ℝ* [n, d_z]) ⬝ᵥ (KT : Tensor ℝ* [d_z, n]))[i])).trans
+    apply Eq.trans (b := (((Q : Tensor ℝ* [n, d_z]).get i) ⬝ᵥ (K : Tensor ℝ* [n, d_z]).get ⟨i + 1 - l + j, by grind⟩))
     ·
       simp [GetElem.getElem]
       erw [GetDot.eq.DotGetS.fin]

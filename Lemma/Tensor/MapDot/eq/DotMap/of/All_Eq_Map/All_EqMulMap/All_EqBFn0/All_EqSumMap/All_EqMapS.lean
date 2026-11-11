@@ -1,14 +1,15 @@
 import Lemma.Tensor.Dot.eq.GetSumMul
-import Def.Data.Holor.Unsqueeze
-import Def.Data.Holor.Repeat
-import Notation.Data.Holor.Permute
+import Def.Data.Tensor.Unsqueeze
+import Def.Data.Tensor.Repeat
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.Dot.eq.SelectDot_Unsqueeze_1
 import Lemma.Tensor.DotBFn.eq.BFnDot.of.GeLength_2.All_EqBFn0.All_EqSumMap.All_EqMapS
 import Lemma.Tensor.DotBFn.eq.BFnDot.of.GeLength_2.GeLength_2.All_EqBFn0.All_EqSumMap.All_EqMapS
 import Lemma.Tensor.MapDot.eq.DotMap.of.All_EqBFn0.All_EqSumMap.All_EqMapS
 import Lemma.Tensor.MapDot.eq.DotMap.of.All_EqMulMap
 import Lemma.Tensor.Einsum.eq.MulGetData_0
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
+import Instance.Data.Vector.Basic.Dot
 open Tensor Vector
 
 
@@ -27,7 +28,7 @@ private lemma main
   (B : Tensor α [])
   (C : Tensor α s') :
 -- imply
-  (A @ C).map (f · B.data[0]) = (A.map (f · B.data[0])) @ C := by
+  (A ⬝ᵥ C).map (f · B.data[0]) = (A.map (f · B.data[0])) ⬝ᵥ C := by
 -- proof
   apply Eq.symm
   match s, s' with
@@ -73,9 +74,9 @@ private lemma main
       rw [hu, RepeatBFn.eq.BFnRepeat f A0 B ⟨1, by grind⟩ d]
       apply Cast_MapBFn.eq.MapCast.of.Eq
       simp
-    have hL : (F A) @ C = ((A_f * C').sum 2).get ⟨0, by grind⟩ := by
+    have hL : (F A) ⬝ᵥ C = ((A_f * C').sum 2).get ⟨0, by grind⟩ := by
       simpa [F, A_f, A_f0, Af0, A_f_r, C', C0, CT, C_r, K] using Dot.eq.GetSumMul.resize (F A) C
-    have hR : A @ C = ((A' * C').sum 2).get ⟨0, by grind⟩ := by
+    have hR : A ⬝ᵥ C = ((A' * C').sum 2).get ⟨0, by grind⟩ := by
       simpa [A', A0, Au0, A_r, C', C0, CT, C_r, K] using Dot.eq.GetSumMul.resize A C
     rw [hL, hR, hA, h_mul, h_sum]
     apply GetMap.eq.MapGet (i := ⟨0, by simp [Tensor.length]⟩)

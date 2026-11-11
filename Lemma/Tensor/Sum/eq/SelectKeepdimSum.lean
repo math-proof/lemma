@@ -1,7 +1,7 @@
-import Theorem.Data.Holor.Functions
-import Def.Data.Holor.Sum
-import Def.Data.Holor.Unsqueeze
-import Def.Data.Holor.Repeat
+import Theorem.Data.Tensor.Functions
+import Def.Data.Tensor.Sum
+import Def.Data.Tensor.Unsqueeze
+import Def.Data.Tensor.Repeat
 import Lemma.Nat.EqMod_1'0
 import Lemma.Tensor.SelectRepeat.as.Select_Mod_Get.of.Lt_MulGet
 import Lemma.Tensor.SEqSelectUnsqueeze.of.GeLength

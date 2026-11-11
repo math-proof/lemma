@@ -11,7 +11,8 @@ makes the next-state integrals `∫ y, Wk θ k y ∂T(· | x, u)` meaningful, so
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [MeasurableSpace A] [Fintype A]
+  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
+  [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
   {M : Model Θ S A}
   {γ : ℝ}
 -- given
@@ -38,7 +39,7 @@ private lemma main
     have h := hasSum_integral_of_summable_integral_norm (fun k => Integrable.of_bound
       ((Measurable_Wk.of.All_Measurable_Prob (M := M) h₀ θ k).const_mul _).aestronglyMeasurable
       (γ ^ k * |M.env.R|) (Filter.Eventually.of_forall (hb k))) hs
-    simpa [integral_const_mul, Model.Vk] using h
+    simpa [integral_const_mul, Model.Vk, Model.V0] using h
   have hS : HasSum (fun k => γ ^ (k + 1) * M.Wk θ (k + 1) x)
       (γ * ∑ u, M.policy.prob θ x u * ∫ y, M.Vk θ γ y ∂(M.env.trans (x, u))) := by
     have h := (hasSum_sum (s := Finset.univ) fun u _ => ((hI u).mul_left (M.policy.prob θ x u))).mul_left γ
@@ -47,13 +48,14 @@ private lemma main
     rw [Finset.mul_sum, Finset.mul_sum, pow_succ]
     refine Finset.sum_congr rfl fun u _ => ?_
     ring
-  unfold Model.Vk
+  unfold Model.Vk Model.V0
   rw [(Summable_MulPowWk.of.In_Ico (M := M) h₁ θ x).tsum_eq_zero_add, hS.tsum_eq]
   show (γ ^ 0 * ∑ u, M.policy.prob θ x u * M.rk x u) + _ = _
-  unfold Model.Qk Model.Vk
+  unfold Model.Qk Model.Vk Model.V0
   simp only [pow_zero, one_mul, Finset.mul_sum, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun u _ => ?_
   ring
 
 
 -- created on 2026-10-07
+-- updated on 2026-11-08

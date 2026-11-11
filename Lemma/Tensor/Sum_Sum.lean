@@ -3,7 +3,7 @@ import Lemma.Tensor.EqSum0_0
 import Lemma.Tensor.SEqAddS.of.SEq.SEq
 import Lemma.Tensor.SumStack.of.All_Eq
 import Lemma.Tensor.Sum_Add.eq.AddSumS
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Bool Tensor
 set_option maxHeartbeats 500000
 

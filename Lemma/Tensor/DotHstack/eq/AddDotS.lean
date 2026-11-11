@@ -2,6 +2,7 @@ import Lemma.Tensor.Dot.eq.Stack_Sum_MulGetS
 import Lemma.Tensor.GetAdd.eq.AddGetS
 import Lemma.Tensor.GetHstack.eq.Get.of.Lt
 import Lemma.Tensor.GetHstack.eq.Get_Sub.of.GtAdd.Ge
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 set_option maxHeartbeats 200000
 
@@ -18,9 +19,9 @@ private lemma mv
   (x : Tensor α [n])
   (y : Tensor α [m]) :
 -- imply
-  (A.hstack B) @ (x ++ y) = id (α := Tensor α [d]) (A @ x) + id (α := Tensor α [d]) (B @ y) := by
+  (A.hstack B) ⬝ᵥ (x ++ y) = id (α := Tensor α [d]) (A ⬝ᵥ x) + id (α := Tensor α [d]) (B ⬝ᵥ y) := by
 -- proof
-  change id (α := Tensor α [d]) ((A.hstack B) @ (x ++ y)) = id (α := Tensor α [d]) (A @ x) + id (α := Tensor α [d]) (B @ y)
+  change id (α := Tensor α [d]) ((A.hstack B) ⬝ᵥ (x ++ y)) = id (α := Tensor α [d]) (A ⬝ᵥ x) + id (α := Tensor α [d]) (B ⬝ᵥ y)
   simp only [id]
   have hAB := Dot.eq.Stack_Sum_MulGetS.mv (A.hstack B) (x ++ y)
   have hA := Dot.eq.Stack_Sum_MulGetS.mv A x
@@ -180,9 +181,9 @@ private lemma main
   (X : Tensor α [n, r])
   (Y : Tensor α [m, r]) :
 -- imply
-  (A.hstack B) @ (X ++ Y) = id (α := Tensor α [d, r]) (A @ X) + id (α := Tensor α [d, r]) (B @ Y) := by
+  (A.hstack B) ⬝ᵥ (X ++ Y) = id (α := Tensor α [d, r]) (A ⬝ᵥ X) + id (α := Tensor α [d, r]) (B ⬝ᵥ Y) := by
 -- proof
-  change id (α := Tensor α [d, r]) ((A.hstack B) @ (X ++ Y)) = id (α := Tensor α [d, r]) (A @ X) + id (α := Tensor α [d, r]) (B @ Y)
+  change id (α := Tensor α [d, r]) ((A.hstack B) ⬝ᵥ (X ++ Y)) = id (α := Tensor α [d, r]) (A ⬝ᵥ X) + id (α := Tensor α [d, r]) (B ⬝ᵥ Y)
   simp only [id]
   have hAB := Dot.eq.Stack_Sum_MulGetS (A.hstack B) (X ++ Y)
   have hA := Dot.eq.Stack_Sum_MulGetS A X

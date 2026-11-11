@@ -1,6 +1,6 @@
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
-import Def.Data.Holor.Repeat
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Repeat
+import Def.Data.Tensor.Prod
 import Lemma.List.DropEraseIdx.eq.Drop.of.Le
 import Lemma.List.EraseIdxSet.eq.SetEraseIdx.of.Gt
 import Lemma.List.GetEraseIdx.eq.Get_Add_1.of.Le.LtAdd_1Length

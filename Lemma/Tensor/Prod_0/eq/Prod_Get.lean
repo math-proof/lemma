@@ -1,5 +1,5 @@
 import Lemma.Fin.HEq.of.All_Eq.Eq
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.Tensor.DataProd.eq.Prod_Data
 import Lemma.Tensor.DataProd_0.eq.ProdSplitAtData
 import Lemma.Tensor.Eq.is.EqDataS

@@ -1,3 +1,4 @@
+import Instance.Data.Vector.Basic.Dot
 import Lemma.Vector.Dot.eq.SumMul
 open Nat Vector
 
@@ -8,7 +9,7 @@ private lemma Comm
 -- given
   (a b : List.Vector α n) :
 -- imply
-  a @ b = b @ a := by
+  a ⬝ᵥ b = b ⬝ᵥ a := by
 -- proof
   rw [Dot.eq.SumMul, Dot.eq.SumMul, Mul.comm]
 

@@ -59,7 +59,8 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
     }
 
     get stack_priority() {
-        if (this.parent instanceof L.LeanBracket) return 17;
+        if (this.parent instanceof L.LeanBracket || (L.LeanVecNotation && this.parent instanceof L.LeanVecNotation))
+            return 17;
         if (
             this.parent instanceof LeanArgsCommaSeparated &&
             this.parent.parent instanceof L.LeanGetElem
@@ -610,6 +611,8 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             }
             if (n instanceof L.LeanBitOr) {
                 markFactor(n.lhs);
+                // `s = «\sf{s}»` elides to `s`, and that conditioner is the random
+                // variable (red), not a random argument.
                 markFactor(n.rhs);
                 return;
             }

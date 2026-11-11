@@ -13,7 +13,7 @@ the continuous-state/discrete-action
 `Random.GradVk.eq.Add_SMul_Integral_SMul.of.All_EqWithDensity.All_Ge_0.All_Measurable.All_Measurable_Prob.GtInftySup.All_Differentiable_Prob.In_Ico`
 and the continuous/continuous
 `Random.GradVkd.eq.AddIntegral_SMul_Integral_SMul.of.All_EqWithDensity.All_Ge_0.All_Measurable.All_Measurable_Prob.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.In_Ico`
-versions. It is the corollary of the latter for the counting measure on the finite state space `S` (as in the
+versions. It is the corollary of the latter for the counting measure on the finite state space `𝒮` (as in the
 discrete version, whose state sums are integrals against `Measure.count`): the next-state integral becomes the finite sum
 `∑ s.bvar[t+1]`, and the transition density becomes the transition probability mass function `p x u y = T({y} | x, u)`
 (h₆), so `P1kd θ p x y = ∫ u, π_θ(u | x) * T({y} | x, u) du = ℙ(s[t+1] = y | s[t] = x)`.
@@ -27,15 +27,15 @@ the actions uniformly in the state. `V = V0`, `Q = Q0` are the closed-form value
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
-  [ReferenceMeasure A]
-  {M : DensityModel Θ S A}
+  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Fintype 𝒮]
+  [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
   {θ : Θ}
   {γ : ℝ}
   {t : ℕ}
-  {«\sf{s}» : ℕ → S}
-  {g : S → A → ℝ}
-  {p : S → A → S → ℝ}
+  {«\sf{s}» : ℕ → 𝒮}
+  {g : 𝒮 → 𝒜 → ℝ}
+  {p : 𝒮 → 𝒜 → 𝒮 → ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
@@ -49,10 +49,10 @@ private lemma main
     ∫ u, M.Q0 θ γ («\sf{s}» t) u • ∇[θ] M.policy.prob θ («\sf{s}» t) u ∂ReferenceMeasure.measure +
       γ • (∑ «\sf{s}» (t + 1), M.P1kd θ p («\sf{s}» t) («\sf{s}» (t + 1)) • ∇[θ] M.V0 θ γ («\sf{s}» (t + 1))) := by
 -- proof
-  let : ReferenceMeasure S := ReferenceMeasure.of Measure.count
+  let : ReferenceMeasure 𝒮 := ReferenceMeasure.of Measure.count
   have := M.env.trans_markov
   have hT : ∀ x u, M.env.trans (x, u) =
-      (ReferenceMeasure.measure : Measure S).withDensity (fun y => ENNReal.ofReal (p x u y)) := by
+      (ReferenceMeasure.measure : Measure 𝒮).withDensity (fun y => ENNReal.ofReal (p x u y)) := by
     intro x u
     show M.env.trans (x, u) = Measure.count.withDensity fun y => ENNReal.ofReal (p x u y)
     rw [Measure.ext_iff_singleton]
@@ -73,4 +73,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-02
+-- updated on 2026-11-11

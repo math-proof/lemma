@@ -1,5 +1,5 @@
-import Def.Data.Holor.Reshape
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Reshape
+import Def.Data.Tensor.Prod
 import Lemma.Tensor.SEqReshapeS.of.SEq.Eq.Dvd
 open Tensor Bool
 

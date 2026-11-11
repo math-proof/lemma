@@ -1,5 +1,5 @@
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.Vector.Eq.of.Val
 import Lemma.Tensor.MulShape.assoc
 import Lemma.Vector.GetVal.eq.Get.of.Lt.Lt

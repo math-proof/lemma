@@ -1,4 +1,4 @@
-import Def.Data.Holor.Reshape
+import Def.Data.Tensor.Reshape
 import Lemma.Tensor.Dot.eq.TensorDotDataS
 import Lemma.Tensor.Einsum.as.SelectBmm.of.Eq_Get_SubLength.GeLength_2
 import Lemma.Tensor.Einsum.as.SelectBmm.of.GeLength_2
@@ -10,7 +10,8 @@ import Lemma.Tensor.MapDot.eq.DotMapS.of.All_Eq_Mul
 import Lemma.Tensor.MapMul.eq.MulMap.of.All_Eq_Mul
 import Lemma.Tensor.MapTensordot.eq.TensordotMapS.of.All_Eq_Add.All_Eq_Mul
 import Lemma.Tensor.SelectMap.eq.MapSelect
-import Def.Data.Holor.Bmm
+import Def.Data.Tensor.Bmm
+import Instance.Data.Vector.Basic.Dot
 open Bool List Tensor Vector
 set_option maxHeartbeats 1000000
 
@@ -27,7 +28,7 @@ private lemma une
   (A : Tensor α [n])
   (B : Tensor α [n']) :
 -- imply
-  (A @ B).map f = (A.map f) @ (B.map f) := by
+  (A ⬝ᵥ B).map f = (A.map f) ⬝ᵥ (B.map f) := by
 -- proof
   have h0 : f 0 = 0 := by
     have h := h_add 0 0
@@ -37,11 +38,11 @@ private lemma une
   let B' : Tensor α [K] := B.resize ⟨0, by grind⟩ K
   let Af' : Tensor β [K] := (A.map f).resize ⟨0, by grind⟩ K
   let Bf' : Tensor β [K] := (B.map f).resize ⟨0, by grind⟩ K
-  have hA : A @ B = A' @ B' := by
+  have hA : A ⬝ᵥ B = A' ⬝ᵥ B' := by
     simp only [Dot.dot]
     rw [Einsum.eq.SumMulDataS]
     simpa [A', B', K] using Einsum.eq.SumMulDataS.resize A B
-  have hAf : (A.map f) @ (B.map f) = Af' @ Bf' := by
+  have hAf : (A.map f) ⬝ᵥ (B.map f) = Af' ⬝ᵥ Bf' := by
     simp only [Dot.dot]
     rw [Einsum.eq.SumMulDataS]
     simpa [Af', Bf', K] using Einsum.eq.SumMulDataS.resize (A.map f) (B.map f)
@@ -52,7 +53,7 @@ private lemma une
     simp only [B', Bf']
     exact (Tensor.ResizeMap.eq.MapResize h0 B ⟨0, by grind⟩ K).symm
   rw [hA, hAf, ← hAmap, ← hBmap]
-  have h_data : f (A'.data @ B'.data) = (A'.data.map f) @ (B'.data.map f) := by
+  have h_data : f (A'.data ⬝ᵥ B'.data) = (A'.data.map f) ⬝ᵥ (B'.data.map f) := by
     rw [Vector.Dot.eq.SumMul, Vector.Dot.eq.SumMul]
     rw [Vector.MapSum.eq.SumMap.of.All_EqUFnAdd h_add]
     rw [Vector.MapMul.eq.MulMapS.of.All_Eq_Mul h_mul]
@@ -78,7 +79,7 @@ private lemma main
   (A : Tensor α s)
   (B : Tensor α s') :
 -- imply
-  (A @ B).map f = (A.map f) @ (B.map f) := by
+  (A ⬝ᵥ B).map f = (A.map f) ⬝ᵥ (B.map f) := by
 -- proof
   match s, s' with
   | [], _ =>

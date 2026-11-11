@@ -1,3 +1,4 @@
+import Instance.Data.Vector.Basic.Dot
 import Lemma.Vector.Dot.eq.SumMul
 import Lemma.Vector.MulAppendS.eq.AppendMulS
 import Lemma.Vector.SumAppend.eq.AddSumS
@@ -11,7 +12,7 @@ private lemma main
   (A C : List.Vector α n)
   (B D : List.Vector α m) :
 -- imply
-  (A ++ B) @ (C ++ D) = A @ C + B @ D := by
+  (A ++ B) ⬝ᵥ (C ++ D) = A ⬝ᵥ C + B ⬝ᵥ D := by
 -- proof
   rw [Dot.eq.SumMul]
   rw [Dot.eq.SumMul A C]

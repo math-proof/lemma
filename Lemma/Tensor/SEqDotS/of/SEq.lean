@@ -1,5 +1,6 @@
 import Lemma.Bool.SEq.is.Eq
 import Instance.LinearAlgebra.Matrix.Matmul
+import Instance.Data.Vector.Basic.Dot
 open Bool
 
 
@@ -12,7 +13,7 @@ private lemma main
   (h : A ≃ B)
   (X : Tensor α s_X) :
 -- imply
-  A @ X ≃ B @ X := by
+  A ⬝ᵥ X ≃ B ⬝ᵥ X := by
 -- proof
   have h_s := h.left
   subst h_s
@@ -30,7 +31,7 @@ private lemma left
   (h : A ≃ B)
   (X : Tensor α s_X) :
 -- imply
-  X @ A ≃ X @ B := by
+  X ⬝ᵥ A ≃ X ⬝ᵥ B := by
 -- proof
   have h_s := h.left
   subst h_s

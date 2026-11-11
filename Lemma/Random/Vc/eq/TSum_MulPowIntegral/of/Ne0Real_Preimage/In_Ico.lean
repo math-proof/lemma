@@ -1,4 +1,5 @@
 import Def.Dynamics.PolicyTrajectory.Continuous
+import Lemma.Random.MeasurableRk
 import Def.Dynamics.PolicyTrajectory.Gradient
 import Lemma.Random.NormClip.le.AbsR
 import Lemma.Random.StronglyMeasurableClip

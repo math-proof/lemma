@@ -1,6 +1,7 @@
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.GetDot.eq.DotGet
 import Lemma.Tensor.DotT.eq.Dot
+import Instance.Data.Vector.Basic.Dot
 open Bool Tensor
 
 
@@ -12,7 +13,7 @@ private lemma main
   (X : Tensor α [n, m])
   (j : Fin m) :
 -- imply
-  (A @ X)[j]'(by simp [matmul_shape]; grind) = A @ Xᵀ[j] := by
+  (A ⬝ᵥ X)[j]'(by simp [matmul_shape]; grind) = A ⬝ᵥ Xᵀ[j] := by
 -- proof
   simp [GetElem.getElem]
   have h_dot := GetDot.eq.DotGet.une.fin Xᵀ A j

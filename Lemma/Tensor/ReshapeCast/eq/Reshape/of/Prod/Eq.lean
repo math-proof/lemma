@@ -1,6 +1,6 @@
-import Def.Data.Holor.Defs.Part4
-import Def.Data.Holor.Prod
-import Def.Data.Holor.Reshape
+import Def.Data.Tensor.Defs.Part4
+import Def.Data.Tensor.Prod
+import Def.Data.Tensor.Reshape
 
 
 @[path, comm]

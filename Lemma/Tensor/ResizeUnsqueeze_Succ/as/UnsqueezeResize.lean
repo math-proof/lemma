@@ -1,4 +1,4 @@
-import Def.Data.Holor.Unsqueeze
+import Def.Data.Tensor.Unsqueeze
 import Lemma.List.SetInsertIdx_Succ.eq.InsertIdxSet.of.GtLength
 import Lemma.Tensor.GetResize.as.ResizeGet.of.GtGet_0.GtVal_0
 import Lemma.Tensor.ResizeUnsqueeze.as.UnsqueezeResize_0.of.Gt_0

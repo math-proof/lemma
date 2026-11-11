@@ -1,5 +1,5 @@
 import Lemma.Fin.HEq.of.All_Eq.Eq
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 import Lemma.Tensor.DataSum.eq.Sum_Data
 import Lemma.Tensor.DataSum_0.eq.SumSplitAtData
 import Lemma.Tensor.Eq.is.EqDataS

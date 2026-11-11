@@ -1,8 +1,9 @@
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.Dot
 import Lemma.Tensor.GetDot.eq.DotGet
 import Lemma.Tensor.GetDot.eq.DotGetS
 import Lemma.Tensor.GetT.eq.Select
+import Instance.Data.Vector.Basic.Dot
 open Bool Tensor
 
 
@@ -16,7 +17,7 @@ private lemma main
   (i : Fin l)
   (j : Fin o) :
 -- imply
-  (L @ (M @ N))[i, j] = L[i] @ (M @ Nᵀ[j]) := by
+  (L ⬝ᵥ (M ⬝ᵥ N))[i, j] = L[i] ⬝ᵥ (M ⬝ᵥ Nᵀ[j]) := by
 -- proof
   simp [GetElem.getElem]
   erw [GetDot.eq.DotGetS.fin]

@@ -1,3 +1,4 @@
+import Instance.Data.Vector.Basic.Dot
 import Lemma.Vector.Dot.eq.SumMul
 import Lemma.Vector.Sum.eq.Zero
 open Vector
@@ -9,7 +10,7 @@ private lemma main
 -- given
   (x y : List.Vector α 0) :
 -- imply
-  x @ y = 0 := by
+  x ⬝ᵥ y = 0 := by
 -- proof
   rw [Dot.eq.SumMul]
   apply Sum.eq.Zero

@@ -7,6 +7,7 @@ private lemma valuation_units
   {p : ℕ}
   [Fact p.Prime]
   (u : ℤ_[p]ˣ) : (u : ℤ_[p]).valuation = 0 := by
+-- proof
   have h := PadicInt.valuation_mul (Units.ne_zero u) (Units.ne_zero u⁻¹)
   rw [Units.mul_inv, PadicInt.valuation_one] at h
   omega
@@ -16,6 +17,7 @@ private lemma valuation_prod
   [Fact p.Prime]
   {ι : Type*} (s : Finset ι) (a : ι → ℤ_[p]) (ha : ∀ i ∈ s, a i ≠ 0) :
   (∏ i ∈ s, a i).valuation = ∑ i ∈ s, (a i).valuation := by
+-- proof
   classical
   induction s using Finset.induction_on with
   | empty => simp
@@ -30,6 +32,7 @@ private lemma natCard_quotient_span_singleton
   [Fact p.Prime]
   (a : ℤ_[p]) (ha : a ≠ 0) :
   Nat.card (ℤ_[p] ⧸ Ideal.span ({a} : Set ℤ_[p])) = p ^ a.valuation := by
+-- proof
   have hspan : Ideal.span ({a} : Set ℤ_[p]) = Ideal.span {(p : ℤ_[p]) ^ a.valuation} := by
     rw [Ideal.span_singleton_eq_span_singleton]
     refine ⟨(PadicInt.unitCoeff ha)⁻¹, ?_⟩
@@ -46,6 +49,7 @@ private lemma helper_main (p : ℕ) [Fact p.Prime]
   {T : Type*} [AddCommGroup T] [Module ℤ_[p] T] [Module.Free ℤ_[p] T] [Module.Finite ℤ_[p] T]
   (f : Module.End ℤ_[p] T) (hf : LinearMap.det f ≠ 0) :
   Nat.card (T ⧸ LinearMap.range f) = p ^ (LinearMap.det f).valuation := by
+-- proof
   classical
   let b := Module.Free.chooseBasis ℤ_[p] T
   have hinj : Function.Injective f := by
@@ -110,3 +114,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-10

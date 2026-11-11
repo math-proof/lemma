@@ -1,8 +1,8 @@
 import Lemma.Tensor.LengthBmm.eq.Length
 import Lemma.Bool.SEqUFnS.of.SEq
 import Lemma.List.Eq.of.Append.Length
-import Def.Data.Holor.Defs.Part4
-import Def.Data.Holor.Bmm
+import Def.Data.Tensor.Defs.Part4
+import Def.Data.Tensor.Bmm
 open Bool List
 
 

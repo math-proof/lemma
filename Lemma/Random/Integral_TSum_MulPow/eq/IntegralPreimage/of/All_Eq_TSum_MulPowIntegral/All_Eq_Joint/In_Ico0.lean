@@ -43,23 +43,23 @@ private lemma main
   set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
   classical
   have hpR : Measurable (fun ω t ↦ r t ω) := Measurable.of_eval (Random.Measurable.of.All_Eq.fst h₁)
-  have hfG : Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) @ integ[t:]) :=
+  have hfG : Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[t:]) :=
     Measurable.tsum fun k => (measurable_pi_apply (t + k)).const_mul _
   have hpre : ∀ x u, (s t, a t) ⁻¹' {(x, u)} = s t ⁻¹' {x} ∩ a t ⁻¹' {u} := fun x u => by
     ext ω
     simp [JointRandomSymbol]
   let Qloc (x : S) (u : A) : ℝ :=
-    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u)
+    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = x ∧ a t = u)
   have h₅ : Q = Qloc := funext fun x => funext fun u => by
     rw [h₂ x u]
     simp only [Qloc, Expectation.asRV_process]
     rw [Expectation.condEvent_eq_integral hpR.aemeasurable hfG, hpre x u]
     show ∑' k, γ ^ k * ∫ ω, r (t + k) ω ∂(M θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}] =
-      ∫ ω, ((γ ^ (id : ℕ → ℕ)) @ r[t:]) ω ∂(M θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}]
+      ∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω ∂(M θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}]
     exact (Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico (M := M) h₀ h₁ θ _ t).symm
   subst h₅
   let Vloc (θ : Θ) (t : ℕ) (x : S) : ℝ :=
-    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x)
+    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = x)
   have hVi : ∀ t x, ∫ ω, ∑' k, γ ^ k * r (t + k) ω ∂(M θ)[|s t ⁻¹' {x}] = Vloc θ t x :=
     fun t x => (V.eq.Integral.of.Measurable (M := M) hpR θ γ t x).symm
   simp only [hVi]
@@ -100,4 +100,4 @@ private lemma main
 
 
 -- created on 2023-03-29
--- updated on 2026-10-12
+-- updated on 2026-11-11

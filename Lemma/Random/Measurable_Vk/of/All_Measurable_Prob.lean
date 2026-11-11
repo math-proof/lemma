@@ -7,7 +7,8 @@ If every `x ↦ π_θ(u | x)` is measurable, so is the state value `x ↦ Vk θ 
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [MeasurableSpace A] [Fintype A]
+  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
+  [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
   {M : Model Θ S A}
 -- given
   (h : ∀ θ u, Measurable (fun x => M.policy.prob θ x u))
@@ -16,7 +17,9 @@ private lemma main
 -- imply
   Measurable (M.Vk θ γ) := by
 -- proof
+  unfold Model.Vk Model.V0
   apply Measurable.tsum fun k => (Measurable_Wk.of.All_Measurable_Prob (M := M) h θ k).const_mul _
 
 
 -- created on 2026-10-07
+-- updated on 2026-11-08

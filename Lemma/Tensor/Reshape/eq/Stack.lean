@@ -1,9 +1,9 @@
-import Def.Data.Holor.Reshape
+import Def.Data.Tensor.Reshape
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetReshape.as.Reshape.of.GtLength_0
 import Lemma.Tensor.SEqReshape.of.Eq
-import Def.Data.Holor.Stack.Part2
+import Def.Data.Tensor.Stack.Part2
 open Bool Tensor
 
 

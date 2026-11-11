@@ -1,5 +1,5 @@
 import Lemma.Tensor.ValDataGetToVector.eq.ValArraySliceData
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 open Tensor
 
 

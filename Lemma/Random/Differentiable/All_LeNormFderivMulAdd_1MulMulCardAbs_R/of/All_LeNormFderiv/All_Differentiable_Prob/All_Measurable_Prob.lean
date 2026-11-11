@@ -15,7 +15,9 @@ Continuous-state counterpart of
 -/
 @[path]
 private lemma main
-  [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [FiniteDimensional ℝ Θ] [MeasurableSpace S] [MeasurableSpace A] [Fintype A]
+  [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [FiniteDimensional ℝ Θ]
+  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
+  [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
   {M : Model Θ S A}
   {Cp : ℝ}
 -- given
@@ -90,3 +92,4 @@ private lemma main
 
 
 -- created on 2026-10-07
+-- updated on 2026-11-08

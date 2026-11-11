@@ -1,5 +1,5 @@
-import Def.Data.Holor.Defs.Part4
-import Def.Data.Holor.Reshape
+import Def.Data.Tensor.Defs.Part4
+import Def.Data.Tensor.Reshape
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetRepeat.eq.Get_Mod
 import Lemma.Nat.EqMod_1'0

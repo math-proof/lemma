@@ -1,6 +1,6 @@
 import Lemma.List.GtLengthInsertIdx
-import Def.Data.Holor.Unsqueeze
-import Def.Data.Holor.Repeat
+import Def.Data.Tensor.Unsqueeze
+import Def.Data.Tensor.Repeat
 import Lemma.Tensor.SelectRepeat.as.Select_Mod_Get.of.Lt_MulGet
 import Lemma.Tensor.SEqSelectUnsqueeze.of.GeLength
 import Lemma.Nat.EqMod_1'0

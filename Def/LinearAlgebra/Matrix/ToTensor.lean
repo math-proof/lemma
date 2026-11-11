@@ -1,8 +1,8 @@
 import Mathlib.Data.Matrix.Basic
-import Def.Data.Holor.Stack.Part2
-import Def.Data.Holor.Tensor.Part2
-import Def.Data.Holor.Item
-import Instance.Data.Holor.Defs.Part3
+import Def.Data.Tensor.Stack.Part2
+import Def.Data.Tensor.Tensor.Part2
+import Def.Data.Tensor.Item
+import Instance.Data.Tensor.Defs.Part3
 
 
 /-- Rank-2 tensor whose entries are the matrix entries, row by row. -/

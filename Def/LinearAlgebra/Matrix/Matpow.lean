@@ -1,6 +1,6 @@
 import Def.Algebra.BigOperators.Products
-import Def.Data.Holor.Stack.Part2
-import Def.Data.Holor.Inv
+import Def.Data.Tensor.Stack.Part2
+import Def.Data.Tensor.Inv
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 
 
@@ -9,8 +9,8 @@ import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 
 matrix power `X ^ d` with integer exponent `d`:
 - `d = 0`: `X ^ 0 = eye n`, unconditionally (mirrors Lean's `0 ^ 0 = 1`)
-- `d > 0`: `X ^ d = X @ ⋯ @ X` (`d` factors)
-- `d < 0`: `X ^ d = X.inv @ ⋯ @ X.inv` (`-d` factors)
+- `d > 0`: `X ^ d = X ⬝ᵥ ⋯ ⬝ᵥ X` (`d` factors)
+- `d < 0`: `X ^ d = X.inv ⬝ᵥ ⋯ ⬝ᵥ X.inv` (`-d` factors)
 -/
 noncomputable def Tensor.MatPow [CommRing α] [CharZero α] (X : Tensor α [n, n]) (d : Int) : Tensor α [n, n] :=
   if d ≥ 0 then

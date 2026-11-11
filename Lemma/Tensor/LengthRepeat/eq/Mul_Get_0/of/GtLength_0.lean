@@ -1,5 +1,5 @@
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Def.Data.Holor.Repeat
+import Def.Data.Tensor.Repeat
 open Tensor
 
 

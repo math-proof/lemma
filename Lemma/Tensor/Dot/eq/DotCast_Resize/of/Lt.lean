@@ -2,6 +2,7 @@ import Lemma.Bool.Cast.of.SEq.Eq
 import Lemma.Nat.EqMax.of.Lt
 import Lemma.Tensor.Einsum.as.Tensordot.of.GeLength_2.GeLength_2
 import Lemma.Tensor.Einsum.as.Tensordot.of.Get_SubLength.GeLength_2.GeLength_2
+import Instance.Data.Vector.Basic.Dot
 open Bool Nat Tensor Vector
 set_option maxHeartbeats 250000
 
@@ -14,7 +15,7 @@ private lemma main
   (X : Tensor α [n, k])
   (Y : Tensor α [n', k']) :
 -- imply
-  X @ Y = (X.resize ⟨1, by grind⟩ n') @ Y := by
+  X ⬝ᵥ Y = (X.resize ⟨1, by grind⟩ n') ⬝ᵥ Y := by
 -- proof
   have hmax : k ⊔ n' = n' := EqMax.of.Lt h
   unfold Tensor.resize

@@ -1,6 +1,6 @@
 import Lemma.Tensor.Select.as.OfVectorMapToVector.of.GtVal_0
-import Def.Data.Holor.Prod
-import Notation.Data.Holor.Permute
+import Def.Data.Tensor.Prod
+import Notation.Data.Tensor.Permute
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.EraseIdxTail.eq.Drop_2
 import Lemma.List.Get_0.dvd.ProdTakeEraseIdx.of.Gt_0.Gt_0.GtLength_1

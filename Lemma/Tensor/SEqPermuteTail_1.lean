@@ -1,5 +1,5 @@
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.GetCast.eq.Get.of.Eq

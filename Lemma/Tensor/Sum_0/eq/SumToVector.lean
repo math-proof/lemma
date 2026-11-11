@@ -1,5 +1,5 @@
 import Lemma.Fin.Sum.of.All_Eq
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Tensor.Sum_0.eq.Sum_Get
 open Fin Tensor Vector

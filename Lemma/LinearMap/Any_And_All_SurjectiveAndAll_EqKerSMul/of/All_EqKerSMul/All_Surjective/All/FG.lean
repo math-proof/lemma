@@ -23,7 +23,9 @@ private lemma mem_limSub
   [CommRing R]
   {E : ℕ → Type u} [∀ k, AddCommGroup (E k)] [∀ k, Module R (E k)]
   (τ : ∀ k, E (k + 1) →ₗ[R] E k) (e : ∀ k, E k) :
-  e ∈ limSub E τ ↔ ∀ k, τ k (e (k + 1)) = e k := Iff.rfl
+  e ∈ limSub E τ ↔ ∀ k, τ k (e (k + 1)) = e k :=
+-- proof
+    Iff.rfl
 
 private lemma apply_eq_zero_of_le
   {R : Type u}
@@ -31,6 +33,7 @@ private lemma apply_eq_zero_of_le
   {E : ℕ → Type u} [∀ k, AddCommGroup (E k)] [∀ k, Module R (E k)]
   (τ : ∀ k, E (k + 1) →ₗ[R] E k) {e : ∀ k, E k} (he : e ∈ limSub E τ) {N j : ℕ} (hj : j ≤ N)
   (hN : e N = 0) : e j = 0 := by
+-- proof
   have key : ∀ i : ℕ, e (j + i) = 0 → e j = 0 := by
     intro i
     induction i with
@@ -40,7 +43,7 @@ private lemma apply_eq_zero_of_le
       apply ih
       have h' : e (j + i + 1) = 0 := h
       rw [← he (j + i), h', map_zero]
-  refine key (N - j)
+  refine key (N - j) ?_
   rw [Nat.add_sub_of_le hj]
   apply hN
 
@@ -50,6 +53,7 @@ private lemma exists_mem_apply_eq
   {E : ℕ → Type u} [∀ k, AddCommGroup (E k)] [∀ k, Module R (E k)]
   (τ : ∀ k, E (k + 1) →ₗ[R] E k) (hτs : ∀ k, Function.Surjective (τ k)) :
   ∀ (k : ℕ) (x : E k), ∃ e : ∀ j, E j, e ∈ limSub E τ ∧ e k = x := by
+-- proof
   intro k
   induction k with
   | zero =>
@@ -94,6 +98,7 @@ private lemma exists_sum_of_mem_span_smul
   {X : Type u} [AddCommGroup X] [Module R X] {s : ℕ} (g : Fin s → R)
   (N : Submodule R X) {x : X} (hx : x ∈ Submodule.span R (Set.range g) • N) :
   ∃ v : Fin s → X, (∀ i, v i ∈ N) ∧ x = ∑ i, g i • v i := by
+-- proof
   refine Submodule.smul_induction_on
     (p := fun x => ∃ v : Fin s → X, (∀ i, v i ∈ N) ∧ x = ∑ i, g i • v i) hx ?_ ?_
   ·
@@ -207,8 +212,8 @@ private lemma main
         refine ⟨l + w, ?_, fun i => ?_⟩
         ·
           have e1 : x - ∑ i, g i • (l + w) i = (x - ∑ i, g i • l i) - ∑ i, g i • w i := by
-          simp only [Pi.add_apply, smul_add, Finset.sum_add_distrib]
-          abel
+            simp only [Pi.add_apply, smul_add, Finset.sum_add_distrib]
+            abel
           rw [e1, Submodule.coe_sub, Pi.sub_apply, hzv, hcomp, sub_eq_zero]
           exact Finset.sum_congr rfl fun i _ => by rw [hwv]
         ·
@@ -265,3 +270,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-10

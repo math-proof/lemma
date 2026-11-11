@@ -1,7 +1,7 @@
-import Def.Data.Holor.Unsqueeze
-import Def.Data.Holor.Bmm
-import Def.Data.Holor.Repeat
-import Notation.Data.Holor.Permute
+import Def.Data.Tensor.Unsqueeze
+import Def.Data.Tensor.Bmm
+import Def.Data.Tensor.Repeat
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.Matmul.as.Bmm.of.Eq
 import Lemma.Tensor.Einsum.as.Tensordot.of.Get_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.SEqMulS.of.SEq.SEq
@@ -9,7 +9,8 @@ import Lemma.Tensor.SEqRepeatS.of.SEq.Val.Eq
 import Lemma.Tensor.SEqSumS.of.SEq.Eq
 import Lemma.Tensor.SEqTS.of.SEq
 import Lemma.Tensor.SEqUnsqueezeS.of.SEq.Eq
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
+import Instance.Data.Vector.Basic.Dot
 open Bool List Tensor
 
 
@@ -25,7 +26,7 @@ private lemma main
   let B' : Tensor α (bz ++ [n, k]) := cast (congrArg (Tensor α) (by simp_all [SwapAppend.eq.Append_Swap.of.LeLength.LeLength])) Bᵀ
   let B' : Tensor α (bz ++ [1, n, k]) := cast (congrArg (Tensor α) (by simp [InsertIdxAppend.eq.Append_Cons])) (B'.unsqueeze bz.length)
   let B' : Tensor α (bz ++ [m, n, k]) := cast (congrArg (Tensor α) (by simp)) (B'.repeat ⟨bz.length, by grind⟩ m)
-  A @ B ≃ (A' * B').sum (bz.length + 2) := by
+  A ⬝ᵥ B ≃ (A' * B').sum (bz.length + 2) := by
 -- proof
   simp [Dot.dot]
   rw [Einsum.eq.Cast_Tensordot.of.Get_SubLength.GeLength_2.GeLength_2 (by grind) (by grind) (by grind)]

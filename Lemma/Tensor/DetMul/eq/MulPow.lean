@@ -5,8 +5,8 @@ import Lemma.Tensor.GetMul.eq.MulGet
 import Lemma.Tensor.Pow.eq.TensorListPow
 import Lemma.Vector.GetMul.eq.MulGet
 import Lemma.Vector.GetMul.eq.Mul_Get
-import Def.Data.Holor.Stack.Part2
-import Instance.Data.Holor.Tensor.Part2
+import Def.Data.Tensor.Stack.Part2
+import Instance.Data.Tensor.Tensor.Part2
 open Tensor
 
 

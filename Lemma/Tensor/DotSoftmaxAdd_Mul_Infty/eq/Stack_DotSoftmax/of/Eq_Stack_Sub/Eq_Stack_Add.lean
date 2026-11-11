@@ -1,4 +1,5 @@
 import Lemma.Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmax
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 set_option maxHeartbeats 1000000
 
@@ -19,10 +20,10 @@ private lemma main
   let Ξ := (1 : Tensor ℝ* [n, n]).band_part (l - 1) (u - 1)
   let A : Tensor ℝ* [n, n] := A
   let V : Tensor ℝ* [n, d_z] := V
-  (A + (Ξ - 1) * ∞).softmax @ V ≈ [i < n]
+  (A + (Ξ - 1) * ∞).softmax ⬝ᵥ V ≈ [i < n]
     let βᵢ := β[i].data[0]
     let ζᵢ := ζ[i].data[0]
-    A[i, βᵢ: ζᵢ].softmax @ V[βᵢ: ζᵢ] := by
+    A[i, βᵢ: ζᵢ].softmax ⬝ᵥ V[βᵢ: ζᵢ] := by
 -- proof
   have hβ (i : Fin n) :
       (([j < n] ((↑j + 1 - l : ℕ) : Tensor ℕ []))[i]).data[0] = ↑i + 1 - l := by
@@ -55,10 +56,10 @@ private lemma main
   let idxζ' : Fin n → ℕ := fun i => ↑i + u
   change
     ([i < n]
-      (map Hyperreal.ofReal A)[i][↑(idxβ i):↑(idxζ i)].softmax @
+      (map Hyperreal.ofReal A)[i][↑(idxβ i):↑(idxζ i)].softmax ⬝ᵥ
         (map Hyperreal.ofReal V)[↑(idxβ i):↑(idxζ i)]) =
       ([i < n]
-        (map Hyperreal.ofReal A)[i][↑(idxβ' i):↑(idxζ' i)].softmax @
+        (map Hyperreal.ofReal A)[i][↑(idxβ' i):↑(idxζ' i)].softmax ⬝ᵥ
           (map Hyperreal.ofReal V)[↑(idxβ' i):↑(idxζ' i)])
   rw [show idxβ = idxβ' from funext hβ, show idxζ = idxζ' from funext hζ]
 

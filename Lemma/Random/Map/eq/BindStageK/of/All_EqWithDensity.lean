@@ -8,8 +8,8 @@ The initial stage of the continuous-action trajectory model `M` is distributed a
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A}
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
 -- given
   (θ : Θ) :
 -- imply
@@ -17,15 +17,15 @@ private lemma main
 -- proof
   unfold DensityModel.traj Kernel.trajMeasure
   rw [Measure.map_comp _ _ (measurable_pi_apply 0)]
-  have h₁ : (Kernel.traj (X := fun _ ↦ ℝ × S × A) (M.step θ) 0).map (fun ω => ω 0) =
-      ((Kernel.traj (X := fun _ ↦ ℝ × S × A) (M.step θ) 0).map (Preorder.frestrictLe 0)).map
+  have h₁ : (Kernel.traj (X := fun _ ↦ ℝ × 𝒮 × 𝒜) (M.step θ) 0).map (fun ω => ω 0) =
+      ((Kernel.traj (X := fun _ ↦ ℝ × 𝒮 × 𝒜) (M.step θ) 0).map (Preorder.frestrictLe 0)).map
         (fun h => h ⟨0, mem_Iic.2 le_rfl⟩) := by
     rw [← Kernel.map_comp_right _ (by fun_prop) (by fun_prop)]
     rfl
   rw [h₁, Kernel.traj_map_frestrictLe, Kernel.partialTraj_self, Kernel.id_map (by fun_prop),
     Measure.deterministic_comp_eq_map, Measure.map_map (by fun_prop) (by fun_prop)]
-  have h₂ : ((fun h : (Π _ : Finset.Iic 0, ℝ × S × A) => h ⟨0, mem_Iic.2 le_rfl⟩) ∘
-      ⇑(MeasurableEquiv.piUnique (fun i : Finset.Iic 0 => (fun _ => (ℝ × S × A)) i)).symm) = id := by
+  have h₂ : ((fun h : (Π _ : Finset.Iic 0, ℝ × 𝒮 × 𝒜) => h ⟨0, mem_Iic.2 le_rfl⟩) ∘
+      ⇑(MeasurableEquiv.piUnique (fun i : Finset.Iic 0 => (fun _ => (ℝ × 𝒮 × 𝒜)) i)).symm) = id := by
     funext x; rfl
   rw [h₂, Measure.map_id]
 

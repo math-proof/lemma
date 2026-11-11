@@ -11,16 +11,16 @@ Continuous-action counterpart of
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [ReferenceMeasure A]
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
   [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
-  {M : DensityModel Θ S A}
-  {f : ℝ × S × A → E}
+  {M : DensityModel Θ 𝒮 𝒜}
+  {f : ℝ × 𝒮 × 𝒜 → E}
   {C : ℝ}
 -- given
   (hf : StronglyMeasurable f)
   (hC : ∀ z, ‖f z‖ ≤ C)
   (θ : Θ)
-  (y : S) :
+  (y : 𝒮) :
 -- imply
   ∫ z, f z ∂(M.stageK θ y) =
     ∫ u, M.policy.prob θ y u • ∫ ρ, f (ρ, y, u) ∂(M.env.reward (y, u))
@@ -32,9 +32,9 @@ private lemma main
   unfold DensityModel.stageK
   rw [Kernel.map_apply _ (by fun_prop), integral_map (by fun_prop) hf.aestronglyMeasurable]
   rw [Kernel.prod_apply, Kernel.deterministic_apply]
-  rw [id, Measure.dirac_prod, integral_map (f := fun x : S × A × ℝ => f (x.2.2, x.1, x.2.1))
+  rw [id, Measure.dirac_prod, integral_map (f := fun x : 𝒮 × 𝒜 × ℝ => f (x.2.2, x.1, x.2.1))
     (by fun_prop) (hf.comp_measurable (by fun_prop)).aestronglyMeasurable]
-  rw [ProbabilityTheory.integral_compProd (f := fun x : A × ℝ => f (x.2, y, x.1))
+  rw [ProbabilityTheory.integral_compProd (f := fun x : 𝒜 × ℝ => f (x.2, y, x.1))
     (Integrable.of_bound (hf.comp_measurable (by fun_prop)).aestronglyMeasurable C
       (Filter.Eventually.of_forall fun p => hC _))]
   have hb : ∀ u, ‖∫ ρ, f (ρ, y, u) ∂(M.env.reward (y, u))‖ ≤ C := by
@@ -47,7 +47,7 @@ private lemma main
       _ = C := by simp
   change ∫ u, ∫ ρ, f (ρ, y, u) ∂(M.env.reward (y, u)) ∂(M.policy.kernel θ y) = _
   have hker : M.policy.kernel θ y =
-      (ReferenceMeasure.measure : Measure A).withDensity (M.policy.dens θ y) := by
+      (ReferenceMeasure.measure : Measure 𝒜).withDensity (M.policy.dens θ y) := by
     rw [DensityPolicy.kernel, Kernel.withDensity_apply _ (M.policy.measurable_dens θ)]
     rfl
   rw [hker, integral_withDensity_eq_integral_toReal_smul hπm

@@ -1,6 +1,6 @@
 import Lemma.Tensor.GetT.as.TGet
-import Def.Data.Holor.Unsqueeze
-import Def.Data.Holor.Repeat
+import Def.Data.Tensor.Unsqueeze
+import Def.Data.Tensor.Repeat
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.GtLength_0
 import Lemma.Tensor.GetRepeat.as.RepeatGet.of.GtGet_0.GtLength_0
 import Lemma.Tensor.GetSum.as.SumGet.of.GtGet_0.Gt_0.GtLength
@@ -9,8 +9,8 @@ import Lemma.Tensor.Repeat.of.Eq
 import Lemma.Tensor.Sum.of.Eq
 import Lemma.Tensor.Unsqueeze.of.Eq
 import Lemma.Tensor.GetMul.eq.MulGetS.of.GtGet_0.GtLength_0
-import Def.Data.Holor.Bmm
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Bmm
+import Def.Data.Tensor.Sum
 open Bool Fin List Nat Tensor
 set_option maxHeartbeats 250000
 

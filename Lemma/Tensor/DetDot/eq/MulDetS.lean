@@ -1,5 +1,6 @@
 import Lemma.Tensor.Det.eq.DetToMatrix
 import Lemma.Tensor.ToMatrixDot.eq.MulToMatrixS
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
@@ -10,9 +11,9 @@ private lemma main
   (A : Tensor α [n, n])
   (B : Tensor α [n, n]) :
 -- imply
-  (A @ B).det = A.det * B.det := by
+  (A ⬝ᵥ B).det = A.det * B.det := by
 -- proof
-  apply Eq.trans (congrArg (id (α := Tensor α [])) (Det.eq.DetToMatrix (A @ B)))
+  apply Eq.trans (congrArg (id (α := Tensor α [])) (Det.eq.DetToMatrix (A ⬝ᵥ B)))
   rw [ToMatrixDot.eq.MulToMatrixS, Matrix.det_mul]
   rw [← Det.eq.DetToMatrix A, ← Det.eq.DetToMatrix B]
   rfl
@@ -24,9 +25,9 @@ private lemma trois
 -- given
   (A B C : Tensor α [n, n]) :
 -- imply
-  ((A @ B : Tensor α [n, n]) @ C).det = A.det * B.det * C.det := by
+  ((A ⬝ᵥ B : Tensor α [n, n]) ⬝ᵥ C).det = A.det * B.det * C.det := by
 -- proof
-  exact (main (A @ B) C).trans (congrArg (· * C.det) (main A B))
+  exact (main (A ⬝ᵥ B) C).trans (congrArg (· * C.det) (main A B))
 
 
 -- created on 2020-08-20

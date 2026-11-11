@@ -1,9 +1,9 @@
 import Lemma.Bool.Cast.of.SEq.Eq
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.Vector.SEqRepeat_Div
-import Def.Data.Holor.Defs.Part4
-import Def.Data.Holor.Reshape
-import Def.Data.Holor.Unsqueeze
+import Def.Data.Tensor.Defs.Part4
+import Def.Data.Tensor.Reshape
+import Def.Data.Tensor.Unsqueeze
 open Bool List Vector
 
 

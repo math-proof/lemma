@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Def.Data.Holor.Prod
-import Notation.Data.Holor.Permute
+import Def.Data.Tensor.Prod
+import Notation.Data.Tensor.Permute
 import Lemma.List.Drop.eq.AppendTakeDrop
 import Lemma.List.DropPermute__Neg.eq.Drop
 import Lemma.List.EqPermutePermute__Neg.of.In_Ioo_Length

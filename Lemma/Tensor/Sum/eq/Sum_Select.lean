@@ -1,5 +1,5 @@
 import Lemma.Tensor.Sum.eq.Sum_Select.of.GtLength
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Tensor
 
 

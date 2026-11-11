@@ -1,5 +1,5 @@
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.Tensor.DataGet.eq.GetUnflattenData
 import Lemma.Tensor.XEq.is.XEqDataS
 import Lemma.Vector.XEq.is.All_XEqGetS

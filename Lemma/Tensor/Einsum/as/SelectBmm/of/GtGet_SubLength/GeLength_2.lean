@@ -1,4 +1,4 @@
-import Def.Data.Holor.Reshape
+import Def.Data.Tensor.Reshape
 import Lemma.Nat.EqMax.of.Lt
 import Lemma.Tensor.ResizeCast.as.Resize.of.Eq
 import Lemma.Tensor.SEqBmmS.of.SEq.SEq
@@ -6,7 +6,7 @@ import Lemma.Tensor.SEqReshapeS.of.SEq.Eq.Dvd
 import Lemma.Tensor.SEqResize.of.Eq_Get
 import Lemma.Tensor.SEqSelectS.of.SEq
 import Instance.LinearAlgebra.Matrix.Matmul
-import Def.Data.Holor.Bmm
+import Def.Data.Tensor.Bmm
 open Bool List Nat Tensor
 set_option maxHeartbeats 200000
 

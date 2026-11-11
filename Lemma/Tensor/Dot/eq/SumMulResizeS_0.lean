@@ -1,5 +1,6 @@
 import Instance.LinearAlgebra.Matrix.Matmul
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
+import Instance.Data.Vector.Basic.Dot
 @[path]
 private lemma main
   [Mul α] [Add α] [Zero α]
@@ -10,7 +11,7 @@ private lemma main
   let n := n ⊔ n'
   let A' : Tensor α [n] := A.resize ⟨0, by grind⟩ n
   let B' : Tensor α [n] := B.resize ⟨0, by grind⟩ n
-  A @ B = (A' * B').sum 0 := by
+  A ⬝ᵥ B = (A' * B').sum 0 := by
 -- proof
   simp [Dot.dot]
   unfold Tensor.einsum

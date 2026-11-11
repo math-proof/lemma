@@ -6,6 +6,7 @@ import Mathlib.MeasureTheory.MeasurableSpace.Constructions
 import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
 import Mathlib.Probability.Independence.Basic
 import Mathlib.Probability.Independence.Conditional
+import Mathlib.Probability.Kernel.CondDistrib
 import Def.Probability.SymbolicProbability.Part2
 import Theorem.Function
 import Instance.Probability.JointRv
@@ -64,7 +65,11 @@ noncomputable def Expectation.condRV
 Conditional expectation of an ordinary observable of `x` given the event `y = y0`, under the
 conditional law `(π[|y ⁻¹' {y0}]).map x`. Needs no density: `x` can be a reward, a path, ...;
 `y` is meant to be discrete so that `{y = y0}` is an event. At an event of probability `0` the
-conditional measure is `0`, so the value is `0`. This is the meaning of `𝔼[x: π](f x | y = y0)`. -/
+  conditional measure is `0`, so the value is `0`.
+
+  The binder sugar `𝔼[x: π](f x | y = y0)` is *not* this definition: that `=` is
+  evaluation of the regular conditional `condEval` at `y0`. Use `condEvent` only when
+  the elementary event conditional is intended. -/
 noncomputable def Expectation.condEvent
     {Ω α γ β : Type*}
     [MeasurableSpace Ω] [MeasurableSpace α]
@@ -77,13 +82,46 @@ noncomputable def Expectation.condEvent
   expectation ((ProbabilityTheory.cond π (y ⁻¹' {y0})).map x) f
 
 /--
+Conditional expectation of an ordinary observable of `x`, evaluated at a value `y0` of `y`.
+
+  `Expectation.condEval π x y f y0 = expectation (ProbabilityTheory.condDistrib x y π y0) f`
+
+This is a measurable version of the σ-algebra conditional `condSigma` (Mathlib's regular
+conditional `condDistrib`), evaluated at `y0`. The binder sugar `𝔼[x: π](f x | y = y0)`
+and the joint form `𝔼[x: π](f | y = y0 ∧ z = z0 ∧ …)` elaborate to this: the `=` is
+evaluation at a point, not the elementary event `{y = y0}`.
+
+When `π.map y {y0} ≠ 0`, this agrees with `condEvent`. When the atom has probability `0`
+(e.g. a continuous conditioner), `condEvent` is `0` while `condEval` stays a version of
+`𝔼[f(x) | y]`. Composing with the random variable recovers the σ-algebra form:
+`(fun ω ↦ condEval π x y f (y ω)) =ᵐ[π] condSigma π x y f`.
+
+Needs a standard Borel space on the value type of `x`, and a finite measure `π`
+(probability measures are fine). -/
+noncomputable def Expectation.condEval
+    {Ω α γ β : Type*}
+    [MeasurableSpace Ω]
+    [MeasurableSpace α] [StandardBorelSpace α] [Nonempty α]
+    [MeasurableSpace γ]
+    [Expectation β]
+    (π : Measure Ω)
+    [IsFiniteMeasure π]
+    (x : Ω → α) (y : Ω → γ)
+    (f : α → β)
+    (y0 : γ) :
+    β :=
+  expectation (ProbabilityTheory.condDistrib x y π y0) f
+
+
+/--
 σ-algebra conditional expectation of an observable of `x` given the random variable `y`:
 
   `Expectation.condSigma π x y f = π[fun ω ↦ f (x ω) | σ(y)]`,  `σ(y) = MeasurableSpace.comap y inferInstance`
 
 i.e. Mathlib's `MeasureTheory.condExp` (defined up to `π`-a.e. equality, so it is compared with `=ᵐ[π]`).
 Unlike the event form `condEvent` it needs no atoms (`y` may be continuous) and, unlike `condRV`, no densities. This is the meaning of
-`𝔼[x: π](f x | y)` and `𝔼[x: π](f x | y, z, …)`. -/
+`𝔼[x: π](f x | y)` and `𝔼[x: π](f x | y, z, …)`.
+The observation form `𝔼[x: π](f x | y = y0)` is `condEval`, a version of this evaluated at `y0`. -/
 noncomputable def Expectation.condSigma
     {Ω α γ β : Type*}
     [MeasurableSpace Ω] [MeasurableSpace γ]

@@ -1,13 +1,14 @@
 import Lemma.Tensor.Dot.eq.SumMul
-import Def.Data.Holor.Unsqueeze
-import Def.Data.Holor.Repeat
-import Notation.Data.Holor.Permute
+import Def.Data.Tensor.Unsqueeze
+import Def.Data.Tensor.Repeat
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.Einsum.eq.SumMulDataS
 import Lemma.Tensor.MapCast.as.MapBFn.of.Eq
 import Lemma.Tensor.RepeatBFn.eq.BFnRepeat
 import Lemma.Tensor.ResizeBFn.eq.BFnResize
 import Lemma.Tensor.UnsqueezeBFn.eq.BFnUnsqueeze
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
@@ -24,7 +25,7 @@ private lemma vector
   (C : Tensor α [n'])
   (B : Tensor α []) :
 -- imply
-  (A @ C).map (f · B.data[0]) = (A.map (f · B.data[0])) @ C := by
+  (A ⬝ᵥ C).map (f · B.data[0]) = (A.map (f · B.data[0])) ⬝ᵥ C := by
 -- proof
   apply Eq.symm
   let K := n ⊔ n'
@@ -34,10 +35,10 @@ private lemma vector
   have hr : Af' = A'.map (f · B.data[0]) := by
     simp only [Af', A']
     exact ResizeBFn.eq.BFnResize h0 A B ⟨0, by grind⟩ K
-  have hL : (A.map (f · B.data[0])) @ C = (Af' * C').sum := by
+  have hL : (A.map (f · B.data[0])) ⬝ᵥ C = (Af' * C').sum := by
     simp only [Dot.dot]
     simpa [Af', C', K] using Einsum.eq.SumMulDataS.resize (A.map (f · B.data[0])) C
-  have hR : A @ C = (A' * C').sum := by
+  have hR : A ⬝ᵥ C = (A' * C').sum := by
     simp only [Dot.dot]
     simpa [A', C', K] using Einsum.eq.SumMulDataS.resize A C
   rw [hL, hR, hr, h_mul]
@@ -57,7 +58,7 @@ private lemma matrix
   (C : Tensor α [k', n])
   (B : Tensor α []) :
 -- imply
-  (A @ C).map (f · B.data[0]) = (A.map (f · B.data[0])) @ C := by
+  (A ⬝ᵥ C).map (f · B.data[0]) = (A.map (f · B.data[0])) ⬝ᵥ C := by
 -- proof
   apply Eq.symm
   let F {s} (X : Tensor α s) : Tensor α s := X.map (f · B.data[0])
@@ -86,9 +87,9 @@ private lemma matrix
     rw [hu, RepeatBFn.eq.BFnRepeat f A0 B ⟨1, by grind⟩ n]
     apply Cast_MapBFn.eq.MapCast.of.Eq
     simp
-  have hL : (F A) @ C = (A_f * C').sum 2 := by
+  have hL : (F A) ⬝ᵥ C = (A_f * C').sum 2 := by
     simpa [F, A_f, A_f0, A_f_r, C', C0, CT, C_r, K] using Dot.eq.SumMul.resize (F A) C
-  have hR : A @ C = (A' * C').sum 2 := by
+  have hR : A ⬝ᵥ C = (A' * C').sum 2 := by
     simpa [A', A0, A_r, C', C0, CT, C_r, K] using Dot.eq.SumMul.resize A C
   rw [hL, hR, hA, h_mul, h_sum]
   rfl

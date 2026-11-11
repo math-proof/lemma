@@ -10,8 +10,10 @@ universe u
 
 private noncomputable def Φ {R : Type*} [CommRing R] {K : Type*} [AddCommGroup K] [Module R K] [Module.Finite R K] [Module.Free R K] (B : Type u) [AddCommGroup B] [Module R B] : B ⊗[R] K ≃ₗ[R] (Module.Dual R K →ₗ[R] B) := (TensorProduct.comm R B K).trans ((TensorProduct.congr (Module.evalEquiv R K) (LinearEquiv.refl R B)).trans (dualTensorHomEquiv R (Module.Dual R K) B))
 private lemma Φ_tmul {R : Type*} [CommRing R] {K : Type*} [AddCommGroup K] [Module R K] [Module.Finite R K] [Module.Free R K] (B : Type u) [AddCommGroup B] [Module R B] (b : B) (x : K) (φ : Module.Dual R K) : Φ B (b ⊗ₜ[R] x) φ = φ x • b := by
+-- proof
   simp [Φ]
 private lemma Φ_apply_eq_rid_lTensor {R : Type*} [CommRing R] {K : Type*} [AddCommGroup K] [Module R K] [Module.Finite R K] [Module.Free R K] (B : Type u) [AddCommGroup B] [Module R B] (s : B ⊗[R] K) (φ : Module.Dual R K) : Φ B s φ = TensorProduct.rid R B (φ.lTensor B s) := by
+-- proof
   refine TensorProduct.inductionOn s ?_ ?_
   ·
     intro b x
@@ -20,6 +22,7 @@ private lemma Φ_apply_eq_rid_lTensor {R : Type*} [CommRing R] {K : Type*} [AddC
     intro s t hs ht
     rw [map_add, LinearMap.add_apply, hs, ht, map_add, map_add]
 private lemma Φ_naturality {R : Type*} [CommRing R] {K : Type*} [AddCommGroup K] [Module R K] [Module.Finite R K] [Module.Free R K] (B B' : Type u) [AddCommGroup B] [Module R B] [AddCommGroup B'] [Module R B'] (u : B →ₗ[R] B') (s : B ⊗[R] K) : Φ B' (u.rTensor K s) = LinearMap.comp u (Φ B s) := by
+-- proof
   refine TensorProduct.inductionOn s ?_ ?_
   ·
     intro b x
@@ -30,6 +33,7 @@ private lemma Φ_naturality {R : Type*} [CommRing R] {K : Type*} [AddCommGroup K
     intro s t hs ht
     rw [map_add, map_add, hs, ht, map_add, LinearMap.comp_add]
 private lemma Φ_comp_dualMap {R : Type*} [CommRing R] {K₀ K₁ : Type*} [AddCommGroup K₀] [Module R K₀] [Module.Finite R K₀] [Module.Free R K₀] [AddCommGroup K₁] [Module R K₁] [Module.Finite R K₁] [Module.Free R K₁] (d : K₀ →ₗ[R] K₁) (B : Type u) [AddCommGroup B] [Module R B] (s : B ⊗[R] K₀) : LinearMap.comp (Φ B s) d.dualMap = Φ B (d.lTensor B s) := by
+-- proof
   refine TensorProduct.inductionOn s ?_ ?_
   ·
     intro b x
@@ -40,6 +44,7 @@ private lemma Φ_comp_dualMap {R : Type*} [CommRing R] {K₀ K₁ : Type*} [AddC
     intro s t hs ht
     rw [map_add, LinearMap.add_comp, hs, ht, map_add, map_add]
 private lemma comp_dualMap_eq_zero_iff {R : Type*} [CommRing R] {K₀ K₁ : Type*} [AddCommGroup K₀] [Module R K₀] [Module.Finite R K₀] [Module.Free R K₀] [AddCommGroup K₁] [Module R K₁] [Module.Finite R K₁] [Module.Free R K₁] (d : K₀ →ₗ[R] K₁) (B : Type u) [AddCommGroup B] [Module R B] (s : B ⊗[R] K₀) : LinearMap.comp (Φ B s) d.dualMap = 0 ↔ d.lTensor B s = 0 := by
+-- proof
   rw [Φ_comp_dualMap, LinearEquiv.map_eq_zero_iff]
 /--
 [Module_exists_hom_dual_quotient_range_dualMap_linearEquiv_ker_lTensor_natural](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Module_exists_hom_dual_quotient_range_dualMap_linearEquiv_ker_lTensor_natural.lean)
@@ -92,3 +97,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-10

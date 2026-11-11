@@ -1,6 +1,7 @@
 import Lemma.Tensor.DotT.eq.RotaryMatrixSub
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.SubGetS.eq.Get_Sub.of.Eq_Stack_Mul.Ge
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
@@ -14,7 +15,7 @@ private lemma main
   (h : k ≥ t)
   (hθ : θ = [i < n] (τ * (i : ℝ))) :
 -- imply
-  θ[t].rotaryMatrixᵀ @ θ[k].rotaryMatrix = θ[k - t].rotaryMatrix := by
+  θ[t].rotaryMatrixᵀ ⬝ᵥ θ[k].rotaryMatrix = θ[k - t].rotaryMatrix := by
 -- proof
   apply Eq.trans (DotT.eq.RotaryMatrixSub θ[t] θ[k])
   exact congrArg rotaryMatrix (SubGetS.eq.Get_Sub.of.Eq_Stack_Mul.Ge h hθ)

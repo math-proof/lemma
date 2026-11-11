@@ -1,5 +1,5 @@
 import Lemma.Tensor.SEqSoftmaxS.of.SEq.Eq
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.SEqPermutePermute.of.GtLength_Add
 import Lemma.Tensor.SoftmaxPermute.as.PermuteSoftmax.of.GtLength_Add
 open Tensor

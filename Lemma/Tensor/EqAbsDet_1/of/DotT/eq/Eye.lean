@@ -1,6 +1,7 @@
 import Lemma.Tensor.EqSquareDet_1.of.DotT.eq.Eye
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.EqAbs_1.of.EqSquare_1
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
@@ -9,7 +10,7 @@ private lemma main
   [CommRing α] [CharZero α] [LinearOrder α] [IsStrictOrderedRing α]
   {X : Tensor α [n, n]}
 -- given
-  (h : Xᵀ @ X = Tensor.eye (α := α) n) :
+  (h : Xᵀ ⬝ᵥ X = Tensor.eye (α := α) n) :
 -- imply
   |X.det| = 1 := by
 -- proof

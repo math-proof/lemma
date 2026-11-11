@@ -8,6 +8,7 @@ import Mathlib.Probability.Independence.Basic
 import Mathlib.Probability.Independence.Conditional
 import Def.Probability.SymbolicProbability.Part2
 import Theorem.Function
+import Def.Probability.JointRv.Part2
 import Def.Probability.JointRv.Part6
 import Def.Probability.JointRv.Part8
 open MeasureTheory
@@ -24,13 +25,17 @@ elab_rules : term
       Expectation.Macro.elabExpect xs body fun lam =>
         `(Expectation.ofRV $π $joint (fun a ↦ ($lam a - Expectation.ofRV $π $joint $lam) ^ 2))
   | `(𝔼[$xs:ident,* : $π]($body)) => do
-      let xs := xs.getElems
+      let elems := xs.getElems
+      if elems.size = 1 then
+        if let some e ← Expectation.Macro.elabKernelExpect ⟨elems[0]!⟩ π ⟨body⟩ then
+          return e
+      let xs := elems
       let joint ← Lean.Elab.liftMacroM <| Expectation.Macro.mkRestJoint xs
       Expectation.Macro.elabExpect xs body fun lam => `(Expectation.ofRV $π $joint $lam)
   | `(𝔼[$xs:ident,* : $π]($body | $y:term = $y0)) => do
       let xs := xs.getElems
       let joint ← Lean.Elab.liftMacroM <| Expectation.Macro.mkRestJoint xs
-      Expectation.Macro.elabExpect xs body fun lam => `(Expectation.condEvent $π $joint $y $lam $y0)
+      Expectation.Macro.elabExpect xs body fun lam => `(Expectation.condEval $π $joint $y $lam $y0)
   | `(𝔼[$xs:ident,* : $π]($body | $y:term = $y0:term ∧ $[$ys:term = $ys0:term]∧*)) => do
       let xs := xs.getElems
       -- `y = y0 ∧ z = z0 ∧ …` ↦ `JointRandomSymbol y (JointRandomSymbol z …)` at `(y0, z0, …)`
@@ -42,7 +47,7 @@ elab_rules : term
         cond ← `(JointRandomSymbol $(conds[i]!) $cond)
         val ← `(($(vals[i]!), $val))
       let joint ← Lean.Elab.liftMacroM <| Expectation.Macro.mkRestJoint xs
-      Expectation.Macro.elabExpect xs body fun lam => `(Expectation.condEvent $π $joint $cond $lam $val)
+      Expectation.Macro.elabExpect xs body fun lam => `(Expectation.condEval $π $joint $cond $lam $val)
   | `(𝔼[$xs:ident,* : $π]($body | $ys,*)) => do
       let xs := xs.getElems
       let joint ← Lean.Elab.liftMacroM <| Expectation.Macro.mkRestJoint xs

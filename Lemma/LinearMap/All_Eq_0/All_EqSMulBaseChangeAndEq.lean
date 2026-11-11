@@ -11,8 +11,10 @@ universe u
 noncomputable abbrev ρ {F K P : Type u} [Field F] [Field K] [Algebra F K] [AddCommGroup P] [Module K P] [Module F P] [IsScalarTower F K P] (k : K) : K ⊗[F] P →ₗ[K] K ⊗[F] P :=
   LinearMap.baseChange K ((LinearMap.lsmul K P k).restrictScalars F)
 private lemma ρ_tmul {F K P : Type u} [Field F] [Field K] [Algebra F K] [AddCommGroup P] [Module K P] [Module F P] [IsScalarTower F K P] (k x : K) (v : P) : ρ k (x ⊗ₜ[F] v) = x ⊗ₜ[F] (k • v) := by
+-- proof
   simp [ρ, LinearMap.baseChange_tmul]
 private lemma ρ_add_apply {F K P : Type u} [Field F] [Field K] [Algebra F K] [AddCommGroup P] [Module K P] [Module F P] [IsScalarTower F K P] (b₁ b₂ : K) (m : K ⊗[F] P) : ρ (b₁ + b₂) m = ρ b₁ m + ρ b₂ m := by
+-- proof
   refine TensorProduct.inductionOn m ?_ ?_
   ·
     intro x v
@@ -22,6 +24,7 @@ private lemma ρ_add_apply {F K P : Type u} [Field F] [Field K] [Algebra F K] [A
     rw [map_add, map_add, map_add, h₁, h₂]
     abel
 private lemma ρ_smul_apply {F K P : Type u} [Field F] [Field K] [Algebra F K] [AddCommGroup P] [Module K P] [Module F P] [IsScalarTower F K P] (c : F) (b : K) (m : K ⊗[F] P) : ρ (c • b) m = c • ρ b m := by
+-- proof
   refine TensorProduct.inductionOn m ?_ ?_
   ·
     intro x v
@@ -30,6 +33,7 @@ private lemma ρ_smul_apply {F K P : Type u} [Field F] [Field K] [Algebra F K] [
     intro m₁ m₂ h₁ h₂
     rw [map_add, map_add, h₁, h₂, smul_add]
 private lemma ρ_mul_apply {F K P : Type u} [Field F] [Field K] [Algebra F K] [AddCommGroup P] [Module K P] [Module F P] [IsScalarTower F K P] (b x : K) (m : K ⊗[F] P) : ρ (b * x) m = ρ b (ρ x m) := by
+-- proof
   refine TensorProduct.inductionOn m ?_ ?_
   ·
     intro y v
@@ -38,14 +42,17 @@ private lemma ρ_mul_apply {F K P : Type u} [Field F] [Field K] [Algebra F K] [A
     intro m₁ m₂ h₁ h₂
     rw [map_add, map_add, map_add, h₁, h₂]
 private lemma ρ_comm_apply {F K P : Type u} [Field F] [Field K] [Algebra F K] [AddCommGroup P] [Module K P] [Module F P] [IsScalarTower F K P] (b x : K) (m : K ⊗[F] P) : ρ b (ρ x m) = ρ x (ρ b m) := by
+-- proof
   rw [← ρ_mul_apply, ← ρ_mul_apply, mul_comm]
 private noncomputable def actBil {F K P : Type u} [Field F] [Field K] [Algebra F K] [AddCommGroup P] [Module K P] [Module F P] [IsScalarTower F K P] : K →ₗ[F] K →ₗ[F] (K ⊗[F] P →ₗ[F] K ⊗[F] P) :=
   LinearMap.mk₂ F (fun a b => (a • ρ b).restrictScalars F) (fun a₁ a₂ b => LinearMap.ext fun m => by simp only [LinearMap.restrictScalars_apply, LinearMap.smul_apply, LinearMap.add_apply, add_smul]) (fun c a b => LinearMap.ext fun m => by simp only [LinearMap.restrictScalars_apply, LinearMap.smul_apply, smul_assoc]) (fun a b₁ b₂ => LinearMap.ext fun m => by simp only [LinearMap.restrictScalars_apply, LinearMap.smul_apply, LinearMap.add_apply, ρ_add_apply, smul_add]) (fun c a b => LinearMap.ext fun m => by simp only [LinearMap.restrictScalars_apply, LinearMap.smul_apply, ρ_smul_apply]; rw [smul_comm])
 private noncomputable def act {F K P : Type u} [Field F] [Field K] [Algebra F K] [AddCommGroup P] [Module K P] [Module F P] [IsScalarTower F K P] : K ⊗[F] K →ₗ[F] (K ⊗[F] P →ₗ[F] K ⊗[F] P) :=
   TensorProduct.lift actBil
 private lemma act_tmul {F K P : Type u} [Field F] [Field K] [Algebra F K] [AddCommGroup P] [Module K P] [Module F P] [IsScalarTower F K P] (a b : K) (m : K ⊗[F] P) : act (a ⊗ₜ[F] b) m = a • ρ b m := by
+-- proof
   simp [act, actBil]
 private lemma act_smul_left {F K P : Type u} [Field F] [Field K] [Algebra F K] [AddCommGroup P] [Module K P] [Module F P] [IsScalarTower F K P] (r : K ⊗[F] K) (x : K) (m : K ⊗[F] P) : act r (x • m) = x • act r m := by
+-- proof
   refine TensorProduct.inductionOn r ?_ ?_
   ·
     intro a b
@@ -54,6 +61,7 @@ private lemma act_smul_left {F K P : Type u} [Field F] [Field K] [Algebra F K] [
     intro r₁ r₂ h₁ h₂
     rw [map_add, LinearMap.add_apply, LinearMap.add_apply, h₁, h₂, smul_add]
 private lemma act_ρ {F K P : Type u} [Field F] [Field K] [Algebra F K] [AddCommGroup P] [Module K P] [Module F P] [IsScalarTower F K P] (r : K ⊗[F] K) (x : K) (m : K ⊗[F] P) : act r (ρ x m) = ρ x (act r m) := by
+-- proof
   refine TensorProduct.inductionOn r ?_ ?_
   ·
     intro a b
@@ -62,6 +70,7 @@ private lemma act_ρ {F K P : Type u} [Field F] [Field K] [Algebra F K] [AddComm
     intro r₁ r₂ h₁ h₂
     rw [map_add, LinearMap.add_apply, LinearMap.add_apply, h₁, h₂, map_add]
 private lemma act_tmul_one_mul {F K P : Type u} [Field F] [Field K] [Algebra F K] [AddCommGroup P] [Module K P] [Module F P] [IsScalarTower F K P] (x : K) (r : K ⊗[F] K) (m : K ⊗[F] P) : act ((x ⊗ₜ[F] (1 : K)) * r) m = x • act r m := by
+-- proof
   refine TensorProduct.inductionOn r ?_ ?_
   ·
     intro a b
@@ -70,6 +79,7 @@ private lemma act_tmul_one_mul {F K P : Type u} [Field F] [Field K] [Algebra F K
     intro r₁ r₂ h₁ h₂
     rw [mul_add, map_add, LinearMap.add_apply, h₁, h₂, map_add, LinearMap.add_apply, smul_add]
 private lemma act_one_tmul_mul {F K P : Type u} [Field F] [Field K] [Algebra F K] [AddCommGroup P] [Module K P] [Module F P] [IsScalarTower F K P] (x : K) (r : K ⊗[F] K) (m : K ⊗[F] P) : act (((1 : K) ⊗ₜ[F] x) * r) m = ρ x (act r m) := by
+-- proof
   refine TensorProduct.inductionOn r ?_ ?_
   ·
     intro a b
@@ -78,6 +88,7 @@ private lemma act_one_tmul_mul {F K P : Type u} [Field F] [Field K] [Algebra F K
     intro r₁ r₂ h₁ h₂
     rw [mul_add, map_add, LinearMap.add_apply, h₁, h₂, map_add, LinearMap.add_apply, map_add]
 private lemma act_eq_lmul_smul_of_diag {F K P : Type u} [Field F] [Field K] [Algebra F K] [AddCommGroup P] [Module K P] [Module F P] [IsScalarTower F K P] (w : K ⊗[F] P) (hw : ∀ k : K, k • w = ρ k w) (r : K ⊗[F] K) : act r w = (Algebra.TensorProduct.lmul' F (S := K) r) • w := by
+-- proof
   refine TensorProduct.inductionOn r ?_ ?_
   ·
     intro a b
@@ -150,3 +161,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-10

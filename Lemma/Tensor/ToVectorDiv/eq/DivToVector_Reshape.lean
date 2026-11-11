@@ -1,5 +1,5 @@
 import Lemma.Tensor.ToVector.eq.MapRange_Get
-import Def.Data.Holor.Reshape
+import Def.Data.Tensor.Reshape
 import Lemma.Tensor.GetDiv.eq.DivGet
 import Lemma.Vector.GetDiv.eq.DivGet
 import Lemma.Tensor.Div.eq.Div_Reshape

@@ -1,4 +1,4 @@
-import Instance.Data.Holor.Tensor.Part2
+import Instance.Data.Tensor.Tensor.Part2
 import Lemma.Bool.EqCastS.of.SEq.Eq
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Vector.Eq.is.All_EqGetS

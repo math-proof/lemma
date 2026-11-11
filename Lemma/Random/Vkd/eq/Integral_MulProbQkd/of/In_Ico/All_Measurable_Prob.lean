@@ -13,20 +13,20 @@ Bellman equation of the state value with continuous states and a density policy 
 The one-step reward and the expected continuation are the closed form of the action value; this identity is the
 state marginal of that form and does not mention `Q0`. Continuous-action counterpart of
 `Random.Vk.eq.Sum_MulProbQk.of.In_Ico.All_Measurable_Prob` (the action sum becomes an integral against the reference
-measure of `A`); `h₀` (joint measurability of the policy) makes the integrals over the actions and the next states
+measure of `𝒜`); `h₀` (joint measurability of the policy) makes the integrals over the actions and the next states
 meaningful, so that `∑'` and both integrals can be swapped. Holds for every state because `V0` is the `Wkd` series.
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [MeasurableSingletonClass S] [Countable S]
-  [ReferenceMeasure A] [MeasurableSingletonClass A]
-  {M : DensityModel Θ S A}
+  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮]
+  [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
   {γ : ℝ}
 -- given
-  (h₀ : ∀ θ, Measurable (fun z : S × A => M.policy.prob θ z.1 z.2))
+  (h₀ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.policy.prob θ z.1 z.2))
   (h₁ : γ ∈ Set.Ico 0 1)
   (θ : Θ)
-  (x : S) :
+  (x : 𝒮) :
 -- imply
   M.V0 θ γ x =
     ∫ u, M.policy.prob θ x u * M.rkd x u ∂ReferenceMeasure.measure +
@@ -38,7 +38,7 @@ private lemma main
     Integrable.of_integral_ne_zero (by rw [M.policy.integral_eq_one θ x]; exact one_ne_zero)
   have hπm : Measurable (M.policy.prob θ x) := (h₀ θ).comp measurable_prodMk_left
   have hT : ∀ k, Measurable (fun u => ∫ y, M.Wkd θ k y ∂(M.env.trans (x, u))) := fun k =>
-    ((StronglyMeasurable.integral_kernel_prod_right' (κ := M.env.trans) (f := fun z : (S × A) × S => M.Wkd θ k z.2)
+    ((StronglyMeasurable.integral_kernel_prod_right' (κ := M.env.trans) (f := fun z : (𝒮 × 𝒜) × 𝒮 => M.Wkd θ k z.2)
       ((Measurable_Wkd.of.All_Measurable_Prob (M := M) h₀ θ k).stronglyMeasurable.comp_measurable
         measurable_snd)).measurable).comp measurable_prodMk_left
   have hb : ∀ k y, ‖γ ^ k * M.Wkd θ k y‖ ≤ γ ^ k * |M.env.R| := fun k y => by
@@ -101,4 +101,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-03
+-- updated on 2026-11-11

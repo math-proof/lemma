@@ -2,6 +2,7 @@ import Lemma.Tensor.Det.eq.DetToMatrix
 import Lemma.Tensor.DetAppendHstackS.eq.PowNeg1
 import Lemma.Tensor.SEqDotS.of.SEq
 import Lemma.Tensor.ToMatrixDot.eq.MulToMatrixS
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
@@ -47,7 +48,7 @@ private lemma main
 -- given
   (A : Tensor α [m + n, m + n]) :
 -- imply
-  (A @ ((0 : Tensor α [m, n]).hstack (Tensor.eye m) ++ (Tensor.eye n).hstack (0 : Tensor α [n, m]))).det = (-1) ^ (m * n) * id (α := Tensor α []) A.det := by
+  (A ⬝ᵥ ((0 : Tensor α [m, n]).hstack (Tensor.eye m) ++ (Tensor.eye n).hstack (0 : Tensor α [n, m]))).det = (-1) ^ (m * n) * id (α := Tensor α []) A.det := by
 -- proof
   let P := (0 : Tensor α [m, n]).hstack (Tensor.eye m) ++ (Tensor.eye n).hstack (0 : Tensor α [n, m])
   let Pcast : Tensor α [m + n, m + n] :=
@@ -56,18 +57,18 @@ private lemma main
     rw [Nat.add_comm n m]
   have hPcast : Pcast = cast (congrArg (Tensor α) hs) P := by
     simp [Pcast]
-  have hdot : A @ P ≃ A @ Pcast := by
+  have hdot : A ⬝ᵥ P ≃ A ⬝ᵥ Pcast := by
     rw [hPcast]
     exact SEqDotS.of.SEq.left (Bool.SEq_Cast.of.Eq hs P) A
   have hAP :
-    cast (congrArg (fun t => Tensor α [m + n, t]) (Nat.add_comm n m)) (A @ P) =
-      A @ Pcast := by
+    cast (congrArg (fun t => Tensor α [m + n, t]) (Nat.add_comm n m)) (A ⬝ᵥ P) =
+      A ⬝ᵥ Pcast := by
     apply Eq.trans _ (SEq.cast hdot)
     apply eq_of_heq
     apply HEq.trans (cast_heq _ _)
     exact (cast_heq _ _).symm
-  apply Eq.trans (det_eq_toMatrix_add_comm (A @ P))
-  apply Eq.trans (toMatrix_det_eq_toMatrix_det_cast (A @ P))
+  apply Eq.trans (det_eq_toMatrix_add_comm (A ⬝ᵥ P))
+  apply Eq.trans (toMatrix_det_eq_toMatrix_det_cast (A ⬝ᵥ P))
   rw [hAP]
   apply Eq.trans (congrArg Matrix.det (ToMatrixDot.eq.MulToMatrixS A Pcast))
   rw [Matrix.det_mul]

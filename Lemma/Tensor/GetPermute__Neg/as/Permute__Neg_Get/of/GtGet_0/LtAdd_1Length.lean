@@ -1,5 +1,5 @@
-import Def.Data.Holor.Prod
-import Notation.Data.Holor.Permute
+import Def.Data.Tensor.Prod
+import Notation.Data.Tensor.Permute
 import Lemma.List.ProdDropTake.eq.MulProdDropTake.of.Gt.GtLength
 import Lemma.List.ProdTail.eq.MulProdTakeTailTake.of.Ge
 import Lemma.List.TailPermute__Neg.eq.PermuteTail.of.Gt

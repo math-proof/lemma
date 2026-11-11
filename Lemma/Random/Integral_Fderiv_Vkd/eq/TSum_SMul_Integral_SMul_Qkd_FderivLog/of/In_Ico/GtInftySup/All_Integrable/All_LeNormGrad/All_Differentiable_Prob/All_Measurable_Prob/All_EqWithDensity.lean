@@ -23,30 +23,30 @@ One-step policy-gradient identity under the continuous path law at time `t`:
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [MeasurableSpace S] [MeasurableSingletonClass S] [Countable S]
-  [ReferenceMeasure A] [MeasurableSingletonClass A]
-  {M : DensityModel Θ S A}
+  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮]
+  [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
   {θ : Θ}
   {γ : ℝ}
-  {g : S → A → ℝ}
+  {g : 𝒮 → 𝒜 → ℝ}
   {Cg Ms : ℝ}
-  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
-  {s : ℕ → (ℕ → ℝ × S × A) → S}
-  {a : ℕ → (ℕ → ℝ × S × A) → A}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (hπ : ∀ θ, Measurable (fun z : S × A => M.policy.prob θ z.1 z.2))
+  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.policy.prob θ z.1 z.2))
   (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₃ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ g x u)
   (h₄ : ∀ x, Integrable (g x) ReferenceMeasure.measure)
   (h₅ : ∀ x, ∫ u, g x u ∂ReferenceMeasure.measure ≤ Cg)
   (hφ : StronglyMeasurable
-    (fun z : S × A => fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' z.1 z.2)) θ))
+    (fun z : 𝒮 × 𝒜 => fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' z.1 z.2)) θ))
   (hMs : ∀ y u, ‖fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ‖ ≤ Ms)
   (t : ℕ) :
 -- imply
-  let Qf : S → A → ℝ := fun y u =>
+  let Qf : 𝒮 → 𝒜 → ℝ := fun y u =>
     M.rkd y u + γ * ∫ z, M.V0 θ γ z ∂(M.env.trans (y, u))
   ∫ x, fderiv ℝ (fun θ => M.V0 θ γ x) θ ∂((M θ).map (s t)) =
     ∫ ω, Qf (s t ω) (a t ω) •
@@ -87,11 +87,11 @@ private lemma main
         (Filter.Eventually.of_forall fun y =>
           NormVkd.le.MulInvSub1Abs_R.of.In_Ico (M := M) h₀ θ y)).trans_eq (by simp))
       h₀.1
-  have hQm : Measurable (fun z : S × A => Qf z.1 z.2) := by
+  have hQm : Measurable (fun z : 𝒮 × 𝒜 => Qf z.1 z.2) := by
     unfold Qf
     refine (MeasurableRkd (M := M)).add (Measurable.const_mul ?_ γ)
     exact (StronglyMeasurable.integral_kernel_prod_right' (κ := M.env.trans)
-      (f := fun z : (S × A) × S => M.V0 θ γ z.2)
+      (f := fun z : (𝒮 × 𝒜) × 𝒮 => M.V0 θ γ z.2)
       ((Measurable_Vkd.of.All_Measurable_Prob (M := M) hπ θ γ).stronglyMeasurable.comp_measurable
         measurable_snd)).measurable
   set BQ : ℝ := |M.env.R| + γ * ((1 - γ)⁻¹ * |M.env.R|)
@@ -123,11 +123,11 @@ private lemma main
       (Integral.eq.Integral_Integral_SMul.of.All_Eq_Joint.All_EqWithDensity
         (M := M) h₁ hφQ hφQC θ t).symm
   have hφV : StronglyMeasurable
-    (Function.uncurry fun (x : S) (u : A) =>
+    (Function.uncurry fun (x : 𝒮) (u : 𝒜) =>
         ∫ y, fderiv ℝ (fun θ => M.V0 θ γ y) θ ∂(M.env.trans (x, u))) :=
     (StronglyMeasurable.integral_kernel_prod_right'
       (κ := M.env.trans)
-      (f := fun z : (S × A) × S => fderiv ℝ (fun θ => M.V0 θ γ z.2) θ)
+      (f := fun z : (𝒮 × 𝒜) × 𝒮 => fderiv ℝ (fun θ => M.V0 θ γ z.2) θ)
       (hgm.comp_measurable measurable_snd)).measurable.stronglyMeasurable
   have hCV : ∀ x u,
       ‖∫ y, fderiv ℝ (fun θ => M.V0 θ γ y) θ ∂(M.env.trans (x, u))‖ ≤ C :=
@@ -144,16 +144,16 @@ private lemma main
         (M := M)
         (φ := fun x u => ∫ y, fderiv ℝ (fun θ => M.V0 θ γ y) θ ∂(M.env.trans (x, u)))
         (C := C) h₁ hφV hCV θ t
-    have hsa : Measurable fun ω : ℕ → ℝ × S × A => (s t ω, a t ω) :=
+    have hsa : Measurable fun ω : ℕ → ℝ × 𝒮 × 𝒜 => (s t ω, a t ω) :=
       (Random.Measurable.of.All_Eq.snd.fst h₁ t).prodMk
         (Random.Measurable.of.All_Eq.snd.snd h₁ t)
     have hpath :
       ∫ ω, ∫ y, fderiv ℝ (fun θ => M.V0 θ γ y) θ
             ∂(M.env.trans (s t ω, a t ω)) ∂(M θ) =
-          ∫ p : S × A, ∫ y, fderiv ℝ (fun θ => M.V0 θ γ y) θ ∂(M.env.trans p)
+          ∫ p : 𝒮 × 𝒜, ∫ y, fderiv ℝ (fun θ => M.V0 θ γ y) θ ∂(M.env.trans p)
             ∂((M θ).map (fun ω ↦ (s t ω, a t ω))) :=
       (integral_map (μ := M θ) hsa.aemeasurable
-        (f := fun p : S × A =>
+        (f := fun p : 𝒮 × 𝒜 =>
           ∫ y, fderiv ℝ (fun θ => M.V0 θ γ y) θ ∂(M.env.trans p))
         hφV.aestronglyMeasurable).symm
     have hlaw := Map.eq.Trans.of.All_Eq_Joint.All_EqWithDensity (M := M) h₁ θ t
@@ -165,7 +165,7 @@ private lemma main
     calc
       _ = ∫ ω, ∫ y, fderiv ℝ (fun θ => M.V0 θ γ y) θ
             ∂(M.env.trans (s t ω, a t ω)) ∂(M θ) := hdecomp.symm
-      _ = ∫ p : S × A, ∫ y, fderiv ℝ (fun θ => M.V0 θ γ y) θ ∂(M.env.trans p)
+      _ = ∫ p : 𝒮 × 𝒜, ∫ y, fderiv ℝ (fun θ => M.V0 θ γ y) θ ∂(M.env.trans p)
             ∂((M θ).map (fun ω ↦ (s t ω, a t ω))) := hpath
       _ = ∫ x, fderiv ℝ (fun θ => M.V0 θ γ x) θ
             ∂(M.env.trans ∘ₘ (M θ).map (fun ω ↦ (s t ω, a t ω))) :=
@@ -249,4 +249,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-03
+-- updated on 2026-11-11

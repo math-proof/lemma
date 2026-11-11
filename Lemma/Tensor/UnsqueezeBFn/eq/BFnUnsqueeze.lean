@@ -1,5 +1,5 @@
 import Lemma.Tensor.ReshapeBFn.eq.BFnReshape.of.Dvd
-import Def.Data.Holor.Unsqueeze
+import Def.Data.Tensor.Unsqueeze
 open Tensor
 
 

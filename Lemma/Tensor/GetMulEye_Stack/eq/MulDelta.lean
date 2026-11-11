@@ -1,7 +1,7 @@
 import Lemma.Tensor.GetEye.eq.Delta
 import Lemma.Tensor.GetMul.eq.MulGetS
 import Lemma.Tensor.Mul
-import Def.Data.Holor.Eye
+import Def.Data.Tensor.Eye
 open Tensor
 
 

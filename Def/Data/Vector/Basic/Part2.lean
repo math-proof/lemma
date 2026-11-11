@@ -8,7 +8,7 @@ import Lemma.List.LengthRange.eq.Length
 import Lemma.List.Prod.eq.MulProdS
 import Theorem.Algebra.Power.Part2
 import Theorem.Function
-import Instance.Data.Vector.Basic.Part2
+import Instance.Data.Vector.Basic.Arithmetic
 open Nat Lean
 open scoped BigOperators
 

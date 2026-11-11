@@ -1,6 +1,6 @@
 import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
 import Instance.LinearAlgebra.Matrix.Matmul
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Bool Tensor
 
 

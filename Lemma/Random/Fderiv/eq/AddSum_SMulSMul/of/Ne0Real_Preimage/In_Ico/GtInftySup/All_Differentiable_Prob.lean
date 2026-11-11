@@ -5,7 +5,6 @@ import Lemma.Random.V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico
 import Lemma.Random.Vc.eq.TSum_MulPowIntegral.of.Ne0Real_Preimage.In_Ico
 import Lemma.Random.RealPreimageS_Add_1.ne.Zero.of.NeMulProbT_0.Ne0Real_Preimage
 import Lemma.Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiable_Prob
-import Lemma.Random.Differentiable_FunVc.of.InIco0.GtInftySup_Norm.All_All_Differentiable_FunPolProb
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Filter
 
 
@@ -24,7 +23,7 @@ private lemma Q_eq_Qk
   (u : A)
   (hP : (M θ).real (s t ⁻¹' {x}) * M.policy.prob θ x u ≠ 0) :
   let Q (θ : Θ) (t : ℕ) (x : S) (u : A) : ℝ :=
-    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u);
+    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = x ∧ a t = u);
   Q θ t x u = M.Qk θ γ x u := by
   intro Qθ
   have := M.env.trans_markov
@@ -80,9 +79,9 @@ private lemma main
   (h₄ : (M θ).real (s t ⁻¹' {x}) ≠ 0) :
 -- imply
   let Q (θ : Θ) (t : ℕ) (x : S) (u : A) : ℝ :=
-    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u);
+    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = x ∧ a t = u);
   let V (θ : Θ) (t : ℕ) (x : S) : ℝ :=
-    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x);
+    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = x);
   fderiv ℝ (fun θ' => V θ' t x) θ =
     ∑ u, Q θ t x u • fderiv ℝ (fun θ' => M.policy.prob θ' x u) θ +
     γ • ∑ y, M.P1 θ x y • fderiv ℝ (fun θ' => V θ' (t + 1) y) θ := by
@@ -144,4 +143,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-11-03
+-- updated on 2026-11-11

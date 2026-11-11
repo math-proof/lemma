@@ -1,4 +1,4 @@
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.GetInterleave.eq.Delta_ToSplit
 import Lemma.Tensor.EqGetT
 open Bool Tensor Fin

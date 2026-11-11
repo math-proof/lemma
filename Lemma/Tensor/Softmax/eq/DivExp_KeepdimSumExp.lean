@@ -1,5 +1,5 @@
-import Theorem.Data.Holor.Functions
-import Def.Data.Holor.Sum
+import Theorem.Data.Tensor.Functions
+import Def.Data.Tensor.Sum
 open Exp
 
 

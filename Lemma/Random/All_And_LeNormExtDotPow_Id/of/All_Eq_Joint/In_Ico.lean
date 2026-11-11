@@ -19,8 +19,8 @@ private lemma main
   (θ : Θ)
   (t : ℕ) :
 -- imply
-  ∀ᵐ ω ∂(M θ), HasSum (fun k => γ ^ k * r (t + k) ω) (((γ ^ (id : ℕ → ℕ)) @ r[t:]) ω) ∧
-    ‖((γ ^ (id : ℕ → ℕ)) @ r[t:]) ω‖ ≤ (1 - γ)⁻¹ * |M.env.R| := by
+  ∀ᵐ ω ∂(M θ), HasSum (fun k => γ ^ k * r (t + k) ω) (((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω) ∧
+    ‖((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω‖ ≤ (1 - γ)⁻¹ * |M.env.R| := by
 -- proof
   obtain rfl : r = fun t ω ↦ (ω t).1 := funext₂ fun t ω ↦ (congrArg (·.1) (congrFun (h₁ t) ω)).symm
   set r : ℕ → (ℕ → ℝ × S × A) → ℝ := fun t ω ↦ (ω t).1
@@ -36,4 +36,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-10-12
+-- updated on 2026-11-11

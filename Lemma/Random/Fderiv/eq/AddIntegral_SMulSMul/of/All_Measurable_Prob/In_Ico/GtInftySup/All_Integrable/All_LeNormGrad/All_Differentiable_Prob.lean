@@ -18,32 +18,32 @@ set_option maxHeartbeats 900000
 gradient of the Bellman equation for the closed-form value function with continuous states and a density policy:
 `fderiv V0(x) = ∫ u, Q0(x, u) • fderiv π(u | x) du + γ • ∫ u, π(u | x) • ∫ y, fderiv V0(y) ∂T(· | x, u) du`.
 Continuous-action counterpart of `Random.Fderiv.eq.AddSum_SMulSMul.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Differentiable_Prob`:
-both action sums become integrals against the reference measure of `A` (differentiated under the integral sign).
+both action sums become integrals against the reference measure of `𝒜` (differentiated under the integral sign).
 `h₀`, `h₁`: `θ ↦ π_θ(u | x)` is differentiable and its gradient is dominated by `g x u`; `h₂`, `h₃`: `g x` is integrable
-over the actions, uniformly in the state (this replaces `|A| * sup ‖∇π‖ < ∞` of the finite-action version);
+over the actions, uniformly in the state (this replaces `|𝒜| * sup ‖∇π‖ < ∞` of the finite-action version);
 `h₅`: `(x, u) ↦ π_θ(u | x)` is jointly measurable.
 -/
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [MeasurableSpace S] [MeasurableSingletonClass S] [Countable S]
-  [ReferenceMeasure A] [MeasurableSingletonClass A]
-  {M : DensityModel Θ S A}
+  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮]
+  [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
   {γ : ℝ}
-  {g : S → A → ℝ}
+  {g : 𝒮 → 𝒜 → ℝ}
 -- given
   (h₀ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₁ : ∀ θ x u, ‖∇[θ] M.policy.prob θ x u‖ ≤ g x u)
   (h₂ : ∀ x, Integrable (g x) ReferenceMeasure.measure)
   (h₃ : sup[x] ∫ u, g x u ∂ReferenceMeasure.measure < ∞)
   (h₄ : γ ∈ Set.Ico 0 1)
-  (h₅ : ∀ θ, Measurable (fun z : S × A => M.policy.prob θ z.1 z.2))
-  (hP : ∀ θ x, (M θ).real ((fun ω : ℕ → ℝ × S × A => (ω 0).2.1) ⁻¹' {x}) ≠ 0)
+  (h₅ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.policy.prob θ z.1 z.2))
+  (hP : ∀ θ x, (M θ).real ((fun ω : ℕ → ℝ × 𝒮 × 𝒜 => (ω 0).2.1) ⁻¹' {x}) ≠ 0)
   (hQA : ∀ θ x u,
     (M θ).real
-      (((fun ω : ℕ → ℝ × S × A => (ω 0).2.1) ⁻¹' {x}) ∩
-        ((fun ω : ℕ → ℝ × S × A => (ω 0).2.2) ⁻¹' {u})) ≠ 0)
-  (x : S)
+      (((fun ω : ℕ → ℝ × 𝒮 × 𝒜 => (ω 0).2.1) ⁻¹' {x}) ∩
+        ((fun ω : ℕ → ℝ × 𝒮 × 𝒜 => (ω 0).2.2) ⁻¹' {u})) ≠ 0)
+  (x : 𝒮)
   (θ : Θ) :
 -- imply
   fderiv ℝ (fun θ => M.V0 θ γ x) θ =
@@ -58,7 +58,10 @@ private lemma main
   obtain ⟨C, hCV⟩ := GtInftySup.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob (M := M) h₀ h₁ h₂ h₃ h₄ h₅
   have hQ := fun u θ => DifferentiableAt.Fderiv.eq.SMul.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob (M := M) h₀ h₁ h₂ h₃ h₄ h₅ hP hQA x u θ
   have hQb : ∀ θ u, ‖M.Q0 θ γ x u‖ ≤ |M.env.R| + γ * ((1 - γ)⁻¹ * |M.env.R|) :=
-    fun θ u => NormQkd.le.AddAbs_RMulInvSub1Abs_R.of.In_Ico (M := M) h₄ θ x u
+    fun θ u =>
+      NormQkd.le.AddAbs_RMulInvSub1Abs_R.of.In_Ico (M := M) h₄ θ x u <| by
+        intro h0
+        exact hQA θ x u (by simp [Measure.real, h0])
   have hQ' : ∀ θ u, ‖fderiv ℝ (fun θ => M.Q0 θ γ x u) θ‖ ≤ γ * C := fun θ u => by
     have h := norm_integral_le_of_norm_le_const (μ := M.env.trans (x, u)) (C := C)
       (f := fun y => fderiv ℝ (fun θ => M.V0 θ γ y) θ) (Filter.Eventually.of_forall fun y => by
@@ -89,7 +92,7 @@ private lemma main
           exact mul_le_mul_of_nonneg_left (NormRkd.le.Abs_R (M := M) x u) (M.policy.nonneg θ' x u))
     have hTm : Measurable (fun u => ∫ y, M.V0 θ' γ y ∂(M.env.trans (x, u))) :=
       ((StronglyMeasurable.integral_kernel_prod_right' (κ := M.env.trans)
-        (f := fun z : (S × A) × S => M.V0 θ' γ z.2)
+        (f := fun z : (𝒮 × 𝒜) × 𝒮 => M.V0 θ' γ z.2)
         ((Measurable_Vkd.of.All_Measurable_Prob (M := M) h₅ θ' γ).stronglyMeasurable.comp_measurable
           measurable_snd)).measurable).comp measurable_prodMk_left
     have hv : Integrable (fun u => M.policy.prob θ' x u * ∫ y, M.V0 θ' γ y ∂(M.env.trans (x, u)))
@@ -127,18 +130,18 @@ Same gradient identity with the closed form `rkd + γ * ∫ V0` in place of `Q0`
 -/
 lemma bellmanFderivClosed
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [MeasurableSpace S] [MeasurableSingletonClass S] [Countable S]
-  [ReferenceMeasure A] [MeasurableSingletonClass A]
-  {M : DensityModel Θ S A}
+  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮]
+  [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
   {γ : ℝ}
-  {g : S → A → ℝ}
+  {g : 𝒮 → 𝒜 → ℝ}
   (h₀ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₁ : ∀ θ x u, ‖∇[θ] M.policy.prob θ x u‖ ≤ g x u)
   (h₂ : ∀ x, Integrable (g x) ReferenceMeasure.measure)
   (h₃ : sup[x] ∫ u, g x u ∂ReferenceMeasure.measure < ∞)
   (h₄ : γ ∈ Set.Ico 0 1)
-  (h₅ : ∀ θ, Measurable (fun z : S × A => M.policy.prob θ z.1 z.2))
-  (x : S)
+  (h₅ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.policy.prob θ z.1 z.2))
+  (x : 𝒮)
   (θ : Θ) :
   fderiv ℝ (fun θ => M.V0 θ γ x) θ =
     ∫ u, (M.rkd x u + γ * ∫ y, M.V0 θ γ y ∂(M.env.trans (x, u))) •
@@ -153,7 +156,7 @@ lemma bellmanFderivClosed
   obtain ⟨C, hCV⟩ :=
     GtInftySup.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob
       (M := M) h₀ h₁ h₂ h₃ h₄ h₅
-  let Qf (θ' : Θ) (u : A) : ℝ :=
+  let Qf (θ' : Θ) (u : 𝒜) : ℝ :=
     M.rkd x u + γ * ∫ y, M.V0 θ' γ y ∂(M.env.trans (x, u))
   have hVfd :=
     HasFDerivAt.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob
@@ -206,7 +209,7 @@ lemma bellmanFderivClosed
     · exact (MeasurableRkd (M := M)).comp measurable_prodMk_left
     · apply Measurable.const_mul
       exact ((StronglyMeasurable.integral_kernel_prod_right' (κ := M.env.trans)
-        (f := fun z : (S × A) × S => M.V0 θ' γ z.2)
+        (f := fun z : (𝒮 × 𝒜) × 𝒮 => M.V0 θ' γ z.2)
         ((Measurable_Vkd.of.All_Measurable_Prob (M := M) h₅ θ' γ).stronglyMeasurable.comp_measurable
           measurable_snd)).measurable).comp measurable_prodMk_left
   have hD := HasFDerivAt.LeNorm.of.All_LeNormFderiv.All_LeNorm.All_Differentiable.All_Measurable.Integrable.All_LeNormFderiv.All_EqIntegral_1.All_Ge_0.All_Differentiable.All_Measurable
@@ -232,7 +235,7 @@ lemma bellmanFderivClosed
           exact mul_le_mul_of_nonneg_left (NormRkd.le.Abs_R (M := M) x u) (M.policy.nonneg θ' x u))
     have hTm : Measurable (fun u => ∫ y, M.V0 θ' γ y ∂(M.env.trans (x, u))) :=
       ((StronglyMeasurable.integral_kernel_prod_right' (κ := M.env.trans)
-        (f := fun z : (S × A) × S => M.V0 θ' γ z.2)
+        (f := fun z : (𝒮 × 𝒜) × 𝒮 => M.V0 θ' γ z.2)
         ((Measurable_Vkd.of.All_Measurable_Prob (M := M) h₅ θ' γ).stronglyMeasurable.comp_measurable
           measurable_snd)).measurable).comp measurable_prodMk_left
     have hv : Integrable (fun u => M.policy.prob θ' x u * ∫ y, M.V0 θ' γ y ∂(M.env.trans (x, u)))
@@ -265,4 +268,4 @@ lemma bellmanFderivClosed
 
 
 -- created on 2026-10-07
--- updated on 2026-11-03
+-- updated on 2026-11-11

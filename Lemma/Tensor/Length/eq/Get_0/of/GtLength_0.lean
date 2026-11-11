@@ -1,4 +1,4 @@
-import Def.Data.Holor.Defs.Part4
+import Def.Data.Tensor.Defs.Part4
 import Lemma.Tensor.Length.eq.Get_0.of.Ne_Nil
 open Tensor List
 

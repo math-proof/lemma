@@ -1,6 +1,6 @@
 import Lemma.Tensor.GetReshape.as.Reshape.of.Prod.GtLength_0
-import Def.Data.Holor.Reshape
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Reshape
+import Def.Data.Tensor.Prod
 open Tensor
 
 

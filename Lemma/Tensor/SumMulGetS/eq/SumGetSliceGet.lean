@@ -11,7 +11,7 @@ import Lemma.Tensor.BandPart.eq.Stack_BoolIn_Icc
 import Lemma.Tensor.Get.of.Eq
 import Lemma.Tensor.GetMul.eq.MulGetS
 import Lemma.Tensor.Sum_IteIn_Ico.eq.SumGetSlice
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Int Nat Tensor
 
 

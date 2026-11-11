@@ -1,5 +1,5 @@
 import Lemma.List.ProdTail.eq.MulProdTakeTail
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.Nat.DivAdd.eq.AddDivS.of.Dvd
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.ModAddMul.eq.Mod

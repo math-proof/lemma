@@ -1,5 +1,5 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
-import Theorem.Data.Holor.Functions
+import Theorem.Data.Tensor.Functions
 open Bool
 
 

@@ -1,7 +1,7 @@
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.Tensor.DataSub.eq.SubDataS
 import Lemma.Vector.LogDiv.eq.SubLogS.of.All_Ne_0.All_Ne_0
-import Theorem.Data.Holor.Functions
+import Theorem.Data.Tensor.Functions
 open Tensor Vector
 
 

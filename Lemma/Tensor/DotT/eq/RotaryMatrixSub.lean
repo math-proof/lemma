@@ -1,5 +1,5 @@
 import Lemma.Tensor.AddMulS_Stack.eq.Mul_Stack_Add
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.CosSub.eq.AddMulS
 import Lemma.Tensor.DotAppendSHstackS.eq.AppendHstackSAddSDotS
 import Lemma.Tensor.DotMulSEye.eq.MulEye
@@ -9,6 +9,7 @@ import Lemma.Tensor.RotaryMatrix.eq.AppendHstackSMulSEye
 import Lemma.Tensor.SinSub.eq.SubMulSSin_Cos
 import Lemma.Tensor.TAppendHstackS.eq.AppendHstackSTS
 import Lemma.Tensor.TMulEye.eq.MulEye
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
@@ -17,7 +18,7 @@ private lemma main
 -- given
   (α β : Tensor ℝ [d]) :
 -- imply
-  α.rotaryMatrixᵀ @ β.rotaryMatrix = (β - α).rotaryMatrix := by
+  α.rotaryMatrixᵀ ⬝ᵥ β.rotaryMatrix = (β - α).rotaryMatrix := by
 -- proof
   conv_lhs =>
     arg 1

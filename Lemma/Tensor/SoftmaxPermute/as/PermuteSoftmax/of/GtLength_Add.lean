@@ -1,4 +1,4 @@
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.GtLength_0
 import Lemma.Nat.EqAdd0
 import Lemma.Tensor.GetPermute.as.PermuteGet.of.GtGet_0.LtAdd_1Length

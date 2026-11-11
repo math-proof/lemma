@@ -29,7 +29,7 @@ private lemma main
   (h₂ : (M θ).real (s t ⁻¹' {x}) * M.policy.prob θ x u ≠ 0) :
 -- imply
   let Q (θ : Θ) (t : ℕ) (x : S) (u : A) : ℝ :=
-    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u);
+    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = x ∧ a t = u);
   Q θ t x u = (∫ ρ, clip (ρ, x, u).1 (-M.env.R) M.env.R ∂(M.env.reward (x, u))) +
     γ * ∑ y, (M.env.trans (x, u)).real {y} * ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) k z ∂(M.stageK θ y) := by
 -- proof
@@ -42,7 +42,7 @@ private lemma main
   set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
   set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
   have hpR : Measurable (fun ω t ↦ r t ω) := Measurable.of_eval (Random.Measurable.of.All_Eq.fst h₁)
-  have hfG : Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) @ integ[t:]) :=
+  have hfG : Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[t:]) :=
     Measurable.tsum fun k => (measurable_pi_apply (t + k)).const_mul _
   simp only [Expectation.asRV_process]
   rw [Expectation.condEvent_eq_integral hpR.aemeasurable hfG]
@@ -50,7 +50,7 @@ private lemma main
     ext ω
     simp [JointRandomSymbol]
   rw [hpre]
-  show ∫ ω, ((γ ^ (id : ℕ → ℕ)) @ r[t:]) ω ∂(M θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}] = _
+  show ∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω ∂(M θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}] = _
   rw [Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico (M := M) h₀ h₁ θ _ t]
   rw [(Summable_MulPowIntegral_R_Add.of.In_Ico (M := M) h₀ h₁ θ _ t).tsum_eq_zero_add]
   have h0 : ∫ ω, r (t + 0) ω ∂(M θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}] =
@@ -65,4 +65,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-10-12
+-- updated on 2026-11-11

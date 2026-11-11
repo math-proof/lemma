@@ -1,4 +1,4 @@
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.Tensor.DataGet.eq.GetUnflattenData
 import Lemma.Tensor.Eq.is.EqDataS
 open Tensor Vector List

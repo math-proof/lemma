@@ -2,6 +2,8 @@
  * Signature rules of a lemma / theorem: binder lines before `-- given`, default arguments, combining binders,
  * `-- given` / `-- imply` / `-- proof` sections.
  */
+import fs from 'node:fs';
+import path from 'node:path';
 import { parseSignature, hasWord } from './scan.mjs';
 
 const REL = /[=≠<>≤≥∈∉⊆⊂⊇⊃∣↔∧∨¬≈≡]|∀|∃|\bTrue\b|\bFalse\b/;
@@ -52,6 +54,73 @@ function givenRegionBlank(P, givenLine, end) {
     if (end.col > 0 && end.line > givenLine && end.line < P.code.length)
         text += P.code[end.line].slice(0, end.col);
     return !text.trim();
+}
+
+/** Heads such as `Measurable` / `IsVaR` (a proposition), not a data type. */
+const PREDICATE_HEAD = /^(Is[A-Z]|Has[A-Z]|Odd$|Even$|Prime$|Nat\.Prime$|Squarefree$|Irreducible$|Continuous|Differentiable|Monotone|Antitone|StrictMono|StrictAnti|Injective$|Surjective$|Bijective$|Function\.|Measurable|AEMeasurable|Integrable|Summable|HasSum|Tendsto$|Filter\.Tendsto$|Nonempty$|Set\.Nonempty$|Finite$|Infinite$|Countable$|Bounded|BddAbove$|BddBelow$|Coprime$|Nat\.Coprime$|Disjoint$|Pairwise$|Antisymm|Symmetric$|Transitive$|Reflexive$|Convex|Concave|Fact$|Decidable$|Subsingleton$|Unique$|True$|False$)/;
+
+/** `class Name … : Prop` declared under `Class/` (cached). `SinglePSpace` is one of these. */
+let propClassCache = null;
+
+function collectPropClasses(src, set) {
+    const text = String(src || '').replace(/\/-[\s\S]*?-\//g, '').replace(/--[^\n]*/g, '');
+    const re = /(?:^|\n)\s*(?:(?:noncomputable|private|protected|scoped|unsafe|partial)\s+)*class\s+([A-Za-z_][\w']*)/g;
+    let m;
+    while ((m = re.exec(text))) {
+        let i = re.lastIndex;
+        let depth = 0;
+        let sort = '';
+        for (; i < text.length; i++) {
+            const c = text[i];
+            if ('([{⟨'.includes(c)) depth++;
+            else if (')]}⟩'.includes(c)) depth = Math.max(0, depth - 1);
+            else if (depth === 0 && (text.startsWith('where', i) || (c === ':' && text[i + 1] === '='))) break;
+            else if (depth === 0 && c === ':') {
+                let j = i + 1;
+                while (j < text.length && /\s/.test(text[j])) j++;
+                sort = (/^[\w.]+/.exec(text.slice(j)) || [''])[0];
+                break;
+            }
+        }
+        if (sort === 'Prop') set.add(m[1]);
+    }
+}
+
+function walkLeanFiles(dir, out) {
+    let ents;
+    try { ents = fs.readdirSync(dir, { withFileTypes: true }); } catch { return; }
+    for (const ent of ents) {
+        if (ent.name === 'v1' || ent.name === '.git' || ent.name === 'node_modules') continue;
+        const p = path.join(dir, ent.name);
+        if (ent.isDirectory()) walkLeanFiles(p, out);
+        else if (ent.isFile() && ent.name.endsWith('.lean')) out.push(p);
+    }
+}
+
+function propClassNames(root) {
+    if (propClassCache) return propClassCache;
+    const set = new Set();
+    if (root) {
+        const files = [];
+        walkLeanFiles(path.join(root, 'Class'), files);
+        for (const f of files) {
+            try { collectPropClasses(fs.readFileSync(f, 'utf8'), set); } catch { /* unreadable */ }
+        }
+    }
+    propClassCache = set;
+    return set;
+}
+
+/** Type text is a proposition: a formula, a predicate head, or a `class … : Prop`. */
+function isPropositionType(type, propClasses) {
+    const t = String(type || '').trim();
+    if (!t) return false;
+    if (REL.test(t) || /\bProp\b/.test(t)) return true;
+    const head = (/^[A-Za-z_][\w'.]*/.exec(t) || [''])[0];
+    if (!head) return false;
+    if (head === 'Prop' || PREDICATE_HEAD.test(head)) return true;
+    const last = head.includes('.') ? head.slice(head.lastIndexOf('.') + 1) : head;
+    return propClasses.has(head) || propClasses.has(last);
 }
 
 /** proposition-typed binder (relation / connective in its type) vs. a clear expression binder */
@@ -260,10 +329,10 @@ export function signatureRules(ctx) {
                 ctx.warn('section-imply', imply + 1, 1, `\`-- imply\` marker after \`-- proof\`${where}; order is given, imply, proof`);
             }
             if (sig.assign) {
-                const rest = P.code[sig.assign.line].slice(sig.assign.col + 2).trim();
-                const tactic = /^by\s*$/.test(rest);
+                // `-- proof` is mandatory for every proof shape. A bare `:= by` used to be the only
+                // missing-marker hit; `:= calc`, `:= by rw …`, and a term after `:=` skipped it.
                 if (proof == null) {
-                    if (tactic) ctx.warn('section-proof', sig.assign.line + 1, sig.assign.col + 1, `no \`-- proof\` marker${where}: put the proof body after \`-- proof\``);
+                    ctx.warn('section-proof', sig.assign.line + 1, sig.assign.col + 1, `no \`-- proof\` marker${where}: put the proof body after \`-- proof\``);
                 } else if (proof < sig.assign.line) {
                     ctx.warn('section-proof', proof + 1, 1, `\`-- proof\` marker above the \`:=\`${where}`);
                 } else {
@@ -275,7 +344,7 @@ export function signatureRules(ctx) {
                     }
                 }
             } else if (proof == null) {
-                // term-mode / missing `:= by`: still require the three markers on path/main lemmas
+                // no `:=` found: still require the marker on path/main lemmas
                 ctx.warn('section-proof', d.line + 1, 1, `no \`-- proof\` marker${where}: put the proof body after \`-- proof\``);
             }
         }
@@ -483,6 +552,27 @@ export function signatureRules(ctx) {
                 g.col + 1,
                 `binder default \`${g.open}${g.flat}${closeOf(g.open)}\` uses a tactic; never \`(h : T := by tactic)\` or \`(h : T := by infer_instance)\``,
             );
+        }
+
+        // ---- a proposition type must not take a term default `(h : P := e)` --------------------------------
+        // `SinglePSpace` is `class … : Prop`. `(hSP : SinglePSpace π (x, s) := e)` is that default.
+        // Tactic defaults stay on `given-inst`.
+        {
+            let propClasses = null;
+            for (const g of groups) {
+                if (g.kind !== 'explicit' || g.deflt == null || /^by\b/.test(g.deflt)) continue;
+                if (propClasses == null) {
+                    propClasses = propClassNames(ctx.root);
+                    if (ctx.source && /\bclass\s/.test(ctx.source)) collectPropClasses(ctx.source, propClasses = new Set(propClasses));
+                }
+                if (!isPropositionType(g.type, propClasses)) continue;
+                ctx.warn(
+                    'prop-default-arg',
+                    g.line + 1,
+                    g.col + 1,
+                    `proposition type is taking default argument using \`:=\`: \`${g.open}${g.flat}${closeOf(g.open)}\``,
+                );
+            }
         }
 
         // ---- given: an explicit binder that a later hypothesis mentions is an implicit above `-- given` ----

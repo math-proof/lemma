@@ -1,5 +1,6 @@
 import Lemma.Tensor.DotT.eq.RotaryMatrixSub
 import Lemma.Tensor.RotaryMatrixNeg.eq.TRotaryMatrix
+import Instance.Data.Vector.Basic.Dot
 open Int Tensor
 
 
@@ -8,10 +9,10 @@ private lemma main
 -- given
   (α β : Tensor ℝ [d]) :
 -- imply
-  α.rotaryMatrix @ β.rotaryMatrix = (α + β).rotaryMatrix := by
+  α.rotaryMatrix ⬝ᵥ β.rotaryMatrix = (α + β).rotaryMatrix := by
 -- proof
   rw [add_comm α β, Add.eq.Sub_Neg]
-  apply Eq.trans (congrArg (fun t => t @ β.rotaryMatrix) (congrArg rotaryMatrix (EqNegNeg (x := α)).symm))
+  apply Eq.trans (congrArg (fun t => t ⬝ᵥ β.rotaryMatrix) (congrArg rotaryMatrix (EqNegNeg (x := α)).symm))
   rw [RotaryMatrixNeg.eq.TRotaryMatrix]
   apply DotT.eq.RotaryMatrixSub
 

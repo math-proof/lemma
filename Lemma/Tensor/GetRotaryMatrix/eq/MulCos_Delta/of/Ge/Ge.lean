@@ -1,7 +1,7 @@
 import Lemma.Tensor.GetHstack.eq.Get_Sub.of.GtAdd.Ge
 import Lemma.Tensor.GetMulEye_Stack.eq.MulDelta
 import Lemma.Tensor.RotaryMatrix.eq.AppendHstackSMulSEye
-import Theorem.Data.Holor.Functions
+import Theorem.Data.Tensor.Functions
 open Tensor
 
 

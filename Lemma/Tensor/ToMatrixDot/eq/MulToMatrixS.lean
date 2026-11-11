@@ -2,6 +2,7 @@ import Mathlib.Data.Matrix.Mul
 import Lemma.Tensor.GetDot.eq.Sum_MulGetS
 import Lemma.Tensor.Mul
 import Instance.LinearAlgebra.Matrix.Dense
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
@@ -12,7 +13,7 @@ private lemma main
   (X : Tensor α [m, l])
   (Y : Tensor α [l, n]) :
 -- imply
-  (X @ Y).toMatrix = X.toMatrix * Y.toMatrix := by
+  (X ⬝ᵥ Y).toMatrix = X.toMatrix * Y.toMatrix := by
 -- proof
   ext i j
   apply Eq.trans (GetDot.eq.Sum_MulGetS X Y i j)

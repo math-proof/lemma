@@ -1,5 +1,5 @@
 import Lemma.Tensor.Unsqueeze.eq.OfVectorMap_FunUnsqueeze
-import Def.Data.Holor.Unsqueeze
+import Def.Data.Tensor.Unsqueeze
 import Lemma.Tensor.OfVectorMapToVector.eq.Stack
 open Tensor
 

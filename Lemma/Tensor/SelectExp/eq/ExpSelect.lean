@@ -6,7 +6,7 @@ import Lemma.Vector.ExpCast.as.Exp.of.Eq
 import Lemma.Vector.ExpFlatten.eq.FlattenExp
 import Lemma.Vector.ExpGetSlice.eq.GetSliceExp
 import Lemma.Vector.ExpSplitAt.eq.SplitAtExp
-import Theorem.Data.Holor.Functions
+import Theorem.Data.Tensor.Functions
 open Bool List Tensor Vector
 
 

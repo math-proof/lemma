@@ -6,15 +6,15 @@ open MeasureTheory PolicyGradient PolicyGradient.DensityModel
 /--
 Joint absolute continuity of `law(a[t], s[t])` w.r.t. the product reference measure
 implies absolute continuity of the state marginal `law(s[t])` w.r.t. the reference
-measure on `S` (`μ.map Prod.snd ≪ (α.univ) • ν` and `c • ν ≪ ν`).
+measure on `𝒮` (`μ.map Prod.snd ≪ (α.univ) • ν` and `c • ν ≪ ν`).
 -/
 @[path]
 private lemma main
-  [ReferenceMeasure S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A}
-  {r : ℕ ⇀ (ℕ → ℝ × S × A) → ℝ}
-  {s : ℕ ⇀ (ℕ → ℝ × S × A) → S}
-  {a : ℕ ⇀ (ℕ → ℝ × S × A) → A}
+  [ReferenceMeasure 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
+  {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
   [htr : DensityModel.IsPolicyTrajectory M r s a]
   [haj : DensityModel.AbsContJointAS M a s] :
   DensityModel.AbsContStateMarginal M s := by

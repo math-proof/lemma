@@ -1,4 +1,4 @@
-import Def.Data.Holor.Det
+import Def.Data.Tensor.Det
 
 
 @[path]

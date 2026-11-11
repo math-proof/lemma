@@ -1,4 +1,5 @@
 import Lemma.Tensor.GetDot.eq.DotGet.of.GtLengthS
+import Instance.Data.Vector.Basic.Dot
 open List Tensor
 
 
@@ -19,7 +20,7 @@ private lemma main
     ·
       simp_all
       apply GeLength_1.of.Ne_Nil h_s
-  (X @ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil h_s h_len X Y i) ≃ X[i] @ Y := by
+  (X ⬝ᵥ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil h_s h_len X Y i) ≃ X[i] ⬝ᵥ Y := by
 -- proof
   obtain h_len | h_len := h_len
   ·

@@ -1,6 +1,6 @@
-import Def.Data.Holor.Unsqueeze
-import Def.Data.Holor.Repeat
-import Notation.Data.Holor.Permute
+import Def.Data.Tensor.Unsqueeze
+import Def.Data.Tensor.Repeat
+import Notation.Data.Tensor.Permute
 import Lemma.Nat.EqMod_1'0
 import Lemma.Nat.Mul.of.Eq.Eq
 import Lemma.Tensor.Dot.eq.SumMul
@@ -11,7 +11,8 @@ import Lemma.Tensor.GetMul.eq.MulGetS
 import Lemma.Tensor.GetRepeat.as.RepeatGet.of.GtGet_0.GtVal_0
 import Lemma.Tensor.GetSum_2.eq.SumGet__0
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.GtLength_0
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
+import Instance.Data.Vector.Basic.Dot
 open Bool Nat Tensor
 set_option maxHeartbeats 625000
 
@@ -99,7 +100,7 @@ private lemma main
   (i : Fin m)
   (j : Fin n) :
 -- imply
-  (A @ B)[i, j] = A[i] @ Bᵀ[j] := by
+  (A ⬝ᵥ B)[i, j] = A[i] ⬝ᵥ Bᵀ[j] := by
 -- proof
   rw [Dot.eq.SumMul]
   let Ai : Tensor α [k] := A[i]

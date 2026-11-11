@@ -1,5 +1,6 @@
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.GetDot.eq.DotGetS
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
@@ -10,7 +11,7 @@ private lemma main
   (A : Tensor α [m, l])
   (B : Tensor α [l, n]) :
 -- imply
-  A @ B = [i < m] [j < n] A[i] @ Bᵀ[j] := by
+  A ⬝ᵥ B = [i < m] [j < n] A[i] ⬝ᵥ Bᵀ[j] := by
 -- proof
   simp [GetElem.getElem]
   apply Eq.of.All_EqGetS.fin

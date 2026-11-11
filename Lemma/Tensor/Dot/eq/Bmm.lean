@@ -1,5 +1,6 @@
 import Lemma.Tensor.Einsum.eq.Bmm
-import Def.Data.Holor.Bmm
+import Def.Data.Tensor.Bmm
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
@@ -10,7 +11,7 @@ private lemma main
   (A : Tensor α [m, k])
   (B : Tensor α [k, n]) :
 -- imply
-  A @ B = A.bmm B := by
+  A ⬝ᵥ B = A.bmm B := by
 -- proof
   simp [Dot.dot]
   rw [Einsum.eq.Bmm]

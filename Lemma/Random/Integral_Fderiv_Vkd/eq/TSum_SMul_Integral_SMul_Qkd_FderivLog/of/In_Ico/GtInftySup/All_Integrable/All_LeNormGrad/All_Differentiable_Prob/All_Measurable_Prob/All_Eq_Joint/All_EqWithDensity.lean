@@ -17,25 +17,25 @@ Finite-horizon policy-gradient unroll under the continuous path law.
 -/
 private lemma finite
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [MeasurableSpace S] [MeasurableSingletonClass S] [Countable S]
-  [ReferenceMeasure A] [MeasurableSingletonClass A]
-  {M : DensityModel Θ S A}
+  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮]
+  [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
   {θ : Θ}
   {γ : ℝ}
-  {g : S → A → ℝ}
+  {g : 𝒮 → 𝒜 → ℝ}
   {Cg Ms : ℝ}
-  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
-  {s : ℕ → (ℕ → ℝ × S × A) → S}
-  {a : ℕ → (ℕ → ℝ × S × A) → A}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (hπ : ∀ θ, Measurable (fun z : S × A => M.policy.prob θ z.1 z.2))
+  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.policy.prob θ z.1 z.2))
   (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₃ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ g x u)
   (h₄ : ∀ x, Integrable (g x) ReferenceMeasure.measure)
   (h₅ : ∀ x, ∫ u, g x u ∂ReferenceMeasure.measure ≤ Cg)
   (hφ : StronglyMeasurable
-    (fun z : S × A => fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' z.1 z.2)) θ))
+    (fun z : 𝒮 × 𝒜 => fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' z.1 z.2)) θ))
   (hMs : ∀ y u, ‖fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ‖ ≤ Ms)
   (n : ℕ) :
   ∫ x, fderiv ℝ (fun θ => M.V0 θ γ x) θ ∂((M θ).map (s 0)) =
@@ -72,26 +72,26 @@ discounted Q-score series.
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [MeasurableSpace S] [MeasurableSingletonClass S] [Countable S]
-  [ReferenceMeasure A] [MeasurableSingletonClass A]
-  {M : DensityModel Θ S A}
+  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮]
+  [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
   {θ : Θ}
   {γ : ℝ}
-  {g : S → A → ℝ}
+  {g : 𝒮 → 𝒜 → ℝ}
   {Cg Ms : ℝ}
-  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
-  {s : ℕ → (ℕ → ℝ × S × A) → S}
-  {a : ℕ → (ℕ → ℝ × S × A) → A}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (hπ : ∀ θ, Measurable (fun z : S × A => M.policy.prob θ z.1 z.2))
+  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.policy.prob θ z.1 z.2))
   (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₃ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ g x u)
   (h₄ : ∀ x, Integrable (g x) ReferenceMeasure.measure)
   (h₅ : ∀ x, ∫ u, g x u ∂ReferenceMeasure.measure ≤ Cg)
   (hφ : StronglyMeasurable
-    (fun z : S × A => fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' z.1 z.2)) θ))
+    (fun z : 𝒮 × 𝒜 => fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' z.1 z.2)) θ))
   (hMs : ∀ y u, ‖fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ‖ ≤ Ms) :
 -- imply
   ∫ x, fderiv ℝ (fun θ => M.V0 θ γ x) θ ∂M.env.init =
@@ -162,4 +162,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-03
+-- updated on 2026-11-11

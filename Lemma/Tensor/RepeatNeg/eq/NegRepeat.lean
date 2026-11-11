@@ -1,11 +1,11 @@
-import Def.Data.Holor.Repeat
+import Def.Data.Tensor.Repeat
 import Lemma.Tensor.DataRepeat.as.FlattenMapSplitAtData
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetRepeat.eq.Get_Mod
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.SplitAtNeg.eq.NegSplitAt
-import Theorem.Data.Holor.Functions
+import Theorem.Data.Tensor.Functions
 open Bool Fin List Tensor Vector
 
 

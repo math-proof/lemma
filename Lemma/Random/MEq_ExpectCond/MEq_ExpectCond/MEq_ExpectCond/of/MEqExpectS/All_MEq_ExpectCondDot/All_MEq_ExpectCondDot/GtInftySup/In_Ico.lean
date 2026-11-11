@@ -1,6 +1,5 @@
 import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
 import Lemma.Random.MeasurableJoint.is.Measurable.Measurable
-import Theorem.Algebra.Power.Part2
 import Theorem.Data.Vector.Basic.Part2
 import Syntax.Order.Sup
 open MeasureTheory Random
@@ -32,9 +31,9 @@ private lemma main
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, Measurable (r t, s t, a t))
   (h₂ : sup[t, ω] |r t ω| < ∞)
-  (h₃ : ∀ t, Q t (s t) (a t) =ᵐ[π] 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t, a t))
-  (h₄ : ∀ t, V t (s t) =ᵐ[π] 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t))
-  (h₅ : 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) @ r[t + 1:] | s t, a t, s (t + 1)) =ᵐ[π] 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) @ r[t + 1:] | s (t + 1))) :
+  (h₃ : ∀ t, Q t (s t) (a t) =ᵐ[π] 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t, a t))
+  (h₄ : ∀ t, V t (s t) =ᵐ[π] 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t))
+  (h₅ : 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t + 1:] | s t, a t, s (t + 1)) =ᵐ[π] 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t + 1:] | s (t + 1))) :
 -- imply
   V t (s t) =ᵐ[π] 𝔼[s, a: π](Q t (s t) (a t) | s t) ∧
     V t (s t) =ᵐ[π] 𝔼[r, s: π](r t + γ * V (t + 1) (s (t + 1)) | s t) ∧
@@ -47,7 +46,7 @@ private lemma main
     (Measurable.Measurable.of.MeasurableJoint (Measurable.Measurable.of.MeasurableJoint (h₁ n)).2).1
   have ham : ∀ n, Measurable (a n) := fun n ↦
     (Measurable.Measurable.of.MeasurableJoint (Measurable.Measurable.of.MeasurableJoint (h₁ n)).2).2
-  let G : ℕ → Ω → ℝ := fun n ω ↦ (γ ^ (id : ℕ → ℕ)) @ (r · ω)[n:]
+  let G : ℕ → Ω → ℝ := fun n ω ↦ (γ ^ (id : ℕ → ℕ)) ⬝ᵥ (r · ω)[n:]
   have hG : ∀ n ω, G n ω = ∑' k, γ ^ k * r (n + k) ω := fun _ _ ↦ rfl
   have hb : ∀ n ω k, ‖γ ^ k * r (n + k) ω‖ ≤ γ ^ k * |R| := fun n ω k ↦ by
     rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1, Real.norm_eq_abs]
@@ -107,4 +106,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-10-26
+-- updated on 2026-11-11

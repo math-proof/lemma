@@ -1,5 +1,5 @@
 import Lemma.Nat.Ne_0.of.Mul.ne.Zero
-import Instance.Data.Holor.Tensor.Part2
+import Instance.Data.Tensor.Tensor.Part2
 open Nat
 
 

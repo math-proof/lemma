@@ -2,8 +2,8 @@ import Lemma.Vector.FlattenMap.eq.MapFlatten
 import Lemma.Vector.MapCast.as.Map.of.Eq
 import Lemma.Vector.SplitAtMap.eq.MapSplitAt
 import Lemma.Vector.TransposeMap.eq.MapTranspose
-import Def.Data.Holor.Defs.Part4
-import Notation.Data.Holor.Permute
+import Def.Data.Tensor.Defs.Part4
+import Notation.Data.Tensor.Permute
 open List Vector
 
 

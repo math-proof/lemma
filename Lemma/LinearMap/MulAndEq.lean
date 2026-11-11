@@ -13,12 +13,14 @@ private noncomputable def IsCasimir (c : R ⊗[ℤ] R) : Prop :=
 
 private lemma IsCasimir.one_tmul_mul
   {c : R ⊗[ℤ] R} (hc : IsCasimir c) (y : R) : IsCasimir (((1 : R) ⊗ₜ[ℤ] y) * c) := by
+-- proof
   intro x
   rw [← mul_assoc, Algebra.TensorProduct.tmul_mul_tmul, one_mul, mul_one, mul_assoc, ← hc x, ← mul_assoc,
     Algebra.TensorProduct.tmul_mul_tmul, one_mul, mul_one]
 
 private lemma mul'_tmul_one_mul
   (x : R) (c : R ⊗[ℤ] R) : LinearMap.mul' ℤ R ((x ⊗ₜ[ℤ] (1 : R)) * c) = x * LinearMap.mul' ℤ R c := by
+-- proof
   refine TensorProduct.inductionOn c ?_ ?_
   ·
     intro u v
@@ -29,6 +31,7 @@ private lemma mul'_tmul_one_mul
 
 private lemma mul'_mul_one_tmul
   (x : R) (c : R ⊗[ℤ] R) : LinearMap.mul' ℤ R (c * ((1 : R) ⊗ₜ[ℤ] x)) = LinearMap.mul' ℤ R c * x := by
+-- proof
   refine TensorProduct.inductionOn c ?_ ?_
   ·
     intro u v
@@ -39,11 +42,13 @@ private lemma mul'_mul_one_tmul
 
 private lemma IsCasimir.commute_mul'
   {c : R ⊗[ℤ] R} (hc : IsCasimir c) (x : R) : x * LinearMap.mul' ℤ R c = LinearMap.mul' ℤ R c * x := by
+-- proof
   rw [← mul'_tmul_one_mul, hc x, mul'_mul_one_tmul]
 
 private lemma IsCasimir.of_zsmul
   {c : R ⊗[ℤ] R} {m : ℤ} (htf : ∀ v : R ⊗[ℤ] R, m • v = 0 → v = 0) (hc : IsCasimir (m • c)) :
     IsCasimir c := by
+-- proof
   intro x
   have h := hc x
   rw [mul_smul_comm, smul_mul_assoc] at h
@@ -59,6 +64,7 @@ variable {ι : Type*}
 
 private lemma torsionFree_of_basis
   (bRR : Module.Basis ι ℤ (R ⊗[ℤ] R)) (m : ℤ) (hm : m ≠ 0) (v : R ⊗[ℤ] R) (h : m • v = 0) : v = 0 := by
+-- proof
   apply bRR.ext_elem
   intro i
   have := congrArg (fun w => bRR.repr w i) h
@@ -75,6 +81,7 @@ variable [Fintype ι]
 private lemma exists_eq_zsmul_of_forall_dvd
   (bRR : Module.Basis ι ℤ (R ⊗[ℤ] R)) (ℓ : ℤ) (c : R ⊗[ℤ] R) (h : ∀ i, ℓ ∣ bRR.repr c i) :
     ∃ c' : R ⊗[ℤ] R, c = ℓ • c' ∧ ∀ i, bRR.repr c' i = bRR.repr c i / ℓ := by
+-- proof
   refine ⟨∑ i, (bRR.repr c i / ℓ) • bRR i, ?_, ?_⟩
   ·
     apply bRR.ext_elem
@@ -87,6 +94,7 @@ private lemma exists_eq_zsmul_of_forall_dvd
 private lemma exists_isCasimir_not_dvd
   (bRR : Module.Basis ι ℤ (R ⊗[ℤ] R)) (ℓ : ℤ) (hℓ : 1 < ℓ) (c₀ : R ⊗[ℤ] R) (hc₀ : IsCasimir c₀)
     (h₀ : c₀ ≠ 0) : ∃ c : R ⊗[ℤ] R, IsCasimir c ∧ ∃ i, ¬ ℓ ∣ bRR.repr c i := by
+-- proof
   classical
   have hex : ∃ i₀, bRR.repr c₀ i₀ ≠ 0 := by
     by_contra hall
@@ -143,6 +151,7 @@ variable {ℓ : ℕ} [Fact ℓ.Prime] {n : Type} [Fintype n] [DecidableEq n] {ι
 private lemma linearIndependent_map_basis
   (ψ : R →+* Matrix n n (ZMod ℓ)) (hker : ∀ x : R, ψ x = 0 ↔ ∃ y : R, x = (ℓ : R) * y)
     (bR : Module.Basis ι ℤ R) : LinearIndependent (ZMod ℓ) (fun i => ψ (bR i)) := by
+-- proof
   classical
   rw [Fintype.linearIndependent_iff]
   intro g hg i
@@ -169,6 +178,7 @@ private lemma linearIndependent_map_basis
 private lemma span_map_basis
   (ψ : R →+* Matrix n n (ZMod ℓ)) (hψ : Function.Surjective ψ) (bR : Module.Basis ι ℤ R) :
     ⊤ ≤ Submodule.span (ZMod ℓ) (Set.range fun i => ψ (bR i)) := by
+-- proof
   intro m _
   obtain ⟨r, hr⟩ := hψ m
   rw [← hr]
@@ -187,6 +197,7 @@ private lemma reducedBasis_apply
   (ψ : R →+* Matrix n n (ZMod ℓ)) (hψ : Function.Surjective ψ)
     (hker : ∀ x : R, ψ x = 0 ↔ ∃ y : R, x = (ℓ : R) * y) (bR : Module.Basis ι ℤ R) (i : ι) :
     reducedBasis ψ hψ hker bR i = ψ (bR i) := by
+-- proof
   rw [reducedBasis, Module.Basis.mk_apply]
 
 variable {K : Type} [Field K] {n : Type} [Fintype n] [DecidableEq n] {ι : Type*} [Fintype ι] (bM : Module.Basis ι K (Matrix n n K))
@@ -197,11 +208,13 @@ private noncomputable def sandwichElt (z : ι × ι → K) : Matrix n n K ⊗[K]
 private lemma mulLeftRight_sandwichElt
   (z : ι × ι → K) (m : Matrix n n K) :
     AlgHom.mulLeftRight K (Matrix n n K) (sandwichElt bM z) m = ∑ p, z p • (bM p.1 * m * bM p.2) := by
+-- proof
   simp only [sandwichElt, map_sum, map_smul, LinearMap.coe_sum, Finset.sum_apply, LinearMap.smul_apply,
     AlgHom.mulLeftRight_apply, MulOpposite.unop_op]
 
 private lemma sandwichElt_eq_zero_iff
   (z : ι × ι → K) : sandwichElt bM z = 0 ↔ z = 0 := by
+-- proof
   classical
   let bMop : Module.Basis ι K (Matrix n n K)ᵐᵒᵖ := bM.map (MulOpposite.opLinearEquiv K)
   let bT : Module.Basis (ι × ι) K (Matrix n n K ⊗[K] (Matrix n n K)ᵐᵒᵖ) := bM.tensorProduct bMop
@@ -228,6 +241,7 @@ private lemma sandwichElt_eq_zero_iff
 private lemma forall_eq_zero_of_sandwich_eq_zero
   [Nonempty n] (z : ι × ι → K) (h : ∀ m : Matrix n n K, ∑ p, z p • (bM p.1 * m * bM p.2) = 0) :
     z = 0 := by
+-- proof
   have hbij := (IsAzumaya.matrix K n).bij
   have h0 : AlgHom.mulLeftRight K (Matrix n n K) (sandwichElt bM z) = 0 := by
     apply LinearMap.ext
@@ -238,6 +252,7 @@ private lemma forall_eq_zero_of_sandwich_eq_zero
 
 private lemma exists_eq_scalar_of_forall_commute
   (A : Matrix n n K) (h : ∀ B : Matrix n n K, B * A = A * B) : ∃ k : K, A = Matrix.scalar n k := by
+-- proof
   have hA : A ∈ Set.center (Matrix n n K) := Semigroup.mem_center_iff.mpr h
   rw [Matrix.center_eq_range] at hA
   obtain ⟨k, hk⟩ := hA
@@ -330,3 +345,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-10

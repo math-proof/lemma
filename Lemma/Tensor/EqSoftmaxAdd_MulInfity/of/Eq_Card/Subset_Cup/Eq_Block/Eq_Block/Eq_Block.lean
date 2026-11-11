@@ -1,9 +1,10 @@
 import Lemma.Tensor.SoftmaxAdd_Mul_Infty.eq.Cast_Stack_Ite_Block
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
 /--
-py: `softmax(Q @ K.T + V + (Bool(i < d[j]) - 1) * oo) = V` with the relative-position bias
+py: `softmax(Q ⬝ᵥ K.T + V + (Bool(i < d[j]) - 1) * oo) = V` with the relative-position bias
 `V[i, j] = w_V[k + clip(r[d[j]] - r[i], -k, k)]` (here `c = k`, `dm = d`, `wV = w_V`), in the hyperreal masked softmax.
 For each feature `t` the logits are \( a_{ij} = \langle Q_i, K_j \rangle + V_{ij}^{t} \) and the mask is \( \Xi_{ij} = [i < d_j] \):
 \[

@@ -1,3 +1,4 @@
+import Instance.Data.Vector.Basic.Dot
 import Lemma.Hyperreal.XEqMulS.of.XEq.Imp_XEqInvS
 import Lemma.Vector.Dot
 import Lemma.Vector.XEqSumS.of.XEq.OrAll_NotInfinite
@@ -12,7 +13,7 @@ private lemma main
   (h_or : (∀ i : Fin n, ¬((b * c)[i] → ∞)) ∨ b * c ≥ 0 ∨ b * c ≤ 0)
   (h : a ≈ b) :
 -- imply
-  a @ c ≈ b @ c := by
+  a ⬝ᵥ c ≈ b ⬝ᵥ c := by
 -- proof
   rw [Dot.eq.SumMul, Dot.eq.SumMul]
   apply XEqSumS.of.XEq.OrAll_NotInfinite h_or
@@ -30,7 +31,7 @@ private lemma left
   (h_or : (∀ i : Fin n, ¬((c * b)[i] → ∞)) ∨ c * b ≥ 0 ∨ c * b ≤ 0)
   (h : a ≈ b) :
 -- imply
-  c @ a ≈ c @ b := by
+  c ⬝ᵥ a ≈ c ⬝ᵥ b := by
 -- proof
   rw [Dot.comm]
   conv_rhs => rw [Dot.comm]

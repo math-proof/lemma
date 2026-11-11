@@ -9,6 +9,7 @@ set_option backward.isDefEq.respectTransparency false
 universe u
 
 private lemma telescope (n : ℕ) (κ r d h : ℕ → ℤ) (h0 : ℤ) (hd : ∀ i, d i = κ i + r i) (hh : ∀ i, h i = κ (i + 1) - r i) (hh0 : h0 = κ 0) (hrn : r n = 0) : h0 + ∑ i ∈ Finset.range n, (-1 : ℤ) ^ (i + 1) * h i = ∑ i ∈ Finset.range (n + 1), (-1 : ℤ) ^ i * d i := by
+-- proof
   rw [Finset.sum_range_succ']
   have key : ∑ i ∈ Finset.range n, ((-1 : ℤ) ^ (i + 1) * r (i + 1) + (-1 : ℤ) ^ (i + 1) * r i) =
       (-1) ^ n * r n - (-1) ^ 0 * r 0 := by
@@ -71,3 +72,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-10

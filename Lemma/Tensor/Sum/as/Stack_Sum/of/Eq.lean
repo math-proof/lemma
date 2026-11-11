@@ -1,6 +1,6 @@
 import Lemma.Tensor.SEqStackS_UFnGet.of.Eq
 import Lemma.Tensor.Sum.eq.Stack_Sum
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Tensor
 
 

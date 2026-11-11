@@ -1,10 +1,10 @@
 import Lemma.Tensor.GetSum_0.as.SumSelect.of.GtGet_0.GtLength_0
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.GetPermuteHead.as.PermuteHeadSelect.of.GtGet_1.GtLength_1
 import Lemma.Tensor.GetSum.as.SumGet.of.GtGet_0.Gt_0.GtLength
 import Lemma.Tensor.SEqPermuteHead_1
 import Lemma.Tensor.SEqSumS.of.SEq
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Bool List Nat Tensor
 
 

@@ -1,4 +1,4 @@
-import Def.Data.Holor.Defs.Part4
+import Def.Data.Tensor.Defs.Part4
 
 
 /--

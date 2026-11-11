@@ -1,9 +1,37 @@
 [
   {
-    "resolved": "EReal",
-    "reason": "Mathlib `EReal` is a def of a type former",
+    "resolved": "LinearMap",
+    "reason": "Mathlib `LinearMap` is a structure",
     "kind": "data type",
-    "folder": "EReal",
+    "folder": "LinearMap",
+    "decl": "structure"
+  },
+  {
+    "resolved": "TensorProduct",
+    "reason": "Mathlib `TensorProduct` is a def of a type former",
+    "kind": "data type",
+    "folder": "TensorProduct",
     "decl": "def-type"
+  },
+  {
+    "resolved": "Module",
+    "reason": "Mathlib `Module` is a type class (`Lean.isClass`)",
+    "kind": "type class",
+    "folder": "Module",
+    "decl": "typeclass"
+  },
+  {
+    "resolved": "Complex",
+    "reason": "Mathlib `Complex` is a structure",
+    "kind": "data type",
+    "folder": "Complex",
+    "decl": "structure"
+  },
+  {
+    "resolved": "Vector",
+    "reason": "Mathlib `Vector` is a structure",
+    "kind": "data type",
+    "folder": "Vector",
+    "decl": "structure"
   }
 ]

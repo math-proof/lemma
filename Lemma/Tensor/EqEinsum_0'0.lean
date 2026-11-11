@@ -1,7 +1,7 @@
 import Instance.LinearAlgebra.Matrix.Matmul
-import Def.Data.Holor.Reshape
-import Def.Data.Holor.Bmm
-import Def.Data.Holor.Select
+import Def.Data.Tensor.Reshape
+import Def.Data.Tensor.Bmm
+import Def.Data.Tensor.Select
 import Lemma.Tensor.Cast_ResizeCast_0.eq.Zero
 import Lemma.Tensor.EqBmm_0'0
 import Lemma.Tensor.Select0.eq.Zero

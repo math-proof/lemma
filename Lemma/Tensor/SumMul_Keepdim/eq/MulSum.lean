@@ -1,4 +1,4 @@
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 import Lemma.Fin.MulSum.eq.Sum_Mul
 import Lemma.Fin.Sum.of.All_Eq
 import Lemma.Tensor.EqSelectKeepdim
@@ -6,7 +6,7 @@ import Lemma.Tensor.Keepdim.eq.Cast.of.LeLength
 import Lemma.Tensor.SelectMul.eq.MulSelectS
 import Lemma.Tensor.Sum.as.Sum.of.LeLength
 import Lemma.Tensor.Sum.eq.Sum_Select.of.GtLength
-import Theorem.Data.Holor.Functions
+import Theorem.Data.Tensor.Functions
 open Bool Fin List Nat Tensor
 
 

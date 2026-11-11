@@ -1,5 +1,5 @@
 import Lemma.Tensor.MapGetSlice.eq.GetSliceMap
-import Theorem.Data.Holor.Functions
+import Theorem.Data.Tensor.Functions
 open Exp Tensor
 
 

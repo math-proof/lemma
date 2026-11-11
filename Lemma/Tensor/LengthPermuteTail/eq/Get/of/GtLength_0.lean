@@ -1,5 +1,5 @@
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 open Tensor
 
 

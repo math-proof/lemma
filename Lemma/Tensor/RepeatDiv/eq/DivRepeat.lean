@@ -1,5 +1,5 @@
 import Lemma.Tensor.RepeatBFn.eq.BFnRepeat
-import Def.Data.Holor.Repeat
+import Def.Data.Tensor.Repeat
 open Tensor
 
 

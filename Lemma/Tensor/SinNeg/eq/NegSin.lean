@@ -1,6 +1,6 @@
 import Lemma.Tensor.DataSin.eq.SinData
 import Lemma.Vector.SinNeg.eq.NegSin
-import Theorem.Data.Holor.Functions
+import Theorem.Data.Tensor.Functions
 open Tensor Vector
 
 

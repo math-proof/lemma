@@ -1,6 +1,6 @@
 import Lemma.Tensor.Eq_Stack
-import Theorem.Data.Holor.Functions
-import Def.Data.Holor.Stack.Part2
+import Theorem.Data.Tensor.Functions
+import Def.Data.Tensor.Stack.Part2
 import Lemma.Vector.FlattenPow.eq.PowFlattenS
 import Lemma.Vector.PowMapSRange.eq.MapFunPow
 import Lemma.Vector.MapMap.eq.Map_Comp

@@ -1,5 +1,5 @@
-import Def.Data.Holor.Prod
-import Notation.Data.Holor.Permute
+import Def.Data.Tensor.Prod
+import Notation.Data.Tensor.Permute
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.ProdDrop.eq.MulProdS
 import Lemma.List.ProdPermute.eq.Prod

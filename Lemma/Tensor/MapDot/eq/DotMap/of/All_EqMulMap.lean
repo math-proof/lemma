@@ -1,5 +1,6 @@
 import Lemma.Tensor.MapCast.as.MapBFn.of.Eq
 import Instance.LinearAlgebra.Matrix.Matmul
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
@@ -14,7 +15,7 @@ private lemma main
   (B : Tensor α [])
   (C : Tensor α []) :
 -- imply
-  (A @ C).map (f · B.data[0]) = (A.map (f · B.data[0])) @ C := by
+  (A ⬝ᵥ C).map (f · B.data[0]) = (A.map (f · B.data[0])) ⬝ᵥ C := by
 -- proof
   apply Eq.symm
   simp only [Dot.dot]

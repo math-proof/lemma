@@ -1,3 +1,4 @@
+import Instance.Data.Vector.Basic.Dot
 import Lemma.List.SumCons.eq.Add_Sum
 import Lemma.Vector.SumMap_FunMul.eq.DotMapS
 import Lemma.Vector.EqMap_Id
@@ -15,7 +16,7 @@ private lemma main
   (h: s is constant)
   (default : α) :
 -- imply
-  s' @ s = s'.sum * s.headD default := by
+  s' ⬝ᵥ s = s'.sum * s.headD default := by
 -- proof
   have h_eq_sum := SumMap_FunMul.eq.DotMapS
     (s := s')

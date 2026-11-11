@@ -7,9 +7,9 @@ The iterated kernel expectation `Kf θ f j` of a bounded strongly measurable `f`
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A}
-  {f : ℝ × S × A → ℝ}
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
+  {f : ℝ × 𝒮 × 𝒜 → ℝ}
   {C : ℝ}
 -- given
   (hf : StronglyMeasurable f)

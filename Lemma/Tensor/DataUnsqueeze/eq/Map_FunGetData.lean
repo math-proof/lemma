@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
-import Def.Data.Holor.Unsqueeze
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Unsqueeze
+import Def.Data.Tensor.Prod
 import Lemma.Nat.Cast.eq.Fin.of.Lt.Eq
 import Lemma.Tensor.DataUnsqueeze.as.Data
 import Lemma.Vector.EqGetRange

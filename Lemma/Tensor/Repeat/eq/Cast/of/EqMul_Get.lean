@@ -1,5 +1,5 @@
 import Lemma.Bool.EqCast.of.SEq
-import Def.Data.Holor.Repeat
+import Def.Data.Tensor.Repeat
 import Lemma.Tensor.SEqRepeat.of.EqMul_Get
 open Tensor Bool
 

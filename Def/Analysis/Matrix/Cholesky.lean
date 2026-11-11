@@ -9,7 +9,7 @@ open scoped ComplexOrder
 
 
 /-- py `eq_piece` of the Cholesky algorithm:
-`L[i, j] = (A[i, j] - L[i, :j] @ ~L[j, :j]) / L[j, j]` for `j < i`,
+`L[i, j] = (A[i, j] - L[i, :j] ⬝ᵥ ~L[j, :j]) / L[j, j]` for `j < i`,
 `L[i, i] = sqrt(A[i, i] - ‖L[i, :i]‖²)`, and `0` above the diagonal. -/
 def IsCholeskyRec {𝕜 : Type*} [RCLike 𝕜] {n : ℕ} (A L : Matrix (Fin n) (Fin n) 𝕜) : Prop :=
   ∀ i j, L i j =

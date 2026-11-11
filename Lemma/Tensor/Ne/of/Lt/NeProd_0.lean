@@ -1,5 +1,5 @@
 import Lemma.Tensor.Lt.is.LtDataS
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.Vector.Ne.of.Lt.Ne_0
 open Tensor Vector
 

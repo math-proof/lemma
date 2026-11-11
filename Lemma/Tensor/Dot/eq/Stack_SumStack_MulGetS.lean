@@ -1,4 +1,5 @@
 import Lemma.Tensor.GetDot.eq.SumStack_MulGetS
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
@@ -9,7 +10,7 @@ private lemma main
   (A : Tensor α [m, l])
   (B : Tensor α [l, n]) :
 -- imply
-  A @ B = [i < m] [j < n] ∑ k < l, id (α := Tensor α []) A[i][k] * id (α := Tensor α []) B[k][j] := by
+  A ⬝ᵥ B = [i < m] [j < n] ∑ k < l, id (α := Tensor α []) A[i][k] * id (α := Tensor α []) B[k][j] := by
 -- proof
   apply Eq.of.All_EqGetS.fin
   intro i
@@ -28,7 +29,7 @@ private lemma une
   (A : Tensor α [l])
   (B : Tensor α [l, n]) :
 -- imply
-  A @ B = [j < n] ∑ k < l, id (α := Tensor α []) A[k] * id (α := Tensor α []) B[k][j] := by
+  A ⬝ᵥ B = [j < n] ∑ k < l, id (α := Tensor α []) A[k] * id (α := Tensor α []) B[k][j] := by
 -- proof
   apply Eq.of.All_EqGetS.fin
   intro j

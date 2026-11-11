@@ -10,7 +10,7 @@ Lean 4 可视化定理库由仓库根目录的 `index.php` 提供（本地常见
 
 - [../../../index.php?q=Icc&limit=100](../../../index.php?q=Icc&limit=100) — 模块名含 `Icc` 的引理
 - [../../../index.php?q=kv_cache&limit=50](../../../index.php?q=kv_cache&limit=50) — 模块名含 `kv_cache`
-- [../../../index.php?module=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T](../../../index.php?module=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T) — 直接打开 KV-cache 主引理页
+- [../../../index.php?module=Matrix.XEq_Append_MulSoftmaxDivMul_AppendTSGetSlice.of.All_XEq_MulSoftmaxAddDivMul_T](../../../index.php?module=Matrix.XEq_Append_MulSoftmaxDivMul_AppendTSGetSlice.of.All_XEq_MulSoftmaxAddDivMul_T) — 直接打开 KV-cache 主引理页
 
 搜索框占位符为 `input a hint in search of a formula/theorem/axiom`。可选参数（勾选或写入 URL）：
 
@@ -46,30 +46,30 @@ Lean 4 可视化定理库由仓库根目录的 `index.php` 提供（本地常见
 
 #### callee 层级（谁使用了本定理）
 
-以下以 [KV-cache 主引理](../../../index.php?module=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T) 为例。
+以下以 [KV-cache 主引理](../../../index.php?module=Matrix.XEq_Append_MulSoftmaxDivMul_AppendTSGetSlice.of.All_XEq_MulSoftmaxAddDivMul_T) 为例。
 
 在引理页将鼠标悬停于 **-- imply** 左侧链接，提示为 `callee hierarchy`：
 
 ![callee 链接](png/hierarchy/hyperlink.png)
 
-单击该链接进入 callee 层级图，例如 [`?callee=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T`](../../../index.php?callee=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)：
+单击该链接进入 callee 层级图，例如 [`?callee=Matrix.XEq_Append_MulSoftmaxDivMul_AppendTSGetSlice.of.All_XEq_MulSoftmaxAddDivMul_T`](../../../index.php?callee=Matrix.XEq_Append_MulSoftmaxDivMul_AppendTSGetSlice.of.All_XEq_MulSoftmaxAddDivMul_T)：
 
 ![callee 层级图](png/hierarchy/callee.png)
 
 图中列出在 `imports` 中引用该模块的其他引理（若有）。
 
 - 单击 `>>>>` 展开更上层引用；`<<<<` 折叠。
-- 访问 [`?callee=…#deep`](../../../index.php?callee=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T#deep) 可一次展开全部 callee 层级。
+- 访问 [`?callee=…#deep`](../../../index.php?callee=Matrix.XEq_Append_MulSoftmaxDivMul_AppendTSGetSlice.of.All_XEq_MulSoftmaxAddDivMul_T#deep) 可一次展开全部 callee 层级。
 
 #### caller 层级（本定理使用了谁）
 
-在引理页单击 **-- proof** 左侧、标题为 `caller hierarchy` 的链接，例如 [`?caller=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T`](../../../index.php?caller=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)：
+在引理页单击 **-- proof** 左侧、标题为 `caller hierarchy` 的链接，例如 [`?caller=Matrix.XEq_Append_MulSoftmaxDivMul_AppendTSGetSlice.of.All_XEq_MulSoftmaxAddDivMul_T`](../../../index.php?caller=Matrix.XEq_Append_MulSoftmaxDivMul_AppendTSGetSlice.of.All_XEq_MulSoftmaxAddDivMul_T)：
 
 ![caller 层级图](png/hierarchy/caller.png)
 
 图中列出该引理证明所 import 的子引理（如 `Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmaxDivDot_T`（lemma `gpt`）、`Tensor.Stack.eq.AppendStackS` 等）。
 
-- 访问 [`?caller=…#deep`](../../../index.php?caller=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T#deep) 可展开完整 caller 层级。
+- 访问 [`?caller=…#deep`](../../../index.php?caller=Matrix.XEq_Append_MulSoftmaxDivMul_AppendTSGetSlice.of.All_XEq_MulSoftmaxAddDivMul_T#deep) 可展开完整 caller 层级。
 
 ![caller 深层展开](png/hierarchy/deep/caller.png)
 

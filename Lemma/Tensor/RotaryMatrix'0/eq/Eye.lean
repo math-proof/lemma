@@ -1,6 +1,6 @@
 import Lemma.Tensor.GetRotaryMatrix'.eq.GetRotaryMatrix
 import Lemma.Tensor.RotaryMatrix0.eq.Eye
-import Def.Data.Holor.Eye
+import Def.Data.Tensor.Eye
 open Fin Nat Tensor
 
 

@@ -8,7 +8,7 @@ import Lemma.List.LengthRange.eq.Length
 import Lemma.List.Prod.eq.MulProdS
 import Theorem.Algebra.Power.Part2
 import Theorem.Function
-import Instance.Data.Vector.Basic.Part3
+import Instance.Data.Vector.Basic.Dot
 open Nat Lean
 open scoped BigOperators
 
@@ -16,5 +16,5 @@ open scoped BigOperators
 @[simp]
 theorem FinsetPow.dot_eq [AddCommMonoid α] [HPow α ℕ α] [Mul α]
     (γ : α) (s : Finset ℕ) (g : ℕ → α) :
-    (γ ^ s) @ g = ∑ i ∈ s, γ ^ i * g i := rfl
+    (γ ^ s) ⬝ᵥ g = ∑ i ∈ s, γ ^ i * g i := rfl
 

@@ -1,4 +1,4 @@
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.TensorMul.eq.MulTensorS
 import Lemma.Vector.Cast_Mul.eq.MulCastS.of.Eq
 import Lemma.Vector.FlattenMul.eq.MulFlattenS

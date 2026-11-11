@@ -1,4 +1,4 @@
-import Theorem.Data.Holor.Functions
+import Theorem.Data.Tensor.Functions
 import Lemma.Tensor.MapAppend.eq.AppendMapS
 open Tensor
 

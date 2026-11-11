@@ -12,31 +12,31 @@ With continuous states and a density policy, `θ ↦ Q0 θ γ x u` is differenti
 `γ • ∫ y, fderiv ℝ (fun θ ↦ V0 θ γ y) θ ∂T(· | x, u)` (differentiation under the integral sign).
 Continuous-action counterpart of `Random.DifferentiableAt.Fderiv.eq.SMul.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Differentiable_Prob`.
 `h₀`, `h₁`: `θ ↦ π_θ(u | x)` is differentiable and its gradient is dominated by `g x u`; `h₂`, `h₃`: `g x` is integrable
-over the actions, uniformly in the state (this replaces `|A| * sup ‖∇π‖ < ∞` of the finite-action version);
+over the actions, uniformly in the state (this replaces `|𝒜| * sup ‖∇π‖ < ∞` of the finite-action version);
 `h₅`: `(x, u) ↦ π_θ(u | x)` is jointly measurable.
 -/
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [MeasurableSpace S] [MeasurableSingletonClass S] [Countable S]
-  [ReferenceMeasure A] [MeasurableSingletonClass A]
-  {M : DensityModel Θ S A}
+  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮]
+  [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
   {γ : ℝ}
-  {g : S → A → ℝ}
+  {g : 𝒮 → 𝒜 → ℝ}
 -- given
   (h₀ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₁ : ∀ θ x u, ‖∇[θ] M.policy.prob θ x u‖ ≤ g x u)
   (h₂ : ∀ x, Integrable (g x) ReferenceMeasure.measure)
   (h₃ : sup[x] ∫ u, g x u ∂ReferenceMeasure.measure < ∞)
   (h₄ : γ ∈ Set.Ico 0 1)
-  (h₅ : ∀ θ, Measurable (fun z : S × A => M.policy.prob θ z.1 z.2))
-  (hP : ∀ θ x, (M θ).real ((fun ω : ℕ → ℝ × S × A => (ω 0).2.1) ⁻¹' {x}) ≠ 0)
+  (h₅ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.policy.prob θ z.1 z.2))
+  (hP : ∀ θ x, (M θ).real ((fun ω : ℕ → ℝ × 𝒮 × 𝒜 => (ω 0).2.1) ⁻¹' {x}) ≠ 0)
   (hQA : ∀ θ x u,
     (M θ).real
-      (((fun ω : ℕ → ℝ × S × A => (ω 0).2.1) ⁻¹' {x}) ∩
-        ((fun ω : ℕ → ℝ × S × A => (ω 0).2.2) ⁻¹' {u})) ≠ 0)
-  (x : S)
-  (u : A)
+      (((fun ω : ℕ → ℝ × 𝒮 × 𝒜 => (ω 0).2.1) ⁻¹' {x}) ∩
+        ((fun ω : ℕ → ℝ × 𝒮 × 𝒜 => (ω 0).2.2) ⁻¹' {u})) ≠ 0)
+  (x : 𝒮)
+  (u : 𝒜)
   (θ : Θ) :
 -- imply
   DifferentiableAt ℝ (fun θ => M.Q0 θ γ x u) θ ∧
@@ -71,4 +71,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-03
+-- updated on 2026-11-11

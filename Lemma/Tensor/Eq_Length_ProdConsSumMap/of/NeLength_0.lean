@@ -1,4 +1,4 @@
-import Instance.Data.Holor.Tensor.Part2
+import Instance.Data.Tensor.Tensor.Part2
 import Lemma.List.LengthFlatten.eq.SumMap_FunLength
 open List Nat
 

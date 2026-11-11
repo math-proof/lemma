@@ -26,6 +26,7 @@ private lemma subtype_comp_rangeRestrict
   (f : M →ₗ[R] N) :
   -- imply
   (LinearMap.range f).subtype.comp f.rangeRestrict = f :=
+-- proof
   LinearMap.ext fun _ => rfl
 
 private lemma lTensor_subtype_range_injective
@@ -64,6 +65,7 @@ private lemma free_quotient_range
     LinearMap.range ((LinearMap.ker f).subtype.baseChange (IsLocalRing.ResidueField R))) :
   -- imply
   Module.Free R (N ⧸ LinearMap.range f) :=
+-- proof
   Module.free_of_lTensor_residueField_injective (LinearMap.range f).subtype
     (LinearMap.range f).mkQ (Submodule.mkQ_surjective _) (LinearMap.exact_subtype_mkQ _)
     (lTensor_subtype_range_injective (IsLocalRing.ResidueField R) f h)
@@ -82,7 +84,9 @@ private lemma main
     LinearMap.range ((LinearMap.ker f).subtype.baseChange (IsLocalRing.ResidueField R))) :
   -- imply
   Module.Free R (N ⧸ LinearMap.range f) :=
+-- proof
   free_quotient_range f h
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-10

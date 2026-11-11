@@ -69,6 +69,8 @@ export const RULES = {
     // not an AGENTS.md rule: an explicit `-- given` binder that a later hypothesis mentions is an implicit above `-- given`
     'given-implicit-dep': null,
     'given-inst': Q.givenInst,
+    // not an AGENTS.md rule (user request): a proposition type must not take `(h : P := e)`
+    'prop-default-arg': null,
     'inst-under-given': Q.givenInst,
     'named-inst-above-given': Q.givenInst,
     // not an AGENTS.md rule (user request): the page typesets only the first run of `given` propositions

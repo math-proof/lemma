@@ -1,9 +1,10 @@
 import Lemma.Finset.MulSum.eq.Sum_Mul
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.Fin.Sum_MulDeltaS.eq.Delta
 import Lemma.Tensor.GetDot.eq.Sum_MulGetS
 import Lemma.Tensor.GetMulEye_Stack.eq.MulDelta
-import Def.Data.Holor.Eye
+import Def.Data.Tensor.Eye
+import Instance.Data.Vector.Basic.Dot
 open Finset Nat Tensor Fin
 set_option maxHeartbeats 400000
 
@@ -20,7 +21,7 @@ private lemma main
 -- given
   (a b : Tensor α [d]) :
 -- imply
-  (Tensor.eye d * [_ < d] a) @ (Tensor.eye d * [_ < d] b) = Tensor.eye d * [_ < d] (a * b) := by
+  (Tensor.eye d * [_ < d] a) ⬝ᵥ (Tensor.eye d * [_ < d] b) = Tensor.eye d * [_ < d] (a * b) := by
 -- proof
   apply Eq.of.All_EqGetS.fin
   intro i

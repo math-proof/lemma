@@ -64,7 +64,7 @@ def BinaryInfix.func : BinaryInfix → Func
     | `Max.max => ⟨68, "⊔", "\\sqcup"⟩  -- Lean_sqcup
     | `Min.min => ⟨69, "⊓", "\\sqcap"⟩  -- Lean_sqcap
     | `Dot.dot
-    | `List.Vector.dot => ⟨70, "@", "{\\color{red}\\times}"⟩  -- LeanMatMul
+    | `List.Vector.dot => ⟨70, "⬝ᵥ", "{\\color{red}\\times}"⟩  -- LeanMatMul
     | `HPow.hPow => ⟨80, "^", "^"⟩  -- LeanPow
     | `Function.comp => ⟨90, "∘", "\\circ"⟩  -- Lean_circ
     | `Prod => ⟨35, "×", "×"⟩  -- Lean_Prod

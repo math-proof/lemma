@@ -1,5 +1,5 @@
 import Lemma.Tensor.Sum.as.Stack_Sum.of.Eq
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Tensor Nat
 
 

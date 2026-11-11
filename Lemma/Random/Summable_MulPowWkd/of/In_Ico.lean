@@ -7,13 +7,13 @@ For `γ ∈ [0, 1)` the discounted series `∑ k, γ ^ k * Wkd θ k x` is summab
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A}
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
   {γ : ℝ}
 -- given
   (h : γ ∈ Set.Ico 0 1)
   (θ : Θ)
-  (x : S) :
+  (x : 𝒮) :
 -- imply
   Summable (fun k => γ ^ k * M.Wkd θ k x) := by
 -- proof

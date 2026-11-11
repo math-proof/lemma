@@ -1,7 +1,8 @@
 import Lemma.Tensor.Dot_T.as.Dot
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.GetDot.eq.DotGet
 import Lemma.Tensor.GetGetSlice.eq.Get_Add.of.GtSubMin
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
@@ -20,7 +21,7 @@ private lemma main
   (start stop : ℕ)
   (j : Fin ((⟨start, stop, 1⟩ : Slice).length n)) :
 -- imply
-  (Q @ K[start:stop]ᵀ)[j] ≃ Q @ K[start + j]'(by
+  (Q ⬝ᵥ K[start:stop]ᵀ)[j] ≃ Q ⬝ᵥ K[start + j]'(by
     have h_j := j.isLt
     simp [List.LengthSlice.eq.SubMin] at h_j
     grind) := by
@@ -44,12 +45,12 @@ private lemma zero
   (k : ℕ)
   (j : Fin ((⟨0, k, 1⟩ : Slice).length n)) :
 -- imply
-  (Q @ K[:k]ᵀ)[j] ≃ Q @ K[j]'(by
+  (Q ⬝ᵥ K[:k]ᵀ)[j] ≃ Q ⬝ᵥ K[j]'(by
     have h_j := j.isLt
     simp [List.LengthSlice.eq.Min] at h_j
     grind) := by
 -- proof
-  apply SEq.trans (b := Q @ K[(0 : ℕ) + j]'(by
+  apply SEq.trans (b := Q ⬝ᵥ K[(0 : ℕ) + j]'(by
     have h_j := j.isLt
     simp [List.LengthSlice.eq.Min] at h_j
     grind))

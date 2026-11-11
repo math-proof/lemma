@@ -1,4 +1,4 @@
-import Instance.Data.Holor.Tensor.Part2
+import Instance.Data.Tensor.Tensor.Part2
 import Lemma.List.ProdConsAdd.eq.AddProdSCons
 import Lemma.List.AddProdSCons.eq.MulAdd
 import Lemma.Vector.Unflatten.eq.AppendUnflattenS.of.SEq_Append

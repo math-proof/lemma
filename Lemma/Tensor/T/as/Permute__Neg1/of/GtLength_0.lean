@@ -1,4 +1,4 @@
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.SEqPermute
 import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.GtLength
 import Lemma.Tensor.SEqPermuteS__Neg.of.Le

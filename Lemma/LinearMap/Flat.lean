@@ -15,6 +15,7 @@ variable (M : Type u) [AddCommGroup M] [Module A M]
 private lemma inj_subtype_of_le
   (h𝔪 : Function.Injective (LinearMap.lTensor M (maximalIdeal A).subtype))
   (J : Ideal A) (hJ : maximalIdeal A ≤ J) : Function.Injective (LinearMap.lTensor M J.subtype) := by
+-- proof
   obtain htop | hne := eq_or_ne J ⊤
   ·
     subst htop
@@ -28,6 +29,7 @@ private lemma inj_subtype_of_le
 private lemma inj_of_bijective
   {P Q : Type u} [AddCommGroup P] [Module A P] [AddCommGroup Q] [Module A Q]
   (f : P →ₗ[A] Q) (hf : Function.Bijective f) : Function.Injective (LinearMap.lTensor M f) := by
+-- proof
   have : f = (LinearEquiv.ofBijective f hf).toLinearMap := rfl
   rw [this]
   refine ((LinearEquiv.ofBijective f hf).lTensor M).injective
@@ -36,6 +38,7 @@ private lemma alpha
     {P : Type u} [AddCommGroup P] [Module A P] (Q Q'' : Submodule A P) (p : P) (hQ : Q ≤ Q'')
     (hQ'' : Q'' = Q ⊔ Submodule.span A {p}) (hp : ∀ a ∈ maximalIdeal A, a • p ∈ Q) :
     Function.Injective (LinearMap.lTensor M (Submodule.inclusion hQ)) := by
+-- proof
   subst hQ''
   let J : Ideal A := Q.comap (LinearMap.toSpanSingleton A P p)
   have hJmem : ∀ a : A, a ∈ J ↔ a • p ∈ Q := fun a => Iff.rfl
@@ -53,6 +56,7 @@ private lemma alpha
     obtain ⟨a, ha⟩ := Submodule.mem_span_singleton.1 hz
     refine ⟨(⟨q, hq⟩, a), ?_⟩
     apply Subtype.ext
+    change (q : P) + a • p = x
     rw [ha]
     refine hx
   have hexact : Function.Exact ψ Φ := by
@@ -109,6 +113,7 @@ private lemma beta
     (u : P' →ₗ[A] P) (hu : Function.Injective u)
     (h𝔪P : ∀ a ∈ maximalIdeal A, ∀ x : P, a • x ∈ LinearMap.range u) :
     Function.Injective (LinearMap.lTensor M u) := by
+-- proof
   classical
   obtain ⟨s, hs⟩ := (inferInstance : Module.Finite A P).fg_top
   have chain : ∀ t : Finset P, Function.Injective
@@ -156,6 +161,7 @@ private lemma gamma
       (maximalIdeal A) ^ n • (⊤ : Submodule A N) = ⊥ →
       ∀ (N' : Type u) [AddCommGroup N'] [Module A N'] (u : N' →ₗ[A] N), Function.Injective u →
         Function.Injective (LinearMap.lTensor M u) := by
+-- proof
   induction n
   ·
     intro N _ _ _ hN N' _ _ u hu
@@ -234,6 +240,7 @@ private lemma finite_tensor
     (M : Type u) [AddCommGroup M] [Module A M] [Module B M] [IsScalarTower A B M] [Module.Finite B M]
     (I : Type u) [AddCommGroup I] [Module A I] [Module.Finite A I] :
     Module.Finite B (M ⊗[A] I) := by
+-- proof
   classical
   obtain ⟨s, hs⟩ := (inferInstance : Module.Finite A I).fg_top
   let Ψ : (↥s → M) →ₗ[B] M ⊗[A] I :=
@@ -406,3 +413,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-10

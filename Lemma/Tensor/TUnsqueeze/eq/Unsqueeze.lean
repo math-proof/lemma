@@ -1,5 +1,5 @@
-import Def.Data.Holor.Unsqueeze
-import Notation.Data.Holor.Permute
+import Def.Data.Tensor.Unsqueeze
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.TUnsqueeze_Length.as.Unsqueeze
 open Bool Tensor
 

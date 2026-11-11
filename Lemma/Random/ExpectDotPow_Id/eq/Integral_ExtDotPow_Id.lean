@@ -4,7 +4,7 @@ open MeasureTheory PolicyGradient PolicyGradient.Model
 
 
 /--
-Discounted return under the path binder: `𝔼[r: M θ]((γ ^ id) @ r)` is the Bochner integral of the same observable.
+Discounted return under the path binder: `𝔼[r: M θ]((γ ^ id) ⬝ᵥ r)` is the Bochner integral of the same observable.
 -/
 @[path]
 private lemma main
@@ -15,14 +15,15 @@ private lemma main
 -- given
   [PSpace (M θ) (AsPathRV.path r)] :
 -- imply
-  𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) @ r) =
-    ∫ ω, ((γ ^ (id : ℕ → ℕ)) @ r) ω ∂(M θ) := by
+  𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) =
+    ∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) ω ∂(M θ) := by
 -- proof
   apply Random.OfRV.eq.Integral.of.AEStronglyMeasurable_Map
-    (f := fun path : ℕ → ℝ ↦ ((γ ^ (id : ℕ → ℕ)) @ path))
+    (f := fun path : ℕ → ℝ ↦ ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ path))
   simp only [Dot.dot, Function.hPow_apply, id_eq]
   exact (Measurable.tsum (L := SummationFilter.unconditional ℕ) fun t ↦
     (measurable_pi_apply t).const_mul (γ ^ t)).aestronglyMeasurable
 
 
 -- created on 2026-10-17
+-- updated on 2026-11-11

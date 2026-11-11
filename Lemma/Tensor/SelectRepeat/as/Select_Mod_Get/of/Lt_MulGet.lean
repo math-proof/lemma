@@ -1,4 +1,4 @@
-import Def.Data.Holor.Repeat
+import Def.Data.Tensor.Repeat
 import Lemma.Tensor.SelectRepeat.as.Select_Mod_Get.of.Lt_MulGet.GtLength
 open Tensor Nat
 

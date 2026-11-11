@@ -11,8 +11,10 @@ http://shelf2.library.cmu.edu/Tech/23445461.pdf#page=15
 @[path]
 private lemma main
   [OPlus α]
+  [Std.Associative (α := α) OPlus.oplus]
   [OTimes α]
   [ODot α]
+  [Std.Associative (α := α) ODot.odot]
   [Bullet α]
   {cᵢ c_j cₖ : α × α} :
 -- imply

@@ -1,5 +1,5 @@
 import Lemma.Tensor.Tensordot.as.Matmul.of.GtLengthS
-import Def.Data.Holor.Reshape
+import Def.Data.Tensor.Reshape
 import Lemma.Tensor.Tensordot.eq.Matmul.of.Length
 import Lemma.Tensor.SEqReshape.of.Eq
 import Lemma.Tensor.SEqMatmulS.of.SEq.SEq

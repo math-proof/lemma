@@ -1,13 +1,16 @@
+import Theorem.Data.Fin.Dot
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Data.Matrix.Mul
 import Notation.Fun
 import Syntax.Data.List
 import Instance.Data.Fin.Dot.Part2
+infixl:72 (priority := 2000) " ⬝ᵥ " => Dot.dot
+
 
 
 theorem Dot.fun_out_eq [AddCommMonoid α] [Mul α] {m : ℕ} (s : Slice)
     (v : Fun (Fin m) α) (w : FunSlice.Out α s) :
-    v @ w = Fin.dotResize v.toFun (w : Fin (s.stop.toNat - s.start.toNat) → α) := rfl
+    v ⬝ᵥ w = Fin.dotResize v.toFun (w : Fin (s.stop.toNat - s.start.toNat) → α) := rfl
 
 theorem Fin.resize_cast [Zero α] {m n : ℕ} (heq : m = n) (x : Fin m → α) (i : Fin n) :
     Fin.resize x n i = x (Fin.cast heq.symm i) := by
@@ -41,7 +44,7 @@ theorem Fin.dotResize_cast [AddCommMonoid α] [Mul α] {m n : ℕ} (h : n = m)
 @[simp]
 theorem Dot.fun_getSlice_eq [AddCommMonoid α] [Mul α]
     (v : Fun (Fin n) α) (f : Fun ℕ α) (k : ℕ) :
-    v @ f[k: k + n] = ∑ i : Fin n, v.toFun i * f.toFun (k + i) := by
+    v ⬝ᵥ f[k: k + n] = ∑ i : Fin n, v.toFun i * f.toFun (k + i) := by
   have hto : ((k : ℤ) + (n : ℤ)).toNat = k + n := by
     rw [← Int.natCast_add]
     rfl

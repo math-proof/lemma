@@ -1,8 +1,8 @@
 import Lemma.Tensor.GetHstack.eq.Get.of.Lt
 import Lemma.Tensor.GetHstack.eq.Get_Sub.of.GtAdd.Ge
 import Lemma.Tensor.EqGetT
-import Def.Data.Holor.Defs.Part4
-import Notation.Data.Holor.Permute
+import Def.Data.Tensor.Defs.Part4
+import Notation.Data.Tensor.Permute
 open Tensor
 set_option maxHeartbeats 1000000
 

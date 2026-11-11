@@ -1,7 +1,8 @@
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.RotaryMatrix'.eq.DotDot_RotaryMatrix
 import Lemma.Tensor.SEqDotS.of.SEq
-import Theorem.Data.Holor.Functions
+import Theorem.Data.Tensor.Functions
+import Instance.Data.Vector.Basic.Dot
 open Bool Nat Tensor Fin
 
 
@@ -18,14 +19,14 @@ private lemma main
   apply (Finset.sum_eq_single j.toSplit ?_ ?_).trans ?_
   ·
     intro k _ hk
-    apply (congrArg (fun t : Tensor ℝ [] => ((interleave d)ᵀ @ θ.rotaryMatrix)[i][k] * t) (GetInterleave.eq.Delta_ToSplit k j)).trans
+    apply (congrArg (fun t : Tensor ℝ [] => ((interleave d)ᵀ ⬝ᵥ θ.rotaryMatrix)[i][k] * t) (GetInterleave.eq.Delta_ToSplit k j)).trans
     simp [Delta.eq.Ite, Fin.val_injective.ne hk]
     apply Tensor.EqMul_0'0.nat
   ·
     intro h
     apply (h (Finset.mem_univ _)).elim
   ·
-    apply (congrArg (fun t : Tensor ℝ [] => ((interleave d)ᵀ @ θ.rotaryMatrix)[i][j.toSplit] * t) (GetInterleave.eq.Delta_ToSplit j.toSplit j)).trans
+    apply (congrArg (fun t : Tensor ℝ [] => ((interleave d)ᵀ ⬝ᵥ θ.rotaryMatrix)[i][j.toSplit] * t) (GetInterleave.eq.Delta_ToSplit j.toSplit j)).trans
     simp [Delta.eq.Ite]
     apply (Tensor.EqMul_1.nat _).trans
     apply (congrArg (fun t : Tensor ℝ [d + d, d + d] => t[i][j.toSplit]) (Eq.of.SEq (SEqDotS.of.SEq (SEqCast.of.Eq (by simp) (interleave d)ᵀ) θ.rotaryMatrix)).symm).trans

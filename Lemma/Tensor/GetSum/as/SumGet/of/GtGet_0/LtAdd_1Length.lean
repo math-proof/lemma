@@ -1,7 +1,7 @@
 import Lemma.Tensor.LengthSum.eq.Length.of.Gt_0.GtLength
 import Lemma.Tensor.Sum.as.Stack_Sum.of.GtLength
 import Lemma.Tensor.SEqGetS.of.SEq.GtLength
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Tensor
 
 

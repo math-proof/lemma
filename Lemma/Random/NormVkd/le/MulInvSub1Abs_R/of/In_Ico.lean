@@ -7,13 +7,13 @@ For `γ ∈ [0, 1)` the state value with a density policy is bounded: `‖V0 θ 
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A}
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
   {γ : ℝ}
 -- given
   (h : γ ∈ Set.Ico 0 1)
   (θ : Θ)
-  (x : S) :
+  (x : 𝒮) :
 -- imply
   ‖M.V0 θ γ x‖ ≤ (1 - γ)⁻¹ * |M.env.R| := by
 -- proof
@@ -25,4 +25,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-03
+-- updated on 2026-11-11

@@ -1,7 +1,7 @@
 import Mathlib.MeasureTheory.Measure.WithDensity
 import Theorem.Probability.CondExpectation
 import Instance.Probability.SymbolicMultivariateProbability
-import Def.Data.Holor.Stack.Part2
+import Def.Data.Tensor.Stack.Part2
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.DataGet.eq.GetUnflattenData

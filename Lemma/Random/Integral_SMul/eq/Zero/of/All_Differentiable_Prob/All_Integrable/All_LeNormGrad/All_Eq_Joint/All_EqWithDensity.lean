@@ -13,12 +13,12 @@ zero-score identity.
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [MeasurableSpace S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A}
-  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
-  {s : ℕ → (ℕ → ℝ × S × A) → S}
-  {a : ℕ → (ℕ → ℝ × S × A) → A}
-  {g : S → A → ℝ}
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {g : 𝒮 → 𝒜 → ℝ}
   {C B : ℝ}
 -- given
   (θ : Θ)
@@ -26,11 +26,11 @@ private lemma main
   (h₁ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₂ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ g x u)
   (h₃ : ∀ x, Integrable (g x) ReferenceMeasure.measure)
-  (h : S → ℝ)
+  (h : 𝒮 → ℝ)
   (hh : Measurable h)
   (hC : ∀ y, ‖h y‖ ≤ C)
   (hφ : StronglyMeasurable
-    (fun z : S × A => fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' z.1 z.2)) θ))
+    (fun z : 𝒮 × 𝒜 => fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' z.1 z.2)) θ))
   (hB : ∀ y u, ‖fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ‖ ≤ B)
   (t : ℕ) :
 -- imply

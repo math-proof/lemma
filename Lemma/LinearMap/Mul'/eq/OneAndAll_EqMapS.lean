@@ -7,13 +7,13 @@ set_option backward.isDefEq.respectTransparency false
 
 
 private lemma exists_sepElt_baseChange_of_surjective [CommRing S] [CommRing T] (σ : S →+* T) (hσ : Function.Surjective σ) [Ring Λ] (e : (S ⊗[ℤ] Λ) ⊗[S] (S ⊗[ℤ] Λ)) (he₁ : LinearMap.mul' S (S ⊗[ℤ] Λ) e = 1) (he₂ : ∀ x : S ⊗[ℤ] Λ, TensorProduct.map (LinearMap.mulLeft S x) LinearMap.id e = TensorProduct.map LinearMap.id (LinearMap.mulRight S x) e) : ∃ eT : (T ⊗[ℤ] Λ) ⊗[T] (T ⊗[ℤ] Λ), LinearMap.mul' T (T ⊗[ℤ] Λ) eT = 1 ∧ ∀ x : T ⊗[ℤ] Λ, TensorProduct.map (LinearMap.mulLeft T x) LinearMap.id eT = TensorProduct.map LinearMap.id (LinearMap.mulRight T x) eT := by
+-- proof
   classical
   let _ : Algebra S T := σ.toAlgebra
   let r : S ⊗[ℤ] Λ →ₐ[S] T ⊗[ℤ] Λ := Algebra.TensorProduct.lift (Algebra.ofId S (T ⊗[ℤ] Λ)) (Algebra.TensorProduct.includeRight (R := ℤ) (A := T) (B := Λ)) (fun s l => Algebra.commutes s (Algebra.TensorProduct.includeRight (R := ℤ) (A := T) (B := Λ) l))
   have hr : ∀ (s : S) (l : Λ), r (s ⊗ₜ l) = σ s ⊗ₜ l := by
     intro s l
     rw [Algebra.TensorProduct.lift_tmul, Algebra.ofId_apply, Algebra.TensorProduct.algebraMap_apply, RingHom.algebraMap_toAlgebra, Algebra.TensorProduct.includeRight_apply, Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
-    rfl
   have hrsurj : Function.Surjective r := by
     intro y
     refine TensorProduct.inductionOn y ?_ ?_
@@ -88,7 +88,9 @@ private lemma main
   (he₂ : ∀ x : S ⊗[ℤ] Λ, TensorProduct.map (LinearMap.mulLeft S x) LinearMap.id e = TensorProduct.map LinearMap.id (LinearMap.mulRight S x) e) :
   -- imply
   ∃ eΛ : ((IsLocalRing.ResidueField S) ⊗[ℤ] Λ) ⊗[IsLocalRing.ResidueField S] ((IsLocalRing.ResidueField S) ⊗[ℤ] Λ), LinearMap.mul' (IsLocalRing.ResidueField S) ((IsLocalRing.ResidueField S) ⊗[ℤ] Λ) eΛ = 1 ∧ ∀ x : (IsLocalRing.ResidueField S) ⊗[ℤ] Λ, TensorProduct.map (LinearMap.mulLeft (IsLocalRing.ResidueField S) x) LinearMap.id eΛ = TensorProduct.map LinearMap.id (LinearMap.mulRight (IsLocalRing.ResidueField S) x) eΛ :=
+-- proof
   exists_sepElt_baseChange_of_surjective (IsLocalRing.residue S) IsLocalRing.residue_surjective e he₁ he₂
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-10

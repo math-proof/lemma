@@ -1,5 +1,5 @@
 import Lemma.Tensor.EqData0'0
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.Vector.Le.is.All_Le
 open Tensor Vector
 

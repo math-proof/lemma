@@ -1,5 +1,5 @@
 import Lemma.Tensor.GtLength_0.of.GtLength_0
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.Tensor.LengthData.eq.Prod
 open Tensor List
 

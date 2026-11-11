@@ -74,11 +74,11 @@ export async function mergeSyntaxDrivenImports(imports, leanSource) {
         await maybeUnshift('Macro.Logic.Quantifier.Part4');
         break;
       case 'LeanStack':
-        await maybeUnshift('Def.Data.Holor.Stack.Part2');
+        await maybeUnshift('Def.Data.Tensor.Stack.Part2');
         break;
       case 'Tensor':
-        if (!has('Instance.Data.Holor.Tensor.Part2') && !has('Def.Data.Holor.Stack.Part2')) {
-          await maybeUnshift('Def.Data.Holor.Defs.Part4');
+        if (!has('Instance.Data.Tensor.Tensor.Part2') && !has('Def.Data.Tensor.Stack.Part2')) {
+          await maybeUnshift('Def.Data.Tensor.Defs.Part4');
         }
         break;
       case 'IntegerRing':
@@ -88,7 +88,7 @@ export async function mergeSyntaxDrivenImports(imports, leanSource) {
         await maybeUnshift('Def.Analysis.SpecialFunctions.TensorFunctions');
         break;
       case 'eye':
-        await maybeUnshift('Def.Data.Holor.BandPart');
+        await maybeUnshift('Def.Data.Tensor.BandPart');
         break;
       case '≃':
         await maybeUnshift('Theorem.Logic.SEq');
@@ -97,7 +97,7 @@ export async function mergeSyntaxDrivenImports(imports, leanSource) {
         await maybeUnshift('Theorem.Analysis.Real.Relational');
         break;
       case 'softmax':
-        await maybeUnshift('Def.Data.Holor.Softmax');
+        await maybeUnshift('Def.Data.Tensor.Softmax');
         break;
       case 'sigmoid':
         await maybeUnshift('Instance.Data.Vector.Functions.Part2');

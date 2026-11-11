@@ -20,11 +20,11 @@ Next-state law under the continuous-action trajectory model:
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A}
-  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
-  {s : ℕ → (ℕ → ℝ × S × A) → S}
-  {a : ℕ → (ℕ → ℝ × S × A) → A}
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
 -- given
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
   (θ : Θ)
@@ -39,8 +39,8 @@ private lemma main
     funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₀ t) ω)).symm
   obtain rfl : a = fun t ω ↦ (ω t).2.2 :=
     funext₂ fun t ω ↦ (congrArg (·.2.2) (congrFun (h₀ t) ω)).symm
-  set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
-  set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
+  set s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮 := fun t ω ↦ (ω t).2.1
+  set a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜 := fun t ω ↦ (ω t).2.2
   set μ := (M θ).map (fun ω ↦ ω t)
   have hK := Map.eq.BindK.of.All_EqWithDensity (M := M) θ t
   have hmap :
@@ -53,8 +53,8 @@ private lemma main
       (measurable_pi_apply t)]
     rfl
   have hsk :
-    (M.stageK θ).map (fun z : ℝ × S × A => z.2.1) =
-      Kernel.deterministic (id : S → S) measurable_id := by
+    (M.stageK θ).map (fun z : ℝ × 𝒮 × 𝒜 => z.2.1) =
+      Kernel.deterministic (id : 𝒮 → 𝒮) measurable_id := by
     unfold DensityModel.stageK
     rw [← Kernel.map_comp_right _ (by fun_prop) (by fun_prop)]
     show (Kernel.deterministic id measurable_id ×ₖ

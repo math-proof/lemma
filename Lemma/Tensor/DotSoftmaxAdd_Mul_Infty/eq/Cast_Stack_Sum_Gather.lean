@@ -1,4 +1,5 @@
 import Lemma.Tensor.DotSoftmaxAdd_Mul_Infty.eq.Cast_Stack_Sum_Ite_Mul
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 set_option maxHeartbeats 1000000
 
@@ -31,7 +32,7 @@ private lemma main
   let Ξ : Tensor ℝ* [n, n] := [i < n] [j < n] (Bool.toNat (decide (P i j)))
   let A : Tensor ℝ* [n, n] := ([i < n] [j < n] (a i j : Tensor ℝ []) : Tensor ℝ [n, n])
   let Vᵢ : Tensor ℝ [n, d] := [j < n] [l < d] (v i j l : Tensor ℝ [])
-  ((A + (Ξ - 1) * ∞).softmax.get ⟨i, by grind⟩) @ (Vᵢ : Tensor ℝ* [n, d]) ≈
+  ((A + (Ξ - 1) * ∞).softmax.get ⟨i, by grind⟩) ⬝ᵥ (Vᵢ : Tensor ℝ* [n, d]) ≈
     ((([l < d] ((∑ t : Fin k, Real.exp (a i (dm t)) / (∑ s : Fin k, Real.exp (a i (dm s))) * v i (dm t) l : ℝ) : Tensor ℝ [])) : Tensor ℝ [d]) : Tensor ℝ* [d]) := by
 -- proof
   intro Ξ A Vᵢ

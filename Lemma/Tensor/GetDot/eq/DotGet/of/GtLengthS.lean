@@ -1,6 +1,7 @@
 import Lemma.List.EqAppendTake__ListGet.of.GtLength_0
 import Lemma.Tensor.GetDot.as.DotGet.of.GtLengthS
 import Lemma.Tensor.GetDot.eq.DotGet.of.Ne_Nil
+import Instance.Data.Vector.Basic.Dot
 open Bool List Tensor
 
 
@@ -13,7 +14,7 @@ private lemma main
   (Y : Tensor α (n' :: s'))
   (i : Fin n) :
 -- imply
-  (X @ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil (by grind) (by omega) X Y i) ≃ X[i] @ Y := by
+  (X ⬝ᵥ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil (by grind) (by omega) X Y i) ≃ X[i] ⬝ᵥ Y := by
 -- proof
   have h_s : s ≠ [] := by grind
   match s' with

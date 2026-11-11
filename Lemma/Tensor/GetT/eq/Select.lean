@@ -1,5 +1,5 @@
 import Lemma.Bool.EqCast.of.SEq
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.List.Swap.eq.Permute__Neg1.of.GtLength
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetPermute__Neg.as.Select.of.GtGet.GtLength_0

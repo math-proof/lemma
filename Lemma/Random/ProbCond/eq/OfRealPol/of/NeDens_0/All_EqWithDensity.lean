@@ -17,20 +17,20 @@ continuous densities), or derive it from the `stageK` disintegration in a dedica
 -/
 @[path]
 private lemma main
-  [ReferenceMeasure S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A}
-  {θ : Θ} {t : ℕ} {x : S} {u : A}
-  {r : ℕ ⇀ (ℕ → ℝ × S × A) → ℝ}
-  {s : ℕ ⇀ (ℕ → ℝ × S × A) → S}
-  {a : ℕ ⇀ (ℕ → ℝ × S × A) → A}
+  [ReferenceMeasure 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
+  {θ : Θ} {t : ℕ} {x : 𝒮} {u : 𝒜}
+  {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
 -- given
   (h₀ : DensityModel.IsPolicyTrajectory M r s a)
   (h₁ : DensityModel.AbsContJointAS M a s)
   (h₂ : (M θ).prob (a t, s t) (u, x) =
     ENNReal.ofReal (M.policy.prob θ x u) *
-      ((M θ).map (s t)).rnDeriv (ReferenceMeasure.measure : Measure S) x)
-  (h₃ : ((M θ).map (s t)).rnDeriv (ReferenceMeasure.measure : Measure S) x ≠ 0)
-  (h₄ : ((M θ).map (s t)).rnDeriv (ReferenceMeasure.measure : Measure S) x ≠ ⊤) :
+      ((M θ).map (s t)).rnDeriv (ReferenceMeasure.measure : Measure 𝒮) x)
+  (h₃ : ((M θ).map (s t)).rnDeriv (ReferenceMeasure.measure : Measure 𝒮) x ≠ 0)
+  (h₄ : ((M θ).map (s t)).rnDeriv (ReferenceMeasure.measure : Measure 𝒮) x ≠ ⊤) :
 -- imply
   have : SinglePSpace (M θ) (a t, s t) := h₀.singlePSpace_as (haj := h₁) θ t
   ℙ[M θ]((a t) = u | (s t) = x) = ENNReal.ofReal (M.policy.prob θ x u) := by

@@ -457,10 +457,15 @@ export class LeanParenthesis extends LeanPairedGroup {
             const peel = (n) => (n instanceof LeanParenthesis ? n.arg : n);
             const body = peel(arg);
             if (body instanceof L.LeanBitOr) {
+                // `s = «\sf{s}»` (bound letter matching the RV) elides to `s`, including
+                // the RA event `ℙ[π](x | s = «\sf{s}»)` → `ℙ[π](x | s)`. An observation
+                // event on the left (`x = «\sf{x}»`) still elides to the RV name.
                 const left = L.LeanArgsSpaceSeparated.collectProbEventRVs(body.lhs);
                 const right = L.LeanArgsSpaceSeparated.collectProbEventRVs(body.rhs);
-                if (left && right) {
-                    const lhsLatex = left.map((t) => t.toLatex(syntax)).join(', ');
+                if (right) {
+                    const lhsLatex = left
+                        ? left.map((t) => t.toLatex(syntax)).join(', ')
+                        : body.lhs.toLatex(syntax);
                     const R = right.map((t) => t.toLatex(syntax)).join(', ');
                     return [`${lhsLatex} ${mid()} ${R}`];
                 }
@@ -490,7 +495,7 @@ export class LeanParenthesis extends LeanPairedGroup {
         }
         if (this.isLatexGetElemOperand())
             return [arg.toLatex(syntax)];
-        if (this.isLatexRedundantPrecedence() || this.isLatexJointTuple())
+        if (this.isLatexRedundantPrecedence() || this.isLatexJointTuple() || this.isLatexBareDiv())
             return [arg.toLatex(syntax)];
         // use peeled content (not this.args / super) so ((e)) does not nest another wrap
         return [arg.toLatex(syntax)];
@@ -508,7 +513,7 @@ export class LeanParenthesis extends LeanPairedGroup {
         }
         if (this.isLatexGetElemOperand())
             return '%s';
-        if (this.isLatexRedundantPrecedence() || this.isLatexJointTuple())
+        if (this.isLatexRedundantPrecedence() || this.isLatexJointTuple() || this.isLatexBareDiv())
             return '%s';
         if (
             String(arg).includes('\n') &&
@@ -569,19 +574,63 @@ export class LeanParenthesis extends LeanPairedGroup {
     }
 
     /**
-     * Parentheses only needed for Lean parsing (e.g. `(γ ^ id) @ r[t:]`): the inner operator
-     * binds tighter than the surrounding one, so LaTeX can drop the parens (`γ^{id} × r_{t:}`).
+     * `(a / b)` renders as `\frac{a}{b}`, which is already one atom, so the grouping
+     * parentheses (needed in Lean before `•` or `: ℝ`) are omitted.
+     * Expect/Prob binder parentheses stay (`latexParenRequired`).
+     */
+    isLatexBareDiv() {
+        return this.latexContentArg() instanceof L.LeanDiv && !this.latexParenRequired();
+    }
+
+    /**
+     * This parenthesis is a factor of infix `@` (matmul, priority `LeanMatMul`).
+     * `@` is tokenized as its own word inside juxtaposition — `(γ ^ id) @ r`,
+     * `(γ ^ id) @ fun t ↦ …` — rather than as a `LeanMatMul` node.
+     * Not a factor: `f (a ^ b) @ c` (argument of `f`) and `x @ (a ^ b) y`
+     * (the following term would become part of the exponent).
+     */
+    isMatmulTokenOperand() {
+        const p = this.parent;
+        if (!(p instanceof L.LeanArgsSpaceSeparated)) return false;
+        const args = p.args;
+        const i = args.indexOf(this);
+        if (i < 0) return false;
+        const isAt = (n) => n instanceof L.LeanToken && n.text === '@';
+        // `… @ fun t ↦ …` groups the operator with the lambda.
+        const headAt = (n) => n instanceof L.LeanArgsSpaceSeparated && isAt(n.args?.[0]);
+        const prev = i > 0 ? args[i - 1] : null;
+        const next = i + 1 < args.length ? args[i + 1] : null;
+        const leftOf = next != null && (isAt(next) || headAt(next));
+        const rightOf = prev != null && isAt(prev);
+        if (!leftOf && !rightOf) return false;
+        if (prev != null && !isAt(prev) && !headAt(prev)) return false;
+        if (next != null && !isAt(next) && !headAt(next)) return false;
+        return true;
+    }
+
+    /**
+     * Parentheses only needed for Lean parsing. The inner operator binds tighter
+     * than the surrounding one, so LaTeX drops them.
+     * `(a ^ b) * c` is a `LeanPow` under `LeanMul`.
+     * `(γ ^ id) @ r` is the same comparison against matmul priority (70):
+     * `^` is 80, so the parens go; `(a + b) @ c` stays, because `+` is looser than `@`.
      */
     isLatexRedundantPrecedence() {
-        const p = this.parent;
-        if (!(p instanceof L.LeanArithmetic)) return false;
         const arg = this.arg;
         if (!(arg instanceof L.LeanArithmetic)) return false;
         if (this.latexParenRequired()) return false; // `(· + 1) * 2`
         // Prefer instance priority (`*ᵥ` 73, `⬝ᵥ` 72) so given latex matches Def Expr.toLatex.
         const childPri = arg.input_priority ?? arg.constructor.input_priority ?? 0;
-        const parentPri = p.input_priority ?? p.constructor.input_priority ?? 0;
-        return childPri > parentPri;
+        const p = this.parent;
+        if (p instanceof L.LeanArithmetic) {
+            const parentPri = p.input_priority ?? p.constructor.input_priority ?? 0;
+            return childPri > parentPri;
+        }
+        if (this.isMatmulTokenOperand()) {
+            const matmulPri = L.LeanMatMul?.input_priority ?? 70;
+            return childPri > matmulPri;
+        }
+        return false;
     }
 
     /** Parenthesized GetElem base/index: `(e)[i]` → `e_i`, not `(e)_i`. */
@@ -1015,6 +1064,49 @@ export class LeanBracket extends LeanPairedGroup {
 
     strArgs() {
         return [this.arg];
+    }
+}
+
+/**
+ * Mathlib `![a, b, …]` (`Matrix.vecCons` / `vecEmpty`) and `!![a, b; c, d]` (matrix notation).
+ * The bangs are part of the delimiter, so LaTeX keeps brackets (`!\left[ a, b \right]`)
+ * instead of factorial-plus-subscript (`{!}_{a, b}`).
+ */
+export class LeanVecNotation extends LeanPairedGroup {
+    static { this.register(); }
+
+    /** @type {1 | 2} one bang is a vector; two bangs is a matrix. */
+    bangs = 1;
+
+    get stack_priority() {
+        return 17;
+    }
+
+    get operator() {
+        return this.bangs === 2 ? '!![]' : '![]';
+    }
+
+    latexFormat() {
+        const bang = this.bangs === 2 ? '!!' : '!';
+        return `${bang}\\left[ {%s} \\right]`;
+    }
+
+    strFormat() {
+        const bang = this.bangs === 2 ? '!!' : '!';
+        const inner = this.argFormat();
+        const c = this.is_closed;
+        if (c) return `${bang}[${inner}]`;
+        if (c == null) return `${bang}[${inner}`;
+        return `${inner}]`;
+    }
+
+    /** `]` closes this list (the token handler always asks for `LeanBracket`). */
+    push_right(funcName) {
+        if (funcName === 'LeanBracket') {
+            this.is_closed = true;
+            return this;
+        }
+        return super.push_right(funcName);
     }
 }
 

@@ -1,5 +1,5 @@
-import Def.Data.Holor.Reshape
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Reshape
+import Def.Data.Tensor.Prod
 import Lemma.List.Cons_Append_List.eq.AppendTake_Length
 import Lemma.List.SetAppend.eq.Append_Set.of.LeLength
 import Lemma.Tensor.Einsum.as.SelectBmm.of.GeLength_2
@@ -9,6 +9,7 @@ import Lemma.Tensor.GetSelect.as.SelectGet.of.GtGet_0.GtGet_Add_1.LtAdd_1Length
 import Lemma.Tensor.GetTensordot.as.MatmulGet.of.GtLength_0
 import Lemma.Tensor.SEqMatmulS.of.SEq.SEq.Eq.Eq
 import Lemma.Tensor.Tensordot.as.Matmul
+import Instance.Data.Vector.Basic.Dot
 open Bool List Tensor
 set_option maxHeartbeats 500000
 
@@ -136,7 +137,7 @@ private lemma main
   (Y : Tensor α [n', k'])
   (i : Fin n) :
 -- imply
-  (X @ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil (by simp) (by apply GeLength_1.of.Ne_Nil (by simp)) X Y i) ≃ X[i] @ Y := by
+  (X ⬝ᵥ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil (by simp) (by apply GeLength_1.of.Ne_Nil (by simp)) X Y i) ≃ X[i] ⬝ᵥ Y := by
 -- proof
   simp [GetElem.getElem]
   match s with
@@ -163,7 +164,7 @@ private lemma une
   (Y : Tensor α [n'])
   (i : Fin n) :
 -- imply
-  (X @ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil (by simp) (by simp) X Y i) ≃ X[i] @ Y := by
+  (X ⬝ᵥ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil (by simp) (by simp) X Y i) ≃ X[i] ⬝ᵥ Y := by
 -- proof
   simp [GetElem.getElem]
   match s with

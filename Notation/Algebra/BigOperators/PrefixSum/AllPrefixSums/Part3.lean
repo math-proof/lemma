@@ -1,5 +1,5 @@
 import Initialize.Tactic.Attr.Basic
-import Class.Algebra.BigOperators.PrefixSum.AllPrefixSums.Part3
+import Class.Algebra.ODot
 
 
 infixl:65 "⊙" => ODot.odot

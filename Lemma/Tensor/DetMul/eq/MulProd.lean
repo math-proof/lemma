@@ -1,5 +1,5 @@
 import Mathlib.Data.Matrix.Mul
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.Tensor.Det.eq.DetToMatrix
 import Lemma.Tensor.Mul
 import Lemma.Tensor.MulStack.eq.Stack_Mul

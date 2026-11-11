@@ -1,4 +1,4 @@
-import Def.Data.Holor.Reshape
+import Def.Data.Tensor.Reshape
 import Lemma.Tensor.BmmBFn.eq.BFnBmm
 import Lemma.Tensor.Einsum.as.SelectBmm.of.Eq_Get_SubLength.GeLength_2
 import Lemma.Tensor.Einsum.as.SelectBmm.of.GeLength_2
@@ -6,8 +6,9 @@ import Lemma.Tensor.Einsum.as.SelectBmm.of.GtGet_SubLength.GeLength_2
 import Lemma.Tensor.Einsum.as.SelectBmm.of.Gt_Get_SubLength.GeLength_2
 import Lemma.Tensor.ResizeBFn.eq.BFnResize
 import Lemma.Tensor.SelectBFn.eq.BFnSelect
-import Def.Data.Holor.Bmm
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Bmm
+import Def.Data.Tensor.Sum
+import Instance.Data.Vector.Basic.Dot
 open Bool List Tensor
 set_option maxHeartbeats 500000
 
@@ -26,7 +27,7 @@ private lemma main
   (C : Tensor α s')
   (B : Tensor α []) :
 -- imply
-  (A.map (f · B.data[0])) @ C = (A @ C).map (f · B.data[0]) := by
+  (A.map (f · B.data[0])) ⬝ᵥ C = (A ⬝ᵥ C).map (f · B.data[0]) := by
 -- proof
   let F {s} (X : Tensor α s) : Tensor α s := X.map (f · B.data[0])
   simp only [Dot.dot]
@@ -148,7 +149,7 @@ private lemma left
   (C : Tensor α [n'])
   (B : Tensor α []) :
 -- imply
-  (A.map (f · B.data[0])) @ C = (A @ C).map (f · B.data[0]) := by
+  (A.map (f · B.data[0])) ⬝ᵥ C = (A ⬝ᵥ C).map (f · B.data[0]) := by
 -- proof
   let F {s} (X : Tensor α s) : Tensor α s := X.map (f · B.data[0])
   simp only [Dot.dot]

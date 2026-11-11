@@ -1,9 +1,9 @@
 import Lemma.Nat.Delta.eq.Ite
-import Def.Data.Holor.Prod
-import Notation.Data.Holor.Permute
+import Def.Data.Tensor.Prod
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.GetMulEye_Stack.eq.MulDelta
 import Lemma.Tensor.EqGetT
-import Def.Data.Holor.Eye
+import Def.Data.Tensor.Eye
 open Nat Tensor
 set_option maxHeartbeats 1000000
 

@@ -1,4 +1,4 @@
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.Hyperreal.XEqSumS.of.All_XEq.OrAll_NotInfinite
 import Lemma.Tensor.DataSum.eq.Sum_DataSelect
 import Lemma.Tensor.Ge_0.is.All_Le0GetData
@@ -6,7 +6,7 @@ import Lemma.Tensor.Le_0.is.All_Ge0GetData
 import Lemma.Tensor.Sum.as.Sum.of.LeLength
 import Lemma.Tensor.XEq.is.All_XEqGetS
 import Lemma.Vector.GetSum.eq.Sum_Get
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Hyperreal Tensor Fin Vector List Nat
 
 

@@ -1,6 +1,6 @@
 项目工件：<https://github.com/math-proof/lemma>
 
-KV-cache：[Lean 4](http://www.lemma.cn/lean/?module=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)
+KV-cache：[Lean 4](http://www.lemma.cn/lean/?module=Matrix.XEq_Append_MulSoftmaxDivMul_AppendTSGetSlice.of.All_XEq_MulSoftmaxAddDivMul_T)
 
 # 摘要
 
@@ -32,7 +32,7 @@ Hugging Face Transformers 以 `use_cache=True` 实现（[`generate`](https://hug
 
 这是实现。本文贡献是缺失的代数恒等式：若 \(Z(n)\) 已是前缀的 masked attention，则「将 cache 与新 \(k,v\) 拼接并取最后一行」恰为 \(Z(n+1)\)，而非另一算法。我们在语义等价于 `torch.Tensor` 的 `Tensor` 类型中，将其证明为机器检验引理；因果 mask 为超实数 \(\mathbb{R}^*\) 上的 \((\operatorname{band\_part}-1)\cdot\infty\)，使被 mask 位置在 \(\exp\) 后为 0，而非浮点替身 \(-10^9\)。
 
-公开交互陈述见 lemma.cn 的 [Lean 4](http://www.lemma.cn/lean/?module=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)；源码文件为 `All_Eq_DotSoftmaxAdd_DivDot_T.lean`（[GitHub](https://github.com/math-proof/lemma)）。
+公开交互陈述见 lemma.cn 的 [Lean 4](http://www.lemma.cn/lean/?module=Matrix.XEq_Append_MulSoftmaxDivMul_AppendTSGetSlice.of.All_XEq_MulSoftmaxAddDivMul_T)；源码文件为 `All_XEq_MulSoftmaxAddDivMul_T.lean`（[GitHub](https://github.com/math-proof/lemma)）。
 
 # 2 相关工作
 
@@ -141,7 +141,7 @@ V[(i+1-\ell):(i+1)].
 
 # 4 主结果
 
-**定理 4.1**（KV cache 增量，[`lemma_kv_cache_lean`](http://www.lemma.cn/lean/?module=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)）。设 \(\ell\ge 1\)，且对每个 \(n\)（式 (1)），
+**定理 4.1**（KV cache 增量，[`lemma_kv_cache_lean`](http://www.lemma.cn/lean/?module=Matrix.XEq_Append_MulSoftmaxDivMul_AppendTSGetSlice.of.All_XEq_MulSoftmaxAddDivMul_T)）。设 \(\ell\ge 1\)，且对每个 \(n\)（式 (1)），
 
 \[
 Z(n)\;\approx\;
@@ -236,7 +236,7 @@ Z(n+1)\;\approx\; Z(n)\mathbin{+\mkern-4mu+}[\operatorname{row}]
 
 # 6 形式化工件
 
-已完成陈述的交互可视化：[kv_cache](http://www.lemma.cn/lean/?module=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)。Lean 页展示 `@[path] private lemma kv_cache`，含 `[NeZero (l : ℕ)]`、对 \(Z(n)\) 的全称假设、`let` 链 `Kn, Vn, Kw, Vw, KT, kT, row`，以及结论 \(Z(n+1)\approx Z(n)\mathbin{+\mkern-4mu+}[\operatorname{row}]\)。
+已完成陈述的交互可视化：[kv_cache](http://www.lemma.cn/lean/?module=Matrix.XEq_Append_MulSoftmaxDivMul_AppendTSGetSlice.of.All_XEq_MulSoftmaxAddDivMul_T)。Lean 页展示 `@[path] private lemma kv_cache`，含 `[NeZero (l : ℕ)]`、对 \(Z(n)\) 的全称假设、`let` 链 `Kn, Vn, Kw, Vw, KT, kT, row`，以及结论 \(Z(n+1)\approx Z(n)\mathbin{+\mkern-4mu+}[\operatorname{row}]\)。
 
 源码：[GitHub](https://github.com/math-proof/lemma)（Lean 4 在 `main`）。
 
@@ -244,7 +244,7 @@ Z(n+1)\;\approx\; Z(n)\mathbin{+\mkern-4mu+}[\operatorname{row}]
 
 **图 3** 定理 4.1 的 Lean 证明主要导入引理（同文件 private 辅助引理未列出）。
 
-- **[kv_cache](http://www.lemma.cn/lean/?module=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T)** — `Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T`
+- **[kv_cache](http://www.lemma.cn/lean/?module=Matrix.XEq_Append_MulSoftmaxDivMul_AppendTSGetSlice.of.All_XEq_MulSoftmaxAddDivMul_T)** — `Matrix.XEq_Append_MulSoftmaxDivMul_AppendTSGetSlice.of.All_XEq_MulSoftmaxAddDivMul_T`
   - **[gpt](http://www.lemma.cn/lean/?module=Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmaxDivDot_T)** — `Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmaxDivDot_T`
     - [Stack_DotSoftmax](http://www.lemma.cn/lean/?module=Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmax) — `Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmax`
       - [Stack_BoolIn_Icc](http://www.lemma.cn/lean/?module=Tensor.BandPart.eq.Stack_BoolIn_Icc) — `Tensor.BandPart.eq.Stack_BoolIn_Icc`
@@ -285,7 +285,7 @@ Z(n+1)\;\approx\; Z(n)\mathbin{+\mkern-4mu+}[\operatorname{row}]
 8. math-proof. [Hyperreal.InfiniteInfty](http://www.lemma.cn/lean/?module=Hyperreal.InfiniteInfty), 2025.
 9. math-proof. [Hyperreal.XEq.is.InfinitesimalDivAbsSub](http://www.lemma.cn/lean/?module=Hyperreal.XEq.is.InfinitesimalDivAbsSub), 2025.
 10. math-proof. [Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmaxDivDot_T](http://www.lemma.cn/lean/?module=Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmaxDivDot_T), 2025.
-11. math-proof. [kv_cache lemma (Lean 4)](http://www.lemma.cn/lean/?module=Matrix.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.All_Eq_DotSoftmaxAdd_DivDot_T), 2026.
+11. math-proof. [kv_cache lemma (Lean 4)](http://www.lemma.cn/lean/?module=Matrix.XEq_Append_MulSoftmaxDivMul_AppendTSGetSlice.of.All_XEq_MulSoftmaxAddDivMul_T), 2026.
 12. math-proof. [lemma: machine-checked tensor calculus](https://github.com/math-proof/lemma), 2026.
 13. Mathlib community. [Mathlib: Hyperreal numbers](https://leanprover-community.github.io/mathlib4_docs/), 2026.
 14. PyTorch. [torch.isclose](https://docs.pytorch.org/docs/stable/generated/torch.isclose.html), 2024.

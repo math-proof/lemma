@@ -1,6 +1,6 @@
 import Lemma.Finset.Sum.of.All_Eq.Eq
-import Def.Data.Holor.Sum
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Sum
+import Def.Data.Tensor.Prod
 import Lemma.List.Get.dvd.Mul_ProdTake.of.GtLength
 import Lemma.List.ProdDrop.dvd.Prod
 import Lemma.List.ProdDropInsertIdxEraseIdx.eq.ProdDrop.of.GtLength

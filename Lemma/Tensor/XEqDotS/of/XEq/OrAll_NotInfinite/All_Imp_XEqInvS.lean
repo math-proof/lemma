@@ -4,6 +4,7 @@ import Lemma.Tensor.Ge0Mul.is.Ge0MulDataS
 import Lemma.Tensor.Le0Mul.is.Le0MulDataS
 import Lemma.Tensor.XEq.is.XEqDataS
 import Lemma.Vector.XEqDotS.of.XEq.OrAll_NotInfinite.All_Imp_XEqInvS
+import Instance.Data.Vector.Basic.Dot
 open Nat Tensor Vector
 
 
@@ -15,7 +16,7 @@ private lemma main
   (h_or : (∀ i : Fin n, ¬((B * C).data[i] → ∞)) ∨ B * C ≥ 0 ∨ B * C ≤ 0)
   (h : A ≈ B) :
 -- imply
-  A @ C ≈ B @ C := by
+  A ⬝ᵥ C ≈ B ⬝ᵥ C := by
 -- proof
   rw [Dot.eq.TensorDotDataS, Dot.eq.TensorDotDataS]
   apply XEq.of.XEqDataS
@@ -41,7 +42,7 @@ private lemma left
   (h_or : (∀ i : Fin n, ¬((C * B).data[i] → ∞)) ∨ C * B ≥ 0 ∨ C * B ≤ 0)
   (h : A ≈ B) :
 -- imply
-  C @ A ≈ C @ B := by
+  C ⬝ᵥ A ≈ C ⬝ᵥ B := by
 -- proof
   rw [Tensor.Dot.comm]
   conv_rhs => rw [Tensor.Dot.comm]

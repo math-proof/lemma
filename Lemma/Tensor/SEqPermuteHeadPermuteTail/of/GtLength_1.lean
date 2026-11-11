@@ -1,6 +1,6 @@
 import Lemma.Nat.EqAddSub.of.Gt
-import Def.Data.Holor.Prod
-import Notation.Data.Holor.Permute
+import Def.Data.Tensor.Prod
+import Notation.Data.Tensor.Permute
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.EqRotateRotate.of.Add.eq.Length
 import Lemma.List.ProdRotate.eq.Prod

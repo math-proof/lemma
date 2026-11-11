@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Def.Data.Holor.Repeat
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Repeat
+import Def.Data.Tensor.Prod
 import Lemma.List.EqSetInsertIdxEraseIdx.of.GtLength
 import Lemma.List.MulProdInsertIdxEraseIdx.eq.Prod.of.GtLength
 import Lemma.Tensor.DataRepeat.as.FlattenMapSplitAtData

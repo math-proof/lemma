@@ -1,4 +1,5 @@
 import Instance.LinearAlgebra.Matrix.Matmul
+import Instance.Data.Vector.Basic.Dot
 open Tensor Nat
 
 
@@ -11,7 +12,7 @@ private lemma main
   (Y : Tensor α (s' ++ [n', k']))
   (i : Fin n) :
 -- imply
-  i < (X @ Y).length := by
+  i < (X ⬝ᵥ Y).length := by
 -- proof
   match s, s' with
   | [], []

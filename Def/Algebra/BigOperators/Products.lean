@@ -1,11 +1,13 @@
-import Def.Data.Holor.BandPart
-import Def.Data.Holor.Eye
+import Def.Data.Tensor.BandPart
+import Def.Data.Tensor.Eye
 import Instance.LinearAlgebra.Matrix.Matmul
 import Mathlib.Data.Matrix.Basic
 
+/-- `⬝ᵥ` as `Dot.dot` (Tensor matmul / einsum). Cannot import `Instance.Data.Vector.Basic.Dot` (conflicts with `Structure.Data.Tensor.Defs`). -/
+infixl:72 (priority := 2000) " ⬝ᵥ " => Dot.dot
 
 /--
-`matProd f = f 0 @ ⋯ @ f (n - 1)`, and `matProd f = eye m` when `n = 0`.
+`matProd f = f 0 ⬝ᵥ ⋯ ⬝ᵥ f (n - 1)`, and `matProd f = eye m` when `n = 0`.
 Similar to `Stack`, the factors are indexed by `Fin n`.
 -/
 def Tensor.matProd
@@ -13,7 +15,7 @@ def Tensor.matProd
     {m : ℕ} :
     (n : ℕ) → (Fin n → Tensor α [m, m]) → Tensor α [m, m]
   | 0, _ => Tensor.eye m
-  | n + 1, f => (matProd n (fun i => f i.castSucc)) @ (f (Fin.last n))
+  | n + 1, f => (matProd n (fun i => f i.castSucc)) ⬝ᵥ (f (Fin.last n))
 
 
 /--

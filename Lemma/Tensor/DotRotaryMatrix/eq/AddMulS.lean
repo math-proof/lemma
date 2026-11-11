@@ -2,7 +2,8 @@ import Lemma.List.ConsLengthSlice.eq.List
 import Lemma.Tensor.DotRotaryMatrix.eq.AddMulSAppend
 import Lemma.Tensor.SEq_Append
 import Lemma.Tensor.SEqAppendS.of.SEq.SEq
-import Theorem.Data.Holor.Functions
+import Theorem.Data.Tensor.Functions
+import Instance.Data.Vector.Basic.Dot
 open Bool List Tensor
 set_option maxHeartbeats 300000
 
@@ -15,7 +16,7 @@ private lemma main
 -- imply
   let x0 := cast (congrArg (Tensor ℝ) (ConsLengthSlice.eq.List.head d)) x[:d]
   let x1 := cast (congrArg (Tensor ℝ) (ConsLengthSlice.eq.List.tail d)) x[d:]
-  θ.rotaryMatrix @ x = x * (θ ++ θ).cos + (-x1 ++ x0) * (θ ++ θ).sin := by
+  θ.rotaryMatrix ⬝ᵥ x = x * (θ ++ θ).cos + (-x1 ++ x0) * (θ ++ θ).sin := by
 -- proof
   intro x0 x1
   have hx : x = x0 ++ x1 := by
@@ -36,7 +37,7 @@ private lemma main
         rfl
       ·
         apply SEq_Cast.of.Eq (ConsLengthSlice.eq.List.tail d)
-  apply Eq.trans (congrArg (fun t => θ.rotaryMatrix @ t) hx)
+  apply Eq.trans (congrArg (fun t => θ.rotaryMatrix ⬝ᵥ t) hx)
   apply Eq.trans (DotRotaryMatrix.eq.AddMulSAppend θ x0 x1)
   rw [← hx]
 

@@ -22,12 +22,12 @@ Discrete-state dens twin of `Random.CondIndep.of.All_Eq_Joint`; feeds
 -/
 @[path]
 private lemma main
-  [CountableMeasure S] [MeasurableSingletonClass S] [Fintype S] [DecidableEq S]
-  [CountableMeasure A] [MeasurableSingletonClass A] [Fintype A]
-  {M : DensityModel Θ S A}
-  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
-  {s : ℕ → (ℕ → ℝ × S × A) → S}
-  {a : ℕ → (ℕ → ℝ × S × A) → A}
+  [CountableMeasure 𝒮] [MeasurableSingletonClass 𝒮] [Fintype 𝒮] [DecidableEq 𝒮]
+  [CountableMeasure 𝒜] [MeasurableSingletonClass 𝒜] [Fintype 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
   {θ : Θ}
   {n : ℕ}
 -- given
@@ -45,31 +45,31 @@ private lemma main
   have hT1 : ∀ x u y, ‖(M.env.trans (x, u)).real {y}‖ ≤ 1 := fun x u y ↦ by
     rw [Real.norm_of_nonneg measureReal_nonneg]
     apply measureReal_le_one
-  have hTm : ∀ y, Measurable (fun w : ℝ × S × A ↦ (M.env.trans (w.2.1, w.2.2)).real {y}) := fun y ↦
-    (measurable_of_countable (fun p : S × A ↦ (M.env.trans (p.1, p.2)).real {y})).comp (measurable_snd.fst.prodMk measurable_snd.snd)
+  have hTm : ∀ y, Measurable (fun w : ℝ × 𝒮 × 𝒜 ↦ (M.env.trans (w.2.1, w.2.2)).real {y}) := fun y ↦
+    (measurable_of_countable (fun p : 𝒮 × 𝒜 ↦ (M.env.trans (p.1, p.2)).real {y})).comp (measurable_snd.fst.prodMk measurable_snd.snd)
   have hι : ∀ {β : Type _} [MeasurableSpace β] {p : β → Prop}, MeasurableSet {b | p b} →
       StronglyMeasurable (fun b ↦ if p b then (1 : ℝ) else 0) := fun hp ↦
     (Measurable.ite hp measurable_const measurable_const).stronglyMeasurable
   -- the kernel step: `𝔼[1{s[n+1] = y} * f(ω[n+1]) | ω[n] = w] = T(w, y) * 𝔼[f | stageK y]`
-  have hstep : ∀ (y : S) (w : ℝ × S × A) {f : ℝ × S × A → ℝ} {C : ℝ}, StronglyMeasurable f → (∀ z, ‖f z‖ ≤ C) →
+  have hstep : ∀ (y : 𝒮) (w : ℝ × 𝒮 × 𝒜) {f : ℝ × 𝒮 × 𝒜 → ℝ} {C : ℝ}, StronglyMeasurable f → (∀ z, ‖f z‖ ≤ C) →
       ∫ z, (if z.2.1 = y then (1 : ℝ) else 0) * f z ∂(M.K θ w) = (M.env.trans (w.2.1, w.2.2)).real {y} * ∫ z, f z ∂(M.stageK θ y) := by
     intro y w f C hf hC
     have hK : M.K θ w = M.stageK θ ∘ₘ M.env.trans (w.2.1, w.2.2) := by
       rw [DensityModel.K, Kernel.comp_apply, Kernel.comap_apply]
-    rw [hK, Integral.eq.Integral.of.All_LeNorm.StronglyMeasurable (f := fun z : ℝ × S × A ↦ (if z.2.1 = y then (1 : ℝ) else 0) * f z)
-      (((StronglyMeasurable.of_discrete (f := (fun x : S ↦ if x = y then (1 : ℝ) else 0))).comp_measurable
-        measurable_snd.fst).mul hf) (LeNorm_Mul1.of.All_LeNorm (p := (fun z : ℝ × S × A ↦ z.2.1 = y)) hC),
+    rw [hK, Integral.eq.Integral.of.All_LeNorm.StronglyMeasurable (f := fun z : ℝ × 𝒮 × 𝒜 ↦ (if z.2.1 = y then (1 : ℝ) else 0) * f z)
+      (((StronglyMeasurable.of_discrete (f := (fun x : 𝒮 ↦ if x = y then (1 : ℝ) else 0))).comp_measurable
+        measurable_snd.fst).mul hf) (LeNorm_Mul1.of.All_LeNorm (p := (fun z : ℝ × 𝒮 × 𝒜 ↦ z.2.1 = y)) hC),
       integral_fintype Integrable.of_finite]
     simp_rw [Integral_MulIte.eq.MulKroneckerDeltaIntegral.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity (M := M) hf hC θ y]
     rw [Finset.sum_eq_single y (fun b _ hb ↦ by simp [hb, KroneckerDelta]) (by simp)]
     simp only [KroneckerDelta, decide_true, Bool.toNat_true, Nat.cast_one, one_mul, smul_eq_mul]
-  have hstep1 : ∀ (y : S) (w : ℝ × S × A), ∫ z, (if z.2.1 = y then (1 : ℝ) else 0) ∂(M.K θ w) = (M.env.trans (w.2.1, w.2.2)).real {y} := by
+  have hstep1 : ∀ (y : 𝒮) (w : ℝ × 𝒮 × 𝒜), ∫ z, (if z.2.1 = y then (1 : ℝ) else 0) ∂(M.K θ w) = (M.env.trans (w.2.1, w.2.2)).real {y} := by
     intro y w
     have h := hstep y w (f := fun _ ↦ (1 : ℝ)) stronglyMeasurable_const (fun _ ↦ le_of_eq norm_one)
     simp only [mul_one, integral_const, probReal_univ, smul_eq_mul] at h
     apply h
   -- given the history `ω[:k]` and `s[k] = y`, the stage `ω[k]` is drawn from `stageK y`
-  have hC : ∀ k y (H : Set (Fin k → ℝ × S × A)), MeasurableSet H → ∀ {f : ℝ × S × A → ℝ} {C : ℝ}, StronglyMeasurable f → (∀ z, ‖f z‖ ≤ C) →
+  have hC : ∀ k y (H : Set (Fin k → ℝ × 𝒮 × 𝒜)), MeasurableSet H → ∀ {f : ℝ × 𝒮 × 𝒜 → ℝ} {C : ℝ}, StronglyMeasurable f → (∀ z, ‖f z‖ ≤ C) →
       ∫ ω, (if (fun i : Fin k ↦ ω i) ∈ H then (1 : ℝ) else 0) * ((if (ω k).2.1 = y then (1 : ℝ) else 0) * f (ω k)) ∂(M θ) =
         (∫ ω, (if (fun i : Fin k ↦ ω i) ∈ H then (1 : ℝ) else 0) * (if (ω k).2.1 = y then (1 : ℝ) else 0) ∂(M θ)) * ∫ z, f z ∂(M.stageK θ y) := by
     intro k y H hH f C hf hCf
@@ -80,17 +80,17 @@ private lemma main
       have h2 : ∫ ω, (if (ω 0).2.1 = y then (1 : ℝ) else 0) * 1 ∂(M θ) = (M θ).real ((fun ω ↦ (ω 0).2.1) ⁻¹' {y}) * ∫ z, (1 : ℝ) ∂(M.stageK θ y) :=
         Integral_MulEqS.eq.MulRealPreimageSIntegral.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity (M := M) h₀ (g := fun _ ↦ (1 : ℝ)) stronglyMeasurable_const (fun _ ↦ le_of_eq norm_one) θ 0 y
       simp only [mul_one, integral_const, probReal_univ, smul_eq_mul] at h2
-      if hH0 : (Fin.elim0 : Fin 0 → ℝ × S × A) ∈ H then
-        have e : ∀ ω : ℕ → ℝ × S × A, (if (fun i : Fin 0 ↦ ω i) ∈ H then (1 : ℝ) else 0) = 1 := fun ω ↦
+      if hH0 : (Fin.elim0 : Fin 0 → ℝ × 𝒮 × 𝒜) ∈ H then
+        have e : ∀ ω : ℕ → ℝ × 𝒮 × 𝒜, (if (fun i : Fin 0 ↦ ω i) ∈ H then (1 : ℝ) else 0) = 1 := fun ω ↦
           ite_eq_left (by rwa [Subsingleton.elim (fun i : Fin 0 ↦ ω i) Fin.elim0])
         simp only [e, one_mul]
         rw [h1, h2]
       else
-        have e : ∀ ω : ℕ → ℝ × S × A, (if (fun i : Fin 0 ↦ ω i) ∈ H then (1 : ℝ) else 0) = 0 := fun ω ↦
+        have e : ∀ ω : ℕ → ℝ × 𝒮 × 𝒜, (if (fun i : Fin 0 ↦ ω i) ∈ H then (1 : ℝ) else 0) = 0 := fun ω ↦
           ite_eq_right (by rwa [Subsingleton.elim (fun i : Fin 0 ↦ ω i) Fin.elim0])
         simp only [e, zero_mul, integral_zero]
     | succ m =>
-      let G : (Π _ : Finset.Iic m, ℝ × S × A) → ℝ := fun h ↦
+      let G : (Π _ : Finset.Iic m, ℝ × 𝒮 × 𝒜) → ℝ := fun h ↦
         if (fun i : Fin (m + 1) ↦ h ⟨i, Finset.mem_Iic.2 (Nat.lt_succ_iff.1 i.2)⟩) ∈ H then 1 else 0
       have hGm : StronglyMeasurable G := hι ((Measurable.of_eval fun i ↦ measurable_pi_apply _) hH)
       have hCG : ∀ h, ‖G h‖ ≤ 1 := fun h ↦ Norm_1.le.One _
@@ -109,26 +109,26 @@ private lemma main
         _ = _ := by
           rw [← h2]
           rfl
-  have hHm : Measurable (fun ω : ℕ → ℝ × S × A ↦ fun i : Fin n ↦ ω i) := Measurable.of_eval fun i ↦ measurable_pi_apply _
-  have hsm : Measurable (fun ω : ℕ → ℝ × S × A ↦ (ω n).2.1) := (measurable_pi_apply n).snd.fst
-  have hXm : Measurable (fun ω : ℕ → ℝ × S × A ↦ ((ω n).2.2, (ω n).1, (ω (n + 1)).2.1)) :=
+  have hHm : Measurable (fun ω : ℕ → ℝ × 𝒮 × 𝒜 ↦ fun i : Fin n ↦ ω i) := Measurable.of_eval fun i ↦ measurable_pi_apply _
+  have hsm : Measurable (fun ω : ℕ → ℝ × 𝒮 × 𝒜 ↦ (ω n).2.1) := (measurable_pi_apply n).snd.fst
+  have hXm : Measurable (fun ω : ℕ → ℝ × 𝒮 × 𝒜 ↦ ((ω n).2.2, (ω n).1, (ω (n + 1)).2.1)) :=
     (measurable_pi_apply n).snd.snd.prodMk ((measurable_pi_apply n).fst.prodMk (measurable_pi_apply (n + 1)).snd.fst)
   -- `φ w = ℙ((a, r, s') ∈ E)` for the action and reward of the stage `w` and the next state `s' ∼ T(w)`
-  have hK : ∀ y (E : Set (A × ℝ × S)) (H : Set (Fin n → ℝ × S × A)), MeasurableSet E → MeasurableSet H →
+  have hK : ∀ y (E : Set (𝒜 × ℝ × 𝒮)) (H : Set (Fin n → ℝ × 𝒮 × 𝒜)), MeasurableSet E → MeasurableSet H →
       (M θ).real ((fun ω ↦ (ω n).2.1) ⁻¹' {y} ∩ ((fun ω ↦ ((ω n).2.2, (ω n).1, (ω (n + 1)).2.1)) ⁻¹' E ∩ (fun ω (i : Fin n) ↦ ω i) ⁻¹' H)) =
         (M θ).real ((fun ω ↦ (ω n).2.1) ⁻¹' {y} ∩ (fun ω (i : Fin n) ↦ ω i) ⁻¹' H) *
           ∫ z, ∑ y', (if (z.2.2, z.1, y') ∈ E then (1 : ℝ) else 0) * (M.env.trans (z.2.1, z.2.2)).real {y'} ∂(M.stageK θ y) := by
     intro y E H hE hH
-    have hEm : ∀ y', MeasurableSet {z : ℝ × S × A | (z.2.2, z.1, y') ∈ E} := fun y' ↦
+    have hEm : ∀ y', MeasurableSet {z : ℝ × 𝒮 × 𝒜 | (z.2.2, z.1, y') ∈ E} := fun y' ↦
       (measurable_snd.snd.prodMk (measurable_fst.prodMk measurable_const)) hE
-    have hφ : StronglyMeasurable (fun z : ℝ × S × A ↦ ∑ y', (if (z.2.2, z.1, y') ∈ E then (1 : ℝ) else 0) * (M.env.trans (z.2.1, z.2.2)).real {y'}) :=
+    have hφ : StronglyMeasurable (fun z : ℝ × 𝒮 × 𝒜 ↦ ∑ y', (if (z.2.2, z.1, y') ∈ E then (1 : ℝ) else 0) * (M.env.trans (z.2.1, z.2.2)).real {y'}) :=
       (Finset.measurable_sum _ fun y' _ ↦ (Measurable.ite (hEm y') measurable_const measurable_const).mul (hTm y')).stronglyMeasurable
-    have hCφ : ∀ z : ℝ × S × A, ‖∑ y', (if (z.2.2, z.1, y') ∈ E then (1 : ℝ) else 0) * (M.env.trans (z.2.1, z.2.2)).real {y'}‖ ≤ Fintype.card S := by
+    have hCφ : ∀ z : ℝ × 𝒮 × 𝒜, ‖∑ y', (if (z.2.2, z.1, y') ∈ E then (1 : ℝ) else 0) * (M.env.trans (z.2.1, z.2.2)).real {y'}‖ ≤ Fintype.card 𝒮 := by
       intro z
       refine (norm_sum_le _ _).trans ((Finset.sum_le_sum fun y' _ ↦ (norm_mul_le _ _).trans
         (mul_le_one₀ (Norm_1.le.One _) (norm_nonneg _) (hT1 _ _ _))).trans ?_)
       simp
-    let G : S → (Π _ : Finset.Iic n, ℝ × S × A) → ℝ := fun y' h ↦
+    let G : 𝒮 → (Π _ : Finset.Iic n, ℝ × 𝒮 × 𝒜) → ℝ := fun y' h ↦
       (if (fun i : Fin n ↦ h ⟨i, Finset.mem_Iic.2 i.2.le⟩) ∈ H then (1 : ℝ) else 0) *
         ((if (h ⟨n, Finset.mem_Iic.2 le_rfl⟩).2.1 = y then (1 : ℝ) else 0) *
           (if ((h ⟨n, Finset.mem_Iic.2 le_rfl⟩).2.2, (h ⟨n, Finset.mem_Iic.2 le_rfl⟩).1, y') ∈ E then (1 : ℝ) else 0))
@@ -146,7 +146,7 @@ private lemma main
       simp only [G, norm_mul]
       exact mul_le_one₀ (Norm_1.le.One _) (by positivity)
         (mul_le_one₀ (Norm_1.le.One _) (norm_nonneg _) (Norm_1.le.One _))
-    have hint : ∀ y' {g : (ℕ → ℝ × S × A) → ℝ}, Measurable g → (∀ ω, ‖g ω‖ ≤ 1) →
+    have hint : ∀ y' {g : (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}, Measurable g → (∀ ω, ‖g ω‖ ≤ 1) →
         Integrable (fun ω ↦ G y' (Preorder.frestrictLe n ω) * g ω) (M θ) := fun y' g hg hgC ↦
       Integrable.of_bound (((hGm y').comp_measurable (Preorder.measurable_frestrictLe n)).mul hg.stronglyMeasurable).aestronglyMeasurable 1
         (Filter.Eventually.of_forall fun ω ↦ by
@@ -165,7 +165,7 @@ private lemma main
         by_cases h₁ : (ω n).2.1 = y <;> by_cases h₂ : ((ω n).2.2, (ω n).1, (ω (n + 1)).2.1) ∈ E <;>
           by_cases h₃ : (fun i : Fin n ↦ ω i) ∈ H <;> simp [h₁, h₂, h₃]
       _ = ∑ y', ∫ ω, G y' (Preorder.frestrictLe n ω) * (if (ω (n + 1)).2.1 = y' then (1 : ℝ) else 0) ∂(M θ) :=
-        integral_finsetSum _ fun y' _ ↦ hint y' ((StronglyMeasurable_Eq12 (A := A) y').measurable.comp (measurable_pi_apply _))
+        integral_finsetSum _ fun y' _ ↦ hint y' ((StronglyMeasurable_Eq12 (𝒜 := 𝒜) y').measurable.comp (measurable_pi_apply _))
           fun _ ↦ Norm_1.le.One _
       _ = ∑ y', ∫ ω, G y' (Preorder.frestrictLe n ω) * (M.env.trans ((ω n).2.1, (ω n).2.2)).real {y'} ∂(M θ) := by
         refine Finset.sum_congr rfl fun y' _ ↦ ?_
@@ -186,16 +186,16 @@ private lemma main
         rw [hC n y H hH hφ hCφ]
         refine congrArg (· * _) (integral_congr_ae (Filter.Eventually.of_forall fun ω ↦ ?_))
         by_cases h₁ : (ω n).2.1 = y <;> by_cases h₃ : (fun i : Fin n ↦ ω i) ∈ H <;> simp [h₁, h₃]
-  show CondIndepFun (MeasurableSpace.comap (fun ω : ℕ → ℝ × S × A ↦ (ω n).2.1) inferInstance) hsm.comap_le
+  show CondIndepFun (MeasurableSpace.comap (fun ω : ℕ → ℝ × 𝒮 × 𝒜 ↦ (ω n).2.1) inferInstance) hsm.comap_le
     (fun ω ↦ ((ω n).2.2, (ω n).1, (ω (n + 1)).2.1)) (fun ω (i : Fin n) ↦ ω i) (M θ)
   rw [condIndepFun_iff_condExp_inter_preimage_eq_mul hXm hHm]
   intro E H hE hH
-  have hU : ∀ {U : Set (ℕ → ℝ × S × A)}, MeasurableSet U → Integrable (U.indicator fun _ ↦ (1 : ℝ)) (M θ) :=
+  have hU : ∀ {U : Set (ℕ → ℝ × 𝒮 × 𝒜)}, MeasurableSet U → Integrable (U.indicator fun _ ↦ (1 : ℝ)) (M θ) :=
     fun hU ↦ (integrable_const 1).indicator hU
   filter_upwards [MEqCondExp_Integral.of.Integrable.Measurable hsm (hU ((hXm hE).inter (hHm hH))),
     MEqCondExp_Integral.of.Integrable.Measurable hsm (hU (hXm hE)),
     MEqCondExp_Integral.of.Integrable.Measurable hsm (hU (hHm hH)),
-    Random.AeNe_0 («π» := M θ) (X := fun ω : ℕ → ℝ × S × A ↦ (ω n).2.1)] with ω h₁ h₂ h₃ h₄
+    Random.AeNe_0 («π» := M θ) (X := fun ω : ℕ → ℝ × 𝒮 × 𝒜 ↦ (ω n).2.1)] with ω h₁ h₂ h₃ h₄
   have hB := hsm (measurableSet_singleton (ω n).2.1)
   have hcond : ∀ {U}, MeasurableSet U →
       ∫ ω', U.indicator (fun _ ↦ (1 : ℝ)) ω' ∂(M θ)[|(fun ω ↦ (ω n).2.1) ⁻¹' {(ω n).2.1}] =

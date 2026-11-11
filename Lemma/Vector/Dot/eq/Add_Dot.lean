@@ -1,3 +1,4 @@
+import Instance.Data.Vector.Basic.Dot
 import Lemma.Vector.Dot.eq.SumMul
 open Vector
 
@@ -8,7 +9,7 @@ private lemma main
 -- given
   (x y : List.Vector α (.succ n)) :
 -- imply
-  x @ y = x.head * y.head + x.tail @ y.tail := by
+  x ⬝ᵥ y = x.head * y.head + x.tail ⬝ᵥ y.tail := by
 -- proof
   repeat rw [Dot.eq.SumMul]
   rw [Eq_Cons_Tail.head x, Eq_Cons_Tail.head y]

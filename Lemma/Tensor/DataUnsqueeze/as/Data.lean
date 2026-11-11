@@ -1,6 +1,6 @@
 import Lemma.Bool.SEqCast.of.Eq
-import Def.Data.Holor.Unsqueeze
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Unsqueeze
+import Def.Data.Tensor.Prod
 import Lemma.Tensor.Unsqueeze.eq.TensorCast_Data
 open Bool List Tensor
 

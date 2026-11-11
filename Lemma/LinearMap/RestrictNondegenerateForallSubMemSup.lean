@@ -31,8 +31,9 @@ private lemma main
   have hNd : e.Nondegenerate := ⟨hnondeg, fun b hb => hnondeg b fun a => hrefl _ _ (hb a)⟩
   have hRf : e.IsRefl := hrefl
   have hρinv : ∀ (γ : Γ) (v : V), ρ γ (ρ γ⁻¹ v) = v := fun γ v => by
-    apply LinearMap.congr_fun _ v
-    rw [← map_mul, mul_inv_cancel, map_one]
+    have h : ρ γ * ρ γ⁻¹ = 1 := by
+      rw [← map_mul, mul_inv_cancel, map_one]
+    rw [← Module.End.mul_apply, h, Module.End.one_apply]
   have hWI : ∀ τ ∈ I, ∀ w ∈ Vt ⊔ Vo, ρ τ w ∈ Vt ⊔ Vo := by
     intro τ hτ w hw
     obtain ⟨x, hx, y, hy, rfl⟩ := Submodule.mem_sup.1 hw
@@ -64,12 +65,14 @@ private lemma main
         _ = e a b + e (ρ τ₀ a - a) b := by rw [map_add, LinearMap.add_apply]
         _ = e a b := by rw [hz2, add_zero]
     rw [hequiv] at h1
-    apply (mul_eq_zero.1 _).resolve_left
-    rw [sub_mul, one_mul, h1, sub_self]
-    rw [sub_ne_zero]
+    have hdiff : (((χ τ₀ : Units K) : K) - 1) * e a b = 0 := by
+      rw [sub_mul, one_mul, h1, sub_self]
+    apply (mul_eq_zero.mp hdiff).resolve_left
     intro h
     apply hτ₀
-    apply Units.ext (h.trans Units.val_one.symm)
+    apply Units.ext
+    rw [sub_eq_zero] at h
+    apply h.trans Units.val_one.symm
   have hSW : e.orthogonal (Vt ⊔ Vo) ≤ Vt ⊔ Vo := by
     intro a ha
     have h : a ∈ e.orthogonal (e.orthogonal (Vt ⊔ Vo)) := by
@@ -110,3 +113,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-10

@@ -1,5 +1,5 @@
-import Def.Data.Holor.Defs.Part4
-import Def.Data.Holor.Repeat
+import Def.Data.Tensor.Defs.Part4
+import Def.Data.Tensor.Repeat
 import Theorem.Logic.SEq
 
 

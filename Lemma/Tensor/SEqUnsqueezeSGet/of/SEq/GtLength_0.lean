@@ -1,4 +1,4 @@
-import Def.Data.Holor.Unsqueeze
+import Def.Data.Tensor.Unsqueeze
 import Lemma.Tensor.SEqBFnSGet.of.SEq.GtLength_0
 open Tensor
 

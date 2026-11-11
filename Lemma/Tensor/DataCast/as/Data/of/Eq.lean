@@ -1,5 +1,5 @@
 import Theorem.Logic.SEq
-import Def.Data.Holor.Defs.Part4
+import Def.Data.Tensor.Defs.Part4
 
 
 @[path, comm 1, cast]

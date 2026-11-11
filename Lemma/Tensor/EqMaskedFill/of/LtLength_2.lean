@@ -1,5 +1,5 @@
-import Def.Data.Holor.BandPart
-import Def.Data.Holor.Defs.Part4
+import Def.Data.Tensor.BandPart
+import Def.Data.Tensor.Defs.Part4
 
 
 @[path]

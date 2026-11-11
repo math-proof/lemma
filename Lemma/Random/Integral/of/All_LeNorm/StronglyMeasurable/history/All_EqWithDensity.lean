@@ -8,10 +8,10 @@ One-step Markov property along histories of the continuous-action trajectory mod
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A}
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
   {n : ℕ}
-  {φ : (Π _ : Finset.Iic n, ℝ × S × A) × (ℝ × S × A) → ℝ}
+  {φ : (Π _ : Finset.Iic n, ℝ × 𝒮 × 𝒜) × (ℝ × 𝒮 × 𝒜) → ℝ}
   {C : ℝ}
 -- given
   (hφ : StronglyMeasurable φ)
@@ -23,9 +23,9 @@ private lemma main
       ∂((M θ).map (Preorder.frestrictLe n)) := by
 -- proof
   have := M.env.init_prob
-  let μ₀ : Measure (ℝ × S × A) := M.stageK θ ∘ₘ M.env.init
+  let μ₀ : Measure (ℝ × 𝒮 × 𝒜) := M.stageK θ ∘ₘ M.env.init
   have h := Kernel.map_frestrictLe_trajMeasure_compProd_eq_map_trajMeasure
-    (X := fun _ ↦ ℝ × S × A) (μ₀ := μ₀) (κ := M.step θ) (a := n)
+    (X := fun _ ↦ ℝ × 𝒮 × 𝒜) (μ₀ := μ₀) (κ := M.step θ) (a := n)
   have e : ∫ ω, φ (Preorder.frestrictLe n ω, ω (n + 1)) ∂(M θ) =
       ∫ p, φ p ∂((M θ).map (fun x ↦ (Preorder.frestrictLe n x, x (n + 1)))) := by
     rw [integral_map (by fun_prop) hφ.aestronglyMeasurable]

@@ -37,9 +37,9 @@ private lemma main
   have : ∀ θ, PSpace (M θ) (AsPathRV.path r) := fun _ =>
     PSpace_Path.of.All_PSpace
       (fun t => ⟨(Random.Measurable.of.All_Eq.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).aemeasurable⟩)
-  𝔼[r, s, a : M θ](((γ ^ (id : ℕ → ℕ)) @ r[t:]) • ψ (s t) (a t)) =
+  𝔼[r, s, a : M θ](((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) • ψ (s t) (a t)) =
     𝔼[s, a : M θ](
-      𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s[t], a[t]) • ψ (s t) (a t)) := by
+      𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s[t], a[t]) • ψ (s t) (a t)) := by
 -- proof
   intro _ _ _
   classical
@@ -53,8 +53,8 @@ private lemma main
   set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
   set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
   let Q (θ : Θ) (t : ℕ) (x : S) (u : A) : ℝ :=
-    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u)
-  set G := (γ ^ (id : ℕ → ℕ)) @ r[t:]
+    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = x ∧ a t = u)
+  set G := (γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]
   have hsa : Measurable fun p : (ℕ → S) × (ℕ → A) ↦ (p.1 t, p.2 t) :=
     ((measurable_pi_apply t).comp measurable_fst).prodMk
       ((measurable_pi_apply t).comp measurable_snd)
@@ -62,7 +62,7 @@ private lemma main
     ((measurable_pi_apply t).comp (measurable_fst.comp measurable_snd)).prodMk
       ((measurable_pi_apply t).comp (measurable_snd.comp measurable_snd))
   have hGpath : StronglyMeasurable fun p : (ℕ → ℝ) × ((ℕ → S) × (ℕ → A)) ↦
-      ((γ ^ (id : ℕ → ℕ)) @ fun k ↦ p.1 (t + k)) :=
+      ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun k ↦ p.1 (t + k)) :=
     (Measurable_G.of.All_Measurable
       (r := fun j (p : (ℕ → ℝ) × ((ℕ → S) × (ℕ → A))) => p.1 j)
       (fun j => (measurable_pi_apply j).comp measurable_fst) γ t).stronglyMeasurable
@@ -71,14 +71,14 @@ private lemma main
     StronglyMeasurable.comp_measurable
       (f := fun q : S × A ↦ ψ q.1 q.2) StronglyMeasurable.of_discrete hsa3
   have hQpath : StronglyMeasurable fun p : (ℕ → S) × (ℕ → A) ↦
-      𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = p.1 t ∧ a t = p.2 t) :=
+      𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = p.1 t ∧ a t = p.2 t) :=
     ((measurable_of_countable fun q : S × A =>
-        𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = q.1 ∧ a t = q.2)).comp hsa).stronglyMeasurable
+        𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = q.1 ∧ a t = q.2)).comp hsa).stronglyMeasurable
   have hψpath2 : StronglyMeasurable fun p : (ℕ → S) × (ℕ → A) ↦ ψ (p.1 t) (p.2 t) :=
     StronglyMeasurable.comp_measurable
       (f := fun q : S × A ↦ ψ q.1 q.2) StronglyMeasurable.of_discrete hsa
   have hL :
-    𝔼[r, s, a : M θ](((γ ^ (id : ℕ → ℕ)) @ r[t:]) • ψ (s t) (a t)) =
+    𝔼[r, s, a : M θ](((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) • ψ (s t) (a t)) =
       ∫ ω, G ω • ψ (s t ω) (a t ω) ∂(M θ) := by
     rw [Expectation.ofRV, expectation_bochner]
     have hx : AEMeasurable
@@ -126,3 +126,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-11

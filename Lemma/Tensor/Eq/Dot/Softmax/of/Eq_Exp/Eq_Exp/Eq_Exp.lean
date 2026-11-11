@@ -8,6 +8,7 @@ import Lemma.Tensor.MapExp.eq.ExpMap.of.All_EqUFnExp_ExpUFn
 import Lemma.Tensor.MapMul.eq.MulMapS.of.All_Eq_Mul
 import Lemma.Tensor.MapDiv.eq.DivMapS.of.All_Eq_Div
 import Lemma.Tensor.SumMap.eq.MapSum.of.All_EqUFnAdd
+import Instance.Data.Vector.Basic.Dot
 open Tensor Hyperreal
 set_option maxHeartbeats 500000
 set_option linter.defProp false
@@ -57,11 +58,11 @@ private lemma stack_div_dot_get
   (S : Fin n → Tensor ℝ* [])
   (V : Tensor ℝ* [m, d])
   (i : Fin n) :
-  (([i < n] (U i / S i) : Tensor ℝ* [n, m]) @ V).get ⟨i, GtLengthDot.of.LeLengthS.Ne_Nil (by simp) (by simp) ([i < n] (U i / S i)) V i⟩ =
-    ([i < n] (((U i) @ V) / S i)).get ⟨i, by simp [Tensor.length]⟩ := by
+  (([i < n] (U i / S i) : Tensor ℝ* [n, m]) ⬝ᵥ V).get ⟨i, GtLengthDot.of.LeLengthS.Ne_Nil (by simp) (by simp) ([i < n] (U i / S i)) V i⟩ =
+    ([i < n] (((U i) ⬝ᵥ V) / S i)).get ⟨i, by simp [Tensor.length]⟩ := by
   rw [get_dot_row (W := [i < n] (U i / S i)) (V := V) i]
   erw [EqGetStack.fin (fun i => U i / S i) i]
-  erw [EqGetStack.fin (fun i => ((U i) @ V) / S i) i]
+  erw [EqGetStack.fin (fun i => ((U i) ⬝ᵥ V) / S i) i]
   exact DotDiv.eq.DivDot (U i) (S i) V
 
 
@@ -70,12 +71,12 @@ private lemma stack_div_dot
   (U : Fin n → Tensor ℝ* [m])
   (S : Fin n → Tensor ℝ* [])
   (V : Tensor ℝ* [m, d]) :
-  (([i < n] (U i / S i) : Tensor ℝ* [n, m]) @ V) = [i < n] (((U i) @ V) / S i) :=
+  (([i < n] (U i / S i) : Tensor ℝ* [n, m]) ⬝ᵥ V) = [i < n] (((U i) ⬝ᵥ V) / S i) :=
   Eq.of.All_EqGetS.fin fun i => stack_div_dot_get U S V i
 
 
 /--
-py: `softmax(Q @ K.T / sqrt(d_z) + (-1 + [[0, 1], [1, 0]] + Identity(n)) * oo) @ V`, where the block matrix has zeros on the
+py: `softmax(Q ⬝ᵥ K.T / sqrt(d_z) + (-1 + [[0, 1], [1, 0]] + Identity(n)) * oo) ⬝ᵥ V`, where the block matrix has zeros on the
 `h × h` and `(n-h) × (n-h)` diagonal blocks and ones elsewhere, and the identity adds the diagonal back, in the hyperreal masked softmax.
 Written row by row with the mask `Ξ i j = [i = j ∨ ¬(i < h ↔ j < h)]`:
 \[
@@ -92,12 +93,12 @@ private lemma cross_attention
   (_ : h < n)
   (Q K V : Tensor ℝ [n, d_z]) :
 -- imply
-  let A : Tensor ℝ [n, n] := Q @ Kᵀ / √(d_z : ℝ)
+  let A : Tensor ℝ [n, n] := Q ⬝ᵥ Kᵀ / √(d_z : ℝ)
   let Ξ : Tensor ℝ* [n, n] := [i < n] [j < n] (Bool.toNat (decide (i = j ∨ ¬(i.val < h ↔ j.val < h))))
   let A : Tensor ℝ* [n, n] := A
   let V : Tensor ℝ* [n, d_z] := V
-  (A + (Ξ - 1) * ∞).softmax @ V ≈ [i < n]
-    ((exp A[i] * Ξ[i]) @ V) / id (α := Tensor ℝ* []) ((exp A[i] * Ξ[i]).sum 0) := by
+  (A + (Ξ - 1) * ∞).softmax ⬝ᵥ V ≈ [i < n]
+    ((exp A[i] * Ξ[i]) ⬝ᵥ V) / id (α := Tensor ℝ* []) ((exp A[i] * Ξ[i]).sum 0) := by
 -- proof
   intro A₀ Ξ A' V'
   have h_ne : ∀ i : Fin n, ∃ j : Fin n, (fun (i j : Fin n) => decide (i = j ∨ ¬(i.val < h ↔ j.val < h))) i j = true := by
@@ -126,13 +127,13 @@ private lemma cross_attention
   have hi : (i : ℕ) < n := i.isLt
   have hrow_i : ((A' + (Ξ - 1) * ∞).softmax).get ⟨i, by grind⟩ ≈ ((id (α := Tensor ℝ [n]) (exp A₀[i] * Ξ₀[i] / id (α := Tensor ℝ []) ((exp A₀[i] * Ξ₀[i]).sum 0)) : Tensor ℝ [n]) : Tensor ℝ* [n]) := by
     exact (XEqGetS.of.XEq.GtLength.fin (i := i) (by grind) hmain).trans (Tensor.XEq.of.Eq ((EqGetStack.fin (fun i : Fin n => exp A'[i] * Ξ[i] / id (α := Tensor ℝ* []) ((exp A'[i] * Ξ[i]).sum 0)) i).trans (hrow i)))
-  have hl : ((A' + (Ξ - 1) * ∞).softmax @ V').get i = ((A' + (Ξ - 1) * ∞).softmax.get ⟨i, by grind⟩) @ V' :=
+  have hl : ((A' + (Ξ - 1) * ∞).softmax ⬝ᵥ V').get i = ((A' + (Ξ - 1) * ∞).softmax.get ⟨i, by grind⟩) ⬝ᵥ V' :=
     GetDot.eq.DotGet.fin _ V' i
-  have hr : ([i < n] (((exp A'[i] * Ξ[i]) @ V') / id (α := Tensor ℝ* []) ((exp A'[i] * Ξ[i]).sum 0))).get i =
-      (exp A'[i] * Ξ[i] / id (α := Tensor ℝ* []) ((exp A'[i] * Ξ[i]).sum 0)) @ V' :=
-    (EqGetStack.fin (fun i : Fin n => ((exp A'[i] * Ξ[i]) @ V') / id (α := Tensor ℝ* []) ((exp A'[i] * Ξ[i]).sum 0)) i).trans
+  have hr : ([i < n] (((exp A'[i] * Ξ[i]) ⬝ᵥ V') / id (α := Tensor ℝ* []) ((exp A'[i] * Ξ[i]).sum 0))).get i =
+      (exp A'[i] * Ξ[i] / id (α := Tensor ℝ* []) ((exp A'[i] * Ξ[i]).sum 0)) ⬝ᵥ V' :=
+    (EqGetStack.fin (fun i : Fin n => ((exp A'[i] * Ξ[i]) ⬝ᵥ V') / id (α := Tensor ℝ* []) ((exp A'[i] * Ξ[i]).sum 0)) i).trans
       (DotDiv.eq.DivDot (exp A'[i] * Ξ[i]) (id (α := Tensor ℝ* []) ((exp A'[i] * Ξ[i]).sum 0)) V').symm
-  have hfin : ((A' + (Ξ - 1) * ∞).softmax.get ⟨i, by grind⟩) @ V' ≈ ((id (α := Tensor ℝ [n]) (exp A₀[i] * Ξ₀[i] / id (α := Tensor ℝ []) ((exp A₀[i] * Ξ₀[i]).sum 0)) : Tensor ℝ [n]) : Tensor ℝ* [n]) @ V' :=
+  have hfin : ((A' + (Ξ - 1) * ∞).softmax.get ⟨i, by grind⟩) ⬝ᵥ V' ≈ ((id (α := Tensor ℝ [n]) (exp A₀[i] * Ξ₀[i] / id (α := Tensor ℝ []) ((exp A₀[i] * Ξ₀[i]).sum 0)) : Tensor ℝ [n]) : Tensor ℝ* [n]) ⬝ᵥ V' :=
     XEqDotS.of.XEq (X := V) hrow_i
   refine (Tensor.XEq.of.Eq hl).trans (hfin.trans (Tensor.XEq.of.Eq ?_))
   exact (hrow i ▸ hr).symm

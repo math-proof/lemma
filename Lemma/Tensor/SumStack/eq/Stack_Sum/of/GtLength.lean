@@ -1,7 +1,7 @@
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.GetSum.as.SumGet.of.GtGet_0.LtAdd_1Length
-import Def.Data.Holor.Stack.Part2
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Stack.Part2
+import Def.Data.Tensor.Sum
 open Bool Tensor
 set_option maxHeartbeats 200000
 

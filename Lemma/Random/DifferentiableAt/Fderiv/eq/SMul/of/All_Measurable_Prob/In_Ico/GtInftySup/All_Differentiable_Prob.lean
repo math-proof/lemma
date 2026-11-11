@@ -12,7 +12,9 @@ Continuous-state counterpart of `Random.DifferentiableAt.EqFderiv_FunQc_SMulSum_
 -/
 @[path]
 private lemma main
-  [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ] [MeasurableSpace S] [MeasurableSpace A] [Fintype A]
+  [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
+  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
+  [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
   {M : Model Θ S A}
   {γ : ℝ}
 -- given
@@ -51,3 +53,4 @@ private lemma main
 
 
 -- created on 2026-10-07
+-- updated on 2026-11-08

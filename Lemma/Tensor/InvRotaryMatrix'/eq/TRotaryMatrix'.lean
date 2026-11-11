@@ -1,10 +1,11 @@
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Notation.Data.Holor.Permute
-import Def.Data.Holor.Inv
-import Theorem.Data.Holor.Functions
+import Notation.Data.Tensor.Permute
+import Def.Data.Tensor.Inv
+import Theorem.Data.Tensor.Functions
 import Lemma.Tensor.DotT_RotaryMatrix'.eq.Eye
 import Lemma.Tensor.EqToMatrixStack
 import Lemma.Tensor.ToMatrixT.eq.TToMatrix
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
@@ -21,9 +22,9 @@ private lemma main
     simpa using EqToMatrixStack (f := fun i j => (θ.rotaryMatrix'.toMatrix)⁻¹ i j)
   have hright : θ.rotaryMatrix'ᵀ.toMatrix = (θ.rotaryMatrix'.toMatrix).transpose :=
     ToMatrixT.eq.TToMatrix θ.rotaryMatrix'
-  have hortho : θ.rotaryMatrix' @ θ.rotaryMatrix'ᵀ = Tensor.eye (d + d) :=
+  have hortho : θ.rotaryMatrix' ⬝ᵥ θ.rotaryMatrix'ᵀ = Tensor.eye (d + d) :=
     Dot.eq.Eye.of.Dot.eq.Eye (DotT_RotaryMatrix'.eq.Eye θ)
-  have hdot : (θ.rotaryMatrix' @ θ.rotaryMatrix'ᵀ).toMatrix =
+  have hdot : (θ.rotaryMatrix' ⬝ᵥ θ.rotaryMatrix'ᵀ).toMatrix =
       θ.rotaryMatrix'.toMatrix * (θ.rotaryMatrix'.toMatrix).transpose := by
     apply Eq.trans (ToMatrixDot.eq.MulToMatrixS θ.rotaryMatrix' θ.rotaryMatrix'ᵀ)
     exact congrArg (fun M => θ.rotaryMatrix'.toMatrix * M) hright

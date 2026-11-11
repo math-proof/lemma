@@ -1,5 +1,5 @@
-import Def.Data.Holor.Unsqueeze
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Unsqueeze
+import Def.Data.Tensor.Prod
 import Lemma.Tensor.DataUnsqueeze.eq.Map_FunGetData
 import Lemma.Tensor.Eq.is.EqDataS
 open List Tensor

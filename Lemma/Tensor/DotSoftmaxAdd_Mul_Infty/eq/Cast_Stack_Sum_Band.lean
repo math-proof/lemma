@@ -1,6 +1,7 @@
 import Lemma.Tensor.DotSoftmaxAdd_Mul_Infty.eq.Cast_Stack_Sum_Gather
 import Lemma.Fin.SumFilter.eq.Sum
 import Lemma.Fin.SumFilter.eq.Sum.of.All_Le.EqEMod.Lt.Gt_0
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 set_option maxHeartbeats 1000000
 
@@ -25,7 +26,7 @@ private lemma window
   let Ξ : Tensor ℝ* [n, n] := [i < n] [j < n] (Bool.toNat (decide (((i.val : ℤ) < (j.val : ℤ) + l ∧ (j.val : ℤ) < (i.val : ℤ) + u))))
   let A : Tensor ℝ* [n, n] := ([i < n] [j < n] (a i j : Tensor ℝ []) : Tensor ℝ [n, n])
   let Vᵢ : Tensor ℝ [n, d] := [j < n] [s < d] (v i j s : Tensor ℝ [])
-  ((A + (Ξ - 1) * ∞).softmax.get ⟨i, by grind⟩) @ (Vᵢ : Tensor ℝ* [n, d]) ≈
+  ((A + (Ξ - 1) * ∞).softmax.get ⟨i, by grind⟩) ⬝ᵥ (Vᵢ : Tensor ℝ* [n, d]) ≈
     ((([t < d] ((∑ j' : Fin (min n (i.val + u) - (i.val + 1 - l)),
         Real.exp (a i ⟨i.val + 1 - l + j', by have := j'.2; omega⟩) / (∑ k' : Fin (min n (i.val + u) - (i.val + 1 - l)), Real.exp (a i ⟨i.val + 1 - l + k', by have := k'.2; omega⟩)) *
           v i ⟨i.val + 1 - l + j', by have := j'.2; omega⟩ t : ℝ) : Tensor ℝ [])) : Tensor ℝ [d]) : Tensor ℝ* [d]) := by
@@ -60,7 +61,7 @@ private lemma dilated
   let Ξ : Tensor ℝ* [n, n] := [i < n] [j < n] (Bool.toNat (decide (((i.val : ℤ) < (j.val : ℤ) + l ∧ (j.val : ℤ) < (i.val : ℤ) + u ∧ ((j.val : ℤ) - (i.val : ℤ)) % d = 0))))
   let A : Tensor ℝ* [n, n] := ([i < n] [j < n] (a i j : Tensor ℝ []) : Tensor ℝ [n, n])
   let Vᵢ : Tensor ℝ [n, d_v] := [j < n] [s < d_v] (v i j s : Tensor ℝ [])
-  ((A + (Ξ - 1) * ∞).softmax.get ⟨i, by grind⟩) @ (Vᵢ : Tensor ℝ* [n, d_v]) ≈
+  ((A + (Ξ - 1) * ∞).softmax.get ⟨i, by grind⟩) ⬝ᵥ (Vᵢ : Tensor ℝ* [n, d_v]) ≈
     ((([t < d_v] ((∑ m : Fin ((min n (i.val + u) - b + d - 1) / d),
         Real.exp (a i ⟨b + m * d, by have := Nat.LtAdd_Mul.of.Lt_DivSubAddSub1.Gt_0 hd m.2; omega⟩) / (∑ m' : Fin ((min n (i.val + u) - b + d - 1) / d), Real.exp (a i ⟨b + m' * d, by have := Nat.LtAdd_Mul.of.Lt_DivSubAddSub1.Gt_0 hd m'.2; omega⟩)) *
           v i ⟨b + m * d, by have := Nat.LtAdd_Mul.of.Lt_DivSubAddSub1.Gt_0 hd m.2; omega⟩ t : ℝ) : Tensor ℝ [])) : Tensor ℝ [d_v]) : Tensor ℝ* [d_v]) := by

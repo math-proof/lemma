@@ -1,5 +1,5 @@
 import Lemma.Tensor.Eq.is.EqDataS
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.Tensor.DataGet.eq.Get.of.EqData_Flatten
 open Tensor Bool
 

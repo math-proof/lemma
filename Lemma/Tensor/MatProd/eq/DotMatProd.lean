@@ -1,4 +1,5 @@
 import Def.Algebra.BigOperators.Products
+import Instance.Data.Vector.Basic.Dot
 
 
 @[path, comm]
@@ -7,7 +8,7 @@ private lemma main
   {m n : ℕ}
   {f : Fin (n + 1) → Tensor α [m, m]} :
 -- imply
-  Tensor.matProd (n + 1) f = (Tensor.matProd n fun i => f i.castSucc) @ (f (Fin.last n)) :=
+  Tensor.matProd (n + 1) f = (Tensor.matProd n fun i => f i.castSucc) ⬝ᵥ (f (Fin.last n)) :=
 -- proof
   rfl
 

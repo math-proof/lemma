@@ -1,6 +1,6 @@
 import Lemma.Tensor.EqStack_Get
 import Lemma.Tensor.GtLength.of.GtLength_0
-import Def.Data.Holor.Stack.Part2
+import Def.Data.Tensor.Stack.Part2
 open Tensor
 
 

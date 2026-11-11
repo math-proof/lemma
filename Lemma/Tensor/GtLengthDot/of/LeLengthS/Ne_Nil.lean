@@ -1,4 +1,5 @@
 import Instance.LinearAlgebra.Matrix.Matmul
+import Instance.Data.Vector.Basic.Dot
 open Tensor Nat
 
 
@@ -12,7 +13,7 @@ private lemma main
   (Y : Tensor α (n' :: s'))
   (i : Fin n) :
 -- imply
-  i < (X @ Y).length := by
+  i < (X ⬝ᵥ Y).length := by
 -- proof
   if h_s' : s'.length > 0 then
     obtain h_len | h_len := Lt.ou.Eq.of.Le h_len

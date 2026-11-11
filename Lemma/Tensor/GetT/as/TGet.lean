@@ -1,5 +1,5 @@
 import Lemma.List.TailPermute.eq.PermuteTail.of.GtLength_Add_1.Ge_0
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.GetPermute.as.PermuteGet.of.GtGet_0.GtLength.Gt_0.Ge_0
 import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.GtLength
 import Lemma.List.TailPermute__Neg.eq.PermuteTail.of.Ge

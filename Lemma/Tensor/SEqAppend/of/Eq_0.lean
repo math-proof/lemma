@@ -1,5 +1,5 @@
 import Lemma.Vector.EqHeadSplitAt_0
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.Vector.Get.of.Eq.Lt
 import Lemma.Tensor.DataAppend.as.AppendDataS
 import Lemma.Tensor.DataAppend.as.FlattenMap₂_CastS_SplitAtData

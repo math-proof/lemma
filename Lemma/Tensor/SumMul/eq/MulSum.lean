@@ -2,7 +2,7 @@ import Lemma.Tensor.Mul.eq.Mul_GetData_0
 import Lemma.Tensor.Mul.eq.Mul_KeepdimTensorReplicateProdEraseIdx
 import Lemma.Tensor.Mul.eq.Mul_TensorReplicate
 import Lemma.Tensor.SumMul_Keepdim.eq.MulSum
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Tensor
 
 

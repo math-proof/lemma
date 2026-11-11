@@ -1,5 +1,5 @@
 import Theorem.Logic.SEq
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.SEqRotateRotate.of.GeLength
 import Lemma.Tensor.SEqRotateS.of.SEq
 open Tensor Nat

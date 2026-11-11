@@ -1,10 +1,11 @@
 import Lemma.Real.Grad.Sum_Exp.eq.Sum_Mul_Exp.of.All_DifferentiableAt
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Mathlib.Data.Matrix.Mul
+import Instance.Data.Vector.Basic.Dot
 
 
 /--
-Softmax policy (py: `ℙ(a | s) = softmax(φ(s) @ θ)[a]`) has the score function
+Softmax policy (py: `ℙ(a | s) = softmax(φ(s) ⬝ᵥ θ)[a]`) has the score function
 \(\nabla_\theta\log\pi(a\mid s)=\phi_a-\mathbb E_{b\sim\pi}[\phi_b]\).
 Here `Φ = φ(s)` is the `m × n` feature matrix and the identity is stated per component `k`
 of `θ` (ordinary derivative in the coordinate `θₖ`, the others fixed):

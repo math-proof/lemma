@@ -1,3 +1,4 @@
+import Instance.Data.Vector.Basic.Dot
 import Lemma.Vector.Cons_ValTail.eq.Val
 import Lemma.Vector.Dot.eq.Add_Dot
 import Lemma.Vector.Dot.eq.Zero
@@ -12,7 +13,7 @@ private lemma main
   (s : List.Vector α n)
   (f₁ f₂ : α → β) :
 -- imply
-  (s.map fun x => f₁ x * f₂ x).sum = (s.map f₁) @ s.map f₂ := by
+  (s.map fun x => f₁ x * f₂ x).sum = (s.map f₁) ⬝ᵥ s.map f₂ := by
 -- proof
   induction n with
   | zero =>
@@ -27,7 +28,7 @@ private lemma main
     have h_dot₂ : s.map f₂ = f₂ s.head ::ᵥ s.tail.map f₂ := by
       rw [Eq_Cons_Tail s]
       apply List.Vector.map_cons
-    have : (s.map f₁) @ s.map f₂ = f₁ s.head * f₂ s.head + (s.tail.map f₁) @ s.tail.map f₂ := by
+    have : (s.map f₁) ⬝ᵥ s.map f₂ = f₁ s.head * f₂ s.head + (s.tail.map f₁) ⬝ᵥ s.tail.map f₂ := by
       rw [Dot.eq.Add_Dot]
       rw [h_dot₁, h_dot₂]
       rfl

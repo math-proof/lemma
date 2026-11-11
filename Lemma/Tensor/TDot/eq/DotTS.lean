@@ -1,7 +1,8 @@
 import Lemma.Tensor.Dot
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.EqTT
 import Lemma.Tensor.GetDot.eq.DotGetS
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
@@ -12,7 +13,7 @@ private lemma main
   (X : Tensor α [m, k])
   (Y : Tensor α [k, n]) :
 -- imply
-  (X @ Y)ᵀ = Yᵀ @ Xᵀ := by
+  (X ⬝ᵥ Y)ᵀ = Yᵀ ⬝ᵥ Xᵀ := by
 -- proof
   apply Eq.of.All_EqGetS.fin
   intro i

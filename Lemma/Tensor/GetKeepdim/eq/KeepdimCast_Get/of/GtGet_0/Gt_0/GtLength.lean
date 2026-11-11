@@ -1,6 +1,6 @@
 import Lemma.Tensor.LengthKeepdim.eq.Length.of.Gt_0
-import Def.Data.Holor.Unsqueeze
-import Def.Data.Holor.Repeat
+import Def.Data.Tensor.Unsqueeze
+import Def.Data.Tensor.Repeat
 import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
 import Lemma.List.GetTail.eq.Get_Add_1.of.GtLengthTail
 import Lemma.Tensor.Keepdim.as.RepeatUnsqueeze

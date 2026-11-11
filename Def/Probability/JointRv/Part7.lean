@@ -102,11 +102,13 @@ rewritten to the scalar observation form `ℙ[π]((a₀ t) = (a t) | (s₀ t) = 
 (GetElem `a[t]` / `s[t]` becomes app on both sides of `=` after unpack) with fresh aliases
 `a₀ := a` of the outer processes taken before unpack. That is the same scalar as today's
 handwritten `let a₀ := a; let s₀ := s` pattern, so `(ℙ[M θ](a t | s t) : ℝ)` and
-`(ℙ[M θ](a[t] | s[t]) : ℝ)` work under `𝔼[s, a, …]`. Outside such an outer op, the same
-surface stays `probCondRA` (`Ω → ENNReal`).
+`(ℙ[M θ](a[t] | s[t]) : ℝ)` work under `𝔼[s, a, …]`. A fixed observation on the left,
+`ℙ[π](a[t] = u | s[t])`, is rewritten the same way when every conditioner head is an
+integrated binder: `ℙ[π](a[t] = u | (s₀ t) = (s t))`, a scalar under `𝔼[s]`.
+Outside such an outer op, the same surface stays `probCondRA` (`Ω → ENNReal`).
   Nested conditional expectations use the same alias check via `rewriteNestedExpectRA`:
   `𝔼[r : π](f | s[t], a[t])` under any ancestor that passed aliases becomes
-  `𝔼[r : π](f | s₀ t = s t ∧ a₀ t = a t)` (`condEvent` / pointwise). Standalone
+  `𝔼[r : π](f | s₀ t = s t ∧ a₀ t = a t)` (`condEval` / pointwise). Standalone
   (no outer aliases) `| s[t], a[t]` still elaborates to `Expectation.condSigma`.
 
 Read `=` as “evaluated at” (like `x ↦ x0`), not as an event `{ω | x ω = x0}`.

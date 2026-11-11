@@ -6,6 +6,7 @@ set_option backward.isDefEq.respectTransparency false
 
 
 private lemma exists_injective_linearMap {R : Type u} [CommRing R] {K0 K1 E0 E1 S0 S1 : Type u} [AddCommGroup K0] [Module R K0] [AddCommGroup K1] [Module R K1] [AddCommGroup E0] [Module R E0] [AddCommGroup E1] [Module R E1] [AddCommGroup S0] [Module R S0] [AddCommGroup S1] [Module R S1] (dK : K0 →ₗ[R] K1) (dE : E0 →ₗ[R] E1) (dS : S0 →ₗ[R] S1) (i0 : K0 →ₗ[R] E0) (i1 : K1 →ₗ[R] E1) (p0 : E0 →ₗ[R] S0) (p1 : E1 →ₗ[R] S1) (hi : LinearMap.comp dE i0 = LinearMap.comp i1 dK) (hp : LinearMap.comp dS p0 = LinearMap.comp p1 dE) (hi1 : Function.Injective i1) (hp0 : Function.Surjective p0) (hex0 : LinearMap.range i0 = LinearMap.ker p0) (hex1 : LinearMap.range i1 = LinearMap.ker p1) (hE : LinearMap.ker dE = ⊥) : ∃ δ : LinearMap.ker dS →ₗ[R] (K1 ⧸ LinearMap.range dK), Function.Injective δ := by
+-- proof
   classical
   have step : ∀ s : LinearMap.ker dS, ∃ k : K1, ∃ e : E0, p0 e = s ∧ dE e = i1 k := by
     intro s
@@ -27,27 +28,27 @@ private lemma exists_injective_linearMap {R : Type u} [CommRing R] {K0 K1 E0 E1 
     refine ⟨x, hi1 ?_⟩
     have h1 : i1 (dK x) = dE (i0 x) := (LinearMap.congr_fun hi x).symm
     rw [h1, hx, map_sub, hde', hde, map_sub]
-  refine ⟨(LinearMap.mk (fun s => Submodule.Quotient.mk (kOf s)) ?_ ?_ : LinearMap.ker dS →ₗ[R] (K1 ⧸ LinearMap.range dK)), ?_⟩
-  ·
-    intro s t
-    show (Submodule.Quotient.mk (kOf (s + t)) : K1 ⧸ LinearMap.range dK) = Submodule.Quotient.mk (kOf s) + Submodule.Quotient.mk (kOf t)
-    rw [← Submodule.Quotient.mk_add]
-    apply (well (s + t) (kOf s + kOf t) (eOf s + eOf t) _ _).symm
-    ·
-      rw [map_add, hpe, hpe]
-      rfl
-    ·
-      rw [map_add, hde, hde, map_add]
-  ·
-    intro r s
-    show (Submodule.Quotient.mk (kOf (r • s)) : K1 ⧸ LinearMap.range dK) = r • Submodule.Quotient.mk (kOf s)
-    rw [← Submodule.Quotient.mk_smul]
-    apply (well (r • s) (r • kOf s) (r • eOf s) _ _).symm
-    ·
-      rw [map_smul, hpe]
-      rfl
-    ·
-      rw [map_smul, hde, map_smul]
+  let δ : LinearMap.ker dS →ₗ[R] (K1 ⧸ LinearMap.range dK) :=
+    { toFun := fun s => Submodule.Quotient.mk (kOf s)
+      map_add' := fun s t => by
+        show (Submodule.Quotient.mk (kOf (s + t)) : K1 ⧸ LinearMap.range dK) = Submodule.Quotient.mk (kOf s) + Submodule.Quotient.mk (kOf t)
+        rw [← Submodule.Quotient.mk_add]
+        apply (well (s + t) (kOf s + kOf t) (eOf s + eOf t) _ _).symm
+        ·
+          rw [map_add, hpe, hpe]
+          rfl
+        ·
+          rw [map_add, hde, hde, map_add]
+      map_smul' := fun r s => by
+        show (Submodule.Quotient.mk (kOf (r • s)) : K1 ⧸ LinearMap.range dK) = r • Submodule.Quotient.mk (kOf s)
+        rw [← Submodule.Quotient.mk_smul]
+        apply (well (r • s) (r • kOf s) (r • eOf s) _ _).symm
+        ·
+          rw [map_smul, hpe]
+          rfl
+        ·
+          rw [map_smul, hde, map_smul] }
+  refine ⟨δ, ?_⟩
   ·
     intro s t hst
     have key : ∀ s : LinearMap.ker dS, (Submodule.Quotient.mk (kOf s) : K1 ⧸ LinearMap.range dK) = 0 → s = 0 := by
@@ -68,7 +69,6 @@ private lemma exists_injective_linearMap {R : Type u} [CommRing R] {K0 K1 E0 E1 
       rfl
     have hpsub : p0 (eOf s - eOf t) = s - t := by
       rw [map_sub, hpe, hpe]
-      rfl
     have hdsub : dE (eOf s - eOf t) = i1 (kOf s - kOf t) := by
       rw [map_sub, hde, hde, map_sub]
     have hsub : (Submodule.Quotient.mk (kOf (s - t)) : K1 ⧸ LinearMap.range dK) = Submodule.Quotient.mk (kOf s) - Submodule.Quotient.mk (kOf t) := by
@@ -99,3 +99,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-10

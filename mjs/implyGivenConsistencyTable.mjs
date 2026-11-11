@@ -92,40 +92,74 @@ export function resolveStatementFile(lemmaPath, options = {}) {
  *   token | regex | consistent | suggested
  *
  * - token: imply / first-of stem from `lemmaPath` (after Lemma/<Section>/)
- * - regex: primary implyHoleRegex / first given hole regex from suggest(statement)
+ * - regex: hole-regex alternative that admits that token (consistent and suggested),
+ *   otherwise the first alternative
  * - consistent: yes/no — matchImplyHoleRegex(regex, token)
- * - suggested: yes/no — token is among that role's primary token[]
+ * - suggested: yes/no — token is among that alternative's token[]
+ *
+ * Imply may publish two optional regexes (expanded `Append(T(GetSlice__))(T(GetSlice__))`
+ * and compact `AppendTSGetSlice__` / `AppendGetSliceS__`). The row shows the one that admits the path token.
  *
  * @param {string} lemmaPath
  * @param {{ from?: string, lemma?: string }} [options]
  * @returns {string}
  */
+function altList(entryOrList) {
+  if (!entryOrList) return [];
+  if (Array.isArray(entryOrList)) return entryOrList.filter((e) => e && typeof e === "object");
+  return [entryOrList];
+}
+
+/**
+ * Pick the hole-regex alternative that admits `tok`.
+ * Prefer consistent and suggested, then consistent, then the first alternative.
+ * @param {object|object[]|null|undefined} entryOrList
+ * @param {string} tok
+ * @returns {{ regex: string, pad: number, consistent: boolean, suggested: boolean }}
+ */
+function pickMatchingAlt(entryOrList, tok, fallback) {
+  const list = altList(entryOrList);
+  const scored = list.map((e) => {
+    const regex = String(e.regex || "_");
+    const pad = e.pad;
+    const consistent = !!(tok && matchImplyHoleRegex({ regex, pad }, tok));
+    const toks = Array.isArray(e.token) ? e.token.map(String) : [String(e.token ?? "")];
+    const suggested = !!(tok && toks.includes(String(tok)));
+    return { regex, pad, consistent, suggested };
+  });
+  const hit =
+    scored.find((s) => s.consistent && s.suggested) ||
+    scored.find((s) => s.consistent) ||
+    scored[0];
+  if (hit) return hit;
+  const regex = String(fallback?.regex || "_");
+  return {
+    regex,
+    pad: fallback?.pad ?? 0,
+    consistent: !!(tok && matchImplyHoleRegex({ regex, pad: fallback?.pad }, tok)),
+    suggested: false,
+  };
+}
+
 export function implyGivenConsistencyTable(lemmaPath, options = {}) {
   const rel = normalizeLemmaRel(lemmaPath);
   const statementAbs = resolveStatementFile(rel, options);
   const r = suggest(statementAbs, options.lemma, options);
   const implyTok = implyStemFromRelPath(rel);
   const givenTok = ofStemsFromRelPath(rel)[0] || "";
-  const implyEntry = (Array.isArray(r.imply) && r.imply[0]) || {
-    token: [],
+  const implyPick = pickMatchingAlt(r.imply, implyTok, {
     regex: r.implyHoleRegex || "_",
     pad: holeRegexTrailingPad(r.implyHoleRegex || "_"),
-  };
+  });
   const given0 = Array.isArray(r.givens) && r.givens[0];
-  const givenEntry = (Array.isArray(given0) ? given0[0] : given0) || {
-    token: [],
-    regex: "_",
-    pad: 0,
-  };
-  const implyRe = String(implyEntry.regex || "_");
-  const givenRe = String(givenEntry.regex || "_");
+  const givenPick = pickMatchingAlt(given0, givenTok, { regex: "_", pad: 0 });
   const yn = (b) => (b ? "yes" : "no");
-  const implyConsistent = !!(implyTok && matchImplyHoleRegex({ regex: implyRe, pad: implyEntry.pad }, implyTok));
-  const givenConsistent = !!(givenTok && matchImplyHoleRegex({ regex: givenRe, pad: givenEntry.pad }, givenTok));
-  const implyToks = Array.isArray(implyEntry.token) ? implyEntry.token : [implyEntry.token];
-  const givenToks = Array.isArray(givenEntry.token) ? givenEntry.token : [givenEntry.token];
-  const implySuggested = implyToks.map(String).includes(implyTok);
-  const givenSuggested = givenToks.map(String).includes(givenTok);
+  const implyRe = implyPick.regex;
+  const givenRe = givenPick.regex;
+  const implyConsistent = implyPick.consistent;
+  const givenConsistent = givenPick.consistent;
+  const implySuggested = implyPick.suggested;
+  const givenSuggested = givenPick.suggested;
   return [
     "| token | regex | consistent | suggested |",
     "| " + implyTok + " | " + implyRe + " | " + yn(implyConsistent) + " | " + yn(implySuggested) + " |",

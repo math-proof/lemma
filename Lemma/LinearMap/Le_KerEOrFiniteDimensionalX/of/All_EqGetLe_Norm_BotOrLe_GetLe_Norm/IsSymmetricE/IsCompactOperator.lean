@@ -20,9 +20,10 @@ private lemma le_norm_sub_of_mem_eigenspace
   [InnerProductSpace 𝕜 E]
   [CompleteSpace E]
   {T : E →L[𝕜] E} (hT' : (T : E →ₗ[𝕜] E).IsSymmetric)
-  {μ ν : 𝕜} (hμν : μ ≠ ν) {r : ℝ} (hr : 0 ≤ r) (hμ : r ≤ ‖μ‖) (hν : r ≤ ‖ν‖)
+  {μ ν : 𝕜} (hμν : μ ≠ ν) {r : ℝ} (hr : 0 ≤ r) (hμ : r ≤ ‖μ‖)
   {e e' : E} (he : e ∈ eigenspace (T : Module.End 𝕜 E) μ) (he' : e' ∈ eigenspace (T : Module.End 𝕜 E) ν)
   (hne : ‖e‖ = 1) (hne' : ‖e'‖ = 1) : r ≤ ‖T e - T e'‖ := by
+-- proof
   have h0 : inner 𝕜 e e' = 0 := hT'.orthogonalFamily_eigenspaces hμν ⟨e, he⟩ ⟨e', he'⟩
   have horth : inner 𝕜 (μ • e) (ν • e') = 0 := by
     rw [inner_smul_left, inner_smul_right, h0]; simp
@@ -47,6 +48,7 @@ private lemma finite_setOf_hasEigenvalue_le_norm_pf
   {T : E →L[𝕜] E}
   (hT : IsCompactOperator T) (hT' : (T : E →ₗ[𝕜] E).IsSymmetric) {r : ℝ} (hr : 0 < r) :
   {μ : 𝕜 | HasEigenvalue (T : Module.End 𝕜 E) μ ∧ r ≤ ‖μ‖}.Finite := by
+-- proof
   by_contra hinf
   have hinf' : {μ : 𝕜 | HasEigenvalue (T : Module.End 𝕜 E) μ ∧ r ≤ ‖μ‖}.Infinite := hinf
   let μ : ℕ → 𝕜 := fun n => (hinf'.natEmbedding _ n : 𝕜)
@@ -60,7 +62,7 @@ private lemma finite_setOf_hasEigenvalue_le_norm_pf
     rw [norm_smul, norm_inv, RCLike.norm_ofReal, abs_norm, inv_mul_cancel₀ (norm_ne_zero_iff.mpr hv0)]
   choose e he hne using hex
   have hsep : ∀ n m, n ≠ m → r ≤ ‖T (e n) - T (e m)‖ := fun n m hnm =>
-    le_norm_sub_of_mem_eigenspace hT' (fun h => hnm (hμinj h)) hr.le (hμmem n).2 (hμmem m).2 (he n) (he m)
+    le_norm_sub_of_mem_eigenspace hT' (fun h => hnm (hμinj h)) hr.le (hμmem n).2 (he n) (he m)
       (hne n) (hne m)
   have hK : IsCompact (closure (T '' Metric.closedBall (0 : E) 1)) := hT.isCompact_closure_image_closedBall 1
   have hin : ∀ n, T (e n) ∈ closure (T '' Metric.closedBall (0 : E) 1) := fun n =>
@@ -82,6 +84,7 @@ private lemma finiteDimensional_highPart_pf
   {T : E →L[𝕜] E}
   (hT : IsCompactOperator T) (hT' : (T : E →ₗ[𝕜] E).IsSymmetric) {r : ℝ} (hr : 0 < r) :
   FiniteDimensional 𝕜 ↥(highPart T r) := by
+-- proof
   set M := {μ : 𝕜 | HasEigenvalue (T : Module.End 𝕜 E) μ ∧ r ≤ ‖μ‖} with hM
   have hfin : M.Finite := finite_setOf_hasEigenvalue_le_norm_pf hT hT' hr
   have : ∀ μ : 𝕜, μ ∈ hfin.toFinset → FiniteDimensional 𝕜 ↥(eigenspace (T : Module.End 𝕜 E) μ) := by
@@ -93,8 +96,7 @@ private lemma finiteDimensional_highPart_pf
   have hle : highPart T r ≤ hfin.toFinset.sup fun μ => eigenspace (T : Module.End 𝕜 E) μ := by
     refine iSup₂_le fun μ hμ => ?_
     if h : HasEigenvalue (T : Module.End 𝕜 E) μ then
-      exact Finset.le_sup (f := fun μ => eigenspace (T : Module.End 𝕜 E) μ)
-      (hfin.mem_toFinset.mpr ⟨h, hμ⟩)
+      exact Finset.le_sup (f := fun μ => eigenspace (T : Module.End 𝕜 E) μ) (hfin.mem_toFinset.mpr ⟨h, hμ⟩)
     else
       rw [hasEigenvalue_iff, not_ne_iff] at h
       rw [h]; apply bot_le
@@ -118,6 +120,7 @@ private lemma apply_mem_iSup_eigenspace_ne_zero
   {T : E →L[𝕜] E} {u : E}
   (hu : u ∈ ⨆ (μ : 𝕜) (_ : μ ≠ 0), eigenspace (T : Module.End 𝕜 E) μ) :
   T u ∈ ⨆ (μ : 𝕜) (_ : μ ≠ 0), eigenspace (T : Module.End 𝕜 E) μ := by
+-- proof
   refine Submodule.iSup_induction _
     (motive := fun u => T u ∈ ⨆ (μ : 𝕜) (_ : μ ≠ 0), eigenspace (T : Module.End 𝕜 E) μ) hu
     (fun μ x hx => ?_) (by simp) (fun x y hx hy => ?_)
@@ -144,6 +147,7 @@ private lemma orthogonal_iSup_eigenspace_ne_zero_eq_ker_pf
   {T : E →L[𝕜] E}
   (hT : IsCompactOperator T) (hT' : (T : E →ₗ[𝕜] E).IsSymmetric) :
   (⨆ (μ : 𝕜) (_ : μ ≠ 0), eigenspace (T : Module.End 𝕜 E) μ)ᗮ = LinearMap.ker (T : E →ₗ[𝕜] E) := by
+-- proof
   set K : Submodule 𝕜 E := ⨆ (μ : 𝕜) (_ : μ ≠ 0), eigenspace (T : Module.End 𝕜 E) μ with hK
   apply le_antisymm
   ·
@@ -205,6 +209,7 @@ private lemma highPart_sup_orthogonal_eq_top_pf
   {T : E →L[𝕜] E}
   (hT : IsCompactOperator T) (hT' : (T : E →ₗ[𝕜] E).IsSymmetric) {r : ℝ} (hr : 0 < r) :
   highPart T r ⊔ (highPart T r)ᗮ = ⊤ := by
+-- proof
   have := finiteDimensional_highPart_pf hT hT' hr
   exact Submodule.sup_orthogonal_of_hasOrthogonalProjection
 
@@ -215,8 +220,9 @@ private lemma map_highPart_le_of_commute_pf
   [InnerProductSpace 𝕜 E]
   [CompleteSpace E]
   {T S : E →L[𝕜] E}
-  (hT' : (T : E →ₗ[𝕜] E).IsSymmetric) (hST : S.comp T = T.comp S) (r : ℝ) :
+  (hST : S.comp T = T.comp S) (r : ℝ) :
   Submodule.map (S : E →ₗ[𝕜] E) (highPart T r) ≤ highPart T r := by
+-- proof
   unfold highPart
   rw [Submodule.map_iSup]
   refine iSup_mono fun μ => ?_
@@ -226,7 +232,7 @@ private lemma map_highPart_le_of_commute_pf
   rw [SetLike.mem_coe, mem_eigenspace_iff] at hx
   rw [mem_eigenspace_iff]
   have h := congrArg (fun A : E →L[𝕜] E => A x) hST
-  simp only [coe_comp', Function.comp_apply] at h
+  simp only [coe_comp, Function.comp_apply] at h
   show (T : E →ₗ[𝕜] E) (S x) = μ • S x
   have : T (S x) = S (T x) := h.symm
   rw [ContinuousLinearMap.coe_coe, this, show (T x) = μ • x from hx, map_smul]
@@ -240,6 +246,7 @@ private lemma adjoint_comp_eq_of_isSymmetric
   {T S : E →L[𝕜] E}
   (hT' : (T : E →ₗ[𝕜] E).IsSymmetric) (hST : S.comp T = T.comp S) :
   (adjoint S).comp T = T.comp (adjoint S) := by
+-- proof
   have hT : adjoint T = T := hT'.isSelfAdjoint.adjoint_eq
   have := congrArg adjoint hST
   rw [adjoint_comp, adjoint_comp, hT] at this
@@ -254,12 +261,13 @@ private lemma map_highPart_orthogonal_le_of_commute_pf
   {T S : E →L[𝕜] E}
   (hT' : (T : E →ₗ[𝕜] E).IsSymmetric) (hST : S.comp T = T.comp S) (r : ℝ) :
   Submodule.map (S : E →ₗ[𝕜] E) (highPart T r)ᗮ ≤ (highPart T r)ᗮ := by
+-- proof
   rintro _ ⟨y, hy, rfl⟩
   rw [SetLike.mem_coe, Submodule.mem_orthogonal] at hy
   rw [Submodule.mem_orthogonal]
   intro x hx
   have hx' : adjoint S x ∈ highPart T r :=
-    map_highPart_le_of_commute_pf hT' (adjoint_comp_eq_of_isSymmetric hT' hST) r ⟨x, hx, rfl⟩
+    map_highPart_le_of_commute_pf (adjoint_comp_eq_of_isSymmetric hT' hST) r ⟨x, hx, rfl⟩
   rw [ContinuousLinearMap.coe_coe, ← adjoint_inner_left]
   exact hy _ hx'
 
@@ -272,6 +280,7 @@ private lemma iInf_highPart_orthogonal_eq_ker_pf
   {T : E →L[𝕜] E}
   (hT : IsCompactOperator T) (hT' : (T : E →ₗ[𝕜] E).IsSymmetric) :
   (⨅ (r : ℝ) (_ : 0 < r), (highPart T r)ᗮ) = LinearMap.ker (T : E →ₗ[𝕜] E) := by
+-- proof
   rw [← orthogonal_iSup_eigenspace_ne_zero_eq_ker_pf hT hT']
   have e : (⨅ (r : ℝ) (_ : 0 < r), (highPart T r)ᗮ) = (⨆ (r : ℝ) (_ : 0 < r), highPart T r)ᗮ := by
     rw [← Submodule.iInf_orthogonal]
@@ -304,6 +313,7 @@ private lemma exists_inf_highPart_orthogonal_eq_bot_of_not_le_ker_pf
   (hTX : ¬ X ≤ LinearMap.ker (T : E →ₗ[𝕜] E)) :
   ∃ r : ℝ, 0 < r ∧ X ⊓ (highPart T r)ᗮ = ⊥ ∧
     ∃ L : ↥X →ₗ[𝕜] ↥(highPart T r), Function.Injective L := by
+-- proof
   by_contra hcon
   push Not at hcon
   apply hTX
@@ -314,11 +324,11 @@ private lemma exists_inf_highPart_orthogonal_eq_bot_of_not_le_ker_pf
     exfalso
     have := finiteDimensional_highPart_pf hT hT' hr
     have hinj : Function.Injective
-      (((highPart T r).orthogonalProjection : E →ₗ[𝕜] ↥(highPart T r)).comp X.subtype) := by
+      (((highPart T r).orthogonalProjectionOnto : E →ₗ[𝕜] ↥(highPart T r)).comp X.subtype) := by
       intro a b hab
       apply Subtype.ext
       have h2 : (a : E) - b ∈ (highPart T r)ᗮ := by
-        rw [← Submodule.orthogonalProjection_eq_zero_iff, map_sub, sub_eq_zero]
+        rw [← Submodule.orthogonalProjectionOnto_eq_zero_iff, map_sub, sub_eq_zero]
         apply hab
       have hmem : (a : E) - b ∈ X ⊓ (highPart T r)ᗮ := ⟨X.sub_mem a.2 b.2, h2⟩
       rw [h, Submodule.mem_bot, sub_eq_zero] at hmem
@@ -336,6 +346,7 @@ private lemma le_ker_or_finiteDimensional_of_forall_inf_highPart_orthogonal_pf
   (hT : IsCompactOperator T) (hT' : (T : E →ₗ[𝕜] E).IsSymmetric) (X : Submodule 𝕜 E)
   (hX : ∀ r : ℝ, 0 < r → X ⊓ (highPart T r)ᗮ = ⊥ ∨ X ≤ (highPart T r)ᗮ) :
   X ≤ LinearMap.ker (T : E →ₗ[𝕜] E) ∨ FiniteDimensional 𝕜 ↥X := by
+-- proof
   if hTX : X ≤ LinearMap.ker (T : E →ₗ[𝕜] E) then
     exact Or.inl hTX
   else
@@ -362,3 +373,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-10

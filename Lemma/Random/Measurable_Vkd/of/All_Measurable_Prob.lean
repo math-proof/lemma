@@ -7,10 +7,10 @@ If every `(x, u) ↦ π_θ(u | x)` is jointly measurable, so is the state value 
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [MeasurableSingletonClass S] [Countable S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A}
+  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
 -- given
-  (h : ∀ θ, Measurable (fun z : S × A => M.policy.prob θ z.1 z.2))
+  (h : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.policy.prob θ z.1 z.2))
   (θ : Θ)
   (γ : ℝ) :
 -- imply
@@ -21,4 +21,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-02
+-- updated on 2026-11-11

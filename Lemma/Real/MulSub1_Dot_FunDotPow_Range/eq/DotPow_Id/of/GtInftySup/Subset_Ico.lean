@@ -3,6 +3,7 @@ import Mathlib.Analysis.Normed.Ring.InfiniteSum
 import Theorem.Data.Vector.Basic.Part2
 import Syntax.Order.Sup
 import Theorem.Function
+import Instance.Data.Vector.Basic.Dot
 open Finset
 
 
@@ -11,7 +12,7 @@ Generalized advantage estimation (Schulman et al., arXiv 1506.02438, Eq. (16)):
 for bounded temporal-difference residuals δ and γ, ℓ ∈ [0, 1), the exponentially weighted average
 (1 - ℓ) * ∑' k, ℓ ^ k * ∑ i ∈ range (k + 1), γ ^ i * δ[t + i] of the k-step advantage estimates
 (∑ i ∈ range (k + 1), γ ^ i * δ[t + i] is the (k + 1)-step estimate) equals the closed form
-(γ * ℓ) ** @ δ[t:] = ∑' i, (γ * ℓ) ^ i * δ[t + i].
+(γ * ℓ) ** ⬝ᵥ δ[t:] = ∑' i, (γ * ℓ) ^ i * δ[t + i].
 This connects the weighted average of k-step estimates with the closed form A[t] used in
 generalized_advantage_estimate of the policy gradient.
 -/
@@ -24,8 +25,8 @@ private lemma main
   (h₀ : ({γ, ℓ} : Set ℝ) ⊆ Set.Ico 0 1)
   (h₁ : sup[t] |δ[t]| < ∞) :
 -- imply
-  (1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) @ fun k ↦ (γ ^ range (k + 1)) @ δ[t:]) =
-    ((γ * ℓ) ^ (id : ℕ → ℕ)) @ δ[t:] := by
+  (1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) ⬝ᵥ fun k ↦ (γ ^ range (k + 1)) ⬝ᵥ δ[t:]) =
+    ((γ * ℓ) ^ (id : ℕ → ℕ)) ⬝ᵥ δ[t:] := by
 -- proof
   obtain ⟨hγ0, hγ1⟩ : γ ∈ Set.Ico 0 1 := h₀ (by simp)
   obtain ⟨hℓ0, hℓ1⟩ : ℓ ∈ Set.Ico 0 1 := h₀ (by simp)
@@ -54,17 +55,19 @@ private lemma main
   simp only [e1] at key
   rw [tsum_geometric_of_lt_one hℓ0 hℓ1] at key
   have hL :
-      (ℓ ^ (id : ℕ → ℕ)) @ (fun k ↦ (γ ^ range (k + 1)) @ δ[t:]) =
+      (ℓ ^ (id : ℕ → ℕ)) ⬝ᵥ (fun k ↦ (γ ^ range (k + 1)) ⬝ᵥ δ[t:]) =
         ∑' k, ℓ ^ k * ∑ i ∈ range (k + 1), γ ^ i * δ[t + i] := by
     simp_rw [FinsetPow.dot_eq]
     simp [Dot.dot, Function.hPow_apply, Fun.getSliceFrom_apply]
   have hR :
-      ((γ * ℓ) ^ (id : ℕ → ℕ)) @ δ[t:] =
+      ((γ * ℓ) ^ (id : ℕ → ℕ)) ⬝ᵥ δ[t:] =
         ∑' i, (γ * ℓ) ^ i * δ[t + i] := by
     simp [Dot.dot, Function.hPow_apply, Fun.getSliceFrom_apply]
   rw [hL, hR, ← key]
   have : (1 - ℓ) ≠ 0 := (sub_pos.mpr hℓ1).ne'
   field_simp
+  ring
 
 
 -- created on 2023-04-08
+-- updated on 2026-11-11

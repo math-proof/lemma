@@ -1,6 +1,6 @@
-import Theorem.Data.Holor.Functions
+import Theorem.Data.Tensor.Functions
 import Theorem.Logic.SEq
-import Def.Data.Holor.Defs.Part4
+import Def.Data.Tensor.Defs.Part4
 
 
 @[path, comm, cast]

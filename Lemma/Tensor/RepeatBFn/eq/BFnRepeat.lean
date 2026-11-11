@@ -1,4 +1,4 @@
-import Def.Data.Holor.Repeat
+import Def.Data.Tensor.Repeat
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.FlattenMap.eq.MapFlatten
 import Lemma.Vector.MapCast.as.Map.of.Eq

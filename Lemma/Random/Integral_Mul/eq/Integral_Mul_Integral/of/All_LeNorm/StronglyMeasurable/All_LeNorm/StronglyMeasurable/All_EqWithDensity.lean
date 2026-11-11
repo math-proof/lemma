@@ -7,12 +7,12 @@ Markov property along histories: `𝔼[G(ω[..n]) * g(ω[n+1])] = 𝔼[G(ω[..n]
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A}
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
   {n : ℕ}
-  {G : (Π _ : Finset.Iic n, ℝ × S × A) → ℝ}
+  {G : (Π _ : Finset.Iic n, ℝ × 𝒮 × 𝒜) → ℝ}
   {CG : ℝ}
-  {g : ℝ × S × A → ℝ}
+  {g : ℝ × 𝒮 × 𝒜 → ℝ}
   {C : ℝ}
 -- given
   (hG : StronglyMeasurable G)
@@ -32,7 +32,7 @@ private lemma main
       exact mul_le_mul (hCG _) (hC _) (norm_nonneg _) ((norm_nonneg _).trans (hCG p.1)))
     (C := CG * C) θ]
   simp_rw [integral_const_mul]
-  have hm : StronglyMeasurable (fun h : (Π _ : Finset.Iic n, ℝ × S × A) =>
+  have hm : StronglyMeasurable (fun h : (Π _ : Finset.Iic n, ℝ × 𝒮 × 𝒜) =>
       G h * ∫ z, g z ∂(M.K θ (h ⟨n, mem_Iic.2 le_rfl⟩))) := by
     refine hG.mul ?_
     exact (hg.comp_measurable measurable_snd).integral_kernel_prod_right' (κ := M.step θ n)

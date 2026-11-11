@@ -31,7 +31,8 @@ import Lemma.Tensor.ExpAdd_MulInfty.eq.Mul_Stack_Bool
 import Lemma.Tensor.GetDiv.eq.DivGetS
 import Lemma.Tensor.GetKeepdim.eq.KeepdimCast_Get.of.GtGet_0.Gt_0.GtLength
 import Lemma.Tensor.XEqGetS.of.XEq.GtLength
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
+import Instance.Data.Vector.Basic.Dot
 open Tensor Hyperreal Exp
 set_option maxHeartbeats 2000000
 
@@ -48,10 +49,10 @@ private lemma main
   let Ξ := (1 : Tensor ℝ* [n, n]).band_part (l - 1) (u - 1)
   let A : Tensor ℝ* [n, n] := A
   let V : Tensor ℝ* [n, d_z] := V
-  (A + (Ξ - 1) * ∞).softmax @ V ≈ [i < n]
+  (A + (Ξ - 1) * ∞).softmax ⬝ᵥ V ≈ [i < n]
     let βᵢ := i + 1 - l
     let ζᵢ := i + u
-    A[i, βᵢ: ζᵢ].softmax @ V[βᵢ: ζᵢ] := by
+    A[i, βᵢ: ζᵢ].softmax ⬝ᵥ V[βᵢ: ζᵢ] := by
 -- proof
   denote h_Ξ_def : Ξ = _
   denote h_A' : A' = _
@@ -63,7 +64,7 @@ private lemma main
   simp [← h_Ξ_def] at h_Ξ
   denote h_a' : a' = (A' + (Ξ - 1) * ∞)
   rw [← h_a'] at h_Ξ ⊢
-  denote h_z : z = a'.softmax @ V'
+  denote h_z : z = a'.softmax ⬝ᵥ V'
   rw [← h_z]
   apply @Tensor.XEq.of.All_XEqGetS.fin
   intro i
@@ -89,7 +90,7 @@ private lemma main
     rw [MapBandPart.eq.BandPartMap.of.EqUFn0'0]
     rfl
   apply (Tensor.XEq.of.Eq h_zi).trans
-  apply XEq.trans (b := ((exp A').get i * Ξ.get i / id (α := Tensor ℝ* []) (((exp A').get i * Ξ.get i).sum 0)) @ V')
+  apply XEq.trans (b := ((exp A').get i * Ξ.get i / id (α := Tensor ℝ* []) (((exp A').get i * Ξ.get i).sum 0)) ⬝ᵥ V')
   .
     simp
     rw [h_A', hΞ, h_V']

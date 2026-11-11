@@ -1,4 +1,4 @@
-import Def.Data.Holor.Repeat
+import Def.Data.Tensor.Repeat
 import Lemma.Tensor.LengthRepeat.eq.Length.of.GtVal_0
 open Tensor
 

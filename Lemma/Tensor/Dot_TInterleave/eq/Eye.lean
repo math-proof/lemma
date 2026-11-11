@@ -1,15 +1,16 @@
 import Lemma.Tensor.Dot.eq.Eye.of.Dot.eq.Eye
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.DotTInterleave.eq.Eye
-import Def.Data.Holor.Eye
-import Theorem.Data.Holor.Functions
+import Def.Data.Tensor.Eye
+import Theorem.Data.Tensor.Functions
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
 @[path]
 private lemma main :
 -- imply
-  (interleave d) @ (interleave d)ᵀ = Tensor.eye (d + d) := by
+  (interleave d) ⬝ᵥ (interleave d)ᵀ = Tensor.eye (d + d) := by
 -- proof
   apply Dot.eq.Eye.of.Dot.eq.Eye (A := id (α := Tensor ℝ [d + d, d + d]) (interleave d)ᵀ) (B := interleave d)
   apply DotTInterleave.eq.Eye

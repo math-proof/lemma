@@ -1,12 +1,12 @@
 import Lemma.Tensor.SEqSumS.of.SEq.Eq
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Bool.Eq.of.SEq.SEq
 import Lemma.List.GetPermute.eq.Get.of.Ge
 import Lemma.Tensor.SEq1S.of.Eq
 import Lemma.Tensor.Softmax.as.PermuteSoftmaxPermute.of.LtAdd_1Length
 import Lemma.Tensor.SumPermute.as.PermuteSum.of.Ge
 import Lemma.Tensor.SumSoftmax.eq.One.of.Get_SubLength_1.gt.Zero.GtLength_0
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Bool List Nat Tensor Fin
 
 

@@ -1,5 +1,5 @@
 import Lemma.Tensor.GetSoftmax.eq.SoftmaxGet.of.GtGet_0.LtAdd_1Length
-import Def.Data.Holor.Stack.Part2
+import Def.Data.Tensor.Stack.Part2
 open Bool Tensor
 
 

@@ -1,5 +1,5 @@
 import Lemma.Tensor.EqLength_0.of.Eq_Nil
-import Theorem.Data.Holor.Functions
+import Theorem.Data.Tensor.Functions
 open Tensor
 
 

@@ -23,9 +23,9 @@ private lemma main
   (t : ℕ)
   (ψ : S → A → E) :
 -- imply
-  Integrable (fun ω => ((γ ^ (id : ℕ → ℕ)) @ r[t:]) ω • ψ (s t ω) (a t ω)) (M θ) := by
+  Integrable (fun ω => ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω • ψ (s t ω) (a t ω)) (M θ) := by
 -- proof
-  set G := (γ ^ (id : ℕ → ℕ)) @ r[t:]
+  set G := (γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]
   have hX : Measurable (fun ω : ℕ → ℝ × S × A => (s t ω, a t ω)) := (Random.Measurable.of.All_Eq.snd.fst h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.snd h₁ t)
   refine Integrable.of_bound (C := (1 - γ)⁻¹ * |M.env.R| * ∑ p : S × A, ‖ψ p.1 p.2‖)
     ((IntegrableDotPow_Id.of.All_Eq.In_Ico (M := M) h₀ h₁ θ t).1.smul ((StronglyMeasurable.of_discrete
@@ -38,3 +38,4 @@ private lemma main
 
 
 -- created on 2026-10-06
+-- updated on 2026-11-11

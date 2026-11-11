@@ -1,5 +1,5 @@
 import Lemma.Tensor.DataSum_0.eq.SumSplitAtData
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 import Lemma.Tensor.Eq.is.EqDataS
 open Tensor Vector
 

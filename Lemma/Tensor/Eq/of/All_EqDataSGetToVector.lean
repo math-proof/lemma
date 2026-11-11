@@ -1,5 +1,5 @@
 import Lemma.Tensor.Data.eq.FlattenMapRange_GetToVector
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.Tensor.DataGetToVector.as.ArraySliceData
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.EqFlattenMapRange.of.All_SEqArraySlice

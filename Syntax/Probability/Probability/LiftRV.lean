@@ -28,7 +28,7 @@ throws an error are the local names of type `Ω → α`, `ℕ → Ω → α`, `F
 error is rethrown. So every `x` that already elaborates (e.g. `fun ω ↦ V t (s t ω)`,
 `𝔼[r: π](… | s t)`, `0`) is unchanged.
 It is applied to both sides of `=ᵐ[μ]` (see the `macro_rules` below), e.g.
-`∀ t, V t (s[t]) =ᵐ[π] 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s[t])`.
+`∀ t, V t (s[t]) =ᵐ[π] 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s[t])`.
 -/
 syntax (name := liftRV) "rv%[" term "] " term:max : term
 

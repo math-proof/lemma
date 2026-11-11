@@ -1,12 +1,13 @@
-import Def.Data.Holor.Unsqueeze
-import Def.Data.Holor.Reshape
-import Def.Data.Holor.Bmm
+import Def.Data.Tensor.Unsqueeze
+import Def.Data.Tensor.Reshape
+import Def.Data.Tensor.Bmm
 import Lemma.Tensor.Matmul.as.Bmm
 import Lemma.Tensor.ResizeUnsqueeze_Succ.as.UnsqueezeResize
 import Lemma.Tensor.SEqReshapeS.of.SEq.Eq.Dvd
 import Lemma.Tensor.SEqResize.of.Eq_Get
 import Lemma.Tensor.SEqSelectS.of.SEq
 import Lemma.Tensor.Unsqueeze.eq.Reshape
+import Instance.Data.Vector.Basic.Dot
 open Bool Tensor
 set_option maxHeartbeats 250000
 
@@ -18,7 +19,7 @@ private lemma main
   (A : Tensor α [m, k'])
   (B : Tensor α [k]) :
 -- imply
-  A @ B = (A @ (B.unsqueeze 1)).select ⟨1, by simp [matmul_shape]⟩ ⟨0, by simp [matmul_shape, broadcast_shape]⟩ := by
+  A ⬝ᵥ B = (A ⬝ᵥ (B.unsqueeze 1)).select ⟨1, by simp [matmul_shape]⟩ ⟨0, by simp [matmul_shape, broadcast_shape]⟩ := by
 -- proof
   simp [Dot.dot]
   simp [Tensor.einsum]

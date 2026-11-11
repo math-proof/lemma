@@ -21,3 +21,23 @@ def Matrix.ofFunSlicePrefix {n d : ℕ}
     (rows ⟨(i : ℕ), by
       have h : (n : ℤ).toNat = n := Int.toNat_natCast n
       simp [h]⟩).toFun a
+
+/-- Length of the singleton integer slice `n:n+1`. -/
+theorem Matrix.funSlice_singleton_length (n : ℕ) :
+    ((n : ℤ) + 1).toNat - (n : ℤ).toNat = 1 := by
+  have h0 : (n : ℤ).toNat = n := Int.toNat_natCast n
+  have h1 : ((n : ℤ) + 1).toNat = n + 1 := by
+    rw [show (n : ℤ) + 1 = ((n + 1 : ℕ) : ℤ) from (by norm_cast)]
+    exact Int.toNat_natCast (n + 1)
+  omega
+
+/-- Singleton slice `V[n:n+1]` as a 1-row real matrix.
+Used by the `CoeDep` instance; prefer the cast `(s : ℝ ^ [1, d])` at call sites. -/
+def Matrix.ofFunSliceSingleton {d n : ℕ}
+    (s : FunSlice.Out (Fun (Fin d) ℝ) ⟨(n : ℤ), (n : ℤ) + 1, (1 : ℤ)⟩) :
+    Matrix (Fin 1) (Fin d) ℝ :=
+  Matrix.of fun i a =>
+    let rows : Fin (((n : ℤ) + 1).toNat - (n : ℤ).toNat) → Fun (Fin d) ℝ := s
+    (rows ⟨(i : ℕ), by
+      have h := Matrix.funSlice_singleton_length n
+      omega⟩).toFun a

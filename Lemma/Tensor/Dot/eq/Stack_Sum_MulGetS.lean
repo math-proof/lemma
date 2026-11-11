@@ -1,4 +1,5 @@
 import Lemma.Tensor.GetDot.eq.Sum_MulGetS
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
@@ -9,7 +10,7 @@ private lemma main
   (A : Tensor α [m, l])
   (B : Tensor α [l, n]) :
 -- imply
-  A @ B = [i < m] [j < n] ∑ k : Fin l, id (α := Tensor α []) A[i][k] * id (α := Tensor α []) B[k][j] := by
+  A ⬝ᵥ B = [i < m] [j < n] ∑ k : Fin l, id (α := Tensor α []) A[i][k] * id (α := Tensor α []) B[k][j] := by
 -- proof
   apply Eq.of.All_EqGetS.fin
   intro i
@@ -28,7 +29,7 @@ private lemma vm
   (A : Tensor α [l])
   (B : Tensor α [l, n]) :
 -- imply
-  A @ B = [j < n] ∑ k : Fin l, id (α := Tensor α []) A[k] * id (α := Tensor α []) B[k][j] := by
+  A ⬝ᵥ B = [j < n] ∑ k : Fin l, id (α := Tensor α []) A[k] * id (α := Tensor α []) B[k][j] := by
 -- proof
   apply Eq.of.All_EqGetS.fin
   intro j
@@ -47,7 +48,7 @@ private lemma mv
   (A : Tensor α [n, k])
   (C : Tensor α [k]) :
 -- imply
-  A @ C = [i < n] ∑ p : Fin k, id (α := Tensor α []) A[i][p] * id (α := Tensor α []) C[p] := by
+  A ⬝ᵥ C = [i < n] ∑ p : Fin k, id (α := Tensor α []) A[i][p] * id (α := Tensor α []) C[p] := by
 -- proof
   apply Eq.of.All_EqGetS.fin
   intro i

@@ -13,5 +13,5 @@ open Nat Lean
 open scoped BigOperators
 
 
-infixl:70 " @ᵒ " => OuterProd.outer
+infixl:70 " ⊗ᵒ " => OuterProd.outer
 

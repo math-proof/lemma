@@ -1,6 +1,6 @@
 import Def.Algebra.BigOperators.Products
-import Def.Data.Holor.Stack.Part2
-import Def.Data.Holor.Inv
+import Def.Data.Tensor.Stack.Part2
+import Def.Data.Tensor.Inv
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Def.LinearAlgebra.Matrix.Matpow
 

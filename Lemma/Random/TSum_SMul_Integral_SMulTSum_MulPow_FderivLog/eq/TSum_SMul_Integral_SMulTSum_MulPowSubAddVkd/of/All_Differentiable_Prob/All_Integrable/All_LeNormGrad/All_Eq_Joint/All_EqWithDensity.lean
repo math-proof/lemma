@@ -21,24 +21,24 @@ Continuous-action counterpart of the `key` step in
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [MeasurableSpace S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A}
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
   {θ : Θ}
   {γ : ℝ}
-  {g : S → A → ℝ}
+  {g : 𝒮 → 𝒜 → ℝ}
   {Ms : ℝ}
-  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
-  {s : ℕ → (ℕ → ℝ × S × A) → S}
-  {a : ℕ → (ℕ → ℝ × S × A) → A}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₃ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ g x u)
   (h₄ : ∀ x, Integrable (g x) ReferenceMeasure.measure)
-  (h₅ : ∀ θ, Measurable (fun z : S × A => M.policy.prob θ z.1 z.2))
+  (h₅ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.policy.prob θ z.1 z.2))
   (hφ : StronglyMeasurable
-    (fun z : S × A => fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' z.1 z.2)) θ))
+    (fun z : 𝒮 × 𝒜 => fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' z.1 z.2)) θ))
   (hMs : ∀ y u, ‖fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ‖ ≤ Ms) :
 -- imply
   ∑' t, γ ^ t • ∫ ω, (∑' k, γ ^ k * r (t + k) ω) •
@@ -142,4 +142,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-02
+-- updated on 2026-11-11

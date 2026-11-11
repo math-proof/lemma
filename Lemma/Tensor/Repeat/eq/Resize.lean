@@ -1,4 +1,4 @@
-import Def.Data.Holor.Repeat
+import Def.Data.Tensor.Repeat
 import Lemma.Tensor.Repeat.as.Resize.of.GtLength
 open Bool Tensor
 

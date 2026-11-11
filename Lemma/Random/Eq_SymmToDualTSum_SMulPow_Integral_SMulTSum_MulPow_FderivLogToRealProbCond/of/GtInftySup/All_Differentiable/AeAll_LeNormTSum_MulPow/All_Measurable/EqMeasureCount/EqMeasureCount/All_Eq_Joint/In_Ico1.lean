@@ -58,7 +58,7 @@ private lemma main
     let s₀ := s
     𝔼[r, s, a : M θ](
       ∑' t, γ ^ t •
-        (((fun k : ℕ => c ^ k) @ (fun k : ℕ => X s a r (t + k))) •
+        (((fun k : ℕ => c ^ k) ⬝ᵥ (fun k : ℕ => X s a r (t + k))) •
           ∇[θ] Real.log (ℙ[M θ]((a₀ t) = (a t) | (s₀ t) = (s t))).toReal)) := by
 -- proof
   intro hP _ _ _ _ _ _
@@ -143,7 +143,7 @@ private lemma main
     let s₀ := s
     𝔼[r, s, a : M θ](
       ∑' t, γ ^ t •
-        (((fun k : ℕ => c ^ k) @ (fun k : ℕ => X s a r (t + k))) •
+        (((fun k : ℕ => c ^ k) ⬝ᵥ (fun k : ℕ => X s a r (t + k))) •
           ∇[θ] Real.log (ℙ[M θ]((a₀ t) = (a t) | (s₀ t) = (s t))).toReal)) =
       ∫ ω, G ω ∂(M θ) := by
     have hx : AEMeasurable
@@ -167,4 +167,4 @@ private lemma main
 
 
 -- created on 2026-10-01
--- updated on 2026-10-23
+-- updated on 2026-11-11

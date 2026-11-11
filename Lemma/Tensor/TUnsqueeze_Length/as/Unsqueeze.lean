@@ -1,6 +1,6 @@
-import Def.Data.Holor.Unsqueeze
-import Def.Data.Holor.Prod
-import Notation.Data.Holor.Permute
+import Def.Data.Tensor.Unsqueeze
+import Def.Data.Tensor.Prod
+import Notation.Data.Tensor.Permute
 import Lemma.List.InsertIdxCons.eq.Cons_InsertIdx.of.Gt_0
 import Lemma.List.PermuteCons.eq.Cons_Permute.of.Ge
 import Lemma.List.PermuteInsertIdx.eq.InsertIdx.of.GtLength_0

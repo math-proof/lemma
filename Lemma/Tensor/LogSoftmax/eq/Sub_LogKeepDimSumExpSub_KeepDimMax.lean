@@ -1,4 +1,4 @@
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.Fin.Sum.ne.Zero.of.All_Gt_0.Ne_0
 import Lemma.Real.EqLog1'0
 import Lemma.Real.GtExp_0
@@ -8,7 +8,7 @@ import Lemma.Tensor.LogDiv.eq.SubLogS.of.All_Ne_0.All_Ne_0
 import Lemma.Tensor.Max.eq.Cast.of.LeLength
 import Lemma.Tensor.SoftmaxSub_Keepdim.eq.Softmax
 import Lemma.Vector.GetSum.eq.Sum_Get
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Fin List Nat Real Tensor Vector Set
 
 

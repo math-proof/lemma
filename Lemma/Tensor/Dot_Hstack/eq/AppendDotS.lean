@@ -2,6 +2,7 @@ import Lemma.Tensor.Dot.eq.Stack_Sum_MulGetS
 import Lemma.Tensor.GetHstack.eq.Get.of.Lt
 import Lemma.Tensor.GetHstack.eq.Get_Sub.of.GtAdd.Ge
 import Lemma.Tensor.Stack.eq.AppendStackS
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
@@ -16,9 +17,9 @@ private lemma main
   (X : Tensor α [k, p])
   (Y : Tensor α [k, q]) :
 -- imply
-  x @ (X.hstack Y) = id (α := Tensor α [p]) (x @ X) ++ id (α := Tensor α [q]) (x @ Y) := by
+  x ⬝ᵥ (X.hstack Y) = id (α := Tensor α [p]) (x ⬝ᵥ X) ++ id (α := Tensor α [q]) (x ⬝ᵥ Y) := by
 -- proof
-  change id (α := Tensor α [p + q]) (x @ (X.hstack Y)) = id (α := Tensor α [p]) (x @ X) ++ id (α := Tensor α [q]) (x @ Y)
+  change id (α := Tensor α [p + q]) (x ⬝ᵥ (X.hstack Y)) = id (α := Tensor α [p]) (x ⬝ᵥ X) ++ id (α := Tensor α [q]) (x ⬝ᵥ Y)
   simp only [id]
   rw [Dot.eq.Stack_Sum_MulGetS.vm x (X.hstack Y), Dot.eq.Stack_Sum_MulGetS.vm x X, Dot.eq.Stack_Sum_MulGetS.vm x Y]
   let f : ℕ → Tensor α [] := fun j =>

@@ -1,5 +1,5 @@
 import Lemma.Bool.SEqUFnS.of.SEq
-import Def.Data.Holor.Defs.Part4
+import Def.Data.Tensor.Defs.Part4
 open Bool
 
 

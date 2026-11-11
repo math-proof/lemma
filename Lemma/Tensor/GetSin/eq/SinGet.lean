@@ -1,5 +1,5 @@
 import Lemma.Tensor.GetMap.eq.MapGet
-import Theorem.Data.Holor.Functions
+import Theorem.Data.Tensor.Functions
 open Tensor
 
 

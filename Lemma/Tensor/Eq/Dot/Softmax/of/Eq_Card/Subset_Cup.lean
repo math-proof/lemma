@@ -1,4 +1,5 @@
 import Lemma.Tensor.DotSoftmaxAdd_Mul_Infty.eq.Cast_Stack_Sum_Image
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
@@ -23,7 +24,7 @@ private lemma gather
   let Ξ : Tensor ℝ* [n, n] := [_i < n] [j < n] (Bool.toNat (decide (j ∈ Finset.univ.image d)))
   let A' : Tensor ℝ* [n, n] := ([i < n] [j < n] (A i j : Tensor ℝ []) : Tensor ℝ [n, n])
   let V' : Tensor ℝ [n, d_z] := [j < n] [l < d_z] (V j l : Tensor ℝ [])
-  (A' + (Ξ - 1) * ∞).softmax @ (V' : Tensor ℝ* [n, d_z]) ≈
+  (A' + (Ξ - 1) * ∞).softmax ⬝ᵥ (V' : Tensor ℝ* [n, d_z]) ≈
     ((([i < n] [l < d_z] ((∑ j, Real.exp (A i (d j)) / (∑ k, Real.exp (A i (d k))) * V (d j) l : ℝ) : Tensor ℝ [])) : Tensor ℝ [n, d_z]) : Tensor ℝ* [n, d_z]) := by
 -- proof
   exact DotSoftmaxAdd_Mul_Infty.eq.Cast_Stack_Sum_Image h₀ h_m A V
@@ -49,7 +50,7 @@ private lemma position_representation.relative.gather
   let Ξ : Tensor ℝ* [n, n] := [_i < n] [j < n] (Bool.toNat (decide (j ∈ Finset.univ.image d)))
   let A : Tensor ℝ* [n, n] := ([i < n] [j < n] (((∑ t, Q i t * (K j t + K' j t)) / √(d_z : ℝ) : ℝ) : Tensor ℝ []) : Tensor ℝ [n, n])
   let W : Tensor ℝ [n, d_z] := [j < n] [l < d_z] ((V j l + V' j l : ℝ) : Tensor ℝ [])
-  (A + (Ξ - 1) * ∞).softmax @ (W : Tensor ℝ* [n, d_z]) ≈
+  (A + (Ξ - 1) * ∞).softmax ⬝ᵥ (W : Tensor ℝ* [n, d_z]) ≈
     ((([i < n] [l < d_z] ((∑ j, Real.exp ((∑ t, Q i t * (K (d j) t + K' (d j) t)) / √(d_z : ℝ)) / (∑ k, Real.exp ((∑ t, Q i t * (K (d k) t + K' (d k) t)) / √(d_z : ℝ))) * (V (d j) l + V' (d j) l) : ℝ) : Tensor ℝ [])) : Tensor ℝ [n, d_z]) : Tensor ℝ* [n, d_z]) := by
 -- proof
   exact DotSoftmaxAdd_Mul_Infty.eq.Cast_Stack_Sum_Image h₀ h_m (fun i j => (∑ t, Q i t * (K j t + K' j t)) / √(d_z : ℝ)) (fun j l => V j l + V' j l)

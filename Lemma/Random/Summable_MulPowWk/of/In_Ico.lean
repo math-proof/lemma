@@ -7,7 +7,8 @@ For `γ ∈ [0, 1)` the discounted series `∑ k, γ ^ k * Wk θ k x` is summabl
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [MeasurableSpace A] [Fintype A]
+  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
+  [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
   {M : Model Θ S A}
   {γ : ℝ}
 -- given
@@ -23,3 +24,4 @@ private lemma main
 
 
 -- created on 2026-10-07
+-- updated on 2026-11-08

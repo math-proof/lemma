@@ -44,8 +44,8 @@ private lemma main
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (h₂ : ∀ θ t («\sf{s}» : ℕ → S) («\sf{a}» : ℕ → A), Q θ t («\sf{s}» t) («\sf{a}» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t ∧ a t = «\sf{a}» t))
-  (h₃ : ∀ θ t («\sf{s}» : ℕ → S), V θ t («\sf{s}» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = «\sf{s}» t))
+  (h₂ : ∀ θ t («\sf{s}» : ℕ → S) («\sf{a}» : ℕ → A), Q θ t («\sf{s}» t) («\sf{a}» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = «\sf{s}» t ∧ a t = «\sf{a}» t))
+  (h₃ : ∀ θ t («\sf{s}» : ℕ → S), V θ t («\sf{s}» t) = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = «\sf{s}» t))
   (h₄ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₅ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞)
   (h₆ : (M θ).real (s t ⁻¹' {«\sf{s}» t}) ≠ 0) :
@@ -70,9 +70,9 @@ private lemma main
   set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
   intro hs ha hSPA hSPS
   let Qloc (θ : Θ) (t : ℕ) (x : S) (u : A) : ℝ :=
-    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u)
+    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = x ∧ a t = u)
   let Vloc (θ : Θ) (t : ℕ) (x : S) : ℝ :=
-    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x)
+    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = x)
   have hQ : Q = Qloc := funext fun θ => funext fun t => funext fun x => funext fun u =>
     h₂ θ t (fun _ ↦ x) (fun _ ↦ u)
   have hV : V = Vloc := funext fun θ => funext fun t => funext fun x =>
@@ -104,4 +104,4 @@ private lemma main
 
 
 -- created on 2023-03-30
--- updated on 2026-11-03
+-- updated on 2026-11-11

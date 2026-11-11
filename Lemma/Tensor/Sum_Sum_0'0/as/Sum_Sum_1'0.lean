@@ -3,7 +3,7 @@ import Lemma.Tensor.LengthSum.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.Sum.eq.SumStack_Select
 import Lemma.Tensor.Sum_0.eq.SumStack_Get
 import Lemma.Tensor.Sum_Sum
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Bool Tensor
 
 

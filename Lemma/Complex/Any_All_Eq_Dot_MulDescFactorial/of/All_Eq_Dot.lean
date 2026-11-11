@@ -20,13 +20,14 @@ import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.Order.Interval.Finset.Fin
 import Theorem.Function
 import Theorem.Data.Fin.Dot.Part2
+infixl:72 (priority := 2000) " ⬝ᵥ " => Dot.dot
 open Polynomial Matrix Finset
 set_option maxHeartbeats 999999
 
 
 /--
 Closed form of a homogeneous linear recurrence of order `n` over `ℂ`:
-`h[k + n] = c @ h[k: k + n]`. A root of multiplicity `m` contributes the
+`h[k + n] = c ⬝ᵥ h[k: k + n]`. A root of multiplicity `m` contributes the
 falling factorials of exponents `0, …, m - 1`, so a repeated root `0` still
 frees the initial values.
 -/
@@ -36,10 +37,10 @@ private lemma main
   {h : ℕ ⇀ ℂ}
   {c : Fin n ⇀ ℂ}
 -- given
-  (hrec : ∀ k : ℕ, h[k + n] = c @ h[k: k + n]) :
+  (hrec : ∀ k : ℕ, h[k + n] = c ⬝ᵥ h[k: k + n]) :
 -- imply
   ∃ (e : Fin n ⇀ ℕ) (r : Fin n ⇀ ℂ) (A : Fin n ⇀ ℂ), ∀ t : ℕ,
-    h[t] = A @ fun i => t.descFactorial e[i] * r[i] ^ (t - e[i]) := by
+    h[t] = A ⬝ᵥ fun i => t.descFactorial e[i] * r[i] ^ (t - e[i]) := by
 -- proof
   classical
   let E : LinearRecurrence ℂ := ⟨n, fun i => c[i]⟩

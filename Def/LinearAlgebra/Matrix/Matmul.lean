@@ -7,7 +7,7 @@ import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
 import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
 import Lemma.List.ZipWith_Append.eq.AppendZipWithS
 import Lemma.List.ZipWith__Append.eq.AppendZipWithS
-import Instance.Data.Holor.Tensor.Part2
+import Instance.Data.Tensor.Tensor.Part2
 open List Tensor
 
 
@@ -81,11 +81,11 @@ perform matrix multiplication between two tensors like
 [torch.einsum](https://docs.pytorch.org/docs/stable/generated/torch.einsum.html)
 if the batch dimensions are different, the shorter length is broadcasted to the longer one, eg:
 - if A.shape = [1, 4, 5], B.shape = [9, 5, 6], then the result is :
-  A.repeat 9 0 @ B,  with shape of [9, 4, 6]
+  A.repeat 9 0 ⬝ᵥ B,  with shape of [9, 4, 6]
 - if A.shape = [3, 4, 5], B.shape = [9, 5, 6], then the result is :
-  A.repeat 3 0 @ B,  with shape of [9, 4, 6]
+  A.repeat 3 0 ⬝ᵥ B,  with shape of [9, 4, 6]
 - if A.shape = [2, 4, 5], B.shape = [9, 5, 6], then the result is :
-  A.repeat 4 0 ++ (0 : Tensor α [1, 4, 5]) @ B,  with shape of [9, 4, 6]
+  A.repeat 4 0 ++ (0 : Tensor α [1, 4, 5]) ⬝ᵥ B,  with shape of [9, 4, 6]
 -- instance [Mul α] [Add α] [Zero α] : MatMul (Tensor α (batch_size ++ [m, k])) (Tensor α (batch_size ++ [k, n])) (Tensor α (batch_size ++ [m, n])) := ⟨dot⟩
 -/
 def Tensor.einsum [Mul α] [Add α] [Zero α] (X : Tensor α s) (Y : Tensor α s') : Tensor α (matmul_shape s s') :=

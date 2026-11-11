@@ -8,12 +8,12 @@ The `k`-step expected reward with a density policy is bounded: `‖Wkd θ k x‖
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A}
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
 -- given
   (θ : Θ)
   (k : ℕ)
-  (x : S) :
+  (x : 𝒮) :
 -- imply
   ‖M.Wkd θ k x‖ ≤ |M.env.R| := by
 -- proof

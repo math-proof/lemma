@@ -3,10 +3,11 @@ import Lemma.Tensor.Add
 import Lemma.Tensor.AddMulS.eq.SubMulS
 import Lemma.Tensor.Dot.eq.Stack_Sum_MulGetS
 import Lemma.Tensor.GetRotaryMatrix'.eq.Ite_IteS
-import Notation.Data.Holor.Permute
-import Instance.Data.Holor.Tensor.Part2
-import Theorem.Data.Holor.Functions
-import Def.Data.Holor.Stack.Part2
+import Notation.Data.Tensor.Permute
+import Instance.Data.Tensor.Tensor.Part2
+import Theorem.Data.Tensor.Functions
+import Def.Data.Tensor.Stack.Part2
+import Instance.Data.Vector.Basic.Dot
 open Bool Tensor List
 set_option maxHeartbeats 1000000
 
@@ -17,7 +18,7 @@ private lemma main
   (θ : Tensor ℝ [d])
   (x : Tensor ℝ [d + d]) :
 -- imply
-  θ.rotaryMatrix'ᵀ @ x =
+  θ.rotaryMatrix'ᵀ ⬝ᵥ x =
     [j < d + d]
       if h : (j : ℕ) % 2 = 0 then
         let j1 : Fin (d + d) := ⟨(j : ℕ) + 1, by omega⟩
@@ -34,8 +35,8 @@ private lemma main
 -- proof
   let RT : Tensor ℝ [d + d, d + d] :=
     cast (congrArg (Tensor ℝ) (by simp)) θ.rotaryMatrix'ᵀ
-  have hmat : θ.rotaryMatrix'ᵀ @ x = RT @ x := by
-    refine congrArg (fun t : Tensor ℝ [d + d, d + d] => t @ x) ?_
+  have hmat : θ.rotaryMatrix'ᵀ ⬝ᵥ x = RT ⬝ᵥ x := by
+    refine congrArg (fun t : Tensor ℝ [d + d, d + d] => t ⬝ᵥ x) ?_
     exact (cast_eq (congrArg (Tensor ℝ) (by simp)) θ.rotaryMatrix'ᵀ).symm
   rw [hmat]
   apply Eq.trans (Dot.eq.Stack_Sum_MulGetS.mv RT x)

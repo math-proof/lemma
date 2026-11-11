@@ -1,4 +1,5 @@
 import Def.Analysis.Calculus.Gradient.Operators.Part2
+import Mathlib.Analysis.Calculus.SmoothSeries
 import Syntax.Order.Sup
 import Lemma.Random.Differentiable.All_LeNormFderiv_MulAdd_1_MulMulCard.of.All_LeNorm.StronglyMeasurable.All_LeNormFderiv.All_All_Differentiable_FunPolProb
 import Lemma.Random.Vc.eq.TSum_MulPowIntegral.of.Ne0Real_Preimage.In_Ico
@@ -44,4 +45,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-11-03
+-- updated on 2026-11-08

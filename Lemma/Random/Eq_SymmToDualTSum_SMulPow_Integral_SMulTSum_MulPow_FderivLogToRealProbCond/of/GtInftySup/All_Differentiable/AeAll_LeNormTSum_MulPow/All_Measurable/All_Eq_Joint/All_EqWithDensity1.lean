@@ -16,24 +16,24 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel 
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ]
-  [MeasurableSpace S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A}
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
   {θ : Θ}
   {γ c : ℝ}
-  {X : (ℕ → S) → (ℕ → A) → (ℕ → ℝ) → ℕ → ℝ}
+  {X : (ℕ → 𝒮) → (ℕ → 𝒜) → (ℕ → ℝ) → ℕ → ℝ}
   {B Ms : ℝ}
-  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
-  {s : ℕ → (ℕ → ℝ × S × A) → S}
-  {a : ℕ → (ℕ → ℝ × S × A) → A}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (h₂ : ∀ k, Measurable fun ω : ℕ → ℝ × S × A =>
+  (h₂ : ∀ k, Measurable fun ω : ℕ → ℝ × 𝒮 × 𝒜 =>
     X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) k)
   (h₃ : ∀ᵐ ω ∂(M θ), ∀ t,
     ‖∑' k, c ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)‖ ≤ B)
   (hφ : StronglyMeasurable
-    (fun z : S × A =>
+    (fun z : 𝒮 × 𝒜 =>
       gradient (fun θ' => Real.log (M.policy.prob θ' z.1 z.2)) θ))
   (hMs : ∀ y u,
     ‖gradient (fun θ' => Real.log (M.policy.prob θ' y u)) θ‖ ≤ Ms) :
@@ -57,7 +57,7 @@ private lemma main
         fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ)) =
     𝔼[r, s, a : M θ](
       ∑' t, γ ^ t •
-        (((fun k : ℕ => c ^ k) @ (fun k : ℕ => X s a r (t + k))) •
+        (((fun k : ℕ => c ^ k) ⬝ᵥ (fun k : ℕ => X s a r (t + k))) •
           ∇[θ] Real.log (M.policy.prob θ (s t) (a t)))) := by
 -- proof
   intro _ _ _ _ _ _
@@ -65,9 +65,9 @@ private lemma main
   obtain rfl : r = fun t ω ↦ (ω t).1 := funext₂ fun t ω ↦ (congrArg Prod.fst (congrFun (h₁ t) ω)).symm
   obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
   obtain rfl : a = fun t ω ↦ (ω t).2.2 := funext₂ fun t ω ↦ (congrArg (·.2.2) (congrFun (h₁ t) ω)).symm
-  set r : ℕ → (ℕ → ℝ × S × A) → ℝ := fun t ω ↦ (ω t).1
-  set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
-  set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
+  set r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ := fun t ω ↦ (ω t).1
+  set s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮 := fun t ω ↦ (ω t).2.1
+  set a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜 := fun t ω ↦ (ω t).2.2
   let _ : MeasurableSpace Θ := borel Θ
   have _ : BorelSpace Θ := ⟨rfl⟩
   have hs' : ∀ t, PSpace (M θ) (s t) := fun t =>
@@ -81,7 +81,7 @@ private lemma main
   have : PSpace (M θ) (AsPathRV.path r) := PSpace_Path.of.All_PSpace hr'
   let L : StrongDual ℝ Θ ≃L[ℝ] Θ := (InnerProductSpace.toDual ℝ Θ).symm.toContinuousLinearEquiv
   have hL : ∀ φ, (InnerProductSpace.toDual ℝ Θ).symm φ = L φ := fun _ => rfl
-  let G : (ℕ → ℝ × S × A) → Θ := fun ω => ∑' t, γ ^ t •
+  let G : (ℕ → ℝ × 𝒮 × 𝒜) → Θ := fun ω => ∑' t, γ ^ t •
     ((∑' k, c ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)) •
       gradient (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ)
   have hg := fun t : ℕ =>
@@ -118,7 +118,7 @@ private lemma main
   have hGsm : StronglyMeasurable G :=
     StronglyMeasurable.tsum (L := SummationFilter.unconditional ℕ) fun t =>
       (hg t).const_smul (γ ^ t)
-  let fromPath := fun (p : (ℕ → ℝ) × (ℕ → S) × (ℕ → A)) =>
+  let fromPath := fun (p : (ℕ → ℝ) × (ℕ → 𝒮) × (ℕ → 𝒜)) =>
     fun t => (p.1 t, p.2.1 t, p.2.2 t)
   have fromPath_meas : Measurable fromPath :=
     Measurable.of_eval fun t =>
@@ -128,7 +128,7 @@ private lemma main
   have hpath :
     𝔼[r, s, a : M θ](
       ∑' t, γ ^ t •
-        (((fun k : ℕ => c ^ k) @ (fun k : ℕ => X s a r (t + k))) •
+        (((fun k : ℕ => c ^ k) ⬝ᵥ (fun k : ℕ => X s a r (t + k))) •
           ∇[θ] Real.log (M.policy.prob θ (s t) (a t)))) =
       ∫ ω, G ω ∂(M θ) := by
     have hx : AEMeasurable
@@ -152,3 +152,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-11

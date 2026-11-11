@@ -1,5 +1,5 @@
 import Lemma.Tensor.EqGetT
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Instance.LinearAlgebra.Matrix.Dense
 open scoped Matrix
 

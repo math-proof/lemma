@@ -1,5 +1,6 @@
 import Lemma.Tensor.GetDot.as.DotGet
 import Lemma.Tensor.SEqDotS.of.SEq
+import Instance.Data.Vector.Basic.Dot
 open Tensor List Bool
 
 
@@ -12,7 +13,7 @@ private lemma main
   (Y : Tensor α [n', k'])
   (i : Fin n) :
 -- imply
-  (X @ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil h_s (by apply GeLength_1.of.Ne_Nil h_s) X Y i) ≃ X[i] @ Y := by
+  (X ⬝ᵥ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil h_s (by apply GeLength_1.of.Ne_Nil h_s) X Y i) ≃ X[i] ⬝ᵥ Y := by
 -- proof
   have h_s := GtLength_0.of.Ne_Nil h_s
   let X' : Tensor α (n :: (s.take (s.length - 1) ++ [s[s.length - 1]])) := cast (by simp; grind) X
@@ -25,7 +26,7 @@ private lemma main
   have h_s : (n :: s).tail = (n :: (s.take (s.length - 1) ++ [s[s.length - 1]])).tail := by
     simp
     grind
-  have h_seq : (cast (congrArg (Tensor α) h_s) (X.get i)) @ Y ≃ (X.get i) @ Y := SEqDotS.of.SEq (by apply SEqCast.of.Eq h_s) Y
+  have h_seq : (cast (congrArg (Tensor α) h_s) (X.get i)) ⬝ᵥ Y ≃ (X.get i) ⬝ᵥ Y := SEqDotS.of.SEq (by apply SEqCast.of.Eq h_s) Y
   have h_get := h_get.trans h_seq
   symm
   apply h_get.symm.trans
@@ -45,7 +46,7 @@ private lemma une
   (Y : Tensor α [n'])
   (i : Fin n) :
 -- imply
-  (X @ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil h_s (by simp) X Y i) ≃ X[i] @ Y := by
+  (X ⬝ᵥ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil h_s (by simp) X Y i) ≃ X[i] ⬝ᵥ Y := by
 -- proof
   have h_s := GtLength_0.of.Ne_Nil h_s
   let X' : Tensor α (n :: (s.take (s.length - 1) ++ [s[s.length - 1]])) := cast (by simp; grind) X
@@ -58,7 +59,7 @@ private lemma une
   have h_s : (n :: s).tail = (n :: (s.take (s.length - 1) ++ [s[s.length - 1]])).tail := by
     simp
     grind
-  have h_seq : (cast (congrArg (Tensor α) h_s) (X.get i)) @ Y ≃ (X.get i) @ Y := SEqDotS.of.SEq (by apply SEqCast.of.Eq h_s) Y
+  have h_seq : (cast (congrArg (Tensor α) h_s) (X.get i)) ⬝ᵥ Y ≃ (X.get i) ⬝ᵥ Y := SEqDotS.of.SEq (by apply SEqCast.of.Eq h_s) Y
   have h_get := h_get.trans h_seq
   symm
   apply h_get.symm.trans

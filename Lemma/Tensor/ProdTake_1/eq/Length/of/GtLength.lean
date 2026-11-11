@@ -1,5 +1,5 @@
-import Def.Data.Holor.Defs.Part4
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Defs.Part4
+import Def.Data.Tensor.Prod
 import Lemma.Tensor.ProdTake_1.eq.Length.of.GtLength_0
 open Tensor
 

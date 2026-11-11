@@ -1,5 +1,5 @@
 import Lemma.Bool.EqCast.of.SEq
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.PermuteTail.as.Rotate.of.LeLength
 open Bool Tensor Nat
 

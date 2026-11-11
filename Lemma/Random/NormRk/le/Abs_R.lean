@@ -1,4 +1,5 @@
 import Def.Dynamics.PolicyTrajectory.Continuous
+import Lemma.Random.MeasurableRk
 open MeasureTheory PolicyGradient
 
 

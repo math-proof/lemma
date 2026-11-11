@@ -1,7 +1,7 @@
 import Lemma.Tensor.CosSub.eq.AddMulS
 import Lemma.Tensor.GetAdd.eq.AddGetS
 import Lemma.Tensor.GetMul.eq.MulGetS
-import Theorem.Data.Holor.Functions
+import Theorem.Data.Tensor.Functions
 open Tensor
 
 

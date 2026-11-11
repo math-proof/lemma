@@ -1,5 +1,5 @@
 import Lemma.Tensor.GetBmm.as.BmmGetS.of.Eq
-import Def.Data.Holor.Bmm
+import Def.Data.Tensor.Bmm
 open List Tensor
 
 

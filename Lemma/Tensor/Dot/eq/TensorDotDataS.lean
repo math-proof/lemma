@@ -1,5 +1,6 @@
 import Lemma.Tensor.Dot.eq.SumMul__0
 import Lemma.Vector.Dot.eq.SumMul
+import Instance.Data.Vector.Basic.Dot
 open Tensor Vector
 
 
@@ -9,7 +10,7 @@ private lemma main
 -- given
   (A B : Tensor α [n]) :
 -- imply
-  A @ B = (A.data @ B.data : Tensor α []) := by
+  A ⬝ᵥ B = (A.data ⬝ᵥ B.data : Tensor α []) := by
 -- proof
   rw [Dot.eq.SumMul__0]
   apply Eq.of.EqDataS

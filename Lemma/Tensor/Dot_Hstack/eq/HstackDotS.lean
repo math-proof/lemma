@@ -2,6 +2,7 @@ import Lemma.Tensor.Dot.eq.Stack_Sum_MulGetS
 import Lemma.Tensor.GetHstack.eq.Get.of.Lt
 import Lemma.Tensor.GetHstack.eq.Get_Sub.of.GtAdd.Ge
 import Lemma.Tensor.Stack.eq.AppendStackS
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 set_option maxHeartbeats 400000
 
@@ -17,7 +18,7 @@ private lemma main
   (X : Tensor α [k, p])
   (Y : Tensor α [k, q]) :
 -- imply
-  A @ (X.hstack Y) = (A @ X).hstack (A @ Y) := by
+  A ⬝ᵥ (X.hstack Y) = (A ⬝ᵥ X).hstack (A ⬝ᵥ Y) := by
 -- proof
   rw [Dot.eq.Stack_Sum_MulGetS A (X.hstack Y)]
   calc
@@ -78,7 +79,7 @@ private lemma main
                 (j := p + (j : ℕ))
                 (h₀ := Nat.le_add_right p j)
                 (h₁ := Nat.add_lt_add_left j.isLt p) X Y r
-    _ = (A @ X).hstack (A @ Y) := by
+    _ = (A ⬝ᵥ X).hstack (A ⬝ᵥ Y) := by
       apply congrArg₂ Tensor.hstack
       ·
         apply Eq.symm

@@ -20,7 +20,7 @@ instance : GetElem (Fun ι α) ι α (fun _ _ => True) where
   getElem f i _ := f.toFun i
 
 /-- Open-ended path slice: `r[t:]` for `r : Fun ℕ α` is `k ↦ r.toFun (t + k)`,
-same shape as `Function.getSliceFrom` on bare sequences (so `@` / Dot keep working). -/
+same shape as `Function.getSliceFrom` on bare sequences (so `⬝ᵥ` / Dot keep working). -/
 def getSliceFrom (f : Fun ℕ α) (t : ℕ) : ℕ → α :=
   fun k ↦ f.toFun (t + k)
 

@@ -1,4 +1,4 @@
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.LengthPermute.eq.Length.of.Ge_0.GtVal_0
 open Tensor
 

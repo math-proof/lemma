@@ -1,5 +1,5 @@
-import Def.Data.Holor.Stack.Part2
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Stack.Part2
+import Def.Data.Tensor.Prod
 
 
 @[path]

@@ -4,7 +4,7 @@ import Notation.Fun
 import Notation.Data.Fin.Dot
 
 
-/-- Finite dot product: `v @ w = ∑ i, v i * w i`. -/
+/-- Finite dot product: `v ⬝ᵥ w = ∑ i, v i * w i`. -/
 instance [Mul α] [AddCommMonoid α] [Fintype ι] : Dot (ι → α) (ι → α) α where
   dot := dotProduct
 

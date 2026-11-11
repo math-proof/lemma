@@ -1,5 +1,5 @@
 import Def.Analysis.SpecialFunctions.TensorFunctions
-import Def.Data.Holor.Stack.Part2
+import Def.Data.Tensor.Stack.Part2
 
 
 /--

@@ -15,15 +15,15 @@ rewrite via `π • ∇ log π = ∇π`, then differentiate under the integral
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [MeasurableSpace S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A}
-  {g : S → A → ℝ}
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
+  {g : 𝒮 → 𝒜 → ℝ}
 -- given
   (h₀ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₁ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ g x u)
   (h₂ : ∀ x, Integrable (g x) ReferenceMeasure.measure)
   (θ : Θ)
-  (x : S) :
+  (x : 𝒮) :
 -- imply
   ∫ u, M.policy.prob θ x u • fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' x u)) θ
     ∂ReferenceMeasure.measure = 0 := by

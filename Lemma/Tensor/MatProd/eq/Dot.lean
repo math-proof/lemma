@@ -1,4 +1,5 @@
 import Lemma.Tensor.EqMatProd
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
@@ -8,7 +9,7 @@ private lemma main
   {m : ℕ}
   (f : Fin 2 → Tensor α [m, m]) :
 -- imply
-  matProd 2 f = (f (0 : Fin 2)) @ f 1 := by
+  matProd 2 f = (f (0 : Fin 2)) ⬝ᵥ f 1 := by
 -- proof
   apply MatProd.eq.DotMatProd.trans
   have h : matProd 1 (fun i : Fin 1 => f i.castSucc) = f 0 := by

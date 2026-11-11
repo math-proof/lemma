@@ -12,6 +12,7 @@ private lemma helper_main
   Subalgebra.toSubmodule
     (HopfAlgebra.hopfKer (Bialgebra.TensorProduct.map (BialgHom.id R₁ R₁) qc :
       BialgHom R₁ (R₁ ⊗[R] H) (R₁ ⊗[R] H'))) = LinearMap.range ((HopfAlgebra.hopfKer qc).val.toLinearMap.baseChange R₁) := by
+-- proof
   classical
   set qc₁ : BialgHom R₁ (R₁ ⊗[R] H) (R₁ ⊗[R] H') := Bialgebra.TensorProduct.map (BialgHom.id R₁ R₁) qc
     with hqc₁
@@ -51,9 +52,12 @@ private lemma helper_main
     rw [LinearMap.lTensor_tmul, AlgHom.toLinearMap_apply, HopfAlgebra.coaction_apply,
       HopfAlgebra.coaction_apply, TensorProduct.comul_tmul, CommSemiring.comul_apply]
     let L₁ : H ⊗[R] H →ₗ[R] R₁ ⊗[R] (H ⊗[R] H') :=
-      ΘR.comp ((Algebra.TensorProduct.map (AlgHom.id R₁ (R₁ ⊗[R] H)) (qc₁ : R₁ ⊗[R] H →ₐ[R₁] R₁ ⊗[R] H')).toLinearMap.restrictScalars R)
-        .comp ((TensorProduct.AlgebraTensorModule.tensorTensorTensorComm R R₁ R R₁ R₁ R₁ H H).toLinearMap.restrictScalars R)
-        .comp (TensorProduct.mk R (R₁ ⊗[R₁] R₁) (H ⊗[R] H) ((1 : R₁) ⊗ₜ[R₁] r))
+      LinearMap.comp ΘR
+        (LinearMap.comp
+          ((Algebra.TensorProduct.map (AlgHom.id R₁ (R₁ ⊗[R] H)) (qc₁ : R₁ ⊗[R] H →ₐ[R₁] R₁ ⊗[R] H')).toLinearMap.restrictScalars R)
+          (LinearMap.comp
+            ((TensorProduct.AlgebraTensorModule.tensorTensorTensorComm R R₁ R R₁ R₁ R₁ H H).toLinearMap.restrictScalars R)
+            (TensorProduct.mk R (R₁ ⊗[R₁] R₁) (H ⊗[R] H) ((1 : R₁) ⊗ₜ[R₁] r))))
     let L₂ : H ⊗[R] H →ₗ[R] R₁ ⊗[R] (H ⊗[R] H') :=
       (TensorProduct.mk R R₁ (H ⊗[R] H') r).comp ((Algebra.TensorProduct.map (AlgHom.id R H) (qc : H →ₐ[R] H')).toLinearMap)
     have hL : L₁ = L₂ := by
@@ -88,7 +92,7 @@ private lemma helper_main
       rw [LinearMap.mem_ker, LinearMap.lTensor_sub, LinearMap.sub_apply, ← hco, ← hone, hx, sub_self]
     rw [hker₁, LinearMap.mem_range] at hmem
     obtain ⟨y, hy⟩ := hmem
-    exact ⟨y, (congrFun (LinearMap.baseChange_eq_ltensor _) y).trans hy⟩
+    exact ⟨y, (congrFun (LinearMap.baseChange_eq_lTensor _) y).trans hy⟩
   ·
     rintro ⟨y, rfl⟩
     apply Θ.injective
@@ -96,7 +100,7 @@ private lemma helper_main
     have hmem : (HopfAlgebra.hopfKer qc).val.toLinearMap.lTensor R₁ y ∈ LinearMap.ker (D.lTensor R₁) := by
       rw [hker₁]; exact ⟨y, rfl⟩
     rw [LinearMap.mem_ker, LinearMap.lTensor_sub, LinearMap.sub_apply, sub_eq_zero] at hmem
-    rwa [congrFun (LinearMap.baseChange_eq_ltensor _) y]
+    rwa [congrFun (LinearMap.baseChange_eq_lTensor _) y]
 /--
 [HopfAlgebra_hopfKer_baseChange_toSubmodule_eq_range_baseChange](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_HopfAlgebra_hopfKer_baseChange_toSubmodule_eq_range_baseChange.lean)
 -/
@@ -116,3 +120,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-10

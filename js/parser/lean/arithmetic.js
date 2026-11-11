@@ -339,18 +339,18 @@ export class LeanMatMul extends LeanArithmetic {
 
     static input_priority = 70;
 
-    /** `ᵒ` on `@ᵒ` (outer product). Glued to `@`; a space would not be the infix. */
+    /** `ᵒ` on `⊗ᵒ` (outer product). Glued to `⊗`; a space would not be the infix. */
     superscript = '';
 
     get operator() {
-        return this.superscript ? `@${this.superscript}` : '@';
+        return this.superscript ? `⊗${this.superscript}` : '@';
     }
 
     get holeRegexTag() {
         return "Dot";
     }
 
-    /** `b @ᵒ l` stays `Dot__` when both factors are holes. */
+    /** `b ⊗ᵒ l` stays `Dot__` when both factors are holes. */
     storedHoleRegex(opts, binders) {
         return storedArith(this, "Dot", opts, binders, "Dot__", false);
     }
@@ -395,6 +395,16 @@ export class Lean_otimes extends LeanArithmetic {
     static { this.register(); }
 
     static input_priority = 32;
+
+    /**
+     * `regexp()` is `ucfirst(func)` plus hole marks. The class suffix `otimes`
+     * would spell `Otimes`; lemma paths use `OTimes`. `Lean_otimesSub` inherits
+     * this, so a tighter `⊗ₘ` / `⊗[R]` does not spell `OtimesSub`.
+     * `command` stays `\otimes` (it does not read `func`).
+     */
+    get func() {
+        return 'oTimes';
+    }
 
     /** `⊗ₘ` / `⊗ₜ` — the subscript letter (kernel product / `TensorProduct.tmul`). */
     subscript = '';

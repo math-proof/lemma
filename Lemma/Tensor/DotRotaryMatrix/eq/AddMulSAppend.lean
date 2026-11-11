@@ -8,6 +8,7 @@ import Lemma.Tensor.MulAppendS.eq.AppendMulS
 import Lemma.Tensor.NegStack.eq.Stack_Neg
 import Lemma.Tensor.SinAppend.eq.AppendSinS
 import Lemma.Vector.GetNeg.eq.NegGet
+import Instance.Data.Vector.Basic.Dot
 open Nat Tensor
 set_option maxHeartbeats 300000
 
@@ -18,7 +19,7 @@ private lemma main
   (θ : Tensor ℝ [d])
   (x0 x1 : Tensor ℝ [d]) :
 -- imply
-  θ.rotaryMatrix @ (x0 ++ x1) = (x0 ++ x1) * (θ ++ θ).cos + (-x1 ++ x0) * (θ ++ θ).sin := by
+  θ.rotaryMatrix ⬝ᵥ (x0 ++ x1) = (x0 ++ x1) * (θ ++ θ).cos + (-x1 ++ x0) * (θ ++ θ).sin := by
 -- proof
   simp only [rotaryMatrix]
   rw [DotAppendHstack.eq.AppendAddSDotS (Tensor.eye d * [_ < d] θ.cos) (-(Tensor.eye d * [_ < d] θ.sin)) (Tensor.eye d * [_ < d] θ.sin) (Tensor.eye d * [_ < d] θ.cos) x0 x1]

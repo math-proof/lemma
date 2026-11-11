@@ -1,10 +1,11 @@
-import Def.Data.Holor.Unsqueeze
-import Notation.Data.Holor.Permute
+import Def.Data.Tensor.Unsqueeze
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.Dot.eq.GetDotUnsqueeze_0
 import Lemma.Tensor.GetDot.eq.DotGetS
 import Lemma.Tensor.EqGetT
 import Lemma.Tensor.Sum_0.eq.SumStack_Get
 import Lemma.Tensor.SumStack.of.All_Eq
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 set_option maxHeartbeats 625000
 
@@ -18,7 +19,7 @@ private lemma main
   (i : Fin m)
   (j : Fin n) :
 -- imply
-  (A @ B)[i, j] = ∑ k < l, id (α := Tensor α []) A[i][k] * id (α := Tensor α []) B[k][j] := by
+  (A ⬝ᵥ B)[i, j] = ∑ k < l, id (α := Tensor α []) A[i][k] * id (α := Tensor α []) B[k][j] := by
 -- proof
   rw [GetDot.eq.DotGetS]
   have := Dot.eq.SumMul__0 A[i] Bᵀ[j]
@@ -52,7 +53,7 @@ private lemma body
   (B : Tensor α [l, n])
   (j : Fin n) :
 -- imply
-  (A @ B).get ⟨j, by simp [matmul_shape]; grind⟩ = ∑ k < l, id (α := Tensor α []) A[k] * id (α := Tensor α []) B[k][j] := by
+  (A ⬝ᵥ B).get ⟨j, by simp [matmul_shape]; grind⟩ = ∑ k < l, id (α := Tensor α []) A[k] * id (α := Tensor α []) B[k][j] := by
 -- proof
   have h := Dot.eq.GetDotUnsqueeze_0 A B
   have hg := congrArg (fun t => t.get ⟨j.val, by simp [matmul_shape]; grind⟩) h
@@ -74,7 +75,7 @@ private lemma une
   (B : Tensor α [l, n])
   (j : Fin n) :
 -- imply
-  (A @ B)[j]'(by simp [matmul_shape]; grind) = ∑ k < l, id (α := Tensor α []) A[k] * id (α := Tensor α []) B[k][j] := by
+  (A ⬝ᵥ B)[j]'(by simp [matmul_shape]; grind) = ∑ k < l, id (α := Tensor α []) A[k] * id (α := Tensor α []) B[k][j] := by
 -- proof
   exact body A B j
 

@@ -1,5 +1,5 @@
 import Theorem.Algebra.Power.Part2
-import Instance.Data.Holor.Tensor.Part2
+import Instance.Data.Tensor.Tensor.Part2
 import Lemma.Tensor.ItemMul.eq.MulItemS
 open Tensor
 

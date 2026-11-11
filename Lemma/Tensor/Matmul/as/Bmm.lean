@@ -1,4 +1,4 @@
-import Def.Data.Holor.Bmm
+import Def.Data.Tensor.Bmm
 import Lemma.Tensor.GetBmm.as.BmmGetS.of.Eq
 import Lemma.Tensor.GetResize_0.as.Get.of.GtLength_0
 import Lemma.Tensor.SEqMatmulS.of.SEq.SEq

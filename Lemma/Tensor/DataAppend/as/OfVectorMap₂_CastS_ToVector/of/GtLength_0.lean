@@ -1,5 +1,5 @@
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.List.TailAppend.eq.AppendTail.of.GtLength_0
 import Lemma.Nat.DivDiv.eq.Div_Mul
 import Lemma.Nat.DivMod_Mul.eq.ModDiv

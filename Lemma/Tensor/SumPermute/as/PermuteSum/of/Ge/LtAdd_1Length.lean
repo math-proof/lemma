@@ -1,6 +1,6 @@
 import Lemma.Nat.ModAddMul.eq.Mod
-import Def.Data.Holor.Prod
-import Notation.Data.Holor.Permute
+import Def.Data.Tensor.Prod
+import Notation.Data.Tensor.Permute
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Int.OfNat.eq.Cast
 import Lemma.List.DropPermute__Neg.eq.AppendDropTake.of.Ge.GtLength
@@ -20,7 +20,7 @@ import Lemma.Tensor.DataSelect.as.FlattenGetSliceSplitAtData
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.Sum.eq.Sum_Select
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Int Nat Tensor List Bool Vector Fin Set
 set_option maxHeartbeats 250000
 

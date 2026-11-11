@@ -1,5 +1,5 @@
 import Lemma.Tensor.DataDiv.eq.DivDataS
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.Div.eq.Div_Replicate
 open Tensor Vector

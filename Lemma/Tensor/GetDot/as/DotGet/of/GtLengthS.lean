@@ -3,6 +3,7 @@ import Lemma.Tensor.GetDot.eq.DotGet
 import Lemma.Tensor.GetEinsum.as.EinsumGet.of.GtLengthS
 import Lemma.Tensor.GetTensordot.as.MatmulGet.of.GtLength_0
 import Lemma.Tensor.Tensordot.as.Matmul
+import Instance.Data.Vector.Basic.Dot
 open Bool List Tensor
 set_option maxHeartbeats 500000
 
@@ -131,7 +132,7 @@ private lemma main
   (Y : Tensor α (s' ++ [n', k']))
   (i : Fin n) :
 -- imply
-  (X @ Y)[i]'(GtLengthDot.of.GeLengthS (by grind) X Y i) ≃ X[i] @ Y := by
+  (X ⬝ᵥ Y)[i]'(GtLengthDot.of.GeLengthS (by grind) X Y i) ≃ X[i] ⬝ᵥ Y := by
 -- proof
   simp [GetElem.getElem]
   match s, s' with

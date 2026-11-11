@@ -1,6 +1,6 @@
 import Lemma.Tensor.EqSumStack
 import Lemma.Tensor.SumStack.eq.AddSumSStack
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Nat Tensor
 
 

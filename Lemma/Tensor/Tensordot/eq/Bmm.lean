@@ -1,4 +1,4 @@
-import Def.Data.Holor.Bmm
+import Def.Data.Tensor.Bmm
 import Lemma.Nat.EqMax
 import Lemma.Tensor.SEqResize.of.Eq_Get
 import Instance.LinearAlgebra.Matrix.Matmul

@@ -49,11 +49,11 @@ private lemma main
   (u : A) :
 -- imply
   let Q (θ : Θ) (t : ℕ) (x : S) (u : A) : ℝ :=
-    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u);
-  ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * ((γ ^ (id : ℕ → ℕ)) @ r[t:]) ω ∂(M θ) =
+    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = x ∧ a t = u);
+  ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω ∂(M θ) =
     ((M θ).real (s t ⁻¹' {x}) * M.policy.prob θ x u) * Q θ t x u := by
 -- proof
-  set G := (γ ^ (id : ℕ → ℕ)) @ r[t:]
+  set G := (γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]
   obtain rfl : r = fun t ω ↦ (ω t).1 := funext₂ fun t ω ↦ (congrArg (·.1) (congrFun (h₁ t) ω)).symm
   obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
   obtain rfl : a = fun t ω ↦ (ω t).2.2 := funext₂ fun t ω ↦ (congrArg (·.2.2) (congrFun (h₁ t) ω)).symm
@@ -61,7 +61,7 @@ private lemma main
   set s : ℕ → (ℕ → ℝ × S × A) → S := fun t ω ↦ (ω t).2.1
   set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
   let Q (θ : Θ) (t : ℕ) (x : S) (u : A) : ℝ :=
-    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u)
+    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = x ∧ a t = u)
   have hX : Measurable (fun ω : ℕ → ℝ × S × A => (s t ω, a t ω)) := (Random.Measurable.of.All_Eq.snd.fst h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.snd h₁ t)
   let φ : S × A → ℝ := fun p => if p.1 = x ∧ p.2 = u then (1:ℝ) else 0
   have hF : ∀ k, Integrable (fun ω => (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) *
@@ -84,7 +84,7 @@ private lemma main
       (γ ^ k * r (t + k) ω)‖ ∂(M θ)) :=
     Summable.of_nonneg_of_le (fun k => integral_nonneg fun ω => norm_nonneg _) hN
       ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right _)
-  have e : ∀ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * ((γ ^ (id : ℕ → ℕ)) @ r[t:]) ω =
+  have e : ∀ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω =
       ∑' k, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * (γ ^ k * r (t + k) ω) := fun ω => by
     dsimp only [Dot.dot, Function.getSliceFrom]
     simp only [Function.hPow_apply, id_eq]
@@ -102,7 +102,7 @@ private lemma main
   simp_rw [e2]
   rw [tsum_mul_left]
   have hpR : Measurable (fun ω t ↦ r t ω) := Measurable.of_eval (Random.Measurable.of.All_Eq.fst h₁)
-  have hfG : Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) @ integ[t:]) :=
+  have hfG : Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[t:]) :=
     Measurable.tsum fun k => (measurable_pi_apply (t + k)).const_mul _
   have hpre : (s t, a t) ⁻¹' {(x, u)} = s t ⁻¹' {x} ∩ a t ⁻¹' {u} := by
     ext ω
@@ -111,10 +111,11 @@ private lemma main
       ∑' k, γ ^ k * ∫ ω, r (t + k) ω ∂(M θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}] := by
     simp only [Q, Expectation.asRV_process]
     rw [Expectation.condEvent_eq_integral hpR.aemeasurable hfG, hpre]
-    show ∫ ω, ((γ ^ (id : ℕ → ℕ)) @ r[t:]) ω ∂(M θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}] = _
+    show ∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω ∂(M θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}] = _
     exact Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico (M := M) h₀ h₁ θ _ t
   show _ = _ * Q θ t x u
   rw [hQ]
 
 
 -- created on 2026-10-10
+-- updated on 2026-11-11

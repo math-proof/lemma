@@ -7,11 +7,11 @@ The expected clamped reward is bounded: `‖rkd x u‖ = ‖𝔼[r[t] | s[t] = x
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A}
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
 -- given
-  (x : S)
-  (u : A) :
+  (x : 𝒮)
+  (u : 𝒜) :
 -- imply
   ‖M.rkd x u‖ ≤ |M.env.R| := by
 -- proof
@@ -35,4 +35,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-10-26
+-- updated on 2026-11-11

@@ -1,5 +1,5 @@
 import Lemma.Fin.Lt0Sum.of.All_Gt_0.Gt_0
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.List.ProdDropInsertIdxEraseIdx.eq.ProdDrop.of.GtLength
 import Lemma.List.TakeInsertIdxEraseIdx.eq.Take
 import Lemma.Real.GtExp_0
@@ -11,7 +11,7 @@ import Lemma.Tensor.Keepdim.eq.Cast.of.LeLength
 import Lemma.Tensor.Softmax.eq.One.of.LeLength
 import Lemma.Vector.GetRepeat.eq.Get_Mod.of.Lt_Mul
 import Lemma.Vector.GetSum.eq.Sum_Get
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Exp Fin List Nat Real Tensor Vector
 
 

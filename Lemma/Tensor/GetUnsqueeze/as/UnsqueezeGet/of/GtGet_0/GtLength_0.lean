@@ -1,4 +1,4 @@
-import Def.Data.Holor.Unsqueeze
+import Def.Data.Tensor.Unsqueeze
 import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 import Lemma.Tensor.LengthUnsqueeze.eq.Length.of.Gt_0
 import Lemma.Tensor.Unsqueeze.as.Stack_Unsqueeze.of.GtLength_0

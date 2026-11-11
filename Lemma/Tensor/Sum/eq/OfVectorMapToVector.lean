@@ -1,5 +1,5 @@
 import Lemma.Bool.EqCast.of.SEq
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.List.ProdEraseIdx.eq.MulProdS
 import Lemma.Nat.Div.eq.AddMulDiv_Mul
@@ -13,7 +13,7 @@ import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetSum.eq.SumMapGet
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.MapMap.eq.Map_Comp
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Bool Fin List Nat Tensor Vector
 
 

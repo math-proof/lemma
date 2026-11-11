@@ -10,7 +10,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 Linearity of conditional expectation through the infinite discounted sum: for `γ ∈ [0, 1)` and any event
 `y = «\sf{y}»` of the trajectory, the conditional expectation of the discounted return equals the discounted sum of
 the conditional expected rewards,
-`𝔼[(γ ^ id) @ r[t:] | y = «\sf{y}»] = (γ ^ id) @ (k ↦ 𝔼[r[t+k] | y = «\sf{y}»])`, where `u @ v = ∑' k, u k * v k`
+`𝔼[(γ ^ id) ⬝ᵥ r[t:] | y = «\sf{y}»] = (γ ^ id) ⬝ᵥ (k ↦ 𝔼[r[t+k] | y = «\sf{y}»])`, where `u ⬝ᵥ v = ∑' k, u k * v k`
 (so the left side is `𝔼[G[t] | y = «\sf{y}»]`, `G[t] = ∑' k, γ ^ k * r[t+k]`).
 (Dominated convergence: the rewards are a.s. bounded by `|R|`.)
 -/
@@ -30,14 +30,14 @@ private lemma main
   («\sf{y}» : β)
   (t : ℕ) :
 -- imply
-  𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | y = «\sf{y}») = (γ ^ (id : ℕ → ℕ)) @ fun k => 𝔼[r : M θ](r (t + k) | y = «\sf{y}») := by
+  𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | y = «\sf{y}») = (γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun k => 𝔼[r : M θ](r (t + k) | y = «\sf{y}») := by
 -- proof
   have hr : Measurable (fun ω k ↦ r k ω) := Measurable.of_eval (Random.Measurable.of.All_Eq.fst h₁)
   have h : ∀ k, 𝔼[r : M θ](r (t + k) | y = «\sf{y}») = ∫ ω, r (t + k) ω ∂(M θ)[|y ⁻¹' {«\sf{y}»}] := fun k =>
     Expectation.condEvent_eq_integral hr.aemeasurable (measurable_pi_apply (t + k))
   simp only [h]
   simp only [Expectation.asRV_process]
-  have hG : Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) @ integ[t:]) := Measurable.tsum fun k => (measurable_pi_apply (t + k)).const_mul _
+  have hG : Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[t:]) := Measurable.tsum fun k => (measurable_pi_apply (t + k)).const_mul _
   rw [Expectation.condEvent_eq_integral hr.aemeasurable hG]
   show ∫ ω, ∑' k, γ ^ k * r (t + k) ω ∂(M θ)[|y ⁻¹' {«\sf{y}»}] = ∑' k, γ ^ k * ∫ ω, r (t + k) ω ∂(M θ)[|y ⁻¹' {«\sf{y}»}]
   generalize y ⁻¹' {«\sf{y}»} = B
@@ -71,4 +71,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-02
+-- updated on 2026-11-11

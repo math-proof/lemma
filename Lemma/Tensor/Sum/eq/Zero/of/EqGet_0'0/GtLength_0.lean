@@ -1,5 +1,5 @@
 import Lemma.Tensor.Sum.eq.Zero
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Tensor
 
 

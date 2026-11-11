@@ -1,4 +1,4 @@
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.Finset.Sum.of.All_Eq.Eq
 import Lemma.List.DropEraseIdx.eq.AppendDropTake.of.Ge
 import Lemma.List.DropEraseIdx.eq.Drop.of.Lt
@@ -15,7 +15,7 @@ import Lemma.Tensor.DataSelect.as.FlattenGetSliceSplitAtData
 import Lemma.Tensor.DataSum.eq.Sum_DataSelect
 import Lemma.Vector.GetSum.eq.Sum_Get
 import Lemma.Vector.Sum.of.All_Eq.Eq
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Bool Finset List Nat Tensor Vector Fin Set
 set_option maxHeartbeats 250000
 

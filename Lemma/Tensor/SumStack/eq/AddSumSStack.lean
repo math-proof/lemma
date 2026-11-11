@@ -1,7 +1,7 @@
 import Lemma.Tensor.Stack.eq.AppendStackS
 import Lemma.Tensor.Sum.eq.Zero
 import Lemma.Tensor.SumAppend.eq.AddSumS
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Tensor
 
 

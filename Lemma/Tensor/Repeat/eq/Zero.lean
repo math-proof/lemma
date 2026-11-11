@@ -1,5 +1,5 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
-import Def.Data.Holor.Repeat
+import Def.Data.Tensor.Repeat
 import Lemma.List.ProdSet__Mul_Get.eq.Mul_Prod
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqData0'0

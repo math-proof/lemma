@@ -1,4 +1,4 @@
-import Def.Data.Holor.Stack.Part2
+import Def.Data.Tensor.Stack.Part2
 import Lemma.Vector.AddFlattenS.eq.FlattenAdd
 import Lemma.Vector.AddMapS.eq.Map_FunAdd
 import Lemma.Vector.MapMap.eq.Map_Comp

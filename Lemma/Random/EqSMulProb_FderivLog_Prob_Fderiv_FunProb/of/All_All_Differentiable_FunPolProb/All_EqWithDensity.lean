@@ -7,17 +7,17 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient Random
 `π_θ(u | x) • fderiv log π_θ(u | x) = fderiv π_θ(u | x)` (also where `π_θ(u | x) = 0`).
 Continuous-action counterpart of
 `Random.EqSMulProb_FderivLog_Prob_Fderiv_FunProb.of.All_All_Differentiable_FunPolProb`
-(no `[Fintype A]`).
+(no `[Fintype 𝒜]`).
 -/
 @[path]
 private lemma main
-  [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [MeasurableSpace S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A}
+  [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
 -- given
   (h₀ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (θ : Θ)
-  (x : S)
-  (u : A) :
+  (x : 𝒮)
+  (u : 𝒜) :
 -- imply
   M.policy.prob θ x u • fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' x u)) θ =
     fderiv ℝ (fun θ' => M.policy.prob θ' x u) θ := by

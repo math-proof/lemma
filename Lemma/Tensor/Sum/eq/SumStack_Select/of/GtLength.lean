@@ -9,7 +9,7 @@ import Lemma.Tensor.SEqSumSStack.of.All_SEq.Eq.Eq
 import Lemma.Tensor.Select_0.as.Get.of.GtLength_0
 import Lemma.Tensor.Sum.eq.Zero.of.Eq0Get.GtLength
 import Lemma.Tensor.Sum_0.as.SumStack_Get.of.GtLength_0
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Bool List Nat Tensor
 
 

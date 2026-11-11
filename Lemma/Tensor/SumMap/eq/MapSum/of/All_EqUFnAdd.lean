@@ -11,7 +11,7 @@ import Lemma.Vector.GetSum.eq.SumMapGet
 import Lemma.Vector.MapMap.eq.Map_Comp
 import Lemma.Vector.MapSum.eq.SumMap.of.All_EqUFnAdd
 import Lemma.Vector.SplitAtMap.eq.MapSplitAt
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Tensor Vector Bool
 
 

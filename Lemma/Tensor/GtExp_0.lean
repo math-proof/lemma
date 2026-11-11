@@ -1,5 +1,5 @@
 import Lemma.Vector.GtExp_0
-import Theorem.Data.Holor.Functions
+import Theorem.Data.Tensor.Functions
 open Exp Vector
 
 

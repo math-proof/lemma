@@ -1,6 +1,6 @@
 import Lemma.Tensor.LengthSum.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.SelectSum.as.SumSelect.of.Lt
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Tensor
 
 

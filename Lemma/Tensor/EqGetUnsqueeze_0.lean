@@ -1,4 +1,4 @@
-import Instance.Data.Holor.Tensor.Part2
+import Instance.Data.Tensor.Tensor.Part2
 import Lemma.Nat.Eq_0.of.Lt_1
 import Lemma.Tensor.EqLengthUnsqueeze_0'1
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq

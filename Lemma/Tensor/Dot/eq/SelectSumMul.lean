@@ -1,5 +1,5 @@
-import Def.Data.Holor.Unsqueeze
-import Def.Data.Holor.Repeat
+import Def.Data.Tensor.Unsqueeze
+import Def.Data.Tensor.Repeat
 import Lemma.Nat.EqMax
 import Lemma.Nat.EqMax.of.Lt
 import Lemma.Tensor.Dot.eq.SelectDot_Unsqueeze_1
@@ -12,7 +12,8 @@ import Lemma.Tensor.ResizeCast.as.Resize.of.Eq
 import Lemma.Tensor.SEqTS.of.SEq
 import Lemma.Tensor.TCast.as.T.of.Eq
 import Lemma.Tensor.TUnsqueeze.eq.Unsqueeze
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
+import Instance.Data.Vector.Basic.Dot
 open Bool Nat Tensor
 
 
@@ -26,7 +27,7 @@ private lemma main
   let A' : Tensor α [m, 1, k] := A.unsqueeze 1
   let B' : Tensor α [1, 1, k] := (B.unsqueeze 0).unsqueeze 0
   let B' : Tensor α [m, 1, k] := cast (congrArg (Tensor α) (by simp)) (B'.repeat ⟨0, by grind⟩ m)
-  A @ B = ((A' * B').sum 2).select ⟨1, by simp⟩ ⟨0, by simp⟩ := by
+  A ⬝ᵥ B = ((A' * B').sum 2).select ⟨1, by simp⟩ ⟨0, by simp⟩ := by
 -- proof
   rw [Dot.eq.SelectDot_Unsqueeze_1]
   apply Eq.of.SEq
@@ -73,7 +74,7 @@ private lemma resize
   let B' : Tensor α [k] := B.resize 0 k
   let B' : Tensor α [1, 1, k] := (B'.unsqueeze 0).unsqueeze 0
   let B' : Tensor α [m, 1, k] := cast (congrArg (Tensor α) (by simp)) (B'.repeat ⟨0, by grind⟩ m)
-  A @ B = ((A' * B').sum 2).select ⟨1, by simp⟩ ⟨0, by simp⟩ := by
+  A ⬝ᵥ B = ((A' * B').sum 2).select ⟨1, by simp⟩ ⟨0, by simp⟩ := by
 -- proof
   rw [Dot.eq.SelectDot_Unsqueeze_1]
   apply Eq.of.SEq

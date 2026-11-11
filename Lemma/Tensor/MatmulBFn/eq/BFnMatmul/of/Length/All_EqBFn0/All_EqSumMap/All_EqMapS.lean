@@ -1,11 +1,11 @@
-import Def.Data.Holor.Bmm
+import Def.Data.Tensor.Bmm
 import Lemma.Tensor.BmmBFn.eq.BFnBmm
 import Lemma.Tensor.GetMap.eq.MapGet
 import Lemma.Tensor.GetMatmul.as.MatmulGetS.of.Get_0.Length.GtLength_0
 import Lemma.Tensor.Matmul.as.Bmm
 import Lemma.Tensor.Matmul.as.MatmulResizeS.of.Length.GtLength_0
 import Lemma.Tensor.ResizeBFn.eq.BFnResize
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Bool List Tensor
 set_option maxHeartbeats 500000
 

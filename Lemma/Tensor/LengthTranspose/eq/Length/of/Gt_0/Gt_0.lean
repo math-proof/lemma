@@ -1,5 +1,5 @@
 import Lemma.List.Permute.of.Eq.Val.Eq
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.List.EqSwap.of.OrLeSLength
 import Lemma.Tensor.LengthCast.eq.Length.of.Eq
 import Lemma.Tensor.LengthPermute.eq.Length.of.Ge_0.GtVal_0

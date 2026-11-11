@@ -2,6 +2,7 @@ import Lemma.Tensor.AddHstackS.eq.HstackAddS
 import Lemma.Tensor.Dot_Hstack.eq.HstackDotS
 import Lemma.Tensor.DotAppend.eq.AppendDotS
 import Lemma.Tensor.DotHstack.eq.AddDotS
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
@@ -24,17 +25,17 @@ private lemma main
   (U : Tensor α [l, p])
   (V : Tensor α [l, q]) :
 -- imply
-  (A.hstack B ++ C.hstack D) @ (X.hstack Y ++ U.hstack V) = ((id (α := Tensor α [n, p]) (A @ X) + id (α := Tensor α [n, p]) (B @ U)).hstack (id (α := Tensor α [n, q]) (A @ Y) + id (α := Tensor α [n, q]) (B @ V))) ++ ((id (α := Tensor α [m, p]) (C @ X) + id (α := Tensor α [m, p]) (D @ U)).hstack (id (α := Tensor α [m, q]) (C @ Y) + id (α := Tensor α [m, q]) (D @ V))) := by
+  (A.hstack B ++ C.hstack D) ⬝ᵥ (X.hstack Y ++ U.hstack V) = ((id (α := Tensor α [n, p]) (A ⬝ᵥ X) + id (α := Tensor α [n, p]) (B ⬝ᵥ U)).hstack (id (α := Tensor α [n, q]) (A ⬝ᵥ Y) + id (α := Tensor α [n, q]) (B ⬝ᵥ V))) ++ ((id (α := Tensor α [m, p]) (C ⬝ᵥ X) + id (α := Tensor α [m, p]) (D ⬝ᵥ U)).hstack (id (α := Tensor α [m, q]) (C ⬝ᵥ Y) + id (α := Tensor α [m, q]) (D ⬝ᵥ V))) := by
 -- proof
   rw [DotAppend.eq.AppendDotS (A.hstack B) (C.hstack D) (X.hstack Y ++ U.hstack V)]
-  have h0inv : (A.hstack B) @ (X.hstack Y ++ U.hstack V) = cast (by simp [matmul_shape, broadcast_shape]) (cast (by simp [matmul_shape, broadcast_shape]) ((A.hstack B) @ (X.hstack Y ++ U.hstack V)) : Tensor α [n, p + q]) := by
+  have h0inv : (A.hstack B) ⬝ᵥ (X.hstack Y ++ U.hstack V) = cast (by simp [matmul_shape, broadcast_shape]) (cast (by simp [matmul_shape, broadcast_shape]) ((A.hstack B) ⬝ᵥ (X.hstack Y ++ U.hstack V)) : Tensor α [n, p + q]) := by
     simp
-  have h1inv : (C.hstack D) @ (X.hstack Y ++ U.hstack V) = cast (by simp [matmul_shape, broadcast_shape]) (cast (by simp [matmul_shape, broadcast_shape]) ((C.hstack D) @ (X.hstack Y ++ U.hstack V)) : Tensor α [m, p + q]) := by
+  have h1inv : (C.hstack D) ⬝ᵥ (X.hstack Y ++ U.hstack V) = cast (by simp [matmul_shape, broadcast_shape]) (cast (by simp [matmul_shape, broadcast_shape]) ((C.hstack D) ⬝ᵥ (X.hstack Y ++ U.hstack V)) : Tensor α [m, p + q]) := by
     simp
   rw [h0inv, h1inv, DotHstack.eq.AddDotS A B (X.hstack Y) (U.hstack V), DotHstack.eq.AddDotS C D (X.hstack Y) (U.hstack V)]
   rw [Dot_Hstack.eq.HstackDotS A X Y, Dot_Hstack.eq.HstackDotS B U V, Dot_Hstack.eq.HstackDotS C X Y, Dot_Hstack.eq.HstackDotS D U V]
-  have hAdd0 := AddHstackS.eq.HstackAddS (id (α := Tensor α [n, p]) (A @ X)) (id (α := Tensor α [n, p]) (B @ U)) (id (α := Tensor α [n, q]) (A @ Y)) (id (α := Tensor α [n, q]) (B @ V))
-  have hAdd1 := AddHstackS.eq.HstackAddS (id (α := Tensor α [m, p]) (C @ X)) (id (α := Tensor α [m, p]) (D @ U)) (id (α := Tensor α [m, q]) (C @ Y)) (id (α := Tensor α [m, q]) (D @ V))
+  have hAdd0 := AddHstackS.eq.HstackAddS (id (α := Tensor α [n, p]) (A ⬝ᵥ X)) (id (α := Tensor α [n, p]) (B ⬝ᵥ U)) (id (α := Tensor α [n, q]) (A ⬝ᵥ Y)) (id (α := Tensor α [n, q]) (B ⬝ᵥ V))
+  have hAdd1 := AddHstackS.eq.HstackAddS (id (α := Tensor α [m, p]) (C ⬝ᵥ X)) (id (α := Tensor α [m, p]) (D ⬝ᵥ U)) (id (α := Tensor α [m, q]) (C ⬝ᵥ Y)) (id (α := Tensor α [m, q]) (D ⬝ᵥ V))
   grind
 
 

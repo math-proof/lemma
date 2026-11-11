@@ -1,8 +1,8 @@
 import Lemma.Tensor.MeanDiv.eq.DivMean
 import Lemma.Tensor.Sum.eq.Zero
 import Lemma.Tensor.Div.eq.DivDivS.of.Ne_0
-import Def.Data.Holor.Mean
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Mean
+import Def.Data.Tensor.Sum
 open Tensor Vector Bool Nat
 set_option maxHeartbeats 250000
 

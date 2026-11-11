@@ -1,6 +1,6 @@
 import Lemma.Tensor.ReshapeBFn.eq.BFnReshape.of.Dvd
-import Def.Data.Holor.Reshape
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Reshape
+import Def.Data.Tensor.Prod
 open Tensor
 
 

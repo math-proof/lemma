@@ -3,7 +3,7 @@ import Lemma.ENNReal.In.inf.EReal.eq.In_SetOfAnd_Sum.eq.One_And.inf.ToEReal.of.A
 import Lemma.ENNReal.LowerSemicontinuous.of.All_Eq_Top.All_Eq_OfRealSum_Mul_LogDiv_ToReal.All_GtToReal_0
 import Lemma.Real.Limsup.le.NegIn_SetOfAll_Ge_0AndSum.eq.OneAndIn.inf.ToEReal.of.All_GtToReal_0
 import Lemma.Real.Negν.in.SetOfAll_Geν0AndSum_ν.eq.OneAndInν.inf.ToEReal.le.Liminf.of.IsOpen.All_GtToReal_0
-import Structure.v1.Atlas.TheoryOfProbability.code.LargeDeviations
+import Structure.v1.Atlas.Probability.code.LargeDeviations
 import Initialize.Tactic.Attr.Basic
 open ENNReal Filter MeasureTheory Real
 

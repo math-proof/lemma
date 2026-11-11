@@ -1,6 +1,6 @@
 import Lemma.Nat.ModEq.of.EqMod
-import Def.Data.Holor.Prod
-import Notation.Data.Holor.Permute
+import Def.Data.Tensor.Prod
+import Notation.Data.Tensor.Permute
 import Lemma.Nat.ModEq.of.AddMul
 import Lemma.Nat.ModEq.of.EqAddMul
 import Lemma.Nat.Dvd_Mul

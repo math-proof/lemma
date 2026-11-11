@@ -31,6 +31,7 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
     - A sub lemma without @[path], referenced only once, can be inlined if no `have` is introduced
     - delete `classical` when redundant (proof/def still elaborates and builds without it)
     - use `grind`/`aesop` as much as possible
+    - Prefer `√` (Root.sqrt notation) over `Real.sqrt` at call sites when both mean the same thing.
   - `set_option maxHeartbeats` (and other elaborator heartbeat budgets) may be set or raised to any value strictly below 1000000. 1000000 and above stay disallowed.
   - Dates: never change `-- created on` (including after `sh/rename.sh` / path moves). Only bump `-- updated on` when you edit the lemma. A `[date-created-today]` warning on a rename is a linter false positive if created was rewritten — restore the original created date; do not set created to today.
 
@@ -49,7 +50,7 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
 
 ## Sub-agents
 - Work on https://github.com/math-proof/lemma.
-- Grok bots may use a local coding agent on `main` (WSL `~/github/lean`); never launch Cursor cloud agents unless deliberately demanded.
+- Grok bots may use a Remote Control Agent as Self-Hosted Worker on `main` (WSL `~/github/lean`), via [AgentName](https://cursor.com/agents/bc-UUID); never launch Cursor cloud agents unless deliberately demanded.
 - Modify only files in your assigned folder (agent name = folder name, e.g. Tensor → `Lemma/Tensor`).
 - To modify another folder, send the task to the agent named after that folder (see Inter-agent communication).
 - If that agent does not exist, ask `md` (primary) for help.

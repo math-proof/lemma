@@ -1,14 +1,15 @@
-import Def.Data.Holor.Unsqueeze
-import Def.Data.Holor.Repeat
-import Notation.Data.Holor.Permute
+import Def.Data.Tensor.Unsqueeze
+import Def.Data.Tensor.Repeat
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.Dot.eq.Bmm
 import Lemma.Tensor.SEqMulS.of.SEq.SEq
 import Lemma.Tensor.SEqRepeatS.of.SEq.Val.Eq
 import Lemma.Tensor.SEqSumS.of.SEq.Eq
 import Lemma.Tensor.SEqTS.of.SEq
 import Lemma.Tensor.SEqUnsqueezeS.of.SEq.Eq
-import Def.Data.Holor.Bmm
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Bmm
+import Def.Data.Tensor.Sum
+import Instance.Data.Vector.Basic.Dot
 open Bool Tensor
 
 
@@ -24,7 +25,7 @@ private lemma main
   let B' : Tensor α [n, k] := Bᵀ
   let B' : Tensor α [1, n, k] := B'.unsqueeze 0
   let B' : Tensor α [m, n, k] := cast (congrArg (Tensor α) (by simp)) (B'.repeat ⟨0, by grind⟩ m)
-  A @ B = (A' * B').sum 2 := by
+  A ⬝ᵥ B = (A' * B').sum 2 := by
 -- proof
   rw [Dot.eq.Bmm]
   simp [Tensor.bmm]
@@ -46,7 +47,7 @@ private lemma resize
   let B' : Tensor α [n, k] := B'ᵀ
   let B' : Tensor α [1, n, k] := B'.unsqueeze 0
   let B' : Tensor α [m, n, k] := cast (congrArg (Tensor α) (by simp)) (B'.repeat ⟨0, by grind⟩ m)
-  A @ B = (A' * B').sum 2 := by
+  A ⬝ᵥ B = (A' * B').sum 2 := by
 -- proof
   simp [Dot.dot]
   unfold einsum

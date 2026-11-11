@@ -15,7 +15,7 @@ def Fin.resize [Zero α] {n : ℕ} (x : Fin n → α) (n' : ℕ) : Fin n' → α
       0
 
 /-- Heterogeneous finite dot: resize both sides to `m ⊔ n`, then the ordinary dot product.
-Same padding rule as `List.Vector`'s `@`. -/
+Same padding rule as `List.Vector`'s `⬝ᵥ`. -/
 def Fin.dotResize [AddCommMonoid α] [Mul α] {m n : ℕ} (v : Fin m → α) (w : Fin n → α) : α :=
   let k := m ⊔ n
   dotProduct (Fin.resize v k) (Fin.resize w k)

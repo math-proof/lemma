@@ -3,6 +3,7 @@ import Lemma.Tensor.EqMul0_0
 import Lemma.Tensor.EqMul1
 import Lemma.Tensor.GetDot.eq.Sum_MulGetS
 import Lemma.Tensor.GetEye.eq.Delta
+import Instance.Data.Vector.Basic.Dot
 open Nat Tensor
 set_option maxHeartbeats 1000000
 
@@ -13,7 +14,7 @@ private lemma mv
 -- given
   (x : Tensor α [n]) :
 -- imply
-  (Tensor.eye (α := α) n) @ x = x := by
+  (Tensor.eye (α := α) n) ⬝ᵥ x = x := by
 -- proof
   apply Eq.of.All_EqGetS.fin
   intro j
@@ -40,7 +41,7 @@ private lemma main
 -- given
   (A : Tensor α [m, n]) :
 -- imply
-  (Tensor.eye (α := α) m) @ A = A := by
+  (Tensor.eye (α := α) m) ⬝ᵥ A = A := by
 -- proof
   apply Eq.of.All_EqGetS.fin
   intro i

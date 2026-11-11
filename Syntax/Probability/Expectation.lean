@@ -30,7 +30,8 @@ Python-aligned surface form (cf. `Expectation[x ~ D](f, given=…)` in `../py/sy
   `𝔼[x: π](f x)` → `Expectation.ofRV π (Expectation.asRV x) …`
   `𝔼[x, y: π](f x y)` → `Expectation.ofRV π (JointRandomSymbol (Expectation.asRV x) (Expectation.asRV y)) …`
 * **Scalar conditional at a fixed observation:**
-  `𝔼[x: π](f x | y = y0)` / `𝔼[x, z: π](f | y = y0)` → `Expectation.condRV …`
+  `𝔼[x: π](f x | y = y0)` / `𝔼[x, z: π](f | y = y0)` → `Expectation.condEval …`
+  (`=` is evaluation of a regular conditional at the observed value, not the event `{y = y0}`)
   Joint observations: `| (y, z) = (y0, z0)` (any term on the left of `=`), or the `∧`-chain
   `| y = y0 ∧ z = z0 ∧ …` (two or more conjuncts), which conditions on the joint random variable
   `JointRandomSymbol y (JointRandomSymbol z …)` at `(y0, z0, …)`, as in `ℙ[π](… | y = y0 ∧ z = z0)`.
@@ -47,7 +48,7 @@ Python-aligned surface form (cf. `Expectation[x ~ D](f, given=…)` in `../py/sy
   **Nested under an outer random op that threads aliases** (today: any `𝔼[…]` elaborator
   that calls `desugarProbRA`, including partial/`| ys` forms; the walker also descends into
   arbitrary subterms such as `𝕍𝕒𝕣`/`ℂ𝕠𝕧`/`ℙ` applications): the same surface `| s[t], a[t]`
-  is rewritten (with outer aliases) to `| s₀ t = s t ∧ a₀ t = a t` → `Expectation.condEvent`,
+  is rewritten (with outer aliases) to `| s₀ t = s t ∧ a₀ t = a t` → `Expectation.condEval`,
   matching handwritten `have s₀ := s; have a₀ := a` — so
   `𝔼[s, a: π](𝔼[r: π](f | s[t], a[t]) • …)` (and the same nested `𝔼` under `𝕍𝕒𝕣`/`ℂ𝕠𝕧`/`ℙ`
   in that body) needs no manual aliases.

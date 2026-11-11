@@ -5,7 +5,6 @@ import Lemma.Random.Differentiable_RealPreimageS.of.GtInftySup.All_Differentiabl
 import Lemma.Random.AeRealPreimageSS.ne.Zero
 import Lemma.Random.PSpace_Path.of.All_PSpace
 import Lemma.Random.SinglePSpace.of.Measurable
-import Theorem.Dynamics.PolicyTrajectory
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
 open scoped ENNReal.ToRealCoe
@@ -38,7 +37,7 @@ private lemma main
   (h₃ : ∀ k, Measurable fun ω : ℕ → ℝ × S × A =>
     X (r · ω) (s · ω) (a · ω) k)
   (h₄ : ∀ᵐ ω ∂(M θ),
-    sup[t] |((γ ^ (id : ℕ → ℕ)) @ (X (r · ω) (s · ω) (a · ω))[t:])| < ∞)
+    sup[t] |((γ ^ (id : ℕ → ℕ)) ⬝ᵥ (X (r · ω) (s · ω) (a · ω))[t:])| < ∞)
   (h₅ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₆ : sup[θ, x, u] ‖∇[θ] M.policy.prob θ x u‖ < ∞) :
 -- imply
@@ -58,12 +57,12 @@ private lemma main
   let : MeasurableSpace Θ := borel Θ
   have : BorelSpace Θ := ⟨rfl⟩
   𝔼[r, s, a : M θ](
-    (γ ^ (id : ℕ → ℕ)) @ fun t ↦
-      (((γ ^ (id : ℕ → ℕ)) @ (X r s a)[t:]) •
+    (γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
+      (((γ ^ (id : ℕ → ℕ)) ⬝ᵥ (X r s a)[t:]) •
         ∇[θ] Real.log (ℙ[M θ](a[t] | s[t])).toReal)) =
   ∫ ω,
-    ((γ ^ (id : ℕ → ℕ)) @ fun t ↦
-      ((γ ^ (id : ℕ → ℕ)) @ (X (r · ω) (s · ω) (a · ω))[t:]) •
+    ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
+      ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ (X (r · ω) (s · ω) (a · ω))[t:]) •
         ∇[θ] Real.log (ℙ[M θ](a[t] = (a t ω) | s[t] = (s t ω))).toReal) ∂(M θ) := by
 -- proof
   intro hP _ _ _ _
@@ -97,8 +96,8 @@ private lemma main
   -- path-space observable; OfRV turns 𝔼 into ∫ (· ∘ joint path)
   apply OfRV.eq.Integral.of.AEStronglyMeasurable_Map
     (f := fun p : (ℕ → ℝ) × (ℕ → S) × (ℕ → A) ↦
-      (γ ^ (id : ℕ → ℕ)) @ fun t ↦
-        (((γ ^ (id : ℕ → ℕ)) @ (X p.1 p.2.1 p.2.2)[t:]) •
+      (γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
+        (((γ ^ (id : ℕ → ℕ)) ⬝ᵥ (X p.1 p.2.1 p.2.2)[t:]) •
           ∇[θ] Real.log (ℙ[M θ]((a t) = p.2.2 t | (s t) = p.2.1 t)).toReal))
   -- AEStronglyMeasurable of f: transport h₃ via fromPath + discrete gradient
   simp only [Dot.dot, Function.hPow_apply, id_eq]
@@ -114,4 +113,4 @@ private lemma main
 
 
 -- created on 2026-10-21
--- updated on 2026-11-03
+-- updated on 2026-11-11

@@ -1,6 +1,6 @@
 import Lemma.Vector.EqHeadSplitAt_0
-import Def.Data.Holor.Prod
-import Notation.Data.Holor.Permute
+import Def.Data.Tensor.Prod
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul

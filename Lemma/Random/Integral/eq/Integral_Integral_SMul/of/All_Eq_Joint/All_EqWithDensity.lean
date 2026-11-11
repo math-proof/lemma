@@ -9,17 +9,17 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel 
 `𝔼[φ(s[t], a[t])] = ∫ y, (∫ u, π_θ(u | y) • φ y u du) ∂law(s[t])` under the continuous-action
 trajectory model, for an integrable integrand.
 Continuous-action counterpart of `Random.Integral.eq.Sum_Sum_SMul`: Finset sums become
-integrals against `law(s[t])` and the reference measure of `A`, via `DensityModel.stageK`.
+integrals against `law(s[t])` and the reference measure of `𝒜`, via `DensityModel.stageK`.
 -/
 @[path]
 private lemma main
   [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
-  [MeasurableSpace S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A}
-  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
-  {s : ℕ → (ℕ → ℝ × S × A) → S}
-  {a : ℕ → (ℕ → ℝ × S × A) → A}
-  {φ : S → A → E}
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {φ : 𝒮 → 𝒜 → E}
   {C : ℝ}
 -- given
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
@@ -33,12 +33,12 @@ private lemma main
 -- proof
   have hs : Measurable (s t) := Random.Measurable.of.All_Eq.snd.fst h₀ t
   have ha : Measurable (a t) := Random.Measurable.of.All_Eq.snd.snd h₀ t
-  have hsa : Measurable (fun ω : ℕ → ℝ × S × A => (s t ω, a t ω)) := hs.prodMk ha
-  have hf : StronglyMeasurable (fun z : ℝ × S × A => φ z.2.1 z.2.2) :=
+  have hsa : Measurable (fun ω : ℕ → ℝ × 𝒮 × 𝒜 => (s t ω, a t ω)) := hs.prodMk ha
+  have hf : StronglyMeasurable (fun z : ℝ × 𝒮 × 𝒜 => φ z.2.1 z.2.2) :=
     hφ.comp_measurable (measurable_snd.fst.prodMk measurable_snd.snd)
-  have hCb : ∀ z : ℝ × S × A, ‖φ z.2.1 z.2.2‖ ≤ C := fun z => hC _ _
+  have hCb : ∀ z : ℝ × 𝒮 × 𝒜, ‖φ z.2.1 z.2.2‖ ≤ C := fun z => hC _ _
   have e := integral_map (μ := M θ) hsa.aemeasurable
-    (f := fun p : S × A => φ p.1 p.2) hφ.aestronglyMeasurable
+    (f := fun p : 𝒮 × 𝒜 => φ p.1 p.2) hφ.aestronglyMeasurable
   refine e.symm.trans ?_
   have hmap : (M θ).map (fun ω => (s t ω, a t ω)) =
       ((M θ).map (fun ω => ω t)).map (fun z => (z.2.1, z.2.2)) := by
@@ -52,12 +52,12 @@ private lemma main
   rw [hmap, Map.eq.BindStageK.of.All_Eq_Joint.All_EqWithDensity (M := M) h₀ θ t]
   have e_map := integral_map (μ := M.stageK θ ∘ₘ (M θ).map (s t))
     (measurable_snd.fst.prodMk measurable_snd.snd).aemeasurable
-    (f := fun p : S × A => φ p.1 p.2) hφ.aestronglyMeasurable
+    (f := fun p : 𝒮 × 𝒜 => φ p.1 p.2) hφ.aestronglyMeasurable
   refine e_map.trans ?_
   have := M.env.init_prob
   have : IsProbabilityMeasure (M θ) := inferInstance
   have : IsProbabilityMeasure ((M θ).map (s t)) := inferInstance
-  have hInt : Integrable (fun z : ℝ × S × A => φ z.2.1 z.2.2)
+  have hInt : Integrable (fun z : ℝ × 𝒮 × 𝒜 => φ z.2.1 z.2.2)
       (M.stageK θ ∘ₘ (M θ).map (s t)) :=
     Integrable.of_bound hf.aestronglyMeasurable C (Filter.Eventually.of_forall hCb)
   rw [Integral.eq.Integral_Integral.of.Integrable_Bind hInt]

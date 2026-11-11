@@ -1,5 +1,5 @@
-import Def.Data.Holor.Reshape
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Reshape
+import Def.Data.Tensor.Prod
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.MapCast.as.Map.of.Eq
 import Lemma.Vector.RepeatMap.eq.MapRepeat

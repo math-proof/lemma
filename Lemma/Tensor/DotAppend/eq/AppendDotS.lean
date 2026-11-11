@@ -1,6 +1,7 @@
 import Lemma.Tensor.Dot.eq.Stack_Sum_MulGetS
 import Lemma.Tensor.EqLength
 import Lemma.Tensor.Stack.eq.AppendStackS
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 set_option maxHeartbeats 200000
 
@@ -103,7 +104,7 @@ private lemma main
   (B : Tensor α [m, k])
   (C : Tensor α [k, l]) :
 -- imply
-  (A ++ B) @ C = id (α := Tensor α [n, l]) (A @ C) ++ id (α := Tensor α [m, l]) (B @ C) := by
+  (A ++ B) ⬝ᵥ C = id (α := Tensor α [n, l]) (A ⬝ᵥ C) ++ id (α := Tensor α [m, l]) (B ⬝ᵥ C) := by
 -- proof
   rw [Dot.eq.Stack_Sum_MulGetS (A ++ B) C]
   rw [Dot.eq.Stack_Sum_MulGetS A C]
@@ -196,18 +197,18 @@ private lemma mv
   (B : Tensor α [m, k])
   (C : Tensor α [k]) :
 -- imply
-  (A ++ B) @ C = id (α := Tensor α [n]) (A @ C) ++ id (α := Tensor α [m]) (B @ C) := by
+  (A ++ B) ⬝ᵥ C = id (α := Tensor α [n]) (A ⬝ᵥ C) ++ id (α := Tensor α [m]) (B ⬝ᵥ C) := by
 -- proof
   have hAB := Dot.eq.Stack_Sum_MulGetS.mv (A ++ B) C
   have hA := Dot.eq.Stack_Sum_MulGetS.mv A C
   have hB := Dot.eq.Stack_Sum_MulGetS.mv B C
   have hstack := stack_mv A B C
-  have hcast : cast (by simp [matmul_shape]) ((A ++ B) @ C) = (cast (by simp [matmul_shape]) (A @ C) : Tensor α [n]) ++ (cast (by simp [matmul_shape]) (B @ C) : Tensor α [m]) := by
+  have hcast : cast (by simp [matmul_shape]) (Dot.dot (A ++ B) C) = (cast (by simp [matmul_shape]) (Dot.dot A C) : Tensor α [n]) ++ (cast (by simp [matmul_shape]) (Dot.dot B C) : Tensor α [m]) := by
     rw [hAB, hA, hB]
     exact hstack
-  have hinv : (A ++ B) @ C = cast (by simp [matmul_shape]) (cast (by simp [matmul_shape]) ((A ++ B) @ C) : Tensor α [n + m]) := by
+  have hinv : (A ++ B) ⬝ᵥ C = cast (by simp [matmul_shape]) (cast (by simp [matmul_shape]) (Dot.dot (A ++ B) C) : Tensor α [n + m]) := by
     simp
-  change (A ++ B) @ C = cast (by simp [matmul_shape]) ((cast (by simp [matmul_shape]) (A @ C) : Tensor α [n]) ++ (cast (by simp [matmul_shape]) (B @ C) : Tensor α [m]))
+  change (A ++ B) ⬝ᵥ C = cast (by simp [matmul_shape]) ((cast (by simp [matmul_shape]) (Dot.dot A C) : Tensor α [n]) ++ (cast (by simp [matmul_shape]) (Dot.dot B C) : Tensor α [m]))
   rw [hinv, hcast]
 
 

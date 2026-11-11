@@ -1,5 +1,5 @@
 import Lemma.Tensor.SEqPermuteHeadS.of.SEq.Eq
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 open Tensor
 
 

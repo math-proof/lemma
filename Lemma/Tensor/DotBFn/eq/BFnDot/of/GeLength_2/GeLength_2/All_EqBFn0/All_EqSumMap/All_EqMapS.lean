@@ -1,10 +1,11 @@
-import Def.Data.Holor.Reshape
+import Def.Data.Tensor.Reshape
 import Lemma.Tensor.Einsum.as.Tensordot.of.GeLength_2.GeLength_2
 import Lemma.Tensor.MatmulBFn.eq.BFnMatmul.of.Length.All_EqBFn0.All_EqSumMap.All_EqMapS
 import Lemma.Tensor.SEqTensordotS.of.SEq.SEq.Eq.Eq
 import Lemma.Tensor.Tensordot.as.Matmul.of.GeLengthS
 import Lemma.Tensor.Tensordot.as.Matmul.of.LtLengthS
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
+import Instance.Data.Vector.Basic.Dot
 open Bool List Tensor
 set_option maxHeartbeats 500000
 
@@ -24,7 +25,7 @@ private lemma main
   (C : Tensor α s')
   (B : Tensor α []) :
 -- imply
-  (A.map (f · B.data[0])) @ C = (A @ C).map (f · B.data[0]) := by
+  (A.map (f · B.data[0])) ⬝ᵥ C = (A ⬝ᵥ C).map (f · B.data[0]) := by
 -- proof
   let F {s} (X : Tensor α s) : Tensor α s := X.map (f · B.data[0])
   if hb : s.take (s.length - 2) = s'.take (s'.length - 2) then

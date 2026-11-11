@@ -1,11 +1,11 @@
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.Tensor.Softmax.eq.TensorSoftmaxData
 import Lemma.Tensor.Sum.eq.MkListSumData
 import Lemma.Vector.SumSoftmax.eq.One
 import Lemma.Tensor.EqGet1_1
 import Lemma.Tensor.GetSum.as.SumGet.of.GtGet_0.Gt_0.GtLength
 import Lemma.Tensor.GetSoftmax.eq.SoftmaxGet.of.GtGet_0.Gt_0.GtLength
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Tensor Vector Bool
 
 

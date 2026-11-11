@@ -2,8 +2,8 @@ import Lemma.Int.Sub0.eq.Neg
 import Lemma.Nat.Sub.eq.Zero
 import Lemma.Tensor.EqGet1_1
 import Lemma.Tensor.GetSub.eq.SubGetS
-import Theorem.Data.Holor.Functions
-import Def.Data.Holor.Stack.Part2
+import Theorem.Data.Tensor.Functions
+import Def.Data.Tensor.Stack.Part2
 open Tensor Int Nat
 set_option maxHeartbeats 1000000
 

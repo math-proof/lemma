@@ -1,3 +1,4 @@
+import Lemma.Random.MeasurableRk
 import Lemma.Random.Pn0.eq.Eq
 import Lemma.Random.PnAdd_1.eq.Sum_MulProbSum_MulTPn
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model
@@ -22,3 +23,4 @@ private lemma main
 
 
 -- created on 2026-10-06
+-- updated on 2026-11-08

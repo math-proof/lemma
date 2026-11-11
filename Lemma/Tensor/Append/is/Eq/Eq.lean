@@ -1,5 +1,5 @@
 import Lemma.Tensor.Eq.is.EqDataS
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.Tensor.DataAppend.as.AppendDataS
 import Lemma.Tensor.DataAppend.as.FlattenMap₂_CastS_SplitAtData
 import Lemma.Bool.SEq.is.Eq

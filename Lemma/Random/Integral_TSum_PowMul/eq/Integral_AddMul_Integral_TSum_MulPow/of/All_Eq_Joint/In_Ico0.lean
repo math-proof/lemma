@@ -41,7 +41,7 @@ private lemma main
   classical
   have hpR : Measurable (fun ω t ↦ r t ω) := Measurable.of_eval (Random.Measurable.of.All_Eq.fst h₁)
   let Vloc (θ : Θ) (t : ℕ) (x : S) : ℝ :=
-    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x)
+    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = x)
   have hVi : ∀ t x, ∫ ω, ∑' k, γ ^ k * r (t + k) ω ∂(M θ)[|s t ⁻¹' {x}] = Vloc θ t x :=
     fun t x => (V.eq.Integral.of.Measurable (M := M) hpR θ γ t x).symm
   simp only [hVi]
@@ -74,4 +74,4 @@ private lemma main
 
 
 -- created on 2023-03-27
--- updated on 2026-10-12
+-- updated on 2026-11-11

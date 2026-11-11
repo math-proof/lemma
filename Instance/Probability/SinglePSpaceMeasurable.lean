@@ -3,6 +3,10 @@ import Lemma.Random.SinglePSpace.of.Measurable.Measurable
 open MeasureTheory Random
 
 
+/-- The identity on a measurable space is measurable, so `ℙ[μ](id = a)` finds a density. -/
+instance (α : Type*) [MeasurableSpace α] : Fact (Measurable (id : α → α)) :=
+  ⟨measurable_id⟩
+
 /-- From `Fact (Measurable x)`, infer `SinglePSpace π x`. -/
 instance {Ω α : Type*} [MeasurableSpace Ω]
     [CountableMeasure α] [Countable α] [MeasurableSingletonClass α]

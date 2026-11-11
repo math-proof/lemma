@@ -1,5 +1,5 @@
 import Lemma.Tensor.CosNeg.eq.Cos
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.NegMul_Stack.eq.Mul_Stack_Neg
 import Lemma.Tensor.RotaryMatrix.eq.AppendHstackSMulSEye
 import Lemma.Tensor.SinNeg.eq.NegSin

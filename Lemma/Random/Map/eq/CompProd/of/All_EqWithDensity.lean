@@ -9,8 +9,8 @@ Joint law of two consecutive stages of the continuous-action trajectory model `M
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A}
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
 -- given
   (θ : Θ)
   (t : ℕ) :
@@ -18,10 +18,10 @@ private lemma main
   (M θ).map (fun ω => (ω t, ω (t + 1))) = ((M θ).map (fun ω => ω t)) ⊗ₘ M.K θ := by
 -- proof
   have := M.env.init_prob
-  let μ₀ : Measure (ℝ × S × A) := M.stageK θ ∘ₘ M.env.init
+  let μ₀ : Measure (ℝ × 𝒮 × 𝒜) := M.stageK θ ∘ₘ M.env.init
   have h := Kernel.map_frestrictLe_trajMeasure_compProd_eq_map_trajMeasure
-    (X := fun _ ↦ ℝ × S × A) (μ₀ := μ₀) (κ := M.step θ) (a := t)
-  let e : (Π _ : Finset.Iic t, ℝ × S × A) → ℝ × S × A := fun h ↦ h ⟨t, mem_Iic.2 le_rfl⟩
+    (X := fun _ ↦ ℝ × 𝒮 × 𝒜) (μ₀ := μ₀) (κ := M.step θ) (a := t)
+  let e : (Π _ : Finset.Iic t, ℝ × 𝒮 × 𝒜) → ℝ × 𝒮 × 𝒜 := fun h ↦ h ⟨t, mem_Iic.2 le_rfl⟩
   have he : Measurable e := measurable_pi_apply _
   have h₂ := congrArg (Measure.map (Prod.map e id)) h
   rw [Measure.map_map (he.prodMap measurable_id) (by fun_prop)] at h₂

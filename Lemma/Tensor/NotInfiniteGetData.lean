@@ -1,7 +1,7 @@
 import Lemma.Hyperreal.Any_IsSt.is.NotInfinite
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Theorem.Analysis.Real.Relational
-import Def.Data.Holor.Defs.Part4
+import Def.Data.Tensor.Defs.Part4
 open Hyperreal
 
 

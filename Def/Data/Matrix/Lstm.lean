@@ -9,7 +9,7 @@ reads `x t`. -/
 
 noncomputable def sigmoid (z : ℝ) : ℝ := 1 / (1 + Real.exp (-z))
 
-/-- Pre-activation of gate `g`: `x_t @ W_g + h_{t-1} @ W_hg + b_g`. -/
+/-- Pre-activation of gate `g`: `x_t ⬝ᵥ W_g + h_{t-1} ⬝ᵥ W_hg + b_g`. -/
 def lstmGate {dx dh : ℕ} (W : Matrix (Fin dx) (Fin 4 × Fin dh) ℝ) (Wh : Matrix (Fin dh) (Fin 4 × Fin dh) ℝ)
     (b : Fin 4 × Fin dh → ℝ) (g : Fin 4) (xt : Fin dx → ℝ) (hprev : Fin dh → ℝ) (u : Fin dh) : ℝ :=
   ∑ a, xt a * W a (g, u) + ∑ a, hprev a * Wh a (g, u) + b (g, u)

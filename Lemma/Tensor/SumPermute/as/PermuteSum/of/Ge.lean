@@ -1,7 +1,7 @@
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.SumPermute.as.PermuteSum.of.Ge.EqAdd_1Length
 import Lemma.Tensor.SumPermute.as.PermuteSum.of.Ge.LtAdd_1Length
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open List Nat Tensor
 
 

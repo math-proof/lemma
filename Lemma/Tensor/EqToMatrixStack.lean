@@ -1,6 +1,6 @@
 import Lemma.Tensor.EqGetStack
 import Instance.LinearAlgebra.Matrix.Dense
-import Def.Data.Holor.Stack.Part2
+import Def.Data.Tensor.Stack.Part2
 open Tensor
 
 

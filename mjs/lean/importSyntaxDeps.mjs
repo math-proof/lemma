@@ -147,13 +147,13 @@ const PRUNABLE_SYNTAX_IMPORTS = [
   'Theorem.Algebra.Power.Part2',
   'Theorem.Data.Set.Sets',
   'Macro.Logic.Quantifier.Part4',
-  'Def.Data.Holor.Stack.Part2',
-  'Def.Data.Holor.Defs.Part4',
+  'Def.Data.Tensor.Stack.Part2',
+  'Def.Data.Tensor.Defs.Part4',
   'Instance.Data.Int.Integers',
   'Def.Analysis.SpecialFunctions.TensorFunctions',
-  'Def.Data.Holor.BandPart',
+  'Def.Data.Tensor.BandPart',
   'Instance.Data.Vector.Functions.Part2',
-  'Theorem.Data.Holor.Functions',
+  'Theorem.Data.Tensor.Functions',
 ];
 
 /**

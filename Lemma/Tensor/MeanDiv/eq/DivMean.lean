@@ -1,6 +1,6 @@
 import Lemma.Tensor.SumDiv.eq.DivSum
 import Lemma.Tensor.DivDiv
-import Def.Data.Holor.Mean
+import Def.Data.Tensor.Mean
 open Tensor
 
 

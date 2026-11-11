@@ -19,7 +19,7 @@ private lemma main
   (θ : Θ)
   (t : ℕ) :
 -- imply
-  Integrable ((γ ^ (id : ℕ → ℕ)) @ r[t:]) (M θ) := by
+  Integrable ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) (M θ) := by
 -- proof
   obtain rfl : r = fun t ω ↦ (ω t).1 := funext₂ fun t ω ↦ (congrArg (·.1) (congrFun (h₁ t) ω)).symm
   set r : ℕ → (ℕ → ℝ × S × A) → ℝ := fun t ω ↦ (ω t).1
@@ -43,4 +43,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-10-12
+-- updated on 2026-11-11

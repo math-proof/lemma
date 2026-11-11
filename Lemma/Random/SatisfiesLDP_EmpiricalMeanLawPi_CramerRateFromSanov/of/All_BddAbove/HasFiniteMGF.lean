@@ -1,7 +1,7 @@
-import Def.ProbabilityTheory.CramerTheorem
+import Def.Probability.CramerTheorem
 import Lemma.Random.SatisfiesLDP
-import Theorem.v1.Atlas.TheoryOfProbability.code.CramerBarycenter
-import Theorem.v1.Atlas.TheoryOfProbability.code.CramerRateIDCore
+import Theorem.v1.Atlas.Probability.code.CramerBarycenter
+import Theorem.v1.Atlas.Probability.code.CramerRateIDCore
 open Filter MeasureTheory ProbabilityMeasure Random Set
 open scoped ENNReal Topology InnerProductSpace
 

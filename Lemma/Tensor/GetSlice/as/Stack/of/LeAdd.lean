@@ -2,8 +2,8 @@ import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetGetSlice.eq.Get_Add.of.GtSubMin
 import Lemma.Bool.SEq.is.Eq
-import Def.Data.Holor.Stack.Part2
-import Instance.Data.Holor.Tensor.Part2
+import Def.Data.Tensor.Stack.Part2
+import Instance.Data.Tensor.Tensor.Part2
 open Tensor List Bool Nat
 
 

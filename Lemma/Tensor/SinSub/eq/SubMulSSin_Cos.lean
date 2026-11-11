@@ -2,7 +2,7 @@ import Lemma.Tensor.DataCos.eq.CosData
 import Lemma.Tensor.DataSin.eq.SinData
 import Lemma.Tensor.DataSub.eq.SubDataS
 import Lemma.Vector.SinSub.eq.SubMulSSin_Cos
-import Theorem.Data.Holor.Functions
+import Theorem.Data.Tensor.Functions
 open Tensor Vector
 
 

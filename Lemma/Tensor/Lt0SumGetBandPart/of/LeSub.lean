@@ -1,5 +1,5 @@
 import Lemma.Tensor.Lt0SumGetBandPart.of.LeCeil_Floor
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Rat Tensor
 
 

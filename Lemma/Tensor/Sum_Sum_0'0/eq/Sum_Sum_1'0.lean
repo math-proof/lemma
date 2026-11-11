@@ -1,5 +1,5 @@
 import Lemma.Tensor.Sum_Sum_0'0.as.Sum_Sum_1'0
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Bool Tensor
 
 

@@ -1,4 +1,4 @@
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.List.Prod.eq.Foldr
 import Lemma.Tensor.GetUnflattenDataStack.eq.Data
 import Lemma.Bool.SEq.is.Eq

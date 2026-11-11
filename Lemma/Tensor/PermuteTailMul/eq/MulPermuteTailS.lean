@@ -1,4 +1,4 @@
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.RotateMul.eq.MulRotateS
 import Lemma.Vector.MapMul.eq.MulMapS.of.All_Eq_Mul
 open List Tensor Vector

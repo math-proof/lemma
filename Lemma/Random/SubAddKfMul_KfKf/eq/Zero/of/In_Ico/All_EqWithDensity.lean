@@ -14,13 +14,13 @@ set_option maxHeartbeats 800000
 
 
 private lemma stage_clip
-  [MeasurableSpace S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A} {θ : Θ} (y : S) :
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜} {θ : Θ} (y : 𝒮) :
   ∫ w, clip w.1 (-M.env.R) M.env.R ∂(M.stageK θ y) = M.Wkd θ 0 y := by
   have := M.env.reward_markov
-  have hf : StronglyMeasurable fun w : ℝ × S × A ↦ clip w.1 (-M.env.R) M.env.R :=
+  have hf : StronglyMeasurable fun w : ℝ × 𝒮 × 𝒜 ↦ clip w.1 (-M.env.R) M.env.R :=
     ((measurable_fst.max measurable_const).min measurable_const).stronglyMeasurable
-  have hC : ∀ (w : ℝ × S × A), ‖clip w.1 (-M.env.R) M.env.R‖ ≤ |M.env.R| :=
+  have hC : ∀ (w : ℝ × 𝒮 × 𝒜), ‖clip w.1 (-M.env.R) M.env.R‖ ≤ |M.env.R| :=
     fun w => NormClip.le.Abs_R M.env.R w.1
   have e :=
     Integral.eq.Integral_SMul.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
@@ -30,17 +30,17 @@ private lemma stage_clip
 
 
 private lemma stage_Vkd
-  [MeasurableSpace S] [MeasurableSingletonClass S] [Countable S]
-  [ReferenceMeasure A] [MeasurableSingletonClass A]
-  {M : DensityModel Θ S A} {θ : Θ} {γ : ℝ}
+  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮]
+  [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜} {θ : Θ} {γ : ℝ}
   (h₀ : γ ∈ Set.Ico 0 1)
-  (hπ : ∀ θ, Measurable (fun z : S × A ↦ M.policy.prob θ z.1 z.2))
-  (y : S) :
+  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 ↦ M.policy.prob θ z.1 z.2))
+  (y : 𝒮) :
   ∫ w, M.V0 θ γ w.2.1 ∂(M.stageK θ y) = M.V0 θ γ y := by
   have := M.env.reward_markov
-  have hf : StronglyMeasurable fun w : ℝ × S × A ↦ M.V0 θ γ w.2.1 :=
+  have hf : StronglyMeasurable fun w : ℝ × 𝒮 × 𝒜 ↦ M.V0 θ γ w.2.1 :=
     ((Measurable_Vkd.of.All_Measurable_Prob (M := M) hπ θ γ).comp measurable_snd.fst).stronglyMeasurable
-  have hC : ∀ (w : ℝ × S × A), ‖M.V0 θ γ w.2.1‖ ≤ (1 - γ)⁻¹ * |M.env.R| :=
+  have hC : ∀ (w : ℝ × 𝒮 × 𝒜), ‖M.V0 θ γ w.2.1‖ ≤ (1 - γ)⁻¹ * |M.env.R| :=
     fun w => NormVkd.le.MulInvSub1Abs_R.of.In_Ico (M := M) h₀ θ w.2.1
   have e :=
     Integral.eq.Integral_SMul.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
@@ -59,8 +59,8 @@ private lemma stage_Vkd
 
 
 private lemma Kf_clip_one
-  [MeasurableSpace S] [ReferenceMeasure A]
-  {M : DensityModel Θ S A} {θ : Θ} (z : ℝ × S × A) :
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜} {θ : Θ} (z : ℝ × 𝒮 × 𝒜) :
   M.Kf θ (fun w ↦ clip w.1 (-M.env.R) M.env.R) 1 z =
     ∫ y, M.Wkd θ 0 y ∂(M.env.trans z.2) := by
   have := M.env.trans_markov
@@ -69,9 +69,9 @@ private lemma Kf_clip_one
   unfold DensityModel.K
   rw [Kernel.comp_apply, Kernel.comap_apply]
   change ∫ w, clip w.1 (-M.env.R) M.env.R ∂(M.stageK θ ∘ₘ M.env.trans z.2) = _
-  have hf : StronglyMeasurable fun w : ℝ × S × A ↦ clip w.1 (-M.env.R) M.env.R :=
+  have hf : StronglyMeasurable fun w : ℝ × 𝒮 × 𝒜 ↦ clip w.1 (-M.env.R) M.env.R :=
     ((measurable_fst.max measurable_const).min measurable_const).stronglyMeasurable
-  have hC : ∀ (w : ℝ × S × A), ‖clip w.1 (-M.env.R) M.env.R‖ ≤ |M.env.R| :=
+  have hC : ∀ (w : ℝ × 𝒮 × 𝒜), ‖clip w.1 (-M.env.R) M.env.R‖ ≤ |M.env.R| :=
     fun w => NormClip.le.Abs_R M.env.R w.1
   have hbind : Integrable (fun w ↦ clip w.1 (-M.env.R) M.env.R)
       (M.stageK θ ∘ₘ (M.env.trans z.2)) :=
@@ -81,12 +81,12 @@ private lemma Kf_clip_one
 
 
 private lemma Kf_Vkd_one
-  [MeasurableSpace S] [MeasurableSingletonClass S] [Countable S]
-  [ReferenceMeasure A] [MeasurableSingletonClass A]
-  {M : DensityModel Θ S A} {θ : Θ} {γ : ℝ}
+  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮]
+  [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜} {θ : Θ} {γ : ℝ}
   (h₀ : γ ∈ Set.Ico 0 1)
-  (hπ : ∀ θ, Measurable (fun z : S × A ↦ M.policy.prob θ z.1 z.2))
-  (z : ℝ × S × A) :
+  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 ↦ M.policy.prob θ z.1 z.2))
+  (z : ℝ × 𝒮 × 𝒜) :
   M.Kf θ (fun w ↦ M.V0 θ γ w.2.1) 1 z =
     ∫ y, M.V0 θ γ y ∂(M.env.trans z.2) := by
   have := M.env.trans_markov
@@ -95,9 +95,9 @@ private lemma Kf_Vkd_one
   unfold DensityModel.K
   rw [Kernel.comp_apply, Kernel.comap_apply]
   change ∫ w, M.V0 θ γ w.2.1 ∂(M.stageK θ ∘ₘ M.env.trans z.2) = _
-  have hf : StronglyMeasurable fun w : ℝ × S × A ↦ M.V0 θ γ w.2.1 :=
+  have hf : StronglyMeasurable fun w : ℝ × 𝒮 × 𝒜 ↦ M.V0 θ γ w.2.1 :=
     ((Measurable_Vkd.of.All_Measurable_Prob (M := M) hπ θ γ).comp measurable_snd.fst).stronglyMeasurable
-  have hC : ∀ (w : ℝ × S × A), ‖M.V0 θ γ w.2.1‖ ≤ (1 - γ)⁻¹ * |M.env.R| :=
+  have hC : ∀ (w : ℝ × 𝒮 × 𝒜), ‖M.V0 θ γ w.2.1‖ ≤ (1 - γ)⁻¹ * |M.env.R| :=
     fun w => NormVkd.le.MulInvSub1Abs_R.of.In_Ico (M := M) h₀ θ w.2.1
   have hbind : Integrable (fun w ↦ M.V0 θ γ w.2.1)
       (M.stageK θ ∘ₘ (M.env.trans z.2)) :=
@@ -111,15 +111,15 @@ Bellman identity for continuous-action kernel expectations.
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [MeasurableSingletonClass S] [Countable S]
-  [ReferenceMeasure A] [MeasurableSingletonClass A]
-  {M : DensityModel Θ S A}
+  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮]
+  [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
   {γ : ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
-  (hπ : ∀ θ, Measurable (fun z : S × A ↦ M.policy.prob θ z.1 z.2))
+  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 ↦ M.policy.prob θ z.1 z.2))
   (θ : Θ)
-  (z : ℝ × S × A) :
+  (z : ℝ × 𝒮 × 𝒜) :
 -- imply
   M.Kf θ (fun w ↦ clip w.1 (-M.env.R) M.env.R) 1 z +
       γ * M.Kf θ (fun w ↦ M.V0 θ γ w.2.1) 2 z -
@@ -128,10 +128,10 @@ private lemma main
   classical
   have := M.env.trans_markov
   have := M.env.reward_markov
-  set f : ℝ × S × A → ℝ := fun w ↦ M.V0 θ γ w.2.1
+  set f : ℝ × 𝒮 × 𝒜 → ℝ := fun w ↦ M.V0 θ γ w.2.1
   have hf : StronglyMeasurable f :=
     ((Measurable_Vkd.of.All_Measurable_Prob (M := M) hπ θ γ).comp measurable_snd.fst).stronglyMeasurable
-  have hC : ∀ (w : ℝ × S × A), ‖f w‖ ≤ (1 - γ)⁻¹ * |M.env.R| :=
+  have hC : ∀ (w : ℝ × 𝒮 × 𝒜), ‖f w‖ ≤ (1 - γ)⁻¹ * |M.env.R| :=
     fun w => NormVkd.le.MulInvSub1Abs_R.of.In_Ico (M := M) h₀ θ w.2.1
   have h1 := Kf_clip_one (M := M) (θ := θ) z
   have h3 := Kf_Vkd_one (M := M) (θ := θ) h₀ hπ z
@@ -153,12 +153,12 @@ private lemma main
     rw [Integral.eq.Integral_Integral.of.Integrable_Bind hbind]
     refine integral_congr_ae (Filter.Eventually.of_forall fun y => ?_)
     have hTsm : StronglyMeasurable
-        (fun w : ℝ × S × A ↦ ∫ y', M.V0 θ γ y' ∂(M.env.trans w.2)) :=
+        (fun w : ℝ × 𝒮 × 𝒜 ↦ ∫ y', M.V0 θ γ y' ∂(M.env.trans w.2)) :=
       ((StronglyMeasurable.integral_kernel_prod_right'
-        (κ := M.env.trans) (f := fun p : (S × A) × S ↦ M.V0 θ γ p.2)
+        (κ := M.env.trans) (f := fun p : (𝒮 × 𝒜) × 𝒮 ↦ M.V0 θ γ p.2)
         ((Measurable_Vkd.of.All_Measurable_Prob (M := M) hπ θ γ).comp measurable_snd).stronglyMeasurable).comp_measurable
-        (measurable_snd : Measurable fun w : ℝ × S × A ↦ w.2))
-    have hTC : ∀ (w : ℝ × S × A), ‖∫ y', M.V0 θ γ y' ∂(M.env.trans w.2)‖ ≤
+        (measurable_snd : Measurable fun w : ℝ × 𝒮 × 𝒜 ↦ w.2))
+    have hTC : ∀ (w : ℝ × 𝒮 × 𝒜), ‖∫ y', M.V0 θ γ y' ∂(M.env.trans w.2)‖ ≤
         (1 - γ)⁻¹ * |M.env.R| :=
       fun w => (norm_integral_le_of_norm_le_const
         (Filter.Eventually.of_forall fun y' =>
@@ -214,14 +214,14 @@ private lemma main
           NormVkd.le.MulInvSub1Abs_R.of.In_Ico (M := M) h₀ θ y')).trans_eq (by simp))
       hp
   have hGin : AEStronglyMeasurable
-      (fun y : S ↦ ∫ u, M.policy.prob θ y u *
+      (fun y : 𝒮 ↦ ∫ u, M.policy.prob θ y u *
         (∫ y', M.V0 θ γ y' ∂(M.env.trans (y, u))) ∂ReferenceMeasure.measure)
       (M.env.trans z.2) := by
-    have hp : Measurable (fun z : S × A ↦ M.policy.prob θ z.1 z.2) := hπ θ
-    have hT : StronglyMeasurable (fun z : S × A ↦
+    have hp : Measurable (fun z : 𝒮 × 𝒜 ↦ M.policy.prob θ z.1 z.2) := hπ θ
+    have hT : StronglyMeasurable (fun z : 𝒮 × 𝒜 ↦
         ∫ y', M.V0 θ γ y' ∂(M.env.trans z)) :=
       StronglyMeasurable.integral_kernel_prod_right'
-        (κ := M.env.trans) (f := fun p : (S × A) × S ↦ M.V0 θ γ p.2)
+        (κ := M.env.trans) (f := fun p : (𝒮 × 𝒜) × 𝒮 ↦ M.V0 θ γ p.2)
         ((Measurable_Vkd.of.All_Measurable_Prob (M := M) hπ θ γ).comp measurable_snd).stronglyMeasurable
     exact ((hp.stronglyMeasurable.mul hT).integral_prod_right).aestronglyMeasurable
   have hG : Integrable
@@ -248,7 +248,7 @@ private lemma main
             (∫ y', M.V0 θ γ y' ∂(M.env.trans (y, u))) ∂ReferenceMeasure.measure) -
           M.V0 θ γ y) ∂(M.env.trans z.2) := by
     rw [eγ]
-    set g : S → ℝ := fun y =>
+    set g : 𝒮 → ℝ := fun y =>
       γ * (∫ u, M.policy.prob θ y u *
         (∫ y', M.V0 θ γ y' ∂(M.env.trans (y, u))) ∂ReferenceMeasure.measure)
     change ∫ y, M.Wkd θ 0 y ∂(M.env.trans z.2) + ∫ y, g y ∂(M.env.trans z.2) -
@@ -269,4 +269,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-03
+-- updated on 2026-11-11

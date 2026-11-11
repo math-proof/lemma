@@ -1,5 +1,5 @@
 import Lemma.Tensor.SEqSum.of.LeLength
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 import Lemma.Tensor.Length.of.SEq
 open Tensor
 

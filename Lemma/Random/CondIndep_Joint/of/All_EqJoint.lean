@@ -5,7 +5,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel 
 
 /--
 Markov property of the discrete-state continuous-action trajectory model `M θ`
-(`DensityModel` with finite `S` / `A`): given the next state `s[t+1]`, the future rewards
+(`DensityModel` with finite `𝒮` / `𝒜`): given the next state `s[t+1]`, the future rewards
 `r[t+1:]` are conditionally independent of the current state-action pair `(s[t], a[t])`.
 Built from the dens one-step Markov property
 `CondIndep.of.All_Eq_Joint.All_EqWithDensity` by
@@ -13,12 +13,12 @@ Built from the dens one-step Markov property
 -/
 @[path]
 private lemma main
-  [CountableMeasure S] [MeasurableSingletonClass S] [Fintype S] [DecidableEq S]
-  [CountableMeasure A] [MeasurableSingletonClass A] [Fintype A]
-  {M : DensityModel Θ S A}
-  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
-  {s : ℕ → (ℕ → ℝ × S × A) → S}
-  {a : ℕ → (ℕ → ℝ × S × A) → A}
+  [CountableMeasure 𝒮] [MeasurableSingletonClass 𝒮] [Fintype 𝒮] [DecidableEq 𝒮]
+  [CountableMeasure 𝒜] [MeasurableSingletonClass 𝒜] [Fintype 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
   {θ : Θ}
   {t : ℕ}
 -- given
@@ -32,4 +32,4 @@ private lemma main
 
 
 -- created on 2026-10-08
--- updated on 2026-11-04
+-- updated on 2026-11-11

@@ -1,6 +1,6 @@
-import Def.Data.Holor.Defs.Part4
-import Def.Data.Holor.Prod
-import Theorem.Data.Holor.Functions
+import Def.Data.Tensor.Defs.Part4
+import Def.Data.Tensor.Prod
+import Theorem.Data.Tensor.Functions
 open List
 
 

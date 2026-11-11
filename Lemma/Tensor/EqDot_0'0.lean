@@ -1,11 +1,12 @@
 import Lemma.Tensor.EqTensordot_0'0
 import Lemma.Tensor.EqEinsum_0'0
-import Def.Data.Holor.Sum
-import Def.Data.Holor.Reshape
-import Def.Data.Holor.Bmm
-import Def.Data.Holor.Repeat
-import Def.Data.Holor.Prod
-import Notation.Data.Holor.Permute
+import Def.Data.Tensor.Sum
+import Def.Data.Tensor.Reshape
+import Def.Data.Tensor.Bmm
+import Def.Data.Tensor.Repeat
+import Def.Data.Tensor.Prod
+import Notation.Data.Tensor.Permute
+import Instance.Data.Vector.Basic.Dot
 open Tensor Vector
 
 
@@ -15,7 +16,7 @@ private lemma main
 -- given
   (X : Tensor α s) :
 -- imply
-  X @ (0 : Tensor α s') = 0 := by
+  X ⬝ᵥ (0 : Tensor α s') = 0 := by
 -- proof
   cases s with
   | nil =>

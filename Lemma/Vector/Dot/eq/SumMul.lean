@@ -1,3 +1,4 @@
+import Instance.Data.Vector.Basic.Dot
 import Lemma.Nat.EqMax
 import Lemma.Vector.EqResize
 open Nat Vector
@@ -9,7 +10,7 @@ private lemma main
 -- given
   (a b : List.Vector α n) :
 -- imply
-  a @ b = (a * b).sum := by
+  a ⬝ᵥ b = (a * b).sum := by
 -- proof
   dsimp only [Dot.dot]
   rw [EqMax]

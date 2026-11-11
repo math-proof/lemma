@@ -6,7 +6,7 @@ import Mathlib.Topology.UniformSpace.UniformEmbedding
 import Mathlib.LinearAlgebra.FiniteDimensional.Defs
 import Lemma.Vector.Zero.eq.Replicate
 import Lemma.Tensor.Eq.is.EqDataS
-import Instance.Data.Holor.Tensor.Part2
+import Instance.Data.Tensor.Tensor.Part2
 import Def.MeasureTheory.Integral.IntervalIntegral.Integrals.Part4
 open Tensor
 

@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Def.Data.Holor.Repeat
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Repeat
+import Def.Data.Tensor.Prod
 import Lemma.List.EqProd_0.of.Eq0Get
 import Lemma.List.EqSet.of.EqGet
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq

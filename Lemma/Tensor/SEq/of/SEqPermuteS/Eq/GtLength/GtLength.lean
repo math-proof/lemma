@@ -1,5 +1,5 @@
 import Lemma.Int.EqNegToNatNeg.of.Lt_0
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.SEq.of.SEqPermuteS.Eq.GtLength.GtLength.Ge
 import Lemma.Tensor.SEq.of.SEqPermuteS.Eq.GtLength.GtLength.GtLength_Add
 import Lemma.Tensor.SEqPermuteS__Neg.of.Le

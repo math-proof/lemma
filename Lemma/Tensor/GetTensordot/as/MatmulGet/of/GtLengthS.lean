@@ -1,4 +1,4 @@
-import Def.Data.Holor.Reshape
+import Def.Data.Tensor.Reshape
 import Lemma.Tensor.Tensordot.as.Matmul.of.GtLengthS
 import Lemma.Tensor.GetReshape.as.Reshape.of.GtLength_0
 import Lemma.Tensor.GetMatmul.as.MatmulCastS_Get.of.Eq.Length.GtLength_0

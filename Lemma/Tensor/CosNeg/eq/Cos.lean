@@ -1,6 +1,6 @@
 import Lemma.Tensor.DataCos.eq.CosData
 import Lemma.Vector.CosNeg.eq.Cos
-import Theorem.Data.Holor.Functions
+import Theorem.Data.Tensor.Functions
 open Tensor Vector
 
 

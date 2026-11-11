@@ -2,8 +2,9 @@ import Mathlib.LinearAlgebra.Matrix.SemiringInverse
 import Lemma.Tensor.Eq.is.ToMatrix
 import Lemma.Tensor.ToMatrixDot.eq.MulToMatrixS
 import Lemma.Tensor.ToMatrixEye.eq.One
-import Def.Data.Holor.Eye
-import Theorem.Data.Holor.Functions
+import Def.Data.Tensor.Eye
+import Theorem.Data.Tensor.Functions
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
@@ -12,9 +13,9 @@ private lemma main
   [CommSemiring α] [CharZero α]
   {A B : Tensor α [n, n]}
 -- given
-  (h : A @ B = Tensor.eye (α := α) n) :
+  (h : A ⬝ᵥ B = Tensor.eye (α := α) n) :
 -- imply
-  B @ A = Tensor.eye (α := α) n := by
+  B ⬝ᵥ A = Tensor.eye (α := α) n := by
 -- proof
   apply Eq.of.ToMatrix
   apply Eq.trans (ToMatrixDot.eq.MulToMatrixS B A)

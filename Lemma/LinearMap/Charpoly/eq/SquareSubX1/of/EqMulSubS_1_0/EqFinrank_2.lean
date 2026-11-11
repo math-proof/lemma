@@ -5,6 +5,7 @@ open LinearMap
 
 private lemma trace_eq_zero_of_mul_self_eq_zero_fin_two {A : Type u} [CommRing A] [IsDomain A]
   (N : Matrix (Fin 2) (Fin 2) A) (hN : N * N = 0) : N.trace = 0 ∧ N.det = 0 := by
+-- proof
   have e : ∀ i j, N i 0 * N 0 j + N i 1 * N 1 j = 0 := fun i j => by
     simpa [Matrix.mul_apply, Fin.sum_univ_two] using congrFun (congrFun hN i) j
   rw [Matrix.trace_fin_two, Matrix.det_fin_two]
@@ -23,6 +24,7 @@ open Polynomial in
 
 private lemma matrix_charpoly_eq {A : Type u} [CommRing A] [IsDomain A]
   (M : Matrix (Fin 2) (Fin 2) A) (hM : (M - 1) * (M - 1) = 0) : M.charpoly = (X - 1) ^ 2 := by
+-- proof
   obtain ⟨N, rfl⟩ : ∃ N, M = N + 1 := ⟨M - 1, (sub_add_cancel M 1).symm⟩
   rw [add_sub_cancel_right] at hM
   obtain ⟨htr, hdet⟩ := trace_eq_zero_of_mul_self_eq_zero_fin_two N hM
@@ -43,6 +45,7 @@ open Polynomial in
 private lemma linearMap_charpoly_eq {A : Type u} [CommRing A] [IsDomain A] {V : Type v} [AddCommGroup V] [Module A V]
   [Module.Free A V] [Module.Finite A V] (hV : Module.finrank A V = 2)
   (f : Module.End A V) (hf : (f - 1) * (f - 1) = 0) : f.charpoly = (X - 1) ^ 2 := by
+-- proof
   let b := Module.finBasisOfFinrankEq A V hV
   rw [← LinearMap.charpoly_toMatrix f b]
   refine matrix_charpoly_eq _ ?_
@@ -66,3 +69,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-10

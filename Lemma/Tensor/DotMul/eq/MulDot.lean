@@ -1,6 +1,7 @@
 import Lemma.Tensor.MapDot.eq.DotMap.of.All_Eq_Map.All_EqMulMap.All_EqBFn0.All_EqSumMap.All_EqMapS
 import Lemma.Tensor.MulMul
 import Lemma.Tensor.SumMul.eq.MulSum
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
@@ -12,7 +13,7 @@ private lemma main
   (B : Tensor α [])
   (C : Tensor α s') :
 -- imply
-  (A * B) @ C = A @ C * B :=
+  (A * B) ⬝ᵥ C = A ⬝ᵥ C * B :=
 -- proof
   DotMap.eq.MapDot.of.All_Eq_Map.All_EqMulMap.All_EqBFn0.All_EqSumMap.All_EqMapS (f := (· * · : α → α → α))
     MulMul.comm SumMul.eq.MulSum (zero_mul ·) MulMul.comm.right MulMul.comm.left A B C

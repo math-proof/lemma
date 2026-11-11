@@ -7,7 +7,8 @@ The `k`-step expected reward on a general state space is bounded: `‖Wk θ k x�
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [MeasurableSpace A] [Fintype A]
+  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
+  [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
   {M : Model Θ S A}
 -- given
   (θ : Θ)
@@ -34,3 +35,4 @@ private lemma main
 
 
 -- created on 2026-10-07
+-- updated on 2026-11-08

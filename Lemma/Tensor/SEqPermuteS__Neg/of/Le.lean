@@ -1,5 +1,5 @@
-import Def.Data.Holor.Prod
-import Notation.Data.Holor.Permute
+import Def.Data.Tensor.Prod
+import Notation.Data.Tensor.Permute
 import Lemma.List.Permute__Neg.of.Le
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.Nat.EqMod_1'0

@@ -1,4 +1,5 @@
 import Instance.LinearAlgebra.Matrix.Matmul
+import Instance.Data.Vector.Basic.Dot
 
 
 @[path]
@@ -9,7 +10,7 @@ private lemma left
 -- given
   (h : X = Y) :
 -- imply
-  lhs @ X = lhs @ Y := by
+  lhs ⬝ᵥ X = lhs ⬝ᵥ Y := by
 -- proof
   rw [h]
 
@@ -22,7 +23,7 @@ private lemma main
 -- given
   (h : X = Y) :
 -- imply
-  X @ rhs = Y @ rhs := by
+  X ⬝ᵥ rhs = Y ⬝ᵥ rhs := by
 -- proof
   rw [h]
 

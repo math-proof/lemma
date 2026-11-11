@@ -1,4 +1,4 @@
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.List.EqSwap_0'1
 import Lemma.Tensor.GetAppend.eq.Get.of.Lt
 import Lemma.Tensor.GetAppend.eq.Get_Sub.of.GtAdd.Ge

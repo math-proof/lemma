@@ -1,5 +1,5 @@
 import Lemma.Tensor.LengthRepeat.eq.Get_0.of.GtVal_0
-import Def.Data.Holor.Repeat
+import Def.Data.Tensor.Repeat
 import Lemma.Nat.LtVal
 import Lemma.List.GetSet.eq.Get.of.Gt.GtLength
 import Lemma.Tensor.GetToVector.eq.Get.of.GtLength_0

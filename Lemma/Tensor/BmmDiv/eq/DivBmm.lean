@@ -1,7 +1,7 @@
 import Lemma.Tensor.BmmBFn.eq.BFnBmm
 import Lemma.Tensor.MulDiv.eq.DivMul
 import Lemma.Tensor.SumDiv.eq.DivSum
-import Def.Data.Holor.Bmm
+import Def.Data.Tensor.Bmm
 open Tensor
 
 

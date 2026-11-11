@@ -1,5 +1,5 @@
-import Def.Data.Holor.Defs.Part4
-import Def.Data.Holor.Item
+import Def.Data.Tensor.Defs.Part4
+import Def.Data.Tensor.Item
 import Lemma.Tensor.DataNeg.eq.NegData
 open Tensor Vector
 

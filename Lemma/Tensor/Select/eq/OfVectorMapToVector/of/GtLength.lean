@@ -1,5 +1,5 @@
 import Lemma.Bool.EqCast.of.SEq
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength
 import Lemma.Nat.Div.eq.AddMulDiv_Mul

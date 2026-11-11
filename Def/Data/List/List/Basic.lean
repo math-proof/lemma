@@ -7,7 +7,7 @@ import Syntax.Data.List.List
 open Lean
 
 /-- Python's open-ended slice `f[t:]` of an infinite sequence `f : ℕ → α`: the shifted sequence
-`k ↦ f (t + k)`, again of type `ℕ → α` (so e.g. `(fun k ↦ γ ^ k) @ r[t:] = ∑' k, γ ^ k * r (t + k)`). -/
+`k ↦ f (t + k)`, again of type `ℕ → α` (so e.g. `(fun k ↦ γ ^ k) ⬝ᵥ r[t:] = ∑' k, γ ^ k * r (t + k)`). -/
 def Function.getSliceFrom (f : ℕ → α) (t : ℕ) : ℕ → α := fun k ↦ f (t + k)
 
 open Elab Term Meta in

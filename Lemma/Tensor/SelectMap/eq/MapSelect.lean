@@ -2,7 +2,7 @@ import Lemma.Vector.FlattenMap.eq.MapFlatten
 import Lemma.Vector.MapCast.as.Map.of.Eq
 import Lemma.Vector.MapGetSlice.eq.GetSliceMap
 import Lemma.Vector.SplitAtMap.eq.MapSplitAt
-import Instance.Data.Holor.Tensor.Part2
+import Instance.Data.Tensor.Tensor.Part2
 open List Tensor Vector
 
 

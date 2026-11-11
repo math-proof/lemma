@@ -15,7 +15,7 @@ import Lemma.Vector.GetRepeat_AddMul.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetSplitAt.of.Lt_Mul_ProdTail.Gt_0.GtGet_0.GtLength_0
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.SEqFlattenSSplitAt.of.SEq
-import Instance.Data.Holor.Tensor.Part2
+import Instance.Data.Tensor.Tensor.Part2
 open Bool List Nat Tensor Vector
 
 

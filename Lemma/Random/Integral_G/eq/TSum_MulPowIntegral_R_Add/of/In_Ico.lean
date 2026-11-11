@@ -23,9 +23,9 @@ private lemma main
   (B : Set (ℕ → ℝ × S × A))
   (t : ℕ) :
 -- imply
-  ∫ ω, ((γ ^ (id : ℕ → ℕ)) @ r[t:]) ω ∂(M θ)[|B] = ∑' k, γ ^ k * ∫ ω, r (t + k) ω ∂(M θ)[|B] := by
+  ∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω ∂(M θ)[|B] = ∑' k, γ ^ k * ∫ ω, r (t + k) ω ∂(M θ)[|B] := by
 -- proof
-  set G := (γ ^ (id : ℕ → ℕ)) @ r[t:]
+  set G := (γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]
   obtain rfl : r = fun t ω ↦ (ω t).1 := funext₂ fun t ω ↦ (congrArg (·.1) (congrFun (h₁ t) ω)).symm
   set r : ℕ → (ℕ → ℝ × S × A) → ℝ := fun t ω ↦ (ω t).1
   have hr : Measurable (fun ω k ↦ r k ω) := Measurable.of_eval fun k => measurable_fst.comp (measurable_pi_apply k)
@@ -34,7 +34,7 @@ private lemma main
     simp
   have h : ∀ k, 𝔼[r : M θ](r (t + k) | (fun ω ↦ ω ∈ B) = True) = ∫ ω, r (t + k) ω ∂(M θ)[|B] := fun k =>
     (Expectation.condEvent_eq_integral hr.aemeasurable (measurable_pi_apply (t + k))).trans (by rw [hB])
-  have hG : Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) @ integ[t:]) := Measurable.tsum fun k => (measurable_pi_apply (t + k)).const_mul _
+  have hG : Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[t:]) := Measurable.tsum fun k => (measurable_pi_apply (t + k)).const_mul _
   have h' := ExpectCondDot.eq.Dot_ExpectCond.of.In_Ico (M := M) hγ h₁ θ (fun ω ↦ ω ∈ B) True t
   simp only [h] at h'
   simp only [Expectation.asRV_process] at h'
@@ -42,3 +42,4 @@ private lemma main
 
 
 -- created on 2026-10-07
+-- updated on 2026-11-11

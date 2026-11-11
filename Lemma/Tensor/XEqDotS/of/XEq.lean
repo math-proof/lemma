@@ -1,10 +1,11 @@
 import Lemma.Tensor.NotInfiniteGetDataMul
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.TMap.eq.MapT
 import Lemma.Tensor.GetData.eq.HeadDataGet.of.Lt
 import Lemma.Tensor.GetDot.eq.Dot_GetT
 import Lemma.Tensor.XEq.is.All_XEqGetS.of.GtLength_0
 import Lemma.Tensor.XEqDotS.of.XEq.OrAll_NotInfinite.All_Imp_XEqInvS
+import Instance.Data.Vector.Basic.Dot
 open Tensor Vector
 
 
@@ -13,7 +14,7 @@ private lemma get_col
   (A : Tensor ℝ* [n]) (X : Tensor ℝ [n, m])
   (j : Fin m) :
 -- imply
-  (A @ (X : Tensor ℝ* [n, m])).get ⟨j, by simp [matmul_shape]; grind⟩ = A @ (id (α := Tensor ℝ [n]) (Xᵀ.get j) : Tensor ℝ* [n]) := by
+  (A ⬝ᵥ (X : Tensor ℝ* [n, m])).get ⟨j, by simp [matmul_shape]; grind⟩ = A ⬝ᵥ (id (α := Tensor ℝ [n]) (Xᵀ.get j) : Tensor ℝ* [n]) := by
 -- proof
   rw [GetDot.eq.Dot_GetT.fin A (X : Tensor ℝ* [n, m]) j]
   conv_lhs => simp [GetElem.getElem]
@@ -36,7 +37,7 @@ private lemma get_row
   (A : Tensor ℝ* [n])
   (i : Fin m) :
 -- imply
-  ((X : Tensor ℝ* [m, n]) @ A).get ⟨i, by grind [matmul_shape]⟩ = (id (α := Tensor ℝ [n]) X[i] : Tensor ℝ* [n]) @ A := by
+  ((X : Tensor ℝ* [m, n]) ⬝ᵥ A).get ⟨i, by grind [matmul_shape]⟩ = (id (α := Tensor ℝ [n]) X[i] : Tensor ℝ* [n]) ⬝ᵥ A := by
 -- proof
   have h := GetDot.eq.DotGet.une.fin (X : Tensor ℝ* [m, n]) A i
   simp at h
@@ -58,7 +59,7 @@ private lemma main
 -- given
   (h : A ≈ (B : Tensor ℝ* [n])) :
 -- imply
-  A @ (X : Tensor ℝ* [n, m]) ≈ (B : Tensor ℝ* [n]) @ (X : Tensor ℝ* [n, m]) := by
+  A ⬝ᵥ (X : Tensor ℝ* [n, m]) ≈ (B : Tensor ℝ* [n]) ⬝ᵥ (X : Tensor ℝ* [n, m]) := by
 -- proof
   let B' : Tensor ℝ* [n] := B
   apply XEq.of.All_XEqGetS.GtLength_0 (h := by simp [matmul_shape])
@@ -79,7 +80,7 @@ private lemma left
 -- given
   (h : A ≈ (B : Tensor ℝ* [n])) :
 -- imply
-  (X : Tensor ℝ* [m, n]) @ A ≈ (X : Tensor ℝ* [m, n]) @ (B : Tensor ℝ* [n]) := by
+  (X : Tensor ℝ* [m, n]) ⬝ᵥ A ≈ (X : Tensor ℝ* [m, n]) ⬝ᵥ (B : Tensor ℝ* [n]) := by
 -- proof
   let B' : Tensor ℝ* [n] := B
   apply XEq.of.All_XEqGetS.GtLength_0 (h := by simp [matmul_shape])

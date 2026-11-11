@@ -1,4 +1,5 @@
 import Lemma.Tensor.DotSoftmaxAdd_Mul_Infty.eq.Cast_Stack_Sum_Band
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 set_option maxHeartbeats 1000000
 
@@ -23,7 +24,7 @@ private lemma bert.position_representation.relative.band_part_mask
   let Ξ : Tensor ℝ* [n, n] := [i < n] [j < n] (Bool.toNat (decide ((i.val : ℤ) < (j.val : ℤ) + l ∧ (j.val : ℤ) < (i.val : ℤ) + u)))
   let A₀ : Tensor ℝ* [n, n] := ([i < n] [j < n] ((((∑ t, Q i t * (K j t + K' i j t)) / √(d_z : ℝ)) : ℝ) : Tensor ℝ []) : Tensor ℝ [n, n])
   let Vᵢ : Tensor ℝ [n, d_z] := [j < n] [s < d_z] ((V j s + V' i j s : ℝ) : Tensor ℝ [])
-  ((A₀ + (Ξ - 1) * ∞).softmax.get ⟨i, by grind⟩) @ (Vᵢ : Tensor ℝ* [n, d_z]) ≈
+  ((A₀ + (Ξ - 1) * ∞).softmax.get ⟨i, by grind⟩) ⬝ᵥ (Vᵢ : Tensor ℝ* [n, d_z]) ≈
     ((([s < d_z] ((∑ j' : Fin (min n (i.val + u) - (i.val + 1 - l)), Real.exp ((∑ t, Q i t * (K ⟨i.val + 1 - l + j', by have := j'.2; omega⟩ t + K'' i j' t)) / √(d_z : ℝ)) / (∑ k' : Fin (min n (i.val + u) - (i.val + 1 - l)), Real.exp ((∑ t, Q i t * (K ⟨i.val + 1 - l + k', by have := k'.2; omega⟩ t + K'' i k' t)) / √(d_z : ℝ))) * (V ⟨i.val + 1 - l + j', by have := j'.2; omega⟩ s + V'' i j' s) : ℝ) : Tensor ℝ [])) : Tensor ℝ [d_z]) : Tensor ℝ* [d_z]) := by
 -- proof
   intro Ξ A₀ Vᵢ

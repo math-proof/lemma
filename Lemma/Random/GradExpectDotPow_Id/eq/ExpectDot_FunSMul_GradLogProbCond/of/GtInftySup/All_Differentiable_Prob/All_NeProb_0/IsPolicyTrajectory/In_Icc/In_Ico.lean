@@ -12,7 +12,7 @@ Generalized advantage estimation for a finite action/state alphabet
 (Schulman et al., arXiv 1506.02438). Remigrated onto `DensityModel` — applies the
 CountableMeasure dens `In_Icc.In_Ico` specialization, discharging dens extras
 (`Measurable`, `StronglyMeasurable`, score `Ms`, split `g`/`Cg` bounds) from
-`[Fintype S] [Fintype A]` and `sup ‖∇π‖ < ∞`.
+`[Fintype 𝒮] [Fintype 𝒜]` and `sup ‖∇π‖ < ∞`.
 
 Keeps the pre-remigration lean binder count (γ, ℓ, conditional law, Differentiable, Grad
 bound); remigration onto dens CM had briefly reintroduced dens `hmeas`/`hφ`/`hMs`/split bounds.
@@ -22,14 +22,14 @@ bound); remigration onto dens CM had briefly reintroduced dens `hmeas`/`hφ`/`hM
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [CountableMeasure S] [MeasurableSingletonClass S] [Fintype S]
-  [CountableMeasure A] [MeasurableSingletonClass A] [Fintype A]
-  {M : DensityModel Θ S A}
+  [CountableMeasure 𝒮] [MeasurableSingletonClass 𝒮] [Fintype 𝒮]
+  [CountableMeasure 𝒜] [MeasurableSingletonClass 𝒜] [Fintype 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
   {θ : Θ}
   {γ ℓ : ℝ}
-  {r : ℕ ⇀ (ℕ → ℝ × S × A) → ℝ}
-  {s : ℕ ⇀ (ℕ → ℝ × S × A) → S}
-  {a : ℕ ⇀ (ℕ → ℝ × S × A) → A}
+  {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ℓ ∈ Set.Icc 0 1)
@@ -46,28 +46,28 @@ private lemma main
   have : PSpace (M θ) (AsPathRV.path a) :=
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) hπ.htr.stage_eq t).aemeasurable⟩)
   let : MeasurableSpace Θ := borel Θ
-  let V_θ : ℕ ⇀ (ℕ → S) → ℕ → ℝ := ⟨fun _ δ k => M.V0 θ γ (δ k)⟩
-  ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) @ r) =
-    𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) @ fun t ↦
-      ((((γ * ℓ) ^ (id : ℕ → ℕ)) @ (r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:])) •
+  let V_θ : ℕ ⇀ (ℕ → 𝒮) → ℕ → ℝ := ⟨fun _ δ k => M.V0 θ γ (δ k)⟩
+  ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) =
+    𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
+      ((((γ * ℓ) ^ (id : ℕ → ℕ)) ⬝ᵥ (r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:])) •
         ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log)) := by
 -- proof
-  have hmeas : ∀ θ', Measurable (fun z : S × A => M.policy.prob θ' z.1 z.2) :=
+  have hmeas : ∀ θ', Measurable (fun z : 𝒮 × 𝒜 => M.policy.prob θ' z.1 z.2) :=
     M.policy.measurable_prob
   obtain ⟨C, hC⟩ := h₃
-  let g : S → A → ℝ := fun _ _ => C
+  let g : 𝒮 → 𝒜 → ℝ := fun _ _ => C
   have h₃bound : ∀ θ' x u, ‖∇[θ'] M.policy.prob θ' x u‖ ≤ g x u := by
     intro θ' x u
     exact hC ⟨(θ', (x, u)), rfl⟩
-  let Cg : ℝ := C * (Fintype.card A : ℝ)
+  let Cg : ℝ := C * (Fintype.card 𝒜 : ℝ)
   have h₄ : ∀ x, ∑ u, g x u ≤ Cg := by
     intro x
     simp [g, Cg, Finset.sum_const, nsmul_eq_mul, mul_comm]
   have hφ : StronglyMeasurable
-      (fun z : S × A => ∇[θ] Real.log (M.policy.prob θ z.1 z.2)) :=
+      (fun z : 𝒮 × 𝒜 => ∇[θ] Real.log (M.policy.prob θ z.1 z.2)) :=
     StronglyMeasurable.of_discrete
   have hMsEx : ∃ Ms, ∀ y u, ‖∇[θ] Real.log (M.policy.prob θ y u)‖ ≤ Ms := by
-    have hfin : BddAbove (Set.range fun z : S × A =>
+    have hfin : BddAbove (Set.range fun z : 𝒮 × 𝒜 =>
         ‖∇[θ] Real.log (M.policy.prob θ z.1 z.2)‖) :=
       Set.Finite.bddAbove (Set.finite_range _)
     obtain ⟨Ms, hUB⟩ := hfin
@@ -78,4 +78,4 @@ private lemma main
 
 
 -- created on 2026-10-21
--- updated on 2026-11-04
+-- updated on 2026-11-11

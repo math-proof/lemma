@@ -1,6 +1,6 @@
 import Lemma.Tensor.Exp.eq.MulSoftmax_KeepdimSumExp
 import Lemma.Tensor.Mul_Keepdim.eq.Mul
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 open Exp Tensor
 
 

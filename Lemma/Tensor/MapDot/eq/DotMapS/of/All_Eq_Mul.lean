@@ -1,6 +1,7 @@
 import Lemma.Tensor.Einsum.eq.MulGetData_0
 import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.GetMap.eq.UFnGet
+import Instance.Data.Vector.Basic.Dot
 open Tensor Vector
 
 
@@ -15,7 +16,7 @@ private lemma left
   (A : Tensor α [])
   (B : Tensor α s') :
 -- imply
-  (A @ B).map f = (A.map f) @ (B.map f) := by
+  (A ⬝ᵥ B).map f = (A.map f) ⬝ᵥ (B.map f) := by
 -- proof
   simp only [Dot.dot]
   rw [Einsum.eq.MulGetData_0, Einsum.eq.MulGetData_0]
@@ -40,7 +41,7 @@ private lemma main
   (A : Tensor α (n :: s))
   (B : Tensor α []) :
 -- imply
-  (A @ B).map f = (A.map f) @ (B.map f) := by
+  (A ⬝ᵥ B).map f = (A.map f) ⬝ᵥ (B.map f) := by
 -- proof
   simp only [Dot.dot]
   unfold einsum

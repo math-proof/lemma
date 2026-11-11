@@ -1,6 +1,6 @@
 import Theorem.Logic.SEq
-import Def.Data.Holor.Defs.Part4
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Defs.Part4
+import Def.Data.Tensor.Sum
 @[path, cast]
 private lemma main
   [Add α] [Zero α]

@@ -1,5 +1,5 @@
 import Lemma.Vector.SEq.of.EqLength_0.EqLength_0
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.Tensor.All_SEqDataSGet.of.All_SEqGetS.Eq
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Tensor.Data.eq.FlattenMapRange

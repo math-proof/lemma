@@ -1,5 +1,5 @@
 import Lemma.Tensor.SEqPermuteTailPermuteHead.of.Ne_Nil
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.SEqPermuteTail_0
 import Lemma.Tensor.SEqPermuteHead_0
 open Tensor

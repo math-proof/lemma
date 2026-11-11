@@ -1,4 +1,4 @@
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Vector.EqMap0_0.of.EqUFn_0
 import Lemma.Tensor.EqTensor0'0
 import Lemma.Tensor.Rotate0.eq.Zero

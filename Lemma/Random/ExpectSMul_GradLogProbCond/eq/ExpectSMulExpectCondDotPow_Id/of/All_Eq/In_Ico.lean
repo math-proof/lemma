@@ -4,7 +4,6 @@ import Lemma.Random.SinglePSpace.of.Measurable
 import Lemma.Measure.Count.eq.ProdCountS
 import Mathlib.Analysis.Calculus.Gradient.Basic
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
-import Theorem.Function
 import Def.Analysis.Calculus.Gradient.Operators.Part2
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Filter Topology Measure
 open scoped ENNReal.ToRealCoe
@@ -12,8 +11,8 @@ set_option maxHeartbeats 4000000
 
 
 /--
-`𝔼[∇ log π(a[t] | s[t]) • (γ ** @ r[t:])] =
-  𝔼[∇ log π(a[t] | s[t]) • 𝔼[(γ ** @ r[t:]) | s[t], a[t]]]`
+`𝔼[∇ log π(a[t] | s[t]) • (γ ** ⬝ᵥ r[t:])] =
+  𝔼[∇ log π(a[t] | s[t]) • 𝔼[(γ ** ⬝ᵥ r[t:]) | s[t], a[t]]]`
 (law of iterated expectation on `(s[t], a[t])`).
 -/
 @[path]
@@ -46,9 +45,9 @@ private lemma main
     PSpace_Path.of.All_PSpace
       (fun t => ⟨(Random.Measurable.of.All_Eq.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).aemeasurable⟩)
   let : MeasurableSpace Θ := borel Θ
-  𝔼[r, s, a : M θ](((γ ^ (id : ℕ → ℕ)) @ r[t:]) • ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log) =
+  𝔼[r, s, a : M θ](((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) • ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log) =
     𝔼[s, a : M θ](
-      𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s[t], a[t]) •
+      𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s[t], a[t]) •
         ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log) := by
 -- proof
   intro hP _ _ _
@@ -61,4 +60,4 @@ private lemma main
 
 
 -- created on 2023-04-01
--- updated on 2026-10-26
+-- updated on 2026-11-11

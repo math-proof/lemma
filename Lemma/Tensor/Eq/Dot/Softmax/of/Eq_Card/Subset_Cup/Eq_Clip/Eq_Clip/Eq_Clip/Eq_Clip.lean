@@ -1,4 +1,5 @@
 import Lemma.Tensor.DotSoftmaxAdd_Mul_Infty.eq.Cast_Stack_Sum_Image
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 
 
@@ -30,7 +31,7 @@ private lemma position_representation.relative.gather
   let Ξ : Tensor ℝ* [n, n] := [i < n] [j < n] (Bool.toNat (decide (j ∈ Finset.univ.image dm)))
   let A : Tensor ℝ* [n, n] := ([i < n] [j < n] (((∑ t, Q i t * (K j t + K' i j t)) / √(d_z : ℝ) : ℝ) : Tensor ℝ []) : Tensor ℝ [n, n])
   let Vᵢ : Tensor ℝ [n, d_z] := [j < n] [l < d_z] ((V j l + V' i j l : ℝ) : Tensor ℝ [])
-  ((A + (Ξ - 1) * ∞).softmax.get ⟨i, by grind⟩) @ (Vᵢ : Tensor ℝ* [n, d_z]) ≈
+  ((A + (Ξ - 1) * ∞).softmax.get ⟨i, by grind⟩) ⬝ᵥ (Vᵢ : Tensor ℝ* [n, d_z]) ≈
     ((([l < d_z] ((∑ j, Real.exp ((∑ t, Q i t * (K (dm j) t + wK (c + max (-c) (min (((dm j).val : ℤ) - i.val) c)) t)) / √(d_z : ℝ)) / (∑ k, Real.exp ((∑ t, Q i t * (K (dm k) t + wK (c + max (-c) (min (((dm k).val : ℤ) - i.val) c)) t)) / √(d_z : ℝ))) * (V (dm j) l + wV (c + max (-c) (min (((dm j).val : ℤ) - i.val) c)) l) : ℝ) : Tensor ℝ [])) : Tensor ℝ [d_z]) : Tensor ℝ* [d_z]) := by
 -- proof
   exact DotSoftmaxAdd_Mul_Infty.eq.Cast_Stack_Sum_Image.row h h_m (fun i j => (∑ t, Q i t * (K j t + K' i j t)) / √(d_z : ℝ)) (fun i j l => V j l + V' i j l)
@@ -63,7 +64,7 @@ private lemma position_representation.relative.gather.indexed
   let Ξ : Tensor ℝ* [n, n] := [i < n] [j < n] (Bool.toNat (decide (j ∈ Finset.univ.image dm)))
   let A : Tensor ℝ* [n, n] := ([i < n] [j < n] (((∑ t, Q i t * (K j t + K' i j t)) / √(d_z : ℝ) : ℝ) : Tensor ℝ []) : Tensor ℝ [n, n])
   let Vᵢ : Tensor ℝ [n, d_z] := [j < n] [l < d_z] ((V j l + V' i j l : ℝ) : Tensor ℝ [])
-  ((A + (Ξ - 1) * ∞).softmax.get ⟨i, by grind⟩) @ (Vᵢ : Tensor ℝ* [n, d_z]) ≈
+  ((A + (Ξ - 1) * ∞).softmax.get ⟨i, by grind⟩) ⬝ᵥ (Vᵢ : Tensor ℝ* [n, d_z]) ≈
     ((([l < d_z] ((∑ j, Real.exp ((∑ t, Q i t * (K (dm j) t + wK (c + max (-c) (min (r (dm j) - r i) c)) t)) / √(d_z : ℝ)) / (∑ k, Real.exp ((∑ t, Q i t * (K (dm k) t + wK (c + max (-c) (min (r (dm k) - r i) c)) t)) / √(d_z : ℝ))) * (V (dm j) l + wV (c + max (-c) (min (r (dm j) - r i) c)) l) : ℝ) : Tensor ℝ [])) : Tensor ℝ [d_z]) : Tensor ℝ* [d_z]) := by
 -- proof
   exact DotSoftmaxAdd_Mul_Infty.eq.Cast_Stack_Sum_Image.row h h_m (fun i j => (∑ t, Q i t * (K j t + K' i j t)) / √(d_z : ℝ)) (fun i j l => V j l + V' i j l)

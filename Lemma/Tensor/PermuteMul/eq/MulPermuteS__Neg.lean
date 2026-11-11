@@ -1,4 +1,4 @@
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.PermuteMul.eq.MulPermuteS__Neg.of.GtLength_Add
 open Tensor Bool
 

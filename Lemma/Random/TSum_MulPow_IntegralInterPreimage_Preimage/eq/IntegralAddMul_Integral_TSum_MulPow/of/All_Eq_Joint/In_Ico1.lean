@@ -10,8 +10,8 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random 
 
 /--
 Bellman equation for the action value of the trajectory model:
-`γ ** @ 𝔼[r[t:] | s[t] = x, a[t] = u]
-  = 𝔼[γ * (γ ** @ 𝔼[r[t+1:] | s[t+1]]) + r[t] | s[t] = x, a[t] = u]`.
+`γ ** ⬝ᵥ 𝔼[r[t:] | s[t] = x, a[t] = u]
+  = 𝔼[γ * (γ ** ⬝ᵥ 𝔼[r[t+1:] | s[t+1]]) + r[t] | s[t] = x, a[t] = u]`.
 No history-independence hypothesis on the rewards is needed, since the environment of
 `PolicyGradient.Model` is a (Markov) MDP.
 Both sides are `0` when `s[t] = x ∧ a[t] = u` has probability `0`.
@@ -45,9 +45,9 @@ private lemma main
   set a : ℕ → (ℕ → ℝ × S × A) → A := fun t ω ↦ (ω t).2.2
   classical
   let Qloc (θ : Θ) (t : ℕ) (x : S) (u : A) : ℝ :=
-    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x ∧ a t = u)
+    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = x ∧ a t = u)
   have hpR : Measurable (fun ω t ↦ r t ω) := Measurable.of_eval (Random.Measurable.of.All_Eq.fst h₁)
-  have hfG : Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) @ integ[t:]) :=
+  have hfG : Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[t:]) :=
     Measurable.tsum fun k => (measurable_pi_apply (t + k)).const_mul _
   have hpre : (s t, a t) ⁻¹' {(x, u)} = s t ⁻¹' {x} ∩ a t ⁻¹' {u} := by
     ext ω
@@ -56,11 +56,11 @@ private lemma main
       ∑' k, γ ^ k * ∫ ω, r (t + k) ω ∂(M θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}] := by
     simp only [Qloc, Expectation.asRV_process]
     rw [Expectation.condEvent_eq_integral hpR.aemeasurable hfG, hpre]
-    show ∫ ω, ((γ ^ (id : ℕ → ℕ)) @ r[t:]) ω ∂(M θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}] = _
+    show ∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω ∂(M θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}] = _
     exact Integral_G.eq.TSum_MulPowIntegral_R_Add.of.In_Ico (M := M) h₀ h₁ θ _ t
   rw [← hQtsum]
   let Vloc (θ : Θ) (t : ℕ) (x : S) : ℝ :=
-    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) @ r[t:] | s t = x)
+    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = x)
   have hVi : ∀ t x, ∫ ω, ∑' k, γ ^ k * r (t + k) ω ∂(M θ)[|s t ⁻¹' {x}] = Vloc θ t x :=
     fun t x => (V.eq.Integral.of.Measurable (M := M) hpR θ γ t x).symm
   simp only [hVi]
@@ -94,3 +94,4 @@ private lemma main
 
 
 -- created on 2023-03-29
+-- updated on 2026-11-11

@@ -1,5 +1,5 @@
 import Lemma.Bool.Bool.eq.Ite
-import Def.Data.Holor.Sum
+import Def.Data.Tensor.Sum
 import Lemma.Int.Icc_Sub_1.eq.Ico
 import Lemma.Int.InSub.is.In_Ico_AddS
 import Lemma.Int.In_Ico.is.In_IcoToNatS
@@ -9,6 +9,7 @@ import Lemma.Nat.Mul_Ite.eq.Ite_MulS
 import Lemma.Tensor.BandPart.eq.Stack_BoolIn_Icc
 import Lemma.Tensor.Dot.eq.Stack_Sum_MulGetS
 import Lemma.Tensor.Sum_IteIn_Ico.eq.SumGetSlice
+import Instance.Data.Vector.Basic.Dot
 open Int List Nat Tensor
 set_option maxHeartbeats 500000
 
@@ -24,12 +25,12 @@ private lemma main
   (i : Fin n) :
 -- imply
   let Ξ := (1 : Tensor α [n, n]).band_part (l - 1) (u - 1)
-  (A[i] * Ξ[i]) @ V = A[i, (i + 1 - l : ℕ):(i + u : ℕ)] @ V[(i + 1 - l : ℕ):(i + u : ℕ)] := by
+  (A[i] * Ξ[i]) ⬝ᵥ V = A[i, (i + 1 - l : ℕ):(i + u : ℕ)] ⬝ᵥ V[(i + 1 - l : ℕ):(i + u : ℕ)] := by
 -- proof
   denote h_Ξ : Ξ = _
   let Ai : Tensor α [n] := A[i]
   let Ξi : Tensor α [n] := Ξ[i]
-  change (Ai * Ξi) @ V = Ai[(i + 1 - l : ℕ):(i + u : ℕ)] @ V[(i + 1 - l : ℕ):(i + u : ℕ)]
+  change (Ai * Ξi) ⬝ᵥ V = Ai[(i + 1 - l : ℕ):(i + u : ℕ)] ⬝ᵥ V[(i + 1 - l : ℕ):(i + u : ℕ)]
   have h_Ξᵢ := Get.of.Eq.fin h_Ξ i
   rw [BandPart.eq.Stack_BoolIn_Icc] at h_Ξᵢ
   rw [EqGetStack.fin] at h_Ξᵢ

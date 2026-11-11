@@ -1,4 +1,4 @@
-import Def.Data.Holor.Unsqueeze
+import Def.Data.Tensor.Unsqueeze
 import Lemma.Tensor.SelectUnsqueeze.as.UnsqueezeSelect.of.Le
 open List Tensor
 

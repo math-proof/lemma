@@ -1,4 +1,4 @@
-import Def.Data.Holor.Bmm
+import Def.Data.Tensor.Bmm
 import Lemma.Tensor.Tensordot.eq.Bmm
 import Lemma.Tensor.SEqBmmS.of.SEq.SEq
 open Bool Nat Tensor

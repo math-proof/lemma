@@ -1,6 +1,6 @@
-import Def.Data.Holor.Sum
-import Def.Data.Holor.Unsqueeze
-import Def.Data.Holor.Repeat
+import Def.Data.Tensor.Sum
+import Def.Data.Tensor.Unsqueeze
+import Def.Data.Tensor.Repeat
 import Lemma.List.Ne_Nil.is.GeLength_1
 import Lemma.Tensor.Dot.eq.GetSumMul
 import Lemma.Tensor.Dot.eq.SelectSumMul
@@ -9,6 +9,7 @@ import Lemma.Tensor.Dot.eq.SumMulResizeS_0
 import Lemma.Tensor.GetSelect_1.as.Get.of.Lt.GtGet_0.GtLength_0
 import Lemma.Tensor.GetSum_2.eq.SumGet__1
 import Lemma.Tensor.SEqRepeatS.of.SEq
+import Instance.Data.Vector.Basic.Dot
 open Bool List Tensor
 set_option maxHeartbeats 500000
 attribute [local irreducible] List.prod
@@ -22,7 +23,7 @@ private lemma main
   (Y : Tensor α [n', k'])
   (i : Fin n) :
 -- imply
-  (X @ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil (by simp) (by apply GeLength_1.of.Ne_Nil (by simp)) X Y i) = X[i] @ Y := by
+  (X ⬝ᵥ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil (by simp) (by apply GeLength_1.of.Ne_Nil (by simp)) X Y i) = X[i] ⬝ᵥ Y := by
 -- proof
   simp [GetElem.getElem]
   rw [Dot.eq.SumMul.resize]
@@ -147,7 +148,7 @@ private lemma une
   (Y : Tensor α [n'])
   (i : Fin n) :
 -- imply
-  (X @ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil (by simp) (by simp) X Y i) = X[i] @ Y := by
+  (X ⬝ᵥ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil (by simp) (by simp) X Y i) = X[i] ⬝ᵥ Y := by
 -- proof
   simp [GetElem.getElem]
   have h := Dot.eq.SelectSumMul.resize X Y

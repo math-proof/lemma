@@ -1,4 +1,4 @@
-import Notation.Data.Holor.Permute
+import Notation.Data.Tensor.Permute
 import Lemma.Tensor.EqMul0_0
 import Lemma.Tensor.EqMul_0'0
 import Lemma.Tensor.EqMul_1
@@ -10,7 +10,8 @@ import Lemma.Tensor.GetRotaryMatrix.eq.MulCos_Delta.of.Lt.Lt
 import Lemma.Tensor.GetRotaryMatrix.eq.MulNegSin_Delta.of.Lt.Ge
 import Lemma.Tensor.GetRotaryMatrix.eq.MulSin_Delta.of.Ge.Lt
 import Lemma.Tensor.GetRotaryMatrix'.eq.Ite_IteS
-import Theorem.Data.Holor.Functions
+import Theorem.Data.Tensor.Functions
+import Instance.Data.Vector.Basic.Dot
 open Nat Tensor Fin Set
 
 
@@ -19,11 +20,11 @@ private lemma main
 -- given
   (θ : Tensor ℝ [d]) :
 -- imply
-  θ.rotaryMatrix' = ((interleave d)ᵀ @ θ.rotaryMatrix) @ interleave d := by
+  θ.rotaryMatrix' = ((interleave d)ᵀ ⬝ᵥ θ.rotaryMatrix) ⬝ᵥ interleave d := by
 -- proof
   let P : Tensor ℝ [d + d, d + d] := interleave d
   let PT : Tensor ℝ [d + d, d + d] := Pᵀ
-  apply Eq.trans (b := (PT @ θ.rotaryMatrix) @ P) _ rfl
+  apply Eq.trans (b := (PT ⬝ᵥ θ.rotaryMatrix) ⬝ᵥ P) _ rfl
   apply Eq.of.All_EqGetS.fin
   intro i
   apply Eq.of.All_EqGetS.fin
@@ -34,14 +35,14 @@ private lemma main
     apply (Finset.sum_eq_single j.toSplit ?_ ?_).trans ?_
     ·
       intro k _ hk
-      apply (congrArg (fun t : Tensor ℝ [] => (PT @ θ.rotaryMatrix)[i][k] * t) (GetInterleave.eq.Delta_ToSplit k j)).trans
+      apply (congrArg (fun t : Tensor ℝ [] => (PT ⬝ᵥ θ.rotaryMatrix)[i][k] * t) (GetInterleave.eq.Delta_ToSplit k j)).trans
       simp [Delta.eq.Ite, Fin.val_injective.ne hk]
       apply Tensor.EqMul_0'0.nat
     ·
       intro h
       apply (h (Finset.mem_univ _)).elim
     ·
-      apply (congrArg (fun t : Tensor ℝ [] => (PT @ θ.rotaryMatrix)[i][j.toSplit] * t) (GetInterleave.eq.Delta_ToSplit j.toSplit j)).trans
+      apply (congrArg (fun t : Tensor ℝ [] => (PT ⬝ᵥ θ.rotaryMatrix)[i][j.toSplit] * t) (GetInterleave.eq.Delta_ToSplit j.toSplit j)).trans
       simp [Delta.eq.Ite]
       apply (Tensor.EqMul_1.nat _).trans
       apply (GetDot.eq.Sum_MulGetS PT θ.rotaryMatrix i j.toSplit).trans

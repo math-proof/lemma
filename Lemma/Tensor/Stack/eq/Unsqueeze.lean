@@ -1,5 +1,5 @@
 import Lemma.Tensor.Eq.is.All_EqGetS
-import Def.Data.Holor.Unsqueeze
+import Def.Data.Tensor.Unsqueeze
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.EqGetUnsqueeze_0
 open Tensor

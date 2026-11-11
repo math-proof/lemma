@@ -3,6 +3,7 @@ import Lemma.Tensor.EqMul_0'0
 import Lemma.Tensor.EqMul_1
 import Lemma.Tensor.GetDot.eq.Sum_MulGetS
 import Lemma.Tensor.GetEye.eq.Delta
+import Instance.Data.Vector.Basic.Dot
 open Nat Tensor
 
 
@@ -12,7 +13,7 @@ private lemma vm
 -- given
   (x : Tensor α [n]) :
 -- imply
-  x @ Tensor.eye (α := α) n = x := by
+  x ⬝ᵥ Tensor.eye (α := α) n = x := by
 -- proof
   apply Eq.of.All_EqGetS.fin
   intro j
@@ -39,7 +40,7 @@ private lemma main
 -- given
   (A : Tensor α [m, n]) :
 -- imply
-  A @ Tensor.eye (α := α) n = A := by
+  A ⬝ᵥ Tensor.eye (α := α) n = A := by
 -- proof
   apply Eq.of.All_EqGetS.fin
   intro i

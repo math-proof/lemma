@@ -1,5 +1,5 @@
 import Lemma.Vector.HEq.of.Val
-import Def.Data.Holor.Prod
+import Def.Data.Tensor.Prod
 import Lemma.Tensor.ValDataGetToVector.eq.ValArraySliceData
 open Tensor Vector Nat
 

@@ -2,6 +2,7 @@ import Lemma.Tensor.SoftmaxAdd_Mul_Infty.eq.Cast_Stack_Ite_Block
 import Lemma.Tensor.XEqDotS.of.XEq
 import Lemma.Tensor.MapDot.eq.DotMapS.of.All_Eq_Add.All_Eq_Mul
 import Lemma.Tensor.Dot.eq.Stack_Sum_MulGetS
+import Instance.Data.Vector.Basic.Dot
 open Tensor
 set_option maxHeartbeats 1000000
 
@@ -15,7 +16,7 @@ private lemma real_row
   {m d : ℕ}
   (b : Fin m → ℝ)
   (v : Fin m → Fin d → ℝ) :
-  (([j < m] ((b j : ℝ) : Tensor ℝ [])) : Tensor ℝ [m]) @ (([j < m] [l < d] ((v j l : ℝ) : Tensor ℝ [])) : Tensor ℝ [m, d]) =
+  (([j < m] ((b j : ℝ) : Tensor ℝ [])) : Tensor ℝ [m]) ⬝ᵥ (([j < m] [l < d] ((v j l : ℝ) : Tensor ℝ [])) : Tensor ℝ [m, d]) =
     [l < d] (((∑ j, b j * v j l : ℝ)) : Tensor ℝ []) := by
   rw [Dot.eq.Stack_Sum_MulGetS.vm]
   congr 1
@@ -58,7 +59,7 @@ private lemma row
   let Ξ : Tensor ℝ* [n, m] := [i < n] [j < m] (Bool.toNat (decide (P i j)))
   let A : Tensor ℝ* [n, m] := ([i < n] [j < m] (a i j : Tensor ℝ []) : Tensor ℝ [n, m])
   let Vᵢ : Tensor ℝ [m, d] := [j < m] [l < d] (v i j l : Tensor ℝ [])
-  ((A + (Ξ - 1) * ∞).softmax.get ⟨i, by grind⟩) @ (Vᵢ : Tensor ℝ* [m, d]) ≈
+  ((A + (Ξ - 1) * ∞).softmax.get ⟨i, by grind⟩) ⬝ᵥ (Vᵢ : Tensor ℝ* [m, d]) ≈
     ((([l < d] ((∑ j, (if P i j then w i j else 0) * v i j l : ℝ) : Tensor ℝ [])) : Tensor ℝ [d]) : Tensor ℝ* [d]) := by
 -- proof
   intro Ξ A Vᵢ
@@ -74,7 +75,7 @@ private lemma row
     exact EqGetStack.fin (fun i : Fin n => ([j < m] (((if P i j then w i j else 0 : ℝ) : Tensor ℝ [])) : Tensor ℝ [m])) i
   rw [h2] at h1
   have h3 := XEqDotS.of.XEq (X := Vᵢ) h1
-  have h4 : (B : Tensor ℝ* [m]) @ (Vᵢ : Tensor ℝ* [m, d]) = ((id (α := Tensor ℝ [d]) (B @ Vᵢ) : Tensor ℝ [d]) : Tensor ℝ* [d]) := by
+  have h4 : (B : Tensor ℝ* [m]) ⬝ᵥ (Vᵢ : Tensor ℝ* [m, d]) = ((id (α := Tensor ℝ [d]) (B ⬝ᵥ Vᵢ) : Tensor ℝ [d]) : Tensor ℝ* [d]) := by
     have := MapDot.eq.DotMapS.of.All_Eq_Add.All_Eq_Mul (f := Hyperreal.ofReal) (fun a b => Hyperreal.coe_mul a b) (fun a b => Hyperreal.coe_add a b) B Vᵢ
     exact this.symm
   rw [real_row] at h4
@@ -101,7 +102,7 @@ private lemma main
   let Ξ : Tensor ℝ* [n, m] := [i < n] [j < m] (Bool.toNat (decide (P i j)))
   let A : Tensor ℝ* [n, m] := ([i < n] [j < m] (a i j : Tensor ℝ []) : Tensor ℝ [n, m])
   let V : Tensor ℝ [m, d] := [j < m] [l < d] (v j l : Tensor ℝ [])
-  (A + (Ξ - 1) * ∞).softmax @ (V : Tensor ℝ* [m, d]) ≈
+  (A + (Ξ - 1) * ∞).softmax ⬝ᵥ (V : Tensor ℝ* [m, d]) ≈
     ((([i < n] [l < d] ((∑ j, (if P i j then w i j else 0) * v j l : ℝ) : Tensor ℝ [])) : Tensor ℝ [n, d]) : Tensor ℝ* [n, d]) := by
 -- proof
   intro Ξ A V
@@ -110,7 +111,7 @@ private lemma main
   have hi : (i' : ℕ) < n := i'.isLt
   let i : Fin n := ⟨i', hi⟩
   have h0 := row P a w (fun i => v) h_ne h i
-  have e1 : ((A + (Ξ - 1) * ∞).softmax @ (V : Tensor ℝ* [m, d])).get i' = ((A + (Ξ - 1) * ∞).softmax.get i) @ (V : Tensor ℝ* [m, d]) :=
+  have e1 : ((A + (Ξ - 1) * ∞).softmax ⬝ᵥ (V : Tensor ℝ* [m, d])).get i' = ((A + (Ξ - 1) * ∞).softmax.get i) ⬝ᵥ (V : Tensor ℝ* [m, d]) :=
     GetDot.eq.DotGet.fin _ _ i
   let Y : Tensor ℝ [n, d] := [i < n] [l < d] ((∑ j, (if P i j then w i j else 0) * v j l : ℝ) : Tensor ℝ [])
   have e2 : ((Y : Tensor ℝ* [n, d])).get i' = ((id (α := Tensor ℝ [d]) (Y.get i) : Tensor ℝ [d]) : Tensor ℝ* [d]) :=

@@ -968,6 +968,18 @@ export class Lean extends IndentedNode {
                     self.start_idx++;
                     return this.push_binary(L.Lean_ne);
                 }
+                {
+                    // Mathlib `![a, b]` (`Matrix.vecCons`) and `!![a, b; c, d]` (matrix notation).
+                    // `![` / `!![` is one token: not postfix factorial, and the brackets are not
+                    // GetElem (`{{K}\ {!}}_{ψ, φ}`). A space before `[` (`n ! [i]`) stays factorial.
+                    const n1 = tokens[self.start_idx + 1];
+                    const n2 = tokens[self.start_idx + 2];
+                    const bangs = n1 === '[' ? 1 : n1 === '!' && n2 === '[' ? 2 : 0;
+                    if (bangs) {
+                        self.start_idx += bangs; // land on `[`; the parse loop steps into the list
+                        return this.openBangBracket(bangs);
+                    }
+                }
                 if (this instanceof L.LeanCaret) return this.parent.insert_unary(this, 'LeanNot');
                 return this.push_post_unary('LeanFactorial');
             case ',':
@@ -1184,6 +1196,16 @@ export class Lean extends IndentedNode {
                 return caret;
             }
             case '⊗': {
+                // `a ⊗ᵒ b` — outer product matrix `(i,j) ↦ a i * b j` (LeanMatMul). Distinct from Mathlib `⊗ₜ`.
+                // A space before `ᵒ` is not that operator.
+                if (tokens[self.start_idx + 1] === 'ᵒ') {
+                    self.start_idx++;
+                    const caret = this.push_binary(L.LeanMatMul);
+                    let p = caret;
+                    while (p && !(p instanceof L.LeanMatMul)) p = p.parent;
+                    if (p) p.superscript = 'ᵒ';
+                    return caret;
+                }
                 // `μ ⊗ₘ κ` / `κ ⊗ₖ η` — measure / kernel product (subscript letter).
                 // `M ⊗[R] N` / `x ⊗ₜ[R] y` / `x ⊗ₜ y` — Algebra.TensorProduct (optional `ₜ`, optional `[R]`).
                 const sub = tokens[self.start_idx + 1];
@@ -1260,9 +1282,16 @@ export class Lean extends IndentedNode {
                 let modifier = '';
                 if (!ae) {
                     const sub = tokens[self.start_idx + 1];
-                    if (sub === 'L' || sub === 'ₗ' || sub === 'ₐ') {
-                        subscript = sub;
-                        self.start_idx++;
+                    // `≃ₗᵢ[ℝ]` is one notation: every unicode subscript before `[` stays on `≃`.
+                    // A single `ₗ` would echo as `≃ₗ ᵢ[ℝ]`, which Lean rejects.
+                    if (sub === 'L' || (sub && L.LeanToken.subscript[sub] !== undefined)) {
+                        if (sub === 'L') {
+                            subscript = 'L';
+                            self.start_idx++;
+                        } else {
+                            while (L.LeanToken.subscript[tokens[self.start_idx + 1]] !== undefined)
+                                subscript += tokens[++self.start_idx];
+                        }
                         modifier = Lean.consumeBracketModifier(self);
                     } else {
                         subscript = Lean.consumePlusStarSuffix(self);
@@ -1443,24 +1472,9 @@ export class Lean extends IndentedNode {
                         while (isIdentContinueToken(tokens[self.start_idx + 1] ?? '')) word += tokens[++self.start_idx];
                         return this.parent.insert_word(this, word);
                     }
-                    if (tokens[self.start_idx + 1] !== 'ᵒ')
-                        return this.parent.insert_word(this, '@');
+                    return this.parent.insert_word(this, '@');
                 }
-                {
-                    // `@ᵒ` is one infix (outer product). A space before `ᵒ` is not that operator.
-                    let superscript = '';
-                    if (tokens[self.start_idx + 1] === 'ᵒ') {
-                        superscript = 'ᵒ';
-                        self.start_idx++;
-                    }
-                    const caret = this.push_binary(L.LeanMatMul);
-                    if (superscript) {
-                        let p = caret;
-                        while (p && !(p instanceof L.LeanMatMul)) p = p.parent;
-                        if (p) p.superscript = superscript;
-                    }
-                    return caret;
-                }
+                return this.parent.insert_word(this, '@');
             case 'end':
                 return this.parent.insert_end(this);
             case 'only':
@@ -1757,6 +1771,28 @@ export class Lean extends IndentedNode {
 
     push_block_comment(comment, docstring) {
         throw new Error(`push_block_comment is unexpected for ${this.constructor.name}`);
+    }
+
+    /**
+     * `![…]` / `!![…]` — open a bang-bracket list on `this`.
+     * A caret is the list body; any other node is juxtaposed (`K ![ψ, φ]`).
+     * Caller has already consumed the bangs so `start_idx` points at `[`.
+     * @param {1 | 2} bangs
+     */
+    openBangBracket(bangs) {
+        const {indent, level} = this;
+        const parent = this.parent;
+        const caret = this instanceof L.LeanCaret ? this : new L.LeanCaret(indent, level);
+        const vec = new L.LeanVecNotation(caret, indent, level);
+        vec.bangs = bangs;
+        if (this instanceof L.LeanCaret) {
+            parent.replace(this, vec);
+        } else if (parent instanceof L.LeanArgsSpaceSeparated) {
+            parent.push(vec);
+        } else {
+            parent.replace(this, new L.LeanArgsSpaceSeparated([this, vec], indent, level));
+        }
+        return caret;
     }
 
     push_left(func, prevToken) {

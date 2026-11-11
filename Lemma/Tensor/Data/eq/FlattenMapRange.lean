@@ -1,4 +1,4 @@
-import Instance.Data.Holor.Tensor.Part2
+import Instance.Data.Tensor.Tensor.Part2
 import Lemma.Vector.EqFlattenUnflatten
 import Lemma.Nat.Eq_0.of.Le_0
 import Lemma.Bool.EqCast.of.Eq

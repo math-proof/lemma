@@ -1,4 +1,5 @@
 import Instance.LinearAlgebra.Matrix.Matmul
+import Instance.Data.Vector.Basic.Dot
 
 
 @[path]
@@ -9,9 +10,9 @@ private lemma main
   (X Y : Tensor α [n, n])
   (h : X = Y) :
 -- imply
-  t @ X = t @ Y := by
+  t ⬝ᵥ X = t ⬝ᵥ Y := by
 -- proof
-  exact congrArg (fun M : Tensor α [n, n] => t @ M) h
+  exact congrArg (fun M : Tensor α [n, n] => t ⬝ᵥ M) h
 
 
 -- created on 2020-08-16
