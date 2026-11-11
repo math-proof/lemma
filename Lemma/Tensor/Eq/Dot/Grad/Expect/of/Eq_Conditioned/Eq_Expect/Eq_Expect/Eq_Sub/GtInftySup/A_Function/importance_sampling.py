@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Eq_Sub.GtInftySup.A_Function.apply(*Eq[:5])
 
-    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.EqExpect_Expect__Expect.of.Integrable.Measurable.Measurable, s[t])
+    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.Expect_Cond.eq.Expect.of.Integrable.Measurable.joint, s[t])
 
     Eq << Eq[-1].this.rhs.find(Expectation[~Expectation]).apply(Random.All_Eq_Expect_CondSMulDivProbS_Cond.of.All_ImpEqSProb__0, π_quote)
 

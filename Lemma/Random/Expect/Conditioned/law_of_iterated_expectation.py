@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self, *vars):
-    from Lemma.Random.EqExpect_Expect__Expect.of.Integrable.Measurable.Measurable import rewrite
+    from Lemma.Random.Expect_Cond.eq.Expect.of.Integrable.Measurable.joint import rewrite
     return Equal(self, rewrite(self, *vars))
 
 
