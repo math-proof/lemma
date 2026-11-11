@@ -42,7 +42,6 @@ from . import DotMulEye
 from . import DotRotaryMatrix
 from . import DotSoftmax
 from . import DotSoftmaxAdd_Mul_Infty
-from . import DotSoftmaxDivDot_Stack_TDot
 from . import DotSoftmaxDivDot_T
 from . import DotStackS
 from . import DotT
