@@ -6,6 +6,13 @@
 # bash sh/run.sh Real
 # batch size for `lake setup-file` runs
 # bash sh/run.sh -limit 4096
+#
+# Concurrent section runs (e.g. `bash sh/run.sh Nat` and
+# `bash sh/run.sh AbsoluteValue`) use separate Lemma/test.<section>.* and
+# sql/test.<section>.sql files, take a shared global lock plus an exclusive
+# per-section lock, and skip the repo-wide orphan delete / .lake sweep. A
+# full `bash sh/run.sh` takes the exclusive global lock so it does not
+# overlap a section run. Two runs of the same section serialize.
 start_time=$(date +%s)
 source ./sh/utility.sh
 
@@ -116,7 +123,91 @@ get_lemma_date_json() {
   echo "'$json'"
 }
 
-> Lemma/test.lean
+# Per-run work files and locks so concurrent section runs do not share
+# Lemma/test.lean, Lemma/test.$j.lean, Lemma/test.log, or sql/test.sql.
+# A full run uses the historical names and holds /tmp/lean-run-all.lock
+# exclusively. A section run uses test.<section>.* names, holds that lock
+# shared (so it waits for / is waited on by a full run), and holds
+# /tmp/lean-run-section-<key>.lock exclusively (so two Nat runs serialize
+# while Nat and AbsoluteValue can overlap).
+section_key() {
+  local m=$1
+  m=${m%%.*}
+  m=${m//\*/}
+  m=${m//\?/}
+  m=${m//[^A-Za-z0-9_-]/_}
+  m=${m##_}
+  m=${m%%_}
+  printf '%s' "$m"
+}
+
+section_lock_fds=()
+release_run_locks() {
+  flock -u 8 2>/dev/null || true
+  local fd
+  for fd in "${section_lock_fds[@]}"; do
+    flock -u "$fd" 2>/dev/null || true
+  done
+}
+
+section_keys=()
+if [ ${#MODULES[@]} -gt 0 ]; then
+  declare -A _seen_section_key
+  for m in "${MODULES[@]}"; do
+    k=$(section_key "$m")
+    [ -n "$k" ] || continue
+    [ -z "${_seen_section_key[$k]+x}" ] || continue
+    _seen_section_key[$k]=1
+    section_keys+=("$k")
+  done
+  if [ ${#section_keys[@]} -gt 1 ]; then
+    IFS=$'\n' section_keys=($(printf '%s\n' "${section_keys[@]}" | sort))
+    unset IFS
+  fi
+fi
+if [ ${#section_keys[@]} -eq 0 ] && [ ${#MODULES[@]} -gt 0 ]; then
+  section_keys=("mod")
+fi
+
+if [ ${#MODULES[@]} -eq 0 ]; then
+  run_tag=""
+  TEST_LEAN=Lemma/test.lean
+  TEST_LOG=Lemma/test.log
+  TEST_SQL=sql/test.sql
+  TEST_BATCH_PREFIX=Lemma/test
+else
+  run_tag=$(IFS=+; echo "${section_keys[*]}")
+  TEST_LEAN=Lemma/test.$run_tag.lean
+  TEST_LOG=Lemma/test.$run_tag.log
+  TEST_SQL=sql/test.$run_tag.sql
+  TEST_BATCH_PREFIX=Lemma/test.$run_tag
+fi
+
+exec 8>/tmp/lean-run-all.lock
+if [ ${#MODULES[@]} -eq 0 ]; then
+  if ! flock -n 8; then
+    echo "waiting for another run.sh to finish..."
+    flock 8
+  fi
+else
+  if ! flock -n -s 8; then
+    echo "waiting for a full run.sh to finish..."
+    flock -s 8
+  fi
+  _fd=9
+  for k in "${section_keys[@]}"; do
+    eval "exec ${_fd}>/tmp/lean-run-section-${k}.lock"
+    if ! flock -n "$_fd"; then
+      echo "waiting for another run.sh $k to finish..."
+      flock "$_fd"
+    fi
+    section_lock_fds+=("$_fd")
+    _fd=$((_fd + 1))
+  done
+fi
+echo "log = $TEST_LOG"
+
+> "$TEST_LEAN"
 
 declare -A imports_dict
 declare -A syntheticModules
@@ -125,7 +216,7 @@ function echo_import {
   lemma=${file%.lean}
   module=${lemma////.}
   if ! module_included "${module#Lemma.}"; then return; fi
-  echo "import $module" >> Lemma/test.lean
+  echo "import $module" >> "$TEST_LEAN"
   # extract import statements from the lean file
   module=${module#Lemma.}
   mapfile -t lines < <(grep -E '^import[[:space:]]+' $file | sed -E 's/^import[[:space:]]+//; s/\r$//')
@@ -146,50 +237,45 @@ while read -r file; do
   echo_import "$file"
 done < <(find Lemma -type f -name "*.lean" -not -name "*.echo.lean" -not -name "test*.lean")
 
-> Lemma/test.log
+> "$TEST_LOG"
 
-# Split Lemma/test.lean into batches of $limit imports and elaborate each with lake
+# Split $TEST_LEAN into batches of $limit imports and elaborate each with lake
 i=0
 n=0
-: > "Lemma/test.$i.lean"
+: > "$TEST_BATCH_PREFIX.$i.lean"
 while IFS= read -r line; do
   if [ "$n" -ge "$limit" ]; then
     i=$((i + 1))
     n=0
-    : > "Lemma/test.$i.lean"
+    : > "$TEST_BATCH_PREFIX.$i.lean"
   fi
-  printf '%s\n' "$line" >> "Lemma/test.$i.lean"
+  printf '%s\n' "$line" >> "$TEST_BATCH_PREFIX.$i.lean"
   n=$((n + 1))
-done < Lemma/test.lean
+done < "$TEST_LEAN"
 batch_count=$((i + 1))
 
 # Elaborate each batch; drop the last (summary) line of each lake run
 j=0
 while [ "$j" -lt "$batch_count" ]; do
   if [ "$limit" -eq 1 ]; then
-    echo "executing: $(tr '\n' ' ' < "Lemma/test.$j.lean")"
+    echo "executing: $(tr '\n' ' ' < "$TEST_BATCH_PREFIX.$j.lean")"
   fi
-  lake setup-file "Lemma/test.$j.lean" 2>&1 | sed -E 's/\x1b\[[0-9;]*[A-Za-z]//g' | sed '$d' | tee -a Lemma/test.log
+  lake setup-file "$TEST_BATCH_PREFIX.$j.lean" 2>&1 | sed -E 's/\x1b\[[0-9;]*[A-Za-z]//g' | sed '$d' | tee -a "$TEST_LOG"
   j=$((j + 1))
 done
 
-sed -i -E "s/^import //" Lemma/test.lean
-imports=$(cat Lemma/test.lean)
-> Lemma/test.lean
+sed -i -E "s/^import //" "$TEST_LEAN"
+imports=$(cat "$TEST_LEAN")
+> "$TEST_LEAN"
 
 imports=($imports)
 echo "modules:"
-# Two overlapping run.sh processes share sql/test.sql. If one closes the INSERT
-# with ON DUPLICATE KEY UPDATE while the other is still appending rows,
-# mysql reports ERROR 1064 at the next row. That is a torn statement, not a
-# quoting bug in the theorem name. Hold this lock until exit, except just
-# before a re-exec, which needs to take the lock itself.
-exec 9>/tmp/lean-axiom-sql.lock
-flock 9
-touch sql/test.sql
+# Each run writes its own $TEST_SQL, so concurrent sections cannot tear one
+# INSERT. The run locks taken above already serialize two writers of the
+# same file (same section, or two full runs).
+touch "$TEST_SQL"
 
-output_file=sql/test.sql
-echo "INSERT INTO lemma (user, module, imports, open, set_option, preamble, lemma, meta, date) VALUES " > sql/test.sql
+echo "INSERT INTO lemma (user, module, imports, open, set_option, preamble, lemma, meta, date) VALUES " > "$TEST_SQL"
 for module in ${imports[*]}; do
   # echo "${module//.//}.lean"
   module=${module#Lemma.}
@@ -200,7 +286,7 @@ for module in ${imports[*]}; do
   submodules=${imports_dict[$module]}
   submodules=${submodules//\'/\'\'}
   date_json=$(get_lemma_date_json "Lemma/${module//./\/}.lean")
-  echo "  ('$user', \"$module\", '$submodules', '[]', '[]', '[]', '[]', '{\"error\":[]}', $date_json)," >> sql/test.sql
+  echo "  ('$user', \"$module\", '$submodules', '[]', '[]', '[]', '[]', '{\"error\":[]}', $date_json)," >> "$TEST_SQL"
 done
 
 transformExpr() {
@@ -342,7 +428,7 @@ emit_synthetic() {
   # Record synthetic dual rows so the orphan DELETE and the
   # deleted-module detection below do not treat them as gone.
   syntheticModules[$1]=1
-  echo "  ('$user', \"$1\", '[]', '[]', '[]', '[]', '[]', '{\"error\":[]}', '[]')," >> sql/test.sql
+  echo "  ('$user', \"$1\", '[]', '[]', '[]', '[]', '[]', '{\"error\":[]}', '[]')," >> "$TEST_SQL"
 }
 
 # Mirror List.andLeftTokens / List.andRightTokens / Name.andProjName from Def/Tactic/Attr/Basic.lean:
@@ -807,12 +893,12 @@ while read -r file; do
     fi
   fi
 done < <(find Lemma -type f -name "*.lean" ! -name "*.echo.lean" ! -name "test*.lean")
-sed -i '$ s/,$/\nON DUPLICATE KEY UPDATE imports = VALUES(imports), date = VALUES(date);/' sql/test.sql
+sed -i '$ s/,$/\nON DUPLICATE KEY UPDATE imports = VALUES(imports), date = VALUES(date);/' "$TEST_SQL"
 
 # Clear error for all disk modules (preserves meta.callee via JSON_SET)
 diskModuleList=$(sql_in_list "${!imports_dict[@]}")
 if [ -n "$diskModuleList" ]; then
-  echo "UPDATE lemma SET meta = JSON_SET(IFNULL(meta, '{}'), '\$.error', CAST('[]' AS JSON)) WHERE user = '$user' AND module IN ($diskModuleList);" >> sql/test.sql
+  echo "UPDATE lemma SET meta = JSON_SET(IFNULL(meta, '{}'), '\$.error', CAST('[]' AS JSON)) WHERE user = '$user' AND module IN ($diskModuleList);" >> "$TEST_SQL"
 fi
 
 # Scope diagnostics to requested modules (and never count sympy in totals):
@@ -833,10 +919,10 @@ while IFS= read -r module; do
   sorryModules+=("$module")
   echo "${module//.//}.lean"
   module=${module#Lemma.}
-  cat >> sql/test.sql << EOF
+  cat >> "$TEST_SQL" << EOF
 UPDATE lemma set meta = JSON_SET(IFNULL(meta, '{}'), '\$.error', CAST('[{"code": "", "file": "", "info": "declaration uses ''sorry''", "line": 0, "type": "warning"}]' AS JSON)) where user = '$user' and module = "$module";
 EOF
-done < <(grep -P "^warning: (\./)*[\w'!₀-₉/]+\.lean:\d+:\d+: declaration uses \`sorry\`" Lemma/test.log | sed -E 's#^warning: ([.]/)*##' | sed -E "s/\.lean:[0-9]+:[0-9]+: declaration uses \`sorry\`//" | sed 's#/#.#g' | sort -u)
+done < <(grep -P "^warning: (\./)*[\w'!₀-₉/]+\.lean:\d+:\d+: declaration uses \`sorry\`" "$TEST_LOG" | sed -E 's#^warning: ([.]/)*##' | sed -E "s/\.lean:[0-9]+:[0-9]+: declaration uses \`sorry\`//" | sed 's#/#.#g' | sort -u)
 
 echo "failed:"
 
@@ -847,10 +933,10 @@ while IFS= read -r module; do
   failingModules+=("$module")
   echo "${module//.//}.lean"
   module=${module#Lemma.}
-  cat >> sql/test.sql << EOF
+  cat >> "$TEST_SQL" << EOF
 UPDATE lemma set meta = JSON_SET(IFNULL(meta, '{}'), '\$.error', CAST('[{"code": "", "file": "", "info": "", "line": 0, "type": "error"}]' AS JSON)) where user = '$user' and module = "$module";
 EOF
-done < <(awk '/Some required (targets|builds) logged failures:/{flag=1;next}/^[^-]/{flag=0}flag' Lemma/test.log | sed 's/^- //')
+done < <(awk '/Some required (targets|builds) logged failures:/{flag=1;next}/^[^-]/{flag=0}flag' "$TEST_LOG" | sed 's/^- //')
 
 # Non-sorry Lean diagnostics with a .lean path: `warning:` (deprecations,
 # linters, …) and `info:` (e.g. "Try this:" tactic suggestions). Excludes
@@ -867,7 +953,7 @@ while IFS= read -r f; do
   echo "$f"
 done < <(
   {
-    grep -P "^(warning|info): (\./)*[\w'!₀-₉/]+\.lean:\d+:\d+:" Lemma/test.log || true
+    grep -P "^(warning|info): (\./)*[\w'!₀-₉/]+\.lean:\d+:\d+:" "$TEST_LOG" || true
   } | grep -vP "^warning: .*declaration uses \`sorry\`" \
     | sed -E 's/^(warning|info): ([.]\/)?//; s/\.lean:[0-9]+:[0-9]+:.*/.lean/' \
     | sort -u
@@ -890,32 +976,32 @@ while IFS=$'\t' read -r mod imps; do
   case "$mod" in ""|ERROR*) continue ;; esac
   [ -n "$imps" ] || continue  # skip mysql warnings and other non-tab lines
   dbImports[$mod]="$imps"
-done < <(mysql --defaults-extra-file="$tempConfigPath" --batch --skip-column-names -D axiom -e "SELECT module, imports FROM lemma WHERE user = '$user'" 2>&1 | tee Lemma/test.log)
+done < <(mysql --defaults-extra-file="$tempConfigPath" --batch --skip-column-names -D axiom -e "SELECT module, imports FROM lemma WHERE user = '$user'" 2>&1 | tee "$TEST_LOG")
 
-grep -P "ERROR \d+ \(\d+\): Unknown database 'axiom'" Lemma/test.log
+grep -P "ERROR \d+ \(\d+\): Unknown database 'axiom'" "$TEST_LOG"
 if [ $? -eq 0 ]; then
   echo "CREATE DATABASE axiom;"
   mysql --defaults-extra-file="$tempConfigPath" -e "CREATE DATABASE axiom;"
   # Check if the mysql command was successful
   if [ $? -eq 0 ]; then
     echo "Database 'axiom' created successfully."
-    flock -u 9
-    bash $0 $*
+    release_run_locks
+    bash "$0" "$@"
     exit 0
   else
     echo "Failed to create database 'axiom'."
     exit 1
   fi
 fi
-mysql --defaults-extra-file="$tempConfigPath" -D axiom < sql/test.sql 2>&1 | tee Lemma/test.log
-grep -P "ERROR \d+ \(\w+\) at line \d+: Table 'axiom.lemma' doesn't exist" Lemma/test.log
+mysql --defaults-extra-file="$tempConfigPath" -D axiom < "$TEST_SQL" 2>&1 | tee "$TEST_LOG"
+grep -P "ERROR \d+ \(\w+\) at line \d+: Table 'axiom.lemma' doesn't exist" "$TEST_LOG"
 if [ $? -eq 0 ]; then
   mysql --defaults-extra-file="$tempConfigPath" -D axiom < sql/create/lemma.sql
   # Check if the mysql command was successful
   if [ $? -eq 0 ]; then
     echo "Table 'lemma' created successfully."
-    flock -u 9
-    bash sh/run.sh
+    release_run_locks
+    bash "$0" "$@"
     exit 0
   else
     echo "Failed to create table 'lemma'."
@@ -932,7 +1018,7 @@ if [ ${#MODULES[@]} -eq 0 ]; then
   if [ -n "$keepList" ]; then
     # piped via stdin: with thousands of modules the IN list overflows the
     # per-argument execve limit (~128KB) when passed with -e
-    echo "DELETE FROM lemma WHERE user = '$user' AND module NOT IN ($keepList)" | mysql --defaults-extra-file="$tempConfigPath" -D axiom 2>&1 | tee Lemma/test.log
+    echo "DELETE FROM lemma WHERE user = '$user' AND module NOT IN ($keepList)" | mysql --defaults-extra-file="$tempConfigPath" -D axiom 2>&1 | tee "$TEST_LOG"
   fi
 else
   echo "-Modules set: skipping orphan delete"
@@ -988,7 +1074,7 @@ done
 if [ ${#invalidate[@]} -gt 0 ]; then
   invalidateList=$(sql_in_list "${!invalidate[@]}")
   # piped via stdin: the IN list can exceed the per-argument execve limit
-  echo "UPDATE lemma SET meta = JSON_SET(IFNULL(meta, '{}'), '\$.callee', CAST('null' AS JSON)) WHERE user = '$user' AND module IN ($invalidateList)" | mysql --defaults-extra-file="$tempConfigPath" -D axiom 2>&1 | tee Lemma/test.log
+  echo "UPDATE lemma SET meta = JSON_SET(IFNULL(meta, '{}'), '\$.callee', CAST('null' AS JSON)) WHERE user = '$user' AND module IN ($invalidateList)" | mysql --defaults-extra-file="$tempConfigPath" -D axiom 2>&1 | tee "$TEST_LOG"
   echo "invalidated meta.callee for ${#invalidate[@]} module(s)"
 fi
 end_time=$(date +%s)
@@ -1004,9 +1090,14 @@ function remove_invalid_ir_file {
   fi
 }
 
-find .lake/build/ir -type f -regex '.*\.\(trace\|olean\|ilean\|hash\|c\)$' | while read -r file; do
-    remove_invalid_ir_file $file
-done
+# Section runs skip the repo-wide .lake sweep: remove_invalid_* strips at the
+# first dot, so Lemma/test.Nat.0.olean is treated as Lemma/test.lean and would
+# be deleted (or would delete another run's in-progress test artifacts).
+if [ ${#MODULES[@]} -eq 0 ]; then
+  find .lake/build/ir -type f -regex '.*\.\(trace\|olean\|ilean\|hash\|c\)$' | while read -r file; do
+      remove_invalid_ir_file $file
+  done
+fi
 
 function remove_invalid_lib_file {
   module=${1#*/*/*/*/}
@@ -1017,9 +1108,11 @@ function remove_invalid_lib_file {
   fi
 }
 
-find .lake/build/lib -type f -regex '.*\.\(trace\|olean\|ilean\|hash\|c\)$' | while read -r file; do
-    remove_invalid_lib_file $file
-done
+if [ ${#MODULES[@]} -eq 0 ]; then
+  find .lake/build/lib -type f -regex '.*\.\(trace\|olean\|ilean\|hash\|c\)$' | while read -r file; do
+      remove_invalid_lib_file $file
+  done
+fi
 
 function remove_invalid_echo_file {
   module=${1%%.*}
@@ -1033,8 +1126,10 @@ find Lemma -type f -regex '.*\.echo\.lean$' | while read -r file; do
     remove_invalid_echo_file $file
 done
 
-find . -type d -empty -exec rmdir {} +
-find .lake/build -type d -empty -exec rmdir {} +
+if [ ${#MODULES[@]} -eq 0 ]; then
+  find . -type d -empty -exec rmdir {} +
+  find .lake/build -type d -empty -exec rmdir {} +
+fi
 
 echo "seconds cost    = $time_cost"
 echo "total theorems  = ${#imports[@]}"
@@ -1043,4 +1138,4 @@ echo "total failed    = ${#failingModules[@]}"
 echo "total warning   = ${#warningFiles[@]}"
 rm -f "$tempConfigPath"
 
-echo "total lines     = $(find Lemma -type f -name '*.lean' -not -name '*.echo.lean' -exec awk 'END{print NR}' {} + 2>/dev/null | awk '{s+=$1} END{print s}')"
+echo "total lines     = $(find Lemma -type f -name '*.lean' -not -name '*.echo.lean' -not -name 'test*.lean' -exec awk 'END{print NR}' {} + 2>/dev/null | awk '{s+=$1} END{print s}')"
