@@ -66,7 +66,7 @@ def prove(Eq):
 
     Eq << apply(*markov_assumptions(s, a, r, π), T)
 
-    Eq << Random.And.Eq.Conditioned.of.Eq.apply(Eq[0])
+    Eq << Random.All_EqProb_Cond.All_EqProb_Cond.of.IndepJoint.apply(Eq[0])
 
     Eq << Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM.mdp.apply(Eq[-1], Eq[-3], Eq[-2], Eq[1], T, t)
 

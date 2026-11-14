@@ -21,7 +21,7 @@ def prove(Eq):
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Equal(Pr(x & y | z), Pr(x, y)))
 
-    Eq << Random.And.Eq.Conditioned.of.Eq.apply(Eq[0])
+    Eq << Random.All_EqProb_Cond.All_EqProb_Cond.of.IndepJoint.apply(Eq[0])
 
 
 
