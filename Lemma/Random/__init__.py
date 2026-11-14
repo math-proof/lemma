@@ -96,3 +96,4 @@ from . import All_Eq_Expect_CondSMulDivProbS_Cond
 from . import Expect_Cond
 from . import Add_Expect_Cond
 from . import MEqExpect
+from . import MulProbS_Cond
