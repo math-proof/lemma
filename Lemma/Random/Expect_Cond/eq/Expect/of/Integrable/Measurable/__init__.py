@@ -104,9 +104,9 @@ def prove(Eq):
     f = Function(real=True)
     Eq << apply(Expectation(Expectation(f(x, y) | y.random_argument)))
 
-    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Integral_Mul_Prob)
+    Eq << Eq[-1].this.lhs.apply(Random.All_EqExpect_Cond.of.Measurable.SinglePSpace)
 
-    Eq << Eq[-1].this.lhs.find(Expectation).apply(Random.Expect.eq.Integral_Mul_Prob)
+    Eq << Eq[-1].this.lhs.find(Expectation).apply(Random.All_EqExpect_Cond.of.Measurable.SinglePSpace)
 
     Eq << Eq[-1].this.find(Mul[Integral]).apply(Real.Mul_Integral.eq.Integral_Mul)
 

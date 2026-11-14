@@ -17,7 +17,7 @@ def prove(Eq):
     f = Function(real=True)
     Eq << apply(Expectation[θ](f(x)))
 
-    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Integral_Mul_Prob)
+    Eq << Eq[-1].this.lhs.apply(Random.All_EqExpect_Cond.of.Measurable.SinglePSpace)
 
     Eq << Real.All_Le_Sup.apply(Eq[1].rhs)
 

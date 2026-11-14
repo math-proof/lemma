@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.Expect.eq.Integral_Mul_Prob)
+    Eq << Eq[-1].this.rhs.find(Expectation).apply(Random.All_EqExpect_Cond.of.Measurable.SinglePSpace)
 
     Eq << Eq[-1].this.find(Pow @ Integral).apply(Real.Dot.eq.Integral)
 
@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum[Pr]).apply(Random.Sum.eq.Prob)
 
-    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Integral_Mul_Prob)
+    Eq << Eq[-1].this.find(Expectation).apply(Random.All_EqExpect_Cond.of.Measurable.SinglePSpace)
 
     Eq << Eq[-1].this.lhs.find(MatMul).apply(Real.Dot.eq.Integral)
 

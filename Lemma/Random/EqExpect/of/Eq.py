@@ -15,9 +15,9 @@ def prove(Eq):
     f, g = Function(real=True)
     Eq << apply(Equal(f(x), g(x)))
 
-    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Integral_Mul_Prob)
+    Eq << Eq[-1].this.lhs.apply(Random.All_EqExpect_Cond.of.Measurable.SinglePSpace)
 
-    Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Integral_Mul_Prob)
+    Eq << Eq[-1].this.rhs.apply(Random.All_EqExpect_Cond.of.Measurable.SinglePSpace)
 
     Eq << Eq[0].subs(x, x.bvar)
 

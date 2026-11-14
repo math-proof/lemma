@@ -19,9 +19,9 @@ def prove(Eq):
     k = Symbol(integer=True)
     Eq << apply(Expectation(Stack[k:n](f(x[k])) | s))
 
-    Eq << Eq[-1].this.lhs.apply(Random.Expect.eq.Integral_Mul_Prob)
+    Eq << Eq[-1].this.lhs.apply(Random.All_EqExpect_Cond.of.Measurable.SinglePSpace)
 
-    Eq << Eq[-1].this.find(Expectation).apply(Random.Expect.eq.Integral_Mul_Prob)
+    Eq << Eq[-1].this.find(Expectation).apply(Random.All_EqExpect_Cond.of.Measurable.SinglePSpace)
 
     Eq << Eq[-1].this.lhs.find(Mul).apply(Tensor.Mul_Stack.eq.Stack_Mul)
 

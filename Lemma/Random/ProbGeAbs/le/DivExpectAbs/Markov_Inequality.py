@@ -15,7 +15,7 @@ def prove(Eq):
     a = Symbol(positive=True)
     Eq << apply(x, a)
 
-    Eq << Eq[0].find(Expectation).this.apply(Random.Expect.eq.Integral_Mul_Prob)
+    Eq << Eq[0].find(Expectation).this.apply(Random.All_EqExpect_Cond.of.Measurable.SinglePSpace)
 
     Eq.eq = Eq[-1].this.rhs.apply(Real.Integral.eq.Add.split, 0)
 

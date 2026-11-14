@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Random.Grad.Expect.eq.Expect.Grad).reversed
 
-    Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Integral_Mul_Prob)
+    Eq << Eq[-1].this.rhs.apply(Random.All_EqExpect_Cond.of.Measurable.SinglePSpace)
 
     Eq << Random.Zero.eq.AddSum_SMulPowSum_SMul_SMulPow_Sum_SMul.of.Real.ne.Zero.GtInftySup.All_Differentiable.All_Eq_ExpectCondDot.All_Eq_ExpectCondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico0.apply(*Eq[:3], n)
 

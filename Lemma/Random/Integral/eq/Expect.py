@@ -17,7 +17,7 @@ def prove(Eq):
     x, s = Symbol(real=True, random=True)
     Eq << apply(Integral[x.bvar](Pr[x:θ](x | s) * f(x.bvar)))
 
-    Eq << Eq[-1].this.rhs.apply(Random.Expect.eq.Integral_Mul_Prob)
+    Eq << Eq[-1].this.rhs.apply(Random.All_EqExpect_Cond.of.Measurable.SinglePSpace)
 
 
 

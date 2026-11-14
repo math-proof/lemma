@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Expectation[~Expectation]).apply(Random.ExpectMul.eq.Mul_Expect)
 
-    Eq << Eq[-1].this.find(Mul[~Expectation]).apply(Random.ExpectConditionedGrad_LogProb.eq.Zero)
+    Eq << Eq[-1].this.find(Mul[~Expectation]).apply(Random.ExpectConditionedGrad_LogProb.eq.Zero.of.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_EqWithDensity)
 
     Eq << Eq.hypothesis.subs(Eq[-1])
 
