@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_LocalNewvector_PrincipalSeriesCarrier.lean: instance decls only.
-import Lemma.LocalNewvector.ConductorDatum
-import Lemma.LocalNewvector.PrincipalSeriesCarrier
+import Lemma.Matrix.ConductorDatum
+import Lemma.Matrix.PrincipalSeriesCarrier
 
 set_option autoImplicit false
 

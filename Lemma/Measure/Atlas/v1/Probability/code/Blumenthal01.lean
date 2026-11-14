@@ -37,7 +37,7 @@ lemma germSigmaAlgebraZero_le_of_pos
 -- proof
   rw [germSigmaAlgebraZero_eq_iInf]
   exact iInf₂_le t ht
-/-- For Brownian motion, every component `𝓕 s` of the filtration (with `s > 0`)
+/- For Brownian motion, every component `𝓕 s` of the filtration (with `s > 0`)
 is independent of the germ σ-algebra at `0`. This is a Markov-property
 consequence of the independent-increments property and is the main ingredient
 in the proof of Blumenthal's 0-1 law. -/

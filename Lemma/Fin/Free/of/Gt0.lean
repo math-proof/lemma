@@ -284,7 +284,7 @@ private lemma free_of_splitsIdem
   let Ψ : (Fin n → P) →ₗ[R] (Fin (m * n) × Fin n → R) :=
     LinearMap.pi fun ki => (LinearMap.proj ki.1).comp (s.comp (LinearMap.proj ki.2))
   let Φ : (Fin (m * n) × Fin n → R) →ₗ[R] (Fin n → P) :=
-    LinearMap.pi fun i => p.comp LinearMap.pi fun k => LinearMap.proj (k, i)
+    LinearMap.pi fun i => p.comp (LinearMap.pi fun k => LinearMap.proj (k, i))
   have hΨ : ∀ x ki, Ψ x ki = s (x ki.2) ki.1 := fun x ki => rfl
   have hΦ : ∀ y i, Φ y i = p (fun k => y (k, i)) := fun y i => rfl
   have hΦΨ : ∀ x, Φ (Ψ x) = x := fun x => by
@@ -339,7 +339,7 @@ private lemma free_of_splitsIdem
     simp only [u, w, LinearMap.comp_apply, LinearMap.id_apply]
     rw [← he, ← hεe, ← Matrix.toLin'_mul_apply, ← Matrix.toLin'_mul_apply, hAεB,
       Matrix.toLin'_one, LinearMap.id_apply]
-  refine Module.Free.of_equiv (LinearEquiv.ofLinear u w huw hwu).symm
+  refine Module.Free.of_equiv (LinearEquiv.ofLinearMap u w huw hwu).symm
 
 private lemma charZero_completion
   (F : Type*)
@@ -407,4 +407,5 @@ private lemma main
   free_of_splitsIdem (splitsIdem_adeleRing F) hn f
 
 
+-- updated on 2026-11-13
 -- created on 2026-10-24

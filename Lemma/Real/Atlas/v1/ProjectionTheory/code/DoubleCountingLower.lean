@@ -48,8 +48,10 @@ lemma double_counting_ineq
     calc ∑ x₁ ∈ X, ∑ x₂ ∈ X,
       (D.filter (fun t => projMap p t x₁ = projMap p t x₂)).card
       ≤ ∑ x₁ ∈ X, ∑ x₂ ∈ X, (if x₁ = x₂ then D.card else 1) := by
-        apply Finset.sum_le_sum; intro x₁ _
-        apply Finset.sum_le_sum; intro x₂ _
+          apply Finset.sum_le_sum
+          intro x₁ _
+          apply Finset.sum_le_sum
+          intro x₂ _
         split_ifs with heq
         · subst heq; exact Finset.card_filter_le _ _
         ·
@@ -102,7 +104,7 @@ namespace ProjectionTheory
 [double_counting_lower_bound](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ProjectionTheory/code/DoubleCountingLower.lean)
 -/
 @[path]
-lemma double_counting_lower_bound
+lemma double_counting_lower_bound :
 -- imply
   ∃ C : ℚ, C > 0 ∧ ∀ (p : ℕ) (_ : Nat.Prime p) (X : Finset (ZMod p × ZMod p)) (D : Finset (ZMod p)), D.Nonempty → ∃ t ∈ D, C * min (X.card : ℚ) (D.card : ℚ) ≤ ((projImage p t X).card : ℚ) := by
 -- proof

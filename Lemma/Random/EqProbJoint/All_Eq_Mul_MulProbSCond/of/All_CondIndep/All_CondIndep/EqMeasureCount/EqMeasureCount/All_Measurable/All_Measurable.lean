@@ -121,7 +121,7 @@ private lemma main
       tauto
     rw [hFS] at h
     refine (hQ (t + 1)).trans ?_
-    rwa [hQ t, ProbCond.eq.Div.of.SinglePSpace inferInstance, ProbCond.eq.Div.of.SinglePSpace inferInstance, hZ, hQQ]
+    rwa [hQ t, Prob_Cond.eq.Div.of.SinglePSpace inferInstance, Prob_Cond.eq.Div.of.SinglePSpace inferInstance, hZ, hQQ]
 
 
 -- created on 2023-03-22

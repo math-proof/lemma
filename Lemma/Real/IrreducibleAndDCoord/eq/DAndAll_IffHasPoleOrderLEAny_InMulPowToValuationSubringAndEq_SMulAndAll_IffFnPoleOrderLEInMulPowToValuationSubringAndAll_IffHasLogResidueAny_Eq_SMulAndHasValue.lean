@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.LogDeRhamH1
+import Lemma.Submodule.LogDeRhamH1
 import Lemma.Int.P2MUtil
 open KaehlerDifferential
 

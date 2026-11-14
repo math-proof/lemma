@@ -87,6 +87,18 @@ SELECT ROW_COUNT();
 }
 
 
+# sympy/ may be absent; only search directories that exist.
+search_dirs=()
+for d in Lemma sympy; do
+  if [ -d "$d" ]; then
+    search_dirs+=("$d")
+  fi
+done
+if [ ${#search_dirs[@]} -eq 0 ]; then
+  echo "error: no search directories (Lemma/ and sympy/ missing)"
+  exit 1
+fi
+
 src=$(normalize $1)
 
 # Append-only rename history (old → new). Survives as sh/rename.tsv (not *.log,
@@ -263,7 +275,7 @@ if [ -n "$sublemma" ]; then
   real_import="Lemma.${real_dst}"
   real_import_pat="Lemma.${real_dst//./\\.}"
   echo "rewrite imports $src_import_pat -> $real_import (dedupe)"
-  find Lemma sympy -type f -name "*.lean" -not -name "*.echo.lean" -print0 |
+  find "${search_dirs[@]}" -type f -name "*.lean" -not -name "*.echo.lean" -print0 |
     while IFS= read -r -d '' file; do
       if grep -qE "^import ${src_import_pat}\b" "$file"; then
         if grep -qE "^import ${real_import_pat}\b" "$file"; then
@@ -287,8 +299,8 @@ srcReg=${src//./\\.}
 srcReg="\b$srcReg"
 echo srcReg = $srcReg
 submodule="((\.[a-z_]+)*(\b[^.]|$))"
-echo find Lemma sympy -type f -name "*.lean" -not -name "*.echo.lean" -exec sed -i -E "s/$srcReg$submodule/$dst\1/g" {} +
-find Lemma sympy -type f -name "*.lean" -not -name "*.echo.lean" -exec sed -i -E "s/$srcReg$submodule/$dst\1/g" {} +
+echo find "${search_dirs[@]}" -type f -name "*.lean" -not -name "*.echo.lean" -exec sed -i -E "s/$srcReg$submodule/$dst\1/g" {} +
+find "${search_dirs[@]}" -type f -name "*.lean" -not -name "*.echo.lean" -exec sed -i -E "s/$srcReg$submodule/$dst\1/g" {} +
 
 package_src=$(echo $src | cut -d'.' -f1)
 echo package_src = $package_src
@@ -332,12 +344,12 @@ if [ $package_dst != $package_src ]; then
     echo "lemmaNameSrcOrig == lemmaNameDstOrig, no need to rename short names"
   else
     # xargs: unmatched single quote; by default quotes are special to xargs unless you use the -0 option
-    find Lemma sympy -type f -name "*.lean" -not -name "*.echo.lean" -print0 | xargs -0 grep -lZE "open( [[:alnum:]_.]+)* $package_dst\b" | xargs -0 sed -i -E "s/([^.]\b|^)$lemmaNameSrc$submodule/\1$lemmaNameDst\2/g"
+    find "${search_dirs[@]}" -type f -name "*.lean" -not -name "*.echo.lean" -print0 | xargs -0 grep -lZE "open( [[:alnum:]_.]+)* $package_dst\b" | xargs -0 sed -i -E "s/([^.]\b|^)$lemmaNameSrc$submodule/\1$lemmaNameDst\2/g"
   fi
 else
   # same package: rewrite short names under `open <package>`
   # xargs: unmatched single quote; by default quotes are special to xargs unless you use the -0 option
-  find Lemma sympy -type f -name "*.lean" -not -name "*.echo.lean" -print0 | xargs -0 grep -lZE "open( [[:alnum:]_.]+)* $package_dst\b" | xargs -0 sed -i -E "s/([^.]\b|^)$lemmaNameSrc$submodule/\1$lemmaNameDst\2/g"
+  find "${search_dirs[@]}" -type f -name "*.lean" -not -name "*.echo.lean" -print0 | xargs -0 grep -lZE "open( [[:alnum:]_.]+)* $package_dst\b" | xargs -0 sed -i -E "s/([^.]\b|^)$lemmaNameSrc$submodule/\1$lemmaNameDst\2/g"
 fi
 
 # Module path on disk / in imports is the real destination (parent module when merging a sublemma).

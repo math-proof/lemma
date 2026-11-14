@@ -1,6 +1,5 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Theorem.Analysis.SpecialFunctions.Gamma.Digamma.Part3
 open scoped Real
 open Filter Finset Topology
 
@@ -322,16 +321,13 @@ private lemma aux_D_tendsto (x : ℝ) (hx : 0 < x) :
     rw [abs_of_pos hhstar_pos]
     linarith
   -- conclude by the three-term triangle inequality
-  have hfin : dist (Real.log ↑N - ∑ m ∈ Finset.range (N + 1), 1 / (x + ↑m)) (deriv f x)
-    < ε := by
-    calc dist (Real.log ↑N - ∑ m ∈ Finset.range (N + 1), 1 / (x + ↑m)) (deriv f x)
-      ≤ dist (Real.log ↑N - ∑ m ∈ Finset.range (N + 1), 1 / (x + ↑m))
-        (Real.log ↑N - ∑ m ∈ Finset.range (N + 1),
-          (Real.log (x + hstar + ↑m) - Real.log (x + ↑m)) / hstar)
-        + dist (Real.log ↑N - ∑ m ∈ Finset.range (N + 1),
-          (Real.log (x + hstar + ↑m) - Real.log (x + ↑m)) / hstar)
-          ((f (x + hstar) - f x) / hstar)
-        + dist ((f (x + hstar) - f x) / hstar) (deriv f x) := aux_dist_tri
+  let A := Real.log ↑N - ∑ m ∈ Finset.range (N + 1), 1 / (x + ↑m)
+  let C := Real.log ↑N - ∑ m ∈ Finset.range (N + 1),
+    (Real.log (x + hstar + ↑m) - Real.log (x + ↑m)) / hstar
+  let D := (f (x + hstar) - f x) / hstar
+  have hfin : dist A (deriv f x) < ε := by
+    calc
+      dist A (deriv f x) ≤ dist A C + dist C D + dist D (deriv f x) := aux_dist_tri
       _ < (2 * |hstar| * C₀ + ε / 3) + ε / 3 :=
         add_lt_add (add_lt_add_of_le_of_lt hED hE_close) hquot_close
       _ < ε / 3 + ε / 3 + ε / 3 := by linarith [hstar_small]
@@ -441,11 +437,12 @@ namespace Real
 @[path]
 lemma hasSum_digamma_series
 -- given
-  (s : ℂ)
-  (hs : 1 < s.re) :
+  (x : ℝ)
+  (hx : 0 < x) :
 -- imply
-  HasSum (fun j : ℕ => Complex.digammaSeriesTerm j s)
-    (Complex.digamma s + (Real.eulerMascheroniConstant : ℂ)) := by
+  HasSum (fun j : ℕ => 1 / ((j : ℝ) + 1) - 1 / (x + (j : ℝ) + 1))
+    (deriv (fun t => Real.log (Real.Gamma t)) (x + 1)
+      + Real.eulerMascheroniConstant) := by
 -- proof
   set f : ℝ → ℝ := fun t => Real.log (Real.Gamma t) with hf_def
   have hxU : ∀ m : ℕ, x ≠ -((m : ℕ) : ℝ) := by
@@ -506,7 +503,8 @@ lemma hasSum_digamma_series
     = ∑' j : ℕ, (1 / ((j : ℝ) + 1) - 1 / (x + (j : ℝ) + 1)) := by
     rw [hrec, inv_eq_one_div]
     linarith [hval]
-  rwa [hfinal]
+  rw [hfinal]
+  exact hsum.hasSum
 
 end Real
 
@@ -595,7 +593,8 @@ lemma deriv_deriv_log_Gamma_add_one (y : ℝ) (hy : 0 < y) :
       linarith
     have houter : HasDerivAt S (deriv S y) (y + 1 - 1) := by
       have heq : y + 1 - 1 = y := by ring
-      rwa [heq]
+      rw [heq]
+      exact hS.differentiableAt.hasDerivAt
     have hcomp0 := HasDerivAt.comp (y + 1) houter
       ((hasDerivAt_id' (y + 1)).sub_const 1)
     have hsub0 := hcomp0.sub_const Real.eulerMascheroniConstant
@@ -1214,9 +1213,9 @@ namespace Complex
 
 /--
 [hasSum_digamma_series](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
+`1/(j+1) - 1/(j+s)`.
 -/
 @[path]
-`1/(j+1) - 1/(j+s)`. -/
 lemma hasSum_digamma_series (s : ℂ) (hs : 1 < s.re) :
   HasSum (fun j : ℕ => digammaSeriesTerm j s)
     (Complex.digamma s + (Real.eulerMascheroniConstant : ℂ)) := by

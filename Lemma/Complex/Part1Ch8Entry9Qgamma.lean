@@ -96,7 +96,7 @@ private lemma entry9_one_add_unitPow_ne {x : ℂ} (hx : 0 < x.re) {u : ℝ} (hu 
     have hw1 : ‖chapter8UnitPow x u‖ = 1 := by
       have h1 : (1 : ℂ) = -chapter8UnitPow x u := eq_neg_of_add_eq_zero_left hcon
       have h2 := congrArg Norm.norm h1
-      rwa [norm_one, norm_neg] at h2
+      rwa [norm_one, norm_neg, eq_comm] at h2
     rw [entry9_norm_unitPow_of_pos hu] at hw1
     obtain hlt | heq | hgt := lt_trichotomy u 1
     · have hlt1 := Real.rpow_lt_one hu.le hlt hx
@@ -742,7 +742,8 @@ private lemma entry9_tendsto_remainder_integral {x : ℂ} (hx : 0 < x.re) :
     have hset : {v : ℝ | ¬ v ≠ 1} = {1} := by
       ext v
       simp
-    rwa [hset]
+    rw [hset]
+    exact measure_singleton
   have hAES : ∀ N : ℕ, AEStronglyMeasurable
     (fun v => (-1 : ℂ) ^ N * chapter8UnitPow (((N : ℂ) + 1) * x) v / (1 + chapter8UnitPow x v))
     (volume.restrict (Set.Ioc 0 1)) := by

@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_SpecializationMap.lean: instance decls only.
-import Lemma.ModularCurve.JqCoeff
-import Lemma.ModularCurve.LaurentCoeff
+import Lemma.HahnSeries.JqCoeff
+import Lemma.LaurentSeries.LaurentCoeff
 import Instance.ModularCurve_PhiGen
 import Class.AlgebraicCurve_DivisorClassGroup
 import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
@@ -18,7 +18,7 @@ import Mathlib.RingTheory.PrincipalIdealDomain
 import Mathlib.Algebra.CharP.Basic
 import Mathlib.Data.Int.CharZero
 import Mathlib.Data.Nat.Prime.Int
-import Mathlib.RingTheory.DedekindDomain.IntegralClosure
+import Mathlib.RingTheory.Ideal.IntegralClosure
 import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
 import Mathlib.RingTheory.Ideal.Maps
 import Mathlib.RingTheory.Ideal.Maximal
@@ -26,7 +26,7 @@ import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
 import Def.ModularCurve_FibreModel
 import Instance.ModularCurve_ArithmeticGalois
 import Structure.ModularCurve_PlaceSpecialization
-import Lemma.ModularCurve.SpecializationMap
+import Lemma.IntermediateField.SpecializationMap
 
 set_option autoImplicit false
 

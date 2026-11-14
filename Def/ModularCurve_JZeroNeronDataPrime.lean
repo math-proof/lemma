@@ -1,6 +1,6 @@
 import Mathlib
 import Def.ModularCurve_JZeroNeronData
-import Lemma.ModularCurve.HeckeModule
+import Lemma.MvPolynomial.HeckeModule
 import Def.ModularCurve_HeckeInputsAll
 import Def.FLTPrelim_Ramification
 import Def.GaloisRep_Flat

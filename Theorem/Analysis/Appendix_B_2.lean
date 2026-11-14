@@ -15,6 +15,11 @@ namespace AppendixB
 
 open NNReal NNRealDecimal
 
+/-- Exercise B.2.1 -/
+theorem NNRealDecimal.toNNReal_conv (d:NNRealDecimal) :
+  Summable fun i ↦ (d.fracPart i) * (10:NNReal) ^ (-i-1:ℝ) := by
+  sorry
+
 theorem NNRealDecimal.surj (x:NNReal) : ∃ d:NNRealDecimal, x = d := by
   -- This proof is written to follow the structure of the original text.
   by_cases h : x = 0

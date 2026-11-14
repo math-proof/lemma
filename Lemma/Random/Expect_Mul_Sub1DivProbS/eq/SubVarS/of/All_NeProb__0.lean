@@ -2,6 +2,7 @@ import Syntax.Probability.Expectation.Elab
 import Lemma.Random.Map.eq.WithDensityProb
 import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
 import Mathlib.MeasureTheory.Integral.Bochner.SumMeasure
+import Theorem.Probability.JointRv.AsRV
 open MeasureTheory Finset Random
 
 
@@ -91,4 +92,4 @@ private lemma main
 
 
 -- created on 2023-03-24
--- updated on 2026-11-07
+-- updated on 2026-11-12

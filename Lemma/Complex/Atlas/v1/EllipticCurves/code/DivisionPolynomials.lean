@@ -106,7 +106,7 @@ lemma Psi_odd
   E.toWeierstrassCurve.Ψ n = C (E.toWeierstrassCurve.preΨ n) := by
 -- proof
   unfold WeierstrassCurve.Ψ
-  rw [if_neg hn, mul_one]
+  rw [ite_eq_right hn, mul_one]
 
 end ShortWeierstrassCurve
 
@@ -126,7 +126,7 @@ lemma Psi_even
   E.toWeierstrassCurve.Ψ n = C (E.toWeierstrassCurve.preΨ n) * E.toWeierstrassCurve.ψ₂ := by
 -- proof
   unfold WeierstrassCurve.Ψ
-  rw [if_pos hn]
+  rw [ite_eq_left hn]
 
 end ShortWeierstrassCurve
 
@@ -151,7 +151,7 @@ lemma omegaPolyNumer_mk_even
   have hno1 : ¬Even (n - 1) := by intro ⟨k, hk⟩; obtain ⟨m, hm⟩ := hn; omega
   have hn_2 : Even (n - 2) := by obtain ⟨k, hk⟩ := hn; exact ⟨k - 1, by omega⟩
   have hno2 : ¬Even (n + 1) := by intro ⟨k, hk⟩; obtain ⟨m, hm⟩ := hn; omega
-  simp only [WeierstrassCurve.Ψ, if_pos hn2, if_neg hno1, if_pos hn_2, if_neg hno2, mul_one]
+  simp only [WeierstrassCurve.Ψ, ite_eq_left hn2, ite_eq_right hno1, ite_eq_left hn_2, ite_eq_right hno2, mul_one]
   simp only [map_mul]
   ring
 
@@ -180,7 +180,7 @@ lemma omegaPolyNumer_mk_odd
   have hno_2 : ¬Even (n - 2) := by intro ⟨k, hk⟩; exact hn ⟨k + 1, by omega⟩
   have hn_1 : Even (n + 1) := by
     rw [Int.not_even_iff_odd] at hn; obtain ⟨k, hk⟩ := hn; exact ⟨k + 1, by omega⟩
-  simp only [WeierstrassCurve.Ψ, if_neg hno2, if_pos hn1, if_neg hno_2, if_pos hn_1, mul_one]
+  simp only [WeierstrassCurve.Ψ, ite_eq_right hno2, ite_eq_left hn1, ite_eq_right hno_2, ite_eq_left hn_1, mul_one]
   simp only [map_mul]
   ring
 
@@ -1322,7 +1322,7 @@ lemma isogeny_prime_degree_decomposition
     exact ⟨.single α',
       by rw [IsogenyChain.allPrimeDegree, hα_is_p]; exact hp,
       by simp [IsogenyChain.compose]⟩
-  · push_neg at hγ1
+  · push Not at hγ1
     have hγ_lt : γ.degree < d := by
       rw [← hαd]; have : γ.degree * β.degree = α'.degree := hcomp_deg
       rw [← this, hβ_deg]; nlinarith [hp.two_le]

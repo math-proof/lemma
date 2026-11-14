@@ -99,16 +99,16 @@ private lemma submatrix_positive_definite
   intro w hw
   set g := fun i j => f (i₀.succAbove i) (i₀.succAbove j) with hg_def
   have hOffDiag_g : ∀ s t : Fin n, s ≠ t → g s t ≤ 0 :=
-    restrictForm_offDiag f i₀ hOffDiag
+    restrictForm_offDiag hOffDiag
   by_contra h_not_pos
-  push_neg at h_not_pos
+  push Not at h_not_pos
   set v := Fin.insertNth (α := fun _ => ℝ) i₀ (0 : ℝ) (fun k => |w k|) with hv_def
-  have hQF_v : QF f v = QF g (fun k => |w k|) := QF_insertNth_zero f i₀ (fun k => |w k|)
+  have hQF_v : QF f v = QF g (fun k => |w k|) := main (w := fun k => |w k|)
   have habs_le : QF g (fun k => |w k|) ≤ QF g w := QF_abs_le g w hOffDiag_g
   have hPSD_v : QF f v ≥ 0 := hPSD v
   have hQF_v_zero : QF f v = 0 := le_antisymm (by linarith) hPSD_v
-  have hv_nonneg : ∀ b, v b ≥ 0 := insertNth_abs_nonneg i₀ w
-  have hv_ne : v ≠ 0 := insertNth_abs_ne_zero i₀ w hw
+  have hv_nonneg : ∀ b, v b ≥ 0 := insertNth_abs_nonneg (i₀ := i₀) (w := w)
+  have hv_ne : v ≠ 0 := insertNth_abs_ne_zero hw
   have hv_pos : ∀ b, v b > 0 :=
     nonneg_kernel_pos f v hPSD hQF_v_zero hv_nonneg hv_ne hOffDiag hIndecomp
   have hv_i₀ : v i₀ = 0 := by simp [hv_def, Fin.insertNth_apply_same]
@@ -117,4 +117,4 @@ private lemma submatrix_positive_definite
 
 
 -- created on 2026-10-23
--- updated on 2026-10-26
+-- updated on 2026-11-13

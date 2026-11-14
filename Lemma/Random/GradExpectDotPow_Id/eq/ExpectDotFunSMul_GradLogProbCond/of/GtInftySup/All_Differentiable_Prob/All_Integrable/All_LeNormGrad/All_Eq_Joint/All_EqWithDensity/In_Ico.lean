@@ -18,9 +18,7 @@ import Lemma.Random.All_EqIntegral_MulGIntegral_MulGKf.of.All_LeNorm.StronglyMea
 import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Lemma.Random.NormVkd.le.MulInvSub1Abs_R.of.In_Ico
 import Lemma.Random.NormClip.le.Abs_R
-import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Random.AeNormSub.le.DeltaBound.of.In_Ico.All_EqWithDensity
-import Theorem.Probability.CondExpectation
 import Lemma.Random.Integral_SMul.eq.Zero.of.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Filter Topology Random Measure Real
 set_option maxHeartbeats 900000
@@ -47,7 +45,7 @@ For `t ≤ n`, `𝔼[δ[n+1] * ψ(s[t], a[t])] = 0` under the continuous-action 
 (Markov property along histories + Bellman equation).
 -/
 private lemma zero_V0
-  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮]
+  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮]
   [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
   {M : DensityModel Θ 𝒮 𝒜}
   {γ : ℝ}
@@ -69,7 +67,7 @@ private lemma zero_V0
     ψ (s t ω) (a t ω) ∂(M θ) = 0 := by
 -- proof
   classical
-  obtain ⟨Ms, hMs⟩ := hMs
+  obtain ⟨Ms, hMsle⟩ := hMs
   obtain rfl : s = fun t ω ↦ (ω t).2.1 :=
     funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
   obtain rfl : a = fun t ω ↦ (ω t).2.2 :=
@@ -82,7 +80,7 @@ private lemma zero_V0
     hψ.comp_measurable
       ((measurable_snd.fst.comp (measurable_pi_apply _)).prodMk
         (measurable_snd.snd.comp (measurable_pi_apply _)))
-  have hCG : ∀ h, ‖Gh h‖ ≤ Ms := fun h => hMs _ _
+  have hCG : ∀ h, ‖Gh h‖ ≤ Ms := fun h => hMsle _ _
   let fV : (ℝ × 𝒮 × 𝒜) → ℝ := fun w => M.V0 θ γ w.2.1
   have hfV : StronglyMeasurable fV :=
     ((Measurable_Vkd.of.All_Measurable_Prob (M := M) hπ θ γ).comp measurable_snd.fst).stronglyMeasurable
@@ -152,7 +150,7 @@ private lemma zero_V0
 
 private lemma integral_delta_smul_eq_zero
   [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [CompleteSpace Θ]
-  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮]
+  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮]
   [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
   {M : DensityModel Θ 𝒮 𝒜} {γ : ℝ}
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
@@ -169,14 +167,14 @@ private lemma integral_delta_smul_eq_zero
   (hMs : ∃ Ms : ℝ, ∀ y u, ‖ψ y u‖ ≤ Ms) :
   ∫ ω, (r (n + 1) ω + γ * M.V0 θ γ (s (n + 1 + 1) ω) - M.V0 θ γ (s (n + 1) ω)) •
     ψ (s t ω) (a t ω) ∂(M θ) = 0 := by
-  obtain ⟨Ms, hMs⟩ := hMs
+  obtain ⟨Ms, hMsle⟩ := hMs
   refine ContinuousLinearMap.ext fun v => ?_
   have hφ : StronglyMeasurable (Function.uncurry fun y u => (ψ y u) v) :=
     (continuous_eval_const v).comp_stronglyMeasurable hψ
   have hφb : ∃ Ms' : ℝ, ∀ y u, ‖(ψ y u) v‖ ≤ Ms' :=
     ⟨Ms * ‖v‖, fun y u =>
       (ContinuousLinearMap.le_opNorm (ψ y u) v).trans
-        (mul_le_mul_of_nonneg_right (hMs y u) (norm_nonneg v))⟩
+        (mul_le_mul_of_nonneg_right (hMsle y u) (norm_nonneg v))⟩
   set Bδ : ℝ := (3 / (1 - γ) - 1) * |M.env.R|
   have hInt :
       Integrable (fun ω =>
@@ -199,7 +197,7 @@ private lemma integral_delta_smul_eq_zero
       refine sub_nonneg.2 ?_
       have hγ : 0 < 1 - γ := sub_pos.2 h₀.2
       exact (one_le_div₀ hγ).2 (by linarith [h₀.1, h₀.2])
-    exact mul_le_mul (hδ _) (hMs _ _) (norm_nonneg _) hB0
+    exact mul_le_mul (hδ _) (hMsle _ _) (norm_nonneg _) hB0
   rw [ContinuousLinearMap.integral_apply hInt v]
   simp_rw [_root_.smul_apply, smul_eq_mul]
   exact zero_V0
@@ -212,7 +210,7 @@ GAE reduction under the continuous-action path law:
 -/
 private lemma collapse_V0
   [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [CompleteSpace Θ]
-  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮]
+  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮]
   [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
   {M : DensityModel Θ 𝒮 𝒜}
   {γ c : ℝ}
@@ -236,7 +234,7 @@ private lemma collapse_V0
       ψ (s t ω) (a t ω) ∂(M θ) := by
 -- proof
   classical
-  obtain ⟨Ms, hMs⟩ := hMs
+  obtain ⟨Ms, hMsle⟩ := hMs
   let F : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → (Θ →L[ℝ] ℝ) := fun k ω =>
     (c ^ k * (r (t + k) ω + γ * M.V0 θ γ (s (t + k + 1) ω) - M.V0 θ γ (s (t + k) ω))) •
       ψ (s t ω) (a t ω)
@@ -266,12 +264,12 @@ private lemma collapse_V0
     filter_upwards [AeNormSub.le.DeltaBound.of.In_Ico.All_EqWithDensity (M := M) h₀ h₁ θ] with ω h
     rw [hF, norm_smul, norm_smul, norm_pow, Real.norm_of_nonneg h₂.1]
     refine mul_le_mul_of_nonneg_left ?_ (pow_nonneg h₂.1 k)
-    exact mul_le_mul (h _) (hMs _ _) (norm_nonneg _) hB0
+    exact mul_le_mul (h _) (hMsle _ _) (norm_nonneg _) hB0
   have hFb : ∀ k, ∀ᵐ ω ∂(M θ), ‖F k ω‖ ≤ c ^ k * (Bδ * Ms) := fun k => by
     filter_upwards [AeNormSub.le.DeltaBound.of.In_Ico.All_EqWithDensity (M := M) h₀ h₁ θ] with ω h
     rw [hF, norm_smul, norm_smul, norm_pow, Real.norm_of_nonneg h₂.1]
     refine mul_le_mul_of_nonneg_left ?_ (pow_nonneg h₂.1 k)
-    exact mul_le_mul (h _) (hMs _ _) (norm_nonneg _) hB0
+    exact mul_le_mul (h _) (hMsle _ _) (norm_nonneg _) hB0
   have hsum : Summable (fun k => ∫ ω, ‖F k ω‖ ∂(M θ)) := by
     refine Summable.of_nonneg_of_le (fun k => integral_nonneg fun _ => norm_nonneg _) (fun k => ?_)
       ((summable_geometric_of_lt_one h₂.1 h₂.2).mul_right (Bδ * Ms))
@@ -285,7 +283,7 @@ private lemma collapse_V0
     obtain ⟨k', rfl⟩ := Nat.exists_eq_succ_of_ne_zero hk
     simp_rw [hF]
     rw [integral_smul]
-    have := integral_delta_smul_eq_zero (M := M) t (t + k') h₀ h₁ hπ (Nat.le_add_right t k') θ ψ hψ ⟨Ms, hMs⟩
+    have := integral_delta_smul_eq_zero (M := M) t (t + k') h₀ h₁ hπ (Nat.le_add_right t k') θ ψ hψ ⟨Ms, hMsle⟩
     rw [show (fun ω => (r (t + k'.succ) ω + γ * M.V0 θ γ (s (t + k'.succ + 1) ω) -
         M.V0 θ γ (s (t + k'.succ) ω)) • ψ (s t ω) (a t ω)) = fun ω => (r (t + k' + 1) ω +
         γ * M.V0 θ γ (s (t + k' + 1 + 1) ω) - M.V0 θ γ (s (t + k' + 1) ω)) • ψ (s t ω) (a t ω)
@@ -306,24 +304,28 @@ private lemma collapse_V0
 
 
 private lemma ae_norm_residual
-  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮]
+  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮]
   [Nonempty 𝒮] [StandardBorelSpace 𝒮]
   [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
   {M : DensityModel Θ 𝒮 𝒜} {γ : ℝ}
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
-  {V : ℕ ⇀ 𝒮 → ℝ}
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (θ : Θ)
-  (hV : ∀ (k : ℕ) (x : 𝒮),
-    V[k] x =
-      Expectation.condEval (M θ) (fun ω : ℕ → ℝ × 𝒮 × 𝒜 => fun i => r i ω) (s k)
-        (fun integ => (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[k:]) x) :
+  (θ : Θ) :
   ∀ᵐ ω ∂(M θ), ∀ j,
-    ‖r j ω + γ * V[j + 1] (s (j + 1) ω) - V[j] (s j ω)‖ ≤
+    ‖r j ω + γ * M.V θ γ (j + 1) (s (j + 1) ω) - M.V θ γ j (s j ω)‖ ≤
       (2 / (1 - γ)) * |M.env.R| := by
+  obtain rfl : r = fun t ω ↦ (ω t).1 :=
+    funext₂ fun t ω ↦ (congrArg Prod.fst (congrFun (h₁ t) ω)).symm
+  obtain rfl : s = fun t ω ↦ (ω t).2.1 :=
+    funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
+  obtain rfl : a = fun t ω ↦ (ω t).2.2 :=
+    funext₂ fun t ω ↦ (congrArg (·.2.2) (congrFun (h₁ t) ω)).symm
+  set r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ := fun t ω ↦ (ω t).1
+  set s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮 := fun t ω ↦ (ω t).2.1
+  set a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜 := fun t ω ↦ (ω t).2.2
   set BV : ℝ := (1 - γ)⁻¹ * |M.env.R|
   have hBV0 : 0 ≤ BV :=
     mul_nonneg (inv_nonneg.2 (le_of_lt (sub_pos.2 h₀.2))) (abs_nonneg _)
@@ -361,7 +363,7 @@ private lemma ae_norm_residual
       Integrable.of_bound (hret k).aestronglyMeasurable BV
         (by filter_upwards [hret_bd] with ω hω; exact hω k)
   have hV_ae : ∀ k,
-      (fun ω => V[k] (s k ω)) =ᵐ[M θ]
+      (fun ω => M.V θ γ k (s k ω)) =ᵐ[M θ]
         Expectation.condSigma (M θ) (fun ω i => r i ω) (s k)
           (fun integ => (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[k:]) := fun k => by
     have hcomp :=
@@ -370,8 +372,8 @@ private lemma ae_norm_residual
         (f := fun integ => (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[k:])
         hpR.aemeasurable (hsm k) (hfGret k).stronglyMeasurable (hGi k)
     filter_upwards [hcomp] with ω hω
-    exact (hV k (s k ω)).trans hω
-  have hVbd : ∀ᵐ ω ∂(M θ), ∀ k, |V[k] (s k ω)| ≤ BV := by
+    exact hω
+  have hVbd : ∀ᵐ ω ∂(M θ), ∀ k, |M.V θ γ k (s k ω)| ≤ BV := by
     have hcond : ∀ k, ∀ᵐ ω ∂(M θ),
         |Expectation.condSigma (M θ) (fun ω i => r i ω) (s k)
           (fun integ => (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[k:]) ω| ≤ BV := fun k => by
@@ -394,17 +396,17 @@ private lemma ae_norm_residual
     ring
   filter_upwards [hr_bd, hVbd] with ω hr hv j
   rw [Real.norm_eq_abs]
-  have hsum : |r j ω + γ * V[j + 1] (s (j + 1) ω) - V[j] (s j ω)| ≤
-      |r j ω| + |γ * V[j + 1] (s (j + 1) ω)| + |V[j] (s j ω)| := by
-    have h1 := abs_add_le (r j ω) (γ * V[j + 1] (s (j + 1) ω))
-    have h2 : |r j ω + γ * V[j + 1] (s (j + 1) ω) - V[j] (s j ω)| ≤
-        |r j ω + γ * V[j + 1] (s (j + 1) ω)| + |V[j] (s j ω)| := by
+  have hsum : |r j ω + γ * M.V θ γ (j + 1) (s (j + 1) ω) - M.V θ γ j (s j ω)| ≤
+      |r j ω| + |γ * M.V θ γ (j + 1) (s (j + 1) ω)| + |M.V θ γ j (s j ω)| := by
+    have h1 := abs_add_le (r j ω) (γ * M.V θ γ (j + 1) (s (j + 1) ω))
+    have h2 : |r j ω + γ * M.V θ γ (j + 1) (s (j + 1) ω) - M.V θ γ j (s j ω)| ≤
+        |r j ω + γ * M.V θ γ (j + 1) (s (j + 1) ω)| + |M.V θ γ j (s j ω)| := by
       simpa [sub_eq_add_neg, abs_neg] using
-        abs_add_le (r j ω + γ * V[j + 1] (s (j + 1) ω)) (-V[j] (s j ω))
+        abs_add_le (r j ω + γ * M.V θ γ (j + 1) (s (j + 1) ω)) (-M.V θ γ j (s j ω))
     exact h2.trans (add_le_add h1 le_rfl)
-  have : |r j ω| + |γ * V[j + 1] (s (j + 1) ω)| + |V[j] (s j ω)| ≤
+  have : |r j ω| + |γ * M.V θ γ (j + 1) (s (j + 1) ω)| + |M.V θ γ j (s j ω)| ≤
       |M.env.R| + (1 + γ) * BV := by
-    have hγV : |γ * V[j + 1] (s (j + 1) ω)| ≤ γ * BV := by
+    have hγV : |γ * M.V θ γ (j + 1) (s (j + 1) ω)| ≤ γ * BV := by
       rw [abs_mul, abs_of_nonneg h₀.1]
       exact mul_le_mul_of_nonneg_left (hv (j + 1)) h₀.1
     have := add_le_add (add_le_add (hr j) hγV) (hv j)
@@ -438,7 +440,7 @@ private lemma tsum_residual_eq_return_sub
   (r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ)
   (s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮)
   (t : ℕ) (ω : ℕ → ℝ × 𝒮 × 𝒜)
-  {R BV : ℝ} (hR0 : 0 ≤ R) (hBV : 0 ≤ BV)
+  {R BV : ℝ} (_hR0 : 0 ≤ R) (_hBV : 0 ≤ BV)
   (hr : ∀ n, |r n ω| ≤ R)
   (hW : ∀ n, |W n (s n ω)| ≤ BV) :
   ∑' k, γ ^ k * (r (t + k) ω + γ * W (t + k + 1) (s (t + k + 1) ω) -
@@ -498,39 +500,34 @@ private lemma tsum_residual_eq_return_sub
 
 /--
 Unbiased continuous-action advantage estimate: with textbook
-`V[t] : 𝒮 → ℝ` and density score `∇ log π`,
-`∇𝔼[(γ ^ id) ⬝ᵥ r] = 𝔼[(γ ^ id) ⬝ᵥ fun t ↦ ((γ ^ id) ⬝ᵥ (r[t:] + γ • (fun j => V[t+1+j] (s[t+1:] j)) - fun j => V[t+j] (s[t:] j))) • ∇ log π]`.
+`M.V θ γ t : 𝒮 → ℝ` and density score `∇ log π`,
+`∇𝔼[(γ ^ id) ⬝ᵥ r] = 𝔼[(γ ^ id) ⬝ᵥ fun t ↦ ((γ ^ id) ⬝ᵥ (r[t:] + γ • (fun j => M.V θ γ (t+1+j) (s[t+1:] j)) - fun j => M.V θ γ (t+j) (s[t:] j))) • ∇ log π]`.
 -/
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮]
+  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮]
   [Nonempty 𝒮] [StandardBorelSpace 𝒮]
-  [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
+  [μ : ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
   {M : DensityModel Θ 𝒮 𝒜}
   {θ : Θ}
   {γ : ℝ}
   {g : 𝒮 → 𝒜 → ℝ}
-  {Cg Ms : ℝ}
   {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
-  {V : ℕ ⇀ 𝒮 → ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.policy.prob θ z.1 z.2))
-  (hV : ∀ (k : ℕ) (x : 𝒮),
-    V[k] x =
-      Expectation.condEval (M θ) (fun ω : ℕ → ℝ × 𝒮 × 𝒜 => fun i => r i ω) (s k)
-        (fun integ => (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[k:]) x)
+  (hVm : ∀ k, Measurable (M.V θ γ k))
   (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₃ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ g x u)
-  (h₄ : ∀ x, Integrable (g x) ReferenceMeasure.measure)
-  (h₅ : ∀ x, ∫ u, g x u ∂ReferenceMeasure.measure ≤ Cg)
+  (h₄ : ∀ x, Integrable (g x) μ.measure)
+  (h₅ : sup[x] ∫ u, g x u ∂μ.measure < ∞)
   (hφ : StronglyMeasurable
     (fun z : 𝒮 × 𝒜 => fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' z.1 z.2)) θ))
-  (hMs : ∀ y u, ‖fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ‖ ≤ Ms) :
+  (hMs : sup[y, u] ‖fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ‖ < ∞) :
 -- imply
   have : ∀ θ', PSpace (M θ') (AsPathRV.path r) := fun _ =>
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).aemeasurable⟩)
@@ -539,12 +536,17 @@ private lemma main
   have : PSpace (M θ) (AsPathRV.path a) :=
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).aemeasurable⟩)
   let : MeasurableSpace Θ := borel Θ
-  let V_δ : ℕ ⇀ (ℕ → 𝒮) → ℕ → ℝ := ⟨fun t δ k => V[t + k] (δ k)⟩
+  let V_δ : ℕ ⇀ (ℕ → 𝒮) → ℕ → ℝ := ⟨fun t δ k => M.V θ γ (t + k) (δ k)⟩
   ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) =
     𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
       (((γ ^ (id : ℕ → ℕ)) ⬝ᵥ (r[t:] + γ • V_δ[t + 1] s[t + 1:] - V_δ[t] s[t:])) •
         ∇[θ] Real.log (M.policy.prob θ (s t) (a t)))) := by
 -- proof
+  obtain ⟨Cg, hCg⟩ := id h₅
+  have h₅le : ∀ x, ∫ u, g x u ∂μ.measure ≤ Cg := fun x => hCg ⟨x, rfl⟩
+  obtain ⟨Ms, hMsb⟩ := id hMs
+  have hMsle : ∀ y u, ‖fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ‖ ≤ Ms :=
+    fun y u => hMsb ⟨(y, u), rfl⟩
   intro _ _ _ _ V_δ
   classical
   obtain ⟨r⟩ := r
@@ -574,7 +576,7 @@ private lemma main
     exact ((InnerProductSpace.toDual ℝ Θ).symm.continuous.comp_stronglyMeasurable hφ)
   have hMsg : ∀ y u,
       ‖gradient (fun θ' => Real.log (M.policy.prob θ' y u)) θ‖ ≤ Ms := fun y u => by
-    simpa [gradient, LinearIsometryEquiv.norm_map] using hMs y u
+    simpa [gradient, LinearIsometryEquiv.norm_map] using hMsle y u
   set ψ : 𝒮 → 𝒜 → Θ →L[ℝ] ℝ := fun y u =>
     fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ
   have hψ : StronglyMeasurable (Function.uncurry ψ) := hφ
@@ -619,8 +621,8 @@ private lemma main
   -- ∑ γ^t • fderiv(∫r) = ∑ γ^t • ∫ (∑ γ^k δ) • fderiv log
   have hchain :
       ∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ =
-        ∑' t, γ ^ t • ∫ ω, (∑' k, γ ^ k * (r (t + k) ω + γ * V[t + k + 1] (s (t + k + 1) ω) -
-          V[t + k] (s (t + k) ω))) •
+        ∑' t, γ ^ t • ∫ ω, (∑' k, γ ^ k * (r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) -
+          M.V θ γ (t + k) (s (t + k) ω))) •
             fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
     have hTSum :=
       TSum_SMul.eq.Integral_Fderiv_Vkd.of.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.All_Measurable_Prob.All_EqWithDensity
@@ -631,17 +633,17 @@ private lemma main
     refine hTSum.trans (hQ.trans (tsum_congr fun t => congrArg (fun z => γ ^ t • z) ?_))
     have hQδ :=
       Integral_SMul_Qkd.eq.Integral_SMul_SubAddVkd.of.In_Ico.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity
-        (M := M) h₀ h₁ hπ h₂ h₃ h₄ hφ hMs t
+        (M := M) h₀ h₁ hπ h₂ h₃ h₄ hφ hMsle t
     have hcoll :=
-      collapse_V0 (M := M) h₀ h₁ hπ θ h₀ t ψ hψ ⟨Ms, hMs⟩
+      collapse_V0 (M := M) h₀ h₁ hπ θ h₀ t ψ hψ ⟨Ms, hMsle⟩
     -- `∫ Q • score = ∫ (∑ γ^k δ^{V0}) • score`, then rewrite to textbook-`V` residuals.
     have hQV0 := hQδ.trans hcoll.symm
     have hbridge :
         ∫ ω, (∑' k, γ ^ k * (r (t + k) ω + γ * M.V0 θ γ (s (t + k + 1) ω) -
           M.V0 θ γ (s (t + k) ω))) •
           fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) =
-        ∫ ω, (∑' k, γ ^ k * (r (t + k) ω + γ * V[t + k + 1] (s (t + k + 1) ω) -
-          V[t + k] (s (t + k) ω))) •
+        ∫ ω, (∑' k, γ ^ k * (r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) -
+          M.V θ γ (t + k) (s (t + k) ω))) •
           fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
       set BV : ℝ := (1 - γ)⁻¹ * |M.env.R|
       have hBV0 : 0 ≤ BV :=
@@ -655,8 +657,8 @@ private lemma main
         filter_upwards [hcl'] with ω hω j
         rw [hω j, ← Real.norm_eq_abs]
         exact NormClip.le.Abs_R (R := M.env.R) (ρ := (ω j).1)
-      have hVbd : ∀ᵐ ω ∂(M θ), ∀ n, |V[n] (s n ω)| ≤ BV := by
-        have hδ' := ae_norm_residual (M := M) h₀ h₁ θ hV
+      have hVbd : ∀ᵐ ω ∂(M θ), ∀ n, |M.V θ γ n (s n ω)| ≤ BV := by
+        have hδ' := ae_norm_residual (M := M) h₀ h₁ θ
         -- recover the pointwise `V` bound from the residual helper's proof style
         have hrm : ∀ k, Measurable (r k) := fun k => Random.Measurable.of.All_Eq.fst h₁ k
         have hsm : ∀ k, Measurable (s k) := fun k => Random.Measurable.of.All_Eq.snd.fst h₁ k
@@ -682,7 +684,7 @@ private lemma main
             Integrable.of_bound (hret k).aestronglyMeasurable BV
               (by filter_upwards [hret_bd] with ω hω; exact hω k)
         have hV_ae : ∀ k,
-            (fun ω => V[k] (s k ω)) =ᵐ[M θ]
+            (fun ω => M.V θ γ k (s k ω)) =ᵐ[M θ]
               Expectation.condSigma (M θ) (fun ω i => r i ω) (s k)
                 (fun integ => (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[k:]) := fun k => by
           have hcomp :=
@@ -691,7 +693,7 @@ private lemma main
               (f := fun integ => (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[k:])
               hpR.aemeasurable (hsm k) (hfGret k).stronglyMeasurable (hGi k)
           filter_upwards [hcomp] with ω hω
-          exact (hV k (s k ω)).trans hω
+          exact hω
         have hcond : ∀ k, ∀ᵐ ω ∂(M θ),
             |Expectation.condSigma (M θ) (fun ω i => r i ω) (s k)
               (fun integ => (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[k:]) ω| ≤ BV := fun k => by
@@ -718,18 +720,18 @@ private lemma main
         exact tsum_residual_eq_return_sub (fun _ x => M.V0 θ γ x) h₀ r s t ω
           hR0 hBV0 hr (fun n => hV0bd (s n ω))
       have hteleV : ∀ᵐ ω ∂(M θ),
-          (∑' k, γ ^ k * (r (t + k) ω + γ * V[t + k + 1] (s (t + k + 1) ω) -
-            V[t + k] (s (t + k) ω))) =
-            (∑' k, γ ^ k * r (t + k) ω) - V[t] (s t ω) := by
+          (∑' k, γ ^ k * (r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) -
+            M.V θ γ (t + k) (s (t + k) ω))) =
+            (∑' k, γ ^ k * r (t + k) ω) - M.V θ γ t (s t ω) := by
         filter_upwards [hr_bd, hVbd] with ω hr hv
-        exact tsum_residual_eq_return_sub (fun n x => V[n] x) h₀ r s t ω
+        exact tsum_residual_eq_return_sub (fun n x => M.V θ γ n x) h₀ r s t ω
           hR0 hBV0 hr (fun n => hv n)
       have hdiff : ∀ᵐ ω ∂(M θ),
           (∑' k, γ ^ k * (r (t + k) ω + γ * M.V0 θ γ (s (t + k + 1) ω) -
             M.V0 θ γ (s (t + k) ω))) -
-          (∑' k, γ ^ k * (r (t + k) ω + γ * V[t + k + 1] (s (t + k + 1) ω) -
-            V[t + k] (s (t + k) ω))) =
-            V[t] (s t ω) - M.V0 θ γ (s t ω) := by
+          (∑' k, γ ^ k * (r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) -
+            M.V θ γ (t + k) (s (t + k) ω))) =
+            M.V θ γ t (s t ω) - M.V0 θ γ (s t ω) := by
         filter_upwards [hteleV0, hteleV] with ω h0 hv
         rw [h0, hv]
         ring
@@ -741,39 +743,39 @@ private lemma main
           simp only [clip]
           exact min_le_right _ _
         exact abs_le.2 ⟨hlo, hhi⟩
-      let hh : 𝒮 → ℝ := fun y => clip (V[t] y) (-BV) BV - M.V0 θ γ y
+      let hh : 𝒮 → ℝ := fun y => clip (M.V θ γ t y) (-BV) BV - M.V0 θ γ y
       have hhmeas : Measurable hh := by
         have hclipm : Measurable fun x : ℝ => clip x (-BV) BV := by
           simp only [clip]
           exact (continuous_min.comp
             ((continuous_max.comp (continuous_id.prodMk continuous_const)).prodMk
               continuous_const)).measurable
-        change Measurable fun y => clip (V[t] y) (-BV) BV - M.V0 θ γ y
-        exact (hclipm.comp (measurable_of_countable (V[t]))).sub
+        change Measurable fun y => clip (M.V θ γ t y) (-BV) BV - M.V0 θ γ y
+        exact (hclipm.comp ((hVm (t)))).sub
           (Measurable_Vkd.of.All_Measurable_Prob (M := M) hπ θ γ)
       have hhC : ∀ y, ‖hh y‖ ≤ 2 * BV := fun y => by
         rw [Real.norm_eq_abs]
-        have h2 : |clip (V[t] y) (-BV) BV - M.V0 θ γ y| ≤
-            |clip (V[t] y) (-BV) BV| + |M.V0 θ γ y| := by
+        have h2 : |clip (M.V θ γ t y) (-BV) BV - M.V0 θ γ y| ≤
+            |clip (M.V θ γ t y) (-BV) BV| + |M.V0 θ γ y| := by
           simpa [sub_eq_add_neg, abs_neg] using
-            abs_add_le (clip (V[t] y) (-BV) BV) (-M.V0 θ γ y)
-        have := h2.trans (add_le_add (hclip_le (V[t] y)) (hV0bd y))
+            abs_add_le (clip (M.V θ γ t y) (-BV) BV) (-M.V0 θ γ y)
+        have := h2.trans (add_le_add (hclip_le (M.V θ γ t y)) (hV0bd y))
         simpa [hh, two_mul] using this
       have hsc :=
         Integral_SMul.eq.Zero.of.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity
-          (M := M) θ h₁ h₂ h₃ h₄ hh hhmeas hhC hφ hMs t
+          (M := M) θ h₁ h₂ h₃ h₄ hh hhmeas hhC hφ hMsle t
       have hclip : ∀ᵐ ω ∂(M θ),
-          clip (V[t] (s t ω)) (-BV) BV = V[t] (s t ω) := by
+          clip (M.V θ γ t (s t ω)) (-BV) BV = M.V θ γ t (s t ω) := by
         filter_upwards [hVbd] with ω hv
-        have hlo : -BV ≤ V[t] (s t ω) := (abs_le.1 (hv t)).1
-        have hhi : V[t] (s t ω) ≤ BV := (abs_le.1 (hv t)).2
+        have hlo : -BV ≤ M.V θ γ t (s t ω) := (abs_le.1 (hv t)).1
+        have hhi : M.V θ γ t (s t ω) ≤ BV := (abs_le.1 (hv t)).2
         rw [clip, max_eq_left hlo, min_eq_left hhi]
       have hae : ∀ᵐ ω ∂(M θ),
           (∑' k, γ ^ k * (r (t + k) ω + γ * M.V0 θ γ (s (t + k + 1) ω) -
             M.V0 θ γ (s (t + k) ω))) •
             fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ -
-          (∑' k, γ ^ k * (r (t + k) ω + γ * V[t + k + 1] (s (t + k + 1) ω) -
-            V[t + k] (s (t + k) ω))) •
+          (∑' k, γ ^ k * (r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) -
+            M.V θ γ (t + k) (s (t + k) ω))) •
             fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ =
           hh (s t ω) •
             fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ := by
@@ -785,37 +787,37 @@ private lemma main
           M.V0 θ γ (s (t + k) ω))) •
           fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ
       set FV : (ℕ → ℝ × 𝒮 × 𝒜) → Θ →L[ℝ] ℝ := fun ω =>
-        (∑' k, γ ^ k * (r (t + k) ω + γ * V[t + k + 1] (s (t + k + 1) ω) -
-          V[t + k] (s (t + k) ω))) •
+        (∑' k, γ ^ k * (r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) -
+          M.V θ γ (t + k) (s (t + k) ω))) •
           fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ
       set B1 : ℝ := (2 / (1 - γ)) * |M.env.R|
       set Bsum : ℝ := (2 / (1 - γ) ^ 2) * |M.env.R|
       have hgeo1 := (hasSum_geometric_of_lt_one h₀.1 h₀.2).mul_right B1
-      have hδall := ae_norm_residual (M := M) h₀ h₁ θ hV
+      have hδall := ae_norm_residual (M := M) h₀ h₁ θ
       have hFVbd : ∀ᵐ ω ∂(M θ), ‖FV ω‖ ≤ Bsum * Ms := by
         filter_upwards [hδall] with ω h
         have hs : Summable fun k : ℕ =>
-            ‖γ ^ k * (r (t + k) ω + γ * V[t + k + 1] (s (t + k + 1) ω) -
-              V[t + k] (s (t + k) ω))‖ :=
+            ‖γ ^ k * (r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) -
+              M.V θ γ (t + k) (s (t + k) ω))‖ :=
           Summable.of_nonneg_of_le (fun _ => norm_nonneg _)
             (fun k => by
               rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
               exact mul_le_mul_of_nonneg_left (h (t + k)) (pow_nonneg h₀.1 k))
             hgeo1.summable
-        have hts : ‖∑' k, γ ^ k * (r (t + k) ω + γ * V[t + k + 1] (s (t + k + 1) ω) -
-            V[t + k] (s (t + k) ω))‖ ≤ Bsum := by
+        have hts : ‖∑' k, γ ^ k * (r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) -
+            M.V θ γ (t + k) (s (t + k) ω))‖ ≤ Bsum := by
           refine (norm_tsum_le_tsum_norm hs).trans ?_
           have hpt : ∀ k,
-              ‖γ ^ k * (r (t + k) ω + γ * V[t + k + 1] (s (t + k + 1) ω) -
-                V[t + k] (s (t + k) ω))‖ ≤ γ ^ k * B1 := fun k => by
+              ‖γ ^ k * (r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) -
+                M.V θ γ (t + k) (s (t + k) ω))‖ ≤ γ ^ k * B1 := fun k => by
             rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
             exact mul_le_mul_of_nonneg_left (h (t + k)) (pow_nonneg h₀.1 k)
           have htendB : Tendsto (fun N : ℕ => ∑ i ∈ Finset.range N, γ ^ i * B1) atTop
               (nhds (∑' k, γ ^ k * B1)) := by
             simpa [hgeo1.tsum_eq] using hgeo1.tendsto_sum_nat
           have hsumle :
-              (∑' k, ‖γ ^ k * (r (t + k) ω + γ * V[t + k + 1] (s (t + k + 1) ω) -
-                V[t + k] (s (t + k) ω))‖) ≤ ∑' k, γ ^ k * B1 :=
+              (∑' k, ‖γ ^ k * (r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) -
+                M.V θ γ (t + k) (s (t + k) ω))‖) ≤ ∑' k, γ ^ k * B1 :=
             le_of_tendsto_of_tendsto hs.hasSum.tendsto_sum_nat htendB
               (Filter.Eventually.of_forall fun N =>
                 Finset.sum_le_sum fun k _ => hpt k)
@@ -828,7 +830,7 @@ private lemma main
         have : ‖FV ω‖ ≤ Bsum * Ms := by
           dsimp only [FV]
           rw [norm_smul]
-          exact mul_le_mul hts (hMs (s t ω) (a t ω)) (norm_nonneg _)
+          exact mul_le_mul hts (hMsle (s t ω) (a t ω)) (norm_nonneg _)
             ((norm_nonneg _).trans hts)
         exact this
       have hF0bd : ∀ᵐ ω ∂(M θ), ‖F0 ω‖ ≤
@@ -839,7 +841,7 @@ private lemma main
         filter_upwards [hbd0] with ω h
         dsimp only [F0]
         rw [norm_smul]
-        exact mul_le_mul (h t) (hMs (s t ω) (a t ω)) (norm_nonneg _)
+        exact mul_le_mul (h t) (hMsle (s t ω) (a t ω)) (norm_nonneg _)
           ((norm_nonneg _).trans (h t))
       have hF0m : AEStronglyMeasurable F0 (M θ) := by
         have hcoeff0 : Measurable fun ω =>
@@ -862,13 +864,13 @@ private lemma main
         exact hsm0.aestronglyMeasurable
       have hFVm : AEStronglyMeasurable FV (M θ) := by
         have hcoeffV : Measurable fun ω =>
-            ∑' k, γ ^ k * (r (t + k) ω + γ * V[t + k + 1] (s (t + k + 1) ω) -
-              V[t + k] (s (t + k) ω)) := by
+            ∑' k, γ ^ k * (r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) -
+              M.V θ γ (t + k) (s (t + k) ω)) := by
           refine Measurable.tsum fun k => ?_
           exact (((Random.Measurable.of.All_Eq.fst h₁ (t + k)).add
-            (((measurable_of_countable (V[t + k + 1])).comp
+            ((((hVm (t + k + 1))).comp
                 (Random.Measurable.of.All_Eq.snd.fst h₁ (t + k + 1))).const_mul γ)).sub
-            ((measurable_of_countable (V[t + k])).comp
+            (((hVm (t + k))).comp
               (Random.Measurable.of.All_Eq.snd.fst h₁ (t + k)))).const_mul _
         have hscore : StronglyMeasurable fun ω =>
             fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ :=
@@ -893,24 +895,24 @@ private lemma main
     exact hQV0.trans hbridge
   have hmeas : ∀ k, Measurable fun ω : ℕ → ℝ × 𝒮 × 𝒜 =>
       (fun (s : ℕ → 𝒮) (_ : ℕ → 𝒜) (r : ℕ → ℝ) (k : ℕ) =>
-          r k + γ * V[k + 1] (s (k + 1)) - V[k] (s k))
+          r k + γ * M.V θ γ (k + 1) (s (k + 1)) - M.V θ γ k (s k))
         (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) k := fun k =>
     ((Random.Measurable.of.All_Eq.fst h₁ k).add
-      (((measurable_of_countable (V[k + 1])).comp
+      ((((hVm (k + 1))).comp
           (Random.Measurable.of.All_Eq.snd.fst h₁ (k + 1))).const_mul γ)).sub
-      ((measurable_of_countable (V[k])).comp
+      (((hVm (k))).comp
         (Random.Measurable.of.All_Eq.snd.fst h₁ k))
-  have hδall := ae_norm_residual (M := M) h₀ h₁ θ hV
+  have hδall := ae_norm_residual (M := M) h₀ h₁ θ
   set B1 : ℝ := (2 / (1 - γ)) * |M.env.R|
   set Bδ : ℝ := (2 / (1 - γ) ^ 2) * |M.env.R|
   have hgeo1 := (hasSum_geometric_of_lt_one h₀.1 h₀.2).mul_right B1
   have hbd : ∀ᵐ ω ∂(M θ), ∀ t,
-      ‖∑' k, γ ^ k * (r (t + k) ω + γ * V[t + k + 1] (s (t + k + 1) ω) -
-        V[t + k] (s (t + k) ω))‖ ≤ Bδ := by
+      ‖∑' k, γ ^ k * (r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) -
+        M.V θ γ (t + k) (s (t + k) ω))‖ ≤ Bδ := by
     filter_upwards [hδall] with ω h t
     have hs : Summable fun k : ℕ =>
-        ‖γ ^ k * (r (t + k) ω + γ * V[t + k + 1] (s (t + k + 1) ω) -
-          V[t + k] (s (t + k) ω))‖ :=
+        ‖γ ^ k * (r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) -
+          M.V θ γ (t + k) (s (t + k) ω))‖ :=
       Summable.of_nonneg_of_le (fun _ => norm_nonneg _)
         (fun k => by
           rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
@@ -918,16 +920,16 @@ private lemma main
         hgeo1.summable
     refine (norm_tsum_le_tsum_norm hs).trans ?_
     have hpt : ∀ k,
-        ‖γ ^ k * (r (t + k) ω + γ * V[t + k + 1] (s (t + k + 1) ω) -
-          V[t + k] (s (t + k) ω))‖ ≤ γ ^ k * B1 := fun k => by
+        ‖γ ^ k * (r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) -
+          M.V θ γ (t + k) (s (t + k) ω))‖ ≤ γ ^ k * B1 := fun k => by
       rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
       exact mul_le_mul_of_nonneg_left (h (t + k)) (pow_nonneg h₀.1 k)
     have htendB : Tendsto (fun N : ℕ => ∑ i ∈ Finset.range N, γ ^ i * B1) atTop
         (nhds (∑' k, γ ^ k * B1)) := by
       simpa [hgeo1.tsum_eq] using hgeo1.tendsto_sum_nat
     have hsumle :
-        (∑' k, ‖γ ^ k * (r (t + k) ω + γ * V[t + k + 1] (s (t + k + 1) ω) -
-          V[t + k] (s (t + k) ω))‖) ≤ ∑' k, γ ^ k * B1 :=
+        (∑' k, ‖γ ^ k * (r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) -
+          M.V θ γ (t + k) (s (t + k) ω))‖) ≤ ∑' k, γ ^ k * B1 :=
       le_of_tendsto_of_tendsto hs.hasSum.tendsto_sum_nat htendB
         (Filter.Eventually.of_forall fun N =>
           Finset.sum_le_sum fun k _ => hpt k)
@@ -940,7 +942,7 @@ private lemma main
   have hAdvExp :=
     Eq_SymmToDualTSum_SMulPow_Integral_SMulTSum_MulPow_FderivLogToRealProbCond.of.GtInftySup.All_Differentiable.AeAll_LeNormTSum_MulPow.All_Measurable.All_Eq_Joint.All_EqWithDensity
       (M := M) (θ := θ) (γ := γ)
-      (X := fun s _ r k => r k + γ * V[k + 1] (s (k + 1)) - V[k] (s k))
+      (X := fun s _ r k => r k + γ * M.V θ γ (k + 1) (s (k + 1)) - M.V θ γ k (s k))
       (B := Bδ) (Ms := Ms) h₀ h₁ hmeas hbd hφg hMsg
   refine hLHS.trans ((congrArg L hchain).trans (hAdvExp.trans ?_))
   -- rewrite ∑' sugar into Dot / V_δ form
@@ -953,8 +955,8 @@ private lemma main
   change
       (∑' t, γ ^ t •
           (((fun k : ℕ => γ ^ k) ⬝ᵥ
-              (fun k => integ.1 (t + k) + γ * V[t + k + 1] (integ.2.1 (t + k + 1)) -
-                V[t + k] (integ.2.1 (t + k)))) •
+              (fun k => integ.1 (t + k) + γ * M.V θ γ (t + k + 1) (integ.2.1 (t + k + 1)) -
+                M.V θ γ (t + k) (integ.2.1 (t + k)))) •
             ∇[θ] Real.log (M.policy.prob θ (integ.2.1 t) (integ.2.2 t)))) =
         ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
           (((γ ^ (id : ℕ → ℕ)) ⬝ᵥ
@@ -972,4 +974,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-11
+-- updated on 2026-11-14

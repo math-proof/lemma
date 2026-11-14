@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.AlgebraicCurve.Correspondence
+import Lemma.Scheme.Correspondence
 import Class.WeierstrassCurve_GenusOnePic0
 
 set_option autoImplicit false

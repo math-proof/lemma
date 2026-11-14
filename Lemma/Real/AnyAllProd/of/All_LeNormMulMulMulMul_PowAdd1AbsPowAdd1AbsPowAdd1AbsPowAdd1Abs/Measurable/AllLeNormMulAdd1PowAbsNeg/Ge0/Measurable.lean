@@ -115,8 +115,7 @@ lemma k_bound (b : ℝ) (N : ℕ) :
     have h3 : s ^ (b - N) * Real.exp (-(Real.pi * (s ^ 2)⁻¹)) ≤ C := by
       have := hC s hs hs1
       rwa [div_eq_mul_inv] at this
-    calc s ^ b * (1 + s⁻¹) ^ N * Real.exp (-(Real.pi * (s ^ 2)⁻¹)) ≤ s ^ b * (2 * s⁻¹) ^ N * Real.exp (-(Real.pi * (s ^ 2)⁻¹)) := by
-      gcongr
+    calc s ^ b * (1 + s⁻¹) ^ N * Real.exp (-(Real.pi * (s ^ 2)⁻¹)) ≤ s ^ b * (2 * s⁻¹) ^ N * Real.exp (-(Real.pi * (s ^ 2)⁻¹)) := by gcongr
       _ = 2 ^ N * (s ^ (b - N) * Real.exp (-(Real.pi * (s ^ 2)⁻¹))) := by
         rw [mul_pow, ← h2]; ring
       _ ≤ 2 ^ N * C := by gcongr
@@ -133,8 +132,7 @@ lemma k_bound (b : ℝ) (N : ℕ) :
     have h2 : s ^ b ≤ s ^ (max b 0) := Real.rpow_le_rpow_of_exponent_le hs1.le (le_max_left _ _)
     have h3 : Real.exp (-(Real.pi * (s ^ 2)⁻¹)) ≤ 1 := by
       rw [Real.exp_le_one_iff, neg_nonpos]; positivity
-    calc s ^ b * (1 + s⁻¹) ^ N * Real.exp (-(Real.pi * (s ^ 2)⁻¹)) ≤ s ^ (max b 0) * 2 ^ N * 1 := by
-      gcongr
+    calc s ^ b * (1 + s⁻¹) ^ N * Real.exp (-(Real.pi * (s ^ 2)⁻¹)) ≤ s ^ (max b 0) * 2 ^ N * 1 := by gcongr
       _ ≤ 2 ^ N * (C + 1) * (1 + s ^ (max b 0)) := by
         have : 0 ≤ s ^ (max b 0) := Real.rpow_nonneg hs.le _
         have h6 : 0 ≤ (2:ℝ) ^ N * (C + 1) := by positivity
@@ -187,8 +185,7 @@ lemma integrableOn_y2 (c : ℝ) (hc : c < -1) (N : ℕ) :
         linarith
       have h3 : Real.exp (-(Real.pi * (y ^ 2)⁻¹)) ≤ 1 := by
         rw [Real.exp_le_one_iff, neg_nonpos]; positivity
-      calc y ^ c * (1 + y⁻¹) ^ N * Real.exp (-(Real.pi * (y ^ 2)⁻¹)) ≤ y ^ c * 2 ^ N * 1 := by
-        gcongr
+      calc y ^ c * (1 + y⁻¹) ^ N * Real.exp (-(Real.pi * (y ^ 2)⁻¹)) ≤ y ^ c * 2 ^ N * 1 := by gcongr
         _ = 2 ^ N * y ^ c := by ring
 
 lemma integrable_ts (a b : ℝ) (N : ℕ) (ha : max b 0 < a) :

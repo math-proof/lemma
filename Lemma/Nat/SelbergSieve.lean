@@ -317,7 +317,7 @@ lemma levelWeights_mainSum
           s.selbergTerms l / (levelSum s R) ^ 2 else 0) := by
     intro l hl
     rw [Nat.mem_divisors] at hl
-    rw [levelWeights_inner s R l hl.1]
+    rw [levelWeights_inner hl.1]
     unfold levelY
     by_cases hmem : l ∈ levelSet s R
     · rw [ite_eq_left hmem, ite_eq_left hmem]
@@ -782,7 +782,7 @@ private lemma levelWeights_abs_le_nat
   (hnu : 1 ≤ (d : ℝ) * s.nu d) :
   |levelWeights s R d| ≤ d := by
   have hnupos := BoundingSieve.nu_pos_of_dvd_prodPrimes (s := s) hd
-  have hnuw := levelWeights_nu_mul_abs_le s R d hR hd
+  have hnuw := levelWeights_nu_mul_abs_le hR hd
   have hnuabs : |s.nu d| = s.nu d := abs_of_pos hnupos
   have hinv : (s.nu d)⁻¹ ≤ (d : ℝ) := by
     rw [inv_le_iff_one_le_mul₀ hnupos]
@@ -934,8 +934,8 @@ private lemma lambdaSquared_support
     have hw2 : levelWeights s R d2 ≠ 0 := by
       intro hzero
       exact hterm (by rw [hzero, mul_zero])
-    have hd1R := levelWeights_support s R d1 hw1
-    have hd2R := levelWeights_support s R d2 hw2
+    have hd1R := levelWeights_support hw1
+    have hd2R := levelWeights_support hw2
     have hd10 : d1 ≠ 0 := by
       intro hzero
       subst d1
@@ -1035,4 +1035,4 @@ end MathlibExt.SelbergSieve
 
 
 -- created on 2026-10-20
--- updated on 2026-10-29
+-- updated on 2026-11-13

@@ -23,7 +23,7 @@ lemma meromorphicOn_chapter7Entry10ZetaSide
       (Or.inl (Nat.cast_ne_zero.mpr hn.ne'))).analyticAt r
   exact (analyticOnNhd_const.sub hpow).meromorphicOn.mul
     (meromorphicOn_riemannZeta.comp_analyticOnNhd analyticOnNhd_id.neg (Set.mapsTo_univ _ _))
-end
+end Entry10Zeta4
 
 
 

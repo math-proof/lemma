@@ -44,7 +44,7 @@ lemma Tube.carrier_nonempty
   (T.carrier : Set (EuclideanSpace ℝ (Fin 2))).Nonempty := by
 -- proof
   refine ⟨T.center, ?_⟩
-  simp only [Tube.carrier, rectangleCarrier, Set.mem_setOf_eq, sub_self, inner_zero_left,
+  simp only [Tube.carrier, rectangleCarrier, Set.mem_ofPred_eq, sub_self, inner_zero_left,
     abs_zero]
   exact ⟨by linarith, by linarith⟩
 
@@ -77,8 +77,8 @@ lemma disjoint_thickening_infDist
     simp only [Tube.rNeighborhood]
     rwa [Metric.mem_thickening_iff_infDist_lt (Tube.carrier_nonempty hR T₂)]
   exact hdisjoint.ne_of_mem hx1 hx2 rfl
-/-- Schwartz-type pointwise decay bound for the tube wave packet:
-$|\phi_{T, r}(x)| \le r^{-1} (1 + d(x, T) / r)^{-N}$ for every $N > 0$. -/
+-- Schwartz-type pointwise decay bound for the tube wave packet:
+-- $|\phi_{T, r}(x)| \le r^{-1} (1 + d(x, T) / r)^{-N}$ for every $N > 0$.
 
 end OrthogonalityTubes
 

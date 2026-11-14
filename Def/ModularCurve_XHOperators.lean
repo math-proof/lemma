@@ -1,5 +1,5 @@
-import Lemma.ModularCurve.XHHeckeOperator
-import Lemma.CohCarrier.Inst
+import Lemma.LaurentSeries.XHHeckeOperator
+import Lemma.ZMod.Inst
 
 set_option autoImplicit false
 

@@ -1,8 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.QExpansionDiff
+import Lemma.LaurentSeries.QExpansionDiff
 import Lemma.Int.P2MUtil
-open HahnSeries ModularCurve AlgebraicCurve
+open HahnSeries ModularCurve AlgebraicCurve LaurentSeries
 
 
 /-- ported from external source -/
@@ -127,12 +127,12 @@ private lemma AlgebraicCurve.isTraceDiff_unique (K F F' : Type*) [Field K] [Fiel
   apply LinearMap.ext
   intro η
   obtain ⟨z, rfl⟩ := (KaehlerDifferential.tensorKaehlerEquivOfFormallyEtale K F F').surjective η
-  induction z using TensorProduct.induction_on with
-  | zero => simp
-  | tmul y ω =>
+  refine TensorProduct.inductionOn z ?_ ?_
+  · intro y ω
     rw [KaehlerDifferential.tensorKaehlerEquivOfFormallyEtale_apply,
       KaehlerDifferential.mapBaseChange_tmul, h₁, h₂]
-  | add z₁ z₂ hz₁ hz₂ => rw [map_add, map_add, map_add, hz₁, hz₂]
+  · intro z₁ z₂ hz₁ hz₂
+    rw [map_add, map_add, map_add, hz₁, hz₂]
 p2m_open_scoped "AlgebraicCurve" in
 
 private lemma AlgebraicCurve.eq_traceDiff_of_isTraceDiff (K F F' : Type*) [Field K] [Field F] [Field F'] [Algebra K F] [Algebra K F'] [Algebra F F'] [IsScalarTower K F F'] [Algebra.IsSeparable F F'] {t : Ω[F'⁄K] →ₗ[F] Ω[F⁄K]} (ht : IsTraceDiff K F F' t) : t = traceDiff K F F' :=
@@ -169,3 +169,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

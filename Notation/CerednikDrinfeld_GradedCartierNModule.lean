@@ -12,6 +12,6 @@ namespace CerednikDrinfeld_GradedCartierNModule
 
 scoped notation "𝕎" => WittVector p B
 
-scoped notation "σ" => (WittVector.frobenius : WittVector p B →+* WittVector p B)
+scoped notation "σ" => (WittVector.frobenius : RingHom (WittVector p B) (WittVector p B))
 
 end CerednikDrinfeld_GradedCartierNModule

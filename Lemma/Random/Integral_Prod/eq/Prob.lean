@@ -226,20 +226,20 @@ Python: Random.Integral_Prod.eq.Prob.
 @[path]
 private lemma main
   [MeasurableSpace Ω]
-  [ReferenceMeasure α]
+  [μ : ReferenceMeasure α]
   [Countable α] [MeasurableSingletonClass α]
   {π : Measure Ω}
   {s : ℕ → Ω → α}
   {n : ℕ} [SinglePSpace π (s 0)]
 -- given
-  (hα : ReferenceMeasure.measure (α := α) = Measure.count)
+  (hα : μ.measure = Measure.count)
   (hT : ∀ t : ℕ, SinglePSpace π (s (t + 1), s t))
   (v : α) :
 -- imply
   have _ : SinglePSpace π (s n) := singlePSpace_s hT
   ∫⁻ u : Fin n → α,
       density (s := s) (n := n) hT v u
-    ∂(Measure.pi fun _ => ReferenceMeasure.measure) =
+    ∂(Measure.pi fun _ => μ.measure) =
     π.prob (s n) v := by
 -- proof
   induction n generalizing v with
@@ -282,4 +282,4 @@ private lemma main
 
 
 -- created on 2023-04-04
--- updated on 2026-10-10
+-- updated on 2026-11-14

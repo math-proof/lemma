@@ -1,8 +1,8 @@
 import Mathlib
-import Lemma.HeckeEis.BinaryFormRep
-import Lemma.Gamma0CoeffCohomology.Main
+import Lemma.MvPolynomial.BinaryFormRep
+import Lemma.Representation.Main
 import Initialize.Tactic.Attr.Basic
-open HeckeEis
+open HeckeEis MvPolynomial
 open MvPolynomial
 set_option autoImplicit false
 

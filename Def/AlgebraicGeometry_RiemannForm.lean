@@ -1,5 +1,5 @@
-import Lemma.GoodReductionJacobian.RelativeGroupLawAlgPointsV2
-import Lemma.EllipticCurve.TateModule
+import Lemma.Scheme.RelativeGroupLawAlgPointsV2
+import Lemma.WeierstrassCurve.TateModule
 import Abbrev.AlgebraicGeometry_RiemannForm
 
 set_option autoImplicit false

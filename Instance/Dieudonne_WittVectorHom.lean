@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_Dieudonne_WittVectorHom.lean: instance decls only.
 import Mathlib
-import Lemma.Dieudonne.DatumAndHonda
+import Lemma.LinearMap.DatumAndHonda
 
 set_option autoImplicit false
 

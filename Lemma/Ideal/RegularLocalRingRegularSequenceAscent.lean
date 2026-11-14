@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.AlgebraicGeometry.RegularLocalRingQuotientNonZeroDivisorAscent
+import Lemma.Ideal.RegularLocalRingQuotientNonZeroDivisorAscent
 
 set_option autoImplicit false
 set_option maxHeartbeats 800000

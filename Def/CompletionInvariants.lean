@@ -1,6 +1,6 @@
-import Lemma.InvariantBaseChange.Main
-import Lemma.AdicCompletionTensorRing.Main
-import Lemma.StabilizerCompletionAction.Main
+import Lemma.LinearMap.Main
+import Theorem.Algebra.AdicCompletion.TensorRing.Part4
+import Lemma.AdicCompletion.StabilizerCompletionAction
 
 universe u₁ u₂ u₃
 

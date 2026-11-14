@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_IsLocalRing_SmallExtensionTangent.lean: instance decls only.
 import Mathlib
-import Lemma.IsLocalRing.SmallExtensionTangent
+import Lemma.Ideal.SmallExtensionTangent
 
 set_option autoImplicit false
 

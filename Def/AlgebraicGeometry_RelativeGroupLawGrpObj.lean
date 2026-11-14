@@ -1,4 +1,4 @@
-import Lemma.AlgebraicGeometry.RelativeGroupLaw
+import Lemma.Scheme.RelativeGroupLaw
 
 set_option autoImplicit false
 

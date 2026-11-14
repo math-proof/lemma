@@ -25,6 +25,14 @@ import Mathlib.RingTheory.Polynomial.Wronskian
 import Mathlib.RingTheory.Algebraic.Integral
 import Mathlib.Tactic
 import Def.NumberTheory.RothAuxiliary.Part7
+import Lemma.Fin.CardRothLowIndex.Gt_0.of.Lt_Div1'2.Gt_0.Gt_0
+import Lemma.Real.RothCoordinateBase.Gt_0
+import Lemma.Fin.CardRothBox.le.Pow2Sum.of.All_Gt_0
+import Lemma.Fin.RothMvL1_RothMvOfCoeff.le.Sum_NatAbs.of.RothCoeff
+import Lemma.Real.NormRothRidoutAuxMatrix.le.PowMul_2RothCoordinateBaseSum
+import Lemma.Matrix.MulVecRothAuxMatrix.eq.Zero.of.EqMulVecRothRidoutAuxMatrix_0.RothCoeff
+import Lemma.Matrix.RothHasseEval_1.eq.Zero.of.EqMulVecRothAuxMatrix_0.RothCoeff.IsAlgebraic
+import Lemma.Matrix.Mul_SubDiv1'2.le.RothWeightAndRothWeight.le.Sub_Mul_SubDiv1'2.of.Ne_0.RothBox.EqMulVecRothRidoutAuxMatrix_0.All_Gt_0.RothCoeff
 set_option maxHeartbeats 999999
 
 open scoped BigOperators
@@ -66,7 +74,7 @@ theorem roth_ridout_exists_auxiliary_coeff
   have hd : 0 < d := by dsimp [d]; omega
   have hcard : M < N := by
     exact roth_low_equation_card_lt hr hm hγ0 hparamStrict
-  have hMpos : 0 < M := roth_low_equation_card_pos hm hd hγhalf
+  have hMpos : 0 < M := Fin.CardRothLowIndex.Gt_0.of.Lt_Div1'2.Gt_0.Gt_0 hm hd hγhalf
   have htwice : 2 * M ≤ N := by
     exact roth_low_equation_twice_card_le hr hm hγ0 hparamHalf
   obtain ⟨c, hc, hker, hcnorm⟩ :=
@@ -88,11 +96,11 @@ theorem roth_ridout_exists_auxiliary_coeff
       Real.rpow_le_rpow_of_exponent_le hbase hexp
   have hHnat : 1 ≤ H := by
     apply one_le_pow₀
-    have hB := rothCoordinateBase_pos α
+    have hB := Real.RothCoordinateBase.Gt_0 α
     omega
   have hH : (1 : ℝ) ≤ H := by exact_mod_cast hHnat
   have hAnorm : ‖A‖ ≤ (H : ℝ) := by
-    exact rothRidoutAuxMatrix_norm_le α r γ
+    exact Real.NormRothRidoutAuxMatrix.le.PowMul_2RothCoordinateBaseSum α r γ
   have hmax : max 1 ‖A‖ ≤ (H : ℝ) := max_le hH hAnorm
   have hcnormSimple : ‖c‖ ≤ (N : ℝ) * H := by
     calc
@@ -111,8 +119,8 @@ theorem roth_ridout_exists_auxiliary_coeff
         norm_num
       _ ≤ (N : ℝ) * ‖c‖ := by
         simpa [N, nsmul_eq_mul] using hsumNorm
-  have hN : N ≤ 2 ^ S := roth_box_card_le_two_pow_sum hr
-  have hl1Nat := rothMvL1_ofCoeff_le c
+  have hN : N ≤ 2 ^ S := Fin.CardRothBox.le.Pow2Sum.of.All_Gt_0 hr
+  have hl1Nat := Fin.RothMvL1_RothMvOfCoeff.le.Sum_NatAbs.of.RothCoeff c
   have hl1 : (rothMvL1 (rothMvOfCoeff c) : ℝ) ≤
       (((8 * rothCoordinateBase α) ^ S : ℕ) : ℝ) := by
     calc
@@ -127,7 +135,7 @@ theorem roth_ridout_exists_auxiliary_coeff
         rw [← mul_pow, ← mul_pow]
         congr 1
         ring
-  have hkerOld := roth_ridout_old_mulVec_eq_zero α c hker
+  have hkerOld := Matrix.MulVecRothAuxMatrix.eq.Zero.of.EqMulVecRothRidoutAuxMatrix_0.RothCoeff hker
   refine ⟨c, hc, ?_, ?_, by exact_mod_cast hl1⟩
   · intro i hi
     by_cases hir : ∀ h, i h ≤ r h
@@ -135,7 +143,7 @@ theorem roth_ridout_exists_auxiliary_coeff
       have hibLow : ib ∈ rothLowIndices r γ := by
         simp only [rothLowIndices, Finset.mem_filter, Finset.mem_univ, true_and]
         simpa [ib] using hi
-      exact rothHasseEval_eq_zero_of_mulVec_eq_zero α hα ⟨ib, hibLow⟩ c hkerOld
+      exact Matrix.RothHasseEval_1.eq.Zero.of.EqMulVecRothAuxMatrix_0.RothCoeff.IsAlgebraic (i := ⟨ib, hibLow⟩) hα hkerOld
     · push Not at hir
       obtain ⟨h, hh⟩ := hir
       unfold rothHasseEval
@@ -150,6 +158,6 @@ theorem roth_ridout_exists_auxiliary_coeff
       · rw [hz]
         simp
   · intro j hj
-    exact roth_ridout_coeff_weight_bounds α c hr hker j hj
+    exact Matrix.Mul_SubDiv1'2.le.RothWeightAndRothWeight.le.Sub_Mul_SubDiv1'2.of.Ne_0.RothBox.EqMulVecRothRidoutAuxMatrix_0.All_Gt_0.RothCoeff hr hker hj
 
 end MathlibExt.NumberTheory.RothAuxiliary

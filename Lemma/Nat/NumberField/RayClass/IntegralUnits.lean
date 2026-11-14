@@ -4,6 +4,11 @@ import Theorem.NumberTheory.NumberField.RayClass.IntegralUnits.Part4
 open NumberField
 open Modulus
 
+set_option synthInstance.maxHeartbeats 100000
+noncomputable section
+
+
+set_option linter.defProp false
 
 namespace NumberField.Modulus
 
@@ -14,7 +19,7 @@ namespace NumberField.Modulus
 lemma integralUnitsToFieldUnits_injective
   [Field K] [NumberField K] :
 -- imply
-  Function.Injective (integralUnitsToFieldUnits (K :=
+  Function.Injective (integralUnitsToFieldUnits (K := K)) :=
 -- proof
   Units.map_injective (NumberField.RingOfIntegers.coe_injective (K := K))
 
@@ -103,7 +108,7 @@ private lemma integralUnitsToRayElements_coe_eq
   ((integralUnitsToRayElements m u : rayElements m) : Kˣ) =
     integralUnitsToFieldUnits u := by
 -- proof
-  apply NumberField.Modulus.integralUnitsToRayElements_coe m u
+  apply NumberField.Modulus.integralUnitsToRayElements_coe
 
 /--
 [mem_integralRayOneUnits_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/IntegralUnits.lean)
@@ -118,7 +123,7 @@ private lemma mem_integralRayOneUnits_iff_eq
     IsRayElementOne m
     ((integralUnitsToRayElements m u : rayElements m) : Kˣ) := by
 -- proof
-  apply NumberField.Modulus.mem_integralRayOneUnits_iff m u
+  apply NumberField.Modulus.mem_integralRayOneUnits_iff
 
 /--
 [integralUnitsToRayQuotient_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/IntegralUnits.lean)
@@ -132,7 +137,7 @@ private lemma integralUnitsToRayQuotient_apply_eq
   integralUnitsToRayQuotient m u =
     QuotientGroup.mk (integralUnitsToRayElements m u) := by
 -- proof
-  apply NumberField.Modulus.integralUnitsToRayQuotient_apply m u
+  apply NumberField.Modulus.integralUnitsToRayQuotient_apply
 
 /--
 [integralUnitsToResidueSign_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/IntegralUnits.lean)
@@ -146,32 +151,22 @@ private lemma integralUnitsToResidueSign_apply_eq
   integralUnitsToResidueSign m u =
     residueSignMap m (integralUnitsToRayElements m u) := by
 -- proof
-  apply NumberField.Modulus.integralUnitsToResidueSign_apply m u
+  apply NumberField.Modulus.integralUnitsToResidueSign_apply
 
 /--
 [integralUnitsToRayQuotient_ker](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/IntegralUnits.lean)
 -/
 @[path]
-private lemma integralUnitsToRayQuotient_ker_eq
-  [Field K] [NumberField K]
-  {m : Modulus K} :
--- imply
-  (integralUnitsToRayQuotient m).ker = integralRayOneUnits m := by
--- proof
-  apply NumberField.Modulus.integralUnitsToRayQuotient_ker m
+private def integralUnitsToRayQuotient_ker_eq :=
+  @NumberField.Modulus.integralUnitsToRayQuotient_ker
 
 /--
 [integralUnitsToResidueSign_ker](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/IntegralUnits.lean)
 -/
 @[path]
-private lemma integralUnitsToResidueSign_ker_eq
-  [Field K] [NumberField K]
-  {m : Modulus K} :
--- imply
-  (integralUnitsToResidueSign m).ker = integralRayOneUnits m := by
--- proof
-  apply NumberField.Modulus.integralUnitsToResidueSign_ker m
+private def integralUnitsToResidueSign_ker_eq :=
+  @NumberField.Modulus.integralUnitsToResidueSign_ker
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-13

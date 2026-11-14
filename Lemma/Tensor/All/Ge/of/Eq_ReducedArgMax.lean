@@ -5,11 +5,11 @@ import Initialize.Tactic.Attr.Basic
 
 @[path]
 private lemma main
-  {n : ℕ} [NeZero n]
+  [NeZero (n : ℕ)]
   {x : Fin n → ℝ}
   {M : Fin n}
 -- given
-  (h : M = max⁻¹ Set.univ x) :
+  (h : M = «max⁻¹» Set.univ x) :
 -- imply
   ∀ k, x M ≥ x k := by
 -- proof
@@ -22,3 +22,4 @@ private lemma main
 
 
 -- created on 2023-11-05
+-- updated on 2026-11-13

@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.AdelicIndex
+import Lemma.Submodule.AdelicIndex
 import Lemma.Int.P2MUtil
 
-open AlgebraicCurve
+open AlgebraicCurve Submodule
 
 /--
 [AlgebraicCurve_mul_mem_lSpace_nsmul_succ_and_reflects_of_poleDivisor](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_mul_mem_lSpace_nsmul_succ_and_reflects_of_poleDivisor.lean)

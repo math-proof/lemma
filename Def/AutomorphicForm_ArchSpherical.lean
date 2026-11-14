@@ -1,4 +1,4 @@
-import Lemma.AutomorphicForm.CuspidalConstituent
+import Lemma.Submodule.CuspidalConstituent
 
 set_option autoImplicit false
 

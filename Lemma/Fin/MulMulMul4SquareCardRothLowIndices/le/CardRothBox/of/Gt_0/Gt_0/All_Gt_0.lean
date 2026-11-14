@@ -1,4 +1,5 @@
 import Mathlib
+import Def.NumberTheory.RothAuxiliary.Part5
 import Lemma.Fin.Sum_SquareRothCenteredSum.le.DivMul_CardRothBox4.of.All_Gt_0
 import Lemma.Fin.RothWeight.eq.AddRothCenteredSumDiv_2.of.RothBox
 open MathlibExt.NumberTheory.RothAuxiliary
@@ -59,4 +60,5 @@ private lemma main
     _ = (m : ℝ) * Fintype.card (RothBox r) := by ring
 
 
+-- updated on 2026-11-13
 -- created on 2026-10-21

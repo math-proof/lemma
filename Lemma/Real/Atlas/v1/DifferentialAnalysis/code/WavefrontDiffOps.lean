@@ -621,8 +621,8 @@ lemma scatteringWavefrontSet_proj_fst_subset_coneSingularSupport
   by_contra hp
   exact absurd hpq_mem
     (not_mem_scatteringWavefrontSet_of_not_mem_coneSingularSupport u p q hp)
-/-- The cone singular support is contained in the projection to the first factor of the
-scattering wavefront set. -/
+-- The cone singular support is contained in the projection to the first factor of the
+-- scattering wavefront set.
 end WavefrontDiffOps
 
 

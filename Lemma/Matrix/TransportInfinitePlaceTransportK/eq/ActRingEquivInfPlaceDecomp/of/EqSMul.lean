@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.NumberField.ArchimedeanIdeleModule
-import Lemma.NumberField.InfinitePlaceTransport
+import Lemma.AbsoluteValue.ArchimedeanIdeleModule
+import Lemma.AlgEquiv.InfinitePlaceTransport
 
 
 /-- ported from external source -/
@@ -13,7 +13,7 @@ private lemma main
 -- given
   (h : (σ : K ≃ₐ[E] K) • w = w) :
 -- imply
-  NumberField.InfinitePlaceTransport.transport (σ : K ≃ₐ[E] K) h = NumberField.InfPlaceDecomp.actRingEquiv σ :=
+  AlgEquiv.InfinitePlaceTransport.transport (σ : K ≃ₐ[E] K) h = NumberField.InfPlaceDecomp.actRingEquiv σ :=
 -- proof
   rfl
 

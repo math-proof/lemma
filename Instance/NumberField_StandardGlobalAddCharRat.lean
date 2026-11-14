@@ -6,12 +6,12 @@ import Mathlib.NumberTheory.NumberField.AdeleRing
 import Mathlib.RingTheory.DedekindDomain.FiniteAdeleRing
 import Mathlib.NumberTheory.NumberField.Completion.InfinitePlace
 import Mathlib.NumberTheory.NumberField.InfinitePlace.TotallyRealComplex
-import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
+import Mathlib.Filter.Algebra.RestrictedProduct.TopologicalSpace
 import Mathlib.Algebra.BigOperators.Finprod
 import Mathlib.Analysis.SpecialFunctions.Complex.Log
 import Mathlib.Analysis.Normed.Group.Ultra
 import Mathlib.Analysis.Normed.Ring.Ultra
-import Lemma.AutomorphicForm.WhittakerCoefficient
+import Lemma.Measure.WhittakerCoefficient
 
 set_option autoImplicit false
 

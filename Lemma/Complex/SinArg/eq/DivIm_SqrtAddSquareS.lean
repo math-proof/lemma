@@ -1,12 +1,13 @@
 import Def.Analysis.SpecialFunctions.Trigonometric.Part2
 import Lemma.Complex.Norm.eq.Sqrt
+open Complex
 
 
 @[path]
 private lemma main
   {z : ℂ} :
 -- imply
-  sin (arg z) = im z / √((re z)² + (im z)²) := by
+  Real.sin (arg z) = im z / √((re z)² + (im z)²) := by
 -- proof
   rw [← Complex.Norm.eq.Sqrt (z := z)]
   exact Complex.sin_arg z

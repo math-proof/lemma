@@ -131,7 +131,7 @@ private lemma helper_main (N : ℕ) (H : ℝ → ℂ) (hH : ContDiff ℝ N H) (h
       have h2N : (2 : ℝ) ^ N ≠ 0 := pow_ne_zero N two_ne_zero
       calc
         _ = 2 ^ N * (2 ^ N * |l| ^ N)⁻¹ := by
-        rw [mul_inv, ← mul_assoc, mul_inv_cancel₀ h2N, one_mul]
+          rw [mul_inv, ← mul_assoc, mul_inv_cancel₀ h2N, one_mul]
         _ ≤ 2 ^ N * ((1 + |l|) ^ N)⁻¹ :=
             mul_le_mul_of_nonneg_left (inv_anti₀ (pow_pos hl0 N) key) (pow_nonneg zero_le_two N)
     calc

@@ -9,9 +9,9 @@ namespace Complex
 
 /--
 [one_le_eight_mul_atomBound_mul_one_add_sqrt_variance](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CorrectedRosenbloom.lean)
+the natural-valued random variable.  The additive `1` makes the estimate valid at zero variance.
 -/
 @[path]
-the natural-valued random variable.  The additive `1` makes the estimate valid at zero variance. -/
 private lemma one_le_eight_mul_atomBound_mul_one_add_sqrt_variance
   (μ : Measure ℕ) [IsProbabilityMeasure μ]
   (hLp : MemLp (fun n : ℕ => (n : ℝ)) 2 μ)
@@ -139,19 +139,19 @@ lemma wimanMajorant_le_eight_mul_maximumTerm
     (1 + Real.sqrt (iteratedDeriv 2 (wimanGrowth f) x)) := by
 -- proof
   by_cases hne : ∃ n, wimanTaylorCoefficient f n ≠ 0
-  · rw [iteratedDeriv_two_wimanGrowth_eq_variance f hf hne x]
+  · rw [iteratedDeriv_two_wimanGrowth_eq_variance (f := f) (x := x) hf hne]
     let μ : Measure ℕ := wimanTiltedMeasure f x
     let _ : IsProbabilityMeasure μ := by
       dsimp [μ]
-      exact isProbabilityMeasure_wimanTiltedMeasure f hf hne x
+      exact isProbabilityMeasure_wimanTiltedMeasure (f := f) (x := x) hf hne
     obtain ⟨n₀, hn₀⟩ := hne
     have htermPos : 0 < wimanTerm f (Real.exp x) n₀ := by
       rw [wimanTerm, abs_of_pos (Real.exp_pos x)]
       exact mul_pos (norm_pos_iff.mpr hn₀) (pow_pos (Real.exp_pos x) _)
     have hmajorantPos : 0 < wimanMajorant f (Real.exp x) :=
-      htermPos.trans_le (wimanTerm_le_wimanMajorant f hf (Real.exp x) n₀)
+      htermPos.trans_le (wimanTerm_le_wimanMajorant (f := f) (r := Real.exp x) (n := n) hf₀)
     have hmaximumPos : 0 < wimanMaximumTerm f (Real.exp x) :=
-      htermPos.trans_le (wimanTerm_le_wimanMaximumTerm f hf (Real.exp x) n₀)
+      htermPos.trans_le (wimanTerm_le_wimanMaximumTerm (f := f) (r := Real.exp x) (n := n₀) hf)
     let p : ℝ :=
       wimanMaximumTerm f (Real.exp x) / wimanMajorant f (Real.exp x)
     have hp : 0 ≤ p := by
@@ -160,21 +160,21 @@ lemma wimanMajorant_le_eight_mul_maximumTerm
     have hLp : MemLp (fun n : ℕ => (n : ℝ)) 2 μ := by
       have h := ProbabilityTheory.memLp_tilted_mul
         (X := fun n : ℕ => (n : ℝ)) (μ := wimanCoefficientMeasure f)
-        (t := x) (mem_interior_integrableExpSet_wimanCoefficientMeasure f hf x) 2
+        (t := x) (mem_interior_integrableExpSet_wimanCoefficientMeasure (f := f) (x := x) hf) 2
       norm_num at h ⊢
       simpa only [μ, wimanTiltedMeasure] using h
     have hatom : ∀ n : ℕ, μ.real {n} ≤ p := by
       intro n
-      have htermNonneg := wimanTerm_nonneg f (Real.exp x) n
+      have htermNonneg := wimanTerm_nonneg (f := f) (r := Real.exp x) (n := n)
       have hratioNonneg :
         0 ≤ wimanTerm f (Real.exp x) n / wimanMajorant f (Real.exp x) :=
         div_nonneg htermNonneg hmajorantPos.le
       change ENNReal.toReal (wimanTiltedMeasure f x {n}) ≤ p
-      rw [wimanTiltedMeasure_singleton f hf x n,
+      rw [wimanTiltedMeasure_singleton (f := f) (x := x) (n := n) hf,
         ENNReal.toReal_ofReal hratioNonneg]
       dsimp [p]
       exact (div_le_div_iff_of_pos_right hmajorantPos).2
-        (wimanTerm_le_wimanMaximumTerm f hf (Real.exp x) n)
+        (wimanTerm_le_wimanMaximumTerm (f := f) (r := Real.exp x) (n := n) hf)
     have hnormalized :=
       one_le_eight_mul_atomBound_mul_one_add_sqrt_variance μ hLp p hp hatom
     have hdiv :
@@ -201,12 +201,12 @@ lemma wimanMajorant_le_eight_mul_maximumTerm
     have hmajorant : wimanMajorant f (Real.exp x) = 0 := by
       simp [wimanMajorant, wimanTerm, hne]
     have hmaximumNonneg : 0 ≤ wimanMaximumTerm f (Real.exp x) :=
-      (wimanTerm_nonneg f (Real.exp x) 0).trans
-        (wimanTerm_le_wimanMaximumTerm f hf (Real.exp x) 0)
+      (wimanTerm_nonneg (f := f) (r := Real.exp x) (n := 0)).trans
+        (wimanTerm_le_wimanMaximumTerm (f := f) (r := Real.exp x) (n := 0) hf)
     rwa [hmajorant]
       (mul_nonneg (by norm_num) hmaximumNonneg)
       (add_nonneg zero_le_one (Real.sqrt_nonneg _))
-end
+end Complex
 
 
 

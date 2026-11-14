@@ -213,7 +213,7 @@ lemma general_solution_satisfies_wave_eq
     (hasDerivAt_comp_add_left' (hFd'.differentiableAt (x := x + t))).add
       (hasDerivAt_comp_sub_left' (hGd'.differentiableAt (x := x - t)))
   rw [hdt_eq, hdtt.deriv, hdx_eq, hdxx.deriv]
-set_option maxHeartbeats 2000000 in
+set_option maxHeartbeats 2000000
 
 end WaveEquation1D
 
@@ -278,13 +278,13 @@ lemma zero_wave_is_zero
     intro p
     rw [show ((1:ℝ), (-1:ℝ)) = ((1:ℝ), (0:ℝ)) - ((0:ℝ), (1:ℝ)) from by ext <;> simp,
       show ((1:ℝ), (1:ℝ)) = ((1:ℝ), (0:ℝ)) + ((0:ℝ), (1:ℝ)) from by ext <;> simp]
-    simp only [map_sub, map_add, ContinuousLinearMap.sub_apply]
+    simp only [map_sub, map_add, sub_apply]
     linarith [wave_fderiv p, schwarz p]
   have vanish_1m1 : ∀ p, (fderiv ℝ (fderiv ℝ W) p (1, 1)) (1, -1) = 0 := by
     intro p
     rw [show ((1:ℝ), (1:ℝ)) = ((1:ℝ), (0:ℝ)) + ((0:ℝ), (1:ℝ)) from by ext <;> simp,
       show ((1:ℝ), (-1:ℝ)) = ((1:ℝ), (0:ℝ)) - ((0:ℝ), (1:ℝ)) from by ext <;> simp]
-    simp only [map_add, map_sub, ContinuousLinearMap.add_apply]
+    simp only [map_add, map_sub, add_apply]
     linarith [wave_fderiv p, schwarz p]
   have chain_fderiv : ∀ (p v u : ℝ × ℝ),
     fderiv ℝ (fun q => fderiv ℝ W q v) p u = (fderiv ℝ (fderiv ℝ W) p u) v := by
@@ -1432,10 +1432,10 @@ lemma odd_extension_second_spatial_deriv_zero
       simp [hx, hle]
   have dh_even : ∀ x, deriv h (-x) = deriv h x := deriv_even_of_odd h h_odd
   exact deriv_zero_of_even (deriv h) dh_even
-/-- $C^2$ regularity of the joint odd extension in $x$: if $u$ is $C^2$ on
-$[0, \infty) \times [0, \infty)$ with $u(t, 0) = 0$ and the second spatial derivative vanishing
-at the boundary, then the extension $(t, x) \mapsto u(t, x)$ for $x \ge 0$ and $-u(t, -x)$ for
-$x < 0$ is jointly $C^2$ on $\mathbb{R}^2$. -/
+-- $C^2$ regularity of the joint odd extension in $x$: if $u$ is $C^2$ on
+-- $[0, \infty) \times [0, \infty)$ with $u(t, 0) = 0$ and the second spatial derivative vanishing
+-- at the boundary, then the extension $(t, x) \mapsto u(t, x)$ for $x \ge 0$ and $-u(t, -x)$ for
+-- $x < 0$ is jointly $C^2$ on $\mathbb{R}^2$.
 
 end WaveEquation1D
 

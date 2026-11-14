@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.DivisorPushPull
-open AlgebraicCurve AlgebraicCurve.Divisor
+import Lemma.Matrix.DivisorPushPull
+open AlgebraicCurve AlgebraicCurve.Divisor Matrix
 
 
 /-- ported from external source -/

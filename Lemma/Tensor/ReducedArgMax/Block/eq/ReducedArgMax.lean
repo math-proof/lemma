@@ -11,10 +11,10 @@ private lemma main
   (h₀ : ∀ j, j ≠ i₀ → x j < x i₀)
   (h₁ : x i₀ > 0) :
 -- imply
-  ((max⁻¹ Set.univ (Fin.append x (0 : Fin b → ℝ)) : Fin (n + b)) : ℕ) = ((max⁻¹ Set.univ x : Fin n) : ℕ) := by
+  ((«max⁻¹» Set.univ (Fin.append x (0 : Fin b → ℝ)) : Fin (n + b)) : ℕ) = ((«max⁻¹» Set.univ x : Fin n) : ℕ) := by
 -- proof
-  have hA : max⁻¹ Set.univ x = i₀ := by
-    have hs : max⁻¹ Set.univ x ∈ Set.univ ∧ ∀ y ∈ Set.univ, x y ≤ x (max⁻¹ Set.univ x) := by
+  have hA : «max⁻¹» Set.univ x = i₀ := by
+    have hs : «max⁻¹» Set.univ x ∈ Set.univ ∧ ∀ y ∈ Set.univ, x y ≤ x («max⁻¹» Set.univ x) := by
       refine Classical.epsilon_spec (p := fun k => k ∈ Set.univ ∧ ∀ y ∈ Set.univ, x y ≤ x k) ⟨i₀, trivial, fun y _ => ?_⟩
       if hy : y = i₀ then
         rw [hy]
@@ -22,9 +22,9 @@ private lemma main
         exact (h₀ y hy).le
     by_contra hne
     exact absurd (hs.2 i₀ trivial) (not_le.mpr (h₀ _ hne))
-  have hB : max⁻¹ Set.univ (Fin.append x (0 : Fin b → ℝ)) = Fin.castAdd b i₀ := by
-    have hs : max⁻¹ Set.univ (Fin.append x (0 : Fin b → ℝ)) ∈ Set.univ ∧
-        ∀ y ∈ Set.univ, Fin.append x (0 : Fin b → ℝ) y ≤ Fin.append x (0 : Fin b → ℝ) (max⁻¹ Set.univ (Fin.append x (0 : Fin b → ℝ))) := by
+  have hB : «max⁻¹» Set.univ (Fin.append x (0 : Fin b → ℝ)) = Fin.castAdd b i₀ := by
+    have hs : «max⁻¹» Set.univ (Fin.append x (0 : Fin b → ℝ)) ∈ Set.univ ∧
+        ∀ y ∈ Set.univ, Fin.append x (0 : Fin b → ℝ) y ≤ Fin.append x (0 : Fin b → ℝ) («max⁻¹» Set.univ (Fin.append x (0 : Fin b → ℝ))) := by
       refine Classical.epsilon_spec (p := fun k => k ∈ Set.univ ∧ ∀ y ∈ Set.univ, Fin.append x (0 : Fin b → ℝ) y ≤ Fin.append x (0 : Fin b → ℝ) k)
         ⟨Fin.castAdd b i₀, trivial, fun y _ => ?_⟩
       induction y using Fin.addCases with
@@ -38,7 +38,7 @@ private lemma main
         simp only [Fin.append_left, Fin.append_right, Pi.zero_apply]
         exact h₁.le
     have h₂ := hs.2 (Fin.castAdd b i₀) trivial
-    generalize max⁻¹ Set.univ (Fin.append x (0 : Fin b → ℝ)) = k at h₂ ⊢
+    generalize «max⁻¹» Set.univ (Fin.append x (0 : Fin b → ℝ)) = k at h₂ ⊢
     induction k using Fin.addCases with
     | left j =>
       simp only [Fin.append_left] at h₂
@@ -54,3 +54,4 @@ private lemma main
 
 
 -- created on 2021-12-20
+-- updated on 2026-11-13

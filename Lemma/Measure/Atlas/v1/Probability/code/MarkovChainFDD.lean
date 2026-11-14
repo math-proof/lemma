@@ -48,7 +48,7 @@ lemma comap_sigma_mono
 -- proof
   let phi : (Fin (k + 2) -> S) -> (Fin (k + 1) -> S) := fun f i => f (Fin.castSucc i)
   have hphi : @Measurable _ _ MeasurableSpace.pi MeasurableSpace.pi phi :=
-    measurable_pi_lambda _ (fun i => measurable_pi_apply _)
+    Measurable.of_eval (fun i => measurable_pi_apply _)
   have h_factor : (fun omega => fun i : Fin (k + 1) => X (↑i) omega) =
     phi ∘ (fun omega => fun i : Fin (k + 2) => X (↑i) omega) := by
     ext omega i; simp [phi, Fin.castSucc]
@@ -72,8 +72,9 @@ lemma comap_inter_preimage
 -- imply
   @MeasurableSet Omega (MeasurableSpace.comap (fun omega => fun i : Fin (k + 2) => X i omega) MeasurableSpace.pi) (C ∩ X (k + 1) ⁻¹' B) := by
 -- proof
-  exact MeasurableSet.inter (comap_sigma_mono X k C hC)
-    (by rw [MeasurableSpace.measurableSet_comap]
+  exact MeasurableSet.inter (comap_sigma_mono X C hC)
+    (by
+      rw [MeasurableSpace.measurableSet_comap]
       exact ⟨(fun f : Fin (k + 2) -> S => f ⟨k + 1, by omega⟩) ⁻¹' B,
         (measurable_pi_apply _) hB, by ext omega; simp⟩)
 
@@ -111,16 +112,10 @@ lemma lintegral_measurable_extension
     rw [lintegral_indicator ((hmeas (k + 1)) hB), setLIntegral_one,
       Measure.restrict_apply ((hmeas (k + 1)) hB)] at h
     exact h
-  calc ∫⁻ omega in C, f (X (k + 1) omega) ∂P
-    = ∫⁻ y, f y ∂((P.restrict C).map (X (k + 1))) := by
-      rw [lintegral_map hf (hmeas (k + 1))]
-    _ = ∫⁻ y, f y ∂(((P.restrict C).map (X k)).bind (fun x => kappa x)) := by
-      rw [h_eq]
-    _ = ∫⁻ x, (∫⁻ y, f y ∂kappa x) ∂((P.restrict C).map (X k)) := by
-      rw [Measure.lintegral_bind (Kernel.measurable kappa).aemeasurable hf.aemeasurable]
-    _ = ∫⁻ omega in C, (∫⁻ y, f y ∂kappa (X k omega)) ∂P := by
-      rw [lintegral_map _ (hmeas k)]
-      exact Measurable.lintegral_kernel_prod_right (hf.comp measurable_snd)
+  rw [← lintegral_map hf (hmeas (k + 1)), h_eq,
+    Measure.lintegral_bind (Kernel.measurable kappa).aemeasurable hf.aemeasurable,
+    lintegral_map (Measurable.lintegral_kernel_prod_right (f := fun (_ : S) y => f y)
+      (hf.comp measurable_snd)) (hmeas k)]
 
 /--
 [set_lintegral_inter_preimage](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/MarkovChainFDD.lean)
@@ -200,13 +195,13 @@ lemma markov_chain_fdd_aux
     have hC'_meas : MeasurableSet C' := hC_meas.inter (hmeas (j + 1) (hA 0))
     have hC'_comap : @MeasurableSet Omega (MeasurableSpace.comap
       (fun omega => fun i : Fin (j + 2) => X i omega) MeasurableSpace.pi) C' :=
-      comap_inter_preimage X j C (A 0) (hA 0) hC_comap
-    rw [ih (j + 1) (fun i => A i.succ) (fun i => hA i.succ) C' hC'_meas hC'_comap]
+      comap_inter_preimage (k := j) X (hA 0) hC_comap
+    rw [ih (j := j + 1) (C := C') (fun i => A i.succ) (fun i => hA i.succ) hC'_meas hC'_comap]
     simp only [markovFDD]
     set f := fun x => markovFDD (kappa x) kappa m (fun i => A i.succ) with hf_def
-    have hf_meas : Measurable f := markovFDD_measurable kappa m _ (fun i => hA i.succ)
-    rw [set_lintegral_inter_preimage P (X (j + 1)) (hmeas (j + 1)) (A 0) (hA 0) C f]
-    rw [lintegral_measurable_extension P X hmeas kappa hmarkov j C hC_comap
+    have hf_meas : Measurable f := markovFDD_measurable (fun i => A i.succ) (fun i => hA i.succ)
+    rw [set_lintegral_inter_preimage (X (j + 1)) (hmeas (j + 1)) (hA 0) f]
+    rw [lintegral_measurable_extension (k := j) X hmeas hmarkov hC_comap
       ((A 0).indicator f) (hf_meas.indicator (hA 0))]
     congr 1; ext omega
     rw [← lintegral_indicator (hA 0)]
@@ -217,7 +212,6 @@ set_option maxHeartbeats 1600000 in
 -/
 @[path]
 lemma markov_chain_fdd
-  (in the sense expressed by `hmarkov`)
   [MeasurableSpace Omega]
   [MeasurableSpace S]
   {P : Measure Omega}
@@ -263,18 +257,16 @@ lemma markov_chain_fdd
       rw [MeasurableSpace.measurableSet_comap]
       exact ⟨(fun f : Fin 1 -> S => f 0) ⁻¹' A 0,
         (measurable_pi_apply _) (hA 0), by ext omega; simp⟩
-    rw [markov_chain_fdd_aux P X hmeas kappa hmarkov m 0
-      (fun i => A i.succ) (fun i => hA i.succ)
-      (X 0 ⁻¹' A 0) hC_meas hC_comap]
+    rw [markov_chain_fdd_aux (n := m) (j := 0) X hmeas hmarkov
+      (fun i => A i.succ) (fun i => hA i.succ) hC_meas hC_comap]
     rw [← setLIntegral_map (hA 0)
-      (markovFDD_measurable kappa m _ (fun i => hA i.succ)) (hmeas 0)]
+      (markovFDD_measurable (fun i => A i.succ) (fun i => hA i.succ)) (hmeas 0)]
 
 /--
 [markov_chain_finite_dimensional_distributions](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/MarkovChainFDD.lean)
 -/
 @[path]
 lemma markov_chain_finite_dimensional_distributions
-  (in the sense expressed by `hmarkov`)
   [MeasurableSpace Omega]
   [MeasurableSpace S]
   {P : Measure Omega}
@@ -291,7 +283,7 @@ lemma markov_chain_finite_dimensional_distributions
 -- imply
   P (⋂ i : Fin (n + 1), X i ⁻¹' A i) = markovFDD (P.map (X 0)) kappa n A :=
 -- proof
-  markov_chain_fdd P X hmeas kappa n A hA hmarkov
+  markov_chain_fdd X hmeas A hA hmarkov
 
 
 -- created on 2026-10-23

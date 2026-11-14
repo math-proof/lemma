@@ -49,8 +49,8 @@ lemma prop_16_1
 -- imply
   IsCompact (spectrum ℂ T) ∧ spectrum ℂ T ⊆ closedBall 0 ‖T‖ :=
 -- proof
-  ⟨prop_16_1_isCompact T, prop_16_1_subset_closedBall T⟩
-/-- Proposition 16.2: for a self-adjoint operator `A`, both endpoints of the
+  ⟨prop_16_1_isCompact, prop_16_1_subset_closedBall⟩
+/- Proposition 16.2: for a self-adjoint operator `A`, both endpoints of the
 numerical range `m, M` lie in the spectrum, and the spectrum is real and
 contained in the real interval `[m, M]`. -/
 

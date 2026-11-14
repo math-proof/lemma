@@ -36,7 +36,7 @@ private lemma isCoprime_of_monic_of_isCoprime_map_residue
       simp [map_sub, map_add, map_mul, AdjoinRoot.mk_self]
     have hs : s = s * AdjoinRoot.mk f b * AdjoinRoot.mk f g - s * AdjoinRoot.mk f e := calc
       _ = s * 1 := (mul_one s).symm
-        _ = _ := by rw [h1]; ring
+      _ = _ := by rw [h1]; ring
     rw [hs]
     refine Submodule.sub_mem _ ?_ ?_
     · exact Submodule.mem_sup_left (Ideal.mul_mem_left _ _ (Ideal.subset_span rfl))
@@ -91,3 +91,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-14

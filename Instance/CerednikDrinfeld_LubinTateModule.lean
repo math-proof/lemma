@@ -1,8 +1,9 @@
 -- Carved from Lemma/Definitions/Def_CerednikDrinfeld_LubinTateModule.lean: instance decls only.
 import Mathlib
 import Instance.MvFormalGroup_NegV2
-import Lemma.CerednikDrinfeld.SpecialFormalModule
-import Lemma.CerednikDrinfeld.LubinTateModule
+import Lemma.MvPowerSeries.SpecialFormalModule
+import Lemma.MvPowerSeries.LubinTateModule
+import Notation.CerednikDrinfeld_LubinTateModule
 
 set_option autoImplicit false
 set_option linter.unusedSectionVars false
@@ -15,6 +16,7 @@ set_option linter.unusedSectionVars false
 noncomputable section
 
 open MvPowerSeries CerednikDrinfeld CerednikDrinfeld.SpecialFormal
+open scoped CerednikDrinfeld_LubinTateModule
 
 namespace CerednikDrinfeld.LubinTate
 

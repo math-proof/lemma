@@ -21,7 +21,7 @@ Continuous-action counterpart of the `key` step in
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  [MeasurableSpace 𝒮] [μ : ReferenceMeasure 𝒜]
   {M : DensityModel Θ 𝒮 𝒜}
   {θ : Θ}
   {γ : ℝ}
@@ -35,7 +35,7 @@ private lemma main
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₃ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ g x u)
-  (h₄ : ∀ x, Integrable (g x) ReferenceMeasure.measure)
+  (h₄ : ∀ x, Integrable (g x) μ.measure)
   (h₅ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.policy.prob θ z.1 z.2))
   (hφ : StronglyMeasurable
     (fun z : 𝒮 × 𝒜 => fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' z.1 z.2)) θ))
@@ -142,4 +142,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-11
+-- updated on 2026-11-14

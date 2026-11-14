@@ -84,16 +84,16 @@ lemma abelContinuation_eq_mul_mellin
   abelContinuation f s = s * mellin (abelSummatory f) (-s) := by
 -- proof
   have hf_top : abelSummatory f =O[atTop] fun t : ℝ => (t ^ (- -σ) : ℝ) := by
-    simpa using isBigO_abelSummatory_atTop f hO
+    simpa using isBigO_abelSummatory_atTop hO
   have hs_top : (-s).re < -σ := by
     rw [Complex.neg_re, neg_lt_neg_iff]
     exact hs
   have hf_bot :
       abelSummatory f =O[𝓝[>] (0 : ℝ)] fun t : ℝ => (t ^ (-((-s).re - 1)) : ℝ) :=
-    isBigO_abelSummatory_nhdsGT_zero f _
+    isBigO_abelSummatory_nhdsGT_zero
   have hs_bot : (-s).re - 1 < (-s).re := sub_lt_self _ one_pos
   have hconv : MellinConvergent (abelSummatory f) (-s) :=
-    mellinConvergent_of_isBigO_rpow (locallyIntegrableOn_abelSummatory f)
+    mellinConvergent_of_isBigO_rpow (locallyIntegrableOn_abelSummatory)
       hf_top hs_top hf_bot hs_bot
   have hInt : IntegrableOn
       (fun t : ℝ => (t : ℂ) ^ (-s - 1) • abelSummatory f t) (Set.Ioi (0 : ℝ)) :=
@@ -131,16 +131,16 @@ lemma differentiableAt_abelContinuation
   DifferentiableAt ℂ (abelContinuation f) s := by
 -- proof
   have hf_top : abelSummatory f =O[atTop] fun t : ℝ => (t ^ (- -σ) : ℝ) := by
-    simpa using isBigO_abelSummatory_atTop f hO
+    simpa using isBigO_abelSummatory_atTop hO
   have hs_top : (-s).re < -σ := by
     rw [Complex.neg_re, neg_lt_neg_iff]
     exact hs
   have hf_bot :
       abelSummatory f =O[𝓝[>] (0 : ℝ)] fun t : ℝ => (t ^ (-((-s).re - 1)) : ℝ) :=
-    isBigO_abelSummatory_nhdsGT_zero f _
+    isBigO_abelSummatory_nhdsGT_zero
   have hs_bot : (-s).re - 1 < (-s).re := sub_lt_self _ one_pos
   have hdiff : DifferentiableAt ℂ (mellin (abelSummatory f)) (-s) :=
-    mellin_differentiableAt_of_isBigO_rpow (locallyIntegrableOn_abelSummatory f)
+    mellin_differentiableAt_of_isBigO_rpow (locallyIntegrableOn_abelSummatory)
       hf_top hs_top hf_bot hs_bot
   have hcomp : DifferentiableAt ℂ (fun s => mellin (abelSummatory f) (-s)) s :=
     hdiff.comp s (by fun_prop)
@@ -151,7 +151,7 @@ lemma differentiableAt_abelContinuation
     have hopen : IsOpen {s : ℂ | σ < s.re} :=
       isOpen_lt continuous_const Complex.continuous_re
     filter_upwards [hopen.mem_nhds hs] with s' hs'
-    exact (abelContinuation_eq_mul_mellin f hs' hO).symm
+    exact (abelContinuation_eq_mul_mellin hs' hO).symm
   exact hmul.congr_of_eventuallyEq hev.symm
 
 /--
@@ -169,7 +169,7 @@ lemma analyticOn_abelContinuation
   rw [Complex.analyticOn_iff_differentiableOn
     (isOpen_lt continuous_const Complex.continuous_re)]
   intro s hs
-  exact (differentiableAt_abelContinuation f hs hO).differentiableWithinAt
+  exact (differentiableAt_abelContinuation hs hO).differentiableWithinAt
 
 /--
 [abelContinuation_eq_LSeries](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LSeries/AbelContinuation.lean)
@@ -326,3 +326,4 @@ lemma tendsto_abelContinuation_Icc
     exact hsum_eq _
   rw [← hint]
   exact habel.congr fun N => hterm N
+-- updated on 2026-11-13

@@ -1,4 +1,4 @@
-import Lemma.AutomorphicForm.ArchType
+import Lemma.Matrix.ArchType
 
 open AutomorphicForm AutomorphicForm.WindowedSiegel NumberField IsDedekindDomain Matrix
 

@@ -2,7 +2,7 @@
 import Mathlib
 import Lemma.Scheme.CanonicalDivisorUniformizer
 import Class.AlgebraicCurve_CanonicalDivisor
-import Lemma.AlgebraicCurve.AdelicIndex
+import Lemma.Submodule.AdelicIndex
 import Structure.AlgebraicCurve_LocalResidue
 import Class.AlgebraicCurve_LocalResidue
 

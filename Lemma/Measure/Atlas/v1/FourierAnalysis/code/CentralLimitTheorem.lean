@@ -16,7 +16,7 @@ namespace CentralLimitTheorem
 lemma norm_ofReal_mul_I
   {x : ℝ} :
 -- imply
-  ‖(↑x * I : ℂ)‖ = := by
+  ‖(↑x * I : ℂ)‖ = |x| := by
 -- proof
   rw [norm_mul, norm_real, norm_I, mul_one, Real.norm_eq_abs]
 
@@ -33,7 +33,7 @@ lemma expTaylorRemainder_le_cube
 -- given
   (hx : |x| ≤ 1) :
 -- imply
-  ‖expTaylorRemainder x‖ ≤ := by
+  ‖expTaylorRemainder x‖ ≤ |x| ^ 3 := by
 -- proof
   have key : expTaylorRemainder x =
     cexp (↑x * I) - ∑ m ∈ range 3, (↑x * I) ^ m / (m.factorial : ℂ) := by
@@ -62,18 +62,18 @@ lemma expTaylorRemainder_le_sq
 -- given
   (hx : 1 ≤ |x|) :
 -- imply
-  ‖expTaylorRemainder x‖ ≤ 4 * := by
+  ‖expTaylorRemainder x‖ ≤ 4 * |x| ^ 2 := by
 -- proof
   unfold expTaylorRemainder
   have hexp : ‖cexp (↑x * I)‖ = 1 := norm_exp_ofReal_mul_I x
   calc ‖cexp (↑x * I) - 1 - ↑x * I - (↑x * I) ^ 2 / 2‖
-    ≤ ‖cexp (↑x * I)‖ + ‖(1 : ℂ)‖ + ‖(↑x * I : ℂ)‖ + ‖((↑x * I) ^ 2 / 2 : ℂ)‖ := by
-      calc _ ≤ ‖cexp (↑x * I) - 1 - ↑x * I‖ + ‖(↑x * I) ^ 2 / 2‖ := norm_sub_le _ _
-        _ ≤ (‖cexp (↑x * I) - 1‖ + ‖↑x * I‖) + ‖(↑x * I) ^ 2 / 2‖ := by
-          gcongr; exact norm_sub_le _ _
-        _ ≤ (‖cexp (↑x * I)‖ + ‖(1 : ℂ)‖ + ‖↑x * I‖) + ‖(↑x * I) ^ 2 / 2‖ := by
-          gcongr; exact norm_sub_le _ _
-        _ = _ := by ring
+    ≤ ‖cexp (↑x * I) - 1 - ↑x * I‖ + ‖(↑x * I) ^ 2 / 2‖ := norm_sub_le _ _
+    _ ≤ (‖cexp (↑x * I) - 1‖ + ‖↑x * I‖) + ‖(↑x * I) ^ 2 / 2‖ := by
+      gcongr; exact norm_sub_le _ _
+    _ ≤ (‖cexp (↑x * I)‖ + ‖(1 : ℂ)‖ + ‖↑x * I‖) + ‖(↑x * I) ^ 2 / 2‖ := by
+      gcongr; exact norm_sub_le _ _
+    _ = ‖cexp (↑x * I)‖ + ‖(1 : ℂ)‖ + ‖(↑x * I : ℂ)‖ + ‖((↑x * I) ^ 2 / 2 : ℂ)‖ := by
+      ring
     _ = 2 + |x| + |x| ^ 2 / 2 := by
       rw [hexp, norm_one, norm_ofReal_mul_I, norm_div, norm_pow, norm_ofReal_mul_I, norm_ofNat]
       ring
@@ -128,7 +128,7 @@ lemma min_pow_le_rpow
   (hα1 : 0 < α)
   (hα2 : α < 1) :
 -- imply
-  min (|x| ^ 2) (|x| ^ 3) ≤ := by
+  min (|x| ^ 2) (|x| ^ 3) ≤ |x| ^ (2 + α) := by
 -- proof
   by_cases hx : |x| ≤ 1
   · calc min (|x| ^ 2) (|x| ^ 3) ≤ |x| ^ 3 := min_le_right _ _
@@ -158,18 +158,13 @@ lemma expTaylorRemainder_le_rpow
   (hα1 : 0 < α)
   (hα2 : α < 1) :
 -- imply
-  ‖expTaylorRemainder x‖ ≤ 4 * := by
+  ‖expTaylorRemainder x‖ ≤ 4 * |x| ^ (2 + α) := by
 -- proof
   calc ‖expTaylorRemainder x‖
-    ≤ 4 * min (|x| ^ 2) (|x| ^ 3) := expTaylorRemainder_le_min x
+    ≤ 4 * min (|x| ^ 2) (|x| ^ 3) := expTaylorRemainder_le_min
     _ ≤ 4 * |x| ^ (2 + α) := by
       gcongr
-      exact min_pow_le_rpow x α hα1 hα2
-section CLT
-open MeasureTheory ProbabilityTheory Filter
-open scoped Topology
-variable {Ω Ω' : Type*} [MeasurableSpace Ω] [MeasurableSpace Ω']
-  {P : Measure Ω} {P' : Measure Ω'} [IsProbabilityMeasure P] [IsProbabilityMeasure P']
+      exact min_pow_le_rpow hα1 hα2
 
 end CentralLimitTheorem
 
@@ -180,8 +175,8 @@ namespace CentralLimitTheorem
 -/
 @[path]
 lemma memLp_two_of_higher_moment
-  [MeasurableSpace Ω]
-  [MeasurableSpace Ω']
+  {Ω : Type*} [MeasurableSpace Ω]
+  {P : Measure Ω} [IsFiniteMeasure P]
   {X : Ω → ℝ}
   {α : ℝ}
 -- given
@@ -203,8 +198,9 @@ namespace CentralLimitTheorem
 -/
 @[path]
 lemma central_limit_theorem
-  [MeasurableSpace Ω]
-  [MeasurableSpace Ω']
+  {Ω Ω' : Type*} [MeasurableSpace Ω] [MeasurableSpace Ω']
+  {P : Measure Ω} {P' : Measure Ω'}
+  [IsProbabilityMeasure P] [IsProbabilityMeasure P']
   {X : ℕ → Ω → ℝ}
   {Y : Ω' → ℝ}
   {α : ℝ}

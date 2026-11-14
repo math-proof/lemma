@@ -1,10 +1,10 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.X0
+import Lemma.HahnSeries.X0
 import Lemma.Int.P2MUtil
 open scoped PowerSeries.WithPiTopology
 open PowerSeries Finset
-open ModularCurve
+open ModularCurve HahnSeries
 
 
 /-- ported from external source -/

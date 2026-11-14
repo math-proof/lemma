@@ -1,12 +1,12 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.CerednikDrinfeld.DrinfeldHolomorphic
+import Lemma.Polynomial.DrinfeldHolomorphic
 import Lemma.ValuationSubring.CompletionRatClosure
 import Def.FLTPrelim_Ramification
-import Lemma.CerednikDrinfeld.CosetGraphAtPrime
+import Lemma.UpperHalfPlane.CosetGraphAtPrime
 import Lemma.Int.P2MUtil
 open scoped TensorProduct Quaternion NumberField
-open CerednikDrinfeld CerednikDrinfeld.Omega ValuationSubring QuaternionAlgebra IsDedekindDomain
+open CerednikDrinfeld CerednikDrinfeld.Omega ValuationSubring QuaternionAlgebra IsDedekindDomain UpperHalfPlane Polynomial
 
 
 /--

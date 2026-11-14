@@ -18,8 +18,8 @@ meaningful, so that `∑'` and both integrals can be swapped. Holds for every st
 -/
 @[path]
 private lemma main
-  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮]
-  [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
+  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮]
+  [μ : ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
   {M : DensityModel Θ 𝒮 𝒜}
   {γ : ℝ}
 -- given
@@ -29,8 +29,8 @@ private lemma main
   (x : 𝒮) :
 -- imply
   M.V0 θ γ x =
-    ∫ u, M.policy.prob θ x u * M.rkd x u ∂ReferenceMeasure.measure +
-      γ * ∫ u, M.policy.prob θ x u * ∫ y, M.V0 θ γ y ∂(M.env.trans (x, u)) ∂ReferenceMeasure.measure := by
+    ∫ u, M.policy.prob θ x u * M.rkd x u ∂μ.measure +
+      γ * ∫ u, M.policy.prob θ x u * ∫ y, M.V0 θ γ y ∂(M.env.trans (x, u)) ∂μ.measure := by
 -- proof
   have := M.env.trans_markov
   have hVy : ∀ y, M.V0 θ γ y = ∑' k, γ ^ k * M.Wkd θ k y := fun y => rfl
@@ -101,4 +101,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-11
+-- updated on 2026-11-14

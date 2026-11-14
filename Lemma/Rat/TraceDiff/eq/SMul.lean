@@ -1,13 +1,13 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.QExpansionDiff
+import Lemma.LaurentSeries.QExpansionDiff
 import Lemma.Int.P2MUtil
 
 
 namespace Definitions
 end Definitions
 open Definitions
-open HahnSeries ModularCurve AlgebraicCurve
+open HahnSeries ModularCurve AlgebraicCurve LaurentSeries
 open Int
 
 

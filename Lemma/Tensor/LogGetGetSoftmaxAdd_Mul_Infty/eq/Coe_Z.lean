@@ -56,7 +56,7 @@ private lemma main
   Log.log (((A + (Ξ - 1) * ∞).softmax.get ⟨i, by simp [Tensor.length]⟩).get ⟨j, by simp [Tensor.length]⟩ : Tensor ℝ* []) ≈ (((z i j : ℝ) : Tensor ℝ []) : Tensor ℝ* []) := by
 -- proof
   intro Ξ A
-  have h0 := SoftmaxAdd_Mul_Infty.eq.Cast_Stack_Ite_Block.log P a z h_ne h
+  have h0 := SoftmaxAdd_Mul_Infty.eq.Cast_Stack_Ite_Block.log (P := P) (a := a) (z := z) h_ne h
   have h1 := XEqGetS.of.XEq.GtLength.fin (i := i) (by simp [Tensor.length]) h0
   have h2 := XEqGetS.of.XEq.GtLength.fin (i := j) (by simp [Tensor.length]) h1
   have he := entry (fun i j => if P i j then Real.exp (z i j) else 0) i j
@@ -73,3 +73,4 @@ private lemma main
 
 
 -- created on 2026-10-01
+-- updated on 2026-11-13

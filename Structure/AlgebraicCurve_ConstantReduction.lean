@@ -1,6 +1,6 @@
 import Mathlib
 import Instance.AlgebraicCurve_DivisorClassGroup
-import Lemma.AlgebraicCurve.Repartitions
+import Lemma.Submodule.Repartitions
 
 set_option autoImplicit false
 

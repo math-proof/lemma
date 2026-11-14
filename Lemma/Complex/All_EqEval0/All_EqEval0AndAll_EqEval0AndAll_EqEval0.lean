@@ -787,7 +787,7 @@ private theorem block_nu12_one
       Matrix.head_cons, Matrix.cons_val_two, Matrix.tail_cons, map_add, map_mul, map_neg,
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.map_one_eq_zero, map_one, map_zero,
       mul_one, mul_zero, zero_mul, add_zero, zero_add, Fin.reduceLT, lt_self_iff_false,
-      Fin.zero_lt_one, if_true, if_false]
+      Fin.zero_lt_one, ite_true, ite_false]
     ring
   have eA00 :
       MvPolynomial.eval k (MvPolynomial.pderiv (0, 0) (act ν₁₂ 1 2 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ))) =
@@ -797,7 +797,7 @@ private theorem block_nu12_one
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_false]
+      ite_true, ite_false, and_self, and_false]
   have eA01 :
       MvPolynomial.eval k (MvPolynomial.pderiv (0, 1) (act ν₁₂ 1 2 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ))) =
         k (0, 2)/2 + I*k (0, 2)*(τ : ℂ) := by
@@ -806,7 +806,7 @@ private theorem block_nu12_one
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA02 :
@@ -817,7 +817,7 @@ private theorem block_nu12_one
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA10 :
@@ -828,7 +828,7 @@ private theorem block_nu12_one
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_false]
+      ite_true, ite_false, and_self, and_false]
   have eA11 :
       MvPolynomial.eval k (MvPolynomial.pderiv (1, 1) (act ν₁₂ 1 2 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ))) =
         k (1, 2)/2 + I*k (1, 2)*(τ : ℂ) := by
@@ -837,7 +837,7 @@ private theorem block_nu12_one
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA12 :
@@ -848,7 +848,7 @@ private theorem block_nu12_one
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA20 :
@@ -859,7 +859,7 @@ private theorem block_nu12_one
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_false]
+      ite_true, ite_false, and_self, and_false]
   have eA21 :
       MvPolynomial.eval k (MvPolynomial.pderiv (2, 1) (act ν₁₂ 1 2 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ))) =
         -k (2, 2) + I*k (2, 2)*(τ₃ : ℂ) := by
@@ -868,7 +868,7 @@ private theorem block_nu12_one
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA22 :
@@ -879,7 +879,7 @@ private theorem block_nu12_one
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB :
@@ -890,7 +890,7 @@ private theorem block_nu12_one
       Matrix.head_cons, Matrix.cons_val_two, Matrix.tail_cons, map_add, map_mul, map_neg,
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.map_one_eq_zero, map_one, map_zero,
       mul_one, mul_zero, zero_mul, add_zero, zero_add, Fin.reduceLT, lt_self_iff_false,
-      Fin.zero_lt_one, if_true, if_false]
+      Fin.zero_lt_one, ite_true, ite_false]
     ring
   have eB00 :
       MvPolynomial.eval k (MvPolynomial.pderiv (0, 0) (act ν₁₂ 1 1 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ))) =
@@ -900,7 +900,7 @@ private theorem block_nu12_one
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_false]
+      ite_true, ite_false, and_self, and_false]
   have eB01 :
       MvPolynomial.eval k (MvPolynomial.pderiv (0, 1) (act ν₁₂ 1 1 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ))) =
         k (0, 1) + 2*I*k (0, 1)*(τ : ℂ) := by
@@ -909,7 +909,7 @@ private theorem block_nu12_one
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_true]
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_true]
     ring
   have eB02 :
       MvPolynomial.eval k (MvPolynomial.pderiv (0, 2) (act ν₁₂ 1 1 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ))) =
@@ -919,7 +919,7 @@ private theorem block_nu12_one
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_false]
+      ite_true, ite_false, and_self, and_false]
   have eB10 :
       MvPolynomial.eval k (MvPolynomial.pderiv (1, 0) (act ν₁₂ 1 1 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ))) =
         0 := by
@@ -928,7 +928,7 @@ private theorem block_nu12_one
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_false]
+      ite_true, ite_false, and_self, and_false]
   have eB11 :
       MvPolynomial.eval k (MvPolynomial.pderiv (1, 1) (act ν₁₂ 1 1 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ))) =
         k (1, 1) + 2*I*k (1, 1)*(τ : ℂ) := by
@@ -937,7 +937,7 @@ private theorem block_nu12_one
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_true]
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_true]
     ring
   have eB12 :
       MvPolynomial.eval k (MvPolynomial.pderiv (1, 2) (act ν₁₂ 1 1 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ))) =
@@ -947,7 +947,7 @@ private theorem block_nu12_one
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_false]
+      ite_true, ite_false, and_self, and_false]
   have eB20 :
       MvPolynomial.eval k (MvPolynomial.pderiv (2, 0) (act ν₁₂ 1 1 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ))) =
         0 := by
@@ -956,7 +956,7 @@ private theorem block_nu12_one
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_false]
+      ite_true, ite_false, and_self, and_false]
   have eB21 :
       MvPolynomial.eval k (MvPolynomial.pderiv (2, 1) (act ν₁₂ 1 1 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ))) =
         -2*k (2, 1) + 2*I*k (2, 1)*(τ₃ : ℂ) := by
@@ -965,7 +965,7 @@ private theorem block_nu12_one
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_true]
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_true]
     ring
   have eB22 :
       MvPolynomial.eval k (MvPolynomial.pderiv (2, 2) (act ν₁₂ 1 1 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ))) =
@@ -975,14 +975,14 @@ private theorem block_nu12_one
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_false]
+      ite_true, ite_false, and_self, and_false]
   generalize act ν₁₂ 1 2 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ) = A at eA eA00 eA01 eA02 eA10 eA11 eA12 eA20 eA21 eA22 ⊢
   generalize act ν₁₂ 1 1 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ) = B at eB eB00 eB01 eB02 eB10 eB11 eB12 eB20 eB21 eB22 ⊢
   simp only [act, ν₁₂, Fin.sum_univ_three, Fin.isValue, Matrix.cons_val_zero, Matrix.cons_val_one,
     Matrix.head_cons, Matrix.cons_val_two, Matrix.tail_cons, map_add, map_sub, map_mul, map_neg,
     MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.map_one_eq_zero, map_one, map_zero,
     mul_one, mul_zero, zero_mul, add_zero, zero_add, Fin.reduceLT, lt_self_iff_false,
-    Fin.zero_lt_one, if_true, if_false, c', eA, eB, eA00, eA01, eA02, eA10, eA11, eA12, eA20, eA21,
+    Fin.zero_lt_one, ite_true, ite_false, c', eA, eB, eA00, eA01, eA02, eA10, eA11, eA12, eA20, eA21,
     eA22, eB00, eB01, eB02, eB10, eB11, eB12, eB20, eB21, eB22]
   linear_combination kill_nu12_one (τ : ℂ) (τ₃ : ℂ) k hk
 
@@ -1019,7 +1019,7 @@ private theorem block_nu12_x20
       Matrix.head_cons, Matrix.cons_val_two, Matrix.tail_cons, map_add, map_mul, map_neg,
       MvPolynomial.eval_X, MvPolynomial.eval_C, MvPolynomial.pderiv_X, Pi.single_apply,
       Prod.mk.injEq, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA00 :
@@ -1030,7 +1030,7 @@ private theorem block_nu12_x20
       MvPolynomial.eval_X, Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C,
       Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero,
       mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT,
-      lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self, and_true, and_false]
+      lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self, and_true, and_false]
     ring
   have eA01 :
       MvPolynomial.eval k (MvPolynomial.pderiv (0, 1) (act ν₁₂ 1 2 (MvPolynomial.X (2, 0)))) =
@@ -1040,7 +1040,7 @@ private theorem block_nu12_x20
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA02 :
@@ -1051,7 +1051,7 @@ private theorem block_nu12_x20
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA10 :
@@ -1062,7 +1062,7 @@ private theorem block_nu12_x20
       MvPolynomial.eval_X, Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C,
       Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero,
       mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT,
-      lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self, and_true, and_false]
+      lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self, and_true, and_false]
     ring
   have eA11 :
       MvPolynomial.eval k (MvPolynomial.pderiv (1, 1) (act ν₁₂ 1 2 (MvPolynomial.X (2, 0)))) =
@@ -1072,7 +1072,7 @@ private theorem block_nu12_x20
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA12 :
@@ -1083,7 +1083,7 @@ private theorem block_nu12_x20
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA20 :
@@ -1095,7 +1095,7 @@ private theorem block_nu12_x20
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA21 :
@@ -1106,7 +1106,7 @@ private theorem block_nu12_x20
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA22 :
@@ -1117,7 +1117,7 @@ private theorem block_nu12_x20
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB :
@@ -1129,7 +1129,7 @@ private theorem block_nu12_x20
       Matrix.head_cons, Matrix.cons_val_two, Matrix.tail_cons, map_add, map_mul, map_neg,
       MvPolynomial.eval_X, MvPolynomial.eval_C, MvPolynomial.pderiv_X, Pi.single_apply,
       Prod.mk.injEq, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB00 :
@@ -1140,7 +1140,7 @@ private theorem block_nu12_x20
       MvPolynomial.eval_X, Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C,
       Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero,
       mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT,
-      lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self, and_true, and_false]
+      lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self, and_true, and_false]
     ring
   have eB01 :
       MvPolynomial.eval k (MvPolynomial.pderiv (0, 1) (act ν₁₂ 1 1 (MvPolynomial.X (2, 0)))) =
@@ -1150,7 +1150,7 @@ private theorem block_nu12_x20
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB02 :
@@ -1161,7 +1161,7 @@ private theorem block_nu12_x20
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eB10 :
       MvPolynomial.eval k (MvPolynomial.pderiv (1, 0) (act ν₁₂ 1 1 (MvPolynomial.X (2, 0)))) =
         k (1, 1)*k (2, 1) := by
@@ -1170,7 +1170,7 @@ private theorem block_nu12_x20
       MvPolynomial.eval_X, Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C,
       Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero,
       mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT,
-      lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self, and_true, and_false]
+      lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self, and_true, and_false]
     ring
   have eB11 :
       MvPolynomial.eval k (MvPolynomial.pderiv (1, 1) (act ν₁₂ 1 1 (MvPolynomial.X (2, 0)))) =
@@ -1180,7 +1180,7 @@ private theorem block_nu12_x20
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB12 :
@@ -1191,7 +1191,7 @@ private theorem block_nu12_x20
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eB20 :
       MvPolynomial.eval k (MvPolynomial.pderiv (2, 0) (act ν₁₂ 1 1 (MvPolynomial.X (2, 0)))) =
         k (0, 1)^2/2 + k (1, 1)^2/2 - k (2, 1)^2 + I*k (0, 1)^2*(τ : ℂ) + I*k (1, 1)^2*(τ : ℂ)
@@ -1201,7 +1201,7 @@ private theorem block_nu12_x20
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB21 :
@@ -1212,7 +1212,7 @@ private theorem block_nu12_x20
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB22 :
@@ -1223,14 +1223,14 @@ private theorem block_nu12_x20
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   generalize act ν₁₂ 1 2 (MvPolynomial.X (2, 0)) = A at eA eA00 eA01 eA02 eA10 eA11 eA12 eA20 eA21 eA22 ⊢
   generalize act ν₁₂ 1 1 (MvPolynomial.X (2, 0)) = B at eB eB00 eB01 eB02 eB10 eB11 eB12 eB20 eB21 eB22 ⊢
   simp only [act, ν₁₂, Fin.sum_univ_three, Fin.isValue, Matrix.cons_val_zero, Matrix.cons_val_one,
     Matrix.head_cons, Matrix.cons_val_two, Matrix.tail_cons, map_add, map_sub, map_mul, map_neg,
     MvPolynomial.eval_X, MvPolynomial.eval_C, MvPolynomial.pderiv_X, Pi.single_apply, Prod.mk.injEq,
     map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, Fin.reduceEq, Fin.reduceLT,
-    lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self, and_true, and_false, c', eA,
+    lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self, and_true, and_false, c', eA,
     eB, eA00, eA01, eA02, eA10, eA11, eA12, eA20, eA21, eA22, eB00, eB01, eB02, eB10, eB11, eB12,
     eB20, eB21, eB22]
   linear_combination kill_nu12_x20 (τ : ℂ) (τ₃ : ℂ) k hk
@@ -1268,7 +1268,7 @@ private theorem block_nu12_x21
       Matrix.head_cons, Matrix.cons_val_two, Matrix.tail_cons, map_add, map_mul, map_neg,
       MvPolynomial.eval_X, MvPolynomial.eval_C, MvPolynomial.pderiv_X, Pi.single_apply,
       Prod.mk.injEq, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA00 :
@@ -1279,7 +1279,7 @@ private theorem block_nu12_x21
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eA01 :
       MvPolynomial.eval k (MvPolynomial.pderiv (0, 1) (act ν₁₂ 1 2 (MvPolynomial.X (2, 1)))) =
         3*k (0, 2)*k (2, 1)/2 + I*k (0, 2)*k (2, 1)*(τ : ℂ) := by
@@ -1288,7 +1288,7 @@ private theorem block_nu12_x21
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA02 :
@@ -1299,7 +1299,7 @@ private theorem block_nu12_x21
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA10 :
@@ -1310,7 +1310,7 @@ private theorem block_nu12_x21
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eA11 :
       MvPolynomial.eval k (MvPolynomial.pderiv (1, 1) (act ν₁₂ 1 2 (MvPolynomial.X (2, 1)))) =
         3*k (1, 2)*k (2, 1)/2 + I*k (1, 2)*k (2, 1)*(τ : ℂ) := by
@@ -1319,7 +1319,7 @@ private theorem block_nu12_x21
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA12 :
@@ -1330,7 +1330,7 @@ private theorem block_nu12_x21
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA20 :
@@ -1341,7 +1341,7 @@ private theorem block_nu12_x21
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eA21 :
       MvPolynomial.eval k (MvPolynomial.pderiv (2, 1) (act ν₁₂ 1 2 (MvPolynomial.X (2, 1)))) =
         -2*k (2, 1)*k (2, 2) + 3*k (0, 1)*k (0, 2)/2 + 3*k (1, 1)*k (1, 2)/2 + I*k (0, 1)*k (0, 2)*(τ : ℂ)
@@ -1351,7 +1351,7 @@ private theorem block_nu12_x21
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA22 :
@@ -1362,7 +1362,7 @@ private theorem block_nu12_x21
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB :
@@ -1373,7 +1373,7 @@ private theorem block_nu12_x21
       Matrix.head_cons, Matrix.cons_val_two, Matrix.tail_cons, map_add, map_mul, map_neg,
       MvPolynomial.eval_X, MvPolynomial.eval_C, MvPolynomial.pderiv_X, Pi.single_apply,
       Prod.mk.injEq, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB00 :
@@ -1384,7 +1384,7 @@ private theorem block_nu12_x21
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eB01 :
       MvPolynomial.eval k (MvPolynomial.pderiv (0, 1) (act ν₁₂ 1 1 (MvPolynomial.X (2, 1)))) =
         3*k (0, 1)*k (2, 1) + 2*I*k (0, 1)*k (2, 1)*(τ : ℂ) := by
@@ -1393,7 +1393,7 @@ private theorem block_nu12_x21
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB02 :
@@ -1404,7 +1404,7 @@ private theorem block_nu12_x21
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eB10 :
       MvPolynomial.eval k (MvPolynomial.pderiv (1, 0) (act ν₁₂ 1 1 (MvPolynomial.X (2, 1)))) =
         0 := by
@@ -1413,7 +1413,7 @@ private theorem block_nu12_x21
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eB11 :
       MvPolynomial.eval k (MvPolynomial.pderiv (1, 1) (act ν₁₂ 1 1 (MvPolynomial.X (2, 1)))) =
         3*k (1, 1)*k (2, 1) + 2*I*k (1, 1)*k (2, 1)*(τ : ℂ) := by
@@ -1422,7 +1422,7 @@ private theorem block_nu12_x21
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB12 :
@@ -1433,7 +1433,7 @@ private theorem block_nu12_x21
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eB20 :
       MvPolynomial.eval k (MvPolynomial.pderiv (2, 0) (act ν₁₂ 1 1 (MvPolynomial.X (2, 1)))) =
         0 := by
@@ -1442,7 +1442,7 @@ private theorem block_nu12_x21
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eB21 :
       MvPolynomial.eval k (MvPolynomial.pderiv (2, 1) (act ν₁₂ 1 1 (MvPolynomial.X (2, 1)))) =
         -3*k (2, 1)^2 + 3*k (0, 1)^2/2 + 3*k (1, 1)^2/2 + I*k (0, 1)^2*(τ : ℂ) + I*k (1, 1)^2*(τ : ℂ)
@@ -1452,7 +1452,7 @@ private theorem block_nu12_x21
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB22 :
@@ -1463,14 +1463,14 @@ private theorem block_nu12_x21
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   generalize act ν₁₂ 1 2 (MvPolynomial.X (2, 1)) = A at eA eA00 eA01 eA02 eA10 eA11 eA12 eA20 eA21 eA22 ⊢
   generalize act ν₁₂ 1 1 (MvPolynomial.X (2, 1)) = B at eB eB00 eB01 eB02 eB10 eB11 eB12 eB20 eB21 eB22 ⊢
   simp only [act, ν₁₂, Fin.sum_univ_three, Fin.isValue, Matrix.cons_val_zero, Matrix.cons_val_one,
     Matrix.head_cons, Matrix.cons_val_two, Matrix.tail_cons, map_add, map_sub, map_mul, map_neg,
     MvPolynomial.eval_X, MvPolynomial.eval_C, MvPolynomial.pderiv_X, Pi.single_apply, Prod.mk.injEq,
     map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, Fin.reduceEq, Fin.reduceLT,
-    lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self, and_true, and_false, c', eA,
+    lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self, and_true, and_false, c', eA,
     eB, eA00, eA01, eA02, eA10, eA11, eA12, eA20, eA21, eA22, eB00, eB01, eB02, eB10, eB11, eB12,
     eB20, eB21, eB22]
   linear_combination kill_nu12_x21 (τ : ℂ) (τ₃ : ℂ) k hk
@@ -1508,7 +1508,7 @@ private theorem block_nu12_x22
       Matrix.head_cons, Matrix.cons_val_two, Matrix.tail_cons, map_add, map_mul, map_neg,
       MvPolynomial.eval_X, MvPolynomial.eval_C, MvPolynomial.pderiv_X, Pi.single_apply,
       Prod.mk.injEq, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA00 :
@@ -1519,7 +1519,7 @@ private theorem block_nu12_x22
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eA01 :
       MvPolynomial.eval k (MvPolynomial.pderiv (0, 1) (act ν₁₂ 1 2 (MvPolynomial.X (2, 2)))) =
         k (0, 2)*k (2, 2)/2 + I*k (0, 2)*k (2, 2)*(τ : ℂ) := by
@@ -1528,7 +1528,7 @@ private theorem block_nu12_x22
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA02 :
@@ -1539,7 +1539,7 @@ private theorem block_nu12_x22
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA10 :
@@ -1550,7 +1550,7 @@ private theorem block_nu12_x22
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eA11 :
       MvPolynomial.eval k (MvPolynomial.pderiv (1, 1) (act ν₁₂ 1 2 (MvPolynomial.X (2, 2)))) =
         k (1, 2)*k (2, 2)/2 + I*k (1, 2)*k (2, 2)*(τ : ℂ) := by
@@ -1559,7 +1559,7 @@ private theorem block_nu12_x22
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA12 :
@@ -1570,7 +1570,7 @@ private theorem block_nu12_x22
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA20 :
@@ -1581,7 +1581,7 @@ private theorem block_nu12_x22
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eA21 :
       MvPolynomial.eval k (MvPolynomial.pderiv (2, 1) (act ν₁₂ 1 2 (MvPolynomial.X (2, 2)))) =
         k (0, 2)^2 + k (1, 2)^2 - k (2, 2)^2 + I*k (2, 2)^2*(τ₃ : ℂ) := by
@@ -1590,7 +1590,7 @@ private theorem block_nu12_x22
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA22 :
@@ -1602,7 +1602,7 @@ private theorem block_nu12_x22
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB :
@@ -1614,7 +1614,7 @@ private theorem block_nu12_x22
       Matrix.head_cons, Matrix.cons_val_two, Matrix.tail_cons, map_add, map_mul, map_neg,
       MvPolynomial.eval_X, MvPolynomial.eval_C, MvPolynomial.pderiv_X, Pi.single_apply,
       Prod.mk.injEq, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB00 :
@@ -1625,7 +1625,7 @@ private theorem block_nu12_x22
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eB01 :
       MvPolynomial.eval k (MvPolynomial.pderiv (0, 1) (act ν₁₂ 1 1 (MvPolynomial.X (2, 2)))) =
         k (0, 1)*k (2, 2) + k (0, 2)*k (2, 1) + 2*I*k (0, 1)*k (2, 2)*(τ : ℂ) := by
@@ -1634,7 +1634,7 @@ private theorem block_nu12_x22
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB02 :
@@ -1645,7 +1645,7 @@ private theorem block_nu12_x22
       MvPolynomial.eval_X, Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C,
       Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero,
       mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT,
-      lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self, and_true, and_false]
+      lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self, and_true, and_false]
     ring
   have eB10 :
       MvPolynomial.eval k (MvPolynomial.pderiv (1, 0) (act ν₁₂ 1 1 (MvPolynomial.X (2, 2)))) =
@@ -1655,7 +1655,7 @@ private theorem block_nu12_x22
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eB11 :
       MvPolynomial.eval k (MvPolynomial.pderiv (1, 1) (act ν₁₂ 1 1 (MvPolynomial.X (2, 2)))) =
         k (1, 1)*k (2, 2) + k (1, 2)*k (2, 1) + 2*I*k (1, 1)*k (2, 2)*(τ : ℂ) := by
@@ -1664,7 +1664,7 @@ private theorem block_nu12_x22
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB12 :
@@ -1675,7 +1675,7 @@ private theorem block_nu12_x22
       MvPolynomial.eval_X, Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C,
       Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero,
       mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT,
-      lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self, and_true, and_false]
+      lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self, and_true, and_false]
     ring
   have eB20 :
       MvPolynomial.eval k (MvPolynomial.pderiv (2, 0) (act ν₁₂ 1 1 (MvPolynomial.X (2, 2)))) =
@@ -1685,7 +1685,7 @@ private theorem block_nu12_x22
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eB21 :
       MvPolynomial.eval k (MvPolynomial.pderiv (2, 1) (act ν₁₂ 1 1 (MvPolynomial.X (2, 2)))) =
         k (0, 1)*k (0, 2) + k (1, 1)*k (1, 2) - 2*k (2, 1)*k (2, 2) + 2*I*k (2, 1)*k (2, 2)*(τ₃ : ℂ) := by
@@ -1694,7 +1694,7 @@ private theorem block_nu12_x22
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB22 :
@@ -1706,7 +1706,7 @@ private theorem block_nu12_x22
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   generalize act ν₁₂ 1 2 (MvPolynomial.X (2, 2)) = A at eA eA00 eA01 eA02 eA10 eA11 eA12 eA20 eA21 eA22 ⊢
@@ -1715,7 +1715,7 @@ private theorem block_nu12_x22
     Matrix.head_cons, Matrix.cons_val_two, Matrix.tail_cons, map_add, map_sub, map_mul, map_neg,
     MvPolynomial.eval_X, MvPolynomial.eval_C, MvPolynomial.pderiv_X, Pi.single_apply, Prod.mk.injEq,
     map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, Fin.reduceEq, Fin.reduceLT,
-    lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self, and_true, and_false, c', eA,
+    lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self, and_true, and_false, c', eA,
     eB, eA00, eA01, eA02, eA10, eA11, eA12, eA20, eA21, eA22, eB00, eB01, eB02, eB10, eB11, eB12,
     eB20, eB21, eB22]
   linear_combination kill_nu12_x22 (τ : ℂ) (τ₃ : ℂ) k hk
@@ -1752,7 +1752,7 @@ private theorem block_nu13_one
       Matrix.head_cons, Matrix.cons_val_two, Matrix.tail_cons, map_add, map_mul, map_neg,
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.map_one_eq_zero, map_one, map_zero,
       mul_one, mul_zero, zero_mul, add_zero, zero_add, Fin.reduceLT, lt_self_iff_false,
-      Fin.zero_lt_one, if_true, if_false]
+      Fin.zero_lt_one, ite_true, ite_false]
     ring
   have eA00 :
       MvPolynomial.eval k (MvPolynomial.pderiv (0, 0) (act ν₁₃ 1 2 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ))) =
@@ -1762,7 +1762,7 @@ private theorem block_nu13_one
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_false]
+      ite_true, ite_false, and_self, and_false]
   have eA01 :
       MvPolynomial.eval k (MvPolynomial.pderiv (0, 1) (act ν₁₃ 1 2 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ))) =
         k (0, 2)/2 + I*k (0, 2)*(τ : ℂ) := by
@@ -1771,7 +1771,7 @@ private theorem block_nu13_one
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA02 :
@@ -1782,7 +1782,7 @@ private theorem block_nu13_one
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA10 :
@@ -1793,7 +1793,7 @@ private theorem block_nu13_one
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_false]
+      ite_true, ite_false, and_self, and_false]
   have eA11 :
       MvPolynomial.eval k (MvPolynomial.pderiv (1, 1) (act ν₁₃ 1 2 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ))) =
         I*k (1, 2)*(τ₃ : ℂ) := by
@@ -1802,7 +1802,7 @@ private theorem block_nu13_one
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA12 :
@@ -1813,7 +1813,7 @@ private theorem block_nu13_one
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA20 :
@@ -1824,7 +1824,7 @@ private theorem block_nu13_one
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_false]
+      ite_true, ite_false, and_self, and_false]
   have eA21 :
       MvPolynomial.eval k (MvPolynomial.pderiv (2, 1) (act ν₁₃ 1 2 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ))) =
         -k (2, 2)/2 + I*k (2, 2)*(τ : ℂ) := by
@@ -1833,7 +1833,7 @@ private theorem block_nu13_one
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA22 :
@@ -1844,7 +1844,7 @@ private theorem block_nu13_one
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB :
@@ -1854,7 +1854,7 @@ private theorem block_nu13_one
       Matrix.head_cons, Matrix.cons_val_two, Matrix.tail_cons, map_add, map_mul, map_neg,
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.map_one_eq_zero, map_one, map_zero,
       mul_one, mul_zero, zero_mul, add_zero, zero_add, Fin.reduceLT, lt_self_iff_false,
-      Fin.zero_lt_one, if_true, if_false]
+      Fin.zero_lt_one, ite_true, ite_false]
     ring
   have eB00 :
       MvPolynomial.eval k (MvPolynomial.pderiv (0, 0) (act ν₁₃ 1 1 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ))) =
@@ -1864,7 +1864,7 @@ private theorem block_nu13_one
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_false]
+      ite_true, ite_false, and_self, and_false]
   have eB01 :
       MvPolynomial.eval k (MvPolynomial.pderiv (0, 1) (act ν₁₃ 1 1 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ))) =
         k (0, 1) + 2*I*k (0, 1)*(τ : ℂ) := by
@@ -1873,7 +1873,7 @@ private theorem block_nu13_one
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_true]
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_true]
     ring
   have eB02 :
       MvPolynomial.eval k (MvPolynomial.pderiv (0, 2) (act ν₁₃ 1 1 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ))) =
@@ -1883,7 +1883,7 @@ private theorem block_nu13_one
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_false]
+      ite_true, ite_false, and_self, and_false]
   have eB10 :
       MvPolynomial.eval k (MvPolynomial.pderiv (1, 0) (act ν₁₃ 1 1 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ))) =
         0 := by
@@ -1892,7 +1892,7 @@ private theorem block_nu13_one
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_false]
+      ite_true, ite_false, and_self, and_false]
   have eB11 :
       MvPolynomial.eval k (MvPolynomial.pderiv (1, 1) (act ν₁₃ 1 1 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ))) =
         2*I*k (1, 1)*(τ₃ : ℂ) := by
@@ -1901,7 +1901,7 @@ private theorem block_nu13_one
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_true]
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_true]
     ring
   have eB12 :
       MvPolynomial.eval k (MvPolynomial.pderiv (1, 2) (act ν₁₃ 1 1 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ))) =
@@ -1911,7 +1911,7 @@ private theorem block_nu13_one
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_false]
+      ite_true, ite_false, and_self, and_false]
   have eB20 :
       MvPolynomial.eval k (MvPolynomial.pderiv (2, 0) (act ν₁₃ 1 1 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ))) =
         0 := by
@@ -1920,7 +1920,7 @@ private theorem block_nu13_one
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_false]
+      ite_true, ite_false, and_self, and_false]
   have eB21 :
       MvPolynomial.eval k (MvPolynomial.pderiv (2, 1) (act ν₁₃ 1 1 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ))) =
         -k (2, 1) + 2*I*k (2, 1)*(τ : ℂ) := by
@@ -1929,7 +1929,7 @@ private theorem block_nu13_one
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_true]
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_true]
     ring
   have eB22 :
       MvPolynomial.eval k (MvPolynomial.pderiv (2, 2) (act ν₁₃ 1 1 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ))) =
@@ -1939,14 +1939,14 @@ private theorem block_nu13_one
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_false]
+      ite_true, ite_false, and_self, and_false]
   generalize act ν₁₃ 1 2 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ) = A at eA eA00 eA01 eA02 eA10 eA11 eA12 eA20 eA21 eA22 ⊢
   generalize act ν₁₃ 1 1 (1 : MvPolynomial (Fin 3 × Fin 3) ℂ) = B at eB eB00 eB01 eB02 eB10 eB11 eB12 eB20 eB21 eB22 ⊢
   simp only [act, ν₁₃, Fin.sum_univ_three, Fin.isValue, Matrix.cons_val_zero, Matrix.cons_val_one,
     Matrix.head_cons, Matrix.cons_val_two, Matrix.tail_cons, map_add, map_sub, map_mul, map_neg,
     MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.map_one_eq_zero, map_one, map_zero,
     mul_one, mul_zero, zero_mul, add_zero, zero_add, Fin.reduceLT, lt_self_iff_false,
-    Fin.zero_lt_one, if_true, if_false, c', eA, eB, eA00, eA01, eA02, eA10, eA11, eA12, eA20, eA21,
+    Fin.zero_lt_one, ite_true, ite_false, c', eA, eB, eA00, eA01, eA02, eA10, eA11, eA12, eA20, eA21,
     eA22, eB00, eB01, eB02, eB10, eB11, eB12, eB20, eB21, eB22]
   linear_combination kill_nu13_one (τ : ℂ) (τ₃ : ℂ) k hk
 
@@ -1983,7 +1983,7 @@ private theorem block_nu13_x10
       Matrix.head_cons, Matrix.cons_val_two, Matrix.tail_cons, map_add, map_mul, map_neg,
       MvPolynomial.eval_X, MvPolynomial.eval_C, MvPolynomial.pderiv_X, Pi.single_apply,
       Prod.mk.injEq, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA00 :
@@ -1994,7 +1994,7 @@ private theorem block_nu13_x10
       MvPolynomial.eval_X, Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C,
       Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero,
       mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT,
-      lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self, and_true, and_false]
+      lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self, and_true, and_false]
     ring
   have eA01 :
       MvPolynomial.eval k (MvPolynomial.pderiv (0, 1) (act ν₁₃ 1 2 (MvPolynomial.X (1, 0)))) =
@@ -2004,7 +2004,7 @@ private theorem block_nu13_x10
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA02 :
@@ -2015,7 +2015,7 @@ private theorem block_nu13_x10
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA10 :
@@ -2027,7 +2027,7 @@ private theorem block_nu13_x10
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA11 :
@@ -2038,7 +2038,7 @@ private theorem block_nu13_x10
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA12 :
@@ -2049,7 +2049,7 @@ private theorem block_nu13_x10
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA20 :
@@ -2060,7 +2060,7 @@ private theorem block_nu13_x10
       MvPolynomial.eval_X, Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C,
       Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero,
       mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT,
-      lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self, and_true, and_false]
+      lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self, and_true, and_false]
     ring
   have eA21 :
       MvPolynomial.eval k (MvPolynomial.pderiv (2, 1) (act ν₁₃ 1 2 (MvPolynomial.X (1, 0)))) =
@@ -2070,7 +2070,7 @@ private theorem block_nu13_x10
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA22 :
@@ -2081,7 +2081,7 @@ private theorem block_nu13_x10
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB :
@@ -2092,7 +2092,7 @@ private theorem block_nu13_x10
       Matrix.head_cons, Matrix.cons_val_two, Matrix.tail_cons, map_add, map_mul, map_neg,
       MvPolynomial.eval_X, MvPolynomial.eval_C, MvPolynomial.pderiv_X, Pi.single_apply,
       Prod.mk.injEq, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB00 :
@@ -2103,7 +2103,7 @@ private theorem block_nu13_x10
       MvPolynomial.eval_X, Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C,
       Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero,
       mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT,
-      lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self, and_true, and_false]
+      lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self, and_true, and_false]
     ring
   have eB01 :
       MvPolynomial.eval k (MvPolynomial.pderiv (0, 1) (act ν₁₃ 1 1 (MvPolynomial.X (1, 0)))) =
@@ -2113,7 +2113,7 @@ private theorem block_nu13_x10
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB02 :
@@ -2124,7 +2124,7 @@ private theorem block_nu13_x10
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eB10 :
       MvPolynomial.eval k (MvPolynomial.pderiv (1, 0) (act ν₁₃ 1 1 (MvPolynomial.X (1, 0)))) =
         k (0, 1)^2/2 - k (2, 1)^2/2 + I*k (0, 1)^2*(τ : ℂ) + I*k (2, 1)^2*(τ : ℂ) + I*k (1, 1)^2*(τ₃ : ℂ) := by
@@ -2133,7 +2133,7 @@ private theorem block_nu13_x10
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB11 :
@@ -2144,7 +2144,7 @@ private theorem block_nu13_x10
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB12 :
@@ -2155,7 +2155,7 @@ private theorem block_nu13_x10
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eB20 :
       MvPolynomial.eval k (MvPolynomial.pderiv (2, 0) (act ν₁₃ 1 1 (MvPolynomial.X (1, 0)))) =
         -k (1, 1)*k (2, 1) := by
@@ -2164,7 +2164,7 @@ private theorem block_nu13_x10
       MvPolynomial.eval_X, Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C,
       Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero,
       mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT,
-      lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self, and_true, and_false]
+      lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self, and_true, and_false]
     ring
   have eB21 :
       MvPolynomial.eval k (MvPolynomial.pderiv (2, 1) (act ν₁₃ 1 1 (MvPolynomial.X (1, 0)))) =
@@ -2174,7 +2174,7 @@ private theorem block_nu13_x10
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB22 :
@@ -2185,14 +2185,14 @@ private theorem block_nu13_x10
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   generalize act ν₁₃ 1 2 (MvPolynomial.X (1, 0)) = A at eA eA00 eA01 eA02 eA10 eA11 eA12 eA20 eA21 eA22 ⊢
   generalize act ν₁₃ 1 1 (MvPolynomial.X (1, 0)) = B at eB eB00 eB01 eB02 eB10 eB11 eB12 eB20 eB21 eB22 ⊢
   simp only [act, ν₁₃, Fin.sum_univ_three, Fin.isValue, Matrix.cons_val_zero, Matrix.cons_val_one,
     Matrix.head_cons, Matrix.cons_val_two, Matrix.tail_cons, map_add, map_sub, map_mul, map_neg,
     MvPolynomial.eval_X, MvPolynomial.eval_C, MvPolynomial.pderiv_X, Pi.single_apply, Prod.mk.injEq,
     map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, Fin.reduceEq, Fin.reduceLT,
-    lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self, and_true, and_false, c', eA,
+    lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self, and_true, and_false, c', eA,
     eB, eA00, eA01, eA02, eA10, eA11, eA12, eA20, eA21, eA22, eB00, eB01, eB02, eB10, eB11, eB12,
     eB20, eB21, eB22]
   linear_combination kill_nu13_x10 (τ : ℂ) (τ₃ : ℂ) k hk
@@ -2230,7 +2230,7 @@ private theorem block_nu13_x11
       Matrix.head_cons, Matrix.cons_val_two, Matrix.tail_cons, map_add, map_mul, map_neg,
       MvPolynomial.eval_X, MvPolynomial.eval_C, MvPolynomial.pderiv_X, Pi.single_apply,
       Prod.mk.injEq, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA00 :
@@ -2241,7 +2241,7 @@ private theorem block_nu13_x11
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eA01 :
       MvPolynomial.eval k (MvPolynomial.pderiv (0, 1) (act ν₁₃ 1 2 (MvPolynomial.X (1, 1)))) =
         3*k (0, 2)*k (1, 1)/2 + I*k (0, 2)*k (1, 1)*(τ : ℂ) := by
@@ -2250,7 +2250,7 @@ private theorem block_nu13_x11
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA02 :
@@ -2261,7 +2261,7 @@ private theorem block_nu13_x11
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA10 :
@@ -2272,7 +2272,7 @@ private theorem block_nu13_x11
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eA11 :
       MvPolynomial.eval k (MvPolynomial.pderiv (1, 1) (act ν₁₃ 1 2 (MvPolynomial.X (1, 1)))) =
         -k (2, 1)*k (2, 2)/2 + 3*k (0, 1)*k (0, 2)/2 + I*k (0, 1)*k (0, 2)*(τ : ℂ)
@@ -2282,7 +2282,7 @@ private theorem block_nu13_x11
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA12 :
@@ -2293,7 +2293,7 @@ private theorem block_nu13_x11
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA20 :
@@ -2304,7 +2304,7 @@ private theorem block_nu13_x11
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eA21 :
       MvPolynomial.eval k (MvPolynomial.pderiv (2, 1) (act ν₁₃ 1 2 (MvPolynomial.X (1, 1)))) =
         -2*k (1, 2)*k (2, 1) - k (1, 1)*k (2, 2)/2 + I*k (1, 1)*k (2, 2)*(τ : ℂ) := by
@@ -2313,7 +2313,7 @@ private theorem block_nu13_x11
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA22 :
@@ -2324,7 +2324,7 @@ private theorem block_nu13_x11
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB :
@@ -2335,7 +2335,7 @@ private theorem block_nu13_x11
       Matrix.head_cons, Matrix.cons_val_two, Matrix.tail_cons, map_add, map_mul, map_neg,
       MvPolynomial.eval_X, MvPolynomial.eval_C, MvPolynomial.pderiv_X, Pi.single_apply,
       Prod.mk.injEq, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB00 :
@@ -2346,7 +2346,7 @@ private theorem block_nu13_x11
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eB01 :
       MvPolynomial.eval k (MvPolynomial.pderiv (0, 1) (act ν₁₃ 1 1 (MvPolynomial.X (1, 1)))) =
         3*k (0, 1)*k (1, 1) + 2*I*k (0, 1)*k (1, 1)*(τ : ℂ) := by
@@ -2355,7 +2355,7 @@ private theorem block_nu13_x11
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB02 :
@@ -2366,7 +2366,7 @@ private theorem block_nu13_x11
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eB10 :
       MvPolynomial.eval k (MvPolynomial.pderiv (1, 0) (act ν₁₃ 1 1 (MvPolynomial.X (1, 1)))) =
         0 := by
@@ -2375,7 +2375,7 @@ private theorem block_nu13_x11
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eB11 :
       MvPolynomial.eval k (MvPolynomial.pderiv (1, 1) (act ν₁₃ 1 1 (MvPolynomial.X (1, 1)))) =
         -3*k (2, 1)^2/2 + 3*k (0, 1)^2/2 + I*k (0, 1)^2*(τ : ℂ) + I*k (2, 1)^2*(τ : ℂ)
@@ -2385,7 +2385,7 @@ private theorem block_nu13_x11
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB12 :
@@ -2396,7 +2396,7 @@ private theorem block_nu13_x11
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eB20 :
       MvPolynomial.eval k (MvPolynomial.pderiv (2, 0) (act ν₁₃ 1 1 (MvPolynomial.X (1, 1)))) =
         0 := by
@@ -2405,7 +2405,7 @@ private theorem block_nu13_x11
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eB21 :
       MvPolynomial.eval k (MvPolynomial.pderiv (2, 1) (act ν₁₃ 1 1 (MvPolynomial.X (1, 1)))) =
         -3*k (1, 1)*k (2, 1) + 2*I*k (1, 1)*k (2, 1)*(τ : ℂ) := by
@@ -2414,7 +2414,7 @@ private theorem block_nu13_x11
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB22 :
@@ -2425,14 +2425,14 @@ private theorem block_nu13_x11
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   generalize act ν₁₃ 1 2 (MvPolynomial.X (1, 1)) = A at eA eA00 eA01 eA02 eA10 eA11 eA12 eA20 eA21 eA22 ⊢
   generalize act ν₁₃ 1 1 (MvPolynomial.X (1, 1)) = B at eB eB00 eB01 eB02 eB10 eB11 eB12 eB20 eB21 eB22 ⊢
   simp only [act, ν₁₃, Fin.sum_univ_three, Fin.isValue, Matrix.cons_val_zero, Matrix.cons_val_one,
     Matrix.head_cons, Matrix.cons_val_two, Matrix.tail_cons, map_add, map_sub, map_mul, map_neg,
     MvPolynomial.eval_X, MvPolynomial.eval_C, MvPolynomial.pderiv_X, Pi.single_apply, Prod.mk.injEq,
     map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, Fin.reduceEq, Fin.reduceLT,
-    lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self, and_true, and_false, c', eA,
+    lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self, and_true, and_false, c', eA,
     eB, eA00, eA01, eA02, eA10, eA11, eA12, eA20, eA21, eA22, eB00, eB01, eB02, eB10, eB11, eB12,
     eB20, eB21, eB22]
   linear_combination kill_nu13_x11 (τ : ℂ) (τ₃ : ℂ) k hk
@@ -2470,7 +2470,7 @@ private theorem block_nu13_x12
       Matrix.head_cons, Matrix.cons_val_two, Matrix.tail_cons, map_add, map_mul, map_neg,
       MvPolynomial.eval_X, MvPolynomial.eval_C, MvPolynomial.pderiv_X, Pi.single_apply,
       Prod.mk.injEq, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA00 :
@@ -2481,7 +2481,7 @@ private theorem block_nu13_x12
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eA01 :
       MvPolynomial.eval k (MvPolynomial.pderiv (0, 1) (act ν₁₃ 1 2 (MvPolynomial.X (1, 2)))) =
         k (0, 2)*k (1, 2)/2 + I*k (0, 2)*k (1, 2)*(τ : ℂ) := by
@@ -2490,7 +2490,7 @@ private theorem block_nu13_x12
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA02 :
@@ -2501,7 +2501,7 @@ private theorem block_nu13_x12
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA10 :
@@ -2512,7 +2512,7 @@ private theorem block_nu13_x12
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eA11 :
       MvPolynomial.eval k (MvPolynomial.pderiv (1, 1) (act ν₁₃ 1 2 (MvPolynomial.X (1, 2)))) =
         k (0, 2)^2 + I*k (1, 2)^2*(τ₃ : ℂ) := by
@@ -2521,7 +2521,7 @@ private theorem block_nu13_x12
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA12 :
@@ -2533,7 +2533,7 @@ private theorem block_nu13_x12
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA20 :
@@ -2544,7 +2544,7 @@ private theorem block_nu13_x12
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eA21 :
       MvPolynomial.eval k (MvPolynomial.pderiv (2, 1) (act ν₁₃ 1 2 (MvPolynomial.X (1, 2)))) =
         -3*k (1, 2)*k (2, 2)/2 + I*k (1, 2)*k (2, 2)*(τ : ℂ) := by
@@ -2553,7 +2553,7 @@ private theorem block_nu13_x12
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eA22 :
@@ -2564,7 +2564,7 @@ private theorem block_nu13_x12
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB :
@@ -2575,7 +2575,7 @@ private theorem block_nu13_x12
       Matrix.head_cons, Matrix.cons_val_two, Matrix.tail_cons, map_add, map_mul, map_neg,
       MvPolynomial.eval_X, MvPolynomial.eval_C, MvPolynomial.pderiv_X, Pi.single_apply,
       Prod.mk.injEq, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB00 :
@@ -2586,7 +2586,7 @@ private theorem block_nu13_x12
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eB01 :
       MvPolynomial.eval k (MvPolynomial.pderiv (0, 1) (act ν₁₃ 1 1 (MvPolynomial.X (1, 2)))) =
         k (0, 1)*k (1, 2) + k (0, 2)*k (1, 1) + 2*I*k (0, 1)*k (1, 2)*(τ : ℂ) := by
@@ -2595,7 +2595,7 @@ private theorem block_nu13_x12
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB02 :
@@ -2606,7 +2606,7 @@ private theorem block_nu13_x12
       MvPolynomial.eval_X, Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C,
       Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero,
       mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT,
-      lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self, and_true, and_false]
+      lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self, and_true, and_false]
     ring
   have eB10 :
       MvPolynomial.eval k (MvPolynomial.pderiv (1, 0) (act ν₁₃ 1 1 (MvPolynomial.X (1, 2)))) =
@@ -2616,7 +2616,7 @@ private theorem block_nu13_x12
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eB11 :
       MvPolynomial.eval k (MvPolynomial.pderiv (1, 1) (act ν₁₃ 1 1 (MvPolynomial.X (1, 2)))) =
         k (0, 1)*k (0, 2) - k (2, 1)*k (2, 2) + 2*I*k (1, 1)*k (1, 2)*(τ₃ : ℂ) := by
@@ -2625,7 +2625,7 @@ private theorem block_nu13_x12
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB12 :
@@ -2636,7 +2636,7 @@ private theorem block_nu13_x12
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB20 :
@@ -2647,7 +2647,7 @@ private theorem block_nu13_x12
       Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, Derivation.map_one_eq_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul,
       add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one,
-      if_true, if_false, and_self, and_true, and_false]
+      ite_true, ite_false, and_self, and_true, and_false]
   have eB21 :
       MvPolynomial.eval k (MvPolynomial.pderiv (2, 1) (act ν₁₃ 1 1 (MvPolynomial.X (1, 2)))) =
         -k (1, 1)*k (2, 2) - k (1, 2)*k (2, 1) + 2*I*k (1, 2)*k (2, 1)*(τ : ℂ) := by
@@ -2656,7 +2656,7 @@ private theorem block_nu13_x12
       MvPolynomial.eval_X, MvPolynomial.eval_C, Derivation.leibniz, MvPolynomial.pderiv_X,
       MvPolynomial.pderiv_C, Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq,
       smul_eq_mul, map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
-      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self,
+      Fin.reduceEq, Fin.reduceLT, lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self,
       and_true, and_false]
     ring
   have eB22 :
@@ -2667,7 +2667,7 @@ private theorem block_nu13_x12
       MvPolynomial.eval_X, Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C,
       Derivation.map_one_eq_zero, Pi.single_apply, Prod.mk.injEq, smul_eq_mul, map_one, map_zero,
       mul_one, mul_zero, zero_mul, add_zero, zero_add, neg_zero, Fin.reduceEq, Fin.reduceLT,
-      lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self, and_true, and_false]
+      lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self, and_true, and_false]
     ring
   generalize act ν₁₃ 1 2 (MvPolynomial.X (1, 2)) = A at eA eA00 eA01 eA02 eA10 eA11 eA12 eA20 eA21 eA22 ⊢
   generalize act ν₁₃ 1 1 (MvPolynomial.X (1, 2)) = B at eB eB00 eB01 eB02 eB10 eB11 eB12 eB20 eB21 eB22 ⊢
@@ -2675,7 +2675,7 @@ private theorem block_nu13_x12
     Matrix.head_cons, Matrix.cons_val_two, Matrix.tail_cons, map_add, map_sub, map_mul, map_neg,
     MvPolynomial.eval_X, MvPolynomial.eval_C, MvPolynomial.pderiv_X, Pi.single_apply, Prod.mk.injEq,
     map_one, map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, Fin.reduceEq, Fin.reduceLT,
-    lt_self_iff_false, Fin.zero_lt_one, if_true, if_false, and_self, and_true, and_false, c', eA,
+    lt_self_iff_false, Fin.zero_lt_one, ite_true, ite_false, and_self, and_true, and_false, c', eA,
     eB, eA00, eA01, eA02, eA10, eA11, eA12, eA20, eA21, eA22, eB00, eB01, eB02, eB10, eB11, eB12,
     eB20, eB21, eB22]
   linear_combination kill_nu13_x12 (τ : ℂ) (τ₃ : ℂ) k hk

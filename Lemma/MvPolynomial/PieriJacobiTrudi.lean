@@ -950,7 +950,7 @@ lemma symToRowSSYT_toMonomial (hN : 0 < N) (n : ℕ) (s : Sym (Fin N) n) :
   simp only
   -- The product over i : Fin N simplifies because only i = 0 contributes
   rw [Finset.prod_eq_single ⟨0, hN⟩]
-  · -- Main case: i = 0
+  · -- IharaIota case: i = 0
     rw [sym_monomial_eq_weaklyIncreasing_prod]
     apply Finset.prod_congr rfl
     intro j _
@@ -3205,7 +3205,7 @@ lemma lgvPathEastStepYCoords_cons_east_gen (x y : ℤ) (tail : List (ℤ × ℤ)
   simp only [lgvPathEastStepYCoords]
   simp only [and_self, ↓reduceIte]
 
-/-- Main induction lemma: lgvPathEastStepYCoords extracts the heights from buildVerticesAux. -/
+/-- IharaIota induction lemma: lgvPathEastStepYCoords extracts the heights from buildVerticesAux. -/
 lemma lgvPathEastStepYCoords_buildVerticesAux (N : ℕ) (x y : ℤ) (heights : List (Fin N)) (fuel : ℕ)
     (hfuel : fuel ≥ heights.length + (N - y.toNat)) (hy : 1 ≤ y) (hyN : y ≤ N)
     (hchain : heights.IsChain (· ≤ ·))

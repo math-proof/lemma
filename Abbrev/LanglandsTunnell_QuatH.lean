@@ -1,4 +1,4 @@
-import Lemma.LanglandsTunnell.SylowH
+import Lemma.Matrix.SylowH
 import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.NumberTheory.NumberField.Basic
 

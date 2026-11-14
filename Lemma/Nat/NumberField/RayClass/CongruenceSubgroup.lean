@@ -13,19 +13,33 @@ namespace NumberField.Modulus.CongruenceSubgroup
 -/
 @[path]
 lemma mem_image_iff
-  :
+  [Field K] [NumberField K]
+  {m : Modulus K}
+  {C : CongruenceSubgroup (K := K) m}
+  {x : RayClassGroup m} :
 -- imply
-  {K : Type*}
-    [Field K]
-    [NumberField K]
-    {m : Modulus K}
-    (C : CongruenceSubgroup (K :=
+  x ∈ C.image ↔ ∃ y ∈ C.toSubgroup, rayClassMap m y = x :=
 -- proof
   Subgroup.mem_map
-@[simp] theorem image_comap (C : CongruenceSubgroup (K := K) m) :
+
+end NumberField.Modulus.CongruenceSubgroup
+
+namespace NumberField.Modulus.CongruenceSubgroup
+
+/--
+[image_comap](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/CongruenceSubgroup.lean)
+-/
+@[path]
+lemma image_comap
+  [Field K] [NumberField K]
+  {m : Modulus K}
+  (C : CongruenceSubgroup (K := K) m) :
+-- imply
   C.image.comap (rayClassMap m) = C.toSubgroup := by
+-- proof
   unfold image
-  rwa [Subgroup.comap_map_eq, sup_eq_left, rayClassMap_ker]
+  rw [Subgroup.comap_map_eq, rayClassMap_ker, sup_eq_left]
+  exact C.rayGroup_le
 
 end NumberField.Modulus.CongruenceSubgroup
 
@@ -36,13 +50,11 @@ namespace NumberField.Modulus.CongruenceSubgroup
 -/
 @[path]
 lemma toAmbientSubgroup_le
-  :
+  [Field K] [NumberField K]
+  {m : Modulus K}
+  (C : CongruenceSubgroup (K := K) m) :
 -- imply
-  {K : Type*}
-    [Field K]
-    [NumberField K]
-    {m : Modulus K}
-    (C : CongruenceSubgroup (K := by
+  C.toAmbientSubgroup ≤ coprimeFractionalIdeals m := by
 -- proof
   intro x hx
   obtain ⟨y, _, rfl⟩ := Subgroup.mem_map.mp hx
@@ -60,7 +72,7 @@ lemma smallest_image
   [Field K] [NumberField K]
   {m : Modulus K} :
 -- imply
-  (smallest (K := by
+  (smallest (K := K) m).image = ⊥ := by
 -- proof
   rw [image, smallest, eq_bot_iff]
   intro x hx
@@ -79,30 +91,15 @@ lemma largest_image
   [Field K] [NumberField K]
   {m : Modulus K} :
 -- imply
-  (largest (K := by
+  (largest (K := K) m).image = ⊤ := by
 -- proof
   rw [image, largest, eq_top_iff]
   intro x _
-  obtain ⟨y, rfl⟩ := rayClassMap_surjective m x
+  obtain ⟨y, rfl⟩ := rayClassMap_surjective x
   exact Subgroup.mem_map_of_mem _ (Subgroup.mem_top y)
 
 end NumberField.Modulus.CongruenceSubgroup
 
-/--
-[image_comap](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/CongruenceSubgroup.lean)
--/
-@[path]
-private lemma image_comap_eq
-  :
--- imply
-  {K : Type*}
-    [Field K]
-    [NumberField K]
-    {m : Modulus K}
-    (C : CongruenceSubgroup (K := by
--- proof
-  apply NumberField.Modulus.CongruenceSubgroup.image_comap
-
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-13

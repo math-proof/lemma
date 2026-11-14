@@ -25,10 +25,11 @@ lemma RayClassCharacter.isInducedBy_iff
 -- proof
   constructor
   · intro hind x
-    simp [show chi2 = chi1.comp (RayClassGroup.mapOfDvd h) from hind]
+    rw [hind, pullback_apply, pullback_apply, MonoidHom.comp_apply,
+      RayClassGroup.mapOfDvd_rayClassMap]
   · intro hall
     refine MonoidHom.ext fun q => ?_
-    obtain ⟨x, rfl⟩ := rayClassMap_surjective m2 q
+    obtain ⟨x, rfl⟩ := rayClassMap_surjective q
     rw [MonoidHom.comp_apply, RayClassGroup.mapOfDvd_rayClassMap,
       ← pullback_apply, ← pullback_apply]
     exact hall x
@@ -43,7 +44,7 @@ namespace NumberField.Modulus
 @[path]
 lemma RayClassCharacter.isPrimitive_iff
   [Field K] [NumberField K]
-  {m1 m2 : Modulus K}
+  {_m1 m2 : Modulus K}
   {chi : RayClassCharacter m2} :
 -- imply
   chi.IsPrimitive ↔ ∀ (m0 : Modulus K) (chi0 : RayClassCharacter m0)
@@ -125,10 +126,10 @@ private lemma RayClassGroup_mapOfDvd_rayClassMap_eq
 -- given
   (h : m1 ∣ m2) :
 -- imply
-  mapOfDvd h (rayClassMap m2 x) = rayClassMap m1 (coprimeInclusion h x) := by
+  RayClassGroup.mapOfDvd h (rayClassMap m2 x) = rayClassMap m1 (coprimeInclusion h x) := by
 -- proof
   apply NumberField.Modulus.RayClassGroup.mapOfDvd_rayClassMap h x
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-13

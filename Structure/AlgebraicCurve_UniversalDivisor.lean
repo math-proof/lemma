@@ -31,9 +31,6 @@ noncomputable def mapOnProd {C : Scheme.{u}} (c : C ⟶ Spec (CommRingCat.of k))
   pullback.map c t c csym (𝟙 C) φ (𝟙 (Spec (CommRingCat.of k))) (by simp)
     (by rw [Category.comp_id, hφ])
 
-@[reassoc (attr := simp)]
-
-
 def PullsBack {C : Scheme.{u}} {c : C ⟶ Spec (CommRingCat.of k)} {r : ℕ}
     {Csym : Scheme.{u}} {csym : Csym ⟶ Spec (CommRingCat.of k)}
     (Dcan : RelEffDivisor C c r Csym csym)

@@ -10,15 +10,15 @@ open Random MeasureTheory
 `SinglePSpace.exists_distribution` (the joint law equals `μ.prod ν` with density `p`). -/
 private lemma densityAe
   [MeasurableSpace Ω]
-  [ReferenceMeasure α] [ReferenceMeasure β]
+  [μ : ReferenceMeasure α] [ν : ReferenceMeasure β]
   {π : Measure Ω} {x : Ω → α} {y : Ω → β}
   [SinglePSpace π (x, y)]
 -- given
   (p : α × β → ENNReal)
   (hp : Measurable p)
-  (hjoint : π.map (x, y) = (ReferenceMeasure.measure.prod ReferenceMeasure.measure).withDensity p) :
+  (hjoint : π.map (x, y) = (μ.measure.prod ν.measure).withDensity p) :
 -- imply
-  π.prob (x, y) =ᵐ[ReferenceMeasure.measure.prod ReferenceMeasure.measure] p := by
+  π.prob (x, y) =ᵐ[μ.measure.prod ν.measure] p := by
 -- proof
   show (π.map (x, y)).rnDeriv _ =ᵐ[_] p
   rw [hjoint]
@@ -28,14 +28,14 @@ private lemma densityAe
 @[path, comm]
 private lemma left
   [MeasurableSpace Ω]
-  [ReferenceMeasure α] [ReferenceMeasure β]
+  [μ : ReferenceMeasure α] [ν : ReferenceMeasure β]
   {π : Measure Ω} {x : Ω → α} {y : Ω → β}
 -- given
   (hP : SinglePSpace π (x, y)) :
 -- imply
   have := SinglePSpace.of.SinglePSpace.snd hP
-  ∀ᵐ «\sf{y}» ∂ReferenceMeasure.measure,
-    ∫⁻ «\sf{x}», ℙ[π](x = «\sf{x}» ∧ y = «\sf{y}») ∂ReferenceMeasure.measure =
+  ∀ᵐ «\sf{y}» ∂ν.measure,
+    ∫⁻ «\sf{x}», ℙ[π](x = «\sf{x}» ∧ y = «\sf{y}») ∂μ.measure =
       ℙ[π](y = «\sf{y}») := by
 -- proof
   simp
@@ -78,14 +78,14 @@ private lemma left
 @[path, comm]
 private lemma main
   [MeasurableSpace Ω]
-  [ReferenceMeasure α] [ReferenceMeasure β]
+  [μ : ReferenceMeasure α] [ν : ReferenceMeasure β]
   {π : Measure Ω} {x : Ω → α} {y : Ω → β}
 -- given
   (hP : SinglePSpace π (x, y)) :
 -- imply
   have := SinglePSpace.of.SinglePSpace.fst hP
-  ∀ᵐ «\sf{x}» ∂ReferenceMeasure.measure,
-    ∫⁻ «\sf{y}», ℙ[π](x = «\sf{x}» ∧ y = «\sf{y}») ∂ReferenceMeasure.measure =
+  ∀ᵐ «\sf{x}» ∂μ.measure,
+    ∫⁻ «\sf{y}», ℙ[π](x = «\sf{x}» ∧ y = «\sf{y}») ∂ν.measure =
       ℙ[π](x = «\sf{x}») := by
 -- proof
   simp
@@ -117,4 +117,4 @@ private lemma main
 
 
 -- created on 2020-12-07
--- updated on 2026-11-02
+-- updated on 2026-11-14

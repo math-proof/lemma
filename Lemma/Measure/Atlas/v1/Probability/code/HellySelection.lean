@@ -45,7 +45,7 @@ lemma IsDistributionFunction.mem_Icc
 -- imply
   F x ∈ Icc (0 : ℝ) 1 :=
 -- proof
-  ⟨hF.nonneg x, hF.le_one x⟩
+  ⟨hF.nonneg, hF.le_one⟩
 namespace HellySelection
 
 /--
@@ -66,8 +66,9 @@ lemma sSup_image_rat_eq
     · exact ⟨g q, ⟨q, show (q : ℝ) ≤ ↑q from le_rfl, rfl⟩⟩
     · rintro _ ⟨r, (hr : (r : ℝ) ≤ ↑q), rfl⟩
       exact hg_mono r q (Rat.cast_le.mp hr)
-  · exact le_csSup ⟨1, by rintro _ ⟨r, _, rfl⟩; exact (hg_bdd r).2⟩
-    ⟨q, show (q : ℝ) ≤ ↑q from le_rfl, rfl⟩
+  · apply le_csSup
+    · exact ⟨1, by rintro _ ⟨r, _, rfl⟩; exact (hg_bdd r).2⟩
+    · exact Set.mem_image_of_mem g (le_rfl : (q : ℝ) ≤ (q : ℝ))
 
 /--
 [helly_selection](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/HellySelection.lean)
@@ -78,11 +79,11 @@ lemma helly_selection
 -- given
   (hF : ∀ n, IsDistributionFunction (F n)) :
 -- imply
-  ∃ (φ : ℕ → ℕ) (G : HellySelection.MonotoneRightContinuous), StrictMono φ ∧ ∀ x, ContinuousAt (↑G) x → Tendsto (fun k => F (φ k) x) atTop (𝓝 (G x)) := by
+  ∃ (φ : ℕ → ℕ) (G : MonotoneRightContinuous), StrictMono φ ∧ ∀ x, ContinuousAt (↑G) x → Tendsto (fun k => F (φ k) x) atTop (𝓝 (G x)) := by
 -- proof
   classical
   let v : ℕ → ℚ → Set.Icc (0 : ℝ) 1 :=
-    fun n q => ⟨F n ↑q, (hF n).nonneg ↑q, (hF n).le_one ↑q⟩
+    fun n q => ⟨F n ↑q, (hF n).nonneg, (hF n).le_one⟩
   obtain ⟨a, φ, hφ_strict, hφ_conv⟩ := CompactSpace.tendsto_subseq v
   have hconv_rat : ∀ q : ℚ, Tendsto (fun k => F (φ k) (↑q)) atTop (𝓝 ↑(a q)) := by
     intro q
@@ -103,8 +104,8 @@ lemma helly_selection
     · obtain ⟨q, hq⟩ := exists_rat_lt a
       exact ⟨g q, ⟨q, le_of_lt hq, rfl⟩⟩
     · exact image_mono (fun q (hq : (q : ℝ) ≤ a) => le_trans hq hab)
-  have hh_rat : ∀ q : ℚ, h (↑q) = g q := sSup_image_rat_eq g hg_mono hg_bdd
-  let G := HellySelection.ofMonotone h hh_mono
+  have hh_rat : ∀ q : ℚ, h (↑q) = g q := fun q => sSup_image_rat_eq (g := g) hg_mono hg_bdd
+  let G := ofMonotone h hh_mono
   refine ⟨φ, G, hφ_strict, ?_⟩
   intro x hx_cont
   have hleft_eq : leftLim h x = rightLim h x := by
@@ -154,6 +155,8 @@ lemma helly_selection
   have hle_s : F (φ k) x ≤ F (φ k) ↑s := (hF (φ k)).mono (le_of_lt hs_lt)
   rw [Real.dist_eq, abs_lt]
   constructor <;> linarith
+
+end HellySelection
 
 
 -- created on 2026-10-23

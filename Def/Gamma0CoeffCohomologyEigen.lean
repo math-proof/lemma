@@ -1,6 +1,6 @@
 import Mathlib
 import Instance.Gamma0CoeffCohomology
-import Lemma.HeckeEis.BinaryFormRep
+import Lemma.MvPolynomial.BinaryFormRep
 import Instance.Gamma0CoeffCohomologyEigen
 
 set_option autoImplicit false

@@ -482,7 +482,7 @@ lemma sigma1_sq_le_of_bound
     · push Not at hne
       have hempty : {r : ℝ | ∃ f : G → ℂ, IsMeanZero f ∧ l2NormSq f ≠ 0 ∧
         r = Real.sqrt (l2NormSq (convOp μ f)) / Real.sqrt (l2NormSq f)} = ∅ := by
-        ext x; simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false]; exact hne x
+        ext x; simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false]; exact hne x
       rw [hempty, Real.sSup_empty]
       exact Real.sqrt_nonneg _
   have hsup_nn : 0 ≤ sigma1 μ := by
@@ -493,7 +493,7 @@ lemma sigma1_sq_le_of_bound
     · push Not at hne
       have hempty : {r : ℝ | ∃ f : G → ℂ, IsMeanZero f ∧ l2NormSq f ≠ 0 ∧
         r = Real.sqrt (l2NormSq (convOp μ f)) / Real.sqrt (l2NormSq f)} = ∅ := by
-        ext x; simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false]; exact hne x
+        ext x; simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false]; exact hne x
       rw [hempty, Real.sSup_empty]
   nlinarith [Real.sq_sqrt hB]
 
@@ -520,7 +520,7 @@ lemma sl2ZBall_finite
     (Set.Icc (-N) N) ×ˢ ((Set.Icc (-N) N) ×ˢ ((Set.Icc (-N) N) ×ˢ (Set.Icc (-N) N)))
   apply Set.Finite.of_injOn (f := f) (t := S)
   · intro g hg
-    simp only [sl2ZBall, Set.mem_setOf_eq] at hg
+    simp only [sl2ZBall, Set.mem_ofPred_eq] at hg
     simp only [S, f, Set.mem_prod, Set.mem_Icc]
     refine ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩, ?_, ?_⟩ <;>
     nlinarith [sq_nonneg ((g : Matrix (Fin 2) (Fin 2) ℤ) 0 0),
@@ -534,8 +534,8 @@ lemma sl2ZBall_finite
       [exact heq.1; exact heq.2.1; exact heq.2.2.1; exact heq.2.2.2]
   · exact (Set.finite_Icc _ _).prod
     ((Set.finite_Icc _ _).prod ((Set.finite_Icc _ _).prod (Set.finite_Icc _ _)))
-/-- The cardinality of `sl2ZBall T` grows like `T²`: there exist `c, C > 0` such
-that `c·T² ≤ |sl2ZBall T| ≤ C·T²` for all `T ≥ 2`. -/
+-- The cardinality of `sl2ZBall T` grows like `T²`: there exist `c, C > 0` such
+-- that `c·T² ≤ |sl2ZBall T| ≤ C·T²` for all `T ≥ 2`.
 
 end SelbergExpansion
 

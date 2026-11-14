@@ -139,8 +139,8 @@ private lemma helper_main
       refine (contDiffAt_const (c := (0 : ℂ))).congr_of_eventuallyEq hev
     else
       have hxne : x ≠ x₀ := by
-      rintro rfl
-      exact hx (mem_ball_self χ₂.rIn_pos)
+        rintro rfl
+        exact hx (mem_ball_self χ₂.rIn_pos)
       have hux : ContDiffAt ℝ (⊤ : ENat) u x :=
         hu'.contDiffAt (isOpen_compl_singleton.mem_nhds hxne)
       refine ((contDiff_const.sub (contDiff_cb χ₂)).contDiffAt).mul
@@ -224,11 +224,11 @@ private lemma helper_main
       simp only [hgt_def, hg₁_def, hx, sub_zero, one_mul]
     else
       have hxmem : x ∈ ball x₀ (ε / 8) := by
-      by_contra hx'
-      apply hx
-      apply cb_eq_zero_of_le χ₂
-      rw [hχ₂rOut]
-      exact not_lt.mp fun hlt => hx' (mem_ball.mpr hlt)
+        by_contra hx'
+        apply hx
+        apply cb_eq_zero_of_le χ₂
+        rw [hχ₂rOut]
+        exact not_lt.mp fun hlt => hx' (mem_ball.mpr hlt)
       simp only [hgt_def, hg₁_def, hDF₂_zero x hxmem, zero_mul]
   have hd : (∫ x, F x * g₂ x ∂μ) = (∫ x, F₁ x * w x ∂μ) - ∫ x, F₂ x * h x ∂μ := by
     rw [← integral_sub (hint' _ _ hF₁s.continuous hF₁c hw) (hint' _ _ hF₂s.continuous hF₂c hh_cont)]

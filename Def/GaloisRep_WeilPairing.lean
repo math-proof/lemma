@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.FreyPackage.GaloisRep
+import Lemma.WeierstrassCurve.FreyPackageGaloisRep
 import Structure.GaloisRep_WeilPairing
 
 set_option autoImplicit false

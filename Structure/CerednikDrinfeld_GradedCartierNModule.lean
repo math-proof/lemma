@@ -1,7 +1,6 @@
 import Mathlib
 import Structure.CerednikDrinfeld_SpecialFormalModule
 import Structure.CerednikDrinfeld_GradedCartierModuleData
-import Instance.CerednikDrinfeld_GradedCartierNModule
 
 set_option autoImplicit false
 
@@ -16,6 +15,10 @@ variable (D : GradedCartierModuleData p B j)
 
 
 def Sigma (D : GradedCartierModuleData p B j) : Type := D.M
+
+instance : AddCommGroup D.Sigma := inferInstanceAs (AddCommGroup D.M)
+instance : Module (WittVector p B) D.Sigma :=
+  (Module.compHom D.M (WittVector.frobenius : WittVector p B →+* WittVector p B) :)
 
 def toSigma : D.M ≃+ D.Sigma := AddEquiv.refl _
 

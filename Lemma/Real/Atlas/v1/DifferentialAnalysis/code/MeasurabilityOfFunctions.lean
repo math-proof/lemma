@@ -108,11 +108,11 @@ lemma ennrealRatEmbed_dense_Icc
   · rw [key]
     have hvsub : v.toReal - (↑i : ℝ) * δ < δ := by nlinarith
     calc v - ENNReal.ofReal ((↑i : ℝ) * δ)
-      = ENNReal.ofReal v.toReal - ENNReal.ofReal ((↑i : ℝ) * δ) := by
-        rw [ENNReal.ofReal_toReal hv_ne]
+      = ENNReal.ofReal v.toReal - ENNReal.ofReal ((↑i : ℝ) * δ) := (by
+        rw [ENNReal.ofReal_toReal hv_ne])
       _ = ENNReal.ofReal (v.toReal - (↑i : ℝ) * δ) := (ENNReal.ofReal_sub v.toReal hiδ_nn).symm
-      _ < ENNReal.ofReal δ := by
-        rw [ENNReal.ofReal_lt_ofReal_iff hq_pos]; exact hvsub
+      _ < ENNReal.ofReal δ := (by
+        rw [ENNReal.ofReal_lt_ofReal_iff hq_pos]; exact hvsub)
       _ = ↑(Real.toNNReal δ) := rfl
       _ < ε := hqε
 

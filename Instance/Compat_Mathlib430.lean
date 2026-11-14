@@ -16,7 +16,6 @@ import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.Tactic.LinearCombination
 import Mathlib.Tactic.Ring
 import Notation.Algebra.Ring.Action.Submonoid
-import Lemma.Compat.Mathlib430
 
 set_option autoImplicit false
 
@@ -71,4 +70,3 @@ same file :286-295) RENAMED AND REDEFINED them (`IsEllipticSequence W := ∀ p q
 /-! ## Block G — ramification/inertia cardinality lemmas under the separability hypothesis (adapted from Mathlib v4.30.0,
 Mathlib/NumberTheory/RamificationInertia/Galois.lean; v4.33.0 restates them assuming PerfectField of the residue field). Theorems only,
 primed names; no definitions involved. -/
-

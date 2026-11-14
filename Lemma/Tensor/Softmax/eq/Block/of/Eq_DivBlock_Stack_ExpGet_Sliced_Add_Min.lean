@@ -20,7 +20,8 @@ private lemma lower_triangle
   (A + (Ξ - 1) * ∞).softmax ≈
     (([i < n] [j < n] (((if ((i.val : ℤ) - l < (j.val : ℤ) ∧ (j.val : ℤ) ≤ i.val) then z i ((j.val : ℤ) - i.val + ((l : ℤ) - 1)) else 0 : ℝ) : Tensor ℝ [])) : Tensor ℝ [n, n]) : Tensor ℝ* [n, n]) := by
 -- proof
-  exact SoftmaxAdd_Mul_Infty.eq.Cast_Stack_Ite_Block (n := n) (m := n) (fun i j => ((i.val : ℤ) - l < (j.val : ℤ) ∧ (j.val : ℤ) ≤ i.val)) (fun i j => ((A i j) : ℝ)) (fun i j => z i ((j.val : ℤ) - i.val + ((l : ℤ) - 1))) (fun i => ⟨i, by omega⟩) h
+  exact SoftmaxAdd_Mul_Infty.eq.Cast_Stack_Ite_Block (n := n) (m := n) (P := fun i j => ((i.val : ℤ) - l < (j.val : ℤ) ∧ (j.val : ℤ) ≤ i.val)) (a := fun i j => ((A i j) : ℝ)) (w := fun i j => z i ((j.val : ℤ) - i.val + ((l : ℤ) - 1))) (fun i => ⟨i, by omega⟩) h
 
 
 -- created on 2022-01-02
+-- updated on 2026-11-13

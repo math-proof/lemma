@@ -8,7 +8,7 @@ private lemma valuation_prod_one_add_sub_one_lt
   [Field K]
   {Γ₀ : Type*}
   [LinearOrderedCommGroupWithZero Γ₀]
-  [hv : Valued K Γ₀]
+  [Valued K Γ₀]
   {Γ : Type*} [LinearOrderedCommGroupWithZero Γ] (w : Valuation K Γ)
   {ι : Type*} [DecidableEq ι] (f : ι → K) (u : Finset ι) {g : Γ} (hg : 0 < g)
   (h1 : ∀ i ∈ u, w (f i) < 1) (hgu : ∀ i ∈ u, w (f i) < g) :
@@ -28,21 +28,21 @@ private lemma valuation_prod_one_add_le
   [Field K]
   {Γ₀ : Type*}
   [LinearOrderedCommGroupWithZero Γ₀]
-  [hv : Valued K Γ₀]
+  [Valued K Γ₀]
   {Γ : Type*} [LinearOrderedCommGroupWithZero Γ] (w : Valuation K Γ)
   {ι : Type*} [DecidableEq ι] (f : ι → K) (S₀ : Finset ι) (hS₀ : ∀ i, i ∉ S₀ → w (f i) < 1) (s : Finset ι) :
   w (∏ i ∈ s, (1 + f i)) ≤ ∏ i ∈ S₀, max 1 (w (1 + f i)) := by
   rw [map_prod]
   calc
     _ ≤ ∏ i ∈ s, (if i ∈ S₀ then max 1 (w (1 + f i)) else 1) := by
-      refine Finset.prod_le_prod' fun i hi => ?_
+      refine Finset.prod_le_prod fun i hi => ?_
       split_ifs with h
       · exact le_max_right _ _
       · rw [w.map_one_add_of_lt (hS₀ i h)]
     _ = ∏ i ∈ s.filter (· ∈ S₀), max 1 (w (1 + f i)) := by
       rw [Finset.prod_ite, Finset.prod_const_one, mul_one]
     _ ≤ ∏ i ∈ S₀, max 1 (w (1 + f i)) := by
-      refine Finset.prod_le_prod_of_subset_of_one_le' (fun i hi => (Finset.mem_filter.mp hi).2) ?_
+      refine Finset.prod_le_prod_of_subset_of_one_le (fun i hi => (Finset.mem_filter.mp hi).2) ?_
       intro i _ _
       exact le_max_left _ _
 
@@ -55,7 +55,7 @@ private lemma multipliable_aux
   [CompleteSpace K] {ι : Type*} (f : ι → K)
   (hf : Tendsto f cofinite (𝓝 0)) : Multipliable (fun i => 1 + f i) := by
   classical
-  set w : Valuation K (MonoidWithZeroHom.ValueGroup₀ (MonoidWithZeroHom.ofClass hv.v)) := (hv.v).restrict with hw
+  set w : Valuation K hv.v.ValueGroup₀ := (hv.v).restrict with hw
   have hC : CauchySeq (fun s : Finset ι => ∏ i ∈ s, (1 + f i)) := by
     rw [(Valued.hasBasis_uniformity K Γ₀).cauchySeq_iff]
     intro γ _
@@ -70,7 +70,7 @@ private lemma multipliable_aux
       by_contra h
       exact hi (hS₀fin.mem_toFinset.mpr h)
     set M := ∏ i ∈ S₀, max 1 (w (1 + f i)) with hM
-    have hM1 : 1 ≤ M := Finset.one_le_prod' fun i _ => le_max_left _ _
+    have hM1 : 1 ≤ M := Finset.one_le_prod fun i _ => le_max_left _ _
     have hM0 : M ≠ 0 := ne_of_gt (lt_of_lt_of_le zero_lt_one hM1)
     set δ := γ * (Units.mk0 M hM0)⁻¹ with hδ
     have hδmem : {x : K | w x < δ.1} ∈ 𝓝 (0 : K) :=
@@ -123,3 +123,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

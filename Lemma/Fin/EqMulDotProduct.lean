@@ -66,14 +66,17 @@ private lemma main
     · simp [hmv]
     · simp [hmv]
   have hadj00 : (m2 (1 : k) 0 0 0).adjugate = m2 (0 : k) 0 0 1 := by
-    rw [Matrix.adjugate_fin_two_of]
-    norm_num
+    rw [Matrix.adjugate_fin_two]
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [m2, v2]
   have hadj11 : (m2 (0 : k) 0 0 1).adjugate = m2 (1 : k) 0 0 0 := by
-    rw [Matrix.adjugate_fin_two_of]
-    norm_num
+    rw [Matrix.adjugate_fin_two]
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [m2, v2]
   have hadj01 : (m2 (0 : k) 1 0 0).adjugate = m2 (0 : k) (-1) 0 0 := by
-    rw [Matrix.adjugate_fin_two_of]
-    norm_num
+    rw [Matrix.adjugate_fin_two]
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [m2, v2]
   set u₀ : Fin 2 → k := μ⁻¹.mulVec (v2 1 0)
   set u₁ : Fin 2 → k := μ⁻¹.mulVec (v2 0 1)
   set α : k := b (v2 1 0) u₁
@@ -88,19 +91,19 @@ private lemma main
     intro w
     have h := key (m2 (0 : k) 0 0 1) (v2 0 1) w
     rw [hadj11, hA11v, hA00v, hv1 ((μ.mulVec w) 0), Matrix.mulVec_smul, map_smul, smul_eq_mul] at h
-    simp only [Matrix.cons_val_one, Matrix.head_cons, Matrix.cons_val_zero] at h
+    simp only [Matrix.cons_val_one, Matrix.cons_val_zero] at h
     apply h
   have hE5 : ∀ w, b (v2 1 0) w = -(μ.mulVec w) 1 * β := by
     intro w
     have h := key (m2 (0 : k) 1 0 0) (v2 0 1) w
     rw [hadj01, hA01v, hA01nv, hv1 (-(μ.mulVec w) 1), Matrix.mulVec_smul, map_smul, smul_eq_mul] at h
-    simp only [Matrix.cons_val_one, Matrix.head_cons, Matrix.cons_val_zero] at h
+    simp only [Matrix.cons_val_one, Matrix.cons_val_zero] at h
     apply h
   have hαβ : α = -β := by
     have h3 := hE3 <| μ⁻¹.mulVec (v2 0 1)
     have h5 := hE5 <| μ⁻¹.mulVec (v2 0 1)
     rw [hμinv] at h3 h5
-    simp only [Matrix.cons_val_one, Matrix.head_cons, Matrix.cons_val_zero, one_mul, neg_mul] at h3 h5
+    simp only [Matrix.cons_val_one, Matrix.cons_val_zero, one_mul, neg_mul] at h3 h5
     rw [← h3, h5]
   have hbv : ∀ x y : Fin 2 → k, b x y = x 0 * b (v2 1 0) y + x 1 * b (v2 0 1) y := by
     intro x y
@@ -120,9 +123,10 @@ private lemma main
     · simp [hmv]
   refine ⟨α, fun v w => ?_⟩
   rw [hbv v w, hE3, hE4, hJ]
-  simp only [dotProduct, Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons]
+  simp only [dotProduct, Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one]
   rw [hαβ]
   ring
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-13

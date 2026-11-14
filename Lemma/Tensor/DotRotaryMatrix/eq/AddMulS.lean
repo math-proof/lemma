@@ -37,10 +37,10 @@ private lemma main
         rfl
       ·
         apply SEq_Cast.of.Eq (ConsLengthSlice.eq.List.tail d)
-  apply Eq.trans (congrArg (fun t => θ.rotaryMatrix ⬝ᵥ t) hx)
+  apply Eq.trans (congrArg (fun t : Tensor ℝ [d + d] => θ.rotaryMatrix ⬝ᵥ t) hx)
   apply Eq.trans (DotRotaryMatrix.eq.AddMulSAppend θ x0 x1)
   rw [← hx]
 
 
 -- created on 2023-06-06
--- updated on 2026-10-26
+-- updated on 2026-11-13

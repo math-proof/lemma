@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.ModularCurve.UVCrossingModel
+import Lemma.MvPowerSeries.UVCrossingModel
 import Def.ModularCurve_UVCrossingGaussOrder
 import Def.ModularCurve_UVCrossingDominantIndices
 

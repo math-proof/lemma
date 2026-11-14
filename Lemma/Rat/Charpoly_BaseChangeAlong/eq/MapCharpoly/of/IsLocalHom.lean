@@ -19,8 +19,9 @@ private lemma main
 -- imply
   LinearMap.charpoly ((ρ.baseChangeAlong φ hφ).ρ σ) = (LinearMap.charpoly (ρ.ρ σ)).map φ := by
 -- proof
-  letI : Algebra A B := φ.toAlgebra
+  let : Algebra A B := φ.toAlgebra
   exact LinearMap.charpoly_baseChange (ρ.ρ σ) B
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

@@ -1,4 +1,4 @@
-import Lemma.AlgebraicCurve.SemistableChartsComap
+import Lemma.AlgEquiv.SemistableChartsComap
 
 set_option autoImplicit false
 

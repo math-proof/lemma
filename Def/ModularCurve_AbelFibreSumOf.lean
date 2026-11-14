@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.ModularCurve.PeriodOf
+import Lemma.UpperHalfPlane.PeriodOf
 import Def.ModularCurve_AbelFibreSum
 
 set_option autoImplicit false

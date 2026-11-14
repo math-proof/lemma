@@ -12,8 +12,8 @@ private lemma main
   [Field F] [NumberField F] {v : HeightOneSpectrum (𝓞 F)} {ϖ : v.adicCompletionIntegers F} {m : ℕ}
   {g : GL (Fin 2) (v.adicCompletion F)} (hπ : (ϖ : v.adicCompletion F) ≠ 0)
   (hϖ : Valued.v (ϖ : v.adicCompletion F) = WithZero.exp (-1 : ℤ)) (hm : 1 ≤ m)
-  (hc : Valued.v ((g : Matrix (Fin 2) (Fin 2) (v.adicCompletion F)) 1 0) ≤ WithZero.exp (-(m : ℤ)))
-  (hd : Valued.v ((g : Matrix (Fin 2) (Fin 2) (v.adicCompletion F)) 1 1 - 1) ≤ WithZero.exp (-(m : ℤ))) :
+  (hc : Valued.v (g.val 1 0) ≤ WithZero.exp (-(m : ℤ)))
+  (hd : Valued.v (g.val 1 1 - 1) ≤ WithZero.exp (-(m : ℤ))) :
 -- imply
   ∃ (x : v.adicCompletion F) (n : ℤ) (k : GL (Fin 2) (v.adicCompletion F)),
       k ∈ AdelicDock.localLevelOne (𝓞 F) F v (v.asIdeal ^ m) ∧

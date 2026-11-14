@@ -29,7 +29,7 @@ lemma moment_bound
   have hb : (0 : ℝ) < 1 / (2 * σsq) := by positivity
   set g : ℝ → ℝ := fun t => 2 * rexp (-t^2 / (2 * σsq)) * t ^ ((↑k : ℝ) - 1) with hg_def
   have hg_int : IntegrableOn g (Ioi 0) := by
-    have hint := integrableOn_rpow_mul_exp_neg_mul_rpow hq (by norm_num : (1 : ℝ) ≤ 2) hb
+    have hint := integrableOn_rpow_mul_exp_neg_mul_rpow hq two_pos hb
     refine (hint.const_mul 2).congr ?_
     filter_upwards with t
     simp only [hg_def]
@@ -111,16 +111,19 @@ lemma gamma_half_le_rpow
     have h1 : Real.Gamma (3/2 : ℝ) = (1/2) * Real.Gamma (1/2 : ℝ) := by
       rw [show (3:ℝ)/2 = 1/2 + 1 from by norm_num, Real.Gamma_add_one (by norm_num)]
     rw [h1, Real.Gamma_one_half_eq]
-    calc (1:ℝ)/2 * Real.sqrt Real.pi ≤ 1 := by
+    have hle1 : (1:ℝ)/2 * Real.sqrt Real.pi ≤ 1 := by
       have : Real.sqrt Real.pi ≤ 2 := by
-        calc Real.sqrt Real.pi
-          ≤ Real.sqrt 4 := Real.sqrt_le_sqrt (by linarith [Real.pi_le_four])
-          _ = 2 := by rw [show (4:ℝ) = 2^2 from by norm_num]
-            exact Real.sqrt_sq (by norm_num)
+        have hsq : Real.sqrt Real.pi ≤ Real.sqrt 4 :=
+          Real.sqrt_le_sqrt (by linarith [Real.pi_le_four])
+        have h4 : Real.sqrt 4 = 2 := by
+          rw [show (4:ℝ) = 2^2 from by norm_num]
+          exact Real.sqrt_sq (by norm_num)
+        linarith
       linarith
-      _ ≤ (3/2 : ℝ) ^ (3/2 : ℝ) := by
-        rw [← one_rpow (3/2 : ℝ)]
-        exact Real.rpow_le_rpow (by norm_num) (by norm_num) (by norm_num)
+    have hle2 : (1:ℝ) ≤ (3/2 : ℝ) ^ (3/2 : ℝ) := by
+      rw [← one_rpow (3/2 : ℝ)]
+      exact Real.rpow_le_rpow (by norm_num) (by norm_num) (by norm_num)
+    exact hle1.trans hle2
   | k + 4, _ =>
     have ih_prev := ih (k + 2) (by omega) (by omega)
     have hconv : (↑(k + 4) : ℝ) / 2 = (↑(k + 2) : ℝ) / 2 + 1 := by push_cast; ring
@@ -184,7 +187,7 @@ lemma rpow_inv_le_exp_inv_exp
   rw [Real.rpow_def_of_pos hk_pos]
   apply Real.exp_le_exp_of_le
   rw [mul_comm, inv_mul_eq_div]
-  exact log_div_le_inv_exp k hk_pos
+  exact log_div_le_inv_exp hk_pos
 
 end SubGaussianMoments
 
@@ -216,9 +219,11 @@ lemma kth_root_bound
     intro t ht
     calc μ {ω | |X ω| > t}
       ≤ μ {ω | |X ω| ≥ t} := by
-        apply measure_mono; intro ω hω; simp only [mem_setOf_eq] at *; exact le_of_lt hω
+          apply measure_mono
+          intro ω hω
+          exact Set.mem_setOf.mpr (le_of_lt (Set.mem_setOf.mp hω))
       _ ≤ _ := htail t ht.le
-  have hlint := moment_bound hσsq hX.aestronglyMeasurable htail' k hk1
+  have hlint := moment_bound (k := k) hσsq hX.aestronglyMeasurable htail' hk1
   have hf_nn : 0 ≤ᵐ[μ] fun ω => |X ω| ^ k := ae_of_all _ (fun ω => pow_nonneg (abs_nonneg _) _)
   have hf_meas : AEStronglyMeasurable (fun ω => |X ω| ^ k) μ := hX.aestronglyMeasurable.norm.pow k
   rw [integral_eq_lintegral_of_nonneg_ae hf_nn hf_meas]
@@ -234,7 +239,7 @@ lemma kth_root_bound
     ≤ C ^ ((↑k : ℝ)⁻¹) := Real.rpow_le_rpow (by positivity) hint_le hkinv_nn
     _ ≤ σ * Real.exp (1 / Real.exp 1) * Real.sqrt ↑k := by
       have hk_half_pos : (0 : ℝ) < (k : ℝ) / 2 := by positivity
-      have hGamma := gamma_half_le_rpow k hk
+      have hGamma := gamma_half_le_rpow (k := k) hk
       have hC_bound : C ≤ (2 * σ ^ 2) ^ ((k : ℝ) / 2) * (↑k * ((↑k / 2) ^ ((↑k : ℝ) / 2))) := by
         rw [hC_def, mul_assoc]; gcongr
       calc C ^ ((↑k : ℝ)⁻¹)
@@ -264,7 +269,7 @@ lemma kth_root_bound
             = σ * (↑k : ℝ) ^ ((↑k : ℝ)⁻¹) * (Real.sqrt 2 * Real.sqrt (↑k / 2)) := by ring
             _ = σ * (↑k : ℝ) ^ ((↑k : ℝ)⁻¹) * Real.sqrt ↑k := by rw [h1]
         _ ≤ σ * Real.exp (1 / Real.exp 1) * Real.sqrt ↑k := by
-          gcongr; exact rpow_inv_le_exp_inv_exp k hk
+          gcongr; exact rpow_inv_le_exp_inv_exp hk
 
 end SubGaussianMoments
 
@@ -285,7 +290,7 @@ lemma first_moment_bound
   (hX : Measurable X)
   (htail : ∀ t : ℝ, 0 ≤ t → μ {ω | |X ω| ≥ t} ≤ ENNReal.ofReal (2 * Real.exp (-(t ^ 2) / (2 * σ ^ 2)))) :
 -- imply
-  ∫ ω, := by
+  ∫ ω, |X ω| ∂μ ≤ σ * Real.sqrt (2 * Real.pi) := by
 -- proof
   rw [integral_eq_lintegral_of_nonneg_ae
     (ae_of_all _ (fun ω => abs_nonneg _))
@@ -298,12 +303,14 @@ lemma first_moment_bound
     intro t ht
     calc μ {ω | |X ω| > t}
       ≤ μ {ω | |X ω| ≥ t} := by
-        apply measure_mono; intro ω hω; simp only [mem_setOf_eq] at *; exact le_of_lt hω
+          apply measure_mono
+          intro ω hω
+          exact Set.mem_setOf.mpr (le_of_lt (Set.mem_setOf.mp hω))
       _ ≤ _ := htail t ht.le
-  have hbound := moment_bound (sq_pos_of_pos hσ) hX.aestronglyMeasurable htail' 1 le_rfl
+  have hbound := moment_bound (k := 1) (sq_pos_of_pos hσ) hX.aestronglyMeasurable htail' le_rfl
   calc ∫⁻ (a : Ω), ENNReal.ofReal (|X a| ^ (1:ℝ)) ∂μ
-    ≤ ENNReal.ofReal ((2 * σ ^ 2) ^ ((1:ℝ) / 2) * (1:ℝ) * Real.Gamma ((1:ℝ) / 2)) := by
-      push_cast at hbound ⊢; exact hbound
+    ≤ ENNReal.ofReal ((2 * σ ^ 2) ^ ((1:ℝ) / 2) * (1:ℝ) * Real.Gamma ((1:ℝ) / 2)) :=
+        by push_cast at hbound ⊢; exact hbound
     _ = ENNReal.ofReal (σ * Real.sqrt (2 * Real.pi)) := by
       congr 1
       rw [Real.Gamma_one_half_eq, mul_one, ← Real.sqrt_eq_rpow,
@@ -333,8 +340,8 @@ lemma subgaussian_moment_bounds
 -- imply
   (∀ k : ℕ, 2 ≤ k → (∫ ω, |X ω| ^ (k : ℕ) ∂μ) ^ ((k : ℝ)⁻¹) ≤ σ * Real.exp (1 / Real.exp 1) * Real.sqrt k) ∧ (∫ ω, |X ω| ∂μ ≤ σ * Real.sqrt (2 * Real.pi)) :=
 -- proof
-  ⟨fun k hk => kth_root_bound X σ hσ k hk hX htail,
-    first_moment_bound X σ hσ hX htail⟩
+  ⟨fun k hk => kth_root_bound (k := k) hσ hk hX htail,
+    first_moment_bound hσ hX htail⟩
 
 end SubGaussianMoments
 
@@ -357,7 +364,7 @@ lemma lemma_1_4_moment_bound
 -- imply
   ∫⁻ ω, ENNReal.ofReal (|X ω| ^ (k : ℝ)) ∂μ ≤ ENNReal.ofReal ((2 * σsq) ^ ((k : ℝ)/2) * k * Real.Gamma (k/2)) :=
 -- proof
-  SubGaussianMoments.moment_bound hσ hX_meas hX_tail k hk
+  SubGaussianMoments.moment_bound (k := k) hσ hX_meas hX_tail hk
 
 
 -- created on 2026-10-23

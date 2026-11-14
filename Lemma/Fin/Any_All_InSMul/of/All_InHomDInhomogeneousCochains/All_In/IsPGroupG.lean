@@ -15,7 +15,7 @@ private lemma main
   {ν : (Fin 1 → G) → A}
 -- given
   (hG : IsPGroup p G)
-  (hW : ∀ (g : G) (a : A), a ∈ W → A.ρ g a ∈ W)
+  (_hW : ∀ (g : G) (a : A), a ∈ W → A.ρ g a ∈ W)
   (hν : ∀ g : Fin 2 → G, ((inhomogeneousCochains A).d 1 2).hom ν g ∈ W) :
 -- imply
   ∃ (m : (Fin 0 → G) → A) (k : ℕ),
@@ -65,21 +65,26 @@ private lemma main
     rw [hd0, hc t]
     set g := t 0
     have hx : A.ρ g (-(u • s)) - -(u • s) = -(u • (A.ρ g s - s)) := by
-      rw [map_neg, map_zsmul, smul_sub]; abel
+      simp only [map_neg, map_zsmul]
+      rw [sub_neg_eq_add, zsmul_sub, neg_sub, sub_eq_add_neg, add_comm]
     have key : (p ^ k : ℤ) • ν (c g) =
-        (u * p ^ k) • ((Fintype.card G : ℤ) • ν (c g)) + v • ((W.index : ℤ) • ν (c g)) := by
-      rw [smul_smul, smul_smul, ← add_smul]
-      congr 1
+        (u * (p : ℤ) ^ k * (Fintype.card G : ℤ) + v * (W.index : ℤ)) • ν (c g) := by
       rw [ha, hn]
       push_cast at huv ⊢
+      congr 1
       linear_combination (-(p : ℤ) ^ k) * huv
     have hfin : (p ^ k : ℤ) • (ν (c g) - (A.ρ g (-(u • s)) - -(u • s))) =
         (u * p ^ k) • ((Fintype.card G : ℤ) • ν (c g) + (A.ρ g s - s)) + v • ((W.index : ℤ) • ν (c g)) := by
-      rw [hx, smul_sub, key]
-      module
+      rw [hx, sub_neg_eq_add]
+      have hdist : (p ^ k : ℤ) • (ν (c g) + u • (A.ρ g s - s)) =
+          (p ^ k : ℤ) • ν (c g) + ((p : ℤ) ^ k * u) • (A.ρ g s - s) := by
+        rw [zsmul_add, smul_smul]
+      rw [hdist, key, add_zsmul, zsmul_add, smul_smul, smul_smul]
+      simp [mul_comm, mul_assoc, add_comm, add_left_comm]
     show (p ^ k : ℤ) • (ν (c g) - (A.ρ (c g 0) (-(u • s)) - -(u • s))) ∈ W
     rw [show c g 0 = g from rfl, hfin]
     exact W.add_mem (W.zsmul_mem (hsum g) _) (W.zsmul_mem (hidx _) _)
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

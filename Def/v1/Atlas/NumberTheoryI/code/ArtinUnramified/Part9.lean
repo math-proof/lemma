@@ -20,7 +20,7 @@ import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.GroupTheory.Index
 import Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90
-import Mathlib.Algebra.Set.Closure.eq.N.of.Eq
+import Lemma.Set.Closure.eq.N.of.Eq
 import Mathlib.RingTheory.Trace.Basic
 import Mathlib.LinearAlgebra.Dimension.Finrank
 import Mathlib.RingTheory.Ideal.Norm.RelNorm
@@ -59,7 +59,7 @@ def normOnFracUnits (K L : Type*) [Field K] [NumberField K] [Field L] [NumberFie
         ClassGroup.integralRep_mem_nonZeroDivisors I.ne_zero⟩ *
        ⟨ClassGroup.integralRep (J : _),
         ClassGroup.integralRep_mem_nonZeroDivisors J.ne_zero⟩) := by
-      rw [ClassGroup.mk0_integralRep, map_mul (ClassGroup.mk (R := 𝓞 L)),
+      rw [ClassGroup.mk0_integralRep, map_mul (ClassGroup.mk (FractionRing (𝓞 L))),
           ← ClassGroup.mk0_integralRep I, ← ClassGroup.mk0_integralRep J, map_mul]
     show normToClK K L ⟨ClassGroup.integralRep ((I * J : _) : _), _⟩ =
       normToClK K L ⟨ClassGroup.integralRep (I : _), _⟩ *

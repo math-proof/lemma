@@ -1,7 +1,7 @@
-import Lemma.LanglandsTunnell.CubicInduction_PrincipalSeries3
+import Lemma.Matrix.CubicInduction_PrincipalSeries3
 import Def.LanglandsTunnell_StandardLocalConstantsAt
-import Lemma.AutomorphicForm.SmoothingKernel
-import Lemma.AutomorphicForm.LocalOrbitalBase
+import Lemma.Matrix.SmoothingKernel
+import Lemma.Matrix.LocalOrbitalBase
 
 set_option autoImplicit false
 

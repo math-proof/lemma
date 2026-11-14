@@ -271,11 +271,11 @@ private lemma garrett_7_2_corollary
       fun i => i.elim0, fun i => i.elim0, fun i => i.elim0,
       fun i => i.elim0, fun i => i.elim0, fun i => i.elim0,
       by simp [Set.range_eq_empty]⟩
-    · rw [orthogonal_bot]; exact restrict_top_anisotropic B hAniso
+    · rw [orthogonal_bot]; exact restrict_top_anisotropic hAniso
     · rw [orthogonal_bot]; exact isCompl_bot_top
   · simp only [BilinForm.IsAnisotropic, not_forall] at hAniso
     obtain ⟨v, hiso, hv⟩ := hAniso
-    obtain ⟨w, hvw, hww, hwv⟩ := exists_hyperbolic_pair_of_isotropic B hBnd hBsymm v hv hiso
+    obtain ⟨w, hvw, hww, hwv⟩ := main hBnd hBsymm hv hiso
     set P := Submodule.span F {v, w} with hP_def
     have hPnd : (B.restrict P).Nondegenerate := by
       rw [LinearMap.BilinForm.restrict_nondegenerate_iff_isCompl_orthogonal hBsymm.isRefl]
@@ -309,7 +309,7 @@ private lemma garrett_7_2_corollary
     have hCompl : IsCompl P (B.orthogonal P) :=
       B.isCompl_orthogonal_of_restrict_nondegenerate hBsymm.isRefl hPnd
     have hPerpNd : (B.restrict (B.orthogonal P)).Nondegenerate :=
-      restrict_orthogonal_nondegenerate B hBnd hBsymm.isRefl P hPnd
+      restrict_orthogonal_nondegenerate hBnd hBsymm.isRefl hPnd
     have hPerpRank : Module.finrank F ↥(B.orthogonal P) < n := by
       rw [← hn]
       apply Submodule.finrank_lt
@@ -321,19 +321,19 @@ private lemma garrett_7_2_corollary
       rw [this] at hv_mem
       exact hv ((Submodule.mem_bot F).mp hv_mem)
     set Pperp := B.orthogonal P
-    have hPerpSymm := restrict_isSymm B hBsymm Pperp
+    have hPerpSymm := restrict_isSymm (W := Pperp) hBsymm
     obtain ⟨H', A'_ih, hH'hyp, hH'aniso, hH'A'compl, hA'eq⟩ :=
-      ih _ hPerpRank (B.restrict Pperp) hPerpNd hPerpSymm rfl
+      ih _ hPerpRank (B := B.restrict Pperp) hPerpNd hPerpSymm rfl
     set H'V := H'.map Pperp.subtype
     set H := P ⊔ H'V
     set A' := (B.restrict Pperp).orthogonal H'
     have hA'_ih_eq : A'_ih = A' := hA'eq
     have hOrthH : B.orthogonal H = A'.map Pperp.subtype :=
-      orthogonal_sup_map_eq B P Pperp rfl H'
+      orthogonal_sup_map_eq (H' := H') rfl
     have hHA : IsCompl H' A' := hA'_ih_eq ▸ hH'A'compl
     have hHCompl : IsCompl H (B.orthogonal H) := by
       rw [hOrthH]
-      exact isCompl_lift_submodule P Pperp hCompl H' A' hHA
+      exact isCompl_lift_submodule (H' := H') (A' := A') hCompl hHA
     have hHhyp : BilinForm.IsHyperbolicSubspace B H := by
       obtain ⟨m, vs', ws', hvs'H, hws'H, hvs'iso, hws'iso, hvw'pair,
         hvv'orth, hww'orth, hvw'orth, hH'span⟩ := hH'hyp
@@ -382,7 +382,7 @@ private lemma garrett_7_2_corollary
         · rw [hBsymm.eq]; exact (vs' a).2 w (Submodule.subset_span (Set.mem_insert_iff.mpr (Or.inr rfl)))
         · exact hvw'orth a b (fun h => hij (congrArg Fin.succ h))
       · have hvs0_range : Set.range vs0 = Pperp.subtype '' Set.range vs' := by
-        ext x; simp [vs0, Set.mem_range, Set.mem_image]
+          ext x; simp [vs0, Set.mem_range, Set.mem_image]
         have hws0_range : Set.range ws0 = Pperp.subtype '' Set.range ws' := by
           ext x; simp [ws0, Set.mem_range, Set.mem_image]
         rw [show H = P ⊔ H'V from rfl]
@@ -397,10 +397,10 @@ private lemma garrett_7_2_corollary
         simp only [Set.mem_union, Set.mem_insert_iff, Set.mem_singleton_iff, Set.mem_range]
         tauto
     exact ⟨H, B.orthogonal H, hHhyp,
-      by rw [hOrthH]; exact isAnisotropic_restrict_map B Pperp A' (hA'_ih_eq ▸ hH'aniso),
+      by rw [hOrthH]; exact isAnisotropic_restrict_map (W := Pperp) (A := A') (hA'_ih_eq ▸ hH'aniso),
       hHCompl, rfl⟩
 
 
 
 -- created on 2026-10-23
--- updated on 2026-10-26
+-- updated on 2026-11-13

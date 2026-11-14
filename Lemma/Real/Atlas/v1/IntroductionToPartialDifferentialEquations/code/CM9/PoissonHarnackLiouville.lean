@@ -179,7 +179,7 @@ lemma euclidNorm_zero_imp_eq
   have := (Finset.sum_eq_zero_iff_of_nonneg (fun j _ => sq_nonneg ((a - b) j))).mp h i
     (Finset.mem_univ i)
   simp [Pi.sub_apply] at this; linarith [this]
-set_option maxHeartbeats 400000 in
+set_option maxHeartbeats 400000
 
 end PoissonHarnack
 
@@ -1529,8 +1529,8 @@ lemma harnack_upper_squeeze
       simp only [one_mul] at hlim
       exact le_of_tendsto hlim
         (eventually_atTop.mpr ⟨d + 1, fun R hR => h_ge R (by linarith)⟩)
-/-- Liouville's theorem for non-negative harmonic functions: a non-negative harmonic function
-on $\mathbb{R}^n$ is constant. -/
+-- Liouville's theorem for non-negative harmonic functions: a non-negative harmonic function
+-- on $\mathbb{R}^n$ is constant.
 
 end PoissonHarnack
 

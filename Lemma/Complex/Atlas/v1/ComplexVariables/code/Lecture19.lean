@@ -149,8 +149,8 @@ lemma montel_normal_families
     intro k
     by_cases hzk : (ζ k).val ∈ Ω
     · obtain ⟨Mb, hMb⟩ := hbdd {(ζ k).val} (singleton_subset_iff.mpr hzk) isCompact_singleton
-      exact ⟨Mb, fun n => by simp only [x, if_pos hzk]; exact hMb n _ (mem_singleton _)⟩
-    · exact ⟨0, fun n => by simp only [x, if_neg hzk, norm_zero]; exact le_refl 0⟩
+      exact ⟨Mb, fun n => by simp only [x, ite_eq_left hzk]; exact hMb n _ (mem_singleton _)⟩
+    · exact ⟨0, fun n => by simp only [x, ite_eq_right hzk, norm_zero]; exact le_refl 0⟩
   obtain ⟨φ, hφ_mono, hφ_conv⟩ := diagonal_extraction_nat x hbdd_pts
   have hconv_D : ∀ d ∈ D, d ∈ Ω → ∃ a, Tendsto (fun n => f (φ n) d) atTop (nhds a) := by
     intro d hd hdΩ
@@ -160,7 +160,7 @@ lemma montel_normal_families
     have hζk_Ω : (ζ k).val ∈ Ω := hζk_eq ▸ hdΩ
     refine ⟨a, ?_⟩
     have : (fun n => x (φ n) k) = (fun n => f (φ n) d) := by
-      ext n; simp only [x, if_pos hζk_Ω, hζk_eq]
+      ext n; simp only [x, ite_eq_left hζk_Ω, hζk_eq]
     rwa [this] at ha
   have h_cauchy : ∀ K : Set ℂ, K ⊆ Ω → IsCompact K →
     UniformCauchySeqOn (f ∘ φ) atTop K := by
@@ -188,9 +188,9 @@ lemma montel_normal_families
     let dp : ℂ → ℂ := fun z_c =>
       if h : z_c ∈ S then (hD_dense.exists_dist_lt z_c hη_pos).choose else 0
     have hdp_mem : ∀ z_c, z_c ∈ S → dp z_c ∈ D := by
-      intro z_c h; simp only [dp, dif_pos h]; exact (hD_dense.exists_dist_lt z_c hη_pos).choose_spec.1
+      intro z_c h; simp only [dp, dite_eq_left h]; exact (hD_dense.exists_dist_lt z_c hη_pos).choose_spec.1
     have hdp_dist : ∀ z_c, z_c ∈ S → dist z_c (dp z_c) < η := by
-      intro z_c h; simp only [dp, dif_pos h]; exact (hD_dense.exists_dist_lt z_c hη_pos).choose_spec.2
+      intro z_c h; simp only [dp, dite_eq_left h]; exact (hD_dense.exists_dist_lt z_c hη_pos).choose_spec.2
     have hdp_Ω : ∀ z_c, z_c ∈ S → dp z_c ∈ Ω := by
       intro z_c h
       apply hδK; apply thickening_subset_cthickening
@@ -268,7 +268,7 @@ lemma montel_normal_families
   let g : ℂ → ℂ := fun z =>
     if h : z ∈ Ω then (h_ptwise z h).choose else 0
   have hg_lim : ∀ z ∈ Ω, Tendsto (fun n => f (φ n) z) atTop (nhds (g z)) := by
-    intro z hz; simp only [g, dif_pos hz]; exact (h_ptwise z hz).choose_spec
+    intro z hz; simp only [g, dite_eq_left hz]; exact (h_ptwise z hz).choose_spec
   have h_loc_unif : TendstoLocallyUniformlyOn (f ∘ φ) g atTop Ω := by
     rw [tendstoLocallyUniformlyOn_iff_forall_isCompact hΩ]
     intro K hKΩ hK

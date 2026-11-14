@@ -25,9 +25,9 @@ namespace MathlibExt.Analysis.Ramanujan.Part1Ch7.Entry8Bernoullibound
 
 /--
 [eval₂_bernoulli_one_add](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch7Entry8Bernoullibound.lean)
+`B_{r+1}(y+1) = B_{r+1}(y) + (r+1) * y^r`.
 -/
 @[path]
-`B_{r+1}(y+1) = B_{r+1}(y) + (r+1) * y^r`. -/
 private lemma eval₂_bernoulli_one_add (r : ℕ) (y : ℂ) :
   (Polynomial.bernoulli (r + 1)).eval₂ (algebraMap ℚ ℂ) (y + 1) =
     (Polynomial.bernoulli (r + 1)).eval₂ (algebraMap ℚ ℂ) y + ((r : ℂ) + 1) * y ^ r := by

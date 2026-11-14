@@ -9,7 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.LieGroups.code.HarishChandraIsomorphism.Part2
-import Lemma.Int.Any_All_Eq.of.LeKer_Ker.Surjective
 import Mathlib.RingTheory.MvPolynomial.Basic
 import Mathlib.RingTheory.MvPolynomial.Homogeneous
 import Mathlib.FieldTheory.IsAlgClosed.Basic

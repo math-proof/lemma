@@ -10,6 +10,7 @@ import { promisify } from 'util';
 import { REPO_ROOT } from './modulePath.mjs';
 import { leanEchoPath } from './fetchLemmaMysql.mjs';
 import { LeanModule, LeanTactic } from '../../js/parser/lean.js';
+import { completeAxiomMessage, extractBareAxiomReports, splitAxiomReports } from './lint/axiomRules.mjs';
 
 const execAsync = promisify(exec);
 
@@ -361,7 +362,10 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
   }
 
   const outText = `${r.stdout || ''}\n${r.stderr || ''}`;
-  const outputLines = outText.split('\n').filter((l) => l.length > 0);
+  const rawLines = outText.split('\n').filter((l) => l.length > 0);
+  // `'decl' depends on axioms: […]` has no file:line:col. Pull it out before the
+  // diagnostic loop so a transitive `sorryAx` is not dropped on a clean compile.
+  const { rest: outputLines, reports: bareAxiomReports } = extractBareAxiomReports(rawLines);
 
   const latex = {};
   const error = [];
@@ -387,7 +391,8 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
     return echo_codes;
   };
 
-  for (const jsonline of outputLines) {
+  for (let i = 0; i < outputLines.length; i++) {
+    const jsonline = outputLines[i];
     // lake noise (e.g. `warning: proofwidgets: repository '…' has local changes`) is not a Lean diagnostic
     if (/^warning: [^:]+: repository .* has local changes/.test(jsonline)) continue;
     let parsed = null;
@@ -406,16 +411,34 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
       const col = parseInt(m[3], 10);
       const ec = ensureEchoCodes();
       const code = ec[lineNum - 1] ?? '';
+      // A wrapped axiom list is one message, not a continuation of the previous diagnostic.
+      const taken = completeAxiomMessage(outputLines, i, m[6]);
       error.push({
         code,
         line: lineNum,
         col: col - 2,
         type: m[4] + (m[5] ?? ''),
-        info: m[6],
+        info: taken.info,
       });
+      i = taken.next - 1;
     } else if (error.length) {
       const prev = error[error.length - 1];
       prev.info = `${prev.info}\n${jsonline}`;
+    }
+  }
+
+  if (bareAxiomReports.length) {
+    const ec = ensureEchoCodes();
+    const attrIdx = ec.findIndex((l) => /@\[[^\]]*\baxioms\b/.test(l));
+    const lineNum = attrIdx >= 0 ? attrIdx + 1 : 1;
+    for (const info of bareAxiomReports) {
+      error.push({
+        code: attrIdx >= 0 ? ec[attrIdx] : '',
+        line: lineNum,
+        col: 1,
+        type: 'info',
+        info,
+      });
     }
   }
 
@@ -478,7 +501,10 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
     if (m && coveredMissing.has(m[1])) return false;
     return true;
   });
-  codes.error.push(...lakeBuildErrors, ...leanErrors);
+  // `@[axioms]` info is not a Lean error. Allowed names stay silent; anything else is a style warning.
+  const axiomSplit = splitAxiomReports(leanErrors);
+  codes.error.push(...lakeBuildErrors, ...axiomSplit.errors);
+  if (axiomSplit.warnings.length) codes.warning = axiomSplit.warnings;
   if (opts.module != null) codes.module = opts.module;
   return codes;
 }

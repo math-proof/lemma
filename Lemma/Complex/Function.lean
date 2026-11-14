@@ -9,14 +9,14 @@ namespace PeriodPair
 [Function](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Elliptic/Function.lean)
 -/
 @[path]
-lemma isLatticePeriodic_const
+private lemma isLatticePeriodic_const_eq
 -- given
   (L : PeriodPair)
   (c : ℂ) :
 -- imply
   L.IsLatticePeriodic fun _ ↦ c :=
 -- proof
-  fun _ _ ↦ rfl
+  isLatticePeriodic_const L c
 
 end PeriodPair
 
@@ -26,22 +26,24 @@ namespace PeriodPair
 [Function](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Elliptic/Function.lean)
 -/
 @[path]
-lemma IsEllipticFunction.const
+private lemma IsEllipticFunction.const_eq
 -- given
   (L : PeriodPair)
   (c : ℂ) :
 -- imply
   L.IsEllipticFunction fun _ ↦ c :=
 -- proof
-  ⟨Meromorphic.const c, isLatticePeriodic_const L c⟩
+  IsEllipticFunction.const L c
 
 end PeriodPair
+
+namespace PeriodPair
 
 /--
 [Function](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Elliptic/Function.lean)
 -/
 @[path]
-lemma IsEllipticFunction.add
+private lemma IsEllipticFunction.add_eq
 -- given
   (L : PeriodPair)
   (f g : ℂ → ℂ)
@@ -50,8 +52,9 @@ lemma IsEllipticFunction.add
 -- imply
   L.IsEllipticFunction (f + g) :=
 -- proof
-  ⟨hf.meromorphic.add hg.meromorphic, fun ω ↦ (hf.periodic ω).add (hg.periodic ω)⟩
+  IsEllipticFunction.add hf hg
 
+end PeriodPair
 
 namespace PeriodPair
 
@@ -59,7 +62,7 @@ namespace PeriodPair
 [Function](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Elliptic/Function.lean)
 -/
 @[path]
-lemma IsEllipticFunction.mul
+private lemma IsEllipticFunction.mul_eq
 -- given
   (L : PeriodPair)
   (f g : ℂ → ℂ)
@@ -68,7 +71,7 @@ lemma IsEllipticFunction.mul
 -- imply
   L.IsEllipticFunction (f * g) :=
 -- proof
-  ⟨hf.meromorphic.mul hg.meromorphic, fun ω ↦ (hf.periodic ω).mul (hg.periodic ω)⟩
+  IsEllipticFunction.mul hf hg
 
 end PeriodPair
 

@@ -36,7 +36,7 @@ structure TowerQuotientDatum
 
   p_isPullback : ∀ n : ℕ, IsPullback (xt n) (p n) (p (n + 1)) (yt n)
 
-  p_inv : ∀ (n : ℕ) (g : G), (a n g).hom ≫ p n = p n
+  p_inv : ∀ (n : ℕ) (g : G), (a n g).asIso.hom ≫ p n = p n
 
   p_isFinite : ∀ n : ℕ, IsFinite (p n)
 
@@ -47,7 +47,7 @@ structure TowerQuotientDatum
   univ_loc : ∀ (T : Scheme.{0}) (U : ∀ n : ℕ, (Y n).Opens) (hU : ∀ n : ℕ, (yt n) ⁻¹ᵁ (U (n + 1)) = U n)
     (u : ∀ n : ℕ, (↑((p n) ⁻¹ᵁ (U n)) : Scheme.{0}) ⟶ T),
     (∀ (n : ℕ) (g : G),
-      Scheme.Hom.resLE (a n g).hom ((p n) ⁻¹ᵁ (U n)) ((p n) ⁻¹ᵁ (U n))
+      Scheme.Hom.resLE (a n g).asIso.hom ((p n) ⁻¹ᵁ (U n)) ((p n) ⁻¹ᵁ (U n))
         (by rw [← Scheme.Hom.comp_preimage, p_inv]) ≫ u n = u n) →
     (∀ n : ℕ,
       Scheme.Hom.resLE (xt n) ((p (n + 1)) ⁻¹ᵁ (U (n + 1))) ((p n) ⁻¹ᵁ (U n))
@@ -56,7 +56,7 @@ structure TowerQuotientDatum
 
   fib : ∀ (n : ℕ) (k : Type) [Field k] [IsAlgClosed k] (y : Spec (CommRingCat.of k) ⟶ Y n),
     (∃ x : Spec (CommRingCat.of k) ⟶ X n, x ≫ p n = y) ∧
-    ∀ x x' : Spec (CommRingCat.of k) ⟶ X n, x ≫ p n = y → (x' ≫ p n = y ↔ ∃ g : G, x' = x ≫ (a n g).hom)
+    ∀ x x' : Spec (CommRingCat.of k) ⟶ X n, x ≫ p n = y → (x' ≫ p n = y ↔ ∃ g : G, x' = x ≫ (a n g).asIso.hom)
 
   adicFib : ∀ (R : Type) [CommRing R] [IsDomain R] [ValuationRing R] [Algebra 𝒪 R],
     IsAdicComplete (Ideal.span {algebraMap 𝒪 R π}) R → IsAlgClosed (FractionRing R) →
@@ -75,6 +75,6 @@ structure TowerQuotientDatum
         (Ideal.span_singleton_le_span_singleton.mpr (pow_dvd_pow (algebraMap 𝒪 R π) (Nat.le_succ (n + 1)))))) ≫ x (n + 1) = x n ≫ xt n) →
       (∀ n : ℕ, Spec.map (CommRingCat.ofHom (Ideal.Quotient.factor
         (Ideal.span_singleton_le_span_singleton.mpr (pow_dvd_pow (algebraMap 𝒪 R π) (Nat.le_succ (n + 1)))))) ≫ x' (n + 1) = x' n ≫ xt n) →
-      ∃ g : G, ∀ n : ℕ, x' n = x n ≫ (a n g).hom
+      ∃ g : G, ∀ n : ℕ, x' n = x n ≫ (a n g).asIso.hom
 
 end AlgebraicGeometry

@@ -76,8 +76,6 @@ lemma indep_stopping_time_tail
 @[path]
 lemma measurableSet_stoppingTime_eq
   {m : MeasurableSpace Ω}
-  {μ : Measure Ω}
-  [MeasurableSpace S]
   {f : Filtration ℕ m}
   {T : Ω → ℕ}
   {n : ℕ}
@@ -115,7 +113,11 @@ lemma aemeasurable_postStoppingTimeSeq
     apply measurable_to_countable; intro ω
     show MeasurableSet (T ⁻¹' {T ω})
     have : T ⁻¹' {T ω} = {ω' : Ω | T ω' = T ω} := by ext ω'; simp
-    rw [this]; exact measurableSet_stoppingTime_eq hT (T ω)
+    rw [this]
+    have hset : {ω' : Ω | T ω' = T ω} = {ω' : Ω | (T ω' : ℕ∞) = ↑(T ω)} := by
+      ext ω'; simp [Nat.cast_inj]
+    rw [hset]
+    exact (f.le (T ω)) _ (hT.measurableSet_eq ↑(T ω))
   have h_meas : Measurable (fun ω => X' (T ω + k + 1) ω) := by
     intro s hs
     have decomp : (fun ω => X' (T ω + k + 1) ω) ⁻¹' s =
@@ -153,7 +155,7 @@ lemma strong_markov_iid_identDistrib
   IdentDistrib (postStoppingTimeSeq X T k) (X 0) μ μ := by
 -- proof
   have haem := aemeasurable_postStoppingTimeSeq
-    (fun i => (hX_id i 0).aemeasurable_fst) hT k
+    (fun i => (hX_id i 0).aemeasurable_fst) hT (k := k)
   refine ⟨haem, (hX_id 0 0).aemeasurable_fst, ?_⟩
   apply Measure.ext
   intro A hA
@@ -173,21 +175,23 @@ lemma strong_markov_iid_identDistrib
   have hnull : ∀ n, NullMeasurableSet
     ({ω | T ω = n} ∩ (X (n + k + 1)) ⁻¹' A) μ := by
     intro n
-    exact ((measurableSet_stoppingTime_eq hT n).nullMeasurableSet).inter
-      ((hX_meas (n + k + 1) hA).nullMeasurableSet)
+    have hTset : MeasurableSet {ω | T ω = n} :=
+      measurableSet_stoppingTime_eq (n := n) hT
+    have hXset : MeasurableSet ((X (n + k + 1)) ⁻¹' A) := hX_meas (n + k + 1) hA
+    exact (hTset.inter hXset).nullMeasurableSet
   rw [measure_iUnion₀ (fun i j hij => (hdisj hij).aedisjoint) hnull]
   have key : ∀ n, μ ({ω | T ω = n} ∩ (X (n + k + 1)) ⁻¹' A) =
     μ {ω | T ω = n} * μ ((X 0) ⁻¹' A) := by
     intro n
-    have h1 := indep_stopping_time_tail X f T hX_ind hX_meas hT hfX n k A hA
-    have h2 := (identDistrib_tail hX_id n k).measure_preimage_eq hA
+    have h1 := indep_stopping_time_tail (X := X) (f := f) (T := T) (n := n) (k := k) (A := A) hX_ind hX_meas hT hfX hA
+    have h2 := (identDistrib_tail (n := n) (k := k) hX_id).measure_preimage_eq hA
     rw [h1, h2]
   simp_rw [key, ENNReal.tsum_mul_right]
   have hsum : ∑' n, μ {ω | T ω = n} = 1 := by
     rw [← measure_iUnion (fun i j hij => by
       simp only [Function.onFun, Set.disjoint_left, Set.mem_setOf_eq]
       intro ω hi hj; exact hij (hi.symm.trans hj))
-      (fun n => measurableSet_stoppingTime_eq hT n)]
+      (fun n => measurableSet_stoppingTime_eq (n := n) hT)]
     have : ⋃ n, {ω : Ω | T ω = n} = Set.univ := by ext ω; simp [Set.mem_iUnion]
     rw [this]; exact measure_univ
   rw [hsum, one_mul]
@@ -282,19 +286,19 @@ lemma postStoppingTimeSeq_preimage_eq
   rw [measure_iUnion₀ (fun i j hij => (Disjoint.aedisjoint (by
     simp only [Set.disjoint_left, Set.mem_inter_iff, Set.mem_setOf_eq]
     intro ω ⟨hi, _⟩ ⟨hj, _⟩; exact hij (hi.symm.trans hj))))
-    (fun n => ((measurableSet_stoppingTime_eq hT n).nullMeasurableSet).inter
+    (fun n => ((measurableSet_stoppingTime_eq (n := n) hT).nullMeasurableSet).inter
       ((hX_meas (n + k + 1) hA).nullMeasurableSet))]
   have key : ∀ n, μ ({ω | T ω = n} ∩ (X (n + k + 1)) ⁻¹' A) =
     μ {ω | T ω = n} * μ ((X 0) ⁻¹' A) := by
     intro n
-    rw [indep_stopping_time_tail X f T hX_ind hX_meas hT hfX n k A hA]
+    rw [indep_stopping_time_tail (X := X) (f := f) (T := T) (n := n) (k := k) (A := A) hX_ind hX_meas hT hfX hA]
     congr 1; exact (hX_id (n + k + 1) 0).measure_preimage_eq hA
   simp_rw [key, ENNReal.tsum_mul_right]
   have hsum : ∑' n, μ {ω | T ω = n} = 1 := by
     rw [← measure_iUnion (fun i j hij => by
       simp only [Function.onFun, Set.disjoint_left, Set.mem_setOf_eq]
       intro ω hi hj; exact hij (hi.symm.trans hj))
-      (fun n => measurableSet_stoppingTime_eq hT n)]
+      (fun n => measurableSet_stoppingTime_eq (n := n) hT)]
     have : ⋃ n, {ω : Ω | T ω = n} = Set.univ := by ext ω; simp [Set.mem_iUnion]
     rw [this]; exact measure_univ
   rw [hsum, one_mul]
@@ -340,14 +344,14 @@ lemma strong_markov_iid_iIndepFun
     ({ω | T ω = n} ∩ ⋂ k ∈ SF, (X (n + k + 1)) ⁻¹' sets k) μ := by
     intro n
     apply NullMeasurableSet.inter
-    · exact (measurableSet_stoppingTime_eq hT n).nullMeasurableSet
+    · exact (measurableSet_stoppingTime_eq (n := n) hT).nullMeasurableSet
     · exact (MeasurableSet.biInter (Finset.countable_toSet SF)
       (fun k hk => hX_meas (n + k + 1) (hsets k hk))).nullMeasurableSet
   rw [measure_iUnion₀ (fun i j hij => (hdisj hij).aedisjoint) hnull]
   have key : ∀ n, μ ({ω | T ω = n} ∩ ⋂ k ∈ SF, (X (n + k + 1)) ⁻¹' sets k) =
     μ {ω | T ω = n} * ∏ k ∈ SF, μ ((X 0) ⁻¹' sets k) := by
     intro n
-    rw [indep_stopping_time_tail_finset X f T hX_ind hX_meas hT hfX n SF sets hsets]
+    rw [indep_stopping_time_tail_finset (X := X) (f := f) (T := T) (n := n) (SF := SF) (sets := sets) hX_ind hX_meas hT hfX hsets]
     congr 1
     apply Finset.prod_congr rfl
     intro k hk
@@ -357,13 +361,13 @@ lemma strong_markov_iid_iIndepFun
     rw [← measure_iUnion (fun i j hij => by
       simp only [Function.onFun, Set.disjoint_left, Set.mem_setOf_eq]
       intro ω hi hj; exact hij (hi.symm.trans hj))
-      (fun n => measurableSet_stoppingTime_eq hT n)]
+      (fun n => measurableSet_stoppingTime_eq (n := n) hT)]
     have : ⋃ n, {ω : Ω | T ω = n} = Set.univ := by ext ω; simp [Set.mem_iUnion]
     rw [this]; exact measure_univ
   rw [hsum, one_mul]
   apply Finset.prod_congr rfl
   intro k hk
-  exact (postStoppingTimeSeq_preimage_eq hX_id hX_ind hX_meas hT hfX k (sets k) (hsets k hk)).symm
+  exact (postStoppingTimeSeq_preimage_eq (k := k) (A := sets k) hX_id hX_ind hX_meas hT hfX (hsets k hk)).symm
 
 /--
 [measurableSet_FT_inter_eq](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/StrongMarkovIID.lean)
@@ -480,14 +484,15 @@ lemma strong_markov_iid_indep_past
       exact ⟨fun h => ⟨T ω, rfl, h⟩, fun ⟨n, hn, h⟩ => hn ▸ h⟩
     rw [this]
     exact MeasurableSet.iUnion fun n =>
-      (measurableSet_stoppingTime_eq hT n).inter (hX_meas (n + k + 1) hs)
+      (measurableSet_stoppingTime_eq (n := n) hT).inter (hX_meas (n + k + 1) hs)
   have hgen1 : hT.measurableSpace = MeasurableSpace.generateFrom p1 :=
     (@MeasurableSpace.generateFrom_measurableSet Ω hT.measurableSpace).symm
   have hgen2 : ⨆ k, m_Y k = MeasurableSpace.generateFrom p2 := by
     have := generateFrom_piiUnionInter_measurableSet m_Y Set.univ
     simp only [Set.mem_univ, iSup_true] at this
     exact this.symm
-  have h1 : hT.measurableSpace ≤ m := fun s hs => (hT.measurableSet s).mp hs |>.1
+  have h1 : hT.measurableSpace ≤ m := fun s hs =>
+    (iSup_le fun t => f.le t) _ ((hT.measurableSet s).mp hs).1
   have h2 : ⨆ k, m_Y k ≤ m := by
     apply iSup_le; intro k
     exact MeasurableSpace.comap_le_iff_le_map.mpr (hY_meas k)
@@ -536,12 +541,12 @@ lemma strong_markov_iid_indep_past
     have hA_m : MeasurableSet A := h1 _ hA
     have hnull_AB n : NullMeasurableSet
       ((A ∩ {ω | T ω = n}) ∩ ⋂ k ∈ SF, (X (n + k + 1)) ⁻¹' C k) μ :=
-      (hA_m.inter (measurableSet_stoppingTime_eq hT n)).nullMeasurableSet |>.inter
+      (hA_m.inter (measurableSet_stoppingTime_eq (n := n) hT)).nullMeasurableSet |>.inter
         ((MeasurableSet.biInter (Finset.countable_toSet SF)
           (fun k hk => hX_meas (n + k + 1) (hC_meas k hk))).nullMeasurableSet)
     have hnull_B n : NullMeasurableSet
       ({ω | T ω = n} ∩ ⋂ k ∈ SF, (X (n + k + 1)) ⁻¹' C k) μ :=
-      ((measurableSet_stoppingTime_eq hT n).nullMeasurableSet).inter
+      ((measurableSet_stoppingTime_eq (n := n) hT).nullMeasurableSet).inter
         ((MeasurableSet.biInter (Finset.countable_toSet SF)
           (fun k hk => hX_meas (n + k + 1) (hC_meas k hk))).nullMeasurableSet)
     rw [decomp_AB, measure_iUnion₀ (fun i j hij => (hdisj_AB hij).aedisjoint) hnull_AB]
@@ -549,12 +554,15 @@ lemma strong_markov_iid_indep_past
     have key_AB : ∀ n, μ ((A ∩ {ω | T ω = n}) ∩ ⋂ k ∈ SF, (X (n + k + 1)) ⁻¹' C k) =
       μ (A ∩ {ω | T ω = n}) * ∏ k ∈ SF, μ ((X (n + k + 1)) ⁻¹' C k) := by
       intro n
-      exact indep_fn_tail_finset X f hX_ind hX_meas hfX n _ (measurableSet_FT_inter_eq hT hA n)
-        SF C (fun k hk => hC_meas k hk)
+      have hA_fn : MeasurableSet[f n] (A ∩ {ω | T ω = n}) :=
+        measurableSet_FT_inter_eq (m := m) (μ := μ) (S := S) (f := f) (T := T) (A := A) (n := n) hT hA
+      exact indep_fn_tail_finset (m := m) (μ := μ) (X := X) (f := f) (n := n)
+        (A := A ∩ {ω | T ω = n}) (SF := SF) (sets := C)
+        hX_ind hX_meas hfX hA_fn (fun k hk => hC_meas k hk)
     have key_B : ∀ n, μ ({ω | T ω = n} ∩ ⋂ k ∈ SF, (X (n + k + 1)) ⁻¹' C k) =
       μ {ω | T ω = n} * ∏ k ∈ SF, μ ((X (n + k + 1)) ⁻¹' C k) :=
-      fun n => indep_stopping_time_tail_finset X f T hX_ind hX_meas hT hfX n SF C
-        (fun k hk => hC_meas k hk)
+      fun n => indep_stopping_time_tail_finset (X := X) (f := f) (T := T) (n := n) (SF := SF) (sets := C)
+        hX_ind hX_meas hT hfX (fun k hk => hC_meas k hk)
     have hprod_const : ∀ n, ∏ k ∈ SF, μ ((X (n + k + 1)) ⁻¹' C k) =
       ∏ k ∈ SF, μ ((X 0) ⁻¹' C k) := by
       intro n; apply Finset.prod_congr rfl
@@ -564,7 +572,7 @@ lemma strong_markov_iid_indep_past
       rw [← measure_iUnion (fun i j hij => by
         simp only [Function.onFun, Set.disjoint_left, Set.mem_setOf_eq]
         intro ω hi hj; exact hij (hi.symm.trans hj))
-        (fun n => measurableSet_stoppingTime_eq hT n)]
+        (fun n => measurableSet_stoppingTime_eq (n := n) hT)]
       have : ⋃ n, {ω : Ω | T ω = n} = Set.univ := by ext ω; simp [Set.mem_iUnion]
       rw [this]; exact measure_univ
     have hsum_A : ∑' n, μ (A ∩ {ω | T ω = n}) = μ A := by
@@ -572,7 +580,7 @@ lemma strong_markov_iid_indep_past
         exact (Disjoint.aedisjoint (by
           simp only [Set.disjoint_left, Set.mem_inter_iff, Set.mem_setOf_eq]
           intro ω ⟨_, hi⟩ ⟨_, hj⟩; exact hij (hi.symm.trans hj))))
-        (fun n => (hA_m.inter (measurableSet_stoppingTime_eq hT n)).nullMeasurableSet)]
+        (fun n => (hA_m.inter (measurableSet_stoppingTime_eq (n := n) hT)).nullMeasurableSet)]
       congr 1; ext ω; simp only [Set.mem_iUnion, Set.mem_inter_iff, Set.mem_setOf_eq]
       exact ⟨fun ⟨_, ⟨h, _⟩⟩ => h, fun h => ⟨T ω, ⟨h, rfl⟩⟩⟩
     rw [hsum_A, hsum, one_mul]
@@ -600,7 +608,7 @@ lemma strong_markov_iid
 -- imply
   (∀ k, IdentDistrib (postStoppingTimeSeq X T k) (X 0) μ μ) ∧ iIndepFun (m := fun _ => ‹MeasurableSpace S›) (postStoppingTimeSeq X T) μ ∧ Indep (hT.measurableSpace) (⨆ k, MeasurableSpace.comap (postStoppingTimeSeq X T k) ‹MeasurableSpace S›) (μ := μ) :=
 -- proof
-  ⟨fun k => strong_markov_iid_identDistrib hX_id hX_ind hX_meas hT hfX k,
+  ⟨fun k => strong_markov_iid_identDistrib (k := k) hX_id hX_ind hX_meas hT hfX,
     strong_markov_iid_iIndepFun hX_id hX_ind hX_meas hT hfX,
     strong_markov_iid_indep_past hX_id hX_ind hX_meas hT hfX⟩
 

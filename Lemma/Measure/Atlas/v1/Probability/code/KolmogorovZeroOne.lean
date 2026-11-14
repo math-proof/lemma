@@ -16,15 +16,12 @@ lemma tailMeasurableSpace_eq_limsup_atTop
 -- proof
   simp only [tailMeasurableSpace, tailMeasurableSpaceFrom]
   rw [limsup_eq_iInf_iSup_of_nat]
-variable {β : Type*} [mβ : MeasurableSpace β]
-variable {m0 : MeasurableSpace Ω} {μ : Measure Ω}
 
 /--
 [kolmogorov_zero_one](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/KolmogorovZeroOne.lean)
 -/
 @[path]
 lemma kolmogorov_zero_one
-  [mβ : MeasurableSpace β]
   {m0 : MeasurableSpace Ω}
   {μ : Measure Ω}
   {𝓐 : ℕ → MeasurableSpace Ω}
@@ -54,9 +51,10 @@ lemma kolmogorov_zero_one_fun
   (h_indep : iIndep (fun n => MeasurableSpace.comap (X n) mβ) μ)
   (hA : MeasurableSet[tailMeasurableSpaceOfFun X] A) :
 -- imply
-  μ A = 0 ∨ μ A = 1 :=
+  μ A = 0 ∨ μ A = 1 := by
 -- proof
-  kolmogorov_zero_one _ h_le h_indep hA
+  have hA' : MeasurableSet[tailMeasurableSpace (fun n => MeasurableSpace.comap (X n) mβ)] A := hA
+  exact kolmogorov_zero_one (𝓐 := fun n => MeasurableSpace.comap (X n) mβ) h_le h_indep hA'
 
 /--
 [kolmogorov_zero_one_of_iIndepFun](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/KolmogorovZeroOne.lean)
@@ -75,7 +73,7 @@ lemma kolmogorov_zero_one_of_iIndepFun
 -- imply
   μ A = 0 ∨ μ A = 1 :=
 -- proof
-  kolmogorov_zero_one_fun X h_le h_indep hA
+  kolmogorov_zero_one_fun h_le h_indep.iIndep hA
 
 
 -- created on 2026-10-23

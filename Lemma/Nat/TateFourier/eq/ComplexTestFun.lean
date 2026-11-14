@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.LanglandsTunnell.ArchPlace
+import Lemma.Measure.ArchPlace
 import Lemma.Int.P2MUtil
 
-open MeasureTheory Complex LanglandsTunnell.TateLocal LanglandsTunnell.ArchPlace
+open MeasureTheory Complex LanglandsTunnell.TateLocal Measure.ArchPlace
 open scoped Real RealInnerProductSpace ENNReal
 
 /--

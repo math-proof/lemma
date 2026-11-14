@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.SupersingularModuli
+import Lemma.WeierstrassCurve.SupersingularModuli
 import Lemma.Int.P2MUtil
 
-open ModularCurve
+open ModularCurve WeierstrassCurve
 
 /--
 [ModularCurve_zero_mem_ssJSet_of_lt_five](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularCurve_zero_mem_ssJSet_of_lt_five.lean)

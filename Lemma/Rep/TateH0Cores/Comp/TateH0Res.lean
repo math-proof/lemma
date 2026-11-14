@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.GroupCohomology.TateCohomology
+import Lemma.LinearMap.TateCohomology
 import Def.GroupCohomology_TateResCor
 import Lemma.Int.P2MUtil
 

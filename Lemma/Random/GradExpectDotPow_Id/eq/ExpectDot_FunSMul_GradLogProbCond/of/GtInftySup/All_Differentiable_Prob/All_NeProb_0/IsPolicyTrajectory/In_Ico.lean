@@ -1,5 +1,6 @@
 import Lemma.Random.GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity.In_Ico
 import Lemma.Random.PSpace_Path.of.All_PSpace
+import Syntax.Order.Sup
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
 open scoped ENNReal.ToRealCoe
@@ -9,7 +10,7 @@ set_option maxHeartbeats 900000
 
 /--
 Unbiased advantage estimate for a finite action/state alphabet (`[Fintype 𝒮] [Fintype 𝒜]`):
-with `V_θ[t] δ k := M.V0 θ γ (δ k)` and score `∇ log π`,
+with `V_θ[t] δ k := M.V θ γ (t + k) (δ k)` and score `∇ log π`,
 `∇𝔼[(γ ^ id) ⬝ᵥ r] = 𝔼[(γ ^ id) ⬝ᵥ fun t ↦ ((γ ^ id) ⬝ᵥ (r[t:] + γ • V_θ[t+1] s[t+1:] - V_θ[t] s[t:])) • ∇ log π]`.
 
 Remigrated onto `DensityModel` — applies dens FunSMul `In_Ico`, discharging dens extras
@@ -23,7 +24,7 @@ Keeps the pre-remigration lean binder count (γ, conditional law, Differentiable
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [CountableMeasure 𝒮] [MeasurableSingletonClass 𝒮] [Fintype 𝒮]
+  [CountableMeasure 𝒮] [MeasurableSingletonClass 𝒮] [Fintype 𝒮] [Nonempty 𝒮] [StandardBorelSpace 𝒮]
   [CountableMeasure 𝒜] [MeasurableSingletonClass 𝒜] [Fintype 𝒜]
   {M : DensityModel Θ 𝒮 𝒜}
   {θ : Θ}
@@ -44,7 +45,7 @@ private lemma main
   have : PSpace (M θ) (AsPathRV.path a) :=
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) hπ.htr.stage_eq t).aemeasurable⟩)
   let : MeasurableSpace Θ := borel Θ
-  let V_θ : ℕ ⇀ (ℕ → 𝒮) → ℕ → ℝ := ⟨fun _t δ k => M.V0 θ γ (δ k)⟩
+  let V_θ : ℕ ⇀ (ℕ → 𝒮) → ℕ → ℝ := ⟨fun t δ k => M.V θ γ (t + k) (δ k)⟩
   ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) =
     𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
       (((γ ^ (id : ℕ → ℕ)) ⬝ᵥ (r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:])) •
@@ -88,9 +89,14 @@ private lemma main
     obtain ⟨Ms, hUB⟩ := hfin
     exact ⟨Ms, fun y u => hUB ⟨(y, u), rfl⟩⟩
   obtain ⟨Ms, hMs⟩ := hMsEx
+  have h₅sup : sup[x] ∫ u, g x u ∂ReferenceMeasure.measure < ∞ :=
+    ⟨Cg, by rintro _ ⟨x, rfl⟩; exact h₅' x⟩
+  have hMssup : sup[y, u] ‖fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ‖ < ∞ :=
+    ⟨Ms, by rintro _ ⟨p, rfl⟩; exact hMs p.1 p.2⟩
+  have hVm : ∀ k, Measurable (M.V θ γ k) := fun _ => Measurable.of_discrete
   exact GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity.In_Ico
-    (M := M) (Cg := Cg) (Ms := Ms) (g := g) h₀ h₁ hmeas h₂ h₃bound h₄' h₅' hφ hMs
+    (M := M) (g := g) h₀ h₁ hmeas hVm h₂ h₃bound h₄' h₅sup hφ hMssup
 
 
 -- created on 2026-10-21
--- updated on 2026-11-11
+-- updated on 2026-11-14

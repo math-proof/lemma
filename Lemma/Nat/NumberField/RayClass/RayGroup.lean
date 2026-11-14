@@ -76,7 +76,8 @@ lemma positiveAtInfinitePart_one
   PositiveAtInfinitePart m 1 := by
 -- proof
   intro w _
-  rwa [Units.val_one, map_one]
+  rw [Units.val_one, map_one]
+  exact zero_lt_one
 
 end NumberField.Modulus
 
@@ -92,7 +93,7 @@ lemma isRayElementOne_one
 -- imply
   IsRayElementOne m 1 :=
 -- proof
-  ⟨one_mem _, congruentOneAtFinitePart_one m, positiveAtInfinitePart_one m⟩
+  ⟨one_mem _, congruentOneAtFinitePart_one m, positiveAtInfinitePart_one⟩
 
 end NumberField.Modulus
 
@@ -189,4 +190,4 @@ private lemma congruentOneAtFinitePart_one_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-13

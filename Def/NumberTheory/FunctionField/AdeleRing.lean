@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FunctionField/AdeleRing.lean -/
 
 import Mathlib.RingTheory.Valuation.ValuationSubring
-import Mathlib.Topology.Algebra.RestrictedProduct.Basic
+import Mathlib.Set.Algebra.RestrictedProduct.Basic
 open scoped RestrictedProduct
 
 /-!
@@ -17,4 +17,3 @@ valuation subrings.
 def FunctionFieldAdeleRing (F : Type*) [Field F] (P : Type*)
     (O : P → ValuationSubring F) : Type _ :=
   Πʳ p : P, [F, O p]
-

@@ -3,7 +3,7 @@ import Mathlib
 import Class.AlgebraicCurve_DivisorClassGroup
 import Class.AlgebraicCurve_DivisorPushPull
 import Instance.DedekindDomain_AdicValuation_InlineSpecific
-import Lemma.AlgebraicCurve.PlaceCompletion
+import Lemma.Valuation.PlaceCompletion
 
 set_option synthInstance.maxHeartbeats 400000
 set_option maxHeartbeats 1600000

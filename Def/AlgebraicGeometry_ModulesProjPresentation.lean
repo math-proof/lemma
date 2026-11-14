@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.AlgebraicGeometry.ProjSpace
+import Lemma.MvPolynomial.ProjSpace
 import Structure.AlgebraicGeometry_ModulesProjPresentation
 
 set_option autoImplicit false

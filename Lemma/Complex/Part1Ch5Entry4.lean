@@ -30,7 +30,7 @@ private lemma eulerian_succ_ge : ∀ (n j : ℕ), eulerianNumber (n+1) (n+1+j) =
     have h2 : eulerianNumber (n+1+1) (n+1+1+j)
       = (n+1+1+j+1) * eulerianNumber (n+1) (n+1+1+j)
         + (n+1+1-(n+1+1+j)) * (if n+1+1+j = 0 then 0 else eulerianNumber (n+1) (n+1+1+j-1)) := by
-      simp only [eulerianNumber]
+          simp only [eulerianNumber]
     have hC : n + 1 + 1 - (n + 1 + 1 + j) = 0 := by omega
     rw [h2, hC, zero_mul, add_zero, h1', mul_zero]
 
@@ -84,19 +84,19 @@ private lemma key_id (k m N : ℕ) (hm : m ≤ N) :
   have hchoice := choose_succ_right_ℂ (k + (N - m)) N
   have hkk : (((k + 1 : ℕ)) : ℂ)
     = (((m + 1 : ℕ)) : ℂ) + (((((k + (N - m) : ℕ))) : ℂ) - ((N : ℕ) : ℂ)) := by
-    rw [hcast]
-    push_cast
-    ring
+      rw [hcast]
+      push_cast
+      ring
   calc ((k + 1 : ℕ) : ℂ) * (((k + (N - m)).choose N : ℕ) : ℂ)
     = (((m + 1 : ℕ) : ℂ) + (((((k + (N - m) : ℕ))) : ℂ) - ((N : ℕ) : ℂ)))
       * ((((k + (N - m)).choose N : ℕ)) : ℂ) := by
-      rw [← hkk]
+        rw [← hkk]
     _ = (((m + 1 : ℕ)) : ℂ) * ((((k + (N - m)).choose N : ℕ)) : ℂ)
       + (((N + 1 : ℕ)) : ℂ) * ((((k + (N - m)).choose (N+1) : ℕ)) : ℂ) := by
       have hcc : (((((k + (N - m) : ℕ))) : ℂ) - ((N : ℕ) : ℂ))
         * ((((k + (N - m)).choose N : ℕ)) : ℂ)
         = ((((N + 1 : ℕ))) : ℂ) * ((((k + (N - m)).choose (N+1) : ℕ)) : ℂ) := by
-        linear_combination -hchoice
+          linear_combination -hchoice
       rw [add_mul, hcc]
 
 end MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
@@ -142,7 +142,7 @@ private lemma eulerian_expand (n m : ℕ) :
   have hnat : eulerianNumber (n + 1 + 1) m
     = (m + 1) * eulerianNumber (n + 1) m
       + (n + 1 + 1 - m) * (if m = 0 then 0 else eulerianNumber (n + 1) (m - 1)) := by
-    simp only [eulerianNumber]
+        simp only [eulerianNumber]
   exact_mod_cast hnat
 
 end MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
@@ -198,7 +198,7 @@ private lemma worp_step (n k : ℕ) :
       _ = (↑(eulerianNumber (n + 1) m) : ℂ) * ((↑(m + 1) : ℂ)
         * (↑((k + (n + 1) - m).choose (n + 1)) : ℂ)
         + (↑(n + 1 + 1) : ℂ) * (↑((k + (n + 1) - m).choose (n + 1 + 1)) : ℂ)) := by
-        rw [hkey]
+          rw [hkey]
       _ = (↑(m + 1) : ℂ) * (↑(eulerianNumber (n + 1) m) : ℂ)
         * (↑((k + (n + 1) - m).choose (n + 1)) : ℂ)
         + (↑(n + 1 + 1) : ℂ) * (↑(eulerianNumber (n + 1) m) : ℂ)
@@ -218,8 +218,8 @@ private lemma worp_step (n k : ℕ) :
         * (↑((k + (n + 1) - m).choose (n + 1)) : ℂ)
         + (↑(n + 1 + 1) : ℂ) * (↑(eulerianNumber (n + 1) m) : ℂ)
           * (↑((k + (n + 1) - m).choose (n + 1 + 1)) : ℂ)) := by
-        rw [Finset.mul_sum]
-        exact Finset.sum_congr rfl hterm
+            rw [Finset.mul_sum]
+            exact Finset.sum_congr rfl hterm
       _ = (∑ m ∈ Finset.range (n + 1), (↑(m + 1) : ℂ)
         * (↑(eulerianNumber (n + 1) m) : ℂ)
         * (↑((k + (n + 1) - m).choose (n + 1)) : ℂ))
@@ -252,13 +252,13 @@ private lemma worp_step (n k : ℕ) :
           + (↑(n + 1 + 1 - m) : ℂ)
             * (if m = 0 then (0 : ℂ) else (↑(eulerianNumber (n + 1) (m - 1)) : ℂ)))
           * (↑((k + (n + 1 + 1) - m).choose (n + 1 + 1)) : ℂ) := by
-          rw [he]
+            rw [he]
         _ = ((↑(m + 1) : ℂ) * (↑(eulerianNumber (n + 1) m) : ℂ)
           * (↑((k + (n + 1 + 1) - m).choose (n + 1 + 1)) : ℂ)
           + (↑(n + 1 + 1 - m) : ℂ)
             * (if m = 0 then (0 : ℂ) else (↑(eulerianNumber (n + 1) (m - 1)) : ℂ))
             * (↑((k + (n + 1 + 1) - m).choose (n + 1 + 1)) : ℂ)) := by
-          ring
+              ring
     calc (∑ m ∈ Finset.range (n + 1 + 1),
       (↑(eulerianNumber (n + 1 + 1) m) : ℂ)
         * (↑((k + (n + 1 + 1) - m).choose (n + 1 + 1)) : ℂ))
@@ -300,7 +300,7 @@ private lemma worp_step (n k : ℕ) :
         * (↑((k + (n + 1 + 1) - m).choose (n + 1 + 1)) : ℂ))
       + (↑(n + 1 + 1) : ℂ) * (↑(eulerianNumber (n + 1) (n + 1)) : ℂ)
         * (↑((k + (n + 1 + 1) - (n + 1)).choose (n + 1 + 1)) : ℂ) := by
-      rw [Finset.sum_range_succ]
+          rw [Finset.sum_range_succ]
     rw [hpeel, hlast, add_zero]
     have hpm : ∀ m ∈ Finset.range (n + 1),
       (↑(m + 1) : ℂ) * (↑(eulerianNumber (n + 1) m) : ℂ)
@@ -319,12 +319,12 @@ private lemma worp_step (n k : ℕ) :
         = (↑(m + 1) : ℂ) * (↑(eulerianNumber (n + 1) m) : ℂ)
           * ((↑((k + (n + 1) - m).choose (n + 1)) : ℂ)
             + (↑((k + (n + 1) - m).choose (n + 1 + 1)) : ℂ)) := by
-          rw [hp]
+              rw [hp]
         _ = (↑(m + 1) : ℂ) * (↑(eulerianNumber (n + 1) m) : ℂ)
           * (↑((k + (n + 1) - m).choose (n + 1)) : ℂ)
           + (↑(m + 1) : ℂ) * (↑(eulerianNumber (n + 1) m) : ℂ)
             * (↑((k + (n + 1) - m).choose (n + 1 + 1)) : ℂ) := by
-          ring
+              ring
     calc (∑ m ∈ Finset.range (n + 1), (↑(m + 1) : ℂ)
       * (↑(eulerianNumber (n + 1) m) : ℂ)
       * (↑((k + (n + 1 + 1) - m).choose (n + 1 + 1)) : ℂ))
@@ -356,11 +356,11 @@ private lemma worp_step (n k : ℕ) :
       + (↑(n + 1 + 1 - 0) : ℂ)
         * (if (0 : ℕ) = 0 then (0 : ℂ) else (↑(eulerianNumber (n + 1) (0 - 1)) : ℂ))
         * (↑((k + (n + 1 + 1) - 0).choose (n + 1 + 1)) : ℂ) := by
-      rw [Finset.sum_range_succ']
+          rw [Finset.sum_range_succ']
     have hf0 : (↑(n + 1 + 1 - 0) : ℂ)
       * (if (0 : ℕ) = 0 then (0 : ℂ) else (↑(eulerianNumber (n + 1) (0 - 1)) : ℂ))
       * (↑((k + (n + 1 + 1) - 0).choose (n + 1 + 1)) : ℂ) = 0 := by
-      simp
+        simp
     rw [hpeel2, hf0, add_zero]
     have hpt3 : ∀ j ∈ Finset.range (n + 1),
       (↑(n + 1 + 1 - (j + 1)) : ℂ)
@@ -375,7 +375,7 @@ private lemma worp_step (n k : ℕ) :
       have hif : (if j + 1 = 0 then (0 : ℂ)
         else (↑(eulerianNumber (n + 1) (j + 1 - 1)) : ℂ))
         = (↑(eulerianNumber (n + 1) (j + 1 - 1)) : ℂ) := by
-        simp
+          simp
       rw [hif, ha1, ha2, ha3]
     exact Finset.sum_congr rfl hpt3
   have e4 : (∑ m ∈ Finset.range (n + 1), (↑(m + 1) : ℂ)
@@ -406,10 +406,10 @@ private lemma worp_step (n k : ℕ) :
         = ((↑(m + 1) : ℂ) + (↑(n + 1 - m) : ℂ))
           * (↑(eulerianNumber (n + 1) m) : ℂ)
           * (↑((k + (n + 1) - m).choose (n + 1 + 1)) : ℂ) := by
-          ring
+            ring
         _ = (↑(n + 1 + 1) : ℂ) * (↑(eulerianNumber (n + 1) m) : ℂ)
           * (↑((k + (n + 1) - m).choose (n + 1 + 1)) : ℂ) := by
-          rw [hc]
+            rw [hc]
     calc (∑ m ∈ Finset.range (n + 1), (↑(m + 1) : ℂ)
       * (↑(eulerianNumber (n + 1) m) : ℂ)
       * (↑((k + (n + 1) - m).choose (n + 1 + 1)) : ℂ))
@@ -453,14 +453,14 @@ private lemma worp_step (n k : ℕ) :
         + (∑ j ∈ Finset.range (n + 1), (↑(n + 1 - j) : ℂ)
           * (↑(eulerianNumber (n + 1) j) : ℂ)
           * (↑((k + (n + 1) - j).choose (n + 1 + 1)) : ℂ)) := by
-          rw [e2, e3]
+            rw [e2, e3]
       _ = (∑ m ∈ Finset.range (n + 1), (↑(m + 1) : ℂ)
         * (↑(eulerianNumber (n + 1) m) : ℂ)
         * (↑((k + (n + 1) - m).choose (n + 1)) : ℂ))
         + (∑ m ∈ Finset.range (n + 1), (↑(n + 1 + 1) : ℂ)
           * (↑(eulerianNumber (n + 1) m) : ℂ)
           * (↑((k + (n + 1) - m).choose (n + 1 + 1)) : ℂ)) := by
-          rw [add_assoc, e4]
+            rw [add_assoc, e4]
   rwa [hk, hA]
 
 end MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
@@ -483,7 +483,7 @@ private lemma worpitzky (n k : ℕ) :
     have hsum : (∑ m ∈ Finset.range (0 + 1),
       (↑(eulerianNumber (0 + 1) m) : ℂ) * (↑((k + (0 + 1) - m).choose (0 + 1)) : ℂ))
       = (↑(eulerianNumber (0 + 1) 0) : ℂ) * (↑((k + (0 + 1) - 0).choose (0 + 1)) : ℂ) := by
-      rw [show (0 : ℕ) + 1 = 1 from rfl, Finset.sum_range_one]
+        rw [show (0 : ℕ) + 1 = 1 from rfl, Finset.sum_range_one]
     rw [pow_one, hsum, hA10, hC]
     push_cast
     ring
@@ -496,7 +496,7 @@ private lemma worpitzky (n k : ℕ) :
         * (((↑k + 1 : ℂ))) := by rw [ih]
       _ = ((↑k + 1 : ℂ)) * (∑ m ∈ Finset.range (n + 1),
         (↑(eulerianNumber (n + 1) m) : ℂ) * (↑((k + (n + 1) - m).choose (n + 1)) : ℂ)) := by
-        ring
+          ring
       _ = ∑ m ∈ Finset.range (n + 1 + 1),
         (↑(eulerianNumber (n + 1 + 1) m) : ℂ)
           * (↑((k + (n + 1 + 1) - m).choose (n + 1 + 1)) : ℂ) := hws
@@ -522,8 +522,8 @@ private lemma summable_entry4 (n : ℕ) (p : ℂ) (hp : ‖p‖ < 1) :
         * (-p) ^ k := by rw [h]
       _ = ∑ i ∈ Finset.range (n + 1),
         (↑(n.choose i) : ℂ) * ((↑k : ℂ) ^ i * (-p) ^ k) := by
-        rw [Finset.sum_mul]
-        exact Finset.sum_congr rfl (fun i hi => by ring)
+          rw [Finset.sum_mul]
+          exact Finset.sum_congr rfl (fun i hi => by ring)
   have hfun : (fun k : ℕ => (↑k + 1 : ℂ) ^ n * (-p) ^ k)
     = (fun k : ℕ => ∑ i ∈ Finset.range (n + 1),
       (↑(n.choose i) : ℂ) * ((↑k : ℂ) ^ i * (-p) ^ k)) :=
@@ -664,12 +664,12 @@ lemma ramanujan_part1_ch5_entry4
         = (∑ m ∈ Finset.range (n + 1),
           (↑(eulerianNumber (n + 1) m) : ℂ)
             * (↑((k + (n + 1) - m).choose (n + 1)) : ℂ)) * (-p) ^ k := by
-          rw [hw]
+              rw [hw]
         _ = ∑ m ∈ Finset.range (n + 1),
           (↑(eulerianNumber (n + 1) m) : ℂ)
             * ((↑((k + (n + 1) - m).choose (n + 1)) : ℂ) * (-p) ^ k) := by
-          rw [Finset.sum_mul]
-          exact Finset.sum_congr rfl (fun m hm => by ring)
+              rw [Finset.sum_mul]
+              exact Finset.sum_congr rfl (fun m hm => by ring)
     have hsub : ∀ m ∈ Finset.range (n + 1),
       Summable (fun k : ℕ => (↑(eulerianNumber (n + 1) m) : ℂ)
         * ((↑((k + (n + 1) - m).choose (n + 1)) : ℂ) * (-p) ^ k)) := by
@@ -698,13 +698,13 @@ lemma ramanujan_part1_ch5_entry4
         _ = ∑ m ∈ Finset.range (n + 1),
           (↑(eulerianNumber (n + 1) m) : ℂ)
             * (∑' k : ℕ, (↑((k + (n + 1) - m).choose (n + 1)) : ℂ) * (-p) ^ k) := by
-          apply Finset.sum_congr rfl
-          intro m hm
-          have hmle : m ≤ n + 1 := by
-            have hmem := Finset.mem_range.mp hm
-            omega
-          exact Summable.tsum_mul_left _
-            (summable_choose_shift (n + 1) m (-p) hx hmle)
+              apply Finset.sum_congr rfl
+              intro m hm
+              have hmle : m ≤ n + 1 := by
+                have hmem := Finset.mem_range.mp hm
+                omega
+              exact Summable.tsum_mul_left _
+                (summable_choose_shift (n + 1) m (-p) hx hmle)
     have hval2 : ∀ m ∈ Finset.range (n + 1),
       (↑(eulerianNumber (n + 1) m) : ℂ)
         * (∑' k : ℕ, (↑((k + (n + 1) - m).choose (n + 1)) : ℂ) * (-p) ^ k)
@@ -734,7 +734,7 @@ lemma ramanujan_part1_ch5_entry4
     rw [hPsi, hsum2]
     have hpp : (1 : ℂ) - (-p) = p + 1 := by ring
     rw [hpp]
-end
+end MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
 
 
 

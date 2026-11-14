@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.TateCurve.PointSeries
+import Lemma.WeierstrassCurve.PointSeries
 
 set_option autoImplicit false
 

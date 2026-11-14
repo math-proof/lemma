@@ -60,9 +60,9 @@ private lemma ennreal_add_rpow_mul_le {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1)
   have hzt : (0 : ENNReal) ^ t = 0 := ENNReal.zero_rpow_of_pos ht0
   by_cases hA0 : u₁ + u₂ = 0
   · have hu1 : u₁ = 0 := by
-    have hle : u₁ ≤ u₁ + u₂ := le_add_of_nonneg_right (by positivity)
-    rw [hA0] at hle
-    exact le_antisymm hle (by positivity)
+      have hle : u₁ ≤ u₁ + u₂ := le_add_of_nonneg_right (by positivity)
+      rw [hA0] at hle
+      exact le_antisymm hle (by positivity)
     have hu2 : u₂ = 0 := by
       have hle : u₂ ≤ u₁ + u₂ := le_add_of_nonneg_left (by positivity)
       rw [hA0] at hle
@@ -70,9 +70,9 @@ private lemma ennreal_add_rpow_mul_le {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1)
     simp [hu1, hu2, hz1]
   by_cases hB0 : v₁ + v₂ = 0
   · have hv1 : v₁ = 0 := by
-    have hle : v₁ ≤ v₁ + v₂ := le_add_of_nonneg_right (by positivity)
-    rw [hB0] at hle
-    exact le_antisymm hle (by positivity)
+      have hle : v₁ ≤ v₁ + v₂ := le_add_of_nonneg_right (by positivity)
+      rw [hB0] at hle
+      exact le_antisymm hle (by positivity)
     have hv2 : v₂ = 0 := by
       have hle : v₂ ≤ v₁ + v₂ := le_add_of_nonneg_left (by positivity)
       rw [hB0] at hle
@@ -80,23 +80,25 @@ private lemma ennreal_add_rpow_mul_le {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1)
     simp [hv1, hv2, hzt]
   by_cases hAT : u₁ + u₂ = ⊤
   · have hBt : (v₁ + v₂) ^ t ≠ 0 := by
-    intro hcon
-    obtain ⟨h1, _⟩ | ⟨h1, h2⟩ := ENNReal.rpow_eq_zero_iff.mp hcon
-    · exact hB0 h1
-    · linarith
+      intro hcon
+      obtain ⟨h1, _⟩ | ⟨h1, h2⟩ := ENNReal.rpow_eq_zero_iff.mp hcon
+      · exact hB0 h1
+      · linarith
     have hRHS : (u₁ + u₂) ^ (1 - t) * (v₁ + v₂) ^ t = ⊤ := by
       rw [hAT, ENNReal.top_rpow_of_pos h1t, ENNReal.top_mul hBt]
-    rwa [hRHS]
+    rw [hRHS]
+    exact le_top
   by_cases hBT : v₁ + v₂ = ⊤
   · have hAt : (u₁ + u₂) ^ (1 - t) ≠ 0 := by
-    intro hcon
-    obtain ⟨h1, _⟩ | ⟨h1, h2⟩ := ENNReal.rpow_eq_zero_iff.mp hcon
-    · exact hA0 h1
-    · linarith
+      intro hcon
+      obtain ⟨h1, _⟩ | ⟨h1, h2⟩ := ENNReal.rpow_eq_zero_iff.mp hcon
+      · exact hA0 h1
+      · linarith
     have hRHS : (u₁ + u₂) ^ (1 - t) * (v₁ + v₂) ^ t = ⊤ := by
       rw [hBT, ENNReal.top_rpow_of_pos ht0, mul_comm]
       exact ENNReal.top_mul hAt
-    rwa [hRHS]
+    rw [hRHS]
+    exact le_top
   have hAne : (u₁ + u₂) ≠ ⊤ := hAT
   have hBne : (v₁ + v₂) ≠ ⊤ := hBT
   have hAinv : (u₁ + u₂) * (u₁ + u₂)⁻¹ = 1 := ENNReal.mul_inv_cancel hA0 hAne
@@ -156,7 +158,8 @@ private lemma ennreal_add_rpow_mul_le {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1)
     = (u₁ + u₂) ^ (1 - t) * (v₁ + v₂) ^ t *
       ((u₁ * (u₁ + u₂)⁻¹) ^ (1 - t) * (v₁ * (v₁ + v₂)⁻¹) ^ t +
         (u₂ * (u₁ + u₂)⁻¹) ^ (1 - t) * (v₂ * (v₁ + v₂)⁻¹) ^ t) := by
-      rw [e1, e2, e3, e4]; ring
+          rw [e1, e2, e3, e4]
+          ring
     _ ≤ (u₁ + u₂) ^ (1 - t) * (v₁ + v₂) ^ t * 1 :=
       mul_le_mul_of_nonneg_left hS (by positivity)
     _ = (u₁ + u₂) ^ (1 - t) * (v₁ + v₂) ^ t := mul_one _
@@ -165,11 +168,11 @@ end MathlibExt.MeasureTheory.Integral.PrekopaLeindlerWanted
 
 namespace MathlibExt.MeasureTheory.Integral.PrekopaLeindlerWanted
 
+open scoped Pointwise
 /--
 [compact_add_volume_le_1d](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/Integral/PrekopaLeindler.lean)
 -/
 @[path]
-open scoped Pointwise in
 private lemma compact_add_volume_le_1d {K L : Set ℝ}
   (hK : IsCompact K) (hL : IsCompact L)
   (hKne : K.Nonempty) (hLne : L.Nonempty) :
@@ -261,7 +264,7 @@ private lemma compact_add_volume_le_1d {K L : Set ℝ}
   calc volume K + volume L
     = volume ((fun x => x + b₀) '' K \ (fun y => a₁ + y) '' L)
       + volume ((fun y => a₁ + y) '' L) := by
-      rw [← hvolA, ← hvolB, hvolA', hI, add_zero]
+        rw [← hvolA, ← hvolB, hvolA', hI, add_zero]
     _ = volume ((fun x => x + b₀) '' K ∪ (fun y => a₁ + y) '' L) := hvolU.symm
     _ ≤ volume (K + L) :=
       measure_mono (Set.union_subset hAsub hBsub)
@@ -278,8 +281,8 @@ private lemma volume_image_const_mul_of_nonneg (K : Set ℝ) {c : ℝ} (hc : 0 �
   volume ((fun x => c * x) '' K) = ENNReal.ofReal c * volume K := by
   obtain rfl | hpos := eq_or_lt_of_le hc
   · have hsub : (fun x => (0 : ℝ) * x) '' K ⊆ {0} := by
-    rintro x ⟨y, _, rfl⟩
-    simp
+      rintro x ⟨y, _, rfl⟩
+      simp
     have hvol : volume ((fun x => (0 : ℝ) * x) '' K) = 0 :=
       le_antisymm ((measure_mono hsub).trans (le_of_eq Real.volume_singleton))
         (by positivity)
@@ -301,11 +304,11 @@ end MathlibExt.MeasureTheory.Integral.PrekopaLeindlerWanted
 
 namespace MathlibExt.MeasureTheory.Integral.PrekopaLeindlerWanted
 
+open scoped Pointwise
 /--
 [compact_brunn_minkowski_scaled](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/Integral/PrekopaLeindler.lean)
 -/
 @[path]
-open scoped Pointwise in
 private lemma compact_brunn_minkowski_scaled {K L : Set ℝ} {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1)
   (hK : IsCompact K) (hL : IsCompact L)
   (hKne : K.Nonempty) (hLne : L.Nonempty) :
@@ -328,11 +331,11 @@ end MathlibExt.MeasureTheory.Integral.PrekopaLeindlerWanted
 
 namespace MathlibExt.MeasureTheory.Integral.PrekopaLeindlerWanted
 
+open scoped Pointwise
 /--
 [compact_prekopa_indicator](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/Integral/PrekopaLeindler.lean)
 -/
 @[path]
-open scoped Pointwise in
 private lemma compact_prekopa_indicator {K L : Set ℝ} {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1)
   (hK : IsCompact K) (hL : IsCompact L)
   (hKne : K.Nonempty) (hLne : L.Nonempty) :
@@ -461,11 +464,11 @@ end MathlibExt.MeasureTheory.Integral.PrekopaLeindlerWanted
 
 namespace MathlibExt.MeasureTheory.Integral.PrekopaLeindlerWanted
 
+open scoped Pointwise
 /--
 [measurable_brunn_minkowski_scaled](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/Integral/PrekopaLeindler.lean)
 -/
 @[path]
-open scoped Pointwise in
 private lemma measurable_brunn_minkowski_scaled {A B : Set ℝ} {t : ℝ}
   (ht0 : 0 < t) (ht1 : t < 1)
   (hA : MeasurableSet A) (hB : MeasurableSet B)
@@ -524,9 +527,10 @@ private lemma measurable_brunn_minkowski_scaled {A B : Set ℝ} {t : ℝ}
       by_cases hA0 : volume A = 0
       · by_cases hB0 : volume B = 0
         · have hLHS : ENNReal.ofReal (1 - t) * volume A
-          + ENNReal.ofReal t * volume B = 0 := by
-          rw [hA0, hB0, mul_zero, mul_zero, add_zero]
-          rwa [hLHS]
+            + ENNReal.ofReal t * volume B = 0 := by
+            rw [hA0, hB0, mul_zero, mul_zero, add_zero]
+          rw [hLHS]
+          exact bot_le
         · obtain ⟨a0, ha0⟩ := hAne
           have hsub : (fun y => (1 - t) * a0 + t * y) '' B ⊆
             (fun x => (1 - t) * x) '' A + (fun y => t * y) '' B := by
@@ -736,25 +740,25 @@ private lemma lintegral_eq_lintegral_meas_lt_enNReal {α : Type*}
     rw [hset]
     apply le_antisymm
     · exact measure_mono Set.subset_union_left
-    · calc μ ({x | t < (f x).toReal} ∪ {x | f x = ⊤})
-      ≤ μ {x | t < (f x).toReal} + μ {x | f x = ⊤} :=
-        measure_union_le _ _
-      _ = μ {x | t < (f x).toReal} := by rw [hinf, add_zero]
+    · rw [← add_zero (μ {x | t < (f x).toReal}), ← hinf]
+      exact measure_union_le _ _
   · have hpos : (0 : ENNReal) < μ {x | f x = ⊤} := by
-    apply lt_of_le_of_ne'
-    · exact zero_le
-    · exact hinf
+      apply lt_of_le_of_ne'
+      · exact zero_le
+      · exact hinf
     have hpos' : μ {x | f x = ⊤} ≠ 0 := ne_of_gt hpos
     have hLHS : ∫⁻ x, f x ∂μ = ⊤ := by
       apply eq_top_iff.mpr
-      calc (⊤ : ENNReal) = ∫⁻ _ in {x | f x = ⊤}, ⊤ ∂μ := by
+      have h1 : (⊤ : ENNReal) = ∫⁻ _ in {x | f x = ⊤}, ⊤ ∂μ := by
         simp [lintegral_const, hpos']
-        _ = ∫⁻ x in {x | f x = ⊤}, f x ∂μ := by
-          apply setLIntegral_congr_fun
-          · exact hf (measurableSet_singleton ⊤)
-          · intro x hx
-            exact hx.symm
-        _ ≤ ∫⁻ x, f x ∂μ := setLIntegral_le_lintegral _ _
+      have h2 : ∫⁻ _ in {x | f x = ⊤}, ⊤ ∂μ = ∫⁻ x in {x | f x = ⊤}, f x ∂μ := by
+        apply setLIntegral_congr_fun
+        · exact hf (measurableSet_singleton ⊤)
+        · intro x hx
+          exact hx.symm
+      have h3 : ∫⁻ x in {x | f x = ⊤}, f x ∂μ ≤ ∫⁻ x, f x ∂μ :=
+        setLIntegral_le_lintegral _ _
+      exact (h1.trans h2).trans_le h3
     have hRHS : ∫⁻ t in Set.Ioi (0 : ℝ), μ {x | ENNReal.ofReal t < f x} = ⊤ := by
       apply eq_top_iff.mpr
       have hle : ∀ t : ℝ, t ∈ Set.Ioi (0 : ℝ) →
@@ -763,7 +767,8 @@ private lemma lintegral_eq_lintegral_meas_lt_enNReal {α : Type*}
         apply measure_mono
         intro x hx
         simp only [Set.mem_ofPred_eq] at hx ⊢
-        rwa [hx]
+        rw [hx]
+        exact ENNReal.ofReal_lt_top
       have hmono : ∫⁻ _ in Set.Ioi (0 : ℝ), μ {x | f x = ⊤} ∂volume
         ≤ ∫⁻ t in Set.Ioi (0 : ℝ), μ {x | ENNReal.ofReal t < f x} := by
         apply setLIntegral_mono' measurableSet_Ioi
@@ -831,11 +836,11 @@ end MathlibExt.MeasureTheory.Integral.PrekopaLeindlerWanted
 
 namespace MathlibExt.MeasureTheory.Integral.PrekopaLeindlerWanted
 
+open scoped Pointwise
 /--
 [superlevel_inclusion_1d](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/Integral/PrekopaLeindler.lean)
 -/
 @[path]
-open scoped Pointwise in
 private lemma superlevel_inclusion_1d {f g h : ℝ → ENNReal} {t : ℝ}
   (ht0 : 0 < t) (ht1 : t < 1)
   (hfgh : ∀ x y : ℝ, f x ^ (1 - t) * g y ^ t ≤ h ((1 - t) • x + t • y))
@@ -914,14 +919,16 @@ private lemma prekopa_leindler_1d_real {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1)
   have h1t : (0 : ℝ) < 1 - t := by linarith
   by_cases hf0 : (∫⁻ x, f x ∂volume) = 0
   · have hF : (∫⁻ x, f x ∂volume) ^ (1 - t) = 0 := by
-    rw [hf0]
-    exact ENNReal.zero_rpow_of_pos h1t
-    rwa [hF, zero_mul]
+      rw [hf0]
+      exact ENNReal.zero_rpow_of_pos h1t
+    rw [hF, zero_mul]
+    exact bot_le
   · by_cases hg0 : (∫⁻ x, g x ∂volume) = 0
     · have hG : (∫⁻ x, g x ∂volume) ^ t = 0 := by
-      rw [hg0]
-      exact ENNReal.zero_rpow_of_pos ht0
-      rwa [hG, mul_zero]
+        rw [hg0]
+        exact ENNReal.zero_rpow_of_pos ht0
+      rw [hG, mul_zero]
+      exact bot_le
     · have hAne0 : (∫⁻ x, f x ∂volume) ≠ 0 := hf0
       have hBne0 : (∫⁻ x, g x ∂volume) ≠ 0 := hg0
       set Mf : ENNReal := sSup (Set.range f) with hMfdef
@@ -941,7 +948,8 @@ private lemma prekopa_leindler_1d_real {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1)
           exact le_antisymm hle zero_le
         have hint : (∫⁻ x, f x ∂volume) = 0 := by
           have : f = fun _ => 0 := funext hzero
-          rwa [this]
+          rw [this]
+          simp
         exact hAne0 hint
       have hMg_ne : Mg ≠ 0 := by
         intro hcon
@@ -952,18 +960,19 @@ private lemma prekopa_leindler_1d_real {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1)
           exact le_antisymm hle zero_le
         have hint : (∫⁻ x, g x ∂volume) = 0 := by
           have : g = fun _ => 0 := funext hzero
-          rwa [this]
+          rw [this]
+          simp
         exact hBne0 hint
       have hMf_pos : (0 : ENNReal) < Mf := lt_of_le_of_ne' hMf_nn hMf_ne
       have hMg_pos : (0 : ENNReal) < Mg := lt_of_le_of_ne' hMg_nn hMg_ne
       by_cases hMfTop : Mf = ⊤
       · by_cases hMgTop : Mg = ⊤
         · have hpow : ∀ u : ℝ, 0 < u → u ^ (1 - t) * u ^ t = u := by
-          intro u hu
-          have h1 : u ^ (1 - t) * u ^ t = u ^ ((1 - t) + t) := by
-            rw [← Real.rpow_add hu]
-          have h2 : (1 - t) + t = 1 := by ring
-          rw [h1, h2, Real.rpow_one]
+            intro u hu
+            have h1 : u ^ (1 - t) * u ^ t = u ^ ((1 - t) + t) := by
+              rw [← Real.rpow_add hu]
+            have h2 : (1 - t) + t = 1 := by ring
+            rw [h1, h2, Real.rpow_one]
           have hpoint : ∀ u : ℝ, u ∈ Set.Ioi (0 : ℝ) →
             ENNReal.ofReal (1 - t)
               * volume {x | ENNReal.ofReal u < f x}
@@ -1118,7 +1127,8 @@ private lemma prekopa_leindler_1d_real {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1)
               rw [mul_comm]
               exact ENNReal.top_mul hne
             rwa [← hconst]
-          rwa [hHtop]
+          rw [hHtop]
+          exact le_top
       · by_cases hMgTop : Mg = ⊤
         · have hlayF := lintegral_eq_lintegral_meas_lt_enNReal volume hf
           have hlayH := lintegral_eq_lintegral_meas_lt_enNReal volume hh
@@ -1212,7 +1222,8 @@ private lemma prekopa_leindler_1d_real {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1)
               rw [mul_comm]
               exact ENNReal.top_mul hne
             rwa [← hconst]
-          rwa [hHtop]
+          rw [hHtop]
+          exact le_top
         · have h1t' : (0 : ℝ) ≤ 1 - t := le_of_lt h1t
           have ht0' : (0 : ℝ) ≤ t := le_of_lt ht0
           have hApos : (0 : ℝ) < Mf.toReal := ENNReal.toReal_pos hMf_ne hMfTop
@@ -1251,8 +1262,8 @@ private lemma prekopa_leindler_1d_real {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1)
             have hs : (0 : ℝ) < B * u := mul_pos hBpos hupos
             by_cases hu1 : u < 1
             · have hrA : A * u < A := by
-              have hlt := mul_lt_mul_of_pos_left hu1 hApos
-              rwa [mul_one] at hlt
+                have hlt := mul_lt_mul_of_pos_left hu1 hApos
+                rwa [mul_one] at hlt
               have hsB : B * u < B := by
                 have hlt := mul_lt_mul_of_pos_left hu1 hBpos
                 rwa [mul_one] at hlt
@@ -1298,7 +1309,8 @@ private lemma prekopa_leindler_1d_real {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1)
                 have hle : ENNReal.ofReal B ≤ ENNReal.ofReal (B * u) :=
                   ENNReal.ofReal_le_ofReal hBu
                 exact absurd (lt_of_le_of_lt (le_trans hgy hle) hy) (lt_irrefl _)
-              rwa [hempty1, hempty2, measure_empty, mul_zero, mul_zero, add_zero]
+              rw [hempty1, hempty2, measure_empty, mul_zero, mul_zero, add_zero]
+              exact bot_le
           have hFmeas : Measurable fun t : ℝ =>
             volume {x : ℝ | ENNReal.ofReal t < f x} :=
             measurable_tail_measure hf
@@ -1433,10 +1445,10 @@ namespace MathlibExt.MeasureTheory.Integral.PrekopaLeindlerWanted
 
 /--
 [pl_prod](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/Integral/PrekopaLeindler.lean)
+apply the second-factor case to slices, then the first-factor case to the
+slice integrals).
 -/
 @[path]
-apply the second-factor case to slices, then the first-factor case to the
-slice integrals). -/
 private lemma pl_prod {E₁ E₂ : Type*} [Add E₁] [SMul ℝ E₁] [Add E₂] [SMul ℝ E₂]
   [MeasurableSpace E₁] [MeasurableSpace E₂]
   {μ₁ : Measure E₁} {μ₂ : Measure E₂} [SFinite μ₂]
@@ -1480,9 +1492,9 @@ namespace MathlibExt.MeasureTheory.Integral.PrekopaLeindlerWanted
 
 /--
 [pl_map](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/Integral/PrekopaLeindler.lean)
+equivalence that respects affine combinations.
 -/
 @[path]
-equivalence that respects affine combinations. -/
 private lemma pl_map {E F : Type*} [Add E] [SMul ℝ E] [Add F] [SMul ℝ F]
   [MeasurableSpace E] [MeasurableSpace F]
   {μ : Measure E} {ν : Measure F} (e : E ≃ᵐ F)
@@ -1507,7 +1519,8 @@ private lemma pl_map {E F : Type*} [Add E] [SMul ℝ E] [Add F] [SMul ℝ F]
         rw [hcombo]
         simp [e.apply_symm_apply]
       have h2 := congrArg e.symm h1
-      rwa [e.symm_apply_apply] at h2
+      rw [e.symm_apply_apply] at h2
+      exact h2.symm
     have hH'' : H' ((1 - t) • X + t • Y)
       = h ((1 - t) • e.symm X + t • e.symm Y) := congrArg h harg
     rwa [hH'']
@@ -1541,9 +1554,9 @@ namespace MathlibExt.MeasureTheory.Integral.PrekopaLeindlerWanted
 
 /--
 [pl_fin_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/Integral/PrekopaLeindler.lean)
+measure on a singleton; the step splits off one coordinate.
 -/
 @[path]
-measure on a singleton; the step splits off one coordinate. -/
 private lemma pl_fin_zero : PLProp (Fin 0 → ℝ) volume := by
   intro t ht0 ht1 f g h hf hg hh hfgh
   have hvol : (volume : Measure (Fin 0 → ℝ))
@@ -1566,27 +1579,27 @@ private lemma pl_fin : ∀ n : ℕ, PLProp (Fin n → ℝ) volume
   | 0 => pl_fin_zero
   | n + 1 => by
     have hmeas : MeasurePreserving
-      (MeasurableEquiv.piFinSuccAbove (fun _ : Fin (n + 1) => ℝ) 0)
-      volume (volume.prod volume) :=
-  measurePreserving_piFinSuccAbove _ 0
-  have hcombo : ∀ (a b : ℝ) (x y : Fin (n + 1) → ℝ),
+        (MeasurableEquiv.piFinSuccAbove (fun _ : Fin (n + 1) => ℝ) 0)
+        volume (volume.prod volume) :=
+      measurePreserving_piFinSuccAbove _ 0
+    have hcombo : ∀ (a b : ℝ) (x y : Fin (n + 1) → ℝ),
     MeasurableEquiv.piFinSuccAbove (fun _ : Fin (n + 1) => ℝ) 0 (a • x + b • y)
       = a • MeasurableEquiv.piFinSuccAbove (fun _ : Fin (n + 1) => ℝ) 0 x
         + b • MeasurableEquiv.piFinSuccAbove
           (fun _ : Fin (n + 1) => ℝ) 0 y := by
-    intro a b x y
-    simp only [MeasurableEquiv.piFinSuccAbove_apply]
-    have hsymm : ∀ z : Fin (n + 1) → ℝ,
-      (Fin.insertNthEquiv (fun _ : Fin (n + 1) => ℝ) 0).symm z
-        = (z 0, Fin.removeNth 0 z) := fun z => rfl
-    simp only [hsymm]
-    rw [Prod.smul_mk, Prod.smul_mk, Prod.mk_add_mk, Prod.mk.injEq]
-    constructor
-    · simp only [Pi.add_apply, Pi.smul_apply]
-    · funext j
-      simp only [Fin.removeNth_apply, Pi.add_apply, Pi.smul_apply]
-  exact pl_map (MeasurableEquiv.piFinSuccAbove (fun _ : Fin (n + 1) => ℝ) 0)
-    hmeas hcombo (pl_prod pl_one_dim (pl_fin n))
+      intro a b x y
+      simp only [MeasurableEquiv.piFinSuccAbove_apply]
+      have hsymm : ∀ z : Fin (n + 1) → ℝ,
+        (Fin.insertNthEquiv (fun _ : Fin (n + 1) => ℝ) 0).symm z
+          = (z 0, Fin.removeNth 0 z) := fun z => rfl
+      simp only [hsymm]
+      rw [Prod.smul_mk, Prod.smul_mk, Prod.mk_add_mk, Prod.mk.injEq]
+      constructor
+      · simp only [Pi.add_apply, Pi.smul_apply]
+      · funext j
+        simp only [Fin.removeNth_apply, Pi.add_apply, Pi.smul_apply]
+    exact pl_map (MeasurableEquiv.piFinSuccAbove (fun _ : Fin (n + 1) => ℝ) 0)
+      hmeas hcombo (pl_prod pl_one_dim (pl_fin n))
 
 end MathlibExt.MeasureTheory.Integral.PrekopaLeindlerWanted
 

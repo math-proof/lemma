@@ -1,8 +1,8 @@
 import Structure.AlgebraicCurve_SemistableCharts
 import Instance.ModularCurve_FullLevelJacobian
-import Lemma.ModularCurve.QAdicPlace
+import Lemma.HahnSeries.QAdicPlace
 import Instance.ModularCurve_JZeroSemistableSpecialization
-import Lemma.AlgebraicCurve.SemistableChartsComap
+import Lemma.AlgEquiv.SemistableChartsComap
 
 set_option autoImplicit false
 

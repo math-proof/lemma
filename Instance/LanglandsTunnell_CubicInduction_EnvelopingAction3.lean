@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_LanglandsTunnell_CubicInduction_EnvelopingAction3.lean: instance decls only.
-import Lemma.LanglandsTunnell.CubicInduction_ArchSmoothSpace3
-import Lemma.LanglandsTunnell.CubicInduction_EnvelopingAction3
+import Lemma.Matrix.CubicInduction_ArchSmoothSpace3
+import Lemma.Matrix.CubicInduction_EnvelopingAction3
 
 set_option autoImplicit false
 

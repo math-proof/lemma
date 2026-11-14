@@ -8,7 +8,7 @@ import Mathlib.AlgebraicGeometry.Morphisms.Flat
 import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
 import Instance.AlgebraicGeometry_FppfCohomologyLES
 import Instance.AlgebraicGeometry_FppfGmRepresentable
-import Lemma.AlgebraicGeometry.FppfKummerProp17
+import Lemma.Scheme.FppfKummerProp17
 
 namespace ModularCurve
 

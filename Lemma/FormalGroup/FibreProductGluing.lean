@@ -1,6 +1,6 @@
 import Mathlib
 import Def.FormalGroup_PointTransport
-import Lemma.IsLocalRing.SmallExtensionTangent
+import Lemma.Ideal.SmallExtensionTangent
 
 set_option autoImplicit false
 
@@ -220,7 +220,7 @@ end FormalGroup
 
 namespace IsLocalRing.SmallExtension
 
-open IsLocalRing
+open IsLocalRing Ideal
 
 variable {T S : Type} [CommRing T] [CommRing S] (σ : T →+* S)
 

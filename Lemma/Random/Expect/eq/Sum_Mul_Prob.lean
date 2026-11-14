@@ -2,20 +2,21 @@ import Mathlib.MeasureTheory.Integral.Lebesgue.Countable
 import Mathlib.MeasureTheory.Measure.WithDensity
 import Syntax.Probability.Expectation.Elab
 import Lemma.Random.Map.eq.WithDensityProb
+import Theorem.Probability.JointRv.AsRV
 open MeasureTheory
 
 
 @[path]
 private lemma main
   [MeasurableSpace Ω]
-  [ReferenceMeasure α]
+  [μ : ReferenceMeasure α]
   [Countable α]
   [MeasurableSingletonClass α]
   {π : Measure Ω} {a : Ω → α} {f : α → ENNReal}
 -- given
   (hP : SinglePSpace π a)
   (hf : Measurable f)
-  (hμ : ReferenceMeasure.measure (α := α) = Measure.count) :
+  (hμ : μ.measure = Measure.count) :
 -- imply
   𝔼[a: π](f a) = ∑' «\sf{a}» : α, f «\sf{a}» * ℙ[π](a = «\sf{a}») := by
 -- proof
@@ -28,4 +29,4 @@ private lemma main
 
 
 -- created on 2023-03-20
--- updated on 2026-11-02
+-- updated on 2026-11-14

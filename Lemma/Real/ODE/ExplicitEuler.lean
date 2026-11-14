@@ -66,9 +66,9 @@ namespace MathlibExt.Analysis.ODE.ExplicitEulerWanted
 
 /--
 [exists_explicitEuler_localTruncationError_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/ODE/ExplicitEuler.lean)
+time interval.
 -/
 @[path]
-time interval. -/
 lemma _root_.ODE.exists_explicitEuler_localTruncationError_le
   {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   (f : ℝ → E → E) (t₀ T : ℝ) (hT : t₀ < T)

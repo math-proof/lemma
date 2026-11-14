@@ -1,9 +1,9 @@
 import Mathlib
 import Instance.GroupCohomology_RelationModule
-import Lemma.GroupCohomology.RelationModuleRes
+import Lemma.Rep.RelationModuleRes
 import Abbrev.GroupCohomology_RepCokernel
 import Abbrev.GroupCohomology_RepImage
-import Lemma.GroupCohomology.RelationHomDefect
+import Lemma.Rep.RelationHomDefect
 
 set_option autoImplicit false
 
@@ -27,12 +27,12 @@ section Int
 variable {G : Type} [Group G] (B E : Rep ℤ G)
 
 
-abbrev defectQ : Rep ℤ G := GroupCohomology.RepImage.obj (preι B E)
+abbrev defectQ : Rep ℤ G := Rep.RepImage.obj (preι B E)
 
 abbrev defectX : Rep ℤ G := GroupCohomology.RepCokernel.obj (preι B E)
 
 
-abbrev homSeq₂ : ShortComplex (Rep ℤ G) := GroupCohomology.RepImage.seq (preι B E)
+abbrev homSeq₂ : ShortComplex (Rep ℤ G) := Rep.RepImage.seq (preι B E)
 
 end Int
 

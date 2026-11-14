@@ -87,7 +87,7 @@ private lemma main
 -- imply
   False :=
 -- proof
-  false_of_span_eq_top_of_trace_eq_of_commute_impl (h0 := h0) (ρ := ρ) (hspan := hspan) (τ := τ) (hcomm := hcomm) (htr := htr)
+  false_of_span_eq_top_of_trace_eq_of_commute_impl (h2 := h0) (ρ := ρ) (hspan := hspan) (τ := τ) (hcomm := hcomm) (htr := htr)
 
 
 -- created on 2026-10-23

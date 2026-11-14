@@ -8,12 +8,11 @@ namespace MathlibExt.Probability.HewittSavageWanted
 
 /--
 [exists_cylinder_approx](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/HewittSavage.lean)
--/
-@[path]
 # Hewitt–Savage zero–one law
 The iid symmetric zero–one law on Polish spaces.
+Any measurable set in an iid countable product can be approximated by a finite cylinder.
 -/
-/-- Any measurable set in an iid countable product can be approximated by a finite cylinder. -/
+@[path]
 private lemma exists_cylinder_approx {S : Type*} [MeasurableSpace S]
   (μ : Measure S) [IsProbabilityMeasure μ]
   (E : Set (ℕ → S)) (hE : MeasurableSet E) {ε : ENNReal} (hε : 0 < ε) :
@@ -59,8 +58,8 @@ private lemma map_comp_perm {S : Type*} [MeasurableSpace S]
   (Measure.infinitePi (fun _ : ℕ => μ)).map (fun ω : ℕ → S => ω ∘ ⇑σ) =
     Measure.infinitePi (fun _ : ℕ => μ) := by
   have heq : (fun ω : ℕ → S => ω ∘ ⇑σ) = (fun ω : ℕ → S => fun i => ω (⇑σ i)) := rfl
-  rwa [heq]
-    (P := fun _ : ℕ => μ) (Equiv.injective σ)
+  rw [heq]
+  exact Measure.map_infinitePi_infinitePi_of_inj (P := fun _ : ℕ => μ) (Equiv.injective σ)
 
 end MathlibExt.Probability.HewittSavageWanted
 
@@ -106,9 +105,9 @@ namespace MathlibExt.Probability.HewittSavageWanted
 
 /--
 [measurableSet_cylinderEvents_preimage](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/HewittSavage.lean)
+with respect to the coordinates in the permuted index set.
 -/
 @[path]
-with respect to the coordinates in the permuted index set. -/
 private lemma measurableSet_cylinderEvents_preimage {S : Type*} [MeasurableSpace S]
   (J : Finset ℕ) (Tset : Set (∀ _ : ↥J, S)) (hTset : MeasurableSet Tset)
   (σ : Equiv.Perm ℕ) :
@@ -271,16 +270,14 @@ lemma hewitt_savage_zero_one_general
     have hEF' : Measure.infinitePi (fun _ : ℕ => μ)
       (symmDiff E ((fun ω : ℕ → S => ω ∘ ⇑σ) ⁻¹' F)) =
       Measure.infinitePi (fun _ : ℕ => μ) (symmDiff F E) := by
-      calc Measure.infinitePi (fun _ : ℕ => μ)
-        (symmDiff E ((fun ω : ℕ → S => ω ∘ ⇑σ) ⁻¹' F))
-        = Measure.infinitePi (fun _ : ℕ => μ)
-          (symmDiff ((fun ω : ℕ → S => ω ∘ ⇑σ) ⁻¹' F) E) := by
-          rw [symmDiff_comm]
-        _ = Measure.infinitePi (fun _ : ℕ => μ)
-          ((fun ω : ℕ → S => ω ∘ ⇑σ) ⁻¹' (symmDiff F E)) := by
-          rw [hpre]
+      calc (Measure.infinitePi (fun _ : ℕ => μ)
+          (symmDiff E ((fun ω : ℕ → S => ω ∘ ⇑σ) ⁻¹' F)))
+        = (Measure.infinitePi (fun _ : ℕ => μ)
+          (symmDiff ((fun ω : ℕ → S => ω ∘ ⇑σ) ⁻¹' F) E)) := by rw [symmDiff_comm]
+        _ = (Measure.infinitePi (fun _ : ℕ => μ)
+          ((fun ω : ℕ → S => ω ∘ ⇑σ) ⁻¹' (symmDiff F E))) := by rw [hpre]
         _ = Measure.infinitePi (fun _ : ℕ => μ) (symmDiff F E) := by
-          rw [← Measure.map_apply hTmeas (hFmeas.symmDiff hE), hmap]
+            rw [← Measure.map_apply hTmeas (hFmeas.symmDiff hE), hmap]
     have hq' : ((Measure.infinitePi (fun _ : ℕ => μ))
       ((fun ω : ℕ → S => ω ∘ ⇑σ) ⁻¹' F)).toReal =
       ((Measure.infinitePi (fun _ : ℕ => μ)) F).toReal := by
@@ -390,7 +387,8 @@ lemma hewitt_savage_zero_one_general
       rw [hfactor, abs_mul]
       have h1 : |((Measure.infinitePi (fun _ : ℕ => μ)) F).toReal -
         (Measure.infinitePi (fun _ : ℕ => μ) E).toReal| ≤ δ := by
-        rwa [abs_sub_comm]
+        rw [abs_sub_comm]
+        exact e1.le
       have h2 : |((Measure.infinitePi (fun _ : ℕ => μ)) F).toReal +
         (Measure.infinitePi (fun _ : ℕ => μ) E).toReal| ≤ 2 := by
         rw [abs_of_nonneg (add_nonneg ENNReal.toReal_nonneg ENNReal.toReal_nonneg)]
@@ -449,7 +447,7 @@ lemma hewitt_savage_zero_one
   Measure.infinitePi (fun _ : ℕ => μ) E = 0 ∨
     Measure.infinitePi (fun _ : ℕ => μ) E = 1 := by
 -- proof
-  exact hewitt_savage_zero_one_general μ E hE hSym
+  exact hewitt_savage_zero_one_general hE hSym
 
 end MathlibExt.Probability.HewittSavageWanted
 

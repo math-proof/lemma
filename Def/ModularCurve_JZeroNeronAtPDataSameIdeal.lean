@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.ModularCurve.JZeroNeronAtPData
+import Lemma.ValuationSubring.JZeroNeronAtPData
 import Structure.ModularCurve_JZeroNeronAtPDataSameIdeal
 
 set_option autoImplicit false

@@ -42,7 +42,8 @@ lemma FractionalIdeal.unique_factorization_unique
   have h1 : FractionalIdeal.count K v
     (∏ᶠ w : HeightOneSpectrum R, (w.asIdeal : FractionalIdeal R⁰ K) ^ e w) = e v :=
     FractionalIdeal.count_finprod K v e he
-  rwa [hprod] at h1
+  rw [hprod] at h1
+  exact h1.symm
 
 /--
 [FractionalIdeal.unique_factorization](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/DedekindFactorization.lean)

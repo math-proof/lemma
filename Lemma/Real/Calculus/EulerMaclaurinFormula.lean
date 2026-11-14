@@ -360,9 +360,9 @@ namespace MetaMathlibExt
 
 /--
 [msum_eq_ksum](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Calculus/EulerMaclaurinFormula.lean)
+odd Bernoulli numbers beyond `B_1` vanish.
 -/
 @[path]
-odd Bernoulli numbers beyond `B_1` vanish. -/
 private lemma msum_eq_ksum (p : ℕ) (H : ℕ → ℝ) :
   (∑ m ∈ Finset.Icc 2 p, ((-1 : ℝ) ^ m * ((bernoulli m : ℝ) / (Nat.factorial m : ℝ)) * H (m - 1)))
   = ∑ k ∈ Finset.Icc 1 (p / 2),

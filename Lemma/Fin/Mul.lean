@@ -106,11 +106,13 @@ private lemma mul_comm_of_stableLine_impl {F F' : Type*} [Field F] [Field F'] (e
     apply (RingHom.map_mulVec e (M k) v t).symm
   rw [← hcu, Matrix.mulVec_smul, hmv, smul_comm] at hd
   apply mem_span_singleton_of_comp_eq_smul_comp e v _ d (smul_right_injective _ hc0 hd).symm hv0
+
 /--
 [Matrix_mul_comm_of_forall_map_mulVec_mem_span_of_forall_exists_mulVec_not_mem_span](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Matrix_mul_comm_of_forall_map_mulVec_mem_span_of_forall_exists_mulVec_not_mem_span.lean)
 -/
 @[path]
 private lemma main
+  {ι : Type*}
   [Field F] [Field F']
   (e : F →+* F') (M : ι → Matrix (Fin 2) (Fin 2) F) (u : Fin 2 → F')
   -- given
@@ -123,3 +125,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-13

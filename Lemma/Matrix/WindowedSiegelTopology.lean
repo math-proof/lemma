@@ -1,4 +1,4 @@
-import Lemma.AutomorphicForm.WindowedSiegelSet
+import Lemma.Matrix.WindowedSiegelSet
 
 open IsDedekindDomain NumberField MeasureTheory Matrix
 

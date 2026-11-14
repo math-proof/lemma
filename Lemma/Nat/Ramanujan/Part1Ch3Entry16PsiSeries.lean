@@ -144,8 +144,8 @@ private lemma e16ps_summable_norm (r : ℕ) (n u : ℂ)
     simp only [Finset.mem_singleton] at hj
     simp [e16ps_term, hj]
   · have hqpos : 0 < e16ps_q u := by
-    apply norm_pos_iff.mpr
-    exact mul_ne_zero hu (Complex.exp_ne_zero _)
+      apply norm_pos_iff.mpr
+      exact mul_ne_zero hu (Complex.exp_ne_zero _)
     have ha : Real.exp 1 < ‖Complex.exp u / u‖ := by
       rw [e16ps_norm_exp_div u hu]
       have hinv := one_div_lt_one_div_of_lt hqpos (e16ps_q_lt_exp_neg_one h)
@@ -621,7 +621,7 @@ private lemma e16ps_G_zero_ofReal (n : ℂ) (ρ : ℝ) (hρpos : 0 < ρ)
   let x : ℂ := n * (t : ℂ)
   have hJ :=
     Entry16Corollary1JensenSeries.ramanujan_part1_ch3_entry16_corollary1_jensen_series
-      ρ hρpos hρeq t ht x
+      hρpos hρeq ht (x := x)
   have hm := hJ.mul_left (Complex.exp (-x))
   have hterm : ∀ j : ℕ, e16ps_term 0 n (t : ℂ) j =
     Complex.exp (-x) *
@@ -650,7 +650,9 @@ private lemma e16ps_G_zero_ofReal (n : ℂ) (ρ : ℝ) (hρpos : 0 < ρ)
       _ = 1 / (1 - (t : ℂ)) := by
         rw [← Complex.exp_add]
         simp
-  rwa [hvalue] at hm'
+  rw [hvalue] at hm'
+  unfold e16ps_G
+  exact hm'.tsum_eq
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry16PsiSeries
 
@@ -1038,4 +1040,4 @@ end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry16PsiSeries
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-13

@@ -41,20 +41,18 @@ end MapFixedPoints
 
 section Step
 
-variable (k) {m : ℕ} (rs : Fin (m + 1) → ℕ)
+variable {m : ℕ} (rs : Fin (m + 1) → ℕ)
 
 end Step
 
 section StepEquivariance
 
-variable (k : Type u) [CommRing k] {m : ℕ} (rs : Fin (m + 1) → ℕ)
+variable {m : ℕ} (rs : Fin (m + 1) → ℕ)
 
 end StepEquivariance
 
 end BlockwiseFTSym
 
 open BlockwiseFTSym
-
-variable (k) (m : ℕ) (rs : Fin m → ℕ)
 
 end MvPowerSeries

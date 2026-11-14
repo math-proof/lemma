@@ -1,5 +1,5 @@
-import Lemma.ModularCurve.HeckeOperator
-import Lemma.ModularCurve.CharLFrobeniusGeomLevel
+import Lemma.LaurentSeries.HeckeOperator
+import Lemma.LaurentSeries.CharLFrobeniusGeomLevel
 import Structure.HeckeGalois_EichlerShimura
 
 set_option autoImplicit false

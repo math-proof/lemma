@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.Correspondence
+import Lemma.Scheme.Correspondence
 import Lemma.Int.P2MUtil
 
-open AlgebraicCurve Classical
+open AlgebraicCurve Classical Scheme
 
 /--
 [AlgebraicCurve_Divisor_correspondence_single_one_apply_eq_sum_and_eq_finsum](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_Divisor_correspondence_single_one_apply_eq_sum_and_eq_finsum.lean)

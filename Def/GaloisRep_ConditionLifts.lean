@@ -1,6 +1,6 @@
 import Mathlib
 import Def.GaloisRep_Adic
-import Lemma.Deformations.TraceAlgebra
+import Lemma.Matrix.TraceAlgebra
 
 namespace GaloisRep
 

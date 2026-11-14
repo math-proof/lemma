@@ -55,9 +55,8 @@ noncomputable instance fintypeFinsuppDegreeEq (d : ℕ) :
 
 
 instance instModuleFiniteHomogSub (d : ℕ) :
-    Module.Finite k (homogeneousSubmodule (Fin n) k d) := by
-  rw [homogeneousSubmodule_eq_finsupp_supported]
-  exact Module.Finite.equiv (Finsupp.supportedEquivFinsupp _).symm
+    Module.Finite k (homogeneousSubmodule (Fin n) k d) :=
+  Module.Finite.of_fg (homogeneousSubmodule_fg (Fin n) k d)
 
 
 end

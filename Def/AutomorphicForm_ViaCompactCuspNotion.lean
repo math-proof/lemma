@@ -1,6 +1,6 @@
-import Lemma.AutomorphicForm.ArithCuspRealization
+import Lemma.Ideal.ArithCuspRealization
 import Def.AutomorphicForm_ProductionPinsCompact
-import Lemma.AutomorphicForm.ArchWeightCharTransport
+import Lemma.Matrix.ArchWeightCharTransport
 import Def.ModularForm_EisensteinChiNegThree
 
 set_option autoImplicit false

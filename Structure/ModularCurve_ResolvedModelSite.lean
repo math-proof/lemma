@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.AlgebraicGeometry.ResolvedModelGlueComponents
+import Lemma.Scheme.ResolvedModelGlueComponents
 import Structure.ModularCurve_DRResolvedModelPackageV4
 import Abbrev.ModularCurve_DRModelPackage
 import Instance.MvPolynomial_CrossingResolutionScheme

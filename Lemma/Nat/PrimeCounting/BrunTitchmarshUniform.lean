@@ -112,7 +112,7 @@ private lemma brunTitchmarsh_card_mod_sub_div_abs_le (N d a : ℕ)
     linarith
   have hfrac_nonneg : (0 : ℝ) ≤ (N % d : ℕ) / (d : ℝ) := by positivity
   have hfrac_le_one : ((N % d : ℕ) : ℝ) / d ≤ 1 := by
-    rwa [div_le_one hdR]
+    exact (div_le_one hdR).mpr hlt.le
   by_cases hif : a < N % d
   · simp only [hif, ite_true] at hcount
     have hcast : ((((Finset.range N).filter (fun n ↦ n % d = a)).card : ℕ) : ℝ) =
@@ -185,13 +185,13 @@ private lemma brunTitchmarshSieve_abs_rem_le (X k ell R d : ℕ)
     · rintro ⟨hnX, hnprod⟩
       refine ⟨⟨hnX, ?_⟩, ?_⟩
       · have hna : n ≡ a [MOD d * k] := by
-        change n % (d * k) = a % (d * k)
-        rwa [Nat.mod_eq_of_lt ha]
+          rw [Nat.ModEq, Nat.mod_eq_of_lt ha]
+          exact hnprod
         have hnak : n ≡ a [MOD k] := hna.of_dvd ⟨d, by simp [mul_comm]⟩
         exact hnak.trans hak
       · have hna : n ≡ a [MOD d * k] := by
-        change n % (d * k) = a % (d * k)
-        rwa [Nat.mod_eq_of_lt ha]
+          rw [Nat.ModEq, Nat.mod_eq_of_lt ha]
+          exact hnprod
         have hnad : n ≡ a [MOD d] := hna.of_dvd ⟨k, rfl⟩
         exact Nat.modEq_zero_iff_dvd.mp (hnad.trans had)
   have hcard := brunTitchmarsh_card_mod_sub_div_abs_le
@@ -398,7 +398,7 @@ private lemma brunTitchmarsh_harmonic_le_mul_levelSum
         intro p hp
         by_cases hpk : p ∣ k
         · exact Finset.mem_union_right _
-          ((Nat.prime_of_mem_primeFactors hp).mem_primeFactors hpk hk.ne')
+            ((Nat.prime_of_mem_primeFactors hp).mem_primeFactors hpk hk.ne')
         · apply Finset.mem_union_left
           rw [hpf]
           exact Finset.mem_filter.mpr ⟨hp, hpk⟩
@@ -493,7 +493,7 @@ private lemma brunTitchmarsh_primeCount_le_siftedSum (X k ell R : ℕ) :
     (brunTitchmarshSieve X k ell R).siftedSum := by
   let T := (Finset.range (X + 1)).filter fun p ↦ p.Prime ∧ p ≡ ell [MOD k]
   have hTcard : T.card = Nat.primeCountingMod X k ell := by
-    simpa only [T] using (Nat.primeCountingMod_eq_card_filter_range X k ell).symm
+    simpa only [T] using Nat.primeCountingMod_eq_card_filter_range.symm
   have hsplit := Finset.card_filter_add_card_filter_not (s := T) (fun p ↦ p ≤ R)
   have hsmall : ((T.filter fun p ↦ p ≤ R).card : ℝ) ≤ (R + 1 : ℕ) := by
     have hsub : T.filter (fun p ↦ p ≤ R) ⊆ Finset.range (R + 1) := by
@@ -541,11 +541,11 @@ private lemma brunTitchmarsh_primeCount_le (X k ell R : ℕ)
     (R : ℝ) ^ 12 := by
   let s := brunTitchmarshSieve X k ell R
   let w := levelWeights s R
-  have hw1 : w 1 = 1 := levelWeights_one s R hR
+  have hw1 : w 1 = 1 := levelWeights_one (s := s) hR
   have hupper := BoundingSieve.upperMoebius_lambdaSquared w hw1
   have hsieve := BoundingSieve.siftedSum_le_mainSum_errSum_of_upperMoebius
     (s := s) (BoundingSieve.lambdaSquared w) hupper
-  have hmain := levelWeights_mainSum s R hR
+  have hmain := levelWeights_mainSum (s := s) hR
   have hnu : ∀ d : ℕ, d ∣ s.prodPrimes → 1 ≤ (d : ℝ) * s.nu d := by
     intro d hd
     have hd0 := ne_zero_of_dvd_ne_zero (BoundingSieve.prodPrimes_ne_zero (s := s)) hd
@@ -556,7 +556,7 @@ private lemma brunTitchmarsh_primeCount_le (X k ell R : ℕ)
     have hd0 := ne_zero_of_dvd_ne_zero (BoundingSieve.prodPrimes_ne_zero (s := s)) hd
     have h := brunTitchmarshSieve_abs_rem_le X k ell R d hk hd
     exact h.trans (by exact_mod_cast Nat.pos_of_ne_zero hd0)
-  have herr := levelWeights_errSum_le s R hR hnu hrem
+  have herr := levelWeights_errSum_le (s := s) hR hnu hrem
   have htotal : s.totalMass = ((X + 1 : ℕ) : ℝ) / k := rfl
   have hprime := brunTitchmarsh_primeCount_le_siftedSum X k ell R
   change (Nat.primeCountingMod X k ell : ℝ) ≤ (R + 1 : ℕ) + s.siftedSum at hprime
@@ -840,7 +840,7 @@ namespace MathlibExt.NumberTheory.PrimeCounting.BrunTitchmarshUniformWanted
 lemma brun_titchmarsh_uniform
   {β : ℝ}
 -- given
-  (hβ0 : 0 < β)
+  (_hβ0 : 0 < β)
   (hβ1 : β < 1) :
 -- imply
   ∃ ξ₁ : ℝ, 0 < ξ₁ ∧ ∀ X k ell : ℕ, 2 ≤ X → 1 ≤ k →
@@ -872,4 +872,4 @@ end MathlibExt.NumberTheory.PrimeCounting.BrunTitchmarshUniformWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-13

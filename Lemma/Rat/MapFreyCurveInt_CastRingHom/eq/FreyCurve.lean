@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.FLTPrelim.FreyPackage
+import Lemma.WeierstrassCurve.FreyPackage
 open FreyPackage
 open WeierstrassCurve
 
@@ -76,7 +76,7 @@ private lemma not_dvd_c₄Int (P : FreyPackage) {q : ℤ} (hq : Prime q) (hqbad 
     ·
       intro ha
       have hqb : ¬q ∣ P.b := fun hb =>
-        hq.not_unit (isUnit_of_dvd_one (P.hgcdab ▸ dvd_gcd ha hb))
+        hq.not_isUnit (isUnit_of_dvd_one (P.hgcdab ▸ dvd_gcd ha hb))
       have hqap : q ∣ P.a ^ P.p := dvd_pow ha P.hp0
       rw [c₄Int, dvd_add_right (dvd_add (dvd_pow hqap two_ne_zero)
         (dvd_mul_of_dvd_left hqap _))] at hdvd
@@ -84,7 +84,7 @@ private lemma not_dvd_c₄Int (P : FreyPackage) {q : ℤ} (hq : Prime q) (hqbad 
     ·
       intro hb
       have hqa : ¬q ∣ P.a := fun ha =>
-        hq.not_unit (isUnit_of_dvd_one (P.hgcdab ▸ dvd_gcd ha hb))
+        hq.not_isUnit (isUnit_of_dvd_one (P.hgcdab ▸ dvd_gcd ha hb))
       have hqbp : q ∣ P.b ^ P.p := dvd_pow hb P.hp0
       rw [c₄Int, add_assoc, dvd_add_left (dvd_add (dvd_mul_of_dvd_right hqbp _)
         (dvd_pow hqbp two_ne_zero))] at hdvd
@@ -92,9 +92,9 @@ private lemma not_dvd_c₄Int (P : FreyPackage) {q : ℤ} (hq : Prime q) (hqbad 
   ·
     intro hc
     have hqa : ¬q ∣ P.a := fun ha =>
-      hq.not_unit (isUnit_of_dvd_one (P.hgcdac ▸ dvd_gcd ha hc))
+      hq.not_isUnit (isUnit_of_dvd_one (P.hgcdac ▸ dvd_gcd ha hc))
     have hqb : ¬q ∣ P.b := fun hb =>
-      hq.not_unit (isUnit_of_dvd_one (P.hgcdbc ▸ dvd_gcd hb hc))
+      hq.not_isUnit (isUnit_of_dvd_one (P.hgcdbc ▸ dvd_gcd hb hc))
     rw [c₄Int_eq_sub, dvd_sub_right (dvd_pow (dvd_pow hc P.hp0) two_ne_zero)] at hdvd
     refine Or.elim (hq.dvd_mul.mp (hq.dvd_of_dvd_pow hdvd)) ?_ ?_
     ·
@@ -157,3 +157,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

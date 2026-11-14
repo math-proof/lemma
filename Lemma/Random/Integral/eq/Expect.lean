@@ -5,7 +5,7 @@ open MeasureTheory Random
 @[path]
 private lemma main
   [MeasurableSpace Ω]
-  [ReferenceMeasure α] [ReferenceMeasure β]
+  [μ : ReferenceMeasure α] [ReferenceMeasure β]
   {π : Measure Ω}
   {a : Ω → α} {s : Ω → β}
   {f : α → ENNReal}
@@ -14,11 +14,21 @@ private lemma main
   (hf : Measurable f)
   («\sf{s}» : β) :
 -- imply
-  ∫⁻ «\sf{a}», ℙ[π](a = «\sf{a}» | s = «\sf{s}») * f «\sf{a}» ∂ReferenceMeasure.measure = Expectation.condRV π a s f «\sf{s}» := by
+  ∫⁻ «\sf{a}», ℙ[π](a = «\sf{a}» | s = «\sf{s}») * f «\sf{a}» ∂μ.measure = Expectation.condRV π a s f «\sf{s}» := by
 -- proof
-  rw [ExpectCond.eq.Integral_Mul_ProbCond hP hf]
-  apply lintegral_congr fun _ => mul_comm _ _
+  simp only [Expectation.condRV, expectation_ennreal]
+  have hmp : Measurable (π.prob (a, s)) := by
+    simpa [Measure.prob] using Measure.measurable_rnDeriv (π.map (a, s)) ReferenceMeasure.measure
+  have hmc : Measurable (π.condProb (a, s)) := by
+    change Measurable (fun z : α × β ↦ π.prob (a, s) z /
+      (π.map (fun ω ↦ ((a, s) ω).2)).rnDeriv ReferenceMeasure.measure z.2)
+    exact hmp.div ((Measure.measurable_rnDeriv (π.map (fun ω ↦ ((a, s) ω).2))
+      ReferenceMeasure.measure).comp measurable_snd)
+  have hcd : Measurable (fun «\sf{a}» : α ↦ π.condProb (a, s) («\sf{a}», «\sf{s}»)) :=
+    hmc.comp (Measurable.prodMk measurable_id measurable_const)
+  rw [lintegral_withDensity_eq_lintegral_mul _ hcd hf]
+  simp only [Pi.mul_apply, mul_comm]
 
 
 -- created on 2023-04-02
--- updated on 2026-11-02
+-- updated on 2026-11-14

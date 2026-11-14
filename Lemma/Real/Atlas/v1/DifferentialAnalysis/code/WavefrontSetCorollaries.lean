@@ -482,8 +482,8 @@ lemma cssSphere_add_subset
   ConicSingularSupportSphere (u₁ + u₂) ⊆ ConicSingularSupportSphere u₁ ∪ ConicSingularSupportSphere u₂ :=
 -- proof
   ConicSingularSupportSphere_add_subset u₁ u₂
-/-- Convolution with a compactly supported distribution does not enlarge the conic singular
-support on the sphere: `CSS_sphere (v * w) ⊆ CSS_sphere v`. -/
+-- Convolution with a compactly supported distribution does not enlarge the conic singular
+-- support on the sphere: `CSS_sphere (v * w) ⊆ CSS_sphere v`.
 end ConeSupport
 
 

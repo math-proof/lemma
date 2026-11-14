@@ -1,5 +1,6 @@
 import Notation.Analysis.Complex.Complexes
 import Initialize.Tactic.Attr.Basic
+open Complex
 
 
 /--

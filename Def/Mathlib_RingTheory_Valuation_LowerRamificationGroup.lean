@@ -1,5 +1,4 @@
 import Mathlib
-import Instance.Mathlib_RingTheory_Valuation_LowerRamificationGroup
 
 set_option autoImplicit false
 

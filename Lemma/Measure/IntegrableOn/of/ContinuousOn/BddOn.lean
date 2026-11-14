@@ -1,0 +1,20 @@
+import Mathlib
+import Initialize.Tactic.Attr.Basic
+import Abbrev.Analysis.Section_11_5
+open Chapter11.BoundedInterval
+open Chapter9
+open Chapter11
+@[path]
+private lemma main
+  {I: BoundedInterval}
+  {f:ℝ → ℝ}
+-- given
+  (hbound: BddOn f I)
+  (hf: ContinuousOn f I) :
+-- imply
+  IntegrableOn f I :=
+-- proof
+  Chapter11.integ_of_bdd_cts hbound hf
+
+
+-- created on 2026-10-22

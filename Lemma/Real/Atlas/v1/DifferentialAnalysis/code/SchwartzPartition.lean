@@ -41,11 +41,11 @@ lemma schwartz_partition_of_unity_vanishing
     intro i
     have heq : ∀ x, (g i) x = (↑(ρ i x) : ℂ) * ψ x :=
       (hprod_cs i).toSchwartzMap_toFun (hprod_smooth i)
-    calc tsupport ⇑(g i) ⊆ tsupport (ρ i : E → ℝ) := by
-      apply closure_mono
-      intro x hx
-      rw [Function.mem_support] at hx ⊢
-      intro hρx; apply hx; simp [heq, hρx]
+    calc tsupport ⇑(g i) ⊆ tsupport (ρ i : E → ℝ) := (by
+        apply closure_mono
+        intro x hx
+        rw [Function.mem_support] at hx ⊢
+        intro hρx; apply hx; simp [heq, hρx])
       _ ⊆ S i := hρ_sub i
   have hg_vanish : ∀ i, u (g i) = 0 :=
     fun i => hS_van i (g i) (hg_tsupport i)

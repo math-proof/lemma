@@ -82,8 +82,8 @@ lemma gaussian_peak_lower_bound
     calc (↑k : ℝ) * _ ≤ ↑k * (1 / ↑k) := mul_le_mul_of_nonneg_left hd_sq (le_of_lt hk')
       _ = 1 := by field_simp
   nlinarith
-/-- Higher derivatives of the Gaussian peak section are uniformly bounded in the weighted norm. -/
-end
+-- Higher derivatives of the Gaussian peak section are uniformly bounded in the weighted norm. 
+end Donaldson
 
 
 

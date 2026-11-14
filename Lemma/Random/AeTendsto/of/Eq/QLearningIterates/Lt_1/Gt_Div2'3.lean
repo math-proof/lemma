@@ -1,6 +1,6 @@
 import Mathlib.Analysis.Normed.Lp.MeasurableSpace
-import Lemma.LpSpace.MeasurableHalfSq.of.Ge_1
-import Lemma.LpSpace.MeasurableHalfSq'.of.Ge_1
+import Lemma.Matrix.MeasurableHalfSq.of.Ge_1
+import Lemma.Matrix.MeasurableHalfSq'.of.Ge_1
 import Lemma.Random.MeasurableUncurryUpdateTarget
 import Lemma.Random.Any_Ge_0AndAll_All_LeNormSubUpdateTarget_MulNormSub
 import Lemma.Random.ExpectedUpdateTarget.eq.Sum_Sum_SMul
@@ -29,8 +29,8 @@ private lemma main
     ⟨h₂.init, fun n ω => by rw [h₂.step, h₃, QLearningSpec.update_target, add_sub_cancel_right]⟩
     Random.MeasurableUncurryUpdateTarget Random.Any_Ge_0AndAll_All_LeNormSubUpdateTarget_MulNormSub
     Random.ExpectedUpdateTargetOptimalQ.eq.OptimalQ.symm Random.ExpectedUpdateTarget.eq.Sum_Sum_SMul
-    ((LpSpace.MeasurableHalfSq.of.Ge_1 (by omega)).comp ((WithLp.measurable_toLp _ _).comp (WithLp.measurable_ofLp _ _)))
-    (((WithLp.measurable_toLp _ _).comp (WithLp.measurable_ofLp _ _)).comp ((LpSpace.MeasurableHalfSq'.of.Ge_1 (by omega)).comp ((WithLp.measurable_toLp _ _).comp (WithLp.measurable_ofLp _ _))))
+    ((Matrix.MeasurableHalfSq.of.Ge_1 (by omega)).comp ((WithLp.measurable_toLp _ _).comp (WithLp.measurable_ofLp _ _)))
+    (((WithLp.measurable_toLp _ _).comp (WithLp.measurable_ofLp _ _)).comp ((Matrix.MeasurableHalfSq'.of.Ge_1 (by omega)).comp ((WithLp.measurable_toLp _ _).comp (WithLp.measurable_ofLp _ _))))
     Random.LyapunovFunctionHalfSq
 
 

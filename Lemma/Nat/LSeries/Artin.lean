@@ -148,7 +148,7 @@ lemma artinLocalFactorRaw_of_action_eq_id
 -- imply
   artinLocalFactorRaw ρ p d s = (1 - (p.1 : ℂ) ^ (-s))⁻¹ := by
 -- proof
-  rw [artinLocalFactorRaw_of_action_eq_id_general ρ p d s hact, hdim, pow_one]
+  rw [artinLocalFactorRaw_of_action_eq_id_general hact, hdim, pow_one]
 
 end Representation
 
@@ -208,7 +208,7 @@ lemma artinEulerProductOfLocalData_eq_of_hasNonzeroProd
 -- imply
   artinEulerProductOfLocalData ρ localData s = z :=
 -- proof
-  h.hasArtinEulerProduct.tprod_eq
+  h.1.tprod_eq
 
 end Representation
 
@@ -235,10 +235,10 @@ lemma HasNonzeroArtinEulerProduct.localFactorRegular
     (artinLocalFactorRaw_eq_zero_iff ρ p (localData p) s).2 hp
   have hzero : HasProd (fun q => artinLocalFactorRaw ρ q (localData q) s) 0 :=
     hasProd_zero_of_exists_eq_zero ⟨p, hfactor⟩
-  exact h.ne_zero (h.hasArtinEulerProduct.unique hzero)
+  exact h.2 (h.1.unique hzero)
 
 end Representation
 
 
 -- created on 2026-10-20
--- updated on 2026-10-28
+-- updated on 2026-11-13

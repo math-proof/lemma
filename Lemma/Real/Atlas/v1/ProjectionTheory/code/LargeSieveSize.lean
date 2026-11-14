@@ -361,9 +361,9 @@ lemma high_freq_energy_lower_bound
       apply mul_le_mul_of_nonneg_right h_supp_le
       exact Finset.sum_nonneg (fun a _ => sq_nonneg _)
     _ = 0.99 * p * ∑ a : ZMod p, ‖g a‖ ^ 2 := by rw [← h_sum_sq_eq]
-/-- Corollary 5 (Large sieve, size bound): if `A ⊆ [N]` and `|π_p(A)| ≤ 0.99 p` for every
-prime `p ∈ P_{N^{1/2}}`, then `|A| ≲ N^{1/2}` (up to logarithmic factors:
-`|A| ≤ C · √N · log N`). -/
+-- Corollary 5 (Large sieve, size bound): if `A ⊆ [N]` and `|π_p(A)| ≤ 0.99 p` for every
+-- prime `p ∈ P_{N^{1/2}}`, then `|A| ≲ N^{1/2}` (up to logarithmic factors:
+-- `|A| ≤ C · √N · log N`).
 end LargeSieveSize
 
 

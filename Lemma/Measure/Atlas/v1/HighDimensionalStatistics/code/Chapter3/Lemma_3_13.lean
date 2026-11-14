@@ -59,7 +59,7 @@ lemma cos_sum_zero
 -- proof
   have hre : (∑ s : Fin n, Complex.exp
     (2 * ↑Real.pi * Complex.I * ↑k * ↑(s : ℕ) / ↑n)).re = 0 := by
-    rw [discrete_orthogonality n hn k hk]; simp
+    rw [discrete_orthogonality hn hk]; simp
   rw [Complex.re_sum] at hre
   convert hre using 1; apply Finset.sum_congr rfl; intro s _
   set θ : ℝ := 2 * Real.pi * ↑k * ↑(s : ℕ) / ↑n
@@ -88,7 +88,7 @@ lemma sin_sum_zero
 -- proof
   have him : (∑ s : Fin n, Complex.exp
     (2 * ↑Real.pi * Complex.I * ↑k * ↑(s : ℕ) / ↑n)).im = 0 := by
-    rw [discrete_orthogonality n hn k hk]; simp
+    rw [discrete_orthogonality hn hk]; simp
   rw [Complex.im_sum] at him
   convert him using 1; apply Finset.sum_congr rfl; intro s _
   set θ : ℝ := 2 * Real.pi * ↑k * ↑(s : ℕ) / ↑n
@@ -118,8 +118,8 @@ lemma not_dvd
   intro ⟨c, hc⟩
   obtain h | h := Int.lt_or_lt_of_ne hk_ne
   · have hc_neg : c ≤ -1 := by
-    by_contra hc_ge; push_neg at hc_ge
-    linarith [mul_nonneg (show (0 : ℤ) ≤ n from by omega) (show (0 : ℤ) ≤ c from by omega)]
+      by_contra hc_ge; push_neg at hc_ge
+      linarith [mul_nonneg (show (0 : ℤ) ≤ n from by omega) (show (0 : ℤ) ≤ c from by omega)]
     have : k.natAbs ≥ n := by
       have hk_le : k ≤ -(n : ℤ) := by nlinarith
       omega
@@ -158,7 +158,8 @@ lemma natAbs_coe_sub_coe_lt
 -- imply
   ((a : ℤ) - (b : ℤ)).natAbs < n := by
 -- proof
-omega
+  refine lt_of_le_of_lt ?_ h
+  simpa using Int.natAbs_sub_le (a : Int) (b : Int)
 
 end Chapter3
 
@@ -175,7 +176,7 @@ lemma natAbs_two_mul_coe_lt
 -- imply
   (2 * (a : ℤ)).natAbs < n := by
 -- proof
-omega
+  simpa [two_mul] using natAbs_coe_add_coe_lt (a := a) (b := a) h
 
 end Chapter3
 
@@ -208,7 +209,7 @@ lemma cos_sq_sum
     linarith
   rw [← Finset.sum_div]
   simp_rw [show (2 * ↑k : ℝ) = (↑(2 * k) : ℝ) from by push_cast; ring]
-  rw [cos_sum_zero n hn (2 * k) hk, zero_div]
+  rw [cos_sum_zero (k := 2 * k) hn hk, zero_div]
 
 end Chapter3
 
@@ -241,7 +242,7 @@ lemma sin_sq_sum
     linarith
   rw [← Finset.sum_div]
   simp_rw [show (2 * ↑k : ℝ) = (↑(2 * k) : ℝ) from by push_cast; ring]
-  rw [cos_sum_zero n hn (2 * k) hk, zero_div]
+  rw [cos_sum_zero (k := 2 * k) hn hk, zero_div]
 
 end Chapter3
 
@@ -278,7 +279,7 @@ lemma cos_cos_cross_sum_zero
     rw [hadd] at h1; rw [hsub] at h2; linarith
   simp_rw [key]
   rw [← Finset.sum_div, Finset.sum_add_distrib,
-    cos_sum_zero n hn _ hkm, cos_sum_zero n hn _ hkp, add_zero, zero_div]
+    cos_sum_zero hn hkm, cos_sum_zero hn hkp, add_zero, zero_div]
 
 end Chapter3
 
@@ -315,7 +316,7 @@ lemma sin_sin_cross_sum_zero
     rw [hadd] at h1; rw [hsub] at h2; linarith
   simp_rw [key]
   rw [← Finset.sum_div, Finset.sum_sub_distrib,
-    cos_sum_zero n hn _ hkm, cos_sum_zero n hn _ hkp, sub_self, zero_div]
+    cos_sum_zero hn hkm, cos_sum_zero hn hkp, sub_self, zero_div]
 
 end Chapter3
 
@@ -352,12 +353,12 @@ lemma cos_sin_sum_zero
     rw [hadd] at h1; rw [hsub] at h2; linarith
   simp_rw [key]
   rw [← Finset.sum_div, Finset.sum_add_distrib]
-  have h1 := sin_sum_zero n hn _ hkp
+  have h1 := sin_sum_zero hn hkp
   obtain heq | hne := eq_or_ne (k' - k) 0
   · simp only [heq, Int.cast_zero, mul_zero, zero_mul, zero_div, Real.sin_zero,
     Finset.sum_const_zero, add_zero] at h1 ⊢
     linarith
-  · have h2 := sin_sum_zero n hn _ (not_dvd n _ hne habs)
+  · have h2 := sin_sum_zero hn (not_dvd hne habs)
     linarith
 
 end Chapter3
@@ -408,12 +409,12 @@ lemma lemma_3_13
       simp only [hjne, ite_false, mul_zero, hj'0, ↓reduceIte]
       by_cases hj'_odd : j'.val % 2 = 1
       · simp only [hj'_odd, ↓reduceIte, ← Finset.mul_sum]
-        have h := cos_sum_zero n hn (((j'.val + 1) / 2 : ℕ) : ℤ)
-          (not_dvd n _ (by omega) (by omega))
+        have h := cos_sum_zero (k := (((j'.val + 1) / 2 : ℕ) : ℤ)) hn
+          (not_dvd (by omega) (by omega))
         simp only [Int.cast_natCast] at h; rw [h, mul_zero]
       · simp only [hj'_odd, ↓reduceIte, ← Finset.mul_sum]
-        have h := sin_sum_zero n hn ((j'.val / 2 : ℕ) : ℤ)
-          (not_dvd n _ (by omega) (by omega))
+        have h := sin_sum_zero (k := ((j'.val / 2 : ℕ) : ℤ)) hn
+          (not_dvd (by omega) (by omega))
         simp only [Int.cast_natCast] at h; rw [h, mul_zero]
   · by_cases hj_odd : j.val % 2 = 1
     ·
@@ -423,8 +424,8 @@ lemma lemma_3_13
         simp only [hj'0, ↓reduceIte, mul_one, ← Finset.mul_sum]
         have hjne : j ≠ j' := fun h => hj0 (by rw [h]; exact hj'0)
         simp only [hjne, ite_false, mul_zero]
-        have h := cos_sum_zero n hn (((j.val + 1) / 2 : ℕ) : ℤ)
-          (not_dvd n _ (by omega) (by omega))
+        have h := cos_sum_zero (k := (((j.val + 1) / 2 : ℕ) : ℤ)) hn
+          (not_dvd (by omega) (by omega))
         simp only [Int.cast_natCast] at h; rw [h, mul_zero]
       · simp only [hj'0, ↓reduceIte]
         by_cases hj'_odd : j'.val % 2 = 1
@@ -433,9 +434,9 @@ lemma lemma_3_13
           by_cases hjj' : j = j'
           ·
             subst hjj'; simp only [ite_true]
-            have hndvd := not_dvd n (2 * (((j.val + 1) / 2 : ℕ) : ℤ)) (by omega)
+            have hndvd := not_dvd (k := 2 * (((j.val + 1) / 2 : ℕ) : ℤ)) (by omega)
               (natAbs_two_mul_coe_lt (by omega : (j.val+1)/2 + (j.val+1)/2 < n))
-            have h := cos_sq_sum n hn (((j.val + 1) / 2 : ℕ) : ℤ) hndvd
+            have h := cos_sq_sum (k := (((j.val + 1) / 2 : ℕ) : ℤ)) hn hndvd
             simp only [Int.cast_natCast] at h
             simp_rw [show ∀ x : Fin n,
               Real.cos (2 * Real.pi * ↑((j.val + 1) / 2) * ↑↑x / ↑n) *
@@ -447,21 +448,21 @@ lemma lemma_3_13
             simp only [hjj', ite_false, mul_zero]
             have hk_ne : (((j.val+1)/2 : ℕ) : ℤ) - (((j'.val+1)/2 : ℕ) : ℤ) ≠ 0 := by
               intro h; exact hjj' (Fin.ext (by omega))
-            have hkm := not_dvd n _ hk_ne
+            have hkm := not_dvd hk_ne
               (natAbs_coe_sub_coe_lt (by omega : (j.val+1)/2 + (j'.val+1)/2 < n))
-            have hkp := not_dvd n _ (by omega : (((j.val+1)/2 : ℕ) : ℤ) + (((j'.val+1)/2 : ℕ) : ℤ) ≠ 0)
+            have hkp := not_dvd (by omega : (((j.val+1)/2 : ℕ) : ℤ) + (((j'.val+1)/2 : ℕ) : ℤ) ≠ 0)
               (natAbs_coe_add_coe_lt (by omega : (j.val+1)/2 + (j'.val+1)/2 < n))
-            have h := cos_cos_cross_sum_zero n hn _ _ hkm hkp
+            have h := cos_cos_cross_sum_zero hn hkm hkp
             simp only [Int.cast_natCast] at h; linarith
         ·
           simp only [hj'_odd, ↓reduceIte, sqrt2_factor, ← Finset.mul_sum]
           have hjne : j ≠ j' := by intro h; subst h; omega
           simp only [hjne, ite_false, mul_zero]
-          have hkp := not_dvd n _
+          have hkp := not_dvd
             (by omega : (((j.val+1)/2 : ℕ) : ℤ) + ((j'.val/2 : ℕ) : ℤ) ≠ 0)
             (natAbs_coe_add_coe_lt (by omega : (j.val+1)/2 + j'.val/2 < n))
           have habs : (((j'.val/2 : ℕ) : ℤ) - (((j.val+1)/2 : ℕ) : ℤ)).natAbs < n := by omega
-          have h := cos_sin_sum_zero n hn _ _ hkp habs
+          have h := cos_sin_sum_zero hn hkp habs
           simp only [Int.cast_natCast] at h; linarith
     ·
       simp only [hj0, hj_odd, ↓reduceIte, ite_false]
@@ -470,8 +471,8 @@ lemma lemma_3_13
         simp only [hj'0, ↓reduceIte, mul_one, ← Finset.mul_sum]
         have hjne : j ≠ j' := fun h => hj0 (by rw [h]; exact hj'0)
         simp only [hjne, ite_false, mul_zero]
-        have h := sin_sum_zero n hn ((j.val / 2 : ℕ) : ℤ)
-          (not_dvd n _ (by omega) (by omega))
+        have h := sin_sum_zero (k := ((j.val / 2 : ℕ) : ℤ)) hn
+          (not_dvd (by omega) (by omega))
         simp only [Int.cast_natCast] at h; rw [h, mul_zero]
       · simp only [hj'0, ↓reduceIte]
         by_cases hj'_odd : j'.val % 2 = 1
@@ -485,20 +486,20 @@ lemma lemma_3_13
             Real.cos (2 * Real.pi * ↑((j'.val + 1) / 2) * ↑↑x / ↑n) *
             Real.sin (2 * Real.pi * ↑(j.val / 2) * ↑↑x / ↑n)
             from fun x => by ring]
-          have hkp := not_dvd n _
+          have hkp := not_dvd
             (by omega : (((j'.val+1)/2 : ℕ) : ℤ) + ((j.val/2 : ℕ) : ℤ) ≠ 0)
             (natAbs_coe_add_coe_lt (by omega : (j'.val+1)/2 + j.val/2 < n))
           have habs : (((j.val/2 : ℕ) : ℤ) - (((j'.val+1)/2 : ℕ) : ℤ)).natAbs < n := by omega
-          have h := cos_sin_sum_zero n hn _ _ hkp habs
+          have h := cos_sin_sum_zero hn hkp habs
           simp only [Int.cast_natCast] at h; linarith
         ·
           simp only [hj'_odd, ↓reduceIte, sqrt2_factor, ← Finset.mul_sum]
           by_cases hjj' : j = j'
           ·
             subst hjj'; simp only [ite_true]
-            have hndvd := not_dvd n (2 * ((j.val / 2 : ℕ) : ℤ)) (by omega)
+            have hndvd := not_dvd (k := 2 * ((j.val / 2 : ℕ) : ℤ)) (by omega)
               (natAbs_two_mul_coe_lt (by omega : j.val/2 + j.val/2 < n))
-            have h := sin_sq_sum n hn ((j.val / 2 : ℕ) : ℤ) hndvd
+            have h := sin_sq_sum (k := ((j.val / 2 : ℕ) : ℤ)) hn hndvd
             simp only [Int.cast_natCast] at h
             simp_rw [show ∀ x : Fin n,
               Real.sin (2 * Real.pi * ↑(j.val / 2) * ↑↑x / ↑n) *
@@ -510,12 +511,12 @@ lemma lemma_3_13
             simp only [hjj', ite_false, mul_zero]
             have hk_ne : ((j.val/2 : ℕ) : ℤ) - ((j'.val/2 : ℕ) : ℤ) ≠ 0 := by
               intro h; exact hjj' (Fin.ext (by omega))
-            have hkm := not_dvd n _ hk_ne
+            have hkm := not_dvd hk_ne
               (natAbs_coe_sub_coe_lt (by omega : j.val/2 + j'.val/2 < n))
-            have hkp := not_dvd n _
+            have hkp := not_dvd
               (by omega : ((j.val/2 : ℕ) : ℤ) + ((j'.val/2 : ℕ) : ℤ) ≠ 0)
               (natAbs_coe_add_coe_lt (by omega : j.val/2 + j'.val/2 < n))
-            have h := sin_sin_cross_sum_zero n hn _ _ hkm hkp
+            have h := sin_sin_cross_sum_zero hn hkm hkp
             simp only [Int.cast_natCast] at h; linarith
 
 end Chapter3

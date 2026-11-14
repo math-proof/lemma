@@ -1,6 +1,6 @@
 import Mathlib
-import Lemma.ModularCurve.LevelModuliPackage
-import Lemma.ModularCurve.WeierstrassLevelCarrier
+import Lemma.Int.LevelModuliPackage
+import Lemma.Polynomial.WeierstrassLevelCarrier
 import Structure.ModularCurve_WeierstrassLevelModuliDatum
 
 set_option autoImplicit false

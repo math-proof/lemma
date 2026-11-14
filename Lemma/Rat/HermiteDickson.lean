@@ -6,16 +6,17 @@ import Lemma.Polynomial.Finite.PermutationPolynomial
 
 namespace MathlibExt.FieldTheory.HermiteDickson
 
-/--
-[hd_monic](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/FieldTheory/HermiteDickson.lean)
--/
-@[path]
+/-!
 # Hermite–Dickson criterion for permutation polynomials
 A polynomial `f` over a finite field `F_q` of characteristic `p` permutes `F_q` if and only if
 it has exactly one root in `F_q` and, for every `1 ≤ t ≤ q - 2` with `p ∤ t`, the reduction of
 `f ^ t` modulo `X ^ q - X` has degree at most `q - 2`.
 -/
--- Helper: `X ^ q - X` is monic for `q ≥ 2`.
+
+/--
+[hd_monic](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/FieldTheory/HermiteDickson.lean)
+-/
+@[path]
 private lemma hd_monic {Fq : Type*} [Field Fq] [Fintype Fq]
   (hq : 2 ≤ Fintype.card Fq) :
   (Polynomial.X ^ Fintype.card Fq - Polynomial.X : Polynomial Fq).Monic := by
@@ -268,14 +269,14 @@ private lemma hd_sum_pow_eq_zero_of_hyp {p : ℕ} {Fq : Type*} [Field Fq] [Finty
         rw [← pow_mul, hs, mul_comm]
       simp_rw [hexp] at hfro
       have hpne : p ≠ 0 := by omega
-      rwa [ihs, zero_pow hpne] at hfro
+      rwa [ihs, zero_pow hpne, eq_comm] at hfro
     · have hmod : ∀ x : Fq,
       Polynomial.eval x ((f ^ t) %
         (Polynomial.X ^ Fintype.card Fq - Polynomial.X : Polynomial Fq)) =
         (f.eval x) ^ t := by
-      intro x
-      rw [hd_mod_eval hq]
-      simp [Polynomial.eval_pow]
+        intro x
+        rw [hd_mod_eval hq]
+        simp [Polynomial.eval_pow]
       have hsum : ∑ x : Fq, Polynomial.eval x ((f ^ t) %
         (Polynomial.X ^ Fintype.card Fq - Polynomial.X : Polynomial Fq)) = 0 := by
         apply hd_sum_eval_eq_zero_of_natDegree_le _ _ hq
@@ -371,7 +372,7 @@ private lemma hd_deg_le_of_bij {p : ℕ} {Fq : Type*} [Field Fq] [Fintype Fq]
         exact h0
       · have hlt : ((f ^ t) % (Polynomial.X ^ Fintype.card Fq - Polynomial.X :
         Polynomial Fq)).natDegree < N := by
-        omega
+          omega
         exact Polynomial.coeff_eq_zero_of_natDegree_lt hlt
     omega
   have hsum1 : ∑ x : Fq, Polynomial.eval x ((f ^ t) %
@@ -412,7 +413,11 @@ lemma hermite_dickson_permutation_criterion
 -- given
   (hq : 2 ≤ Fintype.card Fq) :
 -- imply
-  let q := by
+  let q := Fintype.card Fq
+  Polynomial.IsPermutationPolynomial f ↔
+    (Finset.univ.filter (fun x => Polynomial.eval x f = 0)).card = 1 ∧
+      ∀ t : ℕ, 1 ≤ t → t ≤ q - 2 → ¬ p ∣ t →
+        Polynomial.natDegree ((f ^ t) % (Polynomial.X ^ q - Polynomial.X)) ≤ q - 2 := by
 -- proof
   constructor
   · intro hbij
@@ -499,4 +504,4 @@ end MathlibExt.FieldTheory.HermiteDickson
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-13

@@ -1,4 +1,6 @@
 import Instance.Analysis.SpecialFunctions.Exponential.Part5
+open Exp
+
 
 /--
 [DecidableEq ι] is not required in Real.exp_sum
@@ -15,3 +17,4 @@ private lemma main
 
 
 -- created on 2025-10-04
+-- updated on 2026-11-13

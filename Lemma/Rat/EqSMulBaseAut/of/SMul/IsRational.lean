@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.DivisorClassGroup
+import Lemma.Valuation.DivisorClassGroup
 import Lemma.Scheme.AlgebraicCurveBaseChangeGalois
 import Def.AlgebraicCurve_PlaceEvaluation
 import Lemma.Int.P2MUtil
@@ -9,7 +9,7 @@ import Lemma.Int.P2MUtil
 namespace Definitions
 end Definitions
 open Definitions
-open AlgebraicCurve IsLocalRing
+open AlgebraicCurve IsLocalRing Valuation
 open Int
 
 

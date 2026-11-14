@@ -11,7 +11,7 @@ namespace Polynomial
 -/
 @[path]
 lemma aeval_lt_l1Norm_of_monic_of_aeval_eq_zero
-  [Field K] [Field L] [Algebra K L]
+  [Field K] [Field L] [Algebra K L] [FaithfulSMul K L]
   {v : AbsoluteValue K ℝ}
   {w : AbsoluteValue L ℝ} [AbsoluteValue.LiesOver w v]
   {f : Polynomial K}
@@ -27,7 +27,7 @@ lemma aeval_lt_l1Norm_of_monic_of_aeval_eq_zero
   obtain hsmall | hbig := lt_or_ge (w α) 1
   · exact hsmall.trans_le (one_le_l1Norm_of_monic v f hf)
   · have hroot2 : eval₂ (algebraMap K L) α f = 0 := by
-    rwa [← aeval_def]
+      rwa [← aeval_def]
     rw [eval₂_eq_sum_range, Finset.sum_range_succ] at hroot2
     have hlead : algebraMap K L (f.coeff f.natDegree) * α ^ f.natDegree
       = α ^ f.natDegree := by

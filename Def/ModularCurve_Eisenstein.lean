@@ -1,6 +1,7 @@
 import Def.HeckeGalois_EichlerShimura
-import Lemma.ModularCurve.HeckeOperator
-import Lemma.ModularCurve.CuspidalClass
+import Lemma.LaurentSeries.HeckeOperator
+import Lemma.Finsupp.CuspidalClass
+import Instance.ModularCurve_ArithmeticGalois
 
 set_option autoImplicit false
 

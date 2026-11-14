@@ -1,7 +1,7 @@
 import Mathlib
-import Lemma.HopfAlgebra.HopfKer
+import Lemma.Submodule.HopfKer
 import Def.HopfAlgebra_HopfKerHopf
-import Lemma.HopfAlgebra.FVectStructure
+import Lemma.AlgHom.FVectStructure
 
 set_option autoImplicit false
 
@@ -18,5 +18,5 @@ inductive HopfAlgebra.HasFVectDevissage (R : Type u) [CommRing R] [IsLocalRing R
       (χ : Fˣ →* Rˣ) (ι : F →+* IsLocalRing.ResidueField R)
       (hχ : ∀ l : Fˣ, IsLocalRing.residue R (χ l : R) = ι l)
       (hrank : Module.finrank K ↥(HopfAlgebra.hopfKer π) = p ^ r)
-      (σ : HopfAlgebra.FVectStructure F K ↥(HopfAlgebra.hopfKer π))
+      (σ : AlgHom.FVectStructure F K ↥(HopfAlgebra.hopfKer π))
       (hĀ : HasFVectDevissage R K p Ā) : HasFVectDevissage R K p A

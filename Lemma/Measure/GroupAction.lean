@@ -58,25 +58,39 @@ open Subgroup Set
 open scoped Pointwise
 
 namespace MeasureTheory
-variable {G α : Type*} [Group G] [MeasurableSpace G] [MeasurableSpace α]
+variable {G α : Type*} [Group G] [MeasurableSpace G] [MeasurableMul G] [MeasurableSpace α]
   {H K : Subgroup G}
 
 
 lemma isMulLeftInvariant_subtypeVal (μ : Measure G) [μ.IsMulLeftInvariant]
   (hH : MeasurableSet (H : Set G)) : (μ.comap Subtype.val : Measure H).IsMulLeftInvariant :=
+  haveI : MeasurableMul (↥H) :=
+    { measurable_const_mul := fun c =>
+        ((measurable_const_mul (c : G)).comp measurable_subtype_coe).subtype_mk
+      measurable_mul_const := fun c =>
+        ((measurable_mul_const (c : G)).comp measurable_subtype_coe).subtype_mk }
   have hφ : MeasurableEmbedding H.subtype := MeasurableEmbedding.subtype_coe hH
   hφ.isMulLeftInvariant_comap μ
 
 @[to_additive]
 lemma isMulRightInvariant_subtypeVal (μ : Measure G) [μ.IsMulRightInvariant]
     (hH : MeasurableSet (H : Set G)) : (μ.comap Subtype.val : Measure H).IsMulRightInvariant :=
+  haveI : MeasurableMul (↥H) :=
+    { measurable_const_mul := fun c =>
+        ((measurable_const_mul (c : G)).comp measurable_subtype_coe).subtype_mk
+      measurable_mul_const := fun c =>
+        ((measurable_mul_const (c : G)).comp measurable_subtype_coe).subtype_mk }
   have hφ : MeasurableEmbedding H.subtype := MeasurableEmbedding.subtype_coe hH
   hφ.isMulRightInvariant_comap μ
 
-@[to_additive index_mul_addHaar_addSubgroup_eq_addHaar_addSubgroup]
 lemma index_mul_haar_subgroup_eq_haar_subgroup [H.IsFiniteRelIndex K] (hHK : H ≤ K)
     (hH : MeasurableSet (H : Set G)) (hK : MeasurableSet (K : Set G)) (μ : Measure G)
     [μ.IsMulLeftInvariant] : H.relIndex K * μ H = μ K := by
+  haveI : MeasurableMul (↥K) :=
+    { measurable_const_mul := fun c =>
+        ((measurable_const_mul (c : G)).comp measurable_subtype_coe).subtype_mk
+      measurable_mul_const := fun c =>
+        ((measurable_mul_const (c : G)).comp measurable_subtype_coe).subtype_mk }
   have := isMulLeftInvariant_subtypeVal μ hK
   have := Subgroup.index_mul_measure (H.subgroupOf K) (measurable_subtype_coe hH)
     (μ.comap Subtype.val)

@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.DivisorClassGroup
+import Lemma.Valuation.DivisorClassGroup
 import Lemma.Int.P2MUtil
 
-open AlgebraicCurve
+open AlgebraicCurve Valuation
 
 /--
 [AlgebraicCurve_exists_divisor_eq_max_ord_sub_algebraMap](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_exists_divisor_eq_max_ord_sub_algebraMap.lean)

@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_CyclotomicUniv_Base.lean: instance decls only.
 import Mathlib
-import Lemma.CyclotomicUniv.Base
+import Lemma.Finset.Base
 
 set_option autoImplicit false
 

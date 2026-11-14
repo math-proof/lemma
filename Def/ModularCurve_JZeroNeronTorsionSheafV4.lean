@@ -1,12 +1,12 @@
 import Mathlib
 import Def.ModularCurve_JZeroNeronDataPrime
-import Lemma.ModularCurve.EisensteinIdeal
+import Lemma.Ideal.EisensteinIdeal
 import Structure.ModularCurve_FppfKummerInterface
 import Def.ModularCurve_MazurStepThreeInputs
 import Instance.AlgebraicGeometry_FppfSiteCohomology
-import Lemma.AlgebraicGeometry.FppfCohomologyLES
-import Lemma.AlgebraicGeometry.FppfKummerProp17
-import Lemma.ModularCurve.JZeroToricTorsion
+import Lemma.Scheme.FppfCohomologyLES
+import Lemma.Scheme.FppfKummerProp17
+import Lemma.ValuationSubring.JZeroToricTorsion
 import Abbrev.ModularCurve_JZeroNeronTorsionSheafV4
 import Structure.ModularCurve_JZeroNeronTorsionSheafV4
 

@@ -9,9 +9,10 @@ private lemma main
 -- given
   (h : f = g) :
 -- imply
-  max⁻¹ Set.univ f = max⁻¹ Set.univ g := by
+  «max⁻¹» Set.univ f = «max⁻¹» Set.univ g := by
 -- proof
   rw [h]
 
 
 -- created on 2021-12-17
+-- updated on 2026-11-13

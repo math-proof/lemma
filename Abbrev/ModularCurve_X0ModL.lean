@@ -2,8 +2,9 @@ import Mathlib
 import Def.ModularCurve_JqCoeff
 import Def.ModularCurve_LaurentCoeff
 import Class.AlgebraicCurve_DivisorClassGroup
-import Lemma.ModularCurve.CoeffSemilinearAut
-import Lemma.ModularCurve.QAdicPlaceMod
+import Lemma.LaurentSeries.CoeffSemilinearAut
+import Lemma.HahnSeries.QAdicPlaceMod
+import Def.ModularCurve_X0ModL
 
 set_option autoImplicit false
 

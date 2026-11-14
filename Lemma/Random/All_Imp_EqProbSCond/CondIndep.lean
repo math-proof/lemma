@@ -9,21 +9,24 @@ import Mathlib.MeasureTheory.Measure.WithDensity
 import Mathlib.MeasureTheory.Integral.Lebesgue.Map
 import Lemma.Random.All_Eq_MulProbCond.of.PSpace_Joint
 import Lemma.Random.Map.eq.WithDensityProb
+import Notation.Probability.JointRv
+import Syntax.Probability.Indep
 open ProbabilityTheory MeasureTheory Random
+open scoped ProbabilityTheory
 
 
 /-- Under counting references, measurability of x, z yields SinglePSpace (x, z). -/
 private lemma of_xz
   [MeasurableSpace Ω]
-  [ReferenceMeasure α] [ReferenceMeasure γ]
+  [μ : ReferenceMeasure α] [ξ : ReferenceMeasure γ]
   [Countable α] [Countable γ]
   [MeasurableSingletonClass α] [MeasurableSingletonClass γ]
   {π : Measure Ω} [IsProbabilityMeasure π]
   {x : Ω → α} {z : Ω → γ}
 -- given
   (hx : Measurable x) (hz : Measurable z)
-  (hμα : ReferenceMeasure.measure (α := α) = Measure.count)
-  (hμγ : ReferenceMeasure.measure (α := γ) = Measure.count) :
+  (hμα : μ.measure = Measure.count)
+  (hμγ : ξ.measure = Measure.count) :
 -- imply
   SinglePSpace π (x, z) := by
 -- proof
@@ -62,7 +65,7 @@ private lemma of_xz
 @[path]
 private lemma main
   [MeasurableSpace Ω] [StandardBorelSpace Ω]
-  [ReferenceMeasure α] [ReferenceMeasure β] [ReferenceMeasure γ]
+  [μ : ReferenceMeasure α] [ν : ReferenceMeasure β] [ξ : ReferenceMeasure γ]
   [StandardBorelSpace α] [Nonempty α] [Countable α] [MeasurableSingletonClass α]
   [StandardBorelSpace β] [Nonempty β] [Countable β] [MeasurableSingletonClass β]
   [Countable γ] [MeasurableSingletonClass γ]
@@ -71,17 +74,17 @@ private lemma main
 -- given
   (hx : Measurable x) (hy : Measurable y) (hz : Measurable z)
   (hPxyz : SinglePSpace π (x, y, z))
-  (hμα : ReferenceMeasure.measure (α := α) = Measure.count)
-  (hμβ : ReferenceMeasure.measure (α := β) = Measure.count)
-  (hμγ : ReferenceMeasure.measure (α := γ) = Measure.count)
-  (hCI : x ⟂ᵢ[π] y | z) :
+  (hμα : μ.measure = Measure.count)
+  (hμβ : ν.measure = Measure.count)
+  (hμγ : ξ.measure = Measure.count)
+  (hCI : ProbabilityTheory.CondIndepFun (MeasurableSpace.comap z inferInstance) (Measurable.comap_le hz) x y π) :
 -- imply
   have _hPyz : SinglePSpace π (y, z) := SinglePSpace.of.SinglePSpace.snd hPxyz
   have _hPz : SinglePSpace π z := SinglePSpace.of.SinglePSpace.snd _hPyz
   have _hPxz : SinglePSpace π (x, z) := of_xz hx hz hμα hμγ
-  ∀ᵐ «\sf{x}» ∂ReferenceMeasure.measure,
-    ∀ᵐ «\sf{y}» ∂ReferenceMeasure.measure,
-      ∀ᵐ «\sf{z}» ∂ReferenceMeasure.measure,
+  ∀ᵐ «\sf{x}» ∂μ.measure,
+    ∀ᵐ «\sf{y}» ∂ν.measure,
+      ∀ᵐ «\sf{z}» ∂ξ.measure,
         ℙ[π](y = «\sf{y}» ∧ z = «\sf{z}») ≠ 0 →
           ℙ[π](x = «\sf{x}» | y = «\sf{y}» ∧ z = «\sf{z}») =
             ℙ[π](x = «\sf{x}» | z = «\sf{z}») := by
@@ -323,4 +326,4 @@ private lemma main
   simpa [mul_comm (π.prob z c), mul_comm (π.prob (y, z) (b, c))] using hDens
 
 -- created on 2026-09-21
--- updated on 2026-11-02
+-- updated on 2026-11-14

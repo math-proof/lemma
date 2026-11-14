@@ -1,6 +1,6 @@
 import Mathlib
 import Def.ModularCurve_NodeDescent
-import Lemma.ModularCurve.ArithmeticGalois
+import Lemma.LaurentSeries.ArithmeticGalois
 
 set_option autoImplicit false
 

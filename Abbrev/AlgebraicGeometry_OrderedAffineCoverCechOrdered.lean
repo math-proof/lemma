@@ -1,6 +1,6 @@
 import Instance.AlgebraicGeometry_OrderedAffineCoverCech
-import Lemma.AlgebraicGeometry.OrderedAffineCoverCechCup
-import Lemma.AlgebraicGeometry.OrderedAffineCoverCochainPullback
+import Lemma.Scheme.OrderedAffineCoverCechCup
+import Lemma.Scheme.OrderedAffineCoverCochainPullback
 
 set_option autoImplicit false
 

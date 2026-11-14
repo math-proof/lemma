@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.LaurentCoeff
-open ModularCurve
+import Lemma.LaurentSeries.LaurentCoeff
+open ModularCurve LaurentSeries
 
 
 private lemma laurent_algebraMap_apply {R : Type*} [Field R] (c : R) :

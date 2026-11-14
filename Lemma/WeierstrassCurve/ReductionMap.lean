@@ -1,5 +1,5 @@
 import Def.FLTPrelim_Ramification
-import Lemma.FreyPackage.GaloisRep
+import Lemma.WeierstrassCurve.FreyPackageGaloisRep
 import Mathlib.RingTheory.Valuation.RamificationGroup
 import Mathlib.RingTheory.Valuation.LocalSubring
 

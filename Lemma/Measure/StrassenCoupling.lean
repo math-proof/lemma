@@ -289,7 +289,7 @@ private lemma push_concl {α : Type*} [PartialOrder α] [DecidableEq α]
     by_cases h : x = a ∧ y = b
     · exact ⟨h.1 ▸ ha, h.2 ▸ hb⟩
     · have : π' x y ≠ 0 := by
-      simp only [ite_eq_right h, add_zero] at hne; exact hne
+        simp only [ite_eq_right h, add_zero] at hne; exact hne
       exact hin x y this
 
 end MathlibExt.Probability.StrassenCouplingWanted
@@ -584,12 +584,12 @@ lemma forall_isUpperSet_sum_le_iff_exists_coupling
         rw [← hcol y]
         exact Finset.sum_le_sum_of_subset_of_nonneg (Finset.subset_univ U)
           (fun x _ _ => hpos x y)
-set_option linter.unusedDecidableInType false in
 
 end MathlibExt.Probability.StrassenCouplingWanted
 
 namespace MathlibExt.Probability.StrassenCouplingWanted
 
+set_option linter.unusedDecidableInType false in
 /--
 [strassen_coupling_finite_poset](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/StrassenCoupling.lean)
 -/
@@ -610,7 +610,7 @@ lemma strassen_coupling_finite_poset
     (∀ y, ∑ x : α, π x y = q y) ∧
     (∀ x y, ¬ x ≤ y → π x y = 0) :=
 -- proof
-  forall_isUpperSet_sum_le_iff_exists_coupling p q hp_nonneg hq_nonneg (by rw [hp_sum, hq_sum])
+  forall_isUpperSet_sum_le_iff_exists_coupling hp_nonneg hq_nonneg (by rw [hp_sum, hq_sum])
 
 end MathlibExt.Probability.StrassenCouplingWanted
 

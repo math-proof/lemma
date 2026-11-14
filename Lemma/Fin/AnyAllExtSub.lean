@@ -149,7 +149,7 @@ private lemma helper_main :
       let π : V → V := fun i => if i = b then a else i
       have hπa : π a = a := by
         show (if a = b then a else a) = a
-        split_ifs <;> rfl
+        split_ifs; rfl
       have hπb : π b = a := by
         show (if b = b then a else b) = a
         rw [ite_eq_left rfl]
@@ -161,7 +161,6 @@ private lemma helper_main :
           refine ⟨fun h => (hi h.symm).elim, fun h => (hib h.symm).elim⟩
         else
           rw [ite_eq_right hx]
-          apply Iff.rfl
       have hflowE' : ∀ ε' : E' → ℤ, IsFlow (fun e => π (src e.1)) (fun e => π (tgt e.1)) ε' → (∑ e, ε' e * τ' e.1) ≡ 0 [ZMOD q] := by
         intro ε' hε'
         let Sb : (E → V) → ℤ := fun v => ∑ e : E', if v e.1 = b then ε' e else 0
@@ -249,3 +248,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-13

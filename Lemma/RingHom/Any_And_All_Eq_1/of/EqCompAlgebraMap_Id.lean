@@ -1,7 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Theorem.Algebra.PointDerivations.Part2
-import Def.Algebra_PointDerivations
 open scoped TensorProduct
 
 universe u

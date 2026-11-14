@@ -1,9 +1,9 @@
 import Mathlib
-import Lemma.AlgebraicCurve.CurveModel
+import Lemma.Scheme.CurveModel
 import Instance.AlgebraicCurve_RatFuncPlaces
-import Lemma.AlgebraicGeometry.NeronModelPropertyBundleCarrier
+import Lemma.Scheme.NeronModelPropertyBundleCarrier
 import Instance.AlgebraicGeometry_RelativePicardFunctor
-import Lemma.AlgebraicGeometry.RelPicardPullback
+import Lemma.Scheme.RelPicardPullback
 
 set_option autoImplicit false
 

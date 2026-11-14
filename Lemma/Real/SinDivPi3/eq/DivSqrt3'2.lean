@@ -3,7 +3,7 @@ import Initialize.Tactic.Attr.Basic
 
 
 @[path]
-private lemma main:
+private lemma main :
 -- imply
   sin (π / 3) = √3 / 2 := by
 -- proof

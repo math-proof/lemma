@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.LocalLanglands.LocalHeckeInstance
+import Lemma.Matrix.LocalHeckeInstance
 
 set_option autoImplicit false
 

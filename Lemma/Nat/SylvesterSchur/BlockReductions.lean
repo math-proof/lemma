@@ -82,7 +82,7 @@ namespace Nat.SylvesterSchur.Internal
 private lemma exists_prime_dvd_choose_of_large_prime_dvd_term {n k i p : ℕ}
   (hi : i < n) (hp : p.Prime) (hp_gt : n < p) (hp_dvd : p ∣ k + i) :
   ∃ q : ℕ, q.Prime ∧ n < q ∧ q ∣ Nat.choose (k + n - 1) n :=
-⟨p, hp, hp_gt, prime_dvd_seq_implies_choose hp hp_gt i hi hp_dvd⟩
+⟨p, hp, hp_gt, prime_dvd_seq_implies_choose hp hp_gt hi hp_dvd⟩
 
 end Nat.SylvesterSchur.Internal
 
@@ -260,7 +260,7 @@ lemma exists_prime_dvd_choose_of_large_start
   ∃ p : ℕ, p.Prime ∧ n < p ∧ p ∣ Nat.choose (k + n - 1) n := by
 -- proof
   obtain ⟨i, hi, p, hp, hp_gt, hp_dvd⟩ := consecutive_of_large_start hn hk hlarge
-  exact ⟨p, hp, by omega, prime_dvd_seq_implies_choose hp (by omega) i hi hp_dvd⟩
+  exact ⟨p, hp, by omega, prime_dvd_seq_implies_choose hp (by omega) hi hp_dvd⟩
 
 end Nat.SylvesterSchur.Internal
 
@@ -281,7 +281,7 @@ lemma exists_prime_dvd_choose_of_half_bound
 -- proof
   obtain ⟨i, hi, p, hp, hp_gt, hp_dvd⟩ :=
     consecutive_of_factorial_mul_top_pow_half_add_one_lt_start_pow hn hk hbound
-  exact ⟨p, hp, by omega, prime_dvd_seq_implies_choose hp (by omega) i hi hp_dvd⟩
+  exact ⟨p, hp, by omega, prime_dvd_seq_implies_choose hp (by omega) hi hp_dvd⟩
 
 end Nat.SylvesterSchur.Internal
 
@@ -323,7 +323,7 @@ lemma exists_prime_dvd_choose_of_primeCounting_bound
 -- proof
   obtain ⟨i, hi, p, hp, hp_gt, hp_dvd⟩ :=
     consecutive_of_factorial_mul_top_pow_primeCounting_lt_start_pow hn hk hbound
-  exact ⟨p, hp, by omega, prime_dvd_seq_implies_choose hp (by omega) i hi hp_dvd⟩
+  exact ⟨p, hp, by omega, prime_dvd_seq_implies_choose hp (by omega) hi hp_dvd⟩
 
 end Nat.SylvesterSchur.Internal
 
@@ -344,7 +344,7 @@ lemma exists_prime_dvd_choose_of_sqrt_primorial_bound
 -- proof
   obtain ⟨i, hi, p, hp, hp_gt, hp_dvd⟩ :=
     consecutive_of_factorial_mul_top_pow_sqrt_mul_primorial_lt_start_pow hn hk hbound
-  exact ⟨p, hp, by omega, prime_dvd_seq_implies_choose hp (by omega) i hi hp_dvd⟩
+  exact ⟨p, hp, by omega, prime_dvd_seq_implies_choose hp (by omega) hi hp_dvd⟩
 
 end Nat.SylvesterSchur.Internal
 
@@ -365,7 +365,7 @@ lemma exists_prime_dvd_choose_of_erdos_layers_bound
 -- proof
   obtain ⟨i, hi, p, hp, hp_gt, hp_dvd⟩ :=
     consecutive_of_factorial_mul_prod_erdos_layers_lt_start_pow hn hk hbound
-  exact ⟨p, hp, by omega, prime_dvd_seq_implies_choose hp (by omega) i hi hp_dvd⟩
+  exact ⟨p, hp, by omega, prime_dvd_seq_implies_choose hp (by omega) hi hp_dvd⟩
 
 end Nat.SylvesterSchur.Internal
 
@@ -386,7 +386,7 @@ lemma exists_prime_dvd_choose_of_erdos_div_three_layers_bound
 -- proof
   obtain ⟨i, hi, p, hp, hp_gt, hp_dvd⟩ :=
     consecutive_of_factorial_mul_prod_erdos_div_three_layers_lt_start_pow hk hN6 hbound
-  exact ⟨p, hp, by omega, prime_dvd_seq_implies_choose hp (by omega) i hi hp_dvd⟩
+  exact ⟨p, hp, by omega, prime_dvd_seq_implies_choose hp (by omega) hi hp_dvd⟩
 
 end Nat.SylvesterSchur.Internal
 
@@ -457,4 +457,4 @@ end Nat.SylvesterSchur.Internal
 
 
 -- created on 2026-10-23
--- updated on 2026-10-29
+-- updated on 2026-11-13

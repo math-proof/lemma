@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.GroupCohomology.CupProduct
+import Lemma.Rep.CupProduct
 import Lemma.Int.P2MUtil
 
 open CategoryTheory

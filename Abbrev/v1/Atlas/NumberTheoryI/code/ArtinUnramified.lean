@@ -20,14 +20,13 @@ import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.GroupTheory.Index
 import Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90
-import Mathlib.Algebra.Set.Closure.eq.N.of.Eq
+import Lemma.Set.Closure.eq.N.of.Eq
 import Mathlib.RingTheory.Trace.Basic
 import Mathlib.LinearAlgebra.Dimension.Finrank
 import Mathlib.RingTheory.Ideal.Norm.RelNorm
 import Mathlib.RingTheory.FractionalIdeal.Extended
 import Mathlib.RingTheory.Invariant.Basic
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Lemma247
-import Theorem.v1.Atlas.NumberTheoryI.code.ArtinUnramified
 
 
 noncomputable section

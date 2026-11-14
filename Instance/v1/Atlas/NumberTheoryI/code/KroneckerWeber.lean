@@ -25,7 +25,7 @@ import Mathlib.Algebra.Group.Subgroup.Basic
 import Mathlib.GroupTheory.Finiteness
 import Mathlib.Algebra.Group.TypeTags.Basic
 import Mathlib.RingTheory.DedekindDomain.AdicValuation
-import Mathlib.RingTheory.DedekindDomain.IntegralClosure
+import Mathlib.RingTheory.Ideal.IntegralClosure
 import Mathlib.NumberTheory.RamificationInertia.Ramification
 import Mathlib.NumberTheory.RamificationInertia.Inertia
 import Mathlib.RingTheory.TensorProduct.Basic

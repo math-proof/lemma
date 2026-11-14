@@ -1,13 +1,14 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Structure.v1.Atlas.LieGroups.code.HarishChandraIsomorphism.Part2
+import Def.v1.Atlas.LieGroups.code.HarishChandraIsomorphism.Part4
+open TriangularDecomposition
 
 
 /--
 [LinearMap.exists_factor_of_surjective_ker_le](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/HarishChandraIsomorphism.lean)
 -/
 @[path]
-private lemma LinearMap.exists_factor_of_surjective_ker_le
+private lemma exists_factor_of_surjective_ker_le
   {R : Type*}
   [CommRing R]
   {𝔤 : Type*}
@@ -210,11 +211,11 @@ private lemma evalWeight_algAction_eq
   {𝔤 : Type*}
   [LieRing 𝔤]
   [LieAlgebra R 𝔤]
-  {Δ : TriangularDecomposition R 𝔤}
-  {wg : WeylGroupData Δ}
-  {g : wg.W}
-  {wt : Δ.𝔥 →ₗ[R] R}
-  {p : UniversalEnvelopingAlgebra R Δ.𝔥} :
+  (Δ : TriangularDecomposition R 𝔤)
+  (wg : WeylGroupData Δ)
+  (g : wg.W)
+  (wt : Δ.𝔥 →ₗ[R] R)
+  (p : UniversalEnvelopingAlgebra R Δ.𝔥) :
 -- imply
   evalWeight Δ wt ((wg.algAction g) p) = evalWeight Δ (wg.dualAction g⁻¹ wt) p :=
 -- proof
@@ -347,7 +348,8 @@ private lemma evalWeight_weyl_invariant
 -- proof
   have key := evalWeight_algAction_eq Δ wg w⁻¹ mu (p : UniversalEnvelopingAlgebra R Δ.𝔥)
   rw [p.prop w⁻¹] at key
-  rwa [inv_inv] at key
+  rw [inv_inv] at key
+  exact key.symm
 
 /--
 [cartan_isLieAbelian](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/HarishChandraIsomorphism.lean)
@@ -363,7 +365,7 @@ private lemma cartan_isLieAbelian_eq
 -- imply
   IsLieAbelian Δ.𝔥 := by
 -- proof
-  apply cartan_isLieAbelian R 𝔤 Δ
+  exact cartan_isLieAbelian Δ
 
 
 -- created on 2026-10-23

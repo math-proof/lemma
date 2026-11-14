@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.ModularCurve.CharPReduction
+import Lemma.LaurentSeries.CharPReduction
 
 set_option autoImplicit false
 

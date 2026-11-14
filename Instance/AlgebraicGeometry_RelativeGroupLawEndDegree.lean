@@ -1,9 +1,9 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_RelativeGroupLawEndDegree.lean: instance decls only.
 import Mathlib
-import Lemma.AlgebraicGeometry.RelativeGroupLaw
-import Lemma.GoodReductionJacobian.RelativeGroupLawKernel
-import Lemma.AlgebraicGeometry.NeronModelEndomorphismExtension
-import Lemma.AlgebraicGeometry.RelativeGroupLawEndDegree
+import Lemma.Scheme.RelativeGroupLaw
+import Lemma.Scheme.RelativeGroupLawKernel
+import Lemma.Scheme.NeronModelEndomorphismExtension
+import Lemma.Scheme.RelativeGroupLawEndDegree
 
 set_option autoImplicit false
 

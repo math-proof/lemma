@@ -29,18 +29,18 @@ lemma dyadic_scale_count_le_log
       linarith [d.hR]
     calc Real.logb 2 (Nat.ceil d.R : ℝ)
       ≤ Real.logb 2 (2 * d.R) := by
-        apply Real.logb_le_logb_of_le (by norm_num : (1:ℝ) < 2)
-        · exact Nat.cast_pos.mpr hceil_pos
-        · exact hceil_bound
+          apply Real.logb_le_logb_of_le (by norm_num : (1:ℝ) < 2)
+          · exact Nat.cast_pos.mpr hceil_pos
+          · exact hceil_bound
       _ = Real.logb 2 2 + Real.logb 2 d.R := by
         rw [Real.logb_mul (by norm_num : (2:ℝ) ≠ 0) (ne_of_gt hR_pos)]
       _ = 1 + Real.logb 2 d.R := by
         rw [Real.logb_self_eq_one (by norm_num : (1:ℝ) < 2)]
       _ = Real.logb 2 d.R + 1 := by ring
   linarith
-/-- Upper bound on the wave packet `L²`-energy obtained by summing the per-scale
-estimates over the `log₂ R + 2` dyadic scales:
-`‖f‖² ≤ S · |D| · R · (log₂ R + 2) · max_{r ∈ [1,R]} (N_X(r) N_D(r/R) / r²)`. -/
+-- Upper bound on the wave packet `L²`-energy obtained by summing the per-scale
+-- estimates over the `log₂ R + 2` dyadic scales:
+-- `‖f‖² ≤ S · |D| · R · (log₂ R + 2) · max_{r ∈ [1,R]} (N_X(r) N_D(r/R) / r²)`.
 
 end ProjectionTheory
 

@@ -1,7 +1,7 @@
 -- Carved from Lemma/Definitions/Def_HopfAlgebra_HopfKerHopf.lean: instance decls only.
 -- Carved: defs+theorems -> Def.HopfAlgebra_HopfKerHopf; instances remain here
 import Mathlib
-import Lemma.HopfAlgebra.HopfKer
+import Lemma.Submodule.HopfKer
 import Def.HopfAlgebra_HopfKerHopf
 
 
@@ -85,5 +85,3 @@ instance instIsCocomm : Coalgebra.IsCocomm R ↥(hopfKer π) where
 end Structure
 
 end HopfAlgebra.HopfKerHopf
-
-

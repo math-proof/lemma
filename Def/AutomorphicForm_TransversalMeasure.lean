@@ -1,4 +1,4 @@
-import Lemma.AutomorphicForm.TwistedOrbital
+import Lemma.Measure.TwistedOrbital
 import Def.NumberField_IdeleBox
 import Def.M4aHerbrand_GenuineBeta
 

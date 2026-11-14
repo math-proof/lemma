@@ -12,15 +12,6 @@ open ModularCurve WeierstrassCurve Polynomial
 namespace ModularCurve.TatePoint
 
 
-open scoped Classical in
-
-
-open scoped Classical in
-
-
-open scoped Classical in
-
-
 section TatePoint
 
 variable (K : Type) [Field K] [Algebra ℚ K]
@@ -54,12 +45,8 @@ structure W4Conclusions (data : ModularPolynomialData p) : Prop where
   distinct : Function.Injective fun i : Fin (p + 1) =>
     @WeierstrassCurve.j _ _ (slotQuotient K p veluSlotSet i) (instQ i)
 
-open scoped Classical in
-
 
 end TatePoint
-
-open scoped Classical in
 
 
 end ModularCurve.TatePoint

@@ -1,5 +1,5 @@
-import Lemma.ModularCurve.HeckeModule
-import Lemma.ModularCurve.ModularUnit
+import Lemma.MvPolynomial.HeckeModule
+import Lemma.HahnSeries.ModularUnit
 
 set_option autoImplicit false
 

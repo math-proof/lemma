@@ -7,7 +7,7 @@
 import Def.AlgebraicCurve_BaseChangeGalois
 import Def.AlgebraicCurve_BaseChangeGalois_TorsionRep
 import Instance.AlgebraicCurve_BaseChangeGalois
-import Lemma.AlgebraicCurve.DivisorClassGroup
+import Lemma.Valuation.DivisorClassGroup
 import Mathlib.Algebra.Ring.Action.End
 import Mathlib.LinearAlgebra.Dimension.Finrank
 

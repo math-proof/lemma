@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.CurveModel
+import Lemma.Scheme.CurveModel
 import Lemma.Int.P2MUtil
 open CategoryTheory AlgebraicGeometry
 

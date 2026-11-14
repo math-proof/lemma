@@ -1,6 +1,6 @@
-import Lemma.CohCarrier.Inst
-import Lemma.ModularCurve.PeriodMap
-import Lemma.CohCarrier.LevelPairing
+import Lemma.ZMod.Inst
+import Lemma.UpperHalfPlane.PeriodMap
+import Lemma.Int.LevelPairing
 import Def.CuspForm_CornerPairingFamily
 
 set_option autoImplicit false
@@ -11,7 +11,7 @@ noncomputable section
 
 namespace CuspForm
 
-open CohCarrier IharaLemma IharaTower
+open CohCarrier IharaLemma IharaTower ZMod Int
 
 
 namespace Bfam

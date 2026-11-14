@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.CerednikDrinfeld.SchottkyTreeAction
+import Lemma.List.SchottkyTreeAction
 import Lemma.Int.P2MUtil
 
 open CerednikDrinfeld.Mumford MulAction

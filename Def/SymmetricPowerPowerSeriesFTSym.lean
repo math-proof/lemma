@@ -113,14 +113,14 @@ theorem mem_degSet {N : ℕ} {e : Fin r →₀ ℕ} : e ∈ degSet r N ↔ e.deg
   exact h ▸ Finsupp.le_degree i e
 
 theorem coeff_aeval_es (q : MvPolynomial (Fin r) k) (e : Fin r →₀ ℕ) :
-    MvPolynomial.coeff e (MvPolynomial.aeval (es k r) q)
-      = ∑ d ∈ wtSet r e.degree, MvPolynomial.coeff d q * MvPolynomial.coeff e (eP (k := k) d) := by
+    (MvPolynomial.aeval (es k r) q).coeff e
+      = ∑ d ∈ wtSet r e.degree, q.coeff d * (eP (k := k) d).coeff e := by
   conv_lhs => rw [q.as_sum, map_sum, MvPolynomial.coeff_sum]
   simp_rw [MvPolynomial.aeval_monomial, MvPolynomial.algebraMap_eq, MvPolynomial.coeff_C_mul]
-  change ∑ d ∈ q.support, MvPolynomial.coeff d q * MvPolynomial.coeff e (eP (k := k) d) = _
+  change ∑ d ∈ q.support, q.coeff d * (eP (k := k) d).coeff e = _
   rw [← Finset.sum_filter_add_sum_filter_not q.support (fun d => wt d = e.degree)]
   have h0 : ∑ d ∈ q.support.filter (fun d => ¬ wt d = e.degree),
-      MvPolynomial.coeff d q * MvPolynomial.coeff e (eP (k := k) d) = 0 :=
+      q.coeff d * (eP (k := k) d).coeff e = 0 :=
     Finset.sum_eq_zero fun d hd => by
       rw [(eP_isHomogeneous d).coeff_eq_zero (Ne.symm (Finset.mem_filter.mp hd).2), mul_zero]
   rw [h0, add_zero]
@@ -136,7 +136,7 @@ theorem coeff_aeval_es (q : MvPolynomial (Fin r) k) (e : Fin r →₀ ℕ) :
 
 theorem coeff_subst_ea (f : MvPowerSeries (Fin r) k) (e : Fin r →₀ ℕ) :
     MvPowerSeries.coeff e (MvPowerSeries.subst (ea k r) f)
-      = ∑ d ∈ wtSet r e.degree, MvPowerSeries.coeff d f * MvPolynomial.coeff e (eP (k := k) d) := by
+      = ∑ d ∈ wtSet r e.degree, MvPowerSeries.coeff d f * (eP (k := k) d).coeff e := by
   rw [MvPowerSeries.coeff_subst (hasSubst_ea k r)]
   rw [finsum_eq_sum_of_support_subset _ (s := wtSet r e.degree) ?_]
   · refine Finset.sum_congr rfl fun d _ => ?_
@@ -157,8 +157,7 @@ theorem aeval_truncFinset_isHomogeneous (f : MvPowerSeries (Fin r) k) (N : ℕ) 
 
 theorem coeff_subst_ea_eq_coeff_aeval (f : MvPowerSeries (Fin r) k) (e : Fin r →₀ ℕ) :
     MvPowerSeries.coeff e (MvPowerSeries.subst (ea k r) f)
-      = MvPolynomial.coeff e
-          (MvPolynomial.aeval (es k r) (MvPowerSeries.truncFinset k (wtSet r e.degree) f)) := by
+      = (MvPolynomial.aeval (es k r) (MvPowerSeries.truncFinset k (wtSet r e.degree) f)).coeff e := by
   rw [coeff_subst_ea, coeff_aeval_es]
   refine Finset.sum_congr rfl fun d hd => ?_
   rw [MvPowerSeries.coeff_truncFinset_of_mem _ hd]
@@ -179,12 +178,12 @@ theorem subst_ea_injective : Function.Injective (MvPowerSeries.subst (R := k) (e
   have hP : MvPolynomial.aeval (es k r) (MvPowerSeries.truncFinset k (wtSet r (wt d)) f) = 0 := by
     ext e
     by_cases he : e.degree = wt d
-    · rw [← he, ← coeff_subst_ea_eq_coeff_aeval, hf, map_zero, MvPolynomial.coeff_zero]
-    · rw [(aeval_truncFinset_isHomogeneous f (wt d)).coeff_eq_zero he, MvPolynomial.coeff_zero]
+    · rw [← he, ← coeff_subst_ea_eq_coeff_aeval, hf, map_zero]; rfl
+    · rw [(aeval_truncFinset_isHomogeneous f (wt d)).coeff_eq_zero he]; rfl
   have h0 : MvPowerSeries.truncFinset k (wtSet r (wt d)) f = 0 :=
     aeval_es_injective (by rw [hP, map_zero])
-  have := congrArg (MvPolynomial.coeff d) h0
-  rwa [MvPowerSeries.coeff_truncFinset_of_mem _ (mem_wtSet.mpr rfl), MvPolynomial.coeff_zero] at this
+  rw [← MvPowerSeries.coeff_truncFinset_of_mem _ (mem_wtSet.mpr rfl), h0]
+  simp
 
 theorem rename_subst_ea (σ : Equiv.Perm (Fin r)) (f : MvPowerSeries (Fin r) k) :
     MvPowerSeries.rename σ (MvPowerSeries.subst (ea k r) f) = MvPowerSeries.subst (ea k r) f := by
@@ -233,16 +232,17 @@ theorem exists_subst_ea_eq {g : MvPowerSeries (Fin r) k}
     (hg : ∀ σ : Equiv.Perm (Fin r), MvPowerSeries.rename σ g = g) :
     ∃ f : MvPowerSeries (Fin r) k, MvPowerSeries.subst (ea k r) f = g := by
   choose q hq using exists_aeval_eq_truncFinset hg
-  refine ⟨fun d => MvPolynomial.coeff d (q (wt d)), ?_⟩
+  let f : MvPowerSeries (Fin r) k := fun d => (q (wt d)).coeff d
+  refine ⟨f, ?_⟩
   ext e
   rw [coeff_subst_ea]
-  calc ∑ d ∈ wtSet r e.degree, MvPowerSeries.coeff d (fun d => MvPolynomial.coeff d (q (wt d)))
-          * MvPolynomial.coeff e (eP (k := k) d)
-        = ∑ d ∈ wtSet r e.degree, MvPolynomial.coeff d (q e.degree) * MvPolynomial.coeff e (eP (k := k) d) :=
+  calc ∑ d ∈ wtSet r e.degree, MvPowerSeries.coeff d (f)
+          * (eP (k := k) d).coeff e
+        = ∑ d ∈ wtSet r e.degree, (q e.degree).coeff d * (eP (k := k) d).coeff e :=
           Finset.sum_congr rfl fun d hd => by
-            rw [show MvPowerSeries.coeff d (fun d => MvPolynomial.coeff d (q (wt d)))
-              = MvPolynomial.coeff d (q (wt d)) from rfl, mem_wtSet.mp hd]
-    _ = MvPolynomial.coeff e (MvPolynomial.aeval (es k r) (q e.degree)) := (coeff_aeval_es _ _).symm
+            rw [show MvPowerSeries.coeff d (f)
+              = (q (wt d)).coeff d from rfl, mem_wtSet.mp hd]
+    _ = (MvPolynomial.aeval (es k r) (q e.degree)).coeff e := (coeff_aeval_es _ _).symm
     _ = MvPowerSeries.coeff e g := by
           rw [hq, MvPowerSeries.coeff_truncFinset_of_mem _ (mem_degSet.mpr rfl)]
 

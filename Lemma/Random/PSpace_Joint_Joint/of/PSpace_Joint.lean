@@ -76,15 +76,15 @@ private lemma jointDiag_preimage_singleton
 private lemma main
   {Ω α γ : Type*}
   [MeasurableSpace Ω]
-  [ReferenceMeasure α] [ReferenceMeasure γ]
+  [μ : ReferenceMeasure α] [ξ : ReferenceMeasure γ]
   [Countable α] [Countable γ]
   [MeasurableSingletonClass α] [MeasurableSingletonClass γ]
   {π : Measure Ω}
   {x : Ω → α} {y : Ω → γ}
 -- given
   (hP : SinglePSpace π (x, y))
-  (hα : ReferenceMeasure.measure (α := α) = Measure.count)
-  (hγ : ReferenceMeasure.measure (α := γ) = Measure.count) :
+  (hα : μ.measure = Measure.count)
+  (hγ : ξ.measure = Measure.count) :
 -- imply
   SinglePSpace π (x, y, y) := by
 -- proof

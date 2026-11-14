@@ -300,11 +300,11 @@ lemma ckNorm_add_le
           exact h_deriv_sum j
         _ = _ := Finset.sum_add_distrib
     linarith
-/-- Schwartz functions are dense in the space of `C^k` zero-at-infinity
-functions: any such `u` can be approximated in the `C^k` norm to within `ε`
-by a Schwartz function. The proof first approximates `u` by a compactly
-supported `C^k` function, then approximates that by a Schwartz function via
-mollification. -/
+-- Schwartz functions are dense in the space of `C^k` zero-at-infinity
+-- functions: any such `u` can be approximated in the `C^k` norm to within `ε`
+-- by a Schwartz function. The proof first approximates `u` by a compactly
+-- supported `C^k` function, then approximates that by a Schwartz function via
+-- mollification.
 section CompactSupportSchwartz
 open scoped ContDiff
 

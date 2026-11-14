@@ -13,9 +13,9 @@ private lemma main
   b ^ (-r) ≤ a ^ (-r) := calc
 -- proof
   _ = (b ^ r)⁻¹ := Real.rpow_neg hb.le r
-  _ ≤ (a ^ r)⁻¹ := by
+  _ ≤ (a ^ r)⁻¹ := (by
     apply (inv_le_inv₀ (Real.rpow_pos_of_pos hb r) (Real.rpow_pos_of_pos ha r)).mpr
-    exact Real.rpow_le_rpow ha.le h hr
+    exact Real.rpow_le_rpow ha.le h hr)
   _ = _ := (Real.rpow_neg ha.le r).symm
 
 

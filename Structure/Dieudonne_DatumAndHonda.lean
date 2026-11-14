@@ -25,13 +25,6 @@ namespace DieudonneDatum
 
 variable {ℓ : 𝓞} {D : Type v} [AddCommGroup D] [Module 𝓞 D] (M : DieudonneDatum ℓ D)
 
-
-variable (ℓ) in
-
-
-variable (ℓ) in
-
-
 end DieudonneDatum
 
 structure HondaSystem (ℓ : 𝓞) (D : Type v) [AddCommGroup D] [Module 𝓞 D] extends

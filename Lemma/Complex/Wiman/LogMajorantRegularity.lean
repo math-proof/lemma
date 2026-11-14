@@ -24,16 +24,16 @@ lemma eventually_wimanGrowth_regular
     ContDiff ℝ 2 (wimanGrowth f) ∧
     Tendsto (deriv (wimanGrowth f)) atTop atTop := by
 -- proof
-  have hsupport := infinite_support_wimanTaylorCoefficient f hf htrans
+  have hsupport := infinite_support_wimanTaylorCoefficient (f := f) hf htrans
   have hne : ∃ n, wimanTaylorCoefficient f n ≠ 0 := by
     obtain ⟨n, hn⟩ := hsupport.nonempty
     exact ⟨n, by simpa only [Function.mem_support] using hn⟩
-  have hC2 : ContDiff ℝ 2 (wimanGrowth f) := contDiff_two_wimanGrowth f hf
+  have hC2 : ContDiff ℝ 2 (wimanGrowth f) := contDiff_two_wimanGrowth (f := f) hf
   have hDiff : Differentiable ℝ (wimanGrowth f) :=
     hC2.differentiable two_ne_zero
   have hDerivNonneg : ∀ x, 0 ≤ deriv (wimanGrowth f) x := by
     intro x
-    rw [deriv_wimanGrowth_eq_expectation f hf hne x]
+    rw [deriv_wimanGrowth_eq_expectation (f := f) (x := x) hf hne]
     exact integral_nonneg fun n : ℕ => Nat.cast_nonneg n
   have hGrowthMono : Monotone (wimanGrowth f) :=
     monotone_of_deriv_nonneg hDiff hDerivNonneg
@@ -46,7 +46,7 @@ lemma eventually_wimanGrowth_regular
     apply monotone_of_deriv_nonneg hDiffDeriv
     intro x
     rw [hSecondDeriv]
-    exact iteratedDeriv_two_wimanGrowth_nonneg f hf hne x
+    exact iteratedDeriv_two_wimanGrowth_nonneg (f := f) (x := x) hf hne
   have hConvex : ConvexOn ℝ Set.univ (wimanGrowth f) :=
     Monotone.convexOn_univ_of_deriv hDiff hDerivMono
   have hDerivAtTop : Tendsto (deriv (wimanGrowth f)) atTop atTop := by
@@ -87,7 +87,7 @@ lemma eventually_wimanGrowth_regular
         _ ≤ wimanGrowth f y := by
           rw [wimanGrowth]
           exact Real.log_le_log htermpos
-            (wimanTerm_le_wimanMajorant f hf (Real.exp y) n)
+            (wimanTerm_le_wimanMajorant (f := f) (r := Real.exp y) (n := n) hf)
     have hbnum : b * y ≤ wimanGrowth f y - wimanGrowth f 0 := by
       nlinarith
     have hbslope : b ≤ slope (wimanGrowth f) 0 y := by
@@ -97,17 +97,17 @@ lemma eventually_wimanGrowth_regular
       (hConvex.slope_le_deriv (by simp) (by simp) hypos (hDiff y))
   have hMaximumAtTop :
     Tendsto (fun x : ℝ => wimanMaximumTerm f (Real.exp x)) atTop atTop :=
-    (tendsto_wimanMaximumTerm_atTop f hf htrans).comp Real.tendsto_exp_atTop
+    (tendsto_wimanMaximumTerm_atTop (f := f) hf htrans).comp Real.tendsto_exp_atTop
   have hEventuallyPos : ∀ᶠ x : ℝ in atTop, 0 < wimanGrowth f x := by
     filter_upwards [hMaximumAtTop.eventually (eventually_gt_atTop 1)] with x hx
     rw [wimanGrowth]
     apply Real.log_pos
-    exact hx.trans_le <| (wimanMaximumTerm_le_iff f hf (Real.exp x) _).2 fun n =>
-      wimanTerm_le_wimanMajorant f hf (Real.exp x) n
+    exact hx.trans_le <| (wimanMaximumTerm_le_iff (f := f) (r := Real.exp x) hf).2 fun n =>
+      wimanTerm_le_wimanMajorant (f := f) (r := Real.exp x) (n := n) hf
   obtain ⟨x₀, hx₀⟩ := eventually_atTop.1 hEventuallyPos
   exact ⟨x₀, hx₀, hGrowthMono.monotoneOn (Set.Ici x₀),
     hDerivMono.monotoneOn (Set.Ici x₀), hC2, hDerivAtTop⟩
-end
+end Complex
 
 
 

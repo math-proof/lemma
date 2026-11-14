@@ -42,7 +42,7 @@ lemma discr_mem_extensionDiscriminant
 -- imply
   Algebra.discr K b ∈ extensionDiscriminant A K L B :=
 -- proof
-  discr_mem_latticeDiscriminant A K hb
+  discr_mem_latticeDiscriminant hb
 
 /--
 [mem_imageOfB](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/ExtensionDiscriminant.lean)
@@ -59,4 +59,4 @@ private lemma mem_imageOfB_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-13

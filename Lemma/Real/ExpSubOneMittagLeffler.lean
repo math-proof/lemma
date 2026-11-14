@@ -11,7 +11,7 @@ namespace MetaMathlibExt
 [ExpSubOneMittagLeffler](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExpSubOneMittagLeffler.lean)
 -/
 @[path]
-lemma one_div_exp_sub_one_eq_tsum
+lemma one_div_exp_sub_one_eq_tsum_eq_lemma
 -- given
   (u : ℝ)
   (hu : u ≠ 0) :
@@ -114,7 +114,7 @@ namespace MetaMathlibExt
 [expSubOnePole_pos](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExpSubOneMittagLeffler.lean)
 -/
 @[path]
-private lemma expSubOnePole_pos (m : ℕ) : 0 < expSubOnePole m := by
+private lemma expSubOnePole_pos_eq_lemma (m : ℕ) : 0 < expSubOnePole m := by
   unfold expSubOnePole
   positivity
 
@@ -126,7 +126,7 @@ namespace MetaMathlibExt
 [expSubOneBound_nonneg](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExpSubOneMittagLeffler.lean)
 -/
 @[path]
-private lemma expSubOneBound_nonneg (N : ℕ) : 0 ≤ expSubOneBound N := by
+private lemma expSubOneBound_nonneg_eq_lemma (N : ℕ) : 0 ≤ expSubOneBound N := by
   unfold expSubOneBound
   exact mul_nonneg (by positivity) (tsum_nonneg fun m =>
     inv_nonneg.mpr (pow_nonneg (expSubOnePole_pos m).le _))
@@ -139,7 +139,7 @@ namespace MetaMathlibExt
 [expSubOnePole_inv_pow_summable](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExpSubOneMittagLeffler.lean)
 -/
 @[path]
-private lemma expSubOnePole_inv_pow_summable (q : ℕ) (hq : 2 ≤ q) :
+private lemma expSubOnePole_inv_pow_summable_eq_lemma (q : ℕ) (hq : 2 ≤ q) :
   Summable (fun m : ℕ => (expSubOnePole m ^ q)⁻¹) := by
   have hs : Summable (fun m : ℕ => 1 / (((m + 1 : ℕ) : ℝ) ^ q)) := by
     simpa only [Nat.cast_add, Nat.cast_one] using
@@ -160,7 +160,7 @@ namespace MetaMathlibExt
 [expSubOneRemainderTerm_abs_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExpSubOneMittagLeffler.lean)
 -/
 @[path]
-private lemma expSubOneRemainderTerm_abs_le (N : ℕ) (v : ℝ) (m : ℕ) :
+private lemma expSubOneRemainderTerm_abs_le_eq_lemma (N : ℕ) (v : ℝ) (m : ℕ) :
   |expSubOneRemainderTerm N v m| ≤
     2 * |v| ^ (2 * N + 1) * (expSubOnePole m ^ (2 * N + 2))⁻¹ := by
   have ha := expSubOnePole_pos m
@@ -194,7 +194,7 @@ namespace MetaMathlibExt
 [expSubOneRemainderTerm_summable](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExpSubOneMittagLeffler.lean)
 -/
 @[path]
-private lemma expSubOneRemainderTerm_summable (N : ℕ) (v : ℝ) :
+private lemma expSubOneRemainderTerm_summable_eq_lemma (N : ℕ) (v : ℝ) :
   Summable (expSubOneRemainderTerm N v) := by
   have hw := expSubOnePole_inv_pow_summable (2 * N + 2) (by omega)
   have hmajorant := hw.mul_left (2 * |v| ^ (2 * N + 1))
@@ -210,7 +210,7 @@ namespace MetaMathlibExt
 [expSubOneRemainderTerm_hasDerivAt](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExpSubOneMittagLeffler.lean)
 -/
 @[path]
-private lemma expSubOneRemainderTerm_hasDerivAt (N : ℕ) (v : ℝ) (m : ℕ) :
+private lemma expSubOneRemainderTerm_hasDerivAt_eq_lemma (N : ℕ) (v : ℝ) (m : ℕ) :
   HasDerivAt (fun y => expSubOneRemainderTerm N y m)
     (expSubOneRemainderDerivTerm N v m) v := by
   let a := expSubOnePole m
@@ -245,7 +245,7 @@ namespace MetaMathlibExt
 [expSubOneRemainderDerivTerm_abs_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExpSubOneMittagLeffler.lean)
 -/
 @[path]
-private lemma expSubOneRemainderDerivTerm_abs_le (N : ℕ) (v : ℝ) (m : ℕ) :
+private lemma expSubOneRemainderDerivTerm_abs_le_eq_lemma (N : ℕ) (v : ℝ) (m : ℕ) :
   |expSubOneRemainderDerivTerm N v m| ≤
     2 * (2 * N + 3 : ℕ) * |v| ^ (2 * N) *
       (expSubOnePole m ^ (2 * N + 2))⁻¹ := by
@@ -310,7 +310,7 @@ namespace MetaMathlibExt
 [expSubOneRemainderDerivTerm_summable](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExpSubOneMittagLeffler.lean)
 -/
 @[path]
-private lemma expSubOneRemainderDerivTerm_summable (N : ℕ) (v : ℝ) :
+private lemma expSubOneRemainderDerivTerm_summable_eq_lemma (N : ℕ) (v : ℝ) :
   Summable (expSubOneRemainderDerivTerm N v) := by
   have hw := expSubOnePole_inv_pow_summable (2 * N + 2) (by omega)
   have hm := hw.mul_left (2 * (2 * N + 3 : ℕ) * |v| ^ (2 * N))
@@ -326,7 +326,7 @@ namespace MetaMathlibExt
 [expSubOneRemainder_hasDerivAt](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExpSubOneMittagLeffler.lean)
 -/
 @[path]
-private lemma expSubOneRemainder_hasDerivAt (N : ℕ) (v : ℝ) :
+private lemma expSubOneRemainder_hasDerivAt_eq_lemma (N : ℕ) (v : ℝ) :
   HasDerivAt (expSubOneRemainder N)
     (∑' m : ℕ, expSubOneRemainderDerivTerm N v m) v := by
   let R := |v| + 1
@@ -371,7 +371,7 @@ namespace MetaMathlibExt
 [expSubOneRemainder_deriv_abs_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExpSubOneMittagLeffler.lean)
 -/
 @[path]
-private lemma expSubOneRemainder_deriv_abs_le (N : ℕ) (v : ℝ) :
+private lemma expSubOneRemainder_deriv_abs_le_eq_lemma (N : ℕ) (v : ℝ) :
   |∑' m : ℕ, expSubOneRemainderDerivTerm N v m| ≤
     2 * (2 * N + 3 : ℕ) * |v| ^ (2 * N) *
       ∑' m : ℕ, (expSubOnePole m ^ (2 * N + 2))⁻¹ := by
@@ -399,7 +399,7 @@ namespace MetaMathlibExt
 [expSubOneRemainder_deriv_abs_le_bound](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExpSubOneMittagLeffler.lean)
 -/
 @[path]
-private lemma expSubOneRemainder_deriv_abs_le_bound (N : ℕ) (v : ℝ) :
+private lemma expSubOneRemainder_deriv_abs_le_bound_eq_lemma (N : ℕ) (v : ℝ) :
   |∑' m : ℕ, expSubOneRemainderDerivTerm N v m| ≤
     expSubOneBound N * |v| ^ (2 * N) := by
   calc
@@ -419,7 +419,7 @@ namespace MetaMathlibExt
 [expSubOneRemainder_abs_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExpSubOneMittagLeffler.lean)
 -/
 @[path]
-private lemma expSubOneRemainder_abs_le (N : ℕ) (v : ℝ) :
+private lemma expSubOneRemainder_abs_le_eq_lemma (N : ℕ) (v : ℝ) :
   |expSubOneRemainder N v| ≤
     2 * |v| ^ (2 * N + 1) * ∑' m : ℕ, (expSubOnePole m ^ (2 * N + 2))⁻¹ := by
   have hr := expSubOneRemainderTerm_summable N v
@@ -447,7 +447,7 @@ namespace MetaMathlibExt
 [expSubOneRemainder_abs_le_bound](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExpSubOneMittagLeffler.lean)
 -/
 @[path]
-private lemma expSubOneRemainder_abs_le_bound (N : ℕ) (v : ℝ) :
+private lemma expSubOneRemainder_abs_le_bound_eq_lemma (N : ℕ) (v : ℝ) :
   |expSubOneRemainder N v| ≤ expSubOneBound N * |v| ^ (2 * N + 1) := by
   calc
     |expSubOneRemainder N v| ≤
@@ -480,7 +480,7 @@ namespace MetaMathlibExt
 [expSubOneRemainderTerm_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExpSubOneMittagLeffler.lean)
 -/
 @[path]
-private lemma expSubOneRemainderTerm_zero (v : ℝ) (m : ℕ) :
+private lemma expSubOneRemainderTerm_zero_eq_lemma (v : ℝ) (m : ℕ) :
   expSubOneRemainderTerm 0 v m = expSubOneKernelTerm v m := by
   simp [expSubOneRemainderTerm, expSubOneKernelTerm]
 
@@ -492,7 +492,7 @@ namespace MetaMathlibExt
 [expSubOneRemainderTerm_succ](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExpSubOneMittagLeffler.lean)
 -/
 @[path]
-private lemma expSubOneRemainderTerm_succ (N : ℕ) (v : ℝ) (m : ℕ) :
+private lemma expSubOneRemainderTerm_succ_eq_lemma (N : ℕ) (v : ℝ) (m : ℕ) :
   expSubOneRemainderTerm N v m =
     2 * (-1 : ℝ) ^ N * v ^ (2 * N + 1) / expSubOnePole m ^ (2 * N + 2) +
       expSubOneRemainderTerm (N + 1) v m := by
@@ -510,7 +510,7 @@ namespace MetaMathlibExt
 [expSubOneKernelCoeff_summable](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExpSubOneMittagLeffler.lean)
 -/
 @[path]
-private lemma expSubOneKernelCoeff_summable (n : ℕ) :
+private lemma expSubOneKernelCoeff_summable_eq_lemma (n : ℕ) :
   Summable (expSubOneKernelCoeff n) := by
   unfold expSubOneKernelCoeff
   simpa only [div_eq_mul_inv] using
@@ -524,7 +524,7 @@ namespace MetaMathlibExt
 [expSubOne_tsum_one_div_succ_pow](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExpSubOneMittagLeffler.lean)
 -/
 @[path]
-private lemma expSubOne_tsum_one_div_succ_pow (k : ℕ) (hk : 1 ≤ k) :
+private lemma expSubOne_tsum_one_div_succ_pow_eq_lemma (k : ℕ) (hk : 1 ≤ k) :
   (∑' m : ℕ, 1 / (((m + 1 : ℕ) : ℝ) ^ (2 * k))) =
     (-1 : ℝ) ^ (k + 1) * 2 ^ (2 * k - 1) * Real.pi ^ (2 * k) *
       (bernoulli (2 * k) : ℝ) / ((2 * k).factorial : ℝ) := by
@@ -544,7 +544,7 @@ namespace MetaMathlibExt
 [expSubOneKernelCoeff_tsum](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExpSubOneMittagLeffler.lean)
 -/
 @[path]
-private lemma expSubOneKernelCoeff_tsum (n : ℕ) :
+private lemma expSubOneKernelCoeff_tsum_eq_lemma (n : ℕ) :
   (∑' m : ℕ, expSubOneKernelCoeff n m) =
     (bernoulli (2 * n + 2) : ℝ) / ((2 * n + 2).factorial : ℝ) := by
   let k := n + 1
@@ -590,7 +590,7 @@ namespace MetaMathlibExt
 [expSubOneRemainder_succ](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExpSubOneMittagLeffler.lean)
 -/
 @[path]
-private lemma expSubOneRemainder_succ (N : ℕ) (v : ℝ) :
+private lemma expSubOneRemainder_succ_eq_lemma (N : ℕ) (v : ℝ) :
   expSubOneRemainder N v =
     (bernoulli (2 * N + 2) : ℝ) / ((2 * N + 2).factorial : ℝ) *
       v ^ (2 * N + 1) + expSubOneRemainder (N + 1) v := by
@@ -631,7 +631,7 @@ namespace MetaMathlibExt
 [expSubOneKernel_tsum_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExpSubOneMittagLeffler.lean)
 -/
 @[path]
-private lemma expSubOneKernel_tsum_eq (N : ℕ) (v : ℝ) :
+private lemma expSubOneKernel_tsum_eq_lemma (N : ℕ) (v : ℝ) :
   (∑' m : ℕ, expSubOneKernelTerm v m) =
     (∑ n ∈ Finset.range N,
       (bernoulli (2 * n + 2) : ℝ) / ((2 * n + 2).factorial : ℝ) *
@@ -655,7 +655,7 @@ namespace MetaMathlibExt
 [expSubOneKernelTerm_eq_mittag](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExpSubOneMittagLeffler.lean)
 -/
 @[path]
-private lemma expSubOneKernelTerm_eq_mittag (v : ℝ) (m : ℕ) :
+private lemma expSubOneKernelTerm_eq_mittag_eq_lemma (v : ℝ) (m : ℕ) :
   expSubOneKernelTerm v m =
     2 * v / (v ^ 2 + 4 * Real.pi ^ 2 * (m + 1 : ℕ) ^ 2) := by
   unfold expSubOneKernelTerm expSubOnePole
@@ -671,7 +671,7 @@ namespace MetaMathlibExt
 [expSubOneKernel_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExpSubOneMittagLeffler.lean)
 -/
 @[path]
-private lemma expSubOneKernel_eq (N : ℕ) (v : ℝ) (hv : v ≠ 0) :
+private lemma expSubOneKernel_eq_lemma (N : ℕ) (v : ℝ) (hv : v ≠ 0) :
   1 / (Real.exp v - 1) - 1 / v + 1 / 2 -
     ∑ n ∈ Finset.range N,
       (bernoulli (2 * n + 2) : ℝ) / ((2 * n + 2).factorial : ℝ) *
@@ -690,7 +690,7 @@ namespace MetaMathlibExt
 [expSubOneRemainder_eq_oneDivExpSubOneLaurentRemainder](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExpSubOneMittagLeffler.lean)
 -/
 @[path]
-private lemma expSubOneRemainder_eq_oneDivExpSubOneLaurentRemainder (N : ℕ) (v : ℝ) :
+private lemma expSubOneRemainder_eq_oneDivExpSubOneLaurentRemainder_eq_lemma (N : ℕ) (v : ℝ) :
   expSubOneRemainder N v = oneDivExpSubOneLaurentRemainder N v := by
   by_cases hv : v = 0
   · subst v
@@ -706,7 +706,7 @@ namespace MetaMathlibExt
 [ExpSubOneMittagLeffler](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExpSubOneMittagLeffler.lean)
 -/
 @[path]
-lemma differentiable_oneDivExpSubOneLaurentRemainder
+lemma differentiable_oneDivExpSubOneLaurentRemainder_eq_lemma
 -- given
   (N : ℕ) :
 -- imply
@@ -726,7 +726,7 @@ namespace MetaMathlibExt
 [ExpSubOneMittagLeffler](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExpSubOneMittagLeffler.lean)
 -/
 @[path]
-lemma oneDivExpSubOneLaurentRemainder_abs_le
+lemma oneDivExpSubOneLaurentRemainder_abs_le_eq_lemma
 -- given
   (N : ℕ)
   (v : ℝ) :
@@ -747,7 +747,7 @@ namespace MetaMathlibExt
 [ExpSubOneMittagLeffler](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExpSubOneMittagLeffler.lean)
 -/
 @[path]
-lemma abs_deriv_oneDivExpSubOneLaurentRemainder_le
+lemma abs_deriv_oneDivExpSubOneLaurentRemainder_le_eq_lemma
 -- given
   (N : ℕ)
   (v : ℝ) :
@@ -771,7 +771,7 @@ namespace MetaMathlibExt
 [ExpSubOneMittagLeffler](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExpSubOneMittagLeffler.lean)
 -/
 @[path]
-lemma abs_one_div_exp_sub_one_sub_laurent_le
+lemma abs_one_div_exp_sub_one_sub_laurent_le_eq_lemma
 -- given
   (N : ℕ) :
 -- imply
@@ -797,7 +797,7 @@ lemma abs_one_div_exp_sub_one_sub_laurent_le
     _ = C * |v| ^ (2 * N + 1) := by
       unfold C
       ring
-end
+end MetaMathlibExt
 
 
 

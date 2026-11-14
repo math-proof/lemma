@@ -13,7 +13,7 @@ lemma uniform_convergence_iff
   {g : ℝ → ℝ}
   {S : Set ℝ} :
 -- imply
-  TendstoUniformlyOn f g atTop S ↔ ∀ ε > 0, ∃ M : ℕ, ∀ n ≥ M, ∀ x ∈ S, := by
+  TendstoUniformlyOn f g atTop S ↔ ∀ ε > 0, ∃ M : ℕ, ∀ n ≥ M, ∀ x ∈ S, |f n x - g x| < ε := by
 -- proof
   rw [Metric.tendstoUniformlyOn_iff]
   constructor

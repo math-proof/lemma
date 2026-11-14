@@ -1,8 +1,8 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_FullLevelJacobian.lean: instance decls only.
-import Lemma.ModularCurve.XHOperators
+import Lemma.UpperHalfPlane.XHOperators
 import Instance.CuspidalType_IsCuspidalOfType
 import Def.HeckeGalois_EichlerShimura
-import Lemma.ModularCurve.FullLevelJacobian
+import Lemma.Matrix.FullLevelJacobian
 
 set_option autoImplicit false
 

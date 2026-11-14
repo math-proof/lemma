@@ -1,6 +1,6 @@
 import Mathlib
-import Lemma.GroupCohomology.Selmer
-import Lemma.Compat.Mathlib430
+import Lemma.Rep.Selmer
+import Lemma.Ideal.Mathlib430
 
 set_option autoImplicit false
 

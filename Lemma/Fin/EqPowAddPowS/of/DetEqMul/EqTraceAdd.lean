@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.TaylorWiles.Primes
+import Lemma.Matrix.Primes
 
 
 /-- ported from external source -/

@@ -2,7 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.GaloisRep_TameCharacter
 import Def.FLTPrelim_Ramification
-import Lemma.EllipticCurve.FrobeniusTrace
+import Lemma.WeierstrassCurve.FrobeniusTrace
 import Lemma.Int.P2MUtil
 
 open ValuationSubring
@@ -17,14 +17,14 @@ private theorem tameCharacter_of_mem
     (π : AlgebraicClosure ℚ) (σ : AlgebraicClosure ℚ ≃ₐ[ℚ] AlgebraicClosure ℚ)
     (h : σ π / π ∈ P) : P.tameCharacter π σ = IsLocalRing.residue P ⟨σ π / π, h⟩ := by
   unfold ValuationSubring.tameCharacter
-  exact dif_pos h
+  exact dite_eq_left h
 
 private theorem tameCharacter_of_not_mem
     (P : ValuationSubring (AlgebraicClosure ℚ))
     (π : AlgebraicClosure ℚ) (σ : AlgebraicClosure ℚ ≃ₐ[ℚ] AlgebraicClosure ℚ)
     (h : σ π / π ∉ P) : P.tameCharacter π σ = 0 := by
   unfold ValuationSubring.tameCharacter
-  exact dif_neg h
+  exact dite_eq_right h
 
 private theorem tameCharacter_pow_left_of_mem
     (P : ValuationSubring (AlgebraicClosure ℚ))
@@ -89,3 +89,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

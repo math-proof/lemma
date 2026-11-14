@@ -47,4 +47,3 @@ example : imageOfB ℚ ℚ ℚ = ⊤ := by
     exact Submodule.mem_top
   · intro _
     exact (mem_imageOfB ℚ ℚ ℚ).mpr ⟨x, by simp⟩
-

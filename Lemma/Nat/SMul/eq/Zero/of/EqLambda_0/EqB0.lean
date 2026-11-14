@@ -1,8 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.CerednikDrinfeld.GradedCartierModuleData
-import Lemma.CerednikDrinfeld.GradedCartierNModule
-open CerednikDrinfeld CerednikDrinfeld.GradedCartierModuleData
+import Lemma.Fin.GradedCartierModuleData
+import Lemma.Submodule.GradedCartierNModule
+open CerednikDrinfeld Fin.GradedCartierModuleData Fin Submodule
 
 
 namespace Definitions
@@ -16,7 +16,7 @@ private lemma main
   [CommRing B]
   {p : ℕ} [Fact p.Prime]
   {j : CerednikDrinfeld.Zp2 p →+* B}
-  {D : CerednikDrinfeld.GradedCartierModuleData p B j}
+  {D : Fin.GradedCartierModuleData p B j}
   {z : D.NMod}
 -- given
   (hp : (p : B) = 0)

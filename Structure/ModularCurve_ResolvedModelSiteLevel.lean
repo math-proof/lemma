@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.AlgebraicGeometry.ResolvedModelGlueComponents
+import Lemma.Scheme.ResolvedModelGlueComponents
 import Structure.ModularCurve_DRResolvedModelPackageLevel
 import Abbrev.ModularCurve_DRModelPackageLevel
 import Lemma.Scheme.DRModelPackageLevelAPI

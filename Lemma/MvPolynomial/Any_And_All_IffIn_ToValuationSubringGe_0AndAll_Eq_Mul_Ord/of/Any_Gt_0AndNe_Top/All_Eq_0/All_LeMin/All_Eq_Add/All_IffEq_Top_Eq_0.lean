@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.DivisorClassGroup
+import Lemma.Valuation.DivisorClassGroup
 open WithZero
 
 

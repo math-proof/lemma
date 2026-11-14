@@ -1,4 +1,4 @@
-import Lemma.FLTPrelim.FreyPackage
+import Lemma.WeierstrassCurve.FreyPackage
 import Instance.FLTPrelim_GaloisRep
 import Def.FLTPrelim_ModularRep
 import Def.FreyPackage_LevelRaising

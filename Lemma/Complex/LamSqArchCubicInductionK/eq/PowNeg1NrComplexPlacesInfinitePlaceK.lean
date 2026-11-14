@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.LanglandsTunnell.LambdaSquared
+import Lemma.Matrix.LambdaSquared
 open NumberField
 
 

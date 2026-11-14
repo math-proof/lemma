@@ -1,0 +1,20 @@
+import Mathlib
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.MeasureTheory.Section_1_1_3.Part7
+open BoundedInterval
+@[path]
+private lemma main
+  {f : ℝ → ℝ}
+  {I : BoundedInterval}
+  {R : ℝ}
+-- given
+  (h_eq : I.a = I.b)
+  (h_len : |I|ₗ = 0)
+  (hR : riemann_integral_eq f I R) :
+-- imply
+  R = 0 :=
+-- proof
+  riemann_integral_eq_zero_of_zero_length h_eq h_len hR
+
+
+-- created on 2026-10-22

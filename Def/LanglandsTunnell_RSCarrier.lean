@@ -1,7 +1,7 @@
 import Def.AutomorphicForm_UnipotentQuotient
-import Lemma.AutomorphicForm.SmoothAutomorphicFnAt
-import Lemma.NumberField.TateGlobalZeta
-import Lemma.AutomorphicForm.WeylIntertwining
+import Lemma.Matrix.SmoothAutomorphicFnAt
+import Lemma.Measure.TateGlobalZeta
+import Lemma.Matrix.WeylIntertwining
 import Abbrev.LanglandsTunnell_RSCarrier
 
 open MeasureTheory NumberField AutomorphicForm Matrix

@@ -1248,9 +1248,9 @@ namespace MathlibExt.Analysis.FunctionalAnalysis.BanachSpaceWanted
 
 /--
 [james_norm_attainment_restrictScalars](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Normed/Module/JamesReflexivity.lean)
+real-linear functional does too after restricting scalars from an `RCLike` field.
 -/
 @[path]
-real-linear functional does too after restricting scalars from an `RCLike` field. -/
 private lemma james_norm_attainment_restrictScalars
   {𝕜 : Type*} [RCLike 𝕜]
   {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
@@ -1291,9 +1291,9 @@ namespace MathlibExt.Analysis.FunctionalAnalysis.BanachSpaceWanted
 
 /--
 [james_surjective_inclusionInDoubleDual_of_restrictScalars](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Normed/Module/JamesReflexivity.lean)
+`RCLike` field after restricting scalars.
 -/
 @[path]
-`RCLike` field after restricting scalars. -/
 private lemma james_surjective_inclusionInDoubleDual_of_restrictScalars
   {𝕜 : Type*} [RCLike 𝕜]
   {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]

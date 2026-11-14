@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Definitions.Def_AlgebraicCurve_RegularProlongation
-open AlgebraicCurve IsLocalRing
+open AlgebraicCurve IsLocalRing Scheme
 
 
 /-- ported from external source -/

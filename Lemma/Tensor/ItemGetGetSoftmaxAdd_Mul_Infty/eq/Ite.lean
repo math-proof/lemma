@@ -38,7 +38,7 @@ private lemma main
   (((A + (Ξ - 1) * ∞).softmax.get ⟨i, by simp [Tensor.length]⟩).get ⟨j, by simp [Tensor.length]⟩ : Tensor ℝ* []).item ≈ (((if P i j then w i j else 0 : ℝ)) : ℝ*) := by
 -- proof
   intro Ξ A
-  have h0 := SoftmaxAdd_Mul_Infty.eq.Cast_Stack_Ite_Block P a w h_ne h
+  have h0 := SoftmaxAdd_Mul_Infty.eq.Cast_Stack_Ite_Block (P := P) (a := a) (w := w) h_ne h
   have h1 := XEqGetS.of.XEq.GtLength.fin (i := i) (by simp [Tensor.length]) h0
   have h2 := XEqGetS.of.XEq.GtLength.fin (i := j) (by simp [Tensor.length]) h1
   have he := entry (fun i j => if P i j then w i j else 0) i j
@@ -51,3 +51,4 @@ private lemma main
 
 
 -- created on 2026-10-01
+-- updated on 2026-11-13

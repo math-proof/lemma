@@ -1,5 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Lemma.Finset.Enumerative.StirlingSecondExplicit
 open scoped BigOperators
 
 
@@ -22,8 +23,8 @@ private lemma pbs_pair_hasSum_abs (j : ℕ) (x y : ℝ) :
     (Nat.stirlingSecond (n + 1) (j + 1) : ℝ) * (|x| ^ n / n.factorial)
   let v : ℕ → ℝ := fun k =>
     (Nat.stirlingSecond (k + 1) (j + 1) : ℝ) * (|y| ^ k / k.factorial)
-  have hx := hasSum_stirlingSecond_succ_egf j |x|
-  have hy := hasSum_stirlingSecond_succ_egf j |y|
+  have hx := hasSum_stirlingSecond_succ_egf (j := j) (x := |x|)
+  have hy := hasSum_stirlingSecond_succ_egf (j := j) (x := |y|)
   have huv : Summable (fun p : ℕ × ℕ => u p.1 * v p.2) :=
     hx.summable.mul_of_nonneg hy.summable (fun _ => by positivity) (fun _ => by positivity)
   have hprod := hx.mul hy huv
@@ -62,7 +63,7 @@ private lemma pbs_pair_hasSum (j : ℕ) (x y : ℝ) :
   let v : ℕ → ℝ := fun k =>
     (Nat.stirlingSecond (k + 1) (j + 1) : ℝ) * (y ^ k / k.factorial)
   have hux : Summable fun n => ‖u n‖ := by
-    apply (hasSum_stirlingSecond_succ_egf j |x|).summable.congr
+    apply (hasSum_stirlingSecond_succ_egf (j := j) (x := |x|)).summable.congr
     intro n
     dsimp [u]
     simp only [abs_mul, abs_div, abs_pow]
@@ -70,15 +71,15 @@ private lemma pbs_pair_hasSum (j : ℕ) (x y : ℝ) :
     have hf : 0 ≤ (n.factorial : ℝ) := by positivity
     rw [abs_of_nonneg hs, abs_of_nonneg hf]
   have hvy : Summable fun k => ‖v k‖ := by
-    apply (hasSum_stirlingSecond_succ_egf j |y|).summable.congr
+    apply (hasSum_stirlingSecond_succ_egf (j := j) (x := |y|)).summable.congr
     intro k
     dsimp [v]
     simp only [abs_mul, abs_div, abs_pow]
     have hs : 0 ≤ (Nat.stirlingSecond (k + 1) (j + 1) : ℝ) := by positivity
     have hf : 0 ≤ (k.factorial : ℝ) := by positivity
     rw [abs_of_nonneg hs, abs_of_nonneg hf]
-  have hx := hasSum_stirlingSecond_succ_egf j x
-  have hy := hasSum_stirlingSecond_succ_egf j y
+  have hx := hasSum_stirlingSecond_succ_egf (j := j) (x := x)
+  have hy := hasSum_stirlingSecond_succ_egf (j := j) (x := y)
   have huv : Summable (fun p : ℕ × ℕ => u p.1 * v p.2) :=
     summable_mul_of_summable_norm hux hvy
   have hscaled := (hx.mul hy huv).mul_left ((j.factorial : ℝ) ^ 2)
@@ -373,4 +374,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-28
+-- updated on 2026-11-13

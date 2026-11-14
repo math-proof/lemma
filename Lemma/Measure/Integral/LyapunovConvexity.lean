@@ -130,9 +130,9 @@ namespace MathlibExt.MeasureTheory.Integral.LyapunovConvexityWanted
 
 /--
 [isAtomless_exists_equipartition](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/Integral/LyapunovConvexity.lean)
+real measure.
 -/
 @[path]
-real measure. -/
 private lemma isAtomless_exists_equipartition {α : Type*} [MeasurableSpace α]
   {μ : Measure α} [IsFiniteMeasure μ] (hA : IsAtomless μ)
   {V : Set α} (hV : MeasurableSet V) {n : ℕ} (hn : 0 < n) :
@@ -423,9 +423,9 @@ namespace MathlibExt.MeasureTheory.Integral.LyapunovConvexityWanted
 
 /--
 [bangBang_step](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/Integral/LyapunovConvexity.lean)
+preserving the integral.
 -/
 @[path]
-preserving the integral. -/
 private lemma bangBang_step {α : Type*} [MeasurableSpace α]
   {μ : Measure α} [IsFiniteMeasure μ] (hA : IsAtomless μ)
   {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]

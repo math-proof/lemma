@@ -1,12 +1,12 @@
 -- Carved from Lemma/Definitions/Def_FreyPackage_ExchangeCase.lean: instance decls only.
-import Lemma.FLTPrelim.FreyPackage
+import Lemma.WeierstrassCurve.FreyPackage
 import Instance.FLTPrelim_GaloisRep
-import Lemma.FLTPrelim.ModularRep
+import Lemma.CuspForm.ModularRep
 import Instance.FLTPrelim_Modularity
 import Def.FLTPrelim_Ramification
 import Instance.FreyPackage_GaloisRep
 import Def.FreyPackage_LevelRaising
-import Lemma.GaloisRep.GlobalUnramifiedAt
+import Lemma.ValuationSubring.GlobalUnramifiedAt
 
 set_option autoImplicit false
 

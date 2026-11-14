@@ -26,8 +26,8 @@ lemma wimanMajorant_bound_off_exceptionalSet
     (1 + wimanGrowth f x ^ (81 / 128 : ℝ)) := by
 -- proof
   obtain ⟨xE, hEfinite, hEbound⟩ :=
-    exists_finite_wimanExceptionalSet f hf htrans
-  obtain ⟨xP, hpos, _, _, _, _⟩ := eventually_wimanGrowth_regular f hf htrans
+    exists_finite_wimanExceptionalSet (f := f) hf htrans
+  obtain ⟨xP, hpos, _, _, _, _⟩ := eventually_wimanGrowth_regular (f := f) hf htrans
   let x₀ : ℝ := max xE xP
   have hxE : xE ≤ x₀ := le_max_left _ _
   have hxP : xP ≤ x₀ := le_max_right _ _
@@ -61,13 +61,13 @@ lemma wimanMajorant_bound_off_exceptionalSet
     congr 1
     norm_num
   have hmaximumNonneg : 0 ≤ wimanMaximumTerm f (Real.exp x) :=
-    (wimanTerm_nonneg f (Real.exp x) 0).trans
-      (wimanTerm_le_wimanMaximumTerm f hf (Real.exp x) 0)
+    (wimanTerm_nonneg (f := f) (r := Real.exp x) (n := 0)).trans
+      (wimanTerm_le_wimanMaximumTerm (f := f) (r := Real.exp x) (n := 0) hf)
   calc
     wimanMajorant f (Real.exp x) ≤
       8 * wimanMaximumTerm f (Real.exp x) *
         (1 + Real.sqrt (iteratedDeriv 2 (wimanGrowth f) x)) :=
-      wimanMajorant_le_eight_mul_maximumTerm f hf x
+      wimanMajorant_le_eight_mul_maximumTerm (f := f) (x := x) hf
     _ ≤ 8 * wimanMaximumTerm f (Real.exp x) *
       (1 + Real.sqrt (wimanGrowth f x ^ (81 / 64 : ℝ))) := by
       exact mul_le_mul_of_nonneg_left
@@ -76,7 +76,7 @@ lemma wimanMajorant_bound_off_exceptionalSet
     _ = 8 * wimanMaximumTerm f (Real.exp x) *
       (1 + wimanGrowth f x ^ (81 / 128 : ℝ)) := by
       rw [hsqrt]
-end
+end Complex
 
 
 

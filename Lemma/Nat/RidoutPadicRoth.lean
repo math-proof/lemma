@@ -1,6 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.RidoutPadicRoth
+import Theorem.NumberTheory.RothAuxiliary.Part7
 open scoped BigOperators
 open MetaMathlibExt
 

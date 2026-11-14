@@ -1,7 +1,7 @@
 import Mathlib
 import Instance.MvFormalGroup_CartierModuleBaseChange
-import Lemma.CerednikDrinfeld.CartierStructureConstants
-import Lemma.CerednikDrinfeld.CartierModuleModel
+import Lemma.MvPolynomial.CartierStructureConstants
+import Lemma.FormalGroup.CartierModuleModel
 import Instance.CerednikDrinfeld_GradedCartierNModule
 import Structure.CerednikDrinfeld_DrinfeldQuadruple
 

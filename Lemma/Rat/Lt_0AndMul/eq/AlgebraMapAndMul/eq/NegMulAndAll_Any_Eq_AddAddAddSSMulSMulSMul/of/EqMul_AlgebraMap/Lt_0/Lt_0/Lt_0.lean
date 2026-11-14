@@ -55,7 +55,7 @@ private lemma span_of_linearIndependent
   ∀ u : ℍ[ℚ,c,d], ∃ α β γ δ : ℚ, u = α • 1 + β • y + γ • z + δ • w := by
   have hspan := hli.span_eq_top_of_card_eq_finrank' (by simp [QuaternionAlgebra.finrank_eq_four])
   intro u
-  have hu : u ∈ Submodule.span ℚ Set.range ![(1 : ℍ[ℚ,c,d]), y, z, w] := by rw [hspan]; trivial
+  have hu : u ∈ Submodule.span ℚ (Set.range ![(1 : ℍ[ℚ,c,d]), y, z, w]) := by rw [hspan]; trivial
   obtain ⟨f, hf⟩ := (Submodule.mem_span_range_iff_exists_fun ℚ).1 hu
   refine ⟨f 0, f 1, f 2, f 3, ?_⟩
   rw [← hf]
@@ -90,16 +90,16 @@ private lemma helper_main
     have hy₂ : y₂ ≠ 0 := by rintro rfl; simp at hre; linarith
     refine ⟨⟨0, 0, 1, 0⟩, d, hd, ?_, ?_, ?_⟩
     · ext <;> simp [algebraMap_eq]
-    · ext <;> simp <;> ring
+    · ext <;> (simp; try ring)
     ·
       refine span_of_linearIndependent _ _ _ (linearIndependent_of_relations _ _ _ t d ht.ne hd.ne
       rfl rfl ?_ ?_ ?_ rfl ?_ ?_ ?_)
       · simp
-      · ext <;> simp <;> (subst t; ring)
-      · ext <;> simp
-      · ext <;> simp <;> (subst t; ring)
-      · ext <;> simp <;> ring
-      · ext <;> simp <;> (subst t; ring)
+      · ext <;> (simp; try (subst t); try ring)
+      · ext <;> (simp; try ring)
+      · ext <;> (simp; try (subst t); try ring)
+      · ext <;> (simp; try ring)
+      · ext <;> (simp; try (subst t); try ring)
   else
     have hpos : 0 < y₃ * y₃ - c * y₄ * y₄ := by
       obtain h | h := not_and_or.1 hJK
@@ -114,7 +114,7 @@ private lemma helper_main
       have hcd : 0 < c * d := mul_pos_of_neg_of_neg hc hd
       nlinarith
     · ext <;> simp [algebraMap_eq] <;> ring
-    · ext <;> simp <;> ring
+    · ext <;> (simp; try ring)
     ·
       refine span_of_linearIndependent _ _ _ (linearIndependent_of_relations _ _ _ t
       (c * d * (c * y₄ * y₄ - y₃ * y₃)) ht.ne ?_ rfl rfl ?_ ?_ ?_ rfl ?_ ?_ ?_)
@@ -123,11 +123,11 @@ private lemma helper_main
         nlinarith
       ·
         simp; ring
-      · ext <;> simp <;> (subst t; ring)
-      · ext <;> simp <;> ring
-      · ext <;> simp <;> (subst t; ring)
-      · ext <;> simp <;> ring
-      · ext <;> simp <;> (subst t; ring)
+      · ext <;> (simp; try (subst t); try ring)
+      · ext <;> (simp; try ring)
+      · ext <;> (simp; try (subst t); try ring)
+      · ext <;> (simp; try ring)
+      · ext <;> (simp; try (subst t); try ring)
 /--
 [QuaternionAlgebra_exists_mul_self_eq_and_anticommute_and_forall_exists_of_mul_self_eq_of_neg_of_neg](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_QuaternionAlgebra_exists_mul_self_eq_and_anticommute_and_forall_exists_of_mul_self_eq_of_neg_of_neg.lean)
 -/
@@ -149,3 +149,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

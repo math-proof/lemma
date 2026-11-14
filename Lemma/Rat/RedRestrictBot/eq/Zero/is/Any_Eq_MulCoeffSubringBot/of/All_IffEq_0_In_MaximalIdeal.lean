@@ -3,7 +3,7 @@ import Initialize.Tactic.Attr.Basic
 import Def.ModularCurve_NodeDescent
 import Lemma.Int.P2MUtil
 
-open ModularCurve ModularCurve.NodeLocalized
+open ModularCurve MvPolynomial.NodeLocalized MvPolynomial
 
 /--
 [ModularCurve_NodeLocalized_redRestrict_bot_eq_zero_iff_exists_eq_natCast_mul](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularCurve_NodeLocalized_redRestrict_bot_eq_zero_iff_exists_eq_natCast_mul.lean)

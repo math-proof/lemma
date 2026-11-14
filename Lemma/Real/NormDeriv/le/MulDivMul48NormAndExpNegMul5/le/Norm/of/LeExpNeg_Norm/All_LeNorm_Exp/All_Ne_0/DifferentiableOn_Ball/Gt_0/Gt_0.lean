@@ -53,7 +53,7 @@ private lemma helper_main (F : ℂ → ℂ) (s₀ : ℂ) (R M : ℝ) (hR : 0 < R
     have h := hconst z hz
     calc
       _ = F z * cexp (-(g z)) * cexp (g z) := by
-      rw [mul_assoc, ← exp_add, neg_add_cancel, exp_zero, mul_one]
+        rw [mul_assoc, ← exp_add, neg_add_cancel, exp_zero, mul_one]
       _ = F s₀ * cexp (g z) := by rw [h]
   have hnormF : ∀ z ∈ ball s₀ R, ‖F z‖ = ‖F s₀‖ * Real.exp (g z).re := by
     intro z hz; rw [hFeq z hz, norm_mul, norm_exp]
@@ -112,7 +112,7 @@ private lemma helper_main (F : ℂ → ℂ) (s₀ : ℂ) (R M : ℝ) (hR : 0 < R
       linarith [hg_half s hs]
     calc
       _ = Real.exp (-M) * Real.exp (-(4 * M)) := by
-      rw [← Real.exp_add]; ring_nf
+        rw [← Real.exp_add]; ring_nf
       _ ≤ ‖F s₀‖ * Real.exp (g s).re :=
           mul_le_mul hlo (Real.exp_le_exp.mpr h1) (Real.exp_pos _).le hF₀pos.le
   refine ⟨?_, hlow⟩

@@ -78,9 +78,9 @@ namespace MathlibExt.MeasureTheory.Geometry.BanachTarskiWanted
 
 /--
 [btCongr_absorb](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/Geometry/BanachTarski.lean)
+never returns to `C`, then `Y` is congruent to `Y \ C`.
 -/
 @[path]
-never returns to `C`, then `Y` is congruent to `Y \ C`. -/
 private lemma btCongr_absorb {X : Type*} [MetricSpace X]
   (σ : X ≃ᵢ X) {C Y : Set X}
   (hY : ∀ n : ℕ, (⇑σ)^[n] '' C ⊆ Y)
@@ -574,9 +574,9 @@ namespace MathlibExt.MeasureTheory.Geometry.BanachTarskiWanted
 
 /--
 [btFree_image_P2](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/Geometry/BanachTarski.lean)
+of `btP₁`.
 -/
 @[path]
-of `btP₁`. -/
 private lemma btFree_image_P2 :
   (fun w => FreeGroup.of (0 : Fin 2) * w) '' btP₂ = btP₁ᶜ := by
   ext v
@@ -640,9 +640,9 @@ namespace MathlibExt.MeasureTheory.Geometry.BanachTarskiWanted
 
 /--
 [btFree_image_P4](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/Geometry/BanachTarski.lean)
+of `btP₃`.
 -/
 @[path]
-of `btP₃`. -/
 private lemma btFree_image_P4 :
   (fun w => FreeGroup.of (1 : Fin 2) * w) '' btP₄ = btP₃ᶜ := by
   ext v

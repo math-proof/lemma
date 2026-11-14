@@ -1,8 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.CerednikDrinfeld.WalkOverlap
+import Lemma.List.WalkOverlap
 open SimpleGraph
-open CerednikDrinfeld.Mumford CerednikDrinfeld
+open CerednikDrinfeld.Mumford CerednikDrinfeld List
 
 
 /-- ported from external source -/

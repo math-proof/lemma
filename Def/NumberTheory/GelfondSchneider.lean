@@ -18,9 +18,10 @@ import Mathlib.Analysis.Complex.JensenFormula
 import Mathlib.Analysis.Meromorphic.Divisor
 import Mathlib.Analysis.Meromorphic.TrailingCoefficient
 import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import Mathlib.Analysis.SpecialFunctions.Integrability.LogMeromorphic
+import Mathlib.Analysis.SpecialFunctions.Integrability.Log
 import Mathlib.LinearAlgebra.Vandermonde
 import Mathlib.MeasureTheory.Integral.CircleAverage
+import Mathlib.NumberTheory.NumberField.Basic
 import Mathlib.NumberTheory.NumberField.House
 import Mathlib.NumberTheory.NumberField.Norm
 import Mathlib.RingTheory.Localization.Integral
@@ -46,6 +47,7 @@ section
 namespace MathlibExt.NumberTheory.TranscendenceWanted
 
 section GS_DEFS
+open scoped NumberField
 
 /-- Frequency at column `t : Fin (L * L)` (same formula as in `gs_freq_injective`). -/
 def gs_ω (b : ℂ) (L : ℕ) (t : Fin (L * L)) : ℂ :=

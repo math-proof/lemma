@@ -2,7 +2,7 @@
 import Mathlib.LinearAlgebra.Matrix.SpecialLinearGroup
 import Mathlib.GroupTheory.GroupAction.Quotient
 import Mathlib.Data.Finite.Prod
-import Lemma.ModularCurve.ProjectiveLine
+import Lemma.SpecialLinearGroup.ProjectiveLine
 
 namespace ModularCurve
 

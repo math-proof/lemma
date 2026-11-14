@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.PhiGen
+import Lemma.Polynomial.PhiGen
 import Lemma.Int.P2MUtil
 
-open ModularCurve
+open ModularCurve Polynomial
 
 /--
 [ModularCurve_mem_range_qExpand_of_qTwist_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularCurve_mem_range_qExpand_of_qTwist_eq.lean)

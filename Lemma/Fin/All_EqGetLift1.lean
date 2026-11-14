@@ -42,7 +42,6 @@ private lemma typeA_toPermHom_surjective
   obtain ⟨i, hi⟩ := hx
   rw [← hi]
   exact hgen i
-/-- Exact cardinality: $|W(A_{n-1})| = (n+1)!$, matching $|S_{n+1}|$. -/
 
 /--
 [swap_mul_swap_cube](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/TypeAInjectivityHelper.lean)
@@ -86,4 +85,4 @@ private lemma adjTransp_isLiftable_eq
 
 
 -- created on 2026-10-23
--- updated on 2026-10-26
+-- updated on 2026-11-13

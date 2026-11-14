@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.AlgebraicGeometry.ModulesSectionsTensor
+import Lemma.Scheme.ModulesSectionsTensor
 
 set_option autoImplicit false
 

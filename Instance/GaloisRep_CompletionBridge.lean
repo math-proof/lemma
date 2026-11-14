@@ -1,7 +1,7 @@
 -- Carved from Lemma/Definitions/Def_GaloisRep_CompletionBridge.lean: instance decls only.
 import Mathlib
 import Def.FLTPrelim_Ramification
-import Lemma.GaloisRep.CompletionBridge
+import Lemma.PadicAlgCl.CompletionBridge
 
 set_option autoImplicit false
 

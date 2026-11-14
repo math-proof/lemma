@@ -83,11 +83,11 @@ private lemma donsker_weighted_sum_eq {Ω : Type*} (n : ℕ) (X : ℕ → Ω →
     simp
   by_cases hm_lt : m < n
   · have htail : (∑ i ∈ Finset.Ico (m + 1) n, X i ω * donskerWeight n i t) = 0 := by
-    apply Finset.sum_eq_zero
-    intro i hi
-    rw [donskerWeight_eq_zero_of_floor_lt n i t]
-    · simp
-    · exact (Nat.succ_le_iff.mp (Finset.mem_Ico.mp hi).1)
+      apply Finset.sum_eq_zero
+      intro i hi
+      rw [donskerWeight_eq_zero_of_floor_lt n i t]
+      · simp
+      · exact (Nat.succ_le_iff.mp (Finset.mem_Ico.mp hi).1)
     rw [← Finset.sum_range_add_sum_Ico (fun i => X i ω * donskerWeight n i t) hm_le,
       Finset.sum_eq_sum_Ico_succ_bot hm_lt, hprefix, donskerWeight_floor, htail]
     simp [m, hm_lt]
@@ -279,9 +279,9 @@ private lemma donsker_continuousMap_measurableSpace_eq_comap :
     MeasurableSpace.comap
       (fun f : C(Set.Icc (0 : ℝ) 1, ℝ) => (f : Set.Icc (0 : ℝ) 1 → ℝ))
       (inferInstance : MeasurableSpace (Set.Icc (0 : ℝ) 1 → ℝ)) := by
-  rw [ContinuousMap.measurableSpace_eq_iSup_comap_eval]
-  exact (MeasurableSpace.comap_process_pi
-    (fun t (f : C(Set.Icc (0 : ℝ) 1, ℝ)) => f t)).symm
+  exact ContinuousMap.measurableSpace_eq_iSup_comap_eval.trans
+    (MeasurableSpace.comap_process_pi
+      (fun t (f : C(Set.Icc (0 : ℝ) 1, ℝ)) => f t)).symm
 
 end MathlibExt.Probability.DonskerWanted
 
@@ -483,8 +483,7 @@ private lemma tid_reindex
   (h : TendstoInDistribution W atTop Y (fun _ => P) P')
   (m : ℕ → ℕ) (hm : Tendsto m atTop atTop) :
   TendstoInDistribution (fun n => W (m n)) atTop Y (fun _ => P) P' where
-  forall_aemeasurable n :=
-  h.forall_aemeasurable (m n)
+    forall_aemeasurable n := h.forall_aemeasurable (m n)
     aemeasurable_limit := h.aemeasurable_limit
     tendsto := h.tendsto.comp hm
 
@@ -504,8 +503,7 @@ private lemma tid_of_identDistrib
   (h : TendstoInDistribution W atTop Y (fun _ => P) P')
   (hWV : ∀ n, IdentDistrib (W n) (V n) P P) :
   TendstoInDistribution V atTop Y (fun _ => P) P' where
-  forall_aemeasurable n :=
-  (hWV n).aemeasurable_snd
+    forall_aemeasurable n := (hWV n).aemeasurable_snd
     aemeasurable_limit := h.aemeasurable_limit
     tendsto := by
       refine h.tendsto.congr' (.of_forall fun n => ?_)
@@ -657,11 +655,11 @@ private lemma bsum_tendstoInDistribution
     (fun _ => P) P' := by
   obtain rfl | hab := hab.eq_or_lt
   · have hconst : TendstoInDistribution (fun _n : ℕ => fun _ω : Ω => (0 : ℝ)) atTop
-    (fun _ω : Ω' => (0 : ℝ)) (fun _ => P) P' := by
-    apply tendstoInDistribution_of_identDistrib 0
-    · intro n
-      exact ⟨by fun_prop, by fun_prop, by simp⟩
-    · exact ⟨by fun_prop, by fun_prop, by simp⟩
+        (fun _ω : Ω' => (0 : ℝ)) (fun _ => P) P' := by
+      apply tendstoInDistribution_of_identDistrib 0
+      · intro n
+        exact ⟨by fun_prop, by fun_prop, by simp⟩
+      · exact ⟨by fun_prop, by fun_prop, by simp⟩
     refine hconst.congr (fun n => .of_forall fun ω => ?_) (.of_forall fun ω => ?_)
     · simp [bsum, bsize]
     · simp
@@ -849,8 +847,8 @@ private lemma continuous_appendVec {d : ℕ} : Continuous (@appendVec d) := by
   apply continuous_pi
   intro i
   refine Fin.lastCases ?_ (fun j => ?_) i
-  · simpa [Function.comp_def] using continuous_snd.comp
-    (WithLp.prod_continuous_ofLp 2 (EuclideanSpace ℝ (Fin d)) ℝ)
+  · simpa [Function.comp_def] using
+      continuous_snd.comp (WithLp.prod_continuous_ofLp 2 (EuclideanSpace ℝ (Fin d)) ℝ)
   · simpa [Function.comp_def] using
     (PiLp.continuous_apply 2 (fun _ : Fin d => ℝ) j).comp
       (continuous_fst.comp
@@ -1070,7 +1068,7 @@ private lemma interpolationCoeff_nonneg (n : ℕ) (t : NNReal) :
   rw [interpolationCoeff]
   split_ifs
   · exact mul_nonneg (inv_nonneg.mpr (Real.sqrt_nonneg _))
-    (Nat.zero_le_self_sub_floor (mul_nonneg (Nat.cast_nonneg n) t.2))
+      (Nat.zero_le_self_sub_floor (mul_nonneg (Nat.cast_nonneg n) t.2))
   · exact le_rfl
 
 end MathlibExt.Probability.DonskerWanted
@@ -1086,7 +1084,7 @@ private lemma interpolationCoeff_le (n : ℕ) (t : NNReal) :
   rw [interpolationCoeff]
   split_ifs
   · exact mul_le_of_le_one_right (inv_nonneg.mpr (Real.sqrt_nonneg _))
-    (Nat.self_sub_floor_lt_one ((n : ℝ) * (t : ℝ))).le
+      (Nat.self_sub_floor_lt_one ((n : ℝ) * (t : ℝ))).le
   · exact inv_nonneg.mpr (Real.sqrt_nonneg _)
 
 end MathlibExt.Probability.DonskerWanted
@@ -1257,7 +1255,7 @@ private lemma processValueVec_eq_prefix_add_error
       ∑ i ∈ Finset.range (Nat.floor ((n : ℝ) * (u j.succ : ℝ))), X i ω +
       interpolationCoeff n (u j.succ) *
         X (Nat.floor ((n : ℝ) * (u j.succ : ℝ))) ω
-  rw [donskerProcess_apply_eq n X ω (t j) hn]
+  rw [donskerProcess_apply_eq (n := n) (X := X) (ω := ω) (t := t j) hn]
   have htuR : (u j.succ : ℝ) = (t j : ℝ) := by
     have h := congrArg ((↑) : NNReal → ℝ) (htu j)
     change (u j.succ : ℝ) = (t j).1 at h
@@ -2294,8 +2292,8 @@ private lemma donsker_etemadi_scaled_of_tail_bound
   have hMreal : M.toReal ≤ (η / 3) / c ^ 2 := by
     have := (ENNReal.toReal_le_toReal hMtop ENNReal.ofReal_ne_top).2 hMbound
     simpa only [ENNReal.toReal_ofReal hq] using this
-  have het := etemadi_maximal_inequality Y hMeas hIndep m
-    (c * Real.sqrt (m : ℝ))
+  have het := etemadi_maximal_inequality (X := Y) (n := m) (a := c * Real.sqrt (m : ℝ))
+    hMeas hIndep
   change P {ω | ∃ k ∈ Finset.range (m + 1),
     3 * (c * Real.sqrt (m : ℝ)) ≤ |psum Y k ω|} ≤ 3 * M at het
   have hthreeMtop : (3 * M : ENNReal) ≠ ∞ := ENNReal.mul_ne_top (by norm_num) hMtop
@@ -2419,7 +2417,7 @@ private lemma donskerProcess_apply_eq_convex {Ω : Type*} (n : ℕ)
     if j < n then
       ((1 - r) * psum X j ω + r * psum X (j + 1) ω) / Real.sqrt (n : ℝ)
     else psum X j ω / Real.sqrt (n : ℝ) := by
-  rw [donskerProcess_apply_eq n X ω t hn]
+  rw [donskerProcess_apply_eq (n := n) (X := X) (ω := ω) (t := t) hn]
   dsimp only
   split_ifs with hj
   · rw [show psum X (Nat.floor ((n : ℝ) * t.1) + 1) ω =
@@ -2613,7 +2611,7 @@ private lemma donsker_bad_oscillation_subset_block_max
   obtain hst | hts := le_total (s : ℝ) t
   · exact hord s t hst hdist hbad
   · exact hord t s hts (by simpa only [dist_comm] using hdist)
-    (by simpa only [dist_comm] using hbad)
+      (by simpa only [dist_comm] using hbad)
 
 end MathlibExt.Probability.DonskerWanted
 
@@ -3045,8 +3043,8 @@ private lemma donsker_good_family_compact
     obtain ⟨n, hfn, _, hosc⟩ := f.2
     by_cases hjn : N j ≤ n
     · have hxy : dist x y ≤ δ j := by
-      rw [dist_comm]
-      exact (hy.trans_le (min_le_right _ _)).le
+        rw [dist_comm]
+        exact (hy.trans_le (min_le_right _ _)).le
       exact (hosc j hjn x y hxy).trans hj
     · have hnlt : n < N j := lt_of_not_ge hjn
       have hfsmall : f.1 ∈ CSmall := by
@@ -3290,8 +3288,7 @@ private lemma donsker_process_tendstoInDistribution
   (B : NNReal → Ω' → ℝ) (hB : IsBrownianReal B P') :
   TendstoInDistribution (fun n ω => donskerProcess n X ω) atTop
     (donskerBrownianPath B) (fun _ => P) P' where
-  forall_aemeasurable n :=
-  (donskerProcess_measurable X hMeas n).aemeasurable
+    forall_aemeasurable n := (donskerProcess_measurable X hMeas n).aemeasurable
     aemeasurable_limit := donskerBrownianPath_aemeasurable B hB
     tendsto := by
       let laws : ℕ → ProbabilityMeasure C(Set.Icc (0 : ℝ) 1, ℝ) := fun n =>
@@ -3379,7 +3376,7 @@ lemma donsker_invariance_principle
 -- proof
   refine ⟨donskerBrownianPath B, donskerBrownianPath_ae_eq B hB, ?_⟩
   exact donsker_process_tendstoInDistribution X hMeas hIndep hIdent hMemLp hMean hVar B hB
-end
+end MathlibExt.Probability.DonskerWanted
 
 
 

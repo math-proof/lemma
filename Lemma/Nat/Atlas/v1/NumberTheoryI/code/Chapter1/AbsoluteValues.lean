@@ -49,11 +49,12 @@ lemma finite_nat_primes_dvd
 -- given
   (hN : N ≠ 0) :
 -- imply
-  {p : Nat.Primes | (p : ℕ) ∣ N}.Finite :=
+  {p : Nat.Primes | p.val ∣ N}.Finite :=
 -- proof
-  (((Finset.Icc 1 N : Finset ℕ).preimage (fun p : Nat.Primes => (p : ℕ))
-    (fun a _ b _ h => Subtype.val_injective h)).finite_toSet).subset fun ⟨p, hp⟩ hdvd => by
-    simp only [Set.mem_ofPred_eq] at hdvd
+  (((Finset.Icc 1 N : Finset ℕ).preimage (fun p : Nat.Primes => p.val)
+    (fun a _ b _ h => Subtype.val_injective h)).finite_toSet).subset fun p hdvd => by
+    change p.val ∣ N at hdvd
+    have hp : Nat.Prime p.val := p.property
     exact Finset.mem_preimage.mpr (Finset.mem_Icc.mpr
       ⟨hp.one_le, Nat.le_of_dvd (Nat.pos_of_ne_zero hN) hdvd⟩)
 
@@ -66,17 +67,19 @@ lemma PF_finsupp
 -- given
   (hx : x ≠ 0) :
 -- imply
-  (Function.mulSupport fun p : Nat.Primes => (padicNorm p x : ℝ)).Finite := by
+  (Function.mulSupport fun p : Nat.Primes => (padicNorm p.val x : ℝ)).Finite := by
 -- proof
-  apply (finite_nat_primes_dvd (x.num.natAbs * x.den) (by
+  apply (finite_nat_primes_dvd (N := x.num.natAbs * x.den) (by
     intro heq; rw [Nat.mul_eq_zero] at heq; rcases heq with h | h
     · exact hx (Rat.num_eq_zero.mp (Int.natAbs_eq_zero.mp h))
     · exact absurd h x.den_pos.ne')).subset
-  intro ⟨p, hp⟩ hmem
-  simp only [Function.mem_mulSupport, Set.mem_ofPred_eq] at hmem ⊢
-  by_contra hndvd; apply hmem
-  exact_mod_cast @padicNorm_eq_one_of_not_dvd x p ⟨hp⟩
-    (fun h => hndvd (h.mul_right _)) (fun h => hndvd (h.mul_left _))
+  intro p hmem
+  have hp : Nat.Prime p.val := p.property
+  have hsupp : (padicNorm p.val x : ℝ) ≠ 1 := Function.mem_mulSupport.mp hmem
+  by_contra hndvd
+  exact hsupp (by
+    exact_mod_cast @padicNorm_eq_one_of_not_dvd x p.val ⟨hp⟩
+      (fun h => hndvd (h.mul_right _)) (fun h => hndvd (h.mul_left _)))
 
 /--
 [PF_prime](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Chapter1/AbsoluteValues.lean)
@@ -87,7 +90,7 @@ lemma PF_prime
 -- given
   (hq : Nat.Prime q) :
 -- imply
-  |(↑(q : ℚ) : ℝ)| * ∏ᶠ (p : Nat.Primes), (↑(padicNorm p (q : ℚ)) : ℝ) = 1 := by
+  |(↑(q : ℚ) : ℝ)| * ∏ᶠ (p : Nat.Primes), (↑(padicNorm p.val (q : ℚ)) : ℝ) = 1 := by
 -- proof
   have hq_pos : (0 : ℝ) < q := Nat.cast_pos.mpr hq.pos
   rw [show |(↑(q : ℚ) : ℝ)| = (q : ℝ) from by
@@ -105,22 +108,22 @@ lemma PF_prime
 lemma PF_mul
   {a b : ℚ}
 -- given
-  (hfa : (Function.mulSupport fun p : Nat.Primes => (padicNorm p a : ℝ)).Finite)
-  (hfb : (Function.mulSupport fun p : Nat.Primes => (padicNorm p b : ℝ)).Finite)
-  (ha1 : |(a : ℝ)| * ∏ᶠ (p : Nat.Primes), (↑(padicNorm p a) : ℝ) = 1)
-  (hb1 : |(b : ℝ)| * ∏ᶠ (p : Nat.Primes), (↑(padicNorm p b) : ℝ) = 1) :
+  (hfa : (Function.mulSupport fun p : Nat.Primes => (padicNorm p.val a : ℝ)).Finite)
+  (hfb : (Function.mulSupport fun p : Nat.Primes => (padicNorm p.val b : ℝ)).Finite)
+  (ha1 : |(a : ℝ)| * ∏ᶠ (p : Nat.Primes), (↑(padicNorm p.val a) : ℝ) = 1)
+  (hb1 : |(b : ℝ)| * ∏ᶠ (p : Nat.Primes), (↑(padicNorm p.val b) : ℝ) = 1) :
 -- imply
-  |(↑(a * b) : ℝ)| * ∏ᶠ (p : Nat.Primes), (↑(padicNorm p (a * b)) : ℝ) = 1 := by
+  |(↑(a * b) : ℝ)| * ∏ᶠ (p : Nat.Primes), (↑(padicNorm p.val (a * b)) : ℝ) = 1 := by
 -- proof
-  have hprod_eq : (fun p : Nat.Primes => (padicNorm p (a * b) : ℝ)) =
-      (fun p : Nat.Primes => (padicNorm p a : ℝ) * (padicNorm p b : ℝ)) := by
+  have hprod_eq : (fun p : Nat.Primes => (padicNorm p.val (a * b) : ℝ)) =
+      (fun p : Nat.Primes => (padicNorm p.val a : ℝ) * (padicNorm p.val b : ℝ)) := by
     ext ⟨p, hp⟩; simp only; exact_mod_cast @padicNorm.mul p ⟨hp⟩ a b
   rw [show |(↑(a * b) : ℝ)| = |(a : ℝ)| * |(b : ℝ)| from by push_cast; exact abs_mul _ _,
       hprod_eq, finprod_mul_distrib hfa hfb,
-      show |(a : ℝ)| * |(b : ℝ)| * ((∏ᶠ p : Nat.Primes, (↑(padicNorm p a) : ℝ)) *
-        (∏ᶠ p : Nat.Primes, (↑(padicNorm p b) : ℝ))) =
-        (|(a : ℝ)| * ∏ᶠ p : Nat.Primes, (↑(padicNorm p a) : ℝ)) *
-        (|(b : ℝ)| * ∏ᶠ p : Nat.Primes, (↑(padicNorm p b) : ℝ)) from by ring,
+      show |(a : ℝ)| * |(b : ℝ)| * ((∏ᶠ p : Nat.Primes, (↑(padicNorm p.val a) : ℝ)) *
+        (∏ᶠ p : Nat.Primes, (↑(padicNorm p.val b) : ℝ))) =
+        (|(a : ℝ)| * ∏ᶠ p : Nat.Primes, (↑(padicNorm p.val a) : ℝ)) *
+        (|(b : ℝ)| * ∏ᶠ p : Nat.Primes, (↑(padicNorm p.val b) : ℝ)) from by ring,
       ha1, hb1, mul_one]
 
 /--
@@ -132,7 +135,7 @@ lemma PF_nat_pos
 -- given
   (hn : 0 < n) :
 -- imply
-  |(↑(n : ℚ) : ℝ)| * ∏ᶠ (p : Nat.Primes), (↑(padicNorm p (n : ℚ)) : ℝ) = 1 := by
+  |(↑(n : ℚ) : ℝ)| * ∏ᶠ (p : Nat.Primes), (↑(padicNorm p.val (n : ℚ)) : ℝ) = 1 := by
 -- proof
   induction n using Nat.strongRecOn with
   | _ n ih =>
@@ -144,10 +147,10 @@ lemma PF_nat_pos
     have hm_pos : 0 < m := Nat.div_pos (Nat.le_of_dvd hn (Nat.minFac_dvd n)) hq_prime.pos
     have hm_lt : m < n := Nat.div_lt_self hn hq_prime.one_lt
     rw [show (n : ℚ) = (m : ℚ) * (q : ℚ) from by exact_mod_cast hmq.symm]
-    exact PF_mul _ _
-      (PF_finsupp _ (Nat.cast_ne_zero.mpr hm_pos.ne'))
-      (PF_finsupp _ (Nat.cast_ne_zero.mpr hq_prime.pos.ne'))
-      (ih m hm_lt hm_pos) (PF_prime q hq_prime)
+    exact PF_mul
+      (PF_finsupp (Nat.cast_ne_zero.mpr hm_pos.ne'))
+      (PF_finsupp (Nat.cast_ne_zero.mpr hq_prime.pos.ne'))
+      (ih m hm_lt hm_pos) (PF_prime hq_prime)
 
 /--
 [PF_int](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Chapter1/AbsoluteValues.lean)
@@ -158,7 +161,7 @@ lemma PF_int
 -- given
   (hz : z ≠ 0) :
 -- imply
-  |(↑(z : ℚ) : ℝ)| * ∏ᶠ (p : Nat.Primes), (↑(padicNorm p (z : ℚ)) : ℝ) = 1 := by
+  |(↑(z : ℚ) : ℝ)| * ∏ᶠ (p : Nat.Primes), (↑(padicNorm p.val (z : ℚ)) : ℝ) = 1 := by
 -- proof
   have hna : 0 < z.natAbs := Int.natAbs_pos.mpr hz
   rcases Int.lt_or_lt_of_ne hz with hz_neg | hz_pos
@@ -166,11 +169,11 @@ lemma PF_int
       rw [← Int.cast_natCast z.natAbs, ← Int.cast_neg]; congr 1; omega
     simp_rw [heq, padicNorm.neg, show |((-↑↑z.natAbs : ℚ) : ℝ)| = |(↑(↑z.natAbs : ℚ) : ℝ)| from by
       push_cast; exact abs_neg _]
-    exact PF_nat_pos z.natAbs hna
+    exact PF_nat_pos hna
   · have heq : (z : ℚ) = ((z.natAbs : ℕ) : ℚ) := by
       rw [← Int.cast_natCast z.natAbs]; congr 1
       exact (Int.natAbs_of_nonneg hz_pos.le).symm
-    rw [heq]; exact PF_nat_pos z.natAbs hna
+    rw [heq]; exact PF_nat_pos hna
 
 /--
 [product_formula](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Chapter1/AbsoluteValues.lean)
@@ -181,22 +184,22 @@ lemma product_formula
 -- given
   (hx : x ≠ 0) :
 -- imply
-  |(x : ℝ)| * ∏ᶠ (p : Nat.Primes), (↑(padicNorm p x) : ℝ) = 1 := by
+  |(x : ℝ)| * ∏ᶠ (p : Nat.Primes), (↑(padicNorm p.val x) : ℝ) = 1 := by
 -- proof
   have hx_eq : x = (x.num : ℚ) / (x.den : ℚ) := by
     rw [← Int.cast_natCast x.den]; exact (Rat.num_div_den x).symm
   rw [hx_eq,
     show |(↑((x.num : ℚ) / (x.den : ℚ)) : ℝ)| = |(↑(x.num : ℚ) : ℝ)| / |(↑(x.den : ℚ) : ℝ)| from by
       push_cast; exact abs_div _ _]
-  rw [show (fun p : Nat.Primes => (padicNorm p ((x.num : ℚ) / (x.den : ℚ)) : ℝ)) =
-      (fun p : Nat.Primes => (padicNorm p (x.num : ℚ) : ℝ) / (padicNorm p (x.den : ℚ) : ℝ)) from by
+  rw [show (fun p : Nat.Primes => (padicNorm p.val ((x.num : ℚ) / (x.den : ℚ)) : ℝ)) =
+      (fun p : Nat.Primes => (padicNorm p.val (x.num : ℚ) : ℝ) / (padicNorm p.val (x.den : ℚ) : ℝ)) from by
       ext ⟨p, hp⟩; simp only; exact_mod_cast @padicNorm.div p ⟨hp⟩ (x.num : ℚ) (x.den : ℚ)]
   rw [finprod_div_distrib
-    (PF_finsupp _ (Int.cast_ne_zero.mpr (Rat.num_ne_zero.mpr hx)))
-    (PF_finsupp _ (Nat.cast_ne_zero.mpr x.den_pos.ne')),
+    (PF_finsupp (Int.cast_ne_zero.mpr (Rat.num_ne_zero.mpr hx)))
+    (PF_finsupp (Nat.cast_ne_zero.mpr x.den_pos.ne')),
     div_mul_div_comm,
-    PF_int x.num (Rat.num_ne_zero.mpr hx),
-    PF_nat_pos x.den x.den_pos,
+    PF_int (Rat.num_ne_zero.mpr hx),
+    PF_nat_pos x.den_pos,
     div_self one_ne_zero]
 
 /--
@@ -215,13 +218,13 @@ lemma AbsoluteValue.pow_le_mul_max_pow
 -- proof
   rw [← v.map_pow]
   rw [add_pow x y n]
-  calc v (∑ m ∈ range (n + 1), x ^ m * y ^ (n - m) * ↑(n.choose m))
-      ≤ ∑ m ∈ range (n + 1), v (x ^ m * y ^ (n - m) * ↑(n.choose m)) :=
+  calc v (∑ m ∈ Finset.range (n + 1), x ^ m * y ^ (n - m) * ↑(n.choose m))
+      ≤ ∑ m ∈ Finset.range (n + 1), v (x ^ m * y ^ (n - m) * ↑(n.choose m)) :=
         v.sum_le _ _
-    _ ≤ ∑ _m ∈ range (n + 1), (max (v x) (v y)) ^ n := by
-        apply sum_le_sum
+    _ ≤ ∑ _m ∈ Finset.range (n + 1), (max (v x) (v y)) ^ n := by
+        apply Finset.sum_le_sum
         intro m hm
-        rw [mem_range] at hm
+        rw [Finset.mem_range] at hm
         have hmn : m + (n - m) = n := Nat.add_sub_cancel' (by omega)
         calc v (x ^ m * y ^ (n - m) * ↑(n.choose m))
             = v x ^ m * v y ^ (n - m) * v (↑(n.choose m)) := by
@@ -238,7 +241,7 @@ lemma AbsoluteValue.pow_le_mul_max_pow
                 (pow_nonneg (le_max_of_le_left (v.nonneg _)) _)
           _ = (max (v x) (v y)) ^ n := by rw [← pow_add, hmn]
     _ = (↑n + 1) * (max (v x) (v y)) ^ n := by
-        simp [sum_const, card_range]
+        simp [Finset.sum_const, Finset.card_range]
 
 /--
 [AbsoluteValue.isNonarchimedean_iff_natCast_le_one](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Chapter1/AbsoluteValues.lean)
@@ -254,7 +257,7 @@ lemma AbsoluteValue.isNonarchimedean_iff_natCast_le_one
   ·
     intro hna n _hn
     rw [nsmul_eq_mul, mul_one]
-    exact IsNonarchimedean.apply_natCast_le_one hna
+    exact IsNonarchimedean.apply_natCast_le_one (by simp [v.map_zero]) v.map_one hna
   ·
     intro hv x y
 
@@ -282,7 +285,7 @@ lemma AbsoluteValue.isNonarchimedean_iff_natCast_le_one
     have hr_bound : ∀ n : ℕ, r ^ n ≤ ↑n + 1 := by
       intro n
       rw [div_pow, div_le_iff₀ (pow_pos hM_pos n)]
-      exact v.pow_le_mul_max_pow hv' x y n
+      exact v.pow_le_mul_max_pow hv'
 
     obtain ⟨m, hm⟩ := Real.exists_natCast_add_one_lt_pow_of_one_lt hr_gt_one
     linarith [hr_bound m]
@@ -299,7 +302,7 @@ lemma lemma_1_4_forward
 -- imply
   ∀ n : ℕ, v (n : k) ≤ 1 :=
 -- proof
-  fun _ => hv.apply_natCast_le_one
+  fun _ => hv.apply_natCast_le_one (by simp [v.map_zero]) v.map_one
 
 /--
 [lemma_1_4](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Chapter1/AbsoluteValues.lean)
@@ -311,7 +314,7 @@ lemma lemma_1_4
 -- imply
   IsNonarchimedean v ↔ ∀ n : ℕ, v (n : k) ≤ 1 :=
 -- proof
-  ⟨lemma_1_4_forward v,
+  ⟨lemma_1_4_forward,
     fun hv => (v.isNonarchimedean_iff_natCast_le_one).mpr
       (fun n _ => by rw [nsmul_eq_mul, mul_one]; exact hv n)⟩
 section Corollary_1_5
@@ -330,7 +333,7 @@ lemma corollary_1_5_part1
 -- imply
   IsNonarchimedean v := by
 -- proof
-  apply (lemma_1_4 v).mpr
+  apply (lemma_1_4).mpr
   intro n
   by_cases hdvd : p ∣ n
   ·
@@ -397,7 +400,7 @@ lemma absValue_charP_isNonarchimedean_and_finite_trivial
 -- imply
   IsNonarchimedean v ∧ (∀ [Fintype k], ∀ x : k, x ≠ 0 → v x = 1) :=
 -- proof
-  ⟨corollary_1_5_part1 hp v, fun {_} x hx => corollary_1_5_part2 v x hx⟩
+  ⟨corollary_1_5_part1 hp, fun {_} x hx => corollary_1_5_part2 x hx⟩
 end Corollary_1_5
 
 

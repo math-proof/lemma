@@ -14,16 +14,16 @@ With counting reference measures on the (countable, discrete) state and action s
 private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure α]
-  [ReferenceMeasure S] [Countable S] [MeasurableSingletonClass S]
-  [ReferenceMeasure A] [Countable A] [MeasurableSingletonClass A]
+  [μ : ReferenceMeasure S] [Countable S] [MeasurableSingletonClass S]
+  [ν : ReferenceMeasure A] [Countable A] [MeasurableSingletonClass A]
   {π : Measure Ω}
   {x : Ω → α}
   {s : ℕ → Ω → S}
   {a : ℕ → Ω → A}
   {t : ℕ}
 -- given
-  (hS : ReferenceMeasure.measure (α := S) = Measure.count)
-  (hA : ReferenceMeasure.measure (α := A) = Measure.count)
+  (hS : μ.measure = Measure.count)
+  (hA : ν.measure = Measure.count)
   (h : SinglePSpace π (x, (s, a)[:t + 1])) :
 -- imply
   SinglePSpace π (x, (s, a)[:t], ((s t, a t) : Ω → S × A)) := by
@@ -65,4 +65,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-10-29
+-- updated on 2026-11-14

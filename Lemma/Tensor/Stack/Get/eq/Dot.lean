@@ -14,7 +14,16 @@ private lemma swap
 -- proof
   funext k
   symm
-  simp [swapMatrix, Matrix.mulVec, dotProduct]
+  simp only [swapMatrix, Matrix.mulVec, dotProduct, Matrix.of_apply]
+  refine (Finset.sum_eq_single (Equiv.swap i j k) (fun e _ he => ?_) (fun h => ?_)).trans ?_
+  ·
+    have hne : Equiv.swap i j k ≠ e := fun hswap => he hswap.symm
+    simp [KroneckerDelta, hne]
+  ·
+    apply absurd (Finset.mem_univ _) h
+  ·
+    simp [KroneckerDelta]
 
 
 -- created on 2020-08-26
+-- updated on 2026-11-13

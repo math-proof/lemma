@@ -1,6 +1,6 @@
 import Mathlib
-import Lemma.PDivisibleGroup.CartierDuality
-import Lemma.PDivisibleGroup.Dimension
+import Lemma.Nat.CartierDuality
+import Lemma.Ideal.Dimension
 
 set_option autoImplicit false
 

@@ -1,5 +1,5 @@
 import Instance.AlgebraicGeometry_OrderedAffineCoverCech
-import Lemma.AlgebraicGeometry.TwoChartCechSectionsOf
+import Lemma.Scheme.TwoChartCechSectionsOf
 import Mathlib.AlgebraicGeometry.Modules.Sheaf
 
 set_option autoImplicit false

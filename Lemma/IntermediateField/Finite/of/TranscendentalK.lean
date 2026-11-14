@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.TwoChartIntegralModel
-open AlgebraicCurve AlgebraicCurve.TwoChartIntegralModel Polynomial Rat
+import Lemma.Scheme.TwoChartIntegralModel
+open AlgebraicCurve Scheme.TwoChartIntegralModel Polynomial Rat Scheme
 
 
 /--

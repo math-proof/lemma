@@ -1,5 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Theorem.v1.Atlas.Buildings.code.BNPair.NormalizerParabolicProof
 import Def.v1.Atlas.Buildings.code.BNPair.NormalizerParabolicProof
 open NormalizerParabolic
 open BNPair CellCover CellDisjoint SubgroupOverB
@@ -74,9 +75,8 @@ private lemma generators_in_closure_bruhatCell
 -- imply
   w ∈ bp.parabolicSubgroupW { s : B_idx | bp.bruhatCell (M.toCoxeterSystem.simple s) ⊆ (Subgroup.closure (bp.bruhatCell w) : Set G) } := by
 -- proof
-  apply bruhatCell_generators_in_subgroup bp ax
-  · exact Subgroup.subset_closure
-  · exact B_le_closure_bruhatCell bp w
+  exact bruhatCell_generators_in_subgroup (ax := ax) (w := w) (Q := Subgroup.closure (bp.bruhatCell w))
+    (hBwB := Subgroup.subset_closure) (hBQ := B_le_closure_bruhatCell (w := w))
 
 end NormalizerParabolic
 
@@ -180,14 +180,14 @@ private lemma closure_B_conjB_sub_closure_bruhatCell
   rw [Subgroup.closure_le]
   intro g hg
   rcases hg with hg_B | hg_conj
-  · exact B_le_closure_bruhatCell bp w hg_B
+  · exact B_le_closure_bruhatCell hg_B
   · obtain ⟨b, hb, hg_eq⟩ := hg_conj
     rw [hg_eq]
     have hn_mem : (n : G) ∈ bp.bruhatCell w :=
       ⟨⟨1, bp.B.one_mem⟩, n, ⟨1, bp.B.one_mem⟩, hn, by simp⟩
     have hn_cl := Subgroup.subset_closure hn_mem
     have hn_inv_cl := (Subgroup.closure (bp.bruhatCell w)).inv_mem hn_cl
-    have hb_cl := B_le_closure_bruhatCell bp w hb
+    have hb_cl := B_le_closure_bruhatCell (w := w) hb
     exact (Subgroup.closure (bp.bruhatCell w)).mul_mem
       ((Subgroup.closure (bp.bruhatCell w)).mul_mem hn_inv_cl hb_cl) hn_cl
 
@@ -213,8 +213,8 @@ private lemma closure_bruhatCell_eq_closure_B_conjB
 -- proof
   apply le_antisymm
   · rw [Subgroup.closure_le]
-    exact bruhatCell_sub_closure_B_conjB bp ax w n hn
-  · exact closure_B_conjB_sub_closure_bruhatCell bp w n hn
+    exact bruhatCell_sub_closure_B_conjB (ax := ax) hn
+  · exact closure_B_conjB_sub_closure_bruhatCell hn
 
 end NormalizerParabolic
 

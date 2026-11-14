@@ -1,7 +1,7 @@
 import Mathlib.Probability.Independence.Conditional
 import Lemma.Random.All_Imp_EqProbSCond.of.CondIndep
 import Lemma.Random.SinglePSpace.of.Measurable
-import Lemma.Random.ProbCond.eq.Div.of.SinglePSpace
+import Lemma.Random.Prob_Cond.eq.Div.of.SinglePSpace
 open ProbabilityTheory MeasureTheory Measure Random
 
 
@@ -54,11 +54,11 @@ private lemma main
       π (x ⁻¹' {u} ∩ (y, z) ⁻¹' {(v, w)}) / π ((y, z) ⁻¹' {(v, w)}) := by
     have : SinglePSpace π (x, show Ω → β × γ from (y, z)) :=
       SinglePSpace.of.Measurable (hx.prodMk (hy.prodMk hz))
-    exact ProbCond.eq.Div.of.SinglePSpace inferInstance u (v, w)
+    exact Prob_Cond.eq.Div.of.SinglePSpace inferInstance u (v, w)
   have hdiv₂ :
     ℙ[π](x = u | z = w) = π (x ⁻¹' {u} ∩ z ⁻¹' {w}) / π (z ⁻¹' {w}) := by
     have := hPxz
-    exact ProbCond.eq.Div.of.SinglePSpace inferInstance u w
+    exact Prob_Cond.eq.Div.of.SinglePSpace inferInstance u w
   rw [EqProb, hdiv₁, hdiv₂, e₁, ← Set.inter_assoc] at h
   if hB : π (y ⁻¹' {v} ∩ z ⁻¹' {w}) = 0 then
     have hT : π (x ⁻¹' {u} ∩ y ⁻¹' {v} ∩ z ⁻¹' {w}) = 0 := by

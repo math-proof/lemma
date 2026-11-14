@@ -452,7 +452,7 @@ namespace MathlibExt.Analysis.SpecialFunctions.ArcsinTaylorSeries
 [ArcsinTaylorSeries](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinTaylorSeries.lean)
 -/
 @[path]
-lemma arcsinSeries_eq_arcsin
+lemma arcsinSeries_eq_arcsin :
 -- imply
   Set.EqOn arcsinSeries Real.arcsin (Set.Ioo (-1 : ℝ) 1) := by
 -- proof
@@ -584,7 +584,7 @@ namespace MathlibExt.Analysis.SpecialFunctions.ArcsinTaylorSeries
 [ArcsinTaylorSeries](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinTaylorSeries.lean)
 -/
 @[path]
-lemma continuousOn_arcsinIntegralSeries
+lemma continuousOn_arcsinIntegralSeries :
 -- imply
   ContinuousOn arcsinIntegralSeries (Set.Icc (-1 : ℝ) 1) := by
 -- proof

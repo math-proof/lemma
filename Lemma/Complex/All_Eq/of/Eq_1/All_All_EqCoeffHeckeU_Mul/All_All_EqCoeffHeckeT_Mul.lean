@@ -32,10 +32,10 @@ private lemma eq_zero_of_coeffHecke_eigen_of_apply_one_eq_zero' (k : ℤ) (N : �
             have hqpos : 0 < q := Nat.pos_of_ne_zero hq0
             nlinarith [hp.two_le]
           have haq : a q = 0 := ih q hqlt hq0
-          rwa [if_pos (dvd_mul_right p q), Nat.mul_div_cancel_left q hp.pos, haq, mul_zero,
+          rwa [ite_eq_left (dvd_mul_right p q), Nat.mul_div_cancel_left q hp.pos, haq, mul_zero,
             add_zero] at h
         else
-          rwa [if_neg hpm, add_zero] at h
+          rwa [ite_eq_right hpm, add_zero] at h
 private lemma coeffHecke_eigenvalue_eq_apply_of_apply_one_eq_one' (k : ℤ) (N : ℕ) (a c : ℕ → ℂ) (hT : ∀ p : ℕ, p.Prime → ¬ p ∣ N → ∀ n : ℕ, ModularForm.coeffHeckeT k p a n = c p * a n) (hU : ∀ p : ℕ, p.Prime → p ∣ N → ∀ n : ℕ, ModularForm.coeffHeckeU p a n = c p * a n) (h1 : a 1 = 1) : ∀ p : ℕ, p.Prime → c p = a p := by
   intro p hp
   if hpN : p ∣ N then
@@ -44,7 +44,7 @@ private lemma coeffHecke_eigenvalue_eq_apply_of_apply_one_eq_one' (k : ℤ) (N :
     apply h.symm
   else
     have h := hT p hp hpN 1
-    rw [ModularForm.coeffHeckeT_apply, if_neg hp.not_dvd_one, add_zero, one_mul, h1, mul_one] at h
+    rw [ModularForm.coeffHeckeT_apply, ite_eq_right hp.not_dvd_one, add_zero, one_mul, h1, mul_one] at h
     apply h.symm
 /--
 [ModularForm_coeffHecke_eigenvalue_eq_apply_of_apply_one_eq_one](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularForm_coeffHecke_eigenvalue_eq_apply_of_apply_one_eq_one.lean)

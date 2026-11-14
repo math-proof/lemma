@@ -68,7 +68,7 @@ private lemma range_map_symm_of (E : ℕ ≃ ℕ) (N : ℕ)
   (hR : (Finset.range N).map E.toEmbedding = Finset.range N) :
   (Finset.range N).map E.symm.toEmbedding = Finset.range N := by
   have h := congrArg (fun s => s.map E.symm.toEmbedding) hR
-  rwa [block_map_inv] at h
+  rw [block_map_inv] at h; exact h.symm
 
 end MetaMathlibExt
 
@@ -178,7 +178,7 @@ private lemma fiber_card_eq_of_perm (N m k : ℕ) (S T : Finset ℕ) (E : ℕ �
     range_map_symm_of E N hR
   have hTS : T.map E.symm.toEmbedding = S := by
     have h := congrArg (fun s => s.map E.symm.toEmbedding) hST
-    rwa [block_map_inv] at h
+    rw [block_map_inv] at h; exact h.symm
   have hSTmem : ∀ D : Finset (Finset ℕ), S ∈ D →
     T ∈ D.image fun B : Finset ℕ => B.map E.toEmbedding := by
     intro D hSD
@@ -486,7 +486,7 @@ private lemma diag_card_eq (k n : ℕ) (D : Finset (Finset ℕ))
   (hD : D ∈ ((Finset.range (k * n)).powerset.powerset.filter fun D : Finset (Finset ℕ) =>
     D.card = n ∧ (∀ B ∈ D, B.card = k) ∧ D.biUnion id = Finset.range (k * n))) :
   D.card = n := by
-  rwa [Finset.mem_filter] at hD
+  exact (Finset.mem_filter.mp hD).2.1
 
 end MetaMathlibExt
 
@@ -598,10 +598,7 @@ lemma mean_short_chords_in_linear_k_chord_diagrams
 -- given
   (hk : 0 < k) :
 -- imply
-  let diagrams := by
--- proof
-  classical
-  change (((((Finset.range (k * n)).powerset.powerset.filter fun D =>
+  ((((Finset.range (k * n)).powerset.powerset.filter fun D =>
     D.card = n ∧
       (∀ B ∈ D, B.card = k) ∧
       D.biUnion id = Finset.range (k * n))).sum fun D =>
@@ -611,7 +608,8 @@ lemma mean_short_chords_in_linear_k_chord_diagrams
       D.card = n ∧
         (∀ B ∈ D, B.card = k) ∧
         D.biUnion id = Finset.range (k * n))).card =
-      (Nat.choose (k * n) k : ℝ)⁻¹ * n * (k * n - (k - 1)))
+      (Nat.choose (k * n) k : ℝ)⁻¹ * n * (k * n - (k - 1)) := by
+  classical
   obtain rfl | hn := Nat.eq_zero_or_pos n
   · have hM0 : k * 0 - (k - 1) = 0 := by simp
     have hr0 : Finset.range (k * 0) = (∅ : Finset ℕ) := by simp

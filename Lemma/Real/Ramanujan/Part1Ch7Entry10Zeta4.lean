@@ -197,7 +197,8 @@ private lemma bad_spacing (e₁ e₂ : ℂ) (h1 : e₁ ∈ chapter7BadSet) (h2 :
   have hre_le : |(e₁ - e₂).re| ≤ ‖e₁ - e₂‖ := Complex.abs_re_le_norm _
   simp only [chapter7BadSet, Set.mem_union, Set.mem_singleton_iff,
     Set.mem_range] at h1 h2
-  obtain rfl | ⟨k₁, rfl⟩ <;> rcases h2 with rfl | ⟨k₂, rfl⟩ := h1
+  rcases h1 with rfl | ⟨k₁, rfl⟩
+  rcases h2 with rfl | ⟨k₂, rfl⟩
   · exact absurd rfl hne
   · have hrediff : ((0 : ℂ) - (-1 - (k₂ : ℂ))).re = 1 + (k₂ : ℝ) := by
     simp [Complex.natCast_re]

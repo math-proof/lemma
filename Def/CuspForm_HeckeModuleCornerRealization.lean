@@ -1,4 +1,4 @@
-import Lemma.CohCarrier.Inst
+import Lemma.ZMod.Inst
 import Instance.IharaLemma_IdempotentSplitting
 import Def.CuspForm_CornerPairingFamily
 import Instance.CuspForm_HeckeLocal

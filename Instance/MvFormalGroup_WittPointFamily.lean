@@ -2,9 +2,9 @@
 import Mathlib
 import Instance.MvFormalGroup_NegV2
 import Instance.MvFormalGroup_CartierModule
-import Lemma.MvFormalGroup.CartierModuleHomothety
+import Lemma.PowerSeries.CartierModuleHomothety
 import Instance.MvFormalGroup_CartierModuleWittAction
-import Lemma.MvFormalGroup.WittPointFamily
+import Lemma.MvPowerSeries.WittPointFamily
 
 set_option autoImplicit false
 

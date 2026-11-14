@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.GluedPic0
+import Lemma.ResidueField.GluedPic0
 import Lemma.Int.P2MUtil
 
-open AlgebraicCurve IsLocalRing
+open AlgebraicCurve IsLocalRing ResidueField
 
 /--
 [AlgebraicCurve_Place_hasValue_smul_iff](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_Place_hasValue_smul_iff.lean)

@@ -4,6 +4,8 @@ import Def.v1.Atlas.AnAlgorithmistsToolkit.code.Cheeger
 open Cheeger
 
 
+set_option linter.style.haveILetI false
+
 namespace Cheeger
 
 /--
@@ -145,7 +147,7 @@ lemma claim7
   (quadForm noncrossing y + splitQuadForm crossing y m) / sqNorm y ≤ quadForm (noncrossing ∪ crossing) y / sqNorm y := by
 -- proof
   apply div_le_div_of_nonneg_right _ (le_of_lt hd)
-  have hqsplit := quadForm_ge_splitQuadForm crossing y m hm hcross
+  have hqsplit := quadForm_ge_splitQuadForm hm hcross
   have hunion : quadForm (noncrossing ∪ crossing) y =
       quadForm noncrossing y + quadForm crossing y := by
     unfold quadForm
@@ -161,7 +163,6 @@ namespace Cheeger
 -/
 @[path]
 lemma abel_summation
-  {_n : ℕ}
   {m : ℕ}
   {a : ℕ → ℝ} :
 -- imply
@@ -182,7 +183,6 @@ namespace Cheeger
 -/
 @[path]
 lemma lemma8_summation_by_parts
-  {n : ℕ}
   {m : ℕ}
   {z : ℕ → ℝ}
   {φ : ℝ}
@@ -203,7 +203,7 @@ lemma lemma8_summation_by_parts
     _ = φ * ((m : ℝ) * z m - ∑ k ∈ Finset.range m, z k) := by
         rw [hzm, mul_zero, zero_sub]
     _ = φ * (∑ k ∈ Finset.range m, ((k : ℝ) + 1) * (z (k + 1) - z k)) := by
-        rw [← abel_summation m z]
+        rw [← abel_summation]
     _ = ∑ k ∈ Finset.range m, (φ * ((k : ℝ) + 1)) * (z (k + 1) - z k) := by
         rw [Finset.mul_sum]; congr 1; ext k; ring
     _ ≤ ∑ k ∈ Finset.range m, C k * (z (k + 1) - z k) := by
@@ -221,7 +221,6 @@ namespace Cheeger
 -/
 @[path]
 lemma lemma8_summation_by_parts_abs
-  {n : ℕ}
   {m : ℕ}
   {z : ℕ → ℝ}
   {φ : ℝ}
@@ -241,7 +240,7 @@ lemma lemma8_summation_by_parts_abs
       linarith
     exact abs_of_nonpos hle
   rw [Finset.sum_congr rfl habs_eq]
-  exact lemma8_summation_by_parts m z φ hmono hzm C hC
+  exact lemma8_summation_by_parts hmono hzm hC
 
 end Cheeger
 
@@ -252,7 +251,6 @@ namespace Cheeger
 -/
 @[path]
 lemma crossing_number_decomposition
-  {_n : ℕ}
   {m : ℕ}
   {z : ℕ → ℝ}
   {edges : Finset (ℕ × ℕ)}
@@ -296,7 +294,6 @@ namespace Cheeger
 -/
 @[path]
 lemma lemma8_summation_by_parts_edges
-  {n : ℕ}
   {m : ℕ}
   {z : ℕ → ℝ}
   {φ : ℝ}
@@ -307,7 +304,7 @@ lemma lemma8_summation_by_parts_edges
   (hedge : ∀ e ∈ edges, e.1 < e.2 ∧ e.2 ≤ m)
   (hC : ∀ k, k < m → φ * ((k : ℝ) + 1) ≤ ((edges.filter (fun e => e.1 ≤ k ∧ k < e.2)).card : ℝ)) :
 -- imply
-  φ * (∑ k ∈ Finset.range m, |z k|) ≤ ∑ e ∈ edges, := by
+  φ * (∑ k ∈ Finset.range m, |z k|) ≤ ∑ e ∈ edges, |z e.2 - z e.1| := by
 -- proof
 
 
@@ -317,9 +314,9 @@ lemma lemma8_summation_by_parts_edges
     exact abs_of_nonneg (sub_nonneg.mpr (hmono e.1 e.2 hlt.le hle))
   rw [Finset.sum_congr rfl habs_edge]
 
-  rw [crossing_number_decomposition m z edges hedge]
+  rw [crossing_number_decomposition hedge]
 
-  exact lemma8_summation_by_parts_abs m z φ hmono hzm _ hC
+  exact lemma8_summation_by_parts_abs hmono hzm hC
 
 end Cheeger
 
@@ -458,7 +455,7 @@ lemma sum_endpoints_sq_le
 -- proof
   have h_split : ∑ e ∈ edges, (x e.1 ^ 2 + x e.2 ^ 2) =
       ∑ e ∈ edges, x e.1 ^ 2 + ∑ e ∈ edges, x e.2 ^ 2 := Finset.sum_add_distrib
-  have h_fst := sum_fst_fiber edges (fun v => x v ^ 2)
+  have h_fst := sum_fst_fiber (edges := edges) (f := fun v => x v ^ 2)
   have h_snd : ∑ e ∈ edges, x e.2 ^ 2 =
       ∑ v : Fin n, ((edges.filter (fun e => e.2 = v)).card : ℝ) * x v ^ 2 := by
     have := (Finset.sum_fiberwise (g := fun e => e.2) edges (fun e => x e.2 ^ 2)).symm
@@ -513,7 +510,7 @@ lemma degree_bound_sum_add_sq
       ≤ ∑ e ∈ edges, (2 * (x e.1 ^ 2 + x e.2 ^ 2)) := Finset.sum_le_sum h_ineq
     _ = 2 * ∑ e ∈ edges, (x e.1 ^ 2 + x e.2 ^ 2) := by rw [Finset.mul_sum]
     _ ≤ 2 * (dmax * sqNorm x) := by
-        apply mul_le_mul_of_nonneg_left (sum_endpoints_sq_le edges x dmax hno hd)
+        apply mul_le_mul_of_nonneg_left (sum_endpoints_sq_le hno hd)
           (by norm_num : (0:ℝ) ≤ 2)
     _ = 2 * dmax * sqNorm x := by ring
 
@@ -552,7 +549,7 @@ lemma theorem5_sorted_rayleigh_bound
   ∃ i : ℕ, 0 < i ∧ i < n ∧ prefixCutRatio edges i ^ 2 / (2 * dmax) ≤ quadForm edges x / sqNorm x := by
 -- proof
 
-  have hφ := prefixCutRatio_nonneg edges i₀ hi₀_pos hi₀_lt
+  have hφ := prefixCutRatio_nonneg (edges := edges) hi₀_pos hi₀_lt
   have hno_selfloop : ∀ e ∈ edges, e.1 ≠ e.2 := by
     intro e he; have := h_edges_sorted e he; exact Fin.ne_of_val_ne (by omega)
   have h_lem8 : prefixCutRatio edges i₀ * sqNorm x ≤
@@ -585,7 +582,7 @@ lemma theorem5_sorted_rayleigh_bound
       _ ≤ ∑ k, x k ^ 2 := Finset.single_le_sum (fun k _ => sq_nonneg (x k)) (Finset.mem_univ j)
   refine ⟨i₀, hi₀_pos, hi₀_lt, ?_⟩
   have h2d : (0 : ℝ) < 2 * dmax := by linarith
-  have h_deg := degree_bound_sum_add_sq edges x dmax hno_selfloop hdmax_bound
+  have h_deg := degree_bound_sum_add_sq (x := x) hno_selfloop hdmax_bound
   rw [div_le_div_iff₀ h2d hx_pos]
   have h_sq : (prefixCutRatio edges i₀ * sqNorm x) ^ 2 ≤
       (∑ e ∈ edges, |x e.1 ^ 2 - x e.2 ^ 2|) ^ 2 :=
@@ -659,7 +656,7 @@ lemma normalized_rayleigh_indicatorVec_le
   have hn : (n : ℝ) = (S.card : ℝ) + (Sᶜ.card : ℝ) := by
     have hh := Finset.card_add_card_compl S; rw [Fintype.card_fin] at hh; push_cast [← hh]; ring
   have hn_pos : (0 : ℝ) < (n : ℝ) := by linarith
-  have hsqnorm_pos := sqNorm_indicatorVec_pos S hS hSc
+  have hsqnorm_pos := sqNorm_indicatorVec_pos hS hSc
   have h2sqnorm_pos : (0 : ℝ) < 2 * sqNorm (indicatorVec S) := by linarith
 
 
@@ -687,7 +684,7 @@ lemma normalized_rayleigh_indicatorVec_le
     · simp only [Finset.sum_const, nsmul_eq_mul]
 
       have hf1 : (dirEdges G).filter (fun e => e.1 ∈ S ∧ e.2 ∉ S) = G.interedges S Sᶜ :=
-        dirEdges_filter_cut G S
+        dirEdges_filter_cut
       have hf2 : (dirEdges G).filter (fun e => e.1 ∉ S ∧ e.2 ∈ S) = G.interedges Sᶜ S := by
         ext e
         simp only [dirEdges, Finset.mem_filter, Finset.mem_univ, true_and,
@@ -699,7 +696,8 @@ lemma normalized_rayleigh_indicatorVec_le
       intro e _ h1 h2; exact absurd h1.1 h2.1
 
   have hcard_symm : (G.interedges Sᶜ S).card = (G.interedges S Sᶜ).card := by
-    exact Rel.card_interedges_comm G.symm Sᶜ S
+    haveI : Std.Symm G.Adj := G.symm
+    exact Rel.card_interedges_comm (r := G.Adj) Sᶜ S
 
   have hqf_val : quadForm (dirEdges G) (indicatorVec S) =
       2 * (G.edgeCut S : ℝ) * (n : ℝ) ^ 2 := by
@@ -747,4 +745,4 @@ end Cheeger
 
 
 -- created on 2026-10-23
--- updated on 2026-10-28
+-- updated on 2026-11-13

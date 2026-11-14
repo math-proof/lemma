@@ -87,8 +87,6 @@ namespace ExpanderDiameter
 -/
 @[path]
 lemma aeval_matrix_diagonal
-  [Fintype V]
-  [DecidableEq V]
   [Fintype m]
   [DecidableEq m]
   {v : m → ℝ}
@@ -115,8 +113,6 @@ namespace ExpanderDiameter
 -/
 @[path]
 lemma aeval_conjStarAlgAut_eq
-  [Fintype V]
-  [DecidableEq V]
   [Fintype m]
   [DecidableEq m]
   {u : ↥(Matrix.unitaryGroup m ℝ)}
@@ -129,7 +125,7 @@ lemma aeval_conjStarAlgAut_eq
     (Unitary.conjStarAlgAut ℝ (Matrix m m ℝ) u).toAlgEquiv D
   have := congr_fun (congrArg DFunLike.coe h) p
   simp only [AlgHom.comp_apply] at this
-  convert this using 1
+  exact this
 
 end ExpanderDiameter
 
@@ -140,8 +136,6 @@ namespace ExpanderDiameter
 -/
 @[path]
 lemma conjStarAlgAut_diagonal_entry_eq
-  [Fintype V]
-  [DecidableEq V]
   [Fintype m]
   [DecidableEq m]
   {u : ↥(Matrix.unitaryGroup m ℝ)}
@@ -167,8 +161,6 @@ namespace ExpanderDiameter
 -/
 @[path]
 lemma aeval_hermitian_entry
-  [Fintype V]
-  [DecidableEq V]
   [Fintype m]
   [DecidableEq m]
   {M : Matrix m m ℝ}
@@ -193,8 +185,6 @@ namespace ExpanderDiameter
 -/
 @[path]
 lemma unitary_row_sq_sum_eq_one
-  [Fintype V]
-  [DecidableEq V]
   [Fintype m]
   [DecidableEq m]
   {u : ↥(Matrix.unitaryGroup m ℝ)}
@@ -218,8 +208,6 @@ namespace ExpanderDiameter
 -/
 @[path]
 lemma walk_matrix_mulVec_ones
-  [Fintype V]
-  [DecidableEq V]
   {n : ℕ}
   {G : SimpleGraph (Fin n)}
   [DecidableRel G.Adj]
@@ -233,7 +221,7 @@ lemma walk_matrix_mulVec_ones
   M *ᵥ (Function.const (Fin n) 1) = Function.const (Fin n) 1 := by
 -- proof
   ext v
-  simp only [hM, mulVec, dotProduct, smul_apply, Function.const_apply]
+  simp only [hM, mulVec, dotProduct, Matrix.smul_apply, smul_eq_mul, Function.const_apply]
   have key : ∑ x : Fin n, (G.adjMatrix ℝ) v x = (d : ℝ) := by
     have h := G.adjMatrix_mulVec_const_apply (a := (1 : ℝ)) (v := v)
     simp only [mulVec, dotProduct, Function.const_apply, mul_one] at h
@@ -248,7 +236,6 @@ end ExpanderDiameter
 
 namespace ExpanderDiameter
 
-variable [Fintype V] [DecidableEq V]
 /--
 [walk_matrix_eigenvalues₀_zero_eq_one](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AnAlgorithmistsToolkit/code/Expanders.lean)
 -/
@@ -269,7 +256,7 @@ lemma walk_matrix_eigenvalues₀_zero_eq_one {n : ℕ} (hn : 0 < n)
     · rintro ⟨k, hk⟩
       exact ⟨(Fintype.equivOfCardEq (Fintype.card_fin (Fintype.card (Fin n)))).symm k, by simp [hk]⟩
   have hones : M *ᵥ (Function.const (Fin n) 1) = Function.const (Fin n) 1 :=
-    walk_matrix_mulVec_ones G hd hreg M hM
+    walk_matrix_mulVec_ones hd hreg hM
   have hones_ne : (Function.const (Fin n) (1 : ℝ)) ≠ 0 := by
     intro h; have := congr_fun h ⟨0, hn⟩; simp at this
   have h_has_ev : Module.End.HasEigenvalue (Matrix.toLin' M) 1 := by
@@ -325,7 +312,7 @@ lemma walk_matrix_eigenvalues₀_zero_eq_one {n : ℕ} (hn : 0 < n)
   have h_one_exists : ∃ i : Fin (Fintype.card (Fin n)), hM_sym.eigenvalues₀ i = 1 := by
     rwa [hM_sym.spectrum_real_eq_range_eigenvalues, ← h_range_eq] at h_one_in_spec
   obtain ⟨i, hi⟩ := h_one_exists
-  haveI : NeZero (Fintype.card (Fin n)) := ⟨by rw [hcard]; omega⟩
+  have : NeZero (Fintype.card (Fin n)) := ⟨by rw [hcard]; omega⟩
   apply le_antisymm
   · exact h_ev_le_one _
   · calc (1 : ℝ) = hM_sym.eigenvalues₀ i := hi.symm
@@ -341,8 +328,6 @@ namespace ExpanderDiameter
 -/
 @[path]
 lemma poly_degree_bounds_diameter
-  [Fintype V]
-  [DecidableEq V]
   {n : ℕ}
   {G : SimpleGraph (Fin n)}
   [DecidableRel G.Adj]
@@ -362,9 +347,9 @@ lemma poly_degree_bounds_diameter
 -- imply
   G.diam ≤ k := by
 -- proof
-  apply polynomial_diameter_bound G hreg hd p hp_deg M hM
+  apply polynomial_diameter_bound hreg hd hp_deg hM
   intro a b
-  rw [aeval_hermitian_entry M hM_sym p a b]
+  rw [aeval_hermitian_entry hM_sym]
   set U := (hM_sym.eigenvectorUnitary : Matrix (Fin n) (Fin n) ℝ)
   set e := Fintype.equivOfCardEq (Fintype.card_fin (Fintype.card (Fin n)))
   set j₀ : Fin (Fintype.card (Fin n)) := ⟨0, by rw [Fintype.card_fin]; omega⟩
@@ -375,7 +360,7 @@ lemma poly_degree_bounds_diameter
     ∑ j : Fin (Fintype.card (Fin n)),
       p.eval (hM_sym.eigenvalues₀ j) * U a (e j) * U b (e j) := by
     conv_lhs => rw [← Equiv.sum_comp e]
-    congr 1; ext j; simp only [Function.comp, h_ev_rel]
+    congr 1; ext j; simp only [h_ev_rel]
   rw [h_sum_reindex]
   have h_ev0 : hM_sym.eigenvalues₀ j₀ = 1 :=
     walk_matrix_eigenvalues₀_zero_eq_one hn G hd hreg M hM hM_sym
@@ -387,7 +372,7 @@ lemma poly_degree_bounds_diameter
     exact h2.symm
   have h_row_sum : ∀ v : Fin n, ∑ j, M v j = 1 := by
     intro v
-    have := congr_fun (walk_matrix_mulVec_ones G hd hreg M hM) v
+    have := congr_fun (walk_matrix_mulVec_ones hd hreg hM) v
     simp [mulVec, dotProduct, Function.const_apply, mul_one] at this
     exact this
   have h_col_sum_M : ∀ i : Fin n, ∑ v, M v i = 1 := by
@@ -399,8 +384,7 @@ lemma poly_degree_bounds_diameter
       intro v
       have h_basis := hM_sym.mulVec_eigenvectorBasis j
       have hv := congr_fun h_basis v
-      simp only [mulVec, dotProduct, Pi.smul_apply, smul_eq_mul,
-        Matrix.IsHermitian.eigenvectorUnitary_apply] at hv
+      simp only [mulVec, dotProduct, Pi.smul_apply, smul_eq_mul] at hv
       exact hv
     have way1 : ∑ v, ∑ k, M v k * U k j = hM_sym.eigenvalues j * ∑ v, U v j := by
       simp_rw [h_eigen, Finset.mul_sum]
@@ -418,10 +402,9 @@ lemma poly_degree_bounds_diameter
     linarith
   have h_parseval : ∑ j : Fin n, (∑ v : Fin n, U v j) ^ 2 = (n : ℝ) := by
     have hUUT : U * Uᵀ = 1 := by
-      have := Unitary.coe_mul_star_self hM_sym.eigenvectorUnitary
-      simp only [Matrix.star_eq_conjTranspose,
-        Matrix.conjTranspose_eq_transpose_of_trivial] at this
-      exact this
+      simpa [U, Matrix.star_eq_conjTranspose,
+        Matrix.conjTranspose_eq_transpose_of_trivial] using
+        Unitary.coe_mul_star_self hM_sym.eigenvectorUnitary
     calc ∑ j : Fin n, (∑ v : Fin n, U v j) ^ 2
       = ∑ v, ∑ w, ∑ j, U v j * U w j := by
           simp_rw [sq, Finset.sum_mul, Finset.mul_sum]
@@ -431,7 +414,7 @@ lemma poly_degree_bounds_diameter
       _ = ∑ v, ∑ w, (U * Uᵀ) v w := by
           simp only [Matrix.mul_apply, Matrix.transpose_apply]
       _ = (n : ℝ) := by
-        rw [hUUT]; simp [Matrix.one_apply, Finset.sum_ite_eq',
+        rw [hUUT]; simp [Matrix.one_apply,
           Finset.card_univ, Fintype.card_fin]
   have h_col_sq_n : (∑ v : Fin n, U v (e j₀)) ^ 2 = (n : ℝ) := by
     have h_reindex : ∑ j' : Fin (Fintype.card (Fin n)),
@@ -459,7 +442,7 @@ lemma poly_degree_bounds_diameter
       RCLike.star_def, conj_trivial] at h
     convert h using 1; congr 1; ext v; ring
   have h_all_eq : ∀ v w : Fin n, U v (e j₀) = U w (e j₀) := by
-    by_contra h_not; push_neg at h_not
+    by_contra h_not; push Not at h_not
     obtain ⟨v₁, v₂, hne⟩ := h_not
     have h_var_zero : ∑ v : Fin n,
       (U v (e j₀) - (∑ w, U w (e j₀)) / n) ^ 2 = 0 := by
@@ -516,12 +499,12 @@ lemma poly_degree_bounds_diameter
     have := Real.sum_mul_le_sqrt_mul_sqrt (Finset.univ.erase j₀)
       (fun j => |U a (e j)|) (fun j => |U b (e j)|)
     simp_rw [sq_abs] at this
-    convert this using 2 <;> (ext j; rw [abs_mul_abs_self])
+    convert this using 2
   have h_rest : ∀ c : Fin n,
     ∑ j ∈ Finset.univ.erase j₀, U c (e j) ^ 2 = 1 - 1 / (n : ℝ) := by
     intro c
     have h_full : ∑ j' : Fin (Fintype.card (Fin n)), U c (e j') ^ 2 = 1 := by
-      have h := unitary_row_sq_sum_eq_one hM_sym.eigenvectorUnitary c
+      have h := unitary_row_sq_sum_eq_one (u := hM_sym.eigenvectorUnitary) (a := c)
       rw [show ∑ j' : Fin (Fintype.card (Fin n)), U c (e j') ^ 2 =
         ∑ k : Fin n, U c k ^ 2 from Equiv.sum_comp e (fun k => U c k ^ 2)]
       exact h
@@ -547,9 +530,9 @@ lemma poly_degree_bounds_diameter
           rw [abs_mul, abs_mul, mul_assoc]
           apply mul_le_mul_of_nonneg_right _ (mul_nonneg (abs_nonneg _) (abs_nonneg _))
           have hj_val : j.val ≥ 1 := by
-              have := (Finset.mem_erase.mp hj).1
-              exact Nat.one_le_iff_ne_zero.mpr (fun h => this (Fin.ext h))
-            exact le_of_lt (hp_small j hj_val)
+            have := (Finset.mem_erase.mp hj).1
+            exact Nat.one_le_iff_ne_zero.mpr (fun h => this (Fin.ext h))
+          exact le_of_lt (hp_small j hj_val)
       _ = (1 / (n : ℝ)) * ∑ j ∈ Finset.univ.erase j₀, |U a (e j)| * |U b (e j)| := by
           rw [← Finset.mul_sum]
       _ ≤ (1 / (n : ℝ)) * (Real.sqrt (∑ j ∈ Finset.univ.erase j₀, U a (e j) ^ 2) *
@@ -558,7 +541,9 @@ lemma poly_degree_bounds_diameter
       _ = _ := by rw [h_rest a, h_rest b]
   have h_sq_lt : Real.sqrt (1 - 1 / (n : ℝ)) * Real.sqrt (1 - 1 / (n : ℝ)) < 1 := by
     have h_nn : (0 : ℝ) ≤ Real.sqrt (1 - 1 / n) := Real.sqrt_nonneg _
-    exact mul_lt_one_of_nonneg_of_lt_one_left h_nn h_sqrt_lt (le_of_lt h_sqrt_lt)
+    have := h_nn
+    have := h_sqrt_lt
+    nlinarith
   have h_bound : 1 / (n : ℝ) * (Real.sqrt (1 - 1 / (n : ℝ)) * Real.sqrt (1 - 1 / (n : ℝ))) < 1 / (n : ℝ) := by
     calc 1 / (n : ℝ) * (Real.sqrt (1 - 1 / (n : ℝ)) * Real.sqrt (1 - 1 / (n : ℝ)))
       < 1 / (n : ℝ) * 1 := by apply mul_lt_mul_of_pos_left h_sq_lt; positivity
@@ -574,8 +559,6 @@ namespace ExpanderDiameter
 -/
 @[path]
 lemma one_sub_lt_exp_neg_of_pos
-  [Fintype V]
-  [DecidableEq V]
   {lam : ℝ}
 -- given
   (hlam_pos : 0 < lam) :
@@ -593,8 +576,6 @@ namespace ExpanderDiameter
 -/
 @[path]
 lemma spectral_gap_rpow_bound
-  [Fintype V]
-  [DecidableEq V]
   {lam : ℝ}
   {n : ℕ}
 -- given
@@ -624,8 +605,6 @@ namespace ExpanderDiameter
 -/
 @[path]
 lemma spectral_gap_nat_pow_bound
-  [Fintype V]
-  [DecidableEq V]
   {lam : ℝ}
   {n : ℕ}
 -- given
@@ -707,7 +686,7 @@ lemma diameter_spectral_gap_bound
       _ = ↑k := by rw [hw]
       _ ≤ ↑t := by exact_mod_cast hk_le
   by_contra h_all
-  push_neg at h_all
+  push Not at h_all
   have hW_zero : ∀ k : ℕ, k ≤ t → (W ^ k) u v = 0 := by
     intro k hk
     rw [hW_def, smul_matrix_pow, Matrix.smul_apply, smul_eq_mul, h_all k hk, mul_zero]
@@ -755,8 +734,10 @@ private lemma walk_matrix_eigenvalues_eq
 -- imply
   hM_sym.eigenvalues₀ ⟨0, by rw [Fintype.card_fin]; omega⟩ = 1 := by
 -- proof
-  apply ExpanderDiameter.walk_matrix_eigenvalues hn G hd hreg M hM hM_sym
+  apply ExpanderDiameter.walk_matrix_eigenvalues₀_zero_eq_one hn G hd hreg M hM hM_sym
 
 
 -- created on 2026-10-23
 -- updated on 2026-10-28
+
+end SimpleGraph

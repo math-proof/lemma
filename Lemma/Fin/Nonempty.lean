@@ -12,15 +12,15 @@ private noncomputable def normBasis [Field F] {a b u v : F} (huv : b = u * u - a
   i := M2 0 a 1 0
   j := M2 u (-(a * v)) v (-u)
   k := M2 (a * v) (-(a * u)) u (-(a * v))
-  i_mul_i := by ext r s; fin_cases r <;> fin_cases s <;> simp [M2, Matrix.mul_apply, Fin.sum_univ_two] <;> ring
-  j_mul_j := by ext r s; fin_cases r <;> fin_cases s <;> simp [M2, Matrix.mul_apply, Fin.sum_univ_two, huv] <;> ring
-  i_mul_j := by ext r s; fin_cases r <;> fin_cases s <;> simp [M2, Matrix.mul_apply, Fin.sum_univ_two] <;> ring
-  j_mul_i := by ext r s; fin_cases r <;> fin_cases s <;> simp [M2, Matrix.mul_apply, Fin.sum_univ_two] <;> ring
+  i_mul_i := by ext r s; fin_cases r <;> fin_cases s <;> simp [M2, Matrix.mul_apply, Fin.sum_univ_two]
+  j_mul_j := by ext r s; fin_cases r <;> fin_cases s <;> simp [M2, Matrix.mul_apply, Fin.sum_univ_two, huv] <;> try ring
+  i_mul_j := by ext r s; fin_cases r <;> fin_cases s <;> simp [M2, Matrix.mul_apply, Fin.sum_univ_two]
+  j_mul_i := by ext r s; fin_cases r <;> fin_cases s <;> simp [M2, Matrix.mul_apply, Fin.sum_univ_two] <;> try ring
 
 private lemma normBasis_liftHom_apply [Field F] {a b u v : F} (huv : b = u * u - a * (v * v)) (z : QuaternionAlgebra F a 0 b) : (normBasis huv).liftHom z = M2 (z.re + u * z.imJ + a * v * z.imK) (a * z.imI - a * v * z.imJ - a * u * z.imK) (z.imI + v * z.imJ + u * z.imK) (z.re - u * z.imJ - a * v * z.imK) := by
   have h : (normBasis huv).liftHom z = algebraMap F (Matrix (Fin 2) (Fin 2) F) z.re + z.imI • M2 (0 : F) a 1 0 + z.imJ • M2 u (-(a * v)) v (-u) + z.imK • M2 (a * v) (-(a * u)) u (-(a * v)) := rfl
   rw [h]
-  ext r s; fin_cases r <;> fin_cases s <;> simp [M2, Matrix.algebraMap_matrix_apply] <;> ring
+  ext r s; fin_cases r <;> fin_cases s <;> simp [M2, Matrix.algebraMap_matrix_apply] <;> try ring
 
 /--
 [QuaternionAlgebra_nonempty_algEquiv_matrix_of_eq_mul_self_sub](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_QuaternionAlgebra_nonempty_algEquiv_matrix_of_eq_mul_self_sub.lean)
@@ -64,4 +64,5 @@ private lemma main
   simp [QuaternionAlgebra.finrank_eq_four, Module.finrank_matrix]
 
 
+-- updated on 2026-11-13
 -- created on 2026-10-20

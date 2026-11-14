@@ -5,7 +5,6 @@ import Lemma.Random.NormClip.le.Abs_R
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Random.PSpace_Path.of.All_PSpace
 import Lemma.Random.EqProb
-import Theorem.Probability.CondExpectation
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
 open scoped ENNReal.ToRealCoe
@@ -18,9 +17,9 @@ set_option maxHeartbeats 900000
 Generalized advantage estimation with the paper's weighted-average estimator (Schulman et al.,
 arXiv 1506.02438, Eq. (16)) for continuous actions. `V` is the textbook (observation) form
 of the conditional expected return,
-`V[t] «s»[t] = 𝔼[r: M θ]((γ ^ id) ⬝ᵥ r[t:] | s[t] = «s»[t])`. Path-GAE is built from the
-path-value `V_δ[t] δ k = V[t + k] (δ k)`. With TD residuals
-`δ[j] = r[j] + γ * V[j + 1] s[j + 1] - V[j] s[j]` and `{γ, ℓ} ⊆ Ico 0 1`, the exponentially
+`M.V θ γ t «s»[t] = 𝔼[r: M θ]((γ ^ id) ⬝ᵥ r[t:] | s[t] = «s»[t])`. Path-GAE is built from the
+path-value `V_δ[t] δ k = M.V θ γ (t + k) (δ k)`. With TD residuals
+`δ[j] = r[j] + γ * M.V θ γ (j + 1) s[j + 1] - M.V θ γ j s[j]` and `{γ, ℓ} ⊆ Ico 0 1`, the exponentially
 weighted average `(1 - ℓ) * ((ℓ ^ id) ⬝ᵥ fun k ↦ (γ ^ range(k+1)) ⬝ᵥ δ)` equals the closed
 form, via `Real.MulSub1_Dot_FunDotPow_Range.…Subset_Ico`, applying the continuous closed-form GAE.
 
@@ -32,16 +31,14 @@ appear as `s[t] = «\sf{s}»[t]` / `a[t] = «\sf{a}»[t]`. The score is
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [CountableMeasure 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮]
-  [Nonempty 𝒮] [StandardBorelSpace 𝒮]
-  [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
+  [ReferenceMeasure 𝒮] [MeasurableSingletonClass 𝒮] [Nonempty 𝒮] [StandardBorelSpace 𝒮]
+  [μ : ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
   {M : DensityModel Θ 𝒮 𝒜}
   {θ : Θ}
   {γ ℓ : ℝ}
   {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
-  {V : ℕ ⇀ 𝒮 → ℝ}
 -- given
   (h₀ : {γ, ℓ} ⊆ Set.Ico 0 1)
   (hfactor : DensityModel.IsConditionalProbability M r s a)
@@ -51,15 +48,13 @@ private lemma main
     (∀ θ t («\sf{s}» : ℕ ⇀ 𝒮) («\sf{a}» : ℕ ⇀ 𝒜),
       ‖∇[θ] (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ)‖ ≤
         g «\sf{s}»[t] «\sf{a}»[t]) ∧
-    (∀ x, Integrable (g x) ReferenceMeasure.measure) ∧
-    (sup[x] (∫ u, g x u ∂ReferenceMeasure.measure) < ∞))
+    (∀ x, Integrable (g x) μ.measure) ∧
+    (sup[x] (∫ u, g x u ∂μ.measure) < ∞))
   (hφ : StronglyMeasurable
     (fun ((s0, a0) : 𝒮 × 𝒜) => ∇[θ] (ℙ[M θ](a[0] = a0 | s[0] = s0) : ℝ).log))
   (hMs : sup[«\sf{s}» : ℕ ⇀ 𝒮, «\sf{a}» : ℕ ⇀ 𝒜]
     ‖∇[θ] (ℙ[M θ](a[0] = «\sf{a}»[0] | s[0] = «\sf{s}»[0]) : ℝ).log‖ < ∞)
-  (hV : ∀ t («\sf{s}» : ℕ ⇀ 𝒮),
-    V[t] «\sf{s}»[t] =
-      𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s[t] = «\sf{s}»[t])) :
+  (hVm : ∀ t, Measurable (M.V θ γ t)) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun θ t =>
     hfactor.htr.singlePSpace_as (haj := hfactor.haj) θ t
@@ -70,7 +65,7 @@ private lemma main
   have : PSpace (M θ) (AsPathRV.path a) :=
     PSpace_Path.of.All_PSpace (fun t => ⟨(hfactor.htr.measurable_a t).aemeasurable⟩)
   let : MeasurableSpace Θ := borel Θ
-  let V_δ : ℕ ⇀ (ℕ → 𝒮) → ℕ → ℝ := ⟨fun t δ k => V[t + k] (δ k)⟩
+  let V_δ : ℕ ⇀ (ℕ → 𝒮) → ℕ → ℝ := ⟨fun t δ k => M.V θ γ (t + k) (δ k)⟩
   ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) =
     𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
       (((1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) ⬝ᵥ fun k ↦ (γ ^ range (k + 1)) ⬝ᵥ
@@ -143,11 +138,11 @@ private lemma main
     funext z
     exact (hscore t z.1 z.2).symm
   have hmeas : ∀ k, Measurable fun ω : ℕ → ℝ × 𝒮 × 𝒜 =>
-    r k ω + γ * V[k + 1] (s (k + 1) ω) - V[k] (s k ω) := fun k =>
+    r k ω + γ * M.V θ γ (k + 1) (s (k + 1) ω) - M.V θ γ k (s k ω) := fun k =>
     ((Random.Measurable.of.All_Eq.fst h₁' k).add
-      (((measurable_of_countable (V[k + 1])).comp
+      ((((hVm (k + 1))).comp
           (Random.Measurable.of.All_Eq.snd.fst h₁' (k + 1))).const_mul γ)).sub
-      ((measurable_of_countable (V[k])).comp
+      (((hVm (k))).comp
         (Random.Measurable.of.All_Eq.snd.fst h₁' k))
   have hrm : ∀ n, Measurable (r n) := fun n =>
     Random.Measurable.of.All_Eq.fst h₁' n
@@ -188,7 +183,7 @@ private lemma main
         ((1 - γ)⁻¹ * |M.env.R|)
         (by filter_upwards [hret_bd] with ω hω; exact hω n)
   have hV_ae : ∀ n,
-      (fun ω => V[n] (s n ω)) =ᵐ[M θ]
+      (fun ω => M.V θ γ n (s n ω)) =ᵐ[M θ]
         Expectation.condSigma (M θ) (fun ω i => r i ω) (s n)
           (fun integ => (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[n:]) := fun n => by
     have hcomp :=
@@ -197,10 +192,8 @@ private lemma main
         (f := fun integ => (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[n:])
         hpR.aemeasurable (hsm n) (hfG n).stronglyMeasurable (hGi n)
     filter_upwards [hcomp] with ω hω
-    have hx := hV n ⟨fun _ => s n ω⟩
-    simp only at hx hω ⊢
-    exact hx.trans hω
-  have hVbd : ∀ᵐ ω ∂(M θ), ∀ n, |V[n] (s n ω)| ≤ (1 - γ)⁻¹ * |M.env.R| := by
+    exact hω
+  have hVbd : ∀ᵐ ω ∂(M θ), ∀ n, |M.V θ γ n (s n ω)| ≤ (1 - γ)⁻¹ * |M.env.R| := by
     have hcond : ∀ n, ∀ᵐ ω ∂(M θ),
         |Expectation.condSigma (M θ) (fun ω i => r i ω) (s n)
           (fun integ => (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[n:]) ω| ≤
@@ -213,7 +206,7 @@ private lemma main
       filter_upwards [hbd] with ω h
       simpa [Expectation.condSigma, Real.norm_eq_abs] using h
     have hVeq : ∀ᵐ ω ∂(M θ), ∀ n,
-        V[n] (s n ω) =
+        M.V θ γ n (s n ω) =
           Expectation.condSigma (M θ) (fun ω i => r i ω) (s n)
             (fun integ => (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[n:]) ω :=
       (ae_all_iff (ι := ℕ)).mpr hV_ae
@@ -227,21 +220,21 @@ private lemma main
     exact hnorm n
   have hbdd : ∀ᵐ ω ∂(M θ),
       BddAbove (Set.range fun j =>
-        |r j ω + γ * V[j + 1] (s (j + 1) ω) - V[j] (s j ω)|) := by
+        |r j ω + γ * M.V θ γ (j + 1) (s (j + 1) ω) - M.V θ γ j (s j ω)|) := by
     filter_upwards [hr_bd, hVbd] with ω hr hV
     refine ⟨(2 / (1 - γ)) * |M.env.R|, ?_⟩
     rintro _ ⟨j, rfl⟩
     have hγn : 0 ≤ γ := hγ.1
     have htri :
-        |r j ω + γ * V[j + 1] (s (j + 1) ω) - V[j] (s j ω)| ≤
-          |r j ω| + γ * |V[j + 1] (s (j + 1) ω)| + |V[j] (s j ω)| := by
+        |r j ω + γ * M.V θ γ (j + 1) (s (j + 1) ω) - M.V θ γ j (s j ω)| ≤
+          |r j ω| + γ * |M.V θ γ (j + 1) (s (j + 1) ω)| + |M.V θ γ j (s j ω)| := by
       calc
-        _ ≤ |r j ω + γ * V[j + 1] (s (j + 1) ω)| + |V[j] (s j ω)| := by
+        _ ≤ |r j ω + γ * M.V θ γ (j + 1) (s (j + 1) ω)| + |M.V θ γ j (s j ω)| := by
           simpa [sub_eq_add_neg, abs_neg] using
-            abs_add_le (r j ω + γ * V[j + 1] (s (j + 1) ω)) (-V[j] (s j ω))
-        _ ≤ |r j ω| + |γ * V[j + 1] (s (j + 1) ω)| + |V[j] (s j ω)| :=
+            abs_add_le (r j ω + γ * M.V θ γ (j + 1) (s (j + 1) ω)) (-M.V θ γ j (s j ω))
+        _ ≤ |r j ω| + |γ * M.V θ γ (j + 1) (s (j + 1) ω)| + |M.V θ γ j (s j ω)| :=
           add_le_add (abs_add_le _ _) (le_refl _)
-        _ = |r j ω| + γ * |V[j + 1] (s (j + 1) ω)| + |V[j] (s j ω)| := by
+        _ = |r j ω| + γ * |M.V θ γ (j + 1) (s (j + 1) ω)| + |M.V θ γ j (s j ω)| := by
           rw [abs_mul, abs_of_nonneg hγn]
     have hle :=
       (add_le_add (add_le_add (hr j)
@@ -255,12 +248,12 @@ private lemma main
     exact (htri.trans hle).trans (le_of_eq hsum)
   have hpt : ∀ᵐ ω ∂(M θ), ∀ t,
     (1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) ⬝ᵥ fun k ↦ ∑ i ∈ range (k + 1), γ ^ i *
-      (r (t + i) ω + γ * V[t + i + 1] (s (t + i + 1) ω) - V[t + i] (s (t + i) ω))) =
+      (r (t + i) ω + γ * M.V θ γ (t + i + 1) (s (t + i + 1) ω) - M.V θ γ (t + i) (s (t + i) ω))) =
     ((γ * ℓ) ^ (id : ℕ → ℕ)) ⬝ᵥ
-      (fun k : ℕ => r (t + k) ω + γ * V[t + k + 1] (s (t + k + 1) ω) - V[t + k] (s (t + k) ω)) := by
+      (fun k : ℕ => r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) - M.V θ γ (t + k) (s (t + k) ω)) := by
     filter_upwards [hbdd] with ω hb t
     exact MulSub1_Dot_FunDotPow_Range.eq.DotPow_Id.of.GtInftySup.Subset_Ico
-      (δ := ⟨fun j => r j ω + γ * V[j + 1] (s (j + 1) ω) - V[j] (s j ω)⟩) (t := t) h₀ hb
+      (δ := ⟨fun j => r j ω + γ * M.V θ γ (j + 1) (s (j + 1) ω) - M.V θ γ j (s j ω)⟩) (t := t) h₀ hb
   have hexp : ∀ F : ℕ → (ℕ → 𝒮) → (ℕ → 𝒜) → (ℕ → ℝ) → ℝ,
     (∀ t, Measurable fun ω : ℕ → ℝ × 𝒮 × 𝒜 => F t (fun j => s j ω) (fun j => a j ω) (fun j => r j ω)) →
     𝔼[r, s, a : M θ](
@@ -301,10 +294,10 @@ private lemma main
     rfl
   have hF₁ : ∀ t, Measurable fun ω : ℕ → ℝ × 𝒮 × 𝒜 =>
     (1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) ⬝ᵥ fun k ↦ ∑ i ∈ range (k + 1), γ ^ i *
-      (r (t + i) ω + γ * V[t + i + 1] (s (t + i + 1) ω) - V[t + i] (s (t + i) ω))) := fun t => by
+      (r (t + i) ω + γ * M.V θ γ (t + i + 1) (s (t + i + 1) ω) - M.V θ γ (t + i) (s (t + i) ω))) := fun t => by
     have htsum : Measurable fun ω : ℕ → ℝ × 𝒮 × 𝒜 =>
         (1 - ℓ) * ∑' k, ℓ ^ k * ∑ i ∈ range (k + 1), γ ^ i *
-          (r (t + i) ω + γ * V[t + i + 1] (s (t + i + 1) ω) - V[t + i] (s (t + i) ω)) :=
+          (r (t + i) ω + γ * M.V θ γ (t + i + 1) (s (t + i + 1) ω) - M.V θ γ (t + i) (s (t + i) ω)) :=
       (Measurable.tsum (L := SummationFilter.unconditional ℕ) fun k =>
         (Finset.measurable_sum _ fun i _ => (hmeas (t + i)).const_mul _).const_mul _).const_mul _
     convert htsum
@@ -312,12 +305,12 @@ private lemma main
     · rfl
   have hF₂ : ∀ t, Measurable fun ω : ℕ → ℝ × 𝒮 × 𝒜 =>
     (((γ * ℓ) ^ (id : ℕ → ℕ)) ⬝ᵥ
-      (fun k : ℕ => r (t + k) ω + γ * V[t + k + 1] (s (t + k + 1) ω) - V[t + k] (s (t + k) ω))) := fun t => by
+      (fun k : ℕ => r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) - M.V θ γ (t + k) (s (t + k) ω))) := fun t => by
     show Measurable fun ω : ℕ → ℝ × 𝒮 × 𝒜 => ∑' k, (γ * ℓ) ^ k *
-      (r (t + k) ω + γ * V[t + k + 1] (s (t + k + 1) ω) - V[t + k] (s (t + k) ω))
+      (r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) - M.V θ γ (t + k) (s (t + k) ω))
     exact Measurable.tsum (L := SummationFilter.unconditional ℕ) fun k => (hmeas (t + k)).const_mul _
   have hδθ : ∀ (s : ℕ → 𝒮) (r : ℕ → ℝ) (t : ℕ),
-    (fun k => r (t + k) + γ * V[t + k + 1] (s (t + k + 1)) - V[t + k] (s (t + k))) =
+    (fun k => r (t + k) + γ * M.V θ γ (t + k + 1) (s (t + k + 1)) - M.V θ γ (t + k) (s (t + k))) =
       r[t:] + γ • V_δ[t + 1] s[t + 1:] - V_δ[t] s[t:] := by
     intro s r t
     funext k
@@ -332,15 +325,9 @@ private lemma main
     funext ω
     exact congrArg (fun δ => Dot.dot ((γ * ℓ) ^ (id : ℕ → ℕ)) δ)
       (hδθ (fun j => s j ω) (fun j => r j ω) t).symm
-  have hV' : ∀ (k : ℕ) (x : 𝒮),
-      V[k] x =
-        Expectation.condEval (M θ) (fun ω : ℕ → ℝ × 𝒮 × 𝒜 => fun i => r i ω) (s k)
-          (fun integ => (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[k:]) x := fun k x => by
-    simpa using hV k ⟨fun _ => x⟩
   refine (GradExpectDotPow_Id.eq.ExpectDot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity.In_Icc.In_Ico
-    (M := M) (θ := θ) (r := ⟨r⟩) (s := ⟨s⟩) (a := ⟨a⟩) (V := V)
-    hγ hℓ hfactor hπ hV' h₁ h₃bound h₄ h₅ hφpol
-    (fun sb ab => hMsUB (Set.mem_range_self (sb, ab)))).trans ?_
+    (M := M) (θ := θ) (r := ⟨r⟩) (s := ⟨s⟩) (a := ⟨a⟩)
+    hγ hℓ hfactor hπ hVm h₁ h₃bound h₄ h₅sup hφpol hMs).trans ?_
   symm
   have hFeq :
     (fun t (s : ℕ → 𝒮) (a : ℕ → 𝒜) (r : ℕ → ℝ) =>
@@ -348,7 +335,7 @@ private lemma main
           (r[t:] + γ • V_δ[t + 1] s[t + 1:] - V_δ[t] s[t:]) i)) =
       (fun t (s : ℕ → 𝒮) (a : ℕ → 𝒜) (r : ℕ → ℝ) =>
         (1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) ⬝ᵥ fun k ↦ ∑ i ∈ range (k + 1), γ ^ i *
-          (r (t + i) + γ * V[t + i + 1] (s (t + i + 1)) - V[t + i] (s (t + i))))) := by
+          (r (t + i) + γ * M.V θ γ (t + i + 1) (s (t + i + 1)) - M.V θ γ (t + i) (s (t + i))))) := by
     funext t s a r
     congr 1
     congr 1
@@ -365,7 +352,7 @@ private lemma main
             ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log)))
       hFeq).trans ?_
   refine (hexp (fun t s a r => (1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) ⬝ᵥ fun k ↦ ∑ i ∈ range (k + 1), γ ^ i *
-      (r (t + i) + γ * V[t + i + 1] (s (t + i + 1)) - V[t + i] (s (t + i))))) hF₁).trans
+      (r (t + i) + γ * M.V θ γ (t + i + 1) (s (t + i + 1)) - M.V θ γ (t + i) (s (t + i))))) hF₁).trans
     ((integral_congr_ae ?_).trans
       (hexp (fun t s a r => ((γ * ℓ) ^ (id : ℕ → ℕ)) ⬝ᵥ
         (r[t:] + γ • V_δ[t + 1] s[t + 1:] - V_δ[t] s[t:])) hFθ).symm)
@@ -375,4 +362,4 @@ private lemma main
 
 
 -- created on 2026-10-21
--- updated on 2026-11-11
+-- updated on 2026-11-14

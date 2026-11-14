@@ -24,6 +24,7 @@ import Lemma.Random.OfRV.eq.Integral.of.AEStronglyMeasurable_Map
 import Lemma.Random.PSpace_Path.of.All_PSpace
 import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Lemma.Random.TSum_SMul.eq.Integral_Fderiv_Vkd.of.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.All_Measurable_Prob.All_EqWithDensity
+import Theorem.Probability.JointRv.AsRV
 open Classical MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.DensityModel Random Finset Kernel
 set_option maxHeartbeats 900000
 
@@ -724,26 +725,38 @@ private lemma integral_return_smul_eq_cond
     refine Measurable.tsum fun k => ?_
     have hm : Measurable (fun integ : ℕ → ℝ => integ (t + k)) := measurable_pi_apply (t + k)
     simpa using hm.const_mul ((γ ^ (id : ℕ → ℕ)) k)
-  have hQint : ∀ x u, Q x u =
-      ∫ ω, G ω ∂(M θ)[|(fun ω => (s t ω, a t ω)) ⁻¹' {(x, u)}] := by
-    intro x u
-    simp only [Q, Expectation.asRV_process]
-    rw [Expectation.condEvent_eq_integral hpR.aemeasurable hfG]
-    rfl
   let pair : (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮 × 𝒜 := fun ω => (s t ω, a t ω)
   have hpair : Measurable pair :=
     (Random.Measurable.of.All_Eq.snd.fst h₁ t).prodMk (Random.Measurable.of.All_Eq.snd.snd h₁ t)
+  have hQint : ∀ x u (_ : (M θ).map pair {(x, u)} ≠ 0),
+      Q x u = ∫ ω, G ω ∂(M θ)[|pair ⁻¹' {(x, u)}] := by
+    intro x u hpos
+    simp only [Q, Expectation.asRV_process]
+    have hpairJ : (s t, a t) = pair := by
+      funext ω
+      unfold JointRandomSymbol
+      simp [pair]
+    have hy : Measurable (s t, a t) := by
+      rw [hpairJ]
+      exact hpair
+    have hpos' : (M θ).map (s t, a t) {(x, u)} ≠ 0 := by
+      rw [hpairJ]
+      exact hpos
+    rw [Expectation.condEval_eq_integral hpR hy hfG hpos', hpairJ]
+    simp [G, Dot.dot, Function.hPow_apply, id_eq, Function.getSliceFrom]
   have hatom : ∀ z : 𝒮 × 𝒜, MeasurableSet (pair ⁻¹' {z}) := fun z =>
     hpair (measurableSet_singleton z)
   have hmass : ∀ z : 𝒮 × 𝒜,
       ∫ ω in pair ⁻¹' {z}, G ω ∂(M θ) = (M θ).real (pair ⁻¹' {z}) * Q z.1 z.2 := by
     intro z
-    have hQ : Q z.1 z.2 = ∫ ω, G ω ∂(M θ)[|pair ⁻¹' {z}] := by
-      simpa [pair] using hQint z.1 z.2
     if h0 : (M θ) (pair ⁻¹' {z}) = 0 then
       rw [measureReal_def, h0, ENNReal.toReal_zero, zero_mul, Measure.restrict_eq_zero.mpr h0]
       simp
     else
+      have hpos : (M θ).map pair {z} ≠ 0 := by
+        rwa [Measure.map_apply hpair (measurableSet_singleton z)]
+      have hQ : Q z.1 z.2 = ∫ ω, G ω ∂(M θ)[|pair ⁻¹' {z}] := by
+        simpa [pair] using hQint z.1 z.2 hpos
       have hQsmul : Q z.1 z.2 =
           ((M θ) (pair ⁻¹' {z}))⁻¹.toReal • ∫ ω in pair ⁻¹' {z}, G ω ∂(M θ) := by
         rw [hQ, ProbabilityTheory.cond, integral_smul_measure]
@@ -757,18 +770,43 @@ private lemma integral_return_smul_eq_cond
           rw [← mul_assoc, mul_inv_cancel₀ hne, one_mul]
         _ = (M θ).real (pair ⁻¹' {z}) * Q z.1 z.2 := by
           rw [← hQsmul]
-  have hQbd : ∀ x u, ‖Q x u‖ ≤ BG := by
-    intro x u
-    rw [hQint x u]
+  have hQbd : ∀ x u (_ : (M θ).map pair {(x, u)} ≠ 0), ‖Q x u‖ ≤ BG := by
+    intro x u hpos
+    rw [hQint x u hpos]
     have hae : ∀ᵐ ω ∂(M θ)[|pair ⁻¹' {(x, u)}], ‖G ω‖ ≤ BG :=
       ProbabilityTheory.cond_absolutelyContinuous.ae_le hGbd
-    if h0 : (M θ) (pair ⁻¹' {(x, u)}) = 0 then
-      rw [ProbabilityTheory.cond_eq_zero_of_meas_eq_zero h0]
-      simpa using hBG
+    have h0 : (M θ) (pair ⁻¹' {(x, u)}) ≠ 0 := by
+      rwa [← Measure.map_apply hpair (measurableSet_singleton (x, u))]
+    have : IsProbabilityMeasure (M θ)[|pair ⁻¹' {(x, u)}] :=
+      ProbabilityTheory.cond_isProbabilityMeasure h0
+    simpa using norm_integral_le_of_norm_le_const (μ := (M θ)[|pair ⁻¹' {(x, u)}]) hae
+  have hpos_ae : ∀ᵐ ω ∂(M θ), (M θ).map pair {pair ω} ≠ 0 := by
+    have hset :
+        {ω | (M θ).map pair {pair ω} = 0} =
+          ⋃ z : 𝒮 × 𝒜, pair ⁻¹' {z} ∩ {ω | (M θ).map pair {z} = 0} := by
+      ext ω
+      constructor
+      · intro h
+        exact Set.mem_iUnion.mpr ⟨pair ω, ⟨rfl, h⟩⟩
+      · intro h
+        obtain ⟨z, hz, hμ⟩ := Set.mem_iUnion.mp h
+        have hz' : pair ω = z := hz
+        simpa [hz'] using hμ
+    apply (ae_iff.2 ?_)
+    simp only [ne_eq, not_not]
+    change (M θ) {ω | (M θ).map pair {pair ω} = 0} = 0
+    rw [hset]
+    refine measure_iUnion_null fun z => ?_
+    if hz : (M θ).map pair {z} = 0 then
+      have : pair ⁻¹' {z} ∩ {ω | (M θ).map pair {z} = 0} = pair ⁻¹' {z} := by
+        ext ω
+        simp [hz]
+      rwa [this, ← Measure.map_apply hpair (measurableSet_singleton z)]
     else
-      have : IsProbabilityMeasure (M θ)[|pair ⁻¹' {(x, u)}] :=
-        ProbabilityTheory.cond_isProbabilityMeasure h0
-      simpa using norm_integral_le_of_norm_le_const (μ := (M θ)[|pair ⁻¹' {(x, u)}]) hae
+      have : pair ⁻¹' {z} ∩ {ω | (M θ).map pair {z} = 0} = ∅ := by
+        ext ω
+        simp [hz]
+      simp [this]
   have hGm : Measurable G := by
     have hfun : G = fun ω => ∑' k, γ ^ k * r (t + k) ω := by
       ext ω
@@ -835,16 +873,17 @@ private lemma integral_return_smul_eq_cond
       _ = ENNReal.ofReal (BG * max Cψ 0) := (ENNReal.ofReal_mul hBG).symm
   have hHtop : ∑' z, ∫⁻ ω, enorm (H z ω) ∂(M θ) ≠ ⊤ := by
     rw [← lintegral_tsum fun z => (hHsm z).aestronglyMeasurable.enorm]
-    suffices ∀ ω, ∑' z, enorm (H z ω) ≤ ENNReal.ofReal (BG * max Cψ 0) by
-      exact ne_top_of_le_ne_top (by rwa [MeasureTheory.lintegral_const]) (lintegral_mono_ae (ae_of_all _ this))
-    intro ω
+    suffices ∀ᵐ ω ∂(M θ), ∑' z, enorm (H z ω) ≤ ENNReal.ofReal (BG * max Cψ 0) by
+      exact ne_top_of_le_ne_top (by rwa [MeasureTheory.lintegral_const]) (lintegral_mono_ae this)
+    filter_upwards [hpos_ae] with ω hωpos
     rw [hHnorm]
     calc
       _ = enorm (Q (s t ω) (a t ω)) * enorm (ψ (s t ω) (a t ω)) := enorm_smul _ _
       _ = ENNReal.ofReal ‖Q (s t ω) (a t ω)‖ * ENNReal.ofReal ‖ψ (s t ω) (a t ω)‖ := by
         rw [← ofReal_norm, ← ofReal_norm]
       _ ≤ ENNReal.ofReal BG * ENNReal.ofReal (max Cψ 0) :=
-        mul_le_mul' (ENNReal.ofReal_le_ofReal (hQbd _ _)) (ENNReal.ofReal_le_ofReal (hC _ _))
+        mul_le_mul' (ENNReal.ofReal_le_ofReal (hQbd (s t ω) (a t ω) (by simpa [pair] using hωpos)))
+          (ENNReal.ofReal_le_ofReal (hC _ _))
       _ = ENNReal.ofReal (BG * max Cψ 0) := (ENNReal.ofReal_mul hBG).symm
   have hsumG : ∀ ω, ∑' z, F z ω = G ω • ψ (s t ω) (a t ω) := by
     intro ω
@@ -900,12 +939,11 @@ scores, and identify those scores with the path-conditional `Q`.
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ] [FiniteDimensional ℝ Θ]
   [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮]
-  [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜] [Countable 𝒜]
+  [μ : ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜] [Countable 𝒜]
   {M : DensityModel Θ 𝒮 𝒜}
   {θ : Θ}
   {γ : ℝ}
   {g : 𝒮 → 𝒜 → ℝ}
-  {Cg Ms : ℝ}
   {Q : Θ → ℕ → 𝒮 → 𝒜 → ℝ}
   {V : Θ → ℕ → 𝒮 → ℝ}
   {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
@@ -919,11 +957,11 @@ private lemma main
   (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.policy.prob θ z.1 z.2))
   (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₃ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ g x u)
-  (h₄ : ∀ x, Integrable (g x) ReferenceMeasure.measure)
-  (h₅ : ∀ x, ∫ u, g x u ∂ReferenceMeasure.measure ≤ Cg)
+  (h₄ : ∀ x, Integrable (g x) μ.measure)
+  (h₅ : sup[x] ∫ u, g x u ∂μ.measure < ∞)
   (hφ : StronglyMeasurable
     (fun z : 𝒮 × 𝒜 => fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' z.1 z.2)) θ))
-  (hMs : ∀ y u, ‖fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ‖ ≤ Ms) :
+  (hMs : sup[y, u] ‖fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ‖ < ∞) :
 -- imply
   have : ∀ θ', PSpace (M θ') (AsPathRV.path r) := fun _ =>
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).aemeasurable⟩)
@@ -935,6 +973,11 @@ private lemma main
     𝔼[s, a : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
       Q θ t (s t) (a t) • ∇[θ] Real.log (M.policy.prob θ (s t) (a t))) := by
 -- proof
+  obtain ⟨Cg, hCg⟩ := id h₅
+  have h₅le : ∀ x, ∫ u, g x u ∂μ.measure ≤ Cg := fun x => hCg ⟨x, rfl⟩
+  obtain ⟨Ms, hMsb⟩ := id hMs
+  have hMsle : ∀ y u, ‖fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ‖ ≤ Ms :=
+    fun y u => hMsb ⟨(y, u), rfl⟩
   intro hrP hsP haP
   let _ := hV
   classical
@@ -1008,7 +1051,7 @@ private lemma main
   set ψ : 𝒮 → 𝒜 → Θ →L[ℝ] ℝ := fun y u =>
     fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ
   have hψ : StronglyMeasurable (Function.uncurry ψ) := hφ
-  have hMs0 : ∀ y u, ‖ψ y u‖ ≤ max Ms 0 := fun y u => (hMs y u).trans (le_max_left _ _)
+  have hMs0 : ∀ y u, ‖ψ y u‖ ≤ max Ms 0 := fun y u => (hMsle y u).trans (le_max_left _ _)
   have hs_meas : ∀ t, Measurable (s t) := fun t =>
     Random.Measurable.of.All_Eq.snd.fst h₁ t
   have ha_meas : ∀ t, Measurable (a t) := fun t =>
@@ -1038,7 +1081,8 @@ private lemma main
     (fun z : 𝒮 × 𝒜 => ∇[θ] Real.log (M.policy.prob θ z.1 z.2)) := by
     simp only [gradient]
     exact L.continuous.comp_stronglyMeasurable hφ
-  have hQB : ∀ t x u, ‖Q θ t x u‖ ≤ BG := by
+  have hQB : ∀ t x u (_ : (M θ).map (fun ω => (s t ω, a t ω)) {(x, u)} ≠ 0),
+      ‖Q θ t x u‖ ≤ BG := by
     intro t x u
     have hpR : Measurable (fun ω t ↦ r t ω) :=
       Measurable.of_eval (Random.Measurable.of.All_Eq.fst h₁)
@@ -1047,13 +1091,25 @@ private lemma main
       refine Measurable.tsum fun k => ?_
       have hm : Measurable (fun integ : ℕ → ℝ => integ (t + k)) := measurable_pi_apply (t + k)
       simpa using hm.const_mul ((γ ^ (id : ℕ → ℕ)) k)
-    have hQint :
+    have hsa : Measurable (fun ω => (s t ω, a t ω)) :=
+      (hs_meas t).prodMk (ha_meas t)
+    have hsaJ : (s t, a t) = fun ω => (s t ω, a t ω) := by
+      funext ω
+      unfold JointRandomSymbol
+      rfl
+    have hy : Measurable (s t, a t) := by
+      rw [hsaJ]
+      exact hsa
+    have hQint (hpos : (M θ).map (fun ω => (s t ω, a t ω)) {(x, u)} ≠ 0) :
       Q θ t x u = ∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω
         ∂(M θ)[|(fun ω => (s t ω, a t ω)) ⁻¹' {(x, u)}] := by
       rw [hQ θ t (fun _ => x) (fun _ => u)]
       simp only [Expectation.asRV, AsPathRV.path_fun]
-      rw [Expectation.condEvent_eq_integral hpR.aemeasurable hfG]
-      rfl
+      have hpos' : (M θ).map (s t, a t) {(x, u)} ≠ 0 := by
+        rw [hsaJ]
+        exact hpos
+      rw [Expectation.condEval_eq_integral hpR hy hfG hpos', hsaJ]
+      simp [Dot.dot, Function.hPow_apply, id_eq, Function.getSliceFrom]
     have hGbd : ∀ᵐ ω ∂(M θ), ‖((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω‖ ≤ BG := by
       filter_upwards [All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity (M := M) h₁ θ] with ω hrω
       have hsum : Summable fun k => γ ^ k * |M.env.R| :=
@@ -1072,20 +1128,50 @@ private lemma main
         _ ≤ ∑' k, γ ^ k * |M.env.R| := Summable.tsum_le_tsum hle hsn hsum
         _ = BG := by
           rw [tsum_mul_right, tsum_geometric_of_lt_one h₀.1 h₀.2]
-    rw [hQint]
+    intro hpos
+    have h0 : (M θ) ((fun ω => (s t ω, a t ω)) ⁻¹' {(x, u)}) ≠ 0 := by
+      rwa [← Measure.map_apply hsa (measurableSet_singleton (x, u))]
+    rw [hQint hpos]
     have hae : ∀ᵐ ω ∂(M θ)[|(fun ω => (s t ω, a t ω)) ⁻¹' {(x, u)}],
         ‖((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω‖ ≤ BG :=
       cond_absolutelyContinuous.ae_le hGbd
-    if h0 : (M θ) ((fun ω => (s t ω, a t ω)) ⁻¹' {(x, u)}) = 0 then
-      rw [cond_eq_zero_of_meas_eq_zero h0]
-      simpa using hBG
+    have : IsProbabilityMeasure
+      (M θ)[|(fun ω => (s t ω, a t ω)) ⁻¹' {(x, u)}] :=
+      cond_isProbabilityMeasure h0
+    simpa using
+      norm_integral_le_of_norm_le_const
+        (μ := (M θ)[|(fun ω => (s t ω, a t ω)) ⁻¹' {(x, u)}]) hae
+  have hpos_ae_t : ∀ t, ∀ᵐ ω ∂(M θ),
+      (M θ).map (fun ω => (s t ω, a t ω)) {(s t ω, a t ω)} ≠ 0 := by
+    intro t
+    let pair : (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮 × 𝒜 := fun ω => (s t ω, a t ω)
+    have hpair : Measurable pair := (hs_meas t).prodMk (ha_meas t)
+    have hset :
+        {ω | (M θ).map pair {pair ω} = 0} =
+          ⋃ z : 𝒮 × 𝒜, pair ⁻¹' {z} ∩ {ω | (M θ).map pair {z} = 0} := by
+      ext ω
+      constructor
+      · intro h
+        exact Set.mem_iUnion.mpr ⟨pair ω, ⟨rfl, h⟩⟩
+      · intro h
+        obtain ⟨z, hz, hμ⟩ := Set.mem_iUnion.mp h
+        have hz' : pair ω = z := hz
+        simpa [hz'] using hμ
+    apply (ae_iff.2 ?_)
+    simp only [ne_eq, not_not]
+    change (M θ) {ω | (M θ).map pair {pair ω} = 0} = 0
+    rw [hset]
+    refine measure_iUnion_null fun z => ?_
+    if hz : (M θ).map pair {z} = 0 then
+      have : pair ⁻¹' {z} ∩ {ω | (M θ).map pair {z} = 0} = pair ⁻¹' {z} := by
+        ext ω
+        simp [hz]
+      rwa [this, ← Measure.map_apply hpair (measurableSet_singleton z)]
     else
-      have : IsProbabilityMeasure
-        (M θ)[|(fun ω => (s t ω, a t ω)) ⁻¹' {(x, u)}] :=
-        cond_isProbabilityMeasure h0
-      simpa using
-        norm_integral_le_of_norm_le_const
-          (μ := (M θ)[|(fun ω => (s t ω, a t ω)) ⁻¹' {(x, u)}]) hae
+      have : pair ⁻¹' {z} ∩ {ω | (M θ).map pair {z} = 0} = ∅ := by
+        ext ω
+        simp [hz]
+      simp [this]
   have hQterm_sm : ∀ t, StronglyMeasurable fun ω =>
       Q θ t (s t ω) (a t ω) • ψ (s t ω) (a t ω) := fun t =>
     (StronglyMeasurable.of_discrete (f := fun q : 𝒮 × 𝒜 => Q θ t q.1 q.2 • ψ q.1 q.2)).comp_measurable
@@ -1093,9 +1179,11 @@ private lemma main
   have hQFint_dual : ∀ t, Integrable (fun ω =>
       Q θ t (s t ω) (a t ω) • ψ (s t ω) (a t ω)) (M θ) := fun t =>
     Integrable.of_bound (hQterm_sm t).aestronglyMeasurable (BG * max Ms 0)
-      (Filter.Eventually.of_forall fun ω => by
+      (by
+        filter_upwards [hpos_ae_t t] with ω hωpos
         rw [norm_smul]
-        exact mul_le_mul (hQB t (s t ω) (a t ω)) (hMs0 (s t ω) (a t ω)) (norm_nonneg _) hBG)
+        exact mul_le_mul (hQB t (s t ω) (a t ω) hωpos) (hMs0 (s t ω) (a t ω))
+          (norm_nonneg _) hBG)
   have hQFint : ∀ t, Integrable (fun ω =>
       γ ^ t • Q θ t (s t ω) (a t ω) •
         ∇[θ] Real.log (M.policy.prob θ (s t ω) (a t ω))) (M θ) := by
@@ -1107,11 +1195,11 @@ private lemma main
           Q θ t q.1 q.2 • ∇[θ] Real.log (M.policy.prob θ q.1 q.2))).comp_measurable
         ((hs_meas t).prodMk (ha_meas t))
     refine Integrable.of_bound (hsm.const_smul (γ ^ t)).aestronglyMeasurable
-      (γ ^ t * (BG * max Ms 0)) (Filter.Eventually.of_forall ?_)
-    intro ω
+      (γ ^ t * (BG * max Ms 0)) ?_
+    filter_upwards [hpos_ae_t t] with ω hωpos
     rw [norm_smul, Real.norm_of_nonneg (pow_nonneg h₀.1 t), norm_smul]
     refine mul_le_mul_of_nonneg_left ?_ (pow_nonneg h₀.1 t)
-    refine mul_le_mul (hQB t (s t ω) (a t ω)) ?_ (norm_nonneg _) hBG
+    refine mul_le_mul (hQB t (s t ω) (a t ω) hωpos) ?_ (norm_nonneg _) hBG
     simp only [gradient]
     rw [LinearIsometryEquiv.norm_map]
     exact hMs0 (s t ω) (a t ω)
@@ -1129,10 +1217,11 @@ private lemma main
     have : IsProbabilityMeasure (M θ) := inferInstance
     simpa [probReal_univ] using
       (norm_integral_le_of_norm_le_const (μ := M θ)
-        (Filter.Eventually.of_forall fun ω => by
+        (by
+          filter_upwards [hpos_ae_t t] with ω hωpos
           rw [norm_smul (Q θ t (s t ω) (a t ω)) (ψ (s t ω) (a t ω)),
             Real.norm_eq_abs]
-          exact mul_le_mul (hQB t (s t ω) (a t ω)) (hMs0 (s t ω) (a t ω))
+          exact mul_le_mul (hQB t (s t ω) (a t ω) hωpos) (hMs0 (s t ω) (a t ω))
             (norm_nonneg _) hBG))
   have hLtsum :
     L (∑' t, γ ^ t • integral (μ := M θ) (fun ω =>
@@ -1166,11 +1255,11 @@ private lemma main
     calc
       _ ≤ ∫ _, γ ^ t * (BG * max Ms 0) ∂(M θ) :=
         integral_mono_ae (hQFint t).norm (integrable_const _)
-          (Filter.Eventually.of_forall fun ω => by
-            dsimp
+          (by
+            filter_upwards [hpos_ae_t t] with ω hωpos
             rw [norm_smul, Real.norm_of_nonneg (pow_nonneg h₀.1 t), norm_smul]
             apply mul_le_mul_of_nonneg_left _ (pow_nonneg h₀.1 t)
-            exact mul_le_mul (hQB t (s t ω) (a t ω)) (hgrad ω) (norm_nonneg _) hBG)
+            exact mul_le_mul (hQB t (s t ω) (a t ω) hωpos) (hgrad ω) (norm_nonneg _) hBG)
       _ = γ ^ t * (BG * max Ms 0) := by
         rw [MeasureTheory.integral_const]
         simp [probReal_univ, smul_eq_mul]
@@ -1203,3 +1292,4 @@ private lemma main
 
 
 -- created on 2026-11-11
+-- updated on 2026-11-14

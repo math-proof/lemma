@@ -6,7 +6,7 @@ open MeasureTheory Random
 @[path]
 private lemma main
   [MeasurableSpace Ω]
-  [ReferenceMeasure α] [ReferenceMeasure β]
+  [μ : ReferenceMeasure α] [ReferenceMeasure β]
   [Countable α] [MeasurableSingletonClass α]
   {π : Measure Ω}
   {a : Ω → α} {s : Ω → β}
@@ -14,7 +14,7 @@ private lemma main
 -- given
   (hP : SinglePSpace π (a, s))
   (hf : Measurable f)
-  (hμ : ReferenceMeasure.measure (α := α) = Measure.count)
+  (hμ : μ.measure = Measure.count)
   («\sf{s}» : β) :
 -- imply
   ∑' «\sf{a}» : α, ℙ[π](a = «\sf{a}» | s = «\sf{s}») * f «\sf{a}» =
@@ -24,4 +24,4 @@ private lemma main
 
 
 -- created on 2023-04-02
--- updated on 2026-11-02
+-- updated on 2026-11-14

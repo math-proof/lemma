@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.GroupCohomology.RepPi
+import Lemma.Rep.RepPi
 
 set_option autoImplicit false
 
@@ -31,6 +31,6 @@ open scoped NumberField.InfPlaceDecomp
 variable (E K : Type) [Field E] [NumberField E] [Field K] [NumberField K] [Algebra E K]
 
 
-noncomputable abbrev obj : Rep ℤ (K ≃ₐ[E] K) := GroupCohomology.RepPi.obj (fibre E K)
+noncomputable abbrev obj : Rep ℤ (K ≃ₐ[E] K) := Rep.RepPi.obj (fibre E K)
 
 end NumberField.ArchIdele

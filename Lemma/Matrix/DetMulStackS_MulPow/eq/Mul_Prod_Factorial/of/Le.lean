@@ -32,5 +32,5 @@ private lemma main
     rw [hmul i j, fwdDiff_iter_pow_eq_zero_of_lt (show i < j from hij), Pi.zero_apply, mul_zero]
 
 
--- created on 2026-10-07
+-- created on 2022-01-15
 -- updated on 2026-10-25

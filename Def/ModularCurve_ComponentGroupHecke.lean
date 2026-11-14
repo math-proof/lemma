@@ -1,4 +1,4 @@
-import Lemma.ModularCurve.ComponentGroup
+import Lemma.Finset.ComponentGroup
 import Mathlib.LinearAlgebra.Dual.Defs
 import Mathlib.Data.Matrix.Basic
 import Mathlib.Tactic.LinearCombination

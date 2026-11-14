@@ -1,11 +1,11 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.CerednikDrinfeld.SpecialFormalModule
-import Lemma.CerednikDrinfeld.GradedCartierModuleData
+import Lemma.MvPowerSeries.SpecialFormalModule
+import Lemma.Fin.GradedCartierModuleData
 import Lemma.Int.P2MUtil
 
-open CerednikDrinfeld
-open CerednikDrinfeld.GradedCartierModuleData
+open CerednikDrinfeld Fin MvPowerSeries
+open Fin.GradedCartierModuleData
 
 /--
 [CerednikDrinfeld_GradedCartierModuleData_exists_eq_varpi_add_verschiebung_iff_dvd_of_varpi_eq_teichmuller_smul_add](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_CerednikDrinfeld_GradedCartierModuleData_exists_eq_varpi_add_verschiebung_iff_dvd_of_varpi_eq_teichmuller_smul_add.lean)

@@ -11,7 +11,7 @@ private lemma eq_one_of_pow_prime_eq_one {A : Type} [CommRing A] [IsDomain A] {n
   let φ : Matrix n n A →+* Matrix n n (A ⧸ 𝔪) := (Ideal.Quotient.mk 𝔪).mapMatrix
   have hφM : φ M = 1 := by
     ext i j
-    rw [Matrix.map_apply]
+    rw [RingHom.mapMatrix_apply]
     simpa [Matrix.one_apply, apply_ite (Ideal.Quotient.mk 𝔪), map_one, map_zero] using ((Ideal.Quotient.eq (I := 𝔪)).2 (hM i j))
   set u : Matrix n n A := ∑ k ∈ Finset.range ℓ, M ^ k with hu
   have hu0 : u * (M - 1) = 0 := by
@@ -81,13 +81,13 @@ private lemma main
     let φ : Matrix n n A →+* Matrix n n (A ⧸ 𝔪) := (Ideal.Quotient.mk 𝔪).mapMatrix
     have hφ : φ (g : Matrix n n A) = 1 := by
       ext i j
-      rw [Matrix.map_apply]
+      rw [RingHom.mapMatrix_apply]
       simpa [Matrix.one_apply, apply_ite (Ideal.Quotient.mk 𝔪), map_one, map_zero] using ((Ideal.Quotient.eq (I := 𝔪)).2 (h i j))
     have hφ' : φ (g' : Matrix n n A) = 1 := by
       rw [hg', Units.val_pow_eq_pow_val, map_pow, hφ, one_pow]
     have h := congrFun (congrFun hφ' i) j
     apply (Ideal.Quotient.eq (I := 𝔪)).1
-    rw [Matrix.map_apply] at h
+    rw [RingHom.mapMatrix_apply] at h
     simpa [Matrix.one_apply, apply_ite (Ideal.Quotient.mk 𝔪), map_one, map_zero] using h
   have key : ∀ (𝔪 : Ideal A) (p : ℕ), 𝔪.IsMaximal → p.Prime → (p : A) ∈ 𝔪 → (ℓ : A) ∈ 𝔪 → ℓ = p := by
     intro 𝔪 p hmax hp hp𝔪 hℓ𝔪
@@ -116,3 +116,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-13

@@ -1,8 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.DivisorClassGroup
+import Lemma.Valuation.DivisorClassGroup
 open KaehlerDifferential
-open AlgebraicCurve
+open AlgebraicCurve Valuation
 
 
 private lemma D_pow_char

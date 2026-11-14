@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.GroupCohomology.TateCohomology
+import Lemma.LinearMap.TateCohomology
 import Lemma.Representation.EqIndBotMk
 open CategoryTheory Rep
 

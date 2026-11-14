@@ -10,6 +10,8 @@ namespace Rep
 
 variable {k G : Type u} [CommRing k] [Group G]
 
+def IsEquivariantBilinear (A B N : Rep k G) (φ : A →ₗ[k] B →ₗ[k] N) : Prop :=
+  ∀ (g : G) (a : A) (b : B), φ (A.ρ g a) (B.ρ g b) = N.ρ g (φ a b)
 
 end Rep
 
@@ -24,19 +26,6 @@ variable (φ : A →ₗ[k] B →ₗ[k] N)
 
 
 variable (hφ : Rep.IsEquivariantBilinear A B N φ)
-
-include hφ in
-
-
-section DescentGadget
-
-variable {W : Type u} [AddCommGroup W] [Module k W]
-
-variable (A) in
-
-
-end DescentGadget
-
 
 def IsCupProductPairing (inv : H2 N →ₗ[k] k) (P : H1 A →ₗ[k] H1 B →ₗ[k] k) : Prop :=
   ∀ (f : cocycles₁ A) (g : cocycles₁ B),

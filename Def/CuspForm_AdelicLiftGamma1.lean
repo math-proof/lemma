@@ -1,5 +1,5 @@
 import Def.LanglandsTunnell_DeltaLift
-import Lemma.AdelicDock.LocalEmbedding
+import Def.AdelicDock_LocalEmbedding
 
 set_option autoImplicit false
 

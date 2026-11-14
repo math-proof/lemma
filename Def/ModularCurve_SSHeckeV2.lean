@@ -1,8 +1,8 @@
 import Mathlib
 import Def.ModularCurve_PlaceWidth
-import Lemma.ModularCurve.CharLDegeneracyHecke
+import Lemma.LaurentSeries.CharLDegeneracyHecke
 import Def.ModularCurve_QExpansionDiff
-import Lemma.AlgebraicCurve.Correspondence
+import Lemma.Scheme.Correspondence
 import Def.ModularCurve_CharLSpecialFibreLevelNDictionary
 import Def.ModularCurve_WeightDivisor
 import Def.ModularCurve_SSCarrier

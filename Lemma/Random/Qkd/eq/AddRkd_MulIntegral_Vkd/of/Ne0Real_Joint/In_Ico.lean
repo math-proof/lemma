@@ -10,6 +10,7 @@ import Lemma.Random.NormClip.le.Abs_R
 import Lemma.Random.NormWkd.le.Abs_R
 import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Lemma.Random.Vkd.eq.TSum_MulPowWkd.of.Ne0Real_Preimage.In_Ico
+import Theorem.Probability.JointRv.AsRV
 open Classical MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.DensityModel Random Finset Kernel
 set_option maxHeartbeats 900000
 
@@ -17,11 +18,14 @@ set_option maxHeartbeats 900000
 private lemma avg_Kf_clip
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
   {M : DensityModel Θ 𝒮 𝒜}
+-- given
   (θ : Θ)
   (j : ℕ)
   (x : 𝒮) :
+-- imply
   ∫ z, M.Kf θ (fun w : ℝ × 𝒮 × 𝒜 ↦ clip w.1 (-M.env.R) M.env.R) j z ∂(M.stageK θ x) =
     M.Wkd θ j x := by
+-- proof
   have := M.env.reward_markov
   have := M.env.trans_markov
   let clipf : ℝ × 𝒮 × 𝒜 → ℝ := fun w ↦ clip w.1 (-M.env.R) M.env.R
@@ -46,7 +50,7 @@ private lemma avg_Kf_clip
       Measurable_Wkd.of.All_Measurable_Prob (M := M) hπ θ j
     have hφ : StronglyMeasurable (fun p : 𝒮 × 𝒜 => ∫ y, M.Wkd θ j y ∂(M.env.trans p)) :=
       (StronglyMeasurable.integral_kernel_prod_right' (κ := M.env.trans)
-        (f := fun z : (𝒮 × 𝒜) × 𝒮 => M.Wkd θ j z.2)
+        (f := fun z => M.Wkd θ j z.2)
         (hmeas.stronglyMeasurable.comp_measurable measurable_snd)).measurable.stronglyMeasurable
     have hfw : StronglyMeasurable (fun z : ℝ × 𝒮 × 𝒜 => ∫ y, M.Wkd θ j y ∂(M.env.trans z.2)) :=
       hφ.comp_measurable measurable_snd
@@ -78,15 +82,17 @@ private lemma avg_Kf_clip
     have : IsProbabilityMeasure (M.env.reward (x, u)) := inferInstance
     rw [MeasureTheory.integral_const, probReal_univ, one_smul]
 
-
 private lemma Kf_succ_eq_Wkd
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
   {M : DensityModel Θ 𝒮 𝒜}
+-- given
   (θ : Θ)
   (j : ℕ)
   (z : ℝ × 𝒮 × 𝒜) :
+-- imply
   M.Kf θ (fun w : ℝ × 𝒮 × 𝒜 ↦ clip w.1 (-M.env.R) M.env.R) (j + 1) z =
     ∫ y, M.Wkd θ j y ∂(M.env.trans z.2) := by
+-- proof
   have := M.env.reward_markov
   have := M.env.trans_markov
   let clipf : ℝ × 𝒮 × 𝒜 → ℝ := fun w ↦ clip w.1 (-M.env.R) M.env.R
@@ -107,22 +113,24 @@ private lemma Kf_succ_eq_Wkd
   refine integral_congr_ae (Filter.Eventually.of_forall fun y => ?_)
   exact avg_Kf_clip (M := M) θ j y
 
-
 private lemma joint_disint
   [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮]
-  [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
+  [μ : ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
   {M : DensityModel Θ 𝒮 𝒜}
   {g : ℝ × 𝒮 × 𝒜 → ℝ}
   {C : ℝ}
+-- given
   (hg : StronglyMeasurable g)
   (hC : ∀ z, ‖g z‖ ≤ C)
   (θ : Θ)
   (x : 𝒮)
   (u : 𝒜) :
+-- imply
   ∫ ω, (if (ω 0).2.1 = x ∧ (ω 0).2.2 = u then (1 : ℝ) else 0) * g (ω 0) ∂(M θ) =
     M.env.init.real {x} * M.policy.prob θ x u *
-      (ReferenceMeasure.measure : Measure 𝒜).real {u} *
+      (μ.measure : Measure 𝒜).real {u} *
       ∫ ρ, g (ρ, x, u) ∂(M.env.reward (x, u)) := by
+-- proof
   have := M.env.init_prob
   have := M.env.reward_markov
   let ι : ℝ × 𝒮 × 𝒜 → ℝ := fun z => if z.2.1 = x ∧ z.2.2 = u then 1 else 0
@@ -138,12 +146,14 @@ private lemma joint_disint
       funext z
       simp [ι]
     exact hι'.symm ▸ hset
-  have hf : StronglyMeasurable (fun z => ι z * g z) := hι.mul hg
+  have hf : StronglyMeasurable (fun z => ι z * g z) :=
+    hι.mul hg
   have hCf : ∀ z, ‖ι z * g z‖ ≤ C := by
     intro z
-    by_cases hz : z.2.1 = x ∧ z.2.2 = u
-    · simpa [ι, hz] using hC z
-    · have hC0 : (0 : ℝ) ≤ C := (norm_nonneg (g z)).trans (hC z)
+    if hz : z.2.1 = x ∧ z.2.2 = u then
+      simpa [ι, hz] using hC z
+    else
+      have hC0 : (0 : ℝ) ≤ C := (norm_nonneg (g z)).trans (hC z)
       simpa [ι, hz] using hC0
   have hmap := Map.eq.BindStageK.of.All_EqWithDensity (M := M) θ
   have hInt : Integrable (fun z : ℝ × 𝒮 × 𝒜 => ι z * g z) (M.stageK θ ∘ₘ M.env.init) :=
@@ -167,20 +177,21 @@ private lemma joint_disint
     have hρ : ∀ u', ∫ ρ, ι (ρ, y, u') * g (ρ, y, u') ∂(M.env.reward (y, u')) =
         if y = x ∧ u' = u then ∫ ρ, g (ρ, x, u) ∂(M.env.reward (x, u)) else 0 := by
       intro u'
-      by_cases hyu : y = x ∧ u' = u
-      · rcases hyu with ⟨hy, hu⟩
+      if hyu : y = x ∧ u' = u then
+        obtain ⟨hy, hu⟩ := hyu
         subst hy
         subst hu
         simp only [ι, and_self, ite_true, one_mul]
-      · have h0 : ∀ ρ, ι (ρ, y, u') * g (ρ, y, u') = 0 := by
+      else
+        have h0 : ∀ ρ, ι (ρ, y, u') * g (ρ, y, u') = 0 := by
           intro ρ
           simp [ι, hyu]
         rw [show (fun ρ => ι (ρ, y, u') * g (ρ, y, u')) = fun _ => 0 from funext h0,
           MeasureTheory.integral_zero]
         simp [hyu]
     simp_rw [hρ, smul_eq_mul]
-    by_cases hy : y = x
-    · have hfun : (fun u' : 𝒜 =>
+    if hy : y = x then
+      have hfun : (fun u' : 𝒜 =>
           M.policy.prob θ y u' * (if y = x ∧ u' = u then
             ∫ ρ, g (ρ, x, u) ∂(M.env.reward (x, u)) else 0)) =
           ({u} : Set 𝒜).indicator (fun _ =>
@@ -189,9 +200,10 @@ private lemma joint_disint
         by_cases hu : u' = u <;> simp [hu, hy, Set.indicator]
       rw [hfun, integral_indicator (measurableSet_singleton u), MeasureTheory.setIntegral_const,
         smul_eq_mul, hy]
+      simp
       ring
-      simp [ite_true]
-    · simp [hy]
+    else
+      simp [hy]
   simp_rw [hinner]
   have hI : (fun y : 𝒮 =>
       if y = x then
@@ -206,7 +218,6 @@ private lemma joint_disint
   rw [hI, integral_indicator (measurableSet_singleton x), MeasureTheory.setIntegral_const, smul_eq_mul]
   ring
 
-
 /--
 On a state-action pair charged at time 0,
 `Q0 θ γ x u = rkd x u + γ * ∫ y, V0 θ γ y ∂(trans (x, u))`.
@@ -217,12 +228,11 @@ private lemma main
   [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
   {M : DensityModel Θ 𝒮 𝒜}
   {γ : ℝ}
+  {θ : Θ}
+  {x : 𝒮}
+  {u : 𝒜}
 -- given
   (h : γ ∈ Set.Ico 0 1)
-  (θ : Θ)
-  (x : 𝒮)
-  (u : 𝒜)
-  (hP : ∀ y, (M θ).real ((fun ω : ℕ → ℝ × 𝒮 × 𝒜 => (ω 0).2.1) ⁻¹' {y}) ≠ 0)
   (hQA : (M θ).real
     (((fun ω : ℕ → ℝ × 𝒮 × 𝒜 => (ω 0).2.1) ⁻¹' {x}) ∩
       ((fun ω : ℕ → ℝ × 𝒮 × 𝒜 => (ω 0).2.2) ⁻¹' {u})) ≠ 0) :
@@ -262,7 +272,7 @@ private lemma main
     rw [Measure.map_apply hy (measurableSet_singleton (x, u)), hpre₀]
     exact fun h => hQA (by simp [Measure.real, h])
   rw [Expectation.condEval_eq_integral hpR hy hfG hmap]
-  have hpre : (JointRandomSymbol (s 0) (a 0)) ⁻¹' {(x, u)} = B := by
+  have hpre : (s 0, a 0) ⁻¹' {(x, u)} = B := by
     ext ω
     simp [JointRandomSymbol, B, s, a, Set.mem_preimage, Set.mem_inter_iff,
       Set.mem_singleton_iff, Prod.ext_iff]
@@ -356,8 +366,11 @@ private lemma main
       exact hιG'.symm ▸ hιG
     have hCG : ∀ hist, ‖G hist‖ ≤ 1 := by
       intro hist
-      by_cases hh : (hist ⟨0, mem_Iic.2 le_rfl⟩).2.1 = x ∧
-          (hist ⟨0, mem_Iic.2 le_rfl⟩).2.2 = u <;> simp [G, hh, norm_one]
+      if hh : (hist ⟨0, mem_Iic.2 le_rfl⟩).2.1 = x ∧
+          (hist ⟨0, mem_Iic.2 le_rfl⟩).2.2 = u then
+        simp [G, hh]
+      else
+        simp [G, hh]
     have hmark :=
       All_EqIntegral_MulGIntegral_MulGKf.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
         (M := M) hf hC θ k 0 hG hCG
@@ -374,11 +387,13 @@ private lemma main
     have hpull : ∫ ω, (if (ω 0).2.1 = x ∧ (ω 0).2.2 = u then (1 : ℝ) else 0) * clipf (ω k) ∂(M θ) =
         (M θ).real B *
           ∫ ρ, M.Kf θ clipf k (ρ, x, u) ∂(M.env.reward (x, u)) := by
-      rw [show (fun ω : ℕ → ℝ × 𝒮 × 𝒜 =>
-            (if (ω 0).2.1 = x ∧ (ω 0).2.2 = u then (1 : ℝ) else 0) * clipf (ω k)) =
+      have hωk : (fun ω : ℕ → ℝ × 𝒮 × 𝒜 =>
+          (if (ω 0).2.1 = x ∧ (ω 0).2.2 = u then (1 : ℝ) else 0) * clipf (ω k)) =
           fun ω : ℕ → ℝ × 𝒮 × 𝒜 =>
-            G (Preorder.frestrictLe (π := fun _ : ℕ => ℝ × 𝒮 × 𝒜) 0 ω) * clipf (ω (0 + k)) by
-        funext ω; simp [hGapp, zero_add]]
+            G (Preorder.frestrictLe (π := fun _ : ℕ => ℝ × 𝒮 × 𝒜) 0 ω) * clipf (ω (0 + k)) := by
+        funext ω
+        simp [hGapp, zero_add]
+      rw [hωk]
       rw [hmark]
       have happ : (fun ω : ℕ → ℝ × 𝒮 × 𝒜 =>
           G (Preorder.frestrictLe (π := fun _ : ℕ => ℝ × 𝒮 × 𝒜) 0 ω) * M.Kf θ clipf k (ω 0)) =
@@ -399,11 +414,12 @@ private lemma main
           have heq : (fun ω => if (ω 0).2.1 = x ∧ (ω 0).2.2 = u then (1 : ℝ) else 0) =
               B.indicator (fun _ => (1 : ℝ)) := by
             funext ω
-            by_cases hω : (ω 0).2.1 = x ∧ (ω 0).2.2 = u
-            · have hmem : ω ∈ B := by
+            if hω : (ω 0).2.1 = x ∧ (ω 0).2.2 = u then
+              have hmem : ω ∈ B := by
                 simpa [B, Set.mem_inter_iff, Set.mem_preimage, Set.mem_singleton_iff] using hω
               simp [hmem, hω, Set.indicator]
-            · have hmem : ω ∉ B := by
+            else
+              have hmem : ω ∉ B := by
                 simpa [B, Set.mem_inter_iff, Set.mem_preimage, Set.mem_singleton_iff] using hω
               simp [hmem, hω, Set.indicator]
           rw [heq, integral_indicator hBm, MeasureTheory.setIntegral_const, smul_eq_mul, mul_one]
@@ -468,10 +484,9 @@ private lemma main
         ((summable_geometric_of_lt_one h.1 h.2).mul_right |M.env.R|)
       have hμ : IsProbabilityMeasure (M.env.trans (x, u)) := inferInstance
       calc
-        ∫ y, ‖γ ^ k * M.Wkd θ k y‖ ∂(M.env.trans (x, u))
-          ≤ ∫ _, γ ^ k * |M.env.R| ∂(M.env.trans (x, u)) :=
-            integral_mono_ae (hri k).norm (integrable_const _)
-              (Filter.Eventually.of_forall fun y => hbd k y)
+        _ ≤ ∫ _, γ ^ k * |M.env.R| ∂(M.env.trans (x, u)) :=
+          integral_mono_ae (hri k).norm (integrable_const _)
+            (Filter.Eventually.of_forall fun y => hbd k y)
         _ = γ ^ k * |M.env.R| := by
           simp [MeasureTheory.integral_const, probReal_univ]
     simp_rw [← integral_const_mul, DensityModel.V0]
@@ -481,4 +496,4 @@ private lemma main
 
 
 -- created on 2026-11-02
--- updated on 2026-11-11
+-- updated on 2026-11-14

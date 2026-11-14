@@ -44,7 +44,7 @@ lemma Partition.mesh_pos_of_lt
   have hn : P.n ≠ 0 := (P.n_pos_of_lt hab).ne'
   have i₀ : Fin P.n := ⟨0, Nat.pos_of_ne_zero hn⟩
   unfold Partition.mesh
-  rw [dif_neg hn]
+  rw [dite_eq_right hn]
   have hlt : P.points i₀.castSucc < P.points i₀.succ :=
     P.ordered Fin.castSucc_lt_succ
   calc (0 : ℝ) < P.points i₀.succ - P.points i₀.castSucc := sub_pos.mpr hlt

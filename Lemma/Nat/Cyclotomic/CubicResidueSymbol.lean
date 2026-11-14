@@ -112,7 +112,7 @@ lemma mk_one_ne_mk_omega
 -- proof
   intro hEq
   have hPrim :=
-    omegaQuotient_isPrimitiveRoot (K := K) hZeta P hPprime hPbot hNormCoprime
+    omegaQuotient_isPrimitiveRoot (K := K) hZeta hPprime hPbot hNormCoprime
   have hOne : Ideal.Quotient.mk P (omega (K := K) hZeta) = 1 := by
     rw [← hEq, map_one]
   exact hPrim.ne_one (by norm_num) hOne
@@ -141,7 +141,7 @@ lemma mk_one_ne_mk_omega_sq
 -- proof
   intro hEq
   have hPrim :=
-    omegaQuotient_isPrimitiveRoot (K := K) hZeta P hPprime hPbot hNormCoprime
+    omegaQuotient_isPrimitiveRoot (K := K) hZeta hPprime hPbot hNormCoprime
   have hPow2 :
       (Ideal.Quotient.mk P (omega (K := K) hZeta)) ^ 2 = 1 := by
     rw [← map_pow, ← hEq, map_one]
@@ -174,7 +174,7 @@ lemma mk_omega_ne_mk_omega_sq
 -- proof
   intro hEq
   have hPrim :=
-    omegaQuotient_isPrimitiveRoot (K := K) hZeta P hPprime hPbot hNormCoprime
+    omegaQuotient_isPrimitiveRoot (K := K) hZeta hPprime hPbot hNormCoprime
   have hMkNeZero :
       Ideal.Quotient.mk P (omega (K := K) hZeta) ≠ 0 := by
     intro hZero
@@ -239,9 +239,9 @@ lemma cubicRoot_quotient_pairwise_distinct
 -- imply
   Ideal.Quotient.mk P (1 : NumberField.RingOfIntegers K) ≠ Ideal.Quotient.mk P (omega (K := K) hZeta) ∧ Ideal.Quotient.mk P (1 : NumberField.RingOfIntegers K) ≠ Ideal.Quotient.mk P (omega (K := K) hZeta ^ 2) ∧ Ideal.Quotient.mk P (omega (K := K) hZeta) ≠ Ideal.Quotient.mk P (omega (K := K) hZeta ^ 2) :=
 -- proof
-  ⟨mk_one_ne_mk_omega hZeta P hPprime hPbot hNormCoprime,
-    mk_one_ne_mk_omega_sq hZeta P hPprime hPbot hNormCoprime,
-    mk_omega_ne_mk_omega_sq hZeta P hPprime hPbot hNormCoprime⟩
+  ⟨mk_one_ne_mk_omega hZeta hPprime hPbot hNormCoprime,
+    mk_one_ne_mk_omega_sq hZeta hPprime hPbot hNormCoprime,
+    mk_omega_ne_mk_omega_sq hZeta hPprime hPbot hNormCoprime⟩
 
 end MetaMathlibExt
 
@@ -270,9 +270,9 @@ lemma primeIdealValidCubicSymbol_unique
   c = primeIdealValidCubicSymbol hZeta P a hPprime hPbot hNormCoprime ha := by
 -- proof
   have hValidMem :=
-    primeIdealValidCubicSymbol_mem hZeta P a hPprime hPbot hNormCoprime ha
+    primeIdealValidCubicSymbol_mem hZeta hPprime hPbot hNormCoprime ha
   have hValidSpec :=
-    primeIdealValidCubicSymbol_spec hZeta P a hPprime hPbot hNormCoprime ha
+    primeIdealValidCubicSymbol_spec hZeta hPprime hPbot hNormCoprime ha
   have hEq :
       Ideal.Quotient.mk P c =
         Ideal.Quotient.mk P
@@ -280,7 +280,7 @@ lemma primeIdealValidCubicSymbol_unique
             hNormCoprime ha) := by
     rw [hcSpec, hValidSpec]
   have hPair :=
-    cubicRoot_quotient_pairwise_distinct (K := K) hZeta P hPprime hPbot
+    cubicRoot_quotient_pairwise_distinct (K := K) hZeta hPprime hPbot
       hNormCoprime
   have h1neW := hPair.1
   have h1neW2 := hPair.2.1
@@ -357,13 +357,13 @@ lemma primeIdealValidCubicSymbol_characterization
   constructor
   · intro hEq
     rw [hEq]
-    exact ⟨primeIdealValidCubicSymbol_mem hZeta P a hPprime hPbot hNormCoprime ha,
-      primeIdealValidCubicSymbol_spec hZeta P a hPprime hPbot hNormCoprime ha⟩
+    exact ⟨primeIdealValidCubicSymbol_mem hZeta hPprime hPbot hNormCoprime ha,
+      primeIdealValidCubicSymbol_spec hZeta hPprime hPbot hNormCoprime ha⟩
   · intro ⟨hMem, hSpec⟩
-    exact primeIdealValidCubicSymbol_unique hZeta P a hPprime hPbot
-      hNormCoprime ha c hMem hSpec
+    exact primeIdealValidCubicSymbol_unique hZeta hPprime hPbot
+      hNormCoprime ha hMem hSpec
 
-open Classical in
+open Classical
 
 end MetaMathlibExt
 
@@ -459,7 +459,7 @@ lemma primeIdealCubicSymbolFactorRaw_eq_one_of_isPrime_of_bot
   have hNotBot : ¬ (P ≠ ⊥) := by rw [hBot]; simp
   simp [primeIdealCubicSymbolFactorRaw, hPprime, hNotBot]
 
-open Classical in
+open Classical
 
 end MetaMathlibExt
 
@@ -606,7 +606,7 @@ lemma cubicResidueSymbolRaw_prime_dvd
 -- imply
   cubicResidueSymbolRaw hZeta a p = 0 := by
 -- proof
-  rw [cubicResidueSymbolRaw_prime hZeta a p hpPrime hpNeZero]
+  rw [cubicResidueSymbolRaw_prime hZeta hpPrime hpNeZero]
   have hSpanPrime :
       (Ideal.span ({p} : Set (NumberField.RingOfIntegers K))).IsPrime :=
     Ideal.isPrime_span_singleton_of_prime hpPrime
@@ -645,7 +645,7 @@ lemma cubicResidueSymbolRaw_prime_not_dvd
   have hNotMem :
       a ∉ Ideal.span ({p} : Set (NumberField.RingOfIntegers K)) := by
     rwa [Ideal.mem_span_singleton]
-  rw [cubicResidueSymbolRaw_prime hZeta a p hpPrime hpNeZero]
+  rw [cubicResidueSymbolRaw_prime hZeta hpPrime hpNeZero]
   have hSpanPrime :
       (Ideal.span ({p} : Set (NumberField.RingOfIntegers K))).IsPrime :=
     Ideal.isPrime_span_singleton_of_prime hpPrime
@@ -661,9 +661,9 @@ lemma cubicResidueSymbolRaw_prime_not_dvd
       dite_eq_right hNotMem]
   rw [hEq]
   constructor
-  · exact primeIdealValidCubicSymbol_mem hZeta _ _
+  · exact primeIdealValidCubicSymbol_mem hZeta
       hSpanPrime hSpanNeBot hNormCop hNotMem
-  · exact primeIdealValidCubicSymbol_spec hZeta _ _
+  · exact primeIdealValidCubicSymbol_spec hZeta
       hSpanPrime hSpanNeBot hNormCop hNotMem
 
 end MetaMathlibExt
@@ -687,7 +687,7 @@ lemma cubicResidueSymbol_unit
 -- imply
   cubicResidueSymbol hZeta a u hValid = 1 := by
 -- proof
-  simpa [cubicResidueSymbol] using cubicResidueSymbolRaw_unit hZeta a u hu
+  simpa [cubicResidueSymbol] using cubicResidueSymbolRaw_unit hZeta hu
 
 end MetaMathlibExt
 
@@ -712,7 +712,7 @@ lemma cubicResidueSymbol_mul
   cubicResidueSymbol hZeta a (m * n) hmnValid = cubicResidueSymbol hZeta a m hmValid * cubicResidueSymbol hZeta a n hnValid := by
 -- proof
   simpa [cubicResidueSymbol] using
-    cubicResidueSymbolRaw_mul hZeta a m n hmValid.1 hnValid.1
+    cubicResidueSymbolRaw_mul hZeta hmValid.1 hnValid.1
 
 end MetaMathlibExt
 
@@ -736,7 +736,7 @@ lemma cubicResidueSymbol_prime
   cubicResidueSymbol hZeta a p hpValid = primeIdealCubicSymbol hZeta (Ideal.span {p}) a (Ideal.isPrime_span_singleton_of_prime hpPrime) (by simpa [Ne, Ideal.span_singleton_eq_bot] using hpValid.1) hpValid.2 := by
 -- proof
   simpa [cubicResidueSymbol, primeIdealCubicSymbol] using
-    cubicResidueSymbolRaw_prime hZeta a p hpPrime hpValid.1
+    cubicResidueSymbolRaw_prime hZeta hpPrime hpValid.1
 
 end MetaMathlibExt
 
@@ -762,7 +762,7 @@ lemma cubicResidueSymbol_prime_dvd
 -- proof
   simpa [cubicResidueSymbol] using
     cubicResidueSymbolRaw_prime_dvd
-      hZeta a p hpPrime hpValid.1 hpValid.2 hdvd
+      hZeta hpPrime hpValid.1 hpValid.2 hdvd
 
 end MetaMathlibExt
 
@@ -788,7 +788,7 @@ lemma cubicResidueSymbol_prime_not_dvd
 -- proof
   simpa [cubicResidueSymbol] using
     cubicResidueSymbolRaw_prime_not_dvd
-      hZeta a p hpPrime hpValid.1 hpValid.2 hndvd
+      hZeta hpPrime hpValid.1 hpValid.2 hndvd
 
 end MetaMathlibExt
 
@@ -816,3 +816,4 @@ private lemma exists_cubic_root_eq_pow_eq
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

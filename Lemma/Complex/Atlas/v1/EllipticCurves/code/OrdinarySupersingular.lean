@@ -27,7 +27,7 @@ lemma isOrdinary_iff_not_supersingular
     exact hPne (hss P hP)
   · intro hns
     unfold IsSupersingular at hns
-    push_neg at hns
+    push Not at hns
     exact hns
 
 end OrdinarySupersingular

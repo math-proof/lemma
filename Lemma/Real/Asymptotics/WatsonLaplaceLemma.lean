@@ -11,7 +11,7 @@ namespace MetaMathlibExt
 [watson_aux_integrable](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/WatsonLaplaceLemma.lean)
 -/
 @[path]
-private lemma watson_aux_integrable (m : ℝ) (hm : 0 < m) (n : ℕ) :
+private lemma watson_aux_integrable_eq_lemma (m : ℝ) (hm : 0 < m) (n : ℕ) :
   MeasureTheory.IntegrableOn (fun s : ℝ => s ^ n * Real.exp (-m * s)) (Set.Ioi 0) := by
   have hs : (-1 : ℝ) < (n : ℝ) := by
     have hnn : (0 : ℝ) ≤ (n : ℝ) := Nat.cast_nonneg n
@@ -31,7 +31,7 @@ namespace MetaMathlibExt
 [watson_aux_value](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/WatsonLaplaceLemma.lean)
 -/
 @[path]
-private lemma watson_aux_value (m : ℝ) (hm : 0 < m) (n : ℕ) :
+private lemma watson_aux_value_eq_lemma (m : ℝ) (hm : 0 < m) (n : ℕ) :
   (∫ s in Set.Ioi 0, s ^ n * Real.exp (-m * s)) = (n.factorial : ℝ) / m ^ (n + 1) := by
   have h := Real.integral_rpow_mul_exp_neg_mul_Ioi (a := (n : ℝ) + 1) (r := m)
     (by positivity) hm
@@ -57,7 +57,7 @@ end MetaMathlibExt
 [watson_laplace_integral_asymptotic](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/WatsonLaplaceLemma.lean)
 -/
 @[path]
-lemma watson_laplace_integral_asymptotic
+lemma watson_laplace_integral_asymptotic_eq_lemma
 -- given
   (g : ℝ → ℝ)
   (hconv : ∃ m₀ : ℝ, ∀ m ≥ m₀, MeasureTheory.IntegrableOn

@@ -98,17 +98,12 @@ variable {R K N}
 variable (R K N)
 
 
-variable {R K} in
 
 
-variable {N} in
-
-variable {N} in
-
-variable {N} in
 
 
-variable {N} in
+
+
 
 
 section Compact
@@ -131,10 +126,8 @@ variable {R K N}
 variable (R K N)
 
 
-variable {N} in
 
 
-variable {N} in
 
 
 end Adelic
@@ -144,12 +137,9 @@ section Gen
 
 variable (v : HeightOneSpectrum R)
 
-open scoped Classical in
 
 
-open scoped Classical in
 
-open scoped Classical in
 
 
 variable {R K v}

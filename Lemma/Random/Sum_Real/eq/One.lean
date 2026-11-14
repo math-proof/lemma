@@ -1,4 +1,4 @@
-import Def.Dynamics.PolicyTrajectory.Gradient
+import Def.Dynamics.PolicyTrajectory.ContinuousAction
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model
 
 
@@ -18,3 +18,4 @@ private lemma main
 
 
 -- created on 2026-10-06
+-- updated on 2026-11-13

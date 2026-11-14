@@ -45,10 +45,8 @@ namespace SetTheory
 -/
 @[path]
 lemma induction_principle
-  {A B C : Set α}
-  {base : P 1}
--- given
   (P : ℕ → Prop)
+  {base : P 1}
   (step : ∀ m : ℕ, P m → P (m + 1)) :
 -- imply
   ∀ n : ℕ, n ≥ 1 → P n := by

@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.EisensteinTwoCoeff
+import Lemma.Int.EisensteinTwoCoeff
 import Lemma.Int.P2MUtil
 
-open ModularCurve
+open ModularCurve Int
 
 /--
 [ModularCurve_eisensteinTwoCoeff_mul_level](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularCurve_eisensteinTwoCoeff_mul_level.lean)

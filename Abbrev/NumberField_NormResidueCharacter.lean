@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.LanglandsTunnell.NormClass
+import Lemma.Ideal.NormClass
 import Def.NumberField_RayCharacterData
 
 set_option autoImplicit false

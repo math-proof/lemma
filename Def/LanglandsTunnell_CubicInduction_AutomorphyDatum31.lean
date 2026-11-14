@@ -1,5 +1,5 @@
 import Def.LanglandsTunnell_CubicInduction_GlobalZeta31
-import Lemma.AdelicDock.LocalEmbedding
+import Def.AdelicDock_LocalEmbedding
 import Structure.LanglandsTunnell_CubicInduction_AutomorphyDatum31
 
 set_option autoImplicit false

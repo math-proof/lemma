@@ -1,14 +1,14 @@
 import Structure.ModularCurve_FullLevelSemistableCovering
-import Lemma.ModularCurve.SupersingularNodePlaces
+import Lemma.Finset.SupersingularNodePlaces
 import Structure.AlgebraicCurve_ConstantReduction
 import Def.FLTPrelim_Ramification
 import Structure.AlgebraicCurve_RegularProlongation
-import Lemma.AlgebraicCurve.ResidueDiscs
+import Lemma.ResidueField.ResidueDiscs
 import Def.ModularCurve_PlaceWidthChar
 import Def.ModularCurve_FullLevelSemistableCoveringW2
-import Lemma.ModularCurve.UVCrossingModel
+import Lemma.MvPowerSeries.UVCrossingModel
 import Instance.AlgebraicCurve_TwoChartIntegralModel
-import Lemma.ModularCurve.X1
+import Lemma.UpperHalfPlane.X1
 import Def.ModularCurve_SupersingularModuli
 import Instance.ModularCurve_FullLevelJacobian
 import Instance.DrinfeldCurve_CoordRing
@@ -163,10 +163,10 @@ structure ModularCurve.FullLevel.RigidDescentHyps
       (∀ f : ↥Kℓ, f ∈ Wt ↔ ∃ g h : ↥Bt, (⟨(h : ↥Kℓ), hBW _ h.2⟩ : ↥Wt) ∉ maximalIdeal ↥Wt ∧ f * (h : ↥Kℓ) = (g : ↥Kℓ)) ∧
 
       (∀ (inst : Algebra (GaloisField q 2) (ResidueField ↥(A.comap (algebraMap ↥k₀ (AlgebraicClosure ℚ))))),
-        ∃ (ρ : ↥Bt →+* DrinfeldCurve.CoordRing q (ResidueField ↥(A.comap (algebraMap ↥k₀ (AlgebraicClosure ℚ))))),
+        ∃ (ρ : ↥Bt →+* MvPolynomial.CoordRing q (ResidueField ↥(A.comap (algebraMap ↥k₀ (AlgebraicClosure ℚ))))),
           Function.Surjective ρ ∧
           (∀ b : ↥Bt, ρ b = 0 ↔ (⟨(b : ↥Kℓ), hBW _ b.2⟩ : ↥Wt) ∈ maximalIdeal ↥Wt) ∧
-          (∀ a : ↥(A.comap (algebraMap ↥k₀ (AlgebraicClosure ℚ))), ρ (algebraMap ↥(A.comap (algebraMap ↥k₀ (AlgebraicClosure ℚ))) ↥Bt a) = algebraMap (ResidueField ↥(A.comap (algebraMap ↥k₀ (AlgebraicClosure ℚ)))) (DrinfeldCurve.CoordRing q (ResidueField ↥(A.comap (algebraMap ↥k₀ (AlgebraicClosure ℚ))))) (residue ↥(A.comap (algebraMap ↥k₀ (AlgebraicClosure ℚ))) a)) ∧
+          (∀ a : ↥(A.comap (algebraMap ↥k₀ (AlgebraicClosure ℚ))), ρ (algebraMap ↥(A.comap (algebraMap ↥k₀ (AlgebraicClosure ℚ))) ↥Bt a) = algebraMap (ResidueField ↥(A.comap (algebraMap ↥k₀ (AlgebraicClosure ℚ)))) (MvPolynomial.CoordRing q (ResidueField ↥(A.comap (algebraMap ↥k₀ (AlgebraicClosure ℚ))))) (residue ↥(A.comap (algebraMap ↥k₀ (AlgebraicClosure ℚ))) a)) ∧
           (∀ γ : SL(2, ℤ), γ ∈ CongruenceSubgroup.Gamma0 M' →
             ∀ τ : ↥Kℓ ≃ₐ[↥k₀] ↥Kℓ, ModularCurve.FullLevel.IsLevelAutAt ↥k₀ (q * ℓ') ξ (q * ℓ') ((q * ℓ') ^ 2 * M')
                 (ModularCurve.FullLevel.levelH (q * ℓ') M') γ⁻¹ Kℓ τ →

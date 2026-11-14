@@ -1,7 +1,7 @@
 -- Carved from Lemma/Definitions/Def_CerednikDrinfeld_CosetGraphAtPrime.lean: instance decls only.
 import Instance.Submodule_LocalBox
 import Class.CerednikDrinfeld_MumfordPeriod
-import Lemma.CerednikDrinfeld.CosetGraphAtPrime
+import Lemma.UpperHalfPlane.CosetGraphAtPrime
 
 set_option autoImplicit false
 

@@ -1,4 +1,4 @@
-import Lemma.AlgebraicGeometry.OrderedAffineCoverCech
+import Lemma.Scheme.OrderedAffineCoverCech
 import Lemma.Fin.Res
 
 set_option autoImplicit false

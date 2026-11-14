@@ -427,7 +427,7 @@ lemma endAlg_quaternion_case
 -- proof
   classical
   open PositiveDefiniteInvolutionAlgebra in
-  push_neg at hall_in_α; obtain ⟨β_raw, hβ_raw⟩ := hall_in_α
+  push Not at hall_in_α; obtain ⟨β_raw, hβ_raw⟩ := hall_in_α
   have hα_sq : α * α = -(algebraMap ℚ A) (normMap α) := by rw [map_neg] at hα_sq_val; exact hα_sq_val
   set sβ := traceMap β_raw / 2 with hsβ_def
   have hinv_β₁ : invol (β_raw - (algebraMap ℚ A) sβ) =
@@ -534,7 +534,7 @@ lemma endomorphism_algebra_classification
         obtain ⟨q, hq⟩ := hall_rat w
         exact ⟨q, by simp only [Algebra.smul_def, mul_one]; exact hq.symm⟩))
   ·
-    push_neg at hall_rat
+    push Not at hall_rat
     obtain ⟨α₀_raw, hα₀_not_rat⟩ := hall_rat
     set α := α₀_raw - (algebraMap ℚ A) (traceMap α₀_raw / 2) with α_def
     have hα_not_rat : ∀ q : ℚ, α ≠ (algebraMap ℚ A) q := by

@@ -1,6 +1,6 @@
-import Lemma.LpSpace.LyapunovCandidateHalfSq.of.Ge_2
+import Lemma.Matrix.LyapunovCandidateHalfSq.of.Ge_2
 import Lemma.Random.DecreaseAlongHalfSq
-open LpSpace
+open LpSpace Matrix
 
 
 @[path]
@@ -10,7 +10,7 @@ private lemma main
 -- imply
   LyapunovFunction (fun x : EuclideanVec (Fintype.card (S × A)) => half_sq (ofL2 spec.pmin x)) (fun x => (half_sq' (ofL2 spec.pmin x)).toL2) spec.expected_update_target :=
 -- proof
-  ⟨LpSpace.LyapunovCandidateHalfSq.of.Ge_2 (le_max_left _ _), Random.DecreaseAlongHalfSq⟩
+  ⟨Matrix.LyapunovCandidateHalfSq.of.Ge_2 (le_max_left _ _), Random.DecreaseAlongHalfSq⟩
 
 
 -- created on 2026-09-26

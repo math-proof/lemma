@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.DivisorPushPull
+import Lemma.Matrix.DivisorPushPull
 import Lemma.Int.P2MUtil
 
-open AlgebraicCurve
+open AlgebraicCurve Matrix
 
 /--
 [AlgebraicCurve_sumRamificationInertia_of_fundamentalIdentity](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_sumRamificationInertia_of_fundamentalIdentity.lean)
@@ -25,8 +25,9 @@ private lemma main
     push_cast
     ring
   have hv : (v.deg : ℤ) ≠ 0 := by exact_mod_cast hdeg v
-  refine mul_left_cancel₀ hv
+  apply mul_left_cancel₀ hv
   rw [← hsum, key, mul_comm]
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

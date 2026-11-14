@@ -1,12 +1,12 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.CurveModel
-import Lemma.AlgebraicCurve.GluedPic0
+import Lemma.Scheme.CurveModel
+import Lemma.ResidueField.GluedPic0
 import Lemma.Int.P2MUtil
 
 open scoped TensorProduct
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry AlgebraicCurve
-open AlgebraicCurve.CurveModel AlgebraicCurve
+open AlgebraicCurve.CurveModel
 
 /--
 [AlgebraicCurve_CurveModel_sub_algebraMap_mem_of_hasValue_placeOfPoint](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_CurveModel_sub_algebraMap_mem_of_hasValue_placeOfPoint.lean)

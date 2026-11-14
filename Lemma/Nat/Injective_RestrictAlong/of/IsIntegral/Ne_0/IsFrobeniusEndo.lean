@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.FrobeniusEndo
-open AlgebraicCurve
+import Lemma.Polynomial.FrobeniusEndo
+open AlgebraicCurve Polynomial
 
 
 namespace Definitions

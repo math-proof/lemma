@@ -63,7 +63,7 @@ private lemma row
     ((([l < d] ((∑ j, (if P i j then w i j else 0) * v i j l : ℝ) : Tensor ℝ [])) : Tensor ℝ [d]) : Tensor ℝ* [d]) := by
 -- proof
   intro Ξ A Vᵢ
-  have h0 := SoftmaxAdd_Mul_Infty.eq.Cast_Stack_Ite_Block P a w h_ne h
+  have h0 := SoftmaxAdd_Mul_Infty.eq.Cast_Stack_Ite_Block (P := P) (a := a) (w := w) h_ne h
   have h1 := XEqGetS.of.XEq.GtLength.fin (i := i) (by grind) h0
   let X : Tensor ℝ [n, m] := [i < n] [j < m] (((if P i j then w i j else 0 : ℝ) : Tensor ℝ []))
   let B : Tensor ℝ [m] := [j < m] (((if P i j then w i j else 0 : ℝ)) : Tensor ℝ [])
@@ -126,3 +126,4 @@ private lemma main
 
 
 -- created on 2026-10-01
+-- updated on 2026-11-13

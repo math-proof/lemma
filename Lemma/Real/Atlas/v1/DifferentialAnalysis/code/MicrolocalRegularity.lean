@@ -253,9 +253,9 @@ lemma smulLeft_complement_eq_zero_of_fixed
   have := sub_eq_zero.mpr this
   simp only [add_sub_cancel_left] at this
   exact this
-/-- Existence of auxiliary Schwartz representatives `c₁, c₂` such that pairings of `u₁` and `u₂`
-with the Schwartz preimages of the cutoff differences factor through the embeddings of `c₁` and
-`c₂`, and the cross-pairings agree. -/
+-- Existence of auxiliary Schwartz representatives `c₁, c₂` such that pairings of `u₁` and `u₂`
+-- with the Schwartz preimages of the cutoff differences factor through the embeddings of `c₁` and
+-- `c₂`, and the cross-pairings agree.
 
 end WavefrontSet
 

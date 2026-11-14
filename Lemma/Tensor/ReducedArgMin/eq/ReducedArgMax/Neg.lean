@@ -5,15 +5,16 @@ import Initialize.Tactic.Attr.Basic
 
 @[path]
 private lemma main
-  {n : ℕ} [NeZero n]
+  [NeZero (n : ℕ)]
   {f : ℕ → ℝ} :
 -- imply
-  ArgMin (Set.univ : Set (Fin n)) (fun i => f i) = ArgMax Set.univ (fun i : Fin n => -f ↑i) := by
+  «min⁻¹» (Set.univ : Set (Fin n)) (fun i => f i) = «max⁻¹» Set.univ (fun i : Fin n => -f ↑i) := by
 -- proof
-  unfold ArgMin ArgMax
+  unfold «min⁻¹» «max⁻¹»
   congr 1
   funext k
   simp only [neg_le_neg_iff]
 
 
 -- created on 2023-11-05
+-- updated on 2026-11-13

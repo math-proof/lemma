@@ -535,7 +535,7 @@ lemma finite_nonsingular_fibers
   have hsub : {y : F | E₁.Nonsingular x₀ y} ⊆
     {y : F | (Polynomial.map (evalRingHom x₀) E₁.polynomial).IsRoot y} := by
     intro y hy
-    simp only [Set.mem_setOf_eq, Polynomial.IsRoot] at hy ⊢
+    simp only [Set.mem_ofPred_eq, Polynomial.IsRoot] at hy ⊢
     rwa [Polynomial.map_evalRingHom_eval]
   exact (Polynomial.finite_setOf_isRoot hne).subset hsub
 
@@ -604,13 +604,13 @@ lemma isogeny_kernel_finite_of_rep
     ·
       intro z hz
       obtain ⟨P, hP, rfl⟩ := hz
-      simp only [Set.mem_setOf_eq] at hP
+      simp only [Set.mem_ofPred_eq] at hP
       cases P with
       | zero => exact Set.mem_union_left _ (Set.mem_singleton _)
       | some x₀ y₀ h₁ =>
         apply Set.mem_union_right
         refine ⟨(x₀, y₀), ?_, rfl⟩
-        simp only [Set.mem_iUnion, Set.mem_setOf_eq, Set.mem_prod, Set.mem_singleton_iff]
+        simp only [Set.mem_iUnion, Set.mem_ofPred_eq, Set.mem_prod, Set.mem_singleton_iff]
         exact ⟨x₀, (kernel_iff_v_eq_zero hE₁ hE₂ α rep x₀ y₀ h₁).mp hP, rfl, h₁⟩
   ·
     exact pointToCoords_injective.injOn

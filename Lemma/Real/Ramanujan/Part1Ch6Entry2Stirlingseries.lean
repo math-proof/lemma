@@ -11,9 +11,9 @@ namespace MathlibExt.Analysis.Ramanujan.Part1Ch6.Entry2Stirlingseries
 
 /--
 [aux_pole_shift](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch6Entry2Stirlingseries.lean)
+`{0, -1, -2, …}`, the poles of `Complex.Gamma`.
 -/
 @[path]
-`{0, -1, -2, …}`, the poles of `Complex.Gamma`. -/
 private lemma aux_pole_shift (z : ℂ) (hz : ∀ k : ℕ, z ≠ -((k + 1 : ℕ) : ℂ)) :
   ∀ m : ℕ, z + 1 ≠ -((m : ℕ) : ℂ) := by
   intro m

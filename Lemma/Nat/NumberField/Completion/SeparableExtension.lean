@@ -1,6 +1,10 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Instance.NumberTheory.NumberField.Completion.FinitePlacesOver
+import Lemma.Int.SeparableAdjoinRoot
+import Lemma.Nat.NumberField.Completion.GlobalAdjoinRootCompletionEquiv
+import Lemma.Polynomial.Normed.Field.AdjoinRootStability
+import Lemma.Polynomial.Normed.Field.ContinuityOfRoots
 open IsDedekindDomain
 open scoped NumberField NumberField.LiesOver Valued
 
@@ -25,7 +29,7 @@ lemma separableExtension_isCompletion_finitePlace
 -- proof
   obtain ⟨f, hf, hirr, hsep, ⟨eMf⟩⟩ :=
     (Algebra.isSeparable_iff_exists_monic_irreducible_separable
-      (v.adicCompletion K) M).mp inferInstance
+      (K := v.adicCompletion K) (L := M)).mp inferInstance
   obtain ⟨δ, hδ, hstable⟩ :=
     Polynomial.exists_pos_adjoinRoot_algEquiv_of_l1Norm_sub_lt
       (v.adicCompletion K) f hf hirr hsep
@@ -75,7 +79,7 @@ lemma separableExtension_isCompletion_finitePlace
   have hcompletion :
       Nonempty (M ≃ₐ[v.adicCompletion K] w.adicCompletion L) :=
     completion_algEquiv_of_adjoinRoot_globalEquiv
-      v w g hmapirr eL hM
+      hmapirr eL hM
   exact
     ⟨L, inferInstance, inferInstance, inferInstance, inferInstance,
       inferInstance, w, inferInstance, hfinrank, hcompletion⟩
@@ -84,4 +88,4 @@ end IsDedekindDomain.HeightOneSpectrum
 
 
 -- created on 2026-10-20
--- updated on 2026-10-28
+-- updated on 2026-11-13

@@ -4,7 +4,6 @@ import Mathlib.RingTheory.AdicCompletion.LocalRing
 import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
 import Mathlib.RingTheory.Ideal.Quotient.Operations
 import Mathlib.RingTheory.Noetherian.Defs
-import Lemma.AdicCompletionLocalRing.Main
 
 set_option autoImplicit false
 
@@ -22,7 +21,7 @@ variable [IsLocalRing A]
 variable [IsNoetherianRing A]
 
 instance instIsLocalRingMaximalIdeal : IsLocalRing (AdicCompletion (maximalIdeal A) A) :=
-  isLocalRing_of_fg maximalIdeal_fg
+  isLocalRing_of_fg (IsNoetherian.noetherian _)
 
 
 end Local

@@ -1,6 +1,6 @@
 import Instance.ModularCurve_TateFormal
 import Mathlib.RingTheory.MvPowerSeries.Substitution
-import Instance.ModularCurve_TateSlots
+import Structure.ModularCurve_X0
 
 set_option autoImplicit false
 

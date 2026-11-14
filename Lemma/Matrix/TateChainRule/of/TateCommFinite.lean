@@ -1,22 +1,22 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.DivisorClassGroup
-import Lemma.AlgebraicCurve.RatFuncPlaces
+import Lemma.Valuation.DivisorClassGroup
+import Lemma.Ideal.RatFuncPlaces
 import Lemma.Scheme.IsCurveOver
 import Lemma.Scheme.CanonicalDivisor
 import Lemma.Scheme.CanonicalDivisorUniformizer
-import Lemma.AlgebraicCurve.Repartitions
-import Lemma.AlgebraicCurve.AdelicIndex
-import Lemma.AlgebraicCurve.CanonicalDivisor
-import Lemma.AlgebraicCurve.LocalResidue
-import Lemma.AlgebraicCurve.DivisorPushPull
-import Lemma.DedekindDomain.AdicValuation_InlineSpecific
-import Lemma.AlgebraicCurve.PlaceCompletion
+import Lemma.Submodule.Repartitions
+import Lemma.Submodule.AdelicIndex
+import Lemma.Valuation.CanonicalDivisor
+import Lemma.Scheme.LocalResidue
+import Lemma.Matrix.DivisorPushPull
+import Lemma.Ideal.AdicValuation_InlineSpecific
+import Lemma.Valuation.PlaceCompletion
 import Def.AlgebraicCurve_TateResidueCurrency
 import Lemma.Int.P2MUtil
 
-open AlgebraicCurve
-open AlgebraicCurve.Place AlgebraicCurve
+open AlgebraicCurve Submodule Valuation Matrix Scheme Ideal
+open AlgebraicCurve.Place AlgebraicCurve Submodule Valuation Matrix Scheme Ideal
 open Filter
 open IntermediateField
 open IsDedekindDomain
@@ -37,7 +37,7 @@ open Topology
 open WithZero
 open scoped WithZero Multiplicative Topology
 open IsDedekindDomain.HeightOneSpectrum.adicCompletion
-open AlgebraicCurve AlgebraicCurve.Place LinearMap Submodule
+open AlgebraicCurve AlgebraicCurve.Place LinearMap Submodule Valuation Matrix Scheme Ideal
 open ModularCurve.KwF4gRRTate
 open LinearMap Submodule
 open IsDedekindDomain WithZero IsLocalRing
@@ -48,11 +48,11 @@ open scoped Pointwise
 open IsDedekindDomain IsDedekindDomain.HeightOneSpectrum IsLocalRing WithZero MonoidWithZeroHom
 open AlgebraicCurve.IsCurveOver
 open IsDedekindDomain WithZero Module IsLocalRing Module.IsLocalRing
-open AlgebraicCurve Polynomial IntermediateField
+open AlgebraicCurve Polynomial IntermediateField Submodule Valuation Matrix Scheme Ideal
 open IsDedekindDomain IsDedekindDomain.HeightOneSpectrum IsLocalRing
 open IsDedekindDomain.HeightOneSpectrum
 open IsDedekindDomain IsDedekindDomain.HeightOneSpectrum IsLocalRing WithZero
-open AlgebraicCurve AlgebraicCurve.Place
+open AlgebraicCurve AlgebraicCurve.Place Submodule Valuation Matrix Scheme Ideal
 
 /--
 [AlgebraicCurve_tateChainRule](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_tateChainRule.lean)

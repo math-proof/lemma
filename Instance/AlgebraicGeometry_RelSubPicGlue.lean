@@ -1,9 +1,8 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_RelSubPicGlue.lean: instance decls only.
 import Mathlib
-import Lemma.CategoryTheory.OverTotalPresheaf
 import Instance.AlgebraicGeometry_LocalRepresentabilityULift
 import Def.AlgebraicGeometry_RelSubPicPresheaf
-import Lemma.AlgebraicGeometry.RelSubPicGlue
+import Lemma.Scheme.RelSubPicGlue
 
 set_option autoImplicit false
 
@@ -21,7 +20,7 @@ section glue
 variable (hG : Presieve.IsSheaf (Scheme.zariskiTopology.over (Spec (CommRingCat.of R))) (relSubPicPresheaf c ε P))
 
 instance (i : ι) : IsOpenImmersion
-    (Scheme.LocalRepresentabilityULift.toGlued (F := relSubPicTotalSheaf hG) (f := f) hf i :
+    (AlgebraicGeometry.LocalRepresentabilityULift.toGlued (F := relSubPicTotalSheaf hG) (f := f) hf i :
       X i ⟶ (gluedDesignation hG f hf).P) :=
   inferInstance
 

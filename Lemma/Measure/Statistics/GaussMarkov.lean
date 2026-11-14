@@ -15,7 +15,10 @@ lemma gaussMarkov_covariance_minimality
 -- given
   (hX : IsUnit (Xᵀ * X)) :
 -- imply
-  let B := by
+  let B := (Xᵀ * X)⁻¹ * Xᵀ
+  B * X = 1 ∧
+    ∀ (A : Matrix (Fin n) (Fin m) ℝ), A * X = 1 →
+      (A * Aᵀ - B * Bᵀ).PosSemidef := by
 -- proof
   have hdet : IsUnit (Xᵀ * X).det :=
     (Matrix.isUnit_iff_isUnit_det _).mp hX

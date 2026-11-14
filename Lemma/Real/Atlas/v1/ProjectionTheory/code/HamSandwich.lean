@@ -153,17 +153,17 @@ lemma indicator_halfspace_continuousAt
   rw [ContinuousAt]
   obtain h | h := lt_or_gt_of_ne hx
   · rw [show Set.indicator {y | affineFunctional n θ₀ y > 0} (fun _ => (1 : ℝ)) x = 0 from by
-    simp only [indicator_apply, mem_setOf_eq, if_neg (not_lt.mpr (le_of_lt h))]]
+    simp only [indicator_apply, mem_setOf_eq, ite_eq_right (not_lt.mpr (le_of_lt h))]]
     exact tendsto_nhds_of_eventually_eq (by
       filter_upwards [(continuousAt_affineFunctional n x θ₀).eventually (Iio_mem_nhds h)]
         with θ hθ
-      simp only [indicator_apply, mem_setOf_eq, if_neg (not_lt.mpr (le_of_lt hθ))])
+      simp only [indicator_apply, mem_setOf_eq, ite_eq_right (not_lt.mpr (le_of_lt hθ))])
   · rw [show Set.indicator {y | affineFunctional n θ₀ y > 0} (fun _ => (1 : ℝ)) x = 1 from by
-    simp only [indicator_apply, mem_setOf_eq, if_pos h]]
+    simp only [indicator_apply, mem_setOf_eq, ite_eq_left h]]
     exact tendsto_nhds_of_eventually_eq (by
       filter_upwards [(continuousAt_affineFunctional n x θ₀).eventually (Ioi_mem_nhds h)]
         with θ hθ
-      simp only [indicator_apply, mem_setOf_eq, if_pos hθ])
+      simp only [indicator_apply, mem_setOf_eq, ite_eq_left hθ])
 
 end HamSandwich
 
@@ -310,18 +310,18 @@ lemma continuousAt_volume_halfspace_neg
     obtain h | h := lt_or_gt_of_ne hx
     ·
       rw [show Set.indicator {y | affineFunctional n θ₀ y < 0} (fun _ => (1 : ℝ)) x = 1 from by
-        simp only [indicator_apply, mem_setOf_eq, if_pos h]]
+        simp only [indicator_apply, mem_setOf_eq, ite_eq_left h]]
       exact tendsto_nhds_of_eventually_eq (by
         filter_upwards [(continuousAt_affineFunctional n x θ₀).eventually (Iio_mem_nhds h)]
           with θ hθ
-        simp only [indicator_apply, mem_setOf_eq, if_pos hθ])
+        simp only [indicator_apply, mem_setOf_eq, ite_eq_left hθ])
     ·
       rw [show Set.indicator {y | affineFunctional n θ₀ y < 0} (fun _ => (1 : ℝ)) x = 0 from by
-        simp only [indicator_apply, mem_setOf_eq, if_neg (not_lt.mpr (le_of_lt h))]]
+        simp only [indicator_apply, mem_setOf_eq, ite_eq_right (not_lt.mpr (le_of_lt h))]]
       exact tendsto_nhds_of_eventually_eq (by
         filter_upwards [(continuousAt_affineFunctional n x θ₀).eventually (Ioi_mem_nhds h)]
           with θ hθ
-        simp only [indicator_apply, mem_setOf_eq, if_neg (not_lt.mpr (le_of_lt hθ))])
+        simp only [indicator_apply, mem_setOf_eq, ite_eq_right (not_lt.mpr (le_of_lt hθ))])
 
 end HamSandwich
 

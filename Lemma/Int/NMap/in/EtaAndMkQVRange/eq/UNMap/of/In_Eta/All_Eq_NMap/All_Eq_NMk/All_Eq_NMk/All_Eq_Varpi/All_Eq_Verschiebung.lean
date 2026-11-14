@@ -1,8 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.CerednikDrinfeld.SpecialFormalModule
-import Lemma.CerednikDrinfeld.GradedCartierModuleData
-import Lemma.CerednikDrinfeld.GradedCartierNModule
+import Lemma.MvPowerSeries.SpecialFormalModule
+import Lemma.Fin.GradedCartierModuleData
+import Lemma.Submodule.GradedCartierNModule
 import Lemma.Int.P2MUtil
 
 
@@ -15,8 +15,8 @@ private lemma main
   {B B' : Type} [CommRing B] [CommRing B']
   {j : CerednikDrinfeld.Zp2 p →+* B}
   {j' : CerednikDrinfeld.Zp2 p →+* B'}
-  {D : CerednikDrinfeld.GradedCartierModuleData p B j}
-  {D' : CerednikDrinfeld.GradedCartierModuleData p B' j'}
+  {D : Fin.GradedCartierModuleData p B j}
+  {D' : Fin.GradedCartierModuleData p B' j'}
   {bc : D.M →+ D'.M}
   {L : D.M →+ D.NMod}
   {L' : D'.M →+ D'.NMod}
@@ -45,8 +45,8 @@ private lemma main
       CerednikDrinfeld.GradedCartierModuleData.phi_nMk, map_add, hLL', CerednikDrinfeld.GradedCartierModuleData.nMap_nMk,
       map_zero]
   have hmem : N z ∈ D'.eta L' hLV' := by
-    rw [CerednikDrinfeld.GradedCartierModuleData.mem_eta_iff, hphi,
-      (CerednikDrinfeld.GradedCartierModuleData.mem_eta_iff D L hLV z).mp hz]
+    rw [Fin.GradedCartierModuleData.mem_eta_iff, hphi,
+      (Fin.GradedCartierModuleData.mem_eta_iff D L hLV z).mp hz]
   refine ⟨hmem, fun m hz' hm => ?_⟩
   obtain ⟨⟨x, x'⟩, rfl⟩ := D.nMk_surjective z
   have hu : D.u L hLV ⟨D.nMk (x, x'), hz⟩ = D.vRange.mkQ x := hq x x'

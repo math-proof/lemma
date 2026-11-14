@@ -2,7 +2,7 @@
 import Mathlib.CategoryTheory.Sites.Continuous
 import Instance.AlgebraicGeometry_FppfSiteCohomology
 import Instance.AlgebraicGeometry_FppfCohomologyLES
-import Lemma.AlgebraicGeometry.FppfH0Identification
+import Lemma.Scheme.FppfH0Identification
 
 universe v' u' wE vE uE v₁ v₂ u₁ u₂ u w' w v
 
@@ -79,4 +79,3 @@ set_option autoImplicit false
 set_option linter.unusedSectionVars false
 
 open CategoryTheory Abelian Limits
-

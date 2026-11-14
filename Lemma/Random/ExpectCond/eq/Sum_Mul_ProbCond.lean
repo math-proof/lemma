@@ -8,7 +8,7 @@ open MeasureTheory
 @[path]
 private lemma main
   [MeasurableSpace Ω]
-  [ReferenceMeasure α] [ReferenceMeasure β]
+  [μ : ReferenceMeasure α] [ReferenceMeasure β]
   [Countable α]
   [MeasurableSingletonClass α]
   {π : Measure Ω}
@@ -17,7 +17,7 @@ private lemma main
 -- given
   (hP : SinglePSpace π (a, s))
   (hf : Measurable f)
-  (hμ : ReferenceMeasure.measure (α := α) = Measure.count)
+  (hμ : μ.measure = Measure.count)
   («\sf{s}» : β) :
 -- imply
   Expectation.condRV π a s f «\sf{s}» =
@@ -32,4 +32,4 @@ private lemma main
 
 
 -- created on 2026-09-16
--- updated on 2026-11-02
+-- updated on 2026-11-14

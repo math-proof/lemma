@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.DedekindDomain.IntegralClosure
+import Lemma.Ideal.IntegralClosure
 section
 
 variable (K : Type*) [Field K] [NumberField K]

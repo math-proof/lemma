@@ -17,4 +17,4 @@ private lemma main
   rw [hs, ← Finset.image_image, Finset.image_univ_equiv]
 
 
--- created on 2026-10-31
+-- created on 2020-10-31

@@ -2,6 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 open scoped NumberField
 open NumberField.InfinitePlace
+set_option backward.isDefEq.respectTransparency.types false
 
 
 namespace NumberField.Units
@@ -77,4 +78,4 @@ end NumberField.Units
 
 
 -- created on 2026-10-20
--- updated on 2026-10-28
+-- updated on 2026-11-13

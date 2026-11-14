@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.ModularUnit
+import Lemma.HahnSeries.ModularUnit
 import Lemma.Int.P2MUtil
 
-open ModularCurve
+open ModularCurve HahnSeries
 
 /--
 [ModularCurve_eisensteinNumerator_coprime](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularCurve_eisensteinNumerator_coprime.lean)

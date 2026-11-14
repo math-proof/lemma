@@ -8,13 +8,12 @@ namespace MathlibExt.Probability.KolmogorovExtensionWanted
 
 /--
 [factor_nonempty](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/KolmogorovExtension.lean)
--/
-@[path]
 # Daniell–Kolmogorov extension lemma
 Extending a projective family of Borel probability measures on
 Polish factors to a measure on the arbitrary product.
+Each factor is nonempty, since it carries a marginal probability measure.
 -/
-/-- Each factor is nonempty, since it carries a marginal probability measure. -/
+@[path]
 private lemma factor_nonempty {ι : Type*} {α : ι → Type*} [∀ i, MeasurableSpace (α i)]
   (P : ∀ J : Finset ι, Measure (∀ j : J, α j))
   [∀ J, IsProbabilityMeasure (P J)] (i : ι) : Nonempty (α i) := by
@@ -27,7 +26,8 @@ private lemma factor_nonempty {ι : Type*} {α : ι → Type*} [∀ i, Measurabl
   have h0 : P {i} Set.univ = 0 := by
     have huniv : (Set.univ : Set (∀ j : ({i} : Finset ι), α j)) = ∅ :=
       Set.eq_empty_of_isEmpty _
-    rwa [huniv]
+    rw [huniv]
+    exact measure_empty
   rw [h1] at h0
   exact one_ne_zero h0
 
@@ -79,7 +79,8 @@ private lemma isCompactSystem_closedCompactCylinders {ι : Type*} {α : ι → T
     · rw [hKeq i h]
       exact (hScompact _).image (continuous_apply _)
     · simp only [hKdef]
-      rwa [dite_eq_right h]
+      rw [dite_eq_right h]
+      exact isCompact_singleton
   have hKne : ∀ i, (K i).Nonempty := by
     intro i
     by_cases h : ∃ n, i ∈ closedCompactCylinders.finset (hC n)
@@ -95,7 +96,8 @@ private lemma isCompactSystem_closedCompactCylinders {ι : Type*} {α : ι → T
     · rw [hKeq i h]
       exact ((hScompact _).image (continuous_apply _)).isClosed
     · simp only [hKdef]
-      rwa [dite_eq_right h]
+      rw [dite_eq_right h]
+      exact isClosed_singleton
   have hmemK : ∀ (n : ℕ) (x : ∀ i, α i), x ∈ Set.dissipate C n →
     ∀ i, (∃ k, k ≤ n ∧ i ∈ closedCompactCylinders.finset (hC k)) → x i ∈ K i := by
     intro n x hx i hik
@@ -160,9 +162,9 @@ namespace MathlibExt.Probability.KolmogorovExtensionWanted
 
 /--
 [IsSigmaSubadditive_of_compactSystem](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/KolmogorovExtension.lean)
+system contained in the ring is sigma-subadditive.
 -/
 @[path]
-system contained in the ring is sigma-subadditive. -/
 private lemma IsSigmaSubadditive_of_compactSystem {α : Type*} {C : Set (Set α)}
   {m : AddContent ENNReal C} (hC : IsSetRing C)
   (hm_top : ∀ s ∈ C, m s ≠ ∞)
@@ -183,16 +185,16 @@ private lemma IsSigmaSubadditive_of_compactSystem {α : Type*} {C : Set (Set α)
         addContent_mono hC.isSetSemiring (hs n) (hs 0) (hAnti (Nat.zero_le n))
         _ < ∞ := lt_top_iff_ne_top.mpr (hm_top _ (hs 0))
     · have hmul_ne : ∀ i : ℕ, (a * (2⁻¹ : ENNReal) ^ (i + 2)) ≠ 0 := by
-      intro i hcon
-      apply hane
-      have hw0 : ((2⁻¹ : ENNReal) ^ (i + 2)) ≠ 0 := by simp
-      have hwtop : ((2⁻¹ : ENNReal) ^ (i + 2)) ≠ ∞ := by simp
-      have hwinv := ENNReal.mul_inv_cancel hw0 hwtop
-      calc a = a * (((2⁻¹ : ENNReal) ^ (i + 2)) * (((2⁻¹ : ENNReal) ^ (i + 2)))⁻¹) := by
-        rw [hwinv, mul_one]
-        _ = (a * ((2⁻¹ : ENNReal) ^ (i + 2))) * (((2⁻¹ : ENNReal) ^ (i + 2)))⁻¹ :=
-          (mul_assoc _ _ _).symm
-        _ = 0 := by rw [hcon, zero_mul]
+        intro i hcon
+        apply hane
+        have hw0 : ((2⁻¹ : ENNReal) ^ (i + 2)) ≠ 0 := by simp
+        have hwtop : ((2⁻¹ : ENNReal) ^ (i + 2)) ≠ ∞ := by simp
+        have hwinv := ENNReal.mul_inv_cancel hw0 hwtop
+        calc a = a * (((2⁻¹ : ENNReal) ^ (i + 2)) * (((2⁻¹ : ENNReal) ^ (i + 2)))⁻¹) := by
+              rw [hwinv, mul_one]
+          _ = (a * ((2⁻¹ : ENNReal) ^ (i + 2))) * (((2⁻¹ : ENNReal) ^ (i + 2)))⁻¹ :=
+            (mul_assoc _ _ _).symm
+          _ = 0 := by rw [hcon, zero_mul]
       have hδ : ∀ i : ℕ, ∃ k ∈ K, k ⊆ s i ∧ m (s i \ k) < a * (2⁻¹ : ENNReal) ^ (i + 2) := by
         intro i
         exact hApprox _ (hs i) _ (hmul_ne i)
@@ -241,8 +243,8 @@ private lemma IsSigmaSubadditive_of_compactSystem {α : Type*} {C : Set (Set α)
             rw [hcalc, ENNReal.div_eq_inv_mul, mul_comm]
       refine Filter.eventually_atTop.mpr ⟨N, fun n hn ↦ ?_⟩
       calc m (s n) ≤ m (⋃ i ∈ Finset.range (N + 1), (s i \ k i)) :=
-        addContent_mono hC.isSetSemiring (hs n)
-          (hC.biUnion_mem _ (fun i _ ↦ hmem i)) (hsub n hn)
+        (addContent_mono hC.isSetSemiring (hs n)
+          (hC.biUnion_mem _ (fun i _ ↦ hmem i)) (hsub n hn))
         _ ≤ ∑ i ∈ Finset.range (N + 1), m (s i \ k i) :=
           addContent_biUnion_le hC (fun i _ ↦ hmem i)
         _ ≤ ∑ i ∈ Finset.range (N + 1), a * (2⁻¹ : ENNReal) ^ (i + 2) :=
@@ -259,10 +261,10 @@ namespace MathlibExt.Probability.KolmogorovExtensionWanted
 -/
 @[path]
 lemma kolmogorov_extension
-  [∀ J, IsProbabilityMeasure (P J)]
   {α : ι → Type*} [∀ i, TopologicalSpace (α i)] [∀ i, PolishSpace (α i)] [∀ i, MeasurableSpace (α i)] [∀ i, BorelSpace (α i)]
 -- given
   (P : ∀ J : Finset ι, Measure (∀ j : J, α j))
+  [∀ J, IsProbabilityMeasure (P J)]
   (hP : IsProjectiveMeasureFamily P) :
 -- imply
   ∃ μ : Measure (∀ i, α i), IsProjectiveLimit μ P := by
@@ -290,13 +292,10 @@ lemma kolmogorov_extension
     (projectiveFamilyContent hP).measure isSetSemiring_measurableCylinders
       generateFrom_measurableCylinders.ge hsub (cylinder J T) = P J T := by
     intro J T hT
-    calc (projectiveFamilyContent hP).measure isSetSemiring_measurableCylinders
-      generateFrom_measurableCylinders.ge hsub (cylinder J T)
-      = projectiveFamilyContent hP (cylinder J T) :=
-        AddContent.measure_eq _ isSetSemiring_measurableCylinders
-          generateFrom_measurableCylinders.symm hsub
-          (cylinder_mem_measurableCylinders J T hT)
-      _ = P J T := projectiveFamilyContent_cylinder hP hT
+    rw [AddContent.measure_eq _ isSetSemiring_measurableCylinders
+      generateFrom_measurableCylinders.symm hsub
+      (cylinder_mem_measurableCylinders J T hT)]
+    exact projectiveFamilyContent_cylinder hP hT
   refine ⟨(projectiveFamilyContent hP).measure isSetSemiring_measurableCylinders
     generateFrom_measurableCylinders.ge hsub, fun I ↦ Measure.ext fun S hS ↦ ?_⟩
   rw [Measure.map_apply (Finset.measurable_restrict I) hS]

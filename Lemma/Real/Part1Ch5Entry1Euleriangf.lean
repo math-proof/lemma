@@ -1101,7 +1101,7 @@ namespace MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry1Euleriangf
 [Part1Ch5Entry1Euleriangf](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch5Entry1Euleriangf.lean)
 -/
 @[path]
-lemma ramanujan_part1_ch5_entry1_euleriangf
+lemma ramanujan_part1_ch5_entry1_euleriangf :
 -- imply
   (∀ (phi : ℝ[X]) (h : ℝ),
       chapter5PolynomialShift h (chapter5DerivativeExpansion chapter5Entry1PlusCoeff h phi) +

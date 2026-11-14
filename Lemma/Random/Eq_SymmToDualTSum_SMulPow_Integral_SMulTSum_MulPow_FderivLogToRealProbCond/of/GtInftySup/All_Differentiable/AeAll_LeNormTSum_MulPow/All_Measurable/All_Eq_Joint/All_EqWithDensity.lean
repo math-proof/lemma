@@ -9,10 +9,8 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel 
 
 /--
 Turning the pointwise integral of the discounted weighted density-score into the
-`𝔼[r, s, a : M θ]` sugar (continuous-action model).
-Continuous-action counterpart of
-`Random.ExpectDot.eq.Integral_Dot_FunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.Ae_GtInftySup.All_Measurable.All_NeProb_0.IsPolicyTrajectory.In_Ico`
-with density score `∇ log π` (no `ProbCond` / counting measure).
+`𝔼[r, s, a : M θ]` sugar (continuous-action model), with density score `∇ log π`
+(no `ProbCond` / counting measure).
 -/
 @[path]
 private lemma main

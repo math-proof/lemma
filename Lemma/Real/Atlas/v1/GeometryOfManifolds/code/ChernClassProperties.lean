@@ -192,8 +192,8 @@ lemma ComplexVectorBundleData.curvature_closed
 -- proof
   rw [← bundle.curvature_eq]
   exact d_squared bundle.connectionForm
-/-- Axiomatic form of Proposition 1: on a compact oriented manifold, the top Chern class equals
-the Euler class, $c_r(E) = e(E) \in H^{2r}(M, \mathbb{Z})$ — equivalently, $c_r - e$ is exact. -/
+-- Axiomatic form of Proposition 1: on a compact oriented manifold, the top Chern class equals
+-- the Euler class, $c_r(E) = e(E) \in H^{2r}(M, \mathbb{Z})$ — equivalently, $c_r - e$ is exact.
 end TopChernEuler
 
 

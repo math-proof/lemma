@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.GroupCohomology.TateCohomology
+import Lemma.LinearMap.TateCohomology
 open CategoryTheory groupCohomology
 
 

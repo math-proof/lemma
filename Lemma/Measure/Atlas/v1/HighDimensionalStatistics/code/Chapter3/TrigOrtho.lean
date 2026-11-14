@@ -84,7 +84,7 @@ lemma ic0
 -- imply
   ∫ x in (0:ℝ)..1, cos (2 * π * m * x) = 0 := by
 -- proof
-  rw [ics _ (two_pi_ne m hm), show sin (2 * π * ↑m) = sin (↑m * (2 * π)) by ring, sin_2pi_m]; simp
+  rw [ics (two_pi_ne hm), show sin (2 * π * ↑m) = sin (↑m * (2 * π)) by ring, sin_2pi_m]; simp
 
 /--
 [is0](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter3/TrigOrtho.lean)
@@ -97,7 +97,7 @@ lemma is0
 -- imply
   ∫ x in (0:ℝ)..1, sin (2 * π * m * x) = 0 := by
 -- proof
-  rw [iss _ (two_pi_ne m hm), show cos (2 * π * ↑m) = cos (↑m * (2 * π)) by ring, cos_int_mul_two_pi]; simp
+  rw [iss (two_pi_ne hm), show cos (2 * π * ↑m) = cos (↑m * (2 * π)) by ring, cos_int_mul_two_pi]; simp
 
 /--
 [ics2](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter3/TrigOrtho.lean)
@@ -110,7 +110,7 @@ lemma ics2
 -- imply
   ∫ x in (0:ℝ)..1, cos (2 * π * m * x) ^ 2 = 1 / 2 := by
 -- proof
-  have h := @integral_comp_mul_right ℝ _ _ (a := 0) (b := 1) (c := 2 * π * m) (fun x => cos x ^ 2) (two_pi_ne m hm)
+  have h := @integral_comp_mul_right ℝ _ _ (a := 0) (b := 1) (c := 2 * π * m) (fun x => cos x ^ 2) (two_pi_ne hm)
   simp only [zero_mul, one_mul] at h; rw [integral_cos_sq] at h
   rw [show (fun x : ℝ => cos (x * (2 * π * ↑m)) ^ 2) = (fun x : ℝ => cos (2 * π * ↑m * x) ^ 2) from by ext; ring_nf] at h
   rw [h]; simp only [smul_eq_mul, cos_zero, sin_zero]
@@ -128,7 +128,7 @@ lemma iss2
 -- imply
   ∫ x in (0:ℝ)..1, sin (2 * π * m * x) ^ 2 = 1 / 2 := by
 -- proof
-  have h := @integral_comp_mul_right ℝ _ _ (a := 0) (b := 1) (c := 2 * π * m) (fun x => sin x ^ 2) (two_pi_ne m hm)
+  have h := @integral_comp_mul_right ℝ _ _ (a := 0) (b := 1) (c := 2 * π * m) (fun x => sin x ^ 2) (two_pi_ne hm)
   simp only [zero_mul, one_mul] at h; rw [integral_sin_sq] at h
   rw [show (fun x : ℝ => sin (x * (2 * π * ↑m)) ^ 2) = (fun x : ℝ => sin (2 * π * ↑m * x) ^ 2) from by ext; ring_nf] at h
   rw [h]; simp only [smul_eq_mul, cos_zero, sin_zero]
@@ -144,7 +144,7 @@ lemma tb_one
 -- imply
   trigBasis 1 x = 1 := by
 -- proof
-simp [trigBasis]
+  simp [trigBasis]
 
 /--
 [tb_even](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter3/TrigOrtho.lean)
@@ -223,7 +223,7 @@ lemma icc0_nat
     intervalIntegral.integral_add
       (Continuous.intervalIntegrable (by fun_prop) 0 1)
       (Continuous.intervalIntegrable (by fun_prop) 0 1),
-    ic0 _ h_sub_ne, ic0 _ h_sum_ne]; simp
+    ic0 h_sub_ne, ic0 h_sum_ne]; simp
 
 /--
 [iss0_nat](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter3/TrigOrtho.lean)
@@ -252,7 +252,7 @@ lemma iss0_nat
     intervalIntegral.integral_sub
       (Continuous.intervalIntegrable (by fun_prop) 0 1)
       (Continuous.intervalIntegrable (by fun_prop) 0 1),
-    ic0 _ h_sub_ne, ic0 _ h_sum_ne]; simp
+    ic0 h_sub_ne, ic0 h_sum_ne]; simp
 
 /--
 [isc0_nat](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter3/TrigOrtho.lean)
@@ -279,10 +279,10 @@ lemma isc0_nat
     intervalIntegral.integral_add
       (Continuous.intervalIntegrable (by fun_prop) 0 1)
       (Continuous.intervalIntegrable (by fun_prop) 0 1),
-    is0 _ h_sum_ne]
+    is0 h_sum_ne]
   by_cases h_sub : (m : ℤ) - n = 0
   · rw [h_sub]; simp
-  · rw [is0 _ h_sub]; simp
+  · rw [is0 h_sub]; simp
 
 /--
 [trigBasis_L2_orthonormal'](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter3/TrigOrtho.lean)
@@ -297,22 +297,22 @@ lemma trigBasis_L2_orthonormal'
   ∫ x in Icc (0 : ℝ) 1, trigBasis j x * trigBasis k x = if j = k then 1 else 0 := by
 -- proof
   rw [Icc_to_ii]
-  obtain rfl | ⟨mj, hmj, rfl⟩ | ⟨mj, hmj, rfl⟩ <;> := nat_tri j hj
-  obtain rfl | ⟨mk, hmk, rfl⟩ | ⟨mk, hmk, rfl⟩ := nat_tri k hk
+  obtain rfl | ⟨mj, hmj, rfl⟩ | ⟨mj, hmj, rfl⟩ := nat_tri hj
+  all_goals obtain rfl | ⟨mk, hmk, rfl⟩ | ⟨mk, hmk, rfl⟩ := nat_tri hk
   · simp_rw [tb_one]; simp [intervalIntegral.integral_const]
   · simp only [show ¬(1 = 2 * mk) from by omega, ite_false]
-    simp_rw [tb_one, tb_even mk hmk, one_mul, intervalIntegral.integral_const_mul]
+    simp_rw [tb_one, tb_even (m := mk) hmk, one_mul, intervalIntegral.integral_const_mul]
     rw [show (fun x => cos (2 * π * ↑mk * x)) = (fun x => cos (2 * π * (↑(mk:ℤ)) * x)) from by push_cast; rfl]
-    rw [ic0 mk (by exact_mod_cast show mk ≠ 0 by omega)]; simp
+    rw [ic0 (m := (mk : ℤ)) (by exact_mod_cast show mk ≠ 0 by omega)]; simp
   · simp only [show ¬(1 = 2 * mk + 1) from by omega, ite_false]
-    simp_rw [tb_one, tb_odd mk hmk, one_mul, intervalIntegral.integral_const_mul]
+    simp_rw [tb_one, tb_odd (m := mk) hmk, one_mul, intervalIntegral.integral_const_mul]
     rw [show (fun x => sin (2 * π * ↑mk * x)) = (fun x => sin (2 * π * (↑(mk:ℤ)) * x)) from by push_cast; rfl]
-    rw [is0 mk (by exact_mod_cast show mk ≠ 0 by omega)]; simp
-  · simp only [show ¬(2 * mj = 1) from by omega, ite_false]
-    simp_rw [tb_even mj hmj, tb_one, mul_one, intervalIntegral.integral_const_mul]
+    rw [is0 (m := (mk : ℤ)) (by exact_mod_cast show mk ≠ 0 by omega)]; simp
+  · rw [if_neg (by omega : ¬(2 * mj = 1))]
+    simp_rw [tb_even (m := mj) hmj, tb_one, mul_one, intervalIntegral.integral_const_mul]
     rw [show (fun x => cos (2 * π * ↑mj * x)) = (fun x => cos (2 * π * (↑(mj:ℤ)) * x)) from by push_cast; rfl]
-    rw [ic0 mj (by exact_mod_cast show mj ≠ 0 by omega)]; simp
-  · simp_rw [tb_even mj hmj, tb_even mk hmk]
+    rw [ic0 (m := (mj : ℤ)) (by exact_mod_cast show mj ≠ 0 by omega)]; simp
+  · simp_rw [tb_even (m := mj) hmj, tb_even (m := mk) hmk]
     simp_rw [show ∀ x : ℝ, √2 * cos (2 * π * ↑mj * x) * (√2 * cos (2 * π * ↑mk * x)) =
       √2 * √2 * (cos (2 * π * ↑mj * x) * cos (2 * π * ↑mk * x)) from fun x => by ring]
     rw [intervalIntegral.integral_const_mul]
@@ -320,25 +320,25 @@ lemma trigBasis_L2_orthonormal'
     · subst h; simp only [show 2 * mj = 2 * mj from rfl, ite_true]
       rw [show (fun x : ℝ => cos (2 * π * ↑mj * x) * cos (2 * π * ↑mj * x)) =
         (fun x => cos (2 * π * ↑(mj:ℤ) * x) ^ 2) from by ext x; push_cast; ring]
-      rw [ics2 mj (by exact_mod_cast show mj ≠ 0 by omega)]
+      rw [ics2 (m := (mj : ℤ)) (by exact_mod_cast show mj ≠ 0 by omega)]
       rw [Real.mul_self_sqrt (by norm_num : (2:ℝ) ≥ 0)]; ring
     · simp only [show ¬(2 * mj = 2 * mk) from by omega, ite_false]
-      rw [icc0_nat mj mk hmj hmk h]; simp
+      rw [icc0_nat hmj hmk h]; simp
   · simp only [show ¬(2 * mj = 2 * mk + 1) from by omega, ite_false]
-    simp_rw [tb_even mj hmj, tb_odd mk hmk]
+    simp_rw [tb_even (m := mj) hmj, tb_odd (m := mk) hmk]
     simp_rw [show ∀ x : ℝ, √2 * cos (2 * π * ↑mj * x) * (√2 * sin (2 * π * ↑mk * x)) =
       √2 * √2 * (sin (2 * π * ↑mk * x) * cos (2 * π * ↑mj * x)) from fun x => by ring]
-    rw [intervalIntegral.integral_const_mul, isc0_nat mk mj hmk hmj]; simp
+    rw [intervalIntegral.integral_const_mul, isc0_nat hmk hmj]; simp
   · simp only [show ¬(2 * mj + 1 = 1) from by omega, ite_false]
-    simp_rw [tb_odd mj hmj, tb_one, mul_one, intervalIntegral.integral_const_mul]
+    simp_rw [tb_odd (m := mj) hmj, tb_one, mul_one, intervalIntegral.integral_const_mul]
     rw [show (fun x => sin (2 * π * ↑mj * x)) = (fun x => sin (2 * π * (↑(mj:ℤ)) * x)) from by push_cast; rfl]
-    rw [is0 mj (by exact_mod_cast show mj ≠ 0 by omega)]; simp
+    rw [is0 (m := (mj : ℤ)) (by exact_mod_cast show mj ≠ 0 by omega)]; simp
   · simp only [show ¬(2 * mj + 1 = 2 * mk) from by omega, ite_false]
-    simp_rw [tb_odd mj hmj, tb_even mk hmk]
+    simp_rw [tb_odd (m := mj) hmj, tb_even (m := mk) hmk]
     simp_rw [show ∀ x : ℝ, √2 * sin (2 * π * ↑mj * x) * (√2 * cos (2 * π * ↑mk * x)) =
       √2 * √2 * (sin (2 * π * ↑mj * x) * cos (2 * π * ↑mk * x)) from fun x => by ring]
-    rw [intervalIntegral.integral_const_mul, isc0_nat mj mk hmj hmk]; simp
-  · simp_rw [tb_odd mj hmj, tb_odd mk hmk]
+    rw [intervalIntegral.integral_const_mul, isc0_nat hmj hmk]; simp
+  · simp_rw [tb_odd (m := mj) hmj, tb_odd (m := mk) hmk]
     simp_rw [show ∀ x : ℝ, √2 * sin (2 * π * ↑mj * x) * (√2 * sin (2 * π * ↑mk * x)) =
       √2 * √2 * (sin (2 * π * ↑mj * x) * sin (2 * π * ↑mk * x)) from fun x => by ring]
     rw [intervalIntegral.integral_const_mul]
@@ -346,10 +346,10 @@ lemma trigBasis_L2_orthonormal'
     · subst h; simp only [show 2 * mj + 1 = 2 * mj + 1 from rfl, ite_true]
       rw [show (fun x : ℝ => sin (2 * π * ↑mj * x) * sin (2 * π * ↑mj * x)) =
         (fun x => sin (2 * π * ↑(mj:ℤ) * x) ^ 2) from by ext x; push_cast; ring]
-      rw [iss2 mj (by exact_mod_cast show mj ≠ 0 by omega)]
+      rw [iss2 (m := (mj : ℤ)) (by exact_mod_cast show mj ≠ 0 by omega)]
       rw [Real.mul_self_sqrt (by norm_num : (2:ℝ) ≥ 0)]; ring
     · simp only [show ¬(2 * mj + 1 = 2 * mk + 1) from by omega, ite_false]
-      rw [iss0_nat mj mk hmj hmk h]; simp
+      rw [iss0_nat (m := mj) (n := mk) hmj hmk h]; simp
 
 
 -- created on 2026-10-23

@@ -1,6 +1,5 @@
 import Mathlib
 import Lemma.ModularForm.HeckeOperator
-import Notation.CuspForm_Gamma1HeckeOperators
 
 set_option autoImplicit false
 
@@ -95,68 +94,92 @@ section commutation
 variable {p : ℕ} (hp : p ≠ 0)
 include hp
 
+set_option backward.isDefEq.respectTransparency false in
 theorem heckeMatrix_mul_of_eq (g : SL(2, ℤ)) (j j' : ℕ) (e : ℤ)
     (he : g 0 1 + j * g 1 1 = j' * (g 0 0 + j * g 1 0) + p * e) :
     ∃ g' : SL(2, ℤ), g' 1 0 = p * g 1 0 ∧ g' 1 1 = g 1 1 - g 1 0 * j' ∧
       heckeMatrix p j * mapGL ℝ g = mapGL ℝ g' * heckeMatrix p j' := by
   have hdet := det_eq g
-  refine ⟨⟨!![g 0 0 + j * g 1 0, e; p * g 1 0, g 1 1 - g 1 0 * j'], ?_⟩, rfl, rfl, ?_⟩
-  · rw [Matrix.det_fin_two_of]
-    linear_combination hdet + (g 1 0) * he
-  · ext i j
-    fin_cases i <;> fin_cases j <;>
-      simp [hp, Matrix.mul_apply, Fin.sum_univ_two]
-    all_goals first
-      | (have := congrArg (Int.cast : ℤ → ℝ) he; push_cast at this ⊢; linear_combination this)
-      | (have := congrArg (Int.cast : ℤ → ℝ) he; push_cast at this ⊢; linear_combination -this)
-      | ring1
+  let g' : SL(2, ℤ) := ⟨!![g 0 0 + j * g 1 0, e; p * g 1 0, g 1 1 - g 1 0 * j'], by
+    rw [Matrix.det_fin_two_of]
+    linear_combination hdet + (g 1 0) * he⟩
+  refine ⟨g', rfl, rfl, ?_⟩
+  apply Units.ext
+  ext i k
+  have hmap (A : SL(2, ℤ)) (i k : Fin 2) :
+      (mapGL ℝ A : Matrix (Fin 2) (Fin 2) ℝ) i k = (A i k : ℝ) := by
+    simp [mapGL_coe_matrix, Matrix.map_apply]
+  simp [Units.val_mul, val_heckeMatrix hp, hmap, Matrix.mul_apply, Fin.sum_univ_two, g']
+  fin_cases i <;> fin_cases k <;> simp [hmap, g']
+  try (have := congrArg (Int.cast : ℤ → ℝ) he; push_cast at this ⊢; linear_combination this)
+  try (have := congrArg (Int.cast : ℤ → ℝ) he; push_cast at this ⊢; linear_combination -this)
+  try ring
+  try (norm_cast; rw [he]; ring)
 
+set_option backward.isDefEq.respectTransparency false in
 theorem heckeMatrix_mul_of_eq' (g : SL(2, ℤ)) (j : ℕ) (e : ℤ)
     (he : g 0 0 + j * g 1 0 = p * e) :
     ∃ g' : SL(2, ℤ), g' 1 0 = g 1 0 ∧ g' 1 1 = p * g 1 1 ∧
       heckeMatrix p j * mapGL ℝ g = mapGL ℝ g' * heckeDiagMatrix p := by
   have hdet := det_eq g
-  refine ⟨⟨!![e, g 0 1 + j * g 1 1; g 1 0, p * g 1 1], ?_⟩, rfl, rfl, ?_⟩
-  · rw [Matrix.det_fin_two_of]
-    linear_combination hdet - (g 1 1) * he
-  · ext i j
-    fin_cases i <;> fin_cases j <;>
-      simp [hp, Matrix.mul_apply, Fin.sum_univ_two]
-    all_goals first
-      | (have := congrArg (Int.cast : ℤ → ℝ) he; push_cast at this ⊢; linear_combination this)
-      | (have := congrArg (Int.cast : ℤ → ℝ) he; push_cast at this ⊢; linear_combination -this)
-      | ring1
+  let g' : SL(2, ℤ) := ⟨!![e, g 0 1 + j * g 1 1; g 1 0, p * g 1 1], by
+    rw [Matrix.det_fin_two_of]
+    linear_combination hdet - (g 1 1) * he⟩
+  refine ⟨g', rfl, rfl, ?_⟩
+  apply Units.ext
+  ext i k
+  have hmap (A : SL(2, ℤ)) (i k : Fin 2) :
+      (mapGL ℝ A : Matrix (Fin 2) (Fin 2) ℝ) i k = (A i k : ℝ) := by
+    simp [mapGL_coe_matrix, Matrix.map_apply]
+  simp [Units.val_mul, val_heckeMatrix hp, val_heckeDiagMatrix hp, hmap, Matrix.mul_apply, Fin.sum_univ_two, g']
+  fin_cases i <;> fin_cases k <;> simp [hmap, g']
+  try (have := congrArg (Int.cast : ℤ → ℝ) he; push_cast at this ⊢; linear_combination this)
+  try (have := congrArg (Int.cast : ℤ → ℝ) he; push_cast at this ⊢; linear_combination -this)
+  try ring
+  try (norm_cast; rw [he]; ring)
 
+set_option backward.isDefEq.respectTransparency false in
 theorem heckeDiagMatrix_mul_of_eq (g : SL(2, ℤ)) (j' : ℕ) (e : ℤ)
     (he : g 1 1 = g 1 0 * j' + p * e) :
     ∃ g' : SL(2, ℤ), g' 1 0 = g 1 0 ∧ g' 1 1 = e ∧
       heckeDiagMatrix p * mapGL ℝ g = mapGL ℝ g' * heckeMatrix p j' := by
   have hdet := det_eq g
-  refine ⟨⟨!![p * g 0 0, g 0 1 - g 0 0 * j'; g 1 0, e], ?_⟩, rfl, rfl, ?_⟩
-  · rw [Matrix.det_fin_two_of]
-    linear_combination hdet - (g 0 0) * he
-  · ext i j
-    fin_cases i <;> fin_cases j <;>
-      simp [hp, Matrix.mul_apply, Fin.sum_univ_two]
-    all_goals first
-      | (have := congrArg (Int.cast : ℤ → ℝ) he; push_cast at this ⊢; linear_combination this)
-      | (have := congrArg (Int.cast : ℤ → ℝ) he; push_cast at this ⊢; linear_combination -this)
-      | ring1
+  let g' : SL(2, ℤ) := ⟨!![p * g 0 0, g 0 1 - g 0 0 * j'; g 1 0, e], by
+    rw [Matrix.det_fin_two_of]
+    linear_combination hdet - (g 0 0) * he⟩
+  refine ⟨g', rfl, rfl, ?_⟩
+  apply Units.ext
+  ext i k
+  have hmap (A : SL(2, ℤ)) (i k : Fin 2) :
+      (mapGL ℝ A : Matrix (Fin 2) (Fin 2) ℝ) i k = (A i k : ℝ) := by
+    simp [mapGL_coe_matrix, Matrix.map_apply]
+  simp [Units.val_mul, val_heckeMatrix hp, val_heckeDiagMatrix hp, hmap, Matrix.mul_apply, Fin.sum_univ_two, g']
+  fin_cases i <;> fin_cases k <;> simp [hmap, g']
+  try (have := congrArg (Int.cast : ℤ → ℝ) he; push_cast at this ⊢; linear_combination this)
+  try (have := congrArg (Int.cast : ℤ → ℝ) he; push_cast at this ⊢; linear_combination -this)
+  try ring
+  try (norm_cast; rw [he]; ring)
 
+set_option backward.isDefEq.respectTransparency false in
 theorem heckeDiagMatrix_mul_of_eq' (g : SL(2, ℤ)) (e : ℤ) (he : g 1 0 = p * e) :
     ∃ g' : SL(2, ℤ), g' 1 0 = e ∧ g' 1 1 = g 1 1 ∧
       heckeDiagMatrix p * mapGL ℝ g = mapGL ℝ g' * heckeDiagMatrix p := by
   have hdet := det_eq g
-  refine ⟨⟨!![g 0 0, p * g 0 1; e, g 1 1], ?_⟩, rfl, rfl, ?_⟩
-  · rw [Matrix.det_fin_two_of]
-    linear_combination hdet + (g 0 1) * he
-  · ext i j
-    fin_cases i <;> fin_cases j <;>
-      simp [hp, Matrix.mul_apply, Fin.sum_univ_two]
-    all_goals first
-      | (have := congrArg (Int.cast : ℤ → ℝ) he; push_cast at this ⊢; linear_combination this)
-      | (have := congrArg (Int.cast : ℤ → ℝ) he; push_cast at this ⊢; linear_combination -this)
-      | ring1
+  let g' : SL(2, ℤ) := ⟨!![g 0 0, p * g 0 1; e, g 1 1], by
+    rw [Matrix.det_fin_two_of]
+    linear_combination hdet + (g 0 1) * he⟩
+  refine ⟨g', rfl, rfl, ?_⟩
+  apply Units.ext
+  ext i k
+  have hmap (A : SL(2, ℤ)) (i k : Fin 2) :
+      (mapGL ℝ A : Matrix (Fin 2) (Fin 2) ℝ) i k = (A i k : ℝ) := by
+    simp [mapGL_coe_matrix, Matrix.map_apply]
+  simp [Units.val_mul, val_heckeDiagMatrix hp, hmap, Matrix.mul_apply, Fin.sum_univ_two, g']
+  fin_cases i <;> fin_cases k <;> simp [hmap, g']
+  try (have := congrArg (Int.cast : ℤ → ℝ) he; push_cast at this ⊢; linear_combination this)
+  try (have := congrArg (Int.cast : ℤ → ℝ) he; push_cast at this ⊢; linear_combination -this)
+  try ring
+  try (norm_cast; rw [he]; ring)
 
 end commutation
 
@@ -460,7 +483,12 @@ open scoped MatrixGroups ModularForm
 
 namespace CuspForm
 
-open scoped CuspForm_Gamma1HeckeOperators
+/-- Coercion of `Gamma1 M` into `GL (Fin 2) ℝ`, replacing the
+`Notation.CuspForm_Gamma1HeckeOperators` scoped notation whose RHS
+`SL(2, ℤ)` cannot be parsed by Lean 4.35 `notation`. -/
+abbrev Γ₁ℝ (M : ℕ) : Subgroup (GL (Fin 2) ℝ) :=
+  ((Gamma1 M : Subgroup SL(2, ℤ)) : Subgroup (GL (Fin 2) ℝ))
+
 
 section Lifts
 
@@ -471,13 +499,15 @@ def IsDiamondLift (d : ℕ) (γ : SL(2, ℤ)) : Prop :=
 
 variable {M}
 
+set_option backward.isDefEq.respectTransparency false in
 theorem exists_isDiamondLift_of_coprime {d : ℕ} (h : Nat.Coprime d M) :
     ∃ γ : SL(2, ℤ), IsDiamondLift M d γ := by
   obtain ⟨u, v, huv⟩ := (Nat.isCoprime_iff_coprime.2 h : IsCoprime (d : ℤ) (M : ℤ))
-  refine ⟨⟨!![u, -v; (M : ℤ), (d : ℤ)], ?_⟩, ?_, ?_⟩
-  · rw [Matrix.det_fin_two_of]; linear_combination huv
-  · simp [Gamma0_mem]
-  · simp
+  let A : SL(2, ℤ) := ⟨!![u, -v; (M : ℤ), (d : ℤ)], by
+    rw [Matrix.det_fin_two_of]; linear_combination huv⟩
+  refine ⟨A, ?_, ?_⟩
+  · exact (Gamma0_mem (A := A)).mpr (by simp [A])
+  · simp [A]
 
 theorem IsDiamondLift.coprime {d : ℕ} {γ : SL(2, ℤ)} (h : IsDiamondLift M d γ) : Nat.Coprime d M := by
   have hdet := Matrix.det_fin_two γ.1
@@ -574,13 +604,23 @@ theorem slash_eq_slash_of_isDiamondLift {d : ℕ} {γ γ' : SL(2, ℤ)} (hγ : I
       have := congrArg (fun z : ℤ => (z : ZMod M)) hd'
       simp only [Int.cast_one, Int.cast_sub, Int.cast_mul, hc', mul_zero, sub_zero, hδ'] at this
       exact this.symm
-    rw [Gamma1_mem, Matrix.SpecialLinearGroup.coe_mul, Matrix.SpecialLinearGroup.SL2_inv_expl]
-    simp only [Matrix.mul_apply, Fin.sum_univ_two, Matrix.cons_val', Matrix.cons_val_zero,
-      Matrix.cons_val_one, Matrix.empty_val', Matrix.cons_val_fin_one, Int.cast_add, Int.cast_mul,
-      Int.cast_neg, hc, hc', hδ, hδ', neg_zero, mul_zero, zero_mul, add_zero, zero_add, mul_neg]
-    refine ⟨?_, ?_, trivial⟩
-    · simpa only [mul_comm] using ha'
-    · linear_combination ha
+    set_option backward.isDefEq.respectTransparency false in
+    rw [Gamma1_mem]
+    have hval : (γ' * γ⁻¹).1 = γ'.1 * γ⁻¹.1 := by
+      simp [Matrix.SpecialLinearGroup.coe_mul]
+    have hinvM : γ⁻¹.1 = !![γ.1 1 1, -γ.1 0 1; -γ.1 1 0, γ.1 0 0] := by
+      rw [Matrix.SpecialLinearGroup.SL2_inv_expl]
+      rfl
+    -- unfold the three Gamma1 entry conditions
+    change ((γ' * γ⁻¹).1 0 0 : ZMod M) = 1 ∧
+      ((γ' * γ⁻¹).1 1 1 : ZMod M) = 1 ∧
+      ((γ' * γ⁻¹).1 1 0 : ZMod M) = 0
+    rw [hval, hinvM]
+    simp [Matrix.mul_apply, Fin.sum_univ_two, hc, hc', hδ, hδ']
+    constructor
+    · convert ha' using 1
+    · convert ha using 1
+      exact mul_comm _ _
   have hinv := SlashInvariantFormClass.slash_action_eq f _ (Subgroup.mem_map_of_mem _ hmem)
   calc ⇑f ∣[k] (Matrix.SpecialLinearGroup.mapGL ℝ γ)
         = (⇑f ∣[k] (Matrix.SpecialLinearGroup.mapGL ℝ (γ' * γ⁻¹))) ∣[k] (Matrix.SpecialLinearGroup.mapGL ℝ γ) := by rw [hinv]

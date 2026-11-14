@@ -17,7 +17,7 @@ lemma continuous_at_iff_eps_delta
 -- given
   (_hc : c ∈ S) :
 -- imply
-  ContinuousWithinAt f S c ↔ ∀ ε > 0, ∃ δ > 0, ∀ x ∈ S, := by
+  ContinuousWithinAt f S c ↔ ∀ ε > 0, ∃ δ > 0, ∀ x ∈ S, |x - c| < δ → |f x - f c| < ε := by
 -- proof
   rw [Metric.continuousWithinAt_iff]
   simp only [Real.dist_eq]
@@ -37,7 +37,7 @@ lemma continuous_on_Icc_bounded
   (_hab : a ≤ b)
   (hf : ContinuousOn f (Set.Icc a b)) :
 -- imply
-  ∃ B : ℝ, ∀ x ∈ Set.Icc a b, := by
+  ∃ B : ℝ, ∀ x ∈ Set.Icc a b, |f x| ≤ B := by
 -- proof
   obtain ⟨C, hC⟩ := isCompact_Icc.exists_bound_of_continuousOn hf
   exact ⟨C, fun x hx => by rw [← Real.norm_eq_abs]; exact hC x hx⟩

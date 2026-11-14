@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.CurveModel
+import Lemma.Scheme.CurveModel
 import Lemma.Int.P2MUtil
 open CategoryTheory AlgebraicGeometry AlgebraicCurve
 
@@ -12,7 +12,7 @@ open CategoryTheory AlgebraicGeometry AlgebraicCurve
 private lemma main
   {K : Type u} [Field K] [IsAlgClosed K]
   {L : Type v} [Field L] [Algebra K L]
-  {𝔐 : AlgebraicCurve.CurveModel K L}
+  {𝔐 : CurveModel K L}
   {X B : Scheme.{u}}
   {πX : X ⟶ B}
   {s : Spec (CommRingCat.of K) ⟶ B}
@@ -35,4 +35,4 @@ private lemma main
 
 
 -- created on 2026-10-23
--- updated on 2026-10-26
+-- updated on 2026-11-14

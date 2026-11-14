@@ -20,9 +20,9 @@ lemma wimanMaximumModulus_le_wimanMajorant
   wimanMaximumModulus f r ≤ wimanMajorant f r := by
 -- proof
   obtain ⟨z, hz, hmax, _⟩ :=
-    exists_mem_sphere_eq_wimanMaximumModulus f hf hr
+    exists_mem_sphere_eq_wimanMaximumModulus (f := f) (r := r) hf hr
   rw [hmax]
-  have hs := hasSum_wimanTaylorCoefficient_mul_pow f hf z
+  have hs := hasSum_wimanTaylorCoefficient_mul_pow (f := f) (z := z) hf
   calc
     ‖f z‖ = ‖∑' n : ℕ, wimanTaylorCoefficient f n * z ^ n‖ := by
       rw [hs.tsum_eq]
@@ -34,7 +34,7 @@ lemma wimanMaximumModulus_le_wimanMajorant
       intro n
       rw [norm_mul, norm_pow, mem_sphere_zero_iff_norm.mp hz, wimanTerm,
         abs_of_nonneg hr]
-end
+end Complex
 
 
 

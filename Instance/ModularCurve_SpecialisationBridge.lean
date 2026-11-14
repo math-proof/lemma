@@ -1,5 +1,5 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_SpecialisationBridge.lean: instance decls only.
-import Lemma.ModularCurve.SpecialisationVocab
+import Lemma.HahnSeries.SpecialisationVocab
 import Instance.ModularCurve_TatePoint
 import Lemma.HahnSeries.Monodromy
 import Def.WeierstrassCurve_VariableChangePointEquiv

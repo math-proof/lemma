@@ -2,7 +2,7 @@
 import Mathlib.RingTheory.MvPolynomial.Basic
 import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
 import Mathlib.FieldTheory.Finite.GaloisField
-import Lemma.DrinfeldCurve.CoordRing
+import Lemma.MvPolynomial.CoordRing
 
 set_option autoImplicit false
 

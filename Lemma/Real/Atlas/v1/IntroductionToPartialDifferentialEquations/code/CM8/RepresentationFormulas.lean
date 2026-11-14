@@ -10,7 +10,7 @@ namespace CM8
 [unitSphereArea_three](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/IntroductionToPartialDifferentialEquations/code/CM8/RepresentationFormulas.lean)
 -/
 @[path]
-lemma unitSphereArea_three
+lemma unitSphereArea_three :
 -- imply
   unitSphereArea 3 = 4 * Real.pi := by
 -- proof
@@ -35,7 +35,7 @@ namespace CM8
 [FundSolN_eq_Phi3](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/IntroductionToPartialDifferentialEquations/code/CM8/RepresentationFormulas.lean)
 -/
 @[path]
-lemma FundSolN_eq_Phi3
+lemma FundSolN_eq_Phi3 :
 -- imply
   ∀ [inst : Fact (2 ≤ 3)] (x : Fin 3 → ℝ), @FundSolN 3 inst x = Phi3 x := by
 -- proof

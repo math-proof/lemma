@@ -34,7 +34,7 @@ lemma hormander_convolution_smooth
     ContinuousLinearEquiv.coe_neg, Function.comp]
   congr 1
   simp [sub_eq_add_neg]
-set_option maxHeartbeats 800000 in
+set_option maxHeartbeats 800000
 
 end DifferentialOperators
 

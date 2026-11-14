@@ -1,10 +1,10 @@
 import Mathlib
 import Lemma.Finset.RothFinsuppL1.eq.Sum_NatAbs.of.SubsetSupport
-open MathlibExt.NumberTheory.RothAuxiliary
-open Finset
+open MathlibExt.NumberTheory.RothAuxiliary Finset
 
 
 private lemma rothFinsuppL1_add
+-- given
   (f g : Finsupp α ℤ) :
 -- imply
   rothFinsuppL1 (f + g) ≤ rothFinsuppL1 f + rothFinsuppL1 g := by
@@ -40,3 +40,4 @@ private lemma main
 
 
 -- created on 2026-10-21
+-- updated on 2026-11-13

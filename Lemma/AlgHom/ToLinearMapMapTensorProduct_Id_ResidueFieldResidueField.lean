@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.AlgebraicGeometry_SmallExtensionPairTangent
-import Lemma.AlgebraicGeometry.SmallExtensionTangentCoords
+import Lemma.ResidueField.SmallExtensionTangentCoords
 import Lemma.Int.P2MUtil
 
 open TensorProduct IsLocalRing AlgebraicGeometry.SmallExtension

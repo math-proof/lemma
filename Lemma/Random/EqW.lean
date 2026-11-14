@@ -1,6 +1,5 @@
-import Lemma.Random.W0.eq.Sum_MulProbIntegral.of.All_LeNorm.StronglyMeasurable
-import Lemma.Real.Norm.le.Sum_Norm
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Real
+import Lemma.Random.EqMapStageK_12.of.All_EqWithDensity
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Random
 
 
 /--
@@ -8,18 +7,23 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random 
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
-  {M : Model Θ S A}
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
+  {f : 𝒮 → ℝ}
 -- given
+  (h₀ : StronglyMeasurable f)
   (θ : Θ)
-  (f : S → ℝ)
-  (y : S) :
+  (y : 𝒮) :
 -- imply
   ∫ z, (f z.2.1) ∂(M.stageK θ y) = f y := by
 -- proof
   have := M.env.reward_markov
-  rw [W0.eq.Sum_MulProbIntegral.of.All_LeNorm.StronglyMeasurable (M := M) (f := fun z => f z.2.1) ((StronglyMeasurable.of_discrete (f := f)).comp_measurable measurable_snd.fst) (fun z => Norm.le.Sum_Norm f z.2.1) θ y]
-  simp [← Finset.sum_mul, M.policy.sum_eq_one]
+  have hmap : (M.stageK θ y).map (fun z => z.2.1) = Measure.dirac y := by
+    have h := EqMapStageK_12.of.All_EqWithDensity (M := M) θ (Measure.dirac y)
+    rwa [Measure.dirac_bind (Kernel.measurable (M.stageK θ))] at h
+  rw [← integral_map_of_stronglyMeasurable measurable_snd.fst h₀, hmap]
+  apply integral_dirac' f y h₀
 
 
 -- created on 2026-10-07
+-- updated on 2026-11-14

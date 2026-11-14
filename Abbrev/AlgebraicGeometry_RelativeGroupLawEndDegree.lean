@@ -1,7 +1,7 @@
 import Mathlib
 import Structure.AlgebraicGeometry_RelativeGroupLaw
 import Abbrev.GoodReductionJacobian_RelativeGroupLawKernel
-import Lemma.AlgebraicGeometry.NeronModelEndomorphismExtension
+import Lemma.Scheme.NeronModelEndomorphismExtension
 
 set_option autoImplicit false
 

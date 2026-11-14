@@ -37,7 +37,7 @@ lemma bmExpectation_measurable
       fun p => (p.1.1, fun s => B s p.2)
     have hg : Measurable g :=
       Measurable.prodMk measurable_fst.fst
-        (measurable_pi_lambda _ fun s =>
+        (Measurable.of_eval fun s =>
           ((hBM.adapted s).mono (ℱ.le s) le_rfl).comp measurable_snd)
     show Measurable ((fun q : NNReal × (NNReal → Rd d) => Y q.1 q.2) ∘ g)
     exact hY_meas.comp hg
@@ -49,7 +49,7 @@ lemma bmExpectation_measurable
     rw [← h_eq]; exact h_sm.measurable
   ext p
   rfl
-/-- For an adapted process `B` (here a Brownian motion) and a stopping time `S`, the
+/- For an adapted process `B` (here a Brownian motion) and a stopping time `S`, the
 random variable `ω ↦ B (S ω) ω` is measurable with respect to the stopping-time
 σ-algebra `ℱ_S`. -/
 

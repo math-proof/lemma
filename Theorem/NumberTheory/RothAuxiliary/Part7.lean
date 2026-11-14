@@ -25,6 +25,10 @@ import Mathlib.RingTheory.Polynomial.Wronskian
 import Mathlib.RingTheory.Algebraic.Integral
 import Mathlib.Tactic
 import Structure.NumberTheory.RothAuxiliary.Part3
+import Lemma.Real.RothCoordinateBase.Gt_0
+import Lemma.Rat.NatDegreeRothIntegralPolynomial.Gt_0.of.IsAlgebraic
+import Lemma.Fin.AbsEval.le.MulRothMvL1Prod_PowMax
+import Theorem.NumberTheory.RothAuxiliary.Part6
 set_option maxHeartbeats 999999
 
 open scoped BigOperators
@@ -80,7 +84,7 @@ theorem roth_ridout_finite_approximations_small_exponent
   have hθ : 0 < θ := by dsimp [θ]; positivity
   have hθone : θ ≤ 1 := by dsimp [θ]; linarith
   have hη : 0 < η := by dsimp [η]; positivity
-  have hD : 0 < D := rothIntegralPolynomial_natDegree_pos hα
+  have hD : 0 < D := Rat.NatDegreeRothIntegralPolynomial.Gt_0.of.IsAlgebraic hα
   have hdenom : 0 < 2 * γ ^ 2 := by positivity
   have hnceil : (((D + 2 : ℕ) : ℝ) / (2 * γ ^ 2)) ≤ n := Nat.le_ceil _
   have hnR : 0 < (n : ℝ) :=
@@ -103,7 +107,7 @@ theorem roth_ridout_finite_approximations_small_exponent
     have hpos : 0 < 2 * (n + 1 : ℕ) * γ ^ 2 := by positivity
     nlinarith
   obtain ⟨δ, Q, R, hδ, hδone, hQtwo, hRone, hRoth⟩ :=
-    roth_lemma n θ hθ hθone
+    Fin.AbsEval.le.MulRothMvL1Prod_PowMax.mathlibExt.numberTheory.rothAuxiliary.roth_lemma n θ hθ hθone
   let β := min δ (1 / (2 * (n + 1 : ℕ)))
   have hβ : 0 < β := lt_min hδ (by positivity)
   have hβδ : β ≤ δ := min_le_left _ _
@@ -146,15 +150,15 @@ theorem roth_ridout_finite_approximations_small_exponent
   let C : ℝ := 8 * H * max 1 |α|
   have hH : 1 ≤ H := by
     dsimp [H]
-    have := rothCoordinateBase_pos α
+    have := Real.RothCoordinateBase.Gt_0 α
     omega
   have hC : 1 ≤ C := by
     dsimp [C]
     have hmax : (1 : ℝ) ≤ max 1 |α| := le_max_left _ _
     have hHR : (1 : ℝ) ≤ H := by exact_mod_cast hH
     nlinarith
-  obtain ⟨QH, hQH⟩ := roth_exists_rpow_threshold_of ((H : ℝ) ^ 2) hδ
-  obtain ⟨QC, hQC⟩ := roth_exists_rpow_threshold_of (C ^ 2) (by positivity : 0 < g / 2)
+  obtain ⟨QH, hQH⟩ := Fin.AbsEval.le.MulRothMvL1Prod_PowMax.mathlibExt.numberTheory.rothAuxiliary.roth_exists_rpow_threshold_of ((H : ℝ) ^ 2) hδ
+  obtain ⟨QC, hQC⟩ := Fin.AbsEval.le.MulRothMvL1Prod_PowMax.mathlibExt.numberTheory.rothAuxiliary.roth_exists_rpow_threshold_of (C ^ 2) (by positivity : 0 < g / 2)
   let N := max Q (max 2 (max QH QC))
   have hQN : Q ≤ N := le_max_left _ _
   have htwoN : 2 ≤ N :=
@@ -173,7 +177,7 @@ theorem roth_ridout_finite_approximations_small_exponent
     intro q hq
     simpa [A, a] using hq.1
   obtain ⟨q, hqA, hq0N, hchain⟩ :=
-    roth_ridout_exists_approximation_chain (α := α) (p := a) ha A hAsub hinf
+    Fin.AbsEval.le.MulRothMvL1Prod_PowMax.mathlibExt.numberTheory.rothAuxiliary.roth_ridout_exists_approximation_chain (α := α) (p := a) ha A hAsub hinf
       n N K
   have happrox : ∀ h,
       |α - (q h : ℝ)| < 1 / Real.rpow ((q h).den : ℝ) a :=
@@ -200,7 +204,7 @@ theorem roth_ridout_finite_approximations_small_exponent
   have hd0two : 2 ≤ d 0 := htwoN.trans hq0N.le
   have hd : ∀ h, 2 ≤ d h := fun h ↦ hd0two.trans (hdmono (Fin.zero_le h))
   obtain ⟨r, hrlarge, hranti, hsep, hpower, hsum, hupper⟩ :=
-    roth_exists_balanced_degrees d K R δ β η hd hdmono hchain
+    Fin.AbsEval.le.MulRothMvL1Prod_PowMax.mathlibExt.numberTheory.rothAuxiliary.roth_exists_balanced_degrees d K R δ β η hd hdmono hchain
       hβ hβδ hη hβn hK
   have hrpos : ∀ h, 0 < r h := fun h ↦
     lt_of_lt_of_le Nat.zero_lt_one (hRone.trans (hrlarge h))
@@ -209,11 +213,11 @@ theorem roth_ridout_finite_approximations_small_exponent
       (by omega : 0 < n + 1) hγ hγhalf
       (by simpa [D] using hparamStrict) (by simpa [D] using hparamHalf)
   let P := rothMvOfCoeff c
-  have hPne : P ≠ 0 := rothMvOfCoeff_ne_zero hc
-  have hPdegree : rothDegreeBound P r := rothMvOfCoeff_degreeBound c
+  have hPne : P ≠ 0 := Fin.AbsEval.le.MulRothMvL1Prod_PowMax.mathlibExt.numberTheory.rothAuxiliary.rothMvOfCoeff_ne_zero hc
+  have hPdegree : rothDegreeBound P r := Fin.AbsEval.le.MulRothMvL1Prod_PowMax.mathlibExt.numberTheory.rothAuxiliary.rothMvOfCoeff_degreeBound c
   have hPvan : rothMvVanishesBelow
       (MvPolynomial.map (algebraMap ℤ ℝ) P) (fun _h ↦ α) r T := by
-    exact rothVanishesBelow_to_mv hcvan
+    exact Fin.AbsEval.le.MulRothMvL1Prod_PowMax.mathlibExt.numberTheory.rothAuxiliary.rothVanishesBelow_to_mv hcvan
   have hheight : (rothMvL1 P : ℝ) ≤
       Real.rpow (q 0).den (δ * r 0) := by
     have hbase : (H : ℝ) ^ 2 ≤ Real.rpow (q 0).den δ :=
@@ -223,7 +227,7 @@ theorem roth_ridout_finite_approximations_small_exponent
         exact_mod_cast hcl1
       _ = (H : ℝ) ^ (∑ h, r h) := by norm_cast
       _ ≤ Real.rpow (q 0).den (δ * r 0) :=
-        roth_pow_le_rpow_of_le_twice H (q 0).den δ (∑ h, r h) (r 0)
+        Fin.AbsEval.le.MulRothMvL1Prod_PowMax.mathlibExt.numberTheory.rothAuxiliary.roth_pow_le_rpow_of_le_twice H (q 0).den δ (∑ h, r h) (r 0)
           (by exact_mod_cast hH) (by positivity) hsum hbase
   let Q₀ : ℝ := ((q 0).den : ℝ) ^ r 0
   have hQ₀ : 1 < Q₀ := by
@@ -238,11 +242,11 @@ theorem roth_ridout_finite_approximations_small_exponent
   have herr : ∀ l : RothMvIndex (n + 1),
       ∏ h, |(q h : ℝ) - α| ^ l h ≤
         Real.rpow Q₀ (-a * rothMvWeight r l) := by
-    exact roth_product_approximation_bound_of_den_power (fun _h ↦ α) q r hrpos
+    exact Fin.AbsEval.le.MulRothMvL1Prod_PowMax.mathlibExt.numberTheory.rothAuxiliary.roth_product_approximation_bound_of_den_power (fun _h ↦ α) q r hrpos
       a Q₀ ha.le (zero_lt_one.trans hQ₀) hpowerR happrox
   have hdenUpper : (rothDenProduct q r : ℝ) ≤
       Real.rpow Q₀ ((n + 1 : ℕ) * (1 + η)) := by
-    apply roth_denProduct_le_rpow q r Q₀ η (zero_le_one.trans hQ₀.le)
+    apply Fin.AbsEval.le.MulRothMvL1Prod_PowMax.mathlibExt.numberTheory.rothAuxiliary.roth_denProduct_le_rpow q r Q₀ η (zero_le_one.trans hQ₀.le)
     intro h
     simpa [Q₀, d] using hupper h
   let F : ℝ :=
@@ -254,7 +258,7 @@ theorem roth_ridout_finite_approximations_small_exponent
       hQC _ (hQCN.trans hq0N.le)
     have hCpow : C ^ (∑ h, r h) ≤
         Real.rpow (q 0).den ((g / 2) * r 0) :=
-      roth_pow_le_rpow_of_le_twice C (q 0).den (g / 2) (∑ h, r h) (r 0)
+      Fin.AbsEval.le.MulRothMvL1Prod_PowMax.mathlibExt.numberTheory.rothAuxiliary.roth_pow_le_rpow_of_le_twice C (q 0).den (g / 2) (∑ h, r h) (r 0)
         hC (by positivity) hsum hCbase
     have hraw : F ≤ C ^ (∑ h, r h) := by
       dsimp [F, C]
@@ -282,7 +286,7 @@ theorem roth_ridout_finite_approximations_small_exponent
         exact Real.rpow_natCast _ _
   have hmaster : (rothDenProduct q r : ℝ) * F <
       Real.rpow Q₀ (aR * (T - θ)) := by
-    apply roth_mul_lt_rpow Q₀ (rothDenProduct q r) F
+    apply Fin.AbsEval.le.MulRothMvL1Prod_PowMax.mathlibExt.numberTheory.rothAuxiliary.roth_mul_lt_rpow Q₀ (rothDenProduct q r) F
       ((n + 1 : ℕ) * (1 + η)) (g / 2) (aR * (T - θ)) hQ₀
       hFnonneg hdenUpper hF
     dsimp [g]
@@ -293,7 +297,7 @@ theorem roth_ridout_finite_approximations_small_exponent
         (G : ℤ) ∣ rothClearEval (rothMvHasse i P) q r := by
     intro i hi
     simpa [P, s, σ] using
-      roth_ridout_exists_hasse_clear_divisor S p q r av bv μ ν c Q₀ T θ i
+      Fin.AbsEval.le.MulRothMvL1Prod_PowMax.mathlibExt.numberTheory.rothAuxiliary.roth_ridout_exists_hasse_clear_divisor S p q r av bv μ ν c Q₀ T θ i
         hrpos hQ₀ hθ.le hμ hν hpowerR
         (fun h ↦ (hav h).1) (fun h ↦ (hav h).2.1)
         (fun h l hl ↦ (hav h).2.2 l hl |>.1)
@@ -307,10 +311,10 @@ theorem roth_ridout_finite_approximations_small_exponent
       dsimp [s, a]
       ring]
     simpa [F] using hmaster
-  have hzero := roth_ridout_hasse_eq_zero_at_rational_of_taylor_bound P
+  have hzero := Fin.AbsEval.le.MulRothMvL1Prod_PowMax.mathlibExt.numberTheory.rothAuxiliary.roth_ridout_hasse_eq_zero_at_rational_of_taylor_bound P
     (fun _h ↦ α) q r hrpos hPdegree T a Q₀ θ s hPvan
     ha.le hQ₀ herr hdiv hmaster'
-  have hratvan := roth_rational_vanishing_of_real_hasse_zero P q r θ hzero
+  have hratvan := Fin.AbsEval.le.MulRothMvL1Prod_PowMax.mathlibExt.numberTheory.rothAuxiliary.roth_rational_vanishing_of_real_hasse_zero P q r θ hzero
   let X : RothLemmaInput n δ Q R := {
     P := P
     r := r

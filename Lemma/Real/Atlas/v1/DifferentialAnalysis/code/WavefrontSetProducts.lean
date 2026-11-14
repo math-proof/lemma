@@ -53,7 +53,7 @@ lemma not_mem_css_fourier_zero
   have h0 : 𝓕 (0 : 𝓢'(EuclideanSpace ℝ (Fin n), ℂ)) = 0 := by ext g; simp
   rw [h0]
   exact not_mem_css_zero q
-set_option maxHeartbeats 400000 in
+set_option maxHeartbeats 400000
 
 end WavefrontSet
 

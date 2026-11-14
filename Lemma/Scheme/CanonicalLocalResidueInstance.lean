@@ -2,8 +2,8 @@ import Mathlib
 import Class.AlgebraicCurve_LocalResidue
 import Instance.AlgebraicCurve_IsCurveOver
 import Class.AlgebraicCurve_DivisorPushPull
-import Lemma.AlgebraicCurve.PlaceCompletion
-import Lemma.AlgebraicCurve.CanonicalLocalResidueInstanceV2
+import Lemma.Valuation.PlaceCompletion
+import Lemma.AdicCompletion.CanonicalLocalResidueInstanceV2
 import Def.AlgebraicCurve_WeilOfKaehler
 
 set_option autoImplicit false
@@ -314,7 +314,7 @@ open IsDedekindDomain WithZero IsLocalRing Polynomial
 
 namespace ModularCurve.Ldgr35Cl
 
-open AlgebraicCurve
+open AlgebraicCurve AdicCompletion Valuation
 
 end ModularCurve.Ldgr35Cl
 
@@ -331,7 +331,7 @@ open IsDedekindDomain WithZero Module IsLocalRing
 
 namespace ModularCurve.Ldgr35Cs
 
-open AlgebraicCurve
+open AlgebraicCurve AdicCompletion Valuation
 
 end ModularCurve.Ldgr35Cs
 
@@ -342,7 +342,7 @@ set_option autoImplicit false
 noncomputable section
 
 open IsDedekindDomain WithZero Module IsLocalRing Polynomial
-open AlgebraicCurve
+open AlgebraicCurve AdicCompletion Valuation
 open scoped Polynomial
 
 end
@@ -359,7 +359,7 @@ open IsDedekindDomain WithZero IsLocalRing Polynomial
 
 namespace ModularCurve.Ldgr36Si
 
-open AlgebraicCurve
+open AlgebraicCurve AdicCompletion Valuation
 
 section Generic
 
@@ -383,7 +383,7 @@ open IsDedekindDomain WithZero Module IsLocalRing
 
 namespace ModularCurve.Ldgr36Rc
 
-open AlgebraicCurve
+open AlgebraicCurve AdicCompletion Valuation
 open ModularCurve.Ldgr35Cs
 open ModularCurve.Ldgr35Cl
 
@@ -446,7 +446,7 @@ open IsDedekindDomain WithZero Module IsLocalRing
 
 namespace ModularCurve.Lg37
 
-open AlgebraicCurve
+open AlgebraicCurve AdicCompletion Valuation
 open ModularCurve.Ldgr36Si
 open ModularCurve.Ldgr36Rc
 open ModularCurve.Ldgr35Cs
@@ -478,7 +478,7 @@ open IsDedekindDomain WithZero Module IsLocalRing Polynomial
 
 namespace Mp72a102T1
 
-open AlgebraicCurve
+open AlgebraicCurve AdicCompletion Valuation
 open ModularCurve.Lg37 ModularCurve.Ldgr37Ch
 
 open scoped Polynomial
@@ -507,7 +507,7 @@ open scoped Polynomial
 
 namespace ModularCurve.Mp72a102T3
 
-open AlgebraicCurve ModularCurve.Lg37
+open AlgebraicCurve ModularCurve.Lg37 AdicCompletion Valuation
 
 section General
 
@@ -541,7 +541,7 @@ open IsDedekindDomain WithZero Module IsLocalRing Polynomial
 
 namespace Mp72a102T2
 
-open AlgebraicCurve
+open AlgebraicCurve AdicCompletion Valuation
 open ModularCurve.Lg37 ModularCurve.Ldgr35Cs
 
 open scoped Polynomial
@@ -564,7 +564,7 @@ end
 set_option autoImplicit false
 set_option maxHeartbeats 800000
 
-open AlgebraicCurve ModularCurve.Lg37 Polynomial IntermediateField Mp72a102T1 Mp72a102T2
+open AlgebraicCurve ModularCurve.Lg37 Polynomial IntermediateField Mp72a102T1 Mp72a102T2 AdicCompletion Valuation
 
 namespace ModularCurve.KwNo6Section
 
@@ -593,7 +593,7 @@ open scoped Polynomial
 
 namespace Mp72a103T2
 
-open AlgebraicCurve
+open AlgebraicCurve AdicCompletion Valuation
 open ModularCurve.Lg37 ModularCurve.Mp72a102T3
 open Mp72a102T2
 
@@ -616,7 +616,7 @@ end
 set_option autoImplicit false
 set_option maxHeartbeats 1600000
 
-open Polynomial IsLocalRing AlgebraicCurve
+open Polynomial IsLocalRing AlgebraicCurve AdicCompletion Valuation
 open ModularCurve.Lg37 ModularCurve.Mp72a102T3 Mp72a103T2 Mp72a102T1
 open ModularCurve.KwNo6Section
 
@@ -628,7 +628,7 @@ end ModularCurve.KwNo6Pin
 set_option autoImplicit false
 set_option maxHeartbeats 1600000
 
-open Polynomial IsLocalRing AlgebraicCurve
+open Polynomial IsLocalRing AlgebraicCurve AdicCompletion Valuation
 open ModularCurve.Lg37 ModularCurve.Mp72a102T3 Mp72a103T2 Mp72a102T1
 open ModularCurve.KwNo6Section
 
@@ -648,7 +648,7 @@ end ModularCurve.KwNo6Pin
 set_option autoImplicit false
 set_option maxHeartbeats 1600000
 
-open Polynomial IsLocalRing AlgebraicCurve
+open Polynomial IsLocalRing AlgebraicCurve AdicCompletion Valuation
 open ModularCurve.Lg37 ModularCurve.KwNo6Section ModularCurve.KwNo6Pin
 open Mp72a102T1
 

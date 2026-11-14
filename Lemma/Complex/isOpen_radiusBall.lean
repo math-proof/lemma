@@ -28,7 +28,7 @@ private lemma main
   have hset : {x : F | Valued.v x < (r : WithZero (Multiplicative ℤ))} =
       (fun x : F => c⁻¹ * x) ⁻¹' {y : F | Valued.v y < (1 : WithZero (Multiplicative ℤ))} := by
     ext x
-    simp only [Set.mem_setOf_eq, Set.mem_preimage, map_mul, map_inv₀, hc]
+    simp only [Set.mem_ofPred_eq, Set.mem_preimage, map_mul, map_inv₀, hc]
     constructor
     ·
       intro hx

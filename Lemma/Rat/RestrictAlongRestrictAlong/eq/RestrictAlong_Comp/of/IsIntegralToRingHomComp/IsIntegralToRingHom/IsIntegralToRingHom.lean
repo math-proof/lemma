@@ -1,8 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.Correspondence
+import Lemma.Scheme.Correspondence
 open IsDedekindDomain AlgebraicCurve
-
 
 /-- ported from external source -/
 @[path]

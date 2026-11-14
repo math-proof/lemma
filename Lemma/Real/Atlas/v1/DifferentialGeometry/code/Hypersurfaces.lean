@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.DifferentialGeometry.code.Hypersurfaces
-open Matrix Finset BigOperators in
+open Matrix Finset BigOperators
 
 
 /--

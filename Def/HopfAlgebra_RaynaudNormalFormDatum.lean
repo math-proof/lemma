@@ -1,7 +1,7 @@
 import Mathlib
-import Lemma.HopfAlgebra.FVectStructure
+import Lemma.AlgHom.FVectStructure
 import Class.HopfAlgebra_HopfTower
-import Lemma.Compat.Mathlib430
+import Lemma.Ideal.Mathlib430
 import Structure.HopfAlgebra_RaynaudNormalFormDatum
 import Abbrev.HopfAlgebra_RaynaudNormalFormDatum
 

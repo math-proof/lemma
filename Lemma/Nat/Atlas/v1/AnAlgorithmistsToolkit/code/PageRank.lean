@@ -137,7 +137,7 @@ lemma pageRankVec_eq2
 -- imply
   pageRankVec α W s = α • s + (1 - α) • pageRankVec α W (W *ᵥ s) := by
 -- proof
-  rw [pageRankVec_comm_W α W s hcomm]
+  rw [pageRankVec_comm_W (hcomm := hcomm)]
   exact pageRankVec_fixed_point α W s hW
 
 end PageRank
@@ -237,7 +237,10 @@ lemma pageRankVec_invariant_preserved
   (hcomm : Commute W ((1 : Matrix (Fin n) (Fin n) ℝ) - (1 - α) • W)⁻¹)
   (hinv : p = pageRankVec α W (s - r)) :
 -- imply
-  let χ_u : Fin n → ℝ := Pi.single u 1 let p' := p + (α * r u) • χ_u let r' := r - r u • χ_u + ((1 - α) * r u) • (W *ᵥ χ_u) p' = pageRankVec α W (s - r') := by
+  let χ_u : Fin n → ℝ := Pi.single u 1
+  let p' := p + (α * r u) • χ_u
+  let r' := r - r u • χ_u + ((1 - α) * r u) • (W *ᵥ χ_u)
+  p' = pageRankVec α W (s - r') := by
 -- proof
   intro χ_u p' r'
 
@@ -253,13 +256,13 @@ lemma pageRankVec_invariant_preserved
     have h1 : pageRankVec α W r =
         pageRankVec α W (r - r u • χ_u) + pageRankVec α W (r u • χ_u) := by
       conv_lhs => rw [hr_split]
-      exact pageRankVec_add α W _ _
+      exact pageRankVec_add
 
     have h2 : pageRankVec α W (r u • χ_u) = r u • pageRankVec α W χ_u := by
-      exact pageRankVec_smul α W (r u) χ_u
+      exact pageRankVec_smul
 
     have h3 : pageRankVec α W χ_u = α • χ_u + (1 - α) • pageRankVec α W (W *ᵥ χ_u) := by
-      exact pageRankVec_eq2 α W χ_u hW hcomm
+      exact pageRankVec_eq2 (s := χ_u) hW hcomm
 
     rw [h2, h3] at h1
 
@@ -272,7 +275,7 @@ lemma pageRankVec_invariant_preserved
 
     have h5 : ((1 - α) * r u) • pageRankVec α W (W *ᵥ χ_u) =
         pageRankVec α W (((1 - α) * r u) • (W *ᵥ χ_u)) := by
-      exact (pageRankVec_smul α W ((1 - α) * r u) (W *ᵥ χ_u)).symm
+      exact (pageRankVec_smul (c := (1 - α) * r u) (s := W *ᵥ χ_u)).symm
     rw [h5] at h1
 
 
@@ -329,7 +332,7 @@ lemma l1norm_smul
   {c : ℝ}
   {f : Fin n → ℝ} :
 -- imply
-  l1norm (c • f) = := by
+  l1norm (c • f) = |c| * l1norm f := by
 -- proof
   unfold l1norm
   simp only [Pi.smul_apply, smul_eq_mul, abs_mul]
@@ -370,7 +373,8 @@ lemma l1norm_sub_single
 -- given
   (hr : ∀ i, 0 ≤ r i) :
 -- imply
-  let χ_u : Fin n → ℝ := Pi.single u 1 l1norm (r - r u • χ_u) = l1norm r - r u := by
+  let χ_u : Fin n → ℝ := Pi.single u 1
+  l1norm (r - r u • χ_u) = l1norm r - r u := by
 -- proof
   intro χ_u
   unfold l1norm
@@ -402,14 +406,15 @@ lemma l1norm_mulVec_single_le
 -- given
   (hW : W ∈ colStochastic ℝ (Fin n)) :
 -- imply
-  let χ_u : Fin n → ℝ := Pi.single u 1 l1norm (W *ᵥ χ_u) ≤ 1 := by
+  let χ_u : Fin n → ℝ := Pi.single u 1
+  l1norm (W *ᵥ χ_u) ≤ 1 := by
 -- proof
   intro χ_u
   unfold l1norm
   have hWnn : ∀ i j, 0 ≤ W i j := hW.1
   have hWcol : ∀ j, ∑ i, W i j = 1 := (mem_colStochastic_iff_sum.mp hW).2
   have hmul : ∀ i, (W *ᵥ χ_u) i = W i u := by
-    intro i; simp only [mulVec, dotProduct, χ_u]; exact sum_mul_pi_single W i u
+    intro i; simp only [mulVec, dotProduct, χ_u]; exact sum_mul_pi_single
   conv_lhs => arg 2; ext i; rw [hmul i, abs_of_nonneg (hWnn i u)]
   exact le_of_eq (hWcol u)
 
@@ -433,21 +438,23 @@ lemma residual_decrease_bound
   (hW : W ∈ colStochastic ℝ (Fin n))
   (hr : ∀ i, 0 ≤ r i) :
 -- imply
-  let χ_u : Fin n → ℝ := Pi.single u 1 let r' := r - r u • χ_u + ((1 - α) * r u) • (W *ᵥ χ_u) l1norm r' ≤ l1norm r - α * r u := by
+  let χ_u : Fin n → ℝ := Pi.single u 1
+  let r' := r - r u • χ_u + ((1 - α) * r u) • (W *ᵥ χ_u)
+  l1norm r' ≤ l1norm r - α * r u := by
 -- proof
   intro χ_u r'
   have hα_pos := hα
   have h1α_pos : (0 : ℝ) < 1 - α := by linarith
 
   have h1 : l1norm r' ≤ l1norm (r - r u • χ_u) + l1norm (((1 - α) * r u) • (W *ᵥ χ_u)) :=
-    l1norm_add_le (r - r u • χ_u) (((1 - α) * r u) • (W *ᵥ χ_u))
+    l1norm_add_le (f := r - r u • χ_u) (g := ((1 - α) * r u) • (W *ᵥ χ_u))
 
-  have h2 : l1norm (r - r u • χ_u) = l1norm r - r u := l1norm_sub_single r u hr
+  have h2 : l1norm (r - r u • χ_u) = l1norm r - r u := l1norm_sub_single hr
 
   have h3 : l1norm (((1 - α) * r u) • (W *ᵥ χ_u)) = (1 - α) * r u * l1norm (W *ᵥ χ_u) := by
     rw [l1norm_smul, abs_of_nonneg (mul_nonneg (le_of_lt h1α_pos) (hr u))]
 
-  have h5 : l1norm (W *ᵥ χ_u) ≤ 1 := l1norm_mulVec_single_le W u hW
+  have h5 : l1norm (W *ᵥ χ_u) ≤ 1 := l1norm_mulVec_single_le hW
 
   have hle : l1norm (((1 - α) * r u) • (W *ᵥ χ_u)) ≤ (1 - α) * r u := by
     rw [h3]
@@ -465,7 +472,6 @@ namespace PageRank
 -/
 @[path]
 lemma telescope_decrease
-  {n : ℕ}
   {T : ℕ}
   {a : Fin (T + 1) → ℝ}
   {b : Fin T → ℝ}
@@ -478,9 +484,9 @@ lemma telescope_decrease
   | zero => simp
   | succ T' ih =>
     have h_last := h ⟨T', Nat.lt_succ_iff.mpr le_rfl⟩
-    have ih' := ih (fun i => a ⟨i.val, Nat.lt_of_lt_of_le i.isLt (Nat.le_succ _)⟩)
-        (fun i => b ⟨i.val, Nat.lt_of_lt_of_le i.isLt (Nat.le_succ _)⟩)
-        (fun i => by exact h ⟨i.val, Nat.lt_of_lt_of_le i.isLt (Nat.le_succ _)⟩)
+    have ih' := ih (a := fun i => a ⟨i.val, Nat.lt_of_lt_of_le i.isLt (Nat.le_succ (T' + 1))⟩)
+        (b := fun i => b ⟨i.val, Nat.lt_of_lt_of_le i.isLt (Nat.le_succ T')⟩)
+        (fun i => by exact h ⟨i.val, Nat.lt_of_lt_of_le i.isLt (Nat.le_succ T')⟩)
     have h_sum : ∑ i : Fin (T' + 1), b i =
         (∑ i : Fin T', b ⟨i.val, Nat.lt_of_lt_of_le i.isLt (Nat.le_succ _)⟩) +
         b ⟨T', Nat.lt_succ_iff.mpr le_rfl⟩ := by
@@ -525,7 +531,7 @@ lemma pageRank_iteration_bound
         _ ≤ residual_vals i := h_select i
     linarith [h_decrease i, mul_le_mul_of_nonneg_left hεd (le_of_lt hα)]
 
-  have h_tel := telescope_decrease residual_norms (fun _ => α * ε) h_min_decrease
+  have h_tel := telescope_decrease (a := residual_norms) (b := fun _ => α * ε) h_min_decrease
   simp only [Finset.sum_const, Finset.card_fin, nsmul_eq_mul] at h_tel
 
   linarith [h_nonneg ⟨T, Nat.lt_succ_iff.mpr le_rfl⟩]
@@ -555,8 +561,8 @@ lemma pageRank_degree_sum_bound
   α * ε * ∑ i : Fin T, d (vertices i) ≤ residual_norms ⟨0, Nat.zero_lt_succ T⟩ := by
 -- proof
 
-  have h_tel := telescope_decrease residual_norms
-      (fun i => α * residual_vals i) h_decrease
+  have h_tel := telescope_decrease (a := residual_norms)
+      (b := fun i => α * residual_vals i) h_decrease
 
   have h_sum_le : α * ε * ∑ i : Fin T, d (vertices i) ≤ ∑ i : Fin T, α * residual_vals i := by
     calc α * ε * ∑ i : Fin T, d (vertices i)
@@ -655,15 +661,15 @@ lemma pageRank_termination
   have hd_pos : ∀ v, 0 < d v := fun v => lt_of_lt_of_le (by norm_num : (0 : ℝ) < 1) (hd v)
   refine ⟨?_, ?_, ?_⟩
   ·
-    have h := pageRank_iteration_bound α ε hα hε T d hd residual_norms h_nonneg
-        vertices residual_vals h_select h_decrease
+    have h := pageRank_iteration_bound hα hε hd h_nonneg h_select h_decrease
+
     linarith [h_init.symm ▸ h]
   ·
-    exact pageRank_output_quality ε d r_final hd_pos h_term
+    exact pageRank_output_quality (r := r_final) hd_pos h_term
   ·
-    have h_vol := vol_supp_le_degree_sum d hd_nonneg p T vertices h_supp_covered
-    have h_deg := pageRank_degree_sum_bound α ε hα T d residual_norms h_nonneg
-        vertices residual_vals h_select h_decrease
+    have h_vol := vol_supp_le_degree_sum hd_nonneg h_supp_covered
+    have h_deg := pageRank_degree_sum_bound hα h_nonneg h_select h_decrease
+
     have hαε_pos : (0 : ℝ) < α * ε := mul_pos hα hε
     calc α * ε * vol d (vecSupp p)
         ≤ α * ε * ∑ i : Fin T, d (vertices i) := by
@@ -675,4 +681,4 @@ end PageRank
 
 
 -- created on 2026-10-23
--- updated on 2026-10-29
+-- updated on 2026-11-13

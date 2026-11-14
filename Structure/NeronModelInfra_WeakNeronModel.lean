@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.AlgebraicGeometry.NeronModelEndomorphismExtension
+import Lemma.Scheme.NeronModelEndomorphismExtension
 
 set_option autoImplicit false
 

@@ -19,12 +19,12 @@ positions) and `𝒜` as the finite legal-move alphabet. A parameterized policy
 `ℙ[M θ](a[0] = «\sf{a}»[0] | s[0] = «\sf{s}»[0])` — is then a move distribution over
 legal moves at a board. This lemma is the solid GAE identity used in that setting: the
 gradient of the discounted return equals a GAE-weighted score expectation under the
-policy trajectory law, with value baseline `V_θ[t] δ k := M.V0 θ γ (δ k)`.
+policy trajectory law, with value baseline `V_θ[t] δ k := M.V θ γ (t + k) (δ k)`.
 -/
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [CountableMeasure 𝒮] [MeasurableSingletonClass 𝒮] [Fintype 𝒮]
+  [CountableMeasure 𝒮] [MeasurableSingletonClass 𝒮] [Fintype 𝒮] [Nonempty 𝒮] [StandardBorelSpace 𝒮]
   [CountableMeasure 𝒜] [MeasurableSingletonClass 𝒜] [Fintype 𝒜]
   {M : DensityModel Θ 𝒮 𝒜}
   {θ : Θ}
@@ -49,7 +49,7 @@ private lemma main
   have : PSpace (M θ) (AsPathRV.path a) :=
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) hπ.htr.stage_eq t).aemeasurable⟩)
   let : MeasurableSpace Θ := borel Θ
-  let V_θ : ℕ ⇀ (ℕ → 𝒮) → ℕ → ℝ := ⟨fun _ δ k => M.V0 θ γ (δ k)⟩
+  let V_θ : ℕ ⇀ (ℕ → 𝒮) → ℕ → ℝ := ⟨fun t δ k => M.V θ γ (t + k) (δ k)⟩
   ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) =
     𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
       (((1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) ⬝ᵥ fun k ↦ (γ ^ range (k + 1)) ⬝ᵥ
@@ -97,4 +97,4 @@ private lemma main
 
 
 -- created on 2026-10-21
--- updated on 2026-11-11
+-- updated on 2026-11-12

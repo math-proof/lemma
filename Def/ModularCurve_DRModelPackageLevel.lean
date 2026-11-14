@@ -1,13 +1,13 @@
 import Mathlib
-import Lemma.ModularCurve.IgusaScheme
+import Lemma.Scheme.IgusaScheme
 import Def.GaloisRep_Flat
-import Lemma.ModularCurve.AtkinLehnerPartial
-import Lemma.AlgebraicCurve.CurveModel
-import Lemma.ModularCurve.GeometricBaseChange
-import Lemma.ModularCurve.ArithmeticGalois
-import Lemma.ModularCurve.PlaceWidthChar
-import Lemma.ModularCurve.CoeffSemilinearAut
-import Lemma.AlgebraicGeometry.NeronModelPropertyBundleCarrier
+import Lemma.AlgEquiv.AtkinLehnerPartial
+import Lemma.Scheme.CurveModel
+import Lemma.LaurentSeries.GeometricBaseChange
+import Lemma.LaurentSeries.ArithmeticGalois
+import Lemma.Nat.PlaceWidthChar
+import Lemma.LaurentSeries.CoeffSemilinearAut
+import Lemma.Scheme.NeronModelPropertyBundleCarrier
 import Structure.ModularCurve_DRModelPackageLevel
 import Abbrev.ModularCurve_DRModelPackageLevel
 

@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.ModularCurve.UVCrossingModel
+import Lemma.MvPowerSeries.UVCrossingModel
 
 set_option autoImplicit false
 

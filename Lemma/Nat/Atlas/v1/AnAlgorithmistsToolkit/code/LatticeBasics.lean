@@ -39,7 +39,8 @@ lemma isUnimodular_inv
 -- imply
   IsUnimodular U⁻¹ := by
 -- proof
-  rw [isUnimodular_iff_isUnit_det U] at hU ⊢
+  rw [isUnimodular_iff_isUnit_det U] at hU
+  rw [isUnimodular_iff_isUnit_det U⁻¹]
   rw [det_nonsing_inv]
   exact hU.ringInverse
 
@@ -61,7 +62,8 @@ lemma isUnimodular_inv_iff
   constructor
   · exact isUnimodular_inv U
   · intro hUinv
-    rw [isUnimodular_iff_isUnit_det U] at hUinv ⊢
+    rw [isUnimodular_iff_isUnit_det U⁻¹] at hUinv
+    rw [isUnimodular_iff_isUnit_det U]
     rw [det_nonsing_inv] at hUinv
     exact isUnit_ringInverse.mp hUinv
 
@@ -175,7 +177,7 @@ lemma latticeDet_eq_abs_det
 -- given
   (_hli : LinearIndependent ℝ b) :
 -- imply
-  latticeDet n n b = := by
+  latticeDet n n b = |Matrix.det (Matrix.of b)| := by
 -- proof
   simp only [latticeDet]
   rw [det_mul, det_transpose, ← sq]
@@ -307,7 +309,7 @@ lemma blichfeldt
   ∃ z₁ z₂ : Fin n → ℝ, z₁ ∈ S ∧ z₂ ∈ S ∧ z₁ ≠ z₂ ∧ z₁ - z₂ ∈ lattice n n b hli := by
 -- proof
 
-  have hdet_eq : latticeDet n n b = |(Matrix.of b).det| := latticeDet_eq_abs_det n b hli
+  have hdet_eq : latticeDet n n b = |(Matrix.of b).det| := latticeDet_eq_abs_det hli
   rw [hdet_eq] at hvol
 
   have hcard : Fintype.card (Fin n) = Module.finrank ℝ (Fin n → ℝ) := by
@@ -367,4 +369,4 @@ end LatticeBasics
 
 
 -- created on 2026-10-23
--- updated on 2026-10-29
+-- updated on 2026-11-13

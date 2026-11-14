@@ -41,31 +41,39 @@ private lemma main
       apply Ideal.mul_mem_mul (haugProj_mem (r j)) hjI
     rw [hsmul, hdecomp, map_add, Iff.mpr Ideal.Quotient.eq_zero_iff_mem hI2, add_zero, map_mul]
     rw [show Q (algebraMap K A (Coalgebra.counit (R := K) (r j))) = algebraMap K (A ⧸ I ^ 2) (Coalgebra.counit (R := K) (r j)) from rfl, ← Algebra.smul_def]
-    apply Submodule.smul_mem _ _ (Submodule.subset_span (⟨↑j, j.2, rfl⟩ : Q (↑j) ∈ Q '' (↑s : Set A)))
+    apply Submodule.smul_mem (Submodule.span K (Q '' (s : Set A)))
+      (Coalgebra.counit (R := K) (r j))
+      (Submodule.subset_span (⟨↑j, j.2, rfl⟩ : Q (↑j) ∈ Q '' (s : Set A)))
   let V : Submodule K (A ⧸ I ^ 2) := Submodule.span K (Q '' (↑s : Set A))
   let _ : Module.Finite K V := Module.Finite.span_of_finite K (s.finite_toSet.image _)
   let B := Module.Free.chooseBasis K V
   let _ : Fintype (Module.Free.ChooseBasisIndex K V) := inferInstance
   have hVsub : ∀ v ∈ V, ∃ a ∈ I, Q a = v := by
+    let P : Submodule K (A ⧸ I ^ 2) :=
+      { carrier := {v | ∃ a ∈ I, Q a = v}
+        zero_mem' := ⟨0, I.zero_mem, map_zero Q⟩
+        add_mem' := by
+          rintro x y ⟨a, ha, rfl⟩ ⟨b, hb, rfl⟩
+          exact ⟨a + b, I.add_mem ha hb, map_add Q a b⟩
+        smul_mem' := by
+          rintro c _ ⟨a, ha, rfl⟩
+          refine ⟨c • a, ?_, map_smul (Ideal.Quotient.mkₐ K (I ^ 2)) c a⟩
+          rw [Algebra.smul_def]
+          exact I.mul_mem_left _ ha }
     intro v hv
-    refine Submodule.span_induction ?_ ?_ ?_ ?_ hv
-    ·
+    have hsubset : Q '' (s : Set A) ⊆ P := by
       rintro _ ⟨g, hg, rfl⟩
       exact ⟨g, hs ▸ Ideal.subset_span hg, rfl⟩
-    · exact ⟨0, I.zero_mem, map_zero Q⟩
-    ·
-      rintro x y _ _ ⟨a, haI, rfl⟩ ⟨b, hbI, rfl⟩
-      exact ⟨a + b, I.add_mem haI hbI, map_add Q a b⟩
-    ·
-      rintro c x _ ⟨a, haI, rfl⟩
-      refine ⟨c • a, ?_, map_smul (Ideal.Quotient.mkₐ K (I ^ 2)) c a⟩
-      rw [Algebra.smul_def]
-      apply I.mul_mem_left _ haI
+    exact Submodule.span_le.mpr hsubset hv
   choose ξ' hξ'I hξ'Q using fun j => hVsub (B j).1 (B j).2
   let e := (Fintype.equivFin (Module.Free.ChooseBasisIndex K V)).symm
   let n := Fintype.card (Module.Free.ChooseBasisIndex K V)
   refine ⟨n, fun i => ξ' (e i), fun i => hξ'I (e i), ?_, ?_⟩
-  · apply (((funext hξ'Q : (fun j => Q (ξ' j)) = fun j => (B j : A ⧸ I ^ 2)) ▸ (B.linearIndependent.map' V.subtype (Submodule.ker_subtype V) : LinearIndependent K (fun j => (B j : A ⧸ I ^ 2)))).comp e e.injective)
+  ·
+    have hfun : (fun j => (B j : A ⧸ I ^ 2)) = (V.subtype ∘ B) := funext fun j => rfl
+    have hli : LinearIndependent K (fun j => (B j : A ⧸ I ^ 2)) :=
+      hfun ▸ B.linearIndependent.map' V.subtype (Submodule.ker_subtype V)
+    exact (funext hξ'Q ▸ hli).comp e e.injective
   ·
     intro a haI
     have haV : Q a ∈ V := hspanA a haI
@@ -84,3 +92,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-14

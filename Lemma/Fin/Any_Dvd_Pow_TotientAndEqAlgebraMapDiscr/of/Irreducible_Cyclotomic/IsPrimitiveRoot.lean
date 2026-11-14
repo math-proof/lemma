@@ -45,10 +45,12 @@ private lemma  exists_int_norm_aeval {K : Type u} {L : Type v} [Field K] [CharZe
   apply (algebraMap K E).injective
   have h1 : algebraMap K E (Algebra.norm K (aeval ζ g)) = ∏ μ ∈ primitiveRoots n E, aeval μ g := by
     rw [Algebra.norm_eq_prod_embeddings K E]
-    convert prod_embeddings_aeval_eq hζ hirr E g <;> first | rfl | exact Subsingleton.elim _ _
+    convert prod_embeddings_aeval_eq hζ hirr E g
+    rfl
   have h2 : algebraMap ℚ E (Algebra.norm ℚ (aeval ζ₀ g)) = ∏ μ ∈ primitiveRoots n E, aeval μ g := by
     rw [Algebra.norm_eq_prod_embeddings ℚ E]
-    convert prod_embeddings_aeval_eq hζ₀ hirr₀ E g <;> first | rfl | exact Subsingleton.elim _ _
+    convert prod_embeddings_aeval_eq hζ₀ hirr₀ E g
+    rfl
   rw [h1, ← h2, ← hD, eq_intCast, eq_intCast, map_intCast, map_intCast]
 
 private lemma  exists_int_dvd_pow_totient_and_algebraMap_eq_discr
@@ -142,3 +144,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

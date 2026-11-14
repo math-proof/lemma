@@ -1,6 +1,6 @@
 import Mathlib
 import Instance.AlgebraicGeometry_RelativePicardFunctor
-import Lemma.AlgebraicGeometry.TwoAffineOpenCover
+import Lemma.Scheme.TwoAffineOpenCover
 
 set_option autoImplicit false
 

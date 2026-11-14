@@ -33,10 +33,10 @@ lemma isUniformFrom_m
   IsUniformFrom N m d m X :=
 -- proof
   fun _ hj hj' => absurd (Nat.lt_of_lt_of_le hj' hj) (lt_irrefl _)
-/-- Pigeon-hole bound: at any fixed scale `k`, the number of distinct
-branching values `R_j` taken by the sub-cube counts across the cubes of `X`
-is at most `2 d log(N)`. This is the loss factor that appears at each scale
-in the Uniformization Lemma. -/
+-- Pigeon-hole bound: at any fixed scale `k`, the number of distinct
+-- branching values `R_j` taken by the sub-cube counts across the cubes of `X`
+-- is at most `2 d log(N)`. This is the loss factor that appears at each scale
+-- in the Uniformization Lemma. 
 
 end UniformSet
 

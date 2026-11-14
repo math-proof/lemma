@@ -1,11 +1,11 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.CerednikDrinfeld.SpecialFormalModule
+import Lemma.MvPowerSeries.SpecialFormalModule
 import Def.CerednikDrinfeld_ModuliPackageDescent
 import Def.CerednikDrinfeld_ModuliPackageDeformation
 import Lemma.Int.P2MUtil
 
-open CerednikDrinfeld CerednikDrinfeld.SpecialFormal CerednikDrinfeld.SpecialFormal.ModuliPackage
+open CerednikDrinfeld CerednikDrinfeld.SpecialFormal CerednikDrinfeld.SpecialFormal.ModuliPackage MvPowerSeries
 
 /--
 [CerednikDrinfeld_SpecialFormal_ModuliPackage_isLocalization_away_pullbackRing_of_comp_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_CerednikDrinfeld_SpecialFormal_ModuliPackage_isLocalization_away_pullbackRing_of_comp_eq.lean)

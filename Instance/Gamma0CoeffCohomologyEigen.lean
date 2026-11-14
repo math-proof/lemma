@@ -1,8 +1,8 @@
 -- Carved from Lemma/Definitions/Def_Gamma0CoeffCohomologyEigen.lean: instance decls only.
 import Mathlib
 import Instance.Gamma0CoeffCohomology
-import Lemma.HeckeEis.BinaryFormRep
-import Lemma.Gamma0CoeffCohomologyEigen.Main
+import Lemma.MvPolynomial.BinaryFormRep
+import Lemma.Representation.Gamma0CoeffCohomologyEigen
 
 set_option autoImplicit false
 

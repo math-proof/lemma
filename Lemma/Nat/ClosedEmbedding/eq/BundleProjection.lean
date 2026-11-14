@@ -212,20 +212,20 @@ private lemma normalVariety_singular_locus_codim_ge_two
     by_contra hne
     have hlt : P < IsLocalRing.maximalIdeal S := lt_of_le_of_ne hle hne
     have h_bot_lt_P : (⊥ : Ideal S) < P := bot_lt_iff_ne_bot.mpr hP
-    have h1 : (⊥ : Ideal S).primeHeight + 1 ≤ P.primeHeight :=
-      Ideal.primeHeight_add_one_le_of_lt h_bot_lt_P
-    have h2 : P.primeHeight + 1 ≤ (IsLocalRing.maximalIdeal S).primeHeight :=
-      Ideal.primeHeight_add_one_le_of_lt hlt
-    have h0 : (⊥ : Ideal S).primeHeight = 0 := by
-      rw [Ideal.primeHeight_eq_zero_iff]
+    have h1 : (⊥ : Ideal S).height + 1 ≤ P.height :=
+      Ideal.height_add_one_le_of_lt_of_isPrime h_bot_lt_P
+    have h2 : P.height + 1 ≤ (IsLocalRing.maximalIdeal S).height :=
+      Ideal.height_add_one_le_of_lt_of_isPrime hlt
+    have h0 : (⊥ : Ideal S).height = 0 := by
+      rw [Ideal.height_eq_zero_iff]
       rw [IsDomain.minimalPrimes_eq_singleton_bot]
       exact Set.mem_singleton _
-    have hge2 : (IsLocalRing.maximalIdeal S).primeHeight ≥ 2 := by
+    have hge2 : (IsLocalRing.maximalIdeal S).height ≥ 2 := by
       calc (2 : ℕ∞) = 0 + 1 + 1 := by norm_num
-        _ ≤ P.primeHeight + 1 := by gcongr; rw [← h0]; exact h1
-        _ ≤ (IsLocalRing.maximalIdeal S).primeHeight := h2
-    have hmaxht : (IsLocalRing.maximalIdeal S).primeHeight = 1 := by
-      have := IsLocalRing.maximalIdeal_primeHeight_eq_ringKrullDim (R := S)
+        _ ≤ P.height + 1 := by gcongr; rw [← h0]; exact h1
+        _ ≤ (IsLocalRing.maximalIdeal S).height := h2
+    have hmaxht : (IsLocalRing.maximalIdeal S).height = 1 := by
+      have := IsLocalRing.maximalIdeal_height_eq_ringKrullDim (R := S)
       rw [hdim] at this
       exact_mod_cast this
     rw [hmaxht] at hge2
@@ -235,7 +235,7 @@ private lemma normalVariety_singular_locus_codim_ge_two
       ∀ P : Ideal S, P ≠ ⊥ → P.IsPrime → P = IsLocalRing.maximalIdeal S :=
     ⟨inferInstance, hunique⟩
   have : IsPrincipalIdealRing S :=
-    ((tfae_of_isNoetherianRing_of_isLocalRing_of_isDomain S).out 3 0).mp hcond
+    ((tfae_of_isNoetherianRing_of_isLocalRing_of_isDomain S).out 4 1).mp hcond
   exact IsRegularLocalRing.instOfIsLocalRingOfIsDomainOfIsPrincipalIdealRing _
 
 /--
@@ -243,9 +243,6 @@ private lemma normalVariety_singular_locus_codim_ge_two
 -/
 @[path]
 private lemma ResolutionData.pStar_injective
-  [CommRing k']
-  [LieRing 𝔤']
-  [LieAlgebra k' 𝔤']
   [Field k]
   {R : ResolutionData k} :
 -- imply
@@ -264,9 +261,6 @@ private lemma ResolutionData.pStar_injective
 -/
 @[path]
 private lemma resolution_pullback_surjective
-  [CommRing k']
-  [LieRing 𝔤']
-  [LieAlgebra k' 𝔤']
   [Field k]
   {R : ResolutionData k} :
 -- imply
@@ -311,24 +305,18 @@ private lemma resolution_pullback_surjective
 -/
 @[path]
 private lemma resolution_pullback_isIso
-  [CommRing k']
-  [LieRing 𝔤']
-  [LieAlgebra k' 𝔤']
   [Field k]
   {R : ResolutionData k} :
 -- imply
   Function.Bijective R.pStar :=
 -- proof
-  ⟨R.pStar_injective, resolution_pullback_surjective R⟩
+  ⟨R.pStar_injective, resolution_pullback_surjective⟩
 
 /--
 [graded_map_reflects_mem](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/BorelWeil.lean)
 -/
 @[path]
 private lemma graded_map_reflects_mem
-  [CommRing k']
-  [LieRing 𝔤']
-  [LieAlgebra k' 𝔤']
   [Field k]
   [CommRing R]
   [Algebra k R]
@@ -437,7 +425,7 @@ private lemma springer_pullback_isIso
       hFracIso := hbirational }
 
 
-  have hbij : Function.Bijective pstar := resolution_pullback_isIso RD
+  have hbij : Function.Bijective pstar := resolution_pullback_isIso (R := RD)
 
   refine ⟨AlgEquiv.ofBijective pstar hbij,
     fun f => AlgEquiv.ofBijective_apply pstar hbij f,
@@ -449,7 +437,8 @@ private lemma springer_pullback_isIso
   ·
 
 
-    exact graded_map_reflects_mem 𝒩_grade TF_grade pstar hpstar_preserves_grade hbij.1 n a
+    intro ha
+    exact graded_map_reflects_mem hpstar_preserves_grade hbij.1 ha
 
 /--
 [nilpotentCone_coordRing_isDomain](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/BorelWeil.lean)
@@ -472,4 +461,4 @@ private lemma nilpotentCone_coordRing_isDomain_eq
 
 
 -- created on 2026-10-24
--- updated on 2026-10-28
+-- updated on 2026-11-13

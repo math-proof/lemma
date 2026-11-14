@@ -148,7 +148,7 @@ private lemma exists_evenlyCovered_data {b : ℂ} {θ : ℝ} {e : ℕ} (he : e �
       idx ⁻¹' {j} = q ⁻¹' ((Set.range fun k : Fin e => ω ^ (k : ℕ)) \ {ω ^ (j : ℕ)})ᶜ := by
     intro j
     ext ζ
-    simp only [Set.mem_preimage, Set.mem_singleton_iff, Set.mem_compl_iff, Set.mem_diff,
+    simp only [Set.mem_preimage, Set.mem_singleton_iff, Set.mem_compl_iff, Set.mem_sdiff,
       Set.mem_range, not_and, not_not]
     constructor
     ·
@@ -171,10 +171,8 @@ private lemma exists_evenlyCovered_data {b : ℂ} {θ : ℝ} {e : ℕ} (he : e �
     refine isOpen_biUnion fun j _ => ?_
     rw [hfib j]
     refine (IsClosed.preimage hqcont ?_).isOpen_compl
-    exact ((Set.finite_range fun k : Fin e => ω ^ (k : ℕ)).subset Set.diff_subset).isClosed
-  refine ⟨{ toEquiv := E
-    continuous_toFun := ?_
-    continuous_invFun := ?_ }, ?_⟩
+    exact ((Set.finite_range fun k : Fin e => ω ^ (k : ℕ)).subset Set.sdiff_subset).isClosed
+  refine ⟨{ toEquiv := E, continuous_toFun := ?_, continuous_invFun := ?_ }, ?_⟩
   ·
     refine Continuous.prodMk ?_ hidx_cont
     exact (hgcont.comp continuous_subtype_val).subtype_mk _
@@ -186,7 +184,7 @@ private lemma exists_evenlyCovered_data {b : ℂ} {θ : ℝ} {e : ℕ} (he : e �
       (f := fun j : Fin e => ω ^ (j : ℕ))).comp continuous_snd
     ·
       exact hσU.comp_continuous (continuous_subtype_val.comp continuous_fst)
-      (fun p => p.1.2)
+        (fun p => p.1.2)
   ·
     intro ζ
     rfl

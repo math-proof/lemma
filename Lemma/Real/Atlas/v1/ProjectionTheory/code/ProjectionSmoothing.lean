@@ -77,18 +77,18 @@ lemma cauchy_schwarz_compact_support
   have h_product_nonneg : 0 ≤ ∫ x : EuclideanSpace ℝ (Fin d), ‖f x‖ * ‖g x‖ ∂volume :=
     integral_nonneg (fun x => mul_nonneg (norm_nonneg _) (norm_nonneg _))
   calc (∫ x, ‖f x‖ * ‖g x‖ ∂volume) ^ 2
-    ≤ ((∫ x, ‖f x‖ ^ (2:ℝ) ∂volume) ^ ((1:ℝ)/2) * (∫ x, ‖g x‖ ^ (2:ℝ) ∂volume) ^ ((1:ℝ)/2)) ^ 2 := by
-      apply sq_le_sq' (by linarith) h_ineq
-    _ = (∫ x, ‖f x‖ ^ (2:ℝ) ∂volume) * (∫ x, ‖g x‖ ^ (2:ℝ) ∂volume) := by
+    ≤ ((∫ x, ‖f x‖ ^ (2:ℝ) ∂volume) ^ ((1:ℝ)/2) * (∫ x, ‖g x‖ ^ (2:ℝ) ∂volume) ^ ((1:ℝ)/2)) ^ 2 := (by
+      apply sq_le_sq' (by linarith) h_ineq)
+    _ = (∫ x, ‖f x‖ ^ (2:ℝ) ∂volume) * (∫ x, ‖g x‖ ^ (2:ℝ) ∂volume) := (by
       rw [mul_pow, ← Real.rpow_natCast ((∫ x, ‖f x‖ ^ (2:ℝ) ∂volume) ^ ((1:ℝ)/2)) 2,
         ← Real.rpow_natCast ((∫ x, ‖g x‖ ^ (2:ℝ) ∂volume) ^ ((1:ℝ)/2)) 2,
         ← Real.rpow_mul h_f_int_nonneg, ← Real.rpow_mul h_g_int_nonneg]
-      norm_num
+      norm_num)
     _ = (volume (closedBall (0 : EuclideanSpace ℝ (Fin d)) 1)).toReal *
       (∫ x, ‖f x‖ ^ (2:ℝ) ∂volume) := by
       rw [h_g_integral]; ring
-/-- For `f ∈ L²(ℝ^d)` supported in the unit ball, the spherical average of
-`‖π_θ f‖_{H^{(d−1)/2}}²` is controlled by a constant times `‖f‖_{L²}²`. -/
+-- For `f ∈ L²(ℝ^d)` supported in the unit ball, the spherical average of
+-- `‖π_θ f‖_{H^{(d−1)/2}}²` is controlled by a constant times `‖f‖_{L²}²`.
 
 end ProjectionSmoothing
 

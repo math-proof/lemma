@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.LaurentCoeff
-import Lemma.ModularCurve.X0
+import Lemma.LaurentSeries.LaurentCoeff
+import Lemma.HahnSeries.X0
 
 
 /-- ported from external source -/

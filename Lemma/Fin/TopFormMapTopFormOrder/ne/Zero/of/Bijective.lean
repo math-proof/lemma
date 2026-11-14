@@ -1,12 +1,12 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.NeronModelInfra.TopFormOrder
+import Lemma.Ideal.TopFormOrder
 
 
 namespace Definitions
 end Definitions
 open Definitions
-open NeronModelInfra NeronModelInfra.TopFormOrder
+open NeronModelInfra Ideal.TopFormOrder Ideal
 set_option backward.isDefEq.respectTransparency false
 
 

@@ -2,7 +2,7 @@
 import Mathlib
 import Instance.AlgebraicGeometry_OrderedAffineCoverCech
 import Instance.AlgebraicGeometry_OrderedAffineCoverOf
-import Lemma.AlgebraicGeometry.OModulePresheafLerayBicomplex
+import Lemma.Scheme.OModulePresheafLerayBicomplex
 
 set_option autoImplicit false
 

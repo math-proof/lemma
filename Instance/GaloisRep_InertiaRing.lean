@@ -2,7 +2,7 @@
 import Mathlib
 import Def.GaloisRep_Flat
 import Def.FLTPrelim_Ramification
-import Lemma.GaloisRep.InertiaRing
+import Lemma.AlgHom.InertiaRing
 
 set_option autoImplicit false
 
@@ -61,4 +61,3 @@ end InertiaRing
 end GaloisRep
 
 end
-

@@ -1,10 +1,10 @@
 import Mathlib
 import Def.ModularCurve_LevelOneGlueData
-import Lemma.ModularCurve.SupersingularNodes
+import Lemma.Finset.SupersingularNodes
 import Def.ModularCurve_SupersingularModuli
 import Structure.AlgebraicCurve_RegularProlongation
-import Lemma.ModularCurve.CharPReduction
-import Lemma.ModularCurve.CuspidalClass
+import Lemma.LaurentSeries.CharPReduction
+import Lemma.Finsupp.CuspidalClass
 import Def.ModularCurve_X0ModL
 
 set_option autoImplicit false

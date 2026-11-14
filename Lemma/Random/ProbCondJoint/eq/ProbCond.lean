@@ -12,15 +12,15 @@ open MeasureTheory Measure Function Random
 @[path]
 private lemma main
   [MeasurableSpace Ω]
-  [ReferenceMeasure α] [ReferenceMeasure γ]
+  [μ : ReferenceMeasure α] [ξ : ReferenceMeasure γ]
   [Countable α] [Countable γ]
   [MeasurableSingletonClass α] [MeasurableSingletonClass γ]
   {π : Measure Ω}
   {x : Ω → α} {y : Ω → γ}
 -- given
   (hP : SinglePSpace π (x, y))
-  (hα : ReferenceMeasure.measure (α := α) = Measure.count)
-  (hγ : ReferenceMeasure.measure (α := γ) = Measure.count)
+  (hα : μ.measure = Measure.count)
+  (hγ : ξ.measure = Measure.count)
   («\sf{x}» : α)
   («\sf{y}» : γ) :
 -- imply
@@ -85,4 +85,4 @@ private lemma main
 
 
 -- created on 2026-09-20
--- updated on 2026-11-02
+-- updated on 2026-11-14

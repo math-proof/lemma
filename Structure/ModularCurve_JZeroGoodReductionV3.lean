@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.ModularCurve.HeckeModule
+import Lemma.MvPolynomial.HeckeModule
 import Instance.ModularCurve_SpecializationWitness
 import Def.ModularCurve_JqCoeff
 import Instance.EllipticCurve_FrobeniusTrace

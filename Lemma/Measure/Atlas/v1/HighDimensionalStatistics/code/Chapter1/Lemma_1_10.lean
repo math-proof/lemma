@@ -72,7 +72,7 @@ lemma lemma_1_10_moment_bound
   have hs_int : (-1 : ℝ) < (k : ℝ) - 1 := by
     have : (1 : ℝ) ≤ (k : ℝ) := by exact_mod_cast hk
     linarith
-  have hint_on := integrableOn_rpow_mul_exp_neg_mul_rpow hs_int le_rfl
+  have hint_on := integrableOn_rpow_mul_exp_neg_mul_rpow hs_int one_pos
     (show (0:ℝ) < 2 / lambda by positivity)
   have hintble : IntegrableOn
     (fun t : ℝ => 2 * exp (-2 * t / lambda) * t ^ ((k : ℝ) - 1))
@@ -152,13 +152,13 @@ lemma lemma_1_10_moment_root_bound
       _ ≤ l ^ k * (k : ℝ) ^ k := by gcongr
       _ = (l * k) ^ k := by rw [mul_pow]
   have hlk_pos : (0 : ℝ) ≤ l * k := by positivity
-  calc E ^ ((k : ℝ)⁻¹) ≤ ((l * k) ^ k) ^ ((k : ℝ)⁻¹) := by
-    apply Real.rpow_le_rpow hE0 hE_le_lk
-    exact inv_nonneg.mpr (le_of_lt hk0)
-    _ = l * k := by
-      rw [← Real.rpow_natCast (l * k) k, ← Real.rpow_mul hlk_pos]
-      simp [Nat.cast_ne_zero.mpr (by omega : k ≠ 0)]
-    _ ≤ 2 * l * k := by nlinarith
+  have h1 : E ^ ((k : ℝ)⁻¹) ≤ ((l * k) ^ k) ^ ((k : ℝ)⁻¹) :=
+    Real.rpow_le_rpow hE0 hE_le_lk (inv_nonneg.mpr (le_of_lt hk0))
+  have h2 : ((l * k) ^ k) ^ ((k : ℝ)⁻¹) = l * k := by
+    rw [← Real.rpow_natCast (l * k) k, ← Real.rpow_mul hlk_pos]
+    simp [Nat.cast_ne_zero.mpr (by omega : k ≠ 0)]
+  have h3 : (l * k : ℝ) ≤ 2 * l * k := by nlinarith
+  exact (h1.trans_eq h2).trans h3
 
 /--
 [mgf_taylor_dct_bound](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter1/Lemma_1_10.lean)
@@ -190,20 +190,21 @@ lemma mgf_taylor_dct_bound
     ∫⁻ ω, ENNReal.ofReal (|X ω| ^ k) ∂μ ≤
       ENNReal.ofReal (lambda ^ k * ↑k.factorial) := by
     intro k hk
-    have h := lemma_1_10_moment_bound lambda_pos hX_meas hX_tail k hk
+    have h := lemma_1_10_moment_bound (k := k) lambda_pos hX_meas hX_tail hk
     simp_rw [rpow_natCast] at h
     exact h
   have int_abs_bound : ∀ k : ℕ, 1 ≤ k →
     Integrable (fun ω => |X ω| ^ k) μ ∧
     ∫ ω, |X ω| ^ k ∂μ ≤ lambda ^ k * ↑k.factorial := by
     intro k hk
-    have h_int : Integrable (fun ω => |X ω| ^ k) μ := ⟨hX_meas.norm.pow k, by
+    have h_int : Integrable (fun ω => |X ω| ^ k) μ := by
+      refine ⟨hX_meas.norm.pow k, ?_⟩
       calc ∫⁻ ω, ‖|X ω| ^ k‖ₑ ∂μ
-        = ∫⁻ ω, ENNReal.ofReal (|X ω| ^ k) ∂μ := by
-          congr 1; ext ω
-          rw [Real.enorm_eq_ofReal_abs, abs_of_nonneg (pow_nonneg (abs_nonneg _) _)]
+        = ∫⁻ ω, ENNReal.ofReal (|X ω| ^ k) ∂μ :=
+          lintegral_congr fun ω => by
+            rw [Real.enorm_eq_ofReal_abs, abs_of_nonneg (pow_nonneg (abs_nonneg _) _)]
         _ ≤ ENNReal.ofReal (lambda ^ k * ↑k.factorial) := moment_bound_nat k hk
-        _ < ⊤ := ENNReal.ofReal_lt_top⟩
+        _ < ⊤ := ENNReal.ofReal_lt_top
     refine ⟨h_int, ?_⟩
     have h_ofReal : ENNReal.ofReal (∫ ω, |X ω| ^ k ∂μ) ≤
       ENNReal.ofReal (lambda ^ k * ↑k.factorial) := by
@@ -231,14 +232,13 @@ lemma mgf_taylor_dct_bound
           congr 1; ring
         simp_rw [h1]
         rw [lintegral_const_mul' _ _ ENNReal.ofReal_ne_top]
-        calc ENNReal.ofReal (s ^ k / ↑k.factorial) *
-          ∫⁻ ω, ENNReal.ofReal (|X ω| ^ k) ∂μ
-          ≤ ENNReal.ofReal (s ^ k / ↑k.factorial) *
-            ENNReal.ofReal (lambda ^ k * ↑k.factorial) := by
-            gcongr; exact moment_bound_nat k hk_pos
-          _ = ENNReal.ofReal ((s * lambda) ^ k) := by
-            rw [← ENNReal.ofReal_mul (by positivity)]
-            congr 1; rw [mul_pow]; field_simp
+        calc ENNReal.ofReal (s ^ k / ↑k.factorial) * ∫⁻ ω, ENNReal.ofReal (|X ω| ^ k) ∂μ
+            ≤ ENNReal.ofReal (s ^ k / ↑k.factorial) * ENNReal.ofReal (lambda ^ k * ↑k.factorial) := by
+              gcongr
+              exact moment_bound_nat k hk_pos
+            _ = ENNReal.ofReal ((s * lambda) ^ k) := by
+              rw [← ENNReal.ofReal_mul (by positivity)]
+              congr 1; rw [mul_pow]; field_simp
     exact ne_top_of_le_ne_top
       (summable_geometric_of_lt_one hsl_pos hsl_lt_one).tsum_ofReal_ne_top
       (ENNReal.tsum_le_tsum h_bound)
@@ -265,13 +265,14 @@ lemma mgf_taylor_dct_bound
     · have hk_pos : 1 ≤ k := Nat.one_le_iff_ne_zero.mpr hk
       simp only [ha_def, norm_eq_abs, abs_mul, abs_div, abs_pow, abs_of_pos s_pos, Nat.abs_cast]
       calc s ^ k / ↑k.factorial * |∫ ω, (X ω) ^ k ∂μ|
-        ≤ s ^ k / ↑k.factorial * (lambda ^ k * ↑k.factorial) := by
-          gcongr
-          calc |∫ ω, (X ω) ^ k ∂μ|
-            = ‖∫ ω, (X ω) ^ k ∂μ‖ := (Real.norm_eq_abs _).symm
-            _ ≤ ∫ ω, ‖(X ω) ^ k‖ ∂μ := norm_integral_le_integral_norm _
-            _ = ∫ ω, |X ω| ^ k ∂μ := by congr 1; ext ω; rw [Real.norm_eq_abs, abs_pow]
-            _ ≤ lambda ^ k * ↑k.factorial := (int_abs_bound k hk_pos).2
+          ≤ s ^ k / ↑k.factorial * (lambda ^ k * ↑k.factorial) := by
+            gcongr
+            calc |∫ ω, (X ω) ^ k ∂μ|
+                = ‖∫ ω, (X ω) ^ k ∂μ‖ := (Real.norm_eq_abs _).symm
+              _ ≤ ∫ ω, ‖(X ω) ^ k‖ ∂μ := norm_integral_le_integral_norm _
+              _ = ∫ ω, |X ω| ^ k ∂μ := by
+                  congr 1; ext ω; rw [Real.norm_eq_abs, abs_pow]
+              _ ≤ lambda ^ k * ↑k.factorial := (int_abs_bound (k := k) hk_pos).2
         _ = (s * lambda) ^ k := by rw [mul_pow]; field_simp
   have h_eq_tsum : ∫ ω, Real.exp (s * X ω) ∂μ = ∑' k, a k := by
     calc ∫ ω, Real.exp (s * X ω) ∂μ
@@ -293,21 +294,20 @@ lemma mgf_taylor_dct_bound
       obtain ⟨h_int_abs, h_abs_le⟩ := int_abs_bound (k + 2) hk2
       have h_Xk_int : Integrable (fun ω => (X ω) ^ (k + 2)) μ := ⟨hX_meas.pow (k + 2), by
         calc ∫⁻ ω, ‖(X ω) ^ (k + 2)‖ₑ ∂μ
-          = ∫⁻ ω, ENNReal.ofReal (|X ω| ^ (k + 2)) ∂μ := by
-            congr 1; ext ω; rw [Real.enorm_eq_ofReal_abs, abs_pow]
+          = ∫⁻ ω, ENNReal.ofReal (|X ω| ^ (k + 2)) ∂μ :=
+            lintegral_congr fun ω => by
+              rw [Real.enorm_eq_ofReal_abs, abs_pow]
           _ ≤ ENNReal.ofReal (lambda ^ (k + 2) * ↑(k + 2).factorial) :=
             moment_bound_nat (k + 2) hk2
           _ < ⊤ := ENNReal.ofReal_lt_top⟩
       calc ∫ ω, (X ω) ^ (k + 2) ∂μ
-        ≤ ∫ ω, |X ω| ^ (k + 2) ∂μ := by
-          apply integral_mono h_Xk_int h_int_abs
-          intro ω
-          calc (X ω) ^ (k + 2) ≤ |(X ω) ^ (k + 2)| := le_abs_self _
-            _ = |X ω| ^ (k + 2) := abs_pow (X ω) (k + 2)
+        ≤ ∫ ω, |X ω| ^ (k + 2) ∂μ :=
+          integral_mono h_Xk_int h_int_abs fun ω =>
+            (le_abs_self (X ω ^ (k + 2))).trans_eq (abs_pow (X ω) (k + 2))
         _ ≤ lambda ^ (k + 2) * ↑(k + 2).factorial := h_abs_le
     calc s ^ (k + 2) / ↑(k + 2).factorial * ∫ ω, (X ω) ^ (k + 2) ∂μ
-      ≤ s ^ (k + 2) / ↑(k + 2).factorial * (lambda ^ (k + 2) * ↑(k + 2).factorial) := by
-        apply mul_le_mul_of_nonneg_left h_int_bound (by positivity)
+      ≤ s ^ (k + 2) / ↑(k + 2).factorial * (lambda ^ (k + 2) * ↑(k + 2).factorial) :=
+        mul_le_mul_of_nonneg_left h_int_bound (by positivity)
       _ = (s * lambda) ^ (k + 2) := by rw [mul_pow]; field_simp
   rw [h_eq_tsum, h_split]
   have ha' : Summable (fun k => a (k + 1)) := h_summable.comp_injective (fun a b h => by omega)
@@ -383,12 +383,12 @@ lemma lemma_1_10_mgf_bound_integral
       intro t ht; simp only [Pi.neg_apply, abs_neg]; exact hX_tail t ht
     have hX_centered' : ∫ ω, (-X) ω ∂μ = 0 := by simp [integral_neg, hX_centered]
     have hX_meas' : AEStronglyMeasurable (-X) μ := hX_meas.neg
-    have h := mgf_bound_pos hlam hX_meas' hX_tail' hX_centered' (-s) hs' hs_le'
+    have h := mgf_bound_pos (s := -s) hlam hX_meas' hX_tail' hX_centered' hs' hs_le'
     convert h using 2; ring
   ·
     subst hs_zero; simp [integral_const]
   ·
-    exact mgf_bound_pos hlam hX_meas hX_tail hX_centered s hs_pos
+    exact mgf_bound_pos (s := s) hlam hX_meas hX_tail hX_centered hs_pos
       (by rwa [abs_of_pos hs_pos] at hs)
 
 /--
@@ -410,9 +410,10 @@ lemma lemma_1_10
   (∀ (k : ℕ), 1 ≤ k → ∫⁻ ω, ENNReal.ofReal (|X ω| ^ (k : ℝ)) ∂μ ≤ ENNReal.ofReal (lambda ^ k * ↑k.factorial)) ∧ (∀ (k : ℕ), 1 ≤ k → ∀ (E_val : ℝ), 0 ≤ E_val → E_val ≤ lambda ^ k * ↑k.factorial → E_val ^ ((k : ℝ)⁻¹) ≤ 2 * lambda * ↑k) ∧ (∀ (s : ℝ), |s| ≤ 1 / (2 * lambda) → ∫ ω, Real.exp (s * X ω) ∂μ ≤ Real.exp (2 * s ^ 2 * lambda ^ 2)) := by
 -- proof
   exact ⟨
-    fun k hk => lemma_1_10_moment_bound hlam hX_meas hX_tail k hk,
-    fun k hk E_val hE0 hE => lemma_1_10_moment_root_bound lambda hlam k hk E_val hE0 hE,
-    fun s hs => lemma_1_10_mgf_bound_integral hlam hX_meas hX_tail hX_centered s hs⟩
+    fun k hk => lemma_1_10_moment_bound (k := k) hlam hX_meas hX_tail hk,
+    fun k hk E_val hE0 hE =>
+      lemma_1_10_moment_root_bound (l := lambda) (k := k) (E := E_val) hlam hk hE0 hE,
+    fun s hs => lemma_1_10_mgf_bound_integral (s := s) hlam hX_meas hX_tail hX_centered hs⟩
 
 
 -- created on 2026-10-23

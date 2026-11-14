@@ -12,10 +12,10 @@ private lemma main
   α.rotaryMatrix ⬝ᵥ β.rotaryMatrix = (α + β).rotaryMatrix := by
 -- proof
   rw [add_comm α β, Add.eq.Sub_Neg]
-  apply Eq.trans (congrArg (fun t => t ⬝ᵥ β.rotaryMatrix) (congrArg rotaryMatrix (EqNegNeg (x := α)).symm))
+  apply Eq.trans (congrArg (fun t : Tensor ℝ [d + d, d + d] => t ⬝ᵥ β.rotaryMatrix) (congrArg rotaryMatrix (EqNegNeg (x := α)).symm))
   rw [RotaryMatrixNeg.eq.TRotaryMatrix]
   apply DotT.eq.RotaryMatrixSub
 
 
 -- created on 2026-09-03
--- updated on 2026-09-05
+-- updated on 2026-11-13

@@ -1,4 +1,4 @@
-import Lemma.NumberField.AdelicTraceFin
+import Lemma.Filter.AdelicTraceFin
 import Def.LanglandsTunnell_TateLocalConstantsAt
 
 set_option autoImplicit false

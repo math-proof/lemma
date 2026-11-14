@@ -1,4 +1,4 @@
-import Lemma.ModularCurve.ModuliPoint
+import Lemma.WeierstrassCurve.ModuliPoint
 
 set_option autoImplicit false
 

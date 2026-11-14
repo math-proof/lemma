@@ -467,10 +467,10 @@ lemma distribConvolution_congr
   distribConvolution a b ha = distribConvolution a' b' ha' := by
 -- proof
   subst ha_eq; subst hb_eq; rfl
-/-- The singular support of a distributional convolution is contained in the Minkowski
-sum of the singular supports of the factors: `singsupp (μ * f) ⊆ singsupp μ + singsupp f`.
-This is the central property underlying pseudodifferential calculus (Melrose,
-Section 12). -/
+-- The singular support of a distributional convolution is contained in the Minkowski
+-- sum of the singular supports of the factors: `singsupp (μ * f) ⊆ singsupp μ + singsupp f`.
+-- This is the central property underlying pseudodifferential calculus (Melrose,
+-- Section 12).
 
 end DifferentialOperators
 

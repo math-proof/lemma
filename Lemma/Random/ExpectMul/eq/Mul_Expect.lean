@@ -2,6 +2,7 @@ import Mathlib.MeasureTheory.Integral.Lebesgue.Add
 import Mathlib.MeasureTheory.Measure.WithDensity
 import Syntax.Probability.Expectation.Elab
 import Initialize.Tactic.Attr.Basic
+import Theorem.Probability.JointRv.AsRV
 open MeasureTheory
 
 
@@ -24,4 +25,4 @@ private lemma main
 
 
 -- created on 2023-03-24
--- updated on 2026-10-26
+-- updated on 2026-11-12

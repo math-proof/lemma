@@ -1,7 +1,7 @@
 import Mathlib
 import Structure.ModularCurve_MazurPrincipleCore
 import Def.ModularCurve_DeligneRapoport
-import Lemma.ModularCurve.HeckeOperator
+import Lemma.LaurentSeries.HeckeOperator
 import Structure.Isogeny_ConditionalCurrency
 
 set_option autoImplicit false

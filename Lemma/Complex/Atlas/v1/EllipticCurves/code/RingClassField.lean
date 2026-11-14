@@ -174,12 +174,12 @@ lemma numIdealsOfNorm_eq_one_add_kroneckerSymbol
       obtain h8_1 | h8_5 := hDmod8
       · have hc0 : ((((1 - D) / 4 : ℤ) : ZMod 2) = 0) := by
         rw [ZMod.intCast_zmod_eq_zero_iff_dvd]; exact Int.dvd_of_emod_eq_zero (by omega)
-        rw [card_filter_sq_sub_x_add_ZMod2, if_pos hc0]
+        rw [card_filter_sq_sub_x_add_ZMod2, ite_eq_left hc0]
         have : D % 8 = 1 ∨ D % 8 = 7 := Or.inl h8_1
         simp [this]
       · have hc1 : ((((1 - D) / 4 : ℤ) : ZMod 2) ≠ 0) := by
         rw [Ne, ZMod.intCast_zmod_eq_zero_iff_dvd]; intro ⟨k, hk⟩; omega
-        rw [card_filter_sq_sub_x_add_ZMod2, if_neg hc1]
+        rw [card_filter_sq_sub_x_add_ZMod2, ite_eq_right hc1]
         have : ¬(D % 8 = 1 ∨ D % 8 = 7) := by omega
         simp [this]
   ·

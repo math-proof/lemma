@@ -264,8 +264,7 @@ lemma matching_terminates_log_steps
       push_cast
       linarith
     have hpow_bound := pow_mul_lt_one_of_log_bound N hN_pos r hr_pos hr_lt _ hk_gt
-    have hbound := geom_contraction_bound r hr_pos S hcontract
-      (⌈Real.log ↑N / Real.log (1 / r)⌉₊ + 1)
+    have hbound := geom_contraction_bound (r := r) (S := S) (k := ⌈Real.log ↑N / Real.log (1 / r)⌉₊ + 1) hr_pos hcontract
     have hS0_le : (S 0 : ℝ) ≤ (N : ℝ) := Nat.cast_le.mpr hS0
     have hSk_lt : (S (⌈Real.log ↑N / Real.log (1 / r)⌉₊ + 1) : ℝ) < 1 := by
       calc (S (⌈Real.log ↑N / Real.log (1 / r)⌉₊ + 1) : ℝ)
@@ -434,7 +433,7 @@ lemma encoding_determines_symDiff_from_structure
 -- imply
   matchingSymDiff s₁ t₁ = matchingSymDiff s₂ t₂ := by
 -- proof
-  have hs : s₁ = s₂ := encoding_determines_source_from_structure d₁ d₂ heq
+  have hs : s₁ = s₂ := encoding_determines_source_from_structure heq
   have hSD : d₁.canonSymDiff = d₂.canonSymDiff := by
     have hs_edges : s₁.edges = s₂.edges := by rw [hs]
     rw [d₁.canon_symDiff_spec, d₂.canon_symDiff_spec, hs_edges, heq]
@@ -443,6 +442,8 @@ lemma encoding_determines_symDiff_from_structure
 end Matchings
 
 namespace Matchings
+
+open Classical
 
 /--
 [transition_bound](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AnAlgorithmistsToolkit/code/Matchings.lean)
@@ -453,7 +454,7 @@ lemma transition_bound
   {G : BipartiteGraph n}
   {T : Transition G}
 -- given
-  (hT : chainIsAdj T.source T.target) :
+  (_hT : chainIsAdj T.source T.target) :
 -- imply
   (Finset.univ.filter (fun p : PerfMatching G × PerfMatching G => typeBUsesTransition T p.1 p.2)).card ≤ Fintype.card (ChainVertex G) := by
 -- proof
@@ -474,10 +475,10 @@ lemma transition_bound
     have h₂' : typeBUsesTransition T s₂ t₂ := by
       rw [hpairs_def] at h₂; exact (Finset.mem_filter.mp h₂).2
     have hs : s₁ = s₂ := encoding_determines_source_from_structure
-      (pathData s₁ t₁ h₁') (pathData s₂ t₂ h₂') heq
+      (d₁ := pathData s₁ t₁ h₁') (d₂ := pathData s₂ t₂ h₂') heq
     have hD : matchingSymDiff s₁ t₁ = matchingSymDiff s₂ t₂ :=
       encoding_determines_symDiff_from_structure
-        (pathData s₁ t₁ h₁') (pathData s₂ t₂ h₂') heq
+        (d₁ := pathData s₁ t₁ h₁') (d₂ := pathData s₂ t₂ h₂') heq
     subst hs
     have ht : t₁ = t₂ := symDiff_determines_target hD
     subst ht
@@ -572,10 +573,10 @@ lemma matching_chain_conductance_bound
   have hmin_pos : (0 : ℝ) < min (vol S) (vol (Finset.univ \ S)) := lt_min hvS_pos hvSc_pos
   have hmin_bound : min (vol S) (vol (Finset.univ \ S)) ≤ (S.card : ℝ) * (n : ℝ) ^ 2 :=
     le_trans (min_le_left _ _) (hmax_degree S)
-  exact canonical_paths_cut_bound (cutEdges S) (min (vol S) (vol (Finset.univ \ S)))
-    (S.card : ℝ) (((n : ℝ) + 1) ^ 4) ((n : ℝ) ^ 2)
+  exact canonical_paths_cut_bound
+    (cutEdges_S := cutEdges S) (vol_S := min (vol S) (vol (Finset.univ \ S)))
+    (S_card := (S.card : ℝ)) (b := ((n : ℝ) + 1) ^ 4) (d_max := (n : ℝ) ^ 2)
     (by positivity) (by positivity) hmin_pos (hcongestion S hS_ne hS_univ) hmin_bound
-
 end Matchings
 
 namespace Matchings
@@ -614,7 +615,7 @@ lemma matching_chain_conductance_concrete
     · intro v _
       exact Nat.cast_pos.mpr (hmin_deg v)
     · exact hS_ne
-  exact matching_chain_conductance_bound hn _ _ hvol_pos hvol_bound hcongestion
+  exact matching_chain_conductance_bound hn hvol_pos hvol_bound hcongestion
 
 end Matchings
 
@@ -636,7 +637,7 @@ lemma matching_chain_conductance_theta
 -- imply
   HasConductanceLB (chainCutEdges neighbors) (chainVol neighbors) (1 / (2 * ((n : ℝ) + 1) ^ 6)) := by
 -- proof
-  have hbase := matching_chain_conductance_concrete hn neighbors hmin_deg hmax_deg hcongestion
+  have hbase := matching_chain_conductance_concrete hn hmin_deg hmax_deg hcongestion
   intro S hS_ne hS_univ
   have hge := hbase S hS_ne hS_univ
   have hn_nonneg : (0 : ℝ) ≤ (n : ℝ) := Nat.cast_nonneg' n
@@ -770,4 +771,4 @@ end Matchings
 
 
 -- created on 2026-10-23
--- updated on 2026-10-29
+-- updated on 2026-11-13

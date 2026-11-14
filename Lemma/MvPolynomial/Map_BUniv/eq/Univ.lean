@@ -2,7 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Definitions.Def_ModularCurve_LevelModuliPackage
 import Definitions.Def_ModularCurve_LevelModuliPackageAbs
-open ModularCurve
+open ModularCurve Int
 
 
 /-- ported from external source -/

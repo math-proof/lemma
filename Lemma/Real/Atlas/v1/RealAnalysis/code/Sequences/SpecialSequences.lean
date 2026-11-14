@@ -9,7 +9,7 @@ namespace Sequences
 [special_sequences](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/RealAnalysis/code/Sequences/SpecialSequences.lean)
 -/
 @[path]
-lemma special_sequences
+lemma special_sequences :
 -- imply
   (∀ p : ℝ, 0 < p → Filter.Tendsto (fun n : ℕ => (n : ℝ) ^ (-p)) Filter.atTop (nhds 0)) ∧ (∀ p : ℝ, 0 < p → Filter.Tendsto (fun n : ℕ => p ^ ((1 : ℝ) / n)) Filter.atTop (nhds 1)) ∧ Filter.Tendsto (fun n : ℕ => (n : ℝ) ^ ((1 : ℝ) / n)) Filter.atTop (nhds 1) := by
 -- proof

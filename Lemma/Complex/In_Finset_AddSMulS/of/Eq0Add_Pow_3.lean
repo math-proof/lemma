@@ -4,6 +4,7 @@ import Lemma.Complex.PowPowAddDivNeg1'2DivMulISqrt3'2'3.eq.One
 import Lemma.Complex.PowAddDivNeg1'2DivMulISqrt3'2.eq.PowAddDivNeg1'2DivMulISqrt3'2EMod3
 import Lemma.Complex.AddPowPowPowPow.eq.Neg
 import Lemma.Complex.MulMulPowPowPow.eq.DivNeg3.of.EqSubCeil.Eq_AddDivMul4Pow3'27Square
+open Complex
 
 
 @[path]
@@ -63,4 +64,4 @@ private lemma mod
       right; right; linear_combination e3 + A * ω * hω3
 
 
--- created on 2018-11-24
+-- created on 2018-11-15

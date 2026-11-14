@@ -1,7 +1,7 @@
 -- Carved from Lemma/Definitions/Def_Gamma0CoeffCohomology.lean: instance decls only.
 import Mathlib
 import Instance.Gamma0HeckeOperatorHom
-import Lemma.Gamma0CoeffCohomology.Main
+import Lemma.Representation.Main
 
 namespace HeckeEis
 

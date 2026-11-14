@@ -1,4 +1,4 @@
-import Lemma.NumberField.StandardGlobalAddChar
+import Lemma.ContinuousMap.StandardGlobalAddChar
 
 open Function IsDedekindDomain NumberField NumberField.InfinitePlace NumberField.InfinitePlace.Completion
 

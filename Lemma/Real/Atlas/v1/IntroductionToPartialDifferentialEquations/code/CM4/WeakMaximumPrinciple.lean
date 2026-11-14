@@ -270,7 +270,7 @@ lemma HeatOp_sub_eps_time
   conv_lhs =>
     rw [show (fun t => (fun q => w q - ε * q.1) (t, p.2)) =
       (fun t => w (t, p.2)) - (fun t => ε * t) from by ext; simp]
-  rw [fderiv_sub hw_t hεt, ContinuousLinearMap.sub_apply]
+  rw [fderiv_sub hw_t hεt, sub_apply]
   have h_deriv_εt : (fderiv ℝ (fun t => ε * t) p.1) (1 : ℝ) = ε := by
     change deriv (fun t => ε * t) p.1 = ε
     rw [show (fun t => ε * t) = (· * ε) from by ext; ring]
@@ -323,7 +323,7 @@ lemma HeatOp_sub
   conv_lhs =>
     rw [show (fun t => (fun q => w q - v q) (t, p.2)) = (fun t => w (t, p.2)) - (fun t => v (t, p.2)) from by ext; simp]
   rw [fderiv_sub hw_t hv_t]
-  simp only [ContinuousLinearMap.sub_apply]
+  simp only [sub_apply]
   have h_inner : ∀ x, fderiv ℝ (fun x' => w (p.1, x') - v (p.1, x')) x =
     fderiv ℝ (fun x' => w (p.1, x')) x - fderiv ℝ (fun x' => v (p.1, x')) x := by
     intro x
@@ -331,12 +331,12 @@ lemma HeatOp_sub
     exact fderiv_sub (hw_x x) (hv_x x)
   have h_inner_applied : (fun x => fderiv ℝ (fun x' => (fun q => w q - v q) (p.1, x')) x (1 : ℝ)) =
     (fun x => fderiv ℝ (fun x' => w (p.1, x')) x 1 - fderiv ℝ (fun x' => v (p.1, x')) x 1) := by
-    ext x; simp [h_inner x, ContinuousLinearMap.sub_apply]
+    ext x; simp [h_inner x, sub_apply]
   rw [h_inner_applied]
   rw [show (fun x => fderiv ℝ (fun x' => w (p.1, x')) x (1 : ℝ) - fderiv ℝ (fun x' => v (p.1, x')) x (1 : ℝ)) =
     (fun x => fderiv ℝ (fun x' => w (p.1, x')) x 1) - (fun x => fderiv ℝ (fun x' => v (p.1, x')) x 1) from by ext; simp]
   rw [fderiv_sub hw_xx hv_xx]
-  simp [ContinuousLinearMap.sub_apply]
+  simp [sub_apply]
   ring
 
 end WeakMaximumPrinciple
@@ -363,7 +363,7 @@ lemma HeatOp_sub_time_const
   conv_lhs =>
     rw [show (fun t => (fun q => u q - q.1 * M) (t, p.2)) =
       (fun t => u (t, p.2)) - (fun t => t * M) from by ext; simp]
-  rw [fderiv_sub hu_t hM, ContinuousLinearMap.sub_apply]
+  rw [fderiv_sub hu_t hM, sub_apply]
   have h_deriv_tM : (fderiv ℝ (fun t => t * M) p.1) (1 : ℝ) = M := by
     change deriv (fun t => t * M) p.1 = M
     simp

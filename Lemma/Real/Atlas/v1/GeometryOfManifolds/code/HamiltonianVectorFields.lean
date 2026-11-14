@@ -6,9 +6,9 @@ open DifferentialFormSpace
 
 /--
 [ι_squared_zero_on_2forms](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/GeometryOfManifolds/code/HamiltonianVectorFields.lean)
+$\iota_X \iota_X \alpha = 0$.
 -/
 @[path]
-$\iota_X \iota_X \alpha = 0$. -/
 lemma ι_squared_zero_on_2forms
   {Ω : ℕ → Type*} {VF : Type*}
   [inst : DifferentialFormSpace Ω VF]
@@ -18,9 +18,9 @@ lemma ι_squared_zero_on_2forms
 
 /--
 [ι_ι_skew_2form](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/GeometryOfManifolds/code/HamiltonianVectorFields.lean)
+$\iota_Y \iota_X \alpha = -\iota_X \iota_Y \alpha$.
 -/
 @[path]
-$\iota_Y \iota_X \alpha = -\iota_X \iota_Y \alpha$. -/
 lemma ι_ι_skew_2form
   {Ω : ℕ → Type*} {VF : Type*}
   [inst : DifferentialFormSpace Ω VF]
@@ -91,10 +91,10 @@ lemma hamiltonian_flow_preserves_symplectic_form
 
 /--
 [isSymplecticVF_iff_ιXω_closed](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/GeometryOfManifolds/code/HamiltonianVectorFields.lean)
+$\iota_X \omega$ is a closed 1-form. This follows from Cartan's formula together with
+$d\omega = 0$.
 -/
 @[path]
-$\iota_X \omega$ is a closed 1-form. This follows from Cartan's formula together with
-$d\omega = 0$. -/
 lemma isSymplecticVF_iff_ιXω_closed
   {Ω : ℕ → Type*} {VF : Type*}
   [inst : DifferentialFormSpace Ω VF]
@@ -149,9 +149,9 @@ lemma poissonBracket_eq_neg_lie_deriv
 
 /--
 [lie_bracket_ι_eq](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/GeometryOfManifolds/code/HamiltonianVectorFields.lean)
+$\iota_{[X, Y]} \alpha = \mathcal{L}_X (\iota_Y \alpha) - \iota_Y (\mathcal{L}_X \alpha)$.
 -/
 @[path]
-$\iota_{[X, Y]} \alpha = \mathcal{L}_X (\iota_Y \alpha) - \iota_Y (\mathcal{L}_X \alpha)$. -/
 lemma lie_bracket_ι_eq
   {Ω : ℕ → Type*} {VF : Type*}
   [inst : DifferentialFormSpace Ω VF]
@@ -271,9 +271,9 @@ lemma L_bracket_eq
 
 /--
 [ι_one_form_nondegenerate](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/GeometryOfManifolds/code/HamiltonianVectorFields.lean)
+then $\alpha = 0$.
 -/
 @[path]
-then $\alpha = 0$. -/
 lemma ι_one_form_nondegenerate
   {Ω : ℕ → Type*} {VF : Type*}
   [inst : DifferentialFormSpace Ω VF]

@@ -1,5 +1,6 @@
 import Theorem.Dynamics.PolicyTrajectory
 import Theorem.Probability.CondExpectation
+import Theorem.Probability.JointRv.AsRV
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
 
 
@@ -35,4 +36,4 @@ private lemma main
 
 
 -- created on 2026-10-11
--- updated on 2026-11-11
+-- updated on 2026-11-12

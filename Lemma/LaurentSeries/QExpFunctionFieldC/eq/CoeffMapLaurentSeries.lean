@@ -1,10 +1,10 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.X1
-import Lemma.ModularCurve.LaurentCoeff
+import Lemma.UpperHalfPlane.X1
+import Lemma.LaurentSeries.LaurentCoeff
 import Lemma.Int.P2MUtil
 
-open ModularCurve
+open ModularCurve LaurentSeries UpperHalfPlane
 open scoped MatrixGroups
 
 /--

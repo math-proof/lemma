@@ -58,7 +58,8 @@ private lemma main
     rw [← hsum, map_add, Derivation.leibniz]
     refine Submodule.add_mem _ (Submodule.add_mem _ ?_ ?_) ?_
     ·
-      apply Submodule.mem_sup_left (Submodule.smul_mem _ _ (Submodule.subset_span rfl))
+      apply Submodule.mem_sup_left
+        (Submodule.smul_mem N s (Submodule.subset_span (Set.mem_singleton (KaehlerDifferential.D R S t))))
     ·
       refine Submodule.mem_sup_right (Submodule.smul_mem_smul ?_ Submodule.mem_top)
       rw [hmemI]; apply ht
@@ -75,3 +76,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-14

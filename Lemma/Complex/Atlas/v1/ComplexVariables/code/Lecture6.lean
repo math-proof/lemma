@@ -2,6 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.ComplexVariables.code.Lecture6.Part3
 open Lecture6
+open Complex
 
 
 namespace Lecture6
@@ -127,7 +128,7 @@ lemma invTranslation_maps_circle_through_pole_to_line
   ·
     intro z hz hdef
     change z ∈ C.toSet at hz
-    simp only [GeneralizedCircle.toSet, Set.mem_setOf_eq, invTranslation, MoebiusTransformation.apply]
+    simp only [GeneralizedCircle.toSet, Set.mem_ofPred_eq, invTranslation, MoebiusTransformation.apply]
     simp only [invTranslation] at hdef
     have hzp : z - p ≠ 0 := by convert hdef using 1; ring
     have hne : z ≠ p := sub_ne_zero.mp hzp
@@ -145,7 +146,7 @@ lemma invTranslation_maps_circle_through_pole_to_line
     rw [h1, h2, hre]
   ·
     intro w hw
-    simp only [GeneralizedCircle.toSet, Set.mem_setOf_eq] at hw
+    simp only [GeneralizedCircle.toSet, Set.mem_ofPred_eq] at hw
     have hline : d.re * w.re - d.im * w.im = -1/2 := by linarith
     have hw0 : w ≠ 0 := by intro h; subst h; simp at hw; linarith
     refine ⟨p + 1/w, ?_, ?_, ?_⟩
@@ -488,7 +489,7 @@ lemma ipc_disjoint_bound
 -- imply
   (α * c.re + β * c.im - γ) ^ 2 > r ^ 2 * (α ^ 2 + β ^ 2) := by
 -- proof
-  by_contra h; push_neg at h
+  by_contra h; push Not at h
   set N2 := α ^ 2 + β ^ 2; set D := α * c.re + β * c.im
   have hN2_ne : N2 ≠ 0 := ne_of_gt hN
   have harg : 0 ≤ (r ^ 2 * N2 - (D - γ) ^ 2) / N2 ^ 2 := by
@@ -498,7 +499,7 @@ lemma ipc_disjoint_bound
   set δ := (D - γ) / N2
   set z : ℂ := ⟨c.re - δ * α - t * β, c.im - δ * β + t * α⟩
   have hz_L : z ∈ {z : ℂ | α * z.re + β * z.im = γ} := by
-    simp only [Set.mem_setOf_eq]
+    simp only [Set.mem_ofPred_eq]
     show α * (c.re - δ * α - t * β) + β * (c.im - δ * β + t * α) = γ
     have : δ * N2 = D - γ := div_mul_cancel₀ (D - γ) hN2_ne
     linarith
@@ -774,7 +775,7 @@ lemma line_nondeg_of_disjoint
   subst hα; subst hβ
   simp only [zero_mul, zero_add] at hne hdisj
   obtain ⟨z, hz⟩ := hne
-  simp only [Set.mem_setOf_eq] at hz
+  simp only [Set.mem_ofPred_eq] at hz
   subst hz
   have huniv : {z : ℂ | (0 : ℝ) = 0} = Set.univ := by ext; simp
   rw [huniv] at hdisj
@@ -814,7 +815,7 @@ lemma moebius_line_circle_to_concentric
   refine ⟨⟨1, -p₁, 1, -p₂, hdet⟩, ⟨0, 1, one_pos⟩, ⟨0, ρ, hρ_pos⟩, ?_, ?_, ?_, ?_, ?_⟩
   ·
     intro z hz hdef
-    simp only [Set.mem_setOf_eq] at hz
+    simp only [Set.mem_ofPred_eq] at hz
     have hzp₂ : z ≠ p₂ := by
       intro heq; apply hdef; show 1 * z + -p₂ = 0; rw [heq]; ring
     have heq_ns := hL_normSq z hz

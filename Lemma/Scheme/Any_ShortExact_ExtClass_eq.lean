@@ -1,8 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicGeometry.FppfCohomologyLES
+import Lemma.Scheme.FppfCohomologyLES
 import Lemma.Int.P2MUtil
-open CategoryTheory CategoryTheory.Abelian CategoryTheory.Limits AlgebraicGeometry
+open CategoryTheory CategoryTheory.Abelian CategoryTheory.Limits AlgebraicGeometry Scheme
 
 
 /--

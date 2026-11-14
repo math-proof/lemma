@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.GaloisRep.AdZero
+import Lemma.LinearMap.AdZero
 import Def.Deformations_TaylorWilesLocal
 set_option autoImplicit false
 

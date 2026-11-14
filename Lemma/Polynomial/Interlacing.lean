@@ -65,12 +65,13 @@ private lemma ksAbs_maxRealRoot_sub_lt_of_coeff_sub_lt
   |g.maxRealRoot - f.maxRealRoot| < ε := by
   rw [abs_lt]
   constructor
-  · have hforward := ksMaxRealRoot_sub_lt_of_coeff_sub_lt hfmonic hgmonic hfrooted
-    hdegree hdegreeEq hρ hfrootsBound hcoeff hradius
+  · have hforward :=
+      ksMaxRealRoot_sub_lt_of_coeff_sub_lt hfmonic hgmonic hfrooted
+        hdegree hdegreeEq hρ hfrootsBound hcoeff hradius
     linarith
   · exact ksMaxRealRoot_sub_lt_of_coeff_sub_lt hgmonic hfmonic hgrooted
-    (hdegreeEq ▸ hdegree) hdegreeEq.symm hρ hgrootsBound
-    (fun i ↦ by simpa [norm_sub_rev] using hcoeff i) (by simpa [hdegreeEq] using hradius)
+      (hdegreeEq ▸ hdegree) hdegreeEq.symm hρ hgrootsBound
+      (fun i ↦ by simpa [norm_sub_rev] using hcoeff i) (by simpa [hdegreeEq] using hradius)
 
 end Polynomial
 
@@ -170,9 +171,11 @@ private lemma ksAffine_isMonicOfDegree {p q : Polynomial ℂ} {n : ℕ}
       (natDegree_smul_le _ _).trans hq.natDegree_eq.le
     exact (natDegree_add_le _ _).trans (max_le hple hqle)
   · have hpcoeff : p.coeff n = 1 := by
-    rwa [← hp.natDegree_eq]
+      rw [← hp.natDegree_eq]
+      exact hp.leadingCoeff_eq
     have hqcoeff : q.coeff n = 1 := by
-      rwa [← hq.natDegree_eq]
+      rw [← hq.natDegree_eq]
+      exact hq.leadingCoeff_eq
     rw [coeff_add, coeff_smul, coeff_smul, hpcoeff, hqcoeff]
     simp
 
@@ -249,8 +252,8 @@ private lemma ksAffine_roots_bound {p q : Polynomial ℂ} {n : ℕ}
     exact ksAffine_cauchyBound_le hp hq ht
   apply max_le
   · exact (hnorm.trans_le hbound).le
-  · have hsum : 0 ≤ ∑ i ∈ Finset.range n, (‖p.coeff i‖ + ‖q.coeff i‖) := by
-    exact Finset.sum_nonneg fun i hi ↦ add_nonneg (norm_nonneg _) (norm_nonneg _)
+  · have hsum : 0 ≤ ∑ i ∈ Finset.range n, (‖p.coeff i‖ + ‖q.coeff i‖) :=
+      Finset.sum_nonneg fun i hi ↦ add_nonneg (norm_nonneg _) (norm_nonneg _)
     linarith
 
 end Polynomial

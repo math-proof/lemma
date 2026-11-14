@@ -1,5 +1,5 @@
-import Lemma.AlgebraicCurve.GluedPic0
-import Lemma.AlgebraicCurve.Correspondence
+import Lemma.ResidueField.GluedPic0
+import Lemma.Scheme.Correspondence
 
 noncomputable section
 

@@ -141,11 +141,11 @@ theorem prod [Finite σ] {ι : Type*} (s : Finset ι) (f : ι → MvPowerSeries 
 
 end Tendsto0
 
-theorem tendsto0_X (p : ℕ) (s : σ) : Tendsto0 p (X s : MvPowerSeries σ 𝓞) := by
+theorem tendsto0_X (p : ℕ) (s : σ) : Tendsto0 p (MvPowerSeries.X s : MvPowerSeries σ 𝓞) := by
   have h := Tendsto0.coe (p := p) (MvPolynomial.X s : MvPolynomial σ 𝓞)
   rwa [MvPolynomial.coe_X] at h
 
-theorem tendsto0_C (p : ℕ) (c : 𝓞) : Tendsto0 p (C c : MvPowerSeries σ 𝓞) := by
+theorem tendsto0_C (p : ℕ) (c : 𝓞) : Tendsto0 p (MvPowerSeries.C c : MvPowerSeries σ 𝓞) := by
   have h := Tendsto0.coe (p := p) (MvPolynomial.C c : MvPolynomial σ 𝓞)
   rwa [MvPolynomial.coe_C] at h
 
@@ -318,11 +318,11 @@ theorem evalT_one (x : σ → Y) : evalT p hY x (1 : MvPowerSeries σ 𝓞) = 1 
   have h := evalT_coe p hY x (1 : MvPolynomial σ 𝓞)
   rwa [MvPolynomial.coe_one, map_one] at h
 
-theorem evalT_C (x : σ → Y) (c : 𝓞) : evalT p hY x (C c : MvPowerSeries σ 𝓞) = algebraMap 𝓞 Y c := by
+theorem evalT_C (x : σ → Y) (c : 𝓞) : evalT p hY x (MvPowerSeries.C c : MvPowerSeries σ 𝓞) = algebraMap 𝓞 Y c := by
   have h := evalT_coe p hY x (MvPolynomial.C c : MvPolynomial σ 𝓞)
   rwa [MvPolynomial.coe_C, MvPolynomial.aeval_C] at h
 
-theorem evalT_X (x : σ → Y) (s : σ) : evalT p hY x (X s : MvPowerSeries σ 𝓞) = x s := by
+theorem evalT_X (x : σ → Y) (s : σ) : evalT p hY x (MvPowerSeries.X s : MvPowerSeries σ 𝓞) = x s := by
   have h := evalT_coe p hY x (MvPolynomial.X s : MvPolynomial σ 𝓞)
   rwa [MvPolynomial.coe_X, MvPolynomial.aeval_X] at h
 
@@ -331,7 +331,7 @@ noncomputable def badPart {S : MvPowerSeries σ 𝓞} (hS : Tendsto0 p S) (N : �
 
 omit hY in
 theorem coeff_badPart [DecidableEq σ] {S : MvPowerSeries σ 𝓞} (hS : Tendsto0 p S) (N : ℕ) (m : σ →₀ ℕ) :
-    MvPolynomial.coeff m (badPart p hS N) = if m ∈ hS.bad N then coeff m S else 0 := by
+    (badPart p hS N).coeff m = if m ∈ hS.bad N then coeff m S else 0 := by
   classical
   rw [badPart, MvPolynomial.coeff_sum]
   simp only [MvPolynomial.coeff_monomial]

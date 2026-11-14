@@ -438,6 +438,37 @@ function existingSections() {
     .filter((d) => d.isDirectory()).map((d) => d.name).sort();
 }
 
+/** Lemma `.lean` leaves under `Lemma/<section>/`, excluding echo sidecars. */
+function sectionLemmaFiles(section) {
+  const dir = path.join(LEMMA_ROOT, section);
+  const out = [];
+  if (!section || !fs.existsSync(dir)) return out;
+  const walk = (d) => {
+    let ents;
+    try { ents = fs.readdirSync(d, { withFileTypes: true }); } catch { return; }
+    for (const e of ents) {
+      const fp = path.join(d, e.name);
+      if (e.isDirectory()) walk(fp);
+      else if (e.isFile() && e.name.endsWith(".lean") && !e.name.endsWith(".echo.lean")) out.push(fp);
+    }
+  };
+  walk(dir);
+  return out;
+}
+
+/**
+ * True if filing `abs` under `section` would leave that folder with only one lemma:
+ * a missing/empty folder, or a singleton folder whose only leaf is this file.
+ * Those folders are not required as the section (a one-lemma data-type section is not kept).
+ */
+function isSingletonSection(section, abs) {
+  const files = sectionLemmaFiles(section);
+  const absN = abs ? path.resolve(abs) : "";
+  const already = absN && files.some((f) => path.resolve(f) === absN);
+  const after = already ? files.length : files.length + 1;
+  return after <= 1;
+}
+
 function collectTokens(node, out = new Set()) {
   if (!node || typeof node !== "object") return out;
   if (cls(node) === "LeanToken" && typeof node.text === "string") {
@@ -876,7 +907,10 @@ function genericSection(sigNode, tokens, existing) {
 }
 
 function pickSection(sigNode, sections, extra = {}) {
-  if (extra.custom) return { section: extra.custom, score: "custom", tokens: [...collectTokens(sigNode)].sort() };
+  // A one-lemma data-type folder is not required as the section.
+  if (extra.custom && !isSingletonSection(extra.custom, extra.file)) {
+    return { section: extra.custom, score: "custom", tokens: [...collectTokens(sigNode)].sort() };
+  }
   const tokens = collectTokens(sigNode);
   const weights = collectTokenWeights(sigNode);
   const depths = sectionDepths(sigNode);
@@ -926,7 +960,12 @@ function pickSection(sigNode, sections, extra = {}) {
     })(sigNode);
     for (const sec of projSecs) add(sec, 2);
   }
-  for (const s of extra.imports || []) { if (!scores.has(s)) scores.set(s, 0); add(s, 1.5); }
+  const importAdded = new Map();
+  for (const s of extra.imports || []) {
+    if (!scores.has(s)) scores.set(s, 0);
+    add(s, 1.5);
+    importAdded.set(s, (importAdded.get(s) ?? 0) + 1.5);
+  }
   const concl = conclusionNode(sigNode);
   if (concl && (cls(concl) === "LeanEq" || cls(concl) === "Lean_le") && concl.superscript === "ᶠ") add("Filter", 3);
   if (concl && CLASS_TOKEN[cls(concl)] && (concl.args || []).length === 2 &&
@@ -1073,8 +1112,13 @@ function pickSection(sigNode, sections, extra = {}) {
   if (concl && tokens.has("ℝ") && hasNode(concl, (n) => cls(n) === "LeanArgsSpaceSeparated" && cls(n.args?.[0]) === "LeanToken" && /^(sSup|sInf)$/.test(n.args[0].text || "") &&
       hasNode(n.args[1], (m) => cls(m) === "LeanToken" && m.text === "''"))) add("Real", 3);
   const existing = new Set(sections);
+  const sigScore = (s) => (scores.get(s) ?? 0) - (importAdded.get(s) ?? 0);
   const rank = (s) => [scores.get(s) ?? 0, depths.get(s) ?? -1];
   const better = (a, b) => {
+    // Signature evidence beats an open/import-only boost (`open scoped Polynomial`
+    // must not steal a CommRing lemma from Int after a singleton folder is skipped).
+    const aSig = sigScore(a) > 0, bSig = sigScore(b) > 0;
+    if (aSig !== bSig) return aSig;
     const [as, ad] = rank(a);
     const [bs, bd] = rank(b);
     if (as !== bs) return as > bs;
@@ -1082,10 +1126,14 @@ function pickSection(sigNode, sections, extra = {}) {
     if (existing.has(a) !== existing.has(b)) return existing.has(a);
     return a < b;
   };
-  let best = sections[0] || "Nat";
-  for (const s of candidates) if (better(s, best)) best = s;
+  // Skip data-type folders that would have only one lemma after this filing.
+  const usable = candidates.filter((s) => !isSingletonSection(s, extra.file));
+  let best = usable[0] || sections[0] || "Nat";
+  for (const s of usable) if (better(s, best)) best = s;
   // No section evidence (generic algebra over α): the repository keeps these under Nat.
-  if (!(scores.get(best) > 0) && existing.has("Nat")) best = genericSection(sigNode, tokens, existing);
+  if (!(scores.get(best) > 0) && existing.has("Nat") && !isSingletonSection("Nat", extra.file)) {
+    best = genericSection(sigNode, tokens, existing);
+  }
   return { section: best, score: scores.get(best) ?? 0, tokens: [...tokens].sort() };
 }
 
@@ -1353,12 +1401,12 @@ function sanitizePathSeg(seg) {
   });
   // Remaining Expect_* unary → CamelCase: Expect_Add → ExpectAdd. GradExpect_* -> GradExpect* (fuse). AddExpect_* / *_Expect untouched.
   // Expectation of a product keeps the underscore: Expect_Mul (not ExpectMul).
-  // Binary Expect bound+scope (Expect_Div) likewise keeps the underscore (house /eq/ RHS).
+  // Binary Expect bound+scope (Expect_Div / Expect_SMul) likewise keeps the underscore (house /eq/ RHS).
   // Nested 𝔼[𝔼[…]] is Expect_(Expect__). Camel-casing the house side
   // Expect_Expect__ → ExpectExpect drops the /eq/ token. Keep Expect_Expect;
   // the trailing `__` hole pad was stripped above and must not stay on the token.
   // Expect_(Cond__) is the path atom Expect_Cond, not camel ExpectCond.
-  if (seg.startsWith("Expect_") && !/^Expect_(Mul|Div|Expect|Cond)/.test(seg))
+  if (seg.startsWith("Expect_") && !/^Expect_(Mul|Div|SMul|Expect|Cond)/.test(seg))
     seg = "Expect" + seg.slice("Expect_".length);
   // GradExpect_DotPow_Id -> GradExpectDotPow_Id (Body: match ExpectDotPow_Id CamelCase)
   if (seg.startsWith("GradExpect_"))
@@ -3247,24 +3295,27 @@ export function implyHoleRegexFromAst(implyStmts, opts = {}) {
 function storeHoleGroups(raw) {
   const s = String(raw ?? "");
   if (!s.includes("(_|")) return s;
-  const stored = s.replace(/\(_\|/g, "(");
-  const back = expandSimplifiedHoleOpts(stored);
-  if (back === s) return stored;
-  // `Var_(scope)` is written required and expanded as `Var_(_|scope)`.
-  if (back === s.replace(/Var_\(/g, "Var_(_|")) return stored;
-  return s;
+  // Published regexes are stored `(Fill)` only. Match time calls expandSimplifiedHoleOpts.
+  // Never keep a generation-time `(_|` string when the expand round-trip is not exact.
+  return s.replace(/\(_\|/g, "(");
 }
 
-/** `(` after `Expect_` / `Deriv_` is a required scope, not an optional fill.
+/** `(` after `Expect_` / `Deriv_` / `Integral_` is a required scope, not an optional fill.
  * `Var_(Mul_…)` is optional: omitting the scope is `Var`, not `Var_Mul`. */
 function requiredScopeParen(s, i) {
-  return /(?:Expect|Deriv)_$/.test(s.slice(Math.max(0, i - 8), i));
+  return /(?:Expect|Deriv|Integral)_$/.test(s.slice(Math.max(0, i - 16), i));
 }
 
 /** Turn stored `(Fill)` into `(_|Fill)`, leaving required scope groups in place. */
 function expandOptionalParens(s) {
   let out = "";
   for (let i = 0; i < s.length; i++) {
+    // `(_)` is already a hole. Do not wrap it as `(_|_)`.
+    if (s.startsWith("(_)", i)) {
+      out += "(_)";
+      i += 2;
+      continue;
+    }
     if (s[i] === "(" && !requiredScopeParen(s, i)) out += "(_|";
     else out += s[i];
   }
@@ -3509,64 +3560,70 @@ export function houseEqStemToPath(stem) {
 }
 
 /**
- * Match token against hole-regex tree. Adjacent filled optional siblings may
- * glue (`I` + `Arctan` → `IArctan`, as in the regex) or take a `_` separator.
+ * Match token against hole-regex tree. Adjacent filled optional siblings are
+ * `_`-separated atoms (not concatenated, even though the regex source has `)(`).
  * `_*` (`kind: "star"`) is the trailing quantifier from `appendHoleRegexTrailingStar`.
  * The match consumes the whole token.
  * @returns {boolean}
  */
 function matchHoleRegexTreeToken(nodes, token) {
   const s = String(token || "");
-  /** @returns {{ pos: number, edgeFilledOpt: boolean }[]} */
-  function matchSeq(seq, pos, edgeFilledOpt) {
-    if (!seq.length) return [{ pos, edgeFilledOpt }];
+  /** @returns {{ pos: number, edgeFilledOpt: boolean, edgeDigit: boolean }[]} */
+  function matchSeq(seq, pos, edgeFilledOpt, edgeDigit) {
+    if (!seq.length) return [{ pos, edgeFilledOpt, edgeDigit }];
     const [head, ...rest] = seq;
-    const heads = matchNode(head, pos, edgeFilledOpt);
+    const heads = matchNode(head, pos, edgeFilledOpt, edgeDigit);
     const out = [];
     for (const h of heads) {
-      for (const r of matchSeq(rest, h.pos, h.edgeFilledOpt)) out.push(r);
+      for (const r of matchSeq(rest, h.pos, h.edgeFilledOpt, h.edgeDigit)) out.push(r);
     }
     return out;
   }
-  /** @returns {{ pos: number, edgeFilledOpt: boolean }[]} */
-  function matchNode(node, pos, edgeFilledOpt) {
+  /** @returns {{ pos: number, edgeFilledOpt: boolean, edgeDigit: boolean }[]} */
+  function matchNode(node, pos, edgeFilledOpt, edgeDigit) {
     if (!node) return [];
     if (node.kind === "lit") {
       const v = node.v || "";
-      if (v && s.startsWith(v, pos)) return [{ pos: pos + v.length, edgeFilledOpt: false }];
-      if (!v) return [{ pos, edgeFilledOpt }];
+      if (v && s.startsWith(v, pos)) return [{ pos: pos + v.length, edgeFilledOpt: false, edgeDigit: false }];
+      if (!v) return [{ pos, edgeFilledOpt, edgeDigit }];
       return [];
     }
     if (node.kind === "hole") {
-      if (s[pos] === "_") return [{ pos: pos + 1, edgeFilledOpt: false }];
+      if (s[pos] === "_") return [{ pos: pos + 1, edgeFilledOpt: false, edgeDigit: false }];
       return [];
     }
     if (node.kind === "opt") {
       const out = [];
-      if (s[pos] === "_") out.push({ pos: pos + 1, edgeFilledOpt: false });
+      if (s[pos] === "_") out.push({ pos: pos + 1, edgeFilledOpt: false, edgeDigit: false });
       const tryAt = (start) => {
-        for (const m of matchSeq(node.alts || [], start, false)) {
+        for (const m of matchSeq(node.alts || [], start, false, false)) {
           // A fill that already ends in `_` does not ask the next filled opt for a separator.
           const endsWithHole = m.pos > 0 && s[m.pos - 1] === "_";
-          out.push({ pos: m.pos, edgeFilledOpt: !endsWithHole });
+          const endsDigit = m.pos > 0 && /\d/.test(s[m.pos - 1]);
+          out.push({ pos: m.pos, edgeFilledOpt: !endsWithHole, edgeDigit: !endsWithHole && endsDigit });
         }
       };
-      // Regex `(_|I)(_|Arctan…)` accepts `IArctan`. A `_` sep (`I_Arctan`) is also allowed.
-      tryAt(pos);
-      if (edgeFilledOpt && s[pos] === "_") tryAt(pos + 1);
+      // Adjacent filled opts require a `_` separator (`Pi_Cos…`), except digit-digit
+      // glue (`Div32` / `Div3'2`). Do not accept letter-atom glue (`PiCos…`).
+      if (edgeFilledOpt) {
+        if (s[pos] === "_") tryAt(pos + 1);
+        else if (edgeDigit && /\d/.test(s[pos] || "")) tryAt(pos);
+      } else {
+        tryAt(pos);
+      }
       return out;
     }
     if (node.kind === "group") {
-      return matchSeq(node.kids || [], pos, edgeFilledOpt);
+      return matchSeq(node.kids || [], pos, edgeFilledOpt, edgeDigit);
     }
     if (node.kind === "star") {
       let j = pos;
       while (s[j] === "_") j++;
-      return [{ pos: j, edgeFilledOpt: false }];
+      return [{ pos: j, edgeFilledOpt: false, edgeDigit: false }];
     }
     return [];
   }
-  const ends = matchSeq(nodes || [], 0, false);
+  const ends = matchSeq(nodes || [], 0, false, false);
   return ends.some((e) => e.pos === s.length);
 }
 
@@ -3671,11 +3728,21 @@ export function matchImplyHoleRegex(reSource, stem) {
 export function enumerateHoleRegexLanguage(reSource) {
   const parts = parseHoleRegexTree(reSource);
   /**
-   * Cartesian expand. Adjacent filled optional siblings concatenate
-   * (`I` + `Arctan` → `IArctan`) and also keep a `_` separator (`I_Arctan`).
+   * Cartesian expand. Adjacent filled optional siblings are `_`-separated
+   * (`SinDivMulMul_Pi` + `CosAdd…` → `SinDivMulMul_Pi_CosAdd…`).
+   * Digit-digit fills stay glued (`Div32` / `Div3'2`).
    * Omit `_` does not invent extras.
    * Acc entries: { s, edgeFilledOpt } — edgeFilledOpt means last sibling chose opt-fill.
    */
+  function adjacentFillSep(leftS, rightS, leftEdgeFilled) {
+    if (!leftEdgeFilled || !leftS || !rightS) return "";
+    if (leftS.endsWith("_") || rightS.startsWith("_")) return "";
+    const l = leftS[leftS.length - 1];
+    const r = rightS[0];
+    // Digit-digit stays glued (`Div32`, apostrophe `Div3'2`).
+    if (/\d/.test(l) && /\d/.test(r)) return "";
+    return "_";
+  }
   function cart(nodes) {
     let acc = [{ s: "", edgeFilledOpt: false }];
     for (const p of nodes || []) {
@@ -3690,11 +3757,11 @@ export function enumerateHoleRegexLanguage(reSource) {
           next.push({ s: a.s + "_", edgeFilledOpt: false });
           for (const f of filled) {
             if (!f.s) continue;
-            const sep =
-              a.edgeFilledOpt && !a.s.endsWith("_") && !f.s.startsWith("_") ? "_" : "";
-            // Regex concatenates filled opts (`I` + `Arctan` → `IArctan`). Keep `_` as an alt.
-            next.push({ s: a.s + f.s, edgeFilledOpt: true });
-            if (sep) next.push({ s: a.s + sep + f.s, edgeFilledOpt: true });
+            // Adjacent filled optional siblings are `_`-separated atoms, not concatenated
+            // (`SinDivMulMul_Pi` + `CosAdd…` → `SinDivMulMul_Pi_CosAdd…`, never `PiCosAdd`).
+            // Digit-digit stays glued. No extra `_` when the left fill already ends with `_`.
+            const sep = adjacentFillSep(a.s, f.s, a.edgeFilledOpt);
+            next.push({ s: a.s + sep + f.s, edgeFilledOpt: true });
           }
         }
       } else if (p.kind === "group") {
@@ -3702,23 +3769,13 @@ export function enumerateHoleRegexLanguage(reSource) {
         for (const a of acc) {
           for (const f of inner) {
             const sep =
-              a.edgeFilledOpt &&
-              f.edgeFilledOpt &&
-              f.s &&
-              !a.s.endsWith("_") &&
-              !f.s.startsWith("_")
-                ? "_"
+              a.edgeFilledOpt && f.edgeFilledOpt
+                ? adjacentFillSep(a.s, f.s, true)
                 : "";
             next.push({
-              s: a.s + f.s,
+              s: a.s + sep + f.s,
               edgeFilledOpt: f.edgeFilledOpt,
             });
-            if (sep) {
-              next.push({
-                s: a.s + sep + f.s,
-                edgeFilledOpt: f.edgeFilledOpt,
-              });
-            }
           }
         }
       }
@@ -3828,11 +3885,35 @@ export function holeRegexLanguageTokens(reSource, opts = {}) {
  * @returns {string|null|undefined} regex fragment, null for a hole slot, undefined to
  *   fall through to nameExpr freeze (Prob / Grad / Var)
  */
+/** Colon-slice GetElem `x[:t]` / `(⇑x)[:n]`, not a big-op binder colon. */
+function isGetElemColonSlice(node) {
+  if (cls(node) !== "LeanGetElem") return false;
+  const headTok = cls(node.args?.[0]) === "LeanToken" ? (node.args[0].text || "") : "";
+  const BIG = new Set(["𝔼", "ℙ", "𝕍𝕒𝕣", "∇", "max", "min", "sup", "inf", "max⁻¹", "min⁻¹"]);
+  if (BIG.has(headTok)) return false;
+  let idx = node.rhs ?? node.args?.[1];
+  for (let i = 0; i < 8 && idx; i++) {
+    const ic = cls(idx);
+    if (ic === "LeanColon") return true;
+    if (ic === "LeanParenthesis") { idx = idx.arg ?? idx.args?.[0]; continue; }
+    if (ic === "LeanStatements" || ic === "LeanArgsNewLineSeparated") {
+      idx = (idx.args || []).find((a) => cls(a) !== "LeanLineComment") || idx.args?.[0];
+      continue;
+    }
+    idx = peelHoleExpr(idx);
+    if (idx && cls(idx) === "LeanColon") return true;
+    break;
+  }
+  return false;
+}
+
 function getElemHoleRegexFrag(node, opts) {
   if (cls(node) !== "LeanGetElem") return null;
   const headTok = cls(node.args?.[0]) === "LeanToken" ? (node.args[0].text || "") : "";
   // Prob / Grad / Mathlib Var[Y] keep their nameExpr freeze (not Get_ nesting).
   if (headTok === "ℙ" || headTok === "∇" || headTok === "Var" || headTok === "variance") return undefined;
+  // `s[:t]` is GetSlice__, not a hole index (isGetIndexNoise would drop the slice).
+  if (isGetElemColonSlice(node)) return "GetSlice__";
   if (isBinderGetAtLiteral(node, opts)) return null;
   if (isGetIndexNoise(node.args?.[1], opts)) {
     const headFrag = holeRegexExpr(node.args?.[0], opts);
@@ -3855,7 +3936,7 @@ function getElemHoleRegexFrag(node, opts) {
  */
 function isGluedQuantEqRegex(re) {
   const s = String(re || "");
-  return /^(?:Any|All)_\(_\|(?:Any|All)_[A-Za-z0-9_]*Eq[A-Za-z0-9_]*\)$/.test(s)
+  return /^(?:Any|All)_\((?:_\|)?(?:Any|All)_[A-Za-z0-9_]*Eq[A-Za-z0-9_]*\)$/.test(s)
     || /^(?:Any|All)_[A-Za-z0-9_]*Eq[A-Za-z0-9_]*$/.test(s);
 }
 
@@ -4338,11 +4419,11 @@ function simplifyIteHoleRegex(raw) {
  * @returns {string|null}
  */
 function simplifyQuantRelDigit(raw) {
-  let s = String(raw || "");
-  // `All_(_|Lt(_|0))` drops the right-hand hole. It sits inside the group: `All_(_|Lt(_|0)_)`.
-  if (/^(?:Any|All)_\(_\|(?:Lt|Gt|Le|Ge)\(_\|-?\d+\)\)$/.test(s)) s = s.slice(0, -1) + "_)";
-  if (!/^(?:Any|All)_\(_\|(?:Lt|Gt|Le|Ge)\(_\|-?\d+\)_\)$/.test(s)) return raw;
-  return s.replace(/\(_\|/g, "(");
+  let s = String(raw || "").replace(/\(_\|/g, "(");
+  // `All_(Lt(0))` drops the right-hand hole. It sits inside the group: `All_(Lt(0)_)`.
+  if (/^(?:Any|All)_\((?:Lt|Gt|Le|Ge)\(-?\d+\)$/.test(s)) s = s.slice(0, -1) + "_)";
+  if (!/^(?:Any|All)_\((?:Lt|Gt|Le|Ge)\(-?\d+\)_\)$/.test(s)) return raw;
+  return s;
 }
 
 /** `All_(Lt(0)_)` mirrors to `All_(Gt_(0))`: hole on the left, digit on the right. */
@@ -4514,9 +4595,275 @@ function flattenStackedExpectOnce(s) {
   return s;
 }
 
+function flattenStackedAll(re) {
+  if (re == null || re === "") return re;
+  let s = String(re);
+  for (let guard = 0; guard < 8; guard++) {
+    const next = flattenStackedAllOnce(s);
+    if (next === s) return s;
+    s = next;
+  }
+  return s;
+}
+
+/** Stacked `All_(All_(…))` / `All_(_|All_(…))` collapses to a single `All`. */
+function flattenStackedAllOnce(s) {
+  let i = 0;
+  while (i < s.length) {
+    const a = s.indexOf("All_(", i);
+    const b = s.indexOf("All_(_|", i);
+    let at = -1;
+    let innerOff = 0;
+    if (a >= 0 && (b < 0 || a <= b)) { at = a; innerOff = "All_(".length; }
+    else if (b >= 0) { at = b; innerOff = "All_(_|".length; }
+    if (at < 0) return s;
+    const inner = at + innerOff;
+    if (!s.startsWith("All", inner)) { i = at + 1; continue; }
+    const openParen = s.indexOf("(", at);
+    const close = holeRegexMatchingParen(s, openParen);
+    if (close < 0) { i = at + 1; continue; }
+    const innerFrag = s.slice(inner, close);
+    if (!innerFrag.startsWith("All")) { i = at + 1; continue; }
+    return s.slice(0, at) + innerFrag + s.slice(close + 1);
+  }
+  return s;
+}
+
+function isProbHoleFrag(s) {
+  const t = String(s || "");
+  return t === "Prob__" || t === "Prob_(Cond__)" || t === "Prob" || t.startsWith("Prob_");
+}
+
+/** True when `n` is (stacked) ∀/∃ around an equality of two `ℙ` terms. */
+function isEqOfProbQuantTree(n) {
+  let cur = peelHoleExpr(n);
+  for (let i = 0; i < 8; i++) {
+    if (cls(cur) !== "Lean_forall" && cls(cur) !== "Lean_exists") break;
+    let body = cur.scope ?? cur.args?.[cur.args.length - 1];
+    if (cls(cur) === "Lean_forall") body = peelGuardForalls(body);
+    cur = peelHoleExpr(peelQuantBody(body));
+  }
+  if (cls(cur) !== "LeanEq") return false;
+  const L = peelHoleExpr(cur.lhs ?? cur.args?.[0]);
+  const R = peelHoleExpr(cur.rhs ?? cur.args?.[1]);
+  return cls(L) === "Lean_Prob" && cls(R) === "Lean_Prob";
+}
+
+
+/**
+ * True when `node` is a GetElem observation (or `Get = «obs»` with the Eq elided).
+ * Conjunctions and slices are not simple Gets.
+ */
+function isSimpleGetObservation(node) {
+  const u = peelHoleExpr(node);
+  if (!u) return false;
+  const c = cls(u);
+  if (c === "LeanGetElem") {
+    let idx = u.rhs ?? u.args?.[1];
+    for (let i = 0; i < 8 && idx; i++) {
+      const ic = cls(idx);
+      if (ic === "LeanColon") return false;
+      if (ic === "LeanParenthesis") { idx = idx.arg ?? idx.args?.[0]; continue; }
+      if (ic === "LeanStatements" || ic === "LeanArgsNewLineSeparated") {
+        idx = (idx.args || []).find((a) => cls(a) !== "LeanLineComment") || idx.args?.[0];
+        continue;
+      }
+      idx = peelHoleExpr(idx);
+      if (idx && cls(idx) === "LeanColon") return false;
+      break;
+    }
+    return true;
+  }
+  if (c === "LeanEq") {
+    const a = peelHoleExpr(u.lhs ?? u.args?.[0]);
+    const b = peelHoleExpr(u.rhs ?? u.args?.[1]);
+    return isSimpleGetObservation(a) || isSimpleGetObservation(b);
+  }
+  return false;
+}
+
+/**
+ * True when `node` is a binary ∧ of two simple Get observations
+ * (`s[k+1] = «s»[k+1] ∧ s[k] = «s»[k]`). Path name is Joint, same as
+ * other And-of-observations spellings (ProbCondJoint, Eq_Joint).
+ */
+function isJointOfTwoGetObservations(node) {
+  const u = peelHoleExpr(node);
+  if (cls(u) !== "Lean_land") return false;
+  const L = unwrapParen(u.lhs ?? u.args?.[0]);
+  const R = unwrapParen(u.rhs ?? u.args?.[1]);
+  return isSimpleGetObservation(L) && isSimpleGetObservation(R);
+}
+
+/**
+ * Conditional ℙ[π](E | C). When both arms are Get observations, walk
+ * `Prob_(Cond(Get__)(Get__))`. A left-of-`|` conjunction of two Get
+ * observations with a Get condition walks
+ * `Prob_(Cond(Joint(Get__)(Get__))(Get__))` (house fill `Prob_CondJoint`).
+ * Any other non-Get arm stays `Prob_(Cond__)`. Not used for point-mass
+ * `ℙ[π](x = a)` (no `|`) — that stays `Prob__`.
+ * @returns {string|null}
+ */
+function probCondGetHoleRegex(node) {
+  const u = peelHoleExpr(node);
+  if (cls(u) !== "Lean_Prob") return null;
+  const sc = peelHoleExpr(u.scope);
+  if (cls(sc) !== "LeanBitOr" || cls(unwrapParen(sc.args?.[0])) === "Lean_perp") return null;
+  const L = unwrapParen(sc.lhs ?? sc.args?.[0]);
+  const R = unwrapParen(sc.rhs ?? sc.args?.[1]);
+  if (isSimpleGetObservation(L) && isSimpleGetObservation(R))
+    return "Prob_(Cond(Get__)(Get__))";
+  if (isJointOfTwoGetObservations(L) && isSimpleGetObservation(R))
+    return "Prob_(Cond(Joint(Get__)(Get__))(Get__))";
+  return "Prob_(Cond__)";
+}
+
+function isProbProductFrag(s) {
+  const t = String(s || "");
+  return t.startsWith("Mul(") && t.includes("Prob");
+}
+
+/**
+ * Nested S-plurals for a repeated `Mul(Prob_(Cond(Get__)(Get__)))(Prob_(Cond(Get__)(Get__)))`.
+ * Same rules as `Div(Prob_(Cond__))(Prob_(Cond__))` → `DivProbS_(Cond__)` and
+ * `Get__` → `GetS__` (S before the index holes):
+ *   MulProbS_(CondGetS__)
+ *   MulProbS_(Cond(Get__)(Get__))
+ *   Mul(Prob_(CondGetS__))(Prob_(CondGetS__))
+ * The expanded form is the caller primary and is not re-listed.
+ * @param {string} reSource
+ * @returns {string[]}
+ */
+function mulProbSCondGetHoleRegexAlts(reSource) {
+  const s = String(reSource || "");
+  const needle = "Mul(Prob_(Cond(Get__)(Get__)))(Prob_(Cond(Get__)(Get__)))";
+  if (!s.includes(needle)) return [];
+  const variants = [
+    s.split(needle).join("MulProbS_(CondGetS__)"),
+    s.split(needle).join("MulProbS_(Cond(Get__)(Get__))"),
+    s.split(needle).join("Mul(Prob_(CondGetS__))(Prob_(CondGetS__))"),
+  ];
+  const out = [];
+  const seen = new Set();
+  for (const v of variants) {
+    if (!v || v === s || seen.has(v)) continue;
+    seen.add(v);
+    out.push(v);
+  }
+  return out;
+}
+
+/**
+ * `SMul(Div(Prob__)(Prob__))_` also spells `SMul(DivProbS__)`.
+ * Same S-before-holes rule as `DivProbS_(Cond__)`, `MulProbS_(Cond__)`, `GetS__`.
+ * The trailing `_` is the scalar-smul right operand.
+ * @param {string} reSource
+ * @returns {string[]}
+ */
+function smulDivProbSHoleRegexAlts(reSource) {
+  const s = String(reSource || "");
+  const needle = "SMul(Div(Prob__)(Prob__))_";
+  if (!s.includes(needle)) return [];
+  const alt = s.split(needle).join("SMul(DivProbS__)_");
+  return alt && alt !== s ? [alt] : [];
+}
+
+
+/** Trailing `∂μ` on `∫` is a hidden/padded Deriv in the path, not a regex token. */
+function integralMeasurePartial(node) {
+  const u = peelHoleExpr(node);
+  if (cls(u) !== "Lean_int") return null;
+  if (typeof u.measurePartial === "function") return u.measurePartial() || null;
+  return null;
+}
+
+function isIntegralArgList(n) {
+  const c = cls(n);
+  return c === "LeanArgsSpaceSeparated" || c === "LeanArgsNewLineSeparated"
+    || c === "LeanArgsCommaNewLineSeparated" || c === "LeanArgsIndented";
+}
+
+function integrandContainsNode(n, meas, d = 0) {
+  if (!n || !meas || d > 24) return false;
+  if (n === meas) return true;
+  if ((n.args || []).some((a) => integrandContainsNode(a, meas, d + 1))) return true;
+  if (n.lhs && integrandContainsNode(n.lhs, meas, d + 1)) return true;
+  if (n.rhs && integrandContainsNode(n.rhs, meas, d + 1)) return true;
+  if (n.scope && integrandContainsNode(n.scope, meas, d + 1)) return true;
+  if (n.arg && integrandContainsNode(n.arg, meas, d + 1)) return true;
+  if (n.bound && integrandContainsNode(n.bound, meas, d + 1)) return true;
+  return false;
+}
+
+/**
+ * Integrand hole-regex with the integral measure stripped.
+ * `c • f x ∂μ` → `SMul(Prob_(Cond__))_`, not `SMulProbCond_Deriv`.
+ */
+function integrandHoleRegex(node, opts, measure) {
+  if (!node || node === measure) return null;
+  const u = peelHoleExpr(node);
+  if (!u || u === measure) return null;
+  if (isIntegralArgList(u)) {
+    if (cls(u) === "LeanArgsIndented") {
+      const L = integrandHoleRegex(u.lhs, opts, measure);
+      const R = integrandHoleRegex(u.rhs, opts, measure);
+      return (L && L !== "_") ? L : ((R && R !== "_") ? R : null);
+    }
+    const args = (u.args || []).filter((a) => a !== measure && cls(a) !== "LeanCaret");
+    const named = [];
+    for (const a of args) {
+      const f = integrandHoleRegex(a, opts, measure);
+      if (f && f !== "_") named.push(f);
+    }
+    if (!named.length) return null;
+    return named.length === 1 ? named[0] : named[0];
+  }
+  if (cls(u) === "Lean_bullet") {
+    const L = integrandHoleRegex(u.lhs ?? u.args?.[0], opts, measure);
+    const R = integrandHoleRegex(u.rhs ?? u.args?.[1], opts, measure);
+    const lFrag = (L && L !== "_") ? L : "";
+    const rFrag = (R && R !== "_") ? R : "";
+    if (!lFrag && !rFrag) return "SMul__";
+    if (!lFrag) return "SMul_" + storedHoleOpt(rFrag);
+    if (!rFrag) return "SMul" + storedHoleOpt(lFrag) + "_";
+    return "SMul" + storedHoleOpt(lFrag) + storedHoleOpt(rFrag);
+  }
+  if (measure && integrandContainsNode(u, measure)) {
+    const tag = CLASS_TOKEN[cls(u)] || u.holeRegexTag;
+    if (tag && tag !== "Integral") {
+      const L = integrandHoleRegex(u.lhs ?? u.args?.[0], opts, measure);
+      const R = integrandHoleRegex(u.rhs ?? u.args?.[1] ?? u.scope, opts, measure);
+      const lFrag = (L && L !== "_") ? L : "";
+      const rFrag = (R && R !== "_") ? R : "";
+      if (!lFrag && !rFrag) return tag + "__";
+      if (!lFrag) return tag + "_" + storedHoleOpt(rFrag);
+      if (!rFrag) return tag + storedHoleOpt(lFrag) + "_";
+      return tag + storedHoleOpt(lFrag) + storedHoleOpt(rFrag);
+    }
+  }
+  return holeRegexExpr(u, opts);
+}
+
+/**
+ * `∫ «a», (ℙ(a=«a» | s=«s») : ℝ) • f «a» ∂μ` → `Integral_(SMul(Prob_(Cond__))_)`.
+ * The trailing measure is hidden (not a Deriv token in the regex).
+ */
+function integralHoleRegex(node, opts) {
+  let u = peelHoleExpr(node);
+  if (cls(u) === "LeanArgsSpaceSeparated" && cls(u.args?.[0]) === "Lean_int")
+    u = u.args[0];
+  if (cls(u) !== "Lean_int") return null;
+  const measure = integralMeasurePartial(u);
+  const body = u.scope ?? u.args?.[u.args.length - 1];
+  const inner = integrandHoleRegex(body, opts, measure);
+  if (!inner || inner === "_") return "Integral__";
+  if (inner === "Integral" || inner.startsWith("Integral_")) return inner;
+  return "Integral_" + storedHoleOpt(inner);
+}
+
 function holeRegexExpr(node, opts) {
   const frag = holeRegexExprWalk(node, opts);
-  return typeof frag === "string" ? flattenStackedExpect(frag) : frag;
+  return typeof frag === "string" ? flattenStackedAll(flattenStackedExpect(frag)) : frag;
 }
 
 function holeRegexExprWalk(node, opts) {
@@ -4526,6 +4873,48 @@ function holeRegexExprWalk(node, opts) {
   if (cls(u) === "LeanVecNotation") return null;
   const ratioRe = likelihoodRatioExpectRegex(u);
   if (ratioRe) return ratioRe;
+
+  // ℙ[π](Get = obs | Get = obs): walk Cond(Get__)(Get__).
+  // ℙ[π](Get = obs ∧ Get = obs | Get = obs): walk Cond(Joint(Get__)(Get__))(Get__).
+  // Point-mass ℙ[π](x = a) (no `|`) stays Prob__ via native collectProbEventRVs.
+  if (cls(u) === "Lean_Prob") {
+    const cond = probCondGetHoleRegex(u);
+    if (cond) return cond;
+  }
+
+  // `(x, y) ⟂ᵢ[π] z` → Indep(Joint__)_, not camel IndepJoint.
+  // `s[t + 1] ⟂ᵢ[s t, hs t; π] s[:t]` → Indep(Get_(Add_(1)))(GetSlice__).
+  // Pairwise holes stay bare Indep (All_(Indep)), not Indep__.
+  if (cls(u) === "Lean_perp") {
+    const left = u.lhs ?? u.args?.[0];
+    const right = u.rhs ?? u.args?.[1];
+    if (isJointRvTuple(left) && !isJointRvTuple(right)) return "Indep(Joint__)_";
+    const L = holeRegexExpr(left, opts);
+    const R = holeRegexExpr(right, opts);
+    const lFrag = (L && L !== "_") ? L : "";
+    const rFrag = (R && R !== "_") ? R : "";
+    if (!lFrag && !rFrag) return "Indep";
+    if (!lFrag) return "Indep_" + storedHoleOpt(rFrag);
+    if (!rFrag) return "Indep" + storedHoleOpt(lFrag) + "_";
+    return "Indep" + storedHoleOpt(lFrag) + storedHoleOpt(rFrag);
+  }
+
+  // ∫ … ∂μ: Deriv is a hidden/padded part of Integral, not a glued camel token.
+  if (cls(u) === "Lean_int") {
+    const ire = integralHoleRegex(u, opts);
+    if (ire) return ire;
+  }
+
+  // Conjunction peers: one regex per conjunct, joined by `/` (same split as path tokens).
+  {
+    const parts = splitTopConjunction(u, false);
+    if (parts && parts.length >= 2 && !opts?.asGiven && !isHoleAndTree(u, opts)) {
+      const frags = parts.map((p) => holeRegexExpr(p, opts));
+      if (frags.every((f) => f && f !== "_" && !/^And(?:_And)*_?$/.test(String(f))))
+        return frags.join("/");
+    }
+  }
+
   const peelGuardsDeep = (n) => {
     // Only peel anonymous ∀ _ : Prop guards. Keep P → Q so Imp stays visible
     // in hole-regex (binary Imp like And/Iff); do not flatten to the consequent.
@@ -4537,6 +4926,11 @@ function holeRegexExprWalk(node, opts) {
     isLeaf: (t) => isLeafName(t, opts.leaves),
     peelGuards: peelGuardsDeep,
     frozen: (n) => {
+      // ∫ … ∂μ: nest Integral_(SMul…); hide the measure (path `_Deriv` is pad).
+      if (cls(n) === "Lean_int") {
+        const ire = integralHoleRegex(n, opts);
+        if (ire) return ire;
+      }
       // Ternary if: Ite(cond)(ifBranch)(elseBranch), not the condition alone.
       if (cls(n) === "LeanIte") return iteHoleRegex(n, opts);
       // GetElem: nest Get_(_|Add_(_|1)) via getElemHoleRegexFrag (not bare Add_1 freeze).
@@ -4556,10 +4950,15 @@ function holeRegexExprWalk(node, opts) {
         let p = n.parent;
         while (p && (cls(p) === "LeanParenthesis" || cls(p) === "LeanColon")) p = p.parent;
         if (cls(p) === "Lean_Expect") {
-          const left = nameExpr(unwrapParen(n.args?.[0]), opts);
-          if (!left) return "Cond__";
-          const lit = escapeHoleReLit(sanitizePathSeg(left));
-          return lit ? "Cond_(" + lit + ")_" : "Cond__";
+          const left = unwrapParen(n.args?.[0]);
+          let leftFrag = holeRegexExpr(left, opts);
+          const tag = CLASS_TOKEN[cls(left)] || left?.holeRegexTag;
+          // Both-holes binaries are often stored as the bare tag (`Add`).
+          // Cond is binary; a filled first hole keeps those two holes: `Add__`.
+          if (tag && leftFrag === tag && (left?.args || []).length === 2)
+            leftFrag = tag + "__";
+          if (!leftFrag || leftFrag === "_") return "Cond__";
+          return "Cond" + storedHoleOpt(leftFrag) + "_";
         }
       }
       const frozen = nameExpr(n, opts);
@@ -4593,15 +4992,58 @@ function holeRegexExprWalk(node, opts) {
   // `∀ a, ℙ[π'](x = a) ≠ 0` → `All_(Ne(Prob__)(0))`. Both probability holes stay `Prob__`.
   // Stored All_(Fill) — not All_(_|Fill). (_| is match-time only (expandSimplifiedHoleOpts).
   if (cls(u) === "Lean_forall" && opts?.asGiven) {
-    const dec = decompImplyStruct(u, { ...opts, digitLiteral: true });
+    const givenOpts = { ...opts, digitLiteral: true };
+    const dec = decompImplyStruct(u, givenOpts);
     if (dec && dec.includes("(") && !dec.includes("(_|"))
       return dec;
+    // decompImplyStruct does not walk ⟂ᵢ; keep imply Get__ / GetSlice__ there.
+    // Given `∀ t, s[t + 1] ⟂ᵢ[π] s[:t]` → All_(Indep(Get_(Add_(1)))(GetSlice__)).
+    let body = u.scope ?? u.args?.[u.args.length - 1];
+    body = peelHoleExpr(peelGuardForalls(body));
+    if (cls(stripIndepWrap(body)) === "Lean_perp") {
+      const inner = holeRegexExpr(body, givenOpts);
+      if (inner && inner !== "_" && inner !== "All") {
+        if (inner === "All" || inner.startsWith("All_")) return inner;
+        return "All_" + storedHoleOpt(inner);
+      }
+    }
     if (allNeProb0GivenName(u) === "All_NeProb_0") return "All_(Ne(Prob__)(0))";
   }
   // `(1 + r) • (p ᵥ* M) = p`: digit stays `(1)`. Stored without `_|`; `consistent` expands `(`.
   if (cls(u) === "LeanEq" && opts?.asGiven) {
     const dec = decompImplyStruct(u, { ...opts, digitLiteral: true });
     if (dec && dec.includes("(") && !dec.includes("(_|")) return dec;
+  }
+
+  // ∀/∃ over Eq of ℙ: walk the body so Prob_ groups are used. Stacked All_All → one All. No AeAll_.
+  if ((cls(u) === "Lean_forall" || cls(u) === "Lean_exists") && isEqOfProbQuantTree(u)) {
+    const tag = cls(u) === "Lean_forall" ? "All" : "Any";
+    let body = u.scope ?? u.args?.[u.args.length - 1];
+    if (cls(u) === "Lean_forall") body = peelGuardForalls(body);
+    body = peelQuantBody(body);
+    const inner = holeRegexExpr(body, opts);
+    if (inner && inner !== "_") {
+      if (inner === tag || inner.startsWith(tag + "_")) return inner;
+      return tag + "_" + storedHoleOpt(inner);
+    }
+  }
+
+  // Eq of observation / conditional probabilities: Eq(Prob_(Cond__))(Prob__).
+  // Also Eq of a Mul of such Probs: recurse via holeRegexExpr so native
+  // Lean_Prob.holeRegex cannot collapse `E | C` to Prob__ (unwalked scope).
+  if (cls(u) === "LeanEq") {
+    const L = holeRegexExpr(u.lhs ?? u.args?.[0], opts);
+    const R = holeRegexExpr(u.rhs ?? u.args?.[1], opts);
+    if (isProbHoleFrag(L) && isProbHoleFrag(R))
+      return "Eq" + storedHoleOpt(L) + storedHoleOpt(R);
+    if ((isProbProductFrag(L) || isProbHoleFrag(L)) && (isProbProductFrag(R) || isProbHoleFrag(R)))
+      return "Eq" + storedHoleOpt(L) + storedHoleOpt(R);
+  }
+  if (cls(u) === "LeanMul") {
+    const L = holeRegexExpr(u.lhs ?? u.args?.[0], opts);
+    const R = holeRegexExpr(u.rhs ?? u.args?.[1], opts);
+    if (isProbHoleFrag(L) && isProbHoleFrag(R))
+      return "Mul" + storedHoleOpt(L) + storedHoleOpt(R);
   }
   // `p ⬝ᵥ … < p ⬝ᵥ …`: grouped Dot / Add / SMul / ternary Ext, stored without `_|`.
   if (cls(u) === "Lean_lt" || cls(u) === "Lean_gt" || cls(u) === "Lean_le" || cls(u) === "Lean_ge") {
@@ -4635,7 +5077,7 @@ function holeRegexExprWalk(node, opts) {
       if (dec) return dec;
     }
     // ∃ (P ∧ eq) froze to Any_(_|And_EqAdd1). Keep • / ᵥ* / updateCol as their own groups.
-    if (/^Any_\(_\|And_[A-Za-z0-9_]+\)$/.test(String(raw || ""))) {
+    if (/^Any_\((?:_\|)?And_[A-Za-z0-9_]+\)$/.test(String(raw || ""))) {
       const dec = decompImplyStruct(u, opts);
       if (dec) return dec;
     }
@@ -4700,7 +5142,7 @@ function pluralMulSHoleRegex(node, opts = {}) {
 /** Force plural Mul RHS to Mul(_|Mul(_)(_))(_|Deriv_) (Body t373). */
 function normalizePluralMulRhs(rhs) {
   // Canonical both-holes nested Mul + Deriv_ for plural MulS alts.
-  return "Mul(_|Mul(_)(_))(_|Deriv_)";
+  return "Mul(Mul(_)(_))(Deriv_)";
 }
 
 
@@ -4745,7 +5187,7 @@ function eqEqualMulSHoleRegex(node, opts = {}) {
     if (!/^Mul\b/.test(a) && !/^Mul_/.test(a) && a !== "Mul" && !a.startsWith("Mul(")) return null;
     // Equal Mul_(_|Deriv_) (or Mul…Deriv…) sides → Eq(MulS(_(_|Deriv))).
     if (!/Deriv/.test(a)) return null;
-    return "Eq(MulS(_(_|Deriv)))";
+    return "Eq(MulS(_(Deriv)))";
   }
   return null;
 }
@@ -4817,7 +5259,7 @@ function impEqualEqSHoleRegex(node, opts = {}) {
     // Prob/0: All_(ImpEqS((Prob__)(0))). Other EqS stays All_(_|Imp(_|EqS…)).
     if (body.startsWith("ImpEqS(")) return tag + "_(" + body + ")";
     // Same wrapHoleOpt nesting as primary All_(_|Imp…) (not required All_(Imp…)).
-    return tag + "_" + wrapHoleOpt(body);
+    return tag + "_" + storedHoleOpt(body);
   }
 
   // Prop → only (fun => stays peeled elsewhere).
@@ -4829,7 +5271,7 @@ function impEqualEqSHoleRegex(node, opts = {}) {
     if (!/^Eq\b/.test(a) && !a.startsWith("Eq(")) return null;
     if (isEqProb0Hole(a)) return "ImpEqS((Prob__)(0))";
     const eqS = a.replace(/^Eq/, "EqS");
-    return "Imp" + wrapHoleOpt(eqS);
+    return "Imp" + storedHoleOpt(eqS);
   }
   return null;
 }
@@ -4878,8 +5320,8 @@ function holeFillStemsImpEqS(node, opts = {}) {
  * @returns {string}
  */
 function houseCollapseDivToRealProb(frag, keepProb) {
-  const div = /Div\(_\|ToReal\(_\|Prob_+\)\)\(_\|ToReal\(_\|Prob_+\)\)/g;
-  const to = keepProb ? "Div(_|Prob__)(_|Prob__)" : "Div";
+  const div = /Div\((?:_\|)?ToReal\((?:_\|)?Prob_+\)\)\((?:_\|)?ToReal\((?:_\|)?Prob_+\)\)/g;
+  const to = keepProb ? "Div(Prob__)(Prob__)" : "Div";
   return String(frag || "").replace(div, to);
 }
 
@@ -4890,10 +5332,10 @@ function houseCollapseDivToRealProb(frag, keepProb) {
  * @returns {string[]}
  */
 function houseExpectLhsForms(frag) {
-  const squared = String(frag || "").replace(/Pow_\(_\|2\)/g, "Square_").replace(/Pow_\(2\)/g, "Square_");
-  if (!/Div\(_\|ToReal\(_\|Prob/.test(squared)) return [houseCollapseDivToRealProb(squared, false)];
+  const squared = String(frag || "").replace(/Pow_\((?:_\|)?2\)/g, "Square_");
+  if (!/Div\((?:_\|)?ToReal\((?:_\|)?Prob/.test(squared)) return [houseCollapseDivToRealProb(squared, false)];
   const full = houseCollapseDivToRealProb(squared, true);
-  const simple = full.replace(/Div\(_\|Prob__\)\(_\|Prob__\)/g, "DivProbS__");
+  const simple = full.replace(/Div\((?:_\|)?Prob__\)\((?:_\|)?Prob__\)/g, "DivProbS__");
   return simple === full ? [full] : [full, simple];
 }
 
@@ -5050,25 +5492,73 @@ function appendEqualPluralHoleRegex(reSource) {
 export function holeRegexAlternatives(typeNode, opts = {}) {
   const primary = implyHoleRegexFromAst(typeNode, opts);
   const out = [];
-  if (primary) out.push(primary);
+  if (primary) out.push(storeHoleGroups(primary));
   // Imply: equal Append(A)(A) publishes a second optional regex, the plural atom.
   // Givens keep their own plural alts (MulS / EqS / house). Do not add this there.
   if (!opts.asGiven && primary) {
     const compact = appendEqualPluralHoleRegex(primary);
-    if (compact && compact !== primary && !out.includes(compact)) out.push(compact);
+    if (compact && compact !== primary && !out.includes(storeHoleGroups(compact))) out.push(storeHoleGroups(compact));
     const divS = divProbSCondHoleRegex(primary);
-    if (divS && divS !== primary && !out.includes(divS)) out.push(divS);
+    if (divS && divS !== primary && !out.includes(storeHoleGroups(divS))) out.push(storeHoleGroups(divS));
+    for (const alt of mulProbSCondGetHoleRegexAlts(primary)) {
+      const stored = storeHoleGroups(alt);
+      if (stored && !out.includes(stored)) out.push(stored);
+    }
+    for (const alt of smulDivProbSHoleRegexAlts(primary)) {
+      const stored = storeHoleGroups(alt);
+      if (stored && !out.includes(stored)) out.push(stored);
+    }
   }
   const relMirror = quantRelDigitMirror(primary);
-  if (relMirror && !out.includes(relMirror)) out.push(relMirror);
+  if (relMirror && !out.includes(storeHoleGroups(relMirror))) out.push(storeHoleGroups(relMirror));
   const plural = pluralMulSHoleRegex(typeNode, opts);
-  if (plural && plural !== primary) out.push(plural);
+  if (plural && plural !== primary) out.push(storeHoleGroups(plural));
   const eqMulS = eqEqualMulSHoleRegex(typeNode, opts);
-  if (eqMulS && eqMulS !== primary && !out.includes(eqMulS)) out.push(eqMulS);
+  if (eqMulS && eqMulS !== primary && !out.includes(storeHoleGroups(eqMulS))) out.push(storeHoleGroups(eqMulS));
   const impEqS = impEqualEqSHoleRegex(typeNode, opts);
-  if (impEqS && impEqS !== primary && !out.includes(impEqS)) out.push(impEqS);
+  if (impEqS && impEqS !== primary && !out.includes(storeHoleGroups(impEqS))) out.push(storeHoleGroups(impEqS));
   for (const house of eqHouseHoleRegexAlts(typeNode, opts)) {
-    if (house && house !== primary && !out.includes(house)) out.push(house);
+    if (house && house !== primary && !out.includes(storeHoleGroups(house))) out.push(storeHoleGroups(house));
+    for (const alt of mulProbSCondGetHoleRegexAlts(house)) {
+      const stored = storeHoleGroups(alt);
+      if (stored && stored !== primary && !out.includes(stored)) out.push(stored);
+    }
+    for (const alt of smulDivProbSHoleRegexAlts(house)) {
+      const stored = storeHoleGroups(alt);
+      if (stored && stored !== primary && !out.includes(stored)) out.push(stored);
+    }
+  }
+  // Standalone LHS, like DivProbS__: `MulProbS_Cond` matches by pad without `/eq/`.
+  if (!opts.asGiven) {
+    const lhsForms = [
+      "Mul(Prob_(Cond(Get__)(Get__)))(Prob_(Cond(Get__)(Get__)))",
+      "MulProbS_(CondGetS__)",
+      "MulProbS_(Cond(Get__)(Get__))",
+      "Mul(Prob_(CondGetS__))(Prob_(CondGetS__))",
+    ];
+    for (const form of lhsForms) {
+      if (out.some((re) => String(re).includes(form))) {
+        const stored = storeHoleGroups(form);
+        if (stored && !out.includes(stored)) out.push(stored);
+      }
+    }
+    // Standalone RHS: `Prob_CondJoint` matches by pad without `/eq/`.
+    const rhsForm = "Prob_(Cond(Joint(Get__)(Get__))(Get__))";
+    if (out.some((re) => String(re).includes(rhsForm))) {
+      const stored = storeHoleGroups(rhsForm);
+      if (stored && !out.includes(stored)) out.push(stored);
+    }
+    // Standalone RHS: `Expect_SMulDivProbS` matches by pad without `/eq/`.
+    const smulRhsForms = [
+      "Expect_(SMul(Div(Prob__)(Prob__))_)",
+      "Expect_(SMul(DivProbS__)_)",
+    ];
+    for (const form of smulRhsForms) {
+      if (out.some((re) => String(re).includes(form))) {
+        const stored = storeHoleGroups(form);
+        if (stored && !out.includes(stored)) out.push(stored);
+      }
+    }
   }
   // Quantified equality's inline atom (`All_Eq…`, `Any_All_Eq…`) is its own hole regex.
   // The expanded `Eq(_|Deriv_)(_|Mul…)` tree does not spell fused forms such as
@@ -5076,7 +5566,7 @@ export function holeRegexAlternatives(typeNode, opts = {}) {
   const named = nameExpr(typeNode, opts);
   // A decomposed `All_(Eq(…)(…))` already spells the equality. Do not also publish
   // the glued `All_Eq…` atom. Fused givens whose primary is still `All_(_|Eq…)` stay.
-  const primaryDecomp = out.some((r) => /(?:Any|All)_\(_\|Eq/.test(String(r)) || String(r).includes("All_(Eq(") || String(r).includes("Any_(Eq(") || String(r).includes("All_(Ne(") || String(r).includes("And(_|") || /(?:Any|All)_\(And\(/.test(String(r)) || String(r).includes("Ite("));
+  const primaryDecomp = out.some((r) => /(?:Any|All)_\(_\|Eq/.test(String(r)) || String(r).includes("All_(Eq(") || String(r).includes("All_(Eq_(") || String(r).includes("Any_(Eq(") || String(r).includes("Any_(Eq_(") || String(r).includes("All_(Ne(") || String(r).includes("And(") || /(?:Any|All)_\(And\(/.test(String(r)) || String(r).includes("Ite("));
   // `x ≠ 0 → …` is a guard. Once the body is grouped, the glued `All_Imp…` atom is not a regex.
   const guardGlued = /Imp/.test(String(named || "")) && out.some((r) => /(?:Any|All)_\(/.test(String(r)));
   // `All_Gt_0` is the fill of `All_(Gt_(0))`, not a second regex.
@@ -5085,7 +5575,7 @@ export function holeRegexAlternatives(typeNode, opts = {}) {
       && !(primaryDecomp && !named.includes("("))
       && !guardGlued
       && !admitted)
-    out.push(named);
+    out.push(storeHoleGroups(named));
   return out.length ? out : ["_"];
 }
 
@@ -5292,16 +5782,33 @@ function holeFillStems(node, opts = {}) {
   }
 
   // Ordinary GetElem omit/fill: Get_Add_1 / Get_ (never bare Add_1 freeze).
+  // Colon-slice `s[:t]` fills GetSlice (matches GetSlice__ by pad).
   if (c === "LeanGetElem") {
     const headTok = cls(u.args?.[0]) === "LeanToken" ? (u.args[0].text || "") : "";
     if (headTok === "ℙ" || headTok === "∇" || headTok === "Var" || headTok === "variance") {
       const frozen = nameExpr(u, opts);
       return frozen ? [sanitizePathSeg(frozen)] : [""];
     }
+    if (isGetElemColonSlice(u)) return uniq(["GetSlice", ""]);
     if (isBinderGetAtLiteral(u, opts)) return [""];
     if (isGetIndexNoise(u.args?.[1], opts)) return holeFillStems(u.args?.[0], opts);
     const idxs = holeFillStems(u.args?.[1], opts);
     return uniq(idxs.flatMap((idx) => (idx ? ["Get_" + idx, ""] : ["Get_", ""])));
+  }
+
+  // IndepFun binary infix, like pathCombineIndepChoices: sides join with `_`.
+  // `s[t + 1] ⟂ᵢ s[:t]` → IndepGet_Add_1_GetSlice / Indep_GetSlice / Indep.
+  if (c === "Lean_perp") {
+    const Ls = holeFillStems(u.lhs ?? u.args?.[0], opts);
+    const Rs = holeFillStems(u.rhs ?? u.args?.[1], opts);
+    const joined = [];
+    for (const l of Ls.length ? Ls : [""]) for (const r of Rs.length ? Rs : [""]) {
+      if (l && r) joined.push("Indep" + l + "_" + r);
+      else if (!l && r) joined.push("Indep_" + r);
+      else if (l && !r) joined.push("Indep" + l);
+      else joined.push("Indep");
+    }
+    return uniq([...joined, ""]);
   }
 
   const frozen = nameExpr(u, opts);
@@ -7073,7 +7580,7 @@ function distributedAlts(node, opts = {}) {
 function demoteExpectSnake(name) {
   if (!name) return name;
   name = name.replaceAll("Expect_Cond", "ExpectCond");
-  if (name.startsWith("Expect_") && !/^Expect_(Mul|Div)/.test(name))
+  if (name.startsWith("Expect_") && !/^Expect_(Mul|Div|SMul)/.test(name))
     name = "Expect" + name.slice("Expect_".length);
   if (name.startsWith("GradExpect_")) return "GradExpect" + name.slice("GradExpect_".length);
   return name;
@@ -8733,6 +9240,16 @@ if (name === "LeanToken") {
     }
     return "";
   }
+  // `l • b`: SMul + named factors. A hole right operand (`f x`) stays implicit.
+  // Do not fall through to the first child (that dropped SMul and spelled only DivProbProb).
+  if (name === "Lean_bullet") {
+    const left = nameExpr(node.args?.[0], opts) || "";
+    const right = nameExpr(node.args?.[1], opts) || "";
+    if (!left && !right) return "SMul__";
+    if (left && !right) return "SMul" + left;
+    if (!left && right) return "SMul_" + right;
+    return "SMul" + left + "_" + right;
+  }
   // Body t174: Expect/Prob/Var bigops -- scope walk (Mathlib Var[Y] stays LeanGetElem below).
   if (name === "Lean_Expect") {
     const pg = expectDotFunSMulGradLogName(node);
@@ -9990,6 +10507,7 @@ export function suggest(filePath, lemmaName, options = {}) {
   const custom = legacy ? legacyCustom : customSection(dataSections, sig.implyStmts, givenTypeNodes, importSections(source, dataSections), sig.indented);
   const picked = pickSection(sig.colon, legacy ? sections : dataSections, {
     custom,
+    file: abs,
     // open/import data-type section boosts; custom folders (Iterates, …) are decided by customSection only
     imports: [
       ...[...importSections(source, sections).keys()].filter((s) => DATA_TYPE_SECTIONS.has(s) || TYPE_TO_SECTION[s]),
@@ -10793,19 +11311,10 @@ export function suggest(filePath, lemmaName, options = {}) {
   const givenRegexListsEarly = pathOrderHypsEarly.map((h) =>
     holeRegexAlternatives(h.typeNode, { ...nameOpts, asGiven: true }),
   );
-  // On-disk quantified given atoms stay admissible (`All_EqDeriv_MulIMulMul_…`).
-  // `All_LHS/eq/RHS` does not.
-  {
-    const diskOfStems = ofStemsFromRelPath(relCurrent);
-    for (let i = 0; i < diskOfStems.length && i < givenRegexListsEarly.length; i++) {
-      const stem = diskOfStems[i];
-      if (!stem || stem.includes("/") || hasQuantEqSlash(stem) || !/^(?:Any|All)_/.test(stem)) continue;
-      if (givenRegexListsEarly[i].includes(stem)) continue;
-      // A grouped regex that already admits the stem is the regex. The bare atom is not.
-      if (stemMatchesAnyHoleRegex(stem, givenRegexListsEarly[i])) continue;
-      givenRegexListsEarly[i].push(stem);
-    }
-  }
+  // Do not publish an unmatched on-disk of-token as a second regex.
+  // That would invent meaning for empty-or-full-atom holes (`All_Eq_MulMul_Sin_Cos`)
+  // and break suggestion set === consistent set. Stems the primary already admits
+  // are still surfaced by the matching safety net below.
   const givenOptionalFlags = givenAltLists.map((g) => !!g.optional);
   const givenAltListsEmit = givenAltLists.map((g, i) => {
     const regexes = givenRegexListsEarly[i] || [];
@@ -10823,6 +11332,7 @@ export function suggest(filePath, lemmaName, options = {}) {
       : [];
     const kept = uniqEmitTok([...(g.alts || []), ...fills]).filter(matchG);
     let alts = kept.length ? kept : fills.slice();
+    alts.sort((a, b) => (b.length - a.length) || (a < b ? -1 : a > b ? 1 : 0));
     // Equal-Imp EqS plural first (canonical over expanded ImpEq…Eq…).
     const eqs = alts.filter((a) => /ImpEqS/.test(a) || /_ImpEqS/.test(a));
     if (eqs.length) alts = uniqEmitTok([...eqs, ...alts]);
@@ -10853,9 +11363,11 @@ export function suggest(filePath, lemmaName, options = {}) {
       if (g.name && !stemMatchesAnyHoleRegex(g.name, regs)) g.name = stem;
     }
   }
-  // Canonical imply/given names must themselves match (else pick first matching emit).
+  // Canonical imply/given names must themselves match (else pick fullest matching emit).
   if (!stemMatchesImplyHole(sanitizeRelPath(implyName || ""))) {
-    implyName = implyAltsEmit[0] || implyName;
+    const matching = implyAltsEmit.filter((a) => stemMatchesImplyHole(sanitizeRelPath(a)));
+    matching.sort((a, b) => (b.length - a.length) || (a < b ? -1 : a > b ? 1 : 0));
+    implyName = matching[0] || implyName;
   }
   givenNames = givenAltListsEmit.filter((g) => !g.canonSkip).map((g, i) => {
     const prev = givenNames[i];
@@ -10983,7 +11495,9 @@ export function suggest(filePath, lemmaName, options = {}) {
       name: g.name || (g.alts || [])[0] || "Given",
       chain: g.chain,
     }));
-    const rescueImply = implyAltsEmit[0] || implyName;
+    const matchingImply = implyAltsEmit.filter((a) => stemMatchesImplyHole(sanitizeRelPath(a)));
+    matchingImply.sort((a, b) => (b.length - a.length) || (a < b ? -1 : a > b ? 1 : 0));
+    const rescueImply = matchingImply[0] || implyAltsEmit[0] || implyName;
     const rescued = buildRel(rescueImply, gEmitNames);
     if (suggestionPathMatchesHoles(rescued, implyRegexAltsEarly, givenRegexListsEarly, { optionalFlags: givenOptionalFlags })) {
       implyName = rescueImply;
@@ -11066,7 +11580,10 @@ export function suggest(filePath, lemmaName, options = {}) {
     if (!reSource) return [];
     const src = typeof reSource === "object" ? String(reSource.regex || reSource.expr || "") : String(reSource);
     const p = pad == null ? holeRegexTrailingPad(reSource) : pad;
-    return uniqTokens(candidates).filter((t) => !unfilledHolePiece(t) && consistent(t, src, p));
+    const toks = uniqTokens(candidates).filter((t) => !unfilledHolePiece(t) && consistent(t, src, p));
+    // Fullest-first: longer fills outrank omit/sibling-short spellings (and glued is already rejected).
+    toks.sort((a, b) => (b.length - a.length) || (a < b ? -1 : a > b ? 1 : 0));
+    return toks;
   };
   const implyAltStems = uniqTokens(implyAlts).map((a) => sanitizeRelPath(String(a)));
   const implyHoleStems = uniqTokens([

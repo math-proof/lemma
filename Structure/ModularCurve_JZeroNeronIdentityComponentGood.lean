@@ -1,12 +1,12 @@
 import Mathlib
 import Structure.ModularCurve_JZeroNeronIdentityComponent
-import Lemma.ModularCurve.ReductionModL
+import Lemma.Finsupp.ReductionModL
 import Structure.JacJ1Iface
 import Structure.AlgebraicGeometry_RelativeGroupLaw
-import Lemma.AlgebraicGeometry.NeronModelEndomorphismExtension
+import Lemma.Scheme.NeronModelEndomorphismExtension
 import Def.ModularCurve_ReductionOfPointsAgreesModL
 import Instance.ModularCurve_ArithmeticGalois
-import Lemma.ModularCurve.HeckeModule
+import Lemma.MvPolynomial.HeckeModule
 import Def.FLTPrelim_Ramification
 import Def.GaloisRep_Flat
 

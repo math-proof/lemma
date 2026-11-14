@@ -47,7 +47,7 @@ lemma choose_step_bound
     calc (n - k + 1) * Nat.choose n j * (j + 1)
       = (n - k + 1) * (j + 1) * Nat.choose n j := by ring
       _ ≤ (n - j) * k * Nat.choose n j := by
-        apply Nat.mul_le_mul_right; exact binom_ratio_ineq n j k hj hk
+        apply Nat.mul_le_mul_right; exact binom_ratio_ineq hj hk
       _ = k * (Nat.choose n j * (n - j)) := by ring
       _ = k * (Nat.choose n (j + 1) * (j + 1)) := by rw [h]
       _ = k * Nat.choose n (j + 1) * (j + 1) := by ring
@@ -73,7 +73,7 @@ lemma choose_iterated_bound
   | succ m ih =>
     have htm' : t + m + 1 ≤ k := by omega
     have htm_le : t + m ≤ k := by omega
-    have hstep := choose_step_bound n (t + m) k htm' hk
+    have hstep := choose_step_bound (j := t + m) htm' hk
     calc (n - k + 1) ^ (m + 1) * Nat.choose n t
       = (n - k + 1) * ((n - k + 1) ^ m * Nat.choose n t) := by ring
       _ ≤ (n - k + 1) * (k ^ m * Nat.choose n (t + m)) := by
@@ -101,7 +101,7 @@ lemma choose_ratio_bound
 -- proof
   have hm : t + (k - 2 * t) = k - t := by omega
   rw [← hm]
-  exact choose_iterated_bound n k t (k - 2 * t) (by omega) hk
+  exact choose_iterated_bound (by omega) hk
 
 end ChernoffHelpers
 
@@ -116,11 +116,11 @@ lemma vandermonde_decomposition
 -- given
   (hk : k ≤ d) :
 -- imply
-  Nat.choose d k = ∑ ij ∈ Finset.antidiagonal k, Nat.choose k ij.1 * Nat.choose (d - k) ij.2 := by
+  Nat.choose d k = ∑ ij ∈ antidiagonal k, Nat.choose k ij.1 * Nat.choose (d - k) ij.2 := by
 -- proof
   have h : d = k + (d - k) := (Nat.add_sub_cancel' hk).symm
   conv_lhs => rw [h]
-  exact Nat.add_choose_eq k (d - k) k
+  exact Nat.add_choose_eq (m := k) (n := d - k) k
 
 end ChernoffHelpers
 
@@ -165,18 +165,17 @@ lemma log_ratio_bound
     nlinarith
   have h2R1_pos : 2 * (R - 1) > 0 := by linarith
   have h1R_pos : 1 + R > 0 := by linarith
-  have hpow : (2 * (R - 1)) ^ 4 ≥ 1 + R := power_ineq_for_chernoff R hR
+  have hpow : (2 * (R - 1)) ^ 4 ≥ 1 + R := power_ineq_for_chernoff hR
   have hlog4 : 4 * Real.log (2 * (R - 1)) ≥ Real.log (1 + R) := by
     have : Real.log ((2 * (R - 1)) ^ 4) ≥ Real.log (1 + R) :=
       Real.log_le_log h1R_pos hpow
     rwa [Real.log_pow] at this
   calc k / 2 * Real.log ((d - 2 * k + 1) / k)
-    ≥ k / 2 * Real.log (2 * (R - 1)) := by
-      apply mul_le_mul_of_nonneg_left (Real.log_le_log h2R1_pos h_ratio_lb)
-      linarith
+      ≥ k / 2 * Real.log (2 * (R - 1)) :=
+        mul_le_mul_of_nonneg_left (Real.log_le_log h2R1_pos h_ratio_lb) (by linarith)
     _ = k / 8 * (4 * Real.log (2 * (R - 1))) := by ring
-    _ ≥ k / 8 * Real.log (1 + R) := by
-      apply mul_le_mul_of_nonneg_left hlog4; linarith
+    _ ≥ k / 8 * Real.log (1 + R) :=
+        mul_le_mul_of_nonneg_left hlog4 (by linarith)
     _ = k / 8 * Real.log (1 + d / (2 * k)) := by rw [hR_def]
 
 end ChernoffHelpers
@@ -199,7 +198,7 @@ lemma exp_le_ratio_pow
   rw [rpow_def_of_pos h_base_pos]
   apply Real.exp_le_exp.mpr
   rw [mul_comm (Real.log _) _]
-  exact log_ratio_bound d k hk hd
+  exact log_ratio_bound (d := d) (k := k) hk hd
 
 end ChernoffHelpers
 
@@ -217,7 +216,7 @@ lemma base_ratio_ge_six
 -- imply
   6 * k ≤ d - 2 * k + 1 := by
 -- proof
-omega
+  omega
 
 end ChernoffHelpers
 

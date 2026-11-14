@@ -1,9 +1,9 @@
 import Mathlib
 import Instance.GroupCohomology_LevelSubgroup
-import Lemma.GroupCohomology.ContinuousUnramified
-import Lemma.GroupCohomology.ContinuousUnramifiedLevel
-import Lemma.GroupCohomology.ContinuousUnramifiedLevelInflation
-import Lemma.GroupCohomology.ContinuousH2Inflation
+import Lemma.Finset.ContinuousUnramified
+import Lemma.Submodule.ContinuousUnramifiedLevel
+import Lemma.Rep.ContinuousUnramifiedLevelInflation
+import Lemma.Rep.ContinuousH2Inflation
 import Def.NumberField_SUnitsMax
 import Instance.NumberField_LevelArithmeticModP
 import Def.NumberField_IdeleLocalInvariant

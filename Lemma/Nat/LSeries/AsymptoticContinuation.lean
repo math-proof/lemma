@@ -50,9 +50,9 @@ lemma analyticAt_linearAsymptoticDirichletContinuation_of_ne_one
 -- imply
   AnalyticAt ℂ (linearAsymptoticDirichletContinuation a ρ) s := by
 -- proof
-  have hremO := isBigO_abelPartialSum_sub_const a ρ hO
+  have hremO := isBigO_abelPartialSum_sub_const hO
   have hrem : AnalyticAt ℂ (abelContinuation (fun n => a n - ρ)) s :=
-    (analyticOn_abelContinuation (fun n => a n - ρ) hremO).analyticAt
+    (analyticOn_abelContinuation hremO).analyticAt
       ((isOpen_lt continuous_const Complex.continuous_re).mem_nhds hs)
   have hzeta : AnalyticAt ℂ riemannZeta s :=
     analyticOn_riemannZeta s (by simpa using hs1)
@@ -71,10 +71,10 @@ private lemma analyticAt_linearAsymptoticNumerator
   (hO : (fun n => abelPartialSum a n - n • ρ) =O[atTop]
     fun n => ((n : ℝ) ^ σ : ℝ)) :
   AnalyticAt ℂ (linearAsymptoticNumerator a ρ) 1 := by
-  have hremO := isBigO_abelPartialSum_sub_const a ρ hO
+  have hremO := isBigO_abelPartialSum_sub_const hO
   have h1mem : (1 : ℂ) ∈ {s : ℂ | σ < s.re} := by simpa using hσ1
   have hrem : AnalyticAt ℂ (abelContinuation (fun n => a n - ρ)) 1 :=
-    (analyticOn_abelContinuation (fun n => a n - ρ) hremO).analyticAt
+    (analyticOn_abelContinuation hremO).analyticAt
       ((isOpen_lt continuous_const Complex.continuous_re).mem_nhds h1mem)
   have hzeta : AnalyticAt ℂ riemannZeta₁ 1 :=
     Complex.analyticAt_iff_eventually_differentiableAt.mpr
@@ -127,7 +127,7 @@ private lemma linearAsymptoticDirichletContinuation_eventuallyEq
       (s - 1) ^ (-1 : ℤ) • linearAsymptoticNumerator a ρ s
   filter_upwards [self_mem_nhdsWithin] with s hs
   have hne : s ≠ 1 := by simpa using hs
-  rw [linearAsymptoticDirichletContinuation_eq_inv_sub_mul a ρ hne]
+  rw [linearAsymptoticDirichletContinuation_eq_inv_sub_mul hne]
   unfold linearAsymptoticNumerator
   rw [zpow_neg_one, smul_eq_mul]
 
@@ -166,7 +166,7 @@ lemma meromorphicOrderAt_linearAsymptoticDirichletContinuation_one
   meromorphicOrderAt (linearAsymptoticDirichletContinuation a ρ) 1 =
     ((-1 : ℤ) : WithTop ℤ) := by
 -- proof
-  have hmero := meromorphicAt_linearAsymptoticDirichletContinuation_one a ρ hσ1 hO
+  have hmero := meromorphicAt_linearAsymptoticDirichletContinuation_one hσ1 hO
   have hval : linearAsymptoticNumerator a ρ 1 ≠ 0 := by
     rw [linearAsymptoticNumerator_one]; exact hρ
   exact ((meromorphicOrderAt_eq_int_iff (n := -1) hmero).2
@@ -199,7 +199,7 @@ lemma tendsto_sub_one_mul_linearAsymptoticDirichletContinuation
   exact hlim.congr' (by
     filter_upwards [self_mem_nhdsWithin] with s hs
     have hs1 : s ≠ 1 := by simpa using hs
-    rw [linearAsymptoticDirichletContinuation_eq_inv_sub_mul a ρ hs1]
+    rw [linearAsymptoticDirichletContinuation_eq_inv_sub_mul hs1]
     unfold linearAsymptoticNumerator
     field_simp [sub_ne_zero.mpr hs1])
 
@@ -221,9 +221,9 @@ lemma meromorphicOn_linearAsymptoticDirichletContinuation
   intro s hs
   by_cases hs1 : s = 1
   · subst hs1
-    exact meromorphicAt_linearAsymptoticDirichletContinuation_one a ρ hσ1 hO
+    exact meromorphicAt_linearAsymptoticDirichletContinuation_one hσ1 hO
   · exact (analyticAt_linearAsymptoticDirichletContinuation_of_ne_one
-    a ρ hO hs hs1).meromorphicAt
+    hO hs hs1).meromorphicAt
 
 /--
 [tendsto_linearAsymptoticDirichletContinuation_Icc](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LSeries/AsymptoticContinuation.lean)
@@ -242,8 +242,8 @@ lemma tendsto_linearAsymptoticDirichletContinuation_Icc
   Tendsto (fun N => ∑ n ∈ Finset.Icc 1 N, LSeries.term a s n) atTop
     (𝓝 (linearAsymptoticDirichletContinuation a ρ s)) := by
 -- proof
-  have hrem := tendsto_abelContinuation_Icc (fun n => a n - ρ) (hσ1.trans hs)
-    (isBigO_abelPartialSum_sub_const a ρ hO)
+  have hrem := tendsto_abelContinuation_Icc (hσ1.trans hs)
+    (isBigO_abelPartialSum_sub_const hO)
   have hrange := (tendsto_add_atTop_iff_nat 1).mpr (LSeriesHasSum_one hs).tendsto_sum_nat
   have hzeta : Tendsto (fun N => ∑ n ∈ Finset.Icc 1 N,
     LSeries.term (1 : ℕ → ℂ) s n) atTop (𝓝 (riemannZeta s)) := by
@@ -276,4 +276,4 @@ lemma tendsto_linearAsymptoticDirichletContinuation_Icc
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-13

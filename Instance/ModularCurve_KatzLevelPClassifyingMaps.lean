@@ -2,7 +2,7 @@
 import Mathlib
 import Instance.ModularCurve_KatzLevelP
 import Instance.ModularCurve_KatzLevelPUniversal
-import Lemma.ModularCurve.KatzLevelPClassifyingMaps
+import Lemma.WeierstrassCurve.KatzLevelPClassifyingMaps
 
 set_option autoImplicit false
 

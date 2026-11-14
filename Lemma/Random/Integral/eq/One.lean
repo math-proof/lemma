@@ -7,13 +7,13 @@ open MeasureTheory Random
 @[path]
 private lemma main
   [MeasurableSpace Ω]
-  [ReferenceMeasure α]
+  [μ : ReferenceMeasure α]
   {π : Measure Ω}
   {x : Ω → α}
 -- given
   [SinglePSpace π x] :
 -- imply
-  ∫⁻ a, π.prob x a ∂ReferenceMeasure.measure = 1 := by
+  ∫⁻ a, π.prob x a ∂μ.measure = 1 := by
 -- proof
   have h := congrArg (fun μ : Measure α => μ Set.univ) (Map.eq.WithDensityProb (π := π) (x := x))
   simp only [withDensity_apply _ MeasurableSet.univ, Measure.restrict_univ] at h
@@ -25,3 +25,4 @@ private lemma main
 
 
 -- created on 2021-08-24
+-- updated on 2026-11-14

@@ -537,7 +537,7 @@ private lemma cbd_window {S : Set ℕ} {a b : ℕ} {Ta Tb : Type}
   set p : ℕ := prod.natAbs with hpdef
   obtain hneg | hpos := lt_or_gt_of_ne hprod
   · have e : ((y₀ : ℤ) - (x₀ : ℤ)) * d = -prod := by
-    rw [hproddef]; ring
+      rw [hproddef]; ring
     have hpos2 : 0 < ((y₀ : ℤ) - (x₀ : ℤ)) * d := by
       rw [e]; linarith
     have hpcast2 : ((p : ℕ) : ℤ) = ((y₀ : ℤ) - (x₀ : ℤ)) * d := by
@@ -550,8 +550,8 @@ private lemma cbd_window {S : Set ℕ} {a b : ℕ} {Ta Tb : Type}
       hsmall hpcast2 hpos2
     exact ⟨p, hp0, hple, fun x hx => hper x (hx.trans hκb)⟩
   · have hpcast1 : ((p : ℕ) : ℤ) = ((x₀ : ℤ) - (y₀ : ℤ)) * d := by
-    rw [hpdef]
-    exact Int.natAbs_of_nonneg (le_of_lt hpos)
+      rw [hpdef]
+      exact Int.natAbs_of_nonneg (le_of_lt hpos)
     obtain ⟨hp0, hple, hper⟩ :=
       cbd_window_aux ha hb hd hx₀ hy₀ hκb hκa hsmall hpcast1 hpos
     exact ⟨p, hp0, hple, hper⟩
@@ -746,10 +746,10 @@ lemma cobham_base_dependence_isUltimatelyPeriodic
   ¬ IsBaseRecognizable l S :=
 -- proof
   cobham_base_dependence hl hindependent hrecognizable
-    (fun h => haperiodic ((isUltimatelyPeriodicSet_iff_isUltimatelyPeriodic S).mp h))
+    (fun h => haperiodic ((isUltimatelyPeriodicSet_iff_isUltimatelyPeriodic).mp h))
 
 end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-28
+-- updated on 2026-11-13

@@ -9,7 +9,7 @@ open Set Real Nat
 
 
 @[path]
-private lemma main:
+private lemma main :
 -- imply
   (π / 9).sin ∈ Ioo (20 / 60) (21 / 60) := by
 -- proof

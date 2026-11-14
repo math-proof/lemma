@@ -1,10 +1,10 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_OrderedAffineCoverCech.lean: instance decls only.
-import Lemma.AlgebraicGeometry.TwoAffineOpenCover
+import Lemma.Scheme.TwoAffineOpenCover
 import Mathlib.AlgebraicGeometry.AffineScheme
 import Mathlib.RingTheory.Finiteness.Defs
 import Mathlib.LinearAlgebra.Quotient.Defs
 import Mathlib.LinearAlgebra.Pi
-import Lemma.AlgebraicGeometry.OrderedAffineCoverCech
+import Lemma.Scheme.OrderedAffineCoverCech
 
 set_option autoImplicit false
 

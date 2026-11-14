@@ -7,6 +7,7 @@ import Lemma.Tensor.GetDot.eq.Sum_MulGetS
 import Lemma.Tensor.ItemMul.eq.MulItemS
 import Lemma.Tensor.Mul
 import Lemma.Vector.GetSum.eq.Sum_Get
+import Theorem.Probability.JointRv.AsRV
 open Tensor
 
 
@@ -164,4 +165,4 @@ private lemma main
 
 
 -- created on 2023-04-07
--- updated on 2026-11-11
+-- updated on 2026-11-12

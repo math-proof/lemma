@@ -20,7 +20,7 @@ lemma piTheta_eq_subsingleton
   Set.Subsingleton {θ : F | piTheta θ x₁ = piTheta θ x₂} := by
 -- proof
   intro θ₁ hθ₁ θ₂ hθ₂
-  simp only [Set.mem_setOf_eq, piTheta] at hθ₁ hθ₂
+  simp only [Set.mem_ofPred_eq, piTheta] at hθ₁ hθ₂
   by_cases h : x₁.2 = x₂.2
   · exact absurd (Prod.ext (by linear_combination hθ₁ - θ₁ * h) h) hne
   · have h' : x₁.2 - x₂.2 ≠ 0 := sub_ne_zero.mpr h

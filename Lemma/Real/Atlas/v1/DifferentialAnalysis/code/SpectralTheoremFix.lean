@@ -25,7 +25,7 @@ lemma inner_shifted_eq
 -- proof
   have halg : algebraMap ℝ (H →L[ℂ] H) t = (t : ℂ) • (1 : H →L[ℂ] H) := by
     simp [Algebra.algebraMap_eq_smul_one]
-  simp only [halg, ContinuousLinearMap.sub_apply, ContinuousLinearMap.smul_apply,
+  simp only [halg, sub_apply, ContinuousLinearMap.smul_apply,
     ContinuousLinearMap.one_apply, inner_sub_left, inner_smul_left,
     Complex.conj_ofReal, inner_self_eq_norm_sq_to_K,
     ← hT.isSymmetric.coe_reApplyInnerSelf_apply (x := x),
@@ -113,7 +113,7 @@ lemma rayleighInf_mul_le_reApplyInnerSelf
   · have h := ciInf_le (bddBelow_rayleigh T) ⟨x, hx⟩
     change rayleighInf T ≤ T.rayleighQuotient x at h
     rwa [ContinuousLinearMap.rayleighQuotient, le_div_iff₀ (by positivity : 0 < ‖x‖ ^ 2)] at h
-set_option maxHeartbeats 4000000 in
+set_option maxHeartbeats 4000000
 
 end SpectralTheorem
 
@@ -137,7 +137,7 @@ lemma selfAdjoint_spectrum_subset_Icc
   spectrum ℝ T ⊆ Set.Icc (rayleighInf T) (rayleighSup T) := by
 -- proof
   intro t ht; rw [Set.mem_Icc]; constructor
-  · by_contra h; push_neg at h; apply ht
+  · by_contra h; push Not at h; apply ht
     apply ContinuousLinearMap.isUnit_of_forall_le_norm_inner_map
       _ (c := ⟨rayleighInf T - t, le_of_lt (sub_pos.mpr h)⟩)
     · exact_mod_cast sub_pos.mpr h
@@ -146,7 +146,7 @@ lemma selfAdjoint_spectrum_subset_Icc
       have := rayleighInf_mul_le_reApplyInnerSelf T x
       rw [abs_of_nonpos (by nlinarith [sq_nonneg ‖x‖])]
       nlinarith [sq_nonneg ‖x‖]
-  · by_contra h; push_neg at h; apply ht
+  · by_contra h; push Not at h; apply ht
     apply ContinuousLinearMap.isUnit_of_forall_le_norm_inner_map
       _ (c := ⟨t - rayleighSup T, le_of_lt (sub_pos.mpr h)⟩)
     · exact_mod_cast sub_pos.mpr h
@@ -227,7 +227,7 @@ lemma quadratic_expansion_aux
     ring
   exact_mod_cast key
 omit [CompleteSpace H] in
-set_option maxHeartbeats 64000000 in
+set_option maxHeartbeats 64000000
 
 end SpectralTheorem
 
@@ -269,7 +269,7 @@ lemma norm_sq_le_opNorm_mul_reApplyInnerSelf
     _ ≤ P.reApplyInnerSelf x * (‖P‖ * ‖P x‖ ^ 2) := by nlinarith [hpos x]
   rw [sq (‖P x‖ ^ 2)] at this
   exact le_of_mul_le_mul_right (by nlinarith) hB_pos
-set_option maxHeartbeats 16000000 in
+set_option maxHeartbeats 16000000
 
 end SpectralTheorem
 
@@ -304,7 +304,7 @@ lemma selfAdjoint_inf_mem_spectrum
     show (T - algebraMap ℝ (H →L[ℂ] H) m).reApplyInnerSelf x = _
     have halg : algebraMap ℝ (H →L[ℂ] H) m = (m : ℂ) • (1 : H →L[ℂ] H) := by
       simp [Algebra.algebraMap_eq_smul_one]
-    simp only [ContinuousLinearMap.reApplyInnerSelf_apply, ContinuousLinearMap.sub_apply,
+    simp only [ContinuousLinearMap.reApplyInnerSelf_apply, sub_apply,
       halg, ContinuousLinearMap.smul_apply, ContinuousLinearMap.one_apply,
       inner_sub_left, inner_smul_left, Complex.conj_ofReal, inner_self_eq_norm_sq_to_K]
     simp [sq]
@@ -396,7 +396,7 @@ lemma rayleighInf_neg
     · rintro ⟨i, rfl⟩; exact ⟨i, (neg_neg _).symm⟩
     · rintro ⟨i, hi⟩; exact ⟨i, by linarith⟩
   rw [hrw, Real.sInf_neg]
-set_option maxHeartbeats 400000 in
+set_option maxHeartbeats 400000
 
 end SpectralTheorem
 

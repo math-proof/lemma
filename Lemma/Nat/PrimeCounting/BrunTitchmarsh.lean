@@ -242,21 +242,21 @@ private lemma btSieveFunction_le_max_endpoints {α β L U v : ℝ}
   have hvpos : 0 < v := hLpos.trans_le hLv
   by_cases hsign : α * v + β * (1 - Real.log v) ≤ 0
   · have hanti : AntitoneOn (btSieveFunction α β) (Set.Icc L v) := by
-    apply antitoneOn_of_deriv_nonpos (convex_Icc L v)
-    · intro x hx
-      exact (btSieveFunction_hasDerivAt α β x
-        (ne_of_gt (hLpos.trans_le hx.1))).continuousAt.continuousWithinAt
-    · intro x hx
-      have hx' := interior_subset hx
-      exact (btSieveFunction_hasDerivAt α β x
-        (ne_of_gt (hLpos.trans_le hx'.1))).differentiableAt.differentiableWithinAt
-    · intro x hx
-      have hx' := interior_subset hx
-      have hnum := btSieveDerivNumerator_mono hα hβ (hturn.trans hx'.1) hx'.2
-      have hderiv := (btSieveFunction_hasDerivAt α β x
-        (ne_of_gt (hLpos.trans_le hx'.1))).deriv
-      rw [hderiv]
-      exact div_nonpos_of_nonpos_of_nonneg (hnum.trans hsign) (sq_nonneg x)
+      apply antitoneOn_of_deriv_nonpos (convex_Icc L v)
+      · intro x hx
+        exact (btSieveFunction_hasDerivAt α β x
+          (ne_of_gt (hLpos.trans_le hx.1))).continuousAt.continuousWithinAt
+      · intro x hx
+        have hx' := interior_subset hx
+        exact (btSieveFunction_hasDerivAt α β x
+          (ne_of_gt (hLpos.trans_le hx'.1))).differentiableAt.differentiableWithinAt
+      · intro x hx
+        have hx' := interior_subset hx
+        have hnum := btSieveDerivNumerator_mono hα hβ (hturn.trans hx'.1) hx'.2
+        have hderiv := (btSieveFunction_hasDerivAt α β x
+          (ne_of_gt (hLpos.trans_le hx'.1))).deriv
+        rw [hderiv]
+        exact div_nonpos_of_nonpos_of_nonneg (hnum.trans hsign) (sq_nonneg x)
     exact (hanti ⟨le_rfl, hLv⟩ ⟨hLv, le_rfl⟩ hLv).trans (le_max_left _ _)
   · have hsign' : 0 ≤ α * v + β * (1 - Real.log v) := le_of_not_ge hsign
     have hmono : MonotoneOn (btSieveFunction α β) (Set.Icc v U) := by
@@ -522,7 +522,7 @@ private lemma btCardRangeModSubDivAbsLe (N m b : ℕ)
     linarith
   have hfracNonneg : (0 : ℝ) ≤ (N % m : ℕ) / (m : ℝ) := by positivity
   have hfracLeOne : ((N % m : ℕ) : ℝ) / m ≤ 1 := by
-    rwa [div_le_one hmR]
+    rw [div_le_one hmR]; exact le_of_lt hlt
   by_cases hif : b < N % m
   · simp only [hif, ite_true] at hcount
     have hcast : ((((Finset.range N).filter (fun n ↦ n % m = b)).card : ℕ) : ℝ) =
@@ -661,15 +661,18 @@ end MathlibExt.NumberTheory.PrimeCounting.BrunTitchmarshWanted
 
 namespace MathlibExt.NumberTheory.PrimeCounting.BrunTitchmarshWanted
 
+private lemma btInv_apply (n : ℕ) : btInv n = (n : ℝ)⁻¹ := rfl
+
 /--
 [btInv_mult](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeCounting/BrunTitchmarsh.lean)
 -/
 @[path]
 private theorem btInv_mult : btInv.IsMultiplicative := by
   constructor
-  · simp
+  · simp [btInv_apply]
   · intro m n _
-    simp only [btInv_apply, Nat.cast_mul, mul_inv]
+    simp [btInv_apply, Nat.cast_mul]
+    exact mul_comm _ _
 
 end MathlibExt.NumberTheory.PrimeCounting.BrunTitchmarshWanted
 
@@ -954,7 +957,7 @@ private lemma btPrimeCount_le_small_add_sifted (X q a z : ℕ) :
       (Nat.Coprime (btPrimeProduct z q))).card : ℝ) := by
   let T := (Finset.range (X + 1)).filter fun p ↦ p.Prime ∧ p ≡ a [MOD q]
   have hTcard : T.card = Nat.primeCountingMod X q a := by
-    simpa only [T] using (Nat.primeCountingMod_eq_card_filter_range X q a).symm
+    simpa only [T] using Nat.primeCountingMod_eq_card_filter_range.symm
   have hsplit := Finset.card_filter_add_card_filter_not (s := T) (fun p ↦ p ≤ z)
   have hsmall : ((T.filter fun p ↦ p ≤ z).card : ℝ) ≤ Nat.primeCounting z := by
     have hsub : T.filter (fun p ↦ p ≤ z) ⊆ z.primesLE := by
@@ -1265,13 +1268,13 @@ private lemma btBrunTitchmarsh_smallRange (X q a : ℕ) (hq : 0 < q)
   rcases btSieveFunction_smallRange ((X : ℝ) / q) hv hv20000 with
     hf | hf | hf | hf
   · exact btSmallRangeFromSieve X q a 2 (1 / 4) (3 / 2) hq hqX
-    btPrimeData_two.1 btPrimeData_two.2 hf
+      btPrimeData_two.1 btPrimeData_two.2 hf
   · exact btSmallRangeFromSieve X q a 3 (1 / 6) 3 hq hqX
-    btPrimeData_three.1 btPrimeData_three.2 hf
+      btPrimeData_three.1 btPrimeData_three.2 hf
   · exact btSmallRangeFromSieve X q a 5 (2 / 15) (11 / 2) hq hqX
-    btPrimeData_five.1 btPrimeData_five.2 hf
+      btPrimeData_five.1 btPrimeData_five.2 hf
   · exact btSmallRangeFromSieve X q a 13 (96 / 1001) 35 hq hqX
-    btPrimeData_thirteen.1 btPrimeData_thirteen.2 hf
+      btPrimeData_thirteen.1 btPrimeData_thirteen.2 hf
 
 end MathlibExt.NumberTheory.PrimeCounting.BrunTitchmarshWanted
 
@@ -1474,7 +1477,7 @@ private lemma btSieveDensityLower (N : ℕ) (hN : 15000 ≤ N) :
     rw [Real.log_mul (by norm_num : (4 / 5 : ℝ) ≠ 0) (by positivity), hlogSqrt]
       at hlogScale
     linarith
-  have hweighted := squarefreeTotientWeightedLower z hz100
+  have hweighted := squarefreeTotientWeightedLower hz100
   have hW : Real.log N / 2 + 13 / 100 <
     ∑ r ∈ Finset.Icc 1 z, (1 + (r : ℝ) / z)⁻¹ *
       (((ArithmeticFunction.moebius r : ℤ) : ℝ) ^ 2 / Nat.totient r) := by
@@ -1668,7 +1671,10 @@ private lemma btLargeRange (X q a : ℕ) (haq : Nat.Coprime a q)
   let S := (Finset.range N).filter fun n ↦
     (q * n + a0).Prime ∧ z < q * n + a0 ∧ Nat.Coprime a0 q
   have ha0q : Nat.Coprime a0 q := by
-    rwa [Nat.coprime_iff_gcd_eq_one, ← Nat.gcd_rec]
+    change Nat.Coprime (a % q) q
+    rw [Nat.coprime_iff_gcd_eq_one, ← Nat.gcd_rec q a, Nat.gcd_comm,
+      ← Nat.coprime_iff_gcd_eq_one]
+    exact haq
   have hfloor : 20000 ≤ X / q := by
     exact (Nat.le_div_iff_mul_le hq).2 hlargeX.le
   have hN : 15000 ≤ N := by
@@ -1678,7 +1684,7 @@ private lemma btLargeRange (X q a : ℕ) (haq : Nat.Coprime a q)
     have hz100 := (btSieveLevelData N hN).1
     omega
   have hTcard : T.card = Nat.primeCountingMod X q a := by
-    simpa only [T] using (Nat.primeCountingMod_eq_card_filter_range X q a).symm
+    simpa only [T] using Nat.primeCountingMod_eq_card_filter_range.symm
   have hsplit : Tsmall.card + Tlarge.card = T.card := by
     simpa only [Tsmall, Tlarge] using
       Finset.card_filter_add_card_filter_not (s := T) (fun p ↦ p ≤ z)
@@ -1735,7 +1741,7 @@ private lemma btLargeRange (X q a : ℕ) (haq : Nat.Coprime a q)
       (((ArithmeticFunction.moebius r : ℤ) : ℝ) ^ 2 / Nat.totient r)
   have hsieve : D * S.card ^ 2 ≤ ((q : ℝ) / Nat.totient q) * S.card := by
     simpa only [D] using
-      arithmeticLargeSieve_progression N z q a0 hz hq S hS hSprime hSlarge
+      arithmeticLargeSieve_progression hz hq hS hSprime hSlarge
   have hDensity : (Real.log N + 13 / 50) / (2 * N) < D :=
     btSieveDensityLower N hN
   have hDensityBase : 0 < (Real.log N + 13 / 50) / (2 * N) := by

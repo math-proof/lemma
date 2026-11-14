@@ -8,7 +8,7 @@ namespace RealNumbers
 [Ioc_zero_one_uncountable](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/RealAnalysis/code/RealNumbers/Uncountability.lean)
 -/
 @[path]
-lemma Ioc_zero_one_uncountable
+lemma Ioc_zero_one_uncountable :
 -- imply
   ¬ Set.Countable (Set.Ioc (0:ℝ) 1) := by
 -- proof
@@ -23,7 +23,7 @@ namespace RealNumbers
 [real_uncountable](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/RealAnalysis/code/RealNumbers/Uncountability.lean)
 -/
 @[path]
-lemma real_uncountable
+lemma real_uncountable :
 -- imply
   ¬ Set.Countable (Set.univ : Set ℝ) :=
 -- proof

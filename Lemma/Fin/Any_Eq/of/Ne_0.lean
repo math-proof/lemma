@@ -1,6 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.LieGroups.code.HighestWeightModules.Part2
+open TriangularDecomposition
 
 
 /--
@@ -13,7 +14,6 @@ private lemma main
   {𝔤 : Type*}
   [LieRing 𝔤]
   [LieAlgebra R 𝔤]
-  {R 𝔤}
   {Δ : TriangularDecomposition R 𝔤}
   {chev : ChevalleyData Δ}
   {i : Fin chev.rank}
@@ -66,7 +66,6 @@ private lemma exercise_8_11
   {𝔤 : Type*}
   [LieRing 𝔤]
   [LieAlgebra R 𝔤]
-  {R 𝔤}
   {Δ : TriangularDecomposition R 𝔤}
   {chev : ChevalleyData Δ}
   {wt : Δ.𝔥 →ₗ[R] R}
@@ -91,8 +90,8 @@ private lemma exercise_8_11
     hV.npos_action ⟨chev.posGen i, chev.posGen_mem i⟩
   have hh_v : ⁅(chev.simpleCoroot i : 𝔤), v⁆ = μ • v :=
     hV.cartan_action (chev.simpleCoroot i)
-  exact chev.sl2_weight_integrality i v hV.hwv_ne_zero he_v μ hh_v
+  exact main hV.hwv_ne_zero he_v hh_v
 
 
 -- created on 2026-10-23
--- updated on 2026-10-26
+-- updated on 2026-11-13

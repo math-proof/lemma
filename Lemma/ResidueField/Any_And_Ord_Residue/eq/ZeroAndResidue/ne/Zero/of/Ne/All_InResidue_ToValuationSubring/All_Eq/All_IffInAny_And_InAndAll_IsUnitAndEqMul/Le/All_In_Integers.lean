@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.RegularProlongation
+import Lemma.Scheme.RegularProlongation
 import Lemma.Int.P2MUtil
 
-open AlgebraicCurve IsLocalRing
+open AlgebraicCurve IsLocalRing Scheme
 
 /--
 [AlgebraicCurve_RegularProlongation_exists_mem_nonunit_ord_residue_eq_zero_of_ne_centre](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_RegularProlongation_exists_mem_nonunit_ord_residue_eq_zero_of_ne_centre.lean)

@@ -136,12 +136,13 @@ lemma completedRiemannZeta_zero_re_in_critical_strip
   ·
     by_contra h
     push Not at h
-    apply completedRiemannZeta_ne_zero_of_one_le_re _
-      (sub_ne_zero.mpr (Ne.symm hs1))
-    ·
-      simp [Complex.sub_re, Complex.one_re]
+    have hre : 1 ≤ (1 - s).re := by
+      rw [Complex.sub_re, Complex.one_re]
       linarith
-    rwa [completedRiemannZeta_one_sub]
+    have hne : (1 - s) ≠ 0 := sub_ne_zero.mpr (Ne.symm hs1)
+    have hζ := completedRiemannZeta_ne_zero_of_one_le_re hre hne
+    rw [completedRiemannZeta_one_sub] at hζ
+    exact hζ hs
   ·
     by_contra h
     push Not at h

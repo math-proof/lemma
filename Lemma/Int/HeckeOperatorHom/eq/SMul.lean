@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.Gamma0HeckeOperatorHom.Main
+import Lemma.Matrix.Gamma0HeckeOperatorHom
 import Lemma.Int.P2MUtil
 
 open CongruenceSubgroup Subgroup

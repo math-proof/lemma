@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.IharaLemma.IdempotentSplitting
-open IharaLemma
+import Lemma.Ideal.IdempotentSplitting
+open IharaLemma Ideal
 
 
 /-- ported from external source -/

@@ -1,4 +1,4 @@
-import Lemma.AutomorphicForm.LocalOrbitalBase
+import Lemma.Matrix.LocalOrbitalBase
 import Def.AutomorphicForm_ConstantTerm
 import Def.LanglandsTunnell_CubicInduction_TorusValues
 

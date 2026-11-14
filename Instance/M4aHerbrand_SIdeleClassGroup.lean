@@ -1,8 +1,8 @@
 -- Carved from Lemma/Definitions/Def_M4aHerbrand_SIdeleClassGroup.lean: instance decls only.
 import Mathlib
 import Def.M4aHerbrand_IdeleClassVocab
-import Lemma.IsDedekindDomain.FiniteUnitIdelesOutside
-import Lemma.M4aHerbrand.SIdeleClassGroup
+import Lemma.Set.FiniteUnitIdelesOutside
+import Lemma.Set.SIdeleClassGroup
 
 set_option autoImplicit false
 

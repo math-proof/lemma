@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.LanglandsTunnell.ArchBessel
+import Lemma.Measure.ArchBessel
 import Lemma.Int.P2MUtil
 
-open MeasureTheory Set LanglandsTunnell.ArchBessel
+open MeasureTheory Set Measure.ArchBessel
 
 /--
 [LanglandsTunnell_ArchBessel_besselKernel_eq_cpow_mul_integral_exp_neg_sub_sq_div](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_LanglandsTunnell_ArchBessel_besselKernel_eq_cpow_mul_integral_exp_neg_sub_sq_div.lean)
@@ -56,8 +56,8 @@ private lemma main
       rw [← Complex.ofReal_mul]; rw [show (2 / x) * (x / 2) = (1 : ℝ) by field_simp]; simp
     rw [this, Complex.one_cpow]
   calc besselKernel ν x = 1 * besselKernel ν x := (one_mul _).symm
-    _ = ((((2 / x : ℝ)) : ℂ) ^ ν * ((((x / 2 : ℝ)) : ℂ) * (((x / 2 : ℝ)) : ℂ) ^ (ν - 1))) * besselKernel ν x := by
-      rw [e3, e4]
+    _ = ((((2 / x : ℝ)) : ℂ) ^ ν * ((((x / 2 : ℝ)) : ℂ) * (((x / 2 : ℝ)) : ℂ) ^ (ν - 1))) * besselKernel ν x := (by
+      rw [e3, e4])
     _ = (((2 / x : ℝ)) : ℂ) ^ ν * ((((x / 2 : ℝ)) : ℂ) * ((((x / 2 : ℝ)) : ℂ) ^ (ν - 1) * besselKernel ν x)) := by
       ring
 

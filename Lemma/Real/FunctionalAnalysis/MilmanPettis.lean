@@ -6,9 +6,9 @@ namespace MathlibExt.Analysis.FunctionalAnalysis.MilmanPettisWanted
 
 /--
 [exists_re_gt](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/FunctionalAnalysis/MilmanPettis.lean)
+on some functional of the unit ball.
 -/
 @[path]
-on some functional of the unit ball. -/
 private lemma exists_re_gt
   {𝕜 : Type*} [RCLike 𝕜]
   {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
@@ -49,9 +49,9 @@ namespace MathlibExt.Analysis.FunctionalAnalysis.MilmanPettisWanted
 
 /--
 [approx_of_norm_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/FunctionalAnalysis/MilmanPettis.lean)
+image of the unit ball.
 -/
 @[path]
-image of the unit ball. -/
 private lemma approx_of_norm_one
   {𝕜 : Type*} [RCLike 𝕜]
   {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E] [UniformConvexSpace E]
@@ -183,9 +183,9 @@ namespace MathlibExt.Analysis.FunctionalAnalysis.MilmanPettisWanted
 
 /--
 [milman_pettis_aux](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/FunctionalAnalysis/MilmanPettis.lean)
+closure of the range of the canonical embedding, and the range is closed.
 -/
 @[path]
-closure of the range of the canonical embedding, and the range is closed. -/
 private lemma milman_pettis_aux
   {𝕜 : Type*} [RCLike 𝕜]
   {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E] [UniformConvexSpace E]

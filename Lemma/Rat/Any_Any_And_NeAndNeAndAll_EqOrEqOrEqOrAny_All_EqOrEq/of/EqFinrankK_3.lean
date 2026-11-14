@@ -12,10 +12,10 @@ private lemma main
 -- given
   (hdeg : Module.finrank ℚ K = 3) :
 -- imply
-  ∃ (w₀ : InfinitePlace K) (h₀ : w₀.IsReal),
-      (∃ (w₁ w₂ : InfinitePlace K) (h₁ : w₁.IsReal) (h₂ : w₂.IsReal),
+  ∃ (w₀ : InfinitePlace K) (_h₀ : w₀.IsReal),
+      (∃ (w₁ w₂ : InfinitePlace K) (_h₁ : w₁.IsReal) (_h₂ : w₂.IsReal),
           w₀ ≠ w₁ ∧ w₀ ≠ w₂ ∧ w₁ ≠ w₂ ∧ (∀ w : InfinitePlace K, w = w₀ ∨ w = w₁ ∨ w = w₂)) ∨
-        (∃ (wC : InfinitePlace K) (hC : wC.IsComplex), ∀ w : InfinitePlace K, w = wC ∨ w = w₀) := by
+        (∃ (wC : InfinitePlace K) (_hC : wC.IsComplex), ∀ w : InfinitePlace K, w = wC ∨ w = w₀) := by
 -- proof
   classical
     have hsum := NumberField.InfinitePlace.card_add_two_mul_card_eq_rank K
@@ -58,3 +58,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

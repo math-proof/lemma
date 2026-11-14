@@ -9,7 +9,7 @@ open scoped MatrixGroups
 
 def IsPrimitive {G : Type*} [Group G] {R : Type*} [CommRing R] (φ ψ : Additive G →+ R)
     (h : G → R) : Prop :=
-  ∀ g g' : G, h (g * g') = h g + h g' - ModularCurve.PDPairing.omega φ ψ g g'
+  ∀ g g' : G, h (g * g') = h g + h g' - Matrix.PDPairing.omega φ ψ g g'
 
 noncomputable def mult (Γ : Subgroup SL(2, ℤ)) : ℚ := by
   classical

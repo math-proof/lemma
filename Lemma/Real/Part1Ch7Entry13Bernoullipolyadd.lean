@@ -336,7 +336,7 @@ namespace MathlibExt.Analysis.Ramanujan.Part1Ch7.Entry13Bernoullipolyadd
 [Part1Ch7Entry13Bernoullipolyadd](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch7Entry13Bernoullipolyadd.lean)
 -/
 @[path]
-lemma ramanujan_part1_ch7_entry13_bernoullipolyadd
+lemma ramanujan_part1_ch7_entry13_bernoullipolyadd :
 -- imply
   ∃! c : ℕ → ℝ,
     (∀ k : ℕ, Filter.Tendsto (chapter7StieltjesApprox k) Filter.atTop (nhds (c k))) ∧

@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.GroupCohomology.ContinuousH1
+import Lemma.Rep.ContinuousH1
 import Lemma.Int.P2MUtil
 open CategoryTheory groupCohomology
 open Int

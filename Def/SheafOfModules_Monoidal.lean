@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.PresheafOfModules.InternalHom
+import Lemma.LinearMap.InternalHom
 import Theorems.Thm_PresheafOfModules_isMonoidal_inverseImage_W_toPresheaf
 import Abbrev.SheafOfModules_Monoidal
 

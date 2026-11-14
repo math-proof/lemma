@@ -11,7 +11,6 @@ open Matrix DVRContext
 private lemma main
   {C : DVRContext}
   [DVRClosureGL2 C]
-  {C}
   {n : ℕ}
   {d : GL (Fin n) C.k}
   {A : Matrix (Fin n) (Fin n) C.k}
@@ -34,7 +33,6 @@ private lemma main
 private lemma mul_diag_entry
   {C : DVRContext}
   [DVRClosureGL2 C]
-  {C}
   {n : ℕ}
   {A : Matrix (Fin n) (Fin n) C.k}
   {d : GL (Fin n) C.k}
@@ -57,7 +55,6 @@ private lemma mul_diag_entry
 private lemma diag_entry_ne_zero
   {C : DVRContext}
   [DVRClosureGL2 C]
-  {C}
   {n : ℕ}
   {d : GL (Fin n) C.k}
   {i : Fin n}
@@ -68,7 +65,7 @@ private lemma diag_entry_ne_zero
 -- proof
   have h1 : d.val * d⁻¹.val = 1 := by exact_mod_cast d.mul_inv
   have h3 : (d.val * d⁻¹.val) i i = 1 := by rw [h1]; simp
-  rw [diag_mul_entry d hd] at h3
+  rw [main (d := d) hd] at h3
   intro heq; rw [heq, zero_mul] at h3; exact zero_ne_one h3
 
 
@@ -79,7 +76,6 @@ private lemma diag_entry_ne_zero
 private lemma diag_inv_mem
   {C : DVRContext}
   [DVRClosureGL2 C]
-  {C}
   {n : ℕ}
   {d : GL (Fin n) C.k}
 -- given
@@ -90,8 +86,8 @@ private lemma diag_inv_mem
   intro i j hij
   have h1 : d.val * d⁻¹.val = 1 := by exact_mod_cast d.mul_inv
   have h2 : (d.val * d⁻¹.val) i j = 0 := by rw [h1]; simp [hij]
-  rw [diag_mul_entry d hd] at h2
-  exact (mul_eq_zero.mp h2).resolve_left (diag_entry_ne_zero d hd i)
+  rw [main (d := d) hd] at h2
+  exact (mul_eq_zero.mp h2).resolve_left (diag_entry_ne_zero hd)
 
 
 
@@ -101,7 +97,6 @@ private lemma diag_inv_mem
 private lemma diag_inv_entry
   {C : DVRContext}
   [DVRClosureGL2 C]
-  {C}
   {n : ℕ}
   {d : GL (Fin n) C.k}
   {i : Fin n}
@@ -112,7 +107,7 @@ private lemma diag_inv_entry
 -- proof
   have h1 : d.val * d⁻¹.val = 1 := by exact_mod_cast d.mul_inv
   have h3 : (d.val * d⁻¹.val) i i = 1 := by rw [h1]; simp
-  rw [diag_mul_entry d hd] at h3
+  rw [main (d := d) hd] at h3
   exact eq_inv_of_mul_eq_one_left (by rwa [mul_comm] at h3)
 
 
@@ -123,7 +118,6 @@ private lemma diag_inv_entry
 private lemma lower_unip_inv_above_aux
   {C : DVRContext}
   [DVRClosureGL2 C]
-  {C}
   {n : ℕ}
   {L : GL (Fin n) C.k}
   {d : ℕ}
@@ -165,7 +159,6 @@ private lemma lower_unip_inv_above_aux
 private lemma lower_unip_inv_above
   {C : DVRContext}
   [DVRClosureGL2 C]
-  {C}
   {n : ℕ}
   {L : GL (Fin n) C.k}
   {i j : Fin n}
@@ -175,7 +168,7 @@ private lemma lower_unip_inv_above
 -- imply
   L⁻¹.val i j = 0 :=
 -- proof
-  lower_unip_inv_above_aux L hL (by exact_mod_cast L.inv_mul) n j (by omega) i hij
+  lower_unip_inv_above_aux (d := n) hL (by exact_mod_cast L.inv_mul) j (by omega) i hij
 
 
 
@@ -185,7 +178,6 @@ private lemma lower_unip_inv_above
 private lemma lower_unip_inv_diag
   {C : DVRContext}
   [DVRClosureGL2 C]
-  {C}
   {n : ℕ}
   {L : GL (Fin n) C.k}
   {i : Fin n}
@@ -201,7 +193,7 @@ private lemma lower_unip_inv_diag
   · intro b _ hbi
     by_cases h : b.val < i.val
     · simp [hL.2 b i h]
-    · simp [lower_unip_inv_above L hL i b (by omega)]
+    · simp [lower_unip_inv_above (i := i) (j := b) hL (by omega)]
   · intro h; exact absurd (Finset.mem_univ i) h
 
 
@@ -212,7 +204,6 @@ private lemma lower_unip_inv_diag
 private lemma lower_unip_mul_diag
   {C : DVRContext}
   [DVRClosureGL2 C]
-  {C}
   {n : ℕ}
   {L1 L2 : GL (Fin n) C.k}
   {i : Fin n}
@@ -239,7 +230,6 @@ private lemma lower_unip_mul_diag
 private lemma lower_unip_mul_above
   {C : DVRContext}
   [DVRClosureGL2 C]
-  {C}
   {n : ℕ}
   {L1 L2 : GL (Fin n) C.k}
   {i j : Fin n}
@@ -265,7 +255,6 @@ private lemma lower_unip_mul_above
 private lemma upper_unip_inv_below_aux
   {C : DVRContext}
   [DVRClosureGL2 C]
-  {C}
   {n : ℕ}
   {U : GL (Fin n) C.k}
   {d : ℕ}
@@ -307,7 +296,6 @@ private lemma upper_unip_inv_below_aux
 private lemma upper_unip_inv_below
   {C : DVRContext}
   [DVRClosureGL2 C]
-  {C}
   {n : ℕ}
   {U : GL (Fin n) C.k}
   {i j : Fin n}
@@ -317,7 +305,7 @@ private lemma upper_unip_inv_below
 -- imply
   U⁻¹.val i j = 0 :=
 -- proof
-  upper_unip_inv_below_aux U hU (by exact_mod_cast U.inv_mul) n j (by omega) i hij
+  upper_unip_inv_below_aux (d := n) hU (by exact_mod_cast U.inv_mul) j (by omega) i hij
 
 
 
@@ -327,7 +315,6 @@ private lemma upper_unip_inv_below
 private lemma upper_unip_inv_diag
   {C : DVRContext}
   [DVRClosureGL2 C]
-  {C}
   {n : ℕ}
   {U : GL (Fin n) C.k}
   {i : Fin n}
@@ -343,7 +330,7 @@ private lemma upper_unip_inv_diag
   · intro b _ hbi
     by_cases h : b.val > i.val
     · simp [hU.2 b i h]
-    · simp [upper_unip_inv_below U hU i b (by omega)]
+    · simp [upper_unip_inv_below (i := i) (j := b) hU (by omega)]
   · intro h; exact absurd (Finset.mem_univ i) h
 
 
@@ -354,7 +341,6 @@ private lemma upper_unip_inv_diag
 private lemma upper_unip_mul_diag
   {C : DVRContext}
   [DVRClosureGL2 C]
-  {C}
   {n : ℕ}
   {U1 U2 : GL (Fin n) C.k}
   {i : Fin n}
@@ -383,7 +369,6 @@ private lemma upper_unip_mul_diag
 private lemma upper_unip_mul_below
   {C : DVRContext}
   [DVRClosureGL2 C]
-  {C}
   {n : ℕ}
   {U1 U2 : GL (Fin n) C.k}
   {i j : Fin n}
@@ -411,7 +396,6 @@ private lemma upper_unip_mul_below
 private lemma iwahori_decomp_unique
   {C : DVRContext}
   [DVRClosureGL2 C]
-  {C}
   {n : ℕ}
   {u_lo : GL (Fin n) C.k}
   {d_diag : GL (Fin n) C.k}
@@ -445,11 +429,11 @@ private lemma iwahori_decomp_unique
   have hmul_right : v_lo⁻¹ * u_lo * d_diag = e_diag * v_up * u_up⁻¹ := by
     calc v_lo⁻¹ * u_lo * d_diag
       = v_lo⁻¹ * u_lo * d_diag * u_up * u_up⁻¹ := by group
-      _ = e_diag * v_up * u_up⁻¹ := by rw [hmul_left]; group
+      _ = e_diag * v_up * u_up⁻¹ := by rw [hmul_left]
   have hLW : v_lo⁻¹ * u_lo = e_diag * (v_up * u_up⁻¹) * d_diag⁻¹ := by
     calc v_lo⁻¹ * u_lo
       = v_lo⁻¹ * u_lo * d_diag * d_diag⁻¹ := by group
-      _ = e_diag * v_up * u_up⁻¹ * d_diag⁻¹ := by rw [hmul_right]; group
+      _ = e_diag * v_up * u_up⁻¹ * d_diag⁻¹ := by rw [hmul_right]
       _ = e_diag * (v_up * u_up⁻¹) * d_diag⁻¹ := by group
   have hentry : ∀ i j : Fin n,
     (v_lo⁻¹ * u_lo).val i j = (e_diag * (v_up * u_up⁻¹) * d_diag⁻¹).val i j := by
@@ -463,22 +447,24 @@ private lemma iwahori_decomp_unique
     · subst hij
       have hLHS_diag : (v_lo⁻¹ * u_lo).val i i = 1 := by
         rw [hLHS_val]
-        exact lower_unip_mul_diag v_lo⁻¹ u_lo
-          ⟨lower_unip_inv_diag v_lo hvl, lower_unip_inv_above v_lo hvl⟩ hul i
+        exact lower_unip_mul_diag (L1 := v_lo⁻¹) (L2 := u_lo)
+          ⟨fun i => lower_unip_inv_diag (L := v_lo) hvl,
+            fun i j hij => lower_unip_inv_above (L := v_lo) hvl hij⟩ hul
       have hW_diag : (v_up * u_up⁻¹).val i i = 1 := by
         show (v_up.val * u_up⁻¹.val) i i = 1
-        exact upper_unip_mul_diag v_up u_up⁻¹ hvu
-          ⟨upper_unip_inv_diag u_up huu, upper_unip_inv_below u_up huu⟩ i
+        exact upper_unip_mul_diag (U1 := v_up) (U2 := u_up⁻¹) hvu
+          ⟨fun i => upper_unip_inv_diag (U := u_up) huu,
+            fun i j hij => upper_unip_inv_below (U := u_up) huu hij⟩
       have hRHS_diag : (e_diag * (v_up * u_up⁻¹) * d_diag⁻¹).val i i =
         e_diag.val i i * (d_diag.val i i)⁻¹ := by
         show ((e_diag.val * (v_up * u_up⁻¹).val) * d_diag⁻¹.val) i i =
           e_diag.val i i * (d_diag.val i i)⁻¹
-        rw [mul_diag_entry _ d_diag⁻¹ (diag_inv_mem d_diag hdd)]
-        rw [diag_mul_entry e_diag hee]
-        rw [hW_diag, mul_one, diag_inv_entry d_diag hdd]
+        rw [mul_diag_entry (d := d_diag⁻¹) (diag_inv_mem (d := d_diag) hdd)]
+        rw [main (d := e_diag) hee]
+        rw [hW_diag, mul_one, diag_inv_entry (d := d_diag) hdd]
       have h1 := hentry i i
       rw [hLHS_diag, hRHS_diag] at h1
-      have hne : d_diag.val i i ≠ 0 := diag_entry_ne_zero d_diag hdd i
+      have hne : d_diag.val i i ≠ 0 := diag_entry_ne_zero (d := d_diag) hdd
       field_simp at h1
       exact h1
     ·
@@ -493,24 +479,27 @@ private lemma iwahori_decomp_unique
     ·
       subst hij
       simp only [Units.val_mul]
-      exact lower_unip_mul_diag v_lo⁻¹ u_lo
-        ⟨lower_unip_inv_diag v_lo hvl, lower_unip_inv_above v_lo hvl⟩ hul i
+      exact lower_unip_mul_diag (L1 := v_lo⁻¹) (L2 := u_lo)
+        ⟨fun i => lower_unip_inv_diag (L := v_lo) hvl,
+          fun i j hij => lower_unip_inv_above (L := v_lo) hvl hij⟩ hul
     ·
       by_cases h : i.val < j.val
       ·
         simp only [Units.val_mul]
-        exact lower_unip_mul_above v_lo⁻¹ u_lo
-          ⟨lower_unip_inv_diag v_lo hvl, lower_unip_inv_above v_lo hvl⟩ hul i j h
+        exact lower_unip_mul_above (L1 := v_lo⁻¹) (L2 := u_lo) (i := i) (j := j)
+          ⟨fun i => lower_unip_inv_diag (L := v_lo) hvl,
+            fun i j hij => lower_unip_inv_above (L := v_lo) hvl hij⟩ hul h
       ·
         have hij_gt : i.val > j.val := by omega
         have hRHS_below : (d_diag * (v_up * u_up⁻¹) * d_diag⁻¹).val i j = 0 := by
           show ((d_diag.val * (v_up * u_up⁻¹).val) * d_diag⁻¹.val) i j = 0
-          rw [mul_diag_entry _ d_diag⁻¹ (diag_inv_mem d_diag hdd)]
-          rw [diag_mul_entry d_diag hdd]
+          rw [mul_diag_entry (d := d_diag⁻¹) (diag_inv_mem (d := d_diag) hdd)]
+          rw [main (d := d_diag) hdd]
           have hW_below : (v_up * u_up⁻¹).val i j = 0 := by
             show (v_up.val * u_up⁻¹.val) i j = 0
-            exact upper_unip_mul_below v_up u_up⁻¹ hvu
-              ⟨upper_unip_inv_diag u_up huu, upper_unip_inv_below u_up huu⟩ i j hij_gt
+            exact upper_unip_mul_below (U1 := v_up) (U2 := u_up⁻¹) (i := i) (j := j) hvu
+              ⟨fun i => upper_unip_inv_diag (U := u_up) huu,
+                fun i j hij => upper_unip_inv_below (U := u_up) huu hij⟩ hij_gt
           rw [hW_below]; ring
         exact (hentry i j).trans hRHS_below
   have hu_lo_eq : u_lo = v_lo := by
@@ -531,4 +520,4 @@ private lemma iwahori_decomp_unique
 
 
 -- created on 2026-10-23
--- updated on 2026-10-26
+-- updated on 2026-11-13

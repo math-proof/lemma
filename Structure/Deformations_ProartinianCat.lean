@@ -1,7 +1,4 @@
 import Mathlib
-import Instance.Deformations_IsProartinian
-import Class.Deformations_IsResidueAlgebra
-import Instance.Deformations_ProartinianCat
 import Class.Deformations_ProartinianCat
 
 set_option autoImplicit false
@@ -28,7 +25,7 @@ structure ProartinianCat where
   [topologicalSpace : TopologicalSpace carrier]
 
   [algebra : Algebra 𝓞 carrier]
-  [isLocalProartinianAlgebra : IsLocalProartinianAlgebra 𝓞 carrier]
+  [isLocalProartinianAlgebra : IsLocalProartinianAlgebra (𝓞 := 𝓞) carrier]
 
 
 namespace ProartinianCat
@@ -39,6 +36,7 @@ initialize_simps_projections ProartinianCat (-commRing, -algebra, -topologicalSp
 
 attribute [coe] ProartinianCat.carrier
 
+instance : CoeSort (ProartinianCat 𝓞) (Type u) := ⟨carrier⟩
 
 variable {𝓞} in
 
@@ -47,15 +45,12 @@ structure Hom (A B : ProartinianCat 𝓞) where
 
   hom : A →A[𝓞] B
 
-variable {𝓞} in
-
-
 variable {𝓞}
 
 variable {X Y Z : Type u}
-  [CommRing X] [Algebra 𝓞 X] [TopologicalSpace X] [IsLocalProartinianAlgebra 𝓞 X]
-  [CommRing Y] [Algebra 𝓞 Y] [TopologicalSpace Y] [IsLocalProartinianAlgebra 𝓞 Y]
-  [CommRing Z] [Algebra 𝓞 Z] [TopologicalSpace Z] [IsLocalProartinianAlgebra 𝓞 Z]
+  [CommRing X] [Algebra 𝓞 X] [TopologicalSpace X] [IsLocalProartinianAlgebra (𝓞 := 𝓞) X]
+  [CommRing Y] [Algebra 𝓞 Y] [TopologicalSpace Y] [IsLocalProartinianAlgebra (𝓞 := 𝓞) Y]
+  [CommRing Z] [Algebra 𝓞 Z] [TopologicalSpace Z] [IsLocalProartinianAlgebra (𝓞 := 𝓞) Z]
 
 variable {A B C : ProartinianCat 𝓞}
 
@@ -71,13 +66,6 @@ end self
 section residueField
 
 variable [IsLocalRing 𝓞]
-
-set_option backward.isDefEq.respectTransparency false in
-
-
-set_option backward.isDefEq.respectTransparency false in
-
-noncomputable
 
 
 end residueField

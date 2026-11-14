@@ -1,4 +1,4 @@
-import Lemma.CerednikDrinfeld.QMRigidification
+import Lemma.Scheme.QMRigidification
 import Def.CerednikDrinfeld_FormalUpperHalfPlaneDatum
 
 set_option autoImplicit false

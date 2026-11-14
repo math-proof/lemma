@@ -1,0 +1,16 @@
+import Mathlib
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.MeasureTheory.Section_1_1_1.Part16
+open BoundedInterval
+open Pointwise
+@[path]
+private lemma main
+  {I: BoundedInterval}
+  {c: ℝ} :
+-- imply
+  ∃ I' : BoundedInterval, I'.toSet = I.toSet + {c} ∧ |I'|ₗ = |I|ₗ :=
+-- proof
+  BoundedInterval.length_of_translate I c
+
+
+-- created on 2026-10-22

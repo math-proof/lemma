@@ -1,7 +1,6 @@
 import Mathlib
 import Abbrev.CuspForm_AuxLevelHeckeModule
 import Inductive.CuspForm_TWLevelHeckeModule_Gen
-import Instance.CuspForm_TWLevelHeckeModule
 import Abbrev.CuspForm_TWLevelHeckeModule
 
 set_option autoImplicit false
@@ -79,7 +78,7 @@ def thetaQ [NeZero N] (k : Type) [NonAssocSemiring k] (θ : ↥(CuspForm.heckeAl
 def heckeData [NeZero N] [∀ i, NeZero (qv i)] [IsLocalRing 𝒪]
     (θ : ↥(CuspForm.heckeAlgebra N 2 S) →+* IsLocalRing.ResidueField 𝒪)
     (α : Fin t → IsLocalRing.ResidueField 𝒪) (hc : OpComm N r qv S 𝒪 H) :
-    CohCarrier.HeckeData 𝒪 (Carrier N r qv 𝒪 H) (IsLocalRing.ResidueField 𝒪) where
+    MvPolynomial.HeckeData 𝒪 (Carrier N r qv 𝒪 H) (IsLocalRing.ResidueField 𝒪) where
   Gen := Gen (level N r qv) S t
   op := op N r qv S 𝒪 H
   comm := hc

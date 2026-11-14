@@ -1,4 +1,4 @@
-import Lemma.ModularCurve.CycSubRootBridge
+import Lemma.WeierstrassCurve.CycSubRootBridge
 import Def.WeierstrassCurve_FullKernelQuotient
 
 set_option autoImplicit false

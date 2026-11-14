@@ -20,7 +20,7 @@ import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.GroupTheory.Index
 import Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90
-import Mathlib.Algebra.Set.Closure.eq.N.of.Eq
+import Lemma.Set.Closure.eq.N.of.Eq
 import Mathlib.RingTheory.Trace.Basic
 import Mathlib.LinearAlgebra.Dimension.Finrank
 import Mathlib.RingTheory.Ideal.Norm.RelNorm
@@ -104,6 +104,13 @@ def TateCohomologyAllTrivial (G : Type*) [Group G] [Finite G]
     (∀ m : M, (∏ g : G, g • m) = 1 →
       m ∈ Subgroup.closure {x : M | ∃ (g : G) (a : M), x = g • a * a⁻¹}))
 
+section NumberFieldIdealGroupData
+
+open nonZeroDivisors
+
+variable (K L : Type*) [Field K] [NumberField K] [Field L] [NumberField L]
+    [Algebra K L] [IsGalois K L] [FiniteDimensional K L] [IsCyclic (L ≃ₐ[K] L)]
+
 def galFracSubmod (σ : L ≃ₐ[K] L) (M : Submodule (𝓞 L) L) : Submodule (𝓞 L) L where
   carrier := σ '' (M : Set L)
   add_mem' := by
@@ -146,7 +153,11 @@ noncomputable def galFracIdealEquiv (σ : L ≃ₐ[K] L) :
     · intro hx; exact ⟨σ⁻¹ x, ⟨x, hx, rfl⟩, by simp⟩
   map_mul' I J := by
     apply FractionalIdeal.coeToSubmodule_injective
-    simp only [galFracIdeal, FractionalIdeal.coe_mul]
+    dsimp
+    rw [FractionalIdeal.coe_mul]
+    simp only [galFracIdeal]
+    change galFracSubmod K L σ ↑(I * J) = galFracSubmod K L σ ↑I * galFracSubmod K L σ ↑J
+    rw [FractionalIdeal.coe_mul]
     ext x; constructor
     · rintro ⟨y, hy, rfl⟩
       exact Submodule.mul_induction_on hy
@@ -214,5 +225,7 @@ noncomputable def idealExtensionMonoidHom_ax :
 noncomputable def idealExtensionMonoidHom :
     (FractionalIdeal (𝓞 K)⁰ K)ˣ →* (FractionalIdeal (𝓞 L)⁰ L)ˣ :=
   idealExtensionMonoidHom_ax K L
+
+end NumberFieldIdealGroupData
 
 end

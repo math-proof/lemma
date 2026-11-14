@@ -1,4 +1,4 @@
-import Lemma.CohCarrier.Inst
+import Lemma.ZMod.Inst
 
 set_option autoImplicit false
 

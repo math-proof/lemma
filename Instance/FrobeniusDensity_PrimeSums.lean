@@ -1,5 +1,5 @@
 -- Carved from Lemma/Definitions/Def_FrobeniusDensity_PrimeSums.lean: instance decls only.
-import Lemma.FrobeniusDensity.BadPrimes
+import Lemma.Ideal.BadPrimes
 import Mathlib.NumberTheory.NumberField.DedekindZeta
 import Mathlib.RingTheory.DedekindDomain.Factorization
 import Def.FrobeniusDensity_PrimeSums

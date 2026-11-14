@@ -1,6 +1,6 @@
 import Mathlib
-import Lemma.GaloisRep.AdZero
-import Lemma.GroupCohomology.TangentSpace
+import Lemma.LinearMap.AdZero
+import Lemma.Rep.TangentSpace
 import Instance.ExtEndgame_ProductionDatum
 import Def.GaloisRep_LocalFlatClasses
 import Instance.GaloisRep_CompletionBridge

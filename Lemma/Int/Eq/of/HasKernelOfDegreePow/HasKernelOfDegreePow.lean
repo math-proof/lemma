@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.CerednikDrinfeld.SpecialFormalModule
+import Lemma.MvPowerSeries.SpecialFormalModule
 import Lemma.Int.P2MUtil
 
-open CerednikDrinfeld CerednikDrinfeld.SpecialFormal
+open CerednikDrinfeld CerednikDrinfeld.SpecialFormal MvPowerSeries
 
 /--
 [CerednikDrinfeld_FormalODModule_HasKernelOfDegree_eq_of_pow_of_pow](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_CerednikDrinfeld_FormalODModule_HasKernelOfDegree_eq_of_pow_of_pow.lean)

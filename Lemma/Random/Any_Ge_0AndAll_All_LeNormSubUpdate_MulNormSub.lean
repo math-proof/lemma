@@ -1,5 +1,5 @@
 import Lemma.Random.AbsSubMaxₐ.le.NormSub
-import Lemma.LpSpace.NormOfLp.le.Norm.of.Ge_1
+import Lemma.Matrix.NormOfLp.le.Norm.of.Ge_1
 
 
 @[path]
@@ -15,7 +15,7 @@ private lemma main
     congr 1
     ring
   have hm : |QLearningSpec.maxₐ (WithLp.ofLp z) y.2.1 - QLearningSpec.maxₐ (WithLp.ofLp z') y.2.1| ≤ ‖z - z'‖ :=
-    (Random.AbsSubMaxₐ.le.NormSub _ _ _).trans (LpSpace.NormOfLp.le.Norm.of.Ge_1 (p := 2) (x := z - z') (by norm_num))
+    (Random.AbsSubMaxₐ.le.NormSub _ _ _).trans (Matrix.NormOfLp.le.Norm.of.Ge_1 (p := 2) (x := z - z') (by norm_num))
   rw [e, norm_smul, QLearningSpec.x, PiLp.norm_single, norm_one, mul_one, Real.norm_eq_abs]
   calc _ ≤ |spec.γ * (QLearningSpec.maxₐ (WithLp.ofLp z) y.2.1 - QLearningSpec.maxₐ (WithLp.ofLp z') y.2.1)| + |(z - z') (QLearningSpec.sa_to_fin y.1)| := abs_sub _ _
     _ ≤ |spec.γ| * ‖z - z'‖ + ‖z - z'‖ := by

@@ -20,14 +20,13 @@ import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.GroupTheory.Index
 import Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90
-import Mathlib.Algebra.Set.Closure.eq.N.of.Eq
+import Lemma.Set.Closure.eq.N.of.Eq
 import Mathlib.RingTheory.Trace.Basic
 import Mathlib.LinearAlgebra.Dimension.Finrank
 import Mathlib.RingTheory.Ideal.Norm.RelNorm
 import Mathlib.RingTheory.FractionalIdeal.Extended
 import Mathlib.RingTheory.Invariant.Basic
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Lemma247
-import Def.v1.Atlas.NumberTheoryI.code.ArtinUnramified.Part5
 
 
 noncomputable section
@@ -43,6 +42,8 @@ structure RamificationData where
   e_inf : ℕ
   e₀_pos : 0 < e₀
   e_inf_pos : 0 < e_inf
+
+def RamificationData.e (rd : RamificationData) : Nat := rd.e₀ * rd.e_inf
 
 end ArtinUnramified
 end

@@ -12,7 +12,6 @@ namespace TuringMachine
 @[path]
 lemma IsBigO.trans
   {Q : Type}
-  {Γ : Type}
   [DecidableEq Q]
   {f g h : ℕ → ℕ}
 -- given

@@ -84,4 +84,4 @@ private lemma main
     apply congrFun (ih hmn' d')
 
 
--- created on 2026-10-31
+-- created on 2020-09-02

@@ -1,8 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.EisensteinTwoCoeff
+import Lemma.Int.EisensteinTwoCoeff
 import Lemma.Int.P2MUtil
-open ModularCurve
+open ModularCurve Int
 
 
 /-- ported from external source -/

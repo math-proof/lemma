@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.CerednikDrinfeld.DrinfeldHolomorphic
+import Lemma.Polynomial.DrinfeldHolomorphic
 
 
 namespace Definitions

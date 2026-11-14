@@ -193,7 +193,9 @@ lemma theta_exp_eq_tsum
     ∑ p ∈ S, if Real.log ↑(↑p : ℕ) ≤ t then Real.log ↑(↑p : ℕ) else 0 := by
     apply tsum_eq_sum
     intro p hp
-    have hmem : ¬((↑p : ℕ) ∈ Ioc 0 ⌊exp t⌋₊) := by rwa [← Finset.mem_subtype]
+    have hmem : p.val ∉ Ioc 0 ⌊exp t⌋₊ := by
+      intro hin
+      exact hp (Finset.mem_subtype.mpr hin)
     rw [Finset.mem_Ioc, not_and_or, not_lt, not_le] at hmem
     simp only [ite_eq_right_iff]
     intro hlog
@@ -208,7 +210,7 @@ lemma theta_exp_eq_tsum
   rw [h1, h2]
   apply Finset.sum_congr rfl
   intro p hp
-  have hmem : (↑p : ℕ) ∈ Ioc 0 ⌊exp t⌋₊ := Finset.mem_subtype.mp hp
+  have hmem : p.val ∈ Ioc 0 ⌊exp t⌋₊ := (Finset.mem_subtype (s := Ioc 0 ⌊exp t⌋₊)).mp (by exact hp)
   rw [Finset.mem_Ioc] at hmem
   have hp_pos : (0 : ℝ) < (↑↑p : ℝ) := by exact_mod_cast hmem.1
   have hlog : Real.log ↑(↑p : ℕ) ≤ t := by
@@ -259,7 +261,7 @@ lemma integral_indicator_prime
     intro h; rw [h] at hs; simp at hs
   have hns_re : (-s).re < 0 := by simp; linarith
   rw [integral_exp_mul_complex_Ioi hns_re (Real.log (↑p : ℝ))]
-  rw [exp_neg_mul_log_eq_cpow p (Nat.Prime.pos hp) s]
+  rw [exp_neg_mul_log_eq_cpow (Nat.Prime.pos hp)]
   field_simp
 
 end Chapter16
@@ -401,11 +403,11 @@ lemma abel_integrableOn_prime_summand
 -- imply
   IntegrableOn (fun t : ℝ => Complex.exp (-s * ↑t) * ↑(if Real.log ↑(↑p : ℕ) ≤ t then Real.log ↑(↑p : ℕ) else 0 : ℝ)) (Set.Ioi 0) := by
 -- proof
-  have hlog_pos := prime_log_pos p
+  have hlog_pos := prime_log_pos (p := p)
   have h_eq : (fun t : ℝ => Complex.exp (-s * ↑t) * ↑(if Real.log ↑(↑p : ℕ) ≤ t then Real.log ↑(↑p : ℕ) else 0 : ℝ)) =
     (Set.Ici (Real.log ↑(↑p : ℕ))).indicator (fun t : ℝ => (↑(Real.log ↑(↑p : ℕ)) : ℂ) * Complex.exp (-s * ↑t)) := by
     ext t; simp only [Set.indicator, Set.mem_Ici]; split_ifs with h <;> simp [mul_comm]
-  rw [h_eq, integrableOn_indicator_iff measurableSet_Ici]
+  rw [h_eq, integrableOn_indicator_iff measurableSet_Ici.nullMeasurableSet]
   have hIci : Set.Ici (Real.log ↑(↑p : ℕ)) ∩ Set.Ioi (0 : ℝ) = Set.Ici (Real.log ↑(↑p : ℕ)) := by
     ext x; simp only [Set.mem_inter_iff, Set.mem_Ici, Set.mem_Ioi]
     exact ⟨And.left, fun hx => ⟨hx, lt_of_lt_of_le hlog_pos hx⟩⟩
@@ -444,23 +446,23 @@ lemma abel_summation_laplace_theta
   have h_int : ∀ p : Nat.Primes, Integrable (fun t : ℝ => Complex.exp (-s * ↑t) *
     ↑(if Real.log ↑(↑p : ℕ) ≤ t then Real.log ↑(↑p : ℕ) else 0 : ℝ))
     (volume.restrict (Set.Ioi 0)) :=
-    fun p => abel_integrableOn_prime_summand p s hs0
+    fun p => abel_integrableOn_prime_summand hs0
   have h_norm_eq : ∀ p : Nat.Primes, ∫ t in Set.Ioi (0 : ℝ),
     ‖Complex.exp (-s * ↑t) * ↑(if Real.log ↑(↑p : ℕ) ≤ t then Real.log ↑(↑p : ℕ) else 0 : ℝ)‖ =
     Real.log ↑(↑p : ℕ) * (↑(↑p : ℕ) : ℝ) ^ (-s.re) / s.re := by
     intro p
-    simp_rw [abel_norm_summand_eq _ (prime_log_pos p).le s]
-    rw [abel_indicator_integral_real _ (prime_log_pos p) _ hs0]
+    simp_rw [abel_norm_summand_eq (prime_log_pos (p := p)).le]
+    rw [abel_indicator_integral_real (prime_log_pos (p := p)) hs0]
     congr 1; congr 1
     rw [Real.rpow_def_of_pos (by exact_mod_cast p.2.pos : (0 : ℝ) < ↑(↑p : ℕ))]; ring_nf
   have h_summ : Summable (fun p : Nat.Primes => ∫ t in Set.Ioi (0 : ℝ),
     ‖Complex.exp (-s * ↑t) * ↑(if Real.log ↑(↑p : ℕ) ≤ t then Real.log ↑(↑p : ℕ) else 0 : ℝ)‖) := by
     simp_rw [h_norm_eq]
-    exact (abel_summable_primes_log_rpow s.re hs).div_const s.re
+    exact (abel_summable_primes_log_rpow hs).div_const s.re
   rw [(integral_tsum_of_summable_integral_norm h_int h_summ).symm]
   congr 1; ext p
-  rw [abel_indicator_integral_complex _ (prime_log_pos p) s]
-  rw [integral_indicator_prime _ p.2 s hs0]
+  rw [abel_indicator_integral_complex (prime_log_pos (p := p))]
+  rw [integral_indicator_prime p.2 hs0]
   ring
 
 end Chapter16
@@ -478,7 +480,7 @@ lemma lem_16_10_laplace_theta
 -- imply
   laplace_transform (fun t => θ (exp t)) s = Phi s / s := by
 -- proof
-  rw [abel_summation_laplace_theta s hs, Phi, tsum_div_const]
+  rw [abel_summation_laplace_theta hs, Phi, tsum_div_const]
 
 end Chapter16
 
@@ -510,7 +512,7 @@ lemma integrableOn_mul_exp_neg_Ioi'
           linarith [Real.add_one_le_exp (r / 2 * t)]
     calc t * Real.exp (-r * t)
         = t * (Real.exp (-(r/2) * t) * Real.exp (-(r/2) * t)) := by
-          rw [← Real.exp_add]; congr 1; ring
+          rw [← Real.exp_add]; congr 1; ring_nf
       _ ≤ (2 / r) * Real.exp (r / 2 * t) *
           (Real.exp (-(r / 2) * t) * Real.exp (-(r/2) * t)) := by
           apply mul_le_mul_of_nonneg_right hle
@@ -674,7 +676,7 @@ lemma lem_16_10_holomorphic :
 -- imply
   DifferentiableOn ℂ (fun s => laplace_transform (fun t => θ (exp t)) s) {s | 1 < s.re} := by
 -- proof
-  refine laplace_holomorphic_of_exp_bound (fun t => θ (exp t)) 1 (Real.log 4) ?_ ?_
+  refine laplace_holomorphic_of_exp_bound (a := 1) (C := Real.log 4) (fun t => θ (exp t)) ?_ ?_
   · exact Real.log_pos (by norm_num : (1 : ℝ) < 4)
   · intro t ht
     have hexp_pos : 0 < exp t := Real.exp_pos t
@@ -768,7 +770,7 @@ namespace Chapter16
 lemma F₀_eq : F₀ = fun z => (z - 1) ^ (2 : ℤ) • riemannZeta z := by
   ext z; simp only [F₀]
   by_cases hz : z = 1
-  · subst hz; simp [G₀, Function.update_self]; norm_num [zpow_natCast, smul_eq_mul]
+  · subst hz; simp [G₀, Function.update_self, smul_eq_mul]
   · rw [G₀_eq_of_ne hz, show (2 : ℤ) = (2 : ℕ) from rfl, zpow_natCast, smul_eq_mul, sq]; ring
 
 end Chapter16
@@ -799,9 +801,10 @@ lemma meromorphicAt_riemannZeta
   MeromorphicAt riemannZeta s := by
 -- proof
   obtain hs | rfl := ne_or_eq s 1
-  · exact (Complex.analyticAt_iff_eventually_differentiableAt.mpr
-    (by filter_upwards [eventually_ne_nhds hs] with z hz
-      exact differentiableAt_riemannZeta hz)).meromorphicAt
+  · apply AnalyticAt.meromorphicAt
+    rw [Complex.analyticAt_iff_eventually_differentiableAt]
+    filter_upwards [eventually_ne_nhds hs] with z hz
+    exact differentiableAt_riemannZeta hz
   · exact meromorphicAt_riemannZeta_one
 
 end Chapter16
@@ -986,7 +989,7 @@ lemma phiCorrection_summable_bound
   · intro p
     apply div_nonneg (Real.log_nonneg (by exact_mod_cast Nat.Prime.one_le p.2))
     exact mul_nonneg (Real.rpow_nonneg (Nat.cast_nonneg _) _)
-      (le_of_lt (prime_rpow_sub_one_pos p σ hσ))
+      (le_of_lt (prime_rpow_sub_one_pos hσ))
   · intro p
     have hp : (2 : ℝ) ≤ (↑↑p : ℝ) := Nat.ofNat_le_cast.mpr (Nat.Prime.two_le p.2)
     have hp_pos : (0 : ℝ) < (↑↑p : ℝ) := by linarith
@@ -1029,10 +1032,10 @@ lemma phiCorrection_holomorphic :
   have hdiff : DifferentiableOn ℂ PhiCorrection {w : ℂ | σ < w.re} := by
     unfold PhiCorrection
     exact Complex.differentiableOn_tsum_of_summable_norm
-      (phiCorrection_summable_bound σ hσ1)
-      (fun p => phiCorrection_term_differentiableOn p σ hσ1)
+      (phiCorrection_summable_bound hσ1)
+      (fun p => phiCorrection_term_differentiableOn hσ1)
       hU
-      (fun p w hw => phiCorrection_term_norm_bound p σ hσ1 w hw)
+      (fun p w hw => phiCorrection_term_norm_bound hσ1 hw)
   exact (hdiff.differentiableAt (hU.mem_nhds hσ2)).differentiableWithinAt
 
 end Chapter16
@@ -1138,7 +1141,7 @@ lemma vonMangoldt_LSeries_eq_Phi_add_PhiCorrection
     rw [Complex.norm_natCast_cpow_of_pos p.prop.pos]
     rw [Complex.neg_re]
     exact Real.rpow_lt_one_of_one_lt_of_neg (by exact_mod_cast p.prop.one_lt) (by linarith)
-  rw [vonMangoldt_LSeries_eq_double_sum s hs]
+  rw [vonMangoldt_LSeries_eq_double_sum hs]
   conv_lhs =>
     arg 1; ext p; arg 1; ext k
     rw [nsmul_eq_mul, mul_comm, Complex.cpow_mul_nat,
@@ -1186,7 +1189,7 @@ lemma vonMangoldt_LSeries_eq_Phi_add_PhiCorrection
       rw [Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (Real.log_nonneg (by exact_mod_cast Nat.Prime.one_le p.prop)),
         Complex.norm_natCast_cpow_of_pos p.prop.pos, Complex.neg_re]
     simp_rw [this]
-    exact abel_summable_primes_log_rpow s.re hs
+    exact abel_summable_primes_log_rpow hs
   have hsCorr : Summable (fun p : Nat.Primes =>
     (↑(log ↑(↑p : ℕ)) : ℂ) / ((↑(↑p : ℕ) : ℂ) ^ s * ((↑(↑p : ℕ) : ℂ) ^ s - 1))) := by
     apply Summable.of_norm
@@ -1194,8 +1197,8 @@ lemma vonMangoldt_LSeries_eq_Phi_add_PhiCorrection
     have hσ₀ : 1 / 2 < σ₀ := by linarith
     have hσ₀_lt : σ₀ < s.re := by linarith
     exact Summable.of_nonneg_of_le (fun p => norm_nonneg _)
-      (fun p => phiCorrection_term_norm_bound p σ₀ hσ₀ s hσ₀_lt)
-      (phiCorrection_summable_bound σ₀ hσ₀)
+      (fun p => phiCorrection_term_norm_bound hσ₀ hσ₀_lt)
+      (phiCorrection_summable_bound hσ₀)
   exact hsPhi.tsum_add hsCorr
 
 end Chapter16
@@ -1214,7 +1217,7 @@ lemma euler_product_log_deriv
   -(deriv riemannZeta s) / riemannZeta s = Phi s + PhiCorrection s := by
 -- proof
   rw [← ArithmeticFunction.LSeries_vonMangoldt_eq_deriv_riemannZeta_div hs]
-  exact vonMangoldt_LSeries_eq_Phi_add_PhiCorrection s hs
+  exact vonMangoldt_LSeries_eq_Phi_add_PhiCorrection hs
 
 end Chapter16
 
@@ -1228,7 +1231,7 @@ lemma log_deriv_zeta_meromorphic_on_pos_re :
 -- imply
   MeromorphicOn (fun s => -(deriv riemannZeta s) / riemannZeta s) {s : ℂ | 0 < s.re} :=
 -- proof
-  fun s _ => ((meromorphicAt_riemannZeta s).deriv.neg).div (meromorphicAt_riemannZeta s)
+  fun s _ => ((meromorphicAt_riemannZeta (s := s)).deriv.neg).div (meromorphicAt_riemannZeta (s := s))
 
 end Chapter16
 
@@ -1257,7 +1260,8 @@ lemma log_deriv_zeta_minus_pole_holomorphic :
       filter_upwards [eventually_ne_nhds hs] with t ht; exact G₀_eq_of_ne ht
     have hderiv : HasDerivAt (fun t => (t - 1) * riemannZeta t)
       (riemannZeta s + (s - 1) * deriv riemannZeta s) s := by
-      simpa using ((hasDerivAt_id s).sub_const 1).mul
+      simpa [one_mul] using
+        ((hasDerivAt_id' s).sub_const 1).fun_mul
         (differentiableAt_riemannZeta hs).hasDerivAt
     have hderivG : deriv G₀ s = riemannZeta s + (s - 1) * deriv riemannZeta s := by
       rw [hG_eq.deriv_eq]; exact hderiv.deriv
@@ -1285,7 +1289,7 @@ lemma lem_16_11_Phi_holomorphic :
     show (1 : ℝ) / 2 < s.re; linarith))
   · intro s hs
     simp only []
-    rw [hh_eq s hs, euler_product_log_deriv s hs]
+    rw [hh_eq s hs, euler_product_log_deriv hs]
     ring
 
 end Chapter16
@@ -1315,7 +1319,7 @@ lemma lem_16_11_Phi_meromorphic :
     exact (h1.sub h2).sub h3
   · intro s hs
     simp only []
-    rw [euler_product_log_deriv s hs]
+    rw [euler_product_log_deriv hs]
     ring
 
 end Chapter16
@@ -1374,7 +1378,7 @@ lemma newman_right_semicircle_bound
         gcongr
         apply intervalIntegral.norm_integral_le_of_norm_le_const
         intro u _
-        exact norm_boundedProj_le _ _ (by positivity)
+        exact norm_boundedProj_le (by positivity)
     _ = 1 / r := by
       have hpi : Real.pi > 0 := Real.pi_pos
       rw [norm_div, norm_one, Complex.norm_mul, Complex.norm_mul,
@@ -1418,7 +1422,7 @@ lemma newman_left_semicircle_bound
         gcongr
         apply intervalIntegral.norm_integral_le_of_norm_le_const
         intro u _
-        exact norm_boundedProj_le _ _ (by positivity)
+        exact norm_boundedProj_le (by positivity)
     _ = 1 / r := by
       have hpi : Real.pi > 0 := Real.pi_pos
       rw [norm_div, norm_one, Complex.norm_mul, Complex.norm_mul,
@@ -1438,7 +1442,7 @@ namespace Chapter16
 @[path]
 lemma H_bounded :
 -- imply
-  ∃ M : ℝ, ∀ t : ℝ, 0 ≤ t → := by
+  ∃ M : ℝ, ∀ t : ℝ, 0 ≤ t → |H t| ≤ M := by
 -- proof
   use log 4 + 1
   intro t ht
@@ -1506,13 +1510,14 @@ lemma laplace_H_identity
         rw [mul_comm (log 4 + 1) _, Complex.norm_real, Real.norm_eq_abs]
         apply mul_le_mul_of_nonneg_left _ (Real.exp_nonneg _)
         rw [abs_le]
-        exact ⟨by linarith [mul_nonneg (theta_nonneg (exp t)) (Real.exp_nonneg (-t)),
-          Real.log_nonneg (show (1:ℝ) ≤ 4 by norm_num)],
-          by have := theta_le_log4_mul_x (le_of_lt (Real.exp_pos t))
-            have hc : exp t * exp (-t) = 1 := by rw [← Real.exp_add]; simp
-            linarith [mul_le_mul_of_nonneg_right this (Real.exp_nonneg (-t)),
-              show log 4 * exp t * exp (-t) = log 4 from
-                by rw [mul_assoc, hc, mul_one]]⟩
+        constructor
+        · linarith [mul_nonneg (theta_nonneg (exp t)) (Real.exp_nonneg (-t)),
+            Real.log_nonneg (show (1:ℝ) ≤ 4 by norm_num)]
+        · have hth := theta_le_log4_mul_x (le_of_lt (Real.exp_pos t))
+          have hc : exp t * exp (-t) = 1 := by rw [← Real.exp_add]; simp
+          have hcancel : log 4 * exp t * exp (-t) = log 4 := by
+            rw [mul_assoc, hc, mul_one]
+          linarith [mul_le_mul_of_nonneg_right hth (Real.exp_nonneg (-t)), hcancel]
     have hh : IntegrableOn (fun t : ℝ => Complex.exp (-s * ↑t)) (Set.Ioi 0) :=
       integrableOn_exp_mul_complex_Ioi (by simp [Complex.neg_re]; linarith) 0
     have heq : ∀ t, Complex.exp (-(s + 1) * ↑t) * (↑(θ (exp t)) : ℂ) =
@@ -1526,7 +1531,7 @@ lemma laplace_H_identity
   have hs1 : 1 < (s + 1).re := by simp [Complex.add_re]; linarith
   rw [show (∫ t in Set.Ioi (0:ℝ), Complex.exp (-(s + 1) * ↑t) * (↑(θ (exp t)) : ℂ)) =
     laplace_transform (fun t => θ (exp t)) (s + 1) from rfl]
-  rw [lem_16_10_laplace_theta (s + 1) hs1]
+  rw [lem_16_10_laplace_theta hs1]
   rw [integral_exp_mul_complex_Ioi (by simp [Complex.neg_re]; linarith) 0]
   simp [Complex.ofReal_zero, mul_zero, Complex.exp_zero]
 
@@ -1575,10 +1580,10 @@ lemma cor_16_12_laplace_H_holomorphic :
     apply DifferentiableOn.div
     · apply DifferentiableOn.sub
       · exact DifferentiableOn.comp hg₁_diff
-        (differentiableOn_id.add (differentiableOn_const 1))
-        (fun s hs => by
-          simp only [Set.mem_ofPred_eq] at hs ⊢
-          simp [Complex.add_re]; linarith)
+          (differentiableOn_id.add (differentiableOn_const 1))
+          (fun s hs => by
+            simp only [Set.mem_ofPred_eq] at hs ⊢
+            simp [Complex.add_re]; linarith)
       · exact differentiableOn_const 1
     · exact differentiableOn_id.add (differentiableOn_const 1)
     · intro s hs
@@ -1648,7 +1653,7 @@ private lemma G_eq
 -- imply
   G₀ s = (s - 1) * riemannZeta s := by
 -- proof
-  apply Chapter16.G hs
+  exact G₀_eq_of_ne hs
 
 /--
 [G](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/PNT.lean)
@@ -1658,7 +1663,7 @@ private lemma G_eq_2 :
 -- imply
   G₀ 1 = 1 := by
 -- proof
-  apply Chapter16.G
+  exact G₀_one
 
 /--
 [G](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/PNT.lean)
@@ -1671,7 +1676,7 @@ private lemma G_eq_3
 -- imply
   DifferentiableAt ℂ G₀ s := by
 -- proof
-  apply Chapter16.G hs
+  exact G₀_differentiableAt_of_ne hs
 
 /--
 [G](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/PNT.lean)
@@ -1681,7 +1686,7 @@ private lemma G_eq_4 :
 -- imply
   AnalyticAt ℂ G₀ 1 := by
 -- proof
-  apply Chapter16.G
+  exact G₀_analyticAt_one
 
 /--
 [G](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/PNT.lean)
@@ -1691,7 +1696,7 @@ private lemma G_eq_5 :
 -- imply
   Differentiable ℂ G₀ := by
 -- proof
-  apply Chapter16.G
+  exact G₀_differentiable
 
 /--
 [G](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/PNT.lean)
@@ -1704,7 +1709,7 @@ private lemma G_eq_6
 -- imply
   G₀ s ≠ 0 := by
 -- proof
-  apply Chapter16.G hs
+  exact G₀_ne_zero_of_one_le_re hs
 
 /--
 [F](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/PNT.lean)
@@ -1714,8 +1719,8 @@ private lemma F_eq :
 -- imply
   F₀ = fun z => (z - 1) ^ (2 : ℤ) • riemannZeta z := by
 -- proof
-  apply Chapter16.F
+  exact F₀_eq
 
 
 -- created on 2026-10-23
--- updated on 2026-10-29
+-- updated on 2026-11-13

@@ -1,4 +1,5 @@
 import Structure.AlgebraicGeometry_CoherentBaseChange
+import Def.AlgebraicGeometry_CoherentBaseChange
 import Mathlib.AlgebraicGeometry.AffineScheme
 
 set_option autoImplicit false

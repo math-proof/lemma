@@ -1,7 +1,7 @@
 import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
 import Mathlib.GroupTheory.Transfer
 import Mathlib.GroupTheory.FreeGroup.NielsenSchreier
-import Lemma.ModularCurve.PeriodMap
+import Lemma.UpperHalfPlane.PeriodMap
 
 set_option autoImplicit false
 

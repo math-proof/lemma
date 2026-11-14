@@ -958,7 +958,7 @@ lemma symm_eq_sum_coeff_monomialSymm (f : MvPolynomial (Fin N) R) (hf : f.IsSymm
           (Finsupp.equivFunOnFinite.symm nu.parts) hsort
       rw [hcoeff]
       exact monomialSymm_coeff_ne nu mu (fun heq => h (hnu.trans heq))
-  -- Main proof: show both sides have the same coefficient for each exponent d
+  -- SchurMultiplierTrivial proof: show both sides have the same coefficient for each exponent d
   ext1 d
   rw [coeff_sum]
   simp only [coeff_smul, smul_eq_mul]

@@ -4,7 +4,7 @@ import Mathlib.NumberTheory.RamificationInertia.Galois
 import Mathlib.RingTheory.Ideal.Quotient.HasFiniteQuotients
 import Mathlib.LinearAlgebra.Matrix.Trace
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Lemma.TaylorWiles.Primes
+import Lemma.Matrix.Primes
 
 set_option autoImplicit false
 
@@ -24,4 +24,3 @@ variable {L}
 variable (L)
 
 end FrobeniusDensity
-

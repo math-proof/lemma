@@ -1,5 +1,4 @@
 import Mathlib
-import Instance.AlgebraicGeometry_DoubleComplex
 import Structure.AlgebraicGeometry_DoubleComplex
 import Abbrev.AlgebraicGeometry_DoubleComplex
 
@@ -44,6 +43,9 @@ def HTotB : (n : ℕ) → Submodule R (LinearMap.ker (dTot D n))
 
 abbrev HTot (n : ℕ) : Type u :=
   LinearMap.ker (dTot D n) ⧸ HTotB D n
+
+instance instAddCommGroupHTot (n : ℕ) : AddCommGroup (HTot D n) := inferInstance
+instance instModuleHTot (n : ℕ) : Module R (HTot D n) := inferInstance
 
 end Tot
 
@@ -143,6 +145,9 @@ def E₂IB :
 abbrev E₂I (p q : ℕ) : Type u :=
   LinearMap.ker (colHdH D p q) ⧸ E₂IB D p q
 
+instance instAddCommGroupE₂I (p q : ℕ) : AddCommGroup (E₂I D p q) := inferInstance
+instance instModuleE₂I (p q : ℕ) : Module R (E₂I D p q) := inferInstance
+
 def transpose : Bounded R where
   C a b := D.C b a
   dH a b := D.dV b a
@@ -155,6 +160,9 @@ def transpose : Bounded R where
 
 abbrev E₂II (p q : ℕ) : Type u :=
   E₂I (transpose D) q p
+
+instance instAddCommGroupE₂II (p q : ℕ) : AddCommGroup (E₂II D p q) := inferInstance
+instance instModuleE₂II (p q : ℕ) : Module R (E₂II D p q) := inferInstance
 
 end E2
 

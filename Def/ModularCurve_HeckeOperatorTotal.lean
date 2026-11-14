@@ -1,4 +1,4 @@
-import Lemma.ModularCurve.HeckeOperator
+import Lemma.LaurentSeries.HeckeOperator
 
 set_option autoImplicit false
 

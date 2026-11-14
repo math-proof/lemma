@@ -18,15 +18,15 @@ discrete countable setting where the reference measure on `α` is `count`).
 @[path, comm]
 private lemma main
   [MeasurableSpace Ω]
-  [ReferenceMeasure α] [ReferenceMeasure β]
+  [μ : ReferenceMeasure α] [ν : ReferenceMeasure β]
   [Countable α] [Countable β]
   [MeasurableSingletonClass α] [MeasurableSingletonClass β]
   {π : Measure Ω}
   {x : Ω → α} {y : Ω → β}
 -- given
   (hP : SinglePSpace π (x, y))
-  (hα : ReferenceMeasure.measure (α := α) = Measure.count)
-  (hβ : ReferenceMeasure.measure (α := β) = Measure.count)
+  (hα : μ.measure = Measure.count)
+  (hβ : ν.measure = Measure.count)
   («\sf{y}» : β) :
 -- imply
   have : SinglePSpace π y := SinglePSpace.of.SinglePSpace.snd hP
@@ -46,4 +46,4 @@ private lemma main
 
 
 -- created on 2020-12-21
--- updated on 2026-11-02
+-- updated on 2026-11-14

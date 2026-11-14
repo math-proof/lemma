@@ -56,12 +56,14 @@ private lemma main
     · apply ((hZ p) p).div ((differentiableAt_const _).mul ((hE p) p)) (mul_ne_zero (hc p) (hE1 p))
     ·
       filter_upwards [hne] with q hq
+      simp only [Pi.div_apply, Pi.mul_apply]
       rw [div_eq_div_iff (mul_ne_zero (hc q) (hE1 q)) (mul_ne_zero (hc p) hq)]
       linear_combination -(star p q q)
   ·
     intro s hs
     have hsσ : σ < s.re := lt_of_le_of_lt (le_max_left _ _) hs
-    apply tendsto_nhds_unique_of_eventuallyEq
+    have : Filter.NeBot (nhdsWithin s ({s} : Set ℂ)ᶜ) := PerfectSpace.not_isolated s
+    apply tendsto_nhds_unique_of_eventuallyEq (l := nhdsWithin s ({s} : Set ℂ)ᶜ)
     ·
       apply Filter.Tendsto.mono_left
       ·
@@ -72,6 +74,7 @@ private lemma main
         ·
           have hne : ∀ᶠ q in nhds s, E s q ≠ 0 := (hE s).continuous.continuousAt.eventually_ne (hE1 s)
           filter_upwards [hne] with q hq
+          simp only [Pi.div_apply, Pi.mul_apply]
           rw [div_eq_div_iff (mul_ne_zero (hc q) (hE1 q)) (mul_ne_zero (hc s) hq)]
           linear_combination -(star s q q)
       · apply nhdsWithin_le_nhds

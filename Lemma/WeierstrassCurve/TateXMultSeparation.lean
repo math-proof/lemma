@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.TateCurve.XMultDistinctRouteB
+import Lemma.WeierstrassCurve.XMultDistinctRouteB
 
 set_option autoImplicit false
 

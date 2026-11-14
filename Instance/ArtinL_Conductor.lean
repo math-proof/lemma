@@ -1,8 +1,8 @@
 -- Carved from Lemma/Definitions/Def_ArtinL_Conductor.lean: instance decls only.
 import Mathlib
-import Lemma.ArtinL.EulerFactor
+import Lemma.Matrix.EulerFactor
 import Instance.Mathlib_RingTheory_Valuation_LowerRamificationGroup
-import Lemma.ArtinL.Conductor
+import Lemma.Matrix.Conductor
 
 set_option autoImplicit false
 

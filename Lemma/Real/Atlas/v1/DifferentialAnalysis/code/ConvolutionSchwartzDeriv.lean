@@ -76,7 +76,7 @@ lemma schwartz_norm_le_of_mem_ball
       _ ≤ (M + S) * (3 : ℝ) ^ (n + 1) := by
         nlinarith [apply_nonneg (SchwartzMap.seminorm ℝ 0 0) φ,
           pow_nonneg (show (0:ℝ) ≤ 3 from by norm_num) (n+1)]
-set_option maxHeartbeats 400000 in
+set_option maxHeartbeats 400000
 
 end ConvolutionDensity
 
@@ -128,7 +128,7 @@ lemma schwartz_norm_le_of_mem_ball_gen
       _ ≤ 3 ^ (n + 1) * S := mul_le_mul_of_nonneg_left hS (by positivity)
       _ ≤ (M + S) * 3 ^ (n + 1) := by
         nlinarith [pow_nonneg (show (0:ℝ) ≤ 3 from by norm_num) (n+1)]
-set_option maxHeartbeats 800000 in
+set_option maxHeartbeats 800000
 
 end ConvolutionDensity
 
@@ -188,7 +188,7 @@ lemma hasFDerivAt_smul_convolution_schwartz
     have hcomp := hψ_at.comp x hsub
     simp only [ContinuousLinearMap.comp_id, Function.comp_def] at hcomp
     exact hcomp.const_smul (v y)
-set_option maxHeartbeats 800000 in
+set_option maxHeartbeats 800000
 
 end ConvolutionDensity
 

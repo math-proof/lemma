@@ -1,6 +1,6 @@
 import Mathlib
-import Lemma.GroupCohomology.ContinuousH2
-import Lemma.GroupCohomology.ContinuousH2Map
+import Lemma.Submodule.ContinuousH2
+import Lemma.Rep.ContinuousH2Map
 
 set_option autoImplicit false
 

@@ -1,8 +1,8 @@
 -- Carved from Lemma/Definitions/Def_Dieudonne_WittGroupHopf.lean: instance decls only.
 import Mathlib
-import Lemma.Dieudonne.DatumAndHonda
+import Lemma.LinearMap.DatumAndHonda
 import Instance.Dieudonne_WittVectorHom
-import Lemma.Dieudonne.WittGroupHopf
+import Lemma.AlgHom.WittGroupHopf
 
 set_option autoImplicit false
 

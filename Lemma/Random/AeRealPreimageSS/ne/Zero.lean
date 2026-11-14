@@ -1,6 +1,5 @@
-import Def.Dynamics.PolicyTrajectory.Gradient
-import Lemma.Random.Eq_0.of.EqReal_0
-open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
+import Def.Dynamics.PolicyTrajectory.ContinuousAction
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.DensityModel Random
 
 
 /--
@@ -8,9 +7,9 @@ almost surely every visited state is reachable
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A]
-  {M : Model Θ S A}
-  {s : ℕ → (ℕ → ℝ × S × A) → S}
+  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Fintype 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
 -- given
   (θ : Θ) :
 -- imply
@@ -19,11 +18,13 @@ private lemma main
   rw [ae_all_iff]
   intro k
   rw [ae_iff]
-  have e : {ω : ℕ → ℝ × S × A | ¬ (M θ).real (s k ⁻¹' {s k ω}) ≠ 0} =
-      ⋃ y ∈ {y : S | (M θ).real (s k ⁻¹' {y}) = 0}, s k ⁻¹' {y} := by
+  have e : {ω : ℕ → ℝ × 𝒮 × 𝒜 | ¬ (M θ).real (s k ⁻¹' {s k ω}) ≠ 0} =
+      ⋃ y ∈ {y : 𝒮 | (M θ).real (s k ⁻¹' {y}) = 0}, s k ⁻¹' {y} := by
     ext ω; simp
   rw [e]
-  exact (measure_biUnion_null_iff (Set.to_countable _)).2 fun y hy => Eq_0.of.EqReal_0 (M := M) θ hy
+  exact (measure_biUnion_null_iff (Set.to_countable _)).2 fun y hy =>
+    (measureReal_eq_zero_iff (measure_ne_top _ _)).1 hy
 
 
 -- created on 2026-10-06
+-- updated on 2026-11-14

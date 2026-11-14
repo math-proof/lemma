@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_HopfAlgebra_CartierDual.lean: instance decls only.
 import Mathlib
-import Lemma.HopfAlgebra.CartierDual
+import Lemma.LinearMap.CartierDual
 
 set_option autoImplicit false
 set_option maxHeartbeats 1600000
@@ -92,4 +92,3 @@ instance instModuleFiniteOfCartier {R : Type*} [CommSemiring R] {Γ : Type*} [Fi
   .equiv (MonoidAlgebra.coeffLinearEquiv R).symm
 
 end MonoidAlgebra
-

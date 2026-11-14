@@ -555,8 +555,8 @@ lemma continuous_cexp_update_coord
   Continuous (fun x : Fin n → ℝ => cexp (↑(-2 * Real.pi) * I * ↑(∑ j : Fin n, (Function.update ξ i t) j * x j))) :=
 -- proof
   (continuous_const.mul (Complex.continuous_ofReal.comp
-    (continuous_finset_sum _ (fun j _ => continuous_const.mul (continuous_apply j))))).cexp
-set_option maxHeartbeats 3200000 in
+    (continuous_finsetSum _ (fun j _ => continuous_const.mul (continuous_apply j))))).cexp
+set_option maxHeartbeats 3200000
 
 end FourierAnalysis
 
@@ -670,7 +670,7 @@ lemma integrable_pow_xi_mul
     (ae_of_all _ fun x => by
       simp only [norm_mul, norm_pow, Complex.norm_real, Real.norm_eq_abs, abs_abs]
       exact le_refl _)
-set_option maxHeartbeats 3200000 in
+set_option maxHeartbeats 3200000
 
 end FourierAnalysis
 
@@ -758,7 +758,7 @@ lemma fourierTransformND_partialDeriv
     ∑ k : Fin n, (ξ k) • (ContinuousLinearMap.proj k : (Fin n → ℝ) →L[ℝ] ℝ)
   have hL_apply : ∀ y, L y = ∑ k : Fin n, ξ k * y k := by
     intro y
-    simp [L, ContinuousLinearMap.sum_apply, ContinuousLinearMap.smul_apply,
+    simp [L, _root_.sum_apply, ContinuousLinearMap.smul_apply,
       ContinuousLinearMap.proj_apply, smul_eq_mul]
   let cL : (Fin n → ℝ) →L[ℝ] ℂ :=
     (↑(-2 * Real.pi) * I) • (Complex.ofRealCLM.comp L)
@@ -1214,7 +1214,7 @@ namespace FourierAnalysis
 [iteratedDeriv_fourierTransform](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/IntroductionToPartialDifferentialEquations/code/CM16/FourierTransform.lean)
 -/
 @[path]
-lemma iteratedDeriv_fourierTransform
+lemma iteratedDeriv_fourierTransform :
 -- imply
   ∀ (k : ℕ) (f : ℝ → ℂ), ContDiff ℝ (↑(⊤ : ℕ∞)) f → HasCompactSupport f → iteratedDeriv k (fourierTransform f) = fourierTransform (mulByPoly f k) := by
 -- proof
@@ -2229,7 +2229,7 @@ lemma fourier_integral_swapND
         apply Continuous.mul
         · exact continuous_const
         · exact Complex.continuous_ofReal.comp
-          (continuous_finset_sum _ (fun j _ =>
+          (continuous_finsetSum _ (fun j _ =>
             ((continuous_apply j).comp continuous_fst).mul
             ((continuous_apply j).comp continuous_snd)))
     · apply ae_of_all
@@ -2505,8 +2505,8 @@ lemma plancherel_theorem_full
     plancherel_ft_memLpND n g hg hg2 hg_hat hg_cont,
     plancherelND n f g hf hg hf2 hg2 hf_hat hg_hat hf_cont hg_cont,
     plancherelND n f f hf hf hf2 hf2 hf_hat hf_hat hf_cont hf_cont⟩
-/-- Proposition 2.0.2: for $f \in C_c^{\infty}(\mathbb{R}^n)$, $\hat{f}$ is smooth, rapidly
-decaying at infinity together with all its derivatives, and lies in $L^1$. -/
+-- Proposition 2.0.2: for $f \in C_c^{\infty}(\mathbb{R}^n)$, $\hat{f}$ is smooth, rapidly
+-- decaying at infinity together with all its derivatives, and lies in $L^1$.
 end FourierAnalysis
 namespace CM16
 export FourierAnalysis (MultiIndex MultiIndex.order multiIndexMonomial iteratedPartialDeriv

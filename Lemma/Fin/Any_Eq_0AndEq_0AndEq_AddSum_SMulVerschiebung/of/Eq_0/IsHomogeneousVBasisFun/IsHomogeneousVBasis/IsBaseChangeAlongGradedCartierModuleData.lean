@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.CerednikDrinfeld.GradedCartierNModule
+import Lemma.Submodule.GradedCartierNModule
 
 
 /--
@@ -12,8 +12,8 @@ private lemma main
   {S B : Type} [CommRing S] [CommRing B]
   {jS : CerednikDrinfeld.Zp2 p →+* S}
   {φ : S →+* B}
-  {Dl : CerednikDrinfeld.GradedCartierModuleData p S jS}
-  {D : CerednikDrinfeld.GradedCartierModuleData p B (φ.comp jS)}
+  {Dl : Fin.GradedCartierModuleData p S jS}
+  {D : Fin.GradedCartierModuleData p B (φ.comp jS)}
   {f : Dl.M →+ D.M}
   {γ : Fin 2 → Dl.M}
   {x : Dl.M}

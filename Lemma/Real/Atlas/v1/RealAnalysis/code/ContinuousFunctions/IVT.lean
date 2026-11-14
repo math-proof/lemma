@@ -51,7 +51,7 @@ namespace ContinuousFunctions
 [polynomial_has_real_root](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/RealAnalysis/code/ContinuousFunctions/IVT.lean)
 -/
 @[path]
-lemma polynomial_has_real_root
+lemma polynomial_has_real_root :
 -- imply
   ∃ x : ℝ, x^2021 + x^2020 + 9.03*x + 1 = 0 := by
 -- proof

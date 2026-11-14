@@ -1,4 +1,4 @@
-import Lemma.LanglandsTunnell.CubicInduction_SlabL2Cusp
+import Lemma.Set.CubicInduction_SlabL2Cusp
 
 open NumberField IsDedekindDomain Matrix
 open scoped InnerProductSpace

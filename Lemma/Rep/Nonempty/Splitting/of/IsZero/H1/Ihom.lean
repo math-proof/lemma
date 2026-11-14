@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.GroupCohomology.TateCohomology
-import Lemma.GroupCohomology.TateSeam
+import Lemma.LinearMap.TateCohomology
+import Lemma.Rep.TateSeam
 import Lemma.Int.P2MUtil
 
 open CategoryTheory Rep CategoryTheory.MonoidalCategory

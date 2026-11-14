@@ -1,74 +1,88 @@
 import Theorem.Probability.CondExpectation
-import Def.Probability.Process.HiddenMarkovSequence.Part2
-import Lemma.Random.MEq_Clip.of.All_Eq
+import Lemma.Random.MEq_Clip.of.All_Eq.All_EqWithDensity
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
-import Lemma.Random.NormClip.le.AbsR
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
+import Lemma.Random.NormClip.le.Abs_R
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Random
 
 
 /--
-Linearity of conditional expectation through the infinite discounted sum: for `γ ∈ [0, 1)` and any event
-`y = «\sf{y}»` of the trajectory, the conditional expectation of the discounted return equals the discounted sum of
-the conditional expected rewards,
-`𝔼[(γ ^ id) ⬝ᵥ r[t:] | y = «\sf{y}»] = (γ ^ id) ⬝ᵥ (k ↦ 𝔼[r[t+k] | y = «\sf{y}»])`, where `u ⬝ᵥ v = ∑' k, u k * v k`
-(so the left side is `𝔼[G[t] | y = «\sf{y}»]`, `G[t] = ∑' k, γ ^ k * r[t+k]`).
+Linearity of conditional expectation through the infinite discounted sum, for the continuous-action
+trajectory model: for `γ ∈ [0, 1)` and an event `y = «\sf{y}»` of the trajectory of positive mass,
+`𝔼[(γ ^ id) ⬝ᵥ r[t:] | y = «\sf{y}»] = (γ ^ id) ⬝ᵥ (k ↦ 𝔼[r[t+k] | y = «\sf{y}»])`,
+where `u ⬝ᵥ v = ∑' k, u k * v k` (so the left side is `𝔼[G[t] | y = «\sf{y}»]`,
+`G[t] = ∑' k, γ ^ k * r[t+k]`).
 (Dominated convergence: the rewards are a.s. bounded by `|R|`.)
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A]
-  {M : Model Θ S A}
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  [MeasurableSpace β] [MeasurableSingletonClass β]
+  {M : DensityModel Θ 𝒮 𝒜}
   {γ : ℝ}
-  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
-  {s : ℕ → (ℕ → ℝ × S × A) → S}
-  {a : ℕ → (ℕ → ℝ × S × A) → A}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {θ : Θ}
+  {y : (ℕ → ℝ × 𝒮 × 𝒜) → β}
+  {«\sf{y}» : β}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (θ : Θ)
-  (y : (ℕ → ℝ × S × A) → β)
-  («\sf{y}» : β)
+  (hy : Measurable y)
+  (hpos : (M θ) (y ⁻¹' {«\sf{y}»}) ≠ 0)
   (t : ℕ) :
 -- imply
-  𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | y = «\sf{y}») = (γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun k => 𝔼[r : M θ](r (t + k) | y = «\sf{y}») := by
+  𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | y = «\sf{y}») =
+    (γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun k => 𝔼[r : M θ](r (t + k) | y = «\sf{y}») := by
 -- proof
-  have hr : Measurable (fun ω k ↦ r k ω) := Measurable.of_eval (Random.Measurable.of.All_Eq.fst h₁)
-  have h : ∀ k, 𝔼[r : M θ](r (t + k) | y = «\sf{y}») = ∫ ω, r (t + k) ω ∂(M θ)[|y ⁻¹' {«\sf{y}»}] := fun k =>
-    Expectation.condEvent_eq_integral hr.aemeasurable (measurable_pi_apply (t + k))
+  have hr : Measurable (fun ω k ↦ r k ω) :=
+    Measurable.of_eval (Random.Measurable.of.All_Eq.fst h₁)
+  have hmap : (M θ).map y {«\sf{y}»} ≠ 0 := by
+    rwa [Measure.map_apply hy (measurableSet_singleton _)]
+  have h : ∀ k, 𝔼[r : M θ](r (t + k) | y = «\sf{y}») =
+      ∫ ω, r (t + k) ω ∂(M θ)[|y ⁻¹' {«\sf{y}»}] := fun k =>
+    Expectation.condEval_eq_integral hr hy (measurable_pi_apply (t + k)) hmap
   simp only [h]
   simp only [Expectation.asRV_process]
-  have hG : Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[t:]) := Measurable.tsum fun k => (measurable_pi_apply (t + k)).const_mul _
-  rw [Expectation.condEvent_eq_integral hr.aemeasurable hG]
-  show ∫ ω, ∑' k, γ ^ k * r (t + k) ω ∂(M θ)[|y ⁻¹' {«\sf{y}»}] = ∑' k, γ ^ k * ∫ ω, r (t + k) ω ∂(M θ)[|y ⁻¹' {«\sf{y}»}]
-  generalize y ⁻¹' {«\sf{y}»} = B
-  if hB : M θ B = 0 then
-    simp [cond_eq_zero_of_meas_eq_zero hB]
-  else
-    have := cond_isProbabilityMeasure (μ := M θ) hB
-    have hae : ∀ᵐ ω ∂(M θ)[|B], ∀ k, ‖r k ω‖ ≤ |M.env.R| := by
-      apply cond_absolutelyContinuous.ae_le
-      exact ae_all_iff.2 fun k => (MEq_Clip.of.All_Eq h₁ (M := M) θ k).mono fun ω h => by rw [h]; exact NormClip.le.AbsR (M := M) _
-    have hm : ∀ k, Measurable (r k) := fun k =>
-      Random.Measurable.of.All_Eq.fst h₁ k
-    have hF : ∀ k, Integrable (fun ω => γ ^ k * r (t + k) ω) (M θ)[|B] := fun k =>
-      Integrable.of_bound ((hm (t + k)).const_mul (γ ^ k)).aestronglyMeasurable (γ ^ k * |M.env.R|)
-        (hae.mono fun ω h => by
-          rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
-          exact mul_le_mul_of_nonneg_left (h (t + k)) (pow_nonneg h₀.1 k))
-    have hS : Summable (fun k => ∫ ω, ‖γ ^ k * r (t + k) ω‖ ∂(M θ)[|B]) := by
-      refine Summable.of_nonneg_of_le (fun k => integral_nonneg fun ω => norm_nonneg _) (fun k => ?_)
-        ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right |M.env.R|)
-      have hb : ∀ᵐ ω ∂(M θ)[|B], ‖‖γ ^ k * r (t + k) ω‖‖ ≤ γ ^ k * |M.env.R| :=
-        hae.mono fun ω h => by
-          rw [norm_norm, norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
-          exact mul_le_mul_of_nonneg_left (h (t + k)) (pow_nonneg h₀.1 k)
-      have := norm_integral_le_of_norm_le_const hb
-      simp only [probReal_univ, mul_one] at this
-      exact (Real.le_norm_self _).trans this
-    rw [← (hasSum_integral_of_summable_integral_norm hF hS).tsum_eq]
-    congr 1; funext k
-    exact integral_const_mul _ _
+  have hG : Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[t:]) :=
+    Measurable.tsum fun k => (measurable_pi_apply (t + k)).const_mul _
+  rw [Expectation.condEval_eq_integral hr hy hG hmap]
+  show ∫ ω, ∑' k, γ ^ k * r (t + k) ω ∂(M θ)[|y ⁻¹' {«\sf{y}»}] =
+    ∑' k, γ ^ k * ∫ ω, r (t + k) ω ∂(M θ)[|y ⁻¹' {«\sf{y}»}]
+  have := cond_isProbabilityMeasure (μ := M θ) hpos
+  have hae : ∀ᵐ ω ∂(M θ)[|y ⁻¹' {«\sf{y}»}], ∀ k, ‖r k ω‖ ≤ |M.env.R| := by
+    apply cond_absolutelyContinuous.ae_le
+    exact ae_all_iff.2 fun k =>
+      (MEq_Clip.of.All_Eq.All_EqWithDensity h₁ (M := M) θ k).mono fun ω h => by
+        rw [h]
+        exact NormClip.le.Abs_R M.env.R _
+  have hm : ∀ k, Measurable (r k) := fun k =>
+    Random.Measurable.of.All_Eq.fst h₁ k
+  have hF : ∀ k, Integrable (fun ω => γ ^ k * r (t + k) ω)
+      (M θ)[|y ⁻¹' {«\sf{y}»}] := fun k =>
+    Integrable.of_bound ((hm (t + k)).const_mul (γ ^ k)).aestronglyMeasurable
+      (γ ^ k * |M.env.R|)
+      (hae.mono fun ω h => by
+        rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
+        apply mul_le_mul_of_nonneg_left (h (t + k)) (pow_nonneg h₀.1 k))
+  have hS : Summable (fun k =>
+      ∫ ω, ‖γ ^ k * r (t + k) ω‖ ∂(M θ)[|y ⁻¹' {«\sf{y}»}]) := by
+    refine Summable.of_nonneg_of_le (fun k => integral_nonneg fun ω => norm_nonneg _)
+      (fun k => ?_)
+      ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right |M.env.R|)
+    have hb : ∀ᵐ ω ∂(M θ)[|y ⁻¹' {«\sf{y}»}],
+        ‖‖γ ^ k * r (t + k) ω‖‖ ≤ γ ^ k * |M.env.R| :=
+      hae.mono fun ω h => by
+        rw [norm_norm, norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
+        apply mul_le_mul_of_nonneg_left (h (t + k)) (pow_nonneg h₀.1 k)
+    have := norm_integral_le_of_norm_le_const hb
+    simp only [probReal_univ, mul_one] at this
+    exact (Real.le_norm_self _).trans this
+  rw [← (hasSum_integral_of_summable_integral_norm hF hS).tsum_eq]
+  congr 1
+  funext k
+  exact integral_const_mul _ _
 
 
 -- created on 2026-10-07
--- updated on 2026-11-11
+-- updated on 2026-11-14

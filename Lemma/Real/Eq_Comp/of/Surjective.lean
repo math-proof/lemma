@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.HopfAlgebra.HopfKer
+import Lemma.Submodule.HopfKer
 import Lemma.Int.P2MUtil
 
 

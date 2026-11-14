@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.ProjectionTheory.code.MultiplicativeConvolution
-open Nat Finset MultiplicativeConvolution
+open Nat Finset
 
 
 namespace MultiplicativeConvolution

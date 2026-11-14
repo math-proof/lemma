@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_PresheafOfModules_ExteriorPower.lean: instance decls only.
 import Mathlib
-import Lemma.PresheafOfModules.ExteriorPower
+import Lemma.LinearMap.ExteriorPower
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false

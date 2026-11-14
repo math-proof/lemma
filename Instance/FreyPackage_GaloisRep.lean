@@ -1,5 +1,5 @@
 -- Carved from Lemma/Definitions/Def_FreyPackage_GaloisRep.lean: instance decls only.
-import Lemma.FLTPrelim.FreyPackage
+import Lemma.WeierstrassCurve.FreyPackage
 import Instance.FLTPrelim_GaloisRep
 import Instance.EllipticCurve_FrobeniusTrace
 import Mathlib.LinearAlgebra.FiniteDimensional.Defs

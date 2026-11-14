@@ -149,7 +149,7 @@ lemma lem_15_7_arakelov_L_finite
     · have h := ha_int x hx.1
       obtain ⟨c, hc⟩ := h
       rw [Algebra.smul_def] at hc
-      rwa [← hc]
+      exact hc.symm ▸ c.property
     · intro φ
       rw [map_mul, norm_mul]
       calc ‖φ (a : K)‖ * ‖φ x‖
@@ -340,7 +340,7 @@ lemma thm_15_13_number_field_case
 -- imply
   ∃! ζe : torsion K × (Fin (rank K) → ℤ), x = ζe.1 * ∏ i, (fundSystem K i) ^ (ζe.2 i) :=
 -- proof
-  thm_15_12_dirichlet_unit_theorem K x
+  thm_15_12_dirichlet_unit_theorem
 
 /--
 [def_15_16_regulator_pos](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/DirichletUnits.lean)
@@ -380,7 +380,9 @@ lemma def_15_16_regulator_eq_det
 -- given
   (e : {w // w ≠ w'} ≃ Fin (rank K)) :
 -- imply
-  regulator K = :=
+  regulator K =
+    |(Matrix.of fun i w : {w // w ≠ w'} ↦ (mult w.val : ℝ) *
+      Real.log (w.val (fundSystem K (e i) : K))).det| :=
 -- proof
   regulator_eq_det K w' e
 
@@ -397,7 +399,7 @@ lemma arakelovDivisor_size_mul
 -- imply
   def_15_3_size K (I₁ * I₂) (f₁ * f₂) = def_15_3_size K I₁ f₁ * def_15_3_size K I₂ f₂ :=
 -- proof
-  def_15_3_size_hom K I₁ I₂ f₁ f₂
+  def_15_3_size_hom
 
 /--
 [arakelovDivisor_principal_size_eq_one](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/DirichletUnits.lean)
@@ -413,7 +415,7 @@ lemma arakelovDivisor_principal_size_eq_one
 -- imply
   def_15_3_size K (FractionalIdeal.spanSingleton (nonZeroDivisors (𝓞 K)) x) (fun w => w x) = 1 :=
 -- proof
-  def_15_3_kernel_contains_princ K hx
+  def_15_3_kernel_contains_princ hx
 
 /--
 [arakelovDivisor_L_subset](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/DirichletUnits.lean)
@@ -428,7 +430,7 @@ lemma arakelovDivisor_L_subset
 -- imply
   def_15_3_L K I f ⊆ (I : Set K) :=
 -- proof
-  def_15_3_L_subset_I_c K I f
+  def_15_3_L_subset_I_c
 
 /--
 [unitLattice_spans_top](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/DirichletUnits.lean)
@@ -441,7 +443,7 @@ lemma unitLattice_spans_top
 -- imply
   Submodule.span ℝ (unitLattice K : Set (logSpace K)) = ⊤ :=
 -- proof
-  lem_15_7_unitLattice_spans_top K
+  lem_15_7_unitLattice_spans_top
 
 /--
 [unitLattice_discreteTopology](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/DirichletUnits.lean)
@@ -454,7 +456,7 @@ lemma unitLattice_discreteTopology
 -- imply
   DiscreteTopology (unitLattice K) :=
 -- proof
-  lem_15_7_unitLattice_discrete K
+  lem_15_7_unitLattice_discrete
 
 /--
 [arakelovL_finite](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/DirichletUnits.lean)
@@ -469,7 +471,7 @@ lemma arakelovL_finite
 -- imply
   Set.Finite (arakelovL K I f) :=
 -- proof
-  lem_15_7_arakelov_L_finite K I f
+  lem_15_7_arakelov_L_finite
 
 /--
 [torsion_finite](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/DirichletUnits.lean)
@@ -482,7 +484,7 @@ lemma torsion_finite
 -- imply
   Finite (torsion K) :=
 -- proof
-  cor_15_8_torsion_finite K
+  cor_15_8_torsion_finite
 
 /--
 [mem_torsion_iff_forall_infinitePlace_eq_one](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/DirichletUnits.lean)
@@ -496,7 +498,7 @@ lemma mem_torsion_iff_forall_infinitePlace_eq_one
 -- imply
   x ∈ torsion K ↔ ∀ w : InfinitePlace K, w x = 1 :=
 -- proof
-  cor_15_8_kernel_characterization K
+  cor_15_8_kernel_characterization
 
 /--
 [logEmbedding_eq_zero_iff_mem_torsion](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/DirichletUnits.lean)
@@ -510,7 +512,7 @@ lemma logEmbedding_eq_zero_iff_mem_torsion
 -- imply
   logEmbedding K (Additive.ofMul x) = 0 ↔ x ∈ torsion K :=
 -- proof
-  cor_15_8_logEmbedding_eq_zero_iff K
+  cor_15_8_logEmbedding_eq_zero_iff
 
 /--
 [torsion_eq_commGroup_torsion](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/DirichletUnits.lean)
@@ -523,7 +525,7 @@ lemma torsion_eq_commGroup_torsion
 -- imply
   torsion K = CommGroup.torsion (𝓞 K)ˣ :=
 -- proof
-  cor_15_8_torsion_subgroup K
+  cor_15_8_torsion_subgroup
 
 /--
 [torsion_isCyclic](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/DirichletUnits.lean)
@@ -536,7 +538,7 @@ lemma torsion_isCyclic
 -- imply
   IsCyclic (torsion K) :=
 -- proof
-  cor_15_8_torsion_cyclic K
+  cor_15_8_torsion_cyclic
 
 /--
 [rootsOfUnity_characterization](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/DirichletUnits.lean)
@@ -549,8 +551,8 @@ lemma rootsOfUnity_characterization
 -- imply
   Finite (torsion K) ∧ IsCyclic (torsion K) ∧ (∀ x : (𝓞 K)ˣ, x ∈ torsion K ↔ ∀ w : InfinitePlace K, w x = 1) :=
 -- proof
-  ⟨cor_15_8_torsion_finite K, cor_15_8_torsion_cyclic K,
-    fun x => cor_15_8_kernel_characterization K⟩
+  ⟨cor_15_8_torsion_finite, cor_15_8_torsion_cyclic,
+    fun x => cor_15_8_kernel_characterization (x := x)⟩
 
 /--
 [unitLattice_finrank_eq_rank](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/DirichletUnits.lean)
@@ -563,7 +565,7 @@ lemma unitLattice_finrank_eq_rank
 -- imply
   finrank ℤ (↑(unitLattice K)) = rank K :=
 -- proof
-  prop_15_9_unit_rank K
+  prop_15_9_unit_rank
 
 /--
 [arakelovL_exists_ne_zero](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/DirichletUnits.lean)
@@ -580,7 +582,7 @@ lemma arakelovL_exists_ne_zero
 -- imply
   ∃ a ∈ arakelovL K (I : FractionalIdeal (𝓞 K)⁰ K) (fun w => (f w : ℝ)), a ≠ 0 :=
 -- proof
-  prop_15_9_L_contains_nonzero K I h
+  prop_15_9_L_contains_nonzero h
 
 /--
 [logEmbedding_fundSystem_eq_basisUnitLattice](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/DirichletUnits.lean)
@@ -594,7 +596,7 @@ lemma logEmbedding_fundSystem_eq_basisUnitLattice
 -- imply
   (logEmbedding K) (Additive.ofMul (fundSystem K i)) = ↑((basisUnitLattice K) i) :=
 -- proof
-  prop_15_11_fundSystem_lattice_basis K i
+  prop_15_11_fundSystem_lattice_basis
 
 /--
 [closure_fundSystem_sup_torsion](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/DirichletUnits.lean)
@@ -607,7 +609,7 @@ lemma closure_fundSystem_sup_torsion
 -- imply
   Subgroup.closure (Set.range (fundSystem K)) ⊔ torsion K = ⊤ :=
 -- proof
-  prop_15_11_closure_fundSystem_sup_torsion_eq_top K
+  prop_15_11_closure_fundSystem_sup_torsion_eq_top
 
 /--
 [unit_eq_torsion_mul_fundSystem_pow](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/DirichletUnits.lean)
@@ -621,7 +623,7 @@ lemma unit_eq_torsion_mul_fundSystem_pow
 -- imply
   ∃! ζe : torsion K × (Fin (rank K) → ℤ), x = ζe.1 * ∏ i, (fundSystem K i) ^ (ζe.2 i) :=
 -- proof
-  thm_15_12_dirichlet_unit_theorem K x
+  thm_15_12_dirichlet_unit_theorem
 
 /--
 [units_fg](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/DirichletUnits.lean)
@@ -634,7 +636,7 @@ lemma units_fg
 -- imply
   Monoid.FG (𝓞 K)ˣ :=
 -- proof
-  thm_15_12_units_fg K
+  thm_15_12_units_fg
 
 /--
 [numberField_unit_decomposition](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/DirichletUnits.lean)
@@ -648,7 +650,7 @@ lemma numberField_unit_decomposition
 -- imply
   ∃! ζe : torsion K × (Fin (rank K) → ℤ), x = ζe.1 * ∏ i, (fundSystem K i) ^ (ζe.2 i) :=
 -- proof
-  thm_15_13_number_field_case K x
+  thm_15_13_number_field_case
 
 /--
 [regulator_pos_of_numberField](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/DirichletUnits.lean)
@@ -661,7 +663,7 @@ lemma regulator_pos_of_numberField
 -- imply
   0 < regulator K :=
 -- proof
-  def_15_16_regulator_pos K
+  def_15_16_regulator_pos
 
 /--
 [regulator_ne_zero_of_numberField](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/DirichletUnits.lean)
@@ -674,7 +676,7 @@ lemma regulator_ne_zero_of_numberField
 -- imply
   regulator K ≠ 0 :=
 -- proof
-  def_15_16_regulator_ne_zero K
+  def_15_16_regulator_ne_zero
 
 /--
 [regulator_eq_det_of_fundSystem](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/DirichletUnits.lean)
@@ -688,9 +690,11 @@ lemma regulator_eq_det_of_fundSystem
 -- given
   (e : {w // w ≠ w'} ≃ Fin (rank K)) :
 -- imply
-  regulator K = :=
+  regulator K =
+    |(Matrix.of fun i w : {w // w ≠ w'} ↦ (mult w.val : ℝ) *
+      Real.log (w.val (fundSystem K (e i) : K))).det| :=
 -- proof
-  def_15_16_regulator_eq_det K w' e
+  def_15_16_regulator_eq_det e
 
 
 -- created on 2026-10-23

@@ -14,7 +14,7 @@ integrals against `law(s[t])` and the reference measure of `𝒜`, via `DensityM
 @[path]
 private lemma main
   [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
-  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  [MeasurableSpace 𝒮] [μ : ReferenceMeasure 𝒜]
   {M : DensityModel Θ 𝒮 𝒜}
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
@@ -29,7 +29,7 @@ private lemma main
   (t : ℕ) :
 -- imply
   ∫ ω, φ (s t ω) (a t ω) ∂(M θ) =
-    ∫ y, (∫ u, M.policy.prob θ y u • φ y u ∂ReferenceMeasure.measure) ∂((M θ).map (s t)) := by
+    ∫ y, (∫ u, M.policy.prob θ y u • φ y u ∂μ.measure) ∂((M θ).map (s t)) := by
 -- proof
   have hs : Measurable (s t) := Random.Measurable.of.All_Eq.snd.fst h₀ t
   have ha : Measurable (a t) := Random.Measurable.of.All_Eq.snd.snd h₀ t
@@ -75,3 +75,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-14

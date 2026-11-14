@@ -1,8 +1,10 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Def.v1.Atlas.TheoryOfComputation.code.NPCompleteness.Part3
+import Def.v1.Atlas.TheoryOfComputation.code.NPCompleteness.Part4
+import Def.v1.Atlas.TheoryOfComputation.code.NPCompleteness.Part5
 import Def.v1.Atlas.TheoryOfComputation.code.NPCompleteness.Part8
-open TuringMachine in NPCompleteness CookLevin ThreeSATComplete HamiltonianPath
-open TuringMachine NPCompleteness
+open TuringMachine NPCompleteness CookLevin
 
 
 namespace CookLevin
@@ -53,12 +55,12 @@ lemma satNTM_runsInTime :
       unfold NTM.step at hstep
       simp only [satNTM] at hstep
       obtain hst | hst := hstate_halt
-        simp only [hst, or_true, true_or, ite_true] at hstep <;> {
+      all_goals
+        simp only [hst, or_true, true_or, ite_true] at hstep
         simp only [NTM.isHaltConfig, NTM.isAcceptConfig, NTM.isRejectConfig, satNTM]
         have : (branch ⟨j + 1, hj⟩).state = (branch ⟨j, ihjlt⟩).state := by
           have := congr_arg Config.state hstep; simpa using this
         rw [this, hst]; simp
-      }
 
 end CookLevin
 
@@ -76,18 +78,15 @@ lemma satNTM_time_bound :
   intro n hn
   simp only [Nat.pow_one]
   omega
-/-- Existential witness that there is a polynomial-time NTM deciding `SATLang`,
-which is what `InNP SATLang` unfolds to. -/
+-- Existential witness that there is a polynomial-time NTM deciding `SATLang`,
+-- which is what `InNP SATLang` unfolds to. 
 end CookLevin
 namespace TuringMachine
 open TuringMachine
-/-- Composition of polynomial-time computable functions is polynomial-time computable. -/
+-- Composition of polynomial-time computable functions is polynomial-time computable.
 end TuringMachine
 namespace ThreeSATComplete
-open TuringMachine NPCompleteness
-
-
-namespace ThreeSATComplete
+open TuringMachine NPCompleteness CookLevin
 
 /--
 [threeSATNTM_runsInTime](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfComputation/code/NPCompleteness.lean)
@@ -135,12 +134,12 @@ lemma threeSATNTM_runsInTime :
       unfold NTM.step at hstep
       simp only [threeSATNTM] at hstep
       obtain hst | hst := hstate_halt
-        simp only [hst, or_true, true_or, ite_true] at hstep <;> {
+      all_goals
+        simp only [hst, or_true, true_or, ite_true] at hstep
         simp only [NTM.isHaltConfig, NTM.isAcceptConfig, NTM.isRejectConfig, threeSATNTM]
         have : (branch ⟨j + 1, hj⟩).state = (branch ⟨j, ihjlt⟩).state := by
           have := congr_arg Config.state hstep; simpa using this
         rw [this, hst]; simp
-      }
 
 end ThreeSATComplete
 
@@ -303,13 +302,13 @@ lemma tseitinAux_clauses_are_3clauses
     intro c hc
     simp only [List.mem_singleton] at hc
     subst hc
-    exact mk3Clause_is3Clause (var_isLiteral _) (var_isLiteral _) (var_isLiteral _)
+    exact mk3Clause_is3Clause (var_isLiteral) (var_isLiteral) (var_isLiteral)
   | falseConst =>
     simp only [tseitinAux]
     intro c hc
     simp only [List.mem_singleton] at hc
     subst hc
-    exact mk3Clause_is3Clause (not_var_isLiteral _) (not_var_isLiteral _) (not_var_isLiteral _)
+    exact mk3Clause_is3Clause (not_var_isLiteral) (not_var_isLiteral) (not_var_isLiteral)
   | not ψ ih =>
     simp only [tseitinAux]
     intro c hc
@@ -321,9 +320,9 @@ lemma tseitinAux_clauses_are_3clauses
       exact hc
     simp only [List.mem_append, List.mem_cons, List.mem_nil_iff, or_false] at this
     obtain hc' | rfl | rfl := this
-    · exact ih fresh c hc'
-    · exact mk3Clause_is3Clause (var_isLiteral _) (var_isLiteral _) (var_isLiteral _)
-    · exact mk3Clause_is3Clause (not_var_isLiteral _) (not_var_isLiteral _) (not_var_isLiteral _)
+    · exact ih c hc'
+    · exact mk3Clause_is3Clause (var_isLiteral) (var_isLiteral) (var_isLiteral)
+    · exact mk3Clause_is3Clause (not_var_isLiteral) (not_var_isLiteral) (not_var_isLiteral)
   | and ψ₁ ψ₂ ih₁ ih₂ =>
     simp only [tseitinAux]
     intro c hc
@@ -339,12 +338,12 @@ lemma tseitinAux_clauses_are_3clauses
       exact hc
     simp only [List.mem_append, List.mem_cons, List.mem_nil_iff, or_false] at this
     obtain (hc' | hc') | rfl | rfl | rfl | rfl := this
-    · exact ih₁ fresh c hc'
-    · exact ih₂ (tseitinAux ψ₁ fresh).2.2 c hc'
-    · exact mk3Clause_is3Clause (not_var_isLiteral _) (not_var_isLiteral _) (var_isLiteral _)
-    · exact mk3Clause_is3Clause (var_isLiteral _) (not_var_isLiteral _) (not_var_isLiteral _)
-    · exact mk3Clause_is3Clause (not_var_isLiteral _) (var_isLiteral _) (not_var_isLiteral _)
-    · exact mk3Clause_is3Clause (var_isLiteral _) (var_isLiteral _) (not_var_isLiteral _)
+    · exact ih₁ c hc'
+    · exact ih₂ c hc'
+    · exact mk3Clause_is3Clause (not_var_isLiteral) (not_var_isLiteral) (var_isLiteral)
+    · exact mk3Clause_is3Clause (var_isLiteral) (not_var_isLiteral) (not_var_isLiteral)
+    · exact mk3Clause_is3Clause (not_var_isLiteral) (var_isLiteral) (not_var_isLiteral)
+    · exact mk3Clause_is3Clause (var_isLiteral) (var_isLiteral) (not_var_isLiteral)
   | or ψ₁ ψ₂ ih₁ ih₂ =>
     simp only [tseitinAux]
     intro c hc
@@ -360,12 +359,12 @@ lemma tseitinAux_clauses_are_3clauses
       exact hc
     simp only [List.mem_append, List.mem_cons, List.mem_nil_iff, or_false] at this
     obtain (hc' | hc') | rfl | rfl | rfl | rfl := this
-    · exact ih₁ fresh c hc'
-    · exact ih₂ (tseitinAux ψ₁ fresh).2.2 c hc'
-    · exact mk3Clause_is3Clause (not_var_isLiteral _) (not_var_isLiteral _) (var_isLiteral _)
-    · exact mk3Clause_is3Clause (var_isLiteral _) (not_var_isLiteral _) (var_isLiteral _)
-    · exact mk3Clause_is3Clause (not_var_isLiteral _) (var_isLiteral _) (var_isLiteral _)
-    · exact mk3Clause_is3Clause (var_isLiteral _) (var_isLiteral _) (not_var_isLiteral _)
+    · exact ih₁ c hc'
+    · exact ih₂ c hc'
+    · exact mk3Clause_is3Clause (not_var_isLiteral) (not_var_isLiteral) (var_isLiteral)
+    · exact mk3Clause_is3Clause (var_isLiteral) (not_var_isLiteral) (var_isLiteral)
+    · exact mk3Clause_is3Clause (not_var_isLiteral) (var_isLiteral) (var_isLiteral)
+    · exact mk3Clause_is3Clause (var_isLiteral) (var_isLiteral) (not_var_isLiteral)
 
 end ThreeSATComplete
 
@@ -434,8 +433,8 @@ lemma tseitinTransform_is3CNF
   have hroot : (mk3Clause (.var (tseitinAux φ fresh).1)
     (.var (tseitinAux φ fresh).1)
     (.var (tseitinAux φ fresh).1)).Is3Clause :=
-    mk3Clause_is3Clause (var_isLiteral _) (var_isLiteral _) (var_isLiteral _)
-  have hclauses := tseitinAux_clauses_are_3clauses φ fresh
+    mk3Clause_is3Clause (var_isLiteral) (var_isLiteral) (var_isLiteral)
+  have hclauses := tseitinAux_clauses_are_3clauses (φ := φ) (fresh := fresh)
   apply conjoinClauses_is3CNF
   · exact List.append_ne_nil_of_right_ne_nil _ (List.cons_ne_nil _ _)
   · intro c hc
@@ -452,24 +451,43 @@ namespace ThreeSATComplete
 [tseitinAux_fresh_mono](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfComputation/code/NPCompleteness.lean)
 -/
 @[path]
-lemma tseitinAux_fresh_mono :
+lemma tseitinAux_fresh_mono (φ : BoolFormula) (fresh : ℕ) :
 -- imply
-  ∀ (φ : BoolFormula) (fresh : ℕ), fresh ≤ (tseitinAux φ fresh).2.2 :=
+  fresh ≤ (tseitinAux φ fresh).2.2 := by
 -- proof
-  tseitinAux_fresh_mono ψ fresh
-    generalize hr : tseitinAux ψ fresh = r at h; obtain ⟨_, _, f1⟩ := r; simp only at h ⊢; omega
-    | .and ψ₁ ψ₂, fresh => by
-      simp only [tseitinAux]
-      have h1 := tseitinAux_fresh_mono ψ₁ fresh
-      generalize hr₁ : tseitinAux ψ₁ fresh = r₁ at h1; obtain ⟨_, _, f1⟩ := r₁; simp only at h1 ⊢
-      have h2 := tseitinAux_fresh_mono ψ₂ f1
-      generalize hr₂ : tseitinAux ψ₂ f1 = r₂ at h2; obtain ⟨_, _, f2⟩ := r₂; simp only at h2 ⊢; omega
-    | .or ψ₁ ψ₂, fresh => by
-      simp only [tseitinAux]
-      have h1 := tseitinAux_fresh_mono ψ₁ fresh
-      generalize hr₁ : tseitinAux ψ₁ fresh = r₁ at h1; obtain ⟨_, _, f1⟩ := r₁; simp only at h1 ⊢
-      have h2 := tseitinAux_fresh_mono ψ₂ f1
-      generalize hr₂ : tseitinAux ψ₂ f1 = r₂ at h2; obtain ⟨_, _, f2⟩ := r₂; simp only at h2 ⊢; omega
+  induction φ generalizing fresh with
+  | var _ => simp [tseitinAux]
+  | trueConst => simp [tseitinAux]
+  | falseConst => simp [tseitinAux]
+  | not ψ ih =>
+    simp only [tseitinAux]
+    have h := ih fresh
+    generalize hr : tseitinAux ψ fresh = r at h
+    obtain ⟨_, _, f1⟩ := r
+    simp only at h ⊢
+    omega
+  | and ψ₁ ψ₂ ih₁ ih₂ =>
+    simp only [tseitinAux]
+    have h1 := ih₁ fresh
+    generalize hr₁ : tseitinAux ψ₁ fresh = r₁ at h1
+    obtain ⟨_, _, f1⟩ := r₁
+    simp only at h1 ⊢
+    have h2 := ih₂ f1
+    generalize hr₂ : tseitinAux ψ₂ f1 = r₂ at h2
+    obtain ⟨_, _, f2⟩ := r₂
+    simp only at h2 ⊢
+    omega
+  | or ψ₁ ψ₂ ih₁ ih₂ =>
+    simp only [tseitinAux]
+    have h1 := ih₁ fresh
+    generalize hr₁ : tseitinAux ψ₁ fresh = r₁ at h1
+    obtain ⟨_, _, f1⟩ := r₁
+    simp only at h1 ⊢
+    have h2 := ih₂ f1
+    generalize hr₂ : tseitinAux ψ₂ f1 = r₂ at h2
+    obtain ⟨_, _, f2⟩ := r₂
+    simp only at h2 ⊢
+    omega
 
 end ThreeSATComplete
 
@@ -543,10 +561,10 @@ lemma tseitinAux_clause_fmv
   | not ψ ih =>
     have hfrs : maxVarSucc ψ ≤ fresh := by simp [maxVarSucc] at hfr; exact hfr
     simp only [tseitinAux] at *; generalize hr : tseitinAux ψ fresh = r at *; obtain ⟨vφ, clsφ, f1⟩ := r; simp only at *
-    have hvlt : vφ < f1 := by have := tseitinAux_root_bound ψ fresh hfrs; rw [hr] at this; simp only at this; exact this
+    have hvlt : vφ < f1 := by have := tseitinAux_root_bound hfrs; rw [hr] at this; simp only at this; exact this
     intro c hc; simp only [List.mem_append, List.mem_cons, List.mem_nil_iff, or_false] at hc
     obtain hc | rfl | rfl := hc
-    · have := ih fresh hfrs c (by rw [hr]; exact hc); rw [hr] at this; simp only at this; omega
+    · have := ih hfrs c (by rw [hr]; exact hc); rw [hr] at this; simp only at this; omega
     · simp [mk3Clause, fmv]; omega
     · simp [mk3Clause, fmv]; omega
   | and ψ₁ ψ₂ ih₁ ih₂ =>
@@ -555,12 +573,12 @@ lemma tseitinAux_clause_fmv
     generalize hr₁ : tseitinAux ψ₁ fresh = r₁ at *; obtain ⟨v₁, cls₁, f1⟩ := r₁; simp only at *
     have hfr₂ : maxVarSucc ψ₂ ≤ f1 := by simp [maxVarSucc] at hfr; have := tseitinAux_fresh_mono ψ₁ fresh; rw [hr₁] at this; simp only at this; omega
     generalize hr₂ : tseitinAux ψ₂ f1 = r₂ at *; obtain ⟨v₂, cls₂, f2⟩ := r₂; simp only at *
-    have hv₁lt : v₁ < f2 := by have := tseitinAux_root_bound ψ₁ fresh hfr₁; rw [hr₁] at this; have := tseitinAux_fresh_mono ψ₂ f1; rw [hr₂] at this; simp only at *; omega
-    have hv₂lt : v₂ < f2 := by have := tseitinAux_root_bound ψ₂ f1 hfr₂; rw [hr₂] at this; simp only at this; exact this
+    have hv₁lt : v₁ < f2 := by have := tseitinAux_root_bound hfr₁; rw [hr₁] at this; have := tseitinAux_fresh_mono ψ₂ f1; rw [hr₂] at this; simp only at *; omega
+    have hv₂lt : v₂ < f2 := by have := tseitinAux_root_bound hfr₂; rw [hr₂] at this; simp only at this; exact this
     intro c hc; simp only [List.mem_append, List.mem_cons, List.mem_nil_iff, or_false] at hc
     obtain (hc | hc) | rfl | rfl | rfl | rfl := hc
-    · have := ih₁ fresh hfr₁ c (by rw [hr₁]; exact hc); rw [hr₁] at this; have hm := tseitinAux_fresh_mono ψ₂ f1; rw [hr₂] at hm; simp only at *; omega
-    · have := ih₂ f1 hfr₂ c (by rw [hr₂]; exact hc); rw [hr₂] at this; simp only at this; omega
+    · have := ih₁ hfr₁ c (by rw [hr₁]; exact hc); rw [hr₁] at this; have hm := tseitinAux_fresh_mono ψ₂ f1; rw [hr₂] at hm; simp only at *; omega
+    · have := ih₂ hfr₂ c (by rw [hr₂]; exact hc); rw [hr₂] at this; simp only at this; omega
     all_goals simp [mk3Clause, fmv]; omega
   | or ψ₁ ψ₂ ih₁ ih₂ =>
     have hfr₁ : maxVarSucc ψ₁ ≤ fresh := by simp [maxVarSucc] at hfr; omega
@@ -568,12 +586,12 @@ lemma tseitinAux_clause_fmv
     generalize hr₁ : tseitinAux ψ₁ fresh = r₁ at *; obtain ⟨v₁, cls₁, f1⟩ := r₁; simp only at *
     have hfr₂ : maxVarSucc ψ₂ ≤ f1 := by simp [maxVarSucc] at hfr; have := tseitinAux_fresh_mono ψ₁ fresh; rw [hr₁] at this; simp only at this; omega
     generalize hr₂ : tseitinAux ψ₂ f1 = r₂ at *; obtain ⟨v₂, cls₂, f2⟩ := r₂; simp only at *
-    have hv₁lt : v₁ < f2 := by have := tseitinAux_root_bound ψ₁ fresh hfr₁; rw [hr₁] at this; have := tseitinAux_fresh_mono ψ₂ f1; rw [hr₂] at this; simp only at *; omega
-    have hv₂lt : v₂ < f2 := by have := tseitinAux_root_bound ψ₂ f1 hfr₂; rw [hr₂] at this; simp only at this; exact this
+    have hv₁lt : v₁ < f2 := by have := tseitinAux_root_bound hfr₁; rw [hr₁] at this; have := tseitinAux_fresh_mono ψ₂ f1; rw [hr₂] at this; simp only at *; omega
+    have hv₂lt : v₂ < f2 := by have := tseitinAux_root_bound hfr₂; rw [hr₂] at this; simp only at this; exact this
     intro c hc; simp only [List.mem_append, List.mem_cons, List.mem_nil_iff, or_false] at hc
     obtain (hc | hc) | rfl | rfl | rfl | rfl := hc
-    · have := ih₁ fresh hfr₁ c (by rw [hr₁]; exact hc); rw [hr₁] at this; have hm := tseitinAux_fresh_mono ψ₂ f1; rw [hr₂] at hm; simp only at *; omega
-    · have := ih₂ f1 hfr₂ c (by rw [hr₂]; exact hc); rw [hr₂] at this; simp only at this; omega
+    · have := ih₁ hfr₁ c (by rw [hr₁]; exact hc); rw [hr₁] at this; have hm := tseitinAux_fresh_mono ψ₂ f1; rw [hr₂] at hm; simp only at *; omega
+    · have := ih₂ hfr₂ c (by rw [hr₂]; exact hc); rw [hr₂] at this; simp only at this; omega
     all_goals simp [mk3Clause, fmv]; omega
 
 end ThreeSATComplete
@@ -627,25 +645,25 @@ lemma tseitinAux_completeness
     exact ⟨σ, fun _ _ => rfl, rfl, fun _ h => absurd h (by simp)⟩
   | trueConst =>
     simp only [tseitinAux, BoolFormula.eval]
-    exact ⟨Function.update σ fresh true, fun n hn => by simp [Function.update_apply, Nat.ne_of_lt hn], by simp [Function.update_apply],
-      fun c hc => by simp only [List.mem_cons, List.mem_nil_iff, or_false] at hc; subst hc; simp [mk3Clause, BoolFormula.eval, Function.update_apply]⟩
+    exact ⟨Function.update σ fresh true, fun n hn => by simp [Nat.ne_of_lt hn], by simp,
+      fun c hc => by simp only [List.mem_cons, List.mem_nil_iff, or_false] at hc; subst hc; simp [mk3Clause, BoolFormula.eval]⟩
   | falseConst =>
     simp only [tseitinAux, BoolFormula.eval]
-    exact ⟨Function.update σ fresh false, fun n hn => by simp [Function.update_apply, Nat.ne_of_lt hn], by simp [Function.update_apply],
-      fun c hc => by simp only [List.mem_cons, List.mem_nil_iff, or_false] at hc; subst hc; simp [mk3Clause, BoolFormula.eval, Function.update_apply]⟩
+    exact ⟨Function.update σ fresh false, fun n hn => by simp [Nat.ne_of_lt hn], by simp,
+      fun c hc => by simp only [List.mem_cons, List.mem_nil_iff, or_false] at hc; subst hc; simp [mk3Clause, BoolFormula.eval]⟩
   | not ψ ih =>
     simp only [tseitinAux]; generalize hr : tseitinAux ψ fresh = r; obtain ⟨vφ, clsφ, f1⟩ := r; simp only
     have hfrs : maxVarSucc ψ ≤ fresh := by simp [maxVarSucc] at hfr; exact hfr
-    obtain ⟨σ₁, hσ₁a, hσ₁r, hσ₁c⟩ := ih fresh σ hfrs; rw [hr] at hσ₁r hσ₁c; simp only at *
-    have hvlt : vφ < f1 := by have := tseitinAux_root_bound ψ fresh hfrs; rw [hr] at this; exact this
+    obtain ⟨σ₁, hσ₁a, hσ₁r, hσ₁c⟩ := ih (σ := σ) hfrs; rw [hr] at hσ₁r hσ₁c; simp only at *
+    have hvlt : vφ < f1 := by have := tseitinAux_root_bound hfrs; rw [hr] at this; exact this
     have hfge : fresh ≤ f1 := by have := tseitinAux_fresh_mono ψ fresh; rw [hr] at this; exact this
     refine ⟨Function.update σ₁ f1 (!σ₁ vφ), fun n hn => ?_, ?_, fun c hc => ?_⟩
-    · simp [Function.update_apply, show n ≠ f1 from by omega]; exact hσ₁a n hn
-    · simp [Function.update_apply, show vφ ≠ f1 from by omega, BoolFormula.eval, hσ₁r]
+    · simp [show n ≠ f1 from by omega]; exact hσ₁a n hn
+    · simp [BoolFormula.eval, hσ₁r]
     · simp only [List.mem_append, List.mem_cons, List.mem_nil_iff, or_false] at hc
       obtain hc | rfl | rfl := hc
-      · have hfmv := tseitinAux_clause_fmv ψ fresh hfrs c (by rw [hr]; exact hc); rw [hr] at hfmv; simp only at hfmv
-        rw [eval_eq_of_ge c _ σ₁ (fun n hn => by simp [Function.update_apply, show n ≠ f1 from by omega])]; exact hσ₁c c hc
+      · have hfmv := tseitinAux_clause_fmv hfrs c (by rw [hr]; exact hc); rw [hr] at hfmv; simp only at hfmv
+        rw [eval_eq_of_ge (c := c) (σ₁ := Function.update σ₁ f1 (!σ₁ vφ)) (σ₂ := σ₁) (fun n hn => Function.update_of_ne (show n ≠ f1 from by omega) _ _)]; exact hσ₁c c hc
       · simp only [mk3Clause, BoolFormula.eval, Function.update_apply, show vφ ≠ f1 from by omega, ite_false]; cases σ₁ vφ <;> simp
       · simp only [mk3Clause, BoolFormula.eval, Function.update_apply, show vφ ≠ f1 from by omega, ite_false]; cases σ₁ vφ <;> simp
   | and ψ₁ ψ₂ ih₁ ih₂ =>
@@ -653,51 +671,154 @@ lemma tseitinAux_completeness
     generalize hr₂ : tseitinAux ψ₂ f1 = r₂; obtain ⟨v₂, cls₂, f2⟩ := r₂; simp only
     have hfr₁ : maxVarSucc ψ₁ ≤ fresh := by simp [maxVarSucc] at hfr; omega
     have hfr₂ : maxVarSucc ψ₂ ≤ f1 := by simp [maxVarSucc] at hfr; have := tseitinAux_fresh_mono ψ₁ fresh; rw [hr₁] at this; simp only at this; omega
-    obtain ⟨σ₁, hσ₁a, hσ₁r, hσ₁c⟩ := ih₁ fresh σ hfr₁; rw [hr₁] at hσ₁r hσ₁c; simp only at *
-    obtain ⟨σ₂, hσ₂a, hσ₂r, hσ₂c⟩ := ih₂ f1 σ₁ hfr₂; rw [hr₂] at hσ₂r hσ₂c; simp only at *
-    have hv₁lt : v₁ < f2 := by have := tseitinAux_root_bound ψ₁ fresh hfr₁; rw [hr₁] at this; have := tseitinAux_fresh_mono ψ₂ f1; rw [hr₂] at this; simp only at *; omega
-    have hv₂lt : v₂ < f2 := by have := tseitinAux_root_bound ψ₂ f1 hfr₂; rw [hr₂] at this; exact this
+    obtain ⟨σ₁, hσ₁a, hσ₁r, hσ₁c⟩ := ih₁ (σ := σ) hfr₁; rw [hr₁] at hσ₁r hσ₁c; simp only at *
+    obtain ⟨σ₂, hσ₂a, hσ₂r, hσ₂c⟩ := ih₂ (fresh := f1) (σ := σ₁) hfr₂; rw [hr₂] at hσ₂r hσ₂c; simp only at *
+    have hv₁lt : v₁ < f2 := by have := tseitinAux_root_bound hfr₁; rw [hr₁] at this; have := tseitinAux_fresh_mono ψ₂ f1; rw [hr₂] at this; simp only at *; omega
+    have hv₂lt : v₂ < f2 := by have := tseitinAux_root_bound hfr₂; rw [hr₂] at this; exact this
     have hfge : fresh ≤ f1 := by have := tseitinAux_fresh_mono ψ₁ fresh; rw [hr₁] at this; exact this
     have hf2ge : f1 ≤ f2 := by have := tseitinAux_fresh_mono ψ₂ f1; rw [hr₂] at this; exact this
     have hσ₂_orig : ∀ n, n < fresh → σ₂ n = σ n := fun n hn => by rw [hσ₂a n (by omega)]; exact hσ₁a n hn
-    have hσ₂v₁ : σ₂ v₁ = ψ₁.eval σ := by rw [hσ₂a v₁ (by have := tseitinAux_root_bound ψ₁ fresh hfr₁; rw [hr₁] at this; exact this)]; exact hσ₁r
-    have hσ₂r_eq : σ₂ v₂ = ψ₂.eval σ := by rw [hσ₂r]; exact eval_maxVarSucc_le ψ₂ fresh σ σ₁ (by simp [maxVarSucc] at hfr; omega) hσ₁a
+    have hσ₂v₁ : σ₂ v₁ = ψ₁.eval σ := by rw [hσ₂a v₁ (by have := tseitinAux_root_bound hfr₁; rw [hr₁] at this; exact this)]; exact hσ₁r
+    have hσ₂r_eq : σ₂ v₂ = ψ₂.eval σ := by rw [hσ₂r]; exact eval_maxVarSucc_le (by simp [maxVarSucc] at hfr; omega) hσ₁a
     refine ⟨Function.update σ₂ f2 (σ₂ v₁ && σ₂ v₂), fun n hn => ?_, ?_, fun c hc => ?_⟩
-    · simp [Function.update_apply, show n ≠ f2 from by omega]; exact hσ₂_orig n hn
-    · simp [Function.update_apply, BoolFormula.eval, hσ₂v₁, hσ₂r_eq]
+    · simp [show n ≠ f2 from by omega]; exact hσ₂_orig n hn
+    · simp [BoolFormula.eval, hσ₂v₁, hσ₂r_eq]
     · simp only [List.mem_append, List.mem_cons, List.mem_nil_iff, or_false] at hc
       obtain (hc | hc) | rfl | rfl | rfl | rfl := hc
-      · have hfmv := tseitinAux_clause_fmv ψ₁ fresh hfr₁ c (by rw [hr₁]; exact hc); rw [hr₁] at hfmv; simp only at hfmv
-        rw [eval_eq_of_ge c _ σ₂ (fun n hn => by simp [Function.update_apply, show n ≠ f2 from by omega])]
-        rw [eval_eq_of_ge c σ₂ σ₁ (fun n hn => by exact hσ₂a n (by omega))]; exact hσ₁c c hc
-      · have hfmv := tseitinAux_clause_fmv ψ₂ f1 hfr₂ c (by rw [hr₂]; exact hc); rw [hr₂] at hfmv; simp only at hfmv
-        rw [eval_eq_of_ge c _ σ₂ (fun n hn => by simp [Function.update_apply, show n ≠ f2 from by omega])]; exact hσ₂c c hc
-      all_goals simp [mk3Clause, BoolFormula.eval, Function.update_apply, show v₁ ≠ f2 from by omega, show v₂ ≠ f2 from by omega]; cases σ₂ v₁ <;> cases σ₂ v₂ <;> simp
+      · have hfmv := tseitinAux_clause_fmv hfr₁ c (by rw [hr₁]; exact hc); rw [hr₁] at hfmv; simp only at hfmv
+        rw [eval_eq_of_ge (c := c) (σ₁ := Function.update σ₂ f2 (σ₂ v₁ && σ₂ v₂)) (σ₂ := σ₂) (fun n hn => Function.update_of_ne (show n ≠ f2 from by omega) _ _)]
+        rw [eval_eq_of_ge (σ₁ := σ₂) (σ₂ := σ₁) (fun n hn => by exact hσ₂a n (by omega))]; exact hσ₁c c hc
+      · have hfmv := tseitinAux_clause_fmv hfr₂ c (by rw [hr₂]; exact hc); rw [hr₂] at hfmv; simp only at hfmv
+        rw [eval_eq_of_ge (c := c) (σ₁ := Function.update σ₂ f2 (σ₂ v₁ && σ₂ v₂)) (σ₂ := σ₂) (fun n hn => Function.update_of_ne (show n ≠ f2 from by omega) _ _)]; exact hσ₂c c hc
+      all_goals simp [mk3Clause, BoolFormula.eval, show v₁ ≠ f2 from by omega, show v₂ ≠ f2 from by omega]; cases σ₂ v₁ <;> cases σ₂ v₂ <;> simp
   | or ψ₁ ψ₂ ih₁ ih₂ =>
     simp only [tseitinAux]; generalize hr₁ : tseitinAux ψ₁ fresh = r₁; obtain ⟨v₁, cls₁, f1⟩ := r₁; simp only
     generalize hr₂ : tseitinAux ψ₂ f1 = r₂; obtain ⟨v₂, cls₂, f2⟩ := r₂; simp only
     have hfr₁ : maxVarSucc ψ₁ ≤ fresh := by simp [maxVarSucc] at hfr; omega
     have hfr₂ : maxVarSucc ψ₂ ≤ f1 := by simp [maxVarSucc] at hfr; have := tseitinAux_fresh_mono ψ₁ fresh; rw [hr₁] at this; simp only at this; omega
-    obtain ⟨σ₁, hσ₁a, hσ₁r, hσ₁c⟩ := ih₁ fresh σ hfr₁; rw [hr₁] at hσ₁r hσ₁c; simp only at *
-    obtain ⟨σ₂, hσ₂a, hσ₂r, hσ₂c⟩ := ih₂ f1 σ₁ hfr₂; rw [hr₂] at hσ₂r hσ₂c; simp only at *
-    have hv₁lt : v₁ < f2 := by have := tseitinAux_root_bound ψ₁ fresh hfr₁; rw [hr₁] at this; have := tseitinAux_fresh_mono ψ₂ f1; rw [hr₂] at this; simp only at *; omega
-    have hv₂lt : v₂ < f2 := by have := tseitinAux_root_bound ψ₂ f1 hfr₂; rw [hr₂] at this; exact this
+    obtain ⟨σ₁, hσ₁a, hσ₁r, hσ₁c⟩ := ih₁ (σ := σ) hfr₁; rw [hr₁] at hσ₁r hσ₁c; simp only at *
+    obtain ⟨σ₂, hσ₂a, hσ₂r, hσ₂c⟩ := ih₂ (fresh := f1) (σ := σ₁) hfr₂; rw [hr₂] at hσ₂r hσ₂c; simp only at *
+    have hv₁lt : v₁ < f2 := by have := tseitinAux_root_bound hfr₁; rw [hr₁] at this; have := tseitinAux_fresh_mono ψ₂ f1; rw [hr₂] at this; simp only at *; omega
+    have hv₂lt : v₂ < f2 := by have := tseitinAux_root_bound hfr₂; rw [hr₂] at this; exact this
     have hfge : fresh ≤ f1 := by have := tseitinAux_fresh_mono ψ₁ fresh; rw [hr₁] at this; exact this
     have hf2ge : f1 ≤ f2 := by have := tseitinAux_fresh_mono ψ₂ f1; rw [hr₂] at this; exact this
     have hσ₂_orig : ∀ n, n < fresh → σ₂ n = σ n := fun n hn => by rw [hσ₂a n (by omega)]; exact hσ₁a n hn
-    have hσ₂v₁ : σ₂ v₁ = ψ₁.eval σ := by rw [hσ₂a v₁ (by have := tseitinAux_root_bound ψ₁ fresh hfr₁; rw [hr₁] at this; exact this)]; exact hσ₁r
-    have hσ₂r_eq : σ₂ v₂ = ψ₂.eval σ := by rw [hσ₂r]; exact eval_maxVarSucc_le ψ₂ fresh σ σ₁ (by simp [maxVarSucc] at hfr; omega) hσ₁a
+    have hσ₂v₁ : σ₂ v₁ = ψ₁.eval σ := by rw [hσ₂a v₁ (by have := tseitinAux_root_bound hfr₁; rw [hr₁] at this; exact this)]; exact hσ₁r
+    have hσ₂r_eq : σ₂ v₂ = ψ₂.eval σ := by rw [hσ₂r]; exact eval_maxVarSucc_le (by simp [maxVarSucc] at hfr; omega) hσ₁a
     refine ⟨Function.update σ₂ f2 (σ₂ v₁ || σ₂ v₂), fun n hn => ?_, ?_, fun c hc => ?_⟩
-    · simp [Function.update_apply, show n ≠ f2 from by omega]; exact hσ₂_orig n hn
-    · simp [Function.update_apply, BoolFormula.eval, hσ₂v₁, hσ₂r_eq]
+    · simp [show n ≠ f2 from by omega]; exact hσ₂_orig n hn
+    · simp [BoolFormula.eval, hσ₂v₁, hσ₂r_eq]
     · simp only [List.mem_append, List.mem_cons, List.mem_nil_iff, or_false] at hc
       obtain (hc | hc) | rfl | rfl | rfl | rfl := hc
-      · have hfmv := tseitinAux_clause_fmv ψ₁ fresh hfr₁ c (by rw [hr₁]; exact hc); rw [hr₁] at hfmv; simp only at hfmv
-        rw [eval_eq_of_ge c _ σ₂ (fun n hn => by simp [Function.update_apply, show n ≠ f2 from by omega])]
-        rw [eval_eq_of_ge c σ₂ σ₁ (fun n hn => by exact hσ₂a n (by omega))]; exact hσ₁c c hc
-      · have hfmv := tseitinAux_clause_fmv ψ₂ f1 hfr₂ c (by rw [hr₂]; exact hc); rw [hr₂] at hfmv; simp only at hfmv
-        rw [eval_eq_of_ge c _ σ₂ (fun n hn => by simp [Function.update_apply, show n ≠ f2 from by omega])]; exact hσ₂c c hc
-      all_goals simp [mk3Clause, BoolFormula.eval, Function.update_apply, show v₁ ≠ f2 from by omega, show v₂ ≠ f2 from by omega]; cases σ₂ v₁ <;> cases σ₂ v₂ <;> simp
+      · have hfmv := tseitinAux_clause_fmv hfr₁ c (by rw [hr₁]; exact hc); rw [hr₁] at hfmv; simp only at hfmv
+        rw [eval_eq_of_ge (c := c) (σ₁ := Function.update σ₂ f2 (σ₂ v₁ || σ₂ v₂)) (σ₂ := σ₂) (fun n hn => Function.update_of_ne (show n ≠ f2 from by omega) _ _)]
+        rw [eval_eq_of_ge (σ₁ := σ₂) (σ₂ := σ₁) (fun n hn => by exact hσ₂a n (by omega))]; exact hσ₁c c hc
+      · have hfmv := tseitinAux_clause_fmv hfr₂ c (by rw [hr₂]; exact hc); rw [hr₂] at hfmv; simp only at hfmv
+        rw [eval_eq_of_ge (c := c) (σ₁ := Function.update σ₂ f2 (σ₂ v₁ || σ₂ v₂)) (σ₂ := σ₂) (fun n hn => Function.update_of_ne (show n ≠ f2 from by omega) _ _)]; exact hσ₂c c hc
+      all_goals simp [mk3Clause, BoolFormula.eval, show v₁ ≠ f2 from by omega, show v₂ ≠ f2 from by omega]; cases σ₂ v₁ <;> cases σ₂ v₂ <;> simp
+
+end ThreeSATComplete
+
+namespace ThreeSATComplete
+
+/--
+[tseitinAux_soundness](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfComputation/code/NPCompleteness.lean)
+-/
+@[path]
+lemma tseitinAux_soundness (φ : BoolFormula) (fresh : ℕ) (σ : BoolAssignment) :
+-- imply
+  (∀ c ∈ (tseitinAux φ fresh).2.1, c.eval σ = true) →
+    σ (tseitinAux φ fresh).1 = φ.eval σ := by
+-- proof
+  induction φ generalizing fresh σ with
+  | var n => intro _; rfl
+  | trueConst =>
+    intro hcls
+    simp only [tseitinAux, BoolFormula.eval] at hcls ⊢
+    have h := hcls (mk3Clause (.var fresh) (.var fresh) (.var fresh)) (by simp)
+    simp [mk3Clause, BoolFormula.eval] at h; exact h
+  | falseConst =>
+    intro hcls
+    simp only [tseitinAux, BoolFormula.eval] at hcls ⊢
+    have h := hcls (mk3Clause (.not (.var fresh)) (.not (.var fresh)) (.not (.var fresh))) (by simp)
+    simp [mk3Clause, BoolFormula.eval] at h; exact h
+  | not ψ ih =>
+    intro hcls
+    simp only [tseitinAux] at hcls ⊢
+    generalize hr : tseitinAux ψ fresh = r at hcls ⊢
+    obtain ⟨vφ, clsφ, fresh1⟩ := r; simp only at hcls ⊢
+    have hih : σ vφ = ψ.eval σ := by
+      have := ih fresh σ; rw [hr] at this
+      exact this (fun c hc => hcls c (List.mem_append_left _ hc))
+    have h1 := hcls (mk3Clause (.var vφ) (.var fresh1) (.var fresh1))
+      (by simp only [List.mem_append, List.mem_cons, List.mem_nil_iff, or_false]; right; left; trivial)
+    have h2 := hcls (mk3Clause (.not (.var vφ)) (.not (.var fresh1)) (.not (.var fresh1)))
+      (by simp only [List.mem_append, List.mem_cons, List.mem_nil_iff, or_false]; right; right; trivial)
+    simp [mk3Clause, BoolFormula.eval, hih] at h1 h2
+    simp only [BoolFormula.eval]; cases he : ψ.eval σ <;> simp_all
+  | and ψ₁ ψ₂ ih₁ ih₂ =>
+    intro hcls
+    simp only [tseitinAux] at hcls ⊢
+    generalize hr₁ : tseitinAux ψ₁ fresh = r₁ at hcls ⊢
+    obtain ⟨v₁, cls₁, f1⟩ := r₁; simp only at hcls ⊢
+    generalize hr₂ : tseitinAux ψ₂ f1 = r₂ at hcls ⊢
+    obtain ⟨v₂, cls₂, f2⟩ := r₂; simp only at hcls ⊢
+    have hih1 : σ v₁ = ψ₁.eval σ := by
+      have := ih₁ fresh σ; rw [hr₁] at this
+      exact this (fun c hc => hcls c (List.mem_append_left _ (List.mem_append_left _ hc)))
+    have hih2 : σ v₂ = ψ₂.eval σ := by
+      have := ih₂ f1 σ; rw [hr₂] at this
+      exact this (fun c hc => hcls c (List.mem_append_left _ (List.mem_append_right _ hc)))
+    have hc1 := hcls _ (by simp only [List.mem_append, List.mem_cons, List.mem_nil_iff]; right; left; trivial)
+    have hc2 := hcls _ (by simp only [List.mem_append, List.mem_cons, List.mem_nil_iff]; right; right; left; trivial)
+    have hc3 := hcls _ (by simp only [List.mem_append, List.mem_cons, List.mem_nil_iff]; right; right; right; left; trivial)
+    have hc4 := hcls _ (by simp only [List.mem_append, List.mem_cons, List.mem_nil_iff]; right; right; right; right; left; trivial)
+    simp [mk3Clause, BoolFormula.eval, hih1, hih2] at hc1 hc2 hc3 hc4
+    simp only [BoolFormula.eval]; cases h1e : ψ₁.eval σ <;> cases h2e : ψ₂.eval σ <;> simp_all
+  | or ψ₁ ψ₂ ih₁ ih₂ =>
+    intro hcls
+    simp only [tseitinAux] at hcls ⊢
+    generalize hr₁ : tseitinAux ψ₁ fresh = r₁ at hcls ⊢
+    obtain ⟨v₁, cls₁, f1⟩ := r₁; simp only at hcls ⊢
+    generalize hr₂ : tseitinAux ψ₂ f1 = r₂ at hcls ⊢
+    obtain ⟨v₂, cls₂, f2⟩ := r₂; simp only at hcls ⊢
+    have hih1 : σ v₁ = ψ₁.eval σ := by
+      have := ih₁ fresh σ; rw [hr₁] at this
+      exact this (fun c hc => hcls c (List.mem_append_left _ (List.mem_append_left _ hc)))
+    have hih2 : σ v₂ = ψ₂.eval σ := by
+      have := ih₂ f1 σ; rw [hr₂] at this
+      exact this (fun c hc => hcls c (List.mem_append_left _ (List.mem_append_right _ hc)))
+    have hc1 := hcls _ (by simp only [List.mem_append, List.mem_cons, List.mem_nil_iff]; right; left; trivial)
+    have hc2 := hcls _ (by simp only [List.mem_append, List.mem_cons, List.mem_nil_iff]; right; right; left; trivial)
+    have hc3 := hcls _ (by simp only [List.mem_append, List.mem_cons, List.mem_nil_iff]; right; right; right; left; trivial)
+    have hc4 := hcls _ (by simp only [List.mem_append, List.mem_cons, List.mem_nil_iff]; right; right; right; right; left; trivial)
+    simp [mk3Clause, BoolFormula.eval, hih1, hih2] at hc1 hc2 hc3 hc4
+    simp only [BoolFormula.eval]; cases h1e : ψ₁.eval σ <;> cases h2e : ψ₂.eval σ <;> simp_all
+
+end ThreeSATComplete
+
+namespace ThreeSATComplete
+
+/--
+[conjoinClauses_eval](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfComputation/code/NPCompleteness.lean)
+-/
+@[path]
+lemma conjoinClauses_eval (cs : List BoolFormula) (hne : cs ≠ []) (σ : BoolAssignment) :
+-- imply
+  (conjoinClauses cs).eval σ = true ↔ ∀ c ∈ cs, c.eval σ = true := by
+-- proof
+  match cs with
+  | [] => exact (hne rfl).elim
+  | [c] => simp [conjoinClauses]
+  | c :: d :: ds =>
+    simp only [conjoinClauses, BoolFormula.eval, Bool.and_eq_true]
+    rw [conjoinClauses_eval (d :: ds) (List.cons_ne_nil d ds) σ]
+    simp only [List.mem_cons]
+    constructor
+    · rintro ⟨hc, hrest⟩ x (rfl | hx)
+      · exact hc
+      · exact hrest x hx
+    · intro h; exact ⟨h c (Or.inl rfl), fun x hx => h x (Or.inr hx)⟩
 
 end ThreeSATComplete
 
@@ -715,7 +836,7 @@ lemma tseitinTransform_correct
   constructor
   · intro ⟨σ, hσ⟩
     unfold tseitinTransform BoolFormula.Satisfiable
-    obtain ⟨σ', _, hσ'_root, hσ'_cls⟩ := tseitinAux_completeness φ (maxVarSucc φ) σ le_rfl
+    obtain ⟨σ', _, hσ'_root, hσ'_cls⟩ := tseitinAux_completeness (σ := σ) le_rfl
     have hne : (tseitinAux φ (maxVarSucc φ)).2.1 ++
       [mk3Clause (.var (tseitinAux φ (maxVarSucc φ)).1)
         (.var (tseitinAux φ (maxVarSucc φ)).1)
@@ -727,7 +848,7 @@ lemma tseitinTransform_correct
     simp only [List.mem_append, List.mem_singleton] at hc
     obtain hc | hc := hc
     · exact hσ'_cls c hc
-    · subst hc; simp [mk3Clause, BoolFormula.eval, hσ'_root, hσ]
+    · subst hc; simp [mk3Clause, BoolFormula.eval, hσ'_root]; exact hσ
   · intro ⟨σ, hσ⟩
     unfold tseitinTransform at hσ
     have hne : (tseitinAux φ (maxVarSucc φ)).2.1 ++
@@ -756,27 +877,24 @@ lemma satTo3SATFn_correct :
   ∀ w : List BoolFormula, w ∈ SATLang ↔ satTo3SATFn w ∈ ThreeSATLang := by
 -- proof
   intro w
-  simp only [SATLang, ThreeSATLang, Set.mem_setOf_eq]
+  simp only [SATLang, ThreeSATLang, Set.mem_ofPred_eq]
   constructor
   · rintro ⟨φ, rfl, hsat⟩
-    exact ⟨tseitinTransform φ, rfl, tseitinTransform_is3CNF φ,
-      (tseitinTransform_correct φ).mp hsat⟩
+    exact ⟨tseitinTransform φ, rfl, tseitinTransform_is3CNF,
+      (tseitinTransform_correct).mp hsat⟩
   · intro ⟨ψ, hw_eq, h3cnf, hsat⟩
     match w, hw_eq with
     | [φ], hw_eq =>
       simp only [satTo3SATFn] at hw_eq
       have hψ : ψ = tseitinTransform φ := (List.cons_eq_cons.mp hw_eq).1.symm
-      exact ⟨φ, rfl, (tseitinTransform_correct φ).mpr (hψ ▸ hsat)⟩
+      exact ⟨φ, rfl, (tseitinTransform_correct).mpr (hψ ▸ hsat)⟩
     | [], hw_eq => simp [satTo3SATFn] at hw_eq
     | _ :: _ :: _, hw_eq => simp [satTo3SATFn] at hw_eq
-/-- `SAT ≤_P 3SAT` via the Tseitin transformation. -/
-end ThreeSATComplete
-namespace HamiltonianPath
-open TuringMachine NPCompleteness
-
+-- `SAT ≤_P 3SAT` via the Tseitin transformation. -/
 end ThreeSATComplete
 
 namespace HamiltonianPath
+open TuringMachine NPCompleteness CookLevin
 
 /--
 [hampathNTM_decides](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfComputation/code/NPCompleteness.lean)
@@ -808,14 +926,14 @@ lemma hampathNTM_decides :
       }⟩
   ·
     ext w
-    simp only [NTM.language, NTM.accepts, Set.mem_setOf_eq, HampathLang]
+    simp only [NTM.language, NTM.accepts, Set.mem_ofPred_eq, HampathLang]
     constructor
     ·
       rintro ⟨n, branch, hstart, hsteps, haccept⟩
       have hstate0 : (branch ⟨0, Nat.zero_lt_succ n⟩).state = .start := by
         rw [hstart]; rfl
       have hn_pos : 0 < n := by
-        by_contra h; push_neg at h
+        by_contra h; push Not at h
         have hn0 : n = 0 := Nat.eq_zero_of_le_zero h
         subst hn0
         simp only [NTM.isAcceptConfig, hampathNTM] at haccept
@@ -846,12 +964,12 @@ lemma hampathNTM_decides :
             simp only [Fin.castSucc_mk, Fin.succ_mk] at hstep
             unfold NTM.step at hstep
             simp only [hampathNTM] at hstep
-            obtain hq | hq <;> { := hq'_cases
+            obtain hq | hq := hq'_cases
+            all_goals
               rw [ih_eq, hq] at hstep
               simp only [or_true, true_or, ite_true] at hstep
               have := congr_arg Config.state hstep
               simpa [ih_eq, hq] using this
-            }
       have hfinal : (branch ⟨n, Nat.lt_succ_of_le le_rfl⟩).state = q' :=
         hall_eq n (Nat.lt_succ_of_le le_rfl) hn_pos
       simp only [NTM.isAcceptConfig, hampathNTM] at haccept
@@ -872,7 +990,9 @@ lemma hampathNTM_decides :
           HampathSymbol.mk 2 (fun _ _ => false) ⟨0, by omega⟩ ⟨1, by omega⟩ := by
           rw [hstart]
           simp only [NTM.initConfig, hampathNTM, hempty, List.length_nil]
-          split <;> [exfalso; rfl] <;> omega
+          split
+          · exfalso; omega
+          · rfl
         exact hcond.1 this
       have htape_eq : (branch ⟨0, Nat.zero_lt_succ n⟩).tape
         (branch ⟨0, Nat.zero_lt_succ n⟩).headPos = w.head hne := by
@@ -880,16 +1000,16 @@ lemma hampathNTM_decides :
         simp only [NTM.initConfig, hampathNTM]
         have hpos : (0 : ℤ) ≥ 0 ∧ (0 : ℤ) < ↑w.length := ⟨le_refl _, by
           have := List.length_pos_of_ne_nil hne; omega⟩
-        simp only [hpos, dite_true, Int.toNat_zero]
+        simp only [hpos, Int.toNat_zero]
         cases w with
         | nil => exact absurd rfl hne
         | cons a t => rfl
-      exact ⟨w.head hne, List.head?_eq_head hne, htape_eq ▸ hcond.2⟩
+      exact ⟨w.head hne, List.head?_eq_some_head hne, htape_eq ▸ hcond.2⟩
     ·
       rintro ⟨sym, hhead, hyes⟩
       have hne : w ≠ [] := by intro h; simp [h] at hhead
       have hsym : w.head hne = sym := by
-        have := List.head?_eq_head hne; rw [hhead] at this
+        have := List.head?_eq_some_head hne; rw [hhead] at this
         exact Option.some_injective _ this |>.symm
       set c0 := hampathNTM.initConfig w
       have hc0_state : c0.state = .start := rfl
@@ -897,7 +1017,7 @@ lemma hampathNTM_decides :
         simp only [c0, NTM.initConfig, hampathNTM]
         have hpos : (0 : ℤ) ≥ 0 ∧ (0 : ℤ) < ↑w.length := ⟨le_refl _, by
           have := List.length_pos_of_ne_nil hne; omega⟩
-        simp only [hpos, dite_true, Int.toNat_zero]
+        simp only [hpos, Int.toNat_zero]
         cases w with
         | nil => exact absurd rfl hne
         | cons a t => simp only [List.get, List.head] at hsym ⊢; exact hsym
@@ -910,9 +1030,18 @@ lemma hampathNTM_decides :
         have h0 := hall ⟨0, by omega⟩
         have h1 := hall ⟨1, by omega⟩
         have hlen : p.length ≥ 2 := by
-          obtain _ | ⟨a, _ | ⟨b, _⟩⟩ <;> simp_all := p
+          cases p with
+          | nil =>
+            cases h0
+          | cons a t =>
+            cases t with
+            | nil =>
+              have h0' : (⟨0, by omega⟩ : Fin 2) = a := List.mem_singleton.mp h0
+              have h1' : (⟨1, by omega⟩ : Fin 2) = a := List.mem_singleton.mp h1
+              have hneq : (0 : Fin 2) ≠ 1 := by decide
+              exact absurd (h0'.trans h1'.symm) hneq
+            | cons _ _ => simp
         have hfalse := hedge 0 (by omega)
-        simp only [DiGraph.mk] at hfalse
         exact Bool.false_ne_true hfalse
       have hcond : c0.tape c0.headPos ≠
         HampathSymbol.mk 2 (fun _ _ => false) ⟨0, by omega⟩ ⟨1, by omega⟩ ∧
@@ -927,7 +1056,7 @@ lemma hampathNTM_decides :
         exact ⟨.accept, c0.tape c0.headPos, Direction.R, by
           show _ ∈ hampathNTM.δ .start _
           simp only [hampathNTM]
-          rw [if_pos hcond]; exact Set.mem_singleton _, rfl⟩
+          rw [ite_eq_left hcond]; exact Set.mem_singleton _, rfl⟩
       have haccept_c1 : hampathNTM.isAcceptConfig c1 := by
         simp only [NTM.isAcceptConfig, hampathNTM, c1]
       refine ⟨1, fun i => match i with
@@ -991,12 +1120,12 @@ lemma hampathNTM_runsInTime :
       unfold NTM.step at hstep
       simp only [hampathNTM] at hstep
       obtain hst | hst := hstate_halt
-        simp only [hst, or_true, true_or, ite_true] at hstep <;> {
+      all_goals
+        simp only [hst, or_true, true_or, ite_true] at hstep
         simp only [NTM.isHaltConfig, NTM.isAcceptConfig, NTM.isRejectConfig, hampathNTM]
         have : (branch ⟨j + 1, hj⟩).state = (branch ⟨j, ihjlt⟩).state := by
           have := congr_arg Config.state hstep; simpa using this
         rw [this, hst]; simp
-      }
 
 end HamiltonianPath
 
@@ -1046,13 +1175,12 @@ lemma hampath_in_NP :
   InNP HampathLang :=
 -- proof
   ⟨2, hampath_in_NP_aux⟩
-/--
-For any 3CNF formula `φ`, there exists a `HampathSymbol` (i.e. a graph + source +
-target) such that `φ` is satisfiable iff this HAMPATH instance is a YES instance.
-This is the existential, abstract form of the classical 3SAT ≤_P HAMPATH reduction.
--/
+--
+-- For any 3CNF formula `φ`, there exists a `HampathSymbol` (i.e. a graph + source +
+-- target) such that `φ` is satisfiable iff this HAMPATH instance is a YES instance.
+-- This is the existential, abstract form of the classical 3SAT ≤_P HAMPATH reduction.
+-- 
 end HamiltonianPath
-/-- Top-level restatement: `HamiltonianPath.HampathLang` is NP-complete. -/
 
 
 /--
@@ -1091,4 +1219,4 @@ private lemma conjoinClauses_eval_eq :
 
 
 -- created on 2026-10-23
--- updated on 2026-10-28
+-- updated on 2026-11-13

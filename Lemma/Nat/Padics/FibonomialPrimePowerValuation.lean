@@ -198,8 +198,8 @@ private lemma rank_coprime_and_dvd_pow_sub_pow (p : ℕ) [Fact (Nat.Prime p)]
       have h1 : z ∣ p - 1 := by simpa [hleg] using hzdvd
       exact h1.trans (Nat.sub_one_dvd_pow_sub_one p (b - a))
     · have hev : Even (b - a) := by
-      rw [Nat.even_iff]
-      omega
+        rw [Nat.even_iff]
+        omega
       obtain ⟨k, hk⟩ := hev
       have h2k : b - a = 2 * k := by omega
       have hpdvd : p ^ 2 - 1 ∣ (p ^ 2) ^ k - 1 := Nat.sub_one_dvd_pow_sub_one _ _
@@ -271,8 +271,8 @@ private lemma fib_mul_eq_sum_choose (m u : ℕ) (hm : 1 ≤ m) :
   -- Irrationality forces d = 0.
   by_cases hd0 : d = 0
   · have hSeq : (S : ℤ) = ((Nat.fib (m * u) : ℕ) : ℤ) := by
-    simp only [hd] at hd0
-    exact sub_eq_zero.mp hd0
+      simp only [hd] at hd0
+      exact sub_eq_zero.mp hd0
     have hnat : S = Nat.fib (m * u) := Int.ofNat_inj.mp hSeq
     omega
   · have hirr := Irrational.intCast_mul Real.goldenRatio_irrational (m := d) hd0
@@ -519,15 +519,17 @@ private lemma padicValNat_fib_prod_range (p : ℕ) [Fact (Nat.Prime p)] (hp2 : p
       have hmul : z * (q + 1) = N + 1 := by
         rw [← hdiv]
         exact Nat.mul_div_cancel' hzdvd
-      have hN8 := padicValNat_fib_mul p hp2 z (by omega) ((hiff z).mpr dvd_rfl) (q + 1)
-        (Nat.succ_pos q)
+      have hm1 : 1 ≤ z := Nat.succ_le_of_lt hz
+      have hj1 : 1 ≤ q + 1 := Nat.succ_le_succ (Nat.zero_le q)
+      have hN8 := padicValNat_fib_mul (m := z) (j := q + 1) hp2 hm1
+        ((hiff z).mpr dvd_rfl) hj1
       rw [hmul] at hN8
       have hfact : padicValNat p (q + 1).factorial
         = padicValNat p (q + 1) + padicValNat p q.factorial := by
         rw [Nat.factorial_succ,
           padicValNat.mul (Nat.succ_ne_zero q) (Nat.factorial_ne_zero q)]
-      rw [hFF, padicValNat.mul hFFne hFne, ih, hdiv, hfact, hN8, mul_add, mul_one]
-      omega
+      rw [hFF, padicValNat.mul hFFne hFne, ih, hdiv, hfact, hN8, mul_add, mul_one, hq]
+      ac_rfl
     · have hdiv : (N + 1) / z = N / z := Nat.succ_div_of_not_dvd hzdvd
       have hnot : ¬ p ∣ Nat.fib (N + 1) := fun h => hzdvd ((hiff (N + 1)).mp h)
       have hF0 : padicValNat p (Nat.fib (N + 1)) = 0 :=
@@ -595,9 +597,9 @@ private lemma div_rank_split (p z a b : ℕ) (hp0 : 0 < p) (hz1 : 1 < z)
     conv_lhs => rw [h2]
     rw [Nat.add_div_of_dvd_right hdvd, add_comm]
   · have hdecomp : p ^ b - p ^ a = p ^ a * (p ^ (b - a) - 1) := by
-    have hb : b = a + (b - a) := by omega
-    conv_lhs => rw [hb, pow_add]
-    rw [Nat.mul_sub_one]
+      have hb : b = a + (b - a) := by omega
+      conv_lhs => rw [hb, pow_add]
+      rw [Nat.mul_sub_one]
     have hdvd2 : z ∣ p ^ (b - a) - 1 :=
       hcop_pow.dvd_of_dvd_mul_left (by rw [← hdecomp]; exact hdvd)
     rw [hdecomp, Nat.mul_div_assoc _ hdvd2]

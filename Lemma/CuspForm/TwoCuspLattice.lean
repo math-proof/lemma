@@ -1,16 +1,15 @@
 import Mathlib
-import Lemma.CohCarrier.Inst
+import Lemma.ZMod.Inst
 import Lemma.CuspForm.HeckeOperatorFormsGammaH
 import Lemma.ModularForm.AtkinLehnerDatum
 import Def.FLTPrelim_Modularity
-import Instance.CuspForm_TwoCuspLattice
 
 set_option autoImplicit false
 
 noncomputable section
 
 open scoped MatrixGroups ModularForm
-open CongruenceSubgroup CohCarrier
+open CongruenceSubgroup CohCarrier ZMod
 
 namespace CuspForm
 

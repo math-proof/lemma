@@ -43,4 +43,3 @@ open Polynomial
 
 open IsDedekindDomain IsDedekindDomain.HeightOneSpectrum WithZero
 
-

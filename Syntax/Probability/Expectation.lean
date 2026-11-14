@@ -8,6 +8,8 @@ import Mathlib.Probability.Independence.Basic
 import Mathlib.Probability.Independence.Conditional
 import Def.Probability.SymbolicProbability.Part2
 import Theorem.Function
+import Def.Probability.JointRv
+import Def.Probability.Expectation
 import Syntax.Probability.Probability.LiftRV
 open MeasureTheory
 open scoped ProbabilityTheory
@@ -61,9 +63,16 @@ Python-aligned surface form (cf. `Expectation[x ~ D](f, given=…)` in `../py/sy
 * **Random-valued (integrate out, leave other RVs free):**
   `𝔼[x: π | y]((x + y)^2)` / `𝔼[x, z: π | y](…)` → `Expectation.partialRV …`
   Any number of free RVs after `|` in the brackets.
+  A currently-illegal bare form `𝔼[x: π](f x + g y)` (free RV `y` used as a sample, no `| y`
+  in the brackets) elaborates as `fun ω ↦ 𝔼[x: π](f x + g (y ω))`. Existing legal scalar
+  forms (`𝔼[x: π](f x)`, `𝔼[x: π](f x | s = s0)`, …) are unchanged: those are tried first.
 * **Random-valued + fixed observation:**
   `𝔼[x: π | y](… | r = r0)` / joint integrate likewise → `Expectation.partialRV_cond`
   Joint observations: `| (r, s) = (r0, s0)`.
+  Bare `𝔼[x: π](f x + g y | s = s0)` likewise becomes
+  `fun ω ↦ 𝔼[x: π](f x + g (y ω) | s = s0)` when scalar `condEval` does not elaborate
+  (e.g. `g y` with `y : Ω → _`). Only `x` is integrated; `y` is a free sample, not a
+  joint integral, and the inner form does not further condition on `y`.
 * There is no random-valued + random-argument form: integrate the free RVs too and condition on
   them, `𝔼[x, y: π](f x y | y, r)` (σ-algebra conditional expectation given `σ(y, r)`).
 -/
@@ -238,3 +247,59 @@ macro_rules (kind := varAtGetElem)
       let rhs ← `($x[$t])
       `(let $c := $rhs; 𝕍𝕒𝕣[$c:ident : $π]($body'))
 
+
+/-- Right-nested `JointRandomSymbol` chain of `Expectation.asRV` binders:
+`#[x,y,z]` ↦ `JointRandomSymbol (Expectation.asRV x) (JointRandomSymbol (Expectation.asRV y) (Expectation.asRV z))`.
+One element returns `Expectation.asRV y` (ordinary RV or flipped process path). -/
+partial def Expectation.Macro.mkRestJoint (ys : Array Syntax) : MacroM Term := do
+  match ys.toList with
+  | [] => Macro.throwError "𝔼[…](…) requires at least one random variable in this slot"
+  | [y] =>
+    let y : Term := ⟨y⟩
+    `(Expectation.asRV $y)
+  | y :: rest =>
+    let y : Term := ⟨y⟩
+    let tail ← Expectation.Macro.mkRestJoint rest.toArray
+    `(JointRandomSymbol (Expectation.asRV $y) $tail)
+
+/-- Right-nested `JointRandomSymbol` chain of arbitrary conditioning terms (no `asRV`):
+`#[y, z, w]` ↦ `JointRandomSymbol y (JointRandomSymbol z w)`; one term is returned bare. -/
+partial def Expectation.Macro.mkJointTerms (ys : Array Syntax) : MacroM Term := do
+  match ys.toList with
+  | [] => Macro.throwError "𝔼[…](… | …) requires at least one conditioning term"
+  | [y] => pure ⟨y⟩
+  | y :: rest =>
+    let y : Term := ⟨y⟩
+    let tail ← Expectation.Macro.mkJointTerms rest.toArray
+    `(JointRandomSymbol $y $tail)
+
+/-- Unpack a right-nested product into `let y := nest.1; …; body`.
+`rebind[i] = false` skips the `let` for that binder (the body keeps the outer local).
+`asFun[i] = true` wraps the value path as `Fun.mk`, so `y[t]` stays `Fun` indexing. -/
+partial def Expectation.Macro.unpackRest
+    (ys : Array Syntax) (nest : Term) (body : Term) (rebind : Array Bool) (asFun : Array Bool) : MacroM Term := do
+  let bind (y : Ident) (rhs : Term) (funProcess : Bool) (body : Term) : MacroM Term :=
+    if funProcess then `(let $y := Fun.mk $rhs; $body) else `(let $y := $rhs; $body)
+  match ys.toList, rebind.toList, asFun.toList with
+  | [], _, _ => pure body
+  | [y], r :: _, f :: _ =>
+    if r then
+      bind ⟨y⟩ nest f body
+    else
+      pure body
+  | y :: rest, r :: rs, f :: fs =>
+    let nest2 ← `(Prod.snd $nest)
+    let body' ← Expectation.Macro.unpackRest rest.toArray nest2 body rs.toArray fs.toArray
+    if r then
+      bind ⟨y⟩ (← `(Prod.fst $nest)) f body'
+    else
+      pure body'
+  | _, [], _ => Macro.throwError "𝔼 binder unpack: rebind mask shorter than the binder list"
+  | _, _, [] => Macro.throwError "𝔼 binder unpack: Fun mask shorter than the binder list"
+
+/-- The measure term of an `expectMeasure` slot: `f a b` ↦ the application `f a b`. -/
+def Expectation.Macro.measure (π : TSyntax `expectMeasure) : MacroM Term :=
+  match π with
+  | `(expectMeasure| $f:term $[$args:term]*) =>
+    if args.isEmpty then pure f else `($f $args*)
+  | _ => Macro.throwUnsupported

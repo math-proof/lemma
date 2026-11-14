@@ -114,11 +114,11 @@ lemma ibp_fundamental_lemma
       have : x ∈ K := (hb_supp_sub_delta.trans Metric.ball_subset_closedBall) this
       exact hx this
     simp [this]
-/-- Smooth differentiation under the integral sign on a compact domain: if at $\varepsilon_0$
-the parameter derivative $\partial_{\varepsilon} F(\varepsilon, x)$ exists pointwise with
-limit $F'(x)$ and both $F(\varepsilon, \cdot)$ and $F'$ are continuous on $K$, then the
-parameterized integral $\varepsilon \mapsto \int_K F(\varepsilon, x) \, dx$ has derivative
-$\int_K F'(x) \, dx$ at $\varepsilon_0$. -/
+-- Smooth differentiation under the integral sign on a compact domain: if at $\varepsilon_0$
+-- the parameter derivative $\partial_{\varepsilon} F(\varepsilon, x)$ exists pointwise with
+-- limit $F'(x)$ and both $F(\varepsilon, \cdot)$ and $F'$ are continuous on $K$, then the
+-- parameterized integral $\varepsilon \mapsto \int_K F(\varepsilon, x) \, dx$ has derivative
+-- $\int_K F'(x) \, dx$ at $\varepsilon_0$.
 
 end CM17Lagrangian
 

@@ -1,8 +1,8 @@
-import Lemma.ModularCurve.QAdicPlace
+import Lemma.HahnSeries.QAdicPlace
 import Instance.ModularCurve_ArithmeticGalois
 import Def.ModularCurve_QExpansionDiff
-import Theorems.Thm_ModularCurve_theta_coeff
-import Theorems.Thm_ModularCurve_coeffMap_injective
+import Theorem.NumberTheory.ModularCurve.ThetaCoeff
+import Theorem.NumberTheory.ModularCurve.CoeffMap
 import Mathlib.NumberTheory.ModularForms.QExpansion
 
 set_option autoImplicit false

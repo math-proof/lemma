@@ -217,11 +217,11 @@ lemma shearerMarginalEntropy_mono
     calc (∑ y : (↥S → α), shearerMarginal μ S y * Real.log (shearerMarginal μ S y))
       = ∑ y : (↥S → α), ∑ z : (↥T → α),
         (if (fun t : ↥T => y ⟨t.val, hTS t.property⟩) = z
-          then shearerMarginal μ S y * Real.log (shearerMarginal μ S y) else 0) := by
+          then shearerMarginal μ S y * Real.log (shearerMarginal μ S y) else 0) := (by
         apply Finset.sum_congr rfl
         intro y _
         rw [Finset.sum_ite_eq]
-        simp
+        simp)
       _ = ∑ z : (↥T → α), ∑ y : (↥S → α),
         (if (fun t : ↥T => y ⟨t.val, hTS t.property⟩) = z
           then shearerMarginal μ S y * Real.log (shearerMarginal μ S y) else 0) :=
@@ -518,7 +518,7 @@ lemma shearerMarginalEntropy_submodular
     intro t
     by_cases ht : shearerMarginal μ (A ∩ B) t = 0
     · calc (∑ z : ↥(A ∪ B) → α, if shearerResI A B z = t then shearerQ μ A B z else 0)
-      = ∑ z : ↥(A ∪ B) → α, (0 : ℝ) := by
+      = ∑ z : ↥(A ∪ B) → α, (0 : ℝ) := (by
         apply Finset.sum_congr rfl
         intro z _
         by_cases h : shearerResI A B z = t
@@ -528,7 +528,7 @@ lemma shearerMarginalEntropy_submodular
             unfold shearerQ
             simp [h0]
           simp [h, hQ0]
-        · simp [h]
+        · simp [h])
       _ = 0 := Finset.sum_const_zero
       _ = shearerMarginal μ (A ∩ B) t := ht.symm
     · have hterm : ∀ z : ↥(A ∪ B) → α,
@@ -1096,7 +1096,7 @@ lemma shearer_entropy_inequality_general
           Finset.sum_comm
         _ ≤ ∑ S ∈ C, shearerMarginalEntropy μ S :=
           Finset.sum_le_sum hEach
-set_option linter.unusedVariables false in
+set_option linter.unusedVariables false
 
 end MathlibExt.InformationTheory.Shearer
 

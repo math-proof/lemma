@@ -23,7 +23,7 @@ production trainers rely on when they backprop through log-probs.
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [CountableMeasure 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮]
+  [CountableMeasure 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮] [Nonempty 𝒮] [StandardBorelSpace 𝒮]
   [CountableMeasure 𝒜] [MeasurableSingletonClass 𝒜] [Fintype 𝒜]
   {M : DensityModel Θ 𝒮 𝒜}
   {θ : Θ}
@@ -53,7 +53,7 @@ private lemma main
   have : PSpace (M θ) (AsPathRV.path a) :=
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) hfactor.htr.stage_eq t).aemeasurable⟩)
   let : MeasurableSpace Θ := borel Θ
-  let V_θ : ℕ ⇀ (ℕ → 𝒮) → ℕ → ℝ := ⟨fun _ δ k => M.V0 θ γ (δ k)⟩
+  let V_θ : ℕ ⇀ (ℕ → 𝒮) → ℕ → ℝ := ⟨fun t δ k => M.V θ γ (t + k) (δ k)⟩
   ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) =
     𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
       (((1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) ⬝ᵥ fun k ↦ (γ ^ range (k + 1)) ⬝ᵥ
@@ -73,9 +73,10 @@ private lemma main
   have hφ : StronglyMeasurable
       (fun ((s0, a0) : 𝒮 × 𝒜) => ∇[θ] (ℙ[M θ](a[0] = a0 | s[0] = s0) : ℝ).log) :=
     StronglyMeasurable.of_discrete
+  have hVm : ∀ t, Measurable (M.V θ γ t) := fun _ => Measurable.of_discrete
   exact GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.Any_And_All_Integrable_Measure.GtInftySup.All_Differentiable_Prob.All_NeDens_0.All_Eq_JointDens.AbsContJointAS.AbsContStateMarginal.IsPolicyTrajectory.Subset_Ico
-    h₀ hfactor h₁ h₂dens hφ hMs
+    h₀ hfactor h₁ h₂dens hφ hMs hVm
 
 
 -- created on 2026-11-02
--- updated on 2026-11-11
+-- updated on 2026-11-12

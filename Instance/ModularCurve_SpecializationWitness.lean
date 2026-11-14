@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_SpecializationWitness.lean: instance decls only.
 import Def.HeckeGalois_EichlerShimura
-import Lemma.ModularCurve.SpecializationWitness
+import Lemma.Set.SpecializationWitness
 
 set_option autoImplicit false
 

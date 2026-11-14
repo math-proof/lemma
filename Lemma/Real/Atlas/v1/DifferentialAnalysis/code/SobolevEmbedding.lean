@@ -904,10 +904,10 @@ lemma representation_rewrite_form2
     simp [hα]
   rw [Finset.sum_eq_single_of_mem 0 h0mem key]
   simp
-/-- **Schwartz representation theorem** (Melrose Thm 10.5, second form): every
-tempered distribution `u ∈ 𝓢'(ℝ^n, ℂ)` is a finite sum
-`u φ = ∑_{α,β} c0SchwartzPairing (v α β) (x^α · ∂^β φ)`
-with `v α β` continuous and vanishing at infinity. -/
+-- **Schwartz representation theorem** (Melrose Thm 10.5, second form): every
+-- tempered distribution `u ∈ 𝓢'(ℝ^n, ℂ)` is a finite sum
+-- `u φ = ∑_{α,β} c0SchwartzPairing (v α β) (x^α · ∂^β φ)`
+-- with `v α β` continuous and vanishing at infinity.
 end SchwartzRepresentation
 
 

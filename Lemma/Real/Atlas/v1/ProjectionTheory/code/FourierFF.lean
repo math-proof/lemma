@@ -1,7 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.ProjectionTheory.code.FourierFF
-open Finset hiding card Fintype (card) FourierFF
+open Finset hiding card
+open FourierFF
 open Fintype (card)
 open scoped BigOperators
 
@@ -105,7 +106,7 @@ lemma sum_fourierChar
 -- proof
   by_cases ha : a = 0
   · subst ha; simp [fourierChar, dotProd]
-  · rw [if_neg ha]
+  · rw [ite_eq_right ha]
     exact AddChar.sum_eq_zero_iff_ne_zero.mpr ((fourierChar_eq_zero_iff e he a).not.mpr ha)
 
 end FourierFF

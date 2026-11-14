@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.IharaLemma.IdempotentSplitting
-open IsLocalRing IharaLemma
+import Lemma.Ideal.IdempotentSplitting
+open IsLocalRing IharaLemma Ideal
 
 
 namespace Definitions

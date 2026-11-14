@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.RegularProlongation
+import Lemma.Scheme.RegularProlongation
 import Lemma.Int.P2MUtil
 
-open AlgebraicCurve IsLocalRing Polynomial
+open AlgebraicCurve IsLocalRing Polynomial Scheme
 
 /--
 [AlgebraicCurve_RegularProlongation_coeff_mem_of_aeval_mem_integers](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_RegularProlongation_coeff_mem_of_aeval_mem_integers.lean)

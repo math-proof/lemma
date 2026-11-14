@@ -6,6 +6,8 @@ open scoped TensorProduct
 open Polynomial IntermediateField EtaleAlgebra
 
 
+set_option linter.style.haveILetI false
+
 /--
 [formallyUnramified_baseChange](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Chapter4/Theorem440.lean)
 -/
@@ -17,9 +19,6 @@ lemma formallyUnramified_baseChange
   [CommRing B]
   [Algebra K B]
   [Module.Finite K B]
-  [Field K]
-  [CommRing B]
-  [Algebra K B]
   [Algebra.FormallyUnramified K B]
   [CommRing Ω]
   [Algebra K Ω] :
@@ -43,12 +42,6 @@ lemma formallyUnramified_baseChange
 -/
 @[path]
 lemma sep_tensor_reduced
-  {K : Type u}
-  [Field K]
-  {B : Type v}
-  [CommRing B]
-  [Algebra K B]
-  [Module.Finite K B]
   {K : Type*}
   [Field K]
   {L : Type*}
@@ -86,12 +79,6 @@ lemma sep_tensor_reduced
 -/
 @[path]
 lemma isReduced_pi_tensor
-  {K : Type u}
-  [Field K]
-  {B : Type v}
-  [CommRing B]
-  [Algebra K B]
-  [Module.Finite K B]
   {K : Type*}
   [Field K]
   {ι : Type}
@@ -110,7 +97,7 @@ lemma isReduced_pi_tensor
   let e := (Algebra.TensorProduct.comm K (∀ i, F i) Ω).toRingEquiv.trans
     (Algebra.TensorProduct.piRight K Ω Ω F).toRingEquiv
   haveI : ∀ i, IsReduced (Ω ⊗[K] F i) := fun i => by
-    haveI := sep_tensor_reduced K (F i) Ω
+    haveI : IsReduced (F i ⊗[K] Ω) := sep_tensor_reduced (K := K) (L := F i) (Ω := Ω)
     exact isReduced_of_injective
       (Algebra.TensorProduct.comm K (F i) Ω).toRingEquiv.symm.toRingHom
       (Algebra.TensorProduct.comm K (F i) Ω).toRingEquiv.symm.injective

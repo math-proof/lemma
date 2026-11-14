@@ -1,4 +1,4 @@
-import Lemma.AlgebraicCurve.Correspondence
+import Lemma.Scheme.Correspondence
 import Mathlib.Algebra.CharP.Reduced
 
 set_option autoImplicit false

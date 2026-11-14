@@ -128,7 +128,7 @@ lemma alternant_rho_eq_vandermonde :
         rw [← Finset.sum_range_reflect]
         apply Finset.sum_congr rfl; intro j hj; simp only [Finset.mem_range] at hj; omega
       rw [hsym, Finset.sum_range_id]
-  -- Main proof
+  -- IharaIota proof
   simp_rw [filter_gt_eq_Ioi]
   -- Convert from sum-based alternant to determinant form
   unfold alternant

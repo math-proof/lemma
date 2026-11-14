@@ -4,7 +4,7 @@ import Def.Algebra.Polynomial.L1Norm
 import Lemma.Polynomial.L1Norm
 import Lemma.AbsoluteValue.IsClosestConjugate
 import Lemma.Polynomial.RootBound
-import Def.Analysis.Normed.Field.IsClosestConjugate
+import Lemma.Polynomial.DegreeStability
 import Theorem.Algebra.Polynomial.RootBound
 
 
@@ -175,7 +175,7 @@ private lemma exists_delta_match_aroots (f : K'[X]) (hf : f.Monic)
   have heta_lt : l1Norm v (f - g) < eta :=
     lt_of_lt_of_le hclose (min_le_right 1 eta)
   have hdeg : f.natDegree = g.natDegree :=
-    natDegree_eq_of_monic_of_l1Norm_sub_lt_one v hf hg hlt1
+    natDegree_eq_of_monic_of_l1Norm_sub_lt_one (v := v) hf hg hlt1
   have hcoeff : ∀ i : ℕ, v (f.coeff i - g.coeff i) < eta := by
     intro i
     rw [← coeff_sub]
@@ -187,7 +187,7 @@ private lemma exists_delta_match_aroots (f : K'[X]) (hf : f.Monic)
     ext x
     change ‖algebraMap K' (AlgebraicClosure K') x‖ = ‖x‖
     rw [NormedAlgebra.norm_eq_spectralNorm K', spectralNorm_extends]⟩
-  have hβlt := aeval_lt_l1Norm_of_monic_of_aeval_eq_zero v w hg hβ
+  have hβlt := aeval_lt_l1Norm_of_monic_of_aeval_eq_zero (v := v) (w := w) hg hβ
   change ‖β‖ < l1Norm v g at hβlt
   have hβC : ‖β‖ < C := hβlt.trans hgC
   have hmax : max ‖β‖ 1 < C := max_lt hβC hC1
@@ -230,8 +230,7 @@ namespace Polynomial
 -/
 @[path]
 lemma exists_isClosestConjugate_root_of_l1Norm_sub_lt
-  [Ring K] [NontriviallyNormedField K'] [IsUltrametricDist K'] [CompleteSpace K'] [NontriviallyNormedField K] [IsUltrametricDist K] [CompleteSpace K]
-  {v : AbsoluteValue K ℝ}
+  [NontriviallyNormedField K] [IsUltrametricDist K] [CompleteSpace K]
   {f : K[X]}
 -- given
   (hf : f.Monic)
@@ -260,7 +259,7 @@ lemma exists_isClosestConjugate_root_of_l1Norm_sub_lt
   have hlt1 : l1Norm (NormedField.toAbsoluteValue K) (f - g) < 1 :=
     lt_of_lt_of_le hclose (min_le_right _ _)
   have hdeg : f.natDegree = g.natDegree :=
-    natDegree_eq_of_monic_of_l1Norm_sub_lt_one _ hf hg hlt1
+    by convert natDegree_eq_of_monic_of_l1Norm_sub_lt_one (v := NormedField.toAbsoluteValue K) hf hg hlt1
   obtain ⟨α, hαmem, hαclose⟩ := hmatch g hg hlt0 β hβ
   have hαroot : aeval α f = 0 := (Polynomial.mem_aroots.mp hαmem).2
   have hαroots : α ∈ fL.roots := by
@@ -324,8 +323,7 @@ namespace Polynomial
 -/
 @[path]
 lemma exists_pos_irreducible_and_separable_of_l1Norm_sub_lt
-  [Ring K] [NontriviallyNormedField K'] [IsUltrametricDist K'] [CompleteSpace K'] [NontriviallyNormedField K] [IsUltrametricDist K] [CompleteSpace K]
-  {v : AbsoluteValue K ℝ}
+  [NontriviallyNormedField K] [IsUltrametricDist K] [CompleteSpace K]
   {f : K[X]}
 -- given
   (hf : f.Monic)
@@ -337,14 +335,14 @@ lemma exists_pos_irreducible_and_separable_of_l1Norm_sub_lt
     Irreducible g ∧ g.Separable := by
 -- proof
   obtain ⟨delta0, hdelta0, hmain⟩ :=
-    exists_isClosestConjugate_root_of_l1Norm_sub_lt K f hf hirr hsep
+    exists_isClosestConjugate_root_of_l1Norm_sub_lt (K := K) hf hirr hsep
   refine ⟨min delta0 1, lt_min hdelta0 one_pos, fun g hg hclose => ?_⟩
   have hlt0 : l1Norm (NormedField.toAbsoluteValue K) (f - g) < delta0 :=
     lt_of_lt_of_le hclose (min_le_left _ _)
   have hlt1 : l1Norm (NormedField.toAbsoluteValue K) (f - g) < 1 :=
     lt_of_lt_of_le hclose (min_le_right _ _)
   have hdeg : f.natDegree = g.natDegree :=
-    natDegree_eq_of_monic_of_l1Norm_sub_lt_one _ hf hg hlt1
+    by convert natDegree_eq_of_monic_of_l1Norm_sub_lt_one (v := NormedField.toAbsoluteValue K) hf hg hlt1
   have hpos : 0 < f.natDegree := Irreducible.natDegree_pos hirr
   have hgpos : 0 < g.natDegree := hdeg ▸ hpos
   have hg_degree_ne : g.degree ≠ 0 :=
@@ -395,8 +393,7 @@ namespace Polynomial
 -/
 @[path]
 lemma exists_monic_and_natDegree_eq_and_l1Norm_sub_lt_and_map_irreducible_and_separable
-  [Ring K] [NontriviallyNormedField K'] [IsUltrametricDist K'] [CompleteSpace K'] [Field K] [NontriviallyNormedField L] [IsUltrametricDist L] [CompleteSpace L] [Algebra K L]
-  {v : AbsoluteValue K ℝ}
+  [Field K] [NontriviallyNormedField L] [IsUltrametricDist L] [CompleteSpace L] [Algebra K L]
   {f : L[X]}
   {ε : ℝ}
 -- given
@@ -413,7 +410,7 @@ lemma exists_monic_and_natDegree_eq_and_l1Norm_sub_lt_and_map_irreducible_and_se
     (g.map (algebraMap K L)).Separable := by
 -- proof
   obtain ⟨δ, hδ, hstable⟩ :=
-    exists_pos_irreducible_and_separable_of_l1Norm_sub_lt L f hf hirr hsep
+    exists_pos_irreducible_and_separable_of_l1Norm_sub_lt (K := L) hf hirr hsep
   let η := min ε δ / (f.natDegree + 1 : ℕ)
   have hη : 0 < η := div_pos (lt_min hε hδ) (by positivity)
   obtain ⟨g, hg, hdeg, hcoeff⟩ :=

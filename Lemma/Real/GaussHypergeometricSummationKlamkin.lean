@@ -9,7 +9,7 @@ namespace MetaMathlibExt
 [C_add_ne](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/GaussHypergeometricSummationKlamkin.lean)
 -/
 @[path]
-private lemma C_add_ne (a b : ℝ) (hadmissible : ∀ k : ℕ, a - b + 1 ≠ (k : ℝ)) (i : ℕ) :
+private lemma C_add_ne_eq_lemma (a b : ℝ) (hadmissible : ∀ k : ℕ, a - b + 1 ≠ (k : ℝ)) (i : ℕ) :
   (b - a) + (i : ℝ) ≠ 0 := by
   intro h
   apply hadmissible (i + 1)
@@ -24,7 +24,7 @@ namespace MetaMathlibExt
 [B_add_ne](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/GaussHypergeometricSummationKlamkin.lean)
 -/
 @[path]
-private lemma B_add_ne (_a b : ℝ) (hb : ∀ k : ℕ, -b ≠ (k : ℝ)) (i : ℕ) :
+private lemma B_add_ne_eq_lemma (_a b : ℝ) (hb : ∀ k : ℕ, -b ≠ (k : ℝ)) (i : ℕ) :
   (b + 1) + (i : ℝ) ≠ 0 := by
   intro h
   apply hb (i + 1)
@@ -39,7 +39,7 @@ namespace MetaMathlibExt
 [pochC_ne](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/GaussHypergeometricSummationKlamkin.lean)
 -/
 @[path]
-private lemma pochC_ne (a b : ℝ) (hadmissible : ∀ k : ℕ, a - b + 1 ≠ (k : ℝ)) (k : ℕ) :
+private lemma pochC_ne_eq_lemma (a b : ℝ) (hadmissible : ∀ k : ℕ, a - b + 1 ≠ (k : ℝ)) (k : ℕ) :
   Polynomial.eval (b - a) (ascPochhammer ℝ k) ≠ 0 := by
   induction k with
   | zero => simp [ascPochhammer_zero]
@@ -55,7 +55,7 @@ namespace MetaMathlibExt
 [pochB_ne](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/GaussHypergeometricSummationKlamkin.lean)
 -/
 @[path]
-private lemma pochB_ne (a b : ℝ) (hb : ∀ k : ℕ, -b ≠ (k : ℝ)) (k : ℕ) :
+private lemma pochB_ne_eq_lemma (a b : ℝ) (hb : ∀ k : ℕ, -b ≠ (k : ℝ)) (k : ℕ) :
   Polynomial.eval (b + 1) (ascPochhammer ℝ k) ≠ 0 := by
   induction k with
   | zero => simp [ascPochhammer_zero]
@@ -71,7 +71,7 @@ namespace MetaMathlibExt
 [pochNat_ne](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/GaussHypergeometricSummationKlamkin.lean)
 -/
 @[path]
-private lemma pochNat_ne (m K : ℕ) (hm : 1 ≤ m) :
+private lemma pochNat_ne_eq_lemma (m K : ℕ) (hm : 1 ≤ m) :
   Polynomial.eval ((m : ℕ) : ℝ) (ascPochhammer ℝ K) ≠ 0 := by
   induction K with
   | zero => simp [ascPochhammer_zero]
@@ -90,7 +90,7 @@ namespace MetaMathlibExt
 [klamCoeff_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/GaussHypergeometricSummationKlamkin.lean)
 -/
 @[path]
-private lemma klamCoeff_zero (b a : ℝ) (m : ℕ) : klamCoeff b a m 0 = 1 := by
+private lemma klamCoeff_zero_eq_lemma (b a : ℝ) (m : ℕ) : klamCoeff b a m 0 = 1 := by
   unfold klamCoeff ordinaryHypergeometricCoefficient
   simp [ascPochhammer_zero]
 
@@ -102,7 +102,7 @@ namespace MetaMathlibExt
 [klamCoeff_zero_succ](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/GaussHypergeometricSummationKlamkin.lean)
 -/
 @[path]
-private lemma klamCoeff_zero_succ (b a : ℝ) (k : ℕ) :
+private lemma klamCoeff_zero_succ_eq_lemma (b a : ℝ) (k : ℕ) :
   klamCoeff b a 0 (k + 1) = 0 := by
   have h0 : Polynomial.eval ((0 : ℕ) : ℝ) (ascPochhammer ℝ (k + 1)) = 0 := by
     rw [Nat.cast_zero, ascPochhammer_eval_zero]
@@ -121,7 +121,7 @@ namespace MetaMathlibExt
 [klamCoeff_succ_right](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/GaussHypergeometricSummationKlamkin.lean)
 -/
 @[path]
-private lemma klamCoeff_succ_right (a b : ℝ)
+private lemma klamCoeff_succ_right_eq_lemma (a b : ℝ)
   (hadmissible : ∀ k : ℕ, a - b + 1 ≠ (k : ℝ)) (m K : ℕ) :
   klamCoeff b a m (K + 1) =
     klamCoeff b a m K * ((((m : ℕ) : ℝ) + (K : ℝ)) * ((b + 1) + (K : ℝ)) /
@@ -158,7 +158,7 @@ namespace MetaMathlibExt
 [klamCoeff_poch_succ_left](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/GaussHypergeometricSummationKlamkin.lean)
 -/
 @[path]
-private lemma klamCoeff_poch_succ_left (j K : ℕ) :
+private lemma klamCoeff_poch_succ_left_eq_lemma (j K : ℕ) :
   Polynomial.eval ((j : ℕ) : ℝ) (ascPochhammer ℝ (K + 1)) =
     (j : ℝ) * Polynomial.eval ((((j + 1 : ℕ))) : ℝ) (ascPochhammer ℝ K) := by
   have hcomp := ascPochhammer_succ_left ℝ K
@@ -176,7 +176,7 @@ namespace MetaMathlibExt
 [klamCoeff_succ_left](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/GaussHypergeometricSummationKlamkin.lean)
 -/
 @[path]
-private lemma klamCoeff_succ_left (a b : ℝ)
+private lemma klamCoeff_succ_left_eq_lemma (a b : ℝ)
   (hadmissible : ∀ k : ℕ, a - b + 1 ≠ (k : ℝ)) (j K : ℕ) :
   klamCoeff b a j (K + 1) =
     klamCoeff b a (j + 1) K * (((j : ℝ) * ((b + 1) + (K : ℝ))) /
@@ -211,7 +211,7 @@ namespace MetaMathlibExt
 [klam_step2_incr](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/GaussHypergeometricSummationKlamkin.lean)
 -/
 @[path]
-private lemma klam_step2_incr (a b : ℝ)
+private lemma klam_step2_incr_eq_lemma (a b : ℝ)
   (hadmissible : ∀ k : ℕ, a - b + 1 ≠ (k : ℝ)) (j K : ℕ) :
   ((b - a) - (j : ℝ) - 1 - (b + 1)) * klamCoeff b a (j + 1) (K + 1) -
     ((b - a) - (j : ℝ) - 1) * klamCoeff b a j (K + 1) =
@@ -234,7 +234,7 @@ namespace MetaMathlibExt
 [klam_step2](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/GaussHypergeometricSummationKlamkin.lean)
 -/
 @[path]
-private lemma klam_step2 (a b : ℝ)
+private lemma klam_step2_eq_lemma (a b : ℝ)
   (hadmissible : ∀ k : ℕ, a - b + 1 ≠ (k : ℝ)) (j K : ℕ) :
   ((b - a) - (j : ℝ) - 1 - (b + 1)) *
     (∑ k ∈ Finset.range (K + 1), klamCoeff b a (j + 1) k) -
@@ -262,7 +262,7 @@ namespace MetaMathlibExt
 [prod_range_add_eq_poch](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/GaussHypergeometricSummationKlamkin.lean)
 -/
 @[path]
-private lemma prod_range_add_eq_poch (x : ℝ) (k : ℕ) :
+private lemma prod_range_add_eq_poch_eq_lemma (x : ℝ) (k : ℕ) :
   ∏ j ∈ Finset.range (k + 1), (x + (j : ℝ)) =
     Polynomial.eval x (ascPochhammer ℝ (k + 1)) := by
   induction k with
@@ -282,7 +282,7 @@ namespace MetaMathlibExt
 [klamCoeff_eq_gammaSeq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/GaussHypergeometricSummationKlamkin.lean)
 -/
 @[path]
-private lemma klamCoeff_eq_gammaSeq (a b : ℝ)
+private lemma klamCoeff_eq_gammaSeq_eq_lemma (a b : ℝ)
   (hadmissible : ∀ k : ℕ, a - b + 1 ≠ (k : ℝ))
   (hb : ∀ k : ℕ, -b ≠ (k : ℝ))
   (j k : ℕ) (hj : 1 ≤ j) (hk : 1 ≤ k) :
@@ -357,7 +357,7 @@ namespace MetaMathlibExt
 [klam_GammaB_ne](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/GaussHypergeometricSummationKlamkin.lean)
 -/
 @[path]
-private lemma klam_GammaB_ne (_a b : ℝ) (hb : ∀ k : ℕ, -b ≠ (k : ℝ)) :
+private lemma klam_GammaB_ne_eq_lemma (_a b : ℝ) (hb : ∀ k : ℕ, -b ≠ (k : ℝ)) :
   Real.Gamma (b + 1) ≠ 0 := by
   apply Real.Gamma_ne_zero
   intro m hm
@@ -373,7 +373,7 @@ namespace MetaMathlibExt
 [klam_GammaC_ne](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/GaussHypergeometricSummationKlamkin.lean)
 -/
 @[path]
-private lemma klam_GammaC_ne (a b : ℝ)
+private lemma klam_GammaC_ne_eq_lemma (a b : ℝ)
   (hadmissible : ∀ k : ℕ, a - b + 1 ≠ (k : ℝ)) :
   Real.Gamma (b - a) ≠ 0 := by
   apply Real.Gamma_ne_zero
@@ -388,7 +388,7 @@ namespace MetaMathlibExt
 [klam_coeff_norm_bound](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/GaussHypergeometricSummationKlamkin.lean)
 -/
 @[path]
-private lemma klam_coeff_norm_bound (a b : ℝ)
+private lemma klam_coeff_norm_bound_eq_lemma (a b : ℝ)
   (hadmissible : ∀ k : ℕ, a - b + 1 ≠ (k : ℝ))
   (hb : ∀ k : ℕ, -b ≠ (k : ℝ))
   (j : ℕ) (hj1 : 1 ≤ j) :
@@ -472,7 +472,7 @@ namespace MetaMathlibExt
 [klam_coeff_summable](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/GaussHypergeometricSummationKlamkin.lean)
 -/
 @[path]
-private lemma klam_coeff_summable (n : ℕ) (a b : ℝ)
+private lemma klam_coeff_summable_eq_lemma (n : ℕ) (a b : ℝ)
   (hadmissible : ∀ k : ℕ, a - b + 1 ≠ (k : ℝ))
   (hb : ∀ k : ℕ, -b ≠ (k : ℝ))
   (hconv : a + 1 + n < 0)
@@ -497,7 +497,7 @@ namespace MetaMathlibExt
 [klam_coeff_zero_summable](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/GaussHypergeometricSummationKlamkin.lean)
 -/
 @[path]
-private lemma klam_coeff_zero_summable (b a : ℝ) :
+private lemma klam_coeff_zero_summable_eq_lemma (b a : ℝ) :
   Summable (fun k => klamCoeff b a 0 k) := by
   have h : (fun k => klamCoeff b a 0 k) =
     (fun k => if k = 0 then klamCoeff b a 0 0 else 0) := by
@@ -518,7 +518,7 @@ namespace MetaMathlibExt
 [klam_boundary_tendsto](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/GaussHypergeometricSummationKlamkin.lean)
 -/
 @[path]
-private lemma klam_boundary_tendsto (n : ℕ) (a b : ℝ)
+private lemma klam_boundary_tendsto_eq_lemma (n : ℕ) (a b : ℝ)
   (hadmissible : ∀ k : ℕ, a - b + 1 ≠ (k : ℝ))
   (hb : ∀ k : ℕ, -b ≠ (k : ℝ))
   (hconv : a + 1 + n < 0)
@@ -601,7 +601,7 @@ namespace MetaMathlibExt
 [klam_F_rec](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/GaussHypergeometricSummationKlamkin.lean)
 -/
 @[path]
-private lemma klam_F_rec (n : ℕ) (a b : ℝ)
+private lemma klam_F_rec_eq_lemma (n : ℕ) (a b : ℝ)
   (hadmissible : ∀ k : ℕ, a - b + 1 ≠ (k : ℝ))
   (hb : ∀ k : ℕ, -b ≠ (k : ℝ))
   (hconv : a + 1 + n < 0)
@@ -614,7 +614,7 @@ private lemma klam_F_rec (n : ℕ) (a b : ℝ)
     by_cases hj0 : j = 0
     · subst hj0; exact klam_coeff_zero_summable b a
     · exact klam_coeff_summable n a b hadmissible hb hconv j
-      (by omega) (by omega)
+        (by omega) (by omega)
   have hT1 : Filter.Tendsto
     (fun (K : ℕ) => ∑ k ∈ Finset.range (K + 1), klamCoeff b a (j + 1) k)
     Filter.atTop (nhds (klamF b a (j + 1))) :=
@@ -664,7 +664,7 @@ namespace MetaMathlibExt
 [klam_gamma_inv_succ](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/GaussHypergeometricSummationKlamkin.lean)
 -/
 @[path]
-private lemma klam_gamma_inv_succ (x : ℝ) :
+private lemma klam_gamma_inv_succ_eq_lemma (x : ℝ) :
   x / Real.Gamma (x + 1) = 1 / Real.Gamma x := by
   by_cases hx : x = 0
   · subst hx
@@ -680,7 +680,7 @@ namespace MetaMathlibExt
 [klam_G_rec](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/GaussHypergeometricSummationKlamkin.lean)
 -/
 @[path]
-private lemma klam_G_rec (n : ℕ) (a b : ℝ) (hconv : a + 1 + n < 0)
+private lemma klam_G_rec_eq_lemma (n : ℕ) (a b : ℝ) (hconv : a + 1 + n < 0)
   (j : ℕ) (hj : j + 1 ≤ n) :
   ((-a - 1) - (j : ℝ) - 1) * klamG a b (j + 1) =
     ((b - a) - (j : ℝ) - 1) * klamG a b j := by
@@ -732,7 +732,7 @@ namespace MetaMathlibExt
 [klam_FG_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/GaussHypergeometricSummationKlamkin.lean)
 -/
 @[path]
-private lemma klam_FG_eq (n : ℕ) (a b : ℝ)
+private lemma klam_FG_eq_lemma (n : ℕ) (a b : ℝ)
   (hadmissible : ∀ k : ℕ, a - b + 1 ≠ (k : ℝ))
   (hb : ∀ k : ℕ, -b ≠ (k : ℝ))
   (hconv : a + 1 + n < 0)
@@ -776,7 +776,7 @@ private lemma klam_FG_eq (n : ℕ) (a b : ℝ)
       ((-a - 1) - (m : ℝ) - 1) * klamG a b (m + 1) := by
       rw [hF, hG]
     exact mul_left_cancel₀ hne hcc
-set_option linter.unusedVariables false in
+set_option linter.unusedVariables false
 
 end MetaMathlibExt
 
@@ -786,7 +786,7 @@ namespace MetaMathlibExt
 [GaussHypergeometricSummationKlamkin](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/GaussHypergeometricSummationKlamkin.lean)
 -/
 @[path]
-lemma gauss_hypergeometric_summation_klamkin
+lemma gauss_hypergeometric_summation_klamkin_eq_lemma
 -- given
   (n : ℕ)
   (a b : ℝ)
@@ -830,7 +830,7 @@ namespace MetaMathlibExt
 [GaussHypergeometricSummationKlamkin](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/GaussHypergeometricSummationKlamkin.lean)
 -/
 @[path]
-lemma hasSum_ordinaryHypergeometricCoefficient_klamkin
+lemma hasSum_ordinaryHypergeometricCoefficient_klamkin_eq_lemma
 -- given
   (n : ℕ)
   (a b : ℝ)
@@ -857,7 +857,7 @@ lemma hasSum_ordinaryHypergeometricCoefficient_klamkin
   have hgauss := gauss_hypergeometric_summation_klamkin n a b ha hb hn hconv hadmissible
   have hsum := hs.hasSum
   rwa [← hvalue, hgauss] at hsum
-end
+end MetaMathlibExt
 
 
 

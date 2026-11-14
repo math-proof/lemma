@@ -1,8 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.Repartitions
+import Lemma.Submodule.Repartitions
 import Lemma.Scheme.IsCurveOver
-open AlgebraicCurve
+open AlgebraicCurve Submodule
 
 
 private lemma exists_divisor_ord (K : Type*) [Field K] {F : Type*} [Field F] [Algebra K F] [IsCurveOver K F] (f : F) :

@@ -25,7 +25,7 @@ private lemma main
 -- proof
     rw [Ideal.inertiaDeg'_eq_inertiaDeg, Ideal.inertiaDeg'_eq_inertiaDeg]
     exact Ideal.inertiaDeg_eq_of_isGaloisGroup (w'.asIdeal.under (𝓞 K)) w.asIdeal w'.asIdeal (L ≃ₐ[K] L)
-  simp only [formalBaseChange_a, formalBaseChange_b, h]
+  simp only [formalBaseChange, h]
   rw [show (HeightOneSpectrum.under (𝓞 K) w').asIdeal = w'.asIdeal.under (𝓞 K) from rfl, hf]
 
 

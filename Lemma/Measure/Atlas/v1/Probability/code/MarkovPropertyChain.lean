@@ -88,7 +88,7 @@ lemma pathFiltration_le_pi
   pathFiltration S n ≤ MeasurableSpace.pi := by
 -- proof
   exact (pathFiltration S).le' n
-/-- Set-integral form of the Markov property for the Markov chain path measure. For any
+/- Set-integral form of the Markov property for the Markov chain path measure. For any
 bounded measurable path functional `Y` and any set `A` measurable with respect to
 `pathFiltration S n`,
   `∫_A Y(shiftPath n ω) dP_μ = ∫_A markovExpectation S κ Y (ω n) dP_μ`.

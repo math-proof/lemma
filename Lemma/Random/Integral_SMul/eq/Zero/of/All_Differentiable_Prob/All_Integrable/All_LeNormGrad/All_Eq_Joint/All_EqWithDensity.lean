@@ -13,7 +13,7 @@ zero-score identity.
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  [MeasurableSpace 𝒮] [μ : ReferenceMeasure 𝒜]
   {M : DensityModel Θ 𝒮 𝒜}
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
@@ -25,7 +25,7 @@ private lemma main
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
   (h₁ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₂ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ g x u)
-  (h₃ : ∀ x, Integrable (g x) ReferenceMeasure.measure)
+  (h₃ : ∀ x, Integrable (g x) μ.measure)
   (h : 𝒮 → ℝ)
   (hh : Measurable h)
   (hC : ∀ y, ‖h y‖ ≤ C)
@@ -64,3 +64,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-14

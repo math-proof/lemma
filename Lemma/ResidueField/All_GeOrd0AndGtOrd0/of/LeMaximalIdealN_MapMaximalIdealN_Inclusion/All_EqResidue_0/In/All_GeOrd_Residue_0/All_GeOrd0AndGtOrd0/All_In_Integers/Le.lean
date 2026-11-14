@@ -1,10 +1,10 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.RegularProlongation
+import Lemma.Scheme.RegularProlongation
 import Def.AlgebraicCurve_PlaceEvaluation
 import Lemma.Int.P2MUtil
 
-open AlgebraicCurve IsLocalRing
+open AlgebraicCurve IsLocalRing Scheme
 
 /--
 [AlgebraicCurve_RegularProlongation_forall_ord_residue_pos_of_maximalIdeal_le_map_sup_span](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_RegularProlongation_forall_ord_residue_pos_of_maximalIdeal_le_map_sup_span.lean)

@@ -173,7 +173,7 @@ lemma partialDeriv_mul
     hf.hasFDerivAt.mul hg.hasFDerivAt
   rw [show fderiv ℝ (fun q => f q * g q) p = fderiv ℝ (f * g) p from rfl]
   rw [hmul.fderiv]
-  simp [ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply]
+  simp [add_apply, ContinuousLinearMap.smul_apply]
   ring
 
 end CM14
@@ -222,7 +222,7 @@ lemma partialDeriv_finset_sum
   partialDeriv (fun q => ∑ i ∈ s, f i q) μ p = ∑ i ∈ s, partialDeriv (f i) μ p := by
 -- proof
   rw [partialDeriv_eq_fderiv _ (DifferentiableAt.fun_sum hf) μ,
-    fderiv_fun_sum hf, ContinuousLinearMap.sum_apply]
+    fderiv_fun_sum hf, _root_.sum_apply]
   apply Finset.sum_congr rfl
   intro i hi
   rw [← partialDeriv_eq_fderiv _ (hf i hi) μ]
@@ -248,7 +248,7 @@ lemma partialDeriv_sub
 -- proof
   have heq : (fun q => f q - g q) = f - g := rfl
   rw [heq, partialDeriv_eq_fderiv _ (hf.sub hg) μ, fderiv_sub hf hg,
-    ContinuousLinearMap.sub_apply,
+    sub_apply,
     ← partialDeriv_eq_fderiv _ hf μ, ← partialDeriv_eq_fderiv _ hg μ]
 
 end CM14
@@ -825,11 +825,11 @@ lemma partialDeriv_sum_product
     have h_eq : (fun s => ∑ i : Fin N, f i (s, p.2) * g i (s, p.2)) =
       ∑ i : Fin N, (fun s => f i (s, p.2) * g i (s, p.2)) := by
       ext s; simp [Finset.sum_apply]
-    rw [h_eq, fderiv_sum (fun i _ => hfg_s i), ContinuousLinearMap.sum_apply]
+    rw [h_eq, fderiv_sum (fun i _ => hfg_s i), _root_.sum_apply]
     congr 1; ext i
     have : (fun s => f i (s, p.2) * g i (s, p.2)) =
       (fun s => f i (s, p.2)) * (fun s => g i (s, p.2)) := by ext; simp [Pi.mul_apply]
-    rw [this, fderiv_mul (hf_s i) (hg_s i), ContinuousLinearMap.add_apply,
+    rw [this, fderiv_mul (hf_s i) (hg_s i), add_apply,
       ContinuousLinearMap.smul_apply, ContinuousLinearMap.smul_apply,
       smul_eq_mul, smul_eq_mul]
     ring
@@ -843,11 +843,11 @@ lemma partialDeriv_sum_product
     have h_eq : (fun y => ∑ i : Fin N, f i (p.1, y) * g i (p.1, y)) =
       ∑ i : Fin N, (fun y => f i (p.1, y) * g i (p.1, y)) := by
       ext s; simp [Finset.sum_apply]
-    rw [h_eq, fderiv_sum (fun i _ => hfg_s i), ContinuousLinearMap.sum_apply]
+    rw [h_eq, fderiv_sum (fun i _ => hfg_s i), _root_.sum_apply]
     congr 1; ext i
     have : (fun y => f i (p.1, y) * g i (p.1, y)) =
       (fun y => f i (p.1, y)) * (fun y => g i (p.1, y)) := by ext; simp [Pi.mul_apply]
-    rw [this, fderiv_mul (hf_s i) (hg_s i), ContinuousLinearMap.add_apply,
+    rw [this, fderiv_mul (hf_s i) (hg_s i), add_apply,
       ContinuousLinearMap.smul_apply, ContinuousLinearMap.smul_apply,
       smul_eq_mul, smul_eq_mul]
     ring
@@ -1597,12 +1597,12 @@ lemma waveOp_linearity_sub
     (fun s => fderiv ℝ (fun r => φ₁ (r, p.2)) s 1 - fderiv ℝ (fun r => φ₂ (r, p.2)) s 1) := by
     ext s
     show (fderiv ℝ ((fun r => φ₁ (r, p.2)) - fun r => φ₂ (r, p.2)) s) 1 = _
-    rw [fderiv_sub (hd1t s) (hd2t s), ContinuousLinearMap.sub_apply]
+    rw [fderiv_sub (hd1t s) (hd2t s), sub_apply]
   have hspace_fn : ∀ i : Fin n, (fun y => fderiv ℝ (fun z => φ₁ (p.1, z) - φ₂ (p.1, z)) y (Pi.single i 1)) =
     (fun y => fderiv ℝ (fun z => φ₁ (p.1, z)) y (Pi.single i 1) - fderiv ℝ (fun z => φ₂ (p.1, z)) y (Pi.single i 1)) := by
     intro i; ext y
     show (fderiv ℝ ((fun z => φ₁ (p.1, z)) - fun z => φ₂ (p.1, z)) y) (Pi.single i 1) = _
-    rw [fderiv_sub (hd1x y) (hd2x y), ContinuousLinearMap.sub_apply]
+    rw [fderiv_sub (hd1x y) (hd2x y), sub_apply]
   rw [htime_fn]; simp_rw [hspace_fn]
   have houter_t :
     (fderiv ℝ (fun s => (fderiv ℝ (fun r => φ₁ (r, p.2)) s) 1 - (fderiv ℝ (fun r => φ₂ (r, p.2)) s) 1) p.1) 1 =
@@ -1610,7 +1610,7 @@ lemma waveOp_linearity_sub
     rw [show (fun s => (fderiv ℝ (fun r => φ₁ (r, p.2)) s) 1 - (fderiv ℝ (fun r => φ₂ (r, p.2)) s) 1) =
       ((fun s => (fderiv ℝ (fun r => φ₁ (r, p.2)) s) 1) - (fun s => (fderiv ℝ (fun r => φ₂ (r, p.2)) s) 1)) from rfl]
     rw [fderiv_sub (diff_outer_t' φ₁ hφ₁ p.2).differentiableAt (diff_outer_t' φ₂ hφ₂ p.2).differentiableAt,
-      ContinuousLinearMap.sub_apply]
+      sub_apply]
   have houter_x : ∀ i : Fin n,
     (fderiv ℝ (fun y => (fderiv ℝ (fun z => φ₁ (p.1, z)) y) (Pi.single i 1) - (fderiv ℝ (fun z => φ₂ (p.1, z)) y) (Pi.single i 1)) p.2) (Pi.single i 1) =
     (fderiv ℝ (fun y => (fderiv ℝ (fun z => φ₁ (p.1, z)) y) (Pi.single i 1)) p.2) (Pi.single i 1) -
@@ -1619,7 +1619,7 @@ lemma waveOp_linearity_sub
     rw [show (fun y => (fderiv ℝ (fun z => φ₁ (p.1, z)) y) (Pi.single i 1) - (fderiv ℝ (fun z => φ₂ (p.1, z)) y) (Pi.single i 1)) =
       ((fun y => (fderiv ℝ (fun z => φ₁ (p.1, z)) y) (Pi.single i 1)) - (fun y => (fderiv ℝ (fun z => φ₂ (p.1, z)) y) (Pi.single i 1))) from rfl]
     rw [fderiv_sub (diff_outer_x' φ₁ hφ₁ p.1 i).differentiableAt (diff_outer_x' φ₂ hφ₂ p.1 i).differentiableAt,
-      ContinuousLinearMap.sub_apply]
+      sub_apply]
   rw [houter_t]; simp_rw [houter_x, Finset.sum_sub_distrib]
   ring
 
@@ -1650,14 +1650,14 @@ lemma fderiv_sub_energy_density
     have hd2 : DifferentiableAt ℝ (fun s => φ₂ (s, x)) 0 :=
       ((hφ₂.comp₂ contDiff_id contDiff_const).differentiable (by decide)).differentiableAt
     show (fderiv ℝ ((fun s => φ₁ (s, x)) - fun s => φ₂ (s, x)) 0) 1 = _
-    rw [fderiv_sub hd1 hd2, ContinuousLinearMap.sub_apply]
+    rw [fderiv_sub hd1 hd2, sub_apply]
   · congr 1; ext i; congr 1
     have hd1 : DifferentiableAt ℝ (fun y => φ₁ (0, y)) x :=
       ((hφ₁.comp₂ contDiff_const contDiff_id).differentiable (by decide)).differentiableAt
     have hd2 : DifferentiableAt ℝ (fun y => φ₂ (0, y)) x :=
       ((hφ₂.comp₂ contDiff_const contDiff_id).differentiable (by decide)).differentiableAt
     show (fderiv ℝ ((fun y => φ₁ (0, y)) - fun y => φ₂ (0, y)) x) (Pi.single i 1) = _
-    rw [fderiv_sub hd1 hd2, ContinuousLinearMap.sub_apply]
+    rw [fderiv_sub hd1 hd2, sub_apply]
 
 end CM14
 
@@ -1690,13 +1690,13 @@ lemma same_data_spatial_deriv_eq
     have hd2 : DifferentiableAt ℝ (fun y => φ₂ (0, y)) x :=
       ((hφ₂.comp (contDiff_prodMk_right (0 : ℝ))).differentiable (by decide)).differentiableAt
     rw [show fderiv ℝ g x = fderiv ℝ (fun y => φ₁ (0, y)) x - fderiv ℝ (fun y => φ₂ (0, y)) x
-      from fderiv_sub hd1 hd2, ContinuousLinearMap.sub_apply] at h; linarith
+      from fderiv_sub hd1 hd2, sub_apply] at h; linarith
   have hg : ContDiff ℝ 2 g :=
     (hφ₁.comp (contDiff_prodMk_right (0 : ℝ))).sub (hφ₂.comp (contDiff_prodMk_right (0 : ℝ)))
   have hg_zero : ∀ y, waveEuclidNormSq (y - x₀) ≤ R ^ 2 → g y = 0 :=
     fun y hy => sub_eq_zero.mpr (h_data y hy)
   have hS_open : IsOpen {y : Fin n → ℝ | waveEuclidNormSq (y - x₀) < R ^ 2} :=
-    isOpen_lt (continuous_finset_sum _ fun j _ => ((continuous_apply j).sub continuous_const).pow 2)
+    isOpen_lt (continuous_finsetSum _ fun j _ => ((continuous_apply j).sub continuous_const).pow 2)
       continuous_const
   have hF_cont : Continuous (fun y => fderiv ℝ g y (Pi.single i 1)) := by
     show Continuous ((fun L : ((Fin n → ℝ) →L[ℝ] ℝ) => L (Pi.single i 1)) ∘ (fderiv ℝ g))
@@ -1808,18 +1808,18 @@ lemma energyDensity_integrable_on_ball
   have hfun : (fun x : Fin n → ℝ =>
     if waveEuclidNormSq (x - x₀) ≤ R ^ 2 then energyDensity φ (t, x) else 0) =
     S.indicator (fun x => energyDensity φ (t, x)) := by
-    ext x; simp only [S, Set.indicator, Set.mem_setOf_eq]
+    ext x; simp only [S, Set.indicator, Set.mem_ofPred_eq]
   rw [hfun]
   have hS_closed : IsClosed S := by
     have : S = (fun x => waveEuclidNormSq (x - x₀)) ⁻¹' Set.Iic (R ^ 2) := by
       ext x; simp [S, Set.mem_preimage, Set.mem_Iic]
     rw [this]
     apply IsClosed.preimage _ isClosed_Iic
-    exact (continuous_finset_sum _ (fun i _ => (continuous_apply i |>.comp (continuous_id.sub continuous_const)).pow 2))
+    exact (continuous_finsetSum _ (fun i _ => (continuous_apply i |>.comp (continuous_id.sub continuous_const)).pow 2))
   have hS_bounded : Bornology.IsBounded S := by
     rw [Metric.isBounded_iff_subset_ball x₀]
     refine ⟨|R| + 1, fun x hx => ?_⟩
-    simp only [S, Set.mem_setOf_eq] at hx
+    simp only [S, Set.mem_ofPred_eq] at hx
     rw [Metric.mem_ball, dist_comm]
     have : ‖x - x₀‖ ≤ |R| := by
       rw [pi_norm_le_iff_of_nonneg (abs_nonneg R)]
@@ -1848,7 +1848,7 @@ lemma energyDensity_integrable_on_ball
         exact hφ.comp (contDiff_snd.prodMk contDiff_fst)
       exact (hswap.fderiv_apply (n := 0) contDiff_const contDiff_const
         (by norm_num : (0 : WithTop ℕ∞) + 1 ≤ 2)).continuous
-    · apply continuous_finset_sum; intro i _
+    · apply continuous_finsetSum; intro i _
       apply Continuous.pow
       have h1 : ContDiff ℝ 2 (fun y : Fin n → ℝ => φ (t, y)) :=
         hφ.comp (contDiff_const.prodMk contDiff_id)
@@ -1906,7 +1906,7 @@ lemma mem_interior_of_waveEuclidNormSq_lt
   x ∈ interior {y : Fin n → ℝ | waveEuclidNormSq (y - x₀) ≤ r ^ 2} := by
 -- proof
   have hcont : Continuous (fun y : Fin n → ℝ => waveEuclidNormSq (y - x₀)) :=
-    (continuous_finset_sum _ (fun i _ => (continuous_apply i).pow 2)).comp
+    (continuous_finsetSum _ (fun i _ => (continuous_apply i).pow 2)).comp
       (continuous_id.sub continuous_const)
   have hopen : IsOpen {y : Fin n → ℝ | waveEuclidNormSq (y - x₀) < r ^ 2} :=
     isOpen_lt hcont continuous_const

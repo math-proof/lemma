@@ -1,9 +1,10 @@
 -- Carved from Lemma/Definitions/Def_CerednikDrinfeld_StandardFormalODModule.lean: instance decls only.
 import Mathlib
 import Instance.MvFormalGroup_NegV2
-import Lemma.CerednikDrinfeld.SpecialFormalModule
+import Lemma.MvPowerSeries.SpecialFormalModule
 import Instance.CerednikDrinfeld_LubinTateModule
-import Lemma.CerednikDrinfeld.StandardFormalODModule
+import Lemma.MvPowerSeries.StandardFormalODModule
+import Notation.CerednikDrinfeld_StandardFormalODModule
 
 section BoxBasisLemmaAppendix
 
@@ -35,6 +36,7 @@ set_option linter.unusedSectionVars false
 noncomputable section
 
 open MvPowerSeries CerednikDrinfeld CerednikDrinfeld.SpecialFormal CerednikDrinfeld.LubinTate
+open scoped CerednikDrinfeld_StandardFormalODModule
 
 namespace CerednikDrinfeld.Standard
 

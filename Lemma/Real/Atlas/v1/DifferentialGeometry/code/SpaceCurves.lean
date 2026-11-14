@@ -377,7 +377,7 @@ lemma frenetCurvature_eq_inner_div_norm
   frenetCurvature c hc i t = @inner ℝ _ _ (frenetFrame c hc t ⟨i.val + 1, by omega⟩) (deriv (fun s => frenetFrame c hc s ⟨i.val, by omega⟩) t) / ‖deriv c t‖ := by
 -- proof
   rfl
-set_option maxHeartbeats 800000 in
+set_option maxHeartbeats 800000
 
 end SpaceCurves
 
@@ -451,13 +451,13 @@ lemma prod_fin_triangular
     rw [← Fin.prod_univ_eq_prod_range]
     congr 1; ext k
     simp only [g]
-    rw [dif_pos (by omega : k.val < n - 1)]
+    rw [dite_eq_left (by omega : k.val < n - 1)]
   have hrhs : ∏ k : Fin (n - 1), f k ^ (n - 1 - k.val) =
     ∏ k ∈ Finset.range (n - 1), g k ^ (n - 1 - k) := by
     rw [← Fin.prod_univ_eq_prod_range]
     congr 1; ext k
     simp only [g]
-    rw [dif_pos k.isLt]
+    rw [dite_eq_left k.isLt]
   rw [hlhs, hrhs]
   have swap : ∏ i ∈ Finset.range n, ∏ k ∈ Finset.range i, g k =
     ∏ k ∈ Finset.range (n - 1), ∏ i ∈ (Finset.range n).filter (fun i => k < i), g k := by

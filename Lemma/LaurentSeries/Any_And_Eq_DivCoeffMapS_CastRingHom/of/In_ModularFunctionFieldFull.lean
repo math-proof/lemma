@@ -1,10 +1,10 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.JqCoeff
-import Lemma.ModularCurve.LaurentCoeff
+import Lemma.HahnSeries.JqCoeff
+import Lemma.LaurentSeries.LaurentCoeff
 import Lemma.Int.P2MUtil
 
-open ModularCurve
+open ModularCurve HahnSeries LaurentSeries
 
 /--
 [ModularCurve_exists_eq_coeffMap_div_coeffMap_of_mem_modularFunctionFieldFull](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularCurve_exists_eq_coeffMap_div_coeffMap_of_mem_modularFunctionFieldFull.lean)

@@ -1,6 +1,6 @@
 import Mathlib
 import Instance.ModularCurve_JZeroSemistableSpecialization
-import Lemma.ModularCurve.ModularUnit
+import Lemma.HahnSeries.ModularUnit
 import Instance.ModularCurve_LevelOneComp
 
 set_option autoImplicit false

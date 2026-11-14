@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.CerednikDrinfeld.FormalUpperHalfPlanePoints
+import Lemma.Ideal.FormalUpperHalfPlanePoints
 import Structure.CerednikDrinfeld_DrinfeldQuadruple
 import Abbrev.CerednikDrinfeld_DrinfeldQuadruple
 

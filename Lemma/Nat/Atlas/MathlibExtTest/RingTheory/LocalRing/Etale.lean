@@ -1,5 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Lemma.Int.LocalRing.Etale
 open Polynomial
 
 

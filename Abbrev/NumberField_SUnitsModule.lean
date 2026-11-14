@@ -14,7 +14,7 @@ variable (E K : Type) [Field E] [NumberField E] [Field K] [NumberField K] [Algeb
 section diag
 variable (S : Finset (HeightOneSpectrum (𝓞 E)))
 
-noncomputable abbrev loc (v : HeightOneSpectrum (𝓞 E)) : K →+* (NumberField.PlaceAbove.above E K v).adicCompletion K :=
+noncomputable abbrev loc (v : HeightOneSpectrum (𝓞 E)) : K →+* (Matrix.PlaceAbove.above E K v).adicCompletion K :=
   algebraMap K _
 
 end diag

@@ -1,7 +1,7 @@
 import Initialize.Tactic.Attr.Basic
 import Mathlib
 
-open IsDedekindDomain NumberField
+open IsDedekindDomain NumberField Matrix
 
 /--
 [AdelicDock_isCompact_localLevelOne](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AdelicDock_isCompact_localLevelOne.lean)

@@ -11,11 +11,7 @@ namespace TuringMachine
 -/
 @[path]
 lemma TM.run_add'
-  {Q₁ Q₂ Γ : Type}
-  [DecidableEq Q₁]
-  [DecidableEq Q₂]
-  {Q : Type}
-  {Γ : Type}
+  {Q Γ : Type}
   [DecidableEq Q]
   {M : TM Q Γ}
   {c : Config Q Γ}
@@ -24,7 +20,7 @@ lemma TM.run_add'
   M.run c (m + n) = M.run (M.run c m) n := by
 -- proof
   induction n with
-  | zero => simp
+  | zero => simp [TM.run]
   | succ n ih =>
     rw [show m + (n + 1) = (m + n) + 1 from by omega]
     simp only [TM.run_succ, ih]
@@ -137,7 +133,7 @@ lemma sequentialCompose_phase1_from_init
 -- given
   (hNotHalt₁ : ∀ k, k < n₁ → ¬M₁.isHaltConfig (M₁.runOnInput w k)) :
 -- imply
-  let M₃ := TM.sequentialCompose M₁ M₂ M₃.run (M₃.initConfig w) n₁ = ⟨.inl (.inl (M₁.runOnInput w n₁).state), (M₁.runOnInput w n₁).headPos, (M₁.runOnInput w n₁).tape⟩ := by
+  (TM.sequentialCompose M₁ M₂).run ((TM.sequentialCompose M₁ M₂).initConfig w) n₁ = ⟨.inl (.inl (M₁.runOnInput w n₁).state), (M₁.runOnInput w n₁).headPos, (M₁.runOnInput w n₁).tape⟩ := by
 -- proof
   show (TM.sequentialCompose M₁ M₂).run
     ⟨.inl (.inl M₁.q₀), 0, (M₁.initConfig w).tape⟩ n₁ = _
@@ -146,7 +142,7 @@ lemma sequentialCompose_phase1_from_init
       Config ((Q₁ ⊕ Q₂) ⊕ Fin 2) Γ) =
       ⟨.inl (.inl (M₁.initConfig w).state), (M₁.initConfig w).headPos,
         (M₁.initConfig w).tape⟩ from by simp [TM.initConfig]]
-  exact sequentialCompose_phase1_run M₁ M₂ (M₁.initConfig w) n₁ hNotHalt₁
+  exact sequentialCompose_phase1_run hNotHalt₁
 
 end TuringMachine
 
@@ -176,18 +172,18 @@ lemma sequentialCompose_accepts_of_phases
   let M₃ := TM.sequentialCompose M₁ M₂
   let c₂ := phase2InitConfig M₁ M₂ w n₁
   refine ⟨n₁ + 1 + n₂ + 1, ?_⟩
-  have h1 := sequentialCompose_phase1_from_init M₁ M₂ w n₁ hNotHalt₁
+  have h1 := sequentialCompose_phase1_from_init (M₁ := M₁) (M₂ := M₂) (w := w) (n₁ := n₁) hNotHalt₁
   have h2 : M₃.run (M₃.initConfig w) (n₁ + 1) =
     ⟨.inl (.inr M₂.q₀), (M₁.runOnInput w n₁).headPos + 1,
       (M₁.runOnInput w n₁).tape⟩ := by
     rw [TM.run_succ, h1]
-    exact sequentialCompose_transition_step M₁ M₂ _ _ _
+    exact sequentialCompose_transition_step (M₁.runOnInput w n₁).headPos
       (by rcases hHalt₁ with h | h <;> [left; right] <;> exact h)
   have h3 : M₃.run (M₃.initConfig w) (n₁ + 1 + n₂) =
     ⟨.inl (.inr (M₂.run c₂ n₂).state),
       (M₂.run c₂ n₂).headPos, (M₂.run c₂ n₂).tape⟩ := by
     rw [TM.run_add', h2]
-    exact sequentialCompose_phase2_run M₁ M₂ c₂ n₂ hNotHalt₂
+    exact sequentialCompose_phase2_run (c := c₂) (n := n₂) hNotHalt₂
   have hAcc_state : (M₂.run c₂ n₂).state = M₂.qAccept := hAccept₂
   have h4 : M₃.step ⟨.inl (.inr (M₂.run c₂ n₂).state),
     (M₂.run c₂ n₂).headPos, (M₂.run c₂ n₂).tape⟩ =
@@ -235,18 +231,18 @@ lemma sequentialCompose_rejects_of_phases
   let M₃ := TM.sequentialCompose M₁ M₂
   let c₂ := phase2InitConfig M₁ M₂ w n₁
   refine ⟨n₁ + 1 + n₂ + 1, ?_⟩
-  have h1 := sequentialCompose_phase1_from_init M₁ M₂ w n₁ hNotHalt₁
+  have h1 := sequentialCompose_phase1_from_init (M₁ := M₁) (M₂ := M₂) (w := w) (n₁ := n₁) hNotHalt₁
   have h2 : M₃.run (M₃.initConfig w) (n₁ + 1) =
     ⟨.inl (.inr M₂.q₀), (M₁.runOnInput w n₁).headPos + 1,
       (M₁.runOnInput w n₁).tape⟩ := by
     rw [TM.run_succ, h1]
-    exact sequentialCompose_transition_step M₁ M₂ _ _ _
+    exact sequentialCompose_transition_step (M₁.runOnInput w n₁).headPos
       (by rcases hHalt₁ with h | h <;> [left; right] <;> exact h)
   have h3 : M₃.run (M₃.initConfig w) (n₁ + 1 + n₂) =
     ⟨.inl (.inr (M₂.run c₂ n₂).state),
       (M₂.run c₂ n₂).headPos, (M₂.run c₂ n₂).tape⟩ := by
     rw [TM.run_add', h2]
-    exact sequentialCompose_phase2_run M₁ M₂ c₂ n₂ hNotHalt₂
+    exact sequentialCompose_phase2_run (c := c₂) (n := n₂) hNotHalt₂
   have hRej_state : (M₂.run c₂ n₂).state = M₂.qReject := hReject₂
   have h4 : M₃.step ⟨.inl (.inr (M₂.run c₂ n₂).state),
     (M₂.run c₂ n₂).headPos, (M₂.run c₂ n₂).tape⟩ =

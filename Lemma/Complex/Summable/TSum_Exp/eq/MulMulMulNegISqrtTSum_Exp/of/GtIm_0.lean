@@ -40,8 +40,9 @@ private lemma summable_norm_cexp_neg_quadratic {a : ℂ} (ha : 0 < a.re) (b : �
   have hre : (-(π : ℂ) * a).re < 0 := by
     rw [neg_mul, neg_re, Complex.re_ofReal_mul, neg_lt_zero]
     exact mul_pos pi_pos ha
-  have hO : Asymptotics.IsBigO (fun x : ℝ => cexp (-(π : ℂ) * a * (x : ℂ) ^ 2 + 2 * π * b * (x : ℂ)))
-      (fun x : ℝ => |x| ^ (-2 : ℝ)) (Filter.cocompact ℝ) :=
+  have hO : Asymptotics.IsBigO (Filter.cocompact ℝ)
+      (fun x : ℝ => cexp (-(π : ℂ) * a * (x : ℂ) ^ 2 + 2 * π * b * (x : ℂ)))
+      (fun x : ℝ => |x| ^ (-2 : ℝ)) :=
     (cexp_neg_quadratic_isLittleO_abs_rpow_cocompact hre (2 * π * b) (-2)).isBigO
   have hZ := hO.comp_tendsto Int.tendsto_coe_cofinite
   simp only [Function.comp_def, Complex.ofReal_intCast] at hZ

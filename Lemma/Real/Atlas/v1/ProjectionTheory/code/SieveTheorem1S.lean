@@ -79,7 +79,8 @@ lemma sieve_theorem_1S
       calc ∑ xy ∈ (X ×ˢ X).filter (fun xy => ¬xy.1 = xy.2),
         (D.filter (fun p => xy.1 % p = xy.2 % p)).card
         ≤ ∑ _xy ∈ (X ×ˢ X).filter (fun xy => ¬xy.1 = xy.2), Nat.log 2 N := by
-          apply sum_le_sum; intro ⟨x₁, x₂⟩ hxy
+            apply sum_le_sum
+            intro ⟨x₁, x₂⟩ hxy
           simp only [mem_filter, mem_product] at hxy
           have hx₁N := mem_range.mp (hX hxy.1.1)
           have hx₂N := mem_range.mp (hX hxy.1.2)

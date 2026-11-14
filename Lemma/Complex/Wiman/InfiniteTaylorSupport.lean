@@ -29,10 +29,10 @@ lemma infinite_support_wimanTaylorCoefficient
     have hcoeff : wimanTaylorCoefficient f n = 0 := by
       simpa [s, Function.mem_support] using hn
     simp [hcoeff]
-  rw [← (hasSum_wimanTaylorCoefficient_mul_pow f hf z).tsum_eq,
-    tsum_eq_sum hzero]
+  have hs := hasSum_wimanTaylorCoefficient_mul_pow (f := f) (z := z) hf
+  rw [← hs.tsum_eq, tsum_eq_sum hzero]
   simp [p, Polynomial.eval_finsetSum]
-end
+end Complex
 
 
 

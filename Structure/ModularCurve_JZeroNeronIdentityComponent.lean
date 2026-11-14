@@ -1,8 +1,8 @@
 import Mathlib
 import Structure.ModularCurve_JZeroNeronPrimaryTorsionSheaf
 import Structure.AlgebraicGeometry_RelativeGroupLaw
-import Lemma.GoodReductionJacobian.RelativeGroupLawKernel
-import Lemma.AlgebraicGeometry.NeronModelEndomorphismExtension
+import Lemma.Scheme.RelativeGroupLawKernel
+import Lemma.Scheme.NeronModelEndomorphismExtension
 
 set_option autoImplicit false
 

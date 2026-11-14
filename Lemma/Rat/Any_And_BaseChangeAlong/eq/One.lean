@@ -21,7 +21,7 @@ private lemma main
 -- proof
   obtain ⟨L, hL, h1⟩ := ρ.isAdicContinuous K
   refine ⟨L, hL, fun {B} _ _ f hf hK s hs => ?_⟩
-  letI : Algebra A B := f.toAlgebra
+  let : Algebra A B := f.toAlgebra
   have hkill : ∀ x ∈ (IsLocalRing.maximalIdeal A ^ K) • (⊤ : Submodule A ρ.V), ∀ b : B,
       TensorProduct.tmul A b x = (0 : TensorProduct A B ρ.V) := by
     intro x hx b
@@ -34,12 +34,13 @@ private lemma main
       rw [TensorProduct.tmul_add, hx, hy, add_zero]
   refine LinearMap.ext fun w => ?_
   show (ρ.ρ s).baseChange B w = w
-  induction w using TensorProduct.induction_on with
-  | zero => rw [map_zero]
-  | tmul b v =>
+  refine TensorProduct.inductionOn w ?_ ?_
+  · intro b v
     rw [LinearMap.baseChange_tmul, ← sub_eq_zero, ← TensorProduct.tmul_sub]
     exact hkill _ (h1 s hs v) b
-  | add x y hx hy => rw [map_add, hx, hy]
+  · intro x y hx hy
+    rw [map_add, hx, hy]
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

@@ -1,12 +1,12 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.EtaQuotient
+import Lemma.UpperHalfPlane.EtaQuotient
 import Lemma.Int.P2MUtil
 
 open Complex ModularGroup
 open UpperHalfPlane hiding I
 open scoped ModularForm MatrixGroups Real Topology
-open ModularCurve
+open ModularCurve UpperHalfPlane
 
 /--
 [ModularCurve_sharpUnitNecessary_of_eisensteinNumerator_eq_one](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularCurve_sharpUnitNecessary_of_eisensteinNumerator_eq_one.lean)

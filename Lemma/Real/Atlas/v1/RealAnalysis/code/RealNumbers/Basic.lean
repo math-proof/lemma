@@ -8,7 +8,7 @@ namespace RealNumbers
 [real_numbers_theorem](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/RealAnalysis/code/RealNumbers/Basic.lean)
 -/
 @[path]
-lemma real_numbers_theorem
+lemma real_numbers_theorem :
 -- imply
   IsStrictOrderedRing ℝ ∧ Function.Injective (Rat.cast : ℚ → ℝ) ∧ (∀ S : Set ℝ, S.Nonempty → BddAbove S → ∃ x, IsLUB S x) :=
 -- proof
@@ -22,7 +22,7 @@ namespace RealNumbers
 [sqrt2_exists_unique](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/RealAnalysis/code/RealNumbers/Basic.lean)
 -/
 @[path]
-lemma sqrt2_exists_unique
+lemma sqrt2_exists_unique :
 -- imply
   ∃! r : ℝ, 0 < r ∧ r ^ 2 = 2 := by
 -- proof

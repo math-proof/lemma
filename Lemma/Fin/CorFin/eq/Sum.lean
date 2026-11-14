@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.GroupCohomology.Corestriction2
+import Lemma.Rep.Corestriction2
 open CategoryTheory groupCohomology
 set_option autoImplicit false
 

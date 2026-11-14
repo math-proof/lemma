@@ -14,6 +14,6 @@ scoped notation "𝕆" => Zp2 p
 
 scoped notation "𝔮" => Fintype.card (GaloisField p 2)
 
-scoped notation "σ" => (WittVector.frobenius : Zp2 p →+* Zp2 p)
+scoped notation "σ" => (WittVector.frobenius : RingHom (Zp2 p) (Zp2 p))
 
 end CerednikDrinfeld_LubinTateModule

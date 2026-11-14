@@ -90,7 +90,7 @@ lemma partialSum_eq_polynomial_eval
 -- imply
   ps.partialSum N z = Polynomial.eval z (∑ k ∈ Finset.range N, Polynomial.C (ps.coeff k) * Polynomial.X ^ k) := by
 -- proof
-  simp only [FormalMultilinearSeries.partialSum, Polynomial.eval_finset_sum, Polynomial.eval_mul,
+  simp only [FormalMultilinearSeries.partialSum, Polynomial.eval_finsetSum, Polynomial.eval_mul,
     Polynomial.eval_C, Polynomial.eval_pow, Polynomial.eval_X]
   congr 1; ext k
   rw [FormalMultilinearSeries.apply_eq_pow_smul_coeff]

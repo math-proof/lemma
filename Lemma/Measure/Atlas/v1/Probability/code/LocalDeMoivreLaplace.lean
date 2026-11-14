@@ -56,7 +56,6 @@ lemma n_sub_localDMLIndex_tendsto_atTop
     omega
   · simp only [Nat.floor_of_nonpos (by linarith : (n : ℝ) / 2 + x * Real.sqrt n / 2 ≤ 0)]
     omega
-set_option maxHeartbeats 800000 in
 
 end ProbabilityTheory
 
@@ -172,8 +171,8 @@ lemma binomProb_div_gaussianApprox_eq
     have h := Stirling.stirlingSeq'_pos (n - k - 1)
     rwa [show n - k - 1 + 1 = n - k from Nat.sub_one_add_one_eq_of_pos hnk_pos] at h
   rw [binomProbHalf, Nat.cast_choose ℝ hkn']
-  rw [factorial_eq_stirlingSeq_mul n hn, factorial_eq_stirlingSeq_mul k hk,
-    factorial_eq_stirlingSeq_mul (n - k) hnk_pos]
+  rw [factorial_eq_stirlingSeq_mul hn, factorial_eq_stirlingSeq_mul hk,
+    factorial_eq_stirlingSeq_mul hnk_pos]
   rw [gaussianApproxHalf]
   have h2n_pos : (0 : ℝ) < 2 * (n : ℝ) := by linarith
   have h2k_pos : (0 : ℝ) < 2 * (k : ℝ) := by linarith
@@ -246,7 +245,6 @@ lemma binomProb_div_gaussianApprox_eq
   simp only [div_eq_mul_inv, mul_pow] at *
   rw [hinv_pow] at hne_pow_ne ⊢
   field_simp
-set_option maxHeartbeats 800000 in
 
 end ProbabilityTheory
 
@@ -290,8 +288,8 @@ lemma entropy_residual_bound
   have hR_bound : |u| ^ 3 / (1 - |u|) ≤ 2 * |u| ^ 3 := by
     have h2 : (1 : ℝ) - |u| ≥ 1 / 2 := by linarith [abs_nonneg u]
     have h3 : |u| ^ 3 ≥ 0 := by positivity
-    calc |u| ^ 3 / (1 - |u|) ≤ |u| ^ 3 / (1 / 2) := by
-      apply div_le_div_of_nonneg_left h3 (by linarith) h2
+    calc |u| ^ 3 / (1 - |u|) ≤ |u| ^ 3 / (1 / 2) :=
+      div_le_div_of_nonneg_left h3 (by linarith) h2
       _ = 2 * |u| ^ 3 := by ring
   calc |(1 + u) * Rp + (1 - u) * Rm|
     ≤ |(1 + u) * Rp| + |(1 - u) * Rm| := abs_add_le _ _
@@ -300,7 +298,6 @@ lemma entropy_residual_bound
     _ ≤ (3 / 2) * (|u| ^ 3 / (1 - |u|)) + (3 / 2) * (|u| ^ 3 / (1 - |u|)) := by gcongr
     _ ≤ (3 / 2) * (2 * |u| ^ 3) + (3 / 2) * (2 * |u| ^ 3) := by gcongr
     _ = 6 * |u| ^ 3 := by ring
-set_option maxHeartbeats 800000 in
 
 end ProbabilityTheory
 
@@ -333,8 +330,6 @@ lemma localDMLIndex_deviation_bound
     have hnn : (0 : ℝ) < (n : ℝ) := by exact_mod_cast hn
     have h1 : (n : ℝ) + x * Real.sqrt n < 0 := by nlinarith
     nlinarith [neg_le_abs x, Real.sqrt_nonneg (n : ℝ)]
-set_option maxHeartbeats 4000000 in
-
 end ProbabilityTheory
 
 namespace ProbabilityTheory
@@ -349,7 +344,8 @@ lemma log_power_factor_formula
   (hk : 0 < k)
   (hkn : k < n) :
 -- imply
-  let u := ((2 : ℝ) * k - n) / n Real.log ((↑n : ℝ) ^ n / ((↑k : ℝ) ^ k * ((n - k : ℕ) : ℝ) ^ (n - k) * 2 ^ n)) + ((↑k : ℝ) - (↑n : ℝ) / 2) ^ 2 / ((↑n : ℝ) / 2) = -((↑n : ℝ) / 2) * ((1 + u) * Real.log (1 + u) + (1 - u) * Real.log (1 - u) - u ^ 2) := by
+  let u := ((2 : ℝ) * k - n) / n
+  Real.log ((↑n : ℝ) ^ n / ((↑k : ℝ) ^ k * ((n - k : ℕ) : ℝ) ^ (n - k) * 2 ^ n)) + ((↑k : ℝ) - (↑n : ℝ) / 2) ^ 2 / ((↑n : ℝ) / 2) = -((↑n : ℝ) / 2) * ((1 + u) * Real.log (1 + u) + (1 - u) * Real.log (1 - u) - u ^ 2) := by
 -- proof
   intro u
   have hn : (0 : ℝ) < (↑n : ℝ) := by exact_mod_cast Nat.pos_of_ne_zero (by omega)
@@ -381,8 +377,6 @@ lemma log_power_factor_formula
   have hnu2 : u ^ 2 = ((2 * (↑k : ℝ) - (↑n : ℝ)) / (↑n : ℝ)) ^ 2 := by simp only [u]
   rw [hnu2]; field_simp
   linear_combination (2 * (↑n : ℝ) * Real.log 2 - 2 * (↑n : ℝ) * Real.log (↑n : ℝ)) * hkn_cast
-set_option maxHeartbeats 8000000 in
-
 end ProbabilityTheory
 
 namespace ProbabilityTheory
@@ -394,7 +388,8 @@ namespace ProbabilityTheory
 lemma dml_power_factor_tendsto_one
   {x : ℝ} :
 -- imply
-  Tendsto (fun n => let k := localDMLIndex x n ((n : ℝ) ^ n / ((k : ℝ) ^ k * ((n - k : ℕ) : ℝ) ^ (n - k) * 2 ^ n)) * Real.exp (((k : ℝ) - (n : ℝ) / 2) ^ 2 / ((n : ℝ) / 2))) atTop (nhds 1) := by
+  Tendsto (fun n => let k := localDMLIndex x n
+    ((n : ℝ) ^ n / ((k : ℝ) ^ k * ((n - k : ℕ) : ℝ) ^ (n - k) * 2 ^ n)) * Real.exp (((k : ℝ) - (n : ℝ) / 2) ^ 2 / ((n : ℝ) / 2))) atTop (nhds 1) := by
 -- proof
   suffices hlog : Tendsto (fun n =>
     let k := localDMLIndex x n
@@ -403,23 +398,23 @@ lemma dml_power_factor_tendsto_one
     atTop (nhds 0) by
     have hexp := Real.tendsto_exp_nhds_zero_nhds_one.comp hlog
     apply hexp.congr'
-    filter_upwards [localDMLIndex_tendsto_atTop x |>.eventually (eventually_gt_atTop 0),
-      n_sub_localDMLIndex_tendsto_atTop x |>.eventually (eventually_gt_atTop 0),
+    filter_upwards [(localDMLIndex_tendsto_atTop (x := x)).eventually (eventually_gt_atTop 0),
+      (n_sub_localDMLIndex_tendsto_atTop (x := x)).eventually (eventually_gt_atTop 0),
       eventually_gt_atTop 0] with n hk hnk hn
     simp only [Function.comp_def]
     exact (Real.exp_add _ _).trans (by rw [Real.exp_log (by positivity)])
   refine @squeeze_zero_norm' ℕ ℝ _ _ (fun n => 3 * (|x| + 2) ^ 3 / Real.sqrt n) atTop ?_ ?_
-  · filter_upwards [localDMLIndex_tendsto_atTop x |>.eventually (eventually_gt_atTop 0),
-    n_sub_localDMLIndex_tendsto_atTop x |>.eventually (eventually_gt_atTop 0),
+  · filter_upwards [(localDMLIndex_tendsto_atTop (x := x)).eventually (eventually_gt_atTop 0),
+    (n_sub_localDMLIndex_tendsto_atTop (x := x)).eventually (eventually_gt_atTop 0),
     eventually_gt_atTop 0,
-    localDMLIndex_deviation_bound x,
+    localDMLIndex_deviation_bound (x := x),
     eventually_ge_atTop (Nat.ceil (16 * (|x| + 2) ^ 2) + 1)] with n hk hnk hn hdev hlarge
     have hkn : localDMLIndex x n < n := by omega
     have hn_pos : (0 : ℝ) < (n : ℝ) := by exact_mod_cast hn
     have hsqrt_pos : (0 : ℝ) < Real.sqrt n := Real.sqrt_pos.mpr hn_pos
     have hsq := Real.sq_sqrt hn_pos.le
     have hn_ge1 : (1 : ℝ) ≤ (n : ℝ) := by exact_mod_cast hn
-    have hformula := log_power_factor_formula n (localDMLIndex x n) (by omega : 0 < localDMLIndex x n) hkn
+    have hformula := log_power_factor_formula (by omega : 0 < localDMLIndex x n) hkn
     simp only [] at hformula ⊢
     rw [hformula]
     set u := ((2 : ℝ) * (localDMLIndex x n : ℝ) - (n : ℝ)) / (n : ℝ)
@@ -461,7 +456,7 @@ lemma n_sub_localDMLIndex_ratio_half
   Tendsto (fun n => ((n - localDMLIndex x n : ℕ) : ℝ) / (n : ℝ)) atTop (nhds (1/2)) := by
 -- proof
   have hfn : ∀ᶠ n in atTop, localDMLIndex x n ≤ n := by
-    filter_upwards [(n_sub_localDMLIndex_tendsto_atTop x).eventually (eventually_gt_atTop 0)]
+    filter_upwards [(n_sub_localDMLIndex_tendsto_atTop (x := x)).eventually (eventually_gt_atTop 0)]
       with n hn; omega
   have heq : ∀ᶠ n in atTop, ((n - localDMLIndex x n : ℕ) : ℝ) / (n : ℝ) =
     1 - (localDMLIndex x n : ℝ) / (n : ℝ) := by
@@ -469,10 +464,8 @@ lemma n_sub_localDMLIndex_ratio_half
     rw [Nat.cast_sub hle]; field_simp
   apply (tendsto_congr' heq).mpr
   have h : Tendsto (fun n : ℕ => (1 : ℝ) - (localDMLIndex x n : ℝ) / (n : ℝ)) atTop (nhds (1 - 1/2)) :=
-    (tendsto_const_nhds (x := (1:ℝ))).sub (localDMLIndex_ratio_half x)
+    (tendsto_const_nhds (x := (1:ℝ))).sub (localDMLIndex_ratio_half (x := x))
   simpa only [show (1 : ℝ) - 1 / 2 = 1 / 2 from by ring] using h
-set_option maxHeartbeats 3200000 in
-
 end ProbabilityTheory
 
 namespace ProbabilityTheory
@@ -499,18 +492,19 @@ lemma binomProbHalf_isEquivalent_gaussianApproxHalf
     suffices hF : Tendsto F atTop (nhds 1) by
       apply hF.congr'
       filter_upwards [eventually_gt_atTop 0,
-        (localDMLIndex_tendsto_atTop x).eventually (eventually_gt_atTop 0),
-        (n_sub_localDMLIndex_tendsto_atTop x).eventually (eventually_gt_atTop 0)] with n hn hk hnk
+        (localDMLIndex_tendsto_atTop (x := x)).eventually (eventually_gt_atTop 0),
+        (n_sub_localDMLIndex_tendsto_atTop (x := x)).eventually (eventually_gt_atTop 0)] with n hn hk hnk
       simp only [Pi.div_apply, F]
-      exact (binomProb_div_gaussianApprox_eq n (localDMLIndex x n) hn (by omega) (by omega)).symm
+      exact (binomProb_div_gaussianApprox_eq (k := localDMLIndex x n) hn (by omega) (by omega)).symm
     show Tendsto F atTop (nhds 1)
     have hstir : Tendsto (fun n : ℕ => Stirling.stirlingSeq n /
       (Stirling.stirlingSeq (localDMLIndex x n) * Stirling.stirlingSeq (n - localDMLIndex x n)))
       atTop (nhds (Real.sqrt Real.pi / (Real.sqrt Real.pi * Real.sqrt Real.pi))) := by
       apply Filter.Tendsto.div
       · exact Stirling.tendsto_stirlingSeq_sqrt_pi
-      · exact (Stirling.tendsto_stirlingSeq_sqrt_pi.comp (localDMLIndex_tendsto_atTop x)).mul
-        (Stirling.tendsto_stirlingSeq_sqrt_pi.comp (n_sub_localDMLIndex_tendsto_atTop x))
+      · exact Tendsto.mul
+          (Stirling.tendsto_stirlingSeq_sqrt_pi.comp (localDMLIndex_tendsto_atTop (x := x)))
+          (Stirling.tendsto_stirlingSeq_sqrt_pi.comp (n_sub_localDMLIndex_tendsto_atTop (x := x)))
       · have h : Real.sqrt Real.pi ≠ 0 := Real.sqrt_ne_zero'.mpr Real.pi_pos
         exact mul_ne_zero h h
     have hsqrt : Tendsto (fun n : ℕ =>
@@ -523,8 +517,8 @@ lemma binomProbHalf_isEquivalent_gaussianApproxHalf
         Real.pi / (4 * ((localDMLIndex x n : ℝ) / (n : ℝ)) *
           (((n - localDMLIndex x n : ℕ) : ℝ) / (n : ℝ))) := by
         filter_upwards [eventually_gt_atTop 0,
-          (localDMLIndex_tendsto_atTop x).eventually (eventually_gt_atTop 0),
-          (n_sub_localDMLIndex_tendsto_atTop x).eventually (eventually_gt_atTop 0)] with n hn hk hnk
+          (localDMLIndex_tendsto_atTop (x := x)).eventually (eventually_gt_atTop 0),
+          (n_sub_localDMLIndex_tendsto_atTop (x := x)).eventually (eventually_gt_atTop 0)] with n hn hk hnk
         have hn_pos : (0 : ℝ) < (n : ℝ) := by exact_mod_cast hn
         have hk_pos : (0 : ℝ) < (localDMLIndex x n : ℝ) := by exact_mod_cast hk
         have hnk_pos : (0 : ℝ) < ((n - localDMLIndex x n : ℕ) : ℝ) := by exact_mod_cast hnk
@@ -532,8 +526,8 @@ lemma binomProbHalf_isEquivalent_gaussianApproxHalf
       apply (tendsto_congr' heq2).mpr
       have hdenom : Tendsto (fun n : ℕ => 4 * ((localDMLIndex x n : ℝ) / (n : ℝ)) *
         (((n - localDMLIndex x n : ℕ) : ℝ) / (n : ℝ))) atTop (nhds 1) := by
-        have h := ((tendsto_const_nhds (x := (4:ℝ))).mul (localDMLIndex_ratio_half x)).mul
-          (n_sub_localDMLIndex_ratio_half x)
+        have h := ((tendsto_const_nhds (x := (4:ℝ))).mul (localDMLIndex_ratio_half (x := x))).mul
+          (n_sub_localDMLIndex_ratio_half (x := x))
         simpa only [show (4 : ℝ) * (1 / 2) * (1 / 2) = 1 from by ring] using h
       have h : Tendsto (fun n : ℕ => Real.pi / (4 * ((localDMLIndex x n : ℝ) / (n : ℝ)) *
         (((n - localDMLIndex x n : ℕ) : ℝ) / (n : ℝ)))) atTop (nhds (Real.pi / 1)) :=
@@ -550,7 +544,7 @@ lemma binomProbHalf_isEquivalent_gaussianApproxHalf
         Real.sqrt Real.pi = 1 := by
         have hp : Real.sqrt Real.pi ≠ 0 := Real.sqrt_ne_zero'.mpr Real.pi_pos; field_simp
       rwa [hlim] at h
-    have hfull := hprod_stir_sqrt.mul (dml_power_factor_tendsto_one x)
+    have hfull := hprod_stir_sqrt.mul (dml_power_factor_tendsto_one (x := x))
     rw [mul_one] at hfull
     exact hfull.congr (fun n => by simp only [F]; ring)
   ·
@@ -574,7 +568,7 @@ lemma local_deMoivreLaplace_half
 -- imply
   Tendsto (fun n => binomProbHalf n (localDMLIndex x n) / gaussianApproxHalf n (localDMLIndex x n)) atTop (nhds 1) := by
 -- proof
-  have hequiv := binomProbHalf_isEquivalent_gaussianApproxHalf x
+  have hequiv := binomProbHalf_isEquivalent_gaussianApproxHalf (x := x)
   rw [isEquivalent_iff_tendsto_one] at hequiv
   · exact hequiv
   ·

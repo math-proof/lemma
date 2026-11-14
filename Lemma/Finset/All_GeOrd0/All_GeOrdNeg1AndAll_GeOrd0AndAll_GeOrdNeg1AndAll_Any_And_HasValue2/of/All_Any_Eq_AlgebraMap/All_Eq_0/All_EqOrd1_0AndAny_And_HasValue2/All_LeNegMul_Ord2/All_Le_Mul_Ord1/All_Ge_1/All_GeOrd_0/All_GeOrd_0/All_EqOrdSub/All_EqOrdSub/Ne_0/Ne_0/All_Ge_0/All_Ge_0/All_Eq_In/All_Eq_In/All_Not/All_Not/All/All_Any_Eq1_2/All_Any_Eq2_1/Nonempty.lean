@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.GluedPic0
+import Lemma.ResidueField.GluedPic0
 import Lemma.Int.P2MUtil
 
-open AlgebraicCurve
+open AlgebraicCurve ResidueField
 open IsLocalRing
 
 /--

@@ -12,8 +12,8 @@ Build a joint `SinglePSpace π (x, y)` from an explicit density `p` of the joint
 @[path]
 private lemma main
   [MeasurableSpace Ω]
-  [ReferenceMeasure α]
-  [ReferenceMeasure β]
+  [μ : ReferenceMeasure α]
+  [ν : ReferenceMeasure β]
   {π : Measure Ω} [IsProbabilityMeasure π]
   {x : Ω → α}
   {y : Ω → β}
@@ -21,7 +21,7 @@ private lemma main
 -- given
   (hxy : AEMeasurable (x, y) π)
   (hp : Measurable p)
-  (hjoint : π.map (x, y) = (ReferenceMeasure.measure.prod ReferenceMeasure.measure).withDensity p) :
+  (hjoint : π.map (x, y) = (μ.measure.prod ν.measure).withDensity p) :
 -- imply
   SinglePSpace π (x, y) := by
 -- proof
@@ -33,3 +33,4 @@ private lemma main
 
 
 -- created on 2026-10-07
+-- updated on 2026-11-14

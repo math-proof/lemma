@@ -1,10 +1,10 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.M4aHerbrand_IdeleClassVocab
-import Lemma.NumberField.IdeleBox
+import Lemma.Set.IdeleBox
 import Lemma.Int.P2MUtil
 
-open NumberField IsDedekindDomain IsDedekindDomain.HeightOneSpectrum
+open NumberField IsDedekindDomain IsDedekindDomain.HeightOneSpectrum Set
 
 /--
 [NumberField_AdeleRing_principalIdeles_sup_ideleBox_eq_top](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_NumberField_AdeleRing_principalIdeles_sup_ideleBox_eq_top.lean)

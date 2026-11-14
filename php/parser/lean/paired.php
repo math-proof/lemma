@@ -418,6 +418,35 @@ class LeanParenthesis extends LeanPairedGroup
             $p instanceof LeanArithmetic ||
             $p instanceof LeanUnaryArithmetic)
             return true;
+        // Standalone / `.log` / `:=` imply: `(ℙ[…](…) : ℝ)` drop outer cast.
+        if ($arg->rhs instanceof LeanToken &&
+            ($arg->rhs->text == 'ℝ' || $arg->rhs->text == 'Real') &&
+            LeanParenthesis::isProbExpectAscriptionSubject($arg->lhs))
+            return true;
+        return false;
+    }
+
+    /**
+     * `ℙ[…](…)` / `𝔼[…](…)` / `𝕍𝕒𝕣[…](…)` (optionally under `.toReal`), used to drop a redundant `: ℝ` cast.
+     * @param mixed $node ascription LHS
+     */
+    public static function isProbExpectAscriptionSubject($node)
+    {
+        while ($node instanceof LeanProperty)
+            $node = $node->args[0];
+        if ($node instanceof LeanParenthesis && !($node->arg instanceof LeanColon))
+            $node = $node->arg;
+        if ($node instanceof Lean_Prob || $node instanceof Lean_Expect || $node instanceof Lean_Var)
+            return true;
+        if (!($node instanceof LeanArgsSpaceSeparated))
+            return false;
+        foreach ($node->args as $i => $head) {
+            if ($i >= count($node->args) - 1)
+                break;
+            $base = $head instanceof LeanGetElem ? ($head->args[0] ?? null) : null;
+            if ($base instanceof LeanToken && ($base->text === 'ℙ' || $base->text === '𝔼' || $base->text === '𝕍𝕒𝕣'))
+                return true;
+        }
         return false;
     }
 

@@ -1,10 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.Correspondence
+import Lemma.Scheme.Correspondence
 import Lemma.Int.P2MUtil
 
 open AlgebraicCurve
-
 /--
 [AlgebraicCurve_finiteAlong_of_isIntegral](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_finiteAlong_of_isIntegral.lean)
 -/
@@ -18,10 +17,10 @@ private lemma main
   FiniteAlong K φ := by
 -- proof
   classical
-  letI := algebraAlong φ
-  haveI := isScalarTower_along φ
-  haveI := isIntegral_along φ hφ
-  haveI : Algebra.EssFiniteType F F' := Algebra.EssFiniteType.of_comp K F F'
+  let := algebraAlong φ
+  have := isScalarTower_along φ
+  have := isIntegral_along φ hφ
+  have : Algebra.EssFiniteType F F' := Algebra.EssFiniteType.of_comp K F F'
   obtain ⟨s, hs⟩ := IntermediateField.fg_top F F'
   have hfin : FiniteDimensional F (IntermediateField.adjoin F (s : Set F')) :=
     IntermediateField.finiteDimensional_adjoin (fun x _ => Algebra.IsIntegral.isIntegral x)
@@ -31,3 +30,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

@@ -89,7 +89,7 @@ namespace LaplacePoisson
 [unitSphereArea_pos](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/IntroductionToPartialDifferentialEquations/code/CM7/LaplacePoisson.lean)
 -/
 @[path]
-lemma unitSphereArea_pos
+lemma unitSphereArea_pos :
 -- imply
   ∀ n, unitSphereArea n > 0 := by
 -- proof
@@ -114,7 +114,7 @@ namespace LaplacePoisson
 [unitSphereArea_three](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/IntroductionToPartialDifferentialEquations/code/CM7/LaplacePoisson.lean)
 -/
 @[path]
-lemma unitSphereArea_three
+lemma unitSphereArea_three :
 -- imply
   unitSphereArea 3 = 4 * Real.pi := by
 -- proof
@@ -929,7 +929,7 @@ namespace LaplacePoisson
 [eps_sq_abs_log_tendsto_zero](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/IntroductionToPartialDifferentialEquations/code/CM7/LaplacePoisson.lean)
 -/
 @[path]
-lemma eps_sq_abs_log_tendsto_zero
+lemma eps_sq_abs_log_tendsto_zero :
 -- imply
   Filter.Tendsto (fun ε : ℝ => ε ^ 2 * |Real.log ε|) (nhdsWithin 0 (Set.Ioi 0)) (nhds 0) := by
 -- proof

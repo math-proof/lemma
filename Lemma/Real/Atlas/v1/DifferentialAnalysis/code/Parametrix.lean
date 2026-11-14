@@ -55,7 +55,7 @@ lemma cauchyPompeiu_excised_ball_integral_vanishes
     rw [Function.comp_apply,
       Metric.cthickening_singleton (0 : EuclideanSpace ℝ (Fin 2)) (le_of_lt hε)]
   exact (hint.tendsto_setIntegral_nhds_zero hmeas_tendsto).mono_left le_rfl
-set_option maxHeartbeats 8000000 in
+set_option maxHeartbeats 8000000
 
 end DifferentialOperators
 
@@ -98,7 +98,7 @@ lemma four_eps_mul_integral_inv_eps_sq_add_sq
   rw [Real.arctan_one, Real.arctan_neg, Real.arctan_one]
   field_simp
   ring
-set_option maxHeartbeats 800000 in
+set_option maxHeartbeats 800000
 
 end DifferentialOperators
 
@@ -185,9 +185,9 @@ lemma fourier_polySymbol_eq_neg_dbar
   rw [hfour_sum_pt]
   simp only [smul_neg]
   rw [← neg_add]
-/-- The Fourier-side integral identity for the Cauchy-Riemann kernel: integrating the Fourier
-multiplier by `polySymbol 2 dbarPoly` of `𝓕⁻¹ φ` against the Cauchy-Riemann kernel recovers
-`φ(0)`. -/
+-- The Fourier-side integral identity for the Cauchy-Riemann kernel: integrating the Fourier
+-- multiplier by `polySymbol 2 dbarPoly` of `𝓕⁻¹ φ` against the Cauchy-Riemann kernel recovers
+-- `φ(0)`.
 end DifferentialOperators
 
 

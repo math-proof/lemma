@@ -1,6 +1,6 @@
 import Instance.SheafOfModules_Monoidal
 import Structure.AlgebraicGeometry_RelEffCartierDiv
-import Lemma.AlgebraicGeometry.RelEffCartierDiv
+import Lemma.Scheme.RelEffCartierDiv
 
 set_option autoImplicit false
 

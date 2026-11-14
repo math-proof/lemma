@@ -15,6 +15,7 @@ import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.Tactic.LinearCombination
 import Mathlib.Tactic.Ring
 import Notation.Algebra.Ring.Action.Submonoid
+import Lemma.Ideal.Mathlib430
 
 set_option autoImplicit false
 
@@ -110,9 +111,6 @@ variable {R S G : Type*} [CommRing R] [CommRing S] [Algebra R S] [Group G]
   [MulSemiringAction G S] [IsGaloisGroup G R S] [Finite G]
 
 open scoped Pointwise
-
-
-attribute [local instance] Ideal.Quotient.field in
 
 end inertia430
 

@@ -1,6 +1,6 @@
 import Mathlib
 
-import Lemma.AlgebraicGeometry.OrderedAffineCoverCech
+import Lemma.Scheme.OrderedAffineCoverCech
 import Mathlib.AlgebraicGeometry.Morphisms.Separated
 import Structure.AlgebraicGeometry_OModulePresheafHom
 

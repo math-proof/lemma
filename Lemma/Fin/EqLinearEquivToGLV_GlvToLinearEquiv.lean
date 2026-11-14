@@ -5,7 +5,7 @@ open GeometricAlgebra GeometricAlgebra.Flag
 
 
 /--
-[linearEquivToGLV_glvToLinearEquiv](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/GeometricAlgebra/FlagsParabolics.lean)
+[main](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/GeometricAlgebra/FlagsParabolics.lean)
 -/
 @[path]
 private lemma main
@@ -104,7 +104,7 @@ private lemma conj_minus_eq
 -- imply
   (↑(g * u * g⁻¹) : V →ₗ[k] V) v - v = (↑g : V →ₗ[k] V) ((↑u : V →ₗ[k] V) ((↑(g⁻¹) : V →ₗ[k] V) v) - (↑(g⁻¹) : V →ₗ[k] V) v) := by
 -- proof
-  rw [gl_conj_apply, map_sub]; congr 1; exact (gl_mul_inv_cancel g v).symm
+  rw [gl_conj_apply, map_sub]; congr 1; exact gl_mul_inv_cancel.symm
 
 
 
@@ -326,14 +326,14 @@ private lemma SemidirectDecompositionUnique
     d₂.toLinearMap.comp e₂.toLinearMap := by
     simp only [d₁, d₂, e₁, e₂, glvToLinearEquiv_toLinearMap]
     have : (↑(m₁ * u₁) : V →ₗ[k] V) = (↑(m₂ * u₂) : V →ₗ[k] V) := by rw [heq]
-    simpa [Units.val_mul] using this
+    simpa [Units.val_mul, Module.End.mul_eq_comp] using this
   have ⟨hd_eq, he_eq⟩ := SemidirectDecompositionProperty.unique_decomp_linear
     F F' hopp hlen hcov d₁ d₂ e₁ e₂ hd₁_F hd₁_F' hd₂_F hd₂_F' he₁_F he₁_unip he₂_F he₂_unip hcomp_eq
   constructor
   · have := congr_arg linearEquivToGLV hd_eq
-    rwa [linearEquivToGLV_glvToLinearEquiv, linearEquivToGLV_glvToLinearEquiv] at this
+    rwa [main, main] at this
   · have := congr_arg linearEquivToGLV he_eq
-    rwa [linearEquivToGLV_glvToLinearEquiv, linearEquivToGLV_glvToLinearEquiv] at this
+    rwa [main, main] at this
 
 
 
@@ -342,11 +342,6 @@ private lemma SemidirectDecompositionUnique
 -/
 private lemma CompleteFlagPairsAreGLEquivalent
   [Field k]
-  [AddCommGroup V]
-  [Module k V]
-  {k : Type*}
-  [Field k]
-  {V : Type*}
   [AddCommGroup V]
   [Module k V]
   [CompleteFlagPairEquivalenceProperty k V] :
@@ -544,4 +539,4 @@ private lemma unique_decomp_linear_proof_eq
 
 
 -- created on 2026-10-23
--- updated on 2026-10-26
+-- updated on 2026-11-13

@@ -2,6 +2,7 @@ import Mathlib.Data.Matrix.Mul
 import Mathlib.MeasureTheory.Integral.Lebesgue.Add
 import Mathlib.MeasureTheory.Measure.WithDensity
 import Theorem.Probability.CondExpectation
+import Theorem.Probability.JointRv.AsRV
 
 
 /--
@@ -18,9 +19,9 @@ Renamed out of `Expect_CondDot` (which is reserved for Tensor `⬝ᵥ` / `Dot.do
 @[path, comm]
 private lemma main
   [MeasurableSpace Ω]
-  [MeasurableSpace α]
+  [MeasurableSpace α] [StandardBorelSpace α] [Nonempty α]
   [Countable α] [MeasurableSingletonClass α]
-  {π : MeasureTheory.Measure Ω} {m n : ℕ}
+  {π : MeasureTheory.Measure Ω} [MeasureTheory.IsFiniteMeasure π] {m n : ℕ}
   {a : Ω → α} {s : Ω → γ}
   {f : α → Fin n → ENNReal}
 -- given
@@ -32,7 +33,7 @@ private lemma main
     Matrix.mulVec A (fun i : Fin n ↦ 𝔼[a: π](f a i | s = «\sf{s}»)) := by
 -- proof
   ext j
-  simp only [Expectation.asRV_function, Expectation.condEvent, expectation_ennreal, Matrix.mulVec, dotProduct]
+  simp only [Expectation.asRV_function, Expectation.condEval, expectation_ennreal, Matrix.mulVec, dotProduct]
   rw [MeasureTheory.lintegral_finsetSum (μ := _) (Finset.univ : Finset (Fin n))
     fun i _ => (hf i).const_mul (A j i)]
   refine Finset.sum_congr rfl ?_
@@ -41,4 +42,4 @@ private lemma main
 
 
 -- created on 2026-09-23
--- updated on 2026-11-11
+-- updated on 2026-11-13

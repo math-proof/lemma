@@ -8,7 +8,7 @@ import Mathlib.Probability.Independence.Basic
 import Mathlib.Probability.Independence.Conditional
 import Def.Probability.SymbolicProbability.Part2
 import Theorem.Function
-import Theorem.Probability.JointRv.Part2
+import Theorem.Probability.JointRv.AsRV
 open MeasureTheory
 open scoped ProbabilityTheory
 
@@ -18,3 +18,20 @@ its path-valued RV `Expectation.asRV X = fun ω k ↦ X k ω`; any other term is
 (syntactically, so `rw`/`simp` patterns on ordinary RVs keep matching). -/
 syntax (name := condIndepLeft) "condIndepLeft% " term:max : term
 
+
+open Lean Elab Term Meta in
+@[term_elab condIndepLeft] def elabCondIndepLeft : TermElab := fun stx _ => do
+  match stx with
+  | `(condIndepLeft% $x) =>
+    let e ← Lean.Elab.Term.elabTerm x none
+    synthesizeSyntheticMVarsNoPostponing
+    let e ← instantiateMVars e
+    let ty ← whnfR (← instantiateMVars (← inferType e))
+    match ty with
+    | .forallE _ d b _ =>
+      if d.isConstOf ``Nat && !b.hasLooseBVars && (← whnfR b).isForall then
+        mkAppM ``Expectation.asRV #[e]
+      else
+        return e
+    | _ => return e
+  | _ => throwUnsupportedSyntax

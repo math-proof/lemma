@@ -1,7 +1,7 @@
 import Mathlib
 import Def.ModularCurve_DRModelPackageLevel
-import Lemma.AlgebraicGeometry.SmoothProperCurveBase
-import Lemma.AlgebraicGeometry.RelPicardPullback
+import Lemma.Scheme.SmoothProperCurveBase
+import Lemma.Scheme.RelPicardPullback
 
 set_option autoImplicit false
 
@@ -10,8 +10,8 @@ set_option synthInstance.maxHeartbeats 400000
 
 noncomputable section
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry AlgebraicCurve NeronModelInfra
-open ModularCurve.IgusaScheme
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry AlgebraicCurve NeronModelInfra Scheme
+open Scheme.IgusaScheme
 
 namespace ModularCurve
 

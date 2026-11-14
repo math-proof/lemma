@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.TwoChartIntegralModel
-open Polynomial AlgebraicCurve AlgebraicCurve.TwoChartIntegralModel
+import Lemma.Scheme.TwoChartIntegralModel
+open Polynomial AlgebraicCurve Scheme.TwoChartIntegralModel Scheme
 open Algebra Matrix
 
 

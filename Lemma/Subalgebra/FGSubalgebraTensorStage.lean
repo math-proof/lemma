@@ -9,7 +9,7 @@ universe u
 
 open TensorProduct
 
-namespace AlgebraicGeometry.FGSubalgebra
+namespace Scheme.FGSubalgebra
 
 variable (k : Type u) [CommRing k] (A : Type u) [CommRing A] [Algebra k A]
   (Γ : Type u) [CommRing Γ] [Algebra k Γ]
@@ -58,4 +58,4 @@ theorem tensorStageToColimit_zero (D : FGSubalgebra k A) (x : tensorStage k A Γ
   rw [LinearEquiv.apply_symm_apply] at this
   rw [this, h, map_zero]
 
-end AlgebraicGeometry.FGSubalgebra
+end Scheme.FGSubalgebra

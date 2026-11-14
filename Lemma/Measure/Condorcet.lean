@@ -53,16 +53,16 @@ private lemma meas_inf_true {Ω : Type*} [MeasurableSpace Ω]
   μ (s.inf fun i => {ω | X i ω = true}) = p ^ s.card := by
   by_cases hs : s.Nonempty
   · have hprod : s.prod (fun i => μ {ω | X i ω = true}) = p ^ s.card := by
-    have h1 : s.prod (fun i => μ {ω | X i ω = true}) = s.prod (fun _ => p) := by
-      apply Finset.prod_congr rfl
-      intro i _
-      exact hmarg i
-    rw [h1, Finset.prod_const]
+      have h1 : s.prod (fun i => μ {ω | X i ω = true}) = s.prod (fun _ => p) := by
+        apply Finset.prod_congr rfl
+        intro i _
+        exact hmarg i
+      rw [h1, Finset.prod_const]
     rw [hindep s hs, hprod]
   · have hcard : s.card = 0 := by
-    have hpos : ¬ 0 < s.card := by
-      rwa [Finset.card_pos]
-    omega
+      have hpos : ¬ 0 < s.card := by
+        rwa [Finset.card_pos]
+      omega
     have hs0 : s = ∅ := Finset.card_eq_zero.mp hcard
     subst hs0
     simp
@@ -147,8 +147,8 @@ private lemma condorcet_step (r : ℝ) (m : ℕ) :
       rw [hc]
       simp
     · have hlt : j < m + 1 := by
-      have h := Finset.mem_range.mp hj
-      omega
+        have h := Finset.mem_range.mp hj
+        omega
       have e : m + 2 + j = (m + 1 + j) + 1 := by omega
       have hq : (1 - r) ^ (m + 1 - j) = (1 - r) * (1 - r) ^ (m - j) := by
         have eq : m + 1 - j = (m - j) + 1 := by omega
@@ -226,11 +226,8 @@ private lemma condorcet_step (r : ℝ) (m : ℕ) :
     intro j _
     have i1 : m + j + 1 = m + 1 + j := by omega
     rw [i1]
-  have hC : (2 * m + 1).choose (m + 1) = (2 * m + 1).choose m := by
-    have hle : m + 1 ≤ 2 * m + 1 := by omega
-    have hsub : 2 * m + 1 - (m + 1) = m := by omega
-    have hsym := Nat.choose_symm hle
-    rwa [hsub] at hsym
+  have hC : (2 * m + 1).choose (m + 1) = (2 * m + 1).choose m :=
+    Nat.choose_symm_half m
   have hTm :
     (∑ j ∈ Finset.range (m + 1),
       ((((2 * m + 1).choose (m + 1 + j) : ℕ)) : ℝ) * r ^ (m + 1 + j) * (1 - r) ^ (m - j))
@@ -827,13 +824,14 @@ private lemma measSet_filter_eq {Ω : Type*} [MeasurableSpace Ω]
   · rw [← pat_eq_filter X s t hsub]
     exact (measSet_inf_true X hmeas t).inter (measSet_inf_false X hmeas (s \ t))
   · have hempty : {ω | Finset.filter (fun i => X i ω = true) s = t} = ∅ := by
-    ext ω
-    simp only [Set.mem_empty_iff_false, iff_false, Set.mem_ofPred_eq]
-    intro hcon
-    apply hsub
-    rw [← hcon]
-    exact Finset.filter_subset _ _
-    rwa [hempty]
+      ext ω
+      simp only [Set.mem_empty_iff_false, iff_false, Set.mem_ofPred_eq]
+      intro hcon
+      apply hsub
+      rw [← hcon]
+      exact Finset.filter_subset _ _
+    rw [hempty]
+    exact MeasurableSet.empty
 
 end MetaMathlibExt
 
@@ -1232,7 +1230,7 @@ lemma condorcet_jury_theorem_of_iIndepFun
     ∀ n : ℕ, Odd n → 1 < n →
     p < μ {ω | n / 2 < (Finset.filter (fun i => X i ω = true) (Finset.range n)).card} :=
 -- proof
-  condorcet_jury_theorem X p hp hp2 hmeas hmarg fun s _ => by
+  condorcet_jury_theorem hp hp2 hmeas hmarg fun s _ => by
     rw [Finset.inf_eq_iInf]
     exact hindep.measure_inter_preimage_eq_mul s (sets := fun _ => {true})
       fun _ _ => measurableSet_singleton true

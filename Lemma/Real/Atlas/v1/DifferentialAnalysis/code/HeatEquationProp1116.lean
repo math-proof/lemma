@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.DifferentialAnalysis.code.HeatEquationProp1116
-open TemperedDistribution LineDeriv Distribution HeatEquation MeasureTheory in DifferentialOperators
+open TemperedDistribution LineDeriv Distribution HeatEquation MeasureTheory
 open scoped SchwartzMap
 
 
@@ -227,7 +227,7 @@ lemma heatKernelFun_le_one_of_time_ge_one
       (neg_nonpos.mpr (sq_nonneg _)) (by positivity)))) le_rfl
   · linarith
 open MeasureTheory in
-set_option maxHeartbeats 800000 in
+set_option maxHeartbeats 800000
 
 end HeatEquation
 
@@ -566,10 +566,10 @@ lemma HeatEquation.isVanishingOn_compl_of_dsupport_subset
       rw [hcsum, one_mul]
   rw [hψ_eq, map_sum]
   exact Finset.sum_eq_zero (fun i _ => hg_vanish i)
-open HeatEquation in
-/-- Support property of the reflected-convolution Schwartz map: if `f` is supported in
-`{t ≥ b}` and `φ` has time support in `{t < a + b}`, then the convolution
-`reflConvSchwartzMap n f hf φ` has time support in `{t < a}`. -/
+open HeatEquation
+-- Support property of the reflected-convolution Schwartz map: if `f` is supported in
+-- `{t ≥ b}` and `φ` has time support in `{t < a + b}`, then the convolution
+-- `reflConvSchwartzMap n f hf φ` has time support in `{t < a}`.
 namespace HeatEquation
 variable (n : ℕ)
 
@@ -588,9 +588,9 @@ lemma heatOperator_sub
   simp only [heatOperator, positiveSpatialLaplacian, sub_eq_add_neg,
     lineDerivOp_add, lineDerivOp_neg, Finset.sum_add_distrib, Finset.sum_neg_distrib]
   abel
-/-- Proposition 11.16 (existence and uniqueness for the heat equation): for every tempered
-distribution `f` with compact distributional support, there is a unique tempered distribution `u`,
-bounded below in time, satisfying `(∂_t - Δ_x) u = f`. -/
+-- Proposition 11.16 (existence and uniqueness for the heat equation): for every tempered
+-- distribution `f` with compact distributional support, there is a unique tempered distribution `u`,
+-- bounded below in time, satisfying `(∂_t - Δ_x) u = f`.
 end HeatEquation
 end
 

@@ -1,18 +1,18 @@
-import Lemma.AutomorphicForm.ProductionPinsGeneral
+import Lemma.ClassGroup.ProductionPinsGeneral
 import Structure.LanglandsTunnell_JLConverse
 import Def.AutomorphicForm_ConstantTerm
 import Structure.AutomorphicForm_CarrierPins
 import Def.NumberField_AdelicBox
-import Lemma.NumberField.NormPowChar
-import Lemma.LocalLanglands.HeckeCosetLocal
+import Lemma.Complex.NormPowChar
+import Lemma.Matrix.HeckeCosetLocal
 import Structure.M4aHerbrand_IdeleClassVocab
 import Mathlib.MeasureTheory.Integral.DominatedConvergence
 import Mathlib.Probability.ConditionalProbability
 import Structure.AutomorphicForm_WhittakerCoefficient
 import Mathlib.Analysis.Normed.Group.FunctionSeries
-import Lemma.NumberField.IdeleProductMeasure
+import Lemma.Measure.IdeleProductMeasure
 import Abbrev.AutomorphicForm_ArchType
-import Lemma.AutomorphicForm.ArchWeightChar
+import Lemma.Matrix.ArchWeightChar
 import Def.AutomorphicForm_ViaCompactCuspNotion
 import Abbrev.LanglandsTunnell_JLSynthesis
 

@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.GroupCohomology.RepPi
-import Lemma.GroupCohomology.TateCohomology
+import Lemma.Rep.RepPi
+import Lemma.LinearMap.TateCohomology
 open CategoryTheory Rep
 
 
@@ -11,9 +11,9 @@ private lemma main
   {k G ι : Type u} [CommRing k] [Group G] [Fintype G]
   {F : ι → Rep.{u} k G} :
 -- imply
-  Nonempty ((GroupCohomology.RepPi.obj F).tateHneg1 ≃ₗ[k] ((i : ι) → (F i).tateHneg1)) := by
+  Nonempty ((Rep.RepPi.obj F).tateHneg1 ≃ₗ[k] ((i : ι) → (F i).tateHneg1)) := by
   classical
-    let P : Rep.{u} k G := GroupCohomology.RepPi.obj F
+    let P : Rep.{u} k G := Rep.RepPi.obj F
     have hnorm : ∀ (x : P) (i : ι), (P.ρ.norm x) i = (F i).ρ.norm (x i) := by
 -- proof
       intro x i

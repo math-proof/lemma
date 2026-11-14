@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.X0
-open ModularCurve IntermediateField
+import Lemma.HahnSeries.X0
+open ModularCurve IntermediateField HahnSeries
 
 
 private lemma  algHom_ext_of_eq_on_divisorExpansions

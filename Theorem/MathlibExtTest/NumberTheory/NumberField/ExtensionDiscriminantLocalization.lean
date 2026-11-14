@@ -17,4 +17,3 @@ example (A K : Type*) (L : Type*) (B : Type*) [CommRing A] [Field K]
     Submodule.span SA (extensionDiscriminant A K L B : Set K) =
       extensionDiscriminant SA K L SB :=
   extensionDiscriminant_localization A K L B S SA SB
-

@@ -1,5 +1,5 @@
 import Mathlib
-import Instance.LocalLanglands_HeckePair
+import Structure.LocalLanglands_HeckePair
 
 set_option autoImplicit false
 

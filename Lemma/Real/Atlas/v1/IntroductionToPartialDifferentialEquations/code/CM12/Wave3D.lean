@@ -10,7 +10,7 @@ namespace WaveEquation3D
 [integral_sin_eq_two](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/IntroductionToPartialDifferentialEquations/code/CM12/Wave3D.lean)
 -/
 @[path]
-lemma integral_sin_eq_two
+lemma integral_sin_eq_two :
 -- imply
   ∫ θ in (0 : ℝ)..π, sin θ = 2 := by
 -- proof
@@ -48,7 +48,7 @@ namespace WaveEquation3D
 [sphericalToCart_continuous](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/IntroductionToPartialDifferentialEquations/code/CM12/Wave3D.lean)
 -/
 @[path]
-lemma sphericalToCart_continuous
+lemma sphericalToCart_continuous :
 -- imply
   Continuous (fun p : (ℝ × ℝ) × ℝ => (EuclideanSpace.equiv (Fin 3) ℝ).symm ![sin p.1.2 * cos p.2, sin p.1.2 * sin p.2, cos p.1.2]) := by
 -- proof
@@ -323,7 +323,7 @@ namespace WaveEquation3D
 [contDiff_sphericalToCart_pair](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/IntroductionToPartialDifferentialEquations/code/CM12/Wave3D.lean)
 -/
 @[path]
-lemma contDiff_sphericalToCart_pair
+lemma contDiff_sphericalToCart_pair :
 -- imply
   ContDiff ℝ ⊤ (fun p : ℝ × ℝ => sphericalToCart p.1 p.2) := by
 -- proof

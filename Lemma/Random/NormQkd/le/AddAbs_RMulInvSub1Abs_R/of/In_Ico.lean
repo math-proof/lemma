@@ -1,5 +1,6 @@
 import Theorem.Probability.CondExpectation
 import Lemma.Random.All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity
+import Theorem.Probability.JointRv.AsRV
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.DensityModel Random
 
 
@@ -79,4 +80,4 @@ private lemma main
 
 
 -- created on 2026-11-02
--- updated on 2026-11-11
+-- updated on 2026-11-12

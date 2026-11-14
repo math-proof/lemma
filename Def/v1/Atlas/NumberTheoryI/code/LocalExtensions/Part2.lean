@@ -47,7 +47,7 @@ import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
 import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
 import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
-import Mathlib.RingTheory.DedekindDomain.IntegralClosure
+import Mathlib.RingTheory.Ideal.IntegralClosure
 import Theorem.v1.Atlas.NumberTheoryI.code.HenselFactorization
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.HenselFactorization
 import Structure.v1.Atlas.NumberTheoryI.code.LocalExtensions

@@ -1,10 +1,10 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicCurve_PlacesOverDVR.lean: instance decls only.
 import Class.AlgebraicCurve_DivisorPushPull
-import Mathlib.RingTheory.DedekindDomain.IntegralClosure
+import Mathlib.RingTheory.Ideal.IntegralClosure
 import Mathlib.RingTheory.RamificationInertia.Basic
 import Mathlib.RingTheory.DedekindDomain.Factorization
 import Mathlib.Algebra.Polynomial.Lifts
-import Lemma.AlgebraicCurve.PlacesOverDVR
+import Lemma.Ideal.PlacesOverDVR
 
 set_option autoImplicit false
 

@@ -1,5 +1,5 @@
 import Def.AutomorphicForm_HeckeEigensystem
-import Lemma.DedekindDomain.IntegralClosure
+import Lemma.Ideal.IntegralClosure
 
 set_option autoImplicit false
 

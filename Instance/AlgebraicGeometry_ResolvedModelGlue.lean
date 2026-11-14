@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_ResolvedModelGlue.lean: instance decls only.
 import Mathlib
-import Lemma.AlgebraicGeometry.ResolvedModelGlue
+import Lemma.Scheme.ResolvedModelGlue
 
 set_option autoImplicit false
 set_option maxHeartbeats 200000
@@ -105,5 +105,4 @@ end ChartInput
 end V3Glue
 
 end
-
 

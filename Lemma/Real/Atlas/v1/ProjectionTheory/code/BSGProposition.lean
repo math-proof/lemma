@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.ProjectionTheory.code.BSGProposition
-open Pointwise Finset in BSG
+open Pointwise Finset
 
 
 namespace BSG

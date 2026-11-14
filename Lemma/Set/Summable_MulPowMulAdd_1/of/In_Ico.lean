@@ -1,5 +1,5 @@
-import Def.Dynamics.PolicyTrajectory.Gradient
-open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model
+import Mathlib
+import Initialize.Tactic.Attr.Basic
 
 
 /--
@@ -15,9 +15,9 @@ private lemma main
   Summable (fun k : ℕ => γ ^ k * ((k + 1) * K)) := by
 -- proof
   have h1 : Summable (fun k : ℕ => (k : ℝ) ^ 1 * γ ^ k) :=
-    summable_pow_mul_geometric_of_norm_lt_one 1 (by rw [Real.norm_of_nonneg h₀.1]; exact h₀.2)
-  have h2 := summable_geometric_of_lt_one h₀.1 h₀.2
-  exact ((h1.add h2).mul_right K).congr fun k => by ring
+    summable_pow_mul_geometric_of_norm_lt_one 1 (by simpa [Real.norm_of_nonneg h₀.1] using h₀.2)
+  exact ((h1.add (summable_geometric_of_lt_one h₀.1 h₀.2)).mul_right K).congr fun k => by ring
 
 
 -- created on 2026-10-06
+-- updated on 2026-11-13

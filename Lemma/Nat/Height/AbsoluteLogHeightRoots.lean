@@ -596,7 +596,7 @@ private lemma alh_primitiveIntMinpoly_map_roots_eq_aroots
       ((NumberField.primitiveIntMinpoly x).leadingCoeff : ℚ) ≠ 0 := by
     rw [map_intCast]
     exact Int.cast_ne_zero.mpr (Polynomial.leadingCoeff_ne_zero.mpr
-      (NumberField.primitiveIntMinpoly_ne_zero x))
+      (NumberField.primitiveIntMinpoly_ne_zero))
   rw [hmapE, Polynomial.roots_C_mul _ hcE, Polynomial.aroots_def]
 
 end MathlibExt.NumberTheory.Height.AbsoluteWanted
@@ -649,7 +649,7 @@ private lemma alh_finprod_max_gen_eq_abs_leadingCoeff
       NumberField.primitiveIntMinpoly_natDegree]
   have hN8 := alh_prod_roots_finprod_max_eq_pow
     (NumberField.primitiveIntMinpoly x)
-    (NumberField.primitiveIntMinpoly_isPrimitive x) hsplit
+    (NumberField.primitiveIntMinpoly_isPrimitive) hsplit
   have hmem : ∀ β ∈ ((NumberField.primitiveIntMinpoly x).map
       (Int.castRingHom (Polynomial.SplittingField (minpoly ℚ x)))).roots,
       β ∈ (minpoly ℚ x).aroots (Polynomial.SplittingField (minpoly ℚ x)) := by
@@ -880,7 +880,7 @@ lemma absLogHeight₁_eq_log_leadingCoeff_add_sum_log_roots_of_isAlgebraic
         (fun z => Real.posLog ‖z‖)).sum) /
       ((minpoly ℚ x).natDegree : ℝ) :=
 -- proof
-  absLogHeight₁_eq_log_leadingCoeff_add_sum_log_roots_of_isIntegral x
+  absLogHeight₁_eq_log_leadingCoeff_add_sum_log_roots_of_isIntegral
     (IsAlgebraic.isIntegral hx)
 
 end MathlibExt.NumberTheory.Height.AbsoluteWanted
@@ -902,7 +902,7 @@ lemma absLogHeight₁_eq_log_leadingCoeff_add_sum_log_roots
         (fun z => Real.posLog ‖z‖)).sum) /
       ((minpoly ℚ x).natDegree : ℝ) :=
 -- proof
-  absLogHeight₁_eq_log_leadingCoeff_add_sum_log_roots_of_isIntegral x
+  absLogHeight₁_eq_log_leadingCoeff_add_sum_log_roots_of_isIntegral
     (IsAlgebraic.isIntegral (Algebra.IsAlgebraic.isAlgebraic x))
 
 end MathlibExt.NumberTheory.Height.AbsoluteWanted
@@ -950,11 +950,11 @@ lemma absMulHeight₁_eq_mapMahlerMeasure
     (NumberField.primitiveIntMinpoly x).mapMahlerMeasure (Int.castRingHom ℂ) ^
       ((minpoly ℚ x).natDegree : ℝ)⁻¹ :=
 -- proof
-  absMulHeight₁_eq_mapMahlerMeasure_of_isIntegral x
+  absMulHeight₁_eq_mapMahlerMeasure_of_isIntegral
     (IsAlgebraic.isIntegral (Algebra.IsAlgebraic.isAlgebraic x))
 
 end MathlibExt.NumberTheory.Height.AbsoluteWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-28
+-- updated on 2026-11-13

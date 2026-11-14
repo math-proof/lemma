@@ -1,5 +1,5 @@
 import Mathlib.NumberTheory.Padics.PadicVal.Basic
-import Lemma.FLTPrelim.FreyPackage
+import Lemma.WeierstrassCurve.FreyPackage
 
 set_option autoImplicit false
 

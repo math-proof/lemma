@@ -1,4 +1,4 @@
-import Lemma.TwistedNormClasses.Main
+import Lemma.Matrix.TwistedNormClasses
 import Def.AutomorphicForm_GL2ConjugacyCells
 import Def.AutomorphicForm_TruncationOperator
 import Def.NumberField_AdelicHeight

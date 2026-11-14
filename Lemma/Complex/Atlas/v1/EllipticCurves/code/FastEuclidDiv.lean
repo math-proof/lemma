@@ -17,7 +17,7 @@ lemma testBit_toNat_eq_mod_two
 -- proof
   simp only [Nat.testBit, Nat.shiftRight_eq_div_pow, Nat.one_and_eq_mod_two]
   have h : n / 2 ^ k % 2 = 0 ∨ n / 2 ^ k % 2 = 1 := by omega
-  obtain h | h <;> simp [h] := h
+  obtain h | h := h <;> simp [h]
 
 end IntegerLongDivision
 
@@ -51,7 +51,8 @@ lemma longDivStep_invariant
 -- given
   (hr : r < b) :
 -- imply
-  let res := longDivStep b bit (q, r) res.1 * b + res.2 = 2 * (q * b + r) + bit.toNat ∧ res.2 < b := by
+  let res := longDivStep b bit (q, r)
+  res.1 * b + res.2 = 2 * (q * b + r) + bit.toNat ∧ res.2 < b := by
 -- proof
   unfold longDivStep; simp only
   split_ifs with h
@@ -76,10 +77,10 @@ lemma longDivLoop_invariant
   (hb : 0 < b)
   (ham : a < 2 ^ (m + 1)) :
 -- imply
-  ∀ k, k ≤ m → let res :=
--- proof
-  longDivLoop a b m k
+  ∀ k, k ≤ m →
+    let res := longDivLoop a b m k
     res.1 * b + res.2 = a / 2 ^ (m - k) ∧ res.2 < b := by
+-- proof
     intro k hk
     induction k with
     | zero =>
@@ -113,7 +114,8 @@ lemma long_division_correct
   (hb : 0 < b)
   (ham : a < 2 ^ (m + 1)) :
 -- imply
-  let res := longDiv a b m a = res.1 * b + res.2 ∧ res.2 < b := by
+  let res := longDiv a b m
+  a = res.1 * b + res.2 ∧ res.2 < b := by
 -- proof
   simp only [longDiv]
   obtain ⟨heq, hr⟩ := longDivLoop_invariant a b m hb ham m le_rfl

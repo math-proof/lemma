@@ -1,4 +1,4 @@
-import Def.Dynamics.PolicyTrajectory.Gradient
+import Def.Dynamics.PolicyTrajectory.ContinuousAction
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model
 
 

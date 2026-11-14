@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.TwoChartIntegralModel
+import Lemma.Scheme.TwoChartIntegralModel
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open scoped TensorProduct
-open AlgebraicCurve AlgebraicCurve.TwoChartIntegralModel
+open AlgebraicCurve Scheme.TwoChartIntegralModel Scheme
 
 
 /--

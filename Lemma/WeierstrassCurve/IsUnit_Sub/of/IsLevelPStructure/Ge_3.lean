@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.KatzLevelP
+import Lemma.WeierstrassCurve.KatzLevelP
 import Lemma.Int.P2MUtil
 open Int
 

@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.AlgebraicGeometry.ResolvedModelGlueFibre
+import Lemma.Scheme.ResolvedModelGlueFibre
 
 set_option maxHeartbeats 200000
 

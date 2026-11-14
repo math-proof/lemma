@@ -1,7 +1,7 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_RelEffCartierDivSum.lean: instance decls only.
 import Mathlib.AlgebraicGeometry.Limits
 import Instance.AlgebraicGeometry_RelEffCartierDivOfPoint
-import Lemma.AlgebraicCurve.SymmetricPower
+import Lemma.Scheme.SymmetricPower
 import Abbrev.AlgebraicGeometry_RelEffCartierDivSum
 
 set_option autoImplicit false

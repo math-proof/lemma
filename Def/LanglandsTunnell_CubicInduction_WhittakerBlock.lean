@@ -1,5 +1,5 @@
 import Def.HaarQuotient
-import Lemma.LanglandsTunnell.CubicInduction_Structure
+import Lemma.Matrix.CubicInduction_Structure
 import Def.NumberField_TateGlobalZeta
 import Instance.M4aHerbrand_AdeleTopologyFacts
 import Instance.LanglandsTunnell_CubicInduction_WhittakerBlock
@@ -38,7 +38,7 @@ def zerothShell (S : Finset (HeightOneSpectrum (𝓞 ℚ))) :
     ∃ (x y z : p.adicCompletion ℚ) (k : GL (Fin 3) (p.adicCompletion ℚ)),
       k ∈ localMaximalCompact3 (𝓞 ℚ) ℚ p ∧ componentAt3 (𝓞 ℚ) ℚ p q.out = upperUnipotent3 x y z * k}
 
-def block (pins : AutomorphicForm.CarrierPins ℚ) (ψ : AddChar (AdeleRing (𝓞 ℚ) ℚ) ℂ)
+def block (pins : Measure.CarrierPins ℚ) (ψ : AddChar (AdeleRing (𝓞 ℚ) ℚ) ℂ)
     (f : AdelicGL 3 (𝓞 ℚ) ℚ → ℂ) (Φ : (Fin 3 → AdeleRing (𝓞 ℚ) ℚ) → ℂ) (σ : ℝ)
     (S : Finset (HeightOneSpectrum (𝓞 ℚ))) : ENNReal :=
   letI : MeasurableSpace (AdelicGL 3 (𝓞 ℚ) ℚ) := glBorel (Fin 3) (𝓞 ℚ) ℚ

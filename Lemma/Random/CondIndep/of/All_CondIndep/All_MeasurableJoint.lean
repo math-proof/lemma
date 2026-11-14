@@ -2,6 +2,7 @@ import Theorem.Data.Vector.Basic.Part2
 import Def.Probability.Process.HiddenMarkovSequence.Part2
 import Lemma.Measure.CondIndep.of.CondIndep.CondIndep.Le_M
 import Lemma.Measure.CondIndep.of.Le.Le.CondIndep.Le_M.Le_M.Le_M.Le_M
+import Notation.Probability.JointRv
 open MeasureTheory ProbabilityTheory
 open scoped ProbabilityTheory
 
@@ -108,3 +109,4 @@ private lemma main
 
 
 -- created on 2026-10-06
+-- updated on 2026-11-13

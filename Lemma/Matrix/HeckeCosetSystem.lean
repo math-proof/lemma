@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.LocalLanglands.HeckePair
+import Lemma.Set.HeckePair
 import Structure.LocalLanglands_HeckeCosetSystem
 
 set_option autoImplicit false

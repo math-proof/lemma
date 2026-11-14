@@ -190,4 +190,4 @@ private lemma main
       simp [xj, xj0, c, s, j0, id_eq]
 
 
--- created on 2023-06-03
+-- created on 2023-05-30

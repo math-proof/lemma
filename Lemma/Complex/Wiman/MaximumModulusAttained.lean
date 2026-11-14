@@ -26,7 +26,7 @@ lemma exists_mem_sphere_eq_wimanMaximumModulus
     (isCompact_sphere (0 : ℂ) r).exists_sSup_image_eq_and_ge
       (NormedSpace.sphere_nonempty.mpr hr) hf.continuous.norm.continuousOn
   exact ⟨z, hz, by simpa [wimanMaximumModulus, abs_of_nonneg hr] using hsup, hmax⟩
-end
+end Complex
 
 
 

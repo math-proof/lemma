@@ -1,10 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.Correspondence
+import Lemma.Scheme.Correspondence
 import Lemma.Int.P2MUtil
 
 open IsDedekindDomain AlgebraicCurve
-
 /--
 [AlgebraicCurve_Pic0_correspondence_correspondence_comm](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_Pic0_correspondence_correspondence_comm.lean)
 -/

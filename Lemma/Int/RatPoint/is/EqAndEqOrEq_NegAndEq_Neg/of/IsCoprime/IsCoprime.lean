@@ -1,12 +1,12 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.CuspSpace
-import Lemma.ModularCurve.GenusNumerics
+import Lemma.Matrix.CuspSpace
+import Lemma.ZMod.GenusNumerics
 import Lemma.Int.P2MUtil
 
 open Matrix Matrix.SpecialLinearGroup OnePoint CongruenceSubgroup
 open scoped MatrixGroups
-open ModularCurve ModularCurve.CuspSpace
+open ModularCurve Matrix.CuspSpace Matrix ZMod
 
 /--
 [ModularCurve_ratPoint_eq_ratPoint_iff_of_isCoprime](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularCurve_ratPoint_eq_ratPoint_iff_of_isCoprime.lean)

@@ -3,8 +3,9 @@
  * lemmaSectionKind.mjs
  * ====================
  * Classify each top-level `Lemma/<Section>/` folder as:
- *   - data type     (Mathlib structure / inductive / type-forming def)
+ *   - data type     (Mathlib structure / non-class inductive / type-forming def that is not Prop-valued)
  *   - type class    (`Lean.isClass`)
+ *   - predicate     (non-class Prop structure, Prop inductive, or Prop-valued type-former def)
  *   - topic/unknown (missing in Mathlib, or not a type)
  *
  * Uses one `lake env lean` pass (same pattern as `mjs/lean/mathlibRequest.mjs`)
@@ -41,17 +42,27 @@ def candidates (env : Environment) (leaf : String) : Array Name :=
       else if n.toString.contains "_private" || n.toString.contains "_@" then acc
       else acc.push n
 
-/-- Higher is better. Prefer type classes / structures / type-forming defs. -/
+/-- True if \`n\` is \`Prop\` or a (telescoped) function into \`Prop\`. -/
+def isPropValued (env : Environment) (n : Name) : MetaM Bool := do
+  match env.find? n with
+  | some info => try Meta.isPropFormerType info.type catch _ => pure false
+  | none => pure false
+
+/-- Higher is better. Prefer type classes and genuine Type formers over Prop predicates. -/
 def scoreCandidate (env : Environment) (n : Name) : MetaM Nat := do
   let lengthPenalty := n.toString.length
   if isClass env n then return 100000 - lengthPenalty
-  if isStructure env n then return 100000 - lengthPenalty
+  let propValued ← isPropValued env n
+  if isStructure env n then
+    return (if propValued then 20000 else 100000) - lengthPenalty
   match env.find? n with
   | some (.inductInfo _) =>
-    return 100000 - lengthPenalty
+    return (if propValued then 20000 else 100000) - lengthPenalty
   | some (.defnInfo info) => do
     let isType ← try Meta.isTypeFormerType info.type catch _ => pure false
-    if isType then return 90000 - lengthPenalty else return 10000 - lengthPenalty
+    if isType && !propValued then return 90000 - lengthPenalty
+    else if isType then return 20000 - lengthPenalty
+    else return 10000 - lengthPenalty
   | some (.thmInfo _) => return 1000 - lengthPenalty
   | _ => return 100 - lengthPenalty
 
@@ -70,14 +81,17 @@ def resolveName (env : Environment) (leaf : String) : MetaM (Option Name) := do
 def declKind (env : Environment) (n : Name) : MetaM String := do
   if isClass env n then
     return "typeclass"
+  let propValued ← isPropValued env n
   if isStructure env n then
-    return "structure"
+    return if propValued then "predicate-structure" else "structure"
   match env.find? n with
   | some (.inductInfo _) =>
-    return "inductive"
+    return if propValued then "predicate-inductive" else "inductive"
   | some (.defnInfo info) => do
     let isType ← try Meta.isTypeFormerType info.type catch _ => pure false
-    if isType then return "def-type" else return "def"
+    if isType && propValued then return "def-prop"
+    else if isType then return "def-type"
+    else return "def"
   | some (.thmInfo _) => return "theorem"
   | some (.axiomInfo _) => return "axiom"
   | some (.opaqueInfo _) => return "opaque"
@@ -105,6 +119,9 @@ def classifyOne (leaf : String) : MetaM Json := do
       | "structure" => ("data type", s!"Mathlib \`{n}\` is a structure")
       | "inductive" => ("data type", s!"Mathlib \`{n}\` is an inductive (not a class)")
       | "def-type"  => ("data type", s!"Mathlib \`{n}\` is a def of a type former")
+      | "predicate-structure" => ("predicate", s!"Mathlib \`{n}\` is a Prop-valued structure (bundled predicate), not a data type")
+      | "predicate-inductive" => ("predicate", s!"Mathlib \`{n}\` is a Prop-valued inductive (not a class), not a data type")
+      | "def-prop"  => ("predicate", s!"Mathlib \`{n}\` is a def of a Prop-valued type former (predicate), not a data type")
       | "def"       => ("topic/unknown", s!"Mathlib \`{n}\` is a def, but not a type former")
       | "theorem"   => ("topic/unknown", s!"Mathlib \`{n}\` is a theorem, not a type")
       | other       => ("topic/unknown", s!"Mathlib \`{n}\` has decl kind \`{other}\`")
@@ -127,7 +144,7 @@ def classifyOne (leaf : String) : MetaM Json := do
 function usage() {
   console.error(`usage: node mjs/lemmaSectionKind.mjs [options] [Folder ...]
 
-Classify Lemma/ top-level section folders via Mathlib (Lean.isClass / isStructure / type formers).
+Classify Lemma/ top-level section folders via Mathlib (Lean.isClass / isStructure / type formers into Type, not Prop).
 
   (no folders)     classify every top-level directory under Lemma/
   Folder ...       classify only these names (need not exist on disk)
@@ -245,7 +262,7 @@ function printTable(rows) {
 export const SECTION_KIND_CACHE = path.join(REPO_ROOT, 'mjs', 'lemmaSectionKinds.json');
 
 /**
- * @returns {Map<string, string>} folder → kind ('data type' | 'type class' | 'topic/unknown')
+ * @returns {Map<string, string>} folder → kind ('data type' | 'type class' | 'predicate' | 'topic/unknown')
  */
 export function loadSectionKindMap() {
   try {

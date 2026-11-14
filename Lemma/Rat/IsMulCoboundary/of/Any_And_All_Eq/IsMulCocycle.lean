@@ -43,7 +43,7 @@ private lemma main
     let N : IntermediateField K L := IntermediateField.normalClosure K E' L
     have : Algebra.IsSeparable K N := Algebra.isSeparable_tower_bot_of_isSeparable K N L
     have : IsGalois K N := IsGalois.mk
-    let instN : MulDistribMulAction (N ≃ₐ[K] N) ↥Nˣ := AlgEquiv.instMulDistribMulActionUnits
+    let instN : MulDistribMulAction (N ≃ₐ[K] N) (N)ˣ := inferInstance
     have hEN : E ≤ N := le_sup_left.trans (IntermediateField.le_normalClosure E')
     have hSN : IntermediateField.adjoin K S ≤ N :=
       le_sup_right.trans (IntermediateField.le_normalClosure E')
@@ -90,7 +90,8 @@ private lemma main
     ext
     have hsm : ∀ (τ : L ≃ₐ[K] L) (x : Lˣ), ((τ • x : Lˣ) : L) = τ (x : L) := fun _ _ => rfl
     rw [← hfN_val σ, ← hg, ← hβ (res σ), Units.val_div_eq_div_val, Units.val_div_eq_div_val,
-      map_div₀, hact, hsm, Units.coe_map, MonoidHom.coe_coe]
+      map_div₀, hact, hsm, Units.coe_map, MonoidHom.coe_ofClass]
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

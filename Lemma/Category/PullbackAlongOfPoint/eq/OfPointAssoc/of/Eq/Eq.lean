@@ -1,10 +1,10 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicGeometry.RelEffCartierDivOfPoint
+import Lemma.Scheme.RelEffCartierDivOfPoint
 import Lemma.Int.P2MUtil
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open AlgebraicGeometry.RelEffCartierDiv
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Scheme
+open Scheme.RelEffCartierDiv
 
 /--
 [AlgebraicGeometry_RelEffCartierDiv_pullbackAlong_ofPoint](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicGeometry_RelEffCartierDiv_pullbackAlong_ofPoint.lean)

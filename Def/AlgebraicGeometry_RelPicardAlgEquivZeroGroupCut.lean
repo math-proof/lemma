@@ -1,8 +1,8 @@
 import Mathlib
 import Def.AlgebraicGeometry_RelativePicardFunctor
-import Lemma.AlgebraicGeometry.RepresentsRelSubPic
+import Lemma.Scheme.RepresentsRelSubPic
 import Def.AlgebraicGeometry_RelPicardAlgEquivZeroCut
-import Lemma.AlgebraicGeometry.RelSubPicGroup
+import Lemma.Scheme.RelSubPicGroup
 import Instance.SheafOfModules_Monoidal
 import Instance.AlgebraicGeometry_ModulesPullbackMonoidal
 import Theorems.Thm_AlgebraicGeometry_Scheme_Modules_IsInvertible_tensor

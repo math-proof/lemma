@@ -15,7 +15,7 @@ import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.FieldTheory.Normal.Basic
 import Mathlib.FieldTheory.SplittingField.IsSplittingField
 import Mathlib.NumberTheory.Transcendental.Lindemann.AnalyticalPart
-import Mathlib.RingTheory.DedekindDomain.IntegralClosure
+import Mathlib.RingTheory.Ideal.IntegralClosure
 import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
 import Mathlib.RingTheory.IsGaloisGroup.Defs
 import Mathlib.RingTheory.Polynomial.ScaleRoots

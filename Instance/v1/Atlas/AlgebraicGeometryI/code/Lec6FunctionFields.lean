@@ -12,7 +12,7 @@ import Mathlib.AlgebraicGeometry.FunctionField
 import Mathlib.NumberTheory.RamificationInertia.Basic
 import Mathlib.CategoryTheory.Yoneda
 import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
-import Mathlib.RingTheory.DedekindDomain.IntegralClosure
+import Mathlib.RingTheory.Ideal.IntegralClosure
 import Mathlib.RingTheory.DiscreteValuationRing.TFAE
 import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.RingTheory.Localization.FractionRing

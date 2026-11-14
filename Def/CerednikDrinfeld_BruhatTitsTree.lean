@@ -1,4 +1,4 @@
-import Lemma.LatticeTreeOrbital.Main
+import Lemma.Matrix.LatticeTreeOrbital
 import Class.CerednikDrinfeld_MumfordPeriod
 import Mathlib.Combinatorics.SimpleGraph.Basic
 import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Projective

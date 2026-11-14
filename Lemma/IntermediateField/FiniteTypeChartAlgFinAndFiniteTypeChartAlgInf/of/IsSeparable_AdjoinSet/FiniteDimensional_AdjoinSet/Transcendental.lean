@@ -1,8 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.TwoChartIntegralModel
-open AlgebraicGeometry AlgebraicCurve.TwoChartIntegralModel
-open AlgebraicCurve
+import Lemma.Scheme.TwoChartIntegralModel
+open AlgebraicGeometry Scheme.TwoChartIntegralModel
+open AlgebraicCurve Scheme
 
 
 private lemma  finiteType_chartAlgFin_and_chartAlgInf_impl

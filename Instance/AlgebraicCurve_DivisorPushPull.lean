@@ -23,6 +23,8 @@ open IsDedekindDomain WithZero IsLocalRing
 namespace AlgebraicCurve
 
 variable {K F F' : Type*} [Field K] [Field F] [Field F']
+  [Algebra K F] [Algebra K F'] [Algebra F F'] [IsScalarTower K F F']
+  [Algebra.IsIntegral F F']
 
 namespace Place
 
@@ -75,6 +77,8 @@ noncomputable section
 namespace AlgebraicCurve
 
 variable {K F F' : Type*} [Field K] [Field F] [Field F']
+  [Algebra K F] [Algebra K F'] [Algebra F F'] [IsScalarTower K F F']
+  [Algebra.IsIntegral F F'] [HasPrincipalDivisors K F']
 
 instance (priority := 100) instFundamentalIdentityOfSumRamificationInertia
     [SumRamificationInertia K F F'] : FundamentalIdentity K F F' where

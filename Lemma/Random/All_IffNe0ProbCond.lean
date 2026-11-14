@@ -13,13 +13,13 @@ open MeasureTheory Random
 @[path, comm, mp, mpr]
 private lemma main
   [MeasurableSpace Ω]
-  [ReferenceMeasure α] [ReferenceMeasure β]
+  [μ : ReferenceMeasure α] [ν : ReferenceMeasure β]
   {π : Measure Ω}
   {x : Ω → α} {y : Ω → β}
 -- given
   (hP : SinglePSpace π (x, y)) :
 -- imply
-  ∀ᵐ «\sf{x}» ∂ReferenceMeasure.measure, ∀ᵐ «\sf{y}» ∂ReferenceMeasure.measure,
+  ∀ᵐ «\sf{x}» ∂μ.measure, ∀ᵐ «\sf{y}» ∂ν.measure,
     ℙ[π](x = «\sf{x}» ∧ y = «\sf{y}») ≠ 0 ↔
       ℙ[π](x = «\sf{x}» | y = «\sf{y}») ≠ 0 := by
 -- proof
@@ -41,4 +41,4 @@ private lemma main
 
 
 -- created on 2026-09-21
--- updated on 2026-11-02
+-- updated on 2026-11-14

@@ -27,7 +27,7 @@ private lemma poly_eq_zero_of_degree_lt
           rw [hq, Polynomial.degree_zero]; exact WithBot.bot_lt_coe n
         else
           have hdeg : p.degree = q.degree + 1 := by
-          rw [← hfac, mul_comm, Polynomial.Monic.degree_mul (Polynomial.monic_X_sub_C (a n)), Polynomial.degree_X_sub_C]
+            rw [← hfac, mul_comm, Polynomial.Monic.degree_mul (Polynomial.monic_X_sub_C (a n)), Polynomial.degree_X_sub_C]
           rw [hdeg, Polynomial.degree_eq_natDegree hq] at hp
           rw [Polynomial.degree_eq_natDegree hq]
           have : q.natDegree + 1 < n + 1 := by exact_mod_cast hp
@@ -50,12 +50,12 @@ private lemma isUnit_pow_sub_pow
   obtain h | h := lt_or_gt_of_ne hij
   ·
     have : ζ ^ i - ζ ^ j = ζ ^ i * (1 - ζ ^ (j - i)) := by
-    rw [mul_sub, mul_one, ← pow_add, Nat.add_sub_cancel' h.le]
+      rw [mul_sub, mul_one, ← pow_add, Nat.add_sub_cancel' h.le]
     rw [this]
     exact (hζU.pow i).mul (hζu (j - i) (Nat.sub_pos_of_lt h) (lt_of_le_of_lt (Nat.sub_le j i) hj))
   ·
     have : ζ ^ i - ζ ^ j = -(ζ ^ j * (1 - ζ ^ (i - j))) := by
-    rw [mul_sub, mul_one, ← pow_add, Nat.add_sub_cancel' h.le, neg_sub]
+      rw [mul_sub, mul_one, ← pow_add, Nat.add_sub_cancel' h.le, neg_sub]
     rw [this]
     exact ((hζU.pow j).mul (hζu (i - j) (Nat.sub_pos_of_lt h) (lt_of_le_of_lt (Nat.sub_le i j) hi))).neg
 
@@ -83,8 +83,8 @@ private lemma X_pow_sub_one_eq_prod
       rw [h0, Polynomial.degree_zero]; exact WithBot.bot_lt_coe m
     else
       have := Polynomial.degree_sub_lt_left (p := (X ^ m - 1 : R[X])) (q := ∏ j ∈ range m, (X - C (ζ ^ j)))
-      (by rw [Polynomial.degree_eq_natDegree hPm.ne_zero, Polynomial.degree_eq_natDegree hQm.ne_zero, hPd, hQd])
-      hPm.ne_zero (by rw [hPm.leadingCoeff, hQm.leadingCoeff])
+        (by rw [Polynomial.degree_eq_natDegree hPm.ne_zero, Polynomial.degree_eq_natDegree hQm.ne_zero, hPd, hQd])
+        hPm.ne_zero (by rw [hPm.leadingCoeff, hQm.leadingCoeff])
       rwa [Polynomial.degree_eq_natDegree hPm.ne_zero, hPd] at this
   ·
     intro i hi
@@ -138,4 +138,4 @@ private lemma main
 
 
 -- created on 2026-10-23
--- updated on 2026-10-28
+-- updated on 2026-11-13

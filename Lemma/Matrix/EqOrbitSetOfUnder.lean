@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.NumberField.PlaceTransport
-open scoped NumberField.PlaceTransport
+import Lemma.Valuation.PlaceTransport
+open scoped Valuation.PlaceTransport
 open scoped Pointwise
-open IsDedekindDomain NumberField
+open IsDedekindDomain NumberField Valuation
 
 
 /-- ported from external source -/

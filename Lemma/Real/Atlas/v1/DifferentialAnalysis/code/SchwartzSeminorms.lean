@@ -1,7 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.DifferentialAnalysis.code.SchwartzSeminorms
-open MultiIndexBridge in TemperedDistributions
 open scoped SchwartzMap
 
 
@@ -536,7 +535,7 @@ lemma norm_multiIndexPartialDeriv_le
 end
 end MultiIndexBridge
 open MultiIndexBridge in
-open scoped SchwartzMap in
+open scoped SchwartzMap
 /-- The iterated Fréchet derivative norm of a Schwartz function is bounded by the sum over tuples of the corresponding mixed partial derivative norms. -/
 namespace MultiIndexBridge
 open scoped SchwartzMap
@@ -1034,7 +1033,7 @@ open MultiIndexBridge
 open scoped SchwartzMap
 end TemperedDistributions
 open MultiIndexBridge in
-open scoped SchwartzMap in
+open scoped SchwartzMap
 namespace TemperedDistributions
 open scoped SchwartzMap
 open MultiIndexBridge
@@ -1234,7 +1233,7 @@ lemma weightedCkNormSup_le_sqrt_two_pow_mul_japaneseBracketCkNormSup
 end
 end TemperedDistributions
 open MultiIndexBridge TemperedDistributions in
-open scoped SchwartzMap in
+open scoped SchwartzMap
 /-- Corollary 7.2 (Melrose): equivalence of the Japanese-bracket weighted `C^K` norm and the book multi-index norm up to constants `C₁, C₂ > 0`. -/
 
 

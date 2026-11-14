@@ -109,7 +109,7 @@ lemma hasFDerivAt_convolution_bdd_schwartz
       ((ψ.hasFDerivAt (x - t)).comp x
         ((hasFDerivAt_id (𝕜 := ℝ) x).sub (hasFDerivAt_const t x))
         |>.congr_fderiv (by ext; simp))
-set_option maxHeartbeats 800000 in
+set_option maxHeartbeats 800000
 
 end ConvolutionSmooth
 
@@ -234,7 +234,7 @@ lemma tendsto_convolution_bdd_schwartz_zero
       hv_zero.comp (tendsto_sub_cocompact t)
     rw [← map_zero (L.flip ((ψ : E → F) t))]
     exact (L.flip ((ψ : E → F) t)).continuous.continuousAt.tendsto.comp hv_sub
-set_option maxHeartbeats 1600000 in
+set_option maxHeartbeats 1600000
 
 end ConvolutionSmooth
 

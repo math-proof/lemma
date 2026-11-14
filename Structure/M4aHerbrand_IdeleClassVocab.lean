@@ -44,10 +44,6 @@ section NormDerive
 variable {R E F : Type*} [CommRing R] [IsDedekindDomain R] [Field E] [Field F]
   [Algebra R F] [IsFractionRing R F] [Algebra E F]
 
-
-set_option maxSynthPendingDepth 3 in
-
-
 end NormDerive
 
 section Inhabitant

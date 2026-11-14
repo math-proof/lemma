@@ -1,6 +1,5 @@
 import Mathlib
 import Class.Mathlib_IsModuleTopology
-import Lemma.Algebra.IsBiscalar.commutes
 
 
 section
@@ -45,7 +44,11 @@ variable {A B : Type*} (S' : Type*) {S : Type*}
 def AlgHom.changeScalars (f : A →ₐ[S] B) [IsBiscalar S S' f] :
     A →ₐ[S'] B where
   __ := f
-  commutes' (r : _) := by simp [IsBiscalar.commutes]
+  commutes' (r : _) := by
+    have commutes (s : S') : f (algebraMap S' A s) = algebraMap S' B s := by
+      simpa [Algebra.algebraMap_eq_smul_one, map_one] using
+        IsBiscalar.map_smul₂ (R := S) (S := S') (f := f) s (1 : A)
+    simp [commutes]
 
 def AlgEquiv.changeScalars (f : A ≃ₐ[S] B) [IsBiscalar S S' f.toAlgHom] :
     A ≃ₐ[S'] B where

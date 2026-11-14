@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.ModularCurve.WeierstrassGamma0Pow
+import Lemma.WeierstrassCurve.WeierstrassGamma0Pow
 import Structure.ModularCurve_WeierstrassGamma1Pow
 
 set_option autoImplicit false

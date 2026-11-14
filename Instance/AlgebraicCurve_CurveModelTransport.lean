@@ -1,7 +1,7 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicCurve_CurveModelTransport.lean: instance decls only.
 import Mathlib
-import Lemma.AlgebraicCurve.CurveModel
-import Lemma.AlgebraicCurve.CurveModelTransport
+import Lemma.Scheme.CurveModel
+import Lemma.Scheme.CurveModelTransport
 
 set_option autoImplicit false
 

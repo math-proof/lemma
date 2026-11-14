@@ -78,16 +78,16 @@ lemma st_fiber_incidence_bound
     _ ≤ (X.card : ℝ) + (n : ℝ) * (S : ℝ) +
       (X.card : ℝ) ^ ((2 : ℝ) / 3) * ((n : ℝ) * (S : ℝ)) ^ ((2 : ℝ) / 3) := by
       gcongr
-/-- Algebraic lemma extracting the projection bound $n \le S^2/P + 1$ from the
-Szemerédi--Trotter incidence inequality $nP \le P + nS + P^{2/3}(nS)^{2/3}$. -/
+-- Algebraic lemma extracting the projection bound $n \le S^2/P + 1$ from the
+-- Szemerédi--Trotter incidence inequality $nP \le P + nS + P^{2/3}(nS)^{2/3}$.
 end SzemerediTrotterProjection
 namespace SzemerediTrotter
 open Classical
-/-- **Beck's theorem / Szemerédi--Trotter lower bound on lines.** There exists a constant
-$C > 0$ such that for any finite point set $E \subset \mathbb{R}^2$ and any choice of
-$S$ lines through each point $x \in E$, the union
-$L = \bigcup_{x \in E} L_x$ has size
-$|L| \gtrsim \min(|E| \cdot S, |E|^{1/2} S^{3/2})$. -/
+-- **Beck's theorem / Szemerédi--Trotter lower bound on lines.** There exists a constant
+-- $C > 0$ such that for any finite point set $E \subset \mathbb{R}^2$ and any choice of
+-- $S$ lines through each point $x \in E$, the union
+-- $L = \bigcup_{x \in E} L_x$ has size
+-- $|L| \gtrsim \min(|E| \cdot S, |E|^{1/2} S^{3/2})$.
 end SzemerediTrotter
 
 

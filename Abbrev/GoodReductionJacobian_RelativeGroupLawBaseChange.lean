@@ -1,6 +1,6 @@
 import Mathlib.AlgebraicGeometry.Pullbacks
 import Abbrev.GoodReductionJacobian_RelativeGroupLawKernel
-import Lemma.AlgebraicGeometry.NeronModelEndomorphismExtension
+import Lemma.Scheme.NeronModelEndomorphismExtension
 import Def.AlgebraicGeometry_NeronSpecialFibreRestriction
 import Abbrev.GoodReductionJacobian_RelativeGroupLawFibre
 

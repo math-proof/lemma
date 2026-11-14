@@ -4,6 +4,7 @@ import Mathlib.Probability.Kernel.CondDistrib
 import Mathlib.Probability.Kernel.Composition.MeasureCompProd
 import Syntax.Probability.Expectation.Elab
 import Initialize.Tactic.Attr.Basic
+import Notation.Probability.JointRv
 open ProbabilityTheory MeasureTheory
 open scoped ProbabilityTheory
 
@@ -78,3 +79,4 @@ private lemma main
 
 
 -- created on 2026-09-21
+-- updated on 2026-11-13

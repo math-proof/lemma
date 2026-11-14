@@ -1,4 +1,4 @@
-import Lemma.ModularCurve.X1
+import Lemma.UpperHalfPlane.X1
 
 set_option autoImplicit false
 

@@ -63,7 +63,7 @@ lemma not_hasCM_iff_endRing_eq_Z
   constructor
   · intro h α hα
     by_contra hne
-    push_neg at hne
+    push Not at hne
     exact h ⟨α, hα, hne⟩
   · intro h ⟨τ, hτ_mem, hτ_not_int⟩
     obtain ⟨n, rfl⟩ := h τ hτ_mem

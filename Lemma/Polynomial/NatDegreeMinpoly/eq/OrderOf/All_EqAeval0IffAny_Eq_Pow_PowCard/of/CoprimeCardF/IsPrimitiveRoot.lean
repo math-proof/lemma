@@ -49,8 +49,8 @@ private lemma main
           intro h; rw [h, one_mul]
       rw [h1, hζ.pow_eq_one_iff_dvd, ← Nat.modEq_iff_dvd' (Nat.one_le_pow k Q (by omega)), hedef,
         orderOf_dvd_iff_pow_eq_one]
-      rwa [← ZMod.natCast_eq_natCast_iff, Nat.cast_one, Nat.cast_pow, ← Units.val_inj, Units.val_pow_eq_pow_val,
-        ZMod.coe_unitOfCoprime, Units.val_one]
+      rw [← ZMod.natCast_eq_natCast_iff, Nat.cast_one, Nat.cast_pow, ← Units.val_inj, Units.val_pow_eq_pow_val,
+        ZMod.coe_unitOfCoprime, Units.val_one, eq_comm]
     have hint : IsIntegral F ζ := by
       refine ⟨X ^ m - 1, monic_X_pow_sub_C 1 hm0, ?_⟩
       simp [hζ.pow_eq_one]

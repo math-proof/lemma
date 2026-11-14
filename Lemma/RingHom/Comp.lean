@@ -51,17 +51,8 @@ private lemma exists_comp_eq_of_finitePresentation {ι : Type} [Preorder ι] [No
   have hvan : ∀ p ∈ RingHom.ker π.toRingHom, σJ p = 0 := by
     intro p hp
     rw [← hs] at hp
-    refine Submodule.span_induction (p := fun p _ => σJ p = 0) ?_ ?_ ?_ ?_ hp
-    ·
-      intro r hr
-      apply hJ _ (Finset.mem_image_of_mem σ hr)
-    · apply map_zero _
-    ·
-      intro a b _ _ ha hb
-      rw [map_add, ha, hb, add_zero]
-    ·
-      intro a b _ hb
-      rw [smul_eq_mul, map_mul, hb, mul_zero]
+    rw [← RingHom.mem_ker]
+    exact (Ideal.span_le.mpr fun r hr => hJ _ (Finset.mem_image_of_mem σ hr)) hp
   let e : (MvPolynomial (Fin n) ℤ ⧸ RingHom.ker π.toRingHom) ≃ₐ[ℤ] A := Ideal.quotientKerAlgEquivOfSurjective hπ
   let ψ : A →+* S J := (Ideal.Quotient.lift (RingHom.ker π.toRingHom) σJ hvan).comp e.symm.toAlgHom.toRingHom
   refine ⟨J, ψ, ?_⟩
@@ -126,3 +117,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-14

@@ -127,7 +127,7 @@ lemma pullback_eq_one_of_mem_rayGroup
 -- imply
   pullback chi x = 1 := by
 -- proof
-  rw [pullback_apply, (rayClassMap_eq_one_iff m x).mpr h, map_one]
+  rw [pullback_apply, rayClassMap_eq_one_iff.mpr h, map_one]
 
 end NumberField.Modulus
 
@@ -182,7 +182,7 @@ lemma evalComplex_rayGroup
 -- imply
   evalComplex chi (rayClassMap m x) = 1 := by
 -- proof
-  rw [(rayClassMap_eq_one_iff m x).mpr h, evalComplex_one]
+  rw [rayClassMap_eq_one_iff.mpr h, evalComplex_one]
 
 end NumberField.Modulus
 
@@ -229,4 +229,4 @@ end NumberField.Modulus
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-13

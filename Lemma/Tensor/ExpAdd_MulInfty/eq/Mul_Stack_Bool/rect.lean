@@ -15,7 +15,7 @@ import Lemma.Tensor.XEq.is.All_XEqGetS.of.GtLength_0
 import Lemma.Vector.GetExp.eq.ExpGet
 import Lemma.Vector.GetMul.eq.MulGet
 import Lemma.Vector.GetSub.eq.SubGetS
-open Hyperreal Tensor
+open Hyperreal Tensor Vector
 set_option maxHeartbeats 500000
 
 
@@ -28,7 +28,7 @@ private lemma main
 -- imply
   let Ξ : Tensor ℝ* [n, m] := [i < n] [j < m] (Bool.toNat (p i j))
   let A : Tensor ℝ* [n, m] := A
-  Exp.exp (A + (Ξ - 1) * ∞) ≈ exp A * Ξ := by
+  Exp.exp (A + (Ξ - 1) * ∞) ≈ Exp.exp A * Ξ := by
 -- proof
   intro Ξ A'
   apply XEq.of.All_XEqGetS.GtLength_0 (h := by simp)
@@ -45,8 +45,8 @@ private lemma main
   simp [Ξ]
   apply XEq.of.XEqDataS
   erw [DataExp.eq.ExpData]
-  rw [GetAdd.eq.AddGetS.fin]
-  erw [GetAdd.eq.AddGetS.fin]
+  rw [Tensor.GetAdd.eq.AddGetS.fin]
+  erw [Tensor.GetAdd.eq.AddGetS.fin]
   have hi : ↑i < n := i.isLt
   have hj : ↑j < m := j.isLt
   erw [congrArg Tensor.data
@@ -61,12 +61,16 @@ private lemma main
       (([i < n] [j < m] ↑(p i j).toNat).get ⟨↑i, hi⟩)
       ⟨↑j, hj⟩)]
   let mask : Tensor ℝ* [n, m] := [i < n] [j < m] ((p i j).toNat : Tensor ℝ* [])
+  have hmul0 : ((mask - 1) * ω).get ⟨↑i, hi⟩ = (mask - 1).get ⟨↑i, hi⟩ * ω := by
+    convert GetMul.eq.MulGet.scalar.fin (mask - 1) ω ⟨↑i, hi⟩
+    ·
+      rfl
+    ·
+      rfl
   refine
     (congrArg
       (fun t => Exp.exp ((A'.get i).get ⟨↑j, hj⟩ + t).data)
-      ((congrArg (fun X : Tensor ℝ* [m] => X.get ⟨↑j, hj⟩)
-          (by
-            convert GetMul.eq.MulGet.scalar.fin (mask - 1) ω ⟨↑i, hi⟩ <;> rfl)).trans
+      ((congrArg (fun X : Tensor ℝ* [m] => X.get ⟨↑j, hj⟩) hmul0).trans
         (GetMul.eq.MulGet.scalar.fin ((mask - 1).get ⟨↑i, hi⟩) ω ⟨↑j, hj⟩))) ▸ ?_
   have hE₁ := GetExp.eq.ExpGet.fin A' ⟨↑i, hi⟩
   simp at hE₁
@@ -79,7 +83,7 @@ private lemma main
           x * (([i < n] [j < m] ↑(p i j).toNat).get ⟨↑i, hi⟩).get ⟨↑j, hj⟩)
         (hE₁.symm ▸ hE₂))).symm ▸ ?_
   have hmsk :
-      (mask.get ⟨↑i, hi⟩).get ⟨↑j, hj⟩ = ((p i j).toNat : Tensor ℝ* []) := by
+    (mask.get ⟨↑i, hi⟩).get ⟨↑j, hj⟩ = ((p i j).toNat : Tensor ℝ* []) := by
     apply Eq.trans (b := ([j < m] ((p ⟨↑i, hi⟩ j).toNat : Tensor ℝ* [])).get ⟨↑j, hj⟩)
     ·
       apply congrArg (fun X : Tensor ℝ* [m] => X.get ⟨↑j, hj⟩)
@@ -101,8 +105,8 @@ private lemma main
   erw [DataExp.eq.ExpData]
   erw [Vector.GetExp.eq.ExpGet.fin]
   have hA :
-      ((A'.get i).get ⟨↑j, hj⟩).data.get ⟨0, Nat.zero_lt_one⟩ =
-        ((A'.get ⟨↑i, hi⟩).get ⟨↑j, hj⟩).data.get ⟨0, Nat.zero_lt_one⟩ := by
+    ((A'.get i).get ⟨↑j, hj⟩).data.get ⟨0, Nat.zero_lt_one⟩ =
+      ((A'.get ⟨↑i, hi⟩).get ⟨↑j, hj⟩).data.get ⟨0, Nat.zero_lt_one⟩ := by
     apply congrArg (fun t : Tensor ℝ* [] => t.data.get ⟨0, Nat.zero_lt_one⟩)
     congr 1
   refine
@@ -125,7 +129,7 @@ private lemma main
   erw [Vector.EqGet1_1.fin]
   if h : p i j then
     have hcast :
-        (↑(p i j).toNat : Tensor ℝ* []).data.get ⟨0, Nat.zero_lt_one⟩ = ((1 : ℕ) : ℝ*) :=
+      (↑(p i j).toNat : Tensor ℝ* []).data.get ⟨0, Nat.zero_lt_one⟩ = ((1 : ℕ) : ℝ*) :=
       (congrArg (fun n : ℕ => (n : Tensor ℝ* []).data.get ⟨0, Nat.zero_lt_one⟩)
         (by simp [h])).trans
         ((Vector.Get_0.eq.Head.fin ((1 : ℕ) : Tensor ℝ* []).data).trans (EqHeadData.nat (1 : ℕ)))
@@ -145,7 +149,7 @@ private lemma main
     simp
   else
     have hcast :
-        (↑(p i j).toNat : Tensor ℝ* []).data.get ⟨0, Nat.zero_lt_one⟩ = ((0 : ℕ) : ℝ*) :=
+      (↑(p i j).toNat : Tensor ℝ* []).data.get ⟨0, Nat.zero_lt_one⟩ = ((0 : ℕ) : ℝ*) :=
       (congrArg (fun n : ℕ => (n : Tensor ℝ* []).data.get ⟨0, Nat.zero_lt_one⟩)
         (by simp [h])).trans
         ((Vector.Get_0.eq.Head.fin ((0 : ℕ) : Tensor ℝ* []).data).trans (EqHeadData.nat (0 : ℕ)))
@@ -161,7 +165,7 @@ private lemma main
               GetMap.eq.MapGet.fin A Hyperreal.ofReal ⟨↑i, hi⟩)).trans
           (congrArg (fun t : Tensor ℝ* [] => t.data.get ⟨0, Nat.zero_lt_one⟩)
             (GetMap.eq.MapGet.fin (A.get ⟨↑i, hi⟩) Hyperreal.ofReal ⟨↑j, hj⟩))).trans
-          (Vector.GetMap.eq.UFnGet
+          (GetMap.eq.UFnGet
             ((A.get ⟨↑i, hi⟩).get ⟨↑j, hj⟩).data
             Hyperreal.ofReal
             ⟨0, Nat.zero_lt_one⟩))) ▸ ?_
@@ -169,3 +173,4 @@ private lemma main
 
 
 -- created on 2023-06-18
+-- updated on 2026-11-13

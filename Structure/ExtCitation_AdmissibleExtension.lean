@@ -44,7 +44,4 @@ structure IsAdmissibleExtension (C : Submodule (ZMod p) V) : Prop where
     ∃ C' : Submodule (ZMod p) V,
       (∀ σ ∈ A.decompositionSubgroup ℚ, ∀ x ∈ C', σ • x ∈ C') ∧ IsCompl C C'
 
-variable {p V} in
-
-
 end ExtCitation

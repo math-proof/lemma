@@ -149,6 +149,25 @@ export function hasWord(text, name) {
     }
 }
 
+/**
+ * True when `identIndex` sits in an intro / fun / pattern binder list, not a later use on the same line.
+ * After `fun x =>` / `λ x ↦`, later identifiers are uses (`fun k => f h₀.1`, `fun y => g hdiff`).
+ */
+export function isBinderKeywordContext(line, identIndex) {
+    const before = String(line ?? '').slice(0, identIndex);
+    const m = before.match(/(^|[^\p{L}\p{N}_'])((intro|rintro|fun|obtain|rcases|cases|induction|with)\b|[λ∑∏∫∀∃⨆⨅])([^,;]*)$/u);
+    if (!m) return false;
+    const kw = m[2];
+    const rest = m[4];
+    if (kw === 'fun' || kw === 'λ') {
+        // binders last until the arrow
+        return !/=>|↦/.test(rest);
+    }
+    // `intro h (` / `with ⟨` starts a following argument, not a binder name
+    if (/[[(]\s*$/.test(rest)) return false;
+    return true;
+}
+
 /** count of whole-word occurrences */
 export function countWord(text, name) {
     let n = 0;

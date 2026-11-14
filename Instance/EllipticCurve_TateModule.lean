@@ -10,7 +10,7 @@ import Mathlib.GroupTheory.Coset.Card
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.Algebra.Group.Subgroup.Finite
 import Def.GaloisRep_Adic
-import Lemma.EllipticCurve.TateModule
+import Lemma.WeierstrassCurve.TateModule.Basic
 
 open IsLocalRing
 
@@ -23,6 +23,9 @@ variable [Fact p.Prime]
 noncomputable instance instSMul : SMul ℤ_[p] (TateModule p M) :=
   ⟨fun a x => ⟨fun n => ((a.appr n : ℕ) : ℤ) • (x : ℕ → M) n, fun n =>
     ⟨by rw [smul_comm, torsion, smul_zero], by rw [smul_comm, compat, appr_succ_smul_eq]⟩⟩⟩
+
+@[simp] theorem smul_apply (a : ℤ_[p]) (x : TateModule p M) (n : ℕ) :
+    ((a • x : TateModule p M) : ℕ → M) n = ((a.appr n : ℕ) : ℤ) • (x : ℕ → M) n := rfl
 
 noncomputable instance instModule : Module ℤ_[p] (TateModule p M) where
   one_smul x := by
@@ -53,5 +56,4 @@ noncomputable instance instModule : Module ℤ_[p] (TateModule p M) where
 
 
 end TateModule
-
 

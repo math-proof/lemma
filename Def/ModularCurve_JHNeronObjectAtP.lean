@@ -1,10 +1,10 @@
 import Mathlib
 import Def.ModularCurve_JZeroNeronObjectAtP
 import Abbrev.GoodReductionJacobian_RelativeGroupLawBaseChange
-import Lemma.AlgebraicGeometry.NeronSpecialFibreRestriction
-import Lemma.ModularCurve.XHDifferentialsModL
-import Lemma.ModularCurve.XHOperators
-import Lemma.AlgebraicCurve.GluedPic0
+import Lemma.Scheme.NeronSpecialFibreRestriction
+import Lemma.CuspForm.XHDifferentialsModL
+import Lemma.UpperHalfPlane.XHOperators
+import Lemma.ResidueField.GluedPic0
 import Def.GaloisRep_Flat
 import Def.FLTPrelim_Ramification
 import Instance.ModularCurve_JHNeronObjectAtP

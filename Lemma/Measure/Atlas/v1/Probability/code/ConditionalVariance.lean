@@ -4,6 +4,8 @@ import Theorem.v1.Atlas.Probability.code.ConditionalVariance
 open MeasureTheory ProbabilityTheory Filter
 
 
+namespace LawOfTotalVariance
+
 /--
 [condVar_eq_condExp_sq_sub_sq_condExp'](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/ConditionalVariance.lean)
 -/

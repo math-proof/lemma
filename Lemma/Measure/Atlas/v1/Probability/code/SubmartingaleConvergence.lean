@@ -79,11 +79,12 @@ lemma submartingale_ae_convergence
   ∃ X_inf : Ω → ℝ, Integrable X_inf μ ∧ ∀ᵐ ω ∂μ, Tendsto (fun n => X n ω) atTop (𝓝 (X_inf ω)) := by
 -- proof
   have hint : ∀ n, Integrable (X n) μ := hsub.2.2
-  have h_norm_bdd := submartingale_integral_norm_le hsub hbdd
+  have h_norm_bdd : ∀ n, ∫ ω, ‖X n ω‖ ∂μ ≤ 2 * C - ∫ ω, X 0 ω ∂μ :=
+    fun n => submartingale_integral_norm_le hsub hbdd
   set B := (2 * C - ∫ ω, X 0 ω ∂μ).toNNReal
   have h_eLpNorm : ∀ n, eLpNorm (X n) 1 μ ≤ ↑B := by
     intro n
-    rw [eLpNorm_one_eq_lintegral_enorm, ← ofReal_integral_norm_eq_lintegral_enorm (hint n)]
+    rw [eLpNorm_one_eq_lintegral_enorm (hint n).aestronglyMeasurable, ← ofReal_integral_norm_eq_lintegral_enorm (hint n)]
     rw [ENNReal.ofReal_le_coe]
     exact le_trans (h_norm_bdd n) (Real.le_coe_toNNReal _)
   have hconv := hsub.ae_tendsto_limitProcess h_eLpNorm

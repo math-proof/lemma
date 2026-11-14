@@ -7,9 +7,10 @@ private lemma main
 -- given
   (X : Tensor α s) :
 -- imply
-  (log X).data = log X.data :=
+  (Log.log X).data = Log.log X.data :=
 -- proof
   rfl
 
 
 -- created on 2025-12-04
+-- updated on 2026-11-13

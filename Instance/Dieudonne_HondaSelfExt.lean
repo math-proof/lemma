@@ -1,7 +1,7 @@
 -- Carved from Lemma/Definitions/Def_Dieudonne_HondaSelfExt.lean: instance decls only.
 import Mathlib
-import Lemma.Dieudonne.DatumAndHonda
-import Lemma.Dieudonne.HondaSelfExt
+import Lemma.LinearMap.DatumAndHonda
+import Lemma.Submodule.HondaSelfExt
 
 set_option autoImplicit false
 

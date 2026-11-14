@@ -248,7 +248,7 @@ lemma generalizedFibonacci_tendsto_ratio
   Filter.Tendsto (fun k => W (k + 1) / W k) Filter.atTop
     (nhds ((p + Real.sqrt (p ^ 2 + 4)) / 2)) := by
 -- proof
-  have hWBN := generalizedFibonacci_binet p W hW
+  have hWBN := fun k => generalizedFibonacci_binet (n := k) hW
   set s : ℝ := Real.sqrt (p ^ 2 + 4) with hsdef
   set α : ℝ := (p + s) / 2 with hαdef
   set β : ℝ := (p - s) / 2 with hβdef
@@ -312,7 +312,7 @@ lemma generalizedFibonacci_binet_cassini_and_ratio_limit
   (hp : 1 ≤ p)
   (ha : 0 ≤ a)
   (hb : 0 < b)
-  (hm : 0 ≤ m)
+  (_hm : 0 ≤ m)
   (hn : 0 ≤ n)
   (hW0 : W 0 = (a : ℝ))
   (hW1 : W 1 = (b : ℝ))
@@ -337,15 +337,14 @@ lemma generalizedFibonacci_binet_cassini_and_ratio_limit
   have hV : ∀ k : ℕ, (fun j : ℕ => W j) (k + 2) = (p : ℝ) * (fun j : ℕ => W j) (k + 1) +
     (fun j : ℕ => W j) k := fun k => by simpa using hWrec k
   obtain ⟨N, rfl⟩ := Int.eq_ofNat_of_zero_le hn
-  refine ⟨?_, generalizedFibonacci_mixed_identity _ W F hWrec hF0 hF1 hFrec m N, ?_, ?_⟩
-  · simpa [hW0, hW1] using generalizedFibonacci_binet (p : ℝ) (fun j : ℕ => W j) hV N
-  · simpa [hW0, hW1] using generalizedFibonacci_cassini (p : ℝ) (fun j : ℕ => W j) hV N
-  · simpa using generalizedFibonacci_tendsto_ratio (p : ℝ) hpR (fun j : ℕ => W j)
-    (by simpa [hW0] using ha)
-    (by simpa [hW1] using hb) hV
+  refine ⟨?_, generalizedFibonacci_mixed_identity hWrec hF0 hF1 hFrec, ?_, ?_⟩
+  · simpa [hW0, hW1] using generalizedFibonacci_binet (p := (p : ℝ)) (W := fun j : ℕ => W j) (n := N) hV
+  · simpa [hW0, hW1] using generalizedFibonacci_cassini (p := (p : ℝ)) (W := fun j : ℕ => W j) (n := N) hV
+  · simpa using generalizedFibonacci_tendsto_ratio (p := (p : ℝ)) (W := fun j : ℕ => W j) hpR
+      (by simpa [hW0] using ha) (by simpa [hW1] using hb) hV
 
 end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-28
+-- updated on 2026-11-13

@@ -27,8 +27,18 @@ private lemma main
   rw [Kernel.prod_apply, Kernel.deterministic_apply, id, Measure.dirac_prod,
     Measure.map_apply measurable_prodMk_left hs, Kernel.compProd_apply (measurable_prodMk_left hs)]
   have h : ∀ b, M.env.reward (y, b) (Prod.mk b ⁻¹' (Prod.mk y ⁻¹'
-      {z : 𝒮 × 𝒜 × ℝ | z.2.2 ∉ Set.Icc (-M.env.R) M.env.R})) = 0 := fun b => M.env.reward_bdd (y, b)
+      {z : 𝒮 × 𝒜 × ℝ | z.2.2 ∉ Set.Icc (-M.env.R) M.env.R})) = 0 := by
+    intro b
+    have hset :
+      Prod.mk b ⁻¹' (Prod.mk y ⁻¹'
+        {z : 𝒮 × 𝒜 × ℝ | z.2.2 ∉ Set.Icc (-M.env.R) M.env.R}) =
+        (Set.Icc (-M.env.R) M.env.R)ᶜ := by
+      ext ρ
+      simp
+    rw [hset, measure_compl measurableSet_Icc (measure_ne_top _ _), measure_univ,
+      M.env.reward_bdd (y, b), tsub_self]
   simp only [h, lintegral_zero]
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-13

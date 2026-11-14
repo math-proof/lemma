@@ -1,7 +1,7 @@
 -- Carved from Lemma/Definitions/Def_CerednikDrinfeld_FormalUpperHalfPlaneChartRings.lean: instance decls only.
 import Mathlib
 import Def.CerednikDrinfeld_FormalUpperHalfPlaneCharts
-import Lemma.CerednikDrinfeld.FormalUpperHalfPlaneChartRings
+import Lemma.MvPolynomial.FormalUpperHalfPlaneChartRings
 
 set_option autoImplicit false
 

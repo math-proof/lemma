@@ -1,4 +1,4 @@
-import Lemma.ModularCurve.ModuliPoint
+import Lemma.WeierstrassCurve.ModuliPoint
 import Def.ModularCurve_MazurStepThreeInputs
 
 set_option autoImplicit false

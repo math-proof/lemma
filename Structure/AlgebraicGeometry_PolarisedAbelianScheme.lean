@@ -1,6 +1,6 @@
 import Mathlib.Topology.KrullDimension
 import Structure.JacJ1Iface
-import Lemma.GoodReductionJacobian.RelativeGroupLawKernel
+import Lemma.Scheme.RelativeGroupLawKernel
 import Instance.AlgebraicGeometry_RelativePicardFunctor
 import Structure.AlgebraicGeometry_ModulesProjPresentation
 

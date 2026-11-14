@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.CechSectionsOfDivisor
+import Lemma.Set.CechSectionsOfDivisor
 import Lemma.Int.P2MUtil
 
-open AlgebraicCurve
+open AlgebraicCurve Set
 
 /--
 [AlgebraicCurve_cechH1ToH1_mk_eq_cechH1ToH1_mk_of_crossSections](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_cechH1ToH1_mk_eq_cechH1ToH1_mk_of_crossSections.lean)

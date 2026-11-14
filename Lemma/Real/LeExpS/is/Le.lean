@@ -1,6 +1,6 @@
 import Lemma.Nat.NotLt.is.Ge
 import Lemma.Real.LtExpS.is.Lt
-open Real Nat
+open Exp Nat
 
 
 @[path, comm, mp, mpr]
@@ -13,7 +13,7 @@ private lemma main
 -- proof
   simp only [Ge.is.NotLt]
   rw [not_iff_not]
-  apply LtExpS.is.Lt
+  apply Real.LtExpS.is.Lt
 
 
 -- created on 2025-12-27

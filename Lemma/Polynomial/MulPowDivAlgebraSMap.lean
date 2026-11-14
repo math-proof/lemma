@@ -57,9 +57,16 @@ private lemma main
     have h1 := h (t : ℂ) ht'
     have h2 := h' (t : ℂ) ht'
     have key : (N : ℂ) ^ ((m : ℂ) * (t : ℂ)) * P.eval ((N : ℂ) ^ (-(t : ℂ))) * Q'.eval ((N : ℂ) ^ (-(t : ℂ))) = (N : ℂ) ^ ((m' : ℂ) * (t : ℂ)) * P'.eval ((N : ℂ) ^ (-(t : ℂ))) * Q.eval ((N : ℂ) ^ (-(t : ℂ))) := by
-      rw [← h1]
-      ring
-      rw [h2]
+      calc
+        (N : ℂ) ^ ((m : ℂ) * (t : ℂ)) * P.eval ((N : ℂ) ^ (-(t : ℂ))) * Q'.eval ((N : ℂ) ^ (-(t : ℂ)))
+            = (f (t : ℂ) * Q.eval ((N : ℂ) ^ (-(t : ℂ)))) * Q'.eval ((N : ℂ) ^ (-(t : ℂ))) := by
+              rw [← h1]
+          _ = Q.eval ((N : ℂ) ^ (-(t : ℂ))) * (f (t : ℂ) * Q'.eval ((N : ℂ) ^ (-(t : ℂ)))) := by
+              ring
+          _ = Q.eval ((N : ℂ) ^ (-(t : ℂ))) * ((N : ℂ) ^ ((m' : ℂ) * (t : ℂ)) * P'.eval ((N : ℂ) ^ (-(t : ℂ)))) := by
+              rw [h2]
+          _ = (N : ℂ) ^ ((m' : ℂ) * (t : ℂ)) * P'.eval ((N : ℂ) ^ (-(t : ℂ))) * Q.eval ((N : ℂ) ^ (-(t : ℂ))) := by
+              ring
     have key2 := congrArg (fun z => z * (N : ℂ) ^ (-((M : ℂ) * (t : ℂ)))) key
     have l1 := hx m e t hMe
     have l2 := hx m' e' t hMe'

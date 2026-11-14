@@ -173,7 +173,7 @@ lemma expected_sum_sq
     (∑ j, w j * a j ^ 2) + ∑ l₂ ∈ Finset.univ.erase l₁,
       ∑ sel : Fin k → S, (∏ l, w (sel l)) * (a (sel l₁) * a (sel l₂)) := by
     intro l₁; rw [← Finset.add_sum_erase _ _ (Finset.mem_univ l₁)]; congr 1
-    convert product_marginal w hw_sum (fun j => a j ^ 2) l₁ using 1
+    convert product_marginal (f := fun j => a j ^ 2) (l₀ := l₁) hw_sum using 1
     congr 1; ext sel; congr 1; ring
   simp_rw [h3, Finset.sum_add_distrib]
   congr 1
@@ -181,7 +181,8 @@ lemma expected_sum_sq
   · have h4 : ∀ (l₁ l₂ : Fin k), l₁ ≠ l₂ →
     ∑ sel : Fin k → S, (∏ l, w (sel l)) * (a (sel l₁) * a (sel l₂)) =
     (∑ j, w j * a j) ^ 2 := by
-    intro l₁ l₂ hne; rw [sq, product_cross_marginal w hw_sum a a l₁ l₂ hne]
+      intro l₁ l₂ hne
+      rw [sq, product_cross_marginal (f := a) (g := a) (l₁ := l₁) (l₂ := l₂) hw_sum hne]
     have h5 : ∀ l₁ : Fin k, ∑ l₂ ∈ Finset.univ.erase l₁,
       ∑ sel : Fin k → S, (∏ l, w (sel l)) * (a (sel l₁) * a (sel l₂)) =
       (↑k - 1) * (∑ j, w j * a j) ^ 2 := by
@@ -257,7 +258,8 @@ lemma product_averaging_existence
   (hB : ∀ j, ∑ i, (u j i) ^ 2 ≤ B)
   (hk : 1 ≤ k) :
 -- imply
-  let μ := fun i => ∑ j, w j * u j i ∃ (sel : Fin k → S), ∑ i, (g i - (1 / ↑k) * ∑ l, u (sel l) i) ^ 2 ≤ ∑ i, (g i - μ i) ^ 2 + B / ↑k := by
+  let μ := fun i => ∑ j, w j * u j i
+  ∃ (sel : Fin k → S), ∑ i, (g i - (1 / ↑k) * ∑ l, u (sel l) i) ^ 2 ≤ ∑ i, (g i - μ i) ^ 2 + B / ↑k := by
 -- proof
   classical
   intro μ
@@ -267,12 +269,12 @@ lemma product_averaging_existence
   let target := ∑ i, (g i - μ i) ^ 2 + B / ↑k
   have hW_nn : ∀ sel, 0 ≤ W sel := fun sel =>
     Finset.prod_nonneg (fun l _ => hw_nn (sel l))
-  have hW_sum : ∑ sel, W sel = 1 := product_weight_sum w hw_sum
+  have hW_sum : ∑ sel, W sel = 1 := product_weight_sum hw_sum
   have hW_pos : 0 < ∑ sel : Fin k → S, W sel := by rw [hW_sum]; exact one_pos
   have hk_pos : (0 : ℝ) < ↑k := Nat.cast_pos.mpr (by omega)
   have hk_ne : (k : ℝ) ≠ 0 := ne_of_gt hk_pos
   suffices havg : ∑ sel, W sel * err sel ≤ (∑ sel, W sel) * target by
-    exact exists_le_of_weighted_sum W err target hW_nn hW_pos havg
+    exact exists_le_of_weighted_sum (w := W) (f := err) (c := target) hW_nn hW_pos havg
   rw [hW_sum, one_mul]
   have swap_eq : ∑ sel, W sel * err sel =
     ∑ i : Fin n, ∑ sel : Fin k → S, W sel * (g i - (1/↑k) * ∑ l, u (sel l) i) ^ 2 := by
@@ -304,7 +306,7 @@ lemma product_averaging_existence
       simp_rw [h2a]
       rw [← Finset.mul_sum, Finset.sum_comm (s := Finset.univ (α := Fin k → S))]
       have h2b : ∀ l : Fin k, ∑ sel : Fin k → S, W sel * u (sel l) i = μ i := by
-        intro l; exact product_marginal w hw_sum (fun j => u j i) l
+        intro l; exact product_marginal (f := fun j => u j i) (l₀ := l) hw_sum
       simp_rw [h2b, Finset.sum_const, Finset.card_fin, nsmul_eq_mul]
       field_simp
     have t3 : ∑ sel : Fin k → S, W sel * (1 / ↑k * ∑ l, u (sel l) i) ^ 2 =
@@ -314,7 +316,7 @@ lemma product_averaging_existence
         (1 / ↑k) ^ 2 * (W sel * (∑ l, u (sel l) i) ^ 2) := by
         intro sel; ring
       simp_rw [h3a, ← Finset.mul_sum]
-      rw [expected_sum_sq hk w hw_sum (fun j => u j i)]
+      rw [expected_sum_sq (w := w) (a := fun j => u j i) hk hw_sum]
       field_simp; ring
     rw [t1, t2, t3]
     field_simp; ring
@@ -324,9 +326,8 @@ lemma product_averaging_existence
     rw [← Finset.sum_div]
     apply div_le_div_of_nonneg_right _ hk_pos.le
     calc ∑ i, ((∑ j, w j * (u j i) ^ 2) - (μ i) ^ 2)
-      ≤ ∑ i, (∑ j, w j * (u j i) ^ 2) := by
-        apply Finset.sum_le_sum; intro i _
-        linarith [sq_nonneg (μ i)]
+      ≤ ∑ i, (∑ j, w j * (u j i) ^ 2) :=
+        Finset.sum_le_sum fun i _ => sub_le_self _ (sq_nonneg (μ i))
       _ = ∑ j, w j * ∑ i, (u j i) ^ 2 := by
         rw [Finset.sum_comm]; congr 1; ext j
         rw [Finset.mul_sum]
@@ -367,14 +368,14 @@ lemma maurey_sparse_approx
   · refine ⟨0, ?_, ?_⟩
     · unfold support_size; simp
     · have h0 : ∀ j, θ j = 0 := by
-      intro j
-      have hle := Finset.single_le_sum (fun j _ => abs_nonneg (θ j)) (Finset.mem_univ j)
-      simp only [l1norm] at hR0
-      have : |θ j| = 0 := le_antisymm (by linarith) (abs_nonneg _)
-      exact abs_eq_zero.mp this
-      have : Φ.mulVec θ = Φ.mulVec 0 := by
+        intro j
+        have hle := Finset.single_le_sum (fun j _ => abs_nonneg (θ j)) (Finset.mem_univ j)
+        simp only [l1norm] at hR0
+        have : |θ j| = 0 := le_antisymm (by linarith [hle, hR0]) (abs_nonneg _)
+        exact abs_eq_zero.mp this
+      have hmul : Φ.mulVec θ = Φ.mulVec 0 := by
         ext i; simp [Matrix.mulVec, dotProduct, h0]
-      rw [this]
+      rw [hmul]
       linarith [div_nonneg (mul_nonneg (sq_nonneg D) (sq_nonneg R)) (Nat.cast_nonneg' k)]
   have hR_pos : 0 < l1norm θ := by
     have := Finset.sum_nonneg (fun j (_ : j ∈ Finset.univ) => abs_nonneg (θ j))
@@ -412,8 +413,11 @@ lemma maurey_sparse_approx
     | some j =>
       simp only [atom]
       calc ∑ i, (R * sign j * Φ i j) ^ 2
-        = ∑ i, R ^ 2 * (Φ i j) ^ 2 := by
-          congr 1; ext i; simp only [sign]; split_ifs <;> ring
+          = ∑ i, R ^ 2 * (Φ i j) ^ 2 := by
+            congr 1
+            ext i
+            simp only [sign]
+            split_ifs <;> ring
         _ = R ^ 2 * ∑ i, (Φ i j) ^ 2 := (Finset.mul_sum ..).symm
         _ ≤ R ^ 2 * (D ^ 2 * ↑n) :=
           mul_le_mul_of_nonneg_left (hNorm j) (sq_nonneg R)
@@ -432,8 +436,8 @@ lemma maurey_sparse_approx
     · rw [abs_of_nonneg h]; field_simp
     · push_neg at h; rw [abs_of_neg h]; field_simp
   have hS_ne : Nonempty S := ⟨none⟩
-  obtain ⟨sel, h_sel⟩ := product_averaging_existence S w hw_nn hw_sum atom f
-    (D ^ 2 * R ^ 2 * ↑n) hB k hk
+  obtain ⟨sel, h_sel⟩ := product_averaging_existence (S := S) (w := w) (u := atom) (g := f)
+    (B := D ^ 2 * R ^ 2 * ↑n) (k := k) hw_nn hw_sum hB hk
   let θ' : Fin M → ℝ := fun j =>
     (R * sign j / ↑k) *
       ↑((Finset.univ.filter (fun l : Fin k => sel l = some j)).card)
@@ -470,31 +474,31 @@ lemma maurey_sparse_approx
       _ = k := by simp
       _ ≤ 2 * k := le_mul_of_one_le_left (Nat.zero_le k) one_le_two
   · have h_mulvec : ∀ i : Fin n, (Φ.mulVec θ') i = (1 / ↑k) * ∑ l, atom (sel l) i := by
-    intro i
-    simp only [Matrix.mulVec, dotProduct]
-    have h_lhs : ∀ j : Fin M, Φ i j * θ' j =
-      Φ i j * ((R * sign j / ↑k) * ↑(#{l | sel l = some j})) := by
-      intro j; rfl
-    simp_rw [h_lhs]
-    have h_fiber : ∑ l : Fin k, atom (sel l) i =
-      ∑ j : Fin M, ↑(#{l : Fin k | sel l = some j}) * atom (some j) i := by
-      conv_lhs => rw [show (∑ l : Fin k, atom (sel l) i) =
-        ∑ s : Option (Fin M), ∑ x : { l // sel l = s }, atom (sel ↑x) i
-        from (Fintype.sum_fiberwise sel (fun l => atom (sel l) i)).symm]
-      rw [Fintype.sum_option]
-      have h_none : (∑ x : { l // sel l = none }, atom (sel ↑x) i) = 0 := by
-        apply Finset.sum_eq_zero; intro ⟨l, hl⟩ _; simp only [atom, hl, mul_zero]
-      rw [h_none, zero_add]
-      congr 1; ext j
-      have : ∀ x : { l // sel l = some j }, atom (sel ↑x) i = atom (some j) i := by
-        intro ⟨l, hl⟩; simp [hl]
-      simp_rw [this, Finset.sum_const, nsmul_eq_mul]
-      congr 1; rw [Finset.card_univ, Fintype.card_subtype]
-    rw [h_fiber]
-    simp only [atom]
-    have hk_ne : (k : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr (by omega)
-    rw [one_div, inv_mul_eq_div, Finset.sum_div]
-    congr 1; ext j; field_simp
+      intro i
+      simp only [Matrix.mulVec, dotProduct]
+      have h_lhs : ∀ j : Fin M, Φ i j * θ' j =
+        Φ i j * ((R * sign j / ↑k) * ↑(#{l | sel l = some j})) := by
+        intro j; rfl
+      simp_rw [h_lhs]
+      have h_fiber : ∑ l : Fin k, atom (sel l) i =
+        ∑ j : Fin M, ↑(#{l : Fin k | sel l = some j}) * atom (some j) i := by
+        conv_lhs => rw [show (∑ l : Fin k, atom (sel l) i) =
+          ∑ s : Option (Fin M), ∑ x : { l // sel l = s }, atom (sel ↑x) i
+          from (Fintype.sum_fiberwise sel (fun l => atom (sel l) i)).symm]
+        rw [Fintype.sum_option]
+        have h_none : (∑ x : { l // sel l = none }, atom (sel ↑x) i) = 0 := by
+          apply Finset.sum_eq_zero; intro ⟨l, hl⟩ _; simp only [atom, hl, mul_zero]
+        rw [h_none, zero_add]
+        congr 1; ext j
+        have : ∀ x : { l // sel l = some j }, atom (sel ↑x) i = atom (some j) i := by
+          intro ⟨l, hl⟩; simp [hl]
+        simp_rw [this, Finset.sum_const, nsmul_eq_mul]
+        congr 1; rw [Finset.card_univ, Fintype.card_subtype]
+      rw [h_fiber]
+      simp only [atom]
+      have hk_ne : (k : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr (by omega)
+      rw [one_div, inv_mul_eq_div, Finset.sum_div]
+      congr 1; ext j; field_simp
     have h_sel_rewrite : ∑ i : Fin n, (f i - (1 / ↑k) * ∑ l, atom (sel l) i) ^ 2 ≤
       ∑ i : Fin n, (f i - (Φ.mulVec θ) i) ^ 2 + D ^ 2 * R ^ 2 * ↑n / ↑k := by
       simp only [] at h_sel
@@ -546,7 +550,7 @@ lemma theorem_3_6_maurey
 -- proof
   have hbdd_sparse : BddBelow (Set.range (fun θ : {θ : Fin M → ℝ // support_size θ ≤ 2 * k} =>
     MSE (Φ.mulVec θ.1) f)) :=
-    ⟨0, by rintro _ ⟨θ, rfl⟩; exact MSE_nonneg _ _⟩
+    ⟨0, by rintro _ ⟨θ, rfl⟩; exact MSE_nonneg⟩
   have hne_l1 : Nonempty {θ : Fin M → ℝ // l1norm θ ≤ R} :=
     ⟨⟨0, by simp [l1norm]; exact hR.le⟩⟩
   have key : ∀ θ₀ : {θ : Fin M → ℝ // l1norm θ ≤ R},
@@ -555,7 +559,7 @@ lemma theorem_3_6_maurey
     MSE (Φ.mulVec θ₀.1) f + D ^ 2 * R ^ 2 / k := by
     intro ⟨θ₀, hθ₀⟩
     obtain ⟨θ', hθ'_sparse, hθ'_mse⟩ :=
-      maurey_sparse_approx hn hM Φ f D hD hNorm k hk R hR θ₀ hθ₀
+      maurey_sparse_approx (Φ := Φ) (f := f) (D := D) (k := k) (R := R) (θ := θ₀) hn hM hD hNorm hk hR hθ₀
     calc ⨅ θ : {θ : Fin M → ℝ // support_size θ ≤ 2 * k},
       MSE (Φ.mulVec θ.1) f
       ≤ MSE (Φ.mulVec θ') f :=

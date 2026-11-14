@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.DivisorClassGroup
-open AlgebraicCurve
+import Lemma.Valuation.DivisorClassGroup
+open AlgebraicCurve Valuation
 
 
 private lemma ord_algebraMap_aux {K F : Type*} [Field K] [Field F] [Algebra K F] (v : Place K F) (c : K) : v.ord (algebraMap K F c) = 0 := by

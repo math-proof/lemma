@@ -49,7 +49,7 @@ private lemma main
   {Ω : Type u} [Field Ω] [Algebra K Ω] [IsAlgClosure K Ω]
   {A : ValuationSubring Ω}
 -- given
-  (hAtop : A ≠ ⊤)
+  (_hAtop : A ≠ ⊤)
   (huniq : ∀ B : ValuationSubring Ω, B.comap (algebraMap K Ω) = A.comap (algebraMap K Ω) → B = A) :
 -- imply
   HenselianLocalRing ↥(A.comap (algebraMap K Ω)) := by
@@ -232,3 +232,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

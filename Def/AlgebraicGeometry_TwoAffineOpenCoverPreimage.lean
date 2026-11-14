@@ -1,4 +1,4 @@
-import Lemma.AlgebraicGeometry.TwoAffineOpenCoverH1BaseChange
+import Lemma.Scheme.TwoAffineOpenCoverH1BaseChange
 
 set_option autoImplicit false
 

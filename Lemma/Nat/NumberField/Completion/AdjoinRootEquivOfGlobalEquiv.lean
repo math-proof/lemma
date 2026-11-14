@@ -1,5 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Instance.NumberTheory.NumberField.Completion.FiniteLiesOverInstances
+import Lemma.Nat.NumberField.Completion.AdjoinRootEquiv
 open scoped NumberField NumberField.LiesOver
 
 
@@ -38,11 +40,11 @@ lemma adicCompletion_algEquiv_adjoinRoot_of_globalEquiv
       Module.finrank K L = Module.finrank K (AdjoinRoot g) :=
         e.toLinearEquiv.finrank_eq
       _ = g.natDegree := finrank_quotient_span_eq_natDegree
-  exact adicCompletion_algEquiv_adjoinRoot_of_root v w g hg hdeg
-    (algebraMap L (w.adicCompletion L) x) hx_completion
+  exact adicCompletion_algEquiv_adjoinRoot_of_root (x := algebraMap L (w.adicCompletion L) x) hg hdeg
+    hx_completion
 
 end IsDedekindDomain.HeightOneSpectrum
 
 
 -- created on 2026-10-20
--- updated on 2026-10-28
+-- updated on 2026-11-13

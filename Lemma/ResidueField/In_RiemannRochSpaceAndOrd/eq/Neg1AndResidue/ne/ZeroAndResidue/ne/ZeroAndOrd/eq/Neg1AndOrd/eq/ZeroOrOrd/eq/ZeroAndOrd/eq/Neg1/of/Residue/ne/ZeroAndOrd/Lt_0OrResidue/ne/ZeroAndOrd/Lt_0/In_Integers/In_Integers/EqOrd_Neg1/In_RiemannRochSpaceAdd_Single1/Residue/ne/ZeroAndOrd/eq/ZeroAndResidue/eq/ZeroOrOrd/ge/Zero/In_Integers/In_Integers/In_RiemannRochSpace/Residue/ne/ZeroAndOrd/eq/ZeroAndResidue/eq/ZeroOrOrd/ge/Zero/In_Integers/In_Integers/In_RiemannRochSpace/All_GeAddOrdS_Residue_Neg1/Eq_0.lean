@@ -1,10 +1,10 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.RegularProlongation
-import Lemma.AlgebraicCurve.Repartitions
+import Lemma.Scheme.RegularProlongation
+import Lemma.Submodule.Repartitions
 import Lemma.Int.P2MUtil
 
-open AlgebraicCurve IsLocalRing
+open AlgebraicCurve IsLocalRing Scheme Submodule
 
 /--
 [AlgebraicCurve_RegularProlongation_exists_mem_riemannRochSpace_add_single_ord_eq_neg_one_and_ord_residue_pair_of_jointLaw](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_RegularProlongation_exists_mem_riemannRochSpace_add_single_ord_eq_neg_one_and_ord_residue_pair_of_jointLaw.lean)

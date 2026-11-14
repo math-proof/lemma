@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.AlgebraicGeometry.NeronModelPropertyBundleCarrier
+import Lemma.Scheme.NeronModelPropertyBundleCarrier
 
 set_option autoImplicit false
 

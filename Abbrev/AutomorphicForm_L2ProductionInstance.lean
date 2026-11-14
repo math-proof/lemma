@@ -1,7 +1,7 @@
 import Mathlib
 import Instance.AutomorphicForm_Gamma0FundamentalSet
 import Abbrev.AutomorphicForm_L2AutomorphicCarrier
-import Lemma.AutomorphicForm.TruncatedDomainPartition
+import Lemma.UpperHalfPlane.TruncatedDomainPartition
 
 set_option autoImplicit false
 

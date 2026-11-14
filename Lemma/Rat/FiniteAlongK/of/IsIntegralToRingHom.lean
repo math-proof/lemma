@@ -1,8 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Definitions.Def_AlgebraicCurve_Correspondence
+import Abbrev.AlgebraicCurve_Correspondence
+import Lemma.Scheme.Correspondence
 open AlgebraicCurve
-
 
 /-- ported from external source -/
 @[path]
@@ -28,3 +28,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.LanglandsTunnell.C8Tower
+import Lemma.Matrix.C8Tower
 import Lemma.Int.P2MUtil
 
 
@@ -8,7 +8,7 @@ namespace Definitions
 end Definitions
 open Definitions
 open Int
-open NumberField LanglandsTunnell
+open NumberField LanglandsTunnell Matrix
 
 
 /--

@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.GenusNumerics
+import Lemma.ZMod.GenusNumerics
 import Lemma.Int.P2MUtil
 
-open ModularCurve
+open ModularCurve ZMod
 
 /--
 [ModularCurve_nuThree_prime](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularCurve_nuThree_prime.lean)

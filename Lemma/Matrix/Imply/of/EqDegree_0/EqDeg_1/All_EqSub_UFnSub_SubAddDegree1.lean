@@ -1,11 +1,11 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.DivisorClassGroup
-import Lemma.AlgebraicCurve.Repartitions
-import Lemma.AlgebraicCurve.AdelicIndex
+import Lemma.Valuation.DivisorClassGroup
+import Lemma.Submodule.Repartitions
+import Lemma.Submodule.AdelicIndex
 import Lemma.Int.P2MUtil
 
-open AlgebraicCurve Module
+open AlgebraicCurve Module Submodule Valuation
 
 /--
 [AlgebraicCurve_RROpens_exists_effective_sub_add_smul_single_mem_principal](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_RROpens_exists_effective_sub_add_smul_single_mem_principal.lean)

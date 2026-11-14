@@ -68,7 +68,7 @@ lemma pointwise_chain_rule
     have hd : HasFDerivAt (perturbedField φ ψ ε) (fderiv ℝ φ x + ε • fderiv ℝ ψ x) x := by
       show HasFDerivAt (fun y => φ y + ε * ψ y) _ x
       exact hφ_da.hasFDerivAt.add (hψ_da.hasFDerivAt.const_smul ε)
-    rw [hd.fderiv]; simp [ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply]
+    rw [hd.fderiv]; simp [add_apply, ContinuousLinearMap.smul_apply]
   rw [show (fun ε => L (φ x + ε * ψ x) (spacetimeGradient (perturbedField φ ψ ε) x) x) =
     (fun ε => L (φ x + ε * ψ x)
       (fun μ => spacetimeGradient φ x μ + ε * spacetimeGradient ψ x μ) x) from by
@@ -156,7 +156,7 @@ lemma general_chain_rule_all_eps
     have hd : HasFDerivAt (perturbedField φ ψ ε) (fderiv ℝ φ x + ε • fderiv ℝ ψ x) x := by
       show HasFDerivAt (fun y => φ y + ε * ψ y) _ x
       exact hφ.hasFDerivAt.add (hψ.hasFDerivAt.const_smul ε)
-    rw [hd.fderiv]; simp [ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply]
+    rw [hd.fderiv]; simp [add_apply, ContinuousLinearMap.smul_apply]
   have h_eq : (fun ε => L (φ x + ε * ψ x) (spacetimeGradient (perturbedField φ ψ ε) x) x) =
     (fun ε => L (φ x + ε * ψ x)
       (fun μ => spacetimeGradient φ x μ + ε * spacetimeGradient ψ x μ) x) := by
@@ -284,9 +284,9 @@ lemma leibniz_chain_rule
   rw [hda.deriv]
   congr 1; ext x
   exact h_at_zero x
-/-- Integration by parts in one coordinate direction $\alpha$: since $\psi$ vanishes near
-$\partial K$,
-$\int_K f\,\partial_\alpha\psi\, d^{1+n}x = -\int_K (\partial_\alpha f)\,\psi\, d^{1+n}x$. -/
+-- Integration by parts in one coordinate direction $\alpha$: since $\psi$ vanishes near
+-- $\partial K$,
+-- $\int_K f\,\partial_\alpha\psi\, d^{1+n}x = -\int_K (\partial_\alpha f)\,\psi\, d^{1+n}x$.
 
 end CM18
 

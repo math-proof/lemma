@@ -152,14 +152,14 @@ lemma int_sq_bounded_finite
 -- proof
   by_cases hN : 0 ≤ N
   · apply Set.Finite.subset (Set.finite_Icc (-⌈Real.sqrt N⌉) ⌈Real.sqrt N⌉)
-    intro n hn; simp only [Set.mem_setOf_eq] at hn
+    intro n hn; simp only [Set.mem_ofPred_eq] at hn
     have : |(n : ℝ)| ≤ (⌈Real.sqrt N⌉ : ℝ) :=
       ((Real.sqrt_sq_eq_abs ↑n ▸ Real.sqrt_le_sqrt hn).trans (Int.le_ceil _))
     rw [Set.mem_Icc]
     exact ⟨by exact_mod_cast (show -(⌈Real.sqrt N⌉ : ℝ) ≤ (n : ℝ) by linarith [neg_abs_le (n : ℝ)]),
       by exact_mod_cast (show (n : ℝ) ≤ (⌈Real.sqrt N⌉ : ℝ) by linarith [le_abs_self (n : ℝ)])⟩
   · push Not at hN; convert Set.finite_empty; ext n
-    simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false, not_le]
+    simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false, not_le]
     linarith [sq_nonneg (n : ℝ)]
 
 /--
@@ -240,10 +240,10 @@ lemma lemma_18_1
       suffices h_sub : {γ : SL(2, ℤ) | ∃ τ ∈ A, γ • τ ∈ B} ⊆ entries ⁻¹' target by
         exact Set.Finite.subset (h_target_finite.preimage h_inj.injOn) h_sub
       intro γ ⟨τ, hτA, hgτB⟩
-      simp only [Set.mem_preimage, Set.mem_setOf_eq, target, entries]
+      simp only [Set.mem_preimage, Set.mem_ofPred_eq, target, entries]
       have hτ_strip := hA_strip hτA
       have hgτ_strip := hB_strip hgτB
-      simp only [UpperHalfPlane.verticalStrip, Set.mem_setOf_eq] at hτ_strip hgτ_strip
+      simp only [UpperHalfPlane.verticalStrip, Set.mem_ofPred_eq] at hτ_strip hgτ_strip
       have hτ_im_ge : m_A ≤ τ.im := hτ_strip.2
       have hτ_re_le : |τ.re| ≤ R_A := hτ_strip.1
       have hgτ_im_ge : m_B ≤ (γ • τ).im := hgτ_strip.2
@@ -370,11 +370,11 @@ lemma lemma_18_1
           _ ≤ N := le_max_of_le_left (le_max_right _ _)
     ·
       convert Set.finite_empty; ext γ
-      simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false]
+      simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false]
       intro ⟨τ, _, hτB⟩; exact hBne ⟨γ • τ, hτB⟩
   ·
     convert Set.finite_empty; ext γ
-    simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false]
+    simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false]
     intro ⟨τ, hτA, _⟩; exact hAne ⟨τ, hτA⟩
 open Complex Metric Set Function
 
@@ -594,15 +594,15 @@ lemma lemma_18_2
   let W : SL(2, ℤ) → Set UpperHalfPlane := fun γ =>
     if h : γ ∈ S then (hsep γ h).choose_spec.choose else Set.univ
   have hV : ∀ γ (h : γ ∈ S), IsOpen (V γ) ∧ γ • τ₁ ∈ V γ := by
-    intro γ hγ; simp only [V, dif_pos hγ]
+    intro γ hγ; simp only [V, dite_eq_left hγ]
     exact ⟨(hsep γ hγ).choose_spec.choose_spec.1,
       (hsep γ hγ).choose_spec.choose_spec.2.2.1⟩
   have hW : ∀ γ (h : γ ∈ S), IsOpen (W γ) ∧ τ₂ ∈ W γ := by
-    intro γ hγ; simp only [W, dif_pos hγ]
+    intro γ hγ; simp only [W, dite_eq_left hγ]
     exact ⟨(hsep γ hγ).choose_spec.choose_spec.2.1,
       (hsep γ hγ).choose_spec.choose_spec.2.2.2.1⟩
   have hVW_disj : ∀ γ (h : γ ∈ S), Disjoint (V γ) (W γ) := by
-    intro γ hγ; simp only [V, W, dif_pos hγ]
+    intro γ hγ; simp only [V, W, dite_eq_left hγ]
     exact (hsep γ hγ).choose_spec.choose_spec.2.2.2.2
   let U₁ := interior K₁ ∩ ⋂ γ ∈ (S : Set SL(2, ℤ)), (fun z => γ • z) ⁻¹' V γ
   let U₂ := interior K₂ ∩ ⋂ γ ∈ (S : Set SL(2, ℤ)), W γ
@@ -633,7 +633,7 @@ lemma lemma_18_2
       exact absurd (Set.disjoint_iff.mp (hVW_disj γ hγ) ⟨hz_in_V, hgz_in_W⟩) id
     ·
       rw [Set.Finite.mem_toFinset] at hγ
-      simp only [Set.mem_setOf_eq] at hγ
+      simp only [Set.mem_ofPred_eq] at hγ
       by_contra h
       exact hγ ⟨⟨z, interior_subset hz_K₁, interior_subset hgz_K₂⟩, h⟩
   ·

@@ -73,15 +73,6 @@ structure IntegralBasisInLSpace [Algebra.IsSeparable E F] [HasPrincipalDivisors 
 
   hu_mem : ∀ i, u i ∈ LSpace (c • T.poleDivisor)
 
-variable (K E F) in
-
-
-variable (K E F) in
-
-
-variable (K E F) in
-
-
 end AlgebraicCurve
 
 end

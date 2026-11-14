@@ -1,4 +1,4 @@
-import Lemma.AdelicDock.LocalEmbedding
+import Def.AdelicDock_LocalEmbedding
 import Def.AutomorphicForm_AdelicTracePushforward
 import Def.NumberField_TateGlobalZeta
 

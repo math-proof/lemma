@@ -8,13 +8,13 @@ open MeasureTheory
 @[path]
 private lemma main
   [MeasurableSpace Ω]
-  [ReferenceMeasure α]
+  [μ : ReferenceMeasure α]
   {π : Measure Ω} [IsProbabilityMeasure π]
   {x : Ω → α}
   {ρ : α → ENNReal}
 -- given
   (hρ : Measurable ρ)
-  (h : π.map x = ReferenceMeasure.measure.withDensity ρ)
+  (h : π.map x = μ.measure.withDensity ρ)
   (hx : AEMeasurable x π) :
 -- imply
   SinglePSpace π x := by
@@ -27,4 +27,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-10-29
+-- updated on 2026-11-14

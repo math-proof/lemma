@@ -44,7 +44,7 @@ lemma textbook_strong_law_ae
 -- imply
   ∀ᵐ ω ∂μ, Tendsto (fun n : ℕ ↦ (∑ i ∈ range n, X i ω) / (n : ℝ)) atTop (𝓝 (∫ x, X 0 x ∂μ)) :=
 -- proof
-  strong_law_of_large_numbers_real X hint hindep hident
+  strong_law_of_large_numbers_real hint hindep hident
 
 end StrongLaw
 

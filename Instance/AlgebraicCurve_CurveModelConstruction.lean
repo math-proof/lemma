@@ -8,10 +8,10 @@ import Mathlib.AlgebraicGeometry.FunctionField
 import Mathlib.AlgebraicGeometry.AlgClosed.Basic
 import Mathlib.AlgebraicGeometry.Limits
 import Mathlib.FieldTheory.RatFunc.AsPolynomial
-import Lemma.AlgebraicCurve.CurveModel
+import Lemma.Scheme.CurveModel
 import Instance.JacJ1_ChartAlgebra
 import Instance.AlgebraicCurve_CurveModelSmooth
-import Lemma.AlgebraicCurve.CurveModelConstruction
+import Lemma.Scheme.CurveModelConstruction
 
 set_option autoImplicit false
 

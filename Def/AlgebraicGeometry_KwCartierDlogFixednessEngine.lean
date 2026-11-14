@@ -1,6 +1,6 @@
 import Mathlib
-import Lemma.AlgebraicGeometry.KwCartierOperatorTCoordEngine
-import Lemma.ModularCurve.KwNo6HspecCartierDlogCampaignFrame
+import Lemma.Polynomial.KwCartierOperatorTCoordEngine
+import Lemma.Submodule.KwNo6HspecCartierDlogCampaignFrame
 
 open Polynomial AlgebraicCurve.KwPke AlgebraicCurve.KwCart
 

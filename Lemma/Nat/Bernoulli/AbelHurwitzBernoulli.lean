@@ -807,7 +807,7 @@ private lemma hurwitz_finset (ι : Type*) [DecidableEq ι] (s : Finset ι) (hs :
       simp only [Finset.sum_map]
       apply Finset.sum_congr rfl
       intro p hp
-      have hpn : p.1 + p.2 = n := Finset.mem_antidiagonal.mp hp
+      have hpn : p.1 + p.2 = n := (Finset.Nat.instHasAntidiagonal.mem_antidiagonal).mp hp
       have hterm : ∀ g ∈ s.piAntidiag p.2,
           (((Nat.multinomial (Finset.cons a s h)
                 ((addRightEmbedding (fun t => if t = a then p.1 else 0)) g) : ℕ)) : ℚ)

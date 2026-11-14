@@ -47,12 +47,12 @@ namespace CM8
 [continuous_euclidNorm3](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/IntroductionToPartialDifferentialEquations/code/CM8/GreenFunctions.lean)
 -/
 @[path]
-lemma continuous_euclidNorm3
+lemma continuous_euclidNorm3 :
 -- imply
   Continuous (euclidNorm : (Fin 3 → ℝ) → ℝ) := by
 -- proof
   unfold euclidNorm
-  exact Real.continuous_sqrt.comp (continuous_finset_sum _ fun j _ => (continuous_apply j).pow 2)
+  exact Real.continuous_sqrt.comp (continuous_finsetSum _ fun j _ => (continuous_apply j).pow 2)
 
 end CM8
 
@@ -62,7 +62,7 @@ namespace CM8
 [isOpen_euclidNorm_ne](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/IntroductionToPartialDifferentialEquations/code/CM8/GreenFunctions.lean)
 -/
 @[path]
-lemma isOpen_euclidNorm_ne
+lemma isOpen_euclidNorm_ne :
 -- imply
   IsOpen {y : Fin 3 → ℝ | euclidNorm y ≠ 0} :=
 -- proof
@@ -103,7 +103,7 @@ lemma normSq_CLM_apply
   normSq_CLM x (Pi.single i 1) = 2 * x i := by
 -- proof
   unfold normSq_CLM
-  simp [ContinuousLinearMap.sum_apply, ContinuousLinearMap.smul_apply,
+  simp [_root_.sum_apply, ContinuousLinearMap.smul_apply,
     ContinuousLinearMap.proj_apply, Pi.single_apply, Finset.sum_ite_eq']
 
 end CM8
@@ -293,7 +293,7 @@ lemma hasDerivAt_phi_2d
   convert h_num.div h_denom h4piR3_ne using 1
   have hR2 : √(t ^ 2 + C) ^ 2 = t ^ 2 + C := Real.sq_sqrt (le_of_lt hpos)
   field_simp; nlinarith [hR2, sq_nonneg t, sq_nonneg (√(t ^ 2 + C))]
-set_option maxHeartbeats 800000 in
+set_option maxHeartbeats 800000
 
 end CM8
 
@@ -389,7 +389,7 @@ lemma laplacian_sub
   congr 1; ext i
   have h_inner : (fun y => fderiv ℝ (f - g) y (Pi.single i 1)) =
     (fun y => fderiv ℝ f y (Pi.single i 1) - fderiv ℝ g y (Pi.single i 1)) := by
-    ext y; rw [fderiv_sub (hf y) (hg y)]; simp [ContinuousLinearMap.sub_apply]
+    ext y; rw [fderiv_sub (hf y) (hg y)]; simp [sub_apply]
   rw [h_inner]
   have h_sub : fderiv ℝ (fun y => fderiv ℝ f y (Pi.single i 1) - fderiv ℝ g y (Pi.single i 1)) x =
     fderiv ℝ (fun y => fderiv ℝ f y (Pi.single i 1)) x -
@@ -398,7 +398,7 @@ lemma laplacian_sub
       (fun y => fderiv ℝ f y (Pi.single i 1)) - (fun y => fderiv ℝ g y (Pi.single i 1)) := by
       ext y; simp [Pi.sub_apply]
     rw [this]; exact fderiv_sub (hf2 i) (hg2 i)
-  rw [h_sub]; simp [ContinuousLinearMap.sub_apply]
+  rw [h_sub]; simp [sub_apply]
 
 end CM8
 

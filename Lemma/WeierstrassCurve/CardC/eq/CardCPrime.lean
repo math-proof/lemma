@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.WeierstrassLevelCarrier
+import Lemma.Polynomial.WeierstrassLevelCarrier
 import Def.ModularCurve_WeierstrassLevelComponents
 import Lemma.Int.P2MUtil
-open ModularCurve Int
+open ModularCurve Int Polynomial
 
 
 /--

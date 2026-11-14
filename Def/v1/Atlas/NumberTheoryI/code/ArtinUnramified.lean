@@ -20,7 +20,7 @@ import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.GroupTheory.Index
 import Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90
-import Mathlib.Algebra.Set.Closure.eq.N.of.Eq
+import Lemma.Set.Closure.eq.N.of.Eq
 import Mathlib.RingTheory.Trace.Basic
 import Mathlib.LinearAlgebra.Dimension.Finrank
 import Mathlib.RingTheory.Ideal.Norm.RelNorm
@@ -37,9 +37,16 @@ open NumberField
 
 namespace ArtinUnramified
 
+section CyclicCohomology
+
+variable {K L : Type*} [Field K] [Field L] [Algebra K L]
+  [FiniteDimensional K L] [IsGalois K L]
+
 omit [FiniteDimensional K L] [IsGalois K L] in
 def sigmaMinusOneMap (σ : L ≃ₐ[K] L) : L →ₗ[K] L :=
   σ.toLinearMap - LinearMap.id
+
+end CyclicCohomology
 
 def DecompositionGroupOfPlace {G : Type*} [Group G] {W : Type*}
     [MulAction G W] (w : W) : Subgroup G :=

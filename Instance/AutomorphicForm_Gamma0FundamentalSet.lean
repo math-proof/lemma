@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_AutomorphicForm_Gamma0FundamentalSet.lean: instance decls only.
 import Mathlib
-import Lemma.AutomorphicForm.FundamentalDomainVolume
+import Lemma.UpperHalfPlane.FundamentalDomainVolume
 import Lemma.UpperHalfPlane.SiegelSetCover
 
 set_option autoImplicit false

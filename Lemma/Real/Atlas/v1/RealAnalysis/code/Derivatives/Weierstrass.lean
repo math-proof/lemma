@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.RealAnalysis.code.Derivatives.Weierstrass
-open Real BigOperators Topology in Filter
+open Real BigOperators Topology
 
 
 /--
@@ -24,7 +24,7 @@ open Real
 [weierstrass_theorem_I](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/RealAnalysis/code/Derivatives/Weierstrass.lean)
 -/
 @[path]
-lemma weierstrass_theorem_I
+lemma weierstrass_theorem_I :
 -- imply
   (∀ x y : ℝ, |cos x - cos y| ≤ |x - y|) ∧ (∀ c : ℝ, ∀ K : ℕ, 0 < K → ∃ y, c + π / K < y ∧ y < c + 3 * π / K ∧ |cos (K * c) - cos (K * y)| ≥ 1) := by
 -- proof
@@ -89,7 +89,7 @@ lemma weierstrass_theorem_I
 [weierstrass_theorem_III](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/RealAnalysis/code/Derivatives/Weierstrass.lean)
 -/
 @[path]
-lemma weierstrass_theorem_III
+lemma weierstrass_theorem_III :
 -- imply
   (∀ x : ℝ, Summable (fun k : ℕ => |cos (160 ^ k * x) / 4 ^ k|)) ∧ (Continuous weierstrass_fun ∧ ∃ B, ∀ x, |weierstrass_fun x| ≤ B) := by
 -- proof
@@ -277,7 +277,7 @@ lemma weierstrass_slope_lower_bound
 [weierstrass_nowhere_differentiable](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/RealAnalysis/code/Derivatives/Weierstrass.lean)
 -/
 @[path]
-lemma weierstrass_nowhere_differentiable
+lemma weierstrass_nowhere_differentiable :
 -- imply
   ∀ c : ℝ, ¬ DifferentiableAt ℝ weierstrass_fun c := by
 -- proof

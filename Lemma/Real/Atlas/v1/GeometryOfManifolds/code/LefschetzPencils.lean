@@ -188,9 +188,9 @@ lemma eta_nondegenerate_on_vertical
 
 /--
 [ι_one_form_eq](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/GeometryOfManifolds/code/LefschetzPencils.lean)
+This is the non-degeneracy of the contraction pairing on 1-forms.
 -/
 @[path]
-This is the non-degeneracy of the contraction pairing on 1-forms. -/
 lemma ι_one_form_eq
   {Ω : ℕ → Type*} {VF : Type*} [inst : DifferentialFormSpace Ω VF]
   (α β : Ω 1) (h : ∀ X : VF, inst.ι X α = inst.ι X β) : α = β := by

@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_IdealSheafHom.lean: instance decls only.
 import Mathlib.AlgebraicGeometry.IdealSheaf.Basic
-import Lemma.AlgebraicGeometry.IdealSheafHom
+import Lemma.Scheme.IdealSheafHom
 
 open CategoryTheory TopologicalSpace Opposite
 

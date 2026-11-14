@@ -701,7 +701,7 @@ lemma ramanujan_part1_ch8_entry12_qgammaintegers
   rw [← chapter8UnitPow_eq_cpow x u hu.1] at hne
   rw [← chapter8UnitPow_eq_cpow x u hu.1, ← chapter8UnitPow_eq_cpow (x - 2) u hu.1] at hform
   exact ⟨hne, hform⟩
-end
+end MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
 
 
 

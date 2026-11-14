@@ -403,7 +403,7 @@ lemma ramanujan_part1_ch2_entry6_general
     rw [eempty, Finset.sum_empty, Finset.range_zero, Finset.sum_empty]
     simp
   | succ r ih =>
-    have hAge : n ≤ A n r := A_ge n r
+    have hAge : n ≤ A n r := A_ge
     have hAle : A n r ≤ A n (r + 1) := by
       have h := A_succ n r
       omega
@@ -480,17 +480,17 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry6
 lemma ramanujan_part1_ch2_entry6
   {n r : ℕ}
 -- given
-  (hr : 0 < r) :
+  (_hr : 0 < r) :
 -- imply
   ∑ j ∈ Finset.Icc (n + 1) (A n r), (1 : ℚ) / (j : ℚ) =
     (r : ℚ) + 2 * ∑ k ∈ Finset.range r, ((r - k : ℕ) : ℚ) *
     ∑ j ∈ Finset.Icc (if k = 0 then 1 else A n (k - 1) + 1) (A n k), (1 : ℚ) /
     ((3 * (j : ℚ)) ^ 3 - 3 * (j : ℚ)) :=
 -- proof
-  ramanujan_part1_ch2_entry6_general n r
+  ramanujan_part1_ch2_entry6_general
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch2.Entry6
 
 
 -- created on 2026-10-20
--- updated on 2026-10-28
+-- updated on 2026-11-13

@@ -10,11 +10,10 @@ namespace MathlibExt.Probability.LawIteratedLogarithmWanted
 
 /--
 [lil_integral_sq_eq_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/LawIteratedLogarithm.lean)
--/
-@[path]
 # Law of the iterated logarithm
 This file proves the Hartman–Wintner law of the iterated logarithm for i.i.d. real random variables.
 -/
+@[path]
 private lemma lil_integral_sq_eq_one
   {Ω : Type*} [MeasurableSpace Ω] {μ : Measure Ω}
   (X : ℕ → Ω → ℝ) (hMeas : Measurable (X 0))
@@ -2449,7 +2448,8 @@ private lemma lil_clt_tail_eventually
     refine hp.trans_le (htail.trans ?_)
     simpa using hport
   filter_upwards [Filter.eventually_lt_of_lt_liminf hlim] with n hn
-  rwa [Measure.map_apply_of_aemeasurable (hclt.forall_aemeasurable n) measurableSet_Ioi] at hn
+  rw [Measure.map_apply_of_aemeasurable (hclt.forall_aemeasurable n) measurableSet_Ioi] at hn
+  exact hn.le
 
 end MathlibExt.Probability.LawIteratedLogarithmWanted
 
@@ -2688,7 +2688,7 @@ private lemma lil_lower_a_one_le_and_large {q : ℕ} (hq : 0 < q) :
   constructor
   · exact (by nlinarith [show (1 : ℝ) ≤ q by exact_mod_cast hq])
   · have hleft : 6 * Real.exp (3 / 2) ≤ 48 := by
-    nlinarith [lil_exp_three_halves_le]
+      nlinarith [lil_exp_three_halves_le]
     have hright : 99 ≤ lilLowerEps q * lilLowerA q := by
       rw [lilLowerEps]
       calc
@@ -3088,18 +3088,18 @@ private lemma lil_lower_events_iIndep
     simp only [I, Finset.mem_Ico] at hjk hjl
     obtain hlt | hgt := lt_or_gt_of_ne hkl
     · have hstep : lilLowerN q (k + 1) ≤ lilLowerN q l := by
-      rw [lilLowerN, lilLowerN]
-      have hθpos : 0 < lilLowerTheta q :=
-        lt_trans Nat.zero_lt_one (lil_lower_theta_gt_one hq)
-      exact Nat.pow_le_pow_right hθpos
-        (Nat.succ_le_iff.2 hlt)
+        rw [lilLowerN, lilLowerN]
+        have hθpos : 0 < lilLowerTheta q :=
+          lt_trans Nat.zero_lt_one (lil_lower_theta_gt_one hq)
+        exact Nat.pow_le_pow_right hθpos
+          (Nat.succ_le_iff.2 hlt)
       omega
     · have hstep : lilLowerN q (l + 1) ≤ lilLowerN q k := by
-      rw [lilLowerN, lilLowerN]
-      have hθpos : 0 < lilLowerTheta q :=
-        lt_trans Nat.zero_lt_one (lil_lower_theta_gt_one hq)
-      exact Nat.pow_le_pow_right hθpos
-        (Nat.succ_le_iff.2 hgt)
+        rw [lilLowerN, lilLowerN]
+        have hθpos : 0 < lilLowerTheta q :=
+          lt_trans Nat.zero_lt_one (lil_lower_theta_gt_one hq)
+        exact Nat.pow_le_pow_right hθpos
+          (Nat.succ_le_iff.2 hgt)
       omega
   apply lil_iIndepSet_of_disjoint_blocks X hMeas hIndep I hI
   intro k
@@ -3157,14 +3157,14 @@ private lemma lil_lower_event_measure_eventually
     have hlm' : (l : ℕ) ≠ (m : ℕ) := fun h ↦ hlm (Fin.ext h)
     obtain hlt | hgt := lt_or_gt_of_ne hlm'
     · have hlast : (l : ℕ) + 1 ≠ r := by
-      exact ne_of_lt ((Nat.succ_le_iff.2 hlt).trans_lt m.isLt)
+        exact ne_of_lt ((Nat.succ_le_iff.2 hlt).trans_lt m.isLt)
       rw [lilLowerBlockLen, ite_eq_right hlast] at hjl
       have hstep : ((l : ℕ) + 1) * ell ≤ (m : ℕ) * ell :=
         Nat.mul_le_mul_right ell (Nat.succ_le_iff.2 hlt)
       rw [Nat.add_mul, one_mul] at hstep
       omega
     · have hlast : (m : ℕ) + 1 ≠ r := by
-      exact ne_of_lt ((Nat.succ_le_iff.2 hgt).trans_lt l.isLt)
+        exact ne_of_lt ((Nat.succ_le_iff.2 hgt).trans_lt l.isLt)
       rw [lilLowerBlockLen, ite_eq_right hlast] at hjm
       have hstep : ((m : ℕ) + 1) * ell ≤ (l : ℕ) * ell :=
         Nat.mul_le_mul_right ell (Nat.succ_le_iff.2 hgt)
@@ -4144,7 +4144,7 @@ lemma law_of_the_iterated_logarithm
     (∑ i ∈ Finset.range n, X i ω) /
     Real.sqrt (2 * (n : ℝ) * Real.log (Real.log (n : ℝ)))) Filter.atTop = (-1 : ℝ) := by
 -- proof
-  exact law_of_the_iterated_logarithm_of_memLp X hMeas hIndep hIdent hMemLp hMean hVar
+  exact law_of_the_iterated_logarithm_of_memLp hMeas hIndep hIdent hMemLp hMean hVar
 
 end MathlibExt.Probability.LawIteratedLogarithmWanted
 

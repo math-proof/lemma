@@ -11,7 +11,6 @@ import Lemma.Random.Measurable_Qkd.of.All_Measurable_Prob
 import Lemma.Random.NormVkd.le.MulInvSub1Abs_R.of.In_Ico
 import Lemma.Random.NormRkd.le.Abs_R
 import Lemma.Random.NormClip.le.Abs_R
-import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Random.MeasurableRkd
 import Lemma.Random.All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Random Real Kernel
@@ -104,7 +103,7 @@ private lemma integral_rkd_smul
 
 private lemma integral_Vkd_succ_smul
   [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [CompleteSpace Θ]
-  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮] [ReferenceMeasure 𝒜]
+  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [ReferenceMeasure 𝒜]
   {M : DensityModel Θ 𝒮 𝒜} {θ : Θ} {γ : ℝ} {Ms BV : ℝ}
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
@@ -227,8 +226,8 @@ private lemma integral_Vkd_succ_smul
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮]
-  [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
+  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮]
+  [μ : ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
   {M : DensityModel Θ 𝒮 𝒜}
   {θ : Θ}
   {γ : ℝ}
@@ -243,7 +242,7 @@ private lemma main
   (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.policy.prob θ z.1 z.2))
   (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₃ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ g x u)
-  (h₄ : ∀ x, Integrable (g x) ReferenceMeasure.measure)
+  (h₄ : ∀ x, Integrable (g x) μ.measure)
   (hφ : StronglyMeasurable
     (fun z : 𝒮 × 𝒜 => fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' z.1 z.2)) θ))
   (hMs : ∀ y u, ‖fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ‖ ≤ Ms)
@@ -395,4 +394,4 @@ private lemma main
       simp only [Pi.smul_apply, integral_smul]
 
 -- created on 2026-10-20
--- updated on 2026-11-11
+-- updated on 2026-11-14

@@ -14,6 +14,8 @@ namespace DoobDecomposition
 lemma predictablePart_mono_of_submartingale
   {m0 : MeasurableSpace Ω}
   {μ : Measure Ω}
+  {ℱ : Filtration ℕ m0}
+  {f : ℕ → Ω → ℝ}
   {n : ℕ}
 -- given
   (hf : Submartingale f ℱ μ) :
@@ -37,6 +39,8 @@ namespace DoobDecomposition
 lemma doob_decomposition
   {m0 : MeasurableSpace Ω}
   {μ : Measure Ω}
+  {ℱ : Filtration ℕ m0}
+  {f : ℕ → Ω → ℝ}
   [SigmaFiniteFiltration μ ℱ]
 -- given
   (hf : Submartingale f ℱ μ) :
@@ -46,7 +50,7 @@ lemma doob_decomposition
   ⟨martingale_martingalePart hf.stronglyAdapted hf.integrable,
     predictablePart_zero,
     stronglyAdapted_predictablePart,
-    fun n => predictablePart_mono_of_submartingale hf n,
+    fun n => predictablePart_mono_of_submartingale hf,
     martingalePart_add_predictablePart ℱ μ f⟩
 
 end DoobDecomposition

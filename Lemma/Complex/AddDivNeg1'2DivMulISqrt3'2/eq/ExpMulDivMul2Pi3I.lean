@@ -1,5 +1,6 @@
 import Notation.Analysis.Complex.Complexes
 import Initialize.Tactic.Attr.Basic
+open Complex
 
 
 /-- `ω = -1/2 + i√3/2 = exp(2πi/3)`. -/

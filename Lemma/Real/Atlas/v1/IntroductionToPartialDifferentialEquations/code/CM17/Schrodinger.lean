@@ -195,7 +195,7 @@ namespace SchrodingerEquation
 [lemma_2_0_2_K_solves_schrodinger](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/IntroductionToPartialDifferentialEquations/code/CM17/Schrodinger.lean)
 -/
 @[path]
-lemma lemma_2_0_2_K_solves_schrodinger
+lemma lemma_2_0_2_K_solves_schrodinger :
 -- imply
   IsFreeSchrodingerSolution (fun t x => schrodingerKernel1D t x) := by
 -- proof
@@ -368,7 +368,7 @@ lemma fourierTransform_eq_fourier
   CM16.fourierTransform f ξ = 𝓕 f ξ :=
 -- proof
   CM16.fourierTransform_eq_mathlib_fourier f ξ
-set_option maxHeartbeats 400000 in
+set_option maxHeartbeats 400000
 
 end SchrodingerEquation
 
@@ -438,7 +438,7 @@ lemma fourierTransformRn_eq_fourier
   congr 1; ext x
   simp only [smul_eq_mul, mul_comm (cexp _) (f x)]
   congr 1; rw [real_inner_comm ξ x]
-set_option maxHeartbeats 400000 in
+set_option maxHeartbeats 400000
 
 end SchrodingerEquation
 
@@ -541,9 +541,9 @@ lemma norm_sq_eq_sum_sq_real
   rw [EuclideanSpace.norm_eq]
   rw [Real.sq_sqrt (Finset.sum_nonneg (fun i _ => sq_nonneg _))]
   congr 1; simp [Real.norm_eq_abs, sq_abs]
-/-- The Fourier transform of the 1D complex Gaussian
-$\frac{1}{(2\pi i t)^{1/2}} e^{i u^2 / (2t)}$ at frequency $\xi$ equals
-$e^{-2\pi^2 i t \xi^2}$. -/
+-- The Fourier transform of the 1D complex Gaussian
+-- $\frac{1}{(2\pi i t)^{1/2}} e^{i u^2 / (2t)}$ at frequency $\xi$ equals
+-- $e^{-2\pi^2 i t \xi^2}$.
 
 end SchrodingerEquation
 

@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.NodeLocalized
+import Lemma.MvPolynomial.NodeLocalized
 import Lemma.Int.P2MUtil
 
-open ModularCurve ModularCurve.NodeLocalized
+open ModularCurve MvPolynomial.NodeLocalized MvPolynomial
 
 /--
 [ModularCurve_modularRing_eq_range_modularEval](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularCurve_modularRing_eq_range_modularEval.lean)

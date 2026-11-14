@@ -17,7 +17,7 @@ lemma holder_inequality
   (hf : MemLp f (ENNReal.ofReal p) μ)
   (hg : MemLp g (ENNReal.ofReal q) μ) :
 -- imply
-  ∫ x, := by
+  ∫ x, |f x * g x| ∂μ ≤ (∫ x, |f x| ^ p ∂μ) ^ (1 / p) * (∫ x, |g x| ^ q ∂μ) ^ (1 / q) := by
 -- proof
   have h1 : ∀ x, |f x * g x| = ‖f x‖ * ‖g x‖ := by
     intro x

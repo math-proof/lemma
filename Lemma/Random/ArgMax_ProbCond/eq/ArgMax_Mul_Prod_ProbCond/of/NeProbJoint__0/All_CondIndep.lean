@@ -1,6 +1,7 @@
 import Lemma.Random.ProbCond.eq.DivMulProb_Prod_ProbCond.of.NeProbJoint__0.All_Indep
 import Lemma.Random.Prob.ne.Zero.of.NeProb_0
 import Syntax.Order.ExprWithLimits
+import Notation.Probability.JointRv
 open MeasureTheory ProbabilityTheory Measure Random
 open scoped ENNReal.ToRealCoe
 open Fun
@@ -140,4 +141,4 @@ private lemma main
 
 
 -- created on 2021-07-21
--- updated on 2026-11-02
+-- updated on 2026-11-13

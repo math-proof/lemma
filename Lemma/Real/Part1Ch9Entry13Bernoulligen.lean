@@ -1628,9 +1628,9 @@ private lemma entry13_dominated (n : ℕ) {r u : ℝ} (hr : r ∈ Set.Ioo (0 : �
     rwa [heq] at h1
   by_cases hs : Real.sin (u / 2) = 0
   · have hsin : Real.sin u = 0 := by
-    conv_lhs => rw [show u = 2 * (u / 2) from by ring, Real.sin_two_mul]
-    rw [hs]
-    ring
+      conv_lhs => rw [show u = 2 * (u / 2) from by ring, Real.sin_two_mul]
+      rw [hs]
+      ring
     have hK : entry13K r u = 0 := by
       unfold entry13K
       rw [hsin, mul_zero, zero_div]
@@ -1647,8 +1647,8 @@ private lemma entry13_dominated (n : ℕ) {r u : ℝ} (hr : r ∈ Set.Ioo (0 : �
       have hdiv : 1 / entry13D r u ≤ 1 / (4 * r * Real.sin (u / 2) ^ 2) :=
         one_div_le_one_div_of_le h4pos hDge
       calc (r * |Real.sin u|) / entry13D r u
-        = (r * |Real.sin u|) * (1 / entry13D r u) := by
-          rw [div_eq_mul_one_div]
+        = (r * |Real.sin u|) * (1 / entry13D r u) := (by
+          rw [div_eq_mul_one_div])
         _ ≤ (r * |Real.sin u|) * (1 / (4 * r * Real.sin (u / 2) ^ 2)) :=
           mul_le_mul_of_nonneg_left hdiv hnn
         _ = (r * |Real.sin u|) / (4 * r * Real.sin (u / 2) ^ 2) :=

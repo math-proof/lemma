@@ -73,7 +73,7 @@ lemma one_period_fundamental_theorem_asset_pricing_general
     refine ⟨fun ω' => ?_, ?_⟩
     · by_cases h : ω' = ω
       · subst h
-        rwa [Pi.single_eq_same]
+        rw [Pi.single_eq_same]; exact zero_le_one
       · simp only [Pi.single_eq_of_ne h 1, le_refl]
     · rw [Finset.sum_eq_single ω]
       · rw [Pi.single_eq_same]
@@ -177,12 +177,12 @@ lemma one_period_fundamental_theorem_asset_pricing_general
       · exact ⟨ω₀, Finset.mem_univ ω₀, mul_pos (hqpos ω₀) hpos⟩
     rw [hswap, hRHS] at hLHSpos
     exact lt_irrefl _ hLHSpos
-set_option linter.unusedDecidableInType false in
 
 end MathlibExt.Probability.Finance.FundamentalTheoremAssetPricing
 
 namespace MathlibExt.Probability.Finance.FundamentalTheoremAssetPricing
 
+set_option linter.unusedDecidableInType false in
 /--
 [one_period_fundamental_theorem_asset_pricing](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/Finance/FundamentalTheoremAssetPricing.lean)
 -/
@@ -196,7 +196,7 @@ lemma one_period_fundamental_theorem_asset_pricing
     ∃ q : Ω → ℝ, (∀ ω : Ω, 0 < q ω) ∧ (∑ ω : Ω, q ω = 1) ∧
     (∀ a : A, ∑ ω : Ω, q ω * g a ω = 0) :=
 -- proof
-  one_period_fundamental_theorem_asset_pricing_general g
+  one_period_fundamental_theorem_asset_pricing_general
 
 end MathlibExt.Probability.Finance.FundamentalTheoremAssetPricing
 

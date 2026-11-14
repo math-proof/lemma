@@ -1,12 +1,12 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_XHDifferentialsModL.lean: instance decls only.
 import Mathlib
-import Lemma.ModularCurve.XHDiamondModL
-import Lemma.ModularCurve.QExpFrobeniusModL
+import Lemma.UpperHalfPlane.XHDiamondModL
+import Lemma.LaurentSeries.QExpFrobeniusModL
 import Instance.ModularCurve_HeckeDifferential
-import Lemma.AlgebraicCurve.PolarDifferentials
-import Lemma.ModularCurve.SupersingularModuli
+import Lemma.Set.PolarDifferentials
+import Lemma.WeierstrassCurve.SupersingularModuli
 import Instance.CuspForm_TwoCuspLattice
-import Lemma.ModularCurve.XHDifferentialsModL
+import Lemma.CuspForm.XHDifferentialsModL
 
 set_option autoImplicit false
 

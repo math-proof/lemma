@@ -31,7 +31,4 @@ structure IsWeilPairing (W' : Affine R) (n : ℕ)
 
   nondegenerate : ∃ P Q, B P Q ≠ 1
 
-variable (S K) in
-
-
 end WeierstrassCurve.Affine.Point

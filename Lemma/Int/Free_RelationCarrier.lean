@@ -1,12 +1,12 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.GroupCohomology.TateCohomology
-import Lemma.GroupCohomology.TateSeam
-import Lemma.GroupCohomology.TateShiftMaps
+import Lemma.LinearMap.TateCohomology
+import Lemma.Rep.TateSeam
+import Lemma.Rep.TateShiftMaps
 import Def.GroupCohomology_CochainCup
 import Lemma.Definitions.Def_GroupCohomology_IsGradedCupProduct
 import Lemma.Definitions.Def_GroupCohomology_IsTateCupProduct
-import Lemma.GroupCohomology.RelationModule
+import Lemma.Rep.RelationModule
 import Lemma.Int.P2MUtil
 open CategoryTheory Rep CategoryTheory.MonoidalCategory
 

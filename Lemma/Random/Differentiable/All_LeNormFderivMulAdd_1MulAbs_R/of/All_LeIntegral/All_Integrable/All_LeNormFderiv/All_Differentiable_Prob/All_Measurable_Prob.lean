@@ -17,7 +17,7 @@ action and the next-state integrals are differentiated under the integral sign.
 -/
 @[path]
 private lemma main
-  [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [FiniteDimensional ℝ Θ] [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [FiniteDimensional ℝ Θ] [MeasurableSpace 𝒮] [μ : ReferenceMeasure 𝒜]
   {M : DensityModel Θ 𝒮 𝒜}
   {g : 𝒮 → 𝒜 → ℝ}
   {Cg : ℝ}
@@ -25,8 +25,8 @@ private lemma main
   (h₀ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.policy.prob θ z.1 z.2))
   (h₁ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₂ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ g x u)
-  (h₃ : ∀ x, Integrable (g x) ReferenceMeasure.measure)
-  (h₄ : ∀ x, ∫ u, g x u ∂ReferenceMeasure.measure ≤ Cg)
+  (h₃ : ∀ x, Integrable (g x) μ.measure)
+  (h₄ : ∀ x, ∫ u, g x u ∂μ.measure ≤ Cg)
   (k : ℕ)
   (x : 𝒮) :
 -- imply
@@ -92,3 +92,4 @@ private lemma main
 
 
 -- created on 2026-10-07
+-- updated on 2026-11-14

@@ -9,11 +9,11 @@ namespace MathlibExt.Probability.KolmogorovMaximal
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nonempty α]
 variable {n : ℕ}
+omit [DecidableEq α] [Nonempty α] in
 /--
 [sum_prod_pi](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/KolmogorovMaximal.lean)
 -/
 @[path]
-omit [DecidableEq α] [Nonempty α] in
 private lemma sum_prod_pi (g : Fin n → α → ℝ) :
   (∑ ω : Fin n → α, ∏ i, g i (ω i)) = ∏ i, ∑ a, g i a := by
   simpa [Fintype.piFinset_univ] using
@@ -55,12 +55,12 @@ namespace MathlibExt.Probability.KolmogorovMaximal
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nonempty α]
 variable {n : ℕ}
+omit [DecidableEq α] [Nonempty α] in
 /--
 [variance_identity](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/KolmogorovMaximal.lean)
+moments; off-diagonal cross terms vanish by independence plus mean zero.
 -/
 @[path]
-omit [DecidableEq α] [Nonempty α] in
-moments; off-diagonal cross terms vanish by independence plus mean zero. -/
 private lemma variance_identity
   (p : Fin n → α → ℝ)
   (hp_sum : ∀ i, ∑ a : α, p i a = 1)
@@ -154,11 +154,11 @@ namespace MathlibExt.Probability.KolmogorovMaximal
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nonempty α]
 variable {n : ℕ}
+omit [DecidableEq α] [Nonempty α] in
 /--
 [firstHit_disjoint](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/KolmogorovMaximal.lean)
 -/
 @[path]
-omit [DecidableEq α] [Nonempty α] in
 private lemma firstHit_disjoint (X : Fin n → α → ℝ) (lam : ℝ) (k₁ k₂ : Fin n)
   (h : k₁ ≠ k₂) : Disjoint (firstHit X lam k₁) (firstHit X lam k₂) := by
   rw [Finset.disjoint_left]
@@ -177,11 +177,11 @@ namespace MathlibExt.Probability.KolmogorovMaximal
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nonempty α]
 variable {n : ℕ}
+omit [Nonempty α] in
 /--
 [badSet_eq_biUnion](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/KolmogorovMaximal.lean)
 -/
 @[path]
-omit [Nonempty α] in
 private lemma badSet_eq_biUnion (X : Fin n → α → ℝ) (lam : ℝ) :
   badSet X lam = Finset.univ.biUnion (fun k => firstHit X lam k) := by
   apply Finset.Subset.antisymm
@@ -219,11 +219,11 @@ namespace MathlibExt.Probability.KolmogorovMaximal
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nonempty α]
 variable {n : ℕ}
+omit [DecidableEq α] [Nonempty α] in
 /--
 [sum_prod_pi_subtype](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/KolmogorovMaximal.lean)
 -/
 @[path]
-omit [DecidableEq α] [Nonempty α] in
 private lemma sum_prod_pi_subtype (ι : Type*) [Fintype ι] [DecidableEq ι]
   (g : ι → α → ℝ) :
   (∑ ω : ι → α, ∏ i, g i (ω i)) = ∏ i, ∑ a, g i a := by
@@ -236,11 +236,11 @@ namespace MathlibExt.Probability.KolmogorovMaximal
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nonempty α]
 variable {n : ℕ}
+omit [Fintype α] [DecidableEq α] [Nonempty α] in
 /--
 [e_symm_past](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/KolmogorovMaximal.lean)
 -/
 @[path]
-omit [Fintype α] [DecidableEq α] [Nonempty α] in
 private lemma e_symm_past (k : Fin n)
   (u : {j : Fin n // j ≤ k} → α) (v : {j : Fin n // ¬ j ≤ k} → α)
   (j : {j : Fin n // j ≤ k}) :
@@ -253,11 +253,11 @@ namespace MathlibExt.Probability.KolmogorovMaximal
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nonempty α]
 variable {n : ℕ}
+omit [Fintype α] [DecidableEq α] [Nonempty α] in
 /--
 [e_symm_fut](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/KolmogorovMaximal.lean)
 -/
 @[path]
-omit [Fintype α] [DecidableEq α] [Nonempty α] in
 private lemma e_symm_fut (k : Fin n)
   (u : {j : Fin n // j ≤ k} → α) (v : {j : Fin n // ¬ j ≤ k} → α)
   (j : {j : Fin n // ¬ j ≤ k}) :
@@ -270,11 +270,11 @@ namespace MathlibExt.Probability.KolmogorovMaximal
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nonempty α]
 variable {n : ℕ}
+omit [Fintype α] [DecidableEq α] [Nonempty α] in
 /--
 [weight_split](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/KolmogorovMaximal.lean)
 -/
 @[path]
-omit [Fintype α] [DecidableEq α] [Nonempty α] in
 private lemma weight_split (p : Fin n → α → ℝ) (k : Fin n)
   (u : {j : Fin n // j ≤ k} → α) (v : {j : Fin n // ¬ j ≤ k} → α) :
   weight p ((splitEquiv k).symm (u, v))
@@ -299,7 +299,8 @@ private lemma weight_split (p : Fin n → α → ℝ) (k : Fin n)
   have hwrw : weight p ((splitEquiv k).symm (u, v))
     = ∏ j ∈ (Finset.univ : Finset (Fin n)),
       p j (((splitEquiv k).symm (u, v)) j) := rfl
-  rwa [hwrw, hpast, hfut]
+  rw [hwrw, hpast, hfut]
+  exact hsplit.symm
 
 end MathlibExt.Probability.KolmogorovMaximal
 
@@ -307,11 +308,11 @@ namespace MathlibExt.Probability.KolmogorovMaximal
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nonempty α]
 variable {n : ℕ}
+omit [Fintype α] [DecidableEq α] [Nonempty α] in
 /--
 [partialSum_split](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/KolmogorovMaximal.lean)
 -/
 @[path]
-omit [Fintype α] [DecidableEq α] [Nonempty α] in
 private lemma partialSum_split (X : Fin n → α → ℝ) (k : Fin n)
   (u : {j : Fin n // j ≤ k} → α) (v : {j : Fin n // ¬ j ≤ k} → α) :
   partialSum X k ((splitEquiv k).symm (u, v))
@@ -326,7 +327,8 @@ private lemma partialSum_split (X : Fin n → α → ℝ) (k : Fin n)
   have hprw : partialSum X k ((splitEquiv k).symm (u, v))
     = ∑ j ∈ (Finset.univ : Finset (Fin n)).filter (fun j => j ≤ k),
       X j (((splitEquiv k).symm (u, v)) j) := rfl
-  rwa [hprw]
+  rw [hprw]
+  exact h.symm
 
 end MathlibExt.Probability.KolmogorovMaximal
 
@@ -334,11 +336,11 @@ namespace MathlibExt.Probability.KolmogorovMaximal
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nonempty α]
 variable {n : ℕ}
+omit [Fintype α] [DecidableEq α] [Nonempty α] in
 /--
 [total_eq_partialSum_add_remainder](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/KolmogorovMaximal.lean)
 -/
 @[path]
-omit [Fintype α] [DecidableEq α] [Nonempty α] in
 private lemma total_eq_partialSum_add_remainder (X : Fin n → α → ℝ) (k : Fin n)
   (ω : Fin n → α) :
   total X ω = partialSum X k ω + remainder X k ω :=
@@ -350,11 +352,11 @@ namespace MathlibExt.Probability.KolmogorovMaximal
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nonempty α]
 variable {n : ℕ}
+omit [Fintype α] [DecidableEq α] [Nonempty α] in
 /--
 [remainder_split](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/KolmogorovMaximal.lean)
 -/
 @[path]
-omit [Fintype α] [DecidableEq α] [Nonempty α] in
 private lemma remainder_split (X : Fin n → α → ℝ) (k : Fin n)
   (u : {j : Fin n // j ≤ k} → α) (v : {j : Fin n // ¬ j ≤ k} → α) :
   remainder X k ((splitEquiv k).symm (u, v))
@@ -369,7 +371,8 @@ private lemma remainder_split (X : Fin n → α → ℝ) (k : Fin n)
   have hrrw : remainder X k ((splitEquiv k).symm (u, v))
     = ∑ j ∈ (Finset.univ : Finset (Fin n)).filter (fun j => ¬ j ≤ k),
       X j (((splitEquiv k).symm (u, v)) j) := rfl
-  rwa [hrrw]
+  rw [hrrw]
+  exact h.symm
 
 end MathlibExt.Probability.KolmogorovMaximal
 
@@ -377,11 +380,11 @@ namespace MathlibExt.Probability.KolmogorovMaximal
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nonempty α]
 variable {n : ℕ}
+omit [Fintype α] [DecidableEq α] [Nonempty α] in
 /--
 [partialSum_le_past](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/KolmogorovMaximal.lean)
 -/
 @[path]
-omit [Fintype α] [DecidableEq α] [Nonempty α] in
 private lemma partialSum_le_past (X : Fin n → α → ℝ) (k : Fin n) (j' : Fin n)
   (hj' : j' ≤ k) (u : {j : Fin n // j ≤ k} → α)
   (v v' : {j : Fin n // ¬ j ≤ k} → α) :
@@ -402,11 +405,11 @@ namespace MathlibExt.Probability.KolmogorovMaximal
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nonempty α]
 variable {n : ℕ}
+omit [DecidableEq α] [Nonempty α] in
 /--
 [mem_firstHit_past](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/KolmogorovMaximal.lean)
 -/
 @[path]
-omit [DecidableEq α] [Nonempty α] in
 private lemma mem_firstHit_past (X : Fin n → α → ℝ) (lam : ℝ) (k : Fin n)
   (u : {j : Fin n // j ≤ k} → α) (v v' : {j : Fin n // ¬ j ≤ k} → α) :
   ((splitEquiv k).symm (u, v) ∈ firstHit X lam k)
@@ -432,11 +435,11 @@ namespace MathlibExt.Probability.KolmogorovMaximal
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nonempty α]
 variable {n : ℕ}
+omit [Nonempty α] in
 /--
 [firstHit_eq_map](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/KolmogorovMaximal.lean)
 -/
 @[path]
-omit [Nonempty α] in
 private lemma firstHit_eq_map (X : Fin n → α → ℝ) (lam : ℝ) (k : Fin n) :
   firstHit X lam k
     = (pastHit X lam k ×ˢ (Finset.univ : Finset ({j : Fin n // ¬ j ≤ k} → α))).map
@@ -465,17 +468,18 @@ namespace MathlibExt.Probability.KolmogorovMaximal
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nonempty α]
 variable {n : ℕ}
+omit [Nonempty α] in
 /--
 [sum_firstHit_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/KolmogorovMaximal.lean)
 -/
 @[path]
-omit [Nonempty α] in
 private lemma sum_firstHit_eq (X : Fin n → α → ℝ) (lam : ℝ) (k : Fin n)
   (f : (Fin n → α) → ℝ) :
   ∑ ω ∈ firstHit X lam k, f ω
     = ∑ u ∈ pastHit X lam k, ∑ v : {j : Fin n // ¬ j ≤ k} → α,
       f ((splitEquiv k).symm (u, v)) := by
-  rwa [firstHit_eq_map, Finset.sum_map, Finset.sum_product]
+  rw [firstHit_eq_map, Finset.sum_map, Finset.sum_product]
+  rfl
 
 end MathlibExt.Probability.KolmogorovMaximal
 
@@ -483,11 +487,11 @@ namespace MathlibExt.Probability.KolmogorovMaximal
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nonempty α]
 variable {n : ℕ}
+omit [DecidableEq α] [Nonempty α] in
 /--
 [sum_fut_weight_mul_coord](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/KolmogorovMaximal.lean)
 -/
 @[path]
-omit [DecidableEq α] [Nonempty α] in
 private lemma sum_fut_weight_mul_coord (p : Fin n → α → ℝ)
   (_hp_sum : ∀ i, ∑ a : α, p i a = 1)
   (X : Fin n → α → ℝ)
@@ -530,11 +534,11 @@ namespace MathlibExt.Probability.KolmogorovMaximal
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nonempty α]
 variable {n : ℕ}
+omit [DecidableEq α] [Nonempty α] in
 /--
 [cross_term_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/KolmogorovMaximal.lean)
 -/
 @[path]
-omit [DecidableEq α] [Nonempty α] in
 private lemma cross_term_zero
   (p : Fin n → α → ℝ)
   (hp_sum : ∀ i, ∑ a : α, p i a = 1)
@@ -585,11 +589,11 @@ namespace MathlibExt.Probability.KolmogorovMaximal
 
 variable {α : Type*} [Fintype α] [DecidableEq α] [Nonempty α]
 variable {n : ℕ}
+omit [DecidableEq α] [Nonempty α] in
 /--
 [per_k_estimate](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/KolmogorovMaximal.lean)
 -/
 @[path]
-omit [DecidableEq α] [Nonempty α] in
 private lemma per_k_estimate
   (p : Fin n → α → ℝ)
   (hp_nonneg : ∀ i a, 0 ≤ p i a)

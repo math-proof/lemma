@@ -225,7 +225,7 @@ lemma derivWeierstrassPFun_order
   refine ⟨fun z ↦ (z - l₀) ^ 3 * L.derivWeierstrassPExcept l₀ z - 2, ?_, ?_, ?_⟩
   · have : AnalyticAt ℂ (L.derivWeierstrassPExcept l₀) l₀ := by
     apply L.analyticOnNhd_derivWeierstrassPExcept l₀
-    simp [Set.mem_compl_iff, Set.mem_diff, h]
+    simp [Set.mem_compl_iff, Set.mem_sdiff, h]
     fun_prop
   · simp [sub_self]
   · filter_upwards [self_mem_nhdsWithin] with z (hz : z ≠ l₀)

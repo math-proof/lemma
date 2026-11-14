@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.AlgebraicGeometry.NeronModelPropertyBundleCarrier
+import Lemma.Scheme.NeronModelPropertyBundleCarrier
 import Abbrev.AlgebraicGeometry_SplitTorusMu
 
 set_option autoImplicit false

@@ -29,14 +29,14 @@ namespace MathlibExt.Analysis.Ramanujan.Part1Ch9.Entry8Arcsin
 @[path]
 private lemma oddHarmonic_le (n : ℕ) : chapter9OddHarmonic n ≤ n := by
   unfold chapter9OddHarmonic
-  calc ∑ j ∈ range n, 1 / ((2 * j + 1 : ℕ) : ℝ)
-    ≤ ∑ j ∈ range n, 1 := by
-      apply Finset.sum_le_sum
-      intro j _
-      rw [div_le_one (by positivity)]
-      have : (1 : ℝ) ≤ ((2 * j + 1 : ℕ) : ℝ) := by
-        exact_mod_cast Nat.succ_le_succ (Nat.zero_le (2 * j))
-      exact this
+  calc (∑ j ∈ range n, 1 / ((2 * j + 1 : ℕ) : ℝ))
+      ≤ (∑ j ∈ range n, (1 : ℝ)) := by
+        apply Finset.sum_le_sum
+        intro j _
+        rw [div_le_one (by positivity)]
+        have : (1 : ℝ) ≤ ((2 * j + 1 : ℕ) : ℝ) := by
+          exact_mod_cast Nat.succ_le_succ (Nat.zero_le (2 * j))
+        exact this
     _ = n := by simp
 
 end MathlibExt.Analysis.Ramanujan.Part1Ch9.Entry8Arcsin
@@ -99,8 +99,8 @@ private lemma summable_FTerm {z : ℝ} (hz : |z| < 1) :
   intro n
   have hH : |chapter9OddHarmonic (n + 1)| ≤ ((n : ℝ) + 1) := by
     rw [abs_of_nonneg (oddHarmonic_nonneg _)]
-    calc chapter9OddHarmonic (n + 1) ≤ (((n + 1 : ℕ)) : ℝ) := by
-      exact_mod_cast oddHarmonic_le (n + 1)
+    calc chapter9OddHarmonic (n + 1) ≤ (((n + 1 : ℕ)) : ℝ) :=
+        by exact_mod_cast oddHarmonic_le (n + 1)
       _ = (n : ℝ) + 1 := by push_cast; ring
   have hnn3 : (0 : ℝ) ≤ ((2 * n + 1 : ℕ) : ℝ) := Nat.cast_nonneg _
   have habs3 : |(((2 * n + 1 : ℕ)) : ℝ)| = (((2 * n + 1 : ℕ)) : ℝ) :=
@@ -288,12 +288,11 @@ private lemma hasSum_T_eq {t : ℝ} (ht : |t| < 1) :
     intro n
     have hHn : ‖chapter9OddHarmonic (n + 1)‖ ≤ (n : ℝ) + 1 := by
       rw [Real.norm_eq_abs, abs_of_nonneg (oddHarmonic_nonneg _)]
-      calc chapter9OddHarmonic (n + 1) ≤ (((n + 1 : ℕ)) : ℝ) := by
-        exact_mod_cast oddHarmonic_le (n + 1)
+      calc chapter9OddHarmonic (n + 1) ≤ (((n + 1 : ℕ)) : ℝ) :=
+          by exact_mod_cast oddHarmonic_le (n + 1)
         _ = (n : ℝ) + 1 := by push_cast; ring
     calc ‖chapter9OddHarmonic (n + 1) * t ^ n‖
-      = ‖chapter9OddHarmonic (n + 1)‖ * ‖t‖ ^ n := by
-        rw [norm_mul, norm_pow]
+        = ‖chapter9OddHarmonic (n + 1)‖ * ‖t‖ ^ n := by rw [norm_mul, norm_pow]
       _ ≤ ((n : ℝ) + 1) * |t| ^ n := by
         have htN : ‖t‖ ^ n ≤ |t| ^ n := by rw [Real.norm_eq_abs]
         exact mul_le_mul hHn htN (by positivity) (by positivity)
@@ -520,8 +519,8 @@ private lemma hasDerivAt_Ffun {x0 R : ℝ} (hR0 : 0 < R) (hR1 : R < 1) (hx0 : |x
     have hYd := Yderiv_abs_le hR0 hR1 hy
     have hHn : ‖chapter9OddHarmonic (n + 1)‖ ≤ (n : ℝ) + 1 := by
       rw [Real.norm_eq_abs, abs_of_nonneg (oddHarmonic_nonneg _)]
-      calc chapter9OddHarmonic (n + 1) ≤ (((n + 1 : ℕ)) : ℝ) := by
-        exact_mod_cast oddHarmonic_le (n + 1)
+      calc chapter9OddHarmonic (n + 1) ≤ (((n + 1 : ℕ)) : ℝ) :=
+          by exact_mod_cast oddHarmonic_le (n + 1)
         _ = (n : ℝ) + 1 := by push_cast; ring
     have hYp : ‖y / (2 - y)‖ ^ (2 * n) ≤ (R / (2 - R)) ^ (2 * n) :=
       pow_le_pow_left₀ (norm_nonneg _) hYb _
@@ -677,7 +676,7 @@ private lemma derivEq_ne {x0 : ℝ} (hx0 : |x0| < 1) (hx00 : x0 ≠ 0) :
   have hD' : (∑' n, x0 ^ n / (((n + 1 : ℕ)) : ℝ))
     = -Real.log (1 - x0) / x0 := by
     have hlog := Real.hasSum_pow_div_log_of_abs_lt_one (x := x0) hx0
-    have h2 := hlog.div_const x0
+    have h2 := (hlog.div_const x0).tsum_eq
     have e : (fun n : ℕ => (x0 ^ (n + 1) / ((n : ℝ) + 1)) / x0)
       = (fun n : ℕ => x0 ^ n / (((n + 1 : ℕ)) : ℝ)) := by
       funext n
@@ -744,11 +743,11 @@ private lemma derivEq_ne {x0 : ℝ} (hx0 : |x0| < 1) (hx00 : x0 ≠ 0) :
   have h1mY2 : 1 - (x0 / (2 - x0)) ^ 2 = 4 * (1 - x0) / (2 - x0) ^ 2 := by
     have e : (x0 / (2 - x0)) ^ 2 = x0 ^ 2 / (2 - x0) ^ 2 := div_pow _ _ _
     rw [e]
-    calc 1 - x0 ^ 2 / (2 - x0) ^ 2
-      = (2 - x0) ^ 2 / (2 - x0) ^ 2 - x0 ^ 2 / (2 - x0) ^ 2 := by
-        rw [div_self (pow_ne_zero 2 h2x)]
-      _ = ((2 - x0) ^ 2 - x0 ^ 2) / (2 - x0) ^ 2 := by rw [sub_div]
-      _ = 4 * (1 - x0) / (2 - x0) ^ 2 := by
+    calc (1 - x0 ^ 2 / (2 - x0) ^ 2)
+        = ((2 - x0) ^ 2 / (2 - x0) ^ 2 - x0 ^ 2 / (2 - x0) ^ 2) :=
+          by rw [div_self (pow_ne_zero 2 h2x)]
+      _ = (((2 - x0) ^ 2 - x0 ^ 2) / (2 - x0) ^ 2) := by rw [sub_div]
+      _ = (4 * (1 - x0) / (2 - x0) ^ 2) := by
         rw [show (2 - x0) ^ 2 - x0 ^ 2 = 4 * (1 - x0) by ring]
   rw [hFfac, hTval, hUval, hSclosed, hD', h1mY2]
   field_simp
@@ -839,7 +838,7 @@ lemma ramanujan_part1_ch9_entry8_arcsin
       rw [zero_div, zero_pow (by omega : 2 * n + 1 ≠ 0)]
       ring
     show (∑' n, chapter9Entry8FTerm ((0 : ℝ) / (2 - 0)) n) = 0
-    rwa [ef]
+    rw [ef, tsum_zero]
   have e1 : chapter9Entry8Dilog (0 : ℝ) = 0 := by
     have ef : (fun n : ℕ => chapter9Entry8DilogTerm (0 : ℝ) n)
       = fun _ => (0 : ℝ) := by
@@ -848,7 +847,7 @@ lemma ramanujan_part1_ch9_entry8_arcsin
       rw [zero_pow (by omega : n + 1 ≠ 0)]
       exact zero_div _
     show (∑' n, chapter9Entry8DilogTerm (0 : ℝ) n) = 0
-    rwa [ef]
+    rw [ef, tsum_zero]
   have hderiv : ∀ t ∈ Set.uIcc (0 : ℝ) x,
     HasDerivAt ((fun x => chapter9Entry8F (x / (2 - x)))
       - (fun x => (1 / 8 : ℝ) * Real.log (1 - x) ^ 2
@@ -910,9 +909,9 @@ lemma ramanujan_part1_ch9_entry8_arcsin
     linarith [hftc, hD0]
   simp only [Pi.sub_apply] at hDx
   exact sub_eq_zero.mp hDx
-end
+end MathlibExt.Analysis.Ramanujan.Part1Ch9.Entry8Arcsin
 
 
 
 -- created on 2026-10-10
--- updated on 2026-10-26
+-- updated on 2026-11-13

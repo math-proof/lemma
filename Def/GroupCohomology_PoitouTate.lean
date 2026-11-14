@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.GroupCohomology.Selmer
+import Lemma.Rep.Selmer
 
 set_option autoImplicit false
 

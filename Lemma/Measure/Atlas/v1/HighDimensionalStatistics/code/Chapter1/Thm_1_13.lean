@@ -51,17 +51,20 @@ lemma bernstein_right_tail
       congr 1; ext ω; simp [Finset.sum_apply]
     rw [this, h_indep.mgf_sum h_meas]
   have h_prod : ∏ i : Fin n, mgf (X i) μ s₀ ≤ exp (↑n * (s₀ ^ 2 * lambda ^ 2 / 2)) := by
+    have h_prod_le : ∏ i : Fin n, mgf (X i) μ s₀
+        ≤ ∏ _i : Fin n, exp (s₀ ^ 2 * lambda ^ 2 / 2) :=
+      Finset.prod_le_prod₀ (fun i _ => mgf_nonneg (X := X i) (μ := μ) (t := s₀))
+        (fun i _ => h_mgf i s₀ hs₀_bound)
     calc ∏ i : Fin n, mgf (X i) μ s₀
-      ≤ ∏ _i : Fin n, exp (s₀ ^ 2 * lambda ^ 2 / 2) :=
-        Finset.prod_le_prod (fun i _ => mgf_nonneg) (fun i _ => h_mgf i s₀ hs₀_bound)
+      ≤ ∏ _i : Fin n, exp (s₀ ^ 2 * lambda ^ 2 / 2) := h_prod_le
       _ = exp (↑n * (s₀ ^ 2 * lambda ^ 2 / 2)) := by
         rw [Finset.prod_const, Finset.card_fin, exp_nat_mul]
   have step3 : ↑n * (s₀ ^ 2 * lambda ^ 2 / 2 - s₀ * t) ≤
     -(↑n / 2 * min (t ^ 2 / lambda ^ 2) (t / lambda)) := by
     by_cases h : t ≤ lambda
     · have hle : t / lambda ^ 2 ≤ 1 / lambda := by
-      rw [div_le_div_iff₀ (by positivity) hlam]
-      nlinarith [mul_le_mul_of_nonneg_left h (le_of_lt ht)]
+        rw [div_le_div_iff₀ (by positivity) hlam]
+        nlinarith [mul_le_mul_of_nonneg_left h (le_of_lt ht)]
       have hle2 : t ^ 2 / lambda ^ 2 ≤ t / lambda := by
         rw [div_le_div_iff₀ (by positivity) hlam]
         nlinarith [mul_le_mul_of_nonneg_left h (le_of_lt (mul_pos ht hlam))]
@@ -142,15 +145,16 @@ lemma bernstein_left_tail
   have h_prod : ∏ i : Fin n, mgf (X i) μ (-s₀) ≤ exp (↑n * (s₀ ^ 2 * lambda ^ 2 / 2)) := by
     calc ∏ i : Fin n, mgf (X i) μ (-s₀)
       ≤ ∏ _i : Fin n, exp ((-s₀) ^ 2 * lambda ^ 2 / 2) :=
-        Finset.prod_le_prod (fun i _ => mgf_nonneg) (fun i _ => h_mgf i (-s₀) hns₀_bound)
+        Finset.prod_le_prod₀ (fun i _ => mgf_nonneg (X := X i) (μ := μ) (t := -s₀))
+          (fun i _ => h_mgf i (-s₀) hns₀_bound)
       _ = exp (↑n * (s₀ ^ 2 * lambda ^ 2 / 2)) := by
         rw [neg_sq]; rw [Finset.prod_const, Finset.card_fin, exp_nat_mul]
   have step3 : ↑n * (s₀ ^ 2 * lambda ^ 2 / 2 - s₀ * t) ≤
     -(↑n / 2 * min (t ^ 2 / lambda ^ 2) (t / lambda)) := by
     by_cases h : t ≤ lambda
     · have hle : t / lambda ^ 2 ≤ 1 / lambda := by
-      rw [div_le_div_iff₀ (by positivity) hlam]
-      nlinarith [mul_le_mul_of_nonneg_left h (le_of_lt ht)]
+        rw [div_le_div_iff₀ (by positivity) hlam]
+        nlinarith [mul_le_mul_of_nonneg_left h (le_of_lt ht)]
       have hle2 : t ^ 2 / lambda ^ 2 ≤ t / lambda := by
         rw [div_le_div_iff₀ (by positivity) hlam]
         nlinarith [mul_le_mul_of_nonneg_left h (le_of_lt (mul_pos ht hlam))]

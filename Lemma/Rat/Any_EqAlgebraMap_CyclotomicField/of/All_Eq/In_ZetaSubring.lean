@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.LevelFunctionField
+import Lemma.PowerSeries.LevelFunctionField
 import Lemma.Int.P2MUtil
 
-open ModularCurve
+open ModularCurve PowerSeries
 
 /--
 [ModularCurve_exists_algebraMap_int_eq_of_mem_zetaSubring_of_forall_algEquiv_apply_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularCurve_exists_algebraMap_int_eq_of_mem_zetaSubring_of_forall_algEquiv_apply_eq.lean)

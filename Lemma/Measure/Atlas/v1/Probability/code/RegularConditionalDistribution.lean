@@ -24,10 +24,9 @@ lemma condDistrib_isRegularConditionalDistribution
   (hX : Measurable X)
   (hY : Measurable Y) :
 -- imply
-  IsRegularConditionalDistribution (condDistrib Y X μ) Y X μ where isMarkovKernel :=
--- proof
-  inferInstance
-    ae_eq_condExp hs := condDistrib_ae_eq_condExp hX hY hs
+  IsRegularConditionalDistribution (condDistrib Y X μ) Y X μ where
+    isMarkovKernel := inferInstance
+    ae_eq_condExp := fun hs => condDistrib_ae_eq_condExp hX hY hs
 end ProbabilityTheory
 
 

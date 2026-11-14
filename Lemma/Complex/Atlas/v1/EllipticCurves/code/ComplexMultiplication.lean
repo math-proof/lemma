@@ -275,7 +275,7 @@ lemma endomorphismRing_classification
 -- proof
   by_cases h : ∀ α : ℂ, α ∈ L.endomorphismRing → ∃ n : ℤ, α = (n : ℂ)
   · exact EndomorphismRingClassification.isZ h
-  · push_neg at h
+  · push Not at h
     obtain ⟨τ, hτ_mem, hτ_not_int⟩ := h
     have hw := endomorphismRing_order_witness L τ hτ_mem hτ_not_int
     have hIsOrder : IsImagQuadOrder L.endomorphismRing := by

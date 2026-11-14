@@ -90,7 +90,7 @@ lemma problem_4_1_part2
   rw [huniv, measure_univ]
   exact le_of_le_of_eq (ENNReal.ofReal_le_ofReal (by norm_num : (0.99 : ℝ) ≤ 1))
     ENNReal.ofReal_one
-end
+end Problem41
 
 
 

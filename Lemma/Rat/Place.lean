@@ -29,7 +29,8 @@ namespace Rat.Place
 lemma completedField_finite
   {prime : Nat.Primes} :
 -- imply
-  letI : Fact prime.1.Prime :=
+  letI : Fact prime.1.Prime := ⟨prime.2⟩
+  CompletedField (.finite prime) = Padic prime.1 :=
 -- proof
   rfl
 
@@ -60,7 +61,8 @@ lemma absoluteValue_finite_apply
   {prime : Nat.Primes}
   {q : ℚ} :
 -- imply
-  let _ : Fact prime.1.Prime :=
+  let _ : Fact prime.1.Prime := ⟨prime.2⟩
+  absoluteValue (.finite prime) q = Rat.AbsoluteValue.padic prime.1 q :=
 -- proof
   rfl
 
@@ -213,10 +215,10 @@ lemma denseRange_withAbsEmbedding
 -- proof
   change Dense (Set.range ((embedding v) ∘ (WithAbs.equiv (v.absoluteValue))))
   rw [(WithAbs.equiv (v.absoluteValue)).surjective.range_comp]
-  exact denseRange_embedding v
+  exact Rat.Place.denseRange_embedding (v := v)
 
 end Rat.Place
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-13

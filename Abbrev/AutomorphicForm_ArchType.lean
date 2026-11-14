@@ -1,4 +1,4 @@
-import Lemma.AutomorphicForm.RowIsometryInvariance
+import Lemma.Matrix.RowIsometryInvariance
 
 open AutomorphicForm AutomorphicForm.WindowedSiegel NumberField AdelicLevel IsDedekindDomain Matrix
 

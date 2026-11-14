@@ -2,7 +2,7 @@ import Mathlib
 import Lemma.AdicCompletion.IsCompact.LocalLevelOne
 import Lemma.Fin.MulFinSEmbed.of.Ne
 
-open NumberField IsDedekindDomain IsDedekindDomain.HeightOneSpectrum
+open NumberField IsDedekindDomain IsDedekindDomain.HeightOneSpectrum Matrix
 
 
 /-! FLT AdelicDock / AdelicLevel ports for finEmbed–localEmbed level-one lemmas. -/

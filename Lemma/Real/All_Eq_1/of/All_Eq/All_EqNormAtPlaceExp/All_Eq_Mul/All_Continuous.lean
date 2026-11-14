@@ -65,9 +65,9 @@ private lemma main
       simp only
       have hc := hconst s w 0 p
       if h : 0 < (P s 0).1 w then
-        rw [if_pos h]; exact ⟨fun _ => hc.mp h, fun _ => rfl⟩
+        rw [ite_eq_left h]; exact ⟨fun _ => hc.mp h, fun _ => rfl⟩
       else
-        rw [if_neg h]
+        rw [ite_eq_right h]
         constructor
         ·
           intro h1; exact absurd h1 (by decide)
@@ -91,13 +91,13 @@ private lemma main
       rw [hm]
       obtain a | a := lt_or_gt_of_ne h1 <;> obtain b | b := lt_or_gt_of_ne h2
       ·
-        rw [if_pos (mul_pos_of_neg_of_neg a b), if_neg (not_lt.mpr a.le), if_neg (not_lt.mpr b.le)]; norm_num
+        rw [ite_eq_left (mul_pos_of_neg_of_neg a b), ite_eq_right (not_lt.mpr a.le), ite_eq_right (not_lt.mpr b.le)]; norm_num
       ·
-        rw [if_neg (not_lt.mpr (mul_neg_of_neg_of_pos a b).le), if_neg (not_lt.mpr a.le), if_pos b]; norm_num
+        rw [ite_eq_right (not_lt.mpr (mul_neg_of_neg_of_pos a b).le), ite_eq_right (not_lt.mpr a.le), ite_eq_left b]; norm_num
       ·
-        rw [if_neg (not_lt.mpr (mul_neg_of_pos_of_neg a b).le), if_pos a, if_neg (not_lt.mpr b.le)]; norm_num
+        rw [ite_eq_right (not_lt.mpr (mul_neg_of_pos_of_neg a b).le), ite_eq_left a, ite_eq_right (not_lt.mpr b.le)]; norm_num
       ·
-        rw [if_pos (mul_pos a b), if_pos a, if_pos b]; norm_num
+        rw [ite_eq_left (mul_pos a b), ite_eq_left a, ite_eq_left b]; norm_num
     have hτ_surj : Function.Surjective τ := by
       intro ε
       let yε : mixedSpace K := (fun w => ((ε w : ℤ) : ℝ), fun _ => 1)

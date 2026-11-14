@@ -231,8 +231,7 @@ private lemma bpH_bound (x : ℝ) (hx0 : 0 < x) (hx1 : x < 1)
       simp only [bpG]
       rwa [hcast]
     calc ‖bpH x s i‖
-      = ‖bpA x (i + 1)‖ * ‖bpG s (i + 1) - bpG s i‖ := by
-        simp only [bpH, norm_mul]
+      = ‖bpA x (i + 1)‖ * ‖bpG s (i + 1) - bpG s i‖ := by simp only [bpH, norm_mul]
       _ ≤ sinBound x * (‖s‖ / (i : ℝ) ^ (s.re + 1)) :=
         mul_le_mul hA hD (norm_nonneg _) (sinBound_nonneg x)
       _ = sinBound x * ‖s‖ / (i : ℝ) ^ (s.re + 1) := by rw [mul_div_assoc]
@@ -684,8 +683,8 @@ private lemma entry15_of_re_gt_neg_one {r : ℂ} {x : ℝ} (hr : -1 < r.re)
     = ((((1 - x : ℝ))) : UnitAddCircle) := by
     have h1 : ((((1 : ℝ))) : UnitAddCircle) = 0 := AddCircle.coe_period 1
     calc -(((((x : ℝ))) : UnitAddCircle))
-      = ((((1 : ℝ))) : UnitAddCircle) - ((((x : ℝ))) : UnitAddCircle) := by
-        rw [h1, zero_sub]
+      = ((((1 : ℝ))) : UnitAddCircle) - ((((x : ℝ))) : UnitAddCircle) := (by
+        rw [h1, zero_sub])
       _ = ((((1 - x : ℝ))) : UnitAddCircle) :=
         (AddCircle.coe_sub (1 : ℝ) (1 : ℝ) x).symm
   have hOdd := HurwitzZeta.hurwitzZetaOdd_eq

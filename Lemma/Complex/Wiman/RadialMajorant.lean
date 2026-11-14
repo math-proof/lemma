@@ -69,7 +69,7 @@ lemma wimanMajorant_nonneg
 -- imply
   0 ≤ wimanMajorant f r :=
 -- proof
-tsum_nonneg fun n => wimanTerm_nonneg f r n
+tsum_nonneg fun n => wimanTerm_nonneg (f := f) (r := r) (n := n)
 
 end Complex
 
@@ -89,8 +89,8 @@ lemma wimanTerm_le_wimanMajorant
   wimanTerm f r n ≤ wimanMajorant f r := by
 -- proof
   rw [wimanMajorant]
-  exact (summable_wimanTerm f hf r).le_tsum n fun m _ => wimanTerm_nonneg f r m
-end
+  exact (summable_wimanTerm (f := f) (r := r) hf).le_tsum n fun m _ => wimanTerm_nonneg (f := f) (r := r) (n := m)
+end Complex
 
 
 

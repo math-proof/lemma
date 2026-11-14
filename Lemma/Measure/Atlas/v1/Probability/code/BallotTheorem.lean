@@ -38,7 +38,7 @@ lemma ballotCount_le
   ballotCount a b = 0 := by
 -- proof
   cases a with
-  | zero => simp
+  | zero => exact ballotCount_zero_left
   | succ a =>
     cases b with
     | zero => omega
@@ -57,7 +57,7 @@ lemma ballot_theorem
 -- proof
   induction a, b using ballotCount.induct with
   | case1 b => omega
-  | case2 a => simp [Nat.choose_self]
+  | case2 a => simp [ballotCount_succ_zero, Nat.choose_self]
   | case3 a b hgt ih1 ih2 =>
     simp only [ballotCount, hgt, ↓reduceIte]
     by_cases hab2 : a > b + 1
@@ -130,7 +130,7 @@ lemma ballot_theorem_div
   rw [div_eq_div_iff (ne_of_gt hchoose_pos) (ne_of_gt hab_sum_pos)]
   calc (ballotCount a b : ℚ) * (↑a + ↑b)
     = ↑(ballotCount a b * (a + b)) := by push_cast; ring
-    _ = ↑((a - b) * Nat.choose (a + b) a) := by exact_mod_cast ballot_theorem a b hab
+    _ = ↑((a - b) * Nat.choose (a + b) a) := by exact_mod_cast (ballot_theorem hab)
     _ = (↑a - ↑b) * ↑(Nat.choose (a + b) a) := by push_cast [Nat.cast_sub (by omega : b ≤ a)]; ring
 
 

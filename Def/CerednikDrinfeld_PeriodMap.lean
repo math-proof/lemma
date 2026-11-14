@@ -1,11 +1,11 @@
 import Mathlib
 import Instance.MvFormalGroup_NegV2
-import Lemma.CerednikDrinfeld.SpecialFormalModule
+import Lemma.MvPowerSeries.SpecialFormalModule
 import Def.CerednikDrinfeld_FormalUpperHalfPlaneDatum
 import Def.CerednikDrinfeld_DrinfeldQuadruple
-import Lemma.CerednikDrinfeld.GradedCartierModuleData
+import Lemma.Fin.GradedCartierModuleData
 import Instance.CerednikDrinfeld_GradedCartierNModule
-import Lemma.CerednikDrinfeld.CartierModuleModel
+import Lemma.FormalGroup.CartierModuleModel
 import Abbrev.CerednikDrinfeld_CartierQuadruple
 import Def.CerednikDrinfeld_PeriodMapSpec
 

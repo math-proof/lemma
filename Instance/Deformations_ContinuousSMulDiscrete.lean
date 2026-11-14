@@ -1,5 +1,7 @@
 -- Carved from Lemma/Definitions/Def_Deformations_ContinuousSMulDiscrete.lean: instance decls only.
 import Mathlib
+import Class.Deformations_ContinuousSMulDiscrete
+import Lemma.Filter.ContinuousSMulDiscrete
 
 section
 

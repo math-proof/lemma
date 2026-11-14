@@ -85,8 +85,8 @@ private lemma moebiusIte_gcdClosed (n : ℕ) (hn : 1 ≤ n) (P : ℕ → Prop)
     refine Finset.sum_eq_zero fun b hb => ?_
     rw [ite_eq_right (hno b hb), mul_zero]
   · have hex2 : ∃ d ∈ n.divisors, P d := by
-    by_contra hc
-    exact hno (fun d hd hPd => hc ⟨d, hd, hPd⟩)
+      by_contra hc
+      exact hno (fun d hd hPd => hc ⟨d, hd, hPd⟩)
     obtain ⟨d0, hd0mem, hd0P⟩ := hex2
     have hex : ∃ d, d ∣ n ∧ P d := ⟨d0, (Nat.mem_divisors.mp hd0mem).1, hd0P⟩
     set r := Nat.find hex with hr_def
@@ -344,9 +344,9 @@ private lemma moebiusVal_le (n : ℕ) (hn : 1 ≤ n) (p : ℕ) [Fact (Nat.Prime 
     by_cases hC : ((p ^ (j + 1) ∣ Nat.fib n)
       ∧ ∀ b ∈ n.divisors, b < n → ¬ p ^ (j + 1) ∣ Nat.fib b)
     · have hvd : padicValNat p (Nat.fib d) ≤ j := by
-      have hnd : ¬ p ^ (j + 1) ∣ Nat.fib d := hC.2 d hd hdn
-      rw [padicValNat_dvd_iff_le hFne_d] at hnd
-      omega
+        have hnd : ¬ p ^ (j + 1) ∣ Nat.fib d := hC.2 d hd hdn
+        rw [padicValNat_dvd_iff_le hFne_d] at hnd
+        omega
       have hvn : j < padicValNat p (Nat.fib n) := by
         have h1 : j + 1 ≤ padicValNat p (Nat.fib n) :=
           (padicValNat_dvd_iff_le hFne_n).mp hC.1
@@ -558,7 +558,7 @@ private lemma lteVal_fib_mulPrime (p : ℕ) [Fact (Nat.Prime p)] (hp2 : p ≠ 2)
   (d : ℕ) (hd : 1 ≤ d) (hdiv : p ∣ Nat.fib d) (q : ℕ) (hq : q.Prime) :
   padicValNat p (Nat.fib (d * q))
     ≤ padicValNat p (Nat.fib d) + padicValNat p q :=
-le_of_eq (padicValNat_fib_mul p hp2 d hd hdiv q hq.one_lt.le)
+le_of_eq (padicValNat_fib_mul hp2 hd hdiv hq.one_lt.le)
 
 end MetaMathlibExt
 
@@ -616,10 +616,10 @@ private lemma properDivisor_valLe (n : ℕ) (hn : 7 ≤ n) (p : ℕ) (hp : p.Pri
         · subst hp5
           exact ⟨5, by omega, by omega, by decide⟩
         · have h4 : (p : ℤ) ∣ 5 * ∏ k ∈ Finset.Ico 1 n, ((fun k => (Nat.fib k : Int)) k) := by
-          by_contra hc
-          apply hnot
-          simp only [LucasSequence.IsPrimitiveDivisor]
-          refine ⟨by omega, hp, Int.natCast_dvd_natCast.mpr hdiv, hc⟩
+            by_contra hc
+            apply hnot
+            simp only [LucasSequence.IsPrimitiveDivisor]
+            refine ⟨by omega, hp, Int.natCast_dvd_natCast.mpr hdiv, hc⟩
           have hprime : Prime (p : ℤ) := Nat.prime_iff_prime_int.mp hp
           have hp5int : ¬ ((p : ℤ) ∣ 5) := by
             intro hdvd
@@ -853,8 +853,7 @@ private lemma fibMoebius_real_eq (n : ℕ) (hn : 2 ≤ n) :
     calc (((Nat.fib x.2 : ℕ) : ℝ)) ^ (ArithmeticFunction.moebius x.1).toNat
       = (((Nat.fib x.2 : ℕ) : ℝ))
         ^ (((-ArithmeticFunction.moebius x.1).toNat : ℤ)
-          + ArithmeticFunction.moebius x.1) := by
-        rw [← hMN, zpow_natCast]
+          + ArithmeticFunction.moebius x.1) := by rw [← hMN, zpow_natCast]
       _ = (((Nat.fib x.2 : ℕ) : ℝ)) ^ (-ArithmeticFunction.moebius x.1).toNat
         * ((((Nat.fib x.2 : ℕ) : ℝ)) ^ (ArithmeticFunction.moebius x.1 : ℤ)) := by
         rw [zpow_add₀ hx0, zpow_natCast]
@@ -1011,11 +1010,12 @@ private lemma prod_one_sub_ratio_zpow_ge (S : Finset ℕ) (hS : 0 ∉ S)
         have hu : 0 ≤ x ^ b := pow_nonneg hx0 b
         nlinarith [mul_nonneg (show (0:ℝ) ≤ r ^ b + x ^ b by linarith [hmrb b hb])
           (show (0:ℝ) ≤ 1 - x ^ b by linarith [hab b hb]), sq_nonneg (x ^ b)]
-      calc 1 - x ^ b = ((1 - x ^ b) * (1 - r ^ b)) * (1 - r ^ b)⁻¹ := by
+      have hcalc : 1 - x ^ b = ((1 - x ^ b) * (1 - r ^ b)) * (1 - r ^ b)⁻¹ := by
         rw [mul_assoc, mul_inv_cancel₀ h1r.ne', mul_one]
-        _ ≤ 1 * (1 - r ^ b)⁻¹ :=
-          mul_le_mul_of_nonneg_right hsq (le_of_lt (inv_pos.mpr h1r))
-        _ = (1 - r ^ b)⁻¹ := one_mul _
+      have hle : ((1 - x ^ b) * (1 - r ^ b)) * (1 - r ^ b)⁻¹ ≤ 1 * (1 - r ^ b)⁻¹ :=
+        mul_le_mul_of_nonneg_right hsq (le_of_lt (inv_pos.mpr h1r))
+      have hone : 1 * (1 - r ^ b)⁻¹ = (1 - r ^ b)⁻¹ := one_mul _
+      exact hcalc.trans_le (hle.trans_eq hone)
     · rw [h, zpow_zero]
       have h := pow_nonneg hx0 b
       linarith [hab b hb]
@@ -1075,8 +1075,7 @@ private lemma prod_one_sub_ratio_zpow_ge (S : Finset ℕ) (hS : 0 ∉ S)
   rw [hz]
   have hbound : ∑ b ∈ S, x ^ b ≤ 1 / Real.goldenRatio :=
     (hsum_le.trans hgeom).trans hval
-  calc (Real.goldenRatio ^ 2)⁻¹ = 1 - 1 / Real.goldenRatio := by
-    rw [one_div, ← h1]; ring
+  calc (Real.goldenRatio ^ 2)⁻¹ = 1 - 1 / Real.goldenRatio := by rw [one_div, ← h1]; ring
     _ ≤ 1 - ∑ b ∈ S, x ^ b := by linarith [hbound]
     _ ≤ ∏ b ∈ S, (1 - x ^ b) := hwei S
     _ ≤ ∏ b ∈ S, (1 - r ^ b) ^ (e b) := hprod
@@ -1473,4 +1472,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-13

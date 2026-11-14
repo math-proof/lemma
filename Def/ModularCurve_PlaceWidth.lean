@@ -1,4 +1,4 @@
-import Lemma.ModularCurve.SupersingularNodePlaces
+import Lemma.Finset.SupersingularNodePlaces
 import Def.ModularCurve_JWidth
 set_option Elab.async false
 set_option autoImplicit false

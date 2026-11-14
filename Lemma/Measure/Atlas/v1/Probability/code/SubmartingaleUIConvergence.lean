@@ -28,7 +28,7 @@ lemma tendsto_integral_norm_zero_of_tendsto_eLpNorm
   rw [Real.dist_eq, sub_zero,
     abs_of_nonneg (integral_nonneg (fun _ => norm_nonneg _))]
   have hstep := hN n hn
-  rw [eLpNorm_one_eq_lintegral_enorm,
+  rw [eLpNorm_one_eq_lintegral_enorm (hint n).aestronglyMeasurable,
     ← ofReal_integral_norm_eq_lintegral_enorm (hint n)] at hstep
   have hle := (ENNReal.ofReal_le_ofReal_iff (by linarith)).mp hstep
   have : (fun ω : Ω => ‖f n ω - g ω‖) = fun x => ‖(f n - g) x‖ := by
@@ -53,7 +53,7 @@ lemma tendsto_eLpNorm_of_tendsto_integral_norm_zero
   have heq : (fun n => eLpNorm (f n - g) 1 μ) =
     (fun n => ENNReal.ofReal (∫ ω, ‖f n ω - g ω‖ ∂μ)) := by
     ext n
-    rw [eLpNorm_one_eq_lintegral_enorm, ← ofReal_integral_norm_eq_lintegral_enorm (hint n)]
+    rw [eLpNorm_one_eq_lintegral_enorm (hint n).aestronglyMeasurable, ← ofReal_integral_norm_eq_lintegral_enorm (hint n)]
     congr 1
   rw [heq, show (0 : ENNReal) = ENNReal.ofReal 0 from by simp]
   exact ENNReal.tendsto_ofReal h
@@ -81,7 +81,7 @@ lemma eLpNorm_bound_of_L1_tendsto
   refine ⟨Cinit ⊔ Ctail, fun i => ?_⟩
   by_cases hi : i < N
   · calc eLpNorm (f i) 1 μ
-    = ↑((eLpNorm (f i) 1 μ).toNNReal) := (ENNReal.coe_toNNReal (hf i).2.ne).symm
+    = ↑((eLpNorm (f i) 1 μ).toNNReal) := (ENNReal.coe_toNNReal (hf i).ne).symm
     _ ≤ ↑Cinit := ENNReal.coe_le_coe.mpr
       (Finset.le_sup (f := fun n => (eLpNorm (f n) 1 μ).toNNReal)
         (Finset.mem_range.mpr hi))
@@ -90,10 +90,10 @@ lemma eLpNorm_bound_of_L1_tendsto
     calc eLpNorm (f i) 1 μ
       = eLpNorm ((f i - g) + g) 1 μ := by ring_nf
       _ ≤ eLpNorm (f i - g) 1 μ + eLpNorm g 1 μ :=
-        eLpNorm_add_le ((hf i).1.sub hg.1) hg.1 le_rfl
+        eLpNorm_add_le le_rfl
       _ ≤ 1 + eLpNorm g 1 μ := by gcongr; exact hN i hi
       _ = ↑(1 : NNReal) + ↑((eLpNorm g 1 μ).toNNReal) := by
-        rw [ENNReal.coe_toNNReal hg.2.ne, ENNReal.coe_one]
+        rw [ENNReal.coe_toNNReal hg.ne, ENNReal.coe_one]
       _ = ↑Ctail := by push_cast; rfl
       _ ≤ ↑(Cinit ⊔ Ctail) := ENNReal.coe_le_coe.mpr le_sup_right
 
@@ -114,8 +114,8 @@ lemma submartingale_ui_convergence_equiv
 -- proof
   tfae_have 1 → 2 := by
     intro hUI
-    obtain ⟨R, hR⟩ := hUI.2.2
-    have hmeas : ∀ n, AEStronglyMeasurable (X n) μ := hUI.1
+    obtain ⟨R, hR⟩ := hUI.2
+    have hmeas : ∀ n, AEStronglyMeasurable (X n) μ := hUI.aestronglyMeasurable
     set X_inf := ℱ.limitProcess X μ
     have hint_lim : Integrable X_inf μ :=
       (Filtration.memLp_limitProcess_of_eLpNorm_bdd hmeas hR).integrable le_rfl
@@ -135,8 +135,7 @@ lemma submartingale_ui_convergence_equiv
     have hint_sub : ∀ n, Integrable (X n - X_inf) μ := fun n =>
       (hsub.integrable n).sub hint
     have heLpNorm := tendsto_eLpNorm_of_tendsto_integral_norm_zero hint_sub hL1
-    exact ⟨fun n => (hMemLp_n n).1,
-      unifIntegrable_of_tendsto_Lp le_rfl ENNReal.one_ne_top hMemLp_n hMemLp_inf heLpNorm,
+    exact ⟨unifIntegrable_of_tendsto_Lp le_rfl ENNReal.one_ne_top hMemLp_n hMemLp_inf heLpNorm,
       eLpNorm_bound_of_L1_tendsto hMemLp_n hMemLp_inf heLpNorm⟩
   tfae_finish
 

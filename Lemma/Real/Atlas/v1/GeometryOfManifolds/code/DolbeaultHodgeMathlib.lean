@@ -132,8 +132,8 @@ lemma box_bar_harmonic_unique
   rw [ip.inner_symm, hadj.adj, hstar_delbar, ip.inner_symm]
   have : (0 : DiffForm n k) = (0 : ℝ) • (b + (-1 : ℝ) • a) := by simp [zero_smul]
   rw [this, ip.inner_smul_left]; ring
-/-- Existence in Hodge–Dolbeault decomposition: every $\bar\partial$-closed form $\alpha$ has
-a decomposition $\alpha = h + \bar\partial \beta$ with $h$ harmonic ($\bar\square h = 0$). -/
+-- Existence in Hodge–Dolbeault decomposition: every $\bar\partial$-closed form $\alpha$ has
+-- a decomposition $\alpha = h + \bar\partial \beta$ with $h$ harmonic ($\bar\square h = 0$).
 
 end DolbeaultHodgeMathlib
 

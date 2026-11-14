@@ -64,10 +64,10 @@ lemma isMCFinite_of_mvPolynomial_recursion
   set φ : ℤ →+* ZMod m := Int.castRingHom (ZMod m)
   obtain ⟨p, q0, hp, hper0⟩ :=
     IsEventuallyPeriodic.of_finite_orbit
-      (fun a : (Fin (k + 1) → ZMod m) × ZMod m =>
+      (F := fun a : (Fin (k + 1) → ZMod m) × ZMod m =>
         ((fun i => MvPolynomial.eval (Sum.elim a.1 (fun _ => a.2)) ((P i).map φ)),
           a.2 + 1))
-      (fun n : ℕ => ((fun j => φ (u j n)), φ (↑n : ℤ)))
+      (r := fun n : ℕ => ((fun j => φ (u j n)), φ (↑n : ℤ)))
       (by
         intro n
         refine Prod.ext ?_ ?_
@@ -121,13 +121,13 @@ lemma IsPRecursiveSequence.isMCFinite
   set φ : ℤ →+* ZMod m := Int.castRingHom (ZMod m)
   obtain ⟨p, q0, hp, hper0⟩ :=
     IsEventuallyPeriodic.of_finite_orbit
-      (fun a : (Fin k → ZMod m) × ZMod m =>
+      (F := fun a : (Fin k → ZMod m) × ZMod m =>
         ((fun i : Fin k =>
           if h : i.val + 1 < k then a.1 ⟨i.val + 1, h⟩
           else ∑ j : Fin k, ((Q j.succ).map φ).eval (a.2 + φ (↑k : ℤ))
             * a.1 ⟨k - 1 - j.val, by have hj := j.isLt; omega⟩),
         a.2 + 1))
-      (fun n : ℕ => ((fun i : Fin k => φ (s (n + i.val))), φ (↑n : ℤ)))
+      (r := fun n : ℕ => ((fun i : Fin k => φ (s (n + i.val))), φ (↑n : ℤ)))
       (by
         intro n
         have hceφ : ∀ j : Fin k, φ ((Q j.succ).eval (↑(n + k) : ℤ))
@@ -233,7 +233,7 @@ lemma polynomially_recursive_MC_finite
 -- proof
   refine ⟨?_, ?_⟩
   · rintro ⟨k, u, P, rfl, hrec⟩
-    exact isMCFinite_of_mvPolynomial_recursion u P hrec
+    exact isMCFinite_of_mvPolynomial_recursion hrec
   · rintro ⟨k, P, -, -, -, hrec⟩
     refine IsPRecursiveSequence.isMCFinite
       (Q := Fin.cons 1 fun i : Fin k => P (i.val + 1)) ?_ (by simp)

@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.AlgebraicGeometry.NeronModelPropertyBundleCarrier
+import Lemma.Scheme.NeronModelPropertyBundleCarrier
 
 set_option autoImplicit false
 
@@ -7,7 +7,7 @@ noncomputable section
 
 universe u
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Scheme
 
 namespace NeronModelInfra
 

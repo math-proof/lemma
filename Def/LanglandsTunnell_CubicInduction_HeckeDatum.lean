@@ -1,5 +1,5 @@
-import Lemma.LanglandsTunnell.ConverseData
-import Lemma.LanglandsTunnell.RankinSelbergEuler
+import Lemma.Finset.ConverseData
+import Lemma.Polynomial.RankinSelbergEuler
 import Structure.LocalLanglands_HeckeCosetSystem
 import Abbrev.LanglandsTunnell_CubicInduction_HeckeDatum
 

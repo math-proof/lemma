@@ -1,13 +1,13 @@
 import Mathlib
 import Structure.ModularCurve_JZeroNeronIdentityComponent
 import Abbrev.GoodReductionJacobian_RelativeGroupLawBaseChange
-import Lemma.ModularCurve.ReductionOfPointsAgreesModL
-import Lemma.ModularCurve.JZeroSemistableSpecialization
+import Lemma.Scheme.ReductionOfPointsAgreesModL
+import Lemma.Scheme.JZeroSemistableSpecialization
 import Def.ModularCurve_JZeroNeronData
-import Lemma.ModularCurve.ToricDescentData
+import Lemma.Submodule.ToricDescentData
 import Def.GaloisRep_Flat
 import Def.FLTPrelim_Ramification
-import Lemma.ModularCurve.SupersingularNodePlaces
+import Lemma.Finset.SupersingularNodePlaces
 import Structure.JacJ1Iface
 import Structure.ModularCurve_JZeroNeronObjectAtP
 import Abbrev.ModularCurve_JZeroNeronObjectAtP

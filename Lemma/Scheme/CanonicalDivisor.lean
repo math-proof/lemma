@@ -1,6 +1,6 @@
 -- Carved: selected defs -> Def.ModularCurve_CanonicalDivisor; leftover decls remain here
 import Mathlib
-import Lemma.AlgebraicCurve.DivisorClassGroup
+import Lemma.Valuation.DivisorClassGroup
 import Def.ModularCurve_CanonicalDivisor
 import Class.ModularCurve_CanonicalDivisor
 

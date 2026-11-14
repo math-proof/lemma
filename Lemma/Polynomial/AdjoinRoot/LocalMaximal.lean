@@ -32,7 +32,8 @@ lemma exists_irreducible_factor_of_is_maximal
     IsLocalRing.eq_maximalIdeal hcomap_max
   have hle : Ideal.map (algebraMap A (AdjoinRoot g))
     (IsLocalRing.maximalIdeal A) ≤ m := by
-    rwa [← hcomap_eq]
+    rw [← hcomap_eq]
+    exact Ideal.map_comap_le
   have hsurj : Function.Surjective (Polynomial.mapRingHom
     (Ideal.Quotient.mk (IsLocalRing.maximalIdeal A))) := by
     rw [Polynomial.coe_mapRingHom]
@@ -139,7 +140,7 @@ lemma is_maximal_iff_irreducible_factor
   constructor
   · intro hm
     have := hm
-    exact exists_irreducible_factor_of_is_maximal g m
+    exact exists_irreducible_factor_of_is_maximal
   · rintro ⟨q, hirr, hdvd, rfl⟩
     exact is_maximal_of_irreducible_factor g q hirr hdvd
 
@@ -169,7 +170,7 @@ lemma is_maximal_iff_irreducible_factor_of_monic
     Ideal.span {AdjoinRoot.mk g q} := by
 -- proof
   have := hg.finite_adjoinRoot
-  exact is_maximal_iff_irreducible_factor g m
+  exact is_maximal_iff_irreducible_factor
 
 end AdjoinRoot
 

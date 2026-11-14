@@ -1,4 +1,4 @@
-import Lemma.AutomorphicForm.ArchWeightChar
+import Lemma.Matrix.ArchWeightChar
 
 set_option autoImplicit false
 

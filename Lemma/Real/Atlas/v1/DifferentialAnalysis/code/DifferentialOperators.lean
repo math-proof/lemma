@@ -191,13 +191,13 @@ lemma isSmoothNear_of_vanishesOn
   isSmoothNear u x₀ :=
 -- proof
   ⟨U, hU, hx₀, 0, contDiff_const, fun φ hφ => by rw [hv φ hφ]; simp⟩
-/-- If `u` is **globally smooth** (represented by a smooth `f`), then
-`P(D) u` is also globally smooth — represented by an explicit smooth `g`
-(the classical action of `P(D)` on `f`). -/
+-- If `u` is **globally smooth** (represented by a smooth `f`), then
+-- `P(D) u` is also globally smooth — represented by an explicit smooth `g`
+-- (the classical action of `P(D)` on `f`).
 section SingularSupportInclusion
 variable {n : ℕ}
-/-- **Singular support is contracted by `P(D)`:**
-`singsupp(P(D) u) ⊆ singsupp u`. -/
+-- **Singular support is contracted by `P(D)`:**
+-- `singsupp(P(D) u) ⊆ singsupp u`.
 end SingularSupportInclusion
 section WeakConvergence
 open Filter Topology
@@ -464,9 +464,9 @@ lemma parametrix_smooth_remainder_exists
     simp only [Set.eq_empty_iff_forall_notMem, Set.mem_setOf_eq, not_not] at hFparam
     exact hFparam y
   exact ⟨ψ, u - ψ, by abel, hψ_smooth⟩
-/-- **Pseudolocal estimate (distributional convolution form).** For any
-parametrix `F` with compact d-support, the singular support of `u` is
-contained in `singsupp F + singsupp(P(D) u)`. -/
+-- **Pseudolocal estimate (distributional convolution form).** For any
+-- parametrix `F` with compact d-support, the singular support of `u` is
+-- contained in `singsupp F + singsupp(P(D) u)`.
 section EllipticHypoelliptic
 
 end DifferentialOperators
@@ -609,7 +609,7 @@ lemma polySymbol_hasTemperateGrowth
         exact Complex.ofRealCLM.hasTemperateGrowth.comp (EuclideanSpace.proj j).hasTemperateGrowth
       exact hc.mul hx
     exact hP.mul hcoord
-set_option maxHeartbeats 400000 in
+set_option maxHeartbeats 400000
 
 end DifferentialOperators
 
@@ -713,10 +713,10 @@ lemma elliptic_parametrix_isParametrix_proof
   exact ⟨U, hU_open, hx₀_U, -f, hf_smooth.neg, fun ψ hψ => by
     simp only [UniformConvergenceCLM.neg_apply, hf_eq ψ hψ, Pi.neg_apply, smul_neg,
       integral_neg]⟩
-/-- **Pointwise singular-support bound for an elliptic parametrix.** Any
-parametrix `F` for an elliptic operator `P(D)` is smooth at every nonzero
-point. Proven by comparing `F` to the explicit Fourier-multiplier
-parametrix `F₀ = Q(D) δ₀` via `parametrix_inversion_isSmoothNear`. -/
+-- **Pointwise singular-support bound for an elliptic parametrix.** Any
+-- parametrix `F` for an elliptic operator `P(D)` is smooth at every nonzero
+-- point. Proven by comparing `F` to the explicit Fourier-multiplier
+-- parametrix `F₀ = Q(D) δ₀` via `parametrix_inversion_isSmoothNear`.
 section PoissonEquation
 open Filter Topology
 
@@ -1420,7 +1420,7 @@ lemma seminorm_compSubConst_zero_weight
     simp only [pow_zero, one_mul] at h
     rwa [hc, iteratedFDeriv_comp_sub, add_sub_cancel_right] at h
 omit [InnerProductSpace ℝ E] [MeasurableSpace E] [BorelSpace E] in
-set_option maxHeartbeats 6400000 in
+set_option maxHeartbeats 6400000
 
 end DifferentialOperators
 
@@ -1622,9 +1622,9 @@ lemma one_add_pow_bound
         gcongr; linarith [add_pow_nonneg_le_one_add a ha N]
       _ = 2 ^ (N + 1) * (1 + a ^ (N + 1)) := by ring
 omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] in
-/-- **Rapid decay of `v ∗ φ`.** For `v` with compact `dsupport`, all
-iterated derivatives of `x ↦ v(φ(· - x))` decay faster than any
-polynomial. Stated with weight `(1 + ‖x‖)^N`. -/
+-- **Rapid decay of `v ∗ φ`.** For `v` with compact `dsupport`, all
+-- iterated derivatives of `x ↦ v(φ(· - x))` decay faster than any
+-- polynomial. Stated with weight `(1 + ‖x‖)^N`.
 section PolynomialGrowthBound
 omit [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
   [MeasurableSpace E] [BorelSpace E]
@@ -1747,9 +1747,9 @@ lemma compactSupport_contDiff_to_schwartz
 -- proof
   ⟨hφ_supp.toSchwartzMap hφ_smooth,
     fun ξ => hφ_supp.toSchwartzMap_toFun hφ_smooth ξ⟩
-/-- **Existence of a parametrix cutoff.** For an elliptic polynomial `P`,
-there is a smooth compactly-supported function `φ` equal to `1` exactly on
-the (compact) zero set of the symbol `polySymbol n P`. -/
+-- **Existence of a parametrix cutoff.** For an elliptic polynomial `P`,
+-- there is a smooth compactly-supported function `φ` equal to `1` exactly on
+-- the (compact) zero set of the symbol `polySymbol n P`.
 
 end DifferentialOperators
 

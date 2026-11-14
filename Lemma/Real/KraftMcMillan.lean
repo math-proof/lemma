@@ -9,27 +9,9 @@ namespace MathlibExt.InformationTheory.KraftMcMillan
 
 /--
 [prefix_of_common_extension](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/InformationTheory/KraftMcMillan.lean)
--/
+
+Two words admitting a common extension are comparable by prefix. -/
 @[path]
-# Kraft–McMillan lemma for finite prefix codes
-For a finite code alphabet with at least two symbols, a finite family of
-natural-number lengths is realized by a prefix-free code if and only if its
-Kraft sum is at most one.
-* The forward direction goes through unique decodability: a prefix-free code
-  with no empty codeword is uniquely decodable, so pinned Mathlib's
-  `InformationTheory.kraft_mcmillan_inequality` applies. (The empty-codeword
-  case forces a singleton source alphabet, where the sum equals one.)
-* The converse is the classical finite greedy construction, which Mathlib does
-  not currently provide: words are chosen length by length, each new word of
-  length `n` outside the extensions of previously chosen codewords; the Kraft
-  hypothesis guarantees such a word exists.
-Source: Leon G. Kraft, *A Device for Quantizing, Grouping, and Coding
-Amplitude-Modulated Pulses*, S.M. thesis, MIT, 1949; B. McMillan,
-"Two inequalities implied by unique decipherability",
-*IEEE Transactions on Information Theory* 2(4) (1956), 115–116,
-DOI 10.1109/TIT.1956.1056818.
--/
-/-- Two words admitting a common extension are comparable by prefix. -/
 private theorem prefix_of_common_extension {β : Type*} (w₁ : List β) :
   ∀ (w₂ A B : List β), w₁ ++ A = w₂ ++ B → w₁ <+: w₂ ∨ w₂ <+: w₁ := by
   induction w₁ with
@@ -55,7 +37,7 @@ namespace MathlibExt.InformationTheory.KraftMcMillan
 @[path]
 private lemma uniquelyDecodable_of_prefixFree {α β : Type*} {code : α → List β}
   (hPF : IsPrefixFree code) (hempty : ∀ a, code a ≠ []) :
-  InformationTheory.UniquelyDecodable (Set.range code) := by
+  InformationTheory.IsUniquelyDecodable (Set.range code) := by
   suffices key : ∀ L₁ L₂ : List (List β), (∀ w ∈ L₁, w ∈ Set.range code) →
     (∀ w ∈ L₂, w ∈ Set.range code) → L₁.flatten = L₂.flatten → L₁ = L₂ from
     fun L₁ L₂ h₁ h₂ hh => key L₁ L₂ h₁ h₂ hh
@@ -135,7 +117,7 @@ private lemma forward {α β : Type*} [Fintype α] [Fintype β]
       = Set.range code := by
       ext w
       simp
-    have hUDS : InformationTheory.UniquelyDecodable
+    have hUDS : InformationTheory.IsUniquelyDecodable
       ((Finset.image code Finset.univ : Finset (List β)) : Set (List β)) := by
       rwa [himg]
     have hne : Nonempty β := Fintype.card_pos_iff.mp (by omega)
@@ -231,9 +213,9 @@ namespace MathlibExt.InformationTheory.KraftMcMillan
 
 /--
 [card_blocked_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/InformationTheory/KraftMcMillan.lean)
+each codeword `code b` form a fiber of size `(card β) ^ (n - length)`.
 -/
 @[path]
-each codeword `code b` form a fiber of size `(card β) ^ (n - length)`. -/
 private lemma card_blocked_le {α β : Type*} [Fintype β]
   [DecidableEq β] (n : ℕ) (code : α → List β) (S : Finset α)
   (hle : ∀ b ∈ S, (code b).length ≤ n) :
@@ -289,9 +271,9 @@ namespace MathlibExt.InformationTheory.KraftMcMillan
 
 /--
 [nat_blocked_bound](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/InformationTheory/KraftMcMillan.lean)
+most `n` already chosen leave room for one more word of length `n`.
 -/
 @[path]
-most `n` already chosen leave room for one more word of length `n`. -/
 private lemma nat_blocked_bound {α β : Type*} [Fintype α] [Fintype β]
   (l : α → ℕ)
   (hK : ∑ b : α, (1 : ℝ) / (Fintype.card β : ℝ) ^ (l b) ≤ 1)
@@ -356,11 +338,11 @@ namespace MathlibExt.InformationTheory.KraftMcMillan
 
 /--
 [backward](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/InformationTheory/KraftMcMillan.lean)
--/
-@[path]
 a prefix-free code. Symbols are handled length by length; at each step the
 integer budget leaves a length-`n` word outside all previously blocked
-extensions. -/
+extensions.
+-/
+@[path]
 private lemma backward {α β : Type*} [Fintype α] [Fintype β]
   (l : α → ℕ)
   (hK : ∑ b : α, (1 : ℝ) / (Fintype.card β : ℝ) ^ (l b) ≤ 1)

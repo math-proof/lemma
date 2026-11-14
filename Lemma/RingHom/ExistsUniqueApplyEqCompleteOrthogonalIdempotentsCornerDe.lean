@@ -35,9 +35,9 @@ private lemma isLocalization_B {K : Type} [CommRing K] {ι : Type} {χ : ι → 
   refine { map_units := ?_, surj := ?_, exists_of_eq := ?_ }
   ·
     intro u
-    obtain ⟨n, hn⟩ := u.2
+    obtain ⟨n, hn⟩ := (Submonoid.mem_powers_iff _ _).mp u.2
     refine IsUnit.of_mul_eq_one (b := ρ χ a (y ^ n)) (Subtype.ext ?_)
-    rw [hn]
+    rw [← hn]
     change ((algebraMap ℤ (B χ a) ((d a : ℤ) ^ n) : B χ a) : ℚ) * χ a (y ^ n) = 1
     rw [map_pow (χ a), hy, map_pow]
     change (((d a : ℤ) : B χ a) : ℚ) ^ n * _ = 1
@@ -47,10 +47,9 @@ private lemma isLocalization_B {K : Type} [CommRing K] {ι : Type} {χ : ι → 
     intro w
     obtain ⟨k, hk⟩ := w.2
     obtain ⟨n, m, hm⟩ := hval a k
-    refine ⟨(m, ⟨(d a : ℤ) ^ n, n, rfl⟩), Subtype.ext ?_⟩
-    rw [← hk]
-    change χ a k * (((d a : ℤ) ^ n : ℤ) : ℚ) = (m : ℚ)
-    rw [hm]
+    refine ⟨(m, ⟨(d a : ℤ) ^ n, (Submonoid.mem_powers_iff _ _).mpr ⟨n, rfl⟩⟩), Subtype.ext ?_⟩
+    change (w : ℚ) * (((d a : ℤ) ^ n : ℤ) : ℚ) = (m : ℚ)
+    rw [← hk, hm]
     push_cast
     field_simp
   ·
@@ -230,3 +229,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-14

@@ -50,23 +50,23 @@ private lemma main
   {red : ↥A →+* k}
   {τ : ↥A}
 -- given
-  (hA : A.LiesOverPrime ℓ)
+  (_hA : A.LiesOverPrime ℓ)
   (hτ : A.valuation (τ : AlgebraicClosure ℚ) < 1) :
 -- imply
   red τ = 0 := by
 -- proof
   classical
-  haveI hprime : (RingHom.ker red).IsPrime := RingHom.ker_isPrime red
-  haveI : IsDomain (A ⧸ RingHom.ker red) := Ideal.Quotient.isDomain _
+  have hprime : (RingHom.ker red).IsPrime := RingHom.ker_isPrime red
+  have : IsDomain (A ⧸ RingHom.ker red) := Ideal.Quotient.isDomain _
 
   have hℓ : ((ℓ : ℕ) : A ⧸ RingHom.ker red) = 0 := by
     rw [← map_natCast (Ideal.Quotient.mk (RingHom.ker red)), Ideal.Quotient.eq_zero_iff_mem,
       RingHom.mem_ker, map_natCast]
     exact CharP.cast_eq_zero k ℓ
-  haveI : CharP (A ⧸ RingHom.ker red) ℓ := (CharP.charP_iff_prime_eq_zero Fact.out).mpr hℓ
-  letI : Algebra (ZMod ℓ) (A ⧸ RingHom.ker red) := ZMod.algebra _ ℓ
+  have : CharP (A ⧸ RingHom.ker red) ℓ := (CharP.charP_iff_prime_eq_zero Fact.out).mpr hℓ
+  let : Algebra (ZMod ℓ) (A ⧸ RingHom.ker red) := ZMod.algebra _ ℓ
 
-  haveI halg : Algebra.IsAlgebraic (ZMod ℓ) (A ⧸ RingHom.ker red) := by
+  have halg : Algebra.IsAlgebraic (ZMod ℓ) (A ⧸ RingHom.ker red) := by
     refine ⟨fun x => ?_⟩
     obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective x
     obtain ⟨Q, hQ, haQ⟩ := exists_isPrimitive_aeval_eq_zero A a
@@ -77,7 +77,7 @@ private lemma main
       ← aeval_def,
       show (Ideal.Quotient.mk (RingHom.ker red)) a = Ideal.Quotient.mkₐ ℤ (RingHom.ker red) a from rfl,
       aeval_algHom_apply, haQ, map_zero]
-  haveI : Algebra.IsIntegral (ZMod ℓ) (A ⧸ RingHom.ker red) := Algebra.isAlgebraic_iff_isIntegral.mp halg
+  have : Algebra.IsIntegral (ZMod ℓ) (A ⧸ RingHom.ker red) := Algebra.isAlgebraic_iff_isIntegral.mp halg
 
   have hfield : IsField (A ⧸ RingHom.ker red) :=
     isField_of_isIntegral_of_isField' (Field.toIsField (ZMod ℓ))
@@ -89,3 +89,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

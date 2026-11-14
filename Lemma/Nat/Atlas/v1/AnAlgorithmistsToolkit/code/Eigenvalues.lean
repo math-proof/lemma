@@ -6,6 +6,8 @@ open Matrix SimpleGraph Finset BigOperators
 open Matrix SimpleGraph Finset BigOperators Module.End
 
 
+set_option linter.style.haveILetI false
+
 namespace EigenvalueBounds
 
 /--
@@ -339,6 +341,7 @@ lemma lapMatrix_eigenspace_zero_eq_span_ones
       simp [SimpleGraph.lapMatrix_mulVec_apply']
     rw [mulVec_smul, h0]
     exact smul_zero c
+end Matrix
 end LapMatrixNullSpace
 end Matrix
 namespace EigenvalueBounds
@@ -390,7 +393,7 @@ lemma eigenvalue_second_smallest_pos
   have hker₂ : (G.lapMatrix ℝ).mulVec (hL.eigenvectorBasis j₂).1 = 0 := by
     have h := hL.mulVec_eigenvectorBasis j₂
     rwa [hev₂, zero_smul] at h
-  have hspan := Matrix.lapMatrix_eigenspace_zero_eq_span_ones G hconn
+  have hspan := lapMatrix_eigenspace_zero_eq_span_ones hconn
   have hmem₁ : (hL.eigenvectorBasis j₁).1 ∈ Submodule.span ℝ {fun _ : V => (1 : ℝ)} := by
     rwa [← hspan, eigenspace_zero, LinearMap.mem_ker, mulVecLin_apply]
   have hmem₂ : (hL.eigenvectorBasis j₂).1 ∈ Submodule.span ℝ {fun _ : V => (1 : ℝ)} := by
@@ -440,9 +443,10 @@ private lemma sum_eigenvalues_eq
   {G : SimpleGraph V}
   [DecidableRel G.Adj] :
 -- imply
-  let hL := isHermitian_lapMatrix ℝ G ∑ i, hL.eigenvalues₀ i = ∑ v : V, (G.degree v : ℝ) := by
+  let hL := isHermitian_lapMatrix ℝ G
+  ∑ i, hL.eigenvalues₀ i = ∑ v : V, (G.degree v : ℝ) := by
 -- proof
-  apply EigenvalueBounds.sum_eigenvalues G
+  exact EigenvalueBounds.sum_eigenvalues₀_eq_sum_degrees G
 
 /--
 [sum_eigenvalues](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AnAlgorithmistsToolkit/code/Eigenvalues.lean)
@@ -454,9 +458,11 @@ private lemma sum_eigenvalues_eq_2
   {G : SimpleGraph V}
   [DecidableRel G.Adj] :
 -- imply
-  let hL := isHermitian_lapMatrix ℝ G (∑ i, hL.eigenvalues₀ i = ∑ v : V, (G.degree v : ℝ)) ∧ (∑ v : V, (G.degree v : ℝ)) ≤ (G.maxDegree : ℝ) * (Fintype.card V : ℝ) := by
+  let hL := isHermitian_lapMatrix ℝ G
+  (∑ i, hL.eigenvalues₀ i = ∑ v : V, (G.degree v : ℝ)) ∧
+    (∑ v : V, (G.degree v : ℝ)) ≤ (G.maxDegree : ℝ) * (Fintype.card V : ℝ) := by
 -- proof
-  apply EigenvalueBounds.sum_eigenvalues G
+  exact EigenvalueBounds.sum_eigenvalues₀_eq_sum_degrees_le_maxDegree_mul_card G
 
 /--
 [eigenvalues](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AnAlgorithmistsToolkit/code/Eigenvalues.lean)
@@ -469,10 +475,11 @@ private lemma eigenvalues_eq
   [DecidableRel G.Adj]
   [Nonempty V] :
 -- imply
-  let hL := isHermitian_lapMatrix ℝ G hL.eigenvalues₀ ⟨Fintype.card V - 1, Nat.sub_lt Fintype.card_pos Nat.one_pos⟩ = 0 := by
+  let hL := isHermitian_lapMatrix ℝ G
+  hL.eigenvalues₀ ⟨Fintype.card V - 1, Nat.sub_lt Fintype.card_pos Nat.one_pos⟩ = 0 := by
 -- proof
-  apply EigenvalueBounds.eigenvalues G
+  exact EigenvalueBounds.eigenvalues₀_min_eq_zero G
 
 
 -- created on 2026-10-23
--- updated on 2026-10-28
+-- updated on 2026-11-13

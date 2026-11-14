@@ -1,4 +1,4 @@
-import Lemma.CerednikDrinfeld.DrinfeldHolomorphic
+import Lemma.Polynomial.DrinfeldHolomorphic
 import Lemma.ValuationSubring.CompletionRatClosure
 import Instance.ValuationSubring_CompletionDecompositionAction
 import Mathlib.FieldTheory.Fixed
@@ -8,7 +8,7 @@ set_option autoImplicit false
 
 noncomputable section
 
-open CerednikDrinfeld
+open CerednikDrinfeld Polynomial
 
 namespace ValuationSubring
 

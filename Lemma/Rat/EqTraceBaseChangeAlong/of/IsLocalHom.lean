@@ -18,8 +18,9 @@ private lemma main
 -- imply
   (ρ.baseChangeAlong φ hφ).trace σ = φ (ρ.trace σ) := by
 -- proof
-  letI : Algebra A B := φ.toAlgebra
+  let : Algebra A B := φ.toAlgebra
   exact LinearMap.trace_baseChange (ρ.ρ σ) B
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

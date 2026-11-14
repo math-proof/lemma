@@ -13,7 +13,7 @@ import Lemma.Nat.Atlas.v1.NumberTheoryI.code.HenselLemmas
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.ScalingStep
 import Instance.v1.Atlas.NumberTheoryI.code.ScalingStep
 import Mathlib.RingTheory.DiscreteValuationRing.TFAE
-import Mathlib.RingTheory.DedekindDomain.IntegralClosure
+import Mathlib.RingTheory.Ideal.IntegralClosure
 import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
 import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
 import Mathlib.RingTheory.Ideal.Over

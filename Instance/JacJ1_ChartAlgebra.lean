@@ -1,5 +1,5 @@
 -- Carved from Lemma/Definitions/Def_JacJ1_ChartAlgebra.lean: instance decls only.
-import Mathlib.RingTheory.DedekindDomain.IntegralClosure
+import Mathlib.RingTheory.Ideal.IntegralClosure
 import Mathlib.RingTheory.DedekindDomain.AdicValuation
 import Mathlib.RingTheory.Localization.Integral
 import Mathlib.RingTheory.Valuation.Integral

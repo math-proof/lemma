@@ -97,7 +97,6 @@ namespace NPCompleteness
 -/
 @[path]
 lemma PolyReducible.compl_left
-  {enc : SharpSATEncoding}
   {Γ : Type}
   {A B : Set (List Γ)}
 -- given
@@ -123,8 +122,7 @@ namespace NPCompleteness
 [BoolFormula.not_satisfiable_falseConst](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfComputation/code/SharpSATCoNPHard.lean)
 -/
 @[path]
-lemma BoolFormula.not_satisfiable_falseConst
-  {enc : SharpSATEncoding} :
+lemma BoolFormula.not_satisfiable_falseConst :
 -- imply
   ¬BoolFormula.falseConst.Satisfiable := by
 -- proof
@@ -139,8 +137,7 @@ namespace NPCompleteness
 [BoolFormula.countSat_falseConst](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfComputation/code/SharpSATCoNPHard.lean)
 -/
 @[path]
-lemma BoolFormula.countSat_falseConst
-  {enc : SharpSATEncoding} :
+lemma BoolFormula.countSat_falseConst :
 -- imply
   BoolFormula.falseConst.countSat = 0 :=
 -- proof
@@ -160,8 +157,8 @@ lemma unsatToSharpSAT_correct
   ∀ w : List BoolFormula, w ∈ SATLangᶜ ↔ unsatToSharpSAT enc w ∈ SharpSATLang enc := by
 -- proof
   intro w
-  simp only [Set.mem_compl_iff, SATLang, Set.mem_setOf_eq,
-    SharpSATLang, Set.mem_setOf_eq, unsatToSharpSAT]
+  simp only [Set.mem_compl_iff, SATLang, Set.mem_ofPred_eq,
+    SharpSATLang, Set.mem_ofPred_eq, unsatToSharpSAT]
   constructor
   · intro hw
     push Not at hw
@@ -171,10 +168,10 @@ lemma unsatToSharpSAT_correct
       exact ⟨φ, 0, enc.decode_encode (φ, 0),
         (BoolFormula.countSat_eq_zero_of_not_satisfiable hunsat).symm⟩
     | [] =>
-      exact ⟨BoolFormula.falseConst, 0, enc.decode_encode _,
+      exact ⟨BoolFormula.falseConst, 0, enc.decode_encode (BoolFormula.falseConst, 0),
         BoolFormula.countSat_falseConst.symm⟩
     | a :: b :: rest =>
-      exact ⟨BoolFormula.falseConst, 0, enc.decode_encode _,
+      exact ⟨BoolFormula.falseConst, 0, enc.decode_encode (BoolFormula.falseConst, 0),
         BoolFormula.countSat_falseConst.symm⟩
   · intro ⟨φ', k, hdec, hk⟩
     push Not
@@ -188,12 +185,11 @@ lemma unsatToSharpSAT_correct
     have hk_eq : k = 0 := ((Prod.ext_iff.mp hinj).2).symm
     subst hφ'_eq; subst hk_eq
     exact BoolFormula.not_satisfiable_of_countSat_eq_zero (by omega)
-/--
-The reduction function `unsatToSharpSAT` is computable in polynomial time:
-encoding `⟨φ, 0⟩` from `φ` takes polynomial work in `|φ|`.
--/
+-- The reduction function unsatToSharpSAT is computable in polynomial time:
+-- encoding ⟨φ, 0⟩ from φ takes polynomial work in |φ|.
 
 end NPCompleteness
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

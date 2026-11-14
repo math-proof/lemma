@@ -1,5 +1,4 @@
 import Mathlib
-import Instance.AlgebraicGeometry_DoubleComplex
 
 set_option autoImplicit false
 

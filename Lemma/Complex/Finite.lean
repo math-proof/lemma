@@ -10,9 +10,9 @@ open scoped MatrixGroups
 
 private lemma  ModularCurve.Period.fg_gamma0 (N : ℕ) [NeZero N] : Group.FG (Gamma0 N) := by
   classical
-  have : Group.FG SL(2, ℤ) := ⟨⟨{ModularGroup.S, ModularGroup.T}, by
-    rw [Finset.coe_insert, Finset.coe_singleton]
-    exact SpecialLinearGroup.SL2Z_generators⟩⟩
+  have : Group.FG SL(2, ℤ) :=
+    (Group.fg_iff).2 ⟨{ModularGroup.S, ModularGroup.T},
+      SpecialLinearGroup.SL2Z_generators, Set.toFinite _⟩
   exact Subgroup.fg_of_index_ne_zero _
 @[path]
 private lemma main
@@ -21,7 +21,7 @@ private lemma main
   Module.Finite ℂ (Additive (CongruenceSubgroup.Gamma0 N) →+ ℂ) := by
 -- proof
   classical
-  obtain ⟨s, hs⟩ := (ModularCurve.Period.fg_gamma0 N).out
+  obtain ⟨s, hs⟩ := (Group.isMulFG_iff (G := Gamma0 N)).1 (ModularCurve.Period.fg_gamma0 N)
   let ev : (Additive (Gamma0 N) →+ ℂ) →ₗ[ℂ] (s → ℂ) :=
     { toFun := fun φ i => φ (Additive.ofMul (i : Gamma0 N))
       map_add' := fun _ _ => rfl

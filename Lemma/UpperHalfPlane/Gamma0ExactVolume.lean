@@ -1,6 +1,6 @@
 import Mathlib
-import Lemma.AutomorphicForm.FundamentalDomainExactVolume
-import Lemma.AutomorphicForm.Gamma0FundamentalSet
+import Lemma.UpperHalfPlane.FundamentalDomainExactVolume
+import Lemma.UpperHalfPlane.Gamma0FundamentalSet
 
 open MeasureTheory Set ModularGroup UpperHalfPlane CongruenceSubgroup
 open scoped MatrixGroups Pointwise ENNReal Modular

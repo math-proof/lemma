@@ -8,7 +8,7 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.Algebra.RestrictedProduct.Basic
+import Mathlib.Set.Algebra.RestrictedProduct.Basic
 import Mathlib.RingTheory.Valuation.ValuationSubring
 import Mathlib.LinearAlgebra.Dual.Defs
 import Mathlib.LinearAlgebra.Dual.Lemmas
@@ -76,4 +76,3 @@ noncomputable def riemannRochSpace (D : CurveDivisor C) : Submodule k F where
         rw [key, ord_mul,
             RiemannRochData.ord_algebraMap (F := F) (k := k), zero_add]
         exact hf_eff P
-

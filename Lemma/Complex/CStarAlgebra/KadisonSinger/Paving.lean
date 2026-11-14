@@ -1,6 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.CStarAlgebra.KadisonSinger.Paving.Part4
+import Def.Analysis.CStarAlgebra.KadisonSinger.Paving
 
 open scoped BigOperators Matrix.Norms.L2Operator
 open scoped Matrix.Norms.L2Operator MatrixOrder ComplexOrder

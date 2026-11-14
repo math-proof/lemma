@@ -1210,7 +1210,7 @@ lemma idealOrder_mul_unit
   idealOrder ((u : FractionalIdeal R⁰ K) * I) = idealOrder I := by
 -- proof
   ext x
-  simp only [idealOrder, Set.mem_setOf_eq]
+  simp only [idealOrder, Set.mem_ofPred_eq]
   rw [show (∀ y ∈ ((↑u * I : FractionalIdeal R⁰ K) : Submodule R K),
     x * y ∈ ((↑u * I : FractionalIdeal R⁰ K) : Submodule R K)) ↔
     spanSingleton R⁰ x * (↑u * I) ≤ ↑u * I

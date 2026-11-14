@@ -1,7 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.ComplexVariables.code.Lecture2
-open Real in Complex
+open Real
+open Complex
 
 
 namespace Complex

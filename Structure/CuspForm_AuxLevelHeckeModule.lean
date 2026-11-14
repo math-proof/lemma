@@ -1,4 +1,4 @@
-import Lemma.CohCarrier.Inst
+import Lemma.ZMod.Inst
 import Instance.CuspForm_HeckeAlgebra
 import Mathlib.RingTheory.LocalRing.ResidueField.Basic
 import Instance.CuspForm_AuxLevelHeckeModule

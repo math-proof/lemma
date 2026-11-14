@@ -5,6 +5,7 @@ import Class.Mathlib_Algebra_IsDirectLimit
 section
 
 variable {ι : Type*} [Preorder ι] {M : ι → Type*} {P : Type*}
+  (f : (i j : ι) → (h : i ≤ j) → M i → M j) (g : ∀ i, M i → P)
 
 variable [DirectedSystem M f] [IsDirectLimit f g]
 
@@ -15,6 +16,8 @@ variable {P₁ P₂ : Type*} (g₁ : ∀ i, M i → P₁) (g₂ : ∀ i, M i →
 namespace Module
 
 variable {R : Type*} [Semiring R] [∀ i, AddCommMonoid (M i)] [∀ i, Module R (M i)]
+  [AddCommMonoid P] [Module R P] (f : (i j : ι) → i ≤ j → M i →ₗ[R] M j)
+  [DirectedSystem M (f · · ·)] [IsDirectLimit (fun ⦃i j⦄ h => f i j h) g] [IsDirected ι (· ≤ ·)]
 
 instance [DecidableEq ι] [Nonempty ι] :
     IsDirectLimit (f · · ·) (Module.DirectLimit.of R ι M f ·) where

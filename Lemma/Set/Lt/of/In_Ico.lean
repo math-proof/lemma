@@ -25,6 +25,6 @@ private lemma domain
   lt_of_le_of_lt h₀.left h₀.right
 
 
--- created on 2023-11-12
+-- created on 2021-03-12
 -- updated on 2026-10-26
 -- updated on 2026-10-24

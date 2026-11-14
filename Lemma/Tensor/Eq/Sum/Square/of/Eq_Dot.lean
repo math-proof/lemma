@@ -17,12 +17,20 @@ private lemma main
   have vm : ∀ (y : Fin n → ℂ) (i j : Fin n), y ᵥ* swapMatrix i j = y ∘ Equiv.swap i j := by
     intro y i j
     funext c
-    simp only [Matrix.vecMul, dotProduct, swapMatrix, Matrix.of_apply, mul_ite, mul_one, mul_zero, Function.comp_apply]
-    rw [Finset.sum_eq_single (Equiv.swap i j c) (fun e _ he => ite_eq_right (fun h => he (by rw [h, Equiv.swap_apply_self])))
-      (fun h => absurd (Finset.mem_univ _) h), ite_eq_left (Equiv.swap_apply_self i j c).symm]
+    simp only [Matrix.vecMul, dotProduct, swapMatrix, Matrix.of_apply, Function.comp_apply]
+    refine (Finset.sum_eq_single (Equiv.swap i j c) (fun e _ he => ?_) (fun h => ?_)).trans ?_
+    ·
+      have hne : Equiv.swap i j e ≠ c := by
+        intro hswap
+        apply he
+        rw [← hswap, Equiv.swap_apply_self]
+      simp [KroneckerDelta, hne]
+    ·
+      apply absurd (Finset.mem_univ _) h
+    ·
+      simp [KroneckerDelta, Equiv.swap_apply_self]
   rw [← h, vm]
   exact (Equiv.sum_comp (Equiv.swap i j) (fun k => x k ^ 2)).symm
-
 
 @[path]
 private lemma double_limits
@@ -37,9 +45,18 @@ private lemma double_limits
   have vm : ∀ (y : Fin n → ℂ) (i j : Fin n), y ᵥ* swapMatrix i j = y ∘ Equiv.swap i j := by
     intro y i j
     funext c
-    simp only [Matrix.vecMul, dotProduct, swapMatrix, Matrix.of_apply, mul_ite, mul_one, mul_zero, Function.comp_apply]
-    rw [Finset.sum_eq_single (Equiv.swap i j c) (fun e _ he => ite_eq_right (fun h => he (by rw [h, Equiv.swap_apply_self])))
-      (fun h => absurd (Finset.mem_univ _) h), ite_eq_left (Equiv.swap_apply_self i j c).symm]
+    simp only [Matrix.vecMul, dotProduct, swapMatrix, Matrix.of_apply, Function.comp_apply]
+    refine (Finset.sum_eq_single (Equiv.swap i j c) (fun e _ he => ?_) (fun h => ?_)).trans ?_
+    ·
+      have hne : Equiv.swap i j e ≠ c := by
+        intro hswap
+        apply he
+        rw [← hswap, Equiv.swap_apply_self]
+      simp [KroneckerDelta, hne]
+    ·
+      apply absurd (Finset.mem_univ _) h
+    ·
+      simp [KroneckerDelta, Equiv.swap_apply_self]
   have key : ∀ z : Fin n → ℂ, ∑ a, ∑ b ∈ Finset.univ.filter (· < a), (z a - z b) ^ 2 = (∑ a, ∑ b, (z a - z b) ^ 2) / 2 := by
     intro z
     simp only [Finset.sum_filter]
@@ -58,9 +75,10 @@ private lemma double_limits
       rw [← Finset.sum_add_distrib]
       apply Finset.sum_congr rfl
       intro b _
-      rcases lt_trichotomy a b with hab | hab | hab
+      obtain hab | hab | hab := lt_trichotomy a b
       · rw [ite_eq_right (not_lt.mpr hab.le), ite_eq_left hab, zero_add]
-      · subst hab
+      ·
+        subst hab
         simp
       · rw [ite_eq_left hab, ite_eq_right (not_lt.mpr hab.le), add_zero]
     rw [e3, e2]
@@ -71,7 +89,6 @@ private lemma double_limits
   apply Fintype.sum_equiv (Equiv.swap i j)
   intro a
   exact Fintype.sum_equiv (Equiv.swap i j) _ _ (fun b => rfl)
-
 
 @[path]
 private lemma offset
@@ -87,11 +104,21 @@ private lemma offset
   have vm : ∀ (y : Fin n → ℂ) (i j : Fin n), y ᵥ* swapMatrix i j = y ∘ Equiv.swap i j := by
     intro y i j
     funext c
-    simp only [Matrix.vecMul, dotProduct, swapMatrix, Matrix.of_apply, mul_ite, mul_one, mul_zero, Function.comp_apply]
-    rw [Finset.sum_eq_single (Equiv.swap i j c) (fun e _ he => ite_eq_right (fun h => he (by rw [h, Equiv.swap_apply_self])))
-      (fun h => absurd (Finset.mem_univ _) h), ite_eq_left (Equiv.swap_apply_self i j c).symm]
+    simp only [Matrix.vecMul, dotProduct, swapMatrix, Matrix.of_apply, Function.comp_apply]
+    refine (Finset.sum_eq_single (Equiv.swap i j c) (fun e _ he => ?_) (fun h => ?_)).trans ?_
+    ·
+      have hne : Equiv.swap i j e ≠ c := by
+        intro hswap
+        apply he
+        rw [← hswap, Equiv.swap_apply_self]
+      simp [KroneckerDelta, hne]
+    ·
+      apply absurd (Finset.mem_univ _) h
+    ·
+      simp [KroneckerDelta, Equiv.swap_apply_self]
   rw [← h, vm]
   exact (Equiv.sum_comp (Equiv.swap i j) (fun k => (x k - a) ^ 2)).symm
 
 
--- created on 2019-11-14
+-- created on 2019-11-13
+-- updated on 2026-11-13

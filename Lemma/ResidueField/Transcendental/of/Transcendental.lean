@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.RegularProlongation
+import Lemma.Scheme.RegularProlongation
 import Lemma.Int.P2MUtil
 
-open AlgebraicCurve IsLocalRing Polynomial
+open AlgebraicCurve IsLocalRing Polynomial Scheme
 
 /--
 [AlgebraicCurve_RegularProlongation_transcendental_of_residue_transcendental](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_RegularProlongation_transcendental_of_residue_transcendental.lean)

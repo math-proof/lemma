@@ -100,7 +100,7 @@ lemma free_norm_trace_baseChange
 -- imply
   Nonempty (Basis ι A' (A' ⊗[A] B)) ∧ (∀ b : B, algebraMap A A' (Algebra.norm A b) = @Algebra.norm A' (A' ⊗[A] B) _ _ (Algebra.TensorProduct.leftAlgebra) (Algebra.TensorProduct.includeRight b)) ∧ (∀ b : B, algebraMap A A' (Algebra.trace A B b) = @Algebra.trace A' (A' ⊗[A] B) _ _ (Algebra.TensorProduct.leftAlgebra) (Algebra.TensorProduct.includeRight b)) :=
 -- proof
-  ⟨⟨bB.baseChange A'⟩, norm_baseChange bB, trace_baseChange bB⟩
+  ⟨⟨bB.baseChange A'⟩, fun _ => norm_baseChange (bB := bB), fun _ => trace_baseChange (bB := bB)⟩
 end NormTraceBaseChange
 section NormTraceEmbeddings
 variable {K L : Type*} [Field K] [Field L] [Algebra K L]
@@ -217,6 +217,7 @@ lemma trace_eq_neg_finrank_mul_nextCoeff
   ring
 
 section NormTraceIntegrality
+set_option linter.unusedSectionVars false
 variable {A : Type*} [CommRing A] [IsDomain A] [IsIntegrallyClosed A]
 variable {K : Type*} [Field K] [Algebra A K] [IsFractionRing A K]
 variable {L : Type*} [Field L] [Algebra K L] [FiniteDimensional K L]
@@ -226,7 +227,6 @@ variable [Algebra A L] [IsScalarTower A K L]
 [norm_mem_of_isIntegral](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/NormTrace.lean)
 -/
 @[path]
-omit [IsDomain A] [FiniteDimensional K L] in
 lemma norm_mem_of_isIntegral
   {x : L}
 -- given
@@ -240,7 +240,6 @@ lemma norm_mem_of_isIntegral
 [trace_mem_of_isIntegral](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/NormTrace.lean)
 -/
 @[path]
-omit [IsDomain A] in
 lemma trace_mem_of_isIntegral
   {x : L}
 -- given
@@ -259,14 +258,14 @@ section NormTraceTransitivity
 lemma norm_tower
   [CommRing A]
   [CommRing B]
-  [Ring C]
+  [Ring D]
   [Algebra A B]
-  [Algebra A C]
-  [Algebra B C]
-  [IsScalarTower A B C]
+  [Algebra A D]
+  [Algebra B D]
+  [IsScalarTower A B D]
   [Module.Free A B]
-  [Module.Free B C]
-  {x : C} :
+  [Module.Free B D]
+  {x : D} :
 -- imply
   Algebra.norm A (Algebra.norm B x) = Algebra.norm A x :=
 -- proof
@@ -279,18 +278,18 @@ lemma norm_tower
 lemma trace_tower
   [CommRing A]
   [CommRing B]
-  [CommRing C]
+  [CommRing D]
   [Algebra A B]
-  [Algebra A C]
-  [Algebra B C]
-  [IsScalarTower A B C]
+  [Algebra A D]
+  [Algebra B D]
+  [IsScalarTower A B D]
   [Module.Free A B]
   [Module.Finite A B]
-  [Module.Free B C]
-  [Module.Finite B C]
-  {x : C} :
+  [Module.Free B D]
+  [Module.Finite B D]
+  {x : D} :
 -- imply
-  Algebra.trace A B (Algebra.trace B C x) = Algebra.trace A C x :=
+  Algebra.trace A B (Algebra.trace B D x) = Algebra.trace A D x :=
 -- proof
   Algebra.trace_trace x
 end NormTraceTransitivity

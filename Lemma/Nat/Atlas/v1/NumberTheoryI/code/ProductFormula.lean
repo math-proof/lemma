@@ -71,6 +71,14 @@ lemma mulLeftContinuousAddEquiv_preimage_smul
 -- proof
   ext x
   simp only [Set.mem_preimage, mulLeftContinuousAddEquiv_apply]
+  constructor
+  · rintro ⟨y, hy, hxy⟩
+    have : y = x := by
+      apply mul_left_cancel₀ ha
+      simpa [smul_eq_mul] using hxy
+    rwa [← this]
+  · intro hx
+    exact ⟨x, hx, by simp [smul_eq_mul]⟩
 
 /--
 [mulLeftContinuousAddEquiv_symm](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/ProductFormula.lean)
@@ -107,7 +115,7 @@ lemma proposition_13_16_haar_scaling
   μ (a • S) = ↑(addEquivAddHaarChar (mulLeftContinuousAddEquiv ha)) * μ S := by
 -- proof
   have hscale := addEquivAddHaarChar_smul_preimage μ (mulLeftContinuousAddEquiv ha) (X := a • S)
-  rw [mulLeftContinuousAddEquiv_preimage_smul ha S] at hscale
+  rw [mulLeftContinuousAddEquiv_preimage_smul ha] at hscale
   rw [← hscale]; simp
 
 /--
@@ -127,7 +135,7 @@ lemma distribHaarChar_eq_addEquivAddHaarChar_mulLeft
 -- proof
   obtain ⟨s, hs_compact, hs_nhd⟩ := exists_compact_mem_nhds (0 : K)
   have hs_ne_zero : (addHaar : Measure K) s ≠ 0 := by
-    obtain ⟨U, hU_sub, hU_open, h0U⟩ := mem_nhds_iff.mp hs_nhd
+    obtain ⟨U, hU_sub, hU_open, h0U⟩ := _root_.mem_nhds_iff.mp hs_nhd
     exact ne_of_gt (lt_of_lt_of_le (hU_open.measure_pos addHaar ⟨0, h0U⟩) (measure_mono hU_sub))
   have hs_ne_top : (addHaar : Measure K) s ≠ ⊤ := hs_compact.measure_lt_top.ne
   apply distribHaarChar_eq_of_measure_smul_eq_mul (s := s) (μ := addHaar) hs_ne_zero hs_ne_top

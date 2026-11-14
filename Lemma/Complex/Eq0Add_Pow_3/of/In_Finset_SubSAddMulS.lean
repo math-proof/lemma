@@ -1,4 +1,5 @@
 import Lemma.Complex.Eq0Add_Pow_3.of.In_Finset_AddSMulS
+open Complex
 
 
 @[path]
@@ -19,4 +20,4 @@ private lemma sub.given
   linear_combination h
 
 
--- created on 2018-11-10
+-- created on 2018-11-20

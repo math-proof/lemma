@@ -1,8 +1,23 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Theorem.Algebra.Lie.LeviDecomposition.Part16
-open LeviDecomposition
+open LeviDecomposition hiding
+  leviTraceKernel_isSolvable levi_lie_dualBasis levi_isFaithful_killingCompl_ker
+  levi_traceForm_nondegenerate levi_casimir_commute levi_codim_one_action_mem
+  levi_trace_casimir levi_finrank_quotient_comap levi_codim_one_complement_aux
+  leviFactorLieModule leviComapMapKerToKer_injective leviMapRestrict_surjective
+  leviQuotientMk_surjective levi_isSolvable_map leviQuotientMk_ker
+  levi_radical_quotient levi_radical_quotient_radical_eq_bot
+  levi_lie_mem_HomVanishing_of_mem_scalarMaps levi_quotient_radical_isSemisimple
+  levi_abelian_radical_map leviSubalgebraComapMap_surjective
+  leviSubalgebraComapKerToKer_injective levi_exists_of_abelian_radical
+  levi_derived_radical_lt levi_quotient_derived_radical_abelian
+  levi_decomposition_aux levi_lie_top_eq_top levi_isKilling_killingCompl
+  levi_split_central_kernel levi_exists_isCompl_of_trivial_action
+  levi_radical_comap_semisimple leviComapMap_surjective levi_isSolvable_of_ker_quotient
 open LieAlgebra
+
+attribute [local instance 100] LieRing.ofAssociativeRing
 
 /--
 [levi_sum_repr](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
@@ -60,7 +75,8 @@ private lemma leviTraceKernel_isSolvable
   have hnil' (x : D) : IsNilpotent (LieModule.toEnd K D M x) := by
     have hxI : x.1 ∈ I := LieSubmodule.lie_le_left I I x.2
     have hxD' : (⟨x.1, hxI⟩ : I) ∈ LieAlgebra.derivedSeries K I 1 := by
-      rwa [LieIdeal.derivedSeries_eq_derivedSeriesOfIdeal_comap]
+      rw [LieIdeal.derivedSeries_eq_derivedSeriesOfIdeal_comap]
+      exact x.2
     let x' : D' := ⟨⟨x.1, hxI⟩, hxD'⟩
     have hx := (LieModule.isNilpotent_iff_forall' (R := K)).mp hnil x'
     change IsNilpotent (LieModule.toEnd K L M x.1)
@@ -476,8 +492,8 @@ private lemma levi_codim_one_complement_aux
   let _ : LieAlgebra.IsSemisimple K H := inferInstance
   by_cases hH0 : Module.finrank K H = 0
   · have hHbot : H = ⊥ := by
-    rw [← LieSubmodule.toSubmodule_inj]
-    exact Submodule.finrank_eq_zero.mp hH0
+      rw [← LieSubmodule.toSubmodule_inj]
+      exact Submodule.finrank_eq_zero.mp hH0
     have hItop : I = ⊤ := by
       have hs := hcompl.sup_eq_top
       rwa [hHbot, sup_bot_eq] at hs
@@ -491,7 +507,7 @@ private lemma levi_codim_one_complement_aux
     rw [hx]
     rfl
   · have hfaithful : LieModule.IsFaithful K H M :=
-    levi_isFaithful_killingCompl_ker
+      levi_isFaithful_killingCompl_ker
     let _ : LieModule.IsFaithful K H M := hfaithful
     have hβ : (LieModule.traceForm K H M).Nondegenerate :=
       levi_traceForm_nondegenerate
@@ -535,7 +551,8 @@ private lemma levi_codim_one_complement_aux
         intro m
         have hm : m ∈ c.maxGenEigenspace 0 := by
           change m ∈ V.toSubmodule
-          rwa [hVtop]
+          rw [hVtop]
+          exact Submodule.mem_top
         simpa using (Module.End.mem_maxGenEigenspace c 0 m).mp hm
       have hnil : IsNilpotent c :=
         ((LinearMap.charpoly_nilpotent_tfae c).out 3 1).mp hpoint
@@ -553,7 +570,8 @@ private lemma levi_codim_one_complement_aux
       refine lt_of_le_of_ne inf_le_right ?_
       intro heq
       have hWV : W.toSubmodule ≤ V.toSubmodule := by
-        rwa [← heq]
+        rw [← heq]
+        exact inf_le_left
       have hPV : P ≤ V.toSubmodule := hPW.trans hWV
       apply hPne
       rw [← le_bot_iff, ← hVP.inf_eq_bot]
@@ -659,7 +677,7 @@ private lemma levi_factor_exists_isCompl
   obtain ⟨U, hU⟩ :=
     LieModule.exists_isCompl_of_isSemisimple (leviFactorSubmodule I hI W)
   refine ⟨leviUnfactorSubmodule I hI U, ?_⟩
-  rwa [← LieSubmodule.isCompl_toSubmodule] at hU ⊢
+  rw [← LieSubmodule.isCompl_toSubmodule] at hU ⊢; assumption
 
 /--
 [leviQuotientMk_surjective](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
@@ -719,7 +737,8 @@ private lemma leviComapMap_surjective
   obtain ⟨x, hx⟩ := hf y
   have hxJ : x ∈ J.comap f := by
     change f x ∈ J
-    rwa [hx]
+    rw [hx]
+    exact y.2
   refine ⟨⟨x, hxJ⟩, ?_⟩
   apply Subtype.ext
   exact hx
@@ -754,7 +773,7 @@ private lemma levi_isSolvable_comap
   let q := leviComapMap f J
   have _ : LieAlgebra.IsSolvable q.ker :=
     (leviComapMapKerToKer_injective f J).lieAlgebra_isSolvable
-  exact levi_isSolvable_of_ker_quotient q (leviComapMap_surjective f hf J)
+  exact levi_isSolvable_of_ker_quotient q ‹_› (leviComapMap_surjective f hf J)
 
 /--
 [leviMapRestrict_surjective](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
@@ -988,8 +1007,9 @@ private lemma levi_abelian_radical_map
   intro x
   have hxcC : ⁅x, c⁆ ∈ C := C.lie_mem hc
   have hxcW : ⁅x, c⁆ ∈ Wbar := by
-    rwa [← hfbar, ← LieModuleHom.map_lie]
-      (levi_lie_mem_HomVanishing_of_mem_scalarMaps R f x)
+    rw [← hfbar, ← LieModuleHom.map_lie]
+    apply LieSubmodule.mem_map_of_mem
+    exact (LieSubmodule.mem_comap).mpr (levi_lie_mem_HomVanishing_of_mem_scalarMaps R f x)
   have hxcBot : ⁅x, c⁆ ∈ (⊥ : LieSubmodule K L (V ⧸ P)) := by
     rw [← hC.inf_eq_bot]
     exact ⟨hxcW, hxcC⟩
@@ -1149,7 +1169,8 @@ private lemma levi_exists_of_abelian_radical
     obtain ⟨t, ht, htval⟩ := (LieSubalgebra.mem_map H.incl T x).mp hx.2
     have htR : t.1 ∈ R := by
       change H.incl t ∈ R
-      rwa [htval]
+      rw [htval]
+      exact hx.1
     have htKer : t ∈ qH.ker := by
       rw [LieHom.mem_ker]
       change q t.1 = 0
@@ -1175,7 +1196,8 @@ private lemma leviSubalgebraComapMap_surjective
   obtain ⟨x, hx⟩ := hq y
   have hxT : x ∈ T.comap q := by
     change q x ∈ T
-    rwa [hx]
+    rw [hx]
+    exact y.2
   refine ⟨⟨x, hxT⟩, ?_⟩
   apply Subtype.ext
   exact hx
@@ -1397,7 +1419,8 @@ private lemma levi_decomposition_aux
         obtain ⟨s, hs, hsx⟩ := (LieSubalgebra.mem_map L₁.incl S₁ x).mp hx.2
         have hsR : s.1 ∈ R := by
           have hsval : s.1 = x := hsx
-          rwa [hsval]
+          rw [hsval]
+          exact hx.1
         have hqsR : q s.1 ∈ LieAlgebra.radical K (L ⧸ D) := by
           rw [← hRadQ]
           exact LieIdeal.mem_map hsR
@@ -1421,7 +1444,7 @@ private lemma levi_decomposition_aux
 
 /--
 [levi_decomposition](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/LeviDecomposition.lean)
--/
+
 Every finite-dimensional Lie algebra `L` over a field `K` of characteristic zero decomposes as
 `K`-vector spaces into its solvable radical `LieAlgebra.radical K L` plus a semisimple Levi factor
 `S : LieSubalgebra K L` with sum `⊤` and intersection `⊥`. Source: E. E. Levi, Atti Accad. Sci.
@@ -1550,4 +1573,4 @@ private lemma LieModule_exists_isCompl_of_isSemisimple_eq
   apply LieModule.exists_isCompl_of_isSemisimple W
 
 -- created on 2026-10-09
--- updated on 2026-10-26
+-- updated on 2026-11-13

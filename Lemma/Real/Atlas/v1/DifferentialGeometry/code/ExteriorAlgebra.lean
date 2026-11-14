@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.DifferentialGeometry.code.ExteriorAlgebra.Part2
-open Matrix Finset Module ExteriorAlgebra in ExteriorSquare
+open Matrix Finset Module ExteriorAlgebra
 
 
 namespace ExteriorAlgebra
@@ -83,7 +83,7 @@ lemma wedge_stdBasis_upper
       exact fun ⟨ha, hb⟩ => h1 ⟨hb, ha⟩
     exact fun ⟨ha, hb⟩ => not_lt.mpr (le_of_lt hp) (ha ▸ hb ▸ q.2)
 end ExteriorAlgebra
-open ExteriorAlgebra in
+open ExteriorAlgebra
 
 
 namespace ExteriorSquare
@@ -146,7 +146,7 @@ lemma sum_sum_eq_two_sum_lt
     simp only [Set.mem_image, Finset.mem_coe, Finset.mem_filter, Finset.mem_univ, true_and] at h ⊢
     exact ⟨(b, a), h, rfl⟩
   · intro ⟨a, b⟩ _; exact hsymm a b
-set_option maxHeartbeats 800000 in
+set_option maxHeartbeats 800000
 
 end ExteriorSquare
 
@@ -170,7 +170,7 @@ lemma trace_exteriorSquare
   · intro i; ring
   · intro i j; ring
 end ExteriorSquare
-open ExteriorAlgebra in
+open ExteriorAlgebra
 
 
 

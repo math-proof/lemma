@@ -2,6 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.EllipticCurves.code.ECDLP.Part4
 open Finset Real Filter Asymptotics MeasureTheory
+open Complex
 
 
 /--
@@ -361,7 +362,7 @@ lemma gaussian_sum_asymptotic
             · intro x hx
               apply Real.exp_le_exp_of_le
               by_contra h
-              push_neg at h
+              push Not at h
               have h1 : x ^ 2 / (2 * ↑N) < 1 / 2 * x := by linarith
               have h2 : x ^ 2 < x * ↑N := by
                 have := (div_lt_iff₀ h2N).mp h1; nlinarith

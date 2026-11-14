@@ -36,6 +36,6 @@ end Cores
 /-- Re-declare at `groupCohomology` root so `open groupCohomology` + Fin CorFin attribute resolves. -/
 @[reducible, instance] noncomputable def fintypeQuot {G : Type} [Group G] {H : Subgroup G}
     [H.FiniteIndex] : Fintype (G ⧸ H) :=
-  Cores.fintypeQuot (H := H)
+  H.fintypeQuotientOfFiniteIndex
 
 end groupCohomology

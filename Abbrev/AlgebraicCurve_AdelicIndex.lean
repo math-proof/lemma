@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.AlgebraicCurve.Repartitions
+import Lemma.Submodule.Repartitions
 import Structure.AlgebraicCurve_AdelicIndex
 
 set_option autoImplicit false
@@ -13,7 +13,6 @@ namespace AlgebraicCurve
 variable {K F : Type*} [Field K] [Field F] [Algebra K F]
 
 
-abbrev ell (D : Divisor K F) : ℕ := Module.finrank K (LSpace D)
 
 variable {D E : Divisor K F}
 

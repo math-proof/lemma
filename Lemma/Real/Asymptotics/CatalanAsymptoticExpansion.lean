@@ -10,7 +10,7 @@ namespace MetaMathlibExt
 [catalanExp_bernoulliPolynomialEval_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_bernoulliPolynomialEval_eq (n : ℕ) (x : ℝ) :
+private lemma catalanExp_bernoulliPolynomialEval_eq_lemma (n : ℕ) (x : ℝ) :
   catalanExpBernoulliPolynomialEval n x =
     Polynomial.aeval x (Polynomial.bernoulli n) :=
   rfl
@@ -23,7 +23,7 @@ namespace MetaMathlibExt
 [catalanExp_hasseDeriv_bernoulli](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_hasseDeriv_bernoulli (n k : ℕ) :
+private lemma catalanExp_hasseDeriv_bernoulli_eq_lemma (n k : ℕ) :
   Polynomial.hasseDeriv k (Polynomial.bernoulli n) =
     (n.choose k : ℚ) • Polynomial.bernoulli (n - k) := by
   ext i
@@ -54,7 +54,7 @@ namespace MetaMathlibExt
 [catalanExp_bernoulli_eval_add](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_bernoulli_eval_add (n : ℕ) (x y : ℚ) :
+private lemma catalanExp_bernoulli_eval_add_eq_lemma (n : ℕ) (x y : ℚ) :
   (Polynomial.bernoulli n).eval (x + y) =
     ∑ k ∈ Finset.range (n + 1),
       (n.choose k : ℚ) * (Polynomial.bernoulli (n - k)).eval x * y ^ k := by
@@ -97,7 +97,7 @@ namespace MetaMathlibExt
 [catalanExp_bernoulli_eval_add'](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_bernoulli_eval_add' (n : ℕ) (x y : ℚ) :
+private lemma catalanExp_bernoulli_eval_add'_eq_lemma (n : ℕ) (x y : ℚ) :
   (Polynomial.bernoulli n).eval (x + y) =
     ∑ k ∈ Finset.range (n + 1),
       (n.choose k : ℚ) * (Polynomial.bernoulli k).eval x * y ^ (n - k) := by
@@ -116,7 +116,7 @@ namespace MetaMathlibExt
 [catalanExp_pow_mul_inv_pow](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_pow_mul_inv_pow {a : ℚ} (ha : a ≠ 0) {k n : ℕ} (hkn : k ≤ n) :
+private lemma catalanExp_pow_mul_inv_pow_eq_lemma {a : ℚ} (ha : a ≠ 0) {k n : ℕ} (hkn : k ≤ n) :
   a ^ n * a⁻¹ ^ (n - k) = a ^ k := by
   rw [inv_pow, ← pow_sub_mul_pow a hkn]
   field_simp
@@ -129,7 +129,7 @@ namespace MetaMathlibExt
 [catalanExp_sum_range_even_odd](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_sum_range_even_odd {R : Type*} [AddCommMonoid R]
+private lemma catalanExp_sum_range_even_odd_eq_lemma {R : Type*} [AddCommMonoid R]
   (f : ℕ → R) (m : ℕ) :
   ∑ k ∈ Finset.range (2 * m + 2), f k =
     ∑ r ∈ Finset.range (m + 1), (f (2 * r) + f (2 * r + 1)) := by
@@ -152,7 +152,7 @@ namespace MetaMathlibExt
 [catalanExp_bernoulli_eval_half_odd](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_bernoulli_eval_half_odd (m : ℕ) :
+private lemma catalanExp_bernoulli_eval_half_odd_eq_lemma (m : ℕ) :
   (Polynomial.bernoulli (2 * m + 1)).eval (1 / 2 : ℚ) = 0 := by
   have h := Polynomial.bernoulli_eval_one_sub (2 * m + 1) (1 / 2 : ℚ)
   norm_num [Even.neg_one_pow, Odd.neg_one_pow, show Odd (2 * m + 1) from ⟨m, by omega⟩] at h
@@ -166,7 +166,7 @@ namespace MetaMathlibExt
 [catalanExp_bernoulli_eval_zero_odd](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_bernoulli_eval_zero_odd (m : ℕ) (hm : 0 < m) :
+private lemma catalanExp_bernoulli_eval_zero_odd_eq_lemma (m : ℕ) (hm : 0 < m) :
   (Polynomial.bernoulli (2 * m + 1)).eval 0 = 0 := by
   rw [Polynomial.bernoulli_eval_zero,
     bernoulli_eq_zero_of_odd (⟨m, by omega⟩ : Odd (2 * m + 1)) (by omega)]
@@ -179,7 +179,7 @@ namespace MetaMathlibExt
 [catalanExp_weighted_bernoulli_add](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_weighted_bernoulli_add (n : ℕ) (x a : ℚ) (ha : a ≠ 0) :
+private lemma catalanExp_weighted_bernoulli_add_eq_lemma (n : ℕ) (x a : ℚ) (ha : a ≠ 0) :
   ∑ k ∈ Finset.range (n + 1),
     (n.choose k : ℚ) * (Polynomial.bernoulli k).eval x * a ^ k =
     a ^ n * (Polynomial.bernoulli n).eval (x + a⁻¹) := by
@@ -203,7 +203,7 @@ namespace MetaMathlibExt
 [catalanExp_odd_weighted_bernoulli_sum](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_odd_weighted_bernoulli_sum (m : ℕ) (hm : 0 < m) :
+private lemma catalanExp_odd_weighted_bernoulli_sum_eq_lemma (m : ℕ) (hm : 0 < m) :
   ∑ r ∈ Finset.range (m + 1),
     ((2 * m + 1).choose (2 * r + 1) : ℚ) *
       (Polynomial.bernoulli (2 * r + 1)).eval (1 / 4) *
@@ -259,7 +259,7 @@ namespace MetaMathlibExt
 [catalanExpEulerEvenQ_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExpEulerEvenQ_zero : catalanExpEulerEvenQ 0 = 1 := by
+private lemma catalanExpEulerEvenQ_zero_eq_lemma : catalanExpEulerEvenQ 0 = 1 := by
   norm_num [catalanExpEulerEvenQ, Polynomial.bernoulli_one]
 
 end MetaMathlibExt
@@ -270,7 +270,7 @@ namespace MetaMathlibExt
 [catalanExpEulerEvenQ_recurrence](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExpEulerEvenQ_recurrence (m : ℕ) :
+private lemma catalanExpEulerEvenQ_recurrence_eq_lemma (m : ℕ) :
   ∑ r ∈ Finset.range (m + 1),
     ((2 * m).choose (2 * r) : ℚ) * catalanExpEulerEvenQ r =
     if m = 0 then 1 else 0 := by
@@ -330,7 +330,7 @@ namespace MetaMathlibExt
 [catalanExp_even_binom_sum_reflect](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_even_binom_sum_reflect (m : ℕ) (f : ℕ → ℚ) :
+private lemma catalanExp_even_binom_sum_reflect_eq_lemma (m : ℕ) (f : ℕ → ℚ) :
   ∑ j ∈ Finset.range (m + 1), ((2 * m).choose (2 * j) : ℚ) * f (m - j) =
     ∑ j ∈ Finset.range (m + 1), ((2 * m).choose (2 * j) : ℚ) * f j := by
   rw [← Finset.sum_range_reflect]
@@ -350,7 +350,7 @@ namespace MetaMathlibExt
 [catalanExp_even_E_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_even_E_eq (E : ℕ → ℤ)
+private lemma catalanExp_even_E_eq_lemma (E : ℕ → ℤ)
   (hE : E 0 = 1 ∧ ∀ n : ℕ, 0 < n →
     (∑ j ∈ Finset.range (n / 2 + 1),
       (n.choose (2 * j) : ℤ) * E (n - 2 * j)) = 0) (m : ℕ) :
@@ -396,7 +396,7 @@ namespace MetaMathlibExt
 [catalanExp_bernoulli_quarter_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_bernoulli_quarter_eq (E : ℕ → ℤ)
+private lemma catalanExp_bernoulli_quarter_eq_lemma (E : ℕ → ℤ)
   (hE : E 0 = 1 ∧ ∀ n : ℕ, 0 < n →
     (∑ j ∈ Finset.range (n / 2 + 1),
       (n.choose (2 * j) : ℤ) * E (n - 2 * j)) = 0) (m : ℕ) :
@@ -418,7 +418,7 @@ namespace MetaMathlibExt
 [catalanExp_bernoulliPolynomialEval_eq_fun](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_bernoulliPolynomialEval_eq_fun (n : ℕ) (x : ℝ) :
+private lemma catalanExp_bernoulliPolynomialEval_eq_fun_eq_lemma (n : ℕ) (x : ℝ) :
   catalanExpBernoulliPolynomialEval n x = bernoulliFun n x := by
   rw [catalanExp_bernoulliPolynomialEval_eq]
   simp only [bernoulliFun, Polynomial.aeval_def, Polynomial.eval_map]
@@ -431,7 +431,7 @@ namespace MetaMathlibExt
 [catalanExp_bernoulliPolynomialEval_rat](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_bernoulliPolynomialEval_rat (n : ℕ) (x : ℚ) :
+private lemma catalanExp_bernoulliPolynomialEval_rat_eq_lemma (n : ℕ) (x : ℚ) :
   catalanExpBernoulliPolynomialEval n (x : ℝ) =
     algebraMap ℚ ℝ ((Polynomial.bernoulli n).eval x) := by
   rw [catalanExp_bernoulliPolynomialEval_eq_fun]
@@ -449,7 +449,7 @@ namespace MetaMathlibExt
 [catalanExp_bernoulliPolynomialEval_two](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_bernoulliPolynomialEval_two (n : ℕ) (hn : n ≠ 1) :
+private lemma catalanExp_bernoulliPolynomialEval_two_eq_lemma (n : ℕ) (hn : n ≠ 1) :
   catalanExpBernoulliPolynomialEval n 2 = (bernoulli n : ℝ) + n := by
   rw [show (2 : ℝ) = ((2 : ℚ) : ℝ) by norm_num,
     catalanExp_bernoulliPolynomialEval_rat]
@@ -472,7 +472,7 @@ namespace MetaMathlibExt
 [catalanExp_first_bernoulli_difference](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_first_bernoulli_difference (j : ℕ) :
+private lemma catalanExp_first_bernoulli_difference_eq_lemma (j : ℕ) :
   catalanExpBernoulliPolynomialEval (j + 2) (1 / 2) -
     catalanExpBernoulliPolynomialEval (j + 2) 2 =
     (((2 : ℝ) ^ (j + 1))⁻¹ - 2) * (bernoulli (j + 2) : ℝ) -
@@ -495,7 +495,7 @@ namespace MetaMathlibExt
 [catalanExp_second_odd_bernoulli_difference](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_second_odd_bernoulli_difference (r : ℕ) :
+private lemma catalanExp_second_odd_bernoulli_difference_eq_lemma (r : ℕ) :
   catalanExpBernoulliPolynomialEval (2 * r + 2) (-1 / 4) -
     catalanExpBernoulliPolynomialEval (2 * r + 2) (5 / 4) = 0 := by
   have hQ : (Polynomial.bernoulli (2 * r + 2)).eval (-1 / 4) -
@@ -519,7 +519,7 @@ namespace MetaMathlibExt
 [catalanExp_second_even_coefficient](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_second_even_coefficient (E : ℕ → ℤ)
+private lemma catalanExp_second_even_coefficient_eq_lemma (E : ℕ → ℤ)
   (hE : E 0 = 1 ∧ ∀ n : ℕ, 0 < n →
     (∑ j ∈ Finset.range (n / 2 + 1),
       (n.choose (2 * j) : ℤ) * E (n - 2 * j)) = 0)
@@ -583,7 +583,7 @@ namespace MetaMathlibExt
 [catalanExp_centralBinom_cast](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_centralBinom_cast (n : ℕ) :
+private lemma catalanExp_centralBinom_cast_eq_lemma (n : ℕ) :
   (n.centralBinom : ℝ) = ((2 * n).factorial : ℝ) /
     ((n.factorial : ℝ) * (n.factorial : ℝ)) := by
   have hle : n ≤ 2 * n := by omega
@@ -605,7 +605,7 @@ namespace MetaMathlibExt
 [catalanExp_catalan_cast](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_catalan_cast (n : ℕ) :
+private lemma catalanExp_catalan_cast_eq_lemma (n : ℕ) :
   (catalan n : ℝ) = (n.centralBinom : ℝ) / ((n : ℝ) + 1) := by
   have h := succ_mul_catalan_eq_centralBinom n
   rw [eq_div_iff (by positivity : (n : ℝ) + 1 ≠ 0), mul_comm]
@@ -619,7 +619,7 @@ namespace MetaMathlibExt
 [catalanExp_stirling_model_identity](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_stirling_model_identity (n : ℕ) (hn : 1 ≤ n) :
+private lemma catalanExp_stirling_model_identity_eq_lemma (n : ℕ) (hn : 1 ≤ n) :
   ((Real.sqrt (2 * (2 * n : ℝ) * Real.pi) *
     ((2 * n : ℝ) / Real.exp 1) ^ (2 * n) /
     ((Real.sqrt (2 * (n : ℝ) * Real.pi) *
@@ -685,7 +685,7 @@ namespace MetaMathlibExt
 [catalanExp_first_log_tendsto_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_first_log_tendsto_zero :
+private lemma catalanExp_first_log_tendsto_zero_eq_lemma :
   Filter.Tendsto (fun n : ℕ =>
     Real.log ((catalan n : ℝ) * ((n : ℝ) * Real.sqrt (Real.pi * n)) /
       (4 : ℝ) ^ n)) Filter.atTop (nhds 0) := by
@@ -798,7 +798,7 @@ namespace MetaMathlibExt
 [catalanExp_catalan_pos](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_catalan_pos (n : ℕ) : (0 : ℝ) < catalan n := by
+private lemma catalanExp_catalan_pos_eq_lemma (n : ℕ) : (0 : ℝ) < catalan n := by
   have h := succ_mul_catalan_eq_centralBinom n
   have hpos : 0 < (n + 1) * catalan n := by
     rw [h]
@@ -816,7 +816,7 @@ namespace MetaMathlibExt
 [catalanExp_catalan_succ_ratio](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_catalan_succ_ratio (n : ℕ) :
+private lemma catalanExp_catalan_succ_ratio_eq_lemma (n : ℕ) :
   (catalan (n + 1) : ℝ) / catalan n =
     2 * (2 * (n : ℝ) + 1) / ((n : ℝ) + 2) := by
   have hcentral := Nat.succ_mul_centralBinom_succ n
@@ -844,7 +844,7 @@ namespace MetaMathlibExt
 [catalanExp_sum_bernoulli_aeval](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_sum_bernoulli_aeval (n : ℕ) (x : ℝ) :
+private lemma catalanExp_sum_bernoulli_aeval_eq_lemma (n : ℕ) (x : ℝ) :
   (∑ k ∈ Finset.range (n + 1),
     ((n + 1).choose k : ℝ) * Polynomial.aeval x (Polynomial.bernoulli k)) =
     (n + 1 : ℝ) * x ^ n := by
@@ -860,7 +860,7 @@ namespace MetaMathlibExt
 [catalanExp_bernoulli_coeff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_bernoulli_coeff (r : ℕ) (hr : 2 ≤ r) (α β : ℝ) :
+private lemma catalanExp_bernoulli_coeff_eq_lemma (r : ℕ) (hr : 2 ≤ r) (α β : ℝ) :
   (∑ k ∈ Finset.range (r - 1),
     ((r - 1).choose k : ℝ) *
       (Polynomial.aeval α (Polynomial.bernoulli (k + 2)) -
@@ -935,7 +935,7 @@ namespace MetaMathlibExt
 [catalanExp_log_sub_taylor_isBigO](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_log_sub_taylor_isBigO (a : ℝ) (N : ℕ) :
+private lemma catalanExp_log_sub_taylor_isBigO_eq_lemma (a : ℝ) (N : ℕ) :
   (fun y : ℝ => Real.log (1 + a * y) - catalanExpLogTaylor a N y) =O[nhds 0]
     fun y : ℝ => y ^ (N + 1) := by
   apply Asymptotics.IsBigO.of_bound (2 * |a| ^ (N + 1))
@@ -981,7 +981,7 @@ namespace MetaMathlibExt
 [catalanExp_choose_neg_nat](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_choose_neg_nat (k l : ℕ) (hk : 1 ≤ k) :
+private lemma catalanExp_choose_neg_nat_eq_lemma (k l : ℕ) (hk : 1 ≤ k) :
   Ring.choose (-(k : ℝ)) l =
     (-1 : ℝ) ^ l * ((k + l - 1).choose l : ℝ) := by
   rw [Ring.choose_neg]
@@ -1002,7 +1002,7 @@ namespace MetaMathlibExt
 [catalanExp_binomial_partialSum](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_binomial_partialSum (k N : ℕ) (hk : 1 ≤ k) (y : ℝ) :
+private lemma catalanExp_binomial_partialSum_eq_lemma (k N : ℕ) (hk : 1 ≤ k) (y : ℝ) :
   (binomialSeries ℝ (-(k : ℝ))).partialSum N y =
     ∑ l ∈ Finset.range N,
       (-1 : ℝ) ^ l * ((k + l - 1).choose l : ℝ) * y ^ l := by
@@ -1022,7 +1022,7 @@ namespace MetaMathlibExt
 [catalanExp_rpow_sub_invTaylor_isBigO](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_rpow_sub_invTaylor_isBigO (k N : ℕ) (hk : 1 ≤ k) :
+private lemma catalanExp_rpow_sub_invTaylor_isBigO_eq_lemma (k N : ℕ) (hk : 1 ≤ k) :
   (fun y : ℝ => (1 + y) ^ (-(k : ℝ)) - catalanExpInvTaylor k N y) =O[nhds 0]
     fun y : ℝ => y ^ N := by
   have h := (Real.one_add_rpow_hasFPowerSeriesAt_zero (a := -(k : ℝ))).isBigO_sub_partialSum_pow N
@@ -1041,7 +1041,7 @@ namespace MetaMathlibExt
 [catalanExp_logTaylor_combination](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_logTaylor_combination (α β : ℝ) (M : ℕ) (y : ℝ) :
+private lemma catalanExp_logTaylor_combination_eq_lemma (α β : ℝ) (M : ℕ) (y : ℝ) :
   catalanExpLogTaylor α (M + 1) y - catalanExpLogTaylor β (M + 1) y +
     (β - α) * catalanExpLogTaylor 1 (M + 1) y =
     catalanExpDiffTaylor α β M y := by
@@ -1088,7 +1088,7 @@ namespace MetaMathlibExt
 [catalanExp_shiftInner_succ](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_shiftInner_succ (M j : ℕ) (hj : j < M) (y : ℝ) :
+private lemma catalanExp_shiftInner_succ_eq_lemma (M j : ℕ) (hj : j < M) (y : ℝ) :
   catalanExpShiftInner (M + 1) j y = catalanExpShiftInner M j y +
     (-1 : ℝ) ^ (M - j + 1) * ((M + 1).choose (M - j + 1) : ℝ) * y ^ (M + 2) := by
   unfold catalanExpShiftInner
@@ -1105,7 +1105,7 @@ namespace MetaMathlibExt
 [catalanExp_shiftTaylor_succ_raw](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_shiftTaylor_succ_raw (α β : ℝ) (M : ℕ) (y : ℝ) :
+private lemma catalanExp_shiftTaylor_succ_raw_eq_lemma (α β : ℝ) (M : ℕ) (y : ℝ) :
   catalanExpShiftTaylor α β (M + 1) y = catalanExpShiftTaylor α β M y +
     ∑ j ∈ Finset.range (M + 1),
       catalanExpBernoulliCoeff α β (j + 1) *
@@ -1142,7 +1142,7 @@ namespace MetaMathlibExt
 [catalanExp_shift_diagonal](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_shift_diagonal (α β : ℝ) (M : ℕ) (y : ℝ) :
+private lemma catalanExp_shift_diagonal_eq_lemma (α β : ℝ) (M : ℕ) (y : ℝ) :
   (∑ j ∈ Finset.range (M + 1),
     catalanExpBernoulliCoeff α β (j + 1) *
       ((-1 : ℝ) ^ (M - j + 1) * ((M + 1).choose (M - j + 1) : ℝ) *
@@ -1215,7 +1215,7 @@ namespace MetaMathlibExt
 [catalanExp_shiftTaylor_eq_diffTaylor](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_shiftTaylor_eq_diffTaylor (α β : ℝ) (M : ℕ) (y : ℝ) :
+private lemma catalanExp_shiftTaylor_eq_diffTaylor_eq_lemma (α β : ℝ) (M : ℕ) (y : ℝ) :
   catalanExpShiftTaylor α β M y = catalanExpDiffTaylor α β M y := by
   induction M with
   | zero => simp [catalanExpShiftTaylor, catalanExpDiffTaylor]
@@ -1232,7 +1232,7 @@ namespace MetaMathlibExt
 [catalanExp_mul_invTaylor_sub_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_mul_invTaylor_sub_one (M j : ℕ) (hj : j < M) (y : ℝ) :
+private lemma catalanExp_mul_invTaylor_sub_one_eq_lemma (M j : ℕ) (hj : j < M) (y : ℝ) :
   y ^ (j + 1) * (catalanExpInvTaylor (j + 1) (M + 1 - j) y - 1) =
     catalanExpShiftInner M j y := by
   have hsub : M + 1 - j = (M - j) + 1 := by omega
@@ -1258,7 +1258,7 @@ namespace MetaMathlibExt
 [catalanExp_shiftRemainder_isBigO](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_shiftRemainder_isBigO (α β : ℝ) (M : ℕ) :
+private lemma catalanExp_shiftRemainder_isBigO_eq_lemma (α β : ℝ) (M : ℕ) :
   catalanExpShiftRemainder α β M =O[nhds 0] fun y : ℝ => y ^ (M + 2) := by
   unfold catalanExpShiftRemainder
   have hsum : (∑ j ∈ Finset.range M, fun y : ℝ =>
@@ -1290,7 +1290,7 @@ namespace MetaMathlibExt
 [catalanExp_shift_sub_eq_remainder](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_shift_sub_eq_remainder (α β : ℝ) (M : ℕ) (y : ℝ)
+private lemma catalanExp_shift_sub_eq_remainder_eq_lemma (α β : ℝ) (M : ℕ) (y : ℝ)
   (hy : 0 < 1 + y) :
   catalanExpBernoulliSum α β M (y / (1 + y)) -
     catalanExpBernoulliSum α β M y - catalanExpShiftTaylor α β M y =
@@ -1315,7 +1315,7 @@ namespace MetaMathlibExt
 [catalanExp_logRemainder_isBigO](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_logRemainder_isBigO (α β : ℝ) (M : ℕ) :
+private lemma catalanExp_logRemainder_isBigO_eq_lemma (α β : ℝ) (M : ℕ) :
   catalanExpLogRemainder α β M =O[nhds 0] fun y : ℝ => y ^ (M + 2) := by
   unfold catalanExpLogRemainder
   have h1 : (fun y : ℝ => Real.log (1 + y) - catalanExpLogTaylor 1 (M + 1) y) =O[nhds 0]
@@ -1336,7 +1336,7 @@ namespace MetaMathlibExt
 [catalanExp_localResidual_isBigO](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_localResidual_isBigO (α β : ℝ) (M : ℕ) :
+private lemma catalanExp_localResidual_isBigO_eq_lemma (α β : ℝ) (M : ℕ) :
   catalanExpLocalResidual α β M =O[nhds 0] fun y : ℝ => y ^ (M + 2) := by
   have hO := (catalanExp_logRemainder_isBigO α β M).sub
     (catalanExp_shiftRemainder_isBigO α β M)
@@ -1364,7 +1364,7 @@ namespace MetaMathlibExt
 [catalanExp_sum_range_inv_sq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_sum_range_inv_sq (n N : ℕ) (hn : 1 ≤ n) :
+private lemma catalanExp_sum_range_inv_sq_eq_lemma (n N : ℕ) (hn : 1 ≤ n) :
   (∑ k ∈ Finset.range N, (((k + n : ℕ) : ℝ) ^ 2)⁻¹) =
     ∑ i ∈ Finset.Ioc (n - 1) ((n - 1) + N), (((i : ℕ) : ℝ) ^ 2)⁻¹ := by
   induction N with
@@ -1383,7 +1383,7 @@ namespace MetaMathlibExt
 [catalanExp_sum_range_inv_sq_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_sum_range_inv_sq_le (n N : ℕ) (hn : 2 ≤ n) :
+private lemma catalanExp_sum_range_inv_sq_le_eq_lemma (n N : ℕ) (hn : 2 ≤ n) :
   (∑ k ∈ Finset.range N, (((k + n : ℕ) : ℝ) ^ 2)⁻¹) ≤ 2 / (n : ℝ) := by
   calc
     (∑ k ∈ Finset.range N, (((k + n : ℕ) : ℝ) ^ 2)⁻¹) =
@@ -1411,7 +1411,7 @@ namespace MetaMathlibExt
 [catalanExp_tendsto_nat_pow_mul_of_diff_isBigO](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_tendsto_nat_pow_mul_of_diff_isBigO (e : ℕ → ℝ) (M : ℕ)
+private lemma catalanExp_tendsto_nat_pow_mul_of_diff_isBigO_eq_lemma (e : ℕ → ℝ) (M : ℕ)
   (he : Filter.Tendsto e Filter.atTop (nhds 0))
   (hd : (fun n : ℕ => e (n + 1) - e n) =O[Filter.atTop]
     fun n : ℕ => (((n : ℝ) ^ (M + 2))⁻¹)) :
@@ -1491,14 +1491,13 @@ namespace MetaMathlibExt
 
 /--
 [tendsto_pow_mul_sub_bernoulli_sum_of_log_diff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
--/
-@[path]
 An all-orders Bernoulli-polynomial expansion obtained from a logarithmic
 first-difference equation. The normalization `u n → 0` fixes the otherwise
 undetermined additive constant. Its coefficients use Mathlib's
 `Polynomial.bernoulli`, evaluated by `Polynomial.aeval`.
 -/
-lemma _root_.Real.tendsto_pow_mul_sub_bernoulli_sum_of_log_diff
+@[path]
+lemma _root_.Real.tendsto_pow_mul_sub_bernoulli_sum_of_log_diff_eq_lemma
   {u : ℕ → ℝ} (α β c : ℝ)
   (hu : Filter.Tendsto u Filter.atTop (nhds 0))
   (hstep : ∀ᶠ n : ℕ in Filter.atTop,
@@ -1598,7 +1597,7 @@ namespace MetaMathlibExt
 [catalanExp_shifted_log_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_shifted_log_eq (c : ℝ) (n : ℕ) (hn : 0 < n)
+private lemma catalanExp_shifted_log_eq_lemma (c : ℝ) (n : ℕ) (hn : 0 < n)
   (hx : 0 < (n : ℝ) + c) :
   Real.log ((catalan n : ℝ) *
     Real.sqrt (Real.pi * ((n : ℝ) + c) ^ 3) / (4 : ℝ) ^ n) =
@@ -1632,7 +1631,7 @@ namespace MetaMathlibExt
 [catalanExp_shifted_log_tendsto_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_shifted_log_tendsto_zero (c : ℝ) :
+private lemma catalanExp_shifted_log_tendsto_zero_eq_lemma (c : ℝ) :
   Filter.Tendsto (fun n : ℕ =>
     Real.log ((catalan n : ℝ) *
       Real.sqrt (Real.pi * ((n : ℝ) + c) ^ 3) / (4 : ℝ) ^ n))
@@ -1682,7 +1681,7 @@ namespace MetaMathlibExt
 [catalanExp_base_log_step](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_base_log_step (n : ℕ) (hn : 0 < n) :
+private lemma catalanExp_base_log_step_eq_lemma (n : ℕ) (hn : 0 < n) :
   Real.log ((catalan (n + 1) : ℝ) *
     ((n + 1 : ℝ) * Real.sqrt (Real.pi * (n + 1 : ℝ))) /
       (4 : ℝ) ^ (n + 1)) -
@@ -1732,7 +1731,7 @@ namespace MetaMathlibExt
 [catalanExp_shifted_log_step](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_shifted_log_step (c : ℝ) :
+private lemma catalanExp_shifted_log_step_eq_lemma (c : ℝ) :
   ∀ᶠ n : ℕ in Filter.atTop,
     Real.log ((catalan (n + 1) : ℝ) *
       Real.sqrt (Real.pi * ((n + 1 : ℝ) + c) ^ 3) /
@@ -1781,7 +1780,7 @@ namespace MetaMathlibExt
 [_root_.tendsto_pow_mul_log_catalan_sub_bernoulli_sum](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-lemma _root_.tendsto_pow_mul_log_catalan_sub_bernoulli_sum
+lemma _root_.tendsto_pow_mul_log_catalan_sub_bernoulli_sum_eq_lemma
   {c : ℝ} :
 -- imply
   ∀ M : ℕ,
@@ -1814,7 +1813,7 @@ namespace MetaMathlibExt
 [catalanExp_first_log_eventuallyEq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_first_log_eventuallyEq :
+private lemma catalanExp_first_log_eventuallyEq_eq_lemma :
   (fun n : ℕ => Real.log ((catalan n : ℝ) *
     Real.sqrt (Real.pi * (n : ℝ) ^ 3) / (4 : ℝ) ^ n)) =ᶠ[Filter.atTop]
   (fun n : ℕ => Real.log ((catalan n : ℝ) *
@@ -1833,7 +1832,7 @@ namespace MetaMathlibExt
 [catalanExp_first_sum_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_first_sum_eq (m n : ℕ) :
+private lemma catalanExp_first_sum_eq_lemma (m n : ℕ) :
   (∑ j ∈ Finset.range m,
     (-1 : ℝ) ^ (j + 2) *
       (catalanExpBernoulliPolynomialEval (j + 2) (1 / 2) -
@@ -1858,7 +1857,7 @@ namespace MetaMathlibExt
 [catalanExp_sum_range_two_mul](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_sum_range_two_mul {R : Type*} [AddCommMonoid R]
+private lemma catalanExp_sum_range_two_mul_eq_lemma {R : Type*} [AddCommMonoid R]
   (f : ℕ → R) (m : ℕ) :
   ∑ k ∈ Finset.range (2 * m), f k =
     ∑ r ∈ Finset.range m, (f (2 * r) + f (2 * r + 1)) := by
@@ -1880,7 +1879,7 @@ namespace MetaMathlibExt
 [catalanExp_second_sum_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma catalanExp_second_sum_eq (E : ℕ → ℤ)
+private lemma catalanExp_second_sum_eq_lemma (E : ℕ → ℤ)
   (hE : E 0 = 1 ∧ ∀ n : ℕ, 0 < n →
     (∑ j ∈ Finset.range (n / 2 + 1),
       (n.choose (2 * j) : ℤ) * E (n - 2 * j)) = 0)
@@ -1911,7 +1910,7 @@ end MetaMathlibExt
 [catalan_stirling_asymptotic_expansions](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-lemma catalan_stirling_asymptotic_expansions
+lemma catalan_stirling_asymptotic_expansions_eq_lemma
 -- given
   (E : ℕ → ℤ)
   (hE : E 0 = 1 ∧ ∀ n : ℕ, 0 < n →
@@ -1952,7 +1951,7 @@ lemma catalan_stirling_asymptotic_expansions
 [_root_.Real.tendsto_pow_mul_sub_bernoulli_sum_of_log_diff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean)
 -/
 @[path]
-private lemma Real_tendsto_pow_mul_sub_bernoulli_sum_of_log_diff_eq
+private lemma Real_tendsto_pow_mul_sub_bernoulli_sum_of_log_diff_eq_lemma
   {u : ℕ → ℝ} {α β c : ℝ}
 -- given
   (hu : Filter.Tendsto u Filter.atTop (nhds 0))

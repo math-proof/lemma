@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.CerednikDrinfeld.FormalUpperHalfPlaneFunctor
+import Lemma.Submodule.FormalUpperHalfPlaneFunctor
 import Def.CerednikDrinfeld_OmegaTubes
 
 set_option autoImplicit false

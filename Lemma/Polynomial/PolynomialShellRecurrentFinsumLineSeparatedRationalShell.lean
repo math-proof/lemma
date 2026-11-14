@@ -357,16 +357,16 @@ private lemma shiftFinite_sum
   {ι : Type} (s : Finset ι) (f : ι → ℕ → ℂ) (h : ∀ i ∈ s, ShiftFinite (f i)) :
     ShiftFinite (fun m => ∑ i ∈ s, f i m) := by
   classical
-  refine Finset.induction_on s ?_ ?_
-  ·
+  induction s using Finset.induction_on with
+  | empty =>
     simp only [Finset.sum_empty]
-    refine shiftFinite_zero
-  ·
-    intro a s ha ih
+    exact shiftFinite_zero
+  | insert a s ha ih =>
     have : (fun m => ∑ i ∈ insert a s, f i m) = f a + fun m => ∑ i ∈ s, f i m := by
       funext m; rw [Finset.sum_insert ha]; rfl
     rw [this]
-    refine shiftFinite_add (h a (Finset.mem_insert_self _ _)) ih
+    exact shiftFinite_add (h a (Finset.mem_insert_self a s))
+      (ih fun i hi => h i (Finset.mem_insert_of_mem hi))
 private lemma shiftFinite_geom (c α : ℂ) : ShiftFinite (fun m => c * α ^ m) := by
   let g : ℕ → ℂ := fun m => c * α ^ m
   refine ⟨Submodule.span ℂ {g}, FiniteDimensional.span_of_finite ℂ (Set.finite_singleton _), ?_, 0, fun k _ => ?_⟩

@@ -1,13 +1,13 @@
 import Mathlib
 import Instance.MvFormalGroup_NegV2
 import Instance.MvFormalGroup_CartierModule
-import Lemma.MvFormalGroup.CartierModuleHomothety
-import Lemma.CerednikDrinfeld.SpecialFormalModule
+import Lemma.PowerSeries.CartierModuleHomothety
+import Lemma.MvPowerSeries.SpecialFormalModule
 import Instance.MvFormalGroup_CartierModuleWittAction
 import Instance.MvFormalGroup_CartierModuleBaseChange
 import Def.CerednikDrinfeld_CartierGradedPiece
-import Lemma.CerednikDrinfeld.CriticalIndexChart
-import Lemma.CerednikDrinfeld.CartierNModule
+import Lemma.FormalGroup.CriticalIndexChart
+import Lemma.Int.CartierNModule
 import Abbrev.CerednikDrinfeld_CartierLMapFibre
 
 set_option autoImplicit false

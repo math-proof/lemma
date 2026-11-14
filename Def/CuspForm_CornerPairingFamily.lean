@@ -1,6 +1,6 @@
-import Lemma.CohCarrier.Inst
-import Lemma.ModularCurve.PeriodMap
-import Lemma.CohCarrier.LevelPairing
+import Lemma.ZMod.Inst
+import Lemma.UpperHalfPlane.PeriodMap
+import Lemma.Int.LevelPairing
 
 set_option autoImplicit false
 

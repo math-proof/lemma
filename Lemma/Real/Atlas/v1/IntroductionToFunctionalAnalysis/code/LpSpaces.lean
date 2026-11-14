@@ -279,7 +279,7 @@ lemma memLp_of_polynomial_decay
     have hle : ∫⁻ (x : ℝ), ‖f x‖ₑ ^ p.toReal ∂volume ≤
         ∫⁻ (x : ℝ), ENNReal.ofReal (C ^ p.toReal * (1 + ‖x‖) ^ (-(q * p.toReal))) ∂volume := by
       refine lintegral_mono fun x => ?_
-      rw [(ofReal_norm_eq_enorm (f x)).symm,
+      rw [(ofReal_norm (f x)).symm,
         ENNReal.ofReal_rpow_of_nonneg (norm_nonneg _) hp_pos.le]
       apply ENNReal.ofReal_le_ofReal
       have hboundX : ‖f x‖ ≤ C * (1 + ‖x‖) ^ (-q) := by

@@ -165,7 +165,7 @@ private lemma main
   Group.ResiduallyFinite G := by
 -- proof
   classical
-  obtain ⟨S, hS⟩ := Group.fg_def.mp hFG
+  obtain ⟨_, S, _, hS⟩ := Group.fg_iff'.mp hFG
   set E : ↥G → Matrix (Fin n) (Fin n) K :=
     fun g => ((g : Matrix.GeneralLinearGroup (Fin n) K) : Matrix (Fin n) (Fin n) K) with hE
   set T : Finset K := (S.biUnion fun s => Finset.univ.biUnion fun i =>
@@ -247,7 +247,7 @@ private lemma main
         rw [hEinv, Matrix.inv_def, Ring.inverse_eq_inv, Matrix.smul_apply, smul_eq_mul]
         exact mul_mem hdx (adj_mem _ hex _ _)
       · have h1 : ((E x)⁻¹).det = ((E x).det)⁻¹ := by
-        rw [Matrix.det_nonsing_inv, Ring.inverse_eq_inv]
+          rw [Matrix.det_nonsing_inv, Ring.inverse_eq_inv]
         rw [hEinv, h1, inv_inv]
         exact det_mem _ hex
   have := isJacobsonRing_int
@@ -425,7 +425,7 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-13
 -- extracted from Lemma/Ideal/IsMaximalSpanP.lean (Group/Malcev bulk)
 -- Ideal keeps Lemma/Ideal/IsMaximalSpanP.lean with span_nat_prime_isMaximal only
 -- local private helpers (incl. span_nat_prime_isMaximal copy) support malcev_residuallyFinite

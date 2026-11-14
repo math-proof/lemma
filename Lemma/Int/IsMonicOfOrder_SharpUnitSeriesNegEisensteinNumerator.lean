@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.EtaQuotient
+import Lemma.UpperHalfPlane.EtaQuotient
 import Lemma.Int.P2MUtil
 
-open ModularCurve
+open ModularCurve UpperHalfPlane
 
 /--
 [ModularCurve_isMonicOfOrder_sharpUnitSeries](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularCurve_isMonicOfOrder_sharpUnitSeries.lean)

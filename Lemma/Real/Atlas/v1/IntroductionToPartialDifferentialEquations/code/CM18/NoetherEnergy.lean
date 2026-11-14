@@ -1108,7 +1108,7 @@ lemma clm_pi_decomp_chain
       (Pi.single (M := fun _ : Fin (n + 1) => ℝ) i 1) from by
       ext j; simp [Finset.sum_apply, Pi.single_apply]]
   simp [map_sum, map_smul, mul_comm]
-set_option maxHeartbeats 800000 in
+set_option maxHeartbeats 800000
 
 end CM18
 
@@ -1186,7 +1186,7 @@ lemma deriv_double_pi_comp_chain
   rw [deriv_pi (fun μ => differentiableAt_pi.mp hf μ)]
   show deriv (fun ε => f ε i) x j = deriv (fun ε => f ε i j) x
   rw [deriv_pi (fun ν => differentiableAt_pi.mp (differentiableAt_pi.mp hf i) ν)]
-set_option maxHeartbeats 1600000 in
+set_option maxHeartbeats 1600000
 
 end CM18
 
@@ -1612,11 +1612,11 @@ lemma energyMomentumTensor_symmetric
 -- proof
   unfold energyMomentumTensor
   rw [dL_dm_symmetric L phi m x hm_symm hL_symm mu nu, hmInv_symm x mu nu]
-/-- The integration-by-parts computation underlying Noether's theorem in CM18: for a coordinate
-invariant Lagrangian, a solution $\phi$ of the Euler-Lagrange equation, and a compactly supported
-vector field $Y$, the contracted integral
-$\int_K (\nabla \cdot T)_\nu \, m_{\alpha\nu} \, Y^\alpha\, d^{1+n}x = 0$
-vanishes. -/
+-- The integration-by-parts computation underlying Noether's theorem in CM18: for a coordinate
+-- invariant Lagrangian, a solution $\phi$ of the Euler-Lagrange equation, and a compactly supported
+-- vector field $Y$, the contracted integral
+-- $\int_K (\nabla \cdot T)_\nu \, m_{\alpha\nu} \, Y^\alpha\, d^{1+n}x = 0$
+-- vanishes.
 
 end CM18
 

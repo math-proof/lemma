@@ -1,5 +1,5 @@
 import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Lemma.AlgebraicGeometry.RelEffCartierDiv
+import Lemma.Scheme.RelEffCartierDiv
 import Instance.AlgebraicGeometry_RelEffCartierDivOfPoint
 
 set_option autoImplicit false

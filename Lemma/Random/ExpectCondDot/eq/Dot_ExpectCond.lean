@@ -7,6 +7,7 @@ import Lemma.Tensor.GetDot.eq.Sum_MulGetS
 import Lemma.Tensor.ItemMul.eq.MulItemS
 import Lemma.Tensor.Mul
 import Lemma.Vector.GetSum.eq.Sum_Get
+import Theorem.Probability.JointRv.AsRV
 open Tensor
 
 
@@ -107,9 +108,9 @@ Python: Random.Expect_CondDot.eq.Dot_Expect_Cond.
 @[path, comm]
 private lemma main
   [MeasurableSpace Ω]
-  [MeasurableSpace α]
+  [MeasurableSpace α] [StandardBorelSpace α] [Nonempty α]
   [Countable α] [MeasurableSingletonClass α]
-  {π : MeasureTheory.Measure Ω} {m k : ℕ}
+  {π : MeasureTheory.Measure Ω} [MeasureTheory.IsFiniteMeasure π] {m k : ℕ}
   {a : Ω → α} {s : Ω → γ}
   {f : α → Tensor ENNReal [k]}
 -- given
@@ -123,8 +124,8 @@ private lemma main
   apply Eq.of.All_EqGetS.fin
   intro i
   apply Eq.of.Item
-  simp only [Expectation.asRV_function, Expectation.condEvent]
-  let ν := (ProbabilityTheory.cond π (s ⁻¹' {«\sf{s}»})).map a
+  simp only [Expectation.asRV_function, Expectation.condEval]
+  let ν := ProbabilityTheory.condDistrib a s π «\sf{s}»
   change (expectation ν fun x ↦ A ⬝ᵥ f x)[i].item =
     (A ⬝ᵥ expectation ν f)[i].item
   have hL := expect_get_item ν (fun x ↦ A ⬝ᵥ f x) i
@@ -165,4 +166,4 @@ private lemma main
 
 
 -- created on 2026-09-23
--- updated on 2026-11-11
+-- updated on 2026-11-13

@@ -1,7 +1,7 @@
 import Mathlib
-import Lemma.AlgebraicCurve.GluedPic0
+import Lemma.ResidueField.GluedPic0
 import Def.AlgebraicCurve_PlaceEvaluation
-import Lemma.AlgebraicCurve.GluedPic0Functoriality
+import Lemma.Scheme.GluedPic0Functoriality
 
 set_option autoImplicit false
 

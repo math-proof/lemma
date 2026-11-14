@@ -20,7 +20,7 @@ import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.GroupTheory.Index
 import Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90
-import Mathlib.Algebra.Set.Closure.eq.N.of.Eq
+import Lemma.Set.Closure.eq.N.of.Eq
 import Mathlib.RingTheory.Trace.Basic
 import Mathlib.LinearAlgebra.Dimension.Finrank
 import Mathlib.RingTheory.Ideal.Norm.RelNorm
@@ -58,7 +58,9 @@ noncomputable def CyclicExtensionData.norm_index_IK_ax
     [Algebra K L] [IsGalois K L] [FiniteDimensional K L] [IsCyclic (L ≃ₐ[K] L)] : ℕ :=
   idealGroupIndex K L
 
-def galUnitsAutHom : (L ≃ₐ[K] L) →* MulAut (𝓞 L)ˣ where
+def galUnitsAutHom (K L : Type*) [Field K] [NumberField K] [Field L] [NumberField L]
+    [Algebra K L] [IsGalois K L] [FiniteDimensional K L] :
+    (L ≃ₐ[K] L) →* MulAut (𝓞 L)ˣ where
   toFun σ := Units.mapEquiv (galRestrict (𝓞 K) K L (𝓞 L) σ).toRingEquiv
   map_one' := by ext u; simp [Units.mapEquiv, galRestrict]
   map_mul' σ τ := by ext u; simp [Units.mapEquiv, galRestrict]

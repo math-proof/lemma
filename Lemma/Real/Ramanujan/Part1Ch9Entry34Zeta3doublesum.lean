@@ -1,10 +1,11 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.Analysis.Ramanujan.Part1Ch9Entry34Zeta3doublesum
+import Def.Analysis.Ramanujan.Part1Ch9Entry8Arcsin
 open scoped Nat Real BigOperators Interval Polynomial ContDiff
 open Asymptotics Filter Finset Complex Topology MeasureTheory
-open Entry8Arcsin (chapter9OddHarmonic)
 open MathlibExt.Analysis.Ramanujan.Part1Ch9
+open MathlibExt.Analysis.Ramanujan.Part1Ch9.Entry8Arcsin (chapter9OddHarmonic)
 open Entry34Zeta3doublesum
 
 
@@ -33,13 +34,13 @@ private lemma chapter9OddHarmonic_le (n : ℕ) :
   chapter9OddHarmonic n ≤ (n : ℝ) := by
   unfold chapter9OddHarmonic
   calc ∑ j ∈ range n, 1 / ((2 * j + 1 : ℕ) : ℝ)
-    ≤ ∑ _j ∈ range n, (1 : ℝ) := by
+    ≤ ∑ _j ∈ range n, (1 : ℝ) := (by
       apply Finset.sum_le_sum
       intro j _
       have h1 : (1 : ℝ) ≤ ((2 * j + 1 : ℕ) : ℝ) := by
         exact_mod_cast Nat.le_add_left 1 (2 * j)
       have hpos : (0 : ℝ) < ((2 * j + 1 : ℕ) : ℝ) := by linarith
-      exact (div_le_one hpos).mpr h1
+      exact (div_le_one hpos).mpr h1)
     _ = (n : ℝ) := by simp
 
 end MathlibExt.Analysis.Ramanujan.Part1Ch9.Entry34Zeta3doublesum

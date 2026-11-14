@@ -3,7 +3,7 @@ import Mathlib.RingTheory.LocalRing.ResidueField.Basic
 import Mathlib.RingTheory.Valuation.ValuationSubring
 import Mathlib.FieldTheory.IsAlgClosed.Basic
 import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Lemma.DrinfeldCurve.FunctionField
+import Lemma.RingHom.FunctionField
 import Structure.DrinfeldCurve_LocalChart
 
 set_option autoImplicit false

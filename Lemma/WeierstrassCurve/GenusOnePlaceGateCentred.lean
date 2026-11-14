@@ -1,6 +1,7 @@
 import Mathlib
 import Class.WeierstrassCurve_GenusOnePic0
 import Class.WeierstrassCurve_GenusOnePlaceGateCentred
+import Lemma.WeierstrassCurve.GenusOnePic0
 
 set_option autoImplicit false
 
@@ -8,7 +9,7 @@ namespace WeierstrassCurve.Affine
 
 universe u
 
-variable {F : Type u} [Field F]
+variable {F : Type u} [Field F] [DecidableEq F]
 
 namespace GenusOnePlaceGate.IsCentred
 

@@ -248,7 +248,7 @@ lemma foldNumerator_append
     rw [ih]
     congr 1
     omega
-set_option maxHeartbeats 400000 in
+set_option maxHeartbeats 400000
 
 end DifferentialOperators
 
@@ -280,7 +280,7 @@ lemma reciprocalNumerator_append_singleton
     simp only [map_sub, map_nsmul, pderiv_mul, List.length_nil]
     rw [hcomm_L, hcomm_P]
     ring
-set_option maxHeartbeats 400000 in
+set_option maxHeartbeats 400000
 
 end DifferentialOperators
 
@@ -338,7 +338,7 @@ lemma iteratedPartialDeriv_eventuallyEq_nhds
     rw [iteratedPartialDeriv_cons, iteratedPartialDeriv_cons]
     apply ih
     exact (heq'.fderiv (𝕜 := ℝ)).fun_comp (· (EuclideanSpace.single j 1))
-set_option maxHeartbeats 800000 in
+set_option maxHeartbeats 800000
 
 end DifferentialOperators
 
@@ -384,7 +384,7 @@ lemma foldNumerator_identity
     rw [key]
     congr 2
     omega
-set_option maxHeartbeats 800000 in
+set_option maxHeartbeats 800000
 
 end DifferentialOperators
 

@@ -1,6 +1,6 @@
 import Mathlib
 import Def.ModularCurve_WeierstrassLevelModuliDatum
-import Lemma.ModularCurve.KatzLevelP
+import Lemma.WeierstrassCurve.KatzLevelP
 import Structure.ModularCurve_WeierstrassLevelComponents
 
 set_option autoImplicit false

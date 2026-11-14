@@ -1,4 +1,4 @@
-import Lemma.ModularCurve.X0
+import Lemma.HahnSeries.X0
 
 set_option autoImplicit false
 

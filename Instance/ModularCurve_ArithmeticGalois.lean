@@ -1,9 +1,9 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_ArithmeticGalois.lean: instance decls only.
-import Lemma.ModularCurve.X0
-import Lemma.ModularCurve.LaurentCoeff
+import Lemma.HahnSeries.X0
+import Lemma.LaurentSeries.LaurentCoeff
 import Lemma.Scheme.AlgebraicCurveBaseChangeGalois
 import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Lemma.ModularCurve.ArithmeticGalois
+import Lemma.LaurentSeries.ArithmeticGalois
 
 set_option autoImplicit false
 
@@ -21,6 +21,10 @@ variable (F₀ : IntermediateField ℚ (LaurentSeries ℚ))
 
 instance : SMul (L ≃ₐ[ℚ] L) (Pic0 L (laurentBaseChange L F₀)) where
   smul σ x := arithmeticGalois F₀ σ • x
+
+theorem galois_smul_pic0_def (σ : L ≃ₐ[ℚ] L) (x : Pic0 L (laurentBaseChange L F₀)) :
+    σ • x = arithmeticGalois F₀ σ • x :=
+  rfl
 
 instance : DistribMulAction (L ≃ₐ[ℚ] L) (Pic0 L (laurentBaseChange L F₀)) where
   one_smul x := by rw [galois_smul_pic0_def, map_one, one_smul]

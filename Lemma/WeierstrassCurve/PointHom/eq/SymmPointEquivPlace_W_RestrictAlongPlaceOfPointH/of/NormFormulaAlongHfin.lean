@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.Isogeny.ConditionalCurrency
+import Lemma.WeierstrassCurve.ConditionalCurrency
 import Lemma.Int.P2MUtil
 open WeierstrassCurve WeierstrassCurve.Affine AlgebraicCurve Int
 

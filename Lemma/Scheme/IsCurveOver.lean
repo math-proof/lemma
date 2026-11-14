@@ -1,4 +1,4 @@
-import Lemma.AlgebraicCurve.DivisorClassGroup
+import Lemma.Valuation.DivisorClassGroup
 import Mathlib.RingTheory.Kaehler.Basic
 import Mathlib.FieldTheory.IsAlgClosed.Basic
 import Class.AlgebraicCurve_IsCurveOver

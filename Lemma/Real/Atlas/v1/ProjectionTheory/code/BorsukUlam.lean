@@ -20,9 +20,9 @@ lemma neg_mem_sphere
 -- proof
   simp only [Sphere, Metric.mem_sphere, dist_zero_right] at hx ⊢
   rwa [norm_neg]
-/-- The Borsuk–Ulam theorem: any continuous antipodal map `f : S^n → ℝ^n`
-(satisfying `f(−x) = −f(x)` for all `x ∈ S^n`) has a zero, i.e. there exists
-`x ∈ S^n` with `f(x) = 0`. -/
+-- The Borsuk–Ulam theorem: any continuous antipodal map `f : S^n → ℝ^n`
+-- (satisfying `f(−x) = −f(x)` for all `x ∈ S^n`) has a zero, i.e. there exists
+-- `x ∈ S^n` with `f(x) = 0`. 
 
 end BorsukUlam
 

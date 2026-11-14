@@ -12,6 +12,7 @@ import Mathlib.RingTheory.HahnSeries.Valuation
 import Mathlib.RingTheory.Valuation.ValuationSubring
 import Lemma.Polynomial.HenselFactorization
 import Def.FieldTheory.PuiseuxTheorem.Part8
+import Theorem.FieldTheory.PuiseuxTheorem.NewtonLift
 /-!
 # Puiseux's theorem
 

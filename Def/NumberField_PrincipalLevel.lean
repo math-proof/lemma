@@ -1,4 +1,4 @@
-import Lemma.NumberField.AdelicLevel
+import Lemma.Matrix.AdelicLevel
 
 noncomputable section
 

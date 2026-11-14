@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.Correspondence
+import Lemma.Scheme.Correspondence
 
 
 /-- ported from external source -/
@@ -34,7 +34,7 @@ private lemma  exists_fin_sum_eq_sum_nsmul {α M : Type*} [DecidableEq α] [AddC
         Fintype.card_fin]
 
 
-open AlgebraicCurve in
+open AlgebraicCurve in Scheme
 @[path]
 private lemma main
   [Field K] [Field F] [Field F'] [Algebra K F] [Algebra K F'] [AlgebraicCurve.HasPrincipalDivisors K F']

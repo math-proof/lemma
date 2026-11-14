@@ -43,9 +43,6 @@ def orthogonal {V W : Type u} [AddCommGroup V] [Module k V] [AddCommGroup W] [Mo
     (B : V →ₗ[k] W →ₗ[k] k) (L : Submodule k V) : Submodule k W :=
   L.dualAnnihilator.comap B.flip
 
-@[simp]
-
-
 variable (M' : Rep k Γ)
 variable (pairing : ∀ v, H1 (Rep.res (loc v) M) →ₗ[k] H1 (Rep.res (loc v) M') →ₗ[k] k)
 

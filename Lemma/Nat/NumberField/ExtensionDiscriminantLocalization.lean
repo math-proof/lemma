@@ -79,14 +79,12 @@ variable [IsScalarTower A SA K] [IsScalarTower B SB L]
 -/
 @[path]
 lemma extensionDiscriminant_localization
-  [CommRing A] [Field K] [CommRing B] [Algebra A K] [Algebra A B] [CommRing SA] [Algebra A SA] [CommRing SB] [Algebra B SB] [Algebra SA K] [Algebra SA SB] [IsScalarTower A SA K]
-  {L : Type u} [Field L] [Algebra B L] [Algebra K L] [Algebra A L] [IsScalarTower A K L] [IsScalarTower A B L] [FiniteDimensional K L] [Algebra SB L] [Algebra SA L] [IsScalarTower SA K L] [IsScalarTower SA SB L] [IsScalarTower B SB L]
   {S : Submonoid A} [IsLocalization S SA] [IsLocalization (Algebra.algebraMapSubmonoid B S) SB] :
 -- imply
   Submodule.span SA (extensionDiscriminant A K L B : Set K) =
     extensionDiscriminant SA K L SB := by
 -- proof
-  rw [extensionDiscriminant_eq A K L B, extensionDiscriminant_eq SA K L SB]
+  rw [extensionDiscriminant_eq (A := A) (K := K) (L := L) (B := B), extensionDiscriminant_eq (A := SA) (K := K) (L := L) (B := SB)]
   simp only [latticeDiscriminant]
   apply le_antisymm
   · rw [Submodule.span_span_of_tower]
@@ -116,7 +114,7 @@ lemma extensionDiscriminant_localization
       rw [hL i, Algebra.smul_def, IsScalarTower.algebraMap_apply A K L]
     have hdisc_mem : Algebra.discr K (fun i => algebraMap A K a • e i) ∈
       extensionDiscriminant A K L B :=
-      discr_mem_extensionDiscriminant A K L B hsmul_mem
+      discr_mem_extensionDiscriminant hsmul_mem
     have hdisc_eq : Algebra.discr K (fun i => algebraMap A K a • e i) =
       (algebraMap A K a) ^ (2 * Module.finrank K L) * Algebra.discr K e :=
       discr_smul (algebraMap A K a) e
@@ -145,4 +143,4 @@ end Localization
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-13

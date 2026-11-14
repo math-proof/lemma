@@ -1,7 +1,7 @@
 import Def.LanglandsTunnell_JLConverse
-import Lemma.AutomorphicForm.CarrierPins
+import Lemma.Measure.CarrierPins
 import Def.NumberField_AdelicBox
-import Lemma.AutomorphicForm.CentreCutSiegelSet
+import Lemma.Matrix.CentreCutSiegelSet
 import Abbrev.LanglandsTunnell_JLSynthesis
 
 set_option autoImplicit false

@@ -51,7 +51,7 @@ lemma bakerDavenport_reduction_absolute_general
     linarith
   have hLamlt : |(r : ℝ) * kappa - (s : ℝ) + mu| < epsilon / (q : ℝ) :=
     lt_of_lt_of_le hlt hexp
-  have hcore := nearestInteger_reduction_core q M r kappa mu s hle epsilon hepsilon
+  have hcore := nearestInteger_reduction_core (v := s) hle hepsilon
   push_cast at hcore
   rw [lt_div_iff₀ hqR] at hLamlt
   linarith
@@ -72,7 +72,7 @@ lemma bakerDavenport_reduction_absolute
   {A mu B epsilon : ℝ}
 -- given
   (hM : 0 < M)
-  (hkappa : Irrational kappa)
+  (_hkappa : Irrational kappa)
   (hq : q = (kappa.convergent j).den)
   (hqM : 6 * M < q)
   (hA : 0 < A)
@@ -86,11 +86,11 @@ lemma bakerDavenport_reduction_absolute
     |(r : ℝ) * kappa - (s : ℝ) + mu| < A * (B⁻¹) ^ w := by
 -- proof
   rintro ⟨r, s, w, -, -, -, hle, hwlog, -, hlt⟩
-  exact bakerDavenport_reduction_absolute_general M q (by omega) kappa A mu B epsilon hA hB
+  exact bakerDavenport_reduction_absolute_general (by omega) hA hB
     hepsilon hepsilonpos ⟨r, s, w, hle, hwlog, hlt⟩
 
 end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-28
+-- updated on 2026-11-13

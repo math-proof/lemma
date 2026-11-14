@@ -1,4 +1,4 @@
-import Lemma.LanglandsTunnell.CubicInduction_ArchSmoothSpace3
+import Lemma.Matrix.CubicInduction_ArchSmoothSpace3
 
 set_option autoImplicit false
 

@@ -10,7 +10,7 @@ private lemma main
   (h : s = s')
   (X : Tensor α s) :
 -- imply
-  exp (cast (congrArg (Tensor α) h) X) ≃ exp X := by
+  Exp.exp (cast (congrArg (Tensor α) h) X) ≃ Exp.exp X := by
 -- proof
   apply SEq.of.Eq_Cast.Eq
   .
@@ -20,3 +20,4 @@ private lemma main
 
 
 -- created on 2025-11-29
+-- updated on 2026-11-13

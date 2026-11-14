@@ -1,5 +1,3 @@
-import Def.Analysis.Calculus.Gradient.Operators.Part2
-import Syntax.Order.Sup
 import Mathlib.Analysis.Calculus.ParametricIntegral
 import Lemma.Random.GetTSum_SMul.of.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.All_Measurable_Prob.All_EqWithDensity
 import Lemma.Random.Integral_Vkd.eq.TSum_MulPowIntegral_R.of.In_Ico.All_EqWithDensity
@@ -13,17 +11,14 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Dens
 
 /--
 `∑' t, γ ^ t • fderiv (∫ r[t]) = ∫ fderiv V0 ∂ init`.
-Continuous-action counterpart of
-`Random.TSum_SMul.eq.Sum_SMul.of.In_Ico.GtInftySup.All_Differentiable_Prob`.
 -/
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮] [ReferenceMeasure 𝒜]
+  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [μ : ReferenceMeasure 𝒜]
   {M : DensityModel Θ 𝒮 𝒜}
   {γ : ℝ}
   {g : 𝒮 → 𝒜 → ℝ}
-  {Cg : ℝ}
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
@@ -33,13 +28,15 @@ private lemma main
   (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.policy.prob θ z.1 z.2))
   (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₃ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ g x u)
-  (h₄ : ∀ x, Integrable (g x) ReferenceMeasure.measure)
-  (h₅ : ∀ x, ∫ u, g x u ∂ReferenceMeasure.measure ≤ Cg)
+  (h₄ : ∀ x, Integrable (g x) μ.measure)
+  (h₅ : sup[x] ∫ u, g x u ∂μ.measure < ∞)
   (θ : Θ) :
 -- imply
   ∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ =
     ∫ x, fderiv ℝ (fun θ => M.V0 θ γ x) θ ∂M.env.init := by
 -- proof
+  obtain ⟨Cg, hCgbound⟩ := id h₅
+  have h₅le : ∀ x, ∫ u, g x u ∂μ.measure ≤ Cg := fun x => hCgbound ⟨x, rfl⟩
   have := M.env.init_prob
   have hGet :=
     GetTSum_SMul.of.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.All_Measurable_Prob.All_EqWithDensity
@@ -53,7 +50,7 @@ private lemma main
     fun θ x u => by
       simpa [gradient, LinearIsometryEquiv.norm_map] using h₃ θ x u
   have hsup : sup[x] ∫ u, g x u ∂ReferenceMeasure.measure < ∞ :=
-    ⟨Cg, by rintro _ ⟨x, rfl⟩; exact h₅ x⟩
+    ⟨Cg, by rintro _ ⟨x, rfl⟩; exact h₅le x⟩
   have hV :=
     HasFDerivAt.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob
       (M := M) h₂ hgrad h₄ hsup h₀ hπ
@@ -92,4 +89,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-11
+-- updated on 2026-11-14

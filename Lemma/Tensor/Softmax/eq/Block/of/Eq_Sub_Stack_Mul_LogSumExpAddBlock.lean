@@ -21,7 +21,8 @@ private lemma biased.upper_triangle
   (A + (Ξ - 1) * ∞).softmax ≈
     (([i < n] [j < n] (((if ((i.val : ℤ) ≤ (j.val : ℤ) ∧ (j.val : ℤ) < (i.val : ℤ) + u) then Real.exp (z i ((j.val : ℤ) - i.val)) else 0 : ℝ) : Tensor ℝ [])) : Tensor ℝ [n, n]) : Tensor ℝ* [n, n]) := by
 -- proof
-  exact SoftmaxAdd_Mul_Infty.eq.Cast_Stack_Ite_Block.log (n := n) (m := n) (fun i j => ((i.val : ℤ) ≤ (j.val : ℤ) ∧ (j.val : ℤ) < (i.val : ℤ) + u)) (fun i j => ((A i j + if i = j then H i else 0) : ℝ)) (fun i j => z i ((j.val : ℤ) - i.val)) (fun i => ⟨i, by omega⟩) h
+  exact SoftmaxAdd_Mul_Infty.eq.Cast_Stack_Ite_Block.log (n := n) (m := n) (P := fun i j => ((i.val : ℤ) ≤ (j.val : ℤ) ∧ (j.val : ℤ) < (i.val : ℤ) + u)) (a := fun i j => ((A i j + if i = j then H i else 0) : ℝ)) (z := fun i j => z i ((j.val : ℤ) - i.val)) (fun i => ⟨i, by omega⟩) h
 
 
 -- created on 2026-09-27
+-- updated on 2026-11-13

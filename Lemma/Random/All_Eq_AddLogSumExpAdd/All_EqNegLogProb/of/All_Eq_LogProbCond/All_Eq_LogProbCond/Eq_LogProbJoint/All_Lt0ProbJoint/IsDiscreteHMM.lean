@@ -90,7 +90,7 @@ private lemma main
     exact ⟨fun i hi => h.1 i (by omega), fun i hi => h.2 i (by omega)⟩
   have hE' : ∀ t ≤ m, ∀ a, 0 < (ℙ[π](x[t] = «\sf{x}»[t] | y[t] = a) : ℝ) := by
     intro t ht a
-    have hdiv := ProbCond.eq.Div.of.SinglePSpace inferInstance (π := π) (x := x t) (y := y t)
+    have hdiv := Prob_Cond.eq.Div.of.SinglePSpace inferInstance (π := π) (x := x t) (y := y t)
       («\sf{x}» t) a
     show 0 < ((ℙ[π](x[t] = «\sf{x}»[t] | y[t] = a) : ENNReal)).toReal
     rw [hdiv]
@@ -102,7 +102,7 @@ private lemma main
         (fun h0 => hne (measure_mono_null Set.inter_subset_right h0))).ne
   have hT' : ∀ i, i + 1 ≤ m → ∀ a b, 0 < (ℙ[π](y[i + 1] = a | y[i] = b) : ℝ) := by
     intro i hi a b
-    have hdiv := ProbCond.eq.Div.of.SinglePSpace inferInstance (π := π) (x := y (i + 1)) (y := y i) a b
+    have hdiv := Prob_Cond.eq.Div.of.SinglePSpace inferInstance (π := π) (x := y (i + 1)) (y := y i) a b
     show 0 < ((ℙ[π](y[i + 1] = a | y[i] = b) : ENNReal)).toReal
     rw [hdiv]
     have hsub : {ω | (∀ k < m + 1, x k ω = «\sf{x}» k) ∧ ∀ k < m + 1, y k ω = (fun k => if k = i + 1 then a else b) k} ⊆ y (i + 1) ⁻¹' {a} ∩ y i ⁻¹' {b} :=

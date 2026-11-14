@@ -1087,10 +1087,10 @@ lemma phi_sub_pole_holomorphic_extension
       (differentiableOn_const 1)
   have hU_open : IsOpen {s : ℂ | 0 < s.re} := isOpen_lt continuous_const continuous_re
   have h_sub : {s : ℂ | 1 ≤ s.re} ⊆ {s : ℂ | 0 < s.re} := fun s hs => by
-    simp only [Set.mem_setOf_eq] at *; linarith
+    simp only [Set.mem_ofPred_eq] at *; linarith
   have hΨ_ne : ∀ s, s ∈ ({s : ℂ | 1 ≤ s.re}) → Ψ s ≠ 0 := by
     intro s hs
-    simp only [Set.mem_setOf_eq] at hs
+    simp only [Set.mem_ofPred_eq] at hs
     by_cases hs_ne : s = 1
     · subst hs_ne; simp [hΨ_def]
     · rw [hΨ_eq s (by linarith) hs_ne]

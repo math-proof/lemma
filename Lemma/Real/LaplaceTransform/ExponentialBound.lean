@@ -2,7 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.Analysis.LaplaceTransform.Basic
 open MeasureTheory Set Real Filter Topology Asymptotics
-open-positive-ray (piecewise continuity on `ℝ_{>0}`) wording does not control the
+-- open-positive-ray (piecewise continuity on `ℝ_{>0}`) wording does not control the
 
 
 variable [NormedAddCommGroup E] [NormedSpace ℂ E]
@@ -31,10 +31,10 @@ private lemma integrableOn_mul_exp_neg_Ioi' {r : ℝ} (hr : 0 < r) :
           linarith [Real.add_one_le_exp (r / 2 * t)]
     calc t * Real.exp (-r * t)
       = t * (Real.exp (-(r / 2) * t) *
-        Real.exp (-(r / 2) * t)) := by
+        Real.exp (-(r / 2) * t)) := (by
         rw [← Real.exp_add]
         congr 1
-        ring_nf
+        ring_nf)
       _ ≤ (2 / r) * Real.exp (r / 2 * t) *
         (Real.exp (-(r / 2) * t) *
           Real.exp (-(r / 2) * t)) := by

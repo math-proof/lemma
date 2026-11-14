@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.GaloisRep_LocalConditions
-import Lemma.GaloisRep.CompletionBridge
+import Lemma.PadicAlgCl.CompletionBridge
 import Lemma.Int.P2MUtil
 
 

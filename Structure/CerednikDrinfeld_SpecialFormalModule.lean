@@ -1,5 +1,8 @@
 import Mathlib
-import Instance.MvFormalGroup_NegV2
+import Structure.MvFormalGroup_BasicV2
+import Class.MvFormalGroup_BasicV2
+import Abbrev.CerednikDrinfeld_SpecialFormalModule
+import Def.MvFormalGroup_LinearPart
 
 set_option autoImplicit false
 
@@ -22,9 +25,14 @@ variable {B : Type u} [CommRing B] {B' : Type v} [CommRing B']
 
 abbrev Series (B : Type u) [CommRing B] : Type u := Fin 2 → MvPowerSeries (Fin 2) B
 
+def Series.id (B : Type u) [CommRing B] : Series B := fun i => MvPowerSeries.X i
+
+def Series.comp (ψ φ : Series B) : Series B := fun i => subst φ (ψ i)
 
 def Series.addVia (F : MvFormalGroup 2 B) (φ ψ : Series B) : Series B :=
   fun i => subst (Sum.elim φ ψ) (F.toPowerSeries i)
+
+def Series.map (f : B →+* B') (φ : Series B) : Series B' := fun i => MvPowerSeries.map f (φ i)
 
 
 def IsLawHom (F G : MvFormalGroup 2 B) (φ : Series B) : Prop :=

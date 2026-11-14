@@ -14,7 +14,7 @@ lemma seq_converges_iff
   {x : ℕ → ℝ}
   {L : ℝ} :
 -- imply
-  Filter.Tendsto x Filter.atTop (nhds L) ↔ ∀ ε > 0, ∃ M : ℕ, ∀ n ≥ M, := by
+  Filter.Tendsto x Filter.atTop (nhds L) ↔ ∀ ε > 0, ∃ M : ℕ, ∀ n ≥ M, |x n - L| < ε := by
 -- proof
   rw [Metric.tendsto_atTop]
   simp_rw [Real.dist_eq]

@@ -1,7 +1,7 @@
 -- Carved from Lemma/Definitions/Def_LanglandsTunnell_C8Tower.lean: instance decls only.
-import Lemma.LanglandsTunnell.C8Character
+import Lemma.Matrix.C8Character
 import Instance.LanglandsTunnell_QuatH
-import Lemma.LanglandsTunnell.C8Tower
+import Lemma.Matrix.C8Tower
 
 set_option autoImplicit false
 

@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Mathlib.RingTheory.DedekindDomain.AdicValuation
-import Mathlib.RingTheory.DedekindDomain.IntegralClosure
+import Mathlib.RingTheory.Ideal.IntegralClosure
 import Mathlib.NumberTheory.RamificationInertia.Ramification
 import Mathlib.RingTheory.Ideal.Over
 import Theorem.v1.Atlas.NumberTheoryI.code.CompleteFields.Part2
@@ -44,4 +44,3 @@ theorem isScalarTower_adicCompletion
       AdicCompletionAlgebra.adicCompletionMap_comp_algebraMap K 𝔭 𝔮 h𝔮_over_𝔭,
       RingHom.comp_apply,
       IsScalarTower.algebraMap_apply K L (𝔮.adicCompletion L)]
-

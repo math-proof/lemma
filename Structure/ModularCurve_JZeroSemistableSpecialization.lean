@@ -1,5 +1,5 @@
-import Lemma.AlgebraicCurve.GluedPic0
-import Lemma.AlgebraicCurve.GluedPic0Functoriality
+import Lemma.ResidueField.GluedPic0
+import Lemma.Scheme.GluedPic0Functoriality
 import Instance.ModularCurve_ArithmeticGalois
 import Def.ModularCurve_JqCoeff
 import Structure.HeckeGalois_EichlerShimura

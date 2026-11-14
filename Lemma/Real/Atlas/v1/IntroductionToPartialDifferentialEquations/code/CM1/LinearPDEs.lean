@@ -179,7 +179,7 @@ lemma inhomogeneous_solution_set
   {w : (Fin n → ℝ) → ℝ | L.apply w = f} = {w | ∃ u_H, L.apply u_H = 0 ∧ w = u_I + u_H} := by
 -- proof
   ext w
-  simp only [Set.mem_setOf_eq]
+  simp only [Set.mem_ofPred_eq]
   constructor
   · intro hw
     refine ⟨w - u_I, ?_, ?_⟩

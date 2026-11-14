@@ -163,7 +163,7 @@ lemma ideal_eq_iInf_comap_map_localization_prime
   constructor
   ·
     intro hx
-    rw [← ideal_eq_iInf_comap_map_localization_maximal A I]
+    rw [← ideal_eq_iInf_comap_map_localization_maximal (I := I)]
     simp only [Ideal.mem_iInf]
     exact fun 𝔪 => hx ⟨𝔪.asIdeal, 𝔪.isMaximal.isPrime⟩
   · intro hxI 𝔭
@@ -183,7 +183,7 @@ lemma ideal_eq_iInf_comap_map_localization
 -- imply
   (⨅ 𝔪 : MaximalSpectrum A, (I.map (algebraMap A (Localization 𝔪.asIdeal.primeCompl))).comap (algebraMap A (Localization 𝔪.asIdeal.primeCompl))) = (⨅ 𝔭 : PrimeSpectrum A, (I.map (algebraMap A (Localization 𝔭.asIdeal.primeCompl))).comap (algebraMap A (Localization 𝔭.asIdeal.primeCompl))) ∧ (⨅ 𝔪 : MaximalSpectrum A, (I.map (algebraMap A (Localization 𝔪.asIdeal.primeCompl))).comap (algebraMap A (Localization 𝔪.asIdeal.primeCompl))) = I :=
 -- proof
-  ⟨by rw [ideal_eq_iInf_comap_map_localization_maximal, ideal_eq_iInf_comap_map_localization_prime], ideal_eq_iInf_comap_map_localization_maximal A I⟩
+  ⟨by rw [ideal_eq_iInf_comap_map_localization_maximal, ideal_eq_iInf_comap_map_localization_prime], ideal_eq_iInf_comap_map_localization_maximal⟩
 section DedekindDomainCharacterization
 variable (A : Type*) [CommRing A] [IsDomain A] [IsNoetherianRing A]
 
@@ -205,13 +205,14 @@ lemma isDVR_localization_iff_integrallyClosed_dimensionLEOne
   constructor
   ·
     intro h
-    have : IsDedekindDomainDvr A := { is_dvr_at_nonzero_prime := h }
+    have : IsDedekindDomain A :=
+      (isDedekindDomain_iff_isDiscreteValuationRing_atPrime (A := A)).mpr ⟨inferInstance, h⟩
     exact ⟨inferInstance, inferInstance⟩
   ·
     intro ⟨hic, hdim⟩
     have : IsDedekindDomain A := { }
     intro P hP hPprime
-    exact (IsDedekindDomain.isDedekindDomainDvr A).is_dvr_at_nonzero_prime P hP hPprime
+    exact (isDedekindDomain_iff_isDiscreteValuationRing_atPrime (A := A)).mp inferInstance |>.2 P hP hPprime
 end DedekindDomainCharacterization
 section DedekindDomain
 variable (A : Type*) [CommRing A] [IsDomain A] [IsNoetherianRing A]
@@ -258,4 +259,4 @@ lemma pid_isDedekindDomain
 
 
 -- created on 2026-10-23
--- updated on 2026-10-29
+-- updated on 2026-11-13

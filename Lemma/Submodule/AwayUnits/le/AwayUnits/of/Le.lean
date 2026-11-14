@@ -1,10 +1,10 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.CerednikDrinfeld.CosetGraphAtPrime
+import Lemma.UpperHalfPlane.CosetGraphAtPrime
 import Lemma.Int.P2MUtil
 
 open scoped TensorProduct Quaternion
-open IsDedekindDomain NumberField QuaternionAlgebra CerednikDrinfeld
+open IsDedekindDomain NumberField QuaternionAlgebra CerednikDrinfeld UpperHalfPlane
 
 /--
 [CerednikDrinfeld_CosetGraph_awayUnits_mono](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_CerednikDrinfeld_CosetGraph_awayUnits_mono.lean)

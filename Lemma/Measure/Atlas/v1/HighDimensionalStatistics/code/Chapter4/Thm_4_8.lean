@@ -132,9 +132,10 @@ lemma dotProduct_self_unit
   dotProduct (EuclideanSpace.equiv (Fin d) ℝ u) (EuclideanSpace.equiv (Fin d) ℝ u) = 1 := by
 -- proof
   show u.ofLp ⬝ᵥ u.ofLp = 1
-  have h1 : @inner ℝ _ _ u u = ‖u‖ ^ 2 := real_inner_self_eq_norm_sq u
-  have h2 := EuclideanSpace.inner_eq_star_dotProduct u u; simp [star_trivial] at h2
-  rw [hu] at h1; linarith [h2.symm.trans h1]
+  have hnorm : ‖u‖ ^ 2 = (1 : ℝ) := by rw [hu, one_pow]
+  rw [← real_inner_self_eq_norm_sq] at hnorm
+  rw [EuclideanSpace.inner_eq_star_dotProduct] at hnorm
+  simpa [star_trivial] using hnorm
 
 end Thm48
 
@@ -230,7 +231,7 @@ lemma bilinear_identity
 -- imply
   dotProduct u (M.mulVec u) - dotProduct w (M.mulVec w) = dotProduct (u - w) (M.mulVec (u + w)) := by
 -- proof
-  have hsym := symmetric_dotProduct_mulVec M hM u w
+  have hsym := symmetric_dotProduct_mulVec (u := u) (w := w) hM
   simp only [mulVec_add, dotProduct_add, sub_dotProduct]
   linarith
 
@@ -249,10 +250,10 @@ lemma inner_toEuclideanLin'
 -- imply
   @inner ℝ _ _ u (toEuclideanLin A w) = dotProduct u.ofLp (A.mulVec w.ofLp) := by
 -- proof
-  rw [inner_eq_dotProduct u (toEuclideanLin A w)]
-  show u.ofLp ⬝ᵥ (toEuclideanLin A w).ofLp = u.ofLp ⬝ᵥ A *ᵥ w.ofLp
-  rw [toEuclideanLin_ofLp]
-set_option maxHeartbeats 800000 in
+  rw [EuclideanSpace.inner_eq_star_dotProduct u (toEuclideanLin A w)]
+  have hstar : star (u.ofLp) = u.ofLp := star_trivial u.ofLp
+  rw [hstar, toEuclideanLin_ofLp]
+  exact dotProduct_comm (A.mulVec w.ofLp) u.ofLp
 
 end Thm48
 
@@ -298,7 +299,6 @@ lemma spiked_transpose_eq
   congr 1
   · congr 1; ext i j; simp [vecMulVec_apply]; ring
   · exact transpose_one
-set_option maxHeartbeats 1600000 in
 
 end Thm48
 
@@ -337,12 +337,12 @@ lemma davis_kahan_sin_bound
     apply Real.sin_nonneg_of_nonneg_of_le_pi (arccos_nonneg _) (arccos_le_pi _)
   have h_rv : dotProduct vf (Sig.mulVec vf) = 1 + θ := by
     rw [hSig, rayleigh_spiked_model]
-    have hdp := dotProduct_self_unit v hv
+    have hdp := dotProduct_self_unit hv
     have hvf : dotProduct vf vf = 1 := hdp
     rw [← hvf_eq]; rw [hvf_eq]; rw [hvf]; ring
   have h_rvt : dotProduct vtf (Sig.mulVec vtf) = 1 + θ * c ^ 2 := by
-    rw [hSig, rayleigh_spiked_model, dotProduct_self_unit vtilde hvt]
-    have h_inner_vvt := inner_eq_dotProduct vtilde v
+    rw [hSig, rayleigh_spiked_model, dotProduct_self_unit hvt]
+    have h_inner_vvt := inner_eq_dotProduct (u := vtilde) (v := v)
     change c = dotProduct vtf vf at h_inner_vvt
     have hvc : v.ofLp ⬝ᵥ vtf = c := by
       rw [hvf_eq, dotProduct_comm, ← h_inner_vvt]
@@ -351,7 +351,7 @@ lemma davis_kahan_sin_bound
     θ * (1 - c ^ 2) := by rw [h_rv, h_rvt]; ring
   have h_eig_ineq := hEig.2 v hv
   set Δ := SigTilde - Sig
-  have hSigSym : Sigᵀ = Sig := by rw [hSig]; exact spiked_transpose_eq θ v
+  have hSigSym : Sigᵀ = Sig := by rw [hSig]; exact spiked_transpose_eq
   have hSTSym : SigTildeᵀ = SigTilde := by
     have h := hPSD.1
     exact_mod_cast h
@@ -372,13 +372,13 @@ lemma davis_kahan_sin_bound
     linarith [h_diff]
   have h_bilinear : dotProduct vtf (Δ.mulVec vtf) - dotProduct vf (Δ.mulVec vf) =
     dotProduct (vtf - vf) (Δ.mulVec (vtf + vf)) :=
-    bilinear_identity Δ hΔsym vtf vf
+    bilinear_identity (M := Δ) (u := vtf) (w := vf) hΔsym
   have h_cs_bound : dotProduct (vtf - vf) (Δ.mulVec (vtf + vf)) ≤
     ‖vtilde - v‖ * matrixOpNorm Δ * ‖vtilde + v‖ := by
     calc dotProduct (vtf - vf) (Δ.mulVec (vtf + vf))
       ≤ |dotProduct (vtf - vf) (Δ.mulVec (vtf + vf))| := le_abs_self _
       _ ≤ ‖vtilde - v‖ * matrixOpNorm Δ * ‖vtilde + v‖ :=
-        abs_bilinear_le_opNorm Δ (vtilde - v) (vtilde + v)
+        abs_bilinear_le_opNorm (A := Δ) (u := vtilde - v) (w := vtilde + v)
   have h_norm_sub_sq : ‖vtilde - v‖ ^ 2 = 2 - 2 * c := by
     rw [norm_sub_sq_real, hvt, hv]; ring
   have h_norm_add_sq : ‖vtilde + v‖ ^ 2 = 2 + 2 * c := by
@@ -449,7 +449,7 @@ lemma theorem_4_8_right
 -- proof
   obtain ⟨hθ, hv, _⟩ := hSpike
   have hSpike' : IsSpikedCovariance Sig θ v := ⟨hθ, hv, by assumption⟩
-  have h_key := davis_kahan_sin_bound Sig θ v hSpike' SigTilde hPSD vtilde hvt hEig
+  have h_key := davis_kahan_sin_bound (Sig := Sig) (θ := θ) (v := v) (SigTilde := SigTilde) (vtilde := vtilde) hSpike' hPSD hvt hEig
   have h_sin_nn : 0 ≤ Real.sin (principalAngle vtilde v) := by
     apply Real.sin_nonneg_of_nonneg_of_le_pi (arccos_nonneg _) (arccos_le_pi _)
   have h_op_nn : 0 ≤ matrixOpNorm (SigTilde - Sig) := norm_nonneg _
@@ -484,8 +484,8 @@ lemma theorem_4_8
   min (‖vtilde - v‖ ^ 2) (‖vtilde + v‖ ^ 2) ≤ 8 / θ ^ 2 * matrixOpNorm (SigTilde - Sig) ^ 2 := by
 -- proof
   have hv : ‖v‖ = 1 := hSpike.2.1
-  have hL := theorem_4_8_left vtilde v hvt hv
-  have hR := theorem_4_8_right Sig θ v hSpike SigTilde hPSD vtilde hvt hEig
+  have hL := theorem_4_8_left (vtilde := vtilde) (v := v) hvt hv
+  have hR := theorem_4_8_right (Sig := Sig) (θ := θ) (v := v) (SigTilde := SigTilde) (vtilde := vtilde) hSpike hPSD hvt hEig
   linarith
 
 end Thm48

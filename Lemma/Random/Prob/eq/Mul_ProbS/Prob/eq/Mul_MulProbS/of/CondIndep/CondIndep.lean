@@ -1,6 +1,6 @@
 import Lemma.Random.Measure.eq.Mul_MulDivS.of.Subset
 import Lemma.Random.MulMeasure.eq.MulMeasure.of.CondIndep
-import Lemma.Random.ProbCond.eq.Div.of.SinglePSpace
+import Lemma.Random.Prob_Cond.eq.Div.of.SinglePSpace
 import Instance.Probability.Process.DiscreteHMM.Part2
 open MeasureTheory Random IsDiscreteHMM
 
@@ -75,10 +75,10 @@ private lemma main
     EqProb _
   have hcondx : ∀ i j, ℙ[π](x[i] = «\sf{x}»[i] | y[j] = «\sf{y}»[j]) =
       π (x i ⁻¹' {«\sf{x}» i} ∩ y j ⁻¹' {«\sf{y}» j}) / π (y j ⁻¹' {«\sf{y}» j}) := fun i j =>
-    ProbCond.eq.Div.of.SinglePSpace inferInstance _ _
+    Prob_Cond.eq.Div.of.SinglePSpace inferInstance _ _
   have hcondy : ∀ i j, ℙ[π](y[i] = «\sf{y}»[i] | y[j] = «\sf{y}»[j]) =
       π (y i ⁻¹' {«\sf{y}» i} ∩ y j ⁻¹' {«\sf{y}» j}) / π (y j ⁻¹' {«\sf{y}» j}) := fun i j =>
-    ProbCond.eq.Div.of.SinglePSpace (hPyy i j) _ _
+    Prob_Cond.eq.Div.of.SinglePSpace (hPyy i j) _ _
   have key : ∀ (p : ℕ → Prop) (m : ℕ), (∀ i < m + 1, p i) ↔ (∀ i < m, p i) ∧ p m := fun p m =>
     ⟨fun h => ⟨fun i hi => h i (by omega), h m (by omega)⟩, fun h i hi => by
       obtain h' | rfl := Nat.lt_succ_iff_lt_or_eq.mp hi

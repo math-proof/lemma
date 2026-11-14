@@ -1,4 +1,4 @@
-import Lemma.ModularCurve.X1HeckeOperator
+import Lemma.LaurentSeries.X1HeckeOperator
 import Def.ModularCurve_X1Diamond
 import Abbrev.ModularCurve_JZeroTateModule
 import Mathlib.Algebra.MvPolynomial.CommRing

@@ -1,6 +1,7 @@
 import Def.AutomorphicForm_AutomorphicFnAt
 import Instance.RepTheory_SmoothVectors
-import Lemma.NumberField.AdelicLevel
+import Lemma.Matrix.AdelicLevel
+import Lemma.Set.SmoothVectors
 
 open IsDedekindDomain NumberField MeasureTheory Matrix
 open FLT.SmoothVectors

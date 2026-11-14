@@ -4,7 +4,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseSignature, hasWord } from './scan.mjs';
+import { parseSignature, hasWord, isBinderKeywordContext } from './scan.mjs';
 
 const REL = /[=≠<>≤≥∈∉⊆⊂⊇⊃∣↔∧∨¬≈≡]|∀|∃|\bTrue\b|\bFalse\b/;
 const isLemma = (d) => d.kind === 'lemma' || d.kind === 'theorem';
@@ -119,6 +119,16 @@ function isPropositionType(type, propClasses) {
     const head = (/^[A-Za-z_][\w'.]*/.exec(t) || [''])[0];
     if (!head) return false;
     if (head === 'Prop' || PREDICATE_HEAD.test(head)) return true;
+    const last = head.includes('.') ? head.slice(head.lastIndexOf('.') + 1) : head;
+    return propClasses.has(head) || propClasses.has(last);
+}
+
+/** Head of `type` is a `class … : Prop` (instance search), not a ∀-wrapped or relational hypothesis. */
+function isPropClassType(type, propClasses) {
+    const t = String(type || '').trim();
+    if (!t || /^(∀|Π|fun\b|λ)/.test(t)) return false;
+    const head = (/^[A-Za-z_][\w'.]*/.exec(t) || [''])[0];
+    if (!head) return false;
     const last = head.includes('.') ? head.slice(head.lastIndexOf('.') + 1) : head;
     return propClasses.has(head) || propClasses.has(last);
 }
@@ -274,6 +284,105 @@ function findRedundantSetAscription(type) {
         return { start: i, ascription: type.slice(i, k + 1) };
     }
     return null;
+}
+
+/** Identifier uses of `name` on [from, end) of the comment-blanked source (same idea as binder-underscore-name). */
+function countNameUses(P, name, from, end) {
+    if (!name || name === '_') return 0;
+    let n = 0;
+    for (let i = from; i < end; i++) {
+        const l = P.code[i];
+        let k = -1;
+        while ((k = l.indexOf(name, k + 1)) >= 0) {
+            const before = l[k - 1];
+            const after = l[k + name.length];
+            if ((before && /[\p{L}\p{N}_'.!?]/u.test(before)) || (after && /[\p{L}\p{N}_'!?₀-₉]/u.test(after))) continue;
+            // binding sites (`name :`, intro / fun / pattern binders), not uses
+            if (/^\s*:(?!=)/.test(l.slice(k + name.length))) continue;
+            if (isBinderKeywordContext(l, k)) continue;
+            n++;
+        }
+    }
+    return n;
+}
+
+/**
+ * Tactics that consume a context hypothesis without naming it.
+ * Not `simp` / `exact` / `refine` / `convert` / `simpa`: those often appear in proofs that
+ * do not use a `_` given (see the Qkd `main` ∀-y example); implicit-argument uses may
+ * therefore be false positives (documented in the README).
+ */
+function proofMayUseUnnamedHyp(P, from, end) {
+    for (let i = from; i < end; i++) {
+        const l = P.code[i];
+        if (l.includes('‹')) return true;
+        if (/(^|[^\p{L}\p{N}_'])(assumption|apply_assumption)(?![\p{L}\p{N}_'])/u.test(l)) return true;
+    }
+    return false;
+}
+
+function showGivenBinder(g) {
+    const o = g.open || '(';
+    const c = closeOf(o);
+    const flat = String(g.flat || '').replace(/\s+/g, ' ');
+    const body = flat.length > 80 ? `${flat.slice(0, 79)}…` : flat;
+    return `${o}${body}${c}`;
+}
+
+/** Proposition `-- given` hypothesis (not an expression binder, not `{…}` / `[…]` above `-- given`). */
+function isGivenHypothesis(g, propClasses) {
+    if (g.kind !== 'explicit' || !g.names.length || g.deflt != null) return false;
+    const t = String(g.type || '').trim();
+    if (!t || t === 'Prop') return false;
+    if (propKind(g) === 'prop') return true;
+    return isPropositionType(t, propClasses);
+}
+
+/**
+ * `-- given` hypothesis that never appears as a use in the proof: drop it, even when already `_`.
+ * Named uses follow binder-underscore-name (identifier occurrences, skipping binding sites).
+ * After `fun` / `λ` `=>` / `↦`, later identifiers on the line are uses (including `h₀.1` / `h₀.2`).
+ * A name still needed in a later given / the imply is kept (often `given-implicit-dep`).
+ * A `class … : Prop` hypothesis (`SinglePSpace`, …) is kept for instance search even when unnamed in the proof.
+ */
+function givenUnusedRule(ctx, d, sig, gg) {
+    const { P } = ctx;
+    const { given, imply, proof } = d.markers;
+    if (given == null || !gg.length) return;
+    const proofFrom = proof != null ? proof + 1
+        : (sig.assign != null ? sig.assign.line + (String(P.code[sig.assign.line] || '').includes('by') ? 1 : 0) : null);
+    if (proofFrom == null || proofFrom >= d.end) return;
+    // later signature: other givens after this binder, plus `-- imply` up to the proof / `:=`
+    const sigEnd = proof != null ? proof : (sig.assign != null ? sig.assign.line : d.end);
+    let propClasses = null;
+    const unnamedOk = proofMayUseUnnamedHyp(P, proofFrom, d.end);
+    for (const g of gg) {
+        if (propClasses == null) {
+            propClasses = new Set(propClassNames(ctx.root));
+            if (ctx.source && /\bclass\s/.test(ctx.source)) collectPropClasses(ctx.source, propClasses);
+        }
+        if (!isGivenHypothesis(g, propClasses)) continue;
+        if (isPropClassType(g.type, propClasses)) continue;
+        const unused = [];
+        for (const name of g.names) {
+            if (name !== '_') {
+                if (countNameUses(P, name, proofFrom, d.end) > 0) continue;
+                // still required by a later given or the imply
+                const afterBinder = g.endLine != null ? g.endLine + 1 : g.line + 1;
+                if (countNameUses(P, name, afterBinder, Math.min(sigEnd, proofFrom)) > 0) continue;
+            } else if (unnamedOk) {
+                continue;
+            }
+            unused.push(name);
+        }
+        if (!unused.length) continue;
+        const shown = showGivenBinder(g);
+        const all = unused.length === g.names.length;
+        const msg = all
+            ? `${shown} is unused in the proof: this \`-- given\` hypothesis is unnecessary and should be dropped`
+            : `\`${unused.join('`, `')}\` in ${shown} is unused in the proof: this \`-- given\` hypothesis is unnecessary and should be dropped`;
+        ctx.warn('given-unused', g.line + 1, g.col + 1, msg);
+    }
 }
 
 export function signatureRules(ctx) {
@@ -497,7 +606,7 @@ export function signatureRules(ctx) {
         }
 
         // ---- explicit (non-instance) binders belong under `-- given` ------------------------------------------
-        // `{…}` / `⦃…⦄` / unnamed `[T]` stay in the pre-given region. A named `[h : T]` is a hypothesis.
+        // `{…}` / `⦃…⦄` / instance binders `[…]` (named or unnamed) stay in the pre-given region.
         // Lean defaults `(h : T := …)` are `default-arg-given`.
         if (given != null) {
             for (const g of groups) {
@@ -507,15 +616,6 @@ export function signatureRules(ctx) {
                     g.line + 1,
                     g.col + 1,
                     `explicit binder \`(${g.flat})\` is above \`-- given\`; move it under \`-- given\``,
-                );
-            }
-            for (const g of groups) {
-                if (g.kind !== 'instImplicit' || !g.names.length || g.line >= given) continue;
-                ctx.warn(
-                    'named-inst-above-given',
-                    g.line + 1,
-                    g.col + 1,
-                    `[${g.flat}] should be changed to \`(${g.flat})\` and put under \`-- given\``,
                 );
             }
         }
@@ -716,6 +816,9 @@ export function signatureRules(ctx) {
                 );
             }
         }
+
+        // ---- given: unused hypothesis (incl. already `_`) should be dropped --------------------------
+        if (given != null) givenUnusedRule(ctx, d, sig, gg);
 
         // ---- combine adjacent binders of the same kind and type ------------------------------------------------
         for (let a = 0; a + 1 < groups.length; a++) {

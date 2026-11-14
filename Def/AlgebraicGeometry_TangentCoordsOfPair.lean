@@ -1,7 +1,7 @@
 import Mathlib
-import Lemma.AlgebraicGeometry.RelativeGroupLaw
+import Lemma.Scheme.RelativeGroupLaw
 import Def.AlgebraicGeometry_SquareZeroDeformation
-import Lemma.AlgebraicGeometry.SquareZeroRelTangent
+import Lemma.Scheme.SquareZeroRelTangent
 import Def.AlgebraicGeometry_SmallExtensionPairTangent
 import Abbrev.AlgebraicGeometry_TangentCoordsOfPair
 

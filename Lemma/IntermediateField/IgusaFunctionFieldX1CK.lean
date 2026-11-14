@@ -1,10 +1,10 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.IgusaFunctionFieldX1
-import Lemma.ModularCurve.LaurentCoeff
+import Lemma.LaurentSeries.IgusaFunctionFieldX1
+import Lemma.LaurentSeries.LaurentCoeff
 import Lemma.Int.P2MUtil
 
-open ModularCurve
+open ModularCurve LaurentSeries
 
 /--
 [ModularCurve_adjoin_image_coeffMap_igusaFunctionFieldX1C_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularCurve_adjoin_image_coeffMap_igusaFunctionFieldX1C_eq.lean)

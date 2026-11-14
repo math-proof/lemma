@@ -1,5 +1,5 @@
 import Instance.M4aHerbrand_ArchSemilocal
-import Lemma.M4aHerbrand.FiniteConorm
+import Lemma.Filter.FiniteConorm
 
 noncomputable section
 

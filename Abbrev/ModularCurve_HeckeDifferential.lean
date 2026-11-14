@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.ModularCurve.HeckeOperator
+import Lemma.LaurentSeries.HeckeOperator
 import Def.AlgebraicCurve_DifferentialPushPull
 import Def.AlgebraicCurve_RegularDifferentials
 import Instance.ModularCurve_HeckeDifferential

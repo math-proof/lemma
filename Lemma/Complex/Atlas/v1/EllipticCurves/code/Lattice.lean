@@ -100,7 +100,6 @@ namespace ComplexLattice
 -/
 @[path]
 lemma IsHomothetic.refl
-  {L : ComplexLattice}
   {L : ComplexLattice} :
 -- imply
   IsHomothetic L L :=

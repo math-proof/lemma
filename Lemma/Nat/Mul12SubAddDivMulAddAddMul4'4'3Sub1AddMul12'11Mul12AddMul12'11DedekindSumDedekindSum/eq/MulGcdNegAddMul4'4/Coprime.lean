@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.NumberTheory.DedekindSum
+import Lemma.Finset.DedekindSum
 
 
 /-- ported from external source -/

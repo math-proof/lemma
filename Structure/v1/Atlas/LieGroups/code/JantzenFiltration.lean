@@ -10,7 +10,6 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.LieGroups.code.VermaModules.Part7
 import Lemma.Int.WeightSubspace.eq.ToSubmoduleWeightSpace
-import Lemma.Int.Any_All_Eq.of.LeKer_Ker.Surjective
 import Structure.v1.Atlas.LieGroups.code.HarishChandraIsomorphism.Part2
 
 

@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_Mathlib_RingTheory_Valuation_LowerRamificationGroup.lean: instance decls only.
 import Mathlib
-import Lemma.RingTheory.Valuation.LowerRamificationGroup
+import Lemma.Ideal.Valuation.LowerRamificationGroup
 
 set_option autoImplicit false
 
@@ -32,31 +32,3 @@ instance lowerRamificationGroup_normal (i : ℕ) :
 
 end ValuationSubring
 
-
-/--
-info: 'IsLocalRing.lowerRamificationGroup' depends on axioms: [propext, Classical.choice, Quot.sound]
--/
-
-/--
-info: 'IsLocalRing.lowerRamificationGroup_antitone' depends on axioms: [propext, Classical.choice, Quot.sound]
--/
-
-/--
-info: 'IsLocalRing.lowerRamificationGroup_normal' depends on axioms: [propext, Classical.choice, Quot.sound]
--/
-
-/--
-info: 'IsLocalRing.lowerRamificationGroup_zero_eq_ker' depends on axioms: [propext, Classical.choice, Quot.sound]
--/
-
-/--
-info: 'IsLocalRing.iInf_lowerRamificationGroup_eq_bot' depends on axioms: [propext, Classical.choice, Quot.sound]
--/
-
-/--
-info: 'ValuationSubring.lowerRamificationGroup_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
--/
-
-/--
-info: 'ValuationSubring.lowerRamificationGroup_le_inertiaSubgroup' depends on axioms: [propext, Classical.choice, Quot.sound]
--/

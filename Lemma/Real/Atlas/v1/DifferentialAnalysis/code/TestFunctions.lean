@@ -165,8 +165,8 @@ lemma coe_mk
   ⇑(mk f hf : SchwartzTestFunctionSpace n) = f :=
 -- proof
   rfl
-/-- Equivalence between our concrete `SchwartzTestFunctionSpace n` and Mathlib's
-`SchwartzMap (ℝⁿ, ℂ)`, expressing Melrose's characterisation of Schwartz space. -/
+-- Equivalence between our concrete `SchwartzTestFunctionSpace n` and Mathlib's
+-- `SchwartzMap (ℝⁿ, ℂ)`, expressing Melrose's characterisation of Schwartz space.
 section UniformConvergenceCLM
 
 end TestFunctions.SchwartzTestFunctionSpace

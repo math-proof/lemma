@@ -1,7 +1,6 @@
-import Instance.MvFormalGroup_NegV2
+import Structure.MvFormalGroup_BasicV2
 import Mathlib.RingTheory.AdicCompletion.Topology
 import Mathlib.RingTheory.Finiteness.Ideal
-import Instance.MvFormalGroup_PointsV2
 
 set_option autoImplicit false
 
@@ -19,11 +18,11 @@ variable {S : Type*} [CommRing S] [Algebra R S] {S' : Type*} [CommRing S'] [Alge
   {σ : Type*}
 
 
-open MvPowerSeries.WithPiTopology in
 
 
 end AdicEval
 
+@[ext]
 structure Points (F : MvFormalGroup g R) (S : Type*) [CommRing S] (J : Ideal S) : Type _ where
 
   val : Fin g → S

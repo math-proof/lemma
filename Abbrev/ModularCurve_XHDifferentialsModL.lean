@@ -1,8 +1,8 @@
 import Mathlib
 import Def.ModularCurve_XHDiamondModL
-import Lemma.ModularCurve.QExpFrobeniusModL
+import Lemma.LaurentSeries.QExpFrobeniusModL
 import Instance.ModularCurve_HeckeDifferential
-import Lemma.AlgebraicCurve.PolarDifferentials
+import Lemma.Set.PolarDifferentials
 import Def.ModularCurve_SupersingularModuli
 import Instance.CuspForm_TwoCuspLattice
 

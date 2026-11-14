@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.PhiGen
+import Lemma.Polynomial.PhiGen
 import Lemma.Int.P2MUtil
 
 open ModularCurve Polynomial

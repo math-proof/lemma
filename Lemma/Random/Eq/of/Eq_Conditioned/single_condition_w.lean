@@ -2,6 +2,7 @@ import Mathlib.Probability.Independence.Basic
 import Mathlib.Probability.Independence.Conditional
 import Syntax.Probability.Expectation.Elab
 import Initialize.Tactic.Attr.Basic
+import Notation.Probability.JointRv
 
 open ProbabilityTheory MeasureTheory
 
@@ -21,4 +22,4 @@ private lemma main
 
 
 -- created on 2021-07-14
--- updated on 2026-10-26
+-- updated on 2026-11-13

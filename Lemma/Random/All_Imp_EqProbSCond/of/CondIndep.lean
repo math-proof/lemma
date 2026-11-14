@@ -1,31 +1,35 @@
+import Mathlib.Probability.Independence.Conditional
 import Lemma.Random.All_Eq_MulProbCond.of.PSpace_Joint
 import Lemma.Random.PSpace_JointJoint.is.PSpace_Joint_Joint
 import Lemma.Random.PSpace_Joint
 import Lemma.Random.Map.eq.WithDensityProb
+import Notation.Probability.JointRv
+import Syntax.Probability.Indep
 open ProbabilityTheory MeasureTheory Random MeasurableSpace
+open scoped ProbabilityTheory
 open scoped ENNReal
 
 
 @[path]
 private lemma main
   [MeasurableSpace Ω] [StandardBorelSpace Ω]
-  [ReferenceMeasure α] [StandardBorelSpace α] [Nonempty α]
-  [ReferenceMeasure β] [StandardBorelSpace β] [Nonempty β]
-  [ReferenceMeasure γ]
+  [μ : ReferenceMeasure α] [StandardBorelSpace α] [Nonempty α]
+  [ν : ReferenceMeasure β] [StandardBorelSpace β] [Nonempty β]
+  [ξ : ReferenceMeasure γ]
   {π : Measure Ω} [IsFiniteMeasure π]
   {x : Ω → α} {y : Ω → β} {z : Ω → γ}
 -- given
   (hx : Measurable x) (hy : Measurable y) (hz : Measurable z)
   (hPxyz : SinglePSpace π (x, y, z))
-  (hCI : x ⟂ᵢ[π] y | z) :
+  (hCI : ProbabilityTheory.CondIndepFun (MeasurableSpace.comap z inferInstance) (Measurable.comap_le hz) x y π) :
 -- imply
   have : SinglePSpace π (y, z) := SinglePSpace.of.SinglePSpace.snd hPxyz
   have : SinglePSpace π z := SinglePSpace.of.SinglePSpace.snd this
   have : SinglePSpace π (x, z) := PSpace_Joint.comm
     (SinglePSpace.of.SinglePSpace.fst (PSpace_JointJoint.of.PSpace_Joint_Joint (PSpace_Joint.comm (PSpace_JointJoint.of.PSpace_Joint_Joint hPxyz))))
-  ∀ᵐ «\sf{x}» ∂ReferenceMeasure.measure,
-    ∀ᵐ «\sf{y}» ∂ReferenceMeasure.measure,
-      ∀ᵐ «\sf{z}» ∂ReferenceMeasure.measure,
+  ∀ᵐ «\sf{x}» ∂μ.measure,
+    ∀ᵐ «\sf{y}» ∂ν.measure,
+      ∀ᵐ «\sf{z}» ∂ξ.measure,
         ℙ[π](y = «\sf{y}» ∧ z = «\sf{z}») ≠ 0 →
           ℙ[π](x = «\sf{x}» | y = «\sf{y}» ∧ z = «\sf{z}») =
             ℙ[π](x = «\sf{x}» | z = «\sf{z}») := by
@@ -579,4 +583,4 @@ private lemma main
 
 
 -- created on 2020-12-16
--- updated on 2026-11-02
+-- updated on 2026-11-14

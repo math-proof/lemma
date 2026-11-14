@@ -1,4 +1,4 @@
-import Lemma.AlgebraicCurve.Correspondence
+import Lemma.Scheme.Correspondence
 import Instance.AlgebraicCurve_IsCurveOver
 import Abbrev.CerednikDrinfeld_HeckeTower
 import Instance.CerednikDrinfeld_HeckeTower

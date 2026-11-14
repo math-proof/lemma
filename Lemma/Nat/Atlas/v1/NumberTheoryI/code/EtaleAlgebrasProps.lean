@@ -78,7 +78,7 @@ lemma piRestr_surjective
   Function.Surjective (piRestr (K := K) (F := F) S) := by
 -- proof
   intro f; use fun i => if h : i ∈ S then f ⟨i, h⟩ else 0
-  ext ⟨i, hi⟩; dsimp [piRestr]; rw [dif_pos hi]
+  ext ⟨i, hi⟩; dsimp [piRestr]; rw [dite_eq_left hi]
 
 end EtaleAlgebra
 
@@ -127,7 +127,8 @@ lemma ker_phi_eq_ker_piRestr
 -- given
   (φ : (∀ i, F i) →ₐ[K] B) :
 -- imply
-  let T := Finset.univ.filter (fun i => ∃ f ∈ RingHom.ker φ, f i ≠ 0) RingHom.ker φ = RingHom.ker (piRestr (K := K) (F := F) (Finset.univ \ T)) := by
+  let T := Finset.univ.filter (fun i => ∃ f ∈ RingHom.ker φ, f i ≠ 0)
+  RingHom.ker φ = RingHom.ker (piRestr (K := K) (F := F) (Finset.univ \ T)) := by
 -- proof
   intro T; ext f; rw [mem_ker_piRestr]; constructor
   · intro hf i hi
@@ -178,7 +179,7 @@ lemma surj_algHom_pi_fields_isSubproduct
   let T := Finset.univ.filter (fun i => ∃ f ∈ RingHom.ker φ, f i ≠ 0)
   exact ⟨Finset.univ \ T,
     ⟨algEquivOfSurjSameKer φ (piRestr (Finset.univ \ T)) hφ
-      (piRestr_surjective _) (ker_phi_eq_ker_piRestr φ)⟩⟩
+      (piRestr_surjective (S := Finset.univ \ T)) (ker_phi_eq_ker_piRestr φ)⟩⟩
 
 end EtaleAlgebra
 
@@ -311,4 +312,4 @@ private lemma piRestr_apply_eq
 
 
 -- created on 2026-10-23
--- updated on 2026-10-29
+-- updated on 2026-11-13

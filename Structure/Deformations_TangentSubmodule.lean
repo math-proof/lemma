@@ -39,9 +39,6 @@ include hD
 
 end IsTangentVector
 
-variable (R) in
-
-
 end ProartinianCat
 
 end Deformation

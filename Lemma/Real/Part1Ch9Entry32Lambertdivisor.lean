@@ -57,7 +57,7 @@ namespace MathlibExt.Analysis.Ramanujan.Part1Ch9.Entry32Lambertdivisor
 -/
 @[path]
 private lemma bCoeff32_one : bCoeff32 1 = 2 := by
-norm_num [bCoeff32, Nat.factorial]
+  norm_num [bCoeff32, Nat.factorial]
 
 end MathlibExt.Analysis.Ramanujan.Part1Ch9.Entry32Lambertdivisor
 
@@ -311,8 +311,8 @@ private lemma summable32_left (x : ℝ) : Summable (chapter9Entry32LeftTerm x) :
         rw [abs_pow]
         exact pow_le_one₀ (abs_nonneg _) hs
       calc |bCoeff32 k| * |Real.sin (2 * x) ^ (2 * k + 1)|
-        = bCoeff32 k * |Real.sin (2 * x) ^ (2 * k + 1)| := by
-          rw [abs_of_nonneg (le_of_lt (bCoeff32_pos k))]
+          = bCoeff32 k * |Real.sin (2 * x) ^ (2 * k + 1)| :=
+            by rw [abs_of_nonneg (le_of_lt (bCoeff32_pos k))]
         _ ≤ bCoeff32 k * 1 :=
           mul_le_mul_of_nonneg_left hpow (le_of_lt (bCoeff32_pos k))
         _ = bCoeff32 k := mul_one _
@@ -677,7 +677,8 @@ private lemma summable_F32_zero :
     have hz : (0 : ℝ) ^ (2 * k + 1) = 0 := zero_pow (by omega)
     rw [hz]
     simp
-  rwa [hzero]
+  rw [hzero]
+  exact summable_zero
 
 end MathlibExt.Analysis.Ramanujan.Part1Ch9.Entry32Lambertdivisor
 
@@ -696,7 +697,8 @@ private lemma summable_G32_zero :
     have hz : (0 : ℝ) ^ (2 * k + 1) = 0 := zero_pow (by omega)
     rw [hz]
     simp
-  rwa [hzero]
+  rw [hzero]
+  exact summable_zero
 
 end MathlibExt.Analysis.Ramanujan.Part1Ch9.Entry32Lambertdivisor
 
@@ -1124,13 +1126,13 @@ private lemma err32_tendsto_zero {z : ℝ} (hz : ‖z‖ < 1) :
   have hpow : ‖z‖ ^ (N + 1) = ‖z‖ * ‖z‖ ^ N := pow_succ' ‖z‖ N
   rw [hpow]
   calc 2 * ((N : ℝ) + 1) * aCoeff32 N * (‖z‖ * ‖z‖ ^ N)
-    ≤ 2 * ((N : ℝ) + 1) * (2 * ((N : ℝ) + 1)) * (‖z‖ * ‖z‖ ^ N) := by
-      apply mul_le_mul_of_nonneg_right _ (by positivity)
-      apply mul_le_mul_of_nonneg_left ha (by positivity)
+      ≤ 2 * ((N : ℝ) + 1) * (2 * ((N : ℝ) + 1)) * (‖z‖ * ‖z‖ ^ N) :=
+        mul_le_mul_of_nonneg_right
+          (mul_le_mul_of_nonneg_left ha (by positivity)) (by positivity)
     _ = 4 * ‖z‖ * (((N : ℝ) + 1) ^ 2 * ‖z‖ ^ N) := by ring
-    _ ≤ 4 * ‖z‖ * (((N : ℝ) + 1) * ((N : ℝ) + 2) * ‖z‖ ^ N) := by
-      apply mul_le_mul_of_nonneg_left _ (by positivity)
-      exact mul_le_mul_of_nonneg_right hle1 (by positivity)
+    _ ≤ 4 * ‖z‖ * (((N : ℝ) + 1) * ((N : ℝ) + 2) * ‖z‖ ^ N) :=
+        mul_le_mul_of_nonneg_left
+          (mul_le_mul_of_nonneg_right hle1 (by positivity)) (by positivity)
 
 end MathlibExt.Analysis.Ramanujan.Part1Ch9.Entry32Lambertdivisor
 
@@ -1612,8 +1614,8 @@ private lemma S32_eq_of_mem {z : ℝ} (hz0 : 0 < z) (hz1 : z < 1) :
     · positivity
     · have h2 : (2:ℝ) ≤ (n : ℝ) + 2 := by linarith
       have hpos : (0:ℝ) < (n : ℝ) + 2 := by linarith
-      calc (1:ℝ) / ((n : ℝ) + 2) ≤ 1 / 2 := by
-        apply one_div_le_one_div_of_le (by norm_num) h2
+      calc (1:ℝ) / ((n : ℝ) + 2) ≤ 1 / 2 :=
+          one_div_le_one_div_of_le (by norm_num) h2
         _ < 1 := by norm_num
   have hseq_lim : Tendsto (fun n : ℕ => (1:ℝ) / ((n : ℝ) + 2)) atTop (𝓝 0) := by
     have h1 : Tendsto (fun k : ℕ => (1:ℝ) / ((k : ℝ) + 1)) atTop (𝓝 0) :=
@@ -1751,7 +1753,7 @@ private lemma G32_deriv_eq_arctan_div {t : ℝ} (ht : ‖t‖ < 1) (ht0 : t ≠ 
   (∑' k : ℕ, (-1 : ℝ) ^ k * t ^ (2 * k) / (((2 * k + 1 : ℕ)) : ℝ))
     = Real.arctan t / t := by
   have hArctan := Real.hasSum_arctan ht
-  have hDiv := hArctan.div_const t
+  have hDiv := (hArctan.div_const t).tsum_eq
   have hEq : (fun k : ℕ => (-1 : ℝ) ^ k * t ^ (2 * k)
     / (((2 * k + 1 : ℕ)) : ℝ))
     = fun k : ℕ => ((-1 : ℝ) ^ k * t ^ (2 * k + 1)
@@ -1795,7 +1797,7 @@ private lemma deriv_G32_zero : deriv G32 0 = 1 := by
     = ∑' k : ℕ, (-1 : ℝ) ^ k * (0:ℝ) ^ (2 * k)
       / (((2 * k + 1 : ℕ)) : ℝ) :=
     hHas.deriv
-  rwa [hDeriv]
+  rw [hDeriv, G32_deriv_zero]
 
 end MathlibExt.Analysis.Ramanujan.Part1Ch9.Entry32Lambertdivisor
 
@@ -1905,10 +1907,10 @@ private lemma arcsin_s32_eq {t : ℝ} (ht : ‖t‖ < 1) :
   have habs : |t| < 1 := by
     rwa [← Real.norm_eq_abs]
   have hmem := abs_lt.mp habs
-  have h1 : Real.arctan (-1) < Real.arctan t := by
-    rwa [Real.arctan_lt_arctan_iff]
-  have h2 : Real.arctan t < Real.arctan 1 := by
-    rwa [Real.arctan_lt_arctan_iff]
+  have h1 : Real.arctan (-1) < Real.arctan t :=
+    Real.arctan_lt_arctan_iff.mpr hmem.1
+  have h2 : Real.arctan t < Real.arctan 1 :=
+    Real.arctan_lt_arctan_iff.mpr hmem.2
   have ha1 : Real.arctan (1:ℝ) = Real.pi / 4 := Real.arctan_one
   have haN1 : Real.arctan (-1 : ℝ) = -(Real.pi / 4) := by
     rw [Real.arctan_neg, ha1]
@@ -1926,8 +1928,8 @@ private lemma arcsin_s32_eq {t : ℝ} (ht : ‖t‖ < 1) :
     have hne : √(1 + t ^ 2) ≠ 0 :=
       ne_of_gt (Real.sqrt_pos.mpr hDpos)
     calc Real.sin (2 * Real.arctan t)
-      = 2 * (t / √(1 + t ^ 2)) * (1 / √(1 + t ^ 2)) := by
-        rw [h2mul, hs, hc]
+        = 2 * (t / √(1 + t ^ 2)) * (1 / √(1 + t ^ 2)) := by
+          rw [h2mul, hs, hc]
       _ = 2 * t / (√(1 + t ^ 2) * √(1 + t ^ 2)) := by field_simp
       _ = 2 * t / (1 + t ^ 2) := by rw [hsq]
       _ = s32_of_t t := by unfold s32_of_t; ring
@@ -2239,9 +2241,9 @@ private lemma continuousOn_F32_Icc :
     apply ContinuousOn.mul continuousOn_const
     exact (continuous_pow (2 * k + 1)).continuousOn
   · have hs1 : |s| ≤ 1 := by
-    have hmem := Set.mem_Icc.mp hs
-    rw [abs_le]
-    constructor <;> linarith [hmem.1, hmem.2]
+      have hmem := Set.mem_Icc.mp hs
+      rw [abs_le]
+      constructor <;> linarith [hmem.1, hmem.2]
     have hpow : |s| ^ (2 * k + 1) ≤ 1 :=
       pow_le_one₀ (abs_nonneg _) hs1
     have hCnn : (0:ℝ) ≤ (2:ℝ) ^ ((1/4 : ℝ)) := by positivity
@@ -2304,9 +2306,9 @@ private lemma continuousOn_G32_Icc :
     apply ContinuousOn.mul continuousOn_const
     exact (continuous_pow (2 * k + 1)).continuousOn
   · have ht1 : |t| ≤ 1 := by
-    have hmem := Set.mem_Icc.mp ht
-    rw [abs_le]
-    constructor <;> linarith [hmem.1, hmem.2]
+      have hmem := Set.mem_Icc.mp ht
+      rw [abs_le]
+      constructor <;> linarith [hmem.1, hmem.2]
     have hpow : |(-1 : ℝ) ^ k * t ^ (2 * k + 1)| ≤ 1 := by
       simp only [abs_mul, abs_pow, abs_neg, abs_one, one_pow, one_mul]
       exact pow_le_one₀ (abs_nonneg _) ht1
@@ -2617,14 +2619,16 @@ lemma ramanujan_part1_ch9_entry32_lambertdivisor
     by_cases hx0 : 0 ≤ x
     · have hxAbs : |x| = x := abs_of_nonneg hx0
       have hxPi : x = Real.pi / 4 := by linarith [hEq, hxAbs]
-      rwa [hxPi]
+      rw [hxPi]
+      exact eq_at_pi_div_four
     · have hxNeg : x < 0 := lt_of_not_ge hx0
       have hxAbs : |x| = -x := abs_of_neg hxNeg
       have hxPi : x = -Real.pi / 4 := by linarith [hEq, hxAbs]
-      rwa [hxPi]
-end
+      rw [hxPi]
+      exact eq_at_neg_pi_div_four
+end MathlibExt.Analysis.Ramanujan.Part1Ch9.Entry32Lambertdivisor
 
 
 
 -- created on 2026-10-10
--- updated on 2026-10-26
+-- updated on 2026-11-13

@@ -1,4 +1,4 @@
-import Lemma.GoodReductionJacobian.RelativeGroupLawTranslate
+import Lemma.Scheme.RelativeGroupLawTranslate
 
 set_option autoImplicit false
 

@@ -2,7 +2,7 @@
 import Mathlib
 import Instance.ModularCurve_ArithmeticGalois
 import Instance.AlgebraicCurve_RatFuncPlaces
-import Lemma.AlgebraicCurve.RatFuncPlaceInfty
+import Lemma.Valuation.RatFuncPlaceInfty
 import Theorems.Thm_ModularCurve_transcendental_coeffEmb_jq
 import Def.ModularCurve_JLinePlacesBar
 

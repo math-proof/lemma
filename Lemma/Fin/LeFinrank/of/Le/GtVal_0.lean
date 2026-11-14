@@ -29,7 +29,6 @@ private lemma main
 private lemma existsUnique_step_jump_eq
   [Field k]
   {n : ℕ}
-  {n : ℕ}
   {g : Fin (n + 1) → ℕ}
 -- given
   (hmono : Monotone g)
@@ -231,4 +230,4 @@ private lemma jhGapVector_ne_zero_eq
 
 
 -- created on 2026-10-23
--- updated on 2026-10-26
+-- updated on 2026-11-13

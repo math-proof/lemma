@@ -1,7 +1,7 @@
-import Lemma.AutomorphicForm.ProductionPinsGeneral
+import Lemma.ClassGroup.ProductionPinsGeneral
 import Def.AutomorphicForm_RightConvolution
 import Def.AutomorphicForm_SigmaAdelicAction
-import Lemma.AutomorphicForm.ArchWeightChar
+import Lemma.Matrix.ArchWeightChar
 
 set_option autoImplicit false
 

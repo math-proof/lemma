@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_LevelModuliPackage.lean: instance decls only.
 import Mathlib
-import Lemma.ModularCurve.LevelModuliPackage
+import Lemma.Int.LevelModuliPackage
 
 set_option autoImplicit false
 

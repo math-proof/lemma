@@ -1,6 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Theorem.AlgebraicGeometry.EllipticCurve.ManinProjectiveDegree
+import Def.AlgebraicGeometry.EllipticCurve.ManinProjectiveDegree
 
 open Polynomial
 

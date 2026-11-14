@@ -671,7 +671,7 @@ lemma ramanujan_part1_ch7_entry20_generalizedbernoullisum
     chapter7Entry20Left =ᶠ[codiscrete ℂ] chapter7Entry20Right :=
 -- proof
   ⟨meroLeft, meroRight, Filter.Eventually.of_forall (fun r => congrFun hFunEq r)⟩
-end
+end Entry20Generalizedbernoullisum
 
 
 

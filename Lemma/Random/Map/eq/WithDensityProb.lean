@@ -11,11 +11,11 @@ Radon–Nikodym theorem reconstructs the measure from its canonical derivative.
 @[path]
 private lemma main
   [MeasurableSpace Ω]
-  [ReferenceMeasure α]
+  [μ : ReferenceMeasure α]
   {π : Measure Ω} {x : Ω → α} [SinglePSpace π x] :
 -- imply
   π.map x =
-      ReferenceMeasure.measure.withDensity (π.prob x) := by
+      μ.measure.withDensity (π.prob x) := by
 -- proof
   have hp : SinglePSpace π x := inferInstance
   obtain ⟨ρ, _, hlaw⟩ := hp.exists_distribution
@@ -24,3 +24,4 @@ private lemma main
 
 
 -- created on 2026-10-07
+-- updated on 2026-11-14

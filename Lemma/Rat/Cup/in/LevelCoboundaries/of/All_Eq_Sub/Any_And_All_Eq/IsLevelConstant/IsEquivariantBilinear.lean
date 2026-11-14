@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.GroupCohomology.ContinuousH2
-import Lemma.GroupCohomology.CupProduct
+import Lemma.Submodule.ContinuousH2
+import Lemma.Rep.CupProduct
 import Lemma.Int.P2MUtil
 open CategoryTheory groupCohomology
 open Int

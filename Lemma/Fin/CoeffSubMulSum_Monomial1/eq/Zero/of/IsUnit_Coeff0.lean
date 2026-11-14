@@ -31,7 +31,7 @@ private lemma exists_inv_jet
     have h2 : (PowerSeries.trunc (m + 1)
       ((PowerSeries.trunc (m + 1) I : PowerSeries A) * (s : PowerSeries A))).coeff (r : ℕ) = (1 : A[X]).coeff (r : ℕ) := by
       rw [h1]
-    rwa [PowerSeries.coeff_trunc, if_pos r.2, ← Polynomial.coe_mul, Polynomial.coeff_coe] at h2
+    rwa [PowerSeries.coeff_trunc, ite_eq_left r.2, ← Polynomial.coe_mul, Polynomial.coeff_coe] at h2
   rw [sum_fin_monomial_eq_trunc, coeff_sub, key, sub_self]
 /--
 [Polynomial_exists_coeff_sum_monomial_mul_sub_one_eq_zero_of_isUnit_coeff_zero](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Polynomial_exists_coeff_sum_monomial_mul_sub_one_eq_zero_of_isUnit_coeff_zero.lean)
@@ -50,4 +50,5 @@ private lemma main
   exists_inv_jet s hs m
 
 
+-- updated on 2026-11-13
 -- created on 2026-10-23

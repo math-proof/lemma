@@ -3,7 +3,6 @@ import Initialize.Tactic.Attr.Basic
 import Def.Analysis.Ramanujan.Part1Ch7Entry17Bernoullipolysymmetry
 open scoped Nat Real BigOperators Interval Polynomial ContDiff
 open Asymptotics Filter Finset Complex Topology MeasureTheory
-open DirichletBeta
 open MathlibExt.Analysis.Ramanujan.Part1Ch7
 open Entry17Bernoullipolysymmetry
 
@@ -596,10 +595,10 @@ namespace MathlibExt.Analysis.Ramanujan.Part1Ch7.Entry17Bernoullipolysymmetry
 
 /--
 [beta_tendsto_of_one_lt_re](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch7Entry17Bernoullipolysymmetry.lean)
+This is the `Re s > 1` case of the second conjunct, proved via the
+`L`-series `HasSum`.
 -/
 @[path]
-This is the `Re s > 1` case of the second conjunct, proved via the
-`L`-series `HasSum`. -/
 private lemma beta_tendsto_of_one_lt_re (s : ℂ) (hs : 1 < s.re) :
   Tendsto (chapter7DirichletBetaPartialSum s) atTop
     (𝓝 (chapter7DirichletBeta s)) := by
@@ -873,9 +872,9 @@ namespace MathlibExt.Analysis.Ramanujan.Part1Ch7.Entry17Bernoullipolysymmetry
 
 /--
 [betaIcc_abel_limit](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch7Entry17Bernoullipolysymmetry.lean)
+to an integral limit for `0 < s.re`.
 -/
 @[path]
-to an integral limit for `0 < s.re`. -/
 private lemma betaIcc_abel_limit (s : ℂ) (hs : 0 < s.re) :
   Tendsto (fun M : ℕ => ∑ n ∈ Finset.Icc 0 M, ((((n : ℝ)) : ℂ) ^ (-s)) * betaCoeff n)
     atTop (𝓝 (0 - ∫ t : ℝ in Set.Ioi 1,

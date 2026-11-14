@@ -1,6 +1,6 @@
 import Mathlib
-import Lemma.TateCurve.XMultStructure
-import Lemma.TateCurve.TateParameter
+import Lemma.WeierstrassCurve.XMultStructure
+import Lemma.WeierstrassCurve.TateParameter
 import Lemma.WeierstrassCurve.AddFormula
 import Def.NetPairing_Basic
 import Theorems.Thm_TateCurve_equation_pointX_pointY

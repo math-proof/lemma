@@ -5,7 +5,7 @@ open Matrix DVRContext
 
 
 /--
-[elimMatrix_val](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/IwahoriGLnHelpers.lean)
+[main](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/IwahoriGLnHelpers.lean)
 -/
 @[path]
 private lemma main
@@ -97,10 +97,10 @@ private lemma elim_matrix_upper_unitriangular
   elimMatrix C i j hij c ∈ UpperUnipGLn C n := by
 -- proof
   refine ⟨fun a => ?_, fun a b hab => ?_⟩
-  · simp only [elimMatrix_val, transvection, add_apply, one_apply_eq, single_apply,
+  · simp only [main, transvection, Matrix.add_apply, one_apply_eq, single_apply,
     show ¬(i = a ∧ j = a) from fun ⟨h1, h2⟩ => hij (h1.trans h2.symm), ite_false, add_zero]
   · have hab' : a ≠ b := by intro h; subst h; omega
-    simp only [elimMatrix_val, transvection, add_apply, one_apply_ne hab', single_apply,
+    simp only [main, transvection, Matrix.add_apply, one_apply_ne hab', single_apply,
       show ¬(i = a ∧ j = b) from fun ⟨h1, h2⟩ => by subst h1; subst h2; omega,
       ite_false, add_zero]
 
@@ -122,12 +122,69 @@ private lemma elim_matrix_lower_unitriangular
   elimMatrix C i j hij c ∈ LowerUnipGLn C n := by
 -- proof
   refine ⟨fun a => ?_, fun a b hab => ?_⟩
-  · simp only [elimMatrix_val, transvection, add_apply, one_apply_eq, single_apply,
+  · simp only [main, transvection, Matrix.add_apply, one_apply_eq, single_apply,
     show ¬(i = a ∧ j = a) from fun ⟨h1, h2⟩ => hij (h1.trans h2.symm), ite_false, add_zero]
   · have hab' : a ≠ b := by intro h; subst h; omega
-    simp only [elimMatrix_val, transvection, add_apply, one_apply_ne hab', single_apply,
+    simp only [main, transvection, Matrix.add_apply, one_apply_ne hab', single_apply,
       show ¬(i = a ∧ j = b) from fun ⟨h1, h2⟩ => by subst h1; subst h2; omega,
       ite_false, add_zero]
+
+
+
+
+/--
+[isUnitInO_one](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Valuation/IwahoriDecomp.lean)
+-/
+private lemma isUnitInO_one
+  {C : DVRContext}
+  [DVRClosureGL2 C] :
+-- imply
+  C.isUnitInO (1 : C.k) :=
+-- proof
+  ⟨1, isUnit_one, C.embed.map_one⟩
+
+
+
+/--
+[isInMaxIdeal_zero](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Valuation/IwahoriDecomp.lean)
+-/
+private lemma isInMaxIdeal_zero
+  {C : DVRContext}
+  [DVRClosureGL2 C] :
+-- imply
+  C.isInMaxIdeal (0 : C.k) :=
+-- proof
+  ⟨0, Ideal.zero_mem _, C.embed.map_zero⟩
+
+
+
+/--
+[isUnitInO_isInO](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Valuation/LatticesValuations.lean)
+-/
+private lemma isUnitInO_isInO
+  {C : DVRContext}
+  {x : C.k}
+-- given
+  (h : C.isUnitInO x) :
+-- imply
+  C.isInO x :=
+-- proof
+  let ⟨r, _, hr⟩ := h; ⟨r, hr⟩
+
+
+
+/--
+[isInMaxIdeal_isInO](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Valuation/LatticesValuations.lean)
+-/
+private lemma isInMaxIdeal_isInO
+  {C : DVRContext}
+  {x : C.k}
+-- given
+  (h : C.isInMaxIdeal x) :
+-- imply
+  C.isInO x :=
+-- proof
+  let ⟨r, _, hr⟩ := h; ⟨r, hr⟩
 
 
 
@@ -150,22 +207,22 @@ private lemma elim_matrix_iwahori_upper
   refine ⟨fun a => ?_, fun a b hab => ?_, fun a b hab => ?_⟩
   ·
     have : (elimMatrix C i j hij c).val a a = 1 := by
-      simp only [elimMatrix_val, transvection, add_apply, one_apply_eq, single_apply,
+      simp only [main, transvection, Matrix.add_apply, one_apply_eq, single_apply,
         show ¬(i = a ∧ j = a) from fun ⟨h1, h2⟩ => hij (h1.trans h2.symm), ite_false, add_zero]
-    rw [this]; exact C.isUnitInO_one
+    rw [this]; exact isUnitInO_one
   ·
     have hab' : a ≠ b := by intro h; subst h; omega
-    simp only [elimMatrix_val, transvection, add_apply, one_apply_ne hab', single_apply, zero_add]
+    simp only [main, transvection, Matrix.add_apply, one_apply_ne hab', single_apply, zero_add]
     split_ifs with h
     · exact hc
     · exact DVRClosure.isInO_zero
   ·
     have hab' : a ≠ b := by intro h; subst h; omega
     have : (elimMatrix C i j hij c).val a b = 0 := by
-      simp only [elimMatrix_val, transvection, add_apply, one_apply_ne hab', single_apply,
+      simp only [main, transvection, Matrix.add_apply, one_apply_ne hab', single_apply,
         show ¬(i = a ∧ j = b) from fun ⟨h1, h2⟩ => by subst h1; subst h2; omega,
         ite_false, add_zero]
-    rw [this]; exact C.isInMaxIdeal_zero
+    rw [this]; exact isInMaxIdeal_zero
 
 
 
@@ -188,22 +245,22 @@ private lemma elim_matrix_iwahori_lower
   refine ⟨fun a => ?_, fun a b hab => ?_, fun a b hab => ?_⟩
   ·
     have : (elimMatrix C i j hij c).val a a = 1 := by
-      simp only [elimMatrix_val, transvection, add_apply, one_apply_eq, single_apply,
+      simp only [main, transvection, Matrix.add_apply, one_apply_eq, single_apply,
         show ¬(i = a ∧ j = a) from fun ⟨h1, h2⟩ => hij (h1.trans h2.symm), ite_false, add_zero]
-    rw [this]; exact C.isUnitInO_one
+    rw [this]; exact isUnitInO_one
   ·
     have hab' : a ≠ b := by intro h; subst h; omega
     have : (elimMatrix C i j hij c).val a b = 0 := by
-      simp only [elimMatrix_val, transvection, add_apply, one_apply_ne hab', single_apply,
+      simp only [main, transvection, Matrix.add_apply, one_apply_ne hab', single_apply,
         show ¬(i = a ∧ j = b) from fun ⟨h1, h2⟩ => by subst h1; subst h2; omega,
         ite_false, add_zero]
     rw [this]; exact DVRClosure.isInO_zero
   ·
     have hab' : a ≠ b := by intro h; subst h; omega
-    simp only [elimMatrix_val, transvection, add_apply, one_apply_ne hab', single_apply, zero_add]
+    simp only [main, transvection, Matrix.add_apply, one_apply_ne hab', single_apply, zero_add]
     split_ifs with h
     · exact hc
-    · exact C.isInMaxIdeal_zero
+    · exact isInMaxIdeal_zero
 
 
 
@@ -211,9 +268,6 @@ private lemma elim_matrix_iwahori_lower
 [finBlockEquiv_inl](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/IwahoriGLnHelpers.lean)
 -/
 private lemma finBlockEquiv_inl
-  {C : DVRContext}
-  [DVRClosureGL2 C]
-  {n : ℕ}
   {n : ℕ} :
 -- imply
   (finBlockEquiv n) (Sum.inl (0 : Fin 1)) = (0 : Fin (n + 1)) := by
@@ -226,9 +280,6 @@ private lemma finBlockEquiv_inl
 [finBlockEquiv_inr](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/IwahoriGLnHelpers.lean)
 -/
 private lemma finBlockEquiv_inr
-  {C : DVRContext}
-  [DVRClosureGL2 C]
-  {n : ℕ}
   {n : ℕ}
   {k : Fin n} :
 -- imply
@@ -242,14 +293,11 @@ private lemma finBlockEquiv_inr
 [finBlockEquiv_symm_zero](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/IwahoriGLnHelpers.lean)
 -/
 private lemma finBlockEquiv_symm_zero
-  {C : DVRContext}
-  [DVRClosureGL2 C]
-  {n : ℕ}
   {n : ℕ} :
 -- imply
   (finBlockEquiv n).symm 0 = Sum.inl 0 := by
 -- proof
-  have := finBlockEquiv_inl n; rw [← this]; simp [Equiv.symm_apply_apply]
+  have := finBlockEquiv_inl (n := n); rw [← this]; simp [Equiv.symm_apply_apply]
 
 
 
@@ -257,15 +305,12 @@ private lemma finBlockEquiv_symm_zero
 [finBlockEquiv_symm_succ](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/IwahoriGLnHelpers.lean)
 -/
 private lemma finBlockEquiv_symm_succ
-  {C : DVRContext}
-  [DVRClosureGL2 C]
-  {n : ℕ}
   {n : ℕ}
   {k : Fin n} :
 -- imply
   (finBlockEquiv n).symm ⟨k.val + 1, by omega⟩ = Sum.inr k := by
 -- proof
-  have := finBlockEquiv_inr n k; rw [← this]; simp [Equiv.symm_apply_apply]
+  have := finBlockEquiv_inr (n := n) (k := k); rw [← this]; simp [Equiv.symm_apply_apply]
 
 
 
@@ -273,11 +318,8 @@ private lemma finBlockEquiv_symm_succ
 [fin_succ_cases](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/IwahoriGLnHelpers.lean)
 -/
 private lemma fin_succ_cases
-  {C : DVRContext}
-  [DVRClosureGL2 C]
   {n : ℕ}
-  {n : ℕ}
-  {p : Fin (n + 1)} :
+  (p : Fin (n + 1)) :
 -- imply
   p = 0 ∨ ∃ k : Fin n, p = ⟨k.val + 1, by omega⟩ := by
 -- proof
@@ -298,7 +340,7 @@ private lemma blockEmbedMatrix_zero_zero
 -- imply
   blockEmbedMatrix C A 0 0 = 1 := by
 -- proof
-  simp only [blockEmbedMatrix, reindexAlgEquiv_apply, reindex_apply, submatrix_apply,
+  simp only [blockEmbedMatrix, coe_reindexAlgEquiv, reindex_apply, submatrix_apply,
     finBlockEquiv_symm_zero, fromBlocks_apply₁₁, one_apply_eq]
 
 
@@ -315,7 +357,7 @@ private lemma blockEmbedMatrix_zero_succ
 -- imply
   blockEmbedMatrix C A 0 ⟨k.val + 1, by omega⟩ = 0 := by
 -- proof
-  simp only [blockEmbedMatrix, reindexAlgEquiv_apply, reindex_apply, submatrix_apply,
+  simp only [blockEmbedMatrix, coe_reindexAlgEquiv, reindex_apply, submatrix_apply,
     finBlockEquiv_symm_zero, finBlockEquiv_symm_succ, fromBlocks_apply₁₂, Matrix.zero_apply]
 
 
@@ -332,7 +374,7 @@ private lemma blockEmbedMatrix_succ_zero
 -- imply
   blockEmbedMatrix C A ⟨k.val + 1, by omega⟩ 0 = 0 := by
 -- proof
-  simp only [blockEmbedMatrix, reindexAlgEquiv_apply, reindex_apply, submatrix_apply,
+  simp only [blockEmbedMatrix, coe_reindexAlgEquiv, reindex_apply, submatrix_apply,
     finBlockEquiv_symm_zero, finBlockEquiv_symm_succ, fromBlocks_apply₂₁, Matrix.zero_apply]
 
 
@@ -349,7 +391,7 @@ private lemma blockEmbedMatrix_succ_succ
 -- imply
   blockEmbedMatrix C A ⟨k.val + 1, by omega⟩ ⟨l.val + 1, by omega⟩ = A k l := by
 -- proof
-  simp only [blockEmbedMatrix, reindexAlgEquiv_apply, reindex_apply, submatrix_apply,
+  simp only [blockEmbedMatrix, coe_reindexAlgEquiv, reindex_apply, submatrix_apply,
     finBlockEquiv_symm_succ, fromBlocks_apply₂₂]
 
 
@@ -386,23 +428,23 @@ private lemma block_embed_preserves_iwahori
   refine ⟨fun p => ?_, fun p q hpq => ?_, fun p q hpq => ?_⟩
   ·
     obtain rfl | ⟨k, rfl⟩ := fin_succ_cases p
-    · simp only [blockEmbedGL_val, blockEmbedMatrix_zero_zero C]; exact C.isUnitInO_one
-    · simp only [blockEmbedGL_val, blockEmbedMatrix_succ_succ C]; exact hdiag k
+    · simp only [blockEmbedGL_val, blockEmbedMatrix_zero_zero]; exact isUnitInO_one
+    · simp only [blockEmbedGL_val, blockEmbedMatrix_succ_succ]; exact hdiag k
   ·
     obtain rfl | ⟨k, rfl⟩ := fin_succ_cases p
     · rcases fin_succ_cases q with rfl | ⟨l, rfl⟩
       · exact absurd hpq (lt_irrefl _)
-      · simp only [blockEmbedGL_val, blockEmbedMatrix_zero_succ C]; exact DVRClosure.isInO_zero
+      · simp only [blockEmbedGL_val, blockEmbedMatrix_zero_succ]; exact DVRClosure.isInO_zero
     · rcases fin_succ_cases q with rfl | ⟨l, rfl⟩
       · exact absurd hpq (Nat.not_lt_zero _)
-      · simp only [blockEmbedGL_val, blockEmbedMatrix_succ_succ C]
+      · simp only [blockEmbedGL_val, blockEmbedMatrix_succ_succ]
         exact habove k l (Nat.lt_of_add_lt_add_right hpq)
   ·
     obtain rfl | ⟨k, rfl⟩ := fin_succ_cases p
     · exact absurd hpq (Nat.not_lt_zero _)
     · rcases fin_succ_cases q with rfl | ⟨l, rfl⟩
-      · simp only [blockEmbedGL_val, blockEmbedMatrix_succ_zero C]; exact C.isInMaxIdeal_zero
-      · simp only [blockEmbedGL_val, blockEmbedMatrix_succ_succ C]
+      · simp only [blockEmbedGL_val, blockEmbedMatrix_succ_zero]; exact isInMaxIdeal_zero
+      · simp only [blockEmbedGL_val, blockEmbedMatrix_succ_succ]
         exact hbelow k l (Nat.lt_of_add_lt_add_right hpq)
 
 
@@ -424,14 +466,14 @@ private lemma block_embed_preserves_upper_unip
   refine ⟨fun p => ?_, fun p q hpq => ?_⟩
   ·
     obtain rfl | ⟨k, rfl⟩ := fin_succ_cases p
-    · simp only [blockEmbedGL_val, blockEmbedMatrix_zero_zero C]
-    · simp only [blockEmbedGL_val, blockEmbedMatrix_succ_succ C]; exact hdiag k
+    · simp only [blockEmbedGL_val, blockEmbedMatrix_zero_zero]
+    · simp only [blockEmbedGL_val, blockEmbedMatrix_succ_succ]; exact hdiag k
   ·
     obtain rfl | ⟨k, rfl⟩ := fin_succ_cases p
     · exact absurd hpq (Nat.not_lt_zero _)
     · rcases fin_succ_cases q with rfl | ⟨l, rfl⟩
-      · simp only [blockEmbedGL_val, blockEmbedMatrix_succ_zero C]
-      · simp only [blockEmbedGL_val, blockEmbedMatrix_succ_succ C]
+      · simp only [blockEmbedGL_val, blockEmbedMatrix_succ_zero]
+      · simp only [blockEmbedGL_val, blockEmbedMatrix_succ_succ]
         exact hbelow k l (Nat.lt_of_add_lt_add_right hpq)
 
 
@@ -453,16 +495,16 @@ private lemma block_embed_preserves_lower_unip
   refine ⟨fun p => ?_, fun p q hpq => ?_⟩
   ·
     obtain rfl | ⟨k, rfl⟩ := fin_succ_cases p
-    · simp only [blockEmbedGL_val, blockEmbedMatrix_zero_zero C]
-    · simp only [blockEmbedGL_val, blockEmbedMatrix_succ_succ C]; exact hdiag k
+    · simp only [blockEmbedGL_val, blockEmbedMatrix_zero_zero]
+    · simp only [blockEmbedGL_val, blockEmbedMatrix_succ_succ]; exact hdiag k
   ·
     obtain rfl | ⟨k, rfl⟩ := fin_succ_cases p
     · rcases fin_succ_cases q with rfl | ⟨l, rfl⟩
       · exact absurd hpq (lt_irrefl _)
-      · simp only [blockEmbedGL_val, blockEmbedMatrix_zero_succ C]
+      · simp only [blockEmbedGL_val, blockEmbedMatrix_zero_succ]
     · rcases fin_succ_cases q with rfl | ⟨l, rfl⟩
       · exact absurd hpq (Nat.not_lt_zero _)
-      · simp only [blockEmbedGL_val, blockEmbedMatrix_succ_succ C]
+      · simp only [blockEmbedGL_val, blockEmbedMatrix_succ_succ]
         exact habove k l (Nat.lt_of_add_lt_add_right hpq)
 
 
@@ -473,7 +515,6 @@ private lemma block_embed_preserves_lower_unip
 private lemma isInMaxIdeal_add
   {C : DVRContext}
   [DVRClosureGL2 C]
-  {n : ℕ}
   {x y : C.k}
 -- given
   (hx : C.isInMaxIdeal x)
@@ -492,7 +533,6 @@ private lemma isInMaxIdeal_add
 private lemma isInO_mul_isInMaxIdeal
   {C : DVRContext}
   [DVRClosureGL2 C]
-  {n : ℕ}
   {x y : C.k}
 -- given
   (hx : C.isInO x)
@@ -511,7 +551,6 @@ private lemma isInO_mul_isInMaxIdeal
 private lemma isUnitInO_mul
   {C : DVRContext}
   [DVRClosureGL2 C]
-  {n : ℕ}
   {x y : C.k}
 -- given
   (hx : C.isUnitInO x)
@@ -530,7 +569,6 @@ private lemma isUnitInO_mul
 private lemma isUnitInO_add_isInMaxIdeal
   {C : DVRContext}
   [DVRClosureGL2 C]
-  {n : ℕ}
   {x y : C.k}
 -- given
   (hx : C.isUnitInO x)
@@ -551,7 +589,6 @@ private lemma isUnitInO_add_isInMaxIdeal
 private lemma isInMaxIdeal_finset_sum
   {C : DVRContext}
   [DVRClosureGL2 C]
-  {n : ℕ}
   {s : Finset ι}
   {f : ι → C.k}
 -- given
@@ -561,9 +598,10 @@ private lemma isInMaxIdeal_finset_sum
 -- proof
   classical
   induction s using Finset.induction_on with
-  | empty => simp; exact C.isInMaxIdeal_zero
+  | empty => simp; exact isInMaxIdeal_zero
   | @insert a s' hna ih =>
-    rwa [Finset.sum_insert hna]
+    rw [Finset.sum_insert hna]
+    exact isInMaxIdeal_add
       (hf _ (Finset.mem_insert_self _ _))
       (ih fun i hi => hf i (Finset.mem_insert_of_mem hi))
 
@@ -575,7 +613,6 @@ private lemma isInMaxIdeal_finset_sum
 private lemma isInO_finset_sum
   {C : DVRContext}
   [DVRClosureGL2 C]
-  {n : ℕ}
   {s : Finset ι}
   {f : ι → C.k}
 -- given
@@ -587,7 +624,8 @@ private lemma isInO_finset_sum
   induction s using Finset.induction_on with
   | empty => simp; exact DVRClosure.isInO_zero
   | @insert a s' hna ih =>
-    rwa [Finset.sum_insert hna]
+    rw [Finset.sum_insert hna]
+    exact DVRClosure.isInO_add
       (hf _ (Finset.mem_insert_self _ _))
       (ih fun i hi => hf i (Finset.mem_insert_of_mem hi))
 
@@ -600,10 +638,9 @@ private lemma iwahori_entry_isInO'
   {C : DVRContext}
   [DVRClosureGL2 C]
   {n : ℕ}
-  {g : GL (Fin n) C.k}
-  {i j : Fin n}
--- given
-  (hg : g ∈ IwahoriGLn C n) :
+  (g : GL (Fin n) C.k)
+  (hg : g ∈ IwahoriGLn C n)
+  (i j : Fin n) :
 -- imply
   C.isInO (g.val i j) := by
 -- proof
@@ -611,8 +648,8 @@ private lemma iwahori_entry_isInO'
   obtain h | h | h := lt_trichotomy i.val j.val
   · exact habove i j h
   · have hij : i = j := Fin.ext h
-    subst hij; exact C.isUnitInO_isInO (hdiag i)
-  · exact C.isInMaxIdeal_isInO (hbelow i j h)
+    subst hij; exact isUnitInO_isInO (hdiag i)
+  · exact isInMaxIdeal_isInO (hbelow i j h)
 
 
 
@@ -623,10 +660,9 @@ private lemma iwahori_entry_below'
   {C : DVRContext}
   [DVRClosureGL2 C]
   {n : ℕ}
-  {g : GL (Fin n) C.k}
-  {i j : Fin n}
--- given
+  (g : GL (Fin n) C.k)
   (hg : g ∈ IwahoriGLn C n)
+  {i j : Fin n}
   (hij : i.val > j.val) :
 -- imply
   C.isInMaxIdeal (g.val i j) :=
@@ -661,43 +697,43 @@ private lemma IwahoriGLn_mul_mem
     have hmul : (g * h).val i i = ∑ k : Fin n, g.val i k * h.val k i := by
       show (g.val * h.val) i i = _; simp [Matrix.mul_apply]
     rw [hmul, ← Finset.add_sum_erase _ _ (Finset.mem_univ i)]
-    apply C.isUnitInO_add_isInMaxIdeal
-    · exact C.isUnitInO_mul (hg_diag i) (hh_diag i)
-    · apply C.isInMaxIdeal_finset_sum
+    apply isUnitInO_add_isInMaxIdeal
+    · exact isUnitInO_mul (hg_diag i) (hh_diag i)
+    · apply isInMaxIdeal_finset_sum
       intro k hk
       rw [Finset.mem_erase] at hk
       obtain hki | hki := lt_or_gt_of_ne (Fin.val_ne_of_ne hk.1)
       ·
         exact DVRClosureGL2.isInMaxIdeal_mul_isInO (hg_below i k hki)
-          (C.iwahori_entry_isInO' h hh k i)
+          (iwahori_entry_isInO' h hh k i)
       ·
-        exact C.isInO_mul_isInMaxIdeal
-          (C.iwahori_entry_isInO' g hg i k) (hh_below k i hki)
+        exact isInO_mul_isInMaxIdeal
+          (iwahori_entry_isInO' g hg i k) (hh_below k i hki)
   ·
     show C.isInO ((g * h).val i j)
     have hmul : (g * h).val i j = ∑ k : Fin n, g.val i k * h.val k j := by
       show (g.val * h.val) i j = _; simp [Matrix.mul_apply]
     rw [hmul]
-    apply C.isInO_finset_sum
+    apply isInO_finset_sum
     intro k _
-    exact DVRClosure.isInO_mul (C.iwahori_entry_isInO' g hg i k)
-      (C.iwahori_entry_isInO' h hh k j)
+    exact DVRClosure.isInO_mul (iwahori_entry_isInO' g hg i k)
+      (iwahori_entry_isInO' h hh k j)
   ·
     show C.isInMaxIdeal ((g * h).val i j)
     have hmul : (g * h).val i j = ∑ k : Fin n, g.val i k * h.val k j := by
       show (g.val * h.val) i j = _; simp [Matrix.mul_apply]
     rw [hmul]
-    apply C.isInMaxIdeal_finset_sum
+    apply isInMaxIdeal_finset_sum
     intro k _
     obtain hkj | hkj := le_or_gt k.val j.val
     ·
       exact DVRClosureGL2.isInMaxIdeal_mul_isInO
-        (hg_below i k (by omega)) (C.iwahori_entry_isInO' h hh k j)
+        (hg_below i k (by omega)) (iwahori_entry_isInO' h hh k j)
     ·
-      exact C.isInO_mul_isInMaxIdeal
-        (C.iwahori_entry_isInO' g hg i k) (hh_below k j hkj)
+      exact isInO_mul_isInMaxIdeal
+        (iwahori_entry_isInO' g hg i k) (hh_below k j hkj)
 
 
 
 -- created on 2026-10-23
--- updated on 2026-10-26
+-- updated on 2026-11-13

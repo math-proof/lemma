@@ -4,10 +4,10 @@ import Class.AlgebraicCurve_DivisorPushPull
 import Class.ModularCurve_CanonicalDivisor
 import Lemma.Scheme.CanonicalDivisorUniformizer
 import Class.AlgebraicCurve_CanonicalDivisor
-import Lemma.AlgebraicCurve.AdelicIndex
+import Lemma.Submodule.AdelicIndex
 import Class.AlgebraicCurve_LocalResidue
 import Instance.DedekindDomain_AdicValuation_InlineSpecific
-import Lemma.AlgebraicCurve.PlaceCompletion
+import Lemma.Valuation.PlaceCompletion
 import Abbrev.AlgebraicCurve_TateResidueCurrency
 
 set_option autoImplicit false

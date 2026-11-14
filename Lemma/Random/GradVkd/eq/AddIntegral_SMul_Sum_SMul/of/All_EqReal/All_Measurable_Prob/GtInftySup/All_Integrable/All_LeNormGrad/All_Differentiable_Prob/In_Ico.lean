@@ -6,12 +6,8 @@ open MeasureTheory PolicyGradient Random
 
 /--
 Policy-gradient recursion with a discrete (finite) state space and a continuous action space:
-∇V(s[t] = s.bvar[t]) = ∫ u, Q(s.bvar[t], u) • ∇π(u | s.bvar[t]) du + γ • ∑ s.bvar[t+1], ℙ(s[t+1] = s.bvar[t+1] | s[t] = s.bvar[t]) • ∇V(s[t+1] = s.bvar[t+1]),
-the fourth case next to the discrete/discrete
-`Random.Grad.eq.Add_SMul_Sum_SMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.All_Eq_Expect.All_Eq_Expect.EqMeasureCount.EqMeasureCount.In_Ico`,
-the continuous-state/discrete-action
-`Random.GradVk.eq.Add_SMul_Integral_SMul.of.All_EqWithDensity.All_Ge_0.All_Measurable.All_Measurable_Prob.GtInftySup.All_Differentiable_Prob.In_Ico`
-and the continuous/continuous
+∇V(s[t] = s.bvar[t]) = ∫ u, (rkd + γ * ∫ V0)(s.bvar[t], u) • ∇π(u | s.bvar[t]) du + γ • ∑ s.bvar[t+1], ℙ(s[t+1] = s.bvar[t+1] | s[t] = s.bvar[t]) • ∇V(s[t+1] = s.bvar[t+1]),
+the finite-state counterpart of the continuous/continuous
 `Random.GradVkd.eq.AddIntegral_SMul_Integral_SMul.of.All_EqWithDensity.All_Ge_0.All_Measurable.All_Measurable_Prob.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.In_Ico`
 versions. It is the corollary of the latter for the counting measure on the finite state space `𝒮` (as in the
 discrete version, whose state sums are integrals against `Measure.count`): the next-state integral becomes the finite sum
@@ -21,14 +17,14 @@ On a finite state space with measurable singletons every function of the state i
 continuous-state version simplify: joint measurability of the policy becomes measurability in the action (h₅), and the
 nonnegativity, measurability and density hypotheses on `p` all follow from h₆.
 h₁: θ ↦ π_θ(u | x) is differentiable; h₂, h₃, h₄: its gradient is dominated by `g x u`, where `g x` is integrable over
-the actions uniformly in the state. `V = V0`, `Q = Q0` are the closed-form values of
-`Theorem.Dynamics.PolicyTrajectory.ContinuousAction.Part3`.
+the actions uniformly in the state. `V = V0` is the discounted `Wkd` series, and the action-value is the closed form
+`rkd + γ * ∫ V0 ∂T`, so no reachability hypothesis is needed.
 -/
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
   [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Fintype 𝒮]
-  [ReferenceMeasure 𝒜]
+  [μ : ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
   {M : DensityModel Θ 𝒮 𝒜}
   {θ : Θ}
   {γ : ℝ}
@@ -40,13 +36,14 @@ private lemma main
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₂ : ∀ θ x u, ‖∇[θ] M.policy.prob θ x u‖ ≤ g x u)
-  (h₃ : ∀ x, Integrable (g x) ReferenceMeasure.measure)
-  (h₄ : sup[x] ∫ u, g x u ∂ReferenceMeasure.measure < ∞)
+  (h₃ : ∀ x, Integrable (g x) μ.measure)
+  (h₄ : sup[x] ∫ u, g x u ∂μ.measure < ∞)
   (h₅ : ∀ θ x, Measurable (M.policy.prob θ x))
   (h₆ : ∀ x u y, (M.env.trans (x, u)).real {y} = p x u y) :
 -- imply
   ∇[θ] M.V0 θ γ («\sf{s}» t) =
-    ∫ u, M.Q0 θ γ («\sf{s}» t) u • ∇[θ] M.policy.prob θ («\sf{s}» t) u ∂ReferenceMeasure.measure +
+    ∫ u, ((M.rkd («\sf{s}» t) u + γ * ∫ y, M.V0 θ γ y ∂(M.env.trans («\sf{s}» t, u))) •
+        ∇[θ] M.policy.prob θ («\sf{s}» t) u) ∂μ.measure +
       γ • (∑ «\sf{s}» (t + 1), M.P1kd θ p («\sf{s}» t) («\sf{s}» (t + 1)) • ∇[θ] M.V0 θ γ («\sf{s}» (t + 1))) := by
 -- proof
   let : ReferenceMeasure 𝒮 := ReferenceMeasure.of Measure.count
@@ -73,4 +70,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-11
+-- updated on 2026-11-14

@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.NumberField.IdeleBox
+import Lemma.Set.IdeleBox
 import Lemma.Int.P2MUtil
 
 

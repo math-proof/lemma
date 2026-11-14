@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_NumberField_AdelicCentre.lean: instance decls only.
 import Instance.NumberField_AdelicHaar
-import Lemma.NumberField.AdelicCentre
+import Lemma.Matrix.AdelicCentre
 import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Basic
 
 open IsDedekindDomain NumberField MeasureTheory

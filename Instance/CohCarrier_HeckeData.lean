@@ -3,7 +3,7 @@ import Mathlib.Algebra.Module.LocalizedModule.Basic
 import Mathlib.Algebra.MvPolynomial.CommRing
 import Mathlib.RingTheory.Ideal.Maps
 import Mathlib.Algebra.Algebra.Subalgebra.Lattice
-import Lemma.CohCarrier.HeckeData
+import Lemma.MvPolynomial.HeckeData
 
 set_option autoImplicit false
 

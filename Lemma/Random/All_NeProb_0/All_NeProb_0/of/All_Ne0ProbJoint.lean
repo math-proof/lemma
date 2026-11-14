@@ -17,14 +17,14 @@ open Random MeasureTheory
 @[path, And.left, And.right]
 private lemma main
   [MeasurableSpace Ω]
-  [ReferenceMeasure α] [ReferenceMeasure β]
+  [μ : ReferenceMeasure α] [ν : ReferenceMeasure β]
   {π : Measure Ω} {x : Ω → α} {y : Ω → β}
 -- given
   (hP : SinglePSpace π (x, y))
-  (h : ∀ᵐ z ∂(ReferenceMeasure.measure : Measure (α × β)), ℙ[π](x = z.1 ∧ y = z.2) ≠ 0) :
+  (h : ∀ᵐ z ∂(μ.measure.prod ν.measure), ℙ[π](x = z.1 ∧ y = z.2) ≠ 0) :
 -- imply
-  (have := SinglePSpace.of.SinglePSpace.fst hP; ∀ᵐ «\sf{x}» ∂ReferenceMeasure.measure, ℙ[π](x = «\sf{x}») ≠ 0) ∧
-  (have := SinglePSpace.of.SinglePSpace.snd hP; ∀ᵐ «\sf{y}» ∂ReferenceMeasure.measure, ℙ[π](y = «\sf{y}») ≠ 0) := by
+  (have := SinglePSpace.of.SinglePSpace.fst hP; ∀ᵐ «\sf{x}» ∂μ.measure, ℙ[π](x = «\sf{x}») ≠ 0) ∧
+  (have := SinglePSpace.of.SinglePSpace.snd hP; ∀ᵐ «\sf{y}» ∂ν.measure, ℙ[π](y = «\sf{y}») ≠ 0) := by
 -- proof
   extract_lets hP_x hP_y
   let μ : Measure α := ReferenceMeasure.measure
@@ -99,4 +99,4 @@ private lemma main
 
 
 -- created on 2020-12-08
--- updated on 2026-11-02
+-- updated on 2026-11-14

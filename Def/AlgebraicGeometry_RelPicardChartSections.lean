@@ -1,7 +1,7 @@
 import Mathlib
-import Lemma.AlgebraicGeometry.NeronModelPropertyBundleCarrier
-import Lemma.AlgebraicCurve.CurveModel
-import Lemma.AlgebraicCurve.AdelicIndex
+import Lemma.Scheme.NeronModelPropertyBundleCarrier
+import Lemma.Scheme.CurveModel
+import Lemma.Submodule.AdelicIndex
 
 set_option autoImplicit false
 

@@ -135,11 +135,11 @@ lemma lapMatrix_mulVec_cosEigenvector
       congrArg (Nat.cast (R := ℝ)) (by simp [Fin.val_sub]; ring_nf)]
     rw [show ((⟨u, hu⟩ + 1 : Fin (n + 3)).val : ℝ) = (((u + 1) % (n + 3) : ℕ) : ℝ) from
       congrArg (Nat.cast (R := ℝ)) (by simp [Fin.val_add])]
-  rw [cos_nat_mod_period k (n + 3) (by positivity) (u + (n + 2))]
-  rw [cos_nat_mod_period k (n + 3) (by positivity) (u + 1)]
+  rw [cos_nat_mod_period (k := k) (n := n + 3) (a := u + (n + 2)) (by positivity)]
+  rw [cos_nat_mod_period (k := k) (n := n + 3) (a := u + 1) (by positivity)]
   rw [show (↑(u + (n + 2)) : ℝ) = ↑u - 1 + ↑(n + 3) from by push_cast; ring]
   rw [show (↑(u + 1) : ℝ) = (↑u : ℝ) + 1 from by push_cast; ring]
-  rw [cos_real_periodic_add k (n + 3) (by positivity)]
+  rw [cos_real_periodic_add (k := k) (m := n + 3) (by positivity)]
 
   have hplus : 2 * π * (↑k : ℝ) * ((↑u : ℝ) + 1) / ↑(n + 3)
              = 2 * π * ↑k * ↑u / ↑(n + 3) + 2 * π * ↑k / ↑(n + 3) := by ring
@@ -172,11 +172,11 @@ lemma lapMatrix_mulVec_sinEigenvector
       congrArg (Nat.cast (R := ℝ)) (by simp [Fin.val_sub]; ring_nf)]
     rw [show ((⟨u, hu⟩ + 1 : Fin (n + 3)).val : ℝ) = (((u + 1) % (n + 3) : ℕ) : ℝ) from
       congrArg (Nat.cast (R := ℝ)) (by simp [Fin.val_add])]
-  rw [sin_nat_mod_period k (n + 3) (by positivity) (u + (n + 2))]
-  rw [sin_nat_mod_period k (n + 3) (by positivity) (u + 1)]
+  rw [sin_nat_mod_period (k := k) (n := n + 3) (a := u + (n + 2)) (by positivity)]
+  rw [sin_nat_mod_period (k := k) (n := n + 3) (a := u + 1) (by positivity)]
   rw [show (↑(u + (n + 2)) : ℝ) = ↑u - 1 + ↑(n + 3) from by push_cast; ring]
   rw [show (↑(u + 1) : ℝ) = (↑u : ℝ) + 1 from by push_cast; ring]
-  rw [sin_real_periodic_add k (n + 3) (by positivity)]
+  rw [sin_real_periodic_add (k := k) (m := n + 3) (by positivity)]
   have hplus : 2 * π * (↑k : ℝ) * ((↑u : ℝ) + 1) / ↑(n + 3)
              = 2 * π * ↑k * ↑u / ↑(n + 3) + 2 * π * ↑k / ↑(n + 3) := by ring
   have hminus : 2 * π * (↑k : ℝ) * ((↑u : ℝ) - 1) / ↑(n + 3)
@@ -200,8 +200,9 @@ lemma ringGraph_lapMatrix_eigenvectors
   (lapMatrix ℝ (ringGraph (n + 3))).mulVec (cosEigenvector (n + 3) k) = ringEigenvalue (n + 3) k • cosEigenvector (n + 3) k ∧ (lapMatrix ℝ (ringGraph (n + 3))).mulVec (sinEigenvector (n + 3) k) = ringEigenvalue (n + 3) k • sinEigenvector (n + 3) k :=
 -- proof
   ⟨lapMatrix_mulVec_cosEigenvector n k, lapMatrix_mulVec_sinEigenvector n k⟩
-end
-namespace GraphProductSpectrum
+
+end SpectraCommonGraphs
+
 open Matrix Finset
 
 
@@ -365,7 +366,7 @@ lemma lapMatrix_boxProd_eq_kronecker_sum
     simp only [and_self, ite_true, mul_one, one_mul]
     have hadj : ¬(G □ H).Adj (v₁, w₁) (v₁, w₁) := (G □ H).irrefl
     simp only [hadj, G.irrefl, H.irrefl, ite_false, sub_zero]
-    norm_cast; convert boxProd_degree_eq G H v₁ w₁ using 2
+    norm_cast; convert boxProd_degree_eq (G := G) (H := H) (v := v₁) (w := w₁) using 2
   · subst hv
     simp only [hw, and_false, ite_true, ite_false, mul_zero, zero_add, one_mul]
     have hadj : (G □ H).Adj (v₁, w₁) (v₁, w₂) ↔ H.Adj w₁ w₂ := by
@@ -408,10 +409,10 @@ lemma lapMatrix_boxProd_eigenvector
   ((G □ H).lapMatrix ℝ).mulVec (vecTensor v w) = (eigG + eigH) • vecTensor v w := by
 -- proof
   rw [lapMatrix_boxProd_eq_kronecker_sum]
-  exact kronecker_sum_eigenvector (G.lapMatrix ℝ) (H.lapMatrix ℝ) v w eigG eigH hv hw
+  exact kronecker_sum_eigenvector (A := G.lapMatrix ℝ) (B := H.lapMatrix ℝ) (v := v) (w := w) (eigA := eigG) (eigB := eigH) hv hw
 
 end GraphProductSpectrum
 
 
 -- created on 2026-10-23
--- updated on 2026-10-28
+-- updated on 2026-11-13

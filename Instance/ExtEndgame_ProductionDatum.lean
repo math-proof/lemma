@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_ExtEndgame_ProductionDatum.lean: instance decls only.
 import Mathlib
-import Lemma.ExtEndgame.ChainAdm
+import Lemma.Rep.ChainAdm
 import Instance.GaloisRep_ComplexConjugation
 import Instance.GaloisRep_CompletionBridge
 import Lemma.ClassGroup.GaloisAction

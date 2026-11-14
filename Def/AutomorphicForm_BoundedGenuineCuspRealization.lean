@@ -1,6 +1,6 @@
-import Lemma.AutomorphicForm.ProductionPinsGeneral
+import Lemma.ClassGroup.ProductionPinsGeneral
 import Def.AutomorphicForm_WhittakerCoefficient
-import Lemma.NumberField.AdelicTraceFin
+import Lemma.Filter.AdelicTraceFin
 
 set_option autoImplicit false
 

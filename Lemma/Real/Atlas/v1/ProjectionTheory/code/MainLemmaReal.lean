@@ -21,7 +21,7 @@ lemma littlewoodPaleyPieceK_sum
   set g : ℕ → ℂ := fun j => if j = 0 then f x else cumulativeFreqProj f ((2 : ℝ) ^ j) x
   rw [Finset.sum_range_succ]
   simp only [show ¬ (K < K) from lt_irrefl K, ite_false]
-  rw [Finset.sum_congr rfl (fun k hk => if_pos (Finset.mem_range.mp hk))]
+  rw [Finset.sum_congr rfl (fun k hk => ite_eq_left (Finset.mem_range.mp hk))]
   rw [show (fun k => g k - g (k + 1)) = (fun k => -(g (k + 1) - g k)) from by ext; ring]
   rw [Finset.sum_neg_distrib, Finset.sum_range_sub]
   simp only [g, if_true]; ring
@@ -75,7 +75,7 @@ namespace FrequencyDecomposition
 [two_pow_injective](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ProjectionTheory/code/MainLemmaReal.lean)
 -/
 @[path]
-lemma two_pow_injective
+lemma two_pow_injective :
 -- imply
   Function.Injective (fun k : ℕ => (2:ℝ) ^ k) := by
 -- proof
@@ -133,7 +133,7 @@ lemma annular_support_in_ball
   simp only [Function.mem_support] at hξ
   rw [Metric.mem_closedBall]
   by_contra h
-  push_neg at h
+  push Not at h
   have h' : dist ξ 0 > 1 / (2:ℝ) ^ k := by linarith [dist_comm (0 : ℝ2) ξ]
   have h1 : ¬ (dist ξ 0 ≤ 1 / (2:ℝ) ^ k) := not_le.mpr h'
   have h2 : ¬ (dist ξ 0 ≤ 1 / (2:ℝ) ^ (k+1)) := by
@@ -203,8 +203,8 @@ lemma l2NormSq_sum_eq_sum_interaction
   unfold l2NormSq tubeInteraction
   simp_rw [norm_sq_sum_eq_sum_re_tube 𝒯 (fun T => g T _)]
   exact integral_finset_sum 𝒯 hint
-/-- The pairwise interaction $\langle P_{\leq 1/r}\varphi_T, P_{\leq 1/r}\varphi_{T'}\rangle$
-between two tube projections is integrable. -/
+-- The pairwise interaction $\langle P_{\leq 1/r}\varphi_T, P_{\leq 1/r}\varphi_{T'}\rangle$
+-- between two tube projections is integrable.
 
 end FrequencyDecomposition
 

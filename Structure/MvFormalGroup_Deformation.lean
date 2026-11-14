@@ -1,4 +1,5 @@
 import Class.MvFormalGroup_BasicV2
+import Def.MvFormalGroup_BasicV2
 
 set_option autoImplicit false
 

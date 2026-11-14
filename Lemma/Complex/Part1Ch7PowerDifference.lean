@@ -11,13 +11,11 @@ namespace MathlibExt.Analysis.Ramanujan.Part1Ch7
 [Part1Ch7PowerDifference](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch7PowerDifference.lean)
 -/
 @[path]
-lemma chapter7Admissible_zero
+private lemma chapter7Admissible_zero_eq :
 -- imply
-  chapter7Admissible 0 := by
+  chapter7Admissible 0 :=
 -- proof
-  intro j
-  rw [add_zero]
-  exact_mod_cast Nat.succ_ne_zero j
+  chapter7Admissible_zero
 
 end MathlibExt.Analysis.Ramanujan.Part1Ch7
 
@@ -27,14 +25,14 @@ namespace MathlibExt.Analysis.Ramanujan.Part1Ch7
 [Part1Ch7PowerDifference](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch7PowerDifference.lean)
 -/
 @[path]
-lemma chapter7PowerDifferenceTerm_zero_left
+private lemma chapter7PowerDifferenceTerm_zero_left_eq
 -- given
   (x : ℂ)
   (j : ℕ) :
 -- imply
-  chapter7PowerDifferenceTerm 0 x j = 0 := by
+  chapter7PowerDifferenceTerm 0 x j = 0 :=
 -- proof
-  simp [chapter7PowerDifferenceTerm]
+  chapter7PowerDifferenceTerm_zero_left x j
 
 end MathlibExt.Analysis.Ramanujan.Part1Ch7
 
@@ -44,16 +42,16 @@ namespace MathlibExt.Analysis.Ramanujan.Part1Ch7
 [Part1Ch7PowerDifference](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch7PowerDifference.lean)
 -/
 @[path]
-lemma chapter7PowerDifferenceTerm_zero_right
+private lemma chapter7PowerDifferenceTerm_zero_right_eq
 -- given
   (r : ℂ)
   (j : ℕ) :
 -- imply
-  chapter7PowerDifferenceTerm r 0 j = 0 := by
+  chapter7PowerDifferenceTerm r 0 j = 0 :=
 -- proof
-  simp [chapter7PowerDifferenceTerm]
-end
+  chapter7PowerDifferenceTerm_zero_right r j
 
+end MathlibExt.Analysis.Ramanujan.Part1Ch7
 
 
 -- created on 2026-10-10

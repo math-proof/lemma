@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open Filter Topology Real_Analysis
+open Filter Topology
 
 
 namespace Real_Analysis.Series
@@ -142,7 +142,7 @@ namespace Real_Analysis.Series
 [alternating_harmonic_converges](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/RealAnalysis/code/Series/ConvergenceTests.lean)
 -/
 @[path]
-lemma alternating_harmonic_converges
+lemma alternating_harmonic_converges :
 -- imply
   ∃ l, Filter.Tendsto (fun n => ∑ i ∈ Finset.range n, ((-1 : ℝ) ^ i / (↑i + 1))) Filter.atTop (nhds l) := by
 -- proof

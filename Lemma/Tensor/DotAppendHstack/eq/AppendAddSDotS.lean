@@ -18,16 +18,14 @@ private lemma main
   (x : Tensor α [k])
   (y : Tensor α [l]) :
 -- imply
-  (A.hstack B ++ C.hstack D) ⬝ᵥ (x ++ y) = (id (α := Tensor α [n]) (A ⬝ᵥ x) + id (α := Tensor α [n]) (B ⬝ᵥ y)) ++ (id (α := Tensor α [m]) (C ⬝ᵥ x) + id (α := Tensor α [m]) (D ⬝ᵥ y)) := by
+  (A.hstack B ++ C.hstack D) ⬝ᵥ (x ++ y) = id (α := Tensor α [n]) (A ⬝ᵥ x) + id (α := Tensor α [n]) (B ⬝ᵥ y) ++ (id (α := Tensor α [m]) (C ⬝ᵥ x) + id (α := Tensor α [m]) (D ⬝ᵥ y)) := by
 -- proof
   rw [DotAppend.eq.AppendDotS.mv (A.hstack B) (C.hstack D) (x ++ y)]
-  have h0inv : (A.hstack B) ⬝ᵥ (x ++ y) = cast (by simp [matmul_shape]) (cast (by simp [matmul_shape]) ((A.hstack B) ⬝ᵥ (x ++ y)) : Tensor α [n]) := by
-    simp
-  have h1inv : (C.hstack D) ⬝ᵥ (x ++ y) = cast (by simp [matmul_shape]) (cast (by simp [matmul_shape]) ((C.hstack D) ⬝ᵥ (x ++ y)) : Tensor α [m]) := by
-    simp
-  rw [h0inv, h1inv, DotHstack.eq.AddDotS.mv A B x y, DotHstack.eq.AddDotS.mv C D x y]
-  grind
+  have h0 := DotHstack.eq.AddDotS.mv A B x y
+  have h1 := DotHstack.eq.AddDotS.mv C D x y
+  simp only [id] at h0 h1 ⊢
+  rw [h0, h1]
 
 
 -- created on 2020-08-18
--- updated on 2026-08-24
+-- updated on 2026-11-13

@@ -1,5 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Theorem.Combinatorics.SimpleGraph.VertexConnectivity
+import Lemma.Finset.SimpleGraph.Fleischner
 
 
 namespace MathlibExtTest.Combinatorics.SimpleGraph.Fleischner
@@ -53,4 +55,4 @@ end MathlibExtTest.Combinatorics.SimpleGraph.Fleischner
 
 
 -- created on 2026-10-23
--- updated on 2026-10-28
+-- updated on 2026-11-13

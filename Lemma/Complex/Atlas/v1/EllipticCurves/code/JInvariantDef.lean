@@ -25,9 +25,7 @@ variable [Field k]
 /--
 [shortWeierstrassCurve_Δ](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariantDef.lean)
 -/
-@[path]
-$-16(4A^3 + 27B^2)$. -/
-@[simp]
+@[path, simp]
 lemma shortWeierstrassCurve_Δ (A B : k) :
   (shortWeierstrassCurve A B).Δ = -16 * (4 * A ^ 3 + 27 * B ^ 2) := by
   simp only [shortWeierstrassCurve, WeierstrassCurve.Δ, WeierstrassCurve.b₂,
@@ -88,19 +86,17 @@ lemma j_eq_jInvariant
   (h2 : (2 : k) ≠ 0)
   (hΔ : 4 * A ^ 3 + 27 * B ^ 2 ≠ 0) :
 -- imply
-  haveI :=
+  (shortWeierstrassCurve A B).j = jInvariant A B := by
 -- proof
-  shortWeierstrassCurve_isElliptic A B h2 hΔ
-    (shortWeierstrassCurve A B).j = jInvariant A B := by
-    haveI := shortWeierstrassCurve_isElliptic A B h2 hΔ
-    simp only [WeierstrassCurve.j, jInvariant]
-    have hΔ_val : ((shortWeierstrassCurve A B).Δ' : k) = (shortWeierstrassCurve A B).Δ :=
-      WeierstrassCurve.coe_Δ' _
-    simp only [Units.val_inv_eq_inv_val, hΔ_val, shortWeierstrassCurve_Δ,
-      shortWeierstrassCurve_c₄]
-    have h16 : (16 : k) ≠ 0 := sixteen_ne_zero_of_two_ne_zero h2
-    field_simp
-    ring
+  haveI := shortWeierstrassCurve_isElliptic (A := A) (B := B) h2 hΔ
+  simp only [WeierstrassCurve.j, jInvariant]
+  have hΔ_val : ((shortWeierstrassCurve A B).Δ' : k) = (shortWeierstrassCurve A B).Δ :=
+    WeierstrassCurve.coe_Δ' _
+  simp only [Units.val_inv_eq_inv_val, hΔ_val, shortWeierstrassCurve_Δ,
+    shortWeierstrassCurve_c₄]
+  have h16 : (16 : k) ≠ 0 := sixteen_ne_zero_of_two_ne_zero h2
+  field_simp
+  ring
 
 end JInvariant
 

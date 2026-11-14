@@ -1,6 +1,6 @@
 import Mathlib
 import Def.ModularCurve_JZeroNeronObjectAtP
-import Lemma.AlgebraicGeometry.NeronModelPropertyBundleCarrier
+import Lemma.Scheme.NeronModelPropertyBundleCarrier
 import Structure.ModularCurve_JZeroNeronObjectAtP_NeronExtension
 import Abbrev.ModularCurve_JZeroNeronObjectAtP_NeronExtension
 

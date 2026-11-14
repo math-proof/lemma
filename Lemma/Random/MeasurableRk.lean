@@ -1,4 +1,4 @@
-import Def.Dynamics.PolicyTrajectory.Continuous
+import Def.Dynamics.PolicyTrajectory.ContinuousAction
 import Def.Order.Miscellaneous
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Probability.Kernel.MeasurableIntegral
@@ -85,4 +85,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-08
+-- updated on 2026-11-13

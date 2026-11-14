@@ -88,9 +88,8 @@ private lemma main
       apply Iff.mp Set.disjoint_left (Ideal.disjoint_nonZeroDivisors_of_mem_minimalPrimes h𝔓min) hn hreg
     rw [mem_nonZeroDivisors_iff_right]
     intro x hx
-    apply Module.IsTorsionFree.isSMulRegular (IsRegular.of_ne_zero hne)
-    show n • x = n • (0 : T)
-    rw [smul_zero, zsmul_eq_mul, mul_comm, hx]
+    exact (IsAddTorsionFree.zsmul_eq_zero_iff_right hne).1 <| by
+      rw [zsmul_eq_mul, mul_comm, hx]
   obtain ⟨g, hgker⟩ := FrobChareqEngine.engine1a (𝔓 := 𝔓) h𝔓 hint
   let _ : Algebra T (integralClosure ℤ ℂ) := g.toAlgebra
   let _ : IsScalarTower ℤ T (integralClosure ℤ ℂ) := IsScalarTower.of_algebraMap_eq fun n => by

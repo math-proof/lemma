@@ -43,7 +43,7 @@ lemma bic_algebraic_core
 -- imply
   (1 - α) * A ≤ (1 + α) * B + P + R := by
 -- proof
-linarith
+  linarith
 
 end Rigollet.Chapter3
 
@@ -127,7 +127,8 @@ lemma cross_term_young_triangle_bound
     have hyoung : 2 * d ≤ 2 / α * (d ^ 2 / N) + α / 2 * N := by
       rw [show 2 / α * (d ^ 2 / N) + α / 2 * N =
         (4 * d ^ 2 + α ^ 2 * N ^ 2) / (2 * α * N) from by field_simp; ring]
-      rwa [show 2 * d = 2 * d * (2 * α * N) / (2 * α * N) from by field_simp]
+      rw [show 2 * d = 2 * d * (2 * α * N) / (2 * α * N) from by field_simp]
+      exact div_le_div_of_nonneg_right
         (by nlinarith [sq_nonneg (2 * d - α * N)]) (by positivity)
     have hassoc : 2 / α * (d ^ 2 / N) = 2 / α * d ^ 2 / N := by ring
     rw [hassoc] at hyoung
@@ -169,18 +170,18 @@ lemma peeling_prob_bound_ratio
     set e := ε ω; set w := Φ *ᵥ (θhat ω) - Φ *ᵥ θ
     by_cases hw : dotProduct w w = 0
     · have hw0 : ∀ i, w i = 0 := by
-      intro i
-      simp only [dotProduct] at hw
-      have := (Finset.sum_eq_zero_iff_of_nonneg
-        (fun k _ => mul_self_nonneg (w k))).mp hw i (Finset.mem_univ i)
-      nlinarith [sq_nonneg (w i)]
+        intro i
+        simp only [dotProduct] at hw
+        have := (Finset.sum_eq_zero_iff_of_nonneg
+          (fun k _ => mul_self_nonneg (w k))).mp hw i (Finset.mem_univ i)
+        nlinarith [sq_nonneg (w i)]
       have : dotProduct e w = 0 := by
         simp only [dotProduct]
         exact Finset.sum_eq_zero fun i _ => by rw [hw0 i]; ring
       rw [this, hw]; simp
       exact Finset.sum_nonneg fun i _ => mul_self_nonneg _
     · have hw_pos : 0 < dotProduct w w :=
-      lt_of_le_of_ne (Finset.sum_nonneg fun i _ => mul_self_nonneg _) (Ne.symm hw)
+        lt_of_le_of_ne (Finset.sum_nonneg fun i _ => mul_self_nonneg _) (Ne.symm hw)
       rw [div_le_iff₀ hw_pos]
       have key := Finset.sum_mul_sq_le_sq_mul_sq Finset.univ e w
       simp only [dotProduct]
@@ -205,8 +206,10 @@ lemma peeling_prob_bound_ratio
   have hN_bound : μ (S N) ≥ ENNReal.ofReal (1 - δ) := by
     have hNN := (hN_prop N le_rfl).1
     have hsub : (1 : ENNReal) - ENNReal.ofReal δ = ENNReal.ofReal (1 - δ) := by
-      have h2 := ENNReal.ofReal_sub (p := (1 : ℝ)) (q := δ) (le_of_lt hδ_pos)
-      rwa [ENNReal.ofReal_one] at h2
+      have h2 : ENNReal.ofReal (1 - δ) = ENNReal.ofReal 1 - ENNReal.ofReal δ :=
+        ENNReal.ofReal_sub 1 (le_of_lt hδ_pos)
+      rw [ENNReal.ofReal_one] at h2
+      exact h2.symm
     rwa [hsub] at hNN
   by_cases hδ_lt : δ < 1
   ·
@@ -252,7 +255,7 @@ lemma peeling_prob_bound_ratio
     refine ⟨1, one_pos, ?_⟩
     rw [hδ_eq]
     simp only [sub_self, ENNReal.ofReal_zero]
-    exact zero_le _
+    exact zero_le
 
 end Rigollet.Chapter3
 
@@ -286,7 +289,7 @@ lemma peeling_unit_vector_concentration
   ∃ C₂ : ℝ, 0 < C₂ ∧ μ {ω | ∀ θ : Fin M → ℝ, (2 / α) * dotProduct (ε ω) (Φ *ᵥ (θhat ω) - Φ *ᵥ θ) ^ 2 / dotProduct (Φ *ᵥ (θhat ω) - Φ *ᵥ θ) (Φ *ᵥ (θhat ω) - Φ *ᵥ θ) ≤ C₂ * σ ^ 2 * ↑(support_size_34 θ) * Real.log (Real.exp 1 * ↑M) + C₂ * σ ^ 2 * Real.log (1 / δ)} ≥ ENNReal.ofReal (1 - δ) := by
 -- proof
   obtain ⟨C, hC_pos, hpeeling⟩ :=
-    peeling_prob_bound_ratio hn hM Φ ε θhat σ hσ δ hδ_pos hδ_le hsubG
+    peeling_prob_bound_ratio (Φ := Φ) (ε := ε) (θhat := θhat) (σ := σ) (δ := δ) hn hM hσ hδ_pos hδ_le hsubG
   refine ⟨2 / α * C, by positivity, ?_⟩
   apply le_trans hpeeling
   apply measure_mono
@@ -344,11 +347,11 @@ lemma noise_peeling_concentration_ch3
   ∃ C₁ : ℝ, 0 < C₁ ∧ μ {ω | ∀ θ : Fin M → ℝ, 2 * dotProduct (ε ω) (Φ *ᵥ (θhat ω) - Φ *ᵥ θ) ≤ α * dotProduct (f - Φ *ᵥ (θhat ω)) (f - Φ *ᵥ (θhat ω)) + α * dotProduct (f - Φ *ᵥ θ) (f - Φ *ᵥ θ) + C₁ * σ ^ 2 * ↑(support_size_34 θ) * Real.log (Real.exp 1 * ↑M) + C₁ * σ ^ 2 * Real.log (1 / δ)} ≥ ENNReal.ofReal (1 - δ) := by
 -- proof
   obtain ⟨C₂, hC₂_pos, hpeeling⟩ :=
-    peeling_unit_vector_concentration hn hM Φ ε θhat σ hσ α hα_pos hα_lt δ hδ_pos hδ_le hsubG
+    peeling_unit_vector_concentration (Φ := Φ) (ε := ε) (θhat := θhat) (σ := σ) (α := α) (δ := δ) hn hM hσ hα_pos hα_lt hδ_pos hδ_le hsubG
   refine ⟨C₂, hC₂_pos, le_trans hpeeling (measure_mono fun ω hω => ?_)⟩
   simp only [Set.mem_setOf_eq] at hω ⊢
   intro θ
-  have hyoung_tri := cross_term_young_triangle_bound (ε ω) (Φ *ᵥ (θhat ω)) (Φ *ᵥ θ) f α hα_pos
+  have hyoung_tri := cross_term_young_triangle_bound (ε := ε ω) (a := Φ *ᵥ (θhat ω)) (b := Φ *ᵥ θ) (f := f) (α := α) hα_pos
   have hpeel_θ := hω θ
   have h_sym1 : dotProduct (Φ *ᵥ (θhat ω) - f) (Φ *ᵥ (θhat ω) - f) =
     dotProduct (f - Φ *ᵥ (θhat ω)) (f - Φ *ᵥ (θhat ω)) := by
@@ -393,7 +396,7 @@ lemma subG_peeling_dot_bound
   ∃ C₀ : ℝ, 0 < C₀ ∧ μ {ω | ∀ θ : Fin M → ℝ, (1 - α) * dotProduct (f - Φ *ᵥ (θhat ω)) (f - Φ *ᵥ (θhat ω)) ≤ (1 + α) * dotProduct (f - Φ *ᵥ θ) (f - Φ *ᵥ θ) + C₀ * σ ^ 2 * ↑(support_size_34 θ) * Real.log (Real.exp 1 * ↑M) + C₀ * σ ^ 2 * Real.log (1 / δ)} ≥ ENNReal.ofReal (1 - δ) := by
 -- proof
   obtain ⟨C₁, hC₁_pos, hpeeling⟩ :=
-    noise_peeling_concentration_ch3 hn hM Φ f ε θhat σ hσ α hα_pos hα_lt δ hδ_pos hδ_le hsubG
+    noise_peeling_concentration_ch3 (Φ := Φ) (f := f) (ε := ε) (θhat := θhat) (σ := σ) (α := α) (δ := δ) hn hM hσ hα_pos hα_lt hδ_pos hδ_le hsubG
   set logEM := Real.log (Real.exp 1 * ↑M) with hlogEM_def
   set log6EM := Real.log (6 * Real.exp 1 * ↑M) with hlog6EM_def
   have hM_pos : (0 : ℝ) < ↑M := Nat.cast_pos.mpr hM
@@ -419,9 +422,9 @@ lemma subG_peeling_dot_bound
     intro θ
     set nτ2 := (16 * σ ^ 2 / α) * log6EM with hnτ2_def
     have hbic_ω := hBIC ω θ
-    have hexpanded := bic_expansion f (ε ω) (Φ *ᵥ (θhat ω)) (Φ *ᵥ θ)
-      (nτ2 * ↑(support_size_34 (θhat ω)))
-      (nτ2 * ↑(support_size_34 θ))
+    have hexpanded := bic_expansion (f := f) (ε := ε ω) (a := Φ *ᵥ (θhat ω)) (b := Φ *ᵥ θ)
+      (P_hat := nτ2 * ↑(support_size_34 (θhat ω)))
+      (P_θ := nτ2 * ↑(support_size_34 θ))
       (by convert hbic_ω using 1)
     have hnoise_ω := hω θ
     set A := dotProduct (f - Φ *ᵥ (θhat ω)) (f - Φ *ᵥ (θhat ω)) with hA_def
@@ -439,8 +442,9 @@ lemma subG_peeling_dot_bound
       · exact Nat.cast_nonneg _
     have hnoise_ω' : cross ≤ α * A + α * B +
       (C₁ * σ ^ 2 * s * logEM + C₁ * σ ^ 2 * Ld) := by linarith
-    have h_core := bic_algebraic_core A B cross (nτ2 * s) (nτ2 * ↑(support_size_34 (θhat ω)))
-      (C₁ * σ ^ 2 * s * logEM + C₁ * σ ^ 2 * Ld) α
+    have h_core := bic_algebraic_core (A := A) (B := B) (cross := cross)
+      (P := nτ2 * s) (P_hat := nτ2 * ↑(support_size_34 (θhat ω)))
+      (R := C₁ * σ ^ 2 * s * logEM + C₁ * σ ^ 2 * Ld) (α := α)
       hP_hat_nn
       hexpanded
       hnoise_ω'
@@ -496,15 +500,15 @@ lemma subG_bic_oracle_event
   ∃ C_const : ℝ, 0 < C_const ∧ μ {ω | ∀ θ : Fin M → ℝ, MSE_34 (Φ *ᵥ (θhat ω)) f ≤ (1 + α) / (1 - α) * MSE_34 (Φ *ᵥ θ) f + C_const * σ ^ 2 / (α * (1 - α) * ↑n) * ↑(support_size_34 θ) * Real.log (Real.exp 1 * ↑M) + C_const * σ ^ 2 / (α * (1 - α) * ↑n) * Real.log (1 / δ)} ≥ ENNReal.ofReal (1 - δ) := by
 -- proof
   obtain ⟨C₀, hC₀_pos, hpeeling⟩ :=
-    subG_peeling_dot_bound hn hM Φ f ε θhat σ hσ α hα_pos hα_lt δ hδ_pos hδ_le hsubG hBIC
+    subG_peeling_dot_bound (Φ := Φ) (f := f) (ε := ε) (θhat := θhat) (σ := σ) (α := α) (δ := δ) hn hM hσ hα_pos hα_lt hδ_pos hδ_le hsubG hBIC
   refine ⟨C₀, hC₀_pos, le_trans hpeeling (measure_mono fun ω hω => ?_)⟩
   simp only [Set.mem_setOf_eq] at hω ⊢
   intro θ
   have hn_pos : (0 : ℝ) < (n : ℝ) := Nat.cast_pos.mpr hn
   have h1_sub_α_pos : (0 : ℝ) < 1 - α := by linarith
   have hdot := hω θ
-  rw [dot_eq_n_mul_MSE hn (Φ *ᵥ (θhat ω)) f,
-    dot_eq_n_mul_MSE hn (Φ *ᵥ θ) f] at hdot
+  rw [dot_eq_n_mul_MSE (g := Φ *ᵥ (θhat ω)) (f := f) hn,
+    dot_eq_n_mul_MSE (g := Φ *ᵥ θ) (f := f) hn] at hdot
   set M1 := MSE_34 (Φ *ᵥ (θhat ω)) f with hM1_def
   set M2 := MSE_34 (Φ *ᵥ θ) f with hM2_def
   set s := (↑(support_size_34 θ) : ℝ) with hs_def
@@ -567,8 +571,8 @@ lemma thm_3_4_bic_oracle_inequality
 -- imply
   ∃ C_const : ℝ, 0 < C_const ∧ μ {ω | MSE_34 (Φ *ᵥ (θhat ω)) f ≤ (⨅ θ : Fin M → ℝ, (1 + α) / (1 - α) * MSE_34 (Φ *ᵥ θ) f + C_const * σ ^ 2 / (α * (1 - α) * ↑n) * ↑(support_size_34 θ) * Real.log (Real.exp 1 * ↑M)) + C_const * σ ^ 2 / (α * (1 - α) * ↑n) * Real.log (1 / δ)} ≥ ENNReal.ofReal (1 - δ) := by
 -- proof
-  obtain ⟨C_const, hC, hconc⟩ := subG_bic_oracle_event hn hM Φ f ε θhat σ hσ α hα_pos hα_lt
-    δ hδ_pos hδ_le hsubG hBIC
+  obtain ⟨C_const, hC, hconc⟩ := subG_bic_oracle_event (Φ := Φ) (f := f) (ε := ε) (θhat := θhat) (σ := σ) (α := α) (δ := δ) hn hM hσ hα_pos hα_lt
+    hδ_pos hδ_le hsubG hBIC
   refine ⟨C_const, hC, ?_⟩
   apply le_trans hconc
   apply measure_mono

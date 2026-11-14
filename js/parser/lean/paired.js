@@ -665,6 +665,9 @@ export class LeanParenthesis extends LeanPairedGroup {
         let n = node;
         while (n instanceof LeanProperty) n = n.args[0];
         if (n instanceof LeanParenthesis && !(n.arg instanceof L.LeanColon)) n = n.arg;
+        // Promoted binder sugars: `ℙ[…](…)`, `𝔼[…](…)`, `𝕍𝕒𝕣[…](…)`.
+        if (n instanceof L.Lean_Prob || n instanceof L.Lean_Expect || n instanceof L.Lean_Var)
+            return true;
         if (!(n instanceof Args)) return false;
         const args = n.args;
         for (let i = 0; i < args.length - 1; i++) {

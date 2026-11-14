@@ -8,7 +8,7 @@ import Def.Data.Tensor.Eye
 import Theorem.Data.Tensor.Functions
 import Instance.Data.Vector.Basic.Dot
 open Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 800000
 
 
 @[path]
@@ -41,7 +41,7 @@ private lemma main
       apply TDot.eq.DotTS
     apply Eq.trans
     ·
-      apply congrArg (fun t => id (α := Tensor ℝ [d + d, d + d]) (Pᵀ ⬝ᵥ t))
+      apply congrArg (fun t : Tensor ℝ [d + d, d + d] => id (α := Tensor ℝ [d + d, d + d]) (Pᵀ ⬝ᵥ t))
       apply TDot.eq.DotTS
     apply congrArg (fun t : Tensor ℝ [d + d, d + d] => PT ⬝ᵥ (αT ⬝ᵥ t))
     apply EqTT
@@ -83,4 +83,4 @@ private lemma main
 
 
 -- created on 2026-09-05
--- updated on 2026-10-26
+-- updated on 2026-11-13

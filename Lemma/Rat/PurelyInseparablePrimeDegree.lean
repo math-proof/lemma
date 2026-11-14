@@ -31,7 +31,7 @@ lemma exists_minpoly_X_pow_sub_C_of_finrank_eq_prime
     rw [hcon] at h1
     omega
   have hlt : (⊥ : IntermediateField K L) < ⊤ := lt_of_le_of_ne bot_le hbot_ne_top
-  obtain ⟨α, _, hα⟩ := SetLike.exists_of_lt hlt
+  obtain ⟨α, _, hα⟩ := IsConcreteLE.exists_of_lt hlt
   have hint : IsIntegral K α := Algebra.IsIntegral.isIntegral α
   have hdeg_adjoin : finrank K K⟮α⟯ = (minpoly K α).natDegree :=
     IntermediateField.adjoin.finrank hint
@@ -70,4 +70,4 @@ end IsPurelyInseparable
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-13

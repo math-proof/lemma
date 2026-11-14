@@ -48,12 +48,12 @@ end MathlibExt.Probability.Statistics.GlivenkoCantelliWanted
 
 namespace MathlibExt.Probability.Statistics.GlivenkoCantelliWanted
 
+open Classical in
 /--
 [tendsto_empirical_frac](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/Statistics/GlivenkoCantelli.lean)
+converges a.s. to `(P (X 0 ⁻¹' s)).toReal`.
 -/
 @[path]
-open Classical in
-converges a.s. to `(P (X 0 ⁻¹' s)).toReal`. -/
 private lemma tendsto_empirical_frac
   {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω} [IsProbabilityMeasure P]
   (X : ℕ → Ω → ℝ) (hMeas : ∀ n, Measurable (X n))

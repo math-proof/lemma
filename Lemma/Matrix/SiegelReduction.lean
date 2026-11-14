@@ -1,4 +1,4 @@
-import Lemma.AutomorphicForm.SiegelCoordinates
+import Lemma.Matrix.SiegelCoordinates
 
 open NumberField IsDedekindDomain Matrix
 
@@ -8,7 +8,7 @@ namespace AutomorphicForm
 
 namespace SiegelReduction
 
-open AutomorphicForm.WindowedSiegel AutomorphicForm.SiegelCoordinates NumberField.AdelicLevel
+open AutomorphicForm.WindowedSiegel Matrix.SiegelCoordinates Matrix.AdelicLevel
   NumberField.InfinitePlace
 
 variable (F : Type) [Field F] [NumberField F]

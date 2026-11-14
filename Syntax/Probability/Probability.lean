@@ -8,12 +8,34 @@ import Mathlib.Probability.Independence.Basic
 import Mathlib.Probability.Independence.Conditional
 import Def.Probability.SymbolicProbability.Part2
 import Theorem.Function
-import Def.Probability.JointRv.Part7
+import Syntax.Probability.Expectation
+import Def.Probability.JointRv
 open MeasureTheory
 open scoped ProbabilityTheory
 
 
 open Lean
+
+
+/-- Right-nested `JointRandomSymbol` chain: `#[x,y,z]` ↦ `JointRandomSymbol x (JointRandomSymbol y z)`. -/
+partial def Probability.Macro.mkJointRV (ts : Array Syntax) : MacroM Term := do
+  match ts.toList with
+  | [] => Macro.throwError "ℙ[π](…) requires at least one factor"
+  | [t] => pure ⟨t⟩
+  | t :: rest =>
+    let t : Term := ⟨t⟩
+    let tail ← Probability.Macro.mkJointRV rest.toArray
+    `(JointRandomSymbol $t $tail)
+
+/-- Right-nested product of values: `#[a,b,c]` ↦ `(a, (b, c))`. -/
+partial def Probability.Macro.mkProd (ts : Array Syntax) : MacroM Term := do
+  match ts.toList with
+  | [] => Macro.throwError "ℙ[π](…) requires at least one factor"
+  | [t] => pure ⟨t⟩
+  | t :: rest =>
+    let t : Term := ⟨t⟩
+    let tail ← Probability.Macro.mkProd rest.toArray
+    `(($t, $tail))
 
 
 /-- RA slots are `term:51` (idents, apps `a t`, and GetElem `a[t]`); observation forms keep

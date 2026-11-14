@@ -2,7 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.GaloisRep_Flat
 import Def.GaloisRep_Residual
-import Lemma.FLTPrelim.GaloisRep
+import Lemma.WeierstrassCurve.GaloisRep
 import Lemma.Int.P2MUtil
 open scoped NNReal
 open scoped WeierstrassCurve.Affine

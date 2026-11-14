@@ -1,6 +1,9 @@
 -- Root of the `Def` library: carved from Lemma/Definitions.
 import Def.Basic
 
+import Def.AbstractHeckeOperator_Main
+import Def.AdicCompletionLocalRing_Main
+import Def.AdelicDock_LocalEmbedding
 import Def.Algebra_PointDerivations
 import Def.AlgebraicCurve_AffinoidCentre
 import Def.AlgebraicCurve_BaseChangeGalois
@@ -132,6 +135,7 @@ import Def.AutomorphicForm_WhittakerCoefficient
 import Def.AutomorphicForm_WhittakerModelLocal
 import Def.AutomorphicForm_WhittakerModelMultiplicityOne
 import Def.AutomorphicForm_WindowedSiegelSet
+import Def.CategoryTheory_OverTotalPresheaf
 import Def.CategoryTheory_Subfunctor_OfIsTerminal
 import Def.CerednikDrinfeld_AlgFunctorConst
 import Def.CerednikDrinfeld_BruhatTitsTree
@@ -330,6 +334,8 @@ import Def.LocalRing_PrincipalUnits
 import Def.M4aHerbrand_GenuineBeta
 import Def.M4aHerbrand_ModuleTopologyBridge
 import Def.M4aLocalCFT_VocabDefs
+import Def.Mathlib_Algebra_Algebra_Hom
+import Def.Mathlib_Algebra_IsDirectLimit
 import Def.Mathlib_CategoryTheory_Corepresentable
 import Def.Mathlib_RingTheory_Localization_BaseChange
 import Def.Mathlib_RingTheory_RegularLocalRingFlatLocalAscent
@@ -461,9 +467,12 @@ import Def.ModularCurve_XHOperators
 import Def.ModularForm_EisensteinChiNegThree
 import Def.ModularForm_HeckeOperator
 import Def.ModularForm_HeckeOperatorForms
+import Def.MvFormalGroup_AddMv
 import Def.MvFormalGroup_ArtinHasse
+import Def.MvFormalGroup_BasicV2
 import Def.MvFormalGroup_BigWittLaw
 import Def.MvFormalGroup_IsShiftBy
+import Def.MvFormalGroup_LinearPart
 import Def.MvFormalGroup_TwoCocycle
 import Def.MvPolynomial_LogMahlerMeasure
 import Def.Nat_MacaulayPow
@@ -526,6 +535,7 @@ import Def.TateCurve_TateParameter
 import Def.TateCurve_XMultDistinctRouteB
 import Def.TateCurve_XMultIdentities
 import Def.TateCurve_XMultStructure
+import Def.TensorProductDomain_Main
 import Def.TwistedUnipotentTerm_SemiLocalOrbitalVocab
 import Def.UnramifiedWhittaker_HeckeRecursion
 import Def.UnramifiedWhittaker_ZetaIntegrand

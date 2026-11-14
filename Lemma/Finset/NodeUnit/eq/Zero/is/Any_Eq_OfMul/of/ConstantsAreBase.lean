@@ -1,10 +1,10 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.GluedPic0
-import Lemma.AlgebraicCurve.AdelicIndex
+import Lemma.ResidueField.GluedPic0
+import Lemma.Submodule.AdelicIndex
 import Lemma.Int.P2MUtil
 
-open AlgebraicCurve AlgebraicCurve.GluedPic0
+open AlgebraicCurve ResidueField.GluedPic0 Submodule ResidueField
 
 /--
 [AlgebraicCurve_GluedPic0_nodeUnit_eq_zero_iff_of_constantsAreBase](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_GluedPic0_nodeUnit_eq_zero_iff_of_constantsAreBase.lean)

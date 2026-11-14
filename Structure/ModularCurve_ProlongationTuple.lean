@@ -1,12 +1,12 @@
 import Def.ModularCurve_GlueData
-import Lemma.ModularCurve.SupersingularNodePlaces
-import Lemma.ModularCurve.CoeffSemilinearAut
+import Lemma.Finset.SupersingularNodePlaces
+import Lemma.LaurentSeries.CoeffSemilinearAut
 import Def.ModularCurve_AtkinLehnerPartial
-import Lemma.ModularCurve.CuspidalClass
+import Lemma.Finsupp.CuspidalClass
 import Def.ModularCurve_X0ModL
-import Lemma.ModularCurve.CharPReduction
+import Lemma.LaurentSeries.CharPReduction
 import Structure.AlgebraicCurve_RegularProlongation
-import Lemma.AlgebraicCurve.Repartitions
+import Lemma.Submodule.Repartitions
 set_option synthInstance.maxHeartbeats 400000
 set_option maxHeartbeats 800000
 set_option Elab.async false

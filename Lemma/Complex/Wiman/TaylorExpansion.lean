@@ -21,7 +21,7 @@ lemma hasSum_wimanTaylorCoefficient_mul_pow
   simpa only [sub_zero, smul_eq_mul, wimanTaylorCoefficient, div_eq_mul_inv,
     mul_comm, mul_left_comm, mul_assoc] using
     (Complex.hasSum_taylorSeries_of_entire hf 0 z)
-end
+end Complex
 
 
 

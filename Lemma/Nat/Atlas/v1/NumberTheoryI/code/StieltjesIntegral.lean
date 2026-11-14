@@ -144,8 +144,8 @@ lemma hasStieltjesIntegral_unique
   have hε : (0 : ℝ) < ‖S₁ - S₂‖ / 2 := by linarith
   obtain ⟨P₁, hP₁⟩ := h₁ (‖S₁ - S₂‖ / 2) hε
   obtain ⟨P₂, hP₂⟩ := h₂ (‖S₁ - S₂‖ / 2) hε
-  obtain ⟨R, hR₁, hR₂⟩ := commonRefinement P₁ P₂
-  obtain ⟨PT, hPT⟩ := taggedPartitionOfPartition R
+  obtain ⟨R, hR₁, hR₂⟩ := commonRefinement (P := P₁) (Q := P₂)
+  obtain ⟨PT, hPT⟩ := taggedPartitionOfPartition (P := R)
   have h₁' := hP₁ PT (by rw [hPT]; exact hR₁)
   have h₂' := hP₂ PT (by rw [hPT]; exact hR₂)
   have key : ‖S₁ - S₂‖ ≤ ‖stieltjesSum PT f g - S₁‖ + ‖stieltjesSum PT f g - S₂‖ := by
@@ -173,7 +173,8 @@ lemma stieltjesIntegral_spec
   HasStieltjesIntegral f g a b (stieltjesIntegral f g a b) := by
 -- proof
   unfold stieltjesIntegral
-  rwa [dite_eq_left h]
+  rw [dite_eq_left h]
+  exact h.choose_spec
 
 end RiemannStieltjes
 
@@ -273,11 +274,11 @@ lemma cumRefine_refines_P_le
   | zero =>
     have : k = 0 := Nat.le_zero.mp hk
     subst this
-    exact IsRefinementOf.refl _
+    exact IsRefinementOf.refl
   | succ n ih =>
     obtain rfl | hlt := Nat.eq_or_lt_of_le hk
-    · exact cumRefine_refines_P P cr n
-    · exact IsRefinementOf.trans (cumRefine_refines_prev P cr n) (ih (Nat.lt_succ_iff.mp hlt))
+    · exact cumRefine_refines_P cr
+    · exact IsRefinementOf.trans (cumRefine_refines_prev cr) (ih (Nat.lt_succ_iff.mp hlt))
 
 end RiemannStieltjes
 
@@ -290,7 +291,6 @@ namespace RiemannStieltjes
 lemma integrable_of_cauchy
   {a b : ℝ}
   {f g : ℝ → ℝ}
-  {a b : ℝ}
 -- given
   (hcauchy : ∀ ε > 0, ∃ P : IntervalPartition a b, ∀ PT₁ PT₂ : TaggedPartition a b, PT₁.toIntervalPartition.IsRefinementOf P → PT₂.toIntervalPartition.IsRefinementOf P → ‖stieltjesSum PT₁ f g - stieltjesSum PT₂ f g‖ < ε) :
 -- imply
@@ -298,8 +298,8 @@ lemma integrable_of_cauchy
 -- proof
   have hε : ∀ n : ℕ, (0 : ℝ) < 1 / (↑n + 1) := fun n => by positivity
   choose P_seq hP_seq using fun n => hcauchy (1 / (↑n + 1)) (hε n)
-  let Q := cumRefine P_seq (fun P Q => commonRefinement P Q)
-  choose PT_seq hPT_seq using fun n => taggedPartitionOfPartition (Q n)
+  let Q := cumRefine P_seq (fun P Q => commonRefinement (P := P) (Q := Q))
+  choose PT_seq hPT_seq using fun n => taggedPartitionOfPartition (P := Q n)
   set s := fun n => stieltjesSum (PT_seq n) f g
   have hs_cauchy : CauchySeq s := by
     rw [Metric.cauchySeq_iff]
@@ -313,10 +313,10 @@ lemma integrable_of_cauchy
         _ < ε * (↑N + 1) := by nlinarith
     have hm_ref : (PT_seq m).toIntervalPartition.IsRefinementOf (P_seq N) := by
       rw [hPT_seq m]
-      exact cumRefine_refines_P_le P_seq _ m N hm
+      exact cumRefine_refines_P_le (fun P Q => commonRefinement (P := P) (Q := Q)) hm
     have hn_ref : (PT_seq n).toIntervalPartition.IsRefinementOf (P_seq N) := by
       rw [hPT_seq n]
-      exact cumRefine_refines_P_le P_seq _ n N hn
+      exact cumRefine_refines_P_le (fun P Q => commonRefinement (P := P) (Q := Q)) hn
     calc dist (s m) (s n) = ‖s m - s n‖ := by rw [Real.dist_eq, Real.norm_eq_abs]
       _ = ‖stieltjesSum (PT_seq m) f g - stieltjesSum (PT_seq n) f g‖ := rfl
       _ < 1 / (↑N + 1) := hP_seq N _ _ hm_ref hn_ref
@@ -336,10 +336,10 @@ lemma integrable_of_cauchy
     have := (div_lt_iff₀ hε).mp hN₁
     nlinarith
   have hPT_ref_N : PT.toIntervalPartition.IsRefinementOf (P_seq N₁) :=
-    IsRefinementOf.trans hPT (cumRefine_refines_P_le P_seq _ N N₁ hN₁_le)
+    IsRefinementOf.trans hPT (cumRefine_refines_P_le (fun P Q => commonRefinement (P := P) (Q := Q)) hN₁_le)
   have hPTN_ref : (PT_seq N).toIntervalPartition.IsRefinementOf (P_seq N₁) := by
     rw [hPT_seq N]
-    exact cumRefine_refines_P_le P_seq _ N N₁ hN₁_le
+    exact cumRefine_refines_P_le (fun P Q => commonRefinement (P := P) (Q := Q)) hN₁_le
   have h_sum_close : ‖stieltjesSum PT f g - s N‖ < ε / 2 := by
     calc ‖stieltjesSum PT f g - s N‖
       = ‖stieltjesSum PT f g - stieltjesSum (PT_seq N) f g‖ := rfl
@@ -388,4 +388,4 @@ end RiemannStieltjes
 
 
 -- created on 2026-10-23
--- updated on 2026-10-28
+-- updated on 2026-11-13

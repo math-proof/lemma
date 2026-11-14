@@ -2,7 +2,7 @@
 import Mathlib
 import Instance.AlgebraicGeometry_OrderedAffineCoverCech
 import Instance.AlgebraicGeometry_DoubleComplex
-import Lemma.AlgebraicGeometry.BiCech
+import Lemma.Scheme.BiCech
 
 set_option autoImplicit false
 

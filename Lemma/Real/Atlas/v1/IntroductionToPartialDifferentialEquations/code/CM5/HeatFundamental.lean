@@ -865,7 +865,7 @@ lemma heat_tail_exp_bound
   calc ∫ x in {x : Fin n → ℝ | δ < ‖x‖}, heatKernel D t x
     ≤ ∫ x in {x : Fin n → ℝ | δ < ‖x‖}, g x := by
       apply setIntegral_mono_on hΓ_int.integrableOn hg_int.integrableOn hS
-      intro x hx; simp only [Set.mem_setOf_eq] at hx
+      intro x hx; simp only [Set.mem_ofPred_eq] at hx
       simp only [g, W, heatKernel]
       have h4p : 0 < 4 * π * D * t := by positivity
       have hp : 0 < 1 / (4 * π * D * t) ^ ((n : ℝ) / 2) :=
@@ -1030,7 +1030,7 @@ lemma heatKernel_mul_integrable
     · apply Continuous.mul
       · exact continuous_const
       · exact Real.continuous_exp.comp ((Continuous.div_const
-        (Continuous.neg (continuous_finset_sum _ (fun i _ => (continuous_apply i).pow 2)))) _)
+        (Continuous.neg (continuous_finsetSum _ (fun i _ => (continuous_apply i).pow 2)))) _)
     · exact hφ
   · apply Eventually.of_forall; intro x
     rw [Real.norm_eq_abs, abs_mul]
@@ -1905,7 +1905,7 @@ lemma one_d_completing_square_integral_aux
   simp only [K]
   have h := ne_of_gt (rpow_pos_of_pos hπc_pos ((1:ℝ)/2))
   field_simp
-set_option maxHeartbeats 400000 in
+set_option maxHeartbeats 400000
 
 end HeatFundamental
 
@@ -1941,7 +1941,7 @@ lemma heatKernel_exp_prod_aux
       (1 / (π * (4 * D * t)) ^ ((1:ℝ)/2)) from by
       rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin]]
   exact Finset.prod_mul_distrib.symm
-set_option maxHeartbeats 800000 in
+set_option maxHeartbeats 800000
 
 end HeatFundamental
 
@@ -1975,7 +1975,7 @@ lemma gaussian_nD_integral_eq
   congr 1
   · rw [← rpow_natCast, ← rpow_mul (le_of_lt (div_pos one_pos h1_sub_cb_pos))]; congr 1; ring
   · rw [← exp_sum]; congr 1; simp only [euclidNormSq, ← Finset.mul_sum]
-set_option maxHeartbeats 800000 in
+set_option maxHeartbeats 800000
 
 end HeatFundamental
 
@@ -2329,9 +2329,9 @@ lemma heat_cauchy_growth_bound
   ∀ T' : ℝ, 0 < T' → T' < 1 / (4 * D * b) → ∃ A B : ℝ, 0 < A ∧ 0 < B ∧ ∀ t x, 0 ≤ t → t ≤ T' → |cauchySolution D g t x| ≤ A * exp (B * euclidNormSq x) :=
 -- proof
   cauchy_solution_growth_bound hD hg_cont ha hb hg_bound
-/-- Uniqueness part of Theorem 1.1: any other solution $v$ of the heat equation matching
-the initial data $g$ and satisfying a Gaussian growth bound $|v(t, x)| \le A \exp(B|x|^2)$
-must coincide with the Cauchy convolution solution on $(0, 1/(4Db)) \times \mathbb R^n$. -/
+-- Uniqueness part of Theorem 1.1: any other solution $v$ of the heat equation matching
+-- the initial data $g$ and satisfying a Gaussian growth bound $|v(t, x)| \le A \exp(B|x|^2)$
+-- must coincide with the Cauchy convolution solution on $(0, 1/(4Db)) \times \mathbb R^n$.
 end HeatFundamental
 
 

@@ -1,5 +1,5 @@
 -- Carved from Lemma/Definitions/Def_CuspForm_AuxLevelHeckeModule.lean: instance decls only.
-import Lemma.CohCarrier.Inst
+import Lemma.ZMod.Inst
 import Instance.CuspForm_HeckeAlgebra
 import Mathlib.RingTheory.LocalRing.ResidueField.Basic
 import Abbrev.CuspForm_AuxLevelHeckeModule

@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.DivisorClassGroup
+import Lemma.Valuation.DivisorClassGroup
 import Lemma.Int.P2MUtil
 
-open AlgebraicCurve
+open AlgebraicCurve Valuation
 
 /--
 [AlgebraicCurve_Place_mem_toValuationSubring_of_isIntegral_adjoin](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_Place_mem_toValuationSubring_of_isIntegral_adjoin.lean)

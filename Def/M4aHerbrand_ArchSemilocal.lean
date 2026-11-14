@@ -1,4 +1,4 @@
-import Lemma.NumberField.InfiniteAdeleRing_BaseChangeData
+import Lemma.AlgEquiv.InfiniteAdeleRing_BaseChangeData
 import Instance.M4aHerbrand_ArchSemilocal
 
 namespace M4aHerbrand.ArchSemilocal

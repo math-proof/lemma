@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.LieGroups.code.Admissible.Part3
-import Lemma.Bijective.EqContinuousLinearEquivOfBijective.of.Bijective
+import Lemma.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
 import Lemma.Real.GetToMonoidHom.in.SmoothSubspace.of.In_SmoothSubspace
 import Lemma.Complex.IsKFinite0
 import Def.v1.Atlas.LieGroups.code.SmoothVectors

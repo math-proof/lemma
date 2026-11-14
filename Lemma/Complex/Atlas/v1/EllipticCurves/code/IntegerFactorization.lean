@@ -14,7 +14,7 @@ lemma isSmooth_iff
 -- imply
   IsSmooth B n ↔ n ≠ 0 ∧ ∀ p ∈ n.primeFactorsList, p ≤ B := by
 -- proof
-  simp only [IsSmooth, Nat.smoothNumbers, Set.mem_setOf_eq, Nat.lt_add_one_iff]
+  simp only [IsSmooth, Nat.smoothNumbers, Set.mem_ofPred_eq, Nat.lt_add_one_iff]
 
 /--
 [mem_factorBase_iff](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/IntegerFactorization.lean)
@@ -336,7 +336,7 @@ lemma dvd_smoothExponent_of_isBSmooth
     have := (Nat.factorization_le_iff_dvd
       (pow_ne_zero _ hq_prime.pos.ne') (smoothExponent_pos N B).ne').mpr h_dvd
     have h := this q
-    rwa [hq_prime.factorization_pow, Finsupp.single_apply, if_pos rfl] at h
+    rwa [hq_prime.factorization_pow, Finsupp.single_apply, ite_eq_left rfl] at h
   exact le_trans (factorization_le_clog hq_prime.one_lt hsmooth.1 hnN) h_fact_ge
 
 end PollardPM1

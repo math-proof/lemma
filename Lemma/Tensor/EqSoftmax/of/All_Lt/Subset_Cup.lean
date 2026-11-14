@@ -16,14 +16,17 @@ import Lemma.Tensor.XEqGetS.of.XEq.GtLength
 import Lemma.Hyperreal.OfRealExp.eq.ExpOfReal
 import Def.Data.Tensor.Sum
 open Tensor Hyperreal
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 800000
 
 
 private lemma ge_zero_mask
   {n m : ℕ}
+-- given
   (d : Fin m → ℤ) :
+-- imply
   let Ξ : Tensor ℝ* [n, m] := [i < n] [j < m] (Bool.toNat (decide ((i : ℤ) > d j)))
   Ξ ≥ 0 := by
+-- proof
   intro Ξ
   apply Le0Stack.of.All_Ge_0
   intro i'
@@ -34,30 +37,29 @@ private lemma ge_zero_mask
   intro k
   have hzero : ((0 : Tensor ℝ* []).data)[k] = (0 : ℝ*) := by
     rw [EqData0'0]
-    exact Vector.EqGet0_0.fin (α := ℝ*) k
+    apply Vector.EqGet0_0.fin (α := ℝ*) k
   fin_cases k
   rw [hzero]
-  have h : ∀ b : Bool, (0 : ℝ*) ≤ ((b.toNat : Tensor ℝ* [])).data[0] := by
-    intro b
-    cases b
-    ·
-      change (0 : ℝ*) ≤ ((0 : ℕ) : ℝ*)
-      exact Nat.cast_nonneg 0
-    ·
-      change (0 : ℝ*) ≤ ((1 : ℕ) : ℝ*)
-      exact Nat.cast_nonneg 1
-  exact h _
-
+  cases decide ((i' : ℤ) > d j')
+  ·
+    change (0 : ℝ*) ≤ ((0 : ℕ) : ℝ*)
+    apply Nat.cast_nonneg 0
+  ·
+    change (0 : ℝ*) ≤ ((1 : ℕ) : ℝ*)
+    apply Nat.cast_nonneg 1
 
 private lemma not_infinitesimal_sum
   {m : ℕ}
-  (x : List.Vector ℝ* m)
+  {x : List.Vector ℝ* m}
+  {j : Fin m}
+  {δ : ℝ}
+-- given
   (hx : ∀ k : Fin m, (0 : ℝ*) ≤ x[k])
-  (j : Fin m)
-  (δ : ℝ)
   (hδ : 0 < δ)
   (hj : Hyperreal.ofReal δ ≤ x[j]) :
+-- imply
   ¬(x.sum → 0) := by
+-- proof
   intro h
   rw [Infinitesimal.is.All_LtAbs] at h
   have h1 := h ⟨δ, hδ⟩
@@ -67,21 +69,31 @@ private lemma not_infinitesimal_sum
   have h3 : (0 : ℝ*) ≤ x.sum := le_trans (hx j) h2
   rw [abs_of_nonneg h3] at h1
   have : Hyperreal.ofReal δ ≤ x.sum := le_trans hj h2
-  exact absurd h1 (not_lt.mpr this)
+  apply absurd h1 (not_lt.mpr this)
 
-
-private lemma lower_bound {n m : ℕ} (d : Fin m → ℤ) (A : Tensor ℝ [n, m]) (i : Fin n) (hi : (i : ℕ) < n) (j : Fin m) (hjd : d j < i) :
-    let Ξ : Tensor ℝ* [n, m] := [i < n] [j < m] (Bool.toNat (decide ((i : ℤ) > d j)))
-    let A' : Tensor ℝ* [n, m] := A
-    Hyperreal.ofReal (Real.exp ((A[i] : Tensor ℝ [m]).data.get (Fin.cast (by simp) j))) ≤ (((exp A').get ⟨i, hi⟩ * Ξ.get ⟨i, hi⟩ : Tensor ℝ* [m]).data.get (Fin.cast (by simp) j)) := by
+private lemma lower_bound
+  {n m : ℕ}
+  {d : Fin m → ℤ}
+  {i : Fin n}
+  {j : Fin m}
+-- given
+  (hi : (i : ℕ) < n)
+  (hjd : d j < i)
+  (A : Tensor ℝ [n, m]) :
+-- imply
+  let Ξ : Tensor ℝ* [n, m] := [i < n] [j < m] (Bool.toNat (decide ((i : ℤ) > d j)))
+  let A' : Tensor ℝ* [n, m] := A
+  Hyperreal.ofReal (Real.exp ((A[i] : Tensor ℝ [m]).data.get (Fin.cast (by simp) j))) ≤
+    (((Exp.exp A').get ⟨i, hi⟩ * Ξ.get ⟨i, hi⟩ : Tensor ℝ* [m]).data.get (Fin.cast (by simp) j)) := by
+-- proof
   intro Ξ A'
-  have hexp : (exp A').get ⟨i, hi⟩ = exp (A'.get ⟨i, hi⟩) := GetExp.eq.ExpGet.fin A' ⟨i, hi⟩
+  have hexp : (Exp.exp A').get ⟨i, hi⟩ = Exp.exp (A'.get ⟨i, hi⟩) := GetExp.eq.ExpGet.fin A' ⟨i, hi⟩
   have h2 : (A'.get ⟨i, hi⟩ : Tensor ℝ* [m]) = (A[i] : Tensor ℝ [m]).map Hyperreal.ofReal := by
     simp [GetElem.getElem, A']
     erw [GetMap.eq.MapGet.fin]
     rfl
-  have hmul := Vector.GetMul.eq.MulGetS.fin ((exp A').get ⟨i, hi⟩).data (Ξ.get ⟨i, hi⟩).data (Fin.cast (by simp) j)
-  have e1 : ((exp A').get ⟨i, hi⟩).data.get (Fin.cast (by simp) j) = Hyperreal.ofReal (Real.exp ((A[i] : Tensor ℝ [m]).data.get (Fin.cast (by simp) j))) := by
+  have hmul := Vector.GetMul.eq.MulGetS.fin ((Exp.exp A').get ⟨i, hi⟩).data (Ξ.get ⟨i, hi⟩).data (Fin.cast (by simp) j)
+  have e1 : ((Exp.exp A').get ⟨i, hi⟩).data.get (Fin.cast (by simp) j) = Hyperreal.ofReal (Real.exp ((A[i] : Tensor ℝ [m]).data.get (Fin.cast (by simp) j))) := by
     rw [hexp, h2]
     erw [DataExp.eq.ExpData]
     erw [Vector.GetExp.eq.ExpGet.fin]
@@ -97,17 +109,15 @@ private lemma lower_bound {n m : ℕ} (d : Fin m → ℤ) (A : Tensor ℝ [n, m]
       erw [EqGetStack.fin]
     rw [hrow]
     erw [EqGetStack.fin]
-    have key : ∀ (b : Bool) (_ : b = true), ((b.toNat : ℕ) : Tensor ℝ* []).data[0] = 1 := by
-      intro b hb
-      subst hb
-      change ((1 : ℕ) : Tensor ℝ* []).data[0] = 1
-      refine ((Vector.Get_0.eq.Head.fin _).trans (EqHeadData.nat (α := ℝ*) 1)).trans ?_
-      exact Nat.cast_one
-    exact key _ hb
-  show _ ≤ (((exp A').get ⟨i, hi⟩).data * (Ξ.get ⟨i, hi⟩).data).get (Fin.cast (by simp) j)
+    refine (show ∀ (b : Bool) (_ : b = true), ((b.toNat : ℕ) : Tensor ℝ* []).data[0] = 1 from ?_) _ hb
+    intro b hb'
+    subst hb'
+    change ((1 : ℕ) : Tensor ℝ* []).data[0] = 1
+    refine ((Vector.Get_0.eq.Head.fin _).trans (EqHeadData.nat (α := ℝ*) 1)).trans ?_
+    apply Nat.cast_one
+  show _ ≤ (((Exp.exp A').get ⟨i, hi⟩).data * (Ξ.get ⟨i, hi⟩).data).get (Fin.cast (by simp) j)
   rw [hmul, e1, e2]
   simp
-
 
 /--
 Lower-triangular style masking by \( \operatorname{Bool}(i > d_j) \) (hyperreal form of the py lemma, no `maskedSoftmax`):
@@ -125,17 +135,17 @@ The py hypotheses `All_Lt` (strictly increasing `d`) and `Subset_Cup` are only u
 @[path]
 private lemma main
   {n m : ℕ}
+  {d : Fin m → ℤ}
 -- given
-  (d : Fin m → ℤ)
-  (A : Tensor ℝ [n, m])
-  (h_ne : ∀ i : Fin n, ∃ j : Fin m, d j < i) :
+  (h_ne : ∀ i : Fin n, ∃ j : Fin m, d j < i)
+  (A : Tensor ℝ [n, m]) :
 -- imply
   let Ξ : Tensor ℝ* [n, m] := [i < n] [j < m] (Bool.toNat (decide ((i : ℤ) > d j)))
   let A : Tensor ℝ* [n, m] := A
-  (A + (Ξ - 1) * ∞).softmax ≈ [i < n] (exp A[i] * Ξ[i]) / id (α := Tensor ℝ* []) ((exp A[i] * Ξ[i]).sum 0) := by
+  (A + (Ξ - 1) * ∞).softmax ≈ [i < n] Exp.exp A[i] * Ξ[i] / id (α := Tensor ℝ* []) ((Exp.exp A[i] * Ξ[i]).sum 0) := by
 -- proof
   intro Ξ A'
-  have h_Ξ : Exp.exp (A' + (Ξ - 1) * ∞) ≈ exp A' * Ξ :=
+  have h_Ξ : Exp.exp (A' + (Ξ - 1) * ∞) ≈ Exp.exp A' * Ξ :=
     ExpAdd_MulInfty.eq.Mul_Stack_Bool.rect (fun (i : Fin n) (j : Fin m) => decide ((i : ℤ) > d j)) A
   denote h_a' : a' = (A' + (Ξ - 1) * ∞)
   rw [← h_a'] at h_Ξ ⊢
@@ -146,39 +156,41 @@ private lemma main
   have hi : (i : ℕ) < n := i.isLt
   have h_Ξᵢ := XEqGetS.of.XEq.GtLength.fin (i := i) (by grind) h_Ξ
   simp at h_Ξᵢ
-  have hmuld : (exp A' * Ξ).get ⟨↑i, by grind⟩ = (exp A').get ⟨↑i, hi⟩ * Ξ.get ⟨↑i, hi⟩ := by
-    convert GetMul.eq.MulGetS.fin (exp A') Ξ ⟨↑i, hi⟩ <;> rfl
+  have hmuld : (Exp.exp A' * Ξ).get ⟨↑i, by grind⟩ = (Exp.exp A').get ⟨↑i, hi⟩ * Ξ.get ⟨↑i, hi⟩ := by
+    convert GetMul.eq.MulGetS.fin (Exp.exp A') Ξ ⟨↑i, hi⟩ <;> rfl
   rw [hmuld] at h_Ξᵢ
   have h_zi := Get.of.Eq.fin h_z i
   simp at h_zi
   rw [Softmax.eq.DivExp_KeepdimSumExp] at h_zi
   conv_rhs at h_zi => erw [@Tensor.GetDiv.eq.DivGetS.fin]
   simp at h_zi
-  erw [GetKeepdim.eq.KeepdimCast_Get.of.GtGet_0.Gt_0.GtLength (i := i) (by grind) (by grind) (by grind) ((exp a').sum 1)] at h_zi
+  erw [GetKeepdim.eq.KeepdimCast_Get.of.GtGet_0.Gt_0.GtLength (i := i) (by grind) (by grind) (by grind) ((Exp.exp a').sum 1)] at h_zi
   erw [GetSum.eq.Cast_SumGet.of.GtGet_0.LtAdd_1Length.fin (d := 0) (by grind) (by grind)] at h_zi
   simp at h_zi
   erw [Div_KeepdimSum.eq.Div_Sum] at h_zi
   have hΞ0 : Ξ ≥ 0 := ge_zero_mask d
-  have hexp : (exp A').get ⟨i, hi⟩ = exp (A'.get ⟨i, hi⟩) :=
+  have hexp : (Exp.exp A').get ⟨i, hi⟩ = Exp.exp (A'.get ⟨i, hi⟩) :=
     GetExp.eq.ExpGet.fin A' ⟨i, hi⟩
-  have h_pos : (exp A').get ⟨i, hi⟩ * Ξ.get ⟨i, hi⟩ ≥ 0 := by
+  have h_pos : (Exp.exp A').get ⟨i, hi⟩ * Ξ.get ⟨i, hi⟩ ≥ 0 := by
     apply Le0Mul.of.Ge_0.Ge_0
     ·
       rw [hexp]
       exact GeExp_0 _
     ·
       exact Le0Get.of.Ge_0 hΞ0 ⟨i, hi⟩
-  have h_not : ¬(((exp A').get ⟨i, hi⟩ * Ξ.get ⟨i, hi⟩ : Tensor ℝ* [m]).data.sum → 0) := by
+  have h_not : ¬(((Exp.exp A').get ⟨i, hi⟩ * Ξ.get ⟨i, hi⟩ : Tensor ℝ* [m]).data.sum → 0) := by
     obtain ⟨j, hj⟩ := h_ne i
-    have hx : ∀ k : Fin [m].prod, (0 : ℝ*) ≤ (((exp A').get ⟨i, hi⟩ * Ξ.get ⟨i, hi⟩ : Tensor ℝ* [m])).data[k] :=
-      fun k => All_Le0GetData.of.Ge_0 h_pos k
-    exact not_infinitesimal_sum _ hx (Fin.cast (by simp) j) (Real.exp ((A[i] : Tensor ℝ [m]).data.get (Fin.cast (by simp) j))) (Real.exp_pos _) (lower_bound d A i hi j hj)
-  have h_fin := XEqDivS_Sum_0.of.XEq.NotInfinitesimalSum.Ge_0 h_pos h_not (y := (exp a').get i) h_Ξᵢ
+    apply not_infinitesimal_sum
+      (j := Fin.cast (by simp) j)
+      (δ := Real.exp ((A[i] : Tensor ℝ [m]).data.get (Fin.cast (by simp) j)))
+      (fun k => All_Le0GetData.of.Ge_0 h_pos k)
+      (Real.exp_pos _)
+      (lower_bound hi hj A)
+  have h_fin := XEqDivS_Sum_0.of.XEq.NotInfinitesimalSum.Ge_0 h_pos h_not (y := (Exp.exp a').get i) h_Ξᵢ
   conv_rhs => erw [EqGetStack.fin]
   rw [h_zi]
-  rw [hexp] at h_fin
-  exact h_fin
+  rwa [hexp] at h_fin
 
 
 -- created on 2022-04-26
--- updated on 2026-10-26
+-- updated on 2026-11-13

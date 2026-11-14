@@ -10,9 +10,6 @@ open scoped ComplexConjugate
 -/
 @[path]
 private lemma main
-  [Group K]
-  [TopologicalSpace K]
-  [IsTopologicalGroup K]
   [NormedAddCommGroup V]
   [InnerProductSpace ℂ V]
   [FiniteDimensional ℂ V]
@@ -32,9 +29,6 @@ private lemma main
 [adjoint_comp_endo](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/SchurOrthogonalityConsequences.lean)
 -/
 private lemma adjoint_comp_endo
-  [Group K]
-  [TopologicalSpace K]
-  [IsTopologicalGroup K]
   [NormedAddCommGroup V]
   [InnerProductSpace ℂ V]
   [CompleteSpace V]
@@ -51,33 +45,30 @@ private lemma adjoint_comp_endo
 [unitary_inv_eq_adjoint](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/SchurOrthogonalityConsequences.lean)
 -/
 private lemma unitary_inv_eq_adjoint
-  [Group K]
-  [TopologicalSpace K]
-  [IsTopologicalGroup K]
   [Group G]
   [NormedAddCommGroup W]
   [InnerProductSpace ℂ W]
   [CompleteSpace W]
-  {ρ_hom : G →* (W →L[ℂ] W)}
-  {g : G}
+  (ρ_hom : G →* (W →L[ℂ] W))
 -- given
-  (hU : ∀ g, ContinuousLinearMap.adjoint (ρ_hom g) * (ρ_hom g) = 1 ∧ (ρ_hom g) * ContinuousLinearMap.adjoint (ρ_hom g) = 1) :
+  (hU : ∀ g, ContinuousLinearMap.adjoint (ρ_hom g) * (ρ_hom g) = 1 ∧ (ρ_hom g) * ContinuousLinearMap.adjoint (ρ_hom g) = 1)
+  (g : G) :
 -- imply
   ρ_hom g⁻¹ = ContinuousLinearMap.adjoint (ρ_hom g) := by
 -- proof
   have h1 : ρ_hom g⁻¹ * ρ_hom g = 1 := by rw [← map_mul, inv_mul_cancel, map_one]
-  calc ρ_hom g⁻¹ = ρ_hom g⁻¹ * (ρ_hom g * ContinuousLinearMap.adjoint (ρ_hom g)) := by
-    rw [(hU g).2, mul_one]
-    _ = (ρ_hom g⁻¹ * ρ_hom g) * ContinuousLinearMap.adjoint (ρ_hom g) := by rw [mul_assoc]
-    _ = ContinuousLinearMap.adjoint (ρ_hom g) := by rw [h1, one_mul]
+  calc
+    ρ_hom g⁻¹ = ρ_hom g⁻¹ * (ρ_hom g * ContinuousLinearMap.adjoint (ρ_hom g)) := by
+      rw [(hU g).2, mul_one]
+    _ = (ρ_hom g⁻¹ * ρ_hom g) * ContinuousLinearMap.adjoint (ρ_hom g) := by
+      rw [mul_assoc]
+    _ = ContinuousLinearMap.adjoint (ρ_hom g) := by
+      rw [h1, one_mul]
 
 /--
 [key_trace_identity](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/SchurOrthogonalityConsequences.lean)
 -/
 private lemma key_trace_identity
-  [Group K]
-  [TopologicalSpace K]
-  [IsTopologicalGroup K]
   [Group G]
   [NormedAddCommGroup W]
   [InnerProductSpace ℂ W]
@@ -97,18 +88,12 @@ private lemma key_trace_identity
     (A.comp (ρ_hom z)).comp (ContinuousLinearMap.adjoint (ρ_hom y)) := by
     have : ρ_hom (z * y⁻¹) = (ρ_hom z).comp (ρ_hom y⁻¹) := by ext v; simp [map_mul]
     rw [this, h_inv]; ext; simp
-  rw [h_lhs_eq, conj_trace_clm, adjoint_comp_endo, ContinuousLinearMap.adjoint_adjoint]
+  rw [h_lhs_eq, main, adjoint_comp_endo, ContinuousLinearMap.adjoint_adjoint]
   change (LinearMap.trace ℂ W) ((A.comp (ρ_hom z)).toLinearMap.comp
     (ContinuousLinearMap.adjoint (ρ_hom y)).toLinearMap) =
     (LinearMap.trace ℂ W) ((ContinuousLinearMap.adjoint (ρ_hom y)).toLinearMap.comp
       (A.comp (ρ_hom z)).toLinearMap)
   exact LinearMap.trace_comp_comm' (ContinuousLinearMap.adjoint (ρ_hom y)).toLinearMap
     (A.comp (ρ_hom z)).toLinearMap
-section MatrixCoefficientDensity
-variable {K : Type*} [Group K] [TopologicalSpace K] [IsTopologicalGroup K]
-  [CompactSpace K] [MeasurableSpace K] [BorelSpace K]
-  (μ : Measure K) [μ.IsHaarMeasure]
-
-
 -- created on 2026-10-23
--- updated on 2026-10-26
+-- updated on 2026-11-13

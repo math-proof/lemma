@@ -59,7 +59,7 @@ const isTrivia = (n) => {
  * (not `… at h`): inline it, e.g. `apply` with a hole and prove it afterwards.
  */
 function haveInlineOnce(ctx, stmts) {
-    const { Lean_have, Lean_replace, LeanAssign, LeanColon, LeanToken, LeanTactic, LeanAt, Lean_let, Lean_set } = Lean.classes;
+    const { Lean_have, Lean_replace, LeanAssign, LeanColon, LeanToken, LeanTactic, LeanAt, Lean_let, Lean_set, Lean_fun } = Lean.classes;
     const args = stmts.args;
     for (let i = 0; i < args.length; i++) {
         const st = args[i];
@@ -67,7 +67,15 @@ function haveInlineOnce(ctx, stmts) {
         const assign = st.args[0];
         if (!(assign instanceof LeanAssign)) continue;
         let lhs = assign.lhs;
-        if (lhs instanceof LeanColon) lhs = lhs.lhs;
+        // typed `have h : T :=` whose type includes `fun`: the ascription may be
+        // required for elaboration (`Measurable.of_eval` / `.comp` needs
+        // `Measurable fun residual : (ℕ → ℝ) => ...`). Inlining would drop it
+        // (Random / importance_sampling `hinner`).
+        if (lhs instanceof LeanColon) {
+            const typ = lhs.rhs;
+            if (Lean_fun && typ && [...walk(typ)].some((x) => x instanceof Lean_fun)) continue;
+            lhs = lhs.lhs;
+        }
         if (!(lhs instanceof LeanToken) || !lhs.text || lhs.text === 'this' || lhs.text === '_') continue;
         const name = lhs.text;
         let j = i + 1;
@@ -622,8 +630,10 @@ function parenRedundantPow(ctx, node) {
     if (!(pow.lhs instanceof LeanParenthesis)) return;
     if (typeof node.latexParenRequired === 'function' && node.latexParenRequired()) return;
     const parent = node.parent;
-    // f ((a - b) ^ 2): juxtaposition arg needs the paren
-    if (parent instanceof LeanArgsSpaceSeparated && parent.args[0] !== node) return;
+    // `((base) ^ exp) arg` -- application binds tighter than `^`, so the outer parens
+    // keep `arg` out of the exponent (`((γ * ℓ) ^ (id : ℕ → ℕ)) k`).
+    // `f ((a - b) ^ 2)` -- juxtaposition argument also needs the paren.
+    if (parent instanceof LeanArgsSpaceSeparated) return;
     // ((a - b) ^ 2).foo
     if (parent instanceof LeanProperty && parent.lhs === node) return;
     // ((a - b) ^ 2)[i]
@@ -654,9 +664,68 @@ function parenRedundantPow(ctx, node) {
  * - `Lean_partial`: only as the RHS of `*`/`/` (LHS would swallow the operator into the partial
  *   scope: `∂[t] u * μ` ≠ `(∂[t] u) * μ`).
  * - Space-separated application: both sides of `*`/`/` (`(f x) * g`, `f * (g x)`).
+ * - Skip repo `⬝ᵥ` (`Dot.dot` via `pathDotV` / `infixl:72 (priority := 2000)`, Mathlib `dotProduct` fallback)
+ *   as the parent or the parenthesized child (Random / importance_sampling: dropping those parens does not compile).
+ * - Skip when the parenthesized child's right spine ends at `fun` (the lambda would swallow
+ *   a following `=`, `|`, or `:=`).
+ * - Skip parens around a `•` (`SMul` / `Lean_bullet`, priority 73) that is the
+ *   numerator of `/` (priority 70): dropping them previously broke `field_simp` in
+ *   `is_weight_eq_score` (Random / importance_sampling).
  *
  * Not an AGENTS.md rule (user request via Hyperreal / Body).
  */
+/** Repo `⬝ᵥ` (`Dot.dot`): `pathDotV` in `Instance/Data/Vector/Basic/Dot.lean` tries `Dot.dot` first
+ * (path tsums, no `Fintype`), then falls back to Mathlib `dotProduct`. Also
+ * `infixl:72 (priority := 2000) " ⬝ᵥ " => Dot.dot`. Not a `*`/`+`-style operator for this rule. */
+function isDotV(node) {
+    const { Lean_cdotp } = Lean.classes;
+    return !!Lean_cdotp && node instanceof Lean_cdotp && node.subscript === 'ᵥ';
+}
+
+/** `•` (`SMul`): `Lean_bullet`, priority 73. */
+function isSMul(node) {
+    const { Lean_bullet } = Lean.classes;
+    return !!Lean_bullet && node instanceof Lean_bullet;
+}
+
+/** `∑` / `∑'` / `∏` (and tsum/tprod variants): the binder comma swallows following `+` / `-`. */
+function isBigOp(node) {
+    const { Lean_sum, Lean_prod, Lean_tsum, Lean_tprod } = Lean.classes;
+    if (!node) return false;
+    if (Lean_sum && node instanceof Lean_sum) return true;
+    if (Lean_prod && node instanceof Lean_prod) return true;
+    if (Lean_tsum && node instanceof Lean_tsum) return true;
+    if (Lean_tprod && node instanceof Lean_tprod) return true;
+    return false;
+}
+
+/** Parenthesized arith whose operands are (or unwrap to) big operators. */
+function arithContainsBigOp(node) {
+    const { LeanParenthesis, LeanArithmetic } = Lean.classes;
+    const seen = new Set();
+    const walk = (n) => {
+        if (!n || seen.has(n)) return false;
+        seen.add(n);
+        if (n instanceof LeanParenthesis) return walk(n.arg);
+        if (isBigOp(n)) return true;
+        if (n instanceof LeanArithmetic) return walk(n.lhs) || walk(n.rhs);
+        return false;
+    };
+    return walk(node);
+}
+
+/** Right spine ends at `fun`: dropping parens lets the lambda swallow following `=`, `|`, `:=`. */
+function rightSpineEndsWithFun(node) {
+    const { LeanArithmetic, LeanParenthesis, Lean_fun } = Lean.classes;
+    for (let n = node; n; ) {
+        if (Lean_fun && n instanceof Lean_fun) return true;
+        if (n instanceof LeanParenthesis) { n = n.arg; continue; }
+        if (n instanceof LeanArithmetic && n.rhs != null) { n = n.rhs; continue; }
+        return false;
+    }
+    return false;
+}
+
 function parenRedundantArith(ctx, node) {
     const {
         LeanParenthesis, LeanArithmetic, LeanMul, LeanDiv, LeanPow, LeanColon,
@@ -669,11 +738,26 @@ function parenRedundantArith(ctx, node) {
     if (arg instanceof LeanColon) return;
     const parent = node.parent;
     if (!(parent instanceof LeanArithmetic)) return;
+    // `⬝ᵥ` is this repo's `Dot.dot` (`pathDotV` / `infixl:72 (priority := 2000)`), not `*`/`+`.
+    // Parens around a `⬝ᵥ` term, or around a `^` term that is its left operand, change the Lean parse:
+    // a trailing `fun` swallows following `=`, `|`, `:=`, and `γ ^ range (k + 1) ⬝ᵥ v`
+    // takes `range (k + 1)` as the `Dot.dot` argument.
+    if (isDotV(parent) || isDotV(arg)) return;
+    if (rightSpineEndsWithFun(arg)) return;
+    // Big-operator binder commas (`∑ x ∈ s, …`, `∑'`, `∏`) swallow following `+` / `-`.
+    // The AST reprint often parenthesizes each sum (`((∑ …) - (∑ …))`) even when the source
+    // only groups the whole difference, e.g. `|(∑ … - ∑ …) + …|`. Dropping those source
+    // parens changes the parse; the reprint also fails `locate` (no source line).
+    if (arithContainsBigOp(arg)) return;
     // unary arith (Neg/…) keep their operand grouping decisions elsewhere
     if (parent.lhs == null || parent.rhs == null) return;
     const onLhs = parent.lhs === node;
     const onRhs = parent.rhs === node;
     if (!onLhs && !onRhs) return;
+    // Parens around a `•` (`SMul`) numerator of `/` are required in this repo:
+    // dropping them previously broke `field_simp` in `is_weight_eq_score`
+    // (Random / importance_sampling), even though `•` is priority 73 and `/` is 70.
+    if (parent instanceof LeanDiv && onLhs && isSMul(arg)) return;
 
     const parentPri = parent.input_priority ?? parent.constructor.input_priority ?? 0;
     let ok = false;

@@ -1,4 +1,4 @@
-import Lemma.AlgebraicCurve.CurveModel
+import Lemma.Scheme.CurveModel
 import Instance.JacJ1_ChartAlgebra
 import Mathlib.AlgebraicGeometry.Morphisms.Smooth
 import Mathlib.AlgebraicGeometry.Morphisms.Etale

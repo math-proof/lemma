@@ -262,7 +262,7 @@ lemma residue_of_not_meromorphicAt
 -- imply
   residue f z₀ = 0 :=
 -- proof
-  dif_neg hf
+  dite_eq_right hf
 
 end Residue
 
@@ -282,7 +282,7 @@ lemma residue_eq_zero_of_analyticAt
 -- proof
   unfold residue
   have hm : MeromorphicAt f z₀ := hf.meromorphicAt
-  rw [dif_pos hm]
+  rw [dite_eq_left hm]
   split_ifs with hn
   · rfl
   · suffices h0 : iteratedDeriv (hm.choose - 1)

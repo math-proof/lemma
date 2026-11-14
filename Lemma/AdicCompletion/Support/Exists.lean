@@ -161,7 +161,7 @@ variable [IsNoetherianRing N]
 noncomputable def Psi :
     (AdicCompletion I N ⧸ 𝔭.map (algebraMap N (AdicCompletion I N))) ≃ₗ[AdicCompletion I N]
       AdicCompletion I (N ⧸ 𝔭) :=
-  (Ideal.qoutMapEquivTensorQout (AdicCompletion I N) (I := 𝔭)) ≪≫ₗ
+  (Ideal.quotMapEquivTensorQuot (AdicCompletion I N) (I := 𝔭)) ≪≫ₗ
     AdicCompletion.ofTensorProductEquivOfFiniteNoetherian I (N ⧸ 𝔭)
 
 lemma Psi_symm_of_one :

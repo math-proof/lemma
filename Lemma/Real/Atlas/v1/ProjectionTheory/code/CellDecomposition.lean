@@ -57,13 +57,13 @@ lemma polyWall_union_cells
   ext x; simp only [mem_union, mem_iUnion, mem_univ, iff_true]
   by_cases h : ∃ i, eval x (polys i) = 0
   · left; exact mem_iUnion.mpr (h.imp fun i hi => hi)
-  · right; push_neg at h
+  · right; push Not at h
     refine ⟨fun i => decide (eval x (polys i) > 0), ?_⟩
     simp only [polyCell, mem_iInter, decide_eq_true_eq]
     intro i; have hi := h i
     split_ifs with hpos
     · exact hpos
-    · push_neg at hpos; exact lt_of_le_of_ne hpos hi
+    · push Not at hpos; exact lt_of_le_of_ne hpos hi
 
 end CellDecomposition
 
@@ -270,12 +270,12 @@ lemma two_pow_half_log_bound
   have : 2 ^ Nat.log 2 s ≤ s := Nat.pow_log_le_self 2 (by omega : s ≠ 0)
   calc 2 ^ (Nat.log 2 s + 1) = 2 * 2 ^ Nat.log 2 s := by ring
     _ ≤ 2 * s := by linarith
-/--
-Iterated polynomial ham-sandwich bisection. For any finite `X ⊆ ℝ²` and any
-`k`, there exist polynomials `polys₀, …, polys_{k−1}` (all nonzero) with
-`deg(polys i) ≤ 2^{⌊(i+1)/2⌋}` such that each of the `2^k` sign-pattern cells
-contains at most `|X| / 2^k` points of `X`.
--/
+-- 
+-- Iterated polynomial ham-sandwich bisection. For any finite `X ⊆ ℝ²` and any
+-- `k`, there exist polynomials `polys₀, …, polys_{k−1}` (all nonzero) with
+-- `deg(polys i) ≤ 2^{⌊(i+1)/2⌋}` such that each of the `2^k` sign-pattern cells
+-- contains at most `|X| / 2^k` points of `X`.
+--
 section
 open Classical
 end

@@ -1,6 +1,5 @@
 import Mathlib
 import Notation.Mathlib_Algebra_Algebra_Hom
-import Instance.Mathlib_Algebra_Algebra_Hom
 import Class.Mathlib_Algebra_Algebra_Hom
 
 section
@@ -15,12 +14,9 @@ structure SemialgHom {R S : Type*} [CommSemiring R] [CommSemiring S] (φ : R →
     (A B : Type*)  [Semiring A] [Semiring B] [Algebra R A] [Algebra S B]
     extends A →ₛₗ[φ] B, RingHom A B
 
-/-- Reinterpret a `SemialgHom` as a `RingHom`. -/
-
 variable {R S : Type*} [CommSemiring R] [CommSemiring S] (φ : R →+* S)
     (A B : Type*) [Semiring A] [Semiring B] [Algebra R A] [Algebra S B]
 
-variable {φ} {A} {B} in
 
 end semialghom
 
@@ -31,7 +27,6 @@ variable (F : Type*) {R S : Type*}
   [Semiring A] [Semiring B] [Algebra R A] [Algebra S B]
   [FunLike F A B] [SemialgHomClass F φ A B]
 
-variable {F} {φ} {A} {B} in
 
 
 end semialghomclass
@@ -43,3 +38,5 @@ variable {R S : Type*} [CommSemiring R] [CommSemiring S] {φ : R →+* S}
 
 
 end semialghom
+
+end

@@ -1,11 +1,11 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.TateSlots
-import Lemma.ModularCurve.KatzLevelPCusps
+import Lemma.MvPowerSeries.TateSlots
+import Lemma.LaurentSeries.KatzLevelPCusps
 import Lemma.Int.P2MUtil
 
 open HahnSeries
-open ModularCurve
+open ModularCurve LaurentSeries MvPowerSeries
 
 /--
 [ModularCurve_exists_powerSeries_forall_coeff_mem_span_sub_one_ofPowerSeries_eq_tateToricPoint_mul_sub_tateToricPoint](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularCurve_exists_powerSeries_forall_coeff_mem_span_sub_one_ofPowerSeries_eq_tateToricPoint_mul_sub_tateToricPoint.lean)

@@ -1,0 +1,23 @@
+import Mathlib.Dynamics.OmegaLimit
+import Mathlib.Dynamics.Flow
+import Lemma.Set.OmegaLimitToFun.of.Attracts.IsClosed
+import Lemma.Set.OmegaLimitToFun.of.Subset.Invariant
+
+
+@[path]
+private lemma main
+  {α : Type*} [TopologicalSpace α] [RegularSpace α]
+  {Φ : ContinuousSemiflow α}
+  {K : Set α}
+  {B : Set α}
+-- given
+  (h₀ : Φ.Invariant K)
+  (h₁ : IsClosed B)
+  (h₂ : Φ.Attracts K B) :
+-- imply
+  K ⊆ B := by
+-- proof
+  exact (Set.OmegaLimitToFun.of.Subset.Invariant h₀ subset_rfl).trans (Set.OmegaLimitToFun.of.Attracts.IsClosed h₁ h₂)
+
+
+-- created on 2026-09-26

@@ -1,5 +1,6 @@
 import Instance.CerednikDrinfeld_DrinfeldUpperHalfPlane
 import Instance.CerednikDrinfeld_MumfordQuotient
+import Structure.CerednikDrinfeld_DrinfeldHolomorphic
 import Mathlib.Topology.Algebra.Valued.ValuationTopology
 import Mathlib.Topology.UniformSpace.UniformConvergence
 import Mathlib.Algebra.Polynomial.Eval.Defs

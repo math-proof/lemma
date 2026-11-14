@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Structure.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM19.TransportBurgers
-open Finset MeasureTheory Set TransportBurgers TransportBurgers.Characteristics
+open Finset MeasureTheory Set TransportBurgers
 open TransportBurgers
 
 

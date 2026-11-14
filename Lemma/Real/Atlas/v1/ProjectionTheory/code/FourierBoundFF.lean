@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.ProjectionTheory.code.FourierBoundFF
-open FourierBound in
+open FourierBound
 
 
 namespace FourierBound
@@ -243,7 +243,7 @@ lemma FourierBound.variance_bound
         apply Nat.add_le_add_left
         have h2 : ∀ θ₂ ∈ D.erase θ₁,
           (if θ₁ = θ₂ then q * c θ₁ else c θ₁ * c θ₂) = c θ₁ * c θ₂ :=
-          fun θ₂ hθ₂ => if_neg (Finset.ne_of_mem_erase hθ₂).symm
+          fun θ₂ hθ₂ => ite_eq_right (Finset.ne_of_mem_erase hθ₂).symm
         rw [Finset.sum_congr rfl h2, ← Finset.mul_sum]
         exact Nat.mul_le_mul_left _ (Finset.sum_le_sum_of_subset (Finset.erase_subset _ _))
       _ = q * M + M * M := by rw [← hMc]

@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.HopfAlgebra.HopfKer
+import Lemma.Submodule.HopfKer
 
 
 /-- ported from external source -/

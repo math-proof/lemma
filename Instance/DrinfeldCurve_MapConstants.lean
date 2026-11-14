@@ -1,7 +1,7 @@
 -- Carved from Lemma/Definitions/Def_DrinfeldCurve_MapConstants.lean: instance decls only.
-import Lemma.DrinfeldCurve.FunctionField
-import Lemma.AlgebraicCurve.Correspondence
-import Lemma.DrinfeldCurve.MapConstants
+import Lemma.RingHom.FunctionField
+import Lemma.Scheme.Correspondence
+import Lemma.MvPolynomial.MapConstants
 
 set_option autoImplicit false
 

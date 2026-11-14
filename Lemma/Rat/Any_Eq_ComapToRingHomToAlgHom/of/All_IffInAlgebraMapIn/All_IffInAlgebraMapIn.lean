@@ -23,11 +23,12 @@ private lemma eq_valuationSubringAtPrime {C K : Type*} [CommRing C] [IsDedekindD
   have hloc : IsLocalHom (Subring.inclusion hOD) := by
     constructor
     intro x0 hx0
-    suffices h : IsUnit (⟨x0.1, x0.2⟩ : ↥(HeightOneSpectrum.valuationSubringAtPrime K v)) h
     have hx : IsUnit (⟨(Subring.inclusion hOD x0).1, (Subring.inclusion hOD x0).2⟩ : ↥D) := hx0
     obtain ⟨⟨a, s⟩, hmk⟩ := IsLocalization.mk'_surjective v.asIdeal.primeCompl
       (⟨x0.1, x0.2⟩ : ↥(HeightOneSpectrum.valuationSubringAtPrime K v))
-    rw [← hmk, IsLocalization.AtPrime.isUnit_mk'_iff (↥(HeightOneSpectrum.valuationSubringAtPrime K v)) v.asIdeal a s]
+    change IsUnit (⟨x0.1, x0.2⟩ : ↥(HeightOneSpectrum.valuationSubringAtPrime K v))
+    rw [← hmk]
+    rw [IsLocalization.AtPrime.isUnit_mk'_iff (↥(HeightOneSpectrum.valuationSubringAtPrime K v)) v.asIdeal a s]
     by_contra ha
     have ha' : a ∈ v.asIdeal := by simpa [Ideal.primeCompl] using ha
     have hspec := IsLocalization.mk'_spec (↥(HeightOneSpectrum.valuationSubringAtPrime K v)) a s
@@ -142,7 +143,7 @@ private lemma main
           ·
             exact (u.ne_zero) (by
             have : algebraMap ↥V E (u : ↥V) = 0 := (algebraMap E K).injective (by rw [map_zero]; apply h0)
-            exact Subtype.ext (by simpa using this))
+            exact Subtype.ext (by simpa))
           ·
             apply hinv
             have : (algebraMap ↥V K (u : ↥V))⁻¹ = algebraMap E K (((u⁻¹ : (↥V)ˣ) : ↥V) : E) := by
@@ -154,7 +155,7 @@ private lemma main
               ·
                 intro h0
                 have : algebraMap ↥V E (u : ↥V) = 0 := (algebraMap E K).injective (by rw [map_zero]; apply h0)
-                exact u.ne_zero (Subtype.ext (by simpa using this))
+                exact u.ne_zero (Subtype.ext (by simpa))
             rw [this]
             exact (hD _).2 (Subtype.mem _)
         ·
@@ -222,3 +223,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

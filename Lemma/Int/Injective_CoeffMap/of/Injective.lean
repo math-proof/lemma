@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.LaurentCoeff
-open ModularCurve IntermediateField HahnSeries
+import Lemma.LaurentSeries.LaurentCoeff
+open ModularCurve IntermediateField HahnSeries LaurentSeries
 
 
 /--

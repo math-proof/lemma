@@ -1,11 +1,11 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.LevelModuliPackage
-import Lemma.ModularCurve.LevelModuliPackageAbs
+import Lemma.Int.LevelModuliPackage
+import Lemma.Int.LevelModuliPackageAbs
 import Def.ModularCurve_WeierstrassLevelModuliDatum
 import Lemma.Int.P2MUtil
 
-open ModularCurve
+open ModularCurve Int
 
 /--
 [ModularCurve_RigidWeierstrassData_exists_levelModuliPackageAbs_surjective_of_represents_of_section](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularCurve_RigidWeierstrassData_exists_levelModuliPackageAbs_surjective_of_represents_of_section.lean)

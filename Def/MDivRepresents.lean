@@ -1,6 +1,6 @@
 import Mathlib
 import Def.ModularCurve_ProlongationTuple
-import Lemma.IncidenceSystem.Main
+import Lemma.MvPolynomial.Main
 import Abbrev.MDivRepresents
 
 set_option autoImplicit false

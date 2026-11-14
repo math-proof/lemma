@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.RegularProlongation
+import Lemma.Scheme.RegularProlongation
 import Lemma.Int.P2MUtil
 
-open AlgebraicCurve IsLocalRing
+open AlgebraicCurve IsLocalRing Scheme
 
 /--
 [AlgebraicCurve_RegularProlongation_krullDimLE_one_integers](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_RegularProlongation_krullDimLE_one_integers.lean)

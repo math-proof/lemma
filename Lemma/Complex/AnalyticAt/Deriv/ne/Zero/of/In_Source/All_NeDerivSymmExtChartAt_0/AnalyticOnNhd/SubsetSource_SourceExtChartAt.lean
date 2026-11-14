@@ -1,11 +1,11 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.DivisorClassGroup
+import Lemma.Valuation.DivisorClassGroup
 import Lemma.Scheme.IsCurveOver
 import Def.AlgebraicCurve_PlaceEvaluation
 import Lemma.Int.P2MUtil
 
-open AlgebraicCurve Set
+open AlgebraicCurve Set Valuation
 open scoped Manifold ContDiff Topology
 
 /--

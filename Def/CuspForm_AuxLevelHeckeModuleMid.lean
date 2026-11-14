@@ -17,7 +17,7 @@ def MidOpComm (N r : ℕ) (S : Set ℕ) (𝒪 : Type) [CommRing 𝒪] : Prop :=
 
 def midHeckeData (N r : ℕ) [NeZero N] (S : Set ℕ) (𝒪 : Type) [CommRing 𝒪] [IsLocalRing 𝒪]
     (θ : ↥(CuspForm.heckeAlgebra N 2 S) →+* IsLocalRing.ResidueField 𝒪) (hc₁ : MidOpComm N r S 𝒪) :
-    CohCarrier.HeckeData 𝒪 (CohCarrier.H1 (N * r) ⊤ 𝒪) (IsLocalRing.ResidueField 𝒪) where
+    MvPolynomial.HeckeData 𝒪 (CohCarrier.H1 (N * r) ⊤ 𝒪) (IsLocalRing.ResidueField 𝒪) where
   Gen := Gen N r S
   op := midOp N r S 𝒪
   comm := hc₁

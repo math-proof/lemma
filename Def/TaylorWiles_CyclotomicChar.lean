@@ -1,4 +1,4 @@
-import Lemma.TaylorWiles.Primes
+import Lemma.Matrix.Primes
 import Mathlib
 import Structure.TaylorWiles_CyclotomicChar
 

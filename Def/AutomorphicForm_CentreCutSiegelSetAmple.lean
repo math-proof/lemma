@@ -1,5 +1,5 @@
 import Def.AutomorphicForm_CentreCutSiegelSet
-import Lemma.NumberField.SiegelVolume
+import Lemma.Matrix.SiegelVolume
 
 set_option autoImplicit false
 

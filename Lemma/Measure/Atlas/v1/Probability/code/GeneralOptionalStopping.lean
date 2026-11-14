@@ -32,13 +32,13 @@ lemma general_optional_stopping_bounded
   {f : ℕ → Ω → ℝ}
   {L M : Ω → ℕ∞}
   {N : ℕ}
-  [SigmaFinite (μ.trim hL.measurableSpace_le)]
 -- given
   (hsub : Submartingale f ℱ μ)
   (hL : IsStoppingTime ℱ L)
   (hM : IsStoppingTime ℱ M)
   (hLM : L ≤ M)
-  (hbdd : ∀ ω, M ω ≤ N) :
+  (hbdd : ∀ ω, M ω ≤ N)
+  [SigmaFinite (μ.trim hL.measurableSpace_le)] :
 -- imply
   (∫ ω, stoppedValue f L ω ∂μ ≤ ∫ ω, stoppedValue f M ω ∂μ) ∧ (stoppedValue f L ≤ᵐ[μ] μ[stoppedValue f M | hL.measurableSpace]) := by
 -- proof
@@ -58,8 +58,8 @@ lemma general_optional_stopping_bounded
       intro k
       by_cases hkN : k ≤ N
       · have h_ineq_k : stoppedProcess f M k ≤ᵐ[μ] μ[stoppedValue f M | ℱ k] := by
-        have := h_sp_sub.ae_le_condExp hkN
-        rwa [h_sp_N] at this
+          have := h_sp_sub.ae_le_condExp hkN
+          rwa [h_sp_N] at this
         have h_ce_restrict :
           μ[stoppedValue f M | hL.measurableSpace]
             =ᵐ[μ.restrict {ω | L ω = ↑k}]
@@ -82,10 +82,11 @@ lemma general_optional_stopping_bounded
     filter_upwards [h_key] with ω hω
     have h_sv_eq : stoppedValue f L ω = stoppedProcess f M (L ω).untopA ω := by
       simp only [stoppedValue]
-      rw [stoppedProcess_eq_of_le ((coe_untopA_eq _ (hL_ne_top ω)).le.trans (hLM ω))]
+      have hle : ((L ω).untopA : ENat) ≤ M ω := (coe_untopA_eq (hL_ne_top ω)).le.trans (hLM ω)
+      rw [stoppedProcess_eq_of_le (i := (L ω).untopA) hle]
     rw [h_sv_eq]
-    exact hω _ (coe_untopA_eq _ (hL_ne_top ω)).symm
-/-- **General optional stopping theorem (expectation inequality form)**. Let `f` be
+    exact hω _ (coe_untopA_eq (hL_ne_top ω)).symm
+/- **General optional stopping theorem (expectation inequality form)**. Let `f` be
 a uniformly integrable submartingale and `τ : Ω → ℕ∞` any stopping time (possibly
 infinite). Then `E[f_0] ≤ E[f_τ] ≤ E[f_∞]`, where `f_∞ = lim_{n → ∞} f n` and
 `f_τ` is given by `stoppedValueExtended`. This corresponds to the textbook statement

@@ -108,9 +108,9 @@ lemma sphere_vec_ne_zero
   simp only [BorsukUlam.Sphere, Metric.mem_sphere, dist_zero_right] at hx
   have : (x : EuclideanSpace ℝ (Fin (n + 1))) = 0 := by ext i; exact congr_fun h i
   rw [this, norm_zero] at hx; exact one_ne_zero hx.symm
-/-- The space of polynomials in `d` variables of total degree at most `D` has
-dimension `binom(D + d, d)`; in particular it admits a linearly independent
-family of that size all of whose elements have total degree `≤ D`. -/
+-- The space of polynomials in `d` variables of total degree at most `D` has
+-- dimension `binom(D + d, d)`; in particular it admits a linearly independent
+-- family of that size all of whose elements have total degree `≤ D`.
 
 end PolynomialHamSandwich
 

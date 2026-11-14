@@ -23,7 +23,7 @@ end Coord
 
 section Specialization
 
-variable (q : ℕ) (M' : ℕ) (lam : ℕ) [Fact lam.Prime] (k : Type) [Field k] [IsDomain (DrinfeldCurve.CoordRing q k)]
+variable (q : ℕ) (M' : ℕ) (lam : ℕ) [Fact lam.Prime] (k : Type) [Field k] [IsDomain (MvPolynomial.CoordRing q k)]
 
 def componentSpecialization
     (Ψ : TateModule lam (Jac q M') ≃ₗ[ℤ_[lam]] (Idx q → TateModule lam (jacComp q M')))

@@ -8,11 +8,10 @@ namespace MetaMathlibExt
 
 /--
 [klamkin_admissible](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/KlamkinVariant.lean)
--/
-@[path]
 This file proves Abel's variant of Klamkin's reciprocal-binomial identity by reducing it to a
 Klamkin-specialized Gauss hypergeometric summation.
 -/
+@[path]
 private lemma klamkin_admissible (a b : ℝ)
   (h_ab : ∀ m : ℤ, a - b ≠ (m : ℝ)) :
   ∀ k : ℕ, a - b + 1 ≠ (k : ℝ) := by

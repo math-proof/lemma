@@ -133,10 +133,13 @@ lemma norm_le_wimanMaximumModulus
   ‖f z‖ ≤ wimanMaximumModulus f r := by
 -- proof
   have hr : 0 ≤ r := hz ▸ norm_nonneg z
-  apply le_csSup
-  · exact (isCompact_sphere (0 : ℂ) |r|).bddAbove_image
-    ((continuous_norm.comp hf).continuousOn)
-  · exact ⟨z, by simpa [Metric.mem_sphere, abs_of_nonneg hr] using hz, rfl⟩
+  have hbd : BddAbove ((fun w ↦ ‖f w‖) '' Metric.sphere (0 : ℂ) |r|) :=
+    (isCompact_sphere (0 : ℂ) |r|).bddAbove_image
+      (continuous_norm.comp hf).continuousOn
+  have hmem : ‖f z‖ ∈ (fun w ↦ ‖f w‖) '' Metric.sphere (0 : ℂ) |r| := by
+    refine ⟨z, ?_, rfl⟩
+    simpa [Metric.mem_sphere, abs_of_nonneg hr] using hz
+  exact le_csSup hbd hmem
 
 end Complex
 
@@ -150,7 +153,7 @@ lemma cube_le_cube_mul_log_sq_of_wiman
 -- given
   {M μ : ℝ}
   (hM : 0 ≤ M)
-  (hμ : 0 ≤ μ)
+  (_hμ : 0 ≤ μ)
   (hlog : 0 ≤ Real.log μ)
   (hWiman : M ≤ μ * Real.log μ ^ (2 / 3 : ℝ)) :
 -- imply
@@ -165,7 +168,7 @@ lemma cube_le_cube_mul_log_sq_of_wiman
       congr 1
       rw [← Real.rpow_mul_natCast hlog]
       norm_num [Real.rpow_two]
-end
+end Complex
 
 
 

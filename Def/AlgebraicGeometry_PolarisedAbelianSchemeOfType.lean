@@ -1,5 +1,5 @@
 import Def.AlgebraicGeometry_FramedPolarisedAbelianScheme
-import Lemma.AlgebraicGeometry.PolarisationRosati
+import Lemma.Scheme.PolarisationRosati
 import Structure.AlgebraicGeometry_PolarisedAbelianSchemeOfType
 import Abbrev.AlgebraicGeometry_PolarisedAbelianSchemeOfType
 

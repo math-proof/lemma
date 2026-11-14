@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_DedekindDomain_FiniteAdeleRing_BaseChange.lean: instance decls only.
 import Instance.DedekindDomain_Completion_BaseChange
-import Lemma.DedekindDomain.FiniteAdeleRing_TensorRestrictedProduct
+import Lemma.Filter.FiniteAdeleRing_TensorRestrictedProduct
 import Instance.Mathlib_Topology_Algebra_RestrictedProduct_TopologicalSpace
 import Notation.DedekindDomain_FiniteAdeleRing_BaseChange
 import Class.DedekindDomain_FiniteAdeleRing_BaseChange

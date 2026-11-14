@@ -1,7 +1,7 @@
 -- Carved from Lemma/Definitions/Def_LanglandsTunnell_CubicInduction_WhittakerBlock.lean: instance decls only.
 import Def.HaarQuotient
-import Lemma.LanglandsTunnell.CubicInduction_Structure
-import Lemma.NumberField.TateGlobalZeta
+import Lemma.Matrix.CubicInduction_Structure
+import Lemma.Measure.TateGlobalZeta
 import Instance.M4aHerbrand_AdeleTopologyFacts
 
 set_option autoImplicit false

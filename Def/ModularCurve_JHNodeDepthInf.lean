@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.ModularCurve.JHNodeDepth
+import Lemma.ResidueField.JHNodeDepth
 
 set_option autoImplicit false
 

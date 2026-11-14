@@ -18,6 +18,7 @@ lemma ktypeBoundedness_eq_boundedBoth_iff
   {Ad : K →* (𝔤 →ₗ[ℂ] 𝔤)}
   [AddCommGroup V]
   [Module ℂ V]
+  [LieRingModule 𝔤 V] [LieModule ℂ 𝔤 V]
   {M : SL2GKModule 𝔤 K 𝔨 Ad V} :
 -- imply
   M.ktypeBoundedness = KTypeBoundedness'.boundedBoth ↔ (BddAbove M.ktypeSet ∧ BddBelow M.ktypeSet) := by
@@ -42,6 +43,7 @@ lemma ktypeBoundedness_eq_boundedAbove_iff
   {Ad : K →* (𝔤 →ₗ[ℂ] 𝔤)}
   [AddCommGroup V]
   [Module ℂ V]
+  [LieRingModule 𝔤 V] [LieModule ℂ 𝔤 V]
   {M : SL2GKModule 𝔤 K 𝔨 Ad V} :
 -- imply
   M.ktypeBoundedness = KTypeBoundedness'.boundedAbove ↔ (BddAbove M.ktypeSet ∧ ¬ BddBelow M.ktypeSet) := by
@@ -66,6 +68,7 @@ lemma ktypeBoundedness_eq_boundedBelow_iff
   {Ad : K →* (𝔤 →ₗ[ℂ] 𝔤)}
   [AddCommGroup V]
   [Module ℂ V]
+  [LieRingModule 𝔤 V] [LieModule ℂ 𝔤 V]
   {M : SL2GKModule 𝔤 K 𝔨 Ad V} :
 -- imply
   M.ktypeBoundedness = KTypeBoundedness'.boundedBelow ↔ (¬ BddAbove M.ktypeSet ∧ BddBelow M.ktypeSet) := by
@@ -90,6 +93,7 @@ lemma ktypeBoundedness_eq_unboundedBoth_iff
   {Ad : K →* (𝔤 →ₗ[ℂ] 𝔤)}
   [AddCommGroup V]
   [Module ℂ V]
+  [LieRingModule 𝔤 V] [LieModule ℂ 𝔤 V]
   {M : SL2GKModule 𝔤 K 𝔨 Ad V} :
 -- imply
   M.ktypeBoundedness = KTypeBoundedness'.unboundedBoth ↔ (¬ BddAbove M.ktypeSet ∧ ¬ BddBelow M.ktypeSet) := by
@@ -102,3 +106,4 @@ end SL2GKModule
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

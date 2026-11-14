@@ -1,6 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.Recurrences.FultonMorrisPisanoFixedPoint
+import Lemma.Nat.Padics.FibonacciFiveAdicValuation
 open MetaMathlibExt
 
 
@@ -98,7 +99,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 private lemma pisanoRet_2_3 : PisanoRet 2 3 := by
-unfold PisanoRet; decide
+  unfold PisanoRet; decide
 
 end MetaMathlibExt
 
@@ -109,7 +110,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 private lemma pisanoRet_3_8 : PisanoRet 3 8 := by
-unfold PisanoRet; decide
+  unfold PisanoRet; decide
 
 end MetaMathlibExt
 
@@ -120,7 +121,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 private lemma pisanoRet_5_20 : PisanoRet 5 20 := by
-unfold PisanoRet; decide
+  unfold PisanoRet; decide
 
 end MetaMathlibExt
 
@@ -131,7 +132,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 private lemma pisanoRet_8_12 : PisanoRet 8 12 := by
-unfold PisanoRet; decide
+  unfold PisanoRet; decide
 
 end MetaMathlibExt
 
@@ -669,15 +670,15 @@ private lemma pisanoRet_prime_odd {q : ℕ} (hq : q.Prime) (hq5 : q ≠ 5)
     constructor
     · have hcast : ((Nat.fib ((q - 1) * k) : ℕ) : ZMod q)
       = ((0 : ℕ) : ZMod q) := by
-      simpa using hq0
+        simpa using hq0
       exact (ZMod.natCast_eq_natCast_iff _ _ _).mp hcast
     · have hcast : ((Nat.fib ((q - 1) * k + 1) : ℕ) : ZMod q)
       = ((1 : ℕ) : ZMod q) := by
-      simpa using hq1
+        simpa using hq1
       exact (ZMod.natCast_eq_natCast_iff _ _ _).mp hcast
   by_cases hleg : legendreSym q 5 = 1
   · have hk_eq : k = q - 1 := by
-    simp [hk_def, hleg]
+      simp [hk_def, hleg]
     have heq : (q + 1) * ((q - 1) * k) = (q - 1) ^ 2 * (q + 1) := by
       rw [hk_eq]
       ring
@@ -685,7 +686,7 @@ private lemma pisanoRet_prime_odd {q : ℕ} (hq : q.Prime) (hq5 : q ≠ 5)
       pisanoRet_mul q ((q - 1) * k) (q + 1) hR
     rwa [heq] at hR'
   · have hk_eq : k = q + 1 := by
-    simp [hk_def, hleg]
+      simp [hk_def, hleg]
     have heq : (q - 1) * ((q - 1) * k) = (q - 1) ^ 2 * (q + 1) := by
       rw [hk_eq]
       ring
@@ -802,8 +803,8 @@ private lemma not_dvd_W_three {r k : ℕ} (hr : r.Prime) (hr7 : 7 ≤ r) :
   intro hdvd
   obtain h8 | h3 := (hr.dvd_mul).mp hdvd
   · have h8' : r ∣ 2 ^ 3 := by
-    have h8eq : (8 : ℕ) = 2 ^ 3 := by norm_num
-    rwa [h8eq] at h8
+      have h8eq : (8 : ℕ) = 2 ^ 3 := by norm_num
+      rwa [h8eq] at h8
     have h2dvd : r ∣ 2 := hr.dvd_of_dvd_pow h8'
     have hEq : r = 2 := (Nat.prime_dvd_prime_iff_eq hr Nat.prime_two).mp h2dvd
     omega
@@ -824,8 +825,8 @@ private lemma not_dvd_W_five {r e : ℕ} (hr : r.Prime) (hr7 : 7 ≤ r) :
   intro hdvd
   obtain h4 | h5 := (hr.dvd_mul).mp hdvd
   · have h4' : r ∣ 2 ^ 2 := by
-    have h4eq : (4 : ℕ) = 2 ^ 2 := by norm_num
-    rwa [h4eq] at h4
+      have h4eq : (4 : ℕ) = 2 ^ 2 := by norm_num
+      rwa [h4eq] at h4
     have h2dvd : r ∣ 2 := hr.dvd_of_dvd_pow h4'
     have hEq : r = 2 := (Nat.prime_dvd_prime_iff_eq hr Nat.prime_two).mp h2dvd
     omega
@@ -938,8 +939,8 @@ private lemma prime_dvd_24_mul_pow5 {r k : ℕ} (hr : r.Prime)
     rw [h24eq] at h24
     obtain h8 | h3 := (hr.dvd_mul).mp h24
     · have h8' : r ∣ 2 ^ 3 := by
-      have h8eq : (8 : ℕ) = 2 ^ 3 := by norm_num
-      rwa [h8eq] at h8
+        have h8eq : (8 : ℕ) = 2 ^ 3 := by norm_num
+        rwa [h8eq] at h8
       have h2 : r ∣ 2 := hr.dvd_of_dvd_pow h8'
       have hEq : r = 2 := (Nat.prime_dvd_prime_iff_eq hr Nat.prime_two).mp h2
       exact Or.inl hEq
@@ -966,7 +967,7 @@ private lemma not_pow5_dvd_fib_24_mul (k : ℕ) (hk1 : 1 ≤ k)
   have hn_ne0 : 24 * 5 ^ (k - 1) ≠ 0 := by omega
   have hf_ne0 : Nat.fib (24 * 5 ^ (k - 1)) ≠ 0 := fun h =>
     hn_ne0 ((Nat.fib_eq_zero).mp h)
-  have hval := lengyel_fibonacci_five_adic (24 * 5 ^ (k - 1)) hn1
+  have hval := lengyel_fibonacci_five_adic hn1
   have hval_mul : padicValNat 5 (24 * 5 ^ (k - 1))
     = padicValNat 5 24 + padicValNat 5 (5 ^ (k - 1)) :=
     padicValNat.mul (by norm_num) (pow_ne_zero _ (by norm_num))
@@ -1175,9 +1176,9 @@ private lemma exists_W_of_lt {r : ℕ} (hr : r.Prime) (hr7 : 7 ≤ r) (u : ℕ)
       (fun p n hp _ hlt' => by
         obtain rfl | hn_pos := Nat.eq_zero_or_pos n
         · have hr1 : ¬ r ∣ 1 := by
-          intro hdvd
-          have hEq : r = 1 := Nat.dvd_one.mp hdvd
-          omega
+            intro hdvd
+            have hEq : r = 1 := Nat.dvd_one.mp hdvd
+            omega
           have hR : PisanoRet (p ^ 0) 1 := by
             rw [pow_zero]
             exact pisanoRet_one 1
@@ -1192,8 +1193,8 @@ private lemma exists_W_of_lt {r : ℕ} (hr : r.Prime) (hr7 : 7 ≤ r) (u : ℕ)
               · subst hp5
                 exact ⟨_, pisanoRet_pow_five n, not_dvd_W_five hr hr7⟩
               · have hp2' : 2 < p := by
-                have h2le := hp.two_le
-                omega
+                  have h2le := hp.two_le
+                  omega
                 have hpdvd : p ∣ p ^ n := dvd_pow_self p (by omega)
                 have hlt_p : p < r := hlt' p hp hpdvd
                 exact ⟨_, pisanoRet_prime_pow_odd hp hp5 hp2' n hn_pos,
@@ -1628,9 +1629,9 @@ lemma fulton_morris_pisano_fixed_point
     exact exists_lambda_of_fixed m hm hiff hno_large hreturn' h24m
   · rintro ⟨lambda, hlam_pos, hm_eq⟩
     exact period_eq_of_form m period (lambda - 1) hm hperiod hreturn' hleast' hm_eq
-end
+end MetaMathlibExt
 
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-13

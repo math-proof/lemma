@@ -1,6 +1,6 @@
 import Lemma.Random.MulMeasure.eq.MulMeasure.of.CondIndep
 import Lemma.Random.Measure.eq.Mul_MulDivS.of.Subset
-import Lemma.Random.ProbCond.eq.Div.of.SinglePSpace
+import Lemma.Random.Prob_Cond.eq.Div.of.SinglePSpace
 import Instance.Probability.Process.DiscreteHMM.Part2
 import Syntax.Algebra.BigOperators.Summations
 open MeasureTheory Random
@@ -320,7 +320,7 @@ private lemma main
   have hP2 : ∀ (t m : ℕ) (a : Y), ℙ[π](x[t + 1:m + 1] = «\sf{x}»[t + 1:m + 1] | y[t] = a) =
       π (Ev (fun f g => ∀ i, t < i → i ≤ m → f i = «\sf{x}» i) ∩ y t ⁻¹' {a}) / π (y t ⁻¹' {a}) := by
     intro t m a
-    rw [ProbCond.eq.Div.of.SinglePSpace inferInstance]
+    rw [Prob_Cond.eq.Div.of.SinglePSpace inferInstance]
     congr 2
     ext ω
     simp only [hEv, Set.mem_preimage, Set.mem_singleton_iff, Set.mem_inter_iff, Set.mem_ofPred_eq, funext_iff]
@@ -337,10 +337,10 @@ private lemma main
       refine ⟨fun j => h1 (j.val + (t + 1)) (by omega) (by have := j.2; change j.val < m + 1 - (t + 1) at this; omega), h2⟩
   have hPcond : ∀ (i j : ℕ) (u : X) (b : Y), ℙ[π](x[i] = u | y[j] = b) =
       π (x i ⁻¹' {u} ∩ y j ⁻¹' {b}) / π (y j ⁻¹' {b}) :=
-    fun i j u b => ProbCond.eq.Div.of.SinglePSpace inferInstance u b
+    fun i j u b => Prob_Cond.eq.Div.of.SinglePSpace inferInstance u b
   have hPcondy : ∀ (i j : ℕ) (c b : Y), ℙ[π](y[i] = c | y[j] = b) =
       π (y i ⁻¹' {c} ∩ y j ⁻¹' {b}) / π (y j ⁻¹' {b}) :=
-    fun i j c b => ProbCond.eq.Div.of.SinglePSpace inferInstance c b
+    fun i j c b => Prob_Cond.eq.Div.of.SinglePSpace inferInstance c b
   have hPy : ∀ (j : ℕ) (b : Y), ℙ[π](y[j] = b) = π (y j ⁻¹' {b}) :=
     fun j b => EqProb b
   have hdA : ∀ (t : ℕ) (a : Y) (k : ℕ),

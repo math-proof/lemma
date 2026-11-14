@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.GroupCohomology.Corestriction2
+import Lemma.Rep.Corestriction2
 
 set_option autoImplicit false
 

@@ -1,10 +1,10 @@
 -- Carved from Lemma/Definitions/Def_NumberField_LevelArithmeticModP.lean: instance decls only.
 import Mathlib
-import Lemma.NumberField.SUnitsModule
+import Lemma.Rep.SUnitsModule
 import Instance.ExtEndgame_ProductionDatum
 import Lemma.ClassGroup.GaloisAction
 import Instance.Compat_Mathlib430
-import Lemma.NumberField.LevelArithmeticModP
+import Lemma.Rep.LevelArithmeticModP
 
 set_option autoImplicit false
 

@@ -141,7 +141,7 @@ lemma root_norm_lt_L1norm
   by_contra habs
   push Not at habs
 
-  have hL1_ge : 1 ≤ L1norm v f := L1norm_monic_ge_one v f hf
+  have hL1_ge : 1 ≤ L1norm v f := L1norm_monic_ge_one hf
   have hwa1 : 1 ≤ w α := le_trans hL1_ge habs
 
   have hn : 0 < f.natDegree := by
@@ -177,7 +177,7 @@ lemma root_norm_lt_L1norm
       _ = w α ^ (f.natDegree - 1) * v (f.coeff i) := mul_comm _ _
 
   have hsum_eq : ∑ i ∈ Finset.range f.natDegree, v (f.coeff i) = L1norm v f - 1 := by
-    have := L1norm_monic_eq v f hf; linarith
+    have := L1norm_monic_eq (v := v) hf; linarith
 
   have hpow_eq : w α ^ f.natDegree = w α ^ (f.natDegree - 1) * w α := by
     rw [← pow_succ]; congr 1; omega
@@ -226,7 +226,7 @@ lemma Lemma_11_13
 -- imply
   spectralNorm K (AlgebraicClosure K) (σ α) = spectralNorm K (AlgebraicClosure K) α :=
 -- proof
-  automorphism_preserves_spectralNorm σ α
+  automorphism_preserves_spectralNorm
 
 /--
 [krasner_lemma](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/KrasnerLemma.lean)
@@ -284,7 +284,7 @@ lemma Lemma_11_15
 -- imply
   K⟮α⟯ ≤ K⟮β⟯ :=
 -- proof
-  krasner_lemma K hsep hbelong
+  krasner_lemma hsep hbelong
 
 /--
 [multiset_prod_ge_pow_of_nonneg_ge](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/KrasnerLemma.lean)
@@ -361,7 +361,7 @@ lemma continuity_of_roots
     rw [Polynomial.aeval_def, Polynomial.eval₂_eq_eval_map]
     exact (Polynomial.mem_roots hfL_ne).mp hα
 
-  have hL1_ge : 1 ≤ Polynomial.L1norm v f := Polynomial.L1norm_monic_ge_one v f hf_monic
+  have hL1_ge : 1 ≤ Polynomial.L1norm v f := Polynomial.L1norm_monic_ge_one hf_monic
   set C := Polynomial.L1norm v f + 1 with hC_def
   have hC_pos : 0 < C := by linarith
 
@@ -494,7 +494,7 @@ lemma continuity_of_roots
         ((minpoly.irreducible hα_int).associated_of_dvd hf_irr hmin_dvd)
     have hα_sep : IsSeparable K α := by
       unfold IsSeparable; rw [hmin_eq_f]; exact hf_sep
-    have hKα_sub_Kβ := krasner_lemma K hα_sep hbelong
+    have hKα_sub_Kβ := krasner_lemma hα_sep hbelong
 
     have hKα_eq_Kβ : K⟮α⟯ = K⟮β⟯ := by
 
@@ -517,12 +517,12 @@ lemma continuity_of_roots
 
   have hβ_root_gL : Polynomial.aeval β g = 0 := hβ_root
   have hβ_bound : w β < Polynomial.L1norm v g :=
-    Polynomial.root_norm_lt_L1norm v g w hcompat hg_monic (by
+    Polynomial.root_norm_lt_L1norm hcompat hg_monic (by
       rw [Polynomial.aeval_def, Polynomial.eval₂_eq_eval_map]
       exact (Polynomial.mem_roots hgL_ne).mp (by
         rw [Polynomial.mem_roots hgL_ne, Polynomial.IsRoot, Polynomial.eval_map,
             ← Polynomial.aeval_def]; exact hβ_root))
-  have hgL1_ge1 : 1 ≤ Polynomial.L1norm v g := Polynomial.L1norm_monic_ge_one v g hg_monic
+  have hgL1_ge1 : 1 ≤ Polynomial.L1norm v g := Polynomial.L1norm_monic_ge_one hg_monic
 
   have hfg_aeval : w (Polynomial.aeval β fg) ≤
       Polynomial.L1norm v fg * (Polynomial.L1norm v g) ^ n := by
@@ -561,7 +561,7 @@ lemma continuity_of_roots
       _ = (∑ i ∈ Finset.range (fgL.natDegree + 1), v (fg.coeff i)) *
             (Polynomial.L1norm v g) ^ n := by rw [Finset.sum_mul]
       _ ≤ Polynomial.L1norm v fg * (Polynomial.L1norm v g) ^ n := by
-          apply mul_le_mul_of_nonneg_right _ (pow_nonneg (Polynomial.L1norm_nonneg v g) _)
+          apply mul_le_mul_of_nonneg_right _ (pow_nonneg (Polynomial.L1norm_nonneg) _)
           rw [Polynomial.L1norm_def]
           apply le_of_eq
           apply (Finset.sum_subset _ _).symm
@@ -631,7 +631,7 @@ lemma continuity_of_roots
       ≤ Polynomial.L1norm v fg * (Polynomial.L1norm v g) ^ n := hfg_aeval
     _ < δ * C ^ n := by
         apply mul_lt_mul hfg_close (pow_le_pow_left₀ (le_of_lt (by linarith)) hgL1_lt_C.le n)
-          (pow_pos (by linarith) n) (le_of_lt (by linarith [Polynomial.L1norm_nonneg v fg]))
+          (pow_pos (by linarith) n) (le_of_lt (by linarith [L1norm_nonneg (v := v) (f := fg)]))
     _ = (ε / 2) ^ n := by
         rw [hδ_def, div_pow, div_mul_eq_mul_div, mul_pow,
             mul_div_mul_right _ _ (pow_ne_zero n hC_pos.ne'), div_pow]
@@ -677,7 +677,7 @@ lemma Theorem_11_19
 -- imply
   ∃ δ : ℝ, 0 < δ ∧ ∀ g : K[X], g.Monic → g.natDegree = f.natDegree → Polynomial.L1norm (normAbsVal K) (f - g) < δ → ∀ β : AlgebraicClosure K, Polynomial.aeval β g = 0 → ∃ α : AlgebraicClosure K, Polynomial.aeval α f = 0 ∧ BelongsTo K β α ∧ K⟮α⟯ = K⟮β⟯ :=
 -- proof
-  continuity_of_roots K f hf_monic hf_irr hf_sep
+  continuity_of_roots hf_monic hf_irr hf_sep
 
 /--
 [continuity_of_roots_irreducible_separable](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/KrasnerLemma.lean)
@@ -696,7 +696,7 @@ lemma continuity_of_roots_irreducible_separable
 -- imply
   ∃ δ : ℝ, 0 < δ ∧ ∀ g : K[X], g.Monic → g.natDegree = f.natDegree → Polynomial.L1norm (normAbsVal K) (f - g) < δ → Irreducible g ∧ g.Separable := by
 -- proof
-  obtain ⟨δ, hδ_pos, hδ⟩ := continuity_of_roots K f hf_monic hf_irr hf_sep
+  obtain ⟨δ, hδ_pos, hδ⟩ := continuity_of_roots hf_monic hf_irr hf_sep
   refine ⟨δ, hδ_pos, fun g hg_monic hg_deg hfg_close => ?_⟩
 
   have hg_deg_pos : 0 < g.natDegree := hg_deg ▸ hf_irr.natDegree_pos

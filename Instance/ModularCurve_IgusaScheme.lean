@@ -2,14 +2,14 @@
 import Mathlib.AlgebraicGeometry.Morphisms.Smooth
 import Mathlib.AlgebraicGeometry.Morphisms.Proper
 import Mathlib.AlgebraicGeometry.Limits
-import Mathlib.RingTheory.DedekindDomain.IntegralClosure
+import Mathlib.RingTheory.Ideal.IntegralClosure
 import Mathlib.RingTheory.Localization.Integral
 import Mathlib.RingTheory.Polynomial.ScaleRoots
 import Mathlib.Algebra.Polynomial.Lifts
-import Lemma.ModularCurve.X0
+import Lemma.HahnSeries.X0
 import Def.GaloisRep_Flat
 import Abbrev.ModularCurve_IgusaScheme
-import Lemma.ModularCurve.IgusaScheme
+import Lemma.Scheme.IgusaScheme
 
 set_option autoImplicit false
 

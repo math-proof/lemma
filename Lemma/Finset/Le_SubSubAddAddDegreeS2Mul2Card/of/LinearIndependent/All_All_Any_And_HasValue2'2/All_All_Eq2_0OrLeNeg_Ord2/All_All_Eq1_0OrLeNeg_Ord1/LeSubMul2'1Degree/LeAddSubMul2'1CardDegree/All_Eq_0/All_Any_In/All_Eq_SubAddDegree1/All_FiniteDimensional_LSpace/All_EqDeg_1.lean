@@ -1,10 +1,10 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.AdelicIndex
-import Lemma.AlgebraicCurve.GluedPic0
+import Lemma.Submodule.AdelicIndex
+import Lemma.ResidueField.GluedPic0
 import Lemma.Int.P2MUtil
 
-open AlgebraicCurve
+open AlgebraicCurve Submodule ResidueField
 
 /--
 [AlgebraicCurve_natCast_le_degree_add_degree_of_linearIndependent_of_mem_riemannRochSpace_of_hasValue](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_natCast_le_degree_add_degree_of_linearIndependent_of_mem_riemannRochSpace_of_hasValue.lean)

@@ -1,7 +1,7 @@
-import Lemma.ModularCurve.HeckeModule
+import Lemma.MvPolynomial.HeckeModule
 import Def.AlgebraicCurve_Differentials
 import Def.ModularCurve_QExpansionDiff
-import Lemma.ModularCurve.JZeroTateModule
+import Lemma.WeierstrassCurve.JZeroTateModule
 
 set_option autoImplicit false
 

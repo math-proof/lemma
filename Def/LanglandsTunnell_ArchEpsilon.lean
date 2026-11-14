@@ -1,4 +1,4 @@
-import Lemma.LanglandsTunnell.ArchParam
+import Lemma.Complex.ArchParam
 
 set_option autoImplicit false
 

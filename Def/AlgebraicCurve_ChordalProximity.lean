@@ -1,4 +1,4 @@
-import Lemma.ModularCurve.JZeroHeightForm
+import Lemma.Finsupp.JZeroHeightForm
 
 noncomputable section
 

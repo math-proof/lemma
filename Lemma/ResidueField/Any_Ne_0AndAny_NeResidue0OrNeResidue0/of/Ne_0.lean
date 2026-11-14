@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.RegularProlongation
+import Lemma.Scheme.RegularProlongation
 import Lemma.Int.P2MUtil
 
-open AlgebraicCurve IsLocalRing
+open AlgebraicCurve IsLocalRing Scheme
 
 /--
 [AlgebraicCurve_RegularProlongation_exists_smul_mem_integers_and_residue_ne_zero_or](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_RegularProlongation_exists_smul_mem_integers_and_residue_ne_zero_or.lean)
@@ -12,7 +12,7 @@ open AlgebraicCurve IsLocalRing
 private lemma main
   [Field L] [Field F] [Algebra L F] [Field Fbar]
   {A : ValuationSubring L} [Algebra (IsLocalRing.ResidueField ↥A) Fbar]
-  {R₁ R₂ : AlgebraicCurve.RegularProlongation A F Fbar}
+  {R₁ R₂ : Scheme.RegularProlongation A F Fbar}
   {f : F}
 -- given
   (hf : f ≠ 0) :

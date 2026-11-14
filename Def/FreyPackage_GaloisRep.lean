@@ -1,4 +1,4 @@
-import Lemma.FLTPrelim.FreyPackage
+import Lemma.WeierstrassCurve.FreyPackage
 import Instance.FLTPrelim_GaloisRep
 import Instance.EllipticCurve_FrobeniusTrace
 import Mathlib.LinearAlgebra.FiniteDimensional.Defs

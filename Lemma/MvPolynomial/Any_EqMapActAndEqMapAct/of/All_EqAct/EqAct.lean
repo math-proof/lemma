@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.LevelModuliPackage
-import Lemma.ModularCurve.LevelModuliPackageAbs
+import Lemma.Int.LevelModuliPackage
+import Lemma.Int.LevelModuliPackageAbs
 import Lemma.Int.P2MUtil
 
 
@@ -12,7 +12,7 @@ import Lemma.Int.P2MUtil
 private lemma main
   {A : Type u} [CommRing A]
   {D : ModularCurve.LevelModuliDatum.{u} A}
-  {P : ModularCurve.LevelModuliPackageAbs A D}
+  {P : Int.LevelModuliPackageAbs A D}
   {ρ ρ' : D.ProblemAut}
 -- given
   (h₁ : ∀ (T : Type u) [CommRing T] [Algebra A T] (y : D.Pt T), ρ'.act (ρ.act y) = y)

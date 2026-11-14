@@ -1,8 +1,8 @@
 import Mathlib
 import Instance.MvFormalGroup_NegV2
 import Instance.MvFormalGroup_CartierModule
-import Lemma.MvFormalGroup.CartierModuleHomothety
-import Lemma.CerednikDrinfeld.SpecialFormalModule
+import Lemma.PowerSeries.CartierModuleHomothety
+import Lemma.MvPowerSeries.SpecialFormalModule
 
 set_option autoImplicit false
 

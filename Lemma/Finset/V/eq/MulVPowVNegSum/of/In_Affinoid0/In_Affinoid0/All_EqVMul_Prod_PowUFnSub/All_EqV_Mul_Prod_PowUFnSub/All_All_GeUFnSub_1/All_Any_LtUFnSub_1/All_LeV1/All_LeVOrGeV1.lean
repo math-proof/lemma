@@ -1,12 +1,12 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.CerednikDrinfeld.DrinfeldHolomorphic
+import Lemma.Polynomial.DrinfeldHolomorphic
 
 
 namespace Definitions
 end Definitions
 open Definitions
-open CerednikDrinfeld CerednikDrinfeld.Omega
+open CerednikDrinfeld CerednikDrinfeld.Omega Polynomial
 open scoped MatrixGroups
 
 

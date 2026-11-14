@@ -58,8 +58,8 @@ lemma tube_inner_product_multiplicity_bound
     = ∑ j ∈ Finset.univ.filter (fun j => (∫ x, φ i x * φ j x) ≠ 0),
       |∫ x, φ i x * φ j x|
       + ∑ j ∈ Finset.univ.filter (fun j => ¬((∫ x, φ i x * φ j x) ≠ 0)),
-        |∫ x, φ i x * φ j x| := by
-      rw [Finset.sum_filter_add_sum_filter_not]
+        |∫ x, φ i x * φ j x| := (by
+      rw [Finset.sum_filter_add_sum_filter_not])
     _ = ∑ j ∈ Finset.univ.filter (fun j => (∫ x, φ i x * φ j x) ≠ 0),
       |∫ x, φ i x * φ j x| := by
       have h0 : ∑ j ∈ Finset.univ.filter (fun j => ¬((∫ x, φ i x * φ j x) ≠ 0)),
@@ -106,13 +106,13 @@ lemma per_scale_l2_bound
   have h_ortho := tube_inner_product_multiplicity_bound S r hr_scale φ hφ_freq hφ_inner hφ_sparse
   rw [h_expand]
   calc ∑ i : S.ι, ∑ j : S.ι, ∫ x, φ i x * φ j x
-    ≤ ∑ i : S.ι, ∑ j : S.ι, |∫ x, φ i x * φ j x| := by
+    ≤ ∑ i : S.ι, ∑ j : S.ι, |∫ x, φ i x * φ j x| := (by
       apply Finset.sum_le_sum; intro i _
       apply Finset.sum_le_sum; intro j _
-      exact le_abs_self _
+      exact le_abs_self _)
     _ = ∑ i : S.ι, (∑ j : S.ι, |∫ x, φ i x * φ j x|) := rfl
-    _ ≤ ∑ i : S.ι, ((S.multiplicity r : ℝ) * (S.R / r)) := by
-      apply Finset.sum_le_sum; intro i _; exact h_ortho i
+    _ ≤ ∑ i : S.ι, ((S.multiplicity r : ℝ) * (S.R / r)) := (by
+      apply Finset.sum_le_sum; intro i _; exact h_ortho i)
     _ = (Fintype.card S.ι : ℝ) * (S.multiplicity r : ℝ) * (S.R / r) := by
       rw [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]; ring
 
@@ -183,9 +183,9 @@ lemma self_norm_from_amplitude
     apply integral_mono (hφ_sq_int i) (hg_int i)
     intro x; exact h_pw i x
     _ ≤ R / r := h_integral_bound i
-/-- Angular Fourier disjointness: if the directions of tubes $i, j$ make a large enough
-angle (so $|\langle d_i, d_j\rangle| < 1 - (r/R)^2/2$), then the Fourier supports of
-their pieces $\varphi_i$ and $\varphi_j$ are disjoint. -/
+-- Angular Fourier disjointness: if the directions of tubes $i, j$ make a large enough
+-- angle (so $|\langle d_i, d_j\rangle| < 1 - (r/R)^2/2$), then the Fourier supports of
+-- their pieces $\varphi_i$ and $\varphi_j$ are disjoint.
 end ProjectionTheory
 
 

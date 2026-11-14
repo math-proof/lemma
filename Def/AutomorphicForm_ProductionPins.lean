@@ -1,5 +1,5 @@
 import Def.NumberField_AdelicBox
-import Lemma.NumberField.SiegelVolume
+import Lemma.Matrix.SiegelVolume
 
 open IsDedekindDomain NumberField MeasureTheory Matrix
 open NumberField.AdelicHaar NumberField.AdelicLevel NumberField.AdelicBox

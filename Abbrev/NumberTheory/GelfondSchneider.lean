@@ -18,14 +18,13 @@ import Mathlib.Analysis.Complex.JensenFormula
 import Mathlib.Analysis.Meromorphic.Divisor
 import Mathlib.Analysis.Meromorphic.TrailingCoefficient
 import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import Mathlib.Analysis.SpecialFunctions.Integrability.LogMeromorphic
+import Mathlib.Analysis.SpecialFunctions.Integrability.Log
 import Mathlib.LinearAlgebra.Vandermonde
 import Mathlib.MeasureTheory.Integral.CircleAverage
 import Mathlib.NumberTheory.NumberField.House
 import Mathlib.NumberTheory.NumberField.Norm
 import Mathlib.RingTheory.Localization.Integral
 import Mathlib.Tactic
-import Def.NumberTheory.GelfondSchneider
 
 
 section GS_N2

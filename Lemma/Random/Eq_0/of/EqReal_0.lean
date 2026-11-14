@@ -1,5 +1,5 @@
-import Theorem.Dynamics.PolicyTrajectory
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
+import Theorem.Dynamics.PolicyTrajectory.ContinuousAction
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel
 
 
 /--
@@ -7,16 +7,17 @@ An event of real probability `0` is null: `(M θ).real B = 0 → M θ B = 0`.
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A]
-  {M : Model Θ S A}
-  {B : Set (ℕ → ℝ × S × A)}
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
+  {B : Set (ℕ → ℝ × 𝒮 × 𝒜)}
+  {θ : Θ}
 -- given
-  (θ : Θ)
   (h : (M θ).real B = 0) :
 -- imply
-  M θ B = 0 := by
+  M θ B = 0 :=
 -- proof
-  exact (measureReal_eq_zero_iff (measure_ne_top _ _)).1 h
+  (measureReal_eq_zero_iff (measure_ne_top _ _)).1 h
 
 
 -- created on 2026-10-07
+-- updated on 2026-11-14

@@ -8,7 +8,7 @@ import Mathlib.LinearAlgebra.Charpoly.Basic
 import Mathlib.LinearAlgebra.Dimension.Free
 import Mathlib.FieldTheory.Finite.GaloisField
 import Instance.Compat_Mathlib430
-import Lemma.CuspidalType.IsCuspidalOfType
+import Lemma.Matrix.IsCuspidalOfType
 
 set_option autoImplicit false
 

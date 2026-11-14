@@ -59,8 +59,7 @@ lemma ac_step_iteratedDeriv
     apply (convex_uIcc (0:ℝ) 1).lipschitzOnWith_of_nnnorm_hasDerivWithin_le
     · intro x hx; exact (hdiff x hx).hasDerivWithinAt
     · intro x hx
-      rw [← NNReal.coe_le_coe, NNReal.coe_mk, coe_nnnorm]
-      exact hC_le x hx
+      exact_mod_cast hC_le x hx
   exact hlip.absolutelyContinuousOnInterval
 
 end Chapter3
@@ -118,8 +117,8 @@ lemma ac_trigBasis
   split_ifs with h0 h1 heven
   · exact (LipschitzWith.const (0:ℝ)).lipschitzOnWith.absolutelyContinuousOnInterval
   · exact (LipschitzWith.const (1:ℝ)).lipschitzOnWith.absolutelyContinuousOnInterval
-  · exact ac_cos_smul _
-  · exact ac_sin_smul _
+  · convert ac_cos_smul (c := (2 * π * (k / 2 : ℕ) : ℝ))
+  · convert ac_sin_smul (c := (2 * π * ((k - 1) / 2 : ℕ) : ℝ))
 
 end Chapter3
 
@@ -574,18 +573,18 @@ lemma trigBasis_L2_error_eq
       (∫ t in Icc (0 : ℝ) 1, g t * trigBasis (k + 1) t) *
         trigBasis (k + 1) x
     have hφ_sq : ∫ x in Icc (0 : ℝ) 1, trigBasis (N + 1) x * trigBasis (N + 1) x = 1 := by
-      have := trigBasis_orthonormal (N + 1) (N + 1) (by omega) (by omega)
+      have := trigBasis_orthonormal (i := N + 1) (j := N + 1) (by omega) (by omega)
       simp at this; exact this
     have hcross : ∫ x in Icc (0 : ℝ) 1, R x * trigBasis (N + 1) x = cN := by
       have hgφ_int : IntegrableOn (fun x => g x * trigBasis (N + 1) x) (Icc (0 : ℝ) 1) :=
-        hg_int.mul_continuousOn (trigBasis_continuous (N + 1)).continuousOn isCompact_Icc
+        hg_int.mul_continuousOn (trigBasis_continuous (j := N + 1)).continuousOn isCompact_Icc
       have hS_cont : Continuous (fun x => ∑ k ∈ Finset.range N,
         (∫ t in Icc (0 : ℝ) 1, g t * trigBasis (k + 1) t) * trigBasis (k + 1) x) :=
-        continuous_finset_sum _ (fun k _ => continuous_const.mul (trigBasis_continuous (k + 1)))
+        continuous_finset_sum _ (fun k _ => continuous_const.mul (trigBasis_continuous (j := k + 1)))
       have hSφ_int : IntegrableOn (fun x => (∑ k ∈ Finset.range N,
         (∫ t in Icc (0 : ℝ) 1, g t * trigBasis (k + 1) t) * trigBasis (k + 1) x) *
         trigBasis (N + 1) x) (Icc (0 : ℝ) 1) :=
-        (hS_cont.mul (trigBasis_continuous (N + 1))).continuousOn.integrableOn_compact isCompact_Icc
+        (hS_cont.mul (trigBasis_continuous (j := N + 1))).continuousOn.integrableOn_compact isCompact_Icc
       have hsplit : ∫ x in Icc (0 : ℝ) 1, R x * trigBasis (N + 1) x =
         (∫ x in Icc (0 : ℝ) 1, g x * trigBasis (N + 1) x) -
         ∫ x in Icc (0 : ℝ) 1, (∑ k ∈ Finset.range N,
@@ -617,13 +616,13 @@ lemma trigBasis_L2_error_eq
             (∫ t in Icc (0 : ℝ) 1, g t * trigBasis (k + 1) t) *
               (trigBasis (k + 1) a * trigBasis (N + 1) a) from fun a => by ring]
           rw [integral_const_mul,
-            trigBasis_orthonormal (k + 1) (N + 1) (by omega) (by omega),
+            trigBasis_orthonormal (i := k + 1) (j := N + 1) (by omega) (by omega),
             if_neg (show k + 1 ≠ N + 1 from by
               simp [Finset.mem_range] at hk; omega)]
           ring
         · intro k _
-          exact ((continuous_const.mul (trigBasis_continuous (k + 1))).mul
-            (trigBasis_continuous (N + 1))).continuousOn.integrableOn_compact isCompact_Icc
+          exact ((continuous_const.mul (trigBasis_continuous (j := k + 1))).mul
+            (trigBasis_continuous (j := N + 1))).continuousOn.integrableOn_compact isCompact_Icc
       rw [hSφ_zero, sub_zero]
     have hexpand : ∫ x in Icc (0 : ℝ) 1, (R x - cN * trigBasis (N + 1) x) ^ 2 =
       (∫ x in Icc (0 : ℝ) 1, (R x) ^ 2) -
@@ -632,11 +631,11 @@ lemma trigBasis_L2_error_eq
       have hR_int : IntegrableOn R (Icc (0 : ℝ) 1) := by
         apply IntegrableOn.sub hg_int
         exact (continuous_finset_sum _ (fun k _ =>
-          continuous_const.mul (trigBasis_continuous (k + 1)))).continuousOn.integrableOn_compact
+          continuous_const.mul (trigBasis_continuous (j := k + 1)))).continuousOn.integrableOn_compact
           isCompact_Icc
       have hS_cont : Continuous (fun x => ∑ k ∈ Finset.range N,
         (∫ t in Icc (0 : ℝ) 1, g t * trigBasis (k + 1) t) * trigBasis (k + 1) x) :=
-        continuous_finset_sum _ (fun k _ => continuous_const.mul (trigBasis_continuous (k + 1)))
+        continuous_finset_sum _ (fun k _ => continuous_const.mul (trigBasis_continuous (j := k + 1)))
       have hRsq : IntegrableOn (fun x => (R x) ^ 2) (Icc (0 : ℝ) 1) := by
         have hgS : IntegrableOn (fun x => g x * (∑ k ∈ Finset.range N,
           (∫ t in Icc (0 : ℝ) 1, g t * trigBasis (k + 1) t) * trigBasis (k + 1) x))
@@ -655,10 +654,10 @@ lemma trigBasis_L2_error_eq
         rw [heq]
         exact (hg.sub (hgS.const_mul 2)).add hSsq
       have hRφ : IntegrableOn (fun x => R x * trigBasis (N + 1) x) (Icc (0 : ℝ) 1) :=
-        hR_int.mul_continuousOn (trigBasis_continuous (N + 1)).continuousOn isCompact_Icc
+        hR_int.mul_continuousOn (trigBasis_continuous (j := N + 1)).continuousOn isCompact_Icc
       have hφsq : IntegrableOn (fun x => trigBasis (N + 1) x * trigBasis (N + 1) x)
         (Icc (0 : ℝ) 1) :=
-        ((trigBasis_continuous (N + 1)).mul (trigBasis_continuous (N + 1))).continuousOn.integrableOn_compact
+        ((trigBasis_continuous (j := N + 1)).mul (trigBasis_continuous (j := N + 1))).continuousOn.integrableOn_compact
           isCompact_Icc
       have h_rw : (fun x => (R x - cN * trigBasis (N + 1) x) ^ 2) =
         (fun x => R x ^ 2 + (-(2 * cN) * (R x * trigBasis (N + 1) x) +
@@ -731,7 +730,7 @@ namespace Chapter3
 [companion_injective](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter3/Thm_3_11.lean)
 -/
 @[path]
-lemma companion_injective
+lemma companion_injective :
 -- imply
   Function.Injective companion := by
 -- proof
@@ -786,8 +785,6 @@ lemma summable_of_pair_eq
         linarith [hg_nn n]
   exact Summable.of_nonneg_of_le hg_nn (fun n => hbound n)
     (hf_sum.add (hf_sum.comp_injective companion_injective))
-/-- Summability of the squared Fourier coefficients of a mean-zero
-`g ∈ L²([0, 1])` against the trigonometric basis. -/
 
 end Chapter3
 

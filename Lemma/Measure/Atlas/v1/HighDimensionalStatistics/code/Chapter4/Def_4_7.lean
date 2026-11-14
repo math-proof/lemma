@@ -21,10 +21,10 @@ lemma IsSpikedCovariance.posSemidef
   obtain ⟨hθ, _, hS⟩ := h
   rw [hS]
   apply PosSemidef.add
-  · have : vecMulVec (v : Fin d → ℝ) v = vecMulVec v (star v) := by
-    simp [star_trivial]
+  · have : vecMulVec v.ofLp v.ofLp = vecMulVec v.ofLp (star v.ofLp) := by
+      simp [star_trivial]
     rw [this]
-    exact (posSemidef_vecMulVec_self_star v).smul (le_of_lt hθ)
+    exact (posSemidef_vecMulVec_self_star v.ofLp).smul (le_of_lt hθ)
   · exact PosSemidef.one
 
 /--

@@ -1,11 +1,11 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.Correspondence
+import Lemma.Scheme.Correspondence
 import Def.AlgebraicCurve_DifferentialPushPull
 import Lemma.Int.P2MUtil
 
 open KaehlerDifferential TensorProduct
-open AlgebraicCurve
+open AlgebraicCurve Scheme
 
 /--
 [AlgebraicCurve_Differential_pullbackAlong_traceAlong_eq_sum_lifts](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_Differential_pullbackAlong_traceAlong_eq_sum_lifts.lean)

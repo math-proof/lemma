@@ -13,7 +13,7 @@ probability:
 -/
 @[path]
 private lemma main
-  [ReferenceMeasure 𝒮] [ReferenceMeasure 𝒜]
+  [μ : ReferenceMeasure 𝒮] [ReferenceMeasure 𝒜]
   {M : DensityModel Θ 𝒮 𝒜}
   {θ : Θ} {t : ℕ} {x : 𝒮} {u : 𝒜}
   {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
@@ -24,9 +24,9 @@ private lemma main
   (h₁ : DensityModel.AbsContJointAS M a s)
   (h₂ : (M θ).prob (a t, s t) (u, x) =
     ENNReal.ofReal (M.policy.prob θ x u) *
-      ((M θ).map (s t)).rnDeriv (ReferenceMeasure.measure : Measure 𝒮) x)
-  (h₃ : ((M θ).map (s t)).rnDeriv (ReferenceMeasure.measure : Measure 𝒮) x ≠ 0)
-  (h₄ : ((M θ).map (s t)).rnDeriv (ReferenceMeasure.measure : Measure 𝒮) x ≠ ⊤) :
+      ((M θ).map (s t)).rnDeriv (μ.measure : Measure 𝒮) x)
+  (h₃ : ((M θ).map (s t)).rnDeriv (μ.measure : Measure 𝒮) x ≠ 0)
+  (h₄ : ((M θ).map (s t)).rnDeriv (μ.measure : Measure 𝒮) x ≠ ⊤) :
 -- imply
   have : SinglePSpace (M θ) (a t, s t) := h₀.singlePSpace_as (haj := h₁) θ t
   (ℙ[M θ]((a t) = u | (s t) = x) : ℝ) = M.policy.prob θ x u := by
@@ -40,3 +40,4 @@ private lemma main
 
 
 -- created on 2026-10-21
+-- updated on 2026-11-14

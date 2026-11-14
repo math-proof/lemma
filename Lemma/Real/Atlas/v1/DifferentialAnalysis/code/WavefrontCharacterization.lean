@@ -76,7 +76,7 @@ lemma norm_iteratedFDeriv_fderiv_le_sum
       exact (iteratedFDeriv ℝ m (fun y => fderiv ℝ f y (EuclideanSpace.single i 1)) x).le_opNorm v
     _ = (∑ i : Fin n, ‖iteratedFDeriv ℝ m (fun y => fderiv ℝ f y (EuclideanSpace.single i 1)) x‖) * ∏ j, ‖v j‖ := by
       rw [Finset.sum_mul]
-set_option maxHeartbeats 800000 in
+set_option maxHeartbeats 800000
 
 end ConeSupport
 
@@ -164,8 +164,8 @@ lemma temperedConvolution_iteratedFDeriv_polynomial_growth
       _ ≤ ((∑ i : Fin n, Cs i) + 1) * (1 + ‖x‖) ^ K := by
         apply mul_le_mul_of_nonneg_right _ (by positivity)
         linarith
-/-- Pairing identity: testing the Schwartz convolution `u ∗ φ` against a Schwartz function `θ`
-equals the integral of `θ` against the pointwise tempered convolution. -/
+-- Pairing identity: testing the Schwartz convolution `u ∗ φ` against a Schwartz function `θ`
+-- equals the integral of `θ` against the pointwise tempered convolution.
 end ConeSupport
 
 

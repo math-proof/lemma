@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.EllipticCurves.code.Uniformization
-open Complex PeriodPair ComplexLattice
+open Complex PeriodPair ComplexLattice WeierstrassCurve
 open scoped UpperHalfPlane
 open ComplexLattice Pointwise ModularGroup UpperHalfPlane
 open ModularGroup Matrix.SpecialLinearGroup

@@ -1,9 +1,9 @@
 -- Carved from Lemma/Definitions/Def_IharaMennickeCarrier.lean: instance decls only.
-import Lemma.Gamma0Away.Main
-import Lemma.IharaAmalgamMap.Main
-import Lemma.Gamma0AwayUnitsChar.Main
+import Lemma.Matrix.Main
+import Lemma.Matrix.IharaAmalgamMap
+import Lemma.Matrix.Gamma0AwayUnitsChar
 import Mathlib.GroupTheory.Subgroup.Simple
-import Lemma.IharaMennickeCarrier.Main
+import Lemma.Matrix.IharaMennickeCarrier
 
 open Matrix
 

@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Lemma.Scheme.CanonicalDivisor
-open KaehlerDifferential AlgebraicCurve
+open KaehlerDifferential AlgebraicCurve Valuation
 
 
 /--

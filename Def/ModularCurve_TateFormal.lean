@@ -1,6 +1,6 @@
-import Def.ModularCurve_JqCoeff
 import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
-import Instance.ModularCurve_TateFormal
+import Mathlib.RingTheory.LaurentSeries
+import Mathlib.NumberTheory.Divisors
 
 set_option autoImplicit false
 

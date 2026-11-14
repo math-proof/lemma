@@ -1,7 +1,7 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_ThetaGroup.lean: instance decls only.
 import Mathlib
 import Def.AlgebraicGeometry_RiemannForm
-import Lemma.AlgebraicGeometry.ThetaGroup
+import Lemma.Scheme.ThetaGroup
 
 set_option autoImplicit false
 

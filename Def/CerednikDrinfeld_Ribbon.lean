@@ -1,4 +1,4 @@
-import Lemma.ModularCurve.ComponentGroup
+import Lemma.Finset.ComponentGroup
 import Mathlib.LinearAlgebra.Matrix.ToLin
 import Mathlib.Data.Nat.Prime.Defs
 import Mathlib.Data.PNat.Defs

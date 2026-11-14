@@ -9,12 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.LieGroups.code.Admissible.Part3
-import Lemma.Bijective.EqContinuousLinearEquivOfBijective.of.Bijective
+import Lemma.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
 import Lemma.Submodule.Any_And_All_Eq_GetToMonoidHomAndAll_In_Span.of.IsMaximalCompactSubgroup.IsSemisimpleLieGroupG
 import Lemma.Int.All_Eq_0.of.EqCompositionLengthO_0.IsCategoryO
 import Lemma.Int.ExtVanishesCategoryO1.of.IsCategoryO.IsProjectiveInO.IsCategoryO
 import Lemma.AlgHom.EqLiftOfSurjectiveNC.of.All_Eq_0.Surjective
-import Lemma.Bijective.All_Bijective.All_AnyAndAll_Any.of.All_All_Any.All_Any_Eq.All_Eq.All_All_Eq.All_All_Eq.All_All_Any_And_Eq.All_All_Any_And_Eq.All_Prop.All_BijectiveFun.All.All.All_Any.All_Prop.All_Prop.All_Eq.All.All.All_Eq.All.All.All
+import Lemma.Representation.All_Bijective.All_AnyAndAll_Any.of.All_All_Any.All_Any_Eq.All_Eq.All_All_Eq.All_All_Eq.All_All_Any_And_Eq.All_All_Any_And_Eq.All_Prop.All_BijectiveFun.All.All.All_Any.All_Prop.All_Prop.All_Eq.All.All.All_Eq.All.All.All
 import Lemma.Nat.ClosedEmbedding.eq.BundleProjection
 import Lemma.Nat.Degrees.Gt_0
 import Lemma.Int.IsInQPlus0
@@ -61,7 +61,7 @@ import Lemma.Int.IsDirectSummand
 import Lemma.Nat.basisHC.eq.SMul
 import Lemma.Matrix.LinearIndependent.of.LpSingle
 import Lemma.Complex.Nonempty_Realization
-import Lemma.Bijective.BijectiveNegIntertwiningLinearMap.of.All_Ne_0
+import Lemma.LinearMap.BijectiveNegIntertwiningLinearMap.of.All_Ne_0
 import Lemma.Set.KtypeBoundedness.eq.BoundedBoth.is.BddAboveKtypeSetAndBddBelowKtypeSet
 import Lemma.Complex.IsIsomorphicGK.of.IsIsomorphicGK.IsIsomorphicGK
 import Lemma.Int.Square.ge.One.of.Ne_0
@@ -70,7 +70,7 @@ import Lemma.Matrix.EqGetTraceSum
 import Lemma.Fin.StarRingEnd_GetTraceVToLinearMap.eq.GetTraceVToLinearMapAdjoint
 import Lemma.Real.GetToMonoidHom.in.SmoothSubspace.of.In_SmoothSubspace
 import Lemma.Real.IsSmoothVector0
-import Lemma.Ideal.IsHomogeneousAugmentationIdealGraded
+import Lemma.Ideal.IsHomogeneous_AugmentationIdealGraded
 import Lemma.Int.Surjective_Comp.of.Surjective
 import Lemma.Int.IsCategoryOA.of.IsCategoryOB
 import Lemma.Submodule.Le.of.LeSpan.SurjectiveFun.InjectiveFun

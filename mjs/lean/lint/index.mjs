@@ -72,13 +72,14 @@ export const RULES = {
     // not an AGENTS.md rule (user request): a proposition type must not take `(h : P := e)`
     'prop-default-arg': null,
     'inst-under-given': Q.givenInst,
-    'named-inst-above-given': Q.givenInst,
     // not an AGENTS.md rule (user request): the page typesets only the first run of `given` propositions
     'given-prop-consecutive': null,
     // not an AGENTS.md rule: numbered `h₀`/`h0`… in `-- given` must start at 0 with no gaps, and lower indices must appear earlier
     'given-hyp-index': null,
     // not an AGENTS.md rule: drop redundant `({…} : Set _)` on the LHS of ⊆/⊂/∈/… in `-- given`
     'redundant-set-ascription': null,
+    // not an AGENTS.md rule (user request): unused `-- given` hypothesis should be dropped, even if already `_`
+    'given-unused': null,
     'binder-combine': Q.combine,
     'section-given': Q.given,
     // not an AGENTS.md rule: a `-- given` with no binders under it should be deleted
@@ -199,6 +200,10 @@ export function lintLean(source, opts = {}) {
             const last = ctx.astLast;
             const from = last && last.node !== node && last.stmt === stmt && last.line != null ? last.line : ctx.astCursor;
             const line = locate(P.raw, stmt, from, follow ? quote(follow, 120, 1) : null);
+            // A reprint that cannot be found in the source is not a safe drop suggestion.
+            // `paren-redundant-arith` previously warned on pretty-printed `((∑ …) - (∑ …))`
+            // with no line, while the source needed those grouping parens inside `|… + …|`.
+            if (line == null && rule === 'paren-redundant-arith') return;
             if (line != null) ctx.astCursor = line - 1;
             ctx.astLast = { node, stmt, line };
             ctx.warn(rule, line, null, msg, { stmt });
@@ -247,6 +252,18 @@ export function lintLean(source, opts = {}) {
         (w.rule === 'hole-question' && /^exact/.test(w.hole ?? '')) ||
         (w.rule === 'by-exact' && w.line - 1 === r.byLine && w.col === r.byCol + 1)));
     if (tm.length) warnings.splice(0, warnings.length, ...warnings.filter((w) => !superseded(w)));
+
+    // unused `-- given` should be dropped, not merely renamed to `_`
+    {
+        const dropLines = new Set(warnings.filter((w) => w.rule === 'given-unused').map((w) => w.line));
+        if (dropLines.size) {
+            for (let i = warnings.length - 1; i >= 0; i--) {
+                if (warnings[i].rule === 'binder-underscore-name' && dropLines.has(warnings[i].line))
+                    warnings.splice(i, 1);
+            }
+        }
+    }
+
     warnings.sort((a, b) => (a.line ?? Infinity) - (b.line ?? Infinity) || (a.col ?? 0) - (b.col ?? 0));
     return warnings;
 }

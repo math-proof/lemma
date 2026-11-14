@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_GroupCohomology_RelationModule.lean: instance decls only.
 import Mathlib
-import Lemma.GroupCohomology.RelationModule
+import Lemma.Rep.RelationModule
 
 set_option autoImplicit false
 

@@ -1,6 +1,7 @@
 import Mathlib.MeasureTheory.Measure.Count
 import Lemma.Measure.EqRnDeriv_Count
 import Lemma.Measure.Count.eq.ProdCountS
+import Instance.Probability.Rv.Part2
 import Lemma.Random.SinglePSpace.of.Measurable
 import Syntax.Probability.Expectation.Elab
 open MeasureTheory Measure Random
@@ -17,8 +18,8 @@ Python: Random.Ne_0.of.Ne_0.joint_slice.
 @[path]
 private lemma main
   [MeasurableSpace Ω]
-  [ReferenceMeasure α] [ReferenceMeasure β]
-  [ReferenceMeasure α'] [ReferenceMeasure β']
+  [μ : ReferenceMeasure α] [ν : ReferenceMeasure β]
+  [μ' : ReferenceMeasure α'] [ν' : ReferenceMeasure β']
   [Countable α] [Countable β]
   [Countable α'] [Countable β']
   [MeasurableSingletonClass α] [MeasurableSingletonClass β]
@@ -28,10 +29,10 @@ private lemma main
   {g : α → α'} {k : β → β'}
   [SinglePSpace π (x, y)]
 -- given
-  (hα : ReferenceMeasure.measure (α := α) = Measure.count)
-  (hβ : ReferenceMeasure.measure (α := β) = Measure.count)
-  (hα' : ReferenceMeasure.measure (α := α') = Measure.count)
-  (hβ' : ReferenceMeasure.measure (α := β') = Measure.count)
+  (hα : μ.measure = Measure.count)
+  (hβ : ν.measure = Measure.count)
+  (hα' : μ'.measure = Measure.count)
+  (hβ' : ν'.measure = Measure.count)
   (hx : Measurable x)
   (hy : Measurable y)
   (hg : Measurable g)
@@ -41,16 +42,18 @@ private lemma main
   (h : ℙ[π](x = v ∧ y = w) ≠ 0) :
 -- imply
   have : ReferenceMeasure.measure (α := α × β) = Measure.count := by
-    change (ReferenceMeasure.measure (α := α)).prod
-        ReferenceMeasure.measure = Measure.count
+    change (μ.measure).prod
+        ν.measure = Measure.count
     rw [hα, hβ, ← Count.eq.ProdCountS]
   have : ReferenceMeasure.measure (α := α' × β') = Measure.count := by
-    change (ReferenceMeasure.measure (α := α')).prod
-        ReferenceMeasure.measure = Measure.count
+    change (μ'.measure).prod
+        ν'.measure = Measure.count
     rw [hα', hβ', ← Count.eq.ProdCountS]
-  have : SinglePSpace π (g ∘ x, k ∘ y) :=
-    SinglePSpace.of.Measurable
-      ((hg.comp hx).prodMk (hk.comp hy)) ‹_›
+  have : SinglePSpace π (g ∘ x, k ∘ y) := by
+    letI : CountableMeasure α' := { measure_eq_count := hα' }
+    letI : CountableMeasure β' := { measure_eq_count := hβ' }
+    letI : CountableMeasure (α' × β') := instCountableMeasureProd
+    exact SinglePSpace.of.Measurable ((hg.comp hx).prodMk (hk.comp hy))
   Measure.prob π (g ∘ x, k ∘ y) (g v, k w) ≠ 0 := by
 -- proof
   intro href href' _
@@ -83,3 +86,4 @@ private lemma main
 
 
 -- created on 2020-12-12
+-- updated on 2026-11-14

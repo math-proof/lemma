@@ -1,5 +1,5 @@
 import Class.MvFormalGroup_BasicV2
-import Lemma.AlgebraicGeometry.RelativeGroupLaw
+import Lemma.Scheme.RelativeGroupLaw
 import Def.CerednikDrinfeld_SchemeNilpPoints
 import Abbrev.AlgebraicGeometry_FormalGroupAlongSection
 

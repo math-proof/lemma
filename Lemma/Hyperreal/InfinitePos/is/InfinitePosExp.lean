@@ -26,7 +26,7 @@ private lemma main
       simp at h
       have h := LtExpS.of.Lt h
       simp at h
-      have : ↑(Real.log δ) = log (δ : ℝ*) := by rfl
+      have : ↑(Real.log δ) = Log.log (δ : ℝ*) := by rfl
       rw [this] at h
       have := LogPos.exp_log_eq_abs (by simp; linarith) (x := (δ : ℝ*))
       simp [show LogPos.exp (Log.log (δ : ℝ*)) = Exp.exp (Log.log (δ : ℝ*)) by rfl] at this
@@ -50,3 +50,4 @@ private lemma main
 
 
 -- created on 2025-12-28
+-- updated on 2026-11-13

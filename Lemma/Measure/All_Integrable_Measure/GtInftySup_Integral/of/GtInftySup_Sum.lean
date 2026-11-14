@@ -14,13 +14,13 @@ Used to apply dens / FunSMul Subset leaves from CountableMeasure sum-hypotheses.
 -/
 @[path]
 private lemma main
-  [CountableMeasure A] [MeasurableSingletonClass A] [Fintype A]
+  [μ : CountableMeasure A] [MeasurableSingletonClass A] [Fintype A]
   {g : ι → A → ℝ}
 -- given
   (h : sup[x] (∑ u, g x u) < ∞) :
 -- imply
-  (∀ x, Integrable (g x) ReferenceMeasure.measure) ∧
-    (sup[x] (∫ u, g x u ∂ReferenceMeasure.measure) < ∞) := by
+  (∀ x, Integrable (g x) μ.measure) ∧
+    (sup[x] (∫ u, g x u ∂μ.measure) < ∞) := by
 -- proof
   have hμ : (ReferenceMeasure.measure : Measure A) = Measure.count :=
     CountableMeasure.measure_eq_count

@@ -1,7 +1,7 @@
 import Mathlib
-import Lemma.ModularCurve.QAdicPlace
-import Lemma.ModularCurve.JqCoeff
-import Lemma.ModularCurve.QAdicPlaceMod
+import Lemma.HahnSeries.QAdicPlace
+import Lemma.HahnSeries.JqCoeff
+import Lemma.HahnSeries.QAdicPlaceMod
 
 noncomputable section InlinedTheorems
 
@@ -37,13 +37,13 @@ private theorem coeff_jqModC_neg_one_loc : (jqModC K).coeff (-1 : ℤ) = 1 := by
 end CharLRows
 end ModularCurve
 
-open ModularCurve in
+open ModularCurve in HahnSeries
 
 private theorem ModularCurve.coeff_jqModC_neg_one_loc (K : Type*) [CommRing K] :
     (jqModC K).coeff (-1 : ℤ) = 1 :=
   CharLRows.coeff_jqModC_neg_one_loc K
 
-open ModularCurve in
+open ModularCurve in HahnSeries
 
 private theorem ModularCurve.coeff_jqModC_pow_of_lt_loc (K : Type*) [CommRing K] {b : ℕ} {m : ℤ} (hm : m < -(b : ℤ)) :
     ((jqModC K) ^ b).coeff m = 0 :=

@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.CerednikDrinfeld.DrinfeldHolomorphic
+import Lemma.Polynomial.DrinfeldHolomorphic
 import Lemma.Int.P2MUtil
 
 open Filter CerednikDrinfeld.Omega
@@ -137,10 +137,13 @@ private lemma  exists_denominator
         refine le_trans ?_ (hb (Valued.v z) hz'.1)
         rw [Polynomial.eval_C, Valuation.map_one, mul_one, Valuation.map_div, Valuation.map_neg]
         have h1w : 1 ≤ Valued.v w := (one_le_pow₀ hpinv).trans hbig.le
-        calc Valued.v (z - w') / Valued.v w ≤ Valued.v (z - w') / 1 := by
-          rw [div_one, div_eq_mul_inv]
-          exact mul_le_of_le_one_right' (inv_le_one_of_one_le₀ h1w)
-          _ ≤ max (Valued.v z) (Valued.v w') := by rw [div_one]; exact Valuation.map_sub _ _ _
+        calc
+          Valued.v (z - w') / Valued.v w ≤ Valued.v (z - w') / 1 := by
+            rw [div_eq_mul_inv, div_eq_mul_inv, inv_one, mul_one]
+            exact mul_le_of_le_one_right' (inv_le_one_of_one_le₀ h1w)
+          _ ≤ max (Valued.v z) (Valued.v w') := by
+            rw [div_one]
+            exact Valuation.map_sub _ _ _
       ·
         have hz' := (mem_affinoid_iff' ϖ n z).mp hz
         have heq : (z - w) / (Polynomial.C (-w)).eval z - 1 = -(z / w) := by

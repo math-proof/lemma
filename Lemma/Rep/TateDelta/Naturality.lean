@@ -1,8 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.GroupCohomology.TateCohomology
-import Lemma.GroupCohomology.TateSeam
-import Lemma.GroupCohomology.TateShiftMaps
+import Lemma.LinearMap.TateCohomology
+import Lemma.Rep.TateSeam
+import Lemma.Rep.TateShiftMaps
 import Lemma.Int.P2MUtil
 
 open CategoryTheory Rep

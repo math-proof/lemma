@@ -111,7 +111,7 @@ private lemma LocalTypePreservingImpliesGlobal
 -- imply
   g ∈ gbp.G :=
 -- proof
-  gbp.TypePreservingImpliesGlobal g h hpres
+  TypePreservingImpliesGlobal h hpres
 
 end GeneralizedBNPair
 

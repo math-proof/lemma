@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.ModularCurve.FrobeniusModL
+import Lemma.LaurentSeries.FrobeniusModL
 
 set_option autoImplicit false
 

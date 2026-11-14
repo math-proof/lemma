@@ -1,7 +1,7 @@
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
-import Lemma.Random.MEq_Clip.of.All_Eq
-import Lemma.Random.NormClip.le.AbsR
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Real
+import Lemma.Random.MEq_Clip.of.All_Eq.All_EqWithDensity
+import Lemma.Random.NormClip.le.Abs_R
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Random Real
 
 
 /--
@@ -9,14 +9,15 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random 
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A] [MeasurableSpace B] [MeasurableSingletonClass B] [Fintype B]
-  {M : Model Θ S A}
-  {r : ℕ → (ℕ → ℝ × S × A) → ℝ}
-  {s : ℕ → (ℕ → ℝ × S × A) → S}
-  {a : ℕ → (ℕ → ℝ × S × A) → A}
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  [MeasurableSpace B] [MeasurableSingletonClass B] [Fintype B]
+  {M : DensityModel Θ 𝒮 𝒜}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {X : (ℕ → ℝ × 𝒮 × 𝒜) → B}
 -- given
-  (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (X : (ℕ → ℝ × S × A) → B)
+  (h₀ : ∀ t, (· t) = (r t, s t, a t))
   (hX : Measurable X)
   (θ : Θ)
   (φ : B → ℝ)
@@ -24,14 +25,15 @@ private lemma main
 -- imply
   Integrable (fun ω => φ (X ω) * r t ω) (M θ) := by
 -- proof
-  refine Integrable.of_bound (C := (∑ b, ‖φ b‖) * |M.env.R|) ?_ ((MEq_Clip.of.All_Eq h₁ (M := M) θ t).mono fun ω h => ?_)
+  refine Integrable.of_bound (C := (∑ b, ‖φ b‖) * |M.env.R|) ?_ ((MEq_Clip.of.All_Eq.All_EqWithDensity h₀ (M := M) θ t).mono fun ω h => ?_)
   · exact (((StronglyMeasurable.of_discrete (f := φ)).comp_measurable hX).mul
-      (Random.Measurable.of.All_Eq.fst h₁ t).stronglyMeasurable).aestronglyMeasurable
+      (Random.Measurable.of.All_Eq.fst h₀ t).stronglyMeasurable).aestronglyMeasurable
   ·
     rw [norm_mul, h]
     exact mul_le_mul (Finset.single_le_sum (f := fun b => ‖φ b‖) (fun _ _ => norm_nonneg _)
-      (Finset.mem_univ _)) (NormClip.le.AbsR (M := M) _) (norm_nonneg _)
+      (Finset.mem_univ _)) (NormClip.le.Abs_R M.env.R _) (norm_nonneg _)
       (Finset.sum_nonneg (fun _ _ => norm_nonneg _))
 
 
 -- created on 2026-10-07
+-- updated on 2026-11-14

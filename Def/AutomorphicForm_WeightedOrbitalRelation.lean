@@ -1,4 +1,4 @@
-import Lemma.AutomorphicForm.TwistedOrbital
+import Lemma.Measure.TwistedOrbital
 import Def.NumberField_AdelicHeight
 
 set_option autoImplicit false

@@ -9,7 +9,7 @@ namespace MetaMathlibExt
 [choose_pos'](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma choose_pos' (n : ℕ) : (0:ℝ) < (Nat.choose (2*n) n : ℝ) := by
+private lemma choose_pos'_eq_lemma (n : ℕ) : (0:ℝ) < (Nat.choose (2*n) n : ℝ) := by
   have h : 0 < Nat.choose (2*n) n := Nat.choose_pos (by omega)
   exact_mod_cast h
 
@@ -21,7 +21,7 @@ namespace MetaMathlibExt
 [choose_ne'](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma choose_ne' (n : ℕ) : (Nat.choose (2*n) n : ℝ) ≠ 0 :=
+private lemma choose_ne'_eq_lemma (n : ℕ) : (Nat.choose (2*n) n : ℝ) ≠ 0 :=
   ne_of_gt (choose_pos' n)
 
 end MetaMathlibExt
@@ -32,7 +32,7 @@ namespace MetaMathlibExt
 [Aterm_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma Aterm_zero (x : ℝ) : Aterm x 0 = 0 := by
+private lemma Aterm_zero_eq_lemma (x : ℝ) : Aterm x 0 = 0 := by
   simp [Aterm]
 
 end MetaMathlibExt
@@ -43,7 +43,7 @@ namespace MetaMathlibExt
 [choose_rec](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma choose_rec (n : ℕ) :
+private lemma choose_rec_eq_lemma (n : ℕ) :
   (Nat.choose (2*(n+1)) (n+1) : ℝ) * ((n:ℝ)+1)
     = (Nat.choose (2*n) n : ℝ)*(2*(2*(n:ℝ)+1)) := by
   have h1 := Nat.choose_mul_factorial_mul_factorial (show n+1 ≤ 2*(n+1) by omega)
@@ -95,7 +95,7 @@ namespace MetaMathlibExt
 [four_pow_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma four_pow_le (n : ℕ) (hn : 1 ≤ n) :
+private lemma four_pow_le_eq_lemma (n : ℕ) (hn : 1 ≤ n) :
   (4^n : ℝ) ≤ 2*(n:ℝ)*(Nat.choose (2*n) n : ℝ) := by
   induction n, hn using Nat.le_induction with
   | base =>
@@ -133,7 +133,7 @@ namespace MetaMathlibExt
 [ratio_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma ratio_le (n : ℕ) (hn : 1 ≤ n) :
+private lemma ratio_le_eq_lemma (n : ℕ) (hn : 1 ≤ n) :
   (4^n : ℝ)/((n:ℝ)*(Nat.choose (2*n) n : ℝ)) ≤ 2 := by
   have hpos : (0:ℝ) < (n:ℝ)*(Nat.choose (2*n) n : ℝ) := by
     apply mul_pos _ (choose_pos' n)
@@ -149,7 +149,7 @@ namespace MetaMathlibExt
 [summable_succ_mul_geom](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma summable_succ_mul_geom (q : ℝ) (hq0 : 0 ≤ q) (hq1 : q < 1) :
+private lemma summable_succ_mul_geom_eq_lemma (q : ℝ) (hq0 : 0 ≤ q) (hq1 : q < 1) :
   Summable (fun n : ℕ => ((n:ℝ)+1)*q^n) := by
   have h1 := summable_pow_mul_geometric_of_norm_lt_one (R := ℝ) 1 (r := q) (by
     rw [Real.norm_eq_abs, abs_of_nonneg hq0]; exact hq1)
@@ -168,7 +168,7 @@ namespace MetaMathlibExt
 [summable_Aterm](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma summable_Aterm (x : ℝ) (hx : |x| < 1) : Summable (Aterm x) := by
+private lemma summable_Aterm_eq_lemma (x : ℝ) (hx : |x| < 1) : Summable (Aterm x) := by
   have hx2 : x^2 < 1 := by
     nlinarith [hx, abs_nonneg x, sq_abs x]
   have hgeom := summable_geometric_of_lt_one (sq_nonneg x) hx2
@@ -197,7 +197,7 @@ private lemma summable_Aterm (x : ℝ) (hx : |x| < 1) : Summable (Aterm x) := by
     rw [hnorm]
     calc ((4^n:ℝ)/((n:ℝ)*(Nat.choose (2*n) n : ℝ)))*(x^2)^n
       ≤ 2*(x^2)^n := by
-        apply mul_le_mul_of_nonneg_right hratio (pow_nonneg (sq_nonneg x) n)
+          apply mul_le_mul_of_nonneg_right hratio (pow_nonneg (sq_nonneg x) n)
       _ = 2*((x^2)^n) := by ring
 
 end MetaMathlibExt
@@ -208,7 +208,7 @@ namespace MetaMathlibExt
 [dcoef_nonneg](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma dcoef_nonneg (n : ℕ) : 0 ≤ dcoef n := by
+private lemma dcoef_nonneg_eq_lemma (n : ℕ) : 0 ≤ dcoef n := by
   unfold dcoef
   apply div_nonneg (pow_nonneg (by norm_num) n)
   exact le_of_lt (choose_pos' n)
@@ -221,7 +221,7 @@ namespace MetaMathlibExt
 [dcoef_rec](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma dcoef_rec (n : ℕ) :
+private lemma dcoef_rec_eq_lemma (n : ℕ) :
   (2 * (n : ℝ) + 1) * dcoef (n + 1) = 2 * ((n : ℝ) + 1) * dcoef n := by
   have hr := choose_rec n
   have hC0 : (Nat.choose (2 * n) n : ℝ) ≠ 0 := choose_ne' n
@@ -242,7 +242,7 @@ namespace MetaMathlibExt
 [dcoef_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma dcoef_one : dcoef 1 = 2 := by
+private lemma dcoef_one_eq_lemma : dcoef 1 = 2 := by
   have h : Nat.choose (2 * 1) 1 = 2 := by decide
   norm_num [dcoef, h]
 
@@ -254,7 +254,7 @@ namespace MetaMathlibExt
 [Dterm_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma Dterm_zero (x : ℝ) : Dterm x 0 = 0 := by
+private lemma Dterm_zero_eq_lemma (x : ℝ) : Dterm x 0 = 0 := by
 simp [Dterm]
 
 end MetaMathlibExt
@@ -265,7 +265,7 @@ namespace MetaMathlibExt
 [Dterm_bound](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma Dterm_bound (x : ℝ) (hx0 : x ≠ 0) (n : ℕ) (hn : 1 ≤ n) :
+private lemma Dterm_bound_eq_lemma (x : ℝ) (hx0 : x ≠ 0) (n : ℕ) (hn : 1 ≤ n) :
   ‖Dterm x n‖ ≤ (4 / |x|) * (((n : ℝ) + 1) * (x ^ 2) ^ n) := by
   have hratio := ratio_le n hn
   have hnR : (0:ℝ) < (n:ℝ) := by exact_mod_cast (by omega : 0 < n)
@@ -315,7 +315,7 @@ namespace MetaMathlibExt
 [summable_Dterm](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma summable_Dterm (x : ℝ) (hx : |x| < 1) : Summable (Dterm x) := by
+private lemma summable_Dterm_eq_lemma (x : ℝ) (hx : |x| < 1) : Summable (Dterm x) := by
   by_cases hx0 : x = 0
   · subst hx0
     have h0 : Dterm 0 = fun _ => 0 := by
@@ -345,7 +345,7 @@ namespace MetaMathlibExt
 [S2term_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma S2term_zero (x : ℝ) : S2term x 0 = 0 := by
+private lemma S2term_zero_eq_lemma (x : ℝ) : S2term x 0 = 0 := by
 simp [S2term]
 
 end MetaMathlibExt
@@ -356,7 +356,7 @@ namespace MetaMathlibExt
 [S2term_bound](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma S2term_bound (x : ℝ) (hx0 : x ≠ 0) (n : ℕ) (hn : 1 ≤ n) :
+private lemma S2term_bound_eq_lemma (x : ℝ) (hx0 : x ≠ 0) (n : ℕ) (hn : 1 ≤ n) :
   ‖S2term x n‖ ≤ (8 / x ^ 2) * ((n : ℝ) ^ 2 * (x ^ 2) ^ n)
     + (4 / x ^ 2) * (((n : ℝ) + 1) * (x ^ 2) ^ n) := by
   have hratio := ratio_le n hn
@@ -428,7 +428,7 @@ namespace MetaMathlibExt
 [summable_S2term](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma summable_S2term (x : ℝ) (hx : |x| < 1) : Summable (S2term x) := by
+private lemma summable_S2term_eq_lemma (x : ℝ) (hx : |x| < 1) : Summable (S2term x) := by
   by_cases hx0 : x = 0
   · subst hx0
     have hsupp : Function.support (S2term 0) ⊆ {1} := by
@@ -469,7 +469,7 @@ namespace MetaMathlibExt
 [two_pow_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma two_pow_eq (n : ℕ) : (2 : ℝ) ^ (2 * n) = 4 ^ n := by
+private lemma two_pow_eq_lemma (n : ℕ) : (2 : ℝ) ^ (2 * n) = 4 ^ n := by
   calc (2 : ℝ) ^ (2 * n) = ((2 : ℝ) ^ 2) ^ n := by rw [pow_mul]
     _ = 4 ^ n := by norm_num
 
@@ -481,7 +481,7 @@ namespace MetaMathlibExt
 [hasDerivAt_Aterm](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma hasDerivAt_Aterm (x : ℝ) (n : ℕ) : HasDerivAt (fun y => Aterm y n) (Dterm x n) x := by
+private lemma hasDerivAt_Aterm_eq_lemma (x : ℝ) (n : ℕ) : HasDerivAt (fun y => Aterm y n) (Dterm x n) x := by
   by_cases hn : n = 0
   · subst hn
     have hfun : (fun y => Aterm y 0) = fun _ => 0 := by
@@ -511,7 +511,7 @@ namespace MetaMathlibExt
 [hasDerivAt_Dterm](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma hasDerivAt_Dterm (x : ℝ) (n : ℕ) : HasDerivAt (fun y => Dterm y n) (S2term x n) x := by
+private lemma hasDerivAt_Dterm_eq_lemma (x : ℝ) (n : ℕ) : HasDerivAt (fun y => Dterm y n) (S2term x n) x := by
   by_cases hn : n = 0
   · subst hn
     have hfun : (fun y => Dterm y 0) = fun _ => 0 := by
@@ -541,7 +541,7 @@ namespace MetaMathlibExt
 [mem_ball_zero_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma mem_ball_zero_iff (y r : ℝ) : y ∈ Metric.ball (0 : ℝ) r ↔ |y| < r := by
+private lemma mem_ball_zero_iff_eq_lemma (y r : ℝ) : y ∈ Metric.ball (0 : ℝ) r ↔ |y| < r := by
   rw [Metric.mem_ball, dist_zero_right, Real.norm_eq_abs]
 
 end MetaMathlibExt
@@ -552,7 +552,7 @@ namespace MetaMathlibExt
 [Dterm_uniform_bound](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma Dterm_uniform_bound (r : ℝ) (hr : 0 < r) (n : ℕ) (y : ℝ)
+private lemma Dterm_uniform_bound_eq_lemma (r : ℝ) (hr : 0 < r) (n : ℕ) (y : ℝ)
   (hy : y ∈ Metric.ball (0 : ℝ) r) :
   ‖Dterm y n‖ ≤ (4 / r) * (((n : ℝ) + 1) * (r ^ 2) ^ n) := by
   have hyr : |y| < r := (mem_ball_zero_iff y r).mp hy
@@ -613,7 +613,7 @@ namespace MetaMathlibExt
 [S2term_uniform_bound](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma S2term_uniform_bound (r : ℝ) (hr : 0 < r) (n : ℕ) (y : ℝ)
+private lemma S2term_uniform_bound_eq_lemma (r : ℝ) (hr : 0 < r) (n : ℕ) (y : ℝ)
   (hy : y ∈ Metric.ball (0 : ℝ) r) :
   ‖S2term y n‖ ≤ (8 / r ^ 2) * ((n : ℝ) ^ 2 * (r ^ 2) ^ n)
     + (4 / r ^ 2) * (((n : ℝ) + 1) * (r ^ 2) ^ n) := by
@@ -693,7 +693,7 @@ namespace MetaMathlibExt
 [hasDerivAt_Sfun](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma hasDerivAt_Sfun (x : ℝ) (hx : |x| < 1) : HasDerivAt Sfun (Dfun x) x := by
+private lemma hasDerivAt_Sfun_eq_lemma (x : ℝ) (hx : |x| < 1) : HasDerivAt Sfun (Dfun x) x := by
   set r := (|x| + 1) / 2 with hr_def
   have hr0 : (0:ℝ) < r := by
     have : (0:ℝ) ≤ |x| := abs_nonneg x
@@ -744,7 +744,7 @@ namespace MetaMathlibExt
 [hasDerivAt_Dfun](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma hasDerivAt_Dfun (x : ℝ) (hx : |x| < 1) : HasDerivAt Dfun (S2fun x) x := by
+private lemma hasDerivAt_Dfun_eq_lemma (x : ℝ) (hx : |x| < 1) : HasDerivAt Dfun (S2fun x) x := by
   set r := (|x| + 1) / 2 with hr_def
   have hr0 : (0:ℝ) < r := by
     have : (0:ℝ) ≤ |x| := abs_nonneg x
@@ -797,7 +797,7 @@ namespace MetaMathlibExt
 [S2term_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma S2term_one (x : ℝ) : S2term x 1 = 4 := by
+private lemma S2term_one_eq_lemma (x : ℝ) : S2term x 1 = 4 := by
   have h1 : S2term x 1 = 2 * dcoef 1 * ((2 * 1 - 1 : ℕ) : ℝ) * x ^ (2 * 1 - 2) := by
     simp [S2term]
   rw [h1]
@@ -811,7 +811,7 @@ namespace MetaMathlibExt
 [S2term_succ](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma S2term_succ (x : ℝ) (m : ℕ) :
+private lemma S2term_succ_eq_lemma (x : ℝ) (m : ℕ) :
   S2term x (m + 1) = 2 * dcoef (m + 1) * (2 * (m : ℝ) + 1) * x ^ (2 * m) := by
   have h1 : 2 * (m + 1) - 1 = 2 * m + 1 := by omega
   have h2 : 2 * (m + 1) - 2 = 2 * m := by omega
@@ -827,7 +827,7 @@ namespace MetaMathlibExt
 [Dterm_succ](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma Dterm_succ (x : ℝ) (m : ℕ) :
+private lemma Dterm_succ_eq_lemma (x : ℝ) (m : ℕ) :
   Dterm x (m + 1) = 2 * dcoef (m + 1) * x ^ (2 * m + 1) := by
   have h1 : 2 * (m + 1) - 1 = 2 * m + 1 := by omega
   simp only [Dterm, show m + 1 ≠ 0 by omega, ↓reduceIte, h1]
@@ -840,7 +840,7 @@ namespace MetaMathlibExt
 [ode_S](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma ode_S (x : ℝ) (hx : |x| < 1) :
+private lemma ode_S_eq_lemma (x : ℝ) (hx : |x| < 1) :
   (1 - x ^ 2) * S2fun x - 3 * x * Dfun x = 4 := by
   have hS2 := summable_S2term x hx
   have hD := summable_Dterm x hx
@@ -909,7 +909,7 @@ namespace MetaMathlibExt
 [hpos_of_mem](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma hpos_of_mem (x : ℝ) (hx : |x| < 1) : (0:ℝ) < 1 - x ^ 2 := by
+private lemma hpos_of_mem_eq_lemma (x : ℝ) (hx : |x| < 1) : (0:ℝ) < 1 - x ^ 2 := by
   have hx2 : x ^ 2 < 1 := by nlinarith [hx, abs_nonneg x, sq_abs x]
   linarith
 
@@ -921,7 +921,7 @@ namespace MetaMathlibExt
 [hne_one_of_mem](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma hne_one_of_mem (x : ℝ) (hx : |x| < 1) : x ≠ 1 ∧ x ≠ -1 := by
+private lemma hne_one_of_mem_eq_lemma (x : ℝ) (hx : |x| < 1) : x ≠ 1 ∧ x ≠ -1 := by
   constructor
   · intro h; rw [h] at hx; norm_num at hx
   · intro h; rw [h] at hx; norm_num at hx
@@ -934,7 +934,7 @@ namespace MetaMathlibExt
 [hasDerivAt_H](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma hasDerivAt_H (x : ℝ) (hx : |x| < 1) : HasDerivAt Hfun (H1fun x) x := by
+private lemma hasDerivAt_H_eq_lemma (x : ℝ) (hx : |x| < 1) : HasDerivAt Hfun (H1fun x) x := by
   have hpos : (0:ℝ) < 1 - x ^ 2 := hpos_of_mem x hx
   have hne : (1:ℝ) - x ^ 2 ≠ 0 := ne_of_gt hpos
   have hne_sqrt : Real.sqrt (1 - x ^ 2) ≠ 0 := Real.sqrt_ne_zero'.mpr hpos
@@ -980,7 +980,7 @@ namespace MetaMathlibExt
 [hasDerivAt_H1](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma hasDerivAt_H1 (x : ℝ) (hx : |x| < 1) : HasDerivAt H1fun (H2fun x) x := by
+private lemma hasDerivAt_H1_eq_lemma (x : ℝ) (hx : |x| < 1) : HasDerivAt H1fun (H2fun x) x := by
   have hpos : (0:ℝ) < 1 - x ^ 2 := hpos_of_mem x hx
   have hne : (1:ℝ) - x ^ 2 ≠ 0 := ne_of_gt hpos
   have hne_sqrt : Real.sqrt (1 - x ^ 2) ≠ 0 := Real.sqrt_ne_zero'.mpr hpos
@@ -1036,7 +1036,7 @@ namespace MetaMathlibExt
 [ode_H](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma ode_H (x : ℝ) (hx : |x| < 1) :
+private lemma ode_H_eq_lemma (x : ℝ) (hx : |x| < 1) :
   (1 - x ^ 2) * H2fun x - 3 * x * H1fun x = 4 := by
   have hpos : (0:ℝ) < 1 - x ^ 2 := hpos_of_mem x hx
   have hne : (1:ℝ) - x ^ 2 ≠ 0 := ne_of_gt hpos
@@ -1057,7 +1057,7 @@ namespace MetaMathlibExt
 [Sfun_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma Sfun_zero : Sfun 0 = 0 := by
+private lemma Sfun_zero_eq_lemma : Sfun 0 = 0 := by
   have h0 : Aterm 0 = fun _ => 0 := by
     funext n
     by_cases hn : n = 0
@@ -1075,7 +1075,7 @@ namespace MetaMathlibExt
 [Dfun_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma Dfun_zero : Dfun 0 = 0 := by
+private lemma Dfun_zero_eq_lemma : Dfun 0 = 0 := by
   have h0 : Dterm 0 = fun _ => 0 := by
     funext n
     by_cases hn : n = 0
@@ -1092,7 +1092,7 @@ namespace MetaMathlibExt
 [Hfun_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma Hfun_zero : Hfun 0 = 0 := by
+private lemma Hfun_zero_eq_lemma : Hfun 0 = 0 := by
 simp [Hfun, Real.arcsin_zero]
 
 end MetaMathlibExt
@@ -1103,7 +1103,7 @@ namespace MetaMathlibExt
 [H1fun_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma H1fun_zero : H1fun 0 = 0 := by
+private lemma H1fun_zero_eq_lemma : H1fun 0 = 0 := by
 simp [H1fun, Real.arcsin_zero]
 
 end MetaMathlibExt
@@ -1114,7 +1114,7 @@ namespace MetaMathlibExt
 [hodeK](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma hodeK (y : ℝ) (hy : |y| < 1) :
+private lemma hodeK_eq_lemma (y : ℝ) (hy : |y| < 1) :
   (1 - y ^ 2) * (S2fun y - H2fun y) - 3 * y * (Dfun y - H1fun y) = 0 := by
   have h1 := ode_S y hy
   have h2 := ode_H y hy
@@ -1128,7 +1128,7 @@ namespace MetaMathlibExt
 [hasDerivAt_Jfun](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma hasDerivAt_Jfun (y : ℝ) (hy : |y| < 1) : HasDerivAt Jfun 0 y := by
+private lemma hasDerivAt_Jfun_eq_lemma (y : ℝ) (hy : |y| < 1) : HasDerivAt Jfun 0 y := by
   have hpos : (0:ℝ) < 1 - y ^ 2 := hpos_of_mem y hy
   have hne : (1:ℝ) - y ^ 2 ≠ 0 := ne_of_gt hpos
   have hne_sqrt : Real.sqrt (1 - y ^ 2) ≠ 0 := Real.sqrt_ne_zero'.mpr hpos
@@ -1168,7 +1168,7 @@ namespace MetaMathlibExt
 [K_eq_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma K_eq_zero (y : ℝ) (hy : |y| < 1) : Dfun y - H1fun y = 0 := by
+private lemma K_eq_zero_eq_lemma (y : ℝ) (hy : |y| < 1) : Dfun y - H1fun y = 0 := by
   set s := Metric.ball (0 : ℝ) 1 with hs_def
   have hs_open : IsOpen s := Metric.isOpen_ball
   have hs_conn : IsPreconnected s := (convex_ball (0 : ℝ) 1).isPreconnected
@@ -1199,7 +1199,7 @@ namespace MetaMathlibExt
 [SH_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-private lemma SH_eq (y : ℝ) (hy : |y| < 1) : Sfun y = Hfun y := by
+private lemma SH_eq_lemma (y : ℝ) (hy : |y| < 1) : Sfun y = Hfun y := by
   set s := Metric.ball (0 : ℝ) 1 with hs_def
   have hs_open : IsOpen s := Metric.isOpen_ball
   have hs_conn : IsPreconnected s := (convex_ball (0 : ℝ) 1).isPreconnected
@@ -1233,7 +1233,7 @@ namespace MetaMathlibExt
 [ArcsinCentralBinomialReciprocal](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ArcsinCentralBinomialReciprocal.lean)
 -/
 @[path]
-lemma arcsin_central_binomial_reciprocal_series
+lemma arcsin_central_binomial_reciprocal_series_eq_lemma
 -- given
   (x : ℝ)
   (hx : |x| < 1) :

@@ -26,7 +26,7 @@ namespace DifferentialOperators
 [dbarFundSolDist_eq_cauchyRiemannDistribution](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/DifferentialAnalysis/code/Lemma11_5.lean)
 -/
 @[path]
-lemma dbarFundSolDist_eq_cauchyRiemannDistribution
+lemma dbarFundSolDist_eq_cauchyRiemannDistribution :
 -- imply
   dbarFundSolDist = cauchyRiemannDistribution := by
 -- proof
@@ -42,7 +42,7 @@ namespace DifferentialOperators
 [dbar_dbarFundSol_eq_delta](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/DifferentialAnalysis/code/Lemma11_5.lean)
 -/
 @[path]
-lemma dbar_dbarFundSol_eq_delta
+lemma dbar_dbarFundSol_eq_delta :
 -- imply
   dbarOp dbarFundSolDist = TemperedDistribution.delta (0 : EuclideanSpace ℝ (Fin 2)) := by
 -- proof
@@ -56,7 +56,7 @@ namespace DifferentialOperators
 [dbarFundSolDist_isFundSol](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/DifferentialAnalysis/code/Lemma11_5.lean)
 -/
 @[path]
-lemma dbarFundSolDist_isFundSol
+lemma dbarFundSolDist_isFundSol :
 -- imply
   IsTemperedFundamentalSolution 2 dbarPoly dbarFundSolDist :=
 -- proof

@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_CuspSpace.lean: instance decls only.
 import Mathlib
-import Lemma.ModularCurve.CuspSpace
+import Lemma.Matrix.CuspSpace
 
 open Matrix Matrix.SpecialLinearGroup OnePoint CongruenceSubgroup
 
@@ -52,4 +52,3 @@ end ModularCurve
 open Matrix Matrix.SpecialLinearGroup OnePoint CongruenceSubgroup
 
 open scoped MatrixGroups
-

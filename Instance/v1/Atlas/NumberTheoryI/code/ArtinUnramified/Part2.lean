@@ -20,7 +20,7 @@ import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.GroupTheory.Index
 import Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90
-import Mathlib.Algebra.Set.Closure.eq.N.of.Eq
+import Lemma.Set.Closure.eq.N.of.Eq
 import Mathlib.RingTheory.Trace.Basic
 import Mathlib.LinearAlgebra.Dimension.Finrank
 import Mathlib.RingTheory.Ideal.Norm.RelNorm
@@ -43,7 +43,9 @@ attribute [instance] CyclicExtensionData.instGroupG
   CyclicExtensionData.instCommGroupM CyclicExtensionData.instFiniteM
   CyclicExtensionData.instAction
 
-instance galActsOnUnits : MulDistribMulAction (L ≃ₐ[K] L) (𝓞 L)ˣ :=
+instance galActsOnUnits (K L : Type*) [Field K] [NumberField K] [Field L]
+    [NumberField L] [Algebra K L] [IsGalois K L] [FiniteDimensional K L] :
+    MulDistribMulAction (L ≃ₐ[K] L) (𝓞 L)ˣ :=
   MulDistribMulAction.compHom (𝓞 L)ˣ (galUnitsAutHom K L)
 
 end ArtinUnramified

@@ -1,7 +1,7 @@
 -- Carved from Lemma/Definitions/Def_GroupCohomology_SelmerAdm.lean: instance decls only.
 import Mathlib
-import Lemma.GroupCohomology.SelmerLe
-import Lemma.GroupCohomology.SelmerAdm
+import Lemma.Rep.SelmerLe
+import Lemma.Rep.SelmerAdm
 
 set_option autoImplicit false
 

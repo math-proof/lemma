@@ -9,14 +9,14 @@ open Random MeasureTheory
 @[path]
 private lemma main
   [MeasurableSpace Ω]
-  [ReferenceMeasure α] [ReferenceMeasure β]
+  [μ : ReferenceMeasure α] [ReferenceMeasure β]
   {π : Measure Ω}
   {x : Ω → α} {y : Ω → β}
 -- given
   (hP : SinglePSpace π (x, y)) :
 -- imply
   ∀ᵐ «\sf{y}» ∂π.map y,
-    ∫⁻ «\sf{x}», ℙ[π](x = «\sf{x}» | y = «\sf{y}») ∂ReferenceMeasure.measure = 1 := by
+    ∫⁻ «\sf{x}», ℙ[π](x = «\sf{x}» | y = «\sf{y}») ∂μ.measure = 1 := by
 -- proof
   have := SinglePSpace.of.SinglePSpace.snd hP
   let μ : Measure α := ReferenceMeasure.measure
@@ -81,4 +81,4 @@ private lemma main
 
 
 -- created on 2021-07-20
--- updated on 2026-11-02
+-- updated on 2026-11-14

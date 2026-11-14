@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.AlgebraicCurve.Correspondence
+import Lemma.Scheme.Correspondence
 import Def.AlgebraicCurve_Differentials
 
 set_option autoImplicit false

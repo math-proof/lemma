@@ -27,7 +27,7 @@ private lemma main
   ∑ a, ψ a = (Fintype.card A : ℂ) := by
 -- proof
   classical
-  rw [AddChar.sum_eq_ite, if_pos hψ]
+  rw [AddChar.sum_eq_ite, ite_eq_left hψ]
 
 end LocalGL2.Kirillov
 

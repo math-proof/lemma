@@ -2,6 +2,9 @@ import Mathlib.RingTheory.AdicCompletion.Basic
 import Mathlib.RingTheory.DiscreteValuationRing.Basic
 import Mathlib.RingTheory.Noetherian.Basic
 import Structure.GaloisRep_Adic
+import Def.GaloisRep_Adic
+import Def.GaloisRep_Residual
+import Def.GaloisRep_ResidualEquiv
 
 namespace GaloisRep
 

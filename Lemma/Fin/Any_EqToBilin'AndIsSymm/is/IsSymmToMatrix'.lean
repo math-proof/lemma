@@ -49,7 +49,7 @@ private lemma orthogonal_complement_def
   {W : Submodule R M}
   {v : M} :
 -- imply
-  v ∈ B.orthogonal W ↔ ∀ w ∈ W, B.IsOrtho w v :=
+  v ∈ B.orthogonal W ↔ ∀ w ∈ W, B w v = 0 :=
 -- proof
   mem_orthogonal_iff
 
@@ -106,4 +106,4 @@ private lemma signature_invariance
 
 
 -- created on 2026-10-23
--- updated on 2026-10-26
+-- updated on 2026-11-13

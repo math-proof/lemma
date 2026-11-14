@@ -1,7 +1,6 @@
 import Mathlib.NumberTheory.ModularForms.Basic
-import Lemma.CohCarrier.Inst
+import Lemma.ZMod.Inst
 import Lemma.ModularForm.HeckeOperator
-import Instance.CuspForm_HeckeOperatorFormsGammaH
 
 set_option autoImplicit false
 

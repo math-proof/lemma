@@ -21,8 +21,8 @@ lemma wimanMaximumTerm_le_wimanMaximumModulus
   wimanMaximumTerm f r ≤ wimanMaximumModulus f r := by
 -- proof
   obtain ⟨z, hz, hzmax, hmax⟩ :=
-    exists_mem_sphere_eq_wimanMaximumModulus f hf hr.le
-  apply (wimanMaximumTerm_le_iff f hf r _).2
+    exists_mem_sphere_eq_wimanMaximumModulus (f := f) (r := r) hf hr.le
+  apply (wimanMaximumTerm_le_iff (f := f) (r := r) hf).2
   intro n
   have hcircle :
     ∀ w ∈ Metric.sphere (0 : ℂ) r, ‖f w‖ ≤ wimanMaximumModulus f r := by
@@ -40,7 +40,7 @@ lemma wimanMaximumTerm_le_wimanMaximumModulus
   apply (div_le_iff₀ hfac).2
   have hscaled := (le_div_iff₀ hrpow).1 hcauchy
   simpa only [mul_comm] using hscaled
-end
+end Complex
 
 
 

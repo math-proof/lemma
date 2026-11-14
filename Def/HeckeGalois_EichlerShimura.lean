@@ -1,5 +1,5 @@
 import Def.FLTPrelim_Ramification
-import Lemma.EllipticCurve.FrobeniusTrace
+import Lemma.WeierstrassCurve.FrobeniusTrace
 import Mathlib.Algebra.MvPolynomial.CommRing
 import Mathlib.Algebra.Module.Torsion.Basic
 import Mathlib.LinearAlgebra.Determinant

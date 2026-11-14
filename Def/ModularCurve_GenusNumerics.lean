@@ -2,7 +2,7 @@ import Mathlib.NumberTheory.LegendreSymbol.Basic
 import Mathlib.FieldTheory.Finite.Basic
 import Mathlib.Data.Nat.Totient
 import Mathlib.NumberTheory.Divisors
-import Lemma.ModularCurve.X0
+import Lemma.HahnSeries.X0
 
 namespace ModularCurve
 

@@ -1,7 +1,7 @@
 import Def.ModularCurve_LevelOneGlueData
-import Lemma.AlgebraicCurve.GluedPic0
+import Lemma.ResidueField.GluedPic0
 import Def.ModularCurve_NodeDepth
-import Lemma.ModularCurve.NodeLocalizedPlaces
+import Lemma.IntermediateField.NodeLocalizedPlaces
 import Def.ModularCurve_ProlongationTuple
 import Structure.ModularCurve_LevelOneAnnulusSpecialization
 set_option autoImplicit false

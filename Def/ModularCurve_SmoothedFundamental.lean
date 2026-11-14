@@ -40,6 +40,6 @@ end ModularCurve.SmoothedFundamental
 
 def ModularCurve.smoothedFundamental (Γ : Subgroup SL(2, ℤ)) (T : ℝ) (z : ℂ) : ℝ :=
   ∑ᶠ q : SL(2, ℤ) ⧸ Γ,
-    ModularCurve.SmoothedFundamental.puCut T (ModularCurve.SmoothedFundamental.mob (Quotient.out q) z)
+    ModularCurve.SmoothedFundamental.puCut T (UpperHalfPlane.SmoothedFundamental.mob (Quotient.out q) z)
 
 end

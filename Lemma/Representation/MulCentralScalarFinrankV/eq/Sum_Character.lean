@@ -2,6 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.GroupTheory.BurnsidePaqb.CentralCharacter.Part3
 open BurnsidePaqb
+open Classical
 
 
 namespace BurnsidePaqb
@@ -76,7 +77,7 @@ lemma centralScalar_isIntegral
 -- imply
   IsIntegral ℤ (centralScalar ρ l) :=
 -- proof
-  IsIntegral.of_mem_of_fg (scalarSubalg ρ) (scalarSubalg_fg ρ) _
+  IsIntegral.of_mem_of_fg (scalarSubalg ρ) scalarSubalg_fg _
     (scalar_mem_scalarSpan ρ l)
 
 end BurnsidePaqb
@@ -106,15 +107,18 @@ lemma classSum_centralScalar_isIntegral
     have hcarry : (ConjClasses.carrier (ConjClasses.mk g)).toFinset
       = conjClass g := by
       rw [carrier_toFinset]
-      apply conjClass_eq_of_isConj
-      rw [← ConjClasses.mk_eq_mk_iff_isConj]
-      exact classRep_spec _
+      ext x
+      rw [mem_conjClass_iff, mem_conjClass_iff]
+      have hconj : IsConj (classRep (ConjClasses.mk g)) g :=
+        (ConjClasses.mk_eq_mk_iff_isConj).mp (classRep_spec _)
+      exact ⟨fun hx => hx.trans hconj, fun hx => hx.trans (isConj_comm.mp hconj)⟩
     have hchar : ∀ x ∈ conjClass g, ρ.character x = ρ.character g := by
       intro x hx
       rw [mem_conjClass_iff] at hx
       obtain ⟨c, hc⟩ := isConj_iff.mp hx
       have hcc := Representation.char_conj ρ x c
-      rwa [hc] at hcc
+      rw [hc] at hcc
+      exact hcc.symm
     have hsum : ∑ x ∈ conjClass g, ρ.character x
       = (conjClass g).card * ρ.character g := by
       calc ∑ x ∈ conjClass g, ρ.character x
@@ -126,7 +130,7 @@ lemma classSum_centralScalar_isIntegral
     rw [hcarry, hsum] at htrace
     rwa [Representation.char_one]
   rw [← hdiv]
-  exact centralScalar_isIntegral ρ _
+  exact centralScalar_isIntegral
 
 end BurnsidePaqb
 

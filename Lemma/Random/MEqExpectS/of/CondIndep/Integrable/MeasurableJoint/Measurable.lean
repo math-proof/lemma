@@ -3,6 +3,7 @@ import Mathlib.MeasureTheory.Function.ConditionalExpectation.Real
 import Mathlib.Probability.Independence.Conditional
 import Initialize.Tactic.Attr.Basic
 import Syntax.Probability.Expectation.Elab
+import Notation.Probability.JointRv
 open MeasureTheory ProbabilityTheory
 
 
@@ -161,3 +162,4 @@ private lemma main
 
 
 -- created on 2026-10-10
+-- updated on 2026-11-13

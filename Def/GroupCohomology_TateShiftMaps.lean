@@ -1,6 +1,6 @@
 import Mathlib
 import Abbrev.GroupCohomology_TateCohomology
-import Lemma.GroupCohomology.TateSeam
+import Lemma.Rep.TateSeam
 
 set_option autoImplicit false
 

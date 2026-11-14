@@ -22,8 +22,6 @@ noncomputable abbrev proj (l : Fin r) : finFibrePow c r ⟶ C :=
 noncomputable abbrev toBase : finFibrePow c r ⟶ Spec (CommRingCat.of k) :=
   WidePullback.base (fun _ : Fin r => c)
 
-@[reassoc]
-
 noncomputable def permHom (σ : Equiv.Perm (Fin r)) : finFibrePow c r ⟶ finFibrePow c r :=
   WidePullback.lift (toBase c r) (fun j => proj c r (σ⁻¹ j)) (fun _ => WidePullback.π_arrow _ _)
 
@@ -50,17 +48,19 @@ theorem permHom_mul (σ τ : Equiv.Perm (Fin r)) :
       Equiv.Perm.mul_apply]
   · rw [permHom_toBase, Category.assoc, permHom_toBase, permHom_toBase]
 
-noncomputable def permAut (σ : Equiv.Perm (Fin r)) : Aut (finFibrePow c r) where
-  hom := permHom c r σ
-  inv := permHom c r σ⁻¹
-  hom_inv_id := by rw [← permHom_mul, inv_mul_cancel, permHom_one]
-  inv_hom_id := by rw [← permHom_mul, mul_inv_cancel, permHom_one]
+noncomputable def permAut (σ : Equiv.Perm (Fin r)) : Aut (finFibrePow c r) :=
+  .of
+    { hom := permHom c r σ
+      inv := permHom c r σ⁻¹
+      hom_inv_id := by rw [← permHom_mul, inv_mul_cancel, permHom_one]
+      inv_hom_id := by rw [← permHom_mul, mul_inv_cancel, permHom_one] }
 
 noncomputable def permAct : Equiv.Perm (Fin r) →* Aut (finFibrePow c r) :=
-  MonoidHom.mk' (permAut c r) (fun σ τ => by
-    ext : 1
-    change permHom c r (σ * τ) = (permAut c r τ).hom ≫ (permAut c r σ).hom
-    exact permHom_mul c r σ τ)
+  MonoidHom.mk' (permAut c r) (fun σ τ =>
+    Aut.ext <| Iso.ext <| by
+      change permHom c r (σ * τ) =
+        (permAut c r τ).asIso.hom ≫ (permAut c r σ).asIso.hom
+      simpa [permAut, Aut.mul_asIso] using permHom_mul c r σ τ)
 
 
 end finFibrePow
@@ -86,19 +86,19 @@ structure SymmetricPowerPackage {k : Type u} [Field k] {C : Scheme.{u}}
 
   π_comp_csym : π ≫ csym = finFibrePow.toBase c r
 
-  permAct_comp_π : ∀ σ : Equiv.Perm (Fin r), (finFibrePow.permAct c r σ).hom ≫ π = π
+  permAct_comp_π : ∀ σ : Equiv.Perm (Fin r), (finFibrePow.permAct c r σ).asIso.hom ≫ π = π
 
   isFinite_π : IsFinite π
 
   surjective_π : Surjective π
 
   π_apply_eq_iff : ∀ x x' : ↥(finFibrePow c r),
-    π.base x = π.base x' ↔ ∃ σ : Equiv.Perm (Fin r), (finFibrePow.permAct c r σ).hom.base x = x'
+    π.base x = π.base x' ↔ ∃ σ : Equiv.Perm (Fin r), (finFibrePow.permAct c r σ).asIso.hom.base x = x'
 
   app_injective : ∀ V : Csym.Opens, Function.Injective (π.app V)
 
   range_app : ∀ V : Csym.Opens, Set.range (π.app V) =
-    {s | ∀ σ : Equiv.Perm (Fin r), (finFibrePow.permAct c r σ).hom.appLE (π ⁻¹ᵁ V) (π ⁻¹ᵁ V)
+    {s | ∀ σ : Equiv.Perm (Fin r), (finFibrePow.permAct c r σ).asIso.hom.appLE (π ⁻¹ᵁ V) (π ⁻¹ᵁ V)
       (le_preimage_of_comp_eq _ _ (permAct_comp_π σ) V) s = s}
 
   exists_affine_chart : ∀ U : C.Opens, IsAffineOpen U →

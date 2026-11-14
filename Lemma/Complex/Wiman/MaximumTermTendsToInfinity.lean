@@ -22,7 +22,7 @@ lemma tendsto_wimanMaximumTerm_atTop
   Tendsto (wimanMaximumTerm f) atTop atTop := by
 -- proof
   obtain ⟨n, hnmem, hnpos⟩ :=
-    (infinite_support_wimanTaylorCoefficient f hf htrans).exists_gt 0
+    (infinite_support_wimanTaylorCoefficient (f := f) hf htrans).exists_gt 0
   have hn : n ≠ 0 := Nat.ne_of_gt hnpos
   have hcoeff : wimanTaylorCoefficient f n ≠ 0 := by
     simpa only [Function.mem_support] using hnmem
@@ -36,7 +36,7 @@ lemma tendsto_wimanMaximumTerm_atTop
     simp only [wimanTerm, abs_of_nonneg hr]
   refine tendsto_atTop_mono' atTop ?_ hterm
   filter_upwards with r
-  exact wimanTerm_le_wimanMaximumTerm f hf r n
+  exact wimanTerm_le_wimanMaximumTerm (f := f) (r := r) (n := n) hf
 
 end Complex
 
@@ -54,7 +54,7 @@ lemma eventually_one_lt_wimanMaximumTerm
 -- imply
   ∀ᶠ r : ℝ in atTop, 1 < wimanMaximumTerm f r :=
 -- proof
-  (tendsto_wimanMaximumTerm_atTop f hf htrans).eventually (eventually_gt_atTop 1)
+  (tendsto_wimanMaximumTerm_atTop (f := f) hf htrans).eventually (eventually_gt_atTop 1)
 
 end Complex
 
@@ -72,7 +72,7 @@ lemma eventually_pos_log_wimanMaximumTerm
 -- imply
   ∀ᶠ r : ℝ in atTop, 0 < Real.log (wimanMaximumTerm f r) := by
 -- proof
-  filter_upwards [eventually_one_lt_wimanMaximumTerm f hf htrans] with r hr
+  filter_upwards [eventually_one_lt_wimanMaximumTerm (f := f) hf htrans] with r hr
   exact Real.log_pos hr
 
 end Complex

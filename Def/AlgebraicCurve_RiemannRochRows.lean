@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.AlgebraicCurve.AdelicIndex
+import Lemma.Submodule.AdelicIndex
 import Class.AlgebraicCurve_CanonicalDivisor
 import Instance.AlgebraicCurve_IsCurveOver
 

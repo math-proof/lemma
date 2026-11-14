@@ -1,10 +1,11 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.Analysis.Ramanujan.Part1Ch9Entry23Ramanujanpi2
+import Def.Analysis.Ramanujan.Part1Ch9Entry8Arcsin
 open scoped Nat Real BigOperators Interval Polynomial ContDiff
 open Filter Finset Topology MeasureTheory
-open Entry8Arcsin (chapter9OddHarmonic)
 open MathlibExt.Analysis.Ramanujan.Part1Ch9
+open MathlibExt.Analysis.Ramanujan.Part1Ch9.Entry8Arcsin (chapter9OddHarmonic)
 open Entry23Ramanujanpi2
 
 
@@ -31,12 +32,12 @@ namespace MathlibExt.Analysis.Ramanujan.Part1Ch9.Entry23Ramanujanpi2
 private lemma oddHarmonic_le_card (n : ℕ) : chapter9OddHarmonic n ≤ (n : ℝ) := by
   unfold chapter9OddHarmonic
   calc ∑ i ∈ Finset.range n, (1 : ℝ) / (((2 * i + 1 : ℕ)) : ℝ)
-    ≤ ∑ _i ∈ Finset.range n, (1 : ℝ) := by
+    ≤ ∑ _i ∈ Finset.range n, (1 : ℝ) := (by
       apply Finset.sum_le_sum
       intro i _
       rw [div_le_one (Nat.cast_pos.mpr (by omega : 0 < 2 * i + 1))]
       calc (1 : ℝ) = ((((1 : ℕ))) : ℝ) := by norm_num
-        _ ≤ ((((2 * i + 1 : ℕ))) : ℝ) := Nat.cast_le.mpr (by omega)
+        _ ≤ ((((2 * i + 1 : ℕ))) : ℝ) := Nat.cast_le.mpr (by omega))
     _ = (n : ℝ) := by simp
 
 end MathlibExt.Analysis.Ramanujan.Part1Ch9.Entry23Ramanujanpi2

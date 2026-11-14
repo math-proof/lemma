@@ -37,7 +37,7 @@ namespace LinnikLargeSieve
 lemma fareySet_separated
   {M : ℕ} :
 -- imply
-  ∀ x ∈ fareySet M, ∀ y ∈ fareySet M, x ≠ y → (1 : ℝ) / (M ^ 2 : ℝ) ≤ := by
+  ∀ x ∈ fareySet M, ∀ y ∈ fareySet M, x ≠ y → (1 : ℝ) / (M ^ 2 : ℝ) ≤ |x - y| := by
 -- proof
   intro x hx y hy hxy
   simp only [fareySet, mem_biUnion, mem_image, Finset.mem_Icc, primesInRange, mem_filter] at hx hy
@@ -138,9 +138,9 @@ lemma sum_over_fareySet
   have hα₁' := Finset.mem_Icc.mp hα₁
   have hp_pos : (0 : ℝ) < (↑p : ℝ) := by exact_mod_cast (show 0 < p by omega)
   exact_mod_cast (div_left_inj' (ne_of_gt hp_pos)).mp heq
-/-- Reduction step: there exists a `1/M^2`-separated set `S ⊆ [0, 1)` (namely the Farey set
-`Q_M`) such that
-`linnikLHS N M f ≤ (2/M) ∑_{ξ ∈ S} |\widehat{f_H}(ξ)|²`. -/
+-- Reduction step: there exists a `1/M^2`-separated set `S ⊆ [0, 1)` (namely the Farey set
+-- `Q_M`) such that
+-- `linnikLHS N M f ≤ (2/M) ∑_{ξ ∈ S} |\widehat{f_H}(ξ)|²`.
 end LinnikLargeSieve
 
 

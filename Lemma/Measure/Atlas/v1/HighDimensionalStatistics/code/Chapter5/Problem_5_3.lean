@@ -67,7 +67,7 @@ lemma problem_5_3b
       · exact hS.1 z hz
     · intro a ha b hb hab
       rw [Finset.mem_insert] at ha hb
-      obtain rfl | ha <;> rcases hb with rfl | hb := ha
+      rcases ha with rfl | ha <;> rcases hb with rfl | hb
       · exact absurd rfl hab
       · exact le_of_lt (h b hb)
       · rw [dist_comm]; exact le_of_lt (h a ha)
@@ -111,7 +111,8 @@ lemma problem_5_3c
     simp at this
     exact Finset.Nonempty.card_pos this
   exact_mod_cast hcard
-end
+
+end Chapter5.Problem53
 
 
 

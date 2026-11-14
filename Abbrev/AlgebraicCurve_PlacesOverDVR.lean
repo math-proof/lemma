@@ -1,5 +1,5 @@
 import Class.AlgebraicCurve_DivisorPushPull
-import Mathlib.RingTheory.DedekindDomain.IntegralClosure
+import Mathlib.RingTheory.Ideal.IntegralClosure
 import Mathlib.RingTheory.RamificationInertia.Basic
 import Mathlib.RingTheory.DedekindDomain.Factorization
 import Mathlib.Algebra.Polynomial.Lifts

@@ -1,4 +1,5 @@
 import Def.ModularCurve_ResidualRealization
+import Structure.ModularCurve_ResidualRealization
 import Instance.ModularCurve_ArithmeticGalois
 import Def.FLTPrelim_ModularRep
 

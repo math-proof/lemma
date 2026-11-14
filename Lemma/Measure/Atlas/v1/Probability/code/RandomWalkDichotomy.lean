@@ -25,10 +25,10 @@ lemma exists_prob_one_of_cover
   by_contra h_none
   simp only [not_or] at h_none
   obtain ⟨hne1, hne2, hne3, hne4⟩ := h_none
-  have he1 : μ E₁ = 0 := h1.resolve_right hne1
-  have he2 : μ E₂ = 0 := h2.resolve_right hne2
-  have he3 : μ E₃ = 0 := h3.resolve_right hne3
-  have he4 : μ E₄ = 0 := h4.resolve_right hne4
+  have he1 : μ E₁ = 0 := h0.resolve_right hne1
+  have he2 : μ E₂ = 0 := h1.resolve_right hne2
+  have he3 : μ E₃ = 0 := h2.resolve_right hne3
+  have he4 : μ E₄ = 0 := h3.resolve_right hne4
   have h_union : μ (E₁ ∪ E₂ ∪ E₃ ∪ E₄) = 0 := by
     have h12 : μ (E₁ ∪ E₂) = 0 :=
       nonpos_iff_eq_zero.mp (le_trans (measure_union_le E₁ E₂) (by simp [he1, he2]))

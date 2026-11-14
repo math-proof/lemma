@@ -53,13 +53,13 @@ private lemma single_mem_prodSet :
   ·
     rename_i n ih
     intro K i κ hκ
-    refine Fin.cases ?_ ?_ i
+    rcases i.eq_zero_or_eq_succ with rfl | ⟨j, rfl⟩
     ·
       refine ⟨Fin.cons κ (fun _ => (1 : G)), ?_, ?_⟩
       ·
         intro j
         refine Fin.cases ?_ ?_ j
-        · simpa using hκ
+        · exact hκ
         ·
           intro j
           simp [(K j.succ).one_mem]
@@ -72,7 +72,6 @@ private lemma single_mem_prodSet :
         obtain ⟨_, rfl⟩ := hx
         rfl
     ·
-      intro j
       obtain ⟨k', hk', hprod⟩ := ih (fun i => K i.succ) j hκ
       refine ⟨Fin.cons (1 : G) k', ?_, ?_⟩
       ·
@@ -243,7 +242,7 @@ private lemma exists_eval_combination (W : Submodule ℂ (G → ℂ)) [FiniteDim
 end
 section
 variable {G : Type*} [Group G]
-private noncomputable def iterMulVec {d : ℕ} (n : ℕ) (M : Fin n → Matrix (Fin d) (Fin d) ℂ) (c : Fin d → ℂ) : Fin d → ℂ := Nat.rec (motive := fun n => (Fin n → Matrix (Fin d) (Fin d) ℂ) → (Fin d → ℂ) → Fin d → ℂ) (fun _ c => c) (fun n ih M c => Matrix.mulVec (M 0) (ih (fun i => M i.succ) c)) n M c
+private noncomputable def iterMulVec {d : ℕ} (n : ℕ) (M : Fin n → Matrix (Fin d) (Fin d) ℂ) (c : Fin d → ℂ) : Fin d → ℂ := Nat.rec (motive := fun n => (Fin n → Matrix (Fin d) (Fin d) ℂ) → (Fin d → ℂ) → Fin d → ℂ) (fun _ c => c) (fun _ ih M c => Matrix.mulVec (M 0) (ih (fun i => M i.succ) c)) n M c
 private lemma iterMulVec_eq_sum_paths {d : ℕ} :
   ∀ (n : ℕ) (M : Fin n → Matrix (Fin d) (Fin d) ℂ) (c : Fin d → ℂ) (p : Fin d), iterMulVec n M c p = ∑ r : Fin n → Fin d, (∏ i : Fin n, M i ((Fin.cons p r : Fin (n + 1) → Fin d) (Fin.castSucc i))
                 ((Fin.cons p r : Fin (n + 1) → Fin d) i.succ)) * c ((Fin.cons p r : Fin (n + 1) → Fin d) (Fin.last n)) := by
@@ -256,7 +255,9 @@ private lemma iterMulVec_eq_sum_paths {d : ℕ} :
     rename_i n ih
     intro M c p
     classical
-    simp only [iterMulVec, Matrix.mulVec, dotProduct]
+    have hrec : iterMulVec (n + 1) M c p =
+        Matrix.mulVec (M 0) (iterMulVec n (fun i => M i.succ) c) p := rfl
+    rw [hrec, Matrix.mulVec, dotProduct]
     simp_rw [ih (fun i => M i.succ) c]
     simp_rw [Finset.mul_sum]
     rw [← Finset.sum_product']
@@ -270,11 +271,13 @@ private lemma iterMulVec_eq_sum_paths {d : ℕ} :
       apply Finset.mem_univ _
     ·
       intro qr _
-      ext <; simp
+      ext1
+      · simp [Fin.cons_zero]
+      · ext i
+        simp [Fin.cons_succ]
     ·
       intro r _
-      funext i
-      refine Fin.cases ?_ ?_ i <; simp
+      exact Fin.cons_self_tail r
     ·
       intro qr _
       obtain ⟨q, r'⟩ := qr
@@ -519,4 +522,5 @@ private lemma main
   tensor_split K hcomm f hf
 
 
+-- updated on 2026-11-13
 -- created on 2026-10-20

@@ -1,4 +1,4 @@
-import Lemma.ModularCurve.CharLDegeneracyHecke
+import Lemma.LaurentSeries.CharLDegeneracyHecke
 import Def.ModularCurve_PlaceWidth
 import Def.CerednikDrinfeld_Ribbon
 import Structure.ModularCurve_SSDegeneracyHecke

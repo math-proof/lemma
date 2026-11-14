@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.CerednikDrinfeld.SpecialFormalModule
+import Lemma.MvPowerSeries.SpecialFormalModule
 
 set_option autoImplicit false
 

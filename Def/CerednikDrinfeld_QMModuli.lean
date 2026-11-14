@@ -7,8 +7,8 @@ import Mathlib.Topology.KrullDimension
 import Mathlib.Algebra.DualNumber
 import Mathlib.LinearAlgebra.Trace
 import Structure.JacJ1Iface
-import Lemma.AlgebraicGeometry.RelativeGroupLaw
-import Lemma.CerednikDrinfeld.ShimuraCurve
+import Lemma.Scheme.RelativeGroupLaw
+import Lemma.MvPolynomial.ShimuraCurve
 import Structure.CerednikDrinfeld_QMModuli
 import Abbrev.CerednikDrinfeld_QMModuli
 

@@ -1,6 +1,6 @@
 import Mathlib.Algebra.FreeAlgebra
 import Lemma.CuspForm.HeckeAlgebra
-import Lemma.Gamma0HeckeOperatorHom.Main
+import Lemma.Matrix.Gamma0HeckeOperatorHom
 import Def.CuspForm_HeckeWord
 
 open CongruenceSubgroup

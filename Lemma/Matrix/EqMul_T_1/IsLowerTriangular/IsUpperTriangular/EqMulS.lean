@@ -563,5 +563,5 @@ private lemma main
   ⟨pluP_mul_transpose_eq_one X, pluL_isLowerTriangular X, pluU_isUpperTriangular X, plu_mul_eq X⟩
 
 
--- created on 2026-10-07
+-- created on 2023-08-19
 -- updated on 2026-10-28

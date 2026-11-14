@@ -59,7 +59,7 @@ private lemma main
         have hpow : (ϖ : K) ^ a = (ϖ : K) ^ b * (ϖ : K) ^ (a - b) := by
           rw [← pow_add, Nat.add_sub_cancel' hab]
         apply mul_left_cancel₀ (pow_ne_zero _ hϖ0)
-        linear_combination key + (g' : K) * hpow
+        rw [mul_left_comm ((ϖ : K) ^ b) f, ← mul_assoc, key, hpow, mul_assoc]
       else
         exfalso
         apply hg'nd
@@ -69,7 +69,8 @@ private lemma main
         have ha0 : (ϖ : K) ^ a ≠ 0 := pow_ne_zero _ hϖ0
         have hg'eq : (g' : K) = f * (h' : K) * (ϖ : K) ^ (b - a) := by
           apply mul_left_cancel₀ ha0
-          linear_combination -key + (f * (h' : K)) * hpow
+          rw [← key, hpow]
+          ring
         have hmem : (⟨(g' : K), hSO g'⟩ : ↥O) =
             ⟨f, hfO⟩ * ⟨(h' : K), hSO h'⟩ * (⟨((ϖ : ↥S) : K), hSO ϖ⟩ : ↥O) ^ (b - a) := by
           apply Subtype.ext
@@ -96,3 +97,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-13

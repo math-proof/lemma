@@ -2,10 +2,10 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.AlgebraicCurve_PlaceTaylorCoeff
 import Lemma.Scheme.PlaceEvaluationAlgebra
-import Lemma.AlgebraicCurve.Repartitions
+import Lemma.Submodule.Repartitions
 import Lemma.Int.P2MUtil
 
-open AlgebraicCurve AlgebraicCurve.Place
+open AlgebraicCurve AlgebraicCurve.Place Submodule
 
 /--
 [AlgebraicCurve_Place_taylorRem_mem_toValuationSubring](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_Place_taylorRem_mem_toValuationSubring.lean)

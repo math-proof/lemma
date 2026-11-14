@@ -13,7 +13,7 @@ private lemma main
   (d : Fin s.length)
   (i : Fin s[d]) :
 -- imply
-  (X.softmax d).select d i = (exp X).select d i / (exp X).sum d := by
+  (X.softmax d).select d i = (Exp.exp X).select d i / (Exp.exp X).sum d := by
 -- proof
   rw [Softmax.eq.DivExp_KeepdimSumExp]
   rw [SelectDiv.eq.DivSelectS]
@@ -22,3 +22,4 @@ private lemma main
 
 
 -- created on 2025-11-17
+-- updated on 2026-11-13

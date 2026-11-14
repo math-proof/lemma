@@ -1,4 +1,4 @@
-import Lemma.AutomorphicForm.CarrierPins
+import Lemma.Measure.CarrierPins
 import Def.AutomorphicForm_ConstantTerm
 
 set_option autoImplicit false

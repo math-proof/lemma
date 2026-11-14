@@ -1,26 +1,29 @@
-import Lemma.Random.Integral.eq.Sum_SMul.of.All_LeNorm.StronglyMeasurable
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
+import Lemma.Random.Integral.eq.Integral_SMul.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Random
 
 
 /--
-`∫ z, f z ∂(stageK θ x) = ∑ u, π_θ(u | x) * ∫ ρ, f (ρ, x, u) ∂(reward (x, u))`.
+`∫ z, f z ∂(stageK θ x) = ∫ u, π_θ(u | x) * ∫ ρ, f (ρ, x, u) ∂(reward (x, u)) du`.
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
-  {M : Model Θ S A}
-  {f : ℝ × S × A → ℝ}
+  [MeasurableSpace 𝒮] [μ : ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
+  {f : ℝ × 𝒮 × 𝒜 → ℝ}
   {C : ℝ}
 -- given
-  (hf : StronglyMeasurable f)
-  (hC : ∀ z, ‖f z‖ ≤ C)
+  (h₀ : StronglyMeasurable f)
+  (h₁ : ∀ z, ‖f z‖ ≤ C)
   (θ : Θ)
-  (x : S) :
+  (x : 𝒮) :
 -- imply
-  ∫ z, f z ∂(M.stageK θ x) = ∑ u, M.policy.prob θ x u * ∫ ρ, f (ρ, x, u) ∂(M.env.reward (x, u)) := by
+  ∫ z, f z ∂(M.stageK θ x) =
+    ∫ (u : 𝒜), (M.policy.prob θ x u * ∫ ρ, f (ρ, x, u) ∂(M.env.reward (x, u)))
+      ∂μ.measure := by
 -- proof
-  rw [Integral.eq.Sum_SMul.of.All_LeNorm.StronglyMeasurable (M := M) hf hC θ x]
+  rw [Integral.eq.Integral_SMul.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity (M := M) h₀ h₁ θ]
   simp [smul_eq_mul]
 
 
 -- created on 2026-10-07
+-- updated on 2026-11-14

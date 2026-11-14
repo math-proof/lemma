@@ -20,7 +20,7 @@ import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.Order.Interval.Finset.Fin
 import Theorem.Function
 import Theorem.Data.Fin.Dot.Part2
-infixl:72 (priority := 2000) " ⬝ᵥ " => Dot.dot
+import Notation.Data.Dot
 open Polynomial Matrix Finset
 set_option maxHeartbeats 999999
 

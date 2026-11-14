@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.ModularCurve.X0
+import Lemma.HahnSeries.X0
 
 noncomputable section
 

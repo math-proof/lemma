@@ -1,4 +1,4 @@
-import Lemma.ModularCurve.JZeroHeightForm
+import Lemma.Finsupp.JZeroHeightForm
 import Instance.Compat_Mathlib430
 
 set_option autoImplicit false

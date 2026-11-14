@@ -1,8 +1,8 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_RelEffCartierDivRestrict.lean: instance decls only.
 import Mathlib.AlgebraicGeometry.Morphisms.Separated
 import Mathlib.AlgebraicGeometry.Morphisms.FlatRank
-import Lemma.AlgebraicGeometry.RelEffCartierDivSupportedIn
-import Lemma.AlgebraicGeometry.RelEffCartierDivRestrict
+import Lemma.Scheme.RelEffCartierDivSupportedIn
+import Lemma.Scheme.RelEffCartierDivRestrict
 
 set_option autoImplicit false
 
@@ -51,4 +51,3 @@ variable [IsSeparated f]
 end Extend
 
 end AlgebraicGeometry.RelEffCartierDiv
-

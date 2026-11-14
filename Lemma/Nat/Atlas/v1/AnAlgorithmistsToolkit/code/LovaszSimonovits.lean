@@ -136,7 +136,7 @@ lemma claim8_weighted_sum_inequality
   by_cases hk : Nat.floor S ≥ n
   · simp only [ge_iff_le, hk, ↓reduceDIte]
     have hSn : (n : ℝ) ≤ S := le_trans (Nat.cast_le.mpr hk) (Nat.floor_le hS_nonneg)
-    have hallone : ∀ i, c i = 1 := all_one_of_sum_ge_n c hc1 hSn
+    have hallone : ∀ i, c i = 1 := all_one_of_sum_ge_n hc1 hSn
     have hlhs : univ.sum (fun i => c i * w i) = univ.sum w := by
       congr 1; ext i; rw [hallone i, one_mul]
     have hrhs : partialSum w n = univ.sum w := by
@@ -146,8 +146,7 @@ lemma claim8_weighted_sum_inequality
     have hkn : Nat.floor S < n := by omega
     have hsum_eq : univ.sum c = (⟨Nat.floor S, hkn⟩ : Fin n).val + (S - ↑(Nat.floor S)) := by
       simp; ring
-    exact antitone_weighted_sum_le w c hw hc0 hc1 ⟨Nat.floor S, hkn⟩
-      (S - ↑(Nat.floor S)) hsum_eq
+    exact antitone_weighted_sum_le hw hc0 hc1 hsum_eq
 
 end LovaszSimonovits
 
@@ -230,7 +229,7 @@ lemma midpoint_mono_pointwise
 -- imply
   (1/2) * (f a + f b) ≤ (1/2) * (g a + g b) := by
 -- proof
-linarith
+  linarith
 
 end LovaszSimonovits
 
@@ -285,7 +284,7 @@ lemma sqrt_midpoint_bound
     rw [lhs_sq, show (2 - φ^2)^2 = 4 - 4 * φ^2 + φ^4 from by ring,
       show (1 - 2 * φ) * (1 + 2 * φ) = 1 - 4 * φ^2 from by ring]
     have hsqrt : Real.sqrt (1 - 4 * φ^2) ≤ 1 - 2 * φ^2 := by
-      have := sqrt_one_sub_le (4 * φ^2) (by nlinarith)
+      have := sqrt_one_sub_le (t := 4 * φ^2) (by nlinarith)
       simp only [show 4 * φ ^ 2 / 2 = 2 * φ ^ 2 from by ring] at this
       exact this
     nlinarith [sq_nonneg (φ^2)]
@@ -340,8 +339,8 @@ lemma midpoint_bound_lower_proof
       min (Real.sqrt (x * (1 + 2 * φ))) (Real.sqrt (↑n - x * (1 + 2 * φ))) * (1 - φ^2/2)^t)
       ≤ (1/2) * (Real.sqrt (x * (1 - 2 * φ)) * (1 - φ^2/2)^t +
         Real.sqrt (x * (1 + 2 * φ)) * (1 - φ^2/2)^t) := by
-        apply mul_le_mul_of_nonneg_left _ (by norm_num : (0:ℝ) ≤ 1/2)
-        linarith [mul_le_mul_of_nonneg_right hmin_add_le hc_nn]
+          apply mul_le_mul_of_nonneg_left _ (by norm_num : (0:ℝ) ≤ 1/2)
+          linarith [mul_le_mul_of_nonneg_right hmin_add_le hc_nn]
       _ = (1 - φ^2/2)^t * ((1/2) * (Real.sqrt (x * (1 - 2 * φ)) +
         Real.sqrt (x * (1 + 2 * φ)))) := by ring
       _ = (1 - φ^2/2)^t * (Real.sqrt x * ((1/2) * (Real.sqrt (1 - 2 * φ) +
@@ -349,7 +348,7 @@ lemma midpoint_bound_lower_proof
         rw [hsqrt_sub, hsqrt_add]; ring
       _ ≤ (1 - φ^2/2)^t * (Real.sqrt x * (1 - φ^2/2)) := by
         apply mul_le_mul_of_nonneg_left _ hc_nn
-        exact mul_le_mul_of_nonneg_left (sqrt_midpoint_bound φ hφ hφ1) (Real.sqrt_nonneg x)
+        exact mul_le_mul_of_nonneg_left (sqrt_midpoint_bound hφ hφ1) (Real.sqrt_nonneg x)
       _ = Real.sqrt x * ((1 - φ^2/2)^t * (1 - φ^2/2)) := by ring
   linarith
 
@@ -408,8 +407,8 @@ lemma midpoint_bound_upper_proof
       (1 - φ^2/2)^t + Real.sqrt (y * (1 - 2 * φ)) * (1 - φ^2/2)^t)
       ≤ (1/2) * (Real.sqrt (y * (1 + 2 * φ)) * (1 - φ^2/2)^t +
         Real.sqrt (y * (1 - 2 * φ)) * (1 - φ^2/2)^t) := by
-        apply mul_le_mul_of_nonneg_left _ (by norm_num : (0:ℝ) ≤ 1/2)
-        linarith [mul_le_mul_of_nonneg_right hmin_sub_le hc_nn]
+          apply mul_le_mul_of_nonneg_left _ (by norm_num : (0:ℝ) ≤ 1/2)
+          linarith [mul_le_mul_of_nonneg_right hmin_sub_le hc_nn]
       _ = (1 - φ^2/2)^t * ((1/2) * (Real.sqrt (y * (1 + 2 * φ)) +
         Real.sqrt (y * (1 - 2 * φ)))) := by ring
       _ = (1 - φ^2/2)^t * (Real.sqrt y * ((1/2) * (Real.sqrt (1 + 2 * φ) +
@@ -418,7 +417,7 @@ lemma midpoint_bound_upper_proof
       _ ≤ (1 - φ^2/2)^t * (Real.sqrt y * (1 - φ^2/2)) := by
         apply mul_le_mul_of_nonneg_left _ hc_nn
         apply mul_le_mul_of_nonneg_left _ (Real.sqrt_nonneg y)
-        linarith [sqrt_midpoint_bound φ hφ hφ1]
+        linarith [sqrt_midpoint_bound hφ hφ1]
       _ = Real.sqrt y * ((1 - φ^2/2)^t * (1 - φ^2/2)) := by ring
   linarith
 
@@ -498,9 +497,9 @@ lemma lovasz_simonovits_full
 -- imply
   ∀ t : ℕ, ∀ x : ℝ, 0 ≤ x → x ≤ ↑n → lsCurve (ρ t) x ≤ lovaszSimonovitsBound n φ t x :=
 -- proof
-  lovasz_simonovits ρ φ hφ hφ1 hevol hbase
-    (midpoint_bound_lower_proof n φ hφ hφ1 hn)
-    (midpoint_bound_upper_proof n φ hφ hφ1 hn)
+  lovasz_simonovits hφ hφ1 hevol hbase
+    (midpoint_bound_lower_proof hφ hφ1 hn)
+    (midpoint_bound_upper_proof hφ hφ1 hn)
 
 end LovaszSimonovits
 
@@ -583,8 +582,8 @@ lemma corollary12_from_theorem11
 -- imply
   |I_t x - x / ↑n| ≤ min (Real.sqrt x) (Real.sqrt (↑n - x)) * (1 - φ^2 / 2)^t := by
 -- proof
-  have hlower := lovasz_simonovits_complement_bound φ t I_t x hn hLS_nx hcompl
-  exact corollary12 φ t I_t x hx0 hxn hLS hlower
+  have hlower := lovasz_simonovits_complement_bound hn hLS_nx hcompl
+  exact corollary12 hx0 hxn hLS hlower
 
 end LovaszSimonovits
 
@@ -619,7 +618,7 @@ lemma corollary12_vertex_set
   |W.sum p_t - x / ↑n| ≤ min (Real.sqrt x) (Real.sqrt (↑n - x)) * (1 - (↑(G.conductance) : ℝ)^2 / 2)^t := by
 -- proof
   rw [hmass]
-  exact corollary12_from_theorem11 (↑(G.conductance) : ℝ) t I_t x hx0 hxn hn hLS hLS_nx hcompl
+  exact corollary12_from_theorem11 hx0 hxn hn hLS hLS_nx hcompl
 
 end LovaszSimonovits
 

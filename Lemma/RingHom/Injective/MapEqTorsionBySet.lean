@@ -59,7 +59,9 @@ private lemma isSaturated_map {𝒪 : Type} [CommRing 𝒪] [IsDomain 𝒪] [IsD
   obtain ⟨x₁, rfl⟩ := hres x y hxy
   have hx₁ : x₁ ∈ A := hA ϖ hϖ.ne_zero x₁ hxA
   refine Submodule.mem_map.mpr ⟨x₁, hx₁, ?_⟩
-  exact smul_right_injective M' hϖ.ne_zero (by rw [← map_smul, hxy])
+  exact smul_right_injective M' hϖ.ne_zero (by
+    change ϖ • i x₁ = ϖ • y
+    rw [← map_smul, hxy])
 private lemma eq_of_le_of_finrank_le_of_isSaturated {𝒪 : Type} [CommRing 𝒪] [IsDomain 𝒪] [IsDiscreteValuationRing 𝒪] {M' : Type} [AddCommGroup M'] [Module 𝒪 M'] [Module.Finite 𝒪 M'] {W B : Submodule 𝒪 M'} (hWB : W ≤ B) (hrk : Module.finrank 𝒪 B ≤ Module.finrank 𝒪 W) (hW : IsSaturated W) : W = B := by
   classical
   let _ : IsNoetherianRing 𝒪 := inferInstance
@@ -109,3 +111,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-14

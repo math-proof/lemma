@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.CerednikDrinfeld.SpecialFormalModule
+import Lemma.MvPowerSeries.SpecialFormalModule
 import Def.CerednikDrinfeld_ModuliPackageDescent
 import Def.CerednikDrinfeld_ModuliPackageDeformation
 import Lemma.Int.P2MUtil

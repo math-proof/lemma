@@ -4,6 +4,7 @@ import Instance.Dieudonne_WittVectorHom
 import Instance.Dieudonne_WittHomColimit
 import Instance.PDivisibleGroup_Basic
 import Class.MvFormalGroup_BasicV2
+import Def.MvFormalGroup_LinearPart
 import Instance.MvFormalGroup_PointsV2
 
 set_option autoImplicit false

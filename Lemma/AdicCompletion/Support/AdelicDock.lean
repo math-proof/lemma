@@ -85,25 +85,25 @@ theorem idealBound_pow (m : ℕ) : AdelicLevel.idealBound (𝓞 F) (v.asIdeal ^ 
 theorem structure_lemma (ϖ : v.adicCompletionIntegers F) (hπ : (ϖ : Kv) ≠ 0)
     (hϖ : Valued.v (ϖ : Kv) = WithZero.exp (-1 : ℤ)) (m : ℕ)
     (hB : AdelicLevel.idealBound (𝓞 F) (v.asIdeal ^ m) v < 1) (g : G)
-    (hc : Valued.v ((g : Mat) 1 0) ≤ AdelicLevel.idealBound (𝓞 F) (v.asIdeal ^ m) v)
-    (hd : Valued.v ((g : Mat) 1 1 - 1) ≤ AdelicLevel.idealBound (𝓞 F) (v.asIdeal ^ m) v) :
+    (hc : Valued.v (g.val 1 0) ≤ AdelicLevel.idealBound (𝓞 F) (v.asIdeal ^ m) v)
+    (hd : Valued.v (g.val 1 1 - 1) ≤ AdelicLevel.idealBound (𝓞 F) (v.asIdeal ^ m) v) :
     ∃ (x : Kv) (n : ℤ) (k : G), k ∈ localLevelOne (𝓞 F) F v (v.asIdeal ^ m) ∧
-      g = unipotent F v x * diagZ F v (ϖ : Kv) hπ n * k ∧ Valued.v ((g : Mat).det) = WithZero.exp (-n) := by
+      g = unipotent F v x * diagZ F v (ϖ : Kv) hπ n * k ∧ Valued.v (g.val.det) = WithZero.exp (-n) := by
   set B := AdelicLevel.idealBound (𝓞 F) (v.asIdeal ^ m) v with hBdef
-  set a : Kv := (g : Mat) 0 0 with ha
-  set b : Kv := (g : Mat) 0 1 with hb
-  set c : Kv := (g : Mat) 1 0 with hcdef
-  set d : Kv := (g : Mat) 1 1 with hddef
+  set a : Kv := g.val 0 0 with ha
+  set b : Kv := g.val 0 1 with hb
+  set c : Kv := g.val 1 0 with hcdef
+  set d : Kv := g.val 1 1 with hddef
   have hc' : Valued.v c ≤ B := hc
   have hd' : Valued.v (d - 1) ≤ B := hd
   have hd1 : Valued.v d = 1 := by
     have := Valuation.map_one_add_of_lt Valued.v (lt_of_le_of_lt hd' hB)
     rwa [add_sub_cancel] at this
   have hd0 : d ≠ 0 := fun h => by rw [h, map_zero] at hd1; exact zero_ne_one hd1
-  have hD : (g : Mat).det = a * d - b * c := by rw [Matrix.det_fin_two]
-  have hD0 : (g : Mat).det ≠ 0 := by
+  have hD : g.val.det = a * d - b * c := by rw [Matrix.det_fin_two]
+  have hD0 : g.val.det ≠ 0 := by
     rw [← Matrix.GeneralLinearGroup.val_det_apply]; exact (Matrix.GeneralLinearGroup.det g).ne_zero
-  set y : Kv := (g : Mat).det / d with hy
+  set y : Kv := g.val.det / d with hy
   have hy0 : y ≠ 0 := div_ne_zero hD0 hd0
   have hvy0 : Valued.v y ≠ 0 := (Valuation.ne_zero_iff _).mpr hy0
   set n : ℤ := -(Valued.v y).log with hn
@@ -175,7 +175,7 @@ theorem structure_lemma (ϖ : v.adicCompletionIntegers F) (hπ : (ϖ : Kv) ≠ 0
     · show d = _
       simp [Matrix.mul_apply, Fin.sum_univ_two]
   ·
-    have : (g : Mat).det = y * d := by rw [hy]; field_simp
+    have : g.val.det = y * d := by rw [hy]; field_simp
     rw [this, map_mul, hvy, hd1, mul_one]
 
 end K1Struct
@@ -186,14 +186,14 @@ theorem structure_lemma
     (hϖ : Valued.v (ϖ : v.adicCompletion F) = WithZero.exp (-1 : ℤ)) (m : ℕ)
     (hB : AdelicLevel.idealBound (𝓞 F) (v.asIdeal ^ m) v < 1)
     (g : GL (Fin 2) (v.adicCompletion F))
-    (hc : Valued.v ((g : Matrix (Fin 2) (Fin 2) (v.adicCompletion F)) 1 0)
+    (hc : Valued.v (g.val 1 0)
       ≤ AdelicLevel.idealBound (𝓞 F) (v.asIdeal ^ m) v)
-    (hd : Valued.v ((g : Matrix (Fin 2) (Fin 2) (v.adicCompletion F)) 1 1 - 1)
+    (hd : Valued.v (g.val 1 1 - 1)
       ≤ AdelicLevel.idealBound (𝓞 F) (v.asIdeal ^ m) v) : Nonempty
     (Σ' (x : v.adicCompletion F) (n : ℤ) (k : GL (Fin 2) (v.adicCompletion F)),
       k ∈ AdelicDock.localLevelOne (𝓞 F) F v (v.asIdeal ^ m) ∧
       g = unipotent F v x * diagZ F v (ϖ : v.adicCompletion F) hπ n * k ∧
-      Valued.v ((g : Matrix (Fin 2) (Fin 2) (v.adicCompletion F)).det) = WithZero.exp (-n)) := by
+      Valued.v (g.val.det) = WithZero.exp (-n)) := by
   obtain ⟨x, n, k, hk, hg, hv⟩ :=
     K1Struct.structure_lemma (F := F) (v := v) ϖ hπ hϖ m hB g hc hd
   exact ⟨⟨x, n, k, hk, hg, hv⟩⟩

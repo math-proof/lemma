@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_PresheafOfModules_PullbackMonoidal.lean: instance decls only.
 import Mathlib
-import Lemma.PresheafOfModules.PullbackMonoidal
+import Lemma.LinearMap.PullbackMonoidal
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false

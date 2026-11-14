@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.GroupCohomology.LocallyConstantClasses
+import Lemma.Rep.LocallyConstantClasses
 open CategoryTheory Module groupCohomology
 
 

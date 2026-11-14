@@ -1,10 +1,10 @@
 import Mathlib
 import Def.ModularCurve_X0ModL
-import Lemma.ModularCurve.QAdicPlaceMod
-import Lemma.ModularCurve.ModuliPointMap
+import Lemma.HahnSeries.QAdicPlaceMod
+import Lemma.WeierstrassCurve.ModuliPointMap
 import Lemma.WeierstrassCurve.ReduceHom
 import Lemma.WeierstrassCurve.CyclicQuotientJ
-import Lemma.AlgebraicCurve.Correspondence
+import Lemma.Scheme.Correspondence
 import Instance.ModularCurve_ModuliPlace
 
 set_option autoImplicit false

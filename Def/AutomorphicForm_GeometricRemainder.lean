@@ -2,7 +2,7 @@ import Def.AutomorphicForm_TruncationOperator
 import Def.AutomorphicForm_AdelicKernel
 import Def.NumberField_AdelicHeight
 import Def.Analysis_HalfLineIntercept
-import Lemma.AutomorphicForm.CarrierPins
+import Lemma.Measure.CarrierPins
 import Def.NumberField_PrincipalLevel
 import Def.AutomorphicForm_SmoothAutomorphicFnAt
 import Def.NumberField_AdelicBox

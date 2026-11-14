@@ -182,7 +182,7 @@ lemma incidence_ge_R_mul_rRichLines
     = ∑ _l ∈ rRichLines X L R, R := by rw [Finset.sum_const]; ring
     _ ≤ ∑ l ∈ rRichLines X L R, (X.filter (fun x => x ∈ l)).card :=
       Finset.sum_le_sum h
-set_option maxHeartbeats 800000 in
+set_option maxHeartbeats 800000
 
 end SzemerediTrotter
 
@@ -283,7 +283,7 @@ lemma card_image_le_of_eq_imp
   rw [dif_pos hex]
   have := h _ hex.choose_spec.1 _ ha_s hex.choose_spec.2
   rw [this, ha_f]
-set_option maxHeartbeats 400000 in
+set_option maxHeartbeats 400000
 
 end ProjectionTheory
 
@@ -454,10 +454,10 @@ lemma fiber_lines_st_bound
         (by linarith [hθ₁.1, hθ₁.2, hθ₂.1, hθ₂.2] : p₂.2 - p₁.2 < Real.pi)).mp hsin
       exact Prod.ext hx_eq (by linarith)
 set_option maxHeartbeats 800000 in
-/-- **Szemerédi--Trotter projection theorem.** There exists a universal constant $C > 0$
-such that for any finite point set $X \subset \mathbb{R}^2$, set of directions
-$D \subset [0, \pi)$, and bound $|\pi_\theta(X)| \le S$ for $\theta \in D$, if $2S < |X|$
-then $|D| \le C \cdot S^2 / |X| + 1$. -/
+-- **Szemerédi--Trotter projection theorem.** There exists a universal constant $C > 0$
+-- such that for any finite point set $X \subset \mathbb{R}^2$, set of directions
+-- $D \subset [0, \pi)$, and bound $|\pi_\theta(X)| \le S$ for $\theta \in D$, if $2S < |X|$
+-- then $|D| \le C \cdot S^2 / |X| + 1$.
 
 end ProjectionTheory
 

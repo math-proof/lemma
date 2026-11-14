@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.GroupCohomology.ContinuousH2
-import Lemma.GroupCohomology.ContinuousH2Map
-import Lemma.GroupCohomology.ContinuousH1
-import Lemma.GroupCohomology.CupProduct
+import Lemma.Submodule.ContinuousH2
+import Lemma.Rep.ContinuousH2Map
+import Lemma.Rep.ContinuousH1
+import Lemma.Rep.CupProduct
 import Def.GroupCohomology_ContinuousDuality
 import Lemma.Int.P2MUtil
 open CategoryTheory groupCohomology

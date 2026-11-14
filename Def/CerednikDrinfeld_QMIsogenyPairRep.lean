@@ -1,5 +1,5 @@
 import Def.CerednikDrinfeld_QMIsogeny
-import Lemma.CerednikDrinfeld.QMRigidification
+import Lemma.Scheme.QMRigidification
 import Abbrev.CerednikDrinfeld_QMIsogenyPairRep
 
 set_option autoImplicit false

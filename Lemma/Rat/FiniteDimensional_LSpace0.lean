@@ -1,10 +1,10 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.AdelicIndex
+import Lemma.Submodule.AdelicIndex
 import Lemma.Scheme.IsCurveOver
 import Lemma.Int.P2MUtil
 
-open AlgebraicCurve
+open AlgebraicCurve Submodule
 
 /--
 [AlgebraicCurve_finiteDimensional_lSpace_zero](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_finiteDimensional_lSpace_zero.lean)

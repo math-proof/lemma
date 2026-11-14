@@ -148,7 +148,7 @@ lemma sub_bumpCutoffMul_eventuallyEq_zero
     simp only [Metric.mem_ball, dist_zero_right, bumpSeq]; exact hx
   have hev := (bumpSeq (E := E) m).eventuallyEq_one_of_mem_ball hmem
   filter_upwards [hev] with y hy
-  simp only [SchwartzMap.sub_apply, bumpCutoffMul_apply, Pi.one_apply] at hy ⊢
+  simp only [sub_apply, bumpCutoffMul_apply, Pi.one_apply] at hy ⊢
   rw [hy, one_smul, sub_self]
 
 end SchwartzMap
@@ -219,11 +219,11 @@ lemma SchwartzMap.seminorm_le_div_of_vanish
         rw [pow_succ]; ring
       _ ≤ R⁻¹ * (SchwartzMap.seminorm 𝕜 (k + 1) j) g := by
         gcongr; exact SchwartzMap.le_seminorm 𝕜 (k + 1) j g x
-/-- Iterated Fréchet derivatives of a `ContDiffBump` on `E` admit a uniform bound `C`
-depending only on the order `n` and the ratio `rOut/rIn`. -/
+-- Iterated Fréchet derivatives of a `ContDiffBump` on `E` admit a uniform bound `C`
+-- depending only on the order `n` and the ratio `rOut/rIn`.
 namespace SchwartzMap
-/-- Cutoff convergence (Melrose Lemma 8.8): every Schwartz seminorm of `f - χ_m f`
-tends to `0` as `m → ∞`, hence `χ_m f → f` in the Schwartz topology. -/
+-- Cutoff convergence (Melrose Lemma 8.8): every Schwartz seminorm of `f - χ_m f`
+-- tends to `0` as `m → ∞`, hence `χ_m f → f` in the Schwartz topology.
 end SchwartzMap
 
 

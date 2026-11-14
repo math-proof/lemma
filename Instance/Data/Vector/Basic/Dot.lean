@@ -10,17 +10,15 @@ import Theorem.Algebra.Power.Part2
 import Theorem.Function
 import Def.Data.Vector.Basic.Part2
 import Lean.Elab.Term
+import Notation.Data.Dot
 open Nat Lean
 open scoped BigOperators
 
-
+open Lean Elab Term Meta in
 /-- Path/sequence notation `f ⬝ᵥ g` for `Dot.dot` (typically `∑' t, f t * g t`).
 Hooks Mathlib's `⬝ᵥ` glyph: try `Dot.dot` first (infinite path tsums, no `Fintype`), then fall back
 to Mathlib `dotProduct` for finite-index vectors. -/
-syntax (name := pathDotV) (priority := high) term:72 " ⬝ᵥ " term:73 : term
-
-open Lean Elab Term Meta in
-@[term_elab pathDotV]
+@[term_elab termDotV]
 def elabPathDotV : TermElab := fun stx expectedType? => do
   match stx with
   | `($x ⬝ᵥ $y) => do

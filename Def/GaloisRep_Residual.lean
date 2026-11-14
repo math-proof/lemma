@@ -1,4 +1,4 @@
-import Lemma.EllipticCurve.FrobeniusTrace
+import Lemma.WeierstrassCurve.FrobeniusTrace
 import Def.FLTPrelim_Modularity
 import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
 import Mathlib.LinearAlgebra.Charpoly.Basic

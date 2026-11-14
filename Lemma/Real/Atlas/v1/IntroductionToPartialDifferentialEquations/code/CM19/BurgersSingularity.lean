@@ -400,10 +400,10 @@ lemma transport_equation_from_ift
     have : (A + c * B) * (1 + d * t) = A + d * A * t + c * (B + d * B * t) := by ring
     rw [this, eq2]; linarith
   exact (mul_eq_zero.mp h_factor).resolve_right h_nonzero
-/-- Combined IFT-with-transport statement: if $f \in C^1$ with $f' \ge 0$, then
-the characteristic inverse $p_0$ exists, is $C^1$, agrees with the identity at
-$t = 0$, satisfies $x = p_0 + f(p_0) t$, and obeys the transport PDE
-$\partial_t p_0 + f(p_0) \partial_x p_0 = 0$. -/
+-- Combined IFT-with-transport statement: if $f \in C^1$ with $f' \ge 0$, then
+-- the characteristic inverse $p_0$ exists, is $C^1$, agrees with the identity at
+-- $t = 0$, satisfies $x = p_0 + f(p_0) t$, and obeys the transport PDE
+-- $\partial_t p_0 + f(p_0) \partial_x p_0 = 0$.
 
 end TransportBurgers
 

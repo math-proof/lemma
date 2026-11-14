@@ -1,7 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.Probability.code.MeasuresOnR
-open Set Filter MeasureTheory ENNReal Topology (ofReal)
+open Set Filter MeasureTheory ENNReal
+open scoped Topology
 open ENNReal (ofReal)
 
 

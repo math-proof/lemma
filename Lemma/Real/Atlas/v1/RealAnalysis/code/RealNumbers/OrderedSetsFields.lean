@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.RealAnalysis.code.RealNumbers.OrderedSetsFields
-open OrderedSetsFields RealNumbers
+open OrderedSetsFields
 
 
 namespace OrderedSetsFields

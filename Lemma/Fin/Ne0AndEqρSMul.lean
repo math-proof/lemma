@@ -121,17 +121,17 @@ private lemma main
       add_mem' := fun ha hb => L.add_mem ha hb
       zero_mem' := L.zero_mem
       smul_mem' := fun t x hx => hstab t x hx }
-  let hVtf : IsAddTorsionFree V := by
-    refine ⟨fun n hn a b hab => ?_⟩
-    have h : (n : K) • a = (n : K) • b := by
-      simpa only [Nat.cast_smul_eq_nsmul] using hab
-    refine smul_right_injective V (Nat.cast_ne_zero.mpr hn) h
-  let hLTtf : IsAddTorsionFree LT := by
-    refine ⟨fun n hn a b hab => ?_⟩
-    apply Subtype.ext
-    apply IsAddTorsionFree.nsmul_right_injective hn
-    have := congrArg Subtype.val hab
-    simpa using this
+  letI : HasUniqueDiv V :=
+    ⟨fun n hn a b hnab => by
+      have h : (n : K) • a = (n : K) • b := by
+        simpa only [Nat.cast_smul_eq_nsmul] using hnab
+      exact smul_right_injective (R := K) (M := V) (Nat.cast_ne_zero.mpr hn) h⟩
+  letI : HasUniqueDiv LT :=
+    ⟨fun n hn a b hnab =>
+      Subtype.ext <| HasUniqueDiv.nsmul_right_injective hn (by
+        simpa using congrArg Subtype.val hnab)⟩
+  letI : Module.IsTorsionFree ℤ LT :=
+    ⟨fun n hn => zsmul_right_injective (by simpa [isRegular_iff_ne_zero] using hn)⟩
   let _ : Module.Finite ℤ L := Module.Finite.iff_fg.mpr hL
   let eL : L ≃ₗ[ℤ] LT :=
     { toFun := fun x => ⟨x, x.2⟩
@@ -201,11 +201,12 @@ private lemma main
   let _ : Module.Finite ℤ (T ⧸ 𝔓) :=
     Module.Finite.of_surjective (Ideal.Quotient.mkₐ ℤ 𝔓).toLinearMap
       (Ideal.Quotient.mkₐ_surjective ℤ 𝔓)
-  let _ : IsAddTorsionFree (T ⧸ 𝔓) := by
-    refine ⟨fun n hn a b hab => he_inj ?_⟩
-    apply IsAddTorsionFree.nsmul_right_injective hn
-    simp only [← map_nsmul]
-    exact congrArg e hab
+  letI : HasUniqueDiv (T ⧸ 𝔓) :=
+    ⟨fun n hn a b hnab =>
+      he_inj <| HasUniqueDiv.nsmul_right_injective (M := V) hn (by
+        simpa [← map_nsmul] using congrArg e hnab)⟩
+  letI : Module.IsTorsionFree ℤ (T ⧸ 𝔓) :=
+    ⟨fun n hn => zsmul_right_injective (by simpa [isRegular_iff_ne_zero] using hn)⟩
   let _ : Module.Free ℤ (T ⧸ 𝔓) := inferInstance
   refine FrobChareqEngine.engine5a ρ χ (Ideal.Quotient.mk 𝔓)
     (Ideal.Quotient.lift 𝔓 χ fun t ht => h𝔓le ht) (fun t => Ideal.Quotient.lift_mk 𝔓 χ _)
@@ -216,4 +217,5 @@ private lemma main
     refine hd.map' (e.restrictScalars ℤ) hker
   refine hfree n _ (fun i => he_memL _) h1
 
+-- updated on 2026-11-13
 -- created on 2026-10-20

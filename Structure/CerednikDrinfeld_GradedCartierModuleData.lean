@@ -53,6 +53,20 @@ attribute [instance] GradedCartierModuleData.addCommGroup GradedCartierModuleDat
 
 variable {p : ℕ} [Fact p.Prime] {B : Type} [CommRing B] {j : Zp2 p →+* B}
 
+def IsHomogeneousVBasis (D : GradedCartierModuleData p B j) (γ : Fin 2 → D.M) : Prop :=
+  (∀ i : Fin 2, γ i ∈ D.piece i) ∧
+    ∀ x : D.M, ∃! cy : (Fin 2 → B) × D.M,
+      x = (∑ i : Fin 2, WittVector.teichmuller p (cy.1 i) • γ i) + D.verschiebung cy.2
+
+def IsVAdicallyComplete (D : GradedCartierModuleData p B j) : Prop :=
+  ∀ x : ℕ → D.M, ∃! s : D.M, ∀ N : ℕ, ∃ t : D.M,
+    s = (∑ m ∈ Finset.range N, (⇑D.verschiebung)^[m] (x m)) + (⇑D.verschiebung)^[N] t
+
+def IsSpecialCartierModule (D : GradedCartierModuleData p B j) : Prop :=
+  (∃ γ : Fin 2 → D.M, D.IsHomogeneousVBasis γ) ∧ D.IsVAdicallyComplete
+
+theorem varpi_smul (D : GradedCartierModuleData p B j) (w : WittVector p B) (x : D.M) :
+    D.varpi (w • x) = w • D.varpi x := map_smul _ _ _
 
 end GradedCartierModuleData
 

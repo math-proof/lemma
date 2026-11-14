@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Theorem.MathlibExtTest.Analysis.Convex.LinearProgrammingDuality
+import Theorem.MathlibExtTest.Analysis.Matrix.LinearProgrammingDuality
 
 
 namespace LinearProgrammingDualityTest

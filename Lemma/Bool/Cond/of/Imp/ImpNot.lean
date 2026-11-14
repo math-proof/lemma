@@ -27,5 +27,5 @@ private lemma domain_defined.given
   h₁ h₀
 
 
--- created on 2023-10-13
+-- created on 2018-05-07
 -- updated on 2026-09-27

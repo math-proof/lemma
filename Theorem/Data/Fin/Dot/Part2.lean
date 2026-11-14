@@ -4,8 +4,7 @@ import Mathlib.Data.Matrix.Mul
 import Notation.Fun
 import Syntax.Data.List
 import Instance.Data.Fin.Dot.Part2
-infixl:72 (priority := 2000) " ⬝ᵥ " => Dot.dot
-
+import Notation.Data.Dot
 
 
 theorem Dot.fun_out_eq [AddCommMonoid α] [Mul α] {m : ℕ} (s : Slice)

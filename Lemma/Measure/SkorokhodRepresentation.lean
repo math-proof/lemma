@@ -145,7 +145,7 @@ private lemma cdfQuantile_measurable (ν : Measure ℝ) : Measurable (cdfQuantil
         rw [cdfQuantile_le_iff ν hu]
         exact ⟨fun h => ⟨hu, h⟩, fun h => h.2⟩
     · have hQ0 : cdfQuantile ν u = 0 := by
-      simp only [cdfQuantile, hu, ite_false]
+        simp only [cdfQuantile, hu, ite_false]
       by_cases ht : (0:ℝ) ≤ t
       · simp only [Set.mem_preimage, Set.mem_Iic, hQ0, Set.mem_union,
         Set.mem_inter_iff]
@@ -195,15 +195,15 @@ private lemma map_cdfQuantile_restrict_Icc (ν : Measure ℝ) [IsProbabilityMeas
   rw [← ProbabilityTheory.ofReal_cdf ν t]
   by_cases hclt : c < 1
   · have hset : Set.Iic c ∩ Set.Ioo (0:ℝ) 1 = Set.Ioc 0 c := by
-    ext u
-    simp only [Set.mem_inter_iff, Set.mem_Iic, Set.mem_Ioo, Set.mem_Ioc]
-    constructor
-    · intro h
-      obtain ⟨huct, hu0, hu1⟩ := h
-      exact ⟨hu0, huct⟩
-    · intro h
-      obtain ⟨hu0, huc⟩ := h
-      exact ⟨huc, hu0, lt_of_le_of_lt huc hclt⟩
+      ext u
+      simp only [Set.mem_inter_iff, Set.mem_Iic, Set.mem_Ioo, Set.mem_Ioc]
+      constructor
+      · intro h
+        obtain ⟨huct, hu0, hu1⟩ := h
+        exact ⟨hu0, huct⟩
+      · intro h
+        obtain ⟨hu0, huc⟩ := h
+        exact ⟨huc, hu0, lt_of_le_of_lt huc hclt⟩
     rw [hset, Real.volume_Ioc]
     congr 1
     ring
@@ -547,11 +547,11 @@ end MathlibExt.Probability.SkorokhodRepresentationWanted
 
 namespace MathlibExt.Probability.SkorokhodRepresentationWanted
 
+open Classical in
 /--
 [tendsto_of_tendsto_ballAddress](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/SkorokhodRepresentation.lean)
 -/
 @[path]
-open Classical in
 private lemma tendsto_of_tendsto_ballAddress
   {X : Type*} [PseudoMetricSpace X]
   (c : ℕ → X) (r : ℕ → ℝ)
@@ -587,11 +587,11 @@ end MathlibExt.Probability.SkorokhodRepresentationWanted
 
 namespace MathlibExt.Probability.SkorokhodRepresentationWanted
 
+open Classical in
 /--
 [continuousAt_ballAddress](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/SkorokhodRepresentation.lean)
 -/
 @[path]
-open Classical in
 private lemma continuousAt_ballAddress
   {X : Type*} [PseudoMetricSpace X]
   (c : ℕ → X) (r : ℕ → ℝ)
@@ -602,8 +602,8 @@ private lemma continuousAt_ballAddress
   set B := Metric.ball (c m) (r m) with hB
   by_cases hxmem : x ∈ B
   · have heq : (fun x' : X => decide (x' ∈ B)) =ᶠ[nhds x] (fun _ => true) := by
-    filter_upwards [Metric.isOpen_ball.mem_nhds hxmem] with x' hx'
-    exact decide_eq_true_iff.mpr hx'
+      filter_upwards [Metric.isOpen_ball.mem_nhds hxmem] with x' hx'
+      exact decide_eq_true_iff.mpr hx'
     exact heq.continuousAt
   · have hxcl : x ∈ closure Bᶜ := subset_closure hxmem
     -- x ∉ frontier B and x ∈ closure Bᶜ forces x ∉ closure B
@@ -658,7 +658,8 @@ private lemma exists_measurableEmbedding_ae_continuous_reflecting
       Metric.ball (c m) (r m) := by
       ext x
       simp
-    rwa [hpre]
+    rw [hpre]
+    exact Metric.isOpen_ball.measurableSet
   have hΦ_meas : Measurable Φ := hCantorCont.measurable.comp ha_meas
   -- reflection: C ∘ a reflects via IsEmbedding + N3
   have hreflect : ∀ (y : ℕ → X) (x : X),
@@ -673,9 +674,11 @@ private lemma exists_measurableEmbedding_ae_continuous_reflecting
   have hinj : Function.Injective Φ := by
     intro x y hxy
     have hlim : Filter.Tendsto (fun _ : ℕ => Φ y) Filter.atTop (nhds (Φ x)) := by
-      rwa [hxy]
+      rw [hxy]
+      exact tendsto_const_nhds
     have := hreflect (fun _ => y) x hlim
-    rwa [tendsto_const_nhds_iff] at this
+    rw [tendsto_const_nhds_iff] at this
+    exact this.symm
   have hME : MeasurableEmbedding Φ := hΦ_meas.measurableEmbedding hinj
   refine ⟨Φ, hME, ?_, hreflect⟩
   -- discontinuity set null

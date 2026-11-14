@@ -1,7 +1,7 @@
 -- Carved from Lemma/Definitions/Def_ProjectiveLineMatrixAction.lean: instance decls only.
 import Mathlib
 import Instance.ModularCurve_ProjectiveLine
-import Lemma.ProjectiveLineMatrixAction.Main
+import Lemma.Matrix.ProjectiveLineMatrixAction
 
 
 namespace HeckeEis

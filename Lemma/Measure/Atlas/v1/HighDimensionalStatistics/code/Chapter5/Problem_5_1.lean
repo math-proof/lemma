@@ -76,7 +76,7 @@ lemma problem_5_1b
   by_cases heq : θ = θ'
   · subst heq
     exact ⟨1, one_pos, by unfold klBernoulli; simp⟩
-  · have hkl := klBernoulli_pos θ θ' hθ hθ1 hθ' hθ'1 heq
+  · have hkl := klBernoulli_pos hθ hθ1 hθ' hθ'1 heq
     have hsq : 0 < (θ - θ') ^ 2 := by
       have : θ - θ' ≠ 0 := sub_ne_zero.mpr heq
       positivity

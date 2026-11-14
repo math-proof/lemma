@@ -44,7 +44,7 @@ private lemma relative_distance.lower_triangle
 -- proof
   intro t
   have h := SoftmaxAdd_Mul_Infty.eq.Cast_Stack_Ite_Block (n := n) (m := m)
-    (fun i j => i.val < (dm j).val) (fun i j => (∑ s, Q i s * K j s) + V i j t) (fun i j => V i j t) h_ne
+    (P := fun i j => i.val < (dm j).val) (a := fun i j => (∑ s, Q i s * K j s) + V i j t) (w := fun i j => V i j t) h_ne
     (fun i j hp => h_fix i j t hp)
   refine h.trans (Tensor.XEq.of.Eq ?_)
   congr 1
@@ -58,3 +58,4 @@ private lemma relative_distance.lower_triangle
 
 
 -- created on 2022-04-26
+-- updated on 2026-11-13

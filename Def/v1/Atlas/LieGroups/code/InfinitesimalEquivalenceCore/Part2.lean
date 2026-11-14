@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 import Def.v1.Atlas.LieGroups.code.GKModule.Part2
 import Def.v1.Atlas.LieGroups.code.GKModuleDefs.Part2
 import Structure.v1.Atlas.LieGroups.code.HarishChandraFunctor
-import Lemma.Bijective.EqContinuousLinearEquivOfBijective.of.Bijective
+import Lemma.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
 import Def.v1.Atlas.LieGroups.code.Admissible.Part3
 import Mathlib.Analysis.InnerProductSpace.Completion
 import Mathlib.Analysis.Normed.Module.Completion

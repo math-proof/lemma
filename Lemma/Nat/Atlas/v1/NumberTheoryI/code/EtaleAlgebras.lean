@@ -391,14 +391,6 @@ section Lemma_4_10
 -/
 @[path]
 lemma hom_count_mul_tower
-  {K : Type*}
-  {L : Type*}
-  [Field K]
-  [Field L]
-  [Algebra K L]
-  {K' : Type u}
-  {F : Type v}
-  {L : Type w}
   [FiniteDimensional K' F]
   [FiniteDimensional F L] :
 -- imply
@@ -415,14 +407,6 @@ section Corollary_4_11
 -/
 @[path]
 lemma separable_degree_mul_tower
-  {K : Type*}
-  {L : Type*}
-  [Field K]
-  [Field L]
-  [Algebra K L]
-  {K' : Type u}
-  {F : Type v}
-  {L : Type w}
   [FiniteDimensional K' F]
   [FiniteDimensional F L] :
 -- imply
@@ -599,14 +583,6 @@ open scoped TensorProduct
 -/
 @[path]
 lemma etale_base_change
-  {K : Type*}
-  {L : Type*}
-  [Field K]
-  [Field L]
-  [Algebra K L]
-  {_K' : Type u}
-  {_F : Type v}
-  {_L : Type w}
   {K K' : Type*}
   [Field K]
   [Field K']
@@ -626,14 +602,6 @@ lemma etale_base_change
 -/
 @[path]
 lemma etale_finite_base_change
-  {K : Type*}
-  {L : Type*}
-  [Field K]
-  [Field L]
-  [Algebra K L]
-  {_K' : Type u}
-  {_F : Type v}
-  {_L : Type w}
   {K K' : Type*}
   [Field K]
   [Field K']
@@ -653,14 +621,6 @@ lemma etale_finite_base_change
 -/
 @[path]
 lemma etale_base_change_finrank_eq
-  {K : Type*}
-  {L : Type*}
-  [Field K]
-  [Field L]
-  [Algebra K L]
-  {_K' : Type u}
-  {_F : Type v}
-  {_L : Type w}
   {K K' : Type*}
   [Field K]
   [Field K']
@@ -681,14 +641,6 @@ lemma etale_base_change_finrank_eq
 -/
 @[path]
 lemma etale_base_change_bundle
-  {K : Type*}
-  {L : Type*}
-  [Field K]
-  [Field L]
-  [Algebra K L]
-  {K' : Type u}
-  {F : Type v}
-  {L : Type w}
   {K K' : Type*}
   [Field K]
   [Field K']
@@ -701,7 +653,7 @@ lemma etale_base_change_bundle
 -- imply
   Algebra.Etale K' (K' ⊗[K] L) ∧ Module.Finite K' (K' ⊗[K] L) ∧ Module.finrank K L = Module.finrank K' (K' ⊗[K] L) :=
 -- proof
-  ⟨etale_base_change K K' L, etale_finite_base_change K K' L, etale_base_change_finrank_eq K K' L⟩
+  ⟨etale_base_change, etale_finite_base_change, etale_base_change_finrank_eq⟩
 
 /--
 [semisimple_iff_reduced](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/EtaleAlgebras.lean)

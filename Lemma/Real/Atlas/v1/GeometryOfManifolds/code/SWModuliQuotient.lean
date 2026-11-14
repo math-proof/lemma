@@ -69,8 +69,8 @@ lemma SWModuliQuotient.no_reducibles_generic
   intro hred
   have h_no_red := IsGenericPair.no_reducible_solutions hb₂_pos sol
   exact h_no_red ((sol.isReducible_iff_supNormSq_zero).mpr hred)
-/-- Dimension formula for the SW moduli space:
-$4d = c_1(L)^2 - (2\chi(M) + 3\sigma(M))$ for some integer $d \in \mathbb{Z}$. -/
+-- Dimension formula for the SW moduli space:
+-- $4d = c_1(L)^2 - (2\chi(M) + 3\sigma(M))$ for some integer $d \in \mathbb{Z}$.
 
 
 -- created on 2026-10-23

@@ -1,8 +1,8 @@
 import Mathlib
-import Lemma.ModularCurve.HeckeModule
+import Lemma.MvPolynomial.HeckeModule
 import Def.ModularCurve_HeckeInputsAll
 import Def.FLTPrelim_Ramification
-import Lemma.ModularCurve.ToricMonodromyPart
+import Lemma.Submodule.ToricMonodromyPart
 import Def.GaloisRep_Flat
 import Structure.ModularCurve_JZeroNeronData
 

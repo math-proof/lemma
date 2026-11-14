@@ -84,6 +84,15 @@ variable {A F}
 
 variable {Fbar}
 
+def IsAttached (An : Annulus A F) (C : ComponentChart A F Fbar) (x : Place (ResidueField A) Fbar) :
+    Prop :=
+  x ∈ C.nodes ∧ ∃ hz : An.param ∈ C.integers, x.ord (C.residue ⟨An.param, hz⟩) = 1 ∧
+    ∀ (f : F) (hf : f ∈ C.integers), C.residue ⟨f, hf⟩ ≠ 0 → (∀ P ∈ An.dom, P.ord f = 0) →
+      ∀ P ∈ An.dom,
+        ∃ h : P.evalAt f * (P.evalAt An.param) ^ (-(x.ord (C.residue ⟨f, hf⟩))) ∈ A,
+          IsUnit (⟨_, h⟩ : A)
+
+
 
 section DegenerateMember
 

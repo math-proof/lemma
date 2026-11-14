@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.AlgebraicGeometry.RelativeGroupLaw
+import Lemma.Scheme.RelativeGroupLaw
 import Instance.AlgebraicGeometry_SquareZeroDeformation
 import Def.AlgebraicGeometry_SquareZeroRelTangent
 import Def.AlgebraicGeometry_SmallExtensionPairTangent

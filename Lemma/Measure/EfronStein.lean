@@ -7,11 +7,10 @@ namespace MathlibExt.Probability.EfronStein
 
 /--
 [var_eq_mean_sq_sub](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/EfronStein.lean)
+# Efron–Stein inequality (finite iid specialization)
+Variance about the mean equals mean of squares minus square of mean.
 -/
 @[path]
-# Efron–Stein inequality (finite iid specialization)
--/
-/-- Variance about the mean equals mean of squares minus square of mean. -/
 private lemma var_eq_mean_sq_sub
   (ι : Type*) [Fintype ι]
   (w z : ι → ℝ)
@@ -709,14 +708,12 @@ lemma efron_stein_finite_iid_general
   (hp_nonneg : ∀ a, 0 ≤ p a)
   (hp_sum : ∑ a : α, p a = 1) :
 -- imply
-  let μ : ℝ := by
--- proof
-  change (∑ x : Fin n → α, (∏ i : Fin n, p (x i)) *
+  (∑ x : Fin n → α, (∏ i : Fin n, p (x i)) *
     (f x - ∑ y : Fin n → α, (∏ i : Fin n, p (y i)) * f y) ^ 2)
     ≤ (1 / 2 : ℝ) * ∑ i : Fin n, ∑ x : Fin n → α, ∑ a : α, (∏ j : Fin n, p (x j)) * p a *
-      (f x - f (Function.update x i a)) ^ 2
+      (f x - f (Function.update x i a)) ^ 2 := by
+-- proof
   exact efron_stein_aux α n p hp_nonneg hp_sum f
-set_option linter.unusedDecidableInType false in
 
 end MathlibExt.Probability.EfronStein
 
@@ -735,9 +732,12 @@ lemma efron_stein_finite_iid
   (hp_nonneg : ∀ a, 0 ≤ p a)
   (hp_sum : ∑ a : α, p a = 1) :
 -- imply
-  let μ : ℝ :=
+  (∑ x : Fin n → α, (∏ i : Fin n, p (x i)) *
+    (f x - ∑ y : Fin n → α, (∏ i : Fin n, p (y i)) * f y) ^ 2)
+    ≤ (1 / 2 : ℝ) * ∑ i : Fin n, ∑ x : Fin n → α, ∑ a : α, (∏ j : Fin n, p (x j)) * p a *
+      (f x - f (Function.update x i a)) ^ 2 :=
 -- proof
-  efron_stein_finite_iid_general p hp_nonneg hp_sum f
+  efron_stein_finite_iid_general hp_nonneg hp_sum
 
 end MathlibExt.Probability.EfronStein
 

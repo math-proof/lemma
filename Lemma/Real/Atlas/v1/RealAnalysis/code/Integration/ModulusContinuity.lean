@@ -140,7 +140,7 @@ lemma Partition.le_mesh
     (if h : P.n = 0 then (0 : ℝ) else Finset.sup' (Finset.univ (α := Fin P.n))
       (Finset.univ_nonempty_iff.mpr ⟨⟨0, Nat.pos_of_ne_zero h⟩⟩)
       (fun i : Fin P.n => P.points i.succ - P.points i.castSucc))
-  rw [dif_neg hne]
+  rw [dite_eq_right hne]
   exact Finset.le_sup' (fun i : Fin P.n => P.points i.succ - P.points i.castSucc)
     (Finset.mem_univ i)
 
@@ -163,10 +163,10 @@ lemma Partition.sum_sub_eq
     rw [← h, ← Fin.sum_univ_eq_sum_range (fun i => g (i + 1) - g i)]
     congr 1; ext i
     simp only [g, show (↑i : ℕ) + 1 < P.n + 1 from by omega,
-      show (↑i : ℕ) < P.n + 1 from by omega, dif_pos]
+      show (↑i : ℕ) < P.n + 1 from by omega, dite_eq_left]
     congr 1
   rw [Finset.sum_range_sub]
-  simp only [g, show P.n < P.n + 1 from by omega, show (0 : ℕ) < P.n + 1 from by omega, dif_pos]
+  simp only [g, show P.n < P.n + 1 from by omega, show (0 : ℕ) < P.n + 1 from by omega, dite_eq_left]
   rw [show (⟨P.n, by omega⟩ : Fin (P.n + 1)) = Fin.last P.n from Fin.ext rfl,
     show (⟨0, by omega⟩ : Fin (P.n + 1)) = (0 : Fin (P.n + 1)) from Fin.ext rfl,
     P.last, P.first]
@@ -368,12 +368,12 @@ lemma telescope_sum_of_embedding
           ⟨Finset.mem_univ _, Finset.mem_Ico.mp hi⟩, rfl⟩)
         (fun _ _ => rfl)
     rw [hbij, Finset.sum_Ico_sub g hab']
-    simp only [g, hb'_lt, Nat.lt_of_le_of_lt hab' hb'_lt, dif_pos]
+    simp only [g, hb'_lt, Nat.lt_of_le_of_lt hab' hb'_lt, dite_eq_left]
     congr 1 <;> congr 1 <;> simp only [Fin.val]
   intro j hj
   have hj' := (Finset.mem_filter.mp hj).2
   simp only [g, show j.val < n'' + 1 from by omega,
-    show j.val + 1 < n'' + 1 from by omega, dif_pos]
+    show j.val + 1 < n'' + 1 from by omega, dite_eq_left]
   congr 1 <;> congr 1 <;> simp only [Fin.val_succ, Fin.val]
 
 end Integration

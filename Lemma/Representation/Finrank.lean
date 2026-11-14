@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.GroupCohomology.Selmer
+import Lemma.Rep.Selmer
 open Module
 open scoped IntermediateField Pointwise
 

@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_GaloisRep_ComplexConjugation.lean: instance decls only.
 import Mathlib
-import Lemma.GaloisRep.ComplexConjugation
+import Lemma.AlgEquiv.ComplexConjugation
 
 set_option autoImplicit false
 
@@ -17,4 +17,3 @@ noncomputable local instance instAlgebraQbarComplex : Algebra (AlgebraicClosure 
   complexEmbedding.toRingHom.toAlgebra
 local instance instTowerQbarComplex : IsScalarTower ℚ (AlgebraicClosure ℚ) ℂ :=
   IsScalarTower.of_algebraMap_eq' (Subsingleton.elim _ _)
-

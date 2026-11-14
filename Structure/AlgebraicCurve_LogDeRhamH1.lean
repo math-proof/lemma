@@ -1,6 +1,6 @@
 import Mathlib
 import Def.AlgebraicCurve_RegularDifferentials
-import Lemma.AlgebraicCurve.GluedPic0
+import Lemma.ResidueField.GluedPic0
 
 set_option autoImplicit false
 

@@ -17,8 +17,7 @@ set_option maxHeartbeats 900000
 /--
 gradient of the Bellman equation for the closed-form value function with continuous states and a density policy:
 `fderiv V0(x) = ∫ u, Q0(x, u) • fderiv π(u | x) du + γ • ∫ u, π(u | x) • ∫ y, fderiv V0(y) ∂T(· | x, u) du`.
-Continuous-action counterpart of `Random.Fderiv.eq.AddSum_SMulSMul.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Differentiable_Prob`:
-both action sums become integrals against the reference measure of `𝒜` (differentiated under the integral sign).
+Both action sums become integrals against the reference measure of `𝒜` (differentiated under the integral sign).
 `h₀`, `h₁`: `θ ↦ π_θ(u | x)` is differentiable and its gradient is dominated by `g x u`; `h₂`, `h₃`: `g x` is integrable
 over the actions, uniformly in the state (this replaces `|𝒜| * sup ‖∇π‖ < ∞` of the finite-action version);
 `h₅`: `(x, u) ↦ π_θ(u | x)` is jointly measurable.
@@ -26,19 +25,18 @@ over the actions, uniformly in the state (this replaces `|𝒜| * sup ‖∇π�
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮]
-  [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
+  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮]
+  [μ : ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
   {M : DensityModel Θ 𝒮 𝒜}
   {γ : ℝ}
   {g : 𝒮 → 𝒜 → ℝ}
 -- given
   (h₀ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₁ : ∀ θ x u, ‖∇[θ] M.policy.prob θ x u‖ ≤ g x u)
-  (h₂ : ∀ x, Integrable (g x) ReferenceMeasure.measure)
-  (h₃ : sup[x] ∫ u, g x u ∂ReferenceMeasure.measure < ∞)
+  (h₂ : ∀ x, Integrable (g x) μ.measure)
+  (h₃ : sup[x] ∫ u, g x u ∂μ.measure < ∞)
   (h₄ : γ ∈ Set.Ico 0 1)
   (h₅ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.policy.prob θ z.1 z.2))
-  (hP : ∀ θ x, (M θ).real ((fun ω : ℕ → ℝ × 𝒮 × 𝒜 => (ω 0).2.1) ⁻¹' {x}) ≠ 0)
   (hQA : ∀ θ x u,
     (M θ).real
       (((fun ω : ℕ → ℝ × 𝒮 × 𝒜 => (ω 0).2.1) ⁻¹' {x}) ∩
@@ -47,8 +45,8 @@ private lemma main
   (θ : Θ) :
 -- imply
   fderiv ℝ (fun θ => M.V0 θ γ x) θ =
-    ∫ u, M.Q0 θ γ x u • fderiv ℝ (fun θ => M.policy.prob θ x u) θ ∂ReferenceMeasure.measure +
-      γ • ∫ u, M.policy.prob θ x u • ∫ y, fderiv ℝ (fun θ => M.V0 θ γ y) θ ∂(M.env.trans (x, u)) ∂ReferenceMeasure.measure := by
+    ∫ u, M.Q0 θ γ x u • fderiv ℝ (fun θ => M.policy.prob θ x u) θ ∂μ.measure +
+      γ • ∫ u, M.policy.prob θ x u • ∫ y, fderiv ℝ (fun θ => M.V0 θ γ y) θ ∂(M.env.trans (x, u)) ∂μ.measure := by
 -- proof
   have := M.env.trans_markov
   obtain ⟨Cg, hCg⟩ := id h₃
@@ -56,7 +54,7 @@ private lemma main
   have hC : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ g x u := fun θ x u => by
     simpa [gradient, LinearIsometryEquiv.norm_map] using h₁ θ x u
   obtain ⟨C, hCV⟩ := GtInftySup.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob (M := M) h₀ h₁ h₂ h₃ h₄ h₅
-  have hQ := fun u θ => DifferentiableAt.Fderiv.eq.SMul.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob (M := M) h₀ h₁ h₂ h₃ h₄ h₅ hP hQA x u θ
+  have hQ := fun u θ => DifferentiableAt.Fderiv.eq.SMul.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob (M := M) h₀ h₁ h₂ h₃ h₄ h₅ hQA x u θ
   have hQb : ∀ θ u, ‖M.Q0 θ γ x u‖ ≤ |M.env.R| + γ * ((1 - γ)⁻¹ * |M.env.R|) :=
     fun θ u =>
       NormQkd.le.AddAbs_RMulInvSub1Abs_R.of.In_Ico (M := M) h₄ θ x u <| by
@@ -75,8 +73,8 @@ private lemma main
     (B₀ := |M.env.R| + γ * ((1 - γ)⁻¹ * |M.env.R|)) (B₁ := γ * C)
     (fun θ => (h₅ θ).comp (measurable_prodMk_left (x := x))) (h₀ x) (fun θ u => M.policy.nonneg θ x u)
     (fun θ => M.policy.integral_eq_one θ x) (fun θ u => hC θ x u) (h₂ x)
-    (fun θ => (Measurable_Qkd.of.All_Measurable_Prob (M := M) h₅ θ γ h₄
-      (fun y => hP θ y) (fun y u => hQA θ y u)).comp (measurable_prodMk_left (x := x)))
+    (fun θ => (Measurable_Qkd.of.All_Measurable_Prob (M := M) h₅ h₄
+      (fun y u => hQA θ y u)).comp (measurable_prodMk_left (x := x)))
     (fun u θ => (hQ u θ).1) hQb hQ' θ
   have hb : (fun θ => M.V0 θ γ x) = fun θ => ∫ u, M.policy.prob θ x u * M.Q0 θ γ x u ∂ReferenceMeasure.measure := by
     funext θ'
@@ -108,7 +106,7 @@ private lemma main
           γ * (M.policy.prob θ' x u * ∫ y, M.V0 θ' γ y ∂(M.env.trans (x, u))) := by
       funext u
       rw [Qkd.eq.AddRkd_MulIntegral_Vkd.of.Ne0Real_Joint.In_Ico
-        (M := M) h₄ θ' x u (fun y => hP θ' y) (hQA θ' x u)]
+        (M := M) h₄ (hQA θ' x u)]
       ring
     rw [hB, e, integral_add hr (hv.const_mul γ), integral_const_mul]
   have hV : HasFDerivAt (fun θ => M.V0 θ γ x)
@@ -130,7 +128,7 @@ Same gradient identity with the closed form `rkd + γ * ∫ V0` in place of `Q0`
 -/
 lemma bellmanFderivClosed
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮]
+  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮]
   [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
   {M : DensityModel Θ 𝒮 𝒜}
   {γ : ℝ}
@@ -268,4 +266,4 @@ lemma bellmanFderivClosed
 
 
 -- created on 2026-10-07
--- updated on 2026-11-11
+-- updated on 2026-11-14

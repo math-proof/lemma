@@ -10,9 +10,7 @@ variable {K : Type*} [Field K]
 private lemma _root_.ValuationSubring.valuation_intCast_le_one
   (A : ValuationSubring K) (a : ℤ) :
   A.valuation (a : K) ≤ 1 := by
-  have h := A.valuation_le_one (a : A)
   simp
-  refine h
 private lemma _root_.ValuationSubring.valuation_natCast_eq_one_of_not_dvd
   (A : ValuationSubring K) {p : ℕ} (hp : p.Prime)
   (hvp : A.valuation (p : K) < 1) {n : ℕ} (hn : ¬ p ∣ n) :
@@ -24,9 +22,7 @@ private lemma _root_.ValuationSubring.valuation_natCast_eq_one_of_not_dvd
     exact_mod_cast congrArg (fun z : ℤ => (z : K)) hab
   apply le_antisymm
   ·
-    have this := A.valuation_intCast_le_one n
     simp
-    refine this
   ·
     by_contra hlt
     push Not at hlt
@@ -233,3 +229,4 @@ private lemma main
 
 
 -- created on 2026-10-21
+-- updated on 2026-11-13

@@ -5,7 +5,6 @@ import Mathlib.RingTheory.FormalGroup.Basic
 import Mathlib.Algebra.BigOperators.Finprod
 import Mathlib.RingTheory.MvPowerSeries.NoZeroDivisors
 import Mathlib.RingTheory.MvPowerSeries.Evaluation
-import Instance.WeierstrassCurve_FormalGroup
 import Abbrev.WeierstrassCurve_FormalGroup
 
 set_option autoImplicit false

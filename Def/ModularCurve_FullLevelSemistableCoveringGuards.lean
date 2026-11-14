@@ -1,5 +1,5 @@
-import Lemma.ModularCurve.FullLevelSemistableCovering
-import Lemma.AlgebraicCurve.Repartitions
+import Lemma.ResidueField.FullLevelSemistableCovering
+import Lemma.Submodule.Repartitions
 import Class.AlgebraicCurve_IsCurveOver
 
 set_option autoImplicit false

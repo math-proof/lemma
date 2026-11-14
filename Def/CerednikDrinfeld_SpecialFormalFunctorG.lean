@@ -1,6 +1,6 @@
 import Mathlib
-import Lemma.MvFormalGroup.NegV2
-import Lemma.CerednikDrinfeld.SpecialFormalModule
+import Lemma.MvPowerSeries.NegV2
+import Lemma.MvPowerSeries.SpecialFormalModule
 import Def.CerednikDrinfeld_FormalUpperHalfPlaneDatum
 import Structure.CerednikDrinfeld_SpecialFormalFunctorG
 

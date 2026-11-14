@@ -33,25 +33,20 @@ instance IsTopologicalGroup.discreteUniformity
 instance ContinuousAlgHom.isLocalHom_id {R A : Type*}
     [CommSemiring R] [Semiring A] [Algebra R A] [TopologicalSpace A] :
     IsLocalHom (ContinuousAlgHom.id R A) := by
-  convert isLocalHom_id A
+  convert _root_.isLocalHom_id A
   exact ⟨fun ⟨H⟩ ↦ ⟨H⟩, fun ⟨H⟩ ↦ ⟨H⟩⟩
 
 
 instance {R A B : Type*} [CommSemiring R] [Semiring A] [Semiring B]
     [Algebra R A] [Algebra R B] [TopologicalSpace A] [TopologicalSpace B]
-    (f : A →A[R] B) [IsLocalHom f] : IsLocalHom f.toRingHom := by
-  rwa [ContinuousAlgHom.isLocalHom_toRingHom]
+    (f : A →A[R] B) [IsLocalHom f] : IsLocalHom f.toRingHom :=
+  isLocalHom_toRingHom f
 
 instance {R A B : Type*} [CommSemiring R] [Semiring A] [Semiring B]
     [Algebra R A] [Algebra R B] [TopologicalSpace A] [TopologicalSpace B]
     (f : A ≃A[R] B) : IsLocalHom (f : A →A[R] B) := by
   convert isLocalHom_equiv f
   exact ⟨fun ⟨H⟩ ↦ ⟨H⟩, fun ⟨H⟩ ↦ ⟨H⟩⟩
-
-instance {R A B : Type*} [CommSemiring R] [Semiring A] [Semiring B]
-    [Algebra R A] [Algebra R B] [TopologicalSpace A] [TopologicalSpace B]
-    (f : A →A[R] B) [IsLocalHom f] : IsLocalHom f.toRingHom := by
-  rwa [ContinuousAlgHom.isLocalHom_toRingHom]
 
 instance {A B : Type*} [Semiring A] [Semiring B]
     (F : Type*) [EquivLike F A B] [RingEquivClass F A B] (f : F) :
@@ -135,7 +130,17 @@ instance ValuationSubring.smulCommClass
 
 
 instance {G : Type*} [Group G] (H : Subgroup G) [H.FiniteIndex] :
-    H.op.FiniteIndex := ⟨by rw [Subgroup.index_op]; exact Subgroup.FiniteIndex.index_ne_zero⟩
+    H.op.FiniteIndex := ⟨by
+  have hmap : H.op = H.map (MulEquiv.inv' G) := by
+    ext x
+    constructor
+    · intro hx
+      exact ⟨x.unop⁻¹, H.inv_mem (Subgroup.mem_op.mp hx), by simp [MulEquiv.inv']⟩
+    · intro hx
+      rcases Subgroup.mem_map.mp hx with ⟨y, hy, rfl⟩
+      exact Subgroup.mem_op.mpr (H.inv_mem hy)
+  rw [hmap, Subgroup.index_map_equiv]
+  exact Subgroup.FiniteIndex.index_ne_zero⟩
 
 instance Additive.instDistrbMulAction
     {G M : Type*} [Monoid G] [Monoid M] [MulDistribMulAction G M] :

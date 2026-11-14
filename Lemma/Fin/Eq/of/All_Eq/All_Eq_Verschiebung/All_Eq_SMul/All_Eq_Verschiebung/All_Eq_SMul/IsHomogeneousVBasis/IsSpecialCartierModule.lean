@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.CerednikDrinfeld.GradedCartierNModule
-open CerednikDrinfeld CerednikDrinfeld.GradedCartierModuleData
+import Lemma.Submodule.GradedCartierNModule
+open CerednikDrinfeld Fin.GradedCartierModuleData Fin Submodule
 
 
 /--
@@ -14,8 +14,8 @@ private lemma main
   {jR : CerednikDrinfeld.Zp2 p →+* R}
   {j' : CerednikDrinfeld.Zp2 p →+* B'}
   {φ : R →+* B'}
-  {D : CerednikDrinfeld.GradedCartierModuleData p R jR}
-  {D' : CerednikDrinfeld.GradedCartierModuleData p B' j'}
+  {D : Fin.GradedCartierModuleData p R jR}
+  {D' : Fin.GradedCartierModuleData p B' j'}
   {γ : Fin 2 → D.M}
   {δ₁ δ₂ : D.M →+ D'.M}
 -- given

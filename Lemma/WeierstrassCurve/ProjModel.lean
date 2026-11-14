@@ -1,6 +1,6 @@
-import Lemma.AlgebraicGeometry.HomogeneousIdealQuotientGradingInfra
-import Lemma.AlgebraicGeometry.ProjectiveWeierstrassPolynomialPrime
-import Lemma.AlgebraicGeometry.NeronModelPropertyBundleCarrier
+import Lemma.Ideal.HomogeneousIdealQuotientGradingInfra
+import Lemma.WeierstrassCurve.ProjectiveWeierstrassPolynomialPrime
+import Lemma.Scheme.NeronModelPropertyBundleCarrier
 import Mathlib.AlgebraicGeometry.Morphisms.SchemeTheoreticallyDominant
 import Mathlib.AlgebraicGeometry.Morphisms.Separated
 import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
@@ -20,7 +20,7 @@ noncomputable section
 
 universe u
 
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Ideal Scheme WeierstrassCurve
 
 namespace WeierstrassProjModel
 
@@ -199,7 +199,7 @@ universe u
 
 noncomputable section
 
-open AlgebraicGeometry CategoryTheory CategoryTheory.Limits NeronModelInfra
+open AlgebraicGeometry CategoryTheory CategoryTheory.Limits NeronModelInfra Ideal Scheme WeierstrassCurve
 
 namespace WeierstrassProjModel
 
@@ -230,7 +230,7 @@ end
 
 noncomputable section
 
-open AlgebraicGeometry CategoryTheory MvPolynomial
+open AlgebraicGeometry CategoryTheory MvPolynomial Ideal Scheme WeierstrassCurve
 open HomogeneousIdealQuotientGrading ProjWeierstrassCubicPrime
 open NeronModelInfra
 

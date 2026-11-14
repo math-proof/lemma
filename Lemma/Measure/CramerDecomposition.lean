@@ -7,11 +7,10 @@ namespace MathlibExt.Probability.CramerDecompositionWanted
 
 /--
 [integrable_exp_mul_of_indep_add_gaussian](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/CramerDecomposition.lean)
--/
-@[path]
 # Cramér's decomposition lemma
 Cramér's decomposition of Gaussian sums into Gaussian summands.
 -/
+@[path]
 private lemma integrable_exp_mul_of_indep_add_gaussian
   {Ω : Type*} [MeasurableSpace Ω] {μ : Measure Ω} [IsProbabilityMeasure μ]
   {X Y : Ω → ℝ} (hX : Measurable X) (hY : Measurable Y)

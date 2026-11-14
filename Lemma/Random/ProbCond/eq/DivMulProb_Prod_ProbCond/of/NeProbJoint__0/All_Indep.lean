@@ -1,4 +1,4 @@
-import Lemma.Random.ProbCond.eq.Div.of.SinglePSpace
+import Lemma.Random.Prob_Cond.eq.Div.of.SinglePSpace
 import Lemma.Random.SinglePSpace.SinglePSpace.of.SinglePSpace
 import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
 import Mathlib.MeasureTheory.Function.FactorsThrough
@@ -263,7 +263,7 @@ private lemma main
       ℙ[π](x = a | y[:m] = (show Fin m → β from b[:m])) =
         π (x ⁻¹' {a} ∩ (show Ω → Fin m → β from y[:m]) ⁻¹' {show Fin m → β from b[:m]}) /
           π ((show Ω → Fin m → β from y[:m]) ⁻¹' {show Fin m → β from b[:m]}) :=
-      ProbCond.eq.Div.of.SinglePSpace inferInstance a (show Fin m → β from b[:m])
+      Prob_Cond.eq.Div.of.SinglePSpace inferInstance a (show Fin m → β from b[:m])
     simpa [a, A, ys, Set.inter_comm] using h
   have hfac : ∀ j : Fin m, ℙ[π](y[j] = b j | x = a) =
     π (A ∩ y[j] ⁻¹' {b j}) / π A := by
@@ -271,7 +271,7 @@ private lemma main
     have h :
       ℙ[π](y[j] = b j | x = a) =
         π (y[j] ⁻¹' {b j} ∩ x ⁻¹' {a}) / π (x ⁻¹' {a}) :=
-      ProbCond.eq.Div.of.SinglePSpace inferInstance (b j) a
+      Prob_Cond.eq.Div.of.SinglePSpace inferInstance (b j) a
     simpa [a, A, Set.inter_comm] using h
   have hprod : ∏ j : Fin m, ℙ[π](y[j] = b j | x = a) =
     π (A ∩ prefixSet m) / π A := by

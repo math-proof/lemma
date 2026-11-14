@@ -9,7 +9,7 @@ namespace Real
 [Integral](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Log/Integral.lean)
 -/
 @[path]
-lemma logarithmicIntegral_zero
+lemma logarithmicIntegral_zero_eq_lemma
 -- given
   (hx : 0 ≤ (0 : ℝ) ∧ (0 : ℝ) ≠ (1 : ℝ)) :
 -- imply
@@ -25,7 +25,7 @@ namespace Real
 [Integral](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Log/Integral.lean)
 -/
 @[path]
-lemma logarithmicIntegral_of_lt_one
+lemma logarithmicIntegral_of_lt_one_eq_lemma
 -- given
   (x : Real.LogarithmicIntegralDomain)
   (hx : x.val < 1) :
@@ -42,7 +42,7 @@ namespace Real
 [Integral](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Log/Integral.lean)
 -/
 @[path]
-lemma logarithmicIntegral_of_one_lt
+lemma logarithmicIntegral_of_one_lt_eq_lemma
 -- given
   (x : Real.LogarithmicIntegralDomain)
   (hx : 1 < x.val) :

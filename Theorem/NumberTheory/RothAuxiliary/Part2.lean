@@ -25,6 +25,7 @@ import Mathlib.RingTheory.Polynomial.Wronskian
 import Mathlib.RingTheory.Algebraic.Integral
 import Mathlib.Tactic
 import Def.NumberTheory.RothAuxiliary.Part4
+import Lemma.Fin.Sum_SquareRothCentered.le.DivCardRothBox4.of.All_Gt_0
 set_option maxHeartbeats 999999
 
 open scoped BigOperators
@@ -112,7 +113,7 @@ theorem rothCentered_second_moment_le {m : ℕ} {r : Fin m → ℕ}
       gcongr with h k
       by_cases hhk : h = k
       · subst k
-        simpa [pow_two] using rothCentered_sq_sum_le hr h
+        simpa [pow_two] using Fin.Sum_SquareRothCentered.le.DivCardRothBox4.of.All_Gt_0 hr h
       · simp only [hhk, ↓reduceIte]
         rw [rothCentered_cross_sum hr hhk]
     _ = (m : ℝ) * Fintype.card (RothBox r) / 4 := by

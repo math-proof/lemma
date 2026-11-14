@@ -1,5 +1,5 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicCurve_CurveModelSmooth.lean: instance decls only.
-import Lemma.AlgebraicCurve.CurveModel
+import Lemma.Scheme.CurveModel
 import Instance.JacJ1_ChartAlgebra
 import Mathlib.AlgebraicGeometry.Morphisms.Smooth
 import Mathlib.AlgebraicGeometry.Morphisms.Etale
@@ -17,7 +17,7 @@ import Mathlib.RingTheory.Unramified.LocalRing
 import Mathlib.RingTheory.LocalRing.ResidueField.Instances
 import Mathlib.RingTheory.DedekindDomain.Dvr
 import Mathlib.RingTheory.Flat.TorsionFree
-import Lemma.AlgebraicCurve.CurveModelSmooth
+import Lemma.Set.CurveModelSmooth
 
 set_option autoImplicit false
 

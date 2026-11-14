@@ -1,4 +1,4 @@
-import Def.Dynamics.PolicyTrajectory.Gradient
+import Def.Dynamics.PolicyTrajectory.ContinuousAction
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
@@ -34,3 +34,4 @@ private lemma main
 
 
 -- created on 2026-10-06
+-- updated on 2026-11-13

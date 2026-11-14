@@ -9,7 +9,7 @@ namespace Real
 [DickmanDeBruijn](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/DickmanDeBruijn.lean)
 -/
 @[path]
-lemma IsDickmanDeBruijn.eq_zero_of_neg
+lemma IsDickmanDeBruijn.eq_zero_of_neg_eq_lemma
 -- given
   (ρ : ℝ → ℝ)
   (u : ℝ)
@@ -28,7 +28,7 @@ namespace Real
 [DickmanDeBruijn](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/DickmanDeBruijn.lean)
 -/
 @[path]
-lemma IsDickmanDeBruijn.mapsTo_Ici_Icc
+lemma IsDickmanDeBruijn.mapsTo_Ici_Icc_eq_lemma
 -- given
   (ρ : ℝ → ℝ)
   (h : Real.IsDickmanDeBruijn ρ) :
@@ -45,7 +45,7 @@ namespace Real
 [DickmanDeBruijn](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/DickmanDeBruijn.lean)
 -/
 @[path]
-lemma IsDickmanDeBruijn.continuousOn_Ici
+lemma IsDickmanDeBruijn.continuousOn_Ici_eq_lemma
 -- given
   (ρ : ℝ → ℝ)
   (h : Real.IsDickmanDeBruijn ρ) :
@@ -62,7 +62,7 @@ namespace Real
 [DickmanDeBruijn](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/DickmanDeBruijn.lean)
 -/
 @[path]
-lemma IsDickmanDeBruijn.eq_one_of_mem_Icc
+lemma IsDickmanDeBruijn.eq_one_of_mem_Icc_eq_lemma
 -- given
   (ρ : ℝ → ℝ)
   (u : ℝ)
@@ -81,7 +81,7 @@ namespace Real
 [DickmanDeBruijn](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/DickmanDeBruijn.lean)
 -/
 @[path]
-lemma IsDickmanDeBruijn.eq_one_of_nonneg_of_le_one
+lemma IsDickmanDeBruijn.eq_one_of_nonneg_of_le_one_eq_lemma
 -- given
   (ρ : ℝ → ℝ)
   (u : ℝ)
@@ -101,7 +101,7 @@ namespace Real
 [DickmanDeBruijn](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/DickmanDeBruijn.lean)
 -/
 @[path]
-lemma IsDickmanDeBruijn.differentiableAt_of_one_lt
+lemma IsDickmanDeBruijn.differentiableAt_of_one_lt_eq_lemma
 -- given
   (ρ : ℝ → ℝ)
   (u : ℝ)
@@ -120,7 +120,7 @@ namespace Real
 [DickmanDeBruijn](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/DickmanDeBruijn.lean)
 -/
 @[path]
-lemma IsDickmanDeBruijn.delay_eq
+lemma IsDickmanDeBruijn.delay_eq_lemma
 -- given
   (ρ : ℝ → ℝ)
   (u : ℝ)
@@ -139,7 +139,7 @@ namespace Real
 [DickmanDeBruijn](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/DickmanDeBruijn.lean)
 -/
 @[path]
-lemma IsDickmanDeBruijn.nonneg_of_nonneg
+lemma IsDickmanDeBruijn.nonneg_of_nonneg_eq_lemma
 -- given
   (ρ : ℝ → ℝ)
   (u : ℝ)
@@ -158,7 +158,7 @@ namespace Real
 [DickmanDeBruijn](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/DickmanDeBruijn.lean)
 -/
 @[path]
-lemma IsDickmanDeBruijn.le_one_of_nonneg
+lemma IsDickmanDeBruijn.le_one_of_nonneg_eq_lemma
 -- given
   (ρ : ℝ → ℝ)
   (u : ℝ)
@@ -177,7 +177,7 @@ namespace Real
 [DickmanDeBruijn](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/DickmanDeBruijn.lean)
 -/
 @[path]
-lemma IsDickmanDeBruijn.mem_Icc_of_nonneg
+lemma IsDickmanDeBruijn.mem_Icc_of_nonneg_eq_lemma
 -- given
   (ρ : ℝ → ℝ)
   (u : ℝ)

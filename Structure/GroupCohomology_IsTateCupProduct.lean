@@ -1,6 +1,6 @@
 import Mathlib
 import Abbrev.GroupCohomology_TateCohomology
-import Lemma.GroupCohomology.TateSeam
+import Lemma.Rep.TateSeam
 import Def.GroupCohomology_TateShiftMaps
 import Abbrev.GroupCohomology_CochainCup
 import Structure.GroupCohomology_IsGradedCupProduct

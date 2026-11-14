@@ -58,7 +58,8 @@ lemma IsBackwardsMartingale.integrable
 -- imply
   Integrable (M n) μ := by
 -- proof
-  rwa [integrable_congr (hM.condExp_ae_eq n)]
+  rw [integrable_congr (hM.condExp_ae_eq n)]
+  exact integrable_condExp
 
 end TheoryOfProbability3
 
@@ -119,14 +120,12 @@ lemma condExp_antitone_limit_eq
     fun n => (stronglyMeasurable_condExp (m := m n)).aestronglyMeasurable.mono (hm_le n)
   have hL1 : Tendsto (fun n => eLpNorm ((fun ω => (μ[g | m n]) ω) - h) 1 μ) atTop (𝓝 0) :=
     tendsto_Lp_finite_of_tendstoInMeasure le_rfl ENNReal.one_ne_top haem
-      (memLp_one_iff_integrable.mpr hh_int) hui.2.1
+      (memLp_one_iff_integrable.mpr hh_int) hui.1
       (tendstoInMeasure_of_tendsto_ae haem hh_ae)
-  have hL1' : Tendsto (fun n => ∫⁻ x, ‖(μ[g | m n]) x - h x‖ₑ ∂μ) atTop (𝓝 0) := by
-    simp_rw [← eLpNorm_one_eq_lintegral_enorm]; convert hL1 using 1
-  have hsetint := tendsto_setIntegral_of_L1 h hh_int
-    (Filter.Eventually.of_forall fun n => integrable_condExp) hL1' s
+  have hsetint := tendsto_setIntegral_of_L1' h
+    (Filter.Eventually.of_forall fun n => integrable_condExp) hL1 s
   exact tendsto_nhds_unique (hsetint.congr hint_eq) tendsto_const_nhds
-/-- Existence of an a.e. limit for conditional expectations along a decreasing
+/- Existence of an a.e. limit for conditional expectations along a decreasing
 sequence of σ-algebras. Given any integrable `g` and antitone `m : ℕ →
 MeasurableSpace Ω` with `m n ≤ m0`, there exists an integrable function `h`
 measurable with respect to `⨅ n, m n` such that `μ[g | m n] → h` `μ`-a.e. -/

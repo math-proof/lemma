@@ -1083,9 +1083,9 @@ namespace MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry3
 
 /--
 [aux_Rec_of_coeff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch5Entry3.lean)
+by clearing denominators (`p + 1 ≠ 0`, factorials nonzero).
 -/
 @[path]
-by clearing denominators (`p + 1 ≠ 0`, factorials nonzero). -/
 private lemma aux_Rec_of_coeff (p : ℂ) (hp : p ≠ -1) :
   auxRec p (fun n => chapter5Entry3Coeff n p) := by
   have hp1 : p + 1 ≠ 0 := by
@@ -1167,9 +1167,9 @@ namespace MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry3
 
 /--
 [aux_Op_X_pow_of_Rec](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch5Entry3.lean)
+Double-sum binomial computation using `ha`.
 -/
 @[path]
-Double-sum binomial computation using `ha`. -/
 private lemma aux_Op_X_pow_of_Rec (p : ℂ) (a : ℕ → ℂ) (ha : auxRec p a) (h : ℂ) (m : ℕ) :
   Polynomial.taylor h (chapter5DerivativeExpansion a h (Polynomial.X ^ m : ℂ[X])) +
     Polynomial.C p * chapter5DerivativeExpansion a h (Polynomial.X ^ m : ℂ[X]) =

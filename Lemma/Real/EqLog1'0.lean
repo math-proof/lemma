@@ -1,4 +1,5 @@
 import Instance.Analysis.SpecialFunctions.Exponential.Part5
+open Log
 
 
 @[path]

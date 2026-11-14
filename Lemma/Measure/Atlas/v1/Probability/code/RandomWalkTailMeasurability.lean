@@ -35,7 +35,7 @@ lemma meas_tSum
 -- imply
   @Measurable _ _ (tailMeasurableSpaceFrom (sigmaAlg X) n) _ (fun ω => ∑ i ∈ Ico n m, X i ω) :=
 -- proof
-  Finset.measurable_sum _ (fun i hi => meas_Xi X n i (mem_Ico.mp hi).1)
+  Finset.measurable_sum _ (fun i hi => meas_Xi (mem_Ico.mp hi).1)
 
 end RandomWalkTailMeasurability
 
@@ -55,7 +55,7 @@ lemma measurableSet_driftsToTop_from
     ⋂ (b : ℤ), ⋃ (N : ℕ), ⋂ (m : ℕ), ⋂ (_ : N ≤ m),
       {ω | (b : ℝ) ≤ ∑ i ∈ Ico n m, X i ω} by
     rw [h]; exact .iInter fun _ => .iUnion fun _ => .iInter fun m => .iInter fun _ =>
-      (meas_tSum X n m) measurableSet_Ici
+      meas_tSum measurableSet_Ici
   ext ω; simp only [Set.mem_setOf_eq, Set.mem_iInter, Set.mem_iUnion, randomWalkPartialSum]
   constructor
   · intro h b
@@ -93,7 +93,7 @@ lemma measurableSet_driftsToBot_from
     ⋂ (b : ℤ), ⋃ (N : ℕ), ⋂ (m : ℕ), ⋂ (_ : N ≤ m),
       {ω | ∑ i ∈ Ico n m, X i ω ≤ (b : ℝ)} by
     rw [h]; exact .iInter fun _ => .iUnion fun _ => .iInter fun m => .iInter fun _ =>
-      (meas_tSum X n m) measurableSet_Iic
+      meas_tSum measurableSet_Iic
   ext ω; simp only [Set.mem_setOf_eq, Set.mem_iInter, Set.mem_iUnion, randomWalkPartialSum]
   constructor
   · intro h b
@@ -131,7 +131,7 @@ lemma measurableSet_limsupTop_from
     ⋂ (b : ℤ), ⋂ (N : ℕ), ⋃ (m : ℕ), ⋃ (_ : N ≤ m),
       {ω | (b : ℝ) < ∑ i ∈ Ico n m, X i ω} by
     rw [h]; exact .iInter fun _ => .iInter fun _ => .iUnion fun m => .iUnion fun _ =>
-      (meas_tSum X n m) measurableSet_Ioi
+      meas_tSum measurableSet_Ioi
   ext ω; simp only [Set.mem_setOf_eq, Set.mem_iInter, Set.mem_iUnion, randomWalkPartialSum]
   set Sn := ∑ i ∈ range n, X i ω
   constructor
@@ -183,7 +183,7 @@ lemma measurableSet_liminfBot_from
     ⋂ (b : ℤ), ⋂ (N : ℕ), ⋃ (m : ℕ), ⋃ (_ : N ≤ m),
       {ω | ∑ i ∈ Ico n m, X i ω < (b : ℝ)} by
     rw [h]; exact .iInter fun _ => .iInter fun _ => .iUnion fun m => .iUnion fun _ =>
-      (meas_tSum X n m) measurableSet_Iio
+      meas_tSum measurableSet_Iio
   ext ω; simp only [Set.mem_setOf_eq, Set.mem_iInter, Set.mem_iUnion, randomWalkPartialSum]
   set Sn := ∑ i ∈ range n, X i ω
   constructor
@@ -242,7 +242,7 @@ lemma measurableSet_convergesFinite_from
       (fun ω => ∑ i ∈ Ico n m₁, X i ω - ∑ i ∈ Ico n m₂, X i ω) ⁻¹'
         Set.Ioo (-(1 / ((k : ℝ) + 1))) (1 / ((k : ℝ) + 1)) := by
       ext ω; simp only [Set.mem_setOf_eq, Set.mem_preimage, Set.mem_Ioo, abs_lt]
-    rw [this]; exact ((meas_tSum X n m₁).sub (meas_tSum X n m₂)) measurableSet_Ioo
+    rw [this]; exact ((meas_tSum (m := m₁)).sub (meas_tSum (m := m₂)) ) measurableSet_Ioo
   ext ω; simp only [Set.mem_setOf_eq, Set.mem_iInter, Set.mem_iUnion, randomWalkPartialSum]
   have diff_eq : ∀ m₁ m₂, n ≤ m₁ → n ≤ m₂ →
     (∑ i ∈ range m₁, X i ω) - (∑ i ∈ range m₂, X i ω) =
@@ -299,7 +299,7 @@ lemma measurableSet_driftsToTop
 -- imply
   @MeasurableSet _ (tailMeasurableSpaceOfFun X) {ω | Tendsto (fun m => randomWalkPartialSum X m ω) atTop atTop} :=
 -- proof
-  measurableSet_iInf.mpr fun n => measurableSet_driftsToTop_from X n
+  measurableSet_iInf.mpr fun n => measurableSet_driftsToTop_from (n := n)
 
 end RandomWalkTailMeasurability
 
@@ -314,7 +314,7 @@ lemma measurableSet_driftsToBot
 -- imply
   @MeasurableSet _ (tailMeasurableSpaceOfFun X) {ω | Tendsto (fun m => randomWalkPartialSum X m ω) atTop atBot} :=
 -- proof
-  measurableSet_iInf.mpr fun n => measurableSet_driftsToBot_from X n
+  measurableSet_iInf.mpr fun n => measurableSet_driftsToBot_from (n := n)
 
 end RandomWalkTailMeasurability
 
@@ -330,7 +330,7 @@ lemma measurableSet_oscillates
   @MeasurableSet _ (tailMeasurableSpaceOfFun X) {ω | limsup (fun m => ((randomWalkPartialSum X m ω : ℝ) : EReal)) atTop = ⊤ ∧ liminf (fun m => ((randomWalkPartialSum X m ω : ℝ) : EReal)) atTop = ⊥} :=
 -- proof
   measurableSet_iInf.mpr fun n =>
-    (measurableSet_limsupTop_from X n).inter (measurableSet_liminfBot_from X n)
+    (measurableSet_limsupTop_from (n := n)).inter (measurableSet_liminfBot_from (n := n))
 
 end RandomWalkTailMeasurability
 
@@ -345,7 +345,7 @@ lemma measurableSet_convergesFinite
 -- imply
   @MeasurableSet _ (tailMeasurableSpaceOfFun X) {ω | ∃ l : ℝ, Tendsto (fun m => randomWalkPartialSum X m ω) atTop (𝓝 l)} :=
 -- proof
-  measurableSet_iInf.mpr fun n => measurableSet_convergesFinite_from X n
+  measurableSet_iInf.mpr fun n => measurableSet_convergesFinite_from (n := n)
 
 end RandomWalkTailMeasurability
 

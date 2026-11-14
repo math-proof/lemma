@@ -1,7 +1,7 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_ProjSpaceCechGradedModule.lean: instance decls only.
 import Mathlib
 import Instance.AlgebraicGeometry_ProjSpaceCechTwist
-import Lemma.AlgebraicGeometry.ProjSpaceCechGradedModule
+import Lemma.LinearMap.ProjSpaceCechGradedModule
 
 set_option autoImplicit false
 

@@ -1,6 +1,6 @@
 import Mathlib
 import Def.AlgebraicGeometry_RelativePicardFunctor
-import Lemma.AlgebraicGeometry.RepresentsRelSubPic
+import Lemma.Scheme.RepresentsRelSubPic
 
 set_option autoImplicit false
 

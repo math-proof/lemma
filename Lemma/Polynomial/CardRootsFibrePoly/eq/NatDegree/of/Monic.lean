@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.FibrePoly
+import Lemma.Polynomial.FibrePoly
 import Lemma.Int.P2MUtil
 
 open Polynomial ModularCurve

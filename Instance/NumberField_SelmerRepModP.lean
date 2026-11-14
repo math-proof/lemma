@@ -1,7 +1,7 @@
 -- Carved from Lemma/Definitions/Def_NumberField_SelmerRepModP.lean: instance decls only.
 import Mathlib
 import Instance.NumberField_LevelArithmeticModP
-import Lemma.NumberField.SelmerRepModP
+import Lemma.Rep.SelmerRepModP
 
 set_option autoImplicit false
 

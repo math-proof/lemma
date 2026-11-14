@@ -89,12 +89,12 @@ lemma riemann_lebesgue
               _ ≤ ‖f (-Real.pi)‖ * (1 / ↑n) := by gcongr; exact hg_bound _
               _ = ‖f (-Real.pi)‖ / ↑n := by ring
             · calc ‖∫ x in (-Real.pi)..Real.pi, deriv f x * g x‖
-              ≤ ∫ x in (-Real.pi)..Real.pi, ‖deriv f x‖ * (1 / ↑n) := by
+              ≤ ∫ x in (-Real.pi)..Real.pi, ‖deriv f x‖ * (1 / ↑n) := (by
                 apply intervalIntegral.norm_integral_le_of_norm_le hpi
                 · filter_upwards with x; intro _
                   calc ‖deriv f x * g x‖ = ‖deriv f x‖ * ‖g x‖ := norm_mul _ _
                     _ ≤ ‖deriv f x‖ * (1 / ↑n) := by gcongr; exact hg_bound _
-                · exact hf_deriv_int.norm.mul_const _
+                · exact hf_deriv_int.norm.mul_const _)
               _ = (∫ x in (-Real.pi)..Real.pi, ‖deriv f x‖) * (1 / ↑n) :=
                 intervalIntegral.integral_mul_const _ _
               _ = (∫ x in (-Real.pi)..Real.pi, ‖deriv f x‖) / ↑n := by ring
@@ -147,12 +147,12 @@ lemma riemann_lebesgue
       rw [hrw, ibp, hg_pi, hg_neg_pi]
       simp only [mul_zero, sub_zero, zero_sub, norm_neg]
       calc ‖∫ x in (-Real.pi)..Real.pi, deriv f x * g x‖
-        ≤ ∫ x in (-Real.pi)..Real.pi, ‖deriv f x‖ * (1 / ↑n) := by
+        ≤ ∫ x in (-Real.pi)..Real.pi, ‖deriv f x‖ * (1 / ↑n) := (by
           apply intervalIntegral.norm_integral_le_of_norm_le hpi
           · filter_upwards with x; intro _
             calc ‖deriv f x * g x‖ = ‖deriv f x‖ * ‖g x‖ := norm_mul _ _
               _ ≤ ‖deriv f x‖ * (1 / ↑n) := by gcongr; exact hg_bound _
-          · exact hf_deriv_int.norm.mul_const _
+          · exact hf_deriv_int.norm.mul_const _)
         _ = (∫ x in (-Real.pi)..Real.pi, ‖deriv f x‖) * (1 / ↑n) :=
           intervalIntegral.integral_mul_const _ _
         _ = (∫ x in (-Real.pi)..Real.pi, ‖deriv f x‖) / ↑n := by ring

@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Theorem.v1.Atlas.Buildings.code.Building.AptFoldingFromRetraction
 import Lemma.Finset.Any_And_All_EqAndAll_IsMaximalAndAll_EqImageSOrAdjacentAndAll_Eq.of.IsMaximal.In_Apartments
-import Lemma.Bijective.Any_And_In_Faces.is.Image.in.FacesAndEqImage.of.IsMaximalToSimplicialComplexToChamberComplex.In_Faces.IsMaximalToSimplicialComplexToChamberComplex.In_Faces.In_Apartments.In_Apartments
+import Lemma.Equiv.Any_And_In_Faces.is.Image.in.FacesAndEqImage.of.IsMaximalToSimplicialComplexToChamberComplex.In_Faces.IsMaximalToSimplicialComplexToChamberComplex.In_Faces.In_Apartments.In_Apartments
 import Theorem.v1.Atlas.Buildings.code.Building.UniqueRetraction
 open scoped Classical
 open AptFoldingFromRetraction

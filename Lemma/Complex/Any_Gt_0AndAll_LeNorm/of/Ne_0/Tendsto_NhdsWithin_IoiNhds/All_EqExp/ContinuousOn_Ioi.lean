@@ -12,7 +12,7 @@ private lemma helper_main {Λ ℓ : ℝ → ℂ} {a : ℝ} {c : ℂ} (hΛ : Cont
     rw [Metric.tendsto_nhdsWithin_nhds] at hlim
     obtain ⟨δ, hδ, h⟩ := hlim (‖c‖ / 2) (half_pos hcpos)
     refine ⟨δ, hδ, fun s hs hsδ => ?_⟩
-    have hdist : Real.dist s a < ‖c‖ / 2 := by
+    have hdist : dist s a < δ := by
       rw [Real.dist_eq, abs_of_pos (by linarith)]
       linarith
     have h' := h (Set.mem_Ioi.mpr hs) hdist
@@ -121,8 +121,8 @@ private lemma helper_main {Λ ℓ : ℝ → ℂ} {a : ℝ} {c : ℂ} (hΛ : Cont
       intro t ht
       rw [Set.mem_uIcc] at ht
       constructor
-      · obtain h | h <;> linarith [h.1] := ht
-      · obtain h | h <;> linarith [h.2] := ht
+      · obtain h | h := ht <;> linarith [h.1]
+      · obtain h | h := ht <;> linarith [h.2]
     obtain ⟨t, ht, hft⟩ := intermediate_value_uIcc (hfcont.mono hsub) hymem
     obtain ⟨n, hn, -⟩ := hfint t (hsub ht).1 (hsub ht).2
     rw [hn, hy] at hft

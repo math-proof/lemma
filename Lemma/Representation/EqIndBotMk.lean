@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.GroupCohomology.TateCohomology
+import Lemma.LinearMap.TateCohomology
 set_option autoImplicit false
 open CategoryTheory
 

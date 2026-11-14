@@ -51,8 +51,8 @@ lemma double_counting_real_hausdorff_dichotomy_line683
       have := (div_lt_iff₀ hX_pos').mp h
       linarith
     nlinarith
-/-- **Corollary (Real SETUP with Hausdorff spacing).** Under the `ℝ`-SETUP where both
-`X` and `D` have Hausdorff spacing, `|D| ≲ S · R / |X|`. -/
+-- **Corollary (Real SETUP with Hausdorff spacing).** Under the `ℝ`-SETUP where both
+-- `X` and `D` have Hausdorff spacing, `|D| ≲ S · R / |X|`. 
 
 end ProjectionTheory
 

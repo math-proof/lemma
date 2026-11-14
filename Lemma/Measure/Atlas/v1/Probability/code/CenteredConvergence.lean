@@ -24,7 +24,6 @@ lemma eLpNorm_one_le_two
     (by norm_num : (1 : ENNReal) ≤ 2) hf
   simp only [measure_univ, one_rpow, mul_one] at h
   exact h
-set_option maxHeartbeats 800000 in
 
 end KolmogorovThreeSeries
 
@@ -56,8 +55,6 @@ lemma eLpNorm_one_le_sqrt_integral_sq
     rw [show (2 : ℝ)⁻¹ = (1 : ℝ) / 2 from by norm_num]
     exact Real.rpow_le_rpow (integral_nonneg (fun x => by positivity)) h_int_sq (by norm_num)
   exact h1.trans h2
-set_option linter.unusedSectionVars false in
-set_option maxHeartbeats 6400000 in
 
 end KolmogorovThreeSeries
 

@@ -558,9 +558,9 @@ private lemma card_snoc_true {m P Q : ℕ} (hm : m = P + Q) (hlt : Q < P + 1) :
       rwa [hlast] at h
     refine ⟨?_, ?_⟩
     · have hTeq : (Finset.univ.filter (fun i : Fin (m + 1) => σ i = true)).card
-      = (Finset.univ.filter (fun i : Fin m => Fin.init σ i = true)).card + 1 := by
-      conv_lhs => rw [hσeq]
-      exact snoc_total_true_add _
+        = (Finset.univ.filter (fun i : Fin m => Fin.init σ i = true)).card + 1 := by
+        conv_lhs => rw [hσeq]
+        exact snoc_total_true_add _
       omega
     · intro j
       rw [hσeq] at hballot
@@ -637,9 +637,9 @@ private lemma card_snoc_false {m P Q : ℕ} (hm : m = P + Q) (hlt : Q + 1 < P) :
       rwa [hlast] at h
     refine ⟨?_, ?_⟩
     · have hTeq : (Finset.univ.filter (fun i : Fin (m + 1) => σ i = true)).card
-      = (Finset.univ.filter (fun i : Fin m => Fin.init σ i = true)).card := by
-      conv_lhs => rw [hσeq]
-      exact snoc_total_true_eq _
+          = (Finset.univ.filter (fun i : Fin m => Fin.init σ i = true)).card := by
+        conv_lhs => rw [hσeq]
+        exact snoc_total_true_eq _
       omega
     · intro j
       rw [hσeq] at hballot

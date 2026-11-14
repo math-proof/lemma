@@ -1,5 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Lemma.Measure.Atlas.v1.Probability.code.MarkovInequality
 open MeasureTheory ProbabilityTheory
 
 
@@ -31,7 +32,7 @@ lemma chebyshev_inequality
     rw [sq_le_sq, abs_of_pos ha]
   rw [hset] at markov
   have hvar : (∫ ω, (X ω - μ[X]) ^ 2 ∂μ) = Var[X; μ] :=
-    (variance_eq_integral hX.1.aemeasurable).symm
+    (variance_eq_integral hX.aemeasurable).symm
   rwa [hvar] at markov
 
 

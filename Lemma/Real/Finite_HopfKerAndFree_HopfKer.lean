@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.HopfAlgebra.HopfKer
-open HopfAlgebra
+import Lemma.Submodule.HopfKer
+open HopfAlgebra Submodule
 
 
 private lemma  finite

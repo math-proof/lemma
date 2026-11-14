@@ -21,7 +21,7 @@ import Mathlib.RingTheory.ClassGroup
 import Mathlib.LinearAlgebra.Dimension.Finrank
 import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
 import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
-import Mathlib.RingTheory.DedekindDomain.IntegralClosure
+import Mathlib.RingTheory.Ideal.IntegralClosure
 import Structure.v1.Atlas.AlgebraicGeometryI.code.Lec17AbelJacobi.Part3
 set_option maxHeartbeats 800000
 

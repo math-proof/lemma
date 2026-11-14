@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.ModularCurve.CharPReduction
+import Lemma.LaurentSeries.CharPReduction
 import Def.ModularCurve_NodeLocalized
 import Def.ModularCurve_LambdaSeries
 

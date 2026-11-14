@@ -1,4 +1,3 @@
-import Lemma.Random.V.eq.Vc.of.Ne0Real_Preimage.In_Ico
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
@@ -20,8 +19,8 @@ private lemma main
 -- imply
   M.V0 θ γ x = M.V θ γ t x := by
 -- proof
-  exact (V.eq.Vc.of.Ne0Real_Preimage.In_Ico (M := M) θ t x h₀ h₂ h₃).symm
+  rfl
 
 
 -- created on 2026-10-20
--- updated on 2026-11-02
+-- updated on 2026-11-13

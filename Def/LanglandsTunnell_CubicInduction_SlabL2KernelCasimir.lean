@@ -1,4 +1,4 @@
-import Lemma.LanglandsTunnell.CubicInduction_SlabL2Cusp
+import Lemma.Set.CubicInduction_SlabL2Cusp
 import Def.LanglandsTunnell_CubicInduction_ArchCentre3
 import Mathlib.Analysis.Calculus.FDeriv.Basic
 

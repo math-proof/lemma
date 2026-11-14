@@ -2222,7 +2222,7 @@ lemma binom_log_concave (n k : ℕ) (hk : 1 ≤ k) :
     have h2 : n.choose (k + 1) = 0 := Nat.choose_eq_zero_of_lt (Nat.lt_add_right 1 hkn)
     simp [h1, h2]
   · push Not at hkn
-    -- Main case: 1 ≤ k ≤ n
+    -- IharaIota case: 1 ≤ k ≤ n
     have hk_pos : 0 < k := hk
 
     -- Key recurrences from Mathlib:
@@ -2635,7 +2635,7 @@ lemma lgv_involution_cancellation {k : ℕ} (A B : kVertex k) :
       rw [numIpatsK_eq_ipatFinset_card]
     simp_rw [h_eq]
     exact LGV.sum_signed_ipatFinset_card_eq_zero A B
-  -- Main proof: use partition_lemma and ipat_cancellation
+  -- IharaIota proof: use partition_lemma and ipat_cancellation
   have h : ∀ σ, (∏ i, (numPaths (A i) (B (σ i)) : ℤ)) =
       (numNipatsK A B σ : ℤ) + (numIpatsK A B σ : ℤ) := by
     intro σ

@@ -40,8 +40,8 @@ lemma l2NormSqHighFreq_mono_of_subset
     calc ∑ x ∈ S, ‖f x - μS‖ ^ 2
       ≤ ∑ x ∈ S, ‖f x - μS‖ ^ 2 + (↑S.card * ‖μS - μT‖ ^ 2 +
         2 * ∑ x ∈ S, @inner ℝ ℂ _ (f x - μS) (μS - μT)) := by
-        rw [cross_zero, mul_zero, add_zero]
-        linarith [mul_nonneg (Nat.cast_nonneg' S.card) (sq_nonneg ‖μS - μT‖)]
+          rw [cross_zero, mul_zero, add_zero]
+          linarith [mul_nonneg (Nat.cast_nonneg' S.card) (sq_nonneg ‖μS - μT‖)]
       _ = ∑ x ∈ S, ‖f x - μT‖ ^ 2 := by
         rw [show ∑ x ∈ S, ‖f x - μT‖ ^ 2 = ∑ x ∈ S, (‖f x - μS‖ ^ 2 + ‖μS - μT‖ ^ 2 +
           2 * @inner ℝ ℂ _ (f x - μS) (μS - μT)) from sum_congr rfl decomp]

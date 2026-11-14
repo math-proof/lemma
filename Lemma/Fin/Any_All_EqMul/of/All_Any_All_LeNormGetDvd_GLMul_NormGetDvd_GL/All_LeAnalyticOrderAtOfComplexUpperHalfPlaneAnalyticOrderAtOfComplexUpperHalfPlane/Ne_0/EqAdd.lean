@@ -46,12 +46,13 @@ private lemma quo_analytic {F G : ℂ → ℂ} {U : Set ℂ} (hU : IsOpen U)
   rw [h1]
   apply h2
 
-private lemma analyticAt_of_mdiff {P : ℍ → ℂ} (hP : MDifferentiable 𝓘ℂ 𝓘(ℂ) P) {z : ℂ} (hz : 0 < z.im) :
+private lemma analyticAt_of_mdiff {P : ℍ → ℂ} (hP : MDiff P) {z : ℂ} (hz : 0 < z.im) :
   AnalyticAt ℂ (P ∘ ofComplex) z :=
-  (UpperHalfPlane.mdifferentiable_iff.mp hP).analyticAt
-    ((isOpen_lt continuous_const Complex.continuous_im).mem_nhds hz)
+  (DifferentiableOn.analyticOnNhd
+    (UpperHalfPlane.mdifferentiable_iff.mp hP)
+    (isOpen_lt continuous_const Complex.continuous_im)) z hz
 
-private lemma vanish {P : ℍ → ℂ} (hP : MDifferentiable 𝓘ℂ 𝓘(ℂ) P) {W : Set ℍ} (hW : IsOpen W) {τ₀ : ℍ}
+private lemma vanish {P : ℍ → ℂ} (hP : MDiff P) {W : Set ℍ} (hW : IsOpen W) {τ₀ : ℍ}
   (hτ₀ : τ₀ ∈ W) (h0 : ∀ τ ∈ W, P τ = 0) : ∀ τ, P τ = 0 := by
   have hPa : AnalyticOnNhd ℂ (P ∘ ofComplex) {z : ℂ | 0 < z.im} := fun z hz => analyticAt_of_mdiff hP hz
   have hconn : IsPreconnected {z : ℂ | 0 < z.im} := (convex_halfSpace_im_gt 0).isPreconnected
@@ -106,7 +107,7 @@ private lemma main
       simp only [hΦ', hΨ', Function.comp_apply, ofComplex_apply] at this
       exact this.symm
     have hfΨfun : f * (Ψ : ℍ → ℂ) = (Φ : ℍ → ℂ) := funext hfΨ
-    have hf_mdiff : MDifferentiable 𝓘ℂ 𝓘(ℂ) f := by
+    have hf_mdiff : MDiff f := by
       rw [UpperHalfPlane.mdifferentiable_iff]
       have h1 : DifferentiableOn ℂ F {z : ℂ | 0 < z.im} := fun z hz =>
         (hF z hz).1.differentiableAt.differentiableWithinAt
@@ -131,7 +132,7 @@ private lemma main
         have h1 := congrFun hprod τ
         simp only [Pi.mul_apply] at h1
         rw [Pi.sub_apply, sub_mul, h1, hfΨ τ, sub_self]
-      have hDm : MDifferentiable 𝓘ℂ 𝓘(ℂ) (f ∣[c] γ₀ - f) := by
+      have hDm : MDiff (f ∣[c] γ₀ - f) := by
         have := hf_mdiff.slash c (γ₀ : GL (Fin 2) ℝ)
         exact this.sub hf_mdiff
       by_contra hne
@@ -156,7 +157,7 @@ private lemma main
       set ΨA : ℍ → ℂ := (Ψ : ℍ → ℂ) ∣[b] γ with hΨA
       have hprodA : G * ΨA = (Φ : ℍ → ℂ) ∣[a] γ := by
         rw [hG, hΨA, ← ModularForm.mul_slash_SL2, hfΨfun, hcb]
-      have hΨA_mdiff : MDifferentiable 𝓘ℂ 𝓘ℂ ΨA := by
+      have hΨA_mdiff : MDiff ΨA := by
         have := Ψ.holo'.slash b (γ : GL (Fin 2) ℝ)
         exact this
       have hG_cont : Continuous G := (hf_mdiff.slash c (γ : GL (Fin 2) ℝ)).continuous
@@ -183,4 +184,5 @@ private lemma main
     refine (OnePoint.isBoundedAt_iff_forall_SL2Z hc').mpr fun γ _ => hcusp' γ
 
 
+-- updated on 2026-11-13
 -- created on 2026-10-23

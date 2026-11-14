@@ -142,7 +142,7 @@ lemma trigBasis_orthonormal
       simp [trigBasis_one, intervalIntegral.integral_const]
     ·
       simp only [show (1 : ℕ) ≠ k by omega, ite_false]
-      simp_rw [trigBasis_one, one_mul, trigBasis_of_ge_two k (by omega)]
+      simp_rw [trigBasis_one, one_mul, trigBasis_of_ge_two (Nat.succ_le_of_lt hk2)]
       split_ifs with hke
       · rw [intervalIntegral.integral_const_mul,
         show (↑(k / 2 : ℕ) : ℝ) = ((↑(k / 2 : ℕ) : ℤ) : ℝ) from by push_cast; rfl,
@@ -154,7 +154,7 @@ lemma trigBasis_orthonormal
     obtain rfl | hk2 := Nat.eq_or_lt_of_le hk
     ·
       simp only [show j ≠ 1 by omega, ite_false]
-      simp_rw [trigBasis_one, trigBasis_of_ge_two j (by omega)]
+      simp_rw [trigBasis_one, trigBasis_of_ge_two (Nat.succ_le_of_lt hj2)]
       split_ifs with hje
       · simp only [mul_one]
         rw [intervalIntegral.integral_const_mul,
@@ -165,7 +165,7 @@ lemma trigBasis_orthonormal
           show (↑((j - 1) / 2 : ℕ) : ℝ) = ((↑((j - 1) / 2 : ℕ) : ℤ) : ℝ) from by push_cast; rfl,
           int_sin_period ↑((j - 1) / 2 : ℕ) (by omega), mul_zero]
     ·
-      simp_rw [trigBasis_of_ge_two j (by omega), trigBasis_of_ge_two k (by omega)]
+      simp_rw [trigBasis_of_ge_two (j := j) (by omega : 2 ≤ j), trigBasis_of_ge_two (j := k) (by omega : 2 ≤ k)]
       by_cases hje : j % 2 = 0
       ·
         simp only [hje, ite_true]
@@ -232,8 +232,9 @@ lemma trigBasis_orthonormal
           · exfalso; exact hjk (by omega)
           · exfalso; exact hab (by omega)
           · norm_num
-/-- Orthonormality of the Haar system on `[0,1]`:
-`∫₀¹ ψ_{j,k}(x) ψ_{j',k'}(x) dx = δ_{(j,k),(j',k')}` for admissible indices. -/
+
+-- Orthonormality of the Haar system on `[0,1]`:
+-- `∫₀¹ ψ_{j,k}(x) ψ_{j',k'}(x) dx = δ_{(j,k),(j',k')}` for admissible indices.
 
 
 -- created on 2026-10-23

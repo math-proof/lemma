@@ -26,8 +26,6 @@ lemma partialSumIndicators_eq
 @[path]
 lemma comap_indicator_one_le_generateFrom
   [MeasurableSpace Ω]
-  {μ : Measure Ω}
-  [IsProbabilityMeasure μ]
   {s : Set Ω} :
 -- imply
   MeasurableSpace.comap (s.indicator (1 : Ω → ℝ)) Real.measurableSpace ≤ MeasurableSpace.generateFrom {s} := by
@@ -63,9 +61,10 @@ lemma indepFun_indicator_of_indepSet
 -- imply
   IndepFun (s.indicator (1 : Ω → ℝ)) (t.indicator (1 : Ω → ℝ)) μ := by
 -- proof
-  rwa [IndepFun, IndepSet] at *
-    (Kernel.indep_of_indep_of_le_right h (comap_indicator_one_le_generateFrom t))
-    (comap_indicator_one_le_generateFrom s)
+  exact (IndepFun_iff_Indep (s.indicator (1 : Ω → ℝ)) (t.indicator (1 : Ω → ℝ)) μ).2
+    (indep_of_indep_of_le ((IndepSet_iff_Indep s t μ).1 h)
+      (comap_indicator_one_le_generateFrom (s := s))
+      (comap_indicator_one_le_generateFrom (s := t)))
 
 /--
 [memLp_indicator_one](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/PairwiseIndepSLLN.lean)
@@ -81,7 +80,7 @@ lemma memLp_indicator_one
 -- imply
   MemLp (s.indicator (1 : Ω → ℝ)) 2 μ :=
 -- proof
-  memLp_indicator_const 2 hs 1 (Or.inr (measure_ne_top μ s))
+  memLp_indicator_const 2 hs.nullMeasurableSet 1 (Or.inr (measure_ne_top μ s))
 
 /--
 [indicator_one_sq](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/PairwiseIndepSLLN.lean)
@@ -111,8 +110,8 @@ lemma variance_indicator_le
 -- imply
   variance (s.indicator (1 : Ω → ℝ)) μ ≤ (μ s).toReal := by
 -- proof
-  rw [variance_eq_sub (memLp_indicator_one hs)]
-  rw [indicator_one_sq, integral_indicator_one hs, measureReal_def]
+  rw [variance_eq_sub (memLp_indicator_one (μ := μ) hs)]
+  rw [indicator_one_sq (μ := μ), integral_indicator_one (μ := μ) hs, measureReal_def]
   linarith [sq_nonneg ((μ s).toReal)]
 
 /--
@@ -151,9 +150,9 @@ lemma variance_partialSumIndicators_le
 -- imply
   variance (partialSumIndicators A n) μ ≤ integral μ (partialSumIndicators A n) := by
 -- proof
-  rw [partialSumIndicators_eq]
+  rw [partialSumIndicators_eq (μ := μ)]
   have hmem : ∀ i ∈ Finset.range n, MemLp ((A i).indicator (1 : Ω → ℝ)) 2 μ :=
-    fun i _ => memLp_indicator_one (hA i)
+    fun i _ => memLp_indicator_one (μ := μ) (hA i)
   have hindepFun : (↑(Finset.range n) : Set ℕ).Pairwise
     fun i j => IndepFun ((A i).indicator (1 : Ω → ℝ)) ((A j).indicator (1 : Ω → ℝ)) μ :=
     fun _ _ _ _ hij => indepFun_indicator_of_indepSet (hindep hij)
@@ -164,7 +163,7 @@ lemma variance_partialSumIndicators_le
   apply Finset.sum_le_sum
   intro i _
   rw [integral_indicator_one (hA i), measureReal_def]
-  exact variance_indicator_le (hA i)
+  exact variance_indicator_le (μ := μ) (hA i)
 
 /--
 [ES_tendsto_atTop](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/PairwiseIndepSLLN.lean)
@@ -181,7 +180,7 @@ lemma ES_tendsto_atTop
 -- imply
   Filter.Tendsto (fun n => ∫ ω, partialSumIndicators A n ω ∂μ) Filter.atTop Filter.atTop := by
 -- proof
-  simp_rw [integral_partialSumIndicators A hA]
+  simp_rw [integral_partialSumIndicators hA]
   have hnn : ∀ n, 0 ≤ (μ (A n)).toReal := fun _ => ENNReal.toReal_nonneg
   rw [← not_summable_iff_tendsto_nat_atTop_of_nonneg hnn]
   intro h
@@ -204,7 +203,7 @@ lemma ES_mono
   Monotone (fun n => ∫ ω, partialSumIndicators A n ω ∂μ) := by
 -- proof
   intro m n hmn
-  simp_rw [integral_partialSumIndicators A hA]
+  simp_rw [integral_partialSumIndicators hA]
   exact Finset.sum_le_sum_of_subset_of_nonneg (Finset.range_mono hmn)
     (fun _ _ _ => ENNReal.toReal_nonneg)
 
@@ -223,7 +222,7 @@ lemma ES_step_le_one
 -- imply
   ∫ ω, partialSumIndicators A (n + 1) ω ∂μ - ∫ ω, partialSumIndicators A n ω ∂μ ≤ 1 := by
 -- proof
-  simp_rw [integral_partialSumIndicators A hA, Finset.sum_range_succ]
+  simp_rw [integral_partialSumIndicators hA, Finset.sum_range_succ]
   ring_nf
   exact ENNReal.toReal_le_of_le_ofReal zero_le_one (ENNReal.ofReal_one ▸ prob_le_one)
 
@@ -263,7 +262,7 @@ lemma sllnSubseq_pos
 -- proof
   rw [Nat.pos_iff_ne_zero]
   intro h
-  have h1 := sllnSubseq_spec hES_top k
+  have h1 := sllnSubseq_spec (k := k) hES_top
   change sllnSubseq hES_top k = 0 at h
   rw [h] at h1
   have h2 : ∫ ω, partialSumIndicators A 0 ω ∂μ = 0 := by simp [partialSumIndicators]
@@ -286,14 +285,14 @@ lemma sllnSubseq_strictMono
 -- proof
   classical
   intro k k' hkk'
-  have hpos : 0 < sllnSubseq hES_top k := sllnSubseq_pos hES_top k
+  have hpos : 0 < sllnSubseq hES_top k := sllnSubseq_pos (k := k) hES_top
   obtain ⟨m, hm⟩ : ∃ m, sllnSubseq hES_top k = m + 1 :=
     ⟨sllnSubseq hES_top k - 1, (Nat.succ_pred_eq_of_pos hpos).symm⟩
   have hmin_m : ∫ ω, partialSumIndicators A m ω ∂μ < ((k : ℝ) + 1) ^ 2 :=
     not_le.mp (Nat.find_min _ (by omega : m < sllnSubseq hES_top k))
   have hub : ∫ ω, partialSumIndicators A (sllnSubseq hES_top k) ω ∂μ <
     ((k : ℝ) + 1) ^ 2 + 1 := by
-    rw [hm]; linarith [ES_step_le_one (μ := μ) A hA m]
+    rw [hm]; linarith [ES_step_le_one (n := m) (μ := μ) hA]
   have hthresh : ((k : ℝ) + 1) ^ 2 + 1 ≤ ((k' : ℝ) + 1) ^ 2 := by
     have : (k : ℝ) + 2 ≤ (k' : ℝ) + 1 := by exact_mod_cast Nat.add_le_add_right hkk' 1
     nlinarith
@@ -301,8 +300,8 @@ lemma sllnSubseq_strictMono
     ((k' : ℝ) + 1) ^ 2 := by linarith
   by_contra hle
   push Not at hle
-  have h_mono := ES_mono (μ := μ) A hA hle
-  have h_spec := sllnSubseq_spec hES_top k'
+  have h_mono := ES_mono (μ := μ) hA hle
+  have h_spec := sllnSubseq_spec (k := k') hES_top
   linarith
 
 /--
@@ -320,7 +319,7 @@ lemma ES_sllnSubseq_pos
 -- imply
   0 < ∫ ω, partialSumIndicators A (sllnSubseq hES_top k) ω ∂μ := by
 -- proof
-  have h := sllnSubseq_spec hES_top k
+  have h := sllnSubseq_spec (k := k) hES_top
   have : 0 < ((k : ℝ) + 1) ^ 2 := by positivity
   linarith
 
@@ -339,7 +338,7 @@ lemma memLp_partialSumIndicators
 -- imply
   MemLp (partialSumIndicators A n) 2 μ := by
 -- proof
-  rw [partialSumIndicators_eq]
+  rw [partialSumIndicators_eq (μ := μ)]
   exact memLp_finset_sum' _ (fun i _ => memLp_indicator_one (hA i))
 
 /--
@@ -392,8 +391,8 @@ lemma chebyshev_subseq_bound
 -- proof
   set n := sllnSubseq hES_top k with hn_def
   set ESn := ∫ ω', partialSumIndicators A n ω' ∂μ with hESn_def
-  have hESn_pos : 0 < ESn := ES_sllnSubseq_pos hES_top k
-  have hESn_sq : ((k : ℝ) + 1) ^ 2 ≤ ESn := sllnSubseq_spec hES_top k
+  have hESn_pos : 0 < ESn := ES_sllnSubseq_pos (k := k) hES_top
+  have hESn_sq : ((k : ℝ) + 1) ^ 2 ≤ ESn := sllnSubseq_spec (k := k) hES_top
   have hsub : {ω | ε ≤ |partialSumIndicators A n ω / ESn - 1|} ⊆
     {ω | ε * ESn ≤ |partialSumIndicators A n ω - ESn|} := by
     intro ω hω
@@ -406,13 +405,12 @@ lemma chebyshev_subseq_bound
     exact le_of_le_of_eq (mul_le_mul_of_nonneg_right h1 hESn_pos.le)
       (div_mul_cancel₀ _ (ne_of_gt hESn_pos))
   have hc_pos : 0 < ε * ESn := mul_pos hε hESn_pos
-  have hmemLp : MemLp (partialSumIndicators A n) 2 μ := memLp_partialSumIndicators A hA n
+  have hmemLp : MemLp (partialSumIndicators A n) 2 μ := memLp_partialSumIndicators (n := n) hA
   have hcheb := meas_ge_le_variance_div_sq hmemLp hc_pos
-  have hvar := variance_partialSumIndicators_le A hA hindep n
+  have hvar := variance_partialSumIndicators_le (n := n) hA hindep
   calc μ {ω | ε ≤ |partialSumIndicators A n ω / ESn - 1|}
-    ≤ μ {ω | ε * ESn ≤ |partialSumIndicators A n ω -
-      ∫ x, partialSumIndicators A n x ∂μ|} := by
-      apply measure_mono hsub
+    ≤ μ {ω | ε * ESn ≤ |partialSumIndicators A n ω - ∫ x, partialSumIndicators A n x ∂μ|} :=
+      measure_mono hsub
     _ ≤ ENNReal.ofReal (variance (partialSumIndicators A n) μ / (ε * ESn) ^ 2) := hcheb
     _ ≤ ENNReal.ofReal (ESn / (ε * ESn) ^ 2) := by
       apply ENNReal.ofReal_le_ofReal
@@ -447,22 +445,22 @@ lemma summable_chebyshev_subseq
 -- proof
   apply ne_top_of_le_ne_top
   · have : ∑' (k : ℕ), ENNReal.ofReal (1 / (ε ^ 2 * ((k : ℝ) + 1) ^ 2)) < ⊤ := by
-    have hsumm : Summable (fun k : ℕ => 1 / (ε ^ 2 * ((k : ℝ) + 1) ^ 2)) := by
-      have hshift : Summable (fun n : ℕ => (1 : ℝ) / ((n : ℝ) + 1) ^ 2) := by
-        have h2 := (Real.summable_nat_pow_inv (p := 2)).mpr (by norm_num : 1 < 2)
-        have heq : (fun n : ℕ => (1 : ℝ) / ((n : ℝ) + 1) ^ 2) =
-          (fun n : ℕ => ((n : ℝ) ^ 2)⁻¹) ∘ (· + 1) := by
-          ext n; simp only [Function.comp, one_div]; push_cast; ring
-        rw [heq]
-        exact h2.comp_injective (fun a b hab => by omega)
-      exact (Summable.mul_left (1 / ε ^ 2) hshift).congr (fun k => by
-        have hε2 : ε ^ 2 ≠ 0 := by positivity
-        have hk : ((k : ℝ) + 1) ^ 2 ≠ 0 := by positivity
-        field_simp)
-    exact hsumm.tsum_ofReal_lt_top
+      have hsumm : Summable (fun k : ℕ => 1 / (ε ^ 2 * ((k : ℝ) + 1) ^ 2)) := by
+        have hshift : Summable (fun n : ℕ => (1 : ℝ) / ((n : ℝ) + 1) ^ 2) := by
+          have h2 := (Real.summable_nat_pow_inv (p := 2)).mpr (by norm_num : 1 < 2)
+          have heq : (fun n : ℕ => (1 : ℝ) / ((n : ℝ) + 1) ^ 2) =
+            (fun n : ℕ => ((n : ℝ) ^ 2)⁻¹) ∘ (· + 1) := by
+            ext n; simp only [Function.comp, one_div]; push_cast; ring
+          rw [heq]
+          exact h2.comp_injective (fun a b hab => by omega)
+        exact (Summable.mul_left (1 / ε ^ 2) hshift).congr (fun k => by
+          have hε2 : ε ^ 2 ≠ 0 := by positivity
+          have hk : ((k : ℝ) + 1) ^ 2 ≠ 0 := by positivity
+          field_simp)
+      exact hsumm.tsum_ofReal_lt_top
     exact this.ne
   · exact ENNReal.tsum_le_tsum (fun k =>
-    chebyshev_subseq_bound A hA hindep hES_top ε hε k)
+    chebyshev_subseq_bound (ε := ε) (k := k) hA hindep hES_top hε)
 
 /--
 [partialSumIndicators_mono](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/PairwiseIndepSLLN.lean)
@@ -549,12 +547,12 @@ lemma ES_sllnSubseq_upper_bound
   ∫ ω, partialSumIndicators A (sllnSubseq hES_top k) ω ∂μ < ((k : ℝ) + 1) ^ 2 + 1 := by
 -- proof
   classical
-  have hpos : 0 < sllnSubseq hES_top k := sllnSubseq_pos hES_top k
+  have hpos : 0 < sllnSubseq hES_top k := sllnSubseq_pos (k := k) hES_top
   obtain ⟨m, hm⟩ : ∃ m, sllnSubseq hES_top k = m + 1 :=
     ⟨sllnSubseq hES_top k - 1, (Nat.succ_pred_eq_of_pos hpos).symm⟩
   have hmin_m : ∫ ω, partialSumIndicators A m ω ∂μ < ((k : ℝ) + 1) ^ 2 :=
     not_le.mp (Nat.find_min _ (by omega : m < sllnSubseq hES_top k))
-  rw [hm]; linarith [ES_step_le_one (μ := μ) A hA m]
+  rw [hm]; linarith [ES_step_le_one (n := m) (μ := μ) hA]
 
 /--
 [ES_subseq_ratio_tendsto_one](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/PairwiseIndepSLLN.lean)
@@ -578,20 +576,20 @@ lemma ES_subseq_ratio_tendsto_one
   rw [Real.dist_eq]
   set a := ∫ ω, partialSumIndicators A (sllnSubseq hES_top (k + 1)) ω ∂μ
   set b := ∫ ω, partialSumIndicators A (sllnSubseq hES_top k) ω ∂μ
-  have hb_pos : 0 < b := ES_sllnSubseq_pos hES_top k
-  have ha_pos : 0 < a := ES_sllnSubseq_pos hES_top (k + 1)
-  have hb_sq : ((k : ℝ) + 1) ^ 2 ≤ b := sllnSubseq_spec hES_top k
+  have hb_pos : 0 < b := ES_sllnSubseq_pos (k := k) hES_top
+  have ha_pos : 0 < a := ES_sllnSubseq_pos (k := k + 1) hES_top
+  have hb_sq : ((k : ℝ) + 1) ^ 2 ≤ b := sllnSubseq_spec (k := k) hES_top
   have ha_ub : a < ((k : ℝ) + 1 + 1) ^ 2 + 1 := by
-    have := ES_sllnSubseq_upper_bound hA hES_top (k + 1)
+    have := ES_sllnSubseq_upper_bound (k := k + 1) hA hES_top
     push_cast at this; linarith
-  have hab : b ≤ a := ES_mono (μ := μ) A hA (le_of_lt (sllnSubseq_strictMono hA hES_top (Nat.lt_succ_of_le le_rfl)))
+  have hab : b ≤ a := ES_mono (μ := μ) hA (le_of_lt (sllnSubseq_strictMono hA hES_top (Nat.lt_succ_of_le le_rfl)))
   have h_ge_one : 1 ≤ a / b := le_div_iff₀ hb_pos |>.mpr (by linarith)
   rw [abs_of_nonneg (by linarith)]
   have h_step : a / b - 1 = (a - b) / b := by
     rw [div_sub_one (ne_of_gt hb_pos)]
   rw [h_step]
   have h_diff : a - b < 2 * (k : ℝ) + 4 := by
-    have hb_lb := sllnSubseq_spec hES_top k
+    have hb_lb := sllnSubseq_spec (k := k) hES_top
     have : a < ((k : ℝ) + 2) ^ 2 + 1 := by push_cast at ha_ub ⊢; linarith
     nlinarith
   have hk1_pos : (0 : ℝ) < (k : ℝ) + 1 := by positivity
@@ -629,14 +627,14 @@ lemma pairwise_indep_slln
       ∫ ω', partialSumIndicators A n ω' ∂μ)
     Filter.atTop (nhds 1) by
     filter_upwards [h] with ω hω
-    simp_rw [integral_partialSumIndicators A hA_meas] at hω
+    simp_rw [integral_partialSumIndicators hA_meas] at hω
     exact hω
-  have hES_top := ES_tendsto_atTop A hA_meas hA_sum
-  have hES_mono := ES_mono (μ := μ) A hA_meas
+  have hES_top := ES_tendsto_atTop hA_meas hA_sum
+  have hES_mono := ES_mono (μ := μ) hA_meas
   set φ := sllnSubseq hES_top
   have hφ_strict : StrictMono φ := sllnSubseq_strictMono hA_meas hES_top
   have hES_φ_pos : ∀ k, 0 < ∫ ω', partialSumIndicators A (φ k) ω' ∂μ :=
-    fun k => ES_sllnSubseq_pos hES_top k
+    fun k => ES_sllnSubseq_pos (k := k) hES_top
   have hρ := ES_subseq_ratio_tendsto_one hA_meas hES_top
   have hφ_ae : ∀ᵐ ω ∂μ, Filter.Tendsto
     (fun k => partialSumIndicators A (φ k) ω /
@@ -645,7 +643,7 @@ lemma pairwise_indep_slln
     apply ae_tendsto_of_ae_eventually_abs_sub_lt
     intro m
     have hε : (0 : ℝ) < 1 / ((m : ℝ) + 1) := by positivity
-    have hfin := summable_chebyshev_subseq A hA_meas hA_indep hES_top _ hε
+    have hfin := summable_chebyshev_subseq (ε := 1 / ((m : ℝ) + 1)) hA_meas hA_indep hES_top hε
     filter_upwards [ae_eventually_notMem hfin] with ω hω
     exact hω.mono (fun k hk => not_le.mp hk)
   filter_upwards [hφ_ae] with ω hω_subseq
@@ -660,7 +658,7 @@ lemma pairwise_indep_slln
   set K := max K₁ K₂
   refine ⟨φ K, fun n hn => ?_⟩
   have hn0 : φ 0 ≤ n := le_trans (hφ_strict.monotone (Nat.zero_le K)) hn
-  obtain ⟨k, hk_lb, hk_ub⟩ := exists_bracket_of_strictMono φ hφ_strict n hn0
+  obtain ⟨k, hk_lb, hk_ub⟩ := exists_bracket_of_strictMono (Ω := Ω) (μ := μ) (φ := φ) (n := n) hφ_strict hn0
   have hk_ge : K ≤ k := by
     by_contra hlt; push Not at hlt
     exact absurd (lt_of_lt_of_le hk_ub (hφ_strict.monotone hlt)) (not_lt.mpr hn)
@@ -677,14 +675,14 @@ lemma pairwise_indep_slln
   have hEφk1 := hES_φ_pos (k + 1)
   have hEn : 0 < ∫ ω', partialSumIndicators A n ω' ∂μ :=
     lt_of_lt_of_le hEφk (hES_mono hk_lb)
-  have hSn_lb := partialSumIndicators_mono A ω hk_lb
-  have hSn_ub := partialSumIndicators_mono A ω (le_of_lt hk_ub)
+  have hSn_lb := partialSumIndicators_mono (Ω := Ω) (μ := μ) (A := A) (ω := ω) hk_lb
+  have hSn_ub := partialSumIndicators_mono (Ω := Ω) (μ := μ) (A := A) (ω := ω) (le_of_lt hk_ub)
   have hEn_lb : ∫ ω', partialSumIndicators A (φ k) ω' ∂μ ≤
     ∫ ω', partialSumIndicators A n ω' ∂μ := hES_mono hk_lb
   have hEn_ub : ∫ ω', partialSumIndicators A n ω' ∂μ ≤
     ∫ ω', partialSumIndicators A (φ (k + 1)) ω' ∂μ := hES_mono (le_of_lt hk_ub)
-  have hSφk_nn := partialSumIndicators_nonneg A (φ k) ω
-  have hSn_nn := partialSumIndicators_nonneg A n ω
+  have hSφk_nn := partialSumIndicators_nonneg (Ω := Ω) (μ := μ) (A := A) (n := φ k) (ω := ω)
+  have hSn_nn := partialSumIndicators_nonneg (Ω := Ω) (μ := μ) (A := A) (n := n) (ω := ω)
   set r₀ := partialSumIndicators A (φ k) ω / (∫ ω', partialSumIndicators A (φ k) ω' ∂μ)
   set r₁ := partialSumIndicators A (φ (k + 1)) ω / (∫ ω', partialSumIndicators A (φ (k + 1)) ω' ∂μ)
   set ρ := (∫ ω', partialSumIndicators A (φ (k + 1)) ω' ∂μ) / (∫ ω', partialSumIndicators A (φ k) ω' ∂μ)

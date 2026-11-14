@@ -12,6 +12,7 @@ private lemma main
   [Field k]
   [AddCommGroup V]
   [Module k V]
+  [FiniteDimensional k V]
   {B : LinearMap.BilinForm k V}
   {g : V ≃ₗ[k] V}
 -- given
@@ -46,6 +47,7 @@ private lemma isometry_det_eq_one_or_neg_one
   [Field k]
   [AddCommGroup V]
   [Module k V]
+  [FiniteDimensional k V]
   {B : LinearMap.BilinForm k V}
   {g : V ≃ₗ[k] V}
 -- given
@@ -54,7 +56,7 @@ private lemma isometry_det_eq_one_or_neg_one
 -- imply
   (g : V →ₗ[k] V).det = 1 ∨ (g : V →ₗ[k] V).det = -1 := by
 -- proof
-  have h := isometry_det_sq_eq_one B hnd g hiso
+  have h := main hnd hiso
   have h1 := sub_eq_zero.mpr h
   have h2 : ((g : V →ₗ[k] V).det - 1) * ((g : V →ₗ[k] V).det + 1) = 0 := by
     ring_nf; ring_nf at h1; exact h1
@@ -109,4 +111,4 @@ private lemma hyp_plane_swap_isometry_det
 
 
 -- created on 2026-10-23
--- updated on 2026-10-26
+-- updated on 2026-11-13

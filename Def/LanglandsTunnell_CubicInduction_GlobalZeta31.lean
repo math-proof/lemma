@@ -1,5 +1,5 @@
-import Lemma.LanglandsTunnell.CubicInduction_Structure
-import Lemma.NumberField.IdeleProductMeasure
+import Lemma.Matrix.CubicInduction_Structure
+import Lemma.Measure.IdeleProductMeasure
 
 set_option autoImplicit false
 

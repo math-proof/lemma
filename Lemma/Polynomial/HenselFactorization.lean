@@ -47,7 +47,8 @@ lemma exists_monic_coprime_factorization_of_isAdicComplete
       have c1 : (pg : (A ⧸ I)[X]) = g_bar := rfl
       have c2 : (ph : (A ⧸ I)[X]) = h_bar := rfl
       have c3 : (pf : A[X]) = f := rfl
-      rwa [c1, c2, c3, halg]
+      rw [c1, c2, c3, halg]
+      exact hfac.symm
     have h2 : IsCoprime (pg : (A ⧸ I)[X]) (ph : (A ⧸ I)[X]) := by
       have c1 : (pg : (A ⧸ I)[X]) = g_bar := rfl
       have c2 : (ph : (A ⧸ I)[X]) = h_bar := rfl
@@ -71,7 +72,7 @@ lemma exists_monic_coprime_factorization_of_isAdicComplete
       have hmap : (pf : A[X]).map (algebraMap A A) = f := by
         have c : (pf : A[X]) = f := rfl
         rw [c, Algebra.algebraMap_self, Polynomial.map_id]
-      rwa [hprod]
+      rw [hprod, hmap]
     · have cg : (pg : (A ⧸ I)[X]) = g_bar := rfl
       have e1 : ((UniversalCoprimeFactorizationRing.homEquiv (A ⧸ I)
         g_bar.natDegree h_bar.natDegree hdeg pf
@@ -83,7 +84,8 @@ lemma exists_monic_coprime_factorization_of_isAdicComplete
       simp only [MonicDegreeEq.map_coe, ← AlgHom.toRingHom_eq_coe,
         Ideal.Quotient.mkₐ_toRingHom] at nat1c
       have red1 : (E.1.1 : A[X]).map (Ideal.Quotient.mk I) = g_bar := by
-        rwa [e1] at nat1c
+        rw [e1, eq_comm] at nat1c
+        exact nat1c
       exact red1
     · have ch : (ph : (A ⧸ I)[X]) = h_bar := rfl
       have e2 : ((UniversalCoprimeFactorizationRing.homEquiv (A ⧸ I)
@@ -96,7 +98,8 @@ lemma exists_monic_coprime_factorization_of_isAdicComplete
       simp only [MonicDegreeEq.map_coe, ← AlgHom.toRingHom_eq_coe,
         Ideal.Quotient.mkₐ_toRingHom] at nat2c
       have red2 : (E.1.2 : A[X]).map (Ideal.Quotient.mk I) = h_bar := by
-        rwa [e2] at nat2c
+        rw [e2, eq_comm] at nat2c
+        exact nat2c
       exact red2
   · -- Trivial quotient: every reduction equality holds vacuously.
     have : Subsingleton (A ⧸ I) := not_nontrivial_iff_subsingleton.mp hnt
@@ -129,8 +132,7 @@ lemma exists_monic_coprime_factorization_of_isAdicComplete_natDegree
     g.natDegree = g_bar.natDegree ∧ h.natDegree = h_bar.natDegree := by
 -- proof
   obtain ⟨g, h, hgM, hhM, hgh, hr1, hr2⟩ :=
-    exists_monic_coprime_factorization_of_isAdicComplete I f hf g_bar h_bar
-      hg hh hfac hcop
+    exists_monic_coprime_factorization_of_isAdicComplete hf hg hh hfac hcop
   have e1 : (g.map (Ideal.Quotient.mk I)).natDegree = g.natDegree :=
     hgM.natDegree_map (Ideal.Quotient.mk I)
   have e2 : (h.map (Ideal.Quotient.mk I)).natDegree = h.natDegree :=

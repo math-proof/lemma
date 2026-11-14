@@ -3,7 +3,6 @@ import Instance.CerednikDrinfeld_MumfordQuotient
 import Mathlib.Topology.Algebra.Valued.ValuationTopology
 import Mathlib.Topology.UniformSpace.UniformConvergence
 import Mathlib.Algebra.Polynomial.Eval.Defs
-import Instance.CerednikDrinfeld_DrinfeldHolomorphic
 
 set_option autoImplicit false
 
@@ -47,9 +46,6 @@ variable (K)
 variable {K}
 
 
-variable (K) in
-
-
 end Hol
 
 
@@ -59,9 +55,6 @@ variable [DecidableEq K]
 
 
 section Stab
-
-
-omit [DecidableEq K] in
 
 
 end Stab
@@ -76,9 +69,6 @@ structure IsometricAut where
   fix : ∀ a : K₀, toRingEquiv (algebraMap K₀ K a) = algebraMap K₀ K a
 
 namespace IsometricAut
-
-omit [DecidableEq K] in
-
 
 end IsometricAut
 
@@ -95,9 +85,6 @@ end Hom
 section Glue
 
 variable [DecidableEq K] {G : Type} [Group G] (ρ : G →* PGL(2, K₀))
-
-set_option linter.unusedVariables false in
-
 
 end Glue
 

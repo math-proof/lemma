@@ -2,6 +2,7 @@ import Instance.Analysis.SpecialFunctions.Exponential.Part5
 import Lemma.Int.Sub.eq.Add_Neg
 import Lemma.Rat.Div.eq.Mul_Inv
 open Int Rat
+open Exp
 
 
 @[path, comm]

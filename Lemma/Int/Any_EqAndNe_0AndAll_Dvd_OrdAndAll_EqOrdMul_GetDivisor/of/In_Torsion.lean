@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.DivisorClassGroup
-open AlgebraicCurve
+import Lemma.Valuation.DivisorClassGroup
+open AlgebraicCurve Valuation
 
 
 private lemma exists_ord_eq_mul_of_mk_mem_torsion {K F : Type*} [Field K] [Field F] [Algebra K F] {n : ℕ} {x : Pic0 K F} (hx : x ∈ Pic0.torsion K F n) {D : Divisor.degZero (K := K) (F := F)} (hD : Pic0.mk D = x) : ∃ f : F, f ≠ 0 ∧ ∀ v : Place K F, v.ord f = n * (D : Divisor K F) v := by

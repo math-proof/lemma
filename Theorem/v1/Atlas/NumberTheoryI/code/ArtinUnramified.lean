@@ -20,7 +20,7 @@ import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.GroupTheory.Index
 import Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90
-import Mathlib.Algebra.Set.Closure.eq.N.of.Eq
+import Lemma.Set.Closure.eq.N.of.Eq
 import Mathlib.RingTheory.Trace.Basic
 import Mathlib.LinearAlgebra.Dimension.Finrank
 import Mathlib.RingTheory.Ideal.Norm.RelNorm
@@ -28,6 +28,7 @@ import Mathlib.RingTheory.FractionalIdeal.Extended
 import Mathlib.RingTheory.Invariant.Basic
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Lemma247
 import Def.v1.Atlas.NumberTheoryI.code.ArtinUnramified
+import Theorem.v1.Atlas.NumberTheoryI.code.ArtinUnramified.IdealMap
 
 
 noncomputable section
@@ -38,24 +39,5 @@ open NumberField
 
 namespace ArtinUnramified
 
-section GaloisClassGroupAction
-
-lemma ideal_map_comp_ringEquiv {R : Type*} [CommRing R]
-    (e₁ e₂ : R ≃+* R) (I : Ideal R) :
-    Ideal.map e₂ (Ideal.map e₁ I) = Ideal.map (e₁.trans e₂) I := by
-  apply le_antisymm
-  · apply Ideal.map_le_iff_le_comap.mpr; intro x hx
-    obtain ⟨y, hy, rfl⟩ := (Ideal.mem_map_iff_of_surjective e₁ e₁.surjective).mp hx
-    exact Ideal.mem_map_of_mem _ hy
-  · apply Ideal.map_le_iff_le_comap.mpr; intro x hx
-    exact Ideal.mem_map_of_mem e₂ (Ideal.mem_map_of_mem e₁ hx)
-
-lemma ideal_map_refl_ringEquiv {R : Type*} [CommRing R] (I : Ideal R) :
-    Ideal.map (RingEquiv.refl R) I = I := by
-  apply le_antisymm
-  · exact Ideal.map_le_iff_le_comap.mpr (fun x hx => by simpa using hx)
-  · exact fun x hx => Ideal.mem_map_of_mem _ hx
-
-end GaloisClassGroupAction
 end ArtinUnramified
 end

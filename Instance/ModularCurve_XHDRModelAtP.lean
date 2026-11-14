@@ -1,11 +1,11 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_XHDRModelAtP.lean: instance decls only.
 import Mathlib
 import Instance.ModularCurve_XHDifferentialsModL
-import Lemma.ModularCurve.XHOperators
+import Lemma.UpperHalfPlane.XHOperators
 import Abbrev.ModularCurve_IgusaScheme
 import Instance.AlgebraicCurve_TwoChartIntegralModel
-import Lemma.AlgebraicCurve.CurveModel
-import Lemma.AlgebraicGeometry.NeronModelPropertyBundleCarrier
+import Lemma.Scheme.CurveModel
+import Lemma.Scheme.NeronModelPropertyBundleCarrier
 import Abbrev.ModularCurve_XHDRModelAtP
 
 set_option autoImplicit false

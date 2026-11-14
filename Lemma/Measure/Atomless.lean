@@ -40,9 +40,9 @@ namespace MeasureTheory
 
 /--
 [isAtomless_exists_small_subset_real](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/Measure/Atomless.lean)
+subsets with a geometric bound. Consumed by Sierpinski (N3) and the bang-bang step.
 -/
 @[path]
-subsets with a geometric bound. Consumed by Sierpinski (N3) and the bang-bang step. -/
 private lemma isAtomless_exists_small_subset_real {α : Type*} [MeasurableSpace α]
   {μ : Measure α} [IsFiniteMeasure μ] (hA : IsAtomless μ)
   {s : Set α} (hs : MeasurableSet s) (hpos : 0 < μ s) (n : ℕ) :
@@ -94,9 +94,9 @@ namespace MeasureTheory
 
 /--
 [isAtomless_exists_small_subset_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/Measure/Atomless.lean)
+positive real bound.
 -/
 @[path]
-positive real bound. -/
 private lemma isAtomless_exists_small_subset_le {α : Type*} [MeasurableSpace α]
   {μ : Measure α} [IsFiniteMeasure μ] (hA : IsAtomless μ)
   {s : Set α} (hs : MeasurableSet s) (hpos : 0 < μ s)

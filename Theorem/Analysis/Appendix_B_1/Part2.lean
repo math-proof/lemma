@@ -15,7 +15,7 @@ namespace AppendixB
 theorem Digit.toNat_mk {n:ℕ} (h: n < 10) : (Digit.mk h:ℕ) = n := rfl
 
 @[simp]
-theorem Digit.inj (d d':Digit) : d = d' ↔ (d:ℕ) = d' := by grind
+theorem Digit.inj (d d':Digit) : d = d' ↔ (d:ℕ) = d' := Fin.ext_iff
 
 theorem Digit.mk_eq_iff (d:Digit) {n:ℕ} (h: n < 10) : d = mk h ↔ (d:ℕ) = n := by
   convert Digit.inj d (mk h)

@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicCurve_SemistableModel.lean: instance decls only.
 import Mathlib
-import Lemma.AlgebraicCurve.SemistableCharts
+import Lemma.ValuationSubring.SemistableCharts
 import Abbrev.AlgebraicCurve_SemistableModel
 
 set_option autoImplicit false

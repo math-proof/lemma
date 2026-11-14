@@ -1,5 +1,5 @@
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicGeometry.OrderedAffineCoverCech
+import Lemma.Scheme.OrderedAffineCoverCech
 open CategoryTheory Opposite
 set_option autoImplicit false
 

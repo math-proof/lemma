@@ -35,10 +35,10 @@ lemma integral_laplacian_eq_zero
     · filter_upwards [Ioi_mem_atTop (0 : ℝ)] with R hR; exact hbound t R hR
     · rw [show (0 : ℝ) = C * 0 from by ring]; exact (hdecay t).const_mul C
   exact hcover.integral_eq_of_tendsto 0 (hlapl_int t) htend
-/-- For a solution $u$ to the heat equation $\partial_t u = \Delta u$ on $\mathbb{R}^n$
-with suitable decay and integrability hypotheses, the derivative of the total thermal
-energy with respect to time vanishes: $\mathcal{T}'(t) = 0$. This is the differential
-form of conservation of thermal energy (Lemma 2.0.3). -/
+-- For a solution $u$ to the heat equation $\partial_t u = \Delta u$ on $\mathbb{R}^n$
+-- with suitable decay and integrability hypotheses, the derivative of the total thermal
+-- energy with respect to time vanishes: $\mathcal{T}'(t) = 0$. This is the differential
+-- form of conservation of thermal energy (Lemma 2.0.3). 
 
 end HeatEquation
 

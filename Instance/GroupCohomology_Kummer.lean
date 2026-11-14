@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_GroupCohomology_Kummer.lean: instance decls only.
 import Mathlib
-import Lemma.GroupCohomology.Kummer
+import Lemma.Rep.Kummer
 
 set_option autoImplicit false
 

@@ -1,8 +1,8 @@
 -- Carved from Lemma/Definitions/Def_AutomorphicForm_GaussTwist.lean: instance decls only.
 import Def.HeckeCharacter_FiniteOrder
-import Lemma.NumberField.AdelicLevel
+import Lemma.Matrix.AdelicLevel
 import Def.AutomorphicForm_ConstantTerm
-import Lemma.AutomorphicForm.GaussTwist
+import Lemma.Ideal.GaussTwist
 
 set_option autoImplicit false
 set_option maxSynthPendingDepth 3

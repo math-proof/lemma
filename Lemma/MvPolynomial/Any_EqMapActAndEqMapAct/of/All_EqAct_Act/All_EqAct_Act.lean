@@ -9,7 +9,7 @@ import Definitions.Def_ModularCurve_LevelModuliPackageAbs
 private lemma main
   {A : Type u} [CommRing A]
   {D : ModularCurve.LevelModuliDatum.{u} A}
-  {P : ModularCurve.LevelModuliPackageAbs A D}
+  {P : Int.LevelModuliPackageAbs A D}
   {ρ ρ' : D.ProblemAut}
 -- given
   (h₁ : ∀ (T : Type u) [CommRing T] [Algebra A T] (y : D.Pt T), ρ'.act (ρ.act y) = y)

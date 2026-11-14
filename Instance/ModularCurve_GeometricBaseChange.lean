@@ -3,9 +3,9 @@ import Mathlib.FieldTheory.LinearDisjoint
 import Mathlib.RingTheory.TensorProduct.Free
 import Mathlib.Algebra.Algebra.Hom.Rat
 import Mathlib.Algebra.Module.LinearMap.Rat
-import Lemma.ModularCurve.LaurentCoeff
+import Lemma.LaurentSeries.LaurentCoeff
 import Instance.FieldTheory_RatAlgClosureGalois
-import Lemma.ModularCurve.GeometricBaseChange
+import Lemma.LaurentSeries.GeometricBaseChange
 
 set_option autoImplicit false
 

@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Abbrev.v1.Atlas.DifferentialAnalysis.code.Integration.Part2
-open MeasureTheory ENNReal Set NormedSpaces Integration MonotoneConvergence
+open MeasureTheory ENNReal Set NormedSpaces Integration
 open scoped ENNReal
 open MeasureTheory Filter ENNReal Topology
 
@@ -27,7 +27,7 @@ lemma Lp_isBanachSpace
 open scoped ENNReal
 section MinkowskiInequality
 
-end NormedSpaces
+end MinkowskiInequality
 
 namespace NormedSpaces
 

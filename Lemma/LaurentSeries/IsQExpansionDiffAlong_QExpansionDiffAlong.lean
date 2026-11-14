@@ -1,8 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.QExpansionDiff
+import Lemma.LaurentSeries.QExpansionDiff
 import Lemma.Int.P2MUtil
-open HahnSeries ModularCurve AlgebraicCurve
+open HahnSeries ModularCurve AlgebraicCurve LaurentSeries
 
 
 private lemma thetaL_coeff {L : Type*} [Field L] (f : LaurentSeries L) (n : ℤ) : (thetaL L f).coeff n = n • f.coeff n := by

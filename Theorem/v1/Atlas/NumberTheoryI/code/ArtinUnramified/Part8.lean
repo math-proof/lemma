@@ -20,7 +20,7 @@ import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.GroupTheory.Index
 import Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90
-import Mathlib.Algebra.Set.Closure.eq.N.of.Eq
+import Lemma.Set.Closure.eq.N.of.Eq
 import Mathlib.RingTheory.Trace.Basic
 import Mathlib.LinearAlgebra.Dimension.Finrank
 import Mathlib.RingTheory.Ideal.Norm.RelNorm
@@ -43,7 +43,7 @@ attribute [instance] CyclicExtensionData.instGroupG
   CyclicExtensionData.instCommGroupM CyclicExtensionData.instFiniteM
   CyclicExtensionData.instAction
 
-lemma subgroup_fg_of_comm_fg (H : Subgroup (𝓞 L)ˣ) : H.FG := by
+lemma subgroup_fg_of_comm_fg {L : Type*} [Field L] [NumberField L] (H : Subgroup (𝓞 L)ˣ) : H.FG := by
   rw [Subgroup.fg_iff_add_fg]
   haveI : Monoid.FG (𝓞 L)ˣ := inferInstance
   haveI : Module.Finite ℤ (Additive (𝓞 L)ˣ) := AddMonoid.FG.to_moduleFinite_int
@@ -52,7 +52,10 @@ lemma subgroup_fg_of_comm_fg (H : Subgroup (𝓞 L)ˣ) : H.FG := by
     IsNoetherian.noetherian _
   rwa [Submodule.fg_iff_addSubgroup_fg, AddSubgroup.toIntSubmodule_toAddSubgroup] at hfg_mod
 
-lemma pow_card_mem_augmentationUnitsSubgroup [Fintype (L ≃ₐ[K] L)]
+lemma pow_card_mem_augmentationUnitsSubgroup (K L : Type*)
+    [Field K] [NumberField K] [Field L] [NumberField L]
+    [Algebra K L] [IsGalois K L] [FiniteDimensional K L]
+    [Fintype (L ≃ₐ[K] L)]
     (u : (𝓞 L)ˣ) (hu : normMapUnits K L u = 1) :
     u ^ Fintype.card (L ≃ₐ[K] L) ∈ augmentationUnitsSubgroup K L := by
   have key : u ^ Fintype.card (L ≃ₐ[K] L) = ∏ σ : (L ≃ₐ[K] L), (u * (σ • u)⁻¹) := by

@@ -8,7 +8,7 @@ open DifferentialFormSpace KTGamma
 [freeAbelianRank_Z3](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/GeometryOfManifolds/code/Counterexamples.lean)
 -/
 @[path]
-lemma freeAbelianRank_Z3
+lemma freeAbelianRank_Z3 :
 -- imply
   FreeAbelianRank.rank (G := Multiplicative ℤ × Multiplicative ℤ × Multiplicative ℤ) = 3 := by
 -- proof
@@ -18,7 +18,7 @@ lemma freeAbelianRank_Z3
 [KTGamma.abelianizationFreeRank_eq_three](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/GeometryOfManifolds/code/Counterexamples.lean)
 -/
 @[path]
-lemma KTGamma.abelianizationFreeRank_eq_three
+lemma KTGamma.abelianizationFreeRank_eq_three :
 -- imply
   KTGamma.abelianizationFreeRank = 3 := by
 -- proof

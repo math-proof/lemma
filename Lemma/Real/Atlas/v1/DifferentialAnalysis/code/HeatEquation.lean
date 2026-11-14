@@ -1,9 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.DifferentialAnalysis.code.HeatEquation
-open TemperedDistribution LineDeriv DifferentialOperators in
+open TemperedDistribution LineDeriv DifferentialOperators
 open scoped SchwartzMap
-open set on which `u` vanishes). -/
 
 
 namespace DifferentialOperators
@@ -43,7 +42,7 @@ lemma distributionalSupport_sub_subset
   by_contra h
   simp only [Set.mem_union, not_or] at h
   obtain ⟨hnu, hnv⟩ := h
-  simp only [distributionalSupport, Set.mem_setOf_eq, not_not] at hnu hnv
+  simp only [distributionalSupport, Set.mem_ofPred_eq, not_not] at hnu hnv
   obtain ⟨U₁, hU₁_open, hx_U₁, hU₁⟩ := hnu
   obtain ⟨U₂, hU₂_open, hx_U₂, hU₂⟩ := hnv
   exact hx ⟨U₁ ∩ U₂, hU₁_open.inter hU₂_open, ⟨hx_U₁, hx_U₂⟩,
@@ -72,7 +71,7 @@ lemma supportedInTimeGeq_sub
   intro x hx
   have hsub := distributionalSupport_sub_subset n u v hx
   simp only [Set.mem_union] at hsub
-  simp only [Set.mem_setOf_eq]
+  simp only [Set.mem_ofPred_eq]
   obtain hu | hv := hsub
   · exact le_trans (min_le_left a b) (ha hu)
   · exact le_trans (min_le_right a b) (hb hv)
@@ -101,10 +100,10 @@ lemma compact_support_time_bounded_below
     obtain ⟨x₀, _, hx₀_min⟩ := hf.exists_isMinOn hne hcont.continuousOn
     exact ⟨timeCoord n x₀, fun x hx => hx₀_min hx⟩
 end DifferentialOperators
-open DifferentialOperators in
-/-- The forward fundamental solution of the heat operator on `SpaceTime n`: a
-tempered distribution `E` such that `(∂ₜ − Δ) E = δ₀` and `E` is supported
-in `{t ≥ 0}`. -/
+open DifferentialOperators
+-- The forward fundamental solution of the heat operator on `SpaceTime n`: a
+-- tempered distribution `E` such that `(∂ₜ − Δ) E = δ₀` and `E` is supported
+-- in `{t ≥ 0}`.
 namespace DifferentialOperators
 
 end DifferentialOperators

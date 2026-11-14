@@ -1,5 +1,5 @@
-import Lemma.LanglandsTunnell.CubicInduction_Carrier
-import Lemma.AutomorphicForm.SmoothingKernel
+import Lemma.Matrix.CubicInduction_Carrier
+import Lemma.Matrix.SmoothingKernel
 import Mathlib.Analysis.Calculus.ContDiff.Defs
 
 set_option autoImplicit false

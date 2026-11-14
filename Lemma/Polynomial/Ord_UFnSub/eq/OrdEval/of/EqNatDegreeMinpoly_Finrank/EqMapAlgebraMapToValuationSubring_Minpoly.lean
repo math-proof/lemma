@@ -1,10 +1,10 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.PlacesOverDVR
+import Lemma.Ideal.PlacesOverDVR
 import Lemma.Int.P2MUtil
 
-open Polynomial IntermediateField AlgebraicCurve
-open AlgebraicCurve
+open Polynomial IntermediateField AlgebraicCurve Ideal
+open AlgebraicCurve Ideal
 
 /--
 [AlgebraicCurve_Place_ord_norm_sub_eq_ord_eval](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_Place_ord_norm_sub_eq_ord_eval.lean)
@@ -44,7 +44,7 @@ private lemma  norm_algebraMap_sub
 
 
 
-open AlgebraicCurve
+open AlgebraicCurve Ideal
 
 private lemma  ord_norm_sub_eq
     {K F F' : Type*}

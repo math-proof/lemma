@@ -1,12 +1,12 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.IsDedekindDomain.FiniteUnitIdelesOutside
+import Lemma.Set.FiniteUnitIdelesOutside
 import Def.M4aHerbrand_IdeleClassVocab
-import Lemma.NumberField.PlaceTransport
+import Lemma.Valuation.PlaceTransport
 import Lemma.Int.P2MUtil
 
-open IsDedekindDomain NumberField
-open scoped NumberField.PlaceTransport
+open IsDedekindDomain NumberField Set Valuation
+open scoped Valuation.PlaceTransport
 
 /--
 [NumberField_AdeleRing_exists_units_forall_valued_snd_eq_ofAdd_neg](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_NumberField_AdeleRing_exists_units_forall_valued_snd_eq_ofAdd_neg.lean)

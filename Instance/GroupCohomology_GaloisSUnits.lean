@@ -1,7 +1,7 @@
 -- Carved from Lemma/Definitions/Def_GroupCohomology_GaloisSUnits.lean: instance decls only.
 import Mathlib
 import Def.FLTPrelim_Ramification
-import Lemma.GroupCohomology.GaloisSUnits
+import Lemma.Rep.GaloisSUnits
 
 set_option autoImplicit false
 

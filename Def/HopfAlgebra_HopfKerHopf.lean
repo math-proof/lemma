@@ -486,4 +486,3 @@ namespace HopfAlgebra
 export HopfKerHopf (antipode_mem map_antipode comul_antipode)
 
 end HopfAlgebra
-

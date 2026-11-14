@@ -104,8 +104,8 @@ lemma leastSquares_normalEquations_residual
       have := hmin_t t
       rw [dotProduct_sub_smul_expand] at this
       linarith
-    exact eq_zero_of_forall_quad_nonneg _ _
-      (dotProduct_self_nonneg (X *ᵥ v)) nonneg
+    exact eq_zero_of_forall_quad_nonneg
+      (dotProduct_self_nonneg) nonneg
   apply dotProduct_eq_zero
   intro w
   have := key w
@@ -130,7 +130,7 @@ lemma leastSquares_normalEquations
 -- imply
   X.transpose *ᵥ (X *ᵥ θ) = X.transpose *ᵥ Y := by
 -- proof
-  have h := leastSquares_normalEquations_residual X Y θ hmin
+  have h := leastSquares_normalEquations_residual hmin
   rw [mulVec_sub] at h
   exact (eq_of_sub_eq_zero h).symm
 
@@ -214,8 +214,8 @@ lemma normalEquations_imply_minimizer
   have expand : dotProduct (r - X *ᵥ v) (r - X *ᵥ v) =
     dotProduct r r - 2 * dotProduct r (X *ᵥ v) + dotProduct (X *ᵥ v) (X *ᵥ v) := by
     simp only [dotProduct_sub, sub_dotProduct, dotProduct_comm (X *ᵥ v) r]; ring
-  rw [expand, ortho]
-  linarith [dotProduct_self_nonneg (X *ᵥ v)]
+  rw [expand, ortho, mul_zero, sub_zero]
+  exact le_add_of_nonneg_right (by simpa using dotProduct_star_self_nonneg (X *ᵥ v))
 
 end LeastSquares
 
@@ -232,13 +232,14 @@ lemma pseudoinverse_satisfies_normal_eq
 -- imply
   (X.transpose * X) *ᵥ ((X.transpose * X)† *ᵥ (X.transpose *ᵥ Y)) = X.transpose *ᵥ Y := by
 -- proof
-  obtain ⟨w, hw⟩ := range_transpose_subset_range_gramian X Y
+  obtain ⟨w, hw⟩ := range_transpose_subset_range_gramian
   set A := X.transpose * X
   rw [← hw]
   have step1 : A† *ᵥ (A *ᵥ w) = (A† * A) *ᵥ w := by rw [mulVec_mulVec]
   rw [step1]
   have step2 : A *ᵥ ((A† * A) *ᵥ w) = (A * (A† * A)) *ᵥ w := by rw [mulVec_mulVec]
-  rw [step2, ← Matrix.mul_assoc, (moorePenrosePseudoinverse_spec A).mul_pinv_mul]
+  have hpen := (moorePenrosePseudoinverse_spec (A := A)).mul_pinv_mul
+  rw [step2, ← Matrix.mul_assoc, hpen]
 
 end LeastSquares
 
@@ -253,16 +254,17 @@ lemma leastSquares_pseudoinverse
   {X : Matrix (Fin n) (Fin d) ℝ}
   {Y : Fin n → ℝ} :
 -- imply
-  let θ_LS := (X.transpose * X)† *ᵥ (X.transpose *ᵥ Y) ∀ θ' : Fin d → ℝ, dotProduct (Y - X *ᵥ θ_LS) (Y - X *ᵥ θ_LS) ≤ dotProduct (Y - X *ᵥ θ') (Y - X *ᵥ θ') := by
+  let θ_LS := (X.transpose * X)† *ᵥ (X.transpose *ᵥ Y)
+  ∀ θ' : Fin d → ℝ, dotProduct (Y - X *ᵥ θ_LS) (Y - X *ᵥ θ_LS) ≤ dotProduct (Y - X *ᵥ θ') (Y - X *ᵥ θ') := by
 -- proof
-  intro θ_LS
-  apply normalEquations_imply_minimizer X Y θ_LS
+  let θ_LS := (X.transpose * X)† *ᵥ (X.transpose *ᵥ Y)
+  apply normalEquations_imply_minimizer (X := X) (Y := Y) (θ := θ_LS)
   rw [mulVec_sub, sub_eq_zero]
   have h : X.transpose *ᵥ (X *ᵥ ((X.transpose * X)† *ᵥ (X.transpose *ᵥ Y))) =
     (X.transpose * X) *ᵥ ((X.transpose * X)† *ᵥ (X.transpose *ᵥ Y)) := by
     rw [mulVec_mulVec]
   rw [h]
-  exact (pseudoinverse_satisfies_normal_eq X Y).symm
+  exact pseudoinverse_satisfies_normal_eq.symm
 
 end LeastSquares
 
@@ -277,10 +279,11 @@ lemma leastSquares_normalEquations_and_pseudoinverse
   {X : Matrix (Fin n) (Fin d) ℝ}
   {Y : Fin n → ℝ} :
 -- imply
-  (∀ (θ : Fin d → ℝ), (∀ θ' : Fin d → ℝ, dotProduct (Y - X *ᵥ θ) (Y - X *ᵥ θ) ≤ dotProduct (Y - X *ᵥ θ') (Y - X *ᵥ θ')) → X.transpose *ᵥ (X *ᵥ θ) = X.transpose *ᵥ Y) ∧ (let θ_LS := (X.transpose * X)† *ᵥ (X.transpose *ᵥ Y) ∀ θ' : Fin d → ℝ, dotProduct (Y - X *ᵥ θ_LS) (Y - X *ᵥ θ_LS) ≤ dotProduct (Y - X *ᵥ θ') (Y - X *ᵥ θ')) :=
+  (∀ (θ : Fin d → ℝ), (∀ θ' : Fin d → ℝ, dotProduct (Y - X *ᵥ θ) (Y - X *ᵥ θ) ≤ dotProduct (Y - X *ᵥ θ') (Y - X *ᵥ θ')) → X.transpose *ᵥ (X *ᵥ θ) = X.transpose *ᵥ Y) ∧ (let θ_LS := (X.transpose * X)† *ᵥ (X.transpose *ᵥ Y)
+      ∀ θ' : Fin d → ℝ, dotProduct (Y - X *ᵥ θ_LS) (Y - X *ᵥ θ_LS) ≤ dotProduct (Y - X *ᵥ θ') (Y - X *ᵥ θ')) :=
 -- proof
-  ⟨fun θ hmin => leastSquares_normalEquations X Y θ hmin,
-    leastSquares_pseudoinverse X Y⟩
+  ⟨fun θ hmin => leastSquares_normalEquations hmin,
+    leastSquares_pseudoinverse⟩
 
 end LeastSquares
 

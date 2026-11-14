@@ -1,9 +1,6 @@
-import Lemma.ModularCurve.TateFormal
-import Lemma.ModularCurve.PhiGen
+import Def.ModularCurve_TateFormal
+import Structure.ModularCurve_X0
 import Lemma.WeierstrassCurve.VeluQuotientMap
-import Instance.ModularCurve_TatePoint
-import Structure.ModularCurve_TatePoint
-import Abbrev.ModularCurve_TatePoint
 
 set_option autoImplicit false
 
@@ -12,6 +9,11 @@ noncomputable section
 open ModularCurve WeierstrassCurve Polynomial
 
 namespace ModularCurve.TatePoint
+
+open scoped Classical
+
+abbrev Qbar : Type := AlgebraicClosure ℚ
+abbrev H : Type := HahnSeries ℚ Qbar
 
 def jNear (j₀ : Qbar) : H := HahnSeries.C j₀ + HahnSeries.single (1 : ℚ) (1 : Qbar)
 
@@ -29,6 +31,10 @@ def RootsAt {p : ℕ} [NeZero p] (data : ModularPolynomialData p) (jv : H) : Typ
   {y : H // (data.Φ.map (Polynomial.eval₂RingHom (Int.castRingHom H) jv)).IsRoot y}
 
 open scoped Classical in
+
+open scoped Classical in
+instance (j₀ : Qbar) : (nearCurve j₀).IsElliptic := by
+  unfold nearCurve; infer_instance
 
 theorem nearCurve_j (j₀ : Qbar) : (nearCurve j₀).j = jNear j₀ :=
   WeierstrassCurve.ofJ_j (jNear j₀)
@@ -51,20 +57,17 @@ section TatePoint
 variable (K : Type) [Field K] [Algebra ℚ K]
 variable (p : ℕ) [Fact (Nat.Prime p)] [NeZero p] (ζ : Kˣ)
 
-
 variable (veluSlotSet : Fin (p + 1) → Finset (LaurentSeries K × LaurentSeries K))
 
-
-variable (instQ : ∀ i, (slotQuotient K p veluSlotSet i).IsElliptic)
-
+variable (instQ : ∀ i, (((tateLaurent K).map (qExpand K p)).veluQuotient (veluSlotSet i)).IsElliptic)
 
 open scoped Classical in
 
 def W3Proper : Prop :=
   ∀ i, (veluSlotSet i).card = (p - 1) / 2 ∧
-    ∃ g : (basePoint K p).toAffine.Point, addOrderOf g = p ∧
-      ∀ P ∈ veluSlotSet i, ∃ (k : ℕ) (h : (basePoint K p).toAffine.Nonsingular P.1 P.2),
-        0 < k ∧ (k • g : (basePoint K p).toAffine.Point) = WeierstrassCurve.Affine.Point.some P.1 P.2 h
+    ∃ g : ((tateLaurent K).map (qExpand K p)).toAffine.Point, addOrderOf g = p ∧
+      ∀ P ∈ veluSlotSet i, ∃ (k : ℕ) (h : ((tateLaurent K).map (qExpand K p)).toAffine.Nonsingular P.1 P.2),
+        0 < k ∧ (k • g : ((tateLaurent K).map (qExpand K p)).toAffine.Point) = WeierstrassCurve.Affine.Point.some P.1 P.2 h
 
 end TatePoint
 

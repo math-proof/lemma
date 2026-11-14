@@ -64,13 +64,13 @@ lemma lemma_1_15_sSup_eq
     apply csSup_le
     · exact image_nonempty.mpr (convexHull_nonempty_iff.mpr (Finset.coe_nonempty.mpr hS))
     · rintro _ ⟨x, hx, rfl⟩
-      exact lemma_1_15_linear_max_at_vertex f S hS x hx
+      exact lemma_1_15_linear_max_at_vertex hS hx
   ·
     apply Finset.sup'_le hS
     intro v hv
     apply le_csSup
     ·
-      exact ⟨S.sup' hS f, fun _ ⟨x, hx, he⟩ => he ▸ lemma_1_15_linear_max_at_vertex f S hS x hx⟩
+      exact ⟨S.sup' hS f, fun _ ⟨x, hx, he⟩ => he ▸ lemma_1_15_linear_max_at_vertex hS hx⟩
     · exact ⟨v, subset_convexHull ℝ (↑S : Set E) (Finset.mem_coe.mpr hv), rfl⟩
 
 

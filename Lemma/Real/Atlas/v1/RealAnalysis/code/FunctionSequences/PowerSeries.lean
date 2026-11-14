@@ -40,7 +40,7 @@ lemma summable_abs_bounded
 -- given
   (hf : Summable f) :
 -- imply
-  ∃ C, ∀ n, := by
+  ∃ C, ∀ n, |f n| ≤ C := by
 -- proof
   have htend := hf.tendsto_atTop_zero
   rw [Metric.tendsto_atTop] at htend

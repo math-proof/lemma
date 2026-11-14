@@ -1,12 +1,12 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.TwoChartModel
-import Lemma.AlgebraicCurve.TwoChartIntegralModel
+import Lemma.Subalgebra.TwoChartModel
+import Lemma.Scheme.TwoChartIntegralModel
 
 namespace Definitions
 end Definitions
 open Definitions
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry ModularCurve AlgebraicCurve
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry ModularCurve AlgebraicCurve Scheme Subalgebra
 
 /--
 [ModularCurve_TwoChart_exists_iso_twoChartIntegralModel_hom_comp_toBase_eq_modelTo](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularCurve_TwoChart_exists_iso_twoChartIntegralModel_hom_comp_toBase_eq_modelTo.lean)
@@ -17,7 +17,7 @@ private lemma main
   {K : Type u} [Field K] [Algebra A K]
   {j : K} [Fact (j ≠ 0)] :
 -- imply
-  ∃ e : ModularCurve.TwoChartModel A K j ≅ AlgebraicCurve.TwoChartIntegralModel A K j,
+  ∃ e : Subalgebra.TwoChartModel A K j ≅ Scheme.TwoChartIntegralModel A K j,
       e.hom ≫ AlgebraicCurve.TwoChartIntegralModel.toBase A K j = ModularCurve.TwoChart.modelTo A K j ∧
       ModularCurve.TwoChart.ιFin A K j ≫ e.hom = AlgebraicCurve.TwoChartIntegralModel.ιFin A K j ∧
       ModularCurve.TwoChart.ιInf A K j ≫ e.hom = AlgebraicCurve.TwoChartIntegralModel.ιInf A K j :=

@@ -1,6 +1,6 @@
 import Mathlib
-import Lemma.AlgebraicGeometry.RelativeGroupLaw
-import Lemma.AlgebraicGeometry.NeronModelEndomorphismExtension
+import Lemma.Scheme.RelativeGroupLaw
+import Lemma.Scheme.NeronModelEndomorphismExtension
 import Structure.GoodReductionJacobian_PartialAction
 import Abbrev.GoodReductionJacobian_PartialAction
 

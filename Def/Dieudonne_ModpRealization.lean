@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.Dieudonne.DatumAndHonda
+import Lemma.LinearMap.DatumAndHonda
 
 set_option autoImplicit false
 

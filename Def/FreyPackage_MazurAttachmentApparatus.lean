@@ -1,11 +1,11 @@
 import Mathlib
-import Lemma.FLTPrelim.FreyPackage
+import Lemma.WeierstrassCurve.FreyPackage
 import Def.FreyPackage_LevelRaising
-import Lemma.FreyPackage.GaloisRep
-import Lemma.GaloisRep.GlobalUnramifiedAt
-import Lemma.ModularCurve.HeckeModule
+import Lemma.WeierstrassCurve.FreyPackageGaloisRep
+import Lemma.ValuationSubring.GlobalUnramifiedAt
+import Lemma.MvPolynomial.HeckeModule
 import Def.ModularCurve_HeckeInputsAll
-import Lemma.ModularCurve.MazurPrincipleCore
+import Lemma.MvPolynomial.MazurPrincipleCore
 import Structure.FreyPackage_MazurAttachmentApparatus
 import Abbrev.FreyPackage_MazurAttachmentApparatus
 

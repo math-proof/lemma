@@ -10,12 +10,16 @@ set_option backward.isDefEq.respectTransparency false
 -/
 @[path]
 private lemma main
-  [Field k] {q : ℕ} [Fact q.Prime] [CharP k q] (hq : 5 ≤ q)
-  (a : k) (h01728 : a = 0 ∨ a = 1728) (l : k)
+  [Field k]
+  {q : ℕ} [Fact q.Prime] [CharP k q]
+  {a l : k}
+-- given
+  (hq : 5 ≤ q)
+  (h01728 : a = 0 ∨ a = 1728)
   (hl : a * ((16 * l) ^ 2 * (16 * l - 1) ^ 2) = 256 * ((16 * l) ^ 2 - 16 * l + 1) ^ 3) :
-  -- imply
-  l ^ (q ^ 2) = l := by
-  -- proof
+-- imply
+  l ^ q ^ 2 = l := by
+-- proof
   have hp : q.Prime := Fact.out
   have hqodd : Odd q := hp.odd_of_ne_two (by omega)
   have h2 : (2 : k) ≠ 0 := by
@@ -43,10 +47,10 @@ private lemma main
     rw [frobenius_def] at this
     refine this
   have h16q : (16 : k) ^ q = 16 := hfrobC 14
-  have h16qq : (16 : k) ^ (q ^ 2) = 16 := by
+  have h16qq : (16 : k) ^ q ^ 2 = 16 := by
     rw [pow_two, pow_mul, h16q, h16q]
   set lam : k := 16 * l with hlam
-  have hlamqq : lam ^ (q ^ 2) = lam := by
+  have hlamqq : lam ^ q ^ 2 = lam := by
     cases h01728
     ·
       rename_i ha
@@ -95,7 +99,8 @@ private lemma main
           rename_i hmod
           simp [hmod]
       have hdecomp : q ^ 2 = 6 * (q ^ 2 / 6) + 1 := by
-        have := Nat.div_add_mod (q ^ 2) 6
+        have hdivmod : 6 * (q ^ 2 / 6) + q ^ 2 % 6 = q ^ 2 :=
+          Nat.div_add_mod (q ^ 2) (6 : ℕ)
         omega
       rw [hdecomp, pow_add, pow_mul, h6, one_pow, one_mul, pow_one]
     ·
@@ -142,3 +147,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-13

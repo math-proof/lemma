@@ -43,7 +43,7 @@ lemma lemma_2_7
 -- imply
   (n.choose k : ℝ) ≤ (Real.exp 1 * n / k) ^ k :=
 -- proof
-  lemma_2_7_binom_bound n k hk hkn
+  lemma_2_7_binom_bound hk hkn
 
 
 -- created on 2026-10-23

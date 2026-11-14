@@ -1,6 +1,6 @@
 import Mathlib
 import Instance.ExtEndgame_ProductionDatum
-import Lemma.GroupCohomology.ContinuousH2
+import Lemma.Submodule.ContinuousH2
 import Def.GroupCohomology_GaloisUnitsInflation
 import Def.GroupCohomology_CyclicCarry
 

@@ -18,9 +18,9 @@ lemma tendsto_eLpNorm_indicator_compl_Icc
 -- imply
   Tendsto (fun N : ℕ => eLpNorm ((Icc (-(N : ℝ)) N)ᶜ.indicator g) 2 volume) atTop (𝓝 0) := by
 -- proof
-  set g' := hg.1.mk g
-  have hg'_sm : StronglyMeasurable g' := hg.1.stronglyMeasurable_mk
-  have hg'_ae : g =ᶠ[ae volume] g' := hg.1.ae_eq_mk
+  set g' := hg.aestronglyMeasurable.mk g
+  have hg'_sm : StronglyMeasurable g' := hg.aestronglyMeasurable.stronglyMeasurable_mk
+  have hg'_ae : g =ᶠ[ae volume] g' := hg.aestronglyMeasurable.ae_eq_mk
   have hg'_lp : MemLp g' 2 volume := hg.ae_eq hg'_ae
   suffices h : Tendsto (fun N : ℕ => eLpNorm ((Icc (-(N : ℝ)) N)ᶜ.indicator g') 2 volume)
     atTop (𝓝 0) by
@@ -28,7 +28,8 @@ lemma tendsto_eLpNorm_indicator_compl_Icc
   suffices h_lint : Tendsto
     (fun N : ℕ => ∫⁻ x : ℝ, (‖(Icc (-(N : ℝ)) N)ᶜ.indicator g' x‖₊ : ENNReal) ^ (2 : ℝ) ∂volume)
     atTop (𝓝 0) by
-    simp_rw [eLpNorm_eq_lintegral_rpow_enorm_toReal two_ne_zero ENNReal.ofNat_ne_top]
+    simp_rw [eLpNorm_eq_lintegral_rpow_enorm_toReal two_ne_zero ENNReal.ofNat_ne_top
+      (hg'_sm.indicator measurableSet_Icc.compl).aestronglyMeasurable]
     simp only [ENNReal.toReal_ofNat]
     simp_rw [enorm_eq_nnnorm]
     rw [show (0 : ENNReal) = 0 ^ (1 / 2 : ℝ) from by simp]
@@ -43,8 +44,8 @@ lemma tendsto_eLpNorm_indicator_compl_Icc
     apply ENNReal.rpow_le_rpow _ (by norm_num : (0:ℝ) ≤ 2)
     simp only [ENNReal.coe_le_coe, nnnorm_indicator_eq_indicator_nnnorm]
     exact Set.indicator_le_self _ _ _
-  · have h2 := hg'_lp.2
-    rw [eLpNorm_eq_lintegral_rpow_enorm_toReal two_ne_zero ENNReal.ofNat_ne_top] at h2
+  · have h2 := hg'_lp.eLpNorm_lt_top
+    rw [eLpNorm_eq_lintegral_rpow_enorm_toReal two_ne_zero ENNReal.ofNat_ne_top hg'_sm.aestronglyMeasurable] at h2
     simp only [ENNReal.toReal_ofNat] at h2
     simp_rw [enorm_eq_nnnorm] at h2
     intro h_eq; rw [h_eq] at h2; simp at h2
@@ -73,7 +74,7 @@ lemma truncated_fourier_hat_memLp
 -- imply
   MemLp ((Icc (-N) N).indicator (𝓕 f : Lp (α := ℝ) ℂ 2 volume)) 2 volume :=
 -- proof
-  (Lp.memLp (𝓕 f)).indicator measurableSet_Icc
+  MemLp.indicator measurableSet_Icc.nullMeasurableSet (Lp.memLp (𝓕 f))
 
 end TruncatedFourierInversion
 
@@ -87,14 +88,14 @@ lemma truncated_fourier_inversion_L2
 -- given
   (f : Lp (α := ℝ) ℂ 2 volume) :
 -- imply
-  Tendsto (fun N : ℕ => ‖f - 𝓕⁻ ((truncated_fourier_hat_memLp f N).toLp _)‖) atTop (𝓝 0) := by
+  Tendsto (fun N : ℕ => ‖f - 𝓕⁻ ((truncated_fourier_hat_memLp (N := (N : ℝ)) f).toLp _)‖) atTop (𝓝 0) := by
 -- proof
   have h𝓕inv : (𝓕⁻ : Lp (α := ℝ) ℂ 2 volume → _) = (Lp.fourierTransformₗᵢ ℝ ℂ).symm := rfl
   have h_eq : ∀ N : ℕ,
-    ‖f - 𝓕⁻ ((truncated_fourier_hat_memLp f N).toLp _)‖ =
-    ‖𝓕 f - (truncated_fourier_hat_memLp f N).toLp _‖ := by
+    ‖f - 𝓕⁻ ((truncated_fourier_hat_memLp (N := (N : ℝ)) f).toLp _)‖ =
+    ‖𝓕 f - (truncated_fourier_hat_memLp (N := (N : ℝ)) f).toLp _‖ := by
     intro N
-    set a := (truncated_fourier_hat_memLp f N).toLp _
+    set a := (truncated_fourier_hat_memLp (N := (N : ℝ)) f).toLp _
     calc ‖f - 𝓕⁻ a‖
       = ‖𝓕⁻ (𝓕 f) - 𝓕⁻ a‖ := by rw [FourierTransform.fourierInv_fourier_eq]
       _ = ‖𝓕⁻ (𝓕 f - a)‖ := by
@@ -104,15 +105,15 @@ lemma truncated_fourier_inversion_L2
       _ = ‖𝓕 f - a‖ := by rw [h𝓕inv]; exact (Lp.fourierTransformₗᵢ ℝ ℂ).symm.norm_map _
   simp_rw [h_eq]
   have h_norm_eq : ∀ N : ℕ,
-    ‖𝓕 f - (truncated_fourier_hat_memLp f N).toLp _‖ =
+    ‖𝓕 f - (truncated_fourier_hat_memLp (N := (N : ℝ)) f).toLp _‖ =
     (eLpNorm ((Icc (-(N : ℝ)) N)ᶜ.indicator
       (𝓕 f : Lp (α := ℝ) ℂ 2 volume)) 2 volume).toReal := by
     intro N
     rw [Lp.norm_def]
     congr 1
     apply eLpNorm_congr_ae
-    filter_upwards [Lp.coeFn_sub (𝓕 f) ((truncated_fourier_hat_memLp f N).toLp _),
-      (truncated_fourier_hat_memLp f N).coeFn_toLp] with x hx1 hx2
+    filter_upwards [Lp.coeFn_sub (𝓕 f) ((truncated_fourier_hat_memLp (N := (N : ℝ)) f).toLp _),
+      (truncated_fourier_hat_memLp (N := (N : ℝ)) f).coeFn_toLp] with x hx1 hx2
     rw [hx1, Pi.sub_apply, hx2]
     simp only [Set.indicator_apply, mem_compl_iff]
     split_ifs <;> simp_all

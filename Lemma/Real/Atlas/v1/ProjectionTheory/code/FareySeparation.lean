@@ -18,7 +18,7 @@ lemma farey_separation
   (hp₂M : p₂ ≤ M)
   (hne : (a₁ : ℚ) / p₁ ≠ (a₂ : ℚ) / p₂) :
 -- imply
-  (1 : ℝ) / (M : ℝ) ^ 2 ≤ := by
+  (1 : ℝ) / (M : ℝ) ^ 2 ≤ |((a₁ : ℝ) / (p₁ : ℝ)) - ((a₂ : ℝ) / (p₂ : ℝ))| := by
 -- proof
   have hp₁pos : (0 : ℝ) < (p₁ : ℝ) := by exact_mod_cast hp₁.pos
   have hp₂pos : (0 : ℝ) < (p₂ : ℝ) := by exact_mod_cast hp₂.pos
@@ -34,9 +34,9 @@ lemma farey_separation
   have hnum_int : (1 : ℤ) ≤ |a₁ * (p₂ : ℤ) - a₂ * (p₁ : ℤ)| :=
     Int.one_le_abs (sub_ne_zero.mpr hne_int)
   have hdenom : (p₁ : ℝ) * (p₂ : ℝ) ≤ (M : ℝ) ^ 2 := by
-    calc (p₁ : ℝ) * (p₂ : ℝ) ≤ (M : ℝ) * (M : ℝ) := by
+    calc (p₁ : ℝ) * (p₂ : ℝ) ≤ (M : ℝ) * (M : ℝ) := (by
       apply mul_le_mul <;> [exact_mod_cast hp₁M; exact_mod_cast hp₂M;
-        exact le_of_lt hp₂pos; linarith]
+        exact le_of_lt hp₂pos; linarith])
       _ = (M : ℝ) ^ 2 := (sq (M : ℝ)).symm
   suffices h : (1 : ℝ) / ((p₁ : ℝ) * (p₂ : ℝ)) ≤
     |((a₁ : ℝ) / (p₁ : ℝ)) - ((a₂ : ℝ) / (p₂ : ℝ))| by

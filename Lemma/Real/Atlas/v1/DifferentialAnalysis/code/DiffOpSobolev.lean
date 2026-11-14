@@ -212,8 +212,8 @@ lemma multiIndexDeriv_memHs
   MemHs n (m - ↑(∑ i, α i)) (iteratedDistribDeriv n α u) :=
 -- proof
   memHs_iteratedDistribDeriv α u hu
-/-- Iteratively multiplying by Fourier variables equals smul-left multiplication by
-the symbol of the monomial `x^α`, when acting on a distribution. -/
+-- Iteratively multiplying by Fourier variables equals smul-left multiplication by
+-- the symbol of the monomial `x^α`, when acting on a distribution.
 section WitnessAeBound
 open TestFunctions
 open TemperedDistributions (distribDerivCLM)
@@ -281,7 +281,7 @@ lemma sobolev_witness_ae_unique
     = ∫ x, (sobolevWeight n s x : ℂ)⁻¹ * g₁ x * φ x := congr_arg _ heq_lhs
     _ = ∫ x, (sobolevWeight n s x : ℂ)⁻¹ * g₂ x * φ x := key
     _ = ∫ x, g_test x • g₂ x := congr_arg _ heq_rhs.symm
-set_option maxHeartbeats 800000 in
+set_option maxHeartbeats 800000
 
 end DiffOpSobolev
 
@@ -388,7 +388,7 @@ lemma memHs_distribDeriv_with_bound
       congr 1; linarith
     rw [← hws]; ring
   exact ⟨g_cand, hcand_mem, hcand_eq, hcand_bound⟩
-set_option maxHeartbeats 1600000 in
+set_option maxHeartbeats 1600000
 
 end DiffOpSobolev
 
@@ -436,7 +436,7 @@ lemma memHs_iteratedPartialDeriv_with_bound
         _ ≤ (2 * Real.pi) * ((2 * Real.pi) ^ k * ‖g ξ‖) :=
           mul_le_mul_of_nonneg_left (hg_k_bound ξ) (by positivity)
         _ = (2 * Real.pi) ^ (k + 1) * ‖g ξ‖ := by ring
-set_option maxHeartbeats 1600000 in
+set_option maxHeartbeats 1600000
 
 end DiffOpSobolev
 
@@ -487,7 +487,7 @@ lemma memHs_foldr_with_bound
           mul_le_mul_of_nonneg_left (hg_tail_bound ξ) (by positivity)
         _ = (2 * Real.pi) ^ (α j + (l.map (fun j => α j)).sum) * ‖g ξ‖ := by
           rw [pow_add]; ring
-set_option maxHeartbeats 1600000 in
+set_option maxHeartbeats 1600000
 
 end DiffOpSobolev
 

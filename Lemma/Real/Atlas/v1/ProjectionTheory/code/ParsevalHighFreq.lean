@@ -63,15 +63,15 @@ lemma dft_highFreqPart_ne_zero
 end ProjectionTheory
 section PlancherelAxiom
 open Finset Complex ZMod
-/-- **Plancherel's identity on $\mathbb{Z}/p\mathbb{Z}$.** For `g : ZMod p → ℂ`,
-$$p \sum_{a \in \mathbb{Z}/p} |g(a)|^2 = \sum_{\alpha \in \mathbb{Z}/p} |\hat g(\alpha)|^2.$$ -/
+-- **Plancherel's identity on $\mathbb{Z}/p\mathbb{Z}$.** For `g : ZMod p → ℂ`,
+-- $$p \sum_{a \in \mathbb{Z}/p} |g(a)|^2 = \sum_{\alpha \in \mathbb{Z}/p} |\hat g(\alpha)|^2.$$ 
 end PlancherelAxiom
 namespace ProjectionTheory
 open Finset Complex ZMod
 variable {p : ℕ} [NeZero p]
-/-- **Parseval applied to the high-frequency part $f_h$.** The $L^2$ mass of the
-high-frequency part is captured by the non-zero Fourier modes of `g`:
-$$p \sum_{a} |g_h(a)|^2 = \sum_{\alpha \neq 0} |\hat g(\alpha)|^2.$$ -/
+-- **Parseval applied to the high-frequency part $f_h$.** The $L^2$ mass of the
+-- high-frequency part is captured by the non-zero Fourier modes of `g`:
+-- $$p \sum_{a} |g_h(a)|^2 = \sum_{\alpha \neq 0} |\hat g(\alpha)|^2.$$ 
 
 end ProjectionTheory
 

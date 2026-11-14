@@ -38,7 +38,7 @@ lemma integrable_exp_mul_wimanCoefficientMeasure
 -- proof
   rw [wimanCoefficientMeasure]
   refine integrable_sum_dirac (fun n => by simp) ?_
-  refine (summable_wimanTerm f hf (Real.exp x)).congr fun n => ?_
+  refine (summable_wimanTerm (f := f) (r := Real.exp x) hf).congr fun n => ?_
   rw [wimanTerm, ENNReal.toReal_ofReal (norm_nonneg _), Real.norm_eq_abs,
     abs_of_pos (Real.exp_pos _), mul_comm x (n : ℝ), Real.exp_nat_mul,
     abs_of_nonneg (pow_nonneg (Real.exp_pos x).le n)]
@@ -60,7 +60,7 @@ lemma integrableExpSet_wimanCoefficientMeasure_eq_univ
 -- proof
   ext x
   simp only [integrableExpSet, Set.mem_ofPred_eq, Set.mem_univ, iff_true]
-  exact integrable_exp_mul_wimanCoefficientMeasure f hf x
+  exact integrable_exp_mul_wimanCoefficientMeasure (f := f) (x := x) hf
 
 end Complex
 
@@ -79,7 +79,7 @@ lemma mem_interior_integrableExpSet_wimanCoefficientMeasure
   x ∈ interior (integrableExpSet (fun n : ℕ => (n : ℝ))
     (wimanCoefficientMeasure f)) := by
 -- proof
-  simp [integrableExpSet_wimanCoefficientMeasure_eq_univ f hf]
+  simp [integrableExpSet_wimanCoefficientMeasure_eq_univ (f := f) hf]
 
 end Complex
 
@@ -98,7 +98,7 @@ lemma integral_exp_mul_wimanCoefficientMeasure
   ∫ n : ℕ, Real.exp (x * (n : ℝ)) ∂(wimanCoefficientMeasure f) =
     wimanMajorant f (Real.exp x) := by
 -- proof
-  have hInt := integrable_exp_mul_wimanCoefficientMeasure f hf x
+  have hInt := integrable_exp_mul_wimanCoefficientMeasure (f := f) (x := x) hf
   rw [wimanCoefficientMeasure] at hInt
   have hsum : Summable (fun n : ℕ =>
     (ENNReal.ofReal ‖wimanTaylorCoefficient f n‖).toReal *
@@ -130,7 +130,7 @@ lemma wiman_mgf_eq_majorant
   mgf (fun n : ℕ => (n : ℝ)) (wimanCoefficientMeasure f) x =
     wimanMajorant f (Real.exp x) := by
 -- proof
-  rw [mgf, integral_exp_mul_wimanCoefficientMeasure f hf x]
+  rw [mgf, integral_exp_mul_wimanCoefficientMeasure (f := f) (x := x) hf]
 
 end Complex
 
@@ -149,7 +149,7 @@ lemma wiman_cgf_eq_growth
   ProbabilityTheory.cgf (fun n : ℕ => (n : ℝ))
     (wimanCoefficientMeasure f) x = wimanGrowth f x := by
 -- proof
-  rw [cgf, wimanGrowth, wiman_mgf_eq_majorant f hf x]
+  rw [cgf, wimanGrowth, wiman_mgf_eq_majorant (f := f) (x := x) hf]
 
 end Complex
 
@@ -171,7 +171,7 @@ lemma wimanCoefficientMeasure_ne_zero
     ne_of_gt (ENNReal.ofReal_pos.mpr (norm_pos_iff.mpr hn))
   intro hzero
   apply hmass
-  rw [← wimanCoefficientMeasure_singleton f n, hzero]
+  rw [← wimanCoefficientMeasure_singleton (f := f) (n := n), hzero]
   simp
 
 end Complex
@@ -192,8 +192,8 @@ lemma isProbabilityMeasure_wimanTiltedMeasure
   IsProbabilityMeasure (wimanTiltedMeasure f x) := by
 -- proof
   let _ : NeZero (wimanCoefficientMeasure f) :=
-    ⟨wimanCoefficientMeasure_ne_zero f hne⟩
-  exact isProbabilityMeasure_tilted (integrable_exp_mul_wimanCoefficientMeasure f hf x)
+    ⟨wimanCoefficientMeasure_ne_zero (f := f) hne⟩
+  exact isProbabilityMeasure_tilted (integrable_exp_mul_wimanCoefficientMeasure (f := f) (x := x) hf)
 
 end Complex
 
@@ -218,11 +218,11 @@ lemma wimanTiltedMeasure_singleton
     ProbabilityTheory.tilted_mul_apply_mgf'
       (μ := wimanCoefficientMeasure f) (X := fun n : ℕ => (n : ℝ))
       (t := x) (measurableSet_singleton n),
-    lintegral_singleton, wiman_mgf_eq_majorant f hf x,
+    lintegral_singleton, wiman_mgf_eq_majorant (f := f) (x := x) hf,
     wimanCoefficientMeasure_singleton]
   have hratio :
     0 ≤ Real.exp (x * (n : ℝ)) / wimanMajorant f (Real.exp x) :=
-    div_nonneg (Real.exp_pos _).le (wimanMajorant_nonneg f (Real.exp x))
+    div_nonneg (Real.exp_pos _).le (wimanMajorant_nonneg (f := f) (r := Real.exp x))
   rw [← ENNReal.ofReal_mul hratio]
   congr 1
   rw [wimanTerm, abs_of_pos (Real.exp_pos x), mul_comm x (n : ℝ), Real.exp_nat_mul]
@@ -250,9 +250,9 @@ lemma wimanTiltedMeasure_eq_sum
 -- proof
   apply Measure.ext_iff_singleton.mpr
   intro n
-  rw [wimanTiltedMeasure_singleton f hf x n,
+  rw [wimanTiltedMeasure_singleton (f := f) (x := x) (n := n) hf,
     Measure.sum_smul_dirac_singleton]
-end
+end Complex
 
 
 

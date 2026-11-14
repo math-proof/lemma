@@ -113,15 +113,11 @@ namespace CourantFischer
 -/
 @[path]
 lemma rayleigh_spectral_expansion_V
-  {m : ℕ}
-  [NeZero m]
-  {A : Matrix (Fin m) (Fin m) ℝ}
   [Fintype V]
   [DecidableEq V]
   {L : Matrix V V ℝ}
   {x : V → ℝ}
 -- given
-  (_hA : A.IsHermitian)
   (hL : L.IsHermitian) :
 -- imply
   dotProduct x (L.mulVec x) = ∑ i : V, hL.eigenvalues i * (dotProduct (⇑(hL.eigenvectorBasis i)) x) ^ 2 := by
@@ -159,15 +155,11 @@ namespace CourantFischer
 -/
 @[path]
 lemma parseval_eigenvectors_V
-  {m : ℕ}
-  [NeZero m]
-  {A : Matrix (Fin m) (Fin m) ℝ}
   [Fintype V]
   [DecidableEq V]
   {L : Matrix V V ℝ}
   {x : V → ℝ}
 -- given
-  (_hA : A.IsHermitian)
   (hL : L.IsHermitian) :
 -- imply
   ∑ i : V, (dotProduct (⇑(hL.eigenvectorBasis i)) x) ^ 2 = dotProduct x x := by
@@ -194,15 +186,11 @@ namespace CourantFischer
 -/
 @[path]
 lemma eigenvalue_eq_rayleigh_eigenvector_V
-  {m : ℕ}
-  [NeZero m]
-  {A : Matrix (Fin m) (Fin m) ℝ}
   [Fintype V]
   [DecidableEq V]
   {L : Matrix V V ℝ}
   {k : V}
 -- given
-  (_hA : A.IsHermitian)
   (hL : L.IsHermitian) :
 -- imply
   dotProduct (⇑(hL.eigenvectorBasis k)) (L.mulVec (⇑(hL.eigenvectorBasis k))) = hL.eigenvalues k := by
@@ -232,15 +220,11 @@ namespace CourantFischer
 -/
 @[path]
 lemma eigenvector_dotProduct_one_V
-  {m : ℕ}
-  [NeZero m]
-  {A : Matrix (Fin m) (Fin m) ℝ}
   [Fintype V]
   [DecidableEq V]
   {L : Matrix V V ℝ}
   {k : V}
 -- given
-  (_hA : A.IsHermitian)
   (hL : L.IsHermitian) :
 -- imply
   dotProduct (⇑(hL.eigenvectorBasis k)) (⇑(hL.eigenvectorBasis k)) = 1 := by
@@ -264,15 +248,11 @@ namespace CourantFischer
 -/
 @[path]
 lemma rayleighQuotient_orthogonal_isLeast
-  {m : ℕ}
-  [NeZero m]
-  {A : Matrix (Fin m) (Fin m) ℝ}
   [Fintype V]
   [DecidableEq V]
   {L : Matrix V V ℝ}
   {k : V}
 -- given
-  (hA : A.IsHermitian)
   (hL : L.IsHermitian) :
 -- imply
   IsLeast {r | ∃ x : V → ℝ, x ≠ 0 ∧ (∀ j : V, hL.eigenvalues j < hL.eigenvalues k → dotProduct (⇑(hL.eigenvectorBasis j)) x = 0) ∧ dotProduct x (L.mulVec x) / dotProduct x x = r} (hL.eigenvalues k) := by
@@ -298,8 +278,8 @@ lemma rayleighQuotient_orthogonal_isLeast
       convert h using 1
       congr 1; ext i; ring
     ·
-      rw [eigenvector_dotProduct_one_V hL k, div_one]
-      exact eigenvalue_eq_rayleigh_eigenvector_V hL k
+      rw [eigenvector_dotProduct_one_V hL, div_one]
+      exact eigenvalue_eq_rayleigh_eigenvector_V hL
   ·
 
 
@@ -313,10 +293,10 @@ lemma rayleighQuotient_orthogonal_isLeast
             (f := fun j => x j * x j) (fun j _ => mul_self_nonneg (a := x j)) (Finset.mem_univ i)
         _ = dotProduct x x := by simp [dotProduct]
     rw [le_div_iff₀ hpos]
-    rw [rayleigh_spectral_expansion_V hL x]
+    rw [rayleigh_spectral_expansion_V hL]
     calc hL.eigenvalues k * dotProduct x x
         = hL.eigenvalues k * ∑ i, (dotProduct (⇑(hL.eigenvectorBasis i)) x) ^ 2 := by
-          rw [parseval_eigenvectors_V hL x]
+          rw [parseval_eigenvectors_V hL]
       _ = ∑ i, hL.eigenvalues k * (dotProduct (⇑(hL.eigenvectorBasis i)) x) ^ 2 := by
           rw [Finset.mul_sum]
       _ ≤ ∑ i, hL.eigenvalues i * (dotProduct (⇑(hL.eigenvectorBasis i)) x) ^ 2 := by
@@ -336,20 +316,15 @@ namespace CourantFischer
 -/
 @[path]
 lemma laplacian_quadratic_form_eq
-  {m : ℕ}
-  [NeZero m]
-  {A : Matrix (Fin m) (Fin m) ℝ}
   [Fintype V]
   [DecidableEq V]
   {G : SimpleGraph V}
   [DecidableRel G.Adj]
-  {x : V → ℝ}
--- given
-  (hA : A.IsHermitian) :
+  {x : V → ℝ} :
 -- imply
   dotProduct x ((G.lapMatrix ℝ).mulVec x) = (∑ i : V, ∑ j : V, if G.Adj i j then (x i - x j) ^ 2 else 0) / 2 := by
 -- proof
-  have h := lapMatrix_toLinearMap₂' ℝ G x
+  have h := SimpleGraph.lapMatrix_toLinearMap₂' (R := ℝ) (G := G) x
   rw [toLinearMap₂'_apply'] at h
   exact h
 
@@ -362,16 +337,12 @@ namespace CourantFischer
 -/
 @[path]
 lemma laplacian_edge_sum_min_characterization
-  {m : ℕ}
-  [NeZero m]
-  {A : Matrix (Fin m) (Fin m) ℝ}
   [Fintype V]
   [DecidableEq V]
   {G : SimpleGraph V}
   [DecidableRel G.Adj]
   {k : V}
 -- given
-  (hA : A.IsHermitian)
   (hL : (G.lapMatrix ℝ).IsHermitian) :
 -- imply
   IsLeast {r | ∃ x : V → ℝ, x ≠ 0 ∧ (∀ j : V, hL.eigenvalues j < hL.eigenvalues k → dotProduct (⇑(hL.eigenvectorBasis j)) x = 0) ∧ (∑ i : V, ∑ j : V, if G.Adj i j then (x i - x j) ^ 2 else 0) / 2 / dotProduct x x = r} (hL.eigenvalues k) := by
@@ -399,9 +370,9 @@ lemma laplacian_edge_sum_min_characterization
       convert h using 1
       congr 1; ext i; ring
     ·
-      rw [eigenvector_dotProduct_one_V hL k, div_one]
+      rw [eigenvector_dotProduct_one_V (k := k) hL, div_one]
       rw [← laplacian_quadratic_form_eq]
-      exact eigenvalue_eq_rayleigh_eigenvector_V hL k
+      exact eigenvalue_eq_rayleigh_eigenvector_V (k := k) hL
   ·
     intro r ⟨x, hx, horth, hxr⟩
     rw [← hxr]
@@ -414,10 +385,10 @@ lemma laplacian_edge_sum_min_characterization
         _ = dotProduct x x := by simp [dotProduct]
     rw [← laplacian_quadratic_form_eq]
     rw [le_div_iff₀ hpos]
-    rw [rayleigh_spectral_expansion_V hL x]
+    rw [rayleigh_spectral_expansion_V hL]
     calc hL.eigenvalues k * dotProduct x x
         = hL.eigenvalues k * ∑ i, (dotProduct (⇑(hL.eigenvectorBasis i)) x) ^ 2 := by
-          rw [parseval_eigenvectors_V hL x]
+          rw [parseval_eigenvectors_V hL]
       _ = ∑ i, hL.eigenvalues k * (dotProduct (⇑(hL.eigenvectorBasis i)) x) ^ 2 := by
           rw [Finset.mul_sum]
       _ ≤ ∑ i, hL.eigenvalues i * (dotProduct (⇑(hL.eigenvectorBasis i)) x) ^ 2 := by
@@ -437,16 +408,12 @@ namespace CourantFischer
 -/
 @[path]
 lemma laplacian_edge_sum_max_quotient_characterization
-  {m : ℕ}
-  [NeZero m]
-  {A : Matrix (Fin m) (Fin m) ℝ}
   [Fintype V]
   [DecidableEq V]
   {G : SimpleGraph V}
   [DecidableRel G.Adj]
   {i₀ : V}
 -- given
-  (hA : A.IsHermitian)
   (hL : (G.lapMatrix ℝ).IsHermitian)
   (hi₀ : ∀ j : V, hL.eigenvalues j ≤ hL.eigenvalues i₀) :
 -- imply
@@ -466,9 +433,9 @@ lemma laplacian_edge_sum_max_quotient_characterization
       rw [this, Real.sqrt_zero] at hn
       exact zero_ne_one hn
     ·
-      rw [eigenvector_dotProduct_one_V hL i₀, div_one]
+      rw [eigenvector_dotProduct_one_V (k := i₀) hL, div_one]
       rw [← laplacian_quadratic_form_eq]
-      exact eigenvalue_eq_rayleigh_eigenvector_V hL i₀
+      exact eigenvalue_eq_rayleigh_eigenvector_V (k := i₀) hL
   ·
     intro r ⟨x, hx, hxr⟩
     rw [← hxr]
@@ -481,7 +448,7 @@ lemma laplacian_edge_sum_max_quotient_characterization
         _ = dotProduct x x := by simp [dotProduct]
     rw [← laplacian_quadratic_form_eq]
     rw [div_le_iff₀ hpos]
-    rw [rayleigh_spectral_expansion_V hL x]
+    rw [rayleigh_spectral_expansion_V hL]
     calc ∑ i, hL.eigenvalues i * (dotProduct (⇑(hL.eigenvectorBasis i)) x) ^ 2
         ≤ ∑ i, hL.eigenvalues i₀ * (dotProduct (⇑(hL.eigenvectorBasis i)) x) ^ 2 := by
           apply Finset.sum_le_sum
@@ -490,7 +457,7 @@ lemma laplacian_edge_sum_max_quotient_characterization
       _ = hL.eigenvalues i₀ * ∑ i, (dotProduct (⇑(hL.eigenvectorBasis i)) x) ^ 2 := by
           rw [Finset.mul_sum]
       _ = hL.eigenvalues i₀ * dotProduct x x := by
-          rw [parseval_eigenvectors_V hL x]
+          rw [parseval_eigenvectors_V hL]
 
 end CourantFischer
 
@@ -501,16 +468,7 @@ namespace CourantFischer
 -/
 @[path]
 lemma ones_ne_zero
-  {m : ℕ}
-  [NeZero m]
-  {A : Matrix (Fin m) (Fin m) ℝ}
-  [Fintype V]
-  [DecidableEq V]
-  [Nonempty V]
-  {G : SimpleGraph V}
-  [DecidableRel G.Adj]
--- given
-  (_hA : A.IsHermitian) :
+  [Nonempty V] :
 -- imply
   (fun _ : V => (1 : ℝ)) ≠ 0 := by
 -- proof
@@ -527,20 +485,16 @@ namespace CourantFischer
 -/
 @[path]
 lemma laplacian_quadform_ones_eq_zero
-  {m : ℕ}
-  [NeZero m]
-  {A : Matrix (Fin m) (Fin m) ℝ}
   [Fintype V]
   [DecidableEq V]
   [Nonempty V]
   {G : SimpleGraph V}
-  [DecidableRel G.Adj]
--- given
-  (hA : A.IsHermitian) :
+  [DecidableRel G.Adj] :
 -- imply
   dotProduct (fun _ : V => (1 : ℝ)) ((G.lapMatrix ℝ).mulVec (fun _ => 1)) = 0 := by
 -- proof
-  rw [lapMatrix_mulVec_const_eq_zero]
+  have hx : (fun _ : V => (1 : ℝ)) = (1 : V → ℝ) := rfl
+  rw [hx, SimpleGraph.lapMatrix_mulVec_one_eq_zero (R := ℝ)]
   simp [dotProduct]
 
 end CourantFischer
@@ -552,9 +506,6 @@ namespace CourantFischer
 -/
 @[path]
 lemma laplacian_rayleigh_nonneg
-  {m : ℕ}
-  [NeZero m]
-  {A : Matrix (Fin m) (Fin m) ℝ}
   [Fintype V]
   [DecidableEq V]
   [Nonempty V]
@@ -562,13 +513,12 @@ lemma laplacian_rayleigh_nonneg
   [DecidableRel G.Adj]
   {x : V → ℝ}
 -- given
-  (hA : A.IsHermitian)
   (hx : x ≠ 0) :
 -- imply
   0 ≤ dotProduct x ((G.lapMatrix ℝ).mulVec x) / dotProduct x x := by
 -- proof
   apply div_nonneg
-  · have h := lapMatrix_toLinearMap₂' ℝ G x
+  · have h := SimpleGraph.lapMatrix_toLinearMap₂' (R := ℝ) (G := G) x
     rw [toLinearMap₂'_apply'] at h
     rw [h]
     apply div_nonneg
@@ -591,16 +541,11 @@ namespace CourantFischer
 -/
 @[path]
 lemma laplacian_rayleigh_ones_eq_zero
-  {m : ℕ}
-  [NeZero m]
-  {A : Matrix (Fin m) (Fin m) ℝ}
   [Fintype V]
   [DecidableEq V]
   [Nonempty V]
   {G : SimpleGraph V}
-  [DecidableRel G.Adj]
--- given
-  (hA : A.IsHermitian) :
+  [DecidableRel G.Adj] :
 -- imply
   dotProduct (fun _ : V => (1 : ℝ)) ((G.lapMatrix ℝ).mulVec (fun _ => 1)) / dotProduct (fun _ : V => (1 : ℝ)) (fun _ : V => (1 : ℝ)) = 0 := by
 -- proof
@@ -616,26 +561,21 @@ namespace CourantFischer
 -/
 @[path]
 lemma laplacian_rayleighQuotient_min_eq_zero
-  {m : ℕ}
-  [NeZero m]
-  {A : Matrix (Fin m) (Fin m) ℝ}
   [Fintype V]
   [DecidableEq V]
   [Nonempty V]
   {G : SimpleGraph V}
-  [DecidableRel G.Adj]
--- given
-  (hA : A.IsHermitian) :
+  [DecidableRel G.Adj] :
 -- imply
   IsLeast {r | ∃ x : V → ℝ, x ≠ 0 ∧ dotProduct x ((G.lapMatrix ℝ).mulVec x) / dotProduct x x = r} 0 := by
 -- proof
   constructor
   ·
-    exact ⟨fun _ => 1, ones_ne_zero, laplacian_rayleigh_ones_eq_zero G⟩
+    exact ⟨fun _ => 1, ones_ne_zero, laplacian_rayleigh_ones_eq_zero⟩
   ·
     intro r ⟨x, hx, hxr⟩
     rw [← hxr]
-    exact laplacian_rayleigh_nonneg G x hx
+    exact laplacian_rayleigh_nonneg hx
 
 end CourantFischer
 
@@ -646,9 +586,6 @@ namespace CourantFischer
 -/
 @[path]
 lemma corollary24_rayleighQuotient
-  {m : ℕ}
-  [NeZero m]
-  {A : Matrix (Fin m) (Fin m) ℝ}
   [Fintype V]
   [DecidableEq V]
   [Nonempty V]
@@ -657,16 +594,15 @@ lemma corollary24_rayleighQuotient
   {k : V}
   {i₀ : V}
 -- given
-  (hA : A.IsHermitian)
   (hL : (G.lapMatrix ℝ).IsHermitian)
   (hk : ∀ x : V → ℝ, (∀ j : V, hL.eigenvalues j < hL.eigenvalues k → dotProduct (⇑(hL.eigenvectorBasis j)) x = 0) ↔ (∑ i, x i = 0))
   (hi₀ : ∀ j : V, hL.eigenvalues j ≤ hL.eigenvalues i₀) :
 -- imply
   IsLeast {r | ∃ x : V → ℝ, x ≠ 0 ∧ dotProduct x ((G.lapMatrix ℝ).mulVec x) / dotProduct x x = r} 0 ∧ IsLeast {r | ∃ x : V → ℝ, x ≠ 0 ∧ (∑ i, x i = 0) ∧ (∑ i : V, ∑ j : V, if G.Adj i j then (x i - x j) ^ 2 else 0) / 2 / dotProduct x x = r} (hL.eigenvalues k) ∧ IsGreatest {r | ∃ x : V → ℝ, x ≠ 0 ∧ (∑ i : V, ∑ j : V, if G.Adj i j then (x i - x j) ^ 2 else 0) / 2 / dotProduct x x = r} (hL.eigenvalues i₀) := by
 -- proof
-  refine ⟨laplacian_rayleighQuotient_min_eq_zero G, ?_, laplacian_edge_sum_max_quotient_characterization G hL i₀ hi₀⟩
+  refine ⟨laplacian_rayleighQuotient_min_eq_zero, ?_, laplacian_edge_sum_max_quotient_characterization (i₀ := i₀) hL hi₀⟩
 
-  have h := laplacian_edge_sum_min_characterization G hL k
+  have h := laplacian_edge_sum_min_characterization (k := k) hL
   have hset : {r | ∃ x : V → ℝ, x ≠ 0 ∧
       (∀ j : V, hL.eigenvalues j < hL.eigenvalues k →
         dotProduct (⇑(hL.eigenvectorBasis j)) x = 0) ∧
@@ -690,4 +626,4 @@ end CourantFischer
 
 
 -- created on 2026-10-23
--- updated on 2026-10-28
+-- updated on 2026-11-13

@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.ComplexVariables.code.Lecture8
-open Complex MeasureTheory intervalIntegral Set Function Real in
+open Complex MeasureTheory intervalIntegral Set Function Real
 
 
 /--
@@ -85,7 +85,8 @@ lemma circleIntegral_comp_sq_eq_zero
       simp only [zero_add]
     rw [hsub]
     have hcongr : (∫ θ in (0 : ℝ)..π, g (θ + π)) = -(∫ θ in (0 : ℝ)..π, g θ) := by
-      rwa [show (fun θ => g (θ + π)) = fun θ => -g θ from funext (fun θ => hanti θ)]
+      rw [show (fun θ => g (θ + π)) = fun θ => -g θ from funext (fun θ => hanti θ)]
+      exact intervalIntegral.integral_neg
     rw [hcongr]
     simp
   ·

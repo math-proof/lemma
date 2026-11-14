@@ -3,6 +3,7 @@ import Initialize.Tactic.Attr.Basic
 import Def.Probability.Combinatorics.LovaszLocalLemma
 open Finset SimpleGraph
 open scoped BigOperators
+open Classical
 open MathlibExt.Probability.Combinatorics.LovaszLocalLemma
 
 
@@ -235,9 +236,9 @@ namespace MathlibExt.Probability.Combinatorics.LovaszLocalLemma
 variable {Ω : Type*}
 /--
 [compl_indep](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/Combinatorics/LovaszLocalLemma.lean)
+the joint with goodSet factors.
 -/
 @[path]
-the joint with goodSet factors. -/
 private lemma compl_indep [Fintype Ω] [Fintype I] [DecidableEq I] (pmf : Ω → ℝ) (A : I
   → Set Ω) (G : SimpleGraph I)
   (i : I) (N : Finset I)
@@ -302,48 +303,48 @@ private lemma compl_indep [Fintype Ω] [Fintype I] [DecidableEq I] (pmf : Ω →
       then (1 : ℝ) else 0)))
       = ∑ ω : Ω, ∑ T ∈ N.powerset, ((-1 : ℝ) ^ T.card) * (pmf ω * ((if ω ∈ A i
         then (1 : ℝ) else 0) * (if ω ∈ allSet A T then (1 : ℝ) else 0))) := by
-        apply Finset.sum_congr rfl
-        intro ω _
-        rw [hGoodExp ω]
-        simp only [Finset.mul_sum]
-        apply Finset.sum_congr rfl
-        intro T hT
-        ring
+          apply Finset.sum_congr rfl
+          intro ω _
+          rw [hGoodExp ω]
+          simp only [Finset.mul_sum]
+          apply Finset.sum_congr rfl
+          intro T hT
+          ring
       _ = ∑ T ∈ N.powerset, ∑ ω : Ω, ((-1 : ℝ) ^ T.card) * (pmf ω * ((if ω ∈ A i
         then (1 : ℝ) else 0) * (if ω ∈ allSet A T then (1 : ℝ) else 0))) := Finset.sum_comm
       _ = ∑ T ∈ N.powerset, ((-1 : ℝ) ^ T.card) * (∑ ω : Ω, pmf ω * ((if ω ∈ A i
         then (1 : ℝ) else 0) * (if ω ∈ allSet A T then (1 : ℝ) else 0))) := by
-        apply Finset.sum_congr rfl
-        intro T hT
-        rw [Finset.mul_sum]
+          apply Finset.sum_congr rfl
+          intro T hT
+          rw [Finset.mul_sum]
       _ = ∑ T ∈ N.powerset, ((-1 : ℝ) ^ T.card) * prob pmf (A i ∩ allSet A T) := by
-        apply Finset.sum_congr rfl
-        intro T hT
-        rw [hInterT T]
+          apply Finset.sum_congr rfl
+          intro T hT
+          rw [hInterT T]
   have hRHS : prob pmf (goodSet A N) =
     ∑ T ∈ N.powerset, ((-1 : ℝ) ^ T.card) * prob pmf (allSet A T) := by
     rw [hGoodPmf]
     calc (∑ ω : Ω, pmf ω * (if ω ∈ goodSet A N then (1 : ℝ) else 0))
       = ∑ ω : Ω, ∑ T ∈ N.powerset, ((-1 : ℝ) ^ T.card) * (pmf ω * (if ω ∈ allSet
         A T then (1 : ℝ) else 0)) := by
-        apply Finset.sum_congr rfl
-        intro ω _
-        rw [hGoodExp ω]
-        simp only [Finset.mul_sum]
-        apply Finset.sum_congr rfl
-        intro T hT
-        ring
+          apply Finset.sum_congr rfl
+          intro ω _
+          rw [hGoodExp ω]
+          simp only [Finset.mul_sum]
+          apply Finset.sum_congr rfl
+          intro T hT
+          ring
       _ = ∑ T ∈ N.powerset, ∑ ω : Ω, ((-1 : ℝ) ^ T.card) * (pmf ω * (if ω ∈ allSet
         A T then (1 : ℝ) else 0)) := Finset.sum_comm
       _ = ∑ T ∈ N.powerset, ((-1 : ℝ) ^ T.card) * (∑ ω : Ω, pmf ω * (if ω ∈ allSet
         A T then (1 : ℝ) else 0)) := by
-        apply Finset.sum_congr rfl
-        intro T hT
-        rw [Finset.mul_sum]
+          apply Finset.sum_congr rfl
+          intro T hT
+          rw [Finset.mul_sum]
       _ = ∑ T ∈ N.powerset, ((-1 : ℝ) ^ T.card) * prob pmf (allSet A T) := by
-        apply Finset.sum_congr rfl
-        intro T hT
-        rw [hAllPmf T]
+          apply Finset.sum_congr rfl
+          intro T hT
+          rw [hAllPmf T]
   rw [hLHS]
   have hFacSum : (∑ T ∈ N.powerset, ((-1 : ℝ) ^ T.card) * prob pmf (A i ∩ allSet A T)) =
     prob pmf (A i) * (∑ T ∈ N.powerset, ((-1 : ℝ) ^ T.card) * prob pmf (allSet A T)) := by
@@ -502,7 +503,7 @@ private lemma main_induction [Fintype Ω] [Fintype I] [DecidableEq I] (pmf : Ω 
     subst hS_empty
     constructor
     · have hP1 : prob pmf (goodSet A ∅) = 1 := by
-      rw [goodSet_empty A, prob_univ pmf hpmf_sum]
+        rw [goodSet_empty A, prob_univ pmf hpmf_sum]
       rw [hP1]
       simp only [Finset.card_empty, pow_zero]
       exact le_rfl
@@ -571,7 +572,8 @@ private lemma main_induction [Fintype Ω] [Fintype I] [DecidableEq I] (pmf : Ω 
           rw [hD_def]
           exact Finset.filter_subset _ _
         have hN_sub_S : N ⊆ S := by
-          rwa [hN_def]
+          rw [hN_def]
+          exact Finset.sdiff_subset
         have h_union : D ∪ N = S := by
           rw [hN_def]
           exact Finset.union_sdiff_of_subset hD_sub_S
@@ -879,13 +881,13 @@ private lemma special_case [Fintype Ω] [Fintype I] [DecidableEq I] (pmf : Ω �
     intro ω _
     by_cases h : ∀ i : I, ω ∉ A i
     · have hmem : ω ∈ goodSet A (Finset.univ : Finset I) := by
-      simp only [goodSet, Set.mem_ofPred_eq, Finset.mem_univ, true_imp_iff] at h ⊢
-      exact h
-      rw [ite_eq_left h, ite_eq_left hmem]
+        simp only [goodSet, Set.mem_ofPred_eq, Finset.mem_univ, true_imp_iff] at h ⊢
+        exact h
+      rw [if_pos h, if_pos hmem]
     · have hmem : ω ∉ goodSet A (Finset.univ : Finset I) := by
-      simp only [goodSet, Set.mem_ofPred_eq, Finset.mem_univ, true_imp_iff] at h ⊢
-      exact h
-      rw [ite_eq_right h, ite_eq_right hmem]
+        simp only [goodSet, Set.mem_ofPred_eq, Finset.mem_univ, true_imp_iff] at h ⊢
+        exact h
+      rw [if_neg h, if_neg hmem]
   rwa [h_concl]
 
 end MathlibExt.Probability.Combinatorics.LovaszLocalLemma
@@ -918,27 +920,27 @@ lemma lovasz_local_lemma_symmetric_finite
   · obtain ⟨hd0, hep1⟩ := hspec
     exact special_case pmf hpmf_sum A G p d hp_nonneg hmaxDeg hp_le hDep hd0 hep1
   · have hPos : 0 < 1 - Real.exp 1 * p := by
-    by_cases hd0 : d = 0
-    · have hep_ne : Real.exp 1 * p ≠ 1 := by
-      intro heq
-      exact hspec ⟨hd0, heq⟩
-      have hep_le : Real.exp 1 * p ≤ 1 := by
-        have h := hExp
-        rw [hd0] at h
-        simpa using h
-      have hlt : Real.exp 1 * p < 1 := lt_of_le_of_ne hep_le hep_ne
-      linarith
-    · have hd_ge1 : 1 ≤ d := by omega
-      have hdR : (1 : ℝ) ≤ (d : ℝ) := by
-        have h : ((1 : ℕ) : ℝ) ≤ (d : ℝ) := Nat.cast_le.mpr hd_ge1
-        simpa using h
-      have h_d1_ge2 : (2 : ℝ) ≤ (d : ℝ) + 1 := by linarith [hdR]
-      have h_ep2_le : Real.exp 1 * p * 2 ≤ 1 := by
-        have h1 : Real.exp 1 * p * 2 ≤ Real.exp 1 * p * ((d : ℝ) + 1) :=
-          mul_le_mul_of_nonneg_left h_d1_ge2 (ep_nonneg p hp_nonneg)
-        exact le_trans h1 hExp
-      have hlt : Real.exp 1 * p < 1 := by linarith [h_ep2_le]
-      linarith
+      by_cases hd0 : d = 0
+      · have hep_ne : Real.exp 1 * p ≠ 1 := by
+          intro heq
+          exact hspec ⟨hd0, heq⟩
+        have hep_le : Real.exp 1 * p ≤ 1 := by
+          have h := hExp
+          rw [hd0] at h
+          simpa using h
+        have hlt : Real.exp 1 * p < 1 := lt_of_le_of_ne hep_le hep_ne
+        linarith
+      · have hd_ge1 : 1 ≤ d := by omega
+        have hdR : (1 : ℝ) ≤ (d : ℝ) := by
+          have h : ((1 : ℕ) : ℝ) ≤ (d : ℝ) := Nat.cast_le.mpr hd_ge1
+          simpa using h
+        have h_d1_ge2 : (2 : ℝ) ≤ (d : ℝ) + 1 := by linarith [hdR]
+        have h_ep2_le : Real.exp 1 * p * 2 ≤ 1 := by
+          have h1 : Real.exp 1 * p * 2 ≤ Real.exp 1 * p * ((d : ℝ) + 1) :=
+            mul_le_mul_of_nonneg_left h_d1_ge2 (ep_nonneg p hp_nonneg)
+          exact le_trans h1 hExp
+        have hlt : Real.exp 1 * p < 1 := by linarith [h_ep2_le]
+        linarith
     have hPow : (1 : ℝ) / Real.exp 1 ≤ (1 - Real.exp 1 * p) ^ d :=
       exp_pow_le p d hExp hPos
     have hmain := main_induction pmf hpmf_nonneg hpmf_sum A G p d hp_nonneg hmaxDeg hp_le hDep
@@ -954,13 +956,13 @@ lemma lovasz_local_lemma_symmetric_finite
       intro ω _
       by_cases h : ∀ i : I, ω ∉ A i
       · have hmem : ω ∈ goodSet A (Finset.univ : Finset I) := by
-        simp only [goodSet, Set.mem_ofPred_eq, Finset.mem_univ, true_imp_iff] at h ⊢
-        exact h
-        rw [ite_eq_left h, ite_eq_left hmem]
+          simp only [goodSet, Set.mem_ofPred_eq, Finset.mem_univ, true_imp_iff] at h ⊢
+          exact h
+        rw [if_pos h, if_pos hmem]
       · have hmem : ω ∉ goodSet A (Finset.univ : Finset I) := by
-        simp only [goodSet, Set.mem_ofPred_eq, Finset.mem_univ, true_imp_iff] at h ⊢
-        exact h
-        rw [ite_eq_right h, ite_eq_right hmem]
+          simp only [goodSet, Set.mem_ofPred_eq, Finset.mem_univ, true_imp_iff] at h ⊢
+          exact h
+        rw [if_neg h, if_neg hmem]
     rwa [h_concl]
 
 end MathlibExt.Probability.Combinatorics.LovaszLocalLemma

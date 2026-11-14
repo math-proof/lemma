@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.FLTPrelim_Ramification
-import Lemma.EllipticCurve.FrobeniusTrace
+import Lemma.WeierstrassCurve.FrobeniusTrace
 import Lemma.WeierstrassCurve.ReductionMap
 import Lemma.Int.P2MUtil
 
@@ -89,9 +89,10 @@ private lemma main
     exact zero_ne_one h1
 
   have hp0 : (p : IsLocalRing.ResidueField A) = 0 := (mul_eq_zero.mp hsum).resolve_right htne
-  haveI hchar : CharP (IsLocalRing.ResidueField A) q :=
+  have hchar : CharP (IsLocalRing.ResidueField A) q :=
     ValuationSubring.charP_residueField_of_liesOverPrime_def hq hA
   exact hqp ((Nat.prime_dvd_prime_iff_eq hq hp).mp ((CharP.cast_eq_zero_iff _ q p).mp hp0))
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

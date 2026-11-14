@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.AutomorphicForm.FundamentalDomainVolume
+import Lemma.UpperHalfPlane.FundamentalDomainVolume
 import Lemma.UpperHalfPlane.SiegelSetCover
 import Instance.AutomorphicForm_Gamma0FundamentalSet
 

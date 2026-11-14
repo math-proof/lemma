@@ -17,7 +17,7 @@ def BaseOpComm (N r : ℕ) (S : Set ℕ) (𝒪 : Type) [CommRing 𝒪] : Prop :=
 
 def baseHeckeData (N r : ℕ) [NeZero N] (S : Set ℕ) (𝒪 : Type) [CommRing 𝒪] [IsLocalRing 𝒪]
     (θ : ↥(CuspForm.heckeAlgebra N 2 S) →+* IsLocalRing.ResidueField 𝒪) (hc₀ : BaseOpComm N r S 𝒪) :
-    CohCarrier.HeckeData 𝒪 (CohCarrier.H1 N ⊤ 𝒪) (IsLocalRing.ResidueField 𝒪) where
+    MvPolynomial.HeckeData 𝒪 (CohCarrier.H1 N ⊤ 𝒪) (IsLocalRing.ResidueField 𝒪) where
   Gen := Gen N r S
   op := baseOp N r S 𝒪
   comm := hc₀

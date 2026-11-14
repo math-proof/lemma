@@ -11,7 +11,6 @@ open Matrix DVRContext
 private lemma main
   {C : DVRContext}
   [DVRClosureGL2 C]
-  {C}
   {f : Fin 2 → Fin 2 → C.k}
   {i j : Fin 2}
 -- given
@@ -28,14 +27,12 @@ private lemma main
 -/
 private lemma iwahoriGL2Gen_eq_iwahoriGL2
   {C : DVRContext}
-  [DVRClosureGL2 C]
-  {C}
-  (C) :
+  [DVRClosureGL2 C] :
 -- imply
   C.IwahoriGL2Gen = C.IwahoriGL2 := by
 -- proof
   ext g
-  simp only [IwahoriGL2Gen, IwahoriGL2, Set.mem_setOf_eq]
+  simp only [IwahoriGL2Gen, IwahoriGL2, Set.mem_ofPred_eq]
   constructor
   · rintro ⟨hdiag, hupper, hlower⟩
     exact ⟨hdiag 0, hdiag 1, hupper 0 1 (by omega), hlower 1 0 (by omega)⟩
@@ -52,14 +49,12 @@ private lemma iwahoriGL2Gen_eq_iwahoriGL2
 -/
 private lemma lowerUnipGL2Gen_eq_lowerUnipGL2
   {C : DVRContext}
-  [DVRClosureGL2 C]
-  {C}
-  (C) :
+  [DVRClosureGL2 C] :
 -- imply
   C.LowerUnipGL2Gen = C.LowerUnipGL2 := by
 -- proof
   ext g
-  simp only [LowerUnipGL2Gen, LowerUnipGL2, Set.mem_setOf_eq]
+  simp only [LowerUnipGL2Gen, LowerUnipGL2, Set.mem_ofPred_eq]
   constructor
   · rintro ⟨hdiag, hupper⟩
     exact ⟨hdiag 0, hdiag 1, hupper 0 1 (by omega)⟩
@@ -75,14 +70,12 @@ private lemma lowerUnipGL2Gen_eq_lowerUnipGL2
 -/
 private lemma upperUnipGL2Gen_eq_upperUnipGL2
   {C : DVRContext}
-  [DVRClosureGL2 C]
-  {C}
-  (C) :
+  [DVRClosureGL2 C] :
 -- imply
   C.UpperUnipGL2Gen = C.UpperUnipGL2 := by
 -- proof
   ext g
-  simp only [UpperUnipGL2Gen, UpperUnipGL2, Set.mem_setOf_eq]
+  simp only [UpperUnipGL2Gen, UpperUnipGL2, Set.mem_ofPred_eq]
   constructor
   · rintro ⟨hdiag, hlower⟩
     exact ⟨hdiag 0, hdiag 1, hlower 1 0 (by omega)⟩
@@ -98,14 +91,12 @@ private lemma upperUnipGL2Gen_eq_upperUnipGL2
 -/
 private lemma diagGL2Gen_eq_diagGL2
   {C : DVRContext}
-  [DVRClosureGL2 C]
-  {C}
-  (C) :
+  [DVRClosureGL2 C] :
 -- imply
   C.DiagGL2Gen = C.DiagGL2 := by
 -- proof
   ext g
-  simp only [DiagGL2Gen, DiagGL2, Set.mem_setOf_eq]
+  simp only [DiagGL2Gen, DiagGL2, Set.mem_ofPred_eq]
   constructor
   · intro h; exact ⟨h 0 1 (by omega), h 1 0 (by omega)⟩
   · rintro ⟨h01, h10⟩ i j hij
@@ -118,9 +109,7 @@ private lemma diagGL2Gen_eq_diagGL2
 -/
 private lemma isUnitInO_one
   {C : DVRContext}
-  [DVRClosureGL2 C]
-  {C}
-  (C) :
+  [DVRClosureGL2 C] :
 -- imply
   C.isUnitInO (1 : C.k) :=
 -- proof
@@ -133,9 +122,7 @@ private lemma isUnitInO_one
 -/
 private lemma isInMaxIdeal_zero
   {C : DVRContext}
-  [DVRClosureGL2 C]
-  {C}
-  (C) :
+  [DVRClosureGL2 C] :
 -- imply
   C.isInMaxIdeal (0 : C.k) :=
 -- proof
@@ -149,8 +136,6 @@ private lemma isInMaxIdeal_zero
 private lemma gl2_triple_product_entry
   {C : DVRContext}
   [DVRClosureGL2 C]
-  {C}
-  (C)
   {u' m u : GL (Fin 2) C.k}
   {i j : Fin 2}
 -- given
@@ -170,9 +155,7 @@ private lemma gl2_triple_product_entry
 -/
 private lemma iwahori_decomp_gl2_exists
   {C : DVRContext}
-  [DVRClosureGL2 C]
-  {C}
-  (C) :
+  [DVRClosureGL2 C] :
 -- imply
   ∀ b ∈ C.IwahoriGL2, ∃ (u' m u : GL (Fin 2) C.k), u' ∈ C.LowerUnipGL2 ∩ C.IwahoriGL2 ∧ m ∈ C.DiagGL2 ∩ C.IwahoriGL2 ∧ u ∈ C.UpperUnipGL2 ∩ C.IwahoriGL2 ∧ b = u' * m * u := by
 -- proof
@@ -206,40 +189,40 @@ private lemma iwahori_decomp_gl2_exists
   let u_gl := mkGL2 u_f hu_det
   have hu'_e : u'_gl.val 0 0 = 1 ∧ u'_gl.val 0 1 = 0 ∧
     u'_gl.val 1 0 = c * a⁻¹ ∧ u'_gl.val 1 1 = 1 := by
-    refine ⟨?_, ?_, ?_, ?_⟩ <;> simp [u'_gl, u'_f]
+    refine ⟨?_, ?_, ?_, ?_⟩ <;> simp [u'_gl, u'_f, main]
   have hm_e : m_gl.val 0 0 = a ∧ m_gl.val 0 1 = 0 ∧
     m_gl.val 1 0 = 0 ∧ m_gl.val 1 1 = d - c * a⁻¹ * β := by
-    refine ⟨?_, ?_, ?_, ?_⟩ <;> simp [m_gl, m_f]
+    refine ⟨?_, ?_, ?_, ?_⟩ <;> simp [m_gl, m_f, main]
   have hu_e : u_gl.val 0 0 = 1 ∧ u_gl.val 0 1 = a⁻¹ * β ∧
     u_gl.val 1 0 = 0 ∧ u_gl.val 1 1 = 1 := by
-    refine ⟨?_, ?_, ?_, ?_⟩ <;> simp [u_gl, u_f]
+    refine ⟨?_, ?_, ?_, ?_⟩ <;> simp [u_gl, u_f, main]
   refine ⟨u'_gl, m_gl, u_gl, ?_, ?_, ?_, ?_⟩
   · exact ⟨⟨hu'_e.1, hu'_e.2.2.2, hu'_e.2.1⟩,
-    hu'_e.1 ▸ C.isUnitInO_one,
-    hu'_e.2.2.2 ▸ C.isUnitInO_one,
+    hu'_e.1 ▸ isUnitInO_one,
+    hu'_e.2.2.2 ▸ isUnitInO_one,
     hu'_e.2.1 ▸ DVRClosure.isInO_zero,
     hu'_e.2.2.1 ▸ hca_inv_m⟩
   · exact ⟨⟨hm_e.2.1, hm_e.2.2.1⟩,
     hm_e.1 ▸ ha_unit,
     hm_e.2.2.2 ▸ hd_mid_unit,
     hm_e.2.1 ▸ DVRClosure.isInO_zero,
-    hm_e.2.2.1 ▸ C.isInMaxIdeal_zero⟩
+    hm_e.2.2.1 ▸ isInMaxIdeal_zero⟩
   · exact ⟨⟨hu_e.1, hu_e.2.2.2, hu_e.2.2.1⟩,
-    hu_e.1 ▸ C.isUnitInO_one,
-    hu_e.2.2.2 ▸ C.isUnitInO_one,
+    hu_e.1 ▸ isUnitInO_one,
+    hu_e.2.2.2 ▸ isUnitInO_one,
     hu_e.2.1 ▸ ha_inv_β_O,
-    hu_e.2.2.1 ▸ C.isInMaxIdeal_zero⟩
+    hu_e.2.2.1 ▸ isInMaxIdeal_zero⟩
   · apply Units.val_injective
     ext i j
     show b.val i j = (u'_gl * m_gl * u_gl).val i j
-    rw [gl2_triple_product_entry C u'_gl m_gl u_gl hm_e.2.1 hm_e.2.2.1]
+    rw [gl2_triple_product_entry hm_e.2.1 hm_e.2.2.1]
     fin_cases i <;> fin_cases j <;> dsimp
     · rw [hu'_e.1, hu'_e.2.1, hu_e.1, hu_e.2.2.1, hm_e.1, hm_e.2.2.2]; ring
     · rw [hu'_e.1, hu'_e.2.1, hu_e.2.1, hu_e.2.2.2, hm_e.1, hm_e.2.2.2]
-      simp only [one_mul, mul_one, zero_mul, mul_zero, add_zero]
+      simp only [one_mul, mul_one, zero_mul, add_zero]
       rw [mul_inv_cancel_left₀ ha_ne]
     · rw [hu'_e.2.2.1, hu'_e.2.2.2, hu_e.1, hu_e.2.2.1, hm_e.1, hm_e.2.2.2]
-      simp only [one_mul, mul_one, zero_mul, mul_zero, add_zero]
+      simp only [one_mul, mul_one, mul_zero, add_zero]
       rw [inv_mul_cancel_right₀ ha_ne]
     · rw [hu'_e.2.2.1, hu'_e.2.2.2, hu_e.2.1, hu_e.2.2.2, hm_e.1, hm_e.2.2.2]
       simp only [one_mul, mul_one]
@@ -253,14 +236,11 @@ private lemma iwahori_decomp_gl2_exists
 -/
 private lemma iwahori_decomp_gl2_unique
   {C : DVRContext}
-  [DVRClosureGL2 C]
-  {C}
-  (C) :
+  [DVRClosureGL2 C] :
 -- imply
   ∀ b ∈ C.IwahoriGL2, ∀ (t₁ t₂ : GL (Fin 2) C.k × GL (Fin 2) C.k × GL (Fin 2) C.k), (t₁.1 ∈ C.LowerUnipGL2 ∩ C.IwahoriGL2 ∧ t₁.2.1 ∈ C.DiagGL2 ∩ C.IwahoriGL2 ∧ t₁.2.2 ∈ C.UpperUnipGL2 ∩ C.IwahoriGL2 ∧ b = t₁.1 * t₁.2.1 * t₁.2.2) → (t₂.1 ∈ C.LowerUnipGL2 ∩ C.IwahoriGL2 ∧ t₂.2.1 ∈ C.DiagGL2 ∩ C.IwahoriGL2 ∧ t₂.2.2 ∈ C.UpperUnipGL2 ∩ C.IwahoriGL2 ∧ b = t₂.1 * t₂.2.1 * t₂.2.2) → t₁ = t₂ := by
 -- proof
   intro b _hb ⟨u'₁, m₁, u₁⟩ ⟨u'₂, m₂, u₂⟩ h₁ h₂
-  simp only [Prod.fst, Prod.snd] at h₁ h₂
   obtain ⟨⟨⟨hu'₁_00, hu'₁_11, hu'₁_01⟩, _⟩,
     ⟨⟨hm₁_01, hm₁_10⟩, hm₁_iwa⟩,
     ⟨⟨hu₁_00, hu₁_11, hu₁_10⟩, _⟩, heq₁⟩ := h₁
@@ -271,8 +251,8 @@ private lemma iwahori_decomp_gl2_unique
   have h_entry : ∀ i j : Fin 2,
     (u'₁ * m₁ * u₁).val i j = (u'₂ * m₂ * u₂).val i j := by
     intro i j; rw [h_eq]
-  have p₁ := gl2_triple_product_entry C u'₁ m₁ u₁ hm₁_01 hm₁_10
-  have p₂ := gl2_triple_product_entry C u'₂ m₂ u₂ hm₂_01 hm₂_10
+  have p₁ := fun (i j : Fin 2) => gl2_triple_product_entry (u' := u'₁) (m := m₁) (u := u₁) (i := i) (j := j) hm₁_01 hm₁_10
+  have p₂ := fun (i j : Fin 2) => gl2_triple_product_entry (u' := u'₂) (m := m₂) (u := u₂) (i := i) (j := j) hm₂_01 hm₂_10
   have hm00_ne : m₁.val 0 0 ≠ 0 := DVRClosureGL2.isUnitInO_ne_zero hm₁_iwa.1
   have hm00 : m₁.val 0 0 = m₂.val 0 0 := by
     have := h_entry 0 0; rw [p₁, p₂] at this
@@ -283,7 +263,7 @@ private lemma iwahori_decomp_gl2_unique
     have := h_entry 0 1; rw [p₁, p₂] at this
     rw [hu'₁_00, hu'₁_01, hu₁_11,
       hu'₂_00, hu'₂_01, hu₂_11] at this
-    simp only [one_mul, mul_one, zero_mul, mul_zero, add_zero] at this
+    simp only [one_mul, mul_one, zero_mul, add_zero] at this
     rw [hm00] at this
     have hm₂_ne : (↑m₂ : Matrix (Fin 2) (Fin 2) C.k) 0 0 ≠ 0 := hm00 ▸ hm00_ne
     exact mul_left_cancel₀ hm₂_ne this
@@ -291,7 +271,7 @@ private lemma iwahori_decomp_gl2_unique
     have := h_entry 1 0; rw [p₁, p₂] at this
     rw [hu'₁_11, hu₁_00, hu₁_10,
       hu'₂_11, hu₂_00, hu₂_10] at this
-    simp only [one_mul, mul_one, zero_mul, mul_zero, add_zero] at this
+    simp only [one_mul, mul_one, mul_zero, add_zero] at this
     rw [hm00] at this
     have hm₂_ne : (↑m₂ : Matrix (Fin 2) (Fin 2) C.k) 0 0 ≠ 0 := hm00 ▸ hm00_ne
     exact mul_right_cancel₀ hm₂_ne this
@@ -319,20 +299,18 @@ private lemma iwahori_decomp_gl2_unique
 -/
 private lemma IwahoriDecomposition
   {C : DVRContext}
-  [DVRClosureGL2 C]
-  {C}
-  (C) :
+  [DVRClosureGL2 C] :
 -- imply
-  ∀ b ∈ C.IwahoriGL2Gen, ∃! (triple : GL (Fin 2) C.k × GL (Fin 2) C.k × GL (Fin 2) C.k), let (u', m, u) := triple u' ∈ C.LowerUnipGL2Gen ∩ C.IwahoriGL2Gen ∧ m ∈ C.DiagGL2Gen ∩ C.IwahoriGL2Gen ∧ u ∈ C.UpperUnipGL2Gen ∩ C.IwahoriGL2Gen ∧ b = u' * m * u := by
+  ∀ b ∈ C.IwahoriGL2Gen, ∃! (triple : GL (Fin 2) C.k × GL (Fin 2) C.k × GL (Fin 2) C.k), let (u', m, u) := triple; u' ∈ C.LowerUnipGL2Gen ∩ C.IwahoriGL2Gen ∧ m ∈ C.DiagGL2Gen ∩ C.IwahoriGL2Gen ∧ u ∈ C.UpperUnipGL2Gen ∩ C.IwahoriGL2Gen ∧ b = u' * m * u := by
 -- proof
   rw [iwahoriGL2Gen_eq_iwahoriGL2, lowerUnipGL2Gen_eq_lowerUnipGL2,
     upperUnipGL2Gen_eq_upperUnipGL2, diagGL2Gen_eq_diagGL2]
   intro b hb
   obtain ⟨u', m, u, hu'_mem, hm_mem, hu_mem, heq⟩ :=
-    C.iwahori_decomp_gl2_exists b hb
+    iwahori_decomp_gl2_exists b hb
   refine ⟨(u', m, u), ⟨hu'_mem, hm_mem, hu_mem, heq⟩, ?_⟩
   intro ⟨u'₂, m₂, u₂⟩ ⟨hu'₂, hm₂, hu₂, heq₂⟩
-  exact C.iwahori_decomp_gl2_unique b hb
+  exact iwahori_decomp_gl2_unique b hb
     (u'₂, m₂, u₂) (u', m, u)
     ⟨hu'₂, hm₂, hu₂, heq₂⟩ ⟨hu'_mem, hm_mem, hu_mem, heq⟩
 
@@ -343,17 +321,15 @@ private lemma IwahoriDecomposition
 -/
 private lemma IwahoriDecomposition_concrete
   {C : DVRContext}
-  [DVRClosureGL2 C]
-  {C}
-  (C) :
+  [DVRClosureGL2 C] :
 -- imply
-  ∀ b ∈ C.IwahoriGL2, ∃! (triple : GL (Fin 2) C.k × GL (Fin 2) C.k × GL (Fin 2) C.k), let (u', m, u) := triple u' ∈ C.LowerUnipGL2 ∩ C.IwahoriGL2 ∧ m ∈ C.DiagGL2 ∩ C.IwahoriGL2 ∧ u ∈ C.UpperUnipGL2 ∩ C.IwahoriGL2 ∧ b = u' * m * u := by
+  ∀ b ∈ C.IwahoriGL2, ∃! (triple : GL (Fin 2) C.k × GL (Fin 2) C.k × GL (Fin 2) C.k), let (u', m, u) := triple; u' ∈ C.LowerUnipGL2 ∩ C.IwahoriGL2 ∧ m ∈ C.DiagGL2 ∩ C.IwahoriGL2 ∧ u ∈ C.UpperUnipGL2 ∩ C.IwahoriGL2 ∧ b = u' * m * u := by
 -- proof
   rw [← iwahoriGL2Gen_eq_iwahoriGL2, ← lowerUnipGL2Gen_eq_lowerUnipGL2,
     ← upperUnipGL2Gen_eq_upperUnipGL2, ← diagGL2Gen_eq_diagGL2]
-  exact C.IwahoriDecomposition
+  exact IwahoriDecomposition
 
 
 
 -- created on 2026-10-23
--- updated on 2026-10-26
+-- updated on 2026-11-13

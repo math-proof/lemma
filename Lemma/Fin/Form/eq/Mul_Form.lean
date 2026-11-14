@@ -10,7 +10,6 @@ open DVRContext DVRContext.AnisotropicQuadSpace
 @[path]
 private lemma main
   {C : DVRContext}
-  {C}
   {B : AnisotropicQuadSpace C}
   {r : C.k}
   {v w : Fin C.n → C.k} :
@@ -26,7 +25,6 @@ private lemma main
 -/
 private lemma form_add_right
   {C : DVRContext}
-  {C}
   {B : AnisotropicQuadSpace C}
   {u v w : Fin C.n → C.k} :
 -- imply
@@ -41,7 +39,6 @@ private lemma form_add_right
 -/
 private lemma form_zero_left
   {C : DVRContext}
-  {C}
   {B : AnisotropicQuadSpace C}
   {v : Fin C.n → C.k} :
 -- imply
@@ -58,7 +55,6 @@ private lemma form_zero_left
 -/
 private lemma form_zero_right
   {C : DVRContext}
-  {C}
   {B : AnisotropicQuadSpace C}
   {v : Fin C.n → C.k} :
 -- imply
@@ -73,7 +69,6 @@ private lemma form_zero_right
 -/
 private lemma form_add_expand
   {C : DVRContext}
-  {C}
   {B : AnisotropicQuadSpace C}
   {x y : Fin C.n → C.k} :
 -- imply
@@ -89,14 +84,13 @@ private lemma form_add_expand
 -/
 private lemma form_smul_self
   {C : DVRContext}
-  {C}
   {B : AnisotropicQuadSpace C}
   {r : C.k}
   {x : Fin C.n → C.k} :
 -- imply
   B.form (r • x) (r • x) = r * r * B.form x x := by
 -- proof
-  rw [B.form_smul_left, form_smul_right, mul_assoc]
+  rw [B.form_smul_left, main, mul_assoc]
 
 
 
@@ -105,8 +99,6 @@ private lemma form_smul_self
 -/
 private lemma two_unit_o
   {C : DVRContext}
-  {C}
-  {B : AnisotropicQuadSpace C}
   {B : AnisotropicQuadSpace C} :
 -- imply
   IsUnit (2 : C.𝔬) := by
@@ -124,8 +116,6 @@ private lemma two_unit_o
 -/
 private lemma hensel_quadratic_root
   {C : DVRContext}
-  {C}
-  {B : AnisotropicQuadSpace C}
   {B : AnisotropicQuadSpace C}
   {b c : C.k}
 -- given
@@ -138,7 +128,7 @@ private lemma hensel_quadratic_root
   change ∃ r : C.𝔬, r ∈ C.maxIdeal ∧ C.embed r = c at hc
   obtain ⟨b_o, hb_unit, hb_eq⟩ := hb
   obtain ⟨c_o, hc_mem, hc_eq⟩ := hc
-  haveI := B.inst_henselian
+  have := B.inst_henselian
   set f := Polynomial.X ^ 2 + Polynomial.C (2 * b_o) * Polynomial.X + Polynomial.C c_o with hf_def
   have hf_assoc : f = Polynomial.X ^ 2 +
     (Polynomial.C (2 * b_o) * Polynomial.X + Polynomial.C c_o) := by
@@ -147,9 +137,11 @@ private lemma hensel_quadratic_root
     rw [hf_assoc]
     apply Polynomial.monic_X_pow_add
     calc Polynomial.degree (Polynomial.C (2 * b_o) * Polynomial.X + Polynomial.C c_o)
-      ≤ max (Polynomial.degree (Polynomial.C (2 * b_o) * Polynomial.X))
-        (Polynomial.degree (Polynomial.C c_o)) := Polynomial.degree_add_le _ _
-      _ ≤ max 1 0 := max_le_max (Polynomial.degree_C_mul_X_le _) Polynomial.degree_C_le
+        ≤ max (Polynomial.degree (Polynomial.C (2 * b_o) * Polynomial.X))
+            (Polynomial.degree (Polynomial.C c_o)) :=
+          Polynomial.degree_add_le _ _
+      _ ≤ max (1 : WithBot ℕ) 0 :=
+          max_le_max (Polynomial.degree_C_mul_X_le _) Polynomial.degree_C_le
       _ = 1 := by simp
       _ < 2 := by norm_cast
   have hf0 : f.eval 0 = c_o := by
@@ -160,7 +152,7 @@ private lemma hensel_quadratic_root
       Polynomial.derivative_X, Polynomial.derivative_C, Polynomial.derivative_mul,
       Polynomial.eval_add, Polynomial.eval_mul, Polynomial.eval_X, Polynomial.eval_C]
   have hf'0_unit : IsUnit ((Polynomial.derivative f).eval 0) := by
-    rw [hf'0]; exact B.two_unit_o.mul hb_unit
+    rw [hf'0]; exact (two_unit_o (B := B)).mul hb_unit
   rw [B.hmax] at hc_mem
   have hf0_mem : f.eval 0 ∈ IsLocalRing.maximalIdeal C.𝔬 := by rwa [hf0]
   obtain ⟨a, ha_root, _⟩ := HenselianLocalRing.is_henselian f hmonic 0 hf0_mem hf'0_unit
@@ -183,7 +175,6 @@ private lemma hensel_quadratic_root
 -/
 private lemma form_cross_integral
   {C : DVRContext}
-  {C}
   {B : AnisotropicQuadSpace C}
   [DVRClosure C]
   {x y : Fin C.n → C.k}
@@ -194,23 +185,23 @@ private lemma form_cross_integral
   C.isInO (B.form x y) := by
 -- proof
   by_cases hx_zero : x = 0
-  · rw [hx_zero, B.form_zero_left]; exact DVRClosure.isInO_zero
+  · rw [hx_zero, form_zero_left]; exact DVRClosure.isInO_zero
   have hxx_ne : B.form x x ≠ 0 := fun h => hx_zero (B.anisotropic x h)
   by_contra hxy_neg
   have hy_ne : y ≠ 0 := by
-    intro h; exact hxy_neg (by rw [h, B.form_zero_right]; exact DVRClosure.isInO_zero)
+    intro h; exact hxy_neg (by rw [h, form_zero_right]; exact DVRClosure.isInO_zero)
   obtain ⟨n, hn_pos, hb_unit, hc_maxideal⟩ :=
     B.dvr_normalize_ratio (B.form x y) (B.form x x) hxy_neg hx hxx_ne
   set pi := C.embed C.uniformizer
   set b := pi ^ n * (B.form x y * (B.form x x)⁻¹)
   set c := pi ^ (2 * n) * (B.form y y * (B.form x x)⁻¹)
-  obtain ⟨α, hα_inO, hα_root⟩ := B.hensel_quadratic_root b c hb_unit (hc_maxideal _ hy)
+  obtain ⟨α, hα_inO, hα_root⟩ := hensel_quadratic_root (B := B) hb_unit (hc_maxideal _ hy)
   set w := (α • x : Fin C.n → C.k) + (pi ^ n • y : Fin C.n → C.k)
   have hw_form : B.form w w = B.form x x * (α * α + 2 * b * α + c) := by
     show B.form (α • x + pi ^ n • y) (α • x + pi ^ n • y) =
       B.form x x * (α * α + 2 * b * α + c)
-    rw [B.form_add_expand, B.form_smul_self, B.form_smul_self]
-    rw [B.form_smul_left, B.form_smul_right]
+    rw [form_add_expand, form_smul_self, form_smul_self]
+    rw [B.form_smul_left, main]
     show α * α * B.form x x + 2 * (α * (pi ^ n * B.form x y)) +
       pi ^ n * (pi ^ n) * B.form y y =
       B.form x x * (α * α + 2 * (pi ^ n * (B.form x y * (B.form x x)⁻¹)) * α +
@@ -254,7 +245,7 @@ private lemma form_cross_integral
       rw [B.form_smul_left]
     have hxx_eq : B.form x x = (-(pi ^ n * α⁻¹)) * (-(pi ^ n * α⁻¹)) * B.form y y := by
       conv_lhs => rw [hprop]
-      rw [B.form_smul_self]
+      rw [form_smul_self]
     have hxy_sq : B.form x y * B.form x y = B.form x x * B.form y y := by
       rw [hxy_eq, hxx_eq]; ring
     have hxy_sq_inO : C.isInO (B.form x y * B.form x y) := by
@@ -268,7 +259,6 @@ private lemma form_cross_integral
 -/
 private lemma integralCarrier_add_closed
   {C : DVRContext}
-  {C}
   {B : AnisotropicQuadSpace C}
   [DVRClosure C]
   {x y : Fin C.n → C.k}
@@ -278,13 +268,11 @@ private lemma integralCarrier_add_closed
 -- imply
   x + y ∈ B.integralCarrier := by
 -- proof
-  simp only [integralCarrier, Set.mem_setOf_eq] at hx hy ⊢
-  rw [B.form_add_expand]
-  have hxy := B.form_cross_integral x y hx hy
-  exact DVRClosure.isInO_add
-    (DVRClosure.isInO_add hx
-      (DVRClosure.isInO_mul (by exact B.two_unit.elim fun r ⟨hr, he⟩ => ⟨r, he⟩) hxy))
-    hy
+  simp only [integralCarrier, Set.mem_ofPred_eq] at hx hy ⊢
+  rw [form_add_expand]
+  have hxy : C.isInO (B.form x y) := form_cross_integral hx hy
+  have h2 : C.isInO (2 : C.k) := ⟨(2 : C.𝔬), by simp [map_ofNat]⟩
+  exact DVRClosure.isInO_add (DVRClosure.isInO_add hx (DVRClosure.isInO_mul h2 hxy)) hy
 
 
 
@@ -293,13 +281,12 @@ private lemma integralCarrier_add_closed
 -/
 private lemma integralCarrier_zero_mem
   {C : DVRContext}
-  {C}
   {B : AnisotropicQuadSpace C}
   [DVRClosure C] :
 -- imply
   (0 : Fin C.n → C.k) ∈ B.integralCarrier := by
 -- proof
-  simp only [integralCarrier, Set.mem_setOf_eq, B.form_zero_left]
+  simp only [integralCarrier, Set.mem_ofPred_eq, form_zero_left]
   exact DVRClosure.isInO_zero
 
 
@@ -309,7 +296,6 @@ private lemma integralCarrier_zero_mem
 -/
 private lemma integralCarrier_smul_mem
   {C : DVRContext}
-  {C}
   {B : AnisotropicQuadSpace C}
   [DVRClosure C]
   {r : C.𝔬}
@@ -319,10 +305,10 @@ private lemma integralCarrier_smul_mem
 -- imply
   C.oscal r v ∈ B.integralCarrier := by
 -- proof
-  simp only [integralCarrier, Set.mem_setOf_eq] at hv ⊢
+  simp only [integralCarrier, Set.mem_ofPred_eq] at hv ⊢
   have heq : C.oscal r v = C.embed r • v := by
     ext i; simp [DVRContext.oscal, Pi.smul_apply, smul_eq_mul]
-  rw [heq, B.form_smul_self]
+  rw [heq, form_smul_self]
   exact DVRClosure.isInO_mul (DVRClosure.isInO_mul ⟨r, rfl⟩ ⟨r, rfl⟩) hv
 
 
@@ -332,7 +318,6 @@ private lemma integralCarrier_smul_mem
 -/
 private lemma oValued_subset_integralCarrier
   {C : DVRContext}
-  {C}
   {B : AnisotropicQuadSpace C}
   {Λ : C.OLattice}
 -- given
@@ -349,19 +334,18 @@ private lemma oValued_subset_integralCarrier
 -/
 private lemma unique_maximal_oValued_lattice
   {C : DVRContext}
-  {C}
   {B : AnisotropicQuadSpace C}
   [DVRClosure C] :
 -- imply
   (∀ x y : Fin C.n → C.k, x ∈ B.integralCarrier → y ∈ B.integralCarrier → x + y ∈ B.integralCarrier) ∧ ((0 : Fin C.n → C.k) ∈ B.integralCarrier) ∧ (∀ (r : C.𝔬) (v : Fin C.n → C.k), v ∈ B.integralCarrier → C.oscal r v ∈ B.integralCarrier) ∧ (∀ v w : Fin C.n → C.k, v ∈ B.integralCarrier → w ∈ B.integralCarrier → C.isInO (B.form v w)) ∧ (∀ (Λ : C.OLattice), B.IsOValued Λ → Λ.carrier ⊆ B.integralCarrier) :=
 -- proof
-  ⟨fun x y hx hy => B.integralCarrier_add_closed x y hx hy,
-    B.integralCarrier_zero_mem,
-    fun r v hv => B.integralCarrier_smul_mem r v hv,
-    fun v w hv hw => B.form_cross_integral v w hv hw,
-    fun Λ hΛ => B.oValued_subset_integralCarrier Λ hΛ⟩
+  ⟨fun _ _ hx hy => integralCarrier_add_closed hx hy,
+    integralCarrier_zero_mem,
+    fun r _ hv => integralCarrier_smul_mem (r := r) hv,
+    fun _ _ hv hw => form_cross_integral hv hw,
+    fun _ hΛ => oValued_subset_integralCarrier hΛ⟩
 
 
 
 -- created on 2026-10-23
--- updated on 2026-10-26
+-- updated on 2026-11-13

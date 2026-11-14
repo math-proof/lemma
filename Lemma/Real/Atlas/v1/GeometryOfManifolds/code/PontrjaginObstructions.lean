@@ -41,7 +41,7 @@ lemma ChernPontrjaginDataClosed.chern_pontrjagin_rel
 [not_sum_of_two_squares_14](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/GeometryOfManifolds/code/PontrjaginObstructions.lean)
 -/
 @[path]
-lemma not_sum_of_two_squares_14
+lemma not_sum_of_two_squares_14 :
 -- imply
   ∀ a b : ℤ, a ^ 2 + b ^ 2 ≠ 14 := by
 -- proof
@@ -53,9 +53,9 @@ lemma not_sum_of_two_squares_14
   have hb_lo : -4 < b := by nlinarith [sq_nonneg (b + 4)]
   have hb_hi : b < 4 := by nlinarith [sq_nonneg (b - 4)]
   interval_cases a <;> interval_cases b <;> omega
-/-- Obstruction example: $\mathbb{CP}^2 \# \mathbb{CP}^2$ (with $b_2 = 2$, $\sigma = 2$,
-$\chi = 4$) admits no almost-complex structure, since the Chern number formula forces
-$c_1^2 = 14$, which cannot be written as a sum of two squares. -/
+-- Obstruction example: $\mathbb{CP}^2 \# \mathbb{CP}^2$ (with $b_2 = 2$, $\sigma = 2$,
+-- $\chi = 4$) admits no almost-complex structure, since the Chern number formula forces
+-- $c_1^2 = 14$, which cannot be written as a sum of two squares.
 
 
 -- created on 2026-10-23

@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.CurveModel
+import Lemma.Scheme.CurveModel
 import Lemma.Int.P2MUtil
 
-open CategoryTheory AlgebraicGeometry IsLocalRing
+open CategoryTheory AlgebraicGeometry AlgebraicCurve IsLocalRing
 
 
 /--
@@ -13,7 +13,7 @@ open CategoryTheory AlgebraicGeometry IsLocalRing
 private lemma main
   {K : Type u} [Field K]
   {L : Type v} [Field L] [Algebra K L]
-  {M : AlgebraicCurve.CurveModel K L}
+  {M : CurveModel K L}
   {x : closedPoints M.C}
   {g : M.C.presheaf.stalk x.1}
 -- given
@@ -57,4 +57,4 @@ private lemma main
 
 
 -- created on 2026-10-23
--- updated on 2026-10-26
+-- updated on 2026-11-14

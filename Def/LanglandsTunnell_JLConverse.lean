@@ -1,8 +1,8 @@
 import Def.LanglandsTunnell_JLData
-import Lemma.LanglandsTunnell.ArchEpsilon
+import Lemma.Complex.ArchEpsilon
 import Def.UnramifiedWhittaker_HeckeRecursion
-import Lemma.AutomorphicForm.ArithCuspRealization
-import Lemma.LanglandsTunnell.StandardLocalConstantsAt
+import Lemma.Ideal.ArithCuspRealization
+import Lemma.Filter.StandardLocalConstantsAt
 import Structure.LanglandsTunnell_JLConverse
 
 set_option autoImplicit false

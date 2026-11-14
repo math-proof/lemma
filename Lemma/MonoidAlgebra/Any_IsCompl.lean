@@ -63,7 +63,7 @@ lemma maschke_semisimple_complex
   ρ.IsSemisimpleRepresentation := by
 -- proof
   haveI : NeZero (Nat.card G : ℂ) := ⟨by exact_mod_cast Nat.card_pos.ne'⟩
-  exact maschke_semisimple ρ
+  exact maschke_semisimple
 
 end RepresentationTheory
 

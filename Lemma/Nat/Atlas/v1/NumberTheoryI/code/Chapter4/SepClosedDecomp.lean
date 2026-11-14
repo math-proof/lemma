@@ -1,6 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.NumberTheoryI.code.Chapter4.SepClosedDecomp.Part2
+set_option synthInstance.maxHeartbeats 80000
+set_option maxHeartbeats 800000
 open Polynomial TensorProduct Module SepClosedDecomposition
 
 
@@ -52,7 +54,8 @@ private lemma column_functions_linearIndependent_eq
   [Algebra K Ω]
   [FiniteDimensional K L]
   [Algebra.IsSeparable K L]
-  [IsSepClosed Ω] :
+  [IsSepClosed Ω]
+  [Module.Free K L] :
 -- imply
   LinearIndependent Ω (fun (i : Fin (finrank K L)) (φ : L →ₐ[K] Ω) => φ (finBasis K L i)) := by
 -- proof

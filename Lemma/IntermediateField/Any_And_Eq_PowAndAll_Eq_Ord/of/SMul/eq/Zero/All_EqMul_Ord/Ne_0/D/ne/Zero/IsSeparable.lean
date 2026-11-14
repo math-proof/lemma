@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.DivisorClassGroup
-import Lemma.AlgebraicGeometry.KwPthPowerKerDExpansionEngine
+import Lemma.Valuation.DivisorClassGroup
+import Lemma.Polynomial.KwPthPowerKerDExpansionEngine
 open KaehlerDifferential
-open AlgebraicCurve
+open AlgebraicCurve Valuation
 
 
 /-- ported from external source -/

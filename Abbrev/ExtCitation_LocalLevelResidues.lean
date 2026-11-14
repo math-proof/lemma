@@ -1,7 +1,7 @@
 import Mathlib
 import Instance.ExtEndgame_ProductionDatum
 import Instance.EllipticCurve_FrobeniusTrace
-import Lemma.Deformations.Frobenius
+import Lemma.Ideal.Frobenius
 
 set_option autoImplicit false
 

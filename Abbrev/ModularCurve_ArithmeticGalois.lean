@@ -1,4 +1,5 @@
 import Structure.ModularCurve_X0
+import Lemma.HahnSeries.X0
 import Def.ModularCurve_LaurentCoeff
 import Lemma.Scheme.AlgebraicCurveBaseChangeGalois
 import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure

@@ -501,9 +501,9 @@ private lemma bsak_exists_subseq_weak_tendsto
 
 /--
 [bsak_kakutani_cesaro_of_weak_tendsto](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/FunctionalAnalysis/BanachSaks.lean)
+along a further subsequence.
 -/
 @[path]
-along a further subsequence. -/
 private lemma bsak_kakutani_cesaro_of_weak_tendsto
   {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [UniformConvexSpace E]
   {x : ℕ → E} {M : ℝ} (hxb : ∀ n, ‖x n‖ ≤ M)

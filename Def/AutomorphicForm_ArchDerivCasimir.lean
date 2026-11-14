@@ -1,6 +1,6 @@
-import Lemma.AutomorphicForm.ArchType
-import Lemma.AutomorphicForm.ArchWeightCharTransport
-import Lemma.LanglandsTunnell.ArchParam
+import Lemma.Matrix.ArchType
+import Lemma.Matrix.ArchWeightCharTransport
+import Lemma.Complex.ArchParam
 import Def.AutomorphicForm_ConstantTerm
 import Inductive.AutomorphicForm_ArchDir
 

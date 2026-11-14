@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Def.Analysis.Convex.Straszewicz
-import Lemma.Convex.Straszewicz
+import Def.Analysis.Set.Straszewicz
+import Lemma.Set.Straszewicz
 open Finset BigOperators InnerProductSpace
 
 

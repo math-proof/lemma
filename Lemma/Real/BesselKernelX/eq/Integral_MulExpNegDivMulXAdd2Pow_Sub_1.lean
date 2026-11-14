@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.LanglandsTunnell.ArchBessel
-open MeasureTheory Set LanglandsTunnell.ArchBessel
+import Lemma.Measure.ArchBessel
+open MeasureTheory Set Measure.ArchBessel
 
 
 /--

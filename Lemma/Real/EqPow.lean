@@ -150,7 +150,6 @@ private lemma main
       intro h
       have : (1 : ℤ) ∈ J := h ▸ Submodule.mem_top
       simp [J] at this
-      apply (maximalIdeal.isMaximal A).ne_top ((Ideal.eq_top_iff_one _).mpr this)
     have hmax : (Ideal.span {(q : ℤ)}).IsMaximal :=
       PrincipalIdealRing.isMaximal_of_irreducible (Nat.prime_iff_prime_int.mp hqp).irreducible
     have hJeq : Ideal.span {(q : ℤ)} = J := hmax.eq_of_le hJne hJq

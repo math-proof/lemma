@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.AlgebraicGeometry.NeronModelPropertyBundleCarrier
+import Lemma.Scheme.NeronModelPropertyBundleCarrier
 import Instance.AlgebraicGeometry_RelativePicardFunctor
 import Structure.AlgebraicGeometry_RelativePicardFunctor
 

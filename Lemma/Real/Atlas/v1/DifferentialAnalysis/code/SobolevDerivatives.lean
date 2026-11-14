@@ -89,7 +89,7 @@ lemma norm_two_pi_I
   rw [show (2 : ℂ) * ↑Real.pi * Complex.I = ↑(2 * Real.pi) * Complex.I by push_cast; ring]
   rw [Complex.norm_mul, Complex.norm_real, Complex.norm_I, mul_one,
     Real.norm_of_nonneg (by positivity)]
-set_option maxHeartbeats 400000 in
+set_option maxHeartbeats 400000
 
 end SobolevSpace
 
@@ -506,13 +506,13 @@ section SobolevWeightL2
 open scoped SchwartzMap FourierTransform
 open SobolevSpace TemperedDistributions TestFunctions MeasureTheory
 variable {n : ℕ}
-/-- Multiplying the Fourier-side `L²` representative by the Sobolev weight `⟨·⟩` stays in `L²`, given derivative regularity. -/
-end SobolevWeightL2
-noncomputable section
-open scoped SchwartzMap FourierTransform
-open SobolevSpace TemperedDistributions TestFunctions MeasureTheory
-namespace SobolevSpace
-/-- Inductive step: if `u ∈ H^m` and every `∂_j u ∈ H^m`, then `u ∈ H^{m+1}`. -/
+-- Multiplying the Fourier-side `L²` representative by the Sobolev weight `⟨·⟩` stays in `L²`, given derivative regularity. -/
+-- end SobolevWeightL2
+-- noncomputable section
+-- open scoped SchwartzMap FourierTransform
+-- open SobolevSpace TemperedDistributions TestFunctions MeasureTheory
+-- namespace SobolevSpace
+-- Inductive step: if `u ∈ H^m` and every `∂_j u ∈ H^m`, then `u ∈ H^{m+1}`. -/
 end SobolevSpace
 end
 

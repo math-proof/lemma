@@ -2,7 +2,7 @@
 import Mathlib.AlgebraicGeometry.Pullbacks
 import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
 import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Lemma.AlgebraicGeometry.AdicThickening
+import Lemma.Scheme.AdicThickening
 
 set_option autoImplicit false
 

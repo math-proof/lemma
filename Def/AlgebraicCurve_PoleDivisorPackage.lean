@@ -1,6 +1,6 @@
 import Mathlib
 import Class.AlgebraicCurve_DivisorPushPull
-import Lemma.AlgebraicCurve.AdelicIndex
+import Lemma.Submodule.AdelicIndex
 import Structure.AlgebraicCurve_PoleDivisorPackage
 import Abbrev.AlgebraicCurve_PoleDivisorPackage
 

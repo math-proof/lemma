@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_ThetaLevelGroup.lean: instance decls only.
 import Mathlib
-import Lemma.AlgebraicGeometry.ThetaLevelGroup
+import Lemma.Matrix.ThetaLevelGroup
 
 set_option autoImplicit false
 

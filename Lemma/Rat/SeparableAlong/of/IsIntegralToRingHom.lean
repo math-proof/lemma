@@ -1,10 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.Correspondence
+import Lemma.Scheme.Correspondence
 import Lemma.Int.P2MUtil
 
 open AlgebraicCurve
-
 /--
 [AlgebraicCurve_separableAlong_of_charZero](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_separableAlong_of_charZero.lean)
 -/
@@ -17,9 +16,10 @@ private lemma main
 -- imply
   SeparableAlong K φ := by
 -- proof
-  letI := algebraAlong φ
-  haveI := isIntegral_along φ hφ
+  let := algebraAlong φ
+  have := isIntegral_along φ hφ
   exact Algebra.IsSeparable.of_integral F F₁
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

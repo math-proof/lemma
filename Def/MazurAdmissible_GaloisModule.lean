@@ -6,7 +6,7 @@ import Mathlib.RingTheory.Flat.Basic
 import Mathlib.RingTheory.Finiteness.Defs
 import Mathlib.RingTheory.TensorProduct.Maps
 import Mathlib.SetTheory.Cardinal.Finite
-import Lemma.Compat.Mathlib430
+import Lemma.Ideal.Mathlib430
 import Structure.MazurAdmissible_GaloisModule
 import Notation.MazurAdmissible_GaloisModule
 

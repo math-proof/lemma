@@ -1,10 +1,11 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.Analysis.Ramanujan.Part1Ch9Entry21Piseries2
+import Def.Analysis.Ramanujan.Part1Ch9Entry8Arcsin
 open scoped Nat Real BigOperators Interval Polynomial ContDiff
 open Filter Finset MeasureTheory
-open Entry8Arcsin (chapter9OddHarmonic)
 open MathlibExt.Analysis.Ramanujan.Part1Ch9
+open MathlibExt.Analysis.Ramanujan.Part1Ch9.Entry8Arcsin (chapter9OddHarmonic)
 open Entry21Piseries2
 
 
@@ -108,11 +109,11 @@ private lemma summable_sine (x : ℝ) : Summable (chapter9Entry21SineTerm x) := 
     have hle : (((j : ℝ) + 1) ^ 2) ≤ ((((2 * j + 1 : ℕ)) : ℝ) ^ 2) :=
       pow_le_pow_left₀ (by positivity) (aux_base_le j) 2
     calc |Real.sin ((((4 * j + 2 : ℕ)) : ℝ) * x)| / |((((2 * j + 1 : ℕ))) : ℝ) ^ 2|
-      ≤ 1 / |((((2 * j + 1 : ℕ))) : ℝ) ^ 2| := by
+      ≤ 1 / |((((2 * j + 1 : ℕ))) : ℝ) ^ 2| := (by
         have hBpos : (0 : ℝ) < |((((2 * j + 1 : ℕ))) : ℝ) ^ 2| := by
           rwa [habs]
         rw [div_le_iff₀ hBpos, one_div_mul_cancel (ne_of_gt hBpos)]
-        exact Real.abs_sin_le_one _
+        exact Real.abs_sin_le_one _)
       _ = 1 / ((((2 * j + 1 : ℕ))) : ℝ) ^ 2 := by rw [habs]
       _ ≤ 1 / (((j : ℝ) + 1) ^ 2) :=
         one_div_le_one_div_of_le (by positivity) hle

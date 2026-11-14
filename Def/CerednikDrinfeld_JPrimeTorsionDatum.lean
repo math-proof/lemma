@@ -1,6 +1,6 @@
 import Def.CerednikDrinfeld_Ribbon
 import Def.HeckeGalois_EichlerShimura
-import Lemma.Compat.Mathlib430
+import Lemma.Ideal.Mathlib430
 import Structure.CerednikDrinfeld_JPrimeTorsionDatum
 
 set_option autoImplicit false

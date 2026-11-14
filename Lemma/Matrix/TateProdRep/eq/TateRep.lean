@@ -1,6 +1,6 @@
-import Lemma.DrinfeldCurve.FunctionField
-import Lemma.AlgebraicCurve.DivisorClassGroup
-import Lemma.ModularCurve.JZeroTateModule
+import Lemma.RingHom.FunctionField
+import Lemma.Valuation.DivisorClassGroup
+import Lemma.WeierstrassCurve.JZeroTateModule
 import Initialize.Tactic.Attr.Basic
 set_option autoImplicit false
 open scoped TensorProduct

@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.ModularCurve.TateFormal
+import Lemma.PowerSeries.TateFormal
 import Structure.ModularForm_KatzLevelOne
 
 universe u

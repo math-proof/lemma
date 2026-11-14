@@ -53,7 +53,7 @@ namespace ProbabilityTheory
 [binomial_singleton](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/DeMoivreLaplace.lean)
 -/
 @[path]
-lemma binomial_singleton
+lemma binomial_measure_singleton
   {n k : ℕ}
   {p : I}
 -- given
@@ -96,7 +96,7 @@ lemma binomial_singleton
       intro x hx
       have hmem := (Finset.mem_powersetCard.mp ht).1 (Finset.mem_coe.mp hx)
       simp [Finset.mem_Iio] at hmem; exact hmem
-    rw [setBernoulli_singleton _ _ hsub (Set.finite_Iio n)]
+    rw [setBernoulli_singleton p hsub (Set.finite_Iio n)]
     have h_ncard_t : (↑t : Set ℕ).ncard = k := by
       rw [Set.ncard_coe_finset]; exact (Finset.mem_powersetCard.mp ht).2
     have h_ncard_diff : (Set.Iio n \ ↑t).ncard = n - k := by
@@ -125,17 +125,17 @@ lemma binomial_singleton_of_gt
   rw [Measure.map_apply (by fun_prop) (by measurability)]
   have hae : ∀ᵐ s ∂setBer(Set.Iio n, p), s ⊆ Set.Iio n := setBernoulli_ae_subset
   rw [Filter.Eventually, MeasureTheory.mem_ae_iff] at hae
-  apply le_antisymm _ (zero_le _)
+  apply le_antisymm _ bot_le
   calc setBer(Set.Iio n, p) (Set.ncard ⁻¹' {k})
     ≤ setBer(Set.Iio n, p) {s | ¬ s ⊆ Set.Iio n} := by
-      apply measure_mono
-      intro s hs
-      simp only [Set.mem_preimage, Set.mem_singleton_iff] at hs
-      simp only [Set.mem_setOf_eq]
-      intro hsub
-      have h1 : s.ncard ≤ (Set.Iio n).ncard := Set.ncard_le_ncard hsub (Set.finite_Iio n)
-      have h2 : (Set.Iio n).ncard = n := by rw [Set.ncard_eq_toFinset_card']; simp
-      omega
+        apply measure_mono
+        intro s hs
+        simp only [Set.mem_preimage, Set.mem_singleton_iff] at hs
+        simp only [Set.mem_setOf_eq]
+        intro hsub
+        have h1 : s.ncard ≤ (Set.Iio n).ncard := Set.ncard_le_ncard hsub (Set.finite_Iio n)
+        have h2 : (Set.Iio n).ncard = n := by rw [Set.ncard_eq_toFinset_card']; simp
+        omega
     _ = 0 := hae
 
 end ProbabilityTheory
@@ -146,7 +146,7 @@ namespace ProbabilityTheory
 [integrable_binomial](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/DeMoivreLaplace.lean)
 -/
 @[path]
-lemma integrable_binomial
+lemma integrable_binomial_measure
   {n : ℕ}
   {p : I}
   {f : ℕ → ℂ} :
@@ -158,10 +158,12 @@ lemma integrable_binomial
   have hsup : ∀ a, a ∉ Finset.range (n + 1) →
     ‖f a‖₊ * (binomial n p) {a} = 0 := by
     intro k hk; rw [Finset.mem_range, not_lt] at hk
-    simp [binomial_singleton_of_gt n k p (by omega)]
+    have hk' : n < k := Nat.lt_of_succ_le hk
+    simp [binomial_singleton_of_gt hk']
   calc ∑' a, ‖f a‖₊ * (binomial n p) {a}
     = ∑ a ∈ Finset.range (n + 1), ‖f a‖₊ * (binomial n p) {a} := tsum_eq_sum hsup
-    _ < ⊤ := by rw [ENNReal.sum_lt_top]; intro k _
+    _ < ⊤ := by
+      rw [ENNReal.sum_lt_top]; intro k _
       exact ENNReal.mul_lt_top (by finiteness) (measure_lt_top _ _)
 
 end ProbabilityTheory
@@ -180,10 +182,10 @@ lemma binomial_singleton_toReal
 -- imply
   ((binomial n p) {k}).toReal = (n.choose k : ℝ) * (p : ℝ) ^ k * (1 - (p : ℝ)) ^ (n - k) := by
 -- proof
-  rw [binomial_singleton n k p hk]
+  rw [binomial_measure_singleton hk]
   rw [ENNReal.toReal_mul, ENNReal.toReal_mul, ENNReal.toReal_pow, ENNReal.toReal_pow,
     ENNReal.toReal_natCast, ENNReal.coe_toReal, ENNReal.coe_toReal]
-  simp [unitInterval.toNNReal, unitInterval.symm]
+  simp [unitInterval.coe_toNNReal]
 
 end ProbabilityTheory
 
@@ -200,17 +202,18 @@ lemma integral_binomial_eq_sum
 -- imply
   ∫ x, f x ∂(binomial n p) = ∑ k ∈ Finset.range (n + 1), (n.choose k : ℂ) * (↑(p : ℝ))^k * (↑(1 - (p : ℝ)))^(n - k) * f k := by
 -- proof
-  rw [integral_countable (integrable_binomial n p f)]
+  rw [integral_countable integrable_binomial_measure]
   unfold Measure.real
   have hsup : ∀ x, x ∉ Finset.range (n + 1) →
     ((binomial n p) {x}).toReal • f x = 0 := by
     intro k hk; rw [Finset.mem_range, not_lt] at hk
-    simp [binomial_singleton_of_gt n k p (by omega)]
+    have hk' : n < k := Nat.lt_of_succ_le hk
+    simp [binomial_singleton_of_gt hk']
   calc ∑' x, ((binomial n p) {x}).toReal • f x
     = ∑ x ∈ Finset.range (n + 1), ((binomial n p) {x}).toReal • f x := tsum_eq_sum hsup
     _ = _ := by
       apply Finset.sum_congr rfl; intro k hk; rw [Finset.mem_range] at hk
-      rw [binomial_singleton_toReal n k p (by omega), Complex.real_smul]
+      rw [binomial_singleton_toReal (by omega), Complex.real_smul]
       push_cast; ring
 
 end ProbabilityTheory
@@ -236,7 +239,7 @@ lemma charFun_binomial_real
     unfold inner InnerProductSpace.toInner
     simp only [RCLike.toInnerProductSpaceReal, Inner.rclikeToReal]
     simp [RCLike.inner_apply, mul_comm]
-  rw [h1, integral_binomial_eq_sum n p _]
+  rw [h1, integral_binomial_eq_sum]
   set pe : ℂ := ((p : ℝ) : ℂ) * Complex.exp (↑t * Complex.I)
   set q : ℂ := ((1 - (p : ℝ)) : ℂ)
   rw [show q + pe = pe + q from add_comm q pe]
@@ -261,11 +264,12 @@ lemma charFun_standardizedBinomial
   {p : I}
   {t : ℝ} :
 -- imply
-  let s := Real.sqrt (↑n * ↑p * (1 - ↑p)) charFun (standardizedBinomial n p) t = charFun Bin(ℝ, n, p) (t * s⁻¹) * Complex.exp (↑(-(↑n * (↑p : ℝ) * (t * s⁻¹))) * Complex.I) := by
+  let s := Real.sqrt (↑n * ↑p * (1 - ↑p))
+  charFun (standardizedBinomial n p) t = charFun Bin(ℝ, n, p) (t * s⁻¹) * Complex.exp (↑(-(↑n * (↑p : ℝ) * (t * s⁻¹))) * Complex.I) := by
 -- proof
   intro s
   unfold standardizedBinomial
-  exact charFun_map_affine _ _ _ _
+  exact charFun_map_affine
 
 end ProbabilityTheory
 
@@ -352,14 +356,16 @@ lemma tendsto_charFun_standardizedBinomial
     rw [div_le_one (Real.sqrt_pos.mpr (mul_pos (Nat.cast_pos.mpr (by omega)) hpq_pos))]
     rw [← Real.sqrt_sq_eq_abs]
     apply Real.sqrt_le_sqrt
-    calc t ^ 2 ≤ ⌈t ^ 2 / (pp * qq)⌉ * (pp * qq) := by
-      rw [← div_le_iff₀ hpq_pos]; exact Int.le_ceil _
-      _ ≤ ↑n * (pp * qq) := by
-        gcongr
-        have : ⌈t ^ 2 / (pp * qq)⌉.toNat ≤ n := by omega
-        calc (⌈t ^ 2 / (pp * qq)⌉ : ℝ)
-          ≤ ↑(⌈t ^ 2 / (pp * qq)⌉.toNat : ℤ) := by exact_mod_cast Int.self_le_toNat _
-          _ ≤ ↑n := by exact_mod_cast this
+    have hceil : t ^ 2 ≤ (⌈t ^ 2 / (pp * qq)⌉ : ℝ) * (pp * qq) := by
+      rw [← div_le_iff₀ hpq_pos]
+      exact Int.le_ceil _
+    have hnat : ⌈t ^ 2 / (pp * qq)⌉.toNat ≤ n := by omega
+    have hto : (⌈t ^ 2 / (pp * qq)⌉ : ℝ) ≤ ↑(⌈t ^ 2 / (pp * qq)⌉.toNat : ℤ) := by
+      exact_mod_cast Int.self_le_toNat _
+    have hnR : (↑(⌈t ^ 2 / (pp * qq)⌉.toNat : ℤ) : ℝ) ≤ (n : ℝ) := by
+      exact_mod_cast hnat
+    have hceil_le_n : (⌈t ^ 2 / (pp * qq)⌉ : ℝ) ≤ (n : ℝ) := hto.trans hnR
+    exact hceil.trans (mul_le_mul_of_nonneg_right hceil_le_n (le_of_lt hpq_pos))
   have hK_bound : ∀ᶠ (n : ℕ) in atTop, K / Real.sqrt n ≤ ε := by
     filter_upwards [Filter.eventually_ge_atTop (⌈(K / ε) ^ 2⌉.toNat + 1)] with n hn
     have hn_pos : 0 < n := by omega
@@ -429,8 +435,8 @@ lemma tendsto_charFun_standardizedBinomial
       _ ≤ 1 * 1 := by
         apply mul_le_mul (by linarith) hsmall_sig (div_nonneg (abs_nonneg _) (Real.sqrt_nonneg _)) (by linarith)
       _ = 1 := one_mul 1
-  have hRa_bound := exp_taylor2_err a ha_norm
-  have hRb_bound := exp_taylor2_err b hb_norm
+  have hRa_bound := exp_taylor2_err ha_norm
+  have hRb_bound := exp_taylor2_err hb_norm
   have ha_le : ‖a‖ ≤ |t| / sig := by
     simp only [a, Complex.norm_mul, Complex.norm_real, Complex.norm_I, mul_one, Real.norm_eq_abs]
     calc |-(pp * u)| = pp * |u| := by rw [abs_neg, abs_mul, abs_of_pos hpp_pos]
@@ -464,9 +470,10 @@ lemma tendsto_charFun_standardizedBinomial
       rw [div_pow, mul_div, mul_one_div, div_le_div_iff₀ (pow_pos hsig_pos 3) hn_pos_r]
       rw [show sig ^ 3 = sig * sig ^ 2 from by ring, hsig_sq]
       have hK_le : K ≤ ε * Real.sqrt ↑n := by
-        calc K = K / Real.sqrt ↑n * Real.sqrt ↑n := by
-          rw [div_mul_cancel₀]; exact ne_of_gt (Real.sqrt_pos.mpr hn_pos_r)
-          _ ≤ ε * Real.sqrt ↑n := by gcongr
+        have hK_rewrite : K = K / Real.sqrt ↑n * Real.sqrt ↑n := by
+          rw [div_mul_cancel₀ _ (ne_of_gt (Real.sqrt_pos.mpr hn_pos_r))]
+        rw [hK_rewrite]
+        gcongr
       have h2t3 : 2 * |t| ^ 3 = K * (pp * qq) ^ (3/2 : ℝ) := by
         simp only [K]; field_simp
       have hrpow : (pp * qq) ^ (3/2 : ℝ) = Real.sqrt (pp * qq) * (pp * qq) := by
@@ -506,13 +513,13 @@ lemma deMoivreLaplace_clt
   intro t
   have hcf : charFun (↑stdNormalProb : Measure ℝ) t = Complex.exp (-(t ^ 2 / 2)) := by
     show charFun (gaussianReal 0 1) t = _
-    exact charFun_stdNormal t
+    exact charFun_stdNormal
   have hcf_n : ∀ n, charFun (↑(standardizedBinomialProb n p) : Measure ℝ) t =
     charFun (standardizedBinomial n p) t := by
     intro n
     rfl
   simp_rw [hcf_n, hcf]
-  exact tendsto_charFun_standardizedBinomial p hp₀ hp₁ t
+  exact tendsto_charFun_standardizedBinomial hp₀ hp₁
 
 end ProbabilityTheory
 

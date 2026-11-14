@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_NumberField_ArchimedeanIdeleModule.lean: instance decls only.
 import Mathlib
-import Lemma.GroupCohomology.RepPi
+import Lemma.Rep.RepPi
 import Abbrev.NumberField_ArchimedeanIdeleModule
 
 set_option autoImplicit false
@@ -53,4 +53,3 @@ variable (E K w) in
 
 
 end NumberField.InfPlaceDecomp
-

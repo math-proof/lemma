@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Structure.v1.Atlas.Buildings.code.BNPair.Basic.Part2
 import Mathlib.Tactic.Group
-import Mathlib.Algebra.Set.Closure.eq.N.of.Eq
+import Lemma.Set.Closure.eq.N.of.Eq
 set_option linter.unusedSectionVars false
 
 variable {G : Type*} [Group G] {B_idx : Type*} {M : CoxeterMatrix B_idx}

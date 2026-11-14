@@ -1,4 +1,4 @@
-import Lemma.ModularCurve.PeriodMap
+import Lemma.UpperHalfPlane.PeriodMap
 import Mathlib.Analysis.Complex.UpperHalfPlane.FunctionsBoundedAtInfty
 import Mathlib.NumberTheory.ModularForms.Basic
 import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups

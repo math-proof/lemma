@@ -29,7 +29,7 @@ lemma convergence_in_prob_iff_subseq_ae_real
       have hδ_pos : 0 < δ := ENNReal.toReal_pos hε.ne' hε_top
       have hδ2_pos : 0 < δ / 2 := half_pos hδ_pos
       apply tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds (hconv (δ / 2) hδ2_pos)
-      · intro n; exact zero_le _
+      · intro n; exact zero_le'
       · intro n
         apply measure_mono
         intro ω hω
@@ -49,7 +49,7 @@ lemma convergence_in_prob_iff_subseq_ae_real
     have hε_ne_top : ENNReal.ofReal ε ≠ ⊤ := ENNReal.ofReal_ne_top
     specialize hTIM (ENNReal.ofReal ε) hε_ennreal hε_ne_top
     apply tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds hTIM
-    · intro n; exact zero_le _
+    · intro n; exact zero_le'
     · intro n
       apply measure_mono
       intro ω hω

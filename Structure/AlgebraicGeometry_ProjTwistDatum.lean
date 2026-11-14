@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.AlgebraicGeometry.ProjSpaceCover
+import Lemma.MvPolynomial.ProjSpaceCover
 import Instance.AlgebraicGeometry_ProjSpaceCechGradedModule
 import Instance.AlgebraicGeometry_ProjTwistDatum
 

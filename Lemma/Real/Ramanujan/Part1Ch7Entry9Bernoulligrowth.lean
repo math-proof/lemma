@@ -324,7 +324,7 @@ lemma ramanujan_part1_ch7_entry9_bernoulligrowth
   -- convert to the stated sum function
   have hAt2 : DifferentiableAt ℂ (fun r : ℂ => chapter7PowerDifferenceSum r x) r0 := hAt
   exact hAt2.differentiableWithinAt
-end
+end Entry9Bernoulligrowth
 
 
 

@@ -2,47 +2,68 @@ import Lemma.Tensor.SoftmaxAdd_Mul_Infty.eq.Cast_Stack_Div_Sum
 open Tensor Hyperreal
 set_option maxHeartbeats 500000
 
-private lemma sum_sc {m : ℕ} (h : Fin m → ℝ) : ((∑ k, h k : ℝ) : Tensor ℝ []) = ∑ k, ((h k : ℝ) : Tensor ℝ []) := by
+
+private lemma sum_sc
+  {m : ℕ}
+-- given
+  (h : Fin m → ℝ) :
+-- imply
+  ((∑ k, h k : ℝ) : Tensor ℝ []) = ∑ k, ((h k : ℝ) : Tensor ℝ []) := by
+-- proof
   let φ : ℝ →+ Tensor ℝ [] := AddMonoidHom.mk' (fun x => (x : Tensor ℝ [])) (fun x y => by apply Eq.of.EqDataS; rfl)
-  exact map_sum φ h Finset.univ
+  apply map_sum φ h Finset.univ
 
+private lemma sc_ext
+  {x y : ℝ}
+-- given
+  (h : x = y) :
+-- imply
+  (x : Tensor ℝ []) = (y : Tensor ℝ []) := by
+-- proof
+  rw [h]
 
-private lemma sc_ext {x y : ℝ} (h : x = y) : (x : Tensor ℝ []) = (y : Tensor ℝ []) := by rw [h]
-
-
-private lemma real_row {m : ℕ} (f g : Fin m → ℝ) :
-    let X : Tensor ℝ [m] := [j < m] (f j : Tensor ℝ [])
-    let Y : Tensor ℝ [m] := [j < m] (g j : Tensor ℝ [])
-    (exp X * Y) / id (α := Tensor ℝ []) ((exp X * Y).sum 0) =
-      ([j < m] (((Real.exp (f j) * g j) / ∑ k, (Real.exp (f k) * g k) : ℝ) : Tensor ℝ [])) := by
+private lemma real_row
+  {m : ℕ}
+-- given
+  (f g : Fin m → ℝ) :
+-- imply
+  let X : Tensor ℝ [m] := [j < m] (f j : Tensor ℝ [])
+  let Y : Tensor ℝ [m] := [j < m] (g j : Tensor ℝ [])
+  Exp.exp X * Y / id (α := Tensor ℝ []) ((Exp.exp X * Y).sum 0) =
+    ([j < m] ((Real.exp (f j) * g j / ∑ k, Real.exp (f k) * g k : ℝ) : Tensor ℝ [])) := by
+-- proof
   intro X Y
   apply Eq.of.All_EqGetS.fin
   intro j
-  have hd := GetDiv.eq.DivGet.fin (exp X * Y) (((exp X * Y).sum 0 : Tensor ℝ [])) j
-  have hs := Sum_0.eq.Sum_Get.fin (exp X * Y)
-  have hm := fun i => GetMul.eq.MulGetS.fin (exp X) Y i
+  have hd := GetDiv.eq.DivGet.fin (Exp.exp X * Y) (((Exp.exp X * Y).sum 0 : Tensor ℝ [])) j
+  have hs := Sum_0.eq.Sum_Get.fin (Exp.exp X * Y)
+  have hm := fun i => GetMul.eq.MulGetS.fin (Exp.exp X) Y i
   have he := fun i => GetExp.eq.ExpGet.fin X i
   have hX : ∀ i : Fin m, X.get i = (f i : Tensor ℝ []) := fun i => EqGetStack.fin (fun j => (f j : Tensor ℝ [])) i
   have hY : ∀ i : Fin m, Y.get i = (g i : Tensor ℝ []) := fun i => EqGetStack.fin (fun j => (g j : Tensor ℝ [])) i
-  have hterm : ∀ i : Fin m, (exp X * Y).get i = ((Real.exp (f i) * g i : ℝ) : Tensor ℝ []) := by
+  have hterm : ∀ i : Fin m, (Exp.exp X * Y).get i = ((Real.exp (f i) * g i : ℝ) : Tensor ℝ []) := by
     intro i
     rw [hm i]
     erw [he i]
     rw [hX i, hY i]
     rfl
-  have hsum : ((exp X * Y).sum 0 : Tensor ℝ []) = ((∑ k, (Real.exp (f k) * g k) : ℝ) : Tensor ℝ []) := by
+  have hsum : ((Exp.exp X * Y).sum 0 : Tensor ℝ []) = ((∑ k, (Real.exp (f k) * g k) : ℝ) : Tensor ℝ []) := by
     rw [hs]
     simp only [hterm]
-    exact (sum_sc _).symm
+    apply Eq.symm (sum_sc _)
   simp only [id]
   erw [hd, hterm j, hsum]
-  erw [EqGetStack.fin (fun j => (((Real.exp (f j) * g j) / ∑ k, (Real.exp (f k) * g k) : ℝ) : Tensor ℝ [])) j]
+  erw [EqGetStack.fin (fun j => ((Real.exp (f j) * g j / ∑ k, Real.exp (f k) * g k : ℝ) : Tensor ℝ [])) j]
   rfl
 
-private lemma sc_bool (b : Bool) : ((b.toNat : ℕ) : Tensor ℝ []) = (((b.toNat : ℕ) : ℝ) : Tensor ℝ []) := by
+private lemma sc_bool
+-- given
+  (b : Bool) :
+-- imply
+  ((b.toNat : ℕ) : Tensor ℝ []) = (((b.toNat : ℕ) : ℝ) : Tensor ℝ []) := by
+-- proof
   apply Eq.of.EqDataS
   cases b <;> rfl
-
 
 /--
 Entrywise form of the hyperreal masked softmax: for logits \( a_{ij} \in \mathbb{R} \) and a mask \( p \) leaving
@@ -55,10 +76,10 @@ every row at least one unmasked entry,
 @[path]
 private lemma main
   {n m : ℕ}
+  {p : Fin n → Fin m → Bool}
 -- given
-  (p : Fin n → Fin m → Bool)
-  (a : Fin n → Fin m → ℝ)
-  (h_ne : ∀ i : Fin n, ∃ j : Fin m, p i j = true) :
+  (h_ne : ∀ i : Fin n, ∃ j : Fin m, p i j = true)
+  (a : Fin n → Fin m → ℝ) :
 -- imply
   let Ξ : Tensor ℝ* [n, m] := [i < n] [j < m] (Bool.toNat (p i j))
   let A : Tensor ℝ* [n, m] := ([i < n] [j < m] (a i j : Tensor ℝ []) : Tensor ℝ [n, m])
@@ -69,8 +90,8 @@ private lemma main
   let A₀ : Tensor ℝ [n, m] := [i < n] [j < m] (a i j : Tensor ℝ [])
   let Ξ₀ : Tensor ℝ [n, m] := [i < n] [j < m] (Bool.toNat (p i j))
   have h : (A + (Ξ - 1) * ∞).softmax ≈
-      (([i < n] (exp A₀[i] * Ξ₀[i] / id (α := Tensor ℝ []) ((exp A₀[i] * Ξ₀[i]).sum 0)) : Tensor ℝ [n, m]) : Tensor ℝ* [n, m]) :=
-    SoftmaxAdd_Mul_Infty.eq.Cast_Stack_Div_Sum p A₀ h_ne
+    (([i < n] (Exp.exp A₀[i] * Ξ₀[i] / id (α := Tensor ℝ []) ((Exp.exp A₀[i] * Ξ₀[i]).sum 0)) : Tensor ℝ [n, m]) : Tensor ℝ* [n, m]) :=
+    SoftmaxAdd_Mul_Infty.eq.Cast_Stack_Div_Sum h_ne A₀
   refine h.trans (Tensor.XEq.of.Eq ?_)
   congr 1
   congr 1
@@ -93,3 +114,4 @@ private lemma main
 
 
 -- created on 2026-10-01
+-- updated on 2026-11-13

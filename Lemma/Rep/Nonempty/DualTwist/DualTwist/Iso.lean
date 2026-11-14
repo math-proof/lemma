@@ -1,10 +1,10 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.DualSelmer.ExtConditions
-import Lemma.ExtCitation.KummerBridge
+import Lemma.Rep.ExtConditions
+import Lemma.Rep.KummerBridge
 import Lemma.Int.P2MUtil
 
-open CategoryTheory Module groupCohomology ExtCitation
+open CategoryTheory Module groupCohomology ExtCitation Rep
 
 /--
 [Rep_nonempty_dualTwist_dualTwist_iso](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Rep_nonempty_dualTwist_dualTwist_iso.lean)

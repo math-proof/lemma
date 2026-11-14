@@ -56,7 +56,7 @@ private lemma main
       (Set.Subsingleton.finite (s := {lam : mixedEmbedding.integerLattice F | (lam : mixedSpace F) = -x})
         fun a₁ h₁ a₂ h₂ => Subtype.coe_injective (h₁.trans h₂.symm)) ?_
     intro lam hlam
-    simp only [Set.mem_setOf_eq] at hlam ⊢
+    simp only [Set.mem_ofPred_eq] at hlam ⊢
     by_contra hne
     apply hlam
 

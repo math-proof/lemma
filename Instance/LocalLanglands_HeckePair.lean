@@ -1,7 +1,7 @@
 -- Carved from Lemma/Definitions/Def_LocalLanglands_HeckePair.lean: instance decls only.
 import Mathlib
 import Instance.AbstractHeckeOperator
-import Lemma.LocalLanglands.HeckePair
+import Lemma.Set.HeckeAlgebra
 
 set_option autoImplicit false
 
@@ -17,8 +17,7 @@ variable (R₀ : Type*) [CommRing R₀]
 
 variable {U R₀}
 
-instance : Mul (HeckeAlgebra U R₀) :=
-  ⟨fun f₁ f₂ => ⟨conv f₁ f₂, isHeckeFun_conv f₁ f₂⟩⟩
+instance : Mul (HeckeAlgebra U R₀) := ⟨heckeMul⟩
 
 instance : One (HeckeAlgebra U R₀) := ⟨heckeOne U R₀⟩
 
@@ -38,7 +37,7 @@ instance : SMulCommClass R₀ (HeckeAlgebra U R₀) (HeckeAlgebra U R₀) :=
   ⟨fun r f g => (HeckePair.mul_smul_comm r f g).symm⟩
 
 instance : IsScalarTower R₀ (HeckeAlgebra U R₀) (HeckeAlgebra U R₀) :=
-  ⟨fun r f g => by rw [smul_eq_mul, smul_eq_mul, HeckePair.smul_mul]⟩
+  ⟨fun r f g => HeckePair.smul_mul r f g⟩
 
 instance : Algebra R₀ (HeckeAlgebra U R₀) :=
   Algebra.ofModule HeckePair.smul_mul HeckePair.mul_smul_comm

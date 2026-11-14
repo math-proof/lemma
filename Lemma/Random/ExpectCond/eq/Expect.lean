@@ -6,7 +6,7 @@ open scoped Classical
 @[path]
 private lemma main
   [MeasurableSpace Ω]
-  [ReferenceMeasure α] [ReferenceMeasure γ]
+  [μ : ReferenceMeasure α] [ξ : ReferenceMeasure γ]
   [Countable α] [Countable γ]
   [MeasurableSingletonClass α] [MeasurableSingletonClass γ]
   [Expectation β]
@@ -14,8 +14,8 @@ private lemma main
   {f : α → γ → β}
 -- given
   (hP : SinglePSpace π (x, y))
-  (hα : ReferenceMeasure.measure (α := α) = Measure.count)
-  (hγ : ReferenceMeasure.measure (α := γ) = Measure.count) :
+  (hα : μ.measure = Measure.count)
+  (hγ : ξ.measure = Measure.count) :
 -- imply
   have : SinglePSpace π (x, y, y) := Random.PSpace_Joint_Joint.of.PSpace_Joint hP hα hγ
   Expectation.partialRV_RA π x y y f = 𝔼[x: π | y](f x y) := by
@@ -31,4 +31,4 @@ private lemma main
 
 
 -- created on 2026-09-20
--- updated on 2026-11-02
+-- updated on 2026-11-14

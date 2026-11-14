@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.AutomorphicForm.ModularFundamentalDomain
+import Lemma.UpperHalfPlane.ModularFundamentalDomain
 import Def.CuspForm_PeterssonCoset
 import Structure.CuspForm_PeterssonCoset
 

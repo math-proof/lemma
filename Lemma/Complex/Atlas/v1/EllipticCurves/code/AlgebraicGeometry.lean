@@ -260,7 +260,7 @@ lemma radical_eq_setOf
   (I.radical : Set R) = {f | ∃ n : ℕ, 0 < n ∧ f ^ n ∈ I} := by
 -- proof
   ext f
-  simp only [SetLike.mem_coe, Ideal.mem_radical_iff, Set.mem_setOf_eq]
+  simp only [SetLike.mem_coe, Ideal.mem_radical_iff, Set.mem_ofPred_eq]
   constructor
   · rintro ⟨n, hn⟩
     exact ⟨n + 1, Nat.succ_pos n, by rw [pow_succ]; exact I.mul_mem_right f hn⟩
@@ -341,7 +341,7 @@ lemma isAffineAlgebraicSet_inter_zeroLocus_singleton
   obtain ⟨I, rfl⟩ := hV
   exact ⟨I ⊔ Ideal.span {f}, by
     ext x
-    simp only [Set.mem_inter_iff, MvPolynomial.mem_zeroLocus_iff, Set.mem_setOf_eq]
+    simp only [Set.mem_inter_iff, MvPolynomial.mem_zeroLocus_iff, Set.mem_ofPred_eq]
     constructor
     · rintro ⟨hxI, hxf⟩ p hp
       have : I ⊔ Ideal.span {f} ≤ RingHom.ker (aeval x) :=
@@ -402,7 +402,7 @@ lemma IsIrreducibleAffineAlgebraicSet.vanishingIdeal_isPrime
     let V₂ := V ∩ {x | aeval x g = 0}
     have hVunion : V = V₁ ∪ V₂ := by
       ext x
-      simp only [V₁, V₂, Set.mem_union, Set.mem_inter_iff, Set.mem_setOf_eq]
+      simp only [V₁, V₂, Set.mem_union, Set.mem_inter_iff, Set.mem_ofPred_eq]
       constructor
       · intro hx
         have := (mem_vanishingIdealOfSet_iff V (f * g)).mp hfg x hx

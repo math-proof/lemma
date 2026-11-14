@@ -1,7 +1,7 @@
 import Mathlib
-import Lemma.GroupCohomology.RepPi
+import Lemma.Rep.RepPi
 import Abbrev.GroupCohomology_RepCokernel
-import Lemma.NumberField.SIdeleClassModule
+import Lemma.Rep.SIdeleClassModule
 import Abbrev.NumberField_ArchimedeanIdeleModule
 
 set_option autoImplicit false

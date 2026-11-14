@@ -1081,55 +1081,7 @@ end_time=$(date +%s)
 time_cost=$((end_time - start_time))
 
 # post-processing
-function remove_invalid_ir_file {
-  module=${1#*/*/*/}
-  module=${module%%.*}
-  module="$module.lean"
-  if [ ! -f $module ]; then
-    rm $1
-  fi
-}
-
-# Section runs skip the repo-wide .lake sweep: remove_invalid_* strips at the
-# first dot, so Lemma/test.Nat.0.olean is treated as Lemma/test.lean and would
-# be deleted (or would delete another run's in-progress test artifacts).
-if [ ${#MODULES[@]} -eq 0 ]; then
-  find .lake/build/ir -type f -regex '.*\.\(trace\|olean\|ilean\|hash\|c\)$' | while read -r file; do
-      remove_invalid_ir_file $file
-  done
-fi
-
-function remove_invalid_lib_file {
-  module=${1#*/*/*/*/}
-  module=${module%%.*}
-  module="$module.lean"
-  if [ ! -f $module ]; then
-    rm $1
-  fi
-}
-
-if [ ${#MODULES[@]} -eq 0 ]; then
-  find .lake/build/lib -type f -regex '.*\.\(trace\|olean\|ilean\|hash\|c\)$' | while read -r file; do
-      remove_invalid_lib_file $file
-  done
-fi
-
-function remove_invalid_echo_file {
-  module=${1%%.*}
-  module="$module.lean"
-  if [ ! -f $module ]; then
-    rm $1
-  fi
-}
-
-find Lemma -type f -regex '.*\.echo\.lean$' | while read -r file; do
-    remove_invalid_echo_file $file
-done
-
-if [ ${#MODULES[@]} -eq 0 ]; then
-  find . -type d -empty -exec rmdir {} +
-  find .lake/build -type d -empty -exec rmdir {} +
-fi
+source ./sh/clean.sh
 
 echo "seconds cost    = $time_cost"
 echo "total theorems  = ${#imports[@]}"

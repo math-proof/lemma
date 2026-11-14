@@ -85,10 +85,10 @@ lemma allPdBound_of_iteratedFDeriv_le
       _ = ‖iteratedFDeriv ℝ (m + 1) f x‖ := by
         rw [one_mul, norm_iteratedFDeriv_fderiv]
       _ ≤ δ := hbd (m + 1) hm1 x
-/-- For every `Cᵏ` function `u` that vanishes at infinity and every `δ > 0`,
-there exists a radius `R` so large that for any smooth bump function with
-inner radius `R` and outer radius `R + 1`, all iterated derivatives of
-`u - φ · u` are at most `δ` in norm outside the ball of radius `R`. -/
+-- For every `Cᵏ` function `u` that vanishes at infinity and every `δ > 0`,
+-- there exists a radius `R` so large that for any smooth bump function with
+-- inner radius `R` and outer radius `R + 1`, all iterated derivatives of
+-- `u - φ · u` are at most `δ` in norm outside the ball of radius `R`.
 end ConvolutionDensity
 
 

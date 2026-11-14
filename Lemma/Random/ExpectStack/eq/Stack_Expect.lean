@@ -6,6 +6,7 @@ import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.DataGet.eq.GetUnflattenData
 import Lemma.Vector.Eq.is.All_EqGetS
+import Theorem.Probability.JointRv.AsRV
 open MeasureTheory Tensor Vector
 set_option maxHeartbeats 1000000
 
@@ -68,9 +69,10 @@ private lemma expect_get
 @[path, comm]
 private lemma main
   [MeasurableSpace Ω]
-  [MeasurableSpace α]
+  [MeasurableSpace α] [StandardBorelSpace α] [Nonempty α]
   [Countable α] [MeasurableSingletonClass α]
-  {π : Measure Ω} {n : ℕ} {s : List ℕ}
+  {π : Measure Ω} [IsFiniteMeasure π] {n : ℕ} {s : List ℕ}
+  [Nonempty (Fin n → α)] [StandardBorelSpace (Fin n → α)]
   {x : Ω → Fin n → α} {y : Ω → γ}
   {f : α → Tensor ENNReal s}
 -- given
@@ -79,8 +81,8 @@ private lemma main
   𝔼[x: π]([k < n] f (x k) | y = «\sf{y}») =
     [k < n] (𝔼[x: π](f (x k) | y = «\sf{y}»)) := by
 -- proof
-  simp only [Expectation.asRV_function, Expectation.condEvent]
-  let ν := (ProbabilityTheory.cond π (y ⁻¹' {«\sf{y}»})).map x
+  simp only [Expectation.asRV_function, Expectation.condEval]
+  let ν := ProbabilityTheory.condDistrib x y π «\sf{y}»
   change
     expectation ν (fun xv ↦ [k < n] f (xv k)) =
       [k < n] (expectation ν (fun xv ↦ f (xv k)))
@@ -104,4 +106,4 @@ private lemma main
 
 
 -- created on 2023-04-02
--- updated on 2026-11-02
+-- updated on 2026-11-13

@@ -4,7 +4,7 @@ open Nat Real
 
 
 @[path]
-private lemma main:
+private lemma main :
 -- imply
   sin (π / 9) < 1 / 2 := by
 -- proof

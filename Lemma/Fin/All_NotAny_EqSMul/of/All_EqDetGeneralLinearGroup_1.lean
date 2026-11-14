@@ -57,15 +57,11 @@ private lemma main
     rintro ⟨γ, hγ, rfl⟩
     obtain ⟨g, hg⟩ := hlift γ hγ
     have hg𝒢 : g ∈ 𝒢 := by rwa [h𝒢, Subgroup.mem_comap, hg]
-    apply hzS _ _ hzτ rfl
-    refine ⟨⟨g, hg𝒢⟩, ?_, ?_⟩
-      ·
-        refine ⟨γ • τ', ⟨τ', rfl, ?_⟩, hzL⟩
-        show (⟨g, hg𝒢⟩ : ↥𝒢) • τ' = γ • τ'
-        rw [Subgroup.mk_smul, hact, hg]
-      ·
-        show (⟨g, hg𝒢⟩ : ↥𝒢) • τ' = γ • τ'
-        rw [Subgroup.mk_smul, hact, hg]
+    have hact' : (⟨g, hg𝒢⟩ : ↥𝒢) • τ' = γ • τ' := by
+      rw [Subgroup.mk_smul, hact, hg]
+    refine (hzS ((⟨g, hg𝒢⟩ : ↥𝒢) • τ') ?_ (hact'.trans_ne hzτ)) hact'.symm
+    exact ⟨⟨g, hg𝒢⟩, ⟨γ • τ', ⟨τ', rfl, hact'⟩, hzL⟩, rfl⟩
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

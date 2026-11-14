@@ -1,6 +1,7 @@
 import Lemma.Complex.PowPowAddDivNeg1'2DivMulISqrt3'2'3.eq.One
 import Lemma.Complex.AddPowPowPowPow.eq.Neg
 import Lemma.Complex.MulMulPowPowPow.eq.DivNeg3.of.EqSubCeil.Eq_AddDivMul4Pow3'27Square
+open Complex
 
 
 @[path]
@@ -21,4 +22,4 @@ private lemma sub.given
   linear_combination (3 * ((δ ^ (1 / 2 : ℂ) / 2 - q / 2) ^ (1 / 3 : ℂ) * (-1 / 2 + Complex.I * √3 / 2) ^ d + (-δ ^ (1 / 2 : ℂ) / 2 - q / 2) ^ (1 / 3 : ℂ))) * hK + ((δ ^ (1 / 2 : ℂ) / 2 - q / 2) ^ (1 / 3 : ℂ)) ^ 3 * hW3 + hsum
 
 
--- created on 2018-11-10
+-- created on 2018-11-20

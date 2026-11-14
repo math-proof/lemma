@@ -1,10 +1,10 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.LevelModuliPackage
-import Lemma.ModularCurve.LevelModuliPackageAbs
+import Lemma.Int.LevelModuliPackage
+import Lemma.Int.LevelModuliPackageAbs
 import Lemma.Int.P2MUtil
 
-open ModularCurve
+open ModularCurve Int
 
 /--
 [ModularCurve_LevelModuliPackageAbs_natCard_algHom_apply_jOf_univ_eq_natCard_pt_jOf_eq](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularCurve_LevelModuliPackageAbs_natCard_algHom_apply_jOf_univ_eq_natCard_pt_jOf_eq.lean)

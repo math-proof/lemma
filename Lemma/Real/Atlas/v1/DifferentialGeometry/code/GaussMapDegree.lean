@@ -61,7 +61,7 @@ lemma det_augmented_eq_det_mul
     congr 1
     ext k
     have hk : (k : ℕ) < n := k.isLt
-    simp only [dif_pos hk]
+    simp only [dite_eq_left hk]
   ·
     rw [Fin.sum_univ_castSucc]
     simp only [Fin.val_castSucc, Fin.val_last, Nat.lt_irrefl,

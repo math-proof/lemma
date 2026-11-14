@@ -1,0 +1,20 @@
+import Mathlib
+import Initialize.Tactic.Attr.Basic
+import Theorem.Analysis.MeasureTheory.Section_1_1_3.Part7
+open BoundedInterval
+open TaggedPartition
+@[path]
+private lemma main
+  {I: BoundedInterval}
+  {δ : ℝ}
+-- given
+  (hI: I = Icc I.a I.b)
+  (hab: I.a < I.b)
+  (hδ : 0 < δ) :
+-- imply
+  ∃ (n : ℕ) (P : TaggedPartition I n), P.norm ≤ δ :=
+-- proof
+  TaggedPartition.exists_norm_le I hI hab δ hδ
+
+
+-- created on 2026-10-22

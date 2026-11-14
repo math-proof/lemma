@@ -27,7 +27,7 @@ private lemma main
   ∑ a, ψ a = 0 := by
 -- proof
   classical
-  rw [AddChar.sum_eq_ite, if_neg hψ]
+  rw [AddChar.sum_eq_ite, ite_eq_right hψ]
 
 end LocalGL2.Kirillov
 

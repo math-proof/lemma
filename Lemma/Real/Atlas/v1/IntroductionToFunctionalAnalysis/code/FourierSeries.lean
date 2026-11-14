@@ -53,7 +53,7 @@ lemma integral_dirichlet_sum
   rw [integral_finset_sum _ (fun n _ => fourier_integrable n)]
   simp only [integral_fourier]
   have h0 : (0 : ℤ) ∈ Finset.Icc (-(k : ℤ)) (k : ℤ) := by simp
-  rw [← Finset.add_sum_erase _ _ h0, if_pos rfl]
+  rw [← Finset.add_sum_erase _ _ h0, ite_eq_left rfl]
   have : ∑ x ∈ (Finset.Icc (-(k : ℤ)) (k : ℤ)).erase 0,
     (if x = (0 : ℤ) then (1 : ℂ) else 0) = 0 := by
     apply Finset.sum_eq_zero
@@ -177,8 +177,8 @@ lemma fejerKernel_continuous
   unfold fejerKernel
   have hsum : Continuous fun x : AddCircle T =>
       ∑ k ∈ range (N + 1), ∑ n ∈ Finset.Icc (-(k : ℤ)) (k : ℤ), (fourier n x : ℂ) := by
-    apply continuous_finset_sum; intro k _
-    apply continuous_finset_sum; intro n _
+    apply continuous_finsetSum; intro k _
+    apply continuous_finsetSum; intro n _
     exact map_continuous (fourier n)
   exact Continuous.const_smul hsum ((N : ℂ) + 1)⁻¹
 
@@ -652,7 +652,7 @@ lemma cesaroMean_uniform_bound
         _ = ε / 2 * ‖fejerKernel N t‖ := by ring
         _ ≤ ε / 2 * ‖fejerKernel N t‖ + 2 * ‖f‖ * C := le_add_of_nonneg_right (by positivity)
     ·
-      push_neg at ht
+      push Not at ht
       have h_decay_t : ‖fejerKernel N t‖ ≤ C :=
         hdecay δ' hδ'_pos t (hδ'_bound t ht)
       have hf_bound : ‖f x - f (x - t)‖ ≤ 2 * ‖f‖ :=

@@ -1,4 +1,4 @@
-import Lemma.LanglandsTunnell.CubicInduction_Structure
+import Lemma.Matrix.CubicInduction_Structure
 import Instance.LanglandsTunnell_CubicInduction_EnvelopingAction3
 
 noncomputable section

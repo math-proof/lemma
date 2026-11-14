@@ -7,7 +7,7 @@ open Random
 @[path]
 private lemma main
   [MeasurableSpace Ω]
-  [ReferenceMeasure α] [ReferenceMeasure β] [ReferenceMeasure γ]
+  [μ : ReferenceMeasure α] [ν : ReferenceMeasure β] [ξ : ReferenceMeasure γ]
   {π : MeasureTheory.Measure Ω}
   {x : Ω → α} {y : Ω → β} {z : Ω → γ}
 -- given
@@ -20,9 +20,9 @@ private lemma main
         (PSpace_JointJoint.of.PSpace_Joint_Joint
           (PSpace_Joint.comm (PSpace_JointJoint.of.PSpace_Joint_Joint hP))))
   have _hPyxz : SinglePSpace π (y, x, z) := PSpace_Joint_Joint.of.PSpace_Joint_Joint hP
-  ∀ᵐ «\sf{y}» ∂ReferenceMeasure.measure,
-    ∀ᵐ «\sf{x}» ∂ReferenceMeasure.measure,
-      ∀ᵐ «\sf{z}» ∂ReferenceMeasure.measure,
+  ∀ᵐ «\sf{y}» ∂ν.measure,
+    ∀ᵐ «\sf{x}» ∂μ.measure,
+      ∀ᵐ «\sf{z}» ∂ξ.measure,
         ℙ[π](y = «\sf{y}» | x = «\sf{x}» ∧ z = «\sf{z}») =
           ℙ[π](x = «\sf{x}» ∧ y = «\sf{y}» | z = «\sf{z}») /
             ℙ[π](x = «\sf{x}» | z = «\sf{z}») := by
@@ -230,4 +230,4 @@ private lemma main
 
 
 -- created on 2023-10-13
--- updated on 2026-11-02
+-- updated on 2026-11-14

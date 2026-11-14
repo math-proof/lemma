@@ -28,11 +28,8 @@ private lemma main
   (A.hstack B ++ C.hstack D) ⬝ᵥ (X.hstack Y ++ U.hstack V) = ((id (α := Tensor α [n, p]) (A ⬝ᵥ X) + id (α := Tensor α [n, p]) (B ⬝ᵥ U)).hstack (id (α := Tensor α [n, q]) (A ⬝ᵥ Y) + id (α := Tensor α [n, q]) (B ⬝ᵥ V))) ++ ((id (α := Tensor α [m, p]) (C ⬝ᵥ X) + id (α := Tensor α [m, p]) (D ⬝ᵥ U)).hstack (id (α := Tensor α [m, q]) (C ⬝ᵥ Y) + id (α := Tensor α [m, q]) (D ⬝ᵥ V))) := by
 -- proof
   rw [DotAppend.eq.AppendDotS (A.hstack B) (C.hstack D) (X.hstack Y ++ U.hstack V)]
-  have h0inv : (A.hstack B) ⬝ᵥ (X.hstack Y ++ U.hstack V) = cast (by simp [matmul_shape, broadcast_shape]) (cast (by simp [matmul_shape, broadcast_shape]) ((A.hstack B) ⬝ᵥ (X.hstack Y ++ U.hstack V)) : Tensor α [n, p + q]) := by
-    simp
-  have h1inv : (C.hstack D) ⬝ᵥ (X.hstack Y ++ U.hstack V) = cast (by simp [matmul_shape, broadcast_shape]) (cast (by simp [matmul_shape, broadcast_shape]) ((C.hstack D) ⬝ᵥ (X.hstack Y ++ U.hstack V)) : Tensor α [m, p + q]) := by
-    simp
-  rw [h0inv, h1inv, DotHstack.eq.AddDotS A B (X.hstack Y) (U.hstack V), DotHstack.eq.AddDotS C D (X.hstack Y) (U.hstack V)]
+  simp only [id]
+  rw [DotHstack.eq.AddDotS A B (X.hstack Y) (U.hstack V), DotHstack.eq.AddDotS C D (X.hstack Y) (U.hstack V)]
   rw [Dot_Hstack.eq.HstackDotS A X Y, Dot_Hstack.eq.HstackDotS B U V, Dot_Hstack.eq.HstackDotS C X Y, Dot_Hstack.eq.HstackDotS D U V]
   have hAdd0 := AddHstackS.eq.HstackAddS (id (α := Tensor α [n, p]) (A ⬝ᵥ X)) (id (α := Tensor α [n, p]) (B ⬝ᵥ U)) (id (α := Tensor α [n, q]) (A ⬝ᵥ Y)) (id (α := Tensor α [n, q]) (B ⬝ᵥ V))
   have hAdd1 := AddHstackS.eq.HstackAddS (id (α := Tensor α [m, p]) (C ⬝ᵥ X)) (id (α := Tensor α [m, p]) (D ⬝ᵥ U)) (id (α := Tensor α [m, q]) (C ⬝ᵥ Y)) (id (α := Tensor α [m, q]) (D ⬝ᵥ V))
@@ -40,4 +37,4 @@ private lemma main
 
 
 -- created on 2020-08-18
--- updated on 2026-09-02
+-- updated on 2026-11-13

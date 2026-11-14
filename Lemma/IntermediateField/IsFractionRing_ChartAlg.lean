@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.TwoChartIntegralModel
-open AlgebraicCurve.TwoChartIntegralModel
+import Lemma.Scheme.TwoChartIntegralModel
+open Scheme.TwoChartIntegralModel
 
 
 /--

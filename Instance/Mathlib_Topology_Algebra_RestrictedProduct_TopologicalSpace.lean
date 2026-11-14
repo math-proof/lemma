@@ -2,10 +2,10 @@
 import Mathlib
 import Def.Mathlib_Topology_Algebra_ContinuousMonoidHom
 import Lemma.Set.IsOpenUnits.of.IsOpenSet
-import Lemma.Topology.Algebra.RestrictedProduct.Equiv
+import Lemma.Filter.Algebra.RestrictedProduct.Equiv
 import Lemma.Filter.CountableSetsCofinite
 import Lemma.Filter.SecondCountableBases
-import Lemma.Topology.Algebra.RestrictedProduct.TopologicalSpace
+import Lemma.Filter.Algebra.RestrictedProduct.TopologicalSpace
 
 section
 

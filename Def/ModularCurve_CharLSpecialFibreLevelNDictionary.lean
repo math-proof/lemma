@@ -1,7 +1,7 @@
 import Mathlib
-import Lemma.ModularCurve.QAdicPlaceMod
-import Lemma.ModularCurve.CharLFrobeniusGeomLevel
-import Lemma.ModularCurve.SpecializeModuli
+import Lemma.HahnSeries.QAdicPlaceMod
+import Lemma.LaurentSeries.CharLFrobeniusGeomLevel
+import Lemma.Finsupp.SpecializeModuli
 import Def.AlgebraicCurve_PlaceEvaluation
 
 set_option autoImplicit false

@@ -25,7 +25,7 @@ lemma exists_finite_wimanExceptionalSet
     wimanGrowth f x ^ (81 / 64 : ℝ) := by
 -- proof
   obtain ⟨a, hgpos_a, hgmono_a, hdmono_a, hC2, hd_atTop⟩ :=
-    eventually_wimanGrowth_regular f hf htrans
+    eventually_wimanGrowth_regular (f := f) hf htrans
   have hd_eventually_pos : ∀ᶠ x : ℝ in atTop, 0 < deriv (wimanGrowth f) x :=
     hd_atTop.eventually (eventually_gt_atTop 0)
   obtain ⟨b, hdb⟩ := eventually_atTop.1 hd_eventually_pos
@@ -86,7 +86,7 @@ lemma exists_finite_wimanExceptionalSet
     _ = wimanGrowth f x ^ ((9 / 8 : ℝ) * (9 / 8 : ℝ)) :=
       (Real.rpow_mul hgx.le (9 / 8 : ℝ) (9 / 8 : ℝ)).symm
     _ = wimanGrowth f x ^ (81 / 64 : ℝ) := by norm_num
-end
+end Complex
 
 
 

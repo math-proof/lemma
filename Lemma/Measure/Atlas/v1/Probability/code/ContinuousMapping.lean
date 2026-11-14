@@ -22,16 +22,10 @@ lemma continuous_mapping
   (hg_ae : μ {x | ¬ContinuousAt g x} = 0)
   (hconv : WeakConvergenceMeasures μs μ) :
 -- imply
-  haveI : ∀ n, IsProbabilityMeasure ((μs n).map g) :=
--- proof
-  fun _ ↦ Measure.isProbabilityMeasure_map hg_meas.aemeasurable
-  haveI : IsProbabilityMeasure (μ.map g) :=
-    Measure.isProbabilityMeasure_map hg_meas.aemeasurable
   WeakConvergenceMeasures (fun n ↦ (μs n).map g) (μ.map g) := by
-  haveI : ∀ n, IsProbabilityMeasure ((μs n).map g) :=
-    fun _ ↦ Measure.isProbabilityMeasure_map hg_meas.aemeasurable
-  haveI : IsProbabilityMeasure (μ.map g) :=
-    Measure.isProbabilityMeasure_map hg_meas.aemeasurable
+-- proof
+  haveI : ∀ n, IsProbabilityMeasure ((μs n).map g) := fun _ ↦ inferInstance
+  haveI : IsProbabilityMeasure (μ.map g) := inferInstance
   let pμs : ℕ → ProbabilityMeasure ℝ := fun n ↦ ⟨μs n, inferInstance⟩
   let pμ : ProbabilityMeasure ℝ := ⟨μ, inferInstance⟩
   have htendsto_orig : Tendsto pμs atTop (𝓝 pμ) := by
@@ -53,10 +47,10 @@ lemma continuous_mapping
           intro x ⟨hx1, hx2⟩ hcont
           exact hx2 (mem_interior_iff_mem_nhds.mpr (hcont.preimage_mem_nhds (hO.mem_nhds hx1)))
         have h0 : μ (g ⁻¹' O \ interior (g ⁻¹' O)) = 0 :=
-          le_antisymm ((measure_mono hsub).trans (le_of_eq hg_ae)) (zero_le _)
+          le_antisymm ((measure_mono hsub).trans (le_of_eq hg_ae)) bot_le
         calc μ (g ⁻¹' O)
-          = μ (interior (g ⁻¹' O) ∪ (g ⁻¹' O \ interior (g ⁻¹' O))) := by
-            rw [union_diff_cancel interior_subset]
+          = μ (interior (g ⁻¹' O) ∪ (g ⁻¹' O \ interior (g ⁻¹' O))) :=
+            by rw [union_sdiff_cancel interior_subset]
           _ ≤ μ (interior (g ⁻¹' O)) + μ (g ⁻¹' O \ interior (g ⁻¹' O)) :=
             measure_union_le _ _
           _ = μ (interior (g ⁻¹' O)) := by rw [h0, add_zero]

@@ -2,7 +2,6 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 
 open MeasureTheory Set Real
-open MGReal
 
 /-- ported from external source -/
 
@@ -375,7 +374,6 @@ private lemma  mellin_integrand_eq_iter (a : ℝ) (C p q κ z : ℂ) (σ' : ℝ)
   simp only [← integral_const_mul, ← integral_mul_const]
 
 
-open MGReal
 
 local notation "μ0" => Measure.restrict (volume : Measure ℝ) (Ioi (0:ℝ))
 

@@ -2,6 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.Buildings.code.Valuation.DiscreteValuationBook
 open Polynomial
+set_option maxHeartbeats 800000
 
 
 namespace Definitions
@@ -43,11 +44,7 @@ variable (K : Type u) [Field K] {Γ₀ : Type v} [LinearOrderedCommGroupWithZero
 [valuationRing_isOpen](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Valuation/DiscreteValuationBook.lean)
 -/
 @[path]
-private lemma valuationRing_isOpen
-  {K : Type u}
-  [Field K]
-  {Γ₀ : Type v}
-  [LinearOrderedCommGroupWithZero Γ₀] :
+private lemma valuationRing_isOpen :
 -- imply
   IsOpen (hv.v.valuationSubring : Set K) :=
 -- proof
@@ -57,11 +54,7 @@ private lemma valuationRing_isOpen
 [valuationRing_isClosed](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Valuation/DiscreteValuationBook.lean)
 -/
 @[path]
-private lemma valuationRing_isClosed
-  {K : Type u}
-  [Field K]
-  {Γ₀ : Type v}
-  [LinearOrderedCommGroupWithZero Γ₀] :
+private lemma valuationRing_isClosed :
 -- imply
   IsClosed (hv.v.valuationSubring : Set K) :=
 -- proof
@@ -71,11 +64,7 @@ private lemma valuationRing_isClosed
 [valuationRing_isClopen](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Valuation/DiscreteValuationBook.lean)
 -/
 @[path]
-private lemma valuationRing_isClopen
-  {K : Type u}
-  [Field K]
-  {Γ₀ : Type v}
-  [LinearOrderedCommGroupWithZero Γ₀] :
+private lemma valuationRing_isClopen :
 -- imply
   IsClopen (hv.v.valuationSubring : Set K) :=
 -- proof
@@ -85,41 +74,29 @@ private lemma valuationRing_isClopen
 [maximalIdeal_isOpen](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Valuation/DiscreteValuationBook.lean)
 -/
 @[path]
-private lemma maximalIdeal_isOpen
-  {K : Type u}
-  [Field K]
-  {Γ₀ : Type v}
-  [LinearOrderedCommGroupWithZero Γ₀] :
+private lemma maximalIdeal_isOpen :
 -- imply
-  IsOpen (X := K) {x | Valued.v.restrict x < (1 : MonoidWithZeroHom.ValueGroup₀ hv.v)} :=
+  IsOpen {x : K | hv.v.restrict x < (1 : hv.v.ValueGroup₀)} :=
 -- proof
-  Valued.isOpen_ball K 1
+  Valued.isOpen_ball (R := K) (r := (1 : hv.v.ValueGroup₀))
 
 /--
 [maximalIdeal_isClosed](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Valuation/DiscreteValuationBook.lean)
 -/
 @[path]
-private lemma maximalIdeal_isClosed
-  {K : Type u}
-  [Field K]
-  {Γ₀ : Type v}
-  [LinearOrderedCommGroupWithZero Γ₀] :
+private lemma maximalIdeal_isClosed :
 -- imply
-  IsClosed (X := K) {x | Valued.v.restrict x < (1 : MonoidWithZeroHom.ValueGroup₀ hv.v)} :=
+  IsClosed {x : K | hv.v.restrict x < (1 : hv.v.ValueGroup₀)} :=
 -- proof
-  Valued.isClosed_ball K 1
+  Valued.isClosed_ball (R := K) (r := (1 : hv.v.ValueGroup₀))
 
 /--
 [maximalIdeal_isClopen](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Valuation/DiscreteValuationBook.lean)
 -/
 @[path]
-private lemma maximalIdeal_isClopen
-  {K : Type u}
-  [Field K]
-  {Γ₀ : Type v}
-  [LinearOrderedCommGroupWithZero Γ₀] :
+private lemma maximalIdeal_isClopen :
 -- imply
-  IsClopen (X := K) {x | Valued.v.restrict x < (1 : MonoidWithZeroHom.ValueGroup₀ hv.v)} :=
+  IsClopen {x : K | hv.v.restrict x < (1 : hv.v.ValueGroup₀)} :=
 -- proof
   ⟨maximalIdeal_isClosed K, maximalIdeal_isOpen K⟩
 
@@ -127,41 +104,29 @@ private lemma maximalIdeal_isClopen
 [valuationUnits_isOpen](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Valuation/DiscreteValuationBook.lean)
 -/
 @[path]
-private lemma valuationUnits_isOpen
-  {K : Type u}
-  [Field K]
-  {Γ₀ : Type v}
-  [LinearOrderedCommGroupWithZero Γ₀] :
+private lemma valuationUnits_isOpen :
 -- imply
-  IsOpen (X := K) {x | Valued.v.restrict x = (1 : MonoidWithZeroHom.ValueGroup₀ hv.v)} :=
+  IsOpen {x : K | hv.v.restrict x = (1 : hv.v.ValueGroup₀)} :=
 -- proof
-  Valued.isOpen_sphere K one_ne_zero
+  Valued.isOpen_sphere (R := K) one_ne_zero
 
 /--
 [valuationUnits_isClosed](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Valuation/DiscreteValuationBook.lean)
 -/
 @[path]
-private lemma valuationUnits_isClosed
-  {K : Type u}
-  [Field K]
-  {Γ₀ : Type v}
-  [LinearOrderedCommGroupWithZero Γ₀] :
+private lemma valuationUnits_isClosed :
 -- imply
-  IsClosed (X := K) {x | Valued.v.restrict x = (1 : MonoidWithZeroHom.ValueGroup₀ hv.v)} :=
+  IsClosed {x : K | hv.v.restrict x = (1 : hv.v.ValueGroup₀)} :=
 -- proof
-  Valued.isClosed_sphere K 1
+  Valued.isClosed_sphere (R := K) (r := (1 : hv.v.ValueGroup₀))
 
 /--
 [valuationUnits_isClopen](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Valuation/DiscreteValuationBook.lean)
 -/
 @[path]
-private lemma valuationUnits_isClopen
-  {K : Type u}
-  [Field K]
-  {Γ₀ : Type v}
-  [LinearOrderedCommGroupWithZero Γ₀] :
+private lemma valuationUnits_isClopen :
 -- imply
-  IsClopen (X := K) {x | Valued.v.restrict x = (1 : MonoidWithZeroHom.ValueGroup₀ hv.v)} :=
+  IsClopen {x : K | hv.v.restrict x = (1 : hv.v.ValueGroup₀)} :=
 -- proof
   ⟨valuationUnits_isClosed K, valuationUnits_isOpen K⟩
 end ClopenSubsets
@@ -215,7 +180,8 @@ private lemma hensel_nonmonic_adic
   have hfcI : ∀ n, f.eval (c n) ∈ I ^ (n + 1) := by
     intro n
     induction n with
-    | zero => simpa only [Nat.rec_zero, zero_add, pow_one] using h₁
+    | zero =>
+      simpa only [c, newtonSeq, Nat.rec_zero, zero_add, pow_one] using h₁
     | succ n ih =>
       rw [← taylor_eval_sub (c n), hc, sub_eq_add_neg, sub_eq_add_neg,
         add_neg_cancel_comm]
@@ -316,7 +282,8 @@ private lemma hensel_nonmonic_adic_newton
   have hfcI : ∀ n, f.eval (c n) ∈ I ^ (n + 1) := by
     intro n
     induction n with
-    | zero => simpa only [Nat.rec_zero, zero_add, pow_one] using h₁
+    | zero =>
+      simpa only [c, newtonSeq, Nat.rec_zero, zero_add, pow_one] using h₁
     | succ n ih =>
       rw [← taylor_eval_sub (c n), hc, sub_eq_add_neg, sub_eq_add_neg,
         add_neg_cancel_comm]
@@ -373,4 +340,4 @@ end HenselsLemma
 
 
 -- created on 2026-10-24
--- updated on 2026-10-28
+-- updated on 2026-11-13

@@ -11,9 +11,9 @@ namespace MathlibExt.MeasureTheory.Geometry.HamSandwichWanted
 
 /--
 [hs_addHaar_setOf_inner_eq_null](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/Geometry/HamSandwich.lean)
+nonzero) are add-Haar-null.
 -/
 @[path]
-nonzero) are add-Haar-null. -/
 private lemma hs_addHaar_setOf_inner_eq_null
   {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   [MeasurableSpace E] [BorelSpace E] [FiniteDimensional ℝ E]
@@ -69,9 +69,9 @@ namespace MathlibExt.MeasureTheory.Geometry.HamSandwichWanted
 
 /--
 [hs_measurableSet_inner_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/Geometry/HamSandwich.lean)
+are measurable.
 -/
 @[path]
-are measurable. -/
 private lemma hs_measurableSet_inner_le
   {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   [MeasurableSpace E] [OpensMeasurableSpace E]
@@ -139,9 +139,9 @@ namespace MathlibExt.MeasureTheory.Geometry.HamSandwichWanted
 
 /--
 [hs_eq_half_of_add_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/Geometry/HamSandwich.lean)
+finiteness needed.
 -/
 @[path]
-finiteness needed. -/
 private lemma hs_eq_half_of_add_eq {a b U : ENNReal} (hab : a = b) (hadd : a + b = U) :
   a = U / 2 ∧ b = U / 2 := by
   subst hab
@@ -263,9 +263,9 @@ namespace MathlibExt.MeasureTheory.Geometry.HamSandwichWanted
 
 /--
 [hs_eventually_mem_halfspace_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/Geometry/HamSandwich.lean)
+eventually constant.
 -/
 @[path]
-eventually constant. -/
 private lemma hs_eventually_mem_halfspace_iff {n : ℕ}
   (u : EuclideanSpace ℝ (Fin (n + 1))) (x : EuclideanSpace ℝ (Fin n))
   (hne : ⟪hsTail u, x⟫_ℝ ≠ u 0) :
@@ -289,9 +289,9 @@ namespace MathlibExt.MeasureTheory.Geometry.HamSandwichWanted
 
 /--
 [hs_continuousAt_measure_halfspace](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/Geometry/HamSandwich.lean)
+exceptional hyperplane is null.
 -/
 @[path]
-exceptional hyperplane is null. -/
 private lemma hs_continuousAt_measure_halfspace {n : ℕ}
   [MeasurableSpace (EuclideanSpace ℝ (Fin n))]
   [BorelSpace (EuclideanSpace ℝ (Fin n))]
@@ -317,9 +317,9 @@ namespace MathlibExt.MeasureTheory.Geometry.HamSandwichWanted
 
 /--
 [hs_continuous_bisectionMap](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/Geometry/HamSandwich.lean)
+continuous.
 -/
 @[path]
-continuous. -/
 private lemma hs_continuous_bisectionMap {n : ℕ}
   [MeasurableSpace (EuclideanSpace ℝ (Fin n))]
   [BorelSpace (EuclideanSpace ℝ (Fin n))]
@@ -384,9 +384,9 @@ namespace MathlibExt.MeasureTheory.Geometry.HamSandwichWanted
 
 /--
 [hs_exists_antipodal_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/Geometry/HamSandwich.lean)
+half-space and opposite half-space have equal mass for every measure.
 -/
 @[path]
-half-space and opposite half-space have equal mass for every measure. -/
 private lemma hs_exists_antipodal_eq {n : ℕ}
   [MeasurableSpace (EuclideanSpace ℝ (Fin n))]
   [BorelSpace (EuclideanSpace ℝ (Fin n))]
@@ -441,9 +441,9 @@ namespace MathlibExt.MeasureTheory.Geometry.HamSandwichWanted
 
 /--
 [hs_measure_univ_eq_zero_of_pole](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/Geometry/HamSandwich.lean)
+measure satisfying the antipodal equation is zero.
 -/
 @[path]
-measure satisfying the antipodal equation is zero. -/
 private lemma hs_measure_univ_eq_zero_of_pole {n : ℕ}
   [MeasurableSpace (EuclideanSpace ℝ (Fin n))]
   (u : EuclideanSpace ℝ (Fin (n + 1))) (h1 : ‖u‖ = 1) (h0 : hsTail u = 0)

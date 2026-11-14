@@ -530,7 +530,7 @@ lemma differentiableOn_cauchyTypeIntegral
     have hr_eq : r = infDist z₀ γ.range / 2 := rfl
     linarith
   have hne_sub : ∀ t ∈ Icc γ.a γ.b, ∀ z ∈ ball z₀ r, γ.toFun t - z ≠ 0 := fun t ht z hz h0 =>
-    absurd (hdist t ht z hz) (by rw [h0, norm_zero]; push_neg; exact hr_pos)
+    absurd (hdist t ht z hz) (by rw [h0, norm_zero]; push Not; exact hr_pos)
   have hfγ : ContinuousOn (f ∘ γ.toFun) (Icc γ.a γ.b) :=
     hf_cont.comp γ.continuous_toFun (mapsTo_image _ _)
   obtain ⟨Cf, hCf⟩ := hK.exists_bound_of_continuousOn hf_cont
@@ -1367,7 +1367,7 @@ lemma differentiableOn_cauchyPiecewise_omega
     (γ.contourIntegral_dslope_differentiable hΩ hf hγ).const_mul _
   have h_eq : ∀ z ∈ Ω, cauchyPiecewise Ω f γ z = F z := by
     intro z hz
-    simp only [cauchyPiecewise, if_pos hz, dividedDiff, hF_def]
+    simp only [cauchyPiecewise, ite_eq_left hz, dividedDiff, hF_def]
   exact hF_diff.differentiableOn.congr (fun z hz => (h_eq z hz))
 
 /--
@@ -1467,7 +1467,7 @@ lemma cauchyPiecewise_tendsto_zero_cocompact
   have hG_diff := cauchyPiecewise_differentiable Ω hΩ f hf γ hγ
   have agree_on_Ω : ∀ z ∈ Ω, cauchyPiecewise Ω f γ z = F z := by
     intro z hz
-    simp only [cauchyPiecewise, if_pos hz, dividedDiff, hF_def]
+    simp only [cauchyPiecewise, ite_eq_left hz, dividedDiff, hF_def]
   obtain ⟨z₀, hz₀⟩ := γ.range_nonempty.mono hγ.1
   have heq_nhds : cauchyPiecewise Ω f γ =ᶠ[nhds z₀] F :=
     Filter.eventuallyEq_iff_exists_mem.mpr ⟨Ω, hΩ.mem_nhds hz₀, agree_on_Ω⟩

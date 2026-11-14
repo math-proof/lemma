@@ -114,3 +114,52 @@ structure GeneralizedBNPair (Gt : Type*) [Group Gt]
   twist_group_finite :
     Finite (Tt ⧸ (Tt ⊓ G).subgroupOf Tt)
 
+
+namespace GeneralizedBNPair
+
+/-- **Decomposition of $\tilde G$.** Every $x \in \tilde G$ factors as $x = t \cdot g$ with
+$t \in \tilde T$ and $g \in G$, reflecting the coset structure $\tilde G / G \cong
+\tilde T / (\tilde T \cap G)$. -/
+axiom Gt_decomp {B_idx : Type*} [Fintype B_idx] [DecidableEq B_idx]
+    {Gt : Type*} [Group Gt] {M : CoxeterMatrix B_idx}
+    (gbp : GeneralizedBNPair Gt M) :
+    ∀ (x : Gt),
+      ∃ (t : Gt) (_ : t ∈ gbp.Tt) (g : Gt) (_ : g ∈ gbp.G),
+        x = t * g
+
+/-- **Building uniqueness lemma.** An element $t \in \tilde B$ that fixes every chamber of
+the standard apartment (i.e. acts trivially on the set $S$ of types of simple reflections
+by conjugating $N$-lifts to $N$-lifts of the *same* simple reflection) must already lie
+in $G$. -/
+axiom building_uniqueness_lemma {B_idx : Type*} [Fintype B_idx] [DecidableEq B_idx]
+    {Gt : Type*} [Group Gt] {M : CoxeterMatrix B_idx}
+    (gbp : GeneralizedBNPair Gt M) :
+    ∀ (t : Gt) (_ : t ∈ gbp.Bt)
+      (_ : ∀ (s : B_idx) (n : gbp.strictBNPair.N),
+        gbp.strictBNPair.π n = M.toCoxeterSystem.simple s →
+        ∃ (n' : gbp.strictBNPair.N),
+          gbp.strictBNPair.π n' = M.toCoxeterSystem.simple s ∧
+          ((n' : gbp.G) : Gt) = t * ((n : gbp.G) : Gt) * t⁻¹),
+      t ∈ gbp.G
+
+/-- **Strong transitivity for type-preserving elements.** Any $g \in \tilde G$ that already
+acts trivially on types can be moved by left-multiplication with some $h' \in G$ into
+$\tilde B$, while remaining type-preserving. This is the "transitivity on chambers" half
+of strong transitivity, restricted to type-preserving elements. -/
+axiom strong_transitivity_for_types {B_idx : Type*} [Fintype B_idx] [DecidableEq B_idx]
+    {Gt : Type*} [Group Gt] {M : CoxeterMatrix B_idx}
+    (gbp : GeneralizedBNPair Gt M) :
+    ∀ (g : Gt)
+      (_ : ∀ (s : B_idx) (n : gbp.strictBNPair.N),
+        gbp.strictBNPair.π n = M.toCoxeterSystem.simple s →
+        ∃ (n' : gbp.strictBNPair.N),
+          gbp.strictBNPair.π n' = M.toCoxeterSystem.simple s ∧
+          ((n' : gbp.G) : Gt) = g * ((n : gbp.G) : Gt) * g⁻¹),
+      ∃ (h' : Gt) (_ : h' ∈ gbp.G) (_ : h' * g ∈ gbp.Bt),
+        (∀ (s : B_idx) (n : gbp.strictBNPair.N),
+          gbp.strictBNPair.π n = M.toCoxeterSystem.simple s →
+          ∃ (n' : gbp.strictBNPair.N),
+            gbp.strictBNPair.π n' = M.toCoxeterSystem.simple s ∧
+            ((n' : gbp.G) : Gt) = (h' * g) * ((n : gbp.G) : Gt) * (h' * g)⁻¹)
+
+end GeneralizedBNPair

@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.KroneckerTransport
+import Lemma.Polynomial.KroneckerTransport
 import Lemma.Int.P2MUtil
 
-open PowerSeries HahnSeries IntermediateField ModularCurve
+open PowerSeries HahnSeries IntermediateField ModularCurve Polynomial
 
 /--
 [ModularCurve_ModularPolynomialData_eval_int_eq_zero](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularCurve_ModularPolynomialData_eval_int_eq_zero.lean)

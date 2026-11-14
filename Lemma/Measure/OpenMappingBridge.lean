@@ -1,4 +1,4 @@
-import Lemma.M4aHerbrand.ModuleTopologyBridge
+import Lemma.ContinuousMap.ModuleTopologyBridge
 import Mathlib.Topology.Algebra.Group.OpenMapping
 import Mathlib.Topology.Baire.LocallyCompactRegular
 import Mathlib.RingTheory.TensorProduct.Free

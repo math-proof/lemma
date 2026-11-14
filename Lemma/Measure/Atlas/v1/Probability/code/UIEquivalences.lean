@@ -17,9 +17,22 @@ lemma textbookUI'_iff_uniformIntegrable
   [IsFiniteMeasure μ]
   {f : ι → α → ℝ} :
 -- imply
-  TextbookUniformlyIntegrable' f μ ↔ UniformIntegrable f 1 μ :=
+  TextbookUniformlyIntegrable' f μ ↔ UniformIntegrable f 1 μ := by
 -- proof
-  (uniformIntegrable_iff le_rfl ENNReal.one_ne_top).symm
+  rw [uniformIntegrable_iff le_rfl ENNReal.one_ne_top]
+  constructor
+  · rintro ⟨hmeas, htail⟩
+    refine ⟨hmeas, ?_⟩
+    intro ε hε
+    by_cases htop : ε = ∞
+    · exact ⟨0, fun _ => htop ▸ le_top⟩
+    · have hεr : 0 < ε.toReal := ENNReal.toReal_pos hε.ne' htop
+      obtain ⟨C, hC⟩ := htail ε.toReal hεr
+      exact ⟨C, fun i => (hC i).trans ENNReal.ofReal_toReal_le⟩
+  · rintro ⟨hmeas, htail⟩
+    refine ⟨hmeas, ?_⟩
+    intro ε hε
+    exact htail (ENNReal.ofReal ε) (ENNReal.ofReal_pos.mpr hε)
 
 end TheoryOfProbability3
 
@@ -38,8 +51,11 @@ lemma textbookUI_iff_bound_and_unifAbsCont
   TextbookUniformlyIntegrable' f μ ↔ (∀ i, AEStronglyMeasurable (f i) μ) ∧ UnifAbsContIntegrals f μ ∧ UnifL1Bound f μ := by
 -- proof
   rw [textbookUI'_iff_uniformIntegrable]
-  unfold UniformIntegrable
-  exact Iff.rfl
+  constructor
+  · intro h
+    exact ⟨h.aestronglyMeasurable, h.1, h.2⟩
+  · rintro ⟨_, hU, hB⟩
+    exact ⟨hU, hB⟩
 
 end TheoryOfProbability3
 
@@ -59,7 +75,7 @@ lemma TextbookUniformlyIntegrable'.unifL1Bound
 -- imply
   UnifL1Bound f μ :=
 -- proof
-  ((textbookUI_iff_bound_and_unifAbsCont f).mp hf).2.2
+  (textbookUI_iff_bound_and_unifAbsCont.mp hf).2.2
 
 end TheoryOfProbability3
 
@@ -79,7 +95,7 @@ lemma TextbookUniformlyIntegrable'.unifAbsContIntegrals
 -- imply
   UnifAbsContIntegrals f μ :=
 -- proof
-  ((textbookUI_iff_bound_and_unifAbsCont f).mp hf).2.1
+  (textbookUI_iff_bound_and_unifAbsCont.mp hf).2.1
 
 end TheoryOfProbability3
 
@@ -99,7 +115,7 @@ lemma TextbookUniformlyIntegrable'.aEStronglyMeasurable'
 -- imply
   ∀ i, AEStronglyMeasurable (f i) μ :=
 -- proof
-  ((textbookUI_iff_bound_and_unifAbsCont f).mp hf).1
+  (textbookUI_iff_bound_and_unifAbsCont.mp hf).1
 
 end TheoryOfProbability3
 

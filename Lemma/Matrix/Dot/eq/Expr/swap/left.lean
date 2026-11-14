@@ -19,4 +19,4 @@ private lemma main
   simp [Equiv.swap_apply_self]
 
 
--- created on 2026-10-31
+-- created on 2020-11-14

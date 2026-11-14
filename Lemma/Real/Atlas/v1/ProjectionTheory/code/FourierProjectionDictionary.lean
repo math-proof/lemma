@@ -9,10 +9,10 @@ namespace FourierProjection
 variable [NormedAddCommGroup E] [InnerProductSpace ℝ E]
 /--
 [innerₗ_add_orthogonal_eq](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ProjectionTheory/code/FourierProjectionDictionary.lean)
+product: `⟨y + z, ξ⟩_E = ⟨y, ξ⟩_V`. This identifies the phase appearing in the
+Fourier integral on `E` with the phase on `V`.
 -/
 @[path]
-product: `⟨y + z, ξ⟩_E = ⟨y, ξ⟩_V`. This identifies the phase appearing in the
-Fourier integral on `E` with the phase on `V`. -/
 lemma innerₗ_add_orthogonal_eq (V : Submodule ℝ E)
   (y ξ : ↥V) (z : ↥(Vᗮ)) :
   (innerₗ E) ((↑y : E) + (↑z : E)) (↑ξ : E) = (innerₗ ↥V) y ξ := by

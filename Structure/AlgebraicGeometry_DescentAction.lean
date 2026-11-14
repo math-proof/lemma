@@ -28,10 +28,6 @@ noncomputable def actMap (act : pullback (x' ≫ s) s ⟶ X') (h : act ≫ x' = 
   pullback.lift (pullback.fst _ _ ≫ act) (pullback.snd _ _)
     (by rw [Category.assoc, reassoc_of% h]; exact pullback.condition)
 
-variable {s x'} in
-variable {s x'} in
-
-
 end DescentAction
 
 structure DescentAction {S S' : Scheme.{u}} (s : S' ⟶ S) {X' : Scheme.{u}} (x' : X' ⟶ S') where
@@ -44,10 +40,6 @@ structure DescentAction {S S' : Scheme.{u}} (s : S' ⟶ S) {X' : Scheme.{u}} (x'
 namespace DescentAction
 
 variable {S S' : Scheme.{u}} (s : S' ⟶ S)
-
-
-variable {s} in
-
 
 end DescentAction
 
@@ -77,17 +69,6 @@ section rep
 variable {S S' : Scheme.{u}} (s : S' ⟶ S) (G : (Over S)ᵒᵖ ⥤ Type (u + 1)) {X' : Scheme.{u}} (x' : X' ⟶ S')
   (hX' : ((Over.map s).op ⋙ G).RepresentableBy (Over.mk x'))
   {X : Scheme.{u}} (f : X ⟶ S) (e : pullback f s ≅ X') (he : e.hom ≫ x' = pullback.snd f s)
-
-
-section withζ
-
-variable (ζ : G.obj (op (Over.mk f))) (hζ : G.map (cover s f).op ζ = univBC s G x' hX' f e he)
-
-include hζ in
-
-
-end withζ
-
 
 end rep
 

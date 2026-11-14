@@ -1,8 +1,8 @@
 import Def.LanglandsTunnell_StandardLocalConstantsAt
 import Def.LanglandsTunnell_ArchEpsilon
-import Lemma.LanglandsTunnell.HonestLDatum
+import Lemma.Polynomial.HonestLDatum
 import Def.NumberField_TateGlobalZeta
-import Lemma.AutomorphicForm.HeckeEigenfunction
+import Lemma.Set.HeckeEigenfunction
 
 set_option autoImplicit false
 

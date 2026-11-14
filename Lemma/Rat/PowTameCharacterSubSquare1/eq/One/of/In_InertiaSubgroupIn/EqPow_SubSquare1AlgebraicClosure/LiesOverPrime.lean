@@ -11,10 +11,10 @@ private lemma main
   {P : ValuationSubring (AlgebraicClosure ℚ)}
   {π : AlgebraicClosure ℚ}
 -- given
-  (hP : P.LiesOverPrime p)
+  (_hP : P.LiesOverPrime p)
   (hπ : π ^ (p ^ 2 - 1) = (p : AlgebraicClosure ℚ))
   (σ : AlgebraicClosure ℚ ≃ₐ[ℚ] AlgebraicClosure ℚ)
-  (hσ : σ ∈ P.inertiaSubgroupIn ℚ) :
+  (_hσ : σ ∈ P.inertiaSubgroupIn ℚ) :
 -- imply
   P.tameCharacter π σ ^ (p ^ 2 - 1) = 1 := by
   classical
@@ -40,3 +40,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

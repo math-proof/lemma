@@ -1,6 +1,6 @@
 import Mathlib.Analysis.Normed.Lp.MeasurableSpace
-import Lemma.LpSpace.MeasurableHalfSq.of.Ge_1
-import Lemma.LpSpace.MeasurableHalfSq'.of.Ge_1
+import Lemma.Matrix.MeasurableHalfSq.of.Ge_1
+import Lemma.Matrix.MeasurableHalfSq'.of.Ge_1
 import Lemma.Random.LinearTD.MeasurableUncurryUpdateTarget
 import Lemma.Random.LinearTD.Any_Ge_0AndAll_All_LeNormSubUpdateTarget_MulNormSub
 import Lemma.Random.LinearTD.ExpectedUpdateTarget.eq.Sum_Sum_SMul
@@ -25,7 +25,7 @@ private lemma main
     ⟨h.init, fun n ω => by rw [h.step, LinearTDSpec.update_target, add_sub_cancel_right]⟩
     (Random.LinearTD.MeasurableUncurryUpdateTarget (spec := spec)) Random.LinearTD.Any_Ge_0AndAll_All_LeNormSubUpdateTarget_MulNormSub
     (by rw [LinearTDSpec.expected_update_target, Pi.add_apply, Random.LinearTD.ExpectedUpdateTdFixedPoint.eq.Zero, zero_add]; rfl) Random.LinearTD.ExpectedUpdateTarget.eq.Sum_Sum_SMul
-    (LpSpace.MeasurableHalfSq.of.Ge_1 (p := 2) (d := d) (by norm_num)) (LpSpace.MeasurableHalfSq'.of.Ge_1 (p := 2) (d := d) (by norm_num)) Random.LinearTD.LyapunovFunctionHalfSq
+    (Matrix.MeasurableHalfSq.of.Ge_1 (p := 2) (d := d) (by norm_num)) (Matrix.MeasurableHalfSq'.of.Ge_1 (p := 2) (d := d) (by norm_num)) Random.LinearTD.LyapunovFunctionHalfSq
 
 
 -- created on 2026-09-26

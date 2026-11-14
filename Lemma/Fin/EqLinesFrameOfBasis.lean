@@ -54,9 +54,8 @@ private lemma adapted_frame_of_single_subspace
   simp only [Finset.mem_univ, iSup_true]
   have key : ∀ j : Fin d, b (idx (Sum.inl j)) = V.subtype (bV j) := by
     intro j
-    simp [b, bAll, bVW, Basis.reindex_apply, Basis.map_apply, Basis.prod_apply,
-      prodEquivOfIsCompl]
-  simp_rw [frameOfBasis_lines, key]
+    simp [b, bAll, bVW, Basis.reindex_apply, Basis.map_apply, Basis.prod_apply]
+  simp_rw [main, key]
   rw [← span_range_eq_iSup]
   rw [show (fun j => V.subtype (bV j)) = V.subtype ∘ bV from rfl]
   rw [Set.range_comp, Submodule.span_image, bV.span_eq]
@@ -65,4 +64,4 @@ private lemma adapted_frame_of_single_subspace
 
 
 -- created on 2026-10-23
--- updated on 2026-10-26
+-- updated on 2026-11-13

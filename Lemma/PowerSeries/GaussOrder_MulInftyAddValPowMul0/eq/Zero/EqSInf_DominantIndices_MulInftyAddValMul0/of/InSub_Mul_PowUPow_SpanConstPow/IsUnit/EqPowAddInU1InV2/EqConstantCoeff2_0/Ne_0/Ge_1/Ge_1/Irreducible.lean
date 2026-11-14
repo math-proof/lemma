@@ -1,11 +1,11 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.UVCrossingModel
-import Lemma.ModularCurve.UVCrossingGaussOrder
+import Lemma.MvPowerSeries.UVCrossingModel
+import Lemma.PowerSeries.UVCrossingGaussOrder
 import Def.ModularCurve_UVCrossingDominantIndices
 import Lemma.Int.P2MUtil
 
-open ModularCurve ModularCurve.UVCrossingModel IsLocalRing
+open ModularCurve MvPowerSeries.UVCrossingModel IsLocalRing PowerSeries MvPowerSeries
 
 /--
 [ModularCurve_UVCrossingModel_sInf_dominantIndices_eq_of_sub_mul_U_pow_mem](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularCurve_UVCrossingModel_sInf_dominantIndices_eq_of_sub_mul_U_pow_mem.lean)

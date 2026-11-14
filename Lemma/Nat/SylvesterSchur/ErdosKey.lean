@@ -360,7 +360,7 @@ private lemma erdos_choose_prime_factor_gt_bertrand_steps (n k : ℕ)
     obtain ⟨i, hi, hr_dvd⟩ :=
       exists_dvd_block_of_succ_succ_prime_not_dvd_pred
         (n := n) (k := k) (s := r) (by omega) hr_n2 hr_not_one hr_not_two
-    exact ⟨r, hr, by omega, prime_dvd_seq_implies_choose hr (by omega) i hi hr_dvd⟩
+    exact ⟨r, hr, by omega, prime_dvd_seq_implies_choose hr (by omega) hi hr_dvd⟩
   obtain ⟨t, ht, ht_gt, ht_le⟩ :=
     Nat.exists_prime_lt_and_le_two_mul (n + 2) (Nat.succ_ne_zero (n + 1))
   by_cases ht_gek : t ≥ k
@@ -426,4 +426,4 @@ end Nat.SylvesterSchur.Internal
 
 
 -- created on 2026-10-23
--- updated on 2026-10-29
+-- updated on 2026-11-13

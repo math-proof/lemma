@@ -4,7 +4,7 @@ import Initialize.Tactic.Attr.Basic
 
 
 @[path]
-private lemma main:
+private lemma main :
 -- imply
   π / 9 < 1 / 2 := by
 -- proof

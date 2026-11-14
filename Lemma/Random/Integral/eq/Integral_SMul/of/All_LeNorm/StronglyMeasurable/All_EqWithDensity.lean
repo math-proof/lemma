@@ -11,7 +11,7 @@ Continuous-action counterpart of
 -/
 @[path]
 private lemma main
-  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  [MeasurableSpace 𝒮] [μ : ReferenceMeasure 𝒜]
   [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
   {M : DensityModel Θ 𝒮 𝒜}
   {f : ℝ × 𝒮 × 𝒜 → E}
@@ -24,7 +24,7 @@ private lemma main
 -- imply
   ∫ z, f z ∂(M.stageK θ y) =
     ∫ u, M.policy.prob θ y u • ∫ ρ, f (ρ, y, u) ∂(M.env.reward (y, u))
-      ∂ReferenceMeasure.measure := by
+      ∂μ.measure := by
 -- proof
   have := M.env.reward_markov
   have hπm : Measurable (M.policy.dens θ y) :=
@@ -58,3 +58,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-14

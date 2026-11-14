@@ -1,11 +1,11 @@
 import Mathlib
 import Def.FLTPrelim_Ramification
 import Instance.EllipticCurve_FrobeniusTrace
-import Lemma.AlgebraicCurve.GluedPic0
-import Lemma.AlgebraicCurve.Correspondence
+import Lemma.ResidueField.GluedPic0
+import Lemma.Scheme.Correspondence
 import Structure.AlgebraicCurve_WeilDatum
 import Instance.ModularCurve_ArithmeticGalois
-import Lemma.ModularCurve.QExpReductionModL
+import Lemma.Finsupp.QExpReductionModL
 import Structure.ModularCurve_QExpSemistableSpecializationPinned
 
 set_option autoImplicit false

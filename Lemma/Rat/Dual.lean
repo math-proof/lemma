@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.DualSelmer.ExtConditions
-import Lemma.GroupCohomology.CupProduct
+import Lemma.Rep.ExtConditions
+import Lemma.Rep.CupProduct
 import Lemma.Int.P2MUtil
 
 open CategoryTheory

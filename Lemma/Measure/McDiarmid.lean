@@ -7,11 +7,10 @@ namespace MathlibExt.Probability.McDiarmid
 
 /--
 [prod_weight_nonneg](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/McDiarmid.lean)
+# McDiarmid bounded-differences
+Product weights are nonnegative.
 -/
 @[path]
-# McDiarmid bounded-differences
--/
-/-- Product weights are nonnegative. -/
 private lemma prod_weight_nonneg
   {α : Type*}
   {n : ℕ}
@@ -343,9 +342,9 @@ private lemma mgf_bound
         ((∑ z : Fin n → α, (∏ i, p (z i)) * f (Fin.cons a z))
           - ∑ a' : α, p a' * (∑ y : Fin n → α, (∏ i, p (y i)) * f (Fin.cons a' y)))))
         * Real.exp (s ^ 2 * (∑ i : Fin n, (c i.succ) ^ 2) / 8)) := by
-        refine Finset.sum_le_sum fun a _ => ?_
-        apply mul_le_mul_of_nonneg_left (hIH a) _
-        apply mul_nonneg (hp_nonneg a) (Real.exp_pos _).le
+          refine Finset.sum_le_sum fun a _ => ?_
+          apply mul_le_mul_of_nonneg_left (hIH a) _
+          apply mul_nonneg (hp_nonneg a) (Real.exp_pos _).le
       _ = Real.exp (s ^ 2 * (∑ i : Fin n, (c i.succ) ^ 2) / 8) *
         (∑ a : α, p a * Real.exp (s *
           ((∑ z : Fin n → α, (∏ i, p (z i)) * f (Fin.cons a z))
@@ -387,9 +386,12 @@ lemma mcdiarmid_one_sided_finite_iid_general
   (ht : 0 < t)
   (hbd : ∀ (i : Fin n) (x y : Fin n → α), (∀ j, j ≠ i → x j = y j) → |f x - f y| ≤ c i) :
 -- imply
-  let mu : ℝ := by
+  let mu : ℝ := ∑ x : Fin n → α, (∏ i : Fin n, p (x i)) * f x
+  ∑ x ∈ Finset.univ.filter (fun x => decide (t ≤ f x - mu)), ∏ i : Fin n, p (x i)
+    ≤ Real.exp (-2 * t ^ 2 / ∑ i : Fin n, c i ^ 2) := by
 -- proof
-  intro mu prob
+  let mu : ℝ := ∑ x : Fin n → α, (∏ i : Fin n, p (x i)) * f x
+  let prob := ∑ x ∈ Finset.univ.filter (fun x => decide (t ≤ f x - mu)), ∏ i : Fin n, p (x i)
   have hs_nonneg : 0 ≤ 4 * t / ∑ i : Fin n, c i ^ 2 :=
     div_nonneg (mul_nonneg (by norm_num) ht.le) hc_pos.le
   have hcher := chernoff_fin p hp_nonneg f mu t (4 * t / ∑ i : Fin n, c i ^ 2) hs_nonneg
@@ -428,10 +430,14 @@ lemma mcdiarmid_one_sided_finite_iid_of_sum_sq_eq_zero
   (ht : 0 < t)
   (hbd : ∀ (i : Fin n) (x y : Fin n → α), (∀ j, j ≠ i → x j = y j) → |f x - f y| ≤ c i) :
 -- imply
-  let mu : ℝ := by
+  let mu : ℝ := ∑ x : Fin n → α, (∏ i : Fin n, p (x i)) * f x
+  ∑ x ∈ Finset.univ.filter (fun x => decide (t ≤ f x - mu)), ∏ i : Fin n, p (x i)
+    = (0 : ℝ) := by
 -- proof
-  intro mu prob
-  have hle : ∀ s : ℝ, 0 ≤ s → prob ≤ Real.exp (-s * t) := by
+  let mu : ℝ := ∑ x : Fin n → α, (∏ i : Fin n, p (x i)) * f x
+  have hle : ∀ s : ℝ, 0 ≤ s →
+      (∑ x ∈ Finset.univ.filter (fun x => decide (t ≤ f x - mu)), ∏ i : Fin n, p (x i))
+        ≤ Real.exp (-s * t) := by
     intro s hs
     have h := (chernoff_fin p hp_nonneg f mu t s hs).trans (mul_le_mul_of_nonneg_left
       (mgf_bound p hp_nonneg hp_sum n f c hc_nonneg hbd s) (Real.exp_pos _).le)
@@ -441,7 +447,6 @@ lemma mcdiarmid_one_sided_finite_iid_of_sum_sq_eq_zero
       Real.tendsto_exp_neg_atTop_nhds_zero.comp (Filter.tendsto_id.atTop_mul_const ht)
   exact le_antisymm (ge_of_tendsto htend ((Filter.eventually_ge_atTop 0).mono hle))
     (Finset.sum_nonneg fun x _ => prod_weight_nonneg p hp_nonneg x)
-set_option linter.unusedDecidableInType false in
 
 end MathlibExt.Probability.McDiarmid
 
@@ -465,13 +470,14 @@ lemma mcdiarmid_one_sided_finite_iid
   (ht : 0 < t)
   (hbd : ∀ (i : Fin n) (x y : Fin n → α), (∀ j, j ≠ i → x j = y j) → |f x - f y| ≤ c i) :
 -- imply
-  let mu : ℝ := by
+  let mu : ℝ := ∑ x : Fin n → α, (∏ i : Fin n, p (x i)) * f x
+  ∑ x ∈ Finset.univ.filter (fun x => decide (t ≤ f x - mu)), ∏ i : Fin n, p (x i)
+    ≤ Real.exp (-2 * t ^ 2 / ∑ i : Fin n, c i ^ 2) := by
 -- proof
-  intro mu prob
   obtain hS | hS := (Finset.sum_nonneg fun i _ => sq_nonneg (c i)).eq_or_lt
-  · exact (mcdiarmid_one_sided_finite_iid_of_sum_sq_eq_zero p hp_nonneg hp_sum f c hc_nonneg
-    hS.symm t ht hbd).le.trans (Real.exp_pos _).le
-  · exact mcdiarmid_one_sided_finite_iid_general p hp_nonneg hp_sum f c hc_nonneg hS t ht hbd
+  · exact (mcdiarmid_one_sided_finite_iid_of_sum_sq_eq_zero hp_nonneg hp_sum hc_nonneg
+    hS.symm ht hbd).le.trans (Real.exp_pos _).le
+  · exact mcdiarmid_one_sided_finite_iid_general hp_nonneg hp_sum hc_nonneg hS ht hbd
 
 end MathlibExt.Probability.McDiarmid
 

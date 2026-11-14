@@ -1,6 +1,6 @@
 import Mathlib
 import Def.ModularCurve_GlueData
-import Lemma.AlgebraicCurve.GluedPic0
+import Lemma.ResidueField.GluedPic0
 import Def.ModularCurve_NodeDepth
 import Structure.ModularCurve_NodeLocalizedPlaces
 import Structure.ModularCurve_ProlongationTuple

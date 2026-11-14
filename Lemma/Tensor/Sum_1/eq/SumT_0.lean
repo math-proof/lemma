@@ -15,12 +15,13 @@ private lemma main
 -- imply
   X.sum 1 = Xᵀ.sum 0 := by
 -- proof
-  rw [Tensor.T.eq.Cast_Permute__Neg1.of.GtLength_0 (by grind)]
-  rw [SumCast.eq.Cast_Sum.of.Eq (by erw [Permute__Neg1.eq.Swap.of.GtLength (by grind)]; simp)]
+  rw [Tensor.T.eq.Cast_Permute__Neg1.of.GtLength_0 (by simp)]
+  rw [SumCast.eq.Cast_Sum.of.Eq (by erw [Permute__Neg1.eq.Swap.of.GtLength (by simp)]; simp)]
   apply Eq_Cast.of.SEq
   simp
   symm
-  apply SumPermute.as.PermuteSum.of.Ge (by grind)
+  apply SumPermute.as.PermuteSum.of.Ge (by simp)
 
 
 -- created on 2026-07-22
+-- updated on 2026-11-13

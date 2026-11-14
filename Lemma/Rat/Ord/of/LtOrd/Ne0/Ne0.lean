@@ -1,13 +1,13 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.DivisorClassGroup
+import Lemma.Valuation.DivisorClassGroup
 import Lemma.Int.P2MUtil
 
 
 namespace Definitions
 end Definitions
 open Definitions
-open AlgebraicCurve
+open AlgebraicCurve Valuation
 open Int
 
 

@@ -63,7 +63,7 @@ private lemma main
     have h1 : Module.finrank k (LinearMap.range L) ≤ Module.finrank k (Fin 4 → k) := LinearMap.finrank_range_le L
     rw [htop, finrank_top, Module.finrank_fin_fun, Module.finrank_fin_fun] at h1
     omega
-  obtain ⟨v, _, hv⟩ := SetLike.exists_of_lt (lt_top_iff_ne_top.mpr hlt)
+  obtain ⟨v, _, hv⟩ := IsConcreteLE.exists_of_lt (lt_top_iff_ne_top.mpr hlt)
   have hv' : ∀ p : Fin 4 → k, L p ≠ v :=
     fun p h => hv ⟨p, h⟩
   refine ⟨⟨TrivSqZeroExt.inl E₀.a₁ + TrivSqZeroExt.inr (v 0), TrivSqZeroExt.inl E₀.a₂ + TrivSqZeroExt.inr (v 1),
@@ -134,9 +134,9 @@ private lemma main
       WeierstrassCurve.variableChange_a₃, WeierstrassCurve.variableChange_a₄, WeierstrassCurve.variableChange_a₆,
       WeierstrassCurve.map, hr2, hs2, ht2, hr3, DualNumber.snd_mul, TrivSqZeroExt.fst_mul, TrivSqZeroExt.snd_add,
       TrivSqZeroExt.fst_add, TrivSqZeroExt.snd_sub, TrivSqZeroExt.fst_sub, TrivSqZeroExt.snd_inl, TrivSqZeroExt.fst_inl,
-      TrivSqZeroExt.snd_inr, TrivSqZeroExt.fst_inr, TrivSqZeroExt.snd_zero, TrivSqZeroExt.fst_zero,
-      hu0, hr0, hs0, ht0, hui0, hui1, (hpow 2).1, (hpow 2).2,
-      (hpow 3).1, (hpow 3).2, (hpow 4).1, (hpow 4).2, (hpow 6).1, (hpow 6).2, pow_one, hf2, hn2, hf3, hn3,
+      TrivSqZeroExt.snd_inr, TrivSqZeroExt.snd_zero, TrivSqZeroExt.fst_zero,
+      hr0, hs0, ht0, hui0, hui1, (hpow 2).1, (hpow 2).2,
+      (hpow 3).1, (hpow 3).2, (hpow 4).1, (hpow 4).2, (hpow 6).1, (hpow 6).2, hf2, hn2, hf3, hn3,
       TrivSqZeroExt.algebraMap_eq_inl] at e1 e2 e3 e4 e6
     refine hv' (Matrix.vecCons (TrivSqZeroExt.snd (C.u : DualNumber k))
       (Matrix.vecCons (TrivSqZeroExt.snd C.r)
@@ -145,21 +145,31 @@ private lemma main
     ext i
     fin_cases i
     ·
-      simp
-      linear_combination e1
+      simp [L]
+      ring_nf
+      ring_nf at e1
+      exact e1
     ·
-      simp
-      linear_combination e2
+      simp [L]
+      ring_nf
+      ring_nf at e2
+      exact e2
     ·
-      simp
-      linear_combination e3
+      simp [L]
+      ring_nf
+      ring_nf at e3
+      exact e3
     ·
-      simp
-      linear_combination e4
+      simp [L]
+      ring_nf
+      ring_nf at e4
+      exact e4
     ·
-      simp
-      linear_combination e6
+      simp [L]
+      ring_nf
+      ring_nf at e6
+      exact e6
 
 
 -- created on 2026-10-21
--- updated on 2026-10-26
+-- updated on 2026-11-13

@@ -2,7 +2,7 @@ import Mathlib.RepresentationTheory.Basic
 import Mathlib.NumberTheory.NumberField.Basic
 import Mathlib.FieldTheory.Galois.Basic
 import Def.FLTPrelim_ModularRep
-import Lemma.FLTPrelim.FreyPackage
+import Lemma.WeierstrassCurve.FreyPackage
 import Instance.EllipticCurve_FrobeniusTrace
 
 set_option autoImplicit false

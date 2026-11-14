@@ -1,5 +1,6 @@
 import Mathlib
-import Instance.AlgebraicCurve_DivisorClassGroup
+import Structure.AlgebraicCurve_Place
+import Abbrev.AlgebraicCurve_DivisorClassGroup
 
 set_option autoImplicit false
 

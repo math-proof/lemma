@@ -1,6 +1,6 @@
 import Mathlib
-import Lemma.AlgebraicGeometry.OrderedAffineCoverCech
-import Lemma.AlgebraicGeometry.OrderedAffineCoverComap
+import Lemma.Scheme.OrderedAffineCoverCech
+import Lemma.Scheme.OrderedAffineCoverComap
 import Def.AlgebraicGeometry_RelativePicardFunctor
 import Abbrev.AlgebraicGeometry_CechPicardObstruction
 

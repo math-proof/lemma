@@ -1,4 +1,4 @@
-import Lemma.LanglandsTunnell.TateLocalZeta
+import Lemma.Measure.TateLocalZeta
 import Mathlib.Topology.Clopen
 import Mathlib.Topology.Compactness.Compact
 import Abbrev.LanglandsTunnell_SchwartzBruhatSpace
@@ -43,7 +43,7 @@ theorem mul_mem_testSpace {e f : X → ℂ} (he : IsLocallyConstant e) (hf : f �
 theorem isClopen_support_of_mem {f : X → ℂ} (hf : f ∈ testSpace X) : IsClopen (Function.support f) := by
   have h : Function.support f = {x | f x = 0}ᶜ := by
     ext x
-    simp only [Function.mem_support, Set.mem_compl_iff, Set.mem_setOf_eq, ne_eq]
+    simp only [Function.mem_support, Set.mem_compl_iff, Set.mem_ofPred_eq, ne_eq]
   rw [h]
   exact (hf.1.isClopen_fiber 0).compl
 

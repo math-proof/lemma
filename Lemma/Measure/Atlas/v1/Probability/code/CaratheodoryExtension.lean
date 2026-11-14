@@ -53,7 +53,7 @@ lemma caratheodory_extension_theorem
 -- imply
   ∃! μ : @Measure α (generateFrom 𝒜), ∀ s ∈ 𝒜, μ s = μ₀ s := by
 -- proof
-  obtain ⟨μ, hμ⟩ := exists_measure_extension 𝒜 h𝒜 μ₀ hμ₀_sigma
+  obtain ⟨μ, hμ⟩ := exists_measure_extension h𝒜 μ₀ hμ₀_sigma
   refine ⟨μ, hμ, fun ν hν => ?_⟩
   exact (ext_of_generateFrom_of_iUnion 𝒜 B rfl (isSetAlgebra_isPiSystem h𝒜) hB_cover hB_mem
     (fun i => by rw [hμ (B i) (hB_mem i)]; exact hB_fin i)

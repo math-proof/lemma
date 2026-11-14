@@ -20,7 +20,7 @@ lemma l1_norm_sparse
   (hk : 0 < k)
   (hcard : ((Finset.univ.filter fun i => ω i = true).card : ℝ) = k) :
 -- imply
-  ∑ i : Fin d, := by
+  ∑ i : Fin d, |sparseVec ω R k i| = R := by
 -- proof
   have hRk : 0 ≤ R / k := div_nonneg hR hk.le
   have habs : ∀ i : Fin d, |sparseVec ω R k i| = sparseVec ω R k i := by

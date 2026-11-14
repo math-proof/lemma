@@ -9,10 +9,11 @@ private lemma main
 -- given
   (a b c : α) :
 -- imply
-  (a + b) * (c + d) = (a * c + a * d) + (b * c + b * d) := by
+  (a + b) * (c + d) = a * c + a * d + (b * c + b * d) := by
 -- proof
   rw [MulAdd.eq.AddMulS]
   repeat rw [Mul_Add.eq.AddMulS]
 
 
 -- created on 2025-10-24
+-- updated on 2026-11-13

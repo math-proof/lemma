@@ -69,7 +69,7 @@ lemma sp_cap_gl_sub_O
 -- imply
   A ∈ O2n l := by
 -- proof
-  simp only [Sp2n, GLnC, O2n, Set.mem_setOf_eq] at *
+  simp only [Sp2n, GLnC, O2n, Set.mem_ofPred_eq] at *
   apply J_mul_left_cancel
   rw [mul_one]
   have hcomm_t := comm_J_transpose hGL
@@ -99,7 +99,7 @@ lemma O_cap_gl_sub_Sp
 -- imply
   A ∈ Sp2n l := by
 -- proof
-  simp only [Sp2n, GLnC, O2n, Set.mem_setOf_eq] at *
+  simp only [Sp2n, GLnC, O2n, Set.mem_ofPred_eq] at *
   calc A.transpose * J l ℝ * A
     = A.transpose * (J l ℝ * A) := by rw [mul_assoc]
     _ = A.transpose * (A * J l ℝ) := by rw [hGL]
@@ -127,7 +127,7 @@ lemma sp_cap_O_sub_GL
 -- imply
   A ∈ GLnC l := by
 -- proof
-  simp only [Sp2n, GLnC, O2n, Set.mem_setOf_eq] at *
+  simp only [Sp2n, GLnC, O2n, Set.mem_ofPred_eq] at *
   have hO' : A * A.transpose = 1 := mul_eq_one_comm.mp hO
   have h : A * (A.transpose * J l ℝ * A) = J l ℝ * A := by
     calc A * (A.transpose * J l ℝ * A)

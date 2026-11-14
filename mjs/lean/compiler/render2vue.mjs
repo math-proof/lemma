@@ -47,8 +47,10 @@ export async function echo2vueFromSource(source, options) {
     if (!(tree instanceof LeanModule)) throw new Error('compile() root must be LeanModule');
     const code = await runEcho2Vue(tree, leanAbsPath, { module: moduleName });
     try {
-        const warning = lintLeanFile(source, leanAbsPath);
+        const prior = Array.isArray(code.warning) ? code.warning : [];
+        const warning = [...prior, ...lintLeanFile(source, leanAbsPath)];
         if (warning.length) code.warning = warning;
+        else delete code.warning;
     } catch (e) {
         console.warn('[lemmaLint]', e?.message || e);
     }

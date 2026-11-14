@@ -71,7 +71,8 @@ namespace MathlibExt.Probability.BerryEsseenWanted
 @[path]
 private lemma continuous_gaussianPDFReal_std : Continuous (gaussianPDFReal 0 1) := by
   have h := gaussianPDFReal_def (0 : ℝ) (1 : NNReal)
-  rwa [h]
+  rw [h]
+  exact continuous_const.mul
     (Real.continuous_exp.comp (((continuous_id.sub continuous_const).pow 2).neg.div_const _))
 
 end MathlibExt.Probability.BerryEsseenWanted
@@ -181,7 +182,8 @@ private lemma gaussianReal_Iio_eq_Iic (w : ℝ) :
       @NullSingletonClass.measure_singleton _ _ _
         (nullSingletonClass_gaussianReal (μ := (0 : ℝ)) (v := (1 : NNReal)) one_ne_zero) w
     unfold Measure.real
-    rwa [h0]
+    rw [h0]
+    exact ENNReal.toReal_zero
   have hdisj : Disjoint (Set.Iio w) ({w} : Set ℝ) := by
     rw [Set.disjoint_left]
     intro x hx1 hx2
@@ -193,7 +195,8 @@ private lemma gaussianReal_Iio_eq_Iic (w : ℝ) :
     = (gaussianReal 0 1).real (Set.Iio w) := by
     rw [measureReal_union hdisj (measurableSet_singleton w)
       (measure_ne_top _ _) (measure_ne_top _ _), hnull, add_zero]
-  rwa [← h1] at h2
+  rw [← h1] at h2
+  exact h2.symm
 
 end MathlibExt.Probability.BerryEsseenWanted
 
@@ -863,7 +866,7 @@ private lemma mid_mul_steinEg_le_two (w : ℝ) :
           linarith [hw2]
         _ ≤ 2 := by norm_num
     · have hPhi : stdNormalCDF w * (1 - stdNormalCDF w) ≤ 1 / 4 := by
-      nlinarith [sq_nonneg (stdNormalCDF w - 1 / 2)]
+        nlinarith [sq_nonneg (stdNormalCDF w - 1 / 2)]
       have hw2sq : w ^ 2 ≤ 1 := by
         nlinarith [mul_nonneg (show (0 : ℝ) ≤ 1 - w by linarith)
           (show (0 : ℝ) ≤ 1 + w by linarith)]
@@ -1425,8 +1428,8 @@ private lemma steinSolution_taylor_le (z y x : ℝ) :
     ≤ (|y| + 2) * x ^ 2 + 2 * |x| * steinWindow y x z := by
   by_cases hwin : |y - z| ≤ |x|
   · have hW : steinWindow y x z = 1 := by
-    unfold steinWindow
-    simp [hwin]
+      unfold steinWindow
+      simp [hwin]
     have e1 : |steinSolution z (y + x) - steinSolution z y| ≤ |x| := by
       calc |steinSolution z (y + x) - steinSolution z y|
         ≤ |(y + x) - y| := abs_steinSolution_sub_le z _ _
@@ -1453,8 +1456,8 @@ private lemma steinSolution_taylor_le (z y x : ℝ) :
     rw [hW]
     linarith [e3, hnn]
   · have hW : steinWindow y x z = 0 := by
-    unfold steinWindow
-    simp [hwin]
+      unfold steinWindow
+      simp [hwin]
     have hne : ∀ t ∈ Set.uIcc (0 : ℝ) x, y + t ≠ z := by
       intro t ht hcon
       apply hwin
@@ -1485,7 +1488,8 @@ private lemma steinSolution_taylor_le (z y x : ℝ) :
       have e2 : (fun s => steinSolution z (y + s) - s * steinSolutionDeriv z y)
         = (fun s => steinSolution z (y + s)) - (fun s => s * steinSolutionDeriv z y) := by
         rfl
-      rwa [e2]
+      rw [e2]
+      exact hsub.hasDerivWithinAt
     have hbound : ∀ t ∈ Set.uIcc (0 : ℝ) x,
       ‖steinSolutionDeriv z (y + t) - steinSolutionDeriv z y‖
         ≤ (|y| + 2) * |x| := by
@@ -1542,24 +1546,24 @@ private lemma sq_le_quarter_add_two_abs_cube (x : ℝ) :
   x ^ 2 ≤ 1 / 4 + 2 * |x| ^ 3 := by
   obtain h | h := le_total |x| (1 / 2)
   · have hx2 : x ^ 2 ≤ 1 / 4 := by
-    have : x ^ 2 = |x| ^ 2 := (sq_abs x).symm
-    rw [this]
-    calc |x| ^ 2 ≤ (1 / 2) ^ 2 := by
-      apply pow_le_pow_left₀ (abs_nonneg _) h 2
-      _ = 1 / 4 := by norm_num
+      have : x ^ 2 = |x| ^ 2 := (sq_abs x).symm
+      rw [this]
+      have hpow : |x| ^ 2 ≤ (1 / 2) ^ 2 := pow_le_pow_left₀ (abs_nonneg _) h 2
+      have hquarter : ((1 / 2 : ℝ) ^ 2) = 1 / 4 := by norm_num
+      exact hpow.trans_eq hquarter
     have hnn3 : (0 : ℝ) ≤ |x| ^ 3 := pow_nonneg (abs_nonneg x) 3
     linarith
   · have hx2 : x ^ 2 ≤ 2 * |x| ^ 3 := by
-    have hsq : x ^ 2 = |x| ^ 2 := (sq_abs x).symm
-    rw [hsq]
-    have hpos : (0 : ℝ) < |x| := lt_of_lt_of_le (by norm_num) h
-    have h1 : (1 : ℝ) ≤ 2 * |x| := by linarith
-    calc |x| ^ 2 = |x| ^ 2 * 1 := (mul_one _).symm
-      _ ≤ |x| ^ 2 * (2 * |x|) := by
-        apply mul_le_mul_of_nonneg_left h1 (sq_nonneg _)
-      _ = 2 * |x| ^ 3 := by ring
+      have hsq : x ^ 2 = |x| ^ 2 := (sq_abs x).symm
+      rw [hsq]
+      have hpos : (0 : ℝ) < |x| := lt_of_lt_of_le (by norm_num) h
+      have h1 : (1 : ℝ) ≤ 2 * |x| := by linarith
+      have hmul : |x| ^ 2 * 1 ≤ |x| ^ 2 * (2 * |x|) :=
+        mul_le_mul_of_nonneg_left h1 (sq_nonneg _)
+      have hleft : |x| ^ 2 = |x| ^ 2 * 1 := (mul_one _).symm
+      have hright : |x| ^ 2 * (2 * |x|) = 2 * |x| ^ 3 := by ring
+      exact (hleft.trans_le hmul).trans_eq hright
     linarith
-
 end MathlibExt.Probability.BerryEsseenWanted
 
 namespace MathlibExt.Probability.BerryEsseenWanted
@@ -1640,9 +1644,9 @@ namespace MathlibExt.Probability.BerryEsseenWanted
 
 /--
 [sq_integral_sq_le_mul](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/BerryEsseen.lean)
+applied to `|ξ|√|ξ|` and `√|ξ|`.
 -/
 @[path]
-applied to `|ξ|√|ξ|` and `√|ξ|`. -/
 private lemma sq_integral_sq_le_mul {Ω : Type*}
   [MeasurableSpace Ω] {P : Measure Ω} [IsProbabilityMeasure P]
   {ξ : Ω → ℝ} (hξ : MemLp ξ 3 P) :
@@ -1778,21 +1782,23 @@ private lemma integral_sq_mul_integral_abs_le {Ω : Type*}
         * P[fun ω => ξ ω ^ 2] := by
       apply mul_le_mul hB hA (sq_nonneg _) _
       exact mul_nonneg hS3 hS1
-    calc (P[fun ω => ξ ω ^ 2] * P[fun ω => |ξ ω|]) ^ 2
-      = (P[fun ω => ξ ω ^ 2]) ^ 2 * (P[fun ω => |ξ ω|]) ^ 2 := by
-        ring
-      _ ≤ (P[fun ω => |ξ ω| ^ 3] * P[fun ω => |ξ ω|])
-        * P[fun ω => ξ ω ^ 2] := hmul
-      _ = P[fun ω => |ξ ω| ^ 3]
-        * (P[fun ω => ξ ω ^ 2] * P[fun ω => |ξ ω|]) := by ring
+    have hpow : (P[fun ω => ξ ω ^ 2] * P[fun ω => |ξ ω|]) ^ 2
+        = (P[fun ω => ξ ω ^ 2]) ^ 2 * (P[fun ω => |ξ ω|]) ^ 2 := by
+      ring
+    have hrearr : (P[fun ω => |ξ ω| ^ 3] * P[fun ω => |ξ ω|])
+        * P[fun ω => ξ ω ^ 2]
+        = P[fun ω => |ξ ω| ^ 3]
+          * (P[fun ω => ξ ω ^ 2] * P[fun ω => |ξ ω|]) := by
+      ring
+    exact (hpow.trans_le hmul).trans_eq hrearr
   obtain h0 | hpos := eq_or_lt_of_le (mul_nonneg hS2 hS1)
   · rw [← h0]
     exact hS3
   · have hC2 : (P[fun ω => ξ ω ^ 2] * P[fun ω => |ξ ω|])
-    * (P[fun ω => ξ ω ^ 2] * P[fun ω => |ξ ω|])
-    ≤ P[fun ω => |ξ ω| ^ 3]
-      * (P[fun ω => ξ ω ^ 2] * P[fun ω => |ξ ω|]) := by
-    rwa [pow_two] at hC
+        * (P[fun ω => ξ ω ^ 2] * P[fun ω => |ξ ω|])
+        ≤ P[fun ω => |ξ ω| ^ 3]
+          * (P[fun ω => ξ ω ^ 2] * P[fun ω => |ξ ω|]) := by
+      rwa [pow_two] at hC
     exact (mul_le_mul_iff_left₀ hpos).mp hC2
 
 end MathlibExt.Probability.BerryEsseenWanted
@@ -4012,16 +4018,19 @@ private lemma berry_esseen_finsetSum_pos {Ω : Type*}
     = ∑ i ∈ s, P[fun ω => (ξ i ω) ^ 2]
       * P[fun ω => steinSolutionDeriv z
         (∑ j ∈ s, ξ j ω)] := by
-    calc (P[fun ω => steinSolutionDeriv z
-      (∑ j ∈ s, ξ j ω)] : ℝ)
-      = 1 * P[fun ω => steinSolutionDeriv z
-        (∑ j ∈ s, ξ j ω)] := by rw [one_mul]
-      _ = (∑ i ∈ s, P[fun ω => (ξ i ω) ^ 2])
-        * P[fun ω => steinSolutionDeriv z
-          (∑ j ∈ s, ξ j ω)] := by rw [hvar]
-      _ = ∑ i ∈ s, P[fun ω => (ξ i ω) ^ 2]
-        * P[fun ω => steinSolutionDeriv z
-          (∑ j ∈ s, ξ j ω)] := by rw [Finset.sum_mul]
+    have hED1 : (P[fun ω => steinSolutionDeriv z (∑ j ∈ s, ξ j ω)] : ℝ)
+        = 1 * P[fun ω => steinSolutionDeriv z (∑ j ∈ s, ξ j ω)] := by
+      rw [one_mul]
+    have hED2 : 1 * P[fun ω => steinSolutionDeriv z (∑ j ∈ s, ξ j ω)]
+        = (∑ i ∈ s, P[fun ω => (ξ i ω) ^ 2])
+          * P[fun ω => steinSolutionDeriv z (∑ j ∈ s, ξ j ω)] := by
+      rw [hvar]
+    have hED3 : (∑ i ∈ s, P[fun ω => (ξ i ω) ^ 2])
+          * P[fun ω => steinSolutionDeriv z (∑ j ∈ s, ξ j ω)]
+        = ∑ i ∈ s, P[fun ω => (ξ i ω) ^ 2]
+          * P[fun ω => steinSolutionDeriv z (∑ j ∈ s, ξ j ω)] := by
+      rw [Finset.sum_mul]
+    exact (hED1.trans hED2).trans hED3
   have hdecomp : P.real {ω | ∑ j ∈ s, ξ j ω ≤ z}
     - stdNormalCDF z
     = ∑ i ∈ s, T i := by
@@ -4108,7 +4117,7 @@ private lemma berry_esseen_finsetSum {Ω : Type*}
   · push Not at hbig
     by_cases hpos : 0 < γ
     · exact berry_esseen_finsetSum_pos hmeas hindep hmem hmean hvar
-      hpos hbig hγ3 z
+        hpos hbig hγ3 z
     · push Not at hpos
       have hγ0 : γ = 0 := le_antisymm hpos hγ
       subst hγ0
@@ -4336,8 +4345,8 @@ lemma berry_esseen_explicit
     rw [hSeq, map_measureReal_apply hWmeas measurableSet_Iic]
     congr 1
   have hmain := berry_esseen_finsetSum_gaussian (ξ := fun i ω => X i ω / c)
-    (s := Finset.range n) (γ := γ) hξmeas hξindep hξmem hξmean hvar_sum
-    hγnonneg hγ3_sum x
+    (s := Finset.range n) (γ := γ) (z := x) hξmeas hξindep hξmem hξmean hvar_sum
+    hγnonneg hγ3_sum
   rw [hmap]
   rwa [hγdef, ← mul_div_assoc] at hmain
 
@@ -4370,7 +4379,7 @@ lemma berry_esseen
 -- proof
   refine ⟨42, by norm_num, ?_⟩
   intro Ω _ P _ X hXmeas hXindep hXid _ hXmem hXmean hXvar n hn x
-  exact berry_esseen_explicit X hXmeas hXindep hXid hXmem hXmean hXvar n hn x
+  exact berry_esseen_explicit hXmeas hXindep hXid hXmem hXmean hXvar hn
 end MathlibExt.Probability.BerryEsseenWanted
 
 

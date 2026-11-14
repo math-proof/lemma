@@ -19,7 +19,7 @@ lemma tendsto_wimanMaximumTerm_exp_atTop
 -- imply
   Tendsto (fun x : ℝ => wimanMaximumTerm f (Real.exp x)) atTop atTop :=
 -- proof
-  (tendsto_wimanMaximumTerm_atTop f hf htrans).comp Real.tendsto_exp_atTop
+  (tendsto_wimanMaximumTerm_atTop (f := f) hf htrans).comp Real.tendsto_exp_atTop
 
 end Complex
 
@@ -41,7 +41,7 @@ lemma exists_wiman_radius_two_thirds
     Real.log (wimanMaximumTerm f r) ^ (2 / 3 : ℝ) := by
 -- proof
   obtain ⟨C, x₀, hC, hfinite, hmajorant⟩ :=
-    wimanMajorant_bound_off_exceptionalSet f hf htrans
+    wimanMajorant_bound_off_exceptionalSet (f := f) hf htrans
   obtain ⟨U, _hU, habsorb⟩ :=
     eventually_absorb_corrected_wiman_exponent C hC
   have hrequirements :
@@ -50,7 +50,7 @@ lemma exists_wiman_radius_two_thirds
         U ≤ wimanMaximumTerm f (Real.exp x) := by
     filter_upwards [eventually_ge_atTop x₀,
       Real.tendsto_exp_atTop.eventually (eventually_gt_atTop R),
-      (tendsto_wimanMaximumTerm_exp_atTop f hf htrans).eventually
+      (tendsto_wimanMaximumTerm_exp_atTop (f := f) hf htrans).eventually
         (eventually_ge_atTop U)] with x hx₀ hR hU
     exact ⟨hx₀, hR, hU⟩
   obtain ⟨X, hX⟩ := eventually_atTop.1 hrequirements
@@ -65,10 +65,10 @@ lemma exists_wiman_radius_two_thirds
     simpa only [r] using hU
   have htermModulus :
     wimanMaximumTerm f r ≤ wimanMaximumModulus f r :=
-    wimanMaximumTerm_le_wimanMaximumModulus f hf hr
+    wimanMaximumTerm_le_wimanMaximumModulus (f := f) (r := r) hf hr
   have hmodulusMajorant :
     wimanMaximumModulus f r ≤ wimanMajorant f r :=
-    wimanMaximumModulus_le_wimanMajorant f hf hr.le
+    wimanMaximumModulus_le_wimanMajorant (f := f) (r := r) hf hr.le
   have htermMajorant :
     wimanMaximumTerm f r ≤ wimanMajorant f r :=
     htermModulus.trans hmodulusMajorant
@@ -84,7 +84,7 @@ lemma exists_wiman_radius_two_thirds
     habsorb (wimanMaximumTerm f r) (wimanMajorant f r)
       hUterm htermMajorant hcorrected
   exact ⟨r, by simpa only [r] using hR, hmodulusMajorant.trans habsorbed⟩
-end
+end Complex
 
 
 

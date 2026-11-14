@@ -1,5 +1,5 @@
 import Abbrev.AutomorphicForm_RationalCentreUnipotentQuotient
-import Lemma.NumberField.AdelicLevel
+import Lemma.Matrix.AdelicLevel
 import Abbrev.AutomorphicForm_RationalTorusUnipotentQuotient
 
 set_option autoImplicit false

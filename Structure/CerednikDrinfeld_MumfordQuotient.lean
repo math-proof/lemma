@@ -4,7 +4,6 @@ import Mathlib.RingTheory.Localization.Basic
 import Mathlib.Algebra.Ring.Action.Group
 import Lemma.Scheme.AlgebraicCurveBaseChangeGalois
 import Def.CerednikDrinfeld_MumfordVertexType
-import Instance.CerednikDrinfeld_MumfordQuotient
 
 set_option autoImplicit false
 

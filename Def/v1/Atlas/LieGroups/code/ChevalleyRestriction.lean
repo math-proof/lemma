@@ -9,7 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.LieGroups.code.HarishChandraIsomorphism.Part2
-import Lemma.Int.Any_All_Eq.of.LeKer_Ker.Surjective
 import Mathlib.RingTheory.MvPolynomial.Basic
 import Mathlib.RingTheory.MvPolynomial.Homogeneous
 import Mathlib.FieldTheory.IsAlgClosed.Basic
@@ -50,6 +49,22 @@ noncomputable def TriangularDecomposition.projectToH
     {R : Type*} [Field R] {𝔤 : Type*} [LieRing 𝔤] [LieAlgebra R 𝔤]
     (Δ : TriangularDecomposition R 𝔤) (x : 𝔤) : Δ.𝔥 :=
   (Δ.decomp_exists x).choose_spec.choose
+
+private theorem TriangularDecomposition.projectToH_of_mem_h
+    {R : Type*} [Field R] {𝔤 : Type*} [LieRing 𝔤] [LieAlgebra R 𝔤]
+    (Δ : TriangularDecomposition R 𝔤) (h : Δ.𝔥) :
+    Δ.projectToH (h : 𝔤) = h := by
+  unfold TriangularDecomposition.projectToH
+  set n_neg := (Δ.decomp_exists (h : 𝔤)).choose
+  set h₀ := (Δ.decomp_exists (h : 𝔤)).choose_spec.choose
+  set n_pos := (Δ.decomp_exists (h : 𝔤)).choose_spec.choose_spec.choose
+  have hdecomp := (Δ.decomp_exists (h : 𝔤)).choose_spec.choose_spec.choose_spec
+  have heq : (n_neg : 𝔤) + (h₀ : 𝔤) + (n_pos : 𝔤) =
+      (0 : Δ.𝔫_neg) + (h : 𝔤) + (0 : Δ.𝔫_pos) := by
+    rw [← hdecomp]
+    simp [ZeroMemClass.coe_zero, zero_add, add_zero]
+  exact (Δ.decomp_unique n_neg 0 h₀ h n_pos 0 heq).2.1
+
 
 noncomputable def chevalleyEval𝔥
     {R : Type*} [Field R] {𝔤 : Type*} [LieRing 𝔤] [LieAlgebra R 𝔤]

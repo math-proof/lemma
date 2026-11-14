@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.DivisorClassGroup
-open AlgebraicCurve
+import Lemma.Valuation.DivisorClassGroup
+open AlgebraicCurve Valuation
 
 
 /-- ported from external source -/

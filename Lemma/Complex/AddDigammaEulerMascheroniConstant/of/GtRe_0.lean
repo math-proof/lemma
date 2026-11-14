@@ -46,14 +46,15 @@ private lemma  norm_term_le_tail {s : ℂ} (hs : 0 < s.re) {k : ℕ} (hk : 1 ≤
     field_simp
     ring
   rw [heq, norm_div, norm_mul]
-  calc ‖s - 1‖ / (‖(k : ℂ) + 1‖ * ‖(k : ℂ) + s‖) ≤ ‖s - 1‖ / (((k : ℝ) + 1) * (k : ℝ)) := by
-    apply div_le_div_of_nonneg_left (norm_nonneg _) (by positivity)
-    exact mul_le_mul hn1 hns hkpos.le (norm_nonneg _)
+  calc
+    ‖s - 1‖ / (‖(k : ℂ) + 1‖ * ‖(k : ℂ) + s‖) ≤ ‖s - 1‖ / (((k : ℝ) + 1) * (k : ℝ)) := by
+      apply div_le_div_of_nonneg_left (norm_nonneg _) (by positivity)
+      exact mul_le_mul hn1 hns hkpos.le (norm_nonneg _)
     _ = ‖s - 1‖ * (1 / (k : ℝ) - 1 / ((k : ℝ) + 1)) := by
       field_simp
       ring
 
-private lemma  sum_Ico_one_div_sub (N : ℕ) (hN : 1 ≤ N) (m : ℕ) (hm : N ≤ m) :
+private lemma  sum_Ico_one_div_sub (N : ℕ) (_hN : 1 ≤ N) (m : ℕ) (hm : N ≤ m) :
   ∑ k ∈ Ico N m, (1 / (k : ℝ) - 1 / ((k : ℝ) + 1)) = 1 / (N : ℝ) - 1 / (m : ℝ) := by
   induction m, hm using Nat.le_induction with
   | base => simp
@@ -310,7 +311,7 @@ private lemma  differentiableAt_T {s : ℂ} (hs : 0 < s.re) : DifferentiableAt �
       field_simp
 
 private lemma  analyticOnNhd_T : AnalyticOnNhd ℂ (fun z => ∑' k, term z k) U :=
-  DifferentiableOn.analyticOnNhd (fun s hs => (differentiableAt_T hs).differentiableWithinAt) isOpen_U
+  DifferentiableOn.analyticOnNhd (fun _s hs => (differentiableAt_T hs).differentiableWithinAt) isOpen_U
 
 private lemma  analyticOnNhd_digamma_add :
   AnalyticOnNhd ℂ (fun s => Complex.digamma s + (Real.eulerMascheroniConstant : ℂ)) U := by

@@ -1,6 +1,6 @@
-import Lemma.AutomorphicForm.WindowedSiegelSet
-import Lemma.AutomorphicForm.CentreCutSiegelSet
-import Lemma.NumberField.TateGlobalZeta
+import Lemma.Matrix.WindowedSiegelSet
+import Lemma.Matrix.CentreCutSiegelSet
+import Lemma.Measure.TateGlobalZeta
 import Mathlib.MeasureTheory.Group.FundamentalDomain
 
 set_option autoImplicit false

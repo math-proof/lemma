@@ -1,10 +1,10 @@
-import Lemma.ModularCurve.FullLevelSemistableCovering
-import Lemma.AlgebraicCurve.SemistableChartsComap
-import Lemma.AlgebraicCurve.ConstantReduction
-import Lemma.DrinfeldCurve.FunctionField
+import Lemma.ResidueField.FullLevelSemistableCovering
+import Lemma.AlgEquiv.SemistableChartsComap
+import Lemma.ResidueField.ConstantReduction
+import Lemma.RingHom.FunctionField
 import Def.GaloisRep_TameCharacter
 import Def.FLTPrelim_Ramification
-import Lemma.ModularCurve.ArithmeticGalois
+import Lemma.LaurentSeries.ArithmeticGalois
 import Abbrev.ModularCurve_FullLevelSemistableCoveringW2
 
 set_option autoImplicit false

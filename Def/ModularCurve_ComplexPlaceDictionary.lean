@@ -1,7 +1,7 @@
 import Mathlib.NumberTheory.ModularForms.QExpansion
 import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
 import Mathlib.Analysis.Meromorphic.Order
-import Lemma.ModularCurve.X0
+import Lemma.HahnSeries.X0
 import Def.ModularCurve_LaurentCoeff
 import Class.AlgebraicCurve_DivisorClassGroup
 

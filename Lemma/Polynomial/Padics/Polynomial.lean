@@ -69,8 +69,8 @@ lemma padicValuation_C
 -- proof
   apply le_antisymm
   · have h0 : 0 ∈ (C a : Polynomial ℤ).support := by
-    rw [support_C ha]
-    exact Finset.mem_singleton_self 0
+      rw [support_C ha]
+      exact Finset.mem_singleton_self 0
     calc
       padicValuation p hp (C a) (C_ne_zero.mpr ha) ≤ padicValInt p ((C a).coeff 0) :=
         padicValuation_le_coeff h0

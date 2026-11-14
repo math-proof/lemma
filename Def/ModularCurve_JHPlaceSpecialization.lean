@@ -1,6 +1,6 @@
 import Mathlib
 import Def.ModularCurve_JHNeronObjectAtP
-import Lemma.AlgebraicCurve.RegularProlongation
+import Lemma.Scheme.RegularProlongation
 import Structure.ModularCurve_JHPlaceSpecialization
 import Notation.ModularCurve_JHPlaceSpecialization
 

@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.CurveModel
-open CategoryTheory AlgebraicGeometry AlgebraicCurve
+import Lemma.Scheme.CurveModel
+open CategoryTheory AlgebraicGeometry AlgebraicCurve Scheme
 
 
 /-- ported from external source -/

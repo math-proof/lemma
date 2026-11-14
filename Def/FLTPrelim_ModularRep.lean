@@ -2,9 +2,10 @@ import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
 import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
 import Mathlib.RingTheory.Ideal.Maximal
 import Mathlib.Analysis.SpecialFunctions.Complex.Circle
-import Lemma.FLTPrelim.FreyPackage
+import Lemma.WeierstrassCurve.FreyPackage
 import Instance.FLTPrelim_GaloisRep
 import Instance.FLTPrelim_Modularity
+import Def.FLTPrelim_GaloisRep
 
 set_option autoImplicit false
 
@@ -14,8 +15,6 @@ open WeierstrassCurve CuspForm
 
 
 namespace FreyPackage
-
-open FLTPrelim
 
 def ModularRepOfLevel (P : FreyPackage) (N : ℕ) : Prop :=
   ∃ (f : CuspForm (CongruenceSubgroup.Gamma0 N) 2) (W : WeierstrassCurve ℤ)

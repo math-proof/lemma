@@ -1,5 +1,5 @@
-import Lemma.ModularCurve.HeckeOperator
-import Lemma.ModularCurve.DegeneracyTower
+import Lemma.LaurentSeries.HeckeOperator
+import Lemma.AlgHom.DegeneracyTower
 
 set_option autoImplicit false
 

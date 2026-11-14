@@ -49,7 +49,7 @@ lemma uniform_limit_derivative
     rw [dist_eq_norm, ← integral_sub (hint_n n x hx) (hg_int x hx)]
     calc ‖∫ t in a..x, (f' n t - g t)‖
       ≤ ∫ t in a..x, ‖f' n t - g t‖ := norm_integral_le_integral_norm hax
-      _ ≤ ∫ t in a..x, (ε / (b - a + 1)) := by
+      _ ≤ ∫ t in a..x, (ε / (b - a + 1)) := (by
         apply integral_mono_on hax
         · exact (((hf'_cont n).sub hg_cont).mono
           (uIcc_subset_Icc ha_mem hx)).norm.intervalIntegrable
@@ -59,17 +59,17 @@ lemma uniform_limit_derivative
           have h := hN n hn t ht_mem
           rw [Real.dist_eq] at h
           rw [norm_sub_rev]
-          exact le_of_lt h
-      _ = (x - a) * (ε / (b - a + 1)) := by
-        simp [intervalIntegral.integral_const, smul_eq_mul]; ring
-      _ ≤ (b - a) * (ε / (b - a + 1)) := by
+          exact le_of_lt h)
+      _ = (x - a) * (ε / (b - a + 1)) := (by
+        simp [intervalIntegral.integral_const, smul_eq_mul]; ring)
+      _ ≤ (b - a) * (ε / (b - a + 1)) := (by
         apply mul_le_mul_of_nonneg_right
         · linarith [hx.2]
-        · exact le_of_lt (div_pos hε hba_pos)
+        · exact le_of_lt (div_pos hε hba_pos))
       _ < ε := by
         calc (b - a) * (ε / (b - a + 1))
           < (b - a + 1) * (ε / (b - a + 1)) := by
-            apply mul_lt_mul_of_pos_right (lt_add_one _) (div_pos hε hba_pos)
+              apply mul_lt_mul_of_pos_right (lt_add_one _) (div_pos hε hba_pos)
           _ = ε := by field_simp
   have hlim_eq : ∀ x ∈ Icc a b, lim x - lim a = ∫ t in a..x, g t := by
     intro x hx

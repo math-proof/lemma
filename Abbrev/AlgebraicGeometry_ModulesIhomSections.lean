@@ -1,7 +1,7 @@
 import Mathlib
 import Instance.PresheafOfModules_InternalHom
 import Instance.SheafOfModules_Monoidal
-import Lemma.AlgebraicGeometry.ModulesSectionsTensor
+import Lemma.Scheme.ModulesSectionsTensor
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false

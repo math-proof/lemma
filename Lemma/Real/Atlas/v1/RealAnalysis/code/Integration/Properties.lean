@@ -53,19 +53,19 @@ lemma integral_bounds
   have hbdd_below : BddBelow (f '' Set.Icc a b) := hcompact.bddBelow
   constructor
   · calc sInf (f '' Set.Icc a b) * (b - a)
-    = ∫ _ in a..b, sInf (f '' Set.Icc a b) := by
-      rw [intervalIntegral.integral_const, smul_eq_mul, mul_comm]
+    = ∫ _ in a..b, sInf (f '' Set.Icc a b) := (by
+      rw [intervalIntegral.integral_const, smul_eq_mul, mul_comm])
     _ ≤ ∫ x in a..b, f x := by
       apply intervalIntegral.integral_mono_on hab
-        intervalIntegral.intervalIntegrable_const hint
+        intervalIntegrable_const hint
       intro x hx
       exact csInf_le hbdd_below (Set.mem_image_of_mem f hx)
   · calc ∫ x in a..b, f x
-    ≤ ∫ _ in a..b, sSup (f '' Set.Icc a b) := by
+    ≤ ∫ _ in a..b, sSup (f '' Set.Icc a b) := (by
       apply intervalIntegral.integral_mono_on hab hint
-        intervalIntegral.intervalIntegrable_const
+        intervalIntegrable_const
       intro x hx
-      exact le_csSup hbdd_above (Set.mem_image_of_mem f hx)
+      exact le_csSup hbdd_above (Set.mem_image_of_mem f hx))
     _ = sSup (f '' Set.Icc a b) * (b - a) := by
       rw [intervalIntegral.integral_const, smul_eq_mul, mul_comm]
 

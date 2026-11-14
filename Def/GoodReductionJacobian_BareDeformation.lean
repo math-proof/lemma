@@ -1,5 +1,5 @@
 import Structure.JacJ1Iface
-import Lemma.AlgebraicGeometry.RelativeGroupLaw
+import Lemma.Scheme.RelativeGroupLaw
 import Def.AlgebraicGeometry_FormalGroupAlongSection
 import Structure.GoodReductionJacobian_BareDeformation
 

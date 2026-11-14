@@ -15,7 +15,8 @@ lemma Submartingale.expected_stoppedValue_mono_real
   {m0 : MeasurableSpace Ω}
   {μ : Measure Ω}
   {𝒢 : Filtration ℕ m0}
-  {π : Ω → ℕ∞}
+  {f : ℕ → Ω → ℝ}
+  {τ π : Ω → ℕ∞}
   [SigmaFiniteFiltration μ 𝒢]
   {N : ℕ}
 -- given
@@ -29,15 +30,18 @@ lemma Submartingale.expected_stoppedValue_mono_real
 -- proof
   rw [← sub_nonneg, ← integral_sub', stoppedValue_sub_eq_sum' hle hbdd]
   · simp only [Finset.sum_apply]
-    have hmeas : ∀ i, MeasurableSet[𝒢 i] {ω : Ω | τ ω ≤ i ∧ ↑i < π ω} := by
+    have hmeas : ∀ i, MeasurableSet[𝒢 i] {ω : Ω | τ ω ≤ (i : ℕ∞) ∧ (i : ℕ∞) < π ω} := by
       intro i
-      refine (hτ i).inter ?_
-      convert (hπ i).compl using 1
-      ext x
-      simp; rfl
+      have hset : {ω : Ω | τ ω ≤ (i : ℕ∞) ∧ (i : ℕ∞) < π ω} =
+          {ω : Ω | τ ω ≤ (i : ℕ∞)} ∩ {ω : Ω | π ω ≤ (i : ℕ∞)}ᶜ := by
+        ext x
+        simp only [Set.mem_inter_iff, Set.mem_setOf_eq, Set.mem_compl_iff]
+        exact and_congr_right fun _ => lt_iff_not_ge
+      rw [hset]
+      exact (hτ i).inter (hπ i).compl
     rw [integral_finset_sum]
     · refine Finset.sum_nonneg fun i _ => ?_
-      rw [integral_indicator (𝒢.le _ _ (hmeas _)), integral_sub', sub_nonneg]
+      erw [integral_indicator (𝒢.le _ _ (hmeas _)), integral_sub', sub_nonneg]
       · exact hf.setIntegral_le (Nat.le_succ i) (hmeas _)
       · exact (hf.integrable _).integrableOn
       · exact (hf.integrable _).integrableOn
@@ -59,6 +63,8 @@ lemma Supermartingale.expected_stoppedValue_le
   {m0 : MeasurableSpace Ω}
   {μ : Measure Ω}
   {𝒢 : Filtration ℕ m0}
+  {f : ℕ → Ω → ℝ}
+  {τ : Ω → ℕ∞}
   [SigmaFiniteFiltration μ 𝒢]
   {N : ℕ}
 -- given
@@ -69,7 +75,7 @@ lemma Supermartingale.expected_stoppedValue_le
   μ[stoppedValue f τ] ≤ μ[f 0] := by
 -- proof
   have hsub : Submartingale (-f) 𝒢 μ := hf.neg
-  have h0 : ∀ ω, (fun _ : Ω => (0 : ℕ∞)) ω ≤ τ ω := fun ω => zero_le _
+  have h0 : ∀ ω, (fun _ : Ω => (0 : ℕ∞)) ω ≤ τ ω := fun ω => zero_le (a := τ ω)
   have key := hsub.expected_stoppedValue_mono_real (isStoppingTime_const 𝒢 0) hτ h0 hbdd
   simp only [stoppedValue_const] at key
   have eq1 : μ[stoppedValue (-f) τ] = -μ[stoppedValue f τ] := by

@@ -41,5 +41,5 @@ private lemma main
     h₁ (hFm.prodMk (hXm.prodMk hZm)) h₂ h₃
 
 
--- created on 2026-10-07
+-- created on 2023-04-05
 -- updated on 2026-10-26

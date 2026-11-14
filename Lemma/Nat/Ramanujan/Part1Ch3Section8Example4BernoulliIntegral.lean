@@ -135,8 +135,8 @@ private lemma Rstep (p i : ℕ) :
       rw [pow_succ]
       ring
     · have hjle : j ≤ p := by
-      have := Finset.mem_range.mp hj
-      omega
+        have := Finset.mem_range.mp hj
+        omega
       have hjle1 : j ≤ p + 1 := by omega
       have ch := choose_helper (p + 1) j hjle1
       rw [Nat.add_sub_cancel] at ch
@@ -637,7 +637,7 @@ namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Section8Example4BernoulliIn
 private lemma exp_val (x : ℂ) : (∑' n : ℕ, x ^ n / (Nat.factorial n : ℂ)) = Complex.exp x := by
   have h := NormedSpace.exp_eq_tsum_div (𝔸 := ℂ)
   have hx : NormedSpace.exp x = ∑' n : ℕ, x ^ n / (Nat.factorial n : ℂ) := congrFun h x
-  rwa [← Complex.exp_eq_exp_ℂ] at hx
+  rw [← hx, Complex.exp_eq_exp_ℂ]
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Section8Example4BernoulliIntegral
 
@@ -669,7 +669,8 @@ private lemma shift_exp (k : ℕ) (x : ℂ) (G : ℕ → ℂ)
   have htailV : (∑' i : ℕ, G (i + k)) = Complex.exp x := by
     rw [← exp_val x]
     exact tsum_congr hpoint
-  rwa [hzero, zero_add, htailV] at hshift
+  rw [hzero, zero_add] at hshift
+  rw [← hshift, htailV]
 
 end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Section8Example4BernoulliIntegral
 
@@ -706,8 +707,7 @@ private lemma dobinski (K : ℕ) (x : ℂ) :
         rw [h]
         exact Nat.cast_div hdvd h2
       have hxi : x ^ i = x ^ a * x ^ (i - a) :=
-        calc x ^ i = x ^ (a + (i - a)) := by
-          rw [show a + (i - a) = i from by omega]
+        calc x ^ i = x ^ (a + (i - a)) := by rw [Nat.add_sub_of_le ha]
           _ = x ^ a * x ^ (i - a) := pow_add x a (i - a)
       have h1 : (Nat.factorial i : ℂ) ≠ 0 :=
         Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero i)
@@ -870,8 +870,8 @@ private lemma bracketQ (m q : ℕ) (hq : 1 ≤ q) :
       rw [Nat.stirlingSecond_self, Nat.stirlingSecond_self]
       simp [bernoulli_zero]
     · have hS1 : Nat.stirlingSecond 1 q = 0 := by
-      apply Nat.stirlingSecond_eq_zero_of_lt
-      omega
+        apply Nat.stirlingSecond_eq_zero_of_lt
+        omega
       have hS0 : Nat.stirlingSecond 0 (q - 1) = 0 := by
         apply Nat.stirlingSecond_eq_zero_of_lt
         omega
@@ -909,7 +909,7 @@ private lemma bracketQ (m q : ℕ) (hq : 1 ≤ q) :
         have hSq : Nat.stirlingSecond 0 q = 0 :=
           Nat.stirlingSecond_eq_zero_of_lt (by omega)
         rw [hSq, Nat.cast_zero, mul_zero]
-      rwa [hG0, add_zero] at hshift
+      rwa [hG0, add_zero, eq_comm] at hshift
     rw [hreindex, star (m + 1) q hm1' hq]
     have hsub1 : (m + 1) - 1 = m := by omega
     rw [hsub1]
@@ -1174,4 +1174,4 @@ end MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Section8Example4BernoulliIntegral
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-13

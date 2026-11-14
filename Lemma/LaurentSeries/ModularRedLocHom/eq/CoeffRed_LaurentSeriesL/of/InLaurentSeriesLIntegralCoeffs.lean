@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.CharPReduction
+import Lemma.LaurentSeries.CharPReduction
 import Lemma.Int.P2MUtil
 
-open ModularCurve ModularCurve.CharPReduction
+open ModularCurve LaurentSeries.CharPReduction LaurentSeries
 
 /--
 [ModularCurve_CharPReduction_modularRedLocHom_eq_coeffRed](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularCurve_CharPReduction_modularRedLocHom_eq_coeffRed.lean)

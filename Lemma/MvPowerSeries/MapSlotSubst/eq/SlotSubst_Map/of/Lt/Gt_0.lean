@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.TateSlots
+import Lemma.MvPowerSeries.TateSlots
 import Lemma.Int.P2MUtil
 
-open ModularCurve
+open ModularCurve MvPowerSeries
 
 /--
 [ModularCurve_map_slotSubst](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularCurve_map_slotSubst.lean)

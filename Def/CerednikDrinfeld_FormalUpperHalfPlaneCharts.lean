@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.LatticeTreeOrbital.Main
+import Lemma.Matrix.LatticeTreeOrbital
 import Instance.CerednikDrinfeld_BruhatTitsTree
 import Structure.CerednikDrinfeld_FormalUpperHalfPlaneCharts
 

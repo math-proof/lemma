@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.AlgebraicCurve.SemistableCharts
+import Lemma.ValuationSubring.SemistableCharts
 import Abbrev.AlgebraicCurve_SemistableModel
 import Instance.AlgebraicCurve_SemistableModel
 

@@ -81,7 +81,7 @@ private lemma expansion_mul_exp {n J : ℕ} (e : Fin n → ℂ) (he : Function.I
             ((y : ℂ) ^ e i' * ((Real.log y : ℝ) : ℂ) ^ (j : ℕ))‖ ≤
       (Real.exp ‖a‖ * C +
         (‖a‖ ^ K / (K.factorial : ℝ) * 2 * M) * ∑ _ : Fin n, ∑ j : Fin J, ((j : ℝ) + 1) ^ (j : ℕ) +
-        (M * Real.exp ‖a‖) * ∑ _i : Fin n, ∑ j : Fin J, (((j : ℝ) + 1) / δ) ^ (j : ℕ)) * y ^ (ρ + δ) := by
+        (M * Real.exp ‖a‖) * ∑ _i : Fin n, ∑ j : Fin J, (((j : ℝ) + 1) / δ) ^ (j : ℕ)) * y ^ (ρ + δ) := (by
   classical
   intro y hy
   have hy0 : 0 < y := hy.1
@@ -154,7 +154,7 @@ private lemma expansion_mul_exp {n J : ℕ} (e : Fin n → ℂ) (he : Function.I
       _ = y ^ (ρ + δ) * (y * |Real.log y| ^ (j : ℕ)) := by rw [hsplit]; ring
       _ ≤ y ^ (ρ + δ) * ((j : ℝ) + 1) ^ (j : ℕ) :=
           mul_le_mul_of_nonneg_left (mul_abs_log_pow_le j y hy) hyρδ
-      _ = ((j : ℝ) + 1) ^ (j : ℕ) * y ^ (ρ + δ) := mul_comm _ _
+      _ = ((j : ℝ) + 1) ^ (j : ℕ) * y ^ (ρ + δ) := mul_comm _ _)
 _ = (‖a‖ ^ K / (K.factorial : ℝ) * 2 * M) * (∑ i : Fin n, ∑ j : Fin J, ((j : ℝ) + 1) ^ (j : ℕ)) *
     y ^ (ρ + δ) := by
     simp only [Finset.mul_sum, Finset.sum_mul]
@@ -182,20 +182,20 @@ _ = (‖a‖ ^ K / (K.factorial : ℝ) * 2 * M) * (∑ i : Fin n, ∑ j : Fin J,
       intro i k j
       if hP : (e i + k).re ≤ ρ then
         obtain ⟨i₀, hi₀⟩ := hcl i k hP
-        rw [if_pos hP, Finset.sum_eq_single i₀]
-        · rw [if_pos hi₀.symm, hi₀]
+        rw [ite_eq_left hP, Finset.sum_eq_single i₀]
+        · rw [ite_eq_left hi₀.symm, hi₀]
         ·
           intro i' _ hne
-          rw [if_neg, zero_mul]
+          rw [ite_eq_right, zero_mul]
           intro h
           exact hne (he (h.symm.trans hi₀.symm))
         ·
           intro h
           exact absurd (Finset.mem_univ i₀) h
       else
-        rw [if_neg hP]
+        rw [ite_eq_right hP]
         refine Finset.sum_eq_zero fun i' _ => ?_
-        rw [if_neg, zero_mul]
+        rw [ite_eq_right, zero_mul]
         intro h
         exact hP (by rw [h]; exact hre i')
     have hSUM : SUMP = ∑ i : Fin n, ∑ k ∈ range K, ∑ j : Fin J,
@@ -239,10 +239,10 @@ _ = (‖a‖ ^ K / (K.factorial : ℝ) * 2 * M) * (∑ i : Fin n, ∑ j : Fin J,
       intro i k j
       have hM0 : 0 ≤ M := (norm_nonneg _).trans (hM i j)
       if hP : (e i + k).re ≤ ρ then
-        rw [if_pos hP, sub_self, norm_zero]
+        rw [ite_eq_left hP, sub_self, norm_zero]
         positivity
       else
-        rw [if_neg hP, sub_zero]
+        rw [ite_eq_right hP, sub_zero]
         have hg := hgap i k (not_le.1 hP)
         rw [norm_mul, norm_mul, norm_div, norm_pow, Complex.norm_natCast, hφnorm]
         have h1 : y ^ (e i + k).re ≤ y ^ (ρ + 2 * δ) := Real.rpow_le_rpow_of_exponent_ge hy0 hy1 hg
@@ -329,10 +329,10 @@ private lemma rescale_expansion {n J : ℕ} (e : Fin n → ℂ) (c : Fin n → F
     rw [Finset.mul_sum, Finset.mul_sum, hidx]
     refine Finset.sum_congr rfl fun k _ => ?_
     if hk : (k : ℕ) ≤ (m : ℕ) then
-      simp only [if_pos hk]
+      simp only [ite_eq_left hk]
       ring
     else
-      simp only [if_neg hk]
+      simp only [ite_eq_right hk]
       ring
   rw [Finset.sum_congr rfl fun m _ => hL m, Finset.sum_comm]
   refine Finset.sum_congr rfl fun k _ => ?_
@@ -545,7 +545,7 @@ private lemma transferEntry_bound {n J : ℕ} (e : Fin n → ℂ) (lam₀ : ℝ)
   ·
     rwa [norm_zero]
 
-open Finset in
+open Finset
 /--
 [RegularSingular_exists_transferMatrix_expLogExpansion_rescale_expTwist](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_RegularSingular_exists_transferMatrix_expLogExpansion_rescale_expTwist.lean)
 -/
@@ -658,12 +658,12 @@ private lemma main
       rw [Finset.mul_sum]
       refine Finset.sum_congr rfl fun m _ => ?_
       if hkm : (k : ℕ) ≤ (m : ℕ) then
-        simp only [hL, if_pos hkm]
+        simp only [hL, ite_eq_left hkm]
         rw [Finset.sum_mul, Finset.sum_mul, Finset.sum_mul, Finset.mul_sum]
         refine Finset.sum_congr rfl fun i₀ _ => ?_
         ring
       else
-        simp only [hL, if_neg hkm, mul_zero, zero_mul, Finset.sum_const_zero]
+        simp only [hL, ite_eq_right hkm, mul_zero, zero_mul, Finset.sum_const_zero]
     have hcD_bound : ∀ i j, ‖cD i j‖ ≤ M_D := by
       intro i' j
       refine (exp_coeff_bound e c Bc' hcb hBc'0 a' Kd i' j).trans ?_

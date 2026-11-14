@@ -20,7 +20,7 @@ import Mathlib.Analysis.Normed.Ring.WithAbs
 import Mathlib.Analysis.AbsoluteValue.Equivalence
 import Mathlib.NumberTheory.RamificationInertia.Ramification
 import Mathlib.RingTheory.DedekindDomain.AdicValuation
-import Mathlib.RingTheory.DedekindDomain.IntegralClosure
+import Mathlib.RingTheory.Ideal.IntegralClosure
 import Mathlib.RingTheory.Ideal.Over
 import Def.v1.Atlas.NumberTheoryI.code.Chapter1.AbsoluteValues.Part2
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Chapter1.AbsoluteValues

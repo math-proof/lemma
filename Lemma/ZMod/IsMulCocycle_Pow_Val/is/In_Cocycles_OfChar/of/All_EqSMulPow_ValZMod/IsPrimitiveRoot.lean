@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.DualSelmer.ExtConditions
+import Lemma.Rep.ExtConditions
 import Lemma.Int.P2MUtil
 
 open CategoryTheory groupCohomology

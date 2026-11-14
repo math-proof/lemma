@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.Algebra.IsDirectLimit
+import Class.Mathlib_Algebra_IsDirectLimit
 open CategoryTheory AlgebraicGeometry
 
 

@@ -51,8 +51,7 @@ lemma central_limit_theorem
   have hY : ProbabilityTheory.HasLaw (id : ℝ → ℝ) (gaussianReal 0 1) (gaussianReal 0 1) :=
     ⟨measurable_id.aemeasurable, Measure.map_id⟩
   have hCLT := tendstoInDistribution_inv_sqrt_mul_sum hY h0 h1 hindep' hident'
-  have hTend := hCLT.tendsto
-  rw [ProbabilityMeasure.tendsto_iff_forall_integral_tendsto] at hTend
+  have hTend := ProbabilityMeasure.tendsto_iff_forall_integral_tendsto.mp hCLT.tendsto
   intro f
   have hf := hTend f
   simp only [Measure.map_id] at hf
@@ -63,14 +62,15 @@ lemma central_limit_theorem
     norm_cast; congr 1; ring
   rw [heq_meas]
   convert hf using 1
-  funext n
-  congr 1
-  apply Measure.map_congr
-  filter_upwards with ω
-  simp only [X']
-  rw [← Finset.sum_div, Finset.sum_sub_distrib]
-  simp only [Finset.sum_const, Finset.card_range, nsmul_eq_mul]
-  field_simp
+  · funext n
+    congr 1
+    apply Measure.map_congr
+    filter_upwards with ω
+    simp only [X']
+    rw [← Finset.sum_div, Finset.sum_sub_distrib]
+    simp only [Finset.sum_const, Finset.card_range, nsmul_eq_mul]
+    field_simp
+  · rfl
 
 
 -- created on 2026-10-23

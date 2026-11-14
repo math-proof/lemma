@@ -28,7 +28,7 @@ namespace MathlibExt.Probability.DeFinettiWanted
 [exists_perm_finite_support_comp_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/DeFinetti.lean)
 -/
 @[path]
-private lemma exists_perm_finite_support_comp_eq {ι : Type*} [Empty.Finite ι]
+private lemma exists_perm_finite_support_comp_eq {ι : Type*} [Finite ι]
   (f g : ι → ℕ) (hf : Function.Injective f) (hg : Function.Injective g) :
   ∃ σ : Equiv.Perm ℕ, Set.Finite {n : ℕ | σ n ≠ n} ∧ ∀ i, σ (g i) = f i := by
   classical
@@ -113,12 +113,10 @@ private lemma measure_dfb_cyl_eq_of_injective {ι : Type*} [Fintype ι]
       rw [hσ s]
       exact h s
   calc (μ : Measure (ℕ → Bool)) (dfbCyl f β)
-    = (μ : Measure (ℕ → Bool)) ((fun ω : ℕ → Bool => ω ∘ ⇑σ) ⁻¹' (dfbCyl g β)) := by
-      rw [hpre]
-    _ = Measure.map (fun ω : ℕ → Bool => ω ∘ ⇑σ) (μ : Measure (ℕ → Bool)) (dfbCyl g β) := by
-      rw [MeasureTheory.Measure.map_apply hmeas (dfb_cyl_measurableSet g β)]
-    _ = (μ : Measure (ℕ → Bool)) (dfbCyl g β) := by
-      rw [hμ σ hfin]
+    = (μ : Measure (ℕ → Bool)) ((fun ω : ℕ → Bool => ω ∘ ⇑σ) ⁻¹' (dfbCyl g β)) := by rw [hpre]
+    _ = Measure.map (fun ω : ℕ → Bool => ω ∘ ⇑σ) (μ : Measure (ℕ → Bool)) (dfbCyl g β) :=
+      (MeasureTheory.Measure.map_apply hmeas (dfb_cyl_measurableSet g β)).symm
+    _ = (μ : Measure (ℕ → Bool)) (dfbCyl g β) := by rw [hμ σ hfin]
 
 end MathlibExt.Probability.DeFinettiWanted
 
@@ -422,29 +420,16 @@ private lemma integral_map_dfb_freq (μ : ProbabilityMeasure (ℕ → Bool)) (a 
   have hfae : MeasureTheory.AEStronglyMeasurable (fun p : Set.Icc (0 : ℝ) 1 => dfbMoment a b p)
     (MeasureTheory.Measure.map (dfbFreq N) (μ : Measure (ℕ → Bool))) :=
     (dfbMoment a b).continuous.aestronglyMeasurable
-  calc MeasureTheory.integral
-    (MeasureTheory.ProbabilityMeasure.map μ (dfbFreq N) : ProbabilityMeasure
-      (Set.Icc (0 : ℝ) 1))
-    (fun p => dfbMoment a b p)
-    = MeasureTheory.integral
-      (MeasureTheory.Measure.map (dfbFreq N) (μ : Measure (ℕ → Bool)))
-      (fun p => dfbMoment a b p) := by
-      rw [MeasureTheory.ProbabilityMeasure.toMeasure_map]
-    _ = MeasureTheory.integral (μ : Measure (ℕ → Bool))
-      (fun ω => dfbMoment a b (dfbFreq N ω)) :=
-      MeasureTheory.integral_map hmeas.aemeasurable hfae
-    _ = MeasureTheory.integral (μ : Measure (ℕ → Bool))
-      (fun ω => (dfbCount N ω / (N : ℝ)) ^ a * (1 - dfbCount N ω / (N : ℝ)) ^ b) := by
-      apply MeasureTheory.integral_congr_ae
-      filter_upwards with ω
-      have hmem := dfb_count_div_mem_Icc N ω
-      have hfreq : (dfbFreq N ω).val = dfbCount N ω / (N : ℝ) := by
-        have h := Set.projIcc_of_mem (show (0 : ℝ) ≤ 1 by norm_num) hmem
-        have h2 : dfbFreq N ω = ⟨dfbCount N ω / (N : ℝ), hmem⟩ := h
-        rw [h2]
-      simp only [dfbMoment, BoundedContinuousFunction.mkOfCompact_apply,
-        ContinuousMap.coe_mk]
-      rw [hfreq]
+  rw [MeasureTheory.ProbabilityMeasure.toMeasure_map]
+  rw [MeasureTheory.integral_map hmeas.aemeasurable hfae]
+  apply MeasureTheory.integral_congr_ae
+  filter_upwards with ω
+  have hmem := dfb_count_div_mem_Icc N ω
+  have hfreq : (dfbFreq N ω).val = dfbCount N ω / (N : ℝ) := by
+    unfold dfbFreq
+    rw [Set.projIcc_of_mem (show (0 : ℝ) ≤ 1 by norm_num) hmem]
+  simp only [dfbMoment, BoundedContinuousFunction.mkOfCompact_apply,
+    ContinuousMap.coe_mk, hfreq]
 
 end MathlibExt.Probability.DeFinettiWanted
 

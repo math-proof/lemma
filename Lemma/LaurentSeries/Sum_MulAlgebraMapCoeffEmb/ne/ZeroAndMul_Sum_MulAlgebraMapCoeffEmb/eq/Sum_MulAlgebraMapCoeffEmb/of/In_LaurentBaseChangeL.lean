@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.LaurentCoeff
+import Lemma.LaurentSeries.LaurentCoeff
 open scoped BigOperators
 
 

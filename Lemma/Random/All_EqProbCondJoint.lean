@@ -7,7 +7,7 @@ open Random MeasureTheory
 @[path]
 private lemma main
   [MeasurableSpace Ω]
-  [ReferenceMeasure α] [ReferenceMeasure β] [ReferenceMeasure γ]
+  [μ : ReferenceMeasure α] [ν : ReferenceMeasure β] [ξ : ReferenceMeasure γ]
   {π : Measure Ω}
   {x : Ω → α} {y : Ω → β} {z : Ω → γ}
 -- given
@@ -15,9 +15,9 @@ private lemma main
 -- imply
   have _hPxy_z : SinglePSpace π ((x, y), z) := PSpace_JointJoint.of.PSpace_Joint_Joint hP
   have _hPyz : SinglePSpace π (y, z) := SinglePSpace.of.SinglePSpace.snd hP
-  ∀ᵐ «\sf{x}» ∂ReferenceMeasure.measure,
-    ∀ᵐ «\sf{y}» ∂ReferenceMeasure.measure,
-      ∀ᵐ «\sf{z}» ∂ReferenceMeasure.measure,
+  ∀ᵐ «\sf{x}» ∂μ.measure,
+    ∀ᵐ «\sf{y}» ∂ν.measure,
+      ∀ᵐ «\sf{z}» ∂ξ.measure,
         ℙ[π](x = «\sf{x}» ∧ y = «\sf{y}» | z = «\sf{z}») =
           ℙ[π](x = «\sf{x}» | y = «\sf{y}» ∧ z = «\sf{z}») *
             ℙ[π](y = «\sf{y}» | z = «\sf{z}») := by
@@ -111,7 +111,7 @@ private lemma main
 @[path]
 private lemma Cond
   [MeasurableSpace Ω]
-  [ReferenceMeasure α] [ReferenceMeasure β] [ReferenceMeasure γ]
+  [μ : ReferenceMeasure α] [ν : ReferenceMeasure β] [ξ : ReferenceMeasure γ]
   {π : Measure Ω}
   {x : Ω → α} {y : Ω → β} {z : Ω → γ}
 -- given
@@ -119,9 +119,9 @@ private lemma Cond
 -- imply
   have _hPxy_z : SinglePSpace π ((x, y), z) := PSpace_JointJoint.of.PSpace_Joint_Joint hP
   have _hPyz : SinglePSpace π (y, z) := SinglePSpace.of.SinglePSpace.snd hP
-  ∀ᵐ «\sf{x}» ∂ReferenceMeasure.measure,
-    ∀ᵐ «\sf{y}» ∂ReferenceMeasure.measure,
-      ∀ᵐ «\sf{z}» ∂ReferenceMeasure.measure,
+  ∀ᵐ «\sf{x}» ∂μ.measure,
+    ∀ᵐ «\sf{y}» ∂ν.measure,
+      ∀ᵐ «\sf{z}» ∂ξ.measure,
         ℙ[π](x = «\sf{x}» ∧ y = «\sf{y}» | z = «\sf{z}») =
           ℙ[π](y = «\sf{y}» | z = «\sf{z}») *
             ℙ[π](x = «\sf{x}» | y = «\sf{y}» ∧ z = «\sf{z}») := by
@@ -133,6 +133,6 @@ private lemma Cond
   rw [hc, mul_comm]
 
 
--- created on 2020-12-11
--- updated on 2026-09-20
+-- created on 2023-03-27
+-- updated on 2026-11-14
 -- updated on 2026-11-02

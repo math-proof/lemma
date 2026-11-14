@@ -1,5 +1,5 @@
-import Lemma.AutomorphicForm.LocalOrbitalBase
-import Lemma.AutomorphicForm.IsotypicCuspSpace
+import Lemma.Matrix.LocalOrbitalBase
+import Lemma.Submodule.IsotypicCuspSpace
 
 set_option autoImplicit false
 

@@ -85,9 +85,9 @@ import Lemma.Fin.ExtMulVal.eq.MulVal.of.In_DiagGLn
 import Lemma.Finset.LabelMap_Image.eq.LabelMap.of.All_Eq.All_InImageFaces.IsMaximalToSimplicialComplexToChamberComplex.In_Faces.In_Faces.In_Apartments.In_Apartments
 import Lemma.Finset.LabelMap.eq.ImageLabelMap.of.EqLabelMap_Head_ImageLabelMap_Head.IsChainAdjacent.Ne.All_EqLabelMap_ImageLabelMap
 import Lemma.Finset.Disjoint.of.In_FacesLinkComplex.In_Faces
-import Lemma.Bijective.All_All_All_Any_And_Eq_ImageAndAll_All_Eq_Image.of.All_ChamberAdjacent.All_Any_And_Eq.All_All_Eq.EqToSimplicialComplex
+import Lemma.Equiv.All_All_All_Any_And_Eq_ImageAndAll_All_Eq_Image.of.All_ChamberAdjacent.All_Any_And_Eq.All_All_Eq.EqToSimplicialComplex
 import Lemma.Finset.IsMaximalUnion.of.IsMaximalLinkComplex.In_Faces
-import Lemma.Bijective.All_EqImage.of.EqImage.All_IffIn_Faces_InImageFaces.Bijective.IsMaximalToSimplicialComplexToChamberComplex.In_Faces.In_Apartments
+import Lemma.Equiv.All_EqImage.of.EqImage.All_IffIn_Faces_InImageFaces.Bijective.IsMaximalToSimplicialComplexToChamberComplex.In_Faces.In_Apartments
 import Lemma.Finset.OppositeSides.of.EqToSimplicialComplex.AreOppositeToSimplicialComplexToChamberComplex.IsMaximal.IsMaximal.In_Faces.In_Faces.In_Apartments.OppositeChamberHyp
 import Lemma.Set.IsBoundedBorn.is.Any_IsBoundedOrbitSetAction
 import Lemma.Finset.AreOpposite.of.AreOpposite
@@ -97,7 +97,7 @@ import Lemma.List.Any.of.Any_Not.Ne.IsChain
 import Lemma.Set.Any_EqToSimplicialComplexAndAny_And_All_Any_And_EqAndAll_ChamberAdjacentAndIsThin.of.In_Apartments.IsThick
 import Lemma.Fin.TitsTheoremHypV
 import Lemma.Finset.Any_And_EqImageToFunMorph.of.AdjacentToSimplicialComplex.HasSufficientFoldings
-import Lemma.Bijective.Any_And_In_Faces.is.Image.in.FacesAndEqImage.of.IsMaximalToSimplicialComplexToChamberComplex.In_Faces.IsMaximalToSimplicialComplexToChamberComplex.In_Faces.In_Apartments.In_Apartments
+import Lemma.Equiv.Any_And_In_Faces.is.Image.in.FacesAndEqImage.of.IsMaximalToSimplicialComplexToChamberComplex.In_Faces.IsMaximalToSimplicialComplexToChamberComplex.In_Faces.In_Apartments.In_Apartments
 import Lemma.Finset.EqImageRefl.of.Ne.EqImageToFun.EqImageToFun.IsMaximalToSimplicialComplex
 import Lemma.Finset.Any_EqImageAndEqImage.of.Adjacent.HasSufficientFoldings
 import Lemma.Finset.Adjacent
@@ -226,7 +226,7 @@ import Lemma.Nat.All_Any_In_BruhatCell
 import Lemma.Set.ImageImage.eq.Image
 import Lemma.Nat.Mul.in.BruhatCell.of.In_B.In_BruhatCell
 import Lemma.Set.B.sub.StandardParabolic
-import Lemma.Bijective.Any_EqToFunAndAll_EqLabelSMap.All_EqLabelSMap.of.In_Faces.IsMaximal.In_Apartments.In_Apartments
+import Lemma.Equiv.Any_EqToFunAndAll_EqLabelSMap.All_EqLabelSMap.of.In_Faces.IsMaximal.In_Apartments.In_Apartments
 import Lemma.Set.Any_And_IsThinAndHasSufficientFoldings.of.In_Apartments.IsThick
 import Lemma.Group.Atlas.v1.Buildings.code.Building.CombinatorialGeometry.PropStrongIsoCombinatorial
 import Lemma.Finset.Any_All_In_FacesAndIsMaximalAndAll_EqAndAll_EqDeltaSAndAll_EqDeltaSAndAll_EqOrAdjacent.of.IsMaximal.In_Apartments

@@ -29,6 +29,24 @@ open Polynomial
 
 namespace puiseux
 
+theorem coeff_newtonPolynomial {K : Type*} [Field K]
+    (f : (HahnSeries Rat K)[X]) (hf : f.Monic)
+    (hpow : f ≠ X ^ f.natDegree) (i : ℕ) (hi : i ≤ f.natDegree) :
+    (newtonPolynomial f hf hpow).coeff i =
+      integralScaledCoeff f hf hpow ⟨i, Nat.lt_succ_of_le hi⟩ := by
+  classical
+  simpa [newtonPolynomial] using
+    Polynomial.ofFn_coeff_eq_val_of_lt
+      (integralScaledCoeff f hf hpow) (Nat.lt_succ_of_le hi)
+
+theorem coe_coeff_newtonPolynomial {K : Type*} [Field K]
+    (f : (HahnSeries Rat K)[X]) (hf : f.Monic)
+    (hpow : f ≠ X ^ f.natDegree) (i : ℕ) (hi : i ≤ f.natDegree) :
+    (((newtonPolynomial f hf hpow).coeff i : O K) : HahnSeries Rat K) =
+      scaledCoeff f (newtonSlope f hf hpow) i := by
+  rw [coeff_newtonPolynomial f hf hpow i hi]
+  rfl
+
 theorem exists_residuePolynomial_coeff_ne_zero {K : Type*} [Field K]
     (f : (HahnSeries Rat K)[X]) (hf : f.Monic)
     (hpow : f ≠ X ^ f.natDegree) :

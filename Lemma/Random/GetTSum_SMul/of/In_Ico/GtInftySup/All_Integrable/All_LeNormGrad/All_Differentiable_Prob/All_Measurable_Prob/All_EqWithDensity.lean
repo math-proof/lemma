@@ -1,7 +1,6 @@
 import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Mathlib.Analysis.Calculus.SmoothSeries
 import Syntax.Order.Sup
-import Lemma.Set.Summable_MulPowMulAdd_1.of.In_Ico
 import Lemma.Random.Differentiable.All_LeNormFderivMulAdd_1MulAbs_R.of.All_LeIntegral.All_Integrable.All_LeNormFderiv.All_Differentiable_Prob.All_Measurable_Prob.All_EqWithDensity
 import Lemma.Random.Integral_R.eq.Integral_Wkd.of.All_Eq.All_EqWithDensity
 import Lemma.Random.NormWkd.le.Abs_R
@@ -30,11 +29,10 @@ private lemma Er_bdd
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  [MeasurableSpace 𝒮] [μ : ReferenceMeasure 𝒜]
   {M : DensityModel Θ 𝒮 𝒜}
   {γ : ℝ}
   {g : 𝒮 → 𝒜 → ℝ}
-  {Cg : ℝ}
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
@@ -44,18 +42,25 @@ private lemma main
   (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.policy.prob θ z.1 z.2))
   (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₃ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ g x u)
-  (h₄ : ∀ x, Integrable (g x) ReferenceMeasure.measure)
-  (h₅ : ∀ x, ∫ u, g x u ∂ReferenceMeasure.measure ≤ Cg)
+  (h₄ : ∀ x, Integrable (g x) μ.measure)
+  (h₅ : sup[x] ∫ u, g x u ∂μ.measure < ∞)
   (θ : Θ) :
 -- imply
   HasFDerivAt (fun θ => ∑' t, γ ^ t * ∫ ω, r t ω ∂(M θ))
     (∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ) θ := by
 -- proof
+  obtain ⟨Cg, hCgbound⟩ := id h₅
+  have h₅le : ∀ x, ∫ u, g x u ∂μ.measure ≤ Cg := fun x => hCgbound ⟨x, rfl⟩
   have hD := fun t =>
     Differentiable.All_LeNormFderivMulAdd_1MulAbs_R.of.All_LeIntegral.All_Integrable.All_LeNormFderiv.All_Differentiable_Prob.All_Measurable_Prob.All_EqWithDensity
-      (M := M) h₁ hπ h₂ h₃ h₄ h₅ t
+      (M := M) h₁ hπ h₂ h₃ h₄ h₅le t
+  have hsum : Summable (fun k : ℕ => γ ^ k * ((k + 1) * (Cg * |M.env.R|))) := by
+    have h1 : Summable (fun k : ℕ => (k : ℝ) ^ 1 * γ ^ k) :=
+      summable_pow_mul_geometric_of_norm_lt_one 1 (by rw [Real.norm_of_nonneg h₀.1]; exact h₀.2)
+    have h2 := summable_geometric_of_lt_one h₀.1 h₀.2
+    exact ((h1.add h2).mul_right (Cg * |M.env.R|)).congr fun k => by ring
   refine hasFDerivAt_tsum (x₀ := θ)
-    (Summable_MulPowMulAdd_1.of.In_Ico h₀ (Cg * |M.env.R|))
+    hsum
     (fun t θ => ((hD t).1 θ).hasFDerivAt.const_mul (γ ^ t))
     (fun t θ => ?_) ?_ θ
   ·
@@ -69,4 +74,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-11
+-- updated on 2026-11-14

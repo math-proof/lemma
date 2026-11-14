@@ -49,10 +49,10 @@ lemma laplacian_sub
   have h_inner : ∀ᶠ y in nhds x, fderiv ℝ (fun z => u z - v z) y (Pi.single i 1) =
     fderiv ℝ u y (Pi.single i 1) - fderiv ℝ v y (Pi.single i 1) := by
     filter_upwards [hu_diff, hv_diff] with y hy_u hy_v
-    rw [fderiv_fun_sub hy_u hy_v, ContinuousLinearMap.sub_apply]
+    rw [fderiv_fun_sub hy_u hy_v, sub_apply]
   rw [Filter.EventuallyEq.fderiv_eq h_inner]
   rw [fderiv_fun_sub (hu2 i) (hv2 i)]
-  simp [ContinuousLinearMap.sub_apply]
+  simp [sub_apply]
 
 end CM7
 
@@ -136,9 +136,8 @@ lemma IsHarmonic.sub
   (hΩ : IsOpen Ω)
   (hv : IsHarmonic v Ω) :
 -- imply
-  IsHarmonic (fun x => u x - v x) Ω where contDiffOn :=
--- proof
-  hu.contDiffOn.sub hv.contDiffOn
+  IsHarmonic (fun x => u x - v x) Ω where
+    contDiffOn := hu.contDiffOn.sub hv.contDiffOn
     laplacian_eq_zero := by
       intro x hx
       rw [laplacian_sub hΩ hu.contDiffOn hv.contDiffOn hx]
@@ -860,9 +859,9 @@ lemma strong_min_principle
   simp only [v] at this
   linarith
 set_option maxHeartbeats 800000 in
-/-- Weak maximum principle for harmonic functions: if $u$ is harmonic on a bounded connected open
-set $\Omega$ and continuous on $\overline{\Omega}$, then for every $x \in \overline{\Omega}$ there
-is a point $q \in \partial \Omega$ with $u(x) \leq u(q)$. -/
+-- Weak maximum principle for harmonic functions: if $u$ is harmonic on a bounded connected open
+-- set $\Omega$ and continuous on $\overline{\Omega}$, then for every $x \in \overline{\Omega}$ there
+-- is a point $q \in \partial \Omega$ with $u(x) \leq u(q)$.
 
 end CM7
 

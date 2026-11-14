@@ -1,7 +1,7 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_TateSlots.lean: instance decls only.
 import Instance.ModularCurve_TateFormal
 import Mathlib.RingTheory.MvPowerSeries.Substitution
-import Lemma.ModularCurve.TateSlots
+import Def.ModularCurve_TateSlots
 
 set_option autoImplicit false
 

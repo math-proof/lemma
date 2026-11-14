@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.TwoChartIntegralModel
+import Lemma.Scheme.TwoChartIntegralModel
 import Lemma.Int.P2MUtil
 open AlgebraicCurve AlgebraicCurve.TwoChartIntegralModel
 open Polynomial
@@ -21,7 +21,6 @@ private lemma exists_eq_C_mul_of_map_residue_eq_zero {R : Type u} [CommRing R] [
   refine h
 
 
-open in
 @[path]
 private lemma main
   {R : Type u} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]

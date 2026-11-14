@@ -1,4 +1,4 @@
-import Lemma.AlgebraicGeometry.ThetaGroupAction
+import Lemma.Scheme.ThetaGroupAction
 
 set_option autoImplicit false
 

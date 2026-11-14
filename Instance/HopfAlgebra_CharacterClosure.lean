@@ -33,4 +33,3 @@ variable {O F A}
 end BaseChange
 
 end CartierDual
-

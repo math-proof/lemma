@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.JqCoeff
+import Lemma.HahnSeries.JqCoeff
 import Lemma.Int.P2MUtil
 
-open Polynomial ModularCurve
+open Polynomial ModularCurve HahnSeries
 
 /--
 [ModularCurve_forall_coeff_mem_of_forall_coeff_aeval_jqModC_mem](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularCurve_forall_coeff_mem_of_forall_coeff_aeval_jqModC_mem.lean)
@@ -155,7 +155,7 @@ private lemma  coeff_mem
     set P' := P - C c * X ^ (N + 1) with hP'
     have hP'coeff : ∀ i, P'.coeff i = if i = N + 1 then 0 else P.coeff i := by
       intro i
-      rw [hP', coeff_sub, coeff_C_mul_X_pow]
+      rw [hP', Polynomial.coeff_sub, coeff_C_mul_X_pow]
       split_ifs with hi
       · rw [hi, hc, sub_self]
       · rw [sub_zero]

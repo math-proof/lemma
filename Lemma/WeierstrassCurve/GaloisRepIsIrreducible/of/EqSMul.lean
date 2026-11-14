@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.FLTPrelim.GaloisRep
+import Lemma.WeierstrassCurve.GaloisRep
 open WeierstrassCurve WeierstrassCurve.Affine WeierstrassCurve.Affine.Point
 
 

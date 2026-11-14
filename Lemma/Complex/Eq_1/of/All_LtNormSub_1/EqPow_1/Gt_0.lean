@@ -4,7 +4,7 @@ import Def.GroupTheory.JordanLinearGroups
 open scoped commutatorElement
 open scoped Matrix.Norms.L2Operator
 open scoped MatrixOrder ComplexOrder
-open MathlibExt.GroupTheory.JordanLinearGroupsWanted
+open MathlibExt.GroupTheory.JordanLinearGroupsWanted hiding jlSeq jlNearOneSet
 
 
 

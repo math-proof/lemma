@@ -11,6 +11,7 @@ namespace ProbabilityTheory
 -/
 @[path]
 lemma paley_zygmund
+  {Ω : Type*} [MeasurableSpace Ω]
   {μ : Measure Ω} [IsProbabilityMeasure μ]
   {Z : Ω → ℝ}
   {θ : ℝ}
@@ -46,9 +47,10 @@ lemma paley_zygmund
     (∫ ω, Z ω ^ 2 ∂μ ) * (μ S).toReal:= by
     by_cases hS : μ S = 0
     · simp [Measure.restrict_eq_zero.mpr, hS]
-    · have h_jensen := ConvexOn.map_set_average_le even_two.convexOn_pow
-      (continuous_pow 2).continuousOn isClosed_univ hS (measure_ne_top μ S) (by simp)
-      hZ_int.integrableOn hZ2.integrable_sq.integrableOn
+    · have h_jensen :=
+        ConvexOn.map_set_average_le even_two.convexOn_pow
+          (continuous_pow 2).continuousOn isClosed_univ hS (measure_ne_top μ S) (by simp)
+          hZ_int.integrableOn hZ2.integrable_sq.integrableOn
       have hμS_pos : 0 < μ.real S := by
         rw [measureReal_def]
         exact ENNReal.toReal_pos hS (measure_ne_top μ S)

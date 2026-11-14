@@ -1,7 +1,7 @@
 import Mathlib
 import Instance.ModularCurve_TateSlots
 import Def.ModularCurve_LaurentCoeff
-import Lemma.ModularCurve.KatzLevelPCusps
+import Lemma.LaurentSeries.KatzLevelPCusps
 import Def.WeierstrassCurve_Velu
 import Macro.WeierstrassCurve_VeluPointMap
 import Def.WeierstrassCurve_VariableChangePointEquiv

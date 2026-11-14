@@ -10,7 +10,7 @@ namespace ProjectionTheory
 [gsw_two_ends_bound](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ProjectionTheory/code/GSW.lean)
 -/
 @[path]
-lemma gsw_two_ends_bound
+lemma gsw_two_ends_bound :
 -- imply
   ∃ (C₁ : ℝ), C₁ > 0 ∧ ∀ (δ : ℝ), 0 < δ → δ ≤ 1 → ∀ (E : Finset (EuclideanSpace ℝ (Fin 2))), 0 < E.card → (∀ x ∈ E, ‖x‖ ≤ 1) → (∀ x ∈ E, ∀ y ∈ E, x ≠ y → δ ≤ dist x y) → ∀ (R : ℝ), R > 0 → R ≤ (E.card : ℝ) → ∀ (Rtilde : ℝ), δ ≤ Rtilde → Rtilde ≤ 1 → ∀ (𝒯_sub : Finset DeltaTube), (∀ T ∈ 𝒯_sub, T.width = δ) → (∀ T ∈ 𝒯_sub, (T.richness E : ℝ) ≥ R) → (∃ (E_sub : Finset (EuclideanSpace ℝ (Fin 2))), E_sub ⊆ E ∧ (E_sub.card : ℝ) ≤ Rtilde ∧ (∃ (witnesses : DeltaTube → Finset (EuclideanSpace ℝ (Fin 2) × EuclideanSpace ℝ (Fin 2))), (∀ T ∈ 𝒯_sub, witnesses T ⊆ E_sub ×ˢ E_sub) ∧ (∀ T ∈ 𝒯_sub, (witnesses T).card ≥ ⌈R ^ 2 / 4⌉₊) ∧ (∀ T₁ ∈ 𝒯_sub, ∀ T₂ ∈ 𝒯_sub, T₁ ≠ T₂ → Disjoint (witnesses T₁) (witnesses T₂)))) → (𝒯_sub.card : ℝ) ≤ C₁ * Rtilde ^ 2 / R ^ 2 := by
 -- proof
@@ -95,11 +95,11 @@ lemma log_dominated_by_rpow
     δ ^ (-ε) + δ ^ (-ε) / (ε * Real.log 2) := by ring
   rw [hexpand]
   linarith
-/-- **Theorem (GSW).** Let `E ⊂ ℝ²` be a set of `N` `δ`-balls in `B₁` which is well-spaced
-(every ball of radius `N^(-1/2)` meets `E` in `≲ 1` points). Let `𝒯_R(E)` be a family of
-essentially distinct `δ`-tubes with `|T ∩ E|_δ ≥ R`, and assume `R > δ^(-ε) · δ · |E|_δ`.
-Then $|\mathcal T_R(E)| \lessapprox N^2 / R^3$, formalised here as
-$|\mathcal T| \le C_\varepsilon \, \delta^{-\varepsilon} |E|^2 / R^3$. -/
+-- **Theorem (GSW).** Let `E ⊂ ℝ²` be a set of `N` `δ`-balls in `B₁` which is well-spaced
+-- (every ball of radius `N^(-1/2)` meets `E` in `≲ 1` points). Let `𝒯_R(E)` be a family of
+-- essentially distinct `δ`-tubes with `|T ∩ E|_δ ≥ R`, and assume `R > δ^(-ε) · δ · |E|_δ`.
+-- Then $|\mathcal T_R(E)| \lessapprox N^2 / R^3$, formalised here as
+-- $|\mathcal T| \le C_\varepsilon \, \delta^{-\varepsilon} |E|^2 / R^3$.
 end ProjectionTheory
 
 

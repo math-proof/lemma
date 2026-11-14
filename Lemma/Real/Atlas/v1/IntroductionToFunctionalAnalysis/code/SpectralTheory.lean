@@ -178,7 +178,7 @@ lemma fredholm_alternative_full
     constructor; have hT' : star T = T := hsa
     simp only [S, star_sub, star_smul, hT', ContinuousLinearMap.star_eq_adjoint,
       ContinuousLinearMap.adjoint_id]
-    ext x; simp only [ContinuousLinearMap.mul_apply, ContinuousLinearMap.sub_apply,
+    ext x; simp only [ContinuousLinearMap.mul_apply, sub_apply,
       ContinuousLinearMap.smul_apply, ContinuousLinearMap.id_apply,
       map_sub, map_smul]; module
   have hort : (LinearMap.range S.toLinearMap).orthogonal = LinearMap.ker S.toLinearMap :=
@@ -224,7 +224,7 @@ lemma fredholm_alternative_full
         rw [LinearMap.mem_range]
         refine ⟨(b : H), ?_⟩
         have hb_val := congr_arg Subtype.val hb
-        simp only [ContinuousLinearMap.sub_apply] at hb_val
+        simp only [sub_apply] at hb_val
         show μ • (b : H) - T (b : H) = y
         have hT'_val : ↑(T' b) = T (↑b : H) := by
           change ↑(T.toLinearMap.restrict hTinv b) = T ↑b
@@ -347,7 +347,7 @@ lemma rayleighQuotient_algebraMap_sub
   ((algebraMap 𝕜 (H →L[𝕜] H)) (↑t : 𝕜) - T).rayleighQuotient x = t - T.rayleighQuotient x := by
 -- proof
   unfold ContinuousLinearMap.rayleighQuotient ContinuousLinearMap.reApplyInnerSelf
-  simp only [ContinuousLinearMap.sub_apply, ContinuousLinearMap.algebraMap_apply]
+  simp only [sub_apply, ContinuousLinearMap.algebraMap_apply]
   rw [inner_sub_left, map_sub, inner_smul_left, RCLike.conj_ofReal]
   have h_re_inner : RCLike.re ((↑t : 𝕜) * @inner 𝕜 H _ x x) = t * ‖x‖ ^ 2 := by
     rw [RCLike.mul_re, RCLike.ofReal_re, RCLike.ofReal_im, inner_self_eq_norm_sq (𝕜 := 𝕜)]
@@ -470,7 +470,7 @@ lemma positive_iff_spectrum_nonneg
       apply mul_nonneg _ (sq_nonneg _)
       suffices hm_nonneg : 0 ≤ m from le_trans hm_nonneg (hm_le u)
       by_contra h_m_neg
-      push_neg at h_m_neg
+      push Not at h_m_neg
       set S := (algebraMap 𝕜 (H →L[𝕜] H)) (↑M : 𝕜) - T
       have hS_sa : IsSelfAdjoint S :=
         (IsSelfAdjoint.algebraMap _
@@ -537,7 +537,7 @@ lemma positive_iff_spectrum_nonneg
       have hS_gt_M : M < ‖S‖ := by
         rw [S.norm_eq_iSup_rayleighQuotient hS_sym]
         obtain ⟨x₀, hx₀⟩ : ∃ x₀ : H, T.rayleighQuotient x₀ < 0 := by
-          by_contra h_all; push_neg at h_all; linarith [le_ciInf h_all]
+          by_contra h_all; push Not at h_all; linarith [le_ciInf h_all]
         have hx₀_ne : x₀ ≠ 0 := by
           intro h; rw [h, ContinuousLinearMap.rayleighQuotient_apply_zero] at hx₀; linarith
         have hS_rq_x₀ : S.rayleighQuotient x₀ = M - T.rayleighQuotient x₀ :=

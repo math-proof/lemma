@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.FLTPrelim.FreyPackage
+import Lemma.WeierstrassCurve.FreyPackage
 import Def.FLTPrelim_ModularRep
 import Def.FreyPackage_LevelRaising
 import Def.RibetLevelLowering_ExchangeData

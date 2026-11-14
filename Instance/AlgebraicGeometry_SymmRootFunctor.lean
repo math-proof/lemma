@@ -1,9 +1,9 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_SymmRootFunctor.lean: instance decls only.
 import Mathlib
 import Instance.AlgebraicGeometry_RelativePicardFunctor
-import Lemma.AlgebraicGeometry.PolarisationRosati
+import Lemma.Scheme.PolarisationRosati
 import Abbrev.GoodReductionJacobian_RelativeGroupLawBaseChange
-import Lemma.AlgebraicGeometry.SymmRootFunctor
+import Lemma.Scheme.SymmRootFunctor
 
 set_option autoImplicit false
 

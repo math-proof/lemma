@@ -1,6 +1,7 @@
 import Mathlib.Probability.ConditionalExpectation
 import Mathlib.Probability.Independence.Conditional
 import Lemma.Random.IndepJoint.of.All_Eq_UFn_MulPreimageS
+import Notation.Probability.JointRv
 open ProbabilityTheory MeasureTheory
 open scoped ProbabilityTheory
 
@@ -130,3 +131,4 @@ private lemma main
 
 
 -- created on 2023-04-05
+-- updated on 2026-11-13

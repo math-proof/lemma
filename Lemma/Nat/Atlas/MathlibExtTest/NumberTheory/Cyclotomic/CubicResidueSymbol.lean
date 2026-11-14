@@ -14,6 +14,7 @@ namespace MetaMathlibExtTest
 lemma test_zero
   [Field K]
   [NumberField K]
+  [IsCyclotomicExtension {3} ℚ K]
   {zeta : K}
   {a : NumberField.RingOfIntegers K}
 -- given
@@ -36,6 +37,7 @@ namespace MetaMathlibExtTest
 lemma test_unit_mul_invariance
   [Field K]
   [NumberField K]
+  [IsCyclotomicExtension {3} ℚ K]
   {zeta : K}
   {a n : NumberField.RingOfIntegers K}
   {u : NumberField.RingOfIntegers K}
@@ -47,8 +49,8 @@ lemma test_unit_mul_invariance
   cubicResidueSymbolRaw hZeta a (u * n) = cubicResidueSymbolRaw hZeta a n := by
 -- proof
   have hu0 : u ≠ 0 := IsUnit.ne_zero hu
-  have h1 := MetaMathlibExt.cubicResidueSymbolRaw_mul hZeta a u n hu0 hn
-  have h2 := MetaMathlibExt.cubicResidueSymbolRaw_unit hZeta a u hu
+  have h1 := MetaMathlibExt.cubicResidueSymbolRaw_mul (a := a) (m := u) (n := n) hZeta hu0 hn
+  have h2 := MetaMathlibExt.cubicResidueSymbolRaw_unit (a := a) hZeta hu
   rwa [h2, one_mul] at h1
 
 end MetaMathlibExtTest
@@ -62,6 +64,7 @@ namespace MetaMathlibExtTest
 lemma test_associate_invariance
   [Field K]
   [NumberField K]
+  [IsCyclotomicExtension {3} ℚ K]
   {zeta : K}
   {a n : NumberField.RingOfIntegers K}
   {u : NumberField.RingOfIntegers K}
@@ -72,7 +75,7 @@ lemma test_associate_invariance
 -- imply
   cubicResidueSymbolRaw hZeta a n = cubicResidueSymbolRaw hZeta a (u * n) := by
 -- proof
-  rw [test_unit_mul_invariance hZeta a n u hu hn]
+  rw [test_unit_mul_invariance hZeta hu hn]
 
 end MetaMathlibExtTest
 
@@ -85,6 +88,7 @@ namespace MetaMathlibExtTest
 lemma test_unit_via_mul
   [Field K]
   [NumberField K]
+  [IsCyclotomicExtension {3} ℚ K]
   {zeta : K}
   {a : NumberField.RingOfIntegers K}
   {u : NumberField.RingOfIntegers K}
@@ -96,10 +100,10 @@ lemma test_unit_via_mul
 -- proof
   have hOneNe : (1 : NumberField.RingOfIntegers K) ≠ 0 := one_ne_zero
   have hInv :=
-    test_unit_mul_invariance hZeta a (1 : NumberField.RingOfIntegers K) u hu hOneNe
+    test_unit_mul_invariance (a := a) (n := 1) hZeta hu hOneNe
   have hOne :
     cubicResidueSymbolRaw hZeta a (1 : NumberField.RingOfIntegers K) = 1 :=
-    MetaMathlibExt.cubicResidueSymbolRaw_unit hZeta a 1 isUnit_one
+    MetaMathlibExt.cubicResidueSymbolRaw_unit (a := a) hZeta isUnit_one
   rw [mul_one] at hInv
   rwa [hOne] at hInv
 -- Prime root membership and congruence (not dividing case) — forwarded.
@@ -115,6 +119,7 @@ namespace MetaMathlibExtTest
 lemma test_prime_not_dvd
   [Field K]
   [NumberField K]
+  [IsCyclotomicExtension {3} ℚ K]
   {zeta : K}
   {a p : NumberField.RingOfIntegers K}
 -- given
@@ -126,7 +131,7 @@ lemma test_prime_not_dvd
 -- imply
   MetaMathlibExt.cubicResidueSymbolRaw hZeta a p ∈ ({(1 : NumberField.RingOfIntegers K), MetaMathlibExt.omega hZeta, MetaMathlibExt.omega hZeta ^ 2} : Set _) ∧ Ideal.Quotient.mk (Ideal.span ({p} : Set (NumberField.RingOfIntegers K))) (MetaMathlibExt.cubicResidueSymbolRaw hZeta a p) = Ideal.Quotient.mk (Ideal.span ({p} : Set _)) a ^ ((Ideal.absNorm (Ideal.span ({p} : Set _)) - 1) / 3) :=
 -- proof
-  MetaMathlibExt.cubicResidueSymbolRaw_prime_not_dvd hZeta a p hp hp0 hCop hndvd
+  MetaMathlibExt.cubicResidueSymbolRaw_prime_not_dvd hZeta hp hp0 hCop hndvd
 -- Prime zero when dividing — forwarded.
 
 end MetaMathlibExtTest
@@ -140,6 +145,7 @@ namespace MetaMathlibExtTest
 lemma test_prime_dvd
   [Field K]
   [NumberField K]
+  [IsCyclotomicExtension {3} ℚ K]
   {zeta : K}
   {a p : NumberField.RingOfIntegers K}
 -- given
@@ -151,7 +157,7 @@ lemma test_prime_dvd
 -- imply
   MetaMathlibExt.cubicResidueSymbolRaw hZeta a p = 0 :=
 -- proof
-  MetaMathlibExt.cubicResidueSymbolRaw_prime_dvd hZeta a p hp hp0 hCop hdvd
+  MetaMathlibExt.cubicResidueSymbolRaw_prime_dvd hZeta hp hp0 hCop hdvd
 -- Multiplicativity: repeated factor and nontrivial composite — forwarded.
 
 end MetaMathlibExtTest
@@ -165,6 +171,7 @@ namespace MetaMathlibExtTest
 lemma test_mul_repeated
   [Field K]
   [NumberField K]
+  [IsCyclotomicExtension {3} ℚ K]
   {zeta : K}
   {a n : NumberField.RingOfIntegers K}
 -- given
@@ -173,7 +180,7 @@ lemma test_mul_repeated
 -- imply
   MetaMathlibExt.cubicResidueSymbolRaw hZeta a (n * n) = MetaMathlibExt.cubicResidueSymbolRaw hZeta a n * MetaMathlibExt.cubicResidueSymbolRaw hZeta a n :=
 -- proof
-  MetaMathlibExt.cubicResidueSymbolRaw_mul hZeta a n n hn hn
+  MetaMathlibExt.cubicResidueSymbolRaw_mul (a := a) (m := n) (n := n) hZeta hn hn
 
 end MetaMathlibExtTest
 
@@ -186,6 +193,7 @@ namespace MetaMathlibExtTest
 lemma test_mul_composite_three
   [Field K]
   [NumberField K]
+  [IsCyclotomicExtension {3} ℚ K]
   {zeta : K}
   {a m n k : NumberField.RingOfIntegers K}
 -- given
@@ -197,8 +205,8 @@ lemma test_mul_composite_three
   MetaMathlibExt.cubicResidueSymbolRaw hZeta a (m * n * k) = MetaMathlibExt.cubicResidueSymbolRaw hZeta a m * MetaMathlibExt.cubicResidueSymbolRaw hZeta a n * MetaMathlibExt.cubicResidueSymbolRaw hZeta a k := by
 -- proof
   have hmn : m * n ≠ 0 := mul_ne_zero hm hn
-  have h1 := MetaMathlibExt.cubicResidueSymbolRaw_mul hZeta a (m * n) k hmn hk
-  have h2 := MetaMathlibExt.cubicResidueSymbolRaw_mul hZeta a m n hm hn
+  have h1 := MetaMathlibExt.cubicResidueSymbolRaw_mul (a := a) (m := m * n) (n := k) hZeta hmn hk
+  have h2 := MetaMathlibExt.cubicResidueSymbolRaw_mul (a := a) (m := m) (n := n) hZeta hm hn
   rwa [h2] at h1
 
 end MetaMathlibExtTest
@@ -212,6 +220,7 @@ namespace MetaMathlibExtTest
 lemma test_mul_with_unit
   [Field K]
   [NumberField K]
+  [IsCyclotomicExtension {3} ℚ K]
   {zeta : K}
   {a m n : NumberField.RingOfIntegers K}
   {u : NumberField.RingOfIntegers K}
@@ -226,9 +235,9 @@ lemma test_mul_with_unit
   have hu0 : u ≠ 0 := IsUnit.ne_zero hu
   have hm0 : m ≠ 0 := hm
   have humn : u * m ≠ 0 := mul_ne_zero hu0 hm0
-  have h1 := MetaMathlibExt.cubicResidueSymbolRaw_mul hZeta a (u * m) n humn hn
-  have h2 := MetaMathlibExt.cubicResidueSymbolRaw_mul hZeta a u m hu0 hm0
-  have h3 := MetaMathlibExt.cubicResidueSymbolRaw_unit hZeta a u hu
+  have h1 := MetaMathlibExt.cubicResidueSymbolRaw_mul (a := a) (m := u * m) (n := n) hZeta humn hn
+  have h2 := MetaMathlibExt.cubicResidueSymbolRaw_mul (a := a) (m := u) (n := m) hZeta hu0 hm0
+  have h3 := MetaMathlibExt.cubicResidueSymbolRaw_unit (a := a) hZeta hu
   rwa [h2, h3, one_mul] at h1
 -- Totalization: every default branch of the prime-ideal factor — forwarded.
 
@@ -243,6 +252,7 @@ namespace MetaMathlibExtTest
 lemma test_factor_notPrime
   [Field K]
   [NumberField K]
+  [IsCyclotomicExtension {3} ℚ K]
   {zeta : K}
   {P : Ideal (NumberField.RingOfIntegers K)}
   {a : NumberField.RingOfIntegers K}
@@ -252,7 +262,7 @@ lemma test_factor_notPrime
 -- imply
   MetaMathlibExt.primeIdealCubicSymbolFactorRaw hZeta P a = 1 :=
 -- proof
-  MetaMathlibExt.primeIdealCubicSymbolFactorRaw_of_not_isPrime hZeta P a hNotPrime
+  MetaMathlibExt.primeIdealCubicSymbolFactorRaw_of_not_isPrime hZeta hNotPrime
 
 end MetaMathlibExtTest
 
@@ -265,6 +275,7 @@ namespace MetaMathlibExtTest
 lemma test_factor_bot
   [Field K]
   [NumberField K]
+  [IsCyclotomicExtension {3} ℚ K]
   {zeta : K}
   {a : NumberField.RingOfIntegers K}
 -- given
@@ -272,7 +283,7 @@ lemma test_factor_bot
 -- imply
   MetaMathlibExt.primeIdealCubicSymbolFactorRaw hZeta (⊥ : Ideal (NumberField.RingOfIntegers K)) a = 1 :=
 -- proof
-  MetaMathlibExt.primeIdealCubicSymbolFactorRaw_bot hZeta a
+  MetaMathlibExt.primeIdealCubicSymbolFactorRaw_bot hZeta
 
 end MetaMathlibExtTest
 
@@ -285,6 +296,7 @@ namespace MetaMathlibExtTest
 lemma test_factor_notCoprime
   [Field K]
   [NumberField K]
+  [IsCyclotomicExtension {3} ℚ K]
   {zeta : K}
   {P : Ideal (NumberField.RingOfIntegers K)}
   {a : NumberField.RingOfIntegers K}
@@ -297,7 +309,7 @@ lemma test_factor_notCoprime
   MetaMathlibExt.primeIdealCubicSymbolFactorRaw hZeta P a = 1 :=
 -- proof
   MetaMathlibExt.primeIdealCubicSymbolFactorRaw_of_not_coprime
-    hZeta P a hPprime hPbot hNotCop
+    hZeta hPprime hPbot hNotCop
 
 end MetaMathlibExtTest
 
@@ -310,6 +322,7 @@ namespace MetaMathlibExtTest
 lemma test_factor_isPrime_bot
   [Field K]
   [NumberField K]
+  [IsCyclotomicExtension {3} ℚ K]
   {zeta : K}
   {P : Ideal (NumberField.RingOfIntegers K)}
   {a : NumberField.RingOfIntegers K}
@@ -321,7 +334,7 @@ lemma test_factor_isPrime_bot
   MetaMathlibExt.primeIdealCubicSymbolFactorRaw hZeta P a = 1 :=
 -- proof
   MetaMathlibExt.primeIdealCubicSymbolFactorRaw_eq_one_of_isPrime_of_bot
-    hZeta P a hPprime hBot
+    hZeta hPprime hBot
 -- Independent definition-unfolding probes for prime-ideal factor branches.
 
 end MetaMathlibExtTest
@@ -335,6 +348,7 @@ namespace MetaMathlibExtTest
 lemma test_factor_valid_branch_via_definition
   [Field K]
   [NumberField K]
+  [IsCyclotomicExtension {3} ℚ K]
   {zeta : K}
   {P : Ideal (NumberField.RingOfIntegers K)}
   {a : NumberField.RingOfIntegers K}
@@ -361,6 +375,7 @@ namespace MetaMathlibExtTest
 lemma test_factor_dvd_branch_via_definition
   [Field K]
   [NumberField K]
+  [IsCyclotomicExtension {3} ℚ K]
   {zeta : K}
   {P : Ideal (NumberField.RingOfIntegers K)}
   {a : NumberField.RingOfIntegers K}
@@ -387,6 +402,7 @@ namespace MetaMathlibExtTest
 lemma test_factor_notPrime_via_definition
   [Field K]
   [NumberField K]
+  [IsCyclotomicExtension {3} ℚ K]
   {zeta : K}
   {P : Ideal (NumberField.RingOfIntegers K)}
   {a : NumberField.RingOfIntegers K}
@@ -409,6 +425,7 @@ namespace MetaMathlibExtTest
 lemma test_factor_bot_via_definition
   [Field K]
   [NumberField K]
+  [IsCyclotomicExtension {3} ℚ K]
   {zeta : K}
   {a : NumberField.RingOfIntegers K}
 -- given
@@ -443,6 +460,7 @@ namespace MetaMathlibExtTest
 lemma test_factor_notCoprime_via_definition
   [Field K]
   [NumberField K]
+  [IsCyclotomicExtension {3} ℚ K]
   {zeta : K}
   {P : Ideal (NumberField.RingOfIntegers K)}
   {a : NumberField.RingOfIntegers K}
@@ -469,6 +487,7 @@ namespace MetaMathlibExtTest
 lemma test_prime_not_dvd_via_definition
   [Field K]
   [NumberField K]
+  [IsCyclotomicExtension {3} ℚ K]
   {zeta : K}
   {a p : NumberField.RingOfIntegers K}
 -- given
@@ -481,11 +500,11 @@ lemma test_prime_not_dvd_via_definition
   MetaMathlibExt.cubicResidueSymbolRaw hZeta a p ∈ ({(1 : NumberField.RingOfIntegers K), MetaMathlibExt.omega hZeta, MetaMathlibExt.omega hZeta ^ 2} : Set _) ∧ Ideal.Quotient.mk (Ideal.span ({p} : Set (NumberField.RingOfIntegers K))) (MetaMathlibExt.cubicResidueSymbolRaw hZeta a p) = Ideal.Quotient.mk (Ideal.span ({p} : Set _)) a ^ ((Ideal.absNorm (Ideal.span ({p} : Set _)) - 1) / 3) := by
 -- proof
   have hNotMem : a ∉ Ideal.span ({p} : Set (NumberField.RingOfIntegers K)) := by
-    rwa [Ideal.mem_span_singleton]
+    simpa [Ideal.mem_span_singleton] using hndvd
   have hSpanPrime : (Ideal.span ({p} : Set (NumberField.RingOfIntegers K))).IsPrime :=
     Ideal.isPrime_span_singleton_of_prime hp
   have hSpanNeBot : Ideal.span ({p} : Set (NumberField.RingOfIntegers K)) ≠ ⊥ := by
-    rwa [Ne, Ideal.span_singleton_eq_bot]
+    simpa [Ne, Ideal.span_singleton_eq_bot] using hp0
   have hPrimeIdeal : Prime (Ideal.span ({p} : Set (NumberField.RingOfIntegers K))) :=
     Ideal.prime_of_isPrime hSpanNeBot hSpanPrime
   have hIrred : Irreducible (Ideal.span ({p} : Set (NumberField.RingOfIntegers K))) :=
@@ -503,9 +522,9 @@ lemma test_prime_not_dvd_via_definition
     simp only [MetaMathlibExt.primeIdealCubicSymbolFactorRaw,
       dite_eq_left hSpanPrime, dite_eq_left hSpanNeBot, dite_eq_left hCop, dite_eq_right hNotMem]
   rw [hSymEq]
-  exact ⟨MetaMathlibExt.primeIdealValidCubicSymbol_mem hZeta _ _
+  exact ⟨MetaMathlibExt.primeIdealValidCubicSymbol_mem hZeta
     hSpanPrime hSpanNeBot hCop hNotMem,
-    MetaMathlibExt.primeIdealValidCubicSymbol_spec hZeta _ _
+    MetaMathlibExt.primeIdealValidCubicSymbol_spec hZeta
       hSpanPrime hSpanNeBot hCop hNotMem⟩
 
 end MetaMathlibExtTest
@@ -519,6 +538,7 @@ namespace MetaMathlibExtTest
 lemma test_prime_dvd_via_definition
   [Field K]
   [NumberField K]
+  [IsCyclotomicExtension {3} ℚ K]
   {zeta : K}
   {a p : NumberField.RingOfIntegers K}
 -- given
@@ -535,7 +555,7 @@ lemma test_prime_dvd_via_definition
   have hSpanPrime : (Ideal.span ({p} : Set (NumberField.RingOfIntegers K))).IsPrime :=
     Ideal.isPrime_span_singleton_of_prime hp
   have hSpanNeBot : Ideal.span ({p} : Set (NumberField.RingOfIntegers K)) ≠ ⊥ := by
-    rwa [Ne, Ideal.span_singleton_eq_bot]
+    simpa [Ne, Ideal.span_singleton_eq_bot] using hp0
   have hPrimeIdeal : Prime (Ideal.span ({p} : Set (NumberField.RingOfIntegers K))) :=
     Ideal.prime_of_isPrime hSpanNeBot hSpanPrime
   have hIrred : Irreducible (Ideal.span ({p} : Set (NumberField.RingOfIntegers K))) :=
@@ -562,6 +582,7 @@ namespace MetaMathlibExtTest
 lemma test_mul_via_definition
   [Field K]
   [NumberField K]
+  [IsCyclotomicExtension {3} ℚ K]
   {zeta : K}
   {a m n : NumberField.RingOfIntegers K}
 -- given
@@ -578,9 +599,9 @@ lemma test_mul_via_definition
     Ideal.span ({m} : Set _) * Ideal.span ({n} : Set _) := by
     rw [Ideal.span_singleton_mul_span_singleton]
   have hmBot : Ideal.span ({m} : Set (NumberField.RingOfIntegers K)) ≠ ⊥ := by
-    rwa [Ne, Ideal.span_singleton_eq_bot]
+    simpa [Ne, Ideal.span_singleton_eq_bot] using hm
   have hnBot : Ideal.span ({n} : Set (NumberField.RingOfIntegers K)) ≠ ⊥ := by
-    rwa [Ne, Ideal.span_singleton_eq_bot]
+    simpa [Ne, Ideal.span_singleton_eq_bot] using hn
   have hFacMul : UniqueFactorizationMonoid.normalizedFactors
     (Ideal.span ({m * n} : Set _)) =
     UniqueFactorizationMonoid.normalizedFactors (Ideal.span ({m} : Set _)) +
@@ -600,6 +621,7 @@ namespace MetaMathlibExtTest
 lemma test_mul_repeated_via_definition
   [Field K]
   [NumberField K]
+  [IsCyclotomicExtension {3} ℚ K]
   {zeta : K}
   {a n : NumberField.RingOfIntegers K}
 -- given
@@ -608,7 +630,7 @@ lemma test_mul_repeated_via_definition
 -- imply
   MetaMathlibExt.cubicResidueSymbolRaw hZeta a (n * n) = MetaMathlibExt.cubicResidueSymbolRaw hZeta a n * MetaMathlibExt.cubicResidueSymbolRaw hZeta a n := by
 -- proof
-  have h := test_mul_via_definition hZeta a n n hn hn
+  have h := test_mul_via_definition (a := a) (m := n) (n := n) hZeta hn hn
   simpa using h
 
 end MetaMathlibExtTest
@@ -622,6 +644,7 @@ namespace MetaMathlibExtTest
 lemma test_mul_composite_three_via_definition
   [Field K]
   [NumberField K]
+  [IsCyclotomicExtension {3} ℚ K]
   {zeta : K}
   {a m n k : NumberField.RingOfIntegers K}
 -- given
@@ -633,8 +656,8 @@ lemma test_mul_composite_three_via_definition
   MetaMathlibExt.cubicResidueSymbolRaw hZeta a (m * n * k) = MetaMathlibExt.cubicResidueSymbolRaw hZeta a m * MetaMathlibExt.cubicResidueSymbolRaw hZeta a n * MetaMathlibExt.cubicResidueSymbolRaw hZeta a k := by
 -- proof
   have hmn : m * n ≠ 0 := mul_ne_zero hm hn
-  have h1 := test_mul_via_definition hZeta a (m * n) k hmn hk
-  have h2 := test_mul_via_definition hZeta a m n hm hn
+  have h1 := test_mul_via_definition (a := a) (m := m * n) (n := k) hZeta hmn hk
+  have h2 := test_mul_via_definition (a := a) (m := m) (n := n) hZeta hm hn
   rwa [h2] at h1
 
 end MetaMathlibExtTest
@@ -645,12 +668,7 @@ namespace MetaMathlibExtTest
 [concrete_cyclotomic_inhabited](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Cyclotomic/CubicResidueSymbol.lean)
 -/
 @[path]
-lemma concrete_cyclotomic_inhabited
-  [Field K]
-  [NumberField K]
-  {zeta : K}
--- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+lemma concrete_cyclotomic_inhabited:
 -- imply
   IsCyclotomicExtension {3} ℚ (CyclotomicField 3 ℚ) :=
 -- proof
@@ -664,12 +682,7 @@ namespace MetaMathlibExtTest
 [concrete_zeta_isPrimitive](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Cyclotomic/CubicResidueSymbol.lean)
 -/
 @[path]
-lemma concrete_zeta_isPrimitive
-  [Field K]
-  [NumberField K]
-  {zeta : K}
--- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+lemma concrete_zeta_isPrimitive :
 -- imply
   IsPrimitiveRoot concreteZeta 3 :=
 -- proof
@@ -683,12 +696,7 @@ namespace MetaMathlibExtTest
 [concrete_omega_mem](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Cyclotomic/CubicResidueSymbol.lean)
 -/
 @[path]
-lemma concrete_omega_mem
-  [Field K]
-  [NumberField K]
-  {zeta : K}
--- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+lemma concrete_omega_mem:
 -- imply
   MetaMathlibExt.omega (K := CyclotomicField 3 ℚ) concrete_zeta_isPrimitive ∈ ({(1 : NumberField.RingOfIntegers (CyclotomicField 3 ℚ)), MetaMathlibExt.omega concrete_zeta_isPrimitive, MetaMathlibExt.omega concrete_zeta_isPrimitive ^ 2} : Set _) := by
 -- proof
@@ -702,17 +710,12 @@ namespace MetaMathlibExtTest
 [concrete_symbol_at_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Cyclotomic/CubicResidueSymbol.lean)
 -/
 @[path]
-lemma concrete_symbol_at_one
-  [Field K]
-  [NumberField K]
-  {zeta : K}
--- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+lemma concrete_symbol_at_one:
 -- imply
   MetaMathlibExt.cubicResidueSymbolRaw (K := CyclotomicField 3 ℚ) concrete_zeta_isPrimitive 0 1 = 1 :=
 -- proof
-  MetaMathlibExt.cubicResidueSymbolRaw_unit
-    concrete_zeta_isPrimitive 0 1 isUnit_one
+  MetaMathlibExt.cubicResidueSymbolRaw_unit (a := 0)
+    concrete_zeta_isPrimitive isUnit_one
 
 end MetaMathlibExtTest
 
@@ -722,12 +725,7 @@ namespace MetaMathlibExtTest
 [concrete_symbol_zero_branch](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Cyclotomic/CubicResidueSymbol.lean)
 -/
 @[path]
-lemma concrete_symbol_zero_branch
-  [Field K]
-  [NumberField K]
-  {zeta : K}
--- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+lemma concrete_symbol_zero_branch:
 -- imply
   MetaMathlibExt.cubicResidueSymbolRaw (K := CyclotomicField 3 ℚ) concrete_zeta_isPrimitive 0 0 = 0 := by
 -- proof
@@ -742,18 +740,13 @@ namespace MetaMathlibExtTest
 [concrete_symbol_unit_direct](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Cyclotomic/CubicResidueSymbol.lean)
 -/
 @[path]
-lemma concrete_symbol_unit_direct
-  [Field K]
-  [NumberField K]
-  {zeta : K}
--- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+lemma concrete_symbol_unit_direct:
 -- imply
   MetaMathlibExt.cubicResidueSymbolRaw (K := CyclotomicField 3 ℚ) concrete_zeta_isPrimitive 0 (-1) = 1 := by
 -- proof
   have h : IsUnit (-1 : NumberField.RingOfIntegers (CyclotomicField 3 ℚ)) :=
     isUnit_one.neg
-  exact MetaMathlibExt.cubicResidueSymbolRaw_unit concrete_zeta_isPrimitive 0 (-1) h
+  exact MetaMathlibExt.cubicResidueSymbolRaw_unit (a := 0) concrete_zeta_isPrimitive h
 -- Concrete composite and repeated-factor probes via direct definition
 
 end MetaMathlibExtTest
@@ -765,19 +758,15 @@ namespace MetaMathlibExtTest
 -/
 @[path]
 lemma concrete_composite_mul_via_definition
-  [Field K]
-  [NumberField K]
-  {zeta : K}
   {a : NumberField.RingOfIntegers (CyclotomicField 3 ℚ)}
   {m n : NumberField.RingOfIntegers (CyclotomicField 3 ℚ)}
 -- given
-  (hZeta : IsPrimitiveRoot zeta 3)
   (hm : m ≠ 0)
   (hn : n ≠ 0) :
 -- imply
   MetaMathlibExt.cubicResidueSymbolRaw (K := CyclotomicField 3 ℚ) concrete_zeta_isPrimitive a (m * n) = MetaMathlibExt.cubicResidueSymbolRaw concrete_zeta_isPrimitive a m * MetaMathlibExt.cubicResidueSymbolRaw concrete_zeta_isPrimitive a n :=
 -- proof
-  test_mul_via_definition concrete_zeta_isPrimitive a m n hm hn
+  test_mul_via_definition (a := a) (m := m) (n := n) concrete_zeta_isPrimitive hm hn
 
 end MetaMathlibExtTest
 
@@ -788,17 +777,13 @@ namespace MetaMathlibExtTest
 -/
 @[path]
 lemma concrete_repeated_factor_via_definition
-  [Field K]
-  [NumberField K]
-  {zeta : K}
   {a n : NumberField.RingOfIntegers (CyclotomicField 3 ℚ)}
 -- given
-  (hZeta : IsPrimitiveRoot zeta 3)
   (hn : n ≠ 0) :
 -- imply
   MetaMathlibExt.cubicResidueSymbolRaw (K := CyclotomicField 3 ℚ) concrete_zeta_isPrimitive a (n * n) = MetaMathlibExt.cubicResidueSymbolRaw concrete_zeta_isPrimitive a n * MetaMathlibExt.cubicResidueSymbolRaw concrete_zeta_isPrimitive a n :=
 -- proof
-  test_mul_repeated_via_definition concrete_zeta_isPrimitive a n hn
+  test_mul_repeated_via_definition (a := a) (n := n) concrete_zeta_isPrimitive hn
 -- Concrete composite with explicit nonzero numerals (exercises normalization multiplicity)
 
 end MetaMathlibExtTest
@@ -810,12 +795,7 @@ namespace MetaMathlibExtTest
 -/
 @[path]
 lemma concrete_composite_explicit_two_three
-  [Field K]
-  [NumberField K]
-  {zeta : K}
-  {a : NumberField.RingOfIntegers (CyclotomicField 3 ℚ)}
--- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+  {a : NumberField.RingOfIntegers (CyclotomicField 3 ℚ)}:
 -- imply
   MetaMathlibExt.cubicResidueSymbolRaw (K := CyclotomicField 3 ℚ) concrete_zeta_isPrimitive a ((2 : NumberField.RingOfIntegers (CyclotomicField 3 ℚ)) * 3) = MetaMathlibExt.cubicResidueSymbolRaw concrete_zeta_isPrimitive a 2 * MetaMathlibExt.cubicResidueSymbolRaw concrete_zeta_isPrimitive a 3 := by
 -- proof
@@ -823,7 +803,7 @@ lemma concrete_composite_explicit_two_three
     Nat.cast_ne_zero.mpr (by decide : (2 : ℕ) ≠ 0)
   have h3 : (3 : NumberField.RingOfIntegers (CyclotomicField 3 ℚ)) ≠ 0 :=
     Nat.cast_ne_zero.mpr (by decide : (3 : ℕ) ≠ 0)
-  exact test_mul_via_definition concrete_zeta_isPrimitive a 2 3 h2 h3
+  exact test_mul_via_definition (a := a) (m := 2) (n := 3) concrete_zeta_isPrimitive h2 h3
 
 end MetaMathlibExtTest
 
@@ -834,18 +814,13 @@ namespace MetaMathlibExtTest
 -/
 @[path]
 lemma concrete_repeated_explicit_two
-  [Field K]
-  [NumberField K]
-  {zeta : K}
-  {a : NumberField.RingOfIntegers (CyclotomicField 3 ℚ)}
--- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+  {a : NumberField.RingOfIntegers (CyclotomicField 3 ℚ)}:
 -- imply
   MetaMathlibExt.cubicResidueSymbolRaw (K := CyclotomicField 3 ℚ) concrete_zeta_isPrimitive a ((2 : NumberField.RingOfIntegers (CyclotomicField 3 ℚ)) * 2) = MetaMathlibExt.cubicResidueSymbolRaw concrete_zeta_isPrimitive a 2 * MetaMathlibExt.cubicResidueSymbolRaw concrete_zeta_isPrimitive a 2 := by
 -- proof
   have h2 : (2 : NumberField.RingOfIntegers (CyclotomicField 3 ℚ)) ≠ 0 :=
     Nat.cast_ne_zero.mpr (by decide : (2 : ℕ) ≠ 0)
-  exact test_mul_via_definition concrete_zeta_isPrimitive a 2 2 h2 h2
+  exact test_mul_via_definition (a := a) (m := 2) (n := 2) concrete_zeta_isPrimitive h2 h2
 -- Closed concrete prime over rational prime 2
 
 end MetaMathlibExtTest
@@ -856,12 +831,7 @@ namespace MetaMathlibExtTest
 [concretePrimeIdeal_isPrime](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Cyclotomic/CubicResidueSymbol.lean)
 -/
 @[path]
-lemma concretePrimeIdeal_isPrime
-  [Field K]
-  [NumberField K]
-  {zeta : K}
--- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+lemma concretePrimeIdeal_isPrime:
 -- imply
   concretePrimeIdeal.IsPrime :=
 -- proof
@@ -875,12 +845,7 @@ namespace MetaMathlibExtTest
 [concretePrimeIdeal_liesOver](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Cyclotomic/CubicResidueSymbol.lean)
 -/
 @[path]
-lemma concretePrimeIdeal_liesOver
-  [Field K]
-  [NumberField K]
-  {zeta : K}
--- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+lemma concretePrimeIdeal_liesOver:
 -- imply
   concretePrimeIdeal.LiesOver (Ideal.span ({(2 : ℤ)} : Set ℤ)) :=
 -- proof
@@ -894,12 +859,7 @@ namespace MetaMathlibExtTest
 [concretePrimeIdeal_mem](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Cyclotomic/CubicResidueSymbol.lean)
 -/
 @[path]
-lemma concretePrimeIdeal_mem
-  [Field K]
-  [NumberField K]
-  {zeta : K}
--- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+lemma concretePrimeIdeal_mem:
 -- imply
   concretePrimeIdeal ∈ Ideal.primesOver (Ideal.span ({(2 : ℤ)} : Set ℤ)) (NumberField.RingOfIntegers (CyclotomicField 3 ℚ)) :=
 -- proof
@@ -913,12 +873,7 @@ namespace MetaMathlibExtTest
 [concretePrimeIdeal_ne_bot](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Cyclotomic/CubicResidueSymbol.lean)
 -/
 @[path]
-lemma concretePrimeIdeal_ne_bot
-  [Field K]
-  [NumberField K]
-  {zeta : K}
--- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+lemma concretePrimeIdeal_ne_bot:
 -- imply
   concretePrimeIdeal ≠ ⊥ :=
 -- proof
@@ -939,12 +894,7 @@ namespace MetaMathlibExtTest
 [concretePrimeIdeal_inertiaDeg](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Cyclotomic/CubicResidueSymbol.lean)
 -/
 @[path]
-lemma concretePrimeIdeal_inertiaDeg
-  [Field K]
-  [NumberField K]
-  {zeta : K}
--- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+lemma concretePrimeIdeal_inertiaDeg:
 -- imply
   Ideal.inertiaDeg concretePrimeIdeal ℤ = 2 := by
 -- proof
@@ -970,12 +920,7 @@ namespace MetaMathlibExtTest
 [concretePrimeIdeal_absNorm](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Cyclotomic/CubicResidueSymbol.lean)
 -/
 @[path]
-lemma concretePrimeIdeal_absNorm
-  [Field K]
-  [NumberField K]
-  {zeta : K}
--- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+lemma concretePrimeIdeal_absNorm:
 -- imply
   Ideal.absNorm concretePrimeIdeal = 4 := by
 -- proof
@@ -987,7 +932,7 @@ lemma concretePrimeIdeal_absNorm
       concretePrimeIdeal_isPrime concretePrimeIdeal_liesOver
   rw [hInertia] at hPow
   have : (2 : ℕ) ^ 2 = 4 := by decide
-  rwa [this] at hPow
+  exact hPow.symm.trans this
 
 end MetaMathlibExtTest
 
@@ -997,12 +942,7 @@ namespace MetaMathlibExtTest
 [concretePrimeIdeal_norm_coprime](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Cyclotomic/CubicResidueSymbol.lean)
 -/
 @[path]
-lemma concretePrimeIdeal_norm_coprime
-  [Field K]
-  [NumberField K]
-  {zeta : K}
--- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+lemma concretePrimeIdeal_norm_coprime:
 -- imply
   Nat.Coprime (Ideal.absNorm concretePrimeIdeal) 3 := by
 -- proof
@@ -1017,12 +957,7 @@ namespace MetaMathlibExtTest
 [concretePrime_span](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Cyclotomic/CubicResidueSymbol.lean)
 -/
 @[path]
-lemma concretePrime_span
-  [Field K]
-  [NumberField K]
-  {zeta : K}
--- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+lemma concretePrime_span:
 -- imply
   Ideal.span ({concretePrime} : Set _) = concretePrimeIdeal :=
 -- proof
@@ -1036,12 +971,7 @@ namespace MetaMathlibExtTest
 [concretePrime_prime](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Cyclotomic/CubicResidueSymbol.lean)
 -/
 @[path]
-lemma concretePrime_prime
-  [Field K]
-  [NumberField K]
-  {zeta : K}
--- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+lemma concretePrime_prime:
 -- imply
   Prime concretePrime :=
 -- proof
@@ -1057,12 +987,7 @@ namespace MetaMathlibExtTest
 [concretePrime_ne_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Cyclotomic/CubicResidueSymbol.lean)
 -/
 @[path]
-lemma concretePrime_ne_zero
-  [Field K]
-  [NumberField K]
-  {zeta : K}
--- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+lemma concretePrime_ne_zero:
 -- imply
   concretePrime ≠ 0 :=
 -- proof
@@ -1076,12 +1001,7 @@ namespace MetaMathlibExtTest
 [concretePrime_absNorm](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Cyclotomic/CubicResidueSymbol.lean)
 -/
 @[path]
-lemma concretePrime_absNorm
-  [Field K]
-  [NumberField K]
-  {zeta : K}
--- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+lemma concretePrime_absNorm:
 -- imply
   Ideal.absNorm (Ideal.span ({concretePrime} : Set _)) = 4 := by
 -- proof
@@ -1095,12 +1015,7 @@ namespace MetaMathlibExtTest
 [concretePrime_norm_coprime](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Cyclotomic/CubicResidueSymbol.lean)
 -/
 @[path]
-lemma concretePrime_norm_coprime
-  [Field K]
-  [NumberField K]
-  {zeta : K}
--- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+lemma concretePrime_norm_coprime:
 -- imply
   Nat.Coprime (Ideal.absNorm (Ideal.span ({concretePrime} : Set _))) 3 := by
 -- proof
@@ -1115,12 +1030,7 @@ namespace MetaMathlibExtTest
 [concretePrime_not_dvd_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Cyclotomic/CubicResidueSymbol.lean)
 -/
 @[path]
-lemma concretePrime_not_dvd_one
-  [Field K]
-  [NumberField K]
-  {zeta : K}
--- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+lemma concretePrime_not_dvd_one:
 -- imply
   ¬ concretePrime ∣ (1 : NumberField.RingOfIntegers (CyclotomicField 3 ℚ)) := by
 -- proof
@@ -1136,16 +1046,11 @@ namespace MetaMathlibExtTest
 [concretePrime_not_mem_span_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Cyclotomic/CubicResidueSymbol.lean)
 -/
 @[path]
-lemma concretePrime_not_mem_span_one
-  [Field K]
-  [NumberField K]
-  {zeta : K}
--- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+lemma concretePrime_not_mem_span_one:
 -- imply
   (1 : NumberField.RingOfIntegers (CyclotomicField 3 ℚ)) ∉ Ideal.span ({concretePrime} : Set _) := by
 -- proof
-  rwa [Ideal.mem_span_singleton]
+  simpa [Ideal.mem_span_singleton] using concretePrime_not_dvd_one
 
 end MetaMathlibExtTest
 
@@ -1155,16 +1060,11 @@ namespace MetaMathlibExtTest
 [concretePrime_one_not_mem_ideal](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Cyclotomic/CubicResidueSymbol.lean)
 -/
 @[path]
-lemma concretePrime_one_not_mem_ideal
-  [Field K]
-  [NumberField K]
-  {zeta : K}
--- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+lemma concretePrime_one_not_mem_ideal:
 -- imply
   (1 : NumberField.RingOfIntegers (CyclotomicField 3 ℚ)) ∉ concretePrimeIdeal := by
 -- proof
-  rwa [← concretePrime_span]
+  simpa [← concretePrime_span] using concretePrime_not_mem_span_one
 -- Closed concrete valid-branch probe at prime denominator
 
 end MetaMathlibExtTest
@@ -1175,17 +1075,12 @@ namespace MetaMathlibExtTest
 [concrete_prime_symbol_valid_closed](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Cyclotomic/CubicResidueSymbol.lean)
 -/
 @[path]
-lemma concrete_prime_symbol_valid_closed
-  [Field K]
-  [NumberField K]
-  {zeta : K}
--- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+lemma concrete_prime_symbol_valid_closed:
 -- imply
   MetaMathlibExt.cubicResidueSymbolRaw (K := CyclotomicField 3 ℚ) concrete_zeta_isPrimitive 1 concretePrime ∈ ({(1 : NumberField.RingOfIntegers (CyclotomicField 3 ℚ)), MetaMathlibExt.omega concrete_zeta_isPrimitive, MetaMathlibExt.omega concrete_zeta_isPrimitive ^ 2} : Set _) ∧ Ideal.Quotient.mk (Ideal.span {concretePrime}) (MetaMathlibExt.cubicResidueSymbolRaw concrete_zeta_isPrimitive 1 concretePrime) = Ideal.Quotient.mk (Ideal.span {concretePrime}) (1 : NumberField.RingOfIntegers (CyclotomicField 3 ℚ)) ^ ((Ideal.absNorm (Ideal.span {concretePrime}) - 1) / 3) :=
 -- proof
   MetaMathlibExt.cubicResidueSymbolRaw_prime_not_dvd
-    (K := CyclotomicField 3 ℚ) concrete_zeta_isPrimitive 1 concretePrime
+    (K := CyclotomicField 3 ℚ) concrete_zeta_isPrimitive
     concretePrime_prime concretePrime_ne_zero concretePrime_norm_coprime
     concretePrime_not_dvd_one
 -- Valid branch via direct definition unfolding (closed)
@@ -1198,12 +1093,7 @@ namespace MetaMathlibExtTest
 [concrete_prime_symbol_valid_via_definition](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Cyclotomic/CubicResidueSymbol.lean)
 -/
 @[path]
-lemma concrete_prime_symbol_valid_via_definition
-  [Field K]
-  [NumberField K]
-  {zeta : K}
--- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+lemma concrete_prime_symbol_valid_via_definition:
 -- imply
   MetaMathlibExt.cubicResidueSymbolRaw (K := CyclotomicField 3 ℚ) concrete_zeta_isPrimitive 1 concretePrime ∈ ({(1 : _), MetaMathlibExt.omega concrete_zeta_isPrimitive, MetaMathlibExt.omega concrete_zeta_isPrimitive ^ 2} : Set _) ∧ Ideal.Quotient.mk (Ideal.span {concretePrime}) (MetaMathlibExt.cubicResidueSymbolRaw concrete_zeta_isPrimitive 1 concretePrime) = Ideal.Quotient.mk (Ideal.span {concretePrime}) (1 : _) ^ ((Ideal.absNorm (Ideal.span {concretePrime}) - 1) / 3) := by
 -- proof
@@ -1214,7 +1104,7 @@ lemma concrete_prime_symbol_valid_via_definition
     Ideal.isPrime_span_singleton_of_prime concretePrime_prime
   have hSpanNeBot :
     Ideal.span ({concretePrime} : Set _) ≠ ⊥ := by
-    rwa [Ne, Ideal.span_singleton_eq_bot]
+    simpa [Ne, Ideal.span_singleton_eq_bot] using concretePrime_ne_zero
   have hCop := concretePrime_norm_coprime
   have hFac :
     UniqueFactorizationMonoid.normalizedFactors
@@ -1243,9 +1133,9 @@ lemma concrete_prime_symbol_valid_via_definition
       dite_eq_left hSpanPrime, dite_eq_left hSpanNeBot, dite_eq_left hCop,
       dite_eq_right hNotMem]
   rw [hSymEq]
-  exact ⟨MetaMathlibExt.primeIdealValidCubicSymbol_mem _ _ _
+  exact ⟨MetaMathlibExt.primeIdealValidCubicSymbol_mem _
     hSpanPrime hSpanNeBot hCop hNotMem,
-    MetaMathlibExt.primeIdealValidCubicSymbol_spec _ _ _
+    MetaMathlibExt.primeIdealValidCubicSymbol_spec _
       hSpanPrime hSpanNeBot hCop hNotMem⟩
 -- NormalizedFactors factorization for the concrete prime
 
@@ -1257,19 +1147,14 @@ namespace MetaMathlibExtTest
 [concretePrime_normalizedFactors_single](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Cyclotomic/CubicResidueSymbol.lean)
 -/
 @[path]
-lemma concretePrime_normalizedFactors_single
-  [Field K]
-  [NumberField K]
-  {zeta : K}
--- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+lemma concretePrime_normalizedFactors_single:
 -- imply
   UniqueFactorizationMonoid.normalizedFactors (Ideal.span ({concretePrime} : Set (NumberField.RingOfIntegers (CyclotomicField 3 ℚ)))) = {Ideal.span {concretePrime}} := by
 -- proof
   have hSpanNeBot :
     Ideal.span ({concretePrime} :
       Set (NumberField.RingOfIntegers (CyclotomicField 3 ℚ))) ≠ ⊥ := by
-    rwa [Ne, Ideal.span_singleton_eq_bot]
+    simpa [Ne, Ideal.span_singleton_eq_bot] using concretePrime_ne_zero
   have hSpanPrime :
     (Ideal.span ({concretePrime} : Set _)).IsPrime :=
     Ideal.isPrime_span_singleton_of_prime concretePrime_prime
@@ -1290,12 +1175,7 @@ namespace MetaMathlibExtTest
 [concretePrime_normalizedFactors_sq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Cyclotomic/CubicResidueSymbol.lean)
 -/
 @[path]
-lemma concretePrime_normalizedFactors_sq
-  [Field K]
-  [NumberField K]
-  {zeta : K}
--- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+lemma concretePrime_normalizedFactors_sq:
 -- imply
   UniqueFactorizationMonoid.normalizedFactors (Ideal.span ({concretePrime * concretePrime} : Set (NumberField.RingOfIntegers (CyclotomicField 3 ℚ)))) = {Ideal.span {concretePrime}, Ideal.span {concretePrime}} := by
 -- proof
@@ -1303,7 +1183,7 @@ lemma concretePrime_normalizedFactors_sq
   have hBot :
     Ideal.span ({concretePrime} :
       Set (NumberField.RingOfIntegers (CyclotomicField 3 ℚ))) ≠ ⊥ := by
-    rwa [Ne, Ideal.span_singleton_eq_bot]
+    simpa [Ne, Ideal.span_singleton_eq_bot] using concretePrime_ne_zero
   have hFacSingle := concretePrime_normalizedFactors_single
   have hFacMul :
     UniqueFactorizationMonoid.normalizedFactors
@@ -1331,12 +1211,7 @@ namespace MetaMathlibExtTest
 -/
 @[path]
 lemma concrete_prime_repeated_closed
-  [Field K]
-  [NumberField K]
-  {zeta : K}
-  {a : NumberField.RingOfIntegers (CyclotomicField 3 ℚ)}
--- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+  {a : NumberField.RingOfIntegers (CyclotomicField 3 ℚ)}:
 -- imply
   MetaMathlibExt.cubicResidueSymbolRaw concrete_zeta_isPrimitive a (concretePrime * concretePrime) = MetaMathlibExt.cubicResidueSymbolRaw concrete_zeta_isPrimitive a concretePrime * MetaMathlibExt.cubicResidueSymbolRaw concrete_zeta_isPrimitive a concretePrime := by
 -- proof
@@ -1354,7 +1229,7 @@ lemma concrete_prime_repeated_closed
   have hBot :
     Ideal.span ({concretePrime} :
       Set (NumberField.RingOfIntegers (CyclotomicField 3 ℚ))) ≠ ⊥ := by
-    rwa [Ne, Ideal.span_singleton_eq_bot]
+    simpa [Ne, Ideal.span_singleton_eq_bot] using concretePrime_ne_zero
   have hFacMul :
     UniqueFactorizationMonoid.normalizedFactors
       (Ideal.span ({concretePrime * concretePrime} : Set _)) =
@@ -1374,16 +1249,11 @@ namespace MetaMathlibExtTest
 [concrete_prime_repeated_zero_a_closed](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Cyclotomic/CubicResidueSymbol.lean)
 -/
 @[path]
-lemma concrete_prime_repeated_zero_a_closed
-  [Field K]
-  [NumberField K]
-  {zeta : K}
--- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+lemma concrete_prime_repeated_zero_a_closed:
 -- imply
   MetaMathlibExt.cubicResidueSymbolRaw concrete_zeta_isPrimitive (0 : NumberField.RingOfIntegers (CyclotomicField 3 ℚ)) (concretePrime * concretePrime) = MetaMathlibExt.cubicResidueSymbolRaw concrete_zeta_isPrimitive 0 concretePrime * MetaMathlibExt.cubicResidueSymbolRaw concrete_zeta_isPrimitive 0 concretePrime :=
 -- proof
-  concrete_prime_repeated_closed 0
+  concrete_prime_repeated_closed (a := 0)
 
 end MetaMathlibExtTest
 
@@ -1396,10 +1266,11 @@ namespace MetaMathlibExtTest
 lemma test_valid_ne_zero
   [Field K]
   [NumberField K]
+  [IsCyclotomicExtension {3} ℚ K]
   {zeta : K}
   {n : NumberField.RingOfIntegers K}
 -- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+  (_hZeta : IsPrimitiveRoot zeta 3) :
 -- imply
   MetaMathlibExt.IsCubicResidueDenominator n → n ≠ 0 :=
 -- proof
@@ -1416,10 +1287,11 @@ namespace MetaMathlibExtTest
 lemma test_valid_norm_coprime
   [Field K]
   [NumberField K]
+  [IsCyclotomicExtension {3} ℚ K]
   {zeta : K}
   {n : NumberField.RingOfIntegers K}
 -- given
-  (hZeta : IsPrimitiveRoot zeta 3) :
+  (_hZeta : IsPrimitiveRoot zeta 3) :
 -- imply
   MetaMathlibExt.IsCubicResidueDenominator n → Nat.Coprime (Ideal.absNorm (Ideal.span {n})) 3 :=
 -- proof
@@ -1436,6 +1308,7 @@ namespace MetaMathlibExtTest
 lemma test_canonical_eq_raw
   [Field K]
   [NumberField K]
+  [IsCyclotomicExtension {3} ℚ K]
   {zeta : K}
   {a n : NumberField.RingOfIntegers K}
 -- given
@@ -1456,6 +1329,7 @@ namespace MetaMathlibExtTest
 lemma test_canonical_prime_dvd
   [Field K]
   [NumberField K]
+  [IsCyclotomicExtension {3} ℚ K]
   {zeta : K}
   {a p : NumberField.RingOfIntegers K}
 -- given
@@ -1464,7 +1338,7 @@ lemma test_canonical_prime_dvd
   ∀ (_hp : Prime p) (hpValid : MetaMathlibExt.IsCubicResidueDenominator p), p ∣ a → MetaMathlibExt.cubicResidueSymbol hZeta a p hpValid = 0 :=
 -- proof
   fun _hp hpValid hdvd =>
-    MetaMathlibExt.cubicResidueSymbol_prime_dvd hZeta a p _hp hpValid hdvd
+    MetaMathlibExt.cubicResidueSymbol_prime_dvd hZeta _hp hpValid hdvd
 
 end MetaMathlibExtTest
 
@@ -1477,6 +1351,7 @@ namespace MetaMathlibExtTest
 lemma test_canonical_prime_not_dvd
   [Field K]
   [NumberField K]
+  [IsCyclotomicExtension {3} ℚ K]
   {zeta : K}
   {a p : NumberField.RingOfIntegers K}
 -- given
@@ -1485,9 +1360,10 @@ lemma test_canonical_prime_not_dvd
   ∀ (_hp : Prime p) (hpValid : MetaMathlibExt.IsCubicResidueDenominator p), ¬ p ∣ a → MetaMathlibExt.cubicResidueSymbol hZeta a p hpValid ∈ ({(1 : NumberField.RingOfIntegers K), MetaMathlibExt.omega hZeta, MetaMathlibExt.omega hZeta ^ 2} : Set _) ∧ Ideal.Quotient.mk (Ideal.span {p}) (MetaMathlibExt.cubicResidueSymbol hZeta a p hpValid) = Ideal.Quotient.mk (Ideal.span {p}) a ^ ((Ideal.absNorm (Ideal.span {p}) - 1) / 3) :=
 -- proof
   fun _hp hpValid hndvd =>
-    MetaMathlibExt.cubicResidueSymbol_prime_not_dvd hZeta a p _hp hpValid hndvd
+    MetaMathlibExt.cubicResidueSymbol_prime_not_dvd hZeta _hp hpValid hndvd
 
 end MetaMathlibExtTest
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

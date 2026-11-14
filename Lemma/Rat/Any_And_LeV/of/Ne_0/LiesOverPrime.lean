@@ -13,7 +13,7 @@ private lemma main
   {A : ValuationSubring (AlgebraicClosure ℚ)}
   {ε : A.ValueGroup}
 -- given
-  (hA : A.LiesOverPrime p)
+  (_hA : A.LiesOverPrime p)
   (hε : ε ≠ 0) :
 -- imply
   ∃ y : A.valuation.Completion, y ≠ 0 ∧ Valued.v y ≤ ε := by
@@ -29,3 +29,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

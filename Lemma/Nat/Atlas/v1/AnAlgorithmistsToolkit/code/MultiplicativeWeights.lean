@@ -11,7 +11,6 @@ namespace MultiplicativeWeights
 -/
 @[path]
 lemma countRounds_succ
-  {n : ℕ}
   {t : ℕ}
 -- given
   (P : ℕ → Prop)
@@ -45,7 +44,7 @@ lemma weight_succ
   weight wrong ε i (k + 1) = weight wrong ε i k * if wrong i k then (1 - ε) else 1 := by
 -- proof
   simp only [weight, expertMistakes, countRounds_succ]
-  split_ifs with h <;> simp [mul_comm]
+  split_ifs with h <;> simp [pow_add, mul_comm]
 
 end MultiplicativeWeights
 
@@ -190,7 +189,6 @@ namespace MultiplicativeWeights
 -/
 @[path]
 lemma log_one_sub_half_eps_le
-  {_n : ℕ}
   {ε : ℝ}
 -- given
   (hε_lt : ε < 2) :
@@ -208,7 +206,6 @@ namespace MultiplicativeWeights
 -/
 @[path]
 lemma neg_log_one_sub_le
-  {_n : ℕ}
   {ε : ℝ}
 -- given
   (hε_pos : 0 < ε)
@@ -273,7 +270,6 @@ namespace MultiplicativeWeights
 @[path]
 lemma regret_bound_from_potential
   {n : ℕ}
-  {n : ℕ}
   {ε : ℝ}
   {m mᵢ : ℕ}
 -- given
@@ -333,7 +329,7 @@ lemma weighted_majority_regret_bound
   (algMistakes wrong ε T : ℝ) ≤ 2 * Real.log n / ε + 2 * (1 + ε) * expertMistakes wrong i T := by
 -- proof
   exact regret_bound_from_potential hn hε_pos hε_le
-    (potential_inequality wrong hε_pos (by linarith) i T)
+    (potential_inequality wrong hε_pos (by linarith))
 
 end MultiplicativeWeights
 
@@ -370,7 +366,6 @@ namespace MultiplicativeWeights
 -/
 @[path]
 lemma corollary_algebraic_core
-  {_n : ℕ}
   {totalExp expertTotal A B ρ logn δ : ℝ}
   {T : ℕ}
 -- given

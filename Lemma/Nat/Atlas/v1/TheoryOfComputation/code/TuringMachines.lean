@@ -122,7 +122,7 @@ lemma TM.run_of_isHaltConfig
   | succ n ih =>
     simp only [TM.run]
     rw [ih]
-    exact M.step_of_halt c h
+    exact TM.step_of_halt (c := c) h
 
 end TuringMachine
 
@@ -172,9 +172,6 @@ namespace TuringMachine
 -/
 @[path]
 lemma countingTM_step_state
-  {Q : Type}
-  {_Γ : Type}
-  [DecidableEq Q]
   {Γ : Type}
   {blank : Γ}
   {inputAlpha : Set Γ}
@@ -198,9 +195,6 @@ namespace TuringMachine
 -/
 @[path]
 lemma countingTM_run_state
-  {Q : Type}
-  {Γ : Type}
-  [DecidableEq Q]
   {Γ : Type}
   {blank : Γ}
   {inputAlpha : Set Γ}
@@ -229,9 +223,6 @@ namespace TuringMachine
 -/
 @[path]
 lemma isTuringEnumerable_of_isTuringRecognizable
-  {Q : Type}
-  {Γ : Type}
-  [DecidableEq Q]
   {Γ : Type}
   {A : Set (List Γ)}
 -- given
@@ -275,4 +266,4 @@ end TuringMachine
 
 
 -- created on 2026-10-23
--- updated on 2026-10-29
+-- updated on 2026-11-13

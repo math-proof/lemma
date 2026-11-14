@@ -25,7 +25,7 @@ private lemma card_zeroSet_le
     let K : Submodule 𝔽 (Fin n → 𝔽) := LinearMap.ker φ.linear
     have hmem : ∀ x, φ x = 0 ↔ x - x₀ ∈ K := fun x => by
       change φ x = 0 ↔ φ.linear (x - x₀) = 0
-      have h := φ.linearMap_vsub x x₀
+      have h := φ.linear_apply_vsub x x₀
       simp only [vsub_eq_sub] at h
       rw [h, hx₀, sub_zero]
     have hK : K ≠ ⊤ := by
@@ -87,4 +87,5 @@ private lemma main
   omega
 
 
+-- updated on 2026-11-13
 -- created on 2026-10-20

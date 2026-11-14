@@ -1,5 +1,5 @@
 -- Carved instances; Definitions owns SmoothProperCurve API.
-import Lemma.AlgebraicGeometry.SmoothProperCurveBase
+import Lemma.Scheme.SmoothProperCurveBase
 import Mathlib.AlgebraicGeometry.Morphisms.Smooth
 import Mathlib.AlgebraicGeometry.Morphisms.Proper
 import Mathlib.AlgebraicGeometry.Geometrically.Integral

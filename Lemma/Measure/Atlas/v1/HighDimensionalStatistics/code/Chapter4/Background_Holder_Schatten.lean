@@ -145,9 +145,9 @@ lemma sum_fin_of_zero_tail
 
 /--
 [sum_extendedσval_rpow](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter4/Background_Holder_Schatten.lean)
+over the original `Fin S.r` singular values.
 -/
 @[path]
-over the original `Fin S.r` singular values. -/
 lemma sum_extendedσval_rpow {d T : ℕ} (S : SVD d T) (p : ℝ) (hp : 0 < p) :
   ∑ j : Fin (min d T), (extendedσval S j) ^ p =
   ∑ j : Fin S.r, (S.σval j) ^ p := by
@@ -199,10 +199,11 @@ lemma holder_schatten_nuclear_op
   apply Finset.sum_le_sum
   intro k _
   exact mul_le_mul_of_nonneg_left
-    (dotProduct_mulVec_le_opNorm _ _ B (hu k) (hv k))
+    (dotProduct_mulVec_le_opNorm (hu k) (hv k))
     (S_A.σval_nonneg k)
-/-- **General Hölder inequality for Schatten norms.** For Hölder conjugate exponents
-$1/p + 1/q = 1$, $|\langle A, B\rangle_F| \le \|A\|_{S_p} \cdot \|B\|_{S_q}$. -/
+
+/- General Hölder inequality for Schatten norms. For Hölder conjugate exponents
+1/p + 1/q = 1, |⟨A, B⟩_F| ≤ ‖A‖_{S_p} · ‖B‖_{S_q}. -/
 
 /--
 [extended](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter4/Background_Holder_Schatten.lean)
@@ -215,7 +216,7 @@ private lemma extended_eq
 -- imply
   0 ≤ extendedσval S j := by
 -- proof
-  apply extended S j
+  exact extendedσval_nonneg S j
 
 /--
 [sum_extended](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter4/Background_Holder_Schatten.lean)
@@ -230,7 +231,7 @@ private lemma sum_extended_eq
 -- imply
   ∑ j : Fin (min d T), (extendedσval S j) ^ p = ∑ j : Fin S.r, (S.σval j) ^ p := by
 -- proof
-  apply sum_extended S p hp
+  exact sum_extendedσval_rpow S p hp
 
 
 -- created on 2026-10-23

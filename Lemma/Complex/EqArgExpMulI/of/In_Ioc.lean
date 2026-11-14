@@ -1,6 +1,7 @@
 import Theorem.Data.Set.Sets
 import Initialize.Tactic.Attr.Basic
 import Notation.Analysis.Complex.Complexes
+open Complex
 
 
 @[path]

@@ -24,7 +24,7 @@ lemma eapprox_ge_ennrealRatEmbed
   SimpleFunc.ennrealRatEmbed k ≤ SimpleFunc.eapprox f n x := by
 -- proof
   simp only [SimpleFunc.eapprox, SimpleFunc.approx_apply x hf]
-  exact Finset.le_sup_of_le (Finset.mem_range.mpr hk) (if_pos h ▸ le_refl _)
+  exact Finset.le_sup_of_le (Finset.mem_range.mpr hk) (ite_eq_left h ▸ le_refl _)
 
 end SimpleApproximation
 

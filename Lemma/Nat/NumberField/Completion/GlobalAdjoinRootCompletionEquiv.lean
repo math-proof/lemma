@@ -1,5 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Instance.NumberTheory.NumberField.Completion.FiniteLiesOverInstances
+import Lemma.Nat.NumberField.Completion.AdjoinRootEquivOfGlobalEquiv
 open scoped NumberField NumberField.LiesOver
 
 
@@ -23,11 +25,11 @@ lemma completion_algEquiv_of_adjoinRoot_globalEquiv
 -- proof
   obtain ⟨eM⟩ := hM
   obtain ⟨eW⟩ :=
-    adicCompletion_algEquiv_adjoinRoot_of_globalEquiv v w g hg eL
+    adicCompletion_algEquiv_adjoinRoot_of_globalEquiv (w := w) hg eL
   exact ⟨eM.trans eW.symm⟩
 
 end IsDedekindDomain.HeightOneSpectrum
 
 
 -- created on 2026-10-20
--- updated on 2026-10-28
+-- updated on 2026-11-13

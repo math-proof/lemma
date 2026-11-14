@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_HomogeneousIdealQuotientGradingInfra.lean: instance decls only.
 import Mathlib
-import Lemma.AlgebraicGeometry.HomogeneousIdealQuotientGradingInfra
+import Lemma.Ideal.HomogeneousIdealQuotientGradingInfra
 
 namespace HomogeneousIdealQuotientGrading
 

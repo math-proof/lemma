@@ -23,7 +23,7 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
     - in lemma docstrings, convert raw lemma module/path names to markdown links by heuristic, not a `run.mjs` warning or lean.js parse (raw module names are hard for lean.js to detect as links). Write `[lemma latex formula or natural language name](?module=Module.Path)` using the site's `?module=` query form (same as home.md cites). Prefer a latex formula or short natural-language name as the link text; put the dotted module in `module=`.
   - before the `given` section, omit auto-bound implicits
   - explicit binders `(…)` (hypotheses and given-section expressions) sit under `-- given`; type binders `{…}` / `⦃…⦄` and instance binders `[…]` stay above it
-  - a named instance binder `[h : T]` is written `(h : T)` under `-- given`; unnamed `[T]` stays above `-- given`; never `(h : … := by infer_instance)` or any `(h : T := by tactic)`
+  - never `(h : … := by infer_instance)` or any `(h : T := by tactic)`
   - within the `given` section: propositions come first, expressions come next, unless otherwise specified
   - within the `proof` section, tactics convention:
     - prefer `apply` instead of `exact`, perhaps by creating some holes

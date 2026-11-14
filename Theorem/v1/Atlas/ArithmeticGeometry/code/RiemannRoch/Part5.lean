@@ -8,7 +8,7 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.Algebra.RestrictedProduct.Basic
+import Mathlib.Set.Algebra.RestrictedProduct.Basic
 import Mathlib.RingTheory.Valuation.ValuationSubring
 import Mathlib.LinearAlgebra.Dual.Defs
 import Mathlib.LinearAlgebra.Dual.Lemmas
@@ -56,4 +56,3 @@ lemma mul_unit_mem_riemannRochSpace (A B : CurveDivisor C) (f : Fˣ)
       simp only [Finsupp.coe_sub, Pi.sub_apply, principalDivisor_apply] at this
       linarith
     linarith
-

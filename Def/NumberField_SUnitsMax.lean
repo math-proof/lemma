@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.GroupCohomology.ContinuousUnramified
+import Lemma.Finset.ContinuousUnramified
 
 set_option autoImplicit false
 

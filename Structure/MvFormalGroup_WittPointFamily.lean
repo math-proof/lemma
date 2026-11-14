@@ -1,9 +1,8 @@
 import Mathlib
 import Instance.MvFormalGroup_NegV2
 import Instance.MvFormalGroup_CartierModule
-import Lemma.MvFormalGroup.CartierModuleHomothety
+import Lemma.PowerSeries.CartierModuleHomothety
 import Instance.MvFormalGroup_CartierModuleWittAction
-import Instance.MvFormalGroup_WittPointFamily
 
 set_option autoImplicit false
 
@@ -36,9 +35,6 @@ variable (p : ℕ) [hp : Fact p.Prime] {R : Type u} [CommRing R] {τ : Type v} {
 
 
 variable {p}
-
-omit hp [CommRing R] in
-
 
 variable (p R τ)
 

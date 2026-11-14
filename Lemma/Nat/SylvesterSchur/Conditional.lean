@@ -2,6 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Lemma.Nat.SylvesterSchur.Bridge
 import Lemma.Nat.SylvesterSchur.LargePrimeCriteria
+import Lemma.Nat.SylvesterSchur.ErdosLayers
 open scoped BigOperators
 open Finset Nat
 
@@ -658,4 +659,4 @@ end Nat.SylvesterSchur
 
 
 -- created on 2026-10-20
--- updated on 2026-10-29
+-- updated on 2026-11-13

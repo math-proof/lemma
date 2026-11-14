@@ -21,7 +21,7 @@ def corepresentableByOfIsInitial (e : F.Elements) (he : IsInitial e) :
       left_inv f := congrArg Elements.Hom.hom
         (he.hom_ext (he.to (F.elementsMk Y (F.map f e.val))) ⟨f, rfl⟩)
       right_inv y := (he.to (F.elementsMk Y y)).map_val }
-  homEquiv_comp {Y Y'} g f := by simp [FunctorToTypes.map_comp_apply]
+  homEquiv_comp {Y Y'} g f := by simp [Functor.map_comp_apply]
 
 end Corepresentable
 
@@ -38,7 +38,7 @@ def representableByOfIsInitial (e : F.Elements) (he : IsInitial e) :
       left_inv f := congrArg (fun g => Quiver.Hom.unop g.hom)
         (he.hom_ext (he.to (F.elementsMk (Opposite.op Y) (F.map f.op e.val))) ⟨f.op, rfl⟩)
       right_inv y := (he.to (F.elementsMk (Opposite.op Y) y)).map_val }
-  homEquiv_comp {Y Y'} g f := by simp [FunctorToTypes.map_comp_apply]
+  homEquiv_comp {Y Y'} g f := by simp [Functor.map_comp_apply]
 
 end Representable
 

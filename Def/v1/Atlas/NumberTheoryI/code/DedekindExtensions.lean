@@ -13,7 +13,7 @@ import Mathlib.LinearAlgebra.Dual.Lemmas
 import Mathlib.LinearAlgebra.PerfectPairing.Basic
 import Mathlib.RingTheory.FractionalIdeal.Operations
 import Mathlib.RingTheory.FractionalIdeal.Inverse
-import Mathlib.RingTheory.DedekindDomain.IntegralClosure
+import Mathlib.RingTheory.Ideal.IntegralClosure
 import Mathlib.RingTheory.KrullDimension.Basic
 import Mathlib.RingTheory.Spectrum.Prime.RingHom
 import Mathlib.NumberTheory.NumberField.Basic

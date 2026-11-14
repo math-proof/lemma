@@ -9,7 +9,6 @@ open MeasureTheory Real
 -/
 @[path]
 lemma IsSubGaussian.integrable
-  (Ω, μ)
   [MeasurableSpace Ω]
   {X : Ω → ℝ}
   {σsq : ℝ}
@@ -27,7 +26,6 @@ lemma IsSubGaussian.integrable
 -/
 @[path]
 lemma IsSubGaussian.mean_zero
-  (Ω, μ)
   [MeasurableSpace Ω]
   {X : Ω → ℝ}
   {σsq : ℝ}
@@ -45,7 +43,6 @@ lemma IsSubGaussian.mean_zero
 -/
 @[path]
 lemma IsSubGaussian.exp_integrable
-  (Ω, μ)
   [MeasurableSpace Ω]
   {X : Ω → ℝ}
   {σsq : ℝ}
@@ -64,7 +61,6 @@ lemma IsSubGaussian.exp_integrable
 -/
 @[path]
 lemma IsSubGaussian.mgf_bound
-  (Ω, μ)
   [MeasurableSpace Ω]
   {X : Ω → ℝ}
   {σsq : ℝ}

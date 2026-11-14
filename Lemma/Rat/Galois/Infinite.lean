@@ -16,7 +16,7 @@ lemma topologicalClosure_eq_fixingSubgroup_fixedField
 -- proof
   apply le_antisymm
   · exact Subgroup.topologicalClosure_minimal H
-    ((IntermediateField.le_iff_le _ _).mp le_rfl) (fixingSubgroup_isClosed _)
+      ((IntermediateField.le_iff_le _ _).mp le_rfl) (fixingSubgroup_isClosed _)
   · have hmono : H ≤ H.topologicalClosure := Subgroup.le_topologicalClosure H
     have hfix : IntermediateField.fixedField H.topologicalClosure ≤
       IntermediateField.fixedField H :=
@@ -31,4 +31,4 @@ end InfiniteGalois
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-13

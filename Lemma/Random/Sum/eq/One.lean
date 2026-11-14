@@ -16,12 +16,12 @@ countable setting where the reference measure on `α` is `count`).
 @[path]
 private lemma main
   [MeasurableSpace Ω]
-  [ReferenceMeasure α] [Countable α] [MeasurableSingletonClass α]
+  [μ : ReferenceMeasure α] [Countable α] [MeasurableSingletonClass α]
   {π : Measure Ω}
   {x : Ω → α}
 -- given
   (hP : SinglePSpace π x)
-  (hμ : ReferenceMeasure.measure (α := α) = Measure.count) :
+  (hμ : μ.measure = Measure.count) :
 -- imply
   ∑' «\sf{x}» : α, ℙ[π](x = «\sf{x}») = 1 := by
 -- proof
@@ -49,4 +49,4 @@ private lemma main
 
 
 -- created on 2021-07-19
--- updated on 2026-11-02
+-- updated on 2026-11-14

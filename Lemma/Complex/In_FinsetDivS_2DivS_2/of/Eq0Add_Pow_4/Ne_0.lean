@@ -2,6 +2,7 @@ import Lemma.Complex.PowPowAddDivNeg1'2DivMulISqrt3'2'3.eq.One
 import Lemma.Complex.PowAddDivNeg1'2DivMulISqrt3'2.eq.PowAddDivNeg1'2DivMulISqrt3'2EMod3
 import Lemma.Complex.AddPowPowPowPow.eq.Neg
 import Lemma.Complex.MulMulPowPowPow.eq.DivNeg3.of.EqSubCeil.Eq_AddDivMul4Pow3'27Square
+open Complex
 
 
 @[path]
@@ -139,4 +140,4 @@ private lemma mod_3
   exact sub hp hq hδ' hD hδ hy' hy₀ hy₁ h hβ
 
 
--- created on 2018-11-26
+-- created on 2018-11-27

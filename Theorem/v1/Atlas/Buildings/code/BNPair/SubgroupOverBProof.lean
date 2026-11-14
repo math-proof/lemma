@@ -13,7 +13,6 @@ import Def.v1.Atlas.Buildings.code.BNPair.ParabolicDefs.Part2
 import Lemma.Nat.NonemptyBruhatCell
 import Lemma.Nat.In_BruhatCell1.of.In_B
 import Lemma.Nat.Simple.ne.One
-import Lemma.Group.Atlas.v1.Buildings.code.BNPair.CellMulParabolicProof
 import Lemma.Nat.In_BruhatCell.of.In_BruhatCell
 import Theorem.v1.Atlas.Buildings.code.BNPair.CellCoverProof
 import Theorem.v1.Atlas.Buildings.code.BNPair.CellDisjointProof

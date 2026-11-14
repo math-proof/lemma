@@ -1,5 +1,5 @@
 import Lemma.Real.LtExpS.is.Lt
-open Real
+open Exp
 
 
 @[path]
@@ -11,7 +11,7 @@ private lemma main
 -- imply
   exp x < exp y :=
 -- proof
-  LtExpS.of.Lt h
+  Real.LtExpS.of.Lt h
 
 
 -- created on 2023-04-16

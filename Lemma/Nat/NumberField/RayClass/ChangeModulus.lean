@@ -124,7 +124,8 @@ lemma changeModulus_isEquivalent
   (hcond : coprimeFractionalIdeals m1 ⊓ rayGroupAmbient m2 ≤ C1.toAmbientSubgroup) :
 -- imply
   CongruenceSubgroupPair.IsEquivalent
-    { modulus := by
+    { modulus := m1, subgroup := C1 }
+    { modulus := m2, subgroup := changeModulus C1 m2 } := by
 -- proof
   have hC1 : C1.toAmbientSubgroup ≤ coprimeFractionalIdeals m1 :=
     C1.toAmbientSubgroup_le
@@ -136,8 +137,8 @@ lemma changeModulus_isEquivalent
   change coprimeFractionalIdeals m1 ⊓
     (changeModulus C1 m2).toAmbientSubgroup =
     coprimeFractionalIdeals m2 ⊓ C1.toAmbientSubgroup
-  rw [changeModulus_toAmbientSubgroup_of_dvd C1 hdiv,
-    inf_comm (coprimeFractionalIdeals m1) _,
+  rw [changeModulus_toAmbientSubgroup_of_dvd hdiv,
+    inf_comm,
     sup_inf_assoc_of_le _ hC1, sup_eq_left.mpr hcond',
     inf_eq_right.mpr hC1']
 
@@ -159,7 +160,10 @@ lemma exists_equivalent_iff_changeModulus
 -- imply
   (∃ C2 : CongruenceSubgroup m2,
     CongruenceSubgroupPair.IsEquivalent
-    { modulus := by
+      { modulus := m1, subgroup := C1 }
+      { modulus := m2, subgroup := C2 }) ↔
+    coprimeFractionalIdeals m1 ⊓ rayGroupAmbient m2 ≤
+      C1.toAmbientSubgroup := by
 -- proof
   constructor
   · rintro ⟨C2, hC2⟩
@@ -167,7 +171,7 @@ lemma exists_equivalent_iff_changeModulus
       le_trans C1.toAmbientSubgroup_le
         (coprimeFractionalIdeals_le_of_dvd hdiv)
     have heq :=
-      (CongruenceSubgroupPair.isEquivalent_iff _ _).mp hC2
+      CongruenceSubgroupPair.isEquivalent_iff.mp hC2
     calc coprimeFractionalIdeals m1 ⊓ rayGroupAmbient m2
       ≤ coprimeFractionalIdeals m1 ⊓ C2.toAmbientSubgroup :=
         inf_le_inf_left _
@@ -176,10 +180,10 @@ lemma exists_equivalent_iff_changeModulus
         rw [heq, inf_eq_right.mpr hC1']
   · intro hcond
     exact ⟨changeModulus C1 m2,
-      changeModulus_isEquivalent C1 hdiv hcond⟩
+      changeModulus_isEquivalent hdiv hcond⟩
 
 end NumberField.Modulus
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-13

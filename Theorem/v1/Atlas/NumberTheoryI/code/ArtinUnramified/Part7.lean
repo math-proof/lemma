@@ -20,7 +20,7 @@ import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.GroupTheory.Index
 import Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90
-import Mathlib.Algebra.Set.Closure.eq.N.of.Eq
+import Lemma.Set.Closure.eq.N.of.Eq
 import Mathlib.RingTheory.Trace.Basic
 import Mathlib.LinearAlgebra.Dimension.Finrank
 import Mathlib.RingTheory.Ideal.Norm.RelNorm
@@ -52,7 +52,7 @@ lemma normOnFracUnits_kills_principal (K L : Type*)
     (normOnFracUnits K L).ker := by
   intro I hI
   rw [MonoidHom.mem_ker]
-  have hI1 : ClassGroup.mk I = 1 := by
+  have hI1 : ClassGroup.mk (FractionRing (𝓞 L)) I = 1 := by
     rw [ClassGroup.mk_eq_one_iff]
     obtain ⟨x, hx⟩ := hI
     rw [← hx, coe_toPrincipalIdeal]

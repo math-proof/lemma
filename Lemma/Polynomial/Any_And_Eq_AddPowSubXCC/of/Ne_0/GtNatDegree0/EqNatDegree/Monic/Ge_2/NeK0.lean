@@ -71,8 +71,9 @@ private lemma _root_.ModularCurve.StarBank.count {K : Type*} [Field K] [IsAlgClo
     else
       rw [hMcount0 γ hin]
       exact Nat.zero_le p
-  have hMsum : (∑ γ ∈ S, M.count γ) = ∑ γ ∈ S, p := calc
-    _ = ∑ γ ∈ S, ∑ b ∈ S, (R - C b).roots.count γ :=
+  have hMsum : (∑ γ ∈ S, M.count γ) = ∑ γ ∈ S, p :=
+    calc
+      ∑ γ ∈ S, M.count γ = ∑ γ ∈ S, ∑ b ∈ S, (R - C b).roots.count γ :=
         Finset.sum_congr rfl fun γ _ => by rw [hM, Multiset.count_sum']
       _ = ∑ b ∈ S, ∑ γ ∈ S, (R - C b).roots.count γ := Finset.sum_comm
       _ = ∑ b ∈ S, p := Finset.sum_congr rfl hinner

@@ -212,12 +212,12 @@ lemma finite_euler_product_gt
     apply Finset.prod_nbij f
     · intro a ha; exact Finset.mem_image_of_mem f ha
     · intro a₁ ha₁ a₂ ha₂ h
-      simp only [f, dif_pos (hs a₁ ha₁), dif_pos (hs a₂ ha₂)] at h
+      simp only [f, dite_eq_left (hs a₁ ha₁), dite_eq_left (hs a₂ ha₂)] at h
       exact Subtype.mk.inj h
     · rw [Set.SurjOn, Finset.coe_image]
-    · intro a ha; simp only [f, dif_pos (hs a ha)]
+    · intro a ha; simp only [f, dite_eq_left (hs a ha)]
   obtain ⟨q, hq, hq_ndvd⟩ : ∃ q, Nat.Prime q ∧ ¬ q ∣ n := by
-    by_contra h; push_neg at h
+    by_contra h; push Not at h
     exact (Set.Finite.subset n.primeFactors.finite_toSet
       (fun p (hp : Nat.Prime p) => Nat.mem_primeFactors.mpr ⟨hp, h p hp, hn0⟩)).not_infinite
       Nat.infinite_setOf_prime

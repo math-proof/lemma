@@ -50,7 +50,7 @@ lemma not_mem_css_fourier_compactlySupported_interior
   simp only [Css, Set.mem_setOf_eq, dif_neg (ne_of_lt hq)]
   simp only [ConeSupport.singularSupport, Set.mem_setOf_eq, not_not]
   exact isSmoothNear_fourier_smulLeftCLM_compactlySupported u φ hφ hφc _
-set_option maxHeartbeats 400000 in
+set_option maxHeartbeats 400000
 
 end WavefrontSet
 

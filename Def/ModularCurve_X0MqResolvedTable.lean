@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.AlgebraicGeometry.MazurRapoportAppendixPicNeronCarriers
+import Lemma.Scheme.MazurRapoportAppendixPicNeronCarriers
 import Abbrev.ModularCurve_X0MqResolvedTable
 
 set_option autoImplicit false

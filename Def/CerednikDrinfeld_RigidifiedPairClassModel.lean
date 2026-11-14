@@ -1,6 +1,6 @@
-import Lemma.CerednikDrinfeld.QMRigidification
+import Lemma.Scheme.QMRigidification
 import Structure.CerednikDrinfeld_QMFineModuli
-import Lemma.CerednikDrinfeld.QMFineModuliT
+import Lemma.UpperHalfPlane.QMFineModuliT
 import Def.CerednikDrinfeld_FormalUpperHalfPlaneCharts
 import Structure.CerednikDrinfeld_RigidifiedPairClassModel
 

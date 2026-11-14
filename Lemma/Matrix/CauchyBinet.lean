@@ -2333,7 +2333,7 @@ lemma sign_decomposition {n : ℕ} (P Q : Finset (Fin n)) (hcard : P.card = Q.ca
   -- Handle edge cases: empty or full sets
   by_cases hk_pos : 0 < P.card
   · by_cases hk_lt : P.card < n
-    · -- Main case: 0 < P.card < n
+    · -- IharaIota case: 0 < P.card < n
       have hk : P.card ≤ n := Nat.le_of_lt hk_lt
       -- Use strong induction on finsetSumFin P + finsetSumFin Q
       have hQ_card_pos : 0 < Q.card := hcard ▸ hk_pos

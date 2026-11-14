@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.DivisorPushPull
+import Lemma.Matrix.DivisorPushPull
 import Lemma.Int.P2MUtil
 
-open AlgebraicCurve AlgebraicCurve.Divisor
+open AlgebraicCurve AlgebraicCurve.Divisor Matrix
 
 /--
 [AlgebraicCurve_Divisor_support_pullback_subset](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_Divisor_support_pullback_subset.lean)

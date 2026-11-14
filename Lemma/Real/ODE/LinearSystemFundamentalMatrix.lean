@@ -121,9 +121,9 @@ namespace MathlibExt.Analysis.ODE.LinearSystemFundamentalMatrixWanted
 
 /--
 [existsUnique_hasDerivAt_eq_continuousLinearMap](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/ODE/LinearSystemFundamentalMatrix.lean)
+has a unique global integral curve through every initial point.
 -/
 @[path]
-has a unique global integral curve through every initial point. -/
 lemma _root_.ODE.existsUnique_hasDerivAt_eq_continuousLinearMap
   {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
   (B : ℝ → E →L[ℝ] E) (t₀ : ℝ) (x₀ : E) (hB : Continuous B) :

@@ -1,5 +1,6 @@
 -- Carved from Lemma/Definitions/Def_PDivisibleGroup_Basic.lean: instance decls only.
 import Mathlib
+import Structure.PDivisibleGroup_Basic
 
 set_option autoImplicit false
 

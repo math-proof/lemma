@@ -1,7 +1,7 @@
 import Mathlib
-import Lemma.GroupCohomology.ContinuousH2
+import Lemma.Submodule.ContinuousH2
 import Def.GroupCohomology_ContinuousH1
-import Lemma.GroupCohomology.CupProduct
+import Lemma.Rep.CupProduct
 
 set_option autoImplicit false
 

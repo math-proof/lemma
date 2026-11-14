@@ -101,9 +101,9 @@ lemma tempered_distribution_of_polynomial_growth
         ∫ x : EuclideanSpace ℝ (Fin n), (1 + ‖x‖) ^ (-(P : ℝ))) *
         (Finset.Iic m).sup (schwartzSeminormFamily ℂ _ ℂ) f := by
         rw [hSf]
-/-- Convolving a tempered fundamental solution of the Laplacian with a Schwartz datum `f`
-produces a smooth solution `u` vanishing at infinity together with all its derivatives, together
-with the corresponding tempered distribution `u_td` satisfying `Δ u_td = f`. -/
+-- Convolving a tempered fundamental solution of the Laplacian with a Schwartz datum `f`
+-- produces a smooth solution `u` vanishing at infinity together with all its derivatives, together
+-- with the corresponding tempered distribution `u_td` satisfying `Δ u_td = f`.
 
 end DifferentialOperators
 

@@ -1,5 +1,6 @@
 import Mathlib
 import Structure.GaloisRep_Adic
+import Def.GaloisRep_Adic
 
 set_option autoImplicit false
 

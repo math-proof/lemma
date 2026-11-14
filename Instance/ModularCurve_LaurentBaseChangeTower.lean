@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_LaurentBaseChangeTower.lean: instance decls only.
 import Mathlib
-import Lemma.ModularCurve.LaurentCoeff
+import Lemma.LaurentSeries.LaurentCoeff
 
 noncomputable section
 

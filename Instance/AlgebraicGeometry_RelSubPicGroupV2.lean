@@ -1,13 +1,13 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_RelSubPicGroupV2.lean: instance decls only.
 import Mathlib
 import Instance.AlgebraicGeometry_RelativePicardFunctor
-import Lemma.AlgebraicGeometry.RepresentsRelSubPic
+import Lemma.Scheme.RepresentsRelSubPic
 import Def.AlgebraicGeometry_RelSubPicPresheaf
-import Lemma.AlgebraicGeometry.RelativeGroupLawGrpObj
+import Lemma.Scheme.RelativeGroupLawGrpObj
 import Structure.JacJ1Iface
 import Abbrev.SheafOfModules_MonoidalV2
-import Lemma.AlgebraicGeometry.RelSubPicGroup
-import Lemma.AlgebraicGeometry.RelSubPicGroupV2
+import Lemma.Scheme.RelSubPicGroup
+import Lemma.Scheme.RelSubPicGroupV2
 
 section InlinedTheorems
 
@@ -84,4 +84,3 @@ universe u
 open CategoryTheory CategoryTheory.Limits MonoidalCategory AlgebraicGeometry AlgebraicGeometry.RelPicard
 
 open scoped CategoryTheory.MonObj
-

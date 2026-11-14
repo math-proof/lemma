@@ -56,7 +56,9 @@ lemma scheffe_hn_tendsto_ae
     have hsub : Tendsto (fun n => f n x - g x) atTop (𝓝 0) := by
       have := hx.sub (@tendsto_const_nhds _ _ _ (g x) _)
       rwa [sub_self] at this
-    simpa using (continuous_enorm.tendsto _).comp hsub
+    have h0 : (0 : ℝ≥0∞) = ‖(0 : ℝ)‖ₑ := by simp [enorm_zero]
+    rw [h0]
+    exact (continuous_enorm.tendsto (0 : ℝ)).comp hsub
   rw [show ‖g x‖ₑ + ‖g x‖ₑ = (‖g x‖ₑ + ‖g x‖ₑ) - 0 from (tsub_zero _).symm]
   exact ENNReal.Tendsto.sub (h1.add tendsto_const_nhds) h2
     (.inl (ENNReal.add_ne_top.mpr ⟨enorm_ne_top, enorm_ne_top⟩))
@@ -88,15 +90,15 @@ lemma scheffe_lintegral_eq
   have hψ_ne_top : ∫⁻ x, ψ x ∂μ ≠ ⊤ := by
     have : (fun x => ‖f n x - g x‖ₑ) = (fun x => ‖(f n - g) x‖ₑ) := by
       ext; simp [Pi.sub_apply]
-    rw [this, ← eLpNorm_one_eq_lintegral_enorm]
-    exact ((eLpNorm_sub_le (hfm n) hgm le_rfl).trans_lt
+    rw [this, ← eLpNorm_one_eq_lintegral_enorm ((hfm n).sub hgm)]
+    exact ((eLpNorm_sub_le (f := f n) (g := g) (μ := μ) le_rfl).trans_lt
       (ENNReal.add_lt_top.mpr ⟨hfn, hg.eLpNorm_lt_top⟩)).ne
   rw [lintegral_sub' hψ_meas hψ_ne_top (Eventually.of_forall fun x => enorm_sub_le),
     lintegral_add_left' (hfm n).enorm,
-    ← eLpNorm_one_eq_lintegral_enorm (f := f n),
-    ← eLpNorm_one_eq_lintegral_enorm (f := g)]
+    ← eLpNorm_one_eq_lintegral_enorm (hfm n),
+    ← eLpNorm_one_eq_lintegral_enorm hgm]
   congr 1
-  rw [eLpNorm_one_eq_lintegral_enorm]; rfl
+  rw [eLpNorm_one_eq_lintegral_enorm ((hfm n).sub hgm)]; rfl
 
 end TheoryOfProbability3
 
@@ -124,7 +126,7 @@ lemma scheffe_lemma
   have hn_tendsto_ae := scheffe_hn_tendsto_ae hae
   have C_le : eLpNorm g 1 μ + eLpNorm g 1 μ ≤ ∫⁻ x, liminf (hn · x) atTop ∂μ :=
     (show eLpNorm g 1 μ + eLpNorm g 1 μ = ∫⁻ x, (‖g x‖ₑ + ‖g x‖ₑ) ∂μ by
-      rw [eLpNorm_one_eq_lintegral_enorm, lintegral_add_left' hgm.enorm]).symm ▸
+      rw [eLpNorm_one_eq_lintegral_enorm hgm, lintegral_add_left' hgm.enorm]).symm ▸
     lintegral_mono_ae (hn_tendsto_ae.mono fun x hx => hx.liminf_eq ▸ le_refl _)
   have h_hn_meas : ∀ n, AEMeasurable (hn n) μ := fun n =>
     ((hfm n).enorm.add hgm.enorm).sub ((hfm n).sub hgm).enorm
@@ -138,7 +140,7 @@ lemma scheffe_lemma
     liminf (fun n => (eLpNorm (f n) 1 μ + eLpNorm g 1 μ) - eLpNorm (f n - g) 1 μ) atTop :=
     C_le.trans ((lintegral_liminf_le' h_hn_meas).trans (liminf_congr lintegral_hn_eq).le)
   exact ennreal_tendsto_zero_of_squeeze
-    (fun n => eLpNorm_sub_le (hfm n) hgm le_rfl)
+    (fun n => eLpNorm_sub_le (f := f n) (g := g) (μ := μ) le_rfl)
     (hnorm.add tendsto_const_nhds)
     (ENNReal.add_ne_top.mpr ⟨hg.eLpNorm_lt_top.ne, hg.eLpNorm_lt_top.ne⟩)
     C_le_liminf
@@ -174,7 +176,7 @@ lemma tendsto_eLpNorm_of_tendsto_eLpNorm_sub
       calc eLpNorm g 1 μ
         = eLpNorm ((g - f n) + f n) 1 μ := by ring_nf
         _ ≤ eLpNorm (g - f n) 1 μ + eLpNorm (f n) 1 μ :=
-          eLpNorm_add_le (hgm.sub (hfm n)) (hfm n) le_rfl
+          eLpNorm_add_le le_rfl
         _ = eLpNorm (f n - g) 1 μ + eLpNorm (f n) 1 μ := by
           rw [show g - f n = -(f n - g) from by ring, eLpNorm_neg]
         _ ≤ ε + eLpNorm (f n) 1 μ := by gcongr
@@ -184,7 +186,7 @@ lemma tendsto_eLpNorm_of_tendsto_eLpNorm_sub
     calc eLpNorm (f n) 1 μ
       = eLpNorm ((f n - g) + g) 1 μ := by ring_nf
       _ ≤ eLpNorm (f n - g) 1 μ + eLpNorm g 1 μ :=
-        eLpNorm_add_le ((hfm n).sub hgm) hgm le_rfl
+        eLpNorm_add_le le_rfl
       _ ≤ ε + eLpNorm g 1 μ := by gcongr
       _ = eLpNorm g 1 μ + ε := add_comm _ _
 
@@ -210,7 +212,7 @@ lemma eLpNorm_uniformly_bounded_of_tendsto_eLpNorm_sub
 -- proof
   rw [ENNReal.tendsto_nhds_zero] at hL1
   obtain ⟨N, hN⟩ := (hL1 1 one_pos).exists_forall_of_atTop
-  have hg_ne : eLpNorm g 1 μ ≠ ⊤ := hg.2.ne
+  have hg_ne : eLpNorm g 1 μ ≠ ⊤ := ne_of_lt hg
   set Ctail : NNReal := 1 + (eLpNorm g 1 μ).toNNReal
   set Cinit : NNReal := (Finset.range N).sup fun n => (eLpNorm (f n) 1 μ).toNNReal
   refine ⟨Cinit ⊔ Ctail, fun i => ?_⟩
@@ -219,7 +221,7 @@ lemma eLpNorm_uniformly_bounded_of_tendsto_eLpNorm_sub
     have h1 : (eLpNorm (f i) 1 μ).toNNReal ≤ Cinit :=
       Finset.le_sup (f := fun n => (eLpNorm (f n) 1 μ).toNNReal) (Finset.mem_range.mpr hi)
     calc eLpNorm (f i) 1 μ
-      = ↑((eLpNorm (f i) 1 μ).toNNReal) := (ENNReal.coe_toNNReal (hf i).2.ne).symm
+      = ↑((eLpNorm (f i) 1 μ).toNNReal) := (ENNReal.coe_toNNReal (ne_of_lt (hf i))).symm
       _ ≤ ↑Cinit := ENNReal.coe_le_coe.mpr h1
       _ ≤ ↑(Cinit ⊔ Ctail) := ENNReal.coe_le_coe.mpr le_sup_left
   ·
@@ -227,7 +229,7 @@ lemma eLpNorm_uniformly_bounded_of_tendsto_eLpNorm_sub
     calc eLpNorm (f i) 1 μ
       = eLpNorm ((f i - g) + g) 1 μ := by ring_nf
       _ ≤ eLpNorm (f i - g) 1 μ + eLpNorm g 1 μ :=
-        eLpNorm_add_le ((hf i).1.sub hg.1) hg.1 le_rfl
+        eLpNorm_add_le le_rfl
       _ ≤ 1 + eLpNorm g 1 μ := by gcongr; exact hN i hi
       _ = ↑(1 : NNReal) + ↑((eLpNorm g 1 μ).toNNReal) := by
         rw [ENNReal.coe_toNNReal hg_ne, ENNReal.coe_one]
@@ -254,8 +256,7 @@ lemma uniformIntegrable_of_tendsto_eLpNorm_sub
 -- imply
   UniformIntegrable f 1 μ :=
 -- proof
-  ⟨fun n => (hf n).1,
-    unifIntegrable_of_tendsto_Lp le_rfl ENNReal.one_ne_top hf hg hL1,
+  ⟨unifIntegrable_of_tendsto_Lp le_rfl ENNReal.one_ne_top hf hg hL1,
     eLpNorm_uniformly_bounded_of_tendsto_eLpNorm_sub hf hg hL1⟩
 
 end TheoryOfProbability3
@@ -279,7 +280,7 @@ lemma L1_convergence_imp_norm_convergence
 -- imply
   Tendsto (fun n => eLpNorm (f n) 1 μ) atTop (𝓝 (eLpNorm g 1 μ)) ∧ MemLp g 1 μ :=
 -- proof
-  ⟨tendsto_eLpNorm_of_tendsto_eLpNorm_sub hfm hgm hg.2.ne hL1, hg⟩
+  ⟨tendsto_eLpNorm_of_tendsto_eLpNorm_sub hfm hgm (ne_of_lt hg) hL1, hg⟩
 
 end TheoryOfProbability3
 
@@ -308,11 +309,9 @@ lemma norm_convergence_imp_ui
     have hfg_sub : TendstoInMeasure μ (f ∘ ns) atTop g := fun ε hε => (hfg ε hε).comp hns
     obtain ⟨ms, hms_mono, hms_ae⟩ := hfg_sub.exists_seq_tendsto_ae
     refine ⟨ms, ?_⟩
-    exact scheffe_lemma (fun n => (hf (ns (ms n))).1) hg.1 hg hms_ae
+    exact scheffe_lemma (fun n => (hf (ns (ms n))).aestronglyMeasurable) hg.aestronglyMeasurable hg hms_ae
       (hnorm.comp (hns.comp hms_mono.tendsto_atTop))
   exact uniformIntegrable_of_tendsto_eLpNorm_sub hf hg hL1
-variable [IsFiniteMeasure μ]
-  {f : ℕ → α → ℝ} {g : α → ℝ}
 
 end TheoryOfProbability3
 
@@ -326,6 +325,8 @@ lemma ui_imp_L1_convergence
   {m : MeasurableSpace α}
   {μ : Measure α}
   [IsFiniteMeasure μ]
+  {f : ℕ → α → ℝ}
+  {g : α → ℝ}
 -- given
   (hUI : UniformIntegrable f 1 μ)
   (hg : MemLp g 1 μ)
@@ -333,7 +334,8 @@ lemma ui_imp_L1_convergence
 -- imply
   Tendsto (fun n => eLpNorm (f n - g) 1 μ) atTop (𝓝 0) :=
 -- proof
-  tendsto_Lp_finite_of_tendstoInMeasure le_rfl ENNReal.one_ne_top hUI.1 hg hUI.2.1 hfg
+  tendsto_Lp_finite_of_tendstoInMeasure le_rfl ENNReal.one_ne_top
+    (fun n => (hUI.memLp n).aestronglyMeasurable) hg hUI.unifIntegrable hfg
 
 end TheoryOfProbability3
 
@@ -347,6 +349,8 @@ lemma ui_L1_norm_tfae
   {m : MeasurableSpace α}
   {μ : Measure α}
   [IsFiniteMeasure μ]
+  {f : ℕ → α → ℝ}
+  {g : α → ℝ}
 -- given
   (hf : ∀ n, MemLp (f n) 1 μ)
   (hg : MemLp g 1 μ)
@@ -356,7 +360,7 @@ lemma ui_L1_norm_tfae
 -- proof
   tfae_have 1 → 2 := fun h => ui_imp_L1_convergence h hg hfg
   tfae_have 2 → 3 := fun h =>
-    (L1_convergence_imp_norm_convergence (fun n => (hf n).1) hg.1 hg h).1
+    (L1_convergence_imp_norm_convergence (fun n => (hf n).aestronglyMeasurable) hg.aestronglyMeasurable hg h).1
   tfae_have 3 → 1 := fun h => norm_convergence_imp_ui hf hg hfg h
   tfae_finish
 
@@ -372,6 +376,8 @@ lemma uniform_integrability_equivalences
   {m : MeasurableSpace α}
   {μ : Measure α}
   [IsFiniteMeasure μ]
+  {f : ℕ → α → ℝ}
+  {g : α → ℝ}
 -- given
   (hf : ∀ n, MemLp (f n) 1 μ)
   (hg : MemLp g 1 μ)

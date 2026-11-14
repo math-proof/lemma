@@ -30,7 +30,7 @@ private lemma stage_clip
 
 
 private lemma stage_Vkd
-  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮]
+  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮]
   [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
   {M : DensityModel Θ 𝒮 𝒜} {θ : Θ} {γ : ℝ}
   (h₀ : γ ∈ Set.Ico 0 1)
@@ -81,7 +81,7 @@ private lemma Kf_clip_one
 
 
 private lemma Kf_Vkd_one
-  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮]
+  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮]
   [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
   {M : DensityModel Θ 𝒮 𝒜} {θ : Θ} {γ : ℝ}
   (h₀ : γ ∈ Set.Ico 0 1)
@@ -111,7 +111,7 @@ Bellman identity for continuous-action kernel expectations.
 -/
 @[path]
 private lemma main
-  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮]
+  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮]
   [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
   {M : DensityModel Θ 𝒮 𝒜}
   {γ : ℝ}
@@ -269,4 +269,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-11
+-- updated on 2026-11-12

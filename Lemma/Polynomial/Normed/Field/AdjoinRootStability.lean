@@ -1,5 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Lemma.Polynomial.Normed.Field.ContinuityOfRoots
 open IntermediateField
 
 
@@ -22,9 +23,9 @@ lemma exists_pos_adjoinRoot_algEquiv_of_l1Norm_sub_lt
     Nonempty (AdjoinRoot f ≃ₐ[K] AdjoinRoot g) := by
 -- proof
   obtain ⟨δroot, hδroot, hroot⟩ :=
-    exists_isClosestConjugate_root_of_l1Norm_sub_lt K f hf hirr hsep
+    exists_isClosestConjugate_root_of_l1Norm_sub_lt (K := K) hf hirr hsep
   obtain ⟨δirr, hδirr, hirrsep⟩ :=
-    exists_pos_irreducible_and_separable_of_l1Norm_sub_lt K f hf hirr hsep
+    exists_pos_irreducible_and_separable_of_l1Norm_sub_lt (K := K) hf hirr hsep
   refine
     ⟨min δroot δirr, lt_min hδroot hδirr,
       fun g hg hclose => ?_⟩

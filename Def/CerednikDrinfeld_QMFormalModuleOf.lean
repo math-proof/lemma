@@ -1,5 +1,5 @@
 import Def.AlgebraicGeometry_FormalGroupAlongSection
-import Lemma.CerednikDrinfeld.SpecialFormalModule
+import Lemma.MvPowerSeries.SpecialFormalModule
 import Def.CerednikDrinfeld_QMModuli
 
 set_option autoImplicit false

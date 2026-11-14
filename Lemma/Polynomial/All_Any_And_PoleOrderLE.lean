@@ -1,11 +1,11 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.X0
-import Lemma.ModularCurve.PhiGen
+import Lemma.HahnSeries.X0
+import Lemma.Polynomial.PhiGen
 import Lemma.Int.P2MUtil
 
 open Polynomial
-open ModularCurve
+open ModularCurve Polynomial HahnSeries
 
 /--
 [ModularCurve_exists_aeval_jq_sub_holomorphicAtInfty](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularCurve_exists_aeval_jq_sub_holomorphicAtInfty.lean)

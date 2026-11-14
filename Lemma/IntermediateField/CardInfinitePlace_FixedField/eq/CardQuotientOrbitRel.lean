@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.NumberField.ArchimedeanIdeleModule
+import Lemma.AbsoluteValue.ArchimedeanIdeleModule
 import Lemma.Int.P2MUtil
 
-open IsDedekindDomain NumberField
+open IsDedekindDomain NumberField AbsoluteValue
 
 /--
 [NumberField_InfPlaceDecomp_card_infinitePlace_fixedField_eq_card_orbitRel_quotient](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_NumberField_InfPlaceDecomp_card_infinitePlace_fixedField_eq_card_orbitRel_quotient.lean)

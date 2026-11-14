@@ -39,9 +39,6 @@ private lemma main
   rw [hfst v₁, hfst v₂] at key
   simp at key
   exact key
-/-- Witt cancellation for orthogonal direct sums: if `U ⊕ V` is isometric to
-`U ⊕ W` (with the same nondegenerate `U`-summand), then `V` is isometric to `W`. -/
-
 
 /--
 [orthogonalSumForm_apply](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/GeometricAlgebra/WittCancellationDirectSum.lean)
@@ -92,4 +89,4 @@ private lemma first_component_zero_eq
 
 
 -- created on 2026-10-23
--- updated on 2026-10-26
+-- updated on 2026-11-13

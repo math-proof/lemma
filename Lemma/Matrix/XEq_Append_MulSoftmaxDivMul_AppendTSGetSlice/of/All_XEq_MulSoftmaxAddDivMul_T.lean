@@ -594,5 +594,5 @@ private lemma main
     exact attn_ok (n + 1) i a
 
 
--- created on 2026-11-07
+-- created on 2024-02-28
 -- updated on 2026-11-08

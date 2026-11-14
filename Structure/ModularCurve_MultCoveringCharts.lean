@@ -2,7 +2,7 @@ import Structure.AlgebraicCurve_SemistableCharts
 import Def.AlgebraicCurve_ChordalProximity
 import Def.ModularCurve_SupersingularModuli
 import Structure.ModularCurve_LevelOneProlongationPair
-import Lemma.AlgebraicCurve.SemistableChartsComap
+import Lemma.AlgEquiv.SemistableChartsComap
 import Structure.ModularCurve_LevelOneChartFst
 import Instance.ModularCurve_MultCoveringCharts
 

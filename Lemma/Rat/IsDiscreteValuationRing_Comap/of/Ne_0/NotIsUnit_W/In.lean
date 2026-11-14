@@ -39,7 +39,7 @@ private lemma DC_isDiscreteValuationRing_of_ringHom_of_dvd {R : Type u} {S : Typ
   have hs0 : s ≠ 0 := by
     intro h
     rw [h, map_zero, (addVal S).map_zero] at hs
-    exact (ENat.top_ne_coe d) hs
+    exact (ENat.top_ne_natCast d) hs
   have key : ∀ (a : ℕ) (x : R), addVal S (φ x) = a → ∃ (q : ℕ) (u : Rˣ), x = u * s ^ q := by
     intro a
     induction a using Nat.strong_induction_on with
@@ -58,7 +58,7 @@ private lemma DC_isDiscreteValuationRing_of_ringHom_of_dvd {R : Type u} {S : Typ
         have hy0 : y ≠ 0 := by
           intro h
           rw [h, mul_zero, map_zero, (addVal S).map_zero] at hx
-          exact (ENat.top_ne_coe a) hx
+          exact (ENat.top_ne_natCast a) hx
         obtain ⟨n, hn⟩ := hval y hy0
         have hnat : d + n = a := by
           rw [map_mul, (addVal S).map_mul, hs, hn] at hx
@@ -74,7 +74,7 @@ private lemma DC_isDiscreteValuationRing_of_ringHom_of_dvd {R : Type u} {S : Typ
       omega
     ·
       have ha0 : a ≠ 0 := by
-      intro h; exact hs0 (by rw [hab, h, zero_mul])
+        intro h; exact hs0 (by rw [hab, h, zero_mul])
       have hb0 : b ≠ 0 := by
         intro h; exact hs0 (by rw [hab, h, mul_zero])
       obtain ⟨na, hna⟩ := hval a ha0
@@ -112,12 +112,13 @@ private lemma main
 -- proof
   classical
     have hmem : ∀ x : F, x ∈ W.comap ι ↔ ι x ∈ W := fun x => Iff.rfl
-    obtain ⟨φ, hφ⟩ : ∃ φ : ↥(W.comap ι) →+* ↥W, ∀ x : ↥(W.comap ι), (φ x : K) = ι (x : F) :=
-      ⟨{ toFun := fun x => ⟨ι (x : F), (hmem x).mp x.2⟩
+    let φ : ↥(W.comap ι) →+* ↥W :=
+      { toFun := fun x => ⟨ι (x : F), (hmem x).mp x.2⟩
         map_one' := Subtype.ext (by simp)
         map_mul' := fun a b => Subtype.ext (by simp)
         map_zero' := Subtype.ext (by simp)
-        map_add' := fun a b => Subtype.ext (by simp) }, fun _ => rfl⟩
+        map_add' := fun a b => Subtype.ext (by simp) }
+    have hφ : ∀ x : ↥(W.comap ι), (φ x : K) = ι (x : F) := fun _ => rfl
     have hιinj : Function.Injective ι := ι.injective
     have hinj : Function.Injective φ := by
       intro a b hab
@@ -154,3 +155,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

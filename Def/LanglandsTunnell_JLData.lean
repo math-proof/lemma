@@ -1,4 +1,4 @@
-import Lemma.LanglandsTunnell.ConverseData
+import Lemma.Finset.ConverseData
 import Structure.LanglandsTunnell_JLData
 
 set_option autoImplicit false

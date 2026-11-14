@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.ProjectionTheory.code.KeyLemmaBSG
-open Finset in BSG
+open Finset
 
 
 /--
@@ -63,10 +63,10 @@ namespace BSG
 variable {α β : Type*} [DecidableEq α] [DecidableEq β]
 /--
 [pathCount₃_ge_of_many_good](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ProjectionTheory/code/KeyLemmaBSG.lean)
+to `b` and each sharing at least `t` common neighbours with `a` in `B`, then the number of
+length-3 paths from `a` to `b` is at least `|S| · t`.
 -/
 @[path]
-to `b` and each sharing at least `t` common neighbours with `a` in `B`, then the number of
-length-3 paths from `a` to `b` is at least `|S| · t`. -/
 lemma pathCount₃_ge_of_many_good (A : Finset α) (B : Finset β) (X : Finset (α × β))
   (a : α) (b : β) (S : Finset α) (t : ℕ)
   (hS_sub_A : S ⊆ A) (hS_conn_b : ∀ a₁ ∈ S, (a₁, b) ∈ X)
@@ -112,9 +112,9 @@ namespace BSG
 variable {α β : Type*} [DecidableEq α] [DecidableEq β]
 /--
 [pathCount₃_of_complete](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ProjectionTheory/code/KeyLemmaBSG.lean)
+any `a ∈ A` and `b ∈ B` is exactly `|B| · |A|`.
 -/
 @[path]
-any `a ∈ A` and `b ∈ B` is exactly `|B| · |A|`. -/
 lemma pathCount₃_of_complete (A : Finset α) (B : Finset β)
   (a : α) (b : β) (ha : a ∈ A) (hb : b ∈ B) :
   pathCount₃ A B (A ×ˢ B) a b = B.card * A.card := by
@@ -341,11 +341,11 @@ lemma BSG.path_count_bound_of_good_sets
   linarith
 namespace BSG
 variable {α β : Type*} [DecidableEq α] [DecidableEq β]
-/-- **Lemma (Key Lemma) for Balog–Szemerédi–Gowers.** If `X ⊆ A × B` has density
-`|X| ≥ K⁻¹ |A| |B|`, then there exist refinements `A' ⊆ A`, `B' ⊆ B` and an exponent
-`c ∈ ℕ` such that the restriction of `X` to `A' × B'` still has density `≥ K^{-c} |A||B|`
-and every pair `(a, b) ∈ A' × B'` is joined by at least `K^{-c} |A||B|` length-3 paths in
-the bipartite graph defined by `X`. -/
+-- **Lemma (Key Lemma) for Balog–Szemerédi–Gowers.** If `X ⊆ A × B` has density
+-- `|X| ≥ K⁻¹ |A| |B|`, then there exist refinements `A' ⊆ A`, `B' ⊆ B` and an exponent
+-- `c ∈ ℕ` such that the restriction of `X` to `A' × B'` still has density `≥ K^{-c} |A||B|`
+-- and every pair `(a, b) ∈ A' × B'` is joined by at least `K^{-c} |A||B|` length-3 paths in
+-- the bipartite graph defined by `X`.
 end BSG
 
 /--

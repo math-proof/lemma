@@ -2,8 +2,8 @@
 import Mathlib
 import Instance.PresheafOfModules_InternalHom
 import Instance.SheafOfModules_Monoidal
-import Lemma.AlgebraicGeometry.ModulesSectionsTensor
-import Lemma.AlgebraicGeometry.ModulesIhomSections
+import Lemma.Scheme.ModulesSectionsTensor
+import Lemma.Scheme.ModulesIhomSections
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -46,4 +46,3 @@ variable {M P}
 end SheafOfModules
 
 end
-

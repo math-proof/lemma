@@ -1,7 +1,7 @@
 import Mathlib.AlgebraicGeometry.Morphisms.Smooth
 import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Lemma.AlgebraicGeometry.NeronModelPropertyBundleCarrier
-import Lemma.AlgebraicGeometry.RelativeGroupLaw
+import Lemma.Scheme.NeronModelPropertyBundleCarrier
+import Lemma.Scheme.RelativeGroupLaw
 import Structure.JacJ1Iface
 
 set_option autoImplicit false

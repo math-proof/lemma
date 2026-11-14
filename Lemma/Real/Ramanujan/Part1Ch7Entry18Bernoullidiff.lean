@@ -3,7 +3,6 @@ import Initialize.Tactic.Attr.Basic
 import Def.Analysis.Ramanujan.Part1Ch7Entry18Bernoullidiff
 open scoped Nat Real BigOperators Interval Polynomial ContDiff
 open Asymptotics Filter Finset Complex Topology MeasureTheory
-open DirichletBeta
 open MathlibExt.Analysis.Ramanujan.Part1Ch7
 open Entry18Bernoullidiff
 

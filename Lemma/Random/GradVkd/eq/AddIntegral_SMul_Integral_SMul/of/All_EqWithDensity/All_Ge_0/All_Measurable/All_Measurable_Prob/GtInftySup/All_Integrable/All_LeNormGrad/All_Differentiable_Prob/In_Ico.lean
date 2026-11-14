@@ -6,26 +6,25 @@ open MeasureTheory PolicyGradient Random Real
 
 /--
 Policy-gradient recursion with a continuous state space and a continuous action space:
-∇V(s[t] = s.bvar[t]) = ∫ u, Q(s.bvar[t], u) • ∇π(u | s.bvar[t]) du + γ • ∫ y, ℙ(s[t+1] = y | s[t] = s.bvar[t]) • ∇V(s[t+1] = y) dy,
-the gradient of the Bellman equations of extract_QVA; both the action sum and the next-state sum of the discrete version
-`Random.Grad.eq.Add_SMul_Sum_SMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.All_Eq_Expect.All_Eq_Expect.EqMeasureCount.EqMeasureCount.In_Ico`
+∇V(s[t] = s.bvar[t]) = ∫ u, (rkd + γ * ∫ V0)(s.bvar[t], u) • ∇π(u | s.bvar[t]) du + γ • ∫ y, ℙ(s[t+1] = y | s[t] = s.bvar[t]) • ∇V(s[t+1] = y) dy,
+the gradient of the Bellman equations of extract_QVA; both the action sum and the next-state sum of the corresponding discrete-state, discrete-action recursion
 become integrals against the reference measures of `𝒜` and `𝒮` (e.g. Lebesgue measures on `ℝ^m`, `ℝ^b`).
-Continuous-action counterpart of
-`Random.GradVk.eq.Add_SMul_Integral_SMul.of.All_EqWithDensity.All_Ge_0.All_Measurable.All_Measurable_Prob.GtInftySup.All_Differentiable_Prob.In_Ico`.
-The policy `π_θ(u | x)` is a probability density w.r.t. the reference measure of `𝒜` (`DensityPolicy`); `V = V0`, `Q = Q0`
-are the regular (kernel) conditional expectations of the discounted return given `s[t] = x`
-(resp. `s[t] = x, a[t] = u`), see `Theorem.Dynamics.PolicyTrajectory.ContinuousAction.Part3`;
+The policy `π_θ(u | x)` is a probability density w.r.t. the reference measure of `𝒜` (`DensityPolicy`); `V = V0` is
+the discounted `Wkd` series, defined on all states (see `Theorem.Dynamics.PolicyTrajectory.ContinuousAction.Part3`);
+the action-value in the first integral is the closed form `rkd + γ * ∫ V0 ∂T`, so no reachability hypothesis is needed;
 `ℙ(s[t+1] = y | s[t] = x) = P1kd θ p x y = ∫ u, π_θ(u | x) * p x u y du`.
 h₁: θ ↦ π_θ(u | x) is differentiable; h₂, h₃, h₄: its gradient is dominated by `g x u`, where `g x` is integrable over
 the actions uniformly in the state (this replaces `sup ‖∇π‖ < ∞` of the finite-action version, where `∑ u` is
 integration against the counting measure); h₅: (x, u) ↦ π_θ(u | x) is jointly measurable; h₆, h₇, h₈: `p x u` is a
 nonnegative density of the transition `T(· | x, u)` w.r.t. the reference measure of `𝒮`, jointly measurable in the
-action and the next state (for Fubini). `Θ` is finite-dimensional (the weights `π` have shape `(D,)`).
+action and the next state (for Fubini).
+`Θ` is finite-dimensional (the weights `π` have shape `(D,)`).
 -/
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [ReferenceMeasure 𝒮] [ReferenceMeasure 𝒜]
+  [μ : ReferenceMeasure 𝒮] [MeasurableSingletonClass 𝒮]
+  [ν : ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
   {M : DensityModel Θ 𝒮 𝒜}
   {θ : Θ}
   {γ : ℝ}
@@ -37,20 +36,21 @@ private lemma main
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
   (h₂ : ∀ θ x u, ‖∇[θ] M.policy.prob θ x u‖ ≤ g x u)
-  (h₃ : ∀ x, Integrable (g x) ReferenceMeasure.measure)
-  (h₄ : sup[x] ∫ u, g x u ∂ReferenceMeasure.measure < ∞)
+  (h₃ : ∀ x, Integrable (g x) ν.measure)
+  (h₄ : sup[x] ∫ u, g x u ∂ν.measure < ∞)
   (h₅ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.policy.prob θ z.1 z.2))
   (h₆ : ∀ x, Measurable (fun z : 𝒜 × 𝒮 => p x z.1 z.2))
   (h₇ : ∀ x u y, p x u y ≥ 0)
-  (h₈ : ∀ x u, M.env.trans (x, u) = (ReferenceMeasure.measure : Measure 𝒮).withDensity (fun y => ENNReal.ofReal (p x u y))) :
+  (h₈ : ∀ x u, M.env.trans (x, u) = (μ.measure : Measure 𝒮).withDensity (fun y => ENNReal.ofReal (p x u y))) :
 -- imply
   ∇[θ] M.V0 θ γ («\sf{s}» t) =
-    ∫ u, M.Q0 θ γ («\sf{s}» t) u • ∇[θ] M.policy.prob θ («\sf{s}» t) u ∂ReferenceMeasure.measure +
-      γ • ∫ y, M.P1kd θ p («\sf{s}» t) y • ∇[θ] M.V0 θ γ y ∂ReferenceMeasure.measure := by
+    ∫ u, ((M.rkd («\sf{s}» t) u + γ * ∫ y, M.V0 θ γ y ∂(M.env.trans («\sf{s}» t, u))) •
+        ∇[θ] M.policy.prob θ («\sf{s}» t) u) ∂ν.measure +
+      γ • ∫ y, (M.P1kd θ p («\sf{s}» t) y • ∇[θ] M.V0 θ γ y) ∂μ.measure := by
 -- proof
   set x := «\sf{s}» t
   have := M.env.trans_markov
-  have hF := Fderiv.eq.AddIntegral_SMulSMul.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob (M := M) h₁ h₂ h₃ h₄ h₀ h₅ x θ
+  have hF := bellmanFderivClosed (M := M) h₁ h₂ h₃ h₄ h₀ h₅ x θ
   obtain ⟨C, hC⟩ := GtInftySup.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob (M := M) h₁ h₂ h₃ h₄ h₀ h₅
   have hCb : ∀ y, ‖fderiv ℝ (fun θ => M.V0 θ γ y) θ‖ ≤ C := fun y => by
     have h := hC ⟨(θ, y), rfl⟩
@@ -60,7 +60,7 @@ private lemma main
       (fun θ' => Measurable_Vkd.of.All_Measurable_Prob (M := M) h₅ θ' γ)
       (fun y => (HasFDerivAt.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob (M := M) h₁ h₂ h₃ h₄ h₀ h₅ y θ).differentiableAt)
   have hπ : Integrable (M.policy.prob θ x) ReferenceMeasure.measure :=
-    Integrable.of_integral_ne_zero (by rw [M.policy.integral_eq_one θ x]; exact one_ne_zero)
+    Integrable.of_integral_ne_zero (by simp [M.policy.integral_eq_one θ x])
   have hπm : Measurable (M.policy.prob θ x) := (h₅ θ).comp measurable_prodMk_left
   have hp : ∀ u, Measurable (p x u) := fun u => (h₆ x).comp measurable_prodMk_left
   have hd : ∀ u, ∫ y, fderiv ℝ (fun θ => M.V0 θ γ y) θ ∂(M.env.trans (x, u)) =
@@ -100,8 +100,8 @@ private lemma main
         (Filter.Eventually.of_forall fun u => by
           rw [Real.norm_of_nonneg (integral_nonneg fun _ => norm_nonneg _)]
           exact hn u)⟩
-  have hsum : ∫ u, M.policy.prob θ x u • ∫ y, fderiv ℝ (fun θ => M.V0 θ γ y) θ ∂(M.env.trans (x, u)) ∂ReferenceMeasure.measure =
-      ∫ y, M.P1kd θ p x y • fderiv ℝ (fun θ => M.V0 θ γ y) θ ∂ReferenceMeasure.measure := calc
+  have hsum : ∫ u, (M.policy.prob θ x u • ∫ y, fderiv ℝ (fun θ => M.V0 θ γ y) θ ∂(M.env.trans (x, u))) ∂ReferenceMeasure.measure =
+      ∫ y, (M.P1kd θ p x y • fderiv ℝ (fun θ => M.V0 θ γ y) θ) ∂ReferenceMeasure.measure := calc
     _ = ∫ u, ∫ y, M.policy.prob θ x u • (p x u y • fderiv ℝ (fun θ => M.V0 θ γ y) θ) ∂ReferenceMeasure.measure ∂ReferenceMeasure.measure := by
       congr 1
       funext u
@@ -112,10 +112,10 @@ private lemma main
       congr 1
       funext y
       simp only [smul_smul, integral_smul_const, DensityModel.P1kd]
-  have hint₁ : (InnerProductSpace.toDual ℝ Θ).symm (∫ u, M.Q0 θ γ x u • fderiv ℝ (fun θ => M.policy.prob θ x u) θ ∂ReferenceMeasure.measure) =
-      ∫ u, (InnerProductSpace.toDual ℝ Θ).symm (M.Q0 θ γ x u • fderiv ℝ (fun θ => M.policy.prob θ x u) θ) ∂ReferenceMeasure.measure := by
+  have hint₁ : (InnerProductSpace.toDual ℝ Θ).symm (∫ u, (M.rkd x u + γ * ∫ y, M.V0 θ γ y ∂(M.env.trans (x, u))) • fderiv ℝ (fun θ => M.policy.prob θ x u) θ ∂ReferenceMeasure.measure) =
+      ∫ u, (InnerProductSpace.toDual ℝ Θ).symm ((M.rkd x u + γ * ∫ y, M.V0 θ γ y ∂(M.env.trans (x, u))) • fderiv ℝ (fun θ => M.policy.prob θ x u) θ) ∂ReferenceMeasure.measure := by
     have h := (InnerProductSpace.toDual ℝ Θ).symm.toContinuousLinearEquiv.integral_comp_comm
-      (μ := (ReferenceMeasure.measure : Measure 𝒜)) (fun u => M.Q0 θ γ x u • fderiv ℝ (fun θ => M.policy.prob θ x u) θ)
+      (μ := (ReferenceMeasure.measure : Measure 𝒜)) (fun u => (M.rkd x u + γ * ∫ y, M.V0 θ γ y ∂(M.env.trans (x, u))) • fderiv ℝ (fun θ => M.policy.prob θ x u) θ)
     simpa using h.symm
   have hint₂ : (InnerProductSpace.toDual ℝ Θ).symm (∫ y, M.P1kd θ p x y • fderiv ℝ (fun θ => M.V0 θ γ y) θ ∂ReferenceMeasure.measure) =
       ∫ y, (InnerProductSpace.toDual ℝ Θ).symm (M.P1kd θ p x y • fderiv ℝ (fun θ => M.V0 θ γ y) θ) ∂ReferenceMeasure.measure := by
@@ -128,4 +128,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-11
+-- updated on 2026-11-14

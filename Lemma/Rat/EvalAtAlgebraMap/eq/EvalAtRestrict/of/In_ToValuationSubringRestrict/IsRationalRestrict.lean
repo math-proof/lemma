@@ -1,14 +1,14 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.AlgebraicCurve_PlaceEvaluation
-import Lemma.AlgebraicCurve.DivisorPushPull
+import Lemma.Matrix.DivisorPushPull
 import Lemma.Int.P2MUtil
 
 
 namespace Definitions
 end Definitions
 open Definitions
-open IsLocalRing AlgebraicCurve AlgebraicCurve.Place
+open IsLocalRing AlgebraicCurve AlgebraicCurve.Place Matrix
 open Int
 
 

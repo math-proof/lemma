@@ -17,7 +17,7 @@ Python: Random.ProbCond.eq.Mul.ProbCond.
 @[path]
 private lemma main
   [MeasurableSpace Ω]
-  [ReferenceMeasure α] [ReferenceMeasure β] [ReferenceMeasure γ]
+  [μ : ReferenceMeasure α] [ν : ReferenceMeasure β] [ξ : ReferenceMeasure γ]
   [Countable α] [Countable β] [Countable γ]
   [MeasurableSingletonClass α] [MeasurableSingletonClass β]
   [MeasurableSingletonClass γ]
@@ -25,9 +25,9 @@ private lemma main
   {x : Ω → α} {y : Ω → β} {z : Ω → γ}
   [SinglePSpace π (x, y, z)]
 -- given
-  (hα : ReferenceMeasure.measure (α := α) = Measure.count)
-  (hβ : ReferenceMeasure.measure (α := β) = Measure.count)
-  (hγ : ReferenceMeasure.measure (α := γ) = Measure.count)
+  (hα : μ.measure = Measure.count)
+  (hβ : ν.measure = Measure.count)
+  (hγ : ξ.measure = Measure.count)
   (hx : Measurable x)
   (hy : Measurable y)
   (hz : Measurable z)
@@ -48,20 +48,20 @@ private lemma main
   have : SinglePSpace π z :=
     SinglePSpace.of.SinglePSpace.snd ‹SinglePSpace π (x, z)›
   have : ReferenceMeasure.measure (α := α × β) = Measure.count := by
-    change (ReferenceMeasure.measure (α := α)).prod
-        ReferenceMeasure.measure = Measure.count
+    change (μ.measure).prod
+        ν.measure = Measure.count
     rw [hα, hβ, ← Count.eq.ProdCountS]
   have : ReferenceMeasure.measure (α := (α × β) × γ) = Measure.count := by
     change (ReferenceMeasure.measure (α := α × β)).prod
-        ReferenceMeasure.measure = Measure.count
+        ξ.measure = Measure.count
     rw [‹ReferenceMeasure.measure (α := α × β) = Measure.count›, hγ,
       ← Count.eq.ProdCountS (α := α × β)]
   have : ReferenceMeasure.measure (α := α × γ) = Measure.count := by
-    change (ReferenceMeasure.measure (α := α)).prod
-        ReferenceMeasure.measure = Measure.count
+    change (μ.measure).prod
+        ξ.measure = Measure.count
     rw [hα, hγ, ← Count.eq.ProdCountS]
   have : ReferenceMeasure.measure (α := β × (α × γ)) = Measure.count := by
-    change (ReferenceMeasure.measure (α := β)).prod
+    change (ν.measure).prod
         ReferenceMeasure.measure = Measure.count
     rw [hβ, ‹ReferenceMeasure.measure (α := α × γ) = Measure.count›,
       ← Count.eq.ProdCountS (α := β) (β := α × γ)]
@@ -184,4 +184,4 @@ private lemma main
   · exact key hB0
 
 -- created on 2023-10-14
--- updated on 2026-11-02
+-- updated on 2026-11-14

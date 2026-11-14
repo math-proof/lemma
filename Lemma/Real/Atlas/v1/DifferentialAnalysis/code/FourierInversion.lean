@@ -730,11 +730,11 @@ lemma sgn_denom_algebraic_identity
   rw [Finset.sum_congr rfl step]
   rw [← Finset.sum_mul, ← Finset.sum_mul, ← Finset.sum_mul,
     ← Complex.ofReal_sum, hS_def, mul_inv_cancel₀ hS_ne, one_mul]
-/-- Converse direction of Proposition 9.7 of Melrose: every distribution
-`u ∈ H^{-m}` admits a representation as a finite sum
-`u = ∑_{|α| ≤ m} ∂^α v_α` with each `v_α ∈ L²`. The proof constructs an
-explicit `v_α` from the Fourier witness using the polar-decomposition
-identity. -/
+-- Converse direction of Proposition 9.7 of Melrose: every distribution
+-- `u ∈ H^{-m}` admits a representation as a finite sum
+-- `u = ∑_{|α| ≤ m} ∂^α v_α` with each `v_α ∈ L²`. The proof constructs an
+-- explicit `v_α` from the Fourier witness using the polar-decomposition
+-- identity.
 end SobolevSpace
 
 

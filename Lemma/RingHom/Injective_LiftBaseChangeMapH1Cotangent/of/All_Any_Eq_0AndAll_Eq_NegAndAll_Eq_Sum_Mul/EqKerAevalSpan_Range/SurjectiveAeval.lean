@@ -4,6 +4,8 @@ open Algebra Algebra.Generators Algebra.Extension
 open MvPolynomial (rename C sumRingEquiv sumRingEquiv_symm_C_C sumRingEquiv_symm_C_X algebraMap_eq
   ringHom_ext aeval)
 open scoped Pointwise TensorProduct
+set_option maxHeartbeats 999999
+set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 
 
@@ -181,31 +183,64 @@ private lemma compAlgebra_smul_def
   p • q = rename Sum.inr p * q := by
   rw [Algebra.smul_def, compAlgebra_algebraMap_apply]
 
+private lemma mvPolynomial_smul_eq_C_mul
+  {R : Type*} {ι : Type*} [CommRing R] (r : R) (p : MvPolynomial ι R) :
+  r • p = C r * p := by
+  rw [Algebra.smul_def, algebraMap_eq]
+
+private lemma sumRingEquiv_symm_C
+  {R : Type*} {ι : Type*} {σ : Type*} [CommRing R] (p : MvPolynomial σ R) :
+  (sumRingEquiv R ι σ).symm (C p) = rename (Sum.inr : σ → ι ⊕ σ) p := by
+  induction p using MvPolynomial.induction_on with
+  | C r =>
+    rw [sumRingEquiv_symm_C_C, MvPolynomial.rename_C]
+  | add p q hp hq =>
+    rw [RingHom.map_add (C : MvPolynomial σ R →+* MvPolynomial ι (MvPolynomial σ R))]
+    rw [(sumRingEquiv R ι σ).symm.map_add]
+    rw [hp, hq]
+    rw [← map_add (rename (Sum.inr : σ → ι ⊕ σ))]
+  | mul_X p n hp =>
+    rw [RingHom.map_mul (C : MvPolynomial σ R →+* MvPolynomial ι (MvPolynomial σ R))]
+    rw [(sumRingEquiv R ι σ).symm.map_mul]
+    rw [hp, sumRingEquiv_symm_C_X]
+    rw [map_mul (rename (Sum.inr : σ → ι ⊕ σ)), MvPolynomial.rename_X]
+
+private lemma sumRingEquiv_symm_C_mul
+  {R : Type*} {ι : Type*} {σ : Type*} [CommRing R]
+  (p : MvPolynomial σ R) (f : MvPolynomial ι (MvPolynomial σ R)) :
+  (sumRingEquiv R ι σ).symm (C p * f) =
+    rename (Sum.inr : σ → ι ⊕ σ) p * (sumRingEquiv R ι σ).symm f := by
+  rw [(sumRingEquiv R ι σ).symm.map_mul, sumRingEquiv_symm_C]
+
+private lemma sumRingEquiv_symm_smul
+  {R : Type*} {ι : Type*} {σ : Type*} [CommRing R]
+  (p : MvPolynomial σ R) (f : MvPolynomial ι (MvPolynomial σ R)) :
+  (sumRingEquiv R ι σ).symm (p • f) =
+    rename (Sum.inr : σ → ι ⊕ σ) p * (sumRingEquiv R ι σ).symm f := by
+  rw [mvPolynomial_smul_eq_C_mul, sumRingEquiv_symm_C_mul]
+
+set_option backward.isDefEq.respectTransparency true
+
+private noncomputable def compAlgEquiv
+  {R : Type u₁} {S : Type u₂} {T : Type u₃}
+  [CommRing R] [CommRing S] [CommRing T]
+  [Algebra R S] [Algebra R T] [Algebra S T] [IsScalarTower R S T]
+  {ι : Type w₁} {σ : Type w₂}
+  (Q : Algebra.Generators S T ι) (P : Algebra.Generators R S σ) :
+  MvPolynomial ι P.Ring ≃ₐ[P.Ring] (Q.comp P).Ring :=
+  AlgEquiv.ofRingEquiv (f := (sumRingEquiv R ι σ).symm) fun p => by
+    rw [algebraMap_eq, sumRingEquiv_symm_C, compAlgebra_algebraMap_apply Q P]
+
 private noncomputable def compLinearEquiv
   {R : Type u₁} {S : Type u₂} {T : Type u₃}
   [CommRing R] [CommRing S] [CommRing T]
   [Algebra R S] [Algebra R T] [Algebra S T] [IsScalarTower R S T]
   {ι : Type w₁} {σ : Type w₂}
   (Q : Algebra.Generators S T ι) (P : Algebra.Generators R S σ) :
-  MvPolynomial ι P.Ring ≃ₗ[P.Ring] (Q.comp P).Ring where
-  toFun := (sumRingEquiv R ι σ).symm
-  invFun := sumRingEquiv R ι σ
-  map_add' := map_add _
-  map_smul' p f := by
-    rw [RingHom.id_apply, compAlgebra_smul_def, Algebra.smul_def, map_mul, algebraMap_eq]
-    congr 1
-    change (((sumRingEquiv R ι σ).symm : MvPolynomial ι P.Ring →+* (Q.comp P).Ring).comp
-        (C : P.Ring →+* MvPolynomial ι P.Ring)) p = rename Sum.inr p
-    congr 1
-    refine ringHom_ext (fun r => ?_) (fun s => ?_)
-    ·
-      rw [RingHom.comp_apply, RingHom.coe_coe, sumRingEquiv_symm_C_C]
-      apply (MvPolynomial.rename_C (Sum.inr (β := σ) (α := ι)) r).symm
-    ·
-      rw [RingHom.comp_apply, RingHom.coe_coe, sumRingEquiv_symm_C_X]
-      apply (MvPolynomial.rename_X (Sum.inr (β := σ) (α := ι)) s).symm
-  left_inv p := (sumRingEquiv R ι σ).apply_symm_apply p
-  right_inv p := (sumRingEquiv R ι σ).symm_apply_apply p
+  MvPolynomial ι P.Ring ≃ₗ[P.Ring] (Q.comp P).Ring :=
+  (compAlgEquiv Q P).toLinearEquiv
+
+set_option backward.isDefEq.respectTransparency false
 
 private instance compAlgebra_free
   {R : Type u₁} {S : Type u₂} {T : Type u₃}
@@ -333,14 +368,14 @@ private noncomputable def theta
     { toFun := thetaAux Q P
       map_zero' := by
         ext a
-        rw [thetaAux_apply, map_zero, TensorProduct.zero_tmul, AddMonoidHom.zero_apply]
+        rw [thetaAux_apply, RingHom.map_zero (algebraMap (Q.comp P).Ring T), TensorProduct.zero_tmul, AddMonoidHom.zero_apply]
       map_add' := fun q q' => by
         ext a
-        rw [thetaAux_apply, map_add, TensorProduct.add_tmul, AddMonoidHom.add_apply,
+        rw [thetaAux_apply, RingHom.map_add (algebraMap (Q.comp P).Ring T), TensorProduct.add_tmul, AddMonoidHom.add_apply,
           thetaAux_apply, thetaAux_apply] }
     (fun p q a => by
       change thetaAux Q P (p • q) a = thetaAux Q P q (p • a)
-      rw [thetaAux_apply, thetaAux_apply, compAlgebra_smul_def, map_mul, algebraMap_rename_inr,
+      rw [thetaAux_apply, thetaAux_apply, compAlgebra_smul_def, RingHom.map_mul (algebraMap (Q.comp P).Ring T), algebraMap_rename_inr,
         (Extension.Cotangent.mk (P := P.toExtension)).map_smul p a,
         ← algebraMap_smul S p (Extension.Cotangent.mk (P := P.toExtension) a),
         ← TensorProduct.smul_tmul, Algebra.smul_def])
@@ -606,3 +641,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-14

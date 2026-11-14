@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.CechSectionsOfDivisor
+import Lemma.Set.CechSectionsOfDivisor
 import Lemma.Int.P2MUtil
 
 

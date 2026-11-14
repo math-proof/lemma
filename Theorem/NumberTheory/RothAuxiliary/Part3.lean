@@ -25,6 +25,7 @@ import Mathlib.RingTheory.Polynomial.Wronskian
 import Mathlib.RingTheory.Algebraic.Integral
 import Mathlib.Tactic
 import Def.NumberTheory.RothAuxiliary.Part5
+import Lemma.Fin.RothWeight.eq.AddRothCenteredSumDiv_2.of.RothBox
 set_option maxHeartbeats 999999
 
 open scoped BigOperators
@@ -52,7 +53,7 @@ theorem roth_low_indices_card_bound {m : ℕ} {r : Fin m → ℕ}
       ((m : ℝ) * γ) ^ 2 ≤ rothCenteredSum r j ^ 2 := by
     intro j hj
     have hjlow := (Finset.mem_filter.mp hj).2
-    rw [rothWeight_eq_centeredSum_add] at hjlow
+    rw [Fin.RothWeight.eq.AddRothCenteredSumDiv_2.of.RothBox] at hjlow
     have hs : rothCenteredSum r j < -((m : ℝ) * γ) := by linarith
     have hmg : 0 < (m : ℝ) * γ := mul_pos hmR hγ
     nlinarith

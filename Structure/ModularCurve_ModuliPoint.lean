@@ -24,12 +24,6 @@ structure Gamma0Pair where
 
 attribute [instance] Gamma0Pair.isElliptic
 
-variable {N L}
-
-
-variable (N L) in
-
-
 end Pairs
 
 section HEqToolbox

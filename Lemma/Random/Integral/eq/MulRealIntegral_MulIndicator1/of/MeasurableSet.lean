@@ -1,5 +1,5 @@
-import Theorem.Dynamics.PolicyTrajectory
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
+import Theorem.Dynamics.PolicyTrajectory.ContinuousAction
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel
 
 
 /--
@@ -7,13 +7,13 @@ Conditional integral as a normalized integral: `∫ f ∂(μ[|B]) = μ(B)⁻¹ *
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A]
-  {M : Model Θ S A}
-  {B : Set (ℕ → ℝ × S × A)}
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : DensityModel Θ 𝒮 𝒜}
+  {B : Set (ℕ → ℝ × 𝒮 × 𝒜)}
 -- given
   (hB : MeasurableSet B)
   (θ : Θ)
-  (f : (ℕ → ℝ × S × A) → ℝ) :
+  (f : (ℕ → ℝ × 𝒮 × 𝒜) → ℝ) :
 -- imply
   ∫ ω, f ω ∂(M θ)[|B] = ((M θ).real B)⁻¹ * ∫ ω, B.indicator 1 ω * f ω ∂(M θ) := by
 -- proof
@@ -26,3 +26,4 @@ private lemma main
 
 
 -- created on 2026-10-07
+-- updated on 2026-11-14

@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.ComponentGroup
-import Lemma.ModularCurve.CharacterLatticePairings
+import Lemma.Finset.ComponentGroup
+import Lemma.Finset.CharacterLatticePairings
 import Lemma.Int.P2MUtil
 
 open ModularCurve ModularCurve.CharacterLattice Finset

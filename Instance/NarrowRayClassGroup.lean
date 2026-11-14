@@ -7,7 +7,7 @@ import Mathlib.RingTheory.ClassGroup
 import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
 import Mathlib.GroupTheory.QuotientGroup.Finite
 import Mathlib.Data.Fintype.Units
-import Lemma.NarrowRayClassGroup.Main
+import Lemma.Ideal.Main
 
 open NumberField nonZeroDivisors IsDedekindDomain
 

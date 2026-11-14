@@ -32,7 +32,7 @@ lemma prop_5_17_isFractionRing
 -- imply
   IsFractionRing B L :=
 -- proof
-  IsIntegralClosure.isFractionRing_of_finite_extension A B
+  IsIntegralClosure.isFractionRing_of_finite_extension A K L B
 
 /--
 [prop_5_18_norm_isIntegral](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/TracePairing.lean)
@@ -55,7 +55,9 @@ lemma prop_5_18_norm_isIntegral
   {B : Type*}
   [CommRing B]
   [IsDomain B]
+  [Algebra A B]
   [Algebra B L]
+  [IsScalarTower A B L]
   [IsIntegralClosure B A L]
   {b : B} :
 -- imply
@@ -84,7 +86,9 @@ lemma prop_5_18_trace_isIntegral
   {B : Type*}
   [CommRing B]
   [IsDomain B]
+  [Algebra A B]
   [Algebra B L]
+  [IsScalarTower A B L]
   [IsIntegralClosure B A L]
   {b : B} :
 -- imply
@@ -113,13 +117,14 @@ lemma thm_5_20_traceForm_symmetric
   {B : Type*}
   [CommRing B]
   [IsDomain B]
+  [Algebra A B]
   [Algebra B L]
+  [IsScalarTower A B L]
   [IsIntegralClosure B A L] :
 -- imply
   (Algebra.traceForm K L).IsSymm :=
 -- proof
   Algebra.traceForm_isSymm K
-variable [Algebra.IsSeparable K L] in
 
 /--
 [thm_5_20_nondegenerate_of_separable](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/TracePairing.lean)
@@ -142,7 +147,9 @@ lemma thm_5_20_nondegenerate_of_separable
   {B : Type*}
   [CommRing B]
   [IsDomain B]
+  [Algebra A B]
   [Algebra B L]
+  [IsScalarTower A B L]
   [IsIntegralClosure B A L]
   [Algebra.IsSeparable K L] :
 -- imply
@@ -171,15 +178,16 @@ lemma thm_5_20_separable_of_nondegenerate
   {B : Type*}
   [CommRing B]
   [IsDomain B]
+  [Algebra A B]
   [Algebra B L]
+  [IsScalarTower A B L]
   [IsIntegralClosure B A L]
-  [Algebra.IsSeparable K L]
 -- given
   (hnd : (Algebra.traceForm K L).Nondegenerate) :
 -- imply
   Algebra.IsSeparable K L :=
 -- proof
-  ((traceForm_nondegenerate_tfae K L).out 2 0).mp hnd
+  ((traceForm_nondegenerate_tfae K L).out 3 1).mp hnd
 
 /--
 [thm_5_20_nondegenerate_iff_separable](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/TracePairing.lean)
@@ -202,16 +210,14 @@ lemma thm_5_20_nondegenerate_iff_separable
   {B : Type*}
   [CommRing B]
   [IsDomain B]
+  [Algebra A B]
   [Algebra B L]
-  [IsIntegralClosure B A L]
-  [Algebra.IsSeparable K L] :
+  [IsScalarTower A B L]
+  [IsIntegralClosure B A L] :
 -- imply
   [Algebra.IsSeparable K L, Algebra.trace K L ≠ 0, (Algebra.traceForm K L).Nondegenerate].TFAE :=
 -- proof
   traceForm_nondegenerate_tfae K L
-omit [IsDomain B] in
-include K L in
-variable [IsDedekindDomain A] [Algebra.IsSeparable K L] in
 
 /--
 [prop_5_22_finite](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/TracePairing.lean)
@@ -233,7 +239,9 @@ lemma prop_5_22_finite
   {B : Type*}
   [CommRing B]
   [IsDomain B]
+  [Algebra A B]
   [Algebra B L]
+  [IsScalarTower A B L]
   [IsIntegralClosure B A L]
   [Algebra.IsSeparable K L]
   [IsDedekindDomain A] :
@@ -241,8 +249,6 @@ lemma prop_5_22_finite
   Module.Finite A B :=
 -- proof
   IsIntegralClosure.finite A K L B
-omit [IsDomain B] in
-include K L in
 
 /--
 [prop_5_22_isNoetherian](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/TracePairing.lean)
@@ -264,7 +270,9 @@ lemma prop_5_22_isNoetherian
   {B : Type*}
   [CommRing B]
   [IsDomain B]
+  [Algebra A B]
   [Algebra B L]
+  [IsScalarTower A B L]
   [IsIntegralClosure B A L]
   [Algebra.IsSeparable K L]
   [IsDedekindDomain A] :

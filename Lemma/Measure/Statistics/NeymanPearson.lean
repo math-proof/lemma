@@ -7,9 +7,9 @@ namespace MathlibExt.Probability.Statistics.NeymanPearson
 
 /--
 [integrable_val_mul_density](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/Statistics/NeymanPearson.lean)
+integrable.
 -/
 @[path]
-integrable. -/
 private lemma integrable_val_mul_density {Ω : Type*} [MeasurableSpace Ω] {μ : Measure Ω}
   {w d : Ω → ℝ} (hw : Measurable w)
   (hw0 : ∀ x, 0 ≤ w x) (hw1 : ∀ x, w x ≤ 1)

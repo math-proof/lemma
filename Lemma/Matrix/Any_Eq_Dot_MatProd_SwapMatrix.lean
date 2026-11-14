@@ -316,4 +316,4 @@ private lemma main
             (List.ofFn fun i : Fin (n + 1) => swapMatrix (α := α) i (b i)).prod := by rw [← hprod]
 
 
--- created on 2026-10-31
+-- created on 2020-09-01

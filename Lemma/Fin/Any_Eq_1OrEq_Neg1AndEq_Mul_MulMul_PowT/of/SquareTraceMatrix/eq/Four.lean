@@ -53,12 +53,12 @@ private lemma exists_isCoprime_fixed {γ : SL(2, ℤ)}
   refine ⟨p, r, Int.isCoprime_iff_gcd_eq_one.mpr hpr, ?_, ?_⟩
   ·
     have key : g * (γ 0 0 * p + γ 0 1 * r - p) = 0 := by
-    linear_combination (-(γ 0 0 - 1)) * hp - γ 0 1 * hr + γ 0 0 * htr - hdet
+      linear_combination (-(γ 0 0 - 1)) * hp - γ 0 1 * hr + γ 0 0 * htr - hdet
     have h0 := (mul_eq_zero.mp key).resolve_left hgne
     linarith
   ·
     have key : g * (γ 1 0 * p + γ 1 1 * r - r) = 0 := by
-    linear_combination (-(γ 1 0)) * hp - (γ 1 1 - 1) * hr + γ 1 0 * htr
+      linear_combination (-(γ 1 0)) * hp - (γ 1 1 - 1) * hr + γ 1 0 * htr
     have h0 := (mul_eq_zero.mp key).resolve_left hgne
     linarith
 
@@ -109,8 +109,8 @@ private lemma classification (γ : SL(2, ℤ)) (hγ : ((γ : Matrix (Fin 2) (Fin
     exact ⟨1, δ, n, Or.inl rfl, by rwa [one_mul]⟩
   ·
     have htrneg : ((-γ : SL(2, ℤ)) : Matrix (Fin 2) (Fin 2) ℤ).trace = 2 := by
-    rw [Matrix.SpecialLinearGroup.coe_neg, Matrix.trace_neg]
-    linarith
+      rw [Matrix.SpecialLinearGroup.coe_neg, Matrix.trace_neg]
+      linarith
     obtain ⟨δ, n, hδ⟩ := exists_conj_T_zpow_of_trace_eq_two htrneg
     refine ⟨-1, δ, n, Or.inr rfl, ?_⟩
     rw [neg_one_mul, ← hδ, neg_neg]
@@ -129,3 +129,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

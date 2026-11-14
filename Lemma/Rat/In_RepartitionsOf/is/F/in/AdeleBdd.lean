@@ -1,8 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.DivisorClassGroup
-import Lemma.AlgebraicCurve.Repartitions
-import Lemma.AlgebraicCurve.AdelicIndex
+import Lemma.Valuation.DivisorClassGroup
+import Lemma.Submodule.Repartitions
+import Lemma.Submodule.AdelicIndex
 import Lemma.Int.P2MUtil
 
 
@@ -10,7 +10,7 @@ namespace Definitions
 end Definitions
 open Definitions
 open WithZero
-open AlgebraicCurve
+open AlgebraicCurve Submodule Valuation
 open Int
 
 

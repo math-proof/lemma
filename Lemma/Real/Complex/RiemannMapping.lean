@@ -60,9 +60,9 @@ namespace MathlibExt.Analysis.Complex.RiemannMappingWanted
 
 /--
 [rmap_exists_holo_sqrt](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/RiemannMapping.lean)
+holomorphic square root.
 -/
 @[path]
-holomorphic square root. -/
 private lemma rmap_exists_holo_sqrt {U : Set ℂ} (hUo : IsOpen U)
   (hUc : IsSimplyConnected U) {G : ℂ → ℂ} (hG : DifferentiableOn ℂ G U)
   (hG0 : ∀ z ∈ U, G z ≠ 0) :
@@ -90,9 +90,9 @@ namespace MathlibExt.Analysis.Complex.RiemannMappingWanted
 
 /--
 [rmap_sqrt_sub](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/RiemannMapping.lean)
+and its image avoids its own negation.
 -/
 @[path]
-and its image avoids its own negation. -/
 private lemma rmap_sqrt_sub {U : Set ℂ} (hUo : IsOpen U)
   (hUc : IsSimplyConnected U) {a : ℂ} (ha : a ∉ U) :
   ∃ s : ℂ → ℂ, (∀ z : ℂ, s z ^ 2 = z - a) ∧ Function.Injective s ∧
@@ -435,9 +435,9 @@ namespace MathlibExt.Analysis.Complex.RiemannMappingWanted
 
 /--
 [rmap_local_power](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/RiemannMapping.lean)
+locally an `n`-th power of a function with nonzero strict derivative.
 -/
 @[path]
-locally an `n`-th power of a function with nonzero strict derivative. -/
 private lemma rmap_local_power {g : ℂ → ℂ} {a : ℂ} (hg : AnalyticAt ℂ g a)
   (hg0 : g a = 0) (hg1 : deriv g a = 0) (hne : ¬ ∀ᶠ z in 𝓝 a, g z = 0) :
   ∃ n : ℕ, ∃ k : ℂ → ℂ, ∃ κ : ℂ, 2 ≤ n ∧ k a = 0 ∧ κ ≠ 0 ∧

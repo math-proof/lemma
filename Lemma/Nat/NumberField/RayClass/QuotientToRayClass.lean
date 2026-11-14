@@ -5,6 +5,9 @@ open scoped nonZeroDivisors
 open NumberField
 open Modulus
 
+noncomputable instance {K : Type*} [Field K] [NumberField K] (m : Modulus K) :
+    Group (rayElements m ⧸ rayOneElements m) :=
+  QuotientGroup.Quotient.group (rayOneElements m)
 
 namespace NumberField.Modulus
 
@@ -63,9 +66,10 @@ lemma rayQuotientToRayClassGroup_ker
         (FractionalIdeal (𝓞 K)⁰ K)ˣ) =
         toPrincipalIdeal (𝓞 K) K (y : Kˣ) :=
         principalRayIdealMap_apply m y
-      rwa [hx, hy'] at hcongr
+      rw [hx, hy'] at hcongr
+      exact hcongr.symm
     obtain ⟨u, hu⟩ :=
-      (toPrincipalIdeal_eq_iff_exists_integralUnit_mul (x : Kˣ) (y : Kˣ)).mp htop
+      toPrincipalIdeal_eq_iff_exists_integralUnit_mul.mp htop
     refine MonoidHom.mem_range.mpr ⟨u, ?_⟩
     rw [integralUnitsToRayQuotient_apply]
     symm
@@ -120,13 +124,9 @@ lemma residueSignToRayClassGroup_residueSignMap
   residueSignToRayClassGroup m (residueSignMap m x) =
     rayElementClassMap m x := by
 -- proof
-  calc residueSignToRayClassGroup m (residueSignMap m x)
-    = residueSignToRayClassGroup m
-      (rayElementsQuotientEquivResidueSign m (QuotientGroup.mk x)) := by
-      rw [rayElementsQuotientEquivResidueSign_mk]
-    _ = rayQuotientToRayClassGroup m (QuotientGroup.mk x) :=
-      residueSignToRayClassGroup_equiv m _
-    _ = rayElementClassMap m x := rayQuotientToRayClassGroup_mk m x
+  rw [← rayElementsQuotientEquivResidueSign_mk]
+  rw [residueSignToRayClassGroup_equiv m]
+  exact rayQuotientToRayClassGroup_mk m x
 
 end NumberField.Modulus
 
@@ -145,7 +145,7 @@ lemma residueSignToRayClassGroup_comp_residueSignMap
 -- proof
   ext x
   simp only [MonoidHom.comp_apply]
-  exact residueSignToRayClassGroup_residueSignMap m x
+  exact residueSignToRayClassGroup_residueSignMap
 
 end NumberField.Modulus
 
@@ -246,4 +246,4 @@ private lemma residueSignToRayClassGroup_equiv_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-13

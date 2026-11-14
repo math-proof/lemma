@@ -1,10 +1,10 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.MvFormalGroup.NegV2
-import Lemma.CerednikDrinfeld.SpecialFormalModule
+import Lemma.MvPowerSeries.NegV2
+import Lemma.MvPowerSeries.SpecialFormalModule
 import Lemma.Int.P2MUtil
 
-open CerednikDrinfeld CerednikDrinfeld.SpecialFormal
+open CerednikDrinfeld CerednikDrinfeld.SpecialFormal MvPowerSeries
 
 /--
 [CerednikDrinfeld_FormalODModule_map_mem_setOf_invariant_of_mem](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_CerednikDrinfeld_FormalODModule_map_mem_setOf_invariant_of_mem.lean)

@@ -26,7 +26,7 @@ private lemma main
   | succ n =>
     have hn : 0 < n.succ := Nat.succ_pos n
     have : NeZero (p ^ (n + 1)) := ⟨pow_ne_zero (n + 1) (Fact.out : p.Prime).ne_zero⟩
-    obtain ⟨ζ, hζ⟩ := HasEnoughRootsOfUnity.exists_primitiveRoot (AlgebraicClosure ℚ) (p ^ (n + 1))
+    obtain ⟨ζ, hζ⟩ := HasEnoughRootsOfUnity.exists_isPrimitiveRoot (AlgebraicClosure ℚ) (p ^ (n + 1))
     have hfix : ∀ τ : AlgebraicClosure ℚ ≃ₐ[ℚ] AlgebraicClosure ℚ,
         (∀ x ∈ (ℚ⟮ζ⟯ : IntermediateField ℚ (AlgebraicClosure ℚ)), τ x = x) →
         PadicInt.toZModPow (n + 1)
@@ -43,3 +43,4 @@ private lemma main
 
 
 -- created on 2026-10-13
+-- updated on 2026-11-13

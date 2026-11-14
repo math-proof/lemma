@@ -16,19 +16,19 @@ open scoped ENNReal
 
 Definitions only (repo rule: `sympy/` holds definitions, theorems live in `Lemma/`).
 
-`Def.Dynamics.PolicyTrajectory.Continuous` treats a general (e.g. continuous) state space with a finite action
+The retired finite-action closed forms treated a general (e.g. continuous) state space with a finite action
 space (`Policy` needs `[Fintype 𝒜]`: `π_θ(· | x)` is a probability vector).  Here the action space is a general
 measurable space with a σ-finite reference measure `ReferenceMeasure.measure` (e.g. Lebesgue measure on `ℝ^m`),
 and the policy `π_θ(u | x)` is a probability density of the action w.r.t. it (`DensityPolicy`); the environment is the
 same `Env 𝒮 𝒜` (transition kernel `T(· | x, u)`, bounded reward kernel).
 
-As in the continuous-state file, the conditional expectations `𝔼[· | s[t] = x]` of the sympy `Q_def`, `V_def` are taken
+The conditional expectations `𝔼[· | s[t] = x]` of the sympy `Q_def`, `V_def` are taken
 in the regular (kernel) sense; every finite action sum `∑ u, π_θ(u | x) * …` becomes the integral
 `∫ u, π_θ(u | x) * … ∂ReferenceMeasure.measure`:
 
 * `rkd x u = 𝔼[r[t] | s[t] = x, a[t] = u]` (the reward clamped to `[-R, R]`, almost surely equal to it);
 * `Wkd θ k x = 𝔼[r[t+k] | s[t] = x]`;
-* `V0 θ γ x = ∑' k, γ ^ k * Wkd θ k x` and `V θ γ t x = V0 θ γ x` (time-homogeneous; equals the conditional expectation whenever `ℙ(s[t] = x) ≠ 0`);
+* `V0 θ γ x = ∑' k, γ ^ k * Wkd θ k x` and `V θ γ t s_t = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = s_t)`;
 * `Q θ γ t x u = 𝔼[(γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = x ∧ a t = u]` and `Q0 θ γ x u = Q θ γ 0 x u`;
 * `P1kd θ p x y = ℙ(s[t+1] = y | s[t] = x) = ∫ u, π_θ(u | x) * p x u y du`, the density (w.r.t. the reference measure
   of `𝒮`) of the next state when `p x u` is the density of `M.env.trans (x, u)`.
@@ -116,9 +116,9 @@ namespace DensityModel
 
 variable {Θ 𝒮 𝒜 : Type*} [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
 
-/-- `rkd x u = 𝔼[r[t] | s[t] = x, a[t] = u]`, the expected reward clamped to `[-R, R]` -/
-noncomputable def rkd (M : DensityModel Θ 𝒮 𝒜) (x : 𝒮) (u : 𝒜) : ℝ :=
-  ∫ ρ, clip ρ (-M.env.R) M.env.R ∂(M.env.reward (x, u))
+/-- `rkd` (reward kernel density): `rkd s_t a_t = 𝔼[r[t] | s[t] = s_t, a[t] = a_t]`, the expected reward clamped to `[-R, R]` -/
+noncomputable def rkd (M : DensityModel Θ 𝒮 𝒜) (s_t : 𝒮) (a_t : 𝒜) : ℝ :=
+  ∫ r_t, clip r_t (-M.env.R) M.env.R ∂(M.env.reward (s_t, a_t))
 
 /-- `Wkd θ k x = 𝔼[r[t+k] | s[t] = x]` with a density policy: one policy step (an integral over the actions) and one
 transition per `k` -/
@@ -199,11 +199,13 @@ Agrees with the conditional expectation `𝔼[(γ ^ (id : ℕ → ℕ)) ⬝ᵥ r
 noncomputable def V0 (M : DensityModel Θ 𝒮 𝒜) (θ : Θ) (γ : ℝ) (x : 𝒮) : ℝ :=
   ∑' k, γ ^ k * M.Wkd θ k x
 
-set_option linter.unusedVariables false in
-/-- Time-homogeneous state-value function:
-`V θ γ t s_t = V0 θ γ s_t` (independent of `t`, matching time-homogeneity of `Wkd`). -/
+/-- State-value function:
+`V θ γ t s_t = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = s_t)`,
+where `(r t ω, s t ω, a t ω) = ω t` on the trajectory space. -/
 noncomputable def V (M : DensityModel Θ 𝒮 𝒜) (θ : Θ) (γ : ℝ) (t : ℕ) (s_t : 𝒮) : ℝ :=
-  M.V0 θ γ s_t
+  let r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ := fun t ω => (ω t).1
+  let s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮 := fun t ω => (ω t).2.1
+  𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = s_t)
 
 /-- Action-value function:
 `Q θ γ t s_t a_t = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = s_t ∧ a t = a_t)`,

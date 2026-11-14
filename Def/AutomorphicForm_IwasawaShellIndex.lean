@@ -1,4 +1,4 @@
-import Lemma.NumberField.AdelicLevel
+import Lemma.Matrix.AdelicLevel
 import Def.AutomorphicForm_AdelicLsXi
 import Def.AutomorphicForm_ConstantTerm
 

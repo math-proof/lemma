@@ -21,4 +21,4 @@ private lemma main
   apply Equiv.sum_comp (Equiv.swap i j) (fun k : Fin n ↦ x k ^ m)
 
 
--- created on 2026-10-31
+-- created on 2020-10-31

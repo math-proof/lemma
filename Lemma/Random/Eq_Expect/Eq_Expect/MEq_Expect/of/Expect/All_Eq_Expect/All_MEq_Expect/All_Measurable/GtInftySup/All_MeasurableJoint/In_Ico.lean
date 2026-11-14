@@ -2,6 +2,7 @@ import Lemma.Random.MEq_ExpectCond.MEq_ExpectCond.MEq_ExpectCond.of.MEqExpectS.A
 import Lemma.Random.MEqCondExp_Integral.of.Integrable.Measurable
 import Lemma.Random.Eq.of.Ne_0.MEq
 import Theorem.Probability.CondExpectation
+import Theorem.Probability.JointRv.AsRV
 open MeasureTheory ProbabilityTheory
 
 
@@ -109,4 +110,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-11-11
+-- updated on 2026-11-12

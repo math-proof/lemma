@@ -22,7 +22,7 @@ bound); remigration onto dens CM had briefly reintroduced dens `hmeas`/`hφ`/`hM
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
-  [CountableMeasure 𝒮] [MeasurableSingletonClass 𝒮] [Fintype 𝒮]
+  [CountableMeasure 𝒮] [MeasurableSingletonClass 𝒮] [Fintype 𝒮] [Nonempty 𝒮] [StandardBorelSpace 𝒮]
   [CountableMeasure 𝒜] [MeasurableSingletonClass 𝒜] [Fintype 𝒜]
   {M : DensityModel Θ 𝒮 𝒜}
   {θ : Θ}
@@ -46,7 +46,7 @@ private lemma main
   have : PSpace (M θ) (AsPathRV.path a) :=
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) hπ.htr.stage_eq t).aemeasurable⟩)
   let : MeasurableSpace Θ := borel Θ
-  let V_θ : ℕ ⇀ (ℕ → 𝒮) → ℕ → ℝ := ⟨fun _ δ k => M.V0 θ γ (δ k)⟩
+  let V_θ : ℕ ⇀ (ℕ → 𝒮) → ℕ → ℝ := ⟨fun t δ k => M.V θ γ (t + k) (δ k)⟩
   ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) =
     𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
       ((((γ * ℓ) ^ (id : ℕ → ℕ)) ⬝ᵥ (r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:])) •
@@ -73,9 +73,13 @@ private lemma main
     obtain ⟨Ms, hUB⟩ := hfin
     exact ⟨Ms, fun y u => hUB ⟨(y, u), rfl⟩⟩
   obtain ⟨Ms, hMs⟩ := hMsEx
+  have h₄sup : sup[x] (∑ u, g x u) < ∞ :=
+    ⟨Cg, by rintro _ ⟨x, rfl⟩; exact h₄ x⟩
+  have hMssup : sup[y, u] ‖∇[θ] Real.log (M.policy.prob θ y u)‖ < ∞ :=
+    ⟨Ms, by rintro _ ⟨(y, u), rfl⟩; exact hMs y u⟩
   exact GradExpectDotPow_Id.eq.ExpectDot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_LeSum.CountableMeasure.In_Icc.In_Ico
-    (M := M) (Cg := Cg) (Ms := Ms) (g := g) h₀ h₁ hπ hmeas h₂ h₃bound h₄ hφ hMs
+    (M := M) (g := g) h₀ h₁ hπ hmeas h₂ h₃bound h₄sup hφ hMssup
 
 
 -- created on 2026-10-21
--- updated on 2026-11-11
+-- updated on 2026-11-14

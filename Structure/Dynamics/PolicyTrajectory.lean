@@ -71,7 +71,7 @@ structure Env (S A : Type*) [MeasurableSpace S] [MeasurableSpace A] where
   reward : Kernel (S × A) ℝ
   reward_markov : IsMarkovKernel reward
   R : ℝ
-  reward_bdd : ∀ p, reward p (Set.Icc (-R) R)ᶜ = 0
+  reward_bdd : ∀ p, reward p (Set.Icc (-R) R) = 1
 
 /-- the model: an environment together with a policy -/
 structure Model (Θ S A : Type*) [MeasurableSpace S] [MeasurableSpace A] [Fintype A] where

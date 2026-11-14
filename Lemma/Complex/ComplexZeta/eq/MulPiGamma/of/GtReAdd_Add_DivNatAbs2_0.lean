@@ -1,14 +1,14 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.LanglandsTunnell.ArchPlace
-import Lemma.LanglandsTunnell.TateLocalZeta
-import Lemma.LanglandsTunnell.ArchEpsilon
+import Lemma.Measure.ArchPlace
+import Lemma.Measure.TateLocalZeta
+import Lemma.Complex.ArchEpsilon
 import Lemma.Int.P2MUtil
 
 open scoped Real
 open Real Set MeasureTheory MeasureTheory.Measure
 open scoped ENNReal
-open LanglandsTunnell LanglandsTunnell.TateLocal LanglandsTunnell.ArchPlace
+open LanglandsTunnell LanglandsTunnell.TateLocal Measure.ArchPlace Complex Measure
 
 /--
 [LanglandsTunnell_ArchPlace_complexZeta_complexTestFun_complexCharFun_eq_pi_mul_GammaComplex](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_LanglandsTunnell_ArchPlace_complexZeta_complexTestFun_complexCharFun_eq_pi_mul_GammaComplex.lean)
@@ -121,13 +121,14 @@ private lemma realZeta_realTestFun_realCharFun_eq_GammaReal (u : ℂ) (a : ZMod 
       ring_nf
     have hnorm : ((‖x‖ : ℝ) : ℂ) = ((|x| : ℝ) : ℂ) := by
       norm_cast
-    calc (↑x ^ a.val * Complex.exp (-(↑Real.pi * (x : ℂ) ^ 2)))
-      * (((‖x‖ : ℝ) : ℂ) ^ u * ((x : ℂ) / ((‖x‖ : ℝ) : ℂ)) ^ (a.val : ℕ))
-      * ((‖x‖ : ℂ) ^ (s - 1)) = ((x : ℂ) ^ (a.val : ℕ) * ((x : ℂ) / ((‖x‖ : ℝ) : ℂ)) ^ (a.val : ℕ))
-      * ((‖x‖ : ℝ) : ℂ) ^ u
-      * ((‖x‖ : ℝ) : ℂ) ^ (s - 1)
-      * Complex.exp (-(↑Real.pi * (x : ℂ) ^ 2)) := by
-      ring
+    calc
+      (↑x ^ a.val * Complex.exp (-(↑Real.pi * (x : ℂ) ^ 2)))
+        * (((‖x‖ : ℝ) : ℂ) ^ u * ((x : ℂ) / ((‖x‖ : ℝ) : ℂ)) ^ (a.val : ℕ))
+        * ((‖x‖ : ℂ) ^ (s - 1)) = ((x : ℂ) ^ (a.val : ℕ) * ((x : ℂ) / ((‖x‖ : ℝ) : ℂ)) ^ (a.val : ℕ))
+        * ((‖x‖ : ℝ) : ℂ) ^ u
+        * ((‖x‖ : ℝ) : ℂ) ^ (s - 1)
+        * Complex.exp (-(↑Real.pi * (x : ℂ) ^ 2)) := by
+        ring
       _ = (((|x| : ℝ) : ℂ) ^ (a.val : ℕ)) * (((|x| : ℝ) : ℂ) ^ u)
         * (((|x| : ℝ) : ℂ) ^ (s - 1)) * (Real.exp (-(Real.pi * |x| ^ 2)) : ℂ) := by
         rw [pow_mul_sign_pow x hx, hnorm, hexp]
@@ -152,12 +153,12 @@ private lemma realZeta_realTestFun_realCharFun_eq_GammaReal (u : ℂ) (a : ZMod 
   rw [hmel, mellin_gaussian hs]
   rw [Complex.Gammaℝ_def, neg_div]
   ring
-p2m_open "LanglandsTunnell P2MW.S_LanglandsTunnell_ArchPlace_complexZeta_complexTestFun_complexCharFun_eq_pi_mul_GammaComplex.LanglandsTunnell LanglandsTunnell.TateLocal LanglandsTunnell.ArchPlace P2MW.S_LanglandsTunnell_ArchPlace_complexZeta_complexTestFun_complexCharFun_eq_pi_mul_GammaComplex.LanglandsTunnell.ArchPlace"
+p2m_open "LanglandsTunnell P2MW.S_LanglandsTunnell_ArchPlace_complexZeta_complexTestFun_complexCharFun_eq_pi_mul_GammaComplex.LanglandsTunnell LanglandsTunnell.TateLocal Measure.ArchPlace P2MW.S_LanglandsTunnell_ArchPlace_complexZeta_complexTestFun_complexCharFun_eq_pi_mul_GammaComplex.Measure.ArchPlace"
 open scoped ENNReal
 
 p2m_export "LanglandsTunnell" "signShift"
-p2m_export "LanglandsTunnell.ArchPlace" "anglePhase complexCharFun complexCharFun_apply complexTestFun complexZeta realSign realCharFun realTestFun realZeta"
-p2m_open "LanglandsTunnell.ArchPlace LanglandsTunnell"
+p2m_export "Measure.ArchPlace" "anglePhase complexCharFun complexCharFun_apply complexTestFun complexZeta realSign realCharFun realTestFun realZeta"
+p2m_open "Measure.ArchPlace LanglandsTunnell"
 
 private lemma mellin_gaussian_two {z : ℂ} (hz : 0 < z.re) :
   mellin (fun t : ℝ => (Real.exp (-(2 * Real.pi * t ^ 2)) : ℂ)) z = (2 : ℂ)⁻¹ * (2 * (Real.pi : ℂ)) ^ (-(z / 2)) * Complex.Gamma (z / 2) := by
@@ -233,14 +234,15 @@ private lemma complexZeta_complexTestFun_complexCharFun_eq_pi_mul_GammaComplex (
     have hphase := conj_pow_mul_pow_mul_phase_zpow (k := k) hz
     rw [charExt_of_ne_zero (complexCharFun u k) hz, complexCharFun_apply]
     simp only [complexTestFun, anglePhase, Units.val_mk0]
-    calc (starRingEnd ℂ z) ^ k.toNat * z ^ (-k).toNat
-      * Complex.exp (-(2 * (Real.pi : ℂ) * ((‖z‖ : ℝ) : ℂ) ^ 2))
-      * (((‖z‖ : ℝ) : ℂ) ^ (2 * u) * (z / ((‖z‖ : ℝ) : ℂ)) ^ k)
-      * ((‖z‖ : ℂ) ^ ((2 : ℂ) * s - 2)) = ((starRingEnd ℂ z) ^ k.toNat * z ^ (-k).toNat * ((z / ((‖z‖ : ℝ) : ℂ)) ^ k))
-      * ((‖z‖ : ℝ) : ℂ) ^ (2 * u)
-      * ((‖z‖ : ℂ) ^ ((2 : ℂ) * s - 2))
-      * Complex.exp (-(2 * (Real.pi : ℂ) * ((‖z‖ : ℝ) : ℂ) ^ 2)) := by
-      ring
+    calc
+      (starRingEnd ℂ z) ^ k.toNat * z ^ (-k).toNat
+        * Complex.exp (-(2 * (Real.pi : ℂ) * ((‖z‖ : ℝ) : ℂ) ^ 2))
+        * (((‖z‖ : ℝ) : ℂ) ^ (2 * u) * (z / ((‖z‖ : ℝ) : ℂ)) ^ k)
+        * ((‖z‖ : ℂ) ^ ((2 : ℂ) * s - 2)) = ((starRingEnd ℂ z) ^ k.toNat * z ^ (-k).toNat * ((z / ((‖z‖ : ℝ) : ℂ)) ^ k))
+        * ((‖z‖ : ℝ) : ℂ) ^ (2 * u)
+        * ((‖z‖ : ℂ) ^ ((2 : ℂ) * s - 2))
+        * Complex.exp (-(2 * (Real.pi : ℂ) * ((‖z‖ : ℝ) : ℂ) ^ 2)) := by
+        ring
       _ = (((‖z‖ : ℝ) : ℂ) ^ k.natAbs) * (((‖z‖ : ℝ) : ℂ) ^ (2 * u))
         * (((‖z‖ : ℝ) : ℂ) ^ ((2 : ℂ) * s - 2))
         * (Real.exp (-(2 * Real.pi * ‖z‖ ^ 2)) : ℂ) := by
@@ -299,15 +301,15 @@ private lemma complexZeta_complexTestFun_complexCharFun_eq_pi_mul_GammaComplex (
   rw [Complex.real_smul]
   push_cast
   ring
-p2m_open "MeasureTheory LanglandsTunnell P2MW.S_LanglandsTunnell_ArchPlace_complexZeta_complexTestFun_complexCharFun_eq_pi_mul_GammaComplex.LanglandsTunnell LanglandsTunnell.TateLocal LanglandsTunnell.ArchPlace P2MW.S_LanglandsTunnell_ArchPlace_complexZeta_complexTestFun_complexCharFun_eq_pi_mul_GammaComplex.LanglandsTunnell.ArchPlace"
+p2m_open "MeasureTheory LanglandsTunnell P2MW.S_LanglandsTunnell_ArchPlace_complexZeta_complexTestFun_complexCharFun_eq_pi_mul_GammaComplex.LanglandsTunnell LanglandsTunnell.TateLocal Measure.ArchPlace P2MW.S_LanglandsTunnell_ArchPlace_complexZeta_complexTestFun_complexCharFun_eq_pi_mul_GammaComplex.Measure.ArchPlace"
 open scoped ENNReal
 
 p2m_export "LanglandsTunnell" "signShift"
-p2m_export "LanglandsTunnell.ArchPlace" "anglePhase complexCharFun complexCharFun_apply complexTestFun complexZeta realSign realCharFun realTestFun realZeta"
-p2m_open "LanglandsTunnell.ArchPlace LanglandsTunnell"
+p2m_export "Measure.ArchPlace" "anglePhase complexCharFun complexCharFun_apply complexTestFun complexZeta realSign realCharFun realTestFun realZeta"
+p2m_open "Measure.ArchPlace LanglandsTunnell"
 
 
-p2m_open "MeasureTheory LanglandsTunnell P2MW.S_LanglandsTunnell_ArchPlace_complexZeta_complexTestFun_complexCharFun_eq_pi_mul_GammaComplex.LanglandsTunnell LanglandsTunnell.TateLocal LanglandsTunnell.ArchPlace P2MW.S_LanglandsTunnell_ArchPlace_complexZeta_complexTestFun_complexCharFun_eq_pi_mul_GammaComplex.LanglandsTunnell.ArchPlace"
+p2m_open "MeasureTheory LanglandsTunnell P2MW.S_LanglandsTunnell_ArchPlace_complexZeta_complexTestFun_complexCharFun_eq_pi_mul_GammaComplex.LanglandsTunnell LanglandsTunnell.TateLocal Measure.ArchPlace P2MW.S_LanglandsTunnell_ArchPlace_complexZeta_complexTestFun_complexCharFun_eq_pi_mul_GammaComplex.Measure.ArchPlace"
 open scoped ENNReal
 @[path]
 private lemma main

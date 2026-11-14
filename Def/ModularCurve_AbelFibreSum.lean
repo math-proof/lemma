@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.ModularCurve.PeriodLattice
+import Lemma.CuspForm.PeriodLattice
 
 open UpperHalfPlane
 open scoped MatrixGroups

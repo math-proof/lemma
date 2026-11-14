@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.FLTPrelim.FreyPackage
+import Lemma.WeierstrassCurve.FreyPackage
 
 set_option autoImplicit false
 

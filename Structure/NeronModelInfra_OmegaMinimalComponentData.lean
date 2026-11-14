@@ -2,7 +2,7 @@ import Mathlib
 import Structure.NeronModelInfra_WeakNeronModel
 import Def.AlgebraicGeometry_KaehlerModule
 import Def.NeronModelInfra_TopFormOrder
-import Lemma.NeronModelInfra.SmoothnessDefect
+import Lemma.Scheme.SmoothnessDefect
 
 set_option autoImplicit false
 

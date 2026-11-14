@@ -1,7 +1,7 @@
 -- Carved from Lemma/Definitions/Def_RepTheory_SmoothVectors.lean: instance decls only.
 import Mathlib
 import Instance.Deformations_ContinuousSMulDiscrete
-import Lemma.RepTheory.SmoothVectors
+import Lemma.Set.RightTranslationFn
 
 set_option autoImplicit false
 

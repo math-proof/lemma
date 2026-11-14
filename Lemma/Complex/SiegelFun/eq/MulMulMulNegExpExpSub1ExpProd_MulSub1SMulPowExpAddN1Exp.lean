@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.SiegelFunction
-open ModularCurve
+import Lemma.Complex.SiegelFunction
+open ModularCurve Complex
 
 
 /--

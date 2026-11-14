@@ -1,6 +1,7 @@
 import Notation.Analysis.Complex.Complexes
 import Def.Analysis.SpecialFunctions.Trigonometric.Part2
 import Initialize.Tactic.Attr.Basic
+open Complex
 
 
 /--

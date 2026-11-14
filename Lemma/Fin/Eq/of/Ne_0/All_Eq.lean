@@ -81,7 +81,7 @@ private lemma exists_noniso_difference
   B (x - y) (x - y) ≠ 0 ∨ B (x + y) (x + y) ≠ 0 := by
 -- proof
   by_contra h
-  push_neg at h
+  push Not at h
   obtain ⟨h1, h2⟩ := h
   apply hBxx
   have hB_sub : B (x - y) (x - y) = 2 * B x x - 2 * B x y := by
@@ -161,7 +161,7 @@ private lemma bilinReflectEquiv_preserves
   B (bilinReflectEquiv B a ha v₁) (bilinReflectEquiv B a ha v₂) = B v₁ v₂ := by
 -- proof
   simp only [bilinReflectEquiv_apply]
-  exact bilinReflect_preserves B hBsymm a ha v₁ v₂
+  exact main hBsymm ha
 
 
 
@@ -196,7 +196,6 @@ private lemma wittExtension_noniso_step
   [Module k V]
   {B : LinearMap.BilinForm k V}
   [FiniteDimensional k V]
-  {B : LinearMap.BilinForm k V}
   {U W : Submodule k V}
   {φ : U ≃ₗ[k] W}
   {x : V}
@@ -214,13 +213,11 @@ private lemma wittExtension_noniso_step
   have hByy : B y y = B x x := by
     have := hφ ⟨x, hxU⟩ ⟨x, hxU⟩; simp at this; exact this
   have hy_noniso : B y y ≠ 0 := hByy ▸ hx_noniso
-  have hx_not_ortho : ¬ LinearMap.BilinForm.IsOrtho B x x := hx_noniso
-  have hy_not_ortho : ¬ LinearMap.BilinForm.IsOrtho B y y := hy_noniso
   have hx_ne : x ≠ 0 := by intro h; rw [h] at hx_noniso; simp at hx_noniso
   have hx_compl : IsCompl (k ∙ x) (LinearMap.BilinForm.orthogonal B (k ∙ x)) :=
-    LinearMap.BilinForm.isCompl_span_singleton_orthogonal hx_not_ortho
+    LinearMap.BilinForm.isCompl_span_singleton_orthogonal hx_noniso
   have hy_compl : IsCompl (k ∙ y) (LinearMap.BilinForm.orthogonal B (k ∙ y)) :=
-    LinearMap.BilinForm.isCompl_span_singleton_orthogonal hy_not_ortho
+    LinearMap.BilinForm.isCompl_span_singleton_orthogonal hy_noniso
   set xperp := LinearMap.BilinForm.orthogonal B (k ∙ x)
   set yperp := LinearMap.BilinForm.orthogonal B (k ∙ y)
   set U' := U ⊓ xperp
@@ -234,12 +231,10 @@ private lemma wittExtension_noniso_step
       intro n hn
       rw [Submodule.mem_span_singleton] at hn
       obtain ⟨a, rfl⟩ := hn
-      unfold LinearMap.BilinForm.IsOrtho
       simp only [map_smul, LinearMap.smul_apply, smul_eq_mul]
       have hu'_xperp : (u' : V) ∈ xperp := (Submodule.mem_inf.mp u'.2).2
       rw [LinearMap.BilinForm.mem_orthogonal_iff] at hu'_xperp
       have hortho := hu'_xperp x (Submodule.mem_span_singleton_self x)
-      unfold LinearMap.BilinForm.IsOrtho at hortho
       have hB_eq : B (φ (Submodule.inclusion inf_le_left u') : V) y = B (u' : V) x := by
         have h := hφ (Submodule.inclusion inf_le_left u') ⟨x, hxU⟩
         simp at h; exact h
@@ -258,8 +253,8 @@ private lemma wittExtension_noniso_step
         congr_arg Subtype.val hinj
       simpa using h2
     exact Subtype.ext this
-  haveI : FiniteDimensional k U' := inferInstance
-  haveI : FiniteDimensional k W' := inferInstance
+  have : FiniteDimensional k U' := inferInstance
+  have : FiniteDimensional k W' := inferInstance
   have hkx_le_U : (k ∙ x) ≤ U := Submodule.span_le.mpr (Set.singleton_subset_iff.mpr hxU)
   have hky_le_W : (k ∙ y) ≤ W := by
     rw [Submodule.span_le]; intro v hv
@@ -333,7 +328,9 @@ private lemma wittExtension_noniso_step
     intro u₁ u₂
     show B ((φ' u₁ : V)) ((φ' u₂ : V)) = B (u₁ : V) (u₂ : V)
     have hcoe : ∀ u : U', (φ' u : V) = (φ (Submodule.inclusion inf_le_left u) : V) := by
-      intro u; simp [φ', LinearEquiv.ofBijective_apply, φ'_lm]
+      intro u
+      simp only [φ']
+      rfl
     rw [hcoe, hcoe]
     exact hφ _ _
   have hU'_lt : Module.finrank k U' < Module.finrank k U := by
@@ -353,7 +350,8 @@ private lemma wittExtension_noniso_step
   have hortho_zy : ∀ u' : U', B ((φ' u' : V)) (z - y) = 0 ∧ B ((φ' u' : V)) (z + y) = 0 := by
     intro u'
     have hcoe : (φ' u' : V) = (φ (Submodule.inclusion inf_le_left u') : V) := by
-      simp [φ', LinearEquiv.ofBijective_apply, φ'_lm]
+      simp only [φ']
+      rfl
     have hBwz : B (φ' u' : V) z = 0 := by
       have hΨu' : Ψ (u' : V) = (φ' u' : V) := by
         have := hΨ_ext u'; rw [this]
@@ -363,14 +361,12 @@ private lemma wittExtension_noniso_step
       have hu'_xperp : (u' : V) ∈ xperp := (Submodule.mem_inf.mp u'.2).2
       rw [LinearMap.BilinForm.mem_orthogonal_iff] at hu'_xperp
       have := hu'_xperp x (Submodule.mem_span_singleton_self x)
-      unfold LinearMap.BilinForm.IsOrtho at this
       rwa [hBsymm] at this
     have hBwy : B (φ' u' : V) y = 0 := by
       have hφ'_in_W' : (φ' u' : V) ∈ W' := (φ' u').2
       have hyperp_mem : (φ' u' : V) ∈ yperp := (Submodule.mem_inf.mp hφ'_in_W').2
       rw [LinearMap.BilinForm.mem_orthogonal_iff] at hyperp_mem
       have := hyperp_mem y (Submodule.mem_span_singleton_self y)
-      unfold LinearMap.BilinForm.IsOrtho at this
       rwa [hBsymm] at this
     constructor
     · simp [map_sub, hBwz, hBwy]
@@ -401,18 +397,19 @@ private lemma wittExtension_noniso_step
       ext; simp [hu_decomp]
     rw [hu_eq, map_add, map_smul, Submodule.coe_add, Submodule.coe_smul]
     congr 1
-  obtain h_sub | h_add := exists_noniso_difference B hBsymm z y hz_noniso hBzz
+  obtain h_sub | h_add := exists_noniso_difference (x := z) (y := y) hBsymm hz_noniso hBzz
   ·
     let ρ := bilinReflectEquiv B (z - y) h_sub
     have hρ_maps : ρ z = y := by
       rw [bilinReflectEquiv_apply]
-      exact bilinReflect_maps B hBsymm z y h_sub hBzz
+      exact bilinReflect_maps (x := z) (y := y) hBsymm h_sub hBzz
     have hρ_preserves : ∀ v₁ v₂, B (ρ v₁) (ρ v₂) = B v₁ v₂ :=
-      bilinReflectEquiv_preserves B hBsymm (z - y) h_sub
+      fun v₁ v₂ =>
+        bilinReflectEquiv_preserves (a := z - y) (v₁ := v₁) (v₂ := v₂) hBsymm h_sub
     have hρ_fixes_W' : ∀ u' : U', ρ (φ' u' : V) = (φ' u' : V) := by
       intro u'
       rw [bilinReflectEquiv_apply]
-      exact bilinReflect_of_ortho B (z - y) h_sub (φ' u' : V) (hortho_zy u').1
+      exact bilinReflect_of_ortho (a := z - y) (v := (φ' u' : V)) h_sub (hortho_zy u').1
     let Φ := Ψ.trans ρ
     refine ⟨Φ, ?_, ?_⟩
     ·
@@ -427,7 +424,8 @@ private lemma wittExtension_noniso_step
         show ρ (Ψ (u' : V)) = (φ (Submodule.inclusion inf_le_left u') : V)
         rw [hΨ_ext u']
         have hcoe : (φ' u' : V) = (φ (Submodule.inclusion inf_le_left u') : V) := by
-          simp [φ', LinearEquiv.ofBijective_apply, φ'_lm]
+          simp only [φ']
+          rfl
         rw [← hcoe]
         exact hρ_fixes_W' u'
   ·
@@ -443,16 +441,18 @@ private lemma wittExtension_noniso_step
       rw [show (2 : k) * (B z z + B z y) / (2 * (B z z + B z y)) = 1 from div_self h2ne]
       simp [one_smul]
     have hρ₁_preserves : ∀ v₁ v₂, B (ρ₁ v₁) (ρ₁ v₂) = B v₁ v₂ :=
-      bilinReflectEquiv_preserves B hBsymm (z + y) h_add
+      fun v₁ v₂ =>
+        bilinReflectEquiv_preserves (a := z + y) (v₁ := v₁) (v₂ := v₂) hBsymm h_add
     have hρ₁_fixes_W' : ∀ u' : U', ρ₁ (φ' u' : V) = (φ' u' : V) := by
       intro u'
       rw [bilinReflectEquiv_apply]
-      exact bilinReflect_of_ortho B (z + y) h_add (φ' u' : V) (hortho_zy u').2
+      exact bilinReflect_of_ortho (a := z + y) (v := (φ' u' : V)) h_add (hortho_zy u').2
     let ρ₂ := bilinReflectEquiv B y hy_noniso
     have hρ₂_maps : ρ₂ (-y) = y := by
-      rw [bilinReflectEquiv_apply]; exact bilinReflect_neg_self B y hy_noniso
+      rw [bilinReflectEquiv_apply]; exact bilinReflect_neg_self (a := y) hy_noniso
     have hρ₂_preserves : ∀ v₁ v₂, B (ρ₂ v₁) (ρ₂ v₂) = B v₁ v₂ :=
-      bilinReflectEquiv_preserves B hBsymm y hy_noniso
+      fun v₁ v₂ =>
+        bilinReflectEquiv_preserves (a := y) (v₁ := v₁) (v₂ := v₂) hBsymm hy_noniso
     have hρ₂_fixes_W' : ∀ u' : U', ρ₂ (φ' u' : V) = (φ' u' : V) := by
       intro u'
       rw [bilinReflectEquiv_apply]
@@ -461,7 +461,6 @@ private lemma wittExtension_noniso_step
       have hyperp_mem : (φ' u' : V) ∈ yperp := (Submodule.mem_inf.mp hφ'_in_W').2
       rw [LinearMap.BilinForm.mem_orthogonal_iff] at hyperp_mem
       have := hyperp_mem y (Submodule.mem_span_singleton_self y)
-      unfold LinearMap.BilinForm.IsOrtho at this
       rw [hBsymm] at this; exact this
     let Φ := Ψ.trans (ρ₁.trans ρ₂)
     refine ⟨Φ, ?_, ?_⟩
@@ -478,7 +477,8 @@ private lemma wittExtension_noniso_step
         show ρ₂ (ρ₁ (Ψ (u' : V))) = (φ (Submodule.inclusion inf_le_left u') : V)
         rw [hΨ_ext u']
         have hcoe : (φ' u' : V) = (φ (Submodule.inclusion inf_le_left u') : V) := by
-          simp [φ', LinearEquiv.ofBijective_apply, φ'_lm]
+          simp only [φ']
+          rfl
         rw [← hcoe, hρ₁_fixes_W' u', hρ₂_fixes_W' u']
 
 
@@ -493,7 +493,6 @@ private lemma wittExtension_isotropic_step
   [Module k V]
   {B : LinearMap.BilinForm k V}
   [FiniteDimensional k V]
-  {B : LinearMap.BilinForm k V}
   {U W : Submodule k V}
   {φ : U ≃ₗ[k] W}
   {u : V}
@@ -511,9 +510,9 @@ private lemma wittExtension_isotropic_step
   by_cases h_exists_noniso : ∃ x ∈ U, B x x ≠ 0
   ·
     obtain ⟨x, hxU, hx_noniso⟩ := h_exists_noniso
-    exact wittExtension_noniso_step B hBsymm hnd U W φ hφ hxU hx_noniso ih
+    exact wittExtension_noniso_step hBsymm hnd hφ hxU hx_noniso ih
   ·
-    push_neg at h_exists_noniso
+    push Not at h_exists_noniso
     set y : V := (φ ⟨u, huU⟩ : V) with hy_def
     have hByy : B y y = 0 := by
       have := hφ ⟨u, huU⟩ ⟨u, huU⟩; rw [this]; exact hu_iso
@@ -534,10 +533,10 @@ private lemma wittExtension_isotropic_step
       rw [h1, h2, h3] at hexpand; simp at hexpand
       exact hexpand.resolve_left (NeZero.ne 2)
     have hu_not_ortho_all : ∃ w₀ : V, B u w₀ ≠ 0 := by
-      by_contra hall; push_neg at hall
+      by_contra hall; push Not at hall
       have : u ∈ LinearMap.BilinForm.orthogonal B ⊤ := by
         rw [LinearMap.BilinForm.mem_orthogonal_iff]
-        intro v _; unfold LinearMap.BilinForm.IsOrtho; rw [hBsymm]; exact hall v
+        intro v _; rw [hBsymm]; exact hall v
       rw [hnd] at this
       exact hu_ne ((Submodule.mem_bot k).mp this)
     obtain ⟨w₀, hw₀⟩ := hu_not_ortho_all
@@ -548,7 +547,6 @@ private lemma wittExtension_isotropic_step
       have h_mem_w₀perp : u ∈ w₀perp := (Submodule.mem_inf.mp h_mem).2
       rw [LinearMap.BilinForm.mem_orthogonal_iff] at h_mem_w₀perp
       have := h_mem_w₀perp w₀ (Submodule.mem_span_singleton_self w₀)
-      unfold LinearMap.BilinForm.IsOrtho at this
       exact hw₀ (by rw [hBsymm]; exact this)
     let φ_U₁_to_V : U₁ →ₗ[k] V :=
       W.subtype.comp (φ.toLinearMap.comp (Submodule.inclusion inf_le_left))
@@ -575,8 +573,8 @@ private lemma wittExtension_isotropic_step
       have : (φ₁_lm a : V) = (φ₁_lm b : V) := by rw [hab]
       simp only [φ₁_lm, LinearMap.coe_mk, AddHom.coe_mk] at this
       exact hφ₁_inj this
-    haveI : FiniteDimensional k U₁ := inferInstance
-    haveI : FiniteDimensional k W₁ := inferInstance
+    have : FiniteDimensional k U₁ := inferInstance
+    have : FiniteDimensional k W₁ := inferInstance
     have hrank_U₁_W₁ : Module.finrank k U₁ = Module.finrank k W₁ := by
       have hsurj : Function.Surjective φ₁_lm := by
         intro ⟨w, hw⟩
@@ -647,7 +645,6 @@ private lemma wittExtension_isotropic_step
       have hv_w₀perp : c • u ∈ w₀perp := (Submodule.mem_inf.mp hv_U₁).2
       rw [LinearMap.BilinForm.mem_orthogonal_iff] at hv_w₀perp
       have := hv_w₀perp w₀ (Submodule.mem_span_singleton_self w₀)
-      unfold LinearMap.BilinForm.IsOrtho at this
       simp [map_smul, smul_eq_mul] at this
       rw [hBsymm] at this
       obtain h | h := this
@@ -663,7 +660,6 @@ private lemma wittExtension_isotropic_step
           rw [LinearMap.BilinForm.mem_orthogonal_iff]
           intro n hn; rw [Submodule.mem_span_singleton] at hn
           obtain ⟨a, rfl⟩ := hn
-          unfold LinearMap.BilinForm.IsOrtho
           simp [map_smul, map_sub, LinearMap.smul_apply, smul_eq_mul]
           rw [hBsymm w₀ v, hBsymm w₀ u, hc_def]
           field_simp; ring
@@ -702,13 +698,14 @@ private lemma wittExtension_isotropic_step
         let ρ := bilinReflectEquiv B (z - y) h_sub
         have hρ_maps : ρ z = y := by
           rw [bilinReflectEquiv_apply]
-          exact bilinReflect_maps B hBsymm z y h_sub hBzz_eq
+          exact bilinReflect_maps (x := z) (y := y) hBsymm h_sub hBzz_eq
         have hρ_preserves : ∀ v₁ v₂, B (ρ v₁) (ρ v₂) = B v₁ v₂ :=
-          bilinReflectEquiv_preserves B hBsymm (z - y) h_sub
+          fun v₁ v₂ =>
+            bilinReflectEquiv_preserves (a := z - y) (v₁ := v₁) (v₂ := v₂) hBsymm h_sub
         have hρ_fixes : ∀ u₁ : U₁, ρ (Ψ (u₁ : V)) = (Ψ (u₁ : V)) := by
           intro u₁
           rw [bilinReflectEquiv_apply]
-          exact bilinReflect_of_ortho B (z - y) h_sub (Ψ (u₁ : V)) (hortho u₁)
+          exact bilinReflect_of_ortho (a := z - y) (v := Ψ (u₁ : V)) h_sub (hortho u₁)
         let Φ := Ψ.trans ρ
         refine ⟨Φ, ?_, ?_⟩
         · intro v₁ v₂; simp only [Φ, LinearEquiv.trans_apply]
@@ -721,13 +718,13 @@ private lemma wittExtension_isotropic_step
             show ρ (Ψ (u₁ : V)) = (φ (Submodule.inclusion inf_le_left u₁) : V)
             rw [hρ_fixes u₁, hΨ_on_U₁ u₁]
       ·
-        push_neg at h_sub
+        push Not at h_sub
         have hzy_ne_zero : z - y ≠ 0 := sub_ne_zero.mpr hzy_ne
         have ⟨v₀, hv₀⟩ : ∃ v₀ : V, B (z - y) v₀ ≠ 0 := by
-          by_contra hall; push_neg at hall
+          by_contra hall; push Not at hall
           have : z - y ∈ LinearMap.BilinForm.orthogonal B ⊤ := by
             rw [LinearMap.BilinForm.mem_orthogonal_iff]
-            intro v _; unfold LinearMap.BilinForm.IsOrtho; rw [hBsymm]; exact hall v
+            intro v _; rw [hBsymm]; exact hall v
           rw [hnd] at this
           exact hzy_ne_zero ((Submodule.mem_bot k).mp this)
         have hBzy : B z y = 0 := by
@@ -745,12 +742,12 @@ private lemma wittExtension_isotropic_step
           · intro x hx
             have : x ∈ LinearMap.BilinForm.orthogonal B ⊤ := by
               rw [LinearMap.BilinForm.mem_orthogonal_iff]
-              intro v _; unfold LinearMap.BilinForm.IsOrtho; rw [hBsymm]; exact hx v
+              intro v _; rw [hBsymm]; exact hx v
             rw [hnd] at this; exact (Submodule.mem_bot k).mp this
           · intro y hy
             have : y ∈ LinearMap.BilinForm.orthogonal B ⊤ := by
               rw [LinearMap.BilinForm.mem_orthogonal_iff]
-              intro v _; unfold LinearMap.BilinForm.IsOrtho; exact hy v
+              intro v _; exact hy v
             rw [hnd] at this; exact (Submodule.mem_bot k).mp this
         have hBrefl : B.IsRefl := by intro x y hxy; rw [hBsymm]; exact hxy
         have hz_not_W₁ : z ∉ W₁ := by
@@ -784,18 +781,18 @@ private lemma wittExtension_isotropic_step
         have hW₁_perp_perp : B.orthogonal (B.orthogonal W₁) = W₁ :=
           LinearMap.BilinForm.orthogonal_orthogonal hBnd hBrefl W₁
         have ⟨b₁, hb₁_mem, hb₁z⟩ : ∃ b ∈ B.orthogonal W₁, B z b ≠ 0 := by
-          by_contra hall; push_neg at hall
+          by_contra hall; push Not at hall
           have : z ∈ B.orthogonal (B.orthogonal W₁) := by
             rw [LinearMap.BilinForm.mem_orthogonal_iff]
-            intro v hv; unfold LinearMap.BilinForm.IsOrtho
+            intro v hv
             rw [hBsymm]; exact hall v hv
           rw [hW₁_perp_perp] at this
           exact hz_not_W₁ this
         have ⟨b₂, hb₂_mem, hb₂y⟩ : ∃ b ∈ B.orthogonal W₁, B y b ≠ 0 := by
-          by_contra hall; push_neg at hall
+          by_contra hall; push Not at hall
           have : y ∈ B.orthogonal (B.orthogonal W₁) := by
             rw [LinearMap.BilinForm.mem_orthogonal_iff]
-            intro v hv; unfold LinearMap.BilinForm.IsOrtho
+            intro v hv
             rw [hBsymm]; exact hall v hv
           rw [hW₁_perp_perp] at this
           exact hy_not_W₁ this
@@ -803,7 +800,7 @@ private lemma wittExtension_isotropic_step
           ∃ b ∈ B.orthogonal W₁, B z b ≠ 0 ∧ B y b ≠ 0 := by
           by_cases hyb₁ : B y b₁ ≠ 0
           · exact ⟨b₁, hb₁_mem, hb₁z, hyb₁⟩
-          · push_neg at hyb₁
+          · push Not at hyb₁
             by_cases hzb₂ : B z b₂ = 0
             ·
               refine ⟨b₁ + b₂, (B.orthogonal W₁).add_mem hb₁_mem hb₂_mem, ?_, ?_⟩
@@ -813,7 +810,7 @@ private lemma wittExtension_isotropic_step
               exact ⟨b₂, hb₂_mem, hzb₂, hb₂y⟩
         have hz_orth_W₁ : z ∈ B.orthogonal W₁ := by
           rw [LinearMap.BilinForm.mem_orthogonal_iff]
-          intro w hw; unfold LinearMap.BilinForm.IsOrtho
+          intro w hw
           rw [Submodule.mem_map] at hw
           obtain ⟨u₁, _, rfl⟩ := hw
           rw [hBsymm]
@@ -826,7 +823,7 @@ private lemma wittExtension_isotropic_step
           exact hU_tot_iso u huU (u₁ : V) ((Submodule.mem_inf.mp u₁.2).1)
         have hy_orth_W₁ : y ∈ B.orthogonal W₁ := by
           rw [LinearMap.BilinForm.mem_orthogonal_iff]
-          intro w hw; unfold LinearMap.BilinForm.IsOrtho
+          intro w hw
           rw [Submodule.mem_map] at hw
           obtain ⟨u₁, _, rfl⟩ := hw
           rw [hBsymm]
@@ -840,7 +837,7 @@ private lemma wittExtension_isotropic_step
           ∃ b' ∈ B.orthogonal W₁, B z b' ≠ 0 ∧ B y b' ≠ 0 ∧ B b' b' ≠ 0 := by
           by_cases hbb : B b b ≠ 0
           · exact ⟨b, hb_mem, hbz, hby, hbb⟩
-          · push_neg at hbb
+          · push Not at hbb
             refine ⟨b + z, (B.orthogonal W₁).add_mem hb_mem hz_orth_W₁, ?_, ?_, ?_⟩
             ·
               simp [map_add, hBzz]; exact hbz
@@ -854,7 +851,8 @@ private lemma wittExtension_isotropic_step
         let ρ₁ := bilinReflectEquiv B b' hb'_noniso
         set w := ρ₁ z with hw_def
         have hρ₁_preserves : ∀ v₁ v₂, B (ρ₁ v₁) (ρ₁ v₂) = B v₁ v₂ :=
-          bilinReflectEquiv_preserves B hBsymm b' hb'_noniso
+          fun v₁ v₂ =>
+            bilinReflectEquiv_preserves (a := b') (v₁ := v₁) (v₂ := v₂) hBsymm hb'_noniso
         have hBww : B w w = 0 := by
           rw [hw_def]; rw [hρ₁_preserves]; exact hBzz
         have hBwy : B w y ≠ 0 := by
@@ -876,9 +874,10 @@ private lemma wittExtension_isotropic_step
         let ρ₂ := bilinReflectEquiv B (w - y) hw_sub_y_noniso
         have hρ₂_maps : ρ₂ w = y := by
           rw [bilinReflectEquiv_apply]
-          exact bilinReflect_maps B hBsymm w y hw_sub_y_noniso hBww_eq
+          exact bilinReflect_maps (x := w) (y := y) hBsymm hw_sub_y_noniso hBww_eq
         have hρ₂_preserves : ∀ v₁ v₂, B (ρ₂ v₁) (ρ₂ v₂) = B v₁ v₂ :=
-          bilinReflectEquiv_preserves B hBsymm (w - y) hw_sub_y_noniso
+          fun v₁ v₂ =>
+            bilinReflectEquiv_preserves (a := w - y) (v₁ := v₁) (v₂ := v₂) hBsymm hw_sub_y_noniso
         have hρ₁_fixes : ∀ u₁ : U₁, ρ₁ (Ψ (u₁ : V)) = Ψ (u₁ : V) := by
           intro u₁
           rw [bilinReflectEquiv_apply]
@@ -891,7 +890,6 @@ private lemma wittExtension_isotropic_step
             exact (hΨ_on_U₁ u₁).symm
           rw [LinearMap.BilinForm.mem_orthogonal_iff] at hb'_mem
           have := hb'_mem (Ψ (u₁ : V)) hΨu₁_in_W₁
-          unfold LinearMap.BilinForm.IsOrtho at this
           exact this
         have hρ₂_fixes : ∀ u₁ : U₁, ρ₂ (Ψ (u₁ : V)) = Ψ (u₁ : V) := by
           intro u₁
@@ -930,6 +928,32 @@ private lemma wittExtension_isotropic_step
 
 
 
+
+/--
+[wittExtension_bot](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/GeometricAlgebra/WittExtensionProof.lean)
+-/
+private lemma wittExtension_bot
+  [Field k]
+  [AddCommGroup V]
+  [Module k V]
+  (B : LinearMap.BilinForm k V)
+  (_hnd : LinearMap.BilinForm.orthogonal B ⊤ = ⊥)
+  (W : Submodule k V)
+  (φ : (⊥ : Submodule k V) ≃ₗ[k] W)
+  (_hφ : IsSubspaceIsometry B ⊥ W φ) :
+-- imply
+  ∃ Φ : V ≃ₗ[k] V,
+      (∀ v₁ v₂, B (Φ v₁) (Φ v₂) = B v₁ v₂) ∧
+      (∀ u : (⊥ : Submodule k V), Φ (u : V) = (φ u : V)) := by
+-- proof
+  refine ⟨LinearEquiv.refl k V, fun v₁ v₂ => rfl, fun u => ?_⟩
+  simp only [LinearEquiv.refl_apply]
+  have hu0 : u = 0 := Subtype.ext ((Submodule.mem_bot k).mp u.2)
+  subst hu0
+  simp [map_zero]
+
+
+
 /--
 [wittExtensionProp_of_symmetric](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/GeometricAlgebra/WittTheorem.lean)
 -/
@@ -940,7 +964,6 @@ private lemma wittExtensionProp_of_symmetric
   [Module k V]
   {B : LinearMap.BilinForm k V}
   [FiniteDimensional k V]
-  {B : LinearMap.BilinForm k V}
 -- given
   (hBsymm : ∀ x y : V, B x y = B y x)
   (hnd : LinearMap.BilinForm.orthogonal B ⊤ = ⊥) :
@@ -965,32 +988,82 @@ private lemma wittExtensionProp_of_symmetric
     ·
       obtain ⟨u_val, hu_mem, hu_ne⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hU
       by_cases h_noniso : B u_val u_val ≠ 0
-      · exact wittExtension_noniso_step B hBsymm hnd U W φ hφ hu_mem h_noniso
-        (fun U' W' φ' hφ' hlt => ih_n _ (hn ▸ hlt) U' W' φ' hφ' rfl)
-      · push_neg at h_noniso
-        exact wittExtension_isotropic_step B hBsymm hnd U W φ hφ hu_mem hu_ne h_noniso
+      · exact wittExtension_noniso_step hBsymm hnd hφ hu_mem h_noniso
           (fun U' W' φ' hφ' hlt => ih_n _ (hn ▸ hlt) U' W' φ' hφ' rfl)
+      · push Not at h_noniso
+        exact wittExtension_isotropic_step hBsymm hnd hφ hu_mem hu_ne h_noniso
+          (fun U' W' φ' hφ' hlt => ih_n _ (hn ▸ hlt) U' W' φ' hφ' rfl)
+
+
+
+
+/--
+[WittCancellation](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/GeometricAlgebra/ExtendingIsometries.lean)
+-/
+private lemma WittCancellation
+  [CommRing k]
+  [AddCommGroup V]
+  [Module k V]
+  (B : LinearMap.BilinForm k V)
+  (hWE : WittExtensionProp B) :
+-- imply
+  WittCancellationProp B := by
+-- proof
+  intro hnd U₁ U₂ φ hφ
+  obtain ⟨Φ, hΦ_isom, hΦ_ext⟩ := hWE hnd U₁ U₂ φ hφ
+  have hΦ_orth_map : Submodule.map Φ.toLinearMap (LinearMap.BilinForm.orthogonal B U₁) =
+      LinearMap.BilinForm.orthogonal B U₂ := by
+    ext w
+    simp only [Submodule.mem_map, LinearEquiv.coe_coe]
+    constructor
+    ·
+      rintro ⟨v, hv, rfl⟩
+      rw [LinearMap.BilinForm.mem_orthogonal_iff] at hv ⊢
+      intro n hn
+      obtain ⟨u, rfl⟩ : ∃ u : U₁, (φ u : V) = n := ⟨φ.symm ⟨n, hn⟩, by simp⟩
+      rw [← hΦ_ext u, hΦ_isom]
+      exact hv (u : V) u.2
+    ·
+      intro hw
+      rw [LinearMap.BilinForm.mem_orthogonal_iff] at hw
+      refine ⟨Φ.symm w, ?_, by simp⟩
+      rw [LinearMap.BilinForm.mem_orthogonal_iff]
+      intro n hn
+      have hΦn : Φ n ∈ U₂ := by rw [hΦ_ext ⟨n, hn⟩]; exact (φ ⟨n, hn⟩).2
+      have := hw (Φ n) hΦn
+      calc B n (Φ.symm w) = B (Φ n) (Φ (Φ.symm w)) := by rw [hΦ_isom]
+        _ = B (Φ n) w := by simp
+        _ = 0 := this
+  let ψ := (Φ.submoduleMap (LinearMap.BilinForm.orthogonal B U₁)).trans
+    (LinearEquiv.ofEq _ _ hΦ_orth_map)
+  refine ⟨ψ, ?_⟩
+  intro x₁ x₂
+  show B ((ψ x₁ : V)) ((ψ x₂ : V)) = B (x₁ : V) (x₂ : V)
+  have h1 : ∀ x : LinearMap.BilinForm.orthogonal B U₁, (ψ x : V) = Φ (x : V) := by
+    intro x
+    simp [ψ]
+  rw [h1, h1]
+  exact hΦ_isom _ _
 
 
 
 /--
 [wittCancellationProp_of_symmetric](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/GeometricAlgebra/WittTheorem.lean)
 -/
-private lemma wittCancellationProp_of_symmetric
+lemma wittCancellationProp_of_symmetric
   [Field k]
   [NeZero (2 : k)]
   [AddCommGroup V]
   [Module k V]
   {B : LinearMap.BilinForm k V}
   [FiniteDimensional k V]
-  {B : LinearMap.BilinForm k V}
 -- given
   (hBsymm : ∀ x y : V, B x y = B y x)
   (hnd : LinearMap.BilinForm.orthogonal B ⊤ = ⊥) :
 -- imply
   WittCancellationProp B :=
 -- proof
-  WittCancellation B (wittExtensionProp_of_symmetric B hBsymm hnd)
+  WittCancellation B (wittExtensionProp_of_symmetric hBsymm hnd)
 
 
 /--
@@ -1013,4 +1086,4 @@ private lemma bilinReflect_invol_eq
 
 
 -- created on 2026-10-23
--- updated on 2026-10-26
+-- updated on 2026-11-13

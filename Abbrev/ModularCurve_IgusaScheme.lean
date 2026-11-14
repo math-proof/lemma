@@ -1,7 +1,7 @@
 import Mathlib.AlgebraicGeometry.Morphisms.Smooth
 import Mathlib.AlgebraicGeometry.Morphisms.Proper
 import Mathlib.AlgebraicGeometry.Limits
-import Mathlib.RingTheory.DedekindDomain.IntegralClosure
+import Mathlib.RingTheory.Ideal.IntegralClosure
 import Mathlib.RingTheory.Localization.Integral
 import Mathlib.RingTheory.Polynomial.ScaleRoots
 import Mathlib.Algebra.Polynomial.Lifts

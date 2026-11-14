@@ -9,7 +9,7 @@ variable {K : Type} [Field K] (O : ValuationSubring K)
 private abbrev v2 {α : Type} (a b : α) : Fin 2 → α := Matrix.vecCons a (Matrix.vecCons b Matrix.vecEmpty)
 private abbrev m2 {α : Type} (a b c d : α) : Matrix (Fin 2) (Fin 2) α := Matrix.of (Matrix.vecCons (v2 a b) (Matrix.vecCons (v2 c d) Matrix.vecEmpty))
 private lemma mem_of_eq {x y : K} (hy : y ∈ O) (e : x = y) : x ∈ O := e ▸ hy
-private lemma inv_mem_or_inv_mem_of_add_eq_one {x y : K} (hx : x ∈ O) (hy : y ∈ O) (h : x + y = 1) : (x ≠ 0 ∧ x⁻¹ ∈ O) ∨ (y ≠ 0 ∧ y⁻¹ ∈ O) := by
+private lemma inv_mem_or_inv_mem_of_add_eq_one {x y : K} (_hx : x ∈ O) (_hy : y ∈ O) (h : x + y = 1) : (x ≠ 0 ∧ x⁻¹ ∈ O) ∨ (y ≠ 0 ∧ y⁻¹ ∈ O) := by
   if hy0 : y = 0 then
     left
     rw [hy0, add_zero] at h
@@ -157,45 +157,45 @@ private lemma isInt_E00 : ∀ i j, (m2 (1 : K) 0 0 0 : Matrix (Fin 2) (Fin 2) K)
   fin_cases i
   ·
     fin_cases j
-    · simp [O.one_mem, O.zero_mem]
-    · simp [O.one_mem, O.zero_mem]
+    · simp [O.one_mem]
+    · simp [O.zero_mem]
   ·
     fin_cases j
-    · simp [O.one_mem, O.zero_mem]
-    · simp [O.one_mem, O.zero_mem]
+    · simp [O.zero_mem]
+    · simp [O.zero_mem]
 private lemma isInt_E01 : ∀ i j, (m2 (0 : K) 1 0 0 : Matrix (Fin 2) (Fin 2) K) i j ∈ O := by
   intro i j
   fin_cases i
   ·
     fin_cases j
-    · simp [O.one_mem, O.zero_mem]
-    · simp [O.one_mem, O.zero_mem]
+    · simp [O.zero_mem]
+    · simp [O.one_mem]
   ·
     fin_cases j
-    · simp [O.one_mem, O.zero_mem]
-    · simp [O.one_mem, O.zero_mem]
+    · simp [O.zero_mem]
+    · simp [O.zero_mem]
 private lemma isInt_E11 : ∀ i j, (m2 (0 : K) 0 0 1 : Matrix (Fin 2) (Fin 2) K) i j ∈ O := by
   intro i j
   fin_cases i
   ·
     fin_cases j
-    · simp [O.one_mem, O.zero_mem]
-    · simp [O.one_mem, O.zero_mem]
+    · simp [O.zero_mem]
+    · simp [O.zero_mem]
   ·
     fin_cases j
-    · simp [O.one_mem, O.zero_mem]
-    · simp [O.one_mem, O.zero_mem]
+    · simp [O.zero_mem]
+    · simp [O.one_mem]
 private lemma isInt_E10 {ϖ : K} (hϖO : ϖ ∈ O) : ∀ i j, (m2 (0 : K) 0 ϖ 0 : Matrix (Fin 2) (Fin 2) K) i j ∈ O := by
   intro i j
   fin_cases i
   ·
     fin_cases j
-    · simp [hϖO, O.zero_mem]
-    · simp [hϖO, O.zero_mem]
+    · simp [O.zero_mem]
+    · simp [O.zero_mem]
   ·
     fin_cases j
-    · simp [hϖO, O.zero_mem]
-    · simp [hϖO, O.zero_mem]
+    · simp [hϖO]
+    · simp [O.zero_mem]
 private def invMat (M : Matrix (Fin 2) (Fin 2) K) : Matrix (Fin 2) (Fin 2) K :=
   let d := M 0 0 * M 1 1 - M 0 1 * M 1 0
   m2 (M 1 1 / d) (-(M 0 1) / d) (-(M 1 0) / d) (M 0 0 / d)
@@ -216,7 +216,7 @@ private lemma GL_inv_eq (g : GL (Fin 2) K) : ((g⁻¹ : GL (Fin 2) K) : Matrix (
       fin_cases j
       ·
         simp [Matrix.mul_apply, Fin.sum_univ_two, Matrix.of_apply]
-        first | linear_combination hE | ring
+        linear_combination hE
       ·
         simp [Matrix.mul_apply, Fin.sum_univ_two, Matrix.of_apply]
         first | linear_combination hE | ring
@@ -227,7 +227,7 @@ private lemma GL_inv_eq (g : GL (Fin 2) K) : ((g⁻¹ : GL (Fin 2) K) : Matrix (
         first | linear_combination hE | ring
       ·
         simp [Matrix.mul_apply, Fin.sum_univ_two, Matrix.of_apply]
-        first | linear_combination hE | ring
+        linear_combination hE
   calc
     _ = ((g⁻¹ : GL (Fin 2) K) : Matrix (Fin 2) (Fin 2) K) * ((g : Matrix (Fin 2) (Fin 2) K) * N) := by
       rw [hgN, Matrix.mul_one]
@@ -285,8 +285,9 @@ private lemma main
   have h_rr := H2'
   have h_ss := H4'
   have h_qq := H4 0 1
-  simp only [Fin.isValue, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one,
-    Matrix.cons_val_fin_one, Matrix.empty_val'] at h_ps h_pq h_rs h_qr h_pr h_pp h_rr h_ss h_qq
+  simp only [invMat, m2, v2, Fin.isValue, Matrix.of_apply, Matrix.cons_val',
+    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_fin_one,
+    Matrix.empty_val'] at h_ps h_pq h_rs h_qr h_pr h_pp h_rr h_ss h_qq
   have k_ps : (g : Matrix (Fin 2) (Fin 2) K) 0 0 * (g : Matrix (Fin 2) (Fin 2) K) 1 1 /
       ((g : Matrix (Fin 2) (Fin 2) K) 0 0 * (g : Matrix (Fin 2) (Fin 2) K) 1 1 -
         (g : Matrix (Fin 2) (Fin 2) K) 0 1 * (g : Matrix (Fin 2) (Fin 2) K) 1 0) ∈ O :=
@@ -347,15 +348,15 @@ private lemma main
       fin_cases i
       ·
         fin_cases j
-        · exact mem_of_eq O c_ps (by simp; ring)
-        · exact mem_of_eq O (O.neg_mem _ c_pq) (by simp; ring)
+        · exact mem_of_eq O c_ps (by simp [invMat, m2, v2]; ring)
+        · exact mem_of_eq O (O.neg_mem _ c_pq) (by simp [invMat, m2, v2]; ring)
       ·
         fin_cases j
-        · exact mem_of_eq O (O.neg_mem _ c_pr) (by simp; ring)
-        · exact mem_of_eq O c_pp (by simp; ring)
+        · exact mem_of_eq O (O.neg_mem _ c_pr) (by simp [invMat, m2, v2]; ring)
+        · exact mem_of_eq O c_pp (by simp [invMat, m2, v2]; ring)
     ·
       rw [Units.val_mk0, hGi]
-      exact mem_of_eq O (O.neg_mem _ c_prϖ) (by simp; field_simp)
+      exact mem_of_eq O (O.neg_mem _ c_prϖ) (by simp [invMat, m2, v2]; field_simp)
   ·
     refine ⟨Units.mk0 _ hq0, Or.inr ⟨?_, ?_, ?_, ?_⟩⟩
     ·
@@ -379,15 +380,16 @@ private lemma main
       fin_cases i
       ·
         fin_cases j
-        · exact mem_of_eq O (O.neg_mem _ c_qq) (by simp [Matrix.mul_apply, Fin.sum_univ_two]; ring)
-        · exact mem_of_eq O c_qs (by simp [Matrix.mul_apply, Fin.sum_univ_two]; ring)
+        · exact mem_of_eq O (O.neg_mem _ c_qq) (by simp [invMat, m2, v2, Matrix.mul_apply, Fin.sum_univ_two]; ring)
+        · exact mem_of_eq O c_qs (by simp [invMat, m2, v2, Matrix.mul_apply, Fin.sum_univ_two]; ring)
       ·
         fin_cases j
-        · exact mem_of_eq O c_ϖpq (by simp [Matrix.mul_apply, Fin.sum_univ_two]; ring)
-        · exact mem_of_eq O (O.neg_mem _ c_qr) (by simp [Matrix.mul_apply, Fin.sum_univ_two]; ring)
+        · exact mem_of_eq O c_ϖpq (by simp [invMat, m2, v2, Matrix.mul_apply, Fin.sum_univ_two]; ring)
+        · exact mem_of_eq O (O.neg_mem _ c_qr) (by simp [invMat, m2, v2, Matrix.mul_apply, Fin.sum_univ_two]; ring)
     ·
       rw [Units.val_mk0, hGi]
-      exact mem_of_eq O c_pq (by simp [Matrix.mul_apply, Fin.sum_univ_two]; field_simp)
+      exact mem_of_eq O c_pq (by simp [invMat, m2, v2, Matrix.mul_apply, Fin.sum_univ_two]; field_simp)
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-13

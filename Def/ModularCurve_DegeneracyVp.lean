@@ -1,5 +1,5 @@
 import Def.ModularCurve_HeckeSeam
-import Lemma.ModularCurve.ToricDescentData
+import Lemma.Submodule.ToricDescentData
 
 set_option autoImplicit false
 

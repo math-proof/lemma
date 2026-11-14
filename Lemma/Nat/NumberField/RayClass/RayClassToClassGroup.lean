@@ -79,7 +79,7 @@ lemma rayClassToClassGroup_ker
   apply le_antisymm
   · intro c hc
     rw [MonoidHom.mem_ker] at hc
-    obtain ⟨I, rfl⟩ := rayClassMap_surjective m c
+    obtain ⟨I, rfl⟩ := rayClassMap_surjective c
     rw [rayClassToClassGroup_rayClassMap] at hc
     have hunfold : ClassGroup.mk K
       ((coprimeFractionalIdeals m).subtype I) = 1 := hc
@@ -94,7 +94,7 @@ lemma rayClassToClassGroup_ker
       simpa only [Subgroup.coe_subtype] using ha_val
     have ha_ne : a ≠ 0 := by
       intro ha_zero
-      rw [ha_zero, FractionalIdeal.spanSingleton_zero] at ha_val'
+      rw [ha_zero, map_zero] at ha_val'
       exact Units.ne_zero (I : (FractionalIdeal (𝓞 K)⁰ K)ˣ) ha_val'
     set α : Kˣ := Units.mk0 a ha_ne with hα
     have hI_eq_topi : (I : (FractionalIdeal (𝓞 K)⁰ K)ˣ) =
@@ -104,7 +104,8 @@ lemma rayClassToClassGroup_ker
         FractionalIdeal (𝓞 K)⁰ K) = _
       rwa [coe_toPrincipalIdeal, hα, Units.val_mk0]
     have hα_coprime : α ∈ rayElements m := by
-      rwa [mem_rayElements_iff, ← hI_eq_topi]
+      rw [mem_rayElements_iff, ← hI_eq_topi]
+      exact I.property
     set γ : rayElements m := ⟨α, hα_coprime⟩ with hγ
     have hγ_eq : principalRayIdealMap m γ = I := by
       apply Subtype.ext
@@ -212,4 +213,4 @@ private lemma rayClassToClassGroup_rayClassMap_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-13

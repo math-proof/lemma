@@ -1,7 +1,7 @@
 import Mathlib
-import Lemma.AlgebraicCurve.GluedPic0Functoriality
+import Lemma.Scheme.GluedPic0Functoriality
 import Def.AlgebraicCurve_GluedPic0Pushforward
-import Lemma.ModularCurve.CharacterLatticePairings
+import Lemma.Finset.CharacterLatticePairings
 
 set_option autoImplicit false
 

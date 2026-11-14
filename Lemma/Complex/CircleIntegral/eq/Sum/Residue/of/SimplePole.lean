@@ -48,14 +48,14 @@ private lemma main
             hcl.isOpen_compl.eventually_mem hmem
           have h₂ : ∀ᶠ w in 𝓝[≠] z, w ∈ ({z}ᶜ : Set ℂ) := eventually_mem_nhdsWithin
           filter_upwards [h₁.filter_mono nhdsWithin_le_nhds, h₂] with w hw₁ hw₂ hwZ
-          simp only [Set.mem_compl_iff, Finset.coe_erase, Set.mem_diff,
+          simp only [Set.mem_compl_iff, Finset.coe_erase, Set.mem_sdiff,
             Set.mem_singleton_iff, Finset.mem_coe, not_and, not_not] at hw₁
           exact hw₂ (hw₁ hwZ)
         have hev : (fun w => if hw : w ∈ Z then g w hw w - ∑ b ∈ Z.erase w, c b * (w - b)⁻¹
           else h w - ∑ b ∈ Z, c b * (w - b)⁻¹) =ᶠ[𝓝[≠]
             z] fun w => g z hzZ w - ∑ b ∈ Z.erase z, c b * (w - b)⁻¹ := by
           filter_upwards [hgeq z hzZ, hevNotZ] with w hw hwZ
-          simp only [dif_neg hwZ]
+          simp only [dite_eq_right hwZ]
           rw [hw, ← Finset.add_sum_erase Z _ hzZ]
           simp only [div_eq_mul_inv]
           ring
@@ -65,7 +65,7 @@ private lemma main
         have hfull : (fun w => if hw : w ∈ Z then g w hw w - ∑ b ∈ Z.erase w, c b * (w - b)⁻¹
           else h w - ∑ b ∈ Z, c b * (w - b)⁻¹) =ᶠ[𝓝 z]
             fun w => g z hzZ w - ∑ b ∈ Z.erase z, c b * (w - b)⁻¹ :=
-          eventuallyEq_nhds_of_eventuallyEq_nhdsNE hev (by simp only [dif_pos hzZ])
+          eventuallyEq_nhds_of_eventuallyEq_nhdsNE hev (by simp only [dite_eq_left hzZ])
         refine hΨan.congr hfull.symm
       else
         have hopen : ∀ᶠ w in 𝓝 z, w ∉ Z := by
@@ -76,7 +76,7 @@ private lemma main
           else h w - ∑ b ∈ Z, c b * (w - b)⁻¹) =ᶠ[𝓝 z]
             fun w => h w - ∑ b ∈ Z, c b * (w - b)⁻¹ := by
           filter_upwards [hopen] with w hw
-          simp only [dif_neg hw]
+          simp only [dite_eq_right hw]
         have han : AnalyticAt ℂ (fun w => h w - ∑ b ∈ Z, c b * (w - b)⁻¹) z :=
           (hh z hz hzZ).sub (hsum_an Z z fun b hb hbz => hzZ (hbz ▸ hb))
         refine han.congr hev.symm
@@ -97,7 +97,7 @@ private lemma main
         (f := fun z => h z - ∑ b ∈ Z, c b * (z - b)⁻¹)
         (g := fun z => if hz : z ∈ Z then g z hz z - ∑ b ∈ Z.erase z, c b * (z - b)⁻¹
           else h z - ∑ b ∈ Z, c b * (z - b)⁻¹)
-        hR.le (fun z hzs => by simp only [dif_neg (hZsphere z hzs)])]
+        hR.le (fun z hzs => by simp only [dite_eq_right (hZsphere z hzs)])]
     have hIntTerm : ∀ b ∈ Z, CircleIntegrable (fun z => c b * (z - b)⁻¹) z₀ R := by
       intro b hb
       have hbs : b ∉ Metric.sphere z₀ |R| := by

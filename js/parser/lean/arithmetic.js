@@ -375,6 +375,10 @@ export class Lean_bullet extends LeanArithmetic {
         return '•';
     }
 
+    get holeRegexTag() {
+        return "SMul";
+    }
+
     /** `l • b` stays `SMul__` when both factors are holes. */
     storedHoleRegex(opts, binders) {
         return storedArith(this, "SMul", opts, binders, "SMul__", false);

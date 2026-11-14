@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.ArithmeticGalois
+import Lemma.LaurentSeries.ArithmeticGalois
 import Lemma.Int.P2MUtil
 
-open ModularCurve AlgebraicCurve IntermediateField HahnSeries
+open ModularCurve AlgebraicCurve IntermediateField HahnSeries LaurentSeries
 
 /--
 [ModularCurve_arithmeticGalois_smul_coeffEmb](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_ModularCurve_arithmeticGalois_smul_coeffEmb.lean)

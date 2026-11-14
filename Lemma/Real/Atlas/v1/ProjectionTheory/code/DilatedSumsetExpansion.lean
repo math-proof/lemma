@@ -25,11 +25,11 @@ lemma dilated_sumset_subset_sumProductSet
   obtain ⟨a, ha, y, ⟨c, hc, rfl⟩, rfl⟩ := hx
   simp only [sumProductSet, Finset.mem_biUnion, Finset.mem_image]
   exact ⟨a, ha, t, ht, c, hc, rfl⟩
-/--
-Specialization of `exists_eps_dilated_sumset_expansion` to the case `D = A`:
-for `|A| = p^{s_A}` with `0 < s_A < 1`, there exists `ε > 0` and some `t ∈ A`
-with `|A + t·A| ≥ p^ε |A|`.
--/
+-- 
+-- Specialization of `exists_eps_dilated_sumset_expansion` to the case `D = A`:
+-- for `|A| = p^{s_A}` with `0 < s_A < 1`, there exists `ε > 0` and some `t ∈ A`
+-- with `|A + t·A| ≥ p^ε |A|`.
+--
 
 end ProjectionTheory
 

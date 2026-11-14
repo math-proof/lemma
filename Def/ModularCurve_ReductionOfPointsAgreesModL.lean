@@ -1,7 +1,7 @@
 import Mathlib
-import Lemma.AlgebraicGeometry.NeronModelPropertyBundleCarrier
-import Lemma.AlgebraicGeometry.RelativeGroupLaw
-import Lemma.ModularCurve.ReductionModL
+import Lemma.Scheme.NeronModelPropertyBundleCarrier
+import Lemma.Scheme.RelativeGroupLaw
+import Lemma.Finsupp.ReductionModL
 
 set_option autoImplicit false
 

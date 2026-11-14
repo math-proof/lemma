@@ -141,7 +141,7 @@ noncomputable section
 [cauchyKernelBare_locallyIntegrable](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/DifferentialAnalysis/code/CauchyKernelIntegrability.lean)
 -/
 @[path]
-lemma cauchyKernelBare_locallyIntegrable
+lemma cauchyKernelBare_locallyIntegrable :
 -- imply
   LocallyIntegrable cauchyKernelBare := by
 -- proof

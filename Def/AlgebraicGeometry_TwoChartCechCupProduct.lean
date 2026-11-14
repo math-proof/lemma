@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.AlgebraicGeometry.TwoChartCech
+import Lemma.LinearMap.TwoChartCech
 
 set_option autoImplicit false
 

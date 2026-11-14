@@ -1,7 +1,7 @@
-import Lemma.LanglandsTunnell.CubicInduction_Carrier
-import Lemma.NumberField.TateGlobalZeta
-import Lemma.NumberField.AdelicLevel
-import Lemma.IsDedekindDomain.FiniteUnitIdeles
+import Lemma.Matrix.CubicInduction_Carrier
+import Lemma.Measure.TateGlobalZeta
+import Lemma.Matrix.AdelicLevel
+import Lemma.Ideal.FiniteUnitIdeles
 import Notation.LanglandsTunnell_CubicInduction_AdelicEpstein
 
 set_option autoImplicit false

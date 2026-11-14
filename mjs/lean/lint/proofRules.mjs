@@ -1,7 +1,7 @@
 /**
  * Indentation and proof-body rules (tactic conventions).
  */
-import { parseSignature, walk, closerOf, countWord, hasWord } from './scan.mjs';
+import { parseSignature, walk, closerOf, countWord, hasWord, isBinderKeywordContext } from './scan.mjs';
 
 /** code lines of every declaration body (after the signature's `:=`): [{ line, from }] (from: first column) */
 function bodies(ctx) {
@@ -357,6 +357,16 @@ function haveOnceRule(ctx, d, lines) {
         while (k < d.end && (P.indent[k] < 0 || P.indent[k] > ind || P.stackAtLineStart[k].length > P.stackAtLineStart[i].length)) k++;
         if (k >= d.end || P.indent[k] !== ind) continue;
         const next = k;
+        // typed `have h : T :=` whose type includes `fun`: the ascription may be
+        // required for elaboration (`Measurable.of_eval` / `.comp`).
+        if (m[3] === ':') {
+            let typ = '';
+            for (let t = i; t < k; t++) {
+                typ += (typ ? '\n' : '') + P.code[t];
+                if (/:=/.test(P.code[t])) break;
+            }
+            if (/\bfun\b/.test(typ)) continue;
+        }
         // the next statement's extent
         let e = next + 1;
         while (e < d.end && (P.indent[e] < 0 || P.indent[e] > ind)) e++;
@@ -498,7 +508,7 @@ export function underscoreNameRule(ctx) {
                     const after = l[k + name.length];
                     if ((before && /[\p{L}\p{N}_'.!?]/u.test(before)) || (after && /[\p{L}\p{N}_'!?₀-₉]/u.test(after))) continue;
                     if (/^\s*:(?!=)/.test(l.slice(k + name.length))) continue;
-                    if (/(^|[^\p{L}\p{N}_'])((intro|rintro|fun|obtain|rcases|cases|induction|with)\b|[λ∑∏∫∀∃⨆⨅])[^,;]*$/u.test(l.slice(0, k)) && !/[[(]\s*$/.test(l.slice(0, k).replace(/^.*\b(intro|rintro|fun|λ)\b/u, ''))) continue;
+                    if (isBinderKeywordContext(l, k)) continue;
                     n++;
                 }
             }

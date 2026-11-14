@@ -1,4 +1,4 @@
-import Lemma.NumberField.AdelicLevel
+import Lemma.Matrix.AdelicLevel
 import Mathlib.Analysis.Calculus.ContDiff.Defs
 import Mathlib.Topology.LocallyConstant.Basic
 

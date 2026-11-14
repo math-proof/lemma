@@ -11,7 +11,7 @@ namespace Real_Analysis
 lemma cauchy_seq_iff
   {x : ℕ → ℝ} :
 -- imply
-  CauchySeq x ↔ ∀ ε > 0, ∃ M : ℕ, ∀ n k, n ≥ M → k ≥ M → := by
+  CauchySeq x ↔ ∀ ε > 0, ∃ M : ℕ, ∀ n k, n ≥ M → k ≥ M → |x n - x k| < ε := by
 -- proof
   rw [Metric.cauchySeq_iff]
   constructor

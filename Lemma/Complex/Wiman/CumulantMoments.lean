@@ -22,13 +22,13 @@ lemma contDiff_two_wimanGrowth
     ProbabilityTheory.cgf (fun n : ℕ => (n : ℝ))
       (wimanCoefficientMeasure f) = wimanGrowth f := by
     funext x
-    exact wiman_cgf_eq_growth f hf x
+    exact wiman_cgf_eq_growth (f := f) (x := x) hf
   rw [← hcgf]
   have hAnalytic :
     AnalyticOnNhd ℝ
       (ProbabilityTheory.cgf (fun n : ℕ => (n : ℝ))
         (wimanCoefficientMeasure f)) Set.univ := by
-    simpa [integrableExpSet_wimanCoefficientMeasure_eq_univ f hf] using
+    simpa [integrableExpSet_wimanCoefficientMeasure_eq_univ (f := f) hf] using
       (ProbabilityTheory.analyticOnNhd_cgf
         (X := fun n : ℕ => (n : ℝ)) (μ := wimanCoefficientMeasure f))
   exact hAnalytic.contDiff
@@ -55,12 +55,12 @@ lemma deriv_wimanGrowth_eq_expectation
     ProbabilityTheory.cgf (fun n : ℕ => (n : ℝ))
       (wimanCoefficientMeasure f) = wimanGrowth f := by
     funext y
-    exact wiman_cgf_eq_growth f hf y
+    exact wiman_cgf_eq_growth (f := f) (x := y) hf
   rw [← hcgf]
   simpa only [wimanTiltedMeasure] using
     (ProbabilityTheory.integral_tilted_mul_self
       (X := fun n : ℕ => (n : ℝ)) (μ := wimanCoefficientMeasure f) (t := x)
-      (mem_interior_integrableExpSet_wimanCoefficientMeasure f hf x)).symm
+      (mem_interior_integrableExpSet_wimanCoefficientMeasure (f := f) (x := x) hf)).symm
 
 end Complex
 
@@ -85,12 +85,12 @@ lemma iteratedDeriv_two_wimanGrowth_eq_variance
     ProbabilityTheory.cgf (fun n : ℕ => (n : ℝ))
       (wimanCoefficientMeasure f) = wimanGrowth f := by
     funext y
-    exact wiman_cgf_eq_growth f hf y
+    exact wiman_cgf_eq_growth (f := f) (x := y) hf
   rw [← hcgf]
   simpa only [wimanTiltedMeasure] using
     (ProbabilityTheory.variance_tilted_mul
       (X := fun n : ℕ => (n : ℝ)) (μ := wimanCoefficientMeasure f) (t := x)
-      (mem_interior_integrableExpSet_wimanCoefficientMeasure f hf x)).symm
+      (mem_interior_integrableExpSet_wimanCoefficientMeasure (f := f) (x := x) hf)).symm
 
 end Complex
 
@@ -109,9 +109,9 @@ lemma iteratedDeriv_two_wimanGrowth_nonneg
 -- imply
   0 ≤ iteratedDeriv 2 (wimanGrowth f) x := by
 -- proof
-  rw [iteratedDeriv_two_wimanGrowth_eq_variance f hf hne x]
+  rw [iteratedDeriv_two_wimanGrowth_eq_variance (f := f) (x := x) hf hne]
   exact ProbabilityTheory.variance_nonneg _ _
-end
+end Complex
 
 
 

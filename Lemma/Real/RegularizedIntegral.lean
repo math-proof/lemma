@@ -10,7 +10,7 @@ namespace Real
 [integral_exp_neg_mul_log_eq_neg_euler](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/RegularizedIntegral.lean)
 -/
 @[path]
-private lemma integral_exp_neg_mul_log_eq_neg_euler :
+private lemma integral_exp_neg_mul_log_eq_neg_euler_eq_lemma :
   (∫ t : ℝ in Ioi 0, (Real.exp (-t) * Real.log t : ℂ)) =
     -(Real.eulerMascheroniConstant : ℂ) := by
   have hGI := Complex.hasDerivAt_GammaIntegral (s := (1 : ℂ)) (by norm_num)
@@ -35,7 +35,7 @@ namespace Real
 [integrableOn_exp_neg_mul_log](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/RegularizedIntegral.lean)
 -/
 @[path]
-private lemma integrableOn_exp_neg_mul_log :
+private lemma integrableOn_exp_neg_mul_log_eq_lemma :
   IntegrableOn (fun t : ℝ => (Real.exp (-t) * Real.log t : ℂ)) (Ioi 0) := by
   have hm :=
     (mellin_hasDerivAt_of_isBigO_rpow (E := ℂ) (a := 2) (b := 0)
@@ -69,7 +69,7 @@ namespace Real
 [tendsto_exp_neg_sub_one_div_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/RegularizedIntegral.lean)
 -/
 @[path]
-private lemma tendsto_exp_neg_sub_one_div_zero :
+private lemma tendsto_exp_neg_sub_one_div_zero_eq_lemma :
   Tendsto (fun t : ℝ => (Real.exp (-t) - 1) / t) (𝓝[>] 0) (𝓝 (-1)) := by
   have hd : HasDerivAt (fun t : ℝ => Real.exp (-t)) (-1) 0 := by
     convert ((hasDerivAt_id (𝕜 := ℝ) 0).neg.exp) using 1 <;> norm_num
@@ -83,7 +83,7 @@ namespace Real
 [RegularizedIntegral](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/RegularizedIntegral.lean)
 -/
 @[path]
-lemma intervalIntegrable_exp_neg_sub_one_div
+lemma intervalIntegrable_exp_neg_sub_one_div_eq_lemma :
 -- imply
   IntervalIntegrable (fun t : ℝ => (((Real.exp (-t) - 1) / t : ℝ) : ℂ)) MeasureTheory.volume 0 1 := by
 -- proof
@@ -124,7 +124,7 @@ namespace Real
 [integrableOn_exp_neg_div_Ioi_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/RegularizedIntegral.lean)
 -/
 @[path]
-private lemma integrableOn_exp_neg_div_Ioi_one :
+private lemma integrableOn_exp_neg_div_Ioi_one_eq_lemma :
   IntegrableOn (fun t : ℝ => ((Real.exp (-t) / t : ℝ) : ℂ)) (Ioi 1) := by
   have he : IntegrableOn (fun t : ℝ => Real.exp (-t)) (Ioi 1) :=
     integrableOn_exp_neg_Ioi 1
@@ -146,7 +146,7 @@ namespace Real
 [integral_exp_neg_mul_log_zero_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/RegularizedIntegral.lean)
 -/
 @[path]
-private lemma integral_exp_neg_mul_log_zero_one :
+private lemma integral_exp_neg_mul_log_zero_one_eq_lemma :
   (∫ t : ℝ in 0..1, Real.exp (-t) * Real.log t) =
     ∫ t : ℝ in 0..1, (Real.exp (-t) - 1) / t := by
   let h : ℝ → ℝ := fun t => Real.exp (-t) * Real.log t
@@ -211,7 +211,7 @@ namespace Real
 [integral_exp_neg_mul_log_Ioi_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/RegularizedIntegral.lean)
 -/
 @[path]
-private lemma integral_exp_neg_mul_log_Ioi_one :
+private lemma integral_exp_neg_mul_log_Ioi_one_eq_lemma :
   (∫ t : ℝ in Ioi 1, Real.exp (-t) * Real.log t) =
     ∫ t : ℝ in Ioi 1, Real.exp (-t) / t := by
   let h : ℝ → ℝ := fun t => Real.exp (-t) * Real.log t
@@ -271,7 +271,7 @@ namespace Real
 [RegularizedIntegral](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/RegularizedIntegral.lean)
 -/
 @[path]
-lemma eulerMascheroniConstant_eq_regularized_integrals
+lemma eulerMascheroniConstant_eq_regularized_integrals_eq_lemma :
 -- imply
   (Real.eulerMascheroniConstant : ℂ) =
     (∫ t : ℝ in 0..1, (((1 - Real.exp (-t)) / t : ℝ) : ℂ)) -

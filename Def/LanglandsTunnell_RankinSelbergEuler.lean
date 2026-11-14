@@ -5,7 +5,7 @@ import Mathlib.RingTheory.Ideal.Norm.AbsNorm
 import Mathlib.NumberTheory.RamificationInertia.Inertia
 import Mathlib.NumberTheory.NumberField.Basic
 import Mathlib.Tactic.Ring
-import Lemma.LanglandsTunnell.HonestLDatum
+import Lemma.Polynomial.HonestLDatum
 
 noncomputable section
 

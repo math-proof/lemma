@@ -18,9 +18,10 @@ private lemma main
 -- imply
   ((ρ.baseChangeAlong φ hφ).det σ : B) = φ (ρ.det σ : A) := by
 -- proof
-  letI : Algebra A B := φ.toAlgebra
+  let : Algebra A B := φ.toAlgebra
   show LinearMap.det ((ρ.ρ σ).baseChange B) = φ (LinearMap.det (ρ.ρ σ))
   exact LinearMap.det_baseChange (ρ.ρ σ)
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

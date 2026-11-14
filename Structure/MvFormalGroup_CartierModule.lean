@@ -1,6 +1,5 @@
 import Mathlib
-import Instance.MvFormalGroup_NegV2
-import Instance.MvFormalGroup_CartierModule
+import Structure.MvFormalGroup_BasicV2
 
 set_option autoImplicit false
 
@@ -56,6 +55,8 @@ end CartierModule
 
 namespace WittLaw
 
+def blk (i : Fin 2) : ℕ → MvPowerSeries (Fin 2 × ℕ) R := fun m => MvPowerSeries.X (i, m)
+
 variable (p)
 
 def pairFam (u : ℕ → MvPowerSeries ℕ R) : Fin 2 × ℕ → MvPowerSeries (Fin 2 × ℕ) R :=
@@ -68,25 +69,6 @@ structure IsEndo (u : ℕ → MvPowerSeries ℕ R) : Prop where
 
 variable {p}
 
-omit hp in
-
-
-variable (R)
-
-
-variable {R}
-
-omit hp in
-
-
-variable (p R)
-
-
-variable {p R}
-
-omit hp in
-
-
 end WittLaw
 
 namespace CartierModule
@@ -97,10 +79,6 @@ variable {Φ : MvFormalGroup d R} {Φ' : MvFormalGroup d' R} {Φ'' : MvFormalGro
 end CartierModule
 
 namespace WittLaw
-
-
-variable (p R) in
-
 
 end WittLaw
 

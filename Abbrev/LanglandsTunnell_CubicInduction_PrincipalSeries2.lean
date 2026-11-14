@@ -1,4 +1,4 @@
-import Lemma.LanglandsTunnell.CubicInduction_PrincipalSeries3
+import Lemma.Matrix.CubicInduction_PrincipalSeries3
 
 set_option autoImplicit false
 

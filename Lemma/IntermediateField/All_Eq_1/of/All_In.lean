@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.NumberField.ArchimedeanIdeleModule
+import Lemma.AbsoluteValue.ArchimedeanIdeleModule
 import Lemma.Int.P2MUtil
 
-open NumberField
+open NumberField AbsoluteValue
 
 /--
 [NumberField_InfPlaceDecomp_eq_one_of_mem_decomp_fixedField_of_forall_isConj_mem](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_NumberField_InfPlaceDecomp_eq_one_of_mem_decomp_fixedField_of_forall_isConj_mem.lean)

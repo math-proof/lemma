@@ -4,7 +4,7 @@ import Lemma.FormalGroup.NSeries
 import Def.FormalGroup_PointTransport
 import Mathlib.RingTheory.FormalGroup.Basic
 import Mathlib.RingTheory.MvPowerSeries.Rename
-import Lemma.MvFormalGroup.OfFormalGroupV2
+import Lemma.FormalGroup.OfFormalGroupV2
 
 set_option autoImplicit false
 

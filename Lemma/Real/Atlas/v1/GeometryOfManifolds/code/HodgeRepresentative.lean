@@ -11,9 +11,8 @@ namespace HodgeRepresentative
 -/
 @[path]
 lemma harmonic_exact_eq_zero
-  {β : hd.Ωk}
--- given
   (hd : HodgeData)
+  {β : hd.Ωk}
   (h : hd.Ωk1)
   (hH : hd.IsHarmonic h)
   (heq : h = hd.d_k β) :

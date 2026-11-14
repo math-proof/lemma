@@ -199,7 +199,7 @@ lemma fano_inequality_general
   rw [hPe]
   rw [hC] at hS
   linarith
-set_option linter.unusedDecidableInType false in
+set_option linter.unusedDecidableInType false
 
 end MathlibExt.InformationTheory.Fano
 

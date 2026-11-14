@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.X0
-open Polynomial ModularCurve
+import Lemma.HahnSeries.X0
+open Polynomial ModularCurve HahnSeries
 
 
 private lemma  coeff_evalAtJ_neg_natDegree (P : Polynomial ℤ) (d : ℕ) (hd : P.natDegree ≤ d) : (evalAtJ P).coeff (-(d : ℤ)) = (P.coeff d : ℚ) := by

@@ -10,14 +10,14 @@ open Random MeasureTheory ProbabilityTheory
 @[path]
 private lemma main
   [MeasurableSpace Ω]
-  [ReferenceMeasure α]
+  [μ : ReferenceMeasure α]
   {π : Measure Ω} {x : Ω → α} [SinglePSpace π x]
   {ρ : α → ENNReal}
 -- given
   (hρ : Measurable ρ) :
 -- imply
-  HasLaw x (ReferenceMeasure.measure.withDensity ρ) π ↔
-      π.prob x =ᵐ[ReferenceMeasure.measure] ρ := by
+  HasLaw x (μ.measure.withDensity ρ) π ↔
+      π.prob x =ᵐ[μ.measure] ρ := by
 -- proof
   refine ⟨fun h ↦ ?_, fun h ↦ ?_⟩
   ·
@@ -32,4 +32,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-10-29
+-- updated on 2026-11-14

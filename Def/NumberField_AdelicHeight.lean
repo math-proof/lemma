@@ -9,7 +9,7 @@ namespace NumberField
 namespace AdelicHeight
 
 open AutomorphicForm AutomorphicForm.WindowedSiegel AutomorphicForm.SiegelCoordinates
-  AutomorphicForm.SiegelReduction NumberField.AdelicLevel NumberField.InfinitePlace
+  AutomorphicForm.SiegelReduction Matrix.AdelicLevel NumberField.InfinitePlace
 
 section Local
 

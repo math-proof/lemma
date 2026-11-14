@@ -961,7 +961,7 @@ lemma smooth_homogeneous_support_contradiction
     have h_R_mem : R ∈ closure (Set.Ioi R) := closure_Ioi R ▸ Set.self_mem_Ici
     exact Set.mem_singleton_iff.mp (h_closed.closure_subset_iff.mpr h_sub h_R_mem)
   exact hω₀_ne (hfR_psi.symm.trans hfR_zero)
-set_option linter.unusedVariables false in
+set_option linter.unusedVariables false
 
 end ConeSupport
 
@@ -990,7 +990,7 @@ lemma partition_of_unity_schwartz_factorization
 -- proof
   (smooth_homogeneous_support_contradiction g hg_smooth R hR hg_supp ψ
     hψ_hom hg_eq hψ_nonzero).elim
-set_option maxHeartbeats 400000 in
+set_option maxHeartbeats 400000
 
 end ConeSupport
 
@@ -1462,9 +1462,9 @@ lemma conicCutoff_mem_support
   have hR_lt_norm : R < ‖(ω : E n)‖ := by rw [hω_norm]; exact hR_lt
   rw [Function.mem_support]
   rwa [hg_eq _ hR_lt_norm]
-/-- Neighbourhood formulation: if `ω₁` is not in `Css(𝓕(g₀ · u))`, there are
-neighbourhoods `Ũ ∋ ω₀` and `V ∋ ω₁` such that for every conic cutoff `g'` near `ω₀` with
-support in `Ũ`, `V` is disjoint from `Css(𝓕(g' · u))`. -/
+-- Neighbourhood formulation: if `ω₁` is not in `Css(𝓕(g₀ · u))`, there are
+-- neighbourhoods `Ũ ∋ ω₀` and `V ∋ ω₁` such that for every conic cutoff `g'` near `ω₀` with
+-- support in `Ũ`, `V` is disjoint from `Css(𝓕(g' · u))`.
 end ConeSupport
 
 
@@ -2358,8 +2358,8 @@ lemma boundaryProd_swap_neg
 -- proof
   simp only [BoundaryProd, Set.mem_setOf_eq, ClosedBall.norm_neg_eq] at hpq ⊢
   exact hpq.symm
-/-- Transport of `WFsc` under the Fourier transform: if `(p, q) ∉ WFsc u`, then
-`(q, -p) ∉ WFsc (𝓕 u)`. -/
+-- Transport of `WFsc` under the Fourier transform: if `(p, q) ∉ WFsc u`, then
+-- `(q, -p) ∉ WFsc (𝓕 u)`.
 end WavefrontSet
 set_option maxHeartbeats 1600000
 open scoped Topology
@@ -2556,10 +2556,10 @@ lemma disjointCss_of_conicPartitionData
   rw [ConeSupport.disjointCssCondition_iff_disjoint]
   exact (P.angSupp_neg_disjoint i j).mono (P.css_uPart_sub i)
     (Set.image_mono (P.css_vPart_sub j))
-/-- From a `ConvolutionWFscCondition` between `u` and `v`, one can construct an
-explicit conic partition (a `ConicPartitionData u v`) whose pieces have angularly
-disjoint conic singular supports. This is Lemma 12.something — the technical input
-behind defining convolution under the WFsc compatibility hypothesis. -/
+-- From a `ConvolutionWFscCondition` between `u` and `v`, one can construct an
+-- explicit conic partition (a `ConicPartitionData u v`) whose pieces have angularly
+-- disjoint conic singular supports. This is Lemma 12.something — the technical input
+-- behind defining convolution under the WFsc compatibility hypothesis.
 
 end WavefrontSet
 

@@ -44,7 +44,7 @@ lemma cdf_continuousAt_frontier_Iic_null
   μ (frontier (Iic x)) = 0 := by
 -- proof
   rw [frontier_Iic]
-  exact cdf_continuousAt_singleton_null μ x hx
+  exact cdf_continuousAt_singleton_null hx
 
 end ProbabilityTheory
 

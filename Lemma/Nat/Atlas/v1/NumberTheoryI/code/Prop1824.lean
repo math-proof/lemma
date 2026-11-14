@@ -57,7 +57,7 @@ namespace RiemannStieltjes
 -/
 @[path]
 lemma norm_linear_combo_sub
-  {a b : ℝ}
+  {_a _b : ℝ}
   [NormedField 𝕜]
   {c₁ c₂ A B S₁ S₂ : 𝕜} :
 -- imply
@@ -79,7 +79,7 @@ namespace RiemannStieltjes
 -/
 @[path]
 lemma eps_bound
-  {a b : ℝ}
+  {_a _b : ℝ}
   [NormedField 𝕜]
   {c₁ c₂ : 𝕜}
   {ε : ℝ}

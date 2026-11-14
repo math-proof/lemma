@@ -1,4 +1,4 @@
-import Lemma.ModularCurve.NodeLocalizedPlaces
+import Lemma.IntermediateField.NodeLocalizedPlaces
 
 set_option autoImplicit false
 

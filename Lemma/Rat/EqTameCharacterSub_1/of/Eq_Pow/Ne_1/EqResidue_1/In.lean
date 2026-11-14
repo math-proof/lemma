@@ -1,8 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Definitions.Def_EllipticCurve_FrobeniusTrace
-import Definitions.Def_FLTPrelim_Ramification
-import Definitions.Def_GaloisRep_TameCharacter
+import Def.EllipticCurve_FrobeniusTrace
+import Def.FLTPrelim_Ramification
+import Def.GaloisRep_TameCharacter
 open ValuationSubring
 open scoped Pointwise
 
@@ -54,3 +54,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

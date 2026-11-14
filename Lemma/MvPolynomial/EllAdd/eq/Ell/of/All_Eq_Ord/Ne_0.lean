@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.AdelicIndex
+import Lemma.Submodule.AdelicIndex
 import Lemma.Int.P2MUtil
 
-open AlgebraicCurve
+open AlgebraicCurve Submodule
 
 /--
 [AlgebraicCurve_ell_add_of_forall_eq_ord](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_AlgebraicCurve_ell_add_of_forall_eq_ord.lean)

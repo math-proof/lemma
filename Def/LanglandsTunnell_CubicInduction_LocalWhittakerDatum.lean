@@ -1,4 +1,4 @@
-import Lemma.LanglandsTunnell.CubicInduction_Structure
+import Lemma.Matrix.CubicInduction_Structure
 
 set_option autoImplicit false
 

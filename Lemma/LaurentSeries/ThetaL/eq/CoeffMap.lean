@@ -1,8 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularCurve.LaurentCoeff
-import Lemma.ModularCurve.QExpansionDiff
-open ModularCurve
+import Lemma.LaurentSeries.LaurentCoeff
+import Lemma.LaurentSeries.QExpansionDiff
+open ModularCurve LaurentSeries
 
 
 private lemma coeffMap_single_one

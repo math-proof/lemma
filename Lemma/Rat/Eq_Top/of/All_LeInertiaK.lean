@@ -27,7 +27,7 @@ private lemma main
       have : P.LiesOver p := ⟨hPp.symm⟩
       have : (p.under ℤ).IsMaximal := Ideal.IsMaximal.under ℤ p
       have : P.LiesOver (p.under ℤ) := Ideal.LiesOver.trans P p (p.under ℤ)
-      have h𝔭0 : p.under ℤ ≠ ⊥ := mt Ideal.eq_bot_of_comap_eq_bot hp0
+      have h𝔭0 : p.under ℤ ≠ ⊥ := mt Ideal.eq_bot_of_under_eq_bot hp0
       have : Finite (ℤ ⧸ p.under ℤ) := Ring.HasFiniteQuotients.finiteQuotient h𝔭0
       have : Finite (𝓞 F ⧸ p) := Ring.HasFiniteQuotients.finiteQuotient hp0
       have c1 := Ideal.card_inertia_eq_ramificationIdxIn (G := K ≃ₐ[ℚ] K) (p.under ℤ) P
@@ -39,13 +39,13 @@ private lemma main
       have c3 : Nat.card (P.inertia H) = Nat.card (P.inertia (K ≃ₐ[ℚ] K)) :=
         Nat.card_congr (Subgroup.subgroupOfEquivOfLe (hH P hPmax)).toEquiv
       have hne : p.ramificationIdx' P ≠ 0 :=
-        Ideal.IsDedekindDomain.ramificationIdx_ne_zero_of_liesOver P hp0
+        Ideal.IsDedekindDomain.ramificationIdx'_ne_zero_of_liesOver P hp0
       have he : (p.under ℤ).ramificationIdx' p = 1 := by
         have h : (p.under ℤ).ramificationIdx' P = p.ramificationIdx' P := by
           rw [← c1, ← c2, c3]
-        rw [Ideal.ramificationIdx_algebra_tower' (p.under ℤ) p P] at h
+        rw [Ideal.ramificationIdx'_algebra_tower' (p.under ℤ) p P] at h
         exact (mul_eq_right₀ hne).mp h
-      exact Algebra.isUnramifiedAt_iff_of_isDedekindDomain.mpr
+      exact Ideal.ramificationIdx_eq_one_iff.mp
         ((Ideal.ramificationIdx'_eq_ramificationIdx (p.under ℤ) p h𝔭0).symm.trans he)
     have hF : Module.finrank ℚ F = 1 := by
       by_contra hne
@@ -56,3 +56,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-13

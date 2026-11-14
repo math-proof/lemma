@@ -1,12 +1,12 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.AlgebraicCurve.DivisorClassGroup
+import Lemma.Valuation.DivisorClassGroup
 
 
 namespace Definitions
 end Definitions
 open Definitions
-open AlgebraicCurve
+open AlgebraicCurve Valuation
 open scoped Pointwise
 
 
@@ -29,12 +29,12 @@ private lemma main
     have hmem : (⟨x, hx⟩ : P'.toValuationSubring) - algebraMap κ' P'.toValuationSubring c ∈
       IsLocalRing.maximalIdeal P'.toValuationSubring := by
 -- proof
-      rw [← IsLocalRing.residue_eq_zero_iff, map_sub, ← hc,
+      rw [← IsLocalRing.residue_eq_zero_iff, _root_.map_sub, ← hc,
         IsScalarTower.algebraMap_apply κ' P'.toValuationSubring P'.ResidueField, IsLocalRing.ResidueField.algebraMap_eq,
         sub_self]
     have e : ((⟨x, hx⟩ - algebraMap κ' P'.toValuationSubring c : P'.toValuationSubring) : F') = x - algebraMap κ' F' c := by
       change P'.toValuationSubring.subtype (⟨x, hx⟩ - algebraMap κ' P'.toValuationSubring c) = _
-      rw [map_sub]
+      rw [_root_.map_sub]
       rfl
     rw [← e]
     exact ValuationSubring.coe_mem_nonunits_iff.mpr hmem

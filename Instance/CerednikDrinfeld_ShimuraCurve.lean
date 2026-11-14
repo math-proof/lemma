@@ -6,7 +6,7 @@ import Instance.AlgebraicCurve_BaseChangeGalois
 import Instance.AlgebraicCurve_IsCurveOver
 import Structure.CerednikDrinfeld_TwoPlaceTorsionDatum
 import Instance.Compat_Mathlib430
-import Lemma.CerednikDrinfeld.ShimuraCurve
+import Lemma.MvPolynomial.ShimuraCurve
 
 set_option autoImplicit false
 

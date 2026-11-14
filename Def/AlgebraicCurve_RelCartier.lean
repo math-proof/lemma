@@ -1,5 +1,5 @@
-import Lemma.AlgebraicGeometry.IdealSheafHom
-import Lemma.AlgebraicCurve.UniversalDivisor
+import Lemma.Scheme.IdealSheafHom
+import Lemma.Scheme.UniversalDivisor
 
 open CategoryTheory CategoryTheory.Limits TopologicalSpace Opposite
 

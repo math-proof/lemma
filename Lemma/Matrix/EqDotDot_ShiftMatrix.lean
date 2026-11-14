@@ -18,4 +18,4 @@ private lemma main
   rw [vecMul_vecMul, DotTShiftMatrix.eq.Eye j i, vecMul_one]
 
 
--- created on 2026-11-01
+-- created on 2020-11-14
