@@ -51,7 +51,6 @@ from . import EqAdd
 from . import EqAdjoint
 from . import EqBlock
 from . import EqDot
-from . import EqExpect
 from . import EqInv
 from . import EqLog
 from . import EqReducedArgMax
@@ -73,7 +72,6 @@ from . import Eq_Ite
 from . import Exp
 from . import ExpAdd_MulInfty
 from . import ExpSub_MulInfty
-from . import Expect
 from . import Expr
 from . import GeBlock
 from . import GeStack

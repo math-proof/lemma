@@ -4,7 +4,6 @@ from . import Eq_Block
 from . import Dot_Stack_Pow
 from . import Eq_Add_Block
 from . import Eq_Stack
-from . import Eq_Pr
 from . import DotStack_Pow
 from . import In
 from . import Eq_Stack_Bool_In

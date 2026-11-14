@@ -1,0 +1,108 @@
+from util import *
+
+
+@apply
+def apply(eq, Q_def, V_def, A_def, π_quote=None):
+    from Lemma.Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico import extract_QVA
+    s, a, r, [π], γ, t, Q_st_var, V_st_var, A_st_var = extract_QVA(eq, Q_def, V_def, A_def)
+    assert π_quote.shape == π.shape
+    return Equal(γ ** Stack[t](t) @ (Expectation[r, a:π_quote](r) - Expectation[r, a:π](r)),
+                 γ ** Stack[t](t) @ Stack[t](Expectation[a:π_quote, s]((A_st_var._subs(s[t].bvar, s[t])._subs(a[t].bvar, a[t])))))
+
+
+@prove
+def prove(Eq):
+    from Lemma import Tensor, Random, Finset, Nat, Real
+
+    b, D = Symbol(integer=True, positive=True)
+    s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
+    a = Symbol(shape=(oo,), integer=True, random=True) # actions
+    r = Symbol(shape=(oo,), real=True, random=True) # rewards
+    π, π_quote = Symbol(shape=(D,), real=True) # trainable weights for the agent
+    t = Symbol(integer=True) # time step counter
+    V, Q, A = Function(real=True, shape=()) # State-Value Function, Action-Value Function, Advantage Function
+    γ = Symbol(domain=Interval(0, 1, right_open=True)) # Discount factor: penalty to uncertainty of future rewards; myopic for γ = 0; and far-sighted for γ = 1
+    *Eq[-4:], Eq.hypothesis = apply(
+                Equal(r[t] | s[:t] & a[:t], r[t]), # history-irrelevant conditional independence assumption for rewards based on states and actions
+                Equal((Q[π] ^ γ)(s[t].bvar, a[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t] & a[t])),
+                Equal((V[π] ^ γ)(s[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t])),
+                Equal((A[π] ^ γ)(s[t].bvar, a[t].bvar), (Q[π] ^ γ)(s[t].bvar, a[t].bvar) - (V[π] ^ γ)(s[t].bvar)),
+                π_quote)
+
+    Eq << Random.EqExpect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Eq_Sub.temporal_difference_residual.apply(*Eq[:4]).reversed
+
+    Eq << Eq[-1].subs(s[t].bvar, s[t]).subs(a[t].bvar, a[t])
+
+    Eq << Eq.hypothesis.subs(Eq[-1])
+
+    Eq << Eq[-1].this.rhs.find(Stack).apply(Random.Stack_Expect.eq.ExpectStack)
+
+    Eq << Eq[-1].this.rhs.apply(Random.Dot.eq.Expect)
+
+    Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Sum_MulGetS)
+
+    Eq << Eq[-1].this.rhs.find(Mul[Expectation]).apply(Random.Mul_Expect.eq.ExpectMul)
+
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
+
+    Eq << Eq[-1].this.find(Symbol * Pow).args[:2].apply(Real.MulPowS.eq.Pow_Add.of.Gt_0)
+
+    Eq << Eq[-1].this.rhs.find(Sum[~Expectation]).apply(Random.ExpectAdd.eq.AddExpectS)
+
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum_Add.eq.AddSumS)
+
+    Eq << Eq[-1].this.rhs.find(Expectation[Conditioned[Pow * Function]]).apply(Random.ExpectMul.eq.Mul_Expect)
+
+    Eq << Eq[-1].this.rhs.apply(Random.ExpectAdd.eq.AddExpectS)
+
+    Eq << Eq[-1].this.find(Expectation[-Sum]).apply(Random.ExpectMul.eq.Mul_Expect)
+
+    Eq << Eq[-1].this.find(Expectation[Sum[Expectation]]).apply(Random.ExpectSum.eq.Sum_Expect)
+
+    Eq << Eq[-1].this.find(Sum[~Expectation]).simplify()
+
+    Eq << Eq[-1].this.find(Sum[~Expectation]).apply(Random.Expect_Cond.eq.Expect.of.Integrable.Measurable)
+
+    Eq << Eq[-1].this.find(Sum[Expectation]).apply(Random.Sum_Expect.eq.ExpectSum)
+
+    Eq << Eq[-1].this.find(Expectation[~Sum]).apply(Tensor.Sum.eq.Dot)
+
+    Eq << Eq[-1].this.find(Expectation[MatMul]).apply(Random.ExpectDot.eq.Dot_Expect)
+
+    Eq << Eq[-1].this.find(Expectation[Sum]).apply(Random.ExpectSum.eq.Sum_Expect)
+
+    Eq << Eq[-1].this.find(Sum[~Expectation]).apply(Random.ExpectMul.eq.Mul_Expect)
+
+    Eq << Eq[-1].this.find(Sum[Mul[~Expectation]]).simplify()
+
+    Eq << Eq[-1].this.find(Sum[Mul[~Expectation]]).apply(Random.Expect_Cond.eq.Expect.of.Integrable.Measurable)
+
+    Eq << Eq[-1].this.find(Sum).apply(Finset.SumIco.eq.Sum_UFnAdd, -1)
+
+    Eq << Eq[-1].this.find(Expectation[Sum]).apply(Random.ExpectSum.eq.Sum_Expect)
+
+    Eq << Eq[-1].this.find(Sum[~Expectation]).apply(Random.ExpectMul.eq.Mul_Expect)
+
+    Eq << Eq[-1].this.find(-~Sum).apply(Finset.SumIco.eq.Add_SumIco.of.Lt)
+
+    Eq << Eq[2].subs(s[t].bvar, s[t]).subs(t, 0)
+
+    Eq << Eq[-2].subs(Eq[-1])
+
+    Eq << Eq[-1].this.find(Expectation[MatMul]).apply(Random.ExpectDot.eq.Dot_Expect)
+
+    Eq << Eq[-1].this.find(Expectation[Expectation]).apply(Random.Expect_Cond.eq.Expect.of.Integrable.Measurable)
+
+    Eq << Eq[-1].this.rhs.find(MatMul[~Stack]).apply(Tensor.Stack_PowGetS.eq.Pow)
+
+    Eq << Eq[-1].this.rhs.apply(Tensor.Add.eq.Dot)
+
+    # https://arxiv.org/pdf/1502.05477.pdf#page=10
+
+
+
+
+if __name__ == '__main__':
+    run()
+# created on 2023-04-12
+# updated on 2023-05-20
