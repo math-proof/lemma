@@ -39,7 +39,7 @@ def prove(Eq):
         Equal(r[t] | s[:t], r[t]), # history-irrelevant conditional independence assumption for rewards based on states
         γ, k)
 
-    Eq << Random.Integral_TSum_PowMul.eq.Integral_AddMul_Integral_TSum_MulPow.of.All_Eq_Joint.In_Ico0.apply(Eq[0])
+    Eq << Random.Integral_TSum_PowMul.eq.IntegralAddMul_V0.of.All_Eq_Joint.All_EqWithDensity.In_Ico0.apply(Eq[0])
 
     Eq << Eq[-1] * (1 - γ)
 

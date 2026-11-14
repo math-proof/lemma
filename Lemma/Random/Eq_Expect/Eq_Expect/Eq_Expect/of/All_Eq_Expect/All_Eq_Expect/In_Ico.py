@@ -75,7 +75,7 @@ def prove(Eq):
 
     Eq << Random.Indep.of.Indep_Joint.apply(Eq[0], 1)
 
-    Eq << Random.Integral_TSum_PowMul.eq.Integral_AddMul_Integral_TSum_MulPow.of.All_Eq_Joint.In_Ico0.apply(Eq[-1], γ, t, (a, π))
+    Eq << Random.Integral_TSum_PowMul.eq.IntegralAddMul_V0.of.All_Eq_Joint.All_EqWithDensity.In_Ico0.apply(Eq[-1], γ, t, (a, π))
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[2], Eq[-1])
 
