@@ -7,3 +7,4 @@ from . import Expect
 from . import given
 from . import ProbCond
 from . import Any_Eq_ExpectCondAdd_MulAndAny_Eq_ExpectCondAdd_Mul
+from . import Dot
