@@ -4,7 +4,7 @@ import Mathlib.Analysis.Complex.Basic
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
 import Class.Probability.Rv.Part3
-import Theorem.Probability.SymbolicProbability.Part2
+import Instance.Probability.SymbolicProbability.Part2
 open MeasureTheory
 
 
