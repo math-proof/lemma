@@ -18,7 +18,7 @@ def prove(Eq):
     n = Symbol(integer=True, nonnegative=True)  # total time step
     Eq << apply(Pr(s[:n] | Z), k)
 
-    Eq << Eq[0].this.rhs.apply(Random.Prod_ProbCond.eq.ProbCond)
+    Eq << Eq[0].this.rhs.apply(Random.Prod_Prob_Cond_Joint.ae.Prob_Cond.of.Measurable.All_Measurable)
 
     # https://arxiv.org/pdf/2309.16058.pdf# 3
 
