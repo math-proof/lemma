@@ -107,7 +107,7 @@ lemma det_alGL_pos [NeZero M] : 0 < ((W.alGL).det : ℝ) := by
   exact_mod_cast W.q_pos
 
 lemma σ_alGL_apply [NeZero M] (z : ℂ) : σ W.alGL z = z := by
-  rw [UpperHalfPlane.σ, if_pos W.det_alGL_pos]
+  rw [UpperHalfPlane.σ, ite_eq_left W.det_alGL_pos]
   simp
 
 def alGLQ [NeZero M] : GL (Fin 2) ℚ :=

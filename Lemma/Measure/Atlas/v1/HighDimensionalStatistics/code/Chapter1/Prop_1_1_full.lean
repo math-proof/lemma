@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open MeasureTheory Set Real Filter Topology ProbabilityTheory ENNReal Rigollet
+open MeasureTheory Set Real Filter Topology ProbabilityTheory ENNReal
 
 
 namespace Rigollet.Chapter1
@@ -57,7 +57,7 @@ lemma proposition_1_1_mills_prob_upper
     (√(2 * π))⁻¹ * ∫ x in Ioi t, rexp (-(x ^ 2 / 2)) := by
     have hf : (fun x => gaussianPDFReal 0 1 x) =
       (fun x => (√(2 * π))⁻¹ * rexp (-(x ^ 2 / 2))) := by
-      funext x; exact gaussianPDFReal_zero_one x
+      funext x; exact gaussianPDFReal_zero_one
     rw [hf, integral_const_mul]
   rw [h_eq]
   calc (√(2 * π))⁻¹ * ∫ x in Ioi t, rexp (-(x ^ 2 / 2))

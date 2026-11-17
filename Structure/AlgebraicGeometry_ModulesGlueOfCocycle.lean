@@ -35,9 +35,6 @@ namespace UnitCocycle
 variable {U : ι → X.Opens} (c : UnitCocycle U)
 
 
-variable (U) in
-
-
 end UnitCocycle
 
 namespace GlueOfCocycle
@@ -53,8 +50,6 @@ variable (c T)
 
 variable {T}
 
-
-set_option maxHeartbeats 400000 in
 
 end GlueOfCocycle
 

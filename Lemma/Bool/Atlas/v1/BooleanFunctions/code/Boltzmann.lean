@@ -488,8 +488,7 @@ namespace BooleanFourier
 lemma tensorization_half_boundary_left
   {α₁ : ℝ}
 -- given
-  (hα₁_pos : 0 < α₁)
-  (_hα₁_le : α₁ ≤ 1) :
+  (hα₁_pos : 0 < α₁) :
 -- imply
   (0 * (Real.log (1 / (0:ℝ)) / Real.log 2) + α₁ * (Real.log (1 / α₁) / Real.log 2)) / 2 + |α₁ - 0| ≥
     ((0 + α₁) / 2) * (Real.log (1 / ((0 + α₁) / 2)) / Real.log 2) := by
@@ -514,8 +513,7 @@ namespace BooleanFourier
 lemma tensorization_half_boundary_right
   {α₀ : ℝ}
 -- given
-  (hα₀_pos : 0 < α₀)
-  (_hα₀_le : α₀ ≤ 1) :
+  (hα₀_pos : 0 < α₀) :
 -- imply
   (α₀ * (Real.log (1 / α₀) / Real.log 2) + 0 * (Real.log (1 / (0:ℝ)) / Real.log 2)) / 2 + |0 - α₀| ≥
     ((α₀ + 0) / 2) * (Real.log (1 / ((α₀ + 0) / 2)) / Real.log 2) := by
@@ -585,7 +583,7 @@ lemma totalInfluence_ge_two_vol_log
       linarith
     have ih₀ := ih (f := restrict f false)
     have ih₁ := ih (f := restrict f true)
-    have h_bound := totalInfluence_restrict_bound
+    have h_bound := totalInfluence_restrict_bound (n := m) (f := f)
     have h_abs_eq : |vol (restrict f true) - vol (restrict f false)| = |α₁ - α₀| := by
       show |vol (restrict f true) - vol (restrict f false)| =
         |(1 - vol (restrict f true)) - (1 - vol (restrict f false))|
@@ -612,11 +610,11 @@ lemma totalInfluence_ge_two_vol_log
           rw [← hα₀_zero, ← hα₁_zero]; simp
         ·
           rw [← hα₀_zero]
-          exact tensorization_half_boundary_left (α₁ := α₁) hα₁_pos hα₁_le
+          exact tensorization_half_boundary_left (α₁ := α₁) hα₁_pos
       · rcases eq_or_lt_of_le hα₁_nn with (hα₁_zero | hα₁_pos)
         ·
           rw [← hα₁_zero]
-          exact tensorization_half_boundary_right (α₀ := α₀) hα₀_pos hα₀_le
+          exact tensorization_half_boundary_right (α₀ := α₀) hα₀_pos
         ·
           exact tensorization_half (α₀ := α₀) (α₁ := α₁) hα₀_pos hα₁_pos hα₀_le hα₁_le
     linarith

@@ -56,7 +56,7 @@ lemma isometry_det_sq_eq_one
 -- imply
   g.det ^ 2 = 1 := by
 -- proof
-  obtain h | h <;> simp [h] := isometry_det_eq_one_or_neg_one hQ hiso
+  exact (sq_eq_one_iff.mpr (isometry_det_eq_one_or_neg_one hQ hiso))
 
 end Garrett
 

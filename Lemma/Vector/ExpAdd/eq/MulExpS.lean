@@ -4,7 +4,7 @@ import Lemma.Vector.GetAdd.eq.AddGetS
 import Lemma.Vector.GetExp.eq.ExpGet
 import Lemma.Vector.GetMul.eq.MulGet
 import Lemma.Vector.GetMul.eq.MulGetS
-open Real Vector
+open Real Vector Exp
 
 
 @[path]

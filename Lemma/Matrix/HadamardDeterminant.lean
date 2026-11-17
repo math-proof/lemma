@@ -119,10 +119,10 @@ lemma hadamard_determinant_inequality
           have hOf : (e j).ofLp c = e j c := rfl
           rw [hL, hR, hOf]
         · have hrval : r.val ≠ m := by
-          intro hcon
-          apply hr
-          apply Fin.ext
-          rwa [hj_val]
+            intro hcon
+            apply hr
+            apply Fin.ext
+            rwa [hj_val]
           have hiff : (r.val < m + 1) ↔ (r.val < m) := by omega
           simp [hB_apply, hiff, Matrix.updateRow_ne, hr]
       have hBj : (B m) j = (v j).ofLp := by
@@ -229,7 +229,7 @@ lemma hadamard_determinant_inequality
     rw [h2] at h1
     have hsq : ‖E.det‖ * ‖E.det‖ = (‖E.det‖^2 : ℝ) := by ring
     rw [hsq] at h1
-    rwa [h3] at h1
+    exact h1.symm.trans h3
   have hnormA : (‖A.det‖^2 : ℝ) = ∏ i, (‖e i‖^2 : ℝ) := by
     rwa [←hdetE]
   have hle_sq : ∀ i, (‖e i‖^2 : ℝ) ≤ ‖v i‖^2 := by
@@ -319,4 +319,4 @@ end MathlibExt.LinearAlgebra.Matrix.HadamardDeterminant
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-16

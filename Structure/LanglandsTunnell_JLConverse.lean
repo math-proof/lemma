@@ -201,8 +201,6 @@ namespace JLData
 variable {S : Finset (HeightOneSpectrum (𝓞 K))}
   {epsS : ∀ v : HeightOneSpectrum (𝓞 K), (v.adicCompletion K)ˣ →* ℂˣ} {ω : (AdeleRing (𝓞 K) K)ˣ →* ℂˣ}
 
-open Classical in
-
 
 end JLData
 
@@ -219,9 +217,6 @@ section Wiring
 variable {K : Type} [Field K] [NumberField K]
 
 open NumberField NumberField.InfinitePlace NumberField.AdelicLevel AutomorphicForm
-
-
-open scoped Classical in
 
 
 variable {S : Finset (IsDedekindDomain.HeightOneSpectrum (𝓞 K))} {Pi : HeckeEigensystem K ℂ}

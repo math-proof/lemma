@@ -1,5 +1,6 @@
 import Syntax.Probability.Expectation.Elab
 import Initialize.Tactic.Attr.Basic
+import Theorem.Probability.SymbolicProbability
 open MeasureTheory
 
 

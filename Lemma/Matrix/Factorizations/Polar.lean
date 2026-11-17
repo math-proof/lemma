@@ -1,5 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Lemma.Matrix.Factorizations.SVD
 open scoped ComplexOrder
 
 
@@ -16,7 +17,7 @@ lemma exists_unitaryGroup_posSemidef
   ∃ (U : Matrix.unitaryGroup n ℂ) (P : Matrix n n ℂ),
     P.PosSemidef ∧ P * P = Aᴴ * A ∧ A = (U : Matrix n n ℂ) * P := by
 -- proof
-  obtain ⟨U, V, σ, hσ, hA⟩ := exists_unitaryGroup_diagonal_nonneg A
+  obtain ⟨U, V, σ, hσ, hA⟩ := exists_unitaryGroup_diagonal_nonneg (A := A)
   set D : Matrix n n ℂ := diagonal fun i => (σ i : ℂ)
   have hD : D.PosSemidef := PosSemidef.diagonal fun i => Complex.zero_le_real.2 (hσ i)
   have hDs : star D = D := by
@@ -55,11 +56,11 @@ namespace Matrix
 
 variable [Fintype n]
 variable {𝕜 : Type*} [RCLike 𝕜]
+open scoped MatrixOrder Classical in
 /--
 [polar_posDef_sqrt](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/Factorizations/Polar.lean)
 -/
 @[path]
-open scoped MatrixOrder Classical in
 private lemma polar_posDef_sqrt {Q : Matrix n n 𝕜} (hQ : Q.PosDef) :
   (CFC.sqrt Q).PosDef :=
 isStrictlyPositive_iff_posDef.mp hQ.isStrictlyPositive.sqrt
@@ -70,11 +71,11 @@ namespace Matrix
 
 variable [Fintype n]
 variable {𝕜 : Type*} [RCLike 𝕜]
+open scoped MatrixOrder Classical in
 /--
 [polar_sqrt_mul_self](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/Factorizations/Polar.lean)
 -/
 @[path]
-open scoped MatrixOrder Classical in
 private lemma polar_sqrt_mul_self {Q : Matrix n n 𝕜} (hQ : Q.PosDef) :
   CFC.sqrt Q * CFC.sqrt Q = Q :=
   CFC.sqrt_mul_sqrt_self Q hQ.posSemidef.nonneg
@@ -108,11 +109,11 @@ namespace Matrix
 
 variable [Fintype n]
 variable {𝕜 : Type*} [RCLike 𝕜]
+open scoped MatrixOrder Classical in
 /--
 [polar_eq_sqrt_of_posDef_sq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/Factorizations/Polar.lean)
 -/
 @[path]
-open scoped MatrixOrder Classical in
 private lemma polar_eq_sqrt_of_posDef_sq {P Q : Matrix n n 𝕜} (hP : P.PosDef)
   (hsq : P * P = Q) : P = CFC.sqrt Q :=
   (CFC.sqrt_unique hsq hP.posSemidef.nonneg).symm
@@ -161,20 +162,23 @@ end Matrix
 
 namespace Matrix
 
+open scoped MatrixOrder Classical in
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 800000 in
 /--
 [exists_unique_unitaryGroup_posDef_of_isUnit_det](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/Factorizations/Polar.lean)
 -/
 @[path]
 lemma exists_unique_unitaryGroup_posDef_of_isUnit_det
-  [Fintype n] [RCLike 𝕜] [DecidableEq n]
-  {A : Matrix n n 𝕜}
+  [Fintype n] [DecidableEq n]
+  {A : Matrix n n ℂ}
 -- given
   (hA : IsUnit A.det) :
 -- imply
-  ∃ (U : Matrix.unitaryGroup n 𝕜) (P : Matrix n n 𝕜),
-    P.PosDef ∧ A = (U : Matrix n n 𝕜) * P ∧
-    ∀ (U' : Matrix.unitaryGroup n 𝕜) (P' : Matrix n n 𝕜),
-    P'.PosDef → A = (U' : Matrix n n 𝕜) * P' → U' = U ∧ P' = P := by
+  ∃ (U : Matrix.unitaryGroup n ℂ) (P : Matrix n n ℂ),
+    P.PosDef ∧ A = (U : Matrix n n ℂ) * P ∧
+    ∀ (U' : Matrix.unitaryGroup n ℂ) (P' : Matrix n n ℂ),
+    P'.PosDef → A = (U' : Matrix n n ℂ) * P' → U' = U ∧ P' = P := by
 -- proof
   let Q := Aᴴ * A
   let P := CFC.sqrt Q
@@ -185,7 +189,7 @@ lemma exists_unique_unitaryGroup_posDef_of_isUnit_det
     simpa only [P] using polar_posDef_sqrt hQ
   have hPsq : P * P = Aᴴ * A := by
     simpa only [P, Q] using polar_sqrt_mul_self hQ
-  have hU : U ∈ unitaryGroup n 𝕜 := by
+  have hU : U ∈ unitaryGroup n ℂ := by
     simpa only [U] using polar_mul_inv_mem_unitaryGroup hP hPsq
   have hdecomp : A = U * P := by
     simpa only [U] using polar_mul_inv_mul hP
@@ -195,10 +199,59 @@ lemma exists_unique_unitaryGroup_posDef_of_isUnit_det
     apply polar_eq_sqrt_of_posDef_sq hP'
     simpa only [P, Q] using
       polar_sq_eq_conjTranspose_mul_self U'.property hP' hdecomp'
-  have hU'eq : (U' : Matrix n n 𝕜) = U := by
+  have hU'eq : (U' : Matrix n n ℂ) = U := by
     apply hP.isUnit.mul_right_cancel
     calc
-      (U' : Matrix n n 𝕜) * P = U' * P' := by rw [hP'eq]
+      (U' : Matrix n n ℂ) * P = U' * P' := by rw [hP'eq]
+      _ = A := hdecomp'.symm
+      _ = U * P := hdecomp
+  exact ⟨Subtype.ext hU'eq, hP'eq⟩
+
+end Matrix
+
+namespace Matrix
+
+open scoped MatrixOrder Classical in
+set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 800000 in
+/--
+Real specialisation of `exists_unique_unitaryGroup_posDef_of_isUnit_det`.
+`Matrix.orthogonalGroup n ℝ` is an abbreviation for `unitaryGroup n ℝ`.
+-/
+lemma exists_unique_unitaryGroup_posDef_of_isUnit_det_real
+  [Fintype n] [DecidableEq n]
+  {A : Matrix n n ℝ}
+-- given
+  (hA : IsUnit A.det) :
+-- imply
+  ∃ (U : Matrix.unitaryGroup n ℝ) (P : Matrix n n ℝ),
+    P.PosDef ∧ A = (U : Matrix n n ℝ) * P ∧
+    ∀ (U' : Matrix.unitaryGroup n ℝ) (P' : Matrix n n ℝ),
+    P'.PosDef → A = (U' : Matrix n n ℝ) * P' → U' = U ∧ P' = P := by
+-- proof
+  let Q := Aᴴ * A
+  let P := CFC.sqrt Q
+  let U := A * P⁻¹
+  have hQ : Q.PosDef := by
+    simpa only [Q] using polar_posDef_conjTranspose_mul_self A hA
+  have hP : P.PosDef := by
+    simpa only [P] using polar_posDef_sqrt hQ
+  have hPsq : P * P = Aᴴ * A := by
+    simpa only [P, Q] using polar_sqrt_mul_self hQ
+  have hU : U ∈ unitaryGroup n ℝ := by
+    simpa only [U] using polar_mul_inv_mem_unitaryGroup hP hPsq
+  have hdecomp : A = U * P := by
+    simpa only [U] using polar_mul_inv_mul hP
+  refine ⟨⟨U, hU⟩, P, hP, hdecomp, ?_⟩
+  intro U' P' hP' hdecomp'
+  have hP'eq : P' = P := by
+    apply polar_eq_sqrt_of_posDef_sq hP'
+    simpa only [P, Q] using
+      polar_sq_eq_conjTranspose_mul_self U'.property hP' hdecomp'
+  have hU'eq : (U' : Matrix n n ℝ) = U := by
+    apply hP.isUnit.mul_right_cancel
+    calc
+      (U' : Matrix n n ℝ) * P = U' * P' := by rw [hP'eq]
       _ = A := hdecomp'.symm
       _ = U * P := hdecomp
   exact ⟨Subtype.ext hU'eq, hP'eq⟩
@@ -207,4 +260,4 @@ end Matrix
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-16

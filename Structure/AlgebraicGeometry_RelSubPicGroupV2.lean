@@ -29,9 +29,6 @@ variable {C : Type u'} [Category.{v'} C] {R : Cᵒᵖ ⥤ CommRingCat.{u}}
   (F N : PresheafOfModules.{u} (R ⋙ forget₂ _ _))
 
 
-variable {F N} in
-
-
 variable {F N}
 
 
@@ -67,8 +64,6 @@ end PresheafOfModules.IsMonoidalW
 
 end
 
-open PresheafOfModules.IsMonoidalW in
-
 
 end LinkageInlined_68107509
 
@@ -85,7 +80,6 @@ namespace AlgebraicGeometry.Scheme.Modules
 
 end AlgebraicGeometry.Scheme.Modules
 
-open AlgebraicGeometry.Scheme.Modules in
 
 end LinkageInlined_7e0d42f8
 
@@ -121,8 +115,6 @@ namespace TrivializationBelow
 
 end TrivializationBelow
 
-variable (F) in
-
 
 end InvertibleDual
 
@@ -150,8 +142,6 @@ end
 
 
 end AlgebraicGeometry.Scheme.Modules
-
-open AlgebraicGeometry AlgebraicGeometry.Scheme.Modules in
 
 
 end LinkageInlined_23d4f55a

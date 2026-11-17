@@ -12,7 +12,6 @@ open MeasureTheory Real ProbabilityTheory BigOperators Finset Set
 -/
 @[path]
 lemma hoeffding_subgaussian_mgf
-  [a,b]
   [MeasurableSpace Ω]
   {μ : Measure Ω}
   [IsProbabilityMeasure μ]
@@ -37,7 +36,6 @@ lemma hoeffding_subgaussian_mgf
 -/
 @[path]
 lemma hoeffding_sum_upper_tail
-  [a,b]
   [MeasurableSpace Ω]
   {μ : Measure Ω}
   [IsProbabilityMeasure μ]
@@ -135,7 +133,6 @@ lemma hoeffding_sum_upper_tail
 -/
 @[path]
 lemma hoeffding_sum_lower_tail
-  [a,b]
   [MeasurableSpace Ω]
   {μ : Measure Ω}
   [IsProbabilityMeasure μ]
@@ -234,7 +231,6 @@ lemma hoeffding_sum_lower_tail
 -/
 @[path]
 lemma hoeffding_sample_mean_upper_tail
-  [a,b]
   [MeasurableSpace Ω]
   {μ : Measure Ω}
   [IsProbabilityMeasure μ]
@@ -297,7 +293,6 @@ lemma hoeffding_sample_mean_upper_tail
 -/
 @[path]
 lemma hoeffding_sample_mean_lower_tail
-  [a,b]
   [MeasurableSpace Ω]
   {μ : Measure Ω}
   [IsProbabilityMeasure μ]
@@ -360,7 +355,6 @@ lemma hoeffding_sample_mean_lower_tail
 -/
 @[path]
 lemma theorem_1_9_sample_mean
-  [a,b]
   [MeasurableSpace Ω]
   {μ : Measure Ω}
   [IsProbabilityMeasure μ]

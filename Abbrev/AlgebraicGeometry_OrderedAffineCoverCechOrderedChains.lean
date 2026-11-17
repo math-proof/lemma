@@ -1,5 +1,4 @@
 import Mathlib
-import Instance.AlgebraicGeometry_OrderedAffineCoverCech
 import Lemma.Scheme.OrderedAffineCoverCechCup
 import Lemma.Scheme.OrderedAffineCoverCochainPullback
 import Abbrev.AlgebraicGeometry_OrderedAffineCoverCechOrdered

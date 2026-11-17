@@ -1,6 +1,6 @@
-import Class.Dynamics.PolicyTrajectory.ContinuousAction
+import Class.Dynamics.PolicyTrajectory
 import Mathlib.MeasureTheory.Measure.Prod
-open MeasureTheory PolicyGradient PolicyGradient.DensityModel
+open MeasureTheory PolicyGradient PolicyGradient.Model
 
 
 /--
@@ -11,19 +11,19 @@ measure on `𝒮` (`μ.map Prod.snd ≪ (α.univ) • ν` and `c • ν ≪ ν`)
 @[path]
 private lemma main
   [ReferenceMeasure 𝒮] [ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
-  [htr : DensityModel.IsPolicyTrajectory M r s a]
-  [haj : DensityModel.AbsContJointAS M a s] :
-  DensityModel.AbsContStateMarginal M s := by
+  [htr : Model.IsPolicyTrajectory M r s a]
+  [haj : Model.AbsContJointAS M a s] :
+  Model.AbsContStateMarginal M s := by
 -- proof
   refine ⟨fun θ t => ?_⟩
   have hmeas : Measurable fun ω => (a t ω, s t ω) :=
     (htr.measurable_a t).prodMk (htr.measurable_s t)
-  have hmap : (M θ).map (s t) =
-      ((M θ).map (fun ω => (a t ω, s t ω))).map Prod.snd := by
+  have hmap : (M.traj θ).map (s t) =
+      ((M.traj θ).map (fun ω => (a t ω, s t ω))).map Prod.snd := by
     rw [Measure.map_map measurable_snd hmeas]
     rfl
   rw [hmap]
@@ -33,3 +33,4 @@ private lemma main
 
 
 -- created on 2026-11-03
+-- updated on 2026-11-16

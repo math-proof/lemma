@@ -12,21 +12,22 @@ Continuous-action counterpart of
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy]
 -- given
-  (h₀ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
+  (h₀ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π[θ] sₜ aₜ))
   (θ : Θ)
-  (x : 𝒮)
-  (u : 𝒜) :
+  (sₜ : 𝒮)
+  (aₜ : 𝒜) :
 -- imply
-  M.policy.prob θ x u • fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' x u)) θ =
-    fderiv ℝ (fun θ' => M.policy.prob θ' x u) θ := by
+  M.π[θ] sₜ aₜ • fderiv ℝ (fun θ' => Real.log (M.π[θ'] sₜ aₜ)) θ =
+    fderiv ℝ (fun θ' => M.π[θ'] sₜ aₜ) θ := by
 -- proof
-  if h : M.policy.prob θ x u = 0 then
+  if h : M.π[θ] sₜ aₜ = 0 then
     rw [h, zero_smul, Fderiv_FunProbPol.eq.Zero.of.ProbPolEq0.All_EqWithDensity
-      (π := M.policy) θ x u h]
+      (π := M.toPolicy) θ sₜ aₜ h]
   else
-    rw [fderiv.log ((h₀ x u) θ) h, smul_smul, mul_inv_cancel₀ h, one_smul]
+    rw [fderiv.log ((h₀ sₜ aₜ) θ) h, smul_smul, mul_inv_cancel₀ h, one_smul]
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-16

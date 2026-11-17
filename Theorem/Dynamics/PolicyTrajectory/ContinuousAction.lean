@@ -1,5 +1,5 @@
-import Theorem.Dynamics.PolicyTrajectory
-import Class.Probability.Rv.Part3
+import Structure.Dynamics.MarkovDecisionProcess
+import Class.Probability.Rv
 import Mathlib.Analysis.Calculus.Gradient.Basic
 import Mathlib.Probability.Kernel.WithDensity
 import Def.Order.Miscellaneous

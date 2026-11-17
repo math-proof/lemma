@@ -1,3 +1,4 @@
+import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Lemma.Random.GradVkd.eq.AddIntegral_SMul_Integral_SMul.of.All_EqWithDensity.All_Ge_0.All_Measurable.All_Measurable_Prob.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.In_Ico
 import Syntax.Algebra.BigOperators.Summations
 import Mathlib.MeasureTheory.Integral.Bochner.SumMeasure
@@ -25,44 +26,39 @@ private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
   [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Fintype 𝒮]
   [μ : ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {θ : Θ}
   {γ : ℝ}
   {t : ℕ}
   {«\sf{s}» : ℕ → 𝒮}
-  {g : 𝒮 → 𝒜 → ℝ}
   {p : 𝒮 → 𝒜 → 𝒮 → ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
-  (h₁ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
-  (h₂ : ∀ θ x u, ‖∇[θ] M.policy.prob θ x u‖ ≤ g x u)
-  (h₃ : ∀ x, Integrable (g x) μ.measure)
-  (h₄ : sup[x] ∫ u, g x u ∂μ.measure < ∞)
-  (h₅ : ∀ θ x, Measurable (M.policy.prob θ x))
-  (h₆ : ∀ x u y, (M.env.trans (x, u)).real {y} = p x u y) :
+  (h₁ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π[θ] sₜ aₜ))
+  (h₂ : sup[sₜ] (∫ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖) ∂μ.measure) < ∞)
+  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖))
+  (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) μ.measure)
+  (h₅ : ∀ θ x, Measurable (M.π[θ] x))
+  (h₆ : ∀ x u y, (M.trans (x, u)).toMeasure.real {y} = p x u y) :
 -- imply
   ∇[θ] M.V0 θ γ («\sf{s}» t) =
-    ∫ u, ((M.rkd («\sf{s}» t) u + γ * ∫ y, M.V0 θ γ y ∂(M.env.trans («\sf{s}» t, u))) •
-        ∇[θ] M.policy.prob θ («\sf{s}» t) u) ∂μ.measure +
+    ∫ u, ((M.rkd («\sf{s}» t) u + γ * ∫ y, M.V0 θ γ y ∂(M.trans («\sf{s}» t, u))) •
+        ∇[θ] M.π[θ] («\sf{s}» t) u) ∂μ.measure +
       γ • (∑ «\sf{s}» (t + 1), M.P1kd θ p («\sf{s}» t) («\sf{s}» (t + 1)) • ∇[θ] M.V0 θ γ («\sf{s}» (t + 1))) := by
 -- proof
   let : ReferenceMeasure 𝒮 := ReferenceMeasure.of Measure.count
-  have := M.env.trans_markov
-  have hT : ∀ x u, M.env.trans (x, u) =
-      (ReferenceMeasure.measure : Measure 𝒮).withDensity (fun y => ENNReal.ofReal (p x u y)) := by
+  have hT : ∀ x u, M.trans (x, u) =
+      ReferenceMeasure.measure.withDensity (fun y => ENNReal.ofReal (p x u y)) := by
     intro x u
-    show M.env.trans (x, u) = Measure.count.withDensity fun y => ENNReal.ofReal (p x u y)
+    show M.trans (x, u) = Measure.count.withDensity fun y => ENNReal.ofReal (p x u y)
     rw [Measure.ext_iff_singleton]
     intro y
     rw [withDensity_apply _ (measurableSet_singleton y), lintegral_singleton, Measure.count_singleton, mul_one, ← h₆,
       ofReal_measureReal]
   rw [GradVkd.eq.AddIntegral_SMul_Integral_SMul.of.All_EqWithDensity.All_Ge_0.All_Measurable.All_Measurable_Prob.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.In_Ico
-    (M := M) (θ := θ) (t := t) («\sf{s}» := «\sf{s}») h₀ h₁ h₂ h₃ h₄
-    (fun θ => measurable_from_prod_countable_right fun x => h₅ θ x)
-    (fun x => measurable_from_prod_countable_left fun y => by
+    (M := M) (θ := θ) (t := t) («\sf{s}» := «\sf{s}») h₀ h₁ h₂ hBdd hIntg (fun θ => measurable_from_prod_countable_right fun x => h₅ θ x) (fun x => measurable_from_prod_countable_left fun y => by
       simp_rw [← h₆]
-      apply ((M.env.trans.measurable_coe (measurableSet_singleton y)).comp measurable_prodMk_left).ennreal_toReal)
-    (fun x u y => by
+      apply ((M.transK.measurable_coe (measurableSet_singleton y)).comp measurable_prodMk_left).ennreal_toReal) (fun x u y => by
       rw [← h₆]
       apply measureReal_nonneg) hT]
   congr 2
@@ -70,4 +66,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-14
+-- updated on 2026-11-16

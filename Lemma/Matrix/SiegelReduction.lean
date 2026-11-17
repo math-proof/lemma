@@ -8,8 +8,8 @@ namespace AutomorphicForm
 
 namespace SiegelReduction
 
-open AutomorphicForm.WindowedSiegel Matrix.SiegelCoordinates Matrix.AdelicLevel
-  NumberField.InfinitePlace
+open AutomorphicForm.WindowedSiegel AutomorphicForm.SiegelCoordinates Matrix.AdelicLevel
+  NumberField.AdelicLevel NumberField.InfinitePlace
 
 variable (F : Type) [Field F] [NumberField F]
 
@@ -76,7 +76,7 @@ theorem archHeight_globalPoints_mul_mul_archHeight_le (γ : GL (Fin 2) F)
     _ ≤ ∏ w : InfinitePlace F,
           (w ((γ : Matrix (Fin 2) (Fin 2) F).det) / w ((γ : Matrix (Fin 2) (Fin 2) F) 1 0) ^ 2)
             ^ w.mult := by
-        refine Finset.prod_le_prod (fun w _ => pow_nonneg (hnonneg w) _) fun w _ => ?_
+        refine Finset.prod_le_prod₀ (fun w _ => pow_nonneg (hnonneg w) _) fun w _ => ?_
         exact pow_le_pow_left₀ (hnonneg w) (hplace w) _
     _ = (∏ w : InfinitePlace F, w ((γ : Matrix (Fin 2) (Fin 2) F).det) ^ w.mult)
           / (∏ w : InfinitePlace F, w ((γ : Matrix (Fin 2) (Fin 2) F) 1 0) ^ w.mult) ^ 2 := by

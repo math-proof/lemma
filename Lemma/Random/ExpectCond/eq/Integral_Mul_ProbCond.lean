@@ -2,6 +2,7 @@ import Mathlib.MeasureTheory.Measure.WithDensity
 import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
 import Syntax.Probability.Expectation.Elab
 import Instance.Analysis.Real.Numbers
+import Theorem.Probability.SymbolicProbability
 open MeasureTheory
 open scoped ENNReal.ToRealCoe
 
@@ -38,4 +39,4 @@ private lemma main
 
 
 -- created on 2026-09-18
--- updated on 2026-11-14
+-- updated on 2026-11-16

@@ -35,7 +35,7 @@ variable {n}
 /-- Treat `SmoothZeroAtInfty n` as a `FunLike` so that an element can be applied like a function. -/
 instance : FunLike (SmoothZeroAtInfty n) (EuclideanSpace ℝ (Fin n)) ℂ where
   coe := SmoothZeroAtInfty.toFun
-  coe_injective' f g h := by cases f; cases g; congr
+  coe_injective f g h := by cases f; cases g; congr
 
 end SmoothZeroAtInfty
 end PoissonEquation

@@ -305,9 +305,19 @@ export function implyGivenConsistencyTable(lemmaPath, options = {}) {
     lines.push(row(house.rhs, R));
   } else if (conj) {
     const picked = pickConjRegex(r.imply, conj);
-    for (let i = 0; i < conj.length; i++) {
-      const side = picked?.[i] || { regex: "_", consistent: false, suggested: false };
-      lines.push(row(conj[i], side));
+    if (picked) {
+      // Split on `/` only when imply published a conjunction regex.
+      // A slash-style stem like Eq/WithDensity_Pdf is one token, not two.
+      for (let i = 0; i < conj.length; i++) {
+        const side = picked[i] || { regex: "_", consistent: false, suggested: false };
+        lines.push(row(conj[i], side));
+      }
+    } else {
+      const implyPick = pickMatchingAlt(r.imply, implyTok, {
+        regex: r.implyHoleRegex || "_",
+        pad: holeRegexTrailingPad(r.implyHoleRegex || "_"),
+      });
+      lines.push(row(implyTok, implyPick));
     }
   } else {
     const implyPick = pickMatchingAlt(r.imply, implyTok, {
@@ -316,7 +326,7 @@ export function implyGivenConsistencyTable(lemmaPath, options = {}) {
     });
     lines.push(row(implyTok, implyPick));
   }
-  lines.push(row(givenTok, givenPick));
+  if (givenTok) lines.push(row(givenTok, givenPick));
   return lines.join("\n");
 }
 

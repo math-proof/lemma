@@ -2,7 +2,6 @@ import Mathlib.Data.Matrix.Mul
 import Mathlib.MeasureTheory.Integral.Lebesgue.Add
 import Mathlib.MeasureTheory.Measure.WithDensity
 import Theorem.Probability.CondExpectation
-import Theorem.Probability.JointRv.AsRV
 
 
 /--
@@ -15,12 +14,17 @@ Renamed out of `Expect_CondDot` (which is reserved for Tensor `⬝ᵥ` / `Dot.do
 | :---: | :---: |
 | path | Random.ExpectCondMulVec.eq.MulVec_ExpectCond |
 | comm | Random.MulVec_Expect_Cond.eq.Expect_CondMulVec |
+| attributes | lemma |
+| :---: | :---: |
+| path | Random.ExpectCondMulVec.eq.MulVec_ExpectCond |
+| comm | Random.MulVec_ExpectCond.eq.ExpectCondMulVec |
 -/
 @[path, comm]
 private lemma main
   [MeasurableSpace Ω]
   [MeasurableSpace α] [StandardBorelSpace α] [Nonempty α]
   [Countable α] [MeasurableSingletonClass α]
+  [MeasurableSpace γ]
   {π : MeasureTheory.Measure Ω} [MeasureTheory.IsFiniteMeasure π] {m n : ℕ}
   {a : Ω → α} {s : Ω → γ}
   {f : α → Fin n → ENNReal}
@@ -42,4 +46,4 @@ private lemma main
 
 
 -- created on 2026-09-23
--- updated on 2026-11-13
+-- updated on 2026-11-15

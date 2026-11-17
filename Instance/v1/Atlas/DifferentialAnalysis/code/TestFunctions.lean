@@ -51,7 +51,7 @@ variable {n : ℕ}
 /-- `SchwartzTestFunctionSpace n` coerces to functions `ℝⁿ → ℂ`. -/
 instance instFunLike : FunLike (SchwartzTestFunctionSpace n) (EuclideanSpace ℝ (Fin n)) ℂ where
   coe f := f.toFun
-  coe_injective' f g h := by cases f; cases g; congr
+  coe_injective f g h := by cases f; cases g; congr
 
 end SchwartzTestFunctionSpace
 end SchwartzSpace

@@ -1,4 +1,4 @@
-import Theorem.Dynamics.PolicyTrajectory.ContinuousAction.Part3
+import Theorem.Dynamics.PolicyTrajectory.ContinuousAction
 import Mathlib.Probability.Kernel.MeasurableIntegral
 open MeasureTheory PolicyGradient
 
@@ -9,17 +9,16 @@ open MeasureTheory PolicyGradient
 @[path]
 private lemma main
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜} :
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M] :
 -- imply
   Measurable (fun z : 𝒮 × 𝒜 => M.rkd z.1 z.2) := by
 -- proof
-  have := M.env.reward_markov
-  simp only [DensityModel.rkd]
-  apply (StronglyMeasurable.integral_kernel_prod_right' (κ := M.env.reward)
-    (f := fun z : (𝒮 × 𝒜) × ℝ => clip z.2 (-M.env.R) M.env.R) _).measurable
+  simp only [Model.rkd]
+  apply (StronglyMeasurable.integral_kernel_prod_right' (κ := M.rewardK)
+    (f := fun z : (𝒮 × 𝒜) × ℝ => clip z.2 (-M.R) M.R) _).measurable
   unfold clip
   apply ((measurable_snd.max measurable_const).min measurable_const).stronglyMeasurable
 
 
 -- created on 2026-10-07
--- updated on 2026-11-11
+-- updated on 2026-11-16

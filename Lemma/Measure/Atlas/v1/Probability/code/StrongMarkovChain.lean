@@ -64,7 +64,8 @@ lemma strong_markov_chain
   (hY_meas : ∀ n, @Measurable _ _ MeasurableSpace.pi _ (Y n))
   (hY_bdd : ∃ C : ℝ, ∀ n ω, |Y n ω| ≤ C) :
 -- imply
-  let P_μ := MarkovChainPathMeasure S μ κ @condExp (ℕ → S) ℝ hT.measurableSpace MeasurableSpace.pi _ _ _ P_μ (fun ω => Y (T ω) (stoppedPathShift T ω)) =ᵐ[P_μ] fun ω => markovExpectation S κ (Y (T ω)) (ω (T ω)) := by
+  let P_μ := MarkovChainPathMeasure S μ κ
+  @condExp (ℕ → S) ℝ hT.measurableSpace MeasurableSpace.pi _ _ _ P_μ (fun ω => Y (T ω) (stoppedPathShift T ω)) =ᵐ[P_μ] fun ω => markovExpectation S κ (Y (T ω)) (ω (T ω)) := by
 -- proof
   intro P_μ
   haveI : @IsFiniteMeasure (ℕ → S) MeasurableSpace.pi P_μ :=

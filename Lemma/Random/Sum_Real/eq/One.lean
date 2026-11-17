@@ -7,15 +7,15 @@ The initial state distribution of the trajectory model sums to `1`.
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S] [MeasurableSpace A] [Fintype A]
-  {M : Model Θ S A} :
+  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Fintype 𝒮]
+  [ReferenceMeasure 𝒜]
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] :
 -- imply
-  ∑ x, M.env.init.real {x} = 1 := by
+  ∑ x, M.init.toMeasure.real {x} = 1 := by
 -- proof
-  have := M.env.init_prob
   rw [sum_measureReal_singleton]
   simp
 
 
 -- created on 2026-10-06
--- updated on 2026-11-13
+-- updated on 2026-11-16

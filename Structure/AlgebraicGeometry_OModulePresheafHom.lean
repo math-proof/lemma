@@ -1,6 +1,6 @@
 import Mathlib
 
-import Instance.AlgebraicGeometry_OrderedAffineCoverCech
+import Structure.AlgebraicGeometry_OrderedAffineCoverCech
 import Mathlib.AlgebraicGeometry.Morphisms.Separated
 
 set_option autoImplicit false
@@ -61,17 +61,11 @@ namespace Hom
 variable {F G H : OModulePresheaf π}
 
 
-variable (F) in
-
-
 end Hom
 
 namespace AffHom
 
 variable {F G H : OModulePresheaf π}
-
-
-variable (F) in
 
 
 end AffHom

@@ -1,11 +1,47 @@
 import Mathlib
-import Lemma.Finset.ContinuousUnramified
-
+import Lemma.Submodule.ContinuousH2
+import Lemma.Rep.ContinuousH1
 set_option autoImplicit false
+open CategoryTheory
+
 
 noncomputable section
 
-open CategoryTheory
+namespace IntermediateField
+
+def IsUnramifiedOutside (F : IntermediateField ℚ (AlgebraicClosure ℚ)) (S : Finset Nat.Primes) : Prop :=
+  FiniteDimensional ℚ F ∧ ∀ q : Nat.Primes, q ∉ S → ∀ A : ValuationSubring (AlgebraicClosure ℚ),
+    (q : AlgebraicClosure ℚ) ∈ A.nonunits →
+    (A.inertiaSubgroup ℚ).map (A.decompositionSubgroup ℚ).subtype ≤ F.fixingSubgroup
+
+lemma isUnramifiedOutside_bot (S : Finset Nat.Primes) :
+    (⊥ : IntermediateField ℚ (AlgebraicClosure ℚ)).IsUnramifiedOutside S := by
+  refine ⟨inferInstance, fun q _ A _ σ _ => ?_⟩
+  rw [IntermediateField.mem_fixingSubgroup_iff]
+  rintro x hx
+  obtain ⟨r, rfl⟩ := IntermediateField.mem_bot.1 hx
+  exact σ.commutes r
+
+lemma IsUnramifiedOutside.sup {S : Finset Nat.Primes} {F F' : IntermediateField ℚ (AlgebraicClosure ℚ)}
+    (hF : F.IsUnramifiedOutside S) (hF' : F'.IsUnramifiedOutside S) : (F ⊔ F').IsUnramifiedOutside S := by
+  have := hF.1
+  have := hF'.1
+  refine ⟨IntermediateField.finiteDimensional_sup F F', fun q hq A hA σ hσ => ?_⟩
+  rw [IntermediateField.fixingSubgroup_sup]
+  exact ⟨hF.2 q hq A hA hσ, hF'.2 q hq A hA hσ⟩
+
+lemma IsUnramifiedOutside.mono {S S' : Finset Nat.Primes} (h : S ⊆ S') {F : IntermediateField ℚ (AlgebraicClosure ℚ)}
+    (hF : F.IsUnramifiedOutside S) : F.IsUnramifiedOutside S' :=
+  ⟨hF.1, fun q hq A hA => hF.2 q (fun hqS => hq (h hqS)) A hA⟩
+
+lemma IsUnramifiedOutside.of_le {S : Finset Nat.Primes} {F F' : IntermediateField ℚ (AlgebraicClosure ℚ)} (hle : F' ≤ F)
+    (hF : F.IsUnramifiedOutside S) : F'.IsUnramifiedOutside S := by
+  have := hF.1
+  exact ⟨FiniteDimensional.of_injective (IntermediateField.inclusion hle).toLinearMap
+      (IntermediateField.inclusion_injective hle),
+    fun q hq A hA => (hF.2 q hq A hA).trans (IntermediateField.fixingSubgroup_antitone hle)⟩
+
+end IntermediateField
 
 namespace groupCohomology
 
@@ -19,6 +55,15 @@ def IsLevelConstantSr₁ {X : Type*} (f : G → X) : Prop :=
 def IsLevelConstantSr₂ {X : Type*} (f : G × G → X) : Prop :=
   ∃ F : IntermediateField ℚ (AlgebraicClosure ℚ), F.IsUnramifiedOutside S ∧
     ∀ g g' s s' : G, r s ∈ F.fixingSubgroup → r s' ∈ F.fixingSubgroup → f (g * s, g' * s') = f (g, g')
+
+def IsLevelConstantS₁ {X : Type*} (f : (AlgebraicClosure ℚ ≃ₐ[ℚ] AlgebraicClosure ℚ) → X) : Prop :=
+  ∃ F : IntermediateField ℚ (AlgebraicClosure ℚ), F.IsUnramifiedOutside S ∧
+    ∀ g s, s ∈ F.fixingSubgroup → f (g * s) = f g
+
+def IsLevelConstantS₂ {X : Type*}
+    (f : (AlgebraicClosure ℚ ≃ₐ[ℚ] AlgebraicClosure ℚ) × (AlgebraicClosure ℚ ≃ₐ[ℚ] AlgebraicClosure ℚ) → X) : Prop :=
+  ∃ F : IntermediateField ℚ (AlgebraicClosure ℚ), F.IsUnramifiedOutside S ∧
+    ∀ g g' s s', s ∈ F.fixingSubgroup → s' ∈ F.fixingSubgroup → f (g * s, g' * s') = f (g, g')
 
 lemma isLevelConstantSr₁_id_iff {X : Type*} (f : (AlgebraicClosure ℚ ≃ₐ[ℚ] AlgebraicClosure ℚ) → X) :
     IsLevelConstantSr₁ (MonoidHom.id _) S f ↔ IsLevelConstantS₁ S f := Iff.rfl

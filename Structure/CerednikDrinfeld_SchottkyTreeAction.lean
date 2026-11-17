@@ -52,15 +52,6 @@ variable {𝒯}
 end IsTreeLattice
 
 
-variable {𝒯} in
-
-
-variable {𝒯} in
-
-
-open scoped Classical in
-
-
 section lemmas
 
 variable [DecidableEq (QuotEdge G 𝒯)] {E : Type} (orb : E → QuotEdge G 𝒯)

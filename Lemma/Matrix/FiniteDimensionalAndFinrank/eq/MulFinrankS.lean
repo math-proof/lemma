@@ -113,10 +113,9 @@ lemma isAlgebraic_iff_adjoin_finiteDimensional
   · exact IntermediateField.adjoin.finiteDimensional
   · intro h
     have hgen := IsIntegral.of_finite K (IntermediateField.AdjoinSimple.gen K α)
-    have hcast : (algebraMap (↥(IntermediateField.adjoin K {α})) L)
-      (IntermediateField.AdjoinSimple.gen K α) = α :=
-      IntermediateField.AdjoinSimple.algebraMap_gen K α
-    rwa [← hcast]
+    have hcast := IntermediateField.AdjoinSimple.algebraMap_gen K α
+    exact hcast ▸ (IsIntegral.map
+      (IsScalarTower.toAlgHom K (IntermediateField.adjoin K {α}) L) hgen)
 
 end FieldExtensions
 

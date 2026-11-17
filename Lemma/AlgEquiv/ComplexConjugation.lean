@@ -1,8 +1,12 @@
 import Mathlib
-import Instance.GaloisRep_ComplexConjugation
 import Def.GaloisRep_ComplexConjugation
 
 set_option autoImplicit false
+
+noncomputable local instance : Algebra (AlgebraicClosure ℚ) ℂ :=
+  complexEmbedding.toRingHom.toAlgebra
+local instance : IsScalarTower ℚ (AlgebraicClosure ℚ) ℂ :=
+  IsScalarTower.of_algebraMap_eq' (Subsingleton.elim _ _)
 
 
 @[simp] lemma complexConjAlgEquiv_apply (z : ℂ) : complexConjAlgEquiv z = starRingEnd ℂ z := rfl

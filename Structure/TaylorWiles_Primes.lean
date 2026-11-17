@@ -28,8 +28,6 @@ abbrev ratPrimeIdeal (ℓ : ℕ) : Ideal ℤ := Ideal.span {(ℓ : ℤ)}
 
 variable {L}
 
-omit [IsGalois ℚ L] in
-
 
 variable (L)
 
@@ -47,8 +45,6 @@ open NumberField Ideal FrobeniusDensity
 
 variable {L : Type*} [Field L] [NumberField L] [IsGalois ℚ L]
 variable {𝕜 : Type*} [Field 𝕜]
-
-variable (L) in
 
 
 variable (ρ : ResidualRep L 𝕜) (p n : ℕ)

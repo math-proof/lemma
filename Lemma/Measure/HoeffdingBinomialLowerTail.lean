@@ -30,7 +30,7 @@ lemma hoeffding_binomial_lower_tail
     intro i
     refine MeasureTheory.Integrable.of_bound ((hmeas i).aestronglyMeasurable) 1 ?_
     filter_upwards [hBernoulli i] with ω hω
-    obtain h | h <;> rw [h] <;> simp := hω
+    rcases hω with h | h <;> simp [h]
   -- Centered variables have mean zero.
   have hYint : ∀ i, ∫ ω, (X i ω - p) ∂μ = 0 := by
     intro i

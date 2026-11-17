@@ -8,14 +8,17 @@ namespace FLT.SpectralSide
 
 theorem gl2_compactSpace (R : Type*) [CommRing R] [TopologicalSpace R]
     [IsTopologicalRing R] [T2Space R] [CompactSpace R] :
-    CompactSpace (GL (Fin 2) R) := inferInstance
+    CompactSpace (GL (Fin 2) R) := by
+  have : CompactSpace (Matrix (Fin 2) (Fin 2) R) :=
+    inferInstanceAs (CompactSpace (Fin 2 → Fin 2 → R))
+  exact Units.isClosedEmbedding_embedProduct.compactSpace
 
 theorem isCompact_coe_integralSubgroup (R : Type*) [CommRing R] [TopologicalSpace R]
     [IsTopologicalRing R] [T2Space R] [CompactSpace R]
     (K : Type*) [Field K] [Algebra R K] [TopologicalSpace K]
     (hcont : Continuous (algebraMap R K)) :
     IsCompact ((LocalGL2.integralSubgroup R K : Set (GL (Fin 2) K))) := by
-  haveI : CompactSpace (GL (Fin 2) R) := gl2_compactSpace R
+  have : CompactSpace (GL (Fin 2) R) := gl2_compactSpace R
   have hmapcont : Continuous (Matrix.GeneralLinearGroup.map (n := Fin 2) (algebraMap R K)) := by
     unfold Matrix.GeneralLinearGroup.map
     refine Continuous.units_map _ ?_
@@ -35,3 +38,4 @@ theorem compactSpace_integralSubgroup_padic (p : ℕ) [Fact p.Prime] :
   isCompact_iff_compactSpace.mp (isCompact_coe_integralSubgroup_padic p)
 
 end FLT.SpectralSide
+-- updated on 2026-11-16

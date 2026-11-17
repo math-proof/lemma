@@ -2,6 +2,9 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 open Matrix Module.End LinearMap Submodule Complex
 
+set_option maxHeartbeats 800000
+set_option synthInstance.maxHeartbeats 400000
+
 
 namespace SpectralTheorem
 
@@ -40,8 +43,8 @@ lemma normal_complex_unitarily_diagonalizable
     ext i j
     simp only [hH_def, hK_def, Matrix.smul_apply, Matrix.add_apply, Matrix.sub_apply, smul_eq_mul]
     ring_nf; simp [I_sq]; ring
-  have hTh_sym : (toEuclideanLin H).IsSymmetric := isHermitian_iff_isSymmetric.mp hH_herm
-  have hTk_sym : (toEuclideanLin K).IsSymmetric := isHermitian_iff_isSymmetric.mp hK_herm
+  have hTh_sym : (toEuclideanLin H).IsSymmetric := isSymmetric_toEuclideanLin_iff.mpr hH_herm
+  have hTk_sym : (toEuclideanLin K).IsSymmetric := isSymmetric_toEuclideanLin_iff.mpr hK_herm
   have hHK : H * K = K * H := by
     have key : (M + M.conjTranspose) * (M - M.conjTranspose) =
       (M - M.conjTranspose) * (M + M.conjTranspose) := by
@@ -57,7 +60,7 @@ lemma normal_complex_unitarily_diagonalizable
   have horth := hTh_sym.orthogonalFamily_eigenspace_inf_eigenspace hTk_sym
   set W : ℂ × ℂ → Submodule ℂ (EuclideanSpace ℂ n) :=
     fun p => eigenspace (toEuclideanLin H) p.2 ⊓ eigenspace (toEuclideanLin K) p.1
-  haveI : Finite {p : ℂ × ℂ // W p ≠ ⊥} := by
+  have : Finite {p : ℂ × ℂ // W p ≠ ⊥} := by
     apply Finite.of_injective
       (fun (s : {p : ℂ × ℂ // W p ≠ ⊥}) =>
         (show Eigenvalues (toEuclideanLin K) from
@@ -65,12 +68,15 @@ lemma normal_complex_unitarily_diagonalizable
           show Eigenvalues (toEuclideanLin H) from
             ⟨s.1.2, hasEigenvalue_iff.mpr (ne_bot_of_le_ne_bot s.2 inf_le_left)⟩))
     intro a b hab
-    simp only [Prod.mk.injEq] at hab
-    exact Subtype.ext (Prod.ext (congrArg Subtype.val hab.1) (congrArg Subtype.val hab.2))
-  haveI : Fintype {p : ℂ × ℂ // W p ≠ ⊥} := Fintype.ofFinite _
+    exact Subtype.ext (Prod.ext (congrArg Subtype.val (congrArg Prod.fst hab))
+      (congrArg Subtype.val (congrArg Prod.snd hab)))
+  have : Fintype {p : ℂ × ℂ // W p ≠ ⊥} := Fintype.ofFinite _
   have hdecomp' : DirectSum.IsInternal (fun (s : {p : ℂ × ℂ // W p ≠ ⊥}) => W s.1) :=
     (horth.comp Subtype.val_injective).isInternal_iff.mpr
-      (by rw [show (⨆ s : {p : ℂ × ℂ // W p ≠ ⊥}, W s.1) = ⨆ p, W p from iSup_ne_bot_subtype W]
+      (by
+        have hsup : (⨆ s : {p : ℂ × ℂ // W p ≠ ⊥}, W s.1) = (⨆ p, W p) :=
+          iSup_ne_bot_subtype W
+        rw [hsup]
         exact horth.isInternal_iff.mp hdecomp)
   have horth' := horth.comp (Subtype.val_injective (α := ℂ × ℂ) (p := fun p => W p ≠ ⊥))
   set basis₀ := hdecomp'.subordinateOrthonormalBasis (finrank_euclideanSpace (ι := n)) horth'
@@ -133,7 +139,7 @@ lemma spectral_theorem
   (∀ (M : Matrix n n ℂ), IsStarNormal M → ∃ (P : Matrix n n ℂ) (_ : P ∈ Matrix.unitaryGroup n ℂ) (d : n → ℂ), (star P) * M * P = diagonal d) ∧ (∀ (M : Matrix n n ℝ), M.IsSymm → ∃ (P : Matrix n n ℝ) (_ : P ∈ Matrix.unitaryGroup n ℝ) (d : n → ℝ), (star P) * M * P = diagonal d) ∧ (∀ (M : Matrix n n ℂ), M.IsHermitian → spectrum ℂ M ⊆ Set.range Complex.ofReal) := by
 -- proof
   refine ⟨?_, ?_, ?_⟩
-  · exact fun M hM => normal_complex_unitarily_diagonalizable M hM
+  · exact fun M hM => normal_complex_unitarily_diagonalizable (M := M) hM
   · intro M hM
     have hH : M.IsHermitian := by
       rwa [Matrix.IsHermitian, conjTranspose_eq_transpose_of_trivial]
@@ -144,12 +150,15 @@ lemma spectral_theorem
     simp only [RCLike.ofReal_real_eq_id, Unitary.conjStarAlgAut_apply] at hspec
     have hUU' : star U * U = 1 :=
       mem_unitaryGroup_iff'.mp hH.eigenvectorUnitary.property
-    have hM_eq : M = U * diagonal (id ∘ d) * star U := hspec
+    have hM_eq : M = U * diagonal d * star U := by
+      convert hspec
+      ext
+      rfl
     rw [hM_eq]
-    have hassoc : star U * (U * diagonal (id ∘ d) * star U) * U
-      = (star U * U) * diagonal (id ∘ d) * (star U * U) := by
+    have hassoc : star U * (U * diagonal d * star U) * U
+      = (star U * U) * diagonal d * (star U * U) := by
       simp only [Matrix.mul_assoc]
-    rw [hassoc, hUU', Matrix.one_mul, Matrix.mul_one, Function.id_comp]
+    rw [hassoc, hUU', Matrix.one_mul, Matrix.mul_one]
   · intro M hM
     rw [hM.spectrum_eq_image_range]
     intro x hx
@@ -160,3 +169,4 @@ end SpectralTheorem
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-16

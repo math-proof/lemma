@@ -1,6 +1,6 @@
 import Lemma.Random.All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity
 import Lemma.Random.NormVkd.le.MulInvSub1Abs_R.of.In_Ico
-open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.DensityModel Random
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -11,7 +11,7 @@ Almost surely every temporal-difference residual
 @[path]
 private lemma main
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {γ : ℝ}
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
@@ -21,14 +21,14 @@ private lemma main
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (θ : Θ) :
 -- imply
-  ∀ᵐ ω ∂(M θ), ∀ j, ‖r j ω + γ * M.V0 θ γ (s (j + 1) ω) - M.V0 θ γ (s j ω)‖ ≤
-    (3 / (1 - γ) - 1) * |M.env.R| := by
+  ∀ᵐ ω ∂(M.traj θ), ∀ j, ‖r j ω + γ * M.V0 θ γ (s (j + 1) ω) - M.V0 θ γ (s j ω)‖ ≤
+    (3 / (1 - γ) - 1) * |M.R| := by
 -- proof
   filter_upwards [All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity h₁ (M := M) θ] with ω hr j
   calc
     _ ≤ ‖r j ω‖ + ‖γ * M.V0 θ γ (s (j + 1) ω)‖ + ‖M.V0 θ γ (s j ω)‖ :=
       (norm_sub_le _ _).trans (by gcongr; apply norm_add_le)
-    _ ≤ (3 / (1 - γ) - 1) * |M.env.R| := by
+    _ ≤ (3 / (1 - γ) - 1) * |M.R| := by
       rw [norm_mul, Real.norm_of_nonneg h₀.1]
       apply le_trans
       ·
@@ -41,7 +41,7 @@ private lemma main
         · apply NormVkd.le.MulInvSub1Abs_R.of.In_Ico (M := M) h₀
       ·
         have hpos : 0 < 1 - γ := sub_pos.mpr h₀.2
-        refine (le_of_eq (b := (2 * (1 - γ)⁻¹) * |M.env.R|) ?_).trans ?_
+        refine (le_of_eq (b := (2 * (1 - γ)⁻¹) * |M.R|) ?_).trans ?_
         ·
           field_simp [hpos.ne']
           ring
@@ -52,4 +52,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-11
+-- updated on 2026-11-16

@@ -9,7 +9,7 @@ open scoped Classical
 [lp_single_linearIndependent](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/SL2CRepresentations.lean)
 -/
 @[path]
-lemma lp_single_linearIndependent
+lemma lp_single_linearIndependent :
 -- imply
   LinearIndependent ℂ (fun i : ℕ => lp.single 2 i (1 : ℂ)) := by
 -- proof
@@ -30,7 +30,7 @@ lemma lp_single_linearIndependent
 [lp_not_finiteDimensional](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/SL2CRepresentations.lean)
 -/
 @[path]
-lemma lp_not_finiteDimensional
+lemma lp_not_finiteDimensional :
 -- imply
   ¬ FiniteDimensional ℂ (lp (fun _ : ℕ => ℂ) 2) := by
 -- proof
@@ -43,7 +43,7 @@ lemma lp_not_finiteDimensional
 [no_liso_lp_complex](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/SL2CRepresentations.lean)
 -/
 @[path]
-lemma no_liso_lp_complex
+lemma no_liso_lp_complex :
 -- imply
   IsEmpty (lp (fun _ : ℕ => ℂ) 2 ≃ₗᵢ[ℂ] ℂ) := by
 -- proof
@@ -55,3 +55,4 @@ lemma no_liso_lp_complex
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-16

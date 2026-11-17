@@ -6,7 +6,7 @@ import Lemma.Random.NormVkd.le.MulInvSub1Abs_R.of.In_Ico
 import Lemma.Random.Measurable_Vkd.of.All_Measurable_Prob
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Real.Eq_0.Lim.of.LtAbs.GtInftySup
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Filter Topology Random Measure Real
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure Real
 set_option maxHeartbeats 400000
 
 
@@ -20,12 +20,11 @@ Continuous-action counterpart of the `key` step in
 -/
 @[path]
 private lemma main
-  [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [FiniteDimensional ℝ Θ]
+  [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
   [MeasurableSpace 𝒮] [μ : ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {θ : Θ}
   {γ : ℝ}
-  {g : 𝒮 → 𝒜 → ℝ}
   {Ms : ℝ}
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
@@ -33,26 +32,26 @@ private lemma main
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
-  (h₃ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ g x u)
-  (h₄ : ∀ x, Integrable (g x) μ.measure)
-  (h₅ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.policy.prob θ z.1 z.2))
+  (h₂ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π[θ] sₜ aₜ))
+  (h₃ : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) μ.measure)
+  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖))
+  (h₅ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π[θ] z.1 z.2))
   (hφ : StronglyMeasurable
-    (fun z : 𝒮 × 𝒜 => fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' z.1 z.2)) θ))
-  (hMs : ∀ y u, ‖fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' y u)) θ‖ ≤ Ms) :
+    (fun z : 𝒮 × 𝒜 => fderiv ℝ (fun θ' => Real.log (M.π[θ'] z.1 z.2)) θ))
+  (hMs : ∀ y u, ‖fderiv ℝ (fun θ' => Real.log (M.π[θ'] y u)) θ‖ ≤ Ms) :
 -- imply
   ∑' t, γ ^ t • ∫ ω, (∑' k, γ ^ k * r (t + k) ω) •
-      fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) =
+      fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ ∂(M.traj θ) =
     ∑' t, γ ^ t • ∫ ω, (∑' k, γ ^ k * (r (t + k) ω + γ * M.V0 θ γ (s (t + k + 1) ω) -
       M.V0 θ γ (s (t + k) ω))) •
-        fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
+        fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ ∂(M.traj θ) := by
 -- proof
   classical
   obtain ⟨B, hBd⟩ : ∃ B : ℝ, ∀ x, |M.V0 θ γ x| ≤ B :=
-    ⟨(1 - γ)⁻¹ * |M.env.R|, fun x => by
+    ⟨(1 - γ)⁻¹ * |M.R|, fun x => by
       simpa [Real.norm_eq_abs] using NormVkd.le.MulInvSub1Abs_R.of.In_Ico (M := M) h₀ θ x⟩
   refine tsum_congr fun t => congrArg (fun z => γ ^ t • z) ?_
-  have h₉ : ∀ᵐ ω ∂(M θ), ∑' k, γ ^ k * (r (t + k) ω + γ * M.V0 θ γ (s (t + k + 1) ω) -
+  have h₉ : ∀ᵐ ω ∂(M.traj θ), ∑' k, γ ^ k * (r (t + k) ω + γ * M.V0 θ γ (s (t + k + 1) ω) -
       M.V0 θ γ (s (t + k) ω)) = (∑' k, γ ^ k * r (t + k) ω) - M.V0 θ γ (s t ω) := by
     filter_upwards [All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity h₁ (M := M) θ] with ω hr
     have hb : ∀ k, |M.V0 θ γ (s k ω)| ≤ B := fun k => hBd _
@@ -66,7 +65,7 @@ private lemma main
       rw [show t + (k + 1) = t + k + 1 by omega]
       ring
     have hG : Summable fun k => γ ^ k * r (t + k) ω := by
-      refine Summable.of_norm_bounded ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right |M.env.R|)
+      refine Summable.of_norm_bounded ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right |M.R|)
         fun k => ?_
       rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
       exact mul_le_mul_of_nonneg_left (hr _) (pow_nonneg h₀.1 k)
@@ -92,13 +91,13 @@ private lemma main
     ring
   have hmeasV : Measurable (M.V0 θ γ) := Measurable_Vkd.of.All_Measurable_Prob (M := M) h₅ θ γ
   have hscore_sm : StronglyMeasurable fun ω =>
-      fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ :=
+      fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ :=
     hφ.comp_measurable
       ((Random.Measurable.of.All_Eq.snd.fst h₁ t).prodMk
         (Random.Measurable.of.All_Eq.snd.snd h₁ t))
   have hIntG : Integrable (fun ω => (∑' k, γ ^ k * r (t + k) ω) •
-      fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ) (M θ) := by
-    refine Integrable.of_bound (C := (1 - γ)⁻¹ * |M.env.R| * Ms) ?_ ?_
+      fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ) (M.traj θ) := by
+    refine Integrable.of_bound (C := (1 - γ)⁻¹ * |M.R| * Ms) ?_ ?_
     ·
       exact ((Measurable.tsum (L := SummationFilter.unconditional ℕ) fun k =>
         (Random.Measurable.of.All_Eq.fst h₁ (t + k)).const_mul (γ ^ k)).stronglyMeasurable.smul
@@ -106,13 +105,13 @@ private lemma main
     ·
       filter_upwards [All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity h₁ (M := M) θ] with ω hr
       rw [norm_smul]
-      have hret : ‖∑' k, γ ^ k * r (t + k) ω‖ ≤ (1 - γ)⁻¹ * |M.env.R| :=
-        tsum_of_norm_bounded ((hasSum_geometric_of_lt_one h₀.1 h₀.2).mul_right |M.env.R|) fun k => by
+      have hret : ‖∑' k, γ ^ k * r (t + k) ω‖ ≤ (1 - γ)⁻¹ * |M.R| :=
+        tsum_of_norm_bounded ((hasSum_geometric_of_lt_one h₀.1 h₀.2).mul_right |M.R|) fun k => by
           rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
           exact mul_le_mul_of_nonneg_left (hr _) (pow_nonneg h₀.1 k)
       exact mul_le_mul hret (hMs _ _) (norm_nonneg _) ((norm_nonneg _).trans hret)
   have hIntV : Integrable (fun ω => M.V0 θ γ (s t ω) •
-      fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ) (M θ) := by
+      fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ) (M.traj θ) := by
     refine Integrable.of_bound (C := B * Ms) ?_ ?_
     ·
       exact ((hmeasV.comp (Random.Measurable.of.All_Eq.snd.fst h₁ t)).stronglyMeasurable.smul
@@ -125,21 +124,20 @@ private lemma main
   symm
   calc
     _ = ∫ ω, ((∑' k, γ ^ k * r (t + k) ω) - M.V0 θ γ (s t ω)) •
-        fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) :=
+        fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ ∂(M.traj θ) :=
       integral_congr_ae (h₉.mono fun ω h => by dsimp only; rw [h])
     _ = (∫ ω, (∑' k, γ ^ k * r (t + k) ω) •
-          fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ)) -
+          fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ ∂(M.traj θ)) -
         ∫ ω, M.V0 θ γ (s t ω) •
-          fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ) := by
+          fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ ∂(M.traj θ) := by
       simp_rw [sub_smul]
       exact integral_sub hIntG hIntV
     _ = _ := by
       have hz := Integral_SMul.eq.Zero.of.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity
-        (M := M) (θ := θ) (r := r) (s := s) (a := a) (g := g) (C := B) (B := Ms)
-        h₁ h₂ h₃ h₄ (M.V0 θ γ) hmeasV (fun y => by
+        (M := M) (θ := θ) (r := r) (s := s) (a := a) (C := B) (B := Ms) h₁ h₂ h₃ hBdd (M.V0 θ γ) hmeasV (fun y => by
           simpa [Real.norm_eq_abs] using hBd y) hφ hMs t
       rw [hz, sub_zero]
 
 
 -- created on 2026-10-20
--- updated on 2026-11-14
+-- updated on 2026-11-16

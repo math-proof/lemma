@@ -1,4 +1,5 @@
 import Mathlib
+import Def.NumberField_SelmerRepModP
 import Lemma.Rep.LevelArithmeticModP
 import Instance.NumberField_SelmerRepModP
 
@@ -16,13 +17,6 @@ section Selmer
 variable (E F : Type) [Field E] [Field F] [NumberField E] [NumberField F] [Algebra E F]
   (S : Finset (HeightOneSpectrum (𝓞 E))) (p : ℕ)
 
-def unitsModPow : Type := Fˣ ⧸ (powMonoidHom p : Fˣ →* Fˣ).range
-
-abbrev unitsModPow.mk (x : Fˣ) : unitsModPow F p := (QuotientGroup.mk x : Fˣ ⧸ (powMonoidHom p : Fˣ →* Fˣ).range)
-
-omit [NumberField E] [NumberField F] in
-theorem unitsModPow.mk_surjective : Function.Surjective (unitsModPow.mk F p) := QuotientGroup.mk_surjective
-
 omit [NumberField E] [NumberField F] in
 theorem unitsModPow.mk_pow (x : Fˣ) : unitsModPow.mk F p (x ^ p) = 1 :=
   (QuotientGroup.eq_one_iff _).2 ⟨x, rfl⟩
@@ -37,19 +31,6 @@ theorem unitsModPow.pow_eq_one (q : unitsModPow F p) : q ^ p = 1 := by
 omit [NumberField E] [NumberField F] in
 theorem nsmul_additive_unitsModPow (a : Additive (unitsModPow F p)) : p • a = 0 :=
   Additive.toMul.injective (by rw [toMul_nsmul, toMul_zero]; exact unitsModPow.pow_eq_one F p _)
-
-omit [NumberField E] [NumberField F] in
-theorem range_powMonoidHom_le_comap (σ : F ≃ₐ[E] F) :
-    (powMonoidHom p : Fˣ →* Fˣ).range ≤ ((powMonoidHom p : Fˣ →* Fˣ).range).comap (MulDistribMulAction.toMonoidHom Fˣ σ) := by
-  rintro _ ⟨x, rfl⟩
-  exact ⟨σ • x, by rw [MulDistribMulAction.toMonoidHom_apply, powMonoidHom_apply, powMonoidHom_apply, smul_pow']⟩
-
-def unitsModPowMap (σ : F ≃ₐ[E] F) : unitsModPow F p →* unitsModPow F p :=
-  (QuotientGroup.map _ _ (MulDistribMulAction.toMonoidHom Fˣ σ) (range_powMonoidHom_le_comap E F p σ) :
-    (Fˣ ⧸ (powMonoidHom p : Fˣ →* Fˣ).range) →* (Fˣ ⧸ (powMonoidHom p : Fˣ →* Fˣ).range))
-
-omit [NumberField E] [NumberField F] in
-@[simp] theorem unitsModPowMap_mk (σ : F ≃ₐ[E] F) (x : Fˣ) : unitsModPowMap E F p σ (unitsModPow.mk F p x) = unitsModPow.mk F p (σ • x) := rfl
 
 omit [NumberField E] [NumberField F] in
 @[simp] theorem smul_mk (σ : F ≃ₐ[E] F) (x : Fˣ) : σ • unitsModPow.mk F p x = unitsModPow.mk F p (σ • x) := rfl
@@ -82,12 +63,25 @@ omit [NumberField E] in
 theorem mem_selmerSubmodule (x : Additive (unitsModPow F p)) : x ∈ selmerSubmodule E F S p ↔ Additive.toMul x ∈ selmerStable E F S p := Iff.rfl
 
 abbrev selmerRepInt : Rep ℤ (F ≃ₐ[E] F) :=
-  Rep.of ((Rep.ofMulDistribMulAction (F ≃ₐ[E] F) (unitsModPow F p)).ρ.subrepresentation (selmerSubmodule E F S p)
-    fun σ _ hx => smul_mem_selmerStable E F S p σ hx)
+  Rep.of ((Representation.ofMulDistribMulAction (F ≃ₐ[E] F) (unitsModPow F p)).subrepresentation (selmerSubmodule E F S p)
+    fun σ x hx => by
+      have hx' : Additive.toMul x ∈ selmerStable E F S p := (mem_selmerSubmodule E F S p x).1 hx
+      have hρ := Representation.ofMulDistribMulAction_apply_apply
+        (M := F ≃ₐ[E] F) (G := unitsModPow F p) σ x
+      have : Additive.toMul
+          (Representation.ofMulDistribMulAction (F ≃ₐ[E] F) (unitsModPow F p) σ x)
+          ∈ selmerStable E F S p := by
+        rw [hρ, toMul_ofMul]
+        exact smul_mem_selmerStable E F S p σ hx'
+      exact (mem_selmerSubmodule E F S p _).2 this)
 
 omit [NumberField E] in
 theorem nsmul_selmer_eq_zero (x : selmerRepInt E F S p) : p • x = 0 :=
   Subtype.ext (nsmul_additive_unitsModPow F p _)
+
+omit [NumberField E] in
+@[reducible] noncomputable def selmerRepIntZModModule : Module (ZMod p) ↑(selmerRepInt E F S p) :=
+  AddCommGroup.zmodModule (nsmul_selmer_eq_zero E F S p)
 
 omit [NumberField E] in
 
@@ -95,7 +89,9 @@ omit [NumberField E] in
     (Subtype.val ((selmerRepInt E F S p).ρ σ x) : Additive (unitsModPow F p)) =
       Additive.ofMul (σ • Additive.toMul (Subtype.val x : Additive (unitsModPow F p))) := rfl
 
-abbrev selmerRepField : Rep (ZMod p) (F ≃ₐ[E] F) := Rep.of (toZMod p (selmerRepInt E F S p).ρ)
+abbrev selmerRepField : Rep (ZMod p) (F ≃ₐ[E] F) :=
+  letI := selmerRepIntZModModule E F S p
+  Rep.of (toZMod p (selmerRepInt E F S p).ρ)
 
 omit [NumberField E] in
 
@@ -117,8 +113,16 @@ theorem mk_mem_selmerStable (u : NumberField.SUnits.sUnitsRep E F S) :
     apply WithZero.coe_injective
     rw [HeightOneSpectrum.valuationOfNeZero_eq]
     exact hval
-  simp only [HeightOneSpectrum.valuationOfNeZeroMod, MonoidHom.coe_comp, Function.comp_apply]
-  erw [QuotientGroup.map_mk, h1, QuotientGroup.mk_one, map_one]
+  have hmod :
+      v.valuationOfNeZeroMod p
+        (QuotientGroup.mk (σ • NumberField.SUnits.val E F S u) :
+          Fˣ ⧸ (powMonoidHom p : Fˣ →* Fˣ).range) =
+      (Int.quotientZMultiplesNatEquivZMod p).toMultiplicative.toMonoidHom
+        (QuotientGroup.mk (s := AddSubgroup.toSubgroup (AddSubgroup.zmultiples (p : ℤ)))
+          (v.valuationOfNeZero (σ • NumberField.SUnits.val E F S u))) :=
+    rfl
+  rw [hmod, h1, QuotientGroup.mk_one]
+  erw [map_one]
 
 omit [NumberField E] [NumberField F] in
 
@@ -139,6 +143,7 @@ def fromSUnitsLinear : NumberField.SUnits.sUnitsRep E F S →ₗ[ℤ] selmerRepI
     exact (QuotientGroup.mk_zpow ((powMonoidHom p : Fˣ →* Fˣ).range) (NumberField.SUnits.val E F S u) n :))
 
 def fromSUnitsModP : repModP p (NumberField.SUnits.sUnitsRep E F S) ⟶ selmerRepField E F S p :=
+  letI := selmerRepIntZModModule E F S p
   Rep.ofHom ⟨(Submodule.liftQ _ (fromSUnitsLinear E F S p) (smul_top_le_ker p _ (nsmul_selmer_eq_zero E F S p))).toAddMonoidHom.toZModLinearMap p,
     fun σ => LinearMap.ext fun x => by
       obtain ⟨u, rfl⟩ := Submodule.Quotient.mk_surjective _ x

@@ -1,4 +1,5 @@
 import Lemma.Random.SinglePSpace.of.AEMeasurable
+import Instance.Probability.Rv.Part2
 import Def.Probability.Process.HiddenMarkovSequence.Part2
 open MeasureTheory Random Fun
 
@@ -27,7 +28,20 @@ private lemma main
   have hg : Measurable g :=
     Measurable.of_eval fun i => measurable_pi_apply (Fin.castLE ht i)
   rw [← show g ∘ x[:n] = x[:t] by funext ω i; rfl]
-  apply SinglePSpace.of.AEMeasurable (hg.comp_aemeasurable hx)
+  have : CountableMeasure (Fin t → α) := inferInstance
+  have hacc : π.map (g ∘ x[:n]) ≪ ReferenceMeasure.measure := by
+    have : ReferenceMeasure.measure (α := Fin t → α) = Measure.count := rfl
+    rw [this]
+    intro s hs0
+    rw [Measure.count_eq_zero_iff.mp hs0]
+    apply measure_empty
+  let q := (π.map (g ∘ x[:n])).rnDeriv ReferenceMeasure.measure
+  exact {
+    toIsProbabilityMeasure := inferInstance
+    aemeasurable := hg.comp_aemeasurable hx
+    exists_distribution :=
+      ⟨q, Measure.measurable_rnDeriv _ _, (Measure.withDensity_rnDeriv_eq _ _ hacc).symm⟩
+  }
 
 -- created on 2026-10-23
--- updated on 2026-10-26
+-- updated on 2026-11-16

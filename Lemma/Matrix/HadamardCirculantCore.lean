@@ -16,7 +16,7 @@ private lemma hcDiag {n : ℕ} (v : Fin n → ℤ)
   classical
   have h1 : ∀ t : Fin n, v t * v t = 1 := by
     intro t
-    obtain h | h <;> rw [h] <;> ring := hv t
+    rcases hv t with h | h <;> rw [h] <;> ring
   calc ∑ t, v t * v t = ∑ _t : Fin n, (1 : ℤ) := Finset.sum_congr rfl (fun x _ => h1 x)
     _ = (n : ℤ) := by simp [Finset.sum_const, Finset.card_univ]
 
@@ -177,11 +177,10 @@ private lemma hcTransport {n : ℕ} [NeZero n] {G : Type*} [AddCommGroup G] [Fin
   · intro d hd
     have hed : e d ≠ 0 := fun hcon => hd ((AddEquiv.map_eq_zero_iff e).mp hcon)
     calc ∑ t, (ψ ∘ e) t * (ψ ∘ e) (t + d)
-      = ∑ t, ψ (e t) * ψ (e t + e d) := by
-        apply Finset.sum_congr rfl
-        intro t _
-        change ψ (e t) * ψ (e (t + d)) = ψ (e t) * ψ (e t + e d)
-        rw [map_add]
+      = ∑ t, ψ (e t) * ψ (e t + e d) :=
+          Finset.sum_congr rfl fun t _ => by
+            change ψ (e t) * ψ (e (t + d)) = ψ (e t) * ψ (e t + e d)
+            rw [map_add]
       _ = ∑ x, ψ x * ψ (x + e d) :=
         e.toEquiv.sum_comp (fun x => ψ x * ψ (x + e d))
       _ = -1 := haut (e d) hed
@@ -339,8 +338,8 @@ private lemma hcPaley (p : ℕ) [Fact p.Prime]
         · rw [hy]
           simp
         · have hy2 : ¬ y + d = 0 := by
-          intro hcon
-          exact hy (add_eq_zero_iff_eq_neg.mp hcon)
+            intro hcon
+            exact hy (add_eq_zero_iff_eq_neg.mp hcon)
           simp [hy, hy2]
       rw [Finset.sum_congr rfl (fun y _ => hstep y)]
       rw [Finset.sum_ite_eq']
@@ -400,8 +399,8 @@ private lemma hcPinChiAdd (r : ℕ) [Fact r.Prime] (t : ZMod r) :
     · rw [hy]
       simp
     · have hy2 : ¬ b + t = 0 := by
-      intro hcon
-      exact hy (add_eq_zero_iff_eq_neg.mp hcon)
+        intro hcon
+        exact hy (add_eq_zero_iff_eq_neg.mp hcon)
       simp [hy, hy2]
   rw [Finset.sum_congr rfl (fun b _ => hstep b), Finset.sum_ite_eq']
   simp
@@ -446,8 +445,8 @@ private lemma hcPinOneAdd (r : ℕ) [Fact r.Prime] (t : ZMod r) :
     · rw [hy]
       simp
     · have hy2 : ¬ b + t = 0 := by
-      intro hcon
-      exact hy (add_eq_zero_iff_eq_neg.mp hcon)
+        intro hcon
+        exact hy (add_eq_zero_iff_eq_neg.mp hcon)
       simp [hy, hy2]
   rw [Finset.sum_congr rfl (fun b _ => hstep b), Finset.sum_ite_eq']
   simp
@@ -465,11 +464,10 @@ private lemma hcSumChiShift (r : ℕ) [Fact r.Prime]
   ∑ b : ZMod r, quadraticChar (ZMod r) (b + t) = 0 := by
   classical
   have hcoe : ⇑(Equiv.addRight t) = fun b : ZMod r => b + t := Equiv.coe_addRight t
-  calc ∑ b : ZMod r, quadraticChar (ZMod r) (b + t)
-    = ∑ b : ZMod r, quadraticChar (ZMod r) ((Equiv.addRight t) b) := by
-      apply Finset.sum_congr rfl
-      intro b _
-      rw [hcoe]
+  calc
+    ∑ b : ZMod r, quadraticChar (ZMod r) (b + t)
+      = ∑ b : ZMod r, quadraticChar (ZMod r) ((Equiv.addRight t) b) :=
+        Finset.sum_congr rfl (fun b _ => by rw [hcoe])
     _ = ∑ b : ZMod r, quadraticChar (ZMod r) b :=
       Equiv.sum_comp (Equiv.addRight t) (quadraticChar (ZMod r))
     _ = 0 := quadraticChar_sum_zero hF
@@ -512,10 +510,10 @@ private lemma hcProdSum (p q : ℕ) [Fact p.Prime] [Fact q.Prime]
   (F : ZMod p → ℤ) (G : ZMod q → ℤ) :
   ∑ x : ZMod p × ZMod q, F x.1 * G x.2 = (∑ a, F a) * (∑ b, G b) := by
   classical
-  calc ∑ x : ZMod p × ZMod q, F x.1 * G x.2
-    = ∑ a : ZMod p, ∑ b : ZMod q, F a * G b := by
-      simp only [Fintype.sum_prod_type]
-    _ = _ := (Finset.sum_mul_sum _ _ _ _).symm
+  calc
+    ∑ x : ZMod p × ZMod q, F x.1 * G x.2
+      = ∑ a : ZMod p, ∑ b : ZMod q, F a * G b := Fintype.sum_prod_type (fun x => F x.1 * G x.2)
+    _ = (∑ a, F a) * (∑ b, G b) := (Finset.sum_mul_sum _ _ _ _).symm
 
 end MetaMathlibExt
 
@@ -548,9 +546,9 @@ private lemma hcTwinVal (p q : ℕ) [Fact p.Prime] [Fact q.Prime]
     norm_num
   · rw [hψ x]
     simp only [ha, hb, ite_false]
-    obtain h1 | h1 <;> := quadraticChar_dichotomy ha
-      obtain h2 | h2 <;> := quadraticChar_dichotomy hb
-      simp [h1, h2]
+    obtain h1 | h1 := quadraticChar_dichotomy ha
+    all_goals obtain h2 | h2 := quadraticChar_dichotomy hb
+    all_goals simp [h1, h2]
 
 end MetaMathlibExt
 
@@ -567,17 +565,18 @@ private lemma hcTwinAA (p q : ℕ) [Fact p.Prime] [Fact q.Prime]
     (∑ a : ZMod p, quadraticChar (ZMod p) a * quadraticChar (ZMod p) (a + s)) *
       (∑ b : ZMod q, quadraticChar (ZMod q) b * quadraticChar (ZMod q) (b + t)) := by
   classical
-  calc ∑ x : ZMod p × ZMod q, (quadraticChar (ZMod p) x.1 * quadraticChar (ZMod q) x.2) *
-    ((quadraticChar (ZMod p) (x.1 + s)) * quadraticChar (ZMod q) (x.2 + t))
-    = ∑ x : ZMod p × ZMod q, (quadraticChar (ZMod p) x.1 *
-      quadraticChar (ZMod p) (x.1 + s)) *
-      (quadraticChar (ZMod q) x.2 * quadraticChar (ZMod q) (x.2 + t)) := by
-      apply Finset.sum_congr rfl
-      intro x _
-      ring
-    _ = _ := hcProdSum p q
-      (fun a : ZMod p => quadraticChar (ZMod p) a * quadraticChar (ZMod p) (a + s))
-      (fun b : ZMod q => quadraticChar (ZMod q) b * quadraticChar (ZMod q) (b + t))
+  calc
+    ∑ x : ZMod p × ZMod q, (quadraticChar (ZMod p) x.1 * quadraticChar (ZMod q) x.2) *
+        ((quadraticChar (ZMod p) (x.1 + s)) * quadraticChar (ZMod q) (x.2 + t))
+      = ∑ x : ZMod p × ZMod q, (quadraticChar (ZMod p) x.1 *
+          quadraticChar (ZMod p) (x.1 + s)) *
+          (quadraticChar (ZMod q) x.2 * quadraticChar (ZMod q) (x.2 + t)) :=
+        Finset.sum_congr rfl (fun x _ => by ring)
+    _ = (∑ a : ZMod p, quadraticChar (ZMod p) a * quadraticChar (ZMod p) (a + s)) *
+          (∑ b : ZMod q, quadraticChar (ZMod q) b * quadraticChar (ZMod q) (b + t)) :=
+        (hcProdSum p q
+          (fun a : ZMod p => quadraticChar (ZMod p) a * quadraticChar (ZMod p) (a + s))
+          (fun b : ZMod q => quadraticChar (ZMod q) b * quadraticChar (ZMod q) (b + t)))
 
 end MetaMathlibExt
 
@@ -608,16 +607,17 @@ private lemma hcTwinCross (p q : ℕ) [Fact p.Prime] [Fact q.Prime]
       = (quadraticChar (ZMod p) a * (1 + (if a + s = 0 then (1 : ℤ) else 0))) *
         quadraticChar (ZMod q) (-t) := by
       intro a
-      calc ∑ b : ZMod q, (quadraticChar (ZMod p) a * quadraticChar (ZMod q) b) *
-        ((if b + t = 0 then (1 : ℤ) else 0) * (1 + (if a + s = 0 then (1 : ℤ) else 0)))
-        = (quadraticChar (ZMod p) a * (1 + (if a + s = 0 then (1 : ℤ) else 0))) *
-          (∑ b : ZMod q, quadraticChar (ZMod q) b *
-            (if b + t = 0 then (1 : ℤ) else 0)) := by
-          rw [Finset.mul_sum]
-          apply Finset.sum_congr rfl
-          intro b _
-          ring
-        _ = _ := by rw [hcPinChiAdd q t]
+      calc
+        ∑ b : ZMod q, (quadraticChar (ZMod p) a * quadraticChar (ZMod q) b) *
+            ((if b + t = 0 then (1 : ℤ) else 0) * (1 + (if a + s = 0 then (1 : ℤ) else 0)))
+          = (quadraticChar (ZMod p) a * (1 + (if a + s = 0 then (1 : ℤ) else 0))) *
+              (∑ b : ZMod q, quadraticChar (ZMod q) b *
+                (if b + t = 0 then (1 : ℤ) else 0)) := by
+            rw [Finset.mul_sum]
+            exact Finset.sum_congr rfl (fun b _ => by ring)
+        _ = (quadraticChar (ZMod p) a * (1 + (if a + s = 0 then (1 : ℤ) else 0))) *
+              quadraticChar (ZMod q) (-t) := by
+          rw [hcPinChiAdd q t]
     have houter : ∑ a : ZMod p, quadraticChar (ZMod p) a *
       (1 + (if a + s = 0 then (1 : ℤ) else 0))
       = quadraticChar (ZMod p) (-s) := by
@@ -630,18 +630,20 @@ private lemma hcTwinCross (p q : ℕ) [Fact p.Prime] [Fact q.Prime]
       rw [Finset.sum_congr rfl (fun a _ => hsplit a)]
       rw [Finset.sum_add_distrib, quadraticChar_sum_zero hFp, zero_add]
       exact hcPinChiAdd p s
-    calc ∑ x : ZMod p × ZMod q, (quadraticChar (ZMod p) x.1 * quadraticChar (ZMod q) x.2) *
-      ((if x.2 + t = 0 then (1 : ℤ) else 0) * (1 + (if x.1 + s = 0 then (1 : ℤ) else 0)))
-      = ∑ a : ZMod p, ∑ b : ZMod q, (quadraticChar (ZMod p) a * quadraticChar (ZMod q) b) *
-        ((if b + t = 0 then (1 : ℤ) else 0) * (1 + (if a + s = 0 then (1 : ℤ) else 0))) := by
-        simp only [Fintype.sum_prod_type]
+    calc
+      ∑ x : ZMod p × ZMod q, (quadraticChar (ZMod p) x.1 * quadraticChar (ZMod q) x.2) *
+          ((if x.2 + t = 0 then (1 : ℤ) else 0) * (1 + (if x.1 + s = 0 then (1 : ℤ) else 0)))
+        = ∑ a : ZMod p, ∑ b : ZMod q, (quadraticChar (ZMod p) a * quadraticChar (ZMod q) b) *
+            ((if b + t = 0 then (1 : ℤ) else 0) * (1 + (if a + s = 0 then (1 : ℤ) else 0))) := by
+          simp only [Fintype.sum_prod_type]
       _ = ∑ a : ZMod p, (quadraticChar (ZMod p) a * (1 + (if a + s = 0 then (1 : ℤ) else 0))) *
-        quadraticChar (ZMod q) (-t) :=
-        Finset.sum_congr rfl (fun a _ => hinner a)
+            quadraticChar (ZMod q) (-t) :=
+          Finset.sum_congr rfl (fun a _ => hinner a)
       _ = (∑ a : ZMod p, quadraticChar (ZMod p) a * (1 + (if a + s = 0 then (1 : ℤ) else 0))) *
-        quadraticChar (ZMod q) (-t) := by
+            quadraticChar (ZMod q) (-t) := by
         rw [Finset.sum_mul]
-      _ = _ := by rw [houter]
+      _ = quadraticChar (ZMod p) (-s) * quadraticChar (ZMod q) (-t) := by
+        rw [houter]
   have hC2 : ∑ x : ZMod p × ZMod q,
     (quadraticChar (ZMod p) x.1 * quadraticChar (ZMod q) x.2) *
     (if x.1 + s = 0 then (1 : ℤ) else 0) = 0 := by
@@ -651,27 +653,29 @@ private lemma hcTwinCross (p q : ℕ) [Fact p.Prime] [Fact q.Prime]
       = (quadraticChar (ZMod p) a * (if a + s = 0 then (1 : ℤ) else 0)) *
         (∑ b : ZMod q, quadraticChar (ZMod q) b) := by
       intro a
-      calc ∑ b : ZMod q, (quadraticChar (ZMod p) a * quadraticChar (ZMod q) b) *
-        (if a + s = 0 then (1 : ℤ) else 0)
-        = (quadraticChar (ZMod p) a * (if a + s = 0 then (1 : ℤ) else 0)) *
-          (∑ b : ZMod q, quadraticChar (ZMod q) b) := by
-          rw [Finset.mul_sum]
-          apply Finset.sum_congr rfl
-          intro b _
-          ring
-        _ = _ := by rw [quadraticChar_sum_zero hFq, mul_zero]
-    calc ∑ x : ZMod p × ZMod q, (quadraticChar (ZMod p) x.1 * quadraticChar (ZMod q) x.2) *
-      (if x.1 + s = 0 then (1 : ℤ) else 0)
-      = ∑ a : ZMod p, ∑ b : ZMod q, (quadraticChar (ZMod p) a * quadraticChar (ZMod q) b) *
-        (if a + s = 0 then (1 : ℤ) else 0) := by
-        simp only [Fintype.sum_prod_type]
+      calc
+        ∑ b : ZMod q, (quadraticChar (ZMod p) a * quadraticChar (ZMod q) b) *
+            (if a + s = 0 then (1 : ℤ) else 0)
+          = (quadraticChar (ZMod p) a * (if a + s = 0 then (1 : ℤ) else 0)) *
+              (∑ b : ZMod q, quadraticChar (ZMod q) b) := by
+            rw [Finset.mul_sum]
+            exact Finset.sum_congr rfl (fun b _ => by ring)
+        _ = (quadraticChar (ZMod p) a * (if a + s = 0 then (1 : ℤ) else 0)) *
+              (∑ b : ZMod q, quadraticChar (ZMod q) b) := rfl
+    calc
+      ∑ x : ZMod p × ZMod q, (quadraticChar (ZMod p) x.1 * quadraticChar (ZMod q) x.2) *
+          (if x.1 + s = 0 then (1 : ℤ) else 0)
+        = ∑ a : ZMod p, ∑ b : ZMod q, (quadraticChar (ZMod p) a * quadraticChar (ZMod q) b) *
+            (if a + s = 0 then (1 : ℤ) else 0) := by
+          simp only [Fintype.sum_prod_type]
       _ = ∑ a : ZMod p, (quadraticChar (ZMod p) a * (if a + s = 0 then (1 : ℤ) else 0)) *
-        (∑ b : ZMod q, quadraticChar (ZMod q) b) :=
-        Finset.sum_congr rfl (fun a _ => hinner a)
+            (∑ b : ZMod q, quadraticChar (ZMod q) b) :=
+          Finset.sum_congr rfl (fun a _ => hinner a)
       _ = (∑ a : ZMod p, quadraticChar (ZMod p) a * (if a + s = 0 then (1 : ℤ) else 0)) *
-        (∑ b : ZMod q, quadraticChar (ZMod q) b) := by
+            (∑ b : ZMod q, quadraticChar (ZMod q) b) := by
         rw [Finset.sum_mul]
-      _ = 0 := by rw [quadraticChar_sum_zero hFq, mul_zero]
+      _ = 0 := by
+        rw [quadraticChar_sum_zero hFq, mul_zero]
   have hC3 : ∑ x : ZMod p × ZMod q,
     ((if x.2 = 0 then (1 : ℤ) else 0) * (1 + (if x.1 = 0 then (1 : ℤ) else 0))) *
     (quadraticChar (ZMod p) (x.1 + s) * quadraticChar (ZMod q) (x.2 + t))
@@ -694,15 +698,16 @@ private lemma hcTwinCross (p q : ℕ) [Fact p.Prime] [Fact q.Prime]
           · simp [hy]
         rw [Finset.sum_congr rfl (fun b _ => hstep b), Finset.sum_ite_eq']
         simp
-      calc ∑ b : ZMod q, ((if b = 0 then (1 : ℤ) else 0) * (1 + (if a = 0 then (1 : ℤ) else 0))) *
-        (quadraticChar (ZMod p) (a + s) * quadraticChar (ZMod q) (b + t))
-        = ((1 + (if a = 0 then (1 : ℤ) else 0)) * quadraticChar (ZMod p) (a + s)) *
-          (∑ b : ZMod q, (if b = 0 then (1 : ℤ) else 0) * quadraticChar (ZMod q) (b + t)) := by
-          rw [Finset.mul_sum]
-          apply Finset.sum_congr rfl
-          intro b _
-          ring
-        _ = _ := by rw [hpin]
+      calc
+        ∑ b : ZMod q, ((if b = 0 then (1 : ℤ) else 0) * (1 + (if a = 0 then (1 : ℤ) else 0))) *
+            (quadraticChar (ZMod p) (a + s) * quadraticChar (ZMod q) (b + t))
+          = ((1 + (if a = 0 then (1 : ℤ) else 0)) * quadraticChar (ZMod p) (a + s)) *
+              (∑ b : ZMod q, (if b = 0 then (1 : ℤ) else 0) * quadraticChar (ZMod q) (b + t)) := by
+            rw [Finset.mul_sum]
+            exact Finset.sum_congr rfl (fun b _ => by ring)
+        _ = ((1 + (if a = 0 then (1 : ℤ) else 0)) * quadraticChar (ZMod p) (a + s)) *
+              quadraticChar (ZMod q) t := by
+          rw [hpin]
     have houter : ∑ a : ZMod p, (1 + (if a = 0 then (1 : ℤ) else 0)) *
       quadraticChar (ZMod p) (a + s) = quadraticChar (ZMod p) s := by
       have hsplit : ∀ a : ZMod p, (1 + (if a = 0 then (1 : ℤ) else 0)) *
@@ -725,20 +730,22 @@ private lemma hcTwinCross (p q : ℕ) [Fact p.Prime] [Fact q.Prime]
         simp
       rw [Finset.sum_congr rfl (fun a _ => hsplit a)]
       rwa [Finset.sum_add_distrib, hcSumChiShift p hFp s, zero_add]
-    calc ∑ x : ZMod p × ZMod q, ((if x.2 = 0 then (1 : ℤ) else 0) *
-      (1 + (if x.1 = 0 then (1 : ℤ) else 0))) *
-      (quadraticChar (ZMod p) (x.1 + s) * quadraticChar (ZMod q) (x.2 + t))
-      = ∑ a : ZMod p, ∑ b : ZMod q, ((if b = 0 then (1 : ℤ) else 0) *
-        (1 + (if a = 0 then (1 : ℤ) else 0))) *
-        (quadraticChar (ZMod p) (a + s) * quadraticChar (ZMod q) (b + t)) := by
-        simp only [Fintype.sum_prod_type]
+    calc
+      ∑ x : ZMod p × ZMod q, ((if x.2 = 0 then (1 : ℤ) else 0) *
+          (1 + (if x.1 = 0 then (1 : ℤ) else 0))) *
+          (quadraticChar (ZMod p) (x.1 + s) * quadraticChar (ZMod q) (x.2 + t))
+        = ∑ a : ZMod p, ∑ b : ZMod q, ((if b = 0 then (1 : ℤ) else 0) *
+            (1 + (if a = 0 then (1 : ℤ) else 0))) *
+            (quadraticChar (ZMod p) (a + s) * quadraticChar (ZMod q) (b + t)) := by
+          simp only [Fintype.sum_prod_type]
       _ = ∑ a : ZMod p, ((1 + (if a = 0 then (1 : ℤ) else 0)) *
-        quadraticChar (ZMod p) (a + s)) * quadraticChar (ZMod q) t :=
-        Finset.sum_congr rfl (fun a _ => hinner a)
+            quadraticChar (ZMod p) (a + s)) * quadraticChar (ZMod q) t :=
+          Finset.sum_congr rfl (fun a _ => hinner a)
       _ = (∑ a : ZMod p, (1 + (if a = 0 then (1 : ℤ) else 0)) *
-        quadraticChar (ZMod p) (a + s)) * quadraticChar (ZMod q) t := by
+            quadraticChar (ZMod p) (a + s)) * quadraticChar (ZMod q) t := by
         rw [Finset.sum_mul]
-      _ = _ := by rw [houter]
+      _ = quadraticChar (ZMod p) s * quadraticChar (ZMod q) t := by
+        rw [houter]
   have hC4 : ∑ x : ZMod p × ZMod q,
     (if x.1 = 0 then (1 : ℤ) else 0) *
     (quadraticChar (ZMod p) (x.1 + s) * quadraticChar (ZMod q) (x.2 + t)) = 0 := by
@@ -748,27 +755,22 @@ private lemma hcTwinCross (p q : ℕ) [Fact p.Prime] [Fact q.Prime]
       = ((if a = 0 then (1 : ℤ) else 0) * quadraticChar (ZMod p) (a + s)) *
         (∑ b : ZMod q, quadraticChar (ZMod q) (b + t)) := by
       intro a
-      calc ∑ b : ZMod q, (if a = 0 then (1 : ℤ) else 0) *
-        (quadraticChar (ZMod p) (a + s) * quadraticChar (ZMod q) (b + t))
-        = ((if a = 0 then (1 : ℤ) else 0) * quadraticChar (ZMod p) (a + s)) *
-          (∑ b : ZMod q, quadraticChar (ZMod q) (b + t)) := by
-          rw [Finset.mul_sum]
-          apply Finset.sum_congr rfl
-          intro b _
-          ring
-        _ = _ := by rw [hcSumChiShift q hFq t, mul_zero]
-    calc ∑ x : ZMod p × ZMod q, (if x.1 = 0 then (1 : ℤ) else 0) *
-      (quadraticChar (ZMod p) (x.1 + s) * quadraticChar (ZMod q) (x.2 + t))
-      = ∑ a : ZMod p, ∑ b : ZMod q, (if a = 0 then (1 : ℤ) else 0) *
-        (quadraticChar (ZMod p) (a + s) * quadraticChar (ZMod q) (b + t)) := by
-        simp only [Fintype.sum_prod_type]
+      rw [Finset.mul_sum]
+      exact Finset.sum_congr rfl (fun b _ => by ring)
+    calc
+      ∑ x : ZMod p × ZMod q, (if x.1 = 0 then (1 : ℤ) else 0) *
+          (quadraticChar (ZMod p) (x.1 + s) * quadraticChar (ZMod q) (x.2 + t))
+        = ∑ a : ZMod p, ∑ b : ZMod q, (if a = 0 then (1 : ℤ) else 0) *
+            (quadraticChar (ZMod p) (a + s) * quadraticChar (ZMod q) (b + t)) := by
+          simp only [Fintype.sum_prod_type]
       _ = ∑ a : ZMod p, ((if a = 0 then (1 : ℤ) else 0) * quadraticChar (ZMod p) (a + s)) *
-        (∑ b : ZMod q, quadraticChar (ZMod q) (b + t)) :=
-        Finset.sum_congr rfl (fun a _ => hinner a)
+            (∑ b : ZMod q, quadraticChar (ZMod q) (b + t)) :=
+          Finset.sum_congr rfl (fun a _ => hinner a)
       _ = (∑ a : ZMod p, (if a = 0 then (1 : ℤ) else 0) * quadraticChar (ZMod p) (a + s)) *
-        (∑ b : ZMod q, quadraticChar (ZMod q) (b + t)) := by
+            (∑ b : ZMod q, quadraticChar (ZMod q) (b + t)) := by
         rw [Finset.sum_mul]
-      _ = 0 := by rw [hcSumChiShift q hFq t, mul_zero]
+      _ = 0 := by
+        rw [hcSumChiShift q hFq t, mul_zero]
   have e1 : ∀ x : ZMod p × ZMod q, (x + (s, t)).1 = x.1 + s := fun x => rfl
   have e2 : ∀ x : ZMod p × ZMod q, (x + (s, t)).2 = x.2 + t := fun x => rfl
   have hexpand1 : ∀ x : ZMod p × ZMod q, ψA x * ψE (x + (s, t))
@@ -894,75 +896,84 @@ private lemma hcTwinEE (p q : ℕ) [Fact p.Prime] [Fact q.Prime]
     ((if x.2 = 0 then (1 : ℤ) else 0) * (if x.2 + t = 0 then (1 : ℤ) else 0)) *
     ((1 + (if x.1 = 0 then (1 : ℤ) else 0)) * (1 + (if x.1 + s = 0 then (1 : ℤ) else 0)))
     = (if t = 0 then (1 : ℤ) else 0) * ((p : ℤ) + 2 + (if s = 0 then 1 else 0)) := by
-    calc ∑ x : ZMod p × ZMod q,
-      ((if x.2 = 0 then (1 : ℤ) else 0) * (if x.2 + t = 0 then (1 : ℤ) else 0)) *
-      ((1 + (if x.1 = 0 then (1 : ℤ) else 0)) * (1 + (if x.1 + s = 0 then (1 : ℤ) else 0)))
-      = ∑ x : ZMod p × ZMod q,
-        ((1 + (if x.1 = 0 then (1 : ℤ) else 0)) * (1 + (if x.1 + s = 0 then (1 : ℤ) else 0))) *
-        ((if x.2 = 0 then (1 : ℤ) else 0) * (if x.2 + t = 0 then (1 : ℤ) else 0)) := by
-        apply Finset.sum_congr rfl
-        intro x _
-        ring
-      _ = _ := by
-        rw [hcProdSum p q
-          (fun a : ZMod p => (1 + (if a = 0 then (1 : ℤ) else 0)) *
-            (1 + (if a + s = 0 then (1 : ℤ) else 0)))
-          (fun b : ZMod q => (if b = 0 then (1 : ℤ) else 0) *
-            (if b + t = 0 then (1 : ℤ) else 0))]
+    calc
+      ∑ x : ZMod p × ZMod q,
+          ((if x.2 = 0 then (1 : ℤ) else 0) * (if x.2 + t = 0 then (1 : ℤ) else 0)) *
+          ((1 + (if x.1 = 0 then (1 : ℤ) else 0)) * (1 + (if x.1 + s = 0 then (1 : ℤ) else 0)))
+        = ∑ x : ZMod p × ZMod q,
+            ((1 + (if x.1 = 0 then (1 : ℤ) else 0)) * (1 + (if x.1 + s = 0 then (1 : ℤ) else 0))) *
+            ((if x.2 = 0 then (1 : ℤ) else 0) * (if x.2 + t = 0 then (1 : ℤ) else 0)) :=
+          Finset.sum_congr rfl (fun x _ => by ring)
+      _ = (∑ a : ZMod p, (1 + (if a = 0 then (1 : ℤ) else 0)) *
+            (1 + (if a + s = 0 then (1 : ℤ) else 0))) *
+          (∑ b : ZMod q, (if b = 0 then (1 : ℤ) else 0) *
+            (if b + t = 0 then (1 : ℤ) else 0)) :=
+          (hcProdSum p q
+            (fun a : ZMod p => (1 + (if a = 0 then (1 : ℤ) else 0)) *
+              (1 + (if a + s = 0 then (1 : ℤ) else 0)))
+            (fun b : ZMod q => (if b = 0 then (1 : ℤ) else 0) *
+              (if b + t = 0 then (1 : ℤ) else 0)))
+      _ = (if t = 0 then (1 : ℤ) else 0) * ((p : ℤ) + 2 + (if s = 0 then 1 else 0)) := by
         rw [hFsum, hGsum, mul_comm]
   have hV2 : ∑ x : ZMod p × ZMod q,
     ((if x.2 = 0 then (1 : ℤ) else 0) * (1 + (if x.1 = 0 then (1 : ℤ) else 0))) *
     (if x.1 + s = 0 then (1 : ℤ) else 0)
     = 1 + (if s = 0 then (1 : ℤ) else 0) := by
-    calc ∑ x : ZMod p × ZMod q,
-      ((if x.2 = 0 then (1 : ℤ) else 0) * (1 + (if x.1 = 0 then (1 : ℤ) else 0))) *
-      (if x.1 + s = 0 then (1 : ℤ) else 0)
-      = ∑ x : ZMod p × ZMod q,
-        ((1 + (if x.1 = 0 then (1 : ℤ) else 0)) * (if x.1 + s = 0 then (1 : ℤ) else 0)) *
-        (if x.2 = 0 then (1 : ℤ) else 0) := by
-        apply Finset.sum_congr rfl
-        intro x _
-        ring
-      _ = _ := by
-        rw [hcProdSum p q
-          (fun a : ZMod p => (1 + (if a = 0 then (1 : ℤ) else 0)) *
-            (if a + s = 0 then (1 : ℤ) else 0))
-          (fun b : ZMod q => (if b = 0 then (1 : ℤ) else 0))]
+    calc
+      ∑ x : ZMod p × ZMod q,
+          ((if x.2 = 0 then (1 : ℤ) else 0) * (1 + (if x.1 = 0 then (1 : ℤ) else 0))) *
+          (if x.1 + s = 0 then (1 : ℤ) else 0)
+        = ∑ x : ZMod p × ZMod q,
+            ((1 + (if x.1 = 0 then (1 : ℤ) else 0)) * (if x.1 + s = 0 then (1 : ℤ) else 0)) *
+            (if x.2 = 0 then (1 : ℤ) else 0) :=
+          Finset.sum_congr rfl (fun x _ => by ring)
+      _ = (∑ a : ZMod p, (1 + (if a = 0 then (1 : ℤ) else 0)) *
+            (if a + s = 0 then (1 : ℤ) else 0)) *
+          (∑ b : ZMod q, (if b = 0 then (1 : ℤ) else 0)) :=
+          (hcProdSum p q
+            (fun a : ZMod p => (1 + (if a = 0 then (1 : ℤ) else 0)) *
+              (if a + s = 0 then (1 : ℤ) else 0))
+            (fun b : ZMod q => (if b = 0 then (1 : ℤ) else 0)))
+      _ = 1 + (if s = 0 then (1 : ℤ) else 0) := by
         rw [hF2, hcSumIndZero q, mul_one]
   have hV3 : ∑ x : ZMod p × ZMod q,
     ((if x.1 = 0 then (1 : ℤ) else 0) * (if x.2 + t = 0 then (1 : ℤ) else 0)) *
     (1 + (if x.1 + s = 0 then (1 : ℤ) else 0))
     = 1 + (if s = 0 then (1 : ℤ) else 0) := by
-    calc ∑ x : ZMod p × ZMod q,
-      ((if x.1 = 0 then (1 : ℤ) else 0) * (if x.2 + t = 0 then (1 : ℤ) else 0)) *
-      (1 + (if x.1 + s = 0 then (1 : ℤ) else 0))
-      = ∑ x : ZMod p × ZMod q,
-        ((if x.1 = 0 then (1 : ℤ) else 0) * (1 + (if x.1 + s = 0 then (1 : ℤ) else 0))) *
-        (if x.2 + t = 0 then (1 : ℤ) else 0) := by
-        apply Finset.sum_congr rfl
-        intro x _
-        ring
-      _ = _ := by
-        rw [hcProdSum p q
-          (fun a : ZMod p => (if a = 0 then (1 : ℤ) else 0) *
-            (1 + (if a + s = 0 then (1 : ℤ) else 0)))
-          (fun b : ZMod q => (if b + t = 0 then (1 : ℤ) else 0))]
+    calc
+      ∑ x : ZMod p × ZMod q,
+          ((if x.1 = 0 then (1 : ℤ) else 0) * (if x.2 + t = 0 then (1 : ℤ) else 0)) *
+          (1 + (if x.1 + s = 0 then (1 : ℤ) else 0))
+        = ∑ x : ZMod p × ZMod q,
+            ((if x.1 = 0 then (1 : ℤ) else 0) * (1 + (if x.1 + s = 0 then (1 : ℤ) else 0))) *
+            (if x.2 + t = 0 then (1 : ℤ) else 0) :=
+          Finset.sum_congr rfl (fun x _ => by ring)
+      _ = (∑ a : ZMod p, (if a = 0 then (1 : ℤ) else 0) *
+            (1 + (if a + s = 0 then (1 : ℤ) else 0))) *
+          (∑ b : ZMod q, (if b + t = 0 then (1 : ℤ) else 0)) :=
+          (hcProdSum p q
+            (fun a : ZMod p => (if a = 0 then (1 : ℤ) else 0) *
+              (1 + (if a + s = 0 then (1 : ℤ) else 0)))
+            (fun b : ZMod q => (if b + t = 0 then (1 : ℤ) else 0)))
+      _ = 1 + (if s = 0 then (1 : ℤ) else 0) := by
         rw [hF3, hcPinOneAdd q t, mul_one]
   have hV4 : ∑ x : ZMod p × ZMod q,
     (if x.1 = 0 then (1 : ℤ) else 0) * (if x.1 + s = 0 then (1 : ℤ) else 0)
     = (if s = 0 then (1 : ℤ) else 0) * (q : ℤ) := by
-    calc ∑ x : ZMod p × ZMod q,
-      (if x.1 = 0 then (1 : ℤ) else 0) * (if x.1 + s = 0 then (1 : ℤ) else 0)
-      = ∑ x : ZMod p × ZMod q,
-        ((if x.1 = 0 then (1 : ℤ) else 0) * (if x.1 + s = 0 then (1 : ℤ) else 0)) * 1 := by
-        apply Finset.sum_congr rfl
-        intro x _
-        ring
-      _ = _ := by
-        rw [hcProdSum p q
-          (fun a : ZMod p => (if a = 0 then (1 : ℤ) else 0) *
-            (if a + s = 0 then (1 : ℤ) else 0))
-          (fun _ : ZMod q => (1 : ℤ))]
+    calc
+      ∑ x : ZMod p × ZMod q,
+          (if x.1 = 0 then (1 : ℤ) else 0) * (if x.1 + s = 0 then (1 : ℤ) else 0)
+        = ∑ x : ZMod p × ZMod q,
+            ((if x.1 = 0 then (1 : ℤ) else 0) * (if x.1 + s = 0 then (1 : ℤ) else 0)) * 1 :=
+          Finset.sum_congr rfl (fun x _ => by ring)
+      _ = (∑ a : ZMod p, (if a = 0 then (1 : ℤ) else 0) *
+            (if a + s = 0 then (1 : ℤ) else 0)) *
+          (∑ _b : ZMod q, (1 : ℤ)) :=
+          (hcProdSum p q
+            (fun a : ZMod p => (if a = 0 then (1 : ℤ) else 0) *
+              (if a + s = 0 then (1 : ℤ) else 0))
+            (fun _ : ZMod q => (1 : ℤ)))
+      _ = (if s = 0 then (1 : ℤ) else 0) * (q : ℤ) := by
         rw [hF4pin, hcSumOne q]
   have e1 : ∀ x : ZMod p × ZMod q, (x + (s, t)).1 = x.1 + s := fun x => rfl
   have e2 : ∀ x : ZMod p × ZMod q, (x + (s, t)).2 = x.2 + t := fun x => rfl
@@ -1026,38 +1037,44 @@ private lemma hcTwin (p : ℕ) [Fact p.Prime] [Fact (p + 2).Prime]
   classical
   have hA0 : (∑ x : ZMod p × ZMod (p + 2),
     quadraticChar (ZMod p) x.1 * quadraticChar (ZMod (p + 2)) x.2) = 0 := by
-    calc _ = (∑ a : ZMod p, quadraticChar (ZMod p) a) *
-      (∑ b : ZMod (p + 2), quadraticChar (ZMod (p + 2)) b) :=
-      hcProdSum p (p + 2) (fun a => quadraticChar (ZMod p) a)
-        (fun b => quadraticChar (ZMod (p + 2)) b)
-      _ = 0 := by rw [quadraticChar_sum_zero hFp, zero_mul]
+    calc
+      ∑ x : ZMod p × ZMod (p + 2),
+          quadraticChar (ZMod p) x.1 * quadraticChar (ZMod (p + 2)) x.2
+        = (∑ a : ZMod p, quadraticChar (ZMod p) a) *
+            (∑ b : ZMod (p + 2), quadraticChar (ZMod (p + 2)) b) :=
+          (hcProdSum p (p + 2) (fun a => quadraticChar (ZMod p) a)
+            (fun b => quadraticChar (ZMod (p + 2)) b))
+      _ = 0 := by
+        rw [quadraticChar_sum_zero hFp, zero_mul]
   have hE1 : (∑ x : ZMod p × ZMod (p + 2),
     (if x.2 = 0 then (1 : ℤ) else 0) * (1 + (if x.1 = 0 then (1 : ℤ) else 0)))
     = ((p : ℤ) + 1) * 1 := by
-    calc _ = ∑ x : ZMod p × ZMod (p + 2),
-      (1 + (if x.1 = 0 then (1 : ℤ) else 0)) * (if x.2 = 0 then (1 : ℤ) else 0) := by
-      apply Finset.sum_congr rfl
-      intro x _
-      ring
+    calc
+      ∑ x : ZMod p × ZMod (p + 2),
+          (if x.2 = 0 then (1 : ℤ) else 0) * (1 + (if x.1 = 0 then (1 : ℤ) else 0))
+        = ∑ x : ZMod p × ZMod (p + 2),
+            (1 + (if x.1 = 0 then (1 : ℤ) else 0)) * (if x.2 = 0 then (1 : ℤ) else 0) :=
+          Finset.sum_congr rfl (fun x _ => by ring)
       _ = (∑ a : ZMod p, (1 + (if a = 0 then (1 : ℤ) else 0))) *
-        (∑ b : ZMod (p + 2), (if b = 0 then (1 : ℤ) else 0)) :=
-        hcProdSum p (p + 2) (fun a : ZMod p => (1 + (if a = 0 then (1 : ℤ) else 0)))
-          (fun b : ZMod (p + 2) => (if b = 0 then (1 : ℤ) else 0))
-      _ = _ := by
+            (∑ b : ZMod (p + 2), (if b = 0 then (1 : ℤ) else 0)) :=
+          (hcProdSum p (p + 2) (fun a : ZMod p => (1 + (if a = 0 then (1 : ℤ) else 0)))
+            (fun b : ZMod (p + 2) => (if b = 0 then (1 : ℤ) else 0)))
+      _ = ((p : ℤ) + 1) * 1 := by
         have h1 : (∑ a : ZMod p, (1 + (if a = 0 then (1 : ℤ) else 0))) = (p : ℤ) + 1 := by
           rw [Finset.sum_add_distrib, hcSumOne p, hcSumIndZero p]
         rw [h1, hcSumIndZero (p + 2)]
   have hE2 : (∑ x : ZMod p × ZMod (p + 2), (if x.1 = 0 then (1 : ℤ) else 0))
     = 1 * (((p + 2 : ℕ)) : ℤ) := by
-    calc _ = ∑ x : ZMod p × ZMod (p + 2), (if x.1 = 0 then (1 : ℤ) else 0) * 1 := by
-      apply Finset.sum_congr rfl
-      intro x _
-      ring
+    calc
+      ∑ x : ZMod p × ZMod (p + 2), (if x.1 = 0 then (1 : ℤ) else 0)
+        = ∑ x : ZMod p × ZMod (p + 2), (if x.1 = 0 then (1 : ℤ) else 0) * 1 :=
+          Finset.sum_congr rfl (fun x _ => by ring)
       _ = (∑ a : ZMod p, (if a = 0 then (1 : ℤ) else 0)) *
-        (∑ _b : ZMod (p + 2), (1 : ℤ)) :=
-        hcProdSum p (p + 2) (fun a : ZMod p => (if a = 0 then (1 : ℤ) else 0))
-          (fun _ : ZMod (p + 2) => (1 : ℤ))
-      _ = _ := by rw [hcSumIndZero p, hcSumOne (p + 2)]
+            (∑ _b : ZMod (p + 2), (1 : ℤ)) :=
+          (hcProdSum p (p + 2) (fun a : ZMod p => (if a = 0 then (1 : ℤ) else 0))
+            (fun _ : ZMod (p + 2) => (1 : ℤ)))
+      _ = 1 * (((p + 2 : ℕ)) : ℤ) := by
+        rw [hcSumIndZero p, hcSumOne (p + 2)]
   have hsum : ∑ x, ψ x = -1 := by
     rw [Finset.sum_congr rfl (fun x _ => hψ x)]
     rw [Finset.sum_add_distrib, Finset.sum_sub_distrib]
@@ -1127,71 +1144,77 @@ private lemma hcTwin (p : ℕ) [Fact p.Prime] [Fact (p + 2).Prime]
     rw [Finset.sum_add_distrib, Finset.sum_add_distrib, Finset.sum_add_distrib]
     by_cases hs : s ≠ 0 <;> by_cases ht : t ≠ 0
     · have eAA : (∑ x : ZMod p × ZMod (p + 2),
-      (quadraticChar (ZMod p) x.1 * quadraticChar (ZMod (p + 2)) x.2) *
-      (quadraticChar (ZMod p) (x.1 + s) * quadraticChar (ZMod (p + 2)) (x.2 + t))) = 1 := by
-      rw [hAA, hcShift hFp hs, hcShift hFq ht]
-      ring
+          (quadraticChar (ZMod p) x.1 * quadraticChar (ZMod (p + 2)) x.2) *
+          (quadraticChar (ZMod p) (x.1 + s) * quadraticChar (ZMod (p + 2)) (x.2 + t))) = 1 := by
+        rw [hAA, hcShift hFp hs, hcShift hFq ht]
+        ring
       have eEE : (∑ x : ZMod p × ZMod (p + 2),
-        (((if x.2 = 0 then (1 : ℤ) else 0) * (1 + (if x.1 = 0 then (1 : ℤ) else 0))) -
-          (if x.1 = 0 then (1 : ℤ) else 0)) *
-        (((if x.2 + t = 0 then (1 : ℤ) else 0) *
-          (1 + (if x.1 + s = 0 then (1 : ℤ) else 0))) -
-          (if x.1 + s = 0 then (1 : ℤ) else 0))) = -2 := by
+          (((if x.2 = 0 then (1 : ℤ) else 0) * (1 + (if x.1 = 0 then (1 : ℤ) else 0))) -
+            (if x.1 = 0 then (1 : ℤ) else 0)) *
+          (((if x.2 + t = 0 then (1 : ℤ) else 0) *
+            (1 + (if x.1 + s = 0 then (1 : ℤ) else 0))) -
+            (if x.1 + s = 0 then (1 : ℤ) else 0))) = -2 := by
         rw [hEE]
         simp only [hs, ht, ite_false]
         ring
       linear_combination hcross + eAA + eEE
     · rw [not_not] at ht
-      have hJq0 : (∑ b : ZMod (p + 2),
-        quadraticChar (ZMod (p + 2)) b * quadraticChar (ZMod (p + 2)) (b + t))
-        = ((((p + 2 : ℕ))) : ℤ) - 1 := by
+      have hJq0 :
+          (∑ b : ZMod (p + 2),
+            quadraticChar (ZMod (p + 2)) b * quadraticChar (ZMod (p + 2)) (b + t)) =
+            ((((p + 2 : ℕ))) : ℤ) - 1 := by
         have h0 : ∀ b : ZMod (p + 2),
-          quadraticChar (ZMod (p + 2)) b * quadraticChar (ZMod (p + 2)) (b + t)
-          = quadraticChar (ZMod (p + 2)) b * quadraticChar (ZMod (p + 2)) b := by
+            quadraticChar (ZMod (p + 2)) b * quadraticChar (ZMod (p + 2)) (b + t) =
+              quadraticChar (ZMod (p + 2)) b * quadraticChar (ZMod (p + 2)) b := by
           intro b
           rw [ht, add_zero]
         rw [Finset.sum_congr rfl (fun b _ => h0 b)]
         exact hcDiagZero (p + 2)
-      have eAA : (∑ x : ZMod p × ZMod (p + 2),
-        (quadraticChar (ZMod p) x.1 * quadraticChar (ZMod (p + 2)) x.2) *
-        (quadraticChar (ZMod p) (x.1 + s) * quadraticChar (ZMod (p + 2)) (x.2 + t)))
-        = 1 - ((p : ℤ) + 2) := by
+      have eAA :
+          (∑ x : ZMod p × ZMod (p + 2),
+            (quadraticChar (ZMod p) x.1 * quadraticChar (ZMod (p + 2)) x.2) *
+            (quadraticChar (ZMod p) (x.1 + s) * quadraticChar (ZMod (p + 2)) (x.2 + t))) =
+            1 - ((p : ℤ) + 2) := by
         rw [hAA, hcShift hFp hs, hJq0]
         push_cast
         ring
-      have eEE : (∑ x : ZMod p × ZMod (p + 2),
-        (((if x.2 = 0 then (1 : ℤ) else 0) * (1 + (if x.1 = 0 then (1 : ℤ) else 0))) -
-          (if x.1 = 0 then (1 : ℤ) else 0)) *
-        (((if x.2 + t = 0 then (1 : ℤ) else 0) *
-          (1 + (if x.1 + s = 0 then (1 : ℤ) else 0))) -
-          (if x.1 + s = 0 then (1 : ℤ) else 0))) = (p : ℤ) := by
+      have eEE :
+          (∑ x : ZMod p × ZMod (p + 2),
+            (((if x.2 = 0 then (1 : ℤ) else 0) * (1 + (if x.1 = 0 then (1 : ℤ) else 0))) -
+              (if x.1 = 0 then (1 : ℤ) else 0)) *
+            (((if x.2 + t = 0 then (1 : ℤ) else 0) *
+              (1 + (if x.1 + s = 0 then (1 : ℤ) else 0))) -
+              (if x.1 + s = 0 then (1 : ℤ) else 0))) = (p : ℤ) := by
         rw [hEE]
         simp only [ht, hs, ite_true, ite_false]
         push_cast
         ring
       linear_combination hcross + eAA + eEE
     · rw [not_not] at hs
-      have hJp0 : (∑ a : ZMod p,
-        quadraticChar (ZMod p) a * quadraticChar (ZMod p) (a + s)) = (p : ℤ) - 1 := by
+      have hJp0 :
+          (∑ a : ZMod p, quadraticChar (ZMod p) a * quadraticChar (ZMod p) (a + s)) =
+            (p : ℤ) - 1 := by
         have h0 : ∀ a : ZMod p,
-          quadraticChar (ZMod p) a * quadraticChar (ZMod p) (a + s)
-          = quadraticChar (ZMod p) a * quadraticChar (ZMod p) a := by
+            quadraticChar (ZMod p) a * quadraticChar (ZMod p) (a + s) =
+              quadraticChar (ZMod p) a * quadraticChar (ZMod p) a := by
           intro a
           rw [hs, add_zero]
         rw [Finset.sum_congr rfl (fun a _ => h0 a)]
         exact hcDiagZero p
-      have eAA : (∑ x : ZMod p × ZMod (p + 2),
-        (quadraticChar (ZMod p) x.1 * quadraticChar (ZMod (p + 2)) x.2) *
-        (quadraticChar (ZMod p) (x.1 + s) * quadraticChar (ZMod (p + 2)) (x.2 + t)))
-        = 1 - (p : ℤ) := by
+      have eAA :
+          (∑ x : ZMod p × ZMod (p + 2),
+            (quadraticChar (ZMod p) x.1 * quadraticChar (ZMod (p + 2)) x.2) *
+            (quadraticChar (ZMod p) (x.1 + s) * quadraticChar (ZMod (p + 2)) (x.2 + t))) =
+            1 - (p : ℤ) := by
         rw [hAA, hJp0, hcShift hFq ht]
         ring
-      have eEE : (∑ x : ZMod p × ZMod (p + 2),
-        (((if x.2 = 0 then (1 : ℤ) else 0) * (1 + (if x.1 = 0 then (1 : ℤ) else 0))) -
-          (if x.1 = 0 then (1 : ℤ) else 0)) *
-        (((if x.2 + t = 0 then (1 : ℤ) else 0) *
-          (1 + (if x.1 + s = 0 then (1 : ℤ) else 0))) -
-          (if x.1 + s = 0 then (1 : ℤ) else 0))) = (p : ℤ) - 2 := by
+      have eEE :
+          (∑ x : ZMod p × ZMod (p + 2),
+            (((if x.2 = 0 then (1 : ℤ) else 0) * (1 + (if x.1 = 0 then (1 : ℤ) else 0))) -
+              (if x.1 = 0 then (1 : ℤ) else 0)) *
+            (((if x.2 + t = 0 then (1 : ℤ) else 0) *
+              (1 + (if x.1 + s = 0 then (1 : ℤ) else 0))) -
+              (if x.1 + s = 0 then (1 : ℤ) else 0))) = (p : ℤ) - 2 := by
         rw [hEE]
         simp only [hs, ht, ite_true, ite_false]
         push_cast
@@ -1385,4 +1408,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-16

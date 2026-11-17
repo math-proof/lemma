@@ -96,7 +96,7 @@ private lemma main
       («\sf{x}»[i0], «\sf{y}»[:m]) measurable_snd (h := h1z)
   have hMtop : ℙ[π](y[:m] = «\sf{y}»[:m]) ≠ ⊤ := by
     rw [Measure.prob,
-      show (ReferenceMeasure.measure : Measure (Fin m → β)) = Measure.count from rfl,
+      show ReferenceMeasure.measure = Measure.count from rfl,
       EqRnDeriv_Count]
     apply measure_ne_top
   have hc : 0 < (ℙ[π](y[:m] = «\sf{y}»[:m]) : ℝ) :=
@@ -141,4 +141,4 @@ private lemma main
 
 
 -- created on 2021-07-21
--- updated on 2026-11-13
+-- updated on 2026-11-16

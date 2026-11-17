@@ -95,20 +95,20 @@ lemma maurey_approximation_37
   by_cases hR : l1norm_37 θ' = 0
   · refine ⟨θ', ?_, ?_⟩
     · have h0 : ∀ i, θ' i = 0 := by
-      intro i
-      have : |θ' i| = 0 := by
-        have hnn : 0 ≤ |θ' i| := abs_nonneg _
-        have hsum : |θ' i| ≤ l1norm_37 θ' :=
-          Finset.single_le_sum (fun j _ => abs_nonneg (θ' j)) (Finset.mem_univ i)
-        linarith [hR]
-      exact abs_eq_zero.mp this
+        intro i
+        have : |θ' i| = 0 := by
+          have hnn : 0 ≤ |θ' i| := abs_nonneg _
+          have hsum : |θ' i| ≤ l1norm_37 θ' :=
+            Finset.single_le_sum (fun j _ => abs_nonneg (θ' j)) (Finset.mem_univ i)
+          linarith [hR]
+        exact abs_eq_zero.mp this
       have : support_size_37 θ' = 0 := by unfold support_size_37; simp [h0]
       omega
     · have : (l1norm_37 θ') ^ 2 / (k : ℝ) = 0 := by simp [hR]
       linarith
   · have hR_pos : 0 < l1norm_37 θ' := by
-    have hnn : 0 ≤ l1norm_37 θ' := Finset.sum_nonneg (fun i _ => abs_nonneg (θ' i))
-    exact lt_of_le_of_ne hnn (Ne.symm hR)
+      have hnn : 0 ≤ l1norm_37 θ' := Finset.sum_nonneg (fun i _ => abs_nonneg (θ' i))
+      exact lt_of_le_of_ne hnn (Ne.symm hR)
     have hNorm1 : ∀ j : Fin M, ∑ i : Fin n, (Φ i j) ^ 2 ≤ (1 : ℝ) ^ 2 * ↑n := by
       intro j; simp; exact hNorm j
     obtain ⟨θ, hθ_sparse, hθ_mse⟩ := Chapter3.maurey_sparse_approx hn hM Φ f

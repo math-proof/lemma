@@ -3,7 +3,7 @@ import Mathlib.Data.EReal.Operations
 import Mathlib.Analysis.Complex.Basic
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
-import Class.Probability.Rv.Part3
+import Class.Probability.Rv
 import Class.Probability.SymbolicProbability
 open MeasureTheory
 
@@ -38,3 +38,39 @@ Conditioning enters by taking the conditional law — e.g. `expectation
 noncomputable instance : Expectation ENNReal where
   expectation ν f := ∫⁻ a, f a ∂ν
 
+/--
+Signed extended-real expectation: `E f = E f⁺ - E f⁻`, where the positive/negative
+parts are the non-negative observables `(fun a ↦ (f a).toENNReal)` and
+`(fun a ↦ (-f a).toENNReal)`, integrated with the `ENNReal` instance of
+`expectation`. Mathlib's `EReal` arithmetic sends the indeterminate `⊤ - ⊤` to `⊥`.
+-/
+noncomputable instance : Expectation EReal where
+  expectation ν f := expectation ν (fun a ↦ (f a).toENNReal) - expectation ν (fun a ↦ (-f a).toENNReal)
+
+/--
+Complex (Bochner) expectation. Equals the classical integral when `f` is integrable;
+Mathlib's Bochner integral is `0` when not integrable — treat integrability as a
+side condition in theorems that need a meaningful value.
+-/
+noncomputable instance : Expectation ℂ where
+  expectation ν f := ∫ a, f a ∂ν
+
+/--
+Real (Bochner) expectation. Equals the classical integral when `f` is integrable;
+Mathlib's Bochner integral is `0` when not integrable — treat integrability as a
+side condition in theorems that need a meaningful value.
+-/
+noncomputable instance : Expectation ℝ where
+  expectation ν f := ∫ a, f a ∂ν
+
+/--
+Vector-valued (Bochner) expectation for any complete real normed space `E`
+(e.g. `Θ →L[ℝ] ℝ` gradients), `expectation ν f = ∫ a, f a ∂ν`. Declared with low priority so
+that the dedicated instances (`ℝ`, `ℂ`, and the componentwise `List.Vector` / `Tensor` ones
+of `Instance.Probability.SymbolicMultivariateProbability`) are preferred wherever they apply;
+for `ℝ` and `ℂ` it agrees definitionally with them.
+-/
+noncomputable instance (priority := low) instExpectationBochner
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E] :
+    Expectation E where
+  expectation ν f := ∫ a, f a ∂ν

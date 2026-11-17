@@ -120,28 +120,20 @@ lemma continuousH2π_levelInflateCocycles₂_eq_zero
 
 def continuousH2Inflation :
     H2 (M.quotientToInvariants (F.fixingSubgroup.comap r)) →ₗ[k] continuousH2 r M :=
-  (Submodule.liftQ _ (continuousH2π r M ∘ₗ levelInflateCocycles₂ r M F) (by
-      rintro x ⟨y, rfl⟩
-      exact continuousH2π_levelInflateCocycles₂_eq_zero r M F ⟨y, rfl⟩))
-    ∘ₗ (H2Iso (M.quotientToInvariants (F.fixingSubgroup.comap r))).hom.hom
+  let N := M.quotientToInvariants (F.fixingSubgroup.comap r)
+  (LinearMap.ker (H2π N).hom).liftQ
+      (continuousH2π r M ∘ₗ levelInflateCocycles₂ r M F)
+      (fun x hx =>
+        (continuousH2π_levelInflateCocycles₂_eq_zero r M F
+          ((H2π_eq_zero_iff _).1 (by
+            simpa [LinearMap.mem_ker] using hx)))) ∘ₗ
+    (LinearMap.quotKerEquivOfSurjective (H2π N).hom
+      ((ModuleCat.epi_iff_surjective (H2π N)).1 inferInstance)).symm
 
 @[simp] lemma continuousH2Inflation_H2π (x : cocycles₂ (M.quotientToInvariants (F.fixingSubgroup.comap r))) :
     continuousH2Inflation r M F (H2π _ x) = continuousH2π r M (levelInflateCocycles₂ r M F x) := by
-  have h := π_comp_H2Iso_hom_apply (M.quotientToInvariants (F.fixingSubgroup.comap r))
-    ((isoCocycles₂ _).inv x)
-  simp only [Iso.inv_hom_id_apply] at h
-  have e : (H2Iso (M.quotientToInvariants (F.fixingSubgroup.comap r))).hom.hom (H2π _ x)
-      = (LinearMap.range
-          (shortComplexH2 (M.quotientToInvariants (F.fixingSubgroup.comap r))).moduleCatToCycles).mkQ x :=
-    Eq.trans rfl h
-  have key : ∀ z, z = (LinearMap.range
-          (shortComplexH2 (M.quotientToInvariants (F.fixingSubgroup.comap r))).moduleCatToCycles).mkQ x →
-      (LinearMap.range (shortComplexH2 (M.quotientToInvariants (F.fixingSubgroup.comap r))).moduleCatToCycles).liftQ
-          (continuousH2π r M ∘ₗ levelInflateCocycles₂ r M F)
-          (by rintro x ⟨y, rfl⟩; exact continuousH2π_levelInflateCocycles₂_eq_zero r M F ⟨y, rfl⟩) z
-        = continuousH2π r M (levelInflateCocycles₂ r M F x) := by
-    rintro _ rfl; rfl
-  exact key _ e
+  simp [continuousH2Inflation, LinearMap.quotKerEquivOfSurjective_symm_apply]
+  rfl
 
 end groupCohomology
 

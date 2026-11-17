@@ -112,9 +112,9 @@ private lemma kh_second_moment (N : ℕ) (a : Fin N → ℝ) (Ω : Type*) [Measu
     apply MeasureTheory.Integrable.of_bound hmeas' |a i * a j|
     filter_upwards [hae i, hae j] with ω hi hj
     have e1 : |ε i ω| = 1 := by
-      obtain h | h <;> simp [h] := hi
+      rcases hi with h | h <;> simp [h]
     have e2 : |ε j ω| = 1 := by
-      obtain h | h <;> simp [h] := hj
+      rcases hj with h | h <;> simp [h]
     have e12 : |ε i ω * ε j ω| = 1 := by rw [abs_mul, e1, e2, mul_one]
     rw [Real.norm_eq_abs, abs_mul, e12, mul_one]
   have hInt1 : ∀ i, MeasureTheory.Integrable (ε i) μ := by
@@ -241,7 +241,7 @@ private lemma kh_even_moment (N : ℕ) (a : Fin N → ℝ) (Ω : Type*) [Measura
           intro i hi
           have e : |ε i ω| = 1 := by
             have hi2 := hall i hi
-            obtain h | h <;> simp [h] := hi2
+            rcases hi2 with h | h <;> simp [h]
           rw [Real.norm_eq_abs, abs_mul, e, mul_one]
     have hterm_int : ∀ m ∈ Finset.range (2 * k + 1),
       MeasureTheory.Integrable
@@ -560,7 +560,7 @@ private lemma kh_S_bound (N : ℕ) (a : Fin N → ℝ) (Ω : Type*) [MeasurableS
       intro i _
       have e : |ε i ω| = 1 := by
         have hi2 := hall i (Finset.mem_univ i)
-        obtain h | h <;> simp [h] := hi2
+        rcases hi2 with h | h <;> simp [h]
       rw [Real.norm_eq_abs, abs_mul, e, mul_one]
 
 end MetaMathlibExt

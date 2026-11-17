@@ -1,7 +1,7 @@
 import Lemma.Random.AeNormSub.le.DeltaBound.of.In_Ico
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Random.Measurable_Vkd.of.All_Measurable_Prob
-open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.DensityModel Random
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
 private lemma delta_meas
@@ -30,7 +30,7 @@ private lemma main
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
   [NormedAddCommGroup E]
   [NormedSpace ℝ E]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {γ : ℝ}
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
@@ -39,21 +39,21 @@ private lemma main
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 ↦ M.policy.prob θ z.1 z.2))
+  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 ↦ M.π[θ] z.1 z.2))
   (hψ : StronglyMeasurable (Function.uncurry ψ))
   (hMs : ∃ Ms : ℝ, ∀ y u, ‖ψ y u‖ ≤ Ms)
   (θ : Θ)
   (t j : ℕ) :
 -- imply
   Integrable (fun ω => (r j ω + γ * M.V0 θ γ (s (j + 1) ω) - M.V0 θ γ (s j ω)) •
-    ψ (s t ω) (a t ω)) (M θ) := by
+    ψ (s t ω) (a t ω)) (M.traj θ) := by
 -- proof
   obtain ⟨Ms, hMs⟩ := hMs
   have hV : Measurable (M.V0 θ γ) := Measurable_Vkd.of.All_Measurable_Prob (M := M) hπ θ γ
   have hX : Measurable (fun ω : ℕ → ℝ × 𝒮 × 𝒜 => (s t ω, a t ω)) :=
     (Random.Measurable.of.All_Eq.snd.fst h₁ t).prodMk
       (Random.Measurable.of.All_Eq.snd.snd h₁ t)
-  refine Integrable.of_bound (C := (3 / (1 - γ) - 1) * |M.env.R| * Ms)
+  refine Integrable.of_bound (C := (3 / (1 - γ) - 1) * |M.R| * Ms)
     ((delta_meas h₁ hV γ j).stronglyMeasurable.smul
       (hψ.comp_measurable hX)).aestronglyMeasurable ?_
   filter_upwards [AeNormSub.le.DeltaBound.of.In_Ico (M := M) h₀ h₁ θ] with ω h
@@ -63,4 +63,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-11-13
+-- updated on 2026-11-16

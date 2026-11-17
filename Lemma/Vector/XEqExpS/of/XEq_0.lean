@@ -2,7 +2,8 @@ import Lemma.Hyperreal.Infinitesimal.is.XEq_0
 import Lemma.Hyperreal.XEqExpS.of.InfinitesimalSub
 import Lemma.Vector.GetSub.eq.SubGetS
 import Lemma.Vector.XEq.is.All_XEqGetS
-open Hyperreal Vector
+import Instance.Data.Vector.Functions
+open Hyperreal Vector Exp
 
 
 @[path]

@@ -49,17 +49,32 @@ def dualUnit (u : Aˣ) (m : A) : (A[ε])ˣ where
   val := ⟨↑u, m * ↑u⟩
   inv := ⟨↑u⁻¹, -(↑u⁻¹ * m)⟩
   val_inv := by
-    refine TrivSqZeroExt.ext ?_ ?_
-    · simp only [fst_mul, fst_mk, fst_one, Units.mul_inv]
-    · simp only [snd_mul, fst_mk, snd_mk, snd_one, smul_eq_mul, op_smul_eq_mul, mul_neg,
-        Units.mul_inv_cancel_left, Units.mul_inv_cancel_right]
-      exact neg_add_cancel m
+    let x : A[ε] := ⟨↑u, m * ↑u⟩
+    let y : A[ε] := ⟨↑u⁻¹, -(↑u⁻¹ * m)⟩
+    change x * y = 1
+    have h1 : fst (x * y) = 1 := by
+      rw [fst_mul, show fst x = ↑u from rfl, show fst y = ↑u⁻¹ from rfl]
+      apply Units.mul_inv
+    have h2 : snd (x * y) = 0 := by
+      rw [snd_mul, show fst x = ↑u from rfl, show snd y = -(↑u⁻¹ * m) from rfl,
+        show snd x = m * ↑u from rfl, show fst y = ↑u⁻¹ from rfl,
+        smul_eq_mul, op_smul_eq_mul, mul_neg, Units.mul_inv_cancel_left,
+        Units.mul_inv_cancel_right]
+      apply neg_add_cancel
+    apply ext h1 h2
   inv_val := by
-    refine TrivSqZeroExt.ext ?_ ?_
-    · simp only [fst_mul, fst_mk, fst_one, Units.inv_mul]
-    · simp only [snd_mul, fst_mk, snd_mk, snd_one, smul_eq_mul, op_smul_eq_mul, neg_mul,
-        ← mul_assoc]
-      exact add_neg_cancel _
+    let y : A[ε] := ⟨↑u⁻¹, -(↑u⁻¹ * m)⟩
+    let x : A[ε] := ⟨↑u, m * ↑u⟩
+    change y * x = 1
+    have h1 : fst (y * x) = 1 := by
+      rw [fst_mul, show fst y = ↑u⁻¹ from rfl, show fst x = ↑u from rfl]
+      apply Units.inv_mul
+    have h2 : snd (y * x) = 0 := by
+      rw [snd_mul, show fst y = ↑u⁻¹ from rfl, show snd x = m * ↑u from rfl,
+        show snd y = -(↑u⁻¹ * m) from rfl, show fst x = ↑u from rfl,
+        smul_eq_mul, op_smul_eq_mul, neg_mul, ← mul_assoc]
+      apply add_neg_cancel
+    apply ext h1 h2
 
 @[simp] lemma dualUnit_val_fst (u : Aˣ) (m : A) : (dualUnit u m : A[ε]).fst = ↑u := rfl
 

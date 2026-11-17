@@ -16,14 +16,16 @@ Python: Random.Dot.eq.Expect.
 @[path, comm]
 private lemma main
   [MeasurableSpace Ω]
-  [MeasurableSpace α]
+  [MeasurableSpace α] [StandardBorelSpace α] [Nonempty α]
   [Countable α] [MeasurableSingletonClass α]
-  {π : MeasureTheory.Measure Ω} {m k : ℕ}
+  [MeasurableSpace γ]
+  {π : MeasureTheory.Measure Ω} [MeasureTheory.IsFiniteMeasure π]
+  {m k : ℕ}
   {a : Ω → α} {s : Ω → γ}
   {f : α → Tensor ENNReal [k]}
 -- given
-  (A : Tensor ENNReal [m, k])
   (hf : ∀ p : Fin k, Measurable (fun x : α ↦ (f x)[p].item))
+  (A : Tensor ENNReal [m, k])
   («\sf{s}» : γ) :
 -- imply
   A ⬝ᵥ 𝔼[a: π](f a | s = «\sf{s}») =
@@ -34,4 +36,4 @@ private lemma main
 
 
 -- created on 2023-04-07
--- updated on 2026-11-11
+-- updated on 2026-11-15

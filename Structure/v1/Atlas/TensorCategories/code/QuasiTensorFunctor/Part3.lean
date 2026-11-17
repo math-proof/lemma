@@ -42,8 +42,5 @@ structure IsProjectiveGenerator
   proj : Projective P
   generates : ∀ (X : C), (∀ f : P ⟶ X, f = 0) → Limits.IsZero X
 
-/-- Every finite abelian `k`-linear category with enough projectives admits a
-projective generator. -/
-structure. -/
 
 end TensorCategories

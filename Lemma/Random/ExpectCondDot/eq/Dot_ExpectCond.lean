@@ -7,7 +7,6 @@ import Lemma.Tensor.GetDot.eq.Sum_MulGetS
 import Lemma.Tensor.ItemMul.eq.MulItemS
 import Lemma.Tensor.Mul
 import Lemma.Vector.GetSum.eq.Sum_Get
-import Theorem.Probability.JointRv.AsRV
 open Tensor
 
 
@@ -104,12 +103,17 @@ Python: Random.Expect_CondDot.eq.Dot_Expect_Cond.
 | :---: | :---: |
 | path | Random.ExpectCondDot.eq.Dot_ExpectCond |
 | comm | Random.Dot_Expect_Cond.eq.Expect_CondDot |
+| attributes | lemma |
+| :---: | :---: |
+| path | Random.ExpectCondDot.eq.Dot_ExpectCond |
+| comm | Random.Dot_ExpectCond.eq.ExpectCondDot |
 -/
 @[path, comm]
 private lemma main
   [MeasurableSpace Ω]
   [MeasurableSpace α] [StandardBorelSpace α] [Nonempty α]
   [Countable α] [MeasurableSingletonClass α]
+  [MeasurableSpace γ]
   {π : MeasureTheory.Measure Ω} [MeasureTheory.IsFiniteMeasure π] {m k : ℕ}
   {a : Ω → α} {s : Ω → γ}
   {f : α → Tensor ENNReal [k]}
@@ -166,4 +170,4 @@ private lemma main
 
 
 -- created on 2026-09-23
--- updated on 2026-11-13
+-- updated on 2026-11-15

@@ -1,6 +1,6 @@
 import Lemma.Real.LogMul.eq.AddLogS.of.Ne_0.Ne_0
 import Instance.Data.Vector.Functions.Part2
-open Real Vector
+open Real Vector Log
 
 
 @[path]

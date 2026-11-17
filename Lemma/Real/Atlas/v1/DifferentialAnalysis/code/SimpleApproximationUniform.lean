@@ -1,5 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.MeasurabilityOfFunctions
 open MeasureTheory MeasureTheory.SimpleFunc
 open scoped ENNReal NNReal
 
@@ -25,8 +26,9 @@ lemma eapprox_uniform_on_bounded_strict
   exact ⟨N, fun n hn x hfx => by
     obtain ⟨k, hkN, hk_le, hk_diff⟩ := hN (f x) hfx
     have hkn : k < n := Nat.lt_of_lt_of_le hkN hn
-    have heapprox_ge : ennrealRatEmbed k ≤ SimpleFunc.eapprox f n x :=
-      eapprox_ge_ennrealRatEmbed hf hkn x hk_le
+    have heapprox_ge : ennrealRatEmbed k ≤ SimpleFunc.eapprox f n x := by
+      simp only [SimpleFunc.eapprox, SimpleFunc.approx_apply x hf]
+      exact Finset.le_sup_of_le (Finset.mem_range.mpr hkn) (ite_eq_left hk_le ▸ le_refl _)
     calc f x - SimpleFunc.eapprox f n x
       ≤ f x - ennrealRatEmbed k := tsub_le_tsub_left heapprox_ge _
       _ < ε := hk_diff⟩
@@ -35,3 +37,4 @@ end SimpleApproximation
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-15

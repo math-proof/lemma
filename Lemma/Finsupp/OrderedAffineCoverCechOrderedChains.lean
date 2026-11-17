@@ -3,7 +3,6 @@ import Lemma.Scheme.OrderedAffineCoverCech
 import Lemma.Scheme.OrderedAffineCoverCechCup
 import Lemma.Scheme.OrderedAffineCoverCochainPullback
 import Lemma.Scheme.OrderedAffineCoverCechOrdered
-import Instance.AlgebraicGeometry_OrderedAffineCoverCechOrderedChains
 import Abbrev.AlgebraicGeometry_OrderedAffineCoverCechOrderedChains
 
 set_option autoImplicit false
@@ -52,12 +51,12 @@ theorem oesort_single_of_injective (n : ℕ) (u : K.OIdx n) (hinj : Function.Inj
     K.oesort n (Finsupp.single u 1) =
       ((Equiv.Perm.sign (Tuple.sort u) : ℤˣ) : ℤ) • Finsupp.single (u ∘ Tuple.sort u : K.OIdx n) (1 : ℤ) := by
   classical
-  rw [oesort, olin_single, dif_pos hinj]
+  rw [oesort, olin_single, dite_eq_left hinj]
 
 theorem oesort_single_of_not_injective (n : ℕ) (u : K.OIdx n) (hinj : ¬ Function.Injective u) :
     K.oesort n (Finsupp.single u 1) = 0 := by
   classical
-  rw [oesort, olin_single, dif_neg hinj]
+  rw [oesort, olin_single, dite_eq_right hinj]
 
 def ohom : (n : ℕ) → (K.OIdx n → K.OCh (n + 1))
   | 0 => fun _ => 0
@@ -70,8 +69,6 @@ theorem ohom_succ (n : ℕ) (σ : K.OIdx (n + 1)) :
     K.ohom (n + 1) σ = K.ocone (σ 0) (n + 1)
       (Finsupp.single σ 1 - K.oesort (n + 1) (Finsupp.single σ 1) - K.olin n (K.ohom n) (K.obd n (Finsupp.single σ 1))) :=
   rfl
-
-def OSub {n k : ℕ} (u : K.OIdx n) (t : K.OIdx k) : Prop := ∀ j, ∃ i, u j = t i
 
 theorem oSub_iff {n k : ℕ} (u : K.OIdx n) (t : K.OIdx k) : K.OSub u t ↔ ∀ j, ∃ i, u j = t i := Iff.rfl
 
@@ -104,13 +101,13 @@ def oresTo {n k : ℕ} (t : K.OIdx k) (u : K.OIdx n) : F.obj (K.ointer u) →ₗ
 theorem oresTo_apply_of_oSub {n k : ℕ} (t : K.OIdx k) (u : K.OIdx n) (h : K.OSub u t) (x : F.obj (K.ointer u)) :
     F.oresTo K t u x = F.res (K.ointer_le_ointer_of_oSub h) x := by
   classical
-  simp only [oresTo, dif_pos h]
+  simp only [oresTo, dite_eq_left h]
   rfl
 
 theorem oresTo_apply_of_not_oSub {n k : ℕ} (t : K.OIdx k) (u : K.OIdx n) (h : ¬ K.OSub u t) (x : F.obj (K.ointer u)) :
     F.oresTo K t u x = 0 := by
   classical
-  simp only [oresTo, dif_neg h, LinearMap.zero_apply]
+  simp only [oresTo, dite_eq_right h, LinearMap.zero_apply]
 
 def opair {k : ℕ} (t : K.OIdx k) (n : ℕ) (c : F.ocochain K n) : K.OCh n →ₗ[ℤ] F.obj (K.ointer t) :=
   K.olin n fun u => F.oresTo K t u (c u)

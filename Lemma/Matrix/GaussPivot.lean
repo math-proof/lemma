@@ -114,10 +114,10 @@ private lemma gaussPivot_hasDecomposition_of_zeroFirstColumn
     rw [Matrix.mul_apply]
     simp [hzero]
   · have heq :
-    (L * A.submatrix σ id).submatrix id Fin.succ =
-      L * (A.submatrix id Fin.succ).submatrix σ id := by
-    ext i j
-    simp [Matrix.mul_apply]
+        (L * A.submatrix σ id).submatrix id Fin.succ =
+          L * (A.submatrix id Fin.succ).submatrix σ id := by
+      ext i j
+      simp [Matrix.mul_apply]
     rwa [heq]
 
 end MathlibExt.LinearAlgebra.Matrix.GaussPivotWanted
@@ -237,18 +237,18 @@ private lemma gaussPivot_hasDecomposition_of_pivot
     simp only [d, neg_mul]
     rw [hsum, neg_add_cancel]
   · have heq :
-    (L * A.submatrix σ id).submatrix Fin.succ Fin.succ =
-      L₀ * D.submatrix τ id := by
-    ext i j
-    change (gaussPivotBorderLower d L₀ * A.submatrix σ id) i.succ j.succ =
-      (L₀ * D.submatrix τ id) i j
-    rw [gaussPivotBorderLower_mul_succ, Matrix.mul_apply]
-    change d i * A' 0 j.succ + ∑ k, L₀ i k * A' (τ k).succ j.succ =
-      ∑ k, L₀ i k * (A' (τ k).succ j.succ - c (τ k) * A' 0 j.succ)
-    simp_rw [mul_sub, Finset.sum_sub_distrib, ← mul_assoc]
-    rw [← Finset.sum_mul]
-    simp [d]
-    ring
+        (L * A.submatrix σ id).submatrix Fin.succ Fin.succ =
+          L₀ * D.submatrix τ id := by
+      ext i j
+      change (gaussPivotBorderLower d L₀ * A.submatrix σ id) i.succ j.succ =
+        (L₀ * D.submatrix τ id) i j
+      rw [gaussPivotBorderLower_mul_succ, Matrix.mul_apply]
+      change d i * A' 0 j.succ + ∑ k, L₀ i k * A' (τ k).succ j.succ =
+        ∑ k, L₀ i k * (A' (τ k).succ j.succ - c (τ k) * A' 0 j.succ)
+      simp_rw [mul_sub, Finset.sum_sub_distrib, ← mul_assoc]
+      rw [← Finset.sum_mul]
+      simp [d]
+      ring
     rwa [heq]
 
 end MathlibExt.LinearAlgebra.Matrix.GaussPivotWanted
@@ -310,9 +310,9 @@ namespace MathlibExt.LinearAlgebra.Matrix.GaussPivotWanted
 
 /--
 [exists_unitLowerTriangular_mul_submatrix_isRowEchelon](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/GaussPivot.lean)
+and then multiplying by one unit lower-triangular matrix.
 -/
 @[path]
-and then multiplying by one unit lower-triangular matrix. -/
 lemma _root_.Matrix.exists_unitLowerTriangular_mul_submatrix_isRowEchelon
   {K m n : Type*} [Field K] [Fintype m] [LinearOrder m]
   [Finite n] [LinearOrder n] (A : Matrix m n K) :
@@ -408,4 +408,4 @@ private lemma Matrix_exists_unitLowerTriangular_mul_submatrix_isRowEchelon_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-16

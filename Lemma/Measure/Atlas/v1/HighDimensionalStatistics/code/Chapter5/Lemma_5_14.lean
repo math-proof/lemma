@@ -84,7 +84,7 @@ lemma greedy_packing_bound
       have : ∀ x ∈ T.cons z hz, ∀ y ∈ T.cons z hz, x ≠ y → y ∉ ball x := by
         intro x hx y hy hne
         simp only [Finset.mem_cons] at hx hy
-        obtain rfl | hx <;> rcases hy with rfl | hy := hx
+        rcases hx with rfl | hx <;> rcases hy with rfl | hy
         · exact absurd rfl hne
         · intro hball; exact habs y hy (ball_symm _ _ hball)
         · intro hball; exact habs x hx hball

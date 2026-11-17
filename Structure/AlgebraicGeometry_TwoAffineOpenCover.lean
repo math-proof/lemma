@@ -28,6 +28,9 @@ namespace Scheme.TwoAffineOpenCover
 
 variable {R : Type u} [CommRing R] {X : Scheme.{u}}
 
+@[reducible] def algebraOfHom (c : X ⟶ Spec (.of R)) (U : X.Opens) : Algebra R Γ(X, U) :=
+  ((Scheme.ΓSpecIso (.of R)).inv ≫ c.appLE ⊤ U (by rw [Scheme.Hom.preimage_top]; exact le_top)).hom.toAlgebra
+
 
 variable (𝒱 : X.TwoAffineOpenCover) (c : X ⟶ Spec (.of R))
 

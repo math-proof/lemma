@@ -14,7 +14,7 @@ section
 
 namespace Equiv.Perm
 
-open Finset
+open _root_.Finset
 
 variable {n : ℕ}
 
@@ -1934,7 +1934,7 @@ lemma lehmerEntry_diff_iff_inversion (σ : Perm (Fin n)) (i : Fin n) (hi : i.val
       rw [hempty, Finset.card_empty]
   rw [hfirst]
   by_cases hcond : σ i' < σ i
-  · rw [if_pos hcond]
+  · rw [ite_eq_left hcond]
     constructor
     · intro _; exact hcond
     · intro _
@@ -1945,7 +1945,7 @@ lemma lehmerEntry_diff_iff_inversion (σ : Perm (Fin n)) (i : Fin n) (hi : i.val
         exact ⟨hj.1, lt_trans hj.2 hcond⟩
       have hcard := Finset.card_le_card hsubset
       omega
-  · rw [if_neg hcond]
+  · rw [ite_eq_right hcond]
     push Not at hcond
     have hle : σ i ≤ σ i' := hcond
     constructor
@@ -2301,9 +2301,6 @@ lemma shiftCount_zero_eq_largerBefore (σ : Perm (Fin n)) (p : Fin n) :
     shiftCount σ p 0 = largerBefore σ p := by
   unfold shiftCount largerBefore
   congr 1
-  ext k
-  simp only [Finset.mem_filter, Finset.mem_univ, true_and, Nat.zero_le,
-             true_and, gt_iff_lt, Fin.lt_def]
 
 /-- shiftCount at j equals shiftCount at j+1 plus 1 if σ(j) > σ(p), else same.
 This is the key recurrence for tracking shifts. -/

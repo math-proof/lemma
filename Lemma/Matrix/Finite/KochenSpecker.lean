@@ -147,7 +147,7 @@ namespace MathlibExt.QuantumInformation.Finite.KochenSpeckerWanted
 -/
 @[path]
 private lemma p10 {a b : ℕ} (p : a + b ≤ 1) (h : a = 1) : b = 0 := by
-omega
+  omega
 
 end MathlibExt.QuantumInformation.Finite.KochenSpeckerWanted
 
@@ -158,7 +158,7 @@ namespace MathlibExt.QuantumInformation.Finite.KochenSpeckerWanted
 -/
 @[path]
 private lemma p01 {a b : ℕ} (p : a + b ≤ 1) (h : b = 1) : a = 0 := by
-omega
+  omega
 
 end MathlibExt.QuantumInformation.Finite.KochenSpeckerWanted
 
@@ -170,7 +170,7 @@ namespace MathlibExt.QuantumInformation.Finite.KochenSpeckerWanted
 @[path]
 private lemma tc {a b c : ℕ} (s : a + b + c = 1) (h1 : a = 0) (h2 : b = 0) (h3 : c = 0) :
   False := by
-omega
+  omega
 
 end MathlibExt.QuantumInformation.Finite.KochenSpeckerWanted
 
@@ -181,7 +181,7 @@ namespace MathlibExt.QuantumInformation.Finite.KochenSpeckerWanted
 -/
 @[path]
 private lemma pc {a b : ℕ} (p : a + b ≤ 1) (h1 : a = 1) (h2 : b = 1) : False := by
-omega
+  omega
 
 end MathlibExt.QuantumInformation.Finite.KochenSpeckerWanted
 
@@ -204,7 +204,7 @@ namespace MathlibExt.QuantumInformation.Finite.KochenSpeckerWanted
 -/
 @[path]
 private lemma alldots : ∀ i : Fin 35, dotProduct (w i) (w i) ≠ 0 := by
-decide
+  decide
 
 end MathlibExt.QuantumInformation.Finite.KochenSpeckerWanted
 
@@ -231,7 +231,9 @@ lemma kochen_specker_finite_real_three
   ∃ (N : ℕ) (v : Fin N → EuclideanSpace ℝ (Fin 3)),
     (∀ i, ‖v i‖ = 1) ∧
     ¬ ∃ (c : Fin N → Fin 2),
-    (∀ i j : Fin N, inner (𝕜 := by
+      (∀ i j : Fin N, inner (𝕜 := ℝ) (v i) (v j) = 0 → (c i).val + (c j).val ≤ 1) ∧
+      (∀ t : Fin 3 → Fin N, Orthonormal ℝ (fun r => v (t r)) →
+        ∑ r : Fin 3, (c (t r)).val = 1) := by
 -- proof
   refine ⟨35, v, hunit, ?_⟩
   rintro ⟨c, hO, hC⟩
@@ -628,4 +630,4 @@ end MathlibExt.QuantumInformation.Finite.KochenSpeckerWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-16

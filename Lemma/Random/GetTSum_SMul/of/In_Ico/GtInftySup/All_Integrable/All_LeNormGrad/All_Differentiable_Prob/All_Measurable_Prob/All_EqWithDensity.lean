@@ -4,22 +4,21 @@ import Syntax.Order.Sup
 import Lemma.Random.Differentiable.All_LeNormFderivMulAdd_1MulAbs_R.of.All_LeIntegral.All_Integrable.All_LeNormFderiv.All_Differentiable_Prob.All_Measurable_Prob.All_EqWithDensity
 import Lemma.Random.Integral_R.eq.Integral_Wkd.of.All_Eq.All_EqWithDensity
 import Lemma.Random.NormWkd.le.Abs_R
-open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.DensityModel Random Set
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Set
 
 
 private lemma Er_bdd
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
   (θ : Θ)
   (t : ℕ) :
-  ‖∫ ω, r t ω ∂(M θ)‖ ≤ |M.env.R| := by
-  have := M.env.init_prob
+  ‖∫ ω, r t ω ∂(M.traj θ)‖ ≤ |M.R| := by
   rw [Integral_R.eq.Integral_Wkd.of.All_Eq.All_EqWithDensity (M := M) h₀ θ t]
-  have h := norm_integral_le_of_norm_le_const (μ := M.env.init)
+  have h := norm_integral_le_of_norm_le_const (μ := (M.init : Measure _))
     (Filter.Eventually.of_forall fun x => NormWkd.le.Abs_R (M := M) θ t x)
   simpa using h
 
@@ -28,37 +27,36 @@ private lemma Er_bdd
 -/
 @[path]
 private lemma main
-  [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [FiniteDimensional ℝ Θ]
+  [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
   [MeasurableSpace 𝒮] [μ : ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {γ : ℝ}
-  {g : 𝒮 → 𝒜 → ℝ}
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.policy.prob θ z.1 z.2))
-  (h₂ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
-  (h₃ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ g x u)
-  (h₄ : ∀ x, Integrable (g x) μ.measure)
-  (h₅ : sup[x] ∫ u, g x u ∂μ.measure < ∞)
+  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π[θ] z.1 z.2))
+  (h₂ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π[θ] sₜ aₜ))
+  (h₃ : sup[sₜ] (∫ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖) ∂μ.measure) < ∞)
+  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖))
+  (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) μ.measure)
   (θ : Θ) :
 -- imply
-  HasFDerivAt (fun θ => ∑' t, γ ^ t * ∫ ω, r t ω ∂(M θ))
-    (∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ) θ := by
+  HasFDerivAt (fun θ => ∑' t, γ ^ t * ∫ ω, r t ω ∂(M.traj θ))
+    (∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M.traj θ)) θ) θ := by
 -- proof
-  obtain ⟨Cg, hCgbound⟩ := id h₅
-  have h₅le : ∀ x, ∫ u, g x u ∂μ.measure ≤ Cg := fun x => hCgbound ⟨x, rfl⟩
+  obtain ⟨Cg, hCgbound⟩ := id h₃
+  have h₅le : ∀ sₜ, ∫ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖) ∂μ.measure ≤ Cg := fun x => hCgbound ⟨x, rfl⟩
   have hD := fun t =>
     Differentiable.All_LeNormFderivMulAdd_1MulAbs_R.of.All_LeIntegral.All_Integrable.All_LeNormFderiv.All_Differentiable_Prob.All_Measurable_Prob.All_EqWithDensity
-      (M := M) h₁ hπ h₂ h₃ h₄ h₅le t
-  have hsum : Summable (fun k : ℕ => γ ^ k * ((k + 1) * (Cg * |M.env.R|))) := by
+      (M := M) h₁ hπ h₂ h₅le hBdd hIntg t
+  have hsum : Summable (fun k : ℕ => γ ^ k * ((k + 1) * (Cg * |M.R|))) := by
     have h1 : Summable (fun k : ℕ => (k : ℝ) ^ 1 * γ ^ k) :=
       summable_pow_mul_geometric_of_norm_lt_one 1 (by rw [Real.norm_of_nonneg h₀.1]; exact h₀.2)
     have h2 := summable_geometric_of_lt_one h₀.1 h₀.2
-    exact ((h1.add h2).mul_right (Cg * |M.env.R|)).congr fun k => by ring
+    exact ((h1.add h2).mul_right (Cg * |M.R|)).congr fun k => by ring
   refine hasFDerivAt_tsum (x₀ := θ)
     hsum
     (fun t θ => ((hD t).1 θ).hasFDerivAt.const_mul (γ ^ t))
@@ -68,10 +66,10 @@ private lemma main
     exact mul_le_mul_of_nonneg_left ((hD t).2 θ) (pow_nonneg h₀.1 t)
   ·
     refine Summable.of_norm_bounded
-      ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right |M.env.R|) fun t => ?_
+      ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right |M.R|) fun t => ?_
     rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
     exact mul_le_mul_of_nonneg_left (Er_bdd h₁ θ t) (pow_nonneg h₀.1 t)
 
 
 -- created on 2026-10-20
--- updated on 2026-11-14
+-- updated on 2026-11-16

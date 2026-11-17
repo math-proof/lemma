@@ -94,8 +94,8 @@ lemma sobolevCoeff_succ_ge_of_le
 -- imply
   (M : ℝ) ^ β ≤ Chapter3.sobolevCoeff β (j + 1) := by
 -- proof
-  calc (M : ℝ) ^ β ≤ (j : ℝ) ^ β := by
-    apply rpow_le_rpow (Nat.cast_nonneg M) (by exact_mod_cast hj) hβ.le
+  calc (M : ℝ) ^ β ≤ (j : ℝ) ^ β :=
+      rpow_le_rpow (Nat.cast_nonneg M) (by exact_mod_cast hj) hβ.le
     _ ≤ Chapter3.sobolevCoeff β (j + 1) := sobolevCoeff_succ_ge β hβ j
 
 /--

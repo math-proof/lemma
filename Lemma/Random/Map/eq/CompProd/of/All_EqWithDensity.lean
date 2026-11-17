@@ -1,6 +1,6 @@
 import Lemma.Measure.MapComap_MapId.eq.Map.of.Measurable
-import Theorem.Dynamics.PolicyTrajectory.ContinuousAction.Part3
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Measure Finset
+import Theorem.Dynamics.PolicyTrajectory.ContinuousAction
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Measure Finset
 
 
 /--
@@ -10,15 +10,14 @@ Joint law of two consecutive stages of the continuous-action trajectory model `M
 @[path]
 private lemma main
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
 -- given
   (θ : Θ)
   (t : ℕ) :
 -- imply
-  (M θ).map (fun ω => (ω t, ω (t + 1))) = ((M θ).map (fun ω => ω t)) ⊗ₘ M.K θ := by
+  (M.traj θ).map (fun ω => (ω t, ω (t + 1))) = ((M.traj θ).map (fun ω => ω t)) ⊗ₘ M.K θ := by
 -- proof
-  have := M.env.init_prob
-  let μ₀ : Measure (ℝ × 𝒮 × 𝒜) := M.stageK θ ∘ₘ M.env.init
+  let μ₀ : Measure (ℝ × 𝒮 × 𝒜) := M.stageK θ ∘ₘ (M.init : Measure _)
   have h := Kernel.map_frestrictLe_trajMeasure_compProd_eq_map_trajMeasure
     (X := fun _ ↦ ℝ × 𝒮 × 𝒜) (μ₀ := μ₀) (κ := M.step θ) (a := t)
   let e : (Π _ : Finset.Iic t, ℝ × 𝒮 × 𝒜) → ℝ × 𝒮 × 𝒜 := fun h ↦ h ⟨t, mem_Iic.2 le_rfl⟩
@@ -31,3 +30,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-16

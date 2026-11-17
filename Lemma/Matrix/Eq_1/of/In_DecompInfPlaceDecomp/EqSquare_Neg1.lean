@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Definitions.Def_NumberField_ArchimedeanIdeleModule
+import Abbrev.NumberField_ArchimedeanIdeleModule
 open NumberField
 open scoped NumberField.InfPlaceDecomp
 

@@ -1,6 +1,5 @@
 import Mathlib
 import Def.GroupCohomology_SelmerLe
-import Instance.GroupCohomology_SelmerAdm
 
 set_option autoImplicit false
 

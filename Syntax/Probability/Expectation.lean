@@ -6,7 +6,7 @@ import Mathlib.MeasureTheory.MeasurableSpace.Constructions
 import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
 import Mathlib.Probability.Independence.Basic
 import Mathlib.Probability.Independence.Conditional
-import Def.Probability.SymbolicProbability.Part2
+import Def.Probability.SymbolicProbability
 import Theorem.Function
 import Def.Probability.JointRv
 import Def.Probability.Expectation

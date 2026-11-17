@@ -1,8 +1,4 @@
 import Mathlib
-import Abbrev.NumberField_SUnitsModule
-import Instance.ExtEndgame_ProductionDatum
-import Lemma.ClassGroup.GaloisAction
-import Instance.Compat_Mathlib430
 
 set_option autoImplicit false
 
@@ -35,7 +31,8 @@ variable (E F : Type) [Field E] [Field F] [NumberField F] [Algebra E F]
 
 abbrev ringOfIntegersAut (σ : F ≃ₐ[E] F) : 𝓞 F ≃+* 𝓞 F := NumberField.RingOfIntegers.mapRingEquiv (σ : F ≃+* F)
 
-abbrev classGroupRep : Rep ℤ (F ≃ₐ[E] F) := Rep.ofMulDistribMulAction (F ≃ₐ[E] F) (ClassGroup (𝓞 F))
+abbrev classGroupRep [MulDistribMulAction (F ≃ₐ[E] F) (ClassGroup (𝓞 F))] : Rep ℤ (F ≃ₐ[E] F) :=
+  Rep.ofMulDistribMulAction (F ≃ₐ[E] F) (ClassGroup (𝓞 F))
 
 end ClassGroups
 
@@ -52,8 +49,9 @@ variable (K L : IntermediateField ℚ (AlgebraicClosure ℚ))
 
 abbrev IsNormalLevel : Prop := ∀ g ∈ K.fixingSubgroup, ∀ s ∈ L.fixingSubgroup, g * s * g⁻¹ ∈ L.fixingSubgroup
 
-abbrev placesAbove (S : Finset Nat.Primes) (v : ExtCitation.extArithIndex S) : Type :=
-  MulAction.orbitRel.Quotient ↥L.fixingSubgroup ((AlgebraicClosure ℚ ≃ₐ[ℚ] AlgebraicClosure ℚ) ⧸ (ExtCitation.extArithLoc S v).range)
+/-- Orbit space of places above a global Galois subgroup H, typically the range of a local embedding. -/
+abbrev placesAbove (H : Subgroup (AlgebraicClosure ℚ ≃ₐ[ℚ] AlgebraicClosure ℚ)) : Type :=
+  MulAction.orbitRel.Quotient ↥L.fixingSubgroup ((AlgebraicClosure ℚ ≃ₐ[ℚ] AlgebraicClosure ℚ) ⧸ H)
 
 end Places
 

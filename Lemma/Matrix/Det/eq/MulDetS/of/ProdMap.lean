@@ -12,6 +12,9 @@ namespace Oriflamme
 @[path]
 lemma extend_lagrangian_auto_det
   [Field k]
+  [AddCommGroup U] [Module k U]
+  [AddCommGroup U'] [Module k U']
+  [AddCommGroup V] [Module k V]
   [Module.Free k U]
   [Module.Free k U']
   [Module.Finite k U]
@@ -20,9 +23,10 @@ lemma extend_lagrangian_auto_det
   {α : U ≃ₗ[k] U}
   {β : U' ≃ₗ[k] U'} :
 -- imply
-  let h : V →ₗ[k] V := e.toLinearMap ∘ₗ (α.toLinearMap.prodMap β.toLinearMap) ∘ₗ e.symm.toLinearMap LinearMap.det h = LinearMap.det α.toLinearMap * LinearMap.det β.toLinearMap := by
+  let h : V →ₗ[k] V :=
+    e.toLinearMap ∘ₗ (α.toLinearMap.prodMap β.toLinearMap) ∘ₗ e.symm.toLinearMap
+  LinearMap.det h = LinearMap.det α.toLinearMap * LinearMap.det β.toLinearMap := by
 -- proof
-  intro h
   show LinearMap.det (e.toLinearMap ∘ₗ (α.toLinearMap.prodMap β.toLinearMap)
     ∘ₗ e.symm.toLinearMap) = _
   rw [LinearMap.det_conj]
@@ -38,6 +42,9 @@ namespace Oriflamme
 @[path]
 lemma extend_lagrangian_auto_det_one
   [Field k]
+  [AddCommGroup U] [Module k U]
+  [AddCommGroup U'] [Module k U']
+  [AddCommGroup V] [Module k V]
   [Module.Free k U]
   [Module.Free k U']
   [Module.Finite k U]
@@ -48,10 +55,13 @@ lemma extend_lagrangian_auto_det_one
 -- given
   (hβ : LinearMap.det β.toLinearMap = (LinearMap.det α.toLinearMap)⁻¹) :
 -- imply
-  let h : V →ₗ[k] V := e.toLinearMap ∘ₗ (α.toLinearMap.prodMap β.toLinearMap) ∘ₗ e.symm.toLinearMap LinearMap.det h = 1 := by
+  let h : V →ₗ[k] V :=
+    e.toLinearMap ∘ₗ (α.toLinearMap.prodMap β.toLinearMap) ∘ₗ e.symm.toLinearMap
+  LinearMap.det h = 1 := by
 -- proof
-  intro h
-  rw [extend_lagrangian_auto_det e α β, hβ]
+  show LinearMap.det (e.toLinearMap ∘ₗ (α.toLinearMap.prodMap β.toLinearMap) ∘ₗ
+      e.symm.toLinearMap) = 1
+  rw [extend_lagrangian_auto_det, hβ]
   exact mul_inv_cancel₀ (by rw [← LinearEquiv.coe_det]; exact Units.ne_zero _)
 
 end Oriflamme
@@ -64,11 +74,16 @@ namespace Oriflamme
 @[path]
 lemma extend_lagrangian_auto_restricts
   [Field k]
+  [AddCommGroup U] [Module k U]
+  [AddCommGroup U'] [Module k U']
+  [AddCommGroup V] [Module k V]
   {e : (U × U') ≃ₗ[k] V}
   {α : U ≃ₗ[k] U}
   {β : U' ≃ₗ[k] U'} :
 -- imply
-  let h : V →ₗ[k] V := e.toLinearMap ∘ₗ (α.toLinearMap.prodMap β.toLinearMap) ∘ₗ e.symm.toLinearMap ∀ u : U, h (e (u, 0)) = e (α u, 0) := by
+  let h : V →ₗ[k] V :=
+    e.toLinearMap ∘ₗ (α.toLinearMap.prodMap β.toLinearMap) ∘ₗ e.symm.toLinearMap
+  ∀ u : U, h (e (u, 0)) = e (α u, 0) := by
 -- proof
   intro h u
   show (e.toLinearMap ∘ₗ (α.toLinearMap.prodMap β.toLinearMap) ∘ₗ e.symm.toLinearMap)
@@ -86,6 +101,9 @@ namespace Oriflamme
 @[path]
 lemma extend_lagrangian_auto_isometry
   [Field k]
+  [AddCommGroup U] [Module k U]
+  [AddCommGroup U'] [Module k U']
+  [AddCommGroup V] [Module k V]
   {e : (U × U') ≃ₗ[k] V}
   {α : U ≃ₗ[k] U}
   {β : U' ≃ₗ[k] U'}
@@ -96,7 +114,9 @@ lemma extend_lagrangian_auto_isometry
   (hadj : ∀ (u : U) (u' : U'), B (e (α u, 0)) (e (0, β u')) = B (e (u, 0)) (e (0, u')))
   (hadj' : ∀ (u' : U') (u : U), B (e (0, β u')) (e (α u, 0)) = B (e (0, u')) (e (u, 0))) :
 -- imply
-  let h : V →ₗ[k] V := e.toLinearMap ∘ₗ (α.toLinearMap.prodMap β.toLinearMap) ∘ₗ e.symm.toLinearMap ∀ v w : V, B (h v) (h w) = B v w := by
+  let h : V →ₗ[k] V :=
+    e.toLinearMap ∘ₗ (α.toLinearMap.prodMap β.toLinearMap) ∘ₗ e.symm.toLinearMap
+  ∀ v w : V, B (h v) (h w) = B v w := by
 -- proof
   intro h v w
   suffices ∀ (p q : U × U'),
@@ -125,3 +145,4 @@ end Oriflamme
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-16

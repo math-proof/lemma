@@ -1,4 +1,5 @@
-import Theorem.Dynamics.PolicyTrajectory
+import Mathlib
+import Initialize.Tactic.Attr.Basic
 import Def.Order.Miscellaneous
 
 
@@ -27,3 +28,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-15

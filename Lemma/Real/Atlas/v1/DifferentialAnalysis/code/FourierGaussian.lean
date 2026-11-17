@@ -15,6 +15,8 @@ lemma fourier_transform_gaussian
   [NormedAddCommGroup V]
   [InnerProductSpace ℝ V]
   [FiniteDimensional ℝ V]
+  [MeasurableSpace V]
+  [BorelSpace V]
   {w : V} :
 -- imply
   bookFourierTransform (fun v => cexp (-(1 / 2 : ℂ) * ‖v‖ ^ 2)) w = ↑((2 * π) ^ ((Module.finrank ℝ V : ℝ) / 2)) * cexp (-(1 / 2 : ℂ) * ‖w‖ ^ 2) := by
@@ -41,3 +43,4 @@ end FourierAnalysis
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-15

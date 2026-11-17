@@ -1,5 +1,4 @@
 import Mathlib
-import Instance.M4aHerbrand_SIdeleClassGroup
 import Structure.M4aHerbrand_AdeleBaseChange
 
 set_option autoImplicit false

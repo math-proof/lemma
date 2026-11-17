@@ -1,3 +1,4 @@
+import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Lemma.Random.GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.Any_And_All_Integrable_Measure.GtInftySup.All_Differentiable_Prob.All_NeDens_0.All_Eq_JointDens.AbsContJointAS.AbsContStateMarginal.IsPolicyTrajectory.Subset_Ico
 import Lemma.Measure.All_Integrable_Measure.GtInftySup_Integral.of.GtInftySup_Sum
 import Lemma.Random.PSpace_Path.of.All_PSpace
@@ -5,7 +6,7 @@ import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
 open scoped ENNReal.ToRealCoe
 open Finset (range)
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Filter Topology Random Measure Real IsPolicyTrajectory
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure Real IsPolicyTrajectory
 set_option maxHeartbeats 900000
 
 
@@ -25,7 +26,7 @@ private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
   [CountableMeasure 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮] [Nonempty 𝒮] [StandardBorelSpace 𝒮]
   [CountableMeasure 𝒜] [MeasurableSingletonClass 𝒜] [Fintype 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {θ : Θ}
   {γ ℓ : ℝ}
   {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
@@ -33,50 +34,42 @@ private lemma main
   {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
 -- given
   (h₀ : {γ, ℓ} ⊆ Set.Ico 0 1)
-  (hfactor : DensityModel.IsConditionalProbability M r s a)
+  (hfactor : Model.IsConditionalProbability M r s a)
   (h₁ : ∀ t («\sf{s}» : ℕ ⇀ 𝒮) («\sf{a}» : ℕ ⇀ 𝒜),
-    Differentiable ℝ (fun θ => (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ)))
-  (h₂ : ∃ (g : 𝒮 → 𝒜 → ℝ),
-    (∀ θ t («\sf{s}» : ℕ ⇀ 𝒮) («\sf{a}» : ℕ ⇀ 𝒜),
-      ‖∇[θ] (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ)‖ ≤
-        g «\sf{s}»[t] «\sf{a}»[t]) ∧
-    (sup[x] (∑ u, g x u) < ∞))
+    Differentiable ℝ (fun θ => (ℙ[M.traj θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ)))
+  (h₂ : sup[x] (∑ u, sSup (Set.range fun θ => ‖∇[θ] (ℙ[M.traj θ](a[0] = u | s[0] = x) : ℝ)‖)) < ∞)
+  (hBdd : ∀ x u, BddAbove (Set.range fun θ => ‖∇[θ] (ℙ[M.traj θ](a[0] = u | s[0] = x) : ℝ)‖))
   (hMs : sup[«\sf{s}» : ℕ ⇀ 𝒮, «\sf{a}» : ℕ ⇀ 𝒜]
-    ‖∇[θ] (ℙ[M θ](a[0] = «\sf{a}»[0] | s[0] = «\sf{s}»[0]) : ℝ).log‖ < ∞) :
+    ‖∇[θ] (ℙ[M.traj θ](a[0] = «\sf{a}»[0] | s[0] = «\sf{s}»[0]) : ℝ).log‖ < ∞) :
 -- imply
-  have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun θ t =>
+  have : ∀ θ t, SinglePSpace (M.traj θ) (a t, s t) := fun θ t =>
     hfactor.htr.singlePSpace_as (haj := hfactor.haj) θ t
-  have : ∀ θ', PSpace (M θ') (AsPathRV.path r) := fun _ =>
+  have : ∀ θ', PSpace (M.traj θ') (AsPathRV.path r) := fun _ =>
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) hfactor.htr.stage_eq t).aemeasurable⟩)
-  have : PSpace (M θ) (AsPathRV.path s) :=
+  have : PSpace (M.traj θ) (AsPathRV.path s) :=
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) hfactor.htr.stage_eq t).aemeasurable⟩)
-  have : PSpace (M θ) (AsPathRV.path a) :=
+  have : PSpace (M.traj θ) (AsPathRV.path a) :=
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) hfactor.htr.stage_eq t).aemeasurable⟩)
   let : MeasurableSpace Θ := borel Θ
   let V_θ : ℕ ⇀ (ℕ → 𝒮) → ℕ → ℝ := ⟨fun t δ k => M.V θ γ (t + k) (δ k)⟩
-  ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) =
-    𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
+  ∇[θ] 𝔼[r: M.traj θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) =
+    𝔼[r, s, a : M.traj θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
       (((1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) ⬝ᵥ fun k ↦ (γ ^ range (k + 1)) ⬝ᵥ
         (r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:]))) •
-        ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log)) := by
+        ∇[θ] (ℙ[M.traj θ](a[t] | s[t]) : ℝ).log)) := by
 -- proof
-  obtain ⟨g, ⟨h₂bound, h₂sup⟩⟩ := h₂
-  have h₂dens :
-      ∃ (g : 𝒮 → 𝒜 → ℝ),
-        (∀ θ t («\sf{s}» : ℕ ⇀ 𝒮) («\sf{a}» : ℕ ⇀ 𝒜),
-          ‖∇[θ] (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ)‖ ≤
-            g «\sf{s}»[t] «\sf{a}»[t]) ∧
-        (∀ x, Integrable (g x) ReferenceMeasure.measure) ∧
-        (sup[x] (∫ u, g x u ∂ReferenceMeasure.measure) < ∞) := by
-    refine ⟨g, h₂bound, ?_⟩
-    exact All_Integrable_Measure.GtInftySup_Integral.of.GtInftySup_Sum h₂sup
+  have hpack :=
+    All_Integrable_Measure.GtInftySup_Integral.of.GtInftySup_Sum
+      (g := fun x u => sSup (Set.range fun θ => ‖∇[θ] (ℙ[M.traj θ](a[0] = u | s[0] = x) : ℝ)‖)) h₂
+  have hIntg := hpack.1
+  have h₂dens := hpack.2
   have hφ : StronglyMeasurable
-      (fun ((s0, a0) : 𝒮 × 𝒜) => ∇[θ] (ℙ[M θ](a[0] = a0 | s[0] = s0) : ℝ).log) :=
+      (fun ((s0, a0) : 𝒮 × 𝒜) => ∇[θ] (ℙ[M.traj θ](a[0] = a0 | s[0] = s0) : ℝ).log) :=
     StronglyMeasurable.of_discrete
   have hVm : ∀ t, Measurable (M.V θ γ t) := fun _ => Measurable.of_discrete
   exact GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.Any_And_All_Integrable_Measure.GtInftySup.All_Differentiable_Prob.All_NeDens_0.All_Eq_JointDens.AbsContJointAS.AbsContStateMarginal.IsPolicyTrajectory.Subset_Ico
-    h₀ hfactor h₁ h₂dens hφ hMs hVm
+    h₀ hfactor h₁ h₂dens hBdd hIntg hφ hMs hVm
 
 
 -- created on 2026-11-02
--- updated on 2026-11-12
+-- updated on 2026-11-16

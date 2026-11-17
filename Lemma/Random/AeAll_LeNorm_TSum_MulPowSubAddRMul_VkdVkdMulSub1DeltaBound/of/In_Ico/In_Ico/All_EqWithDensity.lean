@@ -1,5 +1,5 @@
 import Lemma.Random.AeNormSub.le.DeltaBound.of.In_Ico.All_EqWithDensity
-open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.DensityModel Random
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -9,7 +9,7 @@ Almost surely the `c`-discounted sums of continuous TD residuals are bounded, un
 @[path]
 private lemma main
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {γ c : ℝ}
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
@@ -20,8 +20,8 @@ private lemma main
   (h₂ : c ∈ Set.Ico 0 1)
   (θ : Θ) :
 -- imply
-  ∀ᵐ ω ∂(M θ), ∀ t, ‖∑' k, c ^ k * (r (t + k) ω + γ * M.V0 θ γ (s (t + k + 1) ω) -
-    M.V0 θ γ (s (t + k) ω))‖ ≤ (1 - c)⁻¹ * ((3 / (1 - γ) - 1) * |M.env.R|) := by
+  ∀ᵐ ω ∂(M.traj θ), ∀ t, ‖∑' k, c ^ k * (r (t + k) ω + γ * M.V0 θ γ (s (t + k + 1) ω) -
+    M.V0 θ γ (s (t + k) ω))‖ ≤ (1 - c)⁻¹ * ((3 / (1 - γ) - 1) * |M.R|) := by
 -- proof
   filter_upwards [AeNormSub.le.DeltaBound.of.In_Ico.All_EqWithDensity (M := M) h₀ h₁ θ] with ω h t
   refine tsum_of_norm_bounded ((hasSum_geometric_of_lt_one h₂.1 h₂.2).mul_right _) fun k => ?_
@@ -30,4 +30,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-11
+-- updated on 2026-11-16

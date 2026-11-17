@@ -1,15 +1,16 @@
+import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Mathlib.Analysis.Calculus.ParametricIntegral
 import Mathlib.Probability.Kernel.MeasurableIntegral
 import Lemma.Random.Integral.eq.Integral_SMul.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Lemma.Random.WAdd_1.eq.Integral_MulProbIntegral_TW.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Lemma.Real.HasFDerivAt.LeNorm.of.All_LeNormFderiv.All_LeNorm.All_Differentiable.All_Measurable.Integrable.All_LeNormFderiv.All_EqIntegral_1.All_Ge_0.All_Differentiable.All_Measurable
-open MeasureTheory PolicyGradient PolicyGradient.DensityModel Random Real
+open MeasureTheory PolicyGradient PolicyGradient.Model Random Real
 
 
 private lemma W_bnd
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {f : ℝ × 𝒮 × 𝒜 → ℝ}
   {C : ℝ}
 -- given
@@ -29,40 +30,38 @@ private lemma W_bnd
 
 private lemma reward_int_bdd
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {f : ℝ × 𝒮 × 𝒜 → ℝ}
   {C : ℝ}
 -- given
   (hC : ∀ z, ‖f z‖ ≤ C)
   (y : 𝒮)
-  (u : 𝒜) :
+  (aₜ : 𝒜) :
 -- imply
-  ‖∫ ρ, f (ρ, y, u) ∂(M.env.reward (y, u))‖ ≤ C := by
+  ‖∫ ρ, f (ρ, y, aₜ) ∂(M.reward (y, aₜ))‖ ≤ C := by
 -- proof
-  have := M.env.reward_markov
-  have h := norm_integral_le_of_norm_le_const (μ := M.env.reward (y, u))
-    (Filter.Eventually.of_forall fun ρ => hC (ρ, y, u))
+  have h := norm_integral_le_of_norm_le_const (μ := M.reward (y, aₜ))
+    (Filter.Eventually.of_forall fun ρ => hC (ρ, y, aₜ))
   simpa using h
 
 private lemma measurable_integral_reward
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {f : ℝ × 𝒮 × 𝒜 → ℝ}
 -- given
   (hf : StronglyMeasurable f)
   (y : 𝒮) :
 -- imply
-  Measurable (fun u => ∫ ρ, f (ρ, y, u) ∂(M.env.reward (y, u))) := by
+  Measurable (fun u => ∫ ρ, f (ρ, y, u) ∂(M.reward (y, u))) := by
 -- proof
-  have := M.env.reward_markov
   exact
-    ((StronglyMeasurable.integral_kernel_prod_right' (κ := M.env.reward)
+    ((StronglyMeasurable.integral_kernel_prod_right' (κ := M.rewardK)
       (f := fun p => f (p.2, p.1.1, p.1.2))
       (hf.comp_measurable (by fun_prop))).measurable).comp measurable_prodMk_left
 
 private lemma measurable_integral_W
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {f : ℝ × 𝒮 × 𝒜 → ℝ}
   {C : ℝ}
 -- given
@@ -70,12 +69,11 @@ private lemma measurable_integral_W
   (hC : ∀ z, ‖f z‖ ≤ C)
   (θ : Θ)
   (j : ℕ)
-  (x : 𝒮) :
+  (sₜ : 𝒮) :
 -- imply
   Measurable (fun u =>
-    ∫ y, (∫ z, M.Kf θ f j z ∂(M.stageK θ y)) ∂(M.env.trans (x, u))) := by
+    ∫ y, (∫ z, M.Kf θ f j z ∂(M.stageK θ y)) ∂(M.trans (sₜ, u))) := by
 -- proof
-  have := M.env.trans_markov
   have hKf :=
     StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
       (M := M) hf hC θ j
@@ -85,7 +83,7 @@ private lemma measurable_integral_W
       (f := fun p => M.Kf θ f j p.2)
       (hKf.1.comp_measurable measurable_snd)
   exact
-    ((StronglyMeasurable.integral_kernel_prod_right' (κ := M.env.trans)
+    ((StronglyMeasurable.integral_kernel_prod_right' (κ := M.transK)
       (f := fun z => ∫ w, M.Kf θ f j w ∂(M.stageK θ z.2))
       (hΦ.comp_measurable measurable_snd)).measurable).comp
       measurable_prodMk_left
@@ -102,79 +100,88 @@ This is the general-`f` form of
 -/
 @[path]
 private lemma main
-  [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [FiniteDimensional ℝ Θ]
+  [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
-  {g : 𝒮 → 𝒜 → ℝ}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {Cg : ℝ}
   {f : ℝ × 𝒮 × 𝒜 → ℝ}
   {Cf : ℝ}
 -- given
-  (h₀ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.policy.prob θ z.1 z.2))
-  (h₁ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
-  (h₂ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ g x u)
-  (h₃ : ∀ x, Integrable (g x) ReferenceMeasure.measure)
-  (h₄ : ∀ x, ∫ u, g x u ∂ReferenceMeasure.measure ≤ Cg)
+  (h₀ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π[θ] z.1 z.2))
+  (h₁ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π[θ] sₜ aₜ))
+  (h₂ : ∀ sₜ, ∫ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖) ∂ReferenceMeasure.measure ≤ Cg)
+  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖))
+  (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) ReferenceMeasure.measure)
   (hf : StronglyMeasurable f)
   (hC : ∀ z, ‖f z‖ ≤ Cf)
   (hCf : 0 ≤ Cf)
   (j : ℕ)
-  (x : 𝒮) :
+  (sₜ : 𝒮) :
 -- imply
-  Differentiable ℝ (fun θ => ∫ z, M.Kf θ f j z ∂(M.stageK θ x)) ∧
-    ∀ θ, ‖fderiv ℝ (fun θ => ∫ z, M.Kf θ f j z ∂(M.stageK θ x)) θ‖ ≤
+  Differentiable ℝ (fun θ => ∫ z, M.Kf θ f j z ∂(M.stageK θ sₜ)) ∧
+    ∀ θ, ‖fderiv ℝ (fun θ => ∫ z, M.Kf θ f j z ∂(M.stageK θ sₜ)) θ‖ ≤
       (j + 1) * (Cg * Cf) := by
 -- proof
+  let g : 𝒮 → 𝒜 → ℝ :=
+    fun sₜ aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)
+  have hBound : ∀ θ sₜ aₜ, ‖fderiv ℝ (fun θ => M.π[θ] sₜ aₜ) θ‖ ≤ g sₜ aₜ := by
+    intro θ sₜ aₜ
+    have : ‖∇[θ] M.π[θ] sₜ aₜ‖ ≤ g sₜ aₜ := by
+      refine le_csSup ?_ ⟨θ, rfl⟩
+      exact hBdd sₜ aₜ
+    simpa [gradient, LinearIsometryEquiv.norm_map] using this
+  have hInt : ∀ x, Integrable (g x) ReferenceMeasure.measure := by
+    intro x
+    exact hIntg x
   have hR : ∀ y, Cf * ∫ u, g y u ∂ReferenceMeasure.measure ≤ Cg * Cf := fun y => by
     rw [mul_comm]
-    exact mul_le_mul_of_nonneg_right (h₄ y) hCf
-  induction j generalizing x with
+    exact mul_le_mul_of_nonneg_right (h₂ y) hCf
+  induction j generalizing sₜ with
   | zero =>
-    have e : (fun θ => ∫ z, M.Kf θ f 0 z ∂(M.stageK θ x)) =
-        fun θ => ∫ u, M.policy.prob θ x u *
-          (∫ ρ, f (ρ, x, u) ∂(M.env.reward (x, u))) ∂ReferenceMeasure.measure :=
+    have e : (fun θ => ∫ z, M.Kf θ f 0 z ∂(M.stageK θ sₜ)) =
+        fun θ => ∫ u, M.π[θ] sₜ u *
+          (∫ ρ, f (ρ, sₜ, u) ∂(M.reward (sₜ, u))) ∂ReferenceMeasure.measure :=
       funext fun θ => by
-        change ∫ z, f z ∂(M.stageK θ x) = _
+        change ∫ z, f z ∂(M.stageK θ sₜ) = _
         rw [Integral.eq.Integral_SMul.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
-          (M := M) hf hC θ x]
+          (M := M) hf hC θ sₜ]
         simp [smul_eq_mul]
     rw [e]
     have hD := fun θ =>
       HasFDerivAt.LeNorm.of.All_LeNormFderiv.All_LeNorm.All_Differentiable.All_Measurable.Integrable.All_LeNormFderiv.All_EqIntegral_1.All_Ge_0.All_Differentiable.All_Measurable
-        (ν := ReferenceMeasure.measure) (f := fun θ u => M.policy.prob θ x u)
-        (G := fun _ u => ∫ ρ, f (ρ, x, u) ∂(M.env.reward (x, u))) (g := g x)
+        (ν := ReferenceMeasure.measure) (f := fun θ u => M.π[θ] sₜ u)
+        (G := fun _ u => ∫ ρ, f (ρ, sₜ, u) ∂(M.reward (sₜ, u))) (g := g sₜ)
         (B₀ := Cf) (B₁ := 0)
-        (fun θ => (h₀ θ).comp measurable_prodMk_left) (h₁ x)
-        (fun θ u => M.policy.nonneg θ x u) (fun θ => M.policy.integral_eq_one θ x)
-        (fun θ u => h₂ θ x u) (h₃ x)
-        (fun _ => measurable_integral_reward (M := M) hf x)
+        (fun θ => (h₀ θ).comp measurable_prodMk_left) (h₁ sₜ)
+        (fun θ u => hStoch.nonneg θ sₜ u) (fun θ => hStoch.integral_eq_one θ sₜ)
+        (fun θ u => hBound θ sₜ u) (hInt sₜ)
+        (fun _ => measurable_integral_reward (M := M) hf sₜ)
         (fun u => differentiable_const _)
-        (fun _ u => reward_int_bdd (M := M) hC x u)
+        (fun _ u => reward_int_bdd (M := M) hC sₜ u)
         (fun θ u => by simp) θ
     have hW : ∀ θ, HasFDerivAt
-      (fun θ => ∫ u, M.policy.prob θ x u *
-        (∫ ρ, f (ρ, x, u) ∂(M.env.reward (x, u))) ∂ReferenceMeasure.measure) _ θ :=
+      (fun θ => ∫ u, M.π[θ] sₜ u *
+        (∫ ρ, f (ρ, sₜ, u) ∂(M.reward (sₜ, u))) ∂ReferenceMeasure.measure) _ θ :=
       fun θ => (hD θ).1
     refine ⟨fun θ => (hW θ).differentiableAt, fun θ => ?_⟩
     rw [(hW θ).fderiv, Nat.cast_zero, zero_add, one_mul]
-    linarith [(hD θ).2, hR x]
+    linarith [(hD θ).2, hR sₜ]
   | succ j ih =>
-    have := M.env.trans_markov
-    have e : (fun θ => ∫ z, M.Kf θ f (j + 1) z ∂(M.stageK θ x)) =
-        fun θ => ∫ u, M.policy.prob θ x u *
-          (∫ y, (∫ z, M.Kf θ f j z ∂(M.stageK θ y)) ∂(M.env.trans (x, u)))
+    have e : (fun θ => ∫ z, M.Kf θ f (j + 1) z ∂(M.stageK θ sₜ)) =
+        fun θ => ∫ u, M.π[θ] sₜ u *
+          (∫ y, (∫ z, M.Kf θ f j z ∂(M.stageK θ y)) ∂(M.trans (sₜ, u)))
           ∂ReferenceMeasure.measure :=
       funext fun θ =>
         WAdd_1.eq.Integral_MulProbIntegral_TW.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
-          (M := M) hf hC θ j x
+          (M := M) hf hC θ j sₜ
     rw [e]
     have hT : ∀ θ, Measurable (fun u =>
-        ∫ y, (∫ z, M.Kf θ f j z ∂(M.stageK θ y)) ∂(M.env.trans (x, u))) :=
-      fun θ => measurable_integral_W (M := M) hf hC θ j x
+        ∫ y, (∫ z, M.Kf θ f j z ∂(M.stageK θ y)) ∂(M.trans (sₜ, u))) :=
+      fun θ => measurable_integral_W (M := M) hf hC θ j sₜ
     have hI : ∀ u θ, HasFDerivAt
-      (fun θ => ∫ y, (∫ z, M.Kf θ f j z ∂(M.stageK θ y)) ∂(M.env.trans (x, u)))
+      (fun θ => ∫ y, (∫ z, M.Kf θ f j z ∂(M.stageK θ y)) ∂(M.trans (sₜ, u)))
       (∫ y, fderiv ℝ (fun θ => ∫ z, M.Kf θ f j z ∂(M.stageK θ y)) θ
-        ∂(M.env.trans (x, u))) θ := fun u θ =>
+        ∂(M.trans (sₜ, u))) θ := fun u θ =>
       hasFDerivAt_integral_of_dominated_of_fderiv_le
         (F := fun θ y => ∫ z, M.Kf θ f j z ∂(M.stageK θ y))
         (F' := fun θ y =>
@@ -203,36 +210,37 @@ private lemma main
         (integrable_const _)
         (Filter.Eventually.of_forall fun y θ' _ => ((ih y).1 θ').hasFDerivAt)
     have hg' : ∀ θ u, ‖fderiv ℝ (fun θ =>
-        ∫ y, (∫ z, M.Kf θ f j z ∂(M.stageK θ y)) ∂(M.env.trans (x, u))) θ‖ ≤
+        ∫ y, (∫ z, M.Kf θ f j z ∂(M.stageK θ y)) ∂(M.trans (sₜ, u))) θ‖ ≤
         ((j : ℝ) + 1) * (Cg * Cf) := fun θ u => by
       rw [(hI u θ).fderiv]
       have h :=
-        norm_integral_le_of_norm_le_const (μ := M.env.trans (x, u))
+        norm_integral_le_of_norm_le_const (μ := M.trans (sₜ, u))
           (Filter.Eventually.of_forall fun y => (ih y).2 θ)
       simpa using h
     have hgb : ∀ θ u, ‖∫ y, (∫ z, M.Kf θ f j z ∂(M.stageK θ y))
-      ∂(M.env.trans (x, u))‖ ≤ Cf := fun θ u => by
+      ∂(M.trans (sₜ, u))‖ ≤ Cf := fun θ u => by
       have h :=
-        norm_integral_le_of_norm_le_const (μ := M.env.trans (x, u))
+        norm_integral_le_of_norm_le_const (μ := M.trans (sₜ, u))
           (Filter.Eventually.of_forall fun y => W_bnd (M := M) hf hC θ j y)
       simpa using h
     have hD := fun θ =>
       HasFDerivAt.LeNorm.of.All_LeNormFderiv.All_LeNorm.All_Differentiable.All_Measurable.Integrable.All_LeNormFderiv.All_EqIntegral_1.All_Ge_0.All_Differentiable.All_Measurable
-        (ν := ReferenceMeasure.measure) (f := fun θ u => M.policy.prob θ x u)
+        (ν := ReferenceMeasure.measure) (f := fun θ u => M.π[θ] sₜ u)
         (G := fun θ u =>
-          ∫ y, (∫ z, M.Kf θ f j z ∂(M.stageK θ y)) ∂(M.env.trans (x, u)))
-        (g := g x) (B₀ := Cf) (B₁ := ((j : ℝ) + 1) * (Cg * Cf))
-        (fun θ => (h₀ θ).comp measurable_prodMk_left) (h₁ x)
-        (fun θ u => M.policy.nonneg θ x u) (fun θ => M.policy.integral_eq_one θ x)
-        (fun θ u => h₂ θ x u) (h₃ x)
+          ∫ y, (∫ z, M.Kf θ f j z ∂(M.stageK θ y)) ∂(M.trans (sₜ, u)))
+        (g := g sₜ) (B₀ := Cf) (B₁ := ((j : ℝ) + 1) * (Cg * Cf))
+        (fun θ => (h₀ θ).comp measurable_prodMk_left) (h₁ sₜ)
+        (fun θ u => hStoch.nonneg θ sₜ u) (fun θ => hStoch.integral_eq_one θ sₜ)
+        (fun θ u => hBound θ sₜ u) (hInt sₜ)
         hT (fun u θ => (hI u θ).differentiableAt) hgb hg' θ
-    have hW : ∀ θ, HasFDerivAt (fun θ => ∫ u, M.policy.prob θ x u *
-        (∫ y, (∫ z, M.Kf θ f j z ∂(M.stageK θ y)) ∂(M.env.trans (x, u)))
+    have hW : ∀ θ, HasFDerivAt (fun θ => ∫ u, M.π[θ] sₜ u *
+        (∫ y, (∫ z, M.Kf θ f j z ∂(M.stageK θ y)) ∂(M.trans (sₜ, u)))
         ∂ReferenceMeasure.measure) _ θ := fun θ => (hD θ).1
     refine ⟨fun θ => (hW θ).differentiableAt, fun θ => ?_⟩
     rw [(hW θ).fderiv]
     push_cast
-    linarith [(hD θ).2, hR x]
+    linarith [(hD θ).2, hR sₜ]
 
 
 -- created on 2026-11-13
+-- updated on 2026-11-16

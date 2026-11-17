@@ -20,6 +20,6 @@ private lemma schur_diagonal_eigenvalues_doubly_stochastic_eq
       (fun i => RCLike.re (inner (𝕜 := ℂ) (b i) (T (b i))) : Fin n → ℝ) =
         D.mulVec (hT.eigenvalues hn) := by
 -- proof
-  apply InnerProductSpace.SchurHorn.schur_diagonal_eigenvalues_doublyStochastic T hT hn b
+  apply Matrix.Any_In_DoublyStochasticAndEq_MulVec.of.OrthonormalBasis_Fin.EqFinrank.IsSymmetric.schur_diagonal_eigenvalues_doublyStochastic T hT hn b
 
 -- created on 2026-10-10

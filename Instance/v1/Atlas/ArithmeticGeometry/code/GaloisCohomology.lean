@@ -26,7 +26,7 @@ variable {G A : Type*} [Mul G] [AddCommGroup A] [SMul G A]
 /-- A `CrossedHom G A` can be coerced to a function $G \to A$ in a `FunLike` manner. -/
 instance : FunLike (CrossedHom G A) G A where
   coe := CrossedHom.toFun
-  coe_injective' f g h := by cases f; cases g; congr
+  coe_injective f g h := by cases f; cases g; congr
 
 end CrossedHom
 end GaloisCohomology

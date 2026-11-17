@@ -157,7 +157,7 @@ variable {A π N}
 
 theorem reductionAlong_eq (h : ReductionInputsAlong A π N) :
     reductionAlong A π N = reductionPic0Along h.choose h.choose_spec.1 h.choose_spec.2 := by
-  rw [reductionAlong, dif_pos h]
+  rw [reductionAlong, dite_eq_left h]
 
 theorem reductionAlong_mk (h : ReductionInputsAlong A π N)
     (D : Divisor.degZero (K := L) (F := laurentBaseChange L (modularFunctionFieldFull N))) :
@@ -166,7 +166,7 @@ theorem reductionAlong_mk (h : ReductionInputsAlong A π N)
   rfl
 
 theorem reductionAlong_of_not (h : ¬ ReductionInputsAlong A π N) : reductionAlong A π N = 0 := by
-  rw [reductionAlong, dif_neg h]
+  rw [reductionAlong, dite_eq_right h]
 
 end Total
 
@@ -291,9 +291,9 @@ theorem IsPlaceReductionAlong.eq_or_const_of_agree
   have hr₁const : ∀ Q, r₁ Q = r₁ P₀ := by
     intro Q
     have h := congrArg (fun E => E (r₁ P₀)) (hconst Q P₀)
-    simp only [Finsupp.sub_apply, Finsupp.single_apply, if_neg (Ne.symm hP₀)] at h
+    simp only [Finsupp.sub_apply, Finsupp.single_apply, ite_eq_right (Ne.symm hP₀)] at h
     by_contra hQ
-    rw [if_neg hQ] at h
+    rw [ite_eq_right hQ] at h
     split_ifs at h <;> omega
   exact fun P Q => (hr₁const P).trans (hr₁const Q).symm
 

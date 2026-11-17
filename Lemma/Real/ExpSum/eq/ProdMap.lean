@@ -1,6 +1,6 @@
 import Lemma.Real.EqExp0'1
 import Lemma.Real.ExpAdd.eq.MulExpS
-open Real
+open Exp
 
 
 @[path]
@@ -13,9 +13,10 @@ private lemma main
 -- proof
   induction l with
   | nil =>
-    simp [EqExp0'1]
+    simp [Real.EqExp0'1]
   | cons =>
-    simp_all [ExpAdd.eq.MulExpS]
+    simp_all [Real.ExpAdd.eq.MulExpS]
 
 
 -- created on 2025-10-04
+-- updated on 2026-11-15

@@ -3,6 +3,7 @@ import Mathlib.MeasureTheory.Integral.Lebesgue.Add
 import Mathlib.MeasureTheory.Measure.WithDensity
 import Syntax.Probability.Expectation.Elab
 import Theorem.Probability.JointRv.AsRV
+import Theorem.Probability.SymbolicProbability
 
 
 /--
@@ -43,4 +44,4 @@ private lemma main
 
 
 -- created on 2026-09-23
--- updated on 2026-11-12
+-- updated on 2026-11-16

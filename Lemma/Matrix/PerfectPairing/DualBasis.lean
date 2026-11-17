@@ -65,7 +65,7 @@ lemma exists_dualBasis
 -- imply
   ∃ b' : Basis ι A M, ∀ i j, B (b' i) (b j) = if j = i then 1 else 0 :=
 -- proof
-  ⟨dualBasis B b, fun i j => dualBasis_apply B b i j⟩
+  ⟨dualBasis B b, fun i j => dualBasis_apply (i := i) (j := j)⟩
 
 end LinearMap.IsPerfPair
 
@@ -82,11 +82,11 @@ lemma existsUnique_dualBasis
 -- imply
   ∃! b' : Basis ι A M, ∀ i j, B (b' i) (b j) = if j = i then 1 else 0 := by
 -- proof
-  refine ⟨dualBasis B b, fun i j => dualBasis_apply B b i j, fun b' hb' => ?_⟩
-  exact eq_dualBasis_of B b b' hb'
+  refine ⟨dualBasis B b, fun i j => dualBasis_apply (i := i) (j := j), fun b' hb' => ?_⟩
+  exact eq_dualBasis_of hb'
 
 end LinearMap.IsPerfPair
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-16

@@ -1,7 +1,7 @@
 import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Lemma.Random.ProbCond.eq.OfRealPol.of.NeDens_0.All_EqWithDensity.All_Eq_JointDens
 import Mathlib.Analysis.Calculus.Gradient.Basic
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Filter Topology Random Real Measure
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Real Measure
 open scoped ENNReal.ToRealCoe
 open IsPolicyTrajectory
 
@@ -16,34 +16,34 @@ the two log-gradients agree.
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ]
   [ReferenceMeasure 𝒮] [ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜} {θ : Θ}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M] {θ : Θ}
   {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
 
 -- given
-  (h₀ : DensityModel.IsPolicyTrajectory M r s a)
-  (h₁ : DensityModel.AbsContJointAS M a s)
-  (hSm : DensityModel.AbsContStateMarginal M s)
-  (h₂ : ∀ θ t u x, (M θ).prob (a t, s t) (u, x) =
-    ENNReal.ofReal (M.policy.prob θ x u) *
-      ((M θ).map (s t)).rnDeriv (ReferenceMeasure.measure : Measure 𝒮) x)
-  (h₃ : ∀ θ t x, ((M θ).map (s t)).rnDeriv (ReferenceMeasure.measure : Measure 𝒮) x ≠ 0)
-  (h₄ : ∀ θ t x, ((M θ).map (s t)).rnDeriv (ReferenceMeasure.measure : Measure 𝒮) x ≠ ⊤) :
+  (h₀ : Model.IsPolicyTrajectory M r s a)
+  (h₁ : Model.AbsContJointAS M a s)
+  (hSm : Model.AbsContStateMarginal M s)
+  (h₂ : ∀ θ t aₜ sₜ, (M.traj θ).prob (a t, s t) (aₜ, sₜ) =
+    ENNReal.ofReal (M.π[θ] sₜ aₜ) *
+      ((M.traj θ).map (s t)).rnDeriv ReferenceMeasure.measure sₜ)
+  (h₃ : ∀ θ t x, ((M.traj θ).map (s t)).rnDeriv ReferenceMeasure.measure x ≠ 0)
+  (h₄ : ∀ θ t x, ((M.traj θ).map (s t)).rnDeriv ReferenceMeasure.measure x ≠ ⊤) :
 -- imply
-  have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun θ t =>
+  have : ∀ θ t, SinglePSpace (M.traj θ) (a t, s t) := fun θ t =>
     h₀.singlePSpace_as (haj := h₁) θ t
-  have : ∀ θ t, SinglePSpace (M θ) (s t) := fun θ t =>
+  have : ∀ θ t, SinglePSpace (M.traj θ) (s t) := fun θ t =>
     h₀.singlePSpace_s (hac := hSm) θ t
-  ∀ t, ∀ᵐ ω ∂(M θ),
-      ∇[θ] (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log =
-        ∇[θ] (Real.log (M.policy.prob θ (s t ω) (a t ω))) := by
+  ∀ t, ∀ᵐ ω ∂(M.traj θ),
+      ∇[θ] (ℙ[M.traj θ]((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log =
+        ∇[θ] (Real.log (M.π[θ] (s t ω) (a t ω))) := by
 -- proof
   intro hP _ t
-  refine ae_of_all (M θ) fun ω => ?_
+  refine ae_of_all (M.traj θ) fun ω => ?_
   have hfun :
-    (fun θ' => (ℙ[M θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) =
-        (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) := by
+    (fun θ' => (ℙ[M.traj θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) =
+        (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) := by
     funext θ'
     rw [ProbCond.eq.OfRealPol.of.NeDens_0.All_EqWithDensity.All_Eq_JointDens
       (M := M) h₀ h₁ (h₂ θ' t (a t ω) (s t ω)) (h₃ θ' t (s t ω)) (h₄ θ' t (s t ω))]
@@ -52,3 +52,4 @@ private lemma main
 
 
 -- created on 2026-11-13
+-- updated on 2026-11-16

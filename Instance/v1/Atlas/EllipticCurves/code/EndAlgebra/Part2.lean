@@ -25,7 +25,7 @@ variable {R : Type*} [Ring R]
 coercion is injective. -/
 instance : FunLike (RingInvolution R) R R where
   coe φ := φ.toFun
-  coe_injective' f g h := by
+  coe_injective f g h := by
     obtain ⟨⟨_, _, _, _⟩, _⟩ := f
     obtain ⟨⟨_, _, _, _⟩, _⟩ := g
     congr

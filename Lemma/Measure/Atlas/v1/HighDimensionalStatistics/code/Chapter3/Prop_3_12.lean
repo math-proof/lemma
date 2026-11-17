@@ -51,11 +51,12 @@ lemma sobolev_ellipsoid_monotone
   intro θ hθ
   simp only [SobolevEllipsoid, Set.mem_setOf_eq] at hθ ⊢
   calc ∑ j : Fin M, (sobolevCoeff β' (j.val + 1)) ^ 2 * (θ j) ^ 2
-    ≤ ∑ j : Fin M, (sobolevCoeff β (j.val + 1)) ^ 2 * (θ j) ^ 2 := by
-      apply Finset.sum_le_sum; intro j _
-      apply mul_le_mul_of_nonneg_right _ (sq_nonneg _)
-      exact pow_le_pow_left₀ (sobolevCoeff_nonneg (le_of_lt hβ') (j.val + 1))
-        (sobolevCoeff_mono hβ' (le_of_lt hββ') (j.val + 1)) 2
+    ≤ ∑ j : Fin M, (sobolevCoeff β (j.val + 1)) ^ 2 * (θ j) ^ 2 :=
+      Finset.sum_le_sum fun j _ =>
+        mul_le_mul_of_nonneg_right
+          (pow_le_pow_left₀ (sobolevCoeff_nonneg (le_of_lt hβ') (j.val + 1))
+            (sobolevCoeff_mono hβ' (le_of_lt hββ') (j.val + 1)) 2)
+          (sq_nonneg _)
     _ ≤ Q := hθ
 
 end Chapter3
@@ -262,7 +263,7 @@ namespace Chapter3
 [prop_3_12](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter3/Prop_3_12.lean)
 -/
 @[path]
-lemma prop_3_12
+lemma prop_3_12 :
 -- imply
   (∀ {M : ℕ} {β β' Q : ℝ}, 0 < β' → β' < β → 0 < Q → SobolevEllipsoid β Q M ⊆ SobolevEllipsoid β' Q M) ∧ (∀ {β Q : ℝ}, 1/2 < β → 0 < Q → ∀ (θ : ℕ → ℝ), (∀ M, ∑ j ∈ Finset.range M, (sobolevCoeff β (j + 1))^2 * (θ j)^2 ≤ Q) → Summable (fun j => ‖θ j‖) ∧ Continuous (fun x : ℝ => ∑' j, θ j * trigBasis (j + 1) x)) :=
 -- proof

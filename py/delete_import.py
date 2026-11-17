@@ -307,12 +307,61 @@ def compare(
     return 0
 
 
+_DECL_LIB_SYNTAX_PREFIXES = ("Syntax.", "Macro.", "Notation.")
+_SYNTAX_STRING_RE = re.compile(r'"((?:\\.|[^"\\])*)"')
+
+
+def _is_distinctive_syntax_atom(atom: str) -> bool:
+    """True for syntax heads like ``sup[``, ``max[``, not punctuation or bare ``∞``."""
+    if not atom or atom.isspace():
+        return False
+    stripped = atom.strip()
+    if stripped in {
+        "∞", "<", ">", "=", "|", ",", ":", ";",
+        "(", ")", "[", "]", "{", "}",
+    }:
+        return False
+    if "[" in atom and any(ch.isalpha() or ord(ch) > 127 for ch in atom):
+        return True
+    # Unicode operator (e.g. ∑, ⨅, ⊔) other than infinity.
+    if any(ord(ch) > 127 for ch in atom) and stripped != "∞":
+        return True
+    return False
+
+
+def syntax_introduced_by_module_used_in_body(module: str, body: str) -> bool:
+    """True if ``body`` uses a syntax head introduced by a Syntax/Macro/Notation module.
+
+    Reachability through another import is not enough: the ``sup[x] e < ∞``
+    parser extension lives in ``Syntax.Order.Sup`` and must stay imported when
+    the file writes that syntax, even if a lemma import already reaches the
+    module.  A name-token search will not see ``sup[``.
+    """
+    src = ROOT / (module.replace(".", "/") + ".lean")
+    if not src.is_file():
+        # Cannot inspect the module; do not drop the import.
+        return True
+    atoms: list[str] = []
+    for match in _SYNTAX_STRING_RE.finditer(read_text(src)):
+        raw = match.group(1)
+        if _is_distinctive_syntax_atom(raw):
+            atoms.append(raw)
+    if not atoms:
+        # Unknown syntax shape; keep rather than drop a needed parser extension.
+        return True
+    return any(atom in body for atom in atoms)
+
+
 def import_name_used_in_body(module: str, body: str) -> bool:
-    """True if ``module``'s lemma path appears in ``body`` (non-import text).
+    """True if ``module`` is still referenced in ``body`` (non-import text).
 
     ``Lemma.Matrix.Foo.eq.Bar`` is referenced in proofs as ``Matrix.Foo.eq.Bar``
     or, after ``open``/section elision, ``Foo.eq.Bar``.  Used imports must never
     be dropped even when another import transitively reaches them in the DB.
+
+    Syntax/Macro/Notation modules are also kept when the file uses a syntax
+    head they introduce (e.g. ``sup[`` from ``Syntax.Order.Sup``), not only
+    when the module name itself appears in the body.
     """
     bare = normalize_module(module)
     if bare and bare in body:
@@ -322,6 +371,8 @@ def import_name_used_in_body(module: str, body: str) -> bool:
         short = ".".join(parts[1:])
         if short and short in body:
             return True
+    if module.startswith(_DECL_LIB_SYNTAX_PREFIXES):
+        return syntax_introduced_by_module_used_in_body(module, body)
     return False
 
 

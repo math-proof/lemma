@@ -1,6 +1,6 @@
 import Lemma.Random.MEq_Clip.of.All_Eq.All_EqWithDensity
 import Lemma.Random.NormClip.le.Abs_R
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Random
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -10,7 +10,7 @@ conditional expected reward: `‖𝔼[r[t] | B]‖ ≤ |R|` (the conditional mea
 @[path]
 private lemma main
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {θ : Θ}
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
@@ -20,20 +20,20 @@ private lemma main
   (B : Set (ℕ → ℝ × 𝒮 × 𝒜))
   (t : ℕ) :
 -- imply
-  ‖∫ ω, r t ω ∂(M θ)[|B]‖ ≤ |M.env.R| := by
+  ‖∫ ω, r t ω ∂(M.traj θ)[|B]‖ ≤ |M.R| := by
 -- proof
-  have hae : ∀ᵐ ω ∂(M θ)[|B], ‖r t ω‖ ≤ |M.env.R| :=
+  have hae : ∀ᵐ ω ∂(M.traj θ)[|B], ‖r t ω‖ ≤ |M.R| :=
     cond_absolutelyContinuous.ae_le
       ((MEq_Clip.of.All_Eq.All_EqWithDensity h₀ (M := M) θ t).mono fun ω h => by
         rw [h]
-        exact NormClip.le.Abs_R M.env.R _)
-  if hB : M θ B = 0 then
+        exact NormClip.le.Abs_R M.R _)
+  if hB : M.traj θ B = 0 then
     rw [cond_eq_zero_of_meas_eq_zero hB]
     simp
   else
-    have := cond_isProbabilityMeasure (μ := M θ) hB
+    have := cond_isProbabilityMeasure (μ := M.traj θ) hB
     simpa using norm_integral_le_of_norm_le_const hae
 
 
 -- created on 2026-09-26
--- updated on 2026-11-14
+-- updated on 2026-11-16

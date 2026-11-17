@@ -1,6 +1,10 @@
 import Mathlib.Probability.Kernel.Composition.MeasureCompProd
+import Class.Probability.Rv
 import Def.Dynamics.MarkovRewardProcess.Part4
+import Notation.Fun
+
 open MeasureTheory ProbabilityTheory
+open Fun
 
 universe u v
 
@@ -16,8 +20,10 @@ Ported from rl-theory-in-lean `RLTheory/MarkovDecisionProcess/MarkovDecisionProc
 * `MDPSpec.induced_chain pi`: the Markov chain on state–action pairs induced by `pi`.
 * `FiniteMDP S A`: an MDP on finite spaces with a policy whose induced chain is irreducible and
   aperiodic and `γ ∈ [0, 1)`; `FiniteMDP.MRP` is the induced `FiniteMRP (S × A)`.
--/
 
+The policy-gradient structures `StochasticMDP`, `Policy`, and `Model`, and the class `StochasticPolicy` (namespace `PolicyGradient`)
+also live in this module.
+-/
 
 -- MDP data (rl: `ReinforcementLearning.MDPSpec`)
 structure MDPSpec (S : Type u) (A : Type v) [MeasurableSpace S] [MeasurableSpace A] where
@@ -26,3 +32,36 @@ structure MDPSpec (S : Type u) (A : Type v) [MeasurableSpace S] [MeasurableSpace
   r : S × A → ℝ
   γ : ℝ
 
+namespace PolicyGradient
+
+/-- Standard stochastic MDP environment with bounded rewards. -/
+structure StochasticMDP (S A : Type*) [MeasurableSpace S] [MeasurableSpace A] where
+  init : ProbabilityMeasure S
+  trans : S × A → ProbabilityMeasure S
+  reward : S × A → ProbabilityMeasure ℝ
+  R : ℝ
+  reward_bdd : ∀ p, (reward p : Measure ℝ) (Set.Icc (-R) R) = 1
+
+/-- `init` is a probability measure (compatibility with the former structure field `init_prob`). -/
+theorem StochasticMDP.init_prob {S A : Type*} [MeasurableSpace S] [MeasurableSpace A]
+    (m : StochasticMDP S A) :
+    IsProbabilityMeasure (m.init : Measure S) := inferInstance
+
+/-- A parameterized policy `π[θ] sₜ aₜ = π_θ(aₜ | sₜ)` on a general (e.g. continuous) action space. -/
+structure Policy (Θ 𝒮 𝒜 : Type*) [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜] where
+  π : Θ ⇀ 𝒮 → 𝒜 → ℝ
+
+/-- `π` is a probability density of the action given the state, w.r.t. the reference measure of `𝒜`
+(for a finite action space with counting measure, `integral_eq_one` is the usual `sum_eq_one`). -/
+class StochasticPolicy {Θ 𝒮 𝒜 : Type*} [MeasurableSpace 𝒮] [μ : ReferenceMeasure 𝒜]
+    (p : Policy Θ 𝒮 𝒜) : Prop where
+  nonneg : ∀ (θ : Θ) sₜ aₜ, 0 ≤ p.π[θ] sₜ aₜ
+  integral_eq_one : ∀ (θ : Θ) sₜ, ∫ aₜ, p.π[θ] sₜ aₜ ∂μ.measure = 1
+  measurable_π : ∀ (θ : Θ), Measurable (fun (sₜ, aₜ) => p.π[θ] sₜ aₜ)
+
+/-- A policy-gradient model is a `StochasticMDP` together with a density policy
+on a general action space. -/
+structure Model (Θ 𝒮 𝒜 : Type*) [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+    extends StochasticMDP 𝒮 𝒜, Policy Θ 𝒮 𝒜
+
+end PolicyGradient

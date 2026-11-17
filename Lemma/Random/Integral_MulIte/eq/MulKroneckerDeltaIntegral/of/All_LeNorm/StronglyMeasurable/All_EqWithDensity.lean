@@ -2,18 +2,18 @@ import Def.Analysis.SpecialFunctions.TensorFunctions
 import Lemma.Random.Integral.eq.Integral_SMul.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Lemma.Real.LeNorm_Mul1.of.All_LeNorm
 import Lemma.Real.StronglyMeasurable_Eq12
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Nat Random Real
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Nat Random Real
 
 
 /--
 `∫ z, (if s(z) = y then 1 else 0) * g z ∂(stageK θ y') = δ_{y' y} * ∫ z, g z ∂(stageK θ y')`
-for the continuous-action stage kernel (`DensityModel`).
+for the continuous-action stage kernel (`Model`).
 -/
 @[path]
 private lemma main
   [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Fintype 𝒮]
   [ReferenceMeasure 𝒜] [DecidableEq 𝒮]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {g : ℝ × 𝒮 × 𝒜 → ℝ}
   {C : ℝ}
 -- given
@@ -34,3 +34,4 @@ private lemma main
 
 
 -- created on 2026-11-04
+-- updated on 2026-11-16

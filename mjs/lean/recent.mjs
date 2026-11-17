@@ -15,6 +15,16 @@ export function handleRecent(req, res) {
   /** @type {{ mtimeMs: number, mod: string }[]} */
   const items = [];
 
+  /**
+   * `sh/run.sh` writes import-batch scratch files at Lemma/test.lean,
+   * Lemma/test.N.lean, and Lemma/test.<section>*.lean (gitignored as test.*).
+   * They are not axioms and must not appear in the recent list.
+   * Real lemmas such as Nat.TestBit / Set.TestFunctionActionHom stay included.
+   */
+  function isRunShTestModule(mod) {
+    return mod === 'test' || mod.startsWith('test.');
+  }
+
   function walk(dir) {
     let entries;
     try {
@@ -32,7 +42,7 @@ export function handleRecent(req, res) {
         !ent.name.endsWith('.echo.lean')
       ) {
         const mod = leanPathToModule(p);
-        if (!mod) continue;
+        if (!mod || isRunShTestModule(mod)) continue;
         try {
           const st = fs.statSync(p);
           items.push({ mtimeMs: st.mtimeMs, mod });

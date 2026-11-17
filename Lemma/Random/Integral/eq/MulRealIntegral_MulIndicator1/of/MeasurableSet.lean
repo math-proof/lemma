@@ -1,5 +1,5 @@
 import Theorem.Dynamics.PolicyTrajectory.ContinuousAction
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
 
 
 /--
@@ -8,14 +8,14 @@ Conditional integral as a normalized integral: `∫ f ∂(μ[|B]) = μ(B)⁻¹ *
 @[path]
 private lemma main
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {B : Set (ℕ → ℝ × 𝒮 × 𝒜)}
 -- given
   (hB : MeasurableSet B)
   (θ : Θ)
   (f : (ℕ → ℝ × 𝒮 × 𝒜) → ℝ) :
 -- imply
-  ∫ ω, f ω ∂(M θ)[|B] = ((M θ).real B)⁻¹ * ∫ ω, B.indicator 1 ω * f ω ∂(M θ) := by
+  ∫ ω, f ω ∂(M.traj θ)[|B] = ((M.traj θ).real B)⁻¹ * ∫ ω, B.indicator 1 ω * f ω ∂(M.traj θ) := by
 -- proof
   rw [ProbabilityTheory.cond, integral_smul_measure, ← integral_indicator hB, ENNReal.toReal_inv,
     ← measureReal_def, smul_eq_mul]
@@ -26,4 +26,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-14
+-- updated on 2026-11-16

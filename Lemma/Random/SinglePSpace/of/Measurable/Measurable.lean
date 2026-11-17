@@ -1,4 +1,6 @@
 import Lemma.Random.SinglePSpace.of.Measurable
+import Instance.Probability.Rv.Part2
+import Lemma.Measure.Count.eq.ProdCountS
 import Syntax.Probability.Expectation.Elab
 open MeasureTheory Random
 
@@ -22,7 +24,23 @@ private lemma main
 -- imply
   SinglePSpace π (x, y) := by
 -- proof
-  apply SinglePSpace.of.Measurable (hx.prodMk hy)
+  have : CountableMeasure (α × β) := instCountableMeasureProd
+  have hμ : ReferenceMeasure.measure (α := α × β) = Measure.count := by
+    change (ReferenceMeasure.measure (α := α)).prod ReferenceMeasure.measure = Measure.count
+    rw [CountableMeasure.measure_eq_count, CountableMeasure.measure_eq_count,
+      ← Measure.Count.eq.ProdCountS]
+  have hacc : π.map (x, y) ≪ ReferenceMeasure.measure := by
+    rw [hμ]
+    intro s hs0
+    rw [Measure.count_eq_zero_iff.mp hs0]
+    apply measure_empty
+  let q := (π.map (x, y)).rnDeriv ReferenceMeasure.measure
+  exact {
+    toIsProbabilityMeasure := inferInstance
+    aemeasurable := (hx.prodMk hy).aemeasurable
+    exists_distribution :=
+      ⟨q, Measure.measurable_rnDeriv _ _, (Measure.withDensity_rnDeriv_eq _ _ hacc).symm⟩
+  }
 
 -- created on 2026-10-22
--- updated on 2026-10-26
+-- updated on 2026-11-16

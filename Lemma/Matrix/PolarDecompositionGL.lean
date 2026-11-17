@@ -1,5 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Lemma.Matrix.Factorizations.Polar
 open scoped ComplexOrder
 
 
@@ -21,7 +22,7 @@ lemma polar_decomposition_gl_real
     O' ∈ Matrix.orthogonalGroup n ℝ → S'.PosDef → A = O' * S' → O' = O ∧ S' = S := by
 -- proof
   obtain ⟨U, P, hP, hdecomp, huniq⟩ :=
-    Matrix.exists_unique_unitaryGroup_posDef_of_isUnit_det A hA
+    Matrix.exists_unique_unitaryGroup_posDef_of_isUnit_det_real (A := A) hA
   refine ⟨U, P, U.property, hP, hdecomp, ?_⟩
   intro O' S' hO' hS' hdecomp'
   obtain ⟨hO, hS⟩ := huniq ⟨O', hO'⟩ S' hS' hdecomp'
@@ -47,7 +48,7 @@ lemma polar_decomposition_gl_complex
     U' ∈ Matrix.unitaryGroup n ℂ → P'.PosDef → A = U' * P' → U' = U ∧ P' = P := by
 -- proof
   obtain ⟨V, Q, hQ, hdecomp, huniq⟩ :=
-    Matrix.exists_unique_unitaryGroup_posDef_of_isUnit_det (n := n) (𝕜 := ℂ) A hA
+    Matrix.exists_unique_unitaryGroup_posDef_of_isUnit_det (n := n) (A := A) hA
   refine ⟨V, Q, V.property, hQ, hdecomp, ?_⟩
   intro U' P' hU' hP' hdecomp'
   obtain ⟨hU, hP⟩ := huniq ⟨U', hU'⟩ P' hP' hdecomp'
@@ -57,4 +58,4 @@ end MathlibExt.LinearAlgebra.Matrix.PolarDecompositionGLWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-16

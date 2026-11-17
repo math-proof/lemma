@@ -386,8 +386,8 @@ lemma exists_jordanBasis_of_isNilpotent
     simpa [b', eσ, d', eι, Basis.reindex_apply, Equiv.sigmaCongrLeft'] using
       hsucc (eι.symm i) j
   refine ⟨Fintype.card ι, d', b', hzero', hsucc', ?_⟩
-  exact LinearMap.toMatrix_eq_blockDiagonal_jordanBlock d' b' f (fun _ ↦ 0)
-    (by simpa using hzero') (by simpa using hsucc')
+  exact LinearMap.toMatrix_eq_blockDiagonal_jordanBlock (d := d') (b := b') (f := f)
+    (μ := fun _ ↦ 0) (by simpa using hzero') (by simpa using hsucc')
 
 end Module.End
 
@@ -467,7 +467,7 @@ lemma exists_jordanBasis_of_charpoly_splits
   have hnil (a : S) : IsNilpotent (N a) := by
     simpa only [N, E, hsub] using
       f.isNilpotent_restrict_maxGenEigenspace_sub_algebraMap (a : K) (hsub a)
-  have hex (a : S) := exists_jordanBasis_of_isNilpotent (N a) (hnil a)
+  have hex (a : S) := exists_jordanBasis_of_isNilpotent (f := N a) (hnil a)
   choose k d b hb using hex
   have hzeroN (a : S) := (hb a).1
   have hsuccN (a : S) := (hb a).2.1
@@ -519,7 +519,7 @@ lemma exists_jordanBasis_of_charpoly_splits
     simpa [b', eσ, d', μ', eI, Basis.reindex_apply, Equiv.sigmaCongrLeft'] using
       hsuccI (eI.symm i) j
   refine ⟨Fintype.card I, d', μ', b', hzero', hsucc', ?_⟩
-  exact LinearMap.toMatrix_eq_blockDiagonal_jordanBlock d' b' f μ' hzero' hsucc'
+  exact LinearMap.toMatrix_eq_blockDiagonal_jordanBlock (d := d') (b := b') (f := f) (μ := μ') hzero' hsucc'
 end Module.End
 
 
@@ -547,7 +547,7 @@ lemma exists_jordan_normal_form_of_splits
   have hf : f.charpoly.Splits := by
     simpa only [f, Matrix.charpoly_toLin'] using h
   obtain ⟨k, d, μ, b, hzero, hsucc, hJ⟩ :=
-    Module.End.exists_jordanBasis_of_charpoly_splits f hf
+    Module.End.exists_jordanBasis_of_charpoly_splits (f := f) hf
   let s : Fin k → ℕ := fun i ↦ d i + 1
   let e : (Σ i, Fin (s i)) ≃ n := b.indexEquiv std
   let bN := b.reindex e
@@ -586,4 +586,4 @@ end MathlibExt.LinearAlgebra.Matrix.JordanNormalFormWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-16

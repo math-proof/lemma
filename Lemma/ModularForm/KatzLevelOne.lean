@@ -32,6 +32,51 @@ theorem ext {F G : KatzModularForm R k}
       F.toFun W hW = G.toFun W hW) : F = G :=
   toFun_injective (by funext A _ _ W hW; exact h W hW)
 
+instance : Zero (KatzModularForm R k) :=
+  ⟨{ toFun := fun _ _ _ _ _ => 0
+     map_toFun := by intros; simp
+     toFun_variableChange := by intros; simp }⟩
+
+instance : Add (KatzModularForm R k) :=
+  ⟨fun F G =>
+    { toFun := fun _ _ _ W hW => F.toFun W hW + G.toFun W hW
+      map_toFun := by
+        intro A B _ _ _ _ f W hW hW'
+        rw [map_add, F.map_toFun f W hW hW', G.map_toFun f W hW hW']
+      toFun_variableChange := by
+        intro A _ _ C W hW hW'
+        rw [F.toFun_variableChange C W hW hW', G.toFun_variableChange C W hW hW', mul_add] }⟩
+
+instance : Neg (KatzModularForm R k) :=
+  ⟨fun F =>
+    { toFun := fun _ _ _ W hW => -F.toFun W hW
+      map_toFun := by
+        intro A B _ _ _ _ f W hW hW'
+        rw [map_neg, F.map_toFun f W hW hW']
+      toFun_variableChange := by
+        intro A _ _ C W hW hW'
+        rw [F.toFun_variableChange C W hW hW', mul_neg] }⟩
+
+instance : Sub (KatzModularForm R k) :=
+  ⟨fun F G =>
+    { toFun := fun _ _ _ W hW => F.toFun W hW - G.toFun W hW
+      map_toFun := by
+        intro A B _ _ _ _ f W hW hW'
+        rw [map_sub, F.map_toFun f W hW hW', G.map_toFun f W hW hW']
+      toFun_variableChange := by
+        intro A _ _ C W hW hW'
+        rw [F.toFun_variableChange C W hW hW', G.toFun_variableChange C W hW hW', mul_sub] }⟩
+
+instance : SMul R (KatzModularForm R k) :=
+  ⟨fun c F =>
+    { toFun := fun _ _ _ W hW => c • F.toFun W hW
+      map_toFun := by
+        intro A B _ _ _ _ f W hW hW'
+        rw [map_smul, F.map_toFun f W hW hW']
+      toFun_variableChange := by
+        intro A _ _ C W hW hW'
+        rw [F.toFun_variableChange C W hW hW', mul_smul_comm] }⟩
+
 
 @[simp] theorem zero_toFun {A : Type u} [CommRing A] [Algebra R A] (W : WeierstrassCurve A)
     (hW : IsUnit W.Δ) : (0 : KatzModularForm R k).toFun W hW = 0 := rfl
@@ -50,6 +95,24 @@ theorem ext {F G : KatzModularForm R k}
 @[simp] theorem smul_toFun (c : R) (F : KatzModularForm R k) {A : Type u} [CommRing A]
     [Algebra R A] (W : WeierstrassCurve A) (hW : IsUnit W.Δ) :
     (c • F).toFun W hW = c • F.toFun W hW := rfl
+
+instance : AddCommGroup (KatzModularForm R k) where
+  add_assoc F G H := by ext; simp [add_assoc]
+  zero_add F := by ext; simp
+  add_zero F := by ext; simp
+  add_comm F G := by ext; simp [add_comm]
+  neg_add_cancel F := by ext; simp
+  sub_eq_add_neg F G := by ext; simp [sub_eq_add_neg]
+  nsmul := nsmulRec
+  zsmul := zsmulRec
+
+instance : Module R (KatzModularForm R k) where
+  one_smul F := by ext; simp
+  mul_smul a b F := by ext; simp [mul_smul]
+  smul_zero a := by ext; simp
+  smul_add a F G := by ext; simp
+  add_smul a b F := by ext; simp [add_smul]
+  zero_smul F := by ext; simp
 
 
 def mul (F : KatzModularForm R k) (G : KatzModularForm R l) : KatzModularForm R (k + l) where

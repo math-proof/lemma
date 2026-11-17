@@ -1,5 +1,5 @@
 import Lemma.Random.Integral.of.All_LeNorm.StronglyMeasurable.history.All_EqWithDensity
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Random Finset
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Finset
 
 
 /--
@@ -8,7 +8,7 @@ Markov property along histories: `𝔼[G(ω[..n]) * g(ω[n+1])] = 𝔼[G(ω[..n]
 @[path]
 private lemma main
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {n : ℕ}
   {G : (Π _ : Finset.Iic n, ℝ × 𝒮 × 𝒜) → ℝ}
   {CG : ℝ}
@@ -21,8 +21,8 @@ private lemma main
   (hC : ∀ z, ‖g z‖ ≤ C)
   (θ : Θ) :
 -- imply
-  ∫ ω, G (Preorder.frestrictLe n ω) * g (ω (n + 1)) ∂(M θ) =
-    ∫ ω, G (Preorder.frestrictLe n ω) * ∫ z, g z ∂(M.K θ (ω n)) ∂(M θ) := by
+  ∫ ω, G (Preorder.frestrictLe n ω) * g (ω (n + 1)) ∂(M.traj θ) =
+    ∫ ω, G (Preorder.frestrictLe n ω) * ∫ z, g z ∂(M.K θ (ω n)) ∂(M.traj θ) := by
 -- proof
   rw [Integral.of.All_LeNorm.StronglyMeasurable.history.All_EqWithDensity (M := M)
     ((hG.comp_measurable measurable_fst).mul (hg.comp_measurable measurable_snd)) (n := n)
@@ -41,3 +41,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-16

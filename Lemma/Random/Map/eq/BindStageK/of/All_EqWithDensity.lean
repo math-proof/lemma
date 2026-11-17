@@ -1,5 +1,5 @@
-import Theorem.Dynamics.PolicyTrajectory.ContinuousAction.Part3
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Finset
+import Theorem.Dynamics.PolicyTrajectory.ContinuousAction
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Finset
 
 
 /--
@@ -9,13 +9,13 @@ The initial stage of the continuous-action trajectory model `M` is distributed a
 @[path]
 private lemma main
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
 -- given
   (θ : Θ) :
 -- imply
-  (M θ).map (fun ω => ω 0) = M.stageK θ ∘ₘ M.env.init := by
+  (M.traj θ).map (fun ω => ω 0) = M.stageK θ ∘ₘ (M.init : Measure _) := by
 -- proof
-  unfold DensityModel.traj Kernel.trajMeasure
+  unfold Model.traj Kernel.trajMeasure
   rw [Measure.map_comp _ _ (measurable_pi_apply 0)]
   have h₁ : (Kernel.traj (X := fun _ ↦ ℝ × 𝒮 × 𝒜) (M.step θ) 0).map (fun ω => ω 0) =
       ((Kernel.traj (X := fun _ ↦ ℝ × 𝒮 × 𝒜) (M.step θ) 0).map (Preorder.frestrictLe 0)).map
@@ -31,3 +31,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-16

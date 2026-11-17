@@ -106,6 +106,70 @@ end BooleanFourier
 namespace BooleanFourier
 
 /--
+[two_point_core_inequality](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/TwoPointInequality.lean)
+-/
+lemma two_point_core_inequality
+  {p q ρ : ℝ}
+  {a b : ℝ}
+-- given
+  (hp : 1 ≤ p)
+  (hpq : p ≤ q)
+  (hρ0 : 0 ≤ ρ)
+  (hρ : ρ ≤ Real.sqrt ((p - 1) / (q - 1))) :
+-- imply
+  (|(1 + ρ) / 2 * a + (1 - ρ) / 2 * b| ^ q +
+    |(1 - ρ) / 2 * a + (1 + ρ) / 2 * b| ^ q) / 2 ≤
+    ((|a| ^ p + |b| ^ p) / 2) ^ (q / p) := by
+-- proof
+  sorry
+
+end BooleanFourier
+
+namespace BooleanFourier
+
+/--
+[two_point_inequality](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/TwoPointInequality.lean)
+-/
+lemma two_point_inequality
+  {p q ρ : ℝ}
+-- given
+  (hp : 1 ≤ p)
+  (hpq : p ≤ q)
+  (hρ0 : 0 ≤ ρ)
+  (hρ : ρ ≤ Real.sqrt ((p - 1) / (q - 1)))
+  (g : Bool → ℝ) :
+-- imply
+  twoPointLpNorm q (twoPointNoiseOp ρ g) ≤ twoPointLpNorm p g := by
+-- proof
+  unfold twoPointLpNorm twoPointNoiseOp
+  simp only [ite_true, show (false = true) ↔ False from ⟨Bool.noConfusion, False.elim⟩, ite_false]
+  have hp0 : (0 : ℝ) < p := lt_of_lt_of_le one_pos hp
+  have hq0 : (0 : ℝ) < q := lt_of_lt_of_le hp0 hpq
+  have h1q : (0 : ℝ) < 1 / q := div_pos one_pos hq0
+  have hLHS_nonneg : (0 : ℝ) ≤ (|(1 + ρ) / 2 * g true + (1 - ρ) / 2 * g false| ^ q +
+      |(1 - ρ) / 2 * g true + (1 + ρ) / 2 * g false| ^ q) / 2 := by
+    apply div_nonneg
+    · apply add_nonneg <;> apply rpow_nonneg (abs_nonneg _)
+    · norm_num
+  have hRHS_nonneg : (0 : ℝ) ≤ (|g true| ^ p + |g false| ^ p) / 2 := by
+    apply div_nonneg
+    · apply add_nonneg <;> apply rpow_nonneg (abs_nonneg _)
+    · norm_num
+  have hcore := two_point_core_inequality (a := g true) (b := g false) hp hpq hρ0 hρ
+  calc ((|(1 + ρ) / 2 * g true + (1 - ρ) / 2 * g false| ^ q +
+        |(1 - ρ) / 2 * g true + (1 + ρ) / 2 * g false| ^ q) / 2) ^ (1 / q)
+      ≤ (((|g true| ^ p + |g false| ^ p) / 2) ^ (q / p)) ^ (1 / q) :=
+        rpow_le_rpow hLHS_nonneg hcore h1q.le
+      _ = ((|g true| ^ p + |g false| ^ p) / 2) ^ (1 / p) := by
+        rw [← rpow_mul hRHS_nonneg]
+        congr 1
+        field_simp
+
+end BooleanFourier
+
+namespace BooleanFourier
+
+/--
 [bonami_beckner_succ](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/BonamilBeckner.lean)
 -/
 @[path]

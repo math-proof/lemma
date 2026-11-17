@@ -15,6 +15,8 @@ lemma fourier_continuousLinearMap
   [NormedAddCommGroup V]
   [InnerProductSpace ℝ V]
   [FiniteDimensional ℝ V]
+  [MeasurableSpace V]
+  [BorelSpace V]
   [NormedAddCommGroup F]
   [InnerProductSpace ℂ F] :
 -- imply
@@ -26,3 +28,4 @@ end FourierTransformation
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-15

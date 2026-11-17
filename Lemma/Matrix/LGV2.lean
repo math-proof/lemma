@@ -1,6 +1,35 @@
 import Mathlib
-import sympy.Basic
-import sympy.matrices.determinants.LGV2
+import Initialize.Tactic.Attr.Basic
+import Def.LinearAlgebra.Matrix.Determinant.LGV2
+import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part2
+import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part3
+import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part4
+import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part5
+import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part6
+import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part7
+import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part8
+import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part9
+import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part10
+import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part11
+import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part12
+import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part13
+import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part14
+import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part15
+import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part16
+import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part17
+import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part18
+import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part19
+import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part20
+import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part21
+import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part22
+import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part23
+import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part24
+import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part25
+import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part26
+import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part27
+import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part28
+import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part29
+import Abbrev.LinearAlgebra.Matrix.Determinant.LGV2
 import Syntax.LinearAlgebra.Matrix.Notation
 open Finset
 open Matrix
@@ -175,6 +204,7 @@ lemma Path.vertices_nodup_of_acyclic {D : SimpleDigraph V} (hac : D.IsAcyclic)
     have hlen1 := hac sp hcycle
     have hlen2 : sp.vertices.length = i - j + 1 := subpath_length p j i hij' hi
     omega
+omit [DecidableEq V] in
 /-- Simp lemma for `Path.start` on a constructed path -/
 @[simp] lemma Path.start_mk {D : SimpleDigraph V} (vs : List V) (hne : vs ≠ [])
     (harcs : ∀ i : ℕ, ∀ hi : i + 1 < vs.length, D.arc (vs.get ⟨i, Nat.lt_of_succ_lt hi⟩)
@@ -197,6 +227,7 @@ omit [DecidableEq V] in
 
 variable {V : Type*}
 
+omit [DecidableEq V] in
 /-- The adjacency relation is preserved by `toDigraph`. -/
 @[simp]
 lemma toDigraph_adj (D : SimpleDigraph V) (u v : V) :
@@ -3688,7 +3719,7 @@ lemma dyckPathToWord_dyckWordToPath (w : DyckWord) :
         rw [h1, h2]
         have hle := w.count_D_le_count_U i
         omega
-      rw [if_pos hy_eq, hU]
+      rw [ite_eq_left hy_eq, hU]
     · -- D case: y decreases by 1
       have hy_ne : dyckWordY w (i + 1) ≠ dyckWordY w i + 1 := by
         unfold dyckWordY
@@ -3701,7 +3732,7 @@ lemma dyckPathToWord_dyckWordToPath (w : DyckWord) :
         rw [h1, h2]
         have hle := w.count_D_le_count_U i
         omega
-      rw [if_neg hy_ne, hD]
+      rw [ite_eq_right hy_ne, hD]
 
 /-- The number of Dyck paths from (0, 0) to (2n, 0) equals the n-th Catalan number.
     This is a classical result connecting Dyck paths to Catalan numbers.
@@ -8301,4 +8332,4 @@ private lemma pv_nestedDyckPath_mid_y
 
 
 -- created on 2026-10-23
--- updated on 2026-10-27
+-- updated on 2026-11-16

@@ -1,9 +1,12 @@
 import Lemma.Matrix.AdelicLevel
 import Def.NumberField_PrincipalLevel
+open IsDedekindDomain NumberField Matrix
 
 noncomputable section
 
 namespace Matrix.AdelicLevel
+
+export NumberField.AdelicLevel (weyl principalLevel)
 
 variable (R K : Type*) [CommRing R] [IsDedekindDomain R] [Field K] [Algebra R K]
   [IsFractionRing R K]

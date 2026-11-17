@@ -13,11 +13,11 @@ namespace Deformation.ProartinianCat
 
 variable {𝓞 : Type u} [CommRing 𝓞] [IsLocalRing 𝓞]
 
-instance instFiniteResidueField [Empty.Finite (ResidueField 𝓞)] (A : ProartinianCat 𝓞) :
-    Empty.Finite (ResidueField A) :=
+instance instFiniteResidueField [Finite (ResidueField 𝓞)] (A : ProartinianCat 𝓞) :
+    Finite (ResidueField A) :=
   .of_surjective _ (IsResidueAlgebra.algebraMap_bijective 𝓞 A).surjective
 
-instance instCompactSpace [Empty.Finite (ResidueField 𝓞)] (A : ProartinianCat 𝓞) :
+instance instCompactSpace [Finite (ResidueField 𝓞)] (A : ProartinianCat 𝓞) :
     CompactSpace A :=
   IsProartinian.compactSpace_of_finite_residueField
 

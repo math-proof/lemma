@@ -1,10 +1,11 @@
+import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Mathlib.Analysis.Calculus.ParametricIntegral
 import Lemma.Random.Integral_R.eq.Integral_Wkd.of.All_Eq.All_EqWithDensity
 import Lemma.Random.Differentiable.All_LeNormFderivMulAdd_1MulAbs_R.of.All_LeIntegral.All_Integrable.All_LeNormFderiv.All_Differentiable_Prob.All_Measurable_Prob
 import Lemma.Random.Measurable_Wkd.of.All_Measurable_Prob
 import Lemma.Random.NormWkd.le.Abs_R
 import Lemma.Real.StronglyMeasurable_Fderiv.of.All_DifferentiableAt.All_Measurable
-open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.DensityModel Random Real
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Real
 
 
 /--
@@ -15,47 +16,45 @@ Continuous-action counterpart of
 -/
 @[path]
 private lemma main
-  [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [FiniteDimensional ℝ Θ]
+  [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [FiniteDimensional ℝ Θ]
   [MeasurableSpace 𝒮] [μ : ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
-  {g : 𝒮 → 𝒜 → ℝ}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {Cg : ℝ}
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
 -- given
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
-  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.policy.prob θ z.1 z.2))
-  (h₁ : ∀ x u, Differentiable ℝ (fun θ => M.policy.prob θ x u))
-  (h₂ : ∀ θ x u, ‖fderiv ℝ (fun θ => M.policy.prob θ x u) θ‖ ≤ g x u)
-  (h₃ : ∀ x, Integrable (g x) μ.measure)
-  (h₄ : ∀ x, ∫ u, g x u ∂μ.measure ≤ Cg)
+  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π[θ] z.1 z.2))
+  (h₁ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π[θ] sₜ aₜ))
+  (h₂ : ∀ sₜ, ∫ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖) ∂μ.measure ≤ Cg)
+  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖))
+  (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) μ.measure)
   (t : ℕ) :
 -- imply
-  Differentiable ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) ∧
-    ∀ θ, ‖fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ‖ ≤
-    (t + 1) * (Cg * |M.env.R|) := by
+  Differentiable ℝ (fun θ => ∫ ω, r t ω ∂(M.traj θ)) ∧
+    ∀ θ, ‖fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M.traj θ)) θ‖ ≤
+    (t + 1) * (Cg * |M.R|) := by
 -- proof
-  have := M.env.init_prob
-  have e : (fun θ => ∫ ω, r t ω ∂(M θ)) =
-      fun θ => ∫ x, M.Wkd θ t x ∂M.env.init :=
+  have e : (fun θ => ∫ ω, r t ω ∂(M.traj θ)) =
+      fun θ => ∫ x, M.Wkd θ t x ∂(M.init : Measure _) :=
     funext fun θ =>
       Integral_R.eq.Integral_Wkd.of.All_Eq.All_EqWithDensity (M := M) h₀ θ t
   rw [e]
   have hW :=
     Differentiable.All_LeNormFderivMulAdd_1MulAbs_R.of.All_LeIntegral.All_Integrable.All_LeNormFderiv.All_Differentiable_Prob.All_Measurable_Prob
-      (M := M) hπ h₁ h₂ h₃ h₄ t
+      (M := M) hπ h₁ h₂ hBdd hIntg t
   have hmeas : ∀ θ, Measurable (M.Wkd θ t) := fun θ =>
     Measurable_Wkd.of.All_Measurable_Prob hπ θ t
-  have hbd : ∀ θ x, ‖M.Wkd θ t x‖ ≤ |M.env.R| := fun θ x =>
+  have hbd : ∀ θ x, ‖M.Wkd θ t x‖ ≤ |M.R| := fun θ x =>
     NormWkd.le.Abs_R (M := M) θ t x
-  have hF : ∀ θ, HasFDerivAt (fun θ => ∫ x, M.Wkd θ t x ∂M.env.init)
-      (∫ x, fderiv ℝ (fun θ => M.Wkd θ t x) θ ∂M.env.init) θ := fun θ =>
+  have hF : ∀ θ, HasFDerivAt (fun θ => ∫ x, M.Wkd θ t x ∂(M.init : Measure _))
+      (∫ x, fderiv ℝ (fun θ => M.Wkd θ t x) θ ∂(M.init : Measure _)) θ := fun θ =>
     hasFDerivAt_integral_of_dominated_of_fderiv_le (F := fun θ x => M.Wkd θ t x)
       (F' := fun θ x => fderiv ℝ (fun θ => M.Wkd θ t x) θ) (s := Set.univ)
-      (bound := fun _ => ((t : ℝ) + 1) * (Cg * |M.env.R|)) Filter.univ_mem
+      (bound := fun _ => ((t : ℝ) + 1) * (Cg * |M.R|)) Filter.univ_mem
       (Filter.Eventually.of_forall fun θ' => (hmeas θ').aestronglyMeasurable)
-      (Integrable.of_bound (hmeas θ).aestronglyMeasurable |M.env.R|
+      (Integrable.of_bound (hmeas θ).aestronglyMeasurable |M.R|
         (Filter.Eventually.of_forall fun x => hbd θ x))
       (StronglyMeasurable_Fderiv.of.All_DifferentiableAt.All_Measurable
         hmeas (fun x => (hW x).1 θ)).aestronglyMeasurable
@@ -64,10 +63,10 @@ private lemma main
       (Filter.Eventually.of_forall fun x θ' _ => ((hW x).1 θ').hasFDerivAt)
   refine ⟨fun θ => (hF θ).differentiableAt, fun θ => ?_⟩
   rw [(hF θ).fderiv]
-  have h := norm_integral_le_of_norm_le_const (μ := M.env.init)
+  have h := norm_integral_le_of_norm_le_const (μ := (M.init : Measure _))
     (Filter.Eventually.of_forall fun x => (hW x).2 θ)
   simpa using h
 
 
 -- created on 2026-10-20
--- updated on 2026-11-14
+-- updated on 2026-11-16

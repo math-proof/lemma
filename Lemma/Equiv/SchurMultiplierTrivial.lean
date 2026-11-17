@@ -27,7 +27,7 @@ theorem hasTrivialSchurMultiplier_of_isCyclic {G : Type u} [Group G] [IsCyclic G
     HasTrivialSchurMultiplier G := by
   intro E _ π hsurj hcent hcomm
   have hcommutative : ∀ a b : E, a * b = b * a :=
-    commutative_of_cyclic_center_quotient π hcent
+    (π.isMulCommutative_of_isCyclic_of_ker_le_center hcent).is_comm.comm
   have hbot : commutator E = ⊥ := by
     rw [eq_bot_iff, commutator_def, Subgroup.commutator_le]
     intro g₁ _ g₂ _

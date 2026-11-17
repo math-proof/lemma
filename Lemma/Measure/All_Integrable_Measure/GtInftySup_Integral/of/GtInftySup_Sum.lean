@@ -1,4 +1,4 @@
-import Class.Probability.Rv.Part2
+import Class.Probability.Rv
 import Syntax.Order.Sup
 import Mathlib.MeasureTheory.Integral.Bochner.SumMeasure
 import Mathlib.MeasureTheory.Function.L1Space.Integrable

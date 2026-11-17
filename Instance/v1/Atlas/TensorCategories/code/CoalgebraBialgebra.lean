@@ -34,7 +34,7 @@ variable [CommSemiring R] [AddCommMonoid A] [Module R A] [Coalgebra R A]
 
 instance : SetLike (Subcoalgebra R A) A where
   coe S := S.toSubmodule
-  coe_injective' S T h := by
+  coe_injective S T h := by
     cases S; cases T; congr 1; exact SetLike.coe_injective h
 
 end Subcoalgebra

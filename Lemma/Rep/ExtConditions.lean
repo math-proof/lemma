@@ -11,7 +11,8 @@ universe u
 namespace groupCohomology
 
 variable {k : Type u} [Field k] {Γ : Type u} [Group Γ]
-
+variable {ι : Type u} {Γv : ι → Type u} [∀ v, Group (Γv v)]
+variable (loc : ∀ v, Γv v →* Γ) (M : Rep k Γ)
 
 lemma extConditions_of_mem {P : Set ι} {U : ∀ v, Submodule k (H1 (Rep.res (loc v) M))}
     {v : ι} (hv : v ∈ P) : extConditions loc M P U v = ⊥ := by

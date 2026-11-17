@@ -2,7 +2,6 @@ import Mathlib
 import Class.AlgebraicCurve_DivisorClassGroup
 import Class.AlgebraicCurve_DivisorPushPull
 import Instance.DedekindDomain_AdicValuation_InlineSpecific
-import Instance.AlgebraicCurve_PlaceCompletion
 import Abbrev.AlgebraicCurve_PlaceCompletion
 
 set_option synthInstance.maxHeartbeats 400000
@@ -81,7 +80,7 @@ theorem kw_ffgc_uniformContinuous_withValMapAlgebraMap :
     rw [ne_eq, Valuation.restrict_eq_zero_iff, hx₀v]
     exact hc0
   refine ⟨Units.mk0 _ hδ0, fun x hx => ?_⟩
-  simp only [Set.mem_setOf_eq, Units.val_mk0] at hx ⊢
+  simp only [Set.mem_ofPred_eq, Units.val_mk0] at hx ⊢
   rw [Valuation.restrict_lt_iff, hx₀v] at hx
 
   rw [Valuation.restrict_lt_iff_lt_embedding, kw_ffgc_valued_withValMapAlgebraMap F W x]
@@ -150,7 +149,7 @@ theorem kw_ffgc_valued_adicCompletionComap (x : (W.restrict F).adicCompletion) :
           (IsDedekindDomain.HeightOneSpectrum.adicCompletion.continuous_ofCompletion F _)).pow _)
   | ih a =>
     rw [kw_ffgc_adicCompletionComap_coe]
-    simp only [IsDedekindDomain.HeightOneSpectrum.adicCompletion.valued_ofCompletion,
+    simp only [IsDedekindDomain.HeightOneSpectrum.adicCompletion.valued_ofCompletion_apply,
       Valued.valuedCompletion_apply]
     exact kw_ffgc_valued_withValMapAlgebraMap F W a
 
@@ -214,6 +213,8 @@ variable (F)
 variable [Algebra F F'] [IsScalarTower K F F'] [Algebra.IsIntegral F F'] (W : Place K F')
 
 theorem kw_ffgc_algebraMap_adicCompletionComap_eq :
+    letI : Algebra (W.restrict F).adicCompletion W.adicCompletion :=
+      (kw_ffgc_adicCompletionComap F W).toAlgebra
     algebraMap (W.restrict F).adicCompletion W.adicCompletion
       = kw_ffgc_adicCompletionComap F W := rfl
 
@@ -294,9 +295,13 @@ variable (F)
 variable [Algebra F F'] [IsScalarTower K F F'] [Algebra.IsIntegral F F'] (W : Place K F')
 
 theorem kw_ffgc_adicCompletionComap_algebraMap_algebraMap (c : F) :
+    letI : Algebra (W.restrict F).adicCompletion W.adicCompletion :=
+      (kw_ffgc_adicCompletionComap F W).toAlgebra
     algebraMap F' W.adicCompletion (algebraMap F F' c)
       = algebraMap (W.restrict F).adicCompletion W.adicCompletion
           (algebraMap F (W.restrict F).adicCompletion c) := by
+  letI : Algebra (W.restrict F).adicCompletion W.adicCompletion :=
+    (kw_ffgc_adicCompletionComap F W).toAlgebra
   rw [kw_ffgc_algebraMap_adicCompletionComap_eq,
     show algebraMap F (W.restrict F).adicCompletion c
       = ((WithVal.toVal ((W.restrict F).heightOneSpectrum.valuation F) c
@@ -306,20 +311,32 @@ theorem kw_ffgc_adicCompletionComap_algebraMap_algebraMap (c : F) :
   rfl
 
 theorem kw_ffgc_algebraMap_smul_algebraMap (c : F) (b : F') :
+    letI : Algebra (W.restrict F).adicCompletion W.adicCompletion :=
+      (kw_ffgc_adicCompletionComap F W).toAlgebra
     algebraMap F (W.restrict F).adicCompletion c • algebraMap F' W.adicCompletion b
       = algebraMap F' W.adicCompletion (c • b) := by
+  letI : Algebra (W.restrict F).adicCompletion W.adicCompletion :=
+    (kw_ffgc_adicCompletionComap F W).toAlgebra
   rw [Algebra.smul_def, Algebra.smul_def, map_mul,
     kw_ffgc_adicCompletionComap_algebraMap_algebraMap]
 
 def kw_ffgc_completionLinearCombination {ι : Type*} [Fintype ι] (b : Module.Basis ι F F') :
+    letI : Algebra (W.restrict F).adicCompletion W.adicCompletion :=
+      (kw_ffgc_adicCompletionComap F W).toAlgebra
     (ι → (W.restrict F).adicCompletion)
       →ₗ[(W.restrict F).adicCompletion] W.adicCompletion :=
+  letI : Algebra (W.restrict F).adicCompletion W.adicCompletion :=
+    (kw_ffgc_adicCompletionComap F W).toAlgebra
   Fintype.linearCombination (W.restrict F).adicCompletion
     (fun i => algebraMap F' W.adicCompletion (b i))
 
 theorem kw_ffgc_denseRange_completionLinearCombination {ι : Type*} [Fintype ι]
     (b : Module.Basis ι F F') :
+    letI : Algebra (W.restrict F).adicCompletion W.adicCompletion :=
+      (kw_ffgc_adicCompletionComap F W).toAlgebra
     DenseRange (kw_ffgc_completionLinearCombination F W b) := by
+  letI : Algebra (W.restrict F).adicCompletion W.adicCompletion :=
+    (kw_ffgc_adicCompletionComap F W).toAlgebra
   apply (IsDedekindDomain.HeightOneSpectrum.denseRange_algebraMap F' W.heightOneSpectrum).mono
   rintro _ ⟨l, rfl⟩
   refine ⟨fun i => algebraMap F (W.restrict F).adicCompletion (b.repr l i), ?_⟩
@@ -337,6 +354,8 @@ variable (F)
 variable [Algebra F F'] [IsScalarTower K F F'] [Algebra.IsIntegral F F'] (W : Place K F')
 
 def kw_ffgc_completionTraceF' [FiniteDimensional F F'] : F' →ₗ[F] (W.restrict F).adicCompletion :=
+  letI : Algebra (W.restrict F).adicCompletion W.adicCompletion :=
+    (kw_ffgc_adicCompletionComap F W).toAlgebra
   { toFun := fun g => kw_ffgc_completionTrace F W (algebraMap F' W.adicCompletion g)
     map_add' := fun x y => by simp only [map_add]
     map_smul' := fun c x => by
@@ -368,9 +387,7 @@ theorem kwHgfV352_valued_algebraMap_adicCompletion (v : Place K E) (x : E) :
     Valued.v (algebraMap E v.adicCompletion x) = v.heightOneSpectrum.valuation E x := by
   have h := IsDedekindDomain.HeightOneSpectrum.valuedAdicCompletion_eq_valuation'
     (K := E) v.heightOneSpectrum x
-  first
-    | exact h
-    | (rw [IsDedekindDomain.HeightOneSpectrum.algebraMap_adicCompletion]; exact h)
+  exact h
 
 namespace Place
 

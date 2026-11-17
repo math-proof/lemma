@@ -196,7 +196,18 @@ lemma mem_sPrimeClassesSubmodule (S : Set Nat.Primes) (x : Additive (ClassGroup 
     x ∈ sPrimeClassesSubmodule E F S ↔ Additive.toMul x ∈ sPrimeClasses E F S := Iff.rfl
 
 abbrev sClassGroupRep (S : Set Nat.Primes) : Rep ℤ (F ≃ₐ[E] F) :=
-  Rep.of ((classGroupRep E F).ρ.quotient (sPrimeClassesSubmodule E F S) fun σ _ hx => smul_mem_sPrimeClasses E F S σ hx)
+  Rep.of (X := (Additive (ClassGroup (𝓞 F))) ⧸ sPrimeClassesSubmodule E F S)
+    ((Representation.ofMulDistribMulAction (F ≃ₐ[E] F) (ClassGroup (𝓞 F))).quotient
+      (sPrimeClassesSubmodule E F S) fun σ x hx => by
+        have hx' : Additive.toMul x ∈ sPrimeClasses E F S := (mem_sPrimeClassesSubmodule E F S x).1 hx
+        have hρ := Representation.ofMulDistribMulAction_apply_apply
+          (M := F ≃ₐ[E] F) (G := ClassGroup (𝓞 F)) σ x
+        have : Additive.toMul
+            (Representation.ofMulDistribMulAction (F ≃ₐ[E] F) (ClassGroup (𝓞 F)) σ x)
+            ∈ sPrimeClasses E F S := by
+          rw [hρ, toMul_ofMul]
+          exact smul_mem_sPrimeClasses E F S σ hx'
+        exact (mem_sPrimeClassesSubmodule E F S _).2 this)
 
 def toSClassGroupRep (S : Set Nat.Primes) : classGroupRep E F ⟶ sClassGroupRep E F S :=
   Rep.ofHom ⟨Submodule.mkQ _, fun _ => rfl⟩
@@ -254,7 +265,7 @@ lemma orbitQuotientAction_smul_eq_of_mem (hnorm : IsNormalLevel K L) (X : Type) 
 
 def placesRep (hnorm : IsNormalLevel K L) (S : Finset Nat.Primes) (v : ExtCitation.extArithIndex S) (p : ℕ) :
     Rep (ZMod p) ↥K.fixingSubgroup :=
-  Rep.of (@Representation.ofMulActionFinsupp (ZMod p) _ ↥K.fixingSubgroup _ (placesAbove L S v) (orbitQuotientAction K L hnorm _))
+  Rep.of (@Representation.ofMulActionFinsupp (ZMod p) _ ↥K.fixingSubgroup _ (placesAbove L (ExtCitation.extArithLoc S v).range) (orbitQuotientAction K L hnorm _))
 
 lemma placesRep_ρ_single (hnorm : IsNormalLevel K L) (S : Finset Nat.Primes) (v : ExtCitation.extArithIndex S) (p : ℕ)
     (γ : ↥K.fixingSubgroup) (x : (AlgebraicClosure ℚ ≃ₐ[ℚ] AlgebraicClosure ℚ) ⧸ (ExtCitation.extArithLoc S v).range) (c : ZMod p) :
@@ -269,7 +280,7 @@ def placesAug (hnorm : IsNormalLevel K L) (S : Finset Nat.Primes) (v : ExtCitati
     rw [Finsupp.mapDomain_single, Finsupp.linearCombination_single, Finsupp.linearCombination_single]⟩
 
 lemma placesAug_hom_single (hnorm : IsNormalLevel K L) (S : Finset Nat.Primes) (v : ExtCitation.extArithIndex S) (p : ℕ)
-    (q : placesAbove L S v) (c : ZMod p) : (placesAug K L hnorm S v p).hom (Finsupp.single q c) = c := by
+    (q : placesAbove L (ExtCitation.extArithLoc S v).range) (c : ZMod p) : (placesAug K L hnorm S v p).hom (Finsupp.single q c) = c := by
   change Finsupp.linearCombination (ZMod p) (fun _ => (1 : ZMod p)) (Finsupp.single q c) = c
   rw [Finsupp.linearCombination_single, smul_eq_mul, mul_one]
 

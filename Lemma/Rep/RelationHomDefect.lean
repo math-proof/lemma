@@ -37,7 +37,8 @@ theorem preHom_comp {A A' A'' : Rep.{u} k G} (f : A ⟶ A') (f' : A' ⟶ A'') (E
 theorem preHom_zero {A A' : Rep.{u} k G} (E : Rep.{u} k G) : preHom (0 : A ⟶ A') E = 0 :=
   Rep.hom_ext (DFunLike.ext _ _ fun x => LinearMap.ext fun a => by
     change (show A' →ₗ[k] E from x) ((0 : A ⟶ A').hom a) = (0 : A →ₗ[k] E) a
-    simp)
+    simp
+    apply map_zero)
 
 end generalK
 
@@ -54,7 +55,7 @@ theorem preCover_preι : preCover B E ≫ preι B E = 0 := by
 
 
 def homSeq₁ : ShortComplex (Rep ℤ G) :=
-  ShortComplex.mk (preCover B E) (GroupCohomology.RepImage.toImage (preι B E))
+  ShortComplex.mk (preCover B E) (RepImage.toImage (preι B E))
     (Rep.hom_ext (DFunLike.ext _ _ fun x => Subtype.ext
       (congrArg (fun φ : (ihom B).obj E ⟶ (ihom (Rep.relationModuleInt B)).obj E => φ.hom x) (preCover_preι B E))))
 

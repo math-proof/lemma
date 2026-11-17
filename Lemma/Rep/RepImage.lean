@@ -5,6 +5,7 @@ import Abbrev.GroupCohomology_RepImage
 set_option autoImplicit false
 
 open CategoryTheory
+open GroupCohomology.RepImage (obj)
 
 namespace Rep.RepImage
 

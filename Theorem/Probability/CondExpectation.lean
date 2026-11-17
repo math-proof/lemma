@@ -1,5 +1,6 @@
 import Syntax.Probability.Expectation.Elab
 import Theorem.Probability.JointRv.AsRV
+import Theorem.Probability.SymbolicProbability
 open MeasureTheory ProbabilityTheory
 
 

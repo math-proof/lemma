@@ -1,7 +1,6 @@
 import Instance.Analysis.Real.Numbers
 import Instance.Probability.SinglePSpaceMeasurable
 import Theorem.Probability.CondExpectation
-import Theorem.Probability.JointRv.AsRV
 import Lemma.Random.Prob_Cond.eq.Div.of.SinglePSpace
 open MeasureTheory ProbabilityTheory Random
 open scoped ENNReal.ToRealCoe
@@ -74,6 +73,7 @@ private lemma main
       rw [hun, measure_iUnion hdisj hmeas]
       simp [hjs]
     exact hpos ((Measure.map_apply hs (measurableSet_singleton «\sf{s}»)).trans hs0)
+  simp only [Expectation.asRV_function]
   rw [Expectation.condEval_eq_condEvent hx hs hpos,
       Expectation.condEval_eq_condEvent hx hs hpos']
   have hto (φ : Measure Ω) [IsProbabilityMeasure φ] (g : α → E) :
@@ -135,4 +135,4 @@ private lemma main
 
 
 -- created on 2023-04-03
--- updated on 2026-11-13
+-- updated on 2026-11-15

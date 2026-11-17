@@ -3,6 +3,7 @@ import Lemma.Random.Map.eq.WithDensityProb
 import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
 import Mathlib.MeasureTheory.Integral.Bochner.SumMeasure
 import Theorem.Probability.JointRv.AsRV
+import Theorem.Probability.SymbolicProbability
 open MeasureTheory Finset Random
 
 
@@ -36,7 +37,7 @@ private lemma main
     simp only [Expectation.asRV_function, Expectation.ofRV, expectation_real]
     rw [Map.eq.WithDensityProb (π := ρ) (x := x), hμ]
     have hden : ρ.prob x = (ρ.map x).rnDeriv Measure.count := by
-      simp [Measure.prob]
+      simp [Measure.prob, hμ]
     rw [hden]
     rw [integral_withDensity_eq_integral_toReal_smul (Measure.measurable_rnDeriv _ _)
       (Measure.ae_count_iff.mpr fun a =>
@@ -92,4 +93,4 @@ private lemma main
 
 
 -- created on 2023-03-24
--- updated on 2026-11-12
+-- updated on 2026-11-16

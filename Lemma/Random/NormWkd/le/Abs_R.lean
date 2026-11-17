@@ -9,27 +9,41 @@ The `k`-step expected reward with a density policy is bounded: `‖Wkd θ k x‖
 @[path]
 private lemma main
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy]
 -- given
   (θ : Θ)
   (k : ℕ)
-  (x : 𝒮) :
+  (sₜ : 𝒮) :
 -- imply
-  ‖M.Wkd θ k x‖ ≤ |M.env.R| := by
+  ‖M.Wkd θ k sₜ‖ ≤ |M.R| := by
 -- proof
-  induction k generalizing x with
+  induction k generalizing sₜ with
   | zero =>
-    apply NormIntegral.le.of.All_LeNormMul.EqIntegral_1 (M.policy.integral_eq_one θ x)
+    apply NormIntegral.le.of.All_LeNormMul.EqIntegral_1 (hStoch.integral_eq_one θ sₜ)
     intro u
-    rw [norm_mul, Real.norm_of_nonneg (M.policy.nonneg θ x u)]
-    exact mul_le_mul_of_nonneg_left (NormRkd.le.Abs_R (M := M) x u) (M.policy.nonneg θ x u)
+    rw [Real.norm_eq_abs, abs_mul]
+    calc
+      |M.π[θ] sₜ u| * |M.rkd sₜ u|
+          = M.π[θ] sₜ u * |M.rkd sₜ u| := by
+        congr 1
+        exact abs_of_nonneg (hStoch.nonneg θ sₜ u)
+      _ ≤ M.π[θ] sₜ u * |M.R| :=
+        mul_le_mul_of_nonneg_left (NormRkd.le.Abs_R (M := M) sₜ u) (hStoch.nonneg θ sₜ u)
   | succ k ih =>
-    have := M.env.trans_markov
-    apply NormIntegral.le.of.All_LeNormMul.EqIntegral_1 (M.policy.integral_eq_one θ x)
+    apply NormIntegral.le.of.All_LeNormMul.EqIntegral_1 (hStoch.integral_eq_one θ sₜ)
     intro u
-    rw [norm_mul, Real.norm_of_nonneg (M.policy.nonneg θ x u)]
-    apply mul_le_mul_of_nonneg_left _ (M.policy.nonneg θ x u)
-    simpa using norm_integral_le_of_norm_le_const (μ := M.env.trans (x, u)) (Filter.Eventually.of_forall fun y => ih y)
+    rw [Real.norm_eq_abs, abs_mul]
+    calc
+      |M.π[θ] sₜ u| * |∫ y, M.Wkd θ k y ∂(M.trans (sₜ, u))|
+          = M.π[θ] sₜ u * |∫ y, M.Wkd θ k y ∂(M.trans (sₜ, u))| := by
+        congr 1
+        exact abs_of_nonneg (hStoch.nonneg θ sₜ u)
+      _ ≤ M.π[θ] sₜ u * |M.R| := by
+        apply mul_le_mul_of_nonneg_left _ (hStoch.nonneg θ sₜ u)
+        simpa using
+          norm_integral_le_of_norm_le_const (μ := M.trans (sₜ, u))
+            (Filter.Eventually.of_forall fun y => ih y)
 
 
 -- created on 2026-10-07
+-- updated on 2026-11-16

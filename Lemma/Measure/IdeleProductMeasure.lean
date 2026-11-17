@@ -1,5 +1,6 @@
 import Def.UnramifiedWhittaker_ZetaIntegrand
 import Theorem.AdelicDock_LocalEmbedding
+import Lemma.Set.IdeleBox
 
 set_option autoImplicit false
 
@@ -16,7 +17,7 @@ def ord (v : HeightOneSpectrum (𝓞 F)) (a : (AdeleRing (𝓞 F) F)ˣ) : ℤ :=
 
 theorem valued_snd_ne_zero (v : HeightOneSpectrum (𝓞 F)) (a : (AdeleRing (𝓞 F) F)ˣ) :
     Valued.v ((a : AdeleRing (𝓞 F) F).2 v) ≠ 0 := by
-  rw [← val_finiteUnitsComponent]
+  rw [← NumberField.AdeleRing.val_finiteUnitsComponent]
   exact (Valuation.ne_zero_iff Valued.v).mpr (Units.ne_zero _)
 
 theorem valued_snd_eq_exp_neg_ord (v : HeightOneSpectrum (𝓞 F)) (a : (AdeleRing (𝓞 F) F)ˣ) :

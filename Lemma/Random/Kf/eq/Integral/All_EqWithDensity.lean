@@ -1,14 +1,15 @@
-import Theorem.Dynamics.PolicyTrajectory.ContinuousAction.Part3
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel
+import Theorem.Dynamics.PolicyTrajectory.ContinuousAction
+import Theorem.Probability.SymbolicProbability
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
 
 
 /--
-`Kf θ f (j + 1) z = ∫ w, Kf θ f j w ∂(K θ z)` (bridge past the `𝔼` sugar on `DensityModel.Kf`).
+`Kf θ f (j + 1) z = ∫ w, Kf θ f j w ∂(K θ z)` (bridge past the `𝔼` sugar on `Model.Kf`).
 -/
 @[path]
 private lemma main
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {f : ℝ × 𝒮 × 𝒜 → ℝ}
 -- given
   (θ : Θ)
@@ -25,3 +26,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-16

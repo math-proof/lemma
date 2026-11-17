@@ -40,7 +40,8 @@ def resIhom (R X : Rep.{u} k G) : Rep.res π ((ihom R).obj X) ⟶ (ihom (Rep.res
   Rep.ofHom ⟨LinearMap.id, fun g => LinearMap.ext fun f => by
       change ((ihom R).obj X).ρ (π g) f = ((ihom (Rep.res π R)).obj (Rep.res π X)).ρ g f
       erw [Rep.ihom_obj_ρ_apply, Rep.ihom_obj_ρ_apply]
-      simp [map_inv]⟩
+      simp [map_inv]
+      rfl⟩
 
 theorem resIhom_hom_apply (R X : Rep.{u} k G) (f : Rep.res π ((ihom R).obj X)) :
     (resIhom π R X).hom f = (show (ihom (Rep.res π R)).obj (Rep.res π X) from f) := rfl

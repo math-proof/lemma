@@ -51,8 +51,17 @@ theorem mem_sUnitsSubmodule (S : Finset (HeightOneSpectrum (𝓞 E))) (x : Addit
     x ∈ sUnitsSubmodule E K S ↔ Additive.toMul x ∈ sUnits E K S := Iff.rfl
 
 noncomputable abbrev sUnitsRep (S : Finset (HeightOneSpectrum (𝓞 E))) : Rep ℤ (K ≃ₐ[E] K) :=
-  Rep.of (Representation.subrepresentation (Rep.ofMulDistribMulAction (K ≃ₐ[E] K) Kˣ).ρ (sUnitsSubmodule E K S)
-    fun σ _ hx => smul_mem_sUnits E K S σ hx)
+  Rep.of ((Representation.ofMulDistribMulAction (K ≃ₐ[E] K) Kˣ).subrepresentation (sUnitsSubmodule E K S)
+    fun σ x hx => by
+      have hx' : Additive.toMul x ∈ sUnits E K S := (mem_sUnitsSubmodule E K S x).1 hx
+      have hρ := Representation.ofMulDistribMulAction_apply_apply
+        (M := K ≃ₐ[E] K) (G := Kˣ) σ x
+      have : Additive.toMul
+          (Representation.ofMulDistribMulAction (K ≃ₐ[E] K) Kˣ σ x)
+          ∈ sUnits E K S := by
+        rw [hρ, toMul_ofMul]
+        exact smul_mem_sUnits E K S σ hx'
+      exact (mem_sUnitsSubmodule E K S _).2 this)
 
 noncomputable def toUnitsRep (S : Finset (HeightOneSpectrum (𝓞 E))) : sUnitsRep E K S ⟶ Rep.ofMulDistribMulAction (K ≃ₐ[E] K) Kˣ :=
   Rep.ofHom ⟨Submodule.subtype _, fun _ => rfl⟩
@@ -64,7 +73,7 @@ theorem smul_loc (v : HeightOneSpectrum (𝓞 E)) (σ : NumberField.PlaceDecomp.
     σ • loc E K v x = loc E K v ((σ : K ≃ₐ[E] K) x) := by
   rw [NumberField.PlaceDecomp.smul_def, show loc E K v = algebraMap K _ from rfl,
     IsDedekindDomain.HeightOneSpectrum.algebraMap_adicCompletion]
-  simp only [Function.comp_apply, Algebra.algebraMap_self, RingHom.id_apply, WithVal.equiv_symm_apply]
+  simp only [Function.comp_apply, Algebra.algebraMap_self, RingHom.id_apply]
   rw [NumberField.PlaceDecomp.actRingEquiv_coe, WithVal.congr_apply]
   rfl
 

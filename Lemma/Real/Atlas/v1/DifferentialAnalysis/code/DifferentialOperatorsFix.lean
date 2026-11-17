@@ -14,6 +14,8 @@ namespace Distribution
 lemma singSupp_compl_eq
   [NormedAddCommGroup E]
   [NormedSpace ℝ E]
+  [MeasureSpace E]
+  [BorelSpace E]
   {u : 𝓢'(E, ℂ)} :
 -- imply
   (singSupp u)ᶜ = ⋃₀ {s : Set E | IsOpen s ∧ IsSmoothOn' u s} := by
@@ -31,6 +33,8 @@ namespace Distribution
 lemma notMem_singSupp_iff
   [NormedAddCommGroup E]
   [NormedSpace ℝ E]
+  [MeasureSpace E]
+  [BorelSpace E]
   {u : 𝓢'(E, ℂ)}
   {x : E} :
 -- imply
@@ -42,3 +46,4 @@ end Distribution
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-15

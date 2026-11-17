@@ -98,7 +98,7 @@ private lemma vdw_amgm_prod_bound {k m : ℕ} (hm : m ≤ k + 1) {a : ℝ} (ha :
             have herase : Finset.univ.erase (default : Fin 1) = ∅ := by
               rw [Finset.univ_unique]
               exact Finset.erase_singleton _
-            rwa [herase]
+            rw [herase, Finset.prod_empty]
           rw [hsum1, mul_one]
         rwa [hLHS, hRHS]
       · have mpos : 0 < m := Nat.pos_of_ne_zero hm0
@@ -847,8 +847,8 @@ private lemma vdw_eval_ones_pos {k : ℕ} {p : MvPolynomial (Fin k) ℝ}
   rw [MvPolynomial.eval_eq]
   refine Finset.sum_pos (fun m hm => ?_) ?_
   · have hdeg : Finsupp.degree m = k := by
-    rw [Finsupp.degree_apply]
-    exact (hp.degree_eq_sum_deg_support hm).symm
+      rw [Finsupp.degree_apply]
+      exact (hp.degree_eq_sum_deg_support hm).symm
     have hprod : (∏ i ∈ m.support, (1 : ℝ) ^ m i) = 1 := by simp
     rw [hprod, mul_one]
     exact hfp m hdeg
@@ -1018,11 +1018,7 @@ private lemma vdw_hstable_coeff_zero {k : ℕ} {D : MvPolynomial (Fin (k + 1)) �
       rw [hb1]
       simp only [zero_mul, zero_add, one_mul]
       exact h2
-    · have hapos : 0 < a := by
-      by_contra hc
-      push Not at hc
-      have hzero : a = 0 := le_antisymm hc ha
-      exact ha0 hzero
+    · have hapos : 0 < a := lt_of_le_of_ne ha (Ne.symm ha0)
       exact add_pos_of_pos_of_nonneg (mul_pos hapos h1) (mul_nonneg hb h2.le)
   have hU_preconn : IsPreconnected U := hU_convex.isPreconnected
   have f_eq : ∀ lam, F 0 lam = f lam := by
@@ -1353,8 +1349,8 @@ private lemma vdw_ell_coeff_single {n : ℕ} {A : Matrix (Fin n) (Fin n) ℝ}
     · subst hii
       simp
     · have hne : Finsupp.single i 1 ≠ Finsupp.single i₀ 1 := by
-      intro hcon
-      exact hii ((Finsupp.single_left_inj one_ne_zero).mp hcon)
+        intro hcon
+        exact hii ((Finsupp.single_left_inj one_ne_zero).mp hcon)
       simp [hne, hii]
   simp only [hterm]
   exact Fintype.sum_ite_eq' i₀ (fun x => A x j)
@@ -1432,7 +1428,8 @@ private lemma vdw_prodColForms_fullPos {n : ℕ}
         simp only [map_add, Finsupp.degree_single] at h
         omega
       have hmem : (Finsupp.single i₀ 1, m - Finsupp.single i₀ 1) ∈
-        Finset.antidiagonal m := Finset.mem_antidiagonal.mpr hadd
+        Finsupp.instHasAntidiagonal.antidiagonal m :=
+        Finsupp.instHasAntidiagonal.mem_antidiagonal.mpr hadd
       refine Finset.sum_pos' (fun x _ => mul_nonneg (vdw_ell_nonneg hA j x.1)
         (vdw_prod_nonneg hA S x.2)) ⟨_, hmem, ?_⟩
       show 0 < _ * _
@@ -1705,4 +1702,4 @@ end MathlibExt.LinearAlgebra.Matrix.VanDerWaerdenWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-16

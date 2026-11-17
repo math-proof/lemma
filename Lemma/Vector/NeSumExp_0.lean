@@ -1,6 +1,6 @@
 import Lemma.Nat.Ne.of.Gt
 import Lemma.Vector.GtSumExp_0
-open Vector Nat
+open Vector Nat Exp
 
 
 @[path]

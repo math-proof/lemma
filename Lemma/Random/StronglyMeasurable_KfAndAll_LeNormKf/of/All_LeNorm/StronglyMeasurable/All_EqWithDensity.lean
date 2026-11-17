@@ -1,5 +1,5 @@
 import Lemma.Random.Kf.eq.Integral.All_EqWithDensity
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Random
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -8,7 +8,7 @@ The iterated kernel expectation `Kf θ f j` of a bounded strongly measurable `f`
 @[path]
 private lemma main
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {f : ℝ × 𝒮 × 𝒜 → ℝ}
   {C : ℝ}
 -- given
@@ -34,3 +34,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-16

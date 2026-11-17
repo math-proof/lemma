@@ -119,7 +119,7 @@ lemma stopping_events_measurable
   apply MeasurableSet.inter
   · exact measurableSet_le measurable_const (measurable_partialSum X hmeas k).norm
   · exact MeasurableSet.biInter (Finset.Iio k).countable_toSet
-    (fun j _ => measurableSet_lt (measurable_partialSum X hmeas j).norm measurable_const)
+      (fun j _ => measurableSet_lt (measurable_partialSum X hmeas j).norm measurable_const)
 
 /--
 [partialSum_measurable](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/KolmogorovMaximal.lean)

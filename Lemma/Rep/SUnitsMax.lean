@@ -35,8 +35,17 @@ theorem smul_mem_sUnitsMaxStable (δ : ↥L.fixingSubgroup) {x : (AlgebraicClosu
 theorem mem_sUnitsMaxSubmodule (x : Additive (AlgebraicClosure ℚ)ˣ) : x ∈ sUnitsMaxSubmodule S L ↔ Additive.toMul x ∈ sUnitsMaxStable S L := Iff.rfl
 
 abbrev sUnitsMaxRep : Rep ℤ ↥L.fixingSubgroup :=
-  Rep.of ((Rep.ofMulDistribMulAction ↥L.fixingSubgroup (AlgebraicClosure ℚ)ˣ).ρ.subrepresentation (sUnitsMaxSubmodule S L)
-    fun γ _ hx => smul_mem_sUnitsMaxStable S L γ hx)
+  Rep.of ((Representation.ofMulDistribMulAction ↥L.fixingSubgroup (AlgebraicClosure ℚ)ˣ).subrepresentation (sUnitsMaxSubmodule S L)
+    fun γ x hx => by
+      have hx' : Additive.toMul x ∈ sUnitsMaxStable S L := (mem_sUnitsMaxSubmodule S L x).1 hx
+      have hρ := Representation.ofMulDistribMulAction_apply_apply
+        (M := ↥L.fixingSubgroup) (G := (AlgebraicClosure ℚ)ˣ) γ x
+      have : Additive.toMul
+          (Representation.ofMulDistribMulAction ↥L.fixingSubgroup (AlgebraicClosure ℚ)ˣ γ x)
+          ∈ sUnitsMaxStable S L := by
+        rw [hρ, toMul_ofMul]
+        exact smul_mem_sUnitsMaxStable S L γ hx'
+      exact this)
 
 abbrev sUnitsMaxRep.val (x : sUnitsMaxRep S L) : (AlgebraicClosure ℚ)ˣ := Additive.toMul x.1
 

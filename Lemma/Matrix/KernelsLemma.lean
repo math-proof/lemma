@@ -55,7 +55,7 @@ lemma supIndep_ker_aeval_of_pairwise_isCoprime
   classical
   intro t _ i _ hit
   rw [Finset.sup_eq_iSup,
-    iSup_ker_aeval_eq_ker_aeval_prod_of_pairwise_isCoprime f p hcop t]
+    iSup_ker_aeval_eq_ker_aeval_prod_of_pairwise_isCoprime (f := f) (p := p) (s := t) hcop]
   apply Polynomial.disjoint_ker_aeval_of_isCoprime f
   apply IsCoprime.prod_right
   intro j hj
@@ -82,9 +82,9 @@ lemma iSupIndep_ker_aeval_and_iSup_eq_of_pairwise_isCoprime
   classical
   constructor
   · apply iSupIndep_iff_supIndep_univ.mpr
-    exact supIndep_ker_aeval_of_pairwise_isCoprime f p hcop Finset.univ
+    exact supIndep_ker_aeval_of_pairwise_isCoprime (s := Finset.univ) hcop
   · simpa using
-    iSup_ker_aeval_eq_ker_aeval_prod_of_pairwise_isCoprime f p hcop Finset.univ
+    iSup_ker_aeval_eq_ker_aeval_prod_of_pairwise_isCoprime (s := Finset.univ) hcop
 
 end MathlibExt.LinearAlgebra.KernelsLemmaWanted
 
@@ -104,10 +104,10 @@ lemma kernels_lemma_pairwise_isCoprime
   iSupIndep (fun i => LinearMap.ker (aeval f (p i))) ∧
     (⨆ i, LinearMap.ker (aeval f (p i))) = LinearMap.ker (aeval f (∏ i, p i)) := by
 -- proof
-  exact iSupIndep_ker_aeval_and_iSup_eq_of_pairwise_isCoprime f p hcop
+  exact iSupIndep_ker_aeval_and_iSup_eq_of_pairwise_isCoprime hcop
 
 end MathlibExt.LinearAlgebra.KernelsLemmaWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-16

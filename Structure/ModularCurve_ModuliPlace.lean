@@ -45,8 +45,6 @@ include hex
 
 variable [Algebra K F]
 
-omit hex in
-
 
 end ComapPlace
 
@@ -96,14 +94,9 @@ variable {K : Type u} [Field K] [DecidableEq K] {N : ℕ} {x : ModuliPoint N K}
   {Ω : Type u} [Field Ω] [DecidableEq Ω] [Algebra K Ω] (D : ModuliTestDatum K N x Ω)
 
 
-variable {D} in
-
-
 section RestrictLevel
 
 variable [NeZero N] {M : ℕ} [NeZero M]
-
-omit [NeZero M] in
 
 
 variable (hMN : M ∣ N) (x' : ModuliPoint M K)
@@ -122,15 +115,6 @@ end ModuliTestDatum
 section API
 
 variable (K : Type u) [Field K] [DecidableEq K] (N : ℕ)
-
-variable {K N} in
-
-
-variable {K N} in
-omit [DecidableEq K] in
-
-
-variable {K N} in
 
 
 end API

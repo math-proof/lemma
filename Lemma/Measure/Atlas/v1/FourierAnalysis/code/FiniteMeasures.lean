@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.FourierAnalysis.code.FiniteMeasures.Part2
-open MeasureTheory BoundedContinuousFunction Complex MeasureTheory.Measure Filter Topology Metric FourierTransformMeasure WeakConvergencePortmanteau
+open MeasureTheory BoundedContinuousFunction Complex MeasureTheory.Measure Filter Topology Metric FourierTransformMeasure
 open Filter Topology Metric
 open scoped FourierTransform
 open Set ENNReal

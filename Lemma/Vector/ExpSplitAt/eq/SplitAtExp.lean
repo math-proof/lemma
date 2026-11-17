@@ -1,6 +1,6 @@
 import Lemma.Vector.GetExp.eq.ExpGet
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
-open Vector
+open Vector Exp
 
 
 @[path]

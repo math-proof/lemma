@@ -19,7 +19,7 @@ namespace DiscreteValuation
 instance {k : Type*} [Field k] :
     FunLike (DiscreteValuation k) k (WithZero (Multiplicative ℤ)) where
   coe v := v.val
-  coe_injective' := by
+  coe_injective := by
     intro v w h
     cases v; cases w
     simp only [mk.injEq]

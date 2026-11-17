@@ -153,8 +153,6 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 
 variable {X : Scheme.{0}} {N : Type} (D : GlueInput X N)
 
-omit D in
-
 
 variable (hq : ∀ n (y : D.Y n), ((D.q n).base y).1 ∈ D.X0 → y ∈ Set.range (D.j n).base)
 include hq
@@ -171,8 +169,6 @@ namespace V3Glue.GlueInput
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Topology
 
 variable {X : Scheme.{0}} {N : Type} (D : GlueInput X N)
-
-omit D in
 
 
 variable (hq : ∀ n (y : D.Y n), ((D.q n).base y).1 ∈ D.X0 → y ∈ Set.range (D.j n).base)

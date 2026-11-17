@@ -84,9 +84,7 @@ private lemma main
   {K : Type u} [Field K] [Algebra K Ω]
   {A : Type v} [CommRing A] [HopfAlgebra K A] [Module.Finite K A] [Coalgebra.IsCocomm K A]
   {Ā : Type w} [CommRing Ā] [HopfAlgebra K Ā]
-  {π : A →ₐc[K] Ā}
--- given
-  (hπ : Function.Surjective π) :
+  {π : A →ₐc[K] Ā} :
 -- imply
   ∀ h : ↥(HopfAlgebra.hopfKer π) →ₐ[K] Ω,
       ∃ ν : A →ₐ[K] Ω, ν.comp (HopfAlgebra.hopfKer π).val = h :=
@@ -95,3 +93,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-15

@@ -56,10 +56,10 @@ lemma lowerToeplitz_apply_diag
   lowerToeplitz a i i = a 0 := by
 -- proof
   have h : i ≤ i := Nat.le_refl i
-  rw [lowerToeplitz_apply_of_le a h, Nat.sub_self]
+  rw [lowerToeplitz_apply_of_le h, Nat.sub_self]
 
 end Matrix
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-16

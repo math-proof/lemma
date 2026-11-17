@@ -10,7 +10,7 @@ namespace Chapter3
 [haarMother_stronglyMeasurable](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter3/Ex_3_9.lean)
 -/
 @[path]
-lemma haarMother_stronglyMeasurable
+lemma haarMother_stronglyMeasurable :
 -- imply
   StronglyMeasurable haarMother := by
 -- proof
@@ -33,7 +33,7 @@ lemma haarMother_intervalIntegrable
 -- imply
   IntervalIntegrable haarMother volume a b := by
 -- proof
-  apply (intervalIntegral.intervalIntegrable_const (c := (1 : ℝ))).mono_fun
+  apply (intervalIntegrable_const (c := (1 : ℝ))).mono_fun
   · exact haarMother_stronglyMeasurable.aestronglyMeasurable.restrict
   · apply ae_of_all; intro x; simp only [haarMother]; split_ifs <;> simp
 
@@ -45,7 +45,7 @@ namespace Chapter3
 [haar_ae_first](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter3/Ex_3_9.lean)
 -/
 @[path]
-lemma haar_ae_first
+lemma haar_ae_first :
 -- imply
   ∀ᵐ x ∂(volume : Measure ℝ), x ∈ uIoc 0 (1/2 : ℝ) → haarMother x = 1 := by
 -- proof

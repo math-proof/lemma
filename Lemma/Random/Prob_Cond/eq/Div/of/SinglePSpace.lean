@@ -1,4 +1,5 @@
 import Lemma.Random.EqProb
+import Instance.Probability.Rv.Part2
 open MeasureTheory Measure Random
 
 
@@ -28,7 +29,7 @@ private lemma main
   have hy : AEMeasurable y π := hxy.snd
   have h₁ : ℙ[π](x = «\sf{x}» ∧ y = «\sf{y}») =
       π (x ⁻¹' {«\sf{x}»} ∩ y ⁻¹' {«\sf{y}»}) := by
-    rw [EqProb]
+    rw [EqProb (x := (x, y))]
     congr 1
     ext ω
     simp [JointRandomSymbol, Prod.ext_iff]
@@ -41,4 +42,4 @@ private lemma main
 
 
 -- created on 2026-10-02
--- updated on 2026-11-02
+-- updated on 2026-11-16

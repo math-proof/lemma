@@ -110,12 +110,12 @@ noncomputable def archWeightCharFamily (n : ℤ) :
 
 omit [NumberField F] in
 theorem archWeightCharFamily_apply_of_isReal (n : ℤ) {w : InfinitePlace F} (hw : w.IsReal) :
-    archWeightCharFamily F n w = archWeightCharAt hw n := dif_pos hw
+    archWeightCharFamily F n w = archWeightCharAt hw n := dite_eq_left hw
 
 omit [NumberField F] in
 theorem archWeightCharFamily_apply_of_isComplex (n : ℤ) {w : InfinitePlace F}
     (hw : w.IsComplex) : archWeightCharFamily F n w = 1 :=
-  dif_neg (by rwa [← not_isReal_iff_isComplex] at hw)
+  dite_eq_right (by rwa [← not_isReal_iff_isComplex] at hw)
 
 example : HasArchType₀ F (archWeightCharFamily F 1) (fun _ => 0) :=
   hasArchType₀_zero F (archWeightCharFamily F 1)

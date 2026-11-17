@@ -1,7 +1,5 @@
 import Mathlib.LinearAlgebra.Matrix.SpecialLinearGroup
-import Mathlib.GroupTheory.GroupAction.Quotient
-import Mathlib.Data.Finite.Prod
-import Instance.ModularCurve_ProjectiveLine
+
 
 namespace ModularCurve
 
@@ -27,6 +25,20 @@ theorem IsUnimodularRow.map (f : R →+* S) {a c : R} (h : IsUnimodularRow a c) 
   exact ⟨f x, f y, by rw [← map_mul, ← map_mul, ← map_add, hxy, map_one]⟩
 
 abbrev UnimodularRow (R : Type*) [CommRing R] := { v : R × R // IsUnimodularRow v.1 v.2 }
+
+/-- Equivalence of unimodular rows up to units. Defined here as a `def` (not an
+`instance`) so this module does not import `Instance.ModularCurve_ProjectiveLine`,
+which itself imports this file. -/
+def unimodularRowSetoid (R : Type*) [CommRing R] : Setoid (UnimodularRow R) where
+  r v w := ∃ u : Rˣ, (u : R) * v.1.1 = w.1.1 ∧ (u : R) * v.1.2 = w.1.2
+  iseqv := by
+    refine ⟨fun v => ⟨1, by simp, by simp⟩, ?_, ?_⟩
+    · rintro v w ⟨u, h1, h2⟩
+      exact ⟨u⁻¹, by rw [← h1, Units.inv_mul_cancel_left],
+        by rw [← h2, Units.inv_mul_cancel_left]⟩
+    · rintro v w z ⟨u, h1, h2⟩ ⟨u', h1', h2'⟩
+      exact ⟨u' * u, by rw [Units.val_mul, mul_assoc, h1, h1'],
+        by rw [Units.val_mul, mul_assoc, h2, h2']⟩
 
 def ProjectiveLine (R : Type*) [CommRing R] : Type _ :=
   Quotient (unimodularRowSetoid R)
@@ -60,13 +72,13 @@ def borel (R : Type*) [CommRing R] : Subgroup (SpecialLinearGroup (Fin 2) R) whe
     simp
   mul_mem' := by
     intro A B hA hB
-    simp only [Set.mem_setOf_eq] at *
+    simp only [Set.mem_ofPred_eq] at *
     show (A * B).1 1 0 = 0
     rw [SpecialLinearGroup.coe_mul, (Matrix.two_mul_expl A.1 B.1).2.2.1, hA, hB]
     ring
   inv_mem' := by
     intro A hA
-    simp only [Set.mem_setOf_eq] at *
+    simp only [Set.mem_ofPred_eq] at *
     show (A⁻¹).1 1 0 = 0
     rw [SpecialLinearGroup.SL2_inv_expl A]
     simp only [Matrix.cons_val_one, Matrix.cons_val_zero, neg_eq_zero]

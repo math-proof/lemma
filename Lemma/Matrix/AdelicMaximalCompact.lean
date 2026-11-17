@@ -2,13 +2,14 @@ import Lemma.Matrix.RowIsometryInvariance
 import Def.AutomorphicForm_AdelicLsXi
 import Lemma.Matrix.AdelicLevel
 import Instance.NumberField_AdelicHaar
+import Lemma.Measure.AdelicHaar
 
 set_option autoImplicit false
 
 open NumberField Matrix.AdelicLevel MeasureTheory IsDedekindDomain Matrix
 open AutomorphicForm.WindowedSiegel
 
-attribute [local instance] NumberField.AdelicHaar.glBorel NumberField.AdelicHaar.borelSpace_glBorel
+attribute [local instance] Measure.AdelicHaar.glBorel Measure.AdelicHaar.borelSpace_glBorel
 
 noncomputable section
 
@@ -106,10 +107,10 @@ theorem isClosed_setOf_isRowIsometry (L : Type*) [NormedField L] :
       ‖x * (k : Matrix (Fin 2) (Fin 2) L) 0 0 + y * (k : Matrix (Fin 2) (Fin 2) L) 1 0‖ ^ 2
         + ‖x * (k : Matrix (Fin 2) (Fin 2) L) 0 1 + y * (k : Matrix (Fin 2) (Fin 2) L) 1 1‖ ^ 2
       = ‖x‖ ^ 2 + ‖y‖ ^ 2} := by
-    simp only [Set.setOf_forall]
+    simp only [Set.ofPred_forall]
     refine isClosed_iInter fun x => isClosed_iInter fun y => isClosed_eq ?_ continuous_const
     fun_prop
-  simpa only [IsRowIsometry, Set.setOf_and] using h1.inter h2
+  simpa only [IsRowIsometry, Set.ofPred_and] using h1.inter h2
 
 theorem isClosed_adelicMaximalCompact :
     IsClosed (adelicMaximalCompact K : Set (AdelicGL2 (𝓞 K) K)) := by
@@ -119,7 +120,7 @@ theorem isClosed_adelicMaximalCompact :
           {k : GL (Fin 2) w.Completion | IsRowIsometry k} := by
     ext k
     simp only [SetLike.mem_coe, mem_adelicMaximalCompact_iff, Set.mem_inter_iff, Set.mem_preimage,
-      Set.mem_iInter, Set.mem_setOf_eq]
+      Set.mem_iInter, Set.mem_ofPred_eq]
   rw [h]
   refine IsClosed.inter ((isClosed_finiteLevelZero (𝓞 K) K ⊤).preimage (continuous_glFin (𝓞 K) K)) ?_
   exact isClosed_iInter fun w => (isClosed_setOf_isRowIsometry w.Completion).preimage
@@ -153,7 +154,7 @@ theorem isCompact_setOf_norm_le_one_completion (w : InfinitePlace K) :
   have heq : {x : w.Completion | ‖x‖ ≤ 1} =
       (NumberField.InfinitePlace.Completion.extensionEmbedding w) ⁻¹' Metric.closedBall 0 1 := by
     ext x
-    simp only [Set.mem_setOf_eq, Set.mem_preimage, Metric.mem_closedBall, dist_zero_right, hnorm]
+    simp only [Set.mem_ofPred_eq, Set.mem_preimage, Metric.mem_closedBall, dist_zero_right, hnorm]
   rw [heq]
   exact hce.isCompact_preimage (isCompact_closedBall 0 1)
 
@@ -203,14 +204,17 @@ theorem isCompact_adelicMaximalCompact :
   refine ⟨hmemA k hk, _, hmemA k⁻¹ ((adelicMaximalCompact K).inv_mem hk), rfl⟩
 
 
-def maximalCompactHaar : Measure (adelicMaximalCompact K) := Measure.haarMeasure ⊤
+def maximalCompactHaar : Measure (adelicMaximalCompact K) := by
+  haveI : CompactSpace (adelicMaximalCompact K) :=
+    isCompact_iff_compactSpace.mp (isCompact_adelicMaximalCompact K)
+  exact Measure.haarMeasure ⊤
 
 
 theorem measurable_subtype_val_adelicMaximalCompact :
-    @Measurable (adelicMaximalCompact K) (AdelicGL2 (𝓞 K) K) _ (NumberField.AdelicHaar.glBorel (Fin 2) (𝓞 K) K)
+    @Measurable (adelicMaximalCompact K) (AdelicGL2 (𝓞 K) K) _ (Measure.AdelicHaar.glBorel (Fin 2) (𝓞 K) K)
       (fun k => (k : AdelicGL2 (𝓞 K) K)) := by
-  letI := NumberField.AdelicHaar.glBorel (Fin 2) (𝓞 K) K
-  haveI := NumberField.AdelicHaar.borelSpace_glBorel (Fin 2) (𝓞 K) K
+  let := Measure.AdelicHaar.glBorel (Fin 2) (𝓞 K) K
+  have := Measure.AdelicHaar.borelSpace_glBorel (Fin 2) (𝓞 K) K
   exact continuous_subtype_val.measurable
 
 section Factors
@@ -295,9 +299,15 @@ theorem isCompact_maximalCompactAway : IsCompact (maximalCompactAway K S : Set (
     (maximalCompactAway_le K S)
 
 
-def maximalCompactAtHaar : Measure (maximalCompactAt K S) := Measure.haarMeasure ⊤
+def maximalCompactAtHaar : Measure (maximalCompactAt K S) := by
+  haveI : CompactSpace (maximalCompactAt K S) :=
+    isCompact_iff_compactSpace.mp (isCompact_maximalCompactAt K S)
+  exact Measure.haarMeasure ⊤
 
-def maximalCompactAwayHaar : Measure (maximalCompactAway K S) := Measure.haarMeasure ⊤
+def maximalCompactAwayHaar : Measure (maximalCompactAway K S) := by
+  haveI : CompactSpace (maximalCompactAway K S) :=
+    isCompact_iff_compactSpace.mp (isCompact_maximalCompactAway K S)
+  exact Measure.haarMeasure ⊤
 
 
 end Factors

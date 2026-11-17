@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.LinearAlgebra.Matrix.ZagierMatrixInverse
 import Syntax.LinearAlgebra.Matrix.Notation
 open scoped BigOperators
@@ -92,8 +92,7 @@ private lemma key_identity (M : ℕ) (hM : Odd M) (t : ℚ) :
         rw [h3, mul_assoc, mul_one_div_cancel hne, mul_one]
       calc (M.choose i : ℚ) * bernoulli i * t ^ i
         = t ^ M * ((bernoulli i * (M.choose i : ℚ)) * (1 / t) ^ (M - i)) := by
-          rw [← hpow]
-          ring
+            rw [← hpow]; ring
         _ = t ^ M * ((bernoulli i * (M.choose i : ℚ)) * (1 / t) ^ (M - i)) := rfl
     have hL : ∑ n ∈ Finset.range (M + 1),
       (M.choose n : ℚ) * bernoulli n * t ^ n * (t - 1) ^ (M - n)
@@ -116,12 +115,10 @@ private lemma key_identity (M : ℕ) (hM : Odd M) (t : ℚ) :
         have hne : t ^ (M - i) ≠ 0 := pow_ne_zero _ ht0
         field_simp
       calc (M.choose i : ℚ) * bernoulli i * t ^ i * (t - 1) ^ (M - i)
-        = (bernoulli i * (M.choose i : ℚ)) * (t ^ i * (t - 1) ^ (M - i)) := by
-          ring
+        = (bernoulli i * (M.choose i : ℚ)) * (t ^ i * (t - 1) ^ (M - i)) := by ring
         _ = (bernoulli i * (M.choose i : ℚ)) * (t ^ M * (1 - 1 / t) ^ (M - i)) := by
-          rw [← hpow2]
-        _ = t ^ M * ((bernoulli i * (M.choose i : ℚ)) * (1 - 1 / t) ^ (M - i)) := by
-          ring
+            rw [← hpow2]
+        _ = t ^ M * ((bernoulli i * (M.choose i : ℚ)) * (1 - 1 / t) ^ (M - i)) := by ring
     have hsym : (Polynomial.bernoulli M).eval (1 - 1 / t)
       = - (Polynomial.bernoulli M).eval (1 / t) := by
       have h1 := Polynomial.bernoulli_eval_one_sub M (1 / t)
@@ -218,14 +215,14 @@ private lemma S_new_eq_zero (M a L1 L2 : ℕ) (hM : Odd M) (hM1 : 1 < M)
         (M.choose n : ℚ) * bernoulli n * ((n + a).choose (M + a - K) : ℚ) := by
       by_cases hK : K ≤ M + a
       · have hQexp : (1 + Polynomial.X) ^ a * Q
-        = ∑ n ∈ Finset.range (M + 1),
-          Polynomial.C ((M.choose n : ℚ) * bernoulli n)
-            * ((1 + Polynomial.X) ^ (n + a) * Polynomial.X ^ (M - n)) := by
-        rw [hQ, Finset.mul_sum]
-        refine Finset.sum_congr rfl fun n _ => ?_
-        have hpa : (n + a : ℕ) = a + n := by omega
-        rw [hpa, pow_add]
-        ring
+            = ∑ n ∈ Finset.range (M + 1),
+              Polynomial.C ((M.choose n : ℚ) * bernoulli n)
+                * ((1 + Polynomial.X) ^ (n + a) * Polynomial.X ^ (M - n)) := by
+          rw [hQ, Finset.mul_sum]
+          refine Finset.sum_congr rfl fun n _ => ?_
+          have hpa : (n + a : ℕ) = a + n := by omega
+          rw [hpa, pow_add]
+          ring
         rw [hQexp, Polynomial.finsetSum_coeff]
         refine Finset.sum_congr rfl fun n hn => ?_
         have hnM : n ≤ M := Nat.le_of_lt_succ (Finset.mem_range.mp hn)
@@ -474,9 +471,9 @@ private lemma zmi_alt_choose_mul (M c : ℕ) :
     (-1 : ℚ) ^ k * (M.choose k : ℚ) * (k.choose c : ℚ)
     = if c = M then (-1 : ℚ) ^ M else 0 := by
   by_cases hc : c ≤ M
-  · have hsplit := Finset.sum_range_add
-    (fun k => (-1 : ℚ) ^ k * (M.choose k : ℚ) * (k.choose c : ℚ))
-    c (M - c + 1)
+  · have hsplit := (Finset.sum_range_add
+      (fun k => (-1 : ℚ) ^ k * (M.choose k : ℚ) * (k.choose c : ℚ))
+      c (M - c + 1))
     have hlen : c + (M - c + 1) = M + 1 := by omega
     rw [hlen] at hsplit
     have hfirst : ∑ k ∈ Finset.range c,
@@ -623,55 +620,59 @@ private lemma zmi_bernoulli_delta (K s t : ℕ) (hs1 : 1 ≤ s) (hsK : s < K)
         * (if 2 * K - 2 * s - n + 1 = 2 * K - 2 * t then (-1 : ℚ) else 0)
     = if s = t then 1 else 0 := by
   obtain hst | rfl | hts := lt_trichotomy s t
-  · have hsum : ∑ n ∈ Finset.range (2 * K - 2 * s + 1),
-    ((n + 2 * s - 2).choose n : ℚ) * bernoulli n
-      * (if 2 * K - 2 * s - n + 1 = 2 * K - 2 * t then (-1 : ℚ) else 0)
-    = 0 := by
-    refine Finset.sum_eq_zero fun n hn => ?_
-    by_cases hdelta : 2 * K - 2 * s - n + 1 = 2 * K - 2 * t
-    · have hnodd : Odd n := ⟨t - s, by omega⟩
-      have hn1 : 1 < n := by omega
-      rw [bernoulli_eq_zero_of_odd hnodd hn1]
-      simp
-    · simp [hdelta]
+  · have hsum :
+      ∑ n ∈ Finset.range (2 * K - 2 * s + 1),
+        ((n + 2 * s - 2).choose n : ℚ) * bernoulli n *
+          (if 2 * K - 2 * s - n + 1 = 2 * K - 2 * t then (-1 : ℚ) else 0) = 0
+      := by
+        refine Finset.sum_eq_zero fun n hn => ?_
+        by_cases hdelta : 2 * K - 2 * s - n + 1 = 2 * K - 2 * t
+        · have hnodd : Odd n := ⟨t - s, by omega⟩
+          have hn1 : 1 < n := by omega
+          rw [bernoulli_eq_zero_of_odd hnodd hn1]
+          simp
+        · simp [hdelta]
     rw [hsum, mul_zero]
     simp [ne_of_lt hst]
   · have hmem : 1 ∈ Finset.range (2 * K - 2 * s + 1) := by
-    rw [Finset.mem_range]
-    omega
+      rw [Finset.mem_range]
+      omega
     have harg : 1 + 2 * s - 2 = 2 * s - 1 := by omega
     have hdelta : 2 * K - 2 * s - 1 + 1 = 2 * K - 2 * s := by omega
     have hcast : ((2 * s - 1 : ℕ) : ℚ) = 2 * (s : ℚ) - 1 := by
       rw [Nat.cast_sub (by omega), Nat.cast_mul]
       norm_num
-    have hsum : ∑ n ∈ Finset.range (2 * K - 2 * s + 1),
-      ((n + 2 * s - 2).choose n : ℚ) * bernoulli n
-        * (if 2 * K - 2 * s - n + 1 = 2 * K - 2 * s then (-1 : ℚ) else 0)
-      = (2 * (s : ℚ) - 1) / 2 := by
-      rw [Finset.sum_eq_single 1]
-      · have hif : (if 2 * K - 2 * s = 2 * K - 2 * s then (-1 : ℚ) else 0)
-        = -1 := by simp
-        rw [harg, hdelta, hif, Nat.choose_one_right, bernoulli_one, hcast]
-        ring
-      · intro n hn hn1
-        have hne : 2 * K - 2 * s - n + 1 ≠ 2 * K - 2 * s := by omega
-        simp [hne]
-      · intro hnot
-        exact (hnot hmem).elim
+    have hsum :
+      ∑ n ∈ Finset.range (2 * K - 2 * s + 1),
+        ((n + 2 * s - 2).choose n : ℚ) * bernoulli n *
+          (if 2 * K - 2 * s - n + 1 = 2 * K - 2 * s then (-1 : ℚ) else 0)
+        = (2 * (s : ℚ) - 1) / 2
+      := by
+        rw [Finset.sum_eq_single 1]
+        · have hif : (if 2 * K - 2 * s = 2 * K - 2 * s then (-1 : ℚ) else 0) = -1 := by
+            simp
+          rw [harg, hdelta, hif, Nat.choose_one_right, bernoulli_one, hcast]
+          ring
+        · intro n hn hn1
+          have hne : 2 * K - 2 * s - n + 1 ≠ 2 * K - 2 * s := by omega
+          simp [hne]
+        · intro hnot
+          exact (hnot hmem).elim
     rw [hsum]
     have hd : (2 : ℚ) * (s : ℚ) - 1 ≠ 0 := by
       have hsQ : (1 : ℚ) ≤ (s : ℚ) := by exact_mod_cast hs1
       linarith
     field_simp
     simp
-  · have hsum : ∑ n ∈ Finset.range (2 * K - 2 * s + 1),
-    ((n + 2 * s - 2).choose n : ℚ) * bernoulli n
-      * (if 2 * K - 2 * s - n + 1 = 2 * K - 2 * t then (-1 : ℚ) else 0)
-    = 0 := by
-    refine Finset.sum_eq_zero fun n hn => ?_
-    have hnlt : n < 2 * K - 2 * s + 1 := Finset.mem_range.mp hn
-    have hne : 2 * K - 2 * s - n + 1 ≠ 2 * K - 2 * t := by omega
-    simp [hne]
+  · have hsum :
+      ∑ n ∈ Finset.range (2 * K - 2 * s + 1),
+        ((n + 2 * s - 2).choose n : ℚ) * bernoulli n *
+          (if 2 * K - 2 * s - n + 1 = 2 * K - 2 * t then (-1 : ℚ) else 0) = 0
+      := by
+        refine Finset.sum_eq_zero fun n hn => ?_
+        have hnlt : n < 2 * K - 2 * s + 1 := Finset.mem_range.mp hn
+        have hne : 2 * K - 2 * s - n + 1 ≠ 2 * K - 2 * t := by omega
+        simp [hne]
     rw [hsum, mul_zero]
     simp [ne_of_gt hts]
 
@@ -861,7 +862,7 @@ lemma zagierInverseP_mul_zagierMatrix
 -- imply
   zagierInverseP K * zagierMatrix K = 1 := by
 -- proof
-  have hPQ : zagierInverseP K = zagierInverseQ K := zagierInverseP_eq_zagierInverseQ K hK
+  have hPQ : zagierInverseP K = zagierInverseQ K := zagierInverseP_eq_zagierInverseQ (K := K) hK
   ext i j
   rw [Matrix.mul_apply, Matrix.one_apply]
   have hi1 : 1 ≤ i.val + 1 := by omega
@@ -892,9 +893,9 @@ lemma zagierInverseP_mul_zagierMatrix
       · subst j
         simp
       · have hval : i.val ≠ j.val := by
-        intro h
-        apply hij
-        exact Fin.ext h
+          intro h
+          apply hij
+          exact Fin.ext h
         simp [hij, hval]
 
 end MetaMathlibExt
@@ -912,7 +913,7 @@ lemma zagierMatrix_mul_zagierInverseP
 -- imply
   zagierMatrix K * zagierInverseP K = 1 :=
 -- proof
-  (Matrix.mul_eq_one_comm_of_card_eq _ _ _ rfl).mpr (zagierInverseP_mul_zagierMatrix K hK)
+  (Matrix.mul_eq_one_comm_of_card_eq _ _ _ rfl).mpr (zagierInverseP_mul_zagierMatrix (K := K) hK)
 
 end MetaMathlibExt
 
@@ -982,4 +983,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-27
+-- updated on 2026-11-16

@@ -63,10 +63,10 @@ theorem coe_heckeDiagMatrix_smul {p : ℕ} (hp : p ≠ 0) (τ : UpperHalfPlane) 
   simp [UpperHalfPlane.num, UpperHalfPlane.denom, val_heckeDiagMatrix hp]
 
 theorem σ_heckeMatrix (p j : ℕ) : UpperHalfPlane.σ (heckeMatrix p j) = .refl ℝ ℂ := by
-  rw [UpperHalfPlane.σ, if_pos (det_heckeMatrix_pos p j)]
+  rw [UpperHalfPlane.σ, ite_eq_left (det_heckeMatrix_pos p j)]
 
 theorem σ_heckeDiagMatrix (p : ℕ) : UpperHalfPlane.σ (heckeDiagMatrix p) = .refl ℝ ℂ := by
-  rw [UpperHalfPlane.σ, if_pos (det_heckeDiagMatrix_pos p)]
+  rw [UpperHalfPlane.σ, ite_eq_left (det_heckeDiagMatrix_pos p)]
 
 theorem slash_heckeMatrix_apply (k : ℤ) {p : ℕ} (hp : p ≠ 0) (j : ℕ) (f : UpperHalfPlane → ℂ)
     (τ : UpperHalfPlane) :
@@ -155,11 +155,11 @@ theorem coeffHeckeU_apply (p : ℕ) (a : ℕ → ℂ) (n : ℕ) : coeffHeckeU p 
 
 theorem coeffHeckeT_of_dvd (k : ℤ) {p n : ℕ} (h : p ∣ n) (a : ℕ → ℂ) :
     coeffHeckeT k p a n = a (n * p) + (p : ℂ) ^ (k - 1) * a (n / p) := by
-  rw [coeffHeckeT, if_pos h]
+  rw [coeffHeckeT, ite_eq_left h]
 
 theorem coeffHeckeT_of_not_dvd (k : ℤ) {p n : ℕ} (h : ¬ p ∣ n) (a : ℕ → ℂ) :
     coeffHeckeT k p a n = a (n * p) := by
-  rw [coeffHeckeT, if_neg h, add_zero]
+  rw [coeffHeckeT, ite_eq_right h, add_zero]
 
 theorem coeffHeckeT_eq_coeffHeckeU_add (k : ℤ) (p : ℕ) (a : ℕ → ℂ) (n : ℕ) :
     coeffHeckeT k p a n = coeffHeckeU p a n + if p ∣ n then (p : ℂ) ^ (k - 1) * a (n / p) else 0 := rfl

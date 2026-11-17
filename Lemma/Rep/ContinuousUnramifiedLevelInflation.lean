@@ -1,5 +1,4 @@
 import Mathlib
-import Lemma.Finset.ContinuousUnramified
 import Lemma.Submodule.ContinuousUnramifiedLevel
 import Instance.GroupCohomology_LevelSubgroup
 import Lemma.Rep.ContinuousH2Inflation
@@ -53,25 +52,20 @@ lemma continuousH2Srπ_levelInflateCocyclesSr₂_eq_zero (hF : F.IsUnramifiedOut
 
 def continuousH2SrInflation (hF : F.IsUnramifiedOutside S) :
     H2 (M.quotientToInvariants (F.fixingSubgroup.comap r)) →ₗ[k] continuousH2Sr r S M :=
-  (Submodule.liftQ _ (continuousH2Srπ r S M ∘ₗ levelInflateCocyclesSr₂ r S M F hF) (by
-      rintro x ⟨y, rfl⟩
-      exact continuousH2Srπ_levelInflateCocyclesSr₂_eq_zero r S M F hF ⟨y, rfl⟩))
-    ∘ₗ (H2Iso (M.quotientToInvariants (F.fixingSubgroup.comap r))).hom.hom
+  let N := M.quotientToInvariants (F.fixingSubgroup.comap r)
+  (LinearMap.ker (H2π N).hom).liftQ
+      (continuousH2Srπ r S M ∘ₗ levelInflateCocyclesSr₂ r S M F hF)
+      (fun x hx =>
+        (continuousH2Srπ_levelInflateCocyclesSr₂_eq_zero r S M F hF
+          ((H2π_eq_zero_iff _).1 (by
+            simpa [LinearMap.mem_ker] using hx)))) ∘ₗ
+    (LinearMap.quotKerEquivOfSurjective (H2π N).hom
+      ((ModuleCat.epi_iff_surjective (H2π N)).1 inferInstance)).symm
 
 lemma continuousH2SrInflation_H2π (hF : F.IsUnramifiedOutside S) (x : cocycles₂ (M.quotientToInvariants (F.fixingSubgroup.comap r))) :
     continuousH2SrInflation r S M F hF (H2π _ x) = continuousH2Srπ r S M (levelInflateCocyclesSr₂ r S M F hF x) := by
-  have h := π_comp_H2Iso_hom_apply (M.quotientToInvariants (F.fixingSubgroup.comap r)) ((isoCocycles₂ _).inv x)
-  simp only [Iso.inv_hom_id_apply] at h
-  have e : (H2Iso (M.quotientToInvariants (F.fixingSubgroup.comap r))).hom.hom (H2π _ x)
-      = (LinearMap.range (shortComplexH2 (M.quotientToInvariants (F.fixingSubgroup.comap r))).moduleCatToCycles).mkQ x :=
-    Eq.trans rfl h
-  have key : ∀ z, z = (LinearMap.range (shortComplexH2 (M.quotientToInvariants (F.fixingSubgroup.comap r))).moduleCatToCycles).mkQ x →
-      (LinearMap.range (shortComplexH2 (M.quotientToInvariants (F.fixingSubgroup.comap r))).moduleCatToCycles).liftQ
-          (continuousH2Srπ r S M ∘ₗ levelInflateCocyclesSr₂ r S M F hF)
-          (by rintro x ⟨y, rfl⟩; exact continuousH2Srπ_levelInflateCocyclesSr₂_eq_zero r S M F hF ⟨y, rfl⟩) z
-        = continuousH2Srπ r S M (levelInflateCocyclesSr₂ r S M F hF x) := by
-    rintro _ rfl; rfl
-  exact key _ e
+  simp [continuousH2SrInflation, LinearMap.quotKerEquivOfSurjective_symm_apply]
+  rfl
 
 end A0
 

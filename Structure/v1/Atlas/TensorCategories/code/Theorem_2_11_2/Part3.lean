@@ -24,7 +24,6 @@ namespace CategoryTheory
 
 open Category MonoidalCategory
 
-attribute [reassoc (attr := simp)] RModHom₂.comm
 
 /-- Data for the internal-Hom setup of Theorem 2.11.2: a chosen generator
 `gen ∈ M`, the action functor `C ⥤ M`, the internal endomorphism algebra `A`,

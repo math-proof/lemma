@@ -6,9 +6,10 @@ import Mathlib.MeasureTheory.MeasurableSpace.Constructions
 import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
 import Mathlib.Probability.Independence.Basic
 import Mathlib.Probability.Independence.Conditional
-import Def.Probability.SymbolicProbability.Part2
+import Def.Probability.SymbolicProbability
 import Theorem.Function
 import Syntax.Probability.Indep.MeasurableComponent
+import Syntax.Probability.Indep
 open MeasureTheory
 open scoped ProbabilityTheory
 

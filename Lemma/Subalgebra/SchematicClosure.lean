@@ -29,7 +29,7 @@ lemma le_flatClosure_iff {B : Subalgebra F (F ⊗[R] G)} {S : Subalgebra R G} :
 
 theorem flatClosure_finite [IsNoetherianRing R] [Module.Finite R G]
     (B : Subalgebra F (F ⊗[R] G)) : Module.Finite R (flatClosure B) := by
-  haveI : IsNoetherian R G := isNoetherian_of_isNoetherianRing_of_finite R G
+  have : IsNoetherian R G := isNoetherian_of_isNoetherianRing_of_finite R G
   exact Module.Finite.iff_fg.mpr (IsNoetherian.noetherian (Subalgebra.toSubmodule (flatClosure B)))
 
 theorem flatClosure_isTorsionFree [Module.IsTorsionFree R G]
@@ -39,20 +39,19 @@ theorem flatClosure_isTorsionFree [Module.IsTorsionFree R G]
 theorem flatClosure_free [IsDomain R] [IsPrincipalIdealRing R] [IsNoetherianRing R]
     [Module.Finite R G] [Module.IsTorsionFree R G]
     (B : Subalgebra F (F ⊗[R] G)) : Module.Free R (flatClosure B) := by
-  haveI := flatClosure_finite (R := R) (F := F) (G := G) B
-  haveI := flatClosure_isTorsionFree (R := R) (F := F) (G := G) B
+  have := flatClosure_finite (R := R) (F := F) (G := G) B
+  have := flatClosure_isTorsionFree (R := R) (F := F) (G := G) B
   exact Module.free_of_finite_type_torsion_free'
 
 theorem flatClosure_flat [IsDomain R] [IsPrincipalIdealRing R] [IsNoetherianRing R]
     [Module.Finite R G] [Module.IsTorsionFree R G]
     (B : Subalgebra F (F ⊗[R] G)) : Module.Flat R (flatClosure B) := by
-  haveI := flatClosure_free (R := R) (F := F) (G := G) B
+  have := flatClosure_free (R := R) (F := F) (G := G) B
   exact Module.Flat.of_free
 
 theorem exists_nonzero_smul_eq_one_tmul [IsDomain R] [IsFractionRing R F] (x : F ⊗[R] G) :
     ∃ (r : R) (g : G), r ≠ 0 ∧ (algebraMap R F r) • x = (1 : F) ⊗ₜ[R] g := by
-  induction x with
-  | zero => exact ⟨1, 0, one_ne_zero, by simp⟩
+  induction x using TensorProduct.inductionOn with
   | tmul f g =>
       obtain ⟨p, hs⟩ := IsLocalization.surj (nonZeroDivisors R) f
       refine ⟨p.2, p.1 • g, nonZeroDivisors.coe_ne_zero p.2, ?_⟩
@@ -121,14 +120,14 @@ theorem quotient_flatClosure_finite [Module.Finite R G] (B : Subalgebra F (F ⊗
 theorem quotient_flatClosure_free [IsDomain R] [IsPrincipalIdealRing R] [IsFractionRing R F]
     [Module.Finite R G] (B : Subalgebra F (F ⊗[R] G)) :
     Module.Free R (G ⧸ Subalgebra.toSubmodule (flatClosure B)) := by
-  haveI := quotient_flatClosure_isTorsionFree (R := R) (F := F) (G := G) B
-  haveI := quotient_flatClosure_finite (R := R) (F := F) (G := G) B
+  have := quotient_flatClosure_isTorsionFree (R := R) (F := F) (G := G) B
+  have := quotient_flatClosure_finite (R := R) (F := F) (G := G) B
   exact Module.free_of_finite_type_torsion_free'
 
 theorem exists_isCompl_flatClosure [IsDomain R] [IsPrincipalIdealRing R] [IsFractionRing R F]
     [Module.Finite R G] (B : Subalgebra F (F ⊗[R] G)) :
     ∃ C : Submodule R G, IsCompl (Subalgebra.toSubmodule (flatClosure B)) C := by
-  haveI := quotient_flatClosure_free (R := R) (F := F) (G := G) B
+  have := quotient_flatClosure_free (R := R) (F := F) (G := G) B
   set N : Submodule R G := Subalgebra.toSubmodule (flatClosure B) with hN
 
   obtain ⟨s, hs⟩ := Module.projective_lifting_property N.mkQ (LinearMap.id)

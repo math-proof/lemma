@@ -1,4 +1,3 @@
-import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.Probability.code.StableConstruction
 open MeasureTheory Filter Set ProbabilityTheory
@@ -11,7 +10,7 @@ namespace ProbabilityTheory
 [measureConv_dirac_zero](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/StableConstruction.lean)
 -/
 @[path]
-lemma measureConv_dirac_zero
+lemma measureConv_dirac_zero :
 -- imply
   measureConv (Measure.dirac (0 : ℝ)) (Measure.dirac (0 : ℝ)) = Measure.dirac 0 := by
 -- proof

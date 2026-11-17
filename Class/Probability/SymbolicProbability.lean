@@ -3,7 +3,7 @@ import Mathlib.Data.EReal.Operations
 import Mathlib.Analysis.Complex.Basic
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
-import Class.Probability.Rv.Part3
+import Class.Probability.Rv
 import Def.Probability.SymbolicProbability
 open MeasureTheory
 

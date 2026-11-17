@@ -1,7 +1,7 @@
 import Lemma.Random.Integral_Mul.eq.Integral_Mul_Integral.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Lemma.Random.Kf.eq.Integral.All_EqWithDensity
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Random Finset
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Finset
 
 
 /--
@@ -10,7 +10,7 @@ Iterated Markov property along histories: `𝔼[G(ω[..n]) * f(ω[n+j])] = 𝔼[
 @[path]
 private lemma main
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {f : ℝ × 𝒮 × 𝒜 → ℝ}
   {C : ℝ}
 -- given
@@ -20,8 +20,8 @@ private lemma main
   (j : ℕ) :
 -- imply
   ∀ n {G : (Π _ : Finset.Iic n, ℝ × 𝒮 × 𝒜) → ℝ}, StronglyMeasurable G → ∀ {CG : ℝ}, (∀ h, ‖G h‖ ≤ CG) →
-    ∫ ω, G (Preorder.frestrictLe n ω) * f (ω (n + j)) ∂(M θ) =
-      ∫ ω, G (Preorder.frestrictLe n ω) * M.Kf θ f j (ω n) ∂(M θ) := by
+    ∫ ω, G (Preorder.frestrictLe n ω) * f (ω (n + j)) ∂(M.traj θ) =
+      ∫ ω, G (Preorder.frestrictLe n ω) * M.Kf θ f j (ω n) ∂(M.traj θ) := by
 -- proof
   induction j with
   | zero =>
@@ -42,3 +42,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-16

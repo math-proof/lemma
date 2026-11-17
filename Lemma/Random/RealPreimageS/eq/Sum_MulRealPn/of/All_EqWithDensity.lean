@@ -4,7 +4,7 @@ import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Real.Sum_Eq.eq.One
 import Lemma.Real.Norm_Eq12.le.One
 import Lemma.Real.StronglyMeasurable_Eq12
-open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.DensityModel Random Real Finset
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Real Finset
 
 
 /--
@@ -15,7 +15,7 @@ Occupancy of a state `y` at time `t` expands as a finite mixture over the initia
 private lemma main
   [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Fintype 𝒮]
   [ReferenceMeasure 𝒜] [DecidableEq 𝒮]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
@@ -25,25 +25,25 @@ private lemma main
   (t : ℕ)
   (y : 𝒮) :
 -- imply
-  (M θ).real (s t ⁻¹' {y}) =
-    ∑ x, M.env.init.real {x} * ∫ z, M.Kf θ (fun z => if z.2.1 = y then (1:ℝ) else 0) t z ∂(M.stageK θ x) := by
+  (M.traj θ).real (s t ⁻¹' {y}) =
+    ∑ x, M.init.toMeasure.real {x} * ∫ z, M.Kf θ (fun z => if z.2.1 = y then (1:ℝ) else 0) t z ∂(M.stageK θ x) := by
 -- proof
   have hst : Measurable (s t) := Random.Measurable.of.All_Eq.snd.fst h₀ t
   have h0s : Measurable (s 0) := Random.Measurable.of.All_Eq.snd.fst h₀ 0
   have hinter :
-    ∫ ω, (if s t ω = y then (1:ℝ) else 0) ∂(M θ) = (M θ).real (s t ⁻¹' {y}) := by
+    ∫ ω, (if s t ω = y then (1:ℝ) else 0) ∂(M.traj θ) = (M.traj θ).real (s t ⁻¹' {y}) := by
     have hm : MeasurableSet (s t ⁻¹' {y}) := hst (measurableSet_singleton y)
     have : (fun ω => if s t ω = y then (1:ℝ) else 0) =
       Set.indicator (s t ⁻¹' {y}) (fun _ => (1:ℝ)) := by
       funext ω; simp [Set.indicator]
     rw [this, integral_indicator hm]
-    change (∫ _ in s t ⁻¹' {y}, (1:ℝ) ∂(M θ)) = _
+    change (∫ _ in s t ⁻¹' {y}, (1:ℝ) ∂(M.traj θ)) = _
     rw [setIntegral_const, smul_eq_mul, mul_one, measureReal_def]
   have hsum : ∀ ω, (if s t ω = y then (1:ℝ) else 0) =
     ∑ x, (if s 0 ω = x then (1:ℝ) else 0) * (if s t ω = y then (1:ℝ) else 0) := by
     intro ω
     rw [← Finset.sum_mul, Sum_Eq.eq.One (s 0 ω), one_mul]
-  have hI : ∀ x, Integrable (fun ω => (if s 0 ω = x then (1:ℝ) else 0) * (if s t ω = y then (1:ℝ) else 0)) (M θ) := by
+  have hI : ∀ x, Integrable (fun ω => (if s 0 ω = x then (1:ℝ) else 0) * (if s t ω = y then (1:ℝ) else 0)) (M.traj θ) := by
     intro x
     have hsm :
       StronglyMeasurable (fun ω => (if s 0 ω = x then (1:ℝ) else 0) * (if s t ω = y then (1:ℝ) else 0)) :=
@@ -73,3 +73,4 @@ private lemma main
 
 
 -- created on 2026-11-13
+-- updated on 2026-11-16

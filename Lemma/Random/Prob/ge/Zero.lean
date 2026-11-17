@@ -1,5 +1,4 @@
-import Initialize.Tactic.Attr.Basic
-import Def.Probability.SymbolicProbability.Part2
+import Def.Probability.SymbolicProbability
 open MeasureTheory
 
 
@@ -19,3 +18,4 @@ private lemma main
 
 
 -- created on 2023-04-04
+-- updated on 2026-11-16

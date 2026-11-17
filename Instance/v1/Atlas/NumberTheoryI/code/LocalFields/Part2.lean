@@ -61,7 +61,7 @@ set_option synthInstance.maxHeartbeats 80000 in
 noncomputable instance HeightOneSpectrum.adicCompletion.instIsLocalField
     (v : HeightOneSpectrum (𝓞 K)) : IsLocalField (v.adicCompletion K) := by
   open scoped Valued in
-  haveI : Empty.Finite (Valued.ResidueField (v.adicCompletion K)) :=
+  haveI : Finite (Valued.ResidueField (v.adicCompletion K)) :=
     NumberField.Adeles.adicCompletion_finite_residueField K v
   open scoped Valued in
   haveI : IsDiscreteValuationRing (Valued.integer (v.adicCompletion K)) :=

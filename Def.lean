@@ -254,6 +254,7 @@ import Def.GroupCohomology_ContinuousDuality
 import Def.GroupCohomology_ContinuousH1
 import Def.GroupCohomology_CorestrictionFin
 import Def.GroupCohomology_CyclicCarry
+import Def.GroupCohomology_GaloisSUnits
 import Def.GroupCohomology_GaloisUnitsInflation
 import Def.GroupCohomology_GlobalBridge
 import Def.GroupCohomology_LevelConstantHom
@@ -495,6 +496,7 @@ import Def.NumberField_IsSplitPrime
 import Def.NumberField_PlaceAbove
 import Def.NumberField_PrincipalLevel
 import Def.NumberField_RayCharacterData
+import Def.NumberField_SelmerRepModP
 import Def.NumberField_SUnitsMax
 import Def.NumberField_TateGlobalZeta
 import Def.NumberTheory_DedekindSum

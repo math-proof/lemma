@@ -71,8 +71,8 @@ lemma theorem_2_15_lasso_slow_rate
         apply mul_le_mul_of_nonneg_left _ (by positivity)
         simp only [l1norm, Pi.sub_apply]
         calc ∑ j, |θhat j - θstar j|
-          ≤ ∑ j, (|θhat j| + |θstar j|) := by
-            apply Finset.sum_le_sum; intro j _; exact abs_sub (θhat j) (θstar j)
+          ≤ ∑ j, (|θhat j| + |θstar j|) :=
+            Finset.sum_le_sum fun j _ => abs_sub (θhat j) (θstar j)
           _ = ∑ j, |θhat j| + ∑ j, |θstar j| := Finset.sum_add_distrib
   calc C ≤ 2 * B + ↑n * (E - D) := h2
     _ ≤ 2 * (↑n * τ * (l1norm θhat + l1norm θstar)) + ↑n * (E - D) := by linarith

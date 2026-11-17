@@ -1,5 +1,6 @@
 import Lemma.Random.SinglePSpace.SinglePSpace.of.SinglePSpace
 import Lemma.Random.Map.eq.WithDensityProb
+import Theorem.Probability.SymbolicProbability
 open Function Random
 open scoped Classical
 

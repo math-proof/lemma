@@ -1,7 +1,7 @@
 import Lemma.Random.Integral_Mul.eq.Integral_Mul_Kf.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Lemma.Random.Kf.eq.Integral_TW.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Lemma.Random.ProbJoint.eq.Mul_Prob_Pr
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Random Kernel
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Kernel
 
 
 /--
@@ -11,7 +11,7 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel 
 private lemma main
   [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [DecidableEq 𝒮]
   [μ : ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜] [DecidableEq 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
@@ -23,12 +23,12 @@ private lemma main
   (hC : ∀ y, ‖f y‖ ≤ C)
   (θ : Θ)
   (t : ℕ)
-  (x : 𝒮)
-  (u : 𝒜) :
+  (sₜ : 𝒮)
+  (aₜ : 𝒜) :
 -- imply
-  ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * f (s (t + 1) ω) ∂(M θ) =
-    (M θ).real (s t ⁻¹' {x}) * (M.policy.prob θ x u * μ.measure.real {u}) *
-      ∫ y, f y ∂(M.env.trans (x, u)) := by
+  ∫ ω, (if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) * f (s (t + 1) ω) ∂(M.traj θ) =
+    (M.traj θ).real (s t ⁻¹' {sₜ}) * (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}) *
+      ∫ y, f y ∂(M.trans (sₜ, aₜ)) := by
 -- proof
   obtain rfl : s = fun t ω ↦ (ω t).2.1 :=
     funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₀ t) ω)).symm
@@ -40,36 +40,35 @@ private lemma main
     hf.comp_measurable measurable_snd.fst
   have hC' : ∀ z : ℝ × 𝒮 × 𝒜, ‖f z.2.1‖ ≤ C := fun z => hC z.2.1
   have hGeq :
-    (fun z : ℝ × 𝒮 × 𝒜 => if z.2.1 = x ∧ z.2.2 = u then (1:ℝ) else 0) =
-      ((fun z : ℝ × 𝒮 × 𝒜 => z.2) ⁻¹' {(x, u)}).indicator (fun _ => (1:ℝ)) := by
+    (fun z : ℝ × 𝒮 × 𝒜 => if z.2.1 = sₜ ∧ z.2.2 = aₜ then (1:ℝ) else 0) =
+      ((fun z : ℝ × 𝒮 × 𝒜 => z.2) ⁻¹' {(sₜ, aₜ)}).indicator (fun _ => (1:ℝ)) := by
     funext z
-    if hz : z.2 = (x, u) then
+    if hz : z.2 = (sₜ, aₜ) then
       simp [Set.indicator, Set.mem_preimage, Set.mem_singleton_iff, hz]
     else
-      have hzu : ¬(z.2.1 = x ∧ z.2.2 = u) := fun h' => hz (Prod.ext h'.1 h'.2)
+      have hzu : ¬(z.2.1 = sₜ ∧ z.2.2 = aₜ) := fun h' => hz (Prod.ext h'.1 h'.2)
       simp [Set.indicator, Set.mem_preimage, Set.mem_singleton_iff, hz, hzu]
   have hG : StronglyMeasurable
-    (fun z : ℝ × 𝒮 × 𝒜 => if z.2.1 = x ∧ z.2.2 = u then (1:ℝ) else 0) := by
+    (fun z : ℝ × 𝒮 × 𝒜 => if z.2.1 = sₜ ∧ z.2.2 = aₜ then (1:ℝ) else 0) := by
     rw [hGeq]
     apply (stronglyMeasurable_const (b := (1:ℝ))).indicator
-    exact measurable_snd (measurableSet_singleton (x, u))
+    exact measurable_snd (measurableSet_singleton (sₜ, aₜ))
   have hGbound : ∀ z : ℝ × 𝒮 × 𝒜,
-    ‖(if z.2.1 = x ∧ z.2.2 = u then (1:ℝ) else 0)‖ ≤ (1:ℝ) := fun z => by
-    if h : z.2.1 = x ∧ z.2.2 = u then
+    ‖(if z.2.1 = sₜ ∧ z.2.2 = aₜ then (1:ℝ) else 0)‖ ≤ (1:ℝ) := fun z => by
+    if h : z.2.1 = sₜ ∧ z.2.2 = aₜ then
       simp [h]
     else
       simp [h]
   have hW : ∀ y, ∫ w, M.Kf θ (fun z => f z.2.1) 0 w ∂(M.stageK θ y) = f y := by
     intro y
-    have := M.env.reward_markov
     change ∫ w, f w.2.1 ∂(M.stageK θ y) = f y
     have hker :
       (M.stageK θ).map (fun z => z.2.1) =
         Kernel.deterministic (id : 𝒮 → 𝒮) measurable_id := by
-      unfold DensityModel.stageK
+      unfold Model.stageK
       rw [← Kernel.map_comp_right _ (by fun_prop) (by fun_prop)]
       show (Kernel.deterministic id measurable_id ×ₖ
-          (M.policy.kernel θ ⊗ₖ M.env.reward)).map Prod.fst = _
+          (M.kernel θ ⊗ₖ M.rewardK)).map Prod.fst = _
       rw [← Kernel.fst_eq]
       apply Kernel.fst_prod
     have hmap : (M.stageK θ y).map (fun z => z.2.1) = Measure.dirac y := by
@@ -79,7 +78,7 @@ private lemma main
       hmap, integral_dirac]
   have hKf : ∀ z,
       M.Kf θ (fun z => f z.2.1) 1 z =
-        ∫ y, f y ∂(M.env.trans (z.2.1, z.2.2)) := by
+        ∫ y, f y ∂(M.trans (z.2.1, z.2.2)) := by
     intro z
     rw [Kf.eq.Integral_TW.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
       (M := M) hf' hC' θ 0 z]
@@ -88,29 +87,29 @@ private lemma main
     (M := M) hf' hC' hG hGbound θ t 1]
   have hfun :
     (fun ω =>
-      (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) *
+      (if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) *
         M.Kf θ (fun z => f z.2.1) 1 (ω t)) =
       fun ω =>
-        (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) *
-          ∫ y, f y ∂(M.env.trans (x, u)) := by
+        (if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) *
+          ∫ y, f y ∂(M.trans (sₜ, aₜ)) := by
     funext ω
-    if h : s t ω = x ∧ a t ω = u then
-      have hz : (ω t).2 = (x, u) := Prod.ext h.1 h.2
+    if h : s t ω = sₜ ∧ a t ω = aₜ then
+      have hz : (ω t).2 = (sₜ, aₜ) := Prod.ext h.1 h.2
       simp [h, hKf, hz]
     else
       simp [h]
   rw [hfun, integral_mul_const]
-  have hS : MeasurableSet (s t ⁻¹' {x}) :=
-    Random.Measurable.of.All_Eq.snd.fst h₀ t (measurableSet_singleton x)
-  have hA : MeasurableSet (a t ⁻¹' {u}) :=
-    Random.Measurable.of.All_Eq.snd.snd h₀ t (measurableSet_singleton u)
-  have hSA : MeasurableSet (s t ⁻¹' {x} ∩ a t ⁻¹' {u}) := hS.inter hA
+  have hS : MeasurableSet (s t ⁻¹' {sₜ}) :=
+    Random.Measurable.of.All_Eq.snd.fst h₀ t (measurableSet_singleton sₜ)
+  have hA : MeasurableSet (a t ⁻¹' {aₜ}) :=
+    Random.Measurable.of.All_Eq.snd.snd h₀ t (measurableSet_singleton aₜ)
+  have hSA : MeasurableSet (s t ⁻¹' {sₜ} ∩ a t ⁻¹' {aₜ}) := hS.inter hA
   have hind :
-    (fun ω => if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) =
-      (s t ⁻¹' {x} ∩ a t ⁻¹' {u}).indicator (1 : (ℕ → ℝ × 𝒮 × 𝒜) → ℝ) := by
+    (fun ω => if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) =
+      (s t ⁻¹' {sₜ} ∩ a t ⁻¹' {aₜ}).indicator (1 : (ℕ → ℝ × 𝒮 × 𝒜) → ℝ) := by
     funext ω
-    if hsx : s t ω = x then
-      if hau : a t ω = u then
+    if hsx : s t ω = sₜ then
+      if hau : a t ω = aₜ then
         simp [hsx, hau, Set.indicator, Set.mem_inter_iff, Set.mem_preimage,
           Set.mem_singleton_iff]
       else
@@ -119,8 +118,8 @@ private lemma main
     else
       simp [hsx, Set.indicator, Set.mem_inter_iff, Set.mem_preimage,
         Set.mem_singleton_iff]
-  rw [hind, integral_indicator_one hSA, ProbJoint.eq.Mul_Prob_Pr (M := M) h₀ x u]
+  rw [hind, integral_indicator_one hSA, ProbJoint.eq.Mul_Prob_Pr (M := M) h₀ sₜ aₜ]
 
 
 -- created on 2026-10-07
--- updated on 2026-11-14
+-- updated on 2026-11-16

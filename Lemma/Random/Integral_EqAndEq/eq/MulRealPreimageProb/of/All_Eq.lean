@@ -1,5 +1,5 @@
 import Lemma.Random.ProbJoint.eq.Mul_Prob_Pr
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Random Real
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Real
 
 
 /--
@@ -12,7 +12,7 @@ private lemma main
   [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [DecidableEq 𝒮]
   [μ : ReferenceMeasure 𝒜]
   [MeasurableSingletonClass 𝒜] [DecidableEq 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {θ : Θ}
   {t : ℕ}
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
@@ -20,22 +20,22 @@ private lemma main
   {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
 -- given
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
-  (x : 𝒮)
-  (u : 𝒜) :
+  (sₜ : 𝒮)
+  (aₜ : 𝒜) :
 -- imply
-  ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) ∂(M θ) =
-    (M θ).real (s t ⁻¹' {x}) * (M.policy.prob θ x u * μ.measure.real {u}) := by
+  ∫ ω, (if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) ∂(M.traj θ) =
+    (M.traj θ).real (s t ⁻¹' {sₜ}) * (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}) := by
 -- proof
-  have hS : MeasurableSet (s t ⁻¹' {x}) :=
-    Random.Measurable.of.All_Eq.snd.fst h₀ t (measurableSet_singleton x)
-  have hA : MeasurableSet (a t ⁻¹' {u}) :=
-    Random.Measurable.of.All_Eq.snd.snd h₀ t (measurableSet_singleton u)
-  have hSA : MeasurableSet (s t ⁻¹' {x} ∩ a t ⁻¹' {u}) := hS.inter hA
+  have hS : MeasurableSet (s t ⁻¹' {sₜ}) :=
+    Random.Measurable.of.All_Eq.snd.fst h₀ t (measurableSet_singleton sₜ)
+  have hA : MeasurableSet (a t ⁻¹' {aₜ}) :=
+    Random.Measurable.of.All_Eq.snd.snd h₀ t (measurableSet_singleton aₜ)
+  have hSA : MeasurableSet (s t ⁻¹' {sₜ} ∩ a t ⁻¹' {aₜ}) := hS.inter hA
   have hind :
-    (s t ⁻¹' {x} ∩ a t ⁻¹' {u}).indicator (1 : (ℕ → ℝ × 𝒮 × 𝒜) → ℝ) =
-      fun ω => if s t ω = x ∧ a t ω = u then (1:ℝ) else 0 := by
+    (s t ⁻¹' {sₜ} ∩ a t ⁻¹' {aₜ}).indicator (1 : (ℕ → ℝ × 𝒮 × 𝒜) → ℝ) =
+      fun ω => if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0 := by
     funext ω
-    by_cases hsx : s t ω = x <;> by_cases hau : a t ω = u <;>
+    by_cases hsx : s t ω = sₜ <;> by_cases hau : a t ω = aₜ <;>
       simp [hsx, hau, Set.indicator, Set.mem_inter_iff, Set.mem_preimage,
         Set.mem_singleton_iff]
   rw [← hind, integral_indicator_one hSA]
@@ -43,4 +43,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-14
+-- updated on 2026-11-16

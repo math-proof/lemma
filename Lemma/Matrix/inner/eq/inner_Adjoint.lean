@@ -2,7 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.AlgebraNotes.code.AdjointOperators
 open AdjointOperators
-open scoped InnerProductSpace
+open scoped InnerProductSpace ComplexConjugate
 open LinearMap Submodule
 
 
@@ -86,6 +86,8 @@ end AdjointOperators
 
 namespace AdjointOperators
 
+set_option maxHeartbeats 800000 in
+set_option synthInstance.maxHeartbeats 400000 in
 /--
 [normal_adjoint_eigenvalue](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraNotes/code/AdjointOperators.lean)
 -/
@@ -102,16 +104,30 @@ lemma normal_adjoint_eigenvalue
   (hN : T ∘ₗ LinearMap.adjoint T = LinearMap.adjoint T ∘ₗ T)
   (hv : T v = μ • v) :
 -- imply
-  LinearMap.adjoint T v = (starRingEnd 𝕜 μ) • v := by
+  LinearMap.adjoint T v =
+    ((RCLike.re μ : 𝕜) - (RCLike.im μ : 𝕜) * RCLike.I) • v := by
 -- proof
+  letI : StarRing 𝕜 := RCLike.toStarRing
+  rw [← RCLike.conj_eq_re_sub_im μ]
   set S := T - μ • LinearMap.id with hS_def
   have hSv : S v = 0 := by
     simp only [hS_def, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.id_apply, hv, sub_self]
-  have hSadj : LinearMap.adjoint S = LinearMap.adjoint T - (starRingEnd 𝕜 μ) • LinearMap.id := by
-    simp only [hS_def, map_sub]
-    congr 1
-    rw [← LinearMap.star_eq_adjoint, star_smul, LinearMap.star_eq_adjoint, LinearMap.adjoint_id]
-    rfl
+  have hSadj : LinearMap.adjoint S =
+      LinearMap.adjoint T - (conj μ) • (LinearMap.id : E →ₗ[𝕜] E) := by
+    apply LinearMap.ext
+    intro x
+    apply ext_inner_left 𝕜
+    intro y
+    let W : E →ₗ[𝕜] E :=
+      LinearMap.adjoint T - (conj μ) • (LinearMap.id : E →ₗ[𝕜] E)
+    have hL : ⟪y, LinearMap.adjoint S x⟫_𝕜 = ⟪T y, x⟫_𝕜 - conj μ * ⟪y, x⟫_𝕜 := by
+      rw [LinearMap.adjoint_inner_right, hS_def, LinearMap.sub_apply, LinearMap.smul_apply,
+        LinearMap.id_apply, inner_sub_left, inner_smul_left, starRingEnd_apply]
+    have hR : ⟪y, W x⟫_𝕜 = ⟪T y, x⟫_𝕜 - conj μ * ⟪y, x⟫_𝕜 := by
+      rw [LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.id_apply, inner_sub_right,
+        LinearMap.adjoint_inner_right, inner_smul_right]
+    change ⟪y, LinearMap.adjoint S x⟫_𝕜 = ⟪y, W x⟫_𝕜
+    rw [hL, hR]
   have hS_normal : S ∘ₗ LinearMap.adjoint S = LinearMap.adjoint S ∘ₗ S := by
     rw [hS_def, hSadj]
     ext x
@@ -120,10 +136,10 @@ lemma normal_adjoint_eigenvalue
     have h : T (LinearMap.adjoint T x) = LinearMap.adjoint T (T x) :=
       LinearMap.ext_iff.mp hN x
     rw [h]
-    simp only [smul_sub, smul_smul, mul_comm μ ((starRingEnd 𝕜) μ)]
+    simp only [smul_sub, smul_smul, mul_comm μ (conj μ)]
     abel
   have hSadj_v : LinearMap.adjoint S v = 0 := by
-    have h_norm := norm_apply_eq_norm_adjoint_of_normal S hS_normal v
+    have h_norm := norm_apply_eq_norm_adjoint_of_normal (v := v) hS_normal
     rw [hSv, norm_zero] at h_norm
     exact norm_eq_zero.mp h_norm.symm
   rw [hSadj] at hSadj_v

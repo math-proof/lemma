@@ -1,5 +1,5 @@
 import Mathlib.Analysis.Calculus.LocalExtr.Basic
-import Theorem.Dynamics.PolicyTrajectory.ContinuousAction.Part3
+import Theorem.Dynamics.PolicyTrajectory.ContinuousAction
 open MeasureTheory ProbabilityTheory Topology PolicyGradient
 
 
@@ -10,19 +10,20 @@ Continuous-action counterpart of `Random.Fderiv_FunProbPol.eq.Zero.of.ProbPolEq0
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [MeasurableSpace S] [ReferenceMeasure A]
-  {π : DensityPolicy Θ S A}
+  {π : Policy Θ S A} [hStoch : StochasticPolicy π]
 -- given
   (θ : Θ)
-  (x : S)
-  (u : A)
-  (h₀ : π.prob θ x u = 0) :
+  (sₜ : S)
+  (aₜ : A)
+  (h₀ : π.π[θ] sₜ aₜ = 0) :
 -- imply
-  fderiv ℝ (fun θ' => π.prob θ' x u) θ = 0 := by
+  fderiv ℝ (fun θ' => π.π[θ'] sₜ aₜ) θ = 0 := by
 -- proof
   refine IsLocalMin.fderiv_eq_zero (Filter.Eventually.of_forall fun θ' => ?_)
-  show π.prob θ x u ≤ π.prob θ' x u
+  show π.π[θ] sₜ aₜ ≤ π.π[θ'] sₜ aₜ
   rw [h₀]
-  exact π.nonneg θ' x u
+  exact hStoch.nonneg θ' sₜ aₜ
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-16

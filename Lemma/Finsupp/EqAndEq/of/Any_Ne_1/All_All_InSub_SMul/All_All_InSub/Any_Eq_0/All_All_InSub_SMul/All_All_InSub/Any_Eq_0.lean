@@ -45,7 +45,7 @@ private lemma main
   have coord1 : ∀ {v : ρ'.V}, v ∈ 𝒪 ∙ b 0 → b.repr v 1 = 0 := by
     intro v hv
     obtain ⟨a, rfl⟩ := Submodule.mem_span_singleton.mp hv
-    rw [map_smul, Finsupp.smul_apply, b.repr_self, Finsupp.single_apply, if_neg (by decide), smul_zero]
+    rw [map_smul, Finsupp.smul_apply, b.repr_self, Finsupp.single_apply, ite_eq_right (by decide), smul_zero]
 
   have hLL : (𝒪 ∙ b 0) = (𝒪 ∙ b' 0) := by
     by_cases hy0 : y = 0
@@ -68,7 +68,7 @@ private lemma main
       have hc1 : b.repr (ρ'.ρ τ v - v) 1 = c * y := by
         rw [← hc, hb'0, smul_add, smul_smul, smul_smul, map_add, map_smul, map_smul, Finsupp.add_apply,
           Finsupp.smul_apply, Finsupp.smul_apply, b.repr_self, b.repr_self, Finsupp.single_apply, Finsupp.single_apply,
-          if_neg (by decide), if_pos rfl, smul_zero, zero_add, smul_eq_mul, mul_one]
+          ite_eq_right (by decide), ite_eq_left rfl, smul_zero, zero_add, smul_eq_mul, mul_one]
       have hc0 : c = 0 := by
         have : c * y = 0 := by rw [← hc1, coord1 h1]
         exact (mul_eq_zero.mp this).resolve_right hy0

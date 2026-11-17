@@ -1,5 +1,5 @@
 import Lemma.Random.AbsExpect.le.Abs
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Random
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -9,7 +9,7 @@ continuous-action trajectory model is summable.
 @[path]
 private lemma main
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {γ : ℝ}
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
@@ -21,10 +21,10 @@ private lemma main
   (B : Set (ℕ → ℝ × 𝒮 × 𝒜))
   (t : ℕ) :
 -- imply
-  Summable (fun k => γ ^ k * ∫ ω, r (t + k) ω ∂(M θ)[|B]) := by
+  Summable (fun k => γ ^ k * ∫ ω, r (t + k) ω ∂(M.traj θ)[|B]) := by
 -- proof
   refine Summable.of_norm_bounded
-    ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right |M.env.R|) ?_
+    ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right |M.R|) ?_
   intro k
   rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
   apply mul_le_mul_of_nonneg_left
@@ -32,4 +32,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-14
+-- updated on 2026-11-16

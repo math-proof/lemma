@@ -1,4 +1,5 @@
-import Theorem.Dynamics.PolicyTrajectory
+import Mathlib
+import Initialize.Tactic.Attr.Basic
 
 
 /--
@@ -8,8 +9,6 @@ import Theorem.Dynamics.PolicyTrajectory
 | And.left | Random.Measurable.of.All_Eq.fst |
 | And.right.left | Random.Measurable.of.All_Eq.snd.fst |
 | And.right.right | Random.Measurable.of.All_Eq.snd.snd |
-
-The reward / state / action coordinates of the trajectory are measurable.
 -/
 @[path, And.left, And.right.left, And.right.right]
 private lemma main
@@ -18,7 +17,7 @@ private lemma main
   {s : ℕ → (ℕ → ℝ × S × A) → S}
   {a : ℕ → (ℕ → ℝ × S × A) → A}
 -- given
-  (h₀ : ∀ t, (· t) = (r t, s t, a t))
+  (h₀ : ∀ t, (fun ω ↦ ω t) = fun ω ↦ (r t ω, s t ω, a t ω))
   (k : ℕ) :
 -- imply
   Measurable (r k) ∧ Measurable (s k) ∧ Measurable (a k) := by
@@ -35,3 +34,4 @@ private lemma main
 
 
 -- created on 2026-10-10
+-- updated on 2026-11-15

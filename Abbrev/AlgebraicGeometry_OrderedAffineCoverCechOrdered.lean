@@ -1,6 +1,4 @@
-import Instance.AlgebraicGeometry_OrderedAffineCoverCech
-import Lemma.Scheme.OrderedAffineCoverCechCup
-import Lemma.Scheme.OrderedAffineCoverCochainPullback
+import Lemma.Scheme.OrderedAffineCoverCechOrdered
 
 set_option autoImplicit false
 
@@ -16,7 +14,7 @@ namespace Scheme.OrderedAffineCover
 
 variable {V : Scheme.{u}} (K : V.OrderedAffineCover)
 
-abbrev OIdx (n : ℕ) : Type u := Fin (n + 1) → K.ι
+abbrev OSub {n k : ℕ} (u : K.OIdx n) (t : K.OIdx k) : Prop := ∀ j, ∃ i, u j = t i
 
 end Scheme.OrderedAffineCover
 

@@ -3,7 +3,6 @@ import Mathlib.GroupTheory.Transfer
 import Mathlib.Algebra.Module.Hom
 import Mathlib.Data.ZMod.Units
 import Mathlib.Algebra.BigOperators.GroupWithZero.Action
-import Instance.CohCarrier_Level
 import Structure.CohCarrier_Level
 
 set_option autoImplicit false
@@ -94,14 +93,14 @@ def Gamma0Upper (ℓ : ℕ) : Subgroup SL(2, ℤ) where
   one_mem' := by simp
   mul_mem' := by
     intro a b ha hb
-    simp only [Set.mem_setOf_eq] at *
+    simp only [Set.mem_ofPred_eq] at *
     have h := (Matrix.two_mul_expl a.1 b.1).2.1
     simp only [coe_mul] at *
     rw [h]
     simp [ha, hb]
   inv_mem' := by
     intro a ha
-    simp only [Set.mem_setOf_eq] at *
+    simp only [Set.mem_ofPred_eq] at *
     rw [SL2_inv_expl a]
     simp only [cons_val_zero, cons_val_one, Int.cast_neg, neg_eq_zero] at *
     exact ha
@@ -192,14 +191,23 @@ theorem conjUpperMat_mul (A B : SL(2, ℤ)) (hA : (ℓ : ℤ) ∣ A 0 1) (hB : (
   have h3 : A 1 0 * ℓ * (B 0 1 / ℓ) = A 1 0 * B 0 1 := by
     rw [mul_assoc, Int.mul_ediv_cancel' hB]
   have hmul : ∀ i j, (A * B) i j = A i 0 * B 0 j + A i 1 * B 1 j := fun i j => by
-    simp [Matrix.mul_apply, Fin.sum_univ_two]
+    simp [SpecialLinearGroup.coe_mul, Matrix.mul_apply, Fin.sum_univ_two]
+  have hprod : ∀ i j, (conjUpperMat ℓ A hA * conjUpperMat ℓ B hB) i j =
+      (conjUpperMat ℓ A hA) i 0 * (conjUpperMat ℓ B hB) 0 j +
+        (conjUpperMat ℓ A hA) i 1 * (conjUpperMat ℓ B hB) 1 j := fun i j => by
+    simp [SpecialLinearGroup.coe_mul, Matrix.mul_apply, Fin.sum_univ_two]
   apply Matrix.SpecialLinearGroup.ext
   intro i j
-  fin_cases i <;> fin_cases j <;>
-    simp [conjUpperMat, Matrix.mul_apply, Fin.sum_univ_two, hmul, h2]
-  · exact h1.symm
-  · ring
-  · exact h3.symm
+  fin_cases i <;> fin_cases j
+  · rw [hprod]
+    simp [conjUpperMat, hmul, h1]
+  · rw [hprod]
+    simp [conjUpperMat, hmul, h2]
+  · rw [hprod]
+    simp [conjUpperMat, hmul]
+    ring
+  · rw [hprod]
+    simp [conjUpperMat, hmul, h3]
 
 @[simp] theorem conjUpperMat_apply_11 (A : SL(2, ℤ)) (h : (ℓ : ℤ) ∣ A 0 1) :
     (conjUpperMat ℓ A h) 1 1 = A 1 1 := by
@@ -246,16 +254,17 @@ theorem Gamma0Upper_isCongruenceSubgroup [NeZero ℓ] : IsCongruenceSubgroup (Ga
   rw [mem_Gamma0Upper]
   exact (Gamma_mem.mp hA).2.1
 
-noncomputable def heckeT [NeZero ℓ] : H1 M H A →+ H1 M H A where
-  toFun φ :=
-    MonoidHom.toAdditiveLeft
-      (MonoidHom.transfer ((AddMonoidHom.toMultiplicativeRight φ).comp (conjL M H ℓ)))
-  map_zero' := by
-    simp only [toMultiplicativeRight_zero, MonoidHom.one_comp,
-      transfer_one, toAdditiveLeft_one]
-  map_add' φ ψ := by
-    simp only [toMultiplicativeRight_add, MonoidHom.mul_comp,
-      transfer_mul, toAdditiveLeft_mul]
+noncomputable def heckeT [NeZero ℓ] : H1 M H A →+ H1 M H A :=
+  haveI : (Gamma0Upper ℓ).FiniteIndex := (Gamma0Upper_isCongruenceSubgroup ℓ).finiteIndex
+  { toFun φ :=
+      MonoidHom.toAdditiveLeft
+        (MonoidHom.transfer ((AddMonoidHom.toMultiplicativeRight φ).comp (conjL M H ℓ)))
+    map_zero' := by
+      simp only [toMultiplicativeRight_zero, MonoidHom.one_comp,
+        transfer_one, toAdditiveLeft_one]
+    map_add' φ ψ := by
+      simp only [toMultiplicativeRight_add, MonoidHom.mul_comp,
+        transfer_mul, toAdditiveLeft_mul] }
 
 theorem GammaH_normal_in_Gamma0 :
     ((GammaH M H).subgroupOf (Gamma0 M)).Normal := by
@@ -319,12 +328,23 @@ theorem conjLowerMat_mul (A B : SL(2, ℤ)) (hA : (d : ℤ) ∣ A 1 0) (hB : (d 
   have h3 : A 1 0 / d * (B 0 1 * d) = A 1 0 * B 0 1 := by
     rw [mul_comm (B 0 1) _, ← mul_assoc, Int.ediv_mul_cancel hA]
   have hmul : ∀ i j, (A * B) i j = A i 0 * B 0 j + A i 1 * B 1 j := fun i j => by
-    simp [Matrix.mul_apply, Fin.sum_univ_two]
+    simp [SpecialLinearGroup.coe_mul, Matrix.mul_apply, Fin.sum_univ_two]
+  have hprod : ∀ i j, (conjLowerMat d A hA * conjLowerMat d B hB) i j =
+      (conjLowerMat d A hA) i 0 * (conjLowerMat d B hB) 0 j +
+        (conjLowerMat d A hA) i 1 * (conjLowerMat d B hB) 1 j := fun i j => by
+    simp [SpecialLinearGroup.coe_mul, Matrix.mul_apply, Fin.sum_univ_two]
   apply Matrix.SpecialLinearGroup.ext
   intro i j
-  fin_cases i <;> fin_cases j <;>
-    simp [conjLowerMat, Matrix.mul_apply, Fin.sum_univ_two, hmul, h2]
-  all_goals first | exact h1.symm | exact h3.symm | ring
+  fin_cases i <;> fin_cases j
+  · rw [hprod]
+    simp [conjLowerMat, hmul, h1]
+  · rw [hprod]
+    simp [conjLowerMat, hmul]
+    ring
+  · rw [hprod]
+    simp [conjLowerMat, hmul, h2]
+  · rw [hprod]
+    simp [conjLowerMat, hmul, h3]
 
 
 variable {M M' H H' d}
@@ -468,27 +488,37 @@ noncomputable def pushChar [NeZero d] (h : LevelLE M M' H H' d) (φ : H1 M' H' A
   φ.comp (MonoidHom.toAdditive
     ((iotaDeg M M' H H' d h).ofInjective (iotaDeg_injective M M' H H' d h)).symm.toMonoidHom)
 
-noncomputable def jDeg [NeZero M'] [NeZero d] (h : LevelLE M M' H H' d) : H1 M' H' A →+ H1 M H A where
-  toFun φ := coresAdd _ (pushChar M M' H H' d A h φ)
-  map_zero' := by
-    have : pushChar M M' H H' d A h 0 = 0 := by ext; rfl
-    rw [this, coresAdd_zero]
-  map_add' φ ψ := by
-    have : pushChar M M' H H' d A h (φ + ψ) = pushChar M M' H H' d A h φ + pushChar M M' H H' d A h ψ := by
-      ext; rfl
-    rw [this, coresAdd_add]
+noncomputable def jDeg [NeZero M'] [NeZero d] (h : LevelLE M M' H H' d) : H1 M' H' A →+ H1 M H A :=
+  haveI : NeZero (M' * d) := ⟨mul_ne_zero (NeZero.ne M') (NeZero.ne d)⟩
+  haveI : ((Gamma (M' * d)).subgroupOf (GammaH M H)).FiniteIndex := inferInstance
+  haveI : ((iotaDeg M M' H H' d h).range).FiniteIndex :=
+    Subgroup.finiteIndex_of_le (Gamma_subgroupOf_le_range_iotaDeg M M' H H' d h)
+  { toFun φ := coresAdd _ (pushChar M M' H H' d A h φ)
+    map_zero' := by
+      have : pushChar M M' H H' d A h 0 = 0 := by ext; rfl
+      rw [this, coresAdd_zero]
+    map_add' φ ψ := by
+      have : pushChar M M' H H' d A h (φ + ψ) =
+          pushChar M M' H H' d A h φ + pushChar M M' H H' d A h ψ := by
+        ext; rfl
+      rw [this, coresAdd_add] }
 
 noncomputable def jDegL (R : Type*) [Semiring R] [Module R A] [NeZero M'] [NeZero d]
-    (h : LevelLE M M' H H' d) : H1 M' H' A →ₗ[R] H1 M H A where
-  toFun φ := coresAdd _ (pushChar M M' H H' d A h φ)
-  map_add' φ ψ := by
-    have : pushChar M M' H H' d A h (φ + ψ) = pushChar M M' H H' d A h φ + pushChar M M' H H' d A h ψ := by
-      ext; rfl
-    rw [this, coresAdd_add]
-  map_smul' r φ := by
-    have : pushChar M M' H H' d A h (r • φ) = r • pushChar M M' H H' d A h φ := by ext; rfl
-    rw [this, coresAdd_smul]
-    rfl
+    (h : LevelLE M M' H H' d) : H1 M' H' A →ₗ[R] H1 M H A :=
+  haveI : NeZero (M' * d) := ⟨mul_ne_zero (NeZero.ne M') (NeZero.ne d)⟩
+  haveI : ((Gamma (M' * d)).subgroupOf (GammaH M H)).FiniteIndex := inferInstance
+  haveI : ((iotaDeg M M' H H' d h).range).FiniteIndex :=
+    Subgroup.finiteIndex_of_le (Gamma_subgroupOf_le_range_iotaDeg M M' H H' d h)
+  { toFun φ := coresAdd _ (pushChar M M' H H' d A h φ)
+    map_add' φ ψ := by
+      have : pushChar M M' H H' d A h (φ + ψ) =
+          pushChar M M' H H' d A h φ + pushChar M M' H H' d A h ψ := by
+        ext; rfl
+      rw [this, coresAdd_add]
+    map_smul' r φ := by
+      have : pushChar M M' H H' d A h (r • φ) = r • pushChar M M' H H' d A h φ := by ext; rfl
+      rw [this, coresAdd_smul]
+      rfl }
 
 end LevelMaps
 

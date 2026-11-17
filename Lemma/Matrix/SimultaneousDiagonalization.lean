@@ -20,11 +20,11 @@ end MathlibExt.LinearAlgebra.Matrix.SimultaneousDiagonalizationWanted
 namespace MathlibExt.LinearAlgebra.Matrix.SimultaneousDiagonalizationWanted
 
 variable [Fintype n] [DecidableEq n]
+omit [DecidableEq n] in
 /--
 [simulDiag_isSymm_congr](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/SimultaneousDiagonalization.lean)
 -/
 @[path]
-omit [DecidableEq n] in
 private lemma simulDiag_isSymm_congr {S : Matrix n n ℝ} (Q : Matrix n n ℝ)
   (hS : S.IsSymm) : (Matrix.transpose Q * S * Q).IsSymm := by
   simpa using (Matrix.isHermitian_conjTranspose_mul_mul Q
@@ -147,4 +147,4 @@ private lemma Matrix_PosDef_exists_isUnit_transpose_mul_mul_eq_one_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-16

@@ -25,11 +25,11 @@ end MathlibExt.LinearAlgebra.Matrix.MatrixExpDetTraceWanted
 namespace MathlibExt.LinearAlgebra.Matrix.MatrixExpDetTraceWanted
 
 variable [Fintype n] [DecidableEq n]
+omit [Fintype n] [DecidableEq n] in
 /--
 [matrixExp_exp_pi_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/MatrixExpDetTrace.lean)
 -/
 @[path]
-omit [Fintype n] [DecidableEq n] in
 private lemma matrixExp_exp_pi_apply [Finite n] (v : n → ℂ) (i : n) :
   NormedSpace.exp v i = Complex.exp (v i) := by
   let _ := Fintype.ofFinite n
@@ -56,11 +56,11 @@ end MathlibExt.LinearAlgebra.Matrix.MatrixExpDetTraceWanted
 namespace MathlibExt.LinearAlgebra.Matrix.MatrixExpDetTraceWanted
 
 variable [Fintype n] [DecidableEq n]
+omit [Fintype n] [DecidableEq n] in
 /--
 [matrixExp_dfinsupp_basis_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/MatrixExpDetTrace.lean)
 -/
 @[path]
-omit [Fintype n] [DecidableEq n] in
 private lemma matrixExp_dfinsupp_basis_apply
   {R ι : Type*} [Semiring R] [DecidableEq ι] {M : ι → Type*}
   [∀ i, AddCommMonoid (M i)] [∀ i, Module R (M i)] {η : ι → Type*}
@@ -83,11 +83,11 @@ end MathlibExt.LinearAlgebra.Matrix.MatrixExpDetTraceWanted
 namespace MathlibExt.LinearAlgebra.Matrix.MatrixExpDetTraceWanted
 
 variable [Fintype n] [DecidableEq n]
+omit [Fintype n] [DecidableEq n] in
 /--
 [matrixExp_eigenbasis_apply_mem](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/MatrixExpDetTrace.lean)
 -/
 @[path]
-omit [Fintype n] [DecidableEq n] in
 private lemma matrixExp_eigenbasis_apply_mem {V : Type*} [AddCommGroup V] [Module ℂ V]
   (f : Module.End ℂ V) (h : ⨆ z, f.eigenspace z = ⊤)
   (i : Σ z, Module.Basis.ofVectorSpaceIndex ℂ (f.eigenspace z)) :
@@ -102,11 +102,11 @@ end MathlibExt.LinearAlgebra.Matrix.MatrixExpDetTraceWanted
 namespace MathlibExt.LinearAlgebra.Matrix.MatrixExpDetTraceWanted
 
 variable [Fintype n] [DecidableEq n]
+omit [Fintype n] [DecidableEq n] in
 /--
 [matrixExp_diagonalizingBasis_apply_mem](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/MatrixExpDetTrace.lean)
 -/
 @[path]
-omit [Fintype n] [DecidableEq n] in
 private lemma matrixExp_diagonalizingBasis_apply_mem
   {V ι : Type*} [AddCommGroup V] [Module ℂ V] (b₀ : Module.Basis ι ℂ V)
   (f : Module.End ℂ V) (h : ⨆ z, f.eigenspace z = ⊤) (i : ι) :
@@ -120,11 +120,11 @@ end MathlibExt.LinearAlgebra.Matrix.MatrixExpDetTraceWanted
 namespace MathlibExt.LinearAlgebra.Matrix.MatrixExpDetTraceWanted
 
 variable [Fintype n] [DecidableEq n]
+omit [Fintype n] [DecidableEq n] in
 /--
 [matrixExp_toMatrix_diagonalizingBasis](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/MatrixExpDetTrace.lean)
 -/
 @[path]
-omit [Fintype n] [DecidableEq n] in
 private lemma matrixExp_toMatrix_diagonalizingBasis
   {V ι : Type*} [AddCommGroup V] [Module ℂ V] [Fintype ι] [DecidableEq ι]
   (b₀ : Module.Basis ι ℂ V) (f : Module.End ℂ V) (h : ⨆ z, f.eigenspace z = ⊤) :
@@ -146,11 +146,11 @@ end MathlibExt.LinearAlgebra.Matrix.MatrixExpDetTraceWanted
 namespace MathlibExt.LinearAlgebra.Matrix.MatrixExpDetTraceWanted
 
 variable [Fintype n] [DecidableEq n]
+open scoped Matrix.Norms.Operator in
 /--
 [matrixExp_changeBasis_exp](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/MatrixExpDetTrace.lean)
 -/
 @[path]
-open scoped Matrix.Norms.Operator in
 private lemma matrixExp_changeBasis_exp (b : Module.Basis n ℂ (n → ℂ))
   (A : Matrix n n ℂ) :
   matrixExp_changeBasisAlgEquiv b (NormedSpace.exp A) =
@@ -276,7 +276,8 @@ variable [Fintype n] [DecidableEq n]
 private lemma matrixExp_det_exp_of_isNilpotent (A : Matrix n n ℂ)
   (hA : IsNilpotent A) : Matrix.det (NormedSpace.exp A) = 1 := by
   have h : IsNilpotent (NormedSpace.exp A - 1) := by
-    rwa [matrixExp_normed_exp_eq_nilpotent_exp A hA]
+    rw [matrixExp_normed_exp_eq_nilpotent_exp A hA]
+    exact IsNilpotent.isNilpotent_exp_sub_one hA
   simpa using matrixExp_det_one_add_of_isNilpotent (NormedSpace.exp A - 1) h
 
 end MathlibExt.LinearAlgebra.Matrix.MatrixExpDetTraceWanted
@@ -353,4 +354,4 @@ end MathlibExt.LinearAlgebra.Matrix.MatrixExpDetTraceWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-16

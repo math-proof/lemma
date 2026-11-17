@@ -3,9 +3,11 @@ import Lemma.Matrix.Any_EqComapAsIdealAsIdeal
 import Def.NumberField_PlaceAbove
 set_option autoImplicit false
 open IsDedekindDomain NumberField Matrix
-
+open NumberField.PlaceAbove
 
 namespace Matrix.PlaceAbove
+
+export NumberField.PlaceAbove (above)
 
 variable (E K : Type*) [Field E] [NumberField E] [Field K] [Algebra E K]
 

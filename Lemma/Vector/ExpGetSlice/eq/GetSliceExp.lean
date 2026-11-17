@@ -1,6 +1,6 @@
 import Lemma.Vector.MapGetSlice.eq.GetSliceMap
 import Instance.Data.Vector.Functions.Part2
-open Vector
+open Vector Exp
 
 
 @[path]

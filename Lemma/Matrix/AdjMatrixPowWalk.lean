@@ -98,13 +98,13 @@ lemma adjMatrix_pow_weighted_walk_sum
       rw [hS, Finset.sum_singleton]
       simp
     · have hS : ((Fintype.piFinset (fun _ : Fin (0 + 1) => (Finset.univ : Finset (Fin k)))).filter
-      (fun p => p 0 = i ∧ p (Fin.last 0) = j)) = ∅ := by
-      ext p
-      simp only [Finset.mem_filter, Finset.notMem_empty, iff_false, not_and]
-      intro _ h0 hlast
-      rw [Fin.last_zero] at hlast
-      rw [h0] at hlast
-      exact h hlast
+          (fun p => p 0 = i ∧ p (Fin.last 0) = j)) = ∅ := by
+        ext p
+        simp only [Finset.mem_filter, Finset.notMem_empty, iff_false, not_and]
+        intro _ h0 hlast
+        rw [Fin.last_zero] at hlast
+        rw [h0] at hlast
+        exact h hlast
       rw [hS, Finset.sum_empty]
       simp [h]
   | succ n ih =>
@@ -115,7 +115,7 @@ lemma adjMatrix_pow_weighted_walk_sum
         A i x * ∏ t : Fin n, A (q t.castSucc) (q t.succ) := by
       apply Finset.sum_congr rfl
       intro x _
-      rw [ih x j, Finset.mul_sum]
+      rw [ih, Finset.mul_sum]
     rw [hLHS]
     have hBij : (∑ q ∈ (Fintype.piFinset (fun _ : Fin (n + 1) => (Finset.univ : Finset (Fin k)))).filter
       (fun q => q (Fin.last n) = j), A i (q 0) * ∏ t : Fin n, A (q t.castSucc) (q t.succ))
@@ -196,4 +196,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-16

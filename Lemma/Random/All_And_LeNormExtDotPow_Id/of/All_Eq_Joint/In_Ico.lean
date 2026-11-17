@@ -1,5 +1,5 @@
 import Lemma.Random.All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity
-open MeasureTheory Topology PolicyGradient PolicyGradient.DensityModel Random
+open MeasureTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -9,7 +9,7 @@ trajectory model converges and `‖G[t]‖ ≤ (1 - γ)⁻¹ * |R|`.
 @[path]
 private lemma main
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {γ : ℝ}
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
@@ -20,13 +20,13 @@ private lemma main
   (θ : Θ)
   (t : ℕ) :
 -- imply
-  ∀ᵐ ω ∂(M θ), HasSum (fun k => γ ^ k * r (t + k) ω) (((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω) ∧
-    ‖((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω‖ ≤ (1 - γ)⁻¹ * |M.env.R| := by
+  ∀ᵐ ω ∂(M.traj θ), HasSum (fun k => γ ^ k * r (t + k) ω) (((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω) ∧
+    ‖((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω‖ ≤ (1 - γ)⁻¹ * |M.R| := by
 -- proof
   obtain rfl : r = fun t ω ↦ (ω t).1 := funext₂ fun t ω ↦ (congrArg (·.1) (congrFun (h₁ t) ω)).symm
   set r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ := fun t ω ↦ (ω t).1
   filter_upwards [All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity h₁ (M := M) θ] with ω h
-  have hb : ∀ k, ‖γ ^ k * r (t + k) ω‖ ≤ γ ^ k * |M.env.R| := fun k => by
+  have hb : ∀ k, ‖γ ^ k * r (t + k) ω‖ ≤ γ ^ k * |M.R| := fun k => by
     rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
     apply mul_le_mul_of_nonneg_left (h (t + k)) (pow_nonneg h₀.1 k)
   apply And.intro
@@ -37,4 +37,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-11-14
+-- updated on 2026-11-16

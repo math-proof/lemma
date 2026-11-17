@@ -13,12 +13,12 @@ private lemma  extend {K : Type u} [Field K] {A : Type v} [CommRing A] [Algebra 
     (h : ↥C →ₐ[K] Ω) : ∃ ν : A →ₐ[K] Ω, ν.comp C.val = h := by
   classical
 
-  haveI : Algebra.IsIntegral K A := inferInstance
-  haveI : Algebra.IsIntegral ↥C A :=
+  have : Algebra.IsIntegral K A := inferInstance
+  have : Algebra.IsIntegral ↥C A :=
     ⟨fun x => (Algebra.IsIntegral.isIntegral (R := K) x).tower_top⟩
 
   let 𝔭 : Ideal ↥C := RingHom.ker h.toRingHom
-  haveI h𝔭 : 𝔭.IsPrime := RingHom.ker_isPrime h.toRingHom
+  have h𝔭 : 𝔭.IsPrime := RingHom.ker_isPrime h.toRingHom
   obtain ⟨Q, -, hQprime, hQ⟩ :=
     Ideal.exists_ideal_over_prime_of_isIntegral 𝔭 (⊥ : Ideal A) (by
       intro c hc
@@ -27,26 +27,26 @@ private lemma  extend {K : Type u} [Field K] {A : Type v} [CommRing A] [Algebra 
       have : (c : A) = 0 := hc
       have hc0 : c = 0 := Subtype.ext this
       rw [hc0, map_zero])
-  haveI := hQprime
+  have := hQprime
 
   let 𝔭' : Ideal ↥C := Q.comap (algebraMap ↥C A)
   have h𝔭' : 𝔭' = 𝔭 := hQ
-  haveI : 𝔭'.IsPrime := by rw [h𝔭']; exact h𝔭
-  haveI : IsDomain (↥C ⧸ 𝔭') := Ideal.Quotient.isDomain 𝔭'
-  haveI : IsDomain (A ⧸ Q) := Ideal.Quotient.isDomain Q
+  have : 𝔭'.IsPrime := by rw [h𝔭']; exact h𝔭
+  have : IsDomain (↥C ⧸ 𝔭') := Ideal.Quotient.isDomain 𝔭'
+  have : IsDomain (A ⧸ Q) := Ideal.Quotient.isDomain Q
 
   have hker : ∀ c ∈ 𝔭', h.toRingHom c = 0 := by
     intro c hc
     rw [h𝔭'] at hc
     exact hc
   let h' : ↥C ⧸ 𝔭' →+* Ω := Ideal.Quotient.lift 𝔭' h.toRingHom hker
-  letI algΩ : Algebra (↥C ⧸ 𝔭') Ω := h'.toAlgebra
+  let algΩ : Algebra (↥C ⧸ 𝔭') Ω := h'.toAlgebra
   have h'inj : Function.Injective h' :=
     RingHom.lift_injective_of_ker_le_ideal 𝔭' hker (fun c hc => by
       change h.toRingHom c = 0 at hc
       rw [h𝔭']
       exact hc)
-  haveI : Module.IsTorsionFree (↥C ⧸ 𝔭') Ω := by
+  have : Module.IsTorsionFree (↥C ⧸ 𝔭') Ω := by
     refine Module.IsTorsionFree.mk fun r hr => ?_
     intro a b hab
     have hr0 : algebraMap (↥C ⧸ 𝔭') Ω r ≠ 0 := fun h0 =>
@@ -55,9 +55,9 @@ private lemma  extend {K : Type u} [Field K] {A : Type v} [CommRing A] [Algebra 
       simpa only [Algebra.smul_def] using hab
     exact mul_left_cancel₀ hr0 hab'
 
-  haveI : FaithfulSMul (↥C ⧸ 𝔭') (A ⧸ Q) :=
+  have : FaithfulSMul (↥C ⧸ 𝔭') (A ⧸ Q) :=
     (faithfulSMul_iff_algebraMap_injective _ _).mpr Ideal.algebraMap_quotient_injective
-  haveI : Module.IsTorsionFree (↥C ⧸ 𝔭') (A ⧸ Q) := by
+  have : Module.IsTorsionFree (↥C ⧸ 𝔭') (A ⧸ Q) := by
     refine Module.IsTorsionFree.mk fun r hr => ?_
     intro a b hab
     have hr0 : algebraMap (↥C ⧸ 𝔭') (A ⧸ Q) r ≠ 0 := fun h0 =>
@@ -65,8 +65,8 @@ private lemma  extend {K : Type u} [Field K] {A : Type v} [CommRing A] [Algebra 
     have hab' : algebraMap (↥C ⧸ 𝔭') (A ⧸ Q) r * a = algebraMap (↥C ⧸ 𝔭') (A ⧸ Q) r * b := by
       simpa only [Algebra.smul_def] using hab
     exact mul_left_cancel₀ hr0 hab'
-  haveI : Algebra.IsIntegral (↥C ⧸ 𝔭') (A ⧸ Q) := inferInstance
-  haveI : Algebra.IsAlgebraic (↥C ⧸ 𝔭') (A ⧸ Q) := Algebra.IsIntegral.isAlgebraic
+  have : Algebra.IsIntegral (↥C ⧸ 𝔭') (A ⧸ Q) := inferInstance
+  have : Algebra.IsAlgebraic (↥C ⧸ 𝔭') (A ⧸ Q) := Algebra.IsIntegral.isAlgebraic
 
   let ψ : (A ⧸ Q) →ₐ[↥C ⧸ 𝔭'] Ω := IsAlgClosed.lift
   let ν₀ : A →+* Ω := ψ.toRingHom.comp (Ideal.Quotient.mk Q)
@@ -92,9 +92,7 @@ private lemma main
   {K : Type u} [Field K] [Algebra K Ω]
   {A : Type v} [CommRing A] [HopfAlgebra K A] [Module.Finite K A] [Coalgebra.IsCocomm K A]
   {Ā : Type w} [CommRing Ā] [HopfAlgebra K Ā]
-  {π : A →ₐc[K] Ā}
--- given
-  (hπ : Function.Surjective π) :
+  {π : A →ₐc[K] Ā} :
 -- imply
   ∀ h : ↥(HopfAlgebra.hopfKer π) →ₐ[K] Ω,
       ∃ ν : A →ₐ[K] Ω, ν.comp (HopfAlgebra.hopfKer π).val = h :=
@@ -103,3 +101,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-15

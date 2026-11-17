@@ -31,7 +31,7 @@ lemma val_cycloChar (σ : AlgebraicClosure ℚ ≃ₐ[ℚ] AlgebraicClosure ℚ)
 
 lemma coe_cycloChar (σ : AlgebraicClosure ℚ ≃ₐ[ℚ] AlgebraicClosure ℚ) :
     ((cycloChar p σ : ZMod p)) = (cycloExp p σ : ZMod p) := by
-  haveI : NeZero p := ⟨(Fact.out : p.Prime).ne_zero⟩
+  have : NeZero p := ⟨(Fact.out : p.Prime).ne_zero⟩
   rw [← val_cycloChar, ZMod.natCast_val, ZMod.cast_id]
 
 end ExtCitation

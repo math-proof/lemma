@@ -7,12 +7,16 @@ import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
 import Mathlib.Probability.Independence.Basic
 import Mathlib.Probability.Independence.Conditional
 import Mathlib.Probability.Kernel.CondDistrib
-import Def.Probability.SymbolicProbability.Part2
+import Def.Probability.SymbolicProbability
+import Class.Probability.SymbolicProbability
 import Theorem.Function
 import Instance.Probability.JointRv
 import Theorem.Probability.JointRv
 open MeasureTheory
 open scoped ProbabilityTheory
+
+
+export Expectation (expectation)
 
 
 /--

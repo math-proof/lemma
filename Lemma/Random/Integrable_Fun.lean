@@ -1,6 +1,6 @@
 import Def.Dynamics.PolicyTrajectory.ContinuousAction
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
-open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.DensityModel Random
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -11,7 +11,7 @@ private lemma main
   [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Fintype 𝒮]
   [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜] [Fintype 𝒜]
   [NormedAddCommGroup E]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
@@ -21,7 +21,7 @@ private lemma main
   (t : ℕ)
   (φ : 𝒮 → 𝒜 → E) :
 -- imply
-  Integrable (fun ω => φ (s t ω) (a t ω)) (M θ) := by
+  Integrable (fun ω => φ (s t ω) (a t ω)) (M.traj θ) := by
 -- proof
   have hX : Measurable (fun ω : ℕ → ℝ × 𝒮 × 𝒜 => (s t ω, a t ω)) :=
     (Random.Measurable.of.All_Eq.snd.fst h₀ t).prodMk
@@ -34,4 +34,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-11-14
+-- updated on 2026-11-16

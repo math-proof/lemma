@@ -1,5 +1,4 @@
 import Mathlib
-import Instance.ClassGroup_ModP
 
 set_option autoImplicit false
 
@@ -51,6 +50,9 @@ def ModP.mapHom (f : M →+ M) : ModP p M →+ ModP p M :=
 variable {M} in
 @[simp] lemma ModP.mapHom_proj (f : M →+ M) (x : M) :
     ModP.mapHom p f (ModP.proj p M x) = ModP.proj p M (f x) := rfl
+
+instance instModuleZModModP [NeZero p] : Module (ZMod p) (ModP p M) :=
+  QuotientAddGroup.zmodModule (nsmul_mem_nsmulRange p M)
 
 variable {M} in
 

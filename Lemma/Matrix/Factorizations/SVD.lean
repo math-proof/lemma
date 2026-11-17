@@ -6,12 +6,12 @@ open scoped ComplexOrder
 namespace Matrix
 
 variable [Fintype n] [DecidableEq n]
+omit [DecidableEq n] in
 /--
 [aux_star_mulVec_dotProduct](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/Factorizations/SVD.lean)
+same as pairing one vector against the `(Aᴴ * A)`-image of the other.
 -/
 @[path]
-omit [DecidableEq n] in
-same as pairing one vector against the `(Aᴴ * A)`-image of the other. -/
 private lemma aux_star_mulVec_dotProduct (A : Matrix n n ℂ) (a b : n → ℂ) :
   star (A *ᵥ a) ⬝ᵥ (A *ᵥ b) = star a ⬝ᵥ ((Aᴴ * A) *ᵥ b) := by
   rw [star_mulVec, dotProduct_mulVec, vecMul_vecMul, ← dotProduct_mulVec]
@@ -182,4 +182,4 @@ end Matrix
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-16

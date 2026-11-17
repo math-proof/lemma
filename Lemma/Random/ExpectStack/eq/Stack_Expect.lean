@@ -1,12 +1,10 @@
 import Mathlib.MeasureTheory.Measure.WithDensity
 import Theorem.Probability.CondExpectation
 import Instance.Probability.SymbolicMultivariateProbability
-import Def.Data.Tensor.Stack.Part2
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.DataGet.eq.GetUnflattenData
 import Lemma.Vector.Eq.is.All_EqGetS
-import Theorem.Probability.JointRv.AsRV
 open MeasureTheory Tensor Vector
 set_option maxHeartbeats 1000000
 
@@ -66,11 +64,18 @@ private lemma expect_get
   rfl
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Random.ExpectStack.eq.Stack_Expect |
+| comm | Random.Stack_Expect.eq.ExpectStack |
+-/
 @[path, comm]
 private lemma main
   [MeasurableSpace Ω]
   [MeasurableSpace α] [StandardBorelSpace α] [Nonempty α]
   [Countable α] [MeasurableSingletonClass α]
+  [MeasurableSpace γ]
   {π : Measure Ω} [IsFiniteMeasure π] {n : ℕ} {s : List ℕ}
   [Nonempty (Fin n → α)] [StandardBorelSpace (Fin n → α)]
   {x : Ω → Fin n → α} {y : Ω → γ}
@@ -106,4 +111,4 @@ private lemma main
 
 
 -- created on 2023-04-02
--- updated on 2026-11-13
+-- updated on 2026-11-15

@@ -1,5 +1,6 @@
 -- Carved from Lemma/Definitions/Def_ModularForm_KatzLevelOne.lean: instance decls only.
 import Mathlib
+import Structure.ModularForm_KatzLevelOne
 
 universe u
 

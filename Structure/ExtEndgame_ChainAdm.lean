@@ -1,5 +1,5 @@
 import Mathlib
-import Instance.GroupCohomology_SelmerAdm
+import Structure.GroupCohomology_SelmerAdm
 import Def.DualSelmer_ExtConditions
 import Def.ExtCitation_KummerBridge
 import Structure.ExtCitation_AdmissibleExtension

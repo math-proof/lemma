@@ -201,7 +201,7 @@ namespace MathlibExt.QuantumInformation.Finite.TsirelsonTight
 @[path]
 private lemma B₀_sa : star B₀ = B₀ := by
   ext i j
-  fin_cases i <;> fin_cases j <;> simp [Matrix.star_apply, B₀]
+  fin_cases i <;> fin_cases j <;> simp [Matrix.star_apply, B₀, s, Complex.conj_ofReal]
 
 end MathlibExt.QuantumInformation.Finite.TsirelsonTight
 
@@ -213,7 +213,7 @@ namespace MathlibExt.QuantumInformation.Finite.TsirelsonTight
 @[path]
 private lemma B₁_sa : star B₁ = B₁ := by
   ext i j
-  fin_cases i <;> fin_cases j <;> simp [Matrix.star_apply, B₁]
+  fin_cases i <;> fin_cases j <;> simp [Matrix.star_apply, B₁, s, Complex.conj_ofReal]
 
 end MathlibExt.QuantumInformation.Finite.TsirelsonTight
 
@@ -410,7 +410,8 @@ namespace MathlibExt.QuantumInformation.Finite.TsirelsonTight
 -/
 @[path]
 private lemma mu_smul_s : ((↑(2 * Real.sqrt 2) : ℂ)) • s = 2 := by
-  rwa [smul_eq_mul]
+  rw [smul_eq_mul]
+  exact mu_mul_s
 
 end MathlibExt.QuantumInformation.Finite.TsirelsonTight
 
@@ -455,4 +456,4 @@ end MathlibExt.QuantumInformation.Finite.TsirelsonTight
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-16

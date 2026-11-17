@@ -52,12 +52,12 @@ private lemma  C6E4.formalBaseChange_formalBaseChange
         * (𝔓.under (𝓞 K)).asIdeal.inertiaDeg' 𝔓.asIdeal := by
     intro 𝔓
     rw [hunder]
-    haveI : (𝔓.under (𝓞 K)).asIdeal.LiesOver (𝔓.under (𝓞 F)).asIdeal := by
+    have : (𝔓.under (𝓞 K)).asIdeal.LiesOver (𝔓.under (𝓞 F)).asIdeal := by
       rw [← hunder]; exact ⟨rfl⟩
-    haveI : 𝔓.asIdeal.LiesOver (𝔓.under (𝓞 K)).asIdeal := ⟨rfl⟩
-    haveI : 𝔓.asIdeal.LiesOver (𝔓.under (𝓞 F)).asIdeal := ⟨rfl⟩
-    haveI := (𝔓.under (𝓞 F)).isMaximal
-    exact Ideal.inertiaDeg_algebra_tower (𝔓.under (𝓞 F)).asIdeal (𝔓.under (𝓞 K)).asIdeal 𝔓.asIdeal
+    have : 𝔓.asIdeal.LiesOver (𝔓.under (𝓞 K)).asIdeal := ⟨rfl⟩
+    have : 𝔓.asIdeal.LiesOver (𝔓.under (𝓞 F)).asIdeal := ⟨rfl⟩
+    have := (𝔓.under (𝓞 F)).isMaximal
+    exact Ideal.inertiaDeg'_algebra_tower (𝔓.under (𝓞 F)).asIdeal (𝔓.under (𝓞 K)).asIdeal 𝔓.asIdeal
   unfold formalBaseChange
   congr 1
   ·
@@ -80,3 +80,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-15

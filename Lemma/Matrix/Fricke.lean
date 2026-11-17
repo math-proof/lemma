@@ -47,10 +47,31 @@ theorem frickeMat_mul (A B : SL(2, ℤ)) (hA : (N : ℤ) ∣ A 1 0) (hB : (N : �
   have h01 : (A 1 0 * B 0 0 + A 1 1 * B 1 0) / N = A 1 0 / N * B 0 0 + A 1 1 * (B 1 0 / N) := by
     rw [Int.add_ediv_of_dvd_right (Dvd.dvd.mul_left hB _), Int.mul_ediv_assoc _ hB,
       mul_comm (A 1 0) (B 0 0), Int.mul_ediv_assoc _ hA, mul_comm (B 0 0)]
-  apply Matrix.SpecialLinearGroup.ext
-  intro i j
-  fin_cases i <;> fin_cases j <;>
-    simp [frickeMat, Matrix.mul_apply, Fin.sum_univ_two, hmul, h01] <;> linarith [e1, e2]
+  apply Subtype.ext
+  ext i j
+  rw [show ((frickeMat N A hA * frickeMat N B hB : SL(2, ℤ)) : Matrix (Fin 2) (Fin 2) ℤ) =
+        (frickeMat N A hA : Matrix (Fin 2) (Fin 2) ℤ) *
+          (frickeMat N B hB : Matrix (Fin 2) (Fin 2) ℤ) from rfl]
+  cases i using Fin.cases with
+  | zero =>
+    cases j using Fin.cases with
+    | zero =>
+      simp [frickeMat, Matrix.mul_apply, Fin.sum_univ_two, hmul, e1]
+      try ring
+    | succ j' =>
+      have hj : Fin.succ j' = 1 := by ext; simp
+      simp [hj, frickeMat, Matrix.mul_apply, Fin.sum_univ_two, hmul, h01]
+      try ring
+  | succ i' =>
+    have hi : Fin.succ i' = 1 := by ext; simp
+    cases j using Fin.cases with
+    | zero =>
+      simp [hi, frickeMat, Matrix.mul_apply, Fin.sum_univ_two, hmul]
+      try ring
+    | succ j' =>
+      have hj : Fin.succ j' = 1 := by ext; simp
+      simp [hi, hj, frickeMat, Matrix.mul_apply, Fin.sum_univ_two, hmul, e2]
+      try ring
 
 theorem frickeMat_frickeMat [NeZero N] (A : SL(2, ℤ)) (h : (N : ℤ) ∣ A 1 0)
     (h' : (N : ℤ) ∣ (frickeMat N A h) 1 0) :

@@ -266,7 +266,7 @@ theorem capAt_insert (c : ℝ) (P : Finset (InfinitePlace F)) (w : InfinitePlace
       = capAt c P D ∩
           (fun g => localHeight (archComponent F w (glArch (𝓞 F) F g))) ⁻¹' Iio (4 * c) := by
   ext g
-  simp only [capAt, Finset.forall_mem_insert, mem_inter_iff, mem_setOf_eq, mem_preimage, mem_Iio]
+  simp only [capAt, Finset.forall_mem_insert, mem_inter_iff, mem_ofPred_eq, mem_preimage, mem_Iio]
   tauto
 
 theorem measurableSet_capAt [MeasurableSpace (AdelicGL2 (𝓞 F) F)] [BorelSpace (AdelicGL2 (𝓞 F) F)]

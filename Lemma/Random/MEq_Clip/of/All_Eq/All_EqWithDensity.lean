@@ -1,6 +1,6 @@
 import Lemma.Random.Map.eq.BindStageK.of.All_Eq_Joint.All_EqWithDensity
 import Lemma.Random.StageKSetOf1.eq.Zero.of.All_EqWithDensity
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Random
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -10,7 +10,7 @@ Almost surely the reward equals the clamped reward (continuous-action model):
 @[path]
 private lemma main
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
@@ -19,12 +19,12 @@ private lemma main
   (θ : Θ)
   (t : ℕ) :
 -- imply
-  r t =ᵐ[M θ] fun ω ↦ clip (ω t).1 (-M.env.R) M.env.R := by
+  r t =ᵐ[M.traj θ] fun ω ↦ clip (ω t).1 (-M.R) M.R := by
 -- proof
   obtain rfl : r = fun t ω ↦ (ω t).1 := funext₂ fun t ω ↦ (congrArg Prod.fst (congrFun (h₀ t) ω)).symm
-  have hs : MeasurableSet {z : ℝ × 𝒮 × 𝒜 | z.1 ∉ Set.Icc (-M.env.R) M.env.R} :=
+  have hs : MeasurableSet {z : ℝ × 𝒮 × 𝒜 | z.1 ∉ Set.Icc (-M.R) M.R} :=
     (measurableSet_Icc.compl).preimage measurable_fst
-  have h : (M θ).map (fun ω => ω t) {z | z.1 ∉ Set.Icc (-M.env.R) M.env.R} = 0 := by
+  have h : (M.traj θ).map (fun ω => ω t) {z | z.1 ∉ Set.Icc (-M.R) M.R} = 0 := by
     rw [Map.eq.BindStageK.of.All_Eq_Joint.All_EqWithDensity h₀, Measure.bind_apply hs (Kernel.aemeasurable _)]
     apply (lintegral_congr (fun y => StageKSetOf1.eq.Zero.of.All_EqWithDensity (M := M) θ y)).trans
       lintegral_zero
@@ -39,4 +39,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-12
+-- updated on 2026-11-16

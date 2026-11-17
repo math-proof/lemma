@@ -13,7 +13,7 @@ private lemma ae_map_of_ae_ref
 -- imply
   ∀ᵐ c ∂π.map z, p c := by
 -- proof
-  have : π.map z ≪ (ReferenceMeasure.measure : Measure γ) := by
+  have : π.map z ≪ ReferenceMeasure.measure := by
     rw [Map.eq.WithDensityProb (x := z) (π := π)]
     exact withDensity_absolutelyContinuous _ _
   exact this.ae_le hp
@@ -98,3 +98,4 @@ private lemma main
 
 
 -- created on 2026-11-12
+-- updated on 2026-11-16

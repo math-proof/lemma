@@ -19,8 +19,5 @@ lemma matrixOpNorm_neg_sub
     show (-toEuclideanLin (A - B)).toContinuousLinearMap =
       -(toEuclideanLin (A - B)).toContinuousLinearMap from map_neg _ _,
     ContinuousLinearMap.opNorm_neg]
-/-- **Weyl's bound on singular values.** For any matrices `A` and `B`,
-$\sigma_k(A) \le \sigma_k(B) + \|A - B\|_{op}$. -/
-
 
 -- created on 2026-10-23

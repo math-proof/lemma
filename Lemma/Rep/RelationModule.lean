@@ -1,5 +1,4 @@
 import Mathlib
-import Instance.GroupCohomology_RelationModule
 
 set_option autoImplicit false
 
@@ -48,7 +47,7 @@ section Int
 
 variable {G : Type} [Group G]
 
-def relationCarrier (B : Rep ℤ G) : Type := relationModule B
+abbrev relationCarrier (B : Rep ℤ G) : Type := relationModule B
 
 def relationRepInt (B : Rep ℤ G) : Representation ℤ G (relationCarrier B) where
   toFun g := (((relationModule B).ρ g).toAddMonoidHom).toIntLinearMap

@@ -26,11 +26,6 @@ variable (F : Type*) (A B : outParam Type*)
   [Semiring A] [Semiring B] [Algebra R A] [Algebra S B]
   [FunLike F A B] [TopologicalSpace A] [TopologicalSpace B] [ContinuousSemialgHomClass F φ A B]
 
-variable {F} {φ} {A} {B} in
-
-
-variable {φ A B} in
-
 
 end ContinuousSemialgHom
 
@@ -50,8 +45,6 @@ variable {N : ι → Type*}
 variable [Π i, SetLike (N i) (M i)] [∀ i, AddSubgroupClass (N i) (M i)]
 variable [∀ i, SMulMemClass (N i) (B i) (M i)]
 variable {C : Π i, N i}
-
-omit [Π i, AddSubgroupClass (N i) (M i)] in
 
 
 variable {M₂ : ι → Type*} [Π i, AddCommGroup (M₂ i)] [Π i, Module (R i) (M₂ i)]
@@ -82,15 +75,12 @@ section components
 
 variable [Π i, TopologicalSpace (M₂ i)]
 
-omit [(i : ι) → TopologicalSpace (R i)] in
 
 end components
 
 section free_topology
 
 variable (n : Type*)
-
-variable (B) in
 
 
 variable [∀ i, IsTopologicalRing (R i)]
@@ -143,10 +133,6 @@ open scoped TensorProduct
 namespace FiniteAdeleRing
 
 
-set_option backward.isDefEq.respectTransparency false in
-
-variable {A K B} in
-
 open scoped TensorProduct.RightActions RestrictedProduct
 
 variable [Algebra 𝔸ᶠ[A, K] 𝔸ᶠ[B, L]]
@@ -154,56 +140,13 @@ variable [Algebra 𝔸ᶠ[A, K] 𝔸ᶠ[B, L]]
 
 variable [ComapFiberwiseSMul A K L B]
 
-variable {A K L B} in
-
-variable {A K B} in
 
 noncomputable section bijection
-
-
-set_option synthInstance.maxHeartbeats 40000 in
-
-set_option maxHeartbeats 400000 in
-
-
-set_option backward.isDefEq.respectTransparency false in
-omit [IsFractionRing B L] in
-
-set_option synthInstance.maxHeartbeats 40000 in
-
-set_option maxHeartbeats 400000 in
-
-
-set_option synthInstance.maxHeartbeats 40000 in
-
-set_option maxHeartbeats 400000 in
-
-
-set_option synthInstance.maxHeartbeats 40000 in
-
-set_option maxHeartbeats 400000 in
-
-
-set_option synthInstance.maxHeartbeats 40000 in
-
-set_option maxHeartbeats 400000 in
-
-set_option backward.isDefEq.respectTransparency false in
 
 
 end bijection
 
 section moduleTopology
 
-
-set_option backward.isDefEq.respectTransparency false in
-set_option synthInstance.maxHeartbeats 80000 in
-
-set_option maxHeartbeats 400000 in
-
-
-set_option synthInstance.maxHeartbeats 160000 in
-
-set_option maxHeartbeats 800000 in
 
 end moduleTopology

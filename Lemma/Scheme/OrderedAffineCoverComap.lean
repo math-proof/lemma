@@ -1,8 +1,7 @@
 import Lemma.Scheme.OrderedAffineCoverCech
 import Mathlib.AlgebraicGeometry.Pullbacks
 import Mathlib.AlgebraicGeometry.Morphisms.Affine
-import Def.AlgebraicGeometry_OrderedAffineCoverComap
-import Abbrev.AlgebraicGeometry_OrderedAffineCoverComap
+import Abbrev.AlgebraicGeometry_TwoAffineOpenCover
 
 set_option autoImplicit false
 
@@ -32,6 +31,13 @@ section Comap
 
 variable {X Y : Scheme.{u}} (𝒰 : X.OrderedAffineCover) (f : Y ⟶ X) [IsAffineHom f]
 
+def comap : Y.OrderedAffineCover where
+  ι := 𝒰.ι
+  instFintype := 𝒰.instFintype
+  instLinearOrder := 𝒰.instLinearOrder
+  U i := f ⁻¹ᵁ 𝒰.U i
+  isAffineOpen i := (𝒰.isAffineOpen i).preimage f
+  iSup_eq_top := by rw [← Scheme.Hom.preimage_iSup, 𝒰.iSup_eq_top]; rfl
 
 theorem comap_ι : (𝒰.comap f).ι = 𝒰.ι := rfl
 
@@ -52,10 +58,33 @@ theorem le_comap_inter {i : ℕ} (s : 𝒰.Idx i) : f ⁻¹ᵁ 𝒰.inter s ≤ 
 
 end Comap
 
+end AlgebraicGeometry.Scheme.OrderedAffineCover
+
+namespace AlgebraicGeometry.Scheme.TwoAffineOpenCover
+
+open CategoryTheory CategoryTheory.Limits
+
+variable {R : Type u} [CommRing R] {X : Scheme.{u}}
+
+set_option backward.isDefEq.respectTransparency.types false in
+theorem isAffineHom_fst (c : X ⟶ Spec (.of R)) (A : Type u) [CommRing A] [Algebra R A] :
+    IsAffineHom (Limits.pullback.fst c (specMap R A)) :=
+  MorphismProperty.pullback_fst c (specMap R A) inferInstance
+
+end AlgebraicGeometry.Scheme.TwoAffineOpenCover
+
+namespace AlgebraicGeometry.Scheme.OrderedAffineCover
+
+open CategoryTheory CategoryTheory.Limits Opposite TopologicalSpace Scheme.TwoAffineOpenCover
+
 section BaseChange
 
 variable {R : Type u} [CommRing R] {X : Scheme.{u}} (𝒰 : X.OrderedAffineCover) (π : X ⟶ Spec (.of R))
   (A : Type u) [CommRing A] [Algebra R A]
+
+abbrev baseChange : (Limits.pullback π (specMap R A)).OrderedAffineCover :=
+  haveI := isAffineHom_fst π A
+  𝒰.comap (Limits.pullback.fst π (specMap R A))
 
 theorem baseChange_ι : (𝒰.baseChange π A).ι = 𝒰.ι := rfl
 
@@ -90,6 +119,15 @@ open CategoryTheory CategoryTheory.Limits
 
 variable {R : Type u} [CommRing R] {X : Scheme.{u}} (𝒱 : X.TwoAffineOpenCover) (π : X ⟶ Spec (.of R))
   (A : Type u) [CommRing A] [Algebra R A]
+
+def pullback : (Limits.pullback π (specMap R A)).TwoAffineOpenCover :=
+  haveI := isAffineHom_fst π A
+  { U0 := (Limits.pullback.fst π (specMap R A)) ⁻¹ᵁ 𝒱.U0
+    U1 := (Limits.pullback.fst π (specMap R A)) ⁻¹ᵁ 𝒱.U1
+    isAffineOpen_U0 := 𝒱.isAffineOpen_U0.preimage _
+    isAffineOpen_U1 := 𝒱.isAffineOpen_U1.preimage _
+    sup_eq_top := by rw [← Scheme.Hom.preimage_sup, 𝒱.sup_eq_top]; rfl
+    isAffineOpen_inf := by rw [← Scheme.Hom.preimage_inf]; exact 𝒱.isAffineOpen_inf.preimage _ }
 
 theorem toOrderedAffineCover_pullback :
     (𝒱.pullback π A).toOrderedAffineCover = 𝒱.toOrderedAffineCover.baseChange π A := by

@@ -1,5 +1,6 @@
-import Theorem.Dynamics.PolicyTrajectory
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
+import Mathlib
+import Initialize.Tactic.Attr.Basic
+open MeasureTheory ProbabilityTheory
 
 
 /--
@@ -27,3 +28,4 @@ private lemma main
 
 
 -- created on 2026-10-07
+-- updated on 2026-11-15

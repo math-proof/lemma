@@ -46,7 +46,5 @@ variable {cd : CornerData (𝒪 := 𝒪) 𝕋 V} {cd' : CornerData (𝒪 := 𝒪
 
 end DegeneracyDescent
 
-open CohCarrier in
-
 
 end IharaTower

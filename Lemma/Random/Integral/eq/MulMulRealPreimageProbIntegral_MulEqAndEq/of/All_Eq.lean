@@ -1,5 +1,5 @@
 import Lemma.Random.ProbJoint.eq.Mul_Prob_Pr
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Random
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -10,7 +10,7 @@ private lemma main
   [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [DecidableEq 𝒮]
   [μ : ReferenceMeasure 𝒜]
   [MeasurableSingletonClass 𝒜] [DecidableEq 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
@@ -18,28 +18,28 @@ private lemma main
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
   (θ : Θ)
   (t : ℕ)
-  (x : 𝒮)
-  (u : 𝒜)
+  (sₜ : 𝒮)
+  (aₜ : 𝒜)
   (f : (ℕ → ℝ × 𝒮 × 𝒜) → ℝ) :
 -- imply
-  ∫ ω, f ω ∂(M θ)[|s t ⁻¹' {x} ∩ a t ⁻¹' {u}] =
-    ((M θ).real (s t ⁻¹' {x}) * (M.policy.prob θ x u * μ.measure.real {u}))⁻¹ *
-      ∫ ω, (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * f ω ∂(M θ) := by
+  ∫ ω, f ω ∂(M.traj θ)[|s t ⁻¹' {sₜ} ∩ a t ⁻¹' {aₜ}] =
+    ((M.traj θ).real (s t ⁻¹' {sₜ}) * (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}))⁻¹ *
+      ∫ ω, (if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) * f ω ∂(M.traj θ) := by
 -- proof
-  have hS : MeasurableSet (s t ⁻¹' {x}) :=
-    Random.Measurable.of.All_Eq.snd.fst h₀ t (measurableSet_singleton x)
-  have hA : MeasurableSet (a t ⁻¹' {u}) :=
-    Random.Measurable.of.All_Eq.snd.snd h₀ t (measurableSet_singleton u)
-  have hB : MeasurableSet (s t ⁻¹' {x} ∩ a t ⁻¹' {u}) := hS.inter hA
-  have hP : (M θ).real (s t ⁻¹' {x} ∩ a t ⁻¹' {u}) =
-      (M θ).real (s t ⁻¹' {x}) * (M.policy.prob θ x u * μ.measure.real {u}) :=
-    ProbJoint.eq.Mul_Prob_Pr (M := M) h₀ x u
+  have hS : MeasurableSet (s t ⁻¹' {sₜ}) :=
+    Random.Measurable.of.All_Eq.snd.fst h₀ t (measurableSet_singleton sₜ)
+  have hA : MeasurableSet (a t ⁻¹' {aₜ}) :=
+    Random.Measurable.of.All_Eq.snd.snd h₀ t (measurableSet_singleton aₜ)
+  have hB : MeasurableSet (s t ⁻¹' {sₜ} ∩ a t ⁻¹' {aₜ}) := hS.inter hA
+  have hP : (M.traj θ).real (s t ⁻¹' {sₜ} ∩ a t ⁻¹' {aₜ}) =
+      (M.traj θ).real (s t ⁻¹' {sₜ}) * (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}) :=
+    ProbJoint.eq.Mul_Prob_Pr (M := M) h₀ sₜ aₜ
   have hind :
-    (s t ⁻¹' {x} ∩ a t ⁻¹' {u}).indicator f =
-      fun ω => (if s t ω = x ∧ a t ω = u then (1:ℝ) else 0) * f ω := by
+    (s t ⁻¹' {sₜ} ∩ a t ⁻¹' {aₜ}).indicator f =
+      fun ω => (if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) * f ω := by
     funext ω
-    if hsx : s t ω = x then
-      if hau : a t ω = u then
+    if hsx : s t ω = sₜ then
+      if hau : a t ω = aₜ then
         simp [hsx, hau, Set.indicator, Set.mem_inter_iff, Set.mem_preimage,
           Set.mem_singleton_iff]
       else
@@ -53,4 +53,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-14
+-- updated on 2026-11-16

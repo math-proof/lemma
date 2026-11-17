@@ -4,6 +4,7 @@ import Syntax.Probability.Expectation.Elab
 import Notation.Probability.ApplyRV
 import Instance.Probability.Add
 import Theorem.Probability.JointRv.AsRV
+import Theorem.Probability.SymbolicProbability
 open MeasureTheory
 open scoped ProbabilityTheory ApplyRV
 
@@ -34,4 +35,4 @@ private lemma main
 
 
 -- created on 2023-04-12
--- updated on 2026-11-12
+-- updated on 2026-11-16

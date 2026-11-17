@@ -1,7 +1,6 @@
 import Mathlib.Probability.ConditionalProbability
 import Mathlib.MeasureTheory.Integral.Bochner.Set
 import Theorem.Probability.CondExpectation
-import Theorem.Probability.JointRv.AsRV
 open MeasureTheory ProbabilityTheory
 
 
@@ -28,20 +27,20 @@ private lemma main
     integral_map hYae measurable_id.aestronglyMeasurable
   rw [hmapY]
   have hae :
-      (fun ω ↦ Expectation.condEval π Y X id (X ω)) =ᵐ[π]
-        Expectation.condSigma π Y X id :=
+      (fun ω ↦ Expectation.condEval π Y X (fun y ↦ y) (X ω)) =ᵐ[π]
+        Expectation.condSigma π Y X (fun y ↦ y) :=
     Expectation.condEval_comp_ae_eq_condSigma hYae hX stronglyMeasurable_id hY
-  have hsm : AEStronglyMeasurable (fun x => Expectation.condEval π Y X id x) (π.map X) :=
+  have hsm : AEStronglyMeasurable (fun x => Expectation.condEval π Y X (fun y ↦ y) x) (π.map X) :=
     (StronglyMeasurable.of_discrete
-      (f := fun x => Expectation.condEval π Y X id x)).aestronglyMeasurable
+      (f := fun x => Expectation.condEval π Y X (fun y ↦ y) x)).aestronglyMeasurable
   have hmapX :
-      ∫ x, Expectation.condEval π Y X id x ∂(π.map X) =
-        ∫ ω, Expectation.condEval π Y X id (X ω) ∂π :=
-    (integral_map (μ := π) (f := X) hX.aemeasurable hsm).symm
+      ∫ x, Expectation.condEval π Y X (fun y ↦ y) x ∂(π.map X) =
+        ∫ ω, Expectation.condEval π Y X (fun y ↦ y) (X ω) ∂π :=
+    (integral_map (μ := π) (φ := X) hX.aemeasurable hsm)
   rw [hmapX, integral_congr_ae hae]
   simp only [Expectation.condSigma]
-  exact integral_condExp (μ := π) hY
+  exact integral_condExp (μ := π) hX.comap_le
 
 
 -- created on 2023-03-31
--- updated on 2026-11-13
+-- updated on 2026-11-15

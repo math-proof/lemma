@@ -1,81 +1,142 @@
-import Mathlib.Probability.Kernel.IonescuTulcea.Traj
-import Mathlib.Probability.Kernel.Composition.CompProd
-import Mathlib.Probability.Kernel.Composition.Prod
-import Mathlib.Probability.ConditionalProbability
-import Mathlib.Probability.Independence.Basic
-import Mathlib.Analysis.Calculus.FDeriv.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Def.Probability.Moments.Variance
+import Structure.Dynamics.MarkovDecisionProcess
+import Class.Probability.Rv
+import Mathlib.Analysis.Calculus.Gradient.Basic
+import Mathlib.Probability.Kernel.WithDensity
+import Def.Order.Miscellaneous
+import Lemma.Random.SinglePSpace.of.Eq_WithDensity.Measurable.AEMeasurable
+import Lemma.Random.SinglePSpace.of.AEMeasurable.Distributed
+import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
 import Instance.Analysis.Real.Numbers
-import Theorem.Algebra.Power.Part2
-import Theorem.Data.Vector.Basic.Part2
-import Def.Data.List.List.Basic
-import Theorem.Function
-import Lemma.Random.SinglePSpace.of.Measurable
-import Lemma.Random.SinglePSpace.of.Measurable.Measurable
-import Instance.Dynamics.PolicyTrajectory.Part7
+import Def.Dynamics.PolicyTrajectory.ContinuousAction
+import Theorem.Dynamics.PolicyTrajectory.ContinuousAction
+import Syntax.Probability.Probability
 open MeasureTheory ProbabilityTheory Finset
-
-/-!
-# Shared trajectory model for the policy-gradient lemmas (standard MDP)
-
-Lean model behind the sympy symbols used in `Tensor.*.policy_gradient_theorem`,
-`Tensor.*.unbiased_advantage_estimate` and their dependencies:
-
-* `s : ℕ → Ω → S` (states), `a : ℕ → Ω → A` (actions), `r : ℕ → Ω → ℝ` (rewards),
-  with `S` and `A` finite;
-* `π` (the trainable weights) is a point `θ` of a real normed space `Θ`;
-* `Pr[a:π](a[t] | s[t])` is the policy `M.policy.prob θ (s t) (a t)`;
-* `Expectation[r, a:π](f)` is the Bochner integral `∫ ω, f ω ∂(M θ)`;
-* `Expectation[...](f | s[t] = x)` is the integral against Mathlib's conditional measure
-  `(M θ)[| s t ⁻¹' {x}]`;
-* / `(γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]` is `∑' k, γ ^ k * r (t + k)`;
-* `Derivative[π]` is `fderiv ℝ · θ`.
-
-The environment is a standard (time-homogeneous) MDP: `s 0 ∼ init`, `a t ∼ π_θ(· | s t)`,
-`r t ∼ M.env.reward (s t, a t)`, `s (t + 1) ∼ trans (s t, a t)`, rewards bounded by `R`.
-The stage process `ω t = (r t ω, s t ω, a t ω)` (reward first, then the state-action pair, the order of the
-joint random variable `(r t, s t, a t)`) is a time-homogeneous Markov chain on `ℝ × S × A` with kernel
-`M.K θ`; its law `M.traj θ` is Mathlib's Ionescu-Tulcea measure `Kernel.trajMeasure` on `ℕ → ℝ × S × A`.
-Canonical path projections `M.stateAt t`, `M.actionAt t`, `M.rewardAt t` extract the coordinates of
-`ω t = (r t ω, s t ω, a t ω)` (internal helpers; under `[CountableMeasure S]` / `[CountableMeasure A]`
-they also carry `SinglePSpace`). For **public** Random lemmas prefer the HMM-style class
-`IsPolicyTrajectory M r s a` (`stage_eq` = today's `h₁`) so hyps can use `s[0]` /
-`(ℙ[M θ](s[0] = x) : ℝ) ≠ 0` with no `hPs0` and no public `M.stateAt 0`. Lemmas may still bind
-`{r s a}` with `h₁ : ∀ t, (· t) = (r t, s t, a t)` (the joint random variable of
-`Function.coeProdPi3R`), or take `[IsPolicyTrajectory M r s a]` instead. State / action values are introduced locally in lemmas as
-`V`: `𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = x)` and
-`Q`: `𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = x ∧ a t = u)`.
-Clamped rewards are local `rc z := clip z.1 (-M.env.R) M.env.R` (a.s. equal to the raw reward).
-The j-step stage map is local
-`W θ f j y := 𝔼[z : M.stageK θ y](M.Kf θ f j z)` (identity RV + `PSpace` on `M.stageK θ y`).
-The reward `r t` belongs to stage `t`: `r t ∼ M.env.reward (s t, a t)`.  The sympy reward hypothesis `Equal(r[t] | s[:t] & a[:t], r[t])` is not
-built in; lemmas that carry it in sympy keep it as an explicit named hypothesis.
--/
+open scoped ENNReal ENNReal.ToRealCoe
 
 
 namespace PolicyGradient
 
-variable {Θ S A : Type*}
-  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
-  [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
+variable {Θ 𝒮 𝒜 : Type*} [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
 
-variable {Θ S A : Type*}
-  [MeasurableSpace S] [MeasurableSingletonClass S] [Fintype S]
-  [MeasurableSpace A] [MeasurableSingletonClass A] [Fintype A]
-
-/-- Stage coordinates `(r[t], s[t], a[t])` match the trajectory point `ω t` for every `t`
-(the binder that used to be written `h₁ : ∀ t, (· t) = (r t, s t, a t)`).
-
-Under `[CountableMeasure S]` / `[CountableMeasure A]`, instances below give
-`SinglePSpace (M θ) (s t)` / `(a t)` (and the joint `(s t, a t)`), so
-`(ℙ[M θ](s[0] = x) : ℝ)` elaborates from `[IsPolicyTrajectory M r s a]` alone. -/
-class IsPolicyTrajectory (M : Model Θ S A)
-    (r : ℕ ⇀ (ℕ → ℝ × S × A) → ℝ)
-    (s : ℕ ⇀ (ℕ → ℝ × S × A) → S)
-    (a : ℕ ⇀ (ℕ → ℝ × S × A) → A) : Prop where
+/-- Stage coordinates `(r[t], s[t], a[t])` match the trajectory point `ω t` for every `t`. -/
+class Model.IsPolicyTrajectory (M : Model Θ 𝒮 𝒜)
+    (r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ)
+    (s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮)
+    (a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜) : Prop where
   /-- Same as lemma `h₁`: the stage map is the joint `(r t, s t, a t)`. -/
   stage_eq : ∀ t, (· t) = (r t, s t, a t)
 
+namespace Model.IsPolicyTrajectory
+
+variable {M : Model Θ 𝒮 𝒜}
+  {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+
+/-- `s t` is measurable: rewrite via `stage_eq` to `(ω t).2.1`. -/
+theorem measurable_s [h : Model.IsPolicyTrajectory M r s a] (t : ℕ) :
+    Measurable (s t) := by
+  have : s t = fun ω : ℕ → ℝ × 𝒮 × 𝒜 ↦ (ω t).2.1 :=
+    funext fun ω ↦ (congrArg (fun z : ℝ × 𝒮 × 𝒜 ↦ z.2.1) (congrFun (h.stage_eq t) ω)).symm
+  rw [this]
+  exact measurable_fst.comp <| measurable_snd.comp <|
+    (measurable_pi_apply (X := fun _ : ℕ ↦ ℝ × 𝒮 × 𝒜) t)
+
+/-- `a t` is measurable: rewrite via `stage_eq` to `(ω t).2.2`. -/
+theorem measurable_a [h : Model.IsPolicyTrajectory M r s a] (t : ℕ) :
+    Measurable (a t) := by
+  have : a t = fun ω : ℕ → ℝ × 𝒮 × 𝒜 ↦ (ω t).2.2 :=
+    funext fun ω ↦ (congrArg (fun z : ℝ × 𝒮 × 𝒜 ↦ z.2.2) (congrFun (h.stage_eq t) ω)).symm
+  rw [this]
+  exact measurable_snd.comp <| measurable_snd.comp <|
+    (measurable_pi_apply (X := fun _ : ℕ ↦ ℝ × 𝒮 × 𝒜) t)
+
+/-- `r t` is measurable: rewrite via `stage_eq` to `(ω t).1`. -/
+theorem measurable_r [h : Model.IsPolicyTrajectory M r s a] (t : ℕ) :
+    Measurable (r t) := by
+  have : r t = fun ω : ℕ → ℝ × 𝒮 × 𝒜 ↦ (ω t).1 :=
+    funext fun ω ↦ (congrArg Prod.fst (congrFun (h.stage_eq t) ω)).symm
+  rw [this]
+  exact measurable_fst.comp (measurable_pi_apply (X := fun _ : ℕ ↦ ℝ × 𝒮 × 𝒜) t)
+
+end Model.IsPolicyTrajectory
+
+section ModelIsPolicyTrajectorySinglePSpace
+
+variable {Θ 𝒮 𝒜 : Type*} [ReferenceMeasure 𝒮] [ReferenceMeasure 𝒜]
+
+/-- Absolute continuity of every state marginal `law(s[t])` w.r.t. `ReferenceMeasure` on `𝒮`. -/
+class Model.AbsContStateMarginal (M : Model Θ 𝒮 𝒜) [Model.HasMeasurableEnv M] [StochasticPolicy M.toPolicy]
+    (s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮) : Prop where
+  map_s_ac : ∀ θ t, (M.traj θ).map (s t) ≪ ReferenceMeasure.measure
+
+/-- Absolute continuity of every joint law `law(a[t], s[t])` w.r.t. the product reference
+measure on `𝒜 × 𝒮`. Together with `AbsContStateMarginal`, enables `SinglePSpace` for
+`(a t, s t)` so `ℙ[M.traj θ](a[t] | s[t])` elaborates. -/
+class Model.AbsContJointAS (M : Model Θ 𝒮 𝒜) [Model.HasMeasurableEnv M] [StochasticPolicy M.toPolicy]
+    (a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜)
+    (s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮) : Prop where
+  map_as_ac : ∀ θ t,
+    (M.traj θ).map (fun ω => (a t ω, s t ω)) ≪
+      (ReferenceMeasure.measure.prod ReferenceMeasure.measure)
+
+variable {M : Model Θ 𝒮 𝒜} [Model.HasMeasurableEnv M] [StochasticPolicy M.toPolicy]
+  {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+
+set_option synthInstance.checkSynthOrder false
+
+/-- Under `[IsPolicyTrajectory]` and `[AbsContStateMarginal]`, `s t` is a `SinglePSpace` RV. -/
+instance Model.IsPolicyTrajectory.singlePSpace_s
+    [h : Model.IsPolicyTrajectory M r s a]
+    [hac : Model.AbsContStateMarginal M s] (θ : Θ) (t : ℕ) :
+    SinglePSpace (M.traj θ) (s t) := by
+  have hx : AEMeasurable (s t) (M.traj θ) := (h.measurable_s t).aemeasurable
+  let ρ : 𝒮 → ENNReal := ((M.traj θ).map (s t)).rnDeriv ReferenceMeasure.measure
+  refine {
+    toIsProbabilityMeasure := inferInstance
+    aemeasurable := hx
+    exists_distribution := ⟨ρ, Measure.measurable_rnDeriv _ _, ?_⟩
+  }
+  exact (Measure.withDensity_rnDeriv_eq _ _ (hac.map_s_ac θ t)).symm
+
+/-- Under `[IsPolicyTrajectory]` and `[AbsContJointAS]`, `(a t, s t)` is a `SinglePSpace` RV. -/
+instance Model.IsPolicyTrajectory.singlePSpace_as
+    [h : Model.IsPolicyTrajectory M r s a]
+    [haj : Model.AbsContJointAS M a s] (θ : Θ) (t : ℕ) :
+    SinglePSpace (M.traj θ) (a t, s t) := by
+  have hxy : AEMeasurable (a t, s t) (M.traj θ) :=
+    (h.measurable_a t).aemeasurable.prodMk (h.measurable_s t).aemeasurable
+  have hacc : (M.traj θ).map (a t, s t) ≪
+      (ReferenceMeasure.measure.prod ReferenceMeasure.measure) := by
+    change (M.traj θ).map (fun ω => (a t ω, s t ω)) ≪ _
+    exact haj.map_as_ac θ t
+  exact Random.SinglePSpace.of.Eq_WithDensity.Measurable.AEMeasurable hxy
+    (Measure.measurable_rnDeriv _ _)
+    (Measure.withDensity_rnDeriv_eq _ _ hacc).symm
+
+/-- Policy density equals the conditional of the trajectory law.
+`htr` and `haj` are the stage-coordinate and joint absolute-continuity assumptions
+`ℙ[M.traj θ](a[t] | s[t])` needs, packed here so a lemma can take this class alone. -/
+class Model.IsConditionalProbability
+    (M : Model Θ 𝒮 𝒜) [Model.HasMeasurableEnv M] [StochasticPolicy M.toPolicy]
+    (r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ)
+    (s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮)
+    (a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜) : Prop where
+  htr : Model.IsPolicyTrajectory M r s a
+  haj : Model.AbsContJointAS M a s
+  /-- One stage of the policy density matches the trajectory conditional. -/
+  factor : ∀ θ t (sₜ : 𝒮) (aₜ : 𝒜),
+    M.π[θ] sₜ aₜ = ℙ[M.traj θ](a[t] = aₜ | s[t] = sₜ)
+
+instance [h : Model.IsConditionalProbability M r s a] :
+    Model.IsPolicyTrajectory M r s a :=
+  h.htr
+
+instance [h : Model.IsConditionalProbability M r s a] :
+    Model.AbsContJointAS M a s :=
+  h.haj
+
+end ModelIsPolicyTrajectorySinglePSpace
 end PolicyGradient

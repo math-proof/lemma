@@ -1,6 +1,6 @@
 import Lemma.Random.All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
-open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.DensityModel Random
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -13,7 +13,7 @@ private lemma main
   [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮]
   [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
   [NormedAddCommGroup E] [NormedSpace ℝ E]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {γ : ℝ}
   {C : ℝ}
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
@@ -28,7 +28,7 @@ private lemma main
   (θ : Θ)
   (t : ℕ) :
 -- imply
-  Integrable (fun ω => ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω • ψ (s t ω) (a t ω)) (M θ) := by
+  Integrable (fun ω => ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω • ψ (s t ω) (a t ω)) (M.traj θ) := by
 -- proof
   set G := (γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]
   obtain rfl : r = fun t ω ↦ (ω t).1 :=
@@ -53,9 +53,9 @@ private lemma main
   have hG : Measurable G := hfG.comp hpR
   have hψω : StronglyMeasurable fun ω => ψ (s t ω) (a t ω) :=
     hψ.comp_measurable hX
-  have hbound : ∀ᵐ ω ∂(M θ), ‖G ω‖ ≤ (1 - γ)⁻¹ * |M.env.R| := by
+  have hbound : ∀ᵐ ω ∂(M.traj θ), ‖G ω‖ ≤ (1 - γ)⁻¹ * |M.R| := by
     filter_upwards [All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity h₁ (M := M) θ] with ω h
-    have hb : ∀ k, ‖γ ^ k * r (t + k) ω‖ ≤ γ ^ k * |M.env.R| := fun k => by
+    have hb : ∀ k, ‖γ ^ k * r (t + k) ω‖ ≤ γ ^ k * |M.R| := fun k => by
       rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
       exact mul_le_mul_of_nonneg_left (h (t + k)) (pow_nonneg h₀.1 k)
     have hGω : G ω = ∑' k, γ ^ k * r (t + k) ω := by
@@ -63,7 +63,7 @@ private lemma main
       rfl
     rw [hGω]
     exact tsum_of_norm_bounded ((hasSum_geometric_of_lt_one h₀.1 h₀.2).mul_right _) hb
-  refine Integrable.of_bound (C := (1 - γ)⁻¹ * |M.env.R| * C)
+  refine Integrable.of_bound (C := (1 - γ)⁻¹ * |M.R| * C)
     (hG.aestronglyMeasurable.smul hψω.aestronglyMeasurable) ?_
   filter_upwards [hbound] with ω hGω
   rw [norm_smul]
@@ -71,3 +71,4 @@ private lemma main
 
 
 -- created on 2026-11-14
+-- updated on 2026-11-16

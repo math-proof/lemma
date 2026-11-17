@@ -56,9 +56,10 @@ lemma integrable_pow_of_exp_integrable
   have hfact_pos : (0 : ℝ) < ↑k.factorial := Nat.cast_pos.mpr (Nat.factorial_pos k)
   rw [norm_pow, Real.norm_eq_abs]
   simp only [Real.norm_of_nonneg (by positivity : (0:ℝ) ≤ ↑k.factorial * rexp |X ω|)]
-  calc |X ω| ^ k = ↑k.factorial * (|X ω| ^ k / ↑k.factorial) := by
-    rw [mul_div_cancel₀ _ hfact_pos.ne']
-    _ ≤ ↑k.factorial * rexp (|X ω|) := by gcongr
+  have heq : |X ω| ^ k = ↑k.factorial * (|X ω| ^ k / ↑k.factorial) := by
+    field_simp [hfact_pos.ne']
+  rw [heq]
+  gcongr
 
 /--
 [mgf_taylor_interchange](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter1/Lemma_1_5.lean)
@@ -182,7 +183,7 @@ lemma factorial_two_mul_add_one_eq
 [gamma_factorial_ratio_le](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter1/Lemma_1_5.lean)
 -/
 @[path]
-lemma gamma_factorial_ratio_le
+lemma gamma_factorial_ratio_le :
 -- imply
   ∀ n : ℕ, 2 ≤ n → ↑n * Real.Gamma (↑n / 2) * ↑((n / 2).factorial) ≤ ↑(n.factorial) := by
 -- proof

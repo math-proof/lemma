@@ -25,7 +25,7 @@ variable {G A : Type*} [Mul G] [AddCommGroup A] [SMul G A]
 /-- A `ContCrossedHom G A` can be coerced to a function $G \to A$. -/
 instance : FunLike (ContCrossedHom G A) G A where
   coe f := f.toFun
-  coe_injective' f g h := by
+  coe_injective f g h := by
     cases f; cases g; simp only [mk.injEq]
     exact CrossedHom.ext (fun x => congrFun h x)
 

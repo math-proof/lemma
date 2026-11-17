@@ -161,8 +161,6 @@ namespace DivisorialWeilPairingData
 variable {n : ℕ} [NeZero n] [HasPrincipalDivisors K F]
 variable (e : DivisorialWeilPairingData K F n)
 
-omit [NeZero n] [HasPrincipalDivisors K F] in
-
 
 end DivisorialWeilPairingData
 
@@ -178,8 +176,6 @@ variable (e : DivisorialWeilPairingData K F n)
 
 
 end DivisorialWeilPairingData
-
-variable (K F) in
 
 
 end Bridge

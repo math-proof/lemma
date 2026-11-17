@@ -7,17 +7,17 @@ import Theorem.Function
 import Lemma.Random.Measurable_Vkd.of.All_Measurable_Prob
 import Lemma.Random.NormVkd.le.MulInvSub1Abs_R.of.In_Ico
 import Lemma.Random.MEq_V0.of.In_Ico.All_Eq.All_EqWithDensity
-open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.DensityModel Random Real Finset Filter Kernel
+open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Real Finset Filter Kernel
 set_option maxHeartbeats 800000
 
 
 private lemma int_hist_mul
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  (M : DensityModel Θ 𝒮 𝒜) (θ : Θ) (n k : ℕ)
+  (M : Model Θ 𝒮 𝒜) [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M] (θ : Θ) (n k : ℕ)
   {G : (Π _ : Finset.Iic n, ℝ × 𝒮 × 𝒜) → ℝ}
   (hG : StronglyMeasurable G) {CG : ℝ} (hCG : ∀ h, ‖G h‖ ≤ CG)
   {g : ℝ × 𝒮 × 𝒜 → ℝ} (hg : StronglyMeasurable g) {C : ℝ} (hC : ∀ z, ‖g z‖ ≤ C) :
-  Integrable (fun ω => G (Preorder.frestrictLe n ω) * g (ω k)) (M θ) := by
+  Integrable (fun ω => G (Preorder.frestrictLe n ω) * g (ω k)) (M.traj θ) := by
   refine Integrable.of_bound (C := CG * C) ?_ (Filter.Eventually.of_forall fun ω => ?_)
   · exact ((hG.comp_measurable (Preorder.measurable_frestrictLe n)).mul
       (hg.comp_measurable (measurable_pi_apply k))).aestronglyMeasurable
@@ -36,7 +36,7 @@ private lemma main
   [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮]
   [Nonempty 𝒮] [StandardBorelSpace 𝒮]
   [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {γ : ℝ}
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
@@ -45,7 +45,7 @@ private lemma main
   (t n : ℕ)
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 ↦ M.policy.prob θ z.1 z.2))
+  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 ↦ M.π[θ] z.1 z.2))
   (h₂ : t ≤ n)
   (θ : Θ)
   (hVm : ∀ k, Measurable (M.V θ γ k))
@@ -54,7 +54,7 @@ private lemma main
   (hMs : ∃ Ms : ℝ, ∀ y u, ‖ψ y u‖ ≤ Ms) :
 -- imply
   ∫ ω, (r (n + 1) ω + γ * M.V θ γ (n + 1 + 1) (s (n + 1 + 1) ω) - M.V θ γ (n + 1) (s (n + 1) ω)) *
-    ψ (s t ω) (a t ω) ∂(M θ) = 0 := by
+    ψ (s t ω) (a t ω) ∂(M.traj θ) = 0 := by
 -- proof
   classical
   obtain ⟨Ms, hMs⟩ := hMs
@@ -74,7 +74,7 @@ private lemma main
       ((measurable_snd.fst.comp (measurable_pi_apply _)).prodMk
         (measurable_snd.snd.comp (measurable_pi_apply _)))
   have hCG : ∀ h, ‖Gh h‖ ≤ Ms := fun h => hMs _ _
-  set BV : ℝ := (1 - γ)⁻¹ * |M.env.R|
+  set BV : ℝ := (1 - γ)⁻¹ * |M.R|
   have hBV0 : 0 ≤ BV :=
     mul_nonneg (inv_nonneg.2 (le_of_lt (sub_pos.2 h₀.2))) (abs_nonneg _)
   -- Bounded modifications of `M.V θ γ (n+1)` and `M.V θ γ (n+2)`, so the Kf bounds stay pointwise.
@@ -92,10 +92,10 @@ private lemma main
   have hCV2 : ∀ w, ‖fV2 w‖ ≤ BV := fun w => by
     have := NormClip.le.Abs_R (R := BV) (ρ := M.V θ γ (n + 2) w.2.1)
     simpa [fV2, Real.norm_eq_abs, abs_of_nonneg hBV0] using this
-  have hclip : StronglyMeasurable fun (w : ℝ × 𝒮 × 𝒜) => clip w.1 (-M.env.R) M.env.R :=
+  have hclip : StronglyMeasurable fun (w : ℝ × 𝒮 × 𝒜) => clip w.1 (-M.R) M.R :=
     ((measurable_fst.max measurable_const).min measurable_const).stronglyMeasurable
-  have hCclip : ∀ (w : ℝ × 𝒮 × 𝒜), ‖clip w.1 (-M.env.R) M.env.R‖ ≤ |M.env.R| :=
-    fun w => NormClip.le.Abs_R M.env.R w.1
+  have hCclip : ∀ (w : ℝ × 𝒮 × 𝒜), ‖clip w.1 (-M.R) M.R‖ ≤ |M.R| :=
+    fun w => NormClip.le.Abs_R M.R w.1
   have h1 := All_EqIntegral_MulGIntegral_MulGKf.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
     (M := M) hclip hCclip θ 1 n hG hCG
   have h2 := All_EqIntegral_MulGIntegral_MulGKf.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
@@ -121,19 +121,19 @@ private lemma main
   have hfGret : ∀ k, Measurable
       (fun integ : ℕ → ℝ => (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[k:]) := fun k =>
     Measurable.tsum fun j => (measurable_pi_apply (k + j)).const_mul _
-  have hr_bd : ∀ᵐ ω ∂(M θ), ∀ j, |r j ω| ≤ |M.env.R| := by
+  have hr_bd : ∀ᵐ ω ∂(M.traj θ), ∀ j, |r j ω| ≤ |M.R| := by
     have hcl : ∀ j,
-        r j =ᵐ[M θ] fun ω => clip (ω j).1 (-M.env.R) M.env.R := fun j =>
+        r j =ᵐ[M.traj θ] fun ω => clip (ω j).1 (-M.R) M.R := fun j =>
       MEq_Clip.of.All_Eq.All_EqWithDensity h₁ (M := M) θ j
-    have hcl' : ∀ᵐ ω ∂(M θ), ∀ j,
-        r j ω = clip (ω j).1 (-M.env.R) M.env.R :=
+    have hcl' : ∀ᵐ ω ∂(M.traj θ), ∀ j,
+        r j ω = clip (ω j).1 (-M.R) M.R :=
       (ae_all_iff (ι := ℕ)).mpr hcl
     filter_upwards [hcl'] with ω hω j
     rw [hω j, ← Real.norm_eq_abs]
-    exact NormClip.le.Abs_R (R := M.env.R) (ρ := (ω j).1)
-  have hret_bd : ∀ᵐ ω ∂(M θ), ∀ k,
+    exact NormClip.le.Abs_R (R := M.R) (ρ := (ω j).1)
+  have hret_bd : ∀ᵐ ω ∂(M.traj θ), ∀ k,
       ‖((γ ^ (id : ℕ → ℕ)) ⬝ᵥ (fun j => r j ω)[k:])‖ ≤ BV := by
-    have hgeo := (hasSum_geometric_of_lt_one h₀.1 h₀.2).mul_right |M.env.R|
+    have hgeo := (hasSum_geometric_of_lt_one h₀.1 h₀.2).mul_right |M.R|
     filter_upwards [hr_bd] with ω hω k
     refine tsum_of_norm_bounded hgeo fun j => ?_
     have hid : (γ ^ (id : ℕ → ℕ)) j = γ ^ j := rfl
@@ -144,13 +144,13 @@ private lemma main
       (γ ^ (id : ℕ → ℕ)) ⬝ᵥ (fun j => r j ω)[k:] := fun k =>
     (hfGret k).comp hpR
   have hGi : ∀ k,
-      Integrable (fun ω => (γ ^ (id : ℕ → ℕ)) ⬝ᵥ (fun j => r j ω)[k:]) (M θ) :=
+      Integrable (fun ω => (γ ^ (id : ℕ → ℕ)) ⬝ᵥ (fun j => r j ω)[k:]) (M.traj θ) :=
     fun k =>
       Integrable.of_bound (hret k).aestronglyMeasurable BV
         (by filter_upwards [hret_bd] with ω hω; exact hω k)
   have hV_ae : ∀ k,
-      (fun ω => M.V θ γ k (s k ω)) =ᵐ[M θ]
-        Expectation.condSigma (M θ) (fun ω i => r i ω) (s k)
+      (fun ω => M.V θ γ k (s k ω)) =ᵐ[M.traj θ]
+        Expectation.condSigma (M.traj θ) (fun ω i => r i ω) (s k)
           (fun integ => (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[k:]) := fun k => by
     have hcomp :=
       Expectation.condEval_comp_ae_eq_condSigma
@@ -159,9 +159,9 @@ private lemma main
         hpR.aemeasurable (hsm k) (hfGret k).stronglyMeasurable (hGi k)
     filter_upwards [hcomp] with ω hω
     exact hω
-  have hVbd : ∀ᵐ ω ∂(M θ), ∀ k, |M.V θ γ k (s k ω)| ≤ BV := by
-    have hcond : ∀ k, ∀ᵐ ω ∂(M θ),
-        |Expectation.condSigma (M θ) (fun ω i => r i ω) (s k)
+  have hVbd : ∀ᵐ ω ∂(M.traj θ), ∀ k, |M.V θ γ k (s k ω)| ≤ BV := by
+    have hcond : ∀ k, ∀ᵐ ω ∂(M.traj θ),
+        |Expectation.condSigma (M.traj θ) (fun ω i => r i ω) (s k)
           (fun integ => (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[k:]) ω| ≤ BV := fun k => by
       have hbd :=
         ae_bdd_norm_condExp_of_ae_bdd_norm
@@ -175,10 +175,10 @@ private lemma main
     filter_upwards [hVeq, hVnorm] with ω heq hnorm k
     rw [heq k]
     exact hnorm k
-  have hae : ∀ᵐ ω ∂(M θ),
+  have hae : ∀ᵐ ω ∂(M.traj θ),
       (r (n + 1) ω + γ * M.V θ γ (n + 1 + 1) (s (n + 1 + 1) ω) - M.V θ γ (n + 1) (s (n + 1) ω)) *
         ψ (s t ω) (a t ω) =
-        Gh (Preorder.frestrictLe n ω) * clip (ω (n + 1)).1 (-M.env.R) M.env.R +
+        Gh (Preorder.frestrictLe n ω) * clip (ω (n + 1)).1 (-M.R) M.R +
           γ * (Gh (Preorder.frestrictLe n ω) * fV2 (ω (n + 2))) -
           Gh (Preorder.frestrictLe n ω) * fV1 (ω (n + 1)) := by
     filter_upwards [MEq_Clip.of.All_Eq.All_EqWithDensity h₁ (M := M) θ (n + 1),
@@ -197,16 +197,16 @@ private lemma main
       exact hclipV _ (hVb (n + 2))
     rw [hGω, hω, h1', h2', mul_comm (ψ (s t ω) (a t ω))]
     ring
-  have i23 : Integrable (fun ω => γ * (Gh (Preorder.frestrictLe n ω) * fV2 (ω (n + 2)))) (M θ) :=
+  have i23 : Integrable (fun ω => γ * (Gh (Preorder.frestrictLe n ω) * fV2 (ω (n + 2)))) (M.traj θ) :=
     i2.const_mul γ
-  have j23 : Integrable (fun ω => γ * (Gh (Preorder.frestrictLe n ω) * M.Kf θ fV2 2 (ω n))) (M θ) :=
+  have j23 : Integrable (fun ω => γ * (Gh (Preorder.frestrictLe n ω) * M.Kf θ fV2 2 (ω n))) (M.traj θ) :=
     j2.const_mul γ
   have ia : Integrable (fun ω => Gh (Preorder.frestrictLe n ω) *
-      clip (ω (n + 1)).1 (-M.env.R) M.env.R +
-        γ * (Gh (Preorder.frestrictLe n ω) * fV2 (ω (n + 2)))) (M θ) := i1.add i23
+      clip (ω (n + 1)).1 (-M.R) M.R +
+        γ * (Gh (Preorder.frestrictLe n ω) * fV2 (ω (n + 2)))) (M.traj θ) := i1.add i23
   have ja : Integrable (fun ω => Gh (Preorder.frestrictLe n ω) *
-      M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) 1 (ω n) +
-        γ * (Gh (Preorder.frestrictLe n ω) * M.Kf θ fV2 2 (ω n))) (M θ) := j1.add j23
+      M.Kf θ (fun z ↦ clip z.1 (-M.R) M.R) 1 (ω n) +
+        γ * (Gh (Preorder.frestrictLe n ω) * M.Kf θ fV2 2 (ω n))) (M.traj θ) := j1.add j23
   rw [integral_congr_ae hae, integral_sub ia i3, integral_add i1 i23, integral_const_mul,
     h1, h2, h3]
   have e := integral_sub ja j3
@@ -215,7 +215,7 @@ private lemma main
 
   -- Identify the free V with the kernel value V0 a.e., then apply the
   -- existing V0 Bellman identity for Kf.
-  have hVV0 : ∀ k, (fun ω => M.V θ γ k (s k ω)) =ᵐ[M θ]
+  have hVV0 : ∀ k, (fun ω => M.V θ γ k (s k ω)) =ᵐ[M.traj θ]
       (fun ω => M.V0 θ γ (s k ω)) := fun k =>
     (hV_ae k).trans (MEq_V0.of.In_Ico.All_Eq.All_EqWithDensity (M := M) h₀ h₁ hπ θ k).symm
   let fV : ℝ × 𝒮 × 𝒜 → ℝ := fun w => M.V0 θ γ w.2.1
@@ -238,62 +238,62 @@ private lemma main
     have hlo : -BV ≤ x := (abs_le.mp hx).1
     have hhi : x ≤ BV := (abs_le.mp hx).2
     rw [clip, max_eq_left hlo, min_eq_left hhi]
-  have haeV1 : ∀ᵐ ω ∂(M θ), fV1 (ω (n + 1)) = fV (ω (n + 1)) := by
+  have haeV1 : ∀ᵐ ω ∂(M.traj θ), fV1 (ω (n + 1)) = fV (ω (n + 1)) := by
     filter_upwards [hVbd, hVV0 (n + 1)] with ω hVb hV0
     simp only [fV1, fV]
     rw [hclipV _ (hVb (n + 1)), hV0]
-  have haeV2 : ∀ᵐ ω ∂(M θ), fV2 (ω (n + 2)) = fV (ω (n + 2)) := by
+  have haeV2 : ∀ᵐ ω ∂(M.traj θ), fV2 (ω (n + 2)) = fV (ω (n + 2)) := by
     filter_upwards [hVbd, hVV0 (n + 2)] with ω hVb hV0
     simp only [fV2, fV]
     rw [hclipV _ (hVb (n + 2)), hV0]
   have eKf1 :
-      ∫ ω, Gh (Preorder.frestrictLe n ω) * M.Kf θ fV1 1 (ω n) ∂(M θ) =
-        ∫ ω, Gh (Preorder.frestrictLe n ω) * M.Kf θ fV 1 (ω n) ∂(M θ) := by
+      ∫ ω, Gh (Preorder.frestrictLe n ω) * M.Kf θ fV1 1 (ω n) ∂(M.traj θ) =
+        ∫ ω, Gh (Preorder.frestrictLe n ω) * M.Kf θ fV 1 (ω n) ∂(M.traj θ) := by
     have hL := h3
     have hR := h3V
     have hmid :
-        ∫ ω, Gh (Preorder.frestrictLe n ω) * fV1 (ω (n + 1)) ∂(M θ) =
-          ∫ ω, Gh (Preorder.frestrictLe n ω) * fV (ω (n + 1)) ∂(M θ) :=
+        ∫ ω, Gh (Preorder.frestrictLe n ω) * fV1 (ω (n + 1)) ∂(M.traj θ) =
+          ∫ ω, Gh (Preorder.frestrictLe n ω) * fV (ω (n + 1)) ∂(M.traj θ) :=
       integral_congr_ae (by
         filter_upwards [haeV1] with ω hω
         rw [hω])
     exact hL.symm.trans (hmid.trans hR)
   have eKf2 :
-      ∫ ω, Gh (Preorder.frestrictLe n ω) * M.Kf θ fV2 2 (ω n) ∂(M θ) =
-        ∫ ω, Gh (Preorder.frestrictLe n ω) * M.Kf θ fV 2 (ω n) ∂(M θ) := by
+      ∫ ω, Gh (Preorder.frestrictLe n ω) * M.Kf θ fV2 2 (ω n) ∂(M.traj θ) =
+        ∫ ω, Gh (Preorder.frestrictLe n ω) * M.Kf θ fV 2 (ω n) ∂(M.traj θ) := by
     have hL := h2
     have hR := h2V
     have hmid :
-        ∫ ω, Gh (Preorder.frestrictLe n ω) * fV2 (ω (n + 2)) ∂(M θ) =
-          ∫ ω, Gh (Preorder.frestrictLe n ω) * fV (ω (n + 2)) ∂(M θ) :=
+        ∫ ω, Gh (Preorder.frestrictLe n ω) * fV2 (ω (n + 2)) ∂(M.traj θ) =
+          ∫ ω, Gh (Preorder.frestrictLe n ω) * fV (ω (n + 2)) ∂(M.traj θ) :=
       integral_congr_ae (by
         filter_upwards [haeV2] with ω hω
         rw [hω])
     exact hL.symm.trans (hmid.trans hR)
   have j23V : Integrable
-      (fun ω => γ * (Gh (Preorder.frestrictLe n ω) * M.Kf θ fV 2 (ω n))) (M θ) :=
+      (fun ω => γ * (Gh (Preorder.frestrictLe n ω) * M.Kf θ fV 2 (ω n))) (M.traj θ) :=
     j2V.const_mul γ
   have jaV : Integrable (fun ω => Gh (Preorder.frestrictLe n ω) *
-      M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) 1 (ω n) +
-        γ * (Gh (Preorder.frestrictLe n ω) * M.Kf θ fV 2 (ω n))) (M θ) :=
+      M.Kf θ (fun z ↦ clip z.1 (-M.R) M.R) 1 (ω n) +
+        γ * (Gh (Preorder.frestrictLe n ω) * M.Kf θ fV 2 (ω n))) (M.traj θ) :=
     j1.add j23V
   -- rewrite the fV1/fV2 kernel integral to the V0 kernel integral
   have hrewrite :
       ∫ ω, Gh (Preorder.frestrictLe n ω) *
-            M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) 1 (ω n) +
+            M.Kf θ (fun z ↦ clip z.1 (-M.R) M.R) 1 (ω n) +
           γ * (Gh (Preorder.frestrictLe n ω) * M.Kf θ fV2 2 (ω n)) -
-          Gh (Preorder.frestrictLe n ω) * M.Kf θ fV1 1 (ω n) ∂(M θ) =
+          Gh (Preorder.frestrictLe n ω) * M.Kf θ fV1 1 (ω n) ∂(M.traj θ) =
         ∫ ω, Gh (Preorder.frestrictLe n ω) *
-            M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) 1 (ω n) +
+            M.Kf θ (fun z ↦ clip z.1 (-M.R) M.R) 1 (ω n) +
           γ * (Gh (Preorder.frestrictLe n ω) * M.Kf θ fV 2 (ω n)) -
-          Gh (Preorder.frestrictLe n ω) * M.Kf θ fV 1 (ω n) ∂(M θ) := by
+          Gh (Preorder.frestrictLe n ω) * M.Kf θ fV 1 (ω n) ∂(M.traj θ) := by
     have hs12 :
         ∫ ω, Gh (Preorder.frestrictLe n ω) *
-              M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) 1 (ω n) +
-            γ * (Gh (Preorder.frestrictLe n ω) * M.Kf θ fV2 2 (ω n)) ∂(M θ) =
+              M.Kf θ (fun z ↦ clip z.1 (-M.R) M.R) 1 (ω n) +
+            γ * (Gh (Preorder.frestrictLe n ω) * M.Kf θ fV2 2 (ω n)) ∂(M.traj θ) =
           ∫ ω, Gh (Preorder.frestrictLe n ω) *
-              M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) 1 (ω n) +
-            γ * (Gh (Preorder.frestrictLe n ω) * M.Kf θ fV 2 (ω n)) ∂(M θ) := by
+              M.Kf θ (fun z ↦ clip z.1 (-M.R) M.R) 1 (ω n) +
+            γ * (Gh (Preorder.frestrictLe n ω) * M.Kf θ fV 2 (ω n)) ∂(M.traj θ) := by
       rw [integral_add j1 j23, integral_add j1 j23V, integral_const_mul, integral_const_mul,
         eKf2]
     exact (integral_sub ja j3).trans
@@ -301,13 +301,13 @@ private lemma main
   rw [hrewrite]
   have hz : ∀ ω : ℕ → ℝ × 𝒮 × 𝒜,
       Gh (Preorder.frestrictLe n ω) *
-          M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) 1 (ω n) +
+          M.Kf θ (fun z ↦ clip z.1 (-M.R) M.R) 1 (ω n) +
         γ * (Gh (Preorder.frestrictLe n ω) * M.Kf θ fV 2 (ω n)) -
         Gh (Preorder.frestrictLe n ω) * M.Kf θ fV 1 (ω n) = 0 := fun ω => by
     have := SubAddKfMul_KfKf.eq.Zero.of.In_Ico.All_EqWithDensity (M := M) h₀ hπ θ (ω n)
     calc
       _ = Gh (Preorder.frestrictLe n ω) *
-          (M.Kf θ (fun z ↦ clip z.1 (-M.env.R) M.env.R) 1 (ω n) +
+          (M.Kf θ (fun z ↦ clip z.1 (-M.R) M.R) 1 (ω n) +
             γ * M.Kf θ fV 2 (ω n) - M.Kf θ fV 1 (ω n)) := by
         ring
       _ = 0 := by rw [this, mul_zero]
@@ -316,4 +316,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-12
+-- updated on 2026-11-16

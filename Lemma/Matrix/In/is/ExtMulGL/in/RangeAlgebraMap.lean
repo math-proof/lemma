@@ -277,14 +277,12 @@ private lemma main
   ·
     intro h i j
     have hc := (hCiff _).mp (h j) i
-    simp [Matrix.mul_apply]
-    refine hc
+    simpa [Matrix.mulVec, dotProduct, Matrix.mul_apply] using hc
   ·
     intro h j
     refine (hCiff _).mpr fun i => ?_
     have hc := h i j
-    simp [Matrix.mulVec, dotProduct]
-    refine hc
+    simpa [Matrix.mulVec, dotProduct, Matrix.mul_apply] using hc
 
 
 -- created on 2026-10-20

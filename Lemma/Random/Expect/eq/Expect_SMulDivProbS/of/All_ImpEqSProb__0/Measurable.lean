@@ -1,5 +1,6 @@
 import Syntax.Probability.Expectation.Elab
 import Instance.Analysis.Real.Numbers
+import Theorem.Probability.SymbolicProbability
 import Lemma.Random.Map.eq.WithDensityProb
 import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
 open MeasureTheory Random
@@ -69,4 +70,4 @@ private lemma main
 
 
 -- created on 2023-03-25
--- updated on 2026-11-14
+-- updated on 2026-11-16

@@ -279,6 +279,51 @@ function bundleVars(indented, explicitOnly = false) {
   return out;
 }
 
+/** Type head of a binder annotation (`Model Θ 𝒮 𝒜` → `Model`, `PolicyGradient.Model` → `Model`). */
+function binderTypeHead(typeNode) {
+  let h = unwrapParen(typeNode);
+  if (cls(h) === "LeanArgsSpaceSeparated") h = h.args?.[0];
+  if (cls(h) === "LeanProperty" && cls(h.args?.[1]) === "LeanToken") return h.args[1].text || "";
+  return cls(h) === "LeanToken" ? (h.text || "") : "";
+}
+
+function addColonBinderNames(colonNode, out) {
+  if (cls(colonNode) !== "LeanColon") return;
+  const b = colonNode.args?.[0];
+  for (const x of cls(b) === "LeanToken" ? [b] : b?.args || []) {
+    if (cls(x) === "LeanToken" && x.text && x.text !== "_") out.add(x.text);
+  }
+}
+
+/**
+ * Binders (including `[μ : T]`) whose type head is `typeName`.
+ * `{M : Model Θ 𝒮 𝒜}` → Model; used when `repoDecls()` is an empty stub.
+ */
+function bindersTypedAs(node, typeName, out = new Set()) {
+  if (!node || typeof node !== "object") return out;
+  const c = cls(node);
+  if (c === "LeanBrace" || c === "LeanParenthesis" || c === "LeanBracket") {
+    const a = node.args?.[0];
+    if (cls(a) === "LeanColon" && binderTypeHead(a.args?.[1]) === typeName) addColonBinderNames(a, out);
+  }
+  for (const a of node.args || []) bindersTypedAs(a, typeName, out);
+  return out;
+}
+
+/**
+ * `μ.measure` when `μ` is a binder (typically `[μ : ReferenceMeasure _]`).
+ * The measure itself is a hole; namespaced `ReferenceMeasure.measure` stays Measure.
+ */
+function isBinderMeasureProj(node, opts) {
+  if (cls(node) !== "LeanProperty") return false;
+  const obj = node.args?.[0];
+  const prop = node.args?.[1];
+  if (cls(prop) !== "LeanToken" || prop.text !== "measure") return false;
+  if (cls(obj) !== "LeanToken") return false;
+  return isLeafName(obj.text, opts?.leaves);
+}
+
+
 /** `a.b.c` → ["a", "b", "c"] when every part is a plain token. */
 function propertyParts(n) {
   if (cls(n) === "LeanToken") return [n.text];
@@ -519,6 +564,8 @@ function isSampleSpaceDomain(node) {
 }
 
 function hasRandomAstCues(node) {
+  // PolicyGradient `{M : Model …}` is a Random cue even when repoDecls() is empty.
+  if (bindersTypedAs(node, "Model").size > 0) return true;
   let found = false;
   const walk = (n) => {
     if (!n || typeof n !== "object" || found) return;
@@ -1300,7 +1347,17 @@ function collectLeafBinders(node, out = new Set(), noBinders = false) {
   // namespaced Props (`NS.TateChainRule K F E h`) do not grow `_KFE` path junk.
   if (!noBinders && name === "LeanBracket") {
     const app = node.args?.[0];
-    if (cls(app) === "LeanArgsSpaceSeparated") {
+    // `[μ : ReferenceMeasure 𝒜]`: the instance name is a binder leaf.
+    if (cls(app) === "LeanColon") {
+      const binders = app.args?.[0];
+      if (cls(binders) === "LeanToken") {
+        if (binders.text && binders.text !== "_") out.add(binders.text);
+      } else if (cls(binders) === "LeanArgsSpaceSeparated") {
+        for (const a of binders.args || []) {
+          if (cls(a) === "LeanToken" && a.text && a.text !== "_") out.add(a.text);
+        }
+      }
+    } else if (cls(app) === "LeanArgsSpaceSeparated") {
       for (const a of (app.args || []).slice(1)) {
         if (cls(a) === "LeanToken" && a.text && a.text !== "_") out.add(a.text);
       }
@@ -1685,7 +1742,9 @@ function isQuantBinderHole(node, opts) {
   // Decorations of quant binders stay holes (exists L, ... L adjoint); peel only here.
   if (c === "LeanAdjoint" || c === "LeanTranspose" || c === "LeanConj" || c === "LeanInv")
     return isQuantBinderHole(u.args?.[0], opts);
-  if (c === "LeanGetElem") return isQuantBinderHole(u.args?.[0], opts) && isGetIndexNoise(u.args?.[1], opts);
+  if (c === "LeanGetElem") {
+    return isQuantBinderHole(u.args?.[0], opts) && isGetIndexNoise(u.args?.[1], opts);
+  }
   if (c === "LeanParenthesis") return isQuantBinderHole(u.args?.[0], opts);
   return false;
 }
@@ -1703,7 +1762,9 @@ function isBinderHole(node, opts) {
   // (A adjoint = A -> EqAdjoint, not bare Eq).
   if (c === "LeanAdjoint" || c === "LeanTranspose" || c === "LeanConj" || c === "LeanInv")
     return isQuantBinderHole(u.args?.[0], opts);
-  if (c === "LeanGetElem") return isBinderHole(u.args?.[0], opts) && isGetIndexNoise(u.args?.[1], opts);
+  if (c === "LeanGetElem") {
+    return isBinderHole(u.args?.[0], opts) && isGetIndexNoise(u.args?.[1], opts);
+  }
   if (c === "LeanParenthesis") return isBinderHole(u.args?.[0], opts);
   return false;
 }
@@ -1745,7 +1806,9 @@ function isHoleyExpr(node, opts) {
   // Match isBinderHole: only peel decorations of quant/exists binders (not signature A adjoint)
   if (c === "LeanAdjoint" || c === "LeanTranspose" || c === "LeanConj" || c === "LeanInv")
     return isQuantBinderHole(u.args?.[0], opts) && isHoleyExpr(u.args?.[0], opts);
-  if (c === "LeanGetElem") return isHoleyExpr(u.args?.[0], opts) && isGetIndexNoise(u.args?.[1], opts);
+  if (c === "LeanGetElem") {
+    return isHoleyExpr(u.args?.[0], opts) && isGetIndexNoise(u.args?.[1], opts);
+  }
   // Vector/matrix literal `![…]` / `!![…]` is not an index. Its entries stay holes.
   if (c === "LeanVecNotation") return true;
   if (c === "LeanParenthesis" || c === "LeanColon") return isHoleyExpr(u.args?.[0], opts);
@@ -4861,6 +4924,38 @@ function integralHoleRegex(node, opts) {
   return "Integral_" + storedHoleOpt(inner);
 }
 
+
+/**
+ * `recv.method arg…` hole-regex: name the method the same way as `nameExpr`,
+ * keep hole args as `_`, and nest a filled arg as `Method_(Arg)` so
+ * `μ.measure.withDensity (M.policy.pdf θ x)` is `WithDensity_(Pdf__)`.
+ * A binder GetElem head (`M[x] θ`) stays a hole (`nameExpr` is empty).
+ */
+function propertyAppHoleRegex(node, opts) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanArgsSpaceSeparated") return null;
+  const args = u.args || [];
+  if (args.length < 2) return null;
+  const head = unwrapParen(args[0]);
+  if (cls(head) !== "LeanProperty") return null;
+  const headName = nameExpr(head, opts);
+  if (!headName) return null;
+  // Only nest method-apps that would otherwise freeze flat and lose
+  // inner hole structure. Broad application of this hook rewrites other
+  // property-headed regexes (e.g. Complex motion / unglue-adjacent).
+  if (headName !== "WithDensity" && headName !== "Pdf" && headName !== "Dens")
+    return null;
+  const frags = args.slice(1).map((a) => holeRegexExpr(a, opts));
+  if (frags.every((f) => f == null || f === "" || f === "_"))
+    return headName + "_".repeat(frags.length);
+  let s = headName;
+  for (const f of frags) {
+    if (f == null || f === "" || f === "_") s += "_";
+    else s += "_(" + f + ")";
+  }
+  return s;
+}
+
 function holeRegexExpr(node, opts) {
   const frag = holeRegexExprWalk(node, opts);
   return typeof frag === "string" ? flattenStackedAll(flattenStackedExpect(frag)) : frag;
@@ -4960,6 +5055,11 @@ function holeRegexExprWalk(node, opts) {
           if (!leftFrag || leftFrag === "_") return "Cond__";
           return "Cond" + storedHoleOpt(leftFrag) + "_";
         }
+      }
+      // Method apps: WithDensity_(Pdf__), not the nameExpr freeze WithDensity_Pdf.
+      {
+        const app = propertyAppHoleRegex(n, opts);
+        if (app) return app;
       }
       const frozen = nameExpr(n, opts);
       return frozen ? escapeHoleReLit(sanitizePathSeg(frozen)) : null;
@@ -8968,6 +9068,7 @@ if (name === "LeanToken") {
     const obj = node.args?.[0];
     const prop = node.args?.[1];
     const propName = cls(prop) === "LeanToken" ? nameToken(prop.text || "") || nameExpr(prop, opts) : nameExpr(prop, opts);
+    if (isBinderMeasureProj(node, opts)) return "";
     if (cls(obj) === "LeanToken" || isModulePathReceiver(obj)) return propName || "";
     const objName = nameExpr(obj, opts);
     if (objName && propName) return propName + objName;
@@ -9036,7 +9137,8 @@ if (name === "LeanToken") {
         (headCls !== "LeanToken" && headCls !== "LeanProperty" && headCls !== "LeanParenthesis")) {
       const headName = nameExpr(head, opts);
       if (headName) {
-        const pref = applyEvalPrefix(head);
+        let pref = applyEvalPrefix(head);
+        if (pref === "Get" && headName.startsWith("Get")) pref = "";
         let acc = pref ? joinHeadChild(pref, headName) : headName;
         for (const a of args.slice(1)) {
           const an = nameExpr(a, opts);
@@ -9299,7 +9401,9 @@ if (name === "LeanToken") {
     // Binder Get-at-literal (`C[0]`): full hole → `C[0] = 1` names `Eq_1` (never bare `0` → `Eq0_1`)
     if (isBinderGetAtLiteral(node, opts)) return "";
     // h[k + n] / h[k: k + n]: the index Add is not a path atom (All_Eq_Dot, not All_EqAdd_Dot_Add)
-    if (isGetIndexNoise(node.args?.[1], opts)) return nameExpr(node.args?.[0], opts);
+    if (isGetIndexNoise(node.args?.[1], opts)) {
+      return nameExpr(node.args?.[0], opts);
+    }
     // Structured numeral offset (`C[n + 1]`, `h[k + 3]`): Get_Add_1 — never fall through to bare Add_1
     // (that glued EqAdd_1Sum_Mul / EqAdd_3_0 without Get_).
     {
@@ -9749,6 +9853,7 @@ if (name === "Lean_partial" || name === "LeanPartial") {
       ? (nameToken(prop.text || "") ? [nameToken(prop.text || "")] : nameExprAlts(prop, opts))
       : nameExprAlts(prop, opts);
     // Module-path receivers match bare-token: last segment only (no Prop+ParentNs glue).
+    if (isBinderMeasureProj(node, opts)) return [];
     if (cls(obj) === "LeanToken" || isModulePathReceiver(obj)) return propAlts;
     const objAlts = nameExprAlts(obj, opts);
     const out = [];
@@ -9845,7 +9950,8 @@ if (name === "Lean_partial" || name === "LeanPartial") {
       const headAlts = nameExprAlts(head, opts);
       if (headAlts.length) {
         const argAltLists = args.slice(1).map(a => nameExprAlts(a, opts)).filter(a => a.length);
-        const pref = applyEvalPrefix(head);
+        let pref = applyEvalPrefix(head);
+        if (pref === "Get" && headAlts.some((n) => n.startsWith("Get"))) pref = "";
         let acc = pref ? cartJoin([pref], headAlts, joinHeadChild) : headAlts.slice();
         // applied power `(κ ^ n) s` may read without Get/Ext: PowKernelMat
         if (cls(unwrapParen(head)) === "LeanPow") acc = uniq([...acc, ...headAlts]);
@@ -10169,7 +10275,9 @@ if (name === "Lean_partial" || name === "LeanPartial") {
     if (cls(node.args?.[0]) === "LeanToken" && node.args[0].text === "∇") return ["Grad"];
     // Binder Get-at-literal: empty alts so relationAlts uses Eq_1 (not child digit → Eq0_1)
     if (isBinderGetAtLiteral(node, opts)) return [];
-    if (isGetIndexNoise(node.args?.[1], opts)) return nameExprAlts(node.args?.[0], opts);
+    if (isGetIndexNoise(node.args?.[1], opts)) {
+      return nameExprAlts(node.args?.[0], opts);
+    }
     // Structured index: Get_Add_1 (same as nameExpr; do not surface bare Add_1 alts)
     {
       const idxAlts = nameExprAlts(node.args?.[1], opts).filter(Boolean);

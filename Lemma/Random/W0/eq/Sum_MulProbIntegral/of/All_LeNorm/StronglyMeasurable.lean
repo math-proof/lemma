@@ -1,5 +1,5 @@
 import Lemma.Random.Integral.eq.Integral_SMul.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Random
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -8,17 +8,17 @@ open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel 
 @[path]
 private lemma main
   [MeasurableSpace 𝒮] [μ : ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {f : ℝ × 𝒮 × 𝒜 → ℝ}
   {C : ℝ}
 -- given
   (h₀ : StronglyMeasurable f)
   (h₁ : ∀ z, ‖f z‖ ≤ C)
   (θ : Θ)
-  (x : 𝒮) :
+  (sₜ : 𝒮) :
 -- imply
-  ∫ z, f z ∂(M.stageK θ x) =
-    ∫ (u : 𝒜), (M.policy.prob θ x u * ∫ ρ, f (ρ, x, u) ∂(M.env.reward (x, u)))
+  ∫ z, f z ∂(M.stageK θ sₜ) =
+    ∫ (aₜ : 𝒜), (M.π[θ] sₜ aₜ * ∫ ρ, f (ρ, sₜ, aₜ) ∂(M.reward (sₜ, aₜ)))
       ∂μ.measure := by
 -- proof
   rw [Integral.eq.Integral_SMul.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity (M := M) h₀ h₁ θ]
@@ -26,4 +26,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-14
+-- updated on 2026-11-16

@@ -1,5 +1,5 @@
 import Mathlib
-import sympy.Basic
+import Initialize.Tactic.Attr.Basic
 import Def.LinearAlgebra.Matrix.RealSVD
 import Syntax.LinearAlgebra.Matrix.Notation
 open Matrix
@@ -89,9 +89,9 @@ private lemma realSVD_normalizedImages_orthonormal
       real_inner_smul_right, realSVD_inner_image_eigenvectorBasis T hn]
     field_simp
   · have hv : i.val.val ≠ j.val.val := by
-    intro h
-    apply hij
-    exact Subtype.ext (Fin.ext h)
+      intro h
+      apply hij
+      exact Subtype.ext (Fin.ext h)
     have hfin : (⟨i.val.val, hi⟩ : Fin n) ≠ ⟨j.val.val, hj⟩ := by
       intro h
       exact hv (congrArg (fun x : Fin n => x.val) h)
@@ -284,4 +284,4 @@ end MathlibExt.LinearAlgebra.Matrix.RealSVDWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-27
+-- updated on 2026-11-16

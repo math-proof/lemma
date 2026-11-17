@@ -1,7 +1,10 @@
-import Def.Probability.SymbolicProbability.Part2
+import Def.Probability.SymbolicProbability
+import Class.Probability.SymbolicProbability
 import Theorem.Data.Vector.Basic.Part2
 import Def.Data.Tensor.Defs.Part4
 open MeasureTheory
+
+export Expectation (expectation)
 
 
 /-!
@@ -10,7 +13,7 @@ open MeasureTheory
 Lean counterpart of sympy's `symbolic_multivariate_probability` module: instances of
 `Expectation` for `List.Vector` and `Tensor`, defined by applying `expectation` on
 each component. Scalar instances (`ENNReal`, `EReal`, `ℂ`) live in
-`Def.Probability.SymbolicProbability.Part2`.
+`Def.Probability.SymbolicProbability`.
 -/
 
 /-- Componentwise expectation on `List.Vector β n`. -/

@@ -108,12 +108,13 @@ lemma layer_cake_exp_tail_to_integral_bound
         _ = H := by simp [MeasureTheory.Measure.real, Real.volume_Ioc, hH]
     have hpart2 : (∫ t in Set.Ioi H, g t) ≤ C * Real.exp (-(α * H)) / α := by
       calc (∫ t in Set.Ioi H, g t)
-        ≤ ∫ t in Set.Ioi H, C * Real.exp (-(α * t)) := by
-          apply MeasureTheory.setIntegral_mono_on hg_int_Ioi
-          · simp_rw [show ∀ t, -(α * t) = (-α) * t from fun t => by ring]
-            exact (integrableOn_exp_mul_Ioi hα_neg H).const_mul C
-          · exact measurableSet_Ioi
-          · intro t ht; exact hg_tail t (lt_of_le_of_lt hH ht)
+        ≤ ∫ t in Set.Ioi H, C * Real.exp (-(α * t)) :=
+          MeasureTheory.setIntegral_mono_on hg_int_Ioi
+            (by
+              simp_rw [show ∀ t, -(α * t) = (-α) * t from fun t => by ring]
+              exact (integrableOn_exp_mul_Ioi hα_neg H).const_mul C)
+            measurableSet_Ioi
+            (fun t ht => hg_tail t (lt_of_le_of_lt hH ht))
         _ = C * Real.exp (-(α * H)) / α := by
           simp_rw [show ∀ t, -(α * t) = (-α) * t from fun t => by ring]
           rw [integral_const_mul_of_integrable (integrableOn_exp_mul_Ioi hα_neg H),

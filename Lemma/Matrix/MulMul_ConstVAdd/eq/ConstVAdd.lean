@@ -46,14 +46,14 @@ lemma point_group_preserves_lattice
   show (AffineIsometryEquiv.constVAdd ℝ E2 (A v) : M₂) ∈ G
   have hAv : g.linearIsometryEquiv v = A v := by
     simp only [← hgA, linearPart]
-  rw [← hAv, ← conj_translation g v]
+  rw [← hAv, ← conj_translation]
   exact G.mul_mem (G.mul_mem hg hv) (G.inv_mem hg)
-set_option maxHeartbeats 400000 in
 
 end DiscreteGroups
 
 namespace DiscreteGroups
 
+set_option maxHeartbeats 400000 in
 /--
 [discrete_subgroup_R2_classification](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraNotes/code/DiscreteGroups.lean)
 -/

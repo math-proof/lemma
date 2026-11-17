@@ -35,7 +35,7 @@ private lemma hadamard_sign_matrix_bound (ι : Type*) [Fintype ι] [DecidableEq 
     have h1 : ∀ i j : ι, M.conjTranspose i j * M j i = 1 := by
       intro i j
       simp only [Matrix.conjTranspose_apply, star_trivial]
-      obtain h | h <;> rw [h] <;> norm_num := hM j i
+      rcases hM j i with h | h <;> rw [h] <;> norm_num
     simp only [Matrix.trace, Matrix.diag_apply, hG, Matrix.mul_apply, h1,
       Finset.sum_const, Finset.card_univ, nsmul_eq_mul, mul_one]
   have hAMGM := Real.geom_mean_le_arith_mean_weighted (Finset.univ)
@@ -103,7 +103,7 @@ lemma hadamard_zero_one_determinant_bound
     omega
   have hM1 : ∀ i j, M i j = 1 ∨ M i j = -1 := by
     intro i j
-    obtain x | i <;> rcases j with y | j := i
+    rcases i with x | i <;> rcases j with y | j
     · left
       rw [hMdef]
       show (1 : Matrix (Fin 1) (Fin 1) ℝ) x y = 1
@@ -159,8 +159,9 @@ lemma hadamard_zero_one_determinant_bound
   rw [habs2] at hbound
   have h2ne : (2 : ℝ) ^ n ≠ 0 := by positivity
   rw [inv_pow]
-  calc |B.det| = (((2 : ℝ) ^ n))⁻¹ * (((2 : ℝ) ^ n) * |B.det|) := by
-    rw [← mul_assoc, inv_mul_cancel₀ h2ne, one_mul]
+  calc
+    |B.det| = (((2 : ℝ) ^ n))⁻¹ * (((2 : ℝ) ^ n) * |B.det|) := by
+      rw [← mul_assoc, inv_mul_cancel₀ h2ne, one_mul]
     _ ≤ (((2 : ℝ) ^ n))⁻¹ * (Real.rpow ((n : ℝ) + 1) (((n : ℝ) + 1) / 2)) :=
       mul_le_mul_of_nonneg_left hbound
         (le_of_lt (inv_pos.mpr (pow_pos (by norm_num) n)))
@@ -169,4 +170,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-16

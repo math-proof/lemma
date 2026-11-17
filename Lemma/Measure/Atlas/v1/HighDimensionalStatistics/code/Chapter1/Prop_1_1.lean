@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open MeasureTheory Set Real Filter Topology Rigollet
+open MeasureTheory Set Real Filter Topology
 
 
 namespace Rigollet.Chapter1
@@ -30,7 +30,7 @@ namespace Rigollet.Chapter1
 [tendsto_neg_exp_neg_sq_div_two](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter1/Prop_1_1.lean)
 -/
 @[path]
-lemma tendsto_neg_exp_neg_sq_div_two
+lemma tendsto_neg_exp_neg_sq_div_two :
 -- imply
   Tendsto (fun x : ℝ => -exp (-(x ^ 2 / 2))) atTop (nhds 0) := by
 -- proof
@@ -41,7 +41,7 @@ lemma tendsto_neg_exp_neg_sq_div_two
     tendsto_neg_atTop_atBot.comp h1
   have h3 := tendsto_exp_atBot.comp h2
   simp only [Function.comp_def] at h3
-  rwa [show (0 : ℝ) = -0 from by ring]
+  simpa using h3.neg
 
 end Rigollet.Chapter1
 

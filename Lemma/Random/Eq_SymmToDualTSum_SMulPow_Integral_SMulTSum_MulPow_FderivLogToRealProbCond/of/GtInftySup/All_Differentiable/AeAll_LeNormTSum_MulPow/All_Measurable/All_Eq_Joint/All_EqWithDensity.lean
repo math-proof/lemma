@@ -1,22 +1,24 @@
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
 import Def.Analysis.Calculus.Gradient.Operators.Part2
-import Theorem.Dynamics.PolicyTrajectory.ContinuousAction.Part3
+import Theorem.Dynamics.PolicyTrajectory.ContinuousAction
+import Theorem.Probability.SymbolicProbability
 import Lemma.Random.PSpace_Path.of.All_PSpace
+import Instance.Probability.Moments.Variance
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Filter Topology Random Measure
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure
 
 
 /--
 Turning the pointwise integral of the discounted weighted density-score into the
-`𝔼[r, s, a : M θ]` sugar (continuous-action model), with density score `∇ log π`
+`𝔼[r, s, a : M.traj θ]` sugar (continuous-action model), with density score `∇ log π`
 (no `ProbCond` / counting measure).
 -/
 @[path]
 private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ]
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {θ : Θ}
   {γ : ℝ}
   {X : (ℕ → 𝒮) → (ℕ → 𝒜) → (ℕ → ℝ) → ℕ → ℝ}
@@ -29,35 +31,35 @@ private lemma main
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (h₂ : ∀ k, Measurable fun ω : ℕ → ℝ × 𝒮 × 𝒜 =>
     X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) k)
-  (h₃ : ∀ᵐ ω ∂(M θ), ∀ t,
+  (h₃ : ∀ᵐ ω ∂(M.traj θ), ∀ t,
     ‖∑' k, γ ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)‖ ≤ B)
   (hφ : StronglyMeasurable
     (fun z : 𝒮 × 𝒜 =>
-      gradient (fun θ' => Real.log (M.policy.prob θ' z.1 z.2)) θ))
+      gradient (fun θ' => Real.log (M.π[θ'] z.1 z.2)) θ))
   (hMs : ∀ y u,
-    ‖gradient (fun θ' => Real.log (M.policy.prob θ' y u)) θ‖ ≤ Ms) :
+    ‖gradient (fun θ' => Real.log (M.π[θ'] y u)) θ‖ ≤ Ms) :
 -- imply
-  have hs : ∀ t, PSpace (M θ) (s t) := fun t =>
+  have hs : ∀ t, PSpace (M.traj θ) (s t) := fun t =>
     ⟨(Random.Measurable.of.All_Eq.snd.fst h₁ t).aemeasurable⟩
-  have ha : ∀ t, PSpace (M θ) (a t) := fun t =>
+  have ha : ∀ t, PSpace (M.traj θ) (a t) := fun t =>
     ⟨(Random.Measurable.of.All_Eq.snd.snd h₁ t).aemeasurable⟩
-  have hr : ∀ t, PSpace (M θ) (r t) := fun t =>
+  have hr : ∀ t, PSpace (M.traj θ) (r t) := fun t =>
     ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩
-  have : PSpace (M θ) (AsPathRV.path s) :=
+  have : PSpace (M.traj θ) (AsPathRV.path s) :=
     PSpace_Path.of.All_PSpace hs
-  have : PSpace (M θ) (AsPathRV.path a) :=
+  have : PSpace (M.traj θ) (AsPathRV.path a) :=
     PSpace_Path.of.All_PSpace ha
-  have : PSpace (M θ) (AsPathRV.path r) :=
+  have : PSpace (M.traj θ) (AsPathRV.path r) :=
     PSpace_Path.of.All_PSpace hr
   let : MeasurableSpace Θ := borel Θ
   have : BorelSpace Θ := ⟨rfl⟩
   (InnerProductSpace.toDual ℝ Θ).symm (∑' t, γ ^ t • ∫ ω,
       (∑' k, γ ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)) •
-        fderiv ℝ (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ ∂(M θ)) =
-    𝔼[r, s, a : M θ](
+        fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ ∂(M.traj θ)) =
+    𝔼[r, s, a : M.traj θ](
       ∑' t, γ ^ t •
         (((fun k : ℕ => γ ^ k) ⬝ᵥ (fun k : ℕ => X s a r (t + k))) •
-          ∇[θ] Real.log (M.policy.prob θ (s t) (a t)))) := by
+          ∇[θ] Real.log (M.π[θ] (s t) (a t)))) := by
 -- proof
   intro _ _ _ _ _ _
   classical
@@ -68,21 +70,21 @@ private lemma main
   set s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮 := fun t ω ↦ (ω t).2.1
   set a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜 := fun t ω ↦ (ω t).2.2
   let _ : MeasurableSpace Θ := borel Θ
-  have _ : BorelSpace Θ := ⟨rfl⟩
-  have hs' : ∀ t, PSpace (M θ) (s t) := fun t =>
+  have : BorelSpace Θ := ⟨rfl⟩
+  have hs' : ∀ t, PSpace (M.traj θ) (s t) := fun t =>
     ⟨(Random.Measurable.of.All_Eq.snd.fst h₁ t).aemeasurable⟩
-  have ha' : ∀ t, PSpace (M θ) (a t) := fun t =>
+  have ha' : ∀ t, PSpace (M.traj θ) (a t) := fun t =>
     ⟨(Random.Measurable.of.All_Eq.snd.snd h₁ t).aemeasurable⟩
-  have hr' : ∀ t, PSpace (M θ) (r t) := fun t =>
+  have hr' : ∀ t, PSpace (M.traj θ) (r t) := fun t =>
     ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩
-  have : PSpace (M θ) (AsPathRV.path s) := PSpace_Path.of.All_PSpace hs'
-  have : PSpace (M θ) (AsPathRV.path a) := PSpace_Path.of.All_PSpace ha'
-  have : PSpace (M θ) (AsPathRV.path r) := PSpace_Path.of.All_PSpace hr'
+  have : PSpace (M.traj θ) (AsPathRV.path s) := PSpace_Path.of.All_PSpace hs'
+  have : PSpace (M.traj θ) (AsPathRV.path a) := PSpace_Path.of.All_PSpace ha'
+  have : PSpace (M.traj θ) (AsPathRV.path r) := PSpace_Path.of.All_PSpace hr'
   let L : StrongDual ℝ Θ ≃L[ℝ] Θ := (InnerProductSpace.toDual ℝ Θ).symm.toContinuousLinearEquiv
   have hL : ∀ φ, (InnerProductSpace.toDual ℝ Θ).symm φ = L φ := fun _ => rfl
   let G : (ℕ → ℝ × 𝒮 × 𝒜) → Θ := fun ω => ∑' t, γ ^ t •
     ((∑' k, γ ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)) •
-      gradient (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ)
+      gradient (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ)
   have hg := fun t : ℕ =>
     StronglyMeasurable.smul
       (Measurable.tsum (L := SummationFilter.unconditional ℕ) fun k =>
@@ -91,9 +93,9 @@ private lemma main
         ((Random.Measurable.of.All_Eq.snd.fst h₁ t).prodMk
           (Random.Measurable.of.All_Eq.snd.snd h₁ t)))
   obtain ⟨K, hK⟩ : ∃ K : ℝ, K = B * Ms := ⟨_, rfl⟩
-  have hFb : ∀ t, ∀ᵐ ω ∂(M θ),
+  have hFb : ∀ t, ∀ᵐ ω ∂(M.traj θ),
       ‖γ ^ t • ((∑' k, γ ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)) •
-        gradient (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ)‖ ≤ γ ^ t * K := by
+        gradient (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ)‖ ≤ γ ^ t * K := by
     intro t
     filter_upwards [h₃] with ω h1
     rw [norm_smul, norm_smul, norm_pow, Real.norm_of_nonneg h₀.1, hK]
@@ -103,15 +105,15 @@ private lemma main
         (pow_nonneg h₀.1 t)
   have hint : ∀ t, Integrable (fun ω =>
       γ ^ t • ((∑' k, γ ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)) •
-        gradient (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ)) (M θ) :=
+        gradient (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ)) (M.traj θ) :=
     fun t => Integrable.of_bound ((hg t).const_smul (γ ^ t)).aestronglyMeasurable _ (hFb t)
   have hsum : Summable fun t => ∫ ω,
       ‖γ ^ t • ((∑' k, γ ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)) •
-        gradient (fun θ' => Real.log (M.policy.prob θ' (s t ω) (a t ω))) θ)‖ ∂(M θ) := by
+        gradient (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ)‖ ∂(M.traj θ) := by
     refine Summable.of_nonneg_of_le (fun t => integral_nonneg fun _ => norm_nonneg _) (fun t => ?_)
       ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right K)
     calc
-      _ ≤ ∫ _, γ ^ t * K ∂(M θ) :=
+      _ ≤ ∫ _, γ ^ t * K ∂(M.traj θ) :=
         integral_mono_ae (hint t).norm (integrable_const _) (hFb t)
       _ = γ ^ t * K := by simp
   have hGsm : StronglyMeasurable G :=
@@ -125,13 +127,13 @@ private lemma main
         (((measurable_pi_apply t).comp (measurable_fst.comp measurable_snd)).prodMk
           ((measurable_pi_apply t).comp (measurable_snd.comp measurable_snd)))
   have hpath :
-    𝔼[r, s, a : M θ](
+    𝔼[r, s, a : M.traj θ](
       ∑' t, γ ^ t •
         (((fun k : ℕ => γ ^ k) ⬝ᵥ (fun k : ℕ => X s a r (t + k))) •
-          ∇[θ] Real.log (M.policy.prob θ (s t) (a t)))) =
-      ∫ ω, G ω ∂(M θ) := by
+          ∇[θ] Real.log (M.π[θ] (s t) (a t)))) =
+      ∫ ω, G ω ∂(M.traj θ) := by
     have hx : AEMeasurable
-      (AsPathRV.path r, AsPathRV.path s, AsPathRV.path a) (M θ) :=
+      (AsPathRV.path r, AsPathRV.path s, AsPathRV.path a) (M.traj θ) :=
       PSpace.aemeasurable
     simp only [AsPathRV.path_process, Dot.dot]
     rw [Expectation.ofRV, expectation_bochner]
@@ -151,4 +153,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-11
+-- updated on 2026-11-16

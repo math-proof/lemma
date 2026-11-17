@@ -901,12 +901,9 @@ if [ -n "$diskModuleList" ]; then
   echo "UPDATE lemma SET meta = JSON_SET(IFNULL(meta, '{}'), '\$.error', CAST('[]' AS JSON)) WHERE user = '$user' AND module IN ($diskModuleList);" >> "$TEST_SQL"
 fi
 
-# Scope diagnostics to requested modules (and never count sympy in totals):
-# folder walks (`sh/run.sh ENNReal`) would otherwise pick up dep sympy sorry/
-# warnings and look dirty when Lemma/<Folder> itself is green.
+# Scope diagnostics to requested modules.
 diag_in_scope() {
   local m=${1#Lemma.}
-  [[ "$m" == sympy || "$m" == sympy.* ]] && return 1
   module_included "$m"
 }
 
@@ -1090,4 +1087,76 @@ echo "total failed    = ${#failingModules[@]}"
 echo "total warning   = ${#warningFiles[@]}"
 rm -f "$tempConfigPath"
 
-echo "total lines     = $(find Lemma -type f -name '*.lean' -not -name '*.echo.lean' -not -name 'test*.lean' -exec awk 'END{print NR}' {} + 2>/dev/null | awk '{s+=$1} END{print s}')"
+# Line count: a full run walks all of Lemma/; a section run counts only
+# Lemma/<section>/ (e.g. `bash sh/run.sh Random` -> Lemma/Random/).
+line_roots=(Lemma)
+if [ ${#MODULES[@]} -gt 0 ]; then
+  line_roots=()
+  declare -A _seen_line_root
+  for m in "${MODULES[@]}"; do
+    section="${m%%[.*]*}"
+    [ -n "$section" ] || continue
+    [ -d "Lemma/$section" ] || continue
+    [ -z "${_seen_line_root[$section]+x}" ] || continue
+    _seen_line_root[$section]=1
+    line_roots+=("Lemma/$section")
+  done
+fi
+if [ ${#line_roots[@]} -eq 0 ]; then
+  echo "total lines     = 0"
+else
+  echo "total lines     = $(find "${line_roots[@]}" -type f -name '*.lean' -not -name '*.echo.lean' -not -name 'test*.lean' -exec awk 'END{print NR}' {} + 2>/dev/null | awk '{s+=$1} END{print s+0}')"
+fi
+# Prompt each folder agent with the unique error/warning/sorry paths in its
+# section. A full run (or a run whose issues span multiple sections) prints
+# one prompt per erroneous section.
+_disp_dir=$(mktemp -d)
+_dispatch_add() {
+  local raw="$1" f base section key dir
+  [ -n "$raw" ] || return
+  raw="${raw#./}"
+  if [[ "$raw" == *.lean ]]; then
+    f="$raw"
+  else
+    f="${raw//.//}.lean"
+  fi
+  [[ "$f" == *.lean ]] || return
+  [[ "$f" == *.echo.lean ]] && return
+  base="${f##*/}"
+  [[ "$base" == test*.lean ]] && return
+  [[ "$f" == Lemma/test/* ]] && return
+  [[ "$f" == .lake/* || "$f" == Mathlib/* || "$f" == Mathlib.lean ]] && return
+  if [[ "$f" == Lemma/*/* ]]; then
+    section="${f#Lemma/}"
+    section="${section%%/*}"
+    key="Lemma/$section"
+  elif [[ "$f" == */* ]]; then
+    section="${f%%/*}"
+    case "$section" in
+      Mathlib|.lake) return ;;
+    esac
+    key="$section"
+  else
+    return
+  fi
+  dir="$_disp_dir/$key"
+  mkdir -p "$dir"
+  printf '%s\n' "$f" >> "$dir/paths.txt"
+}
+
+for _m in "${sorryModules[@]}"; do _dispatch_add "$_m"; done
+for _m in "${failingModules[@]}"; do _dispatch_add "$_m"; done
+for _f in "${warningFiles[@]}"; do _dispatch_add "$_f"; done
+
+if [ -n "$(find "$_disp_dir" -type f -name paths.txt -print -quit)" ]; then
+  echo
+  while IFS= read -r key; do
+    [ -n "$key" ] || continue
+    section="${key##*/}"
+    echo "please fix errors/warnings/sorries within ${key}/, task dispatched to @${section}, with the full list of erroneous paths attached :"
+    sort -u "$_disp_dir/$key/paths.txt"
+  done < <(cd "$_disp_dir" && find . -type f -name paths.txt | sed 's|^\./||; s|/paths.txt$||' | sort)
+fi
+rm -rf "$_disp_dir"
+unset -f _dispatch_add
+

@@ -93,12 +93,6 @@ variable {P : JHPlaceSpecialization p M H hpM A}
 variable {θ : ↥(xHFunctionFieldBar M H) ≃ₐ[AlgebraicClosure ℚ] ↥(xHFunctionFieldBar M H)}
 
 
-open Classical in
-
-
-open Classical in
-
-
 end ProlongationDatum
 end JHPlaceSpecialization
 

@@ -32,9 +32,9 @@ theorem toAdd_valuationOfNeZero_eq_neg_count (x : Kˣ) :
 
   have hspan : FractionalIdeal.spanSingleton R⁰ (x : K) * ((Ideal.span {(s : R)} : Ideal R) : FractionalIdeal R⁰ K) =
       ((Ideal.span {r} : Ideal R) : FractionalIdeal R⁰ K) := by
-    rw [← hx]
-    have := (FractionalIdeal.mk'_mul_coeIdeal_eq_coeIdeal K (I := Ideal.span {(s : R)}) (J := Ideal.span {r}) (x := r) s.2).2 (mul_comm _ _)
-    simpa using this
+    rw [FractionalIdeal.spanSingleton_mul_coeIdeal_eq_coeIdeal]
+    simp_rw [← hrdef, ← hsdef]
+    exact mul_comm _ _
   have hx0 : FractionalIdeal.spanSingleton R⁰ (x : K) ≠ 0 := FractionalIdeal.spanSingleton_ne_zero_iff.2 x.ne_zero
   have hs0 : ((Ideal.span {(s : R)} : Ideal R) : FractionalIdeal R⁰ K) ≠ 0 := by
     rw [Ne, FractionalIdeal.coeIdeal_eq_zero, Ideal.span_singleton_eq_bot]; exact hs
@@ -101,11 +101,11 @@ def IsSel (x : Kˣ) : Prop := ∀ v ∉ S, (n : ℤ) ∣ count K v (spanSingleto
 variable {K S n}
 
 theorem IsSel.mul {x y : Kˣ} (hx : IsSel K S n x) (hy : IsSel K S n y) : IsSel K S n (x * y) := fun v hv => by
-  rw [Units.val_mul, ← spanSingleton_mul_spanSingleton, count_mul K v (spanSingleton_ne_zero_iff.2 x.ne_zero) (spanSingleton_ne_zero_iff.2 y.ne_zero)]
+  rw [Units.val_mul, map_mul, count_mul K v (spanSingleton_ne_zero_iff.2 x.ne_zero) (spanSingleton_ne_zero_iff.2 y.ne_zero)]
   exact dvd_add (hx v hv) (hy v hv)
 
 theorem IsSel.pow (z : Kˣ) : IsSel K S n (z ^ n) := fun v _ => by
-  rw [Units.val_pow_eq_pow_val, ← spanSingleton_pow, count_pow]
+  rw [Units.val_pow_eq_pow_val, map_pow, count_pow]
   exact dvd_mul_right _ _
 
 variable (K S n)
@@ -115,7 +115,7 @@ theorem radExp_mul {x y : Kˣ} (hx : IsSel K S n x) (_hy : IsSel K S n y) (v : H
   unfold radExp
   split_ifs with hv
   · simp
-  · rw [Units.val_mul, ← spanSingleton_mul_spanSingleton, count_mul K v (spanSingleton_ne_zero_iff.2 x.ne_zero) (spanSingleton_ne_zero_iff.2 y.ne_zero)]
+  · rw [Units.val_mul, map_mul, count_mul K v (spanSingleton_ne_zero_iff.2 x.ne_zero) (spanSingleton_ne_zero_iff.2 y.ne_zero)]
     exact Int.add_ediv_of_dvd_left (hx v hv)
 
 theorem rad_mul {x y : Kˣ} (hx : IsSel K S n x) (hy : IsSel K S n y) : rad K S n (x * y) = rad K S n x * rad K S n y := by
@@ -205,8 +205,8 @@ theorem radClass_pow (z : Kˣ) : radClass K S n (z ^ n) = 1 := by
     rw [count_mul K v (rad_ne_zero K S n _) J.ne_zero, count_rad, hJcount, radExp]
     split_ifs with hv
     · simp
-    · rw [Units.val_pow_eq_pow_val, ← spanSingleton_pow, count_pow, add_zero, mul_comm, Int.mul_ediv_cancel _ hn]
-  have hJmem : ClassGroup.mk K J ∈ sClasses S := mk_mem_sClasses K S J fun v hv => by rw [hJcount, if_neg hv]
+    · rw [Units.val_pow_eq_pow_val, map_pow, count_pow, add_zero, mul_comm, Int.mul_ediv_cancel _ hn]
+  have hJmem : ClassGroup.mk K J ∈ sClasses S := mk_mem_sClasses K S J fun v hv => by rw [hJcount, ite_eq_right hv]
   rw [radClass_eq, QuotientGroup.eq_one_iff]
   have : ClassGroup.mk K (radU K S n (z ^ n)) = (ClassGroup.mk K J)⁻¹ := by
     rw [eq_inv_iff_mul_eq_one, ← map_mul, hprod, mk_spanSingleton]
@@ -224,7 +224,7 @@ omit [Fact (0 < n)] in
 theorem valuationOfNeZeroMod_mk_eq_one_iff (v : HeightOneSpectrum R) (x : Kˣ) :
     v.valuationOfNeZeroMod n (QuotientGroup.mk x : Kˣ ⧸ (powMonoidHom n : Kˣ →* Kˣ).range) = 1 ↔
       (n : ℤ) ∣ Multiplicative.toAdd (v.valuationOfNeZero x) := by
-  rw [valuationOfNeZeroMod_mk, MulEquiv.map_eq_one_iff]
+  erw [valuationOfNeZeroMod_mk, MulEquiv.map_eq_one_iff]
   change Multiplicative.ofAdd (QuotientAddGroup.mk (Multiplicative.toAdd (v.valuationOfNeZero x)) : ℤ ⧸ AddSubgroup.zmultiples (n : ℤ)) = 1 ↔ _
   rw [ofAdd_eq_one, QuotientAddGroup.eq_zero_iff, Int.mem_zmultiples_iff]
 

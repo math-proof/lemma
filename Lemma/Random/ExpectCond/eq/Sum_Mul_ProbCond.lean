@@ -2,6 +2,7 @@ import Mathlib.MeasureTheory.Integral.Lebesgue.Countable
 import Mathlib.MeasureTheory.Measure.WithDensity
 import Syntax.Probability.Expectation.Elab
 import Initialize.Tactic.Attr.Basic
+import Theorem.Probability.SymbolicProbability
 open MeasureTheory
 
 
@@ -32,4 +33,4 @@ private lemma main
 
 
 -- created on 2026-09-16
--- updated on 2026-11-14
+-- updated on 2026-11-16

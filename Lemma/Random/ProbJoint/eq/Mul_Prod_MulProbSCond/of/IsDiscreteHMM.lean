@@ -1,7 +1,9 @@
 import Lemma.Random.EqProbJoint.All_Eq_Mul_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasureCount.EqMeasureCount.All_Measurable.All_Measurable
 import Lemma.Random.Prob.eq.Mul_ProbS.Prob.eq.Mul_MulProbS.of.CondIndep.CondIndep
-open MeasureTheory Random
-open IsDiscreteHMM
+import Instance.Probability.Process.DiscreteHMM
+import Instance.Probability.Process.DiscreteHMM.Part2
+open MeasureTheory Random IsDiscreteHMM
+set_option synthInstance.maxHeartbeats 60000
 
 
 @[path]
@@ -15,11 +17,16 @@ private lemma main
   (h : IsDiscreteHMM π x y)
   (t : ℕ) :
 -- imply
+  have : ∀ i, SinglePSpace π (y i) := fun i =>
+    IsDiscreteHMM.singlePSpace_y (x := x) i
+  have : ∀ i j, SinglePSpace π (y i, y j) := fun i j =>
+    IsDiscreteHMM.singlePSpace_yy (x := x) i j
   ℙ[π](x[:t + 1] = «\sf{x}»[:t + 1] ∧ y[:t + 1] = «\sf{y}»[:t + 1]) =
     ℙ[π]((x 0) = «\sf{x}» 0 | (y 0) = «\sf{y}» 0) * ℙ[π]((y 0) = «\sf{y}» 0) *
       ∏ i ∈ Finset.Ico 1 (t + 1),
         ℙ[π]((y i) = «\sf{y}» i | (y (i - 1)) = «\sf{y}» (i - 1)) * ℙ[π]((x i) = «\sf{x}» i | (y i) = «\sf{y}» i) := by
 -- proof
+  intro _ _
   obtain ⟨h₀, h₁⟩ := Prob.eq.Mul_ProbS.Prob.eq.Mul_MulProbS.of.CondIndep.CondIndep
     («\sf{x}» := «\sf{x}») h «\sf{y}»
   simp only [fun_getElem] at h₀ h₁
@@ -75,4 +82,4 @@ private lemma mdp
 
 
 -- created on 2020-12-17
--- updated on 2026-11-02
+-- updated on 2026-11-15

@@ -6,11 +6,11 @@ open Polynomial
 namespace MathlibExt.LinearAlgebra.TriangularizationWanted
 
 variable {K V : Type*} [Field K] [AddCommGroup V] [Module K V] [FiniteDimensional K V]
+omit [FiniteDimensional K V] in
 /--
 [triangularization_aeval_mapQ](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Triangularization.lean)
 -/
 @[path]
-omit [FiniteDimensional K V] in
 private lemma triangularization_aeval_mapQ
   (W : Submodule K V) (f : Module.End K V) (hf : W ≤ W.comap f) (p : K[X]) :
   aeval (W.mapQ W f hf) p =
@@ -35,11 +35,11 @@ end MathlibExt.LinearAlgebra.TriangularizationWanted
 namespace MathlibExt.LinearAlgebra.TriangularizationWanted
 
 variable {K V : Type*} [Field K] [AddCommGroup V] [Module K V] [FiniteDimensional K V]
+omit [FiniteDimensional K V] in
 /--
 [triangularization_minpoly_mapQ_dvd](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Triangularization.lean)
 -/
 @[path]
-omit [FiniteDimensional K V] in
 private lemma triangularization_minpoly_mapQ_dvd
   (W : Submodule K V) (f : Module.End K V) (hf : W ≤ W.comap f) :
   minpoly K (W.mapQ W f hf) ∣ minpoly K f := by
@@ -131,8 +131,8 @@ private lemma triangularization_exists_basis_fin
         rw [Module.Basis.sumQuot_inl]
         exact bW.sumQuot_repr_inr_of_mem bQ _ (hfW (bW j).property) i
       · have hji' : j < i := by
-        change 1 + j.val < 1 + i.val at hji
-        omega
+          change 1 + j.val < 1 + i.val at hji
+          omega
         simp only [LinearMap.toMatrix_apply, Module.Basis.reindex_apply,
           Module.Basis.repr_reindex_apply, Equiv.symm_apply_apply]
         dsimp only [bS]
@@ -194,7 +194,7 @@ lemma exists_upperTriangular_similar_of_splits
   have hfchar : f.charpoly.Splits := by
     dsimp only [f]
     rwa [Matrix.charpoly_toLin A e]
-  obtain ⟨b, hb⟩ := exists_basis_upperTriangular_toMatrix (ι := n) f hfchar (by simp)
+  obtain ⟨b, hb⟩ := exists_basis_upperTriangular_toMatrix (ι := n) (f := f) hfchar (by simp)
   let P : Matrix n n K := e.toMatrix b
   let T : Matrix n n K := LinearMap.toMatrix b b f
   have hP : IsUnit P := by
@@ -228,4 +228,4 @@ end MathlibExt.LinearAlgebra.TriangularizationWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-16

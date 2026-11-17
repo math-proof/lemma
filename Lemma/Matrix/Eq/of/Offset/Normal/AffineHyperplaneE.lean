@@ -14,7 +14,6 @@ namespace AffineWeylGroupFullData
 lemma affineHyperplane_ext
   [NormedAddCommGroup E]
   [InnerProductSpace ℝ E]
-  {d : AffineWeylGroupFullData E}
 -- given
   (h0 h1 : AffineHyperplane E)
   (hn : h0.normal = h1.normal)
@@ -22,7 +21,7 @@ lemma affineHyperplane_ext
 -- imply
   h0 = h1 := by
 -- proof
-  cases h1; cases h2; simp_all
+  cases h0; cases h1; simp_all
 
 end AffineWeylGroupFullData
 
@@ -51,7 +50,7 @@ lemma locallyFinite
       (⌊⟪α, x⟫_ℝ - (‖α‖ + 1)⌋)
       (⌈⟪α, x⟫_ℝ + (‖α‖ + 1)⌉))
       intro k hk
-      simp only [Set.mem_setOf_eq] at hk
+      simp only [Set.mem_ofPred_eq] at hk
       simp only [Set.mem_Icc]
       have hk_abs := abs_sub_lt_iff.mp hk
       exact ⟨Int.floor_le_iff.mpr (by push_cast; linarith [hk_abs.2]),
@@ -61,7 +60,7 @@ lemma locallyFinite
   intro η ⟨hη_arr, hη_meet⟩
   obtain ⟨y, hy_ball, hy_carrier⟩ := hη_meet
   obtain ⟨α, hα, k, hα_eq, hk_eq⟩ := hη_arr
-  simp only [AffineHyperplane.carrier, Set.mem_setOf_eq] at hy_carrier
+  simp only [AffineHyperplane.carrier, Set.mem_ofPred_eq] at hy_carrier
   rw [Metric.mem_ball] at hy_ball
   have h_cs : |⟪α, y - x⟫_ℝ| ≤ ‖α‖ * ‖y - x‖ := abs_real_inner_le_norm α (y - x)
   have h_dist : ‖y - x‖ < 1 := by rwa [← dist_eq_norm]
@@ -77,7 +76,7 @@ lemma locallyFinite
         · exact absurd (norm_eq_zero.mp h0.symm) (d.roots_ne_zero α hα)
         · exact mul_lt_mul_of_pos_left h_dist h0
       _ ≤ ‖α‖ + 1 := by linarith [norm_nonneg α]
-  simp only [Set.mem_iUnion, Set.mem_singleton_iff, Set.mem_setOf_eq]
+  simp only [Set.mem_iUnion, Set.mem_singleton_iff, Set.mem_ofPred_eq]
   exact ⟨α, hα, k, h_bound, affineHyperplane_ext _ _ hα_eq (by linarith [hk_eq])⟩
 
 end AffineWeylGroupFullData
@@ -101,7 +100,7 @@ lemma stable_corootLattice
   refine ⟨⟨α, ↑(k + m), d.roots_ne_zero α hα⟩, ⟨α, hα, k + m, rfl, rfl⟩, ?_, ?_⟩
   · exact hα_eq.symm
   · intro x
-    simp only [AffineHyperplane.carrier, Set.mem_setOf_eq]
+    simp only [AffineHyperplane.carrier, Set.mem_ofPred_eq]
     rw [hα_eq, hk_eq, inner_sub_right, real_inner_comm v α]
     constructor
     · intro h; push_cast at h; linarith
@@ -203,7 +202,7 @@ lemma semidirect_product_affineWeylGroup
       d.corootLattice.zsmul_mem hcr_mem k
     convert hzsmul using 1
     exact Int.cast_smul_eq_zsmul ℝ k (d.coroot α)
-  · exact d.affineRefl_eq_translation_comp_linearRefl α hα k v
+  · exact d.affineRefl_eq_translation_comp_linearRefl hα
 
 end AffineWeylGroupFullData
 
@@ -216,9 +215,8 @@ namespace AffineWeylGroupFullData
 lemma linear_inter_translation_trivial
   [NormedAddCommGroup E]
   [InnerProductSpace ℝ E]
-  {d : AffineWeylGroupFullData E}
-  {w : E ≃ₗᵢ[ℝ] E}
-  {t : E}
+  (w : E ≃ₗᵢ[ℝ] E)
+  (t : E)
 -- given
   (h : ∀ v : E, w v = v + t) :
 -- imply
@@ -264,7 +262,6 @@ namespace AffineWeylGroupFullData
 lemma reflection_involutive
   [NormedAddCommGroup E]
   [InnerProductSpace ℝ E]
-  {d : AffineWeylGroupFullData E}
   [CompleteSpace E]
   [FiniteDimensional ℝ E]
   {η : AffineHyperplane E} :
@@ -369,7 +366,6 @@ namespace AffineWeylGroupFullData
 lemma affineWeylGroup_uniqueDecomposition
   [NormedAddCommGroup E]
   [InnerProductSpace ℝ E]
-  {d : AffineWeylGroupFullData E}
   {w₁ w₂ : E ≃ₗᵢ[ℝ] E}
   {t₁ t₂ : E}
 -- given
@@ -416,8 +412,8 @@ lemma corootTranslation_eq_comp_affineRefls
   ∀ v : E, v + d.coroot α = d.affineReflFun α 1 (d.affineReflFun α 0 v) := by
 -- proof
   intro v
-  rw [← d.linearRefl_eq_affineRefl_zero α v]
-  exact d.translation_coroot_eq_comp α hα v
+  rw [← d.linearRefl_eq_affineRefl_zero]
+  exact d.translation_coroot_eq_comp hα
 
 end AffineWeylGroupFullData
 
@@ -438,7 +434,7 @@ lemma neg_corootTranslation_eq_comp_affineRefls
   ∀ v : E, v - d.coroot α = d.affineReflFun α (-1) (d.affineReflFun α 0 v) := by
 -- proof
   intro v
-  rw [← d.linearRefl_eq_affineRefl_zero α v]
+  rw [← d.linearRefl_eq_affineRefl_zero]
   simp only [affineReflFun, linearReflFun]
   have h_inner : ⟪α, d.coroot α⟫_ℝ = 2 := by
     rw [d.coroot_def α hα, inner_smul_right, div_mul_cancel₀]
@@ -463,10 +459,10 @@ lemma reflections_generate_affineWeylGroup
   (∀ α ∈ d.roots, ∀ v : E, d.linearReflFun α v = d.affineReflFun α 0 v) ∧ (∀ α ∈ d.roots, ∀ v : E, v + d.coroot α = d.affineReflFun α 1 (d.affineReflFun α 0 v)) ∧ (∀ α ∈ d.roots, ∀ v : E, v - d.coroot α = d.affineReflFun α (-1) (d.affineReflFun α 0 v)) ∧ (∀ α ∈ d.roots, ∀ k : ℤ, ∀ v : E, d.affineReflFun α k v = d.linearReflFun α v + (k : ℝ) • d.coroot α) := by
 -- proof
   exact ⟨
-    fun α _ v => d.linearRefl_eq_affineRefl_zero α v,
-    fun α hα v => d.corootTranslation_eq_comp_affineRefls α hα v,
-    fun α hα v => d.neg_corootTranslation_eq_comp_affineRefls α hα v,
-    fun α hα k v => d.affineRefl_eq_translation_comp_linearRefl α hα k v⟩
+    fun α _ v => d.linearRefl_eq_affineRefl_zero (α := α) (v := v),
+    fun α hα v => d.corootTranslation_eq_comp_affineRefls hα v,
+    fun α hα v => d.neg_corootTranslation_eq_comp_affineRefls hα v,
+    fun α hα k v => d.affineRefl_eq_translation_comp_linearRefl (k := k) (v := v) hα⟩
 
 end AffineWeylGroupFullData
 

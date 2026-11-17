@@ -1,6 +1,6 @@
 import Lemma.Bool.SEqUFnS.of.SEq
 import Instance.Data.Vector.Functions.Part2
-open Bool
+open Bool Exp
 
 
 @[path]

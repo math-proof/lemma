@@ -103,7 +103,7 @@ private theorem ell_le_ell_sub_single_add_deg
     [IsCurveOver K F] (D : Divisor K F)
     (P : Place K F) : ell D ≤ ell (D - Finsupp.single P 1) + P.deg := by
   classical
-  haveI : Module.Finite K P.ResidueField := IsCurveOver.finite_residueField P
+  have : Module.Finite K P.ResidueField := IsCurveOver.finite_residueField P
   set E : Divisor K F := D - Finsupp.single P 1 with hE
   have hEP : E P = D P - 1 := by rw [hE, Finsupp.sub_apply, Finsupp.single_eq_same]
   have hEv : ∀ v, v ≠ P → E v = D v := by
@@ -196,7 +196,7 @@ private theorem ell_le_ell_sub_single_add_deg
     exact Submodule.finrank_le (LinearMap.range φ)
 
   by_cases hfin : FiniteDimensional K (LSpace D)
-  · haveI := hfin
+  · have := hfin
     have hrn := Submodule.finrank_quotient_add_finrank (LinearMap.ker φ)
     rw [hkerfin] at hrn
     have hb : ell D = finrank K (LSpace D) := rfl
@@ -211,7 +211,7 @@ private theorem one_le_deg
   [Field F]
   [Algebra K F]
   [IsCurveOver K F] (P : Place K F) : 1 ≤ P.deg := by
-  haveI : Module.Finite K P.ResidueField := IsCurveOver.finite_residueField P
+  have : Module.Finite K P.ResidueField := IsCurveOver.finite_residueField P
   exact Module.finrank_pos
 
 private theorem degree_eq_sum_support
@@ -279,7 +279,7 @@ private theorem finite_lSpace
     have : (1 : ℤ) ≤ (ell D' : ℤ) := by linarith
     have h' : 1 ≤ ell D' := by exact_mod_cast this
     exact h'
-  haveI : Module.Finite K (LSpace D') := Module.finite_of_finrank_pos hpos
+  have : Module.Finite K (LSpace D') := Module.finite_of_finrank_pos hpos
   have hle : D ≤ D' := by
     rw [Finsupp.le_def]; intro v
     rw [hD', Finsupp.add_apply, Finsupp.smul_apply, smul_eq_mul]
@@ -314,7 +314,7 @@ private theorem exists_ord_pos_of_ord_neg
       _ ≤ ∑ v ∈ (-D).support, (-D) v * (v.deg : ℤ) :=
           Finset.single_le_sum
             (fun v _ => mul_nonneg (hall' v) (Int.natCast_nonneg _)) hmem
-  rw [map_neg, hdeg, neg_zero] at hdegpos
+  rw [_root_.map_neg, hdeg, neg_zero] at hdegpos
   exact lt_irrefl 0 hdegpos
 
 private theorem infinite_place_of_pole
@@ -356,7 +356,7 @@ private theorem infinite_place_of_pole
     have hval : ((⟨x - algebraMap K F c', hx2⟩ : w.toValuationSubring)
         - ⟨x - algebraMap K F c, hx1⟩) = algebraMap K w.toValuationSubring (c - c') := by
       apply Subtype.ext
-      simp only [AddSubgroupClass.coe_sub, Place.coe_algebraMap, map_sub]
+      simp only [AddSubgroupClass.coe_sub, Place.coe_algebraMap, _root_.map_sub]
       ring
     rw [hval] at hdiff
     have hunit : IsUnit (algebraMap K w.toValuationSubring (c - c')) :=
@@ -406,7 +406,7 @@ private theorem ell_sub_single_add_one_eq
     linarith
   have hlt : LSpace (G - Finsupp.single Q 1) < LSpace G :=
     lt_of_le_of_ne hle fun h => hfnot (h ▸ hfG)
-  haveI : Module.Finite K (LSpace G) := finite_lSpace hRR P G
+  have : Module.Finite K (LSpace G) := finite_lSpace hRR P G
   have h1 : ell (G - Finsupp.single Q 1) < ell G := Submodule.finrank_lt_finrank_of_lt hlt
   have h2 : ell G ≤ ell (G - Finsupp.single Q 1) + Q.deg := ell_le_ell_sub_single_add_deg G Q
   rw [hQ] at h2
@@ -471,7 +471,7 @@ private lemma  exists_finset_subset_ell_sub_sum_single_eq_zero_impl
       exact hS (B.finite_toSet.subset fun x hx => by simpa using h x hx)
     have hv := hB v hvB
     obtain ⟨T, hTS, hTcard, hTell⟩ :=
-      ih (S \ {v}) (hS.diff (Set.finite_singleton v)) (G - Finsupp.single v 1) (by omega)
+      ih (S \ {v}) (hS.sdiff (Set.finite_singleton v)) (G - Finsupp.single v 1) (by omega)
     have hvT : v ∉ T := fun h => (hTS h).2 rfl
     refine ⟨insert v T, ?_, ?_, ?_⟩
     · intro x hx

@@ -1,6 +1,6 @@
 import Theorem.Dynamics.PolicyTrajectory.ContinuousAction
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
-open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.DensityModel Random
+open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
 /--
@@ -11,7 +11,7 @@ Continuous-action counterpart of
 @[path]
 private lemma main
   [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [ReferenceMeasure 𝒜] [DecidableEq 𝒮]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
@@ -19,21 +19,22 @@ private lemma main
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
   (θ : Θ)
   (t : ℕ)
-  (x : 𝒮)
+  (sₜ : 𝒮)
   (f : (ℕ → ℝ × 𝒮 × 𝒜) → ℝ) :
 -- imply
-  ∫ ω, f ω ∂(M θ)[|s t ⁻¹' {x}] =
-    ((M θ).real (s t ⁻¹' {x}))⁻¹ *
-      ∫ ω, (if s t ω = x then (1:ℝ) else 0) * f ω ∂(M θ) := by
+  ∫ ω, f ω ∂(M.traj θ)[|s t ⁻¹' {sₜ}] =
+    ((M.traj θ).real (s t ⁻¹' {sₜ}))⁻¹ *
+      ∫ ω, (if s t ω = sₜ then (1:ℝ) else 0) * f ω ∂(M.traj θ) := by
 -- proof
-  have hB : MeasurableSet (s t ⁻¹' {x}) :=
-    Random.Measurable.of.All_Eq.snd.fst h₀ t (measurableSet_singleton x)
+  have hB : MeasurableSet (s t ⁻¹' {sₜ}) :=
+    Random.Measurable.of.All_Eq.snd.fst h₀ t (measurableSet_singleton sₜ)
   rw [ProbabilityTheory.cond, integral_smul_measure, ← integral_indicator hB, ENNReal.toReal_inv,
     ← measureReal_def, smul_eq_mul]
   congr 1
   congr 1
   funext ω
-  by_cases h : s t ω = x <;> simp [h]
+  by_cases h : s t ω = sₜ <;> simp [h]
 
 
 -- created on 2026-11-13
+-- updated on 2026-11-16

@@ -25,7 +25,7 @@ variable {R S : Type*} [Ring R] [Ring S]
 coercion is injective. -/
 instance : FunLike (RingAntiHom R S) R S where
   coe := RingAntiHom.toFun
-  coe_injective' f g h := by cases f; cases g; congr
+  coe_injective f g h := by cases f; cases g; congr
 
 end RingAntiHom
 end Definition121

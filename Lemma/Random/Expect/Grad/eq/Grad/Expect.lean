@@ -2,6 +2,7 @@ import Mathlib.Analysis.Calculus.ParametricIntegral
 import Syntax.Probability.Expectation.Elab
 import Initialize.Tactic.Attr.Basic
 import Theorem.Probability.JointRv.AsRV
+import Theorem.Probability.SymbolicProbability
 open MeasureTheory Topology
 
 
@@ -30,4 +31,4 @@ private lemma main
 
 
 -- created on 2023-04-04
--- updated on 2026-11-12
+-- updated on 2026-11-16

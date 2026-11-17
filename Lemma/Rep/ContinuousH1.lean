@@ -52,7 +52,7 @@ variable {A B C : Rep k G} (φ : A ⟶ B) (ψ : B ⟶ C)
 
 
 lemma apply_preimageFun {b : B} (h : ∃ a : A, φ.hom a = b) : φ.hom (preimageFun φ b) = b := by
-  rw [preimageFun, dif_pos h]; exact h.choose_spec
+  rw [preimageFun, dite_eq_left h]; exact h.choose_spec
 
 lemma preimageFun_apply (hφ : Function.Injective φ.hom) (a : A) : preimageFun φ (φ.hom a) = a :=
   hφ (apply_preimageFun φ ⟨a, rfl⟩)

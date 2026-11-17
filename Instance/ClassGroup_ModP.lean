@@ -1,4 +1,5 @@
 -- Carved from Lemma/Definitions/Def_ClassGroup_ModP.lean: instance decls only.
+-- `instModuleZModModP` lives in `Lemma.ClassGroup.ModP` to break the import cycle.
 import Mathlib
 import Lemma.ClassGroup.ModP
 
@@ -10,10 +11,7 @@ namespace JacobiSumStickelberger
 
 section ModP
 
-variable (p : ℕ) (M : Type*) [AddCommGroup M]
-
-instance instModuleZModModP [NeZero p] : Module (ZMod p) (ModP p M) :=
-  QuotientAddGroup.zmodModule (nsmul_mem_nsmulRange p M)
+-- Instance `instModuleZModModP` is declared in `Lemma.ClassGroup.ModP`.
 
 end ModP
 

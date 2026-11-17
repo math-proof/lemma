@@ -1,7 +1,6 @@
 import Mathlib
 import Def.M4aHerbrand_IdeleClassVocab
 import Lemma.Set.FiniteUnitIdelesOutside
-import Instance.M4aHerbrand_SIdeleClassGroup
 
 set_option autoImplicit false
 
@@ -107,7 +106,7 @@ lemma sClassKernel_univ : sClassKernel R F Set.univ = principalIdeles R F := by
   rw [sClassKernel, unitIdelesTrivialOn_univ, sup_bot_eq]
 
 def toSIdeleClass (T : Set (HeightOneSpectrum R)) : IdeleClassGroup R F →* SIdeleClassGroup R F T :=
-  QuotientGroup.map _ _ (MonoidHom.id _) (principalIdeles_le_sClassKernel R F T)
+  QuotientGroup.map _ _ (MonoidHom.id _) (by simpa [Subgroup.comap_id] using principalIdeles_le_sClassKernel R F T)
 
 @[simp] lemma toSIdeleClass_mk (T : Set (HeightOneSpectrum R)) (x : (AdeleRing R F)ˣ) :
     toSIdeleClass R F T (QuotientGroup.mk x) = QuotientGroup.mk x := rfl

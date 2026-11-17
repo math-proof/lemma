@@ -6,11 +6,11 @@ namespace MathlibExt.LinearAlgebra.SmithNormalFormWanted
 
 /--
 [aux_generator_dvd_all](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/SmithNormalForm.lean)
--/
-@[path]
 This strengthens `generator_maximal_submoduleImage_dvd` (which only handles the
 witness element `y`) to all of `N`, by translating an arbitrary `x` to one with
-maximal coordinate value. -/
+maximal coordinate value.
+-/
+@[path]
 private lemma aux_generator_dvd_all {R W : Type*} [CommRing R] [IsDomain R]
   [IsPrincipalIdealRing R] [AddCommGroup W] [Module R W]
   {M N : Submodule R W} (hNM : N ≤ M)
@@ -62,10 +62,10 @@ namespace MathlibExt.LinearAlgebra.SmithNormalFormWanted
 
 /--
 [aux_basis_of_pid](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/SmithNormalForm.lean)
+`a` is nonzero, the extension scalars are `Fin.cons`-shaped, the extended basis of `M`
+extends the basis of `M'`, and `a` divides every coordinate value on `N`.
 -/
 @[path]
-`a` is nonzero, the extension scalars are `Fin.cons`-shaped, the extended basis of `M`
-extends the basis of `M'`, and `a` divides every coordinate value on `N`. -/
 private lemma aux_basis_of_pid {ι : Type*} {R : Type*} [CommRing R] [IsPrincipalIdealRing R]
   [IsDomain R] [Finite ι] {O : Type*} [AddCommGroup O] [Module R O]
   (M N : Submodule R O) (b'M : Module.Basis ι R M) (N_bot : N ≠ ⊥) (N_le_M : N ≤ M) :
@@ -189,9 +189,9 @@ namespace MathlibExt.LinearAlgebra.SmithNormalFormWanted
 
 /--
 [aux_exists_smith_of_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/SmithNormalForm.lean)
+entries are nonzero and form a divisibility chain.
 -/
 @[path]
-entries are nonzero and form a divisibility chain. -/
 private lemma aux_exists_smith_of_le {ι : Type*} {R W : Type*} [CommRing R] [IsDomain R]
   [IsPrincipalIdealRing R] [Finite ι] [AddCommGroup W] [Module R W]
   (b : Module.Basis ι R W) (N O : Submodule R W) (N_le_O : N ≤ O) :
@@ -304,10 +304,10 @@ lemma smithNormalForm
     (∀ i, a i ≠ 0) ∧
     (∀ (i : ℕ) (hi1 : i < n) (hi2 : i + 1 < n), a ⟨i, hi1⟩ ∣ a ⟨i + 1, hi2⟩) := by
 -- proof
-  exact Submodule.exists_smith_normal_form_dvd_chain N
+  exact Submodule.exists_smith_normal_form_dvd_chain (N := N)
 
 end MathlibExt.LinearAlgebra.SmithNormalFormWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-16

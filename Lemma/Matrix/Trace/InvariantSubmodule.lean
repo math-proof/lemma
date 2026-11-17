@@ -59,7 +59,6 @@ lemma LinearMap.trace_eq_trace_restrict_add_trace_mapQ
   rw [LinearMap.trace_eq_matrix_trace K b e,
     LinearMap.trace_eq_matrix_trace K bW (e.restrict he),
     LinearMap.trace_eq_matrix_trace K bQ (W.mapQ W e he), hblock, htrace]
-variable {W : Type*} [AddCommGroup W] [Module K W]
 
 /--
 [LinearMap.trace_eq_trace_restrict_ker_add_of_surjective](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Trace/InvariantSubmodule.lean)
@@ -94,11 +93,10 @@ lemma LinearMap.trace_eq_trace_restrict_ker_add_of_surjective
       Submodule.mapQ_apply,
       LinearMap.quotKerEquivOfSurjective_apply_mk]
     exact LinearMap.congr_fun h x
-  rw [LinearMap.trace_eq_trace_restrict_add_trace_mapQ
-    (LinearMap.ker q) f hi,
+  rw [LinearMap.trace_eq_trace_restrict_add_trace_mapQ hi,
     ← LinearMap.trace_conj'
       ((LinearMap.ker q).mapQ (LinearMap.ker q) f hi) E, hc]
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-16

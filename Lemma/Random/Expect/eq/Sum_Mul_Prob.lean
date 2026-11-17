@@ -3,6 +3,7 @@ import Mathlib.MeasureTheory.Measure.WithDensity
 import Syntax.Probability.Expectation.Elab
 import Lemma.Random.Map.eq.WithDensityProb
 import Theorem.Probability.JointRv.AsRV
+import Theorem.Probability.SymbolicProbability
 open MeasureTheory
 
 
@@ -29,4 +30,4 @@ private lemma main
 
 
 -- created on 2023-03-20
--- updated on 2026-11-14
+-- updated on 2026-11-16

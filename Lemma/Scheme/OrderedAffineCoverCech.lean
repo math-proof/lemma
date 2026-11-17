@@ -1,9 +1,7 @@
-import Lemma.Scheme.TwoAffineOpenCover
 import Mathlib.AlgebraicGeometry.AffineScheme
 import Mathlib.RingTheory.Finiteness.Defs
 import Mathlib.LinearAlgebra.Quotient.Defs
 import Mathlib.LinearAlgebra.Pi
-import Instance.AlgebraicGeometry_OrderedAffineCoverCech
 import Structure.AlgebraicGeometry_OrderedAffineCoverCech
 
 set_option autoImplicit false
@@ -21,7 +19,10 @@ namespace Scheme.OrderedAffineCover
 
 variable {V : Scheme.{u}} (K : V.OrderedAffineCover)
 
-def Idx (i : ℕ) : Type u := {s : Fin (i + 1) → K.ι // StrictMono s}
+@[instance_reducible] def fintype_Idx (i : ℕ) : Fintype (K.Idx i) := Subtype.fintype _
+
+@[instance_reducible] def decidableEq_Idx (i : ℕ) : DecidableEq (K.Idx i) := Classical.decEq _
+
 
 def inter {i : ℕ} (s : K.Idx i) : V.Opens := ⨅ j, K.U (s.1 j)
 
@@ -50,6 +51,37 @@ theorem ofAffine_U [IsAffine V] (i : PUnit.{u + 1}) : (ofAffine V).U i = ⊤ := 
 end Scheme.OrderedAffineCover
 
 namespace Scheme.TwoAffineOpenCover
+
+section cover
+
+variable {R : Type u} [CommRing R] {X : Scheme.{u}}
+
+def restrictAlgHom (c : X ⟶ Spec (.of R)) {U V : X.Opens} (h : V ≤ U) :
+    letI := algebraOfHom c U
+    letI := algebraOfHom c V
+    Γ(X, U) →ₐ[R] Γ(X, V) :=
+  letI := algebraOfHom c U
+  letI := algebraOfHom c V
+  { (X.presheaf.map (homOfLE h).op).hom with
+    commutes' := fun r => by
+      change (c.appLE ⊤ U (by rw [Scheme.Hom.preimage_top]; exact le_top) ≫
+          X.presheaf.map (homOfLE h).op).hom _
+        = (c.appLE ⊤ V (by rw [Scheme.Hom.preimage_top]; exact le_top)).hom _
+      rw [Scheme.Hom.appLE_map] }
+
+variable (𝒱 : X.TwoAffineOpenCover) (c : X ⟶ Spec (.of R))
+
+def cover : TwoChartCech.Cover.{u, u} R :=
+  letI := algebraOfHom c 𝒱.U0
+  letI := algebraOfHom c 𝒱.U1
+  letI := algebraOfHom c (𝒱.U0 ⊓ 𝒱.U1)
+  { A0 := Γ(X, 𝒱.U0)
+    A1 := Γ(X, 𝒱.U1)
+    A01 := Γ(X, 𝒱.U0 ⊓ 𝒱.U1)
+    ρ0 := restrictAlgHom c inf_le_left
+    ρ1 := restrictAlgHom c inf_le_right }
+
+end cover
 
 variable {X : Scheme.{u}} (𝒱 : X.TwoAffineOpenCover)
 
@@ -90,6 +122,7 @@ theorem res_res {U U' U'' : V.Opens} (h : U ≤ U') (h' : U' ≤ U'') (x : F.obj
 abbrev cochain (i : ℕ) : Type u := ∀ s : K.Idx i, F.obj (K.inter s)
 
 def d (i : ℕ) : F.cochain K i →ₗ[R] F.cochain K (i + 1) :=
+  haveI := K.decidableEq_Idx i
   LinearMap.pi fun s => ∑ j : Fin (i + 2), ((-1 : ℤ) ^ (j : ℕ)) •
     ((F.res (K.inter_le_inter_face s j)).comp (LinearMap.proj (K.face s j)))
 
@@ -140,7 +173,7 @@ def unit : OModulePresheaf π where
   module U := (Scheme.TwoAffineOpenCover.algebraOfHom π U).toModule
   moduleSections _ := Semiring.toModule
   isScalarTower U := by
-    letI := Scheme.TwoAffineOpenCover.algebraOfHom π U
+    let := Scheme.TwoAffineOpenCover.algebraOfHom π U
     exact IsScalarTower.right
   res {U U'} h :=
     letI := Scheme.TwoAffineOpenCover.algebraOfHom π U
@@ -151,13 +184,13 @@ def unit : OModulePresheaf π where
       = (V.presheaf.map (homOfLE h).op).hom a * (V.presheaf.map (homOfLE h).op).hom x
     exact map_mul _ a x
   res_refl U := by
-    letI := Scheme.TwoAffineOpenCover.algebraOfHom π U
+    let := Scheme.TwoAffineOpenCover.algebraOfHom π U
     refine LinearMap.ext fun x => ?_
     show (V.presheaf.map (homOfLE (le_refl U)).op).hom x = x
     rw [Subsingleton.elim (homOfLE (le_refl U)).op (𝟙 (op U)), V.presheaf.map_id]; rfl
   res_comp {U U' U''} h h' := by
-    letI := Scheme.TwoAffineOpenCover.algebraOfHom π U
-    letI := Scheme.TwoAffineOpenCover.algebraOfHom π U''
+    let := Scheme.TwoAffineOpenCover.algebraOfHom π U
+    let := Scheme.TwoAffineOpenCover.algebraOfHom π U''
     refine LinearMap.ext fun x => ?_
     show (V.presheaf.map (homOfLE (h.trans h')).op).hom x
       = (V.presheaf.map (homOfLE h).op).hom ((V.presheaf.map (homOfLE h').op).hom x)

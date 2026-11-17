@@ -139,7 +139,7 @@ theorem restrictConstants_fiber_finite [HasPrincipalDivisors K' F'] (v : Place K
   obtain ⟨D, hD, -⟩ := HasPrincipalDivisors.exists_divisor (K := K') (algebraMap F F' f) hf0'
   apply Set.Finite.subset D.support.finite_toSet
   intro w hw
-  simp only [Set.mem_setOf_eq] at hw
+  simp only [Set.mem_ofPred_eq] at hw
   simp only [Finset.mem_coe, Finsupp.mem_support_iff, hD w]
   have := (forgetConstants (K := K) w).ord_algebraMap_ne_zero_of_restrict_eq
     (v := v) (f := f) (by omega) hw
@@ -153,7 +153,7 @@ def fiberConstants [HasPrincipalDivisors K' F'] (v : Place K F) : Finset (Place 
 @[simp]
 theorem mem_fiberConstants [HasPrincipalDivisors K' F'] {v : Place K F} {w : Place K' F'} :
     w ∈ fiberConstants K' F' v ↔ restrictConstants F (K := K) w = v := by
-  simp only [fiberConstants, Set.Finite.mem_toFinset, Set.mem_setOf_eq]
+  simp only [fiberConstants, Set.Finite.mem_toFinset, Set.mem_ofPred_eq]
 
 end Place
 

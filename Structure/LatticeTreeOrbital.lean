@@ -5,7 +5,7 @@ import Mathlib.RingTheory.Localization.FractionRing
 import Mathlib.NumberTheory.Padics.PadicIntegers
 import Mathlib.LinearAlgebra.Projectivization.Cardinality
 import Mathlib.RingTheory.Ideal.Quotient.Defs
-import Mathlib.Data.Complex.Basic
+import Mathlib.Basic.Complex.Basic
 
 set_option autoImplicit false
 
@@ -104,6 +104,62 @@ def Homothetic (L L' : Submodule R (Fin 2 → K)) : Prop :=
   ∃ c : Kˣ, latticeMap (scalarGL c) L = L'
 
 
+theorem scalarGL_one : scalarGL (1 : Kˣ) = 1 := by
+  ext1
+  change (1 : K) • (1 : Matrix (Fin 2) (Fin 2) K) = (1 : Matrix (Fin 2) (Fin 2) K)
+  rw [one_smul]
+
+theorem scalarGL_mul (c d : Kˣ) : scalarGL (c * d) = scalarGL c * scalarGL d := by
+  ext1
+  rw [Units.val_mul, scalarGL_coe, scalarGL_coe, scalarGL_coe, Units.val_mul,
+    Matrix.smul_mul, Matrix.one_mul, smul_smul, mul_comm]
+
+theorem Homothetic.refl (L : Submodule R (Fin 2 → K)) : Homothetic L L :=
+  ⟨1, by rw [scalarGL_one, latticeMap_one]⟩
+
+theorem Homothetic.symm {L L' : Submodule R (Fin 2 → K)} (h : Homothetic L L') :
+    Homothetic L' L := by
+  obtain ⟨c, hc⟩ := h
+  refine ⟨c⁻¹, ?_⟩
+  rw [← hc, ← latticeMap_mul, ← scalarGL_mul, inv_mul_cancel, scalarGL_one,
+    latticeMap_one]
+
+theorem Homothetic.trans {L L' L'' : Submodule R (Fin 2 → K)}
+    (h : Homothetic L L') (h' : Homothetic L' L'') : Homothetic L L'' := by
+  obtain ⟨c, hc⟩ := h
+  obtain ⟨d, hd⟩ := h'
+  refine ⟨d * c, ?_⟩
+  rw [← hd, ← hc, ← latticeMap_mul, scalarGL_mul]
+
+theorem IsFullLattice.map {L : Submodule R (Fin 2 → K)} (h : IsFullLattice L)
+    (g : Matrix.GeneralLinearGroup (Fin 2) K) : IsFullLattice (latticeMap g L) := by
+  constructor
+  · exact h.1.map (mulVecLinR g)
+  · let f : (Fin 2 → K) →ₗ[K] (Fin 2 → K) :=
+      Matrix.mulVecLin (g : Matrix (Fin 2) (Fin 2) K)
+    have him : (latticeMap g L : Set (Fin 2 → K)) = ⇑f '' (L : Set (Fin 2 → K)) := by
+      ext v
+      constructor
+      · rintro ⟨x, hx, hxv⟩
+        refine ⟨x, hx, ?_⟩
+        exact hxv
+      · rintro ⟨x, hx, hxv⟩
+        refine ⟨x, hx, ?_⟩
+        exact hxv
+    rw [him, Submodule.span_image, h.2, Submodule.map_top]
+    refine LinearMap.range_eq_top.2 ?_
+    intro v
+    refine ⟨(g⁻¹ : Matrix.GeneralLinearGroup (Fin 2) K) *ᵥ v, ?_⟩
+    calc
+      f ((g⁻¹ : Matrix.GeneralLinearGroup (Fin 2) K) *ᵥ v)
+          = (g : Matrix (Fin 2) (Fin 2) K) *ᵥ
+              ((g⁻¹ : Matrix.GeneralLinearGroup (Fin 2) K) *ᵥ v) := rfl
+      _ = ((g : Matrix (Fin 2) (Fin 2) K) *
+            (g⁻¹ : Matrix.GeneralLinearGroup (Fin 2) K)) *ᵥ v := by
+          rw [Matrix.mulVec_mulVec]
+      _ = (1 : Matrix (Fin 2) (Fin 2) K) *ᵥ v := by
+          rw [← Units.val_mul, mul_inv_cancel, Units.val_one]
+      _ = v := Matrix.one_mulVec v
 variable (R K) in
 
 abbrev FullLattice : Type _ := {L : Submodule R (Fin 2 → K) // IsFullLattice L}
@@ -118,10 +174,8 @@ variable (R K) in
 
 def Vertex : Type _ := Quotient (homothetySetoid R K)
 
-variable (R K) in
 
-
-variable (R K) in
+variable {R K} in
 
 
 def Vertex.act (g : Matrix.GeneralLinearGroup (Fin 2) K) : Vertex R K → Vertex R K :=
@@ -149,12 +203,6 @@ section ResiduePlane
 variable {k : Type*} [Field k] {V : Type*} [AddCommGroup V] [Module k V]
 
 
-set_option maxHeartbeats 800000 in
-
-
-set_option maxHeartbeats 800000 in
-
-
 end ResiduePlane
 
 section NeighbourFamily
@@ -162,16 +210,7 @@ section NeighbourFamily
 variable {R : Type*} [CommRing R] {K : Type*} [Field K] [Algebra R K]
 
 
-variable (R K) in
-
-
-variable (R K) in
-
-
 variable [IsFractionRing R K]
-
-
-variable (R K) in
 
 
 end NeighbourFamily
@@ -213,8 +252,14 @@ structure IntegralAut (R K : Type*) [CommRing R] [Field K] [Algebra R K] where
 
 namespace IntegralAut
 
-variable (R K) in
-
+def symm (σ : IntegralAut R K) : IntegralAut R K where
+  toField := σ.toField.symm
+  toBase := σ.toBase.symm
+  commutes := by
+    intro r
+    have h := σ.commutes (σ.toBase.symm r)
+    rw [RingEquiv.apply_symm_apply] at h
+    exact (RingEquiv.eq_symm_apply σ.toField).2 h.symm
 
 theorem symm_toField (σ : IntegralAut R K) : σ.symm.toField = σ.toField.symm := rfl
 
@@ -317,8 +362,6 @@ theorem mem_fixedVertexSet {g : Matrix.GeneralLinearGroup (Fin 2) K}
     {v : Vertex R K} : v ∈ fixedVertexSet (R := R) g ↔ Vertex.act g v = v :=
   Iff.rfl
 
-variable (R) in
-
 
 section Engine
 
@@ -331,16 +374,12 @@ section Dichotomy
 
 variable [IsFractionRing R K]
 
-omit [IsFractionRing R K] in
-
 
 end Dichotomy
 
 section Rigidity
 
 variable [IsFractionRing R K]
-
-omit [Algebra R K] [IsFractionRing R K] in
 
 
 end Rigidity

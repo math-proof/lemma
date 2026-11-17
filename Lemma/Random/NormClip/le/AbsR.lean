@@ -1,5 +1,4 @@
-import Theorem.Dynamics.PolicyTrajectory
-import Def.Order.Miscellaneous
+import Theorem.Dynamics.PolicyTrajectory.ContinuousAction
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
 
 
@@ -9,12 +8,12 @@ The clamped reward is bounded by the reward bound:
 -/
 @[path]
 private lemma main
-  [MeasurableSpace S] [MeasurableSpace A] [Fintype A]
-  {M : Model Θ S A}
+  [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy]
 -- given
-  (z : ℝ × S × A) :
+  (z : ℝ × 𝒮 × 𝒜) :
 -- imply
-  ‖clip z.1 (-M.env.R) M.env.R‖ ≤ |M.env.R| := by
+  ‖clip z.1 (-M.R) M.R‖ ≤ |M.R| := by
 -- proof
   rw [Real.norm_eq_abs, abs_le, clip]
   constructor
@@ -31,4 +30,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-10-26
+-- updated on 2026-11-16

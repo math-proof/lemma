@@ -24,9 +24,6 @@ namespace Heis
 variable {δ} {d}
 
 
-variable (δ d) in
-
-
 end Heis
 
 section Schrodinger

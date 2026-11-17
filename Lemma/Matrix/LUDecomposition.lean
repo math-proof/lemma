@@ -48,7 +48,8 @@ private lemma lu_lower_inv_unit {n : ℕ} (L : Matrix (Fin n) (Fin n) K)
   (hL : L.IsLowerTriangular) (hdiag : ∀ i, L i i = 1) :
   L⁻¹.IsLowerTriangular ∧ ∀ i, L⁻¹ i i = 1 := by
   have hdet : IsUnit L.det := by
-    rwa [lu_det_eq_one_of_lower_unit L hL hdiag]
+    rw [lu_det_eq_one_of_lower_unit L hL hdiag]
+    exact isUnit_one
   let hInv : Invertible L := Matrix.invertibleOfIsUnitDet L hdet
   have hinv : L⁻¹.IsLowerTriangular :=
     @Matrix.blockTriangular_inv_of_blockTriangular _ _ _ L _ _ _ _ _ hInv hL
@@ -109,7 +110,8 @@ private lemma lu_unique_aux (n : ℕ) (A L₁ L₂ U₁ U₂ : Matrix (Fin n) (F
   have hdetL₁ : L₁.det = 1 := lu_det_eq_one_of_lower_unit L₁ hL₁ hd₁
   have hdetL₂ : L₂.det = 1 := lu_det_eq_one_of_lower_unit L₂ hL₂ hd₂
   have hunitL₂ : IsUnit L₂.det := by
-    rwa [hdetL₂]
+    rw [hdetL₂]
+    exact isUnit_one
   have hdetU₁ : U₁.det = A.det := by
     rw [e₁, Matrix.det_mul, hdetL₁, one_mul]
   have hunitU₁ : IsUnit U₁.det := by
@@ -168,7 +170,7 @@ private lemma lu_fromBlocks_lower {n : ℕ} (L : Matrix (Fin n) (Fin n) K)
     (fun i ↦ OrderDual.toDual
       ((finSumFinEquiv : Fin n ⊕ Fin 1 ≃ Fin (n + 1)) i)) := by
   intro i j hij
-  obtain i | i <;> rcases j with j | j := i
+  rcases i with i | i <;> rcases j with j | j
   · apply hL
     simp only [finSumFinEquiv_apply_left] at hij
     exact (Fin.castAddOrderEmb 1).lt_iff_lt.mp hij
@@ -195,7 +197,7 @@ private lemma lu_fromBlocks_upper {n : ℕ} (U : Matrix (Fin n) (Fin n) K)
   (Matrix.fromBlocks U B 0 D).BlockTriangular
     (finSumFinEquiv : Fin n ⊕ Fin 1 ≃ Fin (n + 1)) := by
   intro i j hij
-  obtain i | i <;> rcases j with j | j := i
+  rcases i with i | i <;> rcases j with j | j
   · apply hU
     simp only [finSumFinEquiv_apply_left] at hij
     exact (Fin.castAddOrderEmb 1).lt_iff_lt.mp hij
@@ -230,7 +232,8 @@ private lemma lu_block_factor {n : ℕ}
       (∀ i, L i i = 1) ∧ A = L * U := by
   have hdetL₀ : L₀.det = 1 := lu_det_eq_one_of_lower_unit L₀ hL₀ hd₀
   have hunitL₀ : IsUnit L₀.det := by
-    rwa [hdetL₀]
+    rw [hdetL₀]
+    exact isUnit_one
   have hdetU₀ : U₀.det ≠ 0 := by
     intro hzero
     apply hdet
@@ -263,11 +266,11 @@ end MathlibExt.LinearAlgebra.Matrix.LUDecompositionWanted
 namespace MathlibExt.LinearAlgebra.Matrix.LUDecompositionWanted
 
 variable [Field K]
+omit [Field K] in
 /--
 [lu_reindexed_topLeft](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/LUDecomposition.lean)
 -/
 @[path]
-omit [Field K] in
 private lemma lu_reindexed_topLeft {n : ℕ} (A : Matrix (Fin (n + 1)) (Fin (n + 1)) K) :
   (Matrix.reindex finSumFinEquiv.symm finSumFinEquiv.symm A).toBlocks₁₁ =
     A.submatrix Fin.castSucc Fin.castSucc := by
@@ -427,4 +430,4 @@ end MathlibExt.LinearAlgebra.Matrix.LUDecompositionWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-16

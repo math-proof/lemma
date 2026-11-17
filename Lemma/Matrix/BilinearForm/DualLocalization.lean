@@ -16,11 +16,14 @@ lemma dualSubmodule_span_localization
   {M : Submodule A V}
 -- given
   (hS : S ≤ nonZeroDivisors A)
-  (hM : M.FG) :
+  (hM : M.FG)
+  {Aₛ : Type*} [CommRing Aₛ] [Algebra A Aₛ] [Module Aₛ V]
+  [IsScalarTower A Aₛ V] [IsLocalization S Aₛ]
+  [Algebra Aₛ K] [IsScalarTower A Aₛ K] [IsScalarTower Aₛ K V] :
 -- imply
-  let Aₛ := by
+  B.dualSubmodule (Submodule.span Aₛ (M : Set V)) =
+    Submodule.span Aₛ (B.dualSubmodule M : Set V) := by
 -- proof
-  intro Aₛ
   apply le_antisymm
   · intro x hx
     obtain ⟨T, hT⟩ := hM
@@ -36,16 +39,12 @@ lemma dualSubmodule_span_localization
       have hyt : (u : V) ∈ Submodule.span Aₛ (M : Set V) :=
         Submodule.subset_span htM
       obtain ⟨c, hc⟩ := Submodule.mem_one.mp ((mem_dualSubmodule B).mp hx _ hyt)
-      have hcar : (c : K) ∈ Localization.subalgebra.ofField K S hS := c.2
-      obtain ⟨a, s, hs, has⟩ := hcar
-      refine ⟨(a, ⟨s, hs⟩), ?_⟩
-      have hcoe : (c : K) = B x (u : V) := by
-        rw [← hc]
-        rfl
-      have hs0 : algebraMap A K s ≠ 0 :=
-        IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors (hS hs)
-      change B x (u : V) * algebraMap A K s = algebraMap A K a
-      rw [← hcoe, has, mul_assoc, inv_mul_cancel₀ hs0, mul_one]
+      obtain ⟨⟨a, s⟩, hfrac⟩ := IsLocalization.surj S c
+      refine ⟨(a, s), ?_⟩
+      have hmap := congrArg (algebraMap Aₛ K) hfrac
+      simp only [map_mul, ← IsScalarTower.algebraMap_apply] at hmap
+      rw [← hc]
+      exact hmap
     choose sp hsp using hmem
     -- Common denominator: product over the finite generating set.
     set s₀ : A := ∏ u : ↥T, ((sp u).2 : A) with hs₀
@@ -113,4 +112,4 @@ end LinearMap.BilinForm
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-16

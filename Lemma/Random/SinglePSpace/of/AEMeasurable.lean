@@ -1,5 +1,6 @@
 import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
-import Class.Probability.Rv.Part3
+import Class.Probability.Rv
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory
 
 
@@ -34,4 +35,4 @@ private lemma main
 
 
 -- created on 2026-10-23
--- updated on 2026-10-26
+-- updated on 2026-11-16

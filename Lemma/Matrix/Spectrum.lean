@@ -78,7 +78,8 @@ lemma PosSemidef.l2_opNorm_eq_maxRealRoot_charpoly
     rw [Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (hA.eigenvalues_nonneg i)]
     exact heigen_le i
   · have hdegree : 0 < A.charpoly.natDegree := by
-    rwa [Matrix.charpoly_natDegree_eq_dim]
+      rw [Matrix.charpoly_natDegree_eq_dim]
+      exact Fintype.card_pos
     have hroot : (A.charpoly.maxRealRoot : ℂ) ∈ A.charpoly.roots :=
       A.charpoly.coe_maxRealRoot_mem_roots hA.1.charpoly_isRealRooted hdegree
     rw [hA.1.roots_charpoly_eq_eigenvalues] at hroot
@@ -97,4 +98,4 @@ end Matrix
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-16

@@ -11,7 +11,7 @@ namespace HeckeIntegralSeam
 
 section CosetSystem
 
-variable {G : Type*} [Group G]
+variable {G : Type*} [Group G] {U : Subgroup G} {g : G}
 
 theorem mem_smul_coe_iff {y x : G} :
     x ∈ y • (U : Set G) ↔ (QuotientGroup.mk y : G ⧸ U) = QuotientGroup.mk x := by
@@ -123,3 +123,4 @@ theorem IsHeckeCosetSystem.measurableSet_doubleCoset {ι : Type*} [Fintype ι] {
 end Volume
 
 end HeckeIntegralSeam
+-- updated on 2026-11-16

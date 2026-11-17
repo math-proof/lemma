@@ -38,7 +38,7 @@ lemma systemOrthogonalSum_inl
 -- imply
   systemOrthogonalSum Q Q' i (x, 0) = Q i x := by
 -- proof
-  simp
+  simp [systemOrthogonalSum]
 
 end QuadraticForm
 
@@ -57,10 +57,10 @@ lemma systemOrthogonalSum_inr
 -- imply
   systemOrthogonalSum Q Q' i (0, y) = Q' i y := by
 -- proof
-  simp
+  simp [systemOrthogonalSum]
 
 end QuadraticForm
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-16

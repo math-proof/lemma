@@ -25,21 +25,23 @@ private lemma kak_volume_le_of_slice_le {A : Set (ℝ × ℝ)} {a b : ℝ} {c : 
     intro s
     rfl
   rw [hvol]
-  calc ∫⁻ s, volume {x : ℝ | (x, s) ∈ A} ∂(volume : Measure ℝ)
-    ≤ ∫⁻ s, (Set.Icc a b).indicator (fun _ => c) s ∂(volume : Measure ℝ) := by
-      apply MeasureTheory.lintegral_mono
-      intro s
-      by_cases hs : s ∈ Set.Icc a b
-      · rw [Set.indicator_of_mem hs]
-        exact hslice s hs
-      · rw [Set.indicator_of_notMem hs]
-        have hempty : {x : ℝ | (x, s) ∈ A} = ∅ := by
-          ext x
-          simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false]
-          intro hx
-          exact hs (hsub hx).2
-        dsimp only
-        rw [hempty, MeasureTheory.measure_empty]
+  have hmono : (∫⁻ s, volume {x : ℝ | (x, s) ∈ A} ∂(volume : Measure ℝ)) ≤
+      ∫⁻ s, (Set.Icc a b).indicator (fun _ => c) s ∂(volume : Measure ℝ) := by
+    apply MeasureTheory.lintegral_mono
+    intro s
+    by_cases hs : s ∈ Set.Icc a b
+    · rw [Set.indicator_of_mem hs]
+      exact hslice s hs
+    · rw [Set.indicator_of_notMem hs]
+      have hempty : {x : ℝ | (x, s) ∈ A} = ∅ := by
+        ext x
+        simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false]
+        intro hx
+        exact hs (hsub hx).2
+      dsimp only
+      rw [hempty, MeasureTheory.measure_empty]
+  calc (∫⁻ s, volume {x : ℝ | (x, s) ∈ A} ∂(volume : Measure ℝ))
+    ≤ ∫⁻ s, (Set.Icc a b).indicator (fun _ => c) s ∂(volume : Measure ℝ) := hmono
     _ = c * volume (Set.Icc a b) :=
       MeasureTheory.lintegral_indicator_const measurableSet_Icc c
     _ = c * ENNReal.ofReal (b - a) := by rw [Real.volume_Icc]
@@ -222,11 +224,11 @@ private lemma kak_slope_mem {N : ℕ} (hN : 1 ≤ N) {k : ℕ} (hk : k ≤ N) :
   rw [Set.mem_Icc]
   constructor
   · have hnn : (0 : ℝ) ≤ 2 * (k : ℝ) / (N : ℝ) :=
-    div_nonneg (by positivity) (Nat.cast_nonneg _)
+      div_nonneg (by positivity) (le_of_lt hNpos)
     linarith
   · have h2 : 2 * (k : ℝ) / (N : ℝ) ≤ 2 := by
-    rw [div_le_iff₀ hNpos]
-    nlinarith
+      rw [div_le_iff₀ hNpos]
+      nlinarith
     linarith
 
 end MathlibExt.MeasureTheory.Geometry.BesicovitchKakeyaWanted

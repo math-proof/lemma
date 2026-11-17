@@ -47,7 +47,7 @@ theorem algebraMap_injective_padicInt :
 
 theorem norm_algebraMap_padicInt (a : ℤ_[p]) : ‖algebraMap ℤ_[p] (PadicAlgCl p) a‖ = ‖a‖ := by
   rw [IsScalarTower.algebraMap_apply ℤ_[p] ℚ_[p] (PadicAlgCl p)]
-  exact (norm_algebraMap' (PadicAlgCl p) (a : ℚ_[p])).trans (PadicInt.padic_norm_e_of_padicInt a)
+  exact (norm_algebraMap' (PadicAlgCl p) (a : ℚ_[p])).trans (PadicInt.norm_coe a)
 
 theorem norm_le_one_of_isIntegral {x : PadicAlgCl p} (hx : IsIntegral ℤ_[p] x) : ‖x‖ ≤ 1 := by
   obtain ⟨f, hf, hfx⟩ := hx

@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Instance.Data.Vector.Functions.Part2
-open Bool
+open Bool Exp
 
 
 @[path, cast]

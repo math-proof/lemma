@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_17
-open Set Metric IsEpsilonNet
+open Set Metric
 open scoped NNReal
 
 

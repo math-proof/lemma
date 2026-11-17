@@ -108,8 +108,6 @@ noncomputable def reducePointSmooth :
       else .zero
     else .zero
 
-@[simp]
-
 
 section Kernel
 
@@ -175,22 +173,11 @@ section CoordinatewiseEngine
 variable [DecidableEq L] [DecidableEq (ResidueField A)]
 
 
-set_option maxHeartbeats 800000 in
-
-
-set_option maxHeartbeats 800000 in
-
-
 end CoordinatewiseEngine
 
 section CaseAnalysis
 
 variable [DecidableEq L] [DecidableEq (ResidueField A)]
-
-set_option maxHeartbeats 1600000 in
-
-
-set_option maxHeartbeats 800000 in
 
 
 end CaseAnalysis
@@ -205,25 +192,6 @@ end Closure
 section Carrier
 
 variable [DecidableEq L] [DecidableEq (ResidueField A)]
-
-variable (W) in
-
-
-variable (W) in
-
-variable (W) in
-
-
-variable (W) in
-
-
-variable (W) in
-
-
-variable (W) in
-
-
-variable (W) in
 
 
 end Carrier

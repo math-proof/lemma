@@ -3,7 +3,6 @@ import Mathlib.AlgebraicGeometry.AffineScheme
 import Mathlib.RingTheory.Finiteness.Defs
 import Mathlib.LinearAlgebra.Quotient.Defs
 import Mathlib.LinearAlgebra.Pi
-import Instance.AlgebraicGeometry_OrderedAffineCoverCech
 
 set_option autoImplicit false
 
@@ -31,8 +30,7 @@ namespace Scheme.OrderedAffineCover
 
 variable {V : Scheme.{u}} (K : V.OrderedAffineCover)
 
-
-variable (V) in
+def Idx (i : ℕ) : Type u := {s : Fin (i + 1) → K.ι // StrictMono s}
 
 
 end Scheme.OrderedAffineCover
@@ -72,9 +70,6 @@ namespace OModulePresheaf
 
 variable {R : Type u} [CommRing R] {V : Scheme.{u}} {π : V ⟶ Spec (.of R)}
 variable (F : OModulePresheaf π) (K : V.OrderedAffineCover)
-
-
-variable (π) in
 
 
 section TwoChart

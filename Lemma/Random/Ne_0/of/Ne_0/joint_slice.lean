@@ -1,8 +1,8 @@
 import Mathlib.MeasureTheory.Measure.Count
 import Lemma.Measure.EqRnDeriv_Count
 import Lemma.Measure.Count.eq.ProdCountS
-import Instance.Probability.Rv.Part2
 import Lemma.Random.SinglePSpace.of.Measurable
+import Instance.Probability.Rv.Part2
 import Syntax.Probability.Expectation.Elab
 open MeasureTheory Measure Random
 
@@ -50,9 +50,9 @@ private lemma main
         ν'.measure = Measure.count
     rw [hα', hβ', ← Count.eq.ProdCountS]
   have : SinglePSpace π (g ∘ x, k ∘ y) := by
-    letI : CountableMeasure α' := { measure_eq_count := hα' }
-    letI : CountableMeasure β' := { measure_eq_count := hβ' }
-    letI : CountableMeasure (α' × β') := instCountableMeasureProd
+    let : CountableMeasure α' := { measure_eq_count := hα' }
+    let : CountableMeasure β' := { measure_eq_count := hβ' }
+    let : CountableMeasure (α' × β') := instCountableMeasureProd
     exact SinglePSpace.of.Measurable ((hg.comp hx).prodMk (hk.comp hy))
   Measure.prob π (g ∘ x, k ∘ y) (g v, k w) ≠ 0 := by
 -- proof
@@ -86,4 +86,4 @@ private lemma main
 
 
 -- created on 2020-12-12
--- updated on 2026-11-14
+-- updated on 2026-11-16

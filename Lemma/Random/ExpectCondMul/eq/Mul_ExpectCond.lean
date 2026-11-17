@@ -1,15 +1,20 @@
 import Mathlib.MeasureTheory.Integral.Lebesgue.Add
 import Mathlib.MeasureTheory.Measure.WithDensity
 import Theorem.Probability.CondExpectation
-import Initialize.Tactic.Attr.Basic
-import Theorem.Probability.JointRv.AsRV
 open MeasureTheory
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Random.ExpectCondMul.eq.Mul_ExpectCond |
+| comm | Random.Mul_ExpectCond.eq.ExpectCondMul |
+-/
 @[path, comm]
 private lemma main
   [MeasurableSpace Ω]
   [MeasurableSpace α] [StandardBorelSpace α] [Nonempty α]
+  [MeasurableSpace γ]
   {π : Measure Ω} [IsFiniteMeasure π]
   {a : Ω → α} {s : Ω → γ}
   {f : α → ENNReal}
@@ -25,4 +30,4 @@ private lemma main
 
 
 -- created on 2026-09-19
--- updated on 2026-11-13
+-- updated on 2026-11-15

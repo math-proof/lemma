@@ -55,26 +55,26 @@ private lemma carroll_schur {T K : Type*} [DecidableEq T] [Fintype T] [Decidable
     · rw [Matrix.mul_zero, add_zero]
       exact hMN
     · have hMB : M * (M.adjugate * B) = M.det • B := by
-      rw [← Matrix.mul_assoc, hMN, Matrix.smul_mul, Matrix.one_mul]
+        rw [← Matrix.mul_assoc, hMN, Matrix.smul_mul, Matrix.one_mul]
       rw [Matrix.mul_neg, hMB, Matrix.mul_smul, Matrix.mul_one, neg_add_cancel]
     · rw [Matrix.mul_zero, add_zero]
     · rw [show Rr * -(M.adjugate * B) = -((Rr * M.adjugate) * B) from by
-      rw [Matrix.mul_neg, Matrix.mul_assoc]]
+        rw [Matrix.mul_neg, Matrix.mul_assoc]]
       rw [show E * (M.det • 1) = M.det • E from by rw [Matrix.mul_smul, Matrix.mul_one]]
       rw [sub_eq_add_neg, add_comm]
   calc (fromBlocks M B Rr E).det * (M.det ^ (Fintype.card T - 1) * M.det ^ Fintype.card K)
     = (fromBlocks M B Rr E).det *
       ((M.adjugate).det * (M.det • (1 : Matrix K K S)).det) := by
-      rw [Matrix.det_adjugate, Matrix.det_smul, Matrix.det_one, mul_one]
+        rw [Matrix.det_adjugate, Matrix.det_smul, Matrix.det_one, mul_one]
     _ = ((fromBlocks M B Rr E) *
       fromBlocks M.adjugate (-(M.adjugate * B)) 0 (M.det • 1)).det := by
-      rw [Matrix.det_mul, Matrix.det_fromBlocks_zero₂₁, Matrix.det_adjugate,
-        Matrix.det_smul, Matrix.det_one, mul_one]
+        rw [Matrix.det_mul, Matrix.det_fromBlocks_zero₂₁, Matrix.det_adjugate,
+          Matrix.det_smul, Matrix.det_one, mul_one]
     _ = (fromBlocks (M.det • 1) 0 (Rr * M.adjugate)
       (M.det • E - Rr * M.adjugate * B)).det := by
-      rw [hQ]
+        rw [hQ]
     _ = M.det ^ Fintype.card T * (M.det • E - Rr * M.adjugate * B).det := by
-      rw [Matrix.det_fromBlocks_zero₁₂, Matrix.det_smul, Matrix.det_one, mul_one]
+        rw [Matrix.det_fromBlocks_zero₁₂, Matrix.det_smul, Matrix.det_one, mul_one]
 
 end MetaMathlibExt.CarrollIdentity
 
@@ -120,7 +120,7 @@ private lemma carrollSplitEquiv_inr (p q : Fin (m + 2)) (hp : p = i ∨ p = j)
   (hq : q = i ∨ q = j) (hqp : q ≠ p) (a : Fin (m + 1))
   (h : Fin.succAbove p a = q) :
   carrollSplitEquiv i j p q hp hq hqp a = Sum.inr 0 := by
-  simp only [carrollSplitEquiv, carroll_ofBijective_apply, carrollSplit, dif_pos h]
+  simp only [carrollSplitEquiv, carroll_ofBijective_apply, carrollSplit, dite_eq_left h]
 
 end MetaMathlibExt.CarrollIdentity
 
@@ -148,11 +148,11 @@ end MetaMathlibExt.CarrollIdentity
 namespace MetaMathlibExt.CarrollIdentity
 
 variable {m : ℕ} [CommRing S] (i j : Fin (m + 2))
+omit [CommRing S] in
 /--
 [carroll_reindex_full](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/CarrollIdentity.lean)
 -/
 @[path]
-omit [CommRing S] in
 private lemma carroll_reindex_full (M : Matrix (Fin (m + 2)) (Fin (m + 2)) S) (hij : i ≠ j) :
   M.submatrix (carrollFull i j hij) (carrollFull i j hij) =
     fromBlocks (M.submatrix
@@ -315,7 +315,7 @@ private lemma carroll_single_uncancelled (M : Matrix (Fin (m + 2)) (Fin (m + 2))
           (Subtype.val : {k : Fin (m + 2) // k ≠ i ∧ k ≠ j} → Fin (m + 2))
           (Subtype.val : {k : Fin (m + 2) // k ≠ i ∧ k ≠ j} → Fin (m + 2))).det ^
           Fintype.card (Fin 1)) := by
-      rw [hdet]
+        rw [hdet]
     _ = (M.submatrix
       (Subtype.val : {k : Fin (m + 2) // k ≠ i ∧ k ≠ j} → Fin (m + 2))
       (Subtype.val : {k : Fin (m + 2) // k ≠ i ∧ k ≠ j} → Fin (m + 2))).det ^
@@ -419,7 +419,8 @@ private lemma carroll_zero {R : Type*} [CommRing R] (C : Matrix (Fin (0 + 2)) (F
   have hC2 : Matrix.det C = C a a * C b b - C a b * C b a := by
     have e := Matrix.det_submatrix_equiv_self
       (Equiv.ofBijective (![a, b] : Fin 2 → Fin (0 + 2)) hsig) C
-    rwa [Matrix.det_fin_two] at e
+    rw [← e, Matrix.det_fin_two]
+    simp [Matrix.submatrix_apply]
   have hTdet : Matrix.det (Matrix.submatrix C
     (Subtype.val : {k : Fin (0 + 2) // k ≠ a ∧ k ≠ b} → Fin (0 + 2))
     (Subtype.val : {k : Fin (0 + 2) // k ≠ a ∧ k ≠ b} → Fin (0 + 2))) = 1 :=
@@ -563,7 +564,8 @@ private lemma carroll_domain (M : Matrix (Fin (m + 2)) (Fin (m + 2)) S) [IsDomai
         ((carrollSplitEquiv i j j i (Or.inr rfl) (Or.inl rfl)
           hij).trans (carrollSplitEquiv i j i j (Or.inl rfl) (Or.inr rfl)
           (Ne.symm hij)).symm)⁻¹
-      rwa [mul_inv_cancel, Equiv.Perm.sign_one, hsign' _] at h
+      rw [mul_inv_cancel, Equiv.Perm.sign_one, hsign' _] at h
+      exact h.symm
     rw [← Int.cast_mul, ← Units.val_mul, h2, Units.val_one, Int.cast_one]
   have c1 : (M.submatrix (Fin.succAbove i) (Fin.succAbove i)).det =
     (M.submatrix
@@ -659,7 +661,7 @@ private lemma carroll_domain (M : Matrix (Fin (m + 2)) (Fin (m + 2)) S) [IsDomai
           (M.submatrix
             (Subtype.val : {k : Fin (m + 2) // k ≠ i ∧ k ≠ j} → Fin (m + 2))
             (Subtype.val : {k : Fin (m + 2) // k ≠ i ∧ k ≠ j} → Fin (m + 2))).det ^ 1) := by
-        ring
+              ring
         _ = (M.submatrix
           (Subtype.val : {k : Fin (m + 2) // k ≠ i ∧ k ≠ j} → Fin (m + 2))
           (Subtype.val : {k : Fin (m + 2) // k ≠ i ∧ k ≠ j} → Fin (m + 2))).det ^ m *
@@ -690,7 +692,7 @@ private lemma carroll_domain (M : Matrix (Fin (m + 2)) (Fin (m + 2)) S) [IsDomai
             (M.submatrix
               (Subtype.val : {k : Fin (m + 2) // k ≠ i ∧ k ≠ j} → Fin (m + 2))
               (Subtype.val : {k : Fin (m + 2) // k ≠ i ∧ k ≠ j} → Fin (m + 2))).det ^ m := by
-          ring)
+                ring)
   have hS00 : ((M.submatrix
     (Subtype.val : {k : Fin (m + 2) // k ≠ i ∧ k ≠ j} → Fin (m + 2))
     (Subtype.val : {k : Fin (m + 2) // k ≠ i ∧ k ≠ j} → Fin (m + 2))).det •
@@ -880,9 +882,9 @@ namespace MetaMathlibExt.CarrollIdentity
 variable {m : ℕ} [CommRing S] (i j : Fin (m + 2))
 /--
 [carroll_succ](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/CarrollIdentity.lean)
+reduction to the generic integral matrix.
 -/
 @[path]
-reduction to the generic integral matrix. -/
 private lemma carroll_succ (m : ℕ) (hm : 1 ≤ m) (R : Type*) [CommRing R]
   (C : Matrix (Fin (m + 2)) (Fin (m + 2)) R) (a b : Fin (m + 2)) (hab : a ≠ b) :
   Matrix.det C * Matrix.det (Matrix.submatrix C
@@ -954,9 +956,8 @@ private lemma carroll_succ (m : ℕ) (hm : 1 ≤ m) (R : Type*) [CommRing R]
     rw [hφ, hG, AlgHom.map_det, AlgHom.mapMatrix_apply, ← Matrix.submatrix_map,
       ← AlgHom.mapMatrix_apply, Matrix.mvPolynomialX_mapMatrix_aeval]
   rwa [eFull, eD, eII, eJJ, eIJ, eJI] at hC
-end
 
-
+end MetaMathlibExt.CarrollIdentity
 namespace MetaMathlibExt.CarrollIdentity
 
 /--
@@ -987,4 +988,4 @@ end MetaMathlibExt.CarrollIdentity
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-16

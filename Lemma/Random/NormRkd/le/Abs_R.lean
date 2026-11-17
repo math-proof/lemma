@@ -1,4 +1,4 @@
-import Theorem.Dynamics.PolicyTrajectory.ContinuousAction.Part3
+import Theorem.Dynamics.PolicyTrajectory.ContinuousAction
 open MeasureTheory PolicyGradient
 
 
@@ -8,16 +8,15 @@ The expected clamped reward is bounded: `‖rkd x u‖ = ‖𝔼[r[t] | s[t] = x
 @[path]
 private lemma main
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy]
 -- given
-  (x : 𝒮)
-  (u : 𝒜) :
+  (sₜ : 𝒮)
+  (aₜ : 𝒜) :
 -- imply
-  ‖M.rkd x u‖ ≤ |M.env.R| := by
+  ‖M.rkd sₜ aₜ‖ ≤ |M.R| := by
 -- proof
-  have := M.env.reward_markov
-  have h := norm_integral_le_of_norm_le_const (μ := M.env.reward (x, u))
-    (f := fun ρ => clip ρ (-M.env.R) M.env.R) (C := |M.env.R|)
+  have h := norm_integral_le_of_norm_le_const (μ := M.reward (sₜ, aₜ))
+    (f := fun ρ => clip ρ (-M.R) M.R) (C := |M.R|)
     (Filter.Eventually.of_forall fun ρ => by
       rw [Real.norm_eq_abs, abs_le, clip]
       constructor
@@ -31,8 +30,8 @@ private lemma main
       ·
         apply (min_le_right _ _).trans
         apply le_abs_self)
-  simpa [DensityModel.rkd] using h
+  simpa [Model.rkd] using h
 
 
 -- created on 2026-10-07
--- updated on 2026-11-11
+-- updated on 2026-11-16

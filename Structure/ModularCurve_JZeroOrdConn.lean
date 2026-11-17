@@ -37,8 +37,6 @@ variable {O'' K}
 structure JZeroOrdConn (W : Submodule K (K ⊗[O''] (O'' ⊗[ℤ_[ℓ]] TateModule ℓ (JZero N)))) : Prop where
   finrank_inf_specKernel_le_one : Module.finrank K ↥(W ⊓ specKernel D O'' K) ≤ 1
 
-set_option maxSynthPendingDepth 3 in
-
 
 end OrdConn
 

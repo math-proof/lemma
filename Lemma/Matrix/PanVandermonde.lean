@@ -54,16 +54,16 @@ private lemma S_diag_aux
     intro k
     rw [hQ, Polynomial.natDegree_prod_of_monic]
     · have h1 : ∀ i ∈ Finset.range k,
-      (((Polynomial.X - Polynomial.C (RCLike.ofReal c : K)) -
-        Polynomial.C ((i : K) * RCLike.ofReal b) : Polynomial K)).natDegree = 1 := by
-      intro i _
-      have heq : ((Polynomial.X - Polynomial.C (RCLike.ofReal c : K)) -
-        Polynomial.C ((i : K) * RCLike.ofReal b) : Polynomial K)
-        = Polynomial.X - Polynomial.C ((RCLike.ofReal c : K) + (i : K) * RCLike.ofReal b) := by
-        simp only [map_add]
-        ring
-      rw [heq]
-      exact Polynomial.natDegree_X_sub_C _
+          (((Polynomial.X - Polynomial.C (RCLike.ofReal c : K)) -
+            Polynomial.C ((i : K) * RCLike.ofReal b) : Polynomial K)).natDegree = 1 := by
+        intro i _
+        have heq : ((Polynomial.X - Polynomial.C (RCLike.ofReal c : K)) -
+            Polynomial.C ((i : K) * RCLike.ofReal b) : Polynomial K)
+            = Polynomial.X - Polynomial.C ((RCLike.ofReal c : K) + (i : K) * RCLike.ofReal b) := by
+          simp only [map_add]
+          ring
+        rw [heq]
+        exact Polynomial.natDegree_X_sub_C _
       rw [Finset.sum_congr rfl h1]
       simp
     · intro i _
@@ -103,7 +103,8 @@ private lemma S_diag_aux
       apply Finset.sum_congr rfl
       intro k _
       rw [hQeval k y]
-    rwa [hset]
+    rw [hset]
+    exact Set.infinite_univ
   have hcoeff : P.coeff n =
     (∑ k ∈ Finset.range (n + 1), Polynomial.C (S a b c n k) * Q k).coeff n := by
     rw [hPoly]
@@ -130,7 +131,7 @@ private lemma S_diag_aux
       rw [hQc, mul_zero]
     · intro habs
       simp at habs
-  rwa [hsum] at hcoeff
+  exact (hcoeff.trans hsum).symm
 
 end MetaMathlibExt
 
@@ -367,4 +368,4 @@ end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-27
+-- updated on 2026-11-16

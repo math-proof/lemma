@@ -36,7 +36,7 @@ variable {F}
 theorem archRealLiftAt_of_det_ne_zero {w : InfinitePlace F} (hw : w.IsReal) {e : Fin 2 → Fin 2 → ℝ}
     (h : (Matrix.of e).det ≠ 0) :
     archRealLiftAt hw e = archRealGLAt hw (GeneralLinearGroup.mkOfDetNeZero (Matrix.of e) h) :=
-  dif_pos h
+  dite_eq_left h
 
 theorem isOpen_setOf_det_ne_zero :
     IsOpen {e : Fin 2 → Fin 2 → ℝ | (Matrix.of e).det ≠ 0} :=
@@ -142,8 +142,9 @@ theorem contDiff_of_symm_mul_const (A : Matrix (Fin 2) (Fin 2) ℝ) :
     ContDiff ℝ (⊤ : ℕ∞) fun e : Fin 2 → Fin 2 → ℝ => (Matrix.of.symm (Matrix.of e * A) : Fin 2 → Fin 2 → ℝ) := by
   refine contDiff_pi.2 fun i => contDiff_pi.2 fun j => ?_
   simp only [Matrix.of_symm_apply, Matrix.mul_apply, Matrix.of_apply]
-  exact ContDiff.sum fun k _ =>
-    ((contDiff_apply ℝ ℝ k).comp (contDiff_apply ℝ (Fin 2 → ℝ) i)).mul contDiff_const
+  refine ContDiff.sum fun k _ => ?_
+  exact (contDiff_apply_apply ℝ i k).mul
+    (show ContDiff ℝ _ (fun _ => A k j) from contDiff_const)
 
 theorem hasDerivAt_of_symm_mul_archFlowMatrix (e : Fin 2 → Fin 2 → ℝ) (d : ArchDir) :
     HasDerivAt

@@ -3,9 +3,7 @@ import Lemma.Random.Measure.eq.Mul_MulDivS.of.Subset
 import Lemma.Random.Prob_Cond.eq.Div.of.SinglePSpace
 import Instance.Probability.Process.DiscreteHMM.Part2
 import Syntax.Algebra.BigOperators.Summations
-open MeasureTheory Random
-open IsDiscreteHMM
-open Fun
+open MeasureTheory Random IsDiscreteHMM Fun
 
 
 /--
@@ -36,9 +34,16 @@ private lemma main
   (h : IsDiscreteHMM π (⇑x) (⇑y))
   (t : Fin n) :
 -- imply
+  have : ∀ i, SinglePSpace π ((⇑y) i) := fun i =>
+    IsDiscreteHMM.singlePSpace_y (x := ⇑x) i
+  have : ∀ i j, SinglePSpace π ((⇑y) i, (⇑y) j) := fun i j =>
+    IsDiscreteHMM.singlePSpace_yy (x := ⇑x) i j
+  have : ∀ (a b : ℤ), SinglePSpace π (⇑x)[a:b] := fun a b =>
+    IsDiscreteHMM.singlePSpace_x (x := ⇑x) (y := ⇑y) a b
   ∑ «\sf{y}»[t], ℙ[π](x[:t + 1] = «\sf{x}»[:t + 1] ∧ y[t] = «\sf{y}»[t]) *
       ℙ[π](x[t + 1:n] = «\sf{x}»[t + 1:n] | y[t] = «\sf{y}»[t]) = ℙ[π](x[:n] = «\sf{x}»[:n]) := by
 -- proof
+  intro _ _ _
   obtain ⟨t, ht⟩ := t
   obtain ⟨m, rfl⟩ : ∃ m, n = m + 1 := ⟨n - 1, by omega⟩
   have hx := h.measurable_x
@@ -428,4 +433,4 @@ private lemma main
 
 
 -- created on 2026-10-03
--- updated on 2026-11-02
+-- updated on 2026-11-15

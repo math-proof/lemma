@@ -1,6 +1,5 @@
 -- Carved from Lemma/Definitions/Def_GroupCohomology_Kummer.lean: instance decls only.
 import Mathlib
-import Lemma.Rep.Kummer
 
 set_option autoImplicit false
 
@@ -13,6 +12,18 @@ namespace Kummer
 section Unbundled
 
 variable {K : Type u} {L : Type v} [Field K] [Field L] [Algebra K L]
+
+private lemma val_smul_units (σ : L ≃ₐ[K] L) (α : Lˣ) : ((σ • α : Lˣ) : L) = σ (α : L) :=
+  rfl
+
+private lemma smul_units_pow (σ : L ≃ₐ[K] L) (x : Lˣ) (n : ℕ) : σ • (x ^ n) = (σ • x) ^ n := by
+  ext
+  simp only [val_smul_units, Units.val_pow_eq_pow_val, map_pow]
+
+private lemma smul_mem_rootsOfUnity {p : ℕ} (σ : L ≃ₐ[K] L) {ζ : Lˣ} (hζ : ζ ∈ rootsOfUnity p L) :
+    σ • ζ ∈ rootsOfUnity p L := by
+  rw [mem_rootsOfUnity] at hζ ⊢
+  rw [← smul_units_pow, hζ, smul_one]
 
 instance instMulDistribMulActionRootsOfUnity (p : ℕ) :
     MulDistribMulAction (L ≃ₐ[K] L) (rootsOfUnity p L) where

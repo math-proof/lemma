@@ -67,15 +67,6 @@ variable [HasSheafify Scheme.fppfTopology.{u} Ab.{u + 1}]
   [HasExt.{u + 1} (Sheaf Scheme.fppfTopology.{u} Ab.{u + 1})]
 
 
-open ZeroObject in
-
-
-open ZeroObject in
-
-
-open ZeroObject in
-
-
 end WithLocalInstances
 
 end FppfPropOneSeven

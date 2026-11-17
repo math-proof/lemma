@@ -1,7 +1,6 @@
 import Lemma.Scheme.OrderedAffineCoverCech
 import Lemma.Scheme.OrderedAffineCoverCechCup
 import Lemma.Scheme.OrderedAffineCoverCochainPullback
-import Abbrev.AlgebraicGeometry_OrderedAffineCoverCechOrdered
 
 set_option autoImplicit false
 
@@ -16,6 +15,8 @@ open CategoryTheory Opposite TopologicalSpace
 namespace Scheme.OrderedAffineCover
 
 variable {V : Scheme.{u}} (K : V.OrderedAffineCover)
+
+abbrev OIdx (n : ℕ) : Type u := Fin (n + 1) → K.ι
 
 def ointer {n : ℕ} (t : K.OIdx n) : V.Opens := ⨅ j, K.U (t j)
 
@@ -89,6 +90,7 @@ variable (F : OModulePresheaf π) (K : V.OrderedAffineCover)
 abbrev ocochain (n : ℕ) : Type u := ∀ t : K.OIdx n, F.obj (K.ointer t)
 
 def od (n : ℕ) : F.ocochain K n →ₗ[R] F.ocochain K (n + 1) :=
+  haveI := Classical.decEq (K.OIdx n)
   LinearMap.pi fun t => ∑ j : Fin (n + 2), ((-1 : ℤ) ^ (j : ℕ)) •
     ((F.res (K.ointer_le_ointer_oface t j)).comp (LinearMap.proj (K.oface t j)))
 
@@ -108,11 +110,14 @@ theorem ocup_apply (a b n : ℕ) (h : a + b = n) (α : (unit π).ocochain K a) (
   rfl
 
 def ores (n : ℕ) : F.ocochain K n →ₗ[R] F.cochain K n :=
+  haveI := Classical.decEq (K.OIdx n)
   LinearMap.pi fun s => LinearMap.proj (R := R) (φ := fun t : K.OIdx n => F.obj (K.ointer t)) s.1
 
 theorem ores_apply (n : ℕ) (c : F.ocochain K n) (s : K.Idx n) : F.ores K n c s = c s.1 := rfl
 
 def oext (n : ℕ) : F.cochain K n →ₗ[R] F.ocochain K n :=
+  haveI := Classical.decEq (K.OIdx n)
+  haveI := K.decidableEq_Idx n
   LinearMap.pi fun t => by
     classical
     exact if hinj : Function.Injective t then
@@ -124,13 +129,13 @@ theorem oext_apply_of_injective (n : ℕ) (z : F.cochain K n) (t : K.OIdx n) (hi
     F.oext K n z t = ((Equiv.Perm.sign (Tuple.sort t) : ℤˣ) : ℤ) •
       F.res (K.ointer_le_inter_osort t hinj) (z (K.osort t hinj)) := by
   classical
-  simp only [oext, LinearMap.pi_apply, dif_pos hinj, LinearMap.smul_apply, LinearMap.comp_apply,
+  simp [oext, LinearMap.pi_apply, hinj, LinearMap.smul_apply, LinearMap.comp_apply,
     LinearMap.proj_apply]
 
 theorem oext_apply_of_not_injective (n : ℕ) (z : F.cochain K n) (t : K.OIdx n) (hinj : ¬ Function.Injective t) :
     F.oext K n z t = 0 := by
   classical
-  simp only [oext, LinearMap.pi_apply, dif_neg hinj, LinearMap.zero_apply]
+  simp [oext, LinearMap.pi_apply, hinj, LinearMap.zero_apply]
 
 variable {R' : Type u} [CommRing R'] {X Y : Scheme.{u}} {πX : X ⟶ Spec (.of R')} {πY : Y ⟶ Spec (.of R)}
 

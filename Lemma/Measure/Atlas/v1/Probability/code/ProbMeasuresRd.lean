@@ -10,7 +10,7 @@ namespace MeasureTheory
 [Real.isCountablySpanning_range_Iic](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/ProbMeasuresRd.lean)
 -/
 @[path]
-lemma Real.isCountablySpanning_range_Iic
+lemma Real.isCountablySpanning_range_Iic :
 -- imply
   IsCountablySpanning (range (Iic : ℝ → Set ℝ)) :=
 -- proof
@@ -26,7 +26,7 @@ namespace MeasureTheory
 [Real.generateFrom_range_Iic](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/ProbMeasuresRd.lean)
 -/
 @[path]
-lemma Real.generateFrom_range_Iic
+lemma Real.generateFrom_range_Iic :
 -- imply
   generateFrom (range (Iic : ℝ → Set ℝ)) = (inferInstance : MeasurableSpace ℝ) :=
 -- proof
@@ -85,9 +85,9 @@ lemma ProbabilityMeasure.ext_of_Iic
   apply ext_of_generate_finite
     (univ.pi '' univ.pi (fun _ : Fin d => range (Iic : ℝ → Set ℝ)))
   ·
-    exact (generateFrom_piIic d).symm
+    exact (generateFrom_piIic (d := d)).symm
   ·
-    exact isPiSystem_piIic d
+    exact isPiSystem_piIic (d := d)
   ·
     intro s hs
     obtain ⟨f, hf, rfl⟩ := hs
@@ -105,7 +105,7 @@ end MeasureTheory
 [isPiSystem_C_Ioc_pi](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/ProbMeasuresRd.lean)
 -/
 @[path]
-lemma isPiSystem_C_Ioc_pi
+lemma isPiSystem_C_Ioc_pi :
 -- imply
   IsPiSystem C_Ioc_pi := by
 -- proof
@@ -116,7 +116,7 @@ lemma isPiSystem_C_Ioc_pi
 [generateFrom_C_Ioc_pi](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/ProbMeasuresRd.lean)
 -/
 @[path]
-lemma generateFrom_C_Ioc_pi
+lemma generateFrom_C_Ioc_pi :
 -- imply
   generateFrom C_Ioc_pi = (inferInstance : MeasurableSpace ℝ) := by
 -- proof
@@ -127,7 +127,7 @@ lemma generateFrom_C_Ioc_pi
 [isCountablySpanning_C_Ioc_pi](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/ProbMeasuresRd.lean)
 -/
 @[path]
-lemma isCountablySpanning_C_Ioc_pi
+lemma isCountablySpanning_C_Ioc_pi :
 -- imply
   IsCountablySpanning C_Ioc_pi := by
 -- proof
@@ -136,10 +136,5 @@ lemma isCountablySpanning_C_Ioc_pi
   · ext x; simp only [mem_iUnion, mem_Ioc, mem_univ, iff_true]
     obtain ⟨n, hn⟩ := exists_nat_gt (|x|)
     exact ⟨n, by linarith [neg_abs_le x], by linarith [le_abs_self x]⟩
-/-- **Characterization of probability measures on `ℝᵈ`**. Given `F : ℝᵈ → ℝ` that is
-coordinate-wise non-decreasing, coordinate-wise right-continuous, and rectangle-nonnegative,
-there exists a *unique* Borel measure `μ` on `ℝᵈ` whose value on each finite rectangle
-`(a, b]` is determined by the inclusion–exclusion `rectangleValue F a b`. -/
-
 
 -- created on 2026-10-23

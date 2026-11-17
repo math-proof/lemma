@@ -13,6 +13,9 @@ namespace groupCohomology
 
 open CategoryTheory ExtCitation
 
+variable (K L : IntermediateField ℚ (AlgebraicClosure ℚ)) (p : ℕ) [Fact p.Prime]
+  [(L.fixingSubgroup.subgroupOf K.fixingSubgroup).Normal]
+
 theorem cyclotomicQuotientRT_one : cyclotomicQuotientRT K L p 1 = 𝟙 _ := by
   apply Rep.hom_ext
   refine DFunLike.ext _ _ fun x => ?_
@@ -42,6 +45,8 @@ theorem cyclotomicQuotientRT_mul (c c' : ↥K.fixingSubgroup) :
   ext q
   simp only [Function.comp_apply, QuotientGroup.mk_mul, mul_inv_rev, mul_assoc]
 
+variable (S : Finset Nat.Primes)
+
 set_option synthInstance.maxHeartbeats 400000 in
 set_option maxHeartbeats 800000 in
 
@@ -54,16 +59,16 @@ def cyclotomicQuotientH2ρ : Representation (ZMod p) ↥K.fixingSubgroup (contin
 
 set_option synthInstance.maxHeartbeats 400000 in
 
-def cyclotomicQuotientH2Rep : Rep (ZMod p) ↥K.fixingSubgroup := Rep.of (cyclotomicQuotientH2ρ S K L p)
+def cyclotomicQuotientH2Rep : Rep (ZMod p) ↥K.fixingSubgroup := Rep.of (cyclotomicQuotientH2ρ K L p S)
 
 set_option synthInstance.maxHeartbeats 400000 in
-theorem cyclotomicQuotientH2Rep_ρ_apply (c : ↥K.fixingSubgroup) (x : cyclotomicQuotientH2Rep S K L p) :
-    (cyclotomicQuotientH2Rep S K L p).ρ c x = continuousH2SrMapHom S K.fixingSubgroup.subtype (cyclotomicQuotientRT K L p c) x := rfl
+theorem cyclotomicQuotientH2Rep_ρ_apply (c : ↥K.fixingSubgroup) (x : cyclotomicQuotientH2Rep K L p S) :
+    (cyclotomicQuotientH2Rep K L p S).ρ c x = continuousH2SrMapHom S K.fixingSubgroup.subtype (cyclotomicQuotientRT K L p c) x := rfl
 
 set_option synthInstance.maxHeartbeats 400000 in
 
 theorem cyclotomicQuotientH2Rep_ρ_eq_one_of_mem (c : ↥K.fixingSubgroup) (hc : (c : (AlgebraicClosure ℚ ≃ₐ[ℚ] AlgebraicClosure ℚ)) ∈ L.fixingSubgroup) :
-    (cyclotomicQuotientH2Rep S K L p).ρ c = 1 :=
+    (cyclotomicQuotientH2Rep K L p S).ρ c = 1 :=
   (congrArg (continuousH2SrMapHom S K.fixingSubgroup.subtype (A := cyclotomicQuotientRep K L p) (B := cyclotomicQuotientRep K L p))
       (cyclotomicQuotientRT_of_mem K L p c hc)).trans (continuousH2SrMapHom_id S K.fixingSubgroup.subtype (A := cyclotomicQuotientRep K L p))
 

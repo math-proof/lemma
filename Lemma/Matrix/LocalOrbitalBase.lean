@@ -1,3 +1,4 @@
+import Mathlib
 import Lemma.Matrix.FactorizableTestFn
 import Abbrev.AutomorphicForm_LocalOrbitalBase
 
@@ -54,7 +55,7 @@ theorem integralUnitsSet_eq_preimage (U : Set A) :
     integralUnitsSet U = (Units.embedProduct (Matrix (Fin 2) (Fin 2) A)) ⁻¹'
       (integralMatrixSet U ×ˢ (MulOpposite.op '' integralMatrixSet U)) := by
   ext g
-  simp only [integralUnitsSet, Set.mem_setOf_eq, Set.mem_preimage, Units.embedProduct_apply,
+  simp only [integralUnitsSet, Set.mem_ofPred_eq, Set.mem_preimage, Units.embedProduct_apply,
     Set.mem_prod, Set.mem_image]
   constructor
   · rintro ⟨h1, h2⟩
@@ -237,7 +238,7 @@ def unitFinSet : Set (GL (Fin 2) (FiniteAdeleRing (𝓞 K) K)) :=
 theorem unitFinSet_eq :
     unitFinSet K = integralUnitsSet (AdelicLevel.integralFiniteAdeles (𝓞 K) K) := by
   ext h
-  simp only [unitFinSet, Set.mem_setOf_eq, mem_localIntegralSet, mem_integralUnitsSet,
+  simp only [unitFinSet, Set.mem_ofPred_eq, mem_localIntegralSet, mem_integralUnitsSet,
     AdelicLevel.integralFiniteAdeles, ← map_inv, AdelicLevel.finComponent_apply]
   exact ⟨fun H => ⟨fun i j v => (H v).1 i j, fun i j v => (H v).2 i j⟩,
     fun H v => ⟨fun i j => H.1 i j v, fun i j => H.2 i j v⟩⟩
@@ -428,3 +429,4 @@ end RegularSemisimple
 end AutomorphicForm
 
 end
+-- updated on 2026-11-16

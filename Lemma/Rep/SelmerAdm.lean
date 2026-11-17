@@ -1,6 +1,5 @@
 import Mathlib
 import Lemma.Rep.SelmerLe
-import Instance.GroupCohomology_SelmerAdm
 import Def.GroupCohomology_SelmerAdm
 import Structure.GroupCohomology_SelmerAdm
 

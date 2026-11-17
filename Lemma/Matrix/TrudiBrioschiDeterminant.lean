@@ -241,7 +241,7 @@ private lemma minor_det_zero (N : ℕ) (i : Fin (N + 1)) :
         ((tH a (N + 1)).submatrix i.succAbove Fin.succ) (Sum.inr r) (Sum.inr c)) := by
     apply Matrix.ext
     intro x y
-    obtain r | r <;> rcases y with c | c := x
+    rcases x with r | r <;> rcases y with c | c
     · rfl
     · change (Matrix.reindex (splitEquiv N i.val hiv) (splitEquiv N i.val hiv)
       ((tH a (N + 1)).submatrix i.succAbove Fin.succ)) (Sum.inl r) (Sum.inr c) = 0
@@ -359,7 +359,8 @@ private lemma base0 : (tH a 0).det = cS a 0 := by
       rw [← Finset.card_eq_zero, Finset.card_univ, Fintype.card_fin, hl]
     rw [hempty, Finset.prod_empty, hl, Nat.sub_zero, pow_zero, one_mul]
   unfold cS
-  rwa [hU, Finset.sum_singleton]
+  rw [hU, Finset.sum_singleton]
+  exact hterm.symm
 
 end MetaMathlibExt
 
@@ -376,7 +377,8 @@ private lemma step (N : ℕ) (IH : ∀ m, m ≤ N → (tH a m).det = cS a m) :
   apply Finset.sum_congr rfl
   intro i _
   rw [IH (N - i.val) (Nat.sub_le _ _)]
-end
+
+end MetaMathlibExt
 
 
 namespace MetaMathlibExt
@@ -411,7 +413,6 @@ lemma Matrix.det_toeplitzHessenberg_eq_sum_compositions_general
       · obtain ⟨k, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (show m ≠ 0 by omega)
         exact step a k (fun m' hm' => IH m' (by omega))
   exact hall n n le_rfl
-set_option linter.unusedVariables false in
 
 end MetaMathlibExt
 
@@ -424,10 +425,7 @@ namespace MetaMathlibExt
 lemma Matrix.det_toeplitzHessenberg_eq_sum_compositions
   [CommRing R]
   {n : Nat}
-  {a : Nat → R}
--- given
-  (hn : 0 < n)
-  (ha0 : a 0 ≠ 0) :
+  {a : Nat → R} :
 -- imply
   Matrix.det (fun i j : Fin n =>
     if (j : Nat) ≤ (i : Nat) + 1 then a ((i : Nat) + 1 - (j : Nat)) else 0) =
@@ -435,10 +433,10 @@ lemma Matrix.det_toeplitzHessenberg_eq_sum_compositions
     (-a 0) ^ (n - c.length) *
     Finset.univ.prod (fun r : Fin c.length => a (c.blocksFun r))) :=
 -- proof
-  Matrix.det_toeplitzHessenberg_eq_sum_compositions_general n a
+  Matrix.det_toeplitzHessenberg_eq_sum_compositions_general
 
 end MetaMathlibExt
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-16

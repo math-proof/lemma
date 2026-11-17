@@ -67,16 +67,16 @@ private lemma sinkJ_row_lb {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ)
   have e : Real.exp (u j₀) = Real.exp M := by rw [hM]
   have h1 : m * Real.exp M ≤ ∑ j, A i j * Real.exp (u j) := by
     calc m * Real.exp M ≤ A i j₀ * Real.exp (u j₀) := by
-      rw [e]
-      exact mul_le_mul (hmA i j₀) le_rfl (le_of_lt (Real.exp_pos _))
-        (le_of_lt (hA i j₀))
-      _ ≤ _ := Finset.single_le_sum
-        (fun j _ => mul_nonneg (le_of_lt (hA i j)) (le_of_lt (Real.exp_pos _)))
-        (Finset.mem_univ j₀)
+          rw [e]
+          exact mul_le_mul (hmA i j₀) le_rfl (le_of_lt (Real.exp_pos _))
+            (le_of_lt (hA i j₀))
+        _ ≤ _ := Finset.single_le_sum
+          (fun j _ => mul_nonneg (le_of_lt (hA i j)) (le_of_lt (Real.exp_pos _)))
+          (Finset.mem_univ j₀)
   have hpos : (0 : ℝ) < m * Real.exp M := mul_pos hm (Real.exp_pos M)
   calc Real.log m + M = Real.log (m * Real.exp M) := by
-    rw [Real.log_mul (ne_of_gt hm) (ne_of_gt (Real.exp_pos M)), Real.log_exp]
-    _ ≤ _ := Real.log_le_log hpos h1
+        rw [Real.log_mul (ne_of_gt hm) (ne_of_gt (Real.exp_pos M)), Real.log_exp]
+      _ ≤ _ := Real.log_le_log hpos h1
 
 end MathlibExt.LinearAlgebra.Matrix.SinkhornWanted
 
@@ -173,8 +173,8 @@ private lemma sink_max_sq {n : ℕ} (hn : 0 < n)
   have habs := sink_abs_sum u hsum
   have hbound : ∀ i, |u i| ≤ 2 * (n : ℝ) * M := by
     intro i
-    calc |u i| ≤ ∑ k, |u k| := Finset.single_le_sum
-      (fun k _ => abs_nonneg (u k)) (Finset.mem_univ i)
+    calc |u i| ≤ ∑ k, |u k| :=
+        Finset.single_le_sum (fun k _ => abs_nonneg (u k)) (Finset.mem_univ i)
       _ = 2 * (∑ i ∈ Finset.univ.filter (fun i => 0 < u i), u i) := habs
       _ ≤ 2 * (n : ℝ) * M := by linarith [hPle]
   have hsq : ∀ i, u i ^ 2 ≤ |u i| * (2 * (n : ℝ) * M) := by
@@ -467,20 +467,20 @@ private lemma sinkJ_crit {n : ℕ} (hn : 0 < n) (A : Matrix (Fin n) (Fin n) ℝ)
         * ((if j = k then (1 : ℝ) else 0) - (if j = l then (1 : ℝ) else 0)))
         = (A i j * Real.exp (c j) * (if j = k then (1 : ℝ) else 0))
           - (A i j * Real.exp (c j) * (if j = l then (1 : ℝ) else 0)) := by
-        intro j
-        ring
+          intro j
+          ring
       rw [Finset.sum_congr rfl (fun j _ => e0 j), Finset.sum_sub_distrib]
       congr 1
       · have e1 : ∀ j, A i j * Real.exp (c j) * (if j = k then (1 : ℝ) else 0)
-        = (if j = k then A i j * Real.exp (c j) else 0) := by
-        intro j
-        by_cases h : j = k <;> simp [h]
+            = (if j = k then A i j * Real.exp (c j) else 0) := by
+          intro j
+          by_cases h : j = k <;> simp [h]
         rw [Finset.sum_congr rfl (fun j _ => e1 j), Finset.sum_ite_eq']
         simp
       · have e2 : ∀ j, A i j * Real.exp (c j) * (if j = l then (1 : ℝ) else 0)
-        = (if j = l then A i j * Real.exp (c j) else 0) := by
-        intro j
-        by_cases h : j = l <;> simp [h]
+            = (if j = l then A i j * Real.exp (c j) else 0) := by
+          intro j
+          by_cases h : j = l <;> simp [h]
         rw [Finset.sum_congr rfl (fun j _ => e2 j), Finset.sum_ite_eq']
         simp
     calc (∑ i, (∑ j, A i j * (Real.exp (c j)
@@ -488,28 +488,28 @@ private lemma sinkJ_crit {n : ℕ} (hn : 0 < n) (A : Matrix (Fin n) (Fin n) ℝ)
       / (∑ j, A i j * Real.exp (c j)))
       = ∑ i, ((A i k * Real.exp (c k) - A i l * Real.exp (c l))
         / (∑ j, A i j * Real.exp (c j))) := by
-        apply Finset.sum_congr rfl
-        intro i _
-        rw [per i]
+          apply Finset.sum_congr rfl
+          intro i _
+          rw [per i]
       _ = (∑ i, (A i k * Real.exp (c k)) / (∑ j, A i j * Real.exp (c j)))
         - (∑ i, (A i l * Real.exp (c l)) / (∑ j, A i j * Real.exp (c j))) := by
-        rw [← Finset.sum_sub_distrib]
-        apply Finset.sum_congr rfl
-        intro i _
-        rw [sub_div]
+          rw [← Finset.sum_sub_distrib]
+          apply Finset.sum_congr rfl
+          intro i _
+          rw [sub_div]
       _ = _ := by
         rw [show (∑ i, (A i k * Real.exp (c k)) / (∑ j, A i j * Real.exp (c j)))
           = Real.exp (c k) * (∑ i, A i k / (∑ j, A i j * Real.exp (c j))) from by
-          rw [Finset.mul_sum]
-          apply Finset.sum_congr rfl
-          intro i _
-          ring]
+            rw [Finset.mul_sum]
+            apply Finset.sum_congr rfl
+            intro i _
+            ring]
         rw [show (∑ i, (A i l * Real.exp (c l)) / (∑ j, A i j * Real.exp (c j)))
           = Real.exp (c l) * (∑ i, A i l / (∑ j, A i j * Real.exp (c j))) from by
-          rw [Finset.mul_sum]
-          apply Finset.sum_congr rfl
-          intro i _
-          ring]
+            rw [Finset.mul_sum]
+            apply Finset.sum_congr rfl
+            intro i _
+            ring]
   have hderiv : HasDerivAt
     (fun t : ℝ => (∑ i, Real.log (∑ j, A i j * Real.exp (c j
       + t * ((if j = k then (1 : ℝ) else 0) - (if j = l then (1 : ℝ) else 0)))))
@@ -586,13 +586,13 @@ lemma sinkhorn_scaling
         - (if j = l then (1 : ℝ) else 0)))
         = (∑ j, t * (if j = k then (1 : ℝ) else 0))
           - (∑ j, t * (if j = l then (1 : ℝ) else 0)) := by
-          rw [← Finset.sum_sub_distrib]
-          apply Finset.sum_congr rfl
-          intro j _
-          ring
+            rw [← Finset.sum_sub_distrib]
+            apply Finset.sum_congr rfl
+            intro j _
+            ring
         _ = t * ((∑ j, (if j = k then (1 : ℝ) else 0))
           - (∑ j, (if j = l then (1 : ℝ) else 0))) := by
-          rw [← Finset.mul_sum, ← Finset.mul_sum, mul_sub]
+            rw [← Finset.mul_sum, ← Finset.mul_sum, mul_sub]
     rw [e, hsum, e1 k, e1 l]
     ring
   have hgline : ∀ (k l : Fin n) (t : ℝ), sinkJ A u
@@ -694,12 +694,12 @@ lemma sinkhorn_scaling
       calc (∑ j, (∑ j', A i j' * Real.exp (u j'))⁻¹ * A i j * Real.exp (u j))
         = ∑ j, (∑ j', A i j' * Real.exp (u j'))⁻¹
           * (A i j * Real.exp (u j)) := by
-          apply Finset.sum_congr rfl
-          intro j _
-          ring
+            apply Finset.sum_congr rfl
+            intro j _
+            ring
         _ = (∑ j', A i j' * Real.exp (u j'))⁻¹
           * (∑ j, A i j * Real.exp (u j)) := by
-          rw [Finset.mul_sum]
+            rw [Finset.mul_sum]
         _ = 1 := inv_mul_cancel₀ (ne_of_gt (hS i))
     · intro k
       show (∑ i, (∑ j', A i j' * Real.exp (u j'))⁻¹ * A i k * Real.exp (u k))
@@ -707,10 +707,10 @@ lemma sinkhorn_scaling
       have hcol : (∑ i, (∑ j', A i j' * Real.exp (u j'))⁻¹ * A i k
         * Real.exp (u k))
         = Real.exp (u k) * (∑ i, A i k / (∑ j', A i j' * Real.exp (u j'))) := by
-        rw [Finset.mul_sum]
-        apply Finset.sum_congr rfl
-        intro i _
-        ring
+          rw [Finset.mul_sum]
+          apply Finset.sum_congr rfl
+          intro i _
+          ring
       rw [hcol]
       exact hQ1 k
 
@@ -718,4 +718,4 @@ end MathlibExt.LinearAlgebra.Matrix.SinkhornWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-16

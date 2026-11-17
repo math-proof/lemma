@@ -1,11 +1,5 @@
 import Mathlib
-import Lemma.Rep.ChainAdm
-import Lemma.AlgEquiv.ComplexConjugation
-import Lemma.PadicAlgCl.CompletionBridge
-import Lemma.ClassGroup.GaloisAction
-import Instance.ExtEndgame_ProductionDatum
 import Def.ExtEndgame_ProductionDatum
-import Abbrev.ExtEndgame_ProductionDatum
 
 set_option autoImplicit false
 

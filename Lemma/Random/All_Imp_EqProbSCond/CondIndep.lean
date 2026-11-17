@@ -31,7 +31,7 @@ private lemma of_xz
   SinglePSpace π (x, z) := by
 -- proof
   have hxz_m : AEMeasurable (x, z) π := (hx.prodMk hz).aemeasurable
-  have href : (ReferenceMeasure.measure : Measure (α × γ)) =
+  have href : ReferenceMeasure.measure =
       (Measure.count (α := α)).prod (Measure.count (α := γ)) := by
     change (ReferenceMeasure.measure (α := α)).prod (ReferenceMeasure.measure (α := γ)) = _
     exact hμα ▸ hμγ ▸ rfl
@@ -326,4 +326,4 @@ private lemma main
   simpa [mul_comm (π.prob z c), mul_comm (π.prob (y, z) (b, c))] using hDens
 
 -- created on 2026-09-21
--- updated on 2026-11-14
+-- updated on 2026-11-16

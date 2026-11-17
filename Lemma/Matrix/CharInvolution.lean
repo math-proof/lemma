@@ -52,9 +52,7 @@ def charInvolution (R : Type*) [Semiring R] [Module R A] : H1 M H A →ₗ[R] H1
 theorem charInvolution_charInvolution (R : Type*) [Semiring R] [Module R A] (φ : H1 M H A) :
     charInvolution M H A R (charInvolution M H A R φ) = φ := by
   ext γ
-  show φ (Additive.ofMul (jConjGammaH M H (Additive.toMul
-    (Additive.ofMul (jConjGammaH M H (Additive.toMul γ)))))) = φ γ
-  rw [toMul_ofMul, jConjGammaH_jConjGammaH, ofMul_toMul]
+  simp [charInvolution_apply, toMul_ofMul, jConjGammaH_jConjGammaH, ofMul_toMul]
 
 theorem charInvolution_comp_charInvolution (R : Type*) [Semiring R] [Module R A] :
     charInvolution M H A R ∘ₗ charInvolution M H A R = LinearMap.id :=

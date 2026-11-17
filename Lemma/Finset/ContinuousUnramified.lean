@@ -1,7 +1,7 @@
 import Mathlib
-import Instance.ExtEndgame_ProductionDatum
+import Def.ExtEndgame_ProductionDatum
 import Lemma.Rep.ContinuousH1
-import Lemma.Rep.PoitouTate
+import Def.GroupCohomology_PoitouTate
 
 set_option autoImplicit false
 set_option maxHeartbeats 400000

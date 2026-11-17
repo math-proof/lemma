@@ -12,7 +12,7 @@ universe u
 /-!
 # Stochastic process types (DiscreteMarkovChain)
 
-Empty.Finite discrete-time homogeneous Markov-chain primitives, aligned with
+Finite discrete-time homogeneous Markov-chain primitives, aligned with
 [Instance.Probability.Process.StochasticProcessTypes.Part3.DiscreteMarkovChain](https://github.com/sympy/sympy/blob/master/sympy/stats/stochastic_process_types.py).
 
 In Lean these are typeclasses on a transition matrix `P : Matrix S S ℝ`

@@ -34,11 +34,6 @@ variable {X : Scheme.{u}} (𝒱 : X.TwoAffineOpenCover) (c : X ⟶ Spec (.of R))
   {A : Type u} [CommRing A] [Algebra R A] {B : Type u} [CommRing B] [Algebra R B]
   {B' : Type u} [CommRing B'] [Algebra R B']
 
-variable (A) in
-
-
-variable (A) in
-
 
 end BaseChange
 

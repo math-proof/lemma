@@ -126,15 +126,13 @@ lemma ae_tendsto_centered_of_indep_summableVar
     exact eLpNorm_one_le_sqrt_integral_sq hS_memLp h_int_bound
   have hR_nn : (0 : ℝ) ≤ Real.sqrt C := Real.sqrt_nonneg _
   set R : NNReal := ⟨Real.sqrt C, hR_nn⟩
-  have hR_eq : (R : ENNReal) = ENNReal.ofReal (Real.sqrt C) := by
-    simp [R, ENNReal.ofReal_eq_coe_nnreal hR_nn]
+  have hR_eq : (R : ENNReal) = ENNReal.ofReal (Real.sqrt C) :=
+    (ENNReal.ofReal_eq_coe_nnreal hR_nn).symm
   have hR_bdd : ∀ n, eLpNorm (fun ω => ∑ k ∈ range (n + 1), Z k ω) 1 μ ≤ ↑R := by
     intro n; rw [hR_eq]; exact hR_bound n
   have h := ae_tendsto_sum_of_indep_centered_L1bdd hZ_sm hZ_indep hZ_mean hZ_int hR_bdd
   filter_upwards [h] with ω ⟨c, hc⟩
   exact ⟨c, (Filter.tendsto_add_atTop_iff_nat 1).mp hc⟩
-set_option linter.unusedSectionVars false in
-
 end KolmogorovThreeSeries
 
 namespace KolmogorovThreeSeries
@@ -154,7 +152,7 @@ lemma ae_eventually_truncation_eq
 -- imply
   ∀ᵐ ω ∂μ, ∀ᶠ n in atTop, X n ω = truncatedRV X A n ω := by
 -- proof
-  have h1' : (∑' n, μ {ω | A < |X n ω|}) ≠ ⊤ := h1.ne
+  have h1' : (∑' n, μ {ω | A < |X n ω|}) ≠ ⊤ := h0.ne
   have hbc := ae_eventually_notMem h1'
   filter_upwards [hbc] with ω hω
   exact hω.mono fun n hn => by
@@ -268,8 +266,6 @@ lemma truncatedRV_eq_comp
 -- proof
   ext ω
   simp only [truncatedRV, Function.comp, Set.indicator, Set.mem_setOf_eq, Pi.one_apply]
-set_option linter.unusedSectionVars false in
-
 end KolmogorovThreeSeries
 
 namespace KolmogorovThreeSeries
@@ -337,8 +333,6 @@ lemma abs_truncatedRV_le
   split_ifs with h
   · simp only [mul_one]; exact h
   · simp only [mul_zero, abs_zero]; exact hA
-set_option linter.unusedSectionVars false in
-
 end KolmogorovThreeSeries
 
 namespace KolmogorovThreeSeries
@@ -361,8 +355,6 @@ lemma truncated_indicator_eq_of_bdd
   ext ω
   have h : ω ∈ {ω' : Ω | |Y n ω'| ≤ A} := hY_bdd n ω
   simp [Set.indicator_of_mem h]
-set_option linter.unusedSectionVars false in
-
 end KolmogorovThreeSeries
 
 namespace KolmogorovThreeSeries

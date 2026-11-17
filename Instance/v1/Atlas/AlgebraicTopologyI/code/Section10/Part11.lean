@@ -26,8 +26,8 @@ namespace SphereHomology
 open AlgebraicTopology
 
 /-- `S^0` is finite (it is just the two-point set `{-1, +1}`). -/
-instance sphere_zero_finite : Empty.Finite (Sphere 0) := by
-  show Empty.Finite ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin 1)) 1)
+instance sphere_zero_finite : Finite (Sphere 0) := by
+  show Finite ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin 1)) 1)
   rw [Set.finite_coe_iff]
   let p1 : EuclideanSpace ℝ (Fin 1) := (EuclideanSpace.equiv (Fin 1) ℝ).symm (fun _ => (1 : ℝ))
   let p2 : EuclideanSpace ℝ (Fin 1) := (EuclideanSpace.equiv (Fin 1) ℝ).symm (fun _ => (-1 : ℝ))

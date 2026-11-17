@@ -5,11 +5,11 @@ import Initialize.Tactic.Attr.Basic
 namespace MathlibExt.LinearAlgebra.DiagonalizationWanted
 
 variable {K V : Type*} [Field K] [AddCommGroup V] [Module K V] [FiniteDimensional K V]
+omit [FiniteDimensional K V] in
 /--
 [diagonalization_iSup_ker_aeval_eq_ker_prod](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Diagonalization.lean)
 -/
 @[path]
-omit [FiniteDimensional K V] in
 private lemma diagonalization_iSup_ker_aeval_eq_ker_prod
   (f : Module.End K V) (s : Finset K) :
   (⨆ μ ∈ s, LinearMap.ker (Polynomial.aeval f (Polynomial.X - Polynomial.C μ))) =
@@ -136,11 +136,11 @@ end MathlibExt.LinearAlgebra.DiagonalizationWanted
 namespace MathlibExt.LinearAlgebra.DiagonalizationWanted
 
 variable {K V : Type*} [Field K] [AddCommGroup V] [Module K V] [FiniteDimensional K V]
+omit [FiniteDimensional K V] in
 /--
 [diagonalization_toMatrix_eq_diagonal](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Diagonalization.lean)
 -/
 @[path]
-omit [FiniteDimensional K V] in
 private lemma diagonalization_toMatrix_eq_diagonal
   {ι : Type*} [Fintype ι] [DecidableEq ι]
   (f : Module.End K V) (b : Module.Basis ι K V) (μ : ι → K)
@@ -207,4 +207,4 @@ end MathlibExt.LinearAlgebra.DiagonalizationWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-16

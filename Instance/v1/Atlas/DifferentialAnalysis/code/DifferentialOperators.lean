@@ -46,7 +46,7 @@ variable {n : ℕ}
 `toFun` field, with the obvious injectivity. -/
 instance instFunLike : FunLike (SmoothZeroAtInfty n) (EuclideanSpace ℝ (Fin n)) ℂ where
   coe u := u.toFun
-  coe_injective' u v h := by cases u; cases v; congr
+  coe_injective u v h := by cases u; cases v; congr
 
 end SmoothZeroAtInfty
 end OperatorProperties

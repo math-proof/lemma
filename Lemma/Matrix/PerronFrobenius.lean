@@ -8,11 +8,11 @@ open MathlibExt.LinearAlgebra.Matrix.PerronFrobeniusWanted
 namespace MathlibExt.LinearAlgebra.Matrix.PerronFrobeniusWanted
 
 variable [Fintype n] [DecidableEq n] [Nonempty n]
+omit [Fintype n] [Nonempty n] in
 /--
 [le_onePlus](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/PerronFrobenius.lean)
 -/
 @[path]
-omit [Fintype n] [Nonempty n] in
 private lemma le_onePlus (A : Matrix n n ℝ) (i j : n) : A i j ≤ (1 + A) i j := by
   simp only [Matrix.add_apply]
   have : 0 ≤ (1 : Matrix n n ℝ) i j := by rw [Matrix.one_apply]; split <;> norm_num
@@ -23,11 +23,11 @@ end MathlibExt.LinearAlgebra.Matrix.PerronFrobeniusWanted
 namespace MathlibExt.LinearAlgebra.Matrix.PerronFrobeniusWanted
 
 variable [Fintype n] [DecidableEq n] [Nonempty n]
+omit [Nonempty n] in
 /--
 [pow_le_onePlus_pow](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/PerronFrobenius.lean)
 -/
 @[path]
-omit [Nonempty n] in
 private lemma pow_le_onePlus_pow (A : Matrix n n ℝ) (hA : ∀ i j, 0 ≤ A i j) :
   ∀ (k : ℕ) (i j : n), (A ^ k) i j ≤ ((1 + A) ^ k) i j := by
   intro k
@@ -46,11 +46,11 @@ end MathlibExt.LinearAlgebra.Matrix.PerronFrobeniusWanted
 namespace MathlibExt.LinearAlgebra.Matrix.PerronFrobeniusWanted
 
 variable [Fintype n] [DecidableEq n] [Nonempty n]
+omit [Fintype n] [Nonempty n] in
 /--
 [onePlus_diag_pos](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/PerronFrobenius.lean)
 -/
 @[path]
-omit [Fintype n] [Nonempty n] in
 private lemma onePlus_diag_pos (A : Matrix n n ℝ) (hA : ∀ i j, 0 ≤ A i j) (j : n) :
   0 < (1 + A) j j := by
   simp only [Matrix.add_apply, Matrix.one_apply_eq]; have := hA j j; linarith
@@ -60,11 +60,11 @@ end MathlibExt.LinearAlgebra.Matrix.PerronFrobeniusWanted
 namespace MathlibExt.LinearAlgebra.Matrix.PerronFrobeniusWanted
 
 variable [Fintype n] [DecidableEq n] [Nonempty n]
+omit [Fintype n] [Nonempty n] in
 /--
 [onePlus_nonneg](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/PerronFrobenius.lean)
 -/
 @[path]
-omit [Fintype n] [Nonempty n] in
 private lemma onePlus_nonneg (A : Matrix n n ℝ) (hA : ∀ i j, 0 ≤ A i j) (i j : n) :
   0 ≤ (1 + A) i j :=
   le_trans (hA i j) (le_onePlus A i j)
@@ -74,12 +74,12 @@ end MathlibExt.LinearAlgebra.Matrix.PerronFrobeniusWanted
 namespace MathlibExt.LinearAlgebra.Matrix.PerronFrobeniusWanted
 
 variable [Fintype n] [DecidableEq n] [Nonempty n]
+omit [Nonempty n] in
 /--
 [pow_pos_succ](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/PerronFrobenius.lean)
+stays positive in the next power.
 -/
 @[path]
-omit [Nonempty n] in
-stays positive in the next power. -/
 private lemma pow_pos_succ (B : Matrix n n ℝ) (hB : ∀ i j, 0 ≤ B i j) (hd : ∀ j, 0 < B j j)
   (k : ℕ) (i j : n) (h : 0 < (B ^ k) i j) : 0 < (B ^ (k + 1)) i j := by
   rw [pow_succ, Matrix.mul_apply]
@@ -95,11 +95,11 @@ end MathlibExt.LinearAlgebra.Matrix.PerronFrobeniusWanted
 namespace MathlibExt.LinearAlgebra.Matrix.PerronFrobeniusWanted
 
 variable [Fintype n] [DecidableEq n] [Nonempty n]
+omit [Nonempty n] in
 /--
 [pow_pos_add](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/PerronFrobenius.lean)
 -/
 @[path]
-omit [Nonempty n] in
 private lemma pow_pos_add (B : Matrix n n ℝ) (hB : ∀ i j, 0 ≤ B i j) (hd : ∀ j, 0 < B j j)
   (k : ℕ) (i j : n) (h : 0 < (B ^ k) i j) : ∀ d, 0 < (B ^ (k + d)) i j := by
   intro d
@@ -114,12 +114,12 @@ end MathlibExt.LinearAlgebra.Matrix.PerronFrobeniusWanted
 namespace MathlibExt.LinearAlgebra.Matrix.PerronFrobeniusWanted
 
 variable [Fintype n] [DecidableEq n] [Nonempty n]
+omit [Nonempty n] in
 /--
 [exists_uniform_pow_pos](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/PerronFrobenius.lean)
+strictly positive.
 -/
 @[path]
-omit [Nonempty n] in
-strictly positive. -/
 private lemma exists_uniform_pow_pos (A : Matrix n n ℝ) (hA : A.IsIrreducible) :
   ∃ m : ℕ, ∀ (i j : n), 0 < ((1 + A) ^ m) i j := by
   have hnn := hA.nonneg
@@ -143,11 +143,11 @@ end MathlibExt.LinearAlgebra.Matrix.PerronFrobeniusWanted
 namespace MathlibExt.LinearAlgebra.Matrix.PerronFrobeniusWanted
 
 variable [Fintype n] [DecidableEq n] [Nonempty n]
+omit [DecidableEq n] [Nonempty n] in
 /--
 [mulVec_mono](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/PerronFrobenius.lean)
 -/
 @[path]
-omit [DecidableEq n] [Nonempty n] in
 private lemma mulVec_mono (C : Matrix n n ℝ) (hC : ∀ i j, 0 ≤ C i j) (u w : n → ℝ)
   (h : ∀ i, u i ≤ w i) (i : n) : C.mulVec u i ≤ C.mulVec w i := by
   classical
@@ -161,11 +161,11 @@ end MathlibExt.LinearAlgebra.Matrix.PerronFrobeniusWanted
 namespace MathlibExt.LinearAlgebra.Matrix.PerronFrobeniusWanted
 
 variable [Fintype n] [DecidableEq n] [Nonempty n]
+omit [DecidableEq n] [Nonempty n] in
 /--
 [mulVec_pos](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/PerronFrobenius.lean)
 -/
 @[path]
-omit [DecidableEq n] [Nonempty n] in
 private lemma mulVec_pos (C : Matrix n n ℝ) (hC : ∀ i j, 0 < C i j) (a : n → ℝ)
   (ha : ∀ i, 0 ≤ a i) (ha0 : a ≠ 0) (i : n) : 0 < C.mulVec a i := by
   classical
@@ -182,11 +182,11 @@ end MathlibExt.LinearAlgebra.Matrix.PerronFrobeniusWanted
 namespace MathlibExt.LinearAlgebra.Matrix.PerronFrobeniusWanted
 
 variable [Fintype n] [DecidableEq n] [Nonempty n]
+omit [DecidableEq n] [Nonempty n] in
 /--
 [mulVec_swap](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/PerronFrobenius.lean)
 -/
 @[path]
-omit [DecidableEq n] [Nonempty n] in
 private lemma mulVec_swap (A C : Matrix n n ℝ) (hcomm : A * C = C * A) (w : n → ℝ) (i : n) :
   C.mulVec (A.mulVec w) i = A.mulVec (C.mulVec w) i := by
   classical
@@ -197,11 +197,11 @@ end MathlibExt.LinearAlgebra.Matrix.PerronFrobeniusWanted
 namespace MathlibExt.LinearAlgebra.Matrix.PerronFrobeniusWanted
 
 variable [Fintype n] [DecidableEq n] [Nonempty n]
+omit [DecidableEq n] in
 /--
 [cw_scale](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/PerronFrobenius.lean)
 -/
 @[path]
-omit [DecidableEq n] in
 private lemma cw_scale (A : Matrix n n ℝ) (z : n → ℝ) (c : ℝ) (hc : 0 < c) :
   cwValue A (c • z) = cwValue A z := by
   classical
@@ -218,11 +218,11 @@ end MathlibExt.LinearAlgebra.Matrix.PerronFrobeniusWanted
 namespace MathlibExt.LinearAlgebra.Matrix.PerronFrobeniusWanted
 
 variable [Fintype n] [DecidableEq n] [Nonempty n]
+omit [DecidableEq n] in
 /--
 [cw_mono](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/PerronFrobenius.lean)
 -/
 @[path]
-omit [DecidableEq n] in
 private lemma cw_mono (A C : Matrix n n ℝ) (hC : ∀ i j, 0 ≤ C i j) (hcomm : A * C = C * A)
   (z : n → ℝ) (hz : ∀ i, 0 < z i) (hCz : ∀ i, 0 < C.mulVec z i) :
   cwValue A z ≤ cwValue A (C.mulVec z) := by
@@ -458,15 +458,13 @@ lemma _root_.Matrix.IsIrreducible.perron_frobenius
   [Fintype n] [DecidableEq n] [Nonempty n]
   {A : Matrix n n ℝ}
 -- given
-  (hA : A.IsIrreducible)
-  (hA0 : A ≠ 0) :
+  (hA : A.IsIrreducible) :
 -- imply
   ∃ (r : ℝ) (v : n → ℝ),
     0 < r ∧ (∀ i, 0 < v i) ∧ A.mulVec v = r • v ∧
     ∀ μ : ℂ, Matrix.det (μ • (1 : Matrix n n ℂ) - toComplexMatrix A) = 0 → ‖μ‖ ≤ r :=
 -- proof
   perron_frobenius_aux A hA
-set_option linter.unusedVariables false in
 
 end MathlibExt.LinearAlgebra.Matrix.PerronFrobeniusWanted
 
@@ -492,4 +490,4 @@ end MathlibExt.LinearAlgebra.Matrix.PerronFrobeniusWanted
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-16

@@ -44,8 +44,5 @@ lemma problem_1_5a_norm_comparison
   rw [mul_rpow (rpow_nonneg (Nat.cast_nonneg n) _) hSq,
     ← rpow_mul (Nat.cast_nonneg n), hexp] at key2
   linarith [mul_comm ((∑ i : Fin n, |x i| ^ q) ^ (1 / q)) ((↑n : ℝ) ^ (1 / 2 - 1 / q))]
-/-- **Problem 1.5(b).** For independent sub-Gaussian variables `X₁,…,Xₙ` with
-proxy `σ²` and `q > 1`, `E ‖X‖_q ≤ 4 σ · n^{1/q} · √q`. -/
-
 
 -- created on 2026-10-23

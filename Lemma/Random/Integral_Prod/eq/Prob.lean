@@ -3,6 +3,7 @@ import Mathlib.MeasureTheory.Integral.Lebesgue.Map
 import Mathlib.MeasureTheory.Measure.Count
 import Lemma.Random.All_EqIntegral_ProbJoint.of.PSpace_Joint
 import Lemma.Random.All_Eq_MulProbCond.of.PSpace_Joint
+import Instance.Probability.Rv
 open MeasureTheory Random
 
 
@@ -18,7 +19,7 @@ private noncomputable def density
   let path : Fin (n + 1) → α := Fin.snoc (α := fun _ => α) u v
   π.prob (s 0) (path 0) *
     ∏ t : Fin n,
-      @MeasureTheory.Measure.condProb Ω α α _ _ _ π (s (t + 1), s t.val) (hT t.val)
+      @MeasureTheory.Measure.condProb Ω α α _ _ _ _ π (s (t + 1), s t.val) (hT t.val)
         (path t.succ, path t.castSucc)
 
 
@@ -78,7 +79,7 @@ private lemma mulProbJoint_fst
   have := SinglePSpace.of.SinglePSpace.snd hP
   (fun w : β =>
       π.prob y w *
-        @MeasureTheory.Measure.condProb Ω α β _ _ _ π (x, y) hP (v, w)) =ᵐ[ReferenceMeasure.measure]
+        @MeasureTheory.Measure.condProb Ω α β _ _ _ _ π (x, y) hP (v, w)) =ᵐ[ReferenceMeasure.measure]
     fun w : β => π.prob (x, y) (v, w) := by
   have hmul := All_Eq_MulProbCond.of.PSpace_Joint hP
   rw [hα, Measure.ae_count_iff] at hmul
@@ -96,17 +97,17 @@ private lemma density_snoc
   (v w₀ : α) (w : Fin n → α) :
   density (s := s) (n := n + 1) hT v (Fin.snoc (α := fun _ => α) w w₀) =
     density (s := s) (n := n) hT w₀ w *
-      @MeasureTheory.Measure.condProb Ω α α _ _ _ π (s (n + 1), s n) (hT n) (v, w₀) := by
+      @MeasureTheory.Measure.condProb Ω α α _ _ _ _ π (s (n + 1), s n) (hT n) (v, w₀) := by
   set path' : Fin (n + 1) → α := Fin.snoc (α := fun _ => α) w w₀
   set path : Fin (n + 2) → α := Fin.snoc (α := fun _ => α) path' v
   have hprod :
     ∏ t : Fin (n + 1),
-      @MeasureTheory.Measure.condProb Ω α α _ _ _ π (s (t.val + 1), s t.val) (hT t.val)
+      @MeasureTheory.Measure.condProb Ω α α _ _ _ _ π (s (t.val + 1), s t.val) (hT t.val)
         (path t.succ, path t.castSucc) =
     (∏ t : Fin n,
-      @MeasureTheory.Measure.condProb Ω α α _ _ _ π (s (t.val + 1), s t.val) (hT t.val)
+      @MeasureTheory.Measure.condProb Ω α α _ _ _ _ π (s (t.val + 1), s t.val) (hT t.val)
         (path' t.succ, path' t.castSucc)) *
-      @MeasureTheory.Measure.condProb Ω α α _ _ _ π (s (n + 1), s n) (hT n) (v, w₀) := by
+      @MeasureTheory.Measure.condProb Ω α α _ _ _ _ π (s (n + 1), s n) (hT n) (v, w₀) := by
     rw [Fin.prod_univ_castSucc]
     congr 1
     ·
@@ -175,7 +176,7 @@ private lemma lintegral_density_snoc
     ∂(Measure.pi fun _ => ReferenceMeasure.measure) =
     ∫⁻ w₀ : α, ∫⁻ w : Fin n → α,
         density (s := s) (n := n) hT w₀ w *
-          @MeasureTheory.Measure.condProb Ω α α _ _ _ π (s (n + 1), s n) (hT n) (v, w₀)
+          @MeasureTheory.Measure.condProb Ω α α _ _ _ _ π (s (n + 1), s n) (hT n) (v, w₀)
       ∂(Measure.pi fun _ => ReferenceMeasure.measure)
       ∂ReferenceMeasure.measure := by
   let μ := ReferenceMeasure.measure (α := α)
@@ -259,19 +260,19 @@ private lemma main
     calc _ =
         ∫⁻ w₀, ∫⁻ w,
             density (s := s) (n := n) hT w₀ w *
-              @MeasureTheory.Measure.condProb Ω α α _ _ _ π (s (n + 1), s n) (hT n) (v, w₀)
+              @MeasureTheory.Measure.condProb Ω α α _ _ _ _ π (s (n + 1), s n) (hT n) (v, w₀)
           ∂(Measure.pi fun _ => μ) ∂μ :=
       lintegral_density_snoc (s := s) hT v
       _ = ∫⁻ w₀,
             (∫⁻ w, density (s := s) (n := n) hT w₀ w ∂(Measure.pi fun _ => μ)) *
-              @MeasureTheory.Measure.condProb Ω α α _ _ _ π (s (n + 1), s n) (hT n) (v, w₀)
+              @MeasureTheory.Measure.condProb Ω α α _ _ _ _ π (s (n + 1), s n) (hT n) (v, w₀)
           ∂μ := by
         apply lintegral_congr
         intro w₀
         rw [lintegral_mul_const'' _
           (measurable_density (s := s) (n := n) hT (v := w₀)).aemeasurable]
       _ = ∫⁻ w₀, π.prob (s n) w₀ *
-            @MeasureTheory.Measure.condProb Ω α α _ _ _ π (s (n + 1), s n) (hT n) (v, w₀) ∂μ := by
+            @MeasureTheory.Measure.condProb Ω α α _ _ _ _ π (s (n + 1), s n) (hT n) (v, w₀) ∂μ := by
         apply lintegral_congr
         intro w₀
         rw [ih w₀]
@@ -282,4 +283,4 @@ private lemma main
 
 
 -- created on 2023-04-04
--- updated on 2026-11-14
+-- updated on 2026-11-16

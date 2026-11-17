@@ -117,7 +117,7 @@ noncomputable def AdelicDock.localLevelOne :
   one_mem' := ⟨by rw [Units.val_one]; exact .one, by rw [inv_one, Units.val_one]; exact .one⟩
   mul_mem' {a b} ha hb :=
     ⟨by rw [Units.val_mul]; exact ha.1.mul hb.1,
-     by rw [mul_inv_rev, Units.val_mul]; exact hb.2.mul ha.2⟩
+     by rw [_root_.mul_inv_rev, Units.val_mul]; exact hb.2.mul ha.2⟩
   inv_mem' {a} ha := ⟨ha.2, by rw [inv_inv]; exact ha.1⟩
 
 theorem AdelicDock.mem_localLevelOne_iff

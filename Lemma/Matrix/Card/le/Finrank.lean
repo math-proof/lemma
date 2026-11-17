@@ -11,19 +11,16 @@ namespace GaloisTheory
 -/
 @[path]
 lemma card_aut_le_finrank
-  [Field F]
-  [Field E]
-  [Algebra F E]
   {F E : Type*}
   [Field F]
   [Field E]
   [Algebra F E]
-  [FiniteDimensional F E]
-  [Algebra.IsSeparable F E] :
+  [FiniteDimensional F E] :
 -- imply
   Nat.card (E ≃ₐ[F] E) ≤ Module.finrank F E := by
 -- proof
-  rwa [Nat.card_eq_fintype_card]
+  rw [Nat.card_eq_fintype_card]
+  exact AlgEquiv.card_le
 
 end GaloisTheory
 
@@ -34,9 +31,6 @@ namespace GaloisTheory
 -/
 @[path]
 lemma isGalois_iff_card_aut_eq_finrank
-  [Field F]
-  [Field E]
-  [Algebra F E]
   {F E : Type*}
   [Field F]
   [Field E]
@@ -57,9 +51,6 @@ namespace GaloisTheory
 -/
 @[path]
 lemma galois_group_size
-  [Field F]
-  [Field E]
-  [Algebra F E]
   {F E : Type*}
   [Field F]
   [Field E]
@@ -69,7 +60,7 @@ lemma galois_group_size
 -- imply
   (Nat.card (E ≃ₐ[F] E) ≤ Module.finrank F E) ∧ (IsGalois F E ↔ Nat.card (E ≃ₐ[F] E) = Module.finrank F E) :=
 -- proof
-  ⟨card_aut_le_finrank F E, isGalois_iff_card_aut_eq_finrank F E⟩
+  ⟨card_aut_le_finrank, isGalois_iff_card_aut_eq_finrank⟩
 
 end GaloisTheory
 
@@ -80,9 +71,7 @@ namespace GaloisTheory
 -/
 @[path]
 lemma symmetric_polynomial_in_esymm
-  [Field F]
-  [Field E]
-  [Algebra F E]
+  {F : Type*}
   [Field F]
   {P : Polynomial F}
   {n : ℕ}
@@ -153,16 +142,14 @@ namespace GaloisTheory
 -/
 @[path]
 lemma all_minpoly_split_in_splitting_field
-  [Field F]
-  [Field E]
-  [Algebra F E]
+  {F : Type*}
   [Field F]
   {p : Polynomial F}
   {α : p.SplittingField} :
 -- imply
   (Polynomial.map (algebraMap F p.SplittingField) (minpoly F α)).Splits := by
 -- proof
-  haveI : Normal F p.SplittingField := Polynomial.SplittingField.instNormal p
+  have : Normal F p.SplittingField := Polynomial.SplittingField.instNormal p
   exact Normal.splits inferInstance α
 
 end GaloisTheory
@@ -173,14 +160,11 @@ namespace GaloisTheory
 [s5_not_solvable_and_a5_simple](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraNotes/code/GaloisTheory.lean)
 -/
 @[path]
-lemma s5_not_solvable_and_a5_simple
-  [Field F]
-  [Field E]
-  [Algebra F E] :
+lemma s5_not_solvable_and_a5_simple :
 -- imply
-  ¬IsSolvable (Equiv.Perm (Fin 5)) ∧ IsSimpleGroup (alternatingGroup (Fin 5)) :=
+  ¬Group.IsSolvable (Equiv.Perm (Fin 5)) ∧ IsSimpleGroup (alternatingGroup (Fin 5)) :=
 -- proof
-  ⟨Equiv.Perm.fin_5_not_solvable, alternatingGroup.isSimpleGroup_five⟩
+  ⟨Equiv.Perm.not_isSolvable_fin_5, alternatingGroup.isSimpleGroup (by simp)⟩
 
 end GaloisTheory
 
@@ -191,16 +175,13 @@ namespace GaloisTheory
 -/
 @[path]
 lemma symmetric_group_not_solvable
-  [Field F]
-  [Field E]
-  [Algebra F E]
   {n : ℕ}
 -- given
   (hn : 5 ≤ n) :
 -- imply
-  ¬IsSolvable (Equiv.Perm (Fin n)) := by
+  ¬Group.IsSolvable (Equiv.Perm (Fin n)) := by
 -- proof
-  apply Equiv.Perm.not_solvable
+  apply Equiv.Perm.not_isSolvable
   rw [Cardinal.mk_fin]
   exact_mod_cast hn
 
@@ -213,29 +194,27 @@ namespace GaloisTheory
 -/
 @[path]
 lemma not_solvableByRad_of_gal_iso_S5
+  {F E : Type*}
   [Field F]
   [Field E]
   [Algebra F E]
-  [Field F]
-  [Field E]
-  [Algebra F E]
-  {p : F[X]}
+  {p : Polynomial F}
   {x : E}
 -- given
   (hp : Irreducible p)
-  (hiso : p.Gal ≃* Equiv.Perm (Fin 5))
-  (hpx : aeval x p = 0) :
+  (hiso : Polynomial.Gal p ≃* Equiv.Perm (Fin 5))
+  (hpx : Polynomial.aeval x p = 0) :
 -- imply
   x ∉ solvableByRad F E := by
 -- proof
   intro hx
-  have hsol : IsSolvable p.Gal := isSolvable_gal_of_irreducible hx hp hpx
-  have : IsSolvable (Equiv.Perm (Fin 5)) := by
-    haveI := hsol
-    exact solvable_of_surjective (f := hiso.toMonoidHom) hiso.surjective
-  exact Equiv.Perm.fin_5_not_solvable this
+  have hsol : Group.IsSolvable (Polynomial.Gal p) := isSolvable_gal_of_irreducible hx hp hpx
+  have : Group.IsSolvable (Equiv.Perm (Fin 5)) :=
+    Group.isSolvable_of_surjective (f := hiso.toMonoidHom) hiso.surjective
+  exact Equiv.Perm.not_isSolvable_fin_5 this
 
 end GaloisTheory
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-16

@@ -99,7 +99,7 @@ theorem measurableSet_centreCutSiegelSet {mS : MeasurableSpace (AdelicGL2 (𝓞 
        ((⋂ w : InfinitePlace F, {g | xWindowSq (archComponent F w (glArch (𝓞 F) F g)) ≤ u ^ 2}) ∩
         (⋂ w : InfinitePlace F, {g | archDetNorm w g ∈ Icc d₁ d₂}))) := by
     ext g
-    simp only [mem_centreCutSiegelSet_iff, mem_inter_iff, mem_setOf_eq, mem_iInter]
+    simp only [mem_centreCutSiegelSet_iff, mem_inter_iff, mem_ofPred_eq, mem_iInter]
   rw [this]
   exact hK.measurableSet.inter
     (((isClosed_iInter hfloor).measurableSet).inter
@@ -449,7 +449,7 @@ theorem isClosed_centreCutSiegelSet (c u d₁ d₂ : ℝ) :
         {g : AdelicGL2 (𝓞 F) F | ∀ w : InfinitePlace F,
           archDetNorm w g ∈ Icc d₁ d₂})) := by
     ext g
-    simp only [mem_centreCutSiegelSet_iff, Set.mem_inter_iff, Set.mem_setOf_eq]
+    simp only [mem_centreCutSiegelSet_iff, Set.mem_inter_iff, Set.mem_ofPred_eq]
   rw [hdecomp]
   exact hK.inter (hfloor.inter (hwin.inter hdet))
 

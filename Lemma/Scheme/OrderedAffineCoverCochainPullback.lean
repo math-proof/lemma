@@ -58,14 +58,15 @@ theorem unitPullback_apply_of_injective (h : X ⟶ Y) (𝒲 : X.OrderedAffineCov
         (X.presheaf.map (homOfLE (𝒲.inter_le_preimage_inter_sortIdx h 𝒦 lam hlam s hinj)).op).hom
           ((h.app (𝒦.inter (𝒲.sortIdx 𝒦 lam s hinj))).hom (z (𝒲.sortIdx 𝒦 lam s hinj))) := by
   classical
-  simp only [unitPullback, dif_pos hinj]
+  simp [unitPullback, hinj]
+  rfl
 
 theorem unitPullback_apply_of_not_injective (h : X ⟶ Y) (𝒲 : X.OrderedAffineCover) (𝒦 : Y.OrderedAffineCover)
     (lam : 𝒲.ι → 𝒦.ι) (hlam : ∀ w, 𝒲.U w ≤ h ⁻¹ᵁ 𝒦.U (lam w)) (n : ℕ)
     (z : (unit πY).cochain 𝒦 n) (s : 𝒲.Idx n) (hinj : ¬ Function.Injective (lam ∘ s.1)) :
     unitPullback (πX := πX) h 𝒲 𝒦 lam hlam n z s = 0 := by
   classical
-  simp only [unitPullback, dif_neg hinj]
+  simp [unitPullback, hinj]
 
 end AlgebraicGeometry.OModulePresheaf
 

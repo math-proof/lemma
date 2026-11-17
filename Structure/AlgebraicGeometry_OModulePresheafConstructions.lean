@@ -29,9 +29,6 @@ namespace OModulePresheaf
 variable {π : V ⟶ Spec (.of R)}
 
 
-variable (π) in
-
-
 section KerImCoker
 
 variable {F G : OModulePresheaf π} (φ : Hom F G)
@@ -71,9 +68,6 @@ def pushforward (H : OModulePresheaf (i ≫ π)) : OModulePresheaf π where
       Scheme.Hom.appLE_map, Scheme.Hom.map_appLE]
   res_refl U := H.res_refl (i ⁻¹ᵁ U)
   res_comp h h' := H.res_comp ((Opens.map i.base).monotone h) ((Opens.map i.base).monotone h')
-
-
-variable (π) in
 
 
 end Pushforward

@@ -43,8 +43,6 @@ section DiagonalContinuity
 
 variable {A : Type*} [CommRing A] [TopologicalSpace A] [IsTopologicalRing A]
 
-omit [IsTopologicalRing A] in
-
 
 end DiagonalContinuity
 

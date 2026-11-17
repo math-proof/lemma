@@ -1,18 +1,19 @@
 import Def.Dynamics.PolicyTrajectory.ContinuousAction
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Random.PSpace_Path.of.All_PSpace
+import Instance.Probability.Moments.Variance
 import Lemma.Random.OfRV.eq.Integral.of.AEStronglyMeasurable_Map
-open MeasureTheory PolicyGradient PolicyGradient.DensityModel Random
+open MeasureTheory PolicyGradient PolicyGradient.Model Random
 
 
 /--
-Sanity check: `𝔼[state, action, reward : M θ](…)` elaborates by flipping each process to its path RV
+Sanity check: `𝔼[state, action, reward : M.traj θ](…)` elaborates by flipping each process to its path RV
 (`AsPathRV.process`) and taking their finite joint law.
 -/
 @[path]
 private lemma main
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : DensityModel Θ 𝒮 𝒜}
+  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {θ : Θ}
   {γ : ℝ}
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
@@ -21,20 +22,20 @@ private lemma main
 -- given
   (h₀ : ∀ t, (· t) = (r t, s t, a t)) :
 -- imply
-  have hs : ∀ t, PSpace (M θ) (s t) := fun t =>
+  have hs : ∀ t, PSpace (M.traj θ) (s t) := fun t =>
     ⟨(Random.Measurable.of.All_Eq.snd.fst h₀ t).aemeasurable⟩
-  have ha : ∀ t, PSpace (M θ) (a t) := fun t =>
+  have ha : ∀ t, PSpace (M.traj θ) (a t) := fun t =>
     ⟨(Random.Measurable.of.All_Eq.snd.snd h₀ t).aemeasurable⟩
-  have hr : ∀ t, PSpace (M θ) (r t) := fun t =>
+  have hr : ∀ t, PSpace (M.traj θ) (r t) := fun t =>
     ⟨(Random.Measurable.of.All_Eq.fst h₀ t).aemeasurable⟩
-  have : PSpace (M θ) (AsPathRV.path s) :=
+  have : PSpace (M.traj θ) (AsPathRV.path s) :=
     PSpace_Path.of.All_PSpace hs
-  have : PSpace (M θ) (AsPathRV.path a) :=
+  have : PSpace (M.traj θ) (AsPathRV.path a) :=
     PSpace_Path.of.All_PSpace ha
-  have : PSpace (M θ) (AsPathRV.path r) :=
+  have : PSpace (M.traj θ) (AsPathRV.path r) :=
     PSpace_Path.of.All_PSpace hr
-  𝔼[r, s, a : M θ](∑' t, γ ^ t * r t) =
-    ∫ ω, ∑' t, γ ^ t * r t ω ∂(M θ) := by
+  𝔼[r, s, a : M.traj θ](∑' t, γ ^ t * r t) =
+    ∫ ω, ∑' t, γ ^ t * r t ω ∂(M.traj θ) := by
 -- proof
   intro _ _ _ _ _ _
   exact OfRV.eq.Integral.of.AEStronglyMeasurable_Map
@@ -43,4 +44,4 @@ private lemma main
 
 
 -- created on 2026-09-28
--- updated on 2026-11-14
+-- updated on 2026-11-16

@@ -119,8 +119,6 @@ section PairingToolkit
 
 variable [Bialgebra R A] [Module.Finite R A] [Module.Free R A]
 
-omit [Module.Finite R A] [Module.Free R A] in
-
 
 end PairingToolkit
 
@@ -135,16 +133,12 @@ section CounitLaws
 
 variable [Bialgebra R A] [Module.Finite R A] [Module.Free R A]
 
-omit [Module.Finite R A] [Module.Free R A] in
-
 
 end CounitLaws
 
 section Multiplicativity
 
 variable [Bialgebra R A] [Module.Finite R A] [Module.Free R A]
-
-omit [Module.Finite R A] [Module.Free R A] in
 
 
 end Multiplicativity
@@ -159,8 +153,6 @@ end BialgebraBundle
 section HopfDischarge
 
 variable [HopfAlgebra R A] [Module.Finite R A] [Module.Free R A]
-
-omit [Module.Finite R A] [Module.Free R A] in
 
 
 end HopfDischarge

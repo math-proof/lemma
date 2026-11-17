@@ -2,7 +2,7 @@ import Lemma.Real.LogDiv.eq.SubLogS.of.Ne_0.Ne_0
 import Lemma.Vector.GetDiv.eq.DivGet
 import Lemma.Vector.GetSub.eq.SubGet
 import Instance.Data.Vector.Functions.Part2
-open Real Vector
+open Real Vector Log
 
 
 @[path]

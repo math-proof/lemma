@@ -6,61 +6,9 @@ set_option autoImplicit false
 open scoped NumberField nonZeroDivisors
 open Polynomial
 
-section Fidl
+section MapNonZero
 variable {R : Type*} [CommRing R] [IsDomain R]
 variable {R' : Type*} [CommRing R'] [IsDomain R']
-variable (K : Type*) [Field K] [Algebra R K] [IsFractionRing R K]
-variable (L : Type*) [Field L] [Algebra R' L] [IsFractionRing R' L]
-
-theorem FractionalIdeal.ringEquivOfRingEquiv_coeIdeal (g : R ≃+* R') (I : Ideal R) :
-    FractionalIdeal.ringEquivOfRingEquiv K L g (I : FractionalIdeal R⁰ K) =
-      ((I.map (g : R →+* R') : Ideal R') : FractionalIdeal R'⁰ L) := by
-  ext x
-  rw [← FractionalIdeal.mem_coe, ← FractionalIdeal.mem_coe,
-    FractionalIdeal.ringEquivOfRingEquiv_apply, FractionalIdeal.coe_mk,
-    FractionalIdeal.val_eq_coe]
-  simp only [Submodule.mem_map, FractionalIdeal.mem_coe, FractionalIdeal.mem_coeIdeal]
-  constructor
-  · rintro ⟨-, ⟨a, haI, rfl⟩, rfl⟩
-    exact ⟨g a, Ideal.mem_map_of_mem _ haI,
-      by rw [LinearEquiv.coe_coe, IsFractionRing.semilinearEquivOfRingEquiv_apply,
-        IsFractionRing.ringEquivOfRingEquiv_algebraMap]⟩
-  · rintro ⟨b, hbI, rfl⟩
-    obtain ⟨a, haI, rfl⟩ := (Ideal.mem_map_iff_of_surjective _ g.surjective).mp hbI
-    exact ⟨algebraMap R K a, ⟨a, haI, rfl⟩,
-      by rw [LinearEquiv.coe_coe, IsFractionRing.semilinearEquivOfRingEquiv_apply,
-        IsFractionRing.ringEquivOfRingEquiv_algebraMap]⟩
-
-end Fidl
-
-section ClassGroupFunctoriality
-variable {R : Type*} [CommRing R] [IsDomain R]
-variable {R' : Type*} [CommRing R'] [IsDomain R']
-
-theorem ClassGroup.mulEquiv_mk_eq_mk (g : R ≃+* R')
-    {I : (FractionalIdeal R⁰ (FractionRing R))ˣ}
-    {J : (FractionalIdeal R'⁰ (FractionRing R'))ˣ}
-    (hIJ : FractionalIdeal.ringEquivOfRingEquiv (FractionRing R) (FractionRing R') g
-        (I : FractionalIdeal R⁰ (FractionRing R)) = (J : FractionalIdeal R'⁰ (FractionRing R'))) :
-    ClassGroup.mulEquiv g (ClassGroup.mk _ I) = ClassGroup.mk _ J := by
-  have hself : ∀ (J' : (FractionalIdeal R'⁰ (FractionRing R'))ˣ),
-      ClassGroup.equiv (R := R') (FractionRing R') (ClassGroup.mk _ J') =
-        QuotientGroup.mk' _ J' := by
-    intro J'
-    rw [ClassGroup.equiv_mk]
-    congr 1
-    rw [← Units.val_inj, Units.coe_mapEquiv]
-    simp [FractionalIdeal.canonicalEquiv_self]
-  rw [ClassGroup.mulEquiv, MulEquiv.trans_apply, MulEquiv.trans_apply, ClassGroup.equiv_mk,
-    show Units.mapEquiv (↑(FractionalIdeal.canonicalEquiv R⁰ (FractionRing R) (FractionRing R)))
-        I = I by
-      rw [← Units.val_inj, Units.coe_mapEquiv]
-      simp [FractionalIdeal.canonicalEquiv_self],
-    QuotientGroup.congr_mk']
-  rw [MulEquiv.symm_apply_eq, hself]
-  congr 1
-  rw [← Units.val_inj, Units.coe_mapEquiv]
-  exact hIJ
 
 def Ideal.mapNonZero (g : R ≃+* R') (P : (Ideal R)⁰) : (Ideal R')⁰ :=
   ⟨(P : Ideal R).map (g : R →+* R'), by
@@ -73,37 +21,36 @@ def Ideal.mapNonZero (g : R ≃+* R') (P : (Ideal R)⁰) : (Ideal R')⁰ :=
 @[simp] lemma Ideal.coe_mapNonZero (g : R ≃+* R') (P : (Ideal R)⁰) :
     (Ideal.mapNonZero g P : Ideal R') = (P : Ideal R).map (g : R →+* R') := rfl
 
-variable [IsDedekindDomain R] [IsDedekindDomain R']
+end MapNonZero
 
-theorem ClassGroup.mulEquiv_mk0 (g : R ≃+* R') (P : (Ideal R)⁰) :
+section ClassGroupFunctoriality
+variable {R : Type*} [CommRing R] [IsDedekindDomain R]
+variable {R' : Type*} [CommRing R'] [IsDedekindDomain R']
+
+theorem ClassGroup.mulEquiv_mk0_mapNonZero (g : R ≃+* R') (P : (Ideal R)⁰) :
     ClassGroup.mulEquiv g (ClassGroup.mk0 P) = ClassGroup.mk0 (Ideal.mapNonZero g P) := by
-  show ClassGroup.mulEquiv g (ClassGroup.mk _ (FractionalIdeal.mk0 (FractionRing R) P)) =
-    ClassGroup.mk _ (FractionalIdeal.mk0 (FractionRing R') (Ideal.mapNonZero g P))
-  refine ClassGroup.mulEquiv_mk_eq_mk g ?_
-  rw [FractionalIdeal.coe_mk0, FractionalIdeal.coe_mk0,
-    FractionalIdeal.ringEquivOfRingEquiv_coeIdeal, Ideal.coe_mapNonZero]
+  rw [ClassGroup.mulEquiv_mk0]
+  congr 1
 
 theorem ClassGroup.mulEquiv_refl_apply (C : ClassGroup R) :
     ClassGroup.mulEquiv (RingEquiv.refl R) C = C := by
   obtain ⟨P, rfl⟩ := ClassGroup.mk0_surjective C
-  rw [ClassGroup.mulEquiv_mk0]
+  rw [ClassGroup.mulEquiv_mk0_mapNonZero]
   congr 1
-  refine Subtype.ext ?_
-  rw [Ideal.coe_mapNonZero,
-    show ((RingEquiv.refl R : R ≃+* R) : R →+* R) = RingHom.id R from RingHom.ext fun _ => rfl,
-    Ideal.map_id]
+  exact Subtype.ext (by
+    rw [Ideal.coe_mapNonZero]
+    simp [Ideal.map_id])
 
-theorem ClassGroup.mulEquiv_trans_apply {R'' : Type*} [CommRing R''] [IsDomain R'']
-    [IsDedekindDomain R''] (g : R ≃+* R') (h : R' ≃+* R'') (C : ClassGroup R) :
+theorem ClassGroup.mulEquiv_trans_apply {R'' : Type*} [CommRing R''] [IsDedekindDomain R'']
+    (g : R ≃+* R') (h : R' ≃+* R'') (C : ClassGroup R) :
     ClassGroup.mulEquiv (g.trans h) C = ClassGroup.mulEquiv h (ClassGroup.mulEquiv g C) := by
   obtain ⟨P, rfl⟩ := ClassGroup.mk0_surjective C
-  rw [ClassGroup.mulEquiv_mk0, ClassGroup.mulEquiv_mk0, ClassGroup.mulEquiv_mk0]
+  rw [ClassGroup.mulEquiv_mk0_mapNonZero, ClassGroup.mulEquiv_mk0_mapNonZero,
+    ClassGroup.mulEquiv_mk0_mapNonZero]
   congr 1
-  refine Subtype.ext ?_
-  rw [Ideal.coe_mapNonZero, Ideal.coe_mapNonZero, Ideal.coe_mapNonZero,
-    show ((g.trans h : R ≃+* R'') : R →+* R'') = (h : R' →+* R'').comp (g : R →+* R') from
-      RingHom.ext fun _ => rfl,
-    ← Ideal.map_map]
+  exact Subtype.ext (by
+    rw [Ideal.coe_mapNonZero, Ideal.coe_mapNonZero, Ideal.coe_mapNonZero]
+    simp [Ideal.map_map])
 
 end ClassGroupFunctoriality
 
@@ -139,19 +86,15 @@ variable (p : ℕ) [NeZero p]
 
 section DedekindAction
 
-variable (R : Type*) [CommRing R] [IsDomain R]
+variable (R : Type*) [CommRing R] [IsDedekindDomain R]
 
 variable {R} in
-variable [IsDedekindDomain R] in
-
 theorem clEnd_clProj_mk0 (g : R ≃+* R) (P : (Ideal R)⁰) :
     clEnd p g (clProj p R (Additive.ofMul (ClassGroup.mk0 P))) =
       clProj p R (Additive.ofMul (ClassGroup.mk0 (Ideal.mapNonZero g P))) := by
-  rw [clEnd_clProj, ClassGroup.mulEquiv_mk0]
+  rw [clEnd_clProj, ClassGroup.mulEquiv_mk0_mapNonZero]
 
 variable {R} in
-variable [IsDedekindDomain R] in
-
 noncomputable def clEndHom : (R ≃+* R) →* Module.End (ZMod p) (ClGalModule p R) where
   toFun := clEnd p
   map_one' := by

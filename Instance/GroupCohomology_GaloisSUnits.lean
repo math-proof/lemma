@@ -1,7 +1,6 @@
 -- Carved from Lemma/Definitions/Def_GroupCohomology_GaloisSUnits.lean: instance decls only.
 import Mathlib
-import Def.FLTPrelim_Ramification
-import Lemma.Rep.GaloisSUnits
+import Def.GroupCohomology_GaloisSUnits
 
 set_option autoImplicit false
 
@@ -13,6 +12,18 @@ namespace groupCohomology
 open ValuationSubring
 
 variable (S : Finset Nat.Primes)
+
+variable {S} in
+private theorem smul_mem_galoisSUnits (σ : AlgebraicClosure ℚ ≃ₐ[ℚ] AlgebraicClosure ℚ) {x : (AlgebraicClosure ℚ)ˣ}
+    (hx : x ∈ galoisSUnits S) : σ • x ∈ galoisSUnits S := by
+  intro A hA
+  have hA' : ∀ q ∈ S, ¬ (A.comap (σ : AlgebraicClosure ℚ →+* AlgebraicClosure ℚ)).LiesOverPrime ((q : Nat.Primes) : ℕ) :=
+    fun q hq h => hA q hq ((A.liesOverPrime_comap_algEquiv_iff σ q).1 h)
+  obtain ⟨h₁, h₂⟩ := hx _ hA'
+  rw [ValuationSubring.mem_comap] at h₁ h₂
+  refine ⟨h₁, ?_⟩
+  rw [← smul_inv']
+  exact h₂
 
 instance instMulDistribMulActionGaloisSUnits :
     MulDistribMulAction (AlgebraicClosure ℚ ≃ₐ[ℚ] AlgebraicClosure ℚ) ↥(galoisSUnits S) where

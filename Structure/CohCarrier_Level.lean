@@ -3,7 +3,6 @@ import Mathlib.GroupTheory.Transfer
 import Mathlib.Algebra.Module.Hom
 import Mathlib.Data.ZMod.Units
 import Mathlib.Algebra.BigOperators.GroupWithZero.Action
-import Instance.CohCarrier_Level
 
 set_option autoImplicit false
 
@@ -16,10 +15,6 @@ namespace CohCarrier
 section TransferAdd
 
 variable {G : Type*} [Group G] {K : Subgroup G} {C : Type*} [CommGroup C]
-
-open Subgroup Subgroup.leftTransversals in
-
-open Subgroup Subgroup.leftTransversals in
 
 
 end TransferAdd
