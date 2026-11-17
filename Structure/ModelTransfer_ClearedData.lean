@@ -1,6 +1,10 @@
-import Instance.FLTPrelim_Modularity
-import Mathlib.Algebra.Field.ZMod
-import Mathlib.Tactic.LinearCombination
+module
+
+public import Instance.FLTPrelim_Modularity
+public import Mathlib.Algebra.Field.ZMod
+public import Mathlib.Tactic.LinearCombination
+
+public section
 
 set_option autoImplicit false
 

@@ -8,15 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Mathlib.LinearAlgebra.Matrix.ToLin
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.Algebra.Ring.CharZero
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Tactic.LinearCombination
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.Data.Real.Basic
+module
+
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.LinearAlgebra.Matrix.ToLin
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+public import Mathlib.Algebra.Ring.CharZero
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Mathlib.Algebra.BigOperators.Ring.Finset
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.Data.Real.Basic
+
+@[expose] public section
+
 open Matrix Finset Module
 
 set_option autoImplicit false

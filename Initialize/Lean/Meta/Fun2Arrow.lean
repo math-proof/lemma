@@ -5,7 +5,11 @@ Rewrite helpers for `@[Fun]` / `@[Fun']`:
 * `Fun.toFun` / `Fun` field-0 projection → the underlying function
 * proof args for rewritten binders wrapped with `Fun.mk`
 -/
-import Def.Lean.Meta.Expr.Part4
+module
+
+public import Def.Lean.Meta.Expr.Part4
+public section
+
 open Lean
 
 /-- Match `Fun ι α`, returning universe params and the two arguments. -/

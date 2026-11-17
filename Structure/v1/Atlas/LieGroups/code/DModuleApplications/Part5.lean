@@ -8,16 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.SimpleModule.Basic
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.GroupTheory.GroupAction.Basic
-import Mathlib.Algebra.Lie.Basic
-import Mathlib.RepresentationTheory.Basic
-import Mathlib.RepresentationTheory.Irreducible
-import Def.v1.Atlas.LieGroups.code.DModuleApplications.Part4
+module
+
+public import Mathlib.RingTheory.SimpleModule.Basic
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.GroupTheory.GroupAction.Basic
+public import Mathlib.Algebra.Lie.Basic
+public import Mathlib.RepresentationTheory.Basic
+public import Mathlib.RepresentationTheory.Irreducible
+public import Def.v1.Atlas.LieGroups.code.DModuleApplications.Part4
 
 
-noncomputable section
+public noncomputable section
 
 attribute [instance] SmoothVarietyWithGroupAction.grpK
 

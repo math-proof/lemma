@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Graph.GraphMinor
-import Lemma.Finset.Graph.GraphMinor
+import Theorem.Finset.Graph.GraphMinor
 import Abbrev.MathlibExtTest.Combinatorics.Graph.GraphMinor
 
 

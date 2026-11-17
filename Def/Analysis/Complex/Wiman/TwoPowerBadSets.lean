@@ -2,7 +2,7 @@
 
 import Theorem.Analysis.Complex.Wiman.LogMajorantRegularity
 import Lemma.Complex.Wiman.LogMajorantRegularity
-import Lemma.Real.Calculus.PowerGrowthBadSet
+import Theorem.Real.Calculus.PowerGrowthBadSet
 import Def.Analysis.Calculus.PowerGrowthBadSet
 
 

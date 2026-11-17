@@ -1,8 +1,10 @@
-import Structure.AlgebraicGeometry_RelativeGroupLaw
-import Mathlib.AlgebraicGeometry.Pullbacks
+module
+
+public import Structure.AlgebraicGeometry_RelativeGroupLaw
+public import Mathlib.AlgebraicGeometry.Pullbacks
 
 set_option autoImplicit false
-noncomputable section
+@[expose] public noncomputable section
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry NeronModelInfra
 

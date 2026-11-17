@@ -17,8 +17,8 @@ import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Data.Int.Cast.Lemmas
 import Mathlib.Tactic.LinearCombination
 import Def.v1.Atlas.DifferentialGeometry.code.GaussMapDegree.Part4
-import Lemma.Real.Atlas.v1.DifferentialGeometry.code.GaussMapDegree
-import Lemma.Real.Atlas.v1.DifferentialGeometry.code.Hypersurfaces
+import Theorem.Real.Atlas.v1.DifferentialGeometry.code.GaussMapDegree
+import Theorem.Real.Atlas.v1.DifferentialGeometry.code.Hypersurfaces
 import Def.v1.Atlas.DifferentialGeometry.code.Hypersurfaces
 import Structure.v1.Atlas.DifferentialGeometry.code.GaussBonnet.Part2
 open Finset Real

@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LSeries/Artin.lean -/
 
-import Mathlib.Analysis.SpecialFunctions.Pow.Complex
-import Mathlib.RepresentationTheory.Invariants
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Pow.Complex
+public import Mathlib.RepresentationTheory.Invariants
 /-!
 # Artin L-functions
 
@@ -36,6 +38,9 @@ finite-dimensional complex representation acting on inertia invariants
 
 [krishnamoorthy2024]: https://doi.org/10.1007/s00605-024-02050-1
 -/
+public section
+
+
 
 
 namespace Representation

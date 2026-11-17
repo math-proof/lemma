@@ -8,18 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Geometry.Manifold.MFDeriv.Basic
-import Mathlib.Topology.MetricSpace.Basic
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Analysis.InnerProductSpace.EuclideanDist
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.Topology.Order.Basic
+module
+
+public import Mathlib.Geometry.Manifold.MFDeriv.Basic
+public import Mathlib.Topology.MetricSpace.Basic
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.InnerProductSpace.EuclideanDist
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+public import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.Topology.Order.Basic
 set_option autoImplicit false
 
 
-noncomputable section
+public noncomputable section
 
 open Real MeasureTheory
 

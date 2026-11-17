@@ -8,11 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.LieGroups.code.CompositionSeries
-import Lemma.Int.StandardFiltrationMultiplicity.eq.DimHomProjectiveContragredientVerma
+module
+
+public import Def.v1.Atlas.LieGroups.code.CompositionSeries
+public import Lemma.Int.StandardFiltrationMultiplicity.eq.DimHomProjectiveContragredientVerma
 
 
-noncomputable section
+public noncomputable section
 
 universe uCatO
 

@@ -1,5 +1,10 @@
-import Mathlib
-import Class.Analysis.Misc.equational
+module
+
+public import Mathlib
+public import Class.Analysis.Misc.equational
+
+public section
+
 /-
 A informal proof of the theorem `singleton_law` is provided below, courtesy of Bruno Le Floch https://leanprover.zulipchat.com/#narrow/channel/458659-Equational/topic/Alternative.20proofs.20of.20E1689.E2.8A.A2E2/near/517189582.  Claude Code was used to formalize this proof using the following steps:
 

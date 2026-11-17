@@ -6,7 +6,7 @@ import Mathlib.RingTheory.Ideal.IntegralClosure
 import Mathlib.RingTheory.Localization.Integral
 import Mathlib.RingTheory.Polynomial.ScaleRoots
 import Mathlib.Algebra.Polynomial.Lifts
-import Lemma.HahnSeries.X0
+import Theorem.HahnSeries.X0
 import Def.GaloisRep_Flat
 import Abbrev.ModularCurve_IgusaScheme
 import Lemma.Scheme.IgusaScheme

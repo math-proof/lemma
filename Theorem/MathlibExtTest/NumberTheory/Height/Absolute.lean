@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.Height.Absolute
-import Lemma.Nat.Height.Absolute
+import Theorem.Nat.Height.Absolute
 
 
 namespace HeightTest

@@ -1,9 +1,14 @@
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.Calculus.FDeriv.Defs
-import Mathlib.Analysis.Complex.Schwarz
+module
+
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Calculus.FDeriv.Defs
+public import Mathlib.Analysis.Complex.Schwarz
+
 /-!
 # Schwarz–Pick theorem for the disc
 -/
+
+public section
 
 
 namespace Complex.SchwarzPick

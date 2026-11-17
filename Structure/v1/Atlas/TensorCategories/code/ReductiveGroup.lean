@@ -10,6 +10,10 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
+module
+
+public section
+
 /-- Combinatorial data abstracting a reductive group `G` acting on a
 representation `V`, together with a unipotent subgroup `U`, an indexing `I` of
 irreducible subrepresentations `W i`, and bookkeeping axioms: faithfulness of `U`,

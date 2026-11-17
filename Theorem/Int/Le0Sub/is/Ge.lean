@@ -1,0 +1,31 @@
+module
+
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.Lean.Meta.Expr
+
+public section
+
+
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Int.Le0Sub.is.Ge |
+| comm | Int.Ge.is.Le0Sub |
+| mp   | Int.Ge.of.Le0Sub |
+| mpr  | Int.Le0Sub.of.Ge |
+| mp.comm | Int.Le.of.Le0Sub |
+| mpr.comm | Int.Le0Sub.of.Le |
+| comm.is | Int.Le0Sub.is.Le |
+-/
+@[comm, mp, mpr, mp.comm, mpr.comm, comm.is]
+public theorem Int.Le0Sub.is.Ge
+  [AddGroup α] [LE α] [AddRightMono α]
+  {x y : α} :
+-- imply
+  x - y ≥ 0 ↔ x ≥ y :=
+-- proof
+  sub_nonneg
+
+
+-- created on 2018-07-03
+-- updated on 2026-10-26

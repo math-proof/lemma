@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Logic/HilbertBernaysLob.lean -/
 
 
-import Lemma.Set.HilbertBernaysLob
+import Theorem.Set.HilbertBernaysLob
 import Inductive.MathlibExtTest.Logic.HilbertBernaysLob
 
 

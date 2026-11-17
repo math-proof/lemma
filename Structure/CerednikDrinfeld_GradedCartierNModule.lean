@@ -1,10 +1,12 @@
-import Mathlib
-import Structure.CerednikDrinfeld_SpecialFormalModule
-import Structure.CerednikDrinfeld_GradedCartierModuleData
+module
+
+public import Mathlib
+public import Structure.CerednikDrinfeld_SpecialFormalModule
+public import Structure.CerednikDrinfeld_GradedCartierModuleData
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace CerednikDrinfeld
 

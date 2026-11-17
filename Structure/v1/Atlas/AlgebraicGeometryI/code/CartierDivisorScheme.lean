@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.FunctionField
-import Mathlib.GroupTheory.QuotientGroup.Basic
-import Def.v1.Atlas.AlgebraicGeometryI.code.CartierDivisorScheme
+module
+
+public import Mathlib.AlgebraicGeometry.FunctionField
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CartierDivisorScheme
+public section
+
 set_option maxHeartbeats 1600000
 
 open AlgebraicGeometry CategoryTheory TopologicalSpace Opposite

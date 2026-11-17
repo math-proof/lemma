@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.StatisticalMechanics.Code.Onsager.RiemannPeriodic2D
-import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingSymbol
+module
+
+public import Theorem.StatisticalMechanics.Code.Onsager.RiemannPeriodic2D
+public import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingSymbol
+
+@[expose] public section
+
 open scoped BigOperators
 open MeasureTheory
 

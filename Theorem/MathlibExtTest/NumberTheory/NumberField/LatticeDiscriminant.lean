@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.NumberField.LatticeDiscriminant
-import Lemma.Nat.NumberField.LatticeDiscriminant
+import Theorem.Nat.NumberField.LatticeDiscriminant
 universe u
 
 variable (A K : Type*) {L : Type u} [CommRing A] [Field K] [Field L]

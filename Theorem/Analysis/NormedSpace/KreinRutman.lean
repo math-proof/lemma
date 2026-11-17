@@ -1,21 +1,24 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
-import Mathlib.Analysis.Normed.Operator.Compact.Basic
-import Mathlib.Analysis.Normed.Algebra.Spectrum
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.Algebra.Module.ModuleTopology
-import Mathlib.Topology.Compactness.CompactlyGeneratedSpace
-import Mathlib.Topology.ContinuousMap.Compact
-import Mathlib.Topology.Metrizable.ContinuousMap
+module
+
+public import Mathlib.Analysis.Normed.Operator.Compact.Basic
+public import Mathlib.Analysis.Normed.Algebra.Spectrum
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.Algebra.Module.ModuleTopology
+public import Mathlib.Topology.Compactness.CompactlyGeneratedSpace
+public import Mathlib.Topology.ContinuousMap.Compact
+public import Mathlib.Topology.Metrizable.ContinuousMap
 open scoped ENNReal
 
+public section
 
 section
 

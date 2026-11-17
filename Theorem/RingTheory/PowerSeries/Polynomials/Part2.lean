@@ -6,8 +6,11 @@ All rights reserved.
 Copyright (c) 2024 AlgebraicCombinatorics Contributors. All rights reserved.
 Authors: AlgebraicCombinatorics Contributors
 -/
-import Mathlib
-import Def.RingTheory.PowerSeries.Polynomials.Part2
+module
+
+public import Mathlib
+public import Def.RingTheory.PowerSeries.Polynomials.Part2
+
 /-!
 # Polynomials
 
@@ -70,6 +73,8 @@ Special cases:
 * Theorem 7.5.7 (thm.pol.eval.a+b) - Properties of polynomial evaluation ✓
 
 -/
+
+public section
 
 
 namespace FPS

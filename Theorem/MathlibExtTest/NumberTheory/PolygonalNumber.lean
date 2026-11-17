@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PolygonalNumber.lean -/
 
 import Theorem.NumberTheory.PolygonalNumber
-import Lemma.Nat.PolygonalNumber
+import Theorem.Nat.PolygonalNumber
 
 
 namespace Nat

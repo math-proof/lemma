@@ -1,13 +1,16 @@
-import Abbrev.Difference
-import Abbrev.Subst
-import Def.Data.List.List.Basic
-import Def.Subst
-import Syntax.Subst
-import Notation.Fun
-import Structure.Fun
-import Syntax.Fun
-import Syntax.Subst
+module
 
+public import Abbrev.Difference
+public import Abbrev.Subst
+public import Def.Data.List.List.Basic
+public import Def.Subst
+public import Syntax.Subst
+public import Notation.Fun
+public import Structure.Fun
+public import Syntax.Fun
+public import Syntax.Subst
+
+public section
 
 @[simp]
 theorem Subst.eq_app {α : Sort*} {β : Sort*} (f : α → β) (a : α) : «Subst» f a = f a :=

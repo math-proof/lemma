@@ -4,10 +4,15 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Analysis.Convex.Hull
-import Mathlib.Analysis.Normed.Lp.MeasurableSpace
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
-import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
+module
+
+public import Mathlib.Analysis.Convex.Hull
+public import Mathlib.Analysis.Normed.Lp.MeasurableSpace
+public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+public import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
+
+public section
+
 /-!
 # Areas of triangles in the Euclidean plane
 

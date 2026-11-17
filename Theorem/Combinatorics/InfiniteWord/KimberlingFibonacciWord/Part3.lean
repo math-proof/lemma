@@ -8,8 +8,8 @@ import Mathlib.Data.Nat.SuccPred
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 import Theorem.Combinatorics.InfiniteWord.FibonacciWord
-import Lemma.Finset.InfiniteWord.FibonacciWord
-import Lemma.Finset.Words.FibonacciFactorization
+import Theorem.Finset.InfiniteWord.FibonacciWord
+import Theorem.Finset.Words.FibonacciFactorization
 import Theorem.Combinatorics.Words.FibonacciFactorization
 import Def.Combinatorics.InfiniteWord.KimberlingFibonacciWord.Part3
 

@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.SimpleGraph.ListColoring
-import Lemma.SimpleGraph.ListColoring
+import Theorem.SimpleGraph.ListColoring
 open SimpleGraph
 
 

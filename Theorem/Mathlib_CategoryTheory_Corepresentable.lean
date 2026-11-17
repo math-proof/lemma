@@ -1,5 +1,9 @@
-import Mathlib
-import Def.Mathlib_CategoryTheory_Corepresentable
+module
+
+public import Mathlib
+public import Def.Mathlib_CategoryTheory_Corepresentable
+
+public section
 
 universe w v u
 

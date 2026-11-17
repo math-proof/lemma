@@ -7,7 +7,7 @@ import Mathlib.Data.Nat.Choose.Basic
 import Mathlib.Algebra.Divisibility.Basic
 import Mathlib.Data.Nat.Cast.Field
 import Def.NumberTheory.PrimeInterval.Breusch.Grid
-import Lemma.Nat.PrimeInterval.Breusch.Grid
+import Theorem.Nat.PrimeInterval.Breusch.Grid
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.GCongr
 import Mathlib.Tactic.Linarith

@@ -1,11 +1,14 @@
-import Mathlib.Analysis.Calculus.Gradient.Basic
-import Syntax.Analysis.Calculus.Gradient.Operators
+module
 
+public import Mathlib.Analysis.Calculus.Gradient.Basic
+public import Syntax.Analysis.Calculus.Gradient.Operators
+
+@[expose] public meta section
 
 /-- Infoview: `gradient (fun θ ↦ e) θ` ↦ `∇[θ] e`; `gradient (fun θ ↦ e) p` ↦ `∇[θ = p] e`;
 non-lambda `gradient F p` with `p` an ident ↦ `∇[p] (F p)`. -/
 @[app_unexpander gradient]
-def gradient.unexpand : Lean.PrettyPrinter.Unexpander
+meta def gradient.unexpand : Lean.PrettyPrinter.Unexpander
   | `($_ $f $p) =>
     match f with
     | `(fun $x:ident ↦ $body) => do

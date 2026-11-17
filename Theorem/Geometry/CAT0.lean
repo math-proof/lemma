@@ -1,7 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Geometry/CAT0.lean -/
+module
 
-import Mathlib.Topology.MetricSpace.Isometry
-import Def.Geometry.CAT0
+public import Mathlib.Topology.MetricSpace.Isometry
+public import Def.Geometry.CAT0
+
+public section
+
 universe u v
 
 /-!

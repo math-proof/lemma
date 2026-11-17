@@ -8,24 +8,26 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.LieGroups.code.HCBimoduleProjectives.Part2
-import Lemma.Fin.All_Eq.of.All_Eq.All_Eq_RightAction.All_Eq_RightAction.All_Any_Eq_Sum_RightAction
-import Lemma.Int.IsInQPlus0
-import Lemma.Int.WeightLE.of.BruhatLE
-import Lemma.Int.Level1.ne.Top
-import Lemma.Int.FGUeaIotaRange
-import Def.v1.Atlas.LieGroups.code.CategoryO.Part3
-import Def.v1.Atlas.LieGroups.code.CategoryOII.Part3
-import Def.v1.Atlas.LieGroups.code.JantzenFiltration.Part2
-import Def.v1.Atlas.LieGroups.code.DufloJoseph.Part8
-import Mathlib.Analysis.InnerProductSpace.Defs
-import Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected
-import Mathlib.RepresentationTheory.Basic
-import Mathlib.Topology.Algebra.Group.Defs
-import Mathlib.Analysis.Complex.Basic
+module
+
+public import Def.v1.Atlas.LieGroups.code.HCBimoduleProjectives.Part2
+public import Lemma.Fin.All_Eq.of.All_Eq.All_Eq_RightAction.All_Eq_RightAction.All_Any_Eq_Sum_RightAction
+public import Lemma.Int.IsInQPlus0
+public import Lemma.Int.WeightLE.of.BruhatLE
+public import Lemma.Int.Level1.ne.Top
+public import Lemma.Int.FGUeaIotaRange
+public import Def.v1.Atlas.LieGroups.code.CategoryO.Part3
+public import Def.v1.Atlas.LieGroups.code.CategoryOII.Part3
+public import Def.v1.Atlas.LieGroups.code.JantzenFiltration.Part2
+public import Def.v1.Atlas.LieGroups.code.DufloJoseph.Part8
+public import Mathlib.Analysis.InnerProductSpace.Defs
+public import Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected
+public import Mathlib.RepresentationTheory.Basic
+public import Mathlib.Topology.Algebra.Group.Defs
+public import Mathlib.Analysis.Complex.Basic
 
 
-noncomputable section
+public noncomputable section
 
 open TensorProduct
 

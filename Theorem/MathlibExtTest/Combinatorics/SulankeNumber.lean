@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.SulankeNumber
-import Lemma.Finset.SulankeNumber
+import Theorem.Finset.SulankeNumber
 import Mathlib.Tactic
 open MetaMathlibExt
 

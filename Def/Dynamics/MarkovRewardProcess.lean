@@ -1,8 +1,10 @@
-import Mathlib.Probability.ProbabilityMassFunction.Constructions
-import Def.Probability.Process.MarkovChainTrajectory.Part2
-import Lemma.Matrix.Any_And_Stationary.of.RowStochastic
-import Lemma.Matrix.Sum_Mul.eq.One.of.StochasticVec.RowStochastic
-import Structure.Dynamics.MarkovRewardProcess
+module
+
+public import Mathlib.Probability.ProbabilityMassFunction.Constructions
+public import Structure.Dynamics.MarkovRewardProcess
+
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory Finset
 open scoped ENNReal Matrix
 
@@ -27,6 +29,21 @@ Ported from rl-theory-in-lean `RLTheory/MarkovDecisionProcess/MarkovRewardProces
 -/
 
 
+namespace Matrix.Sum_Mul.eq.One.of.StochasticVec
+
+theorem RowStochastic {S : Type*} [Fintype S] {μ : S → ℝ} {P : Matrix S S ℝ}
+    (h₀ : RowStochastic P) (h₁ : StochasticVec μ) :
+    ∑ i, ∑ j, μ i * P i j = 1 := by
+  calc
+    _ = ∑ i, μ i * ∑ j, P i j := by
+      simp [Finset.mul_sum]
+    _ = ∑ i, μ i := by
+      simp [fun i => (h₀.stochastic i).rowsum]
+    _ = 1 := h₁.rowsum
+
+end Matrix.Sum_Mul.eq.One.of.StochasticVec
+
+
 -- the law of a transition pair (s, s') with s ~ x and s' ~ P s
 noncomputable def pair_pmf {S : Type u} [Fintype S] (x : S → ℝ) [hx : StochasticVec x]
     (P : Matrix S S ℝ) [hP : RowStochastic P] : PMF (S × S) :=
@@ -43,5 +60,14 @@ variable {S : Type u} [Fintype S] [DecidableEq S] [MeasurableSpace S] [Measurabl
 -- transition matrix (rl: `FiniteMRP.P`)
 noncomputable def P : Matrix S S ℝ :=
   MRP.M.kernel_mat
+
+instance : RowStochastic MRP.P :=
+  inferInstanceAs (RowStochastic MRP.M.kernel_mat)
+
+instance : StochasticIrreducible MRP.P :=
+  MRP.hM.1
+
+instance : Aperiodic MRP.P :=
+  MRP.hM.2
 
 end FiniteMRP

@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.ChamberComplex.Folding.Part3
-import Lemma.List.All.of.All.IsChain.Ne
-import Lemma.List.Any.of.Not.In_A.IsChainA
-import Def.v1.Atlas.Buildings.code.Building.Convexity
+module
+
+public import Def.v1.Atlas.Buildings.code.ChamberComplex.Folding.Part3
+public import Theorem.List.All.of.All.IsChain.Ne
+public import Lemma.List.Any.of.Not.In_A.IsChainA
+public import Def.v1.Atlas.Buildings.code.Building.Convexity
+public section
+
 set_option maxHeartbeats 400000
 
 open scoped Classical

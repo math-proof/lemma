@@ -8,7 +8,11 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.Buildings.code.Building.Retraction
+module
+
+public import Theorem.v1.Atlas.Buildings.code.Building.Retraction
+public section
+
 variable {V : Type*} [DecidableEq V]
 
 

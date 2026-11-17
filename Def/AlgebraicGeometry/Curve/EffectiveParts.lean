@@ -1,9 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/AlgebraicGeometry/Curve/EffectiveParts.lean -/
 
-import Def.AlgebraicGeometry.Curve.Divisor
-import Lemma.Finsupp.EqCoeff_Single
-import Mathlib.Data.Finsupp.Order
-import Mathlib.Algebra.Order.Group.PosPart
+module
+
+public import Def.AlgebraicGeometry.Curve.Divisor
+public import Mathlib.Data.Finsupp.Order
+public import Mathlib.Algebra.Order.Group.PosPart
+
+@[expose] public section
+
 /-!
 # Effective parts of curve divisors
 

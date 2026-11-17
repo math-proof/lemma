@@ -1,5 +1,9 @@
-import Mathlib
-import Def.GroupCohomology_ContinuousH1
+module
+
+public import Mathlib
+public import Def.GroupCohomology_ContinuousH1
+
+@[expose] public section
 
 set_option autoImplicit false
 

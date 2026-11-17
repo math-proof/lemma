@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Collatz.lean -/
 
-import Mathlib.Data.Nat.Notation
-import Mathlib.Order.Bounds.Basic
-import Mathlib.Order.Lattice.Nat
+module
+
+public import Mathlib.Data.Nat.Notation
+public import Mathlib.Order.Bounds.Basic
+public import Mathlib.Order.Lattice.Nat
+
+@[expose] public section
+
 /-!
 # Collatz iteration
 

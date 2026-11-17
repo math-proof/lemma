@@ -1,5 +1,9 @@
-import Structure.GroupCohomology_Selmer
-import Def.GroupCohomology_SelmerLe
+module
+
+public import Structure.GroupCohomology_Selmer
+public import Def.GroupCohomology_SelmerLe
+
+public section
 
 set_option autoImplicit false
 

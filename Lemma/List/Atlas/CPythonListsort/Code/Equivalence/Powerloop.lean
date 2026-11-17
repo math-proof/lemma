@@ -1,6 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.CPythonListsort.Code.Equivalence.Powerloop
+module
+
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.CPythonListsort.Code.Equivalence.Powerloop
+
+public section
+
 open CPythonListsort
 
 
@@ -65,9 +70,9 @@ namespace CPythonListsort
 [powerloopStep_eq_spec](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/Powerloop.lean)
 -/
 @[path]
-lemma powerloopStep_eq_spec
-  {n : PySSize}
-  {state : PowerloopState}
+public lemma powerloopStep_eq_spec
+  (n : PySSize)
+  (state : PowerloopState)
 -- given
   (hsafe : PowerloopStepSafe n state) :
 -- imply
@@ -111,10 +116,10 @@ namespace CPythonListsort
 [powerloopLoop_eq_spec](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/Powerloop.lean)
 -/
 @[path]
-lemma powerloopLoop_eq_spec
-  {fuel : Nat}
-  {n : PySSize}
-  {state : PowerloopState}
+public lemma powerloopLoop_eq_spec
+  (fuel : Nat)
+  (n : PySSize)
+  (state : PowerloopState)
 -- given
   (hsafe : PowerloopTraceSafe fuel n state) :
 -- imply
@@ -136,9 +141,9 @@ lemma powerloopLoop_eq_spec
       have hsafeTail : PowerloopTraceSafe fuel n (powerloopStep n state) := by
         exact hsafePair.2
       simp only [powerloopLoop, powerloopNatLoop, hstopped, Bool.false_eq_true,
-        if_false]
-      rw [ih (powerloopStep n state) hsafeTail]
-      rw [powerloopStep_eq_spec n state hsafeStep]
+        ite_false]
+      rw [ih (state := powerloopStep n state) hsafeTail]
+      rw [powerloopStep_eq_spec (n := n) (state := state) hsafeStep]
       simp [PowerloopState.toNatState, hstopped]
 
 end CPythonListsort
@@ -149,12 +154,12 @@ namespace CPythonListsort
 [powerloopTraced_eq_spec](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/Powerloop.lean)
 -/
 @[path]
-lemma powerloopTraced_eq_spec
-  {s1 n1 n2 n : PySSize}
+public lemma powerloopTraced_eq_spec
+  (s1 n1 n2 n : PySSize)
 -- given
   (haInit : 2 * s1.toNat + n1.toNat < 2 ^ 63)
   (hbInit : 2 * s1.toNat + n1.toNat + n1.toNat + n2.toNat < 2 ^ 63)
-  (hsafe : let a := 2 * s1 + n1 let b := a + n1 + n2 PowerloopTraceSafe 64 n { result := 0, a := a, b := b, stopped := false }) :
+  (hsafe : let a := 2 * s1 + n1; let b := a + n1 + n2; PowerloopTraceSafe 64 n { result := 0, a := a, b := b, stopped := false }) :
 -- imply
   (powerloopTraced s1 n1 n2 n).toNatState = powerloopNatSpec s1 n1 n2 n := by
 -- proof

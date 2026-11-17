@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/BinarysortCorrectness.lean -/
 
-import Def.CPythonListsort.Code.Assembly.BinarysortSafety.Part2
-import Def.CPythonListsort.Code.Assembly.Order.Part4
-import Def.CPythonListsort.Code.Correctness.SortSliceRange
-import Mathlib.Data.List.InsertIdx
-import Def.CPythonListsort.Code.Correctness.BinarysortCorrectness.Part2
+module
+
+public import Def.CPythonListsort.Code.Assembly.BinarysortSafety.Part2
+public import Def.CPythonListsort.Code.Assembly.Order.Part4
+public import Def.CPythonListsort.Code.Correctness.SortSliceRange
+public import Mathlib.Data.List.InsertIdx
+public import Def.CPythonListsort.Code.Correctness.BinarysortCorrectness.Part2
 /-!
 # Functional correctness of `binarysort`
 
@@ -13,6 +15,9 @@ occurrence-carrying keys.  The proof is about the same traced execution covered
 by `binarysort_safe`: raw functional correctness is identified with that result
 through exact erasure, rather than through a second sorting implementation.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

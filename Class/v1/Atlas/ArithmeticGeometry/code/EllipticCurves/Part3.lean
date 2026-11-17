@@ -22,9 +22,6 @@ import Mathlib.Topology.Connected.Basic
 import Mathlib.Topology.Compactification.OnePoint.ProjectiveLine
 import Mathlib.LinearAlgebra.Lagrange
 import Instance.v1.Atlas.ArithmeticGeometry.code.CompleteVarieties
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.CompleteVarieties
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.RationalLineCriterion
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.ProjectiveComplete
 import Def.v1.Atlas.ArithmeticGeometry.code.RationalLineCriterion
 import Structure.v1.Atlas.ArithmeticGeometry.code.ProjectiveComplete
 import Instance.v1.Atlas.ArithmeticGeometry.code.EllipticCurves
@@ -32,8 +29,6 @@ universe u
 
 attribute [instance] IsAlgebraicGroup.toIsTopologicalGroup
 
-
 class IsAbelianVariety (k : outParam (Type u)) [Field k] (A : Type u) [TopologicalSpace A] [Group A] : Prop
     extends IsProjectiveVariety k A, IsAlgebraicGroup k A, ConnectedSpace A
-
 

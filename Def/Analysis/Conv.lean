@@ -1,5 +1,8 @@
-import Mathlib.Analysis.SpecialFunctions.Exp
+module
 
+public import Mathlib.Analysis.SpecialFunctions.Exp
+
+@[expose] public section
 
 /-- py `conv1d/conv2d/conv3d` in a uniform `D`-dimensional form: position `p : Fin D → ℤ`,
 kernel taps `t : T` with integer offsets `off t` (dilation and centering folded into `off`),

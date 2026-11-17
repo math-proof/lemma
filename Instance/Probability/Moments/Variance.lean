@@ -1,6 +1,9 @@
-import Mathlib.Probability.Independence.Integration
-import Syntax.Probability.Expectation.Elab
-import Theorem.Function
+module
+
+public import Mathlib.Probability.Independence.Integration
+public import Syntax.Probability.Expectation.Elab
+public import Theorem.Function
+
 open MeasureTheory
 
 
@@ -9,6 +12,8 @@ open MeasureTheory
 for real random variables, built on `Expectation.ofRV` (the `𝔼[x: π](…)` of `Syntax.Probability.Expectation.Elab`)
 with the `Expectation ℝ` (Bochner) instance. Only the weak `PSpace` is needed.
 -/
+
+@[expose] public section
 
 /-- Two random variables with probability spaces span one jointly: the pair is a.e. measurable. -/
 instance PSpace.joint

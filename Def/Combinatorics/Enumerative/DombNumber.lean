@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/DombNumber.lean -/
 
-import Def.Combinatorics.Enumerative.ZagierNumber
+module
+
+public import Def.Combinatorics.Enumerative.ZagierNumber
+
+@[expose] public section
+
 open scoped BigOperators
 
 

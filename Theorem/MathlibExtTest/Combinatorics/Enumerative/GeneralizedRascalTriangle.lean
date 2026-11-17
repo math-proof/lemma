@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/GeneralizedRascalTriangle.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.GeneralizedRascalTriangle
 
-import Def.Combinatorics.Enumerative.GeneralizedRascalTriangle
-
+public section
 
 namespace MetaMathlibExt
 

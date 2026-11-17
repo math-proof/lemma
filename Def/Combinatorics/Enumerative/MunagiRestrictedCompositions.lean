@@ -1,9 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/MunagiRestrictedCompositions.lean -/
 
-import Mathlib.Combinatorics.Enumerative.Composition
-import Mathlib.Algebra.Order.Sub.Basic
-import Mathlib.Tactic.Ring
+module
 
+public import Mathlib.Combinatorics.Enumerative.Composition
+public import Mathlib.Algebra.Order.Sub.Basic
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

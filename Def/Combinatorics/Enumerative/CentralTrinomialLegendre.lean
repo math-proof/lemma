@@ -4,12 +4,16 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Analysis.Real.Sqrt
-import Mathlib.Basic.Complex.Basic
-import Mathlib.RingTheory.Polynomial.ShiftedLegendre
-import Def.NumberTheory.TrinomialCoefficient
-import Mathlib.Tactic.LinearCombination
-import Lemma.Finset.Enumerative.CentralTrinomialRecurrence
+module
+
+public import Mathlib.Analysis.Real.Sqrt
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.RingTheory.Polynomial.ShiftedLegendre
+public import Def.NumberTheory.TrinomialCoefficient
+public import Mathlib.Tactic.LinearCombination
+
+@[expose] public section
+
 /-!
 # Central trinomial coefficients and Legendre polynomials
 

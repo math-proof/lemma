@@ -8,16 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.LieGroups.code.GKModule.Part2
-import Def.v1.Atlas.LieGroups.code.GKModuleDefs.Part2
-import Structure.v1.Atlas.LieGroups.code.HarishChandraFunctor
-import Lemma.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
-import Def.v1.Atlas.LieGroups.code.Admissible.Part3
-import Mathlib.Analysis.InnerProductSpace.Completion
-import Mathlib.Analysis.Normed.Module.Completion
+module
+
+public import Def.v1.Atlas.LieGroups.code.GKModule.Part2
+public import Def.v1.Atlas.LieGroups.code.GKModuleDefs.Part2
+public import Structure.v1.Atlas.LieGroups.code.HarishChandraFunctor
+public import Lemma.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
+public import Def.v1.Atlas.LieGroups.code.Admissible.Part3
+public import Mathlib.Analysis.InnerProductSpace.Completion
+public import Mathlib.Analysis.Normed.Module.Completion
 
 
-noncomputable section
+public noncomputable section
 
 structure GKModuleIso
     {𝔤 : Type*} [LieRing 𝔤] [LieAlgebra ℂ 𝔤]

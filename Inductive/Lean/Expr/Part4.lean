@@ -1,12 +1,17 @@
-import Def.Lean.Meta.Expr.Part4
-import Def.Lean.Expr.Singleton.Part2
-import Def.Lean.Expr.Part8
+module
+
+public meta import Def.Lean.Meta.CtorName
+public import Class.Lean.Meta.CtorName
+public import Def.Lean.Meta.Expr.Part4
+public import Def.Lean.Expr.Singleton.Part2
+public import Def.Lean.Expr.Part8
 open Lean.Meta
 open Lean (Name Json Level BinderInfo getMCtx)
 set_option linter.unusedVariables false
 
+@[expose] public section
 
-inductive Expr where
+public inductive Expr where
 
   | nil
 
@@ -19,5 +24,7 @@ inductive Expr where
   | Basic (func : Operator) (args : List Expr) (level : Nat)
 
   | Binder (binder : Binder) (binderName : Name) (binderType : Expr) (value : Expr)
-deriving Inhabited, BEq, CtorName
+deriving Inhabited, BEq
+
+#eval mkCtorName ``Expr
 

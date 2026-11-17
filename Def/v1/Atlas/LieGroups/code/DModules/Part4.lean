@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Kaehler.Basic
-import Mathlib.RingTheory.Derivation.Basic
-import Mathlib.Algebra.Module.LinearMap.End
-import Mathlib.LinearAlgebra.TensorProduct.Basic
-import Mathlib.RingTheory.TensorProduct.Basic
-import Mathlib.RingTheory.Derivation.Lie
-import Theorem.v1.Atlas.LieGroups.code.DModules
+module
+
+public import Mathlib.RingTheory.Kaehler.Basic
+public import Mathlib.RingTheory.Derivation.Basic
+public import Mathlib.Algebra.Module.LinearMap.End
+public import Mathlib.LinearAlgebra.TensorProduct.Basic
+public import Mathlib.RingTheory.TensorProduct.Basic
+public import Mathlib.RingTheory.Derivation.Lie
+public import Theorem.v1.Atlas.LieGroups.code.DModules
+
+@[expose] public section
+
 universe u v w
 
 

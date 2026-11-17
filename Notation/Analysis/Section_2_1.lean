@@ -1,5 +1,10 @@
-import Mathlib
-import Instance.Analysis.Section_2_1
+module
+
+public import Mathlib
+public import Instance.Analysis.Section_2_1
+
+public section
+
 /-!
 # Analysis I, Section 2.1: The Peano Axioms
 

@@ -2,10 +2,10 @@
 
 import Mathlib.Data.Fintype.Perm
 import Def.Combinatorics.Enumerative.RStirlingFirstAlternatingExpansion
-import Lemma.Finset.Enumerative.RStirlingFirstAlternatingExpansion
+import Theorem.Finset.Enumerative.RStirlingFirstAlternatingExpansion
 import Lemma.Finset.Enumerative.MeshPatternStirlingRecursion
 import Theorem.Combinatorics.Enumerative.MeshPatternStirlingRecursion.Part3
-import Lemma.Finset.Enumerative.MeshPatternGeneratingFunction
+import Theorem.Finset.Enumerative.MeshPatternGeneratingFunction
 import Mathlib.Algebra.Polynomial.Coeff
 import Mathlib.Algebra.Polynomial.Eval.Coeff
 import Mathlib.Combinatorics.Enumerative.Stirling

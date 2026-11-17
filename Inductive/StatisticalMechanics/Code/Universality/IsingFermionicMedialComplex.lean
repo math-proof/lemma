@@ -9,8 +9,10 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicLocalSwitching.Part12
-import Theorem.StatisticalMechanics.Code.Universality.MedialTwoEdgeSwitch
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicLocalSwitching.Part12
+public import Theorem.StatisticalMechanics.Code.Universality.MedialTwoEdgeSwitch
 open Finset SimpleGraph
 open scoped BigOperators
 
@@ -21,7 +23,7 @@ open StatMech StatMech.FK StatMech.Lattice
 
 noncomputable section
 
-inductive FKIsingMedialSide
+public inductive FKIsingMedialSide
   | west | east | south | north
 deriving DecidableEq, Fintype
 

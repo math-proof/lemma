@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Matrix.Basic
-import Mathlib.Data.Real.Basic
-import Mathlib.Data.Fin.Basic
+module
 
+public import Mathlib.Data.Matrix.Basic
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Data.Fin.Basic
+
+
+public section
 
 namespace OrthogonalDesign
 

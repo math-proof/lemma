@@ -1,11 +1,15 @@
-import Mathlib.Topology.Algebra.Nonarchimedean.AdicTopology
-import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
-import Mathlib.RingTheory.Adjoin.Basic
-import Mathlib.Topology.Algebra.Ring.Basic
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.Order.Filter.Ultrafilter.Defs
-import Mathlib.Data.ENat.Lattice
+module
+
+public import Mathlib.Topology.Algebra.Nonarchimedean.AdicTopology
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
+public import Mathlib.RingTheory.Adjoin.Basic
+public import Mathlib.Topology.Algebra.Ring.Basic
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.Order.Filter.Ultrafilter.Defs
+public import Mathlib.Data.ENat.Lattice
+
+public section
 
 set_option autoImplicit false
 

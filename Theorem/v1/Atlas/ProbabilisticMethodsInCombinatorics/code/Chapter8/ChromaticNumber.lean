@@ -17,7 +17,7 @@ import Mathlib.Data.Nat.Choose.Basic
 import Mathlib.Tactic.Linarith
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.ChromaticNumber
-import Lemma.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.ChromaticNumber
+import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.ChromaticNumber
 set_option maxHeartbeats 400000
 
 /-- Property $\star$ for $G(n, 1/2)$ holds with high probability: for every $\varepsilon > 0$

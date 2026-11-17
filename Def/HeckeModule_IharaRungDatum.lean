@@ -1,5 +1,9 @@
-import Mathlib.Algebra.Module.Torsion.Basic
-import Structure.HeckeModule_IharaRungDatum
+module
+
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Structure.HeckeModule_IharaRungDatum
+
+@[expose] public section
 
 set_option autoImplicit false
 

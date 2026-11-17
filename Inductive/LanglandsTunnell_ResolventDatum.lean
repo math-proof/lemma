@@ -1,4 +1,6 @@
-import Def.LanglandsTunnell_CubicLambda
+module
+
+public import Def.LanglandsTunnell_CubicLambda
 
 set_option autoImplicit false
 
@@ -10,7 +12,7 @@ namespace LanglandsTunnell.CubicLambda
 
 open scoped Classical in
 
-inductive ResolventDatum (K : Type) [Field K] [NumberField K] [Algebra (𝓞 ℚ) (𝓞 K)]
+public inductive ResolventDatum (K : Type) [Field K] [NumberField K] [Algebra (𝓞 ℚ) (𝓞 K)]
     [Algebra.IsIntegral (𝓞 ℚ) (𝓞 K)] : Type 1
 
   | s3 (L : Type) [Field L] [NumberField L] [Algebra (𝓞 ℚ) (𝓞 L)] [Algebra.IsIntegral (𝓞 ℚ) (𝓞 L)]

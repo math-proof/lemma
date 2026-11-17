@@ -8,13 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Def.v1.Atlas.ArithmeticGeometry.code.MorphismsCurves
-import Abbrev.v1.Atlas.ArithmeticGeometry.code.RegularLocalRings
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.RegularLocalRings
+module
+
+public import Mathlib
+public import Def.v1.Atlas.ArithmeticGeometry.code.MorphismsCurves
+public import Abbrev.v1.Atlas.ArithmeticGeometry.code.RegularLocalRings
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.RegularLocalRings
 
 
-noncomputable section
+public noncomputable section
 
 open Module IsDiscreteValuationRing
 

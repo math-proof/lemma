@@ -8,17 +8,21 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.AffineScheme
-import Mathlib.AlgebraicGeometry.Morphisms.Affine
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Mathlib.AlgebraicGeometry.QuasiAffine
-import Mathlib.Algebra.Category.ModuleCat.Sheaf.Quasicoherent
-import Mathlib.Algebra.Category.Ring.Basic
-import Mathlib.CategoryTheory.Adjunction.Basic
-import Mathlib.CategoryTheory.Equivalence
-import Mathlib.CategoryTheory.MorphismProperty.Comma
-import Def.v1.Atlas.AlgebraicGeometryI.code.AffineMorphismEquiv
+module
+
+public import Mathlib.AlgebraicGeometry.AffineScheme
+public import Mathlib.AlgebraicGeometry.Morphisms.Affine
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Mathlib.AlgebraicGeometry.QuasiAffine
+public import Mathlib.Algebra.Category.ModuleCat.Sheaf.Quasicoherent
+public import Mathlib.Algebra.Category.Ring.Basic
+public import Mathlib.CategoryTheory.Adjunction.Basic
+public import Mathlib.CategoryTheory.Equivalence
+public import Mathlib.CategoryTheory.MorphismProperty.Comma
+public import Def.v1.Atlas.AlgebraicGeometryI.code.AffineMorphismEquiv
+public section
+
 open AlgebraicGeometry CategoryTheory TopologicalSpace Opposite
 
 universe u

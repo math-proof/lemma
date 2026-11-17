@@ -1,5 +1,7 @@
-import Mathlib
-import Structure.AlgebraicGeometry_GradedOAlgebraSectionRing
+module
+
+public import Mathlib
+public import Structure.AlgebraicGeometry_GradedOAlgebraSectionRing
 
 set_option autoImplicit false
 
@@ -7,7 +9,7 @@ universe u
 
 open CategoryTheory MonoidalCategory Opposite HomogeneousLocalization
 
-noncomputable section
+public noncomputable section
 
 namespace AlgebraicGeometry.GradedOAlgebra
 

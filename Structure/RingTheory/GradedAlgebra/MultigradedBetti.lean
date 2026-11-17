@@ -4,11 +4,13 @@
   Author: Muse Code powered by Meta Muse Spark
 -/
 
-import Structure.RingTheory.GradedAlgebra.MultigradedFreeResolution
-import Mathlib.Algebra.MvPolynomial.Eval
-import Mathlib.Algebra.Category.ModuleCat.ChangeOfRings
-import Mathlib.LinearAlgebra.Dimension.Finite
-import Def.RingTheory.GradedAlgebra.MultigradedBetti
+module
+
+public import Structure.RingTheory.GradedAlgebra.MultigradedFreeResolution
+public import Mathlib.Algebra.MvPolynomial.Eval
+public import Mathlib.Algebra.Category.ModuleCat.ChangeOfRings
+public import Mathlib.LinearAlgebra.Dimension.Finite
+public import Def.RingTheory.GradedAlgebra.MultigradedBetti
 /-!
 # Multigraded Betti numbers after residue-field base change
 
@@ -42,6 +44,9 @@ Main definitions:
 * `MetaMathlibExt.multigradedBettiNumber`: the multigraded Betti number as
   the resulting `Module.finrank`.
 -/
+public section
+
+
 
 
 namespace MetaMathlibExt

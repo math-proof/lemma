@@ -8,6 +8,8 @@ import Lemma.Random.Integral_MulEqS.eq.MulRealW.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.MEq_Clip.of.All_Eq.All_EqWithDensity
 import Lemma.Random.Wkd.eq.Integral_Kf.of.All_EqWithDensity
 import Lemma.Random.NormClip.le.Abs_R
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Set Real
 
 
@@ -98,4 +100,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-11-16
+-- updated on 2026-11-17

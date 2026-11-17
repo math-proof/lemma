@@ -1,8 +1,10 @@
-import Lemma.Scheme.RelativeGroupLawKernel
+module
+
+public import Lemma.Scheme.RelativeGroupLawKernel
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 universe u
 

@@ -8,12 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.LieGroups.code.ContinuousRep.Part3
-import Mathlib.Geometry.Manifold.Algebra.LieGroup
-import Mathlib.Geometry.Manifold.MFDeriv.Basic
-import Mathlib.Topology.Algebra.Module.Basic
-import Mathlib.Analysis.Calculus.Deriv.Basic
+module
 
+public import Def.v1.Atlas.LieGroups.code.ContinuousRep.Part3
+public import Mathlib.Geometry.Manifold.Algebra.LieGroup
+public import Mathlib.Geometry.Manifold.MFDeriv.Basic
+public import Mathlib.Topology.Algebra.Module.Basic
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+
+@[expose] public section
 
 noncomputable section
 

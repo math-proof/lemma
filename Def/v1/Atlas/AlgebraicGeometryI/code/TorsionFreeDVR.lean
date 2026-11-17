@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Module.PID
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
+module
 
+public import Mathlib.Algebra.Module.PID
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+
+@[expose] public section
 
 /-- An explicit basis (with rank) for a finitely generated torsion-free
 module over a DVR. -/

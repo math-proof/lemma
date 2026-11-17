@@ -1,17 +1,18 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
+module
 
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Mathlib.Topology.MetricSpace.Lipschitz
-import Mathlib.Analysis.Calculus.MeanValue
-import Mathlib.Analysis.ODE.Basic
-import Mathlib.Analysis.ODE.ExistUnique
-import Mathlib.Analysis.ODE.Gronwall
-import Mathlib.Analysis.SpecificLimits.Basic
-import Mathlib.Data.Set.Piecewise
-import Mathlib.Topology.Sequences
-import Structure.Analysis.ODE.MaximalSolution.Part2
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Mathlib.Topology.MetricSpace.Lipschitz
+public import Mathlib.Analysis.Calculus.MeanValue
+public import Mathlib.Analysis.ODE.Basic
+public import Mathlib.Analysis.ODE.ExistUnique
+public import Mathlib.Analysis.ODE.Gronwall
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Mathlib.Data.Set.Piecewise
+public import Mathlib.Topology.Sequences
+public import Structure.Analysis.ODE.MaximalSolution.Part2
 open Filter Function Metric Set
 open scoped NNReal Topology
 
@@ -23,6 +24,8 @@ state variable, and constructs maximal solutions for locally Lipschitz vector fi
 subsets of spacetime.  The latter solutions eventually leave every compact subset at each finite
 or infinite end of their interval of definition.
 -/
+
+public section
 
 
 namespace ODE.MaximalSolutionWanted

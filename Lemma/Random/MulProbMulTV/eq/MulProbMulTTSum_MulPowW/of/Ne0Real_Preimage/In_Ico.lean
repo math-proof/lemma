@@ -7,6 +7,8 @@ import Lemma.Random.MEq_Clip.of.All_Eq.All_EqWithDensity
 import Lemma.Random.NormClip.le.Abs_R
 import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Theorem.Probability.CondExpectation
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
@@ -44,7 +46,7 @@ private lemma main
   intro Vθ
   if hz : M.π[θ] sₜ aₜ * μ.measure.real {aₜ} *
       (M.trans (sₜ, aₜ)).toMeasure.real {y} = 0 then
-    simp [hz]
+    rw [hz, zero_mul, zero_mul]
   else
     obtain rfl : s = fun t ω ↦ (ω t).2.1 :=
       funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
@@ -206,4 +208,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-16
+-- updated on 2026-11-17

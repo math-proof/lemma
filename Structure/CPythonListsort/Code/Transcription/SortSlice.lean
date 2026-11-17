@@ -1,6 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/SortSlice.lean -/
 
-import Mathlib
+module
+
+public import Mathlib
 /-!
 # `sortslice` model and movement primitives
 
@@ -18,6 +20,9 @@ the source-language's forward two-store copy order, even when its contents
 happen to equal the destination.  `memcpy` uses the same provenance distinction
 but rejects overlapping same-backing ranges.
 -/
+@[expose] public section
+
+
 
 
 namespace CPythonListsort

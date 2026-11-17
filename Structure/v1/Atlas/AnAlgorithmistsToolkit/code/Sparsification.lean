@@ -8,22 +8,26 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Matrix.Order
-import Mathlib.LinearAlgebra.Matrix.PosDef
-import Mathlib.Combinatorics.SimpleGraph.Finite
-import Mathlib.Combinatorics.SimpleGraph.LapMatrix
-import Mathlib.Data.Fintype.Card
-import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
-import Mathlib.Probability.Independence.Basic
-import Mathlib.Probability.Moments.Basic
-import Mathlib.Probability.Moments.SubGaussian
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import Mathlib.Analysis.CStarAlgebra.Matrix
-import Mathlib.Analysis.Normed.Lp.MeasurableSpace
-import Mathlib.MeasureTheory.Constructions.Pi
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Def.v1.Atlas.AnAlgorithmistsToolkit.code.Sparsification
+module
+
+public import Mathlib.Analysis.Matrix.Order
+public import Mathlib.LinearAlgebra.Matrix.PosDef
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Mathlib.Combinatorics.SimpleGraph.LapMatrix
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.Probability.Moments.Basic
+public import Mathlib.Probability.Moments.SubGaussian
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+public import Mathlib.Analysis.CStarAlgebra.Matrix
+public import Mathlib.Analysis.Normed.Lp.MeasurableSpace
+public import Mathlib.MeasureTheory.Constructions.Pi
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Def.v1.Atlas.AnAlgorithmistsToolkit.code.Sparsification
+public section
+
 open scoped MatrixOrder ComplexOrder Classical
 open Matrix Finset
 

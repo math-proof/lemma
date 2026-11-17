@@ -1,5 +1,6 @@
 import Mathlib.Probability.Independence.Basic
 import Lemma.Random.IndepJoint.of.Indep.Indep_Joint
+import Initialize.Tactic.Attr.Basic
 open ProbabilityTheory MeasureTheory Random
 
 
@@ -24,3 +25,4 @@ private lemma main
 
 
 -- created on 2026-09-19
+-- updated on 2026-11-17

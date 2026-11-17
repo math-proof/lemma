@@ -9,18 +9,20 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitCrossToggleMatching.Part8
-import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitPairedCutHallExact
-import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitExactTagProjection
-import Theorem.StatisticalMechanics.Code.Walls.gc7componenteven
-import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitPairedCutInjection.Part3
+module
+
+public import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitCrossToggleMatching.Part8
+public import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitPairedCutHallExact
+public import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitExactTagProjection
+public import Theorem.StatisticalMechanics.Code.Walls.gc7componenteven
+public import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitPairedCutInjection.Part3
 open Finset
 open scoped symmDiff
 
 
 namespace StatMech.Ising
 
-noncomputable section
+public noncomputable section
 
 variable {V I : Type*} [Fintype V] [DecidableEq V]
   [Fintype I] [DecidableEq I]

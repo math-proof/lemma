@@ -1,5 +1,13 @@
+module
+
+public import Mathlib.Algebra.GroupWithZero.WithZero
+
+public section
+
 set_option quotPrecheck false
 set_option hygiene false
+
+open scoped WithZero
 
 /-!
 # Notations from `Lemma/Definitions/Def_DedekindDomain_AdicValuation_InlineSpecific.lean`

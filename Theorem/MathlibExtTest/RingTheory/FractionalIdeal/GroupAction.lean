@@ -2,7 +2,7 @@
 
 
 import Abbrev.RingTheory.FractionalIdeal.GroupAction
-import Lemma.Int.FractionalIdeal.GroupAction
+import Theorem.Int.FractionalIdeal.GroupAction
 /-!
 # Tests for group actions on fractional ideals
 

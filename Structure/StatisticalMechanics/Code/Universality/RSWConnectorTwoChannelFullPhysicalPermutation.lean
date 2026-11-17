@@ -8,10 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.StatisticalMechanics.Code.Universality.RSWConnectorTwoChannelFibreCube.Part3
-import Theorem.StatisticalMechanics.Code.Lattice.CollaredWalkCrossing
-import Theorem.StatisticalMechanics.Code.TwoDim.ZhangFaithfulExclusive.Part2
-import Theorem.StatisticalMechanics.Code.Universality.RSWConnectorTwoChannelFullPhysicalPermutation.Part13
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.RSWConnectorTwoChannelFibreCube.Part3
+public import Theorem.StatisticalMechanics.Code.Lattice.CollaredWalkCrossing
+public import Theorem.StatisticalMechanics.Code.TwoDim.ZhangFaithfulExclusive.Part2
+public import Theorem.StatisticalMechanics.Code.Universality.RSWConnectorTwoChannelFullPhysicalPermutation.Part13
 open Finset SimpleGraph Set
 
 
@@ -19,7 +21,7 @@ namespace StatMech.Universality
 
 open StatMech.Percolation StatMech.Lattice StatMech.RSW.Box
 
-noncomputable section
+public noncomputable section
 
 structure PairedEdgeHexCutCarrier {V I : Type*}
     (source target : I → Sym2 V) (A B : Set V) where

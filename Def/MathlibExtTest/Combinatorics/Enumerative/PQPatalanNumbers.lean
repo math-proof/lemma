@@ -1,9 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/PQPatalanNumbers.lean -/
 
 
-import Mathlib.Tactic.NormNum
-import Def.Combinatorics.Enumerative.PQPatalanNumbers.Part2
+module
 
+public import Mathlib.Tactic.NormNum
+public import Def.Combinatorics.Enumerative.PQPatalanNumbers.Part2
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

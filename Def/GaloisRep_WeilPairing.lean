@@ -1,6 +1,9 @@
-import Mathlib
-import Lemma.WeierstrassCurve.FreyPackageGaloisRep
-import Structure.GaloisRep_WeilPairing
+module
+
+public import Mathlib
+public import Structure.GaloisRep_WeilPairing
+
+@[expose] public section
 
 set_option autoImplicit false
 

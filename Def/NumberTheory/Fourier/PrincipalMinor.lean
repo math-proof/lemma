@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Fourier/PrincipalMinor.lean -/
 
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
-import Structure.NumberTheory.Fourier.PrincipalMinor
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+public import Structure.NumberTheory.Fourier.PrincipalMinor
+
+@[expose] public section
+
 /-!
 # Principal minors of cyclic Fourier matrices
 

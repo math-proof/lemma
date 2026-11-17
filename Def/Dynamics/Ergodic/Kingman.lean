@@ -14,7 +14,7 @@ import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
 import Mathlib.Topology.Separation.CompletelyRegular
 import Def.Dynamics.Ergodic.Birkhoff
-import Lemma.Set.Ergodic.Birkhoff
+import Theorem.Set.Ergodic.Birkhoff
 
 
 section

@@ -8,14 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Coloring
-import Mathlib.Order.Filter.AtTopBot.Defs
-import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
-import Mathlib.Data.Real.Sqrt
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Probability.Martingale.Basic
-import Mathlib.Probability.Moments.SubGaussian
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Coloring
+public import Mathlib.Order.Filter.AtTopBot.Defs
+public import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+public import Mathlib.Data.Real.Sqrt
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Probability.Martingale.Basic
+public import Mathlib.Probability.Moments.SubGaussian
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open MeasureTheory Filter Set SimpleGraph

@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Def.v1.Atlas.ProjectionTheory.code.DeltaRegular
-import Structure.v1.Atlas.ProjectionTheory.code.OSRWSharp
+module
+
+public import Mathlib
+public import Def.v1.Atlas.ProjectionTheory.code.DeltaRegular
+public import Structure.v1.Atlas.ProjectionTheory.code.OSRWSharp
+
+@[expose] public section
+
 open Metric Set InnerProductSpace
 
 

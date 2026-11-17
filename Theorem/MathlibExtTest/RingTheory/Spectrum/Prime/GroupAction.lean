@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/Spectrum/Prime/GroupAction.lean -/
 
 
-import Lemma.Int.Spectrum.Prime.GroupAction
+import Theorem.Int.Spectrum.Prime.GroupAction
 open scoped Pointwise
 
 /-!

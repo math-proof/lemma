@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/HZeroBasis.lean -/
 
 import Theorem.NumberTheory.MultipleZeta.WordAlgebra.Part2
-import Lemma.Nat.MultipleZeta.WordAlgebra
+import Theorem.Nat.MultipleZeta.WordAlgebra
 import Mathlib.Algebra.FreeAlgebra
 import Mathlib.Algebra.MvPolynomial.Equiv
 import Mathlib.Combinatorics.Enumerative.Composition

@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/ODE/PicardIteration.lean -/
 
 
-import Theorem.Analysis.ODE.PicardIteration
+module
 
+public import Theorem.Analysis.ODE.PicardIteration
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

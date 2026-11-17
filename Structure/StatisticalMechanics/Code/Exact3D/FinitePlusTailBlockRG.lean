@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailBlockBounds.Part6
-import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailRG
+module
 
+public import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailBlockBounds.Part6
+public import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailRG
+
+
+public section
 
 namespace StatMech
 

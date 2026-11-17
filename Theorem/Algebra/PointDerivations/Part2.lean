@@ -1,5 +1,10 @@
-import Mathlib
-import Def.Algebra.PointDerivations.Part2
+module
+
+public import Mathlib
+public import Def.Algebra.PointDerivations.Part2
+
+public section
+
 universe u v w w'
 
 

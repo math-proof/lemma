@@ -1,10 +1,6 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_RelativeGroupLawEndDegree.lean: instance decls only.
 import Mathlib
-import Lemma.Scheme.RelativeGroupLaw
-import Lemma.Scheme.RelativeGroupLawKernel
-import Lemma.Scheme.NeronModelEndomorphismExtension
-import Lemma.Scheme.RelativeGroupLawEndDegree
-
+import Theorem.Scheme.NeronModelEndomorphismExtension
 set_option autoImplicit false
 
 noncomputable section

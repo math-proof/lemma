@@ -1,22 +1,25 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/BrentOsbornBinomialAbsoluteMoment.lean -/
 
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Int.Basic
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Algebra.CharP.Defs
-import Mathlib.Algebra.Order.Interval.Finset.Basic
-import Mathlib.Algebra.Order.Interval.Finset.SuccPred
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Data.Int.Interval
-import Mathlib.Data.Int.Star
-import Mathlib.Data.Int.SuccPred
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Linarith.Lemmas
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+module
 
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Data.Int.Basic
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Algebra.BigOperators.Ring.Finset
+public import Mathlib.Algebra.CharP.Defs
+public import Mathlib.Algebra.Order.Interval.Finset.Basic
+public import Mathlib.Algebra.Order.Interval.Finset.SuccPred
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Data.Int.Interval
+public import Mathlib.Data.Int.Star
+public import Mathlib.Data.Int.SuccPred
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Linarith.Lemmas
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

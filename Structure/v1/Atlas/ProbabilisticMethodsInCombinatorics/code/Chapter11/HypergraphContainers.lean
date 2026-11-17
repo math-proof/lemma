@@ -8,11 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Real.Sqrt
-import Mathlib.Data.Finset.Lattice.Fold
+module
+
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Data.Real.Sqrt
+public import Mathlib.Data.Finset.Lattice.Fold
+public section
+
 set_option maxHeartbeats 800000
 
 open Finset Real

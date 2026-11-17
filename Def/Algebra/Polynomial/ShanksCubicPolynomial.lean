@@ -1,4 +1,9 @@
-import Mathlib.Algebra.Polynomial.Basic
+module
+
+public import Mathlib.Algebra.Polynomial.Basic
+
+@[expose] public section
+
 /-!
 # Shanks cubic polynomial
 

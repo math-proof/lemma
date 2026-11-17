@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
 import Class.v1.Atlas.GeometryOfManifolds.code.HamiltonianVectorFields
 set_option autoImplicit false
 

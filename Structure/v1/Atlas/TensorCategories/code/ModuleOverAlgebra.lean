@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Mod_
-import Mathlib.CategoryTheory.Monoidal.Mon_
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Mod_
+public import Mathlib.CategoryTheory.Monoidal.Mon_
+public section
+
 set_option maxHeartbeats 800000
 
 universe v u

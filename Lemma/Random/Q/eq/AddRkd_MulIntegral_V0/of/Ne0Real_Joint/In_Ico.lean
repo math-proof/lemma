@@ -13,7 +13,9 @@ import Lemma.Random.Measurable_Wkd.of.All_Measurable_Prob
 import Lemma.Random.NormWkd.le.Abs_R
 import Lemma.Random.Wkd.eq.Integral_Kf.of.All_EqWithDensity
 import Lemma.Random.Kf.eq.Integral_TW.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
-import Theorem.Dynamics.PolicyTrajectory.ContinuousAction
+import Def.Dynamics.PolicyTrajectory.ContinuousAction
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Finset Kernel
 set_option maxHeartbeats 800000
 
@@ -436,4 +438,4 @@ private lemma main
 
 
 -- created on 2026-11-13
--- updated on 2026-11-16
+-- updated on 2026-11-17

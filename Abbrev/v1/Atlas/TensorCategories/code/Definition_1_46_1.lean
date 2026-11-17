@@ -8,7 +8,11 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.TensorCategories.code.DeligneTensorProductDef
+module
+
+public import Structure.v1.Atlas.TensorCategories.code.DeligneTensorProductDef
+@[expose] public section
+
 open CategoryTheory
 
 

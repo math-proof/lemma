@@ -8,13 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.LieGroups.code.VermaModules.Part7
-import Lemma.Int.WeightSubspace.eq.ToSubmoduleWeightSpace
-import Mathlib.Algebra.Lie.Sl2
-import Def.v1.Atlas.LieGroups.code.HighestWeightModules
+module
+
+public import Def.v1.Atlas.LieGroups.code.VermaModules.Part7
+public import Lemma.Int.WeightSubspace.eq.ToSubmoduleWeightSpace
+public import Mathlib.Algebra.Lie.Sl2
+public import Def.v1.Atlas.LieGroups.code.HighestWeightModules
 
 
-noncomputable section
+public noncomputable section
 
 universe u_mod
 

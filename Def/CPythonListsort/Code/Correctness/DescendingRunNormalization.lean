@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/DescendingRunNormalization.lean -/
 
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
+
 /-!
 # Pure normalization algebra for descending natural runs
 

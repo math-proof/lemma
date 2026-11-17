@@ -9,16 +9,18 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPositiveUnitComponentOrbit.Part7
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoHighChargeSpliceHallRouting.Part12
-import Def.StatisticalMechanics.Code.FrontierD.SixVertexPositiveUnitComponentResidualRouting.Part7
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPositiveUnitComponentOrbit.Part7
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoHighChargeSpliceHallRouting.Part12
+public import Def.StatisticalMechanics.Code.FrontierD.SixVertexPositiveUnitComponentResidualRouting.Part7
 
 
 namespace StatMech.FrontierD
 
 noncomputable section
 
-inductive SixVertexHorizontalResidualGeometricCertificate
+public inductive SixVertexHorizontalResidualGeometricCertificate
     {T : EvenTorus} {middle : Fin (T.width + 1)}
     {hmiddle_pos : 0 < middle.val} {hmiddle_lt : middle.val < T.width}
     {grade : Nat × Nat}

@@ -4,8 +4,10 @@
 # Finite graphs and the graph-minor relation
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Maps
-import Structure.Combinatorics.Graph.GraphMinor
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Maps
+public import Structure.Combinatorics.Graph.GraphMinor
 
 
 namespace MetaMathlibExt
@@ -19,7 +21,7 @@ identifying a single adjacent pair `a, b` and injective otherwise, with
 adjacency in `H` given by images of adjacent pairs in `G` at distinct vertices,
 so no loop is forced at the identified vertex).
 Stable source: https://en.wikipedia.org/wiki/Robertson%E2%80%93Seymour_theorem. -/
-inductive MinorStep : FinGraph → FinGraph → Prop where
+public inductive MinorStep : FinGraph → FinGraph → Prop where
   | iso (H G : FinGraph) (e : H.G ≃g G.G) : MinorStep H G
   | deleteVertex (H G : FinGraph) (f : H.V ↪ G.V)
       (h_induced : ∀ u v, H.G.Adj u v ↔ G.G.Adj (f u) (f v))

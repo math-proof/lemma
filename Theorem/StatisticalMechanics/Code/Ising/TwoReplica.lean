@@ -7,16 +7,17 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib
-import Def.StatisticalMechanics.Code.Ising.TwoReplica
+public import Mathlib
+public import Def.StatisticalMechanics.Code.Ising.TwoReplica
 open Finset Classical
 open scoped symmDiff BigOperators
 
 set_option linter.unusedSectionVars false
 set_option maxHeartbeats 800000
 
+public section
 
 namespace StatMech
 

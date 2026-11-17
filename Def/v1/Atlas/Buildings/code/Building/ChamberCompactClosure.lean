@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.MetricSpace.Isometry
-import Mathlib.Topology.MetricSpace.Bounded
-import Mathlib.Topology.Compactness.Compact
+module
+
+public import Mathlib.Topology.MetricSpace.Isometry
+public import Mathlib.Topology.MetricSpace.Bounded
+public import Mathlib.Topology.Compactness.Compact
+
+@[expose] public section
+
 set_option linter.unusedSectionVars false
 
 open Classical

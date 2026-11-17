@@ -1,12 +1,17 @@
-import Mathlib.Analysis.CStarAlgebra.Module.Constructions
-import Mathlib.Analysis.Convex.DoublyStochasticMatrix
-import Mathlib.Analysis.InnerProductSpace.Spectrum
+module
+
+public import Mathlib.Analysis.CStarAlgebra.Module.Constructions
+public import Mathlib.Analysis.Convex.DoublyStochasticMatrix
+public import Mathlib.Analysis.InnerProductSpace.Spectrum
+
 /-!
 # Schur's theorem on diagonals of self-adjoint operators
 
 The real diagonal of a self-adjoint operator in an orthonormal basis is a doubly stochastic image
 of its eigenvalues (the Schur direction of the Schur-Horn theorem).
 -/
+
+public section
 
 
 namespace Matrix.Any_In_DoublyStochasticAndEq_MulVec.of.OrthonormalBasis_Fin.EqFinrank.IsSymmetric

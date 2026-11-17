@@ -6,11 +6,14 @@
 Orientation and dichromatic-colouring infrastructure for simple graphs.
 -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Combinatorics.SimpleGraph.Basic
-import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
-import Mathlib.Data.Fin.Basic
+module
 
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Combinatorics.SimpleGraph.Basic
+public import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
+public import Mathlib.Data.Fin.Basic
+
+@[expose] public section
 
 namespace SimpleGraph
 

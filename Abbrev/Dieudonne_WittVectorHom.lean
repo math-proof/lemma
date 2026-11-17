@@ -1,6 +1,10 @@
-import Mathlib
-import Structure.Dieudonne_DatumAndHonda
-import Instance.Dieudonne_WittVectorHom
+module
+
+public import Mathlib
+public import Structure.Dieudonne_DatumAndHonda
+public import Instance.Dieudonne_WittVectorHom
+
+@[expose] public section
 
 set_option autoImplicit false
 

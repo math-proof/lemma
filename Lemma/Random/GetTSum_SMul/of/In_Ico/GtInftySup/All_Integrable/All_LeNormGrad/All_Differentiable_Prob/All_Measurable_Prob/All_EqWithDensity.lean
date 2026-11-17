@@ -4,6 +4,8 @@ import Syntax.Order.Sup
 import Lemma.Random.Differentiable.All_LeNormFderivMulAdd_1MulAbs_R.of.All_LeIntegral.All_Integrable.All_LeNormFderiv.All_Differentiable_Prob.All_Measurable_Prob.All_EqWithDensity
 import Lemma.Random.Integral_R.eq.Integral_Wkd.of.All_Eq.All_EqWithDensity
 import Lemma.Random.NormWkd.le.Abs_R
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Set
 
 
@@ -72,4 +74,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-16
+-- updated on 2026-11-17

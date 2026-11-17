@@ -3,7 +3,7 @@
 
 import Mathlib.NumberTheory.Chebyshev
 import Def.NumberTheory.PrimeCounting.ResidueClassPsi
-import Lemma.Nat.PrimeCounting.ResidueClassPsi
+import Theorem.Nat.PrimeCounting.ResidueClassPsi
 
 
 example {q : ℕ} (a : ZMod q) : Chebyshev.psiResidueClass a 0 = 0 := by

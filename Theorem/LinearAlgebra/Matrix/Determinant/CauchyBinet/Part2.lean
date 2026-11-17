@@ -2,9 +2,11 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.LinearAlgebra.Matrix.Determinant.PermFinset
-import Def.LinearAlgebra.Matrix.Determinant.CauchyBinet.Part3
+module
+
+public import Mathlib
+public import Def.LinearAlgebra.Matrix.Determinant.PermFinset
+public import Def.LinearAlgebra.Matrix.Determinant.CauchyBinet.Part3
 set_option backward.isDefEq.respectTransparency false
 open scoped Matrix BigOperators
 open Finset Matrix
@@ -49,6 +51,8 @@ We provide additional results and connect Mathlib's API to the textbook presenta
 The submatrix operation `Matrix.submatrix` uses functions for row/column selection,
 which is more general than the textbook's subset-based notation.
 -/
+
+public section
 
 
 namespace AlgebraicCombinatorics

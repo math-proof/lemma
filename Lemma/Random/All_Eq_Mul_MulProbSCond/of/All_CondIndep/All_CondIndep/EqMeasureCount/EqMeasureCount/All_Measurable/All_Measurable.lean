@@ -1,4 +1,5 @@
 import Lemma.Random.EqProbJoint.All_Eq_Mul_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasureCount.EqMeasureCount.All_Measurable.All_Measurable
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory Random
 
 
@@ -40,4 +41,4 @@ private lemma main
 
 
 -- created on 2026-10-04
--- updated on 2026-11-02
+-- updated on 2026-11-17

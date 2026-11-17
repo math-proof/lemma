@@ -7,14 +7,17 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.CategoryTheory.Preadditive.Schur
-import Mathlib.CategoryTheory.Simple
-import Mathlib.CategoryTheory.Linear.Basic
-import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.CategoryTheory.Preadditive.Schur
+public import Mathlib.CategoryTheory.Simple
+public import Mathlib.CategoryTheory.Linear.Basic
+public import Mathlib.CategoryTheory.Abelian.Basic
 set_option maxHeartbeats 800000
 
 open CategoryTheory Module
+
+public section
 
 universe v u
 

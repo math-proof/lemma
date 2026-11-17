@@ -1,6 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/ListSortScanReached.lean -/
 
-import Def.CPythonListsort.Code.Assembly.ListSortTrace
+module
+
+public import Def.CPythonListsort.Code.Assembly.ListSortTrace
 /-!
 # Control-flow provenance for the final-collapse call
 
@@ -25,7 +27,7 @@ the state passed by that call to `mergeForceCollapseTraced?`.
 `bindPrefix` preserves this provenance through a genuine successful helper
 prefix.  In particular, it cannot transport the certificate merely because
 two executions happen to have equal policy-event projections. -/
-inductive ListSortScanReachedCollapse
+public inductive ListSortScanReachedCollapse
     (reverse : Bool) (inputSize : Nat)
     (openState : MergeState κ ν)
     (collapsed : MergeForceCollapseResult κ ν) :

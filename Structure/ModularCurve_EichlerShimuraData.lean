@@ -1,10 +1,12 @@
-import Structure.HeckeGalois_EichlerShimura
-import Abbrev.ModularCurve_EigenformIdeal
-import Def.ModularCurve_EichlerShimuraData
+module
+
+public import Structure.HeckeGalois_EichlerShimura
+public import Abbrev.ModularCurve_EigenformIdeal
+public import Def.ModularCurve_EichlerShimuraData
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace ModularCurve
 

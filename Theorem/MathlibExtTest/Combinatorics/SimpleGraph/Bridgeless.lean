@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.SimpleGraph.Bridgeless
-import Lemma.SimpleGraph.Bridgeless
+import Theorem.SimpleGraph.Bridgeless
 
 
 namespace SimpleGraph

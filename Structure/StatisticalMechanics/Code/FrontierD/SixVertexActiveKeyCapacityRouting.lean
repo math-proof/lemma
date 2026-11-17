@@ -9,14 +9,16 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.FiniteKeyCapacityMatching.Part3
-import Abbrev.StatisticalMechanics.Code.FrontierD.SixVertexActiveKeyCapacityRouting
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.FiniteKeyCapacityMatching.Part3
+public import Abbrev.StatisticalMechanics.Code.FrontierD.SixVertexActiveKeyCapacityRouting
 open Finset
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure SixVertexHorizontalTwoCycleActiveKeyFiberRouting
     (T : EvenTorus) (middle : Fin (T.width + 1))

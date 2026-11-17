@@ -13,7 +13,7 @@ import Mathlib.Analysis.Calculus.ContDiff.Basic
 import Mathlib.Analysis.Calculus.ContDiff.RCLike
 import Mathlib.Analysis.InnerProductSpace.EuclideanDist
 import Def.v1.Atlas.DifferentialGeometry.code.Hypersurfaces
-import Lemma.Real.Atlas.v1.DifferentialGeometry.code.Hypersurfaces
+import Theorem.Real.Atlas.v1.DifferentialGeometry.code.Hypersurfaces
 import Structure.v1.Atlas.DifferentialGeometry.code.Manifolds.Part3
 
 

@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/CompactMeasures.lean -/
 
 /-
@@ -8,18 +10,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Topology.Algebra.Module.Spaces.WeakDual
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
-import Mathlib.LinearAlgebra.DirectSum.Finsupp
-import Mathlib.LinearAlgebra.TensorProduct.Basic
-import Mathlib.Topology.Compactness.LocallyCompact
-import Mathlib.Topology.Algebra.Module.Basic
-import Mathlib.Topology.Sequences
-import Mathlib.Topology.ContinuousMap.Algebra
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Mathlib.Topology.ContinuousMap.SecondCountableSpace
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Topology.Algebra.Module.Spaces.WeakDual
+public import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+public import Mathlib.LinearAlgebra.DirectSum.Finsupp
+public import Mathlib.LinearAlgebra.TensorProduct.Basic
+public import Mathlib.Topology.Compactness.LocallyCompact
+public import Mathlib.Topology.Algebra.Module.Basic
+public import Mathlib.Topology.Sequences
+public import Mathlib.Topology.ContinuousMap.Algebra
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.Topology.ContinuousMap.SecondCountableSpace
 
+
+public section
 
 noncomputable section
 

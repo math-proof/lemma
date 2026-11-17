@@ -16,7 +16,7 @@ import Mathlib.CategoryTheory.Limits.Preserves.Finite
 import Mathlib.CategoryTheory.Limits.Constructions.EpiMono
 import Mathlib.CategoryTheory.Yoneda
 import Instance.v1.Atlas.TensorCategories.code.InvertibleObjects
-import Lemma.Category.Atlas.v1.TensorCategories.code.InvertibleObjects
+import Theorem.Category.Atlas.v1.TensorCategories.code.InvertibleObjects
 import Def.v1.Atlas.TensorCategories.code.Corollary_1_51_3.Part2
 set_option maxHeartbeats 800000
 

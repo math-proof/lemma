@@ -5,6 +5,7 @@ import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.DataGet.eq.GetUnflattenData
 import Lemma.Vector.Eq.is.All_EqGetS
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory Tensor Vector
 set_option maxHeartbeats 1000000
 
@@ -111,4 +112,4 @@ private lemma main
 
 
 -- created on 2023-04-02
--- updated on 2026-11-15
+-- updated on 2026-11-17

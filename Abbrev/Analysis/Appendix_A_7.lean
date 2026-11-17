@@ -1,5 +1,9 @@
-import Mathlib
-import Def.Analysis.Appendix_A_7
+module
+
+public import Mathlib
+public import Def.Analysis.Appendix_A_7
+
+@[expose] public section
 
 
 abbrev make_twelve_equal_two : ℤ → ℤ → Prop := fun a b ↦ a = 12 ∧ b = 2

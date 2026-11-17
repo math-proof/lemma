@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra.Part3
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticLinearAlgebra
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticEvenDim
+module
+
+public import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra.Part3
+public import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticEvenDim
+public section
+
 open Module FiniteDimensional
 
 

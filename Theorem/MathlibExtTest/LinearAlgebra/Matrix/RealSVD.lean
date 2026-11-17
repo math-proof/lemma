@@ -2,7 +2,7 @@
 
 
 import Def.LinearAlgebra.Matrix.RealSVD
-import Lemma.Matrix.RealSVD
+import Theorem.Matrix.RealSVD
 open MathlibExt.LinearAlgebra.Matrix.RealSVDWanted
 
 

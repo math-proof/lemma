@@ -2,7 +2,7 @@
 
 
 import Def.LinearAlgebra.Matrix.OrdinaryRiordanPascalLikeMatrix
-import Lemma.Matrix.OrdinaryRiordanPascalLikeMatrix
+import Theorem.Matrix.OrdinaryRiordanPascalLikeMatrix
 
 
 namespace MetaMathlibExt

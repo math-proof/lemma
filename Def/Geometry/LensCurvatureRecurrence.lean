@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Geometry/LensCurvatureRecurrence.lean -/
 
-import Mathlib.Data.Real.Basic
+module
 
+public import Mathlib.Data.Real.Basic
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

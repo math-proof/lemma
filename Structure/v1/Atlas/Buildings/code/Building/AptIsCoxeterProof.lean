@@ -8,13 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
-import Lemma.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
-import Lemma.List.All.of.All.IsChain.Ne
-import Lemma.Nat.NotChamberAdjacent
-import Def.v1.Atlas.Buildings.code.ChamberComplex.Folding.Part3
-import Def.v1.Atlas.Buildings.code.ChamberComplex.CoxeterComplex.Part2
-import Mathlib.GroupTheory.Coxeter.Length
+module
+
+public import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
+public import Theorem.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
+public import Theorem.List.All.of.All.IsChain.Ne
+public import Theorem.Nat.NotChamberAdjacent
+public import Def.v1.Atlas.Buildings.code.ChamberComplex.Folding.Part3
+public import Def.v1.Atlas.Buildings.code.ChamberComplex.CoxeterComplex.Part2
+public import Mathlib.GroupTheory.Coxeter.Length
+public section
+
 set_option maxHeartbeats 0
 
 open ChamberComplex

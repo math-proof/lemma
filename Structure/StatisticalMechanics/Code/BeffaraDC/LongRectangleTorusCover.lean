@@ -9,9 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.BeffaraDC.LongRectangleGeometry.Part5
-import Theorem.StatisticalMechanics.Code.BeffaraDC.TorusSquareCrossingCover.Part7
-import Theorem.StatisticalMechanics.Code.BeffaraDC.LongRectangleTorusCover.Part4
+module
+
+public import Theorem.StatisticalMechanics.Code.BeffaraDC.LongRectangleGeometry.Part5
+public import Theorem.StatisticalMechanics.Code.BeffaraDC.TorusSquareCrossingCover.Part7
+public import Theorem.StatisticalMechanics.Code.BeffaraDC.LongRectangleTorusCover.Part4
+public section
+
 open SimpleGraph Set
 
 

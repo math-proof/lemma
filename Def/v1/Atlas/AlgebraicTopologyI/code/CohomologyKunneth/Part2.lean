@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section33.Part2
 import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section33
 import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section29
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section25
+import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section25
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section29.Part7
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section25.Part3
 import Mathlib.LinearAlgebra.TensorProduct.Basic

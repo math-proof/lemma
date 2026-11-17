@@ -8,13 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Finite.Defs
-import Mathlib.RingTheory.MvPolynomial.Basic
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Mathlib.Data.Setoid.Basic
-import Mathlib.RingTheory.Ideal.Basic
-import Mathlib.RingTheory.KrullDimension.Basic
-import Def.v1.Atlas.ArithmeticGeometry.code.FaltingsTheorem
+module
+
+public import Mathlib.Data.Finite.Defs
+public import Mathlib.RingTheory.MvPolynomial.Basic
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Mathlib.Data.Setoid.Basic
+public import Mathlib.RingTheory.Ideal.Basic
+public import Mathlib.RingTheory.KrullDimension.Basic
+public import Def.v1.Atlas.ArithmeticGeometry.code.FaltingsTheorem
+public section
+
 open MvPolynomial
 
 

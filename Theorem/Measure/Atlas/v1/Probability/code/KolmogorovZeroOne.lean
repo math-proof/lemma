@@ -1,0 +1,79 @@
+module
+
+public import Mathlib
+public import Abbrev.v1.Atlas.Probability.code.TailSigmaAlgebra
+
+public section
+
+open MeasureTheory MeasurableSpace ProbabilityTheory Filter
+open scoped ENNReal MeasureTheory
+
+
+/--
+[tailMeasurableSpace_eq_limsup_atTop](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/KolmogorovZeroOne.lean)
+-/
+public theorem tailMeasurableSpace_eq_limsup_atTop
+  {𝓐 : ℕ → MeasurableSpace Ω} :
+-- imply
+  tailMeasurableSpace 𝓐 = limsup 𝓐 atTop := by
+-- proof
+  simp only [tailMeasurableSpace, tailMeasurableSpaceFrom]
+  rw [limsup_eq_iInf_iSup_of_nat]
+
+/--
+[kolmogorov_zero_one](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/KolmogorovZeroOne.lean)
+-/
+public theorem kolmogorov_zero_one
+  {m0 : MeasurableSpace Ω}
+  {μ : Measure Ω}
+  {𝓐 : ℕ → MeasurableSpace Ω}
+  {A : Set Ω}
+-- given
+  (h_le : ∀ n, 𝓐 n ≤ m0)
+  (h_indep : iIndep 𝓐 μ)
+  (hA : MeasurableSet[tailMeasurableSpace 𝓐] A) :
+-- imply
+  μ A = 0 ∨ μ A = 1 := by
+-- proof
+  rw [tailMeasurableSpace_eq_limsup_atTop] at hA
+  exact measure_zero_or_one_of_measurableSet_limsup_atTop h_le h_indep hA
+
+/--
+[kolmogorov_zero_one_fun](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/KolmogorovZeroOne.lean)
+-/
+public theorem kolmogorov_zero_one_fun
+  [mβ : MeasurableSpace β]
+  {m0 : MeasurableSpace Ω}
+  {μ : Measure Ω}
+  {X : ℕ → Ω → β}
+  {A : Set Ω}
+-- given
+  (h_le : ∀ n, MeasurableSpace.comap (X n) mβ ≤ m0)
+  (h_indep : iIndep (fun n => MeasurableSpace.comap (X n) mβ) μ)
+  (hA : MeasurableSet[tailMeasurableSpaceOfFun X] A) :
+-- imply
+  μ A = 0 ∨ μ A = 1 := by
+-- proof
+  have hA' : MeasurableSet[tailMeasurableSpace (fun n => MeasurableSpace.comap (X n) mβ)] A := hA
+  exact kolmogorov_zero_one (𝓐 := fun n => MeasurableSpace.comap (X n) mβ) h_le h_indep hA'
+
+/--
+[kolmogorov_zero_one_of_iIndepFun](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/KolmogorovZeroOne.lean)
+-/
+public theorem kolmogorov_zero_one_of_iIndepFun
+  [mβ : MeasurableSpace β]
+  {m0 : MeasurableSpace Ω}
+  {μ : Measure Ω}
+  {X : ℕ → Ω → β}
+  {A : Set Ω}
+-- given
+  (h_le : ∀ n, MeasurableSpace.comap (X n) mβ ≤ m0)
+  (h_indep : iIndepFun (m := fun _ => mβ) X μ)
+  (hA : MeasurableSet[tailMeasurableSpaceOfFun X] A) :
+-- imply
+  μ A = 0 ∨ μ A = 1 :=
+-- proof
+  kolmogorov_zero_one_fun h_le h_indep.iIndep hA
+
+
+-- created on 2026-10-23

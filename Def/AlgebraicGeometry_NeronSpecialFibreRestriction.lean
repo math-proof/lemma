@@ -1,5 +1,9 @@
-import Mathlib
-import Lemma.Scheme.NeronModelPropertyBundleCarrier
+module
+
+public import Mathlib
+public import Structure.AlgebraicGeometry_NeronModelPropertyBundleCarrier
+
+@[expose] public section
 
 set_option autoImplicit false
 

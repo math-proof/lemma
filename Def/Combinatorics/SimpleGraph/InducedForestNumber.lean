@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/InducedForestNumber.lean -/
 
-import Mathlib.Combinatorics.SimpleGraph.Acyclic
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Acyclic
+
+@[expose] public section
+
 /-!
 # Induced forest number
 

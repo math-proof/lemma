@@ -1,9 +1,11 @@
-import Mathlib
-import Abbrev.MvPolynomial_CrossingQuotient
+module
+
+public import Mathlib
+public import Abbrev.MvPolynomial_CrossingQuotient
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace MvPolynomial
 

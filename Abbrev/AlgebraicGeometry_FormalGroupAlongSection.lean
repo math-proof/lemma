@@ -1,10 +1,12 @@
-import Class.MvFormalGroup_BasicV2
-import Structure.AlgebraicGeometry_RelativeGroupLaw
-import Abbrev.CerednikDrinfeld_SchemeNilpPoints
+module
+
+public import Class.MvFormalGroup_BasicV2
+public import Structure.AlgebraicGeometry_RelativeGroupLaw
+public import Abbrev.CerednikDrinfeld_SchemeNilpPoints
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 open CategoryTheory AlgebraicGeometry NeronModelInfra GoodReductionJacobian
 

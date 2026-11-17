@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Instance.v1.Atlas.DifferentialAnalysis.code.TestFunctions
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.TestFunctions
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TestFunctions
 import Mathlib.Analysis.Normed.Group.Basic
 import Instance.v1.Atlas.DifferentialAnalysis.code.CkBanach
 open scoped ZeroAtInfty

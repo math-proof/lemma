@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/PrimitiveUniqueness.lean -/
 
 
-import Lemma.Nat.DirichletCharacter.PrimitiveUniqueness
+import Theorem.Nat.DirichletCharacter.PrimitiveUniqueness
 /-!
 Abstract tests for uniqueness of the primitive inducer of a Dirichlet character.
 -/

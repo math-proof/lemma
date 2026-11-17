@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.SelbergSieve
-import Lemma.Nat.SelbergSieve
+import Theorem.Nat.SelbergSieve
 import Mathlib.Tactic.NormNum
 open MathlibExt.SelbergSieve
 

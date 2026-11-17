@@ -2,7 +2,7 @@
 
 
 import Def.RingTheory.Polynomial.AdjoinRootTensorProduct
-import Lemma.Ideal.Polynomial.AdjoinRootTensorProduct
+import Theorem.Ideal.Polynomial.AdjoinRootTensorProduct
 import Mathlib.Algebra.Polynomial.RingDivision
 set_option autoImplicit false
 

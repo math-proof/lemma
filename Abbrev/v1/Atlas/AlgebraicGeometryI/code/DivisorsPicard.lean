@@ -8,19 +8,21 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.ClassGroup
-import Mathlib.RingTheory.DedekindDomain.PID
-import Mathlib.RingTheory.DedekindDomain.Dvr
-import Mathlib.RingTheory.DedekindDomain.Factorization
-import Mathlib.RingTheory.UniqueFactorizationDomain.Kaplansky
-import Mathlib.RingTheory.Polynomial.UniqueFactorization
-import Mathlib.LinearAlgebra.FreeModule.PID
-import Mathlib.Data.Finsupp.Basic
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Mathlib.RingTheory.PowerSeries.Ideal
+module
+
+public import Mathlib.RingTheory.ClassGroup
+public import Mathlib.RingTheory.DedekindDomain.PID
+public import Mathlib.RingTheory.DedekindDomain.Dvr
+public import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Mathlib.RingTheory.UniqueFactorizationDomain.Kaplansky
+public import Mathlib.RingTheory.Polynomial.UniqueFactorization
+public import Mathlib.LinearAlgebra.FreeModule.PID
+public import Mathlib.Data.Finsupp.Basic
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Mathlib.RingTheory.PowerSeries.Ideal
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 open scoped nonZeroDivisors
 

@@ -1,9 +1,11 @@
-import Mathlib.Analysis.Normed.Lp.WithLp
-import Mathlib.Analysis.Normed.Lp.PiLp
-import Mathlib.Data.Matrix.Basic
-import Class.Data.Set.Add
-import Class.Data.Nat.GCD.Intfunc
-import Instance.Probability.Process.StochasticProcessTypes.Part2
+module
+
+public import Mathlib.Analysis.Normed.Lp.WithLp
+public import Mathlib.Analysis.Normed.Lp.PiLp
+public import Mathlib.Data.Matrix.Basic
+public import Class.Data.Set.Add
+public import Class.Data.Nat.GCD.Intfunc
+public import Instance.Probability.Process.StochasticProcessTypes.Part2
 open Finset Matrix WithLp Set
 open scoped Matrix BigOperators
 
@@ -23,6 +25,8 @@ simplex `StochasticVec` / `Simplex`, rather than a single Python class.
 
 -- probability of an m+n-step i→j path is at least the product of an m-step i→k
 -- path and an n-step k→j path (all other decompositions are nonneg)
+public section
+
 theorem get_pow_add_ge_mul_get_s_pow {S : Type u} [Fintype S] [DecidableEq S]
     {P : Matrix S S ℝ} [RowStochastic P] (m n : ℕ) (i j k : S) :
     (P ^ (m + n)) i j ≥ (P ^ m) i k * (P ^ n) k j := by
@@ -37,4 +41,3 @@ theorem get_pow_add_ge_mul_get_s_pow {S : Type u} [Fintype S] [DecidableEq S]
     apply mul_nonneg <;>
       apply (RowStochastic.stochastic _).nonneg
   · simp
-

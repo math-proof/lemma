@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.EllipticCurves.code.Isogenies.Part13
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.Isogenies
-import Def.v1.Atlas.EllipticCurves.code.CurveMorphism.Part2
+module
+
+public import Def.v1.Atlas.EllipticCurves.code.Isogenies.Part13
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.Isogenies
+public import Def.v1.Atlas.EllipticCurves.code.CurveMorphism.Part2
+public section
+
 open Polynomial
 
 open scoped Polynomial.Bivariate

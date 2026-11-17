@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Clique
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Sym.Card
-import Mathlib.Topology.Order.Basic
-import Mathlib.Topology.Algebra.Order.LiminfLimsup
-import Mathlib.Algebra.Order.Field.Basic
-import Mathlib.Topology.Algebra.Ring.Real
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Data.Sym.Card
+public import Mathlib.Topology.Order.Basic
+public import Mathlib.Topology.Algebra.Order.LiminfLimsup
+public import Mathlib.Algebra.Order.Field.Basic
+public import Mathlib.Topology.Algebra.Ring.Real
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 open scoped Classical

@@ -1,5 +1,9 @@
-import Mathlib
-import Structure.LocalLanglands_HeckePair
+module
+
+public import Mathlib
+public import Structure.LocalLanglands_HeckePair
+
+public section
 
 set_option autoImplicit false
 

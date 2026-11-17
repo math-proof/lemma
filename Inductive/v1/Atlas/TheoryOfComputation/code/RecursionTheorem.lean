@@ -8,7 +8,9 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Set.Basic
+module
+
+public import Mathlib.Data.Set.Basic
 
 
 namespace RecursionTheorem
@@ -17,7 +19,7 @@ namespace RecursionTheorem
 the accept state), `reject` (halt in the reject state) or `diverge` (run
 forever). Matches the three TM outcomes described in Sipser's formal
 definition. -/
-inductive TMResult where
+public inductive TMResult where
   | accept : TMResult
   | reject : TMResult
   | diverge : TMResult

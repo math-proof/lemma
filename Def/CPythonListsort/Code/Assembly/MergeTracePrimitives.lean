@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean -/
 
-import Def.CPythonListsort.Code.Assembly.MergeMemcpyProvenance
-import Inductive.CPythonListsort.Code.Assembly.MergeTracePrimitives
+module
+
+public import Def.CPythonListsort.Code.Assembly.MergeMemcpyProvenance
+public import Inductive.CPythonListsort.Code.Assembly.MergeTracePrimitives
+
+@[expose] public section
+
 /-!
 # Typed trace support for merge movement
 

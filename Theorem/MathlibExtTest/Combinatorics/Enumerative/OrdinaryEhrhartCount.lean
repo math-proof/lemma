@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/OrdinaryEhrhartCount.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.OrdinaryEhrhartCount
 
-import Def.Combinatorics.Enumerative.OrdinaryEhrhartCount
-
+public section
 
 namespace MetaMathlibExt
 

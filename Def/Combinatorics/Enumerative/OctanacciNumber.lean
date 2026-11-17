@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/OctanacciNumber.lean -/
 
-import Mathlib.Data.Nat.Basic
+module
+
+public import Mathlib.Data.Nat.Basic
+
+@[expose] public section
+
 /-!
 # Octanacci numbers
 

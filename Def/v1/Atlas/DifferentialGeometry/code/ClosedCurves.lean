@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.DifferentialGeometry.code.PlaneCurves.Part4
 import Lemma.Real.Atlas.v1.DifferentialGeometry.code.PlaneCurves
-import Lemma.Real.Atlas.v1.DifferentialGeometry.code.DegreeTheory
+import Theorem.Real.Atlas.v1.DifferentialGeometry.code.DegreeTheory
 import Theorem.v1.Atlas.DifferentialGeometry.code.Reparametrization
 import Def.v1.Atlas.DifferentialGeometry.code.DegreeTheory
 import Structure.v1.Atlas.DifferentialGeometry.code.ClosedCurves

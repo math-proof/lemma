@@ -9,17 +9,19 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicVertexCornerCardinality.Part2
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicFaceCornerCardinality.Part2
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicEndpointInputAssembly.Part2
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPolynomialEndpointConvergence
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicVertexCornerCardinality.Part2
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicFaceCornerCardinality.Part2
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicEndpointInputAssembly.Part2
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPolynomialEndpointConvergence
 
 
 namespace StatMech.Universality
 
 open Filter
 
-noncomputable section
+public noncomputable section
 
 namespace FKIsingSquareBoundaryLayerCoordinateOneForm
 

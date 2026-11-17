@@ -4,12 +4,15 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Acyclic
-import Mathlib.Combinatorics.SimpleGraph.LapMatrix
-import Mathlib.LinearAlgebra.Matrix.Block
-import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
-import Theorem.Combinatorics.SimpleGraph.MatrixTree
+module
 
+public import Mathlib.Combinatorics.SimpleGraph.Acyclic
+public import Mathlib.Combinatorics.SimpleGraph.LapMatrix
+public import Mathlib.LinearAlgebra.Matrix.Block
+public import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
+public import Theorem.Combinatorics.SimpleGraph.MatrixTree
+
+@[expose] public section
 
 section
 

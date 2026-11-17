@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/InformationTheory/PrefixFree.lean -/
 
-import Mathlib.Data.List.Basic
+module
 
+public import Mathlib.Data.List.Basic
+
+@[expose] public section
 
 namespace MathlibExt.InformationTheory
 

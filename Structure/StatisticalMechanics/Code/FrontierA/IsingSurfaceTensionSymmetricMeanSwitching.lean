@@ -9,9 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionSymmetricMeanBaseCases.Part2
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingCriticalOddPrismLayerCoordinates.Part35
-import Def.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionSymmetricMeanSwitching
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionSymmetricMeanBaseCases.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingCriticalOddPrismLayerCoordinates.Part35
+public import Def.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionSymmetricMeanSwitching
 open Filter Set Topology
 
 
@@ -19,7 +21,7 @@ namespace StatMech.FrontierA
 
 open StatMech StatMech.Ising StatMech.Sharpness
 
-noncomputable section
+public noncomputable section
 
 structure FiniteExpVarianceSkewSwitchingPairing
     {E : Type*} [Fintype E] (w I : E -> Real) (r : Real) where

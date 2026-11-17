@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.ArithmeticGeometry.code.HilbertSymbol.Part2
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertSymbol
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertSymbol
 import Def.v1.Atlas.ArithmeticGeometry.code.Hilbert2AdicCore
 open PadicInt HilbertSymbol
 

@@ -1,42 +1,46 @@
 /-
 Author: @akiezun, Avocado
 -/
+module
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Data.Finset.Range
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Analysis.Complex.Exponential
-import Mathlib.Analysis.Complex.ExponentialBounds
-import Mathlib.Analysis.Convex.Deriv
-import Mathlib.Analysis.Normed.Group.InfiniteSum
-import Mathlib.Analysis.PSeries
-import Mathlib.Analysis.Real.Sqrt
-import Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup
-import Mathlib.Analysis.SpecialFunctions.Gamma.Deriv
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Mathlib.Analysis.SpecialFunctions.Log.Monotone
-import Mathlib.Analysis.SumIntegralComparisons
-import Mathlib.Data.Finset.Defs
-import Mathlib.LinearAlgebra.AffineSpace.Slope
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
-import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
-import Mathlib.Order.Filter.Basic
-import Mathlib.Order.Interval.Finset.Defs
-import Mathlib.Order.Interval.Set.Defs
-import Mathlib.Tactic.Linarith
-import Mathlib.Topology.Algebra.InfiniteSum.NatInt
-import Mathlib.Topology.Basic
-import Def.Analysis.SpecialFunctions.Part1Ch8Entry17Loggammaintegral
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Data.Finset.Range
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Analysis.Complex.Exponential
+public import Mathlib.Analysis.Complex.ExponentialBounds
+public import Mathlib.Analysis.Convex.Deriv
+public import Mathlib.Analysis.Normed.Group.InfiniteSum
+public import Mathlib.Analysis.PSeries
+public import Mathlib.Analysis.Real.Sqrt
+public import Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Deriv
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+public import Mathlib.Analysis.SpecialFunctions.Log.Monotone
+public import Mathlib.Analysis.SumIntegralComparisons
+public import Mathlib.Data.Finset.Defs
+public import Mathlib.LinearAlgebra.AffineSpace.Slope
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+public import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
+public import Mathlib.Order.Filter.Basic
+public import Mathlib.Order.Interval.Finset.Defs
+public import Mathlib.Order.Interval.Set.Defs
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Topology.Algebra.InfiniteSum.NatInt
+public import Mathlib.Topology.Basic
+public import Def.Analysis.SpecialFunctions.Part1Ch8Entry17Loggammaintegral
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 8
 
 Statements of entries from B. C. Berndt, *Ramanujan's Notebooks, Part I*
 (Springer, 1985), with proofs.
 -/
+
+public section
 
 
 section

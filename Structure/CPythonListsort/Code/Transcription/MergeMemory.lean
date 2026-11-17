@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeMemory.lean -/
 
-import Def.CPythonListsort.Code.Transcription.TempStorageInvariant
-import Def.CPythonListsort.Code.Transcription.MergeMemory.Part2
+module
+
+public import Def.CPythonListsort.Code.Transcription.TempStorageInvariant
+public import Inductive.CPythonListsort.Code.Transcription.MergeMemory.Part2
 /-!
 # Observable temporary-storage transitions
 
@@ -11,6 +13,9 @@ the recorded capacity and all unrelated state untouched. `mergeGetmem` retains
 the signed capacity-reuse comparison, the unsigned allocation-size guard, and
 the fact that the old heap block is freed before that guard is checked.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

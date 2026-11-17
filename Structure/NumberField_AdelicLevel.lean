@@ -1,9 +1,11 @@
-import Instance.NumberField_AdelicHaar
+module
+
+public import Instance.NumberField_AdelicHaar
 
 open IsDedekindDomain IsDedekindDomain.HeightOneSpectrum NumberField RestrictedProduct
 open scoped Topology
 
-noncomputable section
+public noncomputable section
 
 namespace NumberField.AdelicLevel
 

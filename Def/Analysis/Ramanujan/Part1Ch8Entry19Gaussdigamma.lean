@@ -43,7 +43,7 @@ import Mathlib.NumberTheory.ZetaValues
 import Mathlib.Tactic.FunProp
 import Mathlib.Tactic.NormNum
 import Def.Analysis.Calculus.EulerMaclaurinFormula
-import Lemma.Real.Calculus.EulerMaclaurinFormula
+import Theorem.Real.Calculus.EulerMaclaurinFormula
 import Lemma.Real.Ramanujan.Part1Ch7Entry1Powersum
 import Def.Analysis.Ramanujan.Part1Ch7Entry1Powersum
 /-!

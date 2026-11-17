@@ -2,11 +2,16 @@
 
 -- MathlibExt/Combinatorics/SimpleGraph/Saturation.lean
 
-import Mathlib.Combinatorics.SimpleGraph.Copy
-import Mathlib.Combinatorics.SimpleGraph.Operations
-import Mathlib.Combinatorics.SimpleGraph.Finite
-import Mathlib.Order.Lattice.Nat
-import Mathlib.Order.Minimal
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Copy
+public import Mathlib.Combinatorics.SimpleGraph.Operations
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Mathlib.Order.Lattice.Nat
+public import Mathlib.Order.Minimal
+
+@[expose] public section
+
 /-!
 # Graph saturation and the saturation number
 

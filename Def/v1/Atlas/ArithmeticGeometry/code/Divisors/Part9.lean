@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Mathlib
 import Def.v1.Atlas.ArithmeticGeometry.code.DegreePullback
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.DegreePullback
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.DegreePullback
 import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.RationalLineCriterion
 import Def.v1.Atlas.ArithmeticGeometry.code.RationalLineCriterion
 import Theorem.v1.Atlas.ArithmeticGeometry.code.Divisors.Part3

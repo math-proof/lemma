@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Topology/Algebra/ContinuousSemilinearRepresentation.lean -/
+module
 
+public import Class.Topology.Algebra.ContinuousSemilinearRepresentation
+public import Mathlib.Algebra.Module.PUnit
+public import Mathlib.Topology.Homeomorph.Lemmas
+public import Mathlib.Topology.Instances.Int
 
-import Class.Topology.Algebra.ContinuousSemilinearRepresentation
-import Mathlib.Algebra.Module.PUnit
-import Mathlib.Topology.Homeomorph.Lemmas
-import Mathlib.Topology.Instances.Int
-
+public section
 
 -- The class can be constructed directly from its two substantive laws.
 example (G R M : Type*) [Group G] [TopologicalSpace G] [IsTopologicalGroup G]

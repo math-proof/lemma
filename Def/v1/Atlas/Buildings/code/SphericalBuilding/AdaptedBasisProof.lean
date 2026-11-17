@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.Buildings.code.SphericalBuilding.BasisExtensionChain
 import Def.v1.Atlas.Buildings.code.SphericalBuilding.AdaptedBasisSingle
-import Lemma.Fin.EqLinesFrameOfBasis
+import Theorem.Fin.EqLinesFrameOfBasis
 import Lemma.Fin.All_Eq_Val.of.Eq.Eq_0.StrictMono
 import Def.v1.Atlas.Buildings.code.SphericalBuilding.BasisFromFlagProof
 import Mathlib.LinearAlgebra.Basis.VectorSpace

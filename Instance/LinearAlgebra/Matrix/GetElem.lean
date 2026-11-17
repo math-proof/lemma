@@ -6,10 +6,14 @@ Do not add comma GetElem sugar `L[i, j]` here: it collides with List multi-index
 `term__[_,_]` from `Syntax.Data.List.List.Part8`. Use nested `L[i][j]` instead.
 Distinct from Syntax ofFun sugar `[i < m, j < n] body` (has `<`).
 -/
-import Mathlib.LinearAlgebra.Matrix.Defs
-import Notation.Fun
-import Structure.Fun
 
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Defs
+public import Notation.Fun
+public import Structure.Fun
+
+@[expose] public section
 
 namespace Matrix
 

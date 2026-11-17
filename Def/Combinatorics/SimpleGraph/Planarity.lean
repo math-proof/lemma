@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Planarity.lean -/
 
-import Mathlib.Combinatorics.SimpleGraph.Basic
-import Mathlib.Data.Real.Basic
-import Mathlib.Data.Set.Basic
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Basic
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Data.Set.Basic
+
+@[expose] public section
+
 /-!
 # Straight-line planarity
 

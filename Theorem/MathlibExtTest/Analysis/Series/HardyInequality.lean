@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Series/HardyInequality.lean -/
+module
 
+public import Theorem.Topology.Algebra.InfiniteSum.HardyInequality
 
-import Theorem.Topology.Algebra.InfiniteSum.HardyInequality
-
+public section
 
 namespace MetaMathlibExt
 

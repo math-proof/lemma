@@ -1,6 +1,9 @@
-import Mathlib
-import Def.Analysis.Misc.erdos_707
+module
 
+public import Mathlib
+public import Def.Analysis.Misc.erdos_707
+
+public section
 
 lemma IsPerfectDifferenceSet.card {N: ℕ} [NeZero N] {B: Finset (ZMod N)} (hdiff: IsPerfectDifferenceSet B) : B.card * B.card + 1 = N + B.card := by
   have he : Function.Bijective (IsPerfectDifferenceSet.map B) := by

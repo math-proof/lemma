@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/CycleCover.lean -/
+module
 
+public import Def.Combinatorics.SimpleGraph.CycleCover
 
-import Def.Combinatorics.SimpleGraph.CycleCover
-
+public section
 
 namespace SimpleGraph
 

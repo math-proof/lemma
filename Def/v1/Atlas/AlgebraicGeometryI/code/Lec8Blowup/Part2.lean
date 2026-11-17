@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.Projectivization.Basic
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec8Blowup
+module
+
+public import Mathlib.LinearAlgebra.Projectivization.Basic
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec8Blowup
+
+@[expose] public section
+
 open scoped LinearAlgebra.Projectivization
 
 

@@ -2,8 +2,14 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Notation.Combinatorics.Enumerative.WeightedSets
+
+module
+
+public import Mathlib
+public import Notation.Combinatorics.Enumerative.WeightedSets
+
+@[expose] public section
+
 open PowerSeries Finset BigOperators
 
 /-!

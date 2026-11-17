@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.ChevalleyImage
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.ChevalleyImage
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ChevalleyImage
 import Mathlib.RingTheory.Spectrum.Prime.Noetherian
 import Structure.v1.Atlas.AlgebraicGeometryI.code.ChevalleyFiberDimension
 

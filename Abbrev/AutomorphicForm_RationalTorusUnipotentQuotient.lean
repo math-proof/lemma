@@ -1,11 +1,13 @@
-import Abbrev.AutomorphicForm_RationalCentreUnipotentQuotient
-import Structure.NumberField_AdelicLevel
+module
+
+public import Abbrev.AutomorphicForm_RationalCentreUnipotentQuotient
+public import Structure.NumberField_AdelicLevel
 
 set_option autoImplicit false
 
 open MeasureTheory NumberField NumberField.AdelicHaar NumberField.AdelicBox NumberField.AdelicLevel
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace AutomorphicForm
 

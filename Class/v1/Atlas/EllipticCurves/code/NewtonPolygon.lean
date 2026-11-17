@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/NewtonPolygon.lean -/
 
 /-
@@ -8,15 +10,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.MvPolynomial.Basic
-import Mathlib.Analysis.Convex.Hull
-import Mathlib.Topology.Instances.RealVectorSpace
-import Mathlib.Algebra.MvPolynomial.PDeriv
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Mathlib.Algebra.MvPolynomial.Eval
-import Mathlib.Data.Set.Card
-import Def.v1.Atlas.EllipticCurves.code.NewtonPolygon
+public import Mathlib.RingTheory.MvPolynomial.Basic
+public import Mathlib.Analysis.Convex.Hull
+public import Mathlib.Topology.Instances.RealVectorSpace
+public import Mathlib.Algebra.MvPolynomial.PDeriv
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Mathlib.Algebra.MvPolynomial.Eval
+public import Mathlib.Data.Set.Card
+public import Def.v1.Atlas.EllipticCurves.code.NewtonPolygon
 
+
+public section
 
 noncomputable section
 

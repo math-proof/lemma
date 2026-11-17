@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/Ideal/IntegralKrullDim.lean -/
 
 
-import Lemma.Int.Ideal.IntegralKrullDim
+import Theorem.Int.Ideal.IntegralKrullDim
 
 
 -- Generic API example: the lemma applies to any integral extension.

@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman.lean -/
 
-import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.Analysis.Complex.TaylorSeries
+module
+
+public import Mathlib.Analysis.Complex.Polynomial.Basic
+public import Mathlib.Analysis.Complex.TaylorSeries
+
+@[expose] public section
+
 /-!
 # The Wiman maximum-term theorem
 

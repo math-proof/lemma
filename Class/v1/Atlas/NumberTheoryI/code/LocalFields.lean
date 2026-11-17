@@ -25,9 +25,7 @@ import Mathlib.NumberTheory.Padics.WithVal
 import Mathlib.Topology.Algebra.UniformRing
 import Mathlib.RingTheory.Valuation.Discrete.RankOne
 import Def.v1.Atlas.NumberTheoryI.code.Adeles.Part10
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Adeles
 open Metric Filter Set Topology
-
 
 class IsLocalField (K : Type*) extends NontriviallyNormedField K where
   locallyCompact : LocallyCompactSpace K

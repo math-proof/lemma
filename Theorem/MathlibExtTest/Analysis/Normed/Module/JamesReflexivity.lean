@@ -2,7 +2,7 @@
 
 
 import Def.Analysis.Normed.Module.JamesReflexivity
-import Lemma.Real.Normed.Module.JamesReflexivity
+import Theorem.Real.Normed.Module.JamesReflexivity
 import Mathlib.Analysis.InnerProductSpace.EuclideanDist
 import Mathlib.Analysis.Normed.Operator.NNNorm
 

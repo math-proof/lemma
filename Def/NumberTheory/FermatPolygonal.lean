@@ -7,10 +7,10 @@ Authors: Adam Kiezun, Muse Spark 1.3, Codex
 import Mathlib.Algebra.BigOperators.Group.Finset.Defs
 import Mathlib.Data.Finset.Card
 import Theorem.NumberTheory.PolygonalNumber
-import Lemma.Nat.PolygonalNumber
+import Theorem.Nat.PolygonalNumber
 import Mathlib.NumberTheory.SumFourSquares
 import Mathlib.Tactic
-import Lemma.Nat.QuadraticForms.LegendreThreeSquare
+import Theorem.Nat.QuadraticForms.LegendreThreeSquare
 open scoped BigOperators
 
 /-!

@@ -4,6 +4,7 @@ import Mathlib.MeasureTheory.Measure.WithDensity
 import Syntax.Probability.Expectation.Elab
 import Theorem.Probability.JointRv.AsRV
 import Theorem.Probability.SymbolicProbability
+import Initialize.Tactic.Attr.Basic
 
 
 /--
@@ -44,4 +45,4 @@ private lemma main
 
 
 -- created on 2026-09-23
--- updated on 2026-11-16
+-- updated on 2026-11-17

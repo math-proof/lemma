@@ -1,8 +1,13 @@
 -- Carved from Lemma/Definitions/Def_Deformations_IsResidueAlgebra.lean: instance decls only.
-import Mathlib
-import Instance.Mathlib_RingTheory_LocalRing_Defs
-import Instance.Deformations_Deformations_Lemmas
-import Class.Deformations_IsResidueAlgebra
+
+module
+
+public import Mathlib
+public import Instance.Mathlib_RingTheory_LocalRing_Defs
+public import Instance.Deformations_Deformations_Lemmas
+public import Class.Deformations_IsResidueAlgebra
+
+@[expose] public section
 
 set_option autoImplicit false
 

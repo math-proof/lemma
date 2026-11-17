@@ -10,10 +10,10 @@ LICENSE file in the root directory of this source tree.
 
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.NoetherNormalization
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.NoetherNormalization
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.NakayamaApplications
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NakayamaApplications
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.NoetherNullstellensatzChain
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.LinearChangeVariables
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.NoetherianTopological
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.LinearChangeVariables
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NoetherianTopological
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec2AffineVarieties
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.NakayamaApplications
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.NoetherNullstellensatzChain

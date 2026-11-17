@@ -2,7 +2,7 @@
 
 
 import Theorem.NumberTheory.KFull
-import Lemma.Nat.KFull
+import Theorem.Nat.KFull
 import Mathlib.Tactic.IntervalCases
 import Mathlib.Tactic.NormNum
 

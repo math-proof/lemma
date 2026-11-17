@@ -4,7 +4,7 @@ import Mathlib.InformationTheory.Coding.KraftMcMillan
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Def.InformationTheory.PrefixFree
-import Lemma.Real.PrefixFree
+import Theorem.Real.PrefixFree
 open scoped BigOperators
 
 

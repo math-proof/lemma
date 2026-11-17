@@ -10,14 +10,14 @@ LICENSE file in the root directory of this source tree.
 
 import Theorem.v1.Atlas.AlgebraNotes.code.GoalCoverage
 import Def.v1.Atlas.AlgebraNotes.code.AdjointOperators
-import Lemma.Matrix.inner.eq.inner_Adjoint
+import Theorem.Matrix.inner.eq.inner_Adjoint
 import Lemma.Matrix.A.eq.SubMulS
-import Lemma.MonoidAlgebra.Any_IsCompl
-import Lemma.Representation.FinrankHomG.eq.Nonempty_Equiv
-import Lemma.Ideal.IsMaximal.is.Any_Eq_VanishingIdeal
-import Lemma.Nat.Associated.is.Any_Eq_Mul
-import Lemma.Matrix.Card.le.Finrank
-import Lemma.Matrix.IsSeparable.is.All_SeparableMinpoly
+import Theorem.MonoidAlgebra.Any_IsCompl
+import Theorem.Representation.FinrankHomG.eq.Nonempty_Equiv
+import Theorem.Ideal.IsMaximal.is.Any_Eq_VanishingIdeal
+import Theorem.Nat.Associated.is.Any_Eq_Mul
+import Theorem.Matrix.Card.le.Finrank
+import Theorem.Matrix.IsSeparable.is.All_SeparableMinpoly
 import Def.v1.Atlas.AlgebraNotes.code.SimpleGroups.Part5
 import Def.v1.Atlas.AlgebraNotes.code.RepresentationTheory
 import Def.v1.Atlas.AlgebraNotes.code.Characters

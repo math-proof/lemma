@@ -7,15 +7,17 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.AlgebraicTopology.SingularHomology.Basic
-import Mathlib.Algebra.Homology.Homotopy
-import Mathlib.Analysis.Convex.StdSimplex
-import Mathlib.Algebra.Category.Grp.Basic
-import Mathlib.Algebra.Category.Grp.Preadditive
-import Mathlib.Algebra.Category.Grp.Colimits
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section12
+public import Mathlib.AlgebraicTopology.SingularHomology.Basic
+public import Mathlib.Algebra.Homology.Homotopy
+public import Mathlib.Analysis.Convex.StdSimplex
+public import Mathlib.Algebra.Category.Grp.Basic
+public import Mathlib.Algebra.Category.Grp.Preadditive
+public import Mathlib.Algebra.Category.Grp.Colimits
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section12
 
+public section
 
 noncomputable section
 

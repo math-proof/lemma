@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.FubiniNumber
-import Lemma.Finset.Enumerative.FubiniNumber
+import Theorem.Finset.Enumerative.FubiniNumber
 
 
 namespace MetaMathlibExt

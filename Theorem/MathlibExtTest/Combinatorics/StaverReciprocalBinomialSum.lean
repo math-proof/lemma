@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/StaverReciprocalBinomialSum.lean -/
 
 
-import Lemma.Finset.StaverReciprocalBinomialSum
+import Theorem.Finset.StaverReciprocalBinomialSum
 import Mathlib.Tactic.NormNum
 open MetaMathlibExt
 

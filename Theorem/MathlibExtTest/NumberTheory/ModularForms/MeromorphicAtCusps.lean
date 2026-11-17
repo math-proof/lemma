@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.ModularForms.MeromorphicAtCusps
-import Lemma.Nat.ModularForms.MeromorphicAtCusps
+import Theorem.Nat.ModularForms.MeromorphicAtCusps
 open scoped UpperHalfPlane MatrixGroups
 
 

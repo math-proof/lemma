@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/FoundNewRunSafety.lean -/
 
-import Def.CPythonListsort.Code.Assembly.MergeAtSafety.Part4
-import Lemma.List.Atlas.CPythonListsort.Code.Policy.FoundNewRunPreservation
-import Def.CPythonListsort.Code.Assembly.FoundNewRunSafety
+module
+
+public import Def.CPythonListsort.Code.Assembly.MergeAtSafety.Part4
+public import Lemma.List.Atlas.CPythonListsort.Code.Policy.FoundNewRunPreservation
+public import Def.CPythonListsort.Code.Assembly.FoundNewRunSafety
 /-!
 # `found_new_run` safety
 
@@ -12,6 +14,9 @@ has no indexed-memory event of its own.  Exhausting either explicit bound is
 recorded in the trace, while the public theorem proves that source-admitted
 executions never take either exhaustion branch.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

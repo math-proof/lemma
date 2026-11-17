@@ -1,9 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PisotNumber.lean -/
 
-import Mathlib.Algebra.Polynomial.Roots
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.FieldTheory.Minpoly.Basic
+module
 
+public import Mathlib.Algebra.Polynomial.Roots
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.FieldTheory.Minpoly.Basic
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

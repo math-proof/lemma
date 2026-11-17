@@ -1,6 +1,10 @@
-import Mathlib.Data.Complex.Basic
-import Mathlib.Data.Real.Sqrt
-import Mathlib.LinearAlgebra.Matrix.Notation
+module
+
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.Data.Real.Sqrt
+public import Mathlib.LinearAlgebra.Matrix.Notation
+
+@[expose] public section
 
 noncomputable section
 

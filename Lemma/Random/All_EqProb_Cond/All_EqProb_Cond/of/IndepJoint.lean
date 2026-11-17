@@ -1,6 +1,7 @@
 import Lemma.Random.All_EqProb_Cond.of.Indep
 import Lemma.Random.Indep.Indep.of.IndepJoint
 import Lemma.Random.SinglePSpace.of.IndepFun
+import Initialize.Tactic.Attr.Basic
 open Random MeasureTheory ProbabilityTheory
 
 
@@ -36,4 +37,4 @@ private lemma main
 
 
 -- created on 2023-03-23
--- updated on 2026-11-12
+-- updated on 2026-11-17

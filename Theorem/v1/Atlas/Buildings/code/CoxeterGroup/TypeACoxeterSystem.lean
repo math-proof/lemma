@@ -7,16 +7,18 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.GroupTheory.Coxeter.Basic
-import Mathlib.GroupTheory.Coxeter.Matrix
-import Mathlib.GroupTheory.Perm.Sign
-import Mathlib.GroupTheory.Perm.Fin
-import Mathlib.GroupTheory.Perm.Support
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.TypeAInjectivityHelper
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.TypeACoxeterSystem
+public import Mathlib.GroupTheory.Coxeter.Basic
+public import Mathlib.GroupTheory.Coxeter.Matrix
+public import Mathlib.GroupTheory.Perm.Sign
+public import Mathlib.GroupTheory.Perm.Fin
+public import Mathlib.GroupTheory.Perm.Support
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.TypeAInjectivityHelper
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.TypeACoxeterSystem
 open Equiv Fin
 
+public section
 
 namespace SymGroupCoxeter
 

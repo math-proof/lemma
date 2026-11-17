@@ -1,0 +1,22 @@
+module
+
+public import Mathlib
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec10SheafModules
+
+public section
+
+open AlgebraicGeometry
+
+
+/--
+[sheafOfOXModules_eq_sheafOfModules](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/Lec10SheafModules.lean)
+-/
+public theorem sheafOfOXModules_eq_sheafOfModules
+  {X : Scheme.{u}} :
+-- imply
+  SheafOfOXModules X = SheafOfModules.{u} X.ringCatSheaf :=
+-- proof
+  rfl
+
+
+-- created on 2026-10-23

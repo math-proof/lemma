@@ -1,5 +1,9 @@
-import Mathlib
-import Instance.Analysis.Appendix_B_1
+module
+
+public import Mathlib
+public import Instance.Analysis.Appendix_B_1
+@[expose] public section
+
 /-!
 # Analysis I, Appendix B.1: The decimal representation of natural numbers
 

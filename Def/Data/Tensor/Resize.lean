@@ -1,5 +1,5 @@
 import Def.Data.Tensor.Defs.Part4
-import Lemma.List.ProdSet.eq.MulProd_Mul_Prod.of.GtLength
+import Theorem.List.ProdSet.eq.MulProd_Mul_Prod.of.GtLength
 open List Tensor
 
 

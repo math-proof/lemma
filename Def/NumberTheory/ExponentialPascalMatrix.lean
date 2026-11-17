@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ExponentialPascalMatrix.lean -/
 
-import Mathlib.Data.Matrix.Basic
-import Mathlib.RingTheory.PowerSeries.Exp
+module
+
+public import Mathlib.Data.Matrix.Basic
+public import Mathlib.RingTheory.PowerSeries.Exp
+
+@[expose] public section
+
 /-!
 # Exponential Pascal-type matrices
 

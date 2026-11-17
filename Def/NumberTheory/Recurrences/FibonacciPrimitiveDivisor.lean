@@ -5,9 +5,8 @@ Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
 import Def.NumberTheory.Recurrences.PrimitiveDivisor
-import Lemma.Nat.Recurrences.PrimitiveDivisor
+import Theorem.Nat.Recurrences.PrimitiveDivisor
 import Mathlib.Data.Nat.Fib.Basic
-import Lemma.Nat.Padics.FibonomialPrimePowerValuation
 import Mathlib.NumberTheory.ArithmeticFunction.Moebius
 import Mathlib.NumberTheory.Padics.PadicVal.Basic
 import Mathlib.NumberTheory.Real.GoldenRatio

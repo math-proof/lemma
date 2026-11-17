@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.NumberTheoryI.code.ArithmeticFunctions.Part4
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.ArithmeticFunctions
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.ArithmeticFunctions
 import Mathlib.FieldTheory.Finite.Basic
 open scoped Classical
 open ArithmeticFunction

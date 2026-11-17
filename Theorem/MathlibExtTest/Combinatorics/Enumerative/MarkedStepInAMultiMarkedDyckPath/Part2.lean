@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.MarkedStepInAMultiMarkedDyckPath.Part2
-import Lemma.Finset.Enumerative.MarkedStepInAMultiMarkedDyckPath
+import Theorem.Finset.Enumerative.MarkedStepInAMultiMarkedDyckPath
 import Def.MathlibExtTest.Combinatorics.Enumerative.MarkedStepInAMultiMarkedDyckPath
 
 

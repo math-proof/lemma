@@ -1,7 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Convex/FenchelMoreau.lean -/
+module
 
+public import Theorem.Analysis.Convex.FenchelMoreau.Part2
 
-import Theorem.Analysis.Convex.FenchelMoreau.Part2
 /-!
 # Tests for Fenchel conjugates and the Fenchel–Moreau theorem
 
@@ -9,6 +10,8 @@ Focused API checks: the stronger `fenchel_moreau` signature applies without
 a `T2Space` hypothesis, the conjugate/biconjugate unfold to their defining
 suprema, and `isClosed_epi_real` applies under its minimal hypotheses.
 -/
+
+public section
 
 
 noncomputable section

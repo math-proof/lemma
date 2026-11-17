@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.Distributions.Gaussian.Basic
-import Mathlib.MeasureTheory.Measure.Prod
-import Mathlib.RingTheory.Polynomial.Hermite.Basic
+module
 
+public import Mathlib.Probability.Distributions.Gaussian.Basic
+public import Mathlib.MeasureTheory.Measure.Prod
+public import Mathlib.RingTheory.Polynomial.Hermite.Basic
+
+@[expose] public section
 
 noncomputable section
 

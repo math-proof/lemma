@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Log/Integral.lean -/
 
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Abbrev.Analysis.SpecialFunctions.Log.Integral
+module
+
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Abbrev.Analysis.SpecialFunctions.Log.Integral
+
+@[expose] public section
+
 /-!
 # Logarithmic integral (normalized principal value)
 

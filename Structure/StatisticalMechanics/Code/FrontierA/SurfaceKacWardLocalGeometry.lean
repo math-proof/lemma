@@ -9,9 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.SurfaceKacWardFlatSpinor
-import Theorem.StatisticalMechanics.Code.FrontierA.SimpleGraphCellularRibbonEmbedding.Part3
-import Theorem.StatisticalMechanics.Code.FrontierA.SurfaceKacWardLocalGeometry
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierA.SurfaceKacWardFlatSpinor
+public import Theorem.StatisticalMechanics.Code.FrontierA.SimpleGraphCellularRibbonEmbedding.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierA.SurfaceKacWardLocalGeometry
+public section
+
 open scoped BigOperators
 open Finset SimpleGraph
 

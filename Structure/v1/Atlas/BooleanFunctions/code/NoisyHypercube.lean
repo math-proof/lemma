@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.BooleanFunctions.code.FourierExpansion
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
-import Mathlib.Algebra.Order.BigOperators.GroupWithZero.Finset
-import Def.v1.Atlas.BooleanFunctions.code.NoisyHypercube
+module
+
+public import Def.v1.Atlas.BooleanFunctions.code.FourierExpansion
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
+public import Mathlib.Algebra.Order.BigOperators.GroupWithZero.Finset
+public import Def.v1.Atlas.BooleanFunctions.code.NoisyHypercube
+public section
+
 open Finset BigOperators
 
 

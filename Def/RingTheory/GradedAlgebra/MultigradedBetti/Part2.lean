@@ -4,11 +4,16 @@
   Author: Muse Code powered by Meta Muse Spark
 -/
 
-import Structure.RingTheory.GradedAlgebra.MultigradedFreeResolution
-import Mathlib.Algebra.MvPolynomial.Eval
-import Mathlib.Algebra.Category.ModuleCat.ChangeOfRings
-import Mathlib.LinearAlgebra.Dimension.Finite
-import Structure.RingTheory.GradedAlgebra.MultigradedBetti
+module
+
+public import Structure.RingTheory.GradedAlgebra.MultigradedFreeResolution
+public import Mathlib.Algebra.MvPolynomial.Eval
+public import Mathlib.Algebra.Category.ModuleCat.ChangeOfRings
+public import Mathlib.LinearAlgebra.Dimension.Finite
+public import Structure.RingTheory.GradedAlgebra.MultigradedBetti
+
+@[expose] public section
+
 /-!
 # Multigraded Betti numbers after residue-field base change
 

@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Policy/BoundaryPowerGeometry.lean -/
 
-import Def.CPythonListsort.Code.Equivalence.PowerloopResults.Part2
-import Mathlib
+module
+
+public import Def.CPythonListsort.Code.Equivalence.PowerloopResults.Part2
+public import Mathlib
+
+@[expose] public section
+
 /-!
 # Boundary-power geometry
 

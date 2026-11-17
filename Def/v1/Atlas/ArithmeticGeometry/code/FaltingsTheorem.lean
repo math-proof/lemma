@@ -8,12 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Finite.Defs
-import Mathlib.RingTheory.MvPolynomial.Basic
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Mathlib.Data.Setoid.Basic
-import Mathlib.RingTheory.Ideal.Basic
-import Mathlib.RingTheory.KrullDimension.Basic
+module
+
+public import Mathlib.Data.Finite.Defs
+public import Mathlib.RingTheory.MvPolynomial.Basic
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Mathlib.Data.Setoid.Basic
+public import Mathlib.RingTheory.Ideal.Basic
+public import Mathlib.RingTheory.KrullDimension.Basic
+
+@[expose] public section
+
 open MvPolynomial
 
 

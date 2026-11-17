@@ -8,21 +8,25 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Instance.v1.Atlas.AlgebraicCombinatorics.code.YoungLattice.Part3
-import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.YoungLattice
-import Mathlib.Data.Multiset.Sort
-import Mathlib.Data.Finset.Card
-import Mathlib.Order.Fin.Basic
-import Mathlib.Data.Fin.Basic
-import Mathlib.Order.Interval.Finset.Fin
-import Mathlib.Data.List.Sort
-import Mathlib.Data.List.FinRange
-import Mathlib.Data.Fintype.Prod
-import Mathlib.Data.List.GetD
-import Mathlib.GroupTheory.Perm.Basic
-import Mathlib.Logic.Equiv.Fintype
-import Mathlib.Logic.Equiv.Basic
-import Def.v1.Atlas.AlgebraicCombinatorics.code.WreathOrbits
+module
+
+public import Instance.v1.Atlas.AlgebraicCombinatorics.code.YoungLattice.Part3
+public import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.YoungLattice
+public import Mathlib.Data.Multiset.Sort
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Order.Fin.Basic
+public import Mathlib.Data.Fin.Basic
+public import Mathlib.Order.Interval.Finset.Fin
+public import Mathlib.Data.List.Sort
+public import Mathlib.Data.List.FinRange
+public import Mathlib.Data.Fintype.Prod
+public import Mathlib.Data.List.GetD
+public import Mathlib.GroupTheory.Perm.Basic
+public import Mathlib.Logic.Equiv.Fintype
+public import Mathlib.Logic.Equiv.Basic
+public import Def.v1.Atlas.AlgebraicCombinatorics.code.WreathOrbits
+public section
+
 set_option autoImplicit false
 
 

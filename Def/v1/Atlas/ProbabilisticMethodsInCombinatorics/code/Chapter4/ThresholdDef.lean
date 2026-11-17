@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter4.Monotonicity
-import Lemma.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter4.Monotonicity
+import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter4.Monotonicity
 import Mathlib.Topology.Instances.Real.Lemmas
 import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Order.Filter.AtTopBot.Tendsto

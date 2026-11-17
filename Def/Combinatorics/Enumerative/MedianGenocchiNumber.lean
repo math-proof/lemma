@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/MedianGenocchiNumber.lean -/
 
-import Mathlib.NumberTheory.Bernoulli
+module
+
+public import Mathlib.NumberTheory.Bernoulli
+
+@[expose] public section
+
 open scoped BigOperators
 
 /-!

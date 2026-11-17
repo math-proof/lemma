@@ -1,9 +1,11 @@
-import Structure.ModularCurve_ShimuraSubgroup
-import Structure.ModularCurve_ShimuraCovering
+module
+
+public import Structure.ModularCurve_ShimuraSubgroup
+public import Structure.ModularCurve_ShimuraCovering
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 open IntermediateField AlgebraicCurve
 

@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.CategoryTheory.Simple
-import Mathlib.Order.Filter.Basic
+module
+
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.CategoryTheory.Simple
+public import Mathlib.Order.Filter.Basic
+
+@[expose] public section
+
 universe v u
 
 

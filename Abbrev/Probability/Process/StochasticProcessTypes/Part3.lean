@@ -1,9 +1,13 @@
-import Mathlib.Analysis.Normed.Lp.WithLp
-import Mathlib.Analysis.Normed.Lp.PiLp
-import Mathlib.Data.Matrix.Basic
-import Class.Data.Set.Add
-import Class.Data.Nat.GCD.Intfunc
-import Def.Probability.Process.StochasticProcessTypes.Part2
+module
+
+public import Mathlib.Analysis.Normed.Lp.WithLp
+public import Mathlib.Analysis.Normed.Lp.PiLp
+public import Mathlib.Data.Matrix.Basic
+public import Class.Data.Set.Add
+public import Class.Data.Nat.GCD.Intfunc
+public import Def.Probability.Process.StochasticProcessTypes.Part2
+@[expose] public section
+
 open Finset Matrix WithLp Set
 open scoped Matrix BigOperators
 

@@ -7,26 +7,28 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.AlgebraicGeometry.FunctionField
-import Mathlib.NumberTheory.RamificationInertia.Basic
-import Mathlib.CategoryTheory.Yoneda
-import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
-import Mathlib.RingTheory.Ideal.IntegralClosure
-import Mathlib.RingTheory.DiscreteValuationRing.TFAE
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.RingTheory.FiniteType
-import Mathlib.RingTheory.Ideal.Over
-import Mathlib.RingTheory.DedekindDomain.Basic
-import Mathlib.FieldTheory.Separable
-import Mathlib.Data.Set.Card
-import Mathlib.RingTheory.Discriminant
-import Mathlib.RingTheory.Spectrum.Prime.Topology
-import Mathlib.RingTheory.Nilpotent.Lemmas
-import Mathlib.RingTheory.Localization.NormTrace
+public import Mathlib.AlgebraicGeometry.FunctionField
+public import Mathlib.NumberTheory.RamificationInertia.Basic
+public import Mathlib.CategoryTheory.Yoneda
+public import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
+public import Mathlib.RingTheory.Ideal.IntegralClosure
+public import Mathlib.RingTheory.DiscreteValuationRing.TFAE
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.RingTheory.FiniteType
+public import Mathlib.RingTheory.Ideal.Over
+public import Mathlib.RingTheory.DedekindDomain.Basic
+public import Mathlib.FieldTheory.Separable
+public import Mathlib.Data.Set.Card
+public import Mathlib.RingTheory.Discriminant
+public import Mathlib.RingTheory.Spectrum.Prime.Topology
+public import Mathlib.RingTheory.Nilpotent.Lemmas
+public import Mathlib.RingTheory.Localization.NormTrace
 open CategoryTheory Opposite
 
+public section
 
 noncomputable section
 

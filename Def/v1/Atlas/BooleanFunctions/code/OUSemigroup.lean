@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.BooleanFunctions.code.GaussianSpace
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.GaussianSpace
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.GaussianSpace
 import Mathlib.Probability.Distributions.Gaussian.Fernique
 import Mathlib.MeasureTheory.Integral.Prod
 

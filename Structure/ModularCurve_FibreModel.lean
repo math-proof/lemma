@@ -1,13 +1,15 @@
-import Def.ModularCurve_JqCoeff
-import Def.ModularCurve_LaurentCoeff
-import Instance.ModularCurve_PhiGen
-import Class.AlgebraicCurve_DivisorClassGroup
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Def.ModularCurve_FibreModel
+module
+
+public import Def.ModularCurve_JqCoeff
+public import Def.ModularCurve_LaurentCoeff
+public import Instance.ModularCurve_PhiGen
+public import Class.AlgebraicCurve_DivisorClassGroup
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Def.ModularCurve_FibreModel
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace ModularCurve
 namespace CharPModel

@@ -1,5 +1,10 @@
-import Def.Data.List.Slice
-import Macro.Data.List.List
+module
+
+public import Def.Data.List.Slice
+public import Macro.Data.List.List
+
+@[expose] public section
+
 open Lean
 
 

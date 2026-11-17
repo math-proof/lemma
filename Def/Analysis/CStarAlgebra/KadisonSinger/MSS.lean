@@ -7,11 +7,11 @@ Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 import Def.Analysis.CStarAlgebra.KadisonSinger.MixedCharPoly
 import Lemma.Real.CStarAlgebra.KadisonSinger.MixedCharPoly
 import Lemma.Complex.CStarAlgebra.KadisonSinger.Paving
-import Lemma.Polynomial.RealRooted
+import Theorem.Polynomial.RealRooted
 import Lemma.Real.CStarAlgebra.KadisonSinger.Barrier
 import Lemma.Real.CStarAlgebra.KadisonSinger.RealStable
 import Lemma.Polynomial.Interlacing
-import Lemma.Matrix.Spectrum
+import Theorem.Matrix.Spectrum
 import Def.Analysis.CStarAlgebra.KadisonSinger.Paving
 import Def.Algebra.Polynomial.RealRooted.Part2
 import Def.Analysis.CStarAlgebra.KadisonSinger.Barrier

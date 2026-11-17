@@ -1,6 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/IsobaricPolynomial.lean -/
 
-import Mathlib.RingTheory.MvPolynomial.WeightedHomogeneous
+module
+
+public import Mathlib.RingTheory.MvPolynomial.WeightedHomogeneous
 /-!
 # Isobaric polynomials
 
@@ -10,7 +12,7 @@ a polynomial `P_{k,n}(t_1, …, t_k)` over `ℤ` whose monomials are indexed by
 -/
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace MetaMathlibExt
 

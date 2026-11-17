@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
+module
 
+public import Mathlib
+
+
+public section
 
 /-- An abstract local ring at a point $P$ of a curve $C/k$ with function field $K = k(C)$:
 the ring of regular functions $\mathcal{O}_P = \{f \in k(C) : f(P) \neq \infty\}$ presented

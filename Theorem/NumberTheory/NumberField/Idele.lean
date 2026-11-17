@@ -3,10 +3,12 @@
 /-
 Author: @toskua, Avocado
 -/
+module
 
-import Mathlib.NumberTheory.NumberField.AdeleRing
-import Mathlib.Topology.Algebra.Group.Units
-import Abbrev.NumberTheory.NumberField.Idele
+public import Mathlib.NumberTheory.NumberField.AdeleRing
+public import Mathlib.Topology.Algebra.Group.Units
+public import Abbrev.NumberTheory.NumberField.Idele
+
 /-!
 # Ideles of a number field
 
@@ -30,6 +32,8 @@ specializations such as `R = ℤ` and `K = ℚ`. They do not model global functi
 * arXiv:2608.23886v1, *Fourier Spectral Reciprocity and Canonical Hecke L-Functions*,
   lines 201--202
 -/
+
+public section
 
 
 noncomputable section

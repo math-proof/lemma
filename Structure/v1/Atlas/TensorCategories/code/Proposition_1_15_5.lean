@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TensorCategories.code.SemisimpleMultitensor.Part6
-import Lemma.Category.Atlas.v1.TensorCategories.code.SemisimpleMultitensor
+module
+
+public import Def.v1.Atlas.TensorCategories.code.SemisimpleMultitensor.Part6
+public import Lemma.Category.Atlas.v1.TensorCategories.code.SemisimpleMultitensor
+public section
+
 open CategoryTheory MonoidalCategory Limits
 
 universe u v

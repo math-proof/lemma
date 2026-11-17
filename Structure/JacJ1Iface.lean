@@ -1,11 +1,13 @@
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Structure.AlgebraicGeometry_NeronModelPropertyBundleCarrier
-import Structure.AlgebraicGeometry_RelativeGroupLaw
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Structure.AlgebraicGeometry_NeronModelPropertyBundleCarrier
+public import Structure.AlgebraicGeometry_RelativeGroupLaw
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 universe u
 

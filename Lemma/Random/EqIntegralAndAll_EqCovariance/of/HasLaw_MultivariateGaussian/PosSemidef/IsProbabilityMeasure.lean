@@ -3,6 +3,7 @@ import Notation.Probability.HasLaw
 import Syntax.Probability.Expectation.Elab
 import Theorem.Probability.JointRv.AsRV
 import Theorem.Probability.SymbolicProbability
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory
 open scoped ProbabilityTheory
 
@@ -47,4 +48,4 @@ private lemma main
 
 
 -- created on 2023-04-30
--- updated on 2026-11-16
+-- updated on 2026-11-17

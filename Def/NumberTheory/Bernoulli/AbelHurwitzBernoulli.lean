@@ -1,16 +1,19 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Bernoulli/AbelHurwitzBernoulli.lean -/
 
-import Mathlib.NumberTheory.BernoulliPolynomials
-import Mathlib.Data.Nat.Choose.Multinomial
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.Group.ForwardDiff
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Data.Rat.Star
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Ring
+module
 
+public import Mathlib.NumberTheory.BernoulliPolynomials
+public import Mathlib.Data.Nat.Choose.Multinomial
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.Group.ForwardDiff
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Data.Rat.Star
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 section
 

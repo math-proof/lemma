@@ -9,13 +9,15 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexLoopFullMaskFineRelation.Part7
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexResolvedUnitCrossFineRelation
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexLoopFullMaskFineRelation.Part7
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexResolvedUnitCrossFineRelation
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure FKColoredResolvedUnitCross
     {T : EvenTorus} (source : FKColoredLoopPairingPair T) where

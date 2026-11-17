@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 import Class.v1.Atlas.GeometryOfManifolds.code.TangentBundleDFS
 import Def.v1.Atlas.GeometryOfManifolds.code.TwoDimDFS.Part3
 import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.TwoDimDFS
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.AlmostComplexManifolds
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.AlmostComplexManifolds
 import Structure.v1.Atlas.GeometryOfManifolds.code.AlmostComplexManifolds.Part4
 import Theorem.v1.Atlas.GeometryOfManifolds.code.Symp2TangentSpaces
 set_option autoImplicit false

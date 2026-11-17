@@ -1,4 +1,6 @@
 import Lemma.Random.NormWkd.le.Abs_R
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
@@ -10,7 +12,7 @@ open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Mode
 @[path]
 private lemma main
   [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [ReferenceMeasure 𝒜]
-  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
+  {M : Model Θ 𝒮 𝒜} [StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {γ : ℝ}
 -- given
   (_h : γ ∈ Set.Ico 0 1)
@@ -22,4 +24,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-16
+-- updated on 2026-11-17

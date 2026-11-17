@@ -12,7 +12,7 @@ import Mathlib.Algebra.Module.LocalizedModule.Exact
 import Mathlib.RingTheory.Flat.Localization
 import Mathlib.AlgebraicGeometry.Modules.Tilde
 import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec14QCohProjective
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec14QCohProjective
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec14QCohProjective
 import Def.v1.Atlas.AlgebraicGeometryI.code.QCohLocalization
 
 

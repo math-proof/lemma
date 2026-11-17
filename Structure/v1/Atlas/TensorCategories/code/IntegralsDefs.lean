@@ -8,19 +8,23 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.HopfAlgebra.Basic
-import Mathlib.RingTheory.Coalgebra.Convolution
-import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.CategoryTheory.Preadditive.Projective.Basic
-import Mathlib.CategoryTheory.Simple
-import Mathlib.CategoryTheory.Linear.Basic
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Mathlib.Data.Matrix.Basic
-import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
-import Mathlib.RingTheory.SimpleModule.Basic
-import Instance.v1.Atlas.TensorCategories.code.DistinguishedInvertible.Part2
-import Lemma.Category.Atlas.v1.TensorCategories.code.DistinguishedInvertible
+module
+
+public import Mathlib.RingTheory.HopfAlgebra.Basic
+public import Mathlib.RingTheory.Coalgebra.Convolution
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.CategoryTheory.Preadditive.Projective.Basic
+public import Mathlib.CategoryTheory.Simple
+public import Mathlib.CategoryTheory.Linear.Basic
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.Data.Matrix.Basic
+public import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
+public import Mathlib.RingTheory.SimpleModule.Basic
+public import Instance.v1.Atlas.TensorCategories.code.DistinguishedInvertible.Part2
+public import Lemma.Category.Atlas.v1.TensorCategories.code.DistinguishedInvertible
+public section
+
 set_option maxHeartbeats 400000
 
 set_option autoImplicit false

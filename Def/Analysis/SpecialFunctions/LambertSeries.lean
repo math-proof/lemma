@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/LambertSeries.lean -/
 
-import Mathlib.Analysis.Complex.Basic
+module
 
+public import Mathlib.Analysis.Complex.Basic
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

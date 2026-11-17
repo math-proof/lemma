@@ -1,12 +1,15 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
-import Mathlib.Analysis.InnerProductSpace.Spectrum
-import Mathlib.Analysis.Matrix.Hermitian
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.RingTheory.PicardGroup
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Analysis.InnerProductSpace.Spectrum
+public import Mathlib.Analysis.Matrix.Hermitian
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.RingTheory.PicardGroup
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+
 /-!
 # Weyl perturbation inequality
 
@@ -15,6 +18,8 @@ Weyl's Hermitian eigenvalue perturbation inequality.
 Source: H. Weyl, Math. Ann. 71 (1912), DOI 10.1007/BF01456804;
 Horn-Johnson Matrix Analysis (modern reference).
 -/
+
+public section
 
 
 section

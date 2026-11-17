@@ -4,10 +4,15 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.SpecialFunctions.Complex.Log
-import Mathlib.Analysis.Analytic.Binomial
-import Mathlib.Topology.UniformSpace.Uniformizable
+module
+
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.SpecialFunctions.Complex.Log
+public import Mathlib.Analysis.Analytic.Binomial
+public import Mathlib.Topology.UniformSpace.Uniformizable
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 3, Entry 1, Corollary 1
 

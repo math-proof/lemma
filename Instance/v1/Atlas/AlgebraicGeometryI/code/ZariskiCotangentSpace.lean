@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Ideal.Cotangent
-import Mathlib.LinearAlgebra.Dual.Defs
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.ZariskiCotangentSpace
+module
 
+public import Mathlib.RingTheory.Ideal.Cotangent
+public import Mathlib.LinearAlgebra.Dual.Defs
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.ZariskiCotangentSpace
+
+@[expose] public section
 
 noncomputable section
 

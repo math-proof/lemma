@@ -2,10 +2,16 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.Combinatorics.Enumerative.Partition.NPartition.Part9
-import Def.Combinatorics.Young.MonomialSymmetric.Part6
-import Def.Combinatorics.Young.LittlewoodRichardson.Part3
+
+module
+
+public import Mathlib
+public import Def.Combinatorics.Enumerative.Partition.NPartition.Part9
+public import Def.Combinatorics.Young.MonomialSymmetric.Part6
+public import Def.Combinatorics.Young.LittlewoodRichardson.Part3
+
+public section
+
 open Finset Function BigOperators Polynomial MvPolynomial
 
 /-!

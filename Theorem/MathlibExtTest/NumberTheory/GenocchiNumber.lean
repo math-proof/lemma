@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.GenocchiNumber
-import Lemma.Nat.GenocchiNumber
+import Theorem.Nat.GenocchiNumber
 import Mathlib.Tactic.NormNum
 
 

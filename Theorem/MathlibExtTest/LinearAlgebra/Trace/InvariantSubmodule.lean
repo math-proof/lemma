@@ -5,7 +5,7 @@ Author: Muse Code
 -/
 
 import Theorem.LinearAlgebra.Trace.InvariantSubmodule
-import Lemma.Matrix.Trace.InvariantSubmodule
+import Theorem.Matrix.Trace.InvariantSubmodule
 variable {K V : Type*} [Field K] [AddCommGroup V] [Module K V]
   [FiniteDimensional K V]
 

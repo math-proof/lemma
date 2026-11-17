@@ -1,5 +1,9 @@
-import Def.WeierstrassCurve_Velu
-import Def.WeierstrassCurve_VariableChangePointEquiv
+module
+
+public import Def.WeierstrassCurve_Velu
+public import Def.WeierstrassCurve_VariableChangePointEquiv
+
+@[expose] public section
 
 set_option autoImplicit false
 

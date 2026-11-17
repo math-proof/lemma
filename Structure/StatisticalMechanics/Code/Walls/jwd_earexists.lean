@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Lattice.EarExistence.Part4
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Lattice.EarExistence.Part4
+public section
+
 open SimpleGraph Function
 
 

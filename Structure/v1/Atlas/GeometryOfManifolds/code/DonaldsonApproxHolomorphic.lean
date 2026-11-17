@@ -8,18 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.Basic
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import Mathlib.Topology.MetricSpace.Basic
-import Mathlib.Geometry.Manifold.IsManifold.Basic
+module
+
+public import Mathlib.Topology.Basic
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+public import Mathlib.Topology.MetricSpace.Basic
+public import Mathlib.Geometry.Manifold.IsManifold.Basic
 set_option autoImplicit false
 
 
 namespace Donaldson
 
-noncomputable section
+public noncomputable section
 
 open Real
 

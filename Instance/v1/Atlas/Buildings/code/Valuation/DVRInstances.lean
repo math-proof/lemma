@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Class.v1.Atlas.Buildings.code.Valuation.LatticesValuations
-import Lemma.Nat.IsInO
+import Theorem.Nat.IsInO
 import Mathlib.NumberTheory.Padics.PadicIntegers
 import Mathlib.Topology.MetricSpace.Ultra.Basic
 import Mathlib.Analysis.Normed.Group.Ultra

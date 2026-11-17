@@ -8,14 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.Quotient.Basic
-import Mathlib.Algebra.Module.Submodule.Ker
-import Mathlib.LinearAlgebra.Prod
-import Def.v1.Atlas.AlgebraicGeometryI.code.CechCohomologyCurves.Part2
+module
+
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.Quotient.Basic
+public import Mathlib.Algebra.Module.Submodule.Ker
+public import Mathlib.LinearAlgebra.Prod
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CechCohomologyCurves.Part2
 
 
-noncomputable section
+public noncomputable section
 
 namespace CechCohomologyCurves
 

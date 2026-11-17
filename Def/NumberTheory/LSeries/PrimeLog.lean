@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LSeries/PrimeLog.lean -/
 
-import Mathlib.Analysis.Meromorphic.Basic
-import Mathlib.NumberTheory.Harmonic.ZetaAsymp
-import Mathlib.NumberTheory.EulerProduct.Basic
-import Mathlib.NumberTheory.LSeries.Nonvanishing
+module
+
+public import Mathlib.Analysis.Meromorphic.Basic
+public import Mathlib.NumberTheory.Harmonic.ZetaAsymp
+public import Mathlib.NumberTheory.EulerProduct.Basic
+public import Mathlib.NumberTheory.LSeries.Nonvanishing
+
+@[expose] public section
+
 open scoped LSeries.notation
 
 /-!

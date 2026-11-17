@@ -9,9 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Percolation.TreePercolation.Part6
-import Theorem.StatisticalMechanics.Code.BeffaraDC.ClusterMoments
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Percolation.TreePercolation.Part6
+public import Theorem.StatisticalMechanics.Code.BeffaraDC.ClusterMoments
+public section
+
 open scoped BigOperators
 open Set Filter Topology
 

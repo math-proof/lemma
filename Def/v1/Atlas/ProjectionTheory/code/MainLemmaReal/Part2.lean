@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Structure.v1.Atlas.ProjectionTheory.code.MainLemmaReal.Part2
+module
+
+public import Mathlib
+public import Structure.v1.Atlas.ProjectionTheory.code.MainLemmaReal.Part2
+
+@[expose] public section
+
 open MeasureTheory Metric Set
 
 

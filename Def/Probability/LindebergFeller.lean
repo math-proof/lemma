@@ -8,14 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.CentralLimitTheorem
-import Mathlib.Probability.Independence.Basic
-import Mathlib.Probability.Moments.Variance
-import Mathlib.Probability.Distributions.Gaussian.Real
-import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
-import Mathlib.MeasureTheory.Measure.LevyConvergence
-import Mathlib.Probability.Independence.CharacteristicFunction
-import Mathlib.Probability.Distributions.Gaussian.CharFun
+module
+
+public import Mathlib.Probability.CentralLimitTheorem
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.Probability.Moments.Variance
+public import Mathlib.Probability.Distributions.Gaussian.Real
+public import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
+public import Mathlib.MeasureTheory.Measure.LevyConvergence
+public import Mathlib.Probability.Independence.CharacteristicFunction
+public import Mathlib.Probability.Distributions.Gaussian.CharFun
+
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory Filter Complex Finset
 open scoped Topology BoundedContinuousFunction NNReal
 

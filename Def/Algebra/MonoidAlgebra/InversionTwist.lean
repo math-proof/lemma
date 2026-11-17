@@ -1,5 +1,10 @@
-import Mathlib.Algebra.MonoidAlgebra.MapDomain
-import Mathlib.Algebra.Module.Equiv.Defs
+module
+
+public import Mathlib.Algebra.MonoidAlgebra.MapDomain
+public import Mathlib.Algebra.Module.Equiv.Defs
+
+@[expose] public section
+
 /-!
 # Inversion twist of a group-ring module
 

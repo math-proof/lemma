@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ApostolBernoulliNumber.lean -/
 
-import Mathlib.Analysis.SpecialFunctions.Complex.Log
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Complex.Log
+
+@[expose] public section
+
 /-!
 # Apostol-Bernoulli numbers
 -/

@@ -9,8 +9,10 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Sharpness.BackboneConcreteSelectorObstruction
-import Instance.StatisticalMechanics.Code.Sharpness.BackboneAsymmetricCoordinateCertificate.Part2
+module
+
+public import Theorem.StatisticalMechanics.Code.Sharpness.BackboneConcreteSelectorObstruction
+public import Instance.StatisticalMechanics.Code.Sharpness.BackboneAsymmetricCoordinateCertificate.Part2
 open SimpleGraph Finset BigOperators
 open scoped symmDiff
 
@@ -19,7 +21,7 @@ set_option linter.unusedSectionVars false
 
 namespace StatMech.Sharpness
 
-noncomputable section
+public noncomputable section
 
 variable {V : Type*} [Fintype V] [DecidableEq V] [LinearOrder V]
 

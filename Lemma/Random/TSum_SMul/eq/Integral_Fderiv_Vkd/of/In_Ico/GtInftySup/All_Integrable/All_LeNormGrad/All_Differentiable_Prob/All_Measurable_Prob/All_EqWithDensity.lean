@@ -7,6 +7,8 @@ import Lemma.Random.GtInftySup.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Inte
 import Lemma.Random.Measurable_Vkd.of.All_Measurable_Prob
 import Lemma.Random.NormVkd.le.MulInvSub1Abs_R.of.In_Ico
 import Lemma.Real.StronglyMeasurable_Fderiv.of.All_DifferentiableAt.All_Measurable
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Set Real
 
 
@@ -82,4 +84,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-16
+-- updated on 2026-11-17

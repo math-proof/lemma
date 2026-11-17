@@ -1,10 +1,12 @@
-import Mathlib
-import Structure.CerednikDrinfeld_FormalUpperHalfPlanePoints
-import Structure.CerednikDrinfeld_DrinfeldQuadruple
+module
+
+public import Mathlib
+public import Structure.CerednikDrinfeld_FormalUpperHalfPlanePoints
+public import Structure.CerednikDrinfeld_DrinfeldQuadruple
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 open scoped TensorProduct MatrixGroups
 open LT.LatticeTree TensorProduct

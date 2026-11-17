@@ -3,7 +3,7 @@
 
 import Mathlib.Tactic.NormNum
 import Def.LinearAlgebra.Matrix.LowerToeplitz
-import Lemma.Matrix.LowerToeplitz
+import Theorem.Matrix.LowerToeplitz
 import Def.MathlibExtTest.LinearAlgebra.Matrix.LowerToeplitz
 
 

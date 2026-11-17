@@ -1,10 +1,12 @@
-import Structure.CerednikDrinfeld_QMModuliProps
-import Abbrev.CerednikDrinfeld_HeckeTower
-import Structure.AlgebraicCurve_CurveModel
+module
+
+public import Structure.CerednikDrinfeld_QMModuliProps
+public import Abbrev.CerednikDrinfeld_HeckeTower
+public import Structure.AlgebraicCurve_CurveModel
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open CategoryTheory AlgebraicGeometry NeronModelInfra GoodReductionJacobian IsDedekindDomain AlgebraicCurve
 open scoped Quaternion TensorProduct NumberField

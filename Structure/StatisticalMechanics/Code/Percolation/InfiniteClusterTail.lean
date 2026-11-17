@@ -9,10 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib.Combinatorics.SimpleGraph.Ends.Properties
-import Theorem.StatisticalMechanics.Code.Percolation.AvoidingAttachment.Part3
-import Theorem.StatisticalMechanics.Code.Lattice.JordanContour.Part3
-import Theorem.StatisticalMechanics.Code.Percolation.InfiniteClusterTail.Part2
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Ends.Properties
+public import Theorem.StatisticalMechanics.Code.Percolation.AvoidingAttachment.Part3
+public import Theorem.StatisticalMechanics.Code.Lattice.JordanContour.Part3
+public import Theorem.StatisticalMechanics.Code.Percolation.InfiniteClusterTail.Part2
+public section
+
 open Set
 open StatMech.Lattice StatMech.ConfigSpace
 

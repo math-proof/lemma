@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/FittingLemmaLocalEnd.lean -/
 
 /-
@@ -8,17 +10,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Artinian.Module
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Mathlib.RingTheory.Nilpotent.Basic
-import Mathlib.CategoryTheory.Preadditive.Basic
-import Mathlib.CategoryTheory.Linear.Basic
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.CategoryTheory.Preadditive.Projective.Basic
-import Mathlib.CategoryTheory.Simple
-import Mathlib.CategoryTheory.Preadditive.Schur
-import Mathlib.CategoryTheory.Endomorphism
-import Def.v1.Atlas.TensorCategories.code.FittingLemmaLocalEnd
+public import Mathlib.RingTheory.Artinian.Module
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.RingTheory.Nilpotent.Basic
+public import Mathlib.CategoryTheory.Preadditive.Basic
+public import Mathlib.CategoryTheory.Linear.Basic
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.CategoryTheory.Preadditive.Projective.Basic
+public import Mathlib.CategoryTheory.Simple
+public import Mathlib.CategoryTheory.Preadditive.Schur
+public import Mathlib.CategoryTheory.Endomorphism
+public import Def.v1.Atlas.TensorCategories.code.FittingLemmaLocalEnd
+public section
+
 set_option maxHeartbeats 800000
 
 set_option autoImplicit false

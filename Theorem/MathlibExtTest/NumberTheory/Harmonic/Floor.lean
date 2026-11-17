@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Harmonic/Floor.lean -/
 
 
-import Lemma.Real.Harmonic.Floor
+import Theorem.Real.Harmonic.Floor
 open Asymptotics Filter Real Topology
 
 

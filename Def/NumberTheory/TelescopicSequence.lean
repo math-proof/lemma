@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/TelescopicSequence.lean -/
 
-import Mathlib.Data.Nat.GCD.Basic
-import Mathlib.Algebra.Group.Submonoid.Basic
+module
 
+public import Mathlib.Data.Nat.GCD.Basic
+public import Mathlib.Algebra.Group.Submonoid.Basic
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

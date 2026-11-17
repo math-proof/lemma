@@ -1,6 +1,10 @@
-import Mathlib
-import Structure.GroupCohomology_SelmerLe
-import Def.GroupCohomology_SelmerAdm
+module
+
+public import Mathlib
+public import Structure.GroupCohomology_SelmerLe
+public import Def.GroupCohomology_SelmerAdm
+
+public section
 
 set_option autoImplicit false
 

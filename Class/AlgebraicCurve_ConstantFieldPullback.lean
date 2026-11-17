@@ -1,4 +1,8 @@
-import Class.AlgebraicCurve_DivisorClassGroup
+module
+
+public import Class.AlgebraicCurve_DivisorClassGroup
+
+public section
 
 set_option autoImplicit false
 

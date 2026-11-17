@@ -4,11 +4,15 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
 
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Def.AlgebraicGeometry.EllipticCurve.PointCount
-import Lemma.Nat.FrobeniusTrace.eq.SubAddCardF1CardPoint.of.AffineF
-import Mathlib.AlgebraicGeometry.EllipticCurve.VariableChange
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Def.AlgebraicGeometry.EllipticCurve.PointCount
+public import Mathlib.AlgebraicGeometry.EllipticCurve.VariableChange
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 /-!
 # Variable changes on affine Weierstrass points
 

@@ -5,7 +5,7 @@ Author: @toskua, Avocado
 -/
 
 
-import Lemma.Nat.NumberField.Completion.FiniteLiesOverRamificationIndex
+import Theorem.Nat.NumberField.Completion.FiniteLiesOverRamificationIndex
 /-!
 # Test file
 -/

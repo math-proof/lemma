@@ -1,6 +1,10 @@
-import Mathlib.RingTheory.Invariant.Basic
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.LinearAlgebra.TensorProduct.Pi
+module
+
+public import Mathlib.RingTheory.Invariant.Basic
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.Pi
+
+@[expose] public section
 
 universe u₁ u₂ u₃ u₄
 

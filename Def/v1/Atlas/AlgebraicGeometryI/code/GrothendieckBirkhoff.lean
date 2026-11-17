@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 import Mathlib.Algebra.Module.PID
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.SheafCohomology.Part2
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohomology
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec10SheavesP1
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec10SheavesP1
 import Def.v1.Atlas.AlgebraicGeometryI.code.Lec10SheavesP1.Part3
 import Instance.v1.Atlas.AlgebraicGeometryI.code.GrothendieckBirkhoff
 

@@ -2,7 +2,7 @@
 
 
 import Mathlib.RingTheory.Int.Basic
-import Lemma.Ideal.PrimeExtension
+import Theorem.Ideal.PrimeExtension
 
 
 -- Identity algebra over `ℤ`: every denominator is already cleared, with `c = ⊤`.

@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+@[expose] public section
+
 /-!
 # Analysis I, Section 8.1: Countability
 

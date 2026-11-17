@@ -8,23 +8,27 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Normed.Group.FunctionSeries
-import Mathlib.Topology.UniformSpace.LocallyUniformConvergence
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Analysis.Complex.CauchyIntegral
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Mathlib.RingTheory.LaurentSeries
-import Mathlib.Analysis.Calculus.SmoothSeries
-import Mathlib.Analysis.Complex.LocallyUniformLimit
-import Mathlib.Analysis.Complex.Liouville
-import Mathlib.Analysis.Meromorphic.Basic
-import Mathlib.Analysis.Complex.HasPrimitives
-import Mathlib.Analysis.Analytic.IsolatedZeros
-import Mathlib.Analysis.Analytic.Uniqueness
-import Mathlib.Analysis.Complex.OpenMapping
-import Def.v1.Atlas.NumberTheoryI.code.ComplexAnalysis
+module
+
+public import Mathlib.Analysis.Normed.Group.FunctionSeries
+public import Mathlib.Topology.UniformSpace.LocallyUniformConvergence
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Analysis.Complex.CauchyIntegral
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Mathlib.RingTheory.LaurentSeries
+public import Mathlib.Analysis.Calculus.SmoothSeries
+public import Mathlib.Analysis.Complex.LocallyUniformLimit
+public import Mathlib.Analysis.Complex.Liouville
+public import Mathlib.Analysis.Meromorphic.Basic
+public import Mathlib.Analysis.Complex.HasPrimitives
+public import Mathlib.Analysis.Analytic.IsolatedZeros
+public import Mathlib.Analysis.Analytic.Uniqueness
+public import Mathlib.Analysis.Complex.OpenMapping
+public import Def.v1.Atlas.NumberTheoryI.code.ComplexAnalysis
+public section
+
 open Complex Set Filter Finset MeasureTheory Topology Metric
 
 

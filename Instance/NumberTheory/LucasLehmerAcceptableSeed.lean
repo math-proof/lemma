@@ -4,9 +4,11 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
-import Mathlib.NumberTheory.LucasLehmer
-import Def.NumberTheory.LucasLehmerAcceptableSeed
+module
+
+public import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
+public import Mathlib.NumberTheory.LucasLehmer
+public import Def.NumberTheory.LucasLehmerAcceptableSeed
 /-!
 # The Lucas-Lehmer test with a general seed
 
@@ -14,6 +16,7 @@ This file proves that the usual Lucas-Lehmer recurrence detects Mersenne primes 
 initial seed satisfies the two classical Jacobi-symbol conditions.
 -/
 
+@[expose] public section
 
 namespace MetaMathlibExt
 

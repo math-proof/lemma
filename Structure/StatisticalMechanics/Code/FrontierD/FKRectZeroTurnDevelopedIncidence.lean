@@ -9,17 +9,19 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnDevelopedExtremeClosed
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectConnectedInsertionCharge.Part2
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryPotentialContradiction
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectPrimalBoundaryFiberWinding.Part5
-import Def.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnDevelopedIncidence.Part3
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnDevelopedExtremeClosed
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectConnectedInsertionCharge.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryPotentialContradiction
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectPrimalBoundaryFiberWinding.Part5
+public import Def.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnDevelopedIncidence.Part3
 open Finset SimpleGraph
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure FKRectPrimalRankOneRegularNeighborhood
     (R : FKRectTorus) (omega : R.Configuration) : Prop where

@@ -1,7 +1,9 @@
-import Mathlib.Analysis.SpecialFunctions.Gamma.Deligne
-import Inductive.LanglandsTunnell_RealArchParam
+module
 
-noncomputable section
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Deligne
+public import Inductive.LanglandsTunnell_RealArchParam
+
+public noncomputable section
 
 namespace LanglandsTunnell
 

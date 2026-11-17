@@ -2,28 +2,31 @@
 
 /- Authors: Adam Kiezun, Muse Spark 1.3 -/
 
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.Normed.Group.BallSphere
-import Mathlib.Geometry.Manifold.PartitionOfUnity
-import Mathlib.Geometry.Manifold.ContMDiff.NormedSpace
-import Mathlib.Analysis.InnerProductSpace.Calculus
-import Mathlib.Analysis.Calculus.MeanValue
-import Mathlib.Analysis.Calculus.ContDiff.Basic
-import Mathlib.MeasureTheory.Function.Jacobian
-import Mathlib.MeasureTheory.Measure.Haar.OfBasis
-import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
-import Mathlib.Topology.MetricSpace.Contracting
-import Mathlib.LinearAlgebra.Matrix.Polynomial
-import Mathlib.LinearAlgebra.Lagrange
-import Mathlib.Algebra.Polynomial.Roots
-import Mathlib.Algebra.Polynomial.RingDivision
-import Mathlib.Algebra.Polynomial.FieldDivision
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Continuity
-import Mathlib.Topology.Order.IntermediateValue
-import Mathlib.Topology.UniformSpace.HeineCantor
-import Mathlib.Analysis.Normed.Module.Ray
+module
 
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.Normed.Group.BallSphere
+public import Mathlib.Geometry.Manifold.PartitionOfUnity
+public import Mathlib.Geometry.Manifold.ContMDiff.NormedSpace
+public import Mathlib.Analysis.InnerProductSpace.Calculus
+public import Mathlib.Analysis.Calculus.MeanValue
+public import Mathlib.Analysis.Calculus.ContDiff.Basic
+public import Mathlib.MeasureTheory.Function.Jacobian
+public import Mathlib.MeasureTheory.Measure.Haar.OfBasis
+public import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
+public import Mathlib.Topology.MetricSpace.Contracting
+public import Mathlib.LinearAlgebra.Matrix.Polynomial
+public import Mathlib.LinearAlgebra.Lagrange
+public import Mathlib.Algebra.Polynomial.Roots
+public import Mathlib.Algebra.Polynomial.RingDivision
+public import Mathlib.Algebra.Polynomial.FieldDivision
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Continuity
+public import Mathlib.Topology.Order.IntermediateValue
+public import Mathlib.Topology.UniformSpace.HeineCantor
+public import Mathlib.Analysis.Normed.Module.Ray
+
+@[expose] public section
 
 namespace MathlibExt.Geometry.Manifold.HairyBallWanted
 

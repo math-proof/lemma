@@ -1,22 +1,27 @@
 /-
   Author: @toskua, Avocado
 -/
-import Mathlib.Analysis.InnerProductSpace.Adjoint
-import Mathlib.Analysis.InnerProductSpace.l2Space
-import Mathlib.Analysis.Normed.Operator.Compact.Basic
-import Mathlib.Analysis.CStarAlgebra.ContinuousLinearMap
-import Mathlib.Analysis.CStarAlgebra.Module.Constructions
-import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.Analysis.InnerProductSpace.Spectrum
-import Mathlib.LinearAlgebra.FreeModule.PID
-import Mathlib.Order.CompletePartialOrder
-import Mathlib.RingTheory.Flat.TorsionFree
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.Tactic.Linarith
-import Mathlib.Topology.Separation.CompletelyRegular
+module
+
+public import Mathlib.Analysis.InnerProductSpace.Adjoint
+public import Mathlib.Analysis.InnerProductSpace.l2Space
+public import Mathlib.Analysis.Normed.Operator.Compact.Basic
+public import Mathlib.Analysis.CStarAlgebra.ContinuousLinearMap
+public import Mathlib.Analysis.CStarAlgebra.Module.Constructions
+public import Mathlib.Analysis.Complex.Polynomial.Basic
+public import Mathlib.Analysis.InnerProductSpace.Spectrum
+public import Mathlib.LinearAlgebra.FreeModule.PID
+public import Mathlib.Order.CompletePartialOrder
+public import Mathlib.RingTheory.Flat.TorsionFree
+public import Mathlib.RingTheory.SimpleRing.Principal
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Topology.Separation.CompletelyRegular
+
 /-!
 # Spectral theorem for compact operators
 -/
+
+public section
 
 
 section

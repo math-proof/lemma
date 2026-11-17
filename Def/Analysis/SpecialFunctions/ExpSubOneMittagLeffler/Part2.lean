@@ -2,15 +2,20 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.NumberTheory.Bernoulli
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Analysis.Calculus.SmoothSeries
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Cotangent
-import Mathlib.NumberTheory.ZetaValues
-import Mathlib.Tactic
-import Theorem.Analysis.SpecialFunctions.ExpSubOneMittagLeffler
+module
+
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.NumberTheory.Bernoulli
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Analysis.Calculus.SmoothSeries
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Cotangent
+public import Mathlib.NumberTheory.ZetaValues
+public import Mathlib.Tactic
+public import Theorem.Analysis.SpecialFunctions.ExpSubOneMittagLeffler
+
+@[expose] public section
+
 /-!
 # Mittag-Leffler expansion of the Bose-Einstein kernel
 -/

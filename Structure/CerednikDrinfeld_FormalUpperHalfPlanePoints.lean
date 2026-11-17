@@ -1,10 +1,12 @@
-import Mathlib
-import Lemma.Submodule.FormalUpperHalfPlaneFunctor
-import Def.CerednikDrinfeld_OmegaTubes
+module
+
+public import Mathlib
+public import Lemma.Submodule.FormalUpperHalfPlaneFunctor
+public import Def.CerednikDrinfeld_OmegaTubes
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open scoped TensorProduct MatrixGroups
 open LT.LatticeTree TensorProduct Matrix

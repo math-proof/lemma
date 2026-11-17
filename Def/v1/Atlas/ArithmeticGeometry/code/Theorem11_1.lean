@@ -8,12 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.NumberTheory.Padics.Hensel
-import Mathlib.NumberTheory.Padics.PadicIntegers
-import Mathlib.NumberTheory.Padics.RingHoms
-import Mathlib.FieldTheory.ChevalleyWarning
-import Mathlib.Algebra.MvPolynomial.Degrees
+module
 
+public import Mathlib.NumberTheory.Padics.Hensel
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+public import Mathlib.NumberTheory.Padics.RingHoms
+public import Mathlib.FieldTheory.ChevalleyWarning
+public import Mathlib.Algebra.MvPolynomial.Degrees
+
+@[expose] public section
 
 noncomputable section
 

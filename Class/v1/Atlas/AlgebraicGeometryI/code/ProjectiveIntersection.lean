@@ -9,13 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.DimensionTheory
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.DimensionTheory
 import Mathlib.RingTheory.KrullDimension.Polynomial
 import Mathlib.RingTheory.KrullDimension.Field
 import Mathlib.Algebra.MvPolynomial.CommRing
 import Mathlib.RingTheory.MvPolynomial.Ideal
 import Mathlib.RingTheory.DiscreteValuationRing.Basic
-
 
 noncomputable section
 

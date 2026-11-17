@@ -1,11 +1,13 @@
-import Lemma.MvPolynomial.HeckeModule
-import Def.AlgebraicCurve_Differentials
-import Def.ModularCurve_QExpansionDiff
-import Lemma.WeierstrassCurve.JZeroTateModule
+module
+
+public import Lemma.MvPolynomial.HeckeModule
+public import Def.AlgebraicCurve_Differentials
+public import Def.ModularCurve_QExpansionDiff
+public import Lemma.WeierstrassCurve.JZeroTateModule
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace ModularCurve
 

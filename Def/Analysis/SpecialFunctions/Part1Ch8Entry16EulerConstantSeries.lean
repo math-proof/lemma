@@ -2,9 +2,14 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.NumberTheory.Harmonic.EulerMascheroni
-import Mathlib.NumberTheory.Harmonic.Bounds
-import Mathlib.Tactic.NormNum.Parity
+module
+
+public import Mathlib.NumberTheory.Harmonic.EulerMascheroni
+public import Mathlib.NumberTheory.Harmonic.Bounds
+public import Mathlib.Tactic.NormNum.Parity
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 8
 

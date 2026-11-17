@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Fourier/FourierLaplace.lean -/
 
 
-import Theorem.Analysis.Fourier.FourierLaplace
+module
+
+public import Theorem.Analysis.Fourier.FourierLaplace
+
+@[expose] public section
+
 open MeasureTheory
 
 

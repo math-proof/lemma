@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/Group/ProductFree.lean -/
+module
 
+public import Mathlib.Data.Set.Basic
+public import Def.Algebra.Group.ProductFree
 
-import Mathlib.Data.Set.Basic
-import Def.Algebra.Group.ProductFree
-
+public section
 
 namespace Set
 

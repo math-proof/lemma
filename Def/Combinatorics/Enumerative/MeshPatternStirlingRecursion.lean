@@ -1,11 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/MeshPatternStirlingRecursion.lean -/
 
-import Mathlib.Algebra.Polynomial.Basic
-import Mathlib.GroupTheory.Perm.Fin
-import Mathlib.Algebra.Polynomial.Coeff
-import Mathlib.Tactic.Push
-import Mathlib.Tactic.Ring
+module
 
+public import Mathlib.Algebra.Polynomial.Basic
+public import Mathlib.GroupTheory.Perm.Fin
+public import Mathlib.Algebra.Polynomial.Coeff
+public import Mathlib.Tactic.Push
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 section
 

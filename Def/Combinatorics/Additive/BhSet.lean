@@ -1,6 +1,11 @@
-import Mathlib.Algebra.Group.Defs
-import Mathlib.Data.Set.Basic
-import Mathlib.Data.List.Permutation
+module
+
+public import Mathlib.Algebra.Group.Defs
+public import Mathlib.Data.Set.Basic
+public import Mathlib.Data.List.Permutation
+
+@[expose] public section
+
 /-!
 # `B_h`-sets
 

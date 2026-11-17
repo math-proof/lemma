@@ -1,19 +1,22 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
-import Mathlib.Topology.ContinuousMap.Compact
-import Mathlib.Analysis.Normed.Operator.Compact.Basic
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.Asymptotics.SpecificAsymptotics
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Tactic.FunProp
-import Mathlib.Tactic.GCongr
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.Metrizable.ContinuousMap
+module
 
+public import Mathlib.Topology.ContinuousMap.Compact
+public import Mathlib.Analysis.Normed.Operator.Compact.Basic
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Analysis.Asymptotics.SpecificAsymptotics
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Tactic.FunProp
+public import Mathlib.Tactic.GCongr
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.Metrizable.ContinuousMap
+
+public section
 
 section
 

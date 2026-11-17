@@ -8,16 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.DifferentialAnalysis.code.SobolevEmbedding.Part5
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SobolevEmbedding
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.WeightedSobolevSchwartz
-import Def.v1.Atlas.DifferentialAnalysis.code.WeightedSobolevSchwartz
-import Instance.v1.Atlas.DifferentialAnalysis.code.CompactSobolevEmbedding
+module
+
+public import Def.v1.Atlas.DifferentialAnalysis.code.SobolevEmbedding.Part5
+public import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SobolevEmbedding
+public import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.WeightedSobolevSchwartz
+public import Def.v1.Atlas.DifferentialAnalysis.code.WeightedSobolevSchwartz
+public import Instance.v1.Atlas.DifferentialAnalysis.code.CompactSobolevEmbedding
 open MeasureTheory Filter Topology
 open scoped ZeroAtInfty
 
 
-noncomputable section
+public noncomputable section
 
 namespace SchwartzWeightedSobolev
 

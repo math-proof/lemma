@@ -7,12 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.RingTheory.UniqueFactorizationDomain.ClassGroup
-import Mathlib.RingTheory.Polynomial.UniqueFactorization
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Mathlib.Algebra.MvPolynomial.Nilpotent
+public import Mathlib.RingTheory.UniqueFactorizationDomain.ClassGroup
+public import Mathlib.RingTheory.Polynomial.UniqueFactorization
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Mathlib.Algebra.MvPolynomial.Nilpotent
 
+public section
 
 noncomputable section
 

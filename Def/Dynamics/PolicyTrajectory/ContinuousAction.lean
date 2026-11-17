@@ -1,16 +1,16 @@
-import Structure.Dynamics.MarkovDecisionProcess
-import Class.Probability.Rv
-import Mathlib.Analysis.Calculus.Gradient.Basic
-import Mathlib.Probability.Kernel.WithDensity
-import Mathlib.Probability.Kernel.IonescuTulcea.Traj
-import Instance.Algebra.Power
-import Instance.Data.Vector.Basic.Dot
-import Instance.Probability.SymbolicProbability
-import Def.Order.Miscellaneous
-import Lemma.Random.SinglePSpace.of.Eq_WithDensity.Measurable.AEMeasurable
-import Lemma.Random.SinglePSpace.of.AEMeasurable.Distributed
-import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
-import Mathlib.MeasureTheory.Integral.Bochner.SumMeasure
+module
+
+public import Structure.Dynamics.MarkovDecisionProcess
+public import Class.Dynamics.MarkovDecisionProcess
+public import Class.Probability.Rv
+public import Mathlib.Probability.Kernel.WithDensity
+public import Mathlib.Probability.Kernel.IonescuTulcea.Traj
+public import Instance.Data.Vector.Basic.Dot
+public import Instance.Probability.SymbolicProbability
+public import Syntax.Probability.Expectation.Elab
+public import Def.Order.Miscellaneous
+
+@[expose] public section
 open MeasureTheory ProbabilityTheory Finset
 open scoped ENNReal
 
@@ -216,7 +216,7 @@ end MeasurableEnv
 
 /-- Infoview: print `Model.traj M θ` (also when written `M.traj θ`) as `M θ`. -/
 @[app_unexpander Model.traj]
-def traj.unexpand : Lean.PrettyPrinter.Unexpander
+meta def traj.unexpand : Lean.PrettyPrinter.Unexpander
   | `($_ $M $θ) => `($M $θ)
   | _ => throw ()
 

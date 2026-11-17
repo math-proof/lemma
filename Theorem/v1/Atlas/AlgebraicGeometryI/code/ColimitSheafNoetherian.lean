@@ -7,11 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Topology.Sheaves.Sheaf
-import Mathlib.Topology.NoetherianSpace
-import Mathlib.CategoryTheory.Sites.Limits
-import Mathlib.CategoryTheory.Filtered.Basic
+public import Mathlib.Topology.Sheaves.Sheaf
+public import Mathlib.Topology.NoetherianSpace
+public import Mathlib.CategoryTheory.Sites.Limits
+public import Mathlib.CategoryTheory.Filtered.Basic
+
+public section
+
 universe w v u
 
 open CategoryTheory CategoryTheory.Limits TopologicalSpace

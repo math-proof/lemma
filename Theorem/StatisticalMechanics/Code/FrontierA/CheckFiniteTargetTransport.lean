@@ -7,10 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Theorem.StatisticalMechanics.Code.FrontierA.FiniteTargetTransport
+public import Theorem.StatisticalMechanics.Code.FrontierA.FiniteTargetTransport
 open Set
 open StatMech.FrontierA
+
+public section
 
 #check finiteTargetTransport_outgoing_le_one
 #check finiteTargetTransport_incoming_eq_top

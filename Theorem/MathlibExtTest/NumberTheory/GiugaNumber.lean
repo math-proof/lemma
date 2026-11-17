@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/GiugaNumber.lean -/
+module
 
+public import Def.NumberTheory.GiugaNumber
 
-import Def.NumberTheory.GiugaNumber
-
+public section
 
 namespace MetaMathlibExt
 

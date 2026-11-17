@@ -1,6 +1,10 @@
-import Mathlib
-import Instance.ModularCurve_LevelModuliPackage
-import Structure.ModularCurve_WeierstrassLevelCarrier
+module
+
+public import Mathlib
+public import Instance.ModularCurve_LevelModuliPackage
+public import Structure.ModularCurve_WeierstrassLevelCarrier
+
+public section
 
 set_option autoImplicit false
 

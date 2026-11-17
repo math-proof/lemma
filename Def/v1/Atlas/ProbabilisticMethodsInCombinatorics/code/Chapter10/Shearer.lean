@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
-import Mathlib.Analysis.Convex.SpecificFunctions.Basic
-import Mathlib.Analysis.Convex.Jensen
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Algebra.BigOperators.Field
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
+public import Mathlib.Analysis.Convex.SpecificFunctions.Basic
+public import Mathlib.Analysis.Convex.Jensen
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Algebra.BigOperators.Field
+
+@[expose] public section
+
 open Finset Real BigOperators
 
 set_option maxHeartbeats 800000

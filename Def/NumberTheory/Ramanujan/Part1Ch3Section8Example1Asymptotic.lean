@@ -4,41 +4,46 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @akiezun, Avocado, Codex
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Complex.Log
-import Mathlib.Combinatorics.Enumerative.Stirling
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Analysis.Asymptotics.Defs
-import Mathlib.Analysis.Complex.Exponential
-import Mathlib.Analysis.Complex.Trigonometric
-import Mathlib.Analysis.Real.Sqrt
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Complex
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
-import Mathlib.Data.Finset.Range
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.Order.Filter.Basic
-import Mathlib.Order.Interval.Finset.Defs
-import Mathlib.Order.Interval.Set.Defs
-import Mathlib.Topology.Basic
-import Mathlib.Topology.MetricSpace.Pseudo.Defs
-import Mathlib.Analysis.Normed.Group.InfiniteSum
-import Mathlib.Analysis.PSeries
-import Mathlib.Analysis.SpecialFunctions.Complex.Arg
-import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.Algebra.InfiniteSum.NatInt
-import Mathlib.Topology.Algebra.InfiniteSum.Order
-import Mathlib.Topology.Algebra.InfiniteSum.Ring
-import Mathlib.Topology.Algebra.InfiniteSum.Group
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Complex.Log
+public import Mathlib.Combinatorics.Enumerative.Stirling
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Algebra.BigOperators.Field
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Analysis.Asymptotics.Defs
+public import Mathlib.Analysis.Complex.Exponential
+public import Mathlib.Analysis.Complex.Trigonometric
+public import Mathlib.Analysis.Real.Sqrt
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Complex
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
+public import Mathlib.Data.Finset.Range
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.Order.Filter.Basic
+public import Mathlib.Order.Interval.Finset.Defs
+public import Mathlib.Order.Interval.Set.Defs
+public import Mathlib.Topology.Basic
+public import Mathlib.Topology.MetricSpace.Pseudo.Defs
+public import Mathlib.Analysis.Normed.Group.InfiniteSum
+public import Mathlib.Analysis.PSeries
+public import Mathlib.Analysis.SpecialFunctions.Complex.Arg
+public import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.Algebra.InfiniteSum.NatInt
+public import Mathlib.Topology.Algebra.InfiniteSum.Order
+public import Mathlib.Topology.Algebra.InfiniteSum.Ring
+public import Mathlib.Topology.Algebra.InfiniteSum.Group
+
+@[expose] public section
+
 /-!
 # Ramanujan's factorial-series asymptotic expansion
 

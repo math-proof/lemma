@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/ArtinGroup.lean -/
 
-import Mathlib.GroupTheory.PresentedGroup
-import Mathlib.GroupTheory.Coxeter.Matrix
+module
+
+public import Mathlib.GroupTheory.PresentedGroup
+public import Mathlib.GroupTheory.Coxeter.Matrix
+
+@[expose] public section
+
 /-!
 # Artin groups (Artin–Tits groups) of a Coxeter matrix
 

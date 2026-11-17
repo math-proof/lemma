@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/Polynomial/MorganVoycePolynomial.lean -/
 
-import Mathlib.Algebra.Polynomial.Basic
+module
+
+public import Mathlib.Algebra.Polynomial.Basic
+
+@[expose] public section
+
 /-!
 # Morgan-Voyce polynomials
 

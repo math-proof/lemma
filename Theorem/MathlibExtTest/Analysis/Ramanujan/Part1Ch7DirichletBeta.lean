@@ -2,7 +2,7 @@
 
 
 import Theorem.Analysis.Ramanujan.Part1Ch7DirichletBeta
-import Lemma.Complex.Part1Ch7DirichletBeta
+import Theorem.Complex.Part1Ch7DirichletBeta
 /-!
 # Shared Dirichlet beta API checks
 

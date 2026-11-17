@@ -9,14 +9,16 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPrimitiveValueBridge
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicBoundaryRadialMultiCellRegularity.Part4
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPrimitiveValueBridge
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicBoundaryRadialMultiCellRegularity.Part4
 open Filter Set Topology
 
 
 namespace StatMech.Universality
 
-noncomputable section
+public noncomputable section
 
 structure FKIsingDenseIncidenceFamily
     (N : Nat -> Nat) (hN : forall k, 0 < N k) (mesh : Nat -> Real) where

@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/SpectralNormUnitBallTest.lean -/
 
 
-import Lemma.Nat.SpectralNormUnitBall
+import Theorem.Nat.SpectralNormUnitBall
 import Mathlib.Tactic
 -- Focused examples applying both directions of each public theorem.
 -- These assume the essential base-unit-ball hypothesis `hA` as an explicit premise.

@@ -8,14 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.Process.Stopping
-import Mathlib.Probability.Independence.Basic
-import Mathlib.Probability.Independence.Integration
-import Mathlib.Probability.IdentDistrib
-import Mathlib.Probability.Moments.Variance
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
-import Mathlib.Order.Filter.CountableInter
-import Lemma.Measure.Atlas.v1.Probability.code.WaldEquation
+module
+
+public import Mathlib.Probability.Process.Stopping
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.Probability.Independence.Integration
+public import Mathlib.Probability.IdentDistrib
+public import Mathlib.Probability.Moments.Variance
+public import Mathlib.MeasureTheory.Integral.DominatedConvergence
+public import Mathlib.Order.Filter.CountableInter
+
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory Finset ENNReal Filter
 
 

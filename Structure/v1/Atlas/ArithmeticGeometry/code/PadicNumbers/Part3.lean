@@ -8,14 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Order.DirectedInverseSystem
-import Mathlib.Data.ZMod.Basic
-import Mathlib.NumberTheory.Padics.RingHoms
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.NumberTheory.Padics.PadicIntegers
-import Mathlib
-import Instance.v1.Atlas.ArithmeticGeometry.code.PadicNumbers.Part2
+module
 
+public import Mathlib.Order.DirectedInverseSystem
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.NumberTheory.Padics.RingHoms
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+public import Mathlib
+public import Instance.v1.Atlas.ArithmeticGeometry.code.PadicNumbers.Part2
+
+
+public section
 
 /-- Definition 4.18 (discrete valuation): a function $v : R \to \mathbb{Z} \cup \{\infty\}$
 satisfying $v(a) = \infty \iff a = 0$, $v(ab) = v(a) + v(b)$, and the ultrametric inequality

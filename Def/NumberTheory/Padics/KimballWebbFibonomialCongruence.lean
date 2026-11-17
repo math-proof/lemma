@@ -1,27 +1,30 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Padics/KimballWebbFibonomialCongruence.lean -/
 
-import Mathlib.Data.Nat.Fib.Basic
-import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.Data.Int.ModEq
-import Mathlib.Algebra.BigOperators.Intervals
-import Mathlib.Algebra.Order.BigOperators.GroupWithZero.Finset
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Algebra.Ring.Divisibility.Basic
-import Mathlib.Algebra.Ring.Parity
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Int.Fib.Lemmas
-import Mathlib.Data.Int.Star
-import Mathlib.Data.ZMod.Basic
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Linarith.Lemmas
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Push
-import Mathlib.Tactic.Ring
+module
 
+public import Mathlib.Data.Nat.Fib.Basic
+public import Mathlib.Data.Nat.Prime.Basic
+public import Mathlib.Data.Int.ModEq
+public import Mathlib.Algebra.BigOperators.Intervals
+public import Mathlib.Algebra.Order.BigOperators.GroupWithZero.Finset
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Algebra.Ring.Divisibility.Basic
+public import Mathlib.Algebra.Ring.Parity
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Int.Fib.Lemmas
+public import Mathlib.Data.Int.Star
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Linarith.Lemmas
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Push
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

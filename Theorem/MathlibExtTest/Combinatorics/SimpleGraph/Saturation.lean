@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.SimpleGraph.Saturation
-import Lemma.SimpleGraph.Saturation
+import Theorem.SimpleGraph.Saturation
 import Mathlib.Tactic.FinCases
 open SimpleGraph
 

@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialLoopTopology.Part4
+module
 
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialLoopTopology.Part4
+
+
+public section
 
 namespace StatMech.FrontierD
 

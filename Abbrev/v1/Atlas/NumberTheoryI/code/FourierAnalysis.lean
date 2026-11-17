@@ -8,16 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Fourier.PoissonSummation
-import Mathlib.Analysis.Distribution.SchwartzSpace.Fourier
-import Mathlib.Analysis.SpecialFunctions.Gamma.Beta
-import Mathlib.Analysis.MellinTransform
-import Mathlib.MeasureTheory.Measure.Haar.NormedSpace
+module
+
+public import Mathlib.Analysis.Fourier.PoissonSummation
+public import Mathlib.Analysis.Distribution.SchwartzSpace.Fourier
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Beta
+public import Mathlib.Analysis.MellinTransform
+public import Mathlib.MeasureTheory.Measure.Haar.NormedSpace
 open scoped FourierTransform SchwartzMap
 open MeasureTheory Complex Real
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace FourierAnalysis
 

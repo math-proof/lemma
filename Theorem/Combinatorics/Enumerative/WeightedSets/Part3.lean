@@ -2,8 +2,10 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Structure.Combinatorics.Enumerative.WeightedSets.Part3
+module
+
+public import Mathlib
+public import Structure.Combinatorics.Enumerative.WeightedSets.Part3
 open PowerSeries Finset BigOperators
 
 /-!
@@ -52,6 +54,8 @@ Note: Height-3 domino tilings are handled in `Details/DominoTilings.lean`.
 
 weighted set, generating function, combinatorial class, domino tiling
 -/
+
+public section
 
 
 noncomputable section

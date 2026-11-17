@@ -9,9 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialCellularRibbonDuality.Part2
-import Instance.StatisticalMechanics.Code.FrontierA.IsoradialKacWardLaplacian.Part3
+module
 
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialCellularRibbonDuality.Part2
+public import Instance.StatisticalMechanics.Code.FrontierA.IsoradialKacWardLaplacian.Part3
+
+
+public section
 
 namespace StatMech.FrontierA
 

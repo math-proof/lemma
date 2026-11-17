@@ -1,12 +1,14 @@
-import Mathlib
-import Instance.ModularForm_KatzLevelOne
-import Instance.ModularCurve_KatzLevelP
+module
+
+public import Mathlib
+public import Instance.ModularForm_KatzLevelOne
+public import Instance.ModularCurve_KatzLevelP
 
 set_option autoImplicit false
 
 universe u v w
 
-noncomputable section
+public noncomputable section
 
 open WeierstrassCurve Polynomial
 

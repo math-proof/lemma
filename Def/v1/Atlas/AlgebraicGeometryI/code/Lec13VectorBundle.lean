@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.Algebra.Category.ModuleCat.Sheaf.Free
-import Mathlib.AlgebraicGeometry.AffineSpace
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.Algebra.Category.ModuleCat.Sheaf.Free
+public import Mathlib.AlgebraicGeometry.AffineSpace
+
+@[expose] public section
+
 open AlgebraicGeometry CategoryTheory Limits
 
 universe u

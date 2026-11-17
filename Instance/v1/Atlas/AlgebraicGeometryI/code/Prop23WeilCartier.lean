@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.MvPowerSeries.Basic
-import Mathlib.RingTheory.MvPowerSeries.NoZeroDivisors
-import Mathlib.RingTheory.AdicCompletion.Algebra
-import Mathlib.RingTheory.UniqueFactorizationDomain.Basic
-import Mathlib.RingTheory.Noetherian.Defs
-import Mathlib.RingTheory.LocalRing.MaximalIdeal.Defs
-import Mathlib.RingTheory.RegularLocalRing.Defs
+module
+
+public import Mathlib.RingTheory.MvPowerSeries.Basic
+public import Mathlib.RingTheory.MvPowerSeries.NoZeroDivisors
+public import Mathlib.RingTheory.AdicCompletion.Algebra
+public import Mathlib.RingTheory.UniqueFactorizationDomain.Basic
+public import Mathlib.RingTheory.Noetherian.Defs
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Defs
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+
+@[expose] public section
+
 set_option autoImplicit false
 
 

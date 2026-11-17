@@ -20,7 +20,7 @@ import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
 import Mathlib.Order.Filter.Basic
 import Mathlib.Topology.Algebra.InfiniteSum.Basic
 import Def.Analysis.Ramanujan.Part1Ch9Entry8Arcsin
-import Lemma.Real.Part1Ch9Entry8Arcsin
+import Theorem.Real.Part1Ch9Entry8Arcsin
 import Mathlib.Topology.Basic
 import Mathlib.Analysis.PSeries
 import Mathlib.Analysis.SpecialFunctions.Complex.Arctan

@@ -9,9 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Mathlib.Analysis.Calculus.Deriv.Mul
-import Mathlib.Analysis.Complex.Basic
+module
+
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Mathlib.Analysis.Calculus.Deriv.Mul
+public import Mathlib.Analysis.Complex.Basic
+
+@[expose] public section
+
 open Finset
 
 

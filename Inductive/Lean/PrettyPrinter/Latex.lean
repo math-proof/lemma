@@ -1,13 +1,15 @@
-import Def.Lean.Level
-import Def.Lean.Name
-import Def.Data.List.List.Basic
-import Def.Lean.Expr.Part11
-import Def.Lean.PrettyPrinter.Latex
+module
+
+public import Def.Lean.Level
+public import Def.Lean.Name
+public import Def.Data.List.List.Basic
+public import Def.Lean.Expr.Part11
+public import Def.Lean.PrettyPrinter.Latex
 open Lean (Name)
 set_option linter.unusedVariables false
 
 
-inductive ExpectationView where
+public inductive ExpectationView where
   | map (f rv : Expr)
   | mapBody (body rv μ : Expr)
   | cond (f x y : Expr)

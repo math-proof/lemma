@@ -9,7 +9,7 @@ import Mathlib.Analysis.Normed.Lp.MeasurableSpace
 import Mathlib.MeasureTheory.Measure.Haar.OfBasis
 import Def.Geometry.Manifold.Sard
 import Lemma.Set.Manifold.Sard
-import Lemma.Measure.ImageNull
+import Theorem.Measure.ImageNull
 import Theorem.MeasureTheory.Measure.ImageNull
 import Mathlib.Analysis.Calculus.FDeriv.Basic
 import Mathlib.Analysis.Calculus.FDeriv.Comp

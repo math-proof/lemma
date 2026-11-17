@@ -1,6 +1,9 @@
-import Mathlib.Data.Finsupp.Basic
-import Abbrev.AlgebraicGeometry.CurveDivisor
+module
 
+public import Mathlib.Data.Finsupp.Basic
+public import Abbrev.AlgebraicGeometry.CurveDivisor
+
+@[expose] public section
 
 namespace CurveDivisor
 

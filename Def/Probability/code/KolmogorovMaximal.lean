@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.Independence.Basic
-import Mathlib.Probability.Independence.Integration
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.Probability.Moments.Variance
-import Mathlib.MeasureTheory.Measure.MeasureSpace
+module
+
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.Probability.Independence.Integration
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.Probability.Moments.Variance
+public import Mathlib.MeasureTheory.Measure.MeasureSpace
+
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory Finset Set
 
 

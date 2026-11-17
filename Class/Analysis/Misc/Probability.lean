@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+public section
+
 /-! Some finite probability theory -/
 
 

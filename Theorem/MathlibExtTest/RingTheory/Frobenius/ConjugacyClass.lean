@@ -2,7 +2,7 @@
 
 
 import Def.RingTheory.Frobenius.ConjugacyClass
-import Lemma.Int.Frobenius.ConjugacyClass
+import Theorem.Int.Frobenius.ConjugacyClass
 variable {R S G : Type*} [CommRing R] [CommRing S] [Algebra R S]
   [Group G] [MulSemiringAction G S] [SMulCommClass G R S]
   [Finite G] [Algebra.IsInvariant R S G]

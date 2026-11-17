@@ -7,16 +7,17 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib.Analysis.Complex.Schwarz
-import Mathlib.Topology.Sequences
-import Mathlib.Topology.MetricSpace.UniformConvergence
-import Mathlib.Topology.UniformSpace.Ascoli
-import Mathlib.Topology.MetricSpace.Equicontinuity
+public import Mathlib.Analysis.Complex.Schwarz
+public import Mathlib.Topology.Sequences
+public import Mathlib.Topology.MetricSpace.UniformConvergence
+public import Mathlib.Topology.UniformSpace.Ascoli
+public import Mathlib.Topology.MetricSpace.Equicontinuity
 open Metric Set Topology
 open scoped UniformConvergence
 
+public section
 
 namespace StatMech.FrontierA
 

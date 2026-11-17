@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_3
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_3
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_3
 import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
 import Mathlib.Analysis.Convex.Integral
 import Mathlib.Analysis.Convex.SpecificFunctions.Basic

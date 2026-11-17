@@ -1,8 +1,5 @@
-import Lemma.Hyperreal.UFn.of.All_UFn
-import Lemma.Int.Abs.eq.Max_Neg
 import Theorem.Analysis.SpecialFunctions.Exponential.Part2
 open Filter Hyperreal Int
-
 
 class Exp (α : Type u) extends AddCommGroup α, DivInvMonoid α where
   exp : α → α

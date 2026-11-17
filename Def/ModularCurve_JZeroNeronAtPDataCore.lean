@@ -1,6 +1,10 @@
-import Mathlib
-import Def.ModularCurve_JZeroNeronAtPDataSameIdeal
-import Structure.ModularCurve_JZeroNeronAtPDataCore
+module
+
+public import Mathlib
+public import Def.ModularCurve_JZeroNeronAtPDataSameIdeal
+public import Structure.ModularCurve_JZeroNeronAtPDataCore
+
+@[expose] public section
 
 set_option autoImplicit false
 

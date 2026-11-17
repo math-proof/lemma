@@ -1,10 +1,12 @@
-import Mathlib
-import Lemma.Scheme.ResolvedModelGlueComponents
-import Structure.ModularCurve_DRResolvedModelPackageLevel
-import Abbrev.ModularCurve_DRModelPackageLevel
-import Lemma.Scheme.DRModelPackageLevelAPI
-import Instance.MvPolynomial_CrossingResolutionScheme
-import Instance.MvPolynomial_CrossingResolutionFibrePoints
+module
+
+public import Mathlib
+public import Lemma.Scheme.ResolvedModelGlueComponents
+public import Structure.ModularCurve_DRResolvedModelPackageLevel
+public import Abbrev.ModularCurve_DRModelPackageLevel
+public import Lemma.Scheme.DRModelPackageLevelAPI
+public import Instance.MvPolynomial_CrossingResolutionScheme
+public import Instance.MvPolynomial_CrossingResolutionFibrePoints
 
 set_option autoImplicit false
 set_option maxHeartbeats 1600000
@@ -12,7 +14,7 @@ set_option synthInstance.maxHeartbeats 400000
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 
-noncomputable section
+public noncomputable section
 
 namespace V3Glue.LevelSiteAux
 
@@ -21,7 +23,7 @@ end V3Glue.LevelSiteAux
 
 end
 
-noncomputable section
+public noncomputable section
 
 namespace V3Glue.LevelSite
 
@@ -127,7 +129,7 @@ end V3Glue.LevelSite
 
 end
 
-noncomputable section
+public noncomputable section
 
 namespace V3AsmLevel
 

@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/BellMatrix.lean -/
 
-import Mathlib.RingTheory.PowerSeries.Basic
-import Structure.NumberTheory.BellMatrix
+module
+
+public import Mathlib.RingTheory.PowerSeries.Basic
+public import Structure.NumberTheory.BellMatrix
+
+@[expose] public section
+
 /-!
 # Bell matrices
 

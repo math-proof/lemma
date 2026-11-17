@@ -1,15 +1,18 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Analysis.Normed.Operator.Compact.Basic
-import Mathlib.LinearAlgebra.FiniteDimensional.Basic
-import Mathlib.Analysis.Normed.Operator.Compact.FiniteDimension
-import Mathlib.Analysis.Normed.Operator.Compact.FredholmAlternative
-import Mathlib.Analysis.Normed.Algebra.GelfandFormula
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.LinearAlgebra.Eigenspace.ContinuousLinearMap
+module
 
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Analysis.Normed.Operator.Compact.Basic
+public import Mathlib.LinearAlgebra.FiniteDimensional.Basic
+public import Mathlib.Analysis.Normed.Operator.Compact.FiniteDimension
+public import Mathlib.Analysis.Normed.Operator.Compact.FredholmAlternative
+public import Mathlib.Analysis.Normed.Algebra.GelfandFormula
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.LinearAlgebra.Eigenspace.ContinuousLinearMap
+
+public section
 
 namespace FunctionalAnalysis.LomonosovInvariantSubspaceWanted
 

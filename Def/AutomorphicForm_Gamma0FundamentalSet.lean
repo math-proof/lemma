@@ -1,6 +1,6 @@
 import Mathlib
 import Lemma.UpperHalfPlane.FundamentalDomainVolume
-import Lemma.UpperHalfPlane.SiegelSetCover
+import Theorem.UpperHalfPlane.SiegelSetCover
 import Instance.AutomorphicForm_Gamma0FundamentalSet
 
 set_option autoImplicit false

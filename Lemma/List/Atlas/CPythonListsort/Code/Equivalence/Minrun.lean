@@ -11,7 +11,7 @@ namespace CPythonListsort
 -/
 @[path]
 private lemma maxMinrun_msb : MAX_MINRUN.msb = false := by
-decide
+  decide
 
 end CPythonListsort
 
@@ -22,7 +22,7 @@ namespace CPythonListsort
 -/
 @[path]
 private lemma maxMinrun_toNat : MAX_MINRUN.toNat = 64 := by
-decide
+  decide
 
 end CPythonListsort
 
@@ -93,9 +93,9 @@ namespace CPythonListsort
 
 /--
 [one_shift32_toNat](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/Minrun.lean)
+has its mathematical power-of-two value.
 -/
 @[path]
-has its mathematical power-of-two value. -/
 private lemma one_shift32_toNat {exponent : Nat} (hexponent : exponent < 32) :
   (((1 : BitVec 32) <<< exponent).toNat) = 2 ^ exponent := by
   have hpow : 2 ^ exponent < 2 ^ 32 :=
@@ -126,9 +126,9 @@ namespace CPythonListsort
 
 /--
 [cIntMask_eq_fullMask](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/Minrun.lean)
+the mathematical `Py_ssize_t` mask used by the quotient/remainder specification.
 -/
 @[path]
-the mathematical `Py_ssize_t` mask used by the quotient/remainder specification. -/
 private lemma cIntMask_eq_fullMask {exponent : Nat}
   (hexponent : exponent < 32) :
   ((((1 : BitVec 32) <<< exponent) - 1).zeroExtend 64) =
@@ -161,10 +161,10 @@ lemma minrunInit_exponent_eq_spec
 -- given
   (hlistSize : listSize.Nonnegative) :
 -- imply
-  let specified := minrunExponentSpecLoop 64 listSize.toNat 0 (minrunInit listSize).mr_e.toNat = specified.1 ∧ (minrunInit listSize).mr_current = 0 ∧ (minrunInitTraced listSize).stopped = specified.2 := by
+  let specified := minrunExponentSpecLoop 64 listSize.toNat 0; (minrunInit listSize).mr_e.toNat = specified.1 ∧ (minrunInit listSize).mr_current = 0 ∧ (minrunInitTraced listSize).stopped = specified.2 := by
 -- proof
   simp only [minrunInit, minrunInitTraced]
-  rw [minrunExponentLoop_eq_spec 64 listSize 0 hlistSize]
+  rw [minrunExponentLoop_eq_spec (fuel := 64) (listSize := listSize) (exponent := 0) hlistSize]
   have hbound := minrunExponentSpecLoop_le 64 listSize.toNat 0
   have hlt : (minrunExponentSpecLoop 64 listSize.toNat 0).1 < 2 ^ 64 := by
     norm_num at hbound ⊢
@@ -187,10 +187,10 @@ lemma minrunInit_eq_spec
   (hlistSize : listSize.Nonnegative)
   (hexponent : (minrunExponentSpecLoop 64 listSize.toNat 0).1 < 32) :
 -- imply
-  let specified := minrunExponentSpecLoop 64 listSize.toNat 0 (minrunInit listSize).mr_e.toNat = specified.1 ∧ (minrunInit listSize).mr_mask = ((1 : PySSize) <<< specified.1) - 1 ∧ (minrunInit listSize).mr_current = 0 ∧ (minrunInitTraced listSize).stopped = specified.2 := by
+  let specified := minrunExponentSpecLoop 64 listSize.toNat 0; (minrunInit listSize).mr_e.toNat = specified.1 ∧ (minrunInit listSize).mr_mask = ((1 : PySSize) <<< specified.1) - 1 ∧ (minrunInit listSize).mr_current = 0 ∧ (minrunInitTraced listSize).stopped = specified.2 := by
 -- proof
   simp only [minrunInit, minrunInitTraced]
-  rw [minrunExponentLoop_eq_spec 64 listSize 0 hlistSize]
+  rw [minrunExponentLoop_eq_spec (fuel := 64) (listSize := listSize) (exponent := 0) hlistSize]
   have hbound := minrunExponentSpecLoop_le 64 listSize.toNat 0
   have hlt : (minrunExponentSpecLoop 64 listSize.toNat 0).1 < 2 ^ 64 := by
     norm_num at hbound ⊢
@@ -256,7 +256,7 @@ lemma minrunNext_eq_spec
   (hmask : state.mr_mask = ((1 : PySSize) <<< state.mr_e.toNat) - 1)
   (hnoOverflow : state.mr_current.toNat + state.listlen.toNat < 2 ^ 63) :
 -- imply
-  let specified := minrunNextSpec state.listlen.toNat state.mr_current.toNat state.mr_e.toNat (minrunNext state).result.toNat = specified.result ∧ (minrunNext state).state.mr_current.toNat = specified.residual ∧ (minrunNext state).assertionPassed = true := by
+  let specified := minrunNextSpec state.listlen.toNat state.mr_current.toNat state.mr_e.toNat; (minrunNext state).result.toNat = specified.result ∧ (minrunNext state).state.mr_current.toNat = specified.residual ∧ (minrunNext state).assertionPassed = true := by
 -- proof
   let total : PySSize := state.mr_current + state.listlen
   have htotal64 : state.mr_current.toNat + state.listlen.toNat < 2 ^ 64 := by

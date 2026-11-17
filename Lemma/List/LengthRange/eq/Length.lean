@@ -22,8 +22,10 @@ private lemma main
       simp
     | step + 1 =>
       simp
-      denote h_stop_def : stop = Slice.Add_Mul_DivSub1Sign_2 n s.stop
-      denote h_start_def : start = Slice.Add_Mul_DivSub1Sign_2 n s.start
+      let stop := Slice.Add_Mul_DivSub1Sign_2 n s.stop
+      have h_stop_def : stop = Slice.Add_Mul_DivSub1Sign_2 n s.stop := rfl
+      let start := Slice.Add_Mul_DivSub1Sign_2 n s.start
+      have h_start_def : start = Slice.Add_Mul_DivSub1Sign_2 n s.start := rfl
       split_ifs with h_Ge
       ·
         simp
@@ -53,8 +55,10 @@ private lemma main
         apply LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt h_start h_stop h_step
   | .negSucc step =>
     simp
-    denote h_start_def : start = Slice.Add_Mul_DivSub1Sign_2 n s.start + 1
-    denote h_stop_def : stop = Slice.Add_Mul_DivSub1Sign_2 n s.stop + 1
+    let start := Slice.Add_Mul_DivSub1Sign_2 n s.start + 1
+    have h_start_def : start = Slice.Add_Mul_DivSub1Sign_2 n s.start + 1 := rfl
+    let stop := Slice.Add_Mul_DivSub1Sign_2 n s.stop + 1
+    have h_stop_def : stop = Slice.Add_Mul_DivSub1Sign_2 n s.stop + 1 := rfl
     split_ifs with h_Le
     ·
       simp

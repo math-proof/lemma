@@ -1,11 +1,16 @@
-import Def.Lean.Name
-import Def.Lean.BinderInfo.Part2
-import Def.Lean.Meta.Expr
+module
+
+public meta import Def.Lean.Meta.CtorName
+public import Class.Lean.Meta.CtorName
+public import Def.Lean.Name
+public import Def.Lean.BinderInfo
+public import Def.Lean.Meta.Expr
 open Lean.Meta
 open Lean (BinderInfo PPContext FormatWithInfos Expr Core.Context getEnv getMCtx getLCtx getOptions ppExt)
 
+@[expose] public section
 
-inductive Binder where
+public inductive Binder where
   /-- explicit binder annotation for proposition, e.g. `(h : Prop)` -/
   | given
   /-- Default binder annotation, e.g. `(x : α)` -/
@@ -18,5 +23,7 @@ inductive Binder where
   | instImplicit
   /-- membership binder annotation, e.g. `x ∈ α` -/
   | contains
-  deriving Inhabited, BEq, Repr, CtorName
+  deriving Inhabited, BEq, Repr
+
+#eval mkCtorName ``Binder
 

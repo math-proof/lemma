@@ -8,16 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Def.v1.Atlas.EllipticCurves.code.PointCounting.Part2
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.PointCounting
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.OrdinarySupersingular
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.HilbertClassPolynomial
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.CMTorsor
-import Def.v1.Atlas.EllipticCurves.code.OrdinarySupersingular
-import Def.v1.Atlas.EllipticCurves.code.HilbertClassPolynomial.Part2
-import Def.v1.Atlas.EllipticCurves.code.CMTorsor.Part7
-import Class.v1.Atlas.EllipticCurves.code.RingClassField
+module
+
+public import Mathlib
+public import Def.v1.Atlas.EllipticCurves.code.PointCounting.Part2
+public import Lemma.Complex.Atlas.v1.EllipticCurves.code.PointCounting
+public import Lemma.Complex.Atlas.v1.EllipticCurves.code.OrdinarySupersingular
+public import Lemma.Complex.Atlas.v1.EllipticCurves.code.HilbertClassPolynomial
+public import Lemma.Complex.Atlas.v1.EllipticCurves.code.CMTorsor
+public import Def.v1.Atlas.EllipticCurves.code.OrdinarySupersingular
+public import Def.v1.Atlas.EllipticCurves.code.HilbertClassPolynomial.Part2
+public import Def.v1.Atlas.EllipticCurves.code.CMTorsor.Part7
+public import Class.v1.Atlas.EllipticCurves.code.RingClassField
+public section
+
 open NumberField
 
 open Elliptic_Curves

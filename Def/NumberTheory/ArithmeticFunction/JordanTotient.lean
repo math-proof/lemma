@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ArithmeticFunction/JordanTotient.lean -/
 
-import Mathlib.NumberTheory.ArithmeticFunction.Moebius
-import Mathlib.Data.Nat.Totient
+module
+
+public import Mathlib.NumberTheory.ArithmeticFunction.Moebius
+public import Mathlib.Data.Nat.Totient
+
+@[expose] public section
+
 /-!
 # Jordan totient function
 

@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/InfiniteWord/SturmianWord.lean -/
+module
 
+public import Def.Combinatorics.InfiniteWord.SturmianWord
 
-import Def.Combinatorics.InfiniteWord.SturmianWord
-
+public section
 
 namespace MetaMathlibExt
 

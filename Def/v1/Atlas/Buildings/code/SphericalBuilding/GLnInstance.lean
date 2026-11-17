@@ -8,10 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLn.Part3
-import Lemma.Nat.TypeA_CoxeterMatrixA
-import Structure.v1.Atlas.Buildings.code.SphericalBuilding.GLnInstance
+module
 
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLn.Part3
+public import Structure.v1.Atlas.Buildings.code.SphericalBuilding.GLnInstance
+
+@[expose] public section
 
 namespace GLnBuilding
 

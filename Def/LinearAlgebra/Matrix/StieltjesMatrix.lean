@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/StieltjesMatrix.lean -/
 
-import Mathlib.Data.Nat.Cast.Defs
+module
 
+public import Mathlib.Data.Nat.Cast.Defs
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

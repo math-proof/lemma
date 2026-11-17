@@ -1,9 +1,11 @@
-import Instance.DedekindDomain_Completion_BaseChange
-import Lemma.Filter.FiniteAdeleRing_TensorRestrictedProduct
-import Instance.Mathlib_Topology_Algebra_RestrictedProduct_TopologicalSpace
-import Notation.DedekindDomain_FiniteAdeleRing_BaseChange
-import Instance.DedekindDomain_FiniteAdeleRing_BaseChange
-import Class.DedekindDomain_FiniteAdeleRing_BaseChange
+module
+
+public import Instance.DedekindDomain_Completion_BaseChange
+public import Lemma.Filter.FiniteAdeleRing_TensorRestrictedProduct
+public import Instance.Mathlib_Topology_Algebra_RestrictedProduct_TopologicalSpace
+public import Notation.DedekindDomain_FiniteAdeleRing_BaseChange
+public import Instance.DedekindDomain_FiniteAdeleRing_BaseChange
+public import Class.DedekindDomain_FiniteAdeleRing_BaseChange
 
 set_option maxSynthPendingDepth 3
 set_option Elab.async false
@@ -141,7 +143,7 @@ variable [Algebra 𝔸ᶠ[A, K] 𝔸ᶠ[B, L]]
 variable [ComapFiberwiseSMul A K L B]
 
 
-noncomputable section bijection
+public noncomputable section bijection
 
 
 end bijection

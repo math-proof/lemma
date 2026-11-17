@@ -8,16 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Complex.CauchyIntegral
-import Mathlib.Analysis.Complex.Liouville
-import Mathlib.Analysis.Complex.RemovableSingularity
-import Mathlib.Analysis.Calculus.ParametricIntervalIntegral
-import Mathlib.Topology.Compactification.OnePoint.Basic
-import Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected
-import Mathlib.Topology.Connected.PathConnected
-import Mathlib.Analysis.SpecialFunctions.Complex.Log
-import Structure.v1.Atlas.ComplexVariables.code.Lecture13
+module
 
+public import Mathlib.Analysis.Complex.CauchyIntegral
+public import Mathlib.Analysis.Complex.Liouville
+public import Mathlib.Analysis.Complex.RemovableSingularity
+public import Mathlib.Analysis.Calculus.ParametricIntervalIntegral
+public import Mathlib.Topology.Compactification.OnePoint.Basic
+public import Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected
+public import Mathlib.Topology.Connected.PathConnected
+public import Mathlib.Analysis.SpecialFunctions.Complex.Log
+public import Structure.v1.Atlas.ComplexVariables.code.Lecture13
+
+@[expose] public section
 
 noncomputable section
 

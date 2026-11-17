@@ -1,6 +1,8 @@
-import Mathlib
-import Abbrev.Analysis.Appendix_B_1.Part6
-import Theorem.Analysis.Appendix_B_2
+module
+
+public import Mathlib
+public import Abbrev.Analysis.Appendix_B_1.Part6
+public import Theorem.Analysis.Appendix_B_2
 /-!
 # Analysis I, Appendix B.2: The decimal representation of real numbers
 
@@ -15,7 +17,7 @@ namespace AppendixB
 
 open NNReal NNRealDecimal
 
-inductive RealDecimal where
+public inductive RealDecimal where
   | pos : NNRealDecimal → RealDecimal
   | neg : NNRealDecimal → RealDecimal
 

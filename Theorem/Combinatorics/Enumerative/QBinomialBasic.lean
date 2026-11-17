@@ -2,8 +2,11 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.Combinatorics.Enumerative.QBinomialBasic
+module
+
+public import Mathlib
+public import Def.Combinatorics.Enumerative.QBinomialBasic
+
 /-!
 # q-Binomial Coefficients: Basic Definitions and Properties
 
@@ -89,6 +92,8 @@ this canonical definition via the theorems listed above.
 
 q-binomial, Gaussian binomial coefficient, q-integer, q-factorial, partition
 -/
+
+public section
 
 
 /-! ## q-Integers and q-Factorials -/

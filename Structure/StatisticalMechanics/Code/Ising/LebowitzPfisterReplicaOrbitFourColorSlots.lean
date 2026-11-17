@@ -9,9 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitFourColorRecovery
-import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitOrientedFourColor.Part3
-import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitFourColorSlots.Part6
+module
+
+public import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitFourColorRecovery
+public import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitOrientedFourColor.Part3
+public import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitFourColorSlots.Part6
 open Finset
 open scoped symmDiff
 
@@ -20,7 +22,7 @@ namespace StatMech.Ising
 
 open StatMech.GrahamGHS.FourColor
 
-noncomputable section
+public noncomputable section
 
 variable {V I : Type*} [Fintype V] [DecidableEq V]
   [Fintype I] [DecidableEq I]

@@ -12,7 +12,7 @@ import Mathlib.Algebra.Exact
 import Mathlib.Algebra.Homology.ShortComplex.ShortExact
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Structure.v1.Atlas.AlgebraicTopologyI.code.Section6
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section6
+import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section6
 import Instance.v1.Atlas.AlgebraicTopologyI.code.Section8
 
 

@@ -4,6 +4,8 @@ import Lemma.Measure.All_Integrable_Measure.GtInftySup_Integral.of.GtInftySup_Su
 import Lemma.Random.PSpace_Path.of.All_PSpace
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open scoped ENNReal.ToRealCoe
 open Finset (range)
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure Real IsPolicyTrajectory
@@ -72,4 +74,4 @@ private lemma main
 
 
 -- created on 2026-11-02
--- updated on 2026-11-16
+-- updated on 2026-11-17

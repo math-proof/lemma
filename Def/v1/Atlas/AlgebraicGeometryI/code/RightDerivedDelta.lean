@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.AlgebraicGeometryI.code.DerivedFunctorsDefs
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.DerivedFunctorsDefs
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DerivedFunctorsDefs
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.EffaceableUniversal
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CechDerivedInstantiate
 import Def.v1.Atlas.AlgebraicGeometryI.code.EffaceableUniversal

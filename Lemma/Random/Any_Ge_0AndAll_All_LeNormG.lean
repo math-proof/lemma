@@ -1,5 +1,6 @@
 import Lemma.Random.Any_Ge_0AndAll_All_LeNormSub_MulNormSub
 import Lemma.Random.Any_Ge_0AndAll_LeNorm.of.Any_Ge_0AndAll_All_LeNormSub_MulNormSub.IteratesOfResidual
+import Initialize.Tactic.Attr.Basic
 open Iterates Real Random
 
 
@@ -19,3 +20,4 @@ private lemma main
 
 
 -- created on 2026-09-26
+-- updated on 2026-11-17

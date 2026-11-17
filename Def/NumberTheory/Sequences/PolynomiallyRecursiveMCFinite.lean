@@ -3,7 +3,7 @@
 import Def.NumberTheory.PRecursiveSequence
 import Mathlib.Algebra.MvPolynomial.Eval
 import Abbrev.Dynamics.EventuallyPeriodicSequence
-import Lemma.Set.EventuallyPeriodicSequence
+import Theorem.Set.EventuallyPeriodicSequence
 import Mathlib.Algebra.Polynomial.Eval.Coeff
 import Mathlib.Data.ZMod.Basic
 

@@ -1,4 +1,8 @@
-import Abbrev.Analysis.MeasureTheory.Section_1_1_2.Part4
+module
+
+public import Abbrev.Analysis.MeasureTheory.Section_1_1_2.Part4
+public section
+
 open BoundedInterval
 
 /-!

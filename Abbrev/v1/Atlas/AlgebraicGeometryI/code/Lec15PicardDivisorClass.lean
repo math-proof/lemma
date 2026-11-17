@@ -12,11 +12,11 @@ import Def.v1.Atlas.AlgebraicGeometryI.code.PicardProjective.Part7
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.PicardProjective
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.DivisorsPicard
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.PrincipalDivisorDegree
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.BezoutTheorem
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BezoutTheorem
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.LinearEquivDivisors
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.PowerSeriesUFD
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.PicardGroup
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SmoothCurveDivisors
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PowerSeriesUFD
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PicardGroup
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SmoothCurveDivisors
 import Abbrev.v1.Atlas.AlgebraicGeometryI.code.DivisorsPicard.Part3
 import Def.v1.Atlas.AlgebraicGeometryI.code.PrincipalDivisorDegree.Part2
 import Def.v1.Atlas.AlgebraicGeometryI.code.BezoutTheorem

@@ -9,22 +9,24 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
-import Theorem.StatisticalMechanics.Code.Lattice.PlanarDual.Part10
-import Theorem.StatisticalMechanics.Code.Lattice.PlanarFaceGeometric.Part5
-import Theorem.StatisticalMechanics.Code.Lattice.JordanEnclosure.Part6
-import Theorem.StatisticalMechanics.Code.Lattice.EulerFaces2.Part2
-import Theorem.StatisticalMechanics.Code.Lattice.EulerGeneral
-import Theorem.StatisticalMechanics.Code.Lattice.JordanEulerInduction.Part3
-import Theorem.StatisticalMechanics.Code.Lattice.WhitneyBridge.Part3
-import Theorem.StatisticalMechanics.Code.Lattice.JordanEvenClose.Part5
-import Theorem.StatisticalMechanics.Code.Lattice.JordanEvenBiconditional.Part5
-import Theorem.StatisticalMechanics.Code.Lattice.JordanFaithfulCount.Part6
-import Theorem.StatisticalMechanics.Code.Lattice.JordanVeblenStep
-import Theorem.StatisticalMechanics.Code.Lattice.JordanVeblenPeel.Part2
-import Theorem.StatisticalMechanics.Code.Lattice.JordanIsCyclesCount.Part5
-import Theorem.StatisticalMechanics.Code.Lattice.JordanGeneralCount
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
+public import Theorem.StatisticalMechanics.Code.Lattice.PlanarDual.Part10
+public import Theorem.StatisticalMechanics.Code.Lattice.PlanarFaceGeometric.Part5
+public import Theorem.StatisticalMechanics.Code.Lattice.JordanEnclosure.Part6
+public import Theorem.StatisticalMechanics.Code.Lattice.EulerFaces2.Part2
+public import Theorem.StatisticalMechanics.Code.Lattice.EulerGeneral
+public import Theorem.StatisticalMechanics.Code.Lattice.JordanEulerInduction.Part3
+public import Theorem.StatisticalMechanics.Code.Lattice.WhitneyBridge.Part3
+public import Theorem.StatisticalMechanics.Code.Lattice.JordanEvenClose.Part5
+public import Theorem.StatisticalMechanics.Code.Lattice.JordanEvenBiconditional.Part5
+public import Theorem.StatisticalMechanics.Code.Lattice.JordanFaithfulCount.Part6
+public import Theorem.StatisticalMechanics.Code.Lattice.JordanVeblenStep
+public import Theorem.StatisticalMechanics.Code.Lattice.JordanVeblenPeel.Part2
+public import Theorem.StatisticalMechanics.Code.Lattice.JordanIsCyclesCount.Part5
+public import Theorem.StatisticalMechanics.Code.Lattice.JordanGeneralCount
 open SimpleGraph Set
 
 
@@ -32,7 +34,7 @@ namespace StatMech
 
 namespace Lattice
 
-inductive jgc_IsCactus {V : Type*} : SimpleGraph V → Prop where
+public inductive jgc_IsCactus {V : Type*} : SimpleGraph V → Prop where
   | bot : jgc_IsCactus (⊥ : SimpleGraph V)
   | leaf {K : SimpleGraph V} {x z : V} (hadj : K.Adj x z) (huniq : ∀ w, K.Adj x w → w = z)
       (hrec : jgc_IsCactus (K.deleteEdges {s(x, z)})) : jgc_IsCactus K

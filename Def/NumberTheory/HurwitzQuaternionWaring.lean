@@ -1,12 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/HurwitzQuaternionWaring.lean -/
 
-import Mathlib.Algebra.Quaternion
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Ring
+module
 
+public import Mathlib.Algebra.Quaternion
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 section
 

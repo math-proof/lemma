@@ -1,4 +1,9 @@
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+
+@[expose] public section
+
 /-!
 # Fourier series coefficient
 

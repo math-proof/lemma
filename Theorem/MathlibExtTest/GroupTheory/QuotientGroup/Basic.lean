@@ -2,7 +2,7 @@
 
 
 import Theorem.GroupTheory.QuotientGroup.Basic
-import Lemma.Nat.EqQuotientEquivRangeQuotient.of.LeKer
+import Theorem.Nat.EqQuotientEquivRangeQuotient.of.LeKer
 import Mathlib.Data.ZMod.Basic
 import Def.MathlibExtTest.GroupTheory.QuotientGroup.Basic
 /-!

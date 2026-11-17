@@ -19,7 +19,7 @@ import Mathlib.Topology.Order.Compact
 import Mathlib.Topology.Compactness.Compact
 import Mathlib.Analysis.Calculus.LocalExtr.Basic
 import Structure.v1.Atlas.GeometryOfManifolds.code.WeinsteinNeighborhood.Part7
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.WeinsteinNeighborhood
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.WeinsteinNeighborhood
 import Structure.v1.Atlas.GeometryOfManifolds.code.SymplectomorphismFixedPoints
 set_option autoImplicit false
 

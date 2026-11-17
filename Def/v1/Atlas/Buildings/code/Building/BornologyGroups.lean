@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.Buildings.code.Building.ApplicationsToGroups.Part4
-import Lemma.Nat.TopologicalGroupDef
-import Mathlib.Topology.Bornology.Basic
+module
+
+public import Structure.v1.Atlas.Buildings.code.Building.ApplicationsToGroups.Part4
+public import Mathlib.Topology.Bornology.Basic
+
+@[expose] public section
+
 set_option linter.unusedSectionVars false
 
 open Set Filter Classical

@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.StatisticalMechanics.Code.Exact3D.BoxPathWitness.Part4
-import Theorem.StatisticalMechanics.Code.Exact3D.FKPositiveSubcriticalQ2Bridge.Part121
-import Theorem.StatisticalMechanics.Code.FK.QuadrantPartition.Part9
-import Theorem.StatisticalMechanics.Code.Exact3D.RandomCurrentPredecessorComparison.Part57
+module
+
+public import Theorem.StatisticalMechanics.Code.Exact3D.BoxPathWitness.Part4
+public import Theorem.StatisticalMechanics.Code.Exact3D.FKPositiveSubcriticalQ2Bridge.Part121
+public import Theorem.StatisticalMechanics.Code.FK.QuadrantPartition.Part9
+public import Theorem.StatisticalMechanics.Code.Exact3D.RandomCurrentPredecessorComparison.Part57
+public section
+
 open scoped BigOperators symmDiff
 open MeasureTheory
 

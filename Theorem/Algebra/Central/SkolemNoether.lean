@@ -1,11 +1,13 @@
-import Mathlib.Algebra.Central.Defs
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Mathlib.Algebra.Azumaya.Defs
-import Mathlib.Algebra.Central.Basic
-import Mathlib.LinearAlgebra.Dual.Lemmas
-import Mathlib.LinearAlgebra.GeneralLinearGroup.AlgEquiv
-import Mathlib.LinearAlgebra.Matrix.FiniteDimensional
-import Mathlib.RingTheory.RegularLocalRing.Defs
+module
+
+public import Mathlib.Algebra.Central.Defs
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.Algebra.Azumaya.Defs
+public import Mathlib.Algebra.Central.Basic
+public import Mathlib.LinearAlgebra.Dual.Lemmas
+public import Mathlib.LinearAlgebra.GeneralLinearGroup.AlgEquiv
+public import Mathlib.LinearAlgebra.Matrix.FiniteDimensional
+public import Mathlib.RingTheory.RegularLocalRing.Defs
 open TensorProduct
 
 /-!
@@ -15,6 +17,8 @@ Every automorphism of a finite-dimensional central simple algebra is inner.
 
 Proves `Wanted` entry `skolem_noether`.
 -/
+
+public section
 
 
 namespace SkolemNoether

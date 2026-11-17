@@ -1,13 +1,18 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
-import Mathlib.Analysis.Convolution
-import Mathlib.Analysis.Fourier.FourierTransform
+module
+
+public import Mathlib.Analysis.Convolution
+public import Mathlib.Analysis.Fourier.FourierTransform
+
 /-! # Convolution theorem for Fourier integrals on the real line
 
 This file proves that the Fourier integral associated to a continuous additive character and a
 sigma-finite translation-invariant measure turns convolution into pointwise multiplication.
 -/
+
+public section
 
 
 namespace Measure.Eq_MulFourierSIntegral.of.Integrable.Integrable.All_MeasurePreserving_Add.Continuous

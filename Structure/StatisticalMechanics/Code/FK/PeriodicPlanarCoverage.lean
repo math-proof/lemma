@@ -9,10 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarDualPair.Part3
-import Theorem.StatisticalMechanics.Code.FK.TriHexCriticalReduction.Part5
-import Mathlib.MeasureTheory.OuterMeasure.BorelCantelli
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarCoverage.Part2
+module
+
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarDualPair.Part3
+public import Theorem.StatisticalMechanics.Code.FK.TriHexCriticalReduction.Part5
+public import Mathlib.MeasureTheory.OuterMeasure.BorelCantelli
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarCoverage.Part2
+public section
+
 open Filter MeasureTheory Set SimpleGraph Topology
 
 

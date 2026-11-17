@@ -8,11 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.LieGroups.code.JantzenFiltration.Part2
-import Lemma.Int.Level1.ne.Top
+module
+
+public import Def.v1.Atlas.LieGroups.code.JantzenFiltration.Part2
+public import Lemma.Int.Level1.ne.Top
 
 
-noncomputable section
+public noncomputable section
 
 universe u_mod u_ch
 

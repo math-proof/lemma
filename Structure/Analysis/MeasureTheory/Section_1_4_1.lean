@@ -1,5 +1,7 @@
-import Mathlib.Order.BooleanAlgebra.Defs
-import Def.Analysis.MeasureTheory.Section_1_3_5.Part3
+module
+
+public import Mathlib.Order.BooleanAlgebra.Defs
+public import Def.Analysis.MeasureTheory.Section_1_3_5.Part3
 
 
 /-!
@@ -8,6 +10,9 @@ import Def.Analysis.MeasureTheory.Section_1_3_5.Part3
 A companion to (the introduction to) Section 1.4.1 of the book "An introduction to Measure Theory".
 
 -/
+public section
+
+
 
 /-- Definition 1.4.1 -/
 structure ConcreteBooleanAlgebra (X:Type*) where

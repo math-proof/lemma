@@ -18,7 +18,7 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Data.Int.Interval
 import Mathlib.Data.Fintype.BigOperators
 import Structure.v1.Atlas.AnAlgorithmistsToolkit.code.Lattices
-import Lemma.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.Lattices
+import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.Lattices
 
 
 noncomputable section

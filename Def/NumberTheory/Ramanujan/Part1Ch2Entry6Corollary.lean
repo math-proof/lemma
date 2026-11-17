@@ -4,16 +4,21 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Defs
-import Mathlib.Data.Rat.Defs
-import Mathlib.Order.Interval.Finset.Nat
-import Mathlib.Algebra.CharP.Defs
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Analysis.Normed.Field.Lemmas
-import Mathlib.Data.Rat.Star
-import Mathlib.GroupTheory.Finiteness
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.NormNum.Parity
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Data.Rat.Defs
+public import Mathlib.Order.Interval.Finset.Nat
+public import Mathlib.Algebra.CharP.Defs
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Analysis.Normed.Field.Lemmas
+public import Mathlib.Data.Rat.Star
+public import Mathlib.GroupTheory.Finiteness
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.NormNum.Parity
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 2, Corollary to Entry 6
 

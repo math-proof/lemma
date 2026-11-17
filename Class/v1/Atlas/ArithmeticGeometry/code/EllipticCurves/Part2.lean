@@ -22,14 +22,10 @@ import Mathlib.Topology.Connected.Basic
 import Mathlib.Topology.Compactification.OnePoint.ProjectiveLine
 import Mathlib.LinearAlgebra.Lagrange
 import Instance.v1.Atlas.ArithmeticGeometry.code.CompleteVarieties
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.CompleteVarieties
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.RationalLineCriterion
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.ProjectiveComplete
 import Def.v1.Atlas.ArithmeticGeometry.code.RationalLineCriterion
 import Structure.v1.Atlas.ArithmeticGeometry.code.ProjectiveComplete
 import Def.v1.Atlas.ArithmeticGeometry.code.EllipticCurves
 universe u
-
 
 class IsAlgebraicGroup (k : outParam (Type u)) [Field k] (V : Type u) [TopologicalSpace V] [Group V] : Prop where
   toIsTopologicalGroup : IsTopologicalGroup V
@@ -55,5 +51,4 @@ class IsAlgebraicGroup (k : outParam (Type u)) [Field k] (V : Type u) [Topologic
       (∀ v : algV.carrier, cast hV (f v) = (cast hV v)⁻¹) ∧
 
       AlgebraicGeometry.CompletenessValuationCriterion.IsMorphismOfVarieties algV algV f
-
 

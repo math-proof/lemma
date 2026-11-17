@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean -/
 
-import Def.CPythonListsort.Code.Assembly.MergeMemcpyProvenance
-import Def.CPythonListsort.Code.Assembly.MergeTracePrimitives
+module
+
+public import Theorem.CPythonListsort.Code.Assembly.MergeMemcpyProvenance
+public import Def.CPythonListsort.Code.Assembly.MergeTracePrimitives
 /-!
 # Typed trace support for merge movement
 
@@ -19,6 +21,7 @@ call.  Key accesses for the complete range precede the optional synchronized-
 values phase, which is selected solely by `state.a.hasValues`.
 -/
 
+public section
 
 namespace CPythonListsort
 
@@ -29,7 +32,7 @@ open SortSlice
 namespace MergeMemcpySite
 
 /-- The exported provenance theorem covers every site in the closed union. -/
-theorem distinct (site : MergeMemcpySite) : site.backings.Distinct := by
+public theorem distinct (site : MergeMemcpySite) : site.backings.Distinct := by
   cases site with
   | lo site =>
       exact

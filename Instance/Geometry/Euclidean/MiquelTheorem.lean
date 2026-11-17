@@ -1,10 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Geometry/Euclidean/MiquelTheorem.lean -/
 
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.LinearAlgebra.AffineSpace.FiniteDimensional
-import Mathlib.Geometry.Euclidean.Angle.Sphere
-import Mathlib.Geometry.Euclidean.Sphere.SecondInter
+module
 
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.LinearAlgebra.AffineSpace.FiniteDimensional
+public import Mathlib.Geometry.Euclidean.Angle.Sphere
+public import Mathlib.Geometry.Euclidean.Sphere.SecondInter
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

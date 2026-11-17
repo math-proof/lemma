@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.RamanujanSum
-import Lemma.Nat.RamanujanSum
+import Theorem.Nat.RamanujanSum
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 open MetaMathlibExt

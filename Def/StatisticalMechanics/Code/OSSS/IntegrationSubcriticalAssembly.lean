@@ -9,7 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.OSSS.IntegrationSubcritical
+module
+
+public import Theorem.StatisticalMechanics.Code.OSSS.IntegrationSubcritical
+
+@[expose] public section
+
 open scoped BigOperators
 open Real Filter Topology Set Finset
 

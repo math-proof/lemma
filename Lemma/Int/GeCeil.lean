@@ -1,5 +1,5 @@
-import Lemma.Set.In_IocCeil
-open Set
+import Initialize.Tactic.Attr.Basic
+import Theorem.Lean.Meta.Expr
 
 
 /--
@@ -14,11 +14,10 @@ private lemma main
   [FloorRing α]
   {x : α} :
 -- imply
-  ⌈x⌉ ≥ x := by
+  ⌈x⌉ ≥ x :=
 -- proof
-  have := In_IocCeil (x := x)
-  exact this.right
+  Int.le_ceil x
 
 
 -- created on 2018-05-10
--- updated on 2026-08-22
+-- updated on 2026-11-17

@@ -1,13 +1,15 @@
-import Structure.AutomorphicForm_CarrierPins
-import Def.AutomorphicForm_ConstantTerm
-import Def.AutomorphicForm_WhittakerCoefficient
+module
+
+public import Structure.AutomorphicForm_CarrierPins
+public import Def.AutomorphicForm_ConstantTerm
+public import Def.AutomorphicForm_WhittakerCoefficient
 
 set_option autoImplicit false
 
 open IsDedekindDomain NumberField MeasureTheory
 open AutomorphicForm
 
-noncomputable section
+public noncomputable section
 
 namespace AutomorphicForm
 

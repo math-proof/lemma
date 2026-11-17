@@ -9,9 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Class.v1.Atlas.GeometryOfManifolds.code.AdvancedKahler.Part11
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.AdvancedKahler
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.HodgeTheory
 import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
 import Def.v1.Atlas.GeometryOfManifolds.code.HodgeTheory.Part12
 import Mathlib.Geometry.Manifold.MFDeriv.Basic
@@ -19,7 +16,6 @@ import Structure.v1.Atlas.GeometryOfManifolds.code.LefschetzPencils.Part3
 set_option autoImplicit false
 
 open DifferentialFormSpace
-
 
 /-- **Gompf's theorem (1998).**
 
@@ -39,9 +35,7 @@ class IsBlowup
 
       (∀ j, inst_Mhat.d (exceptionalClass j) = 0) ∧
 
-
       (∀ j, ¬ ∃ (β : Ω_Mhat 1), inst_Mhat.d β = exceptionalClass j) ∧
-
 
       (∀ _j : Fin numBlowups,
         HasLocalQuadraticModel (inst_M := inst_Mhat) (inst_B2 := inst_M) blowdown)
@@ -65,5 +59,4 @@ class AdmitsLefschetzFibration
         Function.Injective (fun (X : VF_B) => inst_B.ι X ωB) ∧
 
         ¬ (∃ (β : Ω_B 1), inst_B.d β = ωB)
-
 

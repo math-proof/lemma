@@ -8,11 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.StatisticalMechanics.Code.Exact3D.Certificate.Part6
-import Theorem.StatisticalMechanics.Code.Exact3D.FixedPointSkeleton.Part23
-import Theorem.StatisticalMechanics.Code.Exact3D.FiniteDimensionalRG.Part15
-import Theorem.StatisticalMechanics.Code.Exact3D.FiniteSupportCertificateConsequences
-import Theorem.StatisticalMechanics.Code.Exact3D.TailSummabilitySkeleton.Part5
+module
+
+public import Theorem.StatisticalMechanics.Code.Exact3D.Certificate.Part6
+public import Theorem.StatisticalMechanics.Code.Exact3D.FixedPointSkeleton.Part23
+public import Theorem.StatisticalMechanics.Code.Exact3D.FiniteDimensionalRG.Part15
+public import Theorem.StatisticalMechanics.Code.Exact3D.FiniteSupportCertificateConsequences
+public import Theorem.StatisticalMechanics.Code.Exact3D.TailSummabilitySkeleton.Part5
+public section
+
 open scoped BigOperators
 
 

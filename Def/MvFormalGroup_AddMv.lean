@@ -1,5 +1,9 @@
-import Mathlib.RingTheory.MvPowerSeries.Substitution
-import Structure.MvFormalGroup_BasicV2
+module
+
+public import Mathlib.RingTheory.MvPowerSeries.Substitution
+public import Structure.MvFormalGroup_BasicV2
+
+@[expose] public section
 
 set_option autoImplicit false
 

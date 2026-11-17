@@ -3,7 +3,7 @@
 
 import Mathlib.Tactic
 import Def.LinearAlgebra.Matrix.NuLambdaPascalMatrix
-import Lemma.Matrix.NuLambdaPascalMatrix
+import Theorem.Matrix.NuLambdaPascalMatrix
 import Def.MathlibExtTest.LinearAlgebra.Matrix.NuLambdaPascalMatrix
 
 

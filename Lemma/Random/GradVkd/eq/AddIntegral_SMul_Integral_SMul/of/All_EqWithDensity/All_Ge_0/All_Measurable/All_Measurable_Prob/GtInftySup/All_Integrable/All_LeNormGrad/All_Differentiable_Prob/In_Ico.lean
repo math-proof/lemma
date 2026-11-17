@@ -1,7 +1,8 @@
-import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Mathlib.Analysis.InnerProductSpace.Dual
 import Mathlib.MeasureTheory.Integral.Prod
 import Lemma.Random.Fderiv.eq.AddIntegral_SMulSMul.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory PolicyGradient Random Real
 
 
@@ -11,7 +12,7 @@ Policy-gradient recursion with a continuous state space and a continuous action 
 the gradient of the Bellman equations of extract_QVA; both the action sum and the next-state sum of the corresponding discrete-state, discrete-action recursion
 become integrals against the reference measures of `𝒜` and `𝒮` (e.g. Lebesgue measures on `ℝ^m`, `ℝ^b`).
 The policy `π_θ(u | x)` is a probability density w.r.t. the reference measure of `𝒜` (`Policy`); `V = V0` is
-the discounted `Wkd` series, defined on all states (see `Theorem.Dynamics.PolicyTrajectory.ContinuousAction`);
+the discounted `Wkd` series, defined on all states (see `Def.Dynamics.PolicyTrajectory.ContinuousAction`);
 the action-value in the first integral is the closed form `rkd + γ * ∫ V0 ∂T`, so no reachability hypothesis is needed;
 `ℙ(s[t+1] = y | s[t] = x) = P1kd θ p x y = ∫ u, π_θ(u | x) * p x u y du`.
 h₁: θ ↦ π_θ(u | x) is differentiable; h₂, h₃, h₄: its gradient is dominated by `g x u`, where `g x` is integrable over
@@ -59,7 +60,11 @@ private lemma main
       (fun θ' => Measurable_Vkd.of.All_Measurable_Prob (M := M) h₅ θ' γ)
       (fun y => (HasFDerivAt.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob (M := M) h₁ h₂ hBdd hIntg h₀ h₅ y θ).differentiableAt)
   have hπ : Integrable (M.π[θ] sₜ) ReferenceMeasure.measure :=
-    Integrable.of_integral_ne_zero (by simp [hStoch.integral_eq_one θ sₜ])
+    Integrable.of_integral_ne_zero (by
+      have h1 : ∫ a, M.π[θ] sₜ a ∂ν.measure = 1 :=
+        hStoch.integral_eq_one θ sₜ
+      rw [h1]
+      apply one_ne_zero)
   have hπm : Measurable (M.π[θ] sₜ) := (h₅ θ).comp measurable_prodMk_left
   have hp : ∀ u, Measurable (p sₜ u) := fun u => (h₆ sₜ).comp measurable_prodMk_left
   have hd : ∀ u, ∫ y, fderiv ℝ (fun θ => M.V0 θ γ y) θ ∂(M.trans (sₜ, u)) =
@@ -81,8 +86,9 @@ private lemma main
         (Filter.Eventually.of_forall fun y => ENNReal.ofReal_lt_top)]
       congr 1
       funext y
-      rw [ENNReal.toReal_ofReal (h₇ sₜ aₜ y), norm_smul, norm_smul, Real.norm_of_nonneg (hStoch.nonneg θ sₜ aₜ),
-        Real.norm_of_nonneg (h₇ sₜ aₜ y), smul_eq_mul]
+      have hπnn : 0 ≤ M.π[θ] sₜ aₜ := hStoch.nonneg θ sₜ aₜ
+      rw [ENNReal.toReal_ofReal (h₇ sₜ aₜ y), norm_smul, norm_smul,
+        Real.norm_of_nonneg hπnn, Real.norm_of_nonneg (h₇ sₜ aₜ y), smul_eq_mul]
       ring
     have h := norm_integral_le_of_norm_le_const (μ := M.trans (sₜ, aₜ)) (C := C)
       (f := fun y => ‖fderiv ℝ (fun θ => M.V0 θ γ y) θ‖) (Filter.Eventually.of_forall fun y => by
@@ -127,4 +133,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-16
+-- updated on 2026-11-17

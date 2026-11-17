@@ -9,15 +9,17 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Walls.euceuler.Part2
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Walls.euceuler.Part2
 open scoped BigOperators
 open Finset
 
 
 namespace StatMech.Euc
 
-inductive EucBuildable : Finset Cell → Prop
+public inductive EucBuildable : Finset Cell → Prop
   | singleton (c : Cell) : EucBuildable {c}
   | attach (c : Cell) (K : Finset Cell) (hK : EucBuildable K) (hc : c ∉ K)
       (harc : newEdges c K = newVerts c K + 1) : EucBuildable (insert c K)

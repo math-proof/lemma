@@ -8,7 +8,7 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.Plunnecke
+import Theorem.Real.Atlas.v1.ProjectionTheory.code.Plunnecke
 open scoped Pointwise
 
 

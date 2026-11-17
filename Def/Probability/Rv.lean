@@ -1,8 +1,12 @@
-import Mathlib.MeasureTheory.Measure.Count
-import Mathlib.MeasureTheory.Measure.WithDensity
-import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
-import Lemma.Measure.Count.eq.ProdCountS
-import Class.Probability.Rv
+module
+
+public import Mathlib.MeasureTheory.Measure.Count
+public import Mathlib.MeasureTheory.Measure.WithDensity
+public import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+public import Class.Probability.Rv
+
+@[expose] public section
+
 open MeasureTheory
 
 

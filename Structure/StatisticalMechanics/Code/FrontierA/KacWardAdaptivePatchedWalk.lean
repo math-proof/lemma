@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Def.StatisticalMechanics.Code.FrontierA.KacWardRawNonbacktrackingSimple
+module
 
+public import Def.StatisticalMechanics.Code.FrontierA.KacWardRawNonbacktrackingSimple
+
+
+public section
 
 namespace StatMech.FrontierA
 

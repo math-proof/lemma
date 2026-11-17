@@ -1,14 +1,17 @@
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Mathlib.FieldTheory.KrullTopology
-import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
-import Mathlib.RingTheory.HopfAlgebra.Basic
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.RingTheory.Finiteness.Defs
-import Mathlib.RingTheory.TensorProduct.Maps
-import Mathlib.SetTheory.Cardinal.Finite
-import Lemma.Ideal.Mathlib430
-import Structure.MazurAdmissible_GaloisModule
-import Notation.MazurAdmissible_GaloisModule
+module
+
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Mathlib.FieldTheory.KrullTopology
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+public import Mathlib.RingTheory.HopfAlgebra.Basic
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.RingTheory.Finiteness.Defs
+public import Mathlib.RingTheory.TensorProduct.Maps
+public import Mathlib.SetTheory.Cardinal.Finite
+public import Structure.MazurAdmissible_GaloisModule
+public import Notation.MazurAdmissible_GaloisModule
+
+@[expose] public section
 
 set_option autoImplicit false
 

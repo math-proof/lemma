@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/Polynomial/AdjoinRootTensorProduct.lean -/
 
-import Mathlib.RingTheory.AdjoinRoot
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.RingTheory.PolynomialAlgebra
-import Mathlib.RingTheory.TensorProduct.Quotient
+module
+
+public import Mathlib.RingTheory.AdjoinRoot
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.RingTheory.PolynomialAlgebra
+public import Mathlib.RingTheory.TensorProduct.Quotient
+
+@[expose] public section
+
 open scoped TensorProduct
 
 

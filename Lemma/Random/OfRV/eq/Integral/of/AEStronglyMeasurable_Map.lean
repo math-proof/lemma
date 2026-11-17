@@ -9,9 +9,9 @@ Change of variables: Expectation.ofRV of an observable equals the Bochner integr
 -/
 @[path]
 private lemma main
-  {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+  {ℰ : Type*} [NormedAddCommGroup ℰ] [NormedSpace ℝ ℰ] [CompleteSpace ℰ]
   [MeasurableSpace Ω] [MeasurableSpace α]
-  {π : Measure Ω} {x : Ω → α} [PSpace π x] {f : α → E}
+  {π : Measure Ω} {x : Ω → α} [PSpace π x] {f : α → ℰ}
 -- given
   (hf : AEStronglyMeasurable f (π.map x)) :
 -- imply
@@ -22,3 +22,4 @@ private lemma main
 
 
 -- created on 2026-10-17
+-- updated on 2026-11-17

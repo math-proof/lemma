@@ -8,22 +8,24 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Geometry.Manifold.ContMDiff.Defs
-import Mathlib.Geometry.Manifold.MFDeriv.Basic
-import Mathlib.Geometry.Manifold.Instances.Real
-import Mathlib.LinearAlgebra.CliffordAlgebra.Basic
-import Mathlib.LinearAlgebra.CliffordAlgebra.SpinGroup
-import Mathlib.Topology.VectorBundle.Basic
-import Mathlib.Topology.Algebra.Group.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.Complex.Circle
-import Class.v1.Atlas.GeometryOfManifolds.code.FourManifoldsSW.Part2
+module
+
+public import Mathlib.Geometry.Manifold.ContMDiff.Defs
+public import Mathlib.Geometry.Manifold.MFDeriv.Basic
+public import Mathlib.Geometry.Manifold.Instances.Real
+public import Mathlib.LinearAlgebra.CliffordAlgebra.Basic
+public import Mathlib.LinearAlgebra.CliffordAlgebra.SpinGroup
+public import Mathlib.Topology.VectorBundle.Basic
+public import Mathlib.Topology.Algebra.Group.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.Complex.Circle
+public import Class.v1.Atlas.GeometryOfManifolds.code.FourManifoldsSW.Part2
 open Manifold
 
 set_option autoImplicit false
 
 
-noncomputable section
+public noncomputable section
 
 /-- Abstract data for a $\mathrm{Spin}^c$-structure $S$ on a 4-manifold $M$: positive and
 negative spinor bundle sections $\Gamma(S^\pm)$, the determinant line $L$ with $c_1(L)$,

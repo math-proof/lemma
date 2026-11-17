@@ -9,12 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexConfigurationPhysicalPairedBranch.Part2
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexConfigurationPhysicalPairedBranch.Part2
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure SixVertexConfigurationPhysicalCommonFactor
     (smallT largeT : EvenTorus)

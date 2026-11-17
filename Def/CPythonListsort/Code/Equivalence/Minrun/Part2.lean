@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/Minrun.lean -/
 
-import Def.CPythonListsort.Code.Transcription.Minrun.Part3
-import Mathlib
-import Structure.CPythonListsort.Code.Equivalence.Minrun
+module
+
+public import Def.CPythonListsort.Code.Transcription.Minrun.Part3
+public import Mathlib
+public import Structure.CPythonListsort.Code.Equivalence.Minrun
+
+@[expose] public section
+
 /-!
 # Adaptive-minrun equivalence
 

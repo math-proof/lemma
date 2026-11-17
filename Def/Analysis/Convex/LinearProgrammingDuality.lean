@@ -1,6 +1,11 @@
-import Mathlib.Analysis.Convex.Cone.Dual
-import Mathlib.Analysis.InnerProductSpace.Dual
-import Theorem.Analysis.Convex.LinearProgrammingDuality
+module
+
+public import Mathlib.Analysis.Convex.Cone.Dual
+public import Mathlib.Analysis.InnerProductSpace.Dual
+public import Theorem.Analysis.Convex.LinearProgrammingDuality
+
+@[expose] public section
+
 /-!
 # Strong linear programming duality
 

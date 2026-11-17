@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Set.Function
-import Mathlib.Tactic
+module
 
+public import Mathlib.Data.Set.Function
+public import Mathlib.Tactic
+
+@[expose] public section
 
 /-- The graph of a function `f : X → Y` as the subset of `X × Y` of
 pairs `(x, f x)` (Lec 7, Def 18). -/

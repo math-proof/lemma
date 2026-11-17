@@ -1,0 +1,16 @@
+module
+
+public section
+
+
+public theorem Int.CeilNeg.eq.NegFloor
+  [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
+  [FloorRing α]
+  {x : α} :
+-- imply
+  ⌈-x⌉ = -⌊x⌋ := 
+-- proof
+  Int.ceil_neg
+
+
+-- created on 2025-11-07

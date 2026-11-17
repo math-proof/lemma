@@ -1,6 +1,9 @@
-import Mathlib
-import Lemma.FormalGroup.NSeries
-import Structure.FormalGroup_PointTransport
+module
+
+public import Mathlib
+public import Structure.FormalGroup_PointTransport
+
+@[expose] public section
 
 set_option autoImplicit false
 

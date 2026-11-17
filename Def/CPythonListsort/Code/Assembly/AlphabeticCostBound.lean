@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AlphabeticCostBound.lean -/
 
-import Def.CPythonListsort.Code.Assembly.MergeCost.Part3
-import Mathlib.Analysis.SpecialFunctions.BinaryEntropy
+module
+
+public import Def.CPythonListsort.Code.Assembly.MergeCost.Part3
+public import Mathlib.Analysis.SpecialFunctions.BinaryEntropy
+
+@[expose] public section
+
 /-!
 # Entropy lower bound for alphabetic merge trees
 

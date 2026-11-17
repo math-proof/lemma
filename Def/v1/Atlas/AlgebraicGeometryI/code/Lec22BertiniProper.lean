@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.Projectivization.Basic
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.FieldTheory.IsAlgClosed.Basic
+module
 
+public import Mathlib.LinearAlgebra.Projectivization.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+
+@[expose] public section
 
 section BertiniPredicates
 

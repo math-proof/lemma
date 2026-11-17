@@ -9,14 +9,18 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Lattice.JordanExteriorClosure.Part8
-import Theorem.StatisticalMechanics.Code.RSW.Defs.Part7
-import Theorem.StatisticalMechanics.Code.Universality.Defs.Part7
-import Theorem.StatisticalMechanics.Code.Universality.BXPTransfer.Part2
-import Theorem.StatisticalMechanics.Code.Universality.RSWStrip.Part3
-import Theorem.StatisticalMechanics.Code.Universality.KestenHalf
-import Theorem.StatisticalMechanics.Code.Universality.KestenAssembly
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Lattice.JordanExteriorClosure.Part8
+public import Theorem.StatisticalMechanics.Code.RSW.Defs.Part7
+public import Theorem.StatisticalMechanics.Code.Universality.Defs.Part7
+public import Theorem.StatisticalMechanics.Code.Universality.BXPTransfer.Part2
+public import Theorem.StatisticalMechanics.Code.Universality.RSWStrip.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.KestenHalf
+public import Theorem.StatisticalMechanics.Code.Universality.KestenAssembly
+public section
+
 open MeasureTheory Set Filter Topology
 open scoped ENNReal NNReal
 

@@ -8,13 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Tilde
-import Mathlib.AlgebraicGeometry.Morphisms.Affine
-import Mathlib.Algebra.Category.ModuleCat.Sheaf.Quasicoherent
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Tilde
+public import Mathlib.AlgebraicGeometry.Morphisms.Affine
+public import Mathlib.Algebra.Category.ModuleCat.Sheaf.Quasicoherent
 open CategoryTheory AlgebraicGeometry
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 universe u
 

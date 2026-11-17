@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/JacobiStirlingFirstKind.lean -/
 
-import Mathlib.Data.Real.Basic
-import Mathlib.Algebra.Polynomial.Coeff
+module
+
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Algebra.Polynomial.Coeff
+
+@[expose] public section
+
 open scoped BigOperators
 
 

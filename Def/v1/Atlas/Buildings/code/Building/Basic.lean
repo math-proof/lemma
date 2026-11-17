@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.Buildings.code.ChamberComplex.Basic
-import Lemma.Finset.Adjacent
-import Lemma.Nat.NotChamberAdjacent
+import Theorem.Finset.Adjacent
+import Theorem.Nat.NotChamberAdjacent
 import Def.v1.Atlas.Buildings.code.ChamberComplex.CoxeterComplex.Part2
 import Mathlib.Order.Zorn
 import Structure.v1.Atlas.Buildings.code.Building.Basic

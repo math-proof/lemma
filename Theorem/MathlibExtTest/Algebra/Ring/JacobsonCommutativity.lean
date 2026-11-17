@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/Ring/JacobsonCommutativity.lean -/
+module
 
+public import Def.Algebra.Ring.JacobsonCommutativity
 
-import Def.Algebra.Ring.JacobsonCommutativity
-
+public section
 
 namespace MathlibExt.Algebra.Ring.JacobsonCommutativity
 

@@ -8,15 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Noetherian.Basic
-import Mathlib.Algebra.Module.FinitePresentation
-import Mathlib.LinearAlgebra.FreeModule.Finite.Matrix
-import Mathlib.RingTheory.Localization.Module
-import Mathlib.RingTheory.Localization.Away.Basic
-import Mathlib.Algebra.Category.ModuleCat.Abelian
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.Algebra.Module.LocalizedModule.Basic
+module
 
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Mathlib.Algebra.Module.FinitePresentation
+public import Mathlib.LinearAlgebra.FreeModule.Finite.Matrix
+public import Mathlib.RingTheory.Localization.Module
+public import Mathlib.RingTheory.Localization.Away.Basic
+public import Mathlib.Algebra.Category.ModuleCat.Abelian
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.Algebra.Module.LocalizedModule.Basic
+
+@[expose] public section
 
 namespace HomSheafCoherent
 

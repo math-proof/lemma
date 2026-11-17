@@ -6,8 +6,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Alex Kontorovich and contributors, Adam Kiezun
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Pow.Complex
-import Mathlib.NumberTheory.ArithmeticFunction.Misc
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Pow.Complex
+public import Mathlib.NumberTheory.ArithmeticFunction.Misc
+
+@[expose] public section
+
 /-!
 # Divisor sums with a complex exponent
 

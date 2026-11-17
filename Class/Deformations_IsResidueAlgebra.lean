@@ -1,5 +1,9 @@
-import Mathlib
-import Instance.Mathlib_RingTheory_LocalRing_Defs
+module
+
+public import Mathlib
+public import Instance.Mathlib_RingTheory_LocalRing_Defs
+
+public section
 
 set_option autoImplicit false
 

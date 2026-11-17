@@ -8,10 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Calculus.Deriv.Basic
+module
+
+public import Mathlib.Analysis.Calculus.Deriv.Basic
 
 
-noncomputable section
+public noncomputable section
 
 /-- The defining ODE system for a characteristic curve $(\gamma_t, \gamma_x)$ of
 Burger's equation $\partial_t u + u\,\partial_x u = 0$ (Definition 2.0.1):

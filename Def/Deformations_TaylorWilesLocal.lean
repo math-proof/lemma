@@ -1,5 +1,9 @@
-import Mathlib
-import Notation.Deformations_TaylorWilesLocal
+module
+
+public import Mathlib
+public import Notation.Deformations_TaylorWilesLocal
+
+@[expose] public section
 
 set_option autoImplicit false
 

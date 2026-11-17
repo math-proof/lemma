@@ -1,13 +1,17 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/DescriptiveSetTheory/BernsteinSet.lean -/
+module
 
-import Mathlib.Topology.MetricSpace.Pseudo.Defs
-import Mathlib.SetTheory.ZFC.PSet
-import Mathlib.Topology.GDelta.MetrizableSpace
-import Mathlib.Topology.MetricSpace.Perfect
-import Mathlib.Topology.Separation.CompletelyRegular
+public import Mathlib.Topology.MetricSpace.Pseudo.Defs
+public import Mathlib.SetTheory.ZFC.PSet
+public import Mathlib.Topology.GDelta.MetrizableSpace
+public import Mathlib.Topology.MetricSpace.Perfect
+public import Mathlib.Topology.Separation.CompletelyRegular
+
 /-!
 # Bernstein set existence
 -/
+
+public section
 
 
 namespace MathlibExt.Topology.DescriptiveSetTheory.BernsteinSet

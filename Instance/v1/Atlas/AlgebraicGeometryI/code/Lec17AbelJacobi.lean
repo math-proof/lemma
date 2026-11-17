@@ -8,21 +8,26 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.AlgebraicGeometry.Morphisms.Finite
-import Mathlib.AlgebraicGeometry.Properties
-import Mathlib.AlgebraicGeometry.EllipticCurve.IsomOfJ
-import Mathlib.AlgebraicGeometry.EllipticCurve.ModelsWithJ
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass
-import Mathlib.Data.Complex.Basic
-import Mathlib.RingTheory.ClassGroup
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
-import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
-import Mathlib.RingTheory.Ideal.IntegralClosure
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec17AbelJacobi.Part4
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.AlgebraicGeometry.Morphisms.Finite
+public import Mathlib.AlgebraicGeometry.Properties
+public import Mathlib.AlgebraicGeometry.EllipticCurve.IsomOfJ
+public import Mathlib.AlgebraicGeometry.EllipticCurve.ModelsWithJ
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.RingTheory.ClassGroup
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
+public import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
+public import Mathlib.RingTheory.Ideal.IntegralClosure
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec17AbelJacobi.Part4
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 

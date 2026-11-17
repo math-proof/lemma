@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Mathlib
 import Theorem.v1.Atlas.ArithmeticGeometry.code.GaloisPlaceHelper
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.GaloisPlaceHelper
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.GaloisPlaceHelper
 
 
 noncomputable section

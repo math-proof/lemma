@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.StatisticalMechanics.Code.Exact3D.FiniteCombinatorics
-import Theorem.StatisticalMechanics.Code.Exact3D.BoxPathWitness.Part4
-import Theorem.StatisticalMechanics.Code.Walls.gc7componenteven
-import Theorem.StatisticalMechanics.Code.Exact3D.ComponentThirdSplit.Part11
+module
+
+public import Theorem.StatisticalMechanics.Code.Exact3D.FiniteCombinatorics
+public import Theorem.StatisticalMechanics.Code.Exact3D.BoxPathWitness.Part4
+public import Theorem.StatisticalMechanics.Code.Walls.gc7componenteven
+public import Theorem.StatisticalMechanics.Code.Exact3D.ComponentThirdSplit.Part11
+public section
+
 open Filter
 open scoped symmDiff
 

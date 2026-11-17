@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.MetricSpace.Holder
-import Mathlib.Topology.MetricSpace.HolderNorm
+module
 
+public import Mathlib.Topology.MetricSpace.Holder
+public import Mathlib.Topology.MetricSpace.HolderNorm
+
+@[expose] public section
 
 namespace HolderContinuity
 

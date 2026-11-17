@@ -8,11 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Smooth.StandardSmoothCotangent
-import Mathlib.LinearAlgebra.ExteriorPower.Basis
-import Mathlib.RingTheory.Ideal.Cotangent
-import Class.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafDef
+module
 
+public import Mathlib.RingTheory.Smooth.StandardSmoothCotangent
+public import Mathlib.LinearAlgebra.ExteriorPower.Basis
+public import Mathlib.RingTheory.Ideal.Cotangent
+public import Class.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafDef
+
+@[expose] public section
 
 noncomputable section
 

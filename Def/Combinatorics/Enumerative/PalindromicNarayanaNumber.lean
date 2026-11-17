@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/PalindromicNarayanaNumber.lean -/
 
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Rat.Defs
+module
+
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Data.Rat.Defs
+
+@[expose] public section
+
 /-!
 # Palindromic Narayana numbers
 

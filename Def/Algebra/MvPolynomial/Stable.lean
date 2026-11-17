@@ -5,8 +5,8 @@ Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
 
 import Def.Algebra.Polynomial.RealRooted.Part2
-import Lemma.Polynomial.RealRooted
-import Lemma.MvPolynomial.PDeriv
+import Theorem.Polynomial.RealRooted
+import Theorem.MvPolynomial.PDeriv
 import Def.Algebra.MvPolynomial.PDeriv
 import Mathlib.Algebra.MvPolynomial.CommRing
 import Mathlib.Analysis.Polynomial.CauchyBound

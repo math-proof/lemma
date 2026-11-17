@@ -1,9 +1,13 @@
-import Def.AutomorphicForm_ConstantTerm
-import Def.AutomorphicForm_AdelicLsXi
-import Instance.NumberField_AdelicHaar
-import Def.NumberField_AdelicBox
-import Def.HaarQuotient
-import Abbrev.AutomorphicForm_UnipotentQuotient
+module
+
+public import Def.AutomorphicForm_ConstantTerm
+public import Def.AutomorphicForm_AdelicLsXi
+public import Instance.NumberField_AdelicHaar
+public import Def.NumberField_AdelicBox
+public import Def.HaarQuotient
+public import Abbrev.AutomorphicForm_UnipotentQuotient
+
+@[expose] public section
 
 open MeasureTheory NumberField NumberField.AdelicHaar NumberField.AdelicBox
 

@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Dynamics/SymbolicDynamics/FullShift.lean -/
 
 import Def.Dynamics.SymbolicDynamics.FullShift
-import Lemma.Set.SymbolicDynamics.FullShift
+import Theorem.Set.SymbolicDynamics.FullShift
 open SymbolicDynamics.FullShift
 
 

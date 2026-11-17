@@ -1,5 +1,8 @@
-import Lemma.WeierstrassCurve.FreyPackage
-import Instance.FLTPrelim_GaloisRep
+module
+
+public import Instance.FLTPrelim_GaloisRep
+
+@[expose] public section
 
 set_option autoImplicit false
 

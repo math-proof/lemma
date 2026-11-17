@@ -2,7 +2,7 @@
 
 
 import Theorem.Geometry.Manifold.LocalGraph
-import Lemma.Set.Manifold.LocalGraph
+import Theorem.Set.Manifold.LocalGraph
 open MathlibExt.Geometry.Manifold.LocalGraphWanted
 open scoped Topology
 

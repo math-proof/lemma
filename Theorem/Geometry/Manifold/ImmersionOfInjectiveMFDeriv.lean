@@ -3,11 +3,12 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
+module
 
-import Mathlib.Geometry.Manifold.Immersion
-import Mathlib.Geometry.Manifold.MFDeriv.Basic
-import Mathlib.Analysis.Calculus.InverseFunctionTheorem.ContDiff
-import Mathlib.Analysis.LocallyConvex.HahnBanach
+public import Mathlib.Geometry.Manifold.Immersion
+public import Mathlib.Geometry.Manifold.MFDeriv.Basic
+public import Mathlib.Analysis.Calculus.InverseFunctionTheorem.ContDiff
+public import Mathlib.Analysis.LocallyConvex.HahnBanach
 open scoped Topology ContDiff
 open Function Set Manifold
 
@@ -17,6 +18,8 @@ open Function Set Manifold
 This file proves that an injective manifold differential gives an immersion when its range has
 a closed complement, and derives the finite-dimensional criterion over `ℝ` or `ℂ`.
 -/
+
+public section
 
 
 namespace MathlibExt.Geometry.Manifold.ImmersionOfInjectiveMFDerivWanted

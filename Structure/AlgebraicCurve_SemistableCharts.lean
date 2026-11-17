@@ -1,8 +1,10 @@
-import Structure.ModularCurve_FinitePlaceLift
+module
+
+public import Structure.ModularCurve_FinitePlaceLift
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace AlgebraicCurve
 

@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Policy/StackPowers.lean -/
 
-import Def.CPythonListsort.Code.Policy.PendingLayout
-import Def.CPythonListsort.Code.Transcription.Powerloop
-import Mathlib.Data.List.Pairwise
+module
+
+public import Def.CPythonListsort.Code.Policy.PendingLayout
+public import Def.CPythonListsort.Code.Transcription.Powerloop
+public import Mathlib.Data.List.Pairwise
+
+@[expose] public section
+
 /-!
 # Pending-stack power invariants
 

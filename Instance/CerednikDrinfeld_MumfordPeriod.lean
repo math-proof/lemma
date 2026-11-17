@@ -1,12 +1,17 @@
 -- Carved from Lemma/Definitions/Def_CerednikDrinfeld_MumfordPeriod.lean: instance decls only.
-import Def.CerednikDrinfeld_Ribbon
-import Mathlib.Combinatorics.SimpleGraph.Dart
-import Mathlib.Combinatorics.SimpleGraph.Acyclic
-import Mathlib.GroupTheory.GroupAction.Quotient
-import Mathlib.GroupTheory.OrderOfElement
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.LinearAlgebra.BilinearMap
-import Class.CerednikDrinfeld_MumfordPeriod
+
+module
+
+public import Def.CerednikDrinfeld_Ribbon
+public import Mathlib.Combinatorics.SimpleGraph.Dart
+public import Mathlib.Combinatorics.SimpleGraph.Acyclic
+public import Mathlib.GroupTheory.GroupAction.Quotient
+public import Mathlib.GroupTheory.OrderOfElement
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.LinearAlgebra.BilinearMap
+public import Class.CerednikDrinfeld_MumfordPeriod
+
+@[expose] public section
 
 set_option autoImplicit false
 noncomputable section

@@ -1,11 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/MaximumModulusAttained.lean -/
+module
 
-import Def.Analysis.Complex.Wiman
-import Lemma.Complex.Wiman
-import Mathlib.Analysis.Normed.Module.RCLike.Real
-import Mathlib.Topology.MetricSpace.ProperSpace
-import Mathlib.Topology.Order.Compact
+public import Def.Analysis.Complex.Wiman
+public import Theorem.Complex.Wiman
+public import Mathlib.Analysis.Normed.Module.RCLike.Real
+public import Mathlib.Topology.MetricSpace.ProperSpace
+public import Mathlib.Topology.Order.Compact
 
+public section
 
 noncomputable section
 

@@ -8,20 +8,25 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Calculus.FDeriv.Basic
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Analysis.Complex.Liouville
-import Mathlib.Analysis.Calculus.ContDiff.Defs
-import Mathlib.Analysis.Complex.LocallyUniformLimit
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Mathlib.Analysis.Meromorphic.Order
-import Mathlib.Analysis.Calculus.Deriv.Comp
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Analysis.Complex.CauchyIntegral
-import Mathlib.Analysis.Calculus.IteratedDeriv.Defs
-import Mathlib.Analysis.Analytic.Order
+module
+
+public import Mathlib.Analysis.Calculus.FDeriv.Basic
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Analysis.Complex.Liouville
+public import Mathlib.Analysis.Calculus.ContDiff.Defs
+public import Mathlib.Analysis.Complex.LocallyUniformLimit
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Mathlib.Analysis.Meromorphic.Order
+public import Mathlib.Analysis.Calculus.Deriv.Comp
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Analysis.Complex.CauchyIntegral
+public import Mathlib.Analysis.Calculus.IteratedDeriv.Defs
+public import Mathlib.Analysis.Analytic.Order
+
+@[expose] public section
+
 open Complex Filter
 
 open scoped Topology

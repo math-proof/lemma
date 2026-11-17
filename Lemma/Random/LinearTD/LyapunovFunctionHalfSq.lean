@@ -1,5 +1,6 @@
 import Lemma.Matrix.LyapunovCandidateHalfSq.of.Ge_2
 import Lemma.Random.LinearTD.DecreaseAlongHalfSq
+import Initialize.Tactic.Attr.Basic
 open LpSpace Matrix
 
 
@@ -15,3 +16,4 @@ private lemma main
 
 
 -- created on 2026-09-26
+-- updated on 2026-11-17

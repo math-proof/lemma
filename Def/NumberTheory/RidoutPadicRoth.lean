@@ -4,14 +4,18 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.NumberTheory.Padics.PadicNorm
-import Mathlib.NumberTheory.Real.Irrational
-import Mathlib.RingTheory.Algebraic.Defs
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Int.NatAbs
-import Mathlib.NumberTheory.Padics.PadicVal.Basic
-import Mathlib.Tactic
+module
+
+public import Mathlib.NumberTheory.Padics.PadicNorm
+public import Mathlib.NumberTheory.Real.Irrational
+public import Mathlib.RingTheory.Algebraic.Defs
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Data.Int.NatAbs
+public import Mathlib.NumberTheory.Padics.PadicVal.Basic
+public import Mathlib.Tactic
+
+@[expose] public section
 
 open scoped BigOperators
 

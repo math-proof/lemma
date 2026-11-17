@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.FactorialRatio
-import Lemma.Nat.FactorialRatio
+import Theorem.Nat.FactorialRatio
 
 
 /-!

@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM18.LagrangianMechanics
-import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM18.LagrangianMechanics
+import Theorem.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM18.LagrangianMechanics
 import Abbrev.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM18.NoetherEnergy
 open Real Set MeasureTheory
 

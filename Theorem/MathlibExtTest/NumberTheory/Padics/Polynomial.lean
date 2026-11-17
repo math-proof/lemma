@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.Padics.Polynomial
-import Lemma.Polynomial.Padics.Polynomial
+import Theorem.Polynomial.Padics.Polynomial
 open Polynomial
 
 

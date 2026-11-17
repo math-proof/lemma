@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Valuation/IwahoriDecomp.lean -/
 
 /-
@@ -8,12 +10,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Class.v1.Atlas.Buildings.code.Valuation.LatticesValuations
-import Lemma.Nat.IsInO
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.FieldSimp
-open Matrix
+public import Class.v1.Atlas.Buildings.code.Valuation.LatticesValuations
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.FieldSimp
+public section
 
+open Matrix
 
 namespace DVRContext
 

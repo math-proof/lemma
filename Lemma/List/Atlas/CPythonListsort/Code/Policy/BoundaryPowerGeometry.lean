@@ -1,6 +1,12 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.CPythonListsort.Code.Policy.BoundaryPowerGeometry
+module
+
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.CPythonListsort.Code.Policy.BoundaryPowerGeometry
+public import Lemma.List.Atlas.CPythonListsort.Code.Equivalence.PowerloopResults
+
+public section
+
 open CPythonListsort
 
 
@@ -8,9 +14,9 @@ namespace CPythonListsort
 
 /--
 [ofNat64_toNat_of_le_pyListMax](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Policy/BoundaryPowerGeometry.lean)
+by the selected 64-bit `Py_ssize_t` model.
 -/
 @[path]
-by the selected 64-bit `Py_ssize_t` model. -/
 private lemma ofNat64_toNat_of_le_pyListMax {x : Nat}
   (hx : x ≤ PY_LIST_MAX) :
   (BitVec.ofNat 64 x).toNat = x := by
@@ -25,9 +31,9 @@ namespace CPythonListsort
 
 /--
 [ofNat64_nonnegative_of_le_pyListMax](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Policy/BoundaryPowerGeometry.lean)
+exact `BitVec.ofNat 64` conversion.
 -/
 @[path]
-exact `BitVec.ofNat 64` conversion. -/
 private lemma ofNat64_nonnegative_of_le_pyListMax {x : Nat}
   (hx : x ≤ PY_LIST_MAX) :
   PySSize.Nonnegative (BitVec.ofNat 64 x) := by
@@ -45,7 +51,7 @@ namespace CPythonListsort
 [validPowerloopInput_ofNat](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Policy/BoundaryPowerGeometry.lean)
 -/
 @[path]
-lemma validPowerloopInput_ofNat
+public lemma validPowerloopInput_ofNat
   {s u v n : Nat}
 -- given
   (hu : 0 < u)
@@ -89,9 +95,9 @@ namespace CPythonListsort
 
 /--
 [scaledQuotient_succ_div_two](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Policy/BoundaryPowerGeometry.lean)
+scaled quotient.
 -/
 @[path]
-scaled quotient. -/
 private lemma scaledQuotient_succ_div_two (x n k : Nat) :
   scaledQuotient x n (k + 1) / 2 = scaledQuotient x n k := by
   unfold scaledQuotient
@@ -109,10 +115,10 @@ namespace CPythonListsort
 
 /--
 [scaledQuotient_eq_of_bits_eq_up_to](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Policy/BoundaryPowerGeometry.lean)
+through depth `k` is equivalent to agreement of the whole scaled quotient at
+that depth.  Only the forward direction is needed below.
 -/
 @[path]
-through depth `k` is equivalent to agreement of the whole scaled quotient at
-that depth.  Only the forward direction is needed below. -/
 private lemma scaledQuotient_eq_of_bits_eq_up_to
   {x y n k : Nat} (hx : x < 2 * n) (hy : y < 2 * n)
   (hbits : ∀ j ≤ k,
@@ -154,10 +160,10 @@ namespace CPythonListsort
 
 /--
 [quotientBits_eq_of_between](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Policy/BoundaryPowerGeometry.lean)
+that same prefix.  This is the dyadic-cell convexity fact used by both
+absorption laws.
 -/
 @[path]
-that same prefix.  This is the dyadic-cell convexity fact used by both
-absorption laws. -/
 private lemma quotientBits_eq_of_between
   {x q z n k : Nat} (hxq : x ≤ q) (hqz : q ≤ z)
   (hx : x < 2 * n) (hz : z < 2 * n)
@@ -206,7 +212,7 @@ namespace CPythonListsort
 [boundaryPowerGeometry](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Policy/BoundaryPowerGeometry.lean)
 -/
 @[path]
-lemma boundaryPowerGeometry
+public lemma boundaryPowerGeometry
   {s a b c n : Nat}
 -- given
   (ha : 0 < a)
@@ -215,7 +221,7 @@ lemma boundaryPowerGeometry
   (hfits : s + a + b + c ≤ n)
   (hnmax : n ≤ PY_LIST_MAX) :
 -- imply
-  let P := fun x u v : Nat => powerloop (BitVec.ofNat 64 x) (BitVec.ofNat 64 u) (BitVec.ofNat 64 v) (BitVec.ofNat 64 n) let pAB := P s a b let pBC := P (s + a) b c pAB ≠ pBC ∧ (pAB < pBC → P s a (b + c) = pAB) ∧ (pBC < pAB → P s (a + b) c = pBC) := by
+  let P := fun x u v : Nat => powerloop (BitVec.ofNat 64 x) (BitVec.ofNat 64 u) (BitVec.ofNat 64 v) (BitVec.ofNat 64 n); let pAB := P s a b; let pBC := P (s + a) b c; pAB ≠ pBC ∧ (pAB < pBC → P s a (b + c) = pAB) ∧ (pBC < pAB → P s (a + b) c = pBC) := by
 -- proof
   dsimp only
   have hn : 0 < n := by omega
@@ -329,11 +335,9 @@ lemma boundaryPowerGeometry
       quotientBits_eq_of_between hxqLeft hqLeftm hx hm hxmBits
     have hkCandidate : IsFirstDifferingQuotientBit qLeft z n kBC := by
       refine ⟨?_, hkBC'.2.1, ?_⟩
-      · exact (hxLeftBits kBC (by omega)).symm.trans
-        ((hxmBits kBC (by omega)).trans hkBC'.1)
+      · exact (hxLeftBits kBC (by omega)).symm.trans ((hxmBits kBC (by omega)).trans hkBC'.1)
       · intro j hj
-        exact (hxLeftBits j (by omega)).symm.trans
-          ((hxmBits j (by omega)).trans (hkBC'.2.2 j hj))
+        exact (hxLeftBits j (by omega)).symm.trans ((hxmBits j (by omega)).trans (hkBC'.2.2 j hj))
     have hkSame : kLeft = kBC :=
       firstDifferingQuotientBit_unique hkLeft' hkCandidate
     omega

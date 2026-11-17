@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Abbrev.v1.Atlas.TensorCategories.code.ModuleCategory.Part5
-import Mathlib.CategoryTheory.Limits.Shapes.BinaryBiproducts
+module
+
+public import Abbrev.v1.Atlas.TensorCategories.code.ModuleCategory.Part5
+public import Mathlib.CategoryTheory.Limits.Shapes.BinaryBiproducts
+public section
+
 set_option maxHeartbeats 400000
 
 universe v₁ v₂ v₃ v₄ u₁ u₂ u₃ u₄

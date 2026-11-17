@@ -1,30 +1,35 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/HowardPotentialPolynomial.lean -/
 
-import Mathlib.RingTheory.Polynomial.Pochhammer
-import Mathlib.RingTheory.PowerSeries.Inverse
-import Def.Combinatorics.Enumerative.PartialBellPolynomial
-import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.Group.ForwardDiff
-import Mathlib.Analysis.Normed.Field.Basic
-import Mathlib.Analysis.Normed.Field.Lemmas
-import Mathlib.Combinatorics.Enumerative.Bell
-import Mathlib.Data.Finset.Range
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Data.Nat.Cast.Field
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.LinearAlgebra.Lagrange
-import Mathlib.Order.Interval.Finset.Nat
-import Mathlib.RingTheory.Henselian
-import Mathlib.RingTheory.PowerSeries.Basic
-import Mathlib.RingTheory.PowerSeries.Derivative
-import Mathlib.RingTheory.PowerSeries.Order
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.RingTheory.Polynomial.Pochhammer
+public import Mathlib.RingTheory.PowerSeries.Inverse
+public import Def.Combinatorics.Enumerative.PartialBellPolynomial
+public import Mathlib.Algebra.BigOperators.Field
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.Group.ForwardDiff
+public import Mathlib.Analysis.Normed.Field.Basic
+public import Mathlib.Analysis.Normed.Field.Lemmas
+public import Mathlib.Combinatorics.Enumerative.Bell
+public import Mathlib.Data.Finset.Range
+public import Mathlib.Data.Fintype.Pi
+public import Mathlib.Data.Nat.Cast.Field
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.LinearAlgebra.Lagrange
+public import Mathlib.Order.Interval.Finset.Nat
+public import Mathlib.RingTheory.Henselian
+public import Mathlib.RingTheory.PowerSeries.Basic
+public import Mathlib.RingTheory.PowerSeries.Derivative
+public import Mathlib.RingTheory.PowerSeries.Order
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.SimpleRing.Principal
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 -- Helper lemmas for the proof below (degree bound for the RHS sum).
 -- The remaining hard step is the pointwise evaluation identity, which needs a
 -- Bell-polynomial / power-series coefficient identity with no Mathlib API.

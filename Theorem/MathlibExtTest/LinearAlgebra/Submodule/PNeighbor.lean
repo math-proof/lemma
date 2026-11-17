@@ -2,7 +2,7 @@
 
 
 import Def.LinearAlgebra.Submodule.PNeighbor
-import Lemma.Matrix.Submodule.PNeighbor
+import Theorem.Matrix.Submodule.PNeighbor
 
 
 namespace Submodule

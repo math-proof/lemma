@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Matrix.Basic
-import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
-import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
-import Mathlib.CategoryTheory.Preadditive.Projective.Basic
-import Structure.v1.Atlas.TensorCategories.code.Theorem_1_53_1
+module
+
+public import Mathlib.Data.Matrix.Basic
+public import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
+public import Mathlib.CategoryTheory.Preadditive.Projective.Basic
+public import Structure.v1.Atlas.TensorCategories.code.Theorem_1_53_1
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 set_option autoImplicit false
 

@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/PQPatalanNumbers.lean -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Rat.Cast.Order
-import Def.Combinatorics.Enumerative.PQPatalanNumbers
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Rat.Cast.Order
+public import Def.Combinatorics.Enumerative.PQPatalanNumbers
 /-!
 # (p,q)-Patalan numbers
 
@@ -10,6 +12,9 @@ Formalization of the `(p,q)-Patalan numbers` concept.
 
 Source: <https://cs.uwaterloo.ca/journals/JIS/VOL18/Richardson/rich2.tex>.
 -/
+public section
+
+
 
 
 namespace MetaMathlibExt

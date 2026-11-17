@@ -4,15 +4,19 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
 
-import Mathlib.Analysis.Normed.Module.DoubleDual
-import Lemma.Nat.Closure
-import Mathlib.Analysis.Convex.Combination
-import Mathlib.Analysis.Convex.Slope
-import Mathlib.Analysis.Convex.Topology
-import Mathlib.Analysis.Normed.Module.RCLike.Extend
-import Mathlib.Analysis.SpecificLimits.Normed
-import Mathlib.Topology.Algebra.Module.LocallyConvex
-import Mathlib.Tactic.Linarith
+module
+
+public import Mathlib.Analysis.Normed.Module.DoubleDual
+public import Mathlib.Analysis.Convex.Combination
+public import Mathlib.Analysis.Convex.Slope
+public import Mathlib.Analysis.Convex.Topology
+public import Mathlib.Analysis.Normed.Module.RCLike.Extend
+public import Mathlib.Analysis.SpecificLimits.Normed
+public import Mathlib.Topology.Algebra.Module.LocallyConvex
+public import Mathlib.Tactic.Linarith
+
+@[expose] public section
+
 /-!
 # James' reflexivity theorem
 

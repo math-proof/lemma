@@ -2,7 +2,7 @@
 
 
 import Def.GroupTheory.FiniteAbelianDual.Part2
-import Lemma.Complex.Nonempty_AddChar
+import Theorem.Complex.Nonempty_AddChar
 import Mathlib.SetTheory.Cardinal.Finite
 open MathlibExt.GroupTheory.FiniteAbelianDualWanted
 

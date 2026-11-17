@@ -9,10 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.TensorCategories.code.AlgebrasInCategories.Part4
-import Lemma.Category.Atlas.v1.TensorCategories.code.AlgebrasInCategories
-import Lemma.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
-import Lemma.Category.Atlas.v1.TensorCategories.code.InternalHom
-import Lemma.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
 import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
 import Def.v1.Atlas.TensorCategories.code.InternalHom.Part4
 import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
@@ -28,13 +24,11 @@ set_option autoImplicit false
 
 universe v₁ v₂ u₁ u₂
 
-
 namespace CategoryTheory
 
 open Category MonoidalCategory MonObj LeftModCat
 
 variable {C : Type u₁} [Category.{v₁} C] [MonoidalCategory C]
-
 
 attribute [instance] InternalEndAlgebra.monObj
 
@@ -48,7 +42,6 @@ class InternalHomData
   gen : M
   endAlgebra : InternalEndAlgebra (C := C)
   F : M ⥤ RightMod_ (A := endAlgebra.carrier)
-
 
 variable {M : Type u₂} [Category.{v₂} M] [LeftModuleCategory C M]
 
@@ -85,7 +78,6 @@ class InternalHomGeneration
     [hom : InternalHomData C M] : Prop where
   generation : ∀ (N : M), ∃ (X : C) (f : X ⊗ᵐ hom.gen ⟶ N), Epi f
 
-
 /-- Faithfulness of the internal-Hom functor `F : M ⥤ RightMod (endAlgebra)`. -/
 class InternalHomFaithful
     (C : Type u₁) [Category.{v₁} C] [MonoidalCategory C]
@@ -110,6 +102,5 @@ class InternalHomEssSurj
     [LeftModuleCategory C M]
     [hom : InternalHomData C M] : Prop where
   essSurj : hom.F.EssSurj
-
 
 end CategoryTheory

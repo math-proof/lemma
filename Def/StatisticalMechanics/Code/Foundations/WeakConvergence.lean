@@ -9,7 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Foundations.ConfigSpace
+module
+
+public import Theorem.StatisticalMechanics.Code.Foundations.ConfigSpace
+
+@[expose] public section
+
 open MeasureTheory Filter Topology BoundedContinuousFunction
 open scoped ENNReal NNReal
 

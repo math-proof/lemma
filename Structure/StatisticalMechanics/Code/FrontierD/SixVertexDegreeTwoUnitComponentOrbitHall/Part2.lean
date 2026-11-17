@@ -9,15 +9,17 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoUnitStrandPhysicalTarget
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexUnitComponentHall
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoUnitComponentOrbitHall.Part5
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoUnitStrandPhysicalTarget
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexUnitComponentHall
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoUnitComponentOrbitHall.Part5
 open Finset
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure SixVertexDegreeTwoUnitComponentOrbitAtlas
     (T : EvenTorus) (middle : Fin (T.width + 1))

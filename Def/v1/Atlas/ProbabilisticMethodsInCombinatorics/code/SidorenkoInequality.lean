@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Maps
-import Mathlib.Combinatorics.SimpleGraph.Acyclic
-import Mathlib.Combinatorics.SimpleGraph.Finite
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Data.Real.Basic
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Maps
+public import Mathlib.Combinatorics.SimpleGraph.Acyclic
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Mathlib.Data.Fintype.Pi
+public import Mathlib.Data.Real.Basic
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 

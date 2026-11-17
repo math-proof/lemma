@@ -1,11 +1,13 @@
-import Mathlib.Algebra.Module.LocalizedModule.Basic
-import Mathlib.Algebra.MvPolynomial.CommRing
-import Mathlib.RingTheory.Ideal.Maps
-import Mathlib.Algebra.Algebra.Subalgebra.Lattice
+module
+
+public import Mathlib.Algebra.Module.LocalizedModule.Basic
+public import Mathlib.Algebra.MvPolynomial.CommRing
+public import Mathlib.RingTheory.Ideal.Maps
+public import Mathlib.Algebra.Algebra.Subalgebra.Lattice
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace CohCarrier
 

@@ -3,8 +3,8 @@ import Class.Probability.Rv
 import Mathlib.Analysis.Calculus.Gradient.Basic
 import Mathlib.Probability.Kernel.WithDensity
 import Def.Order.Miscellaneous
-import Lemma.Random.SinglePSpace.of.Eq_WithDensity.Measurable.AEMeasurable
-import Lemma.Random.SinglePSpace.of.AEMeasurable.Distributed
+import Theorem.Random.SinglePSpace.of.Eq_WithDensity.Measurable.AEMeasurable
+import Theorem.Random.SinglePSpace.of.AEMeasurable.Distributed
 import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
 import Class.Dynamics.PolicyTrajectory
 open MeasureTheory ProbabilityTheory Finset

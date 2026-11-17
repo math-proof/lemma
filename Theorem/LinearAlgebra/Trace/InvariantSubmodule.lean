@@ -3,10 +3,13 @@
 /-
 Author: Muse Code
 -/
+module
 
-import Mathlib.LinearAlgebra.Trace
-import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.LinearAlgebra.Trace
+public import Mathlib.LinearAlgebra.Dimension.Constructions
 open Module.Basis
+
+public section
 
 variable {K V : Type*} [Field K] [AddCommGroup V] [Module K V]
   [FiniteDimensional K V]

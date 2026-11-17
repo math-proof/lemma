@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/MarkedStepInAMarkedDyckPath.lean -/
 
-import Mathlib.Data.List.Basic
-import Lean.Elab.Tactic.Omega
-import Def.Combinatorics.Enumerative.MarkedStepInAMarkedDyckPath
+module
+
+public import Mathlib.Data.List.Basic
+public import Lean.Elab.Tactic.Omega
+public import Def.Combinatorics.Enumerative.MarkedStepInAMarkedDyckPath
 /-!
 # Marked step in a marked Dyck path
 
@@ -15,6 +17,9 @@ numbers of `E`, `N` and `N*` steps, the size of `P` is
 Source: Sergi Elizalde, *Patterns in Inversion Sequences II*:
 <https://cs.uwaterloo.ca/journals/JIS/VOL22/Elizalde/eli14.tex>.
 -/
+public section
+
+
 
 
 namespace MetaMathlibExt

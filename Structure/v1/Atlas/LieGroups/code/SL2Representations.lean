@@ -8,20 +8,22 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.LieGroups.code.SL2Basics.Part4
-import Lemma.Nat.basisHC.eq.SMul
-import Lemma.Complex.In_WeightSpace.is.H.eq.SMul
-import Def.v1.Atlas.LieGroups.code.GKModule.Part2
-import Def.v1.Atlas.LieGroups.code.KTypeDecomposition.Part3
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Algebra.Lie.OfAssociative
-import Theorem.v1.Atlas.LieGroups.code.SL2Representations
+module
+
+public import Theorem.v1.Atlas.LieGroups.code.SL2Basics.Part4
+public import Lemma.Nat.basisHC.eq.SMul
+public import Lemma.Complex.In_WeightSpace.is.H.eq.SMul
+public import Def.v1.Atlas.LieGroups.code.GKModule.Part2
+public import Def.v1.Atlas.LieGroups.code.KTypeDecomposition.Part3
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Algebra.Lie.OfAssociative
+public import Theorem.v1.Atlas.LieGroups.code.SL2Representations
 attribute [local instance 100] LieRing.ofAssociativeRing
 
 -- Mathlib keeps LieRing.ofAssociativeRing as a local instance only
 
 
-noncomputable section
+public noncomputable section
 
 open Complex Module
 

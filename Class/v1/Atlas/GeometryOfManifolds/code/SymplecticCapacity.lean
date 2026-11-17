@@ -9,12 +9,10 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
 import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticCapacity
 set_option autoImplicit false
 
 open DifferentialFormSpace
-
 
 /-- Marker class identifying a symplectic manifold $S$ as the standard symplectic ball $B^{2n}(r)$ of radius $r > 0$. -/
 class IsSymplecticBall {Ω : ℕ → Type*} {VF : Type*}
@@ -37,5 +35,4 @@ class IsSymplecticCylinder {Ω : ℕ → Type*} {VF : Type*}
   ω_exact : IsExact' VF S.ω
   capacity_val : NNReal
   capacity_eq : capacity_val = symplCapacity radius
-
 

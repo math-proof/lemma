@@ -1,10 +1,12 @@
-import Mathlib.AlgebraicGeometry.ResidueField
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Abbrev.GoodReductionJacobian_RelativeGroupLawKernel
+module
+
+public import Mathlib.AlgebraicGeometry.ResidueField
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Abbrev.GoodReductionJacobian_RelativeGroupLawKernel
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 universe u
 

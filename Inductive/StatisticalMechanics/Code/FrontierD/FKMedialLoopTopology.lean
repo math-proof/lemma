@@ -9,13 +9,15 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.FKLoopSixVertexLocalCorrespondence.Part5
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKLoopSixVertexLocalCorrespondence.Part5
 open SimpleGraph
 
 
 namespace StatMech.FrontierD
 
-inductive FKMedialSide
+public inductive FKMedialSide
   | west | east | south | north
 deriving DecidableEq, Fintype
 

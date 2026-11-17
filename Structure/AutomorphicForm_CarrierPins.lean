@@ -1,9 +1,11 @@
-import Instance.NumberField_AdelicHaar
-import Structure.AutomorphicForm_AdelicLsXi
+module
+
+public import Instance.NumberField_AdelicHaar
+public import Structure.AutomorphicForm_AdelicLsXi
 
 open IsDedekindDomain NumberField NumberField.AdelicHaar MeasureTheory
 
-noncomputable section
+public noncomputable section
 
 namespace AutomorphicForm
 

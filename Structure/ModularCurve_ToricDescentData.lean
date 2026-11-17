@@ -1,12 +1,14 @@
-import Mathlib
-import Structure.ModularCurve_MazurPrincipleCore
-import Def.ModularCurve_DeligneRapoport
-import Lemma.LaurentSeries.HeckeOperator
-import Structure.Isogeny_ConditionalCurrency
+module
+
+public import Mathlib
+public import Structure.ModularCurve_MazurPrincipleCore
+public import Def.ModularCurve_DeligneRapoport
+public import Lemma.LaurentSeries.HeckeOperator
+public import Structure.Isogeny_ConditionalCurrency
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace ModularCurve
 

@@ -7,17 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib
-import Class.v1.Atlas.GeometryOfManifolds.code.DifferentialForms
+public import Mathlib
+public import Class.v1.Atlas.GeometryOfManifolds.code.DifferentialForms
 set_option autoImplicit false
 
-attribute [reducible, instance] DifferentialFormSpace.instAddCommGroup
-attribute [reducible, instance] DifferentialFormSpace.instModule
-
-attribute [instance] HasComplexScalars.instComplexModule
-attribute [instance] HasComplexScalars.instScalarTower
-attribute [instance] HasComplexScalars.instSMulCommClass
+public section
 
 
 namespace DifferentialFormSpace

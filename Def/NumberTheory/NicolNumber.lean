@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NicolNumber.lean -/
 
-import Mathlib.Data.Nat.Totient
+module
+
+public import Mathlib.Data.Nat.Totient
+
+@[expose] public section
+
 open scoped BigOperators
 
 

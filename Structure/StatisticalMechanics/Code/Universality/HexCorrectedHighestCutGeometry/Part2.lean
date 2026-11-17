@@ -9,16 +9,18 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedHighestCut.Part3
-import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWDepth.Part26
-import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedHighestCutGeometry.Part3
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedHighestCut.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWDepth.Part26
+public import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedHighestCutGeometry.Part3
 
 
 namespace StatMech.Universality
 
 open HexWalk
 
-noncomputable section
+public noncomputable section
 
 set_option maxHeartbeats 800000 in
 

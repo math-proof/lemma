@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/FoundNewRun.lean -/
 
-import Theorem.CPythonListsort.Code.Transcription.MergeAt
-import Def.CPythonListsort.Code.Transcription.Powerloop
+module
+
+public import Def.CPythonListsort.Code.Transcription.Powerloop
+public import Structure.CPythonListsort.Code.Transcription.MergeState.Part3
 /-!
 # PowerSort policy step for a newly found run
 
@@ -10,6 +12,9 @@ run from the newly discovered run, collapses strictly larger powers, and then
 stores the new power on the surviving top run.  The caller remains responsible
 for pushing the new run.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

@@ -1,14 +1,17 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Dynamics/SymbolicDynamics/FullShift.lean -/
 
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Data.Set.Card
-import Mathlib.Dynamics.PeriodicPts.Defs
-import Mathlib.Dynamics.SymbolicDynamics.Basic
-import Mathlib.GroupTheory.Subgroup.Centralizer
-import Mathlib.Order.LiminfLimsup
-import Mathlib.Topology.Homeomorph.Defs
-import Abbrev.Dynamics.SymbolicDynamics.FullShift
+module
 
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Data.Set.Card
+public import Mathlib.Dynamics.PeriodicPts.Defs
+public import Mathlib.Dynamics.SymbolicDynamics.Basic
+public import Mathlib.GroupTheory.Subgroup.Centralizer
+public import Mathlib.Order.LiminfLimsup
+public import Mathlib.Topology.Homeomorph.Defs
+public import Abbrev.Dynamics.SymbolicDynamics.FullShift
+
+@[expose] public section
 
 namespace SymbolicDynamics.FullShift
 

@@ -8,12 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.Matrix.Rank
-import Mathlib.Data.Matrix.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.MeasureTheory.Measure.MeasureSpace
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Rank
+public import Mathlib.Data.Matrix.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.MeasureTheory.Measure.MeasureSpace
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+
+@[expose] public section
+
 open MeasureTheory Matrix Finset
 
 

@@ -3,7 +3,7 @@
 
 import Mathlib.Tactic.FinCases
 import Structure.Combinatorics.SimpleGraph.Deza
-import Lemma.SimpleGraph.Deza
+import Theorem.SimpleGraph.Deza
 open SimpleGraph
 
 

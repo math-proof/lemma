@@ -8,12 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.LieGroups.code.VermaModules.Part7
-import Lemma.Int.WeightSubspace.eq.ToSubmoduleWeightSpace
-import Structure.v1.Atlas.LieGroups.code.HarishChandraIsomorphism.Part2
+module
+
+public import Def.v1.Atlas.LieGroups.code.VermaModules.Part7
+public import Lemma.Int.WeightSubspace.eq.ToSubmoduleWeightSpace
+public import Structure.v1.Atlas.LieGroups.code.HarishChandraIsomorphism.Part2
 
 
-noncomputable section
+public noncomputable section
 
 universe u_mod u_ch
 

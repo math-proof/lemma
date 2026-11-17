@@ -8,20 +8,22 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.NumberTheory.RamificationInertia.Basic
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Mathlib.RingTheory.DedekindDomain.Basic
-import Mathlib.RingTheory.Discriminant
-import Def.v1.Atlas.AlgebraicGeometryI.code.CoherentSheavesCurves.Part2
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoherentSheavesCurves
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitz
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalDivisorDecomposition
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitz
-import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalDivisorDecomposition.Part4
-import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzFormula
+module
+
+public import Mathlib.NumberTheory.RamificationInertia.Basic
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Mathlib.RingTheory.DedekindDomain.Basic
+public import Mathlib.RingTheory.Discriminant
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CoherentSheavesCurves.Part2
+public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoherentSheavesCurves
+public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitz
+public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalDivisorDecomposition
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitz
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalDivisorDecomposition.Part4
+public import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzFormula
 
 
-noncomputable section
+public noncomputable section
 
 open Ideal Module
 

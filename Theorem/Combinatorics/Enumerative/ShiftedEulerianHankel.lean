@@ -8,8 +8,8 @@ import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.Basic.Real.Basic
 import Mathlib.Data.Nat.Choose.Basic
 import Def.Combinatorics.Enumerative.HeilermannWeightedMotzkinDeterminant
-import Lemma.Finset.Enumerative.HeilermannWeightedMotzkinDeterminant
-import Lemma.Finset.Enumerative.StirlingSecondExplicit
+import Theorem.Finset.Enumerative.HeilermannWeightedMotzkinDeterminant
+import Theorem.Finset.Enumerative.StirlingSecondExplicit
 import Def.NumberTheory.HankelTransform
 import Mathlib.Combinatorics.Enumerative.Stirling
 import Mathlib.Data.Nat.Factorial.Basic

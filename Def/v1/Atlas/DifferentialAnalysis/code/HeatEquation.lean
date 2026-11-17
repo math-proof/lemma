@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Distribution.TemperedDistribution
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Abbrev.v1.Atlas.DifferentialAnalysis.code.HeatEquation
+module
 
+public import Mathlib.Analysis.Distribution.TemperedDistribution
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Abbrev.v1.Atlas.DifferentialAnalysis.code.HeatEquation
+
+@[expose] public section
 
 noncomputable section
 

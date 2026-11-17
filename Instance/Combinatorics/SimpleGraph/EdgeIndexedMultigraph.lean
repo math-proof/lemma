@@ -7,7 +7,7 @@ Authors: Adam Kiezun, Muse Spark 1.3, Codex
 import Mathlib.Combinatorics.SimpleGraph.DegreeSum
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 import Mathlib.Combinatorics.SimpleGraph.Trails
-import Lemma.SimpleGraph.EulerCircuit
+import Theorem.SimpleGraph.EulerCircuit
 import Def.Combinatorics.SimpleGraph.EdgeIndexedMultigraph.Part2
 /-!
 # Finite edge-indexed multigraphs

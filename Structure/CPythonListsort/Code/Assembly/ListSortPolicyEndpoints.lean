@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/ListSortPolicyEndpoints.lean -/
 
-import Theorem.CPythonListsort.Code.Assembly.ListSortMergePolicy
-import Def.CPythonListsort.Code.Assembly.ListSortPolicyEndpoints
+module
+
+public import Theorem.CPythonListsort.Code.Assembly.ListSortMergePolicy
+public import Def.CPythonListsort.Code.Assembly.ListSortPolicyEndpoints
 /-!
 # Exact empty and singleton policy endpoints
 
@@ -14,6 +16,9 @@ This module pins those two endpoint cases for arbitrary comparators, reverse
 flags, and validated keyed or unkeyed inputs.  In particular, the singleton
 leaf is semantic normalization: it is not a fabricated `.formed` event.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

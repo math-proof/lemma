@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Matroid.Algebraic.Part2
-import Lemma.Finset.Matroid.Algebraic
+import Theorem.Finset.Matroid.Algebraic
 import Mathlib.FieldTheory.RatFunc.IntermediateField
 import Mathlib.Algebra.Field.ZMod
 import Theorem.MathlibExtTest.Combinatorics.Matroid.Algebraic

@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FrobeniusPseudoprime.lean -/
 
-import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
-import Mathlib.RingTheory.Polynomial.Resultant.Basic
+module
+
+public import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
+public import Mathlib.RingTheory.Polynomial.Resultant.Basic
+
+@[expose] public section
+
 /-!
 Grantham Frobenius pseudoprimes, source-faithful formalization.
 

@@ -1,11 +1,16 @@
 -- Carved from Lemma/Definitions/Def_MvFormalGroup_BasicV2.lean: instance decls only.
-import Mathlib.RingTheory.MvPowerSeries.Substitution
-import Mathlib.LinearAlgebra.Matrix.Defs
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Mathlib.RingTheory.Ideal.Span
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.Algebra.CharP.Defs
-import Class.MvFormalGroup_BasicV2
+
+module
+
+public import Mathlib.RingTheory.MvPowerSeries.Substitution
+public import Mathlib.LinearAlgebra.Matrix.Defs
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.RingTheory.Ideal.Span
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.Algebra.CharP.Defs
+public import Class.MvFormalGroup_BasicV2
+
+@[expose] public section
 
 set_option autoImplicit false
 

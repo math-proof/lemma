@@ -8,16 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Fin.Tuple.NatAntidiagonal
-import Mathlib.RingTheory.Localization.Away.Basic
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Nat.Choose.Bounds
-import Mathlib.RingTheory.MvPolynomial.Basic
-import Mathlib.RingTheory.KrullDimension.Basic
-import Mathlib.RingTheory.FiniteType
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.Tactic
+module
 
+public import Mathlib.Data.Fin.Tuple.NatAntidiagonal
+public import Mathlib.RingTheory.Localization.Away.Basic
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Data.Nat.Choose.Bounds
+public import Mathlib.RingTheory.MvPolynomial.Basic
+public import Mathlib.RingTheory.KrullDimension.Basic
+public import Mathlib.RingTheory.FiniteType
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.Tactic
+
+@[expose] public section
 
 noncomputable section
 

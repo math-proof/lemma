@@ -1,5 +1,9 @@
-import Mathlib.Tactic
-import Notation.Data.Int.Integers
+module
+
+public import Mathlib.Tactic
+public import Notation.Data.Int.Integers
+public section
+
 export Int (fract sign)
 
 

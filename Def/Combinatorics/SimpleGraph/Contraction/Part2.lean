@@ -5,7 +5,7 @@ Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
 import Theorem.Combinatorics.SimpleGraph.VertexConnectivity
-import Lemma.SimpleGraph.VertexConnectivity
+import Theorem.SimpleGraph.VertexConnectivity
 import Theorem.Combinatorics.SimpleGraph.Contraction
 /-!
 # Contracting the complement of a vertex set

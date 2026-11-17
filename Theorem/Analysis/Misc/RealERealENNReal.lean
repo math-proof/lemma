@@ -1,5 +1,6 @@
-import Mathlib
+module
 
+public import Mathlib
 
 /-!
 # General utilities for Real, EReal, and ENNReal
@@ -7,6 +8,8 @@ import Mathlib
 This file contains general-purpose lemmas about {name}`Real`, {name}`EReal`, and {name}`ENNReal`
 that are not specific to measure theory but are used throughout the formalization.
 -/
+
+public section
 
 -- =============================================================================
 -- Real number utilities

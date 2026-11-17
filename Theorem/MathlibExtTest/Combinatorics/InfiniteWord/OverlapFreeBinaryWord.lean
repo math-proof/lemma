@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/InfiniteWord/OverlapFreeBinaryWord.lean -/
+module
 
+public import Def.Combinatorics.InfiniteWord.OverlapFreeBinaryWord
 
-import Def.Combinatorics.InfiniteWord.OverlapFreeBinaryWord
-
+public section
 
 namespace MetaMathlibExt
 

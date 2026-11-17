@@ -8,14 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.CategoryTheory.Linear.Basic
-import Mathlib.CategoryTheory.Simple
-import Mathlib.CategoryTheory.Noetherian
-import Mathlib.CategoryTheory.Preadditive.Projective.Basic
-import Mathlib.RingTheory.Finiteness.Defs
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Mathlib.Algebra.Category.FGModuleCat.Basic
+module
+
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.CategoryTheory.Linear.Basic
+public import Mathlib.CategoryTheory.Simple
+public import Mathlib.CategoryTheory.Noetherian
+public import Mathlib.CategoryTheory.Preadditive.Projective.Basic
+public import Mathlib.RingTheory.Finiteness.Defs
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.Algebra.Category.FGModuleCat.Basic
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open CategoryTheory

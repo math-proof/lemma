@@ -2,7 +2,7 @@
 
 
 import Def.FieldTheory.Finite.PrimitivePolynomial
-import Lemma.Polynomial.Finite.PrimitivePolynomial
+import Theorem.Polynomial.Finite.PrimitivePolynomial
 import Mathlib.FieldTheory.Finite.GaloisField
 set_option autoImplicit false
 

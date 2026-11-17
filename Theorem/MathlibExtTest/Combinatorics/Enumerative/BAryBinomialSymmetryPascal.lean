@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/BAryBinomialSymmetryPascal.lean -/
 
 
-import Lemma.Finset.Enumerative.BAryBinomialSymmetryPascal
+import Theorem.Finset.Enumerative.BAryBinomialSymmetryPascal
 
 
 namespace MetaMathlibExt

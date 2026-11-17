@@ -4,7 +4,12 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Geometry.Manifold.Immersion
+module
+
+public import Mathlib.Geometry.Manifold.Immersion
+
+@[expose] public section
+
 open scoped Topology ContDiff
 open Manifold
 

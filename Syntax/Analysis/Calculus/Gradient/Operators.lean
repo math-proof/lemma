@@ -1,6 +1,10 @@
-import Mathlib.Analysis.Calculus.Gradient.Basic
-import Notation.Analysis.Calculus.Gradient.Operators
+module
 
+public import Mathlib.Analysis.Calculus.Gradient.Basic
+public import Notation.Analysis.Calculus.Gradient.Operators
+public meta import Def.Analysis.Calculus.Gradient.Operators
+
+public meta section
 
 syntax:max (name := gradSugar) "∇[" ident "] " term:67 : term
 

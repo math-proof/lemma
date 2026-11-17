@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/PowerTreeEntropy.lean -/
 
-import Def.CPythonListsort.Code.Assembly.MergeCost.Part3
-import Def.CPythonListsort.Code.Assembly.PowerEntropyBound
+module
+
+public import Def.CPythonListsort.Code.Assembly.MergeCost.Part3
+public import Def.CPythonListsort.Code.Assembly.PowerEntropyBound
+
+@[expose] public section
+
 /-!
 # Entropy bound for a source-faithful PowerSort merge tree
 

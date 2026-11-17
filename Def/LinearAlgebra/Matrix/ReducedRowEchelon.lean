@@ -4,10 +4,15 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.LinearAlgebra.Matrix.Echelon.Basic
-import Mathlib.LinearAlgebra.Matrix.Rank
-import Mathlib.LinearAlgebra.Matrix.ToLin
-import Mathlib.LinearAlgebra.Matrix.Echelon.Pivot
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Echelon.Basic
+public import Mathlib.LinearAlgebra.Matrix.Rank
+public import Mathlib.LinearAlgebra.Matrix.ToLin
+public import Mathlib.LinearAlgebra.Matrix.Echelon.Pivot
+
+@[expose] public section
+
 /-!
 # Reduced row echelon form
 

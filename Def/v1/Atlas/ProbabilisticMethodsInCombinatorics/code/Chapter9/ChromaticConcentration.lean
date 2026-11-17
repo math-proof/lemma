@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.Combinatorics.BinomialRandomGraph.Defs
-import Mathlib.Combinatorics.SimpleGraph.Coloring
+module
+
+public import Mathlib.Probability.Combinatorics.BinomialRandomGraph.Defs
+public import Mathlib.Combinatorics.SimpleGraph.Coloring
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 open MeasureTheory Measure SimpleGraph Real

@@ -1,25 +1,30 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Geometry/Euclidean/PizzaTheorem.lean -/
 
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.Complex.Isometry
-import Mathlib.Analysis.SpecialFunctions.Complex.Arg
-import Mathlib.Analysis.SpecialFunctions.Complex.Log
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.Analysis.SpecialFunctions.PolarCoord
-import Mathlib.MeasureTheory.Function.SpecialFunctions.Basic
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
-import Mathlib.MeasureTheory.Measure.Lebesgue.Complex
-import Mathlib.MeasureTheory.Measure.Prod
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.FunProp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Analysis.Complex.Isometry
+public import Mathlib.Analysis.SpecialFunctions.Complex.Arg
+public import Mathlib.Analysis.SpecialFunctions.Complex.Log
+public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+public import Mathlib.Analysis.SpecialFunctions.PolarCoord
+public import Mathlib.MeasureTheory.Function.SpecialFunctions.Basic
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
+public import Mathlib.MeasureTheory.Measure.Lebesgue.Complex
+public import Mathlib.MeasureTheory.Measure.Prod
+public import Mathlib.RingTheory.SimpleRing.Principal
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.FunProp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 open scoped BigOperators
 
 

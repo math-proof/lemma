@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeHi.lean -/
 
-import Def.CPythonListsort.Code.Transcription.Gallop.Part2
-import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
-import Structure.CPythonListsort.Code.Transcription.MergeHi.Part2
+module
+
+public import Def.CPythonListsort.Code.Transcription.Gallop.Part2
+public import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
+public import Structure.CPythonListsort.Code.Transcription.MergeHi.Part2
 /-!
 # Right-to-left stable merge transcription
 
@@ -35,7 +37,7 @@ universe u v w x
 
 variable {κ : Type u} {ν : Type v}
 
-inductive MergeHiPhase where
+public inductive MergeHiPhase where
   | straight (aCount bCount : Nat)
   | galloping (aCount bCount : Nat)
 

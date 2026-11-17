@@ -1,6 +1,9 @@
-import Lean
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+module
 
+public meta import Lean
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+
+public meta section
 
 /--
 Textbook sum over the *value* of a bound sequence at a fixed index.  In probability texts one writes

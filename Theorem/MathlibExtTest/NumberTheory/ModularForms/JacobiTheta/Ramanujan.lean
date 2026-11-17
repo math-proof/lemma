@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.ModularForms.JacobiTheta.Ramanujan
-import Lemma.Nat.ModularForms.JacobiTheta.Ramanujan
+import Theorem.Nat.ModularForms.JacobiTheta.Ramanujan
 
 
 namespace MetaMathlibExt

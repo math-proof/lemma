@@ -1,7 +1,12 @@
 -- Carved from Lemma/Definitions/Def_Valuation_CompletionAlgebra.lean: instance decls only.
-import Mathlib.Topology.Algebra.Valued.WithVal
-import Mathlib.Topology.Algebra.UniformRing
-import Mathlib.Topology.Algebra.UniformMulAction
+
+module
+
+public import Mathlib.Topology.Algebra.Valued.WithVal
+public import Mathlib.Topology.Algebra.UniformRing
+public import Mathlib.Topology.Algebra.UniformMulAction
+
+@[expose] public section
 
 set_option autoImplicit false
 

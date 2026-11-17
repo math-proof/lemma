@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/PowerSortPolicyCost.lean -/
 
-import Def.CPythonListsort.Code.Assembly.MergePolicyReplay.Part4
-import Def.CPythonListsort.Code.Assembly.PowerTreeEntropy
-import Def.CPythonListsort.Code.Policy.BoundaryPowerGeometry
-import Def.CPythonListsort.Code.Assembly.PowerSortPolicyCost.Part2
+module
+
+public import Def.CPythonListsort.Code.Assembly.MergePolicyReplay.Part4
+public import Def.CPythonListsort.Code.Assembly.PowerTreeEntropy
+public import Def.CPythonListsort.Code.Policy.BoundaryPowerGeometry
+public import Def.CPythonListsort.Code.Assembly.PowerSortPolicyCost.Part2
 /-!
 # PowerSort policy and cost bridge
 
@@ -14,6 +16,9 @@ shallower boundary power unchanged.  The statements use the same `RunSpan`
 and `replayBoundaryPower` objects as the executable policy replay, so no
 paper-level midpoint oracle is introduced at the bridge.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

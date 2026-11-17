@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.Noetherian
-import Mathlib.RingTheory.RegularLocalRing.Defs
+module
+
+public import Mathlib.AlgebraicGeometry.Noetherian
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 

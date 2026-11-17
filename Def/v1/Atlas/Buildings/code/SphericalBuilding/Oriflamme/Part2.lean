@@ -17,7 +17,7 @@ import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.LinearAlgebra.Matrix.BilinearForm
 import Mathlib.LinearAlgebra.Determinant
 import Def.v1.Atlas.Buildings.code.GeometricAlgebra.ExtendingIsometries
-import Lemma.Submodule.OfEq.eq.M.of.Eq
+import Theorem.Submodule.OfEq.eq.M.of.Eq
 import Lemma.Submodule.Any_EqAndAll_Eq_V.of.IsSubspaceIsometry.EqOrthogonalBilinFormTop_Bot.All_Eq
 import Abbrev.v1.Atlas.Buildings.code.SphericalBuilding.Oriflamme
 

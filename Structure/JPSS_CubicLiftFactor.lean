@@ -1,13 +1,15 @@
-import Mathlib
-import Structure.AutomorphicForm_FormalBaseChange
-import Def.AutomorphicForm_LocalLFactor
-import Theorems.Thm_AutomorphicForm_isBaseChangeOf_formalBaseChange
+module
+
+public import Mathlib
+public import Structure.AutomorphicForm_FormalBaseChange
+public import Def.AutomorphicForm_LocalLFactor
+public import Theorems.Thm_AutomorphicForm_isBaseChangeOf_formalBaseChange
 
 set_option autoImplicit false
 
 open IsDedekindDomain NumberField Polynomial
 
-noncomputable section
+public noncomputable section
 
 namespace AutomorphicForm
 

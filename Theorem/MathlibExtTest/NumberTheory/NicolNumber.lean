@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.NicolNumber
-import Lemma.Nat.NicolNumber
+import Theorem.Nat.NicolNumber
 open MetaMathlibExt
 open scoped BigOperators
 

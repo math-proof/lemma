@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FiniteLiesOver.lean -/
+module
 
-import Mathlib.NumberTheory.RamificationInertia.Valuation
-import Def.NumberTheory.NumberField.Completion.FiniteLiesOver
+public import Mathlib.NumberTheory.RamificationInertia.Valuation
+public import Def.NumberTheory.NumberField.Completion.FiniteLiesOver
+
 /-!
 # Canonical maps between finite-place completions
 
@@ -51,6 +53,8 @@ Source conventions used here:
   `Completion.continuous_map`; injectivity follows because the resulting
   ring homomorphism is between fields.
 -/
+
+public section
 
 
 namespace IsDedekindDomain.HeightOneSpectrum

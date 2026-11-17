@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/OddIndependent.lean -/
 
-import Mathlib.Combinatorics.SimpleGraph.Clique
-import Mathlib.Data.Set.Card
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Data.Set.Card
+
+@[expose] public section
+
 /-!
 # Odd independent sets
 

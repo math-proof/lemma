@@ -1064,6 +1064,44 @@ export class LeanRandomBigOp extends LeanBigOperator {
         return 67;
     }
 
+    /**
+     * Promote drops the space-separated wrapper, so the closed form is one node
+     * (`ℙ[π](s[:k] | Z)`). A following term is function application (`… ω`),
+     * not a cond-prob observation. `Lean.push_token` bubbles through `append`
+     * and the argument never lands in the tree, so echo and imply latex omit it.
+     */
+    push_token(word) {
+        const {indent, level} = this;
+        const newTok = new L.LeanToken(word, indent, level);
+        const parent = this.parent;
+        if (!parent) return super.push_token(word);
+        if (parent instanceof L.LeanArgsSpaceSeparated) {
+            parent.push(newTok);
+            return newTok;
+        }
+        parent.replace(this, new L.LeanArgsSpaceSeparated([this, newTok], indent, level));
+        return newTok;
+    }
+
+    /**
+     * `ℙ[π](event) fun ω => …` — juxtaposition, same as `LeanToken.append`.
+     * Tactic keywords still bubble.
+     */
+    append($new, func) {
+        if (typeof $new === 'string' && (func === 'expr' || func === 'operator')) {
+            const Ctor = L[$new];
+            if (Ctor && this.parent) {
+                const {indent, level} = this;
+                const caret = new L.LeanCaret(indent, level);
+                const node = new Ctor(caret, indent, level);
+                if (this.parent instanceof L.LeanArgsSpaceSeparated) this.parent.push(node);
+                else this.parent.replace(this, new L.LeanArgsSpaceSeparated([this, node], indent, level));
+                return caret;
+            }
+        }
+        return super.append($new, func);
+    }
+
     set_line(line) {
         this.line = line;
         line = this.bound.set_line(line);

@@ -1,7 +1,10 @@
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.Normed.Group.InfiniteSum
-import Mathlib.Analysis.Normed.Order.Lattice
+module
 
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Normed.Group.InfiniteSum
+public import Mathlib.Analysis.Normed.Order.Lattice
+
+public section
 
 namespace MetaMathlibExt
 

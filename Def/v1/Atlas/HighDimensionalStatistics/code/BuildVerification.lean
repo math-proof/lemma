@@ -9,11 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_6
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_6
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_6
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_3
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Thm_4_4
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Thm_5_9
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter16.Props
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter16.Props
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_2
 import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Thm_3_3
 import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Thm_4_4

@@ -1,9 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SelfGeneratingSet.lean -/
 
-import Mathlib.Data.Finset.Basic
-import Mathlib.Data.Set.Lattice
-import Inductive.Combinatorics.SelfGeneratingSet
+module
 
+public import Mathlib.Data.Finset.Basic
+public import Mathlib.Data.Set.Lattice
+public import Inductive.Combinatorics.SelfGeneratingSet
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

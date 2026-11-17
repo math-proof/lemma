@@ -1,9 +1,11 @@
-import Structure.AlgebraicGeometry_PolarisedAbelianSchemeOfType
-import Def.AlgebraicGeometry_ModulesPullbackLocalSection
+module
+
+public import Structure.AlgebraicGeometry_PolarisedAbelianSchemeOfType
+public import Def.AlgebraicGeometry_ModulesPullbackLocalSection
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 universe u
 

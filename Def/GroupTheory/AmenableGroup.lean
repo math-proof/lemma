@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/AmenableGroup.lean -/
 
-import Mathlib.Algebra.Group.Action.Pointwise.Finset
-import Mathlib.Basic.Real.Basic
-import Mathlib.Data.Fintype.Perm
-import Mathlib.Algebra.Group.PUnit
+module
+
+public import Mathlib.Algebra.Group.Action.Pointwise.Finset
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Data.Fintype.Perm
+public import Mathlib.Algebra.Group.PUnit
+
+@[expose] public section
+
 open scoped Pointwise Classical symmDiff
 
 

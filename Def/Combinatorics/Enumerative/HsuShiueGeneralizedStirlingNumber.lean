@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/HsuShiueGeneralizedStirlingNumber.lean -/
 
-import Mathlib.Analysis.RCLike.Basic
+module
+
+public import Mathlib.Analysis.RCLike.Basic
+
+@[expose] public section
+
 /-!
 Hsu-Shiue generalized Stirling numbers S(n, k; alpha, beta, r),
 following the JIS source (source statement jis_7e7402faeeffb59e829d97bc).

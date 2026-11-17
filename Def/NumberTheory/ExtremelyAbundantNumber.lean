@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ExtremelyAbundantNumber.lean -/
 
-import Mathlib.NumberTheory.ArithmeticFunction.Misc
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
+module
 
+public import Mathlib.NumberTheory.ArithmeticFunction.Misc
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

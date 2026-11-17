@@ -1,6 +1,12 @@
-import Def.Lean.Name
-import Def.Lean.BinderInfo.Part2
-import Instance.Lean.Meta.Expr
+module
+
+public import Lean
+public import Def.Lean.Name
+public import Def.Lean.BinderInfo
+public import Instance.Lean.Meta.Expr
+
+@[expose] public section
+
 open Lean.Meta
 open Lean (BinderInfo PPContext FormatWithInfos Expr Core.Context getEnv getMCtx getLCtx getOptions ppExt)
 
@@ -244,8 +250,7 @@ def Lean.Expr.comm : Expr → Expr
     .lam n t b.comm i
   | .app (.app (.app (.const `Filter.Eventually us) α) p) f =>
     (Expr.const `Filter.Eventually us).mkApp [α, p.comm, f]
-  | .app (.app (.app (.const `Filter.EventuallyEq us) l) f) g =>
-    (Expr.const `Filter.EventuallyEq us).mkApp [l, g, f]
+  | .app (.app (.app (.app (.app (.const `Filter.EventuallyEq us) α) β) l) f) g =>
+    (Expr.const `Filter.EventuallyEq us).mkApp [α, β, l, g, f]
   | e  =>
     panic! s!"Expected an operator of Eq, Iff, SEq, HEq, Ne, Lt, Le, Gt, Ge, And, Or, Not, ModEq, Eventually, EventuallyEq, but got {e.ctorName} :\n{e}"
-

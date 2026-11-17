@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/TrinomialTransformSequence.lean -/
 
-import Def.NumberTheory.TrinomialCoefficient
+module
+
+public import Def.NumberTheory.TrinomialCoefficient
+
+@[expose] public section
+
 /-!
 # Trinomial transform sequence
 

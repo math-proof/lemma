@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.LSeries.Artin
-import Lemma.Nat.LSeries.Artin
+import Theorem.Nat.LSeries.Artin
 import Def.MathlibExtTest.NumberTheory.LSeries.Artin
 
 

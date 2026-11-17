@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeCounting/ResidueClassPsi.lean -/
 
-import Mathlib.NumberTheory.LSeries.PrimesInAP
+module
+
+public import Mathlib.NumberTheory.LSeries.PrimesInAP
+
+@[expose] public section
+
 /-!
 # The Chebyshev psi function in a residue class
 

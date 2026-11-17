@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/TotienomialCoefficient.lean -/
 
-import Mathlib.Data.Nat.Totient
+module
+
+public import Mathlib.Data.Nat.Totient
+
+@[expose] public section
+
 /-!
 Verified Edgar-Spivey JIS source:
 https://cs.uwaterloo.ca/journals/JIS/VOL19/Edgar/edgar3.tex

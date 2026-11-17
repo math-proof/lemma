@@ -16,12 +16,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Algebra.Module.NatInt
-import Mathlib.Combinatorics.Additive.AP.Three.Defs
-import Mathlib.Data.ENat.Lattice
-import Mathlib.Data.Set.Card
-import Mathlib.Tactic
-import Theorem.Combinatorics.AP.Basic
+module
+
+public import Mathlib.Algebra.Module.NatInt
+public import Mathlib.Combinatorics.Additive.AP.Three.Defs
+public import Mathlib.Data.ENat.Lattice
+public import Mathlib.Data.Set.Card
+public import Mathlib.Tactic
+public import Theorem.Combinatorics.AP.Basic
+
+@[expose] public section
+
 variable {α : Type*} [AddCommMonoid α]
 
 /-! # Arithmetic progressions -/

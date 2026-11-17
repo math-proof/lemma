@@ -1,19 +1,23 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
+module
 
-import Mathlib.Algebra.Lie.Semisimple.Defs
-import Mathlib.Algebra.Lie.CartanCriterion
-import Mathlib.Algebra.Lie.Quotient
-import Mathlib.LinearAlgebra.Basis.Defs
-import Mathlib.LinearAlgebra.Eigenspace.Zero
-import Mathlib.LinearAlgebra.Matrix.BilinearForm
+public import Mathlib.Algebra.Lie.Semisimple.Defs
+public import Mathlib.Algebra.Lie.CartanCriterion
+public import Mathlib.Algebra.Lie.Quotient
+public import Mathlib.LinearAlgebra.Basis.Defs
+public import Mathlib.LinearAlgebra.Eigenspace.Zero
+public import Mathlib.LinearAlgebra.Matrix.BilinearForm
+
 /-!
 # Levi decomposition
 
 This file proves Weyl's complete reducibility theorem and the Levi decomposition for
 finite-dimensional Lie algebras over fields of characteristic zero.
 -/
+
+public section
 
 
 namespace LeviDecomposition

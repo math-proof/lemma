@@ -1,14 +1,16 @@
 /-
   Author: @toskua, Avocado
 -/
+module
 
-import Mathlib.Analysis.CStarAlgebra.GelfandNaimarkSegal
-import Mathlib.Analysis.CStarAlgebra.Unitary.Span
-import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Abs
-import Mathlib.Order.CompletePartialOrder
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.Linarith
+public import Mathlib.Analysis.CStarAlgebra.GelfandNaimarkSegal
+public import Mathlib.Analysis.CStarAlgebra.Unitary.Span
+public import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Abs
+public import Mathlib.Order.CompletePartialOrder
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.Linarith
 
+public section
 
 section
 

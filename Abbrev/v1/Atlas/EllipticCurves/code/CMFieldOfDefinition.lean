@@ -8,13 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
-import Mathlib.Analysis.Complex.UpperHalfPlane.MoebiusAction
-import Mathlib.GroupTheory.GroupAction.Defs
-import Def.v1.Atlas.EllipticCurves.code.CMFieldOfDefinition
+module
+
+public import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
+public import Mathlib.Analysis.Complex.UpperHalfPlane.MoebiusAction
+public import Mathlib.GroupTheory.GroupAction.Defs
+public import Def.v1.Atlas.EllipticCurves.code.CMFieldOfDefinition
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 open Matrix.SpecialLinearGroup Matrix CongruenceSubgroup
 

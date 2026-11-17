@@ -1,8 +1,10 @@
-import Structure.ModularCurve_JHTwistType
+module
+
+public import Structure.ModularCurve_JHTwistType
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open AlgebraicCurve IsLocalRing ModularCurve ModularCurve.JHNeronObjectAtP
 open scoped MatrixGroups

@@ -7,10 +7,12 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Structure.v1.Atlas.LieGroups.code.InfinitesimalEquivalenceCore.Part3
-import Lemma.Complex.DenseRange_ι
+public import Structure.v1.Atlas.LieGroups.code.InfinitesimalEquivalenceCore.Part3
+public import Lemma.Complex.DenseRange_ι
 
+public section
 
 noncomputable section
 

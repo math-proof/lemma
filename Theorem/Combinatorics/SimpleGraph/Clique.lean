@@ -15,12 +15,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Combinatorics.SimpleGraph.Clique
-import Mathlib.Data.ENat.Lattice
-import Mathlib.Order.CompletePartialOrder
-import Notation.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Data.ENat.Lattice
+public import Mathlib.Order.CompletePartialOrder
+public import Notation.Combinatorics.SimpleGraph.Clique
 
+public section
 
 namespace SimpleGraph
 

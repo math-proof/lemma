@@ -8,12 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.MvPolynomial.PDeriv
-import Mathlib.LinearAlgebra.Matrix.Rank
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.Localization.AtPrime.Basic
-import Mathlib.RingTheory.Ideal.Maps
+module
 
+public import Mathlib.Algebra.MvPolynomial.PDeriv
+public import Mathlib.LinearAlgebra.Matrix.Rank
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.Localization.AtPrime.Basic
+public import Mathlib.RingTheory.Ideal.Maps
+
+@[expose] public section
 
 noncomputable section
 

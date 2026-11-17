@@ -3,6 +3,8 @@ import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Random.PSpace_Path.of.All_PSpace
 import Instance.Probability.Moments.Variance
 import Lemma.Random.OfRV.eq.Integral.of.AEStronglyMeasurable_Map
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory PolicyGradient PolicyGradient.Model Random
 
 
@@ -44,4 +46,4 @@ private lemma main
 
 
 -- created on 2026-09-28
--- updated on 2026-11-16
+-- updated on 2026-11-17

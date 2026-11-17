@@ -9,8 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice
+
+@[expose] public section
+
 open Set Finset
 
 

@@ -1,9 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/FractionalIdeal/Dual.lean -/
+module
 
-import Mathlib.LinearAlgebra.BilinearForm.DualLattice
-import Mathlib.RingTheory.FractionalIdeal.Inverse
-import Mathlib.RingTheory.PicardGroup
-import Def.RingTheory.FractionalIdeal.Dual
+public import Mathlib.LinearAlgebra.BilinearForm.DualLattice
+public import Mathlib.RingTheory.FractionalIdeal.Inverse
+public import Mathlib.RingTheory.PicardGroup
+public import Def.RingTheory.FractionalIdeal.Dual
+
+public section
+
 @[expose] noncomputable section
 
 open scoped nonZeroDivisors

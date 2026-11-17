@@ -1,5 +1,9 @@
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.AlgebraicGeometry.EllipticCurve.VariableChange
+module
+
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.AlgebraicGeometry.EllipticCurve.VariableChange
+
+@[expose] public section
 
 set_option autoImplicit false
 

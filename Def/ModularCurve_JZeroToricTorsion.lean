@@ -1,6 +1,6 @@
 import Mathlib
 import Def.ModularCurve_JZeroNeronDataPrime
-import Lemma.HahnSeries.ModularUnit
+import Theorem.HahnSeries.ModularUnit
 
 set_option autoImplicit false
 

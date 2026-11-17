@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FermatPrime.lean -/
 
-import Mathlib.NumberTheory.Fermat
+module
+
+public import Mathlib.NumberTheory.Fermat
+
+@[expose] public section
+
 /-!
 # Fermat primes
 

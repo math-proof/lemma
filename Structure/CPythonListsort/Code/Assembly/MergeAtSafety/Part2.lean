@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeAtSafety.lean -/
 
-import Def.CPythonListsort.Code.Assembly.MergeMemoryLifecycle.Part2
-import Lemma.List.Atlas.CPythonListsort.Code.Policy.MergeAtPreservation
-import Def.CPythonListsort.Code.Assembly.MergeAtSafety.Part2
+module
+
+public import Def.CPythonListsort.Code.Assembly.MergeMemoryLifecycle.Part2
+public import Lemma.List.Atlas.CPythonListsort.Code.Policy.MergeAtPreservation
+public import Def.CPythonListsort.Code.Assembly.MergeAtSafety.Part2
 /-!
 # `merge_at` safety
 
@@ -12,6 +14,9 @@ already traced `merge_lo` or `merge_hi` evaluator.  The logical shrink of the
 active pending array is not an indexed C access; the indexed reads and writes
 which precede it are recorded in source order.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

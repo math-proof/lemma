@@ -122,7 +122,7 @@ namespace CPythonListsort
 [pendingRunsCorrect_nonzeroBase_witness](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/PendingRunCorrectness.lean)
 -/
 @[path]
-lemma pendingRunsCorrect_nonzeroBase_witness
+lemma pendingRunsCorrect_nonzeroBase_witness :
 -- imply
   PendingRunsCorrect pendingRunsCorrectRegressionLt pendingRunsCorrectRegressionInput pendingRunsCorrectRegressionState 2 := by
 -- proof
@@ -144,7 +144,7 @@ namespace CPythonListsort
 [pendingRunsCorrect_unscannedSuffix_freedom_regression](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/PendingRunCorrectness.lean)
 -/
 @[path]
-lemma pendingRunsCorrect_unscannedSuffix_freedom_regression
+lemma pendingRunsCorrect_unscannedSuffix_freedom_regression :
 -- imply
   pendingRunsCorrectRegressionInput.extract 0 3 = pendingRunsCorrectSuffixInput.extract 0 3 ∧ pendingRunsCorrectRegressionState.data.entries.extract 0 3 = pendingRunsCorrectSuffixState.data.entries.extract 0 3 ∧ pendingRunsCorrectRegressionInput ≠ pendingRunsCorrectSuffixInput ∧ pendingRunsCorrectRegressionState.data.entries ≠ pendingRunsCorrectSuffixState.data.entries ∧ canonicalOccurrenceSegment pendingRunsCorrectRegressionInput 1 2 = canonicalOccurrenceSegment pendingRunsCorrectSuffixInput 1 2 ∧ pendingOccurrenceKeys pendingRunsCorrectRegressionState = pendingOccurrenceKeys pendingRunsCorrectSuffixState ∧ PendingRunsCorrect pendingRunsCorrectRegressionLt pendingRunsCorrectRegressionInput pendingRunsCorrectRegressionState 2 ∧ PendingRunsCorrect pendingRunsCorrectRegressionLt pendingRunsCorrectSuffixInput pendingRunsCorrectSuffixState 2 := by
 -- proof
@@ -167,7 +167,7 @@ namespace CPythonListsort
 [canonicalOccurrenceSegment_absolute_origins_regression](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/PendingRunCorrectness.lean)
 -/
 @[path]
-lemma canonicalOccurrenceSegment_absolute_origins_regression
+lemma canonicalOccurrenceSegment_absolute_origins_regression :
 -- imply
   canonicalOccurrenceSegment (#[10, 20, 30] : Array Nat) 1 2 = [{ value := 20, origin := 1 }, { value := 30, origin := 2 }] := by
 -- proof
@@ -181,7 +181,7 @@ namespace CPythonListsort
 [canonicalOccurrenceSegment_ne_local_retag_regression](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/PendingRunCorrectness.lean)
 -/
 @[path]
-lemma canonicalOccurrenceSegment_ne_local_retag_regression
+lemma canonicalOccurrenceSegment_ne_local_retag_regression :
 -- imply
   canonicalOccurrenceSegment (#[10, 20, 30] : Array Nat) 1 2 ≠ (tagOccurrences ((#[10, 20, 30] : Array Nat).extract 1 3)).toList := by
 -- proof

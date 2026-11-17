@@ -10,8 +10,8 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.ProjectionTheory.code.HighFreqMultConv
 import Lemma.Real.Atlas.v1.ProjectionTheory.code.HighFreqMultConv
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.BKTLemma2
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.BKTLemma3
+import Theorem.Real.Atlas.v1.ProjectionTheory.code.BKTLemma2
+import Theorem.Real.Atlas.v1.ProjectionTheory.code.BKTLemma3
 import Lemma.Real.Atlas.v1.ProjectionTheory.code.MultConvProjection
 import Def.v1.Atlas.ProjectionTheory.code.BKTLemma2
 import Def.v1.Atlas.ProjectionTheory.code.BKTLemma3

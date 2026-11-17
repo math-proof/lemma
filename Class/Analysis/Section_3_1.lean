@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+public section
+
 set_option doc.verso.suggestions false
 
 /-!

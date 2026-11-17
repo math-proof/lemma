@@ -8,9 +8,11 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TensorCategories.code.SemisimpleMultitensor.Part6
-import Lemma.Category.Atlas.v1.TensorCategories.code.SemisimpleMultitensor
-import Class.v1.Atlas.TensorCategories.code.ChevalleyProperty.Part2
+module
+
+public import Def.v1.Atlas.TensorCategories.code.SemisimpleMultitensor.Part6
+public import Lemma.Category.Atlas.v1.TensorCategories.code.SemisimpleMultitensor
+public import Class.v1.Atlas.TensorCategories.code.ChevalleyProperty.Part2
 set_option maxHeartbeats 400000
 
 open CategoryTheory MonoidalCategory CategoryTheory.Limits
@@ -18,7 +20,7 @@ open CategoryTheory MonoidalCategory CategoryTheory.Limits
 universe v u
 
 
-noncomputable section
+public noncomputable section
 
 namespace CategoryTheory
 

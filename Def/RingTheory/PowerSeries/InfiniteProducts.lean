@@ -2,8 +2,14 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.RingTheory.PowerSeries.Limits.Part2
+
+module
+
+public import Mathlib
+public import Def.RingTheory.PowerSeries.Limits.Part2
+
+@[expose] public section
+
 open scoped BigOperators
 
 /-!

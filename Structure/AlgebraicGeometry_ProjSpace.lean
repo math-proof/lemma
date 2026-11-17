@@ -1,14 +1,16 @@
-import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Proper
-import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Functor
-import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Mathlib.RingTheory.MvPolynomial.Ideal
-import Instance.AlgebraicGeometry_ProjSpace
+module
+
+public import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Proper
+public import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Functor
+public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Mathlib.RingTheory.MvPolynomial.Ideal
+public import Instance.AlgebraicGeometry_ProjSpace
 
 set_option autoImplicit false
 set_option linter.unusedVariables false
 
-noncomputable section
+public noncomputable section
 
 universe u
 

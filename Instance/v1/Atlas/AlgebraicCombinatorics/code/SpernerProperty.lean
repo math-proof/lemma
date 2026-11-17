@@ -8,14 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Order.Grade
-import Mathlib.Order.Antichain
-import Mathlib.Data.Finset.Grade
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Fintype.Powerset
-import Mathlib.Data.Fin.Basic
-import Mathlib.Data.Finset.Lattice.Fold
-import Abbrev.v1.Atlas.AlgebraicCombinatorics.code.SpernerProperty
+module
+
+public import Mathlib.Order.Grade
+public import Mathlib.Order.Antichain
+public import Mathlib.Data.Finset.Grade
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Fintype.Powerset
+public import Mathlib.Data.Fin.Basic
+public import Mathlib.Data.Finset.Lattice.Fold
+public import Abbrev.v1.Atlas.AlgebraicCombinatorics.code.SpernerProperty
+
+@[expose] public section
+
 open Finset
 
 

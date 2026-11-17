@@ -1,5 +1,9 @@
-import Class.MvFormalGroup_BasicV2
-import Structure.MvFormalGroup_Deformation
+module
+
+public import Class.MvFormalGroup_BasicV2
+public import Structure.MvFormalGroup_Deformation
+
+@[expose] public section
 
 set_option autoImplicit false
 

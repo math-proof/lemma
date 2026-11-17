@@ -9,14 +9,16 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Def.StatisticalMechanics.Code.FrontierD.SixVertexMarkedPairLoopFiber.Part5
-import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialBoundaryToggleParity.Part3
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexColoredLoopPairing
+module
+
+public import Def.StatisticalMechanics.Code.FrontierD.SixVertexMarkedPairLoopFiber.Part5
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialBoundaryToggleParity.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexColoredLoopPairing
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure FKColoredLoopPairing (T : EvenTorus) where
   pairing : FKMedialLoopPairing T

@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.CPythonListsort.Code.Assembly.MergeCost.Part3
-open CPythonListsort CPythonListsort.RunProfile CPythonListsort.MergeTree CPythonListsort.MergePlan
+open CPythonListsort CPythonListsort.RunProfile CPythonListsort.MergeTree MergePlan
 
 
 namespace CPythonListsort.RunProfile
@@ -52,7 +52,7 @@ namespace CPythonListsort
 [binaryEntropy_nil](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeCost.lean)
 -/
 @[path]
-lemma binaryEntropy_nil
+lemma binaryEntropy_nil :
 -- imply
   binaryEntropy [] = 0 := by
 -- proof
@@ -72,7 +72,7 @@ lemma RunProfile.entropy_zero
   profile.entropy = 0 := by
 -- proof
   rw [RunProfile.entropy, RunProfile.fractions, profile.lengths_eq_nil]
-  simp
+  simp [binaryEntropy]
 
 end CPythonListsort
 
@@ -98,13 +98,14 @@ namespace CPythonListsort.MergePlan
 -/
 @[path]
 lemma leavesWithDepth_fst
-  {depth : Nat} :
+  (plan : MergePlan) :
 -- imply
-  ∀ tree : MergeTree, (tree.leavesWithDepth depth).map Prod.fst = tree.runLengths := by
+  plan.leavesWithDepth.map Prod.fst = plan.runLengths := by
 -- proof
   cases plan with
-  | empty => simp [leavesWithDepth, runLengths]
-  | tree root => simp [leavesWithDepth, runLengths]
+  | empty => simp [MergePlan.leavesWithDepth, MergePlan.runLengths]
+  | tree root =>
+    simp [MergePlan.leavesWithDepth, MergePlan.runLengths, MergeTree.leavesWithDepth_fst]
 
 end CPythonListsort.MergePlan
 
@@ -115,7 +116,7 @@ namespace CPythonListsort.MergePlan
 -/
 @[path]
 lemma mergeCost_eq_weightedPathLength
-  {plan : MergePlan} :
+  (plan : MergePlan) :
 -- imply
   plan.mergeCost = plan.weightedPathLength := by
 -- proof
@@ -198,8 +199,8 @@ namespace CPythonListsort
 @[path]
 lemma weightedPathLength_le_entropy_add_two
   {n : Nat}
-  {profile : RunProfile n}
-  {leaves : List (Nat × Nat)}
+  (profile : RunProfile n)
+  (leaves : List (Nat × Nat))
 -- given
   (hlengths : leaves.map Prod.fst = profile.lengths)
   (hdepth : ∀ leaf ∈ leaves, (leaf.2 : ℝ) ≤ Real.logb 2 ((n : ℝ) / (leaf.1 : ℝ)) + 2) :
@@ -274,15 +275,15 @@ namespace CPythonListsort
 @[path]
 lemma MergePlan.mergeCost_le_entropy_add_two
   {n : Nat}
-  {plan : MergePlan}
-  {profile : RunProfile n}
+  (plan : MergePlan)
+  (profile : RunProfile n)
 -- given
   (hlengths : plan.runLengths = profile.lengths)
   (hdepth : ∀ leaf ∈ plan.leavesWithDepth, (leaf.2 : ℝ) ≤ Real.logb 2 ((n : ℝ) / (leaf.1 : ℝ)) + 2) :
 -- imply
   (plan.mergeCost : ℝ) ≤ (n : ℝ) * profile.entropy + 2 * (n : ℝ) := by
 -- proof
-  rw [plan.mergeCost_eq_weightedPathLength]
+  rw [MergePlan.mergeCost_eq_weightedPathLength plan]
   cases plan with
   | empty =>
     simpa only [MergePlan.weightedPathLength, List.map_nil, List.sum_nil,
@@ -305,8 +306,8 @@ namespace CPythonListsort
 @[path]
 lemma MergePlan.mergeCost_le_entropy_mul_add_two
   {n : Nat}
-  {plan : MergePlan}
-  {profile : RunProfile n}
+  (plan : MergePlan)
+  (profile : RunProfile n)
 -- given
   (hlengths : plan.runLengths = profile.lengths)
   (hdepth : ∀ leaf ∈ plan.leavesWithDepth, (leaf.2 : ℝ) ≤ Real.logb 2 ((n : ℝ) / (leaf.1 : ℝ)) + 2) :
@@ -314,7 +315,7 @@ lemma MergePlan.mergeCost_le_entropy_mul_add_two
   (plan.mergeCost : ℝ) ≤ profile.entropy * (n : ℝ) + 2 * (n : ℝ) := by
 -- proof
   simpa only [mul_comm] using
-    plan.mergeCost_le_entropy_add_two profile hlengths hdepth
+    MergePlan.mergeCost_le_entropy_add_two plan profile hlengths hdepth
 
 end CPythonListsort
 

@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Ideal.Norm.AbsNorm
-import Mathlib.NumberTheory.NumberField.Basic
+module
+
+public import Mathlib.RingTheory.Ideal.Norm.AbsNorm
+public import Mathlib.NumberTheory.NumberField.Basic
+@[expose] public section
+
 open Ideal
 
 

@@ -9,8 +9,10 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexFiniteStripEnum.Part6
-import Theorem.StatisticalMechanics.Code.Universality.HexStripCountsClose.Part3
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.HexFiniteStripEnum.Part6
+public import Theorem.StatisticalMechanics.Code.Universality.HexStripCountsClose.Part3
 
 
 namespace StatMech.Universality
@@ -19,7 +21,7 @@ open Complex HexWalk
 
 noncomputable section
 
-inductive HexAWColor
+public inductive HexAWColor
   | black
   | white
   deriving DecidableEq, Repr, Fintype

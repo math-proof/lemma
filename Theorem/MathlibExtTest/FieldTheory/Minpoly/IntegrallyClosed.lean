@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/FieldTheory/Minpoly/IntegrallyClosed.lean -/
 
 
-import Lemma.Rat.Minpoly.IntegrallyClosed
+import Theorem.Rat.Minpoly.IntegrallyClosed
 import Mathlib.Algebra.GCDMonoid.IntegrallyClosed
 variable {R K L : Type*} [CommRing R] [IsDomain R] [IsIntegrallyClosed R]
 variable [Field K] [Algebra R K] [IsFractionRing R K]

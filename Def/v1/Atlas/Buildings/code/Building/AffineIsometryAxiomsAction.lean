@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Theorem.v1.Atlas.Buildings.code.Building.AffineIsometry
 import Structure.v1.Atlas.Buildings.code.Building.GroupApplicationsCh17
-import Lemma.Set.ConjSet.eq.Image
+import Theorem.Set.ConjSet.eq.Image
 set_option linter.unusedSectionVars false
 set_option linter.unusedVariables false
 

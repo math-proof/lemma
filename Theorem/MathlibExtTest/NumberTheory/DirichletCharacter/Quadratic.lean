@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.DirichletCharacter.Quadratic
-import Lemma.Nat.DirichletCharacter.Quadratic
+import Theorem.Nat.DirichletCharacter.Quadratic
 import Mathlib.Tactic.NormNum.LegendreSymbol
 open MetaMathlibExt
 

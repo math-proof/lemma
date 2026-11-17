@@ -1,10 +1,12 @@
-import Structure.HeckeGalois_MazurCase1Bundle
+module
+
+public import Structure.HeckeGalois_MazurCase1Bundle
 
 set_option autoImplicit false
 
 universe u v
 
-noncomputable section
+public noncomputable section
 
 open Module
 

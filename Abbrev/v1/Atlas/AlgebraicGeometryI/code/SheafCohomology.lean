@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.CohomologyP1.Part2
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CohomologyP1
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CohomologyP1
 import Mathlib.RingTheory.Flat.Localization
 import Mathlib.Algebra.Module.LocalizedModule.Basic
 import Mathlib.RingTheory.Ideal.Span

@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.Padics.MoritaGamma
-import Lemma.Nat.Padics.MoritaGamma
+import Theorem.Nat.Padics.MoritaGamma
 
 
 example (p n : ℕ) [Fact p.Prime] :

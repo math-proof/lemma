@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.Martingale.OptionalStopping
-import Mathlib.Probability.Martingale.OptionalSampling
-import Mathlib.Probability.Martingale.Convergence
-import Mathlib.MeasureTheory.Function.ConditionalExpectation.Indicator
-import Mathlib.MeasureTheory.Function.UniformIntegrable
+module
+
+public import Mathlib.Probability.Martingale.OptionalStopping
+public import Mathlib.Probability.Martingale.OptionalSampling
+public import Mathlib.Probability.Martingale.Convergence
+public import Mathlib.MeasureTheory.Function.ConditionalExpectation.Indicator
+public import Mathlib.MeasureTheory.Function.UniformIntegrable
+
+@[expose] public section
+
 set_option maxHeartbeats 4000000
 
 open MeasureTheory Filter

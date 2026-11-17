@@ -1,21 +1,26 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/IsolationLemma.lean -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Data.Rat.Cast.Order
-import Mathlib.Data.Fintype.Powerset
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Data.Finset.Max
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Rat.Star
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Linarith.Lemmas
-import Mathlib.Tactic.NormNum.Ineq
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Positivity.Core
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Fintype.Pi
+public import Mathlib.Data.Rat.Cast.Order
+public import Mathlib.Data.Fintype.Powerset
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Data.Finset.Max
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Data.Rat.Star
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Linarith.Lemmas
+public import Mathlib.Tactic.NormNum.Ineq
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Positivity.Core
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 open scoped BigOperators
 
 

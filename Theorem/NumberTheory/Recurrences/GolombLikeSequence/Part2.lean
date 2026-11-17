@@ -3,18 +3,22 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
+module
 
-import Mathlib.Data.PNat.Defs
-import Mathlib.Data.Rat.Cast.Order
-import Mathlib.Order.Monotone.Basic
-import Mathlib.Tactic
-import Def.NumberTheory.Recurrences.GolombLikeSequence.Part2
+public import Mathlib.Data.PNat.Defs
+public import Mathlib.Data.Rat.Cast.Order
+public import Mathlib.Order.Monotone.Basic
+public import Mathlib.Tactic
+public import Def.NumberTheory.Recurrences.GolombLikeSequence.Part2
+
 /-!
 # Closed forms for Golomb-like sequences
 
 This file proves existence, uniqueness, and the block closed form for strictly increasing
 positive-integer solutions of `f (f n) = y * n + z`.
 -/
+
+public section
 
 
 namespace MetaMathlibExt

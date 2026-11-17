@@ -32,8 +32,8 @@ import Mathlib.Topology.Algebra.InfiniteSum.Basic
 import Mathlib.Topology.Algebra.InfiniteSum.SummationFilter
 import Mathlib.Topology.Basic
 import Def.Analysis.Ramanujan.Part1Ch8Entry9Qgamma
-import Lemma.Complex.Part1Ch8Entry9Qgamma
-import Lemma.Complex.Digamma
+import Theorem.Complex.Part1Ch8Entry9Qgamma
+import Theorem.Complex.Digamma
 import Lemma.Real.Digamma
 import Def.Analysis.SpecialFunctions.Gamma.Digamma
 import Mathlib.Algebra.Order.Star.Real

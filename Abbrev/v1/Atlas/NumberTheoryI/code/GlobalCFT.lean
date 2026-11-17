@@ -20,7 +20,7 @@ import Def.v1.Atlas.NumberTheoryI.code.Ideles.Part3
 import Def.v1.Atlas.NumberTheoryI.code.IdeleNorm.Part4
 import Def.v1.Atlas.NumberTheoryI.code.KroneckerWeber.Part5
 import Theorem.v1.Atlas.NumberTheoryI.code.Cor227.Part2
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Chapter3.FiniteApproximation
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Chapter3.FiniteApproximation
 import Theorem.v1.Atlas.NumberTheoryI.code.Ch22NormGroup.Part4
 import Def.v1.Atlas.NumberTheoryI.code.Prop2219.Part2
 import Def.v1.Atlas.NumberTheoryI.code.GlobalCFT.Part5

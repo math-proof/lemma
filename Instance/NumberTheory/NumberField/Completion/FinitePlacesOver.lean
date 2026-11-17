@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FinitePlacesOver.lean -/
 
-import Mathlib.NumberTheory.NumberField.Basic
-import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
-import Mathlib.RingTheory.Ideal.GoingUp
-import Def.NumberTheory.NumberField.Completion.FinitePlacesOver
+module
+
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
+public import Mathlib.RingTheory.Ideal.GoingUp
+public import Def.NumberTheory.NumberField.Completion.FinitePlacesOver
 /-!
 # Places of a number field extension lying over a fixed finite place
 
@@ -34,6 +36,7 @@ Section 13.1, primary declaration
   the completion maps or the full tensor-product equivalence of Theorem 13.5.
 -/
 
+@[expose] public section
 
 namespace IsDedekindDomain.HeightOneSpectrum
 

@@ -1,9 +1,11 @@
-import Def.CerednikDrinfeld_QMModuliPropsD
-import Structure.CerednikDrinfeld_QMModuliTower
+module
+
+public import Def.CerednikDrinfeld_QMModuliPropsD
+public import Structure.CerednikDrinfeld_QMModuliTower
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open CategoryTheory AlgebraicGeometry NeronModelInfra GoodReductionJacobian IsDedekindDomain AlgebraicCurve
 open scoped Quaternion TensorProduct NumberField

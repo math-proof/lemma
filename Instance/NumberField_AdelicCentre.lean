@@ -1,7 +1,11 @@
 -- Carved from Lemma/Definitions/Def_NumberField_AdelicCentre.lean: instance decls only.
-import Instance.NumberField_AdelicHaar
-import Lemma.Matrix.AdelicCentre
-import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Basic
+
+module
+
+public import Instance.NumberField_AdelicHaar
+public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Basic
+
+@[expose] public section
 
 open IsDedekindDomain NumberField MeasureTheory
 open scoped Pointwise

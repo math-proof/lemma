@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/HankelTransform.lean -/
 
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Mathlib.RingTheory.PowerSeries.Basic
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Mathlib.RingTheory.PowerSeries.Basic
+
+@[expose] public section
+
 /-!
 # Hankel transforms
 

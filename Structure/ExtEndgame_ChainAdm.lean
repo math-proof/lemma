@@ -1,10 +1,14 @@
-import Mathlib
-import Structure.GroupCohomology_SelmerAdm
-import Def.DualSelmer_ExtConditions
-import Def.ExtCitation_KummerBridge
-import Structure.ExtCitation_AdmissibleExtension
-import Def.Stickelberger_Basic
-import Def.ExtEndgame_ChainAdm
+module
+
+public import Mathlib
+public import Structure.GroupCohomology_SelmerAdm
+public import Def.DualSelmer_ExtConditions
+public import Def.ExtCitation_KummerBridge
+public import Structure.ExtCitation_AdmissibleExtension
+public import Def.Stickelberger_Basic
+public import Def.ExtEndgame_ChainAdm
+
+public section
 
 set_option autoImplicit false
 

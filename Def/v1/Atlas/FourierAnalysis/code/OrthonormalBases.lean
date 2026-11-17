@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.InnerProductSpace.Orthonormal
-import Mathlib.Analysis.InnerProductSpace.Continuous
-import Mathlib.Analysis.InnerProductSpace.l2Space
+module
 
+public import Mathlib.Analysis.InnerProductSpace.Orthonormal
+public import Mathlib.Analysis.InnerProductSpace.Continuous
+public import Mathlib.Analysis.InnerProductSpace.l2Space
+
+@[expose] public section
 
 noncomputable section
 

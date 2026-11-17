@@ -9,14 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.GeometryOfManifolds.code.DifferentialForms.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.DifferentialForms
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticLinearAlgebra
 import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra.Part3
 import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds
 set_option autoImplicit false
 
 open DifferentialFormSpace
-
 
 /-- Records that a differential form space carries a positive half-dimension $n > 0$, so the
 ambient symplectic manifold has total dimension $2n$. -/
@@ -36,5 +33,4 @@ class IsCompactSymplectic (Ω : ℕ → Type*) (VF : Type*)
   volume_not_exact : (S : SymplecticManifold Ω VF) →
     ¬ (∃ β : Ω (2 * toSymplecticManifoldDim.n - 1),
       inst.d β = vol S)
-
 

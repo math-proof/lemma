@@ -1,6 +1,10 @@
 -- Carved from Lemma/Definitions/Def_ValuationSubring_ReduceAt.lean: instance decls only.
-import Mathlib
-import Lemma.WeierstrassCurve.ReductionMap
+
+module
+
+public import Mathlib
+
+@[expose] public section
 
 set_option autoImplicit false
 

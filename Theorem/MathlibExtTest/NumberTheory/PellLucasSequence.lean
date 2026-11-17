@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.PellLucasSequence
-import Lemma.Nat.PellLucasSequence
+import Theorem.Nat.PellLucasSequence
 
 
 namespace MetaMathlibExt

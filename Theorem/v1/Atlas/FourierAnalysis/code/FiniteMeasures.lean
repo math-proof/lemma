@@ -7,19 +7,21 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.MeasureTheory.Measure.CharacteristicFunction.TaylorExpansion
-import Mathlib.MeasureTheory.Integral.Prod
-import Mathlib.Topology.ContinuousMap.Bounded.Normed
-import Mathlib.Analysis.Distribution.SchwartzSpace.Fourier
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
-import Mathlib.Topology.MetricSpace.Bounded
-import Mathlib.Topology.Order.Basic
-import Mathlib.Analysis.Calculus.BumpFunction.FiniteDimension
-import Mathlib.MeasureTheory.Measure.Portmanteau
-import Mathlib.MeasureTheory.Integral.Bochner.Set
-import Def.v1.Atlas.FourierAnalysis.code.FiniteMeasures
+public import Mathlib.MeasureTheory.Measure.CharacteristicFunction.TaylorExpansion
+public import Mathlib.MeasureTheory.Integral.Prod
+public import Mathlib.Topology.ContinuousMap.Bounded.Normed
+public import Mathlib.Analysis.Distribution.SchwartzSpace.Fourier
+public import Mathlib.MeasureTheory.Integral.DominatedConvergence
+public import Mathlib.Topology.MetricSpace.Bounded
+public import Mathlib.Topology.Order.Basic
+public import Mathlib.Analysis.Calculus.BumpFunction.FiniteDimension
+public import Mathlib.MeasureTheory.Measure.Portmanteau
+public import Mathlib.MeasureTheory.Integral.Bochner.Set
+public import Def.v1.Atlas.FourierAnalysis.code.FiniteMeasures
 
+public section
 
 noncomputable section
 

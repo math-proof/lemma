@@ -4,19 +4,24 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Finset.Range
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Basic.Real.Basic
-import Mathlib.Algebra.Module.LinearMap.End
-import Mathlib.Algebra.Algebra.Bilinear
-import Mathlib.Algebra.Polynomial.Eval.Defs
-import Mathlib.Data.Nat.Choose.Sum
-import Mathlib.RingTheory.PowerSeries.NoZeroDivisors
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.NoncommRing
-import Mathlib.Tactic.Ring
-import Theorem.Combinatorics.Enumerative.SpiveyPQBell
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Finset.Range
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Algebra.Module.LinearMap.End
+public import Mathlib.Algebra.Algebra.Bilinear
+public import Mathlib.Algebra.Polynomial.Eval.Defs
+public import Mathlib.Data.Nat.Choose.Sum
+public import Mathlib.RingTheory.PowerSeries.NoZeroDivisors
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.NoncommRing
+public import Mathlib.Tactic.Ring
+public import Theorem.Combinatorics.Enumerative.SpiveyPQBell
+
+@[expose] public section
+
 /-!
 # The `(p, q)`-deformed Spivey formula
 

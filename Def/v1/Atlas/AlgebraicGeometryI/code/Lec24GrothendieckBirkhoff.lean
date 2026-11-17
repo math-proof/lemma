@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Scheme
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Mathlib.CategoryTheory.Limits.Shapes.Products
-import Mathlib.Data.Multiset.Sort
+module
+
+public import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Scheme
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Mathlib.CategoryTheory.Limits.Shapes.Products
+public import Mathlib.Data.Multiset.Sort
+
+@[expose] public section
+
 open AlgebraicGeometry CategoryTheory Limits
 
 attribute [local instance] MvPolynomial.gradedAlgebra

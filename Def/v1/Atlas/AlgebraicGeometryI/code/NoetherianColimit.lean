@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.Sheaves.Limits
-import Mathlib.Topology.NoetherianSpace
-import Mathlib.CategoryTheory.Limits.FunctorCategory.Basic
-import Mathlib.CategoryTheory.Filtered.Basic
+module
+
+public import Mathlib.Topology.Sheaves.Limits
+public import Mathlib.Topology.NoetherianSpace
+public import Mathlib.CategoryTheory.Limits.FunctorCategory.Basic
+public import Mathlib.CategoryTheory.Filtered.Basic
+
+@[expose] public section
+
 open CategoryTheory CategoryTheory.Limits Opposite TopologicalSpace
 
 

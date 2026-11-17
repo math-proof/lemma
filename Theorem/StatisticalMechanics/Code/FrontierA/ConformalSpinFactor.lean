@@ -7,12 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib
-import Def.StatisticalMechanics.Code.FrontierA.ConformalSpinFactor
+public import Mathlib
+public import Def.StatisticalMechanics.Code.FrontierA.ConformalSpinFactor
 open scoped BigOperators
 
+public section
 
 namespace StatMech.FrontierA
 

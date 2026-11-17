@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Geometry/Euclidean/Marden.lean -/
 
 
-import Lemma.Set.Euclidean.Marden
+import Theorem.Set.Euclidean.Marden
 
 
 namespace MetaMathlibExt

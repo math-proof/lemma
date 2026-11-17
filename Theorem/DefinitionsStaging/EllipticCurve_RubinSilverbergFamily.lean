@@ -1,9 +1,12 @@
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.LinearAlgebra.Matrix.Notation
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Def.EllipticCurve_RubinSilverbergFamily
+module
+
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.LinearAlgebra.Matrix.Notation
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Def.EllipticCurve_RubinSilverbergFamily
 set_option autoImplicit false
 
+public section
 
 section KleinForms
 

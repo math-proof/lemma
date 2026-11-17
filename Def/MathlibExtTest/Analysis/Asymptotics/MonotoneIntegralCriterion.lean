@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Asymptotics/MonotoneIntegralCriterion.lean -/
 
 
-import Theorem.Analysis.Asymptotics.MonotoneIntegralCriterion
-import Mathlib.NumberTheory.Chebyshev
-import Theorem.MathlibExtTest.Analysis.Asymptotics.MonotoneIntegralCriterion
+module
+
+public import Theorem.Analysis.Asymptotics.MonotoneIntegralCriterion
+public import Mathlib.NumberTheory.Chebyshev
+public import Theorem.MathlibExtTest.Analysis.Asymptotics.MonotoneIntegralCriterion
+
+@[expose] public section
+
 open Filter MeasureTheory Set Topology Asymptotics
 
 

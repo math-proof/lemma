@@ -1,13 +1,19 @@
 /-
 Author: @akiezun, Avocado
 -/
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Analysis.Normed.Module.FiniteDimension
-import Mathlib.LinearAlgebra.Complex.FiniteDimensional
-import Mathlib.Topology.GDelta.MetrizableSpace
-import Mathlib.Topology.Separation.CompletelyRegular
+
+module
+
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.Normed.Module.FiniteDimension
+public import Mathlib.LinearAlgebra.Complex.FiniteDimensional
+public import Mathlib.Topology.GDelta.MetrizableSpace
+public import Mathlib.Topology.Separation.CompletelyRegular
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 6, Entry 16
 

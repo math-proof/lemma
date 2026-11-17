@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.CombinatorialOptimization.code.Flow.FlowCutBound.Part2
-import Lemma.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.FlowCutBound
-import Def.v1.Atlas.CombinatorialOptimization.code.Flow.FlowDecomposition
+module
+
+public import Def.v1.Atlas.CombinatorialOptimization.code.Flow.FlowCutBound.Part2
+public import Theorem.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.FlowCutBound
+public import Def.v1.Atlas.CombinatorialOptimization.code.Flow.FlowDecomposition
+public section
+
 open Finset BigOperators Classical
 
 

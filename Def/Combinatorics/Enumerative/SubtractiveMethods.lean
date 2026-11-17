@@ -6,7 +6,13 @@ All rights reserved.
 Copyright (c) 2025 AlgebraicCombinatorics contributors. All rights reserved.
 Authors: AlgebraicCombinatorics contributors
 -/
-import Mathlib
+
+module
+
+public import Mathlib
+
+@[expose] public section
+
 open Finset BigOperators
 
 /-!

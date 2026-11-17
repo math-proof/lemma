@@ -15,7 +15,7 @@ import Mathlib.Analysis.Convex.Contractible
 import Mathlib.AlgebraicTopology.SingularHomology.HomotopyInvarianceTopCat
 import Mathlib.Algebra.Homology.AlternatingConst
 import Def.v1.Atlas.AlgebraicTopologyI.code.ContractibleHomology.Part2
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.ContractibleHomology
+import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.ContractibleHomology
 import Abbrev.v1.Atlas.AlgebraicTopologyI.code.Section5.Part3
 open CategoryTheory
 

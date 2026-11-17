@@ -1,17 +1,21 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
+module
 
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Analysis.MeanInequalities
-import Mathlib.Topology.Algebra.InfiniteSum.Real
-import Def.Topology.Algebra.InfiniteSum.HardyInequality
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Analysis.MeanInequalities
+public import Mathlib.Topology.Algebra.InfiniteSum.Real
+public import Def.Topology.Algebra.InfiniteSum.HardyInequality
+
 /-!
 # Hardy's inequality for series
 
 This file proves the sharp `ℓᵖ` bound for the sequence of prefix averages of a
 nonnegative real sequence when `1 < p`.
 -/
+
+public section
 
 
 namespace MetaMathlibExt

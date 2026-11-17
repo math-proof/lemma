@@ -4,13 +4,18 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.Meromorphic.Basic
-import Def.Analysis.Ramanujan.Part1Ch7Phi
-import Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected
-import Mathlib.Analysis.Convex.Contractible
-import Mathlib.Analysis.Meromorphic.Complex
-import Mathlib.Topology.Separation.CompletelyRegular
+module
+
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Meromorphic.Basic
+public import Def.Analysis.Ramanujan.Part1Ch7Phi
+public import Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected
+public import Mathlib.Analysis.Convex.Contractible
+public import Mathlib.Analysis.Meromorphic.Complex
+public import Mathlib.Topology.Separation.CompletelyRegular
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 7, Entry 20
 

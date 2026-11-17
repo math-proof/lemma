@@ -3,7 +3,7 @@
 
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
 import Def.LinearAlgebra.Matrix.MatrixExpDetTrace
-import Lemma.Matrix.MatrixExpDetTrace
+import Theorem.Matrix.MatrixExpDetTrace
 open MathlibExt.LinearAlgebra.Matrix.MatrixExpDetTraceWanted
 
 variable {n : Type*} [Fintype n] [DecidableEq n]

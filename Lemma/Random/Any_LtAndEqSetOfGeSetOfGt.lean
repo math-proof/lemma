@@ -1,6 +1,7 @@
 import Mathlib.Data.Fintype.Basic
 import Mathlib.Basic.Real.Basic
 import Lemma.Random.Any_LtAndEqSetOfLeSetOfLt
+import Initialize.Tactic.Attr.Basic
 open Random
 
 
@@ -24,4 +25,4 @@ private lemma main
 
 
 -- created on 2026-09-26
--- updated on 2026-10-12
+-- updated on 2026-11-17

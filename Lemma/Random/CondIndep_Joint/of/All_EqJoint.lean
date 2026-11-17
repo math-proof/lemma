@@ -1,5 +1,7 @@
 import Lemma.Random.CondIndep.of.All_Eq_Joint.All_EqWithDensity
 import Lemma.Random.CondIndep.of.All_CondIndep.All_MeasurableJoint
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
@@ -32,4 +34,4 @@ private lemma main
 
 
 -- created on 2026-10-08
--- updated on 2026-11-16
+-- updated on 2026-11-17

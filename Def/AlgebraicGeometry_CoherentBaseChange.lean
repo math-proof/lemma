@@ -1,12 +1,16 @@
-import Mathlib.LinearAlgebra.TensorProduct.Tower
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.FreeModule.Basic
-import Mathlib.LinearAlgebra.Quotient.Defs
-import Mathlib.RingTheory.Finiteness.Defs
-import Mathlib.RingTheory.Spectrum.Prime.Defs
-import Mathlib.RingTheory.LocalRing.ResidueField.Ideal
-import Structure.AlgebraicGeometry_CoherentBaseChange
-import Abbrev.AlgebraicGeometry_CoherentBaseChange
+module
+
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.FreeModule.Basic
+public import Mathlib.LinearAlgebra.Quotient.Defs
+public import Mathlib.RingTheory.Finiteness.Defs
+public import Mathlib.RingTheory.Spectrum.Prime.Defs
+public import Mathlib.RingTheory.LocalRing.ResidueField.Ideal
+public import Structure.AlgebraicGeometry_CoherentBaseChange
+public import Abbrev.AlgebraicGeometry_CoherentBaseChange
+
+@[expose] public section
 
 set_option autoImplicit false
 

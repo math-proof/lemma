@@ -1,6 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeMemory.lean -/
 
-import Def.CPythonListsort.Code.Transcription.TempStorageInvariant
+module
+
+public import Def.CPythonListsort.Code.Transcription.TempStorageInvariant
 /-!
 # Observable temporary-storage transitions
 
@@ -19,7 +21,7 @@ namespace CPythonListsort
 /-- The four block-movement sites whose source and destination are both in
 `MergeState.data`.  They are deliberately separate from the six tagged
 temp/main `memcpy` sites: these calls require overlap-safe `memmove` semantics. -/
-inductive MergeMemmoveCallsite where
+public inductive MergeMemmoveCallsite where
   | loGallopB
   | loCopyBTail
   | hiGallopA

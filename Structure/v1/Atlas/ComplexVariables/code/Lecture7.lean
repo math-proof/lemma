@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Complex.Basic
-import Mathlib.Analysis.Complex.Basic
+module
+
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.Analysis.Complex.Basic
+public section
+
 open Complex
 
 

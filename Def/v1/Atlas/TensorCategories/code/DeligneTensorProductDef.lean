@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.CategoryTheory.Limits.Preserves.Finite
-import Mathlib.CategoryTheory.Products.Basic
-import Mathlib.CategoryTheory.Linear.LinearFunctor
+module
+
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.CategoryTheory.Limits.Preserves.Finite
+public import Mathlib.CategoryTheory.Products.Basic
+public import Mathlib.CategoryTheory.Linear.LinearFunctor
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 

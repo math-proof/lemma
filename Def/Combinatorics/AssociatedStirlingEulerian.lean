@@ -1,9 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/AssociatedStirlingEulerian.lean -/
 
-import Mathlib.GroupTheory.Perm.Cycle.Type
-import Mathlib.Data.Fintype.Perm
-import Mathlib.Data.Finset.Card
+module
 
+public import Mathlib.GroupTheory.Perm.Cycle.Type
+public import Mathlib.Data.Fintype.Perm
+public import Mathlib.Data.Finset.Card
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

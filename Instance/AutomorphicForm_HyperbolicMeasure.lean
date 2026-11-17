@@ -1,5 +1,10 @@
 -- Carved from Lemma/Definitions/Def_AutomorphicForm_HyperbolicMeasure.lean: instance decls only.
-import Mathlib
+
+module
+
+public import Mathlib
+
+@[expose] public section
 
 open MeasureTheory Set
 open scoped MatrixGroups Pointwise NNReal ENNReal

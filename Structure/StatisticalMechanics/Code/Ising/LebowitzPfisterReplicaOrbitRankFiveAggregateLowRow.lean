@@ -9,15 +9,17 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Def.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitRankFiveAggregateHighRow.Part6
-import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitRankFiveAggregateLowRow
+module
+
+public import Def.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitRankFiveAggregateHighRow.Part6
+public import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitRankFiveAggregateLowRow
 open Finset
 open scoped symmDiff
 
 
 namespace StatMech.Ising
 
-noncomputable section
+public noncomputable section
 
 variable {V I : Type*} [Fintype V] [DecidableEq V]
   [Fintype I] [DecidableEq I]

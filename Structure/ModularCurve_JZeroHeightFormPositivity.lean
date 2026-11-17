@@ -1,6 +1,10 @@
-import Lemma.Finsupp.JZeroHeightForm
-import Instance.Compat_Mathlib430
-import Def.ModularCurve_JZeroHeightFormPositivity
+module
+
+public import Lemma.Finsupp.JZeroHeightForm
+public import Instance.Compat_Mathlib430
+public import Def.ModularCurve_JZeroHeightFormPositivity
+public section
+
 set_option autoImplicit false
 set_option Elab.async false
 

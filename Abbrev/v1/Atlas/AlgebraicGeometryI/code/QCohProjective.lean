@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.AlgebraicGeometryI.code.GradedPolynomial
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.GradedPolynomial
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GradedPolynomial
 import Mathlib.RingTheory.MvPolynomial.Homogeneous
 import Mathlib.Algebra.Module.Torsion.Basic
 import Mathlib.RingTheory.Finiteness.Defs

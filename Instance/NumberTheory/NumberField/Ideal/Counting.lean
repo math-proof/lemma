@@ -4,14 +4,19 @@
 Author: @toskua, Avocado
 -/
 
-import Mathlib.Algebra.CharZero.Infinite
-import Mathlib.Algebra.Order.Archimedean.Real.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Base
-import Mathlib.NumberTheory.NumberField.Basic
-import Mathlib.RingTheory.Ideal.Norm.AbsNorm
-import Mathlib.RingTheory.RamificationInertia.Basic
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
+module
+
+public import Mathlib.Algebra.CharZero.Infinite
+public import Mathlib.Algebra.Order.Archimedean.Real.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.Base
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Mathlib.RingTheory.Ideal.Norm.AbsNorm
+public import Mathlib.RingTheory.RamificationInertia.Basic
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum
+
+@[expose] public section
+
 open scoped NumberField
 
 

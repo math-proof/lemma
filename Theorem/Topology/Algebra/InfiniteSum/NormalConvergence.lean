@@ -1,8 +1,12 @@
-import Mathlib.Analysis.Normed.Group.Basic
-import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
-import Def.Topology.Algebra.InfiniteSum.NormalConvergence
+module
+
+public import Mathlib.Analysis.Normed.Group.Basic
+public import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
+public import Def.Topology.Algebra.InfiniteSum.NormalConvergence
 open Topology
 open scoped ENNReal
+
+public section
 
 variable {X E : Type*} [SeminormedAddCommGroup E]
 

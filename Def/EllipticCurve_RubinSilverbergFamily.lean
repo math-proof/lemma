@@ -1,6 +1,10 @@
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.LinearAlgebra.Matrix.Notation
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+module
+
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.LinearAlgebra.Matrix.Notation
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+
+@[expose] public section
 
 set_option autoImplicit false
 

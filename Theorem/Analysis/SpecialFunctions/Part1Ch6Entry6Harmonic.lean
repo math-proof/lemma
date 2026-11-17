@@ -1,13 +1,15 @@
 /-
 Author: @akiezun, Avocado
 -/
+module
 
-import Mathlib.Analysis.Calculus.IteratedDeriv.Defs
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Analysis.Calculus.SmoothSeries
-import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
-import Mathlib.Topology.Algebra.Module.ModuleTopology
-import Def.Analysis.SpecialFunctions.Part1Ch6Entry6Harmonic
+public import Mathlib.Analysis.Calculus.IteratedDeriv.Defs
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.Calculus.SmoothSeries
+public import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+public import Mathlib.Topology.Algebra.Module.ModuleTopology
+public import Def.Analysis.SpecialFunctions.Part1Ch6Entry6Harmonic
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 6, Entry 6
 
@@ -16,6 +18,8 @@ of `f` satisfies `F(x) - F(x - 1) = f(x)` and agrees with the partial sums at na
 domination hypotheses its derivatives at `0` are `-∑_{k ≥ 1} f⁽ⁿ⁾(k)`, and when `F` is analytic at
 `0` its Taylor series converges to it near `0`.
 -/
+
+public section
 
 
 namespace Ramanujan.Part1Ch6

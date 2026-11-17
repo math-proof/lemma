@@ -4,10 +4,14 @@
 Shared evaluated-basis wrapper around Mathlib's `Lagrange.basis`, plus the
 Lebesgue function and Lagrange interpolant built from it.
 -/
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Basic.Real.Basic
-import Mathlib.LinearAlgebra.Lagrange
 
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.LinearAlgebra.Lagrange
+
+@[expose] public section
 
 namespace Lagrange
 

@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Def.StatisticalMechanics.Code.FrontierD.SixVertex.Part9
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexRectangleBoundary
+module
+
+public import Def.StatisticalMechanics.Code.FrontierD.SixVertex.Part9
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexRectangleBoundary
+public section
+
 open Finset
 
 

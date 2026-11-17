@@ -1,9 +1,11 @@
-import Mathlib
-import Instance.PDivisibleGroup_Basic
+module
+
+public import Mathlib
+public import Instance.PDivisibleGroup_Basic
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 open Coalgebra Bialgebra
 

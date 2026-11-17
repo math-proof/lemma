@@ -1,10 +1,12 @@
-import Mathlib
-import Def.FormalGroup_NSeries
-import Def.FormalGroup_DrinfeldBasis
+module
+
+public import Mathlib
+public import Def.FormalGroup_NSeries
+public import Def.FormalGroup_DrinfeldBasis
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace FormalGroup
 

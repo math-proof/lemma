@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/ListSortMergePolicy.lean -/
 
-import Structure.CPythonListsort.Code.Assembly.ListSortTermination
-import Def.CPythonListsort.Code.Assembly.MergePolicyReplay.Part4
-import Structure.CPythonListsort.Code.Assembly.ScanPowerForestInvariant.Part2
-import Inductive.CPythonListsort.Code.Assembly.ListSortScanReached
-import Def.CPythonListsort.Code.Assembly.ListSortMergePolicy.Part2
+module
+
+public import Structure.CPythonListsort.Code.Assembly.ListSortTermination
+public import Def.CPythonListsort.Code.Assembly.MergePolicyReplay.Part4
+public import Structure.CPythonListsort.Code.Assembly.ScanPowerForestInvariant.Part2
+public import Inductive.CPythonListsort.Code.Assembly.ListSortScanReached
+public import Def.CPythonListsort.Code.Assembly.ListSortMergePolicy.Part2
 /-!
 # The real `list_sort_impl` policy trace replays
 
@@ -14,6 +16,9 @@ by the genuine traced evaluator to the pure checked replay in
 the pending-layout and storage hypotheses already discharged by the public
 safety theorem, but assumes no order law.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

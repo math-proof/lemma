@@ -8,13 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Def.v1.Atlas.NumberTheoryI.code.LocalCFT
+module
+
+public import Mathlib
+public import Def.v1.Atlas.NumberTheoryI.code.LocalCFT
 open scoped RestrictedProduct
 open Filter Set
 
 
-noncomputable section
+public noncomputable section
 
 open scoped Pointwise
 

@@ -1,14 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/BinaryMatrixRotationOrbitCount.lean -/
+module
 
-import Mathlib.Data.Fin.Basic
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Nat.Totient
-import Mathlib.Algebra.Torsor.Defs
-import Mathlib.Combinatorics.Colex
-import Mathlib.GroupTheory.SpecificGroups.Cyclic
-import Mathlib.Logic.Equiv.Fin.Basic
-import Mathlib.Tactic.Abel
+public import Mathlib.Data.Fin.Basic
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Data.Nat.Totient
+public import Mathlib.Algebra.Torsor.Defs
+public import Mathlib.Combinatorics.Colex
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic
+public import Mathlib.Logic.Equiv.Fin.Basic
+public import Mathlib.Tactic.Abel
 
+public section
 
 namespace MetaMathlibExt
 

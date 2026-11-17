@@ -3,6 +3,8 @@ import Syntax.Order.Sup
 import Mathlib.Analysis.Calculus.SmoothSeries
 import Lemma.Random.Differentiable.All_LeNormFderivMulAdd_1MulAbs_R.of.All_LeIntegral.All_Integrable.All_LeNormFderiv.All_Differentiable_Prob.All_Measurable_Prob
 import Lemma.Random.Summable_MulPowWkd.of.In_Ico
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory PolicyGradient Random Set
 
 
@@ -53,4 +55,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-16
+-- updated on 2026-11-17

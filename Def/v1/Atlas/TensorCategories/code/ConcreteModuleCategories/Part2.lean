@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Abbrev.v1.Atlas.TensorCategories.code.ModuleCategory.Part5
 import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
-import Lemma.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
+import Theorem.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
 import Lemma.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
 import Theorem.v1.Atlas.TensorCategories.code.DeligneTensorProductMonoidal
 import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8

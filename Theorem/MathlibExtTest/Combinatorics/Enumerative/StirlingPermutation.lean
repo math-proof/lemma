@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/StirlingPermutation.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.StirlingPermutation
 
-import Def.Combinatorics.Enumerative.StirlingPermutation
-
+public section
 
 namespace MetaMathlibExt
 

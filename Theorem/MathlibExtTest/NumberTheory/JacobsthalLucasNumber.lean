@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/JacobsthalLucasNumber.lean -/
+module
 
+public import Def.NumberTheory.JacobsthalLucasNumber
 
-import Def.NumberTheory.JacobsthalLucasNumber
-
+public section
 
 namespace MetaMathlibExt
 

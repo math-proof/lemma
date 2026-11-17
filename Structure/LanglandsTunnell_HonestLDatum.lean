@@ -1,6 +1,8 @@
-import Mathlib.Analysis.SpecialFunctions.Gamma.Deligne
+module
 
-noncomputable section
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Deligne
+
+public noncomputable section
 
 open Complex Polynomial
 

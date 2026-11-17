@@ -1,12 +1,17 @@
-import Mathlib.Algebra.Algebra.Basic
-import Mathlib.Algebra.Ring.Defs
-import Mathlib.Basic.Complex.Basic
-import Mathlib.LinearAlgebra.Span.Defs
-import Mathlib.Order.Bounds.Defs
-import Mathlib.RingTheory.Ideal.Defs
-import Mathlib.RingTheory.Ideal.Lattice
-import Mathlib.RingTheory.Ideal.Prime
-import Structure.Algebra.Lie.PoissonBracket
+module
+
+public import Mathlib.Algebra.Algebra.Basic
+public import Mathlib.Algebra.Ring.Defs
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.LinearAlgebra.Span.Defs
+public import Mathlib.Order.Bounds.Defs
+public import Mathlib.RingTheory.Ideal.Defs
+public import Mathlib.RingTheory.Ideal.Lattice
+public import Mathlib.RingTheory.Ideal.Prime
+public import Structure.Algebra.Lie.PoissonBracket
+
+@[expose] public section
+
 /-!
 # Poisson brackets over commutative `ℂ`-algebras
 

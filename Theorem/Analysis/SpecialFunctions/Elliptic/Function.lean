@@ -1,8 +1,13 @@
-import Mathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass
-import Structure.Analysis.SpecialFunctions.Elliptic.Function.Part2
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass
+public import Structure.Analysis.SpecialFunctions.Elliptic.Function.Part2
+
 /-!
 # Elliptic functions
 -/
+
+public section
 
 
 namespace PeriodPair

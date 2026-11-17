@@ -1,5 +1,9 @@
-import Mathlib.Analysis.Calculus.Gradient.Basic
-import Def.Analysis.Calculus.Gradient.Operators
+module
+
+public import Mathlib.Analysis.Calculus.Gradient.Basic
+public import Def.Analysis.Calculus.Gradient.Operators
+
+public section
 
 
 /--

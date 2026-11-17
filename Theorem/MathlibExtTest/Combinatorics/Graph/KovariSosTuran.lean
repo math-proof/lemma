@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Graph/KovariSosTuran.lean -/
 
 
-import Lemma.Finset.Graph.KovariSosTuran
+import Theorem.Finset.Graph.KovariSosTuran
 
 
 namespace MetaMathlibExt

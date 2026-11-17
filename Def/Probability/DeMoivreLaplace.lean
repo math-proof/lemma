@@ -8,12 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.Distributions.Binomial
-import Mathlib.Probability.Distributions.Gaussian.Real
-import Mathlib.MeasureTheory.Function.ConvergenceInDistribution
-import Mathlib.Probability.CDF
-import Mathlib.Probability.CentralLimitTheorem
-import Mathlib.MeasureTheory.Measure.LevyConvergence
+module
+
+public import Mathlib.Probability.Distributions.Binomial
+public import Mathlib.Probability.Distributions.Gaussian.Real
+public import Mathlib.MeasureTheory.Function.ConvergenceInDistribution
+public import Mathlib.Probability.CDF
+public import Mathlib.Probability.CentralLimitTheorem
+public import Mathlib.MeasureTheory.Measure.LevyConvergence
+
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory Filter
 open scoped unitInterval NNReal Topology Real
 

@@ -9,9 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierB.PlusPairSourceCurrentLimit
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentSelectionIndependence.Part3
-import Theorem.StatisticalMechanics.Code.FrontierB.PlusFreeSourceJointLimit
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierB.PlusPairSourceCurrentLimit
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentSelectionIndependence.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierB.PlusFreeSourceJointLimit
+public section
+
 open Filter MeasureTheory
 open scoped ENNReal
 

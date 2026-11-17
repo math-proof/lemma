@@ -1,12 +1,17 @@
-import Mathlib.Algebra.Polynomial.Basic
-import Mathlib.Tactic.NormNum
-import Def.Algebra.Polynomial.BesselPolynomial
+module
+
+public import Mathlib.Algebra.Polynomial.Basic
+public import Mathlib.Tactic.NormNum
+public import Def.Algebra.Polynomial.BesselPolynomial
+
 /-!
 # Bessel polynomials (classical definition)
 
 Formalizes the classical n-th Bessel polynomial from the Schork source
 (lines 285-288).
 -/
+
+public section
 
 
 namespace MetaMathlibExt

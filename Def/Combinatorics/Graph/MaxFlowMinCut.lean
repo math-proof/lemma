@@ -4,14 +4,17 @@
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Basic.Real.Basic
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Analysis.Normed.Order.Lattice
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+module
 
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Analysis.Normed.Order.Lattice
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 section
 

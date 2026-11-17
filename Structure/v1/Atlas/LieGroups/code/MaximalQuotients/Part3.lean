@@ -8,19 +8,21 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.LieGroups.code.HarishChandraIsomorphism.Part2
-import Mathlib.RingTheory.TwoSidedIdeal.Operations
-import Mathlib.RingTheory.Congruence.Hom
-import Mathlib.LinearAlgebra.TensorProduct.Basic
-import Mathlib.Algebra.Lie.Semisimple.Defs
-import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.Data.Complex.Basic
-import Mathlib.Algebra.Algebra.Opposite
-import Mathlib.Algebra.Lie.OfAssociative
-import Def.v1.Atlas.LieGroups.code.MaximalQuotients.Part2
+module
+
+public import Structure.v1.Atlas.LieGroups.code.HarishChandraIsomorphism.Part2
+public import Mathlib.RingTheory.TwoSidedIdeal.Operations
+public import Mathlib.RingTheory.Congruence.Hom
+public import Mathlib.LinearAlgebra.TensorProduct.Basic
+public import Mathlib.Algebra.Lie.Semisimple.Defs
+public import Mathlib.Analysis.Complex.Polynomial.Basic
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.Algebra.Algebra.Opposite
+public import Mathlib.Algebra.Lie.OfAssociative
+public import Def.v1.Atlas.LieGroups.code.MaximalQuotients.Part2
 
 
-noncomputable section
+public noncomputable section
 
 attribute [local instance 100] LieRing.ofAssociativeRing
 

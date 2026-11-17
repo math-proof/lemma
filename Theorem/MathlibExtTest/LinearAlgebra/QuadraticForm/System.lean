@@ -2,7 +2,7 @@
 
 
 import Def.LinearAlgebra.QuadraticForm.System
-import Lemma.Matrix.QuadraticForm.System
+import Theorem.Matrix.QuadraticForm.System
 
 
 namespace QuadraticForm

@@ -1,9 +1,11 @@
-import Mathlib
-import Def.MvFormalGroup_BigWittLaw
+module
+
+public import Mathlib
+public import Def.MvFormalGroup_BigWittLaw
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 universe u
 

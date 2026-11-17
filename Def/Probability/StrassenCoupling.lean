@@ -1,20 +1,23 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/StrassenCoupling.lean -/
 
-import Mathlib.Basic.Real.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Data.Finset.Max
-import Mathlib.Data.Finset.Powerset
-import Mathlib.Data.Int.Star
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Linarith.Lemmas
-import Mathlib.Tactic.NormNum.Ineq
-import Mathlib.Tactic.Push
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Zify
+module
 
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Data.Finset.Max
+public import Mathlib.Data.Finset.Powerset
+public import Mathlib.Data.Int.Star
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Linarith.Lemmas
+public import Mathlib.Tactic.NormNum.Ineq
+public import Mathlib.Tactic.Push
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.Zify
+
+@[expose] public section
 
 section
 

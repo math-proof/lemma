@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.BasisExtensionChain
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.AdaptedBasisSingle
-import Lemma.Fin.EqLinesFrameOfBasis
+module
+
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.BasisExtensionChain
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.AdaptedBasisSingle
+public import Theorem.Fin.EqLinesFrameOfBasis
+public section
+
 set_option linter.unusedVariables false
 
 

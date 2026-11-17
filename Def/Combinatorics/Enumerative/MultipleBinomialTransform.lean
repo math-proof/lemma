@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/MultipleBinomialTransform.lean -/
 
 import Def.Combinatorics.Enumerative.FallingKBinomialTransform
-import Lemma.Finset.Enumerative.FallingKBinomialTransform
+import Theorem.Finset.Enumerative.FallingKBinomialTransform
 
 
 namespace MetaMathlibExt

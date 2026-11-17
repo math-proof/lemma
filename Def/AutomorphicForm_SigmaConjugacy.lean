@@ -1,4 +1,8 @@
-import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
+module
+
+public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
+
+@[expose] public section
 
 set_option autoImplicit false
 

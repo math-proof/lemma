@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Module.LocalizedModule.Exact
-import Mathlib.RingTheory.LocalProperties.Exactness
-import Mathlib.AlgebraicGeometry.Modules.Tilde
+module
+
+public import Mathlib.Algebra.Module.LocalizedModule.Exact
+public import Mathlib.RingTheory.LocalProperties.Exactness
+public import Mathlib.AlgebraicGeometry.Modules.Tilde
+
+@[expose] public section
+
 set_option maxHeartbeats 4000000
 
 

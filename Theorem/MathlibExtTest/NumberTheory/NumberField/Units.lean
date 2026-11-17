@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/Units.lean -/
 
 
-import Lemma.Nat.NumberField.Units
+import Theorem.Nat.NumberField.Units
 open NumberField
 open scoped NumberField
 

@@ -1,8 +1,9 @@
-import Mathlib.Probability.ProbabilityMassFunction.Constructions
-import Def.Probability.Process.MarkovChainTrajectory.Part2
-import Lemma.Matrix.Any_And_Stationary.of.RowStochastic
-import Lemma.Matrix.Sum_Mul.eq.One.of.StochasticVec.RowStochastic
-import Instance.Dynamics.MarkovRewardProcess
+module
+
+public import Def.Dynamics.MarkovRewardProcess
+
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory Finset
 open scoped ENNReal Matrix
 
@@ -35,5 +36,8 @@ variable {S : Type u} [Fintype S] [DecidableEq S] [MeasurableSpace S] [Measurabl
 -- initial distribution (rl: `FiniteMRP.p₀`)
 noncomputable def p₀ : S → ℝ :=
   MRP.M.init_vec
+
+instance : StochasticVec MRP.p₀ :=
+  inferInstanceAs (StochasticVec MRP.M.init_vec)
 
 end FiniteMRP

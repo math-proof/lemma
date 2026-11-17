@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Height/Absolute.lean -/
 
-import Mathlib.NumberTheory.Height.NumberField
+module
+
+public import Mathlib.NumberTheory.Height.NumberField
+
+@[expose] public section
+
 /-!
 # Absolute heights of algebraic numbers
 

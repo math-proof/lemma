@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 set_option autoImplicit false
 
@@ -16,6 +20,19 @@ noncomputable def coaction (π : A →ₐc[R] B) : A →ₐ[R] A ⊗[R] B :=
 
 noncomputable def hopfKer (π : A →ₐc[R] B) : Subalgebra R A :=
   AlgHom.equalizer (coaction π) (Algebra.TensorProduct.includeLeft : A →ₐ[R] A ⊗[R] B)
+
+theorem coaction_apply (π : A →ₐc[R] B) (a : A) :
+    coaction π a
+      = Algebra.TensorProduct.map (AlgHom.id R A) (π : A →ₐ[R] B) (Coalgebra.comul (R := R) a) :=
+  rfl
+
+theorem mem_hopfKer_iff (π : A →ₐc[R] B) (a : A) :
+    a ∈ hopfKer π ↔ coaction π a = a ⊗ₜ[R] 1 :=
+  Iff.rfl
+
+theorem coaction_eq_of_mem (π : A →ₐc[R] B) {a : A} (h : a ∈ hopfKer π) :
+    coaction π a = a ⊗ₜ[R] 1 :=
+  h
 
 
 noncomputable def canAlgHom (π : A →ₐc[R] B) : A ⊗[R] A →ₐ[R] A ⊗[R] B :=

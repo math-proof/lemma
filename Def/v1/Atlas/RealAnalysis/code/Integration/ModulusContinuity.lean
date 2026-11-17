@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.RealAnalysis.code.Integration.Basic.Part2
-import Lemma.Real.Atlas.v1.RealAnalysis.code.Integration.Basic
+import Theorem.Real.Atlas.v1.RealAnalysis.code.Integration.Basic
 import Mathlib.Analysis.SpecificLimits.Basic
 import Mathlib.Data.Finset.Sort
 import Mathlib.Topology.UniformSpace.HeineCantor

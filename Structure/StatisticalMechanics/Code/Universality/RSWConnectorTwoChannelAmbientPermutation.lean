@@ -9,9 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.RSWConnectorTwoChannelStaticCutEndpoint
-import Theorem.StatisticalMechanics.Code.Universality.RSWSequentialStoppedConditionalLaw.Part16
-import Theorem.StatisticalMechanics.Code.Universality.RSWConnectorTwoChannelAmbientPermutation.Part4
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.RSWConnectorTwoChannelStaticCutEndpoint
+public import Theorem.StatisticalMechanics.Code.Universality.RSWSequentialStoppedConditionalLaw.Part16
+public import Theorem.StatisticalMechanics.Code.Universality.RSWConnectorTwoChannelAmbientPermutation.Part4
 open Finset SimpleGraph Set
 
 
@@ -19,7 +21,7 @@ namespace StatMech.Universality
 
 open StatMech.Percolation StatMech.Lattice StatMech.RSW.Box
 
-noncomputable section
+public noncomputable section
 
 structure RlcTwoChannelIndexedSelectedFailure {n : Int} (I : Type*)
     (pair : I → RlcDiagonalPathPair n) where

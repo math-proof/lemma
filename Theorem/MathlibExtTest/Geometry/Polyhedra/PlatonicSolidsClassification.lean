@@ -2,7 +2,7 @@
 
 
 import Def.Geometry.Polyhedra.PlatonicSolidsClassification.Part2
-import Lemma.Set.Polyhedra.PlatonicSolidsClassification
+import Theorem.Set.Polyhedra.PlatonicSolidsClassification
 
 
 namespace MetaMathlibExt

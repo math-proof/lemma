@@ -13,7 +13,7 @@ import Mathlib.AlgebraicGeometry.Properties
 import Mathlib.AlgebraicGeometry.Morphisms.FiniteType
 import Mathlib.AlgebraicGeometry.Over
 import Instance.v1.Atlas.AlgebraicGeometryI.code.AffineVarietyDef
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.AffineVarietyDef
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.AffineVarietyDef
 import Class.v1.Atlas.AlgebraicGeometryI.code.Lec2AlgebraicVariety
 set_option maxHeartbeats 800000
 

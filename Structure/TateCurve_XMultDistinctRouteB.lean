@@ -1,9 +1,13 @@
-import Mathlib
-import Structure.TateCurve_XMultAlignment
-import Theorems.Thm_TateCurve_pointY_inv
-import Theorems.Thm_TateCurve_pointY_zpow_mul
-import Theorems.Thm_TateCurve_pointX_qExpansion
-import Def.TateCurve_XMultDistinctRouteB
+module
+
+public import Mathlib
+public import Structure.TateCurve_XMultAlignment
+public import Theorems.Thm_TateCurve_pointY_inv
+public import Theorems.Thm_TateCurve_pointY_zpow_mul
+public import Theorems.Thm_TateCurve_pointX_qExpansion
+public import Def.TateCurve_XMultDistinctRouteB
+
+public section
 
 set_option autoImplicit false
 set_option linter.unusedSectionVars false

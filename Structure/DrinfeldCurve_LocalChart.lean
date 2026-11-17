@@ -1,13 +1,15 @@
-import Mathlib.RingTheory.MvPowerSeries.Basic
-import Mathlib.RingTheory.LocalRing.ResidueField.Basic
-import Mathlib.RingTheory.Valuation.ValuationSubring
-import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Lemma.RingHom.FunctionField
+module
+
+public import Mathlib.RingTheory.MvPowerSeries.Basic
+public import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+public import Mathlib.RingTheory.Valuation.ValuationSubring
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Lemma.RingHom.FunctionField
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open MvPowerSeries IsLocalRing DrinfeldCurve
 

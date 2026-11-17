@@ -3,7 +3,7 @@
 
 import Lean.Elab.Tactic.Omega
 import Def.NumberTheory.Recurrences.HonsbergerFibonacciP
-import Lemma.Nat.Recurrences.HonsbergerFibonacciP
+import Theorem.Nat.Recurrences.HonsbergerFibonacciP
 open MetaMathlibExt
 
 

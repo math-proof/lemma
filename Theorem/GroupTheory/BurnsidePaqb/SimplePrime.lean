@@ -4,7 +4,7 @@ import Lemma.Nat.Any_Eq_MulPowS.of.Prime.Prime
 import Def.GroupTheory.BurnsidePaqb.KillingLemma
 import Lemma.Representation.Character.eq.SumRootsCharpoly
 import Lemma.Representation.All_All_Eq.of.EqNormCharacter_FinrankV
-import Lemma.Representation.IsIrreducible.of.EqRepresentationG
+import Theorem.Representation.IsIrreducible.of.EqRepresentationG
 import Instance.GroupTheory.BurnsidePaqb.ScalarCenter
 import Def.GroupTheory.BurnsidePaqb.CharacterOrthogonality.Part6
 /-!

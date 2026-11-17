@@ -8,18 +8,23 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.MeasureTheory.Group.Integral
-import Mathlib.MeasureTheory.Integral.Pi
-import Mathlib.MeasureTheory.Measure.Dirac
-import Mathlib.Analysis.Calculus.FDeriv.Basic
-import Mathlib.Topology.Order.Basic
-import Mathlib.Analysis.Calculus.FDeriv.Pi
-import Mathlib.Analysis.Calculus.Deriv.Pow
-import Mathlib.Analysis.Calculus.Deriv.Comp
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
-import Mathlib.Analysis.Calculus.ParametricIntegral
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.MeasureTheory.Group.Integral
+public import Mathlib.MeasureTheory.Integral.Pi
+public import Mathlib.MeasureTheory.Measure.Dirac
+public import Mathlib.Analysis.Calculus.FDeriv.Basic
+public import Mathlib.Topology.Order.Basic
+public import Mathlib.Analysis.Calculus.FDeriv.Pi
+public import Mathlib.Analysis.Calculus.Deriv.Pow
+public import Mathlib.Analysis.Calculus.Deriv.Comp
+public import Mathlib.MeasureTheory.Integral.DominatedConvergence
+public import Mathlib.Analysis.Calculus.ParametricIntegral
+
+@[expose] public section
+
 open Set MeasureTheory Filter Topology Real
 
 

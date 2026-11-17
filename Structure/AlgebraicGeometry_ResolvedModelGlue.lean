@@ -1,12 +1,14 @@
-import Mathlib
-import Instance.AlgebraicGeometry_ResolvedModelGlue
+module
+
+public import Mathlib
+public import Instance.AlgebraicGeometry_ResolvedModelGlue
 
 set_option autoImplicit false
 set_option maxHeartbeats 200000
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 
-noncomputable section
+public noncomputable section
 
 namespace V3Glue
 
@@ -145,7 +147,7 @@ end V3Glue
 
 end
 
-noncomputable section
+public noncomputable section
 
 namespace V3Glue.GlueInput
 
@@ -162,7 +164,7 @@ end V3Glue.GlueInput
 
 end
 
-noncomputable section
+public noncomputable section
 
 namespace V3Glue.GlueInput
 
@@ -179,7 +181,7 @@ end V3Glue.GlueInput
 
 end
 
-noncomputable section
+public noncomputable section
 
 namespace V3Glue.GlueInput
 

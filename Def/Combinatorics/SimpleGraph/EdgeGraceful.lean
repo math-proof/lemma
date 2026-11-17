@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/EdgeGraceful.lean -/
 
-import Mathlib.Combinatorics.SimpleGraph.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+
+@[expose] public section
+
 open scoped BigOperators
 
 /-!

@@ -9,8 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.FC.Green25_upper_solution
+module
+
+public import Mathlib
+public import Theorem.FC.Green25_upper_solution
+
+@[expose] public section
+
 open Asymptotics Filter Finset
 
 

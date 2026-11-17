@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeHi.lean -/
 
-import Def.CPythonListsort.Code.Transcription.Gallop.Part2
-import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
-import Def.CPythonListsort.Code.Transcription.MergeHi.Part2
+module
+
+public import Def.CPythonListsort.Code.Transcription.Gallop.Part2
+public import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
+public import Def.CPythonListsort.Code.Transcription.MergeHi.Part2
 /-!
 # Right-to-left stable merge transcription
 
@@ -29,6 +31,8 @@ overlap-safe `SortSlice.memmove?`.
 -/
 
 
+public section
+
 namespace CPythonListsort
 
 universe u v w x
@@ -37,7 +41,7 @@ variable {κ : Type u} {ν : Type v}
 
 /-- Every memcpy-class bulk move in `merge_hi` crosses the main and temporary
 regions.  The evaluator below couples every such move to one of these tags. -/
-theorem mergeHi_memcpyCallsite_distinct (site : MergeHiMemcpyCallsite) :
+public theorem mergeHi_memcpyCallsite_distinct (site : MergeHiMemcpyCallsite) :
     site.backings.Distinct := by
   cases site <;>
     simp [MergeHiMemcpyCallsite.backings, MergeMemcpyBackings.Distinct]

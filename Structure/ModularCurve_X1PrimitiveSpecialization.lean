@@ -1,12 +1,14 @@
-import Mathlib
-import Def.FLTPrelim_Ramification
-import Def.ModularCurve_X1Diamond
-import Instance.EllipticCurve_TateModule
-import Def.ModularCurve_X1PrimitiveSpecialization
+module
+
+public import Mathlib
+public import Def.FLTPrelim_Ramification
+public import Def.ModularCurve_X1Diamond
+public import Instance.EllipticCurve_TateModule
+public import Def.ModularCurve_X1PrimitiveSpecialization
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open HahnSeries IntermediateField AlgebraicCurve CongruenceSubgroup
 

@@ -1,9 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Polynomial/MomentGeneratingJFraction.lean -/
 
-import Mathlib.Data.Real.Basic
-import Def.NumberTheory.HankelTransform
-import Mathlib.Tactic.LinearCombination
+module
 
+public import Mathlib.Data.Real.Basic
+public import Def.NumberTheory.HankelTransform
+public import Mathlib.Tactic.LinearCombination
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

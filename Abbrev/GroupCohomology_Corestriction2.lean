@@ -1,5 +1,9 @@
-import Mathlib
-import Structure.GroupCohomology_Corestriction2
+module
+
+public import Mathlib
+public import Structure.GroupCohomology_Corestriction2
+
+@[expose] public section
 
 set_option autoImplicit false
 

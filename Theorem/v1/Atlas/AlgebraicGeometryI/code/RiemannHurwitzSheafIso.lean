@@ -7,10 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.RingTheory.DedekindDomain.Different
-import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Mathlib.RingTheory.DedekindDomain.Different
+public import Mathlib.RingTheory.DedekindDomain.Factorization
 open Ideal UniqueFactorizationMonoid
+
+public section
 
 attribute [local instance] FractionRing.liftAlgebra FractionRing.isScalarTower_liftAlgebra
 

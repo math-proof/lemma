@@ -1,8 +1,10 @@
-import Mathlib
-import Def.WeierstrassCurve_VariableChangePointEquiv
-import Lemma.WeierstrassCurve.RatPointHom
+module
 
-noncomputable section
+public import Mathlib
+public import Def.WeierstrassCurve_VariableChangePointEquiv
+public import Lemma.WeierstrassCurve.RatPointHom
+
+public noncomputable section
 
 namespace ModularCurve
 

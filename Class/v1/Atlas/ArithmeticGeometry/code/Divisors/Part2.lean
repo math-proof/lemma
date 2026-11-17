@@ -10,13 +10,10 @@ LICENSE file in the root directory of this source tree.
 
 import Mathlib
 import Def.v1.Atlas.ArithmeticGeometry.code.DegreePullback
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.DegreePullback
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.RationalLineCriterion
 import Def.v1.Atlas.ArithmeticGeometry.code.RationalLineCriterion
 import Def.v1.Atlas.ArithmeticGeometry.code.Divisors.Part8
 attribute [instance] ClosedPointRes.residueFieldField ClosedPointRes.residueFieldAlgebra
     ClosedPointRes.finiteDimensional
-
 
 namespace ClosedPoint
 
@@ -38,7 +35,6 @@ class CurveWithConstants (C : Type*) (k : Type*) (F : Type*) [Field k] [Field F]
   residue_eval : ∀ (P : C), ∃ (evalP : F →ₗ[k] k),
     ∀ (f : Fˣ), CurveWithOrd.ord P f ≥ 0 → evalP (f : F) = 0 →
       CurveWithOrd.ord P f ≥ 1
-
 
 end CurveWithOrd
 end ClosedPoint

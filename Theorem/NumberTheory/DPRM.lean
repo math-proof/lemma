@@ -3,22 +3,24 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
+module
 
-import Mathlib.Computability.RE
-import Mathlib.NumberTheory.Dioph
-import Mathlib.Computability.Primrec.Basic
-import Mathlib.Computability.Primrec.List
-import Mathlib.Data.List.GetD
-import Mathlib.Data.Nat.ChineseRemainder
-import Mathlib.Data.Nat.Choose.Sum
-import Mathlib.Data.Nat.Choose.Bounds
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.Data.Int.GCD
-import Mathlib.Logic.Godel.GodelBetaFunction
-import Mathlib.Tactic
-import Def.NumberTheory.DPRM
+public import Mathlib.Computability.RE
+public import Mathlib.NumberTheory.Dioph
+public import Mathlib.Computability.Primrec.Basic
+public import Mathlib.Computability.Primrec.List
+public import Mathlib.Data.List.GetD
+public import Mathlib.Data.Nat.ChineseRemainder
+public import Mathlib.Data.Nat.Choose.Sum
+public import Mathlib.Data.Nat.Choose.Bounds
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.Data.Int.GCD
+public import Mathlib.Logic.Godel.GodelBetaFunction
+public import Mathlib.Tactic
+public import Def.NumberTheory.DPRM
 open scoped Dioph Vector3 Nat Function
 
+public section
 
 namespace MathlibExt.NumberTheory.DPRMWanted
 

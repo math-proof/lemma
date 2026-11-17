@@ -1,5 +1,14 @@
+module
+
+public import Mathlib.LinearAlgebra.Matrix.SpecialLinearGroup
+public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
+
+public section
+
 set_option quotPrecheck false
 set_option hygiene false
+
+open scoped MatrixGroups
 
 /-!
 # Notations from `Lemma/Definitions/Def_CuspForm_Gamma1HeckeOperators.lean`

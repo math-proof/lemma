@@ -8,13 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.Algebra.Field.ZMod
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Data.Int.GCD
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Def.v1.Atlas.EllipticCurves.code.PrimalityCertificate
+module
 
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.Algebra.Field.ZMod
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Data.Int.GCD
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Def.v1.Atlas.EllipticCurves.code.PrimalityCertificate
+
+
+public section
 
 /-- A *Goldwasser-Kilian primality certificate* (Definition 11.14) for a positive
 integer $p > 1$.  It bundles:

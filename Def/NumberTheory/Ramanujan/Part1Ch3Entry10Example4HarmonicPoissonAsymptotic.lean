@@ -29,8 +29,8 @@ import Mathlib.Tactic.LinearCombination
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
 import Theorem.Analysis.SpecialFunctions.Gamma.RegularizedIntegral
-import Lemma.Real.RegularizedIntegral
-import Lemma.Nat.Ramanujan.Part1Ch3Entry10Example4Summable
+import Theorem.Real.RegularizedIntegral
+import Theorem.Nat.Ramanujan.Part1Ch3Entry10Example4Summable
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 3
 

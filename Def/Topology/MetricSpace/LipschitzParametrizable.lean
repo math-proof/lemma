@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/MetricSpace/LipschitzParametrizable.lean -/
 
-import Mathlib.Data.Set.Finite.Basic
-import Mathlib.Topology.MetricSpace.Lipschitz
+module
 
+public import Mathlib.Data.Set.Finite.Basic
+public import Mathlib.Topology.MetricSpace.Lipschitz
+
+@[expose] public section
 
 /-!
 # N384 (Definition 19.4): Lipschitz parametrizable sets

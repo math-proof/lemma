@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ThabitIbnQurra.lean -/
 
 
-import Lemma.Nat.ThabitIbnQurra
+import Theorem.Nat.ThabitIbnQurra
 open scoped BigOperators
 
 

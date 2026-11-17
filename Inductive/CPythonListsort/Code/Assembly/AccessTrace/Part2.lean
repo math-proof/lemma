@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean -/
 
-import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
-import Def.CPythonListsort.Code.Assembly.AccessTrace.Part3
+module
+
+public import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
+public import Def.CPythonListsort.Code.Assembly.AccessTrace.Part3
 /-!
 # Compositional access and pending-push traces
 
@@ -31,7 +33,7 @@ namespace CPythonListsort
 universe u v w
 
 /-- Which directional merge consumed one `merge_getmem` result. -/
-inductive MergeMemoryDirection where
+public inductive MergeMemoryDirection where
   | lo
   | hi
   deriving DecidableEq, Repr

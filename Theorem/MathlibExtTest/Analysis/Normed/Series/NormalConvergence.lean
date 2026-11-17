@@ -2,7 +2,7 @@
 
 
 import Def.Analysis.Normed.Series.NormalConvergence
-import Lemma.Real.NormalConvergence
+import Theorem.Real.NormalConvergence
 import Mathlib.Analysis.Normed.Field.Basic
 open Topology
 open scoped ENNReal

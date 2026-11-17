@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/InfiniteWord/Factor.lean -/
 
-import Mathlib.Data.Finite.Prod
-import Mathlib.Data.List.OfFn
+module
+
+public import Mathlib.Data.Finite.Prod
+public import Mathlib.Data.List.OfFn
+
+@[expose] public section
+
 /-!
 # Factors of right-infinite words
 

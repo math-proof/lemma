@@ -1,14 +1,19 @@
-import Mathlib.Topology.Semicontinuity.Basic
-import Mathlib.Topology.Instances.EReal.Lemmas
-import Mathlib.Topology.Algebra.Module.LocallyConvex
-import Mathlib.Analysis.LocallyConvex.WithSeminorms
-import Mathlib.Analysis.LocallyConvex.Separation
-import Mathlib.Analysis.Normed.Operator.ContinuousLinearMap
-import Mathlib.Analysis.Convex.Basic
-import Mathlib.Basic.Real.Basic
-import Mathlib.Topology.Basic
-import Mathlib.Topology.Constructions
-import Theorem.Analysis.Convex.FenchelMoreau
+module
+
+public import Mathlib.Topology.Semicontinuity.Basic
+public import Mathlib.Topology.Instances.EReal.Lemmas
+public import Mathlib.Topology.Algebra.Module.LocallyConvex
+public import Mathlib.Analysis.LocallyConvex.WithSeminorms
+public import Mathlib.Analysis.LocallyConvex.Separation
+public import Mathlib.Analysis.Normed.Operator.ContinuousLinearMap
+public import Mathlib.Analysis.Convex.Basic
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Topology.Basic
+public import Mathlib.Topology.Constructions
+public import Theorem.Analysis.Convex.FenchelMoreau
+
+@[expose] public section
+
 /-!
 # Fenchel conjugates and epigraph API
 

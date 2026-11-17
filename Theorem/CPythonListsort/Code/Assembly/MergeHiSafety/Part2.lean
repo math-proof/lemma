@@ -1,11 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean -/
 
-import Structure.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part5
-import Structure.CPythonListsort.Code.Assembly.MergeGetmemRequestBound
-import Def.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
-import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopLeftSafety
-import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopRightSafety
-import Def.CPythonListsort.Code.Assembly.MergeHiSafety
+module
+
+public import Structure.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part5
+public import Structure.CPythonListsort.Code.Assembly.MergeGetmemRequestBound
+public import Def.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
+public import Def.CPythonListsort.Code.Assembly.MergeHiSafety
+public import Theorem.CPythonListsort.Code.Assembly.MergeHiSafety.Helpers
+public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.AccessTrace
+public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.MergeTracePrimitives
+public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopSafety
 /-!
 # `merge_hi` traced execution and safety
 
@@ -17,6 +21,7 @@ permit, main-data block movement uses the overlap-safe traced `memmove`, and
 temporary gallops read their live storage through `GallopKeySource.temporary`.
 -/
 
+public section
 
 namespace CPythonListsort
 
@@ -25,7 +30,7 @@ universe u v
 variable {κ : Type u} {ν : Type v}
 
 @[simp]
-theorem erase_mergeHiGallopBAfterTraced
+public theorem erase_mergeHiGallopBAfterTraced
     (afterB : MergeHiCursor κ ν) (aCount : Nat) (gallopB : GallopResult)
     (nextTraced : MergeHiCursor κ ν → TraceResult (MergeHiResult κ ν))
     (next : MergeHiCursor κ ν → Option (MergeHiResult κ ν))
@@ -53,7 +58,7 @@ theorem erase_mergeHiGallopBAfterTraced
       some (mergeHiFuelExhausted afterB)
     simp [mergeHiFuelExhaustedTraced]
 
-theorem mergeHiGallopB_eq_helpers
+public theorem mergeHiGallopB_eq_helpers
     (afterB : MergeHiCursor κ ν) (aCount : Nat)
     (next : MergeHiCursor κ ν → Option (MergeHiResult κ ν)) :
     mergeHiGallopB? afterB aCount next =
@@ -95,7 +100,7 @@ theorem mergeHiGallopB_eq_helpers
                 (afterB.ssb - Int.ofNat (afterB.nb - gallop.index) + 1) <;>
               simp [bind, Option.bind, mergeHiGallopBFinish?]
 
-theorem mergeHiGallopRound_eq_helpers
+public theorem mergeHiGallopRound_eq_helpers
     (cursor : MergeHiCursor κ ν)
     (next : MergeHiCursor κ ν → Option (MergeHiResult κ ν)) :
     mergeHiGallopRound? cursor next =
@@ -150,7 +155,7 @@ theorem mergeHiGallopRound_eq_helpers
 
 /-- Erasure commutes with the second half of one `merge_hi` galloping round
 whenever it commutes with the supplied continuation. -/
-theorem erase_mergeHiGallopBTraced
+public theorem erase_mergeHiGallopBTraced
     (afterB : MergeHiCursor κ ν) (aCount : Nat)
     (nextTraced : MergeHiCursor κ ν → TraceResult (MergeHiResult κ ν))
     (next : MergeHiCursor κ ν → Option (MergeHiResult κ ν))
@@ -180,7 +185,7 @@ theorem erase_mergeHiGallopBTraced
               exact erase_mergeHiGallopBAfterTraced afterB aCount gallop
                 nextTraced next hNext
 
-theorem erase_mergeHiGallopRoundFinishTraced
+public theorem erase_mergeHiGallopRoundFinishTraced
     (movedA : MergeHiCursor κ ν) (aCount : Nat)
     (nextTraced : MergeHiCursor κ ν → TraceResult (MergeHiResult κ ν))
     (next : MergeHiCursor κ ν → Option (MergeHiResult κ ν))
@@ -211,7 +216,7 @@ theorem erase_mergeHiGallopRoundFinishTraced
     · rw [if_neg hOne, if_neg hOne]
       exact erase_mergeHiGallopBTraced _ _ nextTraced next hNext
 
-theorem erase_mergeHiGallopRoundAfterTraced
+public theorem erase_mergeHiGallopRoundAfterTraced
     (cursor : MergeHiCursor κ ν) (minGallop : PySSize)
     (state : MergeState κ ν) (gallopA : GallopResult)
     (nextTraced : MergeHiCursor κ ν → TraceResult (MergeHiResult κ ν))
@@ -234,7 +239,7 @@ theorem erase_mergeHiGallopRoundAfterTraced
 /-- Erasure commutes with one complete `merge_hi` galloping round whenever it
 commutes with the supplied continuation.  This premise-free structural bridge
 is the proof-only API consumed by the top-level raw-domain erasure chain. -/
-theorem erase_mergeHiGallopRoundTraced
+public theorem erase_mergeHiGallopRoundTraced
     (cursor : MergeHiCursor κ ν)
     (nextTraced : MergeHiCursor κ ν → TraceResult (MergeHiResult κ ν))
     (next : MergeHiCursor κ ν → Option (MergeHiResult κ ν))

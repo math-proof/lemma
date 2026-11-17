@@ -4,22 +4,24 @@
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Analysis.SpecificLimits.Basic
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.NumberTheory.Divisors
-import Mathlib.NumberTheory.ArithmeticFunction.Moebius
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Order.Interval.Finset.Basic
-import Lemma.Nat.ArithmeticFunction.WintnerMeanValue
-import Mathlib.NumberTheory.EulerProduct.Basic
-import Mathlib.NumberTheory.ArithmeticFunction.Zeta
-import Mathlib.Analysis.Normed.Ring.InfiniteSum
-import Mathlib.Analysis.SpecificLimits.Normed
-import Mathlib.Topology.Algebra.InfiniteSum.Real
-import Mathlib.Topology.Algebra.InfiniteSum.NatInt
-import Mathlib.Analysis.SpecialFunctions.Exponential
+module
 
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.NumberTheory.Divisors
+public import Mathlib.NumberTheory.ArithmeticFunction.Moebius
+public import Mathlib.Data.Fintype.Pi
+public import Mathlib.Order.Interval.Finset.Basic
+public import Mathlib.NumberTheory.EulerProduct.Basic
+public import Mathlib.NumberTheory.ArithmeticFunction.Zeta
+public import Mathlib.Analysis.Normed.Ring.InfiniteSum
+public import Mathlib.Analysis.SpecificLimits.Normed
+public import Mathlib.Topology.Algebra.InfiniteSum.Real
+public import Mathlib.Topology.Algebra.InfiniteSum.NatInt
+public import Mathlib.Analysis.SpecialFunctions.Exponential
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

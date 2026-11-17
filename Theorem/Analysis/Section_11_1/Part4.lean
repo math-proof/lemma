@@ -1,5 +1,8 @@
-import Mathlib
-import Instance.Analysis.Section_11_1.Part4
+module
+
+public import Mathlib
+public import Instance.Analysis.Section_11_1.Part4
+
 /-!
 # Analysis I, Section 11.1: Partitions
 
@@ -15,6 +18,8 @@ Main constructions and results of this section:
 - Length of an interval; the lengths of a partition sum to the length of the interval.
 
 -/
+
+public section
 
 
 namespace Chapter11

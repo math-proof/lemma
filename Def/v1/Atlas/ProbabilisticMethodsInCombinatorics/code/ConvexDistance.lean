@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.Convex.Hull
-import Mathlib.Analysis.InnerProductSpace.Projection.Minimal
-import Mathlib.Analysis.Convex.Topology
+module
+
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.Convex.Hull
+public import Mathlib.Analysis.InnerProductSpace.Projection.Minimal
+public import Mathlib.Analysis.Convex.Topology
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open scoped BigOperators

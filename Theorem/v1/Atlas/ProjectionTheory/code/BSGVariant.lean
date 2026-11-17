@@ -10,8 +10,8 @@ LICENSE file in the root directory of this source tree.
 
 import Mathlib
 import Def.v1.Atlas.ProjectionTheory.code.KeyLemmaBSG
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.KeyLemmaBSG
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.BSGProposition
+import Theorem.Real.Atlas.v1.ProjectionTheory.code.KeyLemmaBSG
+import Theorem.Real.Atlas.v1.ProjectionTheory.code.BSGProposition
 import Def.v1.Atlas.ProjectionTheory.code.BSGProposition
 /--
 Balog–Szemerédi–Gowers (projection variant). For a commutative ring `G` and any

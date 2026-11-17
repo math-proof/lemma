@@ -1,8 +1,10 @@
-import Def.ModularCurve_JHNodeDepthInf
+module
+
+public import Def.ModularCurve_JHNodeDepthInf
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open AlgebraicCurve IsLocalRing ModularCurve ModularCurve.JHNeronObjectAtP
 open scoped MatrixGroups

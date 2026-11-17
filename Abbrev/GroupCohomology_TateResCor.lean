@@ -1,5 +1,9 @@
-import Mathlib
-import Abbrev.GroupCohomology_TateCohomology
+module
+
+public import Mathlib
+public import Abbrev.GroupCohomology_TateCohomology
+
+@[expose] public section
 
 set_option autoImplicit false
 

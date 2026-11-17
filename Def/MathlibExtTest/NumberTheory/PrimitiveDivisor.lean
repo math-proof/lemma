@@ -3,7 +3,7 @@
 
 import Mathlib.Data.Nat.Prime.Basic
 import Def.NumberTheory.PrimitiveDivisor
-import Lemma.Nat.PrimitiveDivisor
+import Theorem.Nat.PrimitiveDivisor
 
 
 namespace IntegerSequence

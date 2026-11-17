@@ -7,12 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Probability.Independence.Basic
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
 open MeasureTheory ProbabilityTheory Real Finset
 
+public section
 
 namespace Concentration
 

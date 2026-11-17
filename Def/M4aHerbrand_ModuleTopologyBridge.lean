@@ -1,5 +1,9 @@
-import Mathlib.NumberTheory.NumberField.AdeleRing
-import Mathlib.Topology.Algebra.Module.ModuleTopology
+module
+
+public import Mathlib.NumberTheory.NumberField.AdeleRing
+public import Mathlib.Topology.Algebra.Module.ModuleTopology
+
+@[expose] public section
 
 namespace M4aHerbrand.Bridge
 

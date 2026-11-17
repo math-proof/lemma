@@ -1,8 +1,10 @@
-import Abbrev.AlgebraicCurve_GluedPic0
+module
+
+public import Abbrev.AlgebraicCurve_GluedPic0
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace AlgebraicCurve
 

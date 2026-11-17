@@ -19,8 +19,8 @@ import Mathlib.RingTheory.TensorProduct.Basic
 import Mathlib.LinearAlgebra.Dual.Defs
 import Mathlib.CategoryTheory.Yoneda
 import Instance.v1.Atlas.TensorCategories.code.InvertibleObjects
-import Lemma.Category.Atlas.v1.TensorCategories.code.InvertibleObjects
-import Lemma.Category.Atlas.v1.TensorCategories.code.PivotalSpherical
+import Theorem.Category.Atlas.v1.TensorCategories.code.InvertibleObjects
+import Theorem.Category.Atlas.v1.TensorCategories.code.PivotalSpherical
 import Structure.v1.Atlas.TensorCategories.code.PivotalSpherical.Part3
 import Def.v1.Atlas.TensorCategories.code.CategoricalFreeness.Part2
 import Def.v1.Atlas.TensorCategories.code.DistinguishedInvertible.Part5

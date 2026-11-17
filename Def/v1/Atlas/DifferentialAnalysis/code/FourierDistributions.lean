@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Distribution.TemperedDistribution
-import Mathlib.Analysis.Distribution.SchwartzSpace.Fourier
+module
+
+public import Mathlib.Analysis.Distribution.TemperedDistribution
+public import Mathlib.Analysis.Distribution.SchwartzSpace.Fourier
+
+@[expose] public section
+
 open scoped SchwartzMap FourierTransform
 open MeasureTheory
 

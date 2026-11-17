@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.VanDerLaanSequence
-import Lemma.Finset.VanDerLaanSequence
+import Theorem.Finset.VanDerLaanSequence
 
 
 namespace MetaMathlibExt

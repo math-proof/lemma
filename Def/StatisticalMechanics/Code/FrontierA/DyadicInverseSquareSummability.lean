@@ -9,9 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib.Analysis.SpecificLimits.Normed
-import Mathlib.Topology.Algebra.InfiniteSum.Real
-import Theorem.StatisticalMechanics.Code.FrontierA.DyadicInverseSquareSummability
+module
+
+public import Mathlib.Analysis.SpecificLimits.Normed
+public import Mathlib.Topology.Algebra.InfiniteSum.Real
+public import Theorem.StatisticalMechanics.Code.FrontierA.DyadicInverseSquareSummability
+
+@[expose] public section
+
 open Filter Finset Set Topology
 
 

@@ -1,6 +1,6 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean -/
 
-import Lemma.Nat.DirichletCharacter.QuadraticReciprocityThreeOdd
+import Theorem.Nat.DirichletCharacter.QuadraticReciprocityThreeOdd
 /-! Even-family reduction for the reciprocity bridge.
 
 At an odd `p` the factor `4` contributes nothing to the Jacobi symbol,

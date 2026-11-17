@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Padics/PontryaginDual.lean -/
 
+module
 
-import Instance.NumberTheory.Padics.PontryaginDual
-import Lemma.Nat.Padics.PontryaginDual
+public import Instance.NumberTheory.Padics.PontryaginDual
 
+@[expose] public section
 
 namespace MetaMathlibExtTest
 

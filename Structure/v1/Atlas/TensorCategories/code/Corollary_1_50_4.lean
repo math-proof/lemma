@@ -8,15 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Abbrev.v1.Atlas.TensorCategories.code.QuasiBialgebra
-import Mathlib.LinearAlgebra.FreeModule.Basic
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+module
+
+public import Abbrev.v1.Atlas.TensorCategories.code.QuasiBialgebra
+public import Mathlib.LinearAlgebra.FreeModule.Basic
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
 set_option maxHeartbeats 800000
 
 universe u v
 
 
-noncomputable section
+public noncomputable section
 
 /-- A quasi-Hopf subalgebra of a quasi-Hopf algebra H: a subalgebra of H that is stable under
 the antipode S of H. -/

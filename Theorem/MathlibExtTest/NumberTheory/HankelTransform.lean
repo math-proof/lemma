@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/HankelTransform.lean -/
+module
 
+public import Def.NumberTheory.HankelTransform
 
-import Def.NumberTheory.HankelTransform
-
+public section
 
 namespace MetaMathlibExt
 

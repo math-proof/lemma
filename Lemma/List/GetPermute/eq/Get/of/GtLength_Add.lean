@@ -1,4 +1,6 @@
 import Lemma.List.Permute.eq.Ite
+import Initialize.Tactic.Attr.Basic
+import Theorem.Data.List.List.Part2
 open List
 
 
@@ -9,7 +11,7 @@ private lemma main
   (h : s.length > i + d) :
 -- imply
   have : i + d < (s.permute ⟨i, by grind⟩ d).length := by
-    simp
+    rw [List.length_permute]
     omega
   (s.permute ⟨i, by omega⟩ d)[i + d] = s[i] := by
 -- proof

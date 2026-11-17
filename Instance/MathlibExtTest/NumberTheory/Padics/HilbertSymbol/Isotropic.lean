@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Padics/HilbertSymbol/Isotropic.lean -/
 
+module
 
-import Lemma.Nat.Padics.HilbertSymbol.Isotropic
+@[expose] public section
+
 set_option autoImplicit false
 
 

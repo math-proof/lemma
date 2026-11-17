@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.SocialistPrime
-import Lemma.Nat.SocialistPrime
+import Theorem.Nat.SocialistPrime
 
 
 -- 5 is excluded by the strict source bound 5 < p; its listed residues

@@ -1,7 +1,12 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_FGSubalgebraTensorStage.lean: instance decls only.
-import Mathlib
-import Instance.AlgebraicGeometry_FGSubalgebra
-import Abbrev.AlgebraicGeometry_FGSubalgebraTensorStage
+
+module
+
+public import Mathlib
+public import Instance.AlgebraicGeometry_FGSubalgebra
+public import Abbrev.AlgebraicGeometry_FGSubalgebraTensorStage
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,5 +1,10 @@
-import Lean
-import Syntax.Logic.Quantifier.Part2
+module
+
+public meta import Lean
+public import Syntax.Logic.Quantifier.Part2
+
+public meta section
+
 open Lean (Macro explicitBinders)
 
 

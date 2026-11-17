@@ -1,5 +1,8 @@
-import Lemma.Matrix.CubicInduction_Structure
-import Structure.LanglandsTunnell_CubicInduction_DataOn
+module
+
+public import Structure.LanglandsTunnell_CubicInduction_DataOn
+
+@[expose] public section
 
 set_option autoImplicit false
 

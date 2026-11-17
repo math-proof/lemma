@@ -1,13 +1,18 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/Factorizations/Schur.lean -/
 
-import Mathlib.Data.Complex.Basic
-import Mathlib.LinearAlgebra.Matrix.Block
-import Mathlib.LinearAlgebra.UnitaryGroup
-import Mathlib.Analysis.CStarAlgebra.Module.Constructions
-import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
-import Mathlib.RingTheory.PicardGroup
+module
+
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.LinearAlgebra.Matrix.Block
+public import Mathlib.LinearAlgebra.UnitaryGroup
+public import Mathlib.Analysis.CStarAlgebra.Module.Constructions
+public import Mathlib.Analysis.Complex.Polynomial.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
+public import Mathlib.RingTheory.PicardGroup
+
+@[expose] public section
+
 open Matrix
 open scoped ComplexOrder
 

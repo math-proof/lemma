@@ -1,4 +1,4 @@
-import Lemma.Finset.ComponentGroup
+import Theorem.Finset.ComponentGroup
 import Mathlib.LinearAlgebra.Dual.Defs
 import Mathlib.Data.Matrix.Basic
 import Mathlib.Tactic.LinearCombination

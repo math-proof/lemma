@@ -3,7 +3,7 @@
 import Mathlib.Combinatorics.Enumerative.Stirling
 import Mathlib.Data.Matrix.Mul
 import Def.Combinatorics.Enumerative.SignedStirlingFirst
-import Lemma.Finset.Enumerative.SignedStirlingFirst
+import Theorem.Finset.Enumerative.SignedStirlingFirst
 import Mathlib.LinearAlgebra.Matrix.InvariantBasisNumber
 import Mathlib.RingTheory.FiniteType
 import Mathlib.Tactic.Ring

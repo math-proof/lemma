@@ -21,7 +21,7 @@ import Mathlib.CategoryTheory.Limits.Constructions.EpiMono
 import Mathlib.LinearAlgebra.FiniteDimensional.Defs
 import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
 import Lemma.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
-import Lemma.Category.Atlas.v1.TensorCategories.code.HigherDerivation
+import Theorem.Category.Atlas.v1.TensorCategories.code.HigherDerivation
 import Theorem.v1.Atlas.TensorCategories.code.UnitSemisimplicity
 import Instance.v1.Atlas.TensorCategories.code.HigherDerivation
 set_option maxHeartbeats 800000

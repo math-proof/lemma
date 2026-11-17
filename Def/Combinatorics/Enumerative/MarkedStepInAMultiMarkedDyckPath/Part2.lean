@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/MarkedStepInAMultiMarkedDyckPath.lean -/
 
-import Mathlib.Data.List.Basic
-import Structure.Combinatorics.Enumerative.MarkedStepInAMultiMarkedDyckPath
+module
 
+public import Mathlib.Data.List.Basic
+public import Structure.Combinatorics.Enumerative.MarkedStepInAMultiMarkedDyckPath
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

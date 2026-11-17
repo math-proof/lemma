@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/GeneralArithmeticalEulerianPolynomial.lean -/
+module
 
+public import Def.NumberTheory.GeneralArithmeticalEulerianPolynomial
+public import Mathlib.Tactic
 
-import Def.NumberTheory.GeneralArithmeticalEulerianPolynomial
-import Mathlib.Tactic
-
+public section
 
 namespace MetaMathlibExt
 

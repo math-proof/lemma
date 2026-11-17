@@ -1,10 +1,12 @@
-import Mathlib
-import Structure.GaloisRep_Adic
-import Def.GaloisRep_Adic
+module
+
+public import Mathlib
+public import Structure.GaloisRep_Adic
+public import Def.GaloisRep_Adic
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace GaloisRep
 

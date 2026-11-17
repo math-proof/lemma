@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.Process.Adapted
-import Mathlib.Probability.Independence.ZeroOne
+module
+
+public import Mathlib.Probability.Process.Adapted
+public import Mathlib.Probability.Independence.ZeroOne
+
+@[expose] public section
+
 open MeasureTheory MeasurableSpace Filtration
 
 

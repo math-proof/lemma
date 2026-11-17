@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.InnerProductSpace.EuclideanDist
-import Mathlib.Topology.MetricSpace.Basic
-import Mathlib.Data.Set.Card
-import Mathlib.Data.Real.Basic
+module
+
+public import Mathlib.Analysis.InnerProductSpace.EuclideanDist
+public import Mathlib.Topology.MetricSpace.Basic
+public import Mathlib.Data.Set.Card
+public import Mathlib.Data.Real.Basic
+@[expose] public section
+
 open Set Metric
 
 

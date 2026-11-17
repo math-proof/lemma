@@ -8,16 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.AlgebraicGeometryI.code.BezoutIntersection
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.BezoutIntersection
-import Mathlib.RingTheory.Polynomial.Resultant.Basic
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.KrullDimension.Basic
-import Mathlib.RingTheory.DedekindDomain.Basic
-import Mathlib.Algebra.Module.SpanRank
+module
+
+public import Def.v1.Atlas.AlgebraicGeometryI.code.BezoutIntersection
+public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.BezoutIntersection
+public import Mathlib.RingTheory.Polynomial.Resultant.Basic
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.KrullDimension.Basic
+public import Mathlib.RingTheory.DedekindDomain.Basic
+public import Mathlib.Algebra.Module.SpanRank
 
 
-noncomputable section
+public noncomputable section
 
 open Polynomial BezoutIntersection
 

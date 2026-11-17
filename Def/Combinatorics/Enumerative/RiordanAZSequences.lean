@@ -4,14 +4,17 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.RingTheory.PowerSeries.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.Ring.Rat
-import Mathlib.Data.Finset.Range
-import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
-import Mathlib.RingTheory.PowerSeries.Inverse
-import Mathlib.RingTheory.PowerSeries.Substitution
+module
 
+public import Mathlib.RingTheory.PowerSeries.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.Ring.Rat
+public import Mathlib.Data.Finset.Range
+public import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
+public import Mathlib.RingTheory.PowerSeries.Inverse
+public import Mathlib.RingTheory.PowerSeries.Substitution
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

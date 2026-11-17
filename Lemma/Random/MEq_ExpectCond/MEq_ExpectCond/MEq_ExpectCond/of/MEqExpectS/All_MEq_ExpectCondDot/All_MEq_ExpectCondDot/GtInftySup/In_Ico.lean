@@ -2,6 +2,7 @@ import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
 import Lemma.Random.MeasurableJoint.is.Measurable.Measurable
 import Theorem.Data.Vector.Basic.Part2
 import Syntax.Order.Sup
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory Random
 
 
@@ -106,4 +107,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-11-11
+-- updated on 2026-11-17

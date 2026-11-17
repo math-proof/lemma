@@ -2,7 +2,7 @@
 
 
 import Theorem.NumberTheory.NumberField.Completion.FiniteLiesOverResidueField
-import Lemma.Nat.NumberField.Completion.FiniteLiesOverResidueField
+import Theorem.Nat.NumberField.Completion.FiniteLiesOverResidueField
 /-!
 # Checks for adic integer map naturality
 -/

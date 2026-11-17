@@ -1,9 +1,12 @@
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
-import Abbrev.Analysis.InnerProductSpace.EuclideanVec
-import Abbrev.Geometry.Euclidean.Kinematics
+module
 
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
+public import Abbrev.Analysis.InnerProductSpace.EuclideanVec
+public import Abbrev.Geometry.Euclidean.Kinematics
+
+@[expose] public section
 
 /-- Radial distance \(r=|\vec{r}|\). -/
 noncomputable def radial {d : ℕ} (r : Position d) (t : ℝ) : ℝ := ‖r t‖

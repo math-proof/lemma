@@ -4,9 +4,11 @@
   Author: Muse Code powered by Meta Muse Spark
 -/
 
-import Mathlib.Algebra.MvPolynomial.Basic
-import Mathlib.Algebra.DirectSum.Decomposition
-import Def.RingTheory.GradedAlgebra.MultigradedPolynomialModule
+module
+
+public import Mathlib.Algebra.MvPolynomial.Basic
+public import Mathlib.Algebra.DirectSum.Decomposition
+public import Def.RingTheory.GradedAlgebra.MultigradedPolynomialModule
 /-!
 # Multigraded polynomial modules
 
@@ -37,6 +39,9 @@ Main definitions:
   `MvPolynomial.C` and shifting under monomial multiplication by the
   embedded exponent degree.
 -/
+public section
+
+
 
 
 namespace MetaMathlibExt

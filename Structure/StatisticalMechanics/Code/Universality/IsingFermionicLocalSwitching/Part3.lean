@@ -9,9 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicDobrushin.Part8
-import Theorem.StatisticalMechanics.Code.FK.FinitePatternEnergy.Part3
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicLocalSwitching.Part6
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicDobrushin.Part8
+public import Theorem.StatisticalMechanics.Code.FK.FinitePatternEnergy.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicLocalSwitching.Part6
 open Finset Complex
 open scoped BigOperators
 
@@ -20,7 +22,7 @@ namespace StatMech.Universality
 
 open StatMech StatMech.FK StatMech.Lattice StatMech.BeffaraDC
 
-noncomputable section
+public noncomputable section
 
 namespace FKIsingDobrushinDomain
 

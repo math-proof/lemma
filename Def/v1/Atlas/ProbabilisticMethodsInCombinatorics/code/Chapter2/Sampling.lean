@@ -8,12 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Combinatorics.Enumerative.DoubleCounting
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Finset.Powerset
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Fintype.Basic
-import Mathlib.Tactic.Linarith
+module
+
+public import Mathlib.Combinatorics.Enumerative.DoubleCounting
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Data.Finset.Powerset
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Fintype.Basic
+public import Mathlib.Tactic.Linarith
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 open Finset Nat

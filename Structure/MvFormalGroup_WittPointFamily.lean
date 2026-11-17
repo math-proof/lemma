@@ -1,12 +1,14 @@
-import Mathlib
-import Instance.MvFormalGroup_NegV2
-import Instance.MvFormalGroup_CartierModule
-import Lemma.PowerSeries.CartierModuleHomothety
-import Instance.MvFormalGroup_CartierModuleWittAction
+module
+
+public import Mathlib
+public import Instance.MvFormalGroup_NegV2
+public import Instance.MvFormalGroup_CartierModule
+public import Lemma.PowerSeries.CartierModuleHomothety
+public import Instance.MvFormalGroup_CartierModuleWittAction
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 universe u v w
 

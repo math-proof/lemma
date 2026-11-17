@@ -4,16 +4,19 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
 
-import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Algebra.Ring.IsFormallyReal
-import Mathlib.Analysis.SpecialFunctions.Choose
-import Mathlib.MeasureTheory.Measure.Prokhorov
-import Mathlib.Order.CompletePartialOrder
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.FunProp
-import Mathlib.Tactic.Linarith
+module
 
+public import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Algebra.Ring.IsFormallyReal
+public import Mathlib.Analysis.SpecialFunctions.Choose
+public import Mathlib.MeasureTheory.Measure.Prokhorov
+public import Mathlib.Order.CompletePartialOrder
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.FunProp
+public import Mathlib.Tactic.Linarith
+
+@[expose] public section
 
 section
 

@@ -8,14 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Category
-import Mathlib.CategoryTheory.Limits.Shapes.Equalizers
-import Mathlib.CategoryTheory.Monoidal.Mon_
-import Mathlib.CategoryTheory.Monoidal.Mod_
-import Mathlib.CategoryTheory.Simple
-import Mathlib.CategoryTheory.Preadditive.Basic
-import Mathlib.CategoryTheory.Limits.Shapes.Biproducts
-import Abbrev.v1.Atlas.TensorCategories.code.Definition_2_9_22
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Category
+public import Mathlib.CategoryTheory.Limits.Shapes.Equalizers
+public import Mathlib.CategoryTheory.Monoidal.Mon_
+public import Mathlib.CategoryTheory.Monoidal.Mod_
+public import Mathlib.CategoryTheory.Simple
+public import Mathlib.CategoryTheory.Preadditive.Basic
+public import Mathlib.CategoryTheory.Limits.Shapes.Biproducts
+public import Abbrev.v1.Atlas.TensorCategories.code.Definition_2_9_22
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 universe v u

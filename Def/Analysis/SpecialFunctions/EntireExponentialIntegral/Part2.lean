@@ -1,11 +1,17 @@
 -- Author: @toskua, Avocado
-import Mathlib.Analysis.Calculus.SmoothSeries
-import Mathlib.Analysis.Complex.CauchyIntegral
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.GCongr
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+
+module
+
+public import Mathlib.Analysis.Calculus.SmoothSeries
+public import Mathlib.Analysis.Complex.CauchyIntegral
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.GCongr
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 /-!
 # The entire exponential integral
 

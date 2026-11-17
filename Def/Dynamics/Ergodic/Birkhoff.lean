@@ -1,18 +1,21 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Dynamics/Ergodic/Birkhoff.lean -/
 
-import Mathlib.Dynamics.Ergodic.Ergodic
-import Mathlib.Dynamics.BirkhoffSum.Average
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Dynamics.BirkhoffSum.QuasiMeasurePreserving
-import Mathlib.MeasureTheory.Integral.Bochner.Set
-import Mathlib.Order.CompletePartialOrder
-import Mathlib.Tactic.GCongr
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
+module
 
+public import Mathlib.Dynamics.Ergodic.Ergodic
+public import Mathlib.Dynamics.BirkhoffSum.Average
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Dynamics.BirkhoffSum.QuasiMeasurePreserving
+public import Mathlib.MeasureTheory.Integral.Bochner.Set
+public import Mathlib.Order.CompletePartialOrder
+public import Mathlib.Tactic.GCongr
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 section
 

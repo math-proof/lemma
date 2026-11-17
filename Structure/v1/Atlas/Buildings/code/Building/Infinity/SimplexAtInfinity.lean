@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.Building.Infinity.Sectors.Part3
-import Lemma.Fin.All_All_Any_And_InAndAll_In_Vertices
+module
+
+public import Def.v1.Atlas.Buildings.code.Building.Infinity.Sectors.Part3
+public import Lemma.Fin.All_All_Any_And_InAndAll_In_Vertices
+public section
+
 set_option linter.unusedSectionVars false
 
 open ChamberComplex

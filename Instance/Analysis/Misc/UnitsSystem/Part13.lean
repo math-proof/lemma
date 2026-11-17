@@ -1,8 +1,13 @@
-import Mathlib
-import Mathlib.Algebra.Group.InjSurj
-import Mathlib.Order.Defs.PartialOrder
-import Mathlib.Algebra.Order.Module.Defs
-import Theorem.Analysis.Misc.UnitsSystem.Part15
+module
+
+public import Mathlib
+public import Mathlib.Algebra.Group.InjSurj
+public import Mathlib.Order.Defs.PartialOrder
+public import Mathlib.Algebra.Order.Module.Defs
+public import Theorem.Analysis.Misc.UnitsSystem.Part15
+
+@[expose] public section
+
 set_option doc.verso.suggestions false
 
 attribute [implicit_reducible, instance] UnitsSystem.addCommGroup

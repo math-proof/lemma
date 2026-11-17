@@ -2,7 +2,7 @@
 
 
 import Theorem.NumberTheory.RamificationInertia.Inseparable
-import Lemma.Ideal.RamificationInertia.Inseparable
+import Theorem.Ideal.RamificationInertia.Inseparable
 open Ideal
 
 attribute [local instance] Ideal.Quotient.field

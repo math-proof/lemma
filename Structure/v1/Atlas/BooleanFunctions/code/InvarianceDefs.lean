@@ -8,17 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.BooleanFunctions.code.MultilinearExtension
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.MultilinearExtension
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
-import Def.v1.Atlas.BooleanFunctions.code.Talagrand
-import Def.v1.Atlas.BooleanFunctions.code.GaussianHypercontractivity
-import Mathlib.Analysis.Calculus.IteratedDeriv.Defs
-import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
-import Def.v1.Atlas.BooleanFunctions.code.InvarianceDefs
+module
+
+public import Def.v1.Atlas.BooleanFunctions.code.MultilinearExtension
+public import Lemma.Bool.Atlas.v1.BooleanFunctions.code.MultilinearExtension
+public import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
+public import Def.v1.Atlas.BooleanFunctions.code.Talagrand
+public import Def.v1.Atlas.BooleanFunctions.code.GaussianHypercontractivity
+public import Mathlib.Analysis.Calculus.IteratedDeriv.Defs
+public import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
+public import Def.v1.Atlas.BooleanFunctions.code.InvarianceDefs
 
 
-noncomputable section
+public noncomputable section
 
 open Finset BigOperators MeasureTheory
 

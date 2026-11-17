@@ -10,9 +10,8 @@ import Mathlib.Analysis.PSeries
 import Mathlib.Analysis.SpecialFunctions.Gamma.Beta
 import Mathlib.Analysis.SpecialFunctions.Stirling
 import Mathlib.Topology.Algebra.Polynomial
-import Lemma.Complex.ExpOfContinuousAddMul
 import Def.NumberTheory.Ramanujan.Part1Ch3Entry13CorollarySchroder
-import Lemma.Nat.Ramanujan.Part1Ch3Entry13CorollarySchroder
+import Theorem.Nat.Ramanujan.Part1Ch3Entry13CorollarySchroder
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 3, Entry 14
 

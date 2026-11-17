@@ -4,16 +4,21 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Analysis.Analytic.Order
-import Mathlib.Analysis.SpecialFunctions.Complex.Analytic
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.FunProp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Analysis.Analytic.Order
+public import Mathlib.Analysis.SpecialFunctions.Complex.Analytic
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.FunProp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 3, Entry 15, inverse series
 

@@ -1,11 +1,13 @@
-import Mathlib
+module
 
-import Structure.AlgebraicGeometry_OModulePresheafHom
-import Instance.AlgebraicGeometry_OrderedAffineCoverOf
+public import Mathlib
+
+public import Structure.AlgebraicGeometry_OModulePresheafHom
+public import Instance.AlgebraicGeometry_OrderedAffineCoverOf
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 universe u
 

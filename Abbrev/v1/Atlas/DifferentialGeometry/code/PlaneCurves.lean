@@ -8,11 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Def.v1.Atlas.DifferentialGeometry.code.PlaneCurves.Part3
+module
+
+public import Mathlib
+public import Def.v1.Atlas.DifferentialGeometry.code.PlaneCurves.Part3
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace PlaneCurves
 

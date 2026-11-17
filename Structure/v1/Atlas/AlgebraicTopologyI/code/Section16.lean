@@ -8,20 +8,22 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.GroupTheory.FreeAbelianGroup
-import Instance.v1.Atlas.AlgebraicTopologyI.code.Section15
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section15
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section1
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section10
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section1.Part3
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section10.Part24
-import Mathlib.CategoryTheory.Limits.Shapes.ZeroObjects
-import Mathlib.Algebra.Category.Grp.Abelian
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section16.Part2
+module
+
+public import Mathlib.GroupTheory.FreeAbelianGroup
+public import Instance.v1.Atlas.AlgebraicTopologyI.code.Section15
+public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section15
+public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section1
+public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section10
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section1.Part3
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section10.Part24
+public import Mathlib.CategoryTheory.Limits.Shapes.ZeroObjects
+public import Mathlib.Algebra.Category.Grp.Abelian
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section16.Part2
 open AlgebraicTopology CategoryTheory Limits AlgebraicTopologyI
 
 
-noncomputable section
+public noncomputable section
 
 namespace CWComplex.SkeletonHomology
 

@@ -1,5 +1,9 @@
-import Def.Data.List.Slice
-import Def.Data.List.List
+module
+
+public import Def.Data.List.Slice
+public import Def.Data.List.List
+public section
+
 open Lean
 
 

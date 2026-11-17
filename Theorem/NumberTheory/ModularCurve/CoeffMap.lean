@@ -1,7 +1,9 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
-import Def.ModularCurve_LaurentCoeff
+module
+
+public import Def.ModularCurve_LaurentCoeff
 
 /-!
 # Injectivity of coefficientwise ring maps of Laurent series
@@ -9,6 +11,8 @@ import Def.ModularCurve_LaurentCoeff
 This file records `ModularCurve.coeffMap_injective`: if a ring homomorphism
 is injective, then the induced map on Laurent series coefficients is injective.
 -/
+
+public section
 
 set_option autoImplicit false
 

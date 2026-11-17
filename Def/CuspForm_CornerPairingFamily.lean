@@ -1,6 +1,5 @@
 import Lemma.ZMod.Inst
 import Lemma.UpperHalfPlane.PeriodMap
-import Lemma.Int.LevelPairing
 
 set_option autoImplicit false
 

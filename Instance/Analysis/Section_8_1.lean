@@ -1,5 +1,7 @@
-import Mathlib
-import Theorem.Analysis.Section_8_1
+module
+
+public import Mathlib
+public import Theorem.Analysis.Section_8_1
 /-!
 # Analysis I, Section 8.1: Countability
 
@@ -19,6 +21,7 @@ Note that as the Chapter 3 set theory has been deprecated, we will not re-use re
 
 -/
 
+@[expose] public section
 
 namespace Chapter8
 

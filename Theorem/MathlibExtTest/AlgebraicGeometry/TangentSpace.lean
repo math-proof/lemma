@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/AlgebraicGeometry/TangentSpace.lean -/
+module
 
-
-import Theorem.AlgebraicGeometry.TangentSpace
+public import Theorem.AlgebraicGeometry.TangentSpace
 set_option autoImplicit false
+
+public section
 
 variable {k : Type*} [Field k] {n : Nat}
 

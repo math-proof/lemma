@@ -8,26 +8,28 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Def.v1.Atlas.LieGroups.code.ContinuousRep.Part3
-import Lemma.Complex.IsStronglyContinuousToMonoidHom
-import Lemma.Complex.IsKFinite0
-import Lemma.Real.GetToMonoidHom.in.SmoothSubspace.of.In_SmoothSubspace
-import Lemma.Real.IsSmoothVector0
-import Lemma.Complex.Eq_Sum_Mul
-import Def.v1.Atlas.LieGroups.code.KFinite.Part3
-import Def.v1.Atlas.LieGroups.code.SmoothVectors
-import Def.v1.Atlas.LieGroups.code.KFiniteProps.Part4
-import Def.v1.Atlas.LieGroups.code.IsotypicPeterWeyl.Part3
-import Theorem.v1.Atlas.LieGroups.code.SmoothVectorsProps
-import Def.v1.Atlas.LieGroups.code.CompactMeasures
+module
+
+public import Mathlib
+public import Def.v1.Atlas.LieGroups.code.ContinuousRep.Part3
+public import Theorem.Complex.IsStronglyContinuousToMonoidHom
+public import Lemma.Complex.IsKFinite0
+public import Theorem.Real.GetToMonoidHom.in.SmoothSubspace.of.In_SmoothSubspace
+public import Theorem.Real.IsSmoothVector0
+public import Theorem.Complex.Eq_Sum_Mul
+public import Def.v1.Atlas.LieGroups.code.KFinite.Part3
+public import Def.v1.Atlas.LieGroups.code.SmoothVectors
+public import Def.v1.Atlas.LieGroups.code.KFiniteProps.Part4
+public import Def.v1.Atlas.LieGroups.code.IsotypicPeterWeyl.Part3
+public import Theorem.v1.Atlas.LieGroups.code.SmoothVectorsProps
+public import Def.v1.Atlas.LieGroups.code.CompactMeasures
 set_option autoImplicit false
 
 open scoped Topology Manifold
 open MeasureTheory
 
 
-noncomputable section
+public noncomputable section
 
 namespace PlancherelCompact
 

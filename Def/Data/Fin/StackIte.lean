@@ -1,5 +1,8 @@
-import Mathlib.Tactic
+module
 
+public import Mathlib.Tactic
+
+@[expose] public section
 
 /-! py with n blocks: the piecewise chain and its identification with the block concatenation.
 -/

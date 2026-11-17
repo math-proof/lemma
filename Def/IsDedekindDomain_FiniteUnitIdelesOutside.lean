@@ -1,5 +1,9 @@
-import Mathlib
-import Def.IsDedekindDomain_FiniteUnitIdeles
+module
+
+public import Mathlib
+public import Def.IsDedekindDomain_FiniteUnitIdeles
+
+@[expose] public section
 
 set_option autoImplicit false
 

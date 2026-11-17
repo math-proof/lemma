@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Real.Basic
-import Mathlib.LinearAlgebra.BilinearForm.Basic
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Linarith
+module
+
+public import Mathlib.Data.Real.Basic
+public import Mathlib.LinearAlgebra.BilinearForm.Basic
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.Linarith
+public section
+
 set_option autoImplicit false
 
 

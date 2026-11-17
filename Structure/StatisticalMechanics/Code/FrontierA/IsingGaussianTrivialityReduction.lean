@@ -9,9 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.GrahamImprovementReduction
-import Theorem.StatisticalMechanics.Code.FrontierA.RandomWalkHighDimensionalReduction.Part3
-import Def.StatisticalMechanics.Code.FrontierA.IsingGaussianTrivialityReduction.Part2
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierA.GrahamImprovementReduction
+public import Theorem.StatisticalMechanics.Code.FrontierA.RandomWalkHighDimensionalReduction.Part3
+public import Def.StatisticalMechanics.Code.FrontierA.IsingGaussianTrivialityReduction.Part2
+public section
+
 open Filter Finset Topology
 open scoped BigOperators
 

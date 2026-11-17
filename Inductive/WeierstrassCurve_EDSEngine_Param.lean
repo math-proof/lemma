@@ -1,5 +1,7 @@
-import Mathlib
+module
+
+public import Mathlib
 set_option autoImplicit false
 
 
-inductive Param : Type | B : Param | C : Param | D : Param
+public inductive Param : Type | B : Param | C : Param | D : Param

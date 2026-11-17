@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/LAdditiveFunction.lean -/
+module
 
+public import Def.Algebra.LAdditiveFunction
+public import Mathlib.Tactic.NormNum
 
-import Def.Algebra.LAdditiveFunction
-import Mathlib.Tactic.NormNum
-
+public section
 
 namespace MetaMathlibExt
 

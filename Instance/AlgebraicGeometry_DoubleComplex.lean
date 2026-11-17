@@ -3,6 +3,11 @@
 -- `Def.AlgebraicGeometry_DoubleComplex`, but Def and Structure already import this
 -- module, which made a build cycle. Host those instances next to the Def abbrevs
 -- (quotient instances often infer) rather than importing Def from Instance.
-import Mathlib
+
+module
+
+public import Mathlib
+
+@[expose] public section
 
 set_option autoImplicit false

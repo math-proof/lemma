@@ -1,5 +1,9 @@
-import Mathlib
-import Def.AlgebraicGeometry_HilbertFunctor
+module
+
+public import Mathlib
+public import Def.AlgebraicGeometry_HilbertFunctor
+
+public section
 
 set_option autoImplicit false
 

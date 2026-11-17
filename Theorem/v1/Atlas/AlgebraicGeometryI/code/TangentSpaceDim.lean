@@ -7,14 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.Ideal.Cotangent
-import Mathlib.LinearAlgebra.Dual.Lemmas
-import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
-import Mathlib.Algebra.Module.SpanRankOperations
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.Ideal.Cotangent
+public import Mathlib.LinearAlgebra.Dual.Lemmas
+public import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
+public import Mathlib.Algebra.Module.SpanRankOperations
 set_option maxHeartbeats 400000
 
+public section
 
 noncomputable section
 

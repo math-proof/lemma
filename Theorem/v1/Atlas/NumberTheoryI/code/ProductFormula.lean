@@ -7,19 +7,21 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.MeasureTheory.Group.Measure
-import Mathlib.MeasureTheory.Measure.Haar.Basic
-import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
-import Mathlib.MeasureTheory.Measure.Haar.MulEquivHaarChar
-import Mathlib.MeasureTheory.Measure.Haar.DistribChar
-import Mathlib.NumberTheory.NumberField.ProductFormula
-import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
-import Mathlib.FieldTheory.RatFunc.Basic
-import Mathlib.RingTheory.Complex
-import Mathlib.Analysis.Normed.Field.ProperSpace
-import Def.v1.Atlas.NumberTheoryI.code.ProductFormula
+public import Mathlib.MeasureTheory.Group.Measure
+public import Mathlib.MeasureTheory.Measure.Haar.Basic
+public import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
+public import Mathlib.MeasureTheory.Measure.Haar.MulEquivHaarChar
+public import Mathlib.MeasureTheory.Measure.Haar.DistribChar
+public import Mathlib.NumberTheory.NumberField.ProductFormula
+public import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
+public import Mathlib.FieldTheory.RatFunc.Basic
+public import Mathlib.RingTheory.Complex
+public import Mathlib.Analysis.Normed.Field.ProperSpace
+public import Def.v1.Atlas.NumberTheoryI.code.ProductFormula
 
+public section
 
 noncomputable section
 

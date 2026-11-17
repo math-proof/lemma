@@ -8,7 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.PicardGroup
+module
+
+public import Mathlib.RingTheory.PicardGroup
+
+@[expose] public section
+
 open TensorProduct
 
 universe u

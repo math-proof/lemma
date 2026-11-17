@@ -7,9 +7,12 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
+public import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
 set_option maxHeartbeats 800000
+
+public section
 
 /-- **Euclidean isoperimetric inequality** (Theorem 9.4.1). Among all measurable subsets of
 $\mathbb{R}^n$ with a fixed Lebesgue volume, the closed ball minimizes the volume of the

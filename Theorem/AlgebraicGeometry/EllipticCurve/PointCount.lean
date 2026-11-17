@@ -1,9 +1,11 @@
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.Algebra.Polynomial.Roots
-import Mathlib.Tactic.ComputeDegree
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.NormNum
-import Def.AlgebraicGeometry.EllipticCurve.PointCount.Part2
+module
+
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.Algebra.Polynomial.Roots
+public import Mathlib.Tactic.ComputeDegree
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.NormNum
+public import Def.AlgebraicGeometry.EllipticCurve.PointCount.Part2
 open Polynomial
 
 /-!
@@ -12,6 +14,8 @@ open Polynomial
 This file defines the Frobenius trace of an elliptic curve over a finite field through its rational
 point count. It also supplies a finiteness instance for the canonical affine point type.
 -/
+
+public section
 
 
 namespace WeierstrassCurve.Affine

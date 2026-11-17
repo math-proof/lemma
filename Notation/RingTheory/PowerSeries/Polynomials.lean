@@ -6,8 +6,14 @@ All rights reserved.
 Copyright (c) 2024 AlgebraicCombinatorics Contributors. All rights reserved.
 Authors: AlgebraicCombinatorics Contributors
 -/
-import Mathlib
-import Abbrev.RingTheory.PowerSeries.Polynomials
+
+module
+
+public import Mathlib
+public import Abbrev.RingTheory.PowerSeries.Polynomials
+
+public section
+
 /-!
 # Polynomials
 

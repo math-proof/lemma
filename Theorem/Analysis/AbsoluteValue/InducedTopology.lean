@@ -1,5 +1,8 @@
-import Mathlib.Analysis.AbsoluteValue.Equivalence
-import Def.Analysis.AbsoluteValue.InducedTopology
+module
+
+public import Mathlib.Analysis.AbsoluteValue.Equivalence
+public import Def.Analysis.AbsoluteValue.InducedTopology
+
 /-!
 # Topology induced by an absolute value
 
@@ -10,6 +13,8 @@ back to `K`. The main theorem characterizes equality of these carrier
 topologies, not equality of absolute values: two absolute values induce
 the same topology on `K` if and only if they are equivalent.
 -/
+
+public section
 
 
 namespace AbsoluteValue

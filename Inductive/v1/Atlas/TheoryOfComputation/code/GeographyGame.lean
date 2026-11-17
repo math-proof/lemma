@@ -8,8 +8,10 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Combinatorics.Digraph.Basic
-import Def.v1.Atlas.TheoryOfComputation.code.GeographyGame
+module
+
+public import Mathlib.Combinatorics.Digraph.Basic
+public import Def.v1.Atlas.TheoryOfComputation.code.GeographyGame
 
 
 namespace GeographyGame
@@ -22,7 +24,7 @@ has a strategy to win from position `pos`:
 - Player I (`true`) wins by choosing some valid move leading to a position where Player II loses.
 - Player II (`false`) wins immediately if the position is stuck (Player I cannot move), or if
   every valid move by Player I leads to a Player-I-winning position. -/
-inductive HasWinningStrategy (G : Digraph V) : Position V → Bool → Prop where
+public inductive HasWinningStrategy (G : Digraph V) : Position V → Bool → Prop where
   | playerI_moves {pos : Position V} {next : V}
     (hmove : ValidMove G pos next)
     (hwin : HasWinningStrategy G (makeMove pos next) false) :

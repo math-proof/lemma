@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part6
-import Lemma.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
-import Def.v1.Atlas.TensorCategories.code.RegularElement
+module
+
+public import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part6
+public import Lemma.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
+public import Def.v1.Atlas.TensorCategories.code.RegularElement
+public section
+
 open Finset
 
 

@@ -9,11 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib.Combinatorics.SimpleGraph.Paths
-import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
-import Mathlib.Data.Set.Card
-import Mathlib.Data.Fintype.Card
+module
 
+public import Mathlib.Combinatorics.SimpleGraph.Paths
+public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
+public import Mathlib.Data.Set.Card
+public import Mathlib.Data.Fintype.Card
+
+@[expose] public section
 
 namespace StatMech.Walls
 

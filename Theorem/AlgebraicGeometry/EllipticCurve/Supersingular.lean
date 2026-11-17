@@ -1,7 +1,12 @@
-import Mathlib.Algebra.Field.ZMod
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Def.AlgebraicGeometry.EllipticCurve.Supersingular
+module
+
+public import Mathlib.Algebra.Field.ZMod
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Def.AlgebraicGeometry.EllipticCurve.Supersingular
+
+public section
+
 attribute [local instance] Classical.decEq
 
 /-!

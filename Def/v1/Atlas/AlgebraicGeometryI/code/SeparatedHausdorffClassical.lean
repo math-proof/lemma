@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Mathlib.AlgebraicGeometry.Morphisms.FiniteType
-import Mathlib.AlgebraicGeometry.Properties
-import Mathlib.Data.Complex.Basic
-import Mathlib.Topology.Separation.Basic
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Mathlib.AlgebraicGeometry.Morphisms.FiniteType
+public import Mathlib.AlgebraicGeometry.Properties
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.Topology.Separation.Basic
+
+@[expose] public section
+
 open AlgebraicGeometry CategoryTheory
 
 

@@ -1,5 +1,8 @@
-import Def.LinearAlgebra.Matrix.FunSlice
+module
 
+public import Def.LinearAlgebra.Matrix.FunSlice
+
+@[expose] public section
 
 /-- Unit-step slice `V[start:stop]` of `ℕ ⇀ Fin d ⇀ ℝ` as a real matrix.
 Each entry stays in `ℝ`, so this coercion is computable. -/

@@ -8,14 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
-import Mathlib.CategoryTheory.Adjunction.Limits
-import Mathlib.CategoryTheory.Limits.Preserves.Finite
-import Mathlib.CategoryTheory.Limits.ExactFunctor
-import Mathlib.CategoryTheory.Equivalence
-import Mathlib.CategoryTheory.Limits.Constructions.EpiMono
-import Mathlib.CategoryTheory.Abelian.Basic
-import Theorem.v1.Atlas.TensorCategories.code.TensorExact
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
+public import Mathlib.CategoryTheory.Adjunction.Limits
+public import Mathlib.CategoryTheory.Limits.Preserves.Finite
+public import Mathlib.CategoryTheory.Limits.ExactFunctor
+public import Mathlib.CategoryTheory.Equivalence
+public import Mathlib.CategoryTheory.Limits.Constructions.EpiMono
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Theorem.v1.Atlas.TensorCategories.code.TensorExact
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 open CategoryTheory MonoidalCategory Limits Opposite

@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/InformationTheory/LogSum.lean -/
 
 
-import Lemma.Real.LogSum
+import Theorem.Real.LogSum
 
 
 /-- Gibbs' inequality for probability vectors on a finset. -/

@@ -9,7 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Foundations.StrassenFull.Part7
+module
+
+public import Theorem.StatisticalMechanics.Code.Foundations.StrassenFull.Part7
+public section
+
 open Finset
 open scoped NNReal
 

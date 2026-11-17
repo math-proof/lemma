@@ -1,12 +1,14 @@
-import Structure.AlgebraicGeometry_TwoAffineOpenCover
-import Mathlib.AlgebraicGeometry.AffineScheme
-import Mathlib.RingTheory.Finiteness.Defs
-import Mathlib.LinearAlgebra.Quotient.Defs
-import Mathlib.LinearAlgebra.Pi
+module
+
+public import Structure.AlgebraicGeometry_TwoAffineOpenCover
+public import Mathlib.AlgebraicGeometry.AffineScheme
+public import Mathlib.RingTheory.Finiteness.Defs
+public import Mathlib.LinearAlgebra.Quotient.Defs
+public import Mathlib.LinearAlgebra.Pi
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 universe u
 

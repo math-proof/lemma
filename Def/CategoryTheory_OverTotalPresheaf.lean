@@ -1,5 +1,9 @@
-import Mathlib
-import Abbrev.CategoryTheory_OverTotalPresheaf
+module
+
+public import Mathlib
+public import Abbrev.CategoryTheory_OverTotalPresheaf
+
+@[expose] public section
 
 set_option autoImplicit false
 

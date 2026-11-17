@@ -1,8 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/DifferentLocalization.lean -/
 
-import Lemma.Matrix.BilinearForm.DualLocalization
-import Mathlib.RingTheory.DedekindDomain.Different
-import Mathlib.Tactic.LinearCombination
+module
+
+public import Mathlib.RingTheory.DedekindDomain.Different
+public import Mathlib.Tactic.LinearCombination
+
+public section
+
 universe u
 
 variable (A K : Type*) (L : Type u) (B : Type*)

@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Ideal.Cotangent
-import Mathlib.RingTheory.Ideal.Operations
-import Mathlib.RingTheory.GradedAlgebra.Basic
-import Mathlib.LinearAlgebra.SymmetricAlgebra.Basic
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.ReesAlgebra
-import Mathlib.AlgebraicGeometry.Scheme
+module
+
+public import Mathlib.RingTheory.Ideal.Cotangent
+public import Mathlib.RingTheory.Ideal.Operations
+public import Mathlib.RingTheory.GradedAlgebra.Basic
+public import Mathlib.LinearAlgebra.SymmetricAlgebra.Basic
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.ReesAlgebra
+public import Mathlib.AlgebraicGeometry.Scheme
+
+@[expose] public section
+
 open Polynomial
 
 

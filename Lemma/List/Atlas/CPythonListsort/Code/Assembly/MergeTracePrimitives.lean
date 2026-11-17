@@ -1,8 +1,40 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Structure.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part5
-open CPythonListsort CPythonListsort.MergeMemcpySite CPythonListsort.TempRangeInBounds CPythonListsort.MergeMovementFrame CPythonListsort.MovementAccessOnly CPythonListsort.TempRangeInitialized CPythonListsort.TempRangeValuesMode CPythonListsort.AccessTrace CPythonListsort.AccessTrace.HasAccess CPythonListsort.AccessTrace.HasTempAccess CPythonListsort.MovementTraceSafe CPythonListsort.MovementTempLive
+module
+
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Structure.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part5
+public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.AccessTrace
+public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.SortSliceSafety
+public import Theorem.CPythonListsort.Code.Assembly.AccessTrace.Part2
+public import Structure.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part2
+public import Structure.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part3
+public import Structure.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part4
+public import Def.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part2
+public import Def.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part4
+public import Def.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part5
+
+public section
+
+open CPythonListsort
+open CPythonListsort.MergeMemcpySite
+open CPythonListsort.TempRangeInBounds
+open CPythonListsort.TempRangeInBounds.MergeMovementFrame
+open CPythonListsort.AccessTrace
+open CPythonListsort.TempRangeInBounds.MergeMovementFrame.MovementAccessOnly.AccessTrace.HasAccess
+open CPythonListsort.TempRangeInBounds.MergeMovementFrame.MovementAccessOnly.AccessTrace.HasAccess.MovementTraceSafe
 open SortSlice
+
+attribute [local simp]
+  TraceResult.erase_bind
+  TraceResult.erase_map
+  TraceResult.erase_pure
+  TraceResult.erase_failure
+  TraceResult.erase_tempPayloadRead
+  TraceResult.erase_tempPayloadWrite
+  TraceResult.erase_sortSliceKeysRead
+  TraceResult.erase_sortSliceKeysWrite
+  TraceResult.erase_sortSliceValuesRead
+  TraceResult.erase_sortSliceValuesWrite
 
 
 namespace CPythonListsort.TempRangeInBounds
@@ -11,7 +43,7 @@ namespace CPythonListsort.TempRangeInBounds
 [head](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma head
+public lemma head
   {storage : TempStorage κ ν}
   {start : Int}
   {count : Nat}
@@ -34,7 +66,7 @@ namespace CPythonListsort.TempRangeInBounds
 [tail](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma tail
+public lemma tail
   {storage : TempStorage κ ν}
   {start : Int}
   {count : Nat}
@@ -57,7 +89,7 @@ namespace CPythonListsort.TempRangeInBounds
 [of_size_eq](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma of_size_eq
+public lemma of_size_eq
   {first second : TempStorage κ ν}
   {start : Int}
   {count : Nat}
@@ -71,15 +103,36 @@ lemma of_size_eq
 
 end CPythonListsort.TempRangeInBounds
 
+namespace CPythonListsort.TempRangeInBounds.TempRangeValuesMode
+
+/--
+[initialized](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
+-/
+@[path]
+public lemma initialized
+  {storage : TempStorage κ ν}
+  {start : Int}
+  {count : Nat}
+-- given
+  (h : TempRangeValuesMode storage start count) :
+-- imply
+  TempRangeInitialized storage start count := by
+-- proof
+  intro offset hoffset
+  rcases h offset hoffset with ⟨entry, hread, _⟩
+  exact ⟨entry, hread⟩
+
+end CPythonListsort.TempRangeInBounds.TempRangeValuesMode
+
 namespace CPythonListsort
 
 /--
 [erase_mergeTempRead](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma erase_mergeTempRead
-  {storage : TempStorage κ ν}
-  {index : Int} :
+public lemma erase_mergeTempRead
+  (storage : TempStorage κ ν)
+  (index : Int) :
 -- imply
   (TraceResult.tempPayloadRead? storage index).erase = mergeTempRead? storage index := by
 -- proof
@@ -93,10 +146,10 @@ namespace CPythonListsort
 [erase_mergeTempWrite](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma erase_mergeTempWrite
-  {storage : TempStorage κ ν}
-  {index : Int}
-  {entry : SortSliceEntry κ ν} :
+public lemma erase_mergeTempWrite
+  (storage : TempStorage κ ν)
+  (index : Int)
+  (entry : SortSliceEntry κ ν) :
 -- imply
   (TraceResult.tempPayloadWrite? storage index entry).erase = mergeTempWrite? storage index entry := by
 -- proof
@@ -110,9 +163,9 @@ namespace CPythonListsort
 [erase_mainToTempKeyTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma erase_mainToTempKeyTraced
-  {state : MergeState κ ν}
-  {tempDst mainSrc : Int} :
+public lemma erase_mainToTempKeyTraced
+  (state : MergeState κ ν)
+  (tempDst mainSrc : Int) :
 -- imply
   (mainToTempKeyTraced? state tempDst mainSrc).erase = mainToTempCell? state tempDst mainSrc := by
 -- proof
@@ -131,9 +184,9 @@ namespace CPythonListsort
 [erase_mainToTempValuesTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma erase_mainToTempValuesTraced
-  {state : MergeState κ ν}
-  {tempDst mainSrc : Int} :
+public lemma erase_mainToTempValuesTraced
+  (state : MergeState κ ν)
+  (tempDst mainSrc : Int) :
 -- imply
   (mainToTempValuesTraced? state tempDst mainSrc).erase = mainToTempCell? state tempDst mainSrc := by
 -- proof
@@ -152,9 +205,9 @@ namespace CPythonListsort
 [erase_mainToTempCellTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma erase_mainToTempCellTraced
-  {state : MergeState κ ν}
-  {tempDst mainSrc : Int} :
+public lemma erase_mainToTempCellTraced
+  (state : MergeState κ ν)
+  (tempDst mainSrc : Int) :
 -- imply
   (mainToTempCellTraced? state tempDst mainSrc).erase = mainToTempCell? state tempDst mainSrc := by
 -- proof
@@ -162,7 +215,7 @@ lemma erase_mainToTempCellTraced
   rw [TraceResult.erase_bind, erase_mainToTempKeyTraced]
   cases hcopy : mainToTempCell? state tempDst mainSrc <;>
     cases hmode : state.a.hasValues <;>
-    simp [hcopy]
+    simp [hcopy, erase_mainToTempValuesTraced]
 
 end CPythonListsort
 
@@ -172,9 +225,9 @@ namespace CPythonListsort
 [erase_tempToMainKeyTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma erase_tempToMainKeyTraced
-  {state : MergeState κ ν}
-  {mainDst tempSrc : Int} :
+public lemma erase_tempToMainKeyTraced
+  (state : MergeState κ ν)
+  (mainDst tempSrc : Int) :
 -- imply
   (tempToMainKeyTraced? state mainDst tempSrc).erase = tempToMainCell? state mainDst tempSrc := by
 -- proof
@@ -193,9 +246,9 @@ namespace CPythonListsort
 [erase_tempToMainValuesTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma erase_tempToMainValuesTraced
-  {state : MergeState κ ν}
-  {mainDst tempSrc : Int} :
+public lemma erase_tempToMainValuesTraced
+  (state : MergeState κ ν)
+  (mainDst tempSrc : Int) :
 -- imply
   (tempToMainValuesTraced? state mainDst tempSrc).erase = tempToMainCell? state mainDst tempSrc := by
 -- proof
@@ -214,9 +267,9 @@ namespace CPythonListsort
 [erase_tempToMainCellTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma erase_tempToMainCellTraced
-  {state : MergeState κ ν}
-  {mainDst tempSrc : Int} :
+public lemma erase_tempToMainCellTraced
+  (state : MergeState κ ν)
+  (mainDst tempSrc : Int) :
 -- imply
   (tempToMainCellTraced? state mainDst tempSrc).erase = tempToMainCell? state mainDst tempSrc := by
 -- proof
@@ -224,7 +277,7 @@ lemma erase_tempToMainCellTraced
   rw [TraceResult.erase_bind, erase_tempToMainKeyTraced]
   cases hcopy : tempToMainCell? state mainDst tempSrc <;>
     cases hmode : state.a.hasValues <;>
-    simp [hcopy]
+    simp [hcopy, erase_tempToMainValuesTraced]
 
 end CPythonListsort
 
@@ -234,19 +287,20 @@ namespace CPythonListsort
 [erase_mainToTempKeysTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma erase_mainToTempKeysTraced
-  {site : MergeMemcpySite}
-  {permit : site.MainToTempPermit}
-  {count : Nat}
-  {state : MergeState κ ν}
-  {tempDst mainSrc : Int} :
+public lemma erase_mainToTempKeysTraced
+  (site : MergeMemcpySite)
+  (permit : site.MainToTempPermit)
+  (count : Nat)
+  (state : MergeState κ ν)
+  (tempDst mainSrc : Int) :
 -- imply
   (mainToTempKeysTraced? site permit count state tempDst mainSrc).erase = mainToTempMemcpy? count state tempDst mainSrc := by
 -- proof
   induction count generalizing state tempDst mainSrc with
   | zero => rfl
   | succ count ih =>
-    simp [mainToTempKeysTraced?, mainToTempMemcpy?, ih]
+    simp [mainToTempKeysTraced?, mainToTempMemcpy?, ih,
+      erase_mainToTempKeyTraced]
 
 end CPythonListsort
 
@@ -256,19 +310,20 @@ namespace CPythonListsort
 [erase_mainToTempValuesPhaseTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma erase_mainToTempValuesPhaseTraced
-  {site : MergeMemcpySite}
-  {permit : site.MainToTempPermit}
-  {count : Nat}
-  {state : MergeState κ ν}
-  {tempDst mainSrc : Int} :
+public lemma erase_mainToTempValuesPhaseTraced
+  (site : MergeMemcpySite)
+  (permit : site.MainToTempPermit)
+  (count : Nat)
+  (state : MergeState κ ν)
+  (tempDst mainSrc : Int) :
 -- imply
   (mainToTempValuesPhaseTraced? site permit count state tempDst mainSrc).erase = mainToTempMemcpy? count state tempDst mainSrc := by
 -- proof
   induction count generalizing state tempDst mainSrc with
   | zero => rfl
   | succ count ih =>
-    simp [mainToTempValuesPhaseTraced?, mainToTempMemcpy?, ih]
+    simp [mainToTempValuesPhaseTraced?, mainToTempMemcpy?, ih,
+      erase_mainToTempValuesTraced]
 
 end CPythonListsort
 
@@ -278,12 +333,12 @@ namespace CPythonListsort
 [erase_mainToTempMemcpyTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma erase_mainToTempMemcpyTraced
-  {site : MergeMemcpySite}
-  {permit : site.MainToTempPermit}
-  {count : Nat}
-  {state : MergeState κ ν}
-  {tempDst mainSrc : Int} :
+public lemma erase_mainToTempMemcpyTraced
+  (site : MergeMemcpySite)
+  (permit : site.MainToTempPermit)
+  (count : Nat)
+  (state : MergeState κ ν)
+  (tempDst mainSrc : Int) :
 -- imply
   (mainToTempMemcpyTraced? site permit count state tempDst mainSrc).erase = mainToTempMemcpy? count state tempDst mainSrc := by
 -- proof
@@ -291,7 +346,7 @@ lemma erase_mainToTempMemcpyTraced
   rw [TraceResult.erase_bind, erase_mainToTempKeysTraced]
   cases hcopy : mainToTempMemcpy? count state tempDst mainSrc <;>
     cases hmode : state.a.hasValues <;>
-    simp [hcopy]
+    simp [hcopy, erase_mainToTempValuesPhaseTraced]
 
 end CPythonListsort
 
@@ -301,19 +356,20 @@ namespace CPythonListsort
 [erase_tempToMainKeysTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma erase_tempToMainKeysTraced
-  {site : MergeMemcpySite}
-  {permit : site.TempToMainPermit}
-  {count : Nat}
-  {state : MergeState κ ν}
-  {mainDst tempSrc : Int} :
+public lemma erase_tempToMainKeysTraced
+  (site : MergeMemcpySite)
+  (permit : site.TempToMainPermit)
+  (count : Nat)
+  (state : MergeState κ ν)
+  (mainDst tempSrc : Int) :
 -- imply
   (tempToMainKeysTraced? site permit count state mainDst tempSrc).erase = tempToMainMemcpy? count state mainDst tempSrc := by
 -- proof
   induction count generalizing state mainDst tempSrc with
   | zero => rfl
   | succ count ih =>
-    simp [tempToMainKeysTraced?, tempToMainMemcpy?, ih]
+    simp [tempToMainKeysTraced?, tempToMainMemcpy?, ih,
+      erase_tempToMainKeyTraced]
 
 end CPythonListsort
 
@@ -323,19 +379,20 @@ namespace CPythonListsort
 [erase_tempToMainValuesPhaseTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma erase_tempToMainValuesPhaseTraced
-  {site : MergeMemcpySite}
-  {permit : site.TempToMainPermit}
-  {count : Nat}
-  {state : MergeState κ ν}
-  {mainDst tempSrc : Int} :
+public lemma erase_tempToMainValuesPhaseTraced
+  (site : MergeMemcpySite)
+  (permit : site.TempToMainPermit)
+  (count : Nat)
+  (state : MergeState κ ν)
+  (mainDst tempSrc : Int) :
 -- imply
   (tempToMainValuesPhaseTraced? site permit count state mainDst tempSrc).erase = tempToMainMemcpy? count state mainDst tempSrc := by
 -- proof
   induction count generalizing state mainDst tempSrc with
   | zero => rfl
   | succ count ih =>
-    simp [tempToMainValuesPhaseTraced?, tempToMainMemcpy?, ih]
+    simp [tempToMainValuesPhaseTraced?, tempToMainMemcpy?, ih,
+      erase_tempToMainValuesTraced]
 
 end CPythonListsort
 
@@ -345,12 +402,12 @@ namespace CPythonListsort
 [erase_tempToMainMemcpyTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma erase_tempToMainMemcpyTraced
-  {site : MergeMemcpySite}
-  {permit : site.TempToMainPermit}
-  {count : Nat}
-  {state : MergeState κ ν}
-  {mainDst tempSrc : Int} :
+public lemma erase_tempToMainMemcpyTraced
+  (site : MergeMemcpySite)
+  (permit : site.TempToMainPermit)
+  (count : Nat)
+  (state : MergeState κ ν)
+  (mainDst tempSrc : Int) :
 -- imply
   (tempToMainMemcpyTraced? site permit count state mainDst tempSrc).erase = tempToMainMemcpy? count state mainDst tempSrc := by
 -- proof
@@ -358,7 +415,7 @@ lemma erase_tempToMainMemcpyTraced
   rw [TraceResult.erase_bind, erase_tempToMainKeysTraced]
   cases hcopy : tempToMainMemcpy? count state mainDst tempSrc <;>
     cases hmode : state.a.hasValues <;>
-    simp [hcopy]
+    simp [hcopy, erase_tempToMainValuesPhaseTraced]
 
 end CPythonListsort
 
@@ -368,40 +425,41 @@ namespace CPythonListsort
 [erase_mainDataMemmoveTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma erase_mainDataMemmoveTraced
-  {state : MergeState κ ν}
-  {dst src : Int}
-  {count : Nat} :
+public lemma erase_mainDataMemmoveTraced
+  (state : MergeState κ ν)
+  (dst src : Int)
+  (count : Nat) :
 -- imply
   (mainDataMemmoveTraced? state dst src count).erase = mainDataMemmove? state dst src count := by
 -- proof
-  cases hmove : state.data.memmove? dst src count <;>
-    simp [mainDataMemmoveTraced?, mainDataMemmove?, hmove]
+  simp [mainDataMemmoveTraced?, mainDataMemmove?,
+    SortSlice.erase_memmoveTraced]
+  cases state.data.memmove? dst src count <;> rfl
 
 end CPythonListsort
 
-namespace CPythonListsort.MergeMovementFrame
+namespace CPythonListsort.TempRangeInBounds.MergeMovementFrame
 
 /--
 [refl](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma refl
+public lemma refl
   {state : MergeState κ ν} :
 -- imply
   MergeMovementFrame state state := by
 -- proof
   constructor <;> rfl
 
-end CPythonListsort.MergeMovementFrame
+end CPythonListsort.TempRangeInBounds.MergeMovementFrame
 
-namespace CPythonListsort.MergeMovementFrame
+namespace CPythonListsort.TempRangeInBounds.MergeMovementFrame
 
 /--
 [trans](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma trans
+public lemma trans
   {first second third : MergeState κ ν}
 -- given
   (h₁ : MergeMovementFrame first second)
@@ -424,15 +482,15 @@ lemma trans
   · exact h₂.mrE.trans h₁.mrE
   · exact h₂.mrMask.trans h₁.mrMask
 
-end CPythonListsort.MergeMovementFrame
+end CPythonListsort.TempRangeInBounds.MergeMovementFrame
 
-namespace CPythonListsort.MergeMovementFrame
+namespace CPythonListsort.TempRangeInBounds.MergeMovementFrame
 
 /--
 [tempStorageInv](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma tempStorageInv
+public lemma tempStorageInv
   {before after : MergeState κ ν}
 -- given
   (hframe : MergeMovementFrame before after)
@@ -465,15 +523,15 @@ lemma tempStorageInv
       after.a.cells.size = before.a.cells.size := hframe.tempSize
       _ = 0 := by simpa using congrArg Array.size hinvariant
 
-end CPythonListsort.MergeMovementFrame
+end CPythonListsort.TempRangeInBounds.MergeMovementFrame
 
-namespace CPythonListsort.MergeMovementFrame
+namespace CPythonListsort.TempRangeInBounds.MergeMovementFrame
 
 /--
 [live](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma live
+public lemma live
   {before after : MergeState κ ν}
 -- given
   (hframe : MergeMovementFrame before after)
@@ -483,7 +541,7 @@ lemma live
 -- proof
   simpa [TempStorage.Live, hframe.tempBacking] using hlive
 
-end CPythonListsort.MergeMovementFrame
+end CPythonListsort.TempRangeInBounds.MergeMovementFrame
 
 namespace CPythonListsort
 
@@ -548,10 +606,10 @@ namespace CPythonListsort
 [mainToTempMemcpy_frame](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma mainToTempMemcpy_frame
-  {count : Nat}
-  {state result : MergeState κ ν}
-  {tempDst mainSrc : Int}
+public lemma mainToTempMemcpy_frame
+  (count : Nat)
+  (state result : MergeState κ ν)
+  (tempDst mainSrc : Int)
 -- given
   (hresult : mainToTempMemcpy? count state tempDst mainSrc = some result) :
 -- imply
@@ -561,7 +619,7 @@ lemma mainToTempMemcpy_frame
   | zero =>
     simp only [mainToTempMemcpy?, Option.some.injEq] at hresult
     subst result
-    exact .refl state
+    exact MergeMovementFrame.refl
   | succ count ih =>
     simp only [mainToTempMemcpy?, bind, Option.bind] at hresult
     split at hresult <;> try contradiction
@@ -577,10 +635,10 @@ namespace CPythonListsort
 [tempToMainMemcpy_frame](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma tempToMainMemcpy_frame
-  {count : Nat}
-  {state result : MergeState κ ν}
-  {mainDst tempSrc : Int}
+public lemma tempToMainMemcpy_frame
+  (count : Nat)
+  (state result : MergeState κ ν)
+  (mainDst tempSrc : Int)
 -- given
   (hresult : tempToMainMemcpy? count state mainDst tempSrc = some result) :
 -- imply
@@ -590,7 +648,7 @@ lemma tempToMainMemcpy_frame
   | zero =>
     simp only [tempToMainMemcpy?, Option.some.injEq] at hresult
     subst result
-    exact .refl state
+    exact MergeMovementFrame.refl
   | succ count ih =>
     simp only [tempToMainMemcpy?, bind, Option.bind] at hresult
     split at hresult <;> try contradiction
@@ -606,10 +664,10 @@ namespace CPythonListsort
 [mainDataMemmove_frame](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma mainDataMemmove_frame
-  {state result : MergeState κ ν}
-  {dst src : Int}
-  {count : Nat}
+public lemma mainDataMemmove_frame
+  (state result : MergeState κ ν)
+  (dst src : Int)
+  (count : Nat)
 -- given
   (hresult : mainDataMemmove? state dst src count = some result) :
 -- imply
@@ -630,12 +688,12 @@ namespace CPythonListsort
 [mainToTempMemcpyTraced_frame](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma mainToTempMemcpyTraced_frame
-  {site : MergeMemcpySite}
-  {permit : site.MainToTempPermit}
-  {count : Nat}
-  {state result : MergeState κ ν}
-  {tempDst mainSrc : Int}
+public lemma mainToTempMemcpyTraced_frame
+  (site : MergeMemcpySite)
+  (permit : site.MainToTempPermit)
+  (count : Nat)
+  (state result : MergeState κ ν)
+  (tempDst mainSrc : Int)
 -- given
   (hresult : (mainToTempMemcpyTraced? site permit count state tempDst mainSrc).result = some result) :
 -- imply
@@ -652,12 +710,12 @@ namespace CPythonListsort
 [tempToMainMemcpyTraced_frame](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma tempToMainMemcpyTraced_frame
-  {site : MergeMemcpySite}
-  {permit : site.TempToMainPermit}
-  {count : Nat}
-  {state result : MergeState κ ν}
-  {mainDst tempSrc : Int}
+public lemma tempToMainMemcpyTraced_frame
+  (site : MergeMemcpySite)
+  (permit : site.TempToMainPermit)
+  (count : Nat)
+  (state result : MergeState κ ν)
+  (mainDst tempSrc : Int)
 -- given
   (hresult : (tempToMainMemcpyTraced? site permit count state mainDst tempSrc).result = some result) :
 -- imply
@@ -674,10 +732,10 @@ namespace CPythonListsort
 [mainDataMemmoveTraced_frame](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma mainDataMemmoveTraced_frame
-  {state result : MergeState κ ν}
-  {dst src : Int}
-  {count : Nat}
+public lemma mainDataMemmoveTraced_frame
+  (state result : MergeState κ ν)
+  (dst src : Int)
+  (count : Nat)
 -- given
   (hresult : (mainDataMemmoveTraced? state dst src count).result = some result) :
 -- imply
@@ -688,28 +746,28 @@ lemma mainDataMemmoveTraced_frame
 
 end CPythonListsort
 
-namespace CPythonListsort.MovementAccessOnly
+namespace CPythonListsort.TempRangeInBounds.MergeMovementFrame.MovementAccessOnly
 
 /--
 [pure](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma pure
+public lemma pure
   {value : α} :
 -- imply
   MovementAccessOnly (TraceResult.pure value) := by
 -- proof
   simp [MovementAccessOnly, TraceResult.pure, AccessTrace.empty]
 
-end CPythonListsort.MovementAccessOnly
+end CPythonListsort.TempRangeInBounds.MergeMovementFrame.MovementAccessOnly
 
-namespace CPythonListsort.MovementAccessOnly
+namespace CPythonListsort.TempRangeInBounds.MergeMovementFrame.MovementAccessOnly
 
 /--
 [map](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma map
+public lemma map
   {current : TraceResult α}
   {transform : α → β}
 -- given
@@ -719,15 +777,15 @@ lemma map
 -- proof
 h
 
-end CPythonListsort.MovementAccessOnly
+end CPythonListsort.TempRangeInBounds.MergeMovementFrame.MovementAccessOnly
 
-namespace CPythonListsort.MovementAccessOnly
+namespace CPythonListsort.TempRangeInBounds.MergeMovementFrame.MovementAccessOnly
 
 /--
 [bind](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma bind
+public lemma bind
   {current : TraceResult α}
   {next : α → TraceResult β}
 -- given
@@ -746,7 +804,7 @@ lemma bind
     simp [MovementAccessOnly, TraceResult.trace_bind, hresult,
       AccessTrace.compose, hcurrentFuel, hcurrentPush, hnextFuel, hnextPush]
 
-end CPythonListsort.MovementAccessOnly
+end CPythonListsort.TempRangeInBounds.MergeMovementFrame.MovementAccessOnly
 
 namespace CPythonListsort
 
@@ -835,9 +893,9 @@ namespace CPythonListsort
 [mainToTempCellTraced_accessOnly](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma mainToTempCellTraced_accessOnly
-  {state : MergeState κ ν}
-  {tempDst mainSrc : Int} :
+public lemma mainToTempCellTraced_accessOnly
+  (state : MergeState κ ν)
+  (tempDst mainSrc : Int) :
 -- imply
   MovementAccessOnly (mainToTempCellTraced? state tempDst mainSrc) := by
 -- proof
@@ -845,7 +903,7 @@ lemma mainToTempCellTraced_accessOnly
   · apply MovementAccessOnly.bind
     · exact keyRead_accessOnly state.data mainSrc
     · intro entry
-      exact MovementAccessOnly.map _ _ (tempWrite_accessOnly state.a tempDst entry)
+      exact MovementAccessOnly.map (tempWrite_accessOnly state.a tempDst entry)
   · intro keyResult
     cases hmode : state.a.hasValues with
     | false => simp [MovementAccessOnly.pure]
@@ -854,7 +912,7 @@ lemma mainToTempCellTraced_accessOnly
       apply MovementAccessOnly.bind
       · exact valuesRead_accessOnly state.data mainSrc
       · intro entry
-        exact MovementAccessOnly.map _ _
+        exact MovementAccessOnly.map
           (tempWrite_accessOnly state.a tempDst entry)
 
 end CPythonListsort
@@ -865,9 +923,9 @@ namespace CPythonListsort
 [tempToMainCellTraced_accessOnly](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma tempToMainCellTraced_accessOnly
-  {state : MergeState κ ν}
-  {mainDst tempSrc : Int} :
+public lemma tempToMainCellTraced_accessOnly
+  (state : MergeState κ ν)
+  (mainDst tempSrc : Int) :
 -- imply
   MovementAccessOnly (tempToMainCellTraced? state mainDst tempSrc) := by
 -- proof
@@ -875,7 +933,7 @@ lemma tempToMainCellTraced_accessOnly
   · apply MovementAccessOnly.bind
     · exact tempRead_accessOnly state.a tempSrc
     · intro entry
-      exact MovementAccessOnly.map _ _
+      exact MovementAccessOnly.map
         (keyWrite_accessOnly state.data mainDst entry)
   · intro keyResult
     cases hmode : state.a.hasValues with
@@ -885,7 +943,7 @@ lemma tempToMainCellTraced_accessOnly
       apply MovementAccessOnly.bind
       · exact tempRead_accessOnly state.a tempSrc
       · intro entry
-        exact MovementAccessOnly.map _ _
+        exact MovementAccessOnly.map
           (valuesWrite_accessOnly state.data mainDst entry)
 
 end CPythonListsort
@@ -902,13 +960,13 @@ private lemma mainToTempKeysTraced_accessOnly (site : MergeMemcpySite)
   MovementAccessOnly
     (mainToTempKeysTraced? site permit count state tempDst mainSrc) := by
   induction count generalizing state tempDst mainSrc with
-  | zero => exact MovementAccessOnly.pure state
+  | zero => exact MovementAccessOnly.pure
   | succ count ih =>
     apply MovementAccessOnly.bind
     · apply MovementAccessOnly.bind
       · exact keyRead_accessOnly state.data mainSrc
       · intro entry
-        exact MovementAccessOnly.map _ _
+        exact MovementAccessOnly.map
           (tempWrite_accessOnly state.a tempDst entry)
     · intro next
       exact ih next (tempDst + 1) (mainSrc + 1)
@@ -927,13 +985,13 @@ private lemma mainToTempValuesPhaseTraced_accessOnly (site : MergeMemcpySite)
   MovementAccessOnly
     (mainToTempValuesPhaseTraced? site permit count state tempDst mainSrc) := by
   induction count generalizing state tempDst mainSrc with
-  | zero => exact MovementAccessOnly.pure state
+  | zero => exact MovementAccessOnly.pure
   | succ count ih =>
     apply MovementAccessOnly.bind
     · apply MovementAccessOnly.bind
       · exact valuesRead_accessOnly state.data mainSrc
       · intro entry
-        exact MovementAccessOnly.map _ _
+        exact MovementAccessOnly.map
           (tempWrite_accessOnly state.a tempDst entry)
     · intro next
       exact ih next (tempDst + 1) (mainSrc + 1)
@@ -946,12 +1004,12 @@ namespace CPythonListsort
 [mainToTempMemcpyTraced_accessOnly](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma mainToTempMemcpyTraced_accessOnly
-  {site : MergeMemcpySite}
-  {permit : site.MainToTempPermit}
-  {count : Nat}
-  {state : MergeState κ ν}
-  {tempDst mainSrc : Int} :
+public lemma mainToTempMemcpyTraced_accessOnly
+  (site : MergeMemcpySite)
+  (permit : site.MainToTempPermit)
+  (count : Nat)
+  (state : MergeState κ ν)
+  (tempDst mainSrc : Int) :
 -- imply
   MovementAccessOnly (mainToTempMemcpyTraced? site permit count state tempDst mainSrc) := by
 -- proof
@@ -979,13 +1037,13 @@ private lemma tempToMainKeysTraced_accessOnly (site : MergeMemcpySite)
   MovementAccessOnly
     (tempToMainKeysTraced? site permit count state mainDst tempSrc) := by
   induction count generalizing state mainDst tempSrc with
-  | zero => exact MovementAccessOnly.pure state
+  | zero => exact MovementAccessOnly.pure
   | succ count ih =>
     apply MovementAccessOnly.bind
     · apply MovementAccessOnly.bind
       · exact tempRead_accessOnly state.a tempSrc
       · intro entry
-        exact MovementAccessOnly.map _ _
+        exact MovementAccessOnly.map
           (keyWrite_accessOnly state.data mainDst entry)
     · intro next
       exact ih next (mainDst + 1) (tempSrc + 1)
@@ -1004,13 +1062,13 @@ private lemma tempToMainValuesPhaseTraced_accessOnly (site : MergeMemcpySite)
   MovementAccessOnly
     (tempToMainValuesPhaseTraced? site permit count state mainDst tempSrc) := by
   induction count generalizing state mainDst tempSrc with
-  | zero => exact MovementAccessOnly.pure state
+  | zero => exact MovementAccessOnly.pure
   | succ count ih =>
     apply MovementAccessOnly.bind
     · apply MovementAccessOnly.bind
       · exact tempRead_accessOnly state.a tempSrc
       · intro entry
-        exact MovementAccessOnly.map _ _
+        exact MovementAccessOnly.map
           (valuesWrite_accessOnly state.data mainDst entry)
     · intro next
       exact ih next (mainDst + 1) (tempSrc + 1)
@@ -1023,12 +1081,12 @@ namespace CPythonListsort
 [tempToMainMemcpyTraced_accessOnly](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma tempToMainMemcpyTraced_accessOnly
-  {site : MergeMemcpySite}
-  {permit : site.TempToMainPermit}
-  {count : Nat}
-  {state : MergeState κ ν}
-  {mainDst tempSrc : Int} :
+public lemma tempToMainMemcpyTraced_accessOnly
+  (site : MergeMemcpySite)
+  (permit : site.TempToMainPermit)
+  (count : Nat)
+  (state : MergeState κ ν)
+  (mainDst tempSrc : Int) :
 -- imply
   MovementAccessOnly (tempToMainMemcpyTraced? site permit count state mainDst tempSrc) := by
 -- proof
@@ -1089,7 +1147,7 @@ private lemma memmoveForwardKeys_accessOnly (count : Nat)
   MovementAccessOnly
     (SortSlice.memmoveForwardKeysTraced? count slice dst src) := by
   induction count generalizing slice dst src with
-  | zero => exact MovementAccessOnly.pure slice
+  | zero => exact MovementAccessOnly.pure
   | succ count ih =>
     apply MovementAccessOnly.bind
     · exact copyKeysFrom_accessOnly slice slice dst src
@@ -1109,7 +1167,7 @@ private lemma memmoveForwardValues_accessOnly (count : Nat)
   MovementAccessOnly
     (SortSlice.memmoveForwardValuesTraced? count slice dst src) := by
   induction count generalizing slice dst src with
-  | zero => exact MovementAccessOnly.pure slice
+  | zero => exact MovementAccessOnly.pure
   | succ count ih =>
     apply MovementAccessOnly.bind
     · exact copyValuesFrom_accessOnly slice slice dst src
@@ -1129,11 +1187,11 @@ private lemma memmoveBackwardKeys_accessOnly (count : Nat)
   MovementAccessOnly
     (SortSlice.memmoveBackwardKeysTraced? count slice dst src) := by
   induction count generalizing slice dst src with
-  | zero => exact MovementAccessOnly.pure slice
+  | zero => exact MovementAccessOnly.pure
   | succ count ih =>
     apply MovementAccessOnly.bind
     · exact copyKeysFrom_accessOnly slice slice
-      (dst + Int.ofNat count) (src + Int.ofNat count)
+        (dst + Int.ofNat count) (src + Int.ofNat count)
     · intro updated
       exact ih updated dst src
 
@@ -1150,11 +1208,11 @@ private lemma memmoveBackwardValues_accessOnly (count : Nat)
   MovementAccessOnly
     (SortSlice.memmoveBackwardValuesTraced? count slice dst src) := by
   induction count generalizing slice dst src with
-  | zero => exact MovementAccessOnly.pure slice
+  | zero => exact MovementAccessOnly.pure
   | succ count ih =>
     apply MovementAccessOnly.bind
     · exact copyValuesFrom_accessOnly slice slice
-      (dst + Int.ofNat count) (src + Int.ofNat count)
+        (dst + Int.ofNat count) (src + Int.ofNat count)
     · intro updated
       exact ih updated dst src
 
@@ -1200,14 +1258,14 @@ namespace CPythonListsort
 [mainDataMemmoveTraced_accessOnly](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma mainDataMemmoveTraced_accessOnly
-  {state : MergeState κ ν}
-  {dst src : Int}
-  {count : Nat} :
+public lemma mainDataMemmoveTraced_accessOnly
+  (state : MergeState κ ν)
+  (dst src : Int)
+  (count : Nat) :
 -- imply
   MovementAccessOnly (mainDataMemmoveTraced? state dst src count) := by
 -- proof
-  exact MovementAccessOnly.map _ _
+  exact MovementAccessOnly.map
     (sortSliceMemmove_accessOnly state.a.hasValues state.data dst src count)
 
 end CPythonListsort
@@ -1218,10 +1276,10 @@ namespace CPythonListsort
 [mergeTempWrite_eq_some_of_bounds](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma mergeTempWrite_eq_some_of_bounds
-  {storage : TempStorage κ ν}
-  {index : Int}
-  {entry : SortSliceEntry κ ν}
+public lemma mergeTempWrite_eq_some_of_bounds
+  (storage : TempStorage κ ν)
+  (index : Int)
+  (entry : SortSliceEntry κ ν)
 -- given
   (hindex : TempIndexInBounds storage index) :
 -- imply
@@ -1241,10 +1299,10 @@ namespace CPythonListsort
 [mergeTempWrite_size_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma mergeTempWrite_size_of_eq_some
-  {storage updated : TempStorage κ ν}
-  {index : Int}
-  {entry : SortSliceEntry κ ν}
+public lemma mergeTempWrite_size_of_eq_some
+  (storage updated : TempStorage κ ν)
+  (index : Int)
+  (entry : SortSliceEntry κ ν)
 -- given
   (hwrite : mergeTempWrite? storage index entry = some updated) :
 -- imply
@@ -1264,10 +1322,10 @@ namespace CPythonListsort
 [mergeTempWrite_backing_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma mergeTempWrite_backing_of_eq_some
-  {storage updated : TempStorage κ ν}
-  {index : Int}
-  {entry : SortSliceEntry κ ν}
+public lemma mergeTempWrite_backing_of_eq_some
+  (storage updated : TempStorage κ ν)
+  (index : Int)
+  (entry : SortSliceEntry κ ν)
 -- given
   (hwrite : mergeTempWrite? storage index entry = some updated) :
 -- imply
@@ -1287,10 +1345,10 @@ namespace CPythonListsort
 [mergeTempWrite_valuesMode_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma mergeTempWrite_valuesMode_of_eq_some
-  {storage updated : TempStorage κ ν}
-  {index : Int}
-  {entry : SortSliceEntry κ ν}
+public lemma mergeTempWrite_valuesMode_of_eq_some
+  (storage updated : TempStorage κ ν)
+  (index : Int)
+  (entry : SortSliceEntry κ ν)
 -- given
   (hwrite : mergeTempWrite? storage index entry = some updated) :
 -- imply
@@ -1310,10 +1368,10 @@ namespace CPythonListsort
 [mergeTempWrite_read_self_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma mergeTempWrite_read_self_of_eq_some
-  {storage updated : TempStorage κ ν}
-  {index : Int}
-  {entry : SortSliceEntry κ ν}
+public lemma mergeTempWrite_read_self_of_eq_some
+  (storage updated : TempStorage κ ν)
+  (index : Int)
+  (entry : SortSliceEntry κ ν)
 -- given
   (hwrite : mergeTempWrite? storage index entry = some updated) :
 -- imply
@@ -1337,10 +1395,10 @@ namespace CPythonListsort
 [mergeTempWrite_read_ne_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma mergeTempWrite_read_ne_of_eq_some
-  {storage updated : TempStorage κ ν}
-  {written other : Int}
-  {entry : SortSliceEntry κ ν}
+public lemma mergeTempWrite_read_ne_of_eq_some
+  (storage updated : TempStorage κ ν)
+  (written other : Int)
+  (entry : SortSliceEntry κ ν)
 -- given
   (hwrite : mergeTempWrite? storage written entry = some updated)
   (hne : other ≠ written) :
@@ -1354,24 +1412,24 @@ lemma mergeTempWrite_read_ne_of_eq_some
     subst updated
     by_cases hother : 0 ≤ other
     · have hnatne : written.toNat ≠ other.toNat := by
-      intro heq
-      apply hne
-      have hwrittenCast := Int.toNat_of_nonneg hbounds.1
-      have hotherCast := Int.toNat_of_nonneg hother
-      omega
+        intro heq
+        apply hne
+        have hwrittenCast := Int.toNat_of_nonneg hbounds.1
+        have hotherCast := Int.toNat_of_nonneg hother
+        omega
       simp [mergeTempRead?, hother, hnatne]
     · simp [mergeTempRead?, hother]
   · contradiction
 
 end CPythonListsort
 
-namespace CPythonListsort.TempRangeInitialized
+namespace CPythonListsort.TempRangeInBounds.TempRangeInitialized
 
 /--
 [head](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma head
+public lemma head
   {storage : TempStorage κ ν}
   {start : Int}
   {count : Nat}
@@ -1387,15 +1445,15 @@ lemma head
   rw [hzero] at hentry
   exact ⟨entry, hentry⟩
 
-end CPythonListsort.TempRangeInitialized
+end CPythonListsort.TempRangeInBounds.TempRangeInitialized
 
-namespace CPythonListsort.TempRangeInitialized
+namespace CPythonListsort.TempRangeInBounds.TempRangeInitialized
 
 /--
 [tail](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma tail
+public lemma tail
   {storage : TempStorage κ ν}
   {start : Int}
   {count : Nat}
@@ -1412,15 +1470,15 @@ lemma tail
     simp [Int.ofNat_eq_natCast, add_left_comm, add_comm]
   simpa only [hindex] using hentry
 
-end CPythonListsort.TempRangeInitialized
+end CPythonListsort.TempRangeInBounds.TempRangeInitialized
 
-namespace CPythonListsort.TempRangeValuesMode
+namespace CPythonListsort.TempRangeInBounds.TempRangeValuesMode
 
 /--
 [head](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma head
+public lemma head
   {storage : TempStorage κ ν}
   {start : Int}
   {count : Nat}
@@ -1436,15 +1494,15 @@ lemma head
   rw [hzero] at hread
   exact ⟨entry, hread, hmode⟩
 
-end CPythonListsort.TempRangeValuesMode
+end CPythonListsort.TempRangeInBounds.TempRangeValuesMode
 
-namespace CPythonListsort.TempRangeValuesMode
+namespace CPythonListsort.TempRangeInBounds.TempRangeValuesMode
 
 /--
 [tail](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma tail
+public lemma tail
   {storage : TempStorage κ ν}
   {start : Int}
   {count : Nat}
@@ -1461,7 +1519,7 @@ lemma tail
     simp [Int.ofNat_eq_natCast, add_left_comm, add_comm]
   simpa only [hindex] using hread
 
-end CPythonListsort.TempRangeValuesMode
+end CPythonListsort.TempRangeInBounds.TempRangeValuesMode
 
 namespace CPythonListsort.AccessTrace.HasAccess
 
@@ -1469,7 +1527,7 @@ namespace CPythonListsort.AccessTrace.HasAccess
 [compose_left](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma compose_left
+public lemma compose_left
   {earlier later : AccessTrace}
   {kind : AccessKind}
   {region : AccessRegion}
@@ -1489,7 +1547,7 @@ namespace CPythonListsort.AccessTrace.HasAccess
 [compose_right](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma compose_right
+public lemma compose_right
   {earlier later : AccessTrace}
   {kind : AccessKind}
   {region : AccessRegion}
@@ -1509,10 +1567,10 @@ namespace CPythonListsort.AccessTrace.HasAccess
 [accesses_ne_nil](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma accesses_ne_nil
-  {trace : AccessTrace}
-  {kind : AccessKind}
-  {region : AccessRegion}
+public lemma accesses_ne_nil
+  (trace : AccessTrace)
+  (kind : AccessKind)
+  (region : AccessRegion)
 -- given
   (h : trace.HasAccess kind region) :
 -- imply
@@ -1530,7 +1588,7 @@ namespace CPythonListsort.AccessTrace.HasTempAccess
 [compose_left](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma compose_left
+public lemma compose_left
   {earlier later : AccessTrace}
   {kind : AccessKind}
 -- given
@@ -1549,7 +1607,7 @@ namespace CPythonListsort.AccessTrace.HasTempAccess
 [compose_right](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma compose_right
+public lemma compose_right
   {earlier later : AccessTrace}
   {kind : AccessKind}
 -- given
@@ -1562,14 +1620,14 @@ lemma compose_right
 
 end CPythonListsort.AccessTrace.HasTempAccess
 
-namespace CPythonListsort.MovementTraceSafe
+namespace CPythonListsort.TempRangeInBounds.MergeMovementFrame.MovementAccessOnly.AccessTrace.HasAccess.MovementTraceSafe
 
 /--
 [pure](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma pure
-  {value : α} :
+public lemma pure
+  (value : α) :
 -- imply
   MovementTraceSafe (TraceResult.pure value) := by
 -- proof
@@ -1577,15 +1635,15 @@ lemma pure
   · exact AccessTrace.allAccessesInBounds_empty
   · exact AccessTrace.tempPayloadAccessesLive_empty
 
-end CPythonListsort.MovementTraceSafe
+end CPythonListsort.TempRangeInBounds.MergeMovementFrame.MovementAccessOnly.AccessTrace.HasAccess.MovementTraceSafe
 
-namespace CPythonListsort.MovementTraceSafe
+namespace CPythonListsort.TempRangeInBounds.MergeMovementFrame.MovementAccessOnly.AccessTrace.HasAccess.MovementTraceSafe
 
 /--
 [map](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma map
+public lemma map
   {current : TraceResult α}
   {transform : α → β}
 -- given
@@ -1595,32 +1653,121 @@ lemma map
 -- proof
 ⟨h.fuel, h.noPushes, h.bounds, h.tempLive⟩
 
-end CPythonListsort.MovementTraceSafe
+end CPythonListsort.TempRangeInBounds.MergeMovementFrame.MovementAccessOnly.AccessTrace.HasAccess.MovementTraceSafe
 
-namespace CPythonListsort.MovementTraceSafe
+namespace CPythonListsort.TempRangeInBounds.MergeMovementFrame.MovementAccessOnly.AccessTrace.HasAccess.MovementTraceSafe
+
+/--
+[bind](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
+-/
+@[path]
+public lemma bind
+  (current : TraceResult α) (next : α → TraceResult β)
+  (value : α) (hresult : current.result = some value)
+  (hcurrent : MovementTraceSafe current)
+  (hnext : MovementTraceSafe (next value)) :
+-- imply
+  MovementTraceSafe (current.bind next) := by
+-- proof
+  rcases hcurrent with ⟨hcurrentFuel, hcurrentPush, hcurrentBounds, hcurrentLive⟩
+  rcases hnext with ⟨hnextFuel, hnextPush, hnextBounds, hnextLive⟩
+  constructor
+  · simp [TraceResult.trace_bind, hresult, AccessTrace.compose, hcurrentFuel, hnextFuel]
+  · simp [TraceResult.trace_bind, hresult, AccessTrace.compose,
+      hcurrentPush, hnextPush]
+  · rw [TraceResult.trace_bind, hresult,
+      AccessTrace.allAccessesInBounds_compose]
+    exact ⟨hcurrentBounds, hnextBounds⟩
+  · rw [TraceResult.trace_bind, hresult,
+      AccessTrace.tempPayloadAccessesLive_compose]
+    exact ⟨hcurrentLive, hnextLive⟩
+
+end CPythonListsort.TempRangeInBounds.MergeMovementFrame.MovementAccessOnly.AccessTrace.HasAccess.MovementTraceSafe
+
+
+namespace CPythonListsort.TempRangeInBounds.MergeMovementFrame.MovementAccessOnly.AccessTrace.HasAccess.MovementTempLive
+
+/--
+[pure](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
+-/
+@[path]
+public lemma pure
+  (value : α) :
+-- imply
+  MovementTempLive (TraceResult.pure value) :=
+-- proof
+  AccessTrace.tempPayloadAccessesLive_empty
+
+end CPythonListsort.TempRangeInBounds.MergeMovementFrame.MovementAccessOnly.AccessTrace.HasAccess.MovementTempLive
+
+namespace CPythonListsort.TempRangeInBounds.MergeMovementFrame.MovementAccessOnly.AccessTrace.HasAccess.MovementTempLive
+
+/--
+[map](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
+-/
+@[path]
+public lemma map
+  (current : TraceResult α) (transform : α → β)
+-- given
+  (h : MovementTempLive current) :
+-- imply
+  MovementTempLive (current.map transform) := by
+-- proof
+  exact h
+
+end CPythonListsort.TempRangeInBounds.MergeMovementFrame.MovementAccessOnly.AccessTrace.HasAccess.MovementTempLive
+
+namespace CPythonListsort.TempRangeInBounds.MergeMovementFrame.MovementAccessOnly.AccessTrace.HasAccess.MovementTempLive
+
+/--
+[bind](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
+-/
+@[path]
+public lemma bind
+  (current : TraceResult α) (next : α → TraceResult β)
+-- given
+  (hcurrent : MovementTempLive current)
+  (hnext : ∀ value, MovementTempLive (next value)) :
+-- imply
+  MovementTempLive (current.bind next) := by
+-- proof
+  cases hresult : current.result with
+  | none =>
+    simpa [MovementTempLive, TraceResult.trace_bind, hresult] using hcurrent
+  | some value =>
+    rw [MovementTempLive, TraceResult.trace_bind, hresult,
+      AccessTrace.tempPayloadAccessesLive_compose]
+    exact ⟨hcurrent, hnext value⟩
+
+end CPythonListsort.TempRangeInBounds.MergeMovementFrame.MovementAccessOnly.AccessTrace.HasAccess.MovementTempLive
+
+
+namespace CPythonListsort.TempRangeInBounds.MergeMovementFrame.MovementAccessOnly.AccessTrace.HasAccess.MovementTraceSafe
 
 /--
 [recordSuccessMemoryEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma recordSuccessMemoryEvent
-  {current : TraceResult α}
-  {event : α → MergeMemoryEvent}
+public lemma recordSuccessMemoryEvent
+  (current : TraceResult α)
+  (event : α → MergeMemoryEvent)
 -- given
   (h : MovementTraceSafe current) :
 -- imply
   MovementTraceSafe (current.recordSuccessMemoryEvent event) := by
 -- proof
   exact
-    { fuel := by simpa using h.fuel
-      noPushes := by simpa using h.noPushes
-      bounds := (TraceResult.allAccessesInBounds_recordSuccessMemoryEvent
-        current event).2 h.bounds
+    { fuel := by
+        simpa [TraceResult.fuelExhausted_recordSuccessMemoryEvent] using h.fuel
+      noPushes := by
+        simpa [TraceResult.pushDepths_recordSuccessMemoryEvent] using h.noPushes
+      bounds := (TraceResult.allAccessesInBounds_recordSuccessMemoryEvent).2
+        h.bounds
       tempLive :=
-        (TraceResult.tempPayloadAccessesLive_recordSuccessMemoryEvent
-          current event).2 h.tempLive }
+        (TraceResult.tempPayloadAccessesLive_recordSuccessMemoryEvent).2
+          h.tempLive }
 
-end CPythonListsort.MovementTraceSafe
+end CPythonListsort.TempRangeInBounds.MergeMovementFrame.MovementAccessOnly.AccessTrace.HasAccess.MovementTraceSafe
 
 namespace CPythonListsort
 
@@ -1755,9 +1902,9 @@ namespace CPythonListsort
 [mainToTempCell_eq_some_of_bounds](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma mainToTempCell_eq_some_of_bounds
-  {state : MergeState κ ν}
-  {tempDst mainSrc : Int}
+public lemma mainToTempCell_eq_some_of_bounds
+  (state : MergeState κ ν)
+  (tempDst mainSrc : Int)
 -- given
   (htemp : TempIndexInBounds state.a tempDst)
   (hmain : SortSlice.IndexInBounds state.data mainSrc) :
@@ -1779,9 +1926,9 @@ namespace CPythonListsort
 [tempToMainCell_eq_some_of_bounds](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma tempToMainCell_eq_some_of_bounds
-  {state : MergeState κ ν}
-  {mainDst tempSrc : Int}
+public lemma tempToMainCell_eq_some_of_bounds
+  (state : MergeState κ ν)
+  (mainDst tempSrc : Int)
 -- given
   (hmain : SortSlice.IndexInBounds state.data mainDst)
   (hreadable : ∃ entry, mergeTempRead? state.a tempSrc = some entry) :
@@ -1802,9 +1949,9 @@ namespace CPythonListsort
 [mainToTempCell_data_eq_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma mainToTempCell_data_eq_of_eq_some
-  {state result : MergeState κ ν}
-  {tempDst mainSrc : Int}
+public lemma mainToTempCell_data_eq_of_eq_some
+  (state result : MergeState κ ν)
+  (tempDst mainSrc : Int)
 -- given
   (hresult : mainToTempCell? state tempDst mainSrc = some result) :
 -- imply
@@ -1825,9 +1972,9 @@ namespace CPythonListsort
 [tempToMainCell_temp_eq_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma tempToMainCell_temp_eq_of_eq_some
-  {state result : MergeState κ ν}
-  {mainDst tempSrc : Int}
+public lemma tempToMainCell_temp_eq_of_eq_some
+  (state result : MergeState κ ν)
+  (mainDst tempSrc : Int)
 -- given
   (hresult : tempToMainCell? state mainDst tempSrc = some result) :
 -- imply
@@ -1863,8 +2010,8 @@ private lemma mainToTempKeyTraced_safe_of_bounds
   unfold mainToTempKeyTraced?
   apply MovementTraceSafe.bind _ _ entry hreadTraced
   · exact keyRead_safe state.data mainSrc hmain
-  · exact MovementTraceSafe.map _ _
-    (tempWrite_safe state.a tempDst entry htemp hlive)
+  · exact MovementTraceSafe.map
+      (tempWrite_safe state.a tempDst entry htemp hlive)
 
 end CPythonListsort
 
@@ -1889,8 +2036,8 @@ private lemma mainToTempValuesTraced_safe_of_bounds
   unfold mainToTempValuesTraced?
   apply MovementTraceSafe.bind _ _ entry hreadTraced
   · exact valuesRead_safe state.data mainSrc hmain
-  · exact MovementTraceSafe.map _ _
-    (tempWrite_safe state.a tempDst entry htemp hlive)
+  · exact MovementTraceSafe.map
+      (tempWrite_safe state.a tempDst entry htemp hlive)
 
 end CPythonListsort
 
@@ -1900,9 +2047,9 @@ namespace CPythonListsort
 [mainToTempCellTraced_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma mainToTempCellTraced_safe
-  {state : MergeState κ ν}
-  {tempDst mainSrc : Int}
+public lemma mainToTempCellTraced_safe
+  (state : MergeState κ ν)
+  (tempDst mainSrc : Int)
 -- given
   (htemp : TempIndexInBounds state.a tempDst)
   (hmain : SortSlice.IndexInBounds state.data mainSrc)
@@ -1924,9 +2071,11 @@ lemma mainToTempCellTraced_safe
   apply MovementTraceSafe.bind _ _ result hkey
   · exact mainToTempKeyTraced_safe_of_bounds state tempDst mainSrc htemp hmain hlive
   · cases hmode : state.a.hasValues with
-    | false => simp only [Bool.false_eq]
+    | false =>
+      simp only [Bool.false_eq]
       exact MovementTraceSafe.pure result
-    | true => simp only [↓reduceIte]
+    | true =>
+      simp only [↓reduceIte]
       exact mainToTempValuesTraced_safe_of_bounds state tempDst mainSrc
         htemp hmain hlive
 
@@ -1953,8 +2102,8 @@ private lemma tempToMainKeyTraced_safe_of_bounds
   unfold tempToMainKeyTraced?
   apply MovementTraceSafe.bind _ _ entry hreadTraced
   · exact tempRead_safe state.a tempSrc htemp hlive
-  · exact MovementTraceSafe.map _ _
-    (keyWrite_safe state.data mainDst entry hmain)
+  · exact MovementTraceSafe.map
+      (keyWrite_safe state.data mainDst entry hmain)
 
 end CPythonListsort
 
@@ -1979,8 +2128,8 @@ private lemma tempToMainValuesTraced_safe_of_bounds
   unfold tempToMainValuesTraced?
   apply MovementTraceSafe.bind _ _ entry hreadTraced
   · exact tempRead_safe state.a tempSrc htemp hlive
-  · exact MovementTraceSafe.map _ _
-    (valuesWrite_safe state.data mainDst entry hmain)
+  · exact MovementTraceSafe.map
+      (valuesWrite_safe state.data mainDst entry hmain)
 
 end CPythonListsort
 
@@ -1990,9 +2139,9 @@ namespace CPythonListsort
 [tempToMainCellTraced_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma tempToMainCellTraced_safe
-  {state : MergeState κ ν}
-  {mainDst tempSrc : Int}
+public lemma tempToMainCellTraced_safe
+  (state : MergeState κ ν)
+  (mainDst tempSrc : Int)
 -- given
   (hmain : SortSlice.IndexInBounds state.data mainDst)
   (htemp : TempIndexInBounds state.a tempSrc)
@@ -2014,11 +2163,13 @@ lemma tempToMainCellTraced_safe
   unfold tempToMainCellTraced?
   apply MovementTraceSafe.bind _ _ result hkey
   · exact tempToMainKeyTraced_safe_of_bounds state mainDst tempSrc hmain htemp
-    hlive hreadable
+      hlive hreadable
   · cases hmode : state.a.hasValues with
-    | false => simp only [Bool.false_eq]
+    | false =>
+      simp only [Bool.false_eq]
       exact MovementTraceSafe.pure result
-    | true => simp only [↓reduceIte]
+    | true =>
+      simp only [↓reduceIte]
       exact tempToMainValuesTraced_safe_of_bounds state mainDst tempSrc
         hmain htemp hlive hreadable
 
@@ -2044,7 +2195,7 @@ private lemma mainToTempKeysTraced_safe_of_ranges (site : MergeMemcpySite)
     MergeMovementFrame state result := by
   induction count generalizing state tempDst mainSrc with
   | zero =>
-    refine ⟨state, rfl, MovementTraceSafe.pure state, .refl state⟩
+    refine ⟨state, rfl, MovementTraceSafe.pure state, MergeMovementFrame.refl⟩
   | succ count ih =>
     have htempHead := htemp.head
     have hmainHead := hmain.head
@@ -2091,7 +2242,7 @@ private lemma mainToTempValuesPhaseTraced_safe_of_ranges
     MergeMovementFrame state result := by
   induction count generalizing state tempDst mainSrc with
   | zero =>
-    refine ⟨state, rfl, MovementTraceSafe.pure state, .refl state⟩
+    refine ⟨state, rfl, MovementTraceSafe.pure state, MergeMovementFrame.refl⟩
   | succ count ih =>
     have htempHead := htemp.head
     have hmainHead := hmain.head
@@ -2180,7 +2331,7 @@ private lemma tempToMainKeysTraced_safe_of_ranges (site : MergeMemcpySite)
     MergeMovementFrame state result := by
   induction count generalizing state mainDst tempSrc with
   | zero =>
-    refine ⟨state, rfl, MovementTraceSafe.pure state, .refl state⟩
+    refine ⟨state, rfl, MovementTraceSafe.pure state, MergeMovementFrame.refl⟩
   | succ count ih =>
     have hmainHead := hmain.head
     have htempHead := htemp.head
@@ -2233,7 +2384,7 @@ private lemma tempToMainValuesPhaseTraced_safe_of_ranges
     MergeMovementFrame state result := by
   induction count generalizing state mainDst tempSrc with
   | zero =>
-    refine ⟨state, rfl, MovementTraceSafe.pure state, .refl state⟩
+    refine ⟨state, rfl, MovementTraceSafe.pure state, MergeMovementFrame.refl⟩
   | succ count ih =>
     have hmainHead := hmain.head
     have htempHead := htemp.head
@@ -2314,12 +2465,12 @@ namespace CPythonListsort
 [mainToTempMemcpyTraced_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma mainToTempMemcpyTraced_safe
-  {site : MergeMemcpySite}
-  {permit : site.MainToTempPermit}
-  {count : Nat}
-  {state : MergeState κ ν}
-  {tempDst mainSrc : Int}
+public lemma mainToTempMemcpyTraced_safe
+  (site : MergeMemcpySite)
+  (permit : site.MainToTempPermit)
+  (count : Nat)
+  (state : MergeState κ ν)
+  (tempDst mainSrc : Int)
 -- given
   (htemp : TempRangeInBounds state.a tempDst count)
   (hmain : SortSlice.RangeInBounds state.data mainSrc count)
@@ -2338,12 +2489,12 @@ namespace CPythonListsort
 [tempToMainMemcpyTraced_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma tempToMainMemcpyTraced_safe
-  {site : MergeMemcpySite}
-  {permit : site.TempToMainPermit}
-  {count : Nat}
-  {state : MergeState κ ν}
-  {mainDst tempSrc : Int}
+public lemma tempToMainMemcpyTraced_safe
+  (site : MergeMemcpySite)
+  (permit : site.TempToMainPermit)
+  (count : Nat)
+  (state : MergeState κ ν)
+  (mainDst tempSrc : Int)
 -- given
   (hmain : SortSlice.RangeInBounds state.data mainDst count)
   (htemp : TempRangeInBounds state.a tempSrc count)
@@ -2363,9 +2514,9 @@ namespace CPythonListsort
 [mainToTempCell_read_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma mainToTempCell_read_eq_some
-  {state result : MergeState κ ν}
-  {tempDst mainSrc : Int}
+public lemma mainToTempCell_read_eq_some
+  (state result : MergeState κ ν)
+  (tempDst mainSrc : Int)
 -- given
   (hcopy : mainToTempCell? state tempDst mainSrc = some result) :
 -- imply
@@ -2387,9 +2538,9 @@ namespace CPythonListsort
 [mainToTempCell_read_of_ne](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma mainToTempCell_read_of_ne
-  {state result : MergeState κ ν}
-  {tempDst mainSrc other : Int}
+public lemma mainToTempCell_read_of_ne
+  (state result : MergeState κ ν)
+  (tempDst mainSrc other : Int)
 -- given
   (hcopy : mainToTempCell? state tempDst mainSrc = some result)
   (hne : other ≠ tempDst) :
@@ -2412,10 +2563,10 @@ namespace CPythonListsort
 [mainToTempMemcpy_read_before_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma mainToTempMemcpy_read_before_of_eq_some
-  {count : Nat}
-  {state result : MergeState κ ν}
-  {tempDst mainSrc other : Int}
+public lemma mainToTempMemcpy_read_before_of_eq_some
+  (count : Nat)
+  (state result : MergeState κ ν)
+  (tempDst mainSrc other : Int)
 -- given
   (hcopy : mainToTempMemcpy? count state tempDst mainSrc = some result)
   (hother : other < tempDst) :
@@ -2428,9 +2579,8 @@ lemma mainToTempMemcpy_read_before_of_eq_some
     subst result
     rfl
   | succ count ih =>
-    simp only [mainToTempMemcpy?, bind, Option.bind] at hcopy
-    split at hcopy <;> try contradiction
-    rename_i next hhead
+    simp only [mainToTempMemcpy?] at hcopy
+    obtain ⟨next, hhead, hcopy⟩ := Option.bind_eq_some_iff.mp hcopy
     have htail := ih next (tempDst + 1) (mainSrc + 1) hcopy (by omega)
     exact htail.trans
       (mainToTempCell_read_of_ne state next tempDst mainSrc other hhead
@@ -2444,10 +2594,10 @@ namespace CPythonListsort
 [mainToTempMemcpy_valuesMode_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma mainToTempMemcpy_valuesMode_of_eq_some
-  {count : Nat}
-  {state result : MergeState κ ν}
-  {tempDst mainSrc : Int}
+public lemma mainToTempMemcpy_valuesMode_of_eq_some
+  (count : Nat)
+  (state result : MergeState κ ν)
+  (tempDst mainSrc : Int)
 -- given
   (hmode : SortSlice.ValuesModeInvariant state.a.hasValues state.data)
   (hcopy : mainToTempMemcpy? count state tempDst mainSrc = some result) :
@@ -2459,9 +2609,8 @@ lemma mainToTempMemcpy_valuesMode_of_eq_some
     intro offset hoffset
     omega
   | succ count ih =>
-    simp only [mainToTempMemcpy?, bind, Option.bind] at hcopy
-    split at hcopy <;> try contradiction
-    rename_i next hhead
+    simp only [mainToTempMemcpy?] at hcopy
+    obtain ⟨next, hhead, hcopy⟩ := Option.bind_eq_some_iff.mp hcopy
     have hheadFrame := mainToTempCell_frame state next tempDst mainSrc hhead
     have hdataEq := mainToTempCell_data_eq_of_eq_some state next tempDst mainSrc hhead
     have hmodeNext :
@@ -2502,10 +2651,10 @@ namespace CPythonListsort
 [mainToTempMemcpy_data_eq_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma mainToTempMemcpy_data_eq_of_eq_some
-  {count : Nat}
-  {state result : MergeState κ ν}
-  {tempDst mainSrc : Int}
+public lemma mainToTempMemcpy_data_eq_of_eq_some
+  (count : Nat)
+  (state result : MergeState κ ν)
+  (tempDst mainSrc : Int)
 -- given
   (hcopy : mainToTempMemcpy? count state tempDst mainSrc = some result) :
 -- imply
@@ -2517,9 +2666,8 @@ lemma mainToTempMemcpy_data_eq_of_eq_some
     subst result
     rfl
   | succ count ih =>
-    simp only [mainToTempMemcpy?, bind, Option.bind] at hcopy
-    split at hcopy <;> try contradiction
-    rename_i next hhead
+    simp only [mainToTempMemcpy?] at hcopy
+    obtain ⟨next, hhead, hcopy⟩ := Option.bind_eq_some_iff.mp hcopy
     exact (ih next (tempDst + 1) (mainSrc + 1) hcopy).trans
       (mainToTempCell_data_eq_of_eq_some state next tempDst mainSrc hhead)
 
@@ -2531,9 +2679,9 @@ namespace CPythonListsort
 [tempToMainCell_valuesMode_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma tempToMainCell_valuesMode_of_eq_some
-  {state result : MergeState κ ν}
-  {mainDst tempSrc : Int}
+public lemma tempToMainCell_valuesMode_of_eq_some
+  (state result : MergeState κ ν)
+  (mainDst tempSrc : Int)
 -- given
   (hmainMode : SortSlice.ValuesModeInvariant state.a.hasValues state.data)
   (hentryMode : ∀ entry, mergeTempRead? state.a tempSrc = some entry → SortSlice.EntryMatchesValuesMode state.a.hasValues entry)
@@ -2556,10 +2704,10 @@ namespace CPythonListsort
 [tempToMainMemcpy_temp_eq_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma tempToMainMemcpy_temp_eq_of_eq_some
-  {count : Nat}
-  {state result : MergeState κ ν}
-  {mainDst tempSrc : Int}
+public lemma tempToMainMemcpy_temp_eq_of_eq_some
+  (count : Nat)
+  (state result : MergeState κ ν)
+  (mainDst tempSrc : Int)
 -- given
   (hcopy : tempToMainMemcpy? count state mainDst tempSrc = some result) :
 -- imply
@@ -2571,9 +2719,8 @@ lemma tempToMainMemcpy_temp_eq_of_eq_some
     subst result
     rfl
   | succ count ih =>
-    simp only [tempToMainMemcpy?, bind, Option.bind] at hcopy
-    split at hcopy <;> try contradiction
-    rename_i next hhead
+    simp only [tempToMainMemcpy?] at hcopy
+    obtain ⟨next, hhead, hcopy⟩ := Option.bind_eq_some_iff.mp hcopy
     exact (ih next (mainDst + 1) (tempSrc + 1) hcopy).trans
       (tempToMainCell_temp_eq_of_eq_some state next mainDst tempSrc hhead)
 
@@ -2585,10 +2732,10 @@ namespace CPythonListsort
 [tempToMainMemcpy_valuesMode_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma tempToMainMemcpy_valuesMode_of_eq_some
-  {count : Nat}
-  {state result : MergeState κ ν}
-  {mainDst tempSrc : Int}
+public lemma tempToMainMemcpy_valuesMode_of_eq_some
+  (count : Nat)
+  (state result : MergeState κ ν)
+  (mainDst tempSrc : Int)
 -- given
   (hmainMode : SortSlice.ValuesModeInvariant state.a.hasValues state.data)
   (htempMode : TempRangeValuesMode state.a tempSrc count)
@@ -2602,9 +2749,8 @@ lemma tempToMainMemcpy_valuesMode_of_eq_some
     subst result
     exact hmainMode
   | succ count ih =>
-    simp only [tempToMainMemcpy?, bind, Option.bind] at hcopy
-    split at hcopy <;> try contradiction
-    rename_i next hhead
+    simp only [tempToMainMemcpy?] at hcopy
+    obtain ⟨next, hhead, hcopy⟩ := Option.bind_eq_some_iff.mp hcopy
     obtain ⟨entry, hread, hentryMode⟩ := htempMode.head
     have hentry : mergeTempRead? state.a tempSrc = some entry := by
       exact hread
@@ -2627,12 +2773,12 @@ namespace CPythonListsort
 [mainToTempMemcpyTraced_phase_order](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma mainToTempMemcpyTraced_phase_order
-  {site : MergeMemcpySite}
-  {permit : site.MainToTempPermit}
-  {count : Nat}
-  {state : MergeState κ ν}
-  {tempDst mainSrc : Int}
+public lemma mainToTempMemcpyTraced_phase_order
+  (site : MergeMemcpySite)
+  (permit : site.MainToTempPermit)
+  (count : Nat)
+  (state : MergeState κ ν)
+  (tempDst mainSrc : Int)
 -- given
   (hkeys : ∃ keyResult, (mainToTempKeysTraced? site permit count state tempDst mainSrc).result = some keyResult) :
 -- imply
@@ -2652,12 +2798,12 @@ namespace CPythonListsort
 [tempToMainMemcpyTraced_phase_order](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma tempToMainMemcpyTraced_phase_order
-  {site : MergeMemcpySite}
-  {permit : site.TempToMainPermit}
-  {count : Nat}
-  {state : MergeState κ ν}
-  {mainDst tempSrc : Int}
+public lemma tempToMainMemcpyTraced_phase_order
+  (site : MergeMemcpySite)
+  (permit : site.TempToMainPermit)
+  (count : Nat)
+  (state : MergeState κ ν)
+  (mainDst tempSrc : Int)
 -- given
   (hkeys : ∃ keyResult, (tempToMainKeysTraced? site permit count state mainDst tempSrc).result = some keyResult) :
 -- imply
@@ -2851,12 +2997,12 @@ namespace CPythonListsort
 [mainToTempMemcpyTraced_events](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma mainToTempMemcpyTraced_events
-  {site : MergeMemcpySite}
-  {permit : site.MainToTempPermit}
-  {count : Nat}
-  {state : MergeState κ ν}
-  {tempDst mainSrc : Int}
+public lemma mainToTempMemcpyTraced_events
+  (site : MergeMemcpySite)
+  (permit : site.MainToTempPermit)
+  (count : Nat)
+  (state : MergeState κ ν)
+  (tempDst mainSrc : Int)
 -- given
   (htemp : TempRangeInBounds state.a tempDst (count + 1))
   (hmain : SortSlice.RangeInBounds state.data mainSrc (count + 1))
@@ -2948,12 +3094,12 @@ namespace CPythonListsort
 [tempToMainMemcpyTraced_events](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma tempToMainMemcpyTraced_events
-  {site : MergeMemcpySite}
-  {permit : site.TempToMainPermit}
-  {count : Nat}
-  {state : MergeState κ ν}
-  {mainDst tempSrc : Int}
+public lemma tempToMainMemcpyTraced_events
+  (site : MergeMemcpySite)
+  (permit : site.TempToMainPermit)
+  (count : Nat)
+  (state : MergeState κ ν)
+  (mainDst tempSrc : Int)
 -- given
   (hmain : SortSlice.RangeInBounds state.data mainDst (count + 1))
   (htemp : TempRangeInBounds state.a tempSrc (count + 1))
@@ -2993,12 +3139,12 @@ namespace CPythonListsort
 [mainToTempMemcpyTraced_post](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma mainToTempMemcpyTraced_post
-  {site : MergeMemcpySite}
-  {permit : site.MainToTempPermit}
-  {count : Nat}
-  {state : MergeState κ ν}
-  {tempDst mainSrc : Int}
+public lemma mainToTempMemcpyTraced_post
+  (site : MergeMemcpySite)
+  (permit : site.MainToTempPermit)
+  (count : Nat)
+  (state : MergeState κ ν)
+  (tempDst mainSrc : Int)
 -- given
   (htemp : TempRangeInBounds state.a tempDst count)
   (hmain : SortSlice.RangeInBounds state.data mainSrc count)
@@ -3080,12 +3226,12 @@ namespace CPythonListsort
 [tempToMainMemcpyTraced_post](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma tempToMainMemcpyTraced_post
-  {site : MergeMemcpySite}
-  {permit : site.TempToMainPermit}
-  {count : Nat}
-  {state : MergeState κ ν}
-  {mainDst tempSrc : Int}
+public lemma tempToMainMemcpyTraced_post
+  (site : MergeMemcpySite)
+  (permit : site.TempToMainPermit)
+  (count : Nat)
+  (state : MergeState κ ν)
+  (mainDst tempSrc : Int)
 -- given
   (hmain : SortSlice.RangeInBounds state.data mainDst count)
   (htemp : TempRangeInBounds state.a tempSrc count)
@@ -3304,7 +3450,7 @@ private lemma memmoveBackwardKeys_tempLive (count : Nat)
   | succ count ih =>
     apply MovementTempLive.bind
     · exact copyKeysFrom_tempLive slice slice (dst + Int.ofNat count)
-      (src + Int.ofNat count)
+        (src + Int.ofNat count)
     · intro updated
       exact ih updated dst src
 
@@ -3324,7 +3470,7 @@ private lemma memmoveBackwardValues_tempLive (count : Nat)
   | succ count ih =>
     apply MovementTempLive.bind
     · exact copyValuesFrom_tempLive slice slice (dst + Int.ofNat count)
-      (src + Int.ofNat count)
+        (src + Int.ofNat count)
     · intro updated
       exact ih updated dst src
 
@@ -3347,9 +3493,11 @@ private lemma sortSliceMemmove_tempLive (valuesPresent : Bool)
     · exact memmoveForwardKeys_tempLive count slice dst src
     · intro keyResult
       cases hvalues : valuesPresent with
-      | false => simp only [Bool.false_eq]
+      | false =>
+        simp only [Bool.false_eq]
         exact MovementTempLive.pure keyResult
-      | true => simp only [↓reduceIte]
+      | true =>
+        simp only [↓reduceIte]
         exact memmoveForwardValues_tempLive count slice dst src
   | backward =>
     simp only [SortSlice.memmoveTraced?, hdirection]
@@ -3357,9 +3505,11 @@ private lemma sortSliceMemmove_tempLive (valuesPresent : Bool)
     · exact memmoveBackwardKeys_tempLive count slice dst src
     · intro keyResult
       cases hvalues : valuesPresent with
-      | false => simp only [Bool.false_eq]
+      | false =>
+        simp only [Bool.false_eq]
         exact MovementTempLive.pure keyResult
-      | true => simp only [↓reduceIte]
+      | true =>
+        simp only [↓reduceIte]
         exact memmoveBackwardValues_tempLive count slice dst src
 
 end CPythonListsort
@@ -3370,9 +3520,9 @@ namespace CPythonListsort
 [erase_mainDataCopyDecrTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma erase_mainDataCopyDecrTraced
-  {state : MergeState κ ν}
-  {dst src : Int} :
+public lemma erase_mainDataCopyDecrTraced
+  (state : MergeState κ ν)
+  (dst src : Int) :
 -- imply
   (mainDataCopyDecrTraced? state dst src).erase = mergeHiCopyDataDecr? state dst src := by
 -- proof
@@ -3397,7 +3547,7 @@ private lemma sortSliceCopyFrom_accessOnly (valuesPresent : Bool)
   · exact copyKeysFrom_accessOnly destination source dst src
   · intro keyResult
     cases valuesPresent with
-    | false => exact MovementAccessOnly.pure keyResult
+    | false => exact MovementAccessOnly.pure
     | true => exact copyValuesFrom_accessOnly destination source dst src
 
 end CPythonListsort
@@ -3427,9 +3577,9 @@ namespace CPythonListsort
 [mainDataCopyDecrTraced_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma mainDataCopyDecrTraced_safe
-  {state : MergeState κ ν}
-  {dst src : Int}
+public lemma mainDataCopyDecrTraced_safe
+  (state : MergeState κ ν)
+  (dst src : Int)
 -- given
   (hinvariant : TempStorageInv state.a state.alloced)
   (hlive : state.a.Live)
@@ -3499,10 +3649,10 @@ namespace CPythonListsort
 [mainDataMemmoveTraced_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
-lemma mainDataMemmoveTraced_safe
-  {state : MergeState κ ν}
-  {dst src : Int}
-  {count : Nat}
+public lemma mainDataMemmoveTraced_safe
+  (state : MergeState κ ν)
+  (dst src : Int)
+  (count : Nat)
 -- given
   (hinvariant : TempStorageInv state.a state.alloced)
   (hlive : state.a.Live)
@@ -3548,7 +3698,7 @@ end CPythonListsort
 -/
 @[path]
 private lemma distinct_eq
-  {site : MergeMemcpySite} :
+  (site : MergeMemcpySite) :
 -- imply
   site.backings.Distinct := by
 -- proof
@@ -3559,24 +3709,24 @@ private lemma distinct_eq
 -/
 @[path]
 private lemma initialized_eq
-  {storage : TempStorage κ ν}
-  {start : Int}
-  {count : Nat}
+  (storage : TempStorage κ ν)
+  (start : Int)
+  (count : Nat)
 -- given
   (h : TempRangeValuesMode storage start count) :
 -- imply
   TempRangeInitialized storage start count := by
 -- proof
-  apply CPythonListsort.TempRangeValuesMode.initialized h
+  apply CPythonListsort.TempRangeInBounds.TempRangeValuesMode.initialized h
 
 /--
 [bind](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
 private lemma bind_eq_2
-  {current : TraceResult α}
-  {next : α → TraceResult β}
-  {value : α}
+  (current : TraceResult α)
+  (next : α → TraceResult β)
+  (value : α)
 -- given
   (hresult : current.result = some value)
   (hcurrent : MovementTraceSafe current)
@@ -3584,47 +3734,47 @@ private lemma bind_eq_2
 -- imply
   MovementTraceSafe (current.bind next) := by
 -- proof
-  apply CPythonListsort.MovementTraceSafe.bind current next value hresult hcurrent hnext
+  apply CPythonListsort.TempRangeInBounds.MergeMovementFrame.MovementAccessOnly.AccessTrace.HasAccess.MovementTraceSafe.bind current next value hresult hcurrent hnext
 
 /--
 [pure](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
 private lemma pure_eq_3
-  {value : α} :
+  (value : α) :
 -- imply
   MovementTempLive (TraceResult.pure value) := by
 -- proof
-  apply CPythonListsort.MovementTempLive.pure value
+  apply CPythonListsort.TempRangeInBounds.MergeMovementFrame.MovementAccessOnly.AccessTrace.HasAccess.MovementTempLive.pure value
 
 /--
 [map](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
 private lemma map_eq_3
-  {current : TraceResult α}
-  {transform : α → β}
+  (current : TraceResult α)
+  (transform : α → β)
 -- given
   (h : MovementTempLive current) :
 -- imply
   MovementTempLive (current.map transform) := by
 -- proof
-  apply CPythonListsort.MovementTempLive.map current transform h
+  apply CPythonListsort.TempRangeInBounds.MergeMovementFrame.MovementAccessOnly.AccessTrace.HasAccess.MovementTempLive.map current transform h
 
 /--
 [bind](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean)
 -/
 @[path]
 private lemma bind_eq_3
-  {current : TraceResult α}
-  {next : α → TraceResult β}
+  (current : TraceResult α)
+  (next : α → TraceResult β)
 -- given
   (hcurrent : MovementTempLive current)
   (hnext : ∀ value, MovementTempLive (next value)) :
 -- imply
   MovementTempLive (current.bind next) := by
 -- proof
-  apply CPythonListsort.MovementTempLive.bind current next hcurrent hnext
+  apply CPythonListsort.TempRangeInBounds.MergeMovementFrame.MovementAccessOnly.AccessTrace.HasAccess.MovementTempLive.bind current next hcurrent hnext
 
 
 -- created on 2026-10-23

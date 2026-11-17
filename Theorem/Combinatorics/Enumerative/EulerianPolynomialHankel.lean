@@ -15,7 +15,7 @@ import Mathlib.Tactic.NormNum.BigOperators
 import Mathlib.Tactic.NormNum.NatFactorial
 import Mathlib.Tactic.Ring
 import Def.Combinatorics.Enumerative.HeilermannWeightedMotzkinDeterminant
-import Lemma.Finset.Enumerative.HeilermannWeightedMotzkinDeterminant
+import Theorem.Finset.Enumerative.HeilermannWeightedMotzkinDeterminant
 import Def.Combinatorics.Enumerative.EulerianPolynomialHankel
 
 

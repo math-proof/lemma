@@ -1,8 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/ReverseSliceSafety.lean -/
 
-import Structure.CPythonListsort.Code.Assembly.SortSliceSafety
-import Def.CPythonListsort.Code.Transcription.ReverseSlice
-import Theorem.CPythonListsort.Code.Assembly.ReverseSliceSafety.Part4
+module
+
+public import Structure.CPythonListsort.Code.Assembly.SortSliceSafety
+public import Def.CPythonListsort.Code.Transcription.ReverseSlice
+
+@[expose] public section
+
 /-!
 # Slice-reversal safety
 

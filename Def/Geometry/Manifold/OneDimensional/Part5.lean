@@ -5,7 +5,7 @@ Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
 
 import Mathlib.Geometry.Manifold.Instances.Sphere
-import Lemma.Set.Manifold.RiemannianMetricExistence
+import Theorem.Set.Manifold.RiemannianMetricExistence
 import Mathlib.Geometry.Manifold.LocalDiffeomorph
 import Mathlib.Geometry.Manifold.Instances.Icc
 import Mathlib.Geometry.Manifold.ContMDiffMFDeriv

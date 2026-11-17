@@ -1,11 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean -/
 
-import Structure.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part5
-import Structure.CPythonListsort.Code.Assembly.MergeGetmemRequestBound
-import Def.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
-import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopLeftSafety
-import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopRightSafety
-import Structure.CPythonListsort.Code.Assembly.MergeHiSafety.Part2
+module
+
+public import Structure.CPythonListsort.Code.Assembly.MergeHiSafety.Part2
+public import Def.CPythonListsort.Code.Assembly.MergeHiSafety
+public import Def.CPythonListsort.Code.Assembly.MergeHiSafety.Part2
+
+@[expose] public section
+
 /-!
 # `merge_hi` traced execution and safety
 
@@ -21,6 +23,8 @@ temporary gallops read their live storage through `GallopKeySource.temporary`.
 namespace CPythonListsort
 
 universe u v
+
+open AccessTrace
 
 variable {κ : Type u} {ν : Type v}
 

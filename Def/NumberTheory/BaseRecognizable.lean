@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/BaseRecognizable.lean -/
 
-import Mathlib.Data.Nat.Digits.Defs
-import Mathlib.Data.Set.Basic
-import Mathlib.Data.Nat.Digits.Lemmas
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Data.Nat.Digits.Defs
+public import Mathlib.Data.Set.Basic
+public import Mathlib.Data.Nat.Digits.Lemmas
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 /-!
 # Base-`k` recognizable sets of natural numbers
 

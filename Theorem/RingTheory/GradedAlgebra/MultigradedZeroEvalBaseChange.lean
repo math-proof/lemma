@@ -1,14 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/GradedAlgebra/MultigradedZeroEvalBaseChange.lean -/
+module
 
-import Def.RingTheory.GradedAlgebra.MultigradedBetti.Part2
-import Mathlib.Algebra.Category.ModuleCat.ChangeOfRings
-import Mathlib.Algebra.DirectSum.Decomposition
-import Mathlib.CategoryTheory.Preadditive.Projective.Resolution
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.TensorProduct.Basis
-import Mathlib.RingTheory.AlgebraTower
-import Mathlib.RingTheory.MvPolynomial.Basic
+public import Def.RingTheory.GradedAlgebra.MultigradedBetti.Part2
+public import Mathlib.Algebra.Category.ModuleCat.ChangeOfRings
+public import Mathlib.Algebra.DirectSum.Decomposition
+public import Mathlib.CategoryTheory.Preadditive.Projective.Resolution
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.TensorProduct.Basis
+public import Mathlib.RingTheory.AlgebraTower
+public import Mathlib.RingTheory.MvPolynomial.Basic
 
+public section
 
 namespace MetaMathlibExt
 

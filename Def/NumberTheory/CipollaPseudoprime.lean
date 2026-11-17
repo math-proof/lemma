@@ -1,9 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/CipollaPseudoprime.lean -/
 
-import Mathlib.NumberTheory.FermatPsp
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Data.Int.Star
+module
 
+public import Mathlib.NumberTheory.FermatPsp
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Data.Int.Star
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

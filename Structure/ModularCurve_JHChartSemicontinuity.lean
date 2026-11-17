@@ -1,7 +1,11 @@
-import Mathlib
-import Instance.ModularCurve_JHNeronObjectAtP
-import Structure.ModularCurve_JHPlaceSpecialization
-import Def.ModularCurve_JHChartSemicontinuity
+module
+
+public import Mathlib
+public import Instance.ModularCurve_JHNeronObjectAtP
+public import Structure.ModularCurve_JHPlaceSpecialization
+public import Def.ModularCurve_JHChartSemicontinuity
+
+public section
 
 set_option autoImplicit false
 

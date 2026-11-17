@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/GenocchiNumber.lean -/
 
-import Mathlib.RingTheory.PowerSeries.Exp
+module
 
+public import Mathlib.RingTheory.PowerSeries.Exp
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

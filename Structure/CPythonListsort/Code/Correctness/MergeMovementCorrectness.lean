@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/MergeMovementCorrectness.lean -/
 
-import Def.CPythonListsort.Code.Transcription.MergeLo.Part6
-import Def.CPythonListsort.Code.Transcription.MergeHi.Part6
-import Def.CPythonListsort.Code.Correctness.SortSliceRange
-import Def.CPythonListsort.Code.Correctness.MergeMovementCorrectness
+module
+
+public import Def.CPythonListsort.Code.Transcription.MergeLo.Part6
+public import Def.CPythonListsort.Code.Transcription.MergeHi.Part6
+public import Def.CPythonListsort.Code.Correctness.SortSliceRange
+public import Def.CPythonListsort.Code.Correctness.MergeMovementCorrectness
 /-!
 # Exact semantics of merge movement primitives
 
@@ -17,6 +19,9 @@ The signed, pointwise predicates below match the pointer-shaped transcription.
 Natural-indexed `SortSlice.EqualOutsideRange` consequences are supplied for
 the range-facing correctness layer.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

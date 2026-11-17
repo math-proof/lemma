@@ -1,13 +1,18 @@
-import Mathlib.Algebra.Order.Ring.Int
-import Mathlib.Algebra.Ring.Int.Parity
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Theorem.AlgebraicGeometry.EllipticCurve.ManinSequence
+module
+
+public import Mathlib.Algebra.Order.Ring.Int
+public import Mathlib.Algebra.Ring.Int.Parity
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+public import Theorem.AlgebraicGeometry.EllipticCurve.ManinSequence
 /-!
 # Integer sequences in Manin's proof
 
 This file contains the elementary arithmetic at the end of Manin's proof of the Hasse bound.
 -/
+public section
+
+
 
 
 namespace AlgebraicGeometry.EllipticCurve

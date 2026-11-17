@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FermatQuotient.lean -/
 
-import Mathlib.FieldTheory.Finite.Basic
+module
+
+public import Mathlib.FieldTheory.Finite.Basic
+
+@[expose] public section
+
 /-!
 # Fermat quotient
 

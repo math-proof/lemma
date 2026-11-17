@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Combinatorics.SetFamily.LYM
-import Mathlib.Data.Fintype.Perm
-import Mathlib.GroupTheory.Perm.Fin
-import Mathlib.Algebra.Order.Field.Basic
+module
+
+public import Mathlib.Combinatorics.SetFamily.LYM
+public import Mathlib.Data.Fintype.Perm
+public import Mathlib.GroupTheory.Perm.Fin
+public import Mathlib.Algebra.Order.Field.Basic
+
+@[expose] public section
+
 open Finset Nat BigOperators
 
 

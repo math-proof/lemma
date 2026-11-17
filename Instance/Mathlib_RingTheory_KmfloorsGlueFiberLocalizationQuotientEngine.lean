@@ -1,5 +1,10 @@
 -- Carved from Lemma/Definitions/Def_Mathlib_RingTheory_KmfloorsGlueFiberLocalizationQuotientEngine.lean: instance decls only.
-import Mathlib
+
+module
+
+public import Mathlib
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option maxHeartbeats 800000

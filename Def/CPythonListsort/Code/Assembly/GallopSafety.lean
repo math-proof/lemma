@@ -1,10 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean -/
 
-import Def.CPythonListsort.Code.Assembly.AccessTrace.Part9
-import Def.CPythonListsort.Code.Transcription.Gallop.Part2
-import Def.CPythonListsort.Code.Transcription.TempStorageInvariant
-import Mathlib
-import Inductive.CPythonListsort.Code.Assembly.GallopSafety
+module
+
+public import Def.CPythonListsort.Code.Assembly.AccessTrace.Part9
+public import Def.CPythonListsort.Code.Assembly.AccessTrace.Part6
+public import Def.CPythonListsort.Code.Transcription.Gallop.Part2
+public import Def.CPythonListsort.Code.Transcription.TempStorageInvariant
+public import Mathlib
+public import Inductive.CPythonListsort.Code.Assembly.GallopSafety
+
+@[expose] public section
+
 /-!
 # Shared traced gallop safety support
 
@@ -23,6 +29,8 @@ shared source model, traced evaluators, and proof-facing contracts.
 namespace CPythonListsort
 
 universe u v
+
+open AccessTrace
 
 variable {κ : Type u} {ν : Type v}
 

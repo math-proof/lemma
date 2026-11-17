@@ -4,17 +4,20 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Fintype.Fin
-import Mathlib.Data.Multiset.Sort
-import Mathlib.Algebra.Order.Ring.GeomSum
-import Mathlib.Data.List.Forall2
-import Mathlib.Data.List.Lex
-import Mathlib.Data.List.NodupEquivFin
-import Mathlib.Data.List.OfFn
-import Mathlib.Data.List.Sort
-import Mathlib.Data.Fin.Tuple.Take
+module
 
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Fintype.Fin
+public import Mathlib.Data.Multiset.Sort
+public import Mathlib.Algebra.Order.Ring.GeomSum
+public import Mathlib.Data.List.Forall2
+public import Mathlib.Data.List.Lex
+public import Mathlib.Data.List.NodupEquivFin
+public import Mathlib.Data.List.OfFn
+public import Mathlib.Data.List.Sort
+public import Mathlib.Data.Fin.Tuple.Take
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

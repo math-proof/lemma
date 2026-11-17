@@ -8,11 +8,11 @@ import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Analysis.Meromorphic.Basic
 import Mathlib.NumberTheory.LSeries.RiemannZeta
 import Def.Analysis.Ramanujan.Part1Ch7PowerDifference
-import Lemma.Complex.Part1Ch7PowerDifference
+import Theorem.Complex.Part1Ch7PowerDifference
 import Mathlib.Analysis.Complex.HalfPlane
 import Mathlib.Analysis.Normed.Module.Connected
 import Mathlib.NumberTheory.LSeries.Dirichlet
-import Lemma.Nat.LSeries.RiemannZeta
+import Theorem.Nat.LSeries.RiemannZeta
 import Def.Analysis.Ramanujan.Part1Ch7Entry10Zetaviabernoulli
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 7, Entry 10, corollary

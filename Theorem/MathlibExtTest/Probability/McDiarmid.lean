@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Probability/McDiarmid.lean -/
 
 
-import Lemma.Measure.McDiarmid
+import Theorem.Measure.McDiarmid
 open MathlibExt.Probability.McDiarmid
 
 

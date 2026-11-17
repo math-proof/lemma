@@ -8,17 +8,22 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.CategoryTheory.Linear.Basic
-import Mathlib.CategoryTheory.Simple
-import Mathlib.CategoryTheory.Preadditive.Schur
-import Mathlib.CategoryTheory.Monoidal.Preadditive
-import Mathlib.CategoryTheory.Monoidal.Linear
-import Mathlib.CategoryTheory.Limits.Shapes.Biproducts
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.CategoryTheory.Subobject.Lattice
-import Mathlib.CategoryTheory.Preadditive.Projective.Basic
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.CategoryTheory.Linear.Basic
+public import Mathlib.CategoryTheory.Simple
+public import Mathlib.CategoryTheory.Preadditive.Schur
+public import Mathlib.CategoryTheory.Monoidal.Preadditive
+public import Mathlib.CategoryTheory.Monoidal.Linear
+public import Mathlib.CategoryTheory.Limits.Shapes.Biproducts
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.CategoryTheory.Subobject.Lattice
+public import Mathlib.CategoryTheory.Preadditive.Projective.Basic
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open CategoryTheory MonoidalCategory Limits

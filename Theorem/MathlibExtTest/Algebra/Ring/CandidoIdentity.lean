@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/Ring/CandidoIdentity.lean -/
+module
 
+public import Theorem.Algebra.Ring.CandidoIdentity
+public import Mathlib.Algebra.Ring.Int.Defs
+public import Mathlib.Algebra.Ring.Nat
 
-import Theorem.Algebra.Ring.CandidoIdentity
-import Mathlib.Algebra.Ring.Int.Defs
-import Mathlib.Algebra.Ring.Nat
-
+public section
 
 namespace MetaMathlibExt
 

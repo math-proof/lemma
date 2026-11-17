@@ -1,14 +1,17 @@
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Analysis.SpecialFunctions.OrdinaryHypergeometric
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Analysis.PSeries
-import Mathlib.Analysis.SpecialFunctions.Gamma.Beta
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Def.Analysis.SpecialFunctions.GaussHypergeometricSummationKlamkin.Part2
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+public import Mathlib.Analysis.SpecialFunctions.OrdinaryHypergeometric
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Analysis.PSeries
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Beta
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Def.Analysis.SpecialFunctions.GaussHypergeometricSummationKlamkin.Part2
+
 /-!
 # Gauss hypergeometric summation of Klamkin
 
@@ -16,6 +19,8 @@ The first Gamma quotient from U. Abel, "A Short Proof of the Binomial
 Identities of Frisch and Klamkin," _Journal of Integer Sequences_ 23 (2020),
 Article 20.7.1: `₂F₁(n, b + 1; b - a; 1)` equals a quotient of Gamma values.
 -/
+
+public section
 
 
 namespace MetaMathlibExt

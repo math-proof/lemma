@@ -2,7 +2,7 @@
 
 
 import Def.InformationTheory.PrefixFree
-import Lemma.Real.PrefixFree
+import Theorem.Real.PrefixFree
 import Mathlib.Tactic.FinCases
 import Mathlib.Data.Fintype.Card
 open MathlibExt.InformationTheory

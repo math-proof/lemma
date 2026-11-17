@@ -1,5 +1,10 @@
-import Mathlib.RingTheory.AdicCompletion.Algebra
-import Theorem.Algebra.AdicCompletion.RestrictScalars
+module
+
+public import Mathlib.RingTheory.AdicCompletion.Algebra
+public import Theorem.Algebra.AdicCompletion.RestrictScalars
+
+@[expose] public section
+
 universe u₁ u₂
 
 

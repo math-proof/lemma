@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.LSeries.AbelContinuation
-import Lemma.Nat.LSeries.AbelContinuation
+import Theorem.Nat.LSeries.AbelContinuation
 import Def.MathlibExtTest.NumberTheory.LSeries.AbelContinuation
 /-!
 # Tests for the Abel continuation

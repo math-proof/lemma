@@ -7,10 +7,12 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Theorem.StatisticalMechanics.Code.Exact3D.PowerLawBridge
-import Structure.StatisticalMechanics.Code.Exact3D.Reparameterization
+public import Theorem.StatisticalMechanics.Code.Exact3D.PowerLawBridge
+public import Structure.StatisticalMechanics.Code.Exact3D.Reparameterization
 
+public section
 
 namespace StatMech
 

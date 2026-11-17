@@ -1,5 +1,5 @@
 import Def.Data.Tensor.Stack.Part2
-import Lemma.List.EqCons_Tail.of.NeLength_0
+import Theorem.List.EqCons_Tail.of.NeLength_0
 open List Tensor
 
 

@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.Building.Labels
-import Lemma.Finset.LabelMap.eq.ImageLabelMap.of.EqLabelMap_Head_ImageLabelMap_Head.IsChainAdjacent.Ne.All_EqLabelMap_ImageLabelMap
+module
+
+public import Def.v1.Atlas.Buildings.code.Building.Labels
+
+@[expose] public section
+
 open scoped Classical
 
 variable {V : Type*} [DecidableEq V]

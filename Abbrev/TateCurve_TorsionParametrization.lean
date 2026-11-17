@@ -1,6 +1,6 @@
 import Mathlib
 import Structure.TateCurve_XMultDistinctRouteB
-import Lemma.WeierstrassCurve.TateFiltrationPrep
+import Theorem.WeierstrassCurve.TateFiltrationPrep
 import Structure.TateCurve_KeystoneVocab
 import Theorems.Thm_TateCurve_symAddHyps_unconditional
 import Theorems.Thm_TateCurve_diffHyp_unconditional

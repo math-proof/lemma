@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.Contraction
-import Mathlib.RingTheory.TensorProduct.Maps
-import Theorem.v1.Atlas.TensorCategories.code.FiberFunctorEnd
+module
+
+public import Mathlib.LinearAlgebra.Contraction
+public import Mathlib.RingTheory.TensorProduct.Maps
+public import Theorem.v1.Atlas.TensorCategories.code.FiberFunctorEnd
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 

@@ -7,13 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib.Analysis.SpecialFunctions.Artanh
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
-import Def.StatisticalMechanics.Code.Ising.LebowitzPfisterSingleBondUpper
+public import Mathlib.Analysis.SpecialFunctions.Artanh
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
+public import Def.StatisticalMechanics.Code.Ising.LebowitzPfisterSingleBondUpper
 open Set
 
+public section
 
 namespace StatMech.Ising
 

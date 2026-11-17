@@ -7,7 +7,7 @@ Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 import Mathlib.LinearAlgebra.Matrix.Permanent
 import Mathlib.Analysis.Convex.DoublyStochasticMatrix
 import Theorem.Analysis.Complex.Hurwitz
-import Lemma.Complex.Hurwitz
+import Theorem.Complex.Hurwitz
 import Mathlib.RingTheory.MvPolynomial.Homogeneous
 import Mathlib.Algebra.MvPolynomial.Equiv
 import Mathlib.Analysis.Complex.Polynomial.GaussLucas

@@ -34,8 +34,8 @@ import Mathlib.Algebra.Category.ModuleCat.Projective
 import Mathlib.Algebra.Module.Projective
 import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part6
 import Lemma.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
-import Lemma.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctor
-import Lemma.Category.Atlas.v1.TensorCategories.code.RegularObject
+import Theorem.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctor
+import Theorem.Category.Atlas.v1.TensorCategories.code.RegularObject
 import Abbrev.v1.Atlas.TensorCategories.code.QuasiTensorFunctor.Part5
 import Theorem.v1.Atlas.TensorCategories.code.SimpleObjectHelpers
 import Abbrev.v1.Atlas.TensorCategories.code.RegularObject.Part2

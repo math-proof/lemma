@@ -1,7 +1,12 @@
-import Mathlib.MeasureTheory.MeasurableSpace.Constructions
-import Mathlib.Order.Restriction
-import Abbrev.Analysis.InnerProductSpace.EuclideanVec
-import Class.Dynamics.Iterates
+module
+
+public import Mathlib.MeasureTheory.MeasurableSpace.Constructions
+public import Mathlib.Order.Restriction
+public import Abbrev.Analysis.InnerProductSpace.EuclideanVec
+public import Class.Dynamics.Iterates
+
+@[expose] public section
+
 open Finset MeasureTheory Preorder
 
 variable {d : ℕ}

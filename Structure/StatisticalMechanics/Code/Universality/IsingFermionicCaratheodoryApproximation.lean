@@ -9,8 +9,10 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicScalingReduction
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalDirichletLimit.Part2
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicScalingReduction
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalDirichletLimit.Part2
 open Filter Set Topology Metric
 
 
@@ -18,7 +20,7 @@ namespace StatMech.Universality
 
 open StatMech StatMech.FK StatMech.Lattice StatMech.BeffaraDC
 
-noncomputable section
+public noncomputable section
 
 structure FKIsingCaratheodoryApproximation where
   U : Set Complex

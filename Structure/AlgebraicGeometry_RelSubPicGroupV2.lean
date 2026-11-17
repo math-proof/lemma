@@ -1,12 +1,14 @@
-import Mathlib
-import Instance.AlgebraicGeometry_RelativePicardFunctor
-import Structure.AlgebraicGeometry_RepresentsRelSubPic
-import Def.AlgebraicGeometry_RelSubPicPresheaf
-import Def.AlgebraicGeometry_RelativeGroupLawGrpObj
-import Structure.JacJ1Iface
-import Abbrev.SheafOfModules_MonoidalV2
-import Structure.AlgebraicGeometry_RelSubPicGroup
-import Instance.AlgebraicGeometry_RelSubPicGroupV2
+module
+
+public import Mathlib
+public import Instance.AlgebraicGeometry_RelativePicardFunctor
+public import Structure.AlgebraicGeometry_RepresentsRelSubPic
+public import Def.AlgebraicGeometry_RelSubPicPresheaf
+public import Def.AlgebraicGeometry_RelativeGroupLawGrpObj
+public import Structure.JacJ1Iface
+public import Abbrev.SheafOfModules_MonoidalV2
+public import Structure.AlgebraicGeometry_RelSubPicGroup
+public import Instance.AlgebraicGeometry_RelSubPicGroupV2
 
 section InlinedTheorems
 
@@ -19,7 +21,7 @@ universe u v' u'
 
 open CategoryTheory MonoidalCategory Limits Opposite
 
-noncomputable section
+public noncomputable section
 
 namespace PresheafOfModules
 
@@ -49,7 +51,7 @@ universe u
 
 open CategoryTheory MonoidalCategory Limits
 
-noncomputable section
+public noncomputable section
 
 namespace PresheafOfModules.IsMonoidalW
 
@@ -157,7 +159,7 @@ open CategoryTheory CategoryTheory.Limits MonoidalCategory AlgebraicGeometry Alg
 
 open scoped CategoryTheory.MonObj
 
-noncomputable section
+public noncomputable section
 
 namespace AlgebraicGeometry.RelPicard
 

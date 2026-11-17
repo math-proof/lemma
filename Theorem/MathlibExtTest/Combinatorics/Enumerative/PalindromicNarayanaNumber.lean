@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/PalindromicNarayanaNumber.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.PalindromicNarayanaNumber
+public import Mathlib.Tactic.NormNum
 
-import Def.Combinatorics.Enumerative.PalindromicNarayanaNumber
-import Mathlib.Tactic.NormNum
-
+public section
 
 namespace MetaMathlibExt
 

@@ -2,6 +2,8 @@ import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Lemma.Random.GradVkd.eq.AddIntegral_SMul_Integral_SMul.of.All_EqWithDensity.All_Ge_0.All_Measurable.All_Measurable_Prob.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.In_Ico
 import Syntax.Algebra.BigOperators.Summations
 import Mathlib.MeasureTheory.Integral.Bochner.SumMeasure
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory PolicyGradient Random
 
 
@@ -66,4 +68,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-16
+-- updated on 2026-11-17

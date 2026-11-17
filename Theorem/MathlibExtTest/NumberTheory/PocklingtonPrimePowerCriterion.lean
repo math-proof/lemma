@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PocklingtonPrimePowerCriterion.lean -/
 
 
-import Lemma.Nat.PocklingtonPrimePowerCriterion
+import Theorem.Nat.PocklingtonPrimePowerCriterion
 import Mathlib.Tactic.NormNum.GCD
 import Mathlib.Tactic.NormNum.ModEq
 import Mathlib.Tactic.NormNum.Prime

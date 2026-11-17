@@ -1,13 +1,10 @@
-import Mathlib.Probability.Kernel.Composition.Comp
-import Mathlib.Probability.Kernel.Composition.MapComap
-import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
-import Mathlib.Order.Interval.Finset.Nat
-import Instance.Probability.Process.StochasticProcessTypes.Part3
-import Lemma.Random.Sum_ToReal.eq.One
-import Def.Probability.Process.MarkovChain
-open MeasureTheory ProbabilityTheory Finset
+module
 
-universe u
+public import Mathlib.Probability.Kernel.Composition.Comp
+public import Mathlib.Probability.Kernel.Composition.MapComap
+public import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
+public import Mathlib.Order.Interval.Finset.Nat
+public import Def.Probability.Process.MarkovChain
 
 /-!
 # Time-homogeneous Markov chains on a measurable state space
@@ -23,6 +20,11 @@ Kernel-based counterpart of the finite `DiscreteMarkovChain` primitives in
   `RowStochastic` matrix `M.kernel_mat` and a `StochasticVec` `M.init_vec`.
 -/
 
+@[expose] public section
+
+open MeasureTheory ProbabilityTheory Finset
+
+universe u
 
 namespace ProbabilityTheory.Kernel
 

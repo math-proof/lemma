@@ -1,6 +1,5 @@
 import Mathlib
 import Def.AlgebraicGeometry_TwoChartCechCupProduct
-import Lemma.Scheme.TwoAffineOpenCoverKaehler
 import Lemma.HahnSeries.TwoChartCechLaurentChart
 
 set_option autoImplicit false

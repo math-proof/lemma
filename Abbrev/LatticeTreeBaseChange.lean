@@ -1,5 +1,9 @@
-import Structure.LatticeTreeOrbital
-import Structure.LatticeTreeBaseChange
+module
+
+public import Structure.LatticeTreeOrbital
+public import Structure.LatticeTreeBaseChange
+
+@[expose] public section
 
 set_option autoImplicit false
 

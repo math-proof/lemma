@@ -8,14 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.QuadraticForm.Basic
-import Mathlib.LinearAlgebra.QuadraticForm.IsometryEquiv
-import Mathlib.LinearAlgebra.QuadraticForm.Radical
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.LinearAlgebra.Matrix.Rank
-import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
-import Mathlib.GroupTheory.QuotientGroup.Basic
-import Instance.v1.Atlas.ArithmeticGeometry.code.QuadraticForms
+module
+
+public import Mathlib.LinearAlgebra.QuadraticForm.Basic
+public import Mathlib.LinearAlgebra.QuadraticForm.IsometryEquiv
+public import Mathlib.LinearAlgebra.QuadraticForm.Radical
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+public import Mathlib.LinearAlgebra.Matrix.Rank
+public import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+public import Instance.v1.Atlas.ArithmeticGeometry.code.QuadraticForms
+
+@[expose] public section
+
 open LinearMap (BilinMap BilinForm)
 
 

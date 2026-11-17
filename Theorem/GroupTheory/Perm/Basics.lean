@@ -2,8 +2,10 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Abbrev.GroupTheory.Perm.Basics
+module
+
+public import Mathlib
+public import Abbrev.GroupTheory.Perm.Basics
 open Equiv Function Finset
 
 /-!
@@ -67,6 +69,8 @@ permutation (proven by `Equiv.Perm.simpleTransposition_eq_canonical`).
 
 permutation, symmetric group, transposition, cycle, involution
 -/
+
+public section
 
 
 namespace AlgebraicCombinatorics

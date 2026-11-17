@@ -1,9 +1,11 @@
-import Mathlib
-import Def.ModularCurve_WeierstrassLevelCarrier
+module
+
+public import Mathlib
+public import Def.ModularCurve_WeierstrassLevelCarrier
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open Polynomial
 

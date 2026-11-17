@@ -8,12 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.LinearAlgebra.Matrix.Permanent
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Tactic
-import Def.v1.Atlas.AnAlgorithmistsToolkit.code.Approximation
+module
+
+public import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.LinearAlgebra.Matrix.Permanent
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Tactic
+public import Def.v1.Atlas.AnAlgorithmistsToolkit.code.Approximation
+public section
+
 open MeasureTheory Real Matrix Equiv Finset
 
 

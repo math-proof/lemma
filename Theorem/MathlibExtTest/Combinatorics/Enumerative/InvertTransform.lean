@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/InvertTransform.lean -/
 
 import Def.Combinatorics.Enumerative.InvertTransform
-import Lemma.Finset.Enumerative.InvertTransform
+import Theorem.Finset.Enumerative.InvertTransform
 open MetaMathlibExt
 
 

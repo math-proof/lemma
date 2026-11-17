@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.CombinatorialOptimization.code.Flow.FlowCutBound.Part2
-import Lemma.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.FlowCutBound
+import Theorem.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.FlowCutBound
 import Theorem.v1.Atlas.CombinatorialOptimization.code.Flow.MaxFlowMinCut
 open Finset BigOperators Classical
 

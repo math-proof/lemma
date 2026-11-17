@@ -1,11 +1,14 @@
-import Mathlib.Analysis.Real.Sqrt
-import Mathlib.Combinatorics.Enumerative.Stirling
-import Mathlib.Data.Nat.Choose.Central
-import Mathlib.Algebra.CharP.Defs
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Analysis.SpecificLimits.Normed
-import Mathlib.Tactic.LinearCombination
+module
 
+public import Mathlib.Analysis.Real.Sqrt
+public import Mathlib.Combinatorics.Enumerative.Stirling
+public import Mathlib.Data.Nat.Choose.Central
+public import Mathlib.Algebra.CharP.Defs
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Analysis.SpecificLimits.Normed
+public import Mathlib.Tactic.LinearCombination
+
+public section
 
 namespace MetaMathlibExt
 

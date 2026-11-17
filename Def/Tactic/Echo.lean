@@ -1,6 +1,11 @@
-import Mathlib.Tactic
-import Def.Lean.Expr.Parser
-import Def.Lean.PrettyPrinter.Latex.Part2
+module
+
+public import Mathlib.Tactic
+public import Def.Lean.Expr.Parser
+public import Def.Lean.PrettyPrinter.Latex.Part2
+
+@[expose] public section
+
 open Lean Elab.Tactic Meta
 set_option linter.unusedVariables false
 

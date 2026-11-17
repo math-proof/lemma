@@ -1,5 +1,9 @@
-import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.Algebra.Ring.Defs
+module
+
+public import Mathlib.Data.Nat.Prime.Basic
+public import Mathlib.Algebra.Ring.Defs
+
+@[expose] public section
 
 set_option autoImplicit false
 

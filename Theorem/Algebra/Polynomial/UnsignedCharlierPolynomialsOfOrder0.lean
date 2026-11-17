@@ -1,6 +1,9 @@
-import Mathlib.RingTheory.Polynomial.Pochhammer
-import Def.Algebra.Polynomial.UnsignedCharlierPolynomialsOfOrder0
+module
 
+public import Mathlib.RingTheory.Polynomial.Pochhammer
+public import Def.Algebra.Polynomial.UnsignedCharlierPolynomialsOfOrder0
+
+public section
 
 namespace MetaMathlibExt
 

@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/CatalanLarcombeFrenchNumber.lean -/
 
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+module
+
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+
+@[expose] public section
+
 /-!
 # Catalan-Larcombe-French numbers
 

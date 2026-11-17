@@ -3,6 +3,7 @@ import Instance.Analysis.Real.Numbers
 import Theorem.Probability.SymbolicProbability
 import Lemma.Random.Map.eq.WithDensityProb
 import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory Random
 open scoped ENNReal.ToRealCoe
 
@@ -70,4 +71,4 @@ private lemma main
 
 
 -- created on 2023-03-25
--- updated on 2026-11-16
+-- updated on 2026-11-17

@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.DiophantineApproximation.ThreeGap
-import Lemma.Nat.DiophantineApproximation.ThreeGap
+import Theorem.Nat.DiophantineApproximation.ThreeGap
 
 
 namespace MetaMathlibExt

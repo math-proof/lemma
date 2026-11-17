@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
-import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
-import Mathlib.Topology.MetricSpace.Bounded
+module
+
+public import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+public import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
+public import Mathlib.Topology.MetricSpace.Bounded
+
+@[expose] public section
+
 open MeasureTheory Set
 
 

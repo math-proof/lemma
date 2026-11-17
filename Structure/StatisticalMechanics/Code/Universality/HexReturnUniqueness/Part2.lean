@@ -9,10 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexConcreteRegion.Part5
-import Theorem.StatisticalMechanics.Code.Universality.HexW1ExitGeom.Part5
-import Theorem.StatisticalMechanics.Code.Universality.HexReturnUniqueness.Part2
+module
 
+public import Theorem.StatisticalMechanics.Code.Universality.HexConcreteRegion.Part5
+public import Theorem.StatisticalMechanics.Code.Universality.HexW1ExitGeom.Part5
+public import Theorem.StatisticalMechanics.Code.Universality.HexReturnUniqueness.Part2
+
+
+public section
 
 namespace StatMech.Universality
 

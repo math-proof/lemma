@@ -9,9 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Onsager.GroundUpWinding.Part2
+module
 
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Onsager.GroundUpWinding.Part2
+
+
+public section
 
 namespace StatMech.Onsager.GroundUp
 

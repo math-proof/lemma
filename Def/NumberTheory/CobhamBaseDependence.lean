@@ -6,8 +6,8 @@ Authors: Adam Kiezun, Muse Spark 1.3
 
 import Mathlib.Data.Set.Basic
 import Abbrev.Dynamics.EventuallyPeriodicSequence
-import Lemma.Set.EventuallyPeriodicSequence
-import Lemma.Nat.BaseRecognizable
+import Theorem.Set.EventuallyPeriodicSequence
+import Theorem.Nat.BaseRecognizable
 import Def.NumberTheory.BaseRecognizable
 import Mathlib.Algebra.Order.Field.Basic
 import Mathlib.Analysis.SpecialFunctions.Log.Basic

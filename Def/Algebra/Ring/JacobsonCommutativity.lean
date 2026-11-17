@@ -1,24 +1,28 @@
-import Mathlib.RingTheory.TwoSidedIdeal.Basic
-import Mathlib.RingTheory.TwoSidedIdeal.Operations
-import Mathlib.RingTheory.TwoSidedIdeal.Lattice
-import Mathlib.RingTheory.TwoSidedIdeal.Kernel
-import Mathlib.Order.Zorn
-import Mathlib.Algebra.CharP.Defs
-import Mathlib.Algebra.Field.Basic
-import Mathlib.Algebra.Algebra.Subalgebra.Lattice
-import Mathlib.Algebra.Algebra.ZMod
-import Mathlib.LinearAlgebra.Span.Basic
-import Mathlib.RingTheory.Finiteness.Basic
-import Mathlib.RingTheory.Finiteness.Cardinality
-import Mathlib.RingTheory.IntegralDomain
-import Mathlib.RingTheory.LittleWedderburn
-import Mathlib.Algebra.Polynomial.Roots
-import Mathlib.Algebra.Polynomial.Splits
-import Mathlib.Algebra.Polynomial.Eval.Defs
-import Mathlib.Algebra.CharP.Lemmas
-import Mathlib.Algebra.Module.LinearMap.End
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.GroupTheory.OrderOfElement
+module
+
+public import Mathlib.RingTheory.TwoSidedIdeal.Basic
+public import Mathlib.RingTheory.TwoSidedIdeal.Operations
+public import Mathlib.RingTheory.TwoSidedIdeal.Lattice
+public import Mathlib.RingTheory.TwoSidedIdeal.Kernel
+public import Mathlib.Order.Zorn
+public import Mathlib.Algebra.CharP.Defs
+public import Mathlib.Algebra.Field.Basic
+public import Mathlib.Algebra.Algebra.Subalgebra.Lattice
+public import Mathlib.Algebra.Algebra.ZMod
+public import Mathlib.LinearAlgebra.Span.Basic
+public import Mathlib.RingTheory.Finiteness.Basic
+public import Mathlib.RingTheory.Finiteness.Cardinality
+public import Mathlib.RingTheory.IntegralDomain
+public import Mathlib.RingTheory.LittleWedderburn
+public import Mathlib.Algebra.Polynomial.Roots
+public import Mathlib.Algebra.Polynomial.Splits
+public import Mathlib.Algebra.Polynomial.Eval.Defs
+public import Mathlib.Algebra.CharP.Lemmas
+public import Mathlib.Algebra.Module.LinearMap.End
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.GroupTheory.OrderOfElement
+
+@[expose] public section
 
 namespace Int.Ring.JacobsonCommutativity
 

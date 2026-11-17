@@ -14,8 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Algebra.Group.Indicator
-import Def.Algebra.Group.Indicator
+module
+
+public import Mathlib.Algebra.Group.Indicator
+public import Def.Algebra.Group.Indicator
+
+public section
 
 
 namespace Set

@@ -8,7 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.ProjectionTheory.code.DeltaRegular
+module
+
+public import Def.v1.Atlas.ProjectionTheory.code.DeltaRegular
+
+@[expose] public section
+
 open scoped ENNReal NNReal
 open Metric Set Finset Classical
 

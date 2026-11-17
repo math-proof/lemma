@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
 import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.CauchyKernelIntegrability
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.CauchyKernelIntegrability
 import Def.v1.Atlas.DifferentialAnalysis.code.CauchyKernelIntegrability
 import Mathlib.MeasureTheory.Function.LocallyIntegrable
 import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace

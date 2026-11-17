@@ -1,6 +1,11 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_TwoChartModel.lean: instance decls only.
-import Mathlib
-import Abbrev.ModularCurve_TwoChartModel
+
+module
+
+public import Mathlib
+public import Abbrev.ModularCurve_TwoChartModel
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,7 +1,11 @@
-import Def.LanglandsTunnell_ConverseData
-import Def.LanglandsTunnell_RankinSelbergEuler
-import Def.HeckeCharacter_FiniteOrder
-import Inductive.LanglandsTunnell_ResolventDatum
+module
+
+public import Def.LanglandsTunnell_ConverseData
+public import Def.LanglandsTunnell_RankinSelbergEuler
+public import Def.HeckeCharacter_FiniteOrder
+public import Structure.HeckeCharacter_FiniteOrder
+
+@[expose] public section
 
 set_option autoImplicit false
 
@@ -31,20 +35,6 @@ open scoped Classical in
 noncomputable def lambdaArch (w : InfinitePlace K) : ℂ :=
   if w.IsReal then 1 else signEpsilon 1
 
-noncomputable def lambdaAt : ResolventDatum K → HeightOneSpectrum (𝓞 ℚ) → ℂ
-  | @ResolventDatum.s3 _ _ _ _ _ L iF iN iA iI ω θ _ _ _ _ _ _ _ _ _, p => by
-      letI := iF
-      letI := iN
-      letI := iA
-      letI := iI
-      exact stdRootNumberAt ℚ p (localChar ω p) *
-        ∏ᶠ u ∈ primeFibre ℚ L p, stdRootNumberAt L u (localChar θ u)
-  | .cyclic χ _ _ _ _, p =>
-      stdRootNumberAt ℚ p (localChar χ p) * stdRootNumberAt ℚ p (localChar (χ ^ 2) p)
-
-noncomputable def lambdaFin (Λd : ResolventDatum K) (w : HeightOneSpectrum (𝓞 K)) : ℂ :=
-  if Ideal.ramificationIdx' (w.under (𝓞 ℚ)).asIdeal w.asIdeal = 1 ∧
-      (w.under (𝓞 ℚ)).asIdeal.inertiaDeg' w.asIdeal = 1 then 1
-  else lambdaAt K Λd (w.under (𝓞 ℚ))
-
 end LanglandsTunnell.CubicLambda
+
+end

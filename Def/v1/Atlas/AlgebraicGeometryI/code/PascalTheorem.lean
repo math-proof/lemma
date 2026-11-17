@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.AlgebraicGeometryI.code.PascalCurves.Part2
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.PascalCurves
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PascalCurves
 import Structure.v1.Atlas.AlgebraicGeometryI.code.PascalTheorem
 open Polynomial
 

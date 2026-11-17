@@ -1,5 +1,8 @@
-import Mathlib.RingTheory.Polynomial.Pochhammer
+module
 
+public import Mathlib.RingTheory.Polynomial.Pochhammer
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

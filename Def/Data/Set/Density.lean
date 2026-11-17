@@ -17,8 +17,8 @@ limitations under the License.
 -/
 
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Lemma.Set.ImageIioDiv_2.eq.InterSetOfEven_Iio
-import Lemma.Set.Interval.Finset.Basic
+import Theorem.Set.ImageIioDiv_2.eq.InterSetOfEven_Iio
+import Theorem.Set.Interval.Finset.Basic
 import Instance.Data.Set.Interval
 import Mathlib.Order.Interval.Finset.Nat
 import Mathlib.Order.Interval.Set.Nat

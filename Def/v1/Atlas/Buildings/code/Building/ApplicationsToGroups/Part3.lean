@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.Buildings.code.Building.Affine.Part2
 import Def.v1.Atlas.Buildings.code.BNPair.ParabolicDefs.Part2
-import Lemma.Nat.NonemptyBruhatCell
+import Theorem.Nat.NonemptyBruhatCell
 import Mathlib.Topology.Algebra.Group.Basic
 import Mathlib.Topology.Compactness.Compact
 import Mathlib.Order.Filter.AtTopBot.Group

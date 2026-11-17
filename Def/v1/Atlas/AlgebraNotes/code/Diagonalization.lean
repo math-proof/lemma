@@ -8,12 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.Eigenspace.Semisimple
-import Mathlib.LinearAlgebra.Charpoly.Basic
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.FieldTheory.Separable
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+module
 
+public import Mathlib.LinearAlgebra.Eigenspace.Semisimple
+public import Mathlib.LinearAlgebra.Charpoly.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.FieldTheory.Separable
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+
+@[expose] public section
 
 namespace Diagonalization
 

@@ -4,12 +4,15 @@
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Mathlib.Data.List.Perm.Basic
-import Mathlib.Algebra.BigOperators.Group.List.Basic
-import Mathlib.Algebra.Ring.Nat
-import Mathlib.Data.List.Chain
-import Mathlib.Data.List.Nodup
+module
 
+public import Mathlib.Data.List.Perm.Basic
+public import Mathlib.Algebra.BigOperators.Group.List.Basic
+public import Mathlib.Algebra.Ring.Nat
+public import Mathlib.Data.List.Chain
+public import Mathlib.Data.List.Nodup
+
+@[expose] public section
 
 section
 

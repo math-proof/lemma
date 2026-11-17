@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.NumberTheory.RamificationInertia.Basic
-import Mathlib.NumberTheory.RamificationInertia.Ramification
-import Mathlib.RingTheory.DedekindDomain.Different
-import Mathlib.RingTheory.Kaehler.Basic
+module
+
+public import Mathlib.NumberTheory.RamificationInertia.Basic
+public import Mathlib.NumberTheory.RamificationInertia.Ramification
+public import Mathlib.RingTheory.DedekindDomain.Different
+public import Mathlib.RingTheory.Kaehler.Basic
+
+@[expose] public section
+
 /-- For a finite morphism of smooth curves over `k`, the induced extension
 of function fields is separable. -/
 

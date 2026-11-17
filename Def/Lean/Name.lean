@@ -1,5 +1,11 @@
-import Initialize.Lean.Meta.CtorName
-import Def.Data.String.String.Part2
+module
+
+public meta import Def.Lean.Meta.CtorName
+public import Class.Lean.Meta.CtorName
+public import Def.Data.String.String.Part2
+
+@[expose] public section
+
 open Lean
 
 

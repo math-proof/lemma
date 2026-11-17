@@ -1,6 +1,11 @@
-import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.Analysis.Complex.TaylorSeries
-import Theorem.Analysis.Complex.Wiman
+module
+
+public import Mathlib.Analysis.Complex.Polynomial.Basic
+public import Mathlib.Analysis.Complex.TaylorSeries
+public import Theorem.Analysis.Complex.Wiman
+
+@[expose] public section
+
 /-!
 # The Wiman maximum-term theorem
 

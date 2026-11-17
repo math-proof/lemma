@@ -7,14 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Probability.Martingale.OptionalStopping
-import Mathlib.Probability.Martingale.Convergence
-import Mathlib.MeasureTheory.Function.UniformIntegrable
-import Theorem.v1.Atlas.Probability.code.OptionalStoppingAlt
+public import Mathlib.Probability.Martingale.OptionalStopping
+public import Mathlib.Probability.Martingale.Convergence
+public import Mathlib.MeasureTheory.Function.UniformIntegrable
+public import Theorem.v1.Atlas.Probability.code.OptionalStoppingAlt
 open MeasureTheory Filter
 open scoped ENNReal NNReal Topology
 
+public section
 
 noncomputable section
 

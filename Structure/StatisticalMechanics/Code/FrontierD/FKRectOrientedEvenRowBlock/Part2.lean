@@ -9,14 +9,16 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectEvenRowBlockRepetition.Part2
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectOrientedEvenRowBlock.Part2
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectEvenRowBlockRepetition.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectOrientedEvenRowBlock.Part2
 open Set SimpleGraph
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure FKRectPositiveRowOrientedBlock
     (R : FKRectTorus) (q : Real) (scale : Nat) where

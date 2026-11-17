@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.GroupTheory.Sylow
-import Mathlib.GroupTheory.Perm.Cycle.Type
-import Mathlib.GroupTheory.SpecificGroups.Cyclic
-import Mathlib.GroupTheory.Complement
-import Mathlib.GroupTheory.NoncommPiCoprod
-import Mathlib.GroupTheory.SemidirectProduct
-import Mathlib.GroupTheory.SpecificGroups.Dihedral
+module
+
+public import Mathlib.GroupTheory.Sylow
+public import Mathlib.GroupTheory.Perm.Cycle.Type
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic
+public import Mathlib.GroupTheory.Complement
+public import Mathlib.GroupTheory.NoncommPiCoprod
+public import Mathlib.GroupTheory.SemidirectProduct
+public import Mathlib.GroupTheory.SpecificGroups.Dihedral
+
+@[expose] public section
+
 open Finset Nat MulAction Subgroup
 
 

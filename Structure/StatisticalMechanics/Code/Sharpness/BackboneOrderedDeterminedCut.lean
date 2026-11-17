@@ -9,7 +9,9 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Sharpness.BackbonePartialEdgeCopySwitching.Part6
+module
+
+public import Theorem.StatisticalMechanics.Code.Sharpness.BackbonePartialEdgeCopySwitching.Part6
 open Finset BigOperators
 open scoped symmDiff
 
@@ -18,7 +20,7 @@ set_option linter.unusedSectionVars false
 
 namespace StatMech.Sharpness
 
-noncomputable section
+public noncomputable section
 
 structure shb_OrderedLocalTests (E B : Type*) [DecidableEq E] where
   order : List E

@@ -2,8 +2,8 @@
 
 import Mathlib.Analysis.Meromorphic.Divisor
 import Structure.Analysis.SpecialFunctions.Elliptic.Function
-import Lemma.Complex.Function
-import Lemma.Complex.FundamentalParallelogram
+import Theorem.Complex.Function
+import Theorem.Complex.FundamentalParallelogram
 import Def.Analysis.SpecialFunctions.Elliptic.FundamentalParallelogram
 /-!
 # Pole sets and elliptic order of meromorphic elliptic functions

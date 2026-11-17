@@ -1,13 +1,15 @@
-import Mathlib
-import Lemma.MvPolynomial.HeckeModule
-import Instance.ModularCurve_SpecializationWitness
-import Def.ModularCurve_JqCoeff
-import Instance.EllipticCurve_FrobeniusTrace
-import Structure.ModularCurve_JZeroGoodReductionV2
+module
+
+public import Mathlib
+public import Lemma.MvPolynomial.HeckeModule
+public import Instance.ModularCurve_SpecializationWitness
+public import Def.ModularCurve_JqCoeff
+public import Instance.EllipticCurve_FrobeniusTrace
+public import Structure.ModularCurve_JZeroGoodReductionV2
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open ModularCurve AlgebraicCurve IsLocalRing
 

@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/NonnegativeMinors.lean -/
 
-import Mathlib.Data.Real.Basic
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+module
 
+public import Mathlib.Data.Real.Basic
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

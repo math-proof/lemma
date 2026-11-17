@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.Buildings.code.CoxeterGroup.BraidRelation
-import Lemma.Real.EqSigma.of.EqBilinForm_E_0
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.BraidRelationProof.DihedralHelpers
+module
+
+public import Structure.v1.Atlas.Buildings.code.CoxeterGroup.BraidRelation
+public import Theorem.Real.EqSigma.of.EqBilinForm_E_0
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.BraidRelationProof.DihedralHelpers
 open Finset BigOperators Real
+
+public section
 
 
 namespace CoxeterGroup
@@ -21,7 +25,7 @@ variable {B : Type*} [DecidableEq B] [Fintype B]
 
 /-- One-step recurrence for the pair $(A_n, B_n)$ giving the matrix product
 that corresponds to applying one more copy of $\sigma_s \sigma_t$. -/
-theorem seqAB_step (c : ℝ) : ∀ n,
+public theorem seqAB_step (c : ℝ) : ∀ n,
     seqA c (4 * c ^ 2 - 2) (n + 1) = (4 * c ^ 2 - 1) * seqA c (4 * c ^ 2 - 2) n +
       2 * c * seqB c (4 * c ^ 2 - 2) n ∧
     seqB c (4 * c ^ 2 - 2) (n + 1) = -2 * c * seqA c (4 * c ^ 2 - 2) n -
@@ -53,7 +57,7 @@ theorem seqAB_step (c : ℝ) : ∀ n,
 
 /-- One-step recurrence for the pair $(C_n, D_n)$, analogous to
 $\mathtt{seqAB\_step}$. -/
-theorem seqCD_step (c : ℝ) : ∀ n,
+public theorem seqCD_step (c : ℝ) : ∀ n,
     seqC c (4 * c ^ 2 - 2) (n + 1) = (4 * c ^ 2 - 1) * seqC c (4 * c ^ 2 - 2) n +
       2 * c * seqD c (4 * c ^ 2 - 2) n ∧
     seqD c (4 * c ^ 2 - 2) (n + 1) = -2 * c * seqC c (4 * c ^ 2 - 2) n -
@@ -85,7 +89,7 @@ theorem seqCD_step (c : ℝ) : ∀ n,
 
 /-- Functional form: the $n$-th iterate of $\sigma_s \sigma_t$ applied to
 $e_s$ is the linear combination $A_n\, e_s + B_n\, e_t$. -/
-theorem iter_e_s_formula_fn (M : CoxeterMatrix B) (s t : B) (n : ℕ) :
+public theorem iter_e_s_formula_fn (M : CoxeterMatrix B) (s t : B) (n : ℕ) :
     (fun w => sigma M s (sigma M t w))^[n] (e s) =
       seqA (formVal M s t) (4 * formVal M s t ^ 2 - 2) n • e s +
       seqB (formVal M s t) (4 * formVal M s t ^ 2 - 2) n • e t := by
@@ -103,7 +107,7 @@ theorem iter_e_s_formula_fn (M : CoxeterMatrix B) (s t : B) (n : ℕ) :
 
 /-- Pointwise form of $\mathtt{iter\_e\_s\_formula\_fn}$: evaluating at any
 index $u$ gives $A_n\, e_s(u) + B_n\, e_t(u)$. -/
-theorem iter_e_s_formula (M : CoxeterMatrix B) (s t : B) (n : ℕ) (u : B) :
+public theorem iter_e_s_formula (M : CoxeterMatrix B) (s t : B) (n : ℕ) (u : B) :
     let c := formVal M s t
     let α := 4 * c ^ 2 - 2
     (fun w => sigma M s (sigma M t w))^[n] (e s) u =
@@ -114,7 +118,7 @@ theorem iter_e_s_formula (M : CoxeterMatrix B) (s t : B) (n : ℕ) (u : B) :
 
 /-- Functional form: the $n$-th iterate of $\sigma_s \sigma_t$ applied to
 $e_t$ is the linear combination $C_n\, e_s + D_n\, e_t$. -/
-theorem iter_e_t_formula_fn (M : CoxeterMatrix B) (s t : B) (n : ℕ) :
+public theorem iter_e_t_formula_fn (M : CoxeterMatrix B) (s t : B) (n : ℕ) :
     (fun w => sigma M s (sigma M t w))^[n] (e t) =
       seqC (formVal M s t) (4 * formVal M s t ^ 2 - 2) n • e s +
       seqD (formVal M s t) (4 * formVal M s t ^ 2 - 2) n • e t := by
@@ -132,7 +136,7 @@ theorem iter_e_t_formula_fn (M : CoxeterMatrix B) (s t : B) (n : ℕ) :
 
 /-- Pointwise form of $\mathtt{iter\_e\_t\_formula\_fn}$: evaluating at any
 index $u$ gives $C_n\, e_s(u) + D_n\, e_t(u)$. -/
-theorem iter_e_t_formula (M : CoxeterMatrix B) (s t : B) (n : ℕ) (u : B) :
+public theorem iter_e_t_formula (M : CoxeterMatrix B) (s t : B) (n : ℕ) (u : B) :
     let c := formVal M s t
     let α := 4 * c ^ 2 - 2
     (fun w => sigma M s (sigma M t w))^[n] (e t) u =

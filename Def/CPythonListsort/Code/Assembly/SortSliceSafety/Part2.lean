@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean -/
 
-import Def.CPythonListsort.Code.Assembly.AccessTrace.Part9
-import Mathlib
-import Theorem.CPythonListsort.Code.Assembly.SortSliceSafety
+module
+
+public import Def.CPythonListsort.Code.Assembly.AccessTrace.Part9
+
+@[expose] public section
 /-!
 # Safety of the `sortslice` movement primitives
 

@@ -56,10 +56,17 @@ private lemma W_commutator {A : Type u} [Ring A] (P Q : A) (h : Q * P = 0) : W [
   have hx : ∀ x : A, Q * (P * x) = 0 := fun x => by rw [← mul_assoc, h, zero_mul]
   simp only [W_cons, W_nil, E_true, E_false, one_eq, upper_mul, lower_mul]
   refine fin_two_eq ?_ ?_ ?_ ?_
-  · simp [mul_add, add_mul, mul_assoc, h, hx]
-  · simp [mul_add, add_mul, mul_assoc, h, hx]
-  · simp [mul_add, add_mul, mul_assoc, h, hx]
-  · simp [mul_add, add_mul, mul_assoc, h, hx]
+  · simp [h]
+  · trans -Q + Q * (P * Q + 1)
+    · noncomm_ring
+    · rw [mul_add, mul_one, ← mul_assoc, h, zero_mul, zero_add, neg_add_cancel]
+  · simp [h]
+  · trans P * (-Q + Q * (P * Q + 1)) + (P * Q + 1)
+    · noncomm_ring
+    · have : -Q + Q * (P * Q + 1) = 0 := by
+        rw [mul_add, mul_one, ← mul_assoc, h, zero_mul, zero_add, neg_add_cancel]
+      rw [this]
+      simp [add_comm]
 
 private lemma W_weyl {A : Type u} [Ring A] : W [(true, (1 : A)), (false, -1), (true, 1)] = m2 (0 : A) 1 (-1) 0 := by
   simp only [W_cons, W_nil, E_true, E_false, one_eq, upper_mul, lower_mul]
@@ -79,18 +86,15 @@ private lemma W_diag_mul {A : Type u} [Ring A] {l l' : List (Bool × A)} {x y : 
 private lemma W_whitehead {A : Type u} [Ring A] (u : Units A) : W [(true, ((u⁻¹ : Units A) : A)), (false, -(u : A)), (true, ((u⁻¹ : Units A) : A)), (true, (-1 : A)), (false, 1), (true, -1)] = m2 ((u⁻¹ : Units A) : A) 0 0 (u : A) := by
   simp only [W_cons, W_nil, E_true, E_false, one_eq, upper_mul, lower_mul]
   refine fin_two_eq ?_ ?_ ?_ ?_
-  · simp [mul_add, add_mul, mul_assoc]
-  · simp [mul_add, add_mul, mul_assoc]
-  · simp [mul_add, add_mul, mul_assoc]
-  · simp [mul_add, add_mul, mul_assoc]
+  · simp [Units.mul_inv]
+  · simp [Units.inv_mul]
+  · simp [Units.mul_inv]
+  · simp
 
 private lemma diag_units_eq {A : Type u} [Ring A] (g₁ g₂ : Units A) : (m2 (g₁ : A) 0 0 (g₂ : A) : Matrix (Fin 2) (Fin 2) A) = m2 ((g₁ : A) * g₂) 0 0 1 * m2 ((g₂⁻¹ : Units A) : A) 0 0 (g₂ : A) := by
   rw [Matrix.mul_fin_two]
   refine fin_two_eq ?_ ?_ ?_ ?_
-  · simp [mul_assoc]
-  · simp [mul_assoc]
-  · simp [mul_assoc]
-  · simp [mul_assoc]
+  all_goals simp
 
 private lemma map_W {A : Type u} [Ring A] {B : Type w} [Ring B] (f : A →+* B) (l : List (Bool × A)) : f.mapMatrix (W l) = W (l.map fun p => (p.1, f p.2)) := by
   induction l

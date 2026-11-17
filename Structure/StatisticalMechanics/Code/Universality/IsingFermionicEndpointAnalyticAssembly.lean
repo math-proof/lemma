@@ -9,16 +9,18 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicEndpointInputAssembly.Part2
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicAnalyticFourthOrder
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicLocalFourthOrder.Part2
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicEndpointInputAssembly.Part2
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicAnalyticFourthOrder
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicLocalFourthOrder.Part2
 
 
 namespace StatMech.Universality
 
 open Filter Topology
 
-noncomputable section
+public noncomputable section
 
 namespace FKIsingSquareBoundaryLayerCoordinateOneForm
 

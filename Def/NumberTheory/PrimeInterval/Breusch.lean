@@ -2,7 +2,7 @@
 
 import Def.NumberTheory.PrimeInterval.Breusch.Lower
 import Lemma.Nat.PrimeInterval.Breusch.Lower
-import Lemma.Nat.PrimeInterval.Breusch.Theta
+import Theorem.Nat.PrimeInterval.Breusch.Theta
 import Lemma.Nat.PrimeInterval.Breusch.Upper
 import Def.NumberTheory.PrimeInterval.Breusch.Theta
 import Def.NumberTheory.PrimeInterval.Breusch.Upper

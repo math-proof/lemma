@@ -7,9 +7,10 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Ring
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Ring
 
-
+public section

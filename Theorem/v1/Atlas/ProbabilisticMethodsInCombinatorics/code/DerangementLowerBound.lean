@@ -7,11 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Combinatorics.Derangements.Finite
-import Mathlib.Data.Real.Basic
-import Mathlib.Tactic
+public import Mathlib.Combinatorics.Derangements.Finite
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Tactic
 set_option maxHeartbeats 400000
+
+public section
 
 /-- Integer form of the derangement lower bound: for $n \ge 1$,
 $D_n \cdot n^n \ge (n-1)^n \cdot n!$, where $D_n = $ `numDerangements n`. -/

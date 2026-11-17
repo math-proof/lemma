@@ -9,9 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.GrahamMaskFiberMiddleReversal.Part24
-import Theorem.StatisticalMechanics.Code.FrontierA.GrahamTightFamilyCutParity.Part5
-import Def.StatisticalMechanics.Code.FrontierA.GrahamStableRawTokenCutReroute.Part8
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierA.GrahamMaskFiberMiddleReversal.Part24
+public import Theorem.StatisticalMechanics.Code.FrontierA.GrahamTightFamilyCutParity.Part5
+public import Def.StatisticalMechanics.Code.FrontierA.GrahamStableRawTokenCutReroute.Part8
 open Finset
 open scoped symmDiff
 
@@ -22,7 +24,7 @@ variable {I W : Type*} [Fintype I] [DecidableEq I]
   [Fintype W] [DecidableEq W]
 
 
-inductive CanonicalStableRawStateTokenIncidenceKind
+public inductive CanonicalStableRawStateTokenIncidenceKind
     (ends : I -> Sym2 W) (m : Finset I) (j k l zero : W)
     (hloop : ∀ i ∈ m, ¬ (ends i).IsDiag)
     (hjk : j ≠ k) (hkl : k ≠ l) (hk0 : k ≠ zero)

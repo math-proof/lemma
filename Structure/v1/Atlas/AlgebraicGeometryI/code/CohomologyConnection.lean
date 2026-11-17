@@ -8,11 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.SheafCohDerived
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohDerived
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohomology
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.SheafCohomology.Part2
-import Mathlib.CategoryTheory.Sites.SheafCohomology.Basic
+module
+
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.SheafCohDerived
+public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohDerived
+public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohomology
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.SheafCohomology.Part2
+public import Mathlib.CategoryTheory.Sites.SheafCohomology.Basic
 
 
 section SerreVanishing
@@ -38,7 +40,7 @@ variable {C : Type u} [Category.{v} C] {J : GrothendieckTopology C}
 end DerivedSide
 
 
-noncomputable section
+public noncomputable section
 
 open CategoryTheory CategoryTheory.Limits
 

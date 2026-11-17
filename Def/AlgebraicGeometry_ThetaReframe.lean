@@ -1,4 +1,8 @@
-import Def.AlgebraicGeometry_ThetaAdaptedFrame
+module
+
+public import Def.AlgebraicGeometry_ThetaAdaptedFrame
+
+@[expose] public section
 
 set_option autoImplicit false
 

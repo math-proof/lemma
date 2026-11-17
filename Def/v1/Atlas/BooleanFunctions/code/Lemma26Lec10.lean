@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.BooleanFunctions.code.DisagreementStability
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.DisagreementStability
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.UniqueGames
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.UniqueGames
 import Def.v1.Atlas.BooleanFunctions.code.UniqueGames.Part8
 open Finset BigOperators
 

@@ -1,17 +1,20 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/TwinPowers.lean -/
 
-import Mathlib.Basic.Real.Basic
-import Mathlib.RingTheory.PowerSeries.Substitution
-import Mathlib.Algebra.Order.Archimedean.Real.Hom
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Analysis.Normed.Field.Basic
-import Mathlib.Data.Int.Star
-import Mathlib.RingTheory.PowerSeries.Inverse
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Ring
+module
 
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.RingTheory.PowerSeries.Substitution
+public import Mathlib.Algebra.Order.Archimedean.Real.Hom
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Analysis.Normed.Field.Basic
+public import Mathlib.Data.Int.Star
+public import Mathlib.RingTheory.PowerSeries.Inverse
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 section
 

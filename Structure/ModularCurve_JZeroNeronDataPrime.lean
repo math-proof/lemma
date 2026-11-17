@@ -1,13 +1,15 @@
-import Mathlib
-import Structure.ModularCurve_JZeroNeronData
-import Lemma.MvPolynomial.HeckeModule
-import Def.ModularCurve_HeckeInputsAll
-import Def.FLTPrelim_Ramification
-import Def.GaloisRep_Flat
+module
+
+public import Mathlib
+public import Structure.ModularCurve_JZeroNeronData
+public import Lemma.MvPolynomial.HeckeModule
+public import Def.ModularCurve_HeckeInputsAll
+public import Def.FLTPrelim_Ramification
+public import Def.GaloisRep_Flat
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace ModularCurve
 

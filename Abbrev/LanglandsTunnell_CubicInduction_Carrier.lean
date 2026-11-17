@@ -1,12 +1,14 @@
-import Structure.AutomorphicForm_AdelicLsXi
-import Def.AutomorphicForm_ConstantTerm
-import Structure.NumberField_AdelicLevel
+module
+
+public import Structure.AutomorphicForm_AdelicLsXi
+public import Def.AutomorphicForm_ConstantTerm
+public import Structure.NumberField_AdelicLevel
 
 set_option autoImplicit false
 
 open IsDedekindDomain NumberField Matrix
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace LanglandsTunnell.CubicInduction
 

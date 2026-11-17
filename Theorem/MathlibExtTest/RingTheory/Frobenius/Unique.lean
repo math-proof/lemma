@@ -2,7 +2,7 @@
 
 
 import Theorem.RingTheory.Frobenius.Unique
-import Lemma.Int.Frobenius.Unique
+import Theorem.Int.Frobenius.Unique
 variable {R S G : Type*} [CommRing R] [CommRing S] [Algebra R S]
   [Group G] [MulSemiringAction G S] [SMulCommClass G R S]
   {Q : Ideal S} {σ σ' : G}

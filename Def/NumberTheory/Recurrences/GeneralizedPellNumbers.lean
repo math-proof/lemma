@@ -1,9 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Recurrences/GeneralizedPellNumbers.lean -/
 
-import Mathlib.Data.Set.Card
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Tactic.NormNum.Eq
+module
 
+public import Mathlib.Data.Set.Card
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Tactic.NormNum.Eq
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

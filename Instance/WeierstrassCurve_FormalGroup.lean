@@ -1,5 +1,4 @@
 -- Carved from Lemma/Definitions/Def_WeierstrassCurve_FormalGroup.lean: instance decls only.
-import Lemma.WeierstrassCurve.FormalGroupLaw
 import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
 import Mathlib.RingTheory.Localization.FractionRing
 import Mathlib.RingTheory.FormalGroup.Basic

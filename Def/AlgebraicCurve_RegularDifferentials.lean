@@ -1,5 +1,9 @@
-import Mathlib
-import Class.ModularCurve_CanonicalDivisor
+module
+
+public import Mathlib
+public import Class.ModularCurve_CanonicalDivisor
+
+@[expose] public section
 
 set_option autoImplicit false
 

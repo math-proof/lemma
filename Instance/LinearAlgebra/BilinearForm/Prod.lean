@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/BilinearForm/Prod.lean -/
 
-import Mathlib.LinearAlgebra.BilinearForm.DualLattice
-import Mathlib.LinearAlgebra.PerfectPairing.Basic
-import Theorem.LinearAlgebra.BilinearForm.Prod
+module
+
+public import Mathlib.LinearAlgebra.BilinearForm.DualLattice
+public import Mathlib.LinearAlgebra.PerfectPairing.Basic
+public import Theorem.LinearAlgebra.BilinearForm.Prod
+
+@[expose] public section
+
 open LinearMap (BilinForm)
 open Module
 

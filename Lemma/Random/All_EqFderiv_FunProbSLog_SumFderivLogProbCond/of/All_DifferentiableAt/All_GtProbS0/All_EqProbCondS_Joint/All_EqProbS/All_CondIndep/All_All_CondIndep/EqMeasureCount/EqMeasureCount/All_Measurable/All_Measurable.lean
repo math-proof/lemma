@@ -1,5 +1,6 @@
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Lemma.Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory Random
 open scoped ENNReal.ToRealCoe
 
@@ -22,11 +23,11 @@ Python: Tensor.Eq.of.Ne_0.Eq.Eq.Eq.policy_gradient_theorem.
 -/
 @[path]
 private lemma policy_gradient_theorem
-  [NormedAddCommGroup E] [NormedSpace ℝ E]
+  [NormedAddCommGroup ℰ] [NormedSpace ℝ ℰ]
   [MeasurableSpace Ω] [StandardBorelSpace Ω]
   [CountableMeasure S] [CountableMeasure A]
   [Countable S] [MeasurableSingletonClass S] [Countable A] [MeasurableSingletonClass A]
-  {π : E → Measure Ω} {s : ℕ → Ω → S} {a : ℕ → Ω → A} [∀ θ, IsProbabilityMeasure (π θ)] [∀ θ i, SinglePSpace (π θ) (s i)] [∀ θ i j, SinglePSpace (π θ) (a i, s j)] [∀ θ i, SinglePSpace (π θ) (s (i + 1), s i, a i)] [∀ θ n, SinglePSpace (π θ) (s[:n + 1], a[:n])]
+  {π : ℰ → Measure Ω} {s : ℕ → Ω → S} {a : ℕ → Ω → A} [∀ θ, IsProbabilityMeasure (π θ)] [∀ θ i, SinglePSpace (π θ) (s i)] [∀ θ i j, SinglePSpace (π θ) (a i, s j)] [∀ θ i, SinglePSpace (π θ) (s (i + 1), s i, a i)] [∀ θ n, SinglePSpace (π θ) (s[:n + 1], a[:n])]
   {T : ℕ} {sv : ℕ → S} {av : ℕ → A}
 -- given
   (hs : ∀ k, Measurable (s k))
@@ -41,10 +42,10 @@ private lemma policy_gradient_theorem
   (hne : ∀ θ, 0 < (ℙ[π θ](s[:T + 1] = sv[:T + 1] ∧ a[:T] = av[:T]) : ℝ))
   (hdiff : ∀ θ t, DifferentiableAt ℝ (fun θ => (ℙ[π θ]((a t) = av t | (s t) = sv t) : ℝ)) θ) :
 -- imply
-  ∀ θ₀ : E, fderiv ℝ (fun θ => (ℙ[π θ](s[:T + 1] = sv[:T + 1] ∧ a[:T] = av[:T]) : ℝ).log) θ₀ = ∑ t ∈ Finset.range T, fderiv ℝ (fun θ => (ℙ[π θ]((a t) = av t | (s t) = sv t) : ℝ).log) θ₀ := by
+  ∀ θ₀ : ℰ, fderiv ℝ (fun θ => (ℙ[π θ](s[:T + 1] = sv[:T + 1] ∧ a[:T] = av[:T]) : ℝ).log) θ₀ = ∑ t ∈ Finset.range T, fderiv ℝ (fun θ => (ℙ[π θ]((a t) = av t | (s t) = sv t) : ℝ).log) θ₀ := by
 -- proof
   intro θ₀
-  obtain ⟨p, hp⟩ : ∃ p : E → ℕ → ℝ, ∀ θ t, p θ t = (ℙ[π θ]((a t) = av t | (s t) = sv t) : ℝ) :=
+  obtain ⟨p, hp⟩ : ∃ p : ℰ → ℕ → ℝ, ∀ θ t, p θ t = (ℙ[π θ]((a t) = av t | (s t) = sv t) : ℝ) :=
     ⟨fun θ t => (ℙ[π θ]((a t) = av t | (s t) = sv t) : ℝ), fun _ _ => rfl⟩
   obtain ⟨C, hC⟩ : ∃ C : ℝ, C = (ℙ[π θ₀]((s 0) = sv 0) : ℝ) *
       ∏ i ∈ Finset.range T, (ℙ[π θ₀]((s (i + 1)) = sv (i + 1) | (s i) = sv i ∧ (a i) = av i) : ℝ) :=
@@ -90,4 +91,4 @@ private lemma policy_gradient_theorem
 
 
 -- created on 2023-03-22
--- updated on 2026-11-02
+-- updated on 2026-11-17

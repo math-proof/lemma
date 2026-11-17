@@ -1,4 +1,6 @@
+import Initialize.Tactic.Attr.Basic
 import Lemma.List.TakePermute__Neg.eq.Append_RotateDropTake
+import Theorem.Data.List.List.Part2
 open List
 
 
@@ -16,7 +18,7 @@ private lemma main
   simp [← h] at this
   rw [← this]
   rw [EqTake.of.LeLength]
-  simp
+  simp [List.length_permute]
 
 
 -- created on 2025-10-27

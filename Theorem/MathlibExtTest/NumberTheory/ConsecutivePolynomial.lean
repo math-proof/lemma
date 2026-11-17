@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ConsecutivePolynomial.lean -/
+module
 
+public import Def.NumberTheory.ConsecutivePolynomial
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.NormNum
 
-import Def.NumberTheory.ConsecutivePolynomial
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-
+public section
 
 namespace MetaMathlibExt
 

@@ -4,6 +4,8 @@ import Lemma.Random.Map.eq.BindStageK.of.All_Eq_Joint.All_EqWithDensity
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Def.Analysis.SpecialFunctions.TensorFunctions
 import Lemma.Real.LeNorm_Mul1.of.All_LeNorm
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Nat Random Real
 
 
@@ -58,4 +60,4 @@ private lemma main
 
 
 -- created on 2026-11-04
--- updated on 2026-11-16
+-- updated on 2026-11-17

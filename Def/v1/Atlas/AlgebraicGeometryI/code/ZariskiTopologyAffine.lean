@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.MvPolynomial.Basic
-import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Mathlib.Topology.Basic
+module
+
+public import Mathlib.RingTheory.MvPolynomial.Basic
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Mathlib.Topology.Basic
+
+@[expose] public section
+
 open MvPolynomial
 
 

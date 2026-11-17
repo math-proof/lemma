@@ -1,16 +1,19 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
-import Mathlib.Analysis.InnerProductSpace.SingularValues
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.RingTheory.Flat.TorsionFree
-import Mathlib.RingTheory.Henselian
-import Mathlib.RingTheory.PicardGroup
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+module
 
+public import Mathlib.Analysis.InnerProductSpace.SingularValues
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.RingTheory.Flat.TorsionFree
+public import Mathlib.RingTheory.Henselian
+public import Mathlib.RingTheory.PicardGroup
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.SimpleRing.Principal
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+
+public section
 
 namespace InnerProductSpace.EckartYoungWanted
 

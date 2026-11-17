@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RamificationInertia/Inseparable.lean -/
+module
 
-import Mathlib.NumberTheory.RamificationInertia.Galois
-import Mathlib.FieldTheory.PurelyInseparable.Basic
+public import Mathlib.NumberTheory.RamificationInertia.Galois
+public import Mathlib.FieldTheory.PurelyInseparable.Basic
 open scoped Pointwise
 
+public section
 
 namespace Ideal
 

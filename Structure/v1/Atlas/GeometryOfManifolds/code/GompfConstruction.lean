@@ -8,17 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Geometry.Manifold.MFDeriv.Basic
-import Mathlib.LinearAlgebra.Orientation
-import Mathlib.Analysis.Calculus.DifferentialForm.Basic
-import Mathlib.Analysis.Complex.Basic
-import Def.v1.Atlas.GeometryOfManifolds.code.GompfConstruction
+module
+
+public import Mathlib.Geometry.Manifold.MFDeriv.Basic
+public import Mathlib.LinearAlgebra.Orientation
+public import Mathlib.Analysis.Calculus.DifferentialForm.Basic
+public import Mathlib.Analysis.Complex.Basic
+public import Def.v1.Atlas.GeometryOfManifolds.code.GompfConstruction
 set_option autoImplicit false
 
 open scoped Manifold
 
 
-noncomputable section
+public noncomputable section
 
 namespace Gompf
 

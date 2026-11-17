@@ -8,14 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Exact3D.Certificate.Part6
-import Theorem.StatisticalMechanics.Code.Exact3D.FiniteDimensionalRG.Part15
-import Def.StatisticalMechanics.Code.Exact3D.Intervals.Part12
-import Theorem.StatisticalMechanics.Code.Exact3D.MatrixCertificate.Part6
-import Theorem.StatisticalMechanics.Code.Exact3D.RGBridgeCriteria
-import Theorem.StatisticalMechanics.Code.Exact3D.Hierarchical.Part3
+module
 
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Exact3D.Certificate.Part6
+public import Theorem.StatisticalMechanics.Code.Exact3D.FiniteDimensionalRG.Part15
+public import Def.StatisticalMechanics.Code.Exact3D.Intervals.Part12
+public import Theorem.StatisticalMechanics.Code.Exact3D.MatrixCertificate.Part6
+public import Theorem.StatisticalMechanics.Code.Exact3D.RGBridgeCriteria
+public import Theorem.StatisticalMechanics.Code.Exact3D.Hierarchical.Part3
+
+
+public section
 
 namespace StatMech
 

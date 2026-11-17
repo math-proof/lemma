@@ -1,9 +1,11 @@
-import Mathlib
-import Instance.ModularCurve_TateFormal
+module
+
+public import Mathlib
+public import Instance.ModularCurve_TateFormal
 
 universe u
 
-noncomputable section
+public noncomputable section
 
 open WeierstrassCurve
 

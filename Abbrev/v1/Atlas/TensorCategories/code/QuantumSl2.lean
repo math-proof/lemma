@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.HopfAlgebra.Basic
-import Mathlib.RingTheory.Coalgebra.TensorProduct
-import Class.v1.Atlas.TensorCategories.code.QuantumSl2
+module
+
+public import Mathlib.RingTheory.HopfAlgebra.Basic
+public import Mathlib.RingTheory.Coalgebra.TensorProduct
+public import Class.v1.Atlas.TensorCategories.code.QuantumSl2
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 open Coalgebra HopfAlgebra

@@ -1,6 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeMemorySafety.lean -/
 
-import Structure.CPythonListsort.Code.Assembly.ListSortTermination
+module
+
+public import Structure.CPythonListsort.Code.Assembly.ListSortTermination
 /-!
 # Aggregate temporary merge-memory safety
 
@@ -9,6 +11,9 @@ carried by `listSortImplTraced?`.  It does not define another evaluator or a
 separately supplied history: every lifecycle field below refers directly to
 the `memoryEvents` stored in the actual top-level execution trace.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

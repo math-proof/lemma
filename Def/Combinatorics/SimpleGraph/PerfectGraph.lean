@@ -4,13 +4,18 @@
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Data.Rat.Star
-import Mathlib.LinearAlgebra.Matrix.Rank
-import Mathlib.Order.CompletePartialOrder
-import Mathlib.Tactic.GCongr
-import Mathlib.Tactic.Linarith
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Data.Rat.Star
+public import Mathlib.LinearAlgebra.Matrix.Rank
+public import Mathlib.Order.CompletePartialOrder
+public import Mathlib.Tactic.GCongr
+public import Mathlib.Tactic.Linarith
+
+@[expose] public section
+
 open scoped Matrix BigOperators
 
 

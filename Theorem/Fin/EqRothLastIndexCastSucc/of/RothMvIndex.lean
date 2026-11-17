@@ -1,0 +1,34 @@
+module
+
+public import Mathlib
+public import Def.NumberTheory.RothAuxiliary.Part3
+
+public section
+
+open MathlibExt.NumberTheory.RothAuxiliary
+
+
+/--
+[rothLastIndex_castSucc](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)
+-/
+public theorem Fin.EqRothLastIndexCastSucc.of.RothMvIndex
+  {n : ℕ}
+-- given
+  (i : RothMvIndex n)
+  (a : ℕ)
+  (h : Fin n) :
+-- imply
+  rothLastIndex i a h.castSucc = i h := by
+-- proof
+  have heq :
+    (Finsupp.equivCongrLeft finSuccEquivLast) (rothLastIndex i a) =
+      Finsupp.optionElim a i := by
+    simp [rothLastIndex]
+    ext b
+    simp [Finsupp.equivMapDomain_apply]
+  have := congrArg (fun d : Finsupp (Option (Fin n)) ℕ ↦ d (some h)) heq
+  simpa [Finsupp.equivCongrLeft_apply, Finsupp.equivMapDomain_eq_mapDomain] using this
+
+
+-- updated on 2026-11-13
+-- created on 2026-10-21

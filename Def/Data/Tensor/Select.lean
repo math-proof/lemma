@@ -1,5 +1,5 @@
 import Def.Data.Tensor.Defs.Part4
-import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength
+import Theorem.List.MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength
 open List Tensor
 
 

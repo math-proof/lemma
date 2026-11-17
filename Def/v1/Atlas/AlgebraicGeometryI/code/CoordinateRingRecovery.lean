@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.Scheme
-import Mathlib.RingTheory.Spectrum.Prime.Topology
-import Mathlib.RingTheory.Spectrum.Prime.RingHom
-import Mathlib.RingTheory.Polynomial.Basic
+module
+
+public import Mathlib.AlgebraicGeometry.Scheme
+public import Mathlib.RingTheory.Spectrum.Prime.Topology
+public import Mathlib.RingTheory.Spectrum.Prime.RingHom
+public import Mathlib.RingTheory.Polynomial.Basic
+
+@[expose] public section
+
 open AlgebraicGeometry PrimeSpectrum
 
 

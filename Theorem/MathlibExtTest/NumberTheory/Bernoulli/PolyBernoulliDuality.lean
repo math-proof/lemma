@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.Bernoulli.PolyBernoulliDuality
-import Lemma.Nat.Bernoulli.PolyBernoulliDuality
+import Theorem.Nat.Bernoulli.PolyBernoulliDuality
 import Mathlib.Tactic.NormNum
 
 

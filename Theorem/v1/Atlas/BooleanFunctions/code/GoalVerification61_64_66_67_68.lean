@@ -12,8 +12,8 @@ import Theorem.v1.Atlas.BooleanFunctions.code.UncoveredBatch2
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Majority
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.BonamilBeckner
 import Def.v1.Atlas.BooleanFunctions.code.TwoPointInequality
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.TwoPointInequality
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.GaussianSpace
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.TwoPointInequality
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.GaussianSpace
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Claim32Lec8
 import Def.v1.Atlas.BooleanFunctions.code.GaussianSpace
 import Def.v1.Atlas.BooleanFunctions.code.Claim32Lec8

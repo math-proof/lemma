@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Wolstenholme.lean -/
 
 
-import Lemma.Nat.Wolstenholme
+import Theorem.Nat.Wolstenholme
 open scoped BigOperators
 
 

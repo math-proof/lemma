@@ -4,7 +4,7 @@
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Tactic.NormNum
 import Def.NumberTheory.EgyptianFraction
-import Lemma.Nat.EgyptianFraction
+import Theorem.Nat.EgyptianFraction
 import Def.MathlibExtTest.NumberTheory.EgyptianFraction
 
 

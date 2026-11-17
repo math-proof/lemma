@@ -1,5 +1,10 @@
-import Mathlib.Tactic
-import Mathlib.LinearAlgebra.Matrix.Block
+module
+
+public import Mathlib.Tactic
+public import Mathlib.LinearAlgebra.Matrix.Block
+
+@[expose] public section
+
 open Matrix Equiv
 
 /-! Determinant of a block matrix with a zero block on the anti-diagonal: rows split as `a ⊕ b`, columns as `b ⊕ a`; the column block swap is the rotation `finRotate^a` with sign `(-1)^(a*b)`.

@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.SLE.LoewnerExistence
-import Theorem.StatisticalMechanics.Code.SLE.LoewnerMaximal
+module
+
+public import Theorem.StatisticalMechanics.Code.SLE.LoewnerExistence
+public import Theorem.StatisticalMechanics.Code.SLE.LoewnerMaximal
+public section
+
 open Complex Set Metric Filter Topology
 open scoped ENNReal NNReal ComplexConjugate
 

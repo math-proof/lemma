@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/code/CurveMorphisms.lean -/
 
 /-
@@ -8,7 +10,9 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
+public import Mathlib
+public section
+
 open AlgebraicGeometry CategoryTheory TopologicalSpace Order Set
 
 

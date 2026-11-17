@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/TelescopicSequence.lean -/
+module
 
+public import Def.NumberTheory.TelescopicSequence
+public import Mathlib.Tactic
 
-import Def.NumberTheory.TelescopicSequence
-import Mathlib.Tactic
-
+public section
 
 namespace MetaMathlibExt
 

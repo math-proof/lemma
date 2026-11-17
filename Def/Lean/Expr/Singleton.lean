@@ -1,6 +1,11 @@
-import Def.Lean.Name
-import Mathlib.Basic.Real.Basic
-import Inductive.Lean.Expr.Singleton
+module
+
+public import Def.Lean.Name
+public import Mathlib.Basic.Real.Basic
+public import Inductive.Lean.Expr.Singleton
+
+@[expose] public section
+
 open Lean
 
 
@@ -25,5 +30,4 @@ def Constant.toString : Constant → String
     | `EmptyCollection.emptyCollection => "∅"
     | `List.nil => "[]"
     | _ => name.toString
-
 

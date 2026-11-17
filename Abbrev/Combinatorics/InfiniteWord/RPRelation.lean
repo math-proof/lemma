@@ -1,6 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/InfiniteWord/RPRelation.lean -/
 
-import Mathlib.Logic.Equiv.Basic
+module
+
+public import Mathlib.Logic.Equiv.Basic
+
+@[expose] public section
 
 
 namespace MetaMathlibExt

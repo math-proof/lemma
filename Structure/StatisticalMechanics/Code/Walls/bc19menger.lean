@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Walls.bc18mengerhard.Part3
+module
 
+public import Theorem.StatisticalMechanics.Code.Walls.bc18mengerhard.Part3
+
+
+public section
 
 namespace StatMech.Walls
 

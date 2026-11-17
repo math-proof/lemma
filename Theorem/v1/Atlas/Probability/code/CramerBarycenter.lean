@@ -14,7 +14,7 @@ import Theorem.v1.Atlas.Probability.code.CramerTheorem
 import Theorem.v1.Atlas.Probability.code.CramerRateIDCore
 import Theorem.v1.Atlas.Probability.code.LDPContraction
 import Lemma.Random.SatisfiesLDP
-import Lemma.Random.IsProbabilityMeasure.of.Gt_0
+import Theorem.Random.IsProbabilityMeasure.of.Gt_0
 import Mathlib.InformationTheory.KullbackLeibler.Basic
 import Mathlib.Analysis.Normed.Lp.MeasurableSpace
 import Mathlib.Probability.Moments.Basic

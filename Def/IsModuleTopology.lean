@@ -1,6 +1,9 @@
-import Mathlib
-import Class.Mathlib_IsModuleTopology
+module
 
+public import Mathlib
+public import Class.Mathlib_IsModuleTopology
+
+@[expose] public section
 
 section
 

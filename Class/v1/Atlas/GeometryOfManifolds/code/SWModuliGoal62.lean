@@ -9,10 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.GeometryOfManifolds.code.FourManifoldsSW.Part8
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.FourManifoldsSW
 import Def.v1.Atlas.GeometryOfManifolds.code.SWModuliGoal62
 set_option autoImplicit false
-
 
 /-- A generic pair $(g, \mu)$ ensures that the Seiberg–Witten linearization is surjective at irreducible solutions, the cokernel dimension is zero, and the Fredholm index equals $\tfrac{1}{4}(c_1(L)^2 \cdot [X] - (2\chi + 3\sigma))$. -/
 class IsGenericPair
@@ -28,5 +26,4 @@ class IsGenericPair
     fredholmIndex sol * 4 = spinc.c₁_L - (2 * htop.euler + 3 * htop.Q.signature)
   linearised_surjective : ∀ (sol : SWSolution spinc), ¬sol.isReducible → cokerDim sol = 0
   no_reducible_solutions : htop.Q.b₂_plus ≥ 1 → ∀ (sol : SWSolution spinc), ¬sol.isReducible
-
 

@@ -1,6 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LucasSequence.lean -/
 
-import Mathlib.Data.Nat.Fib.Basic
+module
+
+public import Mathlib.Data.Nat.Fib.Basic
 /-!
 # Lucas sequences
 
@@ -19,6 +21,9 @@ Sources:
   Identities*, Journal of Integer Sequences 16 (2013),
   <https://cs.uwaterloo.ca/journals/JIS/VOL16/He/he13.tex>.
 -/
+public section
+
+
 
 
 namespace MetaMathlibExt

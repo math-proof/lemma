@@ -1,9 +1,11 @@
-import Lemma.Scheme.Correspondence
-import Mathlib.Algebra.CharP.Reduced
+module
+
+public import Lemma.Scheme.Correspondence
+public import Mathlib.Algebra.CharP.Reduced
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace AlgebraicCurve
 

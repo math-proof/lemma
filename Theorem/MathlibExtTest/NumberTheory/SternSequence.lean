@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.SternSequence
-import Lemma.Nat.SternSequence
+import Theorem.Nat.SternSequence
 
 
 namespace MetaMathlibExt

@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Distribution.TemperedDistribution
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter10.Schwartz_Repr
+module
+
+public import Mathlib.Analysis.Distribution.TemperedDistribution
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter10.Schwartz_Repr
+
+@[expose] public section
+
 set_option maxHeartbeats 200000
 
 open scoped SchwartzMap

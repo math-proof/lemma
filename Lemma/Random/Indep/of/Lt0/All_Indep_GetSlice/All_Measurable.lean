@@ -1,6 +1,7 @@
 import Instance.Probability.Process.HiddenMarkovSequence
 import Mathlib.Probability.Independence.Conditional
 import Notation.Fun
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Fun
 open scoped ProbabilityTheory
 
@@ -35,3 +36,4 @@ private lemma main
 
 
 -- created on 2026-11-13
+-- updated on 2026-11-17

@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/CobhamGapTheorem.lean -/
 
 import Def.NumberTheory.BaseRecognizable
-import Lemma.Nat.BaseRecognizable
+import Theorem.Nat.BaseRecognizable
 import Mathlib.Basic.ENNReal.Operations
 import Mathlib.Order.LiminfLimsup
 import Mathlib.Algebra.Order.Ring.Star

@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/PascalMatrix.lean -/
 
-import Mathlib.Analysis.SpecificLimits.Normed
+module
+
+public import Mathlib.Analysis.SpecificLimits.Normed
+
+@[expose] public section
+
 open scoped BigOperators Topology
 
 /-!

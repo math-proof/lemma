@@ -8,20 +8,25 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Convolution
-import Mathlib.Analysis.Distribution.SchwartzSpace.Fourier
-import Mathlib.Analysis.Distribution.TemperedDistribution
-import Mathlib.Analysis.Fourier.LpSpace
-import Mathlib.MeasureTheory.Function.LpSeminorm.Basic
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
-import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
-import Mathlib.Topology.Algebra.Order.Field
-import Mathlib.Analysis.Complex.Trigonometric
-import Mathlib.Analysis.Distribution.AEEqOfIntegralContDiff
-import Mathlib.Analysis.Fourier.FourierTransformDeriv
-import Mathlib.Analysis.Fourier.Inversion
-import Mathlib.MeasureTheory.Measure.Haar.NormedSpace
+module
+
+public import Mathlib.Analysis.Convolution
+public import Mathlib.Analysis.Distribution.SchwartzSpace.Fourier
+public import Mathlib.Analysis.Distribution.TemperedDistribution
+public import Mathlib.Analysis.Fourier.LpSpace
+public import Mathlib.MeasureTheory.Function.LpSeminorm.Basic
+public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
+public import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
+public import Mathlib.Topology.Algebra.Order.Field
+public import Mathlib.Analysis.Complex.Trigonometric
+public import Mathlib.Analysis.Distribution.AEEqOfIntegralContDiff
+public import Mathlib.Analysis.Fourier.FourierTransformDeriv
+public import Mathlib.Analysis.Fourier.Inversion
+public import Mathlib.MeasureTheory.Measure.Haar.NormedSpace
+
+@[expose] public section
+
 open MeasureTheory Filter Topology
 open scoped Convolution ENNReal NNReal
 

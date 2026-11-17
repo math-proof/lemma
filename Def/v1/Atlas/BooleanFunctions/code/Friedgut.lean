@@ -10,13 +10,12 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.BooleanFunctions.code.FKN
 import Def.v1.Atlas.BooleanFunctions.code.Influence
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Influence
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Influence
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.MonotoneFourier
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Stability
 import Def.v1.Atlas.BooleanFunctions.code.InfluenceFourier
 import Def.v1.Atlas.BooleanFunctions.code.MonotoneFourier
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.FourierConcentration
 import Def.v1.Atlas.BooleanFunctions.code.Stability
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Analysis.SpecialFunctions.Log.Basic

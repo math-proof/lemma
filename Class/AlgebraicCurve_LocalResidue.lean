@@ -1,5 +1,9 @@
-import Structure.AlgebraicCurve_LocalResidue
-import Mathlib.RingTheory.Trace.Basic
+module
+
+public import Structure.AlgebraicCurve_LocalResidue
+public import Mathlib.RingTheory.Trace.Basic
+
+public section
 
 set_option autoImplicit false
 

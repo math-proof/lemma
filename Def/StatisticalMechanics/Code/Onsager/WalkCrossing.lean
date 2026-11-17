@@ -9,10 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Onsager.BaseCase
-import Theorem.StatisticalMechanics.Code.Onsager.NoDoubleWind
+module
 
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Onsager.BaseCase
+public import Theorem.StatisticalMechanics.Code.Onsager.NoDoubleWind
+
+@[expose] public section
 
 namespace StatMech.Onsager.WalkCrossing
 

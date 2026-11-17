@@ -2,7 +2,7 @@
 
 
 import Def.RingTheory.ConductorIdeal
-import Lemma.Int.ConductorIdeal
+import Theorem.Int.ConductorIdeal
 import Theorem.MathlibExtTest.RingTheory.ConductorIdeal
 
 

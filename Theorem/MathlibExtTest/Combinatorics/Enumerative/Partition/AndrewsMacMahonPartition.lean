@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/Partition/AndrewsMacMahonPartition.lean -/
 
 
-import Lemma.Finset.Enumerative.Partition.AndrewsMacMahonPartition
+import Theorem.Finset.Enumerative.Partition.AndrewsMacMahonPartition
 
 
 namespace MetaMathlibExt

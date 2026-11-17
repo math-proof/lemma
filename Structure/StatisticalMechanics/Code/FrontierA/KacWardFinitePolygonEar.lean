@@ -9,14 +9,18 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardPolygonTurning.Part2
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardFourSignMajority
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardHalfPlaneSegment
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardInteriorSideSplice
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAntipodalExclusion
-import Mathlib.Data.List.Rotate
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardFinitePolygonEar.Part3
+module
 
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardPolygonTurning.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardFourSignMajority
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardHalfPlaneSegment
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardInteriorSideSplice
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAntipodalExclusion
+public import Mathlib.Data.List.Rotate
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardFinitePolygonEar.Part3
+
+
+public section
 
 namespace StatMech.FrontierA
 

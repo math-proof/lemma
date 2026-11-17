@@ -1,3 +1,9 @@
+module
+
+public import Mathlib.Algebra.Algebra.Hom
+
+public section
+
 set_option quotPrecheck false
 set_option hygiene false
 

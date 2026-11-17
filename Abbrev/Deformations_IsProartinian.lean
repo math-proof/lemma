@@ -1,7 +1,11 @@
-import Mathlib
-import Class.Patching_SystemTypes
-import Instance.Deformations_Deformations_Lemmas
-import Class.Deformations_IsProartinian
+module
+
+public import Mathlib
+public import Class.Patching_SystemTypes
+public import Instance.Deformations_Deformations_Lemmas
+public import Class.Deformations_IsProartinian
+
+@[expose] public section
 
 set_option autoImplicit false
 

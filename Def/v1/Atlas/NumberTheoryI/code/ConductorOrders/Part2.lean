@@ -8,24 +8,27 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Conductor
-import Mathlib.NumberTheory.KummerDedekind
-import Mathlib.RingTheory.DedekindDomain.Ideal.Basic
-import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
-import Mathlib.RingTheory.Ideal.IntegralClosure
-import Mathlib.RingTheory.DedekindDomain.Factorization
-import Mathlib.RingTheory.FractionalIdeal.Extended
-import Mathlib.RingTheory.FractionalIdeal.Inverse
-import Mathlib.RingTheory.Localization.LocalizationLocalization
-import Mathlib.RingTheory.Noetherian.Basic
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
-import Mathlib.RingTheory.Ideal.Quotient.Nilpotent
-import Mathlib.RingTheory.Ideal.Norm.RelNorm
-import Mathlib.Algebra.Module.Lattice
-import Mathlib.Tactic.LinearCombination
-import Theorem.v1.Atlas.NumberTheoryI.code.ConductorOrders
+module
 
+public import Mathlib.RingTheory.Conductor
+public import Mathlib.NumberTheory.KummerDedekind
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Basic
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
+public import Mathlib.RingTheory.Ideal.IntegralClosure
+public import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Mathlib.RingTheory.FractionalIdeal.Extended
+public import Mathlib.RingTheory.FractionalIdeal.Inverse
+public import Mathlib.RingTheory.Localization.LocalizationLocalization
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
+public import Mathlib.RingTheory.Ideal.Quotient.Nilpotent
+public import Mathlib.RingTheory.Ideal.Norm.RelNorm
+public import Mathlib.Algebra.Module.Lattice
+public import Mathlib.Tactic.LinearCombination
+public import Theorem.v1.Atlas.NumberTheoryI.code.ConductorOrders
+
+@[expose] public section
 
 noncomputable section
 

@@ -8,6 +8,8 @@ import Lemma.Random.Measurable_Qkd.of.All_Measurable_Prob
 import Lemma.Random.NormVkd.le.MulInvSub1Abs_R.of.In_Ico
 import Lemma.Random.NormRkd.le.Abs_R
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Filter Random Real
 set_option maxHeartbeats 800000
 
@@ -156,4 +158,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-16
+-- updated on 2026-11-17

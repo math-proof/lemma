@@ -7,6 +7,7 @@ import Lemma.List.TakeDrop.eq.DropTake
 import Lemma.List.TakeTake.eq.Take.of.Le
 import Lemma.Nat.EqMin.of.Ge
 import Lemma.Nat.EqMin.of.Le
+import Theorem.Data.List.List.Part2
 open List Nat
 
 
@@ -48,7 +49,7 @@ private lemma main
     simp at h
     have := congrArg (·.take (s.length - i)) this
     rw [Permute.of.Add.ge.SubLength_1 (by omega)] at this ⊢
-    rw [EqTake.of.LeLength (by simp)] at this
+    rw [EqTake.of.LeLength (by rw [List.length_drop, List.length_permute])] at this
     rw [this]
     rw [Drop.eq.Nil.of.LeLength (i := i + d + 1) (by omega)]
     simp

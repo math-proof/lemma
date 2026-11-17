@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/GeneralPosition.lean -/
+module
 
-import Mathlib.LinearAlgebra.AffineSpace.Independent
-import Mathlib.LinearAlgebra.Projectivization.Independence
-import Def.LinearAlgebra.GeneralPosition
+public import Mathlib.LinearAlgebra.AffineSpace.Independent
+public import Mathlib.LinearAlgebra.Projectivization.Independence
+public import Def.LinearAlgebra.GeneralPosition
+
 /-!
 # General position
 
@@ -10,6 +12,8 @@ This file defines general position for indexed families of points in affine and 
 A family is in general position through dimension `d` when each subfamily of at most `d + 1`
 points is independent.
 -/
+
+public section
 
 
 noncomputable section

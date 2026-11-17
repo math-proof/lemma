@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridge.lean -/
 
 
-import Lemma.Nat.DirichletCharacter.QuadraticReciprocityBridge
+import Theorem.Nat.DirichletCharacter.QuadraticReciprocityBridge
 import Mathlib.Tactic.NormNum.LegendreSymbol
 import Mathlib.Tactic.NormNum.Prime
 open MetaMathlibExt

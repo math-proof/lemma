@@ -1,4 +1,6 @@
 import Def.Dynamics.PolicyTrajectory.ContinuousAction
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model
 
 
@@ -9,7 +11,7 @@ The initial state distribution of the trajectory model sums to `1`.
 private lemma main
   [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Fintype 𝒮]
   [ReferenceMeasure 𝒜]
-  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] :
+  {M : Model Θ 𝒮 𝒜} [StochasticPolicy M.toPolicy] :
 -- imply
   ∑ x, M.init.toMeasure.real {x} = 1 := by
 -- proof
@@ -18,4 +20,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-11-16
+-- updated on 2026-11-17

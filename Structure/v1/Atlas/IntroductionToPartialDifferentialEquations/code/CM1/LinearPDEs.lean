@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Instance.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM1.LinearPDEs
+module
 
+public import Mathlib
+public import Instance.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM1.LinearPDEs
+
+
+public section
 
 /-- The $N$-jet of a function at a point: stores the base point $x \in \mathbb{R}^n$ and
 the values of all partial derivatives $\partial^{\alpha} u(x)$ with $|\alpha| \le N$.

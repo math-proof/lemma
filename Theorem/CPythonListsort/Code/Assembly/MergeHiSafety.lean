@@ -1,10 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean -/
 
-import Structure.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part5
-import Structure.CPythonListsort.Code.Assembly.MergeGetmemRequestBound
-import Def.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
-import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopLeftSafety
-import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopRightSafety
+module
+
+public import Structure.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part5
+public import Structure.CPythonListsort.Code.Assembly.MergeGetmemRequestBound
+public import Def.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
 /-!
 # `merge_hi` traced execution and safety
 
@@ -17,6 +17,8 @@ temporary gallops read their live storage through `GallopKeySource.temporary`.
 -/
 
 
+public section
+
 namespace CPythonListsort
 
 universe u v
@@ -26,19 +28,19 @@ variable {κ : Type u} {ν : Type v}
 /-! ## Provenance permits -/
 
 /-- Provenance certificate consumed by the initial main-to-temporary copy. -/
-theorem mergeHiInitialDataToTempPermit :
+public theorem mergeHiInitialDataToTempPermit :
     (MergeMemcpySite.hi .initialDataToTemp).MainToTempPermit :=
   { direction := rfl
     distinctBacking := MergeMemcpySite.distinct _ }
 
 /-- Provenance certificate consumed by a galloping temporary-to-main copy. -/
-theorem mergeHiGallopTempToDataPermit :
+public theorem mergeHiGallopTempToDataPermit :
     (MergeMemcpySite.hi .gallopTempToData).TempToMainPermit :=
   { direction := rfl
     distinctBacking := MergeMemcpySite.distinct _ }
 
 /-- Provenance certificate consumed by the final temporary remainder copy. -/
-theorem mergeHiFinalTempToDataPermit :
+public theorem mergeHiFinalTempToDataPermit :
     (MergeMemcpySite.hi .finalTempToData).TempToMainPermit :=
   { direction := rfl
     distinctBacking := MergeMemcpySite.distinct _ }

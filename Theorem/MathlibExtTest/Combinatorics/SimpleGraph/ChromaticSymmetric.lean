@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.SimpleGraph.ChromaticSymmetric
-import Lemma.SimpleGraph.ChromaticSymmetric
+import Theorem.SimpleGraph.ChromaticSymmetric
 
 
 namespace SimpleGraph

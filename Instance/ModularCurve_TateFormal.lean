@@ -3,7 +3,7 @@ import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
 import Mathlib.RingTheory.LaurentSeries
 import Mathlib.NumberTheory.Divisors
 import Def.ModularCurve_TateFormal
-import Lemma.PowerSeries.TateFormal
+import Theorem.PowerSeries.TateFormal
 
 set_option autoImplicit false
 

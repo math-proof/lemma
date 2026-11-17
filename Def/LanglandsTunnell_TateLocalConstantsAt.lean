@@ -1,5 +1,9 @@
-import Def.LanglandsTunnell_TateLocalZeta
-import Lemma.Matrix.AdelicLevel
+module
+
+public import Def.LanglandsTunnell_TateLocalZeta
+public import Def.NumberField_AdelicLevel
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,19 +1,23 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
+module
 
-import Mathlib.Analysis.Calculus.Gradient.Basic
-import Mathlib.Analysis.Convex.Basic
-import Mathlib.Topology.MetricSpace.Lipschitz
-import Mathlib.Analysis.Calculus.MeanValue
-import Mathlib.Analysis.Convex.Deriv
-import Mathlib.Algebra.BigOperators.Field
+public import Mathlib.Analysis.Calculus.Gradient.Basic
+public import Mathlib.Analysis.Convex.Basic
+public import Mathlib.Topology.MetricSpace.Lipschitz
+public import Mathlib.Analysis.Calculus.MeanValue
+public import Mathlib.Analysis.Convex.Deriv
+public import Mathlib.Algebra.BigOperators.Field
+
 /-!
 # Gradient descent on smooth convex functions
 
 This file proves the descent and first-order estimates used to obtain the `O(1 / k)` objective
 gap for fixed-step gradient descent on a smooth convex function.
 -/
+
+public section
 
 
 namespace Convex.GradientDescent

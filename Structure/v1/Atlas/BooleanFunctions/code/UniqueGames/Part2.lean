@@ -8,18 +8,22 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.GroupTheory.Perm.Basic
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Real.Archimedean
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
-import Mathlib.Order.ConditionallyCompleteLattice.Basic
-import Mathlib.Topology.Order.Basic
-import Mathlib.Algebra.BigOperators.Field
-import Def.v1.Atlas.BooleanFunctions.code.PCP.Part5
-import Theorem.v1.Atlas.BooleanFunctions.code.MISBound
-import Def.v1.Atlas.BooleanFunctions.code.UniqueGames.Part2
+module
 
+public import Mathlib.GroupTheory.Perm.Basic
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Real.Archimedean
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
+public import Mathlib.Order.ConditionallyCompleteLattice.Basic
+public import Mathlib.Topology.Order.Basic
+public import Mathlib.Algebra.BigOperators.Field
+public import Def.v1.Atlas.BooleanFunctions.code.PCP.Part5
+public import Theorem.v1.Atlas.BooleanFunctions.code.MISBound
+public import Def.v1.Atlas.BooleanFunctions.code.UniqueGames.Part2
+
+
+public section
 
 namespace UniqueGames
 

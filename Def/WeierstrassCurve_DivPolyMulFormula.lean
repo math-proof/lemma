@@ -1,8 +1,11 @@
-import Mathlib
-import Lemma.WeierstrassCurve.AddFormula
-import Def.NetPairing_Basic
-import Structure.TateCurve_XMultAlignment
-import Macro.WeierstrassCurve_DivPolyMulFormula
+module
+
+public import Mathlib
+public import Def.NetPairing_Basic
+public import Structure.TateCurve_XMultAlignment
+public import Macro.WeierstrassCurve_DivPolyMulFormula
+
+@[expose] public section
 
 set_option autoImplicit false
 

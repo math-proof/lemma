@@ -9,13 +9,17 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Lattice.CrossingParity.Part2
-import Theorem.StatisticalMechanics.Code.RSW.Defs.Part7
-import Theorem.StatisticalMechanics.Code.Universality.HVIntersection.Part2
-import Theorem.StatisticalMechanics.Code.Lattice.ArcSides.Part3
-import Theorem.StatisticalMechanics.Code.Lattice.TwoPathsCrossWinding.Part2
-import Theorem.StatisticalMechanics.Code.Lattice.JordanStripInduction.Part2
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Lattice.CrossingParity.Part2
+public import Theorem.StatisticalMechanics.Code.RSW.Defs.Part7
+public import Theorem.StatisticalMechanics.Code.Universality.HVIntersection.Part2
+public import Theorem.StatisticalMechanics.Code.Lattice.ArcSides.Part3
+public import Theorem.StatisticalMechanics.Code.Lattice.TwoPathsCrossWinding.Part2
+public import Theorem.StatisticalMechanics.Code.Lattice.JordanStripInduction.Part2
+public section
+
 open Set SimpleGraph MeasureTheory
 
 

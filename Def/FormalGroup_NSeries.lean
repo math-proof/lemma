@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option synthInstance.maxHeartbeats 200000

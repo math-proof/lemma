@@ -7,6 +7,7 @@ import Lemma.Random.Any_Any_AeAll_LeUFnSub.of.LyapunovFunction.SummableSquare.Al
 import Lemma.Random.Any_Ge_0AndAeLeNorm.of.All_Gt_0.Any_LipschitzWith.Any_Ge_0AndAeAll_LeNormMulMulSquare.Any_Ge_0AndAeAll_LeNormMulMul.Iterates
 import Lemma.Random.All_Tendsto_0.of.Any_All_AeLeCondExp.Summable.TendstoSum.All_Gt_0.All_AeGe_0.All_Integrable.StronglyAdapted
 import Lemma.Random.CondExpInner.ae.Inner_CondExp.of.All_AEStronglyMeasurable.All_Integrable_Mul.Integrable
+import Initialize.Tactic.Attr.Basic
 open Filter MeasureTheory Finset Topology Iterates Random
 open scoped RealInnerProductSpace
 
@@ -121,3 +122,4 @@ private lemma main
 
 
 -- created on 2026-09-26
+-- updated on 2026-11-17

@@ -10,8 +10,6 @@ LICENSE file in the root directory of this source tree.
 
 import Abbrev.v1.Atlas.TensorCategories.code.ModuleCategory.Part5
 import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
-import Lemma.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
-import Lemma.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
 import Theorem.v1.Atlas.TensorCategories.code.DeligneTensorProductMonoidal
 import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
 import Mathlib.CategoryTheory.Monoidal.Functor
@@ -20,7 +18,6 @@ import Structure.v1.Atlas.TensorCategories.code.ConcreteModuleCategories
 set_option maxHeartbeats 800000
 
 universe v₁ v₂ v₃ vₘ w u₁ u₂ u₃ uₘ
-
 
 namespace CategoryTheory
 

@@ -1,6 +1,6 @@
 import Lemma.MvPolynomial.HeckeModule
 import Def.AlgebraicCurve_Differentials
-import Lemma.LaurentSeries.QExpansionDiff
+import Theorem.LaurentSeries.QExpansionDiff
 import Lemma.WeierstrassCurve.JZeroTateModule
 import Structure.ModularCurve_HeckeSeam
 

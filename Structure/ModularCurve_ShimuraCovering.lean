@@ -1,8 +1,10 @@
-import Structure.ModularCurve_ShimuraSubgroup
+module
+
+public import Structure.ModularCurve_ShimuraSubgroup
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open IntermediateField AlgebraicCurve
 

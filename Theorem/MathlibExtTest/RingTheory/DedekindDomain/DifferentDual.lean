@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/DedekindDomain/DifferentDual.lean -/
 
 
-import Lemma.Ideal.DedekindDomain.DifferentDual
+import Theorem.Ideal.DedekindDomain.DifferentDual
 open scoped nonZeroDivisors
 
 variable (A K L B : Type*)

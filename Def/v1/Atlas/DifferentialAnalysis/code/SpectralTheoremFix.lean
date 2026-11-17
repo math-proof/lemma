@@ -17,7 +17,7 @@ import Mathlib.Analysis.InnerProductSpace.Rayleigh
 import Mathlib.Analysis.InnerProductSpace.StarOrder
 import Mathlib.Analysis.InnerProductSpace.Positive
 import Class.v1.Atlas.DifferentialAnalysis.code.HilbertSpace
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.HilbertSpace
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.HilbertSpace
 
 
 noncomputable section

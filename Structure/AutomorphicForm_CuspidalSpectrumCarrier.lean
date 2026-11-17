@@ -1,5 +1,7 @@
-import Structure.AutomorphicForm_CuspidalConstituent
-import Def.NumberField_TateGlobalZeta
+module
+
+public import Structure.AutomorphicForm_CuspidalConstituent
+public import Def.NumberField_TateGlobalZeta
 
 set_option autoImplicit false
 
@@ -8,7 +10,7 @@ open IsDedekindDomain
 open scoped ComplexConjugate ENNReal InnerProductSpace
 
 
-noncomputable section
+public noncomputable section
 
 namespace AutomorphicForm
 

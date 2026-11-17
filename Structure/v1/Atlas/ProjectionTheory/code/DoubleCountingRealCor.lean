@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.ProjectionTheory.code.DoubleCountingReal.Part3
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.DoubleCountingReal
-import Def.v1.Atlas.ProjectionTheory.code.HausdorffSpacing
+module
+
+public import Def.v1.Atlas.ProjectionTheory.code.DoubleCountingReal.Part3
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.DoubleCountingReal
+public import Def.v1.Atlas.ProjectionTheory.code.HausdorffSpacing
+public section
+
 open Finset BigOperators
 
 

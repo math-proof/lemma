@@ -1,17 +1,21 @@
 -- Carved from Lemma/Definitions/Def_NumberField_StandardGlobalAddCharRat.lean: instance decls only.
-import Mathlib.NumberTheory.Padics.PadicNumbers
-import Mathlib.NumberTheory.Padics.RingHoms
-import Mathlib.NumberTheory.Padics.HeightOneSpectrum
-import Mathlib.NumberTheory.NumberField.AdeleRing
-import Mathlib.RingTheory.DedekindDomain.FiniteAdeleRing
-import Mathlib.NumberTheory.NumberField.Completion.InfinitePlace
-import Mathlib.NumberTheory.NumberField.InfinitePlace.TotallyRealComplex
-import Mathlib.Filter.Algebra.RestrictedProduct.TopologicalSpace
-import Mathlib.Algebra.BigOperators.Finprod
-import Mathlib.Analysis.SpecialFunctions.Complex.Log
-import Mathlib.Analysis.Normed.Group.Ultra
-import Mathlib.Analysis.Normed.Ring.Ultra
-import Lemma.Measure.WhittakerCoefficient
+
+module
+
+public import Mathlib.NumberTheory.Padics.PadicNumbers
+public import Mathlib.NumberTheory.Padics.RingHoms
+public import Mathlib.NumberTheory.Padics.HeightOneSpectrum
+public import Mathlib.NumberTheory.NumberField.AdeleRing
+public import Mathlib.RingTheory.DedekindDomain.FiniteAdeleRing
+public import Mathlib.NumberTheory.NumberField.Completion.InfinitePlace
+public import Mathlib.NumberTheory.NumberField.InfinitePlace.TotallyRealComplex
+public import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
+public import Mathlib.Algebra.BigOperators.Finprod
+public import Mathlib.Analysis.SpecialFunctions.Complex.Log
+public import Mathlib.Analysis.Normed.Group.Ultra
+public import Mathlib.Analysis.Normed.Ring.Ultra
+
+@[expose] public section
 
 set_option autoImplicit false
 

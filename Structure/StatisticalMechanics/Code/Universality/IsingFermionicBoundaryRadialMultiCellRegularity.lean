@@ -9,16 +9,18 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicBoundaryRadialCellRegularity
-import Mathlib.Algebra.Order.Chebyshev
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicBoundaryRadialMultiCellRegularity.Part2
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicBoundaryRadialCellRegularity
+public import Mathlib.Algebra.Order.Chebyshev
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicBoundaryRadialMultiCellRegularity.Part2
 
 
 namespace StatMech.Universality
 
 open Filter Metric Set
 
-noncomputable section
+public noncomputable section
 
 namespace FKIsingCaratheodoryApproximation
 

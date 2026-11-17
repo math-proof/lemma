@@ -16,9 +16,9 @@ import Mathlib.Analysis.Meromorphic.Basic
 import Mathlib.Analysis.Calculus.ParametricIntegral
 import Mathlib.MeasureTheory.Integral.ExpDecay
 import Mathlib.MeasureTheory.Integral.DominatedConvergence
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.RiemannZeta
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.RiemannZeta
 import Abbrev.v1.Atlas.NumberTheoryI.code.Lem168
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Lem168
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Lem168
 open Chebyshev Asymptotics Filter Topology MeasureTheory Finset
 open Nat (primeCounting)
 open Real (log exp)

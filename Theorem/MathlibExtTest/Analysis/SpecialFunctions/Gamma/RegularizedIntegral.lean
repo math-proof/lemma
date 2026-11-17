@@ -2,7 +2,7 @@
 
 
 import Theorem.Analysis.SpecialFunctions.Gamma.RegularizedIntegral
-import Lemma.Real.RegularizedIntegral
+import Theorem.Real.RegularizedIntegral
 open MeasureTheory Set
 
 

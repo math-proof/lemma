@@ -66,7 +66,12 @@ Both represent the same mathematical object; use whichever is more convenient fo
 
 -/
 
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 /-! ### Inversions and length -/

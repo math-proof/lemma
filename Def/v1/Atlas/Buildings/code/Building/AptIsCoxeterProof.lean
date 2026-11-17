@@ -9,9 +9,9 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
-import Lemma.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
-import Lemma.List.All.of.All.IsChain.Ne
-import Lemma.Nat.NotChamberAdjacent
+import Theorem.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
+import Theorem.List.All.of.All.IsChain.Ne
+import Theorem.Nat.NotChamberAdjacent
 import Def.v1.Atlas.Buildings.code.ChamberComplex.Folding.Part3
 import Def.v1.Atlas.Buildings.code.ChamberComplex.CoxeterComplex.Part2
 import Mathlib.GroupTheory.Coxeter.Length

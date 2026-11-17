@@ -1,17 +1,20 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Stormer.lean -/
 
-import Mathlib.Data.Nat.PrimeFin
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Data.Int.Star
-import Mathlib.NumberTheory.Pell
-import Mathlib.NumberTheory.Primorial
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.NormNum.Prime
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Data.Nat.Squarefree
+module
 
+public import Mathlib.Data.Nat.PrimeFin
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Data.Int.Star
+public import Mathlib.NumberTheory.Pell
+public import Mathlib.NumberTheory.Primorial
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.NormNum.Prime
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Mathlib.Data.Nat.Squarefree
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

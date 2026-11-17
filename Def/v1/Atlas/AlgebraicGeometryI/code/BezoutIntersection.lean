@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 import Def.v1.Atlas.AlgebraicGeometryI.code.LinearEquivDivisors.Part3
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.LinearEquivDivisors
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.PrincipalDivisorDegree
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.BezoutTheorem
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BezoutTheorem
 import Def.v1.Atlas.AlgebraicGeometryI.code.PrincipalDivisorDegree.Part2
 import Def.v1.Atlas.AlgebraicGeometryI.code.BezoutTheorem
 import Mathlib.LinearAlgebra.Eigenspace.Basic

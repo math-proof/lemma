@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.AlgebraicGeometryI.code.PascalCurves.Part2
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.PascalCurves
+module
+
+public import Def.v1.Atlas.AlgebraicGeometryI.code.PascalCurves.Part2
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PascalCurves
+public section
+
 open Polynomial
 
 set_option autoImplicit false

@@ -7,10 +7,12 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Geometry.Manifold.PartitionOfUnity
-import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Geometry.Manifold.PartitionOfUnity
+public import Mathlib.Analysis.InnerProductSpace.PiL2
 
+public section
 
 noncomputable section
 

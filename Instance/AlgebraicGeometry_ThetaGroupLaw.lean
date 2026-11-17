@@ -1,5 +1,4 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_ThetaGroupLaw.lean: instance decls only.
-import Lemma.Scheme.ThetaGroupAction
 import Instance.AlgebraicGeometry_ThetaGroup
 import Lemma.Scheme.ThetaGroupLaw
 

@@ -9,13 +9,10 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.CompatibleComplexStructures
 import Theorem.v1.Atlas.GeometryOfManifolds.code.CompatibleComplexStructures
 set_option autoImplicit false
 
 open DifferentialFormSpace SymplecticLinearAlgebra
-
 
 /-- Typeclass packaging a manifold $M$ with a pointwise tangent space $T_x M$ and the bridge
 between abstract $2$-forms in `Ω 2` and their pointwise bilinear evaluations $\Omega_x$; also

@@ -3,7 +3,7 @@
 
 import Mathlib.Tactic
 import Def.NumberTheory.Recurrences.PrimitiveDivisor
-import Lemma.Nat.Recurrences.PrimitiveDivisor
+import Theorem.Nat.Recurrences.PrimitiveDivisor
 import Def.MathlibExtTest.NumberTheory.Recurrences.PrimitiveDivisor
 
 

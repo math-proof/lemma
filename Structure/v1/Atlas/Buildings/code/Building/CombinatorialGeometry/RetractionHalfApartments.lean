@@ -8,8 +8,11 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.ThreeChamber.Part2
-import Lemma.Group.Atlas.v1.Buildings.code.Building.CombinatorialGeometry.ThreeChamber
+module
+
+public import Structure.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.ThreeChamber.Part2
+public section
+
 open scoped Classical
 
 variable {V : Type*} [DecidableEq V]

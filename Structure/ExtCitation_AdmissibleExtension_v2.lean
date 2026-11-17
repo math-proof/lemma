@@ -1,5 +1,9 @@
-import Mathlib
-import Structure.ExtCitation_AdmissibleExtension
+module
+
+public import Mathlib
+public import Structure.ExtCitation_AdmissibleExtension
+
+public section
 
 set_option autoImplicit false
 

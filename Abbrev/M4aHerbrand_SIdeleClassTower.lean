@@ -1,11 +1,13 @@
-import Mathlib
-import Structure.M4aHerbrand_AdeleBaseChange
+module
+
+public import Mathlib
+public import Structure.M4aHerbrand_AdeleBaseChange
 
 set_option autoImplicit false
 
 open NumberField IsDedekindDomain CategoryTheory
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace M4aHerbrand
 

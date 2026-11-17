@@ -8,7 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.StatisticalMechanics.Code.Onsager.RiemannPeriodic
+module
+
+public import Theorem.StatisticalMechanics.Code.Onsager.RiemannPeriodic
+
+@[expose] public section
+
 open scoped BigOperators
 open MeasureTheory
 

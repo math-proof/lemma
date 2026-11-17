@@ -2,7 +2,7 @@
 
 
 import Def.Analysis.SpecialFunctions.QPochhammer
-import Lemma.Complex.QPochhammer
+import Theorem.Complex.QPochhammer
 
 
 namespace MetaMathlibExt.QPochhammer

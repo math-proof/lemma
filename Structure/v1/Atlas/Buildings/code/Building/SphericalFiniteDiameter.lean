@@ -8,16 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.Building.Spherical
-import Lemma.Finset.AreOpposite.of.AreOpposite
-import Lemma.List.Any.of.Not.In_A.IsChainA
-import Lemma.Finset.OppositeSides.of.EqToSimplicialComplex.AreOppositeToSimplicialComplexToChamberComplex.IsMaximal.IsMaximal.In_Faces.In_Faces.In_Apartments.OppositeChamberHyp
-import Def.v1.Atlas.Buildings.code.Building.Convexity
-import Structure.v1.Atlas.Buildings.code.Building.OppositeChambers
-import Lemma.Finset.Adjacent.of.Adjacent
-import Mathlib.GroupTheory.Coxeter.Length
-import Mathlib.Data.Set.Finite.List
-import Def.v1.Atlas.Buildings.code.Building.SphericalFiniteDiameter
+module
+
+public import Def.v1.Atlas.Buildings.code.Building.Spherical
+public import Theorem.Finset.AreOpposite.of.AreOpposite
+public import Lemma.List.Any.of.Not.In_A.IsChainA
+public import Theorem.Finset.OppositeSides.of.EqToSimplicialComplex.AreOppositeToSimplicialComplexToChamberComplex.IsMaximal.IsMaximal.In_Faces.In_Faces.In_Apartments.OppositeChamberHyp
+public import Def.v1.Atlas.Buildings.code.Building.Convexity
+public import Structure.v1.Atlas.Buildings.code.Building.OppositeChambers
+public import Theorem.Finset.Adjacent.of.Adjacent
+public import Mathlib.GroupTheory.Coxeter.Length
+public import Mathlib.Data.Set.Finite.List
+public import Def.v1.Atlas.Buildings.code.Building.SphericalFiniteDiameter
+public section
+
 variable {V : Type*} [DecidableEq V]
 
 

@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Combinatorics.SetFamily.FourFunctions
-import Mathlib.MeasureTheory.Constructions.Pi
-import Mathlib.Order.UpperLower.Basic
+module
+
+public import Mathlib.Combinatorics.SetFamily.FourFunctions
+public import Mathlib.MeasureTheory.Constructions.Pi
+public import Mathlib.Order.UpperLower.Basic
+
+@[expose] public section
+
 open Finset Fintype MeasureTheory Set
 
 

@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/LahNumber.lean -/
 
-import Mathlib.Data.Nat.Choose.Basic
+module
 
+public import Mathlib.Data.Nat.Choose.Basic
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

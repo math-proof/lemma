@@ -9,17 +9,19 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.SLE.Defs.Part9
-import Theorem.StatisticalMechanics.Code.SLE.Cardy.Part8
-import Theorem.StatisticalMechanics.Code.SLE.CardyCLE.Part2
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.SLE.Defs.Part9
+public import Theorem.StatisticalMechanics.Code.SLE.Cardy.Part8
+public import Theorem.StatisticalMechanics.Code.SLE.CardyCLE.Part2
 open scoped UpperHalfPlane NNReal
 open Complex Filter Topology
 
 
 namespace StatMech.SLE
 
-inductive SLEPhase where
+public inductive SLEPhase where
   
   | simple : SLEPhase
   

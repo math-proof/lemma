@@ -7,11 +7,12 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
+public import Mathlib.Combinatorics.SimpleGraph.Paths
+public import Def.StatisticalMechanics.Code.Probability.MengerSplice
 
-import Mathlib.Combinatorics.SimpleGraph.Paths
-import Def.StatisticalMechanics.Code.Probability.MengerSplice
-
+public section
 
 namespace StatMech.Combinatorics
 

@@ -3,7 +3,7 @@
 
 import Mathlib.Algebra.Field.ZMod
 import Theorem.RingTheory.AdjoinRoot.LocalMaximal
-import Lemma.Polynomial.AdjoinRoot.LocalMaximal
+import Theorem.Polynomial.AdjoinRoot.LocalMaximal
 open Polynomial
 
 variable {A : Type*} [CommRing A] [IsLocalRing A]

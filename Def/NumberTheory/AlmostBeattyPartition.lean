@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/AlmostBeattyPartition.lean -/
 
-import Mathlib.NumberTheory.Rayleigh
+module
+
+public import Mathlib.NumberTheory.Rayleigh
+
+@[expose] public section
+
 /-!
 Source provenance for concept `jis_sem_329070e9cea40082f4048ff4`
 ("almost Beatty partition").

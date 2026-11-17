@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Category
-import Mathlib.CategoryTheory.Functor.Category
-import Structure.v1.Atlas.TensorCategories.code.Proposition_2_1_3
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Category
+public import Mathlib.CategoryTheory.Functor.Category
+public import Structure.v1.Atlas.TensorCategories.code.Proposition_2_1_3
+
+@[expose] public section
+
 set_option maxHeartbeats 3200000
 set_option autoImplicit false
 

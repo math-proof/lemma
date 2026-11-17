@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Sharpness.HighTempSwitching.Part4
-import Theorem.StatisticalMechanics.Code.Sharpness.HighTempSimon
+module
+
+public import Theorem.StatisticalMechanics.Code.Sharpness.HighTempSwitching.Part4
+public import Theorem.StatisticalMechanics.Code.Sharpness.HighTempSimon
+public section
+
 open Finset SimpleGraph
 open scoped BigOperators symmDiff
 

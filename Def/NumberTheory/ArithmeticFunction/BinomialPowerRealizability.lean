@@ -1,14 +1,17 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ArithmeticFunction/BinomialPowerRealizability.lean -/
 
-import Mathlib.NumberTheory.ArithmeticFunction.Moebius
-import Mathlib.Algebra.Field.ZMod
-import Mathlib.Algebra.Order.Archimedean.Basic
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Data.Nat.Choose.Lucas
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
-import Def.NumberTheory.DoldSequence
+module
 
+public import Mathlib.NumberTheory.ArithmeticFunction.Moebius
+public import Mathlib.Algebra.Field.ZMod
+public import Mathlib.Algebra.Order.Archimedean.Basic
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Data.Nat.Choose.Lucas
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Ring
+public import Def.NumberTheory.DoldSequence
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

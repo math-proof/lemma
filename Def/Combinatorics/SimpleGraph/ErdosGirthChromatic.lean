@@ -4,20 +4,25 @@
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Girth
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Analysis.Complex.Exponential
-import Mathlib.Combinatorics.Pigeonhole
-import Mathlib.Data.Int.Star
-import Mathlib.Data.Nat.Choose.Bounds
-import Mathlib.Data.Nat.Choose.Cast
-import Mathlib.Order.CompletePartialOrder
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.GCongr
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Girth
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Analysis.Complex.Exponential
+public import Mathlib.Combinatorics.Pigeonhole
+public import Mathlib.Data.Int.Star
+public import Mathlib.Data.Nat.Choose.Bounds
+public import Mathlib.Data.Nat.Choose.Cast
+public import Mathlib.Order.CompletePartialOrder
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.GCongr
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 open Finset
 
 

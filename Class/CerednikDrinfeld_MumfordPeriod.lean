@@ -1,4 +1,8 @@
-import Mathlib.Combinatorics.SimpleGraph.Basic
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Basic
+
+public section
 
 set_option autoImplicit false
 

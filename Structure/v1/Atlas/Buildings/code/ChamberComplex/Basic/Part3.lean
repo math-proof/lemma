@@ -8,12 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Order.UpperLower.Basic
-import Mathlib.Data.Finset.Basic
-import Mathlib.Data.Finset.Card
-import Mathlib.Order.Lattice.Nat
-import Mathlib.Order.ConditionallyCompleteLattice.Basic
-import Def.v1.Atlas.Buildings.code.ChamberComplex.Basic.Part2
+module
+
+public import Mathlib.Order.UpperLower.Basic
+public import Mathlib.Data.Finset.Basic
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Order.Lattice.Nat
+public import Mathlib.Order.ConditionallyCompleteLattice.Basic
+public import Def.v1.Atlas.Buildings.code.ChamberComplex.Basic.Part2
+public section
+
 variable {V : Type*} [DecidableEq V]
 
 

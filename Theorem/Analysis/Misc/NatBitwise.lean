@@ -1,5 +1,8 @@
-import Mathlib.Data.Nat.BitIndices
-import Mathlib.Combinatorics.Colex
+module
+
+public import Mathlib.Data.Nat.BitIndices
+public import Mathlib.Combinatorics.Colex
+
 /-!
 # Additional lemmas for natural number bit operations
 
@@ -16,6 +19,8 @@ and sums of powers of 2 that are used throughout the formalization.
 These lemmas connect the bit representation of natural numbers with finset membership,
 which is fundamental for binary encoding arguments.
 -/
+
+public section
 
 
 namespace Nat

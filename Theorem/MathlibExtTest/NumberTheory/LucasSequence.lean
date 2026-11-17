@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.LucasSequence
-import Lemma.Nat.LucasSequence
+import Theorem.Nat.LucasSequence
 
 
 namespace MetaMathlibExt

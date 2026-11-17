@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Data/Finset/SubfamilyUnionFree.lean -/
+module
 
+public import Def.Data.Finset.SubfamilyUnionFree
 
-import Def.Data.Finset.SubfamilyUnionFree
-
+public section
 
 -- The empty family is vacuously union-free.
 example {α : Type*} [DecidableEq α] :

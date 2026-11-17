@@ -1,10 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Recurrences/FibonacciPrimeDivisibility.lean -/
 
-import Mathlib.Data.Nat.Fib.Basic
-import Mathlib.NumberTheory.LegendreSymbol.Basic
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Data.Nat.Choose.Dvd
+module
 
+public import Mathlib.Data.Nat.Fib.Basic
+public import Mathlib.NumberTheory.LegendreSymbol.Basic
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Data.Nat.Choose.Dvd
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

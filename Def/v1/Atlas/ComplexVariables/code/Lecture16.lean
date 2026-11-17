@@ -19,7 +19,7 @@ import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
 import Mathlib.Analysis.Calculus.ParametricIntervalIntegral
 import Mathlib.Analysis.SpecialFunctions.Integrals.PosLogEqCircleAverage
 import Def.v1.Atlas.ComplexVariables.code.Lecture13.Part2
-import Lemma.Complex.Atlas.v1.ComplexVariables.code.Lecture13
+import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture13
 import Abbrev.v1.Atlas.ComplexVariables.code.Lecture16
 open Complex InnerProductSpace Laplacian Metric Real Set Topology Filter MeasureTheory
 

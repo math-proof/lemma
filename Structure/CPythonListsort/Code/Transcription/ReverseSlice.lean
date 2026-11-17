@@ -1,6 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/ReverseSlice.lean -/
 
-import Theorem.CPythonListsort.Code.Transcription.SortSlice
+module
+
+public import Theorem.CPythonListsort.Code.Transcription.SortSlice
 /-!
 # Slice reversal transcription
 
@@ -9,6 +11,9 @@ public boundary.  Bounds failures return `none`; bounded-loop exhaustion is a
 separate observable flag for later adequacy proofs.  Because a `SortSliceEntry`
 contains its optional payload, each swap synchronizes keys and values.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

@@ -3,13 +3,16 @@
 /-
 Author: @toskua, Avocado
 -/
+module
 
-import Theorem.Analysis.InnerProductSpace.KyFan
+public import Theorem.Analysis.InnerProductSpace.KyFan
 open MathlibExt.Analysis.InnerProductSpace.KyFanWanted
 
 /-!
 # Tests for the Ky Fan eigenvalue inequality
 -/
+
+public section
 
 
 example (eig : Fin 3 → ℝ) : eigPrefSum eig 0 (by norm_num) = 0 := by

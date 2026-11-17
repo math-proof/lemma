@@ -2,7 +2,7 @@
 
 
 import Structure.NumberTheory.NumberField.HilbertClassField
-import Lemma.Nat.NumberField.HilbertClassField
+import Theorem.Nat.NumberField.HilbertClassField
 open scoped NumberField
 
 universe u

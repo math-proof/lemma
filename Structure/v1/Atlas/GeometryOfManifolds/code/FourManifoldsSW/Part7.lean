@@ -8,22 +8,24 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Geometry.Manifold.ContMDiff.Defs
-import Mathlib.Geometry.Manifold.MFDeriv.Basic
-import Mathlib.Geometry.Manifold.Instances.Real
-import Mathlib.LinearAlgebra.CliffordAlgebra.Basic
-import Mathlib.LinearAlgebra.CliffordAlgebra.SpinGroup
-import Mathlib.Topology.VectorBundle.Basic
-import Mathlib.Topology.Algebra.Group.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.Complex.Circle
-import Theorem.v1.Atlas.GeometryOfManifolds.code.FourManifoldsSW
+module
+
+public import Mathlib.Geometry.Manifold.ContMDiff.Defs
+public import Mathlib.Geometry.Manifold.MFDeriv.Basic
+public import Mathlib.Geometry.Manifold.Instances.Real
+public import Mathlib.LinearAlgebra.CliffordAlgebra.Basic
+public import Mathlib.LinearAlgebra.CliffordAlgebra.SpinGroup
+public import Mathlib.Topology.VectorBundle.Basic
+public import Mathlib.Topology.Algebra.Group.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.Complex.Circle
+public import Theorem.v1.Atlas.GeometryOfManifolds.code.FourManifoldsSW
 open Manifold
 
 set_option autoImplicit false
 
 
-noncomputable section
+public noncomputable section
 
 /-- The Seiberg-Witten moduli space $\mathcal{M}(S, g, \mu) = \{(A,\psi)\}/\mathcal{G}$ together
 with its expected dimension $d(S)$, total point count, and a well-defined signed count for the

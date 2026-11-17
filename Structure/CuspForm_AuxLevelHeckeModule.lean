@@ -1,11 +1,13 @@
-import Lemma.ZMod.Inst
-import Instance.CuspForm_HeckeAlgebra
-import Mathlib.RingTheory.LocalRing.ResidueField.Basic
-import Instance.CuspForm_AuxLevelHeckeModule
+module
+
+public import Lemma.ZMod.Inst
+public import Instance.CuspForm_HeckeAlgebra
+public import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+public import Instance.CuspForm_AuxLevelHeckeModule
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace CuspForm.AuxLevel
 

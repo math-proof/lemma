@@ -1,4 +1,8 @@
-import Mathlib.Analysis.MellinTransform
+module
+
+public import Mathlib.Analysis.MellinTransform
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/MergeSemanticPre.lean -/
 
-import Def.CPythonListsort.Code.Assembly.Order.Part4
-import Def.CPythonListsort.Code.Correctness.SortSliceRange
-import Theorem.CPythonListsort.Code.Transcription.MergeAt
+module
+
+public import Def.CPythonListsort.Code.Assembly.Order.Part4
+public import Def.CPythonListsort.Code.Correctness.SortSliceRange
+public import Theorem.CPythonListsort.Code.Transcription.MergeAt
 /-!
 # Shared semantic precondition for both merge directions
 
@@ -15,6 +17,9 @@ Comparator binding and canonical occurrence stability are deliberately not
 fields here.  They are independent, explicit premises of both public merge
 correctness theorems.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

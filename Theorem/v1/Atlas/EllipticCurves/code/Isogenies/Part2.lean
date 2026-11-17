@@ -7,23 +7,26 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.RingTheory.AdjoinRoot
-import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Mathlib.Algebra.MvPolynomial.Monad
-import Mathlib.Algebra.Polynomial.Derivative
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Mathlib.LinearAlgebra.Projectivization.Basic
-import Mathlib.RingTheory.Coprime.Lemmas
-import Mathlib.Algebra.Polynomial.RingDivision
-import Mathlib.Algebra.Squarefree.Basic
-import Def.v1.Atlas.EllipticCurves.code.Isogenies.Part11
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.RingTheory.AdjoinRoot
+public import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Mathlib.Algebra.MvPolynomial.Monad
+public import Mathlib.Algebra.Polynomial.Derivative
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Mathlib.LinearAlgebra.Projectivization.Basic
+public import Mathlib.RingTheory.Coprime.Lemmas
+public import Mathlib.Algebra.Polynomial.RingDivision
+public import Mathlib.Algebra.Squarefree.Basic
+public import Def.v1.Atlas.EllipticCurves.code.Isogenies.Part11
 open Polynomial
 
 open scoped Polynomial.Bivariate
+
+public section
 
 universe u v
 

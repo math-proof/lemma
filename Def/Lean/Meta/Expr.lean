@@ -1,5 +1,11 @@
-import Def.Lean.Name
-import Def.Lean.BinderInfo.Part2
+module
+
+public import Lean
+public import Def.Lean.Name
+public import Def.Lean.BinderInfo
+
+@[expose] public section
+
 open Lean.Meta
 open Lean (BinderInfo PPContext FormatWithInfos Expr Core.Context getEnv getMCtx getLCtx getOptions ppExt)
 
@@ -25,4 +31,3 @@ def Lean.Expr.is_Prop (e : Expr) : MetaM Bool := do
     pure ()
 
   return false
-

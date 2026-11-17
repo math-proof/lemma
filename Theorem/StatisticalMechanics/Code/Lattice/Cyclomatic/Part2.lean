@@ -7,12 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
+public import Mathlib.Combinatorics.SimpleGraph.Acyclic
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Def.StatisticalMechanics.Code.Lattice.Cyclomatic
 
-import Mathlib.Combinatorics.SimpleGraph.Acyclic
-import Mathlib.Combinatorics.SimpleGraph.Finite
-import Def.StatisticalMechanics.Code.Lattice.Cyclomatic
-
+public section
 
 namespace StatMech.Lattice
 

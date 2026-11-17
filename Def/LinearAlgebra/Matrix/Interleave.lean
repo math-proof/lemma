@@ -1,7 +1,10 @@
-import Def.Analysis.SpecialFunctions.TensorFunctions
-import Mathlib.Data.Matrix.Basic
-import Mathlib.Basic.Real.Basic
+module
 
+public import Def.Analysis.SpecialFunctions.TensorFunctions
+public import Mathlib.Data.Matrix.Basic
+public import Mathlib.Basic.Real.Basic
+
+@[expose] public section
 
 /--
 Even/odd gather on `Fin (d + d)`:

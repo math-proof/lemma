@@ -9,16 +9,18 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWAugment.Part14
-import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripLimits.Part6
-import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWColumns.Part3
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWAugment.Part14
+public import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripLimits.Part6
+public import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWColumns.Part3
 
 
 namespace StatMech.Universality
 
 open HexWalk
 
-noncomputable section
+public noncomputable section
 
 structure HLHCCanonicalColumnWalk (T : ℕ) (ts : List ℤ) where
   legal : (ofTurns hexAWStart 1 ts).IsLegalSAW

@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Coding/SingletonBound.lean -/
 
 
-import Lemma.Finset.Coding.SingletonBound
+import Theorem.Finset.Coding.SingletonBound
 open MathlibExt.Combinatorics.Coding.SingletonBound
 
 

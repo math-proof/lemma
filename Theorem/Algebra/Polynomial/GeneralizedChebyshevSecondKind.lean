@@ -1,6 +1,9 @@
-import Mathlib.Algebra.Polynomial.Basic
-import Mathlib.Tactic
-import Def.Algebra.Polynomial.GeneralizedChebyshevSecondKind
+module
+
+public import Mathlib.Algebra.Polynomial.Basic
+public import Mathlib.Tactic
+public import Def.Algebra.Polynomial.GeneralizedChebyshevSecondKind
+
 /-!
 # Generalized Chebyshev polynomials of the second kind
 
@@ -16,6 +19,8 @@ With `A = X - C r`, the modified second-kind base family `P` satisfies
 generalized family is `Q n = P n - C lam * P (n - 1) - C mu * P (n - 2)`
 with explicit `n = 0` and `n = 1` boundary conventions.
 -/
+
+public section
 
 
 namespace MetaMathlibExt.GeneralizedChebyshevSecondKind

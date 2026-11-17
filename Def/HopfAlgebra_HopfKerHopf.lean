@@ -1,5 +1,9 @@
-import Mathlib
-import Def.HopfAlgebra_HopfKer
+module
+
+public import Mathlib
+public import Def.HopfAlgebra_HopfKer
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option linter.unusedSectionVars false

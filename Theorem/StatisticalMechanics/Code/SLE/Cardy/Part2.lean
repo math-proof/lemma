@@ -7,14 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.SLE.Defs.Part9
-import Def.StatisticalMechanics.Code.SLE.Cardy.Part2
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.SLE.Defs.Part9
+public import Def.StatisticalMechanics.Code.SLE.Cardy.Part2
 open scoped UpperHalfPlane NNReal
 open Complex Filter Topology
 
+public section
 
 namespace StatMech.SLE
 

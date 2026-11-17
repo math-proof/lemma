@@ -1,6 +1,10 @@
-import Structure.CerednikDrinfeld_Ribbon
-import Structure.HeckeGalois_EichlerShimura
-import Instance.Compat_Mathlib430
+module
+
+public import Structure.CerednikDrinfeld_Ribbon
+public import Structure.HeckeGalois_EichlerShimura
+public import Instance.Compat_Mathlib430
+
+public section
 
 set_option autoImplicit false
 

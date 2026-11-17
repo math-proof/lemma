@@ -1,5 +1,9 @@
-import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
-import Mathlib.Algebra.Group.Subgroup.Basic
+module
+
+public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
+public import Mathlib.Algebra.Group.Subgroup.Basic
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,9 +1,14 @@
 -- Carved from Lemma/Definitions/Def_LanglandsTunnell_ArtinFrobenius.lean: instance decls only.
-import Mathlib.NumberTheory.NumberField.Basic
-import Mathlib.RingTheory.Frobenius
-import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
-import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
-import Mathlib.FieldTheory.Galois.IsGaloisGroup
+
+module
+
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Mathlib.RingTheory.Frobenius
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
+public import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
+public import Mathlib.FieldTheory.Galois.IsGaloisGroup
+
+@[expose] public section
 
 set_option autoImplicit false
 

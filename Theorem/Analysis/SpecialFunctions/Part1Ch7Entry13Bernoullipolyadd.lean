@@ -1,19 +1,23 @@
 /-
 Author: @akiezun, Avocado
 -/
+module
 
-import Mathlib.NumberTheory.Harmonic.EulerMascheroni
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
-import Mathlib.Analysis.SumIntegralComparisons
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
-import Def.Analysis.SpecialFunctions.Part1Ch7Entry13Bernoullipolyadd
+public import Mathlib.NumberTheory.Harmonic.EulerMascheroni
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+public import Mathlib.Analysis.SumIntegralComparisons
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+public import Def.Analysis.SpecialFunctions.Part1Ch7Entry13Bernoullipolyadd
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 7, Entry 13
 
 Generalized Stieltjes constants exist uniquely; γ₀ is Euler-Mascheroni.
 -/
+
+public section
 
 
 namespace Ramanujan.Part1Ch7

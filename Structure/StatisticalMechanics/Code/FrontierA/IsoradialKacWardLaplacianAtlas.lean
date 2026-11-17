@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialKacWardAtlas
-import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialKacWardRibbonIdentification.Part7
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialKacWardAtlas
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialKacWardRibbonIdentification.Part7
+public section
+
 open SimpleGraph
 
 set_option linter.unusedDecidableInType false

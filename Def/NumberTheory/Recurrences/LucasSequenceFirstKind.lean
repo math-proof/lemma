@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Recurrences/LucasSequenceFirstKind.lean -/
 
-import Mathlib.Data.Int.Basic
+module
 
+public import Mathlib.Data.Int.Basic
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

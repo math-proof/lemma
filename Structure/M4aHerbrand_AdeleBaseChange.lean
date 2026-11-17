@@ -1,4 +1,6 @@
-import Structure.M4aHerbrand_IdeleClassVocab
+module
+
+public import Structure.M4aHerbrand_IdeleClassVocab
 
 set_option autoImplicit false
 
@@ -6,7 +8,7 @@ open NumberField TensorProduct
 
 namespace M4aHerbrand
 
-noncomputable section
+public noncomputable section
 
 variable (R E : Type*) [CommRing R] [IsDedekindDomain R] [Field E] [Algebra R E]
   [IsFractionRing R E]

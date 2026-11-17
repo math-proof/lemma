@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Reflection/ReflectionGroupsCoxeter.lean -/
 
 /-
@@ -8,11 +10,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.Reflection.HyperplaneChambers.Part4
-import Mathlib.Data.Set.Card
-import Mathlib.GroupTheory.OrderOfElement
-import Mathlib.Data.Nat.Lattice
-import Def.v1.Atlas.Buildings.code.Reflection.ReflectionGroupsCoxeter
+public import Def.v1.Atlas.Buildings.code.Reflection.HyperplaneChambers.Part4
+public import Mathlib.Data.Set.Card
+public import Mathlib.GroupTheory.OrderOfElement
+public import Mathlib.Data.Nat.Lattice
+public import Def.v1.Atlas.Buildings.code.Reflection.ReflectionGroupsCoxeter
+public section
+
 open scoped InnerProductSpace
 open Set
 

@@ -1,5 +1,8 @@
-import Mathlib.Tactic
+module
 
+public import Mathlib.Tactic
+
+@[expose] public section
 
 /--
 heterogeneous/asymptotic equality

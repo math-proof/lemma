@@ -1,4 +1,8 @@
-import Def.AutomorphicForm_HeckeEigensystem
+module
+
+public import Def.AutomorphicForm_HeckeEigensystem
+
+@[expose] public section
 
 open IsDedekindDomain NumberField
 

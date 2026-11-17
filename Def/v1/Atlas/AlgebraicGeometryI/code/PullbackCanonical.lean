@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.FractionalIdeal.Extended
-import Mathlib.RingTheory.Ideal.Norm.RelNorm
-import Mathlib.RingTheory.FractionalIdeal.Norm
-import Mathlib.LinearAlgebra.Dimension.Finrank
+module
+
+public import Mathlib.RingTheory.FractionalIdeal.Extended
+public import Mathlib.RingTheory.Ideal.Norm.RelNorm
+public import Mathlib.RingTheory.FractionalIdeal.Norm
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+
+@[expose] public section
+
 set_option linter.unusedSectionVars false
 
 open scoped nonZeroDivisors

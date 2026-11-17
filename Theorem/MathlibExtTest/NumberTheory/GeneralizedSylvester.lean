@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.GeneralizedSylvester
-import Lemma.Nat.GeneralizedSylvester
+import Theorem.Nat.GeneralizedSylvester
 
 
 example : Nat.generalizedSylvester 1 0 = 2 := by simp

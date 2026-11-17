@@ -1,11 +1,13 @@
-import Class.AlgebraicCurve_DivisorClassGroup
-import Mathlib.GroupTheory.QuotientGroup.Defs
-import Mathlib.Algebra.Group.AddChar
-import Structure.AlgebraicCurve_JacobianH1Autoduality
+module
+
+public import Class.AlgebraicCurve_DivisorClassGroup
+public import Mathlib.GroupTheory.QuotientGroup.Defs
+public import Mathlib.Algebra.Group.AddChar
+public import Structure.AlgebraicCurve_JacobianH1Autoduality
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 open IsDedekindDomain WithZero IsLocalRing
 

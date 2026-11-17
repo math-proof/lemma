@@ -1,6 +1,11 @@
-import Mathlib.Algebra.GCDMonoid.Finset
-import Mathlib.Data.Nat.Choose.Multinomial
-import Mathlib.NumberTheory.ArithmeticFunction.Moebius
+module
+
+public import Mathlib.Algebra.GCDMonoid.Finset
+public import Mathlib.Data.Nat.Choose.Multinomial
+public import Mathlib.NumberTheory.ArithmeticFunction.Moebius
+
+@[expose] public section
+
 /-!
 Witt's multigraded dimension formula for free Lie algebras.
 -/

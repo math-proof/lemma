@@ -4,12 +4,15 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
 
-import Mathlib.MeasureTheory.Measure.Real
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.Order.MonotoneConvergence
-import Structure.MeasureTheory.Measure.Atomless
+module
 
+public import Mathlib.MeasureTheory.Measure.Real
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.Order.MonotoneConvergence
+public import Structure.MeasureTheory.Measure.Atomless
+
+@[expose] public section
 
 section
 

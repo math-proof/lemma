@@ -1,5 +1,9 @@
-import Mathlib
-import Instance.Module_CommFamilyAnnPart
+module
+
+public import Mathlib
+public import Instance.Module_CommFamilyAnnPart
+
+public section
 
 set_option autoImplicit false
 set_option synthInstance.maxHeartbeats 400000

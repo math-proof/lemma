@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/Polynomial/FormalOrthogonality.lean -/
+module
 
+public import Def.Algebra.Polynomial.FormalOrthogonality
 
-import Def.Algebra.Polynomial.FormalOrthogonality
-
+public section
 
 namespace MetaMathlibExt.Polynomial
 

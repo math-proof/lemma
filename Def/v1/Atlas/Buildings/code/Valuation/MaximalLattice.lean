@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Class.v1.Atlas.Buildings.code.Valuation.LatticesValuations
-import Lemma.Nat.IsInO
+import Theorem.Nat.IsInO
 import Structure.v1.Atlas.Buildings.code.Valuation.MaximalLattice
 
 

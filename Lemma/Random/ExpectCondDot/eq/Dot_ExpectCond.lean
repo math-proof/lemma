@@ -7,6 +7,7 @@ import Lemma.Tensor.GetDot.eq.Sum_MulGetS
 import Lemma.Tensor.ItemMul.eq.MulItemS
 import Lemma.Tensor.Mul
 import Lemma.Vector.GetSum.eq.Sum_Get
+import Initialize.Tactic.Attr.Basic
 open Tensor
 
 
@@ -170,4 +171,4 @@ private lemma main
 
 
 -- created on 2026-09-23
--- updated on 2026-11-15
+-- updated on 2026-11-17

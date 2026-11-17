@@ -9,7 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Probability.BonamiTwoPoint
+module
+
+public import Theorem.StatisticalMechanics.Code.Probability.BonamiTwoPoint
+
+@[expose] public section
+
 open Real Set
 
 set_option linter.style.longLine false

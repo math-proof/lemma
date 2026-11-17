@@ -7,16 +7,18 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.RingTheory.Ideal.IntegralClosure
-import Mathlib.RingTheory.DedekindDomain.AdicValuation
-import Mathlib.RingTheory.DedekindDomain.Dvr
-import Mathlib.RingTheory.Ideal.Over
-import Mathlib.RingTheory.Valuation.Discrete.Basic
-import Mathlib.RingTheory.Valuation.ValuationSubring
-import Mathlib.RingTheory.Valuation.LocalSubring
-import Def.v1.Atlas.NumberTheoryI.code.ValuationBijection
+public import Mathlib.RingTheory.Ideal.IntegralClosure
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation
+public import Mathlib.RingTheory.DedekindDomain.Dvr
+public import Mathlib.RingTheory.Ideal.Over
+public import Mathlib.RingTheory.Valuation.Discrete.Basic
+public import Mathlib.RingTheory.Valuation.ValuationSubring
+public import Mathlib.RingTheory.Valuation.LocalSubring
+public import Def.v1.Atlas.NumberTheoryI.code.ValuationBijection
 
+public section
 
 noncomputable section
 

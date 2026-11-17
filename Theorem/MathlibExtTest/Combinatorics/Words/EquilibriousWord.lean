@@ -2,7 +2,7 @@
 
 
 import Instance.Combinatorics.Words.EquilibriousWord
-import Lemma.Finset.Words.EquilibriousWord
+import Theorem.Finset.Words.EquilibriousWord
 open MetaMathlibExt
 
 

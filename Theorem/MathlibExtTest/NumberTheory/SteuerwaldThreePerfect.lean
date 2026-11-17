@@ -4,7 +4,7 @@
 # Tests for Pillai equations and Steuerwald's theorem
 -/
 
-import Lemma.Nat.SteuerwaldThreePerfect
+import Theorem.Nat.SteuerwaldThreePerfect
 
 
 example :

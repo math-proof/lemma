@@ -11,7 +11,7 @@ import Mathlib.Analysis.SpecialFunctions.Exp
 import Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Def.Analysis.SpecialFunctions.Gamma.Digamma
-import Lemma.Complex.Digamma
+import Theorem.Complex.Digamma
 import Lemma.Real.Digamma
 /-!
 # Ramanujan's centered digamma asymptotic

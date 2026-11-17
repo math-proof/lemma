@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.PadovanSequence
-import Lemma.Nat.PadovanSequence
+import Theorem.Nat.PadovanSequence
 
 
 namespace MetaMathlibExt

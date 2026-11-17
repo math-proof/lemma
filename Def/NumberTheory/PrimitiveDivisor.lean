@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimitiveDivisor.lean -/
 
-import Mathlib.Data.Nat.Prime.Defs
+module
+
+public import Mathlib.Data.Nat.Prime.Defs
+
+@[expose] public section
+
 /-!
 # Primitive divisors of integer sequences
 

@@ -1,11 +1,13 @@
-import Mathlib
-import Lemma.MvPolynomial.ProjSpaceCover
-import Instance.AlgebraicGeometry_ProjSpaceCechGradedModule
-import Instance.AlgebraicGeometry_ProjTwistDatum
+module
+
+public import Mathlib
+public import Lemma.MvPolynomial.ProjSpaceCover
+public import Instance.AlgebraicGeometry_ProjSpaceCechGradedModule
+public import Instance.AlgebraicGeometry_ProjTwistDatum
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 universe u
 

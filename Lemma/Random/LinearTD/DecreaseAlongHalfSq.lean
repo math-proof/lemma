@@ -3,6 +3,7 @@ import Def.Analysis.Normed.Lp.LpSpace.Part2
 import Lemma.Matrix.PosDefAsymm.is.Any_All_Le_Dot_MulVec
 import Lemma.Random.LinearTD.NegDefAsymmA
 import Lemma.Random.LinearTD.ExpectedUpdate.eq.ToLpAddMulVecA
+import Initialize.Tactic.Attr.Basic
 open Matrix LpSpace
 
 
@@ -40,3 +41,4 @@ private lemma main
 
 
 -- created on 2026-09-26
+-- updated on 2026-11-17

@@ -14,6 +14,8 @@ import Lemma.Random.NormRkd.le.Abs_R
 import Lemma.Random.NormClip.le.Abs_R
 import Lemma.Random.MeasurableRkd
 import Lemma.Random.All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Real Kernel
 set_option maxHeartbeats 800000
 
@@ -389,4 +391,4 @@ private lemma main
       simp only [Pi.smul_apply, integral_smul]
 
 -- created on 2026-10-20
--- updated on 2026-11-16
+-- updated on 2026-11-17

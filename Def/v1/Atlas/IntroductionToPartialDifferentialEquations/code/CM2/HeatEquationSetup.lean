@@ -8,18 +8,23 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Tactic
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Mathlib.Analysis.Calculus.FDeriv.Basic
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.Topology.ContinuousOn
-import Mathlib.Topology.Order.Basic
-import Mathlib.Order.Filter.Basic
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.Analysis.Complex.Trigonometric
-import Structure.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM2.HeatEquationSetup
+module
+
+public import Mathlib.Tactic
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Mathlib.Analysis.Calculus.FDeriv.Basic
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.Topology.ContinuousOn
+public import Mathlib.Topology.Order.Basic
+public import Mathlib.Order.Filter.Basic
+public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+public import Mathlib.Analysis.Complex.Trigonometric
+public import Structure.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM2.HeatEquationSetup
+
+@[expose] public section
+
 open MeasureTheory Real Finset BigOperators
 open scoped ENNReal
 

@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.GeometryOfManifolds.code.SymplecticStandardBasis
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticStandardBasis
+module
+
+public import Theorem.v1.Atlas.GeometryOfManifolds.code.SymplecticStandardBasis
+public import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticStandardBasis
+public section
+
 set_option autoImplicit false
 
 open Module FiniteDimensional

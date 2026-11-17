@@ -9,8 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib.Analysis.Subadditive
-import Mathlib.Analysis.SpecificLimits.Basic
+module
+
+public import Mathlib.Analysis.Subadditive
+public import Mathlib.Analysis.SpecificLimits.Basic
+
+@[expose] public section
+
 open Filter Set
 
 

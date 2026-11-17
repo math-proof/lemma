@@ -2,7 +2,7 @@
 
 
 import Def.RingTheory.DedekindDomain.ElementDifferent
-import Lemma.Int.DedekindDomain.ElementDifferent
+import Theorem.Int.DedekindDomain.ElementDifferent
 set_option autoImplicit false
 
 variable (A K L : Type*) {B : Type*}

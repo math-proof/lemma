@@ -1,3 +1,4 @@
+import Initialize.Tactic.Attr.Basic
 import Lemma.List.EqTakeAppend
 open List
 

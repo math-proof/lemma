@@ -8,12 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.Algebra.Module.LinearMap.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+module
+
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.Algebra.Module.LinearMap.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 
 
-noncomputable section
+public noncomputable section
 
 namespace GRR
 

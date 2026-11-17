@@ -8,8 +8,11 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.LapMatrix
+module
 
+public import Mathlib.Combinatorics.SimpleGraph.LapMatrix
+
+@[expose] public section
 
 namespace GraphMatrices
 

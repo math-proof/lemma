@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Schnirelmann
-import Lemma.Finset.Schnirelmann
+import Theorem.Finset.Schnirelmann
 import Mathlib.Tactic
 
 

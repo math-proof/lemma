@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/Polynomial/BesselPolynomial.lean -/
+module
 
+public import Theorem.Algebra.Polynomial.BesselPolynomial
 
-import Theorem.Algebra.Polynomial.BesselPolynomial
-
+public section
 
 namespace MetaMathlibExt
 

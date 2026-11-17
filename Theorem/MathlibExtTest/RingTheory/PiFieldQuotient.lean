@@ -3,7 +3,7 @@
 -- MathlibExtTest/RingTheory/PiFieldQuotient.lean
 
 import Def.RingTheory.PiFieldQuotient
-import Lemma.Int.PiFieldQuotient
+import Theorem.Int.PiFieldQuotient
 open PiFieldQuotient
 
 

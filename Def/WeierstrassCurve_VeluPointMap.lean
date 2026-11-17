@@ -1,6 +1,10 @@
-import Mathlib
-import Def.WeierstrassCurve_VeluQuotientMap
-import Macro.WeierstrassCurve_VeluPointMap
+module
+
+public import Mathlib
+public import Def.WeierstrassCurve_VeluQuotientMap
+public import Macro.WeierstrassCurve_VeluPointMap
+
+@[expose] public section
 
 open Polynomial
 open scoped WeierstrassCurve.VeluPointMap

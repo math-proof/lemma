@@ -7,25 +7,27 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Analysis.Asymptotics.Theta
-import Mathlib.Analysis.SpecificLimits.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Analysis.SpecialFunctions.Choose
-import Mathlib.Combinatorics.SimpleGraph.Clique
-import Mathlib.Probability.Combinatorics.BinomialRandomGraph.Defs
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.NormNum
-import Structure.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Janson.Part2
+public import Mathlib.Analysis.Asymptotics.Theta
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Analysis.SpecialFunctions.Choose
+public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Probability.Combinatorics.BinomialRandomGraph.Defs
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.NormNum
+public import Structure.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Janson.Part2
 set_option maxHeartbeats 800000
 
 open Filter Real
 open scoped Topology
 
+public section
 
 noncomputable section
 

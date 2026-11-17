@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Tilde
-import Mathlib.AlgebraicGeometry.Morphisms.Affine
-import Mathlib.Algebra.Category.ModuleCat.Sheaf.Quasicoherent
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.QCohAffineEquivalence
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Tilde
+public import Mathlib.AlgebraicGeometry.Morphisms.Affine
+public import Mathlib.Algebra.Category.ModuleCat.Sheaf.Quasicoherent
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.QCohAffineEquivalence
+
+@[expose] public section
+
 open CategoryTheory AlgebraicGeometry
 
 

@@ -1,5 +1,13 @@
+module
+
+public import Mathlib.CategoryTheory.Functor.Basic
+
+public section
+
 set_option quotPrecheck false
 set_option hygiene false
+
+open scoped CategoryTheory
 
 /-!
 # Notations from `Lemma/Definitions/Def_PresheafOfModules_PullbackMonoidal.lean`

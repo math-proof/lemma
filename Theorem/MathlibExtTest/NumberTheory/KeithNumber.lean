@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/KeithNumber.lean -/
+module
 
+public import Def.NumberTheory.KeithNumber
 
-import Def.NumberTheory.KeithNumber
-
+public section
 
 namespace MetaMathlibExt
 

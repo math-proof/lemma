@@ -1,10 +1,12 @@
-import Mathlib
-import Lemma.Scheme.Correspondence
-import Class.WeierstrassCurve_GenusOnePic0
+module
+
+public import Mathlib
+public import Lemma.Scheme.Correspondence
+public import Class.WeierstrassCurve_GenusOnePic0
 
 set_option autoImplicit false
 
-noncomputable section IsogenyCurrency
+public noncomputable section IsogenyCurrency
 
 section Delta
 

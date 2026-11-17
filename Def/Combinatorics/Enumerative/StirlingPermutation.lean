@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/StirlingPermutation.lean -/
 
-import Mathlib.Order.Interval.Finset.Nat
+module
 
+public import Mathlib.Order.Interval.Finset.Nat
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.QuadrinomialCoefficients
-import Lemma.Finset.Enumerative.QuadrinomialCoefficients
+import Theorem.Finset.Enumerative.QuadrinomialCoefficients
 
 
 namespace MetaMathlibExt

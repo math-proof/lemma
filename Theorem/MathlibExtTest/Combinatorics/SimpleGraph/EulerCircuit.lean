@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/EulerCircuit.lean -/
 
 
-import Lemma.SimpleGraph.EulerCircuit
+import Theorem.SimpleGraph.EulerCircuit
 import Mathlib.Combinatorics.SimpleGraph.CycleGraph
 import Abbrev.MathlibExtTest.Combinatorics.SimpleGraph.EulerCircuit
 

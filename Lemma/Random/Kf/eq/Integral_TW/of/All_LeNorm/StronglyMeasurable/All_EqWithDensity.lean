@@ -1,6 +1,8 @@
 import Lemma.Random.Kf.eq.Integral.All_EqWithDensity
 import Lemma.Random.Integral.eq.Integral.of.All_LeNorm.StronglyMeasurable
 import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
@@ -37,4 +39,4 @@ private lemma main
 
 
 -- created on 2026-11-13
--- updated on 2026-11-16
+-- updated on 2026-11-17

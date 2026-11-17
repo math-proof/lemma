@@ -2,7 +2,7 @@
 
 
 import Def.LinearAlgebra.Matrix.MvPolynomial
-import Lemma.Matrix.MvPolynomial
+import Theorem.Matrix.MvPolynomial
 import Mathlib.Basic.Complex.Basic
 open Matrix
 

@@ -1,9 +1,13 @@
-import Mathlib.MeasureTheory.Group.Measure
-import Mathlib.MeasureTheory.Measure.Haar.Basic
-import Mathlib.Topology.LocallyConstant.Basic
-import Mathlib.Topology.Algebra.Support
-import Mathlib.Topology.Algebra.OpenSubgroup
-import Mathlib.Algebra.Module.BigOperators
+module
+
+public import Mathlib.MeasureTheory.Group.Measure
+public import Mathlib.MeasureTheory.Measure.Haar.Basic
+public import Mathlib.Topology.LocallyConstant.Basic
+public import Mathlib.Topology.Algebra.Support
+public import Mathlib.Topology.Algebra.OpenSubgroup
+public import Mathlib.Algebra.Module.BigOperators
+
+@[expose] public section
 
 set_option autoImplicit false
 

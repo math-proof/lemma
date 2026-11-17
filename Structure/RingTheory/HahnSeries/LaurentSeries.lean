@@ -6,12 +6,14 @@ All rights reserved.
 Copyright (c) 2025 AlgebraicCombinatorics contributors. All rights reserved.
 Authors: AlgebraicCombinatorics contributors
 -/
-import Mathlib
-import Def.RingTheory.LaurentSeries.Part11
-import Lemma.PowerSeries.InfiniteProducts2
-import Lemma.LaurentSeries.LaurentSeries
-import Lemma.Partition.NPartition
-import Def.RingTheory.HahnSeries.LaurentSeries.Part2
+module
+
+public import Mathlib
+public import Def.RingTheory.LaurentSeries.Part11
+public import Lemma.PowerSeries.InfiniteProducts2
+public import Lemma.LaurentSeries.LaurentSeries
+public import Lemma.Partition.NPartition
+public import Def.RingTheory.HahnSeries.LaurentSeries.Part2
 open scoped LaurentPolynomial Polynomial
 open LaurentPolynomial HahnSeries
 
@@ -56,7 +58,7 @@ In Mathlib:
 -- `AddMonoidAlgebra` is a wrapper around `M →₀ R` (`coeff`), not the `Finsupp` itself.
 
 
-noncomputable section
+public noncomputable section
 
 namespace AlgebraicCombinatorics.FPS.Laurent
 

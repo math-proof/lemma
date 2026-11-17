@@ -9,9 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib.Analysis.Calculus.Taylor
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareGridConsistency
+module
 
+public import Mathlib.Analysis.Calculus.Taylor
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareGridConsistency
+
+@[expose] public section
 
 namespace StatMech.Universality
 

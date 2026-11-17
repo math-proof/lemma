@@ -16,7 +16,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Order.Interval.Finset.Defs
+module
+
+public import Mathlib.Order.Interval.Finset.Defs
+
+@[expose] public section
+
 variable {β : Type*} [Preorder β]
 variable {S : Set β} {a b : β}
 

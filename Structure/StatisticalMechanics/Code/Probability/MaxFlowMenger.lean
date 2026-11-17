@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Def.StatisticalMechanics.Code.Probability.MaxFlowMenger
+module
+
+public import Mathlib
+public import Def.StatisticalMechanics.Code.Probability.MaxFlowMenger
+public section
+
 open Finset
 
 

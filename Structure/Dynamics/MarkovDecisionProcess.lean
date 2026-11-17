@@ -1,7 +1,10 @@
-import Mathlib.Probability.Kernel.Composition.MeasureCompProd
-import Class.Probability.Rv
-import Def.Dynamics.MarkovRewardProcess.Part4
-import Notation.Fun
+module
+
+public import Mathlib.Probability.Kernel.Composition.MeasureCompProd
+public import Class.Probability.Rv
+public import Notation.Fun
+
+public section
 
 open MeasureTheory ProbabilityTheory
 open Fun
@@ -21,7 +24,7 @@ Ported from rl-theory-in-lean `RLTheory/MarkovDecisionProcess/MarkovDecisionProc
 * `FiniteMDP S A`: an MDP on finite spaces with a policy whose induced chain is irreducible and
   aperiodic and `γ ∈ [0, 1)`; `FiniteMDP.MRP` is the induced `FiniteMRP (S × A)`.
 
-The policy-gradient structures `StochasticMDP`, `Policy`, and `Model`, and the class `StochasticPolicy` (namespace `PolicyGradient`)
+The policy-gradient structures `StochasticMDP`, `Policy`, and `Model` (namespace `PolicyGradient`)
 also live in this module.
 -/
 
@@ -50,14 +53,6 @@ theorem StochasticMDP.init_prob {S A : Type*} [MeasurableSpace S] [MeasurableSpa
 /-- A parameterized policy `π[θ] sₜ aₜ = π_θ(aₜ | sₜ)` on a general (e.g. continuous) action space. -/
 structure Policy (Θ 𝒮 𝒜 : Type*) [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜] where
   π : Θ ⇀ 𝒮 → 𝒜 → ℝ
-
-/-- `π` is a probability density of the action given the state, w.r.t. the reference measure of `𝒜`
-(for a finite action space with counting measure, `integral_eq_one` is the usual `sum_eq_one`). -/
-class StochasticPolicy {Θ 𝒮 𝒜 : Type*} [MeasurableSpace 𝒮] [μ : ReferenceMeasure 𝒜]
-    (p : Policy Θ 𝒮 𝒜) : Prop where
-  nonneg : ∀ (θ : Θ) sₜ aₜ, 0 ≤ p.π[θ] sₜ aₜ
-  integral_eq_one : ∀ (θ : Θ) sₜ, ∫ aₜ, p.π[θ] sₜ aₜ ∂μ.measure = 1
-  measurable_π : ∀ (θ : Θ), Measurable (fun (sₜ, aₜ) => p.π[θ] sₜ aₜ)
 
 /-- A policy-gradient model is a `StochasticMDP` together with a density policy
 on a general action space. -/

@@ -1,5 +1,7 @@
-import Mathlib.Analysis.SpecificLimits.Basic
-import Def.Analysis.SpecialFunctions.TakagiFunction
+module
+
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Def.Analysis.SpecialFunctions.TakagiFunction
 open scoped BigOperators
 
 /-!
@@ -9,6 +11,8 @@ Formalizes Definition `takagi_newdef` (source statement `jis_23b2f8f9e624bca533b
 concept `jis_sem_95dbf183cc4eaf1172157db5`): binary digits, the `ell` coefficients,
 and the Takagi sum over dyadic presentations `n / 2 ^ (k + 1)`.
 -/
+
+public section
 
 
 namespace MetaMathlibExt

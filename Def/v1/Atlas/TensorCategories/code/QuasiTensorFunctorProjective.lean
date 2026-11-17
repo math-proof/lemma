@@ -23,7 +23,7 @@ import Mathlib.CategoryTheory.Adjunction.Limits
 import Mathlib.CategoryTheory.Limits.Constructions.EpiMono
 import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
 import Lemma.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
-import Lemma.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
+import Theorem.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
 import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
 set_option maxHeartbeats 800000
 

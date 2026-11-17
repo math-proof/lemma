@@ -1,5 +1,8 @@
-import Mathlib.Probability.Process.Filtration
-import Def.Probability.Process.Filtration
+module
+
+public import Mathlib.Probability.Process.Filtration
+public import Def.Probability.Process.Filtration
+
 /-!
 # Shifted filtrations
 
@@ -9,6 +12,8 @@ Ported from rl-theory-in-lean `RLTheory/StochasticApproximation/MartingaleDiffer
 * `ℱ.subsequence ht`: the filtration `n ↦ ℱ (t n)` along a monotone time change `t`
   (from `RLTheory/StochasticApproximation/MarkovSamples.lean`).
 -/
+
+public section
 
 
 namespace MeasureTheory.Filtration

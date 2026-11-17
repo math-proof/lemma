@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/InfiniteWord/Tribonacci.lean -/
 
-import Mathlib.Data.List.Basic
-import Inductive.Combinatorics.InfiniteWord.Tribonacci
+module
+
+public import Mathlib.Data.List.Basic
+public import Inductive.Combinatorics.InfiniteWord.Tribonacci
+
+@[expose] public section
+
 /-!
 # The Tribonacci word
 

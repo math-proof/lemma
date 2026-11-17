@@ -1,8 +1,8 @@
 import Mathlib.Tactic
-import Lemma.Bool.Or.of.Or.Imp
-import Lemma.Bool.And.of.And.Imp
-import Lemma.Bool.Imp.is.ImpNotS
-import Lemma.Bool.Imp.of.Imp.Imp
+import Theorem.Bool.Or.of.Or.Imp
+import Theorem.Bool.And.of.And.Imp
+import Theorem.Bool.Imp.is.ImpNotS
+import Theorem.Bool.Imp.of.Imp.Imp
 import Def.Lean.Meta.Expr.Part4 -- using Lean.Expr.is_Prop
 import Def.Lean.FVarId
 import Syntax.Tactic.Logic.Part3

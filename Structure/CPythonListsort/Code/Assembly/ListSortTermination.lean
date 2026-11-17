@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/ListSortTermination.lean -/
 
-import Def.CPythonListsort.Code.Assembly.ListSortTrace
-import Lemma.List.Atlas.CPythonListsort.Code.Assembly.TopLevelErasureForceCollapse
-import Lemma.List.Atlas.CPythonListsort.Code.Assembly.TopLevelErasureFound
+module
+
+public import Def.CPythonListsort.Code.Assembly.ListSortTrace
+public import Theorem.List.Atlas.CPythonListsort.Code.Assembly.TopLevelErasureForceCollapse
+public import Theorem.List.Atlas.CPythonListsort.Code.Assembly.TopLevelErasureFound
 /-!
 # Top-level listsort termination and safety
 
@@ -10,6 +12,9 @@ This module carries the reviewed local safety certificates through the actual
 traced `list_sort_impl` control flow.  The recursive proof is private; public
 consumers see compact raw and proof-carrying entry-point certificates.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

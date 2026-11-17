@@ -16,9 +16,8 @@ import Mathlib.Tactic.IntervalCases
 import Mathlib.Tactic.LinearCombination
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
-import Lemma.Nat.Padics.FibonacciFiveAdicValuation
 import Def.NumberTheory.Recurrences.FibonacciPrimeDivisibility
-import Lemma.Nat.Recurrences.FibonacciPrimeDivisibility
+import Theorem.Nat.Recurrences.FibonacciPrimeDivisibility
 
 
 namespace MetaMathlibExt

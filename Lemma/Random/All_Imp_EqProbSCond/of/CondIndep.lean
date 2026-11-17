@@ -5,6 +5,7 @@ import Lemma.Random.PSpace_Joint
 import Lemma.Random.Map.eq.WithDensityProb
 import Notation.Probability.JointRv
 import Syntax.Probability.Indep
+import Initialize.Tactic.Attr.Basic
 open ProbabilityTheory MeasureTheory Random MeasurableSpace
 open scoped ProbabilityTheory
 open scoped ENNReal
@@ -583,4 +584,4 @@ private lemma main
 
 
 -- created on 2020-12-16
--- updated on 2026-11-14
+-- updated on 2026-11-17

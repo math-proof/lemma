@@ -1,6 +1,7 @@
 import Mathlib.Probability.Independence.Basic
 import Mathlib.MeasureTheory.MeasurableSpace.Prod
 import Lemma.Random.IndepJoint.of.All_Eq_UFn_MulPreimageS
+import Initialize.Tactic.Attr.Basic
 open ProbabilityTheory MeasureTheory
 
 
@@ -52,3 +53,4 @@ private lemma main
 
 
 -- created on 2026-09-22
+-- updated on 2026-11-17

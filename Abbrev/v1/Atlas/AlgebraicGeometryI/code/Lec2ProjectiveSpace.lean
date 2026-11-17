@@ -8,16 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.Projectivization.Basic
-import Mathlib.Topology.Order
-import Mathlib.RingTheory.Nullstellensatz
-import Mathlib.Topology.Constructions
+module
+
+public import Mathlib.LinearAlgebra.Projectivization.Basic
+public import Mathlib.Topology.Order
+public import Mathlib.RingTheory.Nullstellensatz
+public import Mathlib.Topology.Constructions
 set_option maxHeartbeats 800000
 
 open scoped LinearAlgebra.Projectivization
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace Formalization
 

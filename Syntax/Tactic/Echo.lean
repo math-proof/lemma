@@ -1,8 +1,13 @@
-import Mathlib.Tactic
-import Def.Lean.Expr.Parser
-import Def.Lean.PrettyPrinter.Latex.Part2
-import Def.Tactic.Echo
-import Initialize.Tactic.Attr.Axioms
+module
+
+public import Mathlib.Tactic
+public meta import Def.Lean.Expr.Parser
+public meta import Def.Lean.PrettyPrinter.Latex.Part2
+public meta import Def.Tactic.Echo
+public meta import Initialize.Tactic.Attr.Axioms
+
+public meta section
+
 open Lean Elab.Tactic Meta
 set_option linter.unusedVariables false
 

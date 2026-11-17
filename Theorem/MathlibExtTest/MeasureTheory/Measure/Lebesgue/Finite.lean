@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/MeasureTheory/Measure/Lebesgue/Empty.Finite.lean -/
 
 
-import Lemma.Measure.Lebesgue.Finite
+import Theorem.Measure.Lebesgue.Finite
 open MeasureTheory Set
 open scoped ENNReal
 

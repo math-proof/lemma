@@ -1,10 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeLoSafety.lean -/
 
-import Structure.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part5
-import Structure.CPythonListsort.Code.Assembly.MergeGetmemRequestBound
-import Def.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
-import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopLeftSafety
-import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopRightSafety
+module
+
+public import Structure.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part5
+public import Structure.CPythonListsort.Code.Assembly.MergeGetmemRequestBound
+public import Def.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
 /-!
 # `merge_lo` lockstep safety
 
@@ -15,6 +15,7 @@ materialized `SortSlice` is used only as an untraced semantic bridge to the
 reviewed evaluator.
 -/
 
+public section
 
 namespace CPythonListsort
 
@@ -25,19 +26,19 @@ variable {κ : Type u} {ν : Type v}
 /-! ## Classified bulk-copy permits -/
 
 /-- Provenance permit consumed by the initial main-to-temporary copy. -/
-theorem mergeLoInitialDataToTempPermit :
+public theorem mergeLoInitialDataToTempPermit :
     (MergeMemcpySite.lo .initialDataToTemp).MainToTempPermit where
   direction := rfl
   distinctBacking := MergeMemcpySite.distinct _
 
 /-- Provenance permit consumed by an A-side gallop block copy. -/
-theorem mergeLoGallopTempToDataPermit :
+public theorem mergeLoGallopTempToDataPermit :
     (MergeMemcpySite.lo .gallopTempToData).TempToMainPermit where
   direction := rfl
   distinctBacking := MergeMemcpySite.distinct _
 
 /-- Provenance permit consumed by the final A-side remainder copy. -/
-theorem mergeLoFinalTempToDataPermit :
+public theorem mergeLoFinalTempToDataPermit :
     (MergeMemcpySite.lo .finalTempToData).TempToMainPermit where
   direction := rfl
   distinctBacking := MergeMemcpySite.distinct _

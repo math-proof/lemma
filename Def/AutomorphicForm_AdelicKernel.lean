@@ -1,5 +1,9 @@
-import Def.AutomorphicForm_GL2ConjugacyCells
-import Def.AutomorphicForm_AdelicLsXi
+module
+
+public import Def.AutomorphicForm_GL2ConjugacyCells
+public import Def.AutomorphicForm_AdelicLsXi
+
+@[expose] public section
 
 set_option autoImplicit false
 

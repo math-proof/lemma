@@ -1,7 +1,11 @@
-import Mathlib
+module
+
+public import Mathlib
 open Nat
 
 /-! Formalizing a proof of Erdos problem \#379, arising from conversations between Stijn Cambie, Vjeko Kovac, and Terry Tao.  See the discussion at https://www.erdosproblems.com/forum/thread/379 -/
+
+public section
 
 
 /-- $$`\binom\{n\}\{k\} \cdot k = \binom\{n-1\}\{k-1\} \cdot n`. -/

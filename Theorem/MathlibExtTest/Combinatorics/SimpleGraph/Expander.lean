@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.SimpleGraph.Expander
-import Lemma.SimpleGraph.Expander
+import Theorem.SimpleGraph.Expander
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
 import Lean.Elab.Tactic.Omega

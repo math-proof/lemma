@@ -1,51 +1,55 @@
 /-
 Author: @akiezun, Avocado
 -/
+module
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.Polynomial.Basic
-import Mathlib.Algebra.Polynomial.Degree.Defs
-import Mathlib.Algebra.Polynomial.Derivative
-import Mathlib.Algebra.Polynomial.Eval.Defs
-import Mathlib.Algebra.Polynomial.Taylor
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Basic.Real.Basic
-import Mathlib.Data.Finset.Defs
-import Mathlib.Data.Finset.Range
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.Order.Interval.Finset.Defs
-import Mathlib.Algebra.Squarefree.Basic
-import Mathlib.Analysis.Asymptotics.Defs
-import Mathlib.Analysis.Calculus.ContDiff.Basic
-import Mathlib.Analysis.Complex.Exponential
-import Mathlib.Analysis.Normed.Field.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Complex
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Basic.Complex.Basic
-import Mathlib.Data.Nat.Factorization.Defs
-import Mathlib.Data.Nat.Prime.Defs
-import Mathlib.Data.Nat.Squarefree
-import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
-import Mathlib.NumberTheory.Bernoulli
-import Mathlib.NumberTheory.LSeries.RiemannZeta
-import Mathlib.RingTheory.PowerSeries.Exp
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Topology.Basic
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.NormNum.NatFactorial
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Abbrev.Analysis.SpecialFunctions.Part1Ch5Entry2iEuleriangf
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.Polynomial.Basic
+public import Mathlib.Algebra.Polynomial.Degree.Defs
+public import Mathlib.Algebra.Polynomial.Derivative
+public import Mathlib.Algebra.Polynomial.Eval.Defs
+public import Mathlib.Algebra.Polynomial.Taylor
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Data.Finset.Defs
+public import Mathlib.Data.Finset.Range
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.Order.Interval.Finset.Defs
+public import Mathlib.Algebra.Squarefree.Basic
+public import Mathlib.Analysis.Asymptotics.Defs
+public import Mathlib.Analysis.Calculus.ContDiff.Basic
+public import Mathlib.Analysis.Complex.Exponential
+public import Mathlib.Analysis.Normed.Field.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Complex
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.Data.Nat.Factorization.Defs
+public import Mathlib.Data.Nat.Prime.Defs
+public import Mathlib.Data.Nat.Squarefree
+public import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
+public import Mathlib.NumberTheory.Bernoulli
+public import Mathlib.NumberTheory.LSeries.RiemannZeta
+public import Mathlib.RingTheory.PowerSeries.Exp
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Topology.Basic
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.IntervalCases
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.NormNum.NatFactorial
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Abbrev.Analysis.SpecialFunctions.Part1Ch5Entry2iEuleriangf
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 5
 
 Statements of entries from B. C. Berndt, *Ramanujan's Notebooks, Part I*
 (Springer, 1985), with proofs.
 -/
+
+public section
 
 
 section

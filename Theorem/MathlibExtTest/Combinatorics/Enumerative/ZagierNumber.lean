@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/ZagierNumber.lean -/
+module
 
+public import Mathlib.Tactic.NormNum
+public import Def.Combinatorics.Enumerative.ZagierNumber
 
-import Mathlib.Tactic.NormNum
-import Def.Combinatorics.Enumerative.ZagierNumber
-
+public section
 
 namespace MetaMathlibExt
 

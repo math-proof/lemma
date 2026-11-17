@@ -2,7 +2,7 @@
 
 
 import Instance.RingTheory.RelativePDerivation
-import Lemma.Int.RelativePDerivation
+import Theorem.Int.RelativePDerivation
 import Mathlib.Data.Nat.Choose.Dvd
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Tactic.Ring

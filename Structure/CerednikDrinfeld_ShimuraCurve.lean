@@ -1,15 +1,17 @@
-import Def.QuaternionAlgebra_EichlerOrder
-import Def.QuaternionAlgebra_ReducedNorm
-import Structure.ModularCurve_UniformizedHeckeCurve
-import Lemma.Scheme.AlgebraicCurveBaseChangeGalois
-import Instance.AlgebraicCurve_IsCurveOver
-import Structure.CerednikDrinfeld_TwoPlaceTorsionDatum
-import Instance.Compat_Mathlib430
-import Instance.CerednikDrinfeld_ShimuraCurve
+module
+
+public import Def.QuaternionAlgebra_EichlerOrder
+public import Def.QuaternionAlgebra_ReducedNorm
+public import Structure.ModularCurve_UniformizedHeckeCurve
+public import Lemma.Scheme.AlgebraicCurveBaseChangeGalois
+public import Instance.AlgebraicCurve_IsCurveOver
+public import Structure.CerednikDrinfeld_TwoPlaceTorsionDatum
+public import Instance.Compat_Mathlib430
+public import Instance.CerednikDrinfeld_ShimuraCurve
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open scoped Quaternion TensorProduct MatrixGroups
 open IsDedekindDomain NumberField AlgebraicCurve

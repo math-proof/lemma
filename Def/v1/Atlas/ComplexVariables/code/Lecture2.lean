@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.RootsOfUnity.Complex
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Analysis.SpecialFunctions.Complex.Log
+module
 
+public import Mathlib.RingTheory.RootsOfUnity.Complex
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Analysis.SpecialFunctions.Complex.Log
+
+@[expose] public section
 
 namespace Complex
 

@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/LambertWFunction.lean -/
+module
 
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum
+public import Theorem.Analysis.SpecialFunctions.LambertWFunction
 
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Theorem.Analysis.SpecialFunctions.LambertWFunction
-
+public section
 
 namespace MetaMathlibExt
 

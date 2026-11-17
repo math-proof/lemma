@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleHarmonic.lean -/
 
-import Mathlib.Data.ZMod.Basic
+module
 
+public import Mathlib.Data.ZMod.Basic
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Bernoulli/CarlitzIdentity.lean -/
 
-import Mathlib.NumberTheory.Bernoulli
-import Mathlib.NumberTheory.BernoulliPolynomials
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.NumberTheory.Bernoulli
+public import Mathlib.NumberTheory.BernoulliPolynomials
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 /-!
 # Carlitz Bernoulli identity
 

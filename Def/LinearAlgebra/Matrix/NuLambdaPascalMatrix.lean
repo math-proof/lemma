@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/NuLambdaPascalMatrix.lean -/
 
-import Mathlib.Data.Complex.Basic
-import Mathlib.Algebra.BigOperators.Fin
+module
+
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.Algebra.BigOperators.Fin
+
+@[expose] public section
+
 /-!
 # Nu,lambda-Pascal matrix with coefficients
 

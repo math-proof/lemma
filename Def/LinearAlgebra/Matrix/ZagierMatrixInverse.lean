@@ -4,17 +4,22 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Data.Matrix.Basic
-import Mathlib.Data.Matrix.Mul
-import Mathlib.NumberTheory.Bernoulli
-import Mathlib.Data.Nat.Choose.Cast
-import Mathlib.Data.Nat.Choose.Sum
-import Mathlib.Data.Nat.Choose.Vandermonde
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.LinearAlgebra.Matrix.SemiringInverse
-import Mathlib.NumberTheory.BernoulliPolynomials
-import Mathlib.Tactic
+module
+
+public import Mathlib.Data.Matrix.Basic
+public import Mathlib.Data.Matrix.Mul
+public import Mathlib.NumberTheory.Bernoulli
+public import Mathlib.Data.Nat.Choose.Cast
+public import Mathlib.Data.Nat.Choose.Sum
+public import Mathlib.Data.Nat.Choose.Vandermonde
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.LinearAlgebra.Matrix.SemiringInverse
+public import Mathlib.NumberTheory.BernoulliPolynomials
+public import Mathlib.Tactic
+
+@[expose] public section
+
 open scoped BigOperators
 
 

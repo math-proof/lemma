@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/MacLaneStrictness.lean -/
 
 /-
@@ -8,12 +10,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.End
-import Mathlib.CategoryTheory.Monoidal.Skeleton
-import Mathlib.CategoryTheory.Monoidal.Transport
-import Mathlib.CategoryTheory.Monoidal.CoherenceLemmas
-import Mathlib.CategoryTheory.Monoidal.Free.Coherence
-import Mathlib.CategoryTheory.Monoidal.Free.Basic
+public import Mathlib.CategoryTheory.Monoidal.End
+public import Mathlib.CategoryTheory.Monoidal.Skeleton
+public import Mathlib.CategoryTheory.Monoidal.Transport
+public import Mathlib.CategoryTheory.Monoidal.CoherenceLemmas
+public import Mathlib.CategoryTheory.Monoidal.Free.Coherence
+public import Mathlib.CategoryTheory.Monoidal.Free.Basic
+public section
+
 set_option maxHeartbeats 800000
 
 open CategoryTheory MonoidalCategory Category

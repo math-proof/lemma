@@ -1,5 +1,9 @@
-import Mathlib
-import Instance.PadicComplex_GaloisAction
+module
+
+public import Mathlib
+public import Instance.PadicComplex_GaloisAction
+
+@[expose] public section
 
 set_option autoImplicit false
 

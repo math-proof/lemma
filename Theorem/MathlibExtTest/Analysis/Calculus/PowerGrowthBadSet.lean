@@ -2,7 +2,7 @@
 
 
 import Def.Analysis.Calculus.PowerGrowthBadSet
-import Lemma.Real.Calculus.PowerGrowthBadSet
+import Theorem.Real.Calculus.PowerGrowthBadSet
 open MeasureTheory Set
 open scoped ENNReal
 

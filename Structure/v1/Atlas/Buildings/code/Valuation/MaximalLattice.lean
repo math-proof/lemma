@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Class.v1.Atlas.Buildings.code.Valuation.LatticesValuations
-import Lemma.Nat.IsInO
+module
 
+public import Class.v1.Atlas.Buildings.code.Valuation.LatticesValuations
+public import Theorem.Nat.IsInO
+
+
+public section
 
 namespace DVRContext
 

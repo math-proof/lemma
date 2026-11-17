@@ -8,9 +8,11 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.Reflection.HyperplaneChambers.Part4
-import Theorem.v1.Atlas.Buildings.code.Reflection.WallSeparationCorollary
-import Def.v1.Atlas.Buildings.code.Reflection.AffineWeylGroups
+module
+
+public import Def.v1.Atlas.Buildings.code.Reflection.HyperplaneChambers.Part4
+public import Theorem.v1.Atlas.Buildings.code.Reflection.WallSeparationCorollary
+public import Def.v1.Atlas.Buildings.code.Reflection.AffineWeylGroups
 set_option maxHeartbeats 800000
 
 open scoped InnerProductSpace
@@ -19,7 +21,7 @@ open Set
 set_option maxHeartbeats 800000
 
 
-noncomputable section
+public noncomputable section
 
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
 

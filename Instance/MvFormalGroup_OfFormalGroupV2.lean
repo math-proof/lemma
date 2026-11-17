@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_MvFormalGroup_OfFormalGroupV2.lean: instance decls only.
 import Class.MvFormalGroup_BasicV2
-import Lemma.FormalGroup.NSeries
+import Theorem.FormalGroup.NSeries
 import Def.FormalGroup_PointTransport
 import Mathlib.RingTheory.FormalGroup.Basic
 import Mathlib.RingTheory.MvPowerSeries.Rename

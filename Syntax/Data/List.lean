@@ -1,4 +1,10 @@
-import Notation.Fun
+module
+
+public meta import Lean
+public import Notation.Fun
+
+public meta section
+
 open Lean
 
 

@@ -1,10 +1,12 @@
-import Structure.AutomorphicForm_HeckeEigensystem
-import Instance.LanglandsTunnell_ArtinCoreCTM
+module
+
+public import Structure.AutomorphicForm_HeckeEigensystem
+public import Instance.LanglandsTunnell_ArtinCoreCTM
 
 open IsDedekindDomain NumberField
 open Deep.NTSupply LanglandsTunnell.P2.Artin
 
-noncomputable section
+public noncomputable section
 
 namespace AutomorphicForm.CyclicBaseChangeLifting
 

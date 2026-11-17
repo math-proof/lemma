@@ -1,5 +1,9 @@
-import Def.NumberField_AdelicFourier
-import Def.NumberField_AdelicVolume
+module
+
+public import Def.NumberField_AdelicFourier
+public import Def.NumberField_AdelicVolume
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/HamiltonianCycle.lean -/
 
 
-import Lemma.SimpleGraph.HamiltonianCycle
+import Theorem.SimpleGraph.HamiltonianCycle
 
 
 namespace MathlibExtTest.Combinatorics.SimpleGraph.HamiltonianCycle

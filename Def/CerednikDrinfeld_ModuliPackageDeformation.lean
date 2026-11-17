@@ -1,6 +1,9 @@
-import Mathlib
-import Lemma.MvPowerSeries.SpecialFormalModule
-import Def.CerednikDrinfeld_ModuliPackageDescent
+module
+
+public import Mathlib
+public import Def.CerednikDrinfeld_ModuliPackageDescent
+
+@[expose] public section
 
 set_option autoImplicit false
 

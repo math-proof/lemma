@@ -4,12 +4,17 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.NumberTheory.SelbergSieve
-import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.NumberTheory.SelbergSieve
+public import Mathlib.Algebra.BigOperators.Field
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 /-!
 # Selberg sieve level weights
 

@@ -2,7 +2,7 @@
 
 
 import Theorem.Analysis.Complex.Wiman.Filevych
-import Lemma.Complex.Wiman.Filevych
+import Theorem.Complex.Wiman.Filevych
 
 
 namespace Complex

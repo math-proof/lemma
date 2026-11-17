@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.MetricSpace.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+module
 
+public import Mathlib.Topology.MetricSpace.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+
+@[expose] public section
 
 namespace Integration
 

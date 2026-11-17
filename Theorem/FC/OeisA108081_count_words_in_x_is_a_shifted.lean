@@ -9,25 +9,28 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Def.FC.OeisA108081_count_words_in_x_is_a_shifted.Part2
+module
 
+public import Mathlib
+public import Def.FC.OeisA108081_count_words_in_x_is_a_shifted.Part2
+
+@[expose] public section
 
 namespace OeisA108081
 
 open Nat
 
 
-@[simp] lemma length_l (w : Word) : (l w).length = w.length := by
+@[simp] public theorem length_l (w : Word) : (l w).length = w.length := by
   simp [l]
 
-@[simp] lemma length_r (w : Word) : (r w).length = w.length := by
+@[simp] public theorem length_r (w : Word) : (r w).length = w.length := by
   simp [r]
 
-@[simp] lemma l_r (w : Word) : l (r w) = w := by
+@[simp] public theorem l_r (w : Word) : l (r w) = w := by
   simp [l, r, List.map_reverse, Function.comp_def]
 
-@[simp] lemma r_l (w : Word) : r (l w) = w := by
+@[simp] public theorem r_l (w : Word) : r (l w) = w := by
   simp [l, r, List.map_reverse, Function.comp_def]
 
 

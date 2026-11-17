@@ -16,10 +16,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Algebra.Ring.Parity
-import Mathlib.Combinatorics.SimpleGraph.Paths
-import Mathlib.Order.Lattice.Nat
-import Theorem.Combinatorics.SimpleGraph.Circumference
+module
+
+public import Mathlib.Algebra.Ring.Parity
+public import Mathlib.Combinatorics.SimpleGraph.Paths
+public import Mathlib.Order.Lattice.Nat
+public import Theorem.Combinatorics.SimpleGraph.Circumference
+
+@[expose] public section
+
 /-!
 # Cycle lengths and circumference
 

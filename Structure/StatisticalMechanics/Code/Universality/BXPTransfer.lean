@@ -9,11 +9,15 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Universality.Defs.Part7
-import Theorem.StatisticalMechanics.Code.Universality.STT.Part4
-import Theorem.StatisticalMechanics.Code.Universality.STTTransport.Part3
-import Theorem.StatisticalMechanics.Code.Universality.BXPTransfer
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Universality.Defs.Part7
+public import Theorem.StatisticalMechanics.Code.Universality.STT.Part4
+public import Theorem.StatisticalMechanics.Code.Universality.STTTransport.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.BXPTransfer
+public section
+
 open MeasureTheory Set
 open scoped ENNReal NNReal
 

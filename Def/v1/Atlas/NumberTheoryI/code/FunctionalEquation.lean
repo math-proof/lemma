@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.NumberTheory.LSeries.RiemannZeta
-import Mathlib.NumberTheory.LSeries.Nonvanishing
-import Mathlib.NumberTheory.ModularForms.JacobiTheta.OneVariable
-import Mathlib.Analysis.SpecialFunctions.Gamma.Beta
-import Abbrev.v1.Atlas.NumberTheoryI.code.FunctionalEquation
+module
+
+public import Mathlib.NumberTheory.LSeries.RiemannZeta
+public import Mathlib.NumberTheory.LSeries.Nonvanishing
+public import Mathlib.NumberTheory.ModularForms.JacobiTheta.OneVariable
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Beta
+public import Abbrev.v1.Atlas.NumberTheoryI.code.FunctionalEquation
+
+@[expose] public section
+
 open Complex hiding exp continuous_exp
 open Real Filter Topology Asymptotics
 

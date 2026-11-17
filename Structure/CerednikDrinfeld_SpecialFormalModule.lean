@@ -1,12 +1,14 @@
-import Mathlib
-import Structure.MvFormalGroup_BasicV2
-import Class.MvFormalGroup_BasicV2
-import Abbrev.CerednikDrinfeld_SpecialFormalModule
-import Def.MvFormalGroup_LinearPart
+module
+
+public import Mathlib
+public import Structure.MvFormalGroup_BasicV2
+public import Class.MvFormalGroup_BasicV2
+public import Abbrev.CerednikDrinfeld_SpecialFormalModule
+public import Def.MvFormalGroup_LinearPart
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 universe u v
 

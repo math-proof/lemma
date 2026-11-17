@@ -1,19 +1,24 @@
-import Mathlib.Analysis.Calculus.FDeriv.Basic
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Mathlib.Data.Matrix.Basic
-import Mathlib.Data.Matrix.Mul
-import Mathlib.Analysis.Calculus.FDeriv.Linear
-import Mathlib.Analysis.Calculus.Deriv.Add
-import Mathlib.Analysis.Calculus.Deriv.Comp
-import Mathlib.Analysis.Calculus.Deriv.Mul
-import Mathlib.Analysis.Calculus.Deriv.Prod
-import Mathlib.LinearAlgebra.Matrix.ToLin
-import Mathlib.Topology.Algebra.Module.FiniteDimension
-import Def.Analysis.Calculus.Jacobian
+module
+
+public import Mathlib.Analysis.Calculus.FDeriv.Basic
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Mathlib.Data.Matrix.Basic
+public import Mathlib.Data.Matrix.Mul
+public import Mathlib.Analysis.Calculus.FDeriv.Linear
+public import Mathlib.Analysis.Calculus.Deriv.Add
+public import Mathlib.Analysis.Calculus.Deriv.Comp
+public import Mathlib.Analysis.Calculus.Deriv.Mul
+public import Mathlib.Analysis.Calculus.Deriv.Prod
+public import Mathlib.LinearAlgebra.Matrix.ToLin
+public import Mathlib.Topology.Algebra.Module.FiniteDimension
+public import Def.Analysis.Calculus.Jacobian
+
 /-! # Jacobian matrices
 
 This file relates coordinate Jacobian matrices to Fréchet derivatives and proves their chain rule.
 -/
+
+public section
 
 
 namespace Real.Calculus.Jacobian

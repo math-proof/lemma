@@ -1,6 +1,10 @@
-import Def.WeierstrassCurve_OddOrderSummingSet
-import Def.WeierstrassCurve_VeluQuotientOfSums
-import Def.WeierstrassCurve_VeluOrderTwo
+module
+
+public import Def.WeierstrassCurve_OddOrderSummingSet
+public import Def.WeierstrassCurve_VeluQuotientOfSums
+public import Def.WeierstrassCurve_VeluOrderTwo
+
+@[expose] public section
 
 set_option autoImplicit false
 

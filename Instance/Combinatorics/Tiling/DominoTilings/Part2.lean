@@ -1,5 +1,10 @@
-import Mathlib
-import Def.Combinatorics.Tiling.DominoTilings.Part6
+module
+
+public import Mathlib
+public import Def.Combinatorics.Tiling.DominoTilings.Part6
+
+@[expose] public section
+
 open Finset BigOperators
 
 

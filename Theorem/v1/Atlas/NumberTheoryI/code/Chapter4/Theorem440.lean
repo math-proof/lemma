@@ -7,18 +7,22 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.EtaleAlgebras
-import Instance.v1.Atlas.NumberTheoryI.code.EtaleAlgebrasProps
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.EtaleAlgebrasProps
-import Mathlib.RingTheory.SimpleModule.IsAlgClosed
-import Mathlib.LinearAlgebra.Matrix.Unique
-import Mathlib.RingTheory.Unramified.Field
-import Mathlib.RingTheory.TensorProduct.Pi
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.FieldTheory.PrimitiveElement
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Mathlib.FieldTheory.SeparableClosure
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.EtaleAlgebras
+public import Instance.v1.Atlas.NumberTheoryI.code.EtaleAlgebrasProps
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.EtaleAlgebrasProps
+public import Mathlib.RingTheory.SimpleModule.IsAlgClosed
+public import Mathlib.LinearAlgebra.Matrix.Unique
+public import Mathlib.RingTheory.Unramified.Field
+public import Mathlib.RingTheory.TensorProduct.Pi
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.FieldTheory.PrimitiveElement
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Mathlib.FieldTheory.SeparableClosure
+
+public section
+
 universe u v
 
 

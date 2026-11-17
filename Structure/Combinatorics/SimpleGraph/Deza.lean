@@ -1,11 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Deza.lean -/
 
-import Mathlib.Combinatorics.SimpleGraph.Finite
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Finite
 /-! # Deza graphs
 
 This module introduces Deza graphs with parameters `(n, k, b, a)`,
 following Golubyatnikov (see https://arxiv.org/abs/2608.13089v1, lines 163--164).
 -/
+public section
+
+
 
 
 namespace SimpleGraph

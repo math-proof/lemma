@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Mathlib.Data.Sym.Card
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.RingTheory.Polynomial.HilbertPoly
-import Instance.v1.Atlas.AlgebraicGeometryI.code.GradedPolynomial
+module
+
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Mathlib.Data.Sym.Card
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.RingTheory.Polynomial.HilbertPoly
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.GradedPolynomial
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open MvPolynomial

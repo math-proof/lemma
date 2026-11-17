@@ -6,8 +6,14 @@ All rights reserved.
 Copyright (c) 2024 AlgebraicCombinatorics Contributors. All rights reserved.
 Authors: AlgebraicCombinatorics Contributors
 -/
-import Mathlib
-import Def.GroupTheory.Perm.Inversions1
+
+module
+
+public import Mathlib
+public import Def.GroupTheory.Perm.Inversions1
+
+@[expose] public section
+
 open Equiv Equiv.Perm Finset BigOperators
 
 variable {α : Type*} [DecidableEq α] [Fintype α]

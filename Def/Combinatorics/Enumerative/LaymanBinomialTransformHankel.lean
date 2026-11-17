@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/LaymanBinomialTransformHankel.lean -/
 
 import Def.Combinatorics.Enumerative.FallingKBinomialTransform
-import Lemma.Finset.Enumerative.FallingKBinomialTransform
+import Theorem.Finset.Enumerative.FallingKBinomialTransform
 import Def.NumberTheory.HankelTransform
 import Mathlib.Data.Nat.Choose.Vandermonde
 import Mathlib.LinearAlgebra.Matrix.Block

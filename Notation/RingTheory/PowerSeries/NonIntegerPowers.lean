@@ -2,9 +2,15 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.RingTheory.PowerSeries.ExpLog.Part6
-import Def.RingTheory.PowerSeries.NonIntegerPowers
+
+module
+
+public import Mathlib
+public import Def.RingTheory.PowerSeries.ExpLog.Part6
+public import Def.RingTheory.PowerSeries.NonIntegerPowers
+
+public section
+
 open scoped Polynomial PowerSeries
 open PowerSeries Finset
 

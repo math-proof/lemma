@@ -8,22 +8,27 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Basic
-import Mathlib.Combinatorics.SimpleGraph.Clique
-import Mathlib.Combinatorics.SimpleGraph.Copy
-import Mathlib.Combinatorics.SimpleGraph.Coloring
-import Mathlib.Combinatorics.SimpleGraph.Finite
-import Mathlib.Combinatorics.SimpleGraph.Bipartite
-import Mathlib.Combinatorics.SimpleGraph.Acyclic
-import Mathlib.Order.Filter.AtTopBot.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.MeasureTheory.Measure.Dirac
-import Mathlib.MeasureTheory.Constructions.SimpleGraph
-import Mathlib.Topology.MetricSpace.Pseudo.Lemmas
-import Mathlib.Analysis.Complex.ExponentialBounds
-import Mathlib.Topology.Algebra.Order.LiminfLimsup
-import Mathlib.Data.Finset.Lattice.Fold
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Basic
+public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Combinatorics.SimpleGraph.Copy
+public import Mathlib.Combinatorics.SimpleGraph.Coloring
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Mathlib.Combinatorics.SimpleGraph.Bipartite
+public import Mathlib.Combinatorics.SimpleGraph.Acyclic
+public import Mathlib.Order.Filter.AtTopBot.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.MeasureTheory.Measure.Dirac
+public import Mathlib.MeasureTheory.Constructions.SimpleGraph
+public import Mathlib.Topology.MetricSpace.Pseudo.Lemmas
+public import Mathlib.Analysis.Complex.ExponentialBounds
+public import Mathlib.Topology.Algebra.Order.LiminfLimsup
+public import Mathlib.Data.Finset.Lattice.Fold
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open scoped Classical

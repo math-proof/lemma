@@ -1,15 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Calculus/Jacobian.lean -/
+module
 
-
-import Theorem.Analysis.Calculus.Jacobian
-import Mathlib.Analysis.Calculus.FDeriv.Linear
-import Mathlib.Analysis.Calculus.FDeriv.Mul
-import Mathlib.Analysis.Calculus.FDeriv.Prod
-import Mathlib.LinearAlgebra.Matrix.ToLin
-import Mathlib.Topology.Algebra.Module.FiniteDimension
+public import Theorem.Analysis.Calculus.Jacobian
+public import Mathlib.Analysis.Calculus.FDeriv.Linear
+public import Mathlib.Analysis.Calculus.FDeriv.Mul
+public import Mathlib.Analysis.Calculus.FDeriv.Prod
+public import Mathlib.LinearAlgebra.Matrix.ToLin
+public import Mathlib.Topology.Algebra.Module.FiniteDimension
 open MetaMathlibExt
 open scoped Matrix
 
+public section
 
 -- Composing two matrix actions multiplies their Jacobian matrices.
 example {m n p : ℕ} (M : Matrix (Fin p) (Fin n) ℝ)

@@ -7,17 +7,22 @@ Weyl's equidistribution criterion: a real sequence is equidistributed modulo 1
 if and only if every nontrivial Fourier mean vanishes.
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Analysis.Fourier.AddCircle
-import Mathlib.Topology.Instances.AddCircle.Defs
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.Algebra.Field.GeomSum
-import Mathlib.Analysis.SpecialFunctions.Complex.Log
-import Mathlib.Algebra.Order.Floor.Ring
-import Mathlib.Algebra.Order.Floor.Defs
-import Mathlib.Algebra.Order.Floor.Semiring
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Analysis.Fourier.AddCircle
+public import Mathlib.Topology.Instances.AddCircle.Defs
+public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.Algebra.Field.GeomSum
+public import Mathlib.Analysis.SpecialFunctions.Complex.Log
+public import Mathlib.Algebra.Order.Floor.Ring
+public import Mathlib.Algebra.Order.Floor.Defs
+public import Mathlib.Algebra.Order.Floor.Semiring
+
+@[expose] public section
+
 open scoped BigOperators
 open Filter Topology
 

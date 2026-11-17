@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Probability/Statistics/NeymanPearson.lean -/
 
 
-import Lemma.Measure.Statistics.NeymanPearson
+import Theorem.Measure.Statistics.NeymanPearson
 open MeasureTheory MathlibExt.Probability.Statistics.NeymanPearson
 
 /-!

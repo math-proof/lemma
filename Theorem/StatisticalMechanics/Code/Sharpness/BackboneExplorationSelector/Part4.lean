@@ -7,14 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib
-import Structure.StatisticalMechanics.Code.Sharpness.BackboneExplorationSelector.Part3
+public import Mathlib
+public import Structure.StatisticalMechanics.Code.Sharpness.BackboneExplorationSelector.Part3
 open Finset
 
 set_option linter.unusedSectionVars false
 
+public section
 
 namespace StatMech.Sharpness
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Structure.RibetLevelLowering_ExchangeData
+module
+
+public import Mathlib
+public import Structure.RibetLevelLowering_ExchangeData
+
+@[expose] public section
 
 open Module
 

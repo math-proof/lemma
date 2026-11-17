@@ -1,6 +1,5 @@
 import Mathlib
 import Lemma.Scheme.TwoAffineOpenCover
-import Lemma.HahnSeries.TwoChartCechLaurentChart
 
 set_option autoImplicit false
 

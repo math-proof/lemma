@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Mathlib
 import Def.v1.Atlas.AlgebraNotes.code.DiscreteGroups
-import Lemma.Matrix.MulMul_ConstVAdd.eq.ConstVAdd
+import Theorem.Matrix.MulMul_ConstVAdd.eq.ConstVAdd
 
 
 namespace SymmetryGroups

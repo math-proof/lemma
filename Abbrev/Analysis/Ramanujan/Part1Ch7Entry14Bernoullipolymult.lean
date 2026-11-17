@@ -6,8 +6,8 @@ Authors: Adam Kiezun, Muse Spark 1.3, @akiezun, Avocado, Codex
 
 import Mathlib.NumberTheory.Bernoulli
 import Theorem.Analysis.Ramanujan.Part1Ch7DirichletBeta
-import Lemma.Complex.Part1Ch7DirichletBeta
-import Lemma.Real.Part1Ch7Entry13Bernoullipolyadd
+import Theorem.Complex.Part1Ch7DirichletBeta
+import Theorem.Real.Part1Ch7Entry13Bernoullipolyadd
 import Lemma.Real.Ramanujan.Part1Ch7Entry14Bernoulliasymptotic
 import Lemma.Real.ExpSubOneMittagLeffler
 import Def.Analysis.Ramanujan.Part1Ch7Entry13Bernoullipolyadd

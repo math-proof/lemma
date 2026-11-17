@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.InfiniteWord.Factor
-import Lemma.Finset.InfiniteWord.Factor
+import Theorem.Finset.InfiniteWord.Factor
 import Lean.Elab.Tactic.Omega
 
 

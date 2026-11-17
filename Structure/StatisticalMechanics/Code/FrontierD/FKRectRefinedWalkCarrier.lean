@@ -9,13 +9,15 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedIntersection.Part7
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectSquareCoverDartList
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedIntersection.Part7
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectSquareCoverDartList
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure FKRectRefinedWalkCarrier
     (R : FKRectTorus) {G : SimpleGraph R.Vertex}

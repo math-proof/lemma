@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/ListColoring.lean -/
 
-import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
+
+@[expose] public section
+
 /-!
 # List colorings of simple graphs
 

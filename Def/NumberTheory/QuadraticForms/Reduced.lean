@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/QuadraticForms/Reduced.lean -/
 
-import Mathlib.Algebra.QuadraticDiscriminant
+module
+
+public import Mathlib.Algebra.QuadraticDiscriminant
+
+@[expose] public section
+
 /-!
 # Gauss-reduced integral binary quadratic forms
 

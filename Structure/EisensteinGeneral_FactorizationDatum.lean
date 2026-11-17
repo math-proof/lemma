@@ -1,6 +1,10 @@
-import Def.AutomorphicForm_WeylIntertwining
-import Def.NumberField_TateGlobalZeta
-import Def.LanglandsTunnell_TateLocalConstantsAt
+module
+
+public import Def.AutomorphicForm_WeylIntertwining
+public import Def.NumberField_TateGlobalZeta
+public import Def.LanglandsTunnell_TateLocalConstantsAt
+
+public section
 
 set_option autoImplicit false
 

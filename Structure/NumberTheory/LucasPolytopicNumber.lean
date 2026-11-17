@@ -1,8 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LucasPolytopicNumber.lean -/
 
-import Mathlib.Algebra.BigOperators.GroupWithZero.Finset
-import Mathlib.Data.Real.Basic
-import Def.NumberTheory.LucasPolytopicNumber
+module
+
+public import Mathlib.Algebra.BigOperators.GroupWithZero.Finset
+public import Mathlib.Data.Real.Basic
+public import Def.NumberTheory.LucasPolytopicNumber
+public section
+
 open scoped BigOperators
 
 /-!

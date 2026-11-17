@@ -2,7 +2,7 @@
 
 
 import Def.GroupTheory.GHarmonic
-import Lemma.Set.IsGHarmonicG.of.PairwiseDisjoint.All_EqIndex.All_Gt_0
+import Theorem.Set.IsGHarmonicG.of.PairwiseDisjoint.All_EqIndex.All_Gt_0
 import Mathlib.Algebra.Group.TypeTags.Finite
 open scoped Pointwise
 

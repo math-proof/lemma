@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/Index.lean -/
+module
 
-import Mathlib.Algebra.FreeMonoid.Basic
-import Mathlib.Combinatorics.Enumerative.Composition
-import Mathlib.Data.PNat.Basic
-import Def.NumberTheory.MultipleZeta.Index
+public import Mathlib.Algebra.FreeMonoid.Basic
+public import Mathlib.Combinatorics.Enumerative.Composition
+public import Mathlib.Data.PNat.Basic
+public import Def.NumberTheory.MultipleZeta.Index
+
 /-!
 # Multiple-zeta indices
 
@@ -26,6 +28,8 @@ representations, and Hoffman blocks in a two-letter free monoid.
 * `MetaMathlibExt.MultipleZeta.Index.isAdmissible_iff`
 * `MetaMathlibExt.MultipleZeta.toList_hoffmanBlock`
 -/
+
+public section
 
 
 namespace MetaMathlibExt.MultipleZeta

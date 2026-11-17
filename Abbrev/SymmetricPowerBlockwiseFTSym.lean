@@ -1,8 +1,10 @@
-import Def.SymmetricPowerPowerSeriesFTSym
+module
+
+public import Def.SymmetricPowerPowerSeriesFTSym
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace MvPowerSeries
 

@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.MarkedStepInAMarkedDyckPath.Part2
-import Lemma.Finset.Enumerative.MarkedStepInAMarkedDyckPath
+import Theorem.Finset.Enumerative.MarkedStepInAMarkedDyckPath
 
 
 namespace MetaMathlibExt

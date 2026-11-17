@@ -1,7 +1,12 @@
-import Mathlib.Data.Fintype.Basic
-import Mathlib.Data.Finset.Max
-import Def.Probability.Quantile
-import Class.Probability.Decision.Risk.ValueAtRisk
+module
+
+public import Mathlib.Data.Fintype.Basic
+public import Mathlib.Data.Finset.Max
+public import Def.Probability.Quantile
+public import Class.Probability.Decision.Risk.ValueAtRisk
+
+@[expose] public section
+
 open MeasureTheory
 
 universe u

@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Abbrev.StatisticalMechanics.Code.Exact3D.SurfaceTensionConvexity
+module
 
+public import Mathlib
+public import Abbrev.StatisticalMechanics.Code.Exact3D.SurfaceTensionConvexity
+
+@[expose] public section
 
 namespace StatMech
 

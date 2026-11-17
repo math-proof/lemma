@@ -7,6 +7,7 @@ import Instance.Probability.Process.HiddenMarkovSequence
 import Instance.NNReal.Coe
 import Def.Probability.ChiSquare
 import Lemma.Measure.MapPi_GaussianReal.eq.ProdChiSquareS.of.Gt_1.Gt_1
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Fun Measure
 open scoped NNReal
 set_option maxHeartbeats 800000
@@ -226,3 +227,4 @@ private lemma main
   exact hφ.fun_comp hgrid
 
 -- created on 2026-10-31
+-- updated on 2026-11-17

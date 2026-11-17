@@ -1,4 +1,6 @@
-import Mathlib
+module
+
+public import Mathlib
 
 set_option autoImplicit false
 
@@ -7,7 +9,7 @@ open Function MulAction
 
 namespace HeckePair
 
-noncomputable section
+public noncomputable section
 
 variable {G : Type*} [Group G] (U : Subgroup G)
 

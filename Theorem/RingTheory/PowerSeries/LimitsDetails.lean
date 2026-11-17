@@ -8,8 +8,8 @@ Authors: AlgebraicCombinatorics Contributors
 -/
 import Mathlib
 import Def.RingTheory.PowerSeries.Limits.Part2
-import Lemma.PowerSeries.Limits
-import Lemma.PowerSeries.XnEquivalence
+import Theorem.PowerSeries.Limits
+import Theorem.PowerSeries.XnEquivalence
 open scoped Polynomial
 
 /-!

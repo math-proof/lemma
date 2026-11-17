@@ -8,20 +8,22 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Functor
-import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.CategoryTheory.Linear.Basic
-import Mathlib.Algebra.Category.ModuleCat.Basic
-import Mathlib.Algebra.Category.ModuleCat.Monoidal.Basic
-import Mathlib.Algebra.Algebra.Equiv
-import Mathlib.RingTheory.Bialgebra.Basic
-import Mathlib.CategoryTheory.Functor.Category
-import Mathlib.CategoryTheory.Preadditive.FunctorCategory
-import Mathlib.CategoryTheory.Linear.FunctorCategory
-import Abbrev.v1.Atlas.TensorCategories.code.QuasiBialgebra
-import Abbrev.v1.Atlas.TensorCategories.code.QuasiTensorFunctor.Part5
-import Lemma.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctor
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Functor
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.CategoryTheory.Linear.Basic
+public import Mathlib.Algebra.Category.ModuleCat.Basic
+public import Mathlib.Algebra.Category.ModuleCat.Monoidal.Basic
+public import Mathlib.Algebra.Algebra.Equiv
+public import Mathlib.RingTheory.Bialgebra.Basic
+public import Mathlib.CategoryTheory.Functor.Category
+public import Mathlib.CategoryTheory.Preadditive.FunctorCategory
+public import Mathlib.CategoryTheory.Linear.FunctorCategory
+public import Abbrev.v1.Atlas.TensorCategories.code.QuasiBialgebra
+public import Abbrev.v1.Atlas.TensorCategories.code.QuasiTensorFunctor.Part5
+public import Theorem.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctor
 set_option maxHeartbeats 800000
 set_option autoImplicit false
 
@@ -31,7 +33,7 @@ open TensorCategories
 universe u v w
 
 
-noncomputable section
+public noncomputable section
 
 /-- The bialgebra structure on `End F` for a fiber functor `F : C ⥤ ModuleCat k`,
 packaging the algebra and bialgebra instances required by Theorem 1.21.1. -/

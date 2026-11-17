@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean -/
 
-import Def.CPythonListsort.Code.Assembly.AccessTrace.Part9
-import Def.CPythonListsort.Code.Transcription.Gallop.Part2
-import Def.CPythonListsort.Code.Transcription.TempStorageInvariant
-import Mathlib
+module
+
+public import Def.CPythonListsort.Code.Assembly.AccessTrace.Part9
+public import Def.CPythonListsort.Code.Transcription.Gallop.Part2
+public import Def.CPythonListsort.Code.Transcription.TempStorageInvariant
+public import Mathlib
 /-!
 # Shared traced gallop safety support
 
@@ -27,7 +29,7 @@ variable {κ : Type u} {ν : Type v}
 
 /-- Storage searched by a gallop.  `base` is the physical index corresponding
 to logical index zero of the searched run. -/
-inductive GallopKeySource (κ : Type u) (ν : Type v) where
+public inductive GallopKeySource (κ : Type u) (ν : Type v) where
   | main (slice : SortSlice κ ν) (base : Int)
   | temporary (storage : TempStorage κ ν) (base : Int)
 

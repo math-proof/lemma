@@ -1,5 +1,6 @@
 import Structure.Dynamics.Lyapunov
 import Lemma.Random.Any_Ge_0AndAeLeNorm.of.All_Gt_0.Any_LipschitzWith.Any_Ge_0AndAeAll_LeNormMulMulSquare.Any_Ge_0AndAeAll_LeNormMulMul.Iterates
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory
 
 
@@ -37,3 +38,4 @@ private lemma main
 
 
 -- created on 2026-09-26
+-- updated on 2026-11-17

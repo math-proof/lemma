@@ -9,11 +9,15 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldAdaptiveEndpoint.Part9
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarCrossingGluing.Part2
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarStrictCriticalAssembly
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarStrictNoCoexistenceClosure.Part2
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldAspectComparison.Part2
+module
+
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldAdaptiveEndpoint.Part9
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarCrossingGluing.Part2
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarStrictCriticalAssembly
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarStrictNoCoexistenceClosure.Part2
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldAspectComparison.Part2
+public section
+
 open Filter MeasureTheory Set Topology
 
 

@@ -4,9 +4,14 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Pow.Complex
-import Mathlib.Basic.Complex.Basic
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Pow.Complex
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 7: power-difference series
 

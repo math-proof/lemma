@@ -15,7 +15,7 @@ import Mathlib.Analysis.Calculus.MeanValue
 import Mathlib.Analysis.Calculus.Deriv.Shift
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 import Structure.v1.Atlas.DifferentialGeometry.code.Manifolds.Part6
-import Lemma.Real.Atlas.v1.DifferentialGeometry.code.Manifolds
+import Theorem.Real.Atlas.v1.DifferentialGeometry.code.Manifolds
 import Lemma.Real.Atlas.v1.DifferentialGeometry.code.Intrinsic
 import Mathlib.Analysis.Convex.StrictConvexSpace
 import Mathlib.Analysis.InnerProductSpace.Convex

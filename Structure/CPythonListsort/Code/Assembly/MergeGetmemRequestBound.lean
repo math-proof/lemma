@@ -1,10 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeGetmemRequestBound.lean -/
 
-import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopLeftSafety
-import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopRightSafety
-import Def.CPythonListsort.Code.Policy.PendingLayout
-import Theorem.CPythonListsort.Code.Transcription.MergeAt
-import Mathlib
+module
+
+public import Def.CPythonListsort.Code.Policy.PendingLayout
+public import Mathlib
+public import Structure.CPythonListsort.Code.Transcription.MergeAt.Part3
+public import Structure.CPythonListsort.Code.Transcription.MergeState.Part3
+public import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
+public import Def.CPythonListsort.Code.Transcription.Word
+public import Def.CPythonListsort.Code.Transcription.MergeAt.Part3
 /-!
 # `merge_getmem` call-site request bound
 
@@ -14,6 +18,9 @@ the run-span bound comes from `PendingLayout`, and both trim bounds come from
 the public gallop safety theorems applied to the concrete gallop equations in
 the call-site certificate.  Neither bound is assumed by the public theorem.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.ArithmeticFunction.DedekindPsi
-import Lemma.Nat.ArithmeticFunction.DedekindPsi
+import Theorem.Nat.ArithmeticFunction.DedekindPsi
 open ArithmeticFunction
 
 

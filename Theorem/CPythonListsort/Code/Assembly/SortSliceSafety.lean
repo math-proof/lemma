@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean -/
 
-import Def.CPythonListsort.Code.Assembly.AccessTrace.Part9
-import Mathlib
-import Def.CPythonListsort.Code.Assembly.SortSliceSafety
+module
+
+public import Def.CPythonListsort.Code.Assembly.AccessTrace.Part9
+public import Mathlib
+public import Def.CPythonListsort.Code.Assembly.SortSliceSafety
+public import Def.CPythonListsort.Code.Assembly.AccessTrace.Part8
+
+public section
 /-!
 # Safety of the `sortslice` movement primitives
 
@@ -27,7 +32,7 @@ namespace SortSlice
 
 /-- Rejected same-backing overlap produces neither a partial access trace nor
 an observable traced result, and still obeys exact erasure. -/
-theorem memcpyTraced_sameBacking_overlap_rejected (valuesPresent : Bool)
+public theorem memcpyTraced_sameBacking_overlap_rejected (valuesPresent : Bool)
     (count : Nat) (destination : SortSlice κ ν) (dst src : Int)
     (hoverlap : ¬ MemcpyRangesDisjoint dst src count) :
     (memcpyTraced? valuesPresent count destination .sameBacking dst src).result = none ∧
@@ -36,7 +41,7 @@ theorem memcpyTraced_sameBacking_overlap_rejected (valuesPresent : Bool)
       (memcpyTraced? valuesPresent count destination .sameBacking dst src).erase =
         memcpy? count destination .sameBacking dst src := by
   simp [memcpyTraced?, memcpy?, MemcpySource.Admissible, hoverlap,
-    TraceResult.failure, TraceResult.erase]
+    AccessTrace.TraceResult.failure, AccessTrace.TraceResult.erase]
 
 end SortSlice
 end CPythonListsort

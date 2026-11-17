@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/LabosPrime.lean -/
+module
 
+public import Def.NumberTheory.LabosPrime
+public import Mathlib.Tactic
 
-import Def.NumberTheory.LabosPrime
-import Mathlib.Tactic
-
+public section
 
 namespace MetaMathlibExt
 

@@ -1,4 +1,8 @@
-import Mathlib.NumberTheory.ModularForms.SlashActions
+module
+
+public import Mathlib.NumberTheory.ModularForms.SlashActions
+
+@[expose] public section
 
 set_option autoImplicit false
 

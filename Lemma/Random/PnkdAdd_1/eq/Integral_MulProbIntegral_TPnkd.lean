@@ -2,6 +2,8 @@ import Lemma.Random.Pnkd.eq.Integral
 import Lemma.Random.WAdd_1.eq.Integral_MulProbIntegral_TW.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Lemma.Real.Norm_Eq12.le.One
 import Lemma.Real.StronglyMeasurable_Eq12
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Real
 
 
@@ -31,4 +33,4 @@ private lemma main
 
 
 -- created on 2026-11-13
--- updated on 2026-11-16
+-- updated on 2026-11-17

@@ -9,9 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra.Part3
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticLinearAlgebra
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.MoserDarboux
 import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
 import Structure.v1.Atlas.GeometryOfManifolds.code.MoserDarboux.Part2
 import Def.v1.Atlas.GeometryOfManifolds.code.BlockMatrixLp
@@ -25,7 +22,6 @@ set_option autoImplicit false
 open Module FiniteDimensional
 open SymplecticLinearAlgebra
 open DifferentialFormSpace
-
 
 /-- Axiomatic existence of `TubularNeighborhoodGeometricData` for any closed
 Lagrangian submanifold $X$ of a symplectic manifold $(M, \omega)$. -/
@@ -47,7 +43,6 @@ class HasMoserInfrastructure
       (∀ {p : ℕ} (α : Ω p), φ_inv.pullback (φ.pullback α) = α) ∧
       (∀ {p : ℕ} (α : Ω p), φ.pullback (φ_inv.pullback α) = α) ∧
       (∀ {p : ℕ} (α : Ω p), i.pullback (φ.pullback α) = i.pullback α)
-
 
 /-- All the geometric and Moser-flow data needed to prove Weinstein's Lagrangian
 neighborhood theorem: a common neighborhood $U$ of $X$ with two symplectic forms

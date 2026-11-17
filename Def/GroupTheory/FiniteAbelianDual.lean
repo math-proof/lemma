@@ -4,10 +4,13 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Algebra.Group.AddChar
-import Mathlib.Basic.Complex.Basic
-import Mathlib.Analysis.Fourier.FiniteAbelian.PontryaginDuality
+module
 
+public import Mathlib.Algebra.Group.AddChar
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.Analysis.Fourier.FiniteAbelian.PontryaginDuality
+
+@[expose] public section
 
 namespace MathlibExt.GroupTheory.FiniteAbelianDualWanted
 

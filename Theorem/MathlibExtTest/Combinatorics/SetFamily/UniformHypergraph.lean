@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.SetFamily.UniformHypergraph
-import Lemma.Finset.SetFamily.UniformHypergraph
+import Theorem.Finset.SetFamily.UniformHypergraph
 
 
 example {V : Type*} (H : Finset (Finset V)) :

@@ -1,6 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean -/
 
-import Def.CPythonListsort.Code.Assembly.MergeMemcpyProvenance
+module
+
+public import Def.CPythonListsort.Code.Assembly.MergeMemcpyProvenance
 /-!
 # Typed trace support for merge movement
 
@@ -28,7 +30,7 @@ open SortSlice
 /-! ## Call-site provenance -/
 
 /-- The closed union of the six classified merge `memcpy` sites. -/
-inductive MergeMemcpySite where
+public inductive MergeMemcpySite where
   | lo (site : MergeLoMemcpyCallsite)
   | hi (site : MergeHiMemcpyCallsite)
   deriving DecidableEq, Repr

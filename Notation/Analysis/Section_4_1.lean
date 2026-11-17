@@ -1,6 +1,11 @@
-import Mathlib
-import Mathlib.Algebra.Group.MinimalAxioms
-import Abbrev.Analysis.Section_4_1
+module
+
+public import Mathlib
+public import Mathlib.Algebra.Group.MinimalAxioms
+public import Abbrev.Analysis.Section_4_1
+
+public section
+
 set_option doc.verso.suggestions false
 
 /-!

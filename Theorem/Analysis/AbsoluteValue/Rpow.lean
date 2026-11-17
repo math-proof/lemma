@@ -1,11 +1,16 @@
-import Mathlib.Analysis.MeanInequalitiesPow
-import Def.Analysis.AbsoluteValue.Rpow.Part2
+module
+
+public import Mathlib.Analysis.MeanInequalitiesPow
+public import Def.Analysis.AbsoluteValue.Rpow.Part2
+
 /-!
 # Real powers of absolute values
 
 For `0 < c ≤ 1`, the function `x ↦ (v x) ^ c` is again an absolute value.
 The triangle inequality follows from monotonicity and subadditivity of `Real.rpow`.
 -/
+
+public section
 
 
 noncomputable section

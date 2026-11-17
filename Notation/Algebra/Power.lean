@@ -1,4 +1,8 @@
-import Mathlib.Data.Finset.Basic
+module
+
+public import Mathlib.Data.Finset.Basic
+
+public section
 
 
 notation:max x "²" => x ^ 2  -- square

@@ -1,7 +1,10 @@
-import Def.Data.List.Slice
-import Def.Data.List.List.Basic
+module
+
+public import Def.Data.List.Slice
+public import Def.Data.List.List.Basic
 open Lean
 
+public section
 
 @[simp]
 theorem Function.getSliceFrom_apply (f : ℕ → α) (t k : ℕ) : f[t:] k = f (t + k) := rfl

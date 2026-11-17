@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.PowerFree
-import Lemma.Nat.PowerFree
+import Theorem.Nat.PowerFree
 /-!
 # Examples for power-free natural numbers
 -/

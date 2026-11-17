@@ -1,22 +1,24 @@
-import Mathlib.Analysis.Calculus.FDeriv.Basic
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Mathlib.Analysis.LocallyConvex.Separation
-import Mathlib.Analysis.Calculus.FDeriv.Comp
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Mathlib.Analysis.Calculus.Deriv.Comp
-import Mathlib.Analysis.Calculus.Deriv.Add
-import Mathlib.Analysis.Calculus.Deriv.Mul
-import Mathlib.Analysis.Calculus.Deriv.Slope
-import Mathlib.Analysis.Convex.Basic
-import Mathlib.LinearAlgebra.LinearIndependent.Defs
-import Mathlib.LinearAlgebra.Pi
-import Mathlib.Algebra.BigOperators.Group.Finset.Defs
-import Mathlib.Algebra.Group.Pointwise.Set.Basic
-import Mathlib.Topology.Order.Basic
-import Mathlib.Topology.Basic
-import Mathlib.Order.Filter.Basic
-import Mathlib.Analysis.Normed.Module.Basic
-import Mathlib.Basic.Real.Basic
+module
+
+public import Mathlib.Analysis.Calculus.FDeriv.Basic
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.Analysis.LocallyConvex.Separation
+public import Mathlib.Analysis.Calculus.FDeriv.Comp
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Mathlib.Analysis.Calculus.Deriv.Comp
+public import Mathlib.Analysis.Calculus.Deriv.Add
+public import Mathlib.Analysis.Calculus.Deriv.Mul
+public import Mathlib.Analysis.Calculus.Deriv.Slope
+public import Mathlib.Analysis.Convex.Basic
+public import Mathlib.LinearAlgebra.LinearIndependent.Defs
+public import Mathlib.LinearAlgebra.Pi
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Algebra.Group.Pointwise.Set.Basic
+public import Mathlib.Topology.Order.Basic
+public import Mathlib.Topology.Basic
+public import Mathlib.Order.Filter.Basic
+public import Mathlib.Analysis.Normed.Module.Basic
+public import Mathlib.Basic.Real.Basic
 open scoped Topology Pointwise
 
 /-!
@@ -30,6 +32,8 @@ the active constraints, a strict descent direction would contradict local
 minimality along `t ↦ x + t • d`, so the alternative supplies nonnegative
 multipliers with complementarity and stationarity.
 -/
+
+public section
 
 
 namespace Convex.KarushKuhnTucker

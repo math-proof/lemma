@@ -1,8 +1,13 @@
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.Calculus.FDeriv.Defs
-import Mathlib.Analysis.Complex.Liouville
-import Mathlib.Analysis.Complex.LocallyUniformLimit
-import Mathlib.Topology.ContinuousMap.Bounded.ArzelaAscoli
+module
+
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Calculus.FDeriv.Defs
+public import Mathlib.Analysis.Complex.Liouville
+public import Mathlib.Analysis.Complex.LocallyUniformLimit
+public import Mathlib.Topology.ContinuousMap.Bounded.ArzelaAscoli
+
+@[expose] public section
+
 open Set Filter Topology
 
 /-!

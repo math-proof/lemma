@@ -2,7 +2,7 @@
 
 import Mathlib.Data.Finset.Card
 import Def.Combinatorics.SetFamily.UniformHypergraph
-import Lemma.Finset.SetFamily.UniformHypergraph
+import Theorem.Finset.SetFamily.UniformHypergraph
 /-!
 # Independent sets and Steiner triple systems in finite hypergraphs
 

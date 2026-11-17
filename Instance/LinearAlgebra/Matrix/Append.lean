@@ -1,6 +1,9 @@
-import Mathlib.Data.Fin.Tuple.Basic
-import Mathlib.Data.Matrix.Basic
+module
 
+public import Mathlib.Data.Fin.Tuple.Basic
+public import Mathlib.Data.Matrix.Basic
+
+@[expose] public section
 
 namespace Matrix
 

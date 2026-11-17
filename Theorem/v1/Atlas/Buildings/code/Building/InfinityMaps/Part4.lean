@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.Buildings.code.Building.InfinityConstruction.Part3
-import Lemma.Set.PointsAtInfinity.of.Vertices
-import Lemma.Finset.LabelMap.eq.ImageLabelMap.of.EqLabelMap_Head_ImageLabelMap_Head.IsChainAdjacent.Ne.All_EqLabelMap_ImageLabelMap
+import Theorem.Set.PointsAtInfinity.of.Vertices
+import Theorem.Finset.LabelMap.eq.ImageLabelMap.of.EqLabelMap_Head_ImageLabelMap_Head.IsChainAdjacent.Ne.All_EqLabelMap_ImageLabelMap
 import Def.v1.Atlas.Buildings.code.Building.Labels
 import Mathlib.Data.NNReal.Basic
 import Def.v1.Atlas.Buildings.code.Building.InfinityMaps.Part5

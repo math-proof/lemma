@@ -1,8 +1,10 @@
-import Structure.AlgebraicCurve_TotallyDegenerateCovering
+module
+
+public import Structure.AlgebraicCurve_TotallyDegenerateCovering
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace CerednikDrinfeld
 

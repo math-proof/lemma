@@ -8,8 +8,11 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Order.Fin.Basic
+module
 
+public import Mathlib.Order.Fin.Basic
+
+@[expose] public section
 
 /-- Given a $(p+1)$-tuple `vs` and an index $i$, returns the $p$-tuple obtained by
 omitting the $i$-th entry, used in defining the alternating expansions of forms. -/

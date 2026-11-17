@@ -1,12 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/MergeLoInvariant.lean -/
 
-import Def.CPythonListsort.Code.Assembly.GallopCorrectness
-import Structure.CPythonListsort.Code.Assembly.MergeLoSafety.Part4
-import Structure.CPythonListsort.Code.Correctness.MergeSemanticPre
-import Def.CPythonListsort.Code.Correctness.MergeMovementCorrectness.Part2
-import Def.CPythonListsort.Code.Correctness.SortSliceRange
-import Def.CPythonListsort.Code.Correctness.StableMerge
-import Def.CPythonListsort.Code.Correctness.MergeLoInvariant.Part2
+module
+
+public import Def.CPythonListsort.Code.Assembly.GallopCorrectness
+public import Structure.CPythonListsort.Code.Assembly.MergeLoSafety.Part4
+public import Structure.CPythonListsort.Code.Correctness.MergeSemanticPre
+public import Def.CPythonListsort.Code.Correctness.MergeMovementCorrectness.Part2
+public import Def.CPythonListsort.Code.Correctness.SortSliceRange
+public import Def.CPythonListsort.Code.Correctness.StableMerge
+public import Def.CPythonListsort.Code.Correctness.MergeLoInvariant.Part2
 /-!
 # Semantic invariant for `merge_lo`
 
@@ -17,6 +19,9 @@ and the live main-data suffix to one shared stable-merge target.  Keeping this
 layer separate prevents correctness-only order hypotheses from leaking into
 the arbitrary-comparator safety theorem.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

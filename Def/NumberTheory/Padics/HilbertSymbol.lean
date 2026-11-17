@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Padics/HilbertSymbol.lean -/
 
-import Mathlib.NumberTheory.Padics.PadicNumbers
+module
+
+public import Mathlib.NumberTheory.Padics.PadicNumbers
+
+@[expose] public section
+
 /-!
 # The p-adic Hilbert symbol
 

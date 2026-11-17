@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/KMahlerFunction.lean -/
 
-import Mathlib.Data.Complex.Basic
-import Mathlib.RingTheory.PowerSeries.Basic
+module
+
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.RingTheory.PowerSeries.Basic
+
+@[expose] public section
+
 open scoped BigOperators
 
 

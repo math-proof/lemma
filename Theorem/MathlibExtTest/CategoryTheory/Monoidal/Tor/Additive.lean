@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/CategoryTheory/Monoidal/Tor/Additive.lean -/
+module
 
+public import Mathlib.Algebra.Category.ModuleCat.Abelian
+public import Mathlib.Algebra.Category.ModuleCat.Monoidal.Basic
+public import Mathlib.Algebra.Category.ModuleCat.Projective
+public import Instance.CategoryTheory.Abelian.LeftDerived.Additive
+public import Instance.CategoryTheory.Monoidal.Tor.Additive
 
-import Mathlib.Algebra.Category.ModuleCat.Abelian
-import Mathlib.Algebra.Category.ModuleCat.Monoidal.Basic
-import Mathlib.Algebra.Category.ModuleCat.Projective
-import Instance.CategoryTheory.Abelian.LeftDerived.Additive
-import Instance.CategoryTheory.Monoidal.Tor.Additive
 /-!
 # Compile-time checks for additivity of `Tor`
 
@@ -13,6 +14,8 @@ Typeclass inference provides additivity and finite (co)product preservation
 for each functor `(Tor C n).obj M`, and additivity of left-derived functors
 of additive functors.
 -/
+
+public section
 
 
 namespace CategoryTheory

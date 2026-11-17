@@ -8,9 +8,11 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.StatisticalMechanics.Code.Universality.IsingFermionicSquareBox.Part39
-import Mathlib.Logic.Equiv.Fintype
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredCompletion.Part6
+module
+
+public import Def.StatisticalMechanics.Code.Universality.IsingFermionicSquareBox.Part39
+public import Mathlib.Logic.Equiv.Fintype
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredCompletion.Part6
 
 
 namespace StatMech.Universality
@@ -21,7 +23,7 @@ open StatMech StatMech.FK StatMech.Lattice StatMech.FrontierD
 
 noncomputable section
 
-inductive FKIsingSquareWiredCarrier (n : Nat)
+public inductive FKIsingSquareWiredCarrier (n : Nat)
   | dart : FKIsingMedialDart (fkSquareBoxPlanar n) →
       FKIsingSquareWiredCarrier n
   | bond : FKIsingMedialDart (fkSquareBoxPlanar n) →

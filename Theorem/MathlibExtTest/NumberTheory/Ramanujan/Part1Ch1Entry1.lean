@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Ramanujan/Part1Ch1Entry1.lean -/
 
 
-import Lemma.Nat.Ramanujan.Part1Ch1Entry1
+import Theorem.Nat.Ramanujan.Part1Ch1Entry1
 
 
 namespace MathlibExtTest.NumberTheory.Ramanujan.Part1Ch1Entry1

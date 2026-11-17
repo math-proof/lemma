@@ -4,11 +4,16 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @akiezun, Avocado, Codex
 -/
 
-import Mathlib.Combinatorics.Enumerative.Stirling
-import Mathlib.Data.Nat.Choose.Sum
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Push
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Combinatorics.Enumerative.Stirling
+public import Mathlib.Data.Nat.Choose.Sum
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Push
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 /-!
 # Two-associated Stirling numbers of the second kind
 

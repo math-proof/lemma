@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRoch
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRoch
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CohomologyP1
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CohomologyP1
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoherentSheavesCurves
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckBirkhoff
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.CohomologyP1.Part2

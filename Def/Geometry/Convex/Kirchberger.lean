@@ -4,8 +4,13 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Analysis.InnerProductSpace.EuclideanDist
-import Mathlib.Analysis.Convex.Radon
+module
+
+public import Mathlib.Analysis.InnerProductSpace.EuclideanDist
+public import Mathlib.Analysis.Convex.Radon
+
+@[expose] public section
+
 /-!
 # Kirchberger's separation theorem
 

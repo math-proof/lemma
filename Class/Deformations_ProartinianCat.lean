@@ -1,6 +1,10 @@
-import Mathlib
-import Class.Deformations_IsProartinian
-import Class.Deformations_IsResidueAlgebra
+module
+
+public import Mathlib
+public import Class.Deformations_IsProartinian
+public import Class.Deformations_IsResidueAlgebra
+
+public section
 
 set_option autoImplicit false
 

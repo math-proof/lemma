@@ -1,5 +1,6 @@
 import Lemma.Random.ExpectedUpdateTarget.eq.ToLpAddMulSub
 import Lemma.Random.BellmanOpOfLpOptimalQ.eq.OfLpOptimalQ
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -15,3 +16,4 @@ private lemma main
 
 
 -- created on 2026-09-26
+-- updated on 2026-11-17

@@ -8,19 +8,24 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.Algebra.Group.Int.Units
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
-import Mathlib.LinearAlgebra.LinearIndependent.Defs
-import Mathlib.Analysis.SpecificLimits.Basic
-import Mathlib.Data.Real.Sqrt
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Mathlib.Algebra.Module.ZLattice.Basic
-import Mathlib.MeasureTheory.Group.GeometryOfNumbers
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.Topology.MetricSpace.Basic
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Inductive.v1.Atlas.AnAlgorithmistsToolkit.code.LatticeBasics
+module
+
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+public import Mathlib.Algebra.Group.Int.Units
+public import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+public import Mathlib.LinearAlgebra.LinearIndependent.Defs
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Mathlib.Data.Real.Sqrt
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Mathlib.Algebra.Module.ZLattice.Basic
+public import Mathlib.MeasureTheory.Group.GeometryOfNumbers
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.Topology.MetricSpace.Basic
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Inductive.v1.Atlas.AnAlgorithmistsToolkit.code.LatticeBasics
+
+@[expose] public section
+
 open Matrix BigOperators
 
 

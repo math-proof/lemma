@@ -1,11 +1,13 @@
-import Mathlib
-import Instance.PDivisibleGroup_Points
-import Instance.HopfAlgebra_CartierDual
-import Instance.HopfAlgebra_CartierDualInstances
+module
+
+public import Mathlib
+public import Instance.PDivisibleGroup_Points
+public import Instance.HopfAlgebra_CartierDual
+public import Instance.HopfAlgebra_CartierDualInstances
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open Coalgebra Bialgebra WithConv
 

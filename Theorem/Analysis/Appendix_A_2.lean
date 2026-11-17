@@ -1,5 +1,6 @@
-import Mathlib
+module
 
+public import Mathlib
 
 /-!
 # Analysis I, Appendix A.2: Implication
@@ -7,6 +8,9 @@ import Mathlib
 An introduction to implications.  Showcases some basic tactics and Lean syntax.
 
 -/
+
+public section
+
 theorem example_A_2_1 (x:ℤ) : x = 2 → x^2 = 4 := by
   intro h
   rw [h]

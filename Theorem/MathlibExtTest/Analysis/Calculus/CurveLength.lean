@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Calculus/CurveLength.lean -/
+module
 
-
-import Theorem.Analysis.Calculus.CurveLength
-import Mathlib.Analysis.Calculus.ContDiff.Operations
-import Mathlib.Analysis.Calculus.Deriv.Mul
+public import Theorem.Analysis.Calculus.CurveLength
+public import Mathlib.Analysis.Calculus.ContDiff.Operations
+public import Mathlib.Analysis.Calculus.Deriv.Mul
 open MeasureTheory Set
 
+public section
 
 -- The within-derivative formula computes the variation of the identity segment.
 example : eVariationOn (fun t : ℝ => t) (Icc 0 1) = 1 := by

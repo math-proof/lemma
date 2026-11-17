@@ -1,6 +1,10 @@
-import Instance.CohCarrier_Level
-import Mathlib.Algebra.Polynomial.Module.AEval
-import Mathlib.LinearAlgebra.Prod
+module
+
+public import Instance.CohCarrier_Level
+public import Mathlib.Algebra.Polynomial.Module.AEval
+public import Mathlib.LinearAlgebra.Prod
+
+@[expose] public section
 
 set_option autoImplicit false
 

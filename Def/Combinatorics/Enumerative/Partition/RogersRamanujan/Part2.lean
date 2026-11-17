@@ -15,7 +15,7 @@ import Mathlib.RingTheory.PowerSeries.PiTopology
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
 import Def.Combinatorics.Enumerative.GaussianBinomial
-import Lemma.Finset.Enumerative.GaussianBinomial
+import Theorem.Finset.Enumerative.GaussianBinomial
 import Instance.Combinatorics.Enumerative.Partition.RogersRamanujan
 
 

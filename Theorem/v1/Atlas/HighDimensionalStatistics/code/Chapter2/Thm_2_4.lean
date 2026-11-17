@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_2
 import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_16
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_16
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_6
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_6
 import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_6
 open Matrix MeasureTheory Real ProbabilityTheory ENNReal Finset Set Pointwise
 

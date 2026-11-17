@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.GeometryOfManifolds.code.ConnectionsCurvature.Part7
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.ConnectionsCurvature
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.ConnectionsCurvature
 import Structure.v1.Atlas.GeometryOfManifolds.code.ChernFormGrading
 open Bundle NormedSpace Matrix Complex
 

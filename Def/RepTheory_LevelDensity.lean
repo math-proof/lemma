@@ -1,7 +1,11 @@
-import Mathlib.Algebra.Module.LinearMap.End
-import Mathlib.Algebra.Group.Subgroup.Defs
-import Mathlib.Data.Complex.Basic
-import Mathlib.Topology.Compactness.Compact
+module
+
+public import Mathlib.Algebra.Module.LinearMap.End
+public import Mathlib.Algebra.Group.Subgroup.Defs
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.Topology.Compactness.Compact
+
+@[expose] public section
 
 set_option autoImplicit false
 

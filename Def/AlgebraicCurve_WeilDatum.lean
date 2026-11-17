@@ -1,6 +1,10 @@
-import Mathlib
-import Def.AlgebraicCurve_PlaceEvaluation
-import Structure.AlgebraicCurve_WeilDatum
+module
+
+public import Mathlib
+public import Def.AlgebraicCurve_PlaceEvaluation
+public import Structure.AlgebraicCurve_WeilDatum
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,7 +1,9 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
-import Mathlib.RingTheory.LaurentSeries
+module
+
+public import Mathlib.RingTheory.LaurentSeries
 
 /-!
 # Coefficients of the weight-two theta operator on Laurent series
@@ -9,6 +11,8 @@ import Mathlib.RingTheory.LaurentSeries
 This file records `ModularCurve.theta_coeff`: the coefficient of
 `q * d/dq f` at `k` is `k • f.coeff k`.
 -/
+
+public section
 
 set_option autoImplicit false
 

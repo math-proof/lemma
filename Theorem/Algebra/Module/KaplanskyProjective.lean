@@ -1,18 +1,20 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
+module
 
-import Mathlib.RingTheory.LocalRing.Defs
-import Mathlib.Algebra.Module.Projective
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Order.CompletePartialOrder
-import Mathlib.RingTheory.Henselian
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.Ring
-import Def.Algebra.Module.KaplanskyProjective
+public import Mathlib.RingTheory.LocalRing.Defs
+public import Mathlib.Algebra.Module.Projective
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Order.CompletePartialOrder
+public import Mathlib.RingTheory.Henselian
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.SimpleRing.Principal
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.Ring
+public import Def.Algebra.Module.KaplanskyProjective
 
+public section
 
 namespace Kaplansky
 

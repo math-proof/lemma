@@ -9,8 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section26.Part8
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section26
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section33
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section33.Part2
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.LinearAlgebra.Matrix.Notation
@@ -26,7 +24,6 @@ import Mathlib.LinearAlgebra.BilinearForm.Properties
 import Mathlib.LinearAlgebra.Projection
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section30
 open Matrix
-
 
 namespace SymmetricBilinearForms
 

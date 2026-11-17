@@ -158,7 +158,7 @@ theorem neg_of_descent {W : Type*} [Group W]
     IsNegative (wordSigma M word (e s)) := by
 
   set w := cs.wordProd word
-  obtain ⟨word', hred', hprod'⟩ := cs.exists_reduced_word (w * cs.simple s)
+  obtain ⟨word', hred', hprod'⟩ := cs.exists_isReduced (w * cs.simple s)
 
 
   have hasc' : cs.length (cs.wordProd word' * cs.simple s) >

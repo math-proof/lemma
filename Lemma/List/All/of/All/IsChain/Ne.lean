@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.Buildings.code.ChamberComplex.Folding.Part3
-open ChamberComplex ChamberComplex.Folding ChamberComplex.ReversibleFolding ChamberComplex.WallReflection
+open ChamberComplex Folding Folding.ReversibleFolding Folding.ReversibleFolding.WallReflection
 open scoped Classical
 
 
@@ -36,9 +36,8 @@ lemma List.chain_forall_of_head
         obtain ⟨hrel, hchain_tl⟩ := hchain
         exact ih (List.cons_ne_nil b rest) hchain_tl
           (hprop a b (hrel b rfl) hhead) x hx
-namespace ChamberComplex
 
-namespace ChamberComplex.Folding
+namespace Folding
 
 /--
 [fixed_or_moved](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/ChamberComplex/Folding.lean)
@@ -58,9 +57,9 @@ lemma fixed_or_moved
   · exact Or.inl ⟨hC, h⟩
   · exact Or.inr ⟨hC, h⟩
 
-end ChamberComplex.Folding
+end Folding
 
-namespace ChamberComplex.Folding
+namespace Folding
 
 /--
 [image_is_fixed](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/ChamberComplex/Folding.lean)
@@ -81,9 +80,9 @@ lemma image_is_fixed
   · rintro ⟨w, ⟨u, hu, rfl⟩, rfl⟩; exact ⟨u, hu, (f.idempotent u).symm⟩
   · rintro ⟨w, hw, rfl⟩; exact ⟨f.morph.toFun w, ⟨w, hw, rfl⟩, f.idempotent w⟩
 
-end ChamberComplex.Folding
+end Folding
 
-namespace ChamberComplex.Folding
+namespace Folding
 
 /--
 [fixes_pointwise](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/ChamberComplex/Folding.lean)
@@ -103,9 +102,9 @@ lemma fixes_pointwise
   obtain ⟨u, _, rfl⟩ := Finset.mem_image.mp hv
   exact f.idempotent u
 
-end ChamberComplex.Folding
+end Folding
 
-namespace ChamberComplex.Folding
+namespace Folding
 
 /--
 [fold_adj_to_self](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/ChamberComplex/Folding.lean)
@@ -140,9 +139,9 @@ lemma fold_adj_to_self
     hD'uniq (D.image f.morph.toFun) ⟨hfD_ne_C, hfFfD, hfDmax⟩
   rw [← hD'D] at this; exact hfD this
 
-end ChamberComplex.Folding
+end Folding
 
-namespace ChamberComplex.ReversibleFolding
+namespace Folding.ReversibleFolding
 
 /--
 [halves_disjoint](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/ChamberComplex/Folding.lean)
@@ -160,9 +159,9 @@ lemma halves_disjoint
   have : C ∈ rf.g.movedChambers := rf.complementary_fixed ▸ hf
   exact this.2 hg.2
 
-end ChamberComplex.ReversibleFolding
+end Folding.ReversibleFolding
 
-namespace ChamberComplex
+namespace Folding.ReversibleFolding
 
 /--
 [reflection_involutive](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/ChamberComplex/Folding.lean)
@@ -199,9 +198,9 @@ lemma reflection_involutive
         rf.f.idempotent v]
       exact hgf v hgv
 
-end ChamberComplex
+end Folding.ReversibleFolding
 
-namespace ChamberComplex.WallReflection
+namespace Folding.ReversibleFolding.WallReflection
 
 /--
 [refl_involutive](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/ChamberComplex/Folding.lean)
@@ -214,11 +213,11 @@ lemma refl_involutive
 -- imply
   ∀ v, s.refl (s.refl v) = v :=
 -- proof
-  reflection_involutive s.rf s.fg_id s.gf_id s.cover
+  reflection_involutive s.fg_id s.gf_id s.cover
 
-end ChamberComplex.WallReflection
+end Folding.ReversibleFolding.WallReflection
 
-namespace ChamberComplex.WallReflection
+namespace Folding.ReversibleFolding.WallReflection
 
 /--
 [refl_injective](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/ChamberComplex/Folding.lean)
@@ -235,9 +234,9 @@ lemma refl_injective
   have := congr_arg s.refl hab
   rwa [s.refl_involutive a, s.refl_involutive b] at this
 
-end ChamberComplex.WallReflection
+end Folding.ReversibleFolding.WallReflection
 
-namespace ChamberComplex.WallReflection
+namespace Folding.ReversibleFolding.WallReflection
 
 /--
 [refl_surjective](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/ChamberComplex/Folding.lean)
@@ -252,9 +251,9 @@ lemma refl_surjective
 -- proof
   fun b => ⟨s.refl b, s.refl_involutive b⟩
 
-end ChamberComplex.WallReflection
+end Folding.ReversibleFolding.WallReflection
 
-namespace ChamberComplex.WallReflection
+namespace Folding.ReversibleFolding.WallReflection
 
 /--
 [refl_bijective](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/ChamberComplex/Folding.lean)
@@ -269,7 +268,7 @@ lemma refl_bijective
 -- proof
   ⟨s.refl_injective, s.refl_surjective⟩
 
-end ChamberComplex.WallReflection
+end Folding.ReversibleFolding.WallReflection
 
 namespace ChamberComplex
 

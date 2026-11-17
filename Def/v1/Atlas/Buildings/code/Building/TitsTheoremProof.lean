@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.Buildings.code.Building.AptIsCoxeterProof
 import Lemma.Set.ApartmentsToApartmentSystem.eq.Apartments.of.IsThick
-import Lemma.List.All.of.All.IsChain.Ne
+import Theorem.List.All.of.All.IsChain.Ne
 import Def.v1.Atlas.Buildings.code.ChamberComplex.Folding.Part3
 import Theorem.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes
 import Mathlib.GroupTheory.Coxeter.Length

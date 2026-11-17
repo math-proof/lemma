@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Fourier.AddCircle
-import Mathlib.Analysis.Fourier.FourierTransform
-import Mathlib.Analysis.Asymptotics.SpecificAsymptotics
-import Mathlib.MeasureTheory.Function.L2Space
-import Mathlib.Topology.UniformSpace.UniformConvergence
-import Mathlib.Topology.ContinuousMap.Compact
-import Mathlib.MeasureTheory.Measure.Haar.Unique
+module
+
+public import Mathlib.Analysis.Fourier.AddCircle
+public import Mathlib.Analysis.Fourier.FourierTransform
+public import Mathlib.Analysis.Asymptotics.SpecificAsymptotics
+public import Mathlib.MeasureTheory.Function.L2Space
+public import Mathlib.Topology.UniformSpace.UniformConvergence
+public import Mathlib.Topology.ContinuousMap.Compact
+public import Mathlib.MeasureTheory.Measure.Haar.Unique
+
+@[expose] public section
+
 variable {T : ℝ} [hT : Fact (0 < T)]
 
 open MeasureTheory AddCircle Finset Filter Complex

@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.StatisticalMechanics.Code.Universality.RSWArcBadPlacement.Part6
-import Theorem.StatisticalMechanics.Code.Lattice.MinimalPeriodLoop.Part2
-import Theorem.StatisticalMechanics.Code.Universality.RSWOuterOrientation.Part3
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.RSWArcBadPlacement.Part6
+public import Theorem.StatisticalMechanics.Code.Lattice.MinimalPeriodLoop.Part2
+public import Theorem.StatisticalMechanics.Code.Universality.RSWOuterOrientation.Part3
+public section
+
 open Function MeasureTheory Set
 open scoped ENNReal NNReal BigOperators
 

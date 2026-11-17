@@ -8,14 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Valuation.ValuationSubring
-import Mathlib.RingTheory.Valuation.ValuationRing
-import Mathlib.RingTheory.LocalRing.ResidueField.Defs
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.DiscreteValuationRing.TFAE
-import Mathlib.RingTheory.KrullDimension.LocalRing
-import Mathlib.RingTheory.Localization.AtPrime.Basic
-import Theorem.v1.Atlas.ArithmeticGeometry.code.ValuationRings
+module
+
+public import Mathlib.RingTheory.Valuation.ValuationSubring
+public import Mathlib.RingTheory.Valuation.ValuationRing
+public import Mathlib.RingTheory.LocalRing.ResidueField.Defs
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.DiscreteValuationRing.TFAE
+public import Mathlib.RingTheory.KrullDimension.LocalRing
+public import Mathlib.RingTheory.Localization.AtPrime.Basic
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.ValuationRings
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open Ideal Submodule

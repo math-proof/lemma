@@ -8,13 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.Process.Adapted
-import Mathlib.Probability.Independence.ZeroOne
-import Def.Probability.Blumenthal01
+module
+
+public import Mathlib.Probability.Process.Adapted
+public import Mathlib.Probability.Independence.ZeroOne
+public import Def.Probability.Blumenthal01
 open MeasureTheory MeasurableSpace Filtration
 
 
-noncomputable section
+public noncomputable section
 
 namespace ProbabilityTheory
 

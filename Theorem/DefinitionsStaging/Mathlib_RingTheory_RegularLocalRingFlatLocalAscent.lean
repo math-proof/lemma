@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.Ideal.RegularLocalRingQuotientRegular
+import Theorem.Ideal.RegularLocalRingQuotientRegular
 import Theorems.Thm_IsRegularLocalRing_isDomain
 import Lemma.Ideal.RegularLocalRingRegularSequenceAscent
 import Def.Mathlib_RingTheory_RegularLocalRingFlatLocalAscent

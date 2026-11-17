@@ -11,8 +11,8 @@ LICENSE file in the root directory of this source tree.
 import Mathlib.Analysis.Distribution.Support
 import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
 import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.TemperedDistributions
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzPartition
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TemperedDistributions
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzPartition
 import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SmoothingOperators
 import Def.v1.Atlas.DifferentialAnalysis.code.TemperedDistributions
 import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzPartition

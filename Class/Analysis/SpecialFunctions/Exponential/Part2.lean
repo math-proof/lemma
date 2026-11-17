@@ -1,8 +1,5 @@
-import Lemma.Hyperreal.UFn.of.All_UFn
-import Lemma.Int.Abs.eq.Max_Neg
 import Theorem.Analysis.SpecialFunctions.Exponential.Part3
 open Filter Hyperreal Int
-
 
 /--
 typeclass for ℝ ℝ* ℂ, List.Vector α, Tensor α

@@ -1,16 +1,20 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/BinomialTMotzkinPaths.lean -/
 
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.RingTheory.PowerSeries.Basic
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Data.Int.Star
-import Mathlib.Data.Rat.Star
-import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Push
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.RingTheory.PowerSeries.Basic
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Data.Int.Star
+public import Mathlib.Data.Rat.Star
+public import Mathlib.Tactic.IntervalCases
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Push
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 
 section

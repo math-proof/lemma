@@ -8,14 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.GeometricAlgebra.ExtendingIsometries
-import Lemma.Submodule.OfEq.eq.M.of.Eq
-import Lemma.Fin.Eq.of.Ne_0.All_Eq
-import Lemma.Submodule.Any_EqMapToLinearMap.of.FinrankK
-import Def.v1.Atlas.Buildings.code.GeometricAlgebra.WittTheorem.Part2
-import Instance.v1.Atlas.Buildings.code.GeometricAlgebra.FlagEquivalenceInstance
-import Def.v1.Atlas.Buildings.code.GeometricAlgebra.IsotropicFlagsParabolics
+module
 
+public import Def.v1.Atlas.Buildings.code.GeometricAlgebra.ExtendingIsometries
+public import Theorem.Submodule.OfEq.eq.M.of.Eq
+public import Lemma.Fin.Eq.of.Ne_0.All_Eq
+public import Lemma.Submodule.Any_EqMapToLinearMap.of.FinrankK
+public import Def.v1.Atlas.Buildings.code.GeometricAlgebra.WittTheorem.Part2
+public import Instance.v1.Atlas.Buildings.code.GeometricAlgebra.FlagEquivalenceInstance
+public import Def.v1.Atlas.Buildings.code.GeometricAlgebra.IsotropicFlagsParabolics
+
+
+public section
 
 namespace Garrett
 

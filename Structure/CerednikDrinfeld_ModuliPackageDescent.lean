@@ -1,6 +1,10 @@
-import Mathlib
-import Structure.CerednikDrinfeld_SpecialFormalModule
-import Def.CerednikDrinfeld_ModuliPackageDescent
+module
+
+public import Mathlib
+public import Structure.CerednikDrinfeld_SpecialFormalModule
+public import Def.CerednikDrinfeld_ModuliPackageDescent
+
+public section
 
 set_option autoImplicit false
 

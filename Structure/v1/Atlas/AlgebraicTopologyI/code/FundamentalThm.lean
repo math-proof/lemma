@@ -8,10 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Abelian.Projective.Resolution
+module
+
+public import Mathlib.CategoryTheory.Abelian.Projective.Resolution
 
 
-noncomputable section
+public noncomputable section
 
 open CategoryTheory Category Limits ChainComplex HomologicalComplex
 

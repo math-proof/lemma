@@ -1,5 +1,7 @@
-import Mathlib
-import Structure.LocalLanglands_HeckePair
+module
+
+public import Mathlib
+public import Structure.LocalLanglands_HeckePair
 
 set_option autoImplicit false
 
@@ -7,7 +9,7 @@ open scoped Pointwise
 
 namespace HeckePair
 
-noncomputable section
+public noncomputable section
 
 variable {G : Type*} [Group G] {U : Subgroup G}
 variable {R₀ : Type*} [CommRing R₀]

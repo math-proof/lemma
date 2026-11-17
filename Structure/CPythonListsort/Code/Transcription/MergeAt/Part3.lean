@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeAt.lean -/
 
-import Def.CPythonListsort.Code.Transcription.MergeHi.Part6
-import Def.CPythonListsort.Code.Transcription.MergeLo.Part6
-import Def.CPythonListsort.Code.Transcription.MergeAt.Part3
+module
+
+public import Structure.CPythonListsort.Code.Transcription.MergeAt.Part2
+public import Def.CPythonListsort.Code.Transcription.Gallop.Part2
 /-!
 # Pending-stack merge dispatch
 
@@ -12,6 +13,9 @@ modeled failure retains that mutation.  The two searches trim entries already
 in their final positions and the shorter remaining run selects `merge_lo` or
 `merge_hi`.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

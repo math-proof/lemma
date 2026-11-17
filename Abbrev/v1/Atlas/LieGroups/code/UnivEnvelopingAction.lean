@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.LieGroups.code.SmoothVectors
-import Lemma.Real.GetToMonoidHom.in.SmoothSubspace.of.In_SmoothSubspace
-import Lemma.Complex.IsStronglyContinuousToMonoidHom
+import Theorem.Real.GetToMonoidHom.in.SmoothSubspace.of.In_SmoothSubspace
+import Theorem.Complex.IsStronglyContinuousToMonoidHom
 import Def.v1.Atlas.LieGroups.code.ContinuousRep.Part3
 import Mathlib.Algebra.Lie.UniversalEnveloping
 import Mathlib.Algebra.Lie.OfAssociative

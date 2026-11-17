@@ -8,13 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
-import Mathlib.CategoryTheory.Preadditive.Basic
-import Mathlib.CategoryTheory.Limits.Shapes.Biproducts
-import Mathlib.CategoryTheory.Limits.Shapes.BinaryBiproducts
-import Mathlib.RingTheory.IntegralClosure.IsIntegral.Defs
-import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
-import Structure.v1.Atlas.TensorCategories.code.PivotalSpherical
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
+public import Mathlib.CategoryTheory.Preadditive.Basic
+public import Mathlib.CategoryTheory.Limits.Shapes.Biproducts
+public import Mathlib.CategoryTheory.Limits.Shapes.BinaryBiproducts
+public import Mathlib.RingTheory.IntegralClosure.IsIntegral.Defs
+public import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
+public import Structure.v1.Atlas.TensorCategories.code.PivotalSpherical
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 set_option autoImplicit false

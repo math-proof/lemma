@@ -1,14 +1,18 @@
 /-
 Author: @akiezun, Avocado
 -/
+module
 
-import Mathlib.NumberTheory.LSeries.ZMod
-import Def.Analysis.SpecialFunctions.Part1Ch7DirichletBeta
+public import Mathlib.NumberTheory.LSeries.ZMod
+public import Def.Analysis.SpecialFunctions.Part1Ch7DirichletBeta
+
 /-!
 # Shared Dirichlet beta API for Chapter 7, Entries 17 and 18
 
 The beta character, the Dirichlet beta function, and the Euler star function.
 -/
+
+public section
 
 
 namespace Ramanujan.Part1Ch7

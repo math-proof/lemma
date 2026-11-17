@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Geometry.Manifold.Instances.Real
-import Mathlib.Topology.Compactness.Compact
-import Mathlib.Tactic
+module
+
+public import Mathlib.Geometry.Manifold.Instances.Real
+public import Mathlib.Topology.Compactness.Compact
+public import Mathlib.Tactic
+public section
+
 set_option autoImplicit false
 open scoped Manifold
 

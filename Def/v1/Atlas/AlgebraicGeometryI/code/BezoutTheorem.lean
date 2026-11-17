@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.FreeModule.Norm
-import Mathlib.RingTheory.AdjoinRoot
-import Mathlib.RingTheory.Polynomial.Quotient
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.RingTheory.Norm.Defs
-import Mathlib.RingTheory.AlgebraTower
-import Mathlib.Algebra.Polynomial.Monic
+module
+
+public import Mathlib.LinearAlgebra.FreeModule.Norm
+public import Mathlib.RingTheory.AdjoinRoot
+public import Mathlib.RingTheory.Polynomial.Quotient
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.RingTheory.Norm.Defs
+public import Mathlib.RingTheory.AlgebraTower
+public import Mathlib.Algebra.Polynomial.Monic
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 open Polynomial

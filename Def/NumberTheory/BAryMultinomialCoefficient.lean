@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/BAryMultinomialCoefficient.lean -/
 
-import Mathlib.Data.Nat.Digits.Defs
-import Mathlib.Data.Nat.Choose.Multinomial
+module
 
+public import Mathlib.Data.Nat.Digits.Defs
+public import Mathlib.Data.Nat.Choose.Multinomial
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

@@ -3,14 +3,17 @@
 /-
 Author: @toskua, Avocado
 -/
+module
 
-import Mathlib.RingTheory.AdjoinRoot
-import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
-import Mathlib.RingTheory.Ideal.GoingUp
-import Mathlib.RingTheory.Ideal.Maps
-import Mathlib.RingTheory.Polynomial.Basic
-import Mathlib.RingTheory.PrincipalIdealDomain
+public import Mathlib.RingTheory.AdjoinRoot
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
+public import Mathlib.RingTheory.Ideal.GoingUp
+public import Mathlib.RingTheory.Ideal.Maps
+public import Mathlib.RingTheory.Polynomial.Basic
+public import Mathlib.RingTheory.PrincipalIdealDomain
 open Polynomial
+
+public section
 
 variable {A : Type*} [CommRing A] [IsLocalRing A]
 

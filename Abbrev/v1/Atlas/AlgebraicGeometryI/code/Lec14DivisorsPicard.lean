@@ -13,8 +13,8 @@ import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CartierDivisorScheme
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CartierDivisorGroup
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.LocallyFactorialDivisors
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.DivisorsPicard
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.WeilDivisor
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.PicardGroup
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.WeilDivisor
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PicardGroup
 import Def.v1.Atlas.AlgebraicGeometryI.code.CartierDivisorGroup.Part2
 import Def.v1.Atlas.AlgebraicGeometryI.code.LocallyFactorialDivisors.Part7
 import Abbrev.v1.Atlas.AlgebraicGeometryI.code.DivisorsPicard.Part3

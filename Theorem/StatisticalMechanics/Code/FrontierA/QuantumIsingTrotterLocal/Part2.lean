@@ -7,10 +7,12 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Def.StatisticalMechanics.Code.FrontierA.QuantumIsingTrotterLocal.Part2
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Def.StatisticalMechanics.Code.FrontierA.QuantumIsingTrotterLocal.Part2
 
+public section
 
 namespace StatMech.FrontierA
 

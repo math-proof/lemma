@@ -8,17 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.Distributions.Gaussian.Real
-import Mathlib.Probability.Process.Filtration
-import Mathlib.Probability.Independence.Basic
-import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
-import Mathlib.Tactic.Linarith.NNRealPreprocessor
-import Notation.v1.Atlas.Probability.code.MarkovPropertyBM
+module
+
+public import Mathlib.Probability.Distributions.Gaussian.Real
+public import Mathlib.Probability.Process.Filtration
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
+public import Mathlib.Tactic.Linarith.NNRealPreprocessor
+public import Notation.v1.Atlas.Probability.code.MarkovPropertyBM
 open MeasureTheory ProbabilityTheory MeasurableSpace Filter
 open scoped NNReal ENNReal
 
 
-noncomputable section
+public noncomputable section
 
 namespace BrownianMotion
 

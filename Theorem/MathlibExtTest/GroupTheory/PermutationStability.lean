@@ -2,7 +2,7 @@
 
 
 import Def.GroupTheory.PermutationStability
-import Lemma.Equiv.NormalizedHammingDistance.eq.Zero
+import Theorem.Equiv.NormalizedHammingDistance.eq.Zero
 
 
 namespace PermutationStabilityTest

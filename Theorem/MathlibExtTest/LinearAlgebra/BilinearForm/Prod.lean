@@ -2,7 +2,7 @@
 
 
 import Instance.LinearAlgebra.BilinearForm.Prod
-import Lemma.Matrix.BilinearForm.Prod
+import Theorem.Matrix.BilinearForm.Prod
 import Mathlib.RingTheory.Localization.FractionRing
 open LinearMap (BilinForm)
 open Module

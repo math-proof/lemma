@@ -1,6 +1,10 @@
-import Mathlib
-import Structure.AlgebraicCurve_Place
-import Structure.AlgebraicCurve_LocalResidue
+module
+
+public import Mathlib
+public import Structure.AlgebraicCurve_Place
+public import Structure.AlgebraicCurve_LocalResidue
+
+@[expose] public section
 
 set_option autoImplicit false
 

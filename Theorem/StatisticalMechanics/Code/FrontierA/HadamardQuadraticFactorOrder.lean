@@ -7,13 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib.Analysis.Analytic.Order
-import Mathlib.Analysis.Complex.Basic
-import Def.StatisticalMechanics.Code.FrontierA.HadamardQuadraticFactorOrder
+public import Mathlib.Analysis.Analytic.Order
+public import Mathlib.Analysis.Complex.Basic
+public import Def.StatisticalMechanics.Code.FrontierA.HadamardQuadraticFactorOrder
 open Finset
 
+public section
 
 namespace StatMech.FrontierA
 

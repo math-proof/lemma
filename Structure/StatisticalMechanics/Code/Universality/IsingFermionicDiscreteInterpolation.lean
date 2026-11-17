@@ -9,14 +9,16 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicCaratheodoryApproximation.Part3
-import Mathlib.Topology.UniformSpace.Ascoli
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicDiscreteInterpolation
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicCaratheodoryApproximation.Part3
+public import Mathlib.Topology.UniformSpace.Ascoli
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicDiscreteInterpolation
 open Filter Metric Set Topology
 open scoped UniformConvergence
 
 
-noncomputable section
+public noncomputable section
 
 namespace StatMech.Universality
 

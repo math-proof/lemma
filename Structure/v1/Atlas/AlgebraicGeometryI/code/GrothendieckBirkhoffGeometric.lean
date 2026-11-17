@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.AlgebraicGeometryI.code.GBSplittingExistence.Part2
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.GBSplittingExistence
+module
+
+public import Def.v1.Atlas.AlgebraicGeometryI.code.GBSplittingExistence.Part2
+public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.GBSplittingExistence
+public section
+
 open BigOperators
 
 

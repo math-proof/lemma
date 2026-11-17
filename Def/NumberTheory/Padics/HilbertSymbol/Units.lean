@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Padics/HilbertSymbol/Units.lean -/
 
 import Def.NumberTheory.Padics.HilbertSymbol
-import Lemma.Nat.Padics.HilbertSymbol
+import Theorem.Nat.Padics.HilbertSymbol
 import Mathlib.NumberTheory.Padics.PadicIntegers
 import Mathlib.NumberTheory.Padics.RingHoms
 import Mathlib.NumberTheory.Padics.Hensel

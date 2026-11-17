@@ -9,9 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Abbrev.StatisticalMechanics.Code.Onsager.PolygonWalk
+module
 
+public import Mathlib
+public import Abbrev.StatisticalMechanics.Code.Onsager.PolygonWalk
+
+@[expose] public section
 
 namespace StatMech.Onsager.PolygonWalk
 

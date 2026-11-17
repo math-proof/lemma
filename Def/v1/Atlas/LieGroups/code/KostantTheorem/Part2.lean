@@ -8,28 +8,30 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.LieGroups.code.HarishChandraIsomorphism.Part2
-import Lemma.Int.Any_All_Eq.of.LeKer_Ker.Surjective
-import Mathlib.LinearAlgebra.SymmetricAlgebra.Basic
-import Mathlib.LinearAlgebra.FreeModule.Basic
-import Mathlib.LinearAlgebra.TensorProduct.Basic
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.LinearAlgebra.InvariantBasisNumber
-import Mathlib.RingTheory.MvPolynomial.Basic
-import Mathlib.RingTheory.PowerSeries.Basic
-import Mathlib.Algebra.MonoidAlgebra.Basic
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Topology.Algebra.Order.LiminfLimsup
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
-import Mathlib.Algebra.Lie.Semisimple.Defs
-import Mathlib.Algebra.Lie.CartanSubalgebra
-import Mathlib.Algebra.Lie.Weights.Basic
-import Mathlib.Algebra.Lie.Abelian
-import Mathlib.RingTheory.SimpleModule.Basic
-import Structure.v1.Atlas.LieGroups.code.KostantTheorem
+module
 
+public import Structure.v1.Atlas.LieGroups.code.HarishChandraIsomorphism.Part2
+public import Mathlib.LinearAlgebra.SymmetricAlgebra.Basic
+public import Mathlib.LinearAlgebra.FreeModule.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.LinearAlgebra.InvariantBasisNumber
+public import Mathlib.RingTheory.MvPolynomial.Basic
+public import Mathlib.RingTheory.PowerSeries.Basic
+public import Mathlib.Algebra.MonoidAlgebra.Basic
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Topology.Algebra.Order.LiminfLimsup
+public import Mathlib.MeasureTheory.Integral.DominatedConvergence
+public import Mathlib.Algebra.Lie.Semisimple.Defs
+public import Mathlib.Algebra.Lie.CartanSubalgebra
+public import Mathlib.Algebra.Lie.Weights.Basic
+public import Mathlib.Algebra.Lie.Abelian
+public import Mathlib.RingTheory.SimpleModule.Basic
+public import Structure.v1.Atlas.LieGroups.code.KostantTheorem
+
+@[expose] public section
 
 noncomputable section
 

@@ -8,17 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.EllipticCurves.code.Lattice.Part2
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.Lattice
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.ComplexAnalysis
-import Def.v1.Atlas.EllipticCurves.code.ComplexAnalysis.Part3
-import Mathlib.Analysis.Meromorphic.Basic
-import Mathlib.Analysis.Meromorphic.Order
-import Def.v1.Atlas.EllipticCurves.code.EllipticFunction
+module
+
+public import Def.v1.Atlas.EllipticCurves.code.Lattice.Part2
+public import Lemma.Complex.Atlas.v1.EllipticCurves.code.Lattice
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.ComplexAnalysis
+public import Def.v1.Atlas.EllipticCurves.code.ComplexAnalysis.Part3
+public import Mathlib.Analysis.Meromorphic.Basic
+public import Mathlib.Analysis.Meromorphic.Order
+public import Def.v1.Atlas.EllipticCurves.code.EllipticFunction
 open Complex
 
 
-noncomputable section
+public noncomputable section
 
 namespace ComplexLattice
 

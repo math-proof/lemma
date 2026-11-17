@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.MeasureTheory.OuterMeasure.OfAddContent
-import Mathlib.MeasureTheory.SetAlgebra
-import Mathlib.MeasureTheory.Measure.MeasureSpace
+module
+
+public import Mathlib.MeasureTheory.OuterMeasure.OfAddContent
+public import Mathlib.MeasureTheory.SetAlgebra
+public import Mathlib.MeasureTheory.Measure.MeasureSpace
+
+@[expose] public section
+
 open scoped ENNReal
 
 

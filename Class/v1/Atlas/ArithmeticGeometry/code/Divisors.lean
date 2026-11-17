@@ -10,13 +10,10 @@ LICENSE file in the root directory of this source tree.
 
 import Mathlib
 import Def.v1.Atlas.ArithmeticGeometry.code.DegreePullback
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.DegreePullback
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.RationalLineCriterion
 import Def.v1.Atlas.ArithmeticGeometry.code.RationalLineCriterion
 import Def.v1.Atlas.ArithmeticGeometry.code.Divisors.Part5
 attribute [instance] ClosedPointRes.residueFieldField ClosedPointRes.residueFieldAlgebra
     ClosedPointRes.finiteDimensional
-
 
 namespace ClosedPoint
 
@@ -29,7 +26,6 @@ class CurveWithOrd (C : Type*) (F : Type*) [Field F] where
     ord P (Units.mk0 ((f : F) + (g : F)) hfg) ≥ min (ord P f) (ord P g)
   uniformizer_exists : ∀ (P : C), ∃ (π : Fˣ), ord P π = 1
 
-
 class FunctionFieldCurve (C : Type*) (F : Type*) [Field F]
     extends CurveWithOrd C F where
   isCoordRingElem : Fˣ → Prop
@@ -39,6 +35,5 @@ class FunctionFieldCurve (C : Type*) (F : Type*) [Field F]
     ∀ (P : C), 0 ≤ CurveWithOrd.ord (F := F) P f
   zeroLocus_finite : ∀ (f : Fˣ), isCoordRingElem f →
     Set.Finite {P : C | 0 < CurveWithOrd.ord (F := F) P f}
-
 
 end ClosedPoint

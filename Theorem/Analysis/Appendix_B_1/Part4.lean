@@ -1,5 +1,8 @@
-import Mathlib
-import Abbrev.Analysis.Appendix_B_1.Part3
+module
+
+public import Mathlib
+public import Abbrev.Analysis.Appendix_B_1.Part3
+
 /-!
 # Analysis I, Appendix B.1: The decimal representation of natural numbers
 
@@ -7,6 +10,8 @@ Am implementation of the decimal representation of Mathlib's natural numbers {le
 
 This is separate from the way decimal numerals are already represenated in Mathlib via the {name}`OfNat` typeclass.
 -/
+
+public section
 
 
 namespace AppendixB

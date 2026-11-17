@@ -5,8 +5,13 @@ Copyright (c) 2026 Meta Platforms, Inc. and affiliates. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 -/
 
-import Mathlib.Geometry.Group.WordMetric
-import Mathlib.SetTheory.Cardinal.NatCard
+module
+
+public import Mathlib.Geometry.Group.WordMetric
+public import Mathlib.SetTheory.Cardinal.NatCard
+
+@[expose] public section
+
 /-!
 # Growth of a finitely generated group
 

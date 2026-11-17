@@ -4,11 +4,14 @@
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Acyclic
-import Mathlib.Combinatorics.SimpleGraph.Coloring.EdgeLabeling
-import Mathlib.Combinatorics.SimpleGraph.Connectivity.Finite
-import Mathlib.Order.CompletePartialOrder
+module
 
+public import Mathlib.Combinatorics.SimpleGraph.Acyclic
+public import Mathlib.Combinatorics.SimpleGraph.Coloring.EdgeLabeling
+public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Finite
+public import Mathlib.Order.CompletePartialOrder
+
+@[expose] public section
 
 section
 

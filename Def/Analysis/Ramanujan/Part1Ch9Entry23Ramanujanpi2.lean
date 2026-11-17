@@ -21,7 +21,7 @@ import Mathlib.NumberTheory.Harmonic.Defs
 import Mathlib.Order.Filter.Basic
 import Mathlib.Topology.Algebra.InfiniteSum.Basic
 import Def.Analysis.Ramanujan.Part1Ch9Entry8Arcsin
-import Lemma.Real.Part1Ch9Entry8Arcsin
+import Theorem.Real.Part1Ch9Entry8Arcsin
 import Mathlib.Topology.Basic
 import Mathlib.Algebra.Order.Ring.Star
 import Mathlib.Algebra.Order.Star.Real

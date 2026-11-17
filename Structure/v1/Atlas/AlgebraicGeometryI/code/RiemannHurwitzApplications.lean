@@ -8,16 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzDegree
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzDegree
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.NormalExtension
-import Def.v1.Atlas.AlgebraicGeometryI.code.NormalExtension
-import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
-import Mathlib.RingTheory.DedekindDomain.Basic
-import Mathlib.RingTheory.Ideal.Height
+module
+
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzDegree
+public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzDegree
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NormalExtension
+public import Def.v1.Atlas.AlgebraicGeometryI.code.NormalExtension
+public import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
+public import Mathlib.RingTheory.DedekindDomain.Basic
+public import Mathlib.RingTheory.Ideal.Height
 
 
-noncomputable section
+public noncomputable section
 
 open RiemannHurwitzFormula CanonicalSheafCurves RiemannHurwitzDegree
 

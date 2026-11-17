@@ -11,12 +11,12 @@ LICENSE file in the root directory of this source tree.
 import Instance.v1.Atlas.GeometryOfManifolds.code.PolynomialDFS.Part3
 import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.PolynomialDFS
 import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.TwoDimDFS
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.AlmostComplexManifolds
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.MoserDarboux
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.FourManifoldsSW
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.AlmostComplexManifolds
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.MoserDarboux
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.FourManifoldsSW
 import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.ArnoldConjecture
 import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.AdvancedKahler
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.PontrjaginObstructions
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.PontrjaginObstructions
 import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.HodgeTheory
 import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.ChernClassProperties
 import Instance.v1.Atlas.GeometryOfManifolds.code.TrivialDFS

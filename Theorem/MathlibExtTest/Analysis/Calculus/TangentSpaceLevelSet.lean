@@ -1,16 +1,17 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Calculus/TangentSpaceLevelSet.lean -/
+module
 
-
-import Theorem.Analysis.Calculus.TangentSpaceLevelSet
-import Mathlib.Analysis.Calculus.Deriv.Prod
-import Mathlib.Analysis.Calculus.FDeriv.Pow
-import Mathlib.Analysis.Calculus.FDeriv.Prod
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
+public import Theorem.Analysis.Calculus.TangentSpaceLevelSet
+public import Mathlib.Analysis.Calculus.Deriv.Prod
+public import Mathlib.Analysis.Calculus.FDeriv.Pow
+public import Mathlib.Analysis.Calculus.FDeriv.Prod
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
 open Filter
 open scoped Topology
 
 open MetaMathlibExt
 
+public section
 
 -- The standard unit-circle parametrization supplies its vertical tangent at `(1, 0)`.
 example :

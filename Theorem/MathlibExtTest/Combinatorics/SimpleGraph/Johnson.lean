@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.SimpleGraph.Johnson
-import Lemma.SimpleGraph.Johnson
+import Theorem.SimpleGraph.Johnson
 
 
 namespace SimpleGraph

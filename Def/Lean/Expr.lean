@@ -1,6 +1,11 @@
-import Def.Lean.Meta.Expr.Part4
-import Def.Lean.Expr.Singleton.Part2
-import Structure.Lean.Expr
+module
+
+public import Def.Lean.Meta.Expr.Part4
+public import Def.Lean.Expr.Singleton.Part2
+public import Structure.Lean.Expr
+
+@[expose] public section
+
 open Lean.Meta
 open Lean (Name Json Level BinderInfo getMCtx)
 set_option linter.unusedVariables false
@@ -108,5 +113,4 @@ def BinaryInfix.isProp : BinaryInfix → Bool
     | `SSuperset
     | `Dvd.dvd => true
     | _ => false
-
 

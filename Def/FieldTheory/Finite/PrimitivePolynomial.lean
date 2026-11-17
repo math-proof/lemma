@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/FieldTheory/Finite/PrimitivePolynomial.lean -/
 
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.RingTheory.AdjoinRoot
-import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+module
+
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.RingTheory.AdjoinRoot
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+
+@[expose] public section
+
 set_option autoImplicit false
 
 open scoped Polynomial

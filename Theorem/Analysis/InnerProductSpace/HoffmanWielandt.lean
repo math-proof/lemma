@@ -1,17 +1,22 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
-import Mathlib.Analysis.InnerProductSpace.Spectrum
-import Mathlib.Analysis.Matrix.Hermitian
-import Mathlib.Algebra.Order.Rearrangement
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.Convex.Birkhoff
-import Mathlib.RingTheory.PicardGroup
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Analysis.InnerProductSpace.Spectrum
+public import Mathlib.Analysis.Matrix.Hermitian
+public import Mathlib.Algebra.Order.Rearrangement
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Analysis.Convex.Birkhoff
+public import Mathlib.RingTheory.PicardGroup
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Ring
+
 /-!
 # Hoffman-Wielandt inequality for Hermitian matrices
 -/
+
+public section
 
 
 section

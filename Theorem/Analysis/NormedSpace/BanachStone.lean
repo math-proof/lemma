@@ -1,12 +1,15 @@
-import Mathlib.Topology.ContinuousMap.Compact
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Tactic.FunProp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.Compactness.Paracompact
-import Mathlib.Topology.ContinuousMap.Lattice
-import Mathlib.Topology.UrysohnsLemma
+module
 
+public import Mathlib.Topology.ContinuousMap.Compact
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Tactic.FunProp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.Compactness.Paracompact
+public import Mathlib.Topology.ContinuousMap.Lattice
+public import Mathlib.Topology.UrysohnsLemma
+
+public section
 
 section
 

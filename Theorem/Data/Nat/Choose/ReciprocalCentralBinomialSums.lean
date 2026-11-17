@@ -1,20 +1,23 @@
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Analysis.Real.Sqrt
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Algebra.Ring.IsFormallyReal
-import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.NumberTheory.ZetaValues
-import Mathlib.Tactic.Bound
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.FunProp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Analysis.Real.Sqrt
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Algebra.Ring.IsFormallyReal
+public import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+public import Mathlib.NumberTheory.ZetaValues
+public import Mathlib.Tactic.Bound
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.FunProp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
 open intervalIntegral MeasureTheory Real
 
+public section
 
 /-- Beta integral at natural exponents: `∫₀¹ xᵃ(1-x)ᵇ = a!·b!/(a+b+1)!`. -/
 theorem beta_nat (a b : ℕ) :

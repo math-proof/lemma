@@ -1,5 +1,9 @@
-import Mathlib
-import Theorem.Combinatorics.Tiling.DominoTilings
+module
+
+public import Mathlib
+public import Theorem.Combinatorics.Tiling.DominoTilings
+public section
+
 open Finset BigOperators
 
 

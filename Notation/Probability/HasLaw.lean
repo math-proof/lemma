@@ -1,4 +1,9 @@
-import Mathlib.Probability.HasLaw
+module
+
+public import Mathlib.Probability.HasLaw
+
+public section
+
 open MeasureTheory ProbabilityTheory
 
 /-- `x ∼[π] μ` — `x` has law `μ` under sample measure `π` (`HasLaw`, no density/`ReferenceMeasure`). -/

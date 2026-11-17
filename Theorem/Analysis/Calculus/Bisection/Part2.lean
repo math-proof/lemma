@@ -1,15 +1,20 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
-import Mathlib.Topology.MetricSpace.Basic
-import Mathlib.Topology.Order.IntermediateValue
-import Mathlib.Analysis.SpecificLimits.Basic
-import Mathlib.Topology.Order.MonotoneConvergence
-import Def.Analysis.Calculus.Bisection.Part2
+module
+
+public import Mathlib.Topology.MetricSpace.Basic
+public import Mathlib.Topology.Order.IntermediateValue
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Mathlib.Topology.Order.MonotoneConvergence
+public import Def.Analysis.Calculus.Bisection.Part2
+
 /-!
 This file constructs bisection sequences on real intervals and proves that their midpoints
 converge to a bracketed root with the standard geometric error bound.
 -/
+
+public section
 
 
 namespace Real.Calculus.Bisection

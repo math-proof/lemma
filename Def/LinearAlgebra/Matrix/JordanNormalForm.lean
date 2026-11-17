@@ -4,17 +4,22 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
-import Mathlib.LinearAlgebra.Charpoly.Basic
-import Mathlib.Algebra.Polynomial.Splits
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.Data.Matrix.Block
-import Mathlib.Algebra.DirectSum.LinearMap
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Mathlib.LinearAlgebra.Dimension.OrzechProperty
-import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
-import Mathlib.LinearAlgebra.Eigenspace.Zero
-import Mathlib.LinearAlgebra.Matrix.Basis
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
+public import Mathlib.LinearAlgebra.Charpoly.Basic
+public import Mathlib.Algebra.Polynomial.Splits
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+public import Mathlib.Data.Matrix.Block
+public import Mathlib.Algebra.DirectSum.LinearMap
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.LinearAlgebra.Dimension.OrzechProperty
+public import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
+public import Mathlib.LinearAlgebra.Eigenspace.Zero
+public import Mathlib.LinearAlgebra.Matrix.Basis
+
+@[expose] public section
+
 open Module
 open scoped BigOperators
 

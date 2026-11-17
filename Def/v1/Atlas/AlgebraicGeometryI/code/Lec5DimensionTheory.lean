@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.KrullDimension.NonZeroDivisors
-import Mathlib.RingTheory.KrullDimension.Regular
-import Mathlib.Topology.KrullDimension
+module
+
+public import Mathlib.RingTheory.KrullDimension.NonZeroDivisors
+public import Mathlib.RingTheory.KrullDimension.Regular
+public import Mathlib.Topology.KrullDimension
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 

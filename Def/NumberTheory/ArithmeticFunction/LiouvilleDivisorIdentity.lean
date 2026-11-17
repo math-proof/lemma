@@ -1,10 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ArithmeticFunction/LiouvilleDivisorIdentity.lean -/
 
-import Mathlib.NumberTheory.Divisors
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Data.Int.Star
-import Mathlib.LinearAlgebra.LinearPMap
-import Mathlib.NumberTheory.ArithmeticFunction.Misc
+module
+
+public import Mathlib.NumberTheory.Divisors
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Data.Int.Star
+public import Mathlib.LinearAlgebra.LinearPMap
+public import Mathlib.NumberTheory.ArithmeticFunction.Misc
+
+@[expose] public section
+
 open scoped BigOperators
 
 

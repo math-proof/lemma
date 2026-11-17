@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.NumberTheory.LSeries.PrimesInAP
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Order.Interval.Finset.Nat
-import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
+module
+
+public import Mathlib.NumberTheory.LSeries.PrimesInAP
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Order.Interval.Finset.Nat
+public import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 open Finset

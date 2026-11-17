@@ -1,6 +1,9 @@
-import Mathlib
-import Theorem.Analysis.MeasureTheory.Notation.Part3
+module
 
+public import Mathlib
+public import Theorem.Analysis.MeasureTheory.Notation.Part3
+
+@[expose] public section
 
 def EuclideanSpace'.prod_equiv (d₁ d₂:ℕ) : EuclideanSpace' (d₁ + d₂) ≃ EuclideanSpace' d₁ × EuclideanSpace' d₂ where
   toFun x :=

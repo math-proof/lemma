@@ -8,12 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.Semicontinuity.Defs
-import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
-import Mathlib.Analysis.SpecialFunctions.Log.ENNRealLog
-import Mathlib.Order.LiminfLimsup
-import Mathlib.Data.EReal.Inv
-import Mathlib.Topology.Basic
+module
+
+public import Mathlib.Topology.Semicontinuity.Defs
+public import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
+public import Mathlib.Analysis.SpecialFunctions.Log.ENNRealLog
+public import Mathlib.Order.LiminfLimsup
+public import Mathlib.Data.EReal.Inv
+public import Mathlib.Topology.Basic
+public section
+
 open scoped ENNReal
 open Filter MeasureTheory
 

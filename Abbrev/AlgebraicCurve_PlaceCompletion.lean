@@ -1,7 +1,9 @@
-import Mathlib
-import Class.AlgebraicCurve_DivisorClassGroup
-import Class.AlgebraicCurve_DivisorPushPull
-import Instance.DedekindDomain_AdicValuation_InlineSpecific
+module
+
+public import Mathlib
+public import Class.AlgebraicCurve_DivisorClassGroup
+public import Class.AlgebraicCurve_DivisorPushPull
+public import Instance.DedekindDomain_AdicValuation_InlineSpecific
 
 set_option synthInstance.maxHeartbeats 400000
 set_option maxHeartbeats 1600000
@@ -11,7 +13,7 @@ set_option autoImplicit false
 set_option synthInstance.maxHeartbeats 800000
 set_option maxHeartbeats 1600000
 
-noncomputable section
+@[expose] public noncomputable section
 
 open IsDedekindDomain IsDedekindDomain.HeightOneSpectrum IsLocalRing WithZero MonoidWithZeroHom
 

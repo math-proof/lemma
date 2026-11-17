@@ -1,17 +1,11 @@
-import Mathlib.Data.Vector.MapLemmas
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Data.Matrix.Mul
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Lemma.Nat.EqMin_SubMulS
-import Lemma.Nat.EqAddMulDiv
-import Lemma.List.LengthRange.eq.Length
-import Lemma.List.Prod.eq.MulProdS
-import Theorem.Algebra.Power.Part2
-import Theorem.Function
-import Def.Data.Vector.Basic
-open Nat Lean
-open scoped BigOperators
+module
 
+public import Mathlib.Data.Vector.MapLemmas
+public import Mathlib.Data.Rat.Init
+
+open Nat Lean
+
+@[expose] public section
 
 namespace List.Vector
 

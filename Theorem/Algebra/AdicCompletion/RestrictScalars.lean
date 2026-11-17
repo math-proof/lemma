@@ -1,4 +1,9 @@
-import Mathlib.RingTheory.AdicCompletion.Algebra
+module
+
+public import Mathlib.RingTheory.AdicCompletion.Algebra
+
+public section
+
 universe u₁ u₂
 
 

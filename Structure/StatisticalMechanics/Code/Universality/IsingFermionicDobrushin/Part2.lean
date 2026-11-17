@@ -9,11 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.IsingSHolo.Part7
-import Theorem.StatisticalMechanics.Code.BeffaraDC.PlanarFKDuality.Part6
-import Theorem.StatisticalMechanics.Code.BeffaraDC.SelfDualValue
-import Theorem.StatisticalMechanics.Code.FK.MonoBC.Part4
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicDobrushin.Part5
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.IsingSHolo.Part7
+public import Theorem.StatisticalMechanics.Code.BeffaraDC.PlanarFKDuality.Part6
+public import Theorem.StatisticalMechanics.Code.BeffaraDC.SelfDualValue
+public import Theorem.StatisticalMechanics.Code.FK.MonoBC.Part4
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicDobrushin.Part5
 open Finset Complex
 open scoped BigOperators
 
@@ -22,7 +24,7 @@ namespace StatMech.Universality
 
 open StatMech StatMech.FK StatMech.Lattice StatMech.BeffaraDC
 
-noncomputable section
+public noncomputable section
 
 variable (P : PlanarZ2Subgraph) (M : Type*) [Fintype M] [DecidableEq M]
 

@@ -8,25 +8,27 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.LieGroups.code.Admissible.Part3
-import Lemma.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
-import Lemma.Real.GetToMonoidHom.in.SmoothSubspace.of.In_SmoothSubspace
-import Lemma.Complex.IsKFinite0
-import Def.v1.Atlas.LieGroups.code.SmoothVectors
-import Def.v1.Atlas.LieGroups.code.KFinite.Part3
-import Def.v1.Atlas.LieGroups.code.GKModuleDefs.Part2
-import Mathlib.Geometry.Manifold.Algebra.LieGroup
-import Mathlib.Geometry.Manifold.ContMDiff.Defs
-import Mathlib.Topology.ContinuousMap.Basic
-import Mathlib.Analysis.Analytic.Basic
-import Mathlib.Analysis.InnerProductSpace.EuclideanDist
-import Mathlib.LinearAlgebra.Charpoly.Basic
-import Mathlib.Algebra.Lie.Semisimple.Defs
-import Def.v1.Atlas.LieGroups.code.AnalyticityRegularity
+module
+
+public import Def.v1.Atlas.LieGroups.code.Admissible.Part3
+public import Lemma.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
+public import Theorem.Real.GetToMonoidHom.in.SmoothSubspace.of.In_SmoothSubspace
+public import Lemma.Complex.IsKFinite0
+public import Def.v1.Atlas.LieGroups.code.SmoothVectors
+public import Def.v1.Atlas.LieGroups.code.KFinite.Part3
+public import Def.v1.Atlas.LieGroups.code.GKModuleDefs.Part2
+public import Mathlib.Geometry.Manifold.Algebra.LieGroup
+public import Mathlib.Geometry.Manifold.ContMDiff.Defs
+public import Mathlib.Topology.ContinuousMap.Basic
+public import Mathlib.Analysis.Analytic.Basic
+public import Mathlib.Analysis.InnerProductSpace.EuclideanDist
+public import Mathlib.LinearAlgebra.Charpoly.Basic
+public import Mathlib.Algebra.Lie.Semisimple.Defs
+public import Def.v1.Atlas.LieGroups.code.AnalyticityRegularity
 universe uLie
 
 
-noncomputable section
+public noncomputable section
 
 open scoped Manifold
 

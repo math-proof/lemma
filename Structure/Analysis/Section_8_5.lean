@@ -1,6 +1,10 @@
-import Mathlib
-import Theorem.Analysis.Section_8_4
-import Def.Analysis.Section_8_5.Part3
+module
+
+public import Mathlib
+public import Theorem.Analysis.Section_8_4
+public import Def.Analysis.Section_8_5.Part3
+public section
+
 set_option doc.verso.suggestions false
 
 /-!

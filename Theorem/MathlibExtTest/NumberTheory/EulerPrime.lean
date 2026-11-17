@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.EulerPrime
-import Lemma.Nat.EulerPrime
+import Theorem.Nat.EulerPrime
 open MetaMathlibExt
 
 

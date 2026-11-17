@@ -9,15 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.GeometryOfManifolds.code.HamiltonianVectorFields.Part3
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.HamiltonianVectorFields
 import Structure.v1.Atlas.GeometryOfManifolds.code.ArnoldConjecture.Part3
 set_option autoImplicit false
 
 open DifferentialFormSpace
 
-
 attribute [instance] CompactLagrangian.inst_L
-
 
 /-- Data for the Lagrangian Arnold conjecture: cohomology of $L$, dimension, total Betti number
 $\sum_i b_i(L) \ge 2$, and the intersection number $\# (L \cap \psi(L))$. -/

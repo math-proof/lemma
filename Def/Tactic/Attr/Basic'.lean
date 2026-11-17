@@ -1,7 +1,24 @@
-import Def.Tactic.Attr.Basic.Part2
-import Def.Data.Prod.Prod
-import Def.Lean.Expr.Parser
+module
+
+public import Mathlib.Tactic
+public import Def.Tactic.Attr.Basic.Part2
+public import Def.Data.Prod.Prod
+public import Def.Lean.Expr.Parser
+
+@[expose] public section
+
 open Lean Lean.Meta
+
+instance : ToString Lean.Expr where
+  toString e := e.dbgToString
+
+instance : ToString Lean.BinderInfo where
+  toString
+    | .default => "default"
+    | .implicit => "implicit"
+    | .strictImplicit => "strictImplicit"
+    | .instImplicit => "instImplicit"
+
 
 
 def Expr.comm' (type value : Lean.Expr) (parity : ℕ := 0) : CoreM (List (Bool × Lean.Expr) × Lean.Expr × Lean.Expr) := do

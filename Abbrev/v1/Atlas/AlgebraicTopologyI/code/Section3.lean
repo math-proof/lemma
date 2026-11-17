@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Iso
-import Mathlib.CategoryTheory.NatTrans
+module
+
+public import Mathlib.CategoryTheory.Iso
+public import Mathlib.CategoryTheory.NatTrans
+
+@[expose] public section
 
 
 namespace AlgebraicTopologyI

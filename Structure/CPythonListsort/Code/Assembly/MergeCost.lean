@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeCost.lean -/
 
-import Mathlib.Analysis.SpecialFunctions.Log.Base
-import Mathlib.Algebra.BigOperators.Ring.List
-import Mathlib.Tactic
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Log.Base
+public import Mathlib.Algebra.BigOperators.Ring.List
+public import Mathlib.Tactic
 /-!
 # Merge-cost accounting
 
@@ -14,6 +16,9 @@ An empty `MergePlan` represents the empty input.  A nonempty plan is a binary
 tree whose leaves are the runs, in input order.  Internal powers are retained
 for the later PowerSort-policy bridge but do not affect merge-cost accounting.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

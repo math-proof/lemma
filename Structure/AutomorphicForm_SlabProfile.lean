@@ -1,13 +1,15 @@
-import Def.AutomorphicForm_BorelSubgroup
-import Def.AutomorphicForm_WeylIntertwining
-import Def.NumberField_AdelicHeight
-import Def.NumberField_TateGlobalZeta
+module
+
+public import Def.AutomorphicForm_BorelSubgroup
+public import Def.AutomorphicForm_WeylIntertwining
+public import Def.NumberField_AdelicHeight
+public import Def.NumberField_TateGlobalZeta
 
 open MeasureTheory NumberField
 open NumberField.AdelicHaar
 
 
-noncomputable section
+public noncomputable section
 
 namespace AutomorphicForm
 

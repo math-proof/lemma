@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM16.FourierTransform
-import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM16.FourierTransform
+import Theorem.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM16.FourierTransform
 import Mathlib.Analysis.Distribution.SchwartzSpace.Fourier
 import Mathlib.Analysis.Distribution.FourierMultiplier
 open MeasureTheory Complex FourierTransform

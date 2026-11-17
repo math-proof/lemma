@@ -1,4 +1,8 @@
-import Lean
+module
+
+public import Lean
+
+public section
 
 /-
 Canonical `⬝ᵥ` notation for `Dot.dot`.
@@ -17,7 +21,7 @@ syntax:72 (name := termDotV) (priority := 2000) term:72 " ⬝ᵥ " term:73 : ter
 open Lean Elab Term in
 /-- Elaborate `x ⬝ᵥ y` as `Dot.dot x y`, looking up `Dot` in the caller's scope. -/
 @[term_elab termDotV]
-def elabDotV : TermElab := fun stx expectedType? =>
+meta def elabDotV : TermElab := fun stx expectedType? =>
   match stx with
   | `($x ⬝ᵥ $y) => do
       let dot := mkIdent `Dot.dot

@@ -2,7 +2,7 @@
 
 
 import Theorem.NumberTheory.MultipleZeta.WordAlgebra.Part2
-import Lemma.Nat.MultipleZeta.WordAlgebra
+import Theorem.Nat.MultipleZeta.WordAlgebra
 
 
 namespace MetaMathlibExt.MultipleZeta

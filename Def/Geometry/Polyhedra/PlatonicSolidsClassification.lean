@@ -4,19 +4,24 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Algebra.Order.Archimedean.Real.Hom
-import Mathlib.Analysis.InnerProductSpace.GramMatrix
-import Mathlib.Analysis.InnerProductSpace.Dual
-import Mathlib.Analysis.LocallyConvex.Separation
-import Mathlib.Data.Int.Star
-import Mathlib.NumberTheory.Real.GoldenRatio
-import Mathlib.Order.CompletePartialOrder
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Positivity
+module
+
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Algebra.Order.Archimedean.Real.Hom
+public import Mathlib.Analysis.InnerProductSpace.GramMatrix
+public import Mathlib.Analysis.InnerProductSpace.Dual
+public import Mathlib.Analysis.LocallyConvex.Separation
+public import Mathlib.Data.Int.Star
+public import Mathlib.NumberTheory.Real.GoldenRatio
+public import Mathlib.Order.CompletePartialOrder
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.IntervalCases
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Positivity
+
+@[expose] public section
+
 /-!
 # Classification of the Platonic solids
 

@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.LieGroups.code.HarishChandraFunctor
-import Lemma.Set.Dense_KFiniteSubspace.of.IsAdmissible
+import Theorem.Set.Dense_KFiniteSubspace.of.IsAdmissible
 import Lemma.Submodule.Any_And_All_Eq_GetToMonoidHomAndAll_In_Span.of.IsMaximalCompactSubgroup.IsSemisimpleLieGroupG
 import Def.v1.Atlas.LieGroups.code.GKModuleDefs.Part2
 import Def.v1.Atlas.LieGroups.code.AnalyticityRegularity.Part2

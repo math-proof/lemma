@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.FieldTheory.Finite.GaloisField
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.Algebra.CharP.Frobenius
+module
+
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.FieldTheory.Finite.GaloisField
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.Algebra.CharP.Frobenius
+public section
+
 open Polynomial
 
 universe u

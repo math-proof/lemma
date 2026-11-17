@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/QuadraticForms/Reduced.lean -/
 
 import Def.NumberTheory.QuadraticForms.Reduced
-import Lemma.Nat.QuadraticForms.Reduced
+import Theorem.Nat.QuadraticForms.Reduced
 /-!
 # Tests for `BinaryQuadraticForm.IsGaussReduced`
 Boundary coverage for Mortenson arXiv:1702.01627v2 Section 2 line 259.

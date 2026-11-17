@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/JaccardLattice.lean -/
 
-import Mathlib.Data.Real.Basic
-import Mathlib.Tactic.Linarith
+module
+
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Tactic.Linarith
+
+@[expose] public section
+
 /-!
 # Jaccard distance triangle inequality on arbitrary lattices
 

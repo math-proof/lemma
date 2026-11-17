@@ -21,6 +21,8 @@ import Lemma.Random.NormVkd.le.MulInvSub1Abs_R.of.In_Ico
 import Lemma.Random.NormClip.le.Abs_R
 import Lemma.Random.AeNormSub.le.DeltaBound.of.In_Ico.All_EqWithDensity
 import Lemma.Random.Integral_SMul.eq.Zero.of.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure Real
 set_option maxHeartbeats 900000
 
@@ -973,4 +975,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-16
+-- updated on 2026-11-17

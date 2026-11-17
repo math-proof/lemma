@@ -8,14 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.FreeModule.Finite.Matrix
-import Mathlib.LinearAlgebra.Dimension.DivisionRing
-import Mathlib.LinearAlgebra.Projection
-import Mathlib.LinearAlgebra.Prod
-import Def.v1.Atlas.AlgebraicGeometryI.code.GrassmannianTangent
+module
+
+public import Mathlib.LinearAlgebra.FreeModule.Finite.Matrix
+public import Mathlib.LinearAlgebra.Dimension.DivisionRing
+public import Mathlib.LinearAlgebra.Projection
+public import Mathlib.LinearAlgebra.Prod
+public import Def.v1.Atlas.AlgebraicGeometryI.code.GrassmannianTangent
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 open Module (finrank)
 

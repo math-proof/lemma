@@ -14,7 +14,7 @@ import Mathlib.Topology.ContinuousMap.ZeroAtInfty
 import Mathlib.Topology.Order
 import Def.v1.Atlas.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras.Part3
 import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.ContinuousFunctions
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ContinuousFunctions
 import Def.v1.Atlas.DifferentialAnalysis.code.ContinuousFunctions.Part2
 import Def.v1.Atlas.DifferentialAnalysis.code.OuterMeasureFromFunctional
 

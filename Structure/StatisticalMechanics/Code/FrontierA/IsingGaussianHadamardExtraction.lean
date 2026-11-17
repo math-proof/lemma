@@ -9,27 +9,29 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianHadamardLogDerivative.Part4
-import Theorem.StatisticalMechanics.Code.FrontierA.DyadicInverseSquareSummability.Part4
-import Theorem.StatisticalMechanics.Code.FrontierA.HadamardQuadraticFactorOrder
-import Theorem.StatisticalMechanics.Code.FrontierA.EntireOrderMatchedQuotient
-import Theorem.StatisticalMechanics.Code.FrontierA.EntireZeroFreeLogarithm
-import Theorem.StatisticalMechanics.Code.FrontierA.EntireExponentialLogAffine
-import Theorem.StatisticalMechanics.Code.FrontierA.EntireExponentialCharacteristicAffine
-import Mathlib.Analysis.Complex.JensenFormula
-import Mathlib.Analysis.Complex.LocallyUniformLimit
-import Mathlib.Analysis.Calculus.SmoothSeries
-import Mathlib.Analysis.Calculus.Deriv.MeanValue
-import Mathlib.Analysis.SpecialFunctions.Log.Summable
-import Mathlib.Topology.Algebra.InfiniteSum.Order
-import Mathlib.Topology.Compactness.Lindelof
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianHadamardLogDerivative.Part4
+public import Theorem.StatisticalMechanics.Code.FrontierA.DyadicInverseSquareSummability.Part4
+public import Theorem.StatisticalMechanics.Code.FrontierA.HadamardQuadraticFactorOrder
+public import Theorem.StatisticalMechanics.Code.FrontierA.EntireOrderMatchedQuotient
+public import Theorem.StatisticalMechanics.Code.FrontierA.EntireZeroFreeLogarithm
+public import Theorem.StatisticalMechanics.Code.FrontierA.EntireExponentialLogAffine
+public import Theorem.StatisticalMechanics.Code.FrontierA.EntireExponentialCharacteristicAffine
+public import Mathlib.Analysis.Complex.JensenFormula
+public import Mathlib.Analysis.Complex.LocallyUniformLimit
+public import Mathlib.Analysis.Calculus.SmoothSeries
+public import Mathlib.Analysis.Calculus.Deriv.MeanValue
+public import Mathlib.Analysis.SpecialFunctions.Log.Summable
+public import Mathlib.Topology.Algebra.InfiniteSum.Order
+public import Mathlib.Topology.Compactness.Lindelof
 open Filter Metric
 open scoped BigOperators ComplexConjugate
 
 
 namespace StatMech.FrontierA
 
-noncomputable section
+public noncomputable section
 
 structure EvenExponentialTypeImaginaryZeros (F : Complex → Complex) where
   analytic : AnalyticOnNhd Complex F Set.univ

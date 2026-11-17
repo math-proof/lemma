@@ -9,8 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Analysis.Meromorphic.NormalForm
+module
+
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Analysis.Meromorphic.NormalForm
+
+@[expose] public section
+
 open Set
 
 

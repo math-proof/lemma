@@ -8,12 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Onsager.TrivalentCycles
-import Theorem.StatisticalMechanics.Code.Onsager.TurningTelescope.Part3
-import Theorem.StatisticalMechanics.Code.Onsager.Torus
-import Theorem.StatisticalMechanics.Code.Onsager.TorusDecoration.Part3
+module
 
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Onsager.TrivalentCycles
+public import Theorem.StatisticalMechanics.Code.Onsager.TurningTelescope.Part3
+public import Theorem.StatisticalMechanics.Code.Onsager.Torus
+public import Theorem.StatisticalMechanics.Code.Onsager.TorusDecoration.Part3
+
+
+public section
 
 namespace StatMech.Onsager
 

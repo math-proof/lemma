@@ -7,14 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.LinearAlgebra.Matrix.Rank
-import Mathlib.LinearAlgebra.Matrix.ConjTranspose
-import Mathlib.Data.Real.StarOrdered
-import Mathlib.Analysis.Matrix.Spectrum
-import Structure.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Prop_2_1
+public import Mathlib.LinearAlgebra.Matrix.Rank
+public import Mathlib.LinearAlgebra.Matrix.ConjTranspose
+public import Mathlib.Data.Real.StarOrdered
+public import Mathlib.Analysis.Matrix.Spectrum
+public import Structure.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Prop_2_1
 open Matrix
 
+public section
 
 namespace LeastSquares
 

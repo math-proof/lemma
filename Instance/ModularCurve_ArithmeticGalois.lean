@@ -1,7 +1,4 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_ArithmeticGalois.lean: instance decls only.
-import Lemma.HahnSeries.X0
-import Lemma.LaurentSeries.LaurentCoeff
-import Lemma.Scheme.AlgebraicCurveBaseChangeGalois
 import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
 import Lemma.LaurentSeries.ArithmeticGalois
 

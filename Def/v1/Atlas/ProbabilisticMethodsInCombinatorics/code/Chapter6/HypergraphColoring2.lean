@@ -8,12 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Real.Basic
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Set.Card
-import Mathlib.Data.Set.Finite.Basic
-import Mathlib.Topology.Compactness.Compact
-import Mathlib.Data.Finset.Powerset
+module
+
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Set.Card
+public import Mathlib.Data.Set.Finite.Basic
+public import Mathlib.Topology.Compactness.Compact
+public import Mathlib.Data.Finset.Powerset
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 open Set Topology

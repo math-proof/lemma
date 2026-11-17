@@ -1,5 +1,9 @@
-import Mathlib.RepresentationTheory.Irreducible
-import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
+module
+
+public import Mathlib.RepresentationTheory.Irreducible
+public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
+
+public section
 
 set_option autoImplicit false
 

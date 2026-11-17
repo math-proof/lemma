@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PentanacciNumber.lean -/
+module
 
+public import Def.NumberTheory.PentanacciNumber
 
-import Def.NumberTheory.PentanacciNumber
-
+public section
 
 namespace MetaMathlibExt
 

@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FiniteLiesOverValuation.lean -/
 
 import Theorem.NumberTheory.NumberField.Completion.FiniteLiesOver
-import Lemma.Nat.NumberField.Completion.FiniteLiesOver
+import Theorem.Nat.NumberField.Completion.FiniteLiesOver
 /-!
 # Valuation formula for maps between finite-place completions
 

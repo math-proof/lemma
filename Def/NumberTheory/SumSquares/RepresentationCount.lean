@@ -1,10 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SumSquares/RepresentationCount.lean -/
 
-import Mathlib.Data.Matrix.Mul
-import Mathlib.Data.Set.Card
-import Mathlib.Algebra.Order.Ring.Abs
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Int.Interval
+module
+
+public import Mathlib.Data.Matrix.Mul
+public import Mathlib.Data.Set.Card
+public import Mathlib.Algebra.Order.Ring.Abs
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Int.Interval
+
+@[expose] public section
+
 /-!
 # Ordered signed sums of squares
 Ordered signed integer vectors and their representation numbers.

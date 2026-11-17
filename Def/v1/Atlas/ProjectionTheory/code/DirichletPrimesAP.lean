@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Nat.Totient
-import Mathlib.Topology.Instances.Real.Lemmas
-import Mathlib.Data.Nat.Prime.Basic
+module
+
+public import Mathlib.Data.Nat.Totient
+public import Mathlib.Topology.Instances.Real.Lemmas
+public import Mathlib.Data.Nat.Prime.Basic
+
+@[expose] public section
+
 open Filter Finset
 
 

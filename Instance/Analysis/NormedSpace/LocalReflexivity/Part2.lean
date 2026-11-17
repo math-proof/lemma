@@ -1,33 +1,37 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
-import Mathlib.Analysis.Normed.Module.DoubleDual
-import Mathlib.Analysis.LocallyConvex.Separation
-import Mathlib.Analysis.Normed.Module.HahnBanach
-import Mathlib.Analysis.Normed.Group.Submodule
-import Mathlib.Analysis.Normed.Module.FiniteDimension
-import Mathlib.Topology.Algebra.Module.FiniteDimension
-import Mathlib.LinearAlgebra.Dual.Lemmas
-import Mathlib.LinearAlgebra.Projection
-import Mathlib.Analysis.RCLike.Basic
-import Mathlib.Analysis.RCLike.Lemmas
-import Mathlib.Analysis.Normed.Operator.ContinuousLinearMap
-import Mathlib.Analysis.Normed.Operator.NNNorm
-import Mathlib.Topology.Algebra.Module.ContinuousLinearMap.PiProd
-import Mathlib.Topology.MetricSpace.Pseudo.Basic
-import Mathlib.Topology.MetricSpace.ProperSpace
-import Mathlib.LinearAlgebra.Isomorphisms
-import Mathlib.LinearAlgebra.Quotient.Basic
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Mathlib.LinearAlgebra.Dimension.Free
-import Mathlib.Algebra.Order.Group.Unbundled.Basic
-import Mathlib.Algebra.Module.LinearMap.End
-import Mathlib.Algebra.BigOperators.Pi
-import Mathlib.LinearAlgebra.Pi
-import Mathlib.Algebra.Module.Submodule.Lattice
-import Mathlib.Algebra.Order.Monoid.Unbundled.ExistsOfLE
-import Theorem.Analysis.NormedSpace.LocalReflexivity.Part2
 
+module
+
+public import Mathlib.Analysis.Normed.Module.DoubleDual
+public import Mathlib.Analysis.LocallyConvex.Separation
+public import Mathlib.Analysis.Normed.Module.HahnBanach
+public import Mathlib.Analysis.Normed.Group.Submodule
+public import Mathlib.Analysis.Normed.Module.FiniteDimension
+public import Mathlib.Topology.Algebra.Module.FiniteDimension
+public import Mathlib.LinearAlgebra.Dual.Lemmas
+public import Mathlib.LinearAlgebra.Projection
+public import Mathlib.Analysis.RCLike.Basic
+public import Mathlib.Analysis.RCLike.Lemmas
+public import Mathlib.Analysis.Normed.Operator.ContinuousLinearMap
+public import Mathlib.Analysis.Normed.Operator.NNNorm
+public import Mathlib.Topology.Algebra.Module.ContinuousLinearMap.PiProd
+public import Mathlib.Topology.MetricSpace.Pseudo.Basic
+public import Mathlib.Topology.MetricSpace.ProperSpace
+public import Mathlib.LinearAlgebra.Isomorphisms
+public import Mathlib.LinearAlgebra.Quotient.Basic
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.LinearAlgebra.Dimension.Free
+public import Mathlib.Algebra.Order.Group.Unbundled.Basic
+public import Mathlib.Algebra.Module.LinearMap.End
+public import Mathlib.Algebra.BigOperators.Pi
+public import Mathlib.LinearAlgebra.Pi
+public import Mathlib.Algebra.Module.Submodule.Lattice
+public import Mathlib.Algebra.Order.Monoid.Unbundled.ExistsOfLE
+public import Theorem.Analysis.NormedSpace.LocalReflexivity.Part2
+
+@[expose] public section
 
 namespace FunctionalAnalysis.LocalReflexivityWanted
 

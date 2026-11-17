@@ -1,11 +1,13 @@
-import Mathlib
-import Structure.AlgebraicGeometry_OrderedAffineCoverCech
-import Instance.AlgebraicGeometry_DoubleComplex
-import Instance.AlgebraicGeometry_BiCech
+module
+
+public import Mathlib
+public import Structure.AlgebraicGeometry_OrderedAffineCoverCech
+public import Instance.AlgebraicGeometry_DoubleComplex
+public import Instance.AlgebraicGeometry_BiCech
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 universe u
 

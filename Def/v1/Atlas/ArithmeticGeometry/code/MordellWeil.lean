@@ -8,11 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Tactic
-import Mathlib.RingTheory.Int.Basic
-import Mathlib.Data.Int.GCD
-import Mathlib.RingTheory.UniqueFactorizationDomain.Finite
+module
 
+public import Mathlib.Tactic
+public import Mathlib.RingTheory.Int.Basic
+public import Mathlib.Data.Int.GCD
+public import Mathlib.RingTheory.UniqueFactorizationDomain.Finite
+
+@[expose] public section
 
 namespace WeakMordellWeil
 

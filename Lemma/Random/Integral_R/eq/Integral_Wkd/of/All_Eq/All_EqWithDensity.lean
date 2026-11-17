@@ -10,6 +10,8 @@ import Lemma.Random.NormWkd.le.Abs_R
 import Lemma.Random.NormClip.le.Abs_R
 import Lemma.Random.Measurable_Wkd.of.All_Measurable_Prob
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Kernel
 set_option maxHeartbeats 400000
 
@@ -221,4 +223,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-16
+-- updated on 2026-11-17

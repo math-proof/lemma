@@ -1,7 +1,9 @@
-import Mathlib
-import Structure.ModularCurve_X0
+module
 
-noncomputable section
+public import Mathlib
+public import Structure.ModularCurve_X0
+
+@[expose] public noncomputable section
 
 open IntermediateField
 

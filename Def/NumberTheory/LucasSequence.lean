@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LucasSequence.lean -/
 
-import Mathlib.Data.Nat.Fib.Basic
-import Structure.NumberTheory.LucasSequence
+module
+
+public import Mathlib.Data.Nat.Fib.Basic
+public import Structure.NumberTheory.LucasSequence
+
+@[expose] public section
+
 /-!
 # Lucas sequences
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Structure.AlgebraicGeometry_MazurRapoportAppendixPicNeronCarriers
+module
+
+public import Mathlib
+public import Structure.AlgebraicGeometry_MazurRapoportAppendixPicNeronCarriers
+
+@[expose] public section
 
 set_option autoImplicit false
 

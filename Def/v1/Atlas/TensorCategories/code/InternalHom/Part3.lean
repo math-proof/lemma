@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Abbrev.v1.Atlas.TensorCategories.code.ModuleCategory.Part5
 import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
-import Lemma.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
+import Theorem.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
 import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
 import Theorem.v1.Atlas.TensorCategories.code.InternalHom.Part2
 set_option maxHeartbeats 800000

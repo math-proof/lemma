@@ -1,5 +1,9 @@
-import Mathlib
-import Def.Mathlib_Topology_Algebra_RestrictedProduct_Basic
+module
+
+public import Mathlib
+public import Def.Mathlib_Topology_Algebra_RestrictedProduct_Basic
+
+@[expose] public section
 
 section
 

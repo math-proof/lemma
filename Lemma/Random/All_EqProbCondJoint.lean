@@ -1,6 +1,7 @@
 import Lemma.Random.All_Eq_MulProbCond.of.PSpace_Joint
 import Lemma.Random.PSpace_JointJoint.is.PSpace_Joint_Joint
 import Lemma.Random.Map.eq.WithDensityProb
+import Initialize.Tactic.Attr.Basic
 open Random MeasureTheory
 
 
@@ -134,5 +135,5 @@ private lemma Cond
 
 
 -- created on 2023-03-27
--- updated on 2026-11-14
--- updated on 2026-11-02
+-- updated on 2026-11-17
+-- updated on 2026-11-17

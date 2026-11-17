@@ -1,7 +1,11 @@
-import Mathlib.NumberTheory.ModularForms.Bounds
-import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
-import Mathlib.Analysis.Complex.UpperHalfPlane.Measure
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
+module
+
+public import Mathlib.NumberTheory.ModularForms.Bounds
+public import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
+public import Mathlib.Analysis.Complex.UpperHalfPlane.Measure
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+
+@[expose] public section
 
 set_option autoImplicit false
 

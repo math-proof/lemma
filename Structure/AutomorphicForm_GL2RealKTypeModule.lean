@@ -1,5 +1,9 @@
-import Mathlib
-import Def.AutomorphicForm_GL2RealKTypeModule
+module
+
+public import Mathlib
+public import Def.AutomorphicForm_GL2RealKTypeModule
+
+public section
 
 set_option autoImplicit false
 

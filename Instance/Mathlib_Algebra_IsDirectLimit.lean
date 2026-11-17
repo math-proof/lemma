@@ -1,6 +1,11 @@
 -- Carved from Lemma/Definitions/Def_Mathlib_Algebra_IsDirectLimit.lean: instance decls only.
-import Mathlib
-import Class.Mathlib_Algebra_IsDirectLimit
+
+module
+
+public import Mathlib
+public import Class.Mathlib_Algebra_IsDirectLimit
+
+@[expose] public section
 
 section
 

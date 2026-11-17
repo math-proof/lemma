@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Instance.v1.Atlas.ArithmeticGeometry.code.CompleteVarieties
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.CompleteVarieties
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.CompleteVarieties
 import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.ValuationRings
 import Def.v1.Atlas.ArithmeticGeometry.code.ValuationRings.Part4
 import Mathlib.FieldTheory.IsAlgClosed.Basic

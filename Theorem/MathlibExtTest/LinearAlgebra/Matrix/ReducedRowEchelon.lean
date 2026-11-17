@@ -2,7 +2,7 @@
 
 
 import Def.LinearAlgebra.Matrix.ReducedRowEchelon
-import Lemma.Matrix.ReducedRowEchelon
+import Theorem.Matrix.ReducedRowEchelon
 
 
 namespace MathlibExt.LinearAlgebra.Matrix.ReducedRowEchelonWanted

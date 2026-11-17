@@ -1,5 +1,9 @@
-import Structure.CerednikDrinfeld_FormalUpperHalfPlanePoints
-import Instance.CerednikDrinfeld_FormalUpperHalfPlaneChartRings
+module
+
+public import Structure.CerednikDrinfeld_FormalUpperHalfPlanePoints
+public import Instance.CerednikDrinfeld_FormalUpperHalfPlaneChartRings
+
+public section
 
 set_option autoImplicit false
 

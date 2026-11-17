@@ -6,6 +6,7 @@ import Notation.Algebra.Power
 import Def.Probability.ChiSquare
 import Lemma.Measure.SumSqGaussians.eq.ChiSquaredReal
 import Instance.Probability.Process.HiddenMarkovSequence
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory
 open Fun
 open Measure
@@ -86,4 +87,4 @@ private lemma main
 
 
 -- created on 2021-07-17
--- updated on 2026-10-30
+-- updated on 2026-11-17

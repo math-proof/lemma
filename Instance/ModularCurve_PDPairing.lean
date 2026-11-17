@@ -2,7 +2,6 @@
 import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
 import Mathlib.GroupTheory.Transfer
 import Mathlib.GroupTheory.FreeGroup.NielsenSchreier
-import Lemma.UpperHalfPlane.PeriodMap
 import Lemma.Matrix.PDPairing
 
 set_option autoImplicit false

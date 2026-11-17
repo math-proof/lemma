@@ -8,13 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Calculus.FDeriv.Basic
-import Mathlib.Analysis.Calculus.FDeriv.Pi
-import Mathlib.Analysis.InnerProductSpace.PiL2
+module
+
+public import Mathlib.Analysis.Calculus.FDeriv.Basic
+public import Mathlib.Analysis.Calculus.FDeriv.Pi
+public import Mathlib.Analysis.InnerProductSpace.PiL2
 open Finset
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace FieldTransformation
 

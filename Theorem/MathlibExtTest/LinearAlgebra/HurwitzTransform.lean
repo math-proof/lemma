@@ -2,7 +2,7 @@
 
 
 import Def.LinearAlgebra.HurwitzTransform
-import Lemma.Matrix.HurwitzTransform
+import Theorem.Matrix.HurwitzTransform
 open MetaMathlibExt
 
 

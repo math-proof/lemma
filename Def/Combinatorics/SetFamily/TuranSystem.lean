@@ -2,7 +2,7 @@
 
 import Mathlib.Data.Fintype.Basic
 import Def.Combinatorics.SetFamily.UniformHypergraph
-import Lemma.Finset.SetFamily.UniformHypergraph
+import Theorem.Finset.SetFamily.UniformHypergraph
 /-!
 Turan systems after Liu and Pikhurko,
 "A note on the minimum size of Turán systems" (arXiv:2501.15457v2).

@@ -1,10 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/RStirlingFirstAlternatingExpansion.lean -/
 
-import Mathlib.Algebra.Polynomial.Basic
-import Mathlib.Combinatorics.Enumerative.Stirling
-import Mathlib.Order.Interval.Finset.Nat
-import Mathlib.Algebra.Polynomial.Eval.Coeff
-import Mathlib.Tactic.LinearCombination
+module
+
+public import Mathlib.Algebra.Polynomial.Basic
+public import Mathlib.Combinatorics.Enumerative.Stirling
+public import Mathlib.Order.Interval.Finset.Nat
+public import Mathlib.Algebra.Polynomial.Eval.Coeff
+public import Mathlib.Tactic.LinearCombination
+
+@[expose] public section
+
 /-! Broder's expansion formula for r-Stirling numbers of the first kind.
 
 Source: A. Z. Broder, "The r-Stirling numbers",

@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FiniteLiesOverResidueField.lean -/
 
 import Theorem.NumberTheory.NumberField.Completion.FiniteLiesOverMaximalIdeal
-import Lemma.Nat.NumberField.Completion.FiniteLiesOverMaximalIdeal
+import Theorem.Nat.NumberField.Completion.FiniteLiesOverMaximalIdeal
 /-!
 # Naturality of adic integer maps with ring-of-integers algebra maps
 

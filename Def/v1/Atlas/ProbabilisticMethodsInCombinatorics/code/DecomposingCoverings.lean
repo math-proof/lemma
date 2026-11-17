@@ -8,12 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Finset.Basic
-import Mathlib.Data.Set.Card
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.DecomposingCoveringsAxiom.Part2
+module
+
+public import Mathlib.Data.Finset.Basic
+public import Mathlib.Data.Set.Card
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.DecomposingCoveringsAxiom.Part2
+
+@[expose] public section
+
 open Set Metric
 
 

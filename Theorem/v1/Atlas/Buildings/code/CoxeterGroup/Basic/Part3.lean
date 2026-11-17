@@ -7,13 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.GroupTheory.Coxeter.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Data.Fintype.BigOperators
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.Basic.Part3
+public import Mathlib.GroupTheory.Coxeter.Basic
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Data.Fintype.BigOperators
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.Basic.Part3
 open Finset BigOperators
 
+public section
 
 namespace CoxeterGroup
 

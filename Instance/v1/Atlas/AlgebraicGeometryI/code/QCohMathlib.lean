@@ -8,9 +8,11 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Tilde
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.QCohTildeFunctor
+module
 
+public import Mathlib.AlgebraicGeometry.Modules.Tilde
+
+@[expose] public section
 
 noncomputable section
 

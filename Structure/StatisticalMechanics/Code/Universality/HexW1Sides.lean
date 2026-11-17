@@ -9,12 +9,16 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Universality.HexInfraWinding
-import Theorem.StatisticalMechanics.Code.Universality.HexInfraHeading
-import Theorem.StatisticalMechanics.Code.Universality.HexConnClosed
-import Theorem.StatisticalMechanics.Code.Universality.HexW1Sides
+module
 
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Universality.HexInfraWinding
+public import Theorem.StatisticalMechanics.Code.Universality.HexInfraHeading
+public import Theorem.StatisticalMechanics.Code.Universality.HexConnClosed
+public import Theorem.StatisticalMechanics.Code.Universality.HexW1Sides
+
+
+public section
 
 namespace StatMech.Universality
 

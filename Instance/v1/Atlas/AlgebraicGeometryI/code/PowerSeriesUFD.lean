@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.PowerSeries.Inverse
-import Mathlib.RingTheory.PowerSeries.Ideal
-import Mathlib.RingTheory.MvPowerSeries.NoZeroDivisors
-import Mathlib.RingTheory.MvPowerSeries.Inverse
-import Mathlib.RingTheory.AdicCompletion.Algebra
-import Mathlib.FieldTheory.RatFunc.Degree
-import Mathlib.RingTheory.RegularLocalRing.Defs
+module
+
+public import Mathlib.RingTheory.PowerSeries.Inverse
+public import Mathlib.RingTheory.PowerSeries.Ideal
+public import Mathlib.RingTheory.MvPowerSeries.NoZeroDivisors
+public import Mathlib.RingTheory.MvPowerSeries.Inverse
+public import Mathlib.RingTheory.AdicCompletion.Algebra
+public import Mathlib.FieldTheory.RatFunc.Degree
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+
+@[expose] public section
+
 set_option backward.isDefEq.respectTransparency false
 
 

@@ -1,18 +1,21 @@
 /-
   Author: @toskua, Avocado
 -/
-import Mathlib.Analysis.CStarAlgebra.GelfandNaimarkSegal
-import Mathlib.Analysis.CStarAlgebra.CompletelyPositiveMap
-import Mathlib.Analysis.CStarAlgebra.Hom
-import Mathlib.Analysis.CStarAlgebra.PositiveLinearFunctional
-import Mathlib.Analysis.CStarAlgebra.PositiveLinearMap
-import Mathlib.Analysis.InnerProductSpace.StarOrder
-import Mathlib.Analysis.InnerProductSpace.l2Space
-import Mathlib.Analysis.Normed.Lp.lpHolder
-import Mathlib.Analysis.Normed.Module.HahnBanach
-import Mathlib.Tactic.Positivity
-import Def.Analysis.CStarAlgebra.Landmark
+module
 
+public import Mathlib.Analysis.CStarAlgebra.GelfandNaimarkSegal
+public import Mathlib.Analysis.CStarAlgebra.CompletelyPositiveMap
+public import Mathlib.Analysis.CStarAlgebra.Hom
+public import Mathlib.Analysis.CStarAlgebra.PositiveLinearFunctional
+public import Mathlib.Analysis.CStarAlgebra.PositiveLinearMap
+public import Mathlib.Analysis.InnerProductSpace.StarOrder
+public import Mathlib.Analysis.InnerProductSpace.l2Space
+public import Mathlib.Analysis.Normed.Lp.lpHolder
+public import Mathlib.Analysis.Normed.Module.HahnBanach
+public import Mathlib.Tactic.Positivity
+public import Def.Analysis.CStarAlgebra.Landmark
+
+public section
 
 section
 

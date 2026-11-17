@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.NarayanaNumber
-import Lemma.Finset.Enumerative.NarayanaNumber
+import Theorem.Finset.Enumerative.NarayanaNumber
 
 
 namespace MetaMathlibExt

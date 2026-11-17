@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.Measure.IsHaarMeasure_Comap.of.IsOpenEmbedding
+import Theorem.Measure.IsHaarMeasure_Comap.of.IsOpenEmbedding
 import Instance.Mathlib_Topology_Algebra_RestrictedProduct_TopologicalSpace
 import Instance.Mathlib_MeasureTheory_Constructions_BorelSpace_RestrictedProduct
 

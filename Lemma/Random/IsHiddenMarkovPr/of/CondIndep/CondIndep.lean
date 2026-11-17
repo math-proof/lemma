@@ -1,4 +1,5 @@
 import Lemma.Random.Prob.eq.Mul_ProbS.Prob.eq.Mul_MulProbS.of.CondIndep.CondIndep
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory IsDiscreteHMM Random
 open scoped ENNReal.ToRealCoe
 
@@ -32,4 +33,4 @@ private lemma main
 
 
 -- created on 2026-10-02
--- updated on 2026-11-07
+-- updated on 2026-11-17

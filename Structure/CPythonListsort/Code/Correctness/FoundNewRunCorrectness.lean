@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/FoundNewRunCorrectness.lean -/
 
-import Def.CPythonListsort.Code.Assembly.FoundNewRunSafety.Part2
-import Def.CPythonListsort.Code.Correctness.MergeAtCorrectness.Part2
+module
+
+public import Def.CPythonListsort.Code.Assembly.FoundNewRunSafety.Part2
+public import Def.CPythonListsort.Code.Correctness.MergeAtCorrectness.Part2
 /-!
 # Functional correctness of `found_new_run`
 
@@ -10,6 +12,9 @@ snapshot through the actual `foundNewRunLoop?` collapse loop.  Pending-power
 writes are proved semantically inert, while every taken merge is discharged by
 `mergeAt_correct`.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

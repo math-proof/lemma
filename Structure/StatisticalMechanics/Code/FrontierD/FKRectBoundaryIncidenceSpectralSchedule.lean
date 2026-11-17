@@ -9,12 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBalancedShareVerticalRate
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectAllSectorWidthRate
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryIncidenceRateCapstone
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryIncidencePIMSSchedule.Part4
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryIncidencePIMSPhaseAssembly
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryIncidenceSpectralSchedule.Part3
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBalancedShareVerticalRate
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectAllSectorWidthRate
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryIncidenceRateCapstone
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryIncidencePIMSSchedule.Part4
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryIncidencePIMSPhaseAssembly
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryIncidenceSpectralSchedule.Part3
 open Filter Topology MeasureTheory
 
 
@@ -22,7 +24,7 @@ namespace StatMech.FrontierD
 
 open StatMech.FK StatMech.Lattice StatMech.Percolation StatMech.BeffaraDC
 
-noncomputable section
+public noncomputable section
 
 structure FKQgt4BoundaryIncidenceScheduledSpectralGap
     (q xiInv : Real) : Prop where

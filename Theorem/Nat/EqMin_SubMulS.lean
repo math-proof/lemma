@@ -1,0 +1,33 @@
+module
+
+public import Theorem.Nat.Le_SubMulS
+
+public section
+
+open Nat
+
+
+public theorem Nat.EqMin_SubMulS.left
+-- given
+  (m n : ℕ)
+  (i : Fin n) :
+-- imply
+  m ⊓ (m * n - m * i) = m := by
+-- proof
+  have := Le_SubMulS.left (n := n) (m := m) (i := i)
+  simp [this]
+
+
+public theorem Nat.EqMin_SubMulS
+-- given
+  (n m : ℕ)
+  (i : Fin n) :
+-- imply
+  m ⊓ (n * m - i * m) = m := by
+-- proof
+  have := Le_SubMulS (n := n) (m := m) (i := i)
+  simp [this]
+
+
+-- created on 2025-05-07
+-- updated on 2025-07-15

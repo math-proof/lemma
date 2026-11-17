@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/FieldTheory/Galois/Abelian.lean -/
+module
 
-import Mathlib.Algebra.Group.Subgroup.Order
-import Mathlib.FieldTheory.Galois.Abelian
+public import Mathlib.Algebra.Group.Subgroup.Order
+public import Mathlib.FieldTheory.Galois.Abelian
 open scoped IsMulCommutative
+
+public section
 
 variable {K L : Type*} [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
   [IsAbelianGalois K L]

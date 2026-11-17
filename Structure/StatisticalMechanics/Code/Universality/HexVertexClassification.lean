@@ -9,14 +9,18 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexLattice.Part11
-import Theorem.StatisticalMechanics.Code.Universality.HexVertex.Part5
-import Def.StatisticalMechanics.Code.Universality.HexVertexEnum.Part5
-import Theorem.StatisticalMechanics.Code.Universality.HexVertexBijection.Part5
-import Theorem.StatisticalMechanics.Code.Universality.HexVertexSeparation.Part3
-import Theorem.StatisticalMechanics.Code.Universality.HexVertexCoverage
-import Theorem.StatisticalMechanics.Code.Universality.HexVertexClassification
+module
 
+public import Theorem.StatisticalMechanics.Code.Universality.HexLattice.Part11
+public import Theorem.StatisticalMechanics.Code.Universality.HexVertex.Part5
+public import Def.StatisticalMechanics.Code.Universality.HexVertexEnum.Part5
+public import Theorem.StatisticalMechanics.Code.Universality.HexVertexBijection.Part5
+public import Theorem.StatisticalMechanics.Code.Universality.HexVertexSeparation.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.HexVertexCoverage
+public import Theorem.StatisticalMechanics.Code.Universality.HexVertexClassification
+
+
+public section
 
 namespace StatMech.Universality
 

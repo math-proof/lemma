@@ -1,5 +1,7 @@
 import Class.Dynamics.PolicyTrajectory
 import Mathlib.MeasureTheory.Measure.Prod
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory PolicyGradient PolicyGradient.Model
 
 
@@ -33,4 +35,4 @@ private lemma main
 
 
 -- created on 2026-11-03
--- updated on 2026-11-16
+-- updated on 2026-11-17

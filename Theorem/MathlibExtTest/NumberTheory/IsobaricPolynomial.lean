@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/IsobaricPolynomial.lean -/
+module
 
+public import Abbrev.NumberTheory.IsobaricPolynomial
 
-import Abbrev.NumberTheory.IsobaricPolynomial
-
+public section
 
 namespace MetaMathlibExt
 

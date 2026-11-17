@@ -2,7 +2,9 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
+module
+
+public import Mathlib
 /-!
 # Dividing Formal Power Series
 
@@ -42,7 +44,7 @@ In Mathlib, this is handled via the ring homomorphism `algebraMap K (PowerSeries
 -/
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 open scoped BigOperators
 

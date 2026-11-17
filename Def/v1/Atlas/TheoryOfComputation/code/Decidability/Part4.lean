@@ -14,7 +14,7 @@ import Mathlib.Computability.ContextFreeGrammar
 import Mathlib.Data.Fintype.Pi
 import Mathlib.Data.Fintype.Prod
 import Def.v1.Atlas.TheoryOfComputation.code.TuringMachines.Part4
-import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.TuringMachines
+import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.TuringMachines
 import Notation.v1.Atlas.TheoryOfComputation.code.Reductions
 import Instance.v1.Atlas.TheoryOfComputation.code.Decidability
 

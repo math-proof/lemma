@@ -3,7 +3,7 @@
 import Mathlib.Data.Finset.Card
 import Mathlib.SetTheory.Cardinal.Finite
 import Instance.Combinatorics.Enumerative.ParkingFunction
-import Lemma.Finset.Enumerative.ParkingFunction
+import Theorem.Finset.Enumerative.ParkingFunction
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Tactic.Abel
 import Mathlib.Tactic.Ring

@@ -8,19 +8,22 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Lie.Basic
-import Mathlib.Algebra.Lie.OfAssociative
-import Mathlib.Algebra.Lie.Subalgebra
-import Mathlib.Algebra.Lie.Submodule
-import Mathlib.Algebra.Lie.Quotient
-import Mathlib.Algebra.Lie.UniversalEnveloping
-import Mathlib.Algebra.Lie.Weights.Basic
-import Mathlib.Algebra.Lie.Semisimple.Basic
-import Mathlib.Algebra.Lie.CartanSubalgebra
-import Mathlib.Order.Atoms
-import Mathlib.RingTheory.Congruence.Defs
-import Structure.v1.Atlas.LieGroups.code.VermaModules
+module
 
+public import Mathlib.Algebra.Lie.Basic
+public import Mathlib.Algebra.Lie.OfAssociative
+public import Mathlib.Algebra.Lie.Subalgebra
+public import Mathlib.Algebra.Lie.Submodule
+public import Mathlib.Algebra.Lie.Quotient
+public import Mathlib.Algebra.Lie.UniversalEnveloping
+public import Mathlib.Algebra.Lie.Weights.Basic
+public import Mathlib.Algebra.Lie.Semisimple.Basic
+public import Mathlib.Algebra.Lie.CartanSubalgebra
+public import Mathlib.Order.Atoms
+public import Mathlib.RingTheory.Congruence.Defs
+public import Structure.v1.Atlas.LieGroups.code.VermaModules
+
+@[expose] public section
 
 noncomputable section
 

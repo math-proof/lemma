@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.GeneralizedStirlingNumbers
-import Lemma.Finset.Enumerative.GeneralizedStirlingNumbers
+import Theorem.Finset.Enumerative.GeneralizedStirlingNumbers
 import Mathlib.Tactic.Ring
 
 

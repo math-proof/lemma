@@ -1,6 +1,9 @@
-import Mathlib.RingTheory.Nullstellensatz
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Def.AlgebraicGeometry.DefinedOver.Part2
+module
+
+public import Mathlib.RingTheory.Nullstellensatz
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Def.AlgebraicGeometry.DefinedOver.Part2
+
 /-!
 # Defined-over for affine algebraic sets
 
@@ -9,6 +12,8 @@ For a field `k`, the ideal of polynomials over `k` vanishing on
 over the algebraic closure. A set is defined over `k` when its vanishing
 ideal is extended from that comap ideal.
 -/
+
+public section
 
 
 noncomputable section

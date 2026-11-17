@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.StatisticalMechanics.Code.Universality.RSWOuterOrientation.Part4
-import Theorem.StatisticalMechanics.Code.Universality.RSWOuterStraddle.Part2
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.RSWOuterOrientation.Part4
+public import Theorem.StatisticalMechanics.Code.Universality.RSWOuterStraddle.Part2
+public section
+
 open Function MeasureTheory Set
 open scoped ENNReal NNReal BigOperators
 

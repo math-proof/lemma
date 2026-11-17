@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.GroupTheory.QuotientGroup.Basic
-import Mathlib.Algebra.Group.Subgroup.Ker
+module
 
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+public import Mathlib.Algebra.Group.Subgroup.Ker
+
+@[expose] public section
 
 namespace CorrespondenceTheorem
 

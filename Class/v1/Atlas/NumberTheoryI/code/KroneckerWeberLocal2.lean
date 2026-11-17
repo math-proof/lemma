@@ -18,8 +18,6 @@ import Mathlib.Algebra.Group.Subgroup.Basic
 import Mathlib.GroupTheory.Finiteness
 import Mathlib.Algebra.Group.TypeTags.Basic
 import Theorem.v1.Atlas.NumberTheoryI.code.GroupCounts.Part8
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.GroupCounts
-
 
 noncomputable section
 

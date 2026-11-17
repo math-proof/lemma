@@ -1,11 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/HyperfactorialPartition.lean -/
 
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.Data.Fintype.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Defs
-import Def.NumberTheory.HyperfactorialPartition
+module
+
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.Data.Fintype.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Def.NumberTheory.HyperfactorialPartition
 /-! Provenance: concept `jis_sem_c632991dc77d0efec89f490f`,
 source statement `jis_2803b664db749f0c99721a41`. -/
+public section
+
+
 
 
 namespace MetaMathlibExt

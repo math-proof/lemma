@@ -8,11 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.Order.RelClasses
-import Mathlib.Data.Matrix.Basic
-import Abbrev.v1.Atlas.Buildings.code.SphericalBuilding.GLn
+module
 
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.Order.RelClasses
+public import Mathlib.Data.Matrix.Basic
+public import Abbrev.v1.Atlas.Buildings.code.SphericalBuilding.GLn
+
+
+public section
 
 namespace GLnBuilding
 

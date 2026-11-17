@@ -1,9 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Order/Dilworth.lean -/
 
-import Mathlib.Data.Finset.Powerset
-import Mathlib.Order.Antichain
-import Mathlib.Order.Lattice.Nat
+module
 
+public import Mathlib.Data.Finset.Powerset
+public import Mathlib.Order.Antichain
+public import Mathlib.Order.Lattice.Nat
+
+@[expose] public section
 
 section
 

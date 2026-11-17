@@ -1,11 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeLoSafety.lean -/
 
-import Structure.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part5
-import Structure.CPythonListsort.Code.Assembly.MergeGetmemRequestBound
-import Def.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
-import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopLeftSafety
-import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopRightSafety
-import Def.CPythonListsort.Code.Assembly.MergeLoSafety.Part4
+module
+
+public import Structure.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part5
+public import Structure.CPythonListsort.Code.Assembly.MergeGetmemRequestBound
+public import Def.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
+public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopLeftSafety
+public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopRightSafety
+public import Def.CPythonListsort.Code.Assembly.MergeLoSafety.Part4
 /-!
 # `merge_lo` lockstep safety
 
@@ -15,6 +17,9 @@ Temporary gallops read their actual temporary backing directly; the
 materialized `SortSlice` is used only as an untraced semantic bridge to the
 reviewed evaluator.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

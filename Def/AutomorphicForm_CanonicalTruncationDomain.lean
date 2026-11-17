@@ -1,7 +1,8 @@
-import Lemma.Matrix.WindowedSiegelSet
-import Lemma.Matrix.CentreCutSiegelSet
-import Lemma.Measure.TateGlobalZeta
-import Mathlib.MeasureTheory.Group.FundamentalDomain
+module
+
+public import Mathlib.MeasureTheory.Group.FundamentalDomain
+
+@[expose] public section
 
 set_option autoImplicit false
 

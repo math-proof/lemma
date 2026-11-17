@@ -4,6 +4,7 @@ import Lemma.Random.Iterates
 import Lemma.Random.Any_Ge_0AndAeAll_All_LeNormCondExp_MulAddNorm1
 import Lemma.Random.Any_Ge_0AndAll_All_LeNormE₂₁
 import Lemma.Random.Any_Ge_0AndAeAll_LeNormE₂₂
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory Topology Iterates Real Measure Random Filter Finset
 
 
@@ -89,3 +90,4 @@ private lemma main
 
 
 -- created on 2026-09-26
+-- updated on 2026-11-17

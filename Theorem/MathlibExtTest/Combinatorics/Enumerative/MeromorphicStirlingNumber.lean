@@ -3,7 +3,7 @@
 
 import Mathlib.Tactic.NormNum
 import Def.Combinatorics.Enumerative.MeromorphicStirlingNumber
-import Lemma.Finset.Enumerative.MeromorphicStirlingNumber
+import Theorem.Finset.Enumerative.MeromorphicStirlingNumber
 
 
 namespace MetaMathlibExt

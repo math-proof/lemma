@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.SignedStirlingFirst
-import Lemma.Finset.Enumerative.SignedStirlingFirst
+import Theorem.Finset.Enumerative.SignedStirlingFirst
 
 
 namespace MetaMathlibExt

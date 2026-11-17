@@ -1,6 +1,12 @@
-import Def.Lean.Name
-import Def.Lean.BinderInfo.Part2
-import Theorem.Lean.Meta.Expr
+module
+
+public import Lean
+public import Def.Lean.Name
+public import Def.Lean.BinderInfo
+public import Def.Lean.Meta.Expr.Part3
+
+@[expose] public section
+
 open Lean.Meta
 open Lean (BinderInfo PPContext FormatWithInfos Expr Core.Context getEnv getMCtx getLCtx getOptions ppExt)
 
@@ -35,8 +41,8 @@ def Lean.Expr.symm_args : Expr → Name × List Level × List Expr
   | .app (.const `Not _) p =>
     let ⟨name, us, args⟩ := p.symm_args
     ⟨`Not ++ name, us, args⟩
-  | .app (.app (.app (.const `Filter.EventuallyEq us) l) f) g =>
-    ⟨`Filter.EventuallyEq, us, [l, f, g]⟩
+  | .app (.app (.app (.app (.app (.const `Filter.EventuallyEq us) α) β) l) f) g =>
+    ⟨`Filter.EventuallyEq, us, [α, β, f, g, l]⟩
   | e  =>
     panic! s!"Expected an operator of Eq, Iff, SEq, HEq, Ne, Lt, Le, Gt, Ge, And, Or, Not, ModEq, EventuallyEq, but got {e.ctorName} :\n{e}"
 
@@ -641,4 +647,3 @@ def Lean.Expr.containsBVar (deBruijn : Nat) : Expr → Bool
   | mdata _ expr
   | proj _ _ expr =>
     expr.containsBVar deBruijn
-

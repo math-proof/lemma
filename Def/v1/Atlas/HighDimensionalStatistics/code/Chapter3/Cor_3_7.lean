@@ -10,8 +10,8 @@ LICENSE file in the root directory of this source tree.
 
 import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Setup
 import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Thm_3_4
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_4
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_6
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_4
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_6
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Order.ConditionallyCompleteLattice.Basic
 import Mathlib.MeasureTheory.Measure.MeasureSpace

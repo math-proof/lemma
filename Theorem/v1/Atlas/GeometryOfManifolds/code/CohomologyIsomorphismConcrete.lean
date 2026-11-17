@@ -7,12 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Analysis.Calculus.DifferentialForm.Basic
-import Mathlib.Topology.Algebra.Module.Basic
-import Structure.v1.Atlas.GeometryOfManifolds.code.CohomologyIsomorphismConcrete
+public import Mathlib.Analysis.Calculus.DifferentialForm.Basic
+public import Mathlib.Topology.Algebra.Module.Basic
+public import Structure.v1.Atlas.GeometryOfManifolds.code.CohomologyIsomorphismConcrete
 open ContinuousAlternatingMap
 
+public section
 
 namespace DeRhamConcrete
 

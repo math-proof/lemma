@@ -1,10 +1,13 @@
-import Lemma.Finset.ComponentGroup
-import Mathlib.LinearAlgebra.Matrix.ToLin
-import Mathlib.Data.Nat.Prime.Defs
-import Mathlib.Data.PNat.Defs
-import Mathlib.Algebra.Module.Submodule.LinearMap
-import Mathlib.LinearAlgebra.Quotient.Defs
-import Structure.CerednikDrinfeld_Ribbon
+module
+
+public import Mathlib.LinearAlgebra.Matrix.ToLin
+public import Mathlib.Data.Nat.Prime.Defs
+public import Mathlib.Data.PNat.Defs
+public import Mathlib.Algebra.Module.Submodule.LinearMap
+public import Mathlib.LinearAlgebra.Quotient.Defs
+public import Structure.CerednikDrinfeld_Ribbon
+
+@[expose] public section
 
 set_option autoImplicit false
 

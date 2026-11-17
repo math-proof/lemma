@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.SimpleGraph.InducedForestNumber
-import Lemma.SimpleGraph.InducedForestNumber
+import Theorem.SimpleGraph.InducedForestNumber
 
 
 example (G : SimpleGraph (Fin 0)) : G.inducedForestNumber = 0 := by

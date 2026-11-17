@@ -2,7 +2,7 @@
 
 
 import Def.FieldTheory.Finite.PermutationPolynomial
-import Lemma.Polynomial.Finite.PermutationPolynomial
+import Theorem.Polynomial.Finite.PermutationPolynomial
 import Mathlib.FieldTheory.Finite.Basic
 
 

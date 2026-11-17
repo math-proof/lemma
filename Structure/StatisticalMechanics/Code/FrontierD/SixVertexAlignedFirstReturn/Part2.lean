@@ -9,12 +9,16 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoDisagreementStrand.Part16
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPairSwitchNoUnitCounterexample.Part2
-import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialCheckerboard
-import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialBoundaryToggleParity.Part3
-import Theorem.StatisticalMechanics.Code.FrontierD.FiniteFirstReturn.Part8
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexAlignedFirstReturn.Part24
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoDisagreementStrand.Part16
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPairSwitchNoUnitCounterexample.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialCheckerboard
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialBoundaryToggleParity.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierD.FiniteFirstReturn.Part8
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexAlignedFirstReturn.Part24
+public section
+
 open StatMech.FrontierD
 
 

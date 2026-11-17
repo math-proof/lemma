@@ -7,13 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib
-import Def.StatisticalMechanics.Code.FrontierA.FiniteTargetTransport
+public import Mathlib
+public import Def.StatisticalMechanics.Code.FrontierA.FiniteTargetTransport
 open Set
 open scoped ENNReal
 
+public section
 
 namespace StatMech.FrontierA
 

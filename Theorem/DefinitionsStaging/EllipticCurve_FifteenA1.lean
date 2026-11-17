@@ -1,8 +1,11 @@
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.Data.Rat.Defs
-import Def.EllipticCurve_FifteenA1
+module
+
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.Data.Rat.Defs
+public import Def.EllipticCurve_FifteenA1
 set_option autoImplicit false
 
+public section
 
 namespace ModularCurve
 

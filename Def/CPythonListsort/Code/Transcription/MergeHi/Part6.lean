@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeHi.lean -/
 
-import Def.CPythonListsort.Code.Transcription.Gallop.Part2
-import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
-import Structure.CPythonListsort.Code.Transcription.MergeHi.Part4
+module
+
+public import Def.CPythonListsort.Code.Transcription.Gallop.Part2
+public import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
+public import Structure.CPythonListsort.Code.Transcription.MergeHi.Part3
+public import Structure.CPythonListsort.Code.Transcription.MergeHi.Part4
+
+@[expose] public section
 /-!
 # Right-to-left stable merge transcription
 

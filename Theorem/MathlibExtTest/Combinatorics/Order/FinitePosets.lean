@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Order.FinitePosets
-import Lemma.Finset.Order.FinitePosets
+import Theorem.Finset.Order.FinitePosets
 import Mathlib.Tactic
 open MathlibExt.Combinatorics.Order.FinitePosets
 

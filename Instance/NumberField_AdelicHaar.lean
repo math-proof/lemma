@@ -1,8 +1,13 @@
 -- Carved from Lemma/Definitions/Def_NumberField_AdelicHaar.lean: instance decls only.
-import Mathlib.NumberTheory.NumberField.AdeleRing
-import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
-import Mathlib.Topology.Algebra.Valued.LocallyCompact
-import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
+
+module
+
+public import Mathlib.NumberTheory.NumberField.AdeleRing
+public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
+public import Mathlib.Topology.Algebra.Valued.LocallyCompact
+public import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
+
+@[expose] public section
 
 open IsDedekindDomain NumberField MeasureTheory
 open scoped RestrictedProduct

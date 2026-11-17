@@ -1,6 +1,10 @@
-import Mathlib
-import Abbrev.Analysis.Section_3_1_api
-import Theorem.Analysis.Tools.ExistsUnique.Part2
+module
+
+public import Mathlib
+public import Abbrev.Analysis.Section_3_1_api
+public import Theorem.Analysis.Tools.ExistsUnique.Part2
+public section
+
 set_option doc.verso.suggestions false
 
 /-!

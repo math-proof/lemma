@@ -9,16 +9,18 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexEndpointVertex.Part14
-import Theorem.StatisticalMechanics.Code.Universality.HexBrickUmlaufsatz.Part4
-import Theorem.StatisticalMechanics.Code.Universality.HexEndpointLocalGeometry
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.HexEndpointVertex.Part14
+public import Theorem.StatisticalMechanics.Code.Universality.HexBrickUmlaufsatz.Part4
+public import Theorem.StatisticalMechanics.Code.Universality.HexEndpointLocalGeometry
 
 
 namespace StatMech.Universality
 
 open Complex Function HexWalk
 
-noncomputable section
+public noncomputable section
 
 structure HexEndpointLocalCrossing (ts : List ℤ) (c : HexAWCoord) where
   index : ℕ

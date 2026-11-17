@@ -1,7 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DiscreteValuationRing/RamificationFiltration.lean -/
+module
 
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Lemma.Int.RamificationInertia.Valuation
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Theorem.Int.RamificationInertia.Valuation
 open IsLocalRing
 
 /-!
@@ -30,6 +31,8 @@ while the upper different bound is deliberately deferred.
 * `IsDiscreteValuationRing.algebraMap_mem_maximalIdeal_pow_ramificationIdx`:
   the element-membership corollary.
 -/
+
+public section
 
 
 namespace IsDiscreteValuationRing

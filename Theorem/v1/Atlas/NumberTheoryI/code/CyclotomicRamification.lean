@@ -19,7 +19,7 @@ import Mathlib.RingTheory.RootsOfUnity.Lemmas
 import Abbrev.v1.Atlas.NumberTheoryI.code.Cor1015
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Cor1015
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.LocalExtensions
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.TracePairing
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.TracePairing
 import Theorem.v1.Atlas.NumberTheoryI.code.LocalExtensions.Part2
 import Def.v1.Atlas.NumberTheoryI.code.TracePairing
 

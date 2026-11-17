@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_17
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Def_1_17
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Def_1_17
 import Mathlib.Topology.MetricSpace.CoveringNumbers
 open Set Metric
 open scoped NNReal ENNReal

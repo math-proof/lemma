@@ -19,10 +19,14 @@ limitations under the License.
 # Basic computational-complexity definitions
 -/
 
-import Mathlib.Algebra.Polynomial.Eval.Defs
-import Mathlib.Computability.Encoding
-import Mathlib.Computability.TuringMachine.Computable
-import Instance.Computability.Complexity
+module
+
+public import Mathlib.Algebra.Polynomial.Eval.Defs
+public import Mathlib.Computability.Encoding
+public import Mathlib.Computability.TuringMachine.Computable
+public import Instance.Computability.Complexity
+@[expose] public section
+
 /-! A bitstring-specialized encoding API and basic definitions of `P`, `NP`,
 and `coNP`.
 

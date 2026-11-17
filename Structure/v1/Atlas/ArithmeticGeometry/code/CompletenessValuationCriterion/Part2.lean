@@ -8,13 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Instance.v1.Atlas.ArithmeticGeometry.code.CompleteVarieties
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.CompleteVarieties
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.ValuationRings
-import Def.v1.Atlas.ArithmeticGeometry.code.ValuationRings.Part4
-import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Mathlib.Topology.NoetherianSpace
-import Def.v1.Atlas.ArithmeticGeometry.code.CompletenessValuationCriterion
+module
+
+public import Instance.v1.Atlas.ArithmeticGeometry.code.CompleteVarieties
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.CompleteVarieties
+public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.ValuationRings
+public import Def.v1.Atlas.ArithmeticGeometry.code.ValuationRings.Part4
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Mathlib.Topology.NoetherianSpace
+public import Def.v1.Atlas.ArithmeticGeometry.code.CompletenessValuationCriterion
+public section
+
 universe u
 
 

@@ -2,7 +2,7 @@
 -- Carved: selected defs -> Def.ModularCurve_JZeroNeronPrimaryTorsionSheaf; leftover decls remain here
 import Mathlib
 import Def.ModularCurve_JZeroNeronDataPrime
-import Lemma.Ideal.EisensteinIdeal
+import Theorem.Ideal.EisensteinIdeal
 import Structure.ModularCurve_FppfKummerInterface
 import Def.ModularCurve_MazurStepThreeInputs
 import Instance.AlgebraicGeometry_FppfSiteCohomology

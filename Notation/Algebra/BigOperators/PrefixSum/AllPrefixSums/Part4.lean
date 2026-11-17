@@ -1,5 +1,9 @@
-import Initialize.Tactic.Attr.Basic
-import Class.Algebra.Bullet
+module
+
+public import Initialize.Tactic.Attr.Basic
+public import Class.Algebra.Bullet
+
+public section
 
 
 -- define bullet operator

@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.Buildings.code.GeometricAlgebra.ExtendingIsometries
-import Lemma.Submodule.OfEq.eq.M.of.Eq
+import Theorem.Submodule.OfEq.eq.M.of.Eq
 import Lemma.Fin.Eq.of.Ne_0.All_Eq
 import Def.v1.Atlas.Buildings.code.GeometricAlgebra.WittTheorem.Part2
 set_option maxHeartbeats 800000

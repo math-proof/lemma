@@ -1,7 +1,11 @@
-import Mathlib.Analysis.Complex.LocallyUniformLimit
-import Mathlib.Analysis.Complex.OpenMapping
+module
+
+public import Mathlib.Analysis.Complex.LocallyUniformLimit
+public import Mathlib.Analysis.Complex.OpenMapping
 open Filter Metric Set
 open scoped Topology
+
+public section
 
 variable {α : Type*} {F : α → ℂ → ℂ} {f : ℂ → ℂ}
   {φ : Filter α} {U : Set ℂ}

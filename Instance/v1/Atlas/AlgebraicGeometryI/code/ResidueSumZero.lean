@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.AlgebraicGeometryI.code.ResidueSum
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.ResidueSum
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ResidueSum
 import Mathlib.AlgebraicGeometry.Morphisms.Proper
 import Mathlib.AlgebraicGeometry.Morphisms.Smooth
 import Mathlib.AlgebraicGeometry.Over

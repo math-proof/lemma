@@ -35,8 +35,8 @@ import Mathlib.Topology.Algebra.InfiniteSum.Basic
 import Mathlib.Topology.Basic
 import Def.Analysis.Ramanujan.Part1Ch7Phi
 import Theorem.Analysis.Ramanujan.Part1Ch7DirichletBeta
-import Lemma.Complex.Part1Ch7DirichletBeta
-import Lemma.Nat.LSeries.AbelContinuation
+import Theorem.Complex.Part1Ch7DirichletBeta
+import Theorem.Nat.LSeries.AbelContinuation
 import Mathlib.Analysis.Complex.HalfPlane
 import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
 import Mathlib.NumberTheory.AbelSummation

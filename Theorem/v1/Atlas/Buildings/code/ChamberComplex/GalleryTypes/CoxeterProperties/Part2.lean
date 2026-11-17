@@ -9,13 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.Buildings.code.ChamberComplex.Folding.Part3
-import Lemma.List.All.of.All.IsChain.Ne
-import Lemma.List.ImageGalleryStutters.is.GalleryStuttersUnderToFun
+import Theorem.List.All.of.All.IsChain.Ne
+import Theorem.List.ImageGalleryStutters.is.GalleryStuttersUnderToFun
 import Lemma.Fin.Simple
 import Lemma.Set.EqSimpleDeletionImpliesCoxeterSystem.of.SatisfiesDeletionConditionGen.EqClosure_Range_Top.All_NeMul_1.All_EqMul_1
 import Def.v1.Atlas.Buildings.code.ChamberComplex.UniquenessBook
 import Def.v1.Atlas.Buildings.code.Building.CoxeterComplexFoldings
-import Lemma.Finset.Any_All_IsFacetToSimplicialComplex.of.IsMaximalToSimplicialComplex.IsFacetToSimplicialComplex.All_Any_And_IsMaximalToSimplicialComplexAndIsFacetToSimplicialComplex.All_AdjacentToSimplicialComplex.All_ChamberAdjacent.All_Any_And_Eq.All_All_Eq
+import Theorem.Finset.Any_All_IsFacetToSimplicialComplex.of.IsMaximalToSimplicialComplex.IsFacetToSimplicialComplex.All_Any_And_IsMaximalToSimplicialComplexAndIsFacetToSimplicialComplex.All_AdjacentToSimplicialComplex.All_ChamberAdjacent.All_Any_And_Eq.All_All_Eq
 import Theorem.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes.TitsForwardHelpers
 import Def.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes.CoxeterProperties.Part2
 open scoped Classical

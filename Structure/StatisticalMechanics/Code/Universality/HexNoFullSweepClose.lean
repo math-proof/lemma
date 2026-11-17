@@ -9,10 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Universality.HexStripBandClose.Part7
-import Theorem.StatisticalMechanics.Code.Universality.HexNoFullSweepClose
+module
 
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Universality.HexStripBandClose.Part7
+public import Theorem.StatisticalMechanics.Code.Universality.HexNoFullSweepClose
+
+
+public section
 
 namespace StatMech.Universality
 

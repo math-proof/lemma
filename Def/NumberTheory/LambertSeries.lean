@@ -1,5 +1,8 @@
-import Mathlib.Analysis.Complex.Basic
+module
 
+public import Mathlib.Analysis.Complex.Basic
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

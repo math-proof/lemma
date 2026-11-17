@@ -8,16 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleGeneral
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleGeneral
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafDef
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.TwistSheaf
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafDef.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.TwistSheaf.Part2
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleProjective.Part2
+module
+
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleGeneral
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleGeneral
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafDef
+public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.TwistSheaf
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafDef.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.TwistSheaf.Part2
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleProjective.Part2
 
 
-noncomputable section
+public noncomputable section
 
 open KaehlerDifferential Module CanonicalSheafDef
 

@@ -8,7 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.Probability.code.FiniteMarkovChain
+module
+
+public import Structure.v1.Atlas.Probability.code.FiniteMarkovChain
+
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory Finset BigOperators
 
 

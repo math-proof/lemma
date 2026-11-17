@@ -1,6 +1,9 @@
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
-import Mathlib.Analysis.SpecialFunctions.Exp
+module
 
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
+public import Mathlib.Analysis.SpecialFunctions.Exp
+
+@[expose] public section
 
 /-! LSTM recurrence (py `LSTM` / `LSTMCell`).  The `4 d_h` gate columns of py's `W`, `W_h`, `b`
 (slices `[:d_h]`, `[d_h:2d_h]`, `[2d_h:3d_h]`, `[-d_h:]`) are indexed by `(gate, unit) : Fin 4 × Fin d_h`

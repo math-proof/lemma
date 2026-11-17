@@ -1,10 +1,12 @@
-import Mathlib
-import Instance.AlgebraicGeometry_ProjSpaceCechTwist
-import Instance.AlgebraicGeometry_ProjSpaceCechGradedModule
+module
+
+public import Mathlib
+public import Instance.AlgebraicGeometry_ProjSpaceCechTwist
+public import Instance.AlgebraicGeometry_ProjSpaceCechGradedModule
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 universe u
 

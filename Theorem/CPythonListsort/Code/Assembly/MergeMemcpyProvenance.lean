@@ -1,10 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeMemcpyProvenance.lean -/
 
-import Structure.CPythonListsort.Code.Assembly.SortSliceSafety
-import Def.CPythonListsort.Code.Transcription.MergeLo.Part6
-import Def.CPythonListsort.Code.Transcription.MergeHi.Part6
-import Lean.Elab.Command
-import Structure.CPythonListsort.Code.Assembly.MergeMemcpyProvenance
+module
+
+public import Structure.CPythonListsort.Code.Assembly.SortSliceSafety
+public import Def.CPythonListsort.Code.Transcription.MergeLo.Part6
+public import Def.CPythonListsort.Code.Transcription.MergeHi.Part6
+public import Lean.Elab.Command
+public import Structure.CPythonListsort.Code.Assembly.MergeMemcpyProvenance
+public import Theorem.CPythonListsort.Code.Transcription.MergeLo
+public import Theorem.CPythonListsort.Code.Transcription.MergeHi
+public import Theorem.CPythonListsort.Code.Assembly.SortSliceSafety
 /-!
 # Merge memcpy call-site provenance
 
@@ -19,6 +24,8 @@ lower untagged bulk helper for an evaluator call to bypass.
 -/
 
 
+public section
+
 namespace CPythonListsort
 
 universe u v
@@ -31,7 +38,7 @@ open SortSlice
 provenance, while the generic same-backing overlap case remains rejected.
 
 This is the declaration intended for the roadmap node's `lean:` field. -/
-theorem mergeMemcpyCallsiteProvenance :
+public theorem mergeMemcpyCallsiteProvenance :
     MergeMemcpyCallsiteProvenanceContract κ ν where
   mergeLoCallsitesDistinct := mergeLo_memcpyCallsite_distinct
   mergeHiCallsitesDistinct := mergeHi_memcpyCallsite_distinct

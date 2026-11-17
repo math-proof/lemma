@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeForceCollapse.lean -/
 
-import Theorem.CPythonListsort.Code.Transcription.MergeAt
-import Structure.CPythonListsort.Code.Transcription.MergeForceCollapse
+module
+
+public import Theorem.CPythonListsort.Code.Transcription.MergeAt
+public import Structure.CPythonListsort.Code.Transcription.MergeForceCollapse
+
+@[expose] public section
+
 /-!
 # Final pending-stack collapse
 

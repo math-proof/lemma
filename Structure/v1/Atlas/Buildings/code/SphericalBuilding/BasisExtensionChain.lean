@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnCommonApartment
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Mathlib.LinearAlgebra.Dimension.Finrank
+module
 
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnCommonApartment
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+
+
+public section
 
 namespace GLnBuilding
 

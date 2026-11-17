@@ -1,4 +1,3 @@
-import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
 import Mathlib.Analysis.LocallyConvex.SeparatingDual
@@ -26,6 +25,8 @@ import Lemma.Random.PSpace_Path.of.All_PSpace
 import Instance.Probability.Moments.Variance
 import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Lemma.Random.TSum_SMul.eq.Integral_Fderiv_Vkd.of.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.All_Measurable_Prob.All_EqWithDensity
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Finset Kernel
 set_option maxHeartbeats 900000
 
@@ -80,6 +81,7 @@ private lemma avg_Kf_clip
         Integrable.of_bound hKf.1.aestronglyMeasurable |M.R| (Filter.Eventually.of_forall hKf.2)
       have hbind : M.K θ z = (M.trans z.2).toMeasure.bind (M.stageK θ) := by
         rw [Model.K, Kernel.comp_apply, Kernel.comap_apply]
+        simp [Model.transK]
       rw [hbind, Integral.eq.Integral_Integral.of.Integrable_Bind hInt]
       refine integral_congr_ae (Filter.Eventually.of_forall fun y => ?_)
       exact ih y
@@ -122,15 +124,16 @@ private lemma Kf_succ_eq_Wkd
     Integrable.of_bound hKf.1.aestronglyMeasurable |M.R| (Filter.Eventually.of_forall hKf.2)
   have hbind : M.K θ z = (M.trans z.2).toMeasure.bind (M.stageK θ) := by
     rw [Model.K, Kernel.comp_apply, Kernel.comap_apply]
+    simp [Model.transK]
   rw [hbind, Integral.eq.Integral_Integral.of.Integrable_Bind hInt]
   refine integral_congr_ae (Filter.Eventually.of_forall fun y => ?_)
   exact avg_Kf_clip (M := M) θ j y
 
 private lemma integral_comp_stageK
-  [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+  [NormedAddCommGroup ℰ] [NormedSpace ℝ ℰ] [CompleteSpace ℰ]
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
-  {f : (ℝ × 𝒮 × 𝒜) → E}
+  {f : (ℝ × 𝒮 × 𝒜) → ℰ}
   {C : ℝ}
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
@@ -470,7 +473,12 @@ private lemma integral_mul_return_eq_Qf
                   exact mul_le_mul_of_nonneg_left (NormWkd.le.Abs_R (M := M) θ j y)
                     (pow_nonneg h₀.1 j))
             _ = γ ^ j * |M.R| := by
-              simp [MeasureTheory.integral_const, probReal_univ]
+              change ∫ _ : 𝒮, γ ^ j * |M.R|
+                  ∂(M.trans (s t ω, a t ω) : Measure 𝒮) = γ ^ j * |M.R|
+              have : IsProbabilityMeasure
+                  ((M.trans (s t ω, a t ω) : Measure 𝒮)) := inferInstance
+              rw [MeasureTheory.integral_const, smul_eq_mul, Measure.real,
+                measure_univ, ENNReal.toReal_one, one_mul]
         simp_rw [← integral_const_mul, Model.V0]
         exact integral_tsum_of_summable_integral_norm hri hSn
       rw [hinter]
@@ -527,12 +535,12 @@ private lemma integral_mul_return_eq_Qf
 
 /-- Vector-valued form of `integral_mul_return_eq_Qf`, obtained by pairing. -/
 private lemma integral_smul_return_eq_Qf
-  [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+  [NormedAddCommGroup ℰ] [NormedSpace ℝ ℰ] [CompleteSpace ℰ]
   [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮]
   [ReferenceMeasure 𝒜]
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {γ : ℝ}
-  {ψ : 𝒮 → 𝒜 → E}
+  {ψ : 𝒮 → 𝒜 → ℰ}
   {C : ℝ}
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
@@ -663,7 +671,7 @@ private lemma integral_smul_return_eq_Qf
 
 /-- On a countable alphabet, a state-action score pulls out of the discounted return. -/
 private lemma integral_return_smul_eq_cond
-  [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+  [NormedAddCommGroup ℰ] [NormedSpace ℝ ℰ] [CompleteSpace ℰ]
   [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Countable 𝒮]
   [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜] [Countable 𝒜]
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
@@ -671,7 +679,7 @@ private lemma integral_return_smul_eq_cond
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
-  {ψ : 𝒮 → 𝒜 → E}
+  {ψ : 𝒮 → 𝒜 → ℰ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
@@ -805,9 +813,9 @@ private lemma integral_return_smul_eq_cond
       simp [G, Dot.dot, Function.hPow_apply, id_eq, Function.getSliceFrom]
     rw [hfun]
     exact Measurable.tsum fun k => (Random.Measurable.of.All_Eq.fst h₁ (t + k)).const_mul ((γ ^ (id : ℕ → ℕ)) k)
-  let F : (𝒮 × 𝒜) → (ℕ → ℝ × 𝒮 × 𝒜) → E := fun z ω =>
+  let F : (𝒮 × 𝒜) → (ℕ → ℝ × 𝒮 × 𝒜) → ℰ := fun z ω =>
     (if pair ω = z then G ω else (0 : ℝ)) • ψ z.1 z.2
-  let H : (𝒮 × 𝒜) → (ℕ → ℝ × 𝒮 × 𝒜) → E := fun z ω =>
+  let H : (𝒮 × 𝒜) → (ℕ → ℝ × 𝒮 × 𝒜) → ℰ := fun z ω =>
     (if pair ω = z then Q z.1 z.2 else (0 : ℝ)) • ψ z.1 z.2
   have hC : ∀ x u, ‖ψ x u‖ ≤ max Cψ 0 := fun x u => (hCψ x u).trans (le_max_left _ _)
   have hFsm : ∀ z, StronglyMeasurable (F z) := by
@@ -1278,4 +1286,4 @@ private lemma main
 
 
 -- created on 2026-11-11
--- updated on 2026-11-16
+-- updated on 2026-11-17

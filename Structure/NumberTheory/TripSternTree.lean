@@ -1,7 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/TripSternTree.lean -/
 
-import Mathlib.Data.Finset.Basic
+module
 
+public import Mathlib.Data.Finset.Basic
+
+
+public section
 
 namespace MetaMathlibExt
 

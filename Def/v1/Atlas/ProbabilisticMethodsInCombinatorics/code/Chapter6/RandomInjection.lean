@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Basic
-import Structure.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter6.RandomInjection
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Basic
+public import Structure.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter6.RandomInjection
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open Finset

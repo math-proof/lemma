@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnSimultaneousRefinement
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnChainRefinement
+module
 
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnSimultaneousRefinement
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnChainRefinement
+
+
+public section
 
 namespace GLnBuilding
 

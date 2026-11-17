@@ -1,6 +1,10 @@
-import Structure.ModularCurve_ProlongationTuple
-import Structure.ModularCurve_FibreModel
-import Mathlib.Algebra.Polynomial.Derivative
+module
+
+public import Structure.ModularCurve_ProlongationTuple
+public import Structure.ModularCurve_FibreModel
+public import Mathlib.Algebra.Polynomial.Derivative
+
+public section
 
 set_option autoImplicit false
 set_option synthInstance.maxHeartbeats 400000

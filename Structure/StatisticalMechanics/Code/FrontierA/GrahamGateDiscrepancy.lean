@@ -9,13 +9,17 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib.Data.Fintype.EquivFin
-import Mathlib.Data.Fintype.Option
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Data.Fintype.Prod
-import Mathlib.Data.Finset.Max
-import Theorem.StatisticalMechanics.Code.FrontierA.GrahamGateDiscrepancy.Part4
+module
 
+public import Mathlib.Data.Fintype.EquivFin
+public import Mathlib.Data.Fintype.Option
+public import Mathlib.Data.Fintype.Pi
+public import Mathlib.Data.Fintype.Prod
+public import Mathlib.Data.Finset.Max
+public import Theorem.StatisticalMechanics.Code.FrontierA.GrahamGateDiscrepancy.Part4
+
+
+public section
 
 namespace StatMech.FrontierA
 

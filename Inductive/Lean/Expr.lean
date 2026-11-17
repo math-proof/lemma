@@ -1,12 +1,14 @@
-import Def.Lean.Meta.Expr.Part4
-import Def.Lean.Expr.Singleton.Part2
-import Def.Lean.Expr.Part3
+module
+
+public import Def.Lean.Meta.Expr.Part4
+public import Def.Lean.Expr.Singleton.Part2
+public import Def.Lean.Expr.Part3
 open Lean.Meta
 open Lean (Name Json Level BinderInfo getMCtx)
 set_option linter.unusedVariables false
 
 
-inductive ExprWithLimits where
+public inductive ExprWithLimits where
   | Lean_sum
   | Lean_tsum
   | Lean_prod

@@ -10,11 +10,11 @@ LICENSE file in the root directory of this source tree.
 
 import Mathlib
 import Def.v1.Atlas.LieGroups.code.ContinuousRep.Part3
-import Lemma.Complex.IsStronglyContinuousToMonoidHom
+import Theorem.Complex.IsStronglyContinuousToMonoidHom
 import Lemma.Complex.IsKFinite0
-import Lemma.Real.GetToMonoidHom.in.SmoothSubspace.of.In_SmoothSubspace
-import Lemma.Real.IsSmoothVector0
-import Lemma.Complex.Eq_Sum_Mul
+import Theorem.Real.GetToMonoidHom.in.SmoothSubspace.of.In_SmoothSubspace
+import Theorem.Real.IsSmoothVector0
+import Theorem.Complex.Eq_Sum_Mul
 import Def.v1.Atlas.LieGroups.code.KFinite.Part3
 import Def.v1.Atlas.LieGroups.code.SmoothVectors
 import Def.v1.Atlas.LieGroups.code.KFiniteProps.Part4

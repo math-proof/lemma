@@ -1,6 +1,8 @@
-import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.Analysis.Complex.Order
-import Def.Algebra.Polynomial.RealRooted.Part2
+module
+
+public import Mathlib.Analysis.Complex.Polynomial.Basic
+public import Mathlib.Analysis.Complex.Order
+public import Def.Algebra.Polynomial.RealRooted.Part2
 open scoped ComplexOrder
 
 /-!
@@ -13,6 +15,8 @@ root, defaulting to zero), and proves that a monic real-rooted polynomial
 is positive to the right of its largest root and nonnegative on the
 closed half-line to the right of it.
 -/
+
+public section
 
 
 namespace Polynomial

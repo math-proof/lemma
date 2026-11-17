@@ -1,6 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/InfiniteWord/Tribonacci.lean -/
 
-import Mathlib.Data.List.Basic
+module
+
+public import Mathlib.Data.List.Basic
 /-!
 # The Tribonacci word
 
@@ -20,7 +22,7 @@ The source prints `W(3) = abacabaabacab`, but its stated recurrence makes this w
 namespace InfiniteWord
 
 /-- The three-letter alphabet of the Tribonacci word. -/
-inductive TribonacciLetter : Type
+public inductive TribonacciLetter : Type
   | a : TribonacciLetter
   | b : TribonacciLetter
   | c : TribonacciLetter

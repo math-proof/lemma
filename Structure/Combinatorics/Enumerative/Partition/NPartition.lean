@@ -2,8 +2,12 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Instance.Combinatorics.Enumerative.Partition.NPartition
+module
+
+public import Mathlib
+public import Instance.Combinatorics.Enumerative.Partition.NPartition
+public section
+
 open Finset BigOperators
 
 variable {N : ℕ}

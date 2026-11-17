@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.PrescribedGallery.Part2
-import Lemma.Finset.AdjacentToSimplicialComplex.of.Adjacent.In_Faces.In_Faces.In_Apartments
-import Lemma.Finset.GalleryDistToSimplicialComplexToChamberComplex.eq.LengthToCoxeterSystemCoxeterMatrix_Delta
-import Def.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.ThreeChamber
+module
+
+public import Structure.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.PrescribedGallery.Part2
+public import Theorem.Finset.AdjacentToSimplicialComplex.of.Adjacent.In_Faces.In_Faces.In_Apartments
+public import Theorem.Finset.GalleryDistToSimplicialComplexToChamberComplex.eq.LengthToCoxeterSystemCoxeterMatrix_Delta
+public import Def.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.ThreeChamber
+public section
+
 open scoped Classical
 
 variable {V : Type*} [DecidableEq V]

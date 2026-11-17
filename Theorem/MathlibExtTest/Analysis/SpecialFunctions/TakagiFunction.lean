@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/TakagiFunction.lean -/
+module
 
+public import Theorem.Analysis.SpecialFunctions.TakagiFunction
 
-import Theorem.Analysis.SpecialFunctions.TakagiFunction
-
+public section
 
 namespace MetaMathlibExt
 

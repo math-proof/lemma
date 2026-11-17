@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicTopologyI/code/GradedCoalgebra.lean -/
 
 /-
@@ -8,9 +10,11 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Coalgebra.Basic
-import Mathlib.LinearAlgebra.DirectSum.TensorProduct
-import Mathlib.LinearAlgebra.TensorProduct.Graded.External
+public import Mathlib.RingTheory.Coalgebra.Basic
+public import Mathlib.LinearAlgebra.DirectSum.TensorProduct
+public import Mathlib.LinearAlgebra.TensorProduct.Graded.External
+public section
+
 open scoped TensorProduct DirectSum
 
 universe u v w

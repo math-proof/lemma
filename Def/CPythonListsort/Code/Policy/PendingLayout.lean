@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Policy/PendingLayout.lean -/
 
-import Def.CPythonListsort.Code.Transcription.MergeState.Part3
+module
+
+public import Def.CPythonListsort.Code.Transcription.MergeState.Part3
+
+@[expose] public section
+
 /-!
 # Pending-run layout
 

@@ -6,7 +6,7 @@ Author: @toskua, Avocado
 
 
 import Theorem.RingTheory.Polynomial.Eisenstein.AdjoinRoot
-import Lemma.Int.Polynomial.Eisenstein.AdjoinRoot
+import Theorem.Int.Polynomial.Eisenstein.AdjoinRoot
 import Mathlib.NumberTheory.Padics.PadicIntegers
 import Theorem.MathlibExtTest.RingTheory.Polynomial.Eisenstein.AdjoinRoot.Part2
 open Polynomial

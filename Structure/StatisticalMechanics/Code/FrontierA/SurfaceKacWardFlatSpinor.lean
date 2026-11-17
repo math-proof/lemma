@@ -9,9 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardPrincipalAngleMultiaffine
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardReversibleCycleCoefficient.Part2
-import Theorem.StatisticalMechanics.Code.FrontierA.SurfaceKacWardQuadraticAssembly.Part4
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardPrincipalAngleMultiaffine
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardReversibleCycleCoefficient.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierA.SurfaceKacWardQuadraticAssembly.Part4
+public section
+
 open scoped BigOperators
 open Finset SimpleGraph
 

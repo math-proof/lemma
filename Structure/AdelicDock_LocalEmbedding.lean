@@ -1,12 +1,14 @@
-import Structure.NumberField_AdelicLevel
-import Def.LocalNewvector_CongruenceSubgroupK1
-import Mathlib.NumberTheory.Padics.HeightOneSpectrum
+module
+
+public import Structure.NumberField_AdelicLevel
+public import Def.LocalNewvector_CongruenceSubgroupK1
+public import Mathlib.NumberTheory.Padics.HeightOneSpectrum
 
 set_option autoImplicit false
 
 open IsDedekindDomain NumberField
 
-noncomputable section
+public noncomputable section
 
 namespace AdelicDock
 

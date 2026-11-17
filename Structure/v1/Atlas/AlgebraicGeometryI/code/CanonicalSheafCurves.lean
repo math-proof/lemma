@@ -8,21 +8,23 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.AlgebraicGeometryI.code.CoherentSheavesCurves.Part2
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoherentSheavesCurves
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleProjective
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleGeneral
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochCurves
-import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleProjective.Part4
-import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleGeneral
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannRochCurves
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafCurves
+module
+
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CoherentSheavesCurves.Part2
+public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoherentSheavesCurves
+public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleProjective
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleGeneral
+public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochCurves
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleProjective.Part4
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleGeneral
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannRochCurves
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafCurves
 set_option maxHeartbeats 800000
 
 open RiemannRochCurves
 
 
-noncomputable section
+public noncomputable section
 
 namespace CanonicalSheafCurves
 

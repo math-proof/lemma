@@ -8,12 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Lie.UniversalEnveloping
-import Mathlib.Algebra.Lie.OfAssociative
-import Mathlib.Algebra.Lie.Semisimple.Defs
-import Mathlib.Algebra.Lie.Submodule
-import Mathlib.RingTheory.SimpleModule.Basic
+module
 
+public import Mathlib.Algebra.Lie.UniversalEnveloping
+public import Mathlib.Algebra.Lie.OfAssociative
+public import Mathlib.Algebra.Lie.Semisimple.Defs
+public import Mathlib.Algebra.Lie.Submodule
+public import Mathlib.RingTheory.SimpleModule.Basic
+
+@[expose] public section
 
 noncomputable section
 

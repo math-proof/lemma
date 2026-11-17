@@ -8,13 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Module.ZLattice.Covolume
-import Mathlib.MeasureTheory.Group.GeometryOfNumbers
-import Mathlib.Analysis.InnerProductSpace.GramSchmidtOrtho
-import Def.v1.Atlas.AnAlgorithmistsToolkit.code.Lattices
+module
+
+public import Mathlib.Algebra.Module.ZLattice.Covolume
+public import Mathlib.MeasureTheory.Group.GeometryOfNumbers
+public import Mathlib.Analysis.InnerProductSpace.GramSchmidtOrtho
+public import Def.v1.Atlas.AnAlgorithmistsToolkit.code.Lattices
 
 
-noncomputable section
+public noncomputable section
 
 open MeasureTheory MeasureTheory.Measure Submodule Module ZSpan Set Metric
 

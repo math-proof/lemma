@@ -1,4 +1,8 @@
-import Instance.TaylorWiles_Primes
+module
+
+public import Instance.TaylorWiles_Primes
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,5 +1,8 @@
 -- Carved from Lemma/Definitions/Def_LanglandsTunnell_CubicInduction_IotaTorus.lean: instance decls only.
-import Lemma.Matrix.CubicInduction_Carrier
+
+module
+
+@[expose] public section
 
 set_option autoImplicit false
 

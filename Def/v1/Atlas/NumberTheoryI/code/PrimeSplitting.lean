@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.NumberTheory.RamificationInertia.Basic
-import Mathlib.RingTheory.Ideal.Over
+module
+
+public import Mathlib.NumberTheory.RamificationInertia.Basic
+public import Mathlib.RingTheory.Ideal.Over
+
+@[expose] public section
+
 open Ideal Module
 
 

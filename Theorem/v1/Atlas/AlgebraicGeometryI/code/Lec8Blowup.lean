@@ -7,11 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.LinearAlgebra.Projectivization.Basic
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec8Blowup
+public import Mathlib.LinearAlgebra.Projectivization.Basic
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec8Blowup
 open scoped LinearAlgebra.Projectivization
 
+public section
 
 namespace Lec8Blowup
 

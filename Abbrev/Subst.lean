@@ -1,4 +1,8 @@
-import Mathlib.Data.Nat.Basic
+module
+
+public import Mathlib.Data.Nat.Basic
+
+@[expose] public section
 
 /--
 [sympy.Subs](https://github.com/sympy/sympy/blob/master/sympy/core/function.py)

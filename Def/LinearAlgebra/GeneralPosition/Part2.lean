@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/GeneralPosition.lean -/
 
-import Mathlib.LinearAlgebra.AffineSpace.Independent
-import Mathlib.LinearAlgebra.Projectivization.Independence
-import Theorem.LinearAlgebra.GeneralPosition
+module
+
+public import Mathlib.LinearAlgebra.AffineSpace.Independent
+public import Mathlib.LinearAlgebra.Projectivization.Independence
+public import Theorem.LinearAlgebra.GeneralPosition
+
+@[expose] public section
+
 /-!
 # General position
 

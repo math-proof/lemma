@@ -1,9 +1,11 @@
-import Def.Lean.Name
-import Mathlib.Basic.Real.Basic
+module
+
+public import Def.Lean.Name
+public import Mathlib.Basic.Real.Basic
 open Lean
 
 
-inductive Constant where
+public inductive Constant where
   | True
   | False
   | NaN

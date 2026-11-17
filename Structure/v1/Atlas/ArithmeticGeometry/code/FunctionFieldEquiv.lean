@@ -8,12 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Def.v1.Atlas.ArithmeticGeometry.code.CurveTheory.Part10
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.CurveTheory
+module
+
+public import Mathlib
+public import Def.v1.Atlas.ArithmeticGeometry.code.CurveTheory.Part10
+public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.CurveTheory
 
 
-noncomputable section
+public noncomputable section
 
 open AlgebraicGeometry CategoryTheory
 

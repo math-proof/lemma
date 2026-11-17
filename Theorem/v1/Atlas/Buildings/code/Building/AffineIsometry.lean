@@ -11,6 +11,6 @@ LICENSE file in the root directory of this source tree.
 import Structure.v1.Atlas.Buildings.code.Building.AffineIsometry.Contexts
 import Structure.v1.Atlas.Buildings.code.Building.AffineIsometry.LatticeChains
 import Def.v1.Atlas.Buildings.code.Building.AffineIsometry.Theorems
-import Lemma.Nat.Embed_Add1S.ne.Zero
+import Theorem.Nat.Embed_Add1S.ne.Zero
 
 

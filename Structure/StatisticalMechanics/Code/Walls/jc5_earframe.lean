@@ -9,11 +9,15 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Walls.jc2_runframe.Part2
-import Theorem.StatisticalMechanics.Code.Walls.jc2_thickshelf.Part3
-import Theorem.StatisticalMechanics.Code.Walls.jc3_shelfcell
-import Theorem.StatisticalMechanics.Code.Walls.jc5_earframe.Part2
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Walls.jc2_runframe.Part2
+public import Theorem.StatisticalMechanics.Code.Walls.jc2_thickshelf.Part3
+public import Theorem.StatisticalMechanics.Code.Walls.jc3_shelfcell
+public import Theorem.StatisticalMechanics.Code.Walls.jc5_earframe.Part2
+public section
+
 open SimpleGraph Function
 
 

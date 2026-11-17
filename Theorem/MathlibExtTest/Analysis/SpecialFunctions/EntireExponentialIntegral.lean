@@ -2,7 +2,7 @@
 
 
 import Def.Analysis.SpecialFunctions.EntireExponentialIntegral
-import Lemma.Complex.EntireExponentialIntegral
+import Theorem.Complex.EntireExponentialIntegral
 
 
 namespace Complex

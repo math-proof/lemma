@@ -1,4 +1,3 @@
-import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Lemma.Random.GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.Any_And_All_Integrable_Measure.GtInftySup.All_Differentiable_Prob.All_NeDens_0.All_Eq_JointDens.AbsContJointAS.AbsContStateMarginal.IsPolicyTrajectory.Subset_Ico
 import Lemma.Random.SinglePSpace.of.AEMeasurable.Distributed
 import Lemma.Random.Integral.eq.Integral_Integral_SMul.of.All_Eq_Joint.All_EqWithDensity
@@ -18,6 +17,8 @@ import Lemma.Random.PSpace_Path.of.All_PSpace
 import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
 import Mathlib.MeasureTheory.Function.ConditionalExpectation.PullOut
 import Mathlib.MeasureTheory.Integral.Prod
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open scoped ENNReal.ToRealCoe
 open Finset (range)
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure Real IsPolicyTrajectory
@@ -47,10 +48,10 @@ private lemma smul_fderiv_log
 
 /-- Integral against a density-policy kernel is the reference integral weighted by `π`. -/
 private lemma integral_kernel
-  [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+  [NormedAddCommGroup ℰ] [NormedSpace ℝ ℰ] [CompleteSpace ℰ]
   [MeasurableSpace 𝒮] [μ : ReferenceMeasure 𝒜]
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
-  {f : 𝒜 → E}
+  {f : 𝒜 → ℰ}
 -- given
   (θ : Θ)
   (sₜ : 𝒮) :
@@ -66,7 +67,9 @@ private lemma integral_kernel
   rw [hker, integral_withDensity_eq_integral_toReal_smul hπm
     (Filter.Eventually.of_forall fun _ => ENNReal.ofReal_lt_top)]
   refine integral_congr_ae (Filter.Eventually.of_forall fun u => ?_)
-  simp [Policy.pdf, ENNReal.toReal_ofReal (hStoch.nonneg θ sₜ u)]
+  have hnn : 0 ≤ M.π[θ] sₜ u := hStoch.nonneg θ sₜ u
+  simp only [Policy.pdf]
+  rw [ENNReal.toReal_ofReal hnn]
 
 /-- Importance weight `π' • ((c • ∇π) / π')` equals the on-policy score `π • (c • ∇ log π)`. -/
 private lemma is_weight_eq_score
@@ -136,7 +139,10 @@ private lemma kernel_pdf
     exact Measure.rnDeriv_withDensity (ν := ReferenceMeasure.measure) hpdf
   filter_upwards [hrn] with u hu
   simp only [Measure.prob]
-  rw [hu, Policy.pdf, ENNReal.toReal_ofReal (hStoch.nonneg θ' sₜ u)]
+  have hnn : 0 ≤ M.π[θ'] sₜ u := hStoch.nonneg θ' sₜ u
+  rw [hu]
+  simp only [Policy.pdf]
+  rw [ENNReal.toReal_ofReal hnn]
 
 /--
 Importance-sampled generalized advantage estimation (Schulman et al., arXiv 1506.02438,
@@ -355,7 +361,7 @@ private lemma main
         hA.smul hgrad
       apply StronglyMeasurable.aestronglyMeasurable
       convert (hπ'.inv.stronglyMeasurable.smul hnum) using 1
-    rw [OfRV.eq.Integral.of.AEStronglyMeasurable_Map (E := Θ) hsm]
+    rw [OfRV.eq.Integral.of.AEStronglyMeasurable_Map (ℰ := Θ) hsm]
     simp only [id]
     rw [integral_kernel (M := M) (f := fπ) θ' sₜ]
     refine integral_congr_ae (Filter.Eventually.of_forall fun u => ?_)
@@ -794,7 +800,7 @@ private lemma main
       · exact measurable_const
     have hdis0 :=
       Integral.eq.Integral_Integral_SMul.of.All_Eq_Joint.All_EqWithDensity
-        (M := M) (E := ℝ)
+        (M := M) (ℰ := ℝ)
         (φ := fun y u => if abs (Â t y u) ≤ BG then (0 : ℝ) else 1)
         (C := (1 : ℝ)) h₁' hφind (fun y u => by
           if h : abs (Â t y u) ≤ BG then
@@ -890,7 +896,9 @@ private lemma main
               simp [Policy.pdf, ENNReal.ofReal_lt_top])).1 h1
         convert h' using 1
         funext aₜ
-        simp [Policy.pdf, ENNReal.toReal_ofReal (hStoch.nonneg θ y aₜ)]
+        have hnn : 0 ≤ M.π[θ] y aₜ := hStoch.nonneg θ y aₜ
+        simp only [Policy.pdf]
+        rw [ENNReal.toReal_ofReal hnn, one_mul]
       have hprodint : Integrable
         (fun u => M.π[θ] y u *
           (if abs (Â t y u) ≤ BG then (0 : ℝ) else 1))
@@ -1029,7 +1037,9 @@ private lemma main
           simp [Policy.pdf, ENNReal.ofReal_lt_top])).1 h1
     convert h' using 1
     funext u
-    simp [Policy.pdf, ENNReal.toReal_ofReal (hStoch.nonneg θ y u)]
+    have hnn : 0 ≤ M.π[θ] y u := hStoch.nonneg θ y u
+    simp only [Policy.pdf]
+    rw [ENNReal.toReal_ofReal hnn, one_mul]
   have hπ1 : ∀ y, ∫ u, M.π[θ] y u ∂ReferenceMeasure.measure = 1 := fun y => by
     have hrew := integral_kernel (M := M) (f := fun _ : 𝒜 => (1 : ℝ)) θ y
     have : IsProbabilityMeasure (M[y] θ : Measure 𝒜) := inferInstance
@@ -1287,8 +1297,9 @@ private lemma main
         have hpt : (fun act => (M.pdf θ' (σ t) act).toReal) =
             M.π[θ'] (σ t) := by
           funext act
-          simp [Policy.pdf,
-            ENNReal.toReal_ofReal (hStoch.nonneg θ' (σ t) act)]
+          have hnn : 0 ≤ M.π[θ'] (σ t) act := hStoch.nonneg θ' (σ t) act
+          simp only [Policy.pdf]
+          rw [ENNReal.toReal_ofReal hnn]
         have hμs : M[σ t] θ' =
             ReferenceMeasure.measure.withDensity (M.pdf θ' (σ t)) :=
           hμ (σ t)
@@ -1367,4 +1378,4 @@ private lemma main
 
 
 -- created on 2026-11-11
--- updated on 2026-11-16
+-- updated on 2026-11-17

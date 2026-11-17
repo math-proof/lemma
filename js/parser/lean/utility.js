@@ -123,6 +123,9 @@ export function escapeSpecialsForLatex(token) {
         return !lead && head.length === 1 ? `${head}_{${escTail}}` : `${escLead}${head}\\_${escTail}`;
     }
     if (/\w_$/.test(s)) return s.slice(0, -1) + '\\_';
+    // Trailing `_` after a non-word (`?_`, the anonymous hole). `{?_}` is a KaTeX
+    // subscript with no atom after `_`, so one hole aborts the whole imply align*.
+    if (/[^\w]_+$/.test(s)) return s.replace(/_+$/, (us) => '\\_'.repeat(us.length));
     return s;
 }
 

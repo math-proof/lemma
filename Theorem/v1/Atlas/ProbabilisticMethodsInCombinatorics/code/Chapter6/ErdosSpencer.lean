@@ -9,6 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter6.LatinSquares
-import Lemma.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter6.LatinSquares
+import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter6.LatinSquares
 
 

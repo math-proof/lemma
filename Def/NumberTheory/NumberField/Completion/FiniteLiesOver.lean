@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FiniteLiesOver.lean -/
 
-import Mathlib.NumberTheory.RamificationInertia.Valuation
+module
+
+public import Mathlib.NumberTheory.RamificationInertia.Valuation
+
+@[expose] public section
+
 /-!
 # Canonical maps between finite-place completions
 

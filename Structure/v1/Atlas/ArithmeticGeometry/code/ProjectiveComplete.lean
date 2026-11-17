@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.ArithmeticGeometry.code.CompletenessValuationCriterion.Part2
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.CompletenessValuationCriterion
-import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Proper
+module
+
+public import Structure.v1.Atlas.ArithmeticGeometry.code.CompletenessValuationCriterion.Part2
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.CompletenessValuationCriterion
+public import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Proper
+public section
+
 universe u
 
 open AlgebraicGeometry

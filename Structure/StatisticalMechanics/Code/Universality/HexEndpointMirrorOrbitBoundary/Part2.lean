@@ -9,8 +9,10 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexAllWidthBoundaryWinding.Part4
-import Theorem.StatisticalMechanics.Code.Universality.HexEndpointMirrorOrbitBoundary.Part2
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.HexAllWidthBoundaryWinding.Part4
+public import Theorem.StatisticalMechanics.Code.Universality.HexEndpointMirrorOrbitBoundary.Part2
 
 
 namespace StatMech.Universality
@@ -19,7 +21,7 @@ open Complex HexWalk Set
 
 open scoped BigOperators
 
-noncomputable section
+public noncomputable section
 
 namespace HexEndpointMirrorOrbitData
 

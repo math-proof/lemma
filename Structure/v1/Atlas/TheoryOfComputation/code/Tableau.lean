@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TheoryOfComputation.code.Complexity.Part2
-import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.Complexity
-import Abbrev.v1.Atlas.TheoryOfComputation.code.Tableau.Part2
+module
 
+public import Def.v1.Atlas.TheoryOfComputation.code.Complexity.Part2
+public import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.Complexity
+public import Abbrev.v1.Atlas.TheoryOfComputation.code.Tableau.Part2
+
+
+public section
 
 namespace TuringMachine
 

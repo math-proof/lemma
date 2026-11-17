@@ -1,5 +1,10 @@
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Basic.Real.Basic
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Basic.Real.Basic
+
+@[expose] public section
+
 /-!
 # Initial segment mean for Taylor's variance-to-mean power law
 

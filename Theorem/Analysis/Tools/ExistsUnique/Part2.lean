@@ -1,6 +1,9 @@
-import Mathlib
-import Def.Analysis.Tools.ExistsUnique.Part2
+module
 
+public import Mathlib
+public import Def.Analysis.Tools.ExistsUnique.Part2
+
+public section
 
 theorem Subsingleton.choose_spec {α: Sort*} [hs: Subsingleton α] [Nonempty α] (x:α) : x = hs.choose := Subsingleton.elim _ _
 

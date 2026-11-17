@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/CFiniteSequence.lean -/
 
-import Mathlib.Algebra.MvPolynomial.Basic
+module
+
+public import Mathlib.Algebra.MvPolynomial.Basic
+
+@[expose] public section
+
 open scoped BigOperators
 
 /-!

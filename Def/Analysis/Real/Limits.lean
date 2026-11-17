@@ -1,7 +1,12 @@
-import Mathlib.Analysis.Real.Hyperreal
-import Mathlib.Topology.Defs.Filter
-import Syntax.Analysis.Real.Limits
-import Def.Analysis.Real.Limits.Basic
+module
+
+public import Mathlib.Analysis.Real.Hyperreal
+public import Mathlib.Topology.Defs.Filter
+public import Syntax.Analysis.Real.Limits
+public import Def.Analysis.Real.Limits.Basic
+
+@[expose] public section
+
 open Lean
 open scoped Topology
 

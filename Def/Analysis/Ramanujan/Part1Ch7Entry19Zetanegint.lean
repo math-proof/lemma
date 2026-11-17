@@ -4,29 +4,34 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Analysis.Meromorphic.Basic
-import Def.Analysis.Ramanujan.Part1Ch7Phi
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected
-import Mathlib.Analysis.Calculus.ContDiff.Basic
-import Mathlib.Analysis.Complex.Exponential
-import Mathlib.Analysis.Complex.HalfPlane
-import Mathlib.Analysis.Complex.Trigonometric
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Complex
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Basic.Complex.Basic
-import Mathlib.Data.Finset.Defs
-import Mathlib.Data.Finset.Range
-import Mathlib.Data.Set.Defs
-import Mathlib.NumberTheory.LSeries.ZMod
-import Mathlib.Order.Filter.Basic
-import Mathlib.Order.Interval.Set.Defs
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.Basic
+module
+
+public import Mathlib.Analysis.Meromorphic.Basic
+public import Def.Analysis.Ramanujan.Part1Ch7Phi
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected
+public import Mathlib.Analysis.Calculus.ContDiff.Basic
+public import Mathlib.Analysis.Complex.Exponential
+public import Mathlib.Analysis.Complex.HalfPlane
+public import Mathlib.Analysis.Complex.Trigonometric
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Complex
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.Data.Finset.Defs
+public import Mathlib.Data.Finset.Range
+public import Mathlib.Data.Set.Defs
+public import Mathlib.NumberTheory.LSeries.ZMod
+public import Mathlib.Order.Filter.Basic
+public import Mathlib.Order.Interval.Set.Defs
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.Basic
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 7
 

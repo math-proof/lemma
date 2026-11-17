@@ -8,17 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.CombinatorialOptimization.code.Flow.MaxFlowMinCut.Part2
-import Lemma.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.MaxFlowMinCut
-import Lemma.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.MaxFlowAugPath
-import Lemma.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.FlowDecomposition
-import Instance.v1.Atlas.CombinatorialOptimization.code.Flow.MaxFlowAugPath
-import Def.v1.Atlas.CombinatorialOptimization.code.Flow.FlowDecomposition.Part3
-import Def.v1.Atlas.CombinatorialOptimization.code.Flow.Menger
+module
+
+public import Def.v1.Atlas.CombinatorialOptimization.code.Flow.MaxFlowMinCut.Part2
+public import Lemma.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.MaxFlowMinCut
+public import Lemma.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.MaxFlowAugPath
+public import Lemma.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.FlowDecomposition
+public import Instance.v1.Atlas.CombinatorialOptimization.code.Flow.MaxFlowAugPath
+public import Def.v1.Atlas.CombinatorialOptimization.code.Flow.FlowDecomposition.Part3
+public import Def.v1.Atlas.CombinatorialOptimization.code.Flow.Menger
 open Finset BigOperators Classical
 
 
-noncomputable section
+public noncomputable section
 
 namespace NetworkFlow
 

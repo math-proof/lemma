@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ProdigiousNumber.lean -/
 
-import Mathlib.Data.Nat.Digits.Defs
-import Def.NumberTheory.ProdigiousNumber
+module
 
+public import Mathlib.Data.Nat.Digits.Defs
+public import Def.NumberTheory.ProdigiousNumber
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

@@ -4,9 +4,11 @@
 Author: @toskua, Avocado
 -/
 
-import Mathlib.NumberTheory.NumberField.AdeleRing
-import Mathlib.Topology.Algebra.Group.Units
-import Def.NumberTheory.NumberField.Idele
+module
+
+public import Mathlib.NumberTheory.NumberField.AdeleRing
+public import Mathlib.Topology.Algebra.Group.Units
+public import Def.NumberTheory.NumberField.Idele
 /-!
 # Ideles of a number field
 
@@ -31,6 +33,7 @@ specializations such as `R = ℤ` and `K = ℚ`. They do not model global functi
   lines 201--202
 -/
 
+@[expose] public section
 
 noncomputable section
 

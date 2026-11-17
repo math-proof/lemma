@@ -2,7 +2,7 @@
 
 
 import Theorem.Analysis.FunctionalAnalysis.RosenthalL1.Part13
-import Lemma.Set.Any_All_Any_All_LtNormSubOrHasUniformL1LowerBound.of.IsBounded_Range
+import Theorem.Set.Any_All_Any_All_LtNormSubOrHasUniformL1LowerBound.of.IsBounded_Range
 open MathlibExt.Analysis.FunctionalAnalysis.RosenthalL1Wanted
 
 

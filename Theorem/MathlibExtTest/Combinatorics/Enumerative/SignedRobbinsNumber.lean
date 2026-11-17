@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/SignedRobbinsNumber.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.SignedRobbinsNumber
 
-import Def.Combinatorics.Enumerative.SignedRobbinsNumber
-
+public section
 
 namespace MetaMathlibExt
 

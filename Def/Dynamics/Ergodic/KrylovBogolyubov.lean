@@ -4,15 +4,18 @@
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.MeasureTheory.Measure.LevyProkhorovMetric
-import Mathlib.MeasureTheory.Measure.Prokhorov
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.Metrizable.Basic
-import Mathlib.Topology.Separation.CompletelyRegular
+module
 
+public import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.MeasureTheory.Measure.LevyProkhorovMetric
+public import Mathlib.MeasureTheory.Measure.Prokhorov
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.Metrizable.Basic
+public import Mathlib.Topology.Separation.CompletelyRegular
+
+@[expose] public section
 
 section
 

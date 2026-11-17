@@ -1,5 +1,7 @@
-import Mathlib
-import Instance.Compat_Mathlib430
+module
+
+public import Mathlib
+public import Instance.Compat_Mathlib430
 
 set_option autoImplicit false
 
@@ -7,7 +9,7 @@ universe u
 
 open CategoryTheory
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace Rep
 

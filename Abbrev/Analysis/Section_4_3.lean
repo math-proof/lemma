@@ -1,5 +1,9 @@
-import Mathlib
-import Def.Analysis.Section_4_3
+module
+
+public import Mathlib
+public import Def.Analysis.Section_4_3
+
+@[expose] public section
 
 
 namespace Section_4_3

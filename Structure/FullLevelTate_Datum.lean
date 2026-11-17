@@ -1,10 +1,12 @@
-import Structure.GaloisRep_Adic
-import Instance.CuspidalType_IsCuspidalOfType
-import Structure.HeckeGalois_EichlerShimura
+module
+
+public import Structure.GaloisRep_Adic
+public import Instance.CuspidalType_IsCuspidalOfType
+public import Structure.HeckeGalois_EichlerShimura
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace FullLevelTate
 

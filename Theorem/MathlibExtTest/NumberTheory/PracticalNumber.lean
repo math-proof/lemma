@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PracticalNumber.lean -/
+module
 
+public import Def.NumberTheory.PracticalNumber
 
-import Def.NumberTheory.PracticalNumber
-
+public section
 
 namespace MetaMathlibExt
 

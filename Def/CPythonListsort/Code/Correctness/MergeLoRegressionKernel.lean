@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/MergeLoRegressionKernel.lean -/
 
-import Def.CPythonListsort.Code.Transcription.MergeLo.Part6
-import Def.CPythonListsort.Code.Transcription.TempStorageInvariant
+module
+
+public import Def.CPythonListsort.Code.Transcription.MergeLo.Part6
+public import Def.CPythonListsort.Code.Transcription.TempStorageInvariant
+
+@[expose] public section
+
 /-!
 # Kernel-checked executable fixture for `merge_lo`
 

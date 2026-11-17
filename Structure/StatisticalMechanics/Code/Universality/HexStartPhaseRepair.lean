@@ -9,9 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexFiniteStripIncidenceObstruction.Part4
-import Theorem.StatisticalMechanics.Code.Universality.HexStartPhaseRepair
+module
 
+public import Theorem.StatisticalMechanics.Code.Universality.HexFiniteStripIncidenceObstruction.Part4
+public import Theorem.StatisticalMechanics.Code.Universality.HexStartPhaseRepair
+
+
+public section
 
 namespace StatMech.Universality
 

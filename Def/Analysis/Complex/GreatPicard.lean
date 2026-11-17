@@ -4,23 +4,27 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
 
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Lemma.Complex.Bloch
-import Mathlib.Analysis.Complex.HasPrimitives
-import Mathlib.Analysis.Complex.RemovableSingularity
-import Mathlib.Analysis.Complex.AbsMax
-import Mathlib.Analysis.Complex.CauchyIntegral
-import Mathlib.Analysis.SpecialFunctions.Complex.Log
-import Mathlib.Analysis.SpecialFunctions.Complex.Arg
-import Mathlib.Analysis.Calculus.MeanValue
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
-import Mathlib.Analysis.Complex.Trigonometric
-import Mathlib.Analysis.Complex.ExponentialBounds
-import Mathlib.Analysis.Real.Pi.Bounds
-import Mathlib.Algebra.Order.Round
-import Mathlib.Topology.Algebra.Order.Field
+module
+
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Mathlib.Analysis.Complex.HasPrimitives
+public import Mathlib.Analysis.Complex.RemovableSingularity
+public import Mathlib.Analysis.Complex.AbsMax
+public import Mathlib.Analysis.Complex.CauchyIntegral
+public import Mathlib.Analysis.SpecialFunctions.Complex.Log
+public import Mathlib.Analysis.SpecialFunctions.Complex.Arg
+public import Mathlib.Analysis.Calculus.MeanValue
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
+public import Mathlib.Analysis.Complex.Trigonometric
+public import Mathlib.Analysis.Complex.ExponentialBounds
+public import Mathlib.Analysis.Real.Pi.Bounds
+public import Mathlib.Algebra.Order.Round
+public import Mathlib.Topology.Algebra.Order.Field
+
+@[expose] public section
+
 open Set Filter Topology Metric
 
 

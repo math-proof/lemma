@@ -16,8 +16,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Topology.Bases
+module
 
+public import Mathlib.Topology.Bases
+
+@[expose] public section
 
 /-- A topological space has a countable network if there is a countable family
 of sets refining every open neighborhood of each of its points. Network sets

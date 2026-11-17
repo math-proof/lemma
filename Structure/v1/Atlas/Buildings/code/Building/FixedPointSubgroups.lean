@@ -8,19 +8,21 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.Building.BruhatTitsFixedPoint.Part2
-import Lemma.Set.RadiusFrom.ge.Zero
-import Lemma.Set.BNPairBoundedPredicate_SetMul.of.BNPairBoundedPredicate.BNPairBoundedPredicate
-import Structure.v1.Atlas.Buildings.code.Building.CompactSubgroups.Part2
-import Structure.v1.Atlas.Buildings.code.BNPair.Generalized.Defs
-import Def.v1.Atlas.Buildings.code.Building.FixedPointSubgroups
+module
+
+public import Def.v1.Atlas.Buildings.code.Building.BruhatTitsFixedPoint.Part2
+public import Theorem.Set.RadiusFrom.ge.Zero
+public import Theorem.Set.BNPairBoundedPredicate_SetMul.of.BNPairBoundedPredicate.BNPairBoundedPredicate
+public import Structure.v1.Atlas.Buildings.code.Building.CompactSubgroups.Part2
+public import Structure.v1.Atlas.Buildings.code.BNPair.Generalized.Defs
+public import Def.v1.Atlas.Buildings.code.Building.FixedPointSubgroups
 set_option maxHeartbeats 800000
 
 set_option linter.unusedSectionVars false
 set_option maxHeartbeats 400000
 
 
-noncomputable section
+public noncomputable section
 
 open Set
 

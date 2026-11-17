@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.SimpleGraph.ClawFreeIndependencePoly
-import Lemma.SimpleGraph.ClawFreeIndependencePoly
+import Theorem.SimpleGraph.ClawFreeIndependencePoly
 
 
 -- The empty graph on `Fin 3` is claw-free: no vertex has any neighbours.

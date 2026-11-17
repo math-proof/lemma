@@ -9,8 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Walls.bc113boundaryforest
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Walls.bc113boundaryforest
+
+@[expose] public section
+
 open Set SimpleGraph Finset
 
 set_option linter.style.longLine false

@@ -8,12 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.Distributions.Gaussian.Real
-import Mathlib.Probability.Process.Stopping
-import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
-import Mathlib.Probability.Independence.Basic
-import Mathlib.Probability.Kernel.MeasurableIntegral
-import Structure.v1.Atlas.Probability.code.StrongMarkovBMGoal98
+module
+
+public import Mathlib.Probability.Distributions.Gaussian.Real
+public import Mathlib.Probability.Process.Stopping
+public import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.Probability.Kernel.MeasurableIntegral
+public import Structure.v1.Atlas.Probability.code.StrongMarkovBMGoal98
+
+@[expose] public section
+
 set_option maxHeartbeats 8000000
 
 open MeasureTheory ProbabilityTheory MeasurableSpace

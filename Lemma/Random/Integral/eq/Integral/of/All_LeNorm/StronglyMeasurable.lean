@@ -9,10 +9,10 @@ Integral against a kernel composition, for a bounded strongly measurable integra
 -/
 @[path]
 private lemma main
-  [MeasurableSpace α] [MeasurableSpace β] [NormedAddCommGroup E] [NormedSpace ℝ E]
+  [MeasurableSpace α] [MeasurableSpace β] [NormedAddCommGroup ℰ] [NormedSpace ℝ ℰ]
   {μ : Measure α} [IsProbabilityMeasure μ]
   {κ : Kernel α β} [IsMarkovKernel κ]
-  {f : β → E}
+  {f : β → ℰ}
   {C : ℝ}
 -- given
   (hf : StronglyMeasurable f)
@@ -28,4 +28,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-15
+-- updated on 2026-11-17

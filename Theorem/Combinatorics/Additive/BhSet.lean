@@ -1,7 +1,10 @@
-import Mathlib.Algebra.Group.Defs
-import Mathlib.Data.Set.Basic
-import Mathlib.Data.List.Permutation
-import Def.Combinatorics.Additive.BhSet
+module
+
+public import Mathlib.Algebra.Group.Defs
+public import Mathlib.Data.Set.Basic
+public import Mathlib.Data.List.Permutation
+public import Def.Combinatorics.Additive.BhSet
+
 /-!
 # `B_h`-sets
 
@@ -24,6 +27,8 @@ the head, so the theory applies to genuine semigroups.
   affect the sum.
 * `AdditiveCombinatorics.IsBhSet`: the `B_h`-set predicate.
 -/
+
+public section
 
 
 namespace AdditiveCombinatorics

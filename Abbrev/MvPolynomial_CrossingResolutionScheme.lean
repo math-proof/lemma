@@ -1,10 +1,12 @@
-import Mathlib
-import Abbrev.MvPolynomial_CrossingResolution
-import Inductive.MvPolynomial_GlueIndex
+module
+
+public import Mathlib
+public import Abbrev.MvPolynomial_CrossingResolution
+public import Inductive.MvPolynomial_GlueIndex
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 

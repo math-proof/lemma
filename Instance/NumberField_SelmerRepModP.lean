@@ -1,6 +1,11 @@
 -- Carved from Lemma/Definitions/Def_NumberField_SelmerRepModP.lean: instance decls only.
-import Mathlib
-import Def.NumberField_SelmerRepModP
+
+module
+
+public import Mathlib
+public import Def.NumberField_SelmerRepModP
+
+@[expose] public section
 
 set_option autoImplicit false
 

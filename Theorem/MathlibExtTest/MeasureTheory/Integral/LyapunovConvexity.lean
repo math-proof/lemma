@@ -6,7 +6,7 @@ Authors: Adam Kiezun, Muse Spark 1.3
 
 import Def.MeasureTheory.Integral.LyapunovConvexity
 import Lemma.Measure.Integral.LyapunovConvexity
-import Lemma.Measure.Atomless
+import Theorem.Measure.Atomless
 import Theorem.MeasureTheory.Measure.Atomless.Part3
 import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 open MeasureTheory

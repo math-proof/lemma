@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.Probability.code.SubmartingaleConvergence
-import Lemma.Measure.Atlas.v1.Probability.code.SubmartingaleConvergence
+import Theorem.Measure.Atlas.v1.Probability.code.SubmartingaleConvergence
 import Mathlib.MeasureTheory.Function.UniformIntegrable
 import Mathlib.Tactic.TFAE
 open scoped MeasureTheory NNReal ENNReal Topology

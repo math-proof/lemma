@@ -8,13 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.Independence.ZeroOne
-import Mathlib.Probability.IdentDistrib
-import Mathlib.MeasureTheory.Measure.MeasureSpace
-import Mathlib.Topology.Instances.EReal.Lemmas
-import Mathlib.Topology.Algebra.Order.LiminfLimsup
-import Abbrev.v1.Atlas.Probability.code.TailSigmaAlgebra
-import Def.Probability.RandomWalkDichotomy
+module
+
+public import Mathlib.Probability.Independence.ZeroOne
+public import Mathlib.Probability.IdentDistrib
+public import Mathlib.MeasureTheory.Measure.MeasureSpace
+public import Mathlib.Topology.Instances.EReal.Lemmas
+public import Mathlib.Topology.Algebra.Order.LiminfLimsup
+public import Abbrev.v1.Atlas.Probability.code.TailSigmaAlgebra
+public import Def.Probability.RandomWalkDichotomy
+@[expose] public section
+
 set_option maxHeartbeats 4000000
 
 open MeasureTheory ProbabilityTheory Filter Finset Topology MeasurableSpace

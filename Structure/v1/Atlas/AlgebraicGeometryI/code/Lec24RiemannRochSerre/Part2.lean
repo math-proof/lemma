@@ -8,19 +8,21 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Int.Lemmas
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.Field.Basic
-import Mathlib.LinearAlgebra.Dual.Defs
-import Mathlib.GroupTheory.FreeAbelianGroup
-import Mathlib.GroupTheory.QuotientGroup.Basic
-import Structure.v1.Atlas.AlgebraicGeometryI.code.SerreDualityStatement
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityStatement
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec24RiemannRochSerre.Part2
+module
+
+public import Mathlib.Data.Int.Lemmas
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.Field.Basic
+public import Mathlib.LinearAlgebra.Dual.Defs
+public import Mathlib.GroupTheory.FreeAbelianGroup
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+public import Structure.v1.Atlas.AlgebraicGeometryI.code.SerreDualityStatement
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityStatement
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec24RiemannRochSerre.Part2
 set_option maxHeartbeats 800000
 
 
-noncomputable section
+public noncomputable section
 
 namespace Lec24
 

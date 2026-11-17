@@ -1,6 +1,10 @@
-import Mathlib
-import Abbrev.GroupCohomology_TateCohomology
-import Abbrev.GroupCohomology_TateResCor
+module
+
+public import Mathlib
+public import Abbrev.GroupCohomology_TateCohomology
+public import Abbrev.GroupCohomology_TateResCor
+
+@[expose] public section
 
 set_option autoImplicit false
 

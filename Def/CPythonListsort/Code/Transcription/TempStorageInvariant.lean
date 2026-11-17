@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/TempStorageInvariant.lean -/
 
-import Def.CPythonListsort.Code.Transcription.MergeState.Part3
+module
+
+public import Def.CPythonListsort.Code.Transcription.MergeState.Part3
+
+@[expose] public section
+
 /-!
 # Temporary merge-storage representation invariant
 

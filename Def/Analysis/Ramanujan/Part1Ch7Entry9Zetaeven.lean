@@ -35,7 +35,7 @@ import Mathlib.Topology.Algebra.InfiniteSum.Basic
 import Mathlib.Topology.Basic
 import Def.Analysis.Ramanujan.Part1Ch7Phi
 import Theorem.Analysis.Ramanujan.Part1Ch7DirichletBeta
-import Lemma.Complex.Part1Ch7DirichletBeta
+import Theorem.Complex.Part1Ch7DirichletBeta
 import Lemma.Real.Ramanujan.Part1Ch7Entry10Zetaviabernoulli
 import Lemma.Real.Ramanujan.Part1Ch7Entry8Bernoullibound
 import Abbrev.Analysis.Ramanujan.Part1Ch7Entry10Zetaviabernoulli

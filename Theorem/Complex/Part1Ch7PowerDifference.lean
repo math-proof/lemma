@@ -1,0 +1,58 @@
+module
+
+public import Mathlib
+public import Theorem.Analysis.SpecialFunctions.Part1Ch7PowerDifference
+
+public section
+
+open Ramanujan.Part1Ch7
+
+
+namespace MathlibExt.Analysis.Ramanujan.Part1Ch7
+
+/--
+[Part1Ch7PowerDifference](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch7PowerDifference.lean)
+-/
+public theorem chapter7Admissible_zero_eq :
+-- imply
+  chapter7Admissible 0 :=
+-- proof
+  chapter7Admissible_zero
+
+end MathlibExt.Analysis.Ramanujan.Part1Ch7
+
+namespace MathlibExt.Analysis.Ramanujan.Part1Ch7
+
+/--
+[Part1Ch7PowerDifference](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch7PowerDifference.lean)
+-/
+public theorem chapter7PowerDifferenceTerm_zero_left_eq
+-- given
+  (x : ℂ)
+  (j : ℕ) :
+-- imply
+  chapter7PowerDifferenceTerm 0 x j = 0 :=
+-- proof
+  chapter7PowerDifferenceTerm_zero_left x j
+
+end MathlibExt.Analysis.Ramanujan.Part1Ch7
+
+namespace MathlibExt.Analysis.Ramanujan.Part1Ch7
+
+/--
+[Part1Ch7PowerDifference](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch7PowerDifference.lean)
+-/
+public theorem chapter7PowerDifferenceTerm_zero_right_eq
+-- given
+  (r : ℂ)
+  (j : ℕ) :
+-- imply
+  chapter7PowerDifferenceTerm r 0 j = 0 :=
+-- proof
+  chapter7PowerDifferenceTerm_zero_right r j
+
+end MathlibExt.Analysis.Ramanujan.Part1Ch7
+
+
+-- created on 2026-10-10
+-- updated on 2026-10-26

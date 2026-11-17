@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.ProjectionTheory.code.LinnikLargeSieve
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.LinnikLargeSieve
+import Theorem.Real.Atlas.v1.ProjectionTheory.code.LinnikLargeSieve
 open Finset Complex
 
 

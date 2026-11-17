@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/KolmogorovMaximal.lean -/
 
-import Mathlib.Data.Real.Basic
-import Mathlib.Algebra.Order.BigOperators.Ring.Finset
+module
+
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Algebra.Order.BigOperators.Ring.Finset
+
+@[expose] public section
+
 open Finset BigOperators
 
 /-!

@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.Algebra.Group.Defs
-import Mathlib.Topology.Algebra.Valued.ValuationTopology
-import Mathlib.RingTheory.Henselian
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Mathlib.Algebra.Polynomial.Derivative
-import Mathlib.Algebra.Polynomial.Taylor
-import Structure.v1.Atlas.Buildings.code.Valuation.DiscreteValuationBook
+module
+
+public import Mathlib.Topology.Algebra.Group.Defs
+public import Mathlib.Topology.Algebra.Valued.ValuationTopology
+public import Mathlib.RingTheory.Henselian
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Mathlib.Algebra.Polynomial.Derivative
+public import Mathlib.Algebra.Polynomial.Taylor
+public import Structure.v1.Atlas.Buildings.code.Valuation.DiscreteValuationBook
+
+@[expose] public section
+
 open Polynomial
 
 

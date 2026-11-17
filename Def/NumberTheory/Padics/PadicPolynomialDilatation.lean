@@ -1,9 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Padics/PadicPolynomialDilatation.lean -/
 
-import Mathlib.NumberTheory.Padics.RingHoms
-import Mathlib.Algebra.Polynomial.Degree.Lemmas
-import Structure.NumberTheory.Padics.PadicPolynomialDilatation
+module
 
+public import Mathlib.NumberTheory.Padics.RingHoms
+public import Mathlib.Algebra.Polynomial.Degree.Lemmas
+public import Structure.NumberTheory.Padics.PadicPolynomialDilatation
+
+@[expose] public section
 
 /-- Proved witness: dilatation data exists for the constant polynomial one at zero. -/
 noncomputable def padicPolynomialDilatation_one_zero (p : ℕ) [Fact p.Prime] :

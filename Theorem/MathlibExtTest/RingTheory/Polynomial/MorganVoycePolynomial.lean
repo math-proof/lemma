@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/Polynomial/MorganVoycePolynomial.lean -/
+module
 
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Algebra.Polynomial.Coeff
+public import Def.RingTheory.Polynomial.MorganVoycePolynomial
 
-import Mathlib.Tactic.NormNum
-import Mathlib.Algebra.Polynomial.Coeff
-import Def.RingTheory.Polynomial.MorganVoycePolynomial
-
+public section
 
 namespace MetaMathlibExt
 

@@ -4,7 +4,7 @@ import Lemma.Scheme.GluedPic0Functoriality
 import Instance.ModularCurve_ArithmeticGalois
 import Lemma.HahnSeries.JqCoeff
 import Def.HeckeGalois_EichlerShimura
-import Lemma.Finset.ComponentGroup
+import Theorem.Finset.ComponentGroup
 
 noncomputable section
 

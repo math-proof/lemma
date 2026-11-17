@@ -4,11 +4,13 @@
 Author: Muse Code
 -/
 
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Mathlib.RingTheory.Ideal.IsPrincipalPowQuotient
-import Mathlib.RingTheory.LocalRing.ResidueField.Defs
-import Abbrev.RingTheory.DiscreteValuationRing.MaximalIdealGradedPiece
+module
+
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Mathlib.RingTheory.Ideal.IsPrincipalPowQuotient
+public import Mathlib.RingTheory.LocalRing.ResidueField.Defs
+public import Abbrev.RingTheory.DiscreteValuationRing.MaximalIdealGradedPiece
 /-!
 # Maximal-ideal graded pieces of a discrete valuation ring
 
@@ -46,6 +48,7 @@ is false in wild ramification, so it is not formalized here.
   `κ`-finrank one.
 -/
 
+@[expose] public section
 
 namespace IsDiscreteValuationRing
 

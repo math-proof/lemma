@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Spectrum.Prime.FreeLocus
-import Mathlib.Algebra.Module.SpanRankOperations
-import Mathlib.LinearAlgebra.Dimension.Constructions
+module
+
+public import Mathlib.RingTheory.Spectrum.Prime.FreeLocus
+public import Mathlib.Algebra.Module.SpanRankOperations
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 open scoped TensorProduct

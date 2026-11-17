@@ -1,5 +1,10 @@
-import Mathlib.Basic.Complex.Basic
-import Mathlib.RingTheory.PowerSeries.Basic
+module
+
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.RingTheory.PowerSeries.Basic
+
+@[expose] public section
+
 /-!
 # Basic hypergeometric series `{}_r φ_s`
 

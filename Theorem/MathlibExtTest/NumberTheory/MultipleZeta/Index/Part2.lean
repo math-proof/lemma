@@ -2,7 +2,7 @@
 
 
 import Theorem.NumberTheory.MultipleZeta.Index.Part2
-import Lemma.Nat.MultipleZeta.Index
+import Theorem.Nat.MultipleZeta.Index
 import Def.MathlibExtTest.NumberTheory.MultipleZeta.Index.Part2
 
 

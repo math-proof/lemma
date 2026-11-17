@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.Buildings.code.ChamberComplex.Uniqueness
-import Lemma.Finset.AgreeOnImage.of.AgreeOn
-import Lemma.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
+import Theorem.Finset.AgreeOnImage.of.AgreeOn
+import Theorem.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
 import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
 open scoped Classical
 

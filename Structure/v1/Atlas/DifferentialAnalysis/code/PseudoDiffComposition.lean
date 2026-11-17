@@ -8,16 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Distribution.SchwartzSpace.Deriv
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.Calculus.IteratedDeriv.Defs
-import Mathlib.Analysis.Calculus.MeanValue
-import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.LaplacianExistence
+module
+
+public import Mathlib.Analysis.Distribution.SchwartzSpace.Deriv
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.Calculus.IteratedDeriv.Defs
+public import Mathlib.Analysis.Calculus.MeanValue
+public import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
+public import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
+public import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.LaplacianExistence
 
 
-noncomputable section
+public noncomputable section
 
 open scoped SchwartzMap
 

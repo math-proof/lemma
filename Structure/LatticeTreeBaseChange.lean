@@ -1,4 +1,8 @@
-import Structure.LatticeTreeOrbital
+module
+
+public import Structure.LatticeTreeOrbital
+
+public section
 
 set_option autoImplicit false
 

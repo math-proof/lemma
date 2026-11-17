@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/KFull.lean -/
 
-import Mathlib.Data.Nat.Factorization.Basic
+module
+
+public import Mathlib.Data.Nat.Factorization.Basic
+
+@[expose] public section
+
 /-!
 # `k`-full numbers
 

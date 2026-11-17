@@ -2,7 +2,7 @@
 
 
 import Theorem.Combinatorics.SimpleGraph.Circumference.Part2
-import Lemma.SimpleGraph.Circumference
+import Theorem.SimpleGraph.Circumference
 open SimpleGraph
 
 

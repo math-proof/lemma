@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.EllipticCurves.code.EllipticFunction.Part3
 import Lemma.Complex.Atlas.v1.EllipticCurves.code.EllipticFunction
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.Theorem161
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.Theorem161
 import Lemma.Complex.Atlas.v1.EllipticCurves.code.Uniformization
 import Structure.v1.Atlas.EllipticCurves.code.Theorem161
 import Def.v1.Atlas.EllipticCurves.code.Uniformization

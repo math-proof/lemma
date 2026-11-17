@@ -18,9 +18,9 @@ import Mathlib.MeasureTheory.Measure.Prod
 import Mathlib.MeasureTheory.Constructions.Pi
 import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
 import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzPartition
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzCutoffConvergence
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.DistributionSupport
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzPartition
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzCutoffConvergence
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DistributionSupport
 import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SmoothingOperators
 import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzPartition
 import Def.v1.Atlas.DifferentialAnalysis.code.SchwartzCutoffConvergence

@@ -1,6 +1,10 @@
-import Mathlib.NumberTheory.NumberField.AdeleRing
-import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
-import Mathlib.Analysis.Fourier.FourierTransform
+module
+
+public import Mathlib.NumberTheory.NumberField.AdeleRing
+public import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
+public import Mathlib.Analysis.Fourier.FourierTransform
+
+@[expose] public section
 
 open NumberField IsDedekindDomain MeasureTheory
 open scoped SchwartzMap

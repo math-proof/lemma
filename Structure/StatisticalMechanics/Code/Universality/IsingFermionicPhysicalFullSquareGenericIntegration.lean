@@ -9,14 +9,16 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalFullSquareIntegratedPrimitive.Part5
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalFullSquareIntegratedPrimitive.Part5
 
 
 namespace StatMech.Universality
 
 open StatMech StatMech.FK StatMech.Lattice StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure FKIsingSquareFullCoordinateOneForm (n : Nat) where
   horizontal : Int × Int -> Real

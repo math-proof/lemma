@@ -1,8 +1,13 @@
-import Def.Lean.Level
-import Def.Lean.Name
-import Def.Data.List.List.Basic
-import Def.Lean.Expr.Part11
-import Inductive.Lean.PrettyPrinter.Latex
+module
+
+public import Def.Lean.Level
+public import Def.Lean.Name
+public import Def.Data.List.List.Basic
+public import Def.Lean.Expr.Part11
+public import Inductive.Lean.PrettyPrinter.Latex
+
+@[expose] public section
+
 open Lean (Name)
 set_option linter.unusedVariables false
 
@@ -142,26 +147,38 @@ def Expr.asCondProbApp? : Expr → Option (String × List Expr)
 def Expr.asCondProb? : Expr → Option (Expr × Expr × Expr)
   | e =>
     let e := e.peelToReal
-    let fromJoint (base pair : Expr) : Option (Expr × Expr × Expr) :=
+    -- lean.js `markProbBinderArgs`: a bare factor (the RA form) is magenta
+    -- (`isRandomArgument`); an equality `x = x0` paints the left-hand side red
+    -- (`isRandomVariable`). Split on the ℙ macro accordingly.
+    let fromJoint (markX markY : Expr → Expr) (base pair : Expr) :
+        Option (Expr × Expr × Expr) :=
       match pair.asJointRandomSymbol? with
-      | some (x, y) => some (base, markAsRandomVariable x, markAsRandomVariable y)
+      | some (x, y) => some (base, markX x, markY y)
       | none => none
+    -- `ℙ[π](x = x0 | y = y0)`: both sides observed, both red
     if let some ("condProb", base :: rest) := e.asNamedApp? then
       match rest with
-      | [pair] => fromJoint base pair
+      | [pair] => fromJoint markAsRandomVariable markAsRandomVariable base pair
       | [pair, point] =>
-        if point.isCondProbPoint then fromJoint base pair else none
+        if point.isCondProbPoint then
+          fromJoint markAsRandomVariable markAsRandomVariable base pair
+        else none
       | _ => none
+    -- `ℙ[π](x | y = y0)`: event is magenta, observed conditioner is red
     else if let some ("probCond", base :: xy :: _) := e.asNamedApp? then
-      fromJoint base xy
+      fromJoint markAsRandomArgument markAsRandomVariable base xy
+    -- `ℙ[π](x | y)`: both factors are random arguments (magenta)
     else if let some ("probCondRA", base :: xy :: _) := e.asNamedApp? then
-      fromJoint base xy
+      fromJoint markAsRandomArgument markAsRandomArgument base xy
+    -- `ℙ[π](x = x0 | y)`: observed event is red, conditioner is magenta
     else if let some ("condProbRA", base :: xy :: _) := e.asNamedApp? then
-      fromJoint base xy
+      fromJoint markAsRandomVariable markAsRandomArgument base xy
     else if let some ("condProb", base :: rest) := e.asCondProbApp? then
       match rest with
       | [pair, point] =>
-        if point.isCondProbPoint then fromJoint base pair else none
+        if point.isCondProbPoint then
+          fromJoint markAsRandomVariable markAsRandomVariable base pair
+        else none
       | _ => none
     else none
 

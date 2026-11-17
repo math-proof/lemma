@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/CatalanLarcombeFrenchNumber.lean -/
+module
 
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Def.Combinatorics.Enumerative.CatalanLarcombeFrenchNumber
 
-import Mathlib.Tactic.NormNum
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Def.Combinatorics.Enumerative.CatalanLarcombeFrenchNumber
-
+public section
 
 namespace MetaMathlibExt
 

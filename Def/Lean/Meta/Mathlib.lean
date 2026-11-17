@@ -1,5 +1,11 @@
 -- lake env lean Def/Lean/Meta/Mathlib.lean
-import Mathlib
+
+module
+
+public import Mathlib
+
+@[expose] public section
+
 open Lean Meta
 
 

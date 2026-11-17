@@ -1,5 +1,9 @@
-import Mathlib.Analysis.Normed.Lp.PiLp
-import Abbrev.Analysis.InnerProductSpace.EuclideanVec
+module
+
+public import Mathlib.Analysis.Normed.Lp.PiLp
+public import Abbrev.Analysis.InnerProductSpace.EuclideanVec
+
+@[expose] public section
 
 
 /-!

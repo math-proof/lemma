@@ -1,14 +1,19 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Farey.lean -/
 
-import Mathlib.Data.Rat.Lemmas
-import Mathlib.Data.Finset.Sort
-import Mathlib.Algebra.Order.Ring.Unbundled.Rat
-import Mathlib.Order.Interval.Finset.Nat
-import Mathlib.Data.Nat.ModEq
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Order
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Data.Rat.Lemmas
+public import Mathlib.Data.Finset.Sort
+public import Mathlib.Algebra.Order.Ring.Unbundled.Rat
+public import Mathlib.Order.Interval.Finset.Nat
+public import Mathlib.Data.Nat.ModEq
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Order
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 open scoped Rat
 
 

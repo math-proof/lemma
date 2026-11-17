@@ -1,13 +1,14 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
+module
 
-import Mathlib.Analysis.CStarAlgebra.Matrix
-import Mathlib.LinearAlgebra.Matrix.Hermitian
-import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
-import Mathlib.Analysis.Matrix.Order
-import Mathlib.LinearAlgebra.Matrix.PosDef
-import Def.Analysis.CStarAlgebra.KadisonSinger.Paving.Part3
+public import Mathlib.Analysis.CStarAlgebra.Matrix
+public import Mathlib.LinearAlgebra.Matrix.Hermitian
+public import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
+public import Mathlib.Analysis.Matrix.Order
+public import Mathlib.LinearAlgebra.Matrix.PosDef
+public import Def.Analysis.CStarAlgebra.KadisonSinger.Paving.Part3
 open scoped BigOperators
 
 /-!
@@ -16,6 +17,8 @@ open scoped BigOperators
 This module packages the finite-support Marcus--Spielman--Srivastava bound and develops its
 linear-algebraic consequences for paving Hermitian matrices.
 -/
+
+public section
 
 
 namespace Analysis.CStarAlgebra.KadisonSinger

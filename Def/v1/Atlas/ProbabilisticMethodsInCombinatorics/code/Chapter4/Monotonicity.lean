@@ -8,12 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.Instances.Real.Lemmas
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Order.UpperLower.Basic
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
+module
+
+public import Mathlib.Topology.Instances.Real.Lemmas
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Order.UpperLower.Basic
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open Finset Fintype Set

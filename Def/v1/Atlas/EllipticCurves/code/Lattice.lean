@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass
-import Mathlib.Algebra.Module.ZLattice.Basic
-import Abbrev.v1.Atlas.EllipticCurves.code.Lattice
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass
+public import Mathlib.Algebra.Module.ZLattice.Basic
+public import Abbrev.v1.Atlas.EllipticCurves.code.Lattice
+
+@[expose] public section
+
 open Complex Module ZSpan Set
 
 

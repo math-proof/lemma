@@ -3,7 +3,7 @@
 
 import Mathlib.NumberTheory.Cyclotomic.Basic
 import Theorem.FieldTheory.Galois.Abelian
-import Lemma.Rat.Galois.Abelian
+import Theorem.Rat.Galois.Abelian
 /-!
 # Tests for the abelian Galois modular-lattice constructor
 

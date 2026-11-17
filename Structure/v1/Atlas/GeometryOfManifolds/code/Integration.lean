@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.GeometryOfManifolds.code.HodgeTheory.Part12
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.HodgeTheory
+module
+
+public import Def.v1.Atlas.GeometryOfManifolds.code.HodgeTheory.Part12
+public import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.HodgeTheory
+public section
+
 set_option autoImplicit false
 
 open DifferentialFormSpace

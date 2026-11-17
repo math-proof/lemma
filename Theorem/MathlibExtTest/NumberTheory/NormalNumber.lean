@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.NormalNumber
-import Lemma.Nat.NormalNumber
+import Theorem.Nat.NormalNumber
 open MetaMathlibExt.NormalNumber
 
 

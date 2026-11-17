@@ -9,14 +9,16 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedTopWitness.Part2
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedTopWitness.Part2
 
 
 namespace StatMech.Universality
 
 open HexWalk
 
-noncomputable section
+public noncomputable section
 
 structure HexAsymmetricHighestCut (K : ℝ) where
   D : Type

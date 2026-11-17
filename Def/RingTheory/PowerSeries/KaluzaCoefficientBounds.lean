@@ -1,10 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/PowerSeries/KaluzaCoefficientBounds.lean -/
 
-import Mathlib.Data.Real.Basic
-import Mathlib.RingTheory.MvPowerSeries.Inverse
-import Mathlib.RingTheory.PowerSeries.Basic
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.RingTheory.PowerSeries.Inverse
+module
+
+public import Mathlib.Data.Real.Basic
+public import Mathlib.RingTheory.MvPowerSeries.Inverse
+public import Mathlib.RingTheory.PowerSeries.Basic
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.RingTheory.PowerSeries.Inverse
+
+@[expose] public section
+
 /-!
 # Kaluza's bounds for the coefficients of a reciprocal power series
 

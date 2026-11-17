@@ -1,4 +1,8 @@
-import Mathlib.Algebra.Polynomial.Bivariate
+module
+
+public import Mathlib.Algebra.Polynomial.Bivariate
+
+public meta section
 
 /-!
 # `map_simp` tactic macro

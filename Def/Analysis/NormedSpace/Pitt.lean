@@ -1,17 +1,21 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
-import Mathlib.Analysis.Normed.Lp.lpSpace
-import Mathlib.Analysis.Normed.Operator.Compact.Basic
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Analysis.RCLike.Lemmas
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Theorem.Analysis.NormedSpace.Pitt
 
+module
+
+public import Mathlib.Analysis.Normed.Lp.lpSpace
+public import Mathlib.Analysis.Normed.Operator.Compact.Basic
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.RCLike.Lemmas
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Theorem.Analysis.NormedSpace.Pitt
+
+@[expose] public section
 
 section
 

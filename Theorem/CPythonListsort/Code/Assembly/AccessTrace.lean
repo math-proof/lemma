@@ -1,7 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean -/
 
-import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
-import Def.CPythonListsort.Code.Assembly.AccessTrace.Part7
+module
+
+public import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
+public import Def.CPythonListsort.Code.Assembly.AccessTrace.Part5
+public import Def.CPythonListsort.Code.Assembly.AccessTrace.Part6
+public import Def.CPythonListsort.Code.Assembly.AccessTrace.Part7
+
+public section
 /-!
 # Compositional access and pending-push traces
 
@@ -33,18 +39,18 @@ universe u v w
 namespace AccessTrace
 
 @[simp]
-theorem allAccessesInBounds_compose (earlier later : AccessTrace) :
+public theorem allAccessesInBounds_compose (earlier later : AccessTrace) :
     (compose earlier later).allAccessesInBounds ↔
       earlier.allAccessesInBounds ∧ later.allAccessesInBounds := by
   simp only [allAccessesInBounds, compose, List.mem_append]
   aesop
 
 @[simp]
-theorem tempPayloadAccessesLive_empty : empty.tempPayloadAccessesLive := by
+public theorem tempPayloadAccessesLive_empty : empty.tempPayloadAccessesLive := by
   simp [tempPayloadAccessesLive, empty]
 
 @[simp]
-theorem tempPayloadAccessesLive_compose (earlier later : AccessTrace) :
+public theorem tempPayloadAccessesLive_compose (earlier later : AccessTrace) :
     (compose earlier later).tempPayloadAccessesLive ↔
       earlier.tempPayloadAccessesLive ∧ later.tempPayloadAccessesLive := by
   simp only [tempPayloadAccessesLive, compose, List.mem_append]

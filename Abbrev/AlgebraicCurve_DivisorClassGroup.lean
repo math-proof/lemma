@@ -1,18 +1,20 @@
-import Mathlib.RingTheory.DedekindDomain.AdicValuation
-import Mathlib.RingTheory.Valuation.Discrete.Basic
-import Mathlib.RingTheory.Valuation.Discrete.IsDiscreteValuationRing
-import Mathlib.RingTheory.LocalRing.ResidueField.Basic
-import Mathlib.Data.Finsupp.SMul
-import Mathlib.Algebra.BigOperators.Finsupp.Basic
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.Algebra.Ring.Subring.Pointwise
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Mathlib.RingTheory.Bezout
-import Structure.AlgebraicCurve_Place
+module
+
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation
+public import Mathlib.RingTheory.Valuation.Discrete.Basic
+public import Mathlib.RingTheory.Valuation.Discrete.IsDiscreteValuationRing
+public import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+public import Mathlib.Data.Finsupp.SMul
+public import Mathlib.Algebra.BigOperators.Finsupp.Basic
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.Algebra.Ring.Subring.Pointwise
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.RingTheory.Bezout
+public import Structure.AlgebraicCurve_Place
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 open IsDedekindDomain WithZero IsLocalRing
 

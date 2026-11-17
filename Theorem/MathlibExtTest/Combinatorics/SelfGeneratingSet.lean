@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.SelfGeneratingSet.Part2
-import Lemma.Finset.SelfGeneratingSet
+import Theorem.Finset.SelfGeneratingSet
 open scoped Classical
 
 

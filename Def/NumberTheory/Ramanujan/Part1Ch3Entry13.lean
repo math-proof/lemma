@@ -32,7 +32,7 @@ import Mathlib.Topology.Algebra.InfiniteSum.Basic
 import Mathlib.Topology.Basic
 import Mathlib.Topology.MetricSpace.Pseudo.Defs
 import Def.NumberTheory.Ramanujan.Part1Ch3Entry9IiGeneralizedbellgeneratingDefining
-import Lemma.Nat.Ramanujan.Part1Ch3Entry9IiGeneralizedbellgeneratingDefining
+import Theorem.Nat.Ramanujan.Part1Ch3Entry9IiGeneralizedbellgeneratingDefining
 import Lemma.Nat.Ramanujan.Part1Ch3Section8Example4Integrable
 import Def.NumberTheory.Ramanujan.Part1Ch3Section8Example4Integrable
 import Mathlib.Algebra.Order.Star.Real

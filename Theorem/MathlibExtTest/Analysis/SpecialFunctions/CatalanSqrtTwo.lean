@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/CatalanSqrtTwo.lean -/
+module
 
-
-import Theorem.Analysis.SpecialFunctions.CatalanSqrtTwo
+public import Theorem.Analysis.SpecialFunctions.CatalanSqrtTwo
 open scoped Topology
 open Filter
 
+public section
 
 namespace MathlibExtTest.Analysis.SpecialFunctions.CatalanSqrtTwo
 

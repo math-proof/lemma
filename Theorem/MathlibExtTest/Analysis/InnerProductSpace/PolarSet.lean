@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/InnerProductSpace/PolarSet.lean -/
+module
 
-
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Theorem.Analysis.InnerProductSpace.PolarSet
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Theorem.Analysis.InnerProductSpace.PolarSet
 open MetaMathlibExt
 
+public section
 
 -- Ordinary example: the origin is polar to the whole space.
 example : (0 : EuclideanSpace ℝ (Fin 2)) ∈ polarSet Set.univ :=

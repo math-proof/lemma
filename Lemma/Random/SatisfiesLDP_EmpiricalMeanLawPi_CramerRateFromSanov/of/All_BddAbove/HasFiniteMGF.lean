@@ -2,6 +2,7 @@ import Def.Probability.CramerTheorem
 import Lemma.Random.SatisfiesLDP
 import Theorem.v1.Atlas.Probability.code.CramerBarycenter
 import Theorem.v1.Atlas.Probability.code.CramerRateIDCore
+import Initialize.Tactic.Attr.Basic
 open Filter MeasureTheory ProbabilityMeasure Random Set
 open scoped ENNReal Topology InnerProductSpace
 
@@ -50,3 +51,4 @@ private lemma main
 
 
 -- created on 2026-11-04
+-- updated on 2026-11-17

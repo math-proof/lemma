@@ -4,9 +4,12 @@
 # Finite graphs and the graph-minor relation
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Maps
-import Inductive.Combinatorics.Graph.GraphMinor
+module
 
+public import Mathlib.Combinatorics.SimpleGraph.Maps
+public import Inductive.Combinatorics.Graph.GraphMinor
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

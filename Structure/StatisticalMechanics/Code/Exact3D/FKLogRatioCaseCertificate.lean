@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.StatisticalMechanics.Code.Exact3D.FiniteCurrentToExponent.Part16
-import Def.StatisticalMechanics.Code.Exact3D.Intervals.Part12
-import Def.StatisticalMechanics.Code.Exact3D.FKLogRatioCaseCertificate
+module
 
+public import Theorem.StatisticalMechanics.Code.Exact3D.FiniteCurrentToExponent.Part16
+public import Def.StatisticalMechanics.Code.Exact3D.Intervals.Part12
+public import Def.StatisticalMechanics.Code.Exact3D.FKLogRatioCaseCertificate
+
+
+public section
 
 namespace StatMech
 

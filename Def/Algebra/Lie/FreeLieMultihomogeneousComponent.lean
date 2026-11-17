@@ -1,6 +1,9 @@
-import Mathlib.Algebra.Lie.Free
-import Inductive.Algebra.Lie.FreeLieMultihomogeneousComponent
+module
 
+public import Mathlib.Algebra.Lie.Free
+public import Inductive.Algebra.Lie.FreeLieMultihomogeneousComponent
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

@@ -6,7 +6,7 @@ Author: @akiezun, Avocado
 
 import Mathlib.Analysis.Meromorphic.Basic
 import Mathlib.NumberTheory.LSeries.RiemannZeta
-import Lemma.Nat.LSeries.RiemannZeta
+import Theorem.Nat.LSeries.RiemannZeta
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 7, Entry 10: the zeta side
 

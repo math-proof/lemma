@@ -1,11 +1,13 @@
-import Mathlib.SetTheory.Cardinal.Finite
-import Structure.ModularCurve_ComplexPlaceDictionary
-import Def.ModularForm_HeckeOperator
-import Def.ModularCurve_UniformizedHeckeCurve
+module
+
+public import Mathlib.SetTheory.Cardinal.Finite
+public import Structure.ModularCurve_ComplexPlaceDictionary
+public import Def.ModularForm_HeckeOperator
+public import Def.ModularCurve_UniformizedHeckeCurve
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open UpperHalfPlane
 open scoped MatrixGroups Topology

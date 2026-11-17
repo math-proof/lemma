@@ -7,9 +7,12 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
+public import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
 open scoped Topology
+
+public section
 
 /-- **Skorokhod representation theorem.** If a sequence of probability measures `μₙ`
 on `ℝ` converges weakly to a probability measure `μ`, then there exist random

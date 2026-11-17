@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/WeightedAffinePowerSum.lean -/
+module
 
+public import Mathlib.Tactic.NormNum
+public import Def.Combinatorics.Enumerative.WeightedAffinePowerSum
 
-import Mathlib.Tactic.NormNum
-import Def.Combinatorics.Enumerative.WeightedAffinePowerSum
-
+public section
 
 namespace MetaMathlibExt
 

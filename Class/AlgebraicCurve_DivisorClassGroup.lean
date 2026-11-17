@@ -1,4 +1,8 @@
-import Abbrev.AlgebraicCurve_DivisorClassGroup
+module
+
+public import Abbrev.AlgebraicCurve_DivisorClassGroup
+
+public section
 
 /-!
 Full Divisor / degZero / Pic0 / HasPrincipalDivisors API.

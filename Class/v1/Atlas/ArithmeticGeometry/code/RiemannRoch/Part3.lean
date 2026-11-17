@@ -16,14 +16,11 @@ import Mathlib.LinearAlgebra.Dimension.Finrank
 import Mathlib.LinearAlgebra.Dimension.StrongRankCondition
 import Mathlib.LinearAlgebra.Dimension.Finite
 import Def.v1.Atlas.ArithmeticGeometry.code.EffectiveDivisors
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.EffectiveDivisors
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.CanonicalDivisors
 import Def.v1.Atlas.ArithmeticGeometry.code.CanonicalDivisors.Part2
 import Def.v1.Atlas.ArithmeticGeometry.code.RiemannRoch.Part3
 open scoped RestrictedProduct
 
 variable {F : Type*} [Field F] {P : Type*} {O : P → ValuationSubring F}
-
 
 /-- The complete data structure for a curve $C$ with function field $F$ and constant
 subfield $k$ needed to prove Riemann-Roch: a `CurveWithConstants` together with all

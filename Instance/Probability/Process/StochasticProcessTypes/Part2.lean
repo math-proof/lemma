@@ -1,13 +1,11 @@
-import Mathlib.Analysis.Normed.Lp.WithLp
-import Mathlib.Analysis.Normed.Lp.PiLp
-import Mathlib.Data.Matrix.Basic
-import Class.Data.Set.Add
-import Class.Data.Nat.GCD.Intfunc
-import Abbrev.Probability.Process.StochasticProcessTypes.Part3
-open Finset Matrix WithLp Set
-open scoped Matrix BigOperators
+module
 
-universe u
+public import Mathlib.Analysis.Normed.Lp.WithLp
+public import Mathlib.Analysis.Normed.Lp.PiLp
+public import Mathlib.Data.Matrix.Basic
+public import Class.Data.Set.Add
+public import Class.Data.Nat.GCD.Intfunc
+public import Abbrev.Probability.Process.StochasticProcessTypes.Part3
 
 /-!
 # Stochastic process types (DiscreteMarkovChain)
@@ -20,6 +18,12 @@ In Lean these are typeclasses on a transition matrix `P : Matrix S S ℝ`
 simplex `StochasticVec` / `Simplex`, rather than a single Python class.
 -/
 
+@[expose] public section
+
+open Finset Matrix WithLp Set
+open scoped Matrix BigOperators
+
+universe u
 
 -- result of composing two tag-transition matrices is still a valid transition matrix
 instance smat_mul_smat_is_smat {S : Type u} [Fintype S]
@@ -55,4 +59,3 @@ instance smat_pow_is_smat {S : Type u} [Fintype S] [DecidableEq S]
   | succ n ih =>
     have := ih
     simpa [pow_succ] using smat_mul_smat_is_smat (P ^ n) P
-

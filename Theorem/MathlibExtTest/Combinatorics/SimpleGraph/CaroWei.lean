@@ -2,7 +2,7 @@
 
 
 import Mathlib.Algebra.BigOperators.Fin
-import Lemma.SimpleGraph.CaroWei
+import Theorem.SimpleGraph.CaroWei
 import Mathlib.Tactic.NormNum
 
 

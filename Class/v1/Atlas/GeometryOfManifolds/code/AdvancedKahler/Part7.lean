@@ -9,14 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.KahlerManifolds
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.ConnectionsCurvature
 import Structure.v1.Atlas.GeometryOfManifolds.code.ConnectionsCurvature.Part7
 import Structure.v1.Atlas.GeometryOfManifolds.code.AdvancedKahler.Part6
 set_option autoImplicit false
 
 open DifferentialFormSpace
-
 
 /-- The PDE infrastructure required to run the Green-correction construction:
 a weighted derivative sup-norm, an $L^2$-norm, the Dolbeault operator, and a
@@ -29,5 +26,4 @@ class HasPDEInfrastructure
   dol : DolbeaultOps (inst := inst)
   greenCorrection : ∀ (fam : ApproxHolomorphicSectionFamily (inst := inst)),
     GreenCorrectionInput wdn l2 dol fam
-
 

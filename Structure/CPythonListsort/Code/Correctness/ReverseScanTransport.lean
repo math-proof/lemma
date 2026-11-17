@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/ReverseScanTransport.lean -/
 
-import Def.CPythonListsort.Code.Correctness.OriginRelabelScan.Part2
-import Def.CPythonListsort.Code.Correctness.ReverseModeAlgebra.Part4
-import Def.CPythonListsort.Code.Correctness.ReverseScanTransport
+module
+
+public import Def.CPythonListsort.Code.Correctness.OriginRelabelScan.Part2
+public import Def.CPythonListsort.Code.Correctness.ReverseModeAlgebra.Part4
+public import Def.CPythonListsort.Code.Correctness.ReverseScanTransport
 /-!
 # Reverse-oriented complete-scan transport
 
@@ -16,6 +18,9 @@ This module deliberately stops before assigning semantic meaning to the final
 whole-array reversal.  It retains the exact `finishListSort?` equation and the
 mirrored collapsed state; `ReverseModeCorrectness` consumes those facts.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

@@ -1,5 +1,9 @@
-import Mathlib
-import Def.AlgebraicCurve_PlaceEvaluation
+module
+
+public import Mathlib
+public import Def.AlgebraicCurve_PlaceEvaluation
+
+@[expose] public section
 
 set_option autoImplicit false
 

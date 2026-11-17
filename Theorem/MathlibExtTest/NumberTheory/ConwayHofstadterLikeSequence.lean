@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ConwayHofstadterLikeSequence.lean -/
+module
 
+public import Def.NumberTheory.ConwayHofstadterLikeSequence
+public import Mathlib.Tactic
 
-import Def.NumberTheory.ConwayHofstadterLikeSequence
-import Mathlib.Tactic
-
+public section
 
 namespace MetaMathlibExt
 

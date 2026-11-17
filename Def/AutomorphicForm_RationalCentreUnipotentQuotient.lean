@@ -1,5 +1,9 @@
-import Def.AutomorphicForm_UnipotentQuotient
-import Abbrev.AutomorphicForm_RationalCentreUnipotentQuotient
+module
+
+public import Def.AutomorphicForm_UnipotentQuotient
+public import Abbrev.AutomorphicForm_RationalCentreUnipotentQuotient
+
+@[expose] public section
 
 open MeasureTheory NumberField NumberField.AdelicHaar NumberField.AdelicBox
 

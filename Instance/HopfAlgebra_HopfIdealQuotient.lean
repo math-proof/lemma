@@ -1,6 +1,11 @@
 -- Carved from Lemma/Definitions/Def_HopfAlgebra_HopfIdealQuotient.lean: instance decls only.
-import Mathlib
-import Class.HopfAlgebra_HopfIdealQuotient
+
+module
+
+public import Mathlib
+public import Class.HopfAlgebra_HopfIdealQuotient
+
+@[expose] public section
 
 noncomputable section
 

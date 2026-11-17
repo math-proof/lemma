@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.DiscreteValuationRing.Basic
 import Def.v1.Atlas.NumberTheoryI.code.HenselDefs
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.HenselDefs
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.HenselDefs
 open Polynomial IsLocalRing Ring
 
 

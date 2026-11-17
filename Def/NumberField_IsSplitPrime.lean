@@ -1,5 +1,9 @@
-import Mathlib.NumberTheory.NumberField.ClassNumber
-import Mathlib.NumberTheory.RamificationInertia.Galois
+module
+
+public import Mathlib.NumberTheory.NumberField.ClassNumber
+public import Mathlib.NumberTheory.RamificationInertia.Galois
+
+@[expose] public section
 
 set_option autoImplicit false
 

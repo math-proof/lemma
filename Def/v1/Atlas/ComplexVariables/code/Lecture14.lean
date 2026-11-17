@@ -14,8 +14,8 @@ import Mathlib.Analysis.Analytic.Order
 import Mathlib.Analysis.Complex.RemovableSingularity
 import Mathlib.MeasureTheory.Integral.Prod
 import Def.v1.Atlas.ComplexVariables.code.Lecture13.Part2
-import Lemma.Complex.Atlas.v1.ComplexVariables.code.Lecture13
-import Lemma.Complex.Atlas.v1.ComplexVariables.code.CauchyTransformDiff
+import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture13
+import Theorem.Complex.Atlas.v1.ComplexVariables.code.CauchyTransformDiff
 open Complex MeasureTheory Metric Set Filter Topology
 
 

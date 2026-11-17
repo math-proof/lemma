@@ -1,5 +1,10 @@
-import Mathlib.Algebra.Module.ZLattice.Basic
-import Mathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass
+module
+
+public import Mathlib.Algebra.Module.ZLattice.Basic
+public import Mathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass
+
+@[expose] public section
+
 /-!
 # Fundamental parallelograms of complex lattices
 -/

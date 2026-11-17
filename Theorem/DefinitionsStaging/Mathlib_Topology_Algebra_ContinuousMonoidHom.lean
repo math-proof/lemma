@@ -1,7 +1,10 @@
-import Mathlib
-import Def.Mathlib_Topology_Algebra_Module_Quotient
-import Def.Mathlib_Topology_Algebra_ContinuousMonoidHom
+module
 
+public import Mathlib
+public import Def.Mathlib_Topology_Algebra_Module_Quotient
+public import Def.Mathlib_Topology_Algebra_ContinuousMonoidHom
+
+public section
 
 section
 

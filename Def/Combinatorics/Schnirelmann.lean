@@ -4,12 +4,17 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Combinatorics.Schnirelmann
-import Mathlib.Algebra.BigOperators.Group.Finset.Defs
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Finset.Max
-import Mathlib.Logic.Equiv.Fin.Basic
-import Mathlib.Tactic
+module
+
+public import Mathlib.Combinatorics.Schnirelmann
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Finset.Max
+public import Mathlib.Logic.Equiv.Fin.Basic
+public import Mathlib.Tactic
+
+@[expose] public section
+
 /-! # Schnirelmann density: sumset inequality and bases
 
 This module proves a lower bound for the density of a sumset and shows that a set containing zero

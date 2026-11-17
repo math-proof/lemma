@@ -9,14 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.KahlerManifolds
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.ConnectionsCurvature
 import Structure.v1.Atlas.GeometryOfManifolds.code.ConnectionsCurvature.Part7
 import Structure.v1.Atlas.GeometryOfManifolds.code.AdvancedKahler.Part8
 set_option autoImplicit false
 
 open DifferentialFormSpace
-
 
 /-- Typeclass assumption that `GaussianPeakData` is available for a given
 compact symplectic manifold with a compatible almost-complex structure. -/
@@ -26,7 +23,6 @@ class HasGaussianPeakData
     (S : SymplecticManifold Ω VF) (J : AlmostComplexStr (inst := inst))
     (hcompat : IsCompatibleACS S J) where
   peakData : GaussianPeakData S J hcompat
-
 
 /-- Abstract Weitzenböck decomposition data on a compact symplectic manifold:
 a Green correction, its holomorphicity property, a spectral-gap squared
@@ -48,5 +44,4 @@ class HasWeitzenbockDecomp
   uniform_l2_bound : ∀ (k : ℕ) (_hk : k ≠ 0) (s : Ω 0),
     l2.l2norm (greenCorrection k s) * l2.l2norm (greenCorrection k s) ≤
       c_G / (k : ℝ) * (l2.l2norm (dol.delbar s) * l2.l2norm (dol.delbar s))
-
 

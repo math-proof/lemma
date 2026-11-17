@@ -9,12 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.BooleanFunctions.code.Influence
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Influence
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Influence
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Juntas
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.InfluenceDerivative
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.InfluenceDerivative
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
 import Def.v1.Atlas.BooleanFunctions.code.Juntas
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.FourierSampling
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierSampling
 import Def.v1.Atlas.BooleanFunctions.code.InfluenceDerivative
 import Def.v1.Atlas.BooleanFunctions.code.Talagrand
 import Def.v1.Atlas.BooleanFunctions.code.MajorityStablest

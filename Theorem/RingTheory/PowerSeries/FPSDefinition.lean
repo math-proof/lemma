@@ -4,7 +4,7 @@ All rights reserved.
 -/
 import Mathlib
 import Def.RingTheory.PowerSeries.InfiniteProducts2.Part6
-import Lemma.PowerSeries.InfiniteProducts2
+import Theorem.PowerSeries.InfiniteProducts2
 import Def.RingTheory.PowerSeries.FPSDefinition
 open scoped Polynomial
 open PowerSeries Finset Finset.HasAntidiagonal Finset.Nat

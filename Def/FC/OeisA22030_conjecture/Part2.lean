@@ -9,9 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.FC.OeisA22030_conjecture
+module
 
+public import Mathlib
+public import Theorem.FC.OeisA22030_conjecture
+
+@[expose] public section
 
 namespace OeisA22030
 

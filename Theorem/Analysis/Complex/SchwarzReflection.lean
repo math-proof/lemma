@@ -1,12 +1,15 @@
-import Mathlib.Analysis.Calculus.FDeriv.Basic
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.Complex.HasPrimitives
-import Mathlib.Tactic.FunProp
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Ring
-import Def.Analysis.Complex.SchwarzReflection
+module
 
+public import Mathlib.Analysis.Calculus.FDeriv.Basic
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Complex.HasPrimitives
+public import Mathlib.Tactic.FunProp
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Ring
+public import Def.Analysis.Complex.SchwarzReflection
+
+public section
 
 namespace Complex.SchwarzReflection
 

@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.StatisticalMechanics.Code.Exact3D.Intervals.Part12
-import Structure.StatisticalMechanics.Code.Exact3D.MatrixCertificate
+module
 
+public import Def.StatisticalMechanics.Code.Exact3D.Intervals.Part12
+public import Structure.StatisticalMechanics.Code.Exact3D.MatrixCertificate
+
+@[expose] public section
 
 namespace StatMech
 

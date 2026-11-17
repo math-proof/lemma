@@ -8,7 +8,9 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
+module
+
+public import Mathlib
 open Matrix Finset
 
 
@@ -16,7 +18,7 @@ namespace PDEClassification
 
 /-- Hadamard's classification of second-order linear PDEs into elliptic, hyperbolic, and
 parabolic types, determined by the signature of the leading symbol matrix. -/
-inductive PDEType where
+public inductive PDEType where
   | elliptic
   | hyperbolic
   | parabolic

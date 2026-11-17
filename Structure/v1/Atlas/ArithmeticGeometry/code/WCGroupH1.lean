@@ -8,13 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.ArithmeticGeometry.code.WeilChatelet.Part2
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.WeilChatelet
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.GaloisCohomology
-import Abbrev.v1.Atlas.ArithmeticGeometry.code.GaloisCohomology.Part3
+module
+
+public import Def.v1.Atlas.ArithmeticGeometry.code.WeilChatelet.Part2
+public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.WeilChatelet
+public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.GaloisCohomology
+public import Abbrev.v1.Atlas.ArithmeticGeometry.code.GaloisCohomology.Part3
 
 
-noncomputable section
+public noncomputable section
 
 universe u
 

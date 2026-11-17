@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.TrinomialTransformSequence
-import Lemma.Nat.TrinomialTransformSequence
+import Theorem.Nat.TrinomialTransformSequence
 import Mathlib.Algebra.Polynomial.Coeff
 import Mathlib.Tactic.NormNum
 

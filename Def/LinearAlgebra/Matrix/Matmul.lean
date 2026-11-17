@@ -1,12 +1,12 @@
-import Lemma.List.Append.of.Eq
-import Lemma.List.AppendAppend.eq.Append_Append
-import Lemma.List.Drop.eq.ListGet.of.GtLength_0
-import Lemma.List.DropLast.eq.Take_SubLength_1
-import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
-import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
-import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
-import Lemma.List.ZipWith_Append.eq.AppendZipWithS
-import Lemma.List.ZipWith__Append.eq.AppendZipWithS
+import Theorem.List.Append.of.Eq
+import Theorem.List.AppendAppend.eq.Append_Append
+import Theorem.List.Drop.eq.ListGet.of.GtLength_0
+import Theorem.List.DropLast.eq.Take_SubLength_1
+import Theorem.List.EqAppendTake__ListGet.of.GeLength_2
+import Theorem.List.EraseIdx.eq.Append_Drop_Add_1
+import Theorem.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
+import Theorem.List.ZipWith_Append.eq.AppendZipWithS
+import Theorem.List.ZipWith__Append.eq.AppendZipWithS
 import Instance.Data.Tensor.Tensor.Part2
 open List Tensor
 

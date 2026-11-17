@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Words/EquilibriousWord.lean -/
 
-import Mathlib.Data.List.Count
-import Def.Combinatorics.Words.EquilibriousWord
+module
 
+public import Mathlib.Data.List.Count
+public import Def.Combinatorics.Words.EquilibriousWord
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

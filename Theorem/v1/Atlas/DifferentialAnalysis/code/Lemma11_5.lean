@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.DifferentialAnalysis.code.Parametrix.Part2
 import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.Parametrix
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.CauchyKernelIntegrability
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.CauchyKernelIntegrability
 import Def.v1.Atlas.DifferentialAnalysis.code.CauchyKernelIntegrability
 open scoped SchwartzMap
 open MvPolynomial MeasureTheory Complex Real Set Metric

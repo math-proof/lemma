@@ -1,9 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/Partition/PartitionPolynomial.lean -/
 
-import Mathlib.Algebra.Polynomial.Coeff
-import Mathlib.Algebra.Polynomial.Eval.Defs
-import Mathlib.Combinatorics.Enumerative.Partition.Basic
+module
 
+public import Mathlib.Algebra.Polynomial.Coeff
+public import Mathlib.Algebra.Polynomial.Eval.Defs
+public import Mathlib.Combinatorics.Enumerative.Partition.Basic
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

@@ -1,8 +1,10 @@
-import Mathlib.Analysis.Analytic.OfScalars
-import Mathlib.Analysis.Asymptotics.AsymptoticEquivalent
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.RingTheory.PowerSeries.Basic
-import Mathlib.Analysis.Normed.Group.Tannery
+module
+
+public import Mathlib.Analysis.Analytic.OfScalars
+public import Mathlib.Analysis.Asymptotics.AsymptoticEquivalent
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.RingTheory.PowerSeries.Basic
+public import Mathlib.Analysis.Normed.Group.Tannery
 open Filter
 
 /-!
@@ -10,6 +12,8 @@ open Filter
 
 Proves `Wanted` entry `bender_product_coefficient_asymptotic`.
 -/
+
+public section
 
 
 namespace Real.Asymptotics.BenderProductCoefficient

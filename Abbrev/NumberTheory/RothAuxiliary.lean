@@ -4,26 +4,30 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
 
-import Mathlib.NumberTheory.Real.Irrational
-import Mathlib.RingTheory.Algebraic.Defs
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Algebra.MvPolynomial.Degrees
-import Mathlib.Algebra.MvPolynomial.Equiv
-import Mathlib.Algebra.MvPolynomial.PDeriv
-import Mathlib.Algebra.Polynomial.Coeff
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Fin.SuccPred
-import Mathlib.Data.Int.NatAbs
-import Mathlib.Data.Nat.Choose.Bounds
-import Mathlib.LinearAlgebra.Dimension.Free
-import Mathlib.NumberTheory.SiegelsLemma
-import Mathlib.NumberTheory.Transcendental.Liouville.LiouvilleWith
-import Mathlib.RingTheory.MvPolynomial.Localization
-import Mathlib.RingTheory.Polynomial.GaussLemma
-import Mathlib.RingTheory.Polynomial.Wronskian
-import Mathlib.RingTheory.Algebraic.Integral
-import Mathlib.Tactic
+module
+
+public import Mathlib.NumberTheory.Real.Irrational
+public import Mathlib.RingTheory.Algebraic.Defs
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Algebra.BigOperators.Field
+public import Mathlib.Algebra.MvPolynomial.Degrees
+public import Mathlib.Algebra.MvPolynomial.Equiv
+public import Mathlib.Algebra.MvPolynomial.PDeriv
+public import Mathlib.Algebra.Polynomial.Coeff
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Data.Fin.SuccPred
+public import Mathlib.Data.Int.NatAbs
+public import Mathlib.Data.Nat.Choose.Bounds
+public import Mathlib.LinearAlgebra.Dimension.Free
+public import Mathlib.NumberTheory.SiegelsLemma
+public import Mathlib.NumberTheory.Transcendental.Liouville.LiouvilleWith
+public import Mathlib.RingTheory.MvPolynomial.Localization
+public import Mathlib.RingTheory.Polynomial.GaussLemma
+public import Mathlib.RingTheory.Polynomial.Wronskian
+public import Mathlib.RingTheory.Algebraic.Integral
+public import Mathlib.Tactic
+@[expose] public section
+
 set_option maxHeartbeats 999999
 
 open scoped BigOperators

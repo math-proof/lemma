@@ -2,9 +2,14 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Analysis.MeanInequalities
-import Mathlib.Topology.Algebra.InfiniteSum.Real
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Analysis.MeanInequalities
+public import Mathlib.Topology.Algebra.InfiniteSum.Real
+
+@[expose] public section
+
 /-!
 # Hardy's inequality for series
 

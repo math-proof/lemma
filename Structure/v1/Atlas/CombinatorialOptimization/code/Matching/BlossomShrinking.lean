@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.CombinatorialOptimization.code.Matching.Berge
-import Lemma.Finset.Atlas.v1.CombinatorialOptimization.code.Matching.Berge
-import Def.v1.Atlas.CombinatorialOptimization.code.Matching.BlossomShrinking
+module
+
+public import Def.v1.Atlas.CombinatorialOptimization.code.Matching.Berge
+public import Theorem.Finset.Atlas.v1.CombinatorialOptimization.code.Matching.Berge
+public import Def.v1.Atlas.CombinatorialOptimization.code.Matching.BlossomShrinking
+public section
+
 open SimpleGraph
 
 

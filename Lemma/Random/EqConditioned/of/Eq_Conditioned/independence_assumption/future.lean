@@ -1,4 +1,5 @@
 import Lemma.Random.IndepGetSlice.of.IndepGet
+import Initialize.Tactic.Attr.Basic
 open ProbabilityTheory MeasureTheory Random
 
 
@@ -48,3 +49,4 @@ private lemma main
 
 
 -- created on 2023-04-01
+-- updated on 2026-11-17

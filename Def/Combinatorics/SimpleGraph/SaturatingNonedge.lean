@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/SaturatingNonedge.lean -/
 
-import Mathlib.Combinatorics.SimpleGraph.Copy
-import Mathlib.Combinatorics.SimpleGraph.Operations
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Copy
+public import Mathlib.Combinatorics.SimpleGraph.Operations
+
+@[expose] public section
+
 /-!
 # `F`-saturating non-edges
 

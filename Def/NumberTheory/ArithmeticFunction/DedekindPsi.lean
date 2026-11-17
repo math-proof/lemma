@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ArithmeticFunction/DedekindPsi.lean -/
 
-import Mathlib.NumberTheory.ArithmeticFunction.Defs
+module
+
+public import Mathlib.NumberTheory.ArithmeticFunction.Defs
+
+@[expose] public section
+
 /-!
 # Dedekind psi function
 

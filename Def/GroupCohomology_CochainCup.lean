@@ -1,7 +1,12 @@
 -- Carved from Lemma/Definitions/Def_GroupCohomology_CochainCup.lean:
 -- cochainCup / cochainCup_apply (apply kept @[simp] beside def per TorsionRep pattern).
-import Mathlib
-import Abbrev.GroupCohomology_CochainCup
+
+module
+
+public import Mathlib
+public import Abbrev.GroupCohomology_CochainCup
+
+@[expose] public section
 
 set_option autoImplicit false
 

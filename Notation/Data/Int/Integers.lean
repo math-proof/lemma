@@ -1,4 +1,9 @@
-import Mathlib.Tactic
+module
+
+public import Mathlib.Tactic
+
+public section
+
 export Int (fract sign)
 
 

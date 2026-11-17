@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
-import Mathlib.Combinatorics.SimpleGraph.Paths
-import Mathlib.Data.Nat.Choose.Bounds
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+public import Mathlib.Combinatorics.SimpleGraph.Paths
+public import Mathlib.Data.Nat.Choose.Bounds
+
+@[expose] public section
+
 open Filter Topology Real Asymptotics SimpleGraph
 
 set_option maxHeartbeats 400000

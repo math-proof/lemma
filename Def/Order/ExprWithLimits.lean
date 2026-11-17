@@ -1,5 +1,8 @@
-import Mathlib.Order.ConditionallyCompleteLattice.Basic
+module
 
+public import Mathlib.Order.ConditionallyCompleteLattice.Basic
+
+@[expose] public section
 
 /-- `Minima[x:S](f(x))`: the infimum of `f` over `S`. -/
 noncomputable def Minima [InfSet β] (S : Set α) (f : α → β) : β :=

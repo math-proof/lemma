@@ -1,15 +1,16 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
+module
 
-import Mathlib.Analysis.Analytic.Basic
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.LinearAlgebra.FiniteDimensional.Basic
-import Mathlib.Analysis.Analytic.ChangeOrigin
-import Mathlib.Analysis.Calculus.ImplicitContDiff
-import Mathlib.Analysis.Complex.CauchyIntegral
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
-import Mathlib.Topology.MetricSpace.Pseudo.Lemmas
+public import Mathlib.Analysis.Analytic.Basic
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.LinearAlgebra.FiniteDimensional.Basic
+public import Mathlib.Analysis.Analytic.ChangeOrigin
+public import Mathlib.Analysis.Calculus.ImplicitContDiff
+public import Mathlib.Analysis.Complex.CauchyIntegral
+public import Mathlib.MeasureTheory.Integral.DominatedConvergence
+public import Mathlib.Topology.MetricSpace.Pseudo.Lemmas
 open scoped Topology
 
 open scoped ContDiff ENNReal NNReal
@@ -17,6 +18,8 @@ open scoped ContDiff ENNReal NNReal
 /-!
 # Weierstrass preparation theorem in `E × ℂ`
 -/
+
+public section
 
 
 namespace Complex.WeierstrassPreparationWanted

@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Calculus.FDeriv.Basic
-import Mathlib.Analysis.Calculus.FDeriv.Pi
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Abbrev.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM18.FieldTransformation
+module
+
+public import Mathlib.Analysis.Calculus.FDeriv.Basic
+public import Mathlib.Analysis.Calculus.FDeriv.Pi
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Abbrev.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM18.FieldTransformation
+
+@[expose] public section
+
 open Finset
 
 

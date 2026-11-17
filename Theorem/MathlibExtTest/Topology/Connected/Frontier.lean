@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Topology/Connected/Frontier.lean -/
 
 
-import Lemma.Set.Connected.Frontier
+import Theorem.Set.Connected.Frontier
 import Mathlib.Topology.Algebra.Ring.Real
 import Mathlib.Topology.Order.IntermediateValue
 open Set Topology

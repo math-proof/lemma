@@ -1,6 +1,10 @@
-import Def.MeasureTheory_ScalingDichotomy
-import Lemma.Matrix.WindowedSiegelTopology
-import Instance.NumberField_AdelicCentre
+module
+
+public import Def.MeasureTheory_ScalingDichotomy
+public import Def.NumberField_AdelicLevel
+public import Structure.AutomorphicForm_AdelicLsXi
+
+@[expose] public section
 
 open MeasureTheory Set IsDedekindDomain NumberField MeasureTheory.ScalingDichotomy
 open scoped ENNReal
@@ -11,7 +15,7 @@ namespace NumberField.AdelicVolume
 
 section Adelic
 
-open AutomorphicForm AutomorphicForm.WindowedSiegel NumberField.AdelicLevel
+open AutomorphicForm NumberField.AdelicLevel
 
 variable (F : Type) [Field F] [NumberField F]
 

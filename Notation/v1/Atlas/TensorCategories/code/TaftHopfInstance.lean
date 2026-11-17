@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.TensorCategories.code.TaftConcrete.Part4
-import Lemma.Category.Atlas.v1.TensorCategories.code.TaftConcrete
-import Def.v1.Atlas.TensorCategories.code.HopfAlgebraExamples.Part2
+module
+
+public import Theorem.v1.Atlas.TensorCategories.code.TaftConcrete.Part4
+public import Def.v1.Atlas.TensorCategories.code.HopfAlgebraExamples.Part2
+
+public section
+
 open Coalgebra HopfAlgebra
 open scoped TensorProduct
 

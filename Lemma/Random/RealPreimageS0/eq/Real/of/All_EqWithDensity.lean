@@ -1,6 +1,8 @@
 import Lemma.Random.EqMapStageK_12.of.All_EqWithDensity
 import Lemma.Random.Map.eq.BindStageK.of.All_EqWithDensity
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
@@ -30,4 +32,4 @@ private lemma main
 
 
 -- created on 2026-11-13
--- updated on 2026-11-16
+-- updated on 2026-11-17

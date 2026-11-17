@@ -9,9 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Abbrev.v1.Atlas.TensorCategories.code.CoalgebraBialgebra.Part4
-import Lemma.Category.Atlas.v1.TensorCategories.code.CoalgebraBialgebra
-import Lemma.Category.Atlas.v1.TensorCategories.code.HopfAlgebra
-import Lemma.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
 import Theorem.v1.Atlas.TensorCategories.code.HopfAlgebra.Part3
 import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
 import Mathlib.Algebra.Algebra.Operations
@@ -39,7 +36,6 @@ universe u v
 
 variable {R : Type u} {C : Type v}
 variable [CommRing R] [AddCommGroup C] [Module R C] [Coalgebra R C]
-
 
 namespace Submodule
 

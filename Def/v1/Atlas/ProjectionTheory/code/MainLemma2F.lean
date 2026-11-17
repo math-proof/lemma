@@ -9,9 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.ProjectionTheory.code.FourierFF
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.FourierFF
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.OrthogonalityLines
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.ParsevalFF
+import Theorem.Real.Atlas.v1.ProjectionTheory.code.FourierFF
+import Theorem.Real.Atlas.v1.ProjectionTheory.code.OrthogonalityLines
 import Def.v1.Atlas.ProjectionTheory.code.OrthogonalityLines
 open Finset
 

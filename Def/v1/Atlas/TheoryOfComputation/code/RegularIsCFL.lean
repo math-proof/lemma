@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.TheoryOfComputation.code.CFLInterRegular
 import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.CFLInterRegular
-import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.RegularLanguages
+import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.RegularLanguages
 import Def.v1.Atlas.TheoryOfComputation.code.RegularLanguages
 universe u
 

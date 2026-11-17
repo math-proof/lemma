@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.GroupTheory.FreeAbelianGroup
-import Mathlib.GroupTheory.QuotientGroup.Basic
+module
 
+public import Mathlib.GroupTheory.FreeAbelianGroup
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+
+
+public section
 
 namespace K0Gen
 

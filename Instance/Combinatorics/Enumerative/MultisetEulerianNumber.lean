@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/MultisetEulerianNumber.lean -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Fintype.Pi
-import Def.Combinatorics.Enumerative.MultisetEulerianNumber
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Fintype.Pi
+public import Def.Combinatorics.Enumerative.MultisetEulerianNumber
 /-!
 # Eulerian numbers of multiset permutations
 
@@ -11,6 +13,7 @@ Yeliussizov, *Power Sums of Binomial Coefficients*:
 <https://cs.uwaterloo.ca/journals/JIS/VOL16/Yeliussizov/dzhuma6.tex>.
 -/
 
+@[expose] public section
 
 namespace MetaMathlibExt
 

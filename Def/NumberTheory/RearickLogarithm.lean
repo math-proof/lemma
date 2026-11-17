@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RearickLogarithm.lean -/
 
-import Mathlib.NumberTheory.ArithmeticFunction.VonMangoldt
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.LinearAlgebra.LinearPMap
-import Mathlib.Tactic.IntervalCases
+module
+
+public import Mathlib.NumberTheory.ArithmeticFunction.VonMangoldt
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.LinearAlgebra.LinearPMap
+public import Mathlib.Tactic.IntervalCases
+
+@[expose] public section
+
 /-! Source: Rearick logarithm support characterization of multiplicative
 arithmetic functions, after Huilan Li and Trueman MacHenry,
 arXiv:1009.1892v1, <https://arxiv.org/abs/1009.1892>, lines 444-450

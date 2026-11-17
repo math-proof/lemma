@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/TotienomialCoefficient.lean -/
 
 import Def.Combinatorics.Enumerative.TotienomialCoefficient
-import Lemma.Finset.Enumerative.TotienomialCoefficient
+import Theorem.Finset.Enumerative.TotienomialCoefficient
 import Mathlib.Tactic.NormNum
 
 

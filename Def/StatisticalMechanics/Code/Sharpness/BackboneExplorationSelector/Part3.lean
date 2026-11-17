@@ -9,8 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Structure.StatisticalMechanics.Code.Sharpness.BackboneExplorationSelector.Part2
+module
+
+public import Mathlib
+public import Structure.StatisticalMechanics.Code.Sharpness.BackboneExplorationSelector.Part2
+
+@[expose] public section
+
 open Finset
 
 set_option linter.unusedSectionVars false

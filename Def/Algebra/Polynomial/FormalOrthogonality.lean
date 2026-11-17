@@ -1,7 +1,10 @@
-import Mathlib.Algebra.Polynomial.Degree.Defs
-import Mathlib.Algebra.Polynomial.Eval.Defs
-import Mathlib.Algebra.Module.LinearMap.Basic
+module
 
+public import Mathlib.Algebra.Polynomial.Degree.Defs
+public import Mathlib.Algebra.Polynomial.Eval.Defs
+public import Mathlib.Algebra.Module.LinearMap.Basic
+
+@[expose] public section
 
 namespace MetaMathlibExt.Polynomial
 

@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/GeneralizedFermatNumber.lean -/
+module
 
+public import Def.NumberTheory.GeneralizedFermatNumber
 
-import Def.NumberTheory.GeneralizedFermatNumber
-
+public section
 
 example : MetaMathlibExt.generalizedFermatNumber 2 1 (by decide) (by decide) = 5 := rfl
 

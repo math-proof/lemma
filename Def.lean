@@ -324,6 +324,8 @@ import Def.LanglandsTunnell_TateLocalZeta
 import Def.LanglandsTunnell_TowerCounting
 import Def.LanglandsTunnell_TunnellExistenceCarriers
 import Def.LanglandsTunnell_WeightOneRealizationCarriers
+import Def.Lean.Binder
+import Def.Lean.BinderInfo
 import Def.LocalGL2_Kirillov
 import Def.LocalLanglands_CartanDecomposition
 import Def.LocalLanglands_LocalHeckeInstance

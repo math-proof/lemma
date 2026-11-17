@@ -1,0 +1,45 @@
+module
+
+public import Mathlib
+public import Def.v1.Atlas.BooleanFunctions.code.GaussianSpace
+
+public section
+
+open GaussianSpace ProbabilityTheory MeasureTheory
+open MeasureTheory ProbabilityTheory Real
+
+
+namespace GaussianSpace
+
+/--
+[stdGaussianDensity_eq_gaussianPDFReal](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/GaussianSpace.lean)
+-/
+public theorem stdGaussianDensity_eq_gaussianPDFReal
+  {t : ℝ} :
+-- imply
+  stdGaussianDensity t = gaussianPDFReal 0 1 t := by
+-- proof
+  simp only [stdGaussianDensity, gaussianPDFReal, sub_zero, NNReal.coe_one, mul_one]
+
+end GaussianSpace
+
+namespace GaussianSpace
+
+/--
+[integral_stdGaussianDensity_eq_one](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/GaussianSpace.lean)
+-/
+public theorem integral_stdGaussianDensity_eq_one :
+-- imply
+  ∫ t : ℝ, stdGaussianDensity t = 1 := by
+-- proof
+  have h : (fun t => stdGaussianDensity t) = gaussianPDFReal 0 1 := by
+    ext t
+    exact stdGaussianDensity_eq_gaussianPDFReal (t := t)
+  rw [h]
+  exact integral_gaussianPDFReal_eq_one 0 one_ne_zero
+
+end GaussianSpace
+
+
+-- created on 2026-10-23
+-- updated on 2026-10-27

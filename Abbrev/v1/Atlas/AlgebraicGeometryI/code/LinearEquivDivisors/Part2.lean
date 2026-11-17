@@ -8,15 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.ClassGroup
-import Mathlib.RingTheory.DedekindDomain.PID
-import Mathlib.Data.Finsupp.Basic
-import Mathlib.LinearAlgebra.Projectivization.Basic
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Def.v1.Atlas.AlgebraicGeometryI.code.LinearEquivDivisors
+module
+
+public import Mathlib.RingTheory.ClassGroup
+public import Mathlib.RingTheory.DedekindDomain.PID
+public import Mathlib.Data.Finsupp.Basic
+public import Mathlib.LinearAlgebra.Projectivization.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Def.v1.Atlas.AlgebraicGeometryI.code.LinearEquivDivisors
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 open scoped nonZeroDivisors
 

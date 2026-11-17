@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/InfiniteWord/ThueMorse.lean -/
 
-import Mathlib.Data.List.Basic
-import Mathlib.Data.Nat.Digits.Defs
+module
 
+public import Mathlib.Data.List.Basic
+public import Mathlib.Data.Nat.Digits.Defs
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

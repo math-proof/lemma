@@ -8,27 +8,32 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RepresentationTheory.Character
-import Mathlib.RepresentationTheory.Maschke
-import Mathlib.RepresentationTheory.Tannaka
-import Mathlib.GroupTheory.ClassEquation
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.Trace
-import Mathlib.RingTheory.SimpleModule.IsAlgClosed
-import Mathlib.LinearAlgebra.Matrix.Charpoly.Eigs
-import Mathlib.LinearAlgebra.Eigenspace.Minpoly
-import Mathlib.LinearAlgebra.Eigenspace.Charpoly
-import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
-import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
-import Mathlib.RingTheory.Polynomial.RationalRoot
-import Mathlib.Analysis.SpecialFunctions.Complex.Circle
-import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.Algebra.DirectSum.LinearMap
-import Mathlib.LinearAlgebra.Semisimple
-import Mathlib.LinearAlgebra.Eigenspace.Semisimple
-import Mathlib.Data.Matrix.Action
-import Mathlib.LinearAlgebra.Matrix.ToLin
-import Abbrev.v1.Atlas.AlgebraNotes.code.Characters
+module
+
+public import Mathlib.RepresentationTheory.Character
+public import Mathlib.RepresentationTheory.Maschke
+public import Mathlib.RepresentationTheory.Tannaka
+public import Mathlib.GroupTheory.ClassEquation
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.Trace
+public import Mathlib.RingTheory.SimpleModule.IsAlgClosed
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Eigs
+public import Mathlib.LinearAlgebra.Eigenspace.Minpoly
+public import Mathlib.LinearAlgebra.Eigenspace.Charpoly
+public import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
+public import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
+public import Mathlib.RingTheory.Polynomial.RationalRoot
+public import Mathlib.Analysis.SpecialFunctions.Complex.Circle
+public import Mathlib.Analysis.Complex.Polynomial.Basic
+public import Mathlib.Algebra.DirectSum.LinearMap
+public import Mathlib.LinearAlgebra.Semisimple
+public import Mathlib.LinearAlgebra.Eigenspace.Semisimple
+public import Mathlib.Data.Matrix.Action
+public import Mathlib.LinearAlgebra.Matrix.ToLin
+public import Abbrev.v1.Atlas.AlgebraNotes.code.Characters
+
+@[expose] public section
+
 universe u
 
 

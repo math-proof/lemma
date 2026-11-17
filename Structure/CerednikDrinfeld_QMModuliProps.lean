@@ -1,9 +1,11 @@
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Structure.CerednikDrinfeld_QMModuli
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Structure.CerednikDrinfeld_QMModuli
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 universe u
 

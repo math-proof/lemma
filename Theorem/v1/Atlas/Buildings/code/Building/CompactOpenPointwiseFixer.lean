@@ -9,6 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.Buildings.code.Building.GroupApplicationsCh17
-import Lemma.Set.ConjSet.eq.Image
+import Theorem.Set.ConjSet.eq.Image
 
 

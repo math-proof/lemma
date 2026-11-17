@@ -16,7 +16,7 @@ import Mathlib.MeasureTheory.Function.LpSeminorm.Monotonicity
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Analysis.SpecialFunctions.Pow.Continuity
 import Instance.v1.Atlas.DifferentialAnalysis.code.TestFunctions
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.TestFunctions
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TestFunctions
 import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SobolevEmbedding
 import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzRepresentation
 import Def.v1.Atlas.DifferentialAnalysis.code.SobolevEmbedding.Part5

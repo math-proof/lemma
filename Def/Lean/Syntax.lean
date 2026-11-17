@@ -1,4 +1,11 @@
-import Initialize.Lean.Meta.CtorName
+module
+
+public meta import Def.Lean.Meta.CtorName
+public import Class.Lean.Meta.CtorName
+public import Lean
+
+@[expose] public section
+
 
 
 #eval mkCtorName ``Lean.Syntax
@@ -16,4 +23,3 @@ def Lean.Syntax.getIdent : Syntax → Name
     attr.getId
   | _ =>
     default
-

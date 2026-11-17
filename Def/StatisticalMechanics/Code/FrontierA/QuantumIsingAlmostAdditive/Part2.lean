@@ -9,9 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib.Analysis.Subadditive
-import Mathlib.Analysis.SpecificLimits.Basic
-import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingAlmostAdditive
+module
+
+public import Mathlib.Analysis.Subadditive
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingAlmostAdditive
+
+@[expose] public section
+
 open Filter Set
 
 

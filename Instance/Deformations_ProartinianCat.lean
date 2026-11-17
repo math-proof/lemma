@@ -1,8 +1,13 @@
 -- Carved from Lemma/Definitions/Def_Deformations_ProartinianCat.lean: instance decls only.
-import Mathlib
-import Instance.Deformations_IsProartinian
-import Class.Deformations_IsResidueAlgebra
-import Class.Deformations_ProartinianCat
+
+module
+
+public import Mathlib
+public import Instance.Deformations_IsProartinian
+public import Class.Deformations_IsResidueAlgebra
+public import Class.Deformations_ProartinianCat
+
+@[expose] public section
 
 set_option autoImplicit false
 

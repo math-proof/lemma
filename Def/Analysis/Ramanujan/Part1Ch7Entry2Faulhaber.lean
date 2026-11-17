@@ -17,7 +17,7 @@ import Mathlib.Order.Filter.Basic
 import Mathlib.Topology.Basic
 import Def.Analysis.Ramanujan.Part1Ch7Entry10Zeta4
 import Lemma.Real.Ramanujan.Part1Ch7Entry10Zeta4
-import Lemma.Nat.LSeries.RiemannZeta
+import Theorem.Nat.LSeries.RiemannZeta
 import Mathlib.Algebra.Order.Floor.Defs
 import Mathlib.Algebra.Polynomial.Basic
 import Mathlib.Analysis.CStarAlgebra.Classes

@@ -4,7 +4,7 @@
 Author: Muse Code
 -/
 
-import Lemma.Int.DedekindDomain.FiniteApproximation
+import Theorem.Int.DedekindDomain.FiniteApproximation
 open UniqueFactorizationMonoid IsDedekindDomain Ideal Finset
 
 open scoped nonZeroDivisors

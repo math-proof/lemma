@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.IdentDistrib
-import Mathlib.Probability.Independence.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.Normed.Lp.MeasurableSpace
-import Structure.v1.Atlas.Probability.code.LargeDeviations
-import Def.Probability.LegendreTransform
-import Def.Probability.MGF
+module
+
+public import Mathlib.Probability.IdentDistrib
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.Normed.Lp.MeasurableSpace
+public import Structure.v1.Atlas.Probability.code.LargeDeviations
+public import Def.Probability.LegendreTransform
+public import Def.Probability.MGF
+
+@[expose] public section
+
 open scoped ENNReal InnerProductSpace
 open Filter MeasureTheory ProbabilityTheory Real Finset
 

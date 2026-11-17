@@ -5,7 +5,7 @@ import Lemma.WeierstrassCurve.FreyPackageGaloisRep
 import Lemma.ValuationSubring.GlobalUnramifiedAt
 import Lemma.MvPolynomial.HeckeModule
 import Def.ModularCurve_HeckeInputsAll
-import Lemma.MvPolynomial.MazurPrincipleCore
+import Theorem.MvPolynomial.MazurPrincipleCore
 import Structure.FreyPackage_MazurAttachmentApparatus
 import Abbrev.FreyPackage_MazurAttachmentApparatus
 

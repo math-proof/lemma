@@ -14,7 +14,7 @@ import Mathlib.RingTheory.Coprime.Basic
 import Mathlib.RingTheory.Ideal.Quotient.Basic
 import Mathlib.LinearAlgebra.Quotient.Basic
 import Def.v1.Atlas.AlgebraicGeometryI.code.BezoutTheorem
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.BezoutTheorem
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BezoutTheorem
 import Abbrev.v1.Atlas.AlgebraicGeometryI.code.BezoutLight
 set_option maxHeartbeats 400000
 

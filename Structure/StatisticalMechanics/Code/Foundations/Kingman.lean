@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Foundations.Kingman
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Foundations.Kingman
+public section
+
 open MeasureTheory Filter Topology
 
 

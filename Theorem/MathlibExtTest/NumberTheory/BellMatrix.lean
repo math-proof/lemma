@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/BellMatrix.lean -/
+module
 
+public import Def.NumberTheory.BellMatrix
 
-import Def.NumberTheory.BellMatrix
-
+public section
 
 namespace MetaMathlibExt
 

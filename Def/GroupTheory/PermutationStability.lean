@@ -1,11 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/PermutationStability.lean -/
 
-import Mathlib.GroupTheory.Perm.Basic
-import Mathlib.GroupTheory.Finiteness
-import Mathlib.GroupTheory.Solvable
-import Mathlib.InformationTheory.Hamming
-import Mathlib.Order.Filter.AtTopBot.Basic
-import Mathlib.Topology.Algebra.Order.Field
+module
+
+public import Mathlib.GroupTheory.Perm.Basic
+public import Mathlib.GroupTheory.Finiteness
+public import Mathlib.GroupTheory.Solvable
+public import Mathlib.InformationTheory.Hamming
+public import Mathlib.Order.Filter.AtTopBot.Basic
+public import Mathlib.Topology.Algebra.Order.Field
+
+@[expose] public section
+
 /-!
 # Permutation stability of groups
 

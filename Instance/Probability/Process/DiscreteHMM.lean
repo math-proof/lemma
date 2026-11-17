@@ -1,6 +1,5 @@
-import Lemma.Random.SinglePSpace.of.All_Measurable.All_Measurable
-import Lemma.Random.SinglePSpace.of.Measurable.Measurable
-import Lemma.Random.SinglePSpace.of.Measurable
+import Theorem.Random.SinglePSpace.of.Measurable.Measurable
+import Theorem.Random.SinglePSpace.of.Measurable
 import Def.Probability.Process.HiddenMarkovSequence.Part2
 import Theorem.Probability.Process.DiscreteHMM
 open MeasureTheory

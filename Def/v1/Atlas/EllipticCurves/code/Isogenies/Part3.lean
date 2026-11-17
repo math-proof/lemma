@@ -8,19 +8,24 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.RingTheory.AdjoinRoot
-import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Mathlib.Algebra.MvPolynomial.Monad
-import Mathlib.Algebra.Polynomial.Derivative
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Mathlib.LinearAlgebra.Projectivization.Basic
-import Mathlib.RingTheory.Coprime.Lemmas
-import Mathlib.Algebra.Polynomial.RingDivision
-import Mathlib.Algebra.Squarefree.Basic
-import Structure.v1.Atlas.EllipticCurves.code.Isogenies.Part2
+module
+
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.RingTheory.AdjoinRoot
+public import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Mathlib.Algebra.MvPolynomial.Monad
+public import Mathlib.Algebra.Polynomial.Derivative
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Mathlib.LinearAlgebra.Projectivization.Basic
+public import Mathlib.RingTheory.Coprime.Lemmas
+public import Mathlib.Algebra.Polynomial.RingDivision
+public import Mathlib.Algebra.Squarefree.Basic
+public import Structure.v1.Atlas.EllipticCurves.code.Isogenies.Part2
+
+@[expose] public section
+
 open Polynomial
 
 open scoped Polynomial.Bivariate
@@ -37,6 +42,12 @@ base ring `k` induced by an affine point `P`. -/
 noncomputable def AffinePoint.evalRingHom {f₀ : k[X][Y]} (P : AffinePoint f₀) :
     CoordinateRing f₀ →+* k :=
   AdjoinRoot.lift (Polynomial.evalRingHom P.x) P.y P.on_curve
+
+/-- `eval₂RingHom (algebraMap k k)` agrees with `evalRingHom`, since `algebraMap k k = id`. -/
+theorem eval₂RingHom_algebraMap_self (a : k) :
+    eval₂RingHom (algebraMap k k) a = evalRingHom a := by
+  rw [Algebra.algebraMap_self]
+  rfl
 
 /-- Coerce a `k`-rational affine point into an affine point over `k` viewed as a
 `k`-algebra. -/

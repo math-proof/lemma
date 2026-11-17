@@ -1,6 +1,8 @@
-import Mathlib.Data.Fintype.Prod
-import Mathlib.Data.Finset.Prod
-import Def.Dynamics.MarkovDecisionProcess.Part5
+module
+
+public import Mathlib.Data.Fintype.Prod
+public import Mathlib.Data.Finset.Prod
+public import Def.Dynamics.MarkovDecisionProcess.Part5
 universe u v
 
 /-!
@@ -25,7 +27,7 @@ in `S` and `A` (for an `M : MDPSpec S A`, `M.History` is `Hist S A`).
 
 
 -- a history of states and actions (MDPLib: `Hist M`)
-inductive Hist (S : Type u) (A : Type v) : Type (max u v) where
+public inductive Hist (S : Type u) (A : Type v) : Type (max u v) where
   | init : S → Hist S A
   | foll : Hist S A → A → S → Hist S A
 

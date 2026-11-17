@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Real.Basic
-import Mathlib.Algebra.BigOperators.Field
+module
 
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Algebra.BigOperators.Field
+
+@[expose] public section
 
 namespace BooleanFourier
 

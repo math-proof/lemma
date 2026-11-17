@@ -8,15 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM19.TransportBurgers
-import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM19.TransportBurgers
-import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM19.BurgersSingularity
+module
+
+public import Structure.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM19.TransportBurgers
+public import Theorem.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM19.TransportBurgers
+public import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM19.BurgersSingularity
 set_option maxHeartbeats 1600000
 
 open Finset MeasureTheory Set
 
 
-noncomputable section
+public noncomputable section
 
 namespace TransportBurgers
 

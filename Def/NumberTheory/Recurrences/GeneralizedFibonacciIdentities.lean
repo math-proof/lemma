@@ -1,14 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Recurrences/GeneralizedFibonacciIdentities.lean -/
 
-import Mathlib.Analysis.Real.Sqrt
-import Mathlib.Algebra.CharP.Defs
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Algebra.Ring.IsFormallyReal
-import Mathlib.Analysis.SpecificLimits.Normed
-import Mathlib.Data.Int.Star
-import Lemma.Nat.BinetClosedForm
-import Lemma.Nat.Recurrences.HoradamGeneralizedCatalanIdentity
+module
 
+public import Mathlib.Analysis.Real.Sqrt
+public import Mathlib.Algebra.CharP.Defs
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Algebra.Ring.IsFormallyReal
+public import Mathlib.Analysis.SpecificLimits.Normed
+public import Mathlib.Data.Int.Star
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

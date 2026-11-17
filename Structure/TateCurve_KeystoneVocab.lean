@@ -1,6 +1,10 @@
-import Mathlib
-import Def.TateCurve_XMultIdentities
-import Def.TateCurve_KeystoneVocab
+module
+
+public import Mathlib
+public import Def.TateCurve_XMultIdentities
+public import Def.TateCurve_KeystoneVocab
+
+public section
 
 set_option autoImplicit false
 set_option linter.unusedSectionVars false

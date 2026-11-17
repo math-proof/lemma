@@ -9,9 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexFiniteRegion.Part4
-import Theorem.StatisticalMechanics.Code.Universality.HexInfraWinding
-import Theorem.StatisticalMechanics.Code.Universality.HexCyclicVertexPartition
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.HexFiniteRegion.Part4
+public import Theorem.StatisticalMechanics.Code.Universality.HexInfraWinding
+public import Theorem.StatisticalMechanics.Code.Universality.HexCyclicVertexPartition
 
 
 namespace StatMech.Universality
@@ -20,7 +22,7 @@ open Complex Function HexWalk
 
 open scoped BigOperators
 
-noncomputable section
+public noncomputable section
 
 variable {region : ℂ → Prop} {a : ℂ} {h0 : ℤ} {v du : ℂ}
 

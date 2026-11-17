@@ -1,7 +1,11 @@
-import Mathlib.MeasureTheory.Function.LocallyIntegrable
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.Topology.LocallyConstant.Basic
-import Mathlib.Analysis.Complex.Basic
+module
+
+public import Mathlib.MeasureTheory.Function.LocallyIntegrable
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.Topology.LocallyConstant.Basic
+public import Mathlib.Analysis.Complex.Basic
+
+@[expose] public section
 
 set_option autoImplicit false
 

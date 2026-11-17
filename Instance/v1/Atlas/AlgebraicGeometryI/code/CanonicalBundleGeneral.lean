@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Kaehler.Polynomial
-import Mathlib.LinearAlgebra.ExteriorPower.Basis
+module
 
+public import Mathlib.RingTheory.Kaehler.Polynomial
+public import Mathlib.LinearAlgebra.ExteriorPower.Basis
+
+@[expose] public section
 
 noncomputable section
 

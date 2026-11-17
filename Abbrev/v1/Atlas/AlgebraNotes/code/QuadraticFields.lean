@@ -8,11 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.NumberTheory.NumberField.ClassNumber
-import Mathlib.RingTheory.AdjoinRoot
-import Mathlib.GroupTheory.SpecificGroups.Cyclic
-import Mathlib.RingTheory.DedekindDomain.PID
-import Instance.v1.Atlas.AlgebraNotes.code.QuadraticFields
+module
+
+public import Mathlib.NumberTheory.NumberField.ClassNumber
+public import Mathlib.RingTheory.AdjoinRoot
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic
+public import Mathlib.RingTheory.DedekindDomain.PID
+public import Instance.v1.Atlas.AlgebraNotes.code.QuadraticFields
+@[expose] public section
+
 open Polynomial NumberField
 
 

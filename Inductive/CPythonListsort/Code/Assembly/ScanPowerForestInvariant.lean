@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/ScanPowerForestInvariant.lean -/
 
-import Structure.CPythonListsort.Code.Assembly.PowerSortPolicyCost.Part2
-import Def.CPythonListsort.Code.Policy.StackPowers.Part2
-import Structure.CPythonListsort.Code.Assembly.ScanPowerForestInvariant
+module
+
+public import Structure.CPythonListsort.Code.Assembly.PowerSortPolicyCost.Part2
+public import Def.CPythonListsort.Code.Policy.StackPowers.Part2
+public import Structure.CPythonListsort.Code.Assembly.ScanPowerForestInvariant
 /-!
 # Historical PowerSort invariant for the open scan forest
 
@@ -26,7 +28,7 @@ universe u v
 /-- The final root of a nonempty open forest is a literal leaf.  The custom
 inductive form makes preservation by prepending older roots explicit, while
 also admitting the empty initial forest. -/
-inductive NewestRootLeaf : List SpannedMergeTree → Prop
+public inductive NewestRootLeaf : List SpannedMergeTree → Prop
   | empty : NewestRootLeaf []
   | singleton (span : RunSpan) :
       NewestRootLeaf [SpannedMergeTree.leaf span]

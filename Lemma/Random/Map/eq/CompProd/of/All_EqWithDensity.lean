@@ -1,5 +1,7 @@
 import Lemma.Measure.MapComap_MapId.eq.Map.of.Measurable
-import Theorem.Dynamics.PolicyTrajectory.ContinuousAction
+import Def.Dynamics.PolicyTrajectory.ContinuousAction
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Measure Finset
 
 
@@ -30,4 +32,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-16
+-- updated on 2026-11-17

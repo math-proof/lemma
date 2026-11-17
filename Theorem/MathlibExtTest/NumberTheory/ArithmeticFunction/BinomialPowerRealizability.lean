@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.ArithmeticFunction.BinomialPowerRealizability
-import Lemma.Nat.ArithmeticFunction.BinomialPowerRealizability
+import Theorem.Nat.ArithmeticFunction.BinomialPowerRealizability
 /-!
 # Tests for binomial-power sequences
 

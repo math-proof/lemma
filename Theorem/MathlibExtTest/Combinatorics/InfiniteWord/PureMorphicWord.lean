@@ -3,7 +3,7 @@
 
 import Mathlib.Tactic
 import Def.Combinatorics.InfiniteWord.PureMorphicWord
-import Lemma.Finset.InfiniteWord.PureMorphicWord
+import Theorem.Finset.InfiniteWord.PureMorphicWord
 import Def.MathlibExtTest.Combinatorics.InfiniteWord.PureMorphicWord
 
 

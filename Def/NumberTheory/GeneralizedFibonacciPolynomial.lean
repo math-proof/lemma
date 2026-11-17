@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/GeneralizedFibonacciPolynomial.lean -/
 
-import Mathlib.Algebra.Polynomial.Basic
+module
+
+public import Mathlib.Algebra.Polynomial.Basic
+
+@[expose] public section
+
 /-!
 Provenance: concept `jis_sem_f9bc27c2fb50e959e168b460`
 (`generalized Fibonacci polynomial sequence`); source statement

@@ -7,19 +7,20 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib.Analysis.InnerProductSpace.GramMatrix
-import Mathlib.Analysis.Normed.Lp.MeasurableSpace
-import Mathlib.MeasureTheory.Function.L2Space
-import Mathlib.MeasureTheory.Function.LpSpace.Indicator
-import Mathlib.MeasureTheory.Constructions.Projective
-import Mathlib.Probability.Distributions.Gaussian.HasGaussianLaw.Independence
-import Mathlib.Probability.Distributions.Gaussian.Multivariate
-import Def.StatisticalMechanics.Code.SLE.BrownianFiniteDimensional
+public import Mathlib.Analysis.InnerProductSpace.GramMatrix
+public import Mathlib.Analysis.Normed.Lp.MeasurableSpace
+public import Mathlib.MeasureTheory.Function.L2Space
+public import Mathlib.MeasureTheory.Function.LpSpace.Indicator
+public import Mathlib.MeasureTheory.Constructions.Projective
+public import Mathlib.Probability.Distributions.Gaussian.HasGaussianLaw.Independence
+public import Mathlib.Probability.Distributions.Gaussian.Multivariate
+public import Def.StatisticalMechanics.Code.SLE.BrownianFiniteDimensional
 open MeasureTheory Matrix ProbabilityTheory Set WithLp
 open scoped ENNReal InnerProductSpace NNReal
 
+public section
 
 namespace StatMech.SLE
 

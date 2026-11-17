@@ -7,15 +7,17 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
-import Mathlib.Analysis.Calculus.UniformLimitsDeriv
-import Mathlib.Analysis.Calculus.ContDiff.FTaylorSeries
-import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzSeminormsFix
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzSeminormsFix
+public import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
+public import Mathlib.Analysis.Calculus.UniformLimitsDeriv
+public import Mathlib.Analysis.Calculus.ContDiff.FTaylorSeries
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzSeminormsFix
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzSeminormsFix
 open scoped SchwartzMap
 open Filter Topology
 
+public section
 
 noncomputable section
 

@@ -1,11 +1,13 @@
-import Structure.AlgebraicGeometry_TwoChartCech
-import Mathlib.AlgebraicGeometry.AffineScheme
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Mathlib.AlgebraicGeometry.Morphisms.Affine
+module
+
+public import Structure.AlgebraicGeometry_TwoChartCech
+public import Mathlib.AlgebraicGeometry.AffineScheme
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Mathlib.AlgebraicGeometry.Morphisms.Affine
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 universe u
 

@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/ArakelovDivisor.lean -/
+module
 
-import Mathlib.Algebra.Order.Positive.Field
-import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
-import Mathlib.RingTheory.ClassGroup.Basic
-import Mathlib.RingTheory.FractionalIdeal.Norm
+public import Mathlib.Algebra.Order.Positive.Field
+public import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
+public import Mathlib.RingTheory.ClassGroup.Basic
+public import Mathlib.RingTheory.FractionalIdeal.Norm
 open scoped NumberField nonZeroDivisors
 
 /-!
@@ -38,6 +39,8 @@ complex squaring appears only in the size homomorphism, never in the section-set
 The two bullets above are the two sides of the product formula; the size-one theorem
 below is their combination, not a new normalization.
 -/
+
+public section
 
 
 namespace FractionalIdeal

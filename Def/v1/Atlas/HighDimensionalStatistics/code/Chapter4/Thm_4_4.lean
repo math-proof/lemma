@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Notation.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Lemma_4_2
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Lemma_4_2
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Lemma_4_2
 import Mathlib
 open MeasureTheory Matrix Real Finset
 

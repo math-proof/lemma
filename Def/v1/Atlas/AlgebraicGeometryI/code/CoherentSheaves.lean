@@ -27,12 +27,12 @@ import Mathlib.AlgebraicGeometry.Noetherian
 import Mathlib.Algebra.Category.ModuleCat.Sheaf.Quasicoherent
 import Mathlib.Algebra.Category.ModuleCat.Sheaf.Generators
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.IsFiniteTypeOfCoversTop
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.IsFiniteTypeOfCoversTop
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.PushforwardPreservesKernel
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoherentSpecFinitelyGenerated
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.IsFiniteTypeOfCoversTop
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PushforwardPreservesKernel
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoherentSpecFinitelyGenerated
 import Def.v1.Atlas.AlgebraicGeometryI.code.PushforwardPreservesKernel
 import Def.v1.Atlas.AlgebraicGeometryI.code.CoherentSpecFinitelyGenerated
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Prop19PushforwardEmbedding
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Prop19PushforwardEmbedding
 
 
 namespace CoherentSheaves

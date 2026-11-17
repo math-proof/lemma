@@ -1,10 +1,12 @@
-import Mathlib
+module
+
+public import Mathlib
 
 set_option autoImplicit false
 
 universe u v
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MvPolynomial
 

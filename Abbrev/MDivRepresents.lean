@@ -1,6 +1,10 @@
-import Mathlib
-import Structure.ModularCurve_ProlongationTuple
-import Structure.IncidenceSystem
+module
+
+public import Mathlib
+public import Structure.ModularCurve_ProlongationTuple
+public import Structure.IncidenceSystem
+
+@[expose] public section
 
 set_option autoImplicit false
 

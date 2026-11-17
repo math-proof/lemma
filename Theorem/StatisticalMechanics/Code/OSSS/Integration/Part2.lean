@@ -7,17 +7,18 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Mathlib.Analysis.Calculus.Deriv.MeanValue
-import Mathlib.Topology.Order.OrderClosed
-import Def.StatisticalMechanics.Code.OSSS.Integration
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+public import Mathlib.Analysis.Calculus.Deriv.MeanValue
+public import Mathlib.Topology.Order.OrderClosed
+public import Def.StatisticalMechanics.Code.OSSS.Integration
 open scoped BigOperators
 open Real Set Finset Filter Topology
 
 set_option linter.style.longLine false
 
+public section
 
 namespace StatMech
 

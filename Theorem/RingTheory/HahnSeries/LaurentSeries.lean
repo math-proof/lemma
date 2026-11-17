@@ -8,7 +8,7 @@ Authors: AlgebraicCombinatorics contributors
 -/
 import Mathlib
 import Def.RingTheory.LaurentSeries.Part11
-import Lemma.PowerSeries.InfiniteProducts2
+import Theorem.PowerSeries.InfiniteProducts2
 import Lemma.LaurentSeries.LaurentSeries
 import Lemma.Partition.NPartition
 import Abbrev.RingTheory.HahnSeries.LaurentSeries.Part2

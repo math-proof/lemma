@@ -1,5 +1,9 @@
-import Mathlib
+module
 
+public import Mathlib
+
+
+public section
 
 /-- A cocone `g` exhibits `P` as the direct limit of the transition maps `f`. -/
 class IsDirectLimit {ι : Type*} [Preorder ι] {M : ι → Type*} {P : Type*}

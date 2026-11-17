@@ -9,13 +9,15 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedDualOpenWalkCarrier
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedWalkCarrier.Part3
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedDualOpenWalkCarrier
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedWalkCarrier.Part3
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure FKRectRefinedDualWalkCarrier
     (R : FKRectTorus) {G : SimpleGraph R.Vertex}

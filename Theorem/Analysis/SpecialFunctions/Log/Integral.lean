@@ -1,5 +1,8 @@
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Def.Analysis.SpecialFunctions.Log.Integral.Part2
+module
+
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Def.Analysis.SpecialFunctions.Log.Integral.Part2
+
 /-!
 # Logarithmic integral (normalized principal value)
 
@@ -15,6 +18,8 @@ totalizes via `inv 0 = 0` and Lebesgue measure-zero modifications at isolated
 points. The paired symmetric integral is Lebesgue-equivalent to
 `lim_{ε → 0⁺} (∫₀^{1-ε} + ∫_{1+ε}²)`.
 -/
+
+public section
 
 
 namespace Real

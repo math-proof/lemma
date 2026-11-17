@@ -1,11 +1,13 @@
-import Structure.AutomorphicForm_AdelicLsXi
-import Def.HeckeCharacter_FiniteOrder
+module
+
+public import Structure.AutomorphicForm_AdelicLsXi
+public import Def.HeckeCharacter_FiniteOrder
 
 set_option autoImplicit false
 
 open NumberField AutomorphicForm IsDedekindDomain WithZero
 
-noncomputable section
+public noncomputable section
 
 namespace HeckeCharacter
 

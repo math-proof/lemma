@@ -2,7 +2,7 @@
 
 
 import Theorem.NumberTheory.NumberField.Completion.FiniteLiesOverMaximalIdeal
-import Lemma.Nat.NumberField.Completion.FiniteLiesOverMaximalIdeal
+import Theorem.Nat.NumberField.Completion.FiniteLiesOverMaximalIdeal
 
 
 namespace IsDedekindDomain.HeightOneSpectrum

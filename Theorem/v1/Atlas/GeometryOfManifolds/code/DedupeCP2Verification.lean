@@ -9,6 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.GeometryOfManifolds.code.PontrjaginObstructions.Part7
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.PontrjaginObstructions
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.PontrjaginObstructions
 
 

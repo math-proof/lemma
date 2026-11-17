@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.Compactness.Compact
-import Mathlib.Data.Set.Finite.Basic
-import Mathlib.Data.Finset.Powerset
-import Mathlib.Data.Set.Card
-import Mathlib.Data.Set.Card.Arithmetic
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Analysis.Complex.ExponentialBounds
+module
+
+public import Mathlib.Topology.Compactness.Compact
+public import Mathlib.Data.Set.Finite.Basic
+public import Mathlib.Data.Finset.Powerset
+public import Mathlib.Data.Set.Card
+public import Mathlib.Data.Set.Card.Arithmetic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Analysis.Complex.ExponentialBounds
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open Set Topology

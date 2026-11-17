@@ -1,14 +1,19 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Geometry/Euclidean/JohnsonLindenstrauss.lean -/
 
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Probability.Distributions.Gaussian.Multivariate
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.FunProp
-import Mathlib.Tactic.GCongr
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.UniformSpace.Uniformizable
+module
+
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Probability.Distributions.Gaussian.Multivariate
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.FunProp
+public import Mathlib.Tactic.GCongr
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.UniformSpace.Uniformizable
+
+@[expose] public section
+
 open scoped RealInnerProductSpace
 open ProbabilityTheory MeasureTheory
 

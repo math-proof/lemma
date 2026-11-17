@@ -1,5 +1,8 @@
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Def.NumberTheory.DickmanDeBruijn
+module
+
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Def.NumberTheory.DickmanDeBruijn
+
 /-!
 # The Dickman–de Bruijn function
 
@@ -16,6 +19,8 @@ one. Existence and uniqueness are proved separately in
 * [Jared Duker Lichtman, *An improvement on the largest prime factors of consecutive
   integers*](https://arxiv.org/abs/2607.16032)
 -/
+
+public section
 
 
 namespace Real

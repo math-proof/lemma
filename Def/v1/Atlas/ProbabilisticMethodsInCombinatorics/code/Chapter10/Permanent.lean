@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.Matrix.Permanent
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Combinatorics.SimpleGraph.Matching
-import Mathlib.Combinatorics.SimpleGraph.DegreeSum
-import Mathlib.Combinatorics.SimpleGraph.AdjMatrix
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Real.Sqrt
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Permanent
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Combinatorics.SimpleGraph.Matching
+public import Mathlib.Combinatorics.SimpleGraph.DegreeSum
+public import Mathlib.Combinatorics.SimpleGraph.AdjMatrix
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Real.Sqrt
+
+@[expose] public section
+
 open Finset Matrix BigOperators
 
 

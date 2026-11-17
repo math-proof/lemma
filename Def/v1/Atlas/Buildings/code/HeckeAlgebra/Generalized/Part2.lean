@@ -8,12 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.GroupTheory.Coxeter.Basic
-import Mathlib.Algebra.MonoidAlgebra.Basic
-import Mathlib.LinearAlgebra.Basis.Basic
-import Mathlib.Algebra.Algebra.Subalgebra.Basic
-import Structure.v1.Atlas.Buildings.code.HeckeAlgebra.Generalized.Part2
+module
 
+public import Mathlib.GroupTheory.Coxeter.Basic
+public import Mathlib.Algebra.MonoidAlgebra.Basic
+public import Mathlib.LinearAlgebra.Basis.Basic
+public import Mathlib.Algebra.Algebra.Subalgebra.Basic
+public import Structure.v1.Atlas.Buildings.code.HeckeAlgebra.Generalized.Part2
+
+@[expose] public section
 
 namespace GeneralizedHecke
 

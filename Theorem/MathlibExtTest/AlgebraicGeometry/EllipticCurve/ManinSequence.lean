@@ -2,7 +2,7 @@
 
 
 import Def.AlgebraicGeometry.EllipticCurve.ManinSequence
-import Lemma.Int.EllipticCurve.ManinSequence
+import Theorem.Int.EllipticCurve.ManinSequence
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring

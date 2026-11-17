@@ -9,6 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.TensorCategories.code.IntegralsCartanMatrix.Part2
-import Lemma.Category.Atlas.v1.TensorCategories.code.IntegralsCartanMatrix
+import Theorem.Category.Atlas.v1.TensorCategories.code.IntegralsCartanMatrix
 
 

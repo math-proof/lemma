@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.NumberTheory.ArithmeticFunction.Defs
-import Mathlib.Data.Complex.Basic
+module
+
+public import Mathlib.NumberTheory.ArithmeticFunction.Defs
+public import Mathlib.Data.Complex.Basic
+
+@[expose] public section
+
 open Nat Finset
 
 

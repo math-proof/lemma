@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Normed.Module.Basic
-import Mathlib.Topology.Algebra.Module.Basic
-import Mathlib.Geometry.Manifold.Instances.Real
+module
+
+public import Mathlib.Analysis.Normed.Module.Basic
+public import Mathlib.Topology.Algebra.Module.Basic
+public import Mathlib.Geometry.Manifold.Instances.Real
+@[expose] public section
+
 open ContinuousLinearMap Finset Manifold
 
 

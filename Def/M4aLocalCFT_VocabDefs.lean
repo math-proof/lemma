@@ -1,8 +1,12 @@
-import Mathlib.RingTheory.Valuation.RamificationGroup
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Mathlib.RingTheory.AdicCompletion.Basic
-import Mathlib.Algebra.BigOperators.Pi
-import Mathlib.Data.Fintype.Card
+module
+
+public import Mathlib.RingTheory.Valuation.RamificationGroup
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Mathlib.RingTheory.AdicCompletion.Basic
+public import Mathlib.Algebra.BigOperators.Pi
+public import Mathlib.Data.Fintype.Card
+
+@[expose] public section
 
 set_option autoImplicit false
 

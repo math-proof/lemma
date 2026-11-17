@@ -2,17 +2,20 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
 
-import Mathlib.Analysis.CStarAlgebra.CompletelyPositiveMap
-import Mathlib.Analysis.InnerProductSpace.StarOrder
-import Mathlib.Algebra.Ring.IsFormallyReal
-import Mathlib.Analysis.InnerProductSpace.Completion
-import Mathlib.Tactic.FunProp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
-import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Basic
-import Theorem.Analysis.CStarAlgebra.Stinespring
+module
 
+public import Mathlib.Analysis.CStarAlgebra.CompletelyPositiveMap
+public import Mathlib.Analysis.InnerProductSpace.StarOrder
+public import Mathlib.Algebra.Ring.IsFormallyReal
+public import Mathlib.Analysis.InnerProductSpace.Completion
+public import Mathlib.Tactic.FunProp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+public import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
+public import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Basic
+public import Theorem.Analysis.CStarAlgebra.Stinespring
+
+@[expose] public section
 
 section
 

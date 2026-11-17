@@ -2,6 +2,7 @@ import Mathlib.Probability.Independence.Conditional
 import Lemma.Random.All_Imp_EqProbSCond.of.CondIndep
 import Lemma.Random.SinglePSpace.of.Measurable
 import Lemma.Random.Prob_Cond.eq.Div.of.SinglePSpace
+import Initialize.Tactic.Attr.Basic
 open ProbabilityTheory MeasureTheory Measure Random
 
 
@@ -80,4 +81,4 @@ private lemma main
 
 
 -- created on 2026-10-02
--- updated on 2026-10-23
+-- updated on 2026-11-17

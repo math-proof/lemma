@@ -8,8 +8,10 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.StatisticalMechanics.Code.Universality.RSWAxisGapPIMSAnchoredSide.Part3
-import Def.StatisticalMechanics.Code.Universality.RSWStoppedPathPIMSProvenance
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.RSWAxisGapPIMSAnchoredSide.Part3
+public import Def.StatisticalMechanics.Code.Universality.RSWStoppedPathPIMSProvenance
 open Finset SimpleGraph Set
 
 
@@ -17,7 +19,7 @@ namespace StatMech.Universality
 
 open StatMech.Percolation StatMech.Lattice StatMech.RSW.Box
 
-noncomputable section
+public noncomputable section
 
 structure RlcSequentialExtremalExplorationState {n : Int}
     (gamma : RlcRightDiagonalPath n)

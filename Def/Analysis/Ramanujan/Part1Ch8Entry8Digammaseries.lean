@@ -40,7 +40,7 @@ import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
 import Def.Analysis.SpecialFunctions.Gamma.Digamma
-import Lemma.Complex.Digamma
+import Theorem.Complex.Digamma
 import Lemma.Real.Digamma
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 8

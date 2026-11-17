@@ -8,34 +8,36 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Homology.Monoidal
-import Mathlib.Algebra.Homology.Homotopy
-import Mathlib.Algebra.Homology.ShortComplex.HomologicalComplex
-import Mathlib.Algebra.Homology.ShortComplex.ShortExact
-import Mathlib.Algebra.Homology.ShortComplex.Ab
-import Mathlib.Algebra.Category.ModuleCat.Monoidal.Basic
-import Mathlib.Algebra.Category.ModuleCat.Colimits
-import Mathlib.Algebra.Category.ModuleCat.Abelian
-import Mathlib.Algebra.Category.ModuleCat.Projective
-import Mathlib.CategoryTheory.Functor.Category
-import Mathlib.CategoryTheory.Monoidal.Tor
-import Mathlib.CategoryTheory.Abelian.Projective.Resolution
-import Mathlib.Algebra.Category.Grp.Basic
-import Mathlib.Algebra.Category.Grp.Adjunctions
-import Mathlib.Algebra.Category.Grp.Colimits
-import Mathlib.CategoryTheory.Limits.FunctorCategory.Basic
-import Mathlib.CategoryTheory.Yoneda
-import Mathlib.GroupTheory.FreeAbelianGroup
-import Mathlib.AlgebraicTopology.SingularHomology.Basic
-import Mathlib.Topology.Category.TopCat.Monoidal
-import Mathlib.RingTheory.PrincipalIdealDomain
-import Mathlib.LinearAlgebra.FreeModule.Basic
-import Theorem.v1.Atlas.AlgebraicTopologyI.code.EilenbergZilber
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section25
+module
+
+public import Mathlib.Algebra.Homology.Monoidal
+public import Mathlib.Algebra.Homology.Homotopy
+public import Mathlib.Algebra.Homology.ShortComplex.HomologicalComplex
+public import Mathlib.Algebra.Homology.ShortComplex.ShortExact
+public import Mathlib.Algebra.Homology.ShortComplex.Ab
+public import Mathlib.Algebra.Category.ModuleCat.Monoidal.Basic
+public import Mathlib.Algebra.Category.ModuleCat.Colimits
+public import Mathlib.Algebra.Category.ModuleCat.Abelian
+public import Mathlib.Algebra.Category.ModuleCat.Projective
+public import Mathlib.CategoryTheory.Functor.Category
+public import Mathlib.CategoryTheory.Monoidal.Tor
+public import Mathlib.CategoryTheory.Abelian.Projective.Resolution
+public import Mathlib.Algebra.Category.Grp.Basic
+public import Mathlib.Algebra.Category.Grp.Adjunctions
+public import Mathlib.Algebra.Category.Grp.Colimits
+public import Mathlib.CategoryTheory.Limits.FunctorCategory.Basic
+public import Mathlib.CategoryTheory.Yoneda
+public import Mathlib.GroupTheory.FreeAbelianGroup
+public import Mathlib.AlgebraicTopology.SingularHomology.Basic
+public import Mathlib.Topology.Category.TopCat.Monoidal
+public import Mathlib.RingTheory.PrincipalIdealDomain
+public import Mathlib.LinearAlgebra.FreeModule.Basic
+public import Theorem.v1.Atlas.AlgebraicTopologyI.code.EilenbergZilber
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section25
 open CategoryTheory MonoidalCategory Limits
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace TensorChainComplex
 

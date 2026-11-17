@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ProthTheorem.lean -/
 
 
-import Lemma.Nat.ProthTheorem
+import Theorem.Nat.ProthTheorem
 import Mathlib.Tactic.NormNum
 
 

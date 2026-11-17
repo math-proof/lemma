@@ -9,10 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib.Combinatorics.SimpleGraph.DegreeSum
-import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialCellularRibbonDuality.Part2
-import Theorem.StatisticalMechanics.Code.FrontierA.SimpleGraphCellularRibbonEmbedding.Part2
+module
 
+public import Mathlib.Combinatorics.SimpleGraph.DegreeSum
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialCellularRibbonDuality.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierA.SimpleGraphCellularRibbonEmbedding.Part2
+
+
+public section
 
 namespace StatMech.FrontierA
 

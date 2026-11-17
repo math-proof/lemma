@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_Mathlib_RingTheory_Valuation_LowerRamificationGroup.lean: instance decls only.
 import Mathlib
-import Lemma.Ideal.Valuation.LowerRamificationGroup
+import Theorem.Ideal.Valuation.LowerRamificationGroup
 
 set_option autoImplicit false
 

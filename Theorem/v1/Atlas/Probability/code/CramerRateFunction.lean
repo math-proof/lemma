@@ -7,18 +7,20 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Analysis.Convex.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
-import Mathlib.Topology.Semicontinuity.Basic
-import Def.Probability.CramerTheorem
-import Def.Probability.LegendreTransform
-import Structure.v1.Atlas.Probability.code.LargeDeviations
+public import Mathlib.Analysis.Convex.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+public import Mathlib.Topology.Semicontinuity.Basic
+public import Def.Probability.CramerTheorem
+public import Def.Probability.LegendreTransform
+public import Structure.v1.Atlas.Probability.code.LargeDeviations
 open MeasureTheory ProbabilityTheory Real
 open scoped InnerProductSpace ENNReal Topology
 
+public section
 
 /-- The real log-MGF vanishes at the origin on a probability space. -/
 theorem logMGFVec_zero {d : ℕ} {Ω : Type*} [MeasurableSpace Ω]

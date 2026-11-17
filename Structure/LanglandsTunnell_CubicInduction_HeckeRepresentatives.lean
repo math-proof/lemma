@@ -1,11 +1,13 @@
-import Structure.LanglandsTunnell_CubicInduction_Structure
-import Instance.LanglandsTunnell_CubicInduction_HeckeRepresentatives
+module
+
+public import Structure.LanglandsTunnell_CubicInduction_Structure
+public import Instance.LanglandsTunnell_CubicInduction_HeckeRepresentatives
 
 set_option autoImplicit false
 
 open Matrix IsDedekindDomain NumberField
 
-noncomputable section
+public noncomputable section
 
 namespace LanglandsTunnell.CubicInduction.HeckeRepresentatives
 

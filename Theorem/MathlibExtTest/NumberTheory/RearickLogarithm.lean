@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.RearickLogarithm
-import Lemma.Nat.RearickLogarithm
+import Theorem.Nat.RearickLogarithm
 
 
 namespace MetaMathlibExt

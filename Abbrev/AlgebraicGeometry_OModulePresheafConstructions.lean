@@ -1,14 +1,16 @@
-import Mathlib
+module
 
-import Structure.AlgebraicGeometry_OModulePresheafHom
-import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
-import Mathlib.AlgebraicGeometry.IdealSheaf.Subscheme
-import Mathlib.AlgebraicGeometry.Noetherian
-import Mathlib.AlgebraicGeometry.Properties
+public import Mathlib
+
+public import Structure.AlgebraicGeometry_OModulePresheafHom
+public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Subscheme
+public import Mathlib.AlgebraicGeometry.Noetherian
+public import Mathlib.AlgebraicGeometry.Properties
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 universe u
 

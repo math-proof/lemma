@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RamificationInertia/Tame.lean -/
 
-import Mathlib.RingTheory.RamificationInertia.Ramification
+module
+
+public import Mathlib.RingTheory.RamificationInertia.Ramification
+
+@[expose] public section
+
 /-!
 # Tame and wild ramification at a prime
 

@@ -3,7 +3,7 @@
 import Mathlib.Topology.Algebra.InfiniteSum.Basic
 import Mathlib.Topology.Algebra.Ring.Real
 import Theorem.NumberTheory.MultipleZeta.Index.Part2
-import Lemma.Nat.MultipleZeta.Index
+import Theorem.Nat.MultipleZeta.Index
 import Def.NumberTheory.MultipleZeta.Series.Part2
 /-!
 # Multiple-zeta and multiple-zeta-star series

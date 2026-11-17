@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Abbrev.v1.Atlas.TensorCategories.code.QuasiBialgebra
-import Mathlib.LinearAlgebra.FreeModule.Basic
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Structure.v1.Atlas.TensorCategories.code.Corollary_1_50_4
+module
+
+public import Abbrev.v1.Atlas.TensorCategories.code.QuasiBialgebra
+public import Mathlib.LinearAlgebra.FreeModule.Basic
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Structure.v1.Atlas.TensorCategories.code.Corollary_1_50_4
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 universe u v

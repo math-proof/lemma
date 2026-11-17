@@ -8,8 +8,10 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.StatisticalMechanics.Code.Universality.RSWConnectorTwoChannelFullPhysicalPermutation.Part86
-import Theorem.StatisticalMechanics.Code.Universality.RSWStoppedPathPIMSProvenance.Part3
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.RSWConnectorTwoChannelFullPhysicalPermutation.Part86
+public import Theorem.StatisticalMechanics.Code.Universality.RSWStoppedPathPIMSProvenance.Part3
 open Finset SimpleGraph Set
 
 
@@ -17,7 +19,7 @@ namespace StatMech.Universality
 
 open StatMech.Percolation StatMech.Lattice StatMech.RSW.Box
 
-noncomputable section
+public noncomputable section
 
 structure RlcStoppedTwoChannelOrientedCommonCycleState
     {n : Int} {gamma : RlcRightDiagonalPath n}

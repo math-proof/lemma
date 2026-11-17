@@ -8,18 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.Distributions.Gaussian.Real
-import Mathlib.Probability.Process.Stopping
-import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
-import Mathlib.Probability.Independence.Basic
-import Mathlib.Probability.Kernel.MeasurableIntegral
+module
+
+public import Mathlib.Probability.Distributions.Gaussian.Real
+public import Mathlib.Probability.Process.Stopping
+public import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.Probability.Kernel.MeasurableIntegral
 set_option maxHeartbeats 8000000
 
 open MeasureTheory ProbabilityTheory MeasurableSpace
 open scoped NNReal ENNReal
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace StrongMarkovBMGoal98
 

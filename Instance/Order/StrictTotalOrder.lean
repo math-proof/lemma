@@ -1,12 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Order/StrictTotalOrder.lean -/
 
-import Mathlib.Order.Defs.Unbundled
-import Structure.Order.StrictTotalOrder
+module
+
+public import Mathlib.Order.Defs.Unbundled
+public import Structure.Order.StrictTotalOrder
 /-! # Strict total orders
 
 Shared bundle for strict preferences, used by matching and social-choice developments.
 -/
 
+@[expose] public section
 
 namespace MathlibExt.Order
 

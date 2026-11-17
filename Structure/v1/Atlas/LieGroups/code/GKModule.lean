@@ -8,19 +8,21 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.LieGroups.code.ContinuousRep.Part3
-import Lemma.Complex.IsStronglyContinuousToMonoidHom
-import Lemma.Complex.IsKFinite0
-import Def.v1.Atlas.LieGroups.code.KFinite.Part3
-import Mathlib.Algebra.Lie.Basic
-import Mathlib.Algebra.Lie.Subalgebra
-import Mathlib.Algebra.Lie.UniversalEnveloping
-import Mathlib.RepresentationTheory.Basic
-import Mathlib.LinearAlgebra.Dimension.Finite
-import Def.v1.Atlas.LieGroups.code.GKModule
+module
+
+public import Def.v1.Atlas.LieGroups.code.ContinuousRep.Part3
+public import Theorem.Complex.IsStronglyContinuousToMonoidHom
+public import Lemma.Complex.IsKFinite0
+public import Def.v1.Atlas.LieGroups.code.KFinite.Part3
+public import Mathlib.Algebra.Lie.Basic
+public import Mathlib.Algebra.Lie.Subalgebra
+public import Mathlib.Algebra.Lie.UniversalEnveloping
+public import Mathlib.RepresentationTheory.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finite
+public import Def.v1.Atlas.LieGroups.code.GKModule
 
 
-noncomputable section
+public noncomputable section
 
 structure GKModule
     (𝔤 : Type*) [LieRing 𝔤] [LieAlgebra ℂ 𝔤]

@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
-import Mathlib.Algebra.BigOperators.GroupWithZero.Finset
-import Mathlib.Tactic
+module
+
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+public import Mathlib.Algebra.BigOperators.GroupWithZero.Finset
+public import Mathlib.Tactic
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 variable {k : Type*} [Field k]

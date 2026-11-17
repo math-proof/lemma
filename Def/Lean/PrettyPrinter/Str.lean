@@ -1,5 +1,10 @@
-import Def.Lean.Expr.Part11
-import Def.Lean.Level
+module
+
+public import Def.Lean.Expr.Part11
+public import Def.Lean.Level
+
+@[expose] public section
+
 open Lean (FVarId Name)
 
 

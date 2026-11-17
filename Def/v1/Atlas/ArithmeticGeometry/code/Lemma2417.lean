@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.NumberTheory.Padics.PadicIntegers
-import Mathlib.Tactic
-import Structure.v1.Atlas.ArithmeticGeometry.code.Lemma2417
+module
 
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+public import Mathlib.Tactic
+public import Structure.v1.Atlas.ArithmeticGeometry.code.Lemma2417
+
+@[expose] public section
 
 noncomputable section
 

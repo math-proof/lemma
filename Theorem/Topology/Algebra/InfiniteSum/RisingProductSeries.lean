@@ -1,8 +1,11 @@
 /-
 Author: @akiezun, Avocado
 -/
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.SpecificLimits.Normed
+module
+
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.SpecificLimits.Normed
+
 /-!
 # Series with a rising-product denominator
 
@@ -10,6 +13,8 @@ The series `∑ j, (-b) ^ j * x ^ (j + 1) / ∏ r < j + 1, (c + b * (r + 1))` co
 whenever no factor of its denominator vanishes:
 `Complex.summable_neg_pow_mul_pow_div_prod_add_mul`.
 -/
+
+public section
 
 
 namespace Complex

@@ -9,9 +9,9 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.TheoryOfComputation.code.ContextFree.Part4
-import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.ContextFree
-import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.CFGtoPDA
-import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.RegularLanguages
+import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.ContextFree
+import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.CFGtoPDA
+import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.RegularLanguages
 import Inductive.v1.Atlas.TheoryOfComputation.code.CFGtoPDA.Part2
 import Def.v1.Atlas.TheoryOfComputation.code.RegularLanguages
 universe u

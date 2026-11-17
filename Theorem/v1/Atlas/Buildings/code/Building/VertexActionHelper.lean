@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.Buildings.code.ChamberComplex.Basic
-import Lemma.Finset.Adjacent
-import Lemma.List.All.of.All.IsChain.Ne
+import Theorem.Finset.Adjacent
+import Theorem.List.All.of.All.IsChain.Ne
 import Lemma.Finset.SeparatedByWall.of.AdjacentToSimplicialComplex.HasSufficientReversibleFoldings
 import Def.v1.Atlas.Buildings.code.ChamberComplex.Folding.Part3
 import Theorem.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes.CoxeterProperties.Part2

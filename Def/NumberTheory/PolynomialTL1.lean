@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PolynomialTL1.lean -/
 
-import Mathlib.Algebra.Polynomial.AlgebraMap
-import Mathlib.Analysis.Calculus.Deriv.Basic
+module
 
+public import Mathlib.Algebra.Polynomial.AlgebraMap
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

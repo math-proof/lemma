@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.HahnSeries.X0
+import Theorem.HahnSeries.X0
 import Def.ModularCurve_KroneckerTransport
 
 set_option autoImplicit false

@@ -8,18 +8,21 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Walks.Basic
-import Mathlib.Combinatorics.SimpleGraph.Finite
-import Mathlib.Combinatorics.SimpleGraph.Diam
-import Mathlib.Combinatorics.SimpleGraph.AdjMatrix
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Real.Archimedean
-import Mathlib.Order.ConditionallyCompleteLattice.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Algebra.Order.Monoid.Canonical.Basic
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
+module
 
+public import Mathlib.Combinatorics.SimpleGraph.Walks.Basic
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Mathlib.Combinatorics.SimpleGraph.Diam
+public import Mathlib.Combinatorics.SimpleGraph.AdjMatrix
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Data.Real.Archimedean
+public import Mathlib.Order.ConditionallyCompleteLattice.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Algebra.Order.Monoid.Canonical.Basic
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+
+@[expose] public section
 
 namespace CanonicalPaths
 

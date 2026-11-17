@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ArithmeticFunction/AlderTotient.lean -/
 
-import Mathlib.Data.Nat.Totient
-import Mathlib.NumberTheory.ArithmeticFunction.Defs
+module
+
+public import Mathlib.Data.Nat.Totient
+public import Mathlib.NumberTheory.ArithmeticFunction.Defs
+
+@[expose] public section
+
 /-!
 # Alder's totient with second argument fixed at 2
 

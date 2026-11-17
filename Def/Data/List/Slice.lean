@@ -1,5 +1,9 @@
-import Lemma.Nat.LtSub_1.of.Le.Gt_0
-import Structure.Data.List.Slice
+module
+
+public import Theorem.Nat.LtSub_1.of.Le.Gt_0
+public import Structure.Data.List.Slice
+
+@[expose] public section
 open Nat Lean
 
 
@@ -72,7 +76,7 @@ def Slice.length (s : Slice) (n : ℕ) : ℕ :=
 
 
 @[app_unexpander Slice.mk]
-def Slice.mk.unexpand : PrettyPrinter.Unexpander
+meta def Slice.mk.unexpand : PrettyPrinter.Unexpander
   | `($_ $start $stop $step) => `(⟨$start, $stop, $step⟩)
   | _  =>
     throw ()

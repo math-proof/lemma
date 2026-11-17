@@ -12,7 +12,7 @@ import Instance.v1.Atlas.NumberTheoryI.code.Ch22WeberLFunction
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Ch22WeberLFunction
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.AnalyticClassNumber
 import Instance.v1.Atlas.NumberTheoryI.code.AnalyticClassNumber.Part3
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Cor1838
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor1838
 
 
 noncomputable section

@@ -1,6 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/AlgebraicGeometry/Curve/Divisor.lean -/
 
-import Mathlib.Data.Finsupp.Basic
+module
+
+public import Mathlib.Data.Finsupp.Basic
+
+@[expose] public section
 
 
 /-!

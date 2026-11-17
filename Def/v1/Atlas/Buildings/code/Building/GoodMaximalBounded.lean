@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.Buildings.code.Building.FixedPointSubgroups
-import Lemma.Set.NonemptyOrbitSetSetGt
+module
+
+public import Structure.v1.Atlas.Buildings.code.Building.FixedPointSubgroups
+
+@[expose] public section
+
 set_option maxHeartbeats 1600000
 
 set_option linter.unusedSectionVars false

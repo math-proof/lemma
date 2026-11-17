@@ -1,8 +1,9 @@
 import Lemma.Random.SinglePSpace.of.All_Measurable.All_Measurable
-import Lemma.Random.SinglePSpace.of.Measurable.Measurable
-import Lemma.Random.SinglePSpace.of.Measurable
+import Theorem.Random.SinglePSpace.of.Measurable.Measurable
+import Theorem.Random.SinglePSpace.of.Measurable
 import Def.Probability.Process.HiddenMarkovSequence.Part2
 import Instance.Probability.Process.DiscreteHMM
+import Instance.Probability.Rv
 open MeasureTheory
 
 
@@ -19,8 +20,24 @@ theorem IsDiscreteHMM.singlePSpace_yy [h : IsDiscreteHMM π x y] (i j : ℕ) : S
     (h.measurable_y i) (h.measurable_y j)
 
 omit [Countable Y] [MeasurableSingletonClass Y] in
-theorem IsDiscreteHMM.singlePSpace_x [h : IsDiscreteHMM π x y] (a b : ℤ) : SinglePSpace π x[a:b] :=
-  Random.SinglePSpace.of.Measurable
-    (Measurable.of_eval fun _ => h.measurable_x _)
+theorem IsDiscreteHMM.singlePSpace_x [h : IsDiscreteHMM π x y] (a b : ℤ) : SinglePSpace π x[a:b] := by
+  have hx' : Measurable (x[a:b]) := by
+    unfold Function.getSlice FunSlice.slice
+    exact Measurable.of_eval fun _ => h.measurable_x _
+  have hμ : ReferenceMeasure.measure
+      (α := Fin ((⟨a, b, 1⟩ : Slice).stop.toNat - (⟨a, b, 1⟩ : Slice).start.toNat) → X) =
+      Measure.count := rfl
+  have hacc : π.map (x[a:b]) ≪ ReferenceMeasure.measure := by
+    rw [hμ]
+    intro s hs0
+    rw [Measure.count_eq_zero_iff.mp hs0]
+    apply measure_empty
+  let q := (π.map (x[a:b])).rnDeriv ReferenceMeasure.measure
+  exact {
+    toIsProbabilityMeasure := inferInstance
+    aemeasurable := hx'.aemeasurable
+    exists_distribution :=
+      ⟨q, Measure.measurable_rnDeriv _ _, (Measure.withDensity_rnDeriv_eq _ _ hacc).symm⟩
+  }
 
 end

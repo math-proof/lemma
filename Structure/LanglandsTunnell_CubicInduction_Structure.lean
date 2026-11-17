@@ -1,18 +1,20 @@
-import Lemma.Matrix.CubicInduction_Carrier
-import Def.LanglandsTunnell_CubicInduction_HeckeDatum
-import Def.LanglandsTunnell_CubicInduction_Growth
-import Instance.LanglandsTunnell_CubicInduction_IotaTorus
-import Def.LanglandsTunnell_CubicInduction_Congruence
-import Def.LanglandsTunnell_CubicInduction_TorusValues
-import Structure.AutomorphicForm_WhittakerCoefficient
-import Def.NumberField_TateGlobalZeta
-import Lemma.Matrix.SmoothingKernel
+module
+
+public import Lemma.Matrix.CubicInduction_Carrier
+public import Def.LanglandsTunnell_CubicInduction_HeckeDatum
+public import Def.LanglandsTunnell_CubicInduction_Growth
+public import Instance.LanglandsTunnell_CubicInduction_IotaTorus
+public import Def.LanglandsTunnell_CubicInduction_Congruence
+public import Def.LanglandsTunnell_CubicInduction_TorusValues
+public import Structure.AutomorphicForm_WhittakerCoefficient
+public import Def.NumberField_TateGlobalZeta
+public import Lemma.Matrix.SmoothingKernel
 
 set_option autoImplicit false
 
 open Matrix IsDedekindDomain NumberField MeasureTheory
 
-noncomputable section
+public noncomputable section
 
 namespace LanglandsTunnell.CubicInduction
 

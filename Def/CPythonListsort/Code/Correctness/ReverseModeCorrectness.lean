@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/ReverseModeCorrectness.lean -/
 
-import Structure.CPythonListsort.Code.Correctness.ReverseScanTransport
+module
+
+public import Structure.CPythonListsort.Code.Correctness.ReverseScanTransport
+
+@[expose] public section
+
 /-!
 # Correctness of CPython's reverse-mode pattern
 

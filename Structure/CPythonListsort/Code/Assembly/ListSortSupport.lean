@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/ListSortSupport.lean -/
 
-import Def.CPythonListsort.Code.Assembly.ListSortInputMode
-import Def.CPythonListsort.Code.Assembly.ReverseSliceSafety.Part2
-import Theorem.CPythonListsort.Code.Equivalence.MinrunResults.Part3
-import Theorem.CPythonListsort.Code.Policy.PushRunPreservation
-import Theorem.CPythonListsort.Code.Assembly.ListSortSupport
+module
+
+public import Def.CPythonListsort.Code.Assembly.ListSortInputMode
+public import Def.CPythonListsort.Code.Assembly.ReverseSliceSafety.Part2
+public import Theorem.CPythonListsort.Code.Equivalence.MinrunResults.Part3
+public import Theorem.CPythonListsort.Code.Policy.PushRunPreservation
+public import Theorem.CPythonListsort.Code.Assembly.ListSortSupport
 /-!
 # Support lemmas for top-level listsort assembly
 
@@ -14,6 +16,9 @@ It deliberately does not define a second listsort evaluator: the traced
 top-level assembly consumes the public helpers from the reviewed
 `ListSortImpl` transcription.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

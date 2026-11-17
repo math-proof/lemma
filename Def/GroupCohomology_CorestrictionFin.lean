@@ -1,5 +1,8 @@
-import Mathlib
-import Lemma.Rep.Corestriction2
+module
+
+public import Mathlib
+
+@[expose] public section
 
 set_option autoImplicit false
 

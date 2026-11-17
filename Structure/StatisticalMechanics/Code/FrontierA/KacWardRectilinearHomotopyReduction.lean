@@ -9,10 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardRectilinearPolygonBridge.Part2
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAngleHomotopy.Part3
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardRectilinearHomotopyReduction
+module
 
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardRectilinearPolygonBridge.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAngleHomotopy.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardRectilinearHomotopyReduction
+
+
+public section
 
 namespace StatMech.FrontierA
 

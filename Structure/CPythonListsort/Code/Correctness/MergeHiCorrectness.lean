@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/MergeHiCorrectness.lean -/
 
-import Def.CPythonListsort.Code.Correctness.EntrySnapshotPermutation
-import Theorem.CPythonListsort.Code.Correctness.MergeHiInvariant
+module
+
+public import Def.CPythonListsort.Code.Correctness.EntrySnapshotPermutation
+public import Theorem.CPythonListsort.Code.Correctness.MergeHiInvariant
 /-!
 # Public functional postcondition for `merge_hi`
 
@@ -12,6 +14,9 @@ public postcondition makes sortedness, occurrence stability, payload
 permutation, framing, and persistent input snapshots consequences of one
 semantic result rather than independent key-only claims.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

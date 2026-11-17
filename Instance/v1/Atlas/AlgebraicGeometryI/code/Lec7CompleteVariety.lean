@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Class.v1.Atlas.AlgebraicGeometryI.code.Lec7CompleteVariety
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Class.v1.Atlas.AlgebraicGeometryI.code.Lec7CompleteVariety
+
+@[expose] public section
+
 open AlgebraicGeometry CategoryTheory Limits
 
 universe u

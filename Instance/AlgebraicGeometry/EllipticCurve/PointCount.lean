@@ -1,10 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/AlgebraicGeometry/EllipticCurve/PointCount.lean -/
 
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.Algebra.Polynomial.Roots
-import Mathlib.Tactic.ComputeDegree
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.NormNum
+module
+
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.Algebra.Polynomial.Roots
+public import Mathlib.Tactic.ComputeDegree
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.NormNum
+
+@[expose] public section
+
 open Polynomial
 
 /-!

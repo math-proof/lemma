@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.MedianGenocchiNumber
-import Lemma.Finset.Enumerative.MedianGenocchiNumber
+import Theorem.Finset.Enumerative.MedianGenocchiNumber
 
 
 namespace MetaMathlibExt

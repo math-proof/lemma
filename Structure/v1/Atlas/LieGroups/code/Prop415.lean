@@ -8,13 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Geometry.Manifold.Algebra.LieGroup
-import Mathlib.MeasureTheory.Group.Measure
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+module
+
+public import Mathlib.Geometry.Manifold.Algebra.LieGroup
+public import Mathlib.MeasureTheory.Group.Measure
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
 
 
-noncomputable section
+public noncomputable section
 
 open scoped Manifold Topology
 

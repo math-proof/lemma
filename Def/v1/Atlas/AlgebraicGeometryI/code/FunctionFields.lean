@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.NakayamaApplications
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.NakayamaApplications
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NakayamaApplications
 import Mathlib.RingTheory.Localization.FractionRing
 import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
 import Mathlib.RingTheory.Algebraic.Integral

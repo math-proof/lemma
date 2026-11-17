@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.Padics.HilbertSymbol
-import Lemma.Nat.Padics.HilbertSymbol
+import Theorem.Nat.Padics.HilbertSymbol
 variable {F : Type*} [Field F]
 
 /-!

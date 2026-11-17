@@ -1,6 +1,11 @@
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Basic.Real.Basic
-import Mathlib.Order.Interval.Finset.Nat
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Order.Interval.Finset.Nat
+
+@[expose] public section
+
 open scoped BigOperators
 
 /-!

@@ -7,6 +7,7 @@ import Lemma.Finset.SupUniv.eq.SupUnivSupUnivSnoc
 import Lemma.Finset.SupAdd.eq.AddSup
 import Lemma.Random.All_Imp_Eq.of.IsHiddenMarkovFac
 import Lemma.Random.IsHiddenMarkovFac.of.All_Eq.IsHiddenMarkovPr
+import Initialize.Tactic.Attr.Basic
 open Fin Finset MeasureTheory Measure Random IsDiscreteHMM Fun
 open scoped ENNReal.ToRealCoe
 set_option maxHeartbeats 800000
@@ -144,4 +145,4 @@ private lemma main
 
 
 -- created on 2020-12-20
--- updated on 2026-11-07
+-- updated on 2026-11-17

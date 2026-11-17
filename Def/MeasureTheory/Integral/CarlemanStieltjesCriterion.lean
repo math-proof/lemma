@@ -4,15 +4,20 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Probability.Moments.Basic
-import Mathlib.Analysis.MeanInequalities
-import Mathlib.Analysis.PSeries
-import Mathlib.Analysis.Real.Pi.Bounds
-import Mathlib.Analysis.Calculus.Taylor
-import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
-import Mathlib.Analysis.SpecialFunctions.Stirling
-import Mathlib.Analysis.SumIntegralComparisons
-import Mathlib.MeasureTheory.Measure.CharacteristicFunction.TaylorExpansion
+module
+
+public import Mathlib.Probability.Moments.Basic
+public import Mathlib.Analysis.MeanInequalities
+public import Mathlib.Analysis.PSeries
+public import Mathlib.Analysis.Real.Pi.Bounds
+public import Mathlib.Analysis.Calculus.Taylor
+public import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
+public import Mathlib.Analysis.SpecialFunctions.Stirling
+public import Mathlib.Analysis.SumIntegralComparisons
+public import Mathlib.MeasureTheory.Measure.CharacteristicFunction.TaylorExpansion
+
+@[expose] public section
+
 set_option autoImplicit false
 
 /-!

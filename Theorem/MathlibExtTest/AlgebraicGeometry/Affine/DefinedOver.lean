@@ -1,12 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/AlgebraicGeometry/Affine/DefinedOver.lean -/
+module
 
-
-import Theorem.AlgebraicGeometry.DefinedOver.Part2
+public import Theorem.AlgebraicGeometry.DefinedOver.Part2
 set_option autoImplicit false
 
 /-!
 Focused tests for `MathlibExt.AlgebraicGeometry.Affine.DefinedOver`.
 -/
+
+public section
 
 
 noncomputable section

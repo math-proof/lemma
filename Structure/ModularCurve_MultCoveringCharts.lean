@@ -1,10 +1,12 @@
-import Structure.AlgebraicCurve_SemistableCharts
-import Def.AlgebraicCurve_ChordalProximity
-import Def.ModularCurve_SupersingularModuli
-import Structure.ModularCurve_LevelOneProlongationPair
-import Lemma.AlgEquiv.SemistableChartsComap
-import Structure.ModularCurve_LevelOneChartFst
-import Instance.ModularCurve_MultCoveringCharts
+module
+
+public import Structure.AlgebraicCurve_SemistableCharts
+public import Def.AlgebraicCurve_ChordalProximity
+public import Def.ModularCurve_SupersingularModuli
+public import Structure.ModularCurve_LevelOneProlongationPair
+public import Lemma.AlgEquiv.SemistableChartsComap
+public import Structure.ModularCurve_LevelOneChartFst
+public import Instance.ModularCurve_MultCoveringCharts
 
 set_option maxHeartbeats 200000
 set_option synthInstance.maxHeartbeats 20000
@@ -12,7 +14,7 @@ set_option autoImplicit false
 
 set_option synthInstance.maxHeartbeats 400000
 
-noncomputable section
+public noncomputable section
 
 open AlgebraicCurve IsLocalRing
 

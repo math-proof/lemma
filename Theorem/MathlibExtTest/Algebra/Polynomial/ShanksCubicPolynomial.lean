@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/Polynomial/ShanksCubicPolynomial.lean -/
+module
 
+public import Def.Algebra.Polynomial.ShanksCubicPolynomial
+public import Mathlib.Algebra.Polynomial.Coeff
 
-import Def.Algebra.Polynomial.ShanksCubicPolynomial
-import Mathlib.Algebra.Polynomial.Coeff
-
+public section
 
 namespace MetaMathlibExt
 

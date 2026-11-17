@@ -19,7 +19,7 @@ import Mathlib.Algebra.FreeAlgebra
 import Mathlib.Algebra.RingQuot
 import Mathlib.LinearAlgebra.FiniteDimensional.Defs
 import Def.v1.Atlas.TensorCategories.code.QuantumSl2.Part2
-import Lemma.Category.Atlas.v1.TensorCategories.code.QuantumSl2
+import Theorem.Category.Atlas.v1.TensorCategories.code.QuantumSl2
 import Abbrev.v1.Atlas.TensorCategories.code.QuantumSl2Concrete
 variable {n : ℕ} {k : Type*} [Field k]
 

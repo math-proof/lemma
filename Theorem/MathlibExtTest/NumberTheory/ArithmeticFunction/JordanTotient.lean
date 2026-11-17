@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ArithmeticFunction/JordanTotient.lean -/
 
 import Def.NumberTheory.ArithmeticFunction.JordanTotient
-import Lemma.Nat.ArithmeticFunction.JordanTotient
+import Theorem.Nat.ArithmeticFunction.JordanTotient
 /-!
 # Examples for Jordan totient
 Boundary values, totient specialization, and source orientation.

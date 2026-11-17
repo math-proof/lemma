@@ -7,11 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Topology.UniformSpace.Real
+public import Mathlib.Topology.UniformSpace.Real
 set_option maxHeartbeats 400000
 
 open Filter Topology
+
+public section
 
 /-- Probability that the random graph $G(n, d/n)$ on $n$ vertices is $k$-colorable. -/
 

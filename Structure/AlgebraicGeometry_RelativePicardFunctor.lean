@@ -1,6 +1,8 @@
-import Mathlib
-import Structure.AlgebraicGeometry_NeronModelPropertyBundleCarrier
-import Instance.AlgebraicGeometry_RelativePicardFunctor
+module
+
+public import Mathlib
+public import Structure.AlgebraicGeometry_NeronModelPropertyBundleCarrier
+public import Instance.AlgebraicGeometry_RelativePicardFunctor
 
 set_option autoImplicit false
 
@@ -10,7 +12,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 
 open NeronModelInfra
 
-noncomputable section
+public noncomputable section
 
 namespace AlgebraicGeometry
 

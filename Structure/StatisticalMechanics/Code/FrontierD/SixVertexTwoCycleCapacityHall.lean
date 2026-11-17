@@ -9,14 +9,16 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPairedBranchResidualHall.Part3
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexTwoCycleCapacityHall
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPairedBranchResidualHall.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexTwoCycleCapacityHall
 open Finset
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure FiniteKeyCapacityTransport
     (Key : Type*) [Fintype Key]

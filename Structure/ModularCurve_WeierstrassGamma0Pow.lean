@@ -1,18 +1,20 @@
-import Mathlib
-import Structure.ModularCurve_WeierstrassLevelCarrier
-import Structure.ModularCurve_WeierstrassLevelModuliDatum
-import Structure.ModularCurve_WeierstrassLevelComponents
-import Structure.ModularCurve_WeierstrassGamma0Sqf
-import Structure.WeierstrassCurve_DrinfeldBasisGlobal
-import Def.WeierstrassCurve_DrinfeldTransportPin
-import Def.WeierstrassCurve_SectionAtOrigin
-import Structure.WeierstrassCurve_DrinfeldLevelFunctor
+module
+
+public import Mathlib
+public import Structure.ModularCurve_WeierstrassLevelCarrier
+public import Structure.ModularCurve_WeierstrassLevelModuliDatum
+public import Structure.ModularCurve_WeierstrassLevelComponents
+public import Structure.ModularCurve_WeierstrassGamma0Sqf
+public import Structure.WeierstrassCurve_DrinfeldBasisGlobal
+public import Def.WeierstrassCurve_DrinfeldTransportPin
+public import Def.WeierstrassCurve_SectionAtOrigin
+public import Structure.WeierstrassCurve_DrinfeldLevelFunctor
 
 set_option autoImplicit false
 
 universe u
 
-noncomputable section
+public noncomputable section
 
 open Polynomial
 

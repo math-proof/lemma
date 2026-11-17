@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ImaginaryQuadraticDiscriminant.lean -/
 
 import Def.NumberTheory.DirichletCharacter.Quadratic
-import Lemma.Nat.DirichletCharacter.Quadratic
+import Theorem.Nat.DirichletCharacter.Quadratic
 set_option autoImplicit false
 
 /-!

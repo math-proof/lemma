@@ -8,17 +8,21 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.NumberTheory.RamificationInertia.HilbertTheory
-import Mathlib.RingTheory.Invariant.Basic
-import Mathlib.RingTheory.Frobenius
-import Mathlib.GroupTheory.GroupAction.Basic
-import Mathlib.Algebra.GroupWithZero.Action.Defs
-import Mathlib.RingTheory.Ideal.Quotient.Basic
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.Algebra.Group.Conj
-import Mathlib.FieldTheory.SeparableClosure
-import Mathlib.FieldTheory.Galois.Basic
-import Def.v1.Atlas.NumberTheoryI.code.GaloisExtensions.Part2
+module
+
+public import Mathlib.NumberTheory.RamificationInertia.HilbertTheory
+public import Mathlib.RingTheory.Invariant.Basic
+public import Mathlib.RingTheory.Frobenius
+public import Mathlib.GroupTheory.GroupAction.Basic
+public import Mathlib.Algebra.GroupWithZero.Action.Defs
+public import Mathlib.RingTheory.Ideal.Quotient.Basic
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.Algebra.Group.Conj
+public import Mathlib.FieldTheory.SeparableClosure
+public import Mathlib.FieldTheory.Galois.Basic
+public import Def.v1.Atlas.NumberTheoryI.code.GaloisExtensions.Part2
+@[expose] public section
+
 open Ideal
 open scoped Pointwise
 

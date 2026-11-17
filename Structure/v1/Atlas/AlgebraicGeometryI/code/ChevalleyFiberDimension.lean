@@ -8,13 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.ChevalleyImage
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.ChevalleyImage
-import Mathlib.RingTheory.Spectrum.Prime.Noetherian
-import Def.v1.Atlas.AlgebraicGeometryI.code.ChevalleyFiberDimension
+module
+
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.ChevalleyImage
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ChevalleyImage
+public import Mathlib.RingTheory.Spectrum.Prime.Noetherian
+public import Def.v1.Atlas.AlgebraicGeometryI.code.ChevalleyFiberDimension
 
 
-noncomputable section
+public noncomputable section
 
 open PrimeSpectrum Topology
 

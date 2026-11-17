@@ -17,7 +17,7 @@ import Mathlib.LinearAlgebra.Dimension.StrongRankCondition
 import Mathlib.LinearAlgebra.Dimension.Finite
 import Def.v1.Atlas.ArithmeticGeometry.code.EffectiveDivisors
 import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.EffectiveDivisors
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.CanonicalDivisors
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.CanonicalDivisors
 import Def.v1.Atlas.ArithmeticGeometry.code.CanonicalDivisors.Part2
 import Def.v1.Atlas.ArithmeticGeometry.code.RiemannRoch.Part4
 open scoped RestrictedProduct

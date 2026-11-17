@@ -1,5 +1,9 @@
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.Data.Rat.Defs
+module
+
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.Data.Rat.Defs
+
+@[expose] public section
 
 set_option autoImplicit false
 

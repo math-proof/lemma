@@ -1,6 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.Buildings.code.CoxeterGroup.RootSystem
+import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.GeometricRepresentation.Part2
 open Finset BigOperators CoxeterGroup
 
 
@@ -91,4 +92,4 @@ end CoxeterGroup
 
 
 -- created on 2026-10-23
--- updated on 2026-10-26
+-- updated on 2026-11-17

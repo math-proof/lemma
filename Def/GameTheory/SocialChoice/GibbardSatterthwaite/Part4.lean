@@ -2,7 +2,7 @@
 
 import Mathlib.Data.Fintype.Basic
 import Instance.Order.StrictTotalOrder
-import Lemma.Set.StrictTotalOrder
+import Theorem.Set.StrictTotalOrder
 import Lemma.Set.SocialChoice.Arrow
 import Mathlib.Data.Finset.Max
 import Mathlib.Data.Finset.Powerset

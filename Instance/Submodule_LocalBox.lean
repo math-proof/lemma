@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_Submodule_LocalBox.lean: instance decls only.
 import Mathlib
-import Lemma.Submodule.FiniteAdeleBox
+import Theorem.Submodule.FiniteAdeleBox
 import Def.QuaternionAlgebra_Order_FiniteIdele
 
 set_option autoImplicit false

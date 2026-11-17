@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.SimpleGraph.OddIndependent
-import Lemma.SimpleGraph.OddIndependent
+import Theorem.SimpleGraph.OddIndependent
 import Mathlib.Combinatorics.SimpleGraph.Hasse
 
 

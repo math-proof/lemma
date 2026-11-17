@@ -1,8 +1,11 @@
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Notation.Analysis.Calculus.Deriv.Operators
-import Def.Analysis.Calculus.Gradient.Operators
-import Lean.Elab.Term
+module
 
+public meta import Lean.Elab.Term
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Notation.Analysis.Calculus.Deriv.Operators
+public meta import Def.Analysis.Calculus.Gradient.Operators
+
+public meta section
 
 /-- One or more binders: `∂[t] body`, or `∂[x, y] body` = `∂[y] (∂[x] body)`. -/
 syntax:max (name := derivSugar) "∂[" ident,+ "] " term:67 : term

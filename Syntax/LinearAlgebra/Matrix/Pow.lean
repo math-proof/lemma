@@ -1,5 +1,8 @@
-import Mathlib.Data.Matrix.Basic
+module
 
+public import Mathlib.Data.Matrix.Basic
+
+public meta section
 
 /-- `α ^ [m, n]` expands to `Matrix (Fin m) (Fin n) α`. -/
 syntax:80 (name := matrixPowShape) (priority := high)

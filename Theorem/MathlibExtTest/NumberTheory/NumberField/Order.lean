@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.NumberField.Order
-import Lemma.Nat.NumberField.Order
+import Theorem.Nat.NumberField.Order
 
 
 -- Clause elimination

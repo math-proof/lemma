@@ -8,15 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Def.StatisticalMechanics.Code.Foundations.FiniteNonnegativeMatrixRate
+module
+
+public import Mathlib
+public import Def.StatisticalMechanics.Code.Foundations.FiniteNonnegativeMatrixRate
 open Finset Matrix Filter Topology
 open scoped Matrix.Norms.Operator NNReal
 
 
 namespace StatMech
 
-noncomputable section
+@[expose] public noncomputable section
 
 variable {α : Type*} [Fintype α] [DecidableEq α]
 

@@ -2,7 +2,7 @@
 
 
 import Mathlib.Computability.PartrecCode
-import Lemma.Nat.RiceTheorem
+import Theorem.Nat.RiceTheorem
 import Abbrev.MathlibExtTest.Computability.RiceTheorem
 
 

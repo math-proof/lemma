@@ -8,11 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.OppositeConjugacyProof
-import Lemma.Fin.Len
-import Lemma.Fin.IsCompl
-import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.SemidirectExistence
+module
 
+public import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.OppositeConjugacyProof
+public import Lemma.Fin.Len
+public import Lemma.Fin.IsCompl
+public import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.SemidirectExistence
+
+
+public section
 
 namespace GeometricAlgebra
 

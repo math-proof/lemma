@@ -1,6 +1,8 @@
-import Mathlib.Algebra.Group.Pointwise.Finset.Basic
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Tactic.Abel
+module
+
+public import Mathlib.Algebra.Group.Pointwise.Finset.Basic
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Tactic.Abel
 open scoped Pointwise
 
 /-!
@@ -9,6 +11,8 @@ open scoped Pointwise
 This file records the composite-modulus sumset bound obtained when every
 nonzero element of the second summand is a unit.
 -/
+
+public section
 
 
 namespace MathlibExt.Combinatorics.Additive.CauchyDavenportChowlaWanted

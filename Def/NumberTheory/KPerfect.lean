@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/KPerfect.lean -/
 
-import Mathlib.NumberTheory.ArithmeticFunction.Misc
+module
+
+public import Mathlib.NumberTheory.ArithmeticFunction.Misc
+
+@[expose] public section
+
 /-!
 # Parameterized perfect numbers
 

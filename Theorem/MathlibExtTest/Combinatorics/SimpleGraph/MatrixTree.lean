@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.SimpleGraph.MatrixTree.Part2
-import Lemma.Finset.SimpleGraph.MatrixTree
+import Theorem.Finset.SimpleGraph.MatrixTree
 /-!
 # Tests for the matrix-tree theorem public API
 

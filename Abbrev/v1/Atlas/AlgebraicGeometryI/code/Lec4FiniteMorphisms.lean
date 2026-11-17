@@ -8,15 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Finite
-import Mathlib.AlgebraicGeometry.Morphisms.QuasiFinite
-import Mathlib.AlgebraicGeometry.Morphisms.UniversallyClosed
-import Mathlib.RingTheory.Spectrum.Prime.Topology
-import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
-import Mathlib.RingTheory.IntegralClosure.Algebra.Defs
-import Mathlib.RingTheory.Ideal.GoingUp
-import Mathlib.RingTheory.QuasiFinite.Basic
-import Mathlib.Topology.KrullDimension
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Finite
+public import Mathlib.AlgebraicGeometry.Morphisms.QuasiFinite
+public import Mathlib.AlgebraicGeometry.Morphisms.UniversallyClosed
+public import Mathlib.RingTheory.Spectrum.Prime.Topology
+public import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
+public import Mathlib.RingTheory.IntegralClosure.Algebra.Defs
+public import Mathlib.RingTheory.Ideal.GoingUp
+public import Mathlib.RingTheory.QuasiFinite.Basic
+public import Mathlib.Topology.KrullDimension
+@[expose] public section
+
 open AlgebraicGeometry PrimeSpectrum TopologicalSpace Set
 
 universe u

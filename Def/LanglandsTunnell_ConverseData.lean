@@ -1,8 +1,14 @@
-import Def.LanglandsTunnell_StandardLocalConstantsAt
-import Def.LanglandsTunnell_ArchEpsilon
-import Lemma.Polynomial.HonestLDatum
-import Def.NumberField_TateGlobalZeta
-import Lemma.Set.HeckeEigenfunction
+module
+
+public import Def.LanglandsTunnell_StandardLocalConstantsAt
+public import Def.LanglandsTunnell_ArchEpsilon
+public import Def.LanglandsTunnell_HonestLDatum
+public import Def.NumberField_TateGlobalZeta
+public import Def.AutomorphicForm_HeckeEigenfunction
+public import Def.AutomorphicForm_AdelicLsXi
+public import Structure.AutomorphicForm_HeckeEigensystem
+
+@[expose] public section
 
 set_option autoImplicit false
 
@@ -158,5 +164,7 @@ def sPartDual (S : Finset (HeightOneSpectrum (𝓞 K))) (Ad : (↥S → ℤ) →
       ((Ideal.absNorm v.1.asIdeal : ℕ) : ℂ) ^ ((1 : ℂ) / 2 - s)) ^ (n v)
 
 end LanglandsTunnell.Converse
+
+end
 
 end

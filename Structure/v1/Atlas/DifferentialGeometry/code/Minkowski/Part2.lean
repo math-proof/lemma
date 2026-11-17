@@ -8,16 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Calculus.ContDiff.Defs
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.LinearAlgebra.BilinearMap
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Mathlib.Topology.Algebra.Module.Basic
-import Mathlib.Algebra.Order.BigOperators.Ring.Finset
-import Def.v1.Atlas.DifferentialGeometry.code.Minkowski.Part2
+module
+
+public import Mathlib.Analysis.Calculus.ContDiff.Defs
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.LinearAlgebra.BilinearMap
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Mathlib.Topology.Algebra.Module.Basic
+public import Mathlib.Algebra.Order.BigOperators.Ring.Finset
+public import Def.v1.Atlas.DifferentialGeometry.code.Minkowski.Part2
 
 
-noncomputable section
+public noncomputable section
 
 open Finset
 

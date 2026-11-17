@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/GaussianQBinomial.lean -/
 
-import Mathlib.Algebra.Polynomial.Basic
+module
 
+public import Mathlib.Algebra.Polynomial.Basic
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

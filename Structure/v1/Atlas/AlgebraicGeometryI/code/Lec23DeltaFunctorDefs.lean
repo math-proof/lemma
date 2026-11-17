@@ -8,13 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
+module
+
+public import Mathlib
 open CategoryTheory Category Limits Finset
 
 set_option maxHeartbeats 1600000
 
 
-noncomputable section
+public noncomputable section
 
 universe v u
 

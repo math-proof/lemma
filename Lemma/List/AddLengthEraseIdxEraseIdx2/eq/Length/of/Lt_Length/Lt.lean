@@ -11,7 +11,6 @@ namespace CoxeterSystemFromDeletion
 -/
 @[path]
 lemma eraseIdx_eraseIdx_length
-  [Group W]
   {l : List α}
   {i j : ℕ}
 -- given
@@ -36,11 +35,9 @@ namespace CoxeterSystemFromDeletion
 @[path]
 lemma deletion_relation_even_length
   [Group W]
-  [Group W]
   {gen : B → W}
   {word : List B}
 -- given
-  (hgen_inv : ∀ s, gen s * gen s = 1)
   (hDel : SatisfiesDeletionConditionGen gen)
   (hw : (word.map gen).prod = 1) :
 -- imply
@@ -76,7 +73,6 @@ namespace CoxeterSystemFromDeletion
 -/
 @[path]
 lemma inv_eq_self_of_involution
-  [Group W]
   [Group G]
   {g : G}
 -- given
@@ -124,7 +120,7 @@ lemma reverse_map_prod_inv_of_involutions
   ((l.reverse).map gen).prod = ((l.map gen).prod)⁻¹ := by
 -- proof
   rw [List.map_reverse, List.prod_reverse_noncomm,
-    map_inv_eq_self_of_involutions gen hgen_inv l]
+    map_inv_eq_self_of_involutions hgen_inv]
 
 end CoxeterSystemFromDeletion
 
@@ -155,7 +151,7 @@ lemma first_half_nonreduced
       ((word.drop (m + 1)).map gen).prod = 1 := by
       rw [← List.prod_append, ← List.map_append, List.take_append_drop]; exact hw
     rw [mul_eq_one_iff_eq_inv] at hsplit
-    rw [reverse_map_prod_inv_of_involutions gen hgen_inv, hsplit]
+    rw [reverse_map_prod_inv_of_involutions hgen_inv, hsplit]
 
 end CoxeterSystemFromDeletion
 
@@ -175,9 +171,10 @@ lemma alternating_word_maps_to_one
   (hgen_ne : ∀ s t, s ≠ t → gen s * gen t ≠ 1)
   (h_prod : (gen s * gen t) ^ m = 1) :
 -- imply
-  let M := deletionCoxeterMatrix gen hgen_inv hgen_ne (M.simple s * M.simple t) ^ m = 1 := by
+  ((deletionCoxeterMatrix gen hgen_inv hgen_ne).simple s *
+    (deletionCoxeterMatrix gen hgen_inv hgen_ne).simple t) ^ m = 1 := by
 -- proof
-  intro M
+  let M := deletionCoxeterMatrix gen hgen_inv hgen_ne
   have h_dvd : orderOf (gen s * gen t) ∣ m := orderOf_dvd_of_pow_eq_one h_prod
   have h_M_eq : M s t = orderOf (gen s * gen t) := by
     simp only [M, deletionCoxeterMatrix, Matrix.of_apply]
@@ -196,7 +193,6 @@ namespace CoxeterSystemFromDeletion
 -/
 @[path]
 lemma consecProd_succ
-  [Group W]
   [Monoid W']
   {g : ℕ → W'}
   {k m : ℕ} :
@@ -219,7 +215,6 @@ namespace CoxeterSystemFromDeletion
 -/
 @[path]
 lemma consecProd_succ_succ
-  [Group W]
   [Monoid W']
   {g : ℕ → W'}
   {k m : ℕ} :
@@ -250,7 +245,7 @@ lemma cycling_alternating_of_L_type
   have hpeel : consecProd g k m =
     g k * g (k + 1) * consecProd g (k + 2) (m - 2) := by
     conv_lhs => rw [show m = (m - 2) + 2 from by omega]
-    exact consecProd_succ_succ g k (m - 2)
+    exact consecProd_succ_succ
   have hLk := h_L k
   rw [hpeel] at hLk
   exact mul_right_cancel (mul_right_cancel hLk)
@@ -265,7 +260,6 @@ namespace CoxeterSystemFromDeletion
 @[path]
 lemma cycling_forces_alternating
   [Group W]
-  [Group W]
   {gen : B → W}
   {word : List B}
   {m : ℕ}
@@ -277,8 +271,7 @@ lemma cycling_forces_alternating
   ∀ (k : ℕ) (hk : k + 2 < word.length), gen (word.get ⟨k, by omega⟩) = gen (word.get ⟨k + 2, by omega⟩) := by
 -- proof
   intro k hk
-  have h := cycling_alternating_of_L_type
-    (wordCyclicGen gen word (2 * m) hlen (by omega)) m hm h_L_type k
+  have h := cycling_alternating_of_L_type hm h_L_type k
   simp only [wordCyclicGen, Nat.mod_eq_of_lt (show k < 2 * m by omega),
     Nat.mod_eq_of_lt (show k + 2 < 2 * m by omega)] at h
   exact h

@@ -1,11 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Fourier/Scaling.lean -/
+module
 
-import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
-import Mathlib.Analysis.Fourier.FourierTransform
-import Mathlib.MeasureTheory.Measure.Haar.NormedSpace
+public import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
+public import Mathlib.Analysis.Fourier.FourierTransform
+public import Mathlib.MeasureTheory.Measure.Haar.NormedSpace
 open scoped FourierTransform
 open MeasureTheory
 
+public section
 
 namespace Real
 

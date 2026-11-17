@@ -9,7 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section34.Part3
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section34
 import Mathlib.AlgebraicTopology.SingularHomology.Basic
 import Mathlib.Algebra.Category.ModuleCat.Abelian
 import Mathlib.Algebra.Category.ModuleCat.Colimits
@@ -23,7 +22,6 @@ import Mathlib.Topology.Separation.Regular
 import Mathlib.Algebra.Group.Subgroup.Ker
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section36.Part7
 open CategoryTheory AlgebraicTopology Limits TopologicalSpace MonoidalCategory
-
 
 noncomputable section
 

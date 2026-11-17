@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/CategoryTheory/Monoidal/Tor/Additive.lean -/
 
-import Mathlib.CategoryTheory.Monoidal.Tor
-import Instance.CategoryTheory.Abelian.LeftDerived.Additive
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Tor
+public import Instance.CategoryTheory.Abelian.LeftDerived.Additive
 /-!
 # Additivity of `Tor`
 
@@ -11,6 +13,7 @@ tensoring with a fixed object is additive and left-derived functors of additive
 functors are additive, each functor `(Tor C n).obj M` is additive.
 -/
 
+@[expose] public section
 
 namespace CategoryTheory
 

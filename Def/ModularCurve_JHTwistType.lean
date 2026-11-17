@@ -1,5 +1,9 @@
-import Def.ModularCurve_JHNodeDepthInf
-import Structure.ModularCurve_JHTwistType
+module
+
+public import Def.ModularCurve_JHNodeDepthInf
+public import Structure.ModularCurve_JHTwistType
+
+@[expose] public section
 
 set_option autoImplicit false
 

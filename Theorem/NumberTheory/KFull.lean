@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/KFull.lean -/
+module
 
-import Mathlib.Data.Nat.Factorization.Basic
-import Def.NumberTheory.KFull
+public import Mathlib.Data.Nat.Factorization.Basic
+public import Def.NumberTheory.KFull
+
 /-!
 # `k`-full numbers
 
@@ -20,6 +22,8 @@ values at `k = 0` and `k = 1` are documented and proved explicitly
 The function `Nat.powerfulPart` keeps exactly the prime-power factors whose
 exponents are at least two.
 -/
+
+public section
 
 
 namespace Nat

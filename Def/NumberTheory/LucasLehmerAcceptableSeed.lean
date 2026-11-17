@@ -4,8 +4,13 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
-import Mathlib.NumberTheory.LucasLehmer
+module
+
+public import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
+public import Mathlib.NumberTheory.LucasLehmer
+
+@[expose] public section
+
 /-!
 # The Lucas-Lehmer test with a general seed
 

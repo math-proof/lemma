@@ -22,7 +22,7 @@ import Mathlib.Data.Real.Sqrt
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Combinatorics.SimpleGraph.Finite
 import Def.v1.Atlas.AnAlgorithmistsToolkit.code.Cheeger
-import Lemma.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.Cheeger
+import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.Cheeger
 
 
 namespace LovaszSimonovits

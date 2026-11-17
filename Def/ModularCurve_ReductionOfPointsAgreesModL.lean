@@ -1,6 +1,4 @@
 import Mathlib
-import Lemma.Scheme.NeronModelPropertyBundleCarrier
-import Lemma.Scheme.RelativeGroupLaw
 import Lemma.Finsupp.ReductionModL
 
 set_option autoImplicit false

@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/GesselWord.lean -/
+module
 
+public import Def.NumberTheory.GesselWord
+public import Mathlib.Tactic.IntervalCases
+public import Mathlib.Tactic.NormNum
 
-import Def.NumberTheory.GesselWord
-import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.NormNum
-
+public section
 
 namespace MetaMathlibExt
 

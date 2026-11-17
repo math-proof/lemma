@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/VanDerLaanSequence.lean -/
 
-import Mathlib.Tactic.Order
+module
 
+public import Mathlib.Tactic.Order
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

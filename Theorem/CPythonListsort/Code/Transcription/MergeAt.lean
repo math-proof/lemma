@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeAt.lean -/
 
-import Def.CPythonListsort.Code.Transcription.MergeHi.Part6
-import Def.CPythonListsort.Code.Transcription.MergeLo.Part6
-import Def.CPythonListsort.Code.Transcription.MergeAt.Part4
+module
+
+public import Def.CPythonListsort.Code.Transcription.MergeHi.Part6
+public import Def.CPythonListsort.Code.Transcription.MergeLo.Part6
+public import Def.CPythonListsort.Code.Transcription.MergeAt.Part4
+public import Def.CPythonListsort.Code.Transcription.MergeAt.Part3
 /-!
 # Pending-stack merge dispatch
 
@@ -13,6 +16,8 @@ in their final positions and the shorter remaining run selects `merge_lo` or
 `merge_hi`.
 -/
 
+
+public section
 
 namespace CPythonListsort
 

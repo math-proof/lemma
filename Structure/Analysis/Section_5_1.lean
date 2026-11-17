@@ -1,5 +1,9 @@
-import Mathlib
-import Theorem.Analysis.Section_4_3.Part2
+module
+
+public import Mathlib
+public import Theorem.Analysis.Section_4_3.Part2
+public section
+
 set_option doc.verso.suggestions false
 
 /-!

@@ -8,15 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.LieGroups.code.ContinuousRep.Part3
-import Lemma.Complex.IsStronglyContinuousToMonoidHom
-import Mathlib.LinearAlgebra.Eigenspace.Basic
-import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
-import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.Analysis.Normed.Algebra.GelfandFormula
+module
+
+public import Def.v1.Atlas.LieGroups.code.ContinuousRep.Part3
+public import Theorem.Complex.IsStronglyContinuousToMonoidHom
+public import Mathlib.LinearAlgebra.Eigenspace.Basic
+public import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
+public import Mathlib.Analysis.Complex.Polynomial.Basic
+public import Mathlib.Analysis.Normed.Algebra.GelfandFormula
 
 
-noncomputable section
+public noncomputable section
 
 open scoped ComplexOrder
 

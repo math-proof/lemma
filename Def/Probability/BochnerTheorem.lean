@@ -8,7 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.Probability.CharacteristicFunction
+module
+
+public import Def.Probability.CharacteristicFunction
+
+@[expose] public section
+
 open MeasureTheory Complex
 
 

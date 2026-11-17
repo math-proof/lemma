@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Probability/PaleyZygmund.lean -/
 
 
-import Lemma.Measure.PaleyZygmund
+import Theorem.Measure.PaleyZygmund
 open MeasureTheory
 
 

@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/GradedAlgebra/MultigradedPolynomialModule.lean -/
+module
 
+public import Structure.RingTheory.GradedAlgebra.MultigradedPolynomialModule
 
-import Structure.RingTheory.GradedAlgebra.MultigradedPolynomialModule
-
+public section
 
 -- The zero exponent embeds as the zero grading index.
 example {n : ℕ} : MetaMathlibExt.natDegreeToInt (0 : Fin n →₀ ℕ) = 0 := by

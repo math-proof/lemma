@@ -5,11 +5,6 @@ import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.WordSigmaInvariance
 import Def.v1.Atlas.Buildings.code.CoxeterGroup.RootSystem
 import Def.v1.Atlas.Buildings.code.CoxeterGroup.Reflections
 import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.CoxeterHomomorphism.Part2
-import Lemma.List.WordSigma.eq.AddMulS_WordSigma_E.of.All_Eq_0.Ne
-import Lemma.List.EqWordSSigma.of.WordProd
-import Lemma.Real.IsRoot_Sigma
-import Lemma.List.IsReducedDrop.of.IsReduced
-import Lemma.List.Eq_E.of.IsPositive_IsNegativeSigma_EqBilinForm
 open Finset BigOperators List CoxeterGroup Real
 
 
@@ -244,7 +239,7 @@ namespace CoxeterGroup
 [conj_simpleReflection_eq_generalizedReflection](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/ReflectionLengthDecrease.lean)
 -/
 @[path]
-private lemma conj_simpleReflection_eq_generalizedReflection
+lemma conj_simpleReflection_eq_generalizedReflection
   [DecidableEq B]
   [Fintype B]
   [Group W]
@@ -276,4 +271,4 @@ end CoxeterGroup
 
 
 -- created on 2026-10-23
--- updated on 2026-10-26
+-- updated on 2026-11-17

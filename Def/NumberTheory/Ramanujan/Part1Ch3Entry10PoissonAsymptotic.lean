@@ -11,7 +11,7 @@ import Mathlib.Analysis.Complex.Exponential
 import Mathlib.Combinatorics.Enumerative.Stirling
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
 import Def.Combinatorics.AssociatedStirlingSecond
-import Lemma.Finset.AssociatedStirlingSecond
+import Theorem.Finset.AssociatedStirlingSecond
 import Mathlib.Analysis.Asymptotics.Arith
 import Mathlib.Analysis.Calculus.Deriv.Pow
 import Mathlib.Analysis.Calculus.MeanValue

@@ -1,5 +1,7 @@
 import Def.Dynamics.PolicyTrajectory.ContinuousAction
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
@@ -10,7 +12,7 @@ Every function of `(s[t], a[t])` (finite state / action spaces) is integrable un
 private lemma main
   [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [Fintype 𝒮]
   [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜] [Fintype 𝒜]
-  [NormedAddCommGroup E]
+  [NormedAddCommGroup ℰ]
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
@@ -19,7 +21,7 @@ private lemma main
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
   (θ : Θ)
   (t : ℕ)
-  (φ : 𝒮 → 𝒜 → E) :
+  (φ : 𝒮 → 𝒜 → ℰ) :
 -- imply
   Integrable (fun ω => φ (s t ω) (a t ω)) (M.traj θ) := by
 -- proof
@@ -34,4 +36,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-11-16
+-- updated on 2026-11-17

@@ -1,5 +1,9 @@
-import Def.AlgebraicCurve_PlaceEvaluation
-import Def.AlgebraicCurve_ComplexLineIntegral
+module
+
+public import Def.AlgebraicCurve_PlaceEvaluation
+public import Def.AlgebraicCurve_ComplexLineIntegral
+
+public section
 
 set_option autoImplicit false
 

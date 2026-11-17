@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/ElementDifferent.lean -/
 
-import Mathlib.RingTheory.DedekindDomain.Different
+module
+
+public import Mathlib.RingTheory.DedekindDomain.Different
+
+@[expose] public section
+
 set_option autoImplicit false
 
 variable (A K L : Type*) {B : Type*}

@@ -8,12 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Calculus.MeanValue
-import Mathlib.Analysis.Calculus.DerivativeTest
-import Mathlib.Analysis.Calculus.ContDiff.Comp
-import Mathlib.Analysis.Calculus.ContDiff.Operations
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Topology.Order.Basic
+module
+
+public import Mathlib.Analysis.Calculus.MeanValue
+public import Mathlib.Analysis.Calculus.DerivativeTest
+public import Mathlib.Analysis.Calculus.ContDiff.Comp
+public import Mathlib.Analysis.Calculus.ContDiff.Operations
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Topology.Order.Basic
+
+@[expose] public section
+
 open Set
 
 

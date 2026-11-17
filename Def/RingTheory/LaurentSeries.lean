@@ -6,10 +6,14 @@ All rights reserved.
 Copyright (c) 2024 AlgebraicCombinatorics contributors. All rights reserved.
 Authors: AlgebraicCombinatorics contributors
 -/
-import Mathlib
-import Lemma.PowerSeries.InfiniteProducts2
-import Lemma.Partition.NPartition
-import Structure.RingTheory.LaurentSeries
+
+module
+
+public import Mathlib
+public import Structure.RingTheory.LaurentSeries
+
+@[expose] public section
+
 open scoped LaurentPolynomial
 
 /-!

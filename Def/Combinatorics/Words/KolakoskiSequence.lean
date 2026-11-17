@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Words/KolakoskiSequence.lean -/
 
-import Mathlib.Data.Nat.Basic
+module
+
+public import Mathlib.Data.Nat.Basic
+
+@[expose] public section
+
 /-!
 # Kolakoski sequences
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Abbrev.FreyPackage_ModMCarrier_LatticeRed
+module
+
+public import Mathlib
+public import Abbrev.FreyPackage_ModMCarrier_LatticeRed
+
+@[expose] public section
 
 set_option autoImplicit false
 noncomputable section

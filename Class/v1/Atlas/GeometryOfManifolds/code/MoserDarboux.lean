@@ -9,10 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra.Part3
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticLinearAlgebra
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticStandardBasis
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.HamiltonianVectorFields
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticEvenDim
 import Theorem.v1.Atlas.GeometryOfManifolds.code.SymplecticStandardBasis
 import Def.v1.Atlas.GeometryOfManifolds.code.HamiltonianVectorFields.Part3
 import Structure.v1.Atlas.GeometryOfManifolds.code.MoserDarboux
@@ -23,7 +19,6 @@ universe u_chart v_chart
 open Module FiniteDimensional Finset
 open SymplecticLinearAlgebra
 open DifferentialFormSpace
-
 
 /-- Axiomatization of finite-dimensional behavior of the interior-product map: for a
 nondegenerate $2$-form $\omega$, the map $X \mapsto \iota_X\omega$ is bijective, and the

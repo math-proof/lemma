@@ -5,10 +5,12 @@ Copyright (c) 2026 Adam Kiezun. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Adam Kiezun
 -/
+module
 
-import Mathlib.Combinatorics.SimpleGraph.Maps
-import Def.Combinatorics.SimpleGraph.VertexTransitive
+public import Mathlib.Combinatorics.SimpleGraph.Maps
+public import Def.Combinatorics.SimpleGraph.VertexTransitive
 
+public section
 
 namespace SimpleGraph
 

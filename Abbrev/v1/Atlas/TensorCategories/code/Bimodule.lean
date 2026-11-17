@@ -8,7 +8,11 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Bimod
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Bimod
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 universe v u

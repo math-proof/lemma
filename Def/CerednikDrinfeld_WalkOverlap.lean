@@ -1,7 +1,11 @@
-import Mathlib.Combinatorics.SimpleGraph.Walk.Maps
-import Mathlib.Combinatorics.SimpleGraph.Walk.Operations
-import Mathlib.Algebra.BigOperators.Group.List.Basic
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Walk.Maps
+public import Mathlib.Combinatorics.SimpleGraph.Walk.Operations
+public import Mathlib.Algebra.BigOperators.Group.List.Basic
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 set_option autoImplicit false
 

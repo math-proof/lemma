@@ -8,11 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Ideal.Cotangent
-import Mathlib.LinearAlgebra.Dual.Defs
+module
+
+public import Mathlib.RingTheory.Ideal.Cotangent
+public import Mathlib.LinearAlgebra.Dual.Defs
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 open IsLocalRing
 

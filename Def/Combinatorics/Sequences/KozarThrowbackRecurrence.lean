@@ -1,9 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Sequences/KozarThrowbackRecurrence.lean -/
 
-import Mathlib.Logic.Function.Iterate
-import Mathlib.Order.Interval.Finset.Nat
-import Mathlib.Tactic.Push
+module
 
+public import Mathlib.Logic.Function.Iterate
+public import Mathlib.Order.Interval.Finset.Nat
+public import Mathlib.Tactic.Push
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

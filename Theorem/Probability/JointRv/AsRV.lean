@@ -1,16 +1,20 @@
-import Mathlib.MeasureTheory.Measure.Prod
-import Mathlib.MeasureTheory.Measure.WithDensity
-import Mathlib.MeasureTheory.Measure.Decomposition.Lebesgue
-import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
-import Mathlib.MeasureTheory.MeasurableSpace.Constructions
-import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
-import Mathlib.Probability.Independence.Basic
-import Mathlib.Probability.Independence.Conditional
-import Def.Probability.SymbolicProbability
-import Theorem.Function
-import Def.Probability.Expectation
+module
+
+public import Mathlib.MeasureTheory.Measure.Prod
+public import Mathlib.MeasureTheory.Measure.WithDensity
+public import Mathlib.MeasureTheory.Measure.Decomposition.Lebesgue
+public import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
+public import Mathlib.MeasureTheory.MeasurableSpace.Constructions
+public import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.Probability.Independence.Conditional
+public import Def.Probability.SymbolicProbability
+public import Theorem.Function
+public import Def.Probability.Expectation
 open MeasureTheory
 open scoped ProbabilityTheory
+
+public section
 
 
 @[simp] theorem Expectation.asRV_function {Ω α : Type*} (f : Ω → α) :
@@ -24,4 +28,3 @@ open scoped ProbabilityTheory
 @[simp] theorem Expectation.asRV_fun {Ω α : Type*} (f : Fun ℕ (Ω → α)) :
     Expectation.asRV f = fun ω t ↦ f.toFun t ω :=
   rfl
-

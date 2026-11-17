@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.CategoryTheory.Monoidal.Preadditive
-import Mathlib.CategoryTheory.Monoidal.Braided.Basic
-import Theorem.v1.Atlas.TensorCategories.code.TensorNondegen.ZeroTensorZero
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.CategoryTheory.Monoidal.Preadditive
+public import Mathlib.CategoryTheory.Monoidal.Braided.Basic
+public import Theorem.v1.Atlas.TensorCategories.code.TensorNondegen.ZeroTensorZero
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open CategoryTheory MonoidalCategory Category CategoryTheory.Limits ZeroObject

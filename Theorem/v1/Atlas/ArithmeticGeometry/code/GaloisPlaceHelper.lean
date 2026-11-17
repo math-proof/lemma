@@ -7,10 +7,12 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.RingTheory.DedekindDomain.AdicValuation
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation
 open IsDedekindDomain WithZero
 
+public section
 
 /-- Auxiliary lemma: no element of `Multiplicative ℤ` can satisfy `b'.toAdd ≤ -n` for every
 natural number $n$, since taking $n$ large enough produces a contradiction. -/

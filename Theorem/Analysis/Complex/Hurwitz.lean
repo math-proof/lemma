@@ -1,9 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Hurwitz.lean -/
+module
 
-import Mathlib.Analysis.Complex.LocallyUniformLimit
-import Mathlib.Analysis.Complex.OpenMapping
+public import Mathlib.Analysis.Complex.LocallyUniformLimit
+public import Mathlib.Analysis.Complex.OpenMapping
 open Filter Metric Set
 open scoped Topology
+
+public section
 
 variable {α : Type*} {F : α → ℂ → ℂ} {f : ℂ → ℂ}
   {φ : Filter α} {U : Set ℂ}

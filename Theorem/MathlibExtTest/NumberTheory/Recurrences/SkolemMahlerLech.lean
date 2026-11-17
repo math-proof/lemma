@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Recurrences/SkolemMahlerLech.lean -/
 
 
-import Lemma.Nat.Recurrences.SkolemMahlerLech
+import Theorem.Nat.Recurrences.SkolemMahlerLech
 import Mathlib.Algebra.Field.Rat
 import Mathlib.Data.Set.Finite.Basic
 import Mathlib.Data.Set.Lattice.Bounded

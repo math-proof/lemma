@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/ReverseSliceSafety.lean -/
 
-import Structure.CPythonListsort.Code.Assembly.SortSliceSafety
-import Def.CPythonListsort.Code.Transcription.ReverseSlice
+module
+
+public import Structure.CPythonListsort.Code.Assembly.SortSliceSafety
+public import Def.CPythonListsort.Code.Transcription.ReverseSlice
 /-!
 # Slice-reversal safety
 
@@ -21,7 +23,7 @@ universe u v
 variable {κ : Type u} {ν : Type v}
 
 /-- Which physical `reverse_slice` call is being instrumented. -/
-inductive ReverseSlicePhase where
+public inductive ReverseSlicePhase where
   | keys
   | values
   deriving DecidableEq, Repr

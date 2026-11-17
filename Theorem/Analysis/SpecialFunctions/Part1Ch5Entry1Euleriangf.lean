@@ -1,16 +1,21 @@
 /-
 Author: @akiezun, Avocado
 -/
-import Mathlib.Algebra.Polynomial.Taylor
-import Mathlib.NumberTheory.Bernoulli
-import Mathlib.NumberTheory.BernoulliPolynomials
-import Mathlib.Tactic.NormNum.NatFactorial
-import Def.Analysis.SpecialFunctions.Part1Ch5Entry1Euleriangf
+module
+
+public import Mathlib.Algebra.Polynomial.Taylor
+public import Mathlib.NumberTheory.Bernoulli
+public import Mathlib.NumberTheory.BernoulliPolynomials
+public import Mathlib.Tactic.NormNum.NatFactorial
+public import Def.Analysis.SpecialFunctions.Part1Ch5Entry1Euleriangf
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 5, Entry 1
 
 Unique (1-2ⁿ)Bₙ/n! solution of a shift-plus-derivative identity.
 -/
+
+public section
 
 
 namespace Ramanujan.Part1Ch5

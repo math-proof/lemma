@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Structure.v1.Atlas.ArithmeticGeometry.code.GenusOnePlaneCubic
+module
+
+public import Mathlib
+public import Structure.v1.Atlas.ArithmeticGeometry.code.GenusOnePlaneCubic
+
+@[expose] public section
+
 /-- A smooth projective curve over a field $k$ packaged as: an underlying scheme (with proofs of
 integrality, Krull dimension one, nonemptiness), a structure morphism to $\mathrm{Spec}\,k$, and a
 (declared) genus value. The smoothness is left implicit. -/

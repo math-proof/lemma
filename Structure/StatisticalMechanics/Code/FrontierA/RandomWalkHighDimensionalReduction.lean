@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib.Topology.Algebra.Order.LiminfLimsup
-import Theorem.StatisticalMechanics.Code.Sharpness.IsingSharpness
+module
+
+public import Mathlib.Topology.Algebra.Order.LiminfLimsup
+public import Theorem.StatisticalMechanics.Code.Sharpness.IsingSharpness
+public section
+
 open Filter Finset Topology
 
 

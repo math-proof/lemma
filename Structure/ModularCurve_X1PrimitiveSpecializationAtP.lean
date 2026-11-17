@@ -1,15 +1,17 @@
-import Mathlib
-import Def.FLTPrelim_Ramification
-import Instance.EllipticCurve_FrobeniusTrace
-import Instance.EllipticCurve_TateModule
-import Lemma.MvPolynomial.X1HeckeModule
-import Structure.ModularCurve_X1PrimitiveSpecialization
-import Lemma.LaurentSeries.QExpFrobeniusModL
-import Def.ModularCurve_X1PrimitiveSpecializationAtP
+module
+
+public import Mathlib
+public import Def.FLTPrelim_Ramification
+public import Instance.EllipticCurve_FrobeniusTrace
+public import Instance.EllipticCurve_TateModule
+public import Lemma.MvPolynomial.X1HeckeModule
+public import Structure.ModularCurve_X1PrimitiveSpecialization
+public import Lemma.LaurentSeries.QExpFrobeniusModL
+public import Def.ModularCurve_X1PrimitiveSpecializationAtP
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open IntermediateField AlgebraicCurve CongruenceSubgroup
 

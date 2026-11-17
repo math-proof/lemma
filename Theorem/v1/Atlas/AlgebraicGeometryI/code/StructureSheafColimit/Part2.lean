@@ -7,13 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.AlgebraicGeometry.FunctionField
-import Mathlib.AlgebraicGeometry.StructureSheaf
-import Mathlib.Topology.Sheaves.Stalks
-import Def.v1.Atlas.AlgebraicGeometryI.code.StructureSheafColimit
+public import Mathlib.AlgebraicGeometry.FunctionField
+public import Mathlib.AlgebraicGeometry.StructureSheaf
+public import Mathlib.Topology.Sheaves.Stalks
+public import Def.v1.Atlas.AlgebraicGeometryI.code.StructureSheafColimit
 open AlgebraicGeometry TopologicalSpace CategoryTheory Opposite
 
+public section
 
 noncomputable section
 

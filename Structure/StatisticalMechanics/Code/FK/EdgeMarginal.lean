@@ -9,14 +9,18 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Foundations.ConfigSpace
-import Theorem.StatisticalMechanics.Code.Inequalities.IncreasingEvent.Part2
-import Theorem.StatisticalMechanics.Code.FK.RandomCluster.Part6
-import Theorem.StatisticalMechanics.Code.FK.FKG
-import Theorem.StatisticalMechanics.Code.FK.MonoBC.Part4
-import Theorem.StatisticalMechanics.Code.FK.DensityBounds
-import Def.StatisticalMechanics.Code.FK.EdgeMarginal
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Foundations.ConfigSpace
+public import Theorem.StatisticalMechanics.Code.Inequalities.IncreasingEvent.Part2
+public import Theorem.StatisticalMechanics.Code.FK.RandomCluster.Part6
+public import Theorem.StatisticalMechanics.Code.FK.FKG
+public import Theorem.StatisticalMechanics.Code.FK.MonoBC.Part4
+public import Theorem.StatisticalMechanics.Code.FK.DensityBounds
+public import Def.StatisticalMechanics.Code.FK.EdgeMarginal
+public section
+
 open scoped BigOperators
 open SimpleGraph
 

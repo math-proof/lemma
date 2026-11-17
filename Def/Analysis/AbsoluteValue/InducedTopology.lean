@@ -1,4 +1,9 @@
-import Mathlib.Analysis.AbsoluteValue.Equivalence
+module
+
+public import Mathlib.Analysis.AbsoluteValue.Equivalence
+
+@[expose] public section
+
 /-!
 # Topology induced by an absolute value
 

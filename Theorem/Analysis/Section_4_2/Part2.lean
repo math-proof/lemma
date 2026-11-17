@@ -1,6 +1,8 @@
-import Mathlib
-import Mathlib.Algebra.Group.MinimalAxioms
-import Notation.Analysis.Section_4_2
+module
+
+public import Mathlib
+public import Mathlib.Algebra.Group.MinimalAxioms
+public import Notation.Analysis.Section_4_2
 set_option doc.verso.suggestions false
 
 /-!
@@ -35,6 +37,8 @@ Users of the companion who have completed the exercises in this section are welc
 - (Add tip here)
 
 -/
+
+public section
 
 
 namespace Section_4_2

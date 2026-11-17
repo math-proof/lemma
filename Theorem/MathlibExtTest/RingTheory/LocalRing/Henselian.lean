@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/LocalRing/Henselian.lean -/
 
 
-import Lemma.Int.LocalRing.Henselian
+import Theorem.Int.LocalRing.Henselian
 open IsLocalRing Polynomial
 
 variable (R : Type*) [CommRing R] [IsLocalRing R]

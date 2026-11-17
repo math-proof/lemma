@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Abbrev.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM1.LinearPDEs
+module
 
+public import Mathlib
+public import Abbrev.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM1.LinearPDEs
+
+@[expose] public section
 
 /-- The order of a multi-index $\alpha = (\alpha_1, \ldots, \alpha_n)$ is
 $|\alpha| = \sum_i \alpha_i$, i.e. the total number of derivatives it represents. -/

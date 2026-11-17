@@ -1,11 +1,13 @@
-import Mathlib
+module
 
-import Structure.AlgebraicGeometry_OrderedAffineCoverCech
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Mathlib
+
+public import Structure.AlgebraicGeometry_OrderedAffineCoverCech
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 universe u
 

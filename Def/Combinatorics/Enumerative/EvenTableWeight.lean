@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/EvenTableWeight.lean -/
 
-import Def.Combinatorics.Enumerative.ColumnWeight
-import Structure.Combinatorics.Enumerative.EvenTableWeight
+module
+
+public import Def.Combinatorics.Enumerative.ColumnWeight
+public import Structure.Combinatorics.Enumerative.EvenTableWeight
+
+@[expose] public section
+
 open scoped BigOperators
 
 /-!

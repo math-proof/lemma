@@ -8,15 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.Compactness.LocallyCompact
-import Mathlib.Topology.Metrizable.Urysohn
-import Mathlib.Topology.MetricSpace.Pseudo.Basic
-import Mathlib.Topology.UniformSpace.Cauchy
-import Mathlib.Topology.UniformSpace.Compact
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Topology.Algebra.Module.WeakDual
-import Mathlib.Topology.ContinuousMap.Algebra
-import Mathlib.Topology.PartitionOfUnity
+module
+
+public import Mathlib.Topology.Compactness.LocallyCompact
+public import Mathlib.Topology.Metrizable.Urysohn
+public import Mathlib.Topology.MetricSpace.Pseudo.Basic
+public import Mathlib.Topology.UniformSpace.Cauchy
+public import Mathlib.Topology.UniformSpace.Compact
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Topology.Algebra.Module.WeakDual
+public import Mathlib.Topology.ContinuousMap.Algebra
+public import Mathlib.Topology.PartitionOfUnity
+
+@[expose] public section
+
 set_option linter.unusedSectionVars false
 
 open TopologicalSpace Metric Set Filter Topology

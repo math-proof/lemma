@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/QRDowlingPolynomial.lean -/
 
-import Mathlib.Algebra.Polynomial.Eval.Defs
+module
+
+public import Mathlib.Algebra.Polynomial.Eval.Defs
+
+@[expose] public section
+
 open scoped BigOperators
 
 

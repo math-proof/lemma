@@ -9,16 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.ArithmeticGeometry.code.HilbertSymbol.Part2
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertSymbol
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertFormulaOdd
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Hilbert2Adic
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Hilbert2AdicCore
 import Def.v1.Atlas.ArithmeticGeometry.code.HilbertFormulaOdd
 import Def.v1.Atlas.ArithmeticGeometry.code.Hilbert2Adic
 import Def.v1.Atlas.ArithmeticGeometry.code.Hilbert2AdicCore.Part2
 import Mathlib.NumberTheory.LegendreSymbol.QuadraticChar.Basic
 open scoped Classical
-
 
 /-- A characteristic-zero field on which the Hilbert symbol is bilinear and nondegenerate.
 The two structural axioms encode: (i) if both $(a,c)_F$ and $(b,c)_F$ equal $-1$ then

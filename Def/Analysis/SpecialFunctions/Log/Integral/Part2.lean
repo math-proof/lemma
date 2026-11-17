@@ -1,5 +1,10 @@
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Abbrev.Analysis.SpecialFunctions.Log.Integral.Part2
+module
+
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Abbrev.Analysis.SpecialFunctions.Log.Integral.Part2
+
+@[expose] public section
+
 /-!
 # Logarithmic integral (normalized principal value)
 

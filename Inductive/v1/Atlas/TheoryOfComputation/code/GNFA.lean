@@ -8,8 +8,10 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Computability.RegularExpressions
-import Structure.v1.Atlas.TheoryOfComputation.code.GNFA
+module
+
+public import Mathlib.Computability.RegularExpressions
+public import Structure.v1.Atlas.TheoryOfComputation.code.GNFA
 open List Set
 
 
@@ -26,7 +28,7 @@ self-loop at `q` (`nil`), or `w = w₁ ++ w₂` where some prefix `w₁` reaches
 an intermediate state `qmid` and `w₂` is matched by the regex `G.δ qmid q'`
 labelling the edge from `qmid` to `q'` (`cons`).
 -/
-inductive AcceptPath (G : GNFA Q σ) : Q → Q → List σ → Prop where
+public inductive AcceptPath (G : GNFA Q σ) : Q → Q → List σ → Prop where
   | nil (q : Q) : AcceptPath G q q []
   | cons {q qmid q' : Q} {w₁ w₂ : List σ}
     (path : AcceptPath G q qmid w₁)

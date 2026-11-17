@@ -8,18 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Length
-import Mathlib.RingTheory.OrderOfVanishing
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Mathlib.RingTheory.SimpleModule.Basic
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.Algebra.Module.PID
-import Mathlib.RingTheory.DedekindDomain.Dvr
-import Mathlib.LinearAlgebra.ExteriorPower.Basis
-import Def.v1.Atlas.AlgebraicGeometryI.code.DegreeAdditivity
+module
+
+public import Mathlib.RingTheory.Length
+public import Mathlib.RingTheory.OrderOfVanishing
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Mathlib.RingTheory.SimpleModule.Basic
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.Algebra.Module.PID
+public import Mathlib.RingTheory.DedekindDomain.Dvr
+public import Mathlib.LinearAlgebra.ExteriorPower.Basis
+public import Def.v1.Atlas.AlgebraicGeometryI.code.DegreeAdditivity
 
 
-noncomputable section
+public noncomputable section
 
 open Submodule
 

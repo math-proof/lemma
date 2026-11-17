@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Geometry.Manifold.Instances.Real
-import Mathlib.Topology.Compactness.Compact
-import Mathlib.Tactic
-import Def.v1.Atlas.GeometryOfManifolds.code.PontrjaginObstructions.Part5
+module
+
+public import Mathlib.Geometry.Manifold.Instances.Real
+public import Mathlib.Topology.Compactness.Compact
+public import Mathlib.Tactic
+public import Def.v1.Atlas.GeometryOfManifolds.code.PontrjaginObstructions.Part5
+public section
+
 set_option autoImplicit false
 open scoped Manifold
 

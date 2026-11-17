@@ -1,24 +1,26 @@
-import Mathlib.Analysis.InnerProductSpace.EuclideanDist
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Analysis.Calculus.BumpFunction.Convolution
-import Mathlib.Analysis.Calculus.BumpFunction.FiniteDimension
-import Mathlib.Analysis.Calculus.BumpFunction.InnerProduct
-import Mathlib.Analysis.Calculus.BumpFunction.Normed
-import Mathlib.Analysis.Calculus.ContDiff.Convolution
-import Mathlib.Analysis.Calculus.MeanValue
-import Mathlib.Analysis.Calculus.Taylor
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.LinearAlgebra.Lagrange
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.Tactic.GCongr
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.ContinuousMap.StoneWeierstrass
-import Mathlib.Topology.ContinuousMap.Weierstrass
-import Mathlib.Topology.UniformSpace.HeineCantor
-import Def.Analysis.Calculus.UniversalApproximation.Part2
+module
+
+public import Mathlib.Analysis.InnerProductSpace.EuclideanDist
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Analysis.Calculus.BumpFunction.Convolution
+public import Mathlib.Analysis.Calculus.BumpFunction.FiniteDimension
+public import Mathlib.Analysis.Calculus.BumpFunction.InnerProduct
+public import Mathlib.Analysis.Calculus.BumpFunction.Normed
+public import Mathlib.Analysis.Calculus.ContDiff.Convolution
+public import Mathlib.Analysis.Calculus.MeanValue
+public import Mathlib.Analysis.Calculus.Taylor
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.LinearAlgebra.Lagrange
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.Tactic.GCongr
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.ContinuousMap.StoneWeierstrass
+public import Mathlib.Topology.ContinuousMap.Weierstrass
+public import Mathlib.Topology.UniformSpace.HeineCantor
+public import Def.Analysis.Calculus.UniversalApproximation.Part2
 open scoped BigOperators Pointwise
 
 /-!
@@ -26,6 +28,8 @@ open scoped BigOperators Pointwise
 
 Proves `Wanted` entry `universal_approximation`.
 -/
+
+public section
 
 
 namespace MetaMathlibExt.UniversalApprox

@@ -7,15 +7,17 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Probability.Martingale.Convergence
-import Mathlib.Probability.Martingale.Basic
-import Mathlib.MeasureTheory.Function.UniformIntegrable
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.Tactic.TFAE
+public import Mathlib.Probability.Martingale.Convergence
+public import Mathlib.Probability.Martingale.Basic
+public import Mathlib.MeasureTheory.Function.UniformIntegrable
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.Tactic.TFAE
 open scoped MeasureTheory NNReal ENNReal Topology
 open MeasureTheory Filter
 
+public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Mathlib.NumberTheory.Divisors
+module
+
+public import Mathlib.NumberTheory.Divisors
+
+@[expose] public section
 
 namespace ModularCurve
 

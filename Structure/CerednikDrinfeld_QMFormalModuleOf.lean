@@ -1,11 +1,13 @@
-import Def.AlgebraicGeometry_FormalGroupAlongSection
-import Structure.CerednikDrinfeld_SpecialFormalModule
-import Structure.CerednikDrinfeld_QMModuli
-import Def.CerednikDrinfeld_QMFormalModuleOf
+module
+
+public import Def.AlgebraicGeometry_FormalGroupAlongSection
+public import Structure.CerednikDrinfeld_SpecialFormalModule
+public import Structure.CerednikDrinfeld_QMModuli
+public import Def.CerednikDrinfeld_QMFormalModuleOf
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open CategoryTheory AlgebraicGeometry NeronModelInfra GoodReductionJacobian CerednikDrinfeld CerednikDrinfeld.SpecialFormal
 open scoped Quaternion

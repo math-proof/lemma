@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingTrotterLocal.Part2
-import Theorem.StatisticalMechanics.Code.Onsager.TracePowWalk
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingTrotterLocal.Part2
+public import Theorem.StatisticalMechanics.Code.Onsager.TracePowWalk
+@[expose] public section
+
 open scoped BigOperators
 
 

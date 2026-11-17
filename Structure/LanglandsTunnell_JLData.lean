@@ -1,10 +1,12 @@
-import Def.LanglandsTunnell_ConverseData
+module
+
+public import Def.LanglandsTunnell_ConverseData
 
 set_option autoImplicit false
 
 open IsDedekindDomain NumberField AutomorphicForm
 open NumberField.TateGlobal LanglandsTunnell.TateLocal NumberField.StandardAddChar
-noncomputable section
+public noncomputable section
 
 namespace LanglandsTunnell.Converse
 

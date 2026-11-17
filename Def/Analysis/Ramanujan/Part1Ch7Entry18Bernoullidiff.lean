@@ -7,7 +7,7 @@ Author: @akiezun, Avocado
 import Mathlib.Analysis.Meromorphic.Basic
 import Mathlib.NumberTheory.LSeries.ZMod
 import Theorem.Analysis.Ramanujan.Part1Ch7DirichletBeta
-import Lemma.Complex.Part1Ch7DirichletBeta
+import Theorem.Complex.Part1Ch7DirichletBeta
 import Mathlib.Analysis.Meromorphic.Complex
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.FunProp

@@ -26,6 +26,7 @@ import Mathlib.Topology.Instances.EReal.Lemmas
 import Mathlib.Topology.MetricSpace.Polish
 import Mathlib.Topology.Metrizable.CompletelyMetrizable
 import Mathlib.Topology.Order.LiminfLimsup
+import Initialize.Tactic.Attr.Basic
 open Classical ENNReal EReal Filter Finset InformationTheory MeasureTheory ProbabilityMeasure Random Set Real
 open scoped ENNReal Topology
 set_option maxHeartbeats 800000
@@ -563,4 +564,4 @@ private lemma main
 
 
 -- created on 2026-11-03
--- updated on 2026-11-05
+-- updated on 2026-11-17

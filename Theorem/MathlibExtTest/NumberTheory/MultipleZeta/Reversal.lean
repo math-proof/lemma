@@ -3,7 +3,7 @@
 
 import Mathlib.Tactic.FinCases
 import Def.NumberTheory.MultipleZeta.Reversal.Part2
-import Lemma.Nat.MultipleZeta.Reversal
+import Theorem.Nat.MultipleZeta.Reversal
 import Def.MathlibExtTest.NumberTheory.MultipleZeta.Reversal
 /-!
 Tests for `MathlibExt.NumberTheory.MultipleZeta.Reversal`.

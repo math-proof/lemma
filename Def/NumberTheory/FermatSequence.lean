@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FermatSequence.lean -/
 
-import Mathlib.Data.Complex.Basic
-import Mathlib.NumberTheory.Divisors
+module
 
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.NumberTheory.Divisors
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

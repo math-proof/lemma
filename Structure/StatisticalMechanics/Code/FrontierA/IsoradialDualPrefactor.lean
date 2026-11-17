@@ -9,10 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialKacWardRibbonIdentification.Part7
-import Theorem.StatisticalMechanics.Code.FrontierA.SimpleGraphCellularRibbonEmbedding.Part3
-import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialDualPrefactor.Part2
+module
 
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialKacWardRibbonIdentification.Part7
+public import Theorem.StatisticalMechanics.Code.FrontierA.SimpleGraphCellularRibbonEmbedding.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialDualPrefactor.Part2
+
+
+public section
 
 namespace StatMech.FrontierA
 

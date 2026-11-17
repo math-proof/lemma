@@ -7,13 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib.RingTheory.RootsOfUnity.Complex
-import Mathlib.FieldTheory.KummerExtension
-import Def.StatisticalMechanics.Code.FrontierA.QuantumIsingAntiperiodicProduct
+public import Mathlib.RingTheory.RootsOfUnity.Complex
+public import Mathlib.FieldTheory.KummerExtension
+public import Def.StatisticalMechanics.Code.FrontierA.QuantumIsingAntiperiodicProduct
 open scoped BigOperators
 
+public section
 
 namespace StatMech.FrontierA
 

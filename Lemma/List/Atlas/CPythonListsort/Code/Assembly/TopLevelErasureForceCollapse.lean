@@ -1,5 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Def.CPythonListsort.Code.Assembly.MergeForceCollapseSafety.Part2
+import Lemma.List.Atlas.CPythonListsort.Code.Assembly.MergeForceCollapseSafety
+import Lemma.List.Atlas.CPythonListsort.Code.Assembly.TopLevelErasure
+open CPythonListsort
 
 
 namespace CPythonListsort
@@ -22,15 +26,15 @@ lemma erase_mergeForceCollapseLoopTraced_of_mergeAt
   | zero =>
     simp only [mergeForceCollapseLoopTraced?, mergeForceCollapseLoop?]
     by_cases hdone : state.pending.size ≤ 1
-    · rw [if_pos hdone, if_pos hdone]
+    · rw [ite_eq_left hdone, ite_eq_left hdone]
       rfl
-    · rw [if_neg hdone, if_neg hdone]
+    · rw [ite_eq_right hdone, ite_eq_right hdone]
       simp [TraceResult.erase_markFuelExhausted]
       rfl
   | succ fuel ih =>
     simp only [mergeForceCollapseLoopTraced?, mergeForceCollapseLoop?]
     by_cases hmany : 1 < state.pending.size
-    · rw [if_pos hmany, if_pos hmany, TraceResult.erase_bind,
+    · rw [ite_eq_left hmany, ite_eq_left hmany, TraceResult.erase_bind,
       erase_forceCollapseIndexTraced]
       cases hindex : forceCollapseIndex? state with
       | none => simp
@@ -43,11 +47,11 @@ lemma erase_mergeForceCollapseLoopTraced_of_mergeAt
           simp only [Option.bind_some]
           by_cases hContinue :
             merged.returnCode = 0 ∧ !merged.fuelExhausted
-          · rw [if_pos hContinue, if_pos hContinue]
+          · rw [ite_eq_left hContinue, ite_eq_left hContinue]
             exact ih merged.state
-          · rw [if_neg hContinue, if_neg hContinue]
+          · rw [ite_eq_right hContinue, ite_eq_right hContinue]
             rfl
-    · rw [if_neg hmany, if_neg hmany]
+    · rw [ite_eq_right hmany, ite_eq_right hmany]
       rfl
 
 end CPythonListsort

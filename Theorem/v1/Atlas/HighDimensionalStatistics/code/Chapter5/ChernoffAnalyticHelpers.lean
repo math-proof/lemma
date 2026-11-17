@@ -7,13 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Nat.Choose.Vandermonde
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Data.Nat.Choose.Vandermonde
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
 open Finset Real
 
+public section
 
 noncomputable section
 

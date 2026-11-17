@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Diophantine/PowerSquare.lean -/
 
 
-import Lemma.Nat.Diophantine.PowerSquare
+import Theorem.Nat.Diophantine.PowerSquare
 import Mathlib.Tactic.Linarith
 
 

@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.PerfectPairing.Basic
-import Mathlib.LinearAlgebra.BilinearForm.Properties
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.RingTheory.Localization.Module
+module
+
+public import Mathlib.LinearAlgebra.PerfectPairing.Basic
+public import Mathlib.LinearAlgebra.BilinearForm.Properties
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.RingTheory.Localization.Module
+
+@[expose] public section
+
 open Submodule LinearMap
 
 

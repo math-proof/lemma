@@ -8,7 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.Projectivization.Basic
+module
+
+public import Mathlib.LinearAlgebra.Projectivization.Basic
+
+@[expose] public section
+
 open scoped LinearAlgebra.Projectivization
 
 

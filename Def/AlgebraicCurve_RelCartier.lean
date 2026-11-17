@@ -1,4 +1,3 @@
-import Lemma.Scheme.IdealSheafHom
 import Lemma.Scheme.UniversalDivisor
 
 open CategoryTheory CategoryTheory.Limits TopologicalSpace Opposite

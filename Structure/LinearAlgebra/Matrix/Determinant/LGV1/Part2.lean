@@ -2,9 +2,13 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part29
-import Def.LinearAlgebra.Matrix.Determinant.LGV1.Part9
+module
+
+public import Mathlib
+public import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part29
+public import Def.LinearAlgebra.Matrix.Determinant.LGV1.Part9
+public section
+
 open Finset BigOperators Matrix
 
 /-!

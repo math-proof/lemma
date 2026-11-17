@@ -1,5 +1,9 @@
-import Lean.Attributes
-import Lean.Util.CollectAxioms
+module
+
+public meta import Lean.Attributes
+public meta import Lean.Util.CollectAxioms
+public meta section
+
 open Lean
 
 

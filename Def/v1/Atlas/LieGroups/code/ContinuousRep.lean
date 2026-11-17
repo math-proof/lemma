@@ -8,12 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.Algebra.Module.Basic
-import Mathlib.Analysis.InnerProductSpace.Adjoint
-import Mathlib.Analysis.Normed.Operator.BanachSteinhaus
-import Mathlib.Topology.Sequences
-import Structure.v1.Atlas.LieGroups.code.ContinuousRep
+module
 
+public import Mathlib.Topology.Algebra.Module.Basic
+public import Mathlib.Analysis.InnerProductSpace.Adjoint
+public import Mathlib.Analysis.Normed.Operator.BanachSteinhaus
+public import Mathlib.Topology.Sequences
+public import Structure.v1.Atlas.LieGroups.code.ContinuousRep
+
+@[expose] public section
 
 noncomputable section
 

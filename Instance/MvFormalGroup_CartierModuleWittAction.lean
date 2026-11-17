@@ -2,7 +2,6 @@
 import Mathlib
 import Instance.MvFormalGroup_NegV2
 import Instance.MvFormalGroup_CartierModule
-import Lemma.PowerSeries.CartierModuleHomothety
 import Lemma.MvPowerSeries.CartierModuleWittAction
 
 set_option autoImplicit false

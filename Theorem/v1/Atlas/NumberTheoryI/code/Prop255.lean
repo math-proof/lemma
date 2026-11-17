@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Mathlib
 import Def.v1.Atlas.NumberTheoryI.code.DirectLimits.Part2
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.DirectLimits
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.DirectLimits
 import Def.v1.Atlas.NumberTheoryI.code.Prop255
 open scoped RestrictedProduct
 open Filter Set Topology

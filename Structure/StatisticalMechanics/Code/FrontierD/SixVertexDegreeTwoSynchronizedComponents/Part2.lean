@@ -9,16 +9,18 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoBranchClosedPhysicalKey.Part6
-import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoSynchronizedComponents.Part13
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoBranchClosedPhysicalKey.Part6
+public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoSynchronizedComponents.Part13
 
 
 namespace StatMech.FrontierD
 
 open SimpleGraph
 
-noncomputable section
+public noncomputable section
 
 set_option maxHeartbeats 800000
 

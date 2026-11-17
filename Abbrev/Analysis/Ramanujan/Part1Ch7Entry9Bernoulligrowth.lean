@@ -9,7 +9,7 @@ import Mathlib.Analysis.Calculus.FDeriv.Defs
 import Mathlib.Analysis.SpecialFunctions.Pow.Complex
 import Mathlib.Topology.Algebra.InfiniteSum.Basic
 import Def.Analysis.Ramanujan.Part1Ch7PowerDifference
-import Lemma.Complex.Part1Ch7PowerDifference
+import Theorem.Complex.Part1Ch7PowerDifference
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.Order.Floor.Defs
 import Mathlib.Algebra.Polynomial.Basic

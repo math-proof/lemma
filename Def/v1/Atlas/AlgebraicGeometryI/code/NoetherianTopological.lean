@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.NoetherianSpace
-import Mathlib.Order.Minimal
-import Mathlib.RingTheory.Spectrum.Prime.Noetherian
-import Mathlib.RingTheory.Nilpotent.Lemmas
-import Mathlib.Order.KrullDimension
+module
+
+public import Mathlib.Topology.NoetherianSpace
+public import Mathlib.Order.Minimal
+public import Mathlib.RingTheory.Spectrum.Prime.Noetherian
+public import Mathlib.RingTheory.Nilpotent.Lemmas
+public import Mathlib.Order.KrullDimension
+
+@[expose] public section
+
 open TopologicalSpace Set
 
 universe u

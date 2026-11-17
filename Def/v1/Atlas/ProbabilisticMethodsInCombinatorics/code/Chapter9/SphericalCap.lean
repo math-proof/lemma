@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter9.LevyIsoperimetric
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+public import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter9.LevyIsoperimetric
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 

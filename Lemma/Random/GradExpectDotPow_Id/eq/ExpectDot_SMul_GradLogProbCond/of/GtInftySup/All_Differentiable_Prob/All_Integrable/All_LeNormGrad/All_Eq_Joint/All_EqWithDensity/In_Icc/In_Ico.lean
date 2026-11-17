@@ -10,6 +10,8 @@ import Theorem.Data.List.List
 import Syntax.Order.Sup
 import Instance.Analysis.Real.Numbers
 import Class.Dynamics.PolicyTrajectory
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient Filter Random Real Set
 open scoped ENNReal.ToRealCoe
 set_option maxHeartbeats 900000
@@ -417,4 +419,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-16
+-- updated on 2026-11-17

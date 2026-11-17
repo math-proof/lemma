@@ -9,14 +9,18 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Universality.HexLattice.Part11
-import Theorem.StatisticalMechanics.Code.Universality.HexInfraDisplacement.Part4
-import Theorem.StatisticalMechanics.Code.Universality.HexInfraWinding
-import Theorem.StatisticalMechanics.Code.Universality.HexInfraHeading
-import Theorem.StatisticalMechanics.Code.Universality.HexW1Sides.Part3
-import Theorem.StatisticalMechanics.Code.Universality.HexW1ExitGeom
+module
 
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Universality.HexLattice.Part11
+public import Theorem.StatisticalMechanics.Code.Universality.HexInfraDisplacement.Part4
+public import Theorem.StatisticalMechanics.Code.Universality.HexInfraWinding
+public import Theorem.StatisticalMechanics.Code.Universality.HexInfraHeading
+public import Theorem.StatisticalMechanics.Code.Universality.HexW1Sides.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.HexW1ExitGeom
+
+
+public section
 
 namespace StatMech.Universality
 

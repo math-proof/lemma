@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/NarayanaSequence.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.NarayanaSequence
+public import Mathlib.Data.List.Range
 
-import Def.Combinatorics.Enumerative.NarayanaSequence
-import Mathlib.Data.List.Range
-
+public section
 
 namespace MetaMathlibExt
 

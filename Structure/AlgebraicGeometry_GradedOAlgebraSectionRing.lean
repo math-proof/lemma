@@ -1,6 +1,8 @@
-import Mathlib
-import Abbrev.SheafOfModules_MonoidalV2
-import Def.AlgebraicGeometry_GradedOAlgebraSectionRing
+module
+
+public import Mathlib
+public import Abbrev.SheafOfModules_MonoidalV2
+public import Def.AlgebraicGeometry_GradedOAlgebraSectionRing
 
 set_option autoImplicit false
 
@@ -8,7 +10,7 @@ universe u
 
 open CategoryTheory MonoidalCategory Opposite
 
-noncomputable section
+public noncomputable section
 
 
 namespace AlgebraicGeometry.GradedOAlgebra

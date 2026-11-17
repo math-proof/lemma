@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Complex/Hurwitz.lean -/
 
 import Theorem.Analysis.Complex.Hurwitz
-import Lemma.Complex.Hurwitz
+import Theorem.Complex.Hurwitz
 open Filter Set
 open scoped Topology
 

@@ -1,12 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Words/FibonacciFactorization.lean -/
+module
 
-import Mathlib.Data.List.Basic
-import Theorem.Combinatorics.InfiniteWord.FibonacciWord
-import Lemma.Finset.InfiniteWord.FibonacciWord
-import Mathlib.Algebra.Group.Nat.Defs
-import Mathlib.Data.Nat.Basic
-import Mathlib.Order.RelClasses
+public import Mathlib.Data.List.Basic
+public import Theorem.Combinatorics.InfiniteWord.FibonacciWord
+public import Theorem.Finset.InfiniteWord.FibonacciWord
+public import Mathlib.Algebra.Group.Nat.Defs
+public import Mathlib.Data.Nat.Basic
+public import Mathlib.Order.RelClasses
 
+public section
 
 namespace MetaMathlibExt
 

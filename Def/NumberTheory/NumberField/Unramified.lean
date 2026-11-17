@@ -1,14 +1,17 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Unramified.lean -/
 
-import Mathlib.NumberTheory.NumberField.Basic
-import Mathlib.NumberTheory.RamificationInertia.Unramified
-import Mathlib.RingTheory.Ideal.GoingUp
-import Mathlib.FieldTheory.IntermediateField.Basic
-import Mathlib.RingTheory.Smooth.Fiber
-import Mathlib.RingTheory.Smooth.IntegralClosure
-import Mathlib.RingTheory.DedekindDomain.Instances
-import Theorem.NumberTheory.NumberField.Unramified
+module
 
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Mathlib.NumberTheory.RamificationInertia.Unramified
+public import Mathlib.RingTheory.Ideal.GoingUp
+public import Mathlib.FieldTheory.IntermediateField.Basic
+public import Mathlib.RingTheory.Smooth.Fiber
+public import Mathlib.RingTheory.Smooth.IntegralClosure
+public import Mathlib.RingTheory.DedekindDomain.Instances
+public import Theorem.NumberTheory.NumberField.Unramified
+
+@[expose] public section
 
 namespace NumberField
 

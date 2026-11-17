@@ -1,20 +1,23 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/AignerMotzkinInequality.lean -/
 
-import Mathlib.Data.Nat.Choose.Sum
-import Mathlib.Algebra.CharP.Defs
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Combinatorics.Enumerative.Catalan.Basic
-import Mathlib.Data.Nat.Cast.Field
-import Mathlib.Data.Nat.SuccPred
-import Mathlib.Data.Rat.Star
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.GCongr
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+module
 
+public import Mathlib.Data.Nat.Choose.Sum
+public import Mathlib.Algebra.CharP.Defs
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Combinatorics.Enumerative.Catalan.Basic
+public import Mathlib.Data.Nat.Cast.Field
+public import Mathlib.Data.Nat.SuccPred
+public import Mathlib.Data.Rat.Star
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.GCongr
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

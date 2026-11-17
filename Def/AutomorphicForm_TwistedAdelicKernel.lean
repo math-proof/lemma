@@ -1,4 +1,8 @@
-import Def.AutomorphicForm_AdelicKernel
+module
+
+public import Def.AutomorphicForm_AdelicKernel
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,16 +1,18 @@
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Mathlib.FieldTheory.KrullTopology
-import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
-import Mathlib.RingTheory.HopfAlgebra.Basic
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.RingTheory.Finiteness.Defs
-import Mathlib.RingTheory.TensorProduct.Maps
-import Mathlib.SetTheory.Cardinal.Finite
-import Instance.Compat_Mathlib430
+module
+
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Mathlib.FieldTheory.KrullTopology
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+public import Mathlib.RingTheory.HopfAlgebra.Basic
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.RingTheory.Finiteness.Defs
+public import Mathlib.RingTheory.TensorProduct.Maps
+public import Mathlib.SetTheory.Cardinal.Finite
+public import Instance.Compat_Mathlib430
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open TensorProduct
 

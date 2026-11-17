@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Homology.Homotopy
-import Mathlib.CategoryTheory.Monoidal.Preadditive
-import Mathlib.Algebra.Category.ModuleCat.Monoidal.Basic
+module
+
+public import Mathlib.Algebra.Homology.Homotopy
+public import Mathlib.CategoryTheory.Monoidal.Preadditive
+public import Mathlib.Algebra.Category.ModuleCat.Monoidal.Basic
+
+@[expose] public section
+
 open CategoryTheory MonoidalCategory
 
 

@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.LieGroups.code.BeilinsonBernstein.Part3
-import Lemma.AlgHom.EqLiftOfSurjectiveNC.of.All_Eq_0.Surjective
+import Theorem.AlgHom.EqLiftOfSurjectiveNC.of.All_Eq_0.Surjective
 
 
 namespace BeilinsonBernstein

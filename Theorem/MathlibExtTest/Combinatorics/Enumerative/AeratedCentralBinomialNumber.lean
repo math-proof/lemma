@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/AeratedCentralBinomialNumber.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.AeratedCentralBinomialNumber
 
-import Def.Combinatorics.Enumerative.AeratedCentralBinomialNumber
-
+public section
 
 namespace MetaMathlibExt
 

@@ -8,11 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Complex.Exponential
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Probability.CentralLimitTheorem
-import Mathlib.MeasureTheory.Function.LpSeminorm.CompareExp
+module
 
+public import Mathlib.Analysis.Complex.Exponential
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Probability.CentralLimitTheorem
+public import Mathlib.MeasureTheory.Function.LpSeminorm.CompareExp
+
+@[expose] public section
 
 namespace CentralLimitTheorem
 

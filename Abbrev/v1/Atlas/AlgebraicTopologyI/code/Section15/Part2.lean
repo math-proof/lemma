@@ -8,12 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.AlgebraicTopologyI.code.Section14
-import Mathlib.Topology.CWComplex.Classical.Subcomplex
-import Mathlib.Analysis.Normed.Lp.lpSpace
-import Mathlib.Topology.Homotopy.Contractible
-import Mathlib.Topology.UnitInterval
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section15
+module
+
+public import Structure.v1.Atlas.AlgebraicTopologyI.code.Section14
+public import Mathlib.Topology.CWComplex.Classical.Subcomplex
+public import Mathlib.Analysis.Normed.Lp.lpSpace
+public import Mathlib.Topology.Homotopy.Contractible
+public import Mathlib.Topology.UnitInterval
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section15
+@[expose] public section
+
 open Topology
 
 

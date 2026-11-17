@@ -9,9 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Foundations.ProductMeasure.Part2
-import Theorem.StatisticalMechanics.Code.Inequalities.Pivotal.Part2
-import Theorem.StatisticalMechanics.Code.Inequalities.OSSS.Part2
+module
+
+public import Theorem.StatisticalMechanics.Code.Foundations.ProductMeasure.Part2
+public import Theorem.StatisticalMechanics.Code.Inequalities.Pivotal.Part2
+public import Theorem.StatisticalMechanics.Code.Inequalities.OSSS.Part2
 open scoped BigOperators
 open Finset
 
@@ -25,7 +27,7 @@ namespace OSSS
 variable {E : Type*} [Fintype E] [DecidableEq E]
 
 
-inductive DecisionTree (E : Type*) where
+public inductive DecisionTree (E : Type*) where
   | leaf : Bool → DecisionTree E
   | node : E → DecisionTree E → DecisionTree E → DecisionTree E
 

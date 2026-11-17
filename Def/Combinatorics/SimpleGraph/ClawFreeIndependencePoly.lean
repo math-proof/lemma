@@ -6,29 +6,34 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.Polynomial.AlgebraMap
-import Mathlib.Algebra.Polynomial.Splits
-import Mathlib.Basic.Real.Basic
-import Mathlib.Combinatorics.SimpleGraph.Basic
-import Mathlib.Combinatorics.SimpleGraph.Clique
-import Mathlib.Combinatorics.SimpleGraph.Copy
-import Mathlib.Combinatorics.SimpleGraph.Star
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Int.Cast.Lemmas
-import Mathlib.Algebra.BigOperators.Group.Finset.Powerset
-import Mathlib.Algebra.Polynomial.Roots
-import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.Analysis.Convex.PathConnected
-import Mathlib.Analysis.Convex.Segment
-import Mathlib.Analysis.RCLike.Basic
-import Mathlib.Analysis.SpecialFunctions.Complex.Arg
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Mathlib.Tactic
-import Mathlib.Topology.Connected.Basic
-import Mathlib.Topology.Order.IntermediateValue
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.Polynomial.AlgebraMap
+public import Mathlib.Algebra.Polynomial.Splits
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Combinatorics.SimpleGraph.Basic
+public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Combinatorics.SimpleGraph.Copy
+public import Mathlib.Combinatorics.SimpleGraph.Star
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Int.Cast.Lemmas
+public import Mathlib.Algebra.BigOperators.Group.Finset.Powerset
+public import Mathlib.Algebra.Polynomial.Roots
+public import Mathlib.Analysis.Complex.Polynomial.Basic
+public import Mathlib.Analysis.Convex.PathConnected
+public import Mathlib.Analysis.Convex.Segment
+public import Mathlib.Analysis.RCLike.Basic
+public import Mathlib.Analysis.SpecialFunctions.Complex.Arg
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Mathlib.Tactic
+public import Mathlib.Topology.Connected.Basic
+public import Mathlib.Topology.Order.IntermediateValue
+
+@[expose] public section
+
 /-!
 Real-rootedness of the independence polynomial of a claw-free graph
 (Chudnovsky–Seymour theorem), via half-plane stability of a weighted

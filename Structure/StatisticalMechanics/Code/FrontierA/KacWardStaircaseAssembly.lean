@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardIncidentStairPatch.Part2
+module
 
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardIncidentStairPatch.Part2
+
+
+public section
 
 namespace StatMech.FrontierA
 

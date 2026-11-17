@@ -1,5 +1,9 @@
-import Lean.Elab.Term
-import Structure.Fun
+module
+
+public meta import Lean.Elab.Term
+public import Structure.Fun
+
+public meta section
 
 open Lean Elab Term Meta in
 /-- `f[i]` when `f : Fun ι α` or `f : PiFun α`: elaborate the index at type `ι`.

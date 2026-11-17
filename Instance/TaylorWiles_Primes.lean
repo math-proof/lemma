@@ -1,10 +1,14 @@
 -- Carved from Lemma/Definitions/Def_TaylorWiles_Primes.lean: instance decls only.
-import Mathlib.RingTheory.Frobenius
-import Mathlib.NumberTheory.RamificationInertia.Galois
-import Mathlib.RingTheory.Ideal.Quotient.HasFiniteQuotients
-import Mathlib.LinearAlgebra.Matrix.Trace
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Lemma.Matrix.Primes
+
+module
+
+public import Mathlib.RingTheory.Frobenius
+public import Mathlib.NumberTheory.RamificationInertia.Galois
+public import Mathlib.RingTheory.Ideal.Quotient.HasFiniteQuotients
+public import Mathlib.LinearAlgebra.Matrix.Trace
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+
+@[expose] public section
 
 set_option autoImplicit false
 

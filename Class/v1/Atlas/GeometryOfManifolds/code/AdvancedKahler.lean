@@ -9,13 +9,10 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.KahlerManifolds
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.ConnectionsCurvature
 import Structure.v1.Atlas.GeometryOfManifolds.code.ConnectionsCurvature.Part7
 set_option autoImplicit false
 
 open DifferentialFormSpace
-
 
 /-- A typeclass packaging the Hodge numbers $h^{p,q}(M)$ and Betti numbers $b_k(M)$
 of a compact Kähler manifold, together with the basic symmetries they satisfy:
@@ -33,7 +30,6 @@ class HasHodgeNumbers
   betti_hodge_link : ∀ (k : ℕ),
     betti k = (Finset.range (k + 1)).sum (fun p => hodge p (k - p))
 
-
 /-- A cohomology structure equipped with iterated Lefschetz operators
 $L^m : H^k(M) \to H^{k+2m}(M)$. On a compact Kähler manifold these
 are the linear maps appearing in the Hard Lefschetz theorem. -/
@@ -45,7 +41,6 @@ class HasCohomologyWithLefschetz
     @LinearMap ℝ ℝ _ _ (RingHom.id ℝ) (H k) (H (k + 2 * m))
       (H_addCommGroup k).toAddCommMonoid (H_addCommGroup (k + 2 * m)).toAddCommMonoid
       (H_module k) (H_module (k + 2 * m))
-
 
 /-- A projective embedding datum for a symplectic manifold $(M, \omega)$:
 an embedding $\iota : M \hookrightarrow N$ into a target carrying a closed

@@ -1,9 +1,11 @@
-import Mathlib
-import Instance.AlgebraicGeometry_ThetaLevelGroup
+module
+
+public import Mathlib
+public import Instance.AlgebraicGeometry_ThetaLevelGroup
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open scoped BigOperators
 

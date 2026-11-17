@@ -1,9 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/QuadraticForms/ThreeSquares.lean -/
 
-import Mathlib.Data.Int.Interval
-import Mathlib.Tactic.Ring
-import Mathlib.Data.ZMod.Basic
+module
 
+public import Mathlib.Data.Int.Interval
+public import Mathlib.Tactic.Ring
+public import Mathlib.Data.ZMod.Basic
+
+@[expose] public section
 
 namespace Nat
 

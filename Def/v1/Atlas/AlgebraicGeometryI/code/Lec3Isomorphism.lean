@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.Scheme
-import Mathlib.CategoryTheory.Iso
+module
+
+public import Mathlib.AlgebraicGeometry.Scheme
+public import Mathlib.CategoryTheory.Iso
+
+@[expose] public section
+
 open CategoryTheory AlgebraicGeometry
 
 

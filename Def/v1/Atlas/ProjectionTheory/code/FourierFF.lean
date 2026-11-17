@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Group.AddChar
-import Mathlib.Analysis.Fourier.FiniteAbelian.Orthogonality
-import Mathlib.NumberTheory.LegendreSymbol.AddCharacter
-import Mathlib.Data.Fintype.BigOperators
+module
+
+public import Mathlib.Algebra.Group.AddChar
+public import Mathlib.Analysis.Fourier.FiniteAbelian.Orthogonality
+public import Mathlib.NumberTheory.LegendreSymbol.AddCharacter
+public import Mathlib.Data.Fintype.BigOperators
+
+@[expose] public section
+
 open Finset hiding card
 open Fintype (card)
 open scoped BigOperators

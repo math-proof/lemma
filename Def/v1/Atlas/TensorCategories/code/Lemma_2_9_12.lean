@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Mon_
-import Structure.v1.Atlas.TensorCategories.code.Lemma_2_9_12
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Mon_
+public import Structure.v1.Atlas.TensorCategories.code.Lemma_2_9_12
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 universe v u

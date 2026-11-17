@@ -1,7 +1,11 @@
-import Mathlib
-import Theorem.Analysis.Misc.UnitsSystem.Part23
-import Mathlib.Algebra.Group.MinimalAxioms
+module
 
+public import Mathlib
+public import Theorem.Analysis.Misc.UnitsSystem.Part23
+public import Mathlib.Algebra.Group.MinimalAxioms
+
+
+public section
 
 /-- The SI unit system.  In order to permit fractional dimensions, we allow dimensions to be rational; but then to maintain definitional equality of various explicit dimensions, we need to unseal the arithmetic operations on the rationals. -/
 @[ext]

@@ -9,7 +9,9 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicBoundaryClampedPrimitiveConvergence
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicBoundaryClampedPrimitiveConvergence
 
 
 namespace StatMech.Universality
@@ -18,7 +20,7 @@ open Filter
 
 open StatMech StatMech.FK StatMech.Lattice StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 namespace FKIsingSquareBoundaryLayerCoordinateOneForm
 

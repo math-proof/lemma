@@ -1,19 +1,21 @@
-import Mathlib
-import Instance.ModularCurve_IgusaScheme
-import Def.GaloisRep_Flat
-import Def.ModularCurve_AtkinLehnerPartial
-import Structure.AlgebraicCurve_CurveModel
-import Instance.ModularCurve_GeometricBaseChange
-import Instance.ModularCurve_ArithmeticGalois
-import Def.ModularCurve_PlaceWidthChar
-import Lemma.LaurentSeries.CoeffSemilinearAut
-import Structure.AlgebraicGeometry_NeronModelPropertyBundleCarrier
+module
+
+public import Mathlib
+public import Instance.ModularCurve_IgusaScheme
+public import Def.GaloisRep_Flat
+public import Def.ModularCurve_AtkinLehnerPartial
+public import Structure.AlgebraicCurve_CurveModel
+public import Instance.ModularCurve_GeometricBaseChange
+public import Instance.ModularCurve_ArithmeticGalois
+public import Def.ModularCurve_PlaceWidthChar
+public import Lemma.LaurentSeries.CoeffSemilinearAut
+public import Structure.AlgebraicGeometry_NeronModelPropertyBundleCarrier
 
 set_option autoImplicit false
 set_option maxHeartbeats 800000
 set_option synthInstance.maxHeartbeats 400000
 
-noncomputable section
+public noncomputable section
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry AlgebraicCurve NeronModelInfra
 open ModularCurve.IgusaScheme

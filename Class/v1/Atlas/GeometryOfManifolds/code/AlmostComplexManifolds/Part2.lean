@@ -9,8 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.CompatibleComplexStructures
 import Theorem.v1.Atlas.GeometryOfManifolds.code.CompatibleComplexStructures
 import Class.v1.Atlas.GeometryOfManifolds.code.TangentBundleDFS
 import Mathlib.Geometry.Manifold.IsManifold.Basic
@@ -19,7 +17,6 @@ import Structure.v1.Atlas.GeometryOfManifolds.code.AlmostComplexManifolds
 set_option autoImplicit false
 
 open DifferentialFormSpace SymplecticLinearAlgebra
-
 
 /-- A typeclass witnessing that $S$ is **contractible**: it embeds into an ambient real vector
 space and admits a basepoint together with a normalization retraction, providing the data to

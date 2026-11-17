@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.GaleRyser
-import Lemma.Finset.GaleRyser
+import Theorem.Finset.GaleRyser
 
 
 namespace MetaMathlibExt

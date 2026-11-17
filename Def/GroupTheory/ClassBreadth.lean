@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/ClassBreadth.lean -/
 
-import Mathlib.Data.Nat.Log
-import Mathlib.GroupTheory.GroupAction.ConjAct
-import Mathlib.GroupTheory.PGroup
+module
+
+public import Mathlib.Data.Nat.Log
+public import Mathlib.GroupTheory.GroupAction.ConjAct
+public import Mathlib.GroupTheory.PGroup
+
+@[expose] public section
+
 /-!
 # Breadth of elements and finite groups
 

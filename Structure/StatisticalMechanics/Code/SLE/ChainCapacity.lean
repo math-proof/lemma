@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.SLE.LoewnerCapacity
-import Theorem.StatisticalMechanics.Code.SLE.LoewnerExistence
+module
+
+public import Theorem.StatisticalMechanics.Code.SLE.LoewnerCapacity
+public import Theorem.StatisticalMechanics.Code.SLE.LoewnerExistence
+public section
+
 open Complex Set Filter Topology MeasureTheory
 open scoped NNReal
 

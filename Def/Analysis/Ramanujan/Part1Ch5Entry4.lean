@@ -4,9 +4,14 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Analysis.SpecificLimits.Normed
+module
+
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Algebra.BigOperators.Field
+public import Mathlib.Analysis.SpecificLimits.Normed
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 5, Entry 4
 

@@ -1480,18 +1480,106 @@ function validModuleComponentBasic(c) {
   return /^[\p{L}_][\p{L}\p{N}_'!?\u2080-\u209C\u1D62-\u1D6A\u2070-\u207F]*$/u.test(c || "");
 }
 
-/** Lean module component, or house `LHS.eq.RHS` as one suggestion segment (consistent ≡ suggested). */
+/** Top-level house soft delimiters. Nested `.eq.` / `/eq/` inside parentheses stay inside a side. */
+const HOUSE_SOFTS = [
+  { slash: "/ae/", dot: ".ae.", name: "ae" },
+  { slash: "/eq/", dot: ".eq.", name: "eq" },
+];
+
+function topLevelIndex(s, needle) {
+  const t = String(s || "");
+  let depth = 0;
+  for (let i = 0; i <= t.length - needle.length; i++) {
+    const ch = t[i];
+    if (ch === "(") depth++;
+    else if (ch === ")") depth = Math.max(0, depth - 1);
+    else if (depth === 0 && t.startsWith(needle, i)) return i;
+  }
+  return -1;
+}
+
+/** Split a house stem on the first top-level `/ae/`, `.ae.`, `/eq/`, or `.eq.`. */
+function splitTopHouse(s) {
+  const t = String(s || "");
+  for (const soft of HOUSE_SOFTS) {
+    let i = topLevelIndex(t, soft.slash);
+    if (i >= 0)
+      return { left: t.slice(0, i), soft: soft.name, right: t.slice(i + soft.slash.length), delim: soft.slash };
+    i = topLevelIndex(t, soft.dot);
+    if (i >= 0)
+      return { left: t.slice(0, i), soft: soft.name, right: t.slice(i + soft.dot.length), delim: soft.dot };
+  }
+  return null;
+}
+
+function houseDelimSlash(soft) {
+  return soft === "ae" ? "/ae/" : "/eq/";
+}
+
+function houseDelimDot(soft) {
+  return soft === "ae" ? ".ae." : ".eq.";
+}
+
+/**
+ * A house that is nested *inside* a path token cannot keep `.eq.` / parentheses:
+ * each token is a Lean 4 namespace identifier. `Cond/eq/Prod` → `CondEqProd`.
+ */
+function fuseHouseIdent(s) {
+  const t = String(s || "");
+  const h = splitTopHouse(t);
+  if (!h) return t;
+  const mid = h.soft.charAt(0).toUpperCase() + h.soft.slice(1);
+  return fuseHouseIdent(h.left) + mid + fuseHouseIdent(h.right);
+}
+
+function houseKidsSource(kids) {
+  let out = "";
+  for (const k of kids || []) {
+    if (k.kind === "lit") out += k.v || "";
+    else if (k.kind === "group") out += houseKidsSource(k.kids);
+  }
+  return out;
+}
+
+/** Nested `(Cond.eq.Prod)` / `(Cond/eq/Prod)` spelling inside a path segment. */
+function nestHouseDots(side) {
+  return String(side || "").replace(/\(([^()]+)\)/g, (m, inner) => {
+    const h = splitTopHouse(inner);
+    return h ? "(" + h.left + "." + h.soft + "." + h.right + ")" : m;
+  });
+}
+
+function seqHasTopHouseLit(parts) {
+  for (const p of parts || []) {
+    if (p.kind === "lit" && splitTopHouse(p.v)) return true;
+  }
+  return false;
+}
+
+function markNestedHouseGroups(parts) {
+  for (const p of parts || []) {
+    if (p.kind === "group") {
+      p.nestedHouse = seqHasTopHouseLit(p.kids);
+      markNestedHouseGroups(p.kids);
+    } else if (p.kind === "opt") {
+      markNestedHouseGroups(p.alts);
+    }
+  }
+}
+
+/** Lean module component, or house `LHS.eq.RHS` / `LHS.ae.RHS` as one suggestion segment.
+ * Each side / folder must itself be a Lean 4 namespace identifier (no parentheses,
+ * no embedded dots). Nested houses are camel-fused (`CondEqProd`), not parenthesized. */
 function validModuleComponent(c) {
   const s = String(c || "");
-  if (s.includes(".eq.")) {
-    // Each side must itself be a valid basic component (no empty / nested dots).
-    return s.split(".eq.").every((part) => part.length > 0 && !part.includes(".") && validModuleComponentBasic(part));
-  }
+  const h = splitTopHouse(s);
+  if (h) return validModuleComponent(h.left) && validModuleComponent(h.right);
   return validModuleComponentBasic(s);
 }
 
 /**
- * House pieces of a path: `/` segments, then each segment split on `.eq.` and `/eq/`.
+ * House pieces of a path: `/` segments, then each segment split on a top-level
+ * `.eq.` / `/eq/` / `.ae.` / `/ae/` (not a nested house inside parentheses).
  * A piece that ends with `_` is an unfilled hole, except the full spellings And__ / Or__ / Imp__.
  * Mid-piece `__` (All_NeProb__0, SMul__Dot, EqSumRange__1) stays.
  * @param {string} p
@@ -1502,9 +1590,13 @@ function unfilledHolePiece(p) {
     .replace(/\\/g, "/")
     .replace(/^Lemma\//, "")
     .replace(/\.lean$/, "");
+  const partsOf = (seg) => {
+    const h = splitTopHouse(seg);
+    return h ? [h.left, h.right] : [seg];
+  };
   for (const seg of norm.split("/")) {
     if (!seg) continue;
-    for (const part of seg.split(/\.eq\.|\/eq\//)) {
+    for (const part of partsOf(seg)) {
       if (!part || part === "And__" || part === "Or__" || part === "Imp__") continue;
       if (part.endsWith("_")) return part;
     }
@@ -3364,9 +3456,16 @@ function storeHoleGroups(raw) {
 }
 
 /** `(` after `Expect_` / `Deriv_` / `Integral_` is a required scope, not an optional fill.
- * `Var_(Mul_…)` is optional: omitting the scope is `Var`, not `Var_Mul`. */
+ * `Var_(Mul_…)` is optional: omitting the scope is `Var`, not `Var_Mul`.
+ * A group whose interior is itself a house (`Cond/eq/Prod`, `Cond.eq.Prod`)
+ * is a nested path token: the parentheses stay in the spelling, not an omit group. */
 function requiredScopeParen(s, i) {
-  return /(?:Expect|Deriv|Integral)_$/.test(s.slice(Math.max(0, i - 16), i));
+  if (/(?:Expect|Deriv|Integral)_$/.test(s.slice(Math.max(0, i - 16), i))) return true;
+  if (s[i] === "(") {
+    const close = holeRegexMatchingParen(s, i);
+    if (close > i && splitTopHouse(s.slice(i + 1, close))) return true;
+  }
+  return false;
 }
 
 /** Turn stored `(Fill)` into `(_|Fill)`, leaving required scope groups in place. */
@@ -3396,7 +3495,7 @@ function expandHouseStoredGroups(s) {
   let out = "";
   let i = 0;
   while (i < s.length) {
-    if (s.startsWith("/eq/", i) || s.startsWith(".eq.", i)) {
+    if (s.startsWith("/eq/", i) || s.startsWith(".eq.", i) || s.startsWith("/ae/", i) || s.startsWith(".ae.", i)) {
       out += s.slice(i, i + 4);
       i += 4;
       continue;
@@ -3430,7 +3529,7 @@ function expandHouseStoredGroups(s) {
 export function expandSimplifiedHoleOpts(reSource) {
   const s = String(reSource || "");
   if (!s || s.includes("(_|")) return s;
-  if (s.includes("/eq/") || s.includes(".eq.")) return expandHouseStoredGroups(s);
+  if (s.includes("/eq/") || s.includes(".eq.") || s.includes("/ae/") || s.includes(".ae.")) return expandHouseStoredGroups(s);
   if (!s.includes("(")) return s;
   return expandOptionalParens(s);
 }
@@ -3446,8 +3545,10 @@ export function appendHoleRegexTrailingStar(reSource) {
   const s = String(reSource || "");
   if (!s) return s;
   const side = (part) => (part.endsWith("_*") ? part : part + "_*");
-  // Each house side may carry spare `_` before `/eq/`. The final side still ends with `_*`.
-  if (s.includes("/eq/")) return s.split("/eq/").map(side).join("/eq/");
+  // Each house side may carry spare `_` before `/eq/` or `/ae/`. The final side still ends with `_*`.
+  // Split only at the top-level delimiter so a nested `(Cond/eq/Prod)` is left intact.
+  const h = splitTopHouse(s);
+  if (h) return side(h.left) + houseDelimSlash(h.soft) + side(h.right);
   return side(s);
 }
 
@@ -3496,7 +3597,9 @@ export function parseHoleRegexTree(reSource) {
     return parts;
   }
   try {
-    return parseSeq();
+    const tree = parseSeq();
+    markNestedHouseGroups(tree);
+    return tree;
   } catch {
     return [];
   }
@@ -3595,7 +3698,7 @@ export function holeRegexLastNodeDepth(reSource) {
   // Required-side house `/eq/(Expect_…)` ends in a group (not `(_|Expect_…)`).
   // Group depth alone under-pads Prob__/omit (Expect_DivMul_Prob needs the same
   // trailing-_ budget as fused wrapHoleOpt RHS depth = 1 + inner).
-  if (src.includes("/eq/") && last && last.kind === "group") {
+  if ((src.includes("/eq/") || src.includes("/ae/")) && last && last.kind === "group") {
     d = Math.max(d, 1 + holeRegexNodeDepth(last));
   }
   return d;
@@ -3608,18 +3711,22 @@ export function holeRegexLastNodeDepth(reSource) {
 export function normalizeHouseEqTokenToRegex(token, reSource) {
   let s = String(token || "");
   const re = String(reSource || "");
-  // Canonical house regex uses `/eq/`; dotted module spelling normalizes to slash.
-  if (re.includes("/eq/") || /\.eq\./.test(re)) {
-    if (s.includes(".eq.")) s = s.split(".eq.").join("/eq/");
+  // Canonical house regex uses `/eq/` or `/ae/`; dotted module spelling normalizes to slash.
+  // Only the top-level delimiter is rewritten; a nested `(Cond.eq.Prod)` stays dotted until
+  // consistent() maps every `.` to `/` for matching.
+  if (splitTopHouse(re) || re.includes("/eq/") || re.includes("/ae/") || /\.eq\./.test(re) || /\.ae\./.test(re)) {
+    const h = splitTopHouse(s);
+    if (h) s = h.left + houseDelimSlash(h.soft) + h.right;
   }
   return s;
 }
 
-/** Ensure house-eq stem uses slash path spelling for module path emit. */
+/** Ensure house stem uses slash path spelling for module path emit. Nested house stays dotted. */
 export function houseEqStemToPath(stem) {
   const s = String(stem || "");
-  if (s.includes(".eq.")) return s.split(".eq.").join("/eq/");
-  return s;
+  const h = splitTopHouse(s);
+  if (!h) return s;
+  return h.left + houseDelimSlash(h.soft) + nestHouseDots(h.right);
 }
 
 /**
@@ -3677,6 +3784,12 @@ function matchHoleRegexTreeToken(nodes, token) {
       return out;
     }
     if (node.kind === "group") {
+      if (node.nestedHouse) {
+        const fused = fuseHouseIdent(houseKidsSource(node.kids));
+        if (fused && s.startsWith(fused, pos))
+          return [{ pos: pos + fused.length, edgeFilledOpt: false, edgeDigit: false }];
+        return [];
+      }
       return matchSeq(node.kids || [], pos, edgeFilledOpt, edgeDigit);
     }
     if (node.kind === "star") {
@@ -3693,8 +3806,9 @@ function matchHoleRegexTreeToken(nodes, token) {
 /** Trailing `_` run of each `/eq/` side. The whole-regex pad only sees the last side. */
 function houseRegexSidePads(reSource) {
   const src = expandSimplifiedHoleOpts(String(reSource || ""));
-  if (!src.includes("/eq/")) return null;
-  return src.split("/eq/").map((side) => holeRegexSeqTrailing(parseHoleRegexTree(side)).T);
+  const h = splitTopHouse(src);
+  if (!h) return null;
+  return [h.left, h.right].map((side) => holeRegexSeqTrailing(parseHoleRegexTree(side)).T);
 }
 
 /**
@@ -3723,12 +3837,14 @@ export function consistent(token, regex, pad) {
   // `(Expect_(Expect__))/eq/(Expect)`: the left `__` is a hole pad, the right side has none.
   // A path token strips it (`Expect_Expect/eq/Expect`); matching puts the pad back per side.
   // One global pad would add the left `__` to `Expect` as well, or leave the left side short.
-  const sidePads = norm.includes("/eq/") ? houseRegexSidePads(src0) : null;
-  const sides = norm.includes("/eq/") ? norm.split("/eq/") : null;
+  const house = splitTopHouse(norm);
+  const sidePads = house ? houseRegexSidePads(src0) : null;
+  const sides = house ? [house.left, house.right] : null;
+  const joinSoft = house ? houseDelimSlash(house.soft) : "/eq/";
   const t = sides && sidePads && sidePads.length === sides.length
-    ? sides.map((side, i) => side + "_".repeat(Math.max(d, sidePads[i] || 0))).join("/eq/")
+    ? sides.map((side, i) => side + "_".repeat(Math.max(d, sidePads[i] || 0))).join(joinSoft)
     : sides
-      ? sides.map((side) => side + "_".repeat(d)).join("/eq/")
+      ? sides.map((side) => side + "_".repeat(d)).join(joinSoft)
       : norm + "_".repeat(d);
   const tree = parseHoleRegexTree(matchSrc);
   if (tree.length) {
@@ -3835,8 +3951,9 @@ export function enumerateHoleRegexLanguage(reSource) {
               a.edgeFilledOpt && f.edgeFilledOpt
                 ? adjacentFillSep(a.s, f.s, true)
                 : "";
+            const body = p.nestedHouse ? fuseHouseIdent(f.s) : f.s;
             next.push({
-              s: a.s + sep + f.s,
+              s: a.s + sep + body,
               edgeFilledOpt: f.edgeFilledOpt,
             });
           }
@@ -3871,24 +3988,28 @@ export function holeRegexLanguageTokens(reSource, opts = {}) {
   // Strip it per side before the unfilled-hole check, or the LHS piece is dropped.
   const publishStem = (stem) => {
     const rawStem = String(stem || "");
-    if (!rawStem.includes("/eq/")) return sanitizePathSeg(rawStem);
-    return rawStem.split("/eq/").map((side) => sanitizePathSeg(side)).join("/eq/");
+    const h = splitTopHouse(rawStem);
+    if (!h) return sanitizePathSeg(rawStem);
+    return sanitizePathSeg(h.left) + h.delim + nestHouseDots(sanitizePathSeg(h.right));
+  };
+  const dottedHouse = (stem) => {
+    const h = splitTopHouse(stem);
+    if (!h) return "";
+    return sanitizePathSeg(h.left) + houseDelimDot(h.soft) + nestHouseDots(sanitizePathSeg(h.right));
   };
   const push = (stem) => {
     const s = publishStem(stem);
     // Only publish stems the matcher accepts (trailing-_ budget may drop over-stripped forms).
-    // A piece ending in `_` (including before `.eq.`) is an unfilled hole.
+    // A piece ending in `_` (including before `.eq.` / `.ae.`) is an unfilled hole.
     const admit = (t) => t && !seen.has(t) && !unfilledHolePiece(t) && matchImplyHoleRegex(reSource, t);
     if (admit(s)) {
       seen.add(s);
       out.push(s);
-      // House: also publish Lean-module `.eq.` spelling (path uses `/eq/`; same regex via preprocess).
-      if (s.includes("/eq/")) {
-        const dotted = s.split("/eq/").join(".eq.");
-        if (admit(dotted)) {
-          seen.add(dotted);
-          out.push(dotted);
-        }
+      // House: also publish Lean-module `.eq.` / `.ae.` spelling (path uses slash; same regex via preprocess).
+      const dotted = dottedHouse(s);
+      if (dotted && admit(dotted)) {
+        seen.add(dotted);
+        out.push(dotted);
       }
     }
     // sanitizePathSeg rewrites Expect_Cond → ExpectCond. The stored scope is
@@ -3896,18 +4017,17 @@ export function holeRegexLanguageTokens(reSource, opts = {}) {
     // House `__` sits on the left of `/eq/`, not at the end of the whole stem.
     if (String(reSource).includes("Expect_(Cond")) {
       const rawStem = String(stem || "");
-      const raw = rawStem.includes("/eq/")
-        ? rawStem.split("/eq/").map((side) => side.replace(/_+$/, "")).join("/eq/")
+      const hh = splitTopHouse(rawStem);
+      const raw = hh
+        ? hh.left.replace(/_+$/, "") + hh.delim + hh.right.replace(/_+$/, "")
         : rawStem.replace(/_+$/, "");
       if (raw !== s && admit(raw)) {
         seen.add(raw);
         out.push(raw);
-        if (raw.includes("/eq/")) {
-          const dotted = raw.split("/eq/").join(".eq.");
-          if (admit(dotted)) {
-            seen.add(dotted);
-            out.push(dotted);
-          }
+        const dotted = dottedHouse(raw);
+        if (dotted && admit(dotted)) {
+          seen.add(dotted);
+          out.push(dotted);
         }
       }
     }
@@ -4759,17 +4879,121 @@ function isJointOfTwoGetObservations(node) {
 }
 
 /**
+ * `ℙ[π](E | C1, C2, …)` is often parsed as
+ * ArgsCommaSeparated(BitOr(E, C1), C2, …) rather than BitOr(E, (C1, C2)).
+ * Event is E; the conditioner is the joint of (C1, C2, …).
+ * @returns {{ event: any, conds: any[] }|null}
+ */
+function matchProbCommaCondScope(sc0) {
+  const sc = peelHoleExpr(sc0);
+  if (cls(sc) === "LeanArgsCommaSeparated") {
+    const args = (sc.args || []).map((a) => unwrapParen(a));
+    if (args.length >= 2 && cls(args[0]) === "LeanBitOr") {
+      const bit = args[0];
+      return {
+        event: unwrapParen(bit.lhs ?? bit.args?.[0]),
+        conds: [unwrapParen(bit.rhs ?? bit.args?.[1]), ...args.slice(1)],
+      };
+    }
+  }
+  if (cls(sc) === "LeanBitOr") {
+    const R = unwrapParen(sc.rhs ?? sc.args?.[1]);
+    if (cls(R) === "LeanArgsCommaSeparated" && (R.args || []).length >= 1) {
+      return {
+        event: unwrapParen(sc.lhs ?? sc.args?.[0]),
+        conds: (R.args || []).map((a) => unwrapParen(a)),
+      };
+    }
+  }
+  return null;
+}
+
+function isCommaCondProbFrag(s) {
+  const t = String(s || "");
+  // A conditional ℙ whose conditioner is a Joint (comma-scope, e.g. s[:k], Z).
+  if (t.startsWith("Prob_(Cond(") && t.includes("Joint(")) return true;
+  return t === "(Cond/eq/Prod)_Prob" || t === "(Cond.eq.Prod)_Prob";
+}
+
+function isProbFamilyFrag(s) {
+  const t = String(s || "");
+  return isProbHoleFrag(t) || isProbProductFrag(t) || t.startsWith("Prod_") || isCommaCondProbFrag(t);
+}
+
+/**
+ * Event / conditioner RV for a conditional ℙ: a colon-slice GetElem is
+ * `GetSlice__`, any other GetElem is `Get__`, and a plain variable is a hole.
+ */
+function getRvCondHoleFrag(node) {
+  const u = peelHoleExpr(node);
+  if (!u) return "";
+  if (isGetElemColonSlice(u)) return "GetSlice__";
+  if (isSimpleGetObservation(u) || cls(u) === "LeanGetElem") return "Get__";
+  return "";
+}
+
+/** Binary Joint of conditioner fragments: `Joint(GetSlice__)_` for (s[:k], Z). */
+function jointHoleFrag(frags) {
+  const xs = (frags || []).map((f) => (f && f !== "_") ? f : "");
+  if (!xs.length) return "";
+  let acc = xs[0];
+  for (let i = 1; i < xs.length; i++) {
+    const L = acc || "";
+    const R = xs[i] || "";
+    if (!L && !R) acc = "Joint__";
+    else if (!L) acc = "Joint_" + storedHoleOpt(R);
+    else if (!R) acc = "Joint" + storedHoleOpt(L) + "_";
+    else acc = "Joint" + storedHoleOpt(L) + storedHoleOpt(R);
+  }
+  return acc;
+}
+
+/**
+ * `ℙ[π](s[k] | s[:k], Z)` → `Prob_(Cond(Get__)(Joint(GetSlice__)_))`.
+ * This is a product-of-conditional-probabilities body, not a Cond/eq/Prod house.
+ */
+function commaCondProbHoleRegex(node) {
+  const u = peelHoleExpr(node);
+  if (cls(u) !== "Lean_Prob") return null;
+  const hit = matchProbCommaCondScope(u.scope);
+  if (!hit) return null;
+  return condProbHoleRegexFromFrags(
+    getRvCondHoleFrag(hit.event),
+    jointHoleFrag((hit.conds || []).map(getRvCondHoleFrag)),
+  );
+}
+
+/** `Cond(GetSlice__)_` / `Cond__` / `Cond(Get__)(Joint(GetSlice__)_)` under Prob_. */
+function condProbHoleRegexFromFrags(ev, cd) {
+  const evS = (ev && ev !== "_") ? ev : "";
+  const cdS = (cd && cd !== "_") ? cd : "";
+  let cond;
+  if (!evS && !cdS) cond = "Cond__";
+  else if (!evS) cond = "Cond_" + storedHoleOpt(cdS);
+  else if (!cdS) cond = "Cond" + storedHoleOpt(evS) + "_";
+  else cond = "Cond" + storedHoleOpt(evS) + storedHoleOpt(cdS);
+  return "Prob_(" + cond + ")";
+}
+
+/**
  * Conditional ℙ[π](E | C). When both arms are Get observations, walk
  * `Prob_(Cond(Get__)(Get__))`. A left-of-`|` conjunction of two Get
  * observations with a Get condition walks
  * `Prob_(Cond(Joint(Get__)(Get__))(Get__))` (house fill `Prob_CondJoint`).
- * Any other non-Get arm stays `Prob_(Cond__)`. Not used for point-mass
+ * `ℙ[π](E | C1, C2)` (comma conditioner) walks
+ * `Prob_(Cond(Get__)(Joint(GetSlice__)_))` when the event is a Get and
+ * the conditioner is a joint of a GetSlice and a hole.
+ * `ℙ[π](s[:n] | Z)` walks `Prob_(Cond(GetSlice__)_)`.
+ * Arms that are neither Get nor GetSlice stay holes, so both-hole
+ * conditionals remain `Prob_(Cond__)`. Not used for point-mass
  * `ℙ[π](x = a)` (no `|`) — that stays `Prob__`.
  * @returns {string|null}
  */
 function probCondGetHoleRegex(node) {
   const u = peelHoleExpr(node);
   if (cls(u) !== "Lean_Prob") return null;
+  const comma = commaCondProbHoleRegex(u);
+  if (comma) return comma;
   const sc = peelHoleExpr(u.scope);
   if (cls(sc) !== "LeanBitOr" || cls(unwrapParen(sc.args?.[0])) === "Lean_perp") return null;
   const L = unwrapParen(sc.lhs ?? sc.args?.[0]);
@@ -4778,7 +5002,8 @@ function probCondGetHoleRegex(node) {
     return "Prob_(Cond(Get__)(Get__))";
   if (isJointOfTwoGetObservations(L) && isSimpleGetObservation(R))
     return "Prob_(Cond(Joint(Get__)(Get__))(Get__))";
-  return "Prob_(Cond__)";
+  // `ℙ[π](s[:n] | Z)` → Prob_(Cond(GetSlice__)_); plain RVs stay Prob_(Cond__).
+  return condProbHoleRegexFromFrags(getRvCondHoleFrag(L), getRvCondHoleFrag(R));
 }
 
 function isProbProductFrag(s) {
@@ -4931,6 +5156,24 @@ function integralHoleRegex(node, opts) {
  * `μ.measure.withDensity (M.policy.pdf θ x)` is `WithDensity_(Pdf__)`.
  * A binder GetElem head (`M[x] θ`) stays a hole (`nameExpr` is empty).
  */
+/**
+ * `Measurable s[k]` → Measurable(Get__). Binder-indexed Get is otherwise
+ * dropped as index noise, leaving a bare Measurable. Colon slices stay
+ * MeasurableGetSlice via nameExpr; do not nest Measurable(GetSlice__).
+ */
+function measurableGetHoleRegex(node, opts) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanArgsSpaceSeparated") return null;
+  const args = u.args || [];
+  if (args.length < 2) return null;
+  const head = unwrapParen(args[0]);
+  if (cls(head) !== "LeanToken" || head.text !== "Measurable") return null;
+  const arg = unwrapParen(args[args.length - 1]);
+  if (cls(arg) !== "LeanGetElem") return null;
+  if (isGetElemColonSlice(arg)) return null;
+  return "Measurable(Get__)";
+}
+
 function propertyAppHoleRegex(node, opts) {
   const u = unwrapParen(node);
   if (cls(u) !== "LeanArgsSpaceSeparated") return null;
@@ -4966,6 +5209,10 @@ function holeRegexExprWalk(node, opts) {
   if (!u) return null;
   // Mathlib vec/matrix notation is a hole, not a GetElem fragment.
   if (cls(u) === "LeanVecNotation") return null;
+  {
+    const meas = measurableGetHoleRegex(u, opts);
+    if (meas) return meas;
+  }
   const ratioRe = likelihoodRatioExpectRegex(u);
   if (ratioRe) return ratioRe;
 
@@ -4975,6 +5222,12 @@ function holeRegexExprWalk(node, opts) {
   if (cls(u) === "Lean_Prob") {
     const cond = probCondGetHoleRegex(u);
     if (cond) return cond;
+  }
+
+  // ∏ ℙ[π](s[k] | s[:k], Z): a product of comma-conditioned probabilities.
+  if (cls(u) === "Lean_prod") {
+    const body = holeRegexExpr(u.scope ?? u.args?.[u.args.length - 1], opts);
+    if (isCommaCondProbFrag(body)) return "Prod_" + storedHoleOpt(body);
   }
 
   // `(x, y) ⟂ᵢ[π] z` → Indep(Joint__)_, not camel IndepJoint.
@@ -5061,6 +5314,10 @@ function holeRegexExprWalk(node, opts) {
         const app = propertyAppHoleRegex(n, opts);
         if (app) return app;
       }
+      {
+        const meas = measurableGetHoleRegex(n, opts);
+        if (meas) return meas;
+      }
       const frozen = nameExpr(n, opts);
       return frozen ? escapeHoleReLit(sanitizePathSeg(frozen)) : null;
     },
@@ -5108,6 +5365,12 @@ function holeRegexExprWalk(node, opts) {
       }
     }
     if (allNeProb0GivenName(u) === "All_NeProb_0") return "All_(Ne(Prob__)(0))";
+    // `∀ k, Measurable s[k]` → All_(Measurable(Get__)), not All_(Measurable).
+    const inner = holeRegexExpr(body, givenOpts);
+    if (inner && /Measurable\(Get__\)/.test(inner)) {
+      if (inner === "All" || inner.startsWith("All_")) return inner;
+      return "All_" + storedHoleOpt(inner);
+    }
   }
   // `(1 + r) • (p ᵥ* M) = p`: digit stays `(1)`. Stored without `_|`; `consistent` expands `(`.
   if (cls(u) === "LeanEq" && opts?.asGiven) {
@@ -5134,10 +5397,18 @@ function holeRegexExprWalk(node, opts) {
   if (cls(u) === "LeanEq") {
     const L = holeRegexExpr(u.lhs ?? u.args?.[0], opts);
     const R = holeRegexExpr(u.rhs ?? u.args?.[1], opts);
-    if (isProbHoleFrag(L) && isProbHoleFrag(R))
+    if (isProbFamilyFrag(L) && isProbFamilyFrag(R)) {
+      // `=ᵐ` is almost-sure equality: the path token is ae, not Eq / eq.
+      if (u.superscript === "ᵐ") {
+        const side = (frag) => {
+          let f = frag;
+          if (/^[A-Za-z][A-Za-z0-9]*__$/.test(f)) f = f.slice(0, -2);
+          return "(" + f + ")";
+        };
+        return side(L) + "/ae/" + side(R);
+      }
       return "Eq" + storedHoleOpt(L) + storedHoleOpt(R);
-    if ((isProbProductFrag(L) || isProbHoleFrag(L)) && (isProbProductFrag(R) || isProbHoleFrag(R)))
-      return "Eq" + storedHoleOpt(L) + storedHoleOpt(R);
+    }
   }
   if (cls(u) === "LeanMul") {
     const L = holeRegexExpr(u.lhs ?? u.args?.[0], opts);
@@ -5477,13 +5748,14 @@ function eqHouseHoleRegexAlts(node, opts = {}) {
   for (const L of lhsForms) {
     if (!L || L === "_") continue;
     const storedL = storeHoleGroups(L);
-    const house = storeHoleGroups(houseSide(L) + "/eq/" + houseSide(R));
+    const soft = u.superscript === "ᵐ" ? "/ae/" : "/eq/";
+    const house = storeHoleGroups(houseSide(L) + soft + houseSide(R));
     if (house && !out.includes(house)) out.push(house);
     // The simplified LHS is its own regex: `Expect_Mul_Sub1DivProbS` matches it by pad.
     if (storedL && storedL.includes("DivProbS__") && !out.includes(storedL)) out.push(storedL);
     // House path uses that LHS with the plural variance `SubVarS__` (no parentheses).
     if (storedL && storedL.includes("DivProbS__")) {
-      const plural = "(" + storedL + ")/eq/(SubVarS__)";
+      const plural = "(" + storedL + ")" + soft + "(SubVarS__)";
       if (!out.includes(plural)) out.push(plural);
     }
   }
@@ -9194,6 +9466,8 @@ if (name === "LeanToken") {
       if (headName && argNames.length === 1) {
         const [argNode, arg] = argPairs[0];
         if (arg === "Fun") return headName + arg;
+        // `Measurable s[:k]` → MeasurableGetSlice (like MeasurableJoint), not Measurable_Get.
+        if (arg === "GetSlice") return headName + arg;
         if (cls(unwrapParen(argNode)) === "Lean_fun") return funBodyUnary(argNode) ? headName + arg : headName + "_" + arg;
         if (arg.startsWith("Fun")) return headName + "_" + arg;
         // ContDiff ℝ 2 y → ContDiff_2 (order is its own path token; never ContDiff2 / ContDiffn)
@@ -9209,7 +9483,15 @@ if (name === "LeanToken") {
           return headName + "_" + arg;
         return headName + arg;
       }
-      if (headName && argNames.length === 0) return headName;
+      if (headName && argNames.length === 0) {
+        // `Measurable s[k]`: point Get is a hole in nameExpr, but the path token is MeasurableGet.
+        if (headName === "Measurable") {
+          const last = unwrapParen(args[args.length - 1]);
+          if (cls(last) === "LeanGetElem" && !isGetElemColonSlice(last))
+            return "MeasurableGet";
+        }
+        return headName;
+      }
       if (headName && argNames.length > 1) return joinHeadArgs(headName, argNames);
     }
     // Head was a hole (leaf GetElem / binder): drop bare fun args so
@@ -9398,6 +9680,8 @@ if (name === "LeanToken") {
       const idx = nameExpr(node.args?.[1], opts);
       return idx ? "Var" + idx : "Var";
     }
+    // Colon-slice `s[:k]` / `(⇑s)[:n]` is GetSlice, not Get (index k would otherwise be a hole).
+    if (isGetElemColonSlice(node)) return "GetSlice";
     // Binder Get-at-literal (`C[0]`): full hole → `C[0] = 1` names `Eq_1` (never bare `0` → `Eq0_1`)
     if (isBinderGetAtLiteral(node, opts)) return "";
     // h[k + n] / h[k: k + n]: the index Add is not a path atom (All_Eq_Dot, not All_EqAdd_Dot_Add)
@@ -10273,6 +10557,7 @@ if (name === "Lean_partial" || name === "LeanPartial") {
   if (name === "LeanGetElem") {
     if (cls(node.args?.[0]) === "LeanToken" && node.args[0].text === "ℙ") return ["Prob"];
     if (cls(node.args?.[0]) === "LeanToken" && node.args[0].text === "∇") return ["Grad"];
+    if (isGetElemColonSlice(node)) return ["GetSlice"];
     // Binder Get-at-literal: empty alts so relationAlts uses Eq_1 (not child digit → Eq0_1)
     if (isBinderGetAtLiteral(node, opts)) return [];
     if (isGetIndexNoise(node.args?.[1], opts)) {

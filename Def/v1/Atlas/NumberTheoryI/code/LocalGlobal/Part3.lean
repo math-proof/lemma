@@ -24,7 +24,7 @@ import Mathlib.RingTheory.Norm.Basic
 import Mathlib.GroupTheory.SpecificGroups.Cyclic
 import Abbrev.v1.Atlas.NumberTheoryI.code.GlobalFields
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.GlobalFields
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.KrasnerLemma
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.KrasnerLemma
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.AdicCompletionAlgebra
 import Def.v1.Atlas.NumberTheoryI.code.KrasnerLemma
 import Mathlib.Topology.Algebra.Valued.NormedValued

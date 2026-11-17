@@ -1,4 +1,9 @@
-import Def.Data.String.String.Part2
+module
+
+public import Def.Data.String.String.Part2
+
+@[expose] public section
+
 open Lean
 
 

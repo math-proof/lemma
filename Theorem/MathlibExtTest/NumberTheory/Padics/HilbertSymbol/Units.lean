@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.Padics.HilbertSymbol.Units
-import Lemma.Nat.Padics.HilbertSymbol.Units
+import Theorem.Nat.Padics.HilbertSymbol.Units
 import Instance.MathlibExtTest.NumberTheory.Padics.HilbertSymbol.Units
 set_option autoImplicit false
 

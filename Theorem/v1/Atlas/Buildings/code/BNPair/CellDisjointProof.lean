@@ -8,9 +8,9 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Lemma.Nat.Mul.in.BruhatCell.of.In_B.In_BruhatCell
+import Theorem.Nat.Mul.in.BruhatCell.of.In_B.In_BruhatCell
 import Theorem.v1.Atlas.Buildings.code.BNPair.CellCoverProof
-import Lemma.Nat.In_BruhatCell1.of.In_B
+import Theorem.Nat.In_BruhatCell1.of.In_B
 import Mathlib.Tactic.Group
 set_option linter.unusedSectionVars false
 set_option maxHeartbeats 800000

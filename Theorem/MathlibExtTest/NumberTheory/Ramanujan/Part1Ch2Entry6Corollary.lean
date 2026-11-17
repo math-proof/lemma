@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.Ramanujan.Part1Ch2Entry6Corollary
-import Lemma.Nat.Ramanujan.Part1Ch2Entry6Corollary
+import Theorem.Nat.Ramanujan.Part1Ch2Entry6Corollary
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Tactic.NormNum
 /-!

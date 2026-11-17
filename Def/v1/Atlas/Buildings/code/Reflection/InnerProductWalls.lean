@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.Reflection.WallSeparation
-import Def.v1.Atlas.Buildings.code.Reflection.ReflectionGroupsCoxeter.Part2
-import Def.v1.Atlas.Buildings.code.Reflection.FiniteReflectionGroups.Defs.Part4
-import Def.v1.Atlas.Buildings.code.Reflection.FiniteReflectionGroups.Theorems
-import Theorem.v1.Atlas.Buildings.code.Reflection.GenericFunctional
+module
+
+public import Def.v1.Atlas.Buildings.code.Reflection.WallSeparation
+public import Def.v1.Atlas.Buildings.code.Reflection.ReflectionGroupsCoxeter.Part2
+public import Def.v1.Atlas.Buildings.code.Reflection.FiniteReflectionGroups.Defs.Part4
+public import Def.v1.Atlas.Buildings.code.Reflection.FiniteReflectionGroups.Theorems
+public import Theorem.v1.Atlas.Buildings.code.Reflection.GenericFunctional
+
+@[expose] public section
+
 open scoped InnerProductSpace
 open Set
 

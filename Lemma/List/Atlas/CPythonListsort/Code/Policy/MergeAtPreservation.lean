@@ -1,7 +1,15 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.CPythonListsort.Code.Policy.PendingLayout
-import Theorem.CPythonListsort.Code.Transcription.MergeAt
+module
+
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.CPythonListsort.Code.Policy.PendingLayout
+public import Structure.CPythonListsort.Code.Transcription.MergeAt
+public import Def.CPythonListsort.Code.Transcription.MergeAt.Part3
+public import Theorem.CPythonListsort.Code.Transcription.MergeAt
+public import Lemma.List.Atlas.CPythonListsort.Code.Policy.PendingLayout
+public import Lemma.List.Atlas.CPythonListsort.Code.Transcription.MergeAt
+
+public section
 
 
 namespace CPythonListsort
@@ -10,9 +18,7 @@ namespace CPythonListsort
 [PendingRunsCover.mergeAdjacent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Policy/MergeAtPreservation.lean)
 -/
 @[path]
-lemma PendingRunsCover.mergeAdjacent
-  {κ : Type u}
-  {ν : Type v}
+public lemma PendingRunsCover.mergeAdjacent
   {cursor limit : Nat}
   {before after : List PendingRun}
   {left right : PendingRun}
@@ -64,9 +70,7 @@ namespace CPythonListsort
 [PendingRunsCover.pair_spec](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Policy/MergeAtPreservation.lean)
 -/
 @[path]
-lemma PendingRunsCover.pair_spec
-  {κ : Type u}
-  {ν : Type v}
+public lemma PendingRunsCover.pair_spec
   {cursor limit : Nat}
   {before after : List PendingRun}
   {left right : PendingRun}
@@ -96,7 +100,7 @@ namespace CPythonListsort
 [PendingLayout.pairFits](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Policy/MergeAtPreservation.lean)
 -/
 @[path]
-lemma PendingLayout.pairFits
+public lemma PendingLayout.pairFits
   {κ : Type u}
   {ν : Type v}
   {state : MergeState κ ν}
@@ -129,9 +133,7 @@ namespace CPythonListsort
 [Array.toList_set_eraseIdx_adjacent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Policy/MergeAtPreservation.lean)
 -/
 @[path]
-lemma Array.toList_set_eraseIdx_adjacent
-  {κ : Type u}
-  {ν : Type v}
+public lemma Array.toList_set_eraseIdx_adjacent
   {α : Type u}
   {xs : Array α}
   {i : Nat}
@@ -158,9 +160,9 @@ namespace CPythonListsort
 variable {κ : Type u} {ν : Type v}
 /--
 [pendingLayout_after_mergeAdjacent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Policy/MergeAtPreservation.lean)
+transport `PendingLayout`; merge data and comparator behavior are irrelevant.
 -/
 @[path]
-transport `PendingLayout`; merge data and comparator behavior are irrelevant. -/
 private lemma pendingLayout_after_mergeAdjacent
   (state state' : MergeState κ ν) (scanned : Nat)
   (before after : List PendingRun) (left right : PendingRun)
@@ -195,7 +197,7 @@ namespace CPythonListsort
 [mergeAt_preserves_pendingLayout](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Policy/MergeAtPreservation.lean)
 -/
 @[path]
-lemma mergeAt_preserves_pendingLayout
+public lemma mergeAt_preserves_pendingLayout
   {κ : Type u}
   {ν : Type v}
   {state : MergeState κ ν}
@@ -207,7 +209,7 @@ lemma mergeAt_preserves_pendingLayout
 -- imply
   ∃ before left right after, before.length = i ∧ state.pending.toList = before ++ left :: right :: after ∧ result.state.pending.toList = before ++ ({ left with len := left.len + right.len } : PendingRun) :: after ∧ left.len.Nonnegative ∧ 0 < left.len.toNat ∧ right.len.Nonnegative ∧ 0 < right.len.toNat ∧ left.endIndex = right.base ∧ (left.len + right.len).toNat = left.len.toNat + right.len.toNat ∧ PendingLayout result.state scanned := by
 -- proof
-  rcases mergeAt_pending_frame_of_eq_some state i result hmerge with
+  rcases mergeAt_pending_frame_of_eq_some hmerge with
     ⟨left, right, hleft, hright, hlistlen, hbasekeys, hdataSize, hpending⟩
   rcases Array.exists_pair_split_of_getElem?_eq_some hleft hright with
     ⟨before, after, hbefore, hsplit⟩

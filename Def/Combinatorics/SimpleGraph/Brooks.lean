@@ -4,11 +4,16 @@
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
-import Mathlib.Combinatorics.SimpleGraph.CycleGraph
-import Mathlib.Combinatorics.SimpleGraph.Acyclic
-import Mathlib.Combinatorics.SimpleGraph.Coloring.Constructions
-import Mathlib.Combinatorics.SimpleGraph.Hamiltonian
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
+public import Mathlib.Combinatorics.SimpleGraph.CycleGraph
+public import Mathlib.Combinatorics.SimpleGraph.Acyclic
+public import Mathlib.Combinatorics.SimpleGraph.Coloring.Constructions
+public import Mathlib.Combinatorics.SimpleGraph.Hamiltonian
+
+@[expose] public section
+
 /-!
 # Brooks' theorem
 -/

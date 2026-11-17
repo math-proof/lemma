@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/Polynomial/GeneralizedChebyshevSecondKind.lean -/
+module
 
-import Theorem.Algebra.Polynomial.GeneralizedChebyshevSecondKind
-import Mathlib.Tactic
+public import Theorem.Algebra.Polynomial.GeneralizedChebyshevSecondKind
+public import Mathlib.Tactic
 open Polynomial MetaMathlibExt.GeneralizedChebyshevSecondKind
+
+public section
 
 variable {R : Type*} [CommRing R]
 

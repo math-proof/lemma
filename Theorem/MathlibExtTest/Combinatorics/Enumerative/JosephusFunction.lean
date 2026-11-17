@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.JosephusFunction
-import Lemma.Finset.Enumerative.JosephusFunction
+import Theorem.Finset.Enumerative.JosephusFunction
 
 
 namespace MetaMathlibExt

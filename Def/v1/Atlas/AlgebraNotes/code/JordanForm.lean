@@ -8,19 +8,22 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Nilpotent.Basic
-import Mathlib.Algebra.Module.LinearMap.End
-import Mathlib.LinearAlgebra.Matrix.ToLin
-import Mathlib.Data.Matrix.Block
-import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Data.Fin.SuccPred
-import Mathlib.Algebra.Polynomial.Module.FiniteDimensional
-import Mathlib.LinearAlgebra.Charpoly.Basic
-import Mathlib.LinearAlgebra.Matrix.Basis
-import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
+module
 
+public import Mathlib.RingTheory.Nilpotent.Basic
+public import Mathlib.Algebra.Module.LinearMap.End
+public import Mathlib.LinearAlgebra.Matrix.ToLin
+public import Mathlib.Data.Matrix.Block
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Data.Fin.SuccPred
+public import Mathlib.Algebra.Polynomial.Module.FiniteDimensional
+public import Mathlib.LinearAlgebra.Charpoly.Basic
+public import Mathlib.LinearAlgebra.Matrix.Basis
+public import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
+
+@[expose] public section
 
 namespace JordanForm
 

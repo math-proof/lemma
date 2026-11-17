@@ -1,8 +1,11 @@
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.Analysis.Convex.Continuous
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.Topology.Separation.CompletelyRegular
+module
 
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.Analysis.Convex.Continuous
+public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+public import Mathlib.Topology.Separation.CompletelyRegular
+
+public section
 
 namespace Convex.HermiteHadamard
 

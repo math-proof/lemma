@@ -9,10 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Sharpness.BackboneExplorationSelector.Part4
-import Theorem.StatisticalMechanics.Code.Sharpness.BackboneOrderedDeterminedCut.Part4
-import Theorem.StatisticalMechanics.Code.Sharpness.BackboneActualSelectorSwitching.Part3
-import Theorem.StatisticalMechanics.Code.Sharpness.BackboneBondwiseOrderedExploration.Part5
+module
+
+public import Theorem.StatisticalMechanics.Code.Sharpness.BackboneExplorationSelector.Part4
+public import Theorem.StatisticalMechanics.Code.Sharpness.BackboneOrderedDeterminedCut.Part4
+public import Theorem.StatisticalMechanics.Code.Sharpness.BackboneActualSelectorSwitching.Part3
+public import Theorem.StatisticalMechanics.Code.Sharpness.BackboneBondwiseOrderedExploration.Part5
+public section
+
 open Finset
 open scoped symmDiff
 

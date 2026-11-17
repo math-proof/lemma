@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.GroupTheory.Perm.Cycle.Type
-import Mathlib.Algebra.Group.Conj
+module
+
+public import Mathlib.GroupTheory.Perm.Cycle.Type
+public import Mathlib.Algebra.Group.Conj
+
+@[expose] public section
+
 open Equiv Equiv.Perm
 
 

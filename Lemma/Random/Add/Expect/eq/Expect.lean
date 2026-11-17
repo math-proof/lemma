@@ -1,7 +1,7 @@
 import Mathlib.Probability.Independence.Integration
 import Def.Probability.Moments.Variance
+import Theorem.Probability.SymbolicProbability
 import Initialize.Tactic.Attr.Basic
-import Theorem.Probability.JointRv.AsRV
 open MeasureTheory
 
 
@@ -25,4 +25,4 @@ private lemma main
 
 
 -- created on 2023-04-13
--- updated on 2026-11-12
+-- updated on 2026-11-17

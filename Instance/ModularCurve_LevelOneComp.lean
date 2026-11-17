@@ -1,8 +1,6 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_LevelOneComp.lean: instance decls only.
 import Mathlib
 import Instance.ModularCurve_JZeroSemistableSpecialization
-import Lemma.HahnSeries.ModularUnit
-import Lemma.ValuationSubring.LevelOneComp
 
 set_option autoImplicit false
 

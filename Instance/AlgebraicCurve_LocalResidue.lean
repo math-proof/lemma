@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicCurve_LocalResidue.lean: instance decls only.
 import Mathlib
-import Lemma.Scheme.CanonicalDivisorUniformizer
+import Theorem.Scheme.CanonicalDivisorUniformizer
 import Class.AlgebraicCurve_CanonicalDivisor
 import Lemma.Submodule.AdelicIndex
 import Structure.AlgebraicCurve_LocalResidue

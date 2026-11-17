@@ -9,12 +9,10 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.KahlerManifolds
 import Structure.v1.Atlas.GeometryOfManifolds.code.HodgeTheory.Part7
 set_option autoImplicit false
 
 open DifferentialFormSpace
-
 
 /-- A compact manifold of positive dimension `dim`. -/
 class IsCompactManifold (Ω : ℕ → Type*) (VF : Type*)
@@ -48,5 +46,4 @@ class IsCompactOrientedRiemannian (Ω : ℕ → Type*) (VF : Type*)
       (∀ (α : Ω (k + 1)), IsHarmonic cod α →
         ∃ (coeffs : Ω (k + 1) → ℝ),
           α = S.sum (fun s => coeffs s • s))
-
 

@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.GroupTheory.SemidirectProduct
-import Mathlib.GroupTheory.Perm.Fin
-import Mathlib.GroupTheory.Perm.Sign
-import Mathlib.Algebra.BigOperators.Pi
-import Mathlib.Algebra.Group.TypeTags.Finite
-import Mathlib.Data.Fintype.Perm
-import Abbrev.v1.Atlas.Buildings.code.CoxeterGroup.SignedPermGroup.Part2
+module
+
+public import Mathlib.GroupTheory.SemidirectProduct
+public import Mathlib.GroupTheory.Perm.Fin
+public import Mathlib.GroupTheory.Perm.Sign
+public import Mathlib.Algebra.BigOperators.Pi
+public import Mathlib.Algebra.Group.TypeTags.Finite
+public import Mathlib.Data.Fintype.Perm
+public import Abbrev.v1.Atlas.Buildings.code.CoxeterGroup.SignedPermGroup.Part2
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 

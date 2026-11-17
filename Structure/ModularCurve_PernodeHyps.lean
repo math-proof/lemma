@@ -1,20 +1,24 @@
-import Structure.ModularCurve_FullLevelSemistableCovering
-import Lemma.Finset.SupersingularNodePlaces
-import Structure.AlgebraicCurve_ConstantReduction
-import Def.FLTPrelim_Ramification
-import Structure.AlgebraicCurve_RegularProlongation
-import Lemma.ResidueField.ResidueDiscs
-import Def.ModularCurve_PlaceWidthChar
-import Def.ModularCurve_FullLevelSemistableCoveringW2
-import Lemma.MvPowerSeries.UVCrossingModel
-import Instance.AlgebraicCurve_TwoChartIntegralModel
-import Lemma.UpperHalfPlane.X1
-import Def.ModularCurve_SupersingularModuli
-import Instance.ModularCurve_FullLevelJacobian
-import Instance.DrinfeldCurve_CoordRing
-import Def.ModularCurve_FullLevelLevelAutAt
-import Def.ModularCurve_JqCoeff
-import Instance.AdicCompletionLocalRing
+module
+
+public import Structure.ModularCurve_FullLevelSemistableCovering
+public import Lemma.Finset.SupersingularNodePlaces
+public import Structure.AlgebraicCurve_ConstantReduction
+public import Def.FLTPrelim_Ramification
+public import Structure.AlgebraicCurve_RegularProlongation
+public import Lemma.ResidueField.ResidueDiscs
+public import Def.ModularCurve_PlaceWidthChar
+public import Def.ModularCurve_FullLevelSemistableCoveringW2
+public import Lemma.MvPowerSeries.UVCrossingModel
+public import Instance.AlgebraicCurve_TwoChartIntegralModel
+public import Lemma.UpperHalfPlane.X1
+public import Def.ModularCurve_SupersingularModuli
+public import Instance.ModularCurve_FullLevelJacobian
+public import Instance.DrinfeldCurve_CoordRing
+public import Def.ModularCurve_FullLevelLevelAutAt
+public import Def.ModularCurve_JqCoeff
+public import Instance.AdicCompletionLocalRing
+
+public section
 
 set_option autoImplicit false
 set_option synthInstance.maxHeartbeats 800000

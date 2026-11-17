@@ -1,11 +1,13 @@
-import Mathlib
-import Structure.AlgebraicGeometry_TwoAffineOpenCover
-import Structure.AlgebraicGeometry_TwoChartCechLaurentChart
-import Def.AlgebraicGeometry_TwoAffineOpenCoverSectional
+module
+
+public import Mathlib
+public import Structure.AlgebraicGeometry_TwoAffineOpenCover
+public import Structure.AlgebraicGeometry_TwoChartCechLaurentChart
+public import Def.AlgebraicGeometry_TwoAffineOpenCoverSectional
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 universe u v
 

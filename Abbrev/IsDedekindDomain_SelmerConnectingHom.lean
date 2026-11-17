@@ -1,4 +1,6 @@
-import Mathlib
+module
+
+public import Mathlib
 
 set_option autoImplicit false
 
@@ -12,7 +14,7 @@ variable {R : Type} [CommRing R] [IsDedekindDomain R] {K : Type} [Field K] [Alge
 
 end IsDedekindDomain.selmerGroup
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace IsDedekindDomain.selmerGroup
 

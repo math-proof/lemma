@@ -7,15 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.SLE.Defs.Part9
-import Theorem.StatisticalMechanics.Code.SLE.CapacityProps
-import Def.StatisticalMechanics.Code.SLE.CapacityNonneg
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.SLE.Defs.Part9
+public import Theorem.StatisticalMechanics.Code.SLE.CapacityProps
+public import Def.StatisticalMechanics.Code.SLE.CapacityNonneg
 open scoped UpperHalfPlane NNReal
 open Filter Topology Complex Bornology
 
+public section
 
 namespace StatMech.SLE
 

@@ -1,7 +1,10 @@
-import Def.CerednikDrinfeld_Ribbon
-import Def.HeckeGalois_EichlerShimura
-import Lemma.Ideal.Mathlib430
-import Structure.CerednikDrinfeld_JPrimeTorsionDatum
+module
+
+public import Def.CerednikDrinfeld_Ribbon
+public import Def.HeckeGalois_EichlerShimura
+public import Structure.CerednikDrinfeld_JPrimeTorsionDatum
+
+@[expose] public section
 
 set_option autoImplicit false
 

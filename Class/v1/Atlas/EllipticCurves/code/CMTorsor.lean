@@ -25,13 +25,11 @@ import Mathlib.Data.ZMod.Basic
 import Mathlib.Data.ZMod.QuotientRing
 import Mathlib.RingTheory.ClassGroup
 import Def.v1.Atlas.EllipticCurves.code.ComplexMultiplication.Part6
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.ComplexMultiplication
 import Mathlib.Algebra.Module.Torsion.Basic
 import Mathlib.RingTheory.Ideal.Colon
 import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
 import Mathlib.NumberTheory.NumberField.Basic
 import Def.v1.Atlas.EllipticCurves.code.CMTorsor.Part6
-
 
 namespace CMTorsorAction
 

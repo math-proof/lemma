@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Rat/Place.lean -/
 
-import Mathlib.NumberTheory.Ostrowski
-import Mathlib.NumberTheory.Padics.PadicNumbers
+module
+
+public import Mathlib.NumberTheory.Ostrowski
+public import Mathlib.NumberTheory.Padics.PadicNumbers
 /-!
 # Rational places and completed fields
 
@@ -24,7 +26,7 @@ namespace Rat
 * `infinite` is the ordinary archimedean absolute value.
 * `finite prime` is the `p`-adic absolute value for `prime = ⟨p, hp⟩`.
 -/
-inductive Place : Type where
+public inductive Place : Type where
   | infinite : Place
   | finite : (prime : Nat.Primes) → Place
   deriving DecidableEq

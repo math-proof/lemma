@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/FubiniNumber.lean -/
 
-import Mathlib.Combinatorics.Enumerative.Stirling
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+module
 
+public import Mathlib.Combinatorics.Enumerative.Stirling
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

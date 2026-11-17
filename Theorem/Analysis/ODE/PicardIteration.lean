@@ -1,16 +1,18 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.Topology.MetricSpace.Lipschitz
-import Mathlib.Analysis.Normed.Group.Bounded
-import Mathlib.Analysis.Normed.Group.FunctionSeries
-import Mathlib.Analysis.ODE.ExistUnique
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.Analysis.SpecificLimits.Normed
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+module
+
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.Topology.MetricSpace.Lipschitz
+public import Mathlib.Analysis.Normed.Group.Bounded
+public import Mathlib.Analysis.Normed.Group.FunctionSeries
+public import Mathlib.Analysis.ODE.ExistUnique
+public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+public import Mathlib.Analysis.SpecificLimits.Normed
+public import Mathlib.MeasureTheory.Integral.DominatedConvergence
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 open MeasureTheory
 
 /-!
@@ -21,6 +23,8 @@ convergence to a solution for a globally Lipschitz vector field, given a sequenc
 the Picard recursion. Global existence from the Lipschitz hypothesis alone is proved separately
 as `MathlibExt.Analysis.ODE.MaximalSolutionWanted.ode_global_exists_of_global_lipschitz`.
 -/
+
+public section
 
 
 namespace ODE.PicardIterationWanted

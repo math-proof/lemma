@@ -2,6 +2,7 @@ import Lemma.Random.EqProbJoint.All_Eq_Mul_MulProbSCond.of.All_CondIndep.All_Con
 import Lemma.Random.Prob.eq.Mul_ProbS.Prob.eq.Mul_MulProbS.of.CondIndep.CondIndep
 import Instance.Probability.Process.DiscreteHMM
 import Instance.Probability.Process.DiscreteHMM.Part2
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory Random IsDiscreteHMM
 set_option synthInstance.maxHeartbeats 60000
 
@@ -82,4 +83,4 @@ private lemma mdp
 
 
 -- created on 2020-12-17
--- updated on 2026-11-15
+-- updated on 2026-11-17

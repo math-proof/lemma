@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeMemcpyProvenance.lean -/
 
-import Structure.CPythonListsort.Code.Assembly.SortSliceSafety
-import Def.CPythonListsort.Code.Transcription.MergeLo.Part6
-import Def.CPythonListsort.Code.Transcription.MergeHi.Part6
-import Lean.Elab.Command
-import Theorem.CPythonListsort.Code.Assembly.MergeMemcpyProvenance
+module
+
+public import Structure.CPythonListsort.Code.Assembly.SortSliceSafety
+public import Def.CPythonListsort.Code.Transcription.MergeLo.Part6
+public import Def.CPythonListsort.Code.Transcription.MergeHi.Part6
+public import Lean.Elab.Command
+public import Theorem.CPythonListsort.Code.Assembly.MergeMemcpyProvenance
 /-!
 # Merge memcpy call-site provenance
 
@@ -30,7 +32,7 @@ open SortSlice
 /-! ## Closed bulk-movement inventory -/
 
 /-- The primitive class used at a merge bulk-movement site. -/
-inductive MergeBulkMoveKind where
+public inductive MergeBulkMoveKind where
   | distinctBackingMemcpy
   | sameStoreMemmove
   deriving DecidableEq, Repr
@@ -38,7 +40,7 @@ inductive MergeBulkMoveKind where
 /-- Type-level vocabulary for the six temp/main `memcpy` tags and four
 same-main-store `memmove` tags.  Actual evaluator coverage is checked against
 declaration bodies below; constructor counting is not used as coverage proof. -/
-inductive MergeBulkMoveCallsite where
+public inductive MergeBulkMoveCallsite where
   | loMemcpy (site : MergeLoMemcpyCallsite)
   | hiMemcpy (site : MergeHiMemcpyCallsite)
   | memmove (site : MergeMemmoveCallsite)

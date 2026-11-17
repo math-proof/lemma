@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
-import Mathlib.LinearAlgebra.TensorProduct.RightExactness
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Basic
-import Mathlib.CategoryTheory.Limits.Shapes.BinaryProducts
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
+public import Mathlib.LinearAlgebra.TensorProduct.RightExactness
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Basic
+public import Mathlib.CategoryTheory.Limits.Shapes.BinaryProducts
+
+@[expose] public section
+
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits
 
 

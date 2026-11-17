@@ -30,9 +30,9 @@ import Mathlib.Topology.ContinuousMap.Basic
 import Mathlib.Topology.ContinuousMap.Bounded.Basic
 import Mathlib.Topology.MetricSpace.Polish
 import Def.Probability.CramerTheorem
-import Lemma.Random.Integral_Sub_Log_Integral_Exp.le.ToRealKlDiv.of.Any_All_LeAbs.Continuous.Integrable_Llr
-import Lemma.Random.IsProbabilityMeasure.of.Gt_0
-import Lemma.Random.Measurable.of.Gt_0
+import Theorem.Random.Integral_Sub_Log_Integral_Exp.le.ToRealKlDiv.of.Any_All_LeAbs.Continuous.Integrable_Llr
+import Theorem.Random.IsProbabilityMeasure.of.Gt_0
+import Theorem.Random.Measurable.of.Gt_0
 import Lemma.Random.SatisfiesLDP
 import Structure.v1.Atlas.Probability.code.LargeDeviations
 import Theorem.v1.Atlas.Probability.code.CramerRateFunction

@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ConsecutivePrime.lean -/
+module
 
-
-import Def.NumberTheory.ConsecutivePrime
-import Mathlib.Tactic.NormNum.Prime
-import Lean.Elab.Tactic.Omega
+public import Def.NumberTheory.ConsecutivePrime
+public import Mathlib.Tactic.NormNum.Prime
+public import Lean.Elab.Tactic.Omega
 open MetaMathlibExt
 
+public section
 
 example : AreConsecutivePrimes 2 3 := by
   refine ⟨by norm_num, by norm_num, by norm_num, ?_⟩

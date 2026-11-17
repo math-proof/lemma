@@ -8,16 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Set.Basic
-import Mathlib.Data.Nat.Log
-import Mathlib.Order.RelClasses
+module
+
+public import Mathlib.Data.Set.Basic
+public import Mathlib.Data.Nat.Log
+public import Mathlib.Order.RelClasses
 
 
 namespace TuringMachine
 
 /-- The two possible directions in which a Turing machine head can move on each
 step: `L` for left, `R` for right. -/
-inductive Direction where
+public inductive Direction where
   | L : Direction
   | R : Direction
   deriving DecidableEq, Repr, Inhabited

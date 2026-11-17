@@ -1,6 +1,11 @@
 -- Carved from Lemma/Definitions/Def_NumberField_Completion_HenselianLocalRing.lean: instance decls only.
-import Mathlib
-import Instance.NumberField_Completion_Finite
+
+module
+
+public import Mathlib
+public import Instance.NumberField_Completion_Finite
+
+@[expose] public section
 
 set_option maxHeartbeats 1200000
 set_option synthInstance.maxHeartbeats 400000

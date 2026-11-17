@@ -38,7 +38,7 @@ import Mathlib.MeasureTheory.Integral.DominatedConvergence
 import Mathlib.NumberTheory.ZetaValues
 import Mathlib.Tactic
 import Def.Analysis.Calculus.EulerMaclaurinFormula
-import Lemma.Real.Calculus.EulerMaclaurinFormula
+import Theorem.Real.Calculus.EulerMaclaurinFormula
 import Lemma.Real.ExpSubOneMittagLeffler
 import Def.Analysis.SpecialFunctions.ExpSubOneMittagLeffler
 /-!

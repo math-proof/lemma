@@ -1,10 +1,13 @@
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Topology.MetricSpace.Basic
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Data.Nat.Nth
-import Mathlib.Topology.Algebra.InfiniteSum.Real
-import Def.Topology.Algebra.InfiniteSum.RiemannRearrangement.Part2
+module
 
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Topology.MetricSpace.Basic
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Data.Nat.Nth
+public import Mathlib.Topology.Algebra.InfiniteSum.Real
+public import Def.Topology.Algebra.InfiniteSum.RiemannRearrangement.Part2
+
+public section
 
 namespace Series.RiemannRearrangementWanted
 

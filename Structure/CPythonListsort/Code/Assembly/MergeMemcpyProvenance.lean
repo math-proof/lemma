@@ -1,9 +1,20 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeMemcpyProvenance.lean -/
 
-import Structure.CPythonListsort.Code.Assembly.SortSliceSafety
-import Def.CPythonListsort.Code.Transcription.MergeLo.Part6
-import Def.CPythonListsort.Code.Transcription.MergeHi.Part6
-import Lean.Elab.Command
+module
+
+public import Structure.CPythonListsort.Code.Assembly.SortSliceSafety
+public import Def.CPythonListsort.Code.Transcription.MergeLo.Part6
+public import Def.CPythonListsort.Code.Transcription.MergeHi.Part6
+public import Lean.Elab.Command
+public import Def.CPythonListsort.Code.Transcription.MergeLo.Part3
+public import Def.CPythonListsort.Code.Transcription.MergeHi.Part2
+public import Def.CPythonListsort.Code.Assembly.SortSliceSafety
+public import Def.CPythonListsort.Code.Transcription.SortSlice.Part2
+public import Def.CPythonListsort.Code.Transcription.SortSlice.Part3
+public import Def.CPythonListsort.Code.Transcription.SortSlice.Part4
+public import Inductive.CPythonListsort.Code.Transcription.SortSlice
+public import Def.CPythonListsort.Code.Assembly.AccessTrace.Part5
+public import Def.CPythonListsort.Code.Assembly.AccessTrace.Part8
 /-!
 # Merge memcpy call-site provenance
 
@@ -16,6 +27,9 @@ the obligation structurally: their recursive bulk-copy executors themselves
 require a call-site tag and a proof of its exact backing direction, with no
 lower untagged bulk helper for an evaluator call to bypass.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

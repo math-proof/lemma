@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Instance.v1.Atlas.TensorCategories.code.QuantumSl2Concrete.Part5
-import Lemma.Category.Atlas.v1.TensorCategories.code.QuantumSl2Concrete
-import Lemma.Category.Atlas.v1.TensorCategories.code.QBinomial
-import Theorem.v1.Atlas.TensorCategories.code.QBinomial.Part2
+module
+
+public import Instance.v1.Atlas.TensorCategories.code.QuantumSl2Concrete.Part5
+public import Theorem.v1.Atlas.TensorCategories.code.QBinomial.Part2
+
+public section
+
 open Coalgebra HopfAlgebra
 open scoped TensorProduct
 

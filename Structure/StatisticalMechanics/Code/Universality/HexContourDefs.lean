@@ -9,10 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexInjections.Part7
-import Theorem.StatisticalMechanics.Code.Universality.HexBoundaryAssign.Part3
-import Def.StatisticalMechanics.Code.Universality.HexContourDefs
+module
 
+public import Theorem.StatisticalMechanics.Code.Universality.HexInjections.Part7
+public import Theorem.StatisticalMechanics.Code.Universality.HexBoundaryAssign.Part3
+public import Def.StatisticalMechanics.Code.Universality.HexContourDefs
+
+
+public section
 
 namespace StatMech.Universality
 

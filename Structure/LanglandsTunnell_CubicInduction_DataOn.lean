@@ -1,10 +1,12 @@
-import Structure.LanglandsTunnell_CubicInduction_Structure
+module
+
+public import Structure.LanglandsTunnell_CubicInduction_Structure
 
 set_option autoImplicit false
 
 open Matrix IsDedekindDomain NumberField MeasureTheory AutomorphicForm
 
-noncomputable section
+public noncomputable section
 
 namespace LanglandsTunnell.CubicInduction
 

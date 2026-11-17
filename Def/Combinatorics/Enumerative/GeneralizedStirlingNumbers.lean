@@ -1,9 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/GeneralizedStirlingNumbers.lean -/
 
-import Mathlib.Combinatorics.Enumerative.Stirling
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Real.Basic
+module
 
+public import Mathlib.Combinatorics.Enumerative.Stirling
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Real.Basic
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

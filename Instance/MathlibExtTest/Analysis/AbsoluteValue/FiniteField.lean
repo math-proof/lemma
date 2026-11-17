@@ -1,8 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/AbsoluteValue/FiniteField.lean -/
 
+module
 
-import Theorem.Analysis.AbsoluteValue.FiniteField
-import Mathlib.FieldTheory.Finite.Basic
+public import Theorem.Analysis.AbsoluteValue.FiniteField
+public import Mathlib.FieldTheory.Finite.Basic
+
+@[expose] public section
+
 open AbsoluteValue
 
 variable {K : Type*} [Field K]

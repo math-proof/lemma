@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/CarmichaelNumber.lean -/
 
-import Mathlib.NumberTheory.ArithmeticFunction.Carmichael
-import Mathlib.RingTheory.ZMod
+module
 
+public import Mathlib.NumberTheory.ArithmeticFunction.Carmichael
+public import Mathlib.RingTheory.ZMod
+
+@[expose] public section
 
 /-!
 # Korselt's criterion

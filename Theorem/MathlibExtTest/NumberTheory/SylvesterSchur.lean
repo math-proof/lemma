@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/SylvesterSchur.lean -/
 
 
-import Lemma.Nat.SylvesterSchur
+import Theorem.Nat.SylvesterSchur
 
 
 example {n k : ℕ} (hk : 0 < k) (hkn : k < n) :

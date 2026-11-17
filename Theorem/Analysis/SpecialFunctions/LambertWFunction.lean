@@ -1,7 +1,10 @@
-import Mathlib.Analysis.SpecialFunctions.Exp
-import Mathlib.Analysis.Calculus.Deriv.MeanValue
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import Def.Analysis.SpecialFunctions.LambertWFunction
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Exp
+public import Mathlib.Analysis.Calculus.Deriv.MeanValue
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+public import Def.Analysis.SpecialFunctions.LambertWFunction
+
 /-!
 # Lambert W function, principal real branch (Ouellet JIS VOL20, rank 320)
 
@@ -25,6 +28,8 @@ branch on the open domain `x > -exp (-1)`, with preimages restricted to `y > -1`
 It does not yet define a `lambertW` function; the proved theorem is intended to
 justify such a subtype-valued inverse.
 -/
+
+public section
 
 
 namespace MetaMathlibExt

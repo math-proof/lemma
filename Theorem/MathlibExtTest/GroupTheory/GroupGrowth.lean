@@ -2,7 +2,7 @@
 
 
 import Def.GroupTheory.GroupGrowth
-import Lemma.MvPolynomial.Growth0.eq.One
+import Theorem.MvPolynomial.Growth0.eq.One
 
 
 /-- Ordinary case: every generating family of a finite group has polynomial growth. -/

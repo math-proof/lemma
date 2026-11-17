@@ -1,6 +1,10 @@
-import Mathlib.RingTheory.MvPowerSeries.Basic
-import Mathlib.RingTheory.Ideal.Maps
-import Mathlib.RingTheory.Ideal.Operations
+module
+
+public import Mathlib.RingTheory.MvPowerSeries.Basic
+public import Mathlib.RingTheory.Ideal.Maps
+public import Mathlib.RingTheory.Ideal.Operations
+
+public section
 
 structure Algebra.PatchingLevel (𝒪 : Type) [CommRing 𝒪] (r : ℕ) (R : Type) [CommRing R]
     [Algebra 𝒪 R] (M : Type) [AddCommGroup M] [Module R M]

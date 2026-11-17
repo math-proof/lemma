@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqbReduction.lean -/
+module
 
-import Mathlib.GroupTheory.GroupAction.ConjAct
-import Mathlib.GroupTheory.GroupAction.Quotient
-import Mathlib.GroupTheory.PGroup
-import Mathlib.GroupTheory.Sylow
-import Def.GroupTheory.BurnsidePaqbReduction.Part2
+public import Mathlib.GroupTheory.GroupAction.ConjAct
+public import Mathlib.GroupTheory.GroupAction.Quotient
+public import Mathlib.GroupTheory.PGroup
+public import Mathlib.GroupTheory.Sylow
+public import Def.GroupTheory.BurnsidePaqbReduction.Part2
+
 /-!
 # Conjugacy classes and a Sylow-center reduction step for groups of order `p ^ a * q ^ b`
 
@@ -22,6 +24,8 @@ p^alpha q^beta," *Proceedings of the London Mathematical Society* s2-1 (1904),
 
 This partial stage does not prove the full Burnside `p^a * q^b` solvability theorem.
 -/
+
+public section
 
 
 namespace BurnsidePaqb

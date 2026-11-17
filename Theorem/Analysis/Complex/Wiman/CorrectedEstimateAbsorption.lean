@@ -1,5 +1,8 @@
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+module
 
+public import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+
+public section
 
 namespace Complex.Wiman.CorrectedEstimateAbsorption
 

@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/HsuShiueGeneralizedStirlingNumber.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.HsuShiueGeneralizedStirlingNumber
+public import Mathlib.Combinatorics.Enumerative.Stirling
+public import Mathlib.Tactic
 
-import Def.Combinatorics.Enumerative.HsuShiueGeneralizedStirlingNumber
-import Mathlib.Combinatorics.Enumerative.Stirling
-import Mathlib.Tactic
-
+public section
 
 namespace MetaMathlibExt
 

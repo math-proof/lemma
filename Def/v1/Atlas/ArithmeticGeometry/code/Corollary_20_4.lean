@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.IndependenceOfValuations
+module
+
+public import Mathlib
+
+@[expose] public section
+
 open Finset
 
 variable {F : Type*} [Field F]

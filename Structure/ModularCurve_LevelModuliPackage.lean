@@ -1,5 +1,9 @@
-import Mathlib
-import Instance.ModularCurve_LevelModuliPackage
+module
+
+public import Mathlib
+public import Instance.ModularCurve_LevelModuliPackage
+
+public section
 
 set_option autoImplicit false
 

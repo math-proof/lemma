@@ -4,11 +4,16 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Data.Fintype.Order
-import Mathlib.RingTheory.MvPowerSeries.Inverse
-import Mathlib.SetTheory.Cardinal.Finite
-import Mathlib.Algebra.Order.BigOperators.Group.LocallyFinite
-import Mathlib.Tactic.LinearCombination
+module
+
+public import Mathlib.Data.Fintype.Order
+public import Mathlib.RingTheory.MvPowerSeries.Inverse
+public import Mathlib.SetTheory.Cardinal.Finite
+public import Mathlib.Algebra.Order.BigOperators.Group.LocallyFinite
+public import Mathlib.Tactic.LinearCombination
+
+@[expose] public section
+
 /-! # Restricted-growth word multivariate generating function
 
 This file proves the product formula for the multivariate generating function of

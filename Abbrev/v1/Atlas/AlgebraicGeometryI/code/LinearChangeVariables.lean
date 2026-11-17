@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.MvPolynomial.Funext
-import Mathlib.Algebra.MvPolynomial.Equiv
-import Mathlib.RingTheory.NoetherNormalization
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.LinearChangeVariables
+module
+
+public import Mathlib.Algebra.MvPolynomial.Funext
+public import Mathlib.Algebra.MvPolynomial.Equiv
+public import Mathlib.RingTheory.NoetherNormalization
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.LinearChangeVariables
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 open Cardinal Polynomial MvPolynomial NoetherNormalization Ideal Nat RingHom List Finset

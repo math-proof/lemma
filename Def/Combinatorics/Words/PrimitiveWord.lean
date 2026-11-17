@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Words/PrimitiveWord.lean -/
 
-import Mathlib.Data.List.Basic
+module
+
+public import Mathlib.Data.List.Basic
+
+@[expose] public section
+
 /-!
 # Primitive finite words
 

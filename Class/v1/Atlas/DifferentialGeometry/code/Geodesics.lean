@@ -15,8 +15,6 @@ import Mathlib.Analysis.Calculus.MeanValue
 import Mathlib.Analysis.Calculus.Deriv.Shift
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 import Structure.v1.Atlas.DifferentialGeometry.code.Manifolds.Part6
-import Lemma.Real.Atlas.v1.DifferentialGeometry.code.Manifolds
-import Lemma.Real.Atlas.v1.DifferentialGeometry.code.Intrinsic
 import Mathlib.Analysis.Convex.StrictConvexSpace
 import Mathlib.Analysis.InnerProductSpace.Convex
 import Def.v1.Atlas.DifferentialGeometry.code.Intrinsic.Part4
@@ -27,7 +25,6 @@ import Abbrev.v1.Atlas.DifferentialGeometry.code.GaussMap
 import Def.v1.Atlas.DifferentialGeometry.code.Geodesics.Part5
 open MeasureTheory intervalIntegral Hypersurface Finset
 open scoped InnerProductSpace BigOperators
-
 
 noncomputable section
 

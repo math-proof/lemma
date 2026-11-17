@@ -2,7 +2,7 @@
 
 
 import Mathlib.Algebra.Order.Star.Real
-import Lemma.Matrix.SimultaneousDiagonalization
+import Theorem.Matrix.SimultaneousDiagonalization
 open MathlibExt.LinearAlgebra.Matrix.SimultaneousDiagonalizationWanted
 
 

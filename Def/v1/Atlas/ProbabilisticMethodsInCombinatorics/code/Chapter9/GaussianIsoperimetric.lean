@@ -8,7 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.Distributions.Gaussian.Multivariate
+module
+
+public import Mathlib.Probability.Distributions.Gaussian.Multivariate
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open MeasureTheory ProbabilityTheory

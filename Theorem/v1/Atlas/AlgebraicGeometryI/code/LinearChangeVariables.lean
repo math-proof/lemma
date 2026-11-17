@@ -7,14 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Algebra.MvPolynomial.Funext
-import Mathlib.Algebra.MvPolynomial.Equiv
-import Mathlib.RingTheory.NoetherNormalization
+public import Mathlib.Algebra.MvPolynomial.Funext
+public import Mathlib.Algebra.MvPolynomial.Equiv
+public import Mathlib.RingTheory.NoetherNormalization
 set_option maxHeartbeats 400000
 
 open Cardinal Polynomial MvPolynomial NoetherNormalization Ideal Nat RingHom List Finset
 
+public section
 
 /-- Composing the Nagata substitution with its negative inverse yields
 the identity. -/

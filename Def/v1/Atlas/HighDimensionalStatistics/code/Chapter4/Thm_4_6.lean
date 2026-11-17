@@ -22,10 +22,10 @@ import Mathlib.Probability.Moments.Basic
 import Mathlib.Probability.Independence.Integration
 import Mathlib.Analysis.Convex.SpecificFunctions.Basic
 import Mathlib.Analysis.Convex.Jensen
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_12
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_12
 import Notation.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Lemma_4_2
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Lemma_4_2
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_18
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Lemma_4_2
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_18
 import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_18
 open MeasureTheory ProbabilityTheory Matrix Real Finset BigOperators
 

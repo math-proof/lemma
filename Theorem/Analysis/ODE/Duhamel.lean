@@ -1,12 +1,14 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Mathlib.Analysis.Normed.Algebra.Exponential
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.Analysis.ODE.ExistUnique
-import Mathlib.Analysis.SpecialFunctions.Exponential
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+module
+
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Mathlib.Analysis.Normed.Algebra.Exponential
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.Analysis.ODE.ExistUnique
+public import Mathlib.Analysis.SpecialFunctions.Exponential
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 open MeasureTheory
 
 /-!
@@ -15,6 +17,8 @@ open MeasureTheory
 This file proves existence, the differential equation, and uniqueness for the explicit
 variation-of-constants solution of an inhomogeneous linear ODE on a real Banach space.
 -/
+
+public section
 
 
 namespace ODE.DuhamelWanted

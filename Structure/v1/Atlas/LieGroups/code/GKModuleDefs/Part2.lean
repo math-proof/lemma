@@ -8,14 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.LieGroups.code.GKModule.Part2
-import Def.v1.Atlas.LieGroups.code.Admissible.Part3
-import Lemma.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
-import Mathlib.Algebra.Lie.Semisimple.Defs
-import Def.v1.Atlas.LieGroups.code.GKModuleDefs
+module
+
+public import Def.v1.Atlas.LieGroups.code.GKModule.Part2
+public import Def.v1.Atlas.LieGroups.code.Admissible.Part3
+public import Lemma.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
+public import Mathlib.Algebra.Lie.Semisimple.Defs
+public import Def.v1.Atlas.LieGroups.code.GKModuleDefs
 
 
-noncomputable section
+public noncomputable section
 
 open scoped ComplexOrder
 

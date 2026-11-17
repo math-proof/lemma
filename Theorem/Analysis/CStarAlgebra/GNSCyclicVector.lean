@@ -1,5 +1,9 @@
-import Mathlib.Analysis.CStarAlgebra.GelfandNaimarkSegal
+module
+
+public import Mathlib.Analysis.CStarAlgebra.GelfandNaimarkSegal
 open scoped InnerProductSpace ComplexOrder
+
+public section
 
 universe u
 

@@ -8,12 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Homology.Homotopy
-import Mathlib.Topology.Homotopy.Contractible
-import Mathlib.AlgebraicTopology.SingularHomology.HomotopyInvarianceTopCat
-import Mathlib.Algebra.Category.Grp.Colimits
-import Mathlib.Algebra.Category.Grp.Abelian
+module
 
+public import Mathlib.Algebra.Homology.Homotopy
+public import Mathlib.Topology.Homotopy.Contractible
+public import Mathlib.AlgebraicTopology.SingularHomology.HomotopyInvarianceTopCat
+public import Mathlib.Algebra.Category.Grp.Colimits
+public import Mathlib.Algebra.Category.Grp.Abelian
+
+@[expose] public section
 
 namespace ContractibleHomology
 

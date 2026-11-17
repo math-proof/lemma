@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Words/PrimitiveWord.lean -/
+module
 
+public import Def.Combinatorics.Words.PrimitiveWord
 
-import Def.Combinatorics.Words.PrimitiveWord
-
+public section
 
 namespace MetaMathlibExt
 

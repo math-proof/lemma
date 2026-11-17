@@ -1,4 +1,6 @@
-import Mathlib
+module
+
+public import Mathlib
 /-!
 # Analysis I, Section 11.1: Partitions
 
@@ -18,7 +20,7 @@ Main constructions and results of this section:
 
 namespace Chapter11
 
-inductive BoundedInterval where
+public inductive BoundedInterval where
   | Ioo (a b:ℝ) : BoundedInterval
   | Icc (a b:ℝ) : BoundedInterval
   | Ioc (a b:ℝ) : BoundedInterval

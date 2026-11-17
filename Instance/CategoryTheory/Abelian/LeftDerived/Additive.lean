@@ -1,6 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/CategoryTheory/Abelian/LeftDerived/Additive.lean -/
 
-import Mathlib.CategoryTheory.Abelian.LeftDerived
+module
+
+public import Mathlib.CategoryTheory.Abelian.LeftDerived
 /-!
 # Additivity of projective resolutions and left-derived functors
 
@@ -10,6 +12,7 @@ the left-derived functors `F.leftDerived n` of an additive functor `F` are
 additive.
 -/
 
+@[expose] public section
 
 namespace CategoryTheory
 

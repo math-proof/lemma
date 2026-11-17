@@ -1,10 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/PartitionNumberArray.lean -/
 
-import Mathlib.Data.Nat.Factorial.Basic
-import Def.Combinatorics.Enumerative.PartitionNumberArray
+module
+
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Def.Combinatorics.Enumerative.PartitionNumberArray
 /-!
 # Partition number array (concept jis_sem_4bcead3a4bcda58a1d4dbb9f)
 -/
+public section
+
+
 
 
 namespace MetaMathlibExt

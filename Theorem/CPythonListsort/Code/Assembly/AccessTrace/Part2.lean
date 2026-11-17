@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean -/
 
-import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
-import Def.CPythonListsort.Code.Assembly.AccessTrace.Part8
+module
+
+public import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
+public import Def.CPythonListsort.Code.Assembly.AccessTrace.Part8
 /-!
 # Compositional access and pending-push traces
 
@@ -25,6 +27,8 @@ records its resulting depth.  There is no capacity guard, refusal result,
 clamping operation, or assertion-failure event in this trace model.
 -/
 
+public section
+
 
 namespace CPythonListsort
 
@@ -36,7 +40,7 @@ namespace TraceResult
 
 /-- The trace side of `bind`: a rejected first operation retains its local
 trace, while a successful continuation appends its trace in execution order. -/
-theorem trace_bind (current : TraceResult α) (next : α → TraceResult β) :
+public theorem trace_bind (current : TraceResult α) (next : α → TraceResult β) :
     (current.bind next).trace =
       match current.result with
       | none => current.trace

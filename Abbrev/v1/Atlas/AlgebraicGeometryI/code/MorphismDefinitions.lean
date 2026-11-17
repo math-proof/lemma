@@ -14,7 +14,7 @@ import Mathlib.RingTheory.Ideal.GoingUp
 import Mathlib.RingTheory.QuasiFinite.Basic
 import Mathlib.Order.KrullDimension
 import Mathlib.RingTheory.KrullDimension.Basic
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.FiniteMorphismDimension
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.FiniteMorphismDimension
 open PrimeSpectrum
 
 

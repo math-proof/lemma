@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.BraidRelationProof.DihedralHelpers.Part2
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.BraidRelationProof.Assembly
+module
+
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.BraidRelationProof.DihedralHelpers.Part2
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.BraidRelationProof.Assembly
 open Finset BigOperators Real
+
+public section
 
 
 namespace CoxeterGroup
@@ -20,13 +24,13 @@ variable {B : Type*} [DecidableEq B] [Fintype B]
 
 /-- The decomposition identity:
 $v = \alpha e_s + \beta e_t + w$. -/
-theorem decomp_eq (M : CoxeterMatrix B) (s t : B) (v : B → ℝ) :
+public theorem decomp_eq (M : CoxeterMatrix B) (s t : B) (v : B → ℝ) :
     v = decompAlpha M s t v • e s + decompBeta M s t v • e t + decompW M s t v := by
   simp only [decompW]
   ext u; simp [Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul]
 
 /-- The component $w$ is $B$-orthogonal to $e_s$. -/
-theorem decomp_ortho_s (M : CoxeterMatrix B) (s t : B) (v : B → ℝ)
+public theorem decomp_ortho_s (M : CoxeterMatrix B) (s t : B) (v : B → ℝ)
     (hst : s ≠ t) (hm : M.M s t ≠ 0) :
     bilinForm M (decompW M s t v) (e s) = 0 := by
   simp only [decompW]
@@ -40,7 +44,7 @@ theorem decomp_ortho_s (M : CoxeterMatrix B) (s t : B) (v : B → ℝ)
   field_simp; ring
 
 /-- The component $w$ is $B$-orthogonal to $e_t$. -/
-theorem decomp_ortho_t (M : CoxeterMatrix B) (s t : B) (v : B → ℝ)
+public theorem decomp_ortho_t (M : CoxeterMatrix B) (s t : B) (v : B → ℝ)
     (hst : s ≠ t) (hm : M.M s t ≠ 0) :
     bilinForm M (decompW M s t v) (e t) = 0 := by
   simp only [decompW]
@@ -57,7 +61,7 @@ theorem decomp_ortho_t (M : CoxeterMatrix B) (s t : B) (v : B → ℝ)
 /-- For $s \ne t$ with finite Coxeter order $m(s,t)$, the geometric
 representation satisfies the braid relation $(\sigma_s \sigma_t)^{m(s,t)} v =
 v$ on every vector $v$. -/
-theorem braid_power_ne (M : CoxeterMatrix B) (s t : B)
+public theorem braid_power_ne (M : CoxeterMatrix B) (s t : B)
     (hst : s ≠ t) (hm : M.M s t ≠ 0) (v : B → ℝ) :
     (fun w => sigma M s (sigma M t w))^[M.M s t] v = v := by
   set α' := decompAlpha M s t v

@@ -1,5 +1,9 @@
-import Mathlib.GroupTheory.Subgroup.Centralizer
-import Mathlib.Tactic.Group
+module
+
+public import Mathlib.GroupTheory.Subgroup.Centralizer
+public import Mathlib.Tactic.Group
+
+@[expose] public section
 
 set_option autoImplicit false
 

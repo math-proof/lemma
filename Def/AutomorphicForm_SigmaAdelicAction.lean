@@ -1,4 +1,8 @@
-import Def.M4aHerbrand_IdeleClassVocab
+module
+
+public import Def.M4aHerbrand_IdeleClassVocab
+
+@[expose] public section
 
 set_option autoImplicit false
 

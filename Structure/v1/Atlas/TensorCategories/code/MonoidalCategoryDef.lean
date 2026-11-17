@@ -8,15 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Category
-import Mathlib.CategoryTheory.Monoidal.CoherenceLemmas
-import Mathlib.CategoryTheory.Monoidal.Subcategory
-import Mathlib.CategoryTheory.Monoidal.Functor
-import Mathlib.CategoryTheory.Monoidal.Opposite
-import Mathlib.CategoryTheory.Endomorphism
-import Mathlib.CategoryTheory.Equivalence
-import Mathlib.Tactic.CategoryTheory.Monoidal.PureCoherence
-import Def.v1.Atlas.TensorCategories.code.MonoidalCategoryDef.Part3
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Category
+public import Mathlib.CategoryTheory.Monoidal.CoherenceLemmas
+public import Mathlib.CategoryTheory.Monoidal.Subcategory
+public import Mathlib.CategoryTheory.Monoidal.Functor
+public import Mathlib.CategoryTheory.Monoidal.Opposite
+public import Mathlib.CategoryTheory.Endomorphism
+public import Mathlib.CategoryTheory.Equivalence
+public import Mathlib.Tactic.CategoryTheory.Monoidal.PureCoherence
+public import Def.v1.Atlas.TensorCategories.code.MonoidalCategoryDef.Part3
+public section
+
 set_option maxHeartbeats 800000
 
 open CategoryTheory MonoidalCategory Category

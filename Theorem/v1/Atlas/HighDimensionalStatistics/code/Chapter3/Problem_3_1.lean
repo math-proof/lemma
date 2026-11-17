@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Remark_3_1
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Remark_3_1
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Remark_3_1
 open Matrix MeasureTheory
 
 

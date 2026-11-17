@@ -8,7 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.Sheaves.SheafCondition.UniqueGluing
+module
+
+public import Mathlib.Topology.Sheaves.SheafCondition.UniqueGluing
+
+@[expose] public section
+
 open TopCat TopCat.Presheaf CategoryTheory CategoryTheory.Limits
   TopologicalSpace TopologicalSpace.Opens Opposite
 

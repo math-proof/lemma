@@ -1,6 +1,10 @@
-import Mathlib.RepresentationTheory.Irreducible
-import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
-import Class.Representation_AbsolutelyIrreducible
+module
+
+public import Mathlib.RepresentationTheory.Irreducible
+public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
+public import Class.Representation_AbsolutelyIrreducible
+
+@[expose] public section
 
 set_option autoImplicit false
 

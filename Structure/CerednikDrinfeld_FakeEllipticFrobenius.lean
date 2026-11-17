@@ -1,9 +1,11 @@
-import Mathlib.Algebra.CharP.Frobenius
-import Structure.CerednikDrinfeld_QMModuliProps
+module
+
+public import Mathlib.Algebra.CharP.Frobenius
+public import Structure.CerednikDrinfeld_QMModuliProps
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 universe u
 

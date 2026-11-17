@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/GeneralizedLucas.lean -/
 
-import Mathlib.Algebra.LinearRecurrence
+module
+
+public import Mathlib.Algebra.LinearRecurrence
+
+@[expose] public section
+
 open Finset
 
 /-!

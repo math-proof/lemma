@@ -1,3 +1,4 @@
+import Initialize.Tactic.Attr.Basic
 import Lemma.List.Cons_Append.eq.AppendCons
 import Lemma.List.DropTake.eq.ListGet
 import Lemma.List.LengthTake.eq.Min_Length

@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Free.Coherence
-import Mathlib.CategoryTheory.Monoidal.Free.Basic
-import Mathlib.CategoryTheory.Monoidal.CoherenceLemmas
-import Mathlib.Tactic.CategoryTheory.Monoidal.PureCoherence
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Free.Coherence
+public import Mathlib.CategoryTheory.Monoidal.Free.Basic
+public import Mathlib.CategoryTheory.Monoidal.CoherenceLemmas
+public import Mathlib.Tactic.CategoryTheory.Monoidal.PureCoherence
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open CategoryTheory MonoidalCategory Category

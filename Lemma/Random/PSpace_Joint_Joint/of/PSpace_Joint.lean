@@ -3,6 +3,7 @@ import Mathlib.MeasureTheory.Measure.Prod
 import Mathlib.MeasureTheory.Integral.Lebesgue.Countable
 import Mathlib.MeasureTheory.Measure.WithDensity
 import Lemma.Random.SinglePSpace.SinglePSpace.of.SinglePSpace
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory Function Random
 open scoped Classical
 

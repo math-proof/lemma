@@ -7,11 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Structure.v1.Atlas.Probability.code.RegularConditionalDistribution
-import Lemma.Measure.Atlas.v1.Probability.code.RegularConditionalDistribution
+public import Structure.v1.Atlas.Probability.code.RegularConditionalDistribution
+public import Theorem.Measure.Atlas.v1.Probability.code.RegularConditionalDistribution
 open MeasureTheory ProbabilityTheory
 
+public section
 
 noncomputable section
 

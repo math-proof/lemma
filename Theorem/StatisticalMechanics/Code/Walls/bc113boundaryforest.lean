@@ -7,15 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib
+public import Mathlib
 open Set SimpleGraph Finset
 
 set_option linter.style.longLine false
 set_option linter.unusedVariables false
 set_option maxRecDepth 4000
 
+public section
 
 namespace StatMech.Walls
 

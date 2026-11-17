@@ -1,7 +1,12 @@
-import Mathlib.FieldTheory.RatFunc.Degree
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Ring
-import Instance.AlgebraicGeometry.EllipticCurve.ManinProjectiveDegree.Part2
+module
+
+public import Mathlib.FieldTheory.RatFunc.Degree
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Ring
+public import Instance.AlgebraicGeometry.EllipticCurve.ManinProjectiveDegree.Part2
+
+@[expose] public section
+
 /-!
 # Projective numerator degrees for Manin's proof
 

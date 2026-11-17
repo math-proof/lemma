@@ -9,8 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Walls.euceuler
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Walls.euceuler
+
+@[expose] public section
+
 open scoped BigOperators
 open Finset
 

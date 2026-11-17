@@ -1,7 +1,10 @@
-import Mathlib.Algebra.CharP.Defs
-import Mathlib.Analysis.Normed.Field.Ultra
-import Mathlib.FieldTheory.Finite.Basic
+module
 
+public import Mathlib.Algebra.CharP.Defs
+public import Mathlib.Analysis.Normed.Field.Ultra
+public import Mathlib.FieldTheory.Finite.Basic
+
+public section
 
 namespace AbsoluteValue
 

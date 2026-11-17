@@ -9,15 +9,17 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.FiniteCumulativeGradeHall
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexMarkedPairDecoratedHall.Part3
-import Theorem.StatisticalMechanics.Code.FrontierD.FiniteBidegreeCumulativeHall
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.FiniteCumulativeGradeHall
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexMarkedPairDecoratedHall.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierD.FiniteBidegreeCumulativeHall
 open Finset
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure TwoBranchMonotoneEmbeddings
     (Source Target : Type*) (sourceGrade : Source → Nat)

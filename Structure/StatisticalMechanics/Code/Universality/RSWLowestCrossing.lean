@@ -9,18 +9,22 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Percolation.Exploration.Part5
-import Theorem.StatisticalMechanics.Code.Percolation.OffClusterIndep.Part4
-import Theorem.StatisticalMechanics.Code.Percolation.SurfaceReassembly
-import Theorem.StatisticalMechanics.Code.RSW.Defs.Part7
-import Theorem.StatisticalMechanics.Code.Inequalities.Harris
-import Theorem.StatisticalMechanics.Code.Lattice.JordanExteriorClosure.Part8
-import Theorem.StatisticalMechanics.Code.Lattice.ClosedContourSeparation.Part2
-import Theorem.StatisticalMechanics.Code.Lattice.StraightWalk.Part4
-import Theorem.StatisticalMechanics.Code.Universality.CrossingTranslationInvariance.Part3
-import Theorem.StatisticalMechanics.Code.Universality.ConnectedRCoastClose.Part13
-import Mathlib.Combinatorics.SimpleGraph.Walk.Counting
-import Theorem.StatisticalMechanics.Code.Universality.RSWLowestCrossing.Part79
+module
+
+public import Theorem.StatisticalMechanics.Code.Percolation.Exploration.Part5
+public import Theorem.StatisticalMechanics.Code.Percolation.OffClusterIndep.Part4
+public import Theorem.StatisticalMechanics.Code.Percolation.SurfaceReassembly
+public import Theorem.StatisticalMechanics.Code.RSW.Defs.Part7
+public import Theorem.StatisticalMechanics.Code.Inequalities.Harris
+public import Theorem.StatisticalMechanics.Code.Lattice.JordanExteriorClosure.Part8
+public import Theorem.StatisticalMechanics.Code.Lattice.ClosedContourSeparation.Part2
+public import Theorem.StatisticalMechanics.Code.Lattice.StraightWalk.Part4
+public import Theorem.StatisticalMechanics.Code.Universality.CrossingTranslationInvariance.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.ConnectedRCoastClose.Part13
+public import Mathlib.Combinatorics.SimpleGraph.Walk.Counting
+public import Theorem.StatisticalMechanics.Code.Universality.RSWLowestCrossing.Part79
+public section
+
 open Function MeasureTheory Set
 open scoped ENNReal NNReal BigOperators
 

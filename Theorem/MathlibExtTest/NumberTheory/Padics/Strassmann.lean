@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Padics/Strassmann.lean -/
 
 
-import Lemma.Nat.Padics.Strassmann
+import Theorem.Nat.Padics.Strassmann
 
 
 -- Strassmann's theorem makes the zero set of a nonzero five-adic power series finite.

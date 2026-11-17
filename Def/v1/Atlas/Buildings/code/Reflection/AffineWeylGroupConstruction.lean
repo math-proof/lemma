@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.Buildings.code.Reflection.AffineWeylGroups.Part3
-import Structure.v1.Atlas.Buildings.code.Reflection.AffineWeylGroupConstruction
+module
+
+public import Structure.v1.Atlas.Buildings.code.Reflection.AffineWeylGroups.Part3
+public import Structure.v1.Atlas.Buildings.code.Reflection.AffineWeylGroupConstruction
+
+@[expose] public section
+
 open scoped InnerProductSpace
 open Set
 

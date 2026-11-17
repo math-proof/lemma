@@ -1,8 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/LogMajorantRegularity.lean -/
 
 import Theorem.Analysis.Complex.Wiman.CumulantMoments
-import Lemma.Complex.Wiman.CumulantMoments
-import Lemma.Complex.Wiman.MaximumTermTendsToInfinity
+import Theorem.Complex.Wiman.CumulantMoments
+import Theorem.Complex.Wiman.MaximumTermTendsToInfinity
 import Mathlib.Analysis.Convex.Deriv
 
 

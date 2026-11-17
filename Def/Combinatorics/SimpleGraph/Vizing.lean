@@ -7,7 +7,7 @@ Authors: Adam Kiezun, Muse Spark 1.3
 import Mathlib.Combinatorics.SimpleGraph.Coloring.EdgeLabeling
 import Mathlib.Combinatorics.SimpleGraph.Bipartite
 import Def.Combinatorics.SimpleGraph.EdgeColoring
-import Lemma.Finset.SimpleGraph.EdgeColoring
+import Theorem.Finset.SimpleGraph.EdgeColoring
 import Mathlib.Algebra.BigOperators.Ring.Nat
 import Mathlib.Combinatorics.Enumerative.DoubleCounting
 import Mathlib.Combinatorics.SimpleGraph.Acyclic

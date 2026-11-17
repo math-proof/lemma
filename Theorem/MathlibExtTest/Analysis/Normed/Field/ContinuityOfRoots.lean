@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Normed/Field/ContinuityOfRoots.lean -/
 
 
-import Lemma.Polynomial.Normed.Field.ContinuityOfRoots
+import Theorem.Polynomial.Normed.Field.ContinuityOfRoots
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 
 

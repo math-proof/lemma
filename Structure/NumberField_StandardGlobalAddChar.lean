@@ -1,12 +1,13 @@
-import Mathlib.RingTheory.Trace.Basic
-import Instance.NumberField_StandardGlobalAddCharRat
+module
+
+public import Mathlib.RingTheory.Trace.Basic
+public import Instance.NumberField_StandardGlobalAddCharRat
 
 set_option autoImplicit false
 
 open IsDedekindDomain NumberField NumberField.InfinitePlace
-open AutomorphicForm
 
-noncomputable section
+public noncomputable section
 
 namespace NumberField.StandardAddChar
 

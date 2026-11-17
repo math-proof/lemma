@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.KahlerManifolds
+module
+
+public import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
+public import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.KahlerManifolds
+public section
+
 set_option autoImplicit false
 set_option maxHeartbeats 800000
 

@@ -1,5 +1,7 @@
 import Def.Dynamics.PolicyTrajectory.ContinuousAction
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Real
 
 
@@ -33,4 +35,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-16
+-- updated on 2026-11-17

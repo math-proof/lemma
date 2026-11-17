@@ -21,7 +21,7 @@ import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
 import Def.Analysis.Calculus.EulerMaclaurinFormula
-import Lemma.Real.Calculus.EulerMaclaurinFormula
+import Theorem.Real.Calculus.EulerMaclaurinFormula
 /-!
 # Ramanujan's asymptotic expansion for power sums
 

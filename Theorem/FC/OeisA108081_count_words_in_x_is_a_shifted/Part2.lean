@@ -9,8 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Def.FC.OeisA108081_count_words_in_x_is_a_shifted.Part4
+module
+
+public import Mathlib
+public import Def.FC.OeisA108081_count_words_in_x_is_a_shifted.Part4
+
+@[expose] public section
+
 
 
 namespace OeisA108081
@@ -18,7 +23,7 @@ namespace OeisA108081
 open Nat
 
 
-@[simp] lemma edgeValue_edgeCoord (z : ℤ) : edgeValue (edgeCoord z) = z := by
+@[simp] public theorem edgeValue_edgeCoord (z : ℤ) : edgeValue (edgeCoord z) = z := by
   simp only [edgeCoord]
   split_ifs with h
   · obtain ⟨k, hk⟩ := h
@@ -29,7 +34,7 @@ open Nat
     simp only [edgeValue, ↓reduceIte]
     omega
 
-@[simp] lemma edgeCoord_edgeValue (q : EdgeCoord) : edgeCoord (edgeValue q) = q := by
+@[simp] public theorem edgeCoord_edgeValue (q : EdgeCoord) : edgeCoord (edgeValue q) = q := by
   rcases q with ⟨k, e⟩
   cases e <;> simp [edgeCoord, edgeValue]
 

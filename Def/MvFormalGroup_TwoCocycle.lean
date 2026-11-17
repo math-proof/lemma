@@ -1,5 +1,9 @@
-import Mathlib
-import Class.MvFormalGroup_BasicV2
+module
+
+public import Mathlib
+public import Class.MvFormalGroup_BasicV2
+
+@[expose] public section
 
 set_option autoImplicit false
 

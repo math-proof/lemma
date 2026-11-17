@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/Elliptic/Homothety.lean -/
+module
 
-
-import Theorem.Analysis.SpecialFunctions.Elliptic.Homothety
+public import Theorem.Analysis.SpecialFunctions.Elliptic.Homothety
 open scoped Pointwise
 
+public section
 
 namespace PeriodPair
 

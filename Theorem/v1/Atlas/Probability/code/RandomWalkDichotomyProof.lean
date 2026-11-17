@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Abbrev.v1.Atlas.Probability.code.RandomWalkTailMeasurability
-import Lemma.Measure.Atlas.v1.Probability.code.RandomWalkTailMeasurability
-import Lemma.Measure.Atlas.v1.Probability.code.KolmogorovZeroOne
+import Theorem.Measure.Atlas.v1.Probability.code.RandomWalkTailMeasurability
+import Theorem.Measure.Atlas.v1.Probability.code.KolmogorovZeroOne
 import Mathlib.Probability.Independence.Kernel.IndepFun
 set_option maxHeartbeats 4000000
 

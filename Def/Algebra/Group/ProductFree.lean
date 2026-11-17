@@ -14,9 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Algebra.Group.Defs
-import Mathlib.Data.Set.Defs
+module
 
+public import Mathlib.Algebra.Group.Defs
+public import Mathlib.Data.Set.Defs
+
+@[expose] public section
 
 namespace Set
 

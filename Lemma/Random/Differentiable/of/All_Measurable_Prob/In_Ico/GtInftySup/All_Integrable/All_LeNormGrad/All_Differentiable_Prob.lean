@@ -1,5 +1,7 @@
 import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Lemma.Random.HasFDerivAt.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory PolicyGradient Random Set
 
 
@@ -32,4 +34,4 @@ private lemma main
 
 
 -- created on 2026-11-13
--- updated on 2026-11-16
+-- updated on 2026-11-17

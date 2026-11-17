@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Polynomial.Expand
-import Mathlib.FieldTheory.Separable
-import Mathlib.RingTheory.Polynomial.Wronskian
-import Mathlib.Tactic.LinearCombination
+module
+
+public import Mathlib.Algebra.Polynomial.Expand
+public import Mathlib.FieldTheory.Separable
+public import Mathlib.RingTheory.Polynomial.Wronskian
+public import Mathlib.Tactic.LinearCombination
+public section
+
 open Polynomial
 
 

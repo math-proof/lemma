@@ -4,6 +4,7 @@ import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
 import Mathlib.Probability.Kernel.Composition.WithDensity
 import Lemma.Random.All_Eq_MulProbCond.of.PSpace_Joint
 import Lemma.Random.ExpectCond.eq.Integral_Mul_ProbCond
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Random
 open scoped ENNReal.ToRealCoe
 
@@ -306,3 +307,4 @@ private lemma main
 
 
 -- created on 2023-03-24
+-- updated on 2026-11-17

@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LaplaceQPolynomial.lean -/
 
-import Mathlib.Algebra.Polynomial.Derivative
+module
 
+public import Mathlib.Algebra.Polynomial.Derivative
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

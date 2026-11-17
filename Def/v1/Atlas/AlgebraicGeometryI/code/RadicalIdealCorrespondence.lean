@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Spectrum.Prime.Topology
-import Mathlib.RingTheory.Nullstellensatz
-import Mathlib.RingTheory.Ideal.MinimalPrime.Noetherian
+module
+
+public import Mathlib.RingTheory.Spectrum.Prime.Topology
+public import Mathlib.RingTheory.Nullstellensatz
+public import Mathlib.RingTheory.Ideal.MinimalPrime.Noetherian
+
+@[expose] public section
+
 open PrimeSpectrum Ideal
 
 

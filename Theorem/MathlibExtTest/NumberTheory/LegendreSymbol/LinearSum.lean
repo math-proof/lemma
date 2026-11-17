@@ -4,7 +4,7 @@
 # Tests for linear sums of Legendre symbols
 -/
 
-import Lemma.Nat.LegendreSymbol.LinearSum
+import Theorem.Nat.LegendreSymbol.LinearSum
 open scoped BigOperators
 
 

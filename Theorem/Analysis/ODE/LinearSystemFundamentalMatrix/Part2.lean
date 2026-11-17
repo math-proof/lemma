@@ -20,7 +20,7 @@ import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 import Mathlib.Topology.Algebra.Module.FiniteDimension
 import Mathlib.Topology.Order.ProjIcc
 import Structure.Analysis.ODE.MaximalSolution
-import Lemma.Set.Any_And_EqOnAndAll_HasDerivAt.of.EqOn_Inter.All_HasDerivAt.All_HasDerivAt.IsOpen.IsOpen
+import Theorem.Set.Any_And_EqOnAndAll_HasDerivAt.of.EqOn_Inter.All_HasDerivAt.All_HasDerivAt.IsOpen.IsOpen
 import Def.Analysis.ODE.LinearSystemFundamentalMatrix.Part2
 open MeasureTheory
 

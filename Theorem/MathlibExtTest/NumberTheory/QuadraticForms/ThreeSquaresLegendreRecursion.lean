@@ -2,7 +2,7 @@
 
 
 import Theorem.NumberTheory.QuadraticForms.ThreeSquaresLegendreRecursion.Part23
-import Lemma.Nat.QuadraticForms.ThreeSquaresLegendreRecursion
+import Theorem.Nat.QuadraticForms.ThreeSquaresLegendreRecursion
 
 
 namespace MathlibExtTest.NumberTheory.QuadraticForms.ThreeSquaresLegendreRecursion

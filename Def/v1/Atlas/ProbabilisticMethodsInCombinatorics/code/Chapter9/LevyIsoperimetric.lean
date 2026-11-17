@@ -8,11 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.MetricSpace.Thickening
-import Mathlib.MeasureTheory.Measure.Hausdorff
-import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
-import Abbrev.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter9.LevyIsoperimetric
+module
 
+public import Mathlib.Topology.MetricSpace.Thickening
+public import Mathlib.MeasureTheory.Measure.Hausdorff
+public import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
+public import Abbrev.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter9.LevyIsoperimetric
+
+@[expose] public section
 
 noncomputable section
 

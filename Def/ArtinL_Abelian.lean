@@ -1,5 +1,9 @@
-import Mathlib
-import Instance.LanglandsTunnell_ArtinFrobenius
+module
+
+public import Mathlib
+public import Instance.LanglandsTunnell_ArtinFrobenius
+
+@[expose] public section
 
 set_option autoImplicit false
 

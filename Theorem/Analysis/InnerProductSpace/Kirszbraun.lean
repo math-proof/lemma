@@ -1,18 +1,21 @@
 /-
 Authors: toskua, Avocado, Adam Kiezun, Muse Spark 1.3
 -/
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.InnerProductSpace.Projection.Minimal
-import Mathlib.Analysis.Normed.Module.Convex
-import Mathlib.Analysis.Normed.Order.Lattice
-import Mathlib.Order.CompletePartialOrder
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Analysis.InnerProductSpace.Projection.Minimal
+public import Mathlib.Analysis.Normed.Module.Convex
+public import Mathlib.Analysis.Normed.Order.Lattice
+public import Mathlib.Order.CompletePartialOrder
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
 open Finset
 open scoped InnerProductSpace
 
+public section
 
 -- N1: weighted variance identity
 theorem kirszbraun_sum_mul_mul_norm_sub_sq_eq

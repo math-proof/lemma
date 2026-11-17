@@ -8,11 +8,11 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TheoryOfComputation.code.SpaceComplexity.Part7
-import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.SpaceComplexity
-import Def.v1.Atlas.TheoryOfComputation.code.LadderNSPACE
-open Computability TuringMachine SpaceComplexity
+module
 
+public import Def.v1.Atlas.TheoryOfComputation.code.SpaceComplexity.Part7
+public import Def.v1.Atlas.TheoryOfComputation.code.LadderNSPACE
+open Computability TuringMachine SpaceComplexity
 
 namespace SpaceComplexity
 
@@ -21,7 +21,7 @@ namespace SpaceComplexity
 - `searchFwd`: nondeterministically guessing the next rung of the ladder.
 - `searchBack`: moving the head back to the working area between rungs.
 - `accepted` / `rejected`: terminal states. -/
-inductive LadderPhase
+public inductive LadderPhase
   | readInput | searchFwd | searchBack | accepted | rejected
   deriving DecidableEq, Fintype
 

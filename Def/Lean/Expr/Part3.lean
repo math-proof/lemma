@@ -1,6 +1,10 @@
-import Def.Lean.Meta.Expr.Part4
-import Def.Lean.Expr.Singleton.Part2
-import Structure.Lean.Expr.Part3
+module
+
+public import Def.Lean.Meta.Expr.Part4
+public import Def.Lean.Expr.Singleton.Part2
+public import Structure.Lean.Expr.Part3
+
+@[expose] public section
 open Lean.Meta
 open Lean (Name Json Level BinderInfo getMCtx)
 set_option linter.unusedVariables false

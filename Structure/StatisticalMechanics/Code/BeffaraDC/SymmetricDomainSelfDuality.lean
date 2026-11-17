@@ -9,10 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.BeffaraDC.AnnulusDefs.Part10
-import Theorem.StatisticalMechanics.Code.BeffaraDC.PlanarFKDuality.Part6
-import Theorem.StatisticalMechanics.Code.FK.MonoBC.Part4
-import Theorem.StatisticalMechanics.Code.BeffaraDC.SymmetricDomainSelfDuality.Part4
+module
+
+public import Theorem.StatisticalMechanics.Code.BeffaraDC.AnnulusDefs.Part10
+public import Theorem.StatisticalMechanics.Code.BeffaraDC.PlanarFKDuality.Part6
+public import Theorem.StatisticalMechanics.Code.FK.MonoBC.Part4
+public import Theorem.StatisticalMechanics.Code.BeffaraDC.SymmetricDomainSelfDuality.Part4
 open Finset SimpleGraph
 open scoped BigOperators
 open StatMech.Lattice
@@ -22,7 +24,7 @@ namespace StatMech
 
 namespace BeffaraDC
 
-noncomputable section
+public noncomputable section
 
 namespace SymmetricDomain
 

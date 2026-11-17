@@ -1,18 +1,22 @@
 /-
 Author: @akiezun, Avocado
 -/
+module
 
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.NumberTheory.Harmonic.Defs
-import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
-import Mathlib.Analysis.SpecialFunctions.Gamma.Digamma
-import Mathlib.NumberTheory.Harmonic.Bounds
-import Def.Analysis.SpecialFunctions.Part1Ch9Entry33Zeta3integral
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.NumberTheory.Harmonic.Defs
+public import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Digamma
+public import Mathlib.NumberTheory.Harmonic.Bounds
+public import Def.Analysis.SpecialFunctions.Part1Ch9Entry33Zeta3integral
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 9, Entry 33
 
 ∫ x cosⁿx sin(nx) over [0,π/2] evaluates via harmonic numbers.
 -/
+
+public section
 
 
 namespace Ramanujan.Part1Ch9

@@ -6,7 +6,7 @@ Authors: Adam Kiezun, Muse Spark 1.3, Codex
 
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Def.NumberTheory.PrimeCounting.ResidueClass
-import Lemma.Nat.PrimeCounting.ResidueClass
+import Theorem.Nat.PrimeCounting.ResidueClass
 import Lemma.Nat.PrimeCounting.WeightedLargeSieve
 import Lemma.Nat.PrimeCounting.ArithmeticLargeSieve
 import Lemma.Nat.PrimeCounting.SquarefreeTotientWeighted

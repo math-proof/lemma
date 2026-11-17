@@ -1,19 +1,22 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ArithmeticFunction/WintnerMeanValueMultivariable.lean -/
 
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.NumberTheory.ArithmeticFunction.Moebius
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.Normed.Group.Tannery
-import Mathlib.Analysis.SpecificLimits.Basic
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+module
 
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.NumberTheory.ArithmeticFunction.Moebius
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Algebra.BigOperators.Field
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Normed.Group.Tannery
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 section
 

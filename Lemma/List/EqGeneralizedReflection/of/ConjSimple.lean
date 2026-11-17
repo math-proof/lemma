@@ -1,6 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.Buildings.code.CoxeterGroup.Reflections
+import Def.v1.Atlas.Buildings.code.CoxeterGroup.CoxeterHomomorphism
+import Lemma.Real.GetCoxeterRepresentationMulMul_Simple.eq.GeneralizedReflection_CoxeterRepresentation_E
 open Finset BigOperators
 
 
@@ -20,7 +22,10 @@ lemma conjugation_reflection_identity
   {s : B}
   {v : B → ℝ} :
 -- imply
-  let α := (coxeterRepresentation M cs u) (e s) let s_α := u * cs.simple s * u⁻¹ let β := (coxeterRepresentation M cs w) α (coxeterRepresentation M cs (w * s_α * w⁻¹)) v = generalizedReflection M β v := by
+  let α := (coxeterRepresentation M cs u) (e s)
+  let s_α := u * cs.simple s * u⁻¹
+  let β := (coxeterRepresentation M cs w) α
+  (coxeterRepresentation M cs (w * s_α * w⁻¹)) v = generalizedReflection M β v := by
 -- proof
   simp only []
   have hconj : w * (u * cs.simple s * u⁻¹) * w⁻¹ =
@@ -30,7 +35,7 @@ lemma conjugation_reflection_identity
     (coxeterRepresentation M cs (w * u)) (e s) := by
     rw [map_mul (coxeterRepresentation M cs) w u, LinearEquiv.mul_apply]
   rw [hβ]
-  exact conj_simpleReflection_eq_generalizedReflection M cs (w * u) s v
+  exact conj_simpleReflection_eq_generalizedReflection (M := M) (cs := cs) (w := w * u) (s := s) v
 
 end CoxeterGroup
 

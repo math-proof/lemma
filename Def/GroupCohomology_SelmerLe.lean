@@ -1,4 +1,8 @@
-import Structure.GroupCohomology_Selmer
+module
+
+public import Structure.GroupCohomology_Selmer
+
+@[expose] public section
 
 set_option autoImplicit false
 

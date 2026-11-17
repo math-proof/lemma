@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.SmarandachePermutationSequence
-import Lemma.Finset.Enumerative.SmarandachePermutationSequence
+import Theorem.Finset.Enumerative.SmarandachePermutationSequence
 
 
 namespace MetaMathlibExt

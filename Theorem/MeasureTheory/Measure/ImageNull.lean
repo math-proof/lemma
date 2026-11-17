@@ -3,11 +3,12 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
+module
 
-import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
-import Mathlib.Topology.Bases
-import Mathlib.MeasureTheory.OuterMeasure.Basic
-import Mathlib.Topology.NhdsWithin
+public import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
+public import Mathlib.Topology.Bases
+public import Mathlib.MeasureTheory.OuterMeasure.Basic
+public import Mathlib.Topology.NhdsWithin
 open MeasureTheory
 
 /-!
@@ -15,6 +16,8 @@ open MeasureTheory
 
 A set in a second-countable space whose image is locally null has null image.
 -/
+
+public section
 
 
 namespace MathlibExt.MeasureTheory

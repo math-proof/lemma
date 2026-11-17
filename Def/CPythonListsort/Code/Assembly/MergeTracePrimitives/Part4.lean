@@ -1,7 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean -/
 
-import Def.CPythonListsort.Code.Assembly.MergeMemcpyProvenance
-import Theorem.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part2
+module
+
+public import Def.CPythonListsort.Code.Assembly.AccessTrace.Part9
+
+@[expose] public section
+
 /-!
 # Typed trace support for merge movement
 
@@ -26,25 +30,19 @@ universe u v
 
 open SortSlice
 
-namespace TempRangeInBounds
-
-namespace MergeMovementFrame
-
-namespace MovementAccessOnly
-
 /-! ## Common trace safety -/
 
+namespace AccessTrace
+
 /-- A trace contains an access of the requested kind to the requested region. -/
-def AccessTrace.HasAccess (trace : AccessTrace) (kind : AccessKind)
+def HasAccess (trace : AccessTrace) (kind : AccessKind)
     (region : AccessRegion) : Prop :=
   ∃ event ∈ trace.accesses, event.kind = kind ∧ event.region = region
 
 /-- A trace contains a temporary-payload access of the requested kind.  The
 backing observed by the event remains existentially visible. -/
-def AccessTrace.HasTempAccess (trace : AccessTrace) (kind : AccessKind) : Prop :=
+def HasTempAccess (trace : AccessTrace) (kind : AccessKind) : Prop :=
   ∃ backing, trace.HasAccess kind (.tempPayload backing)
 
-end MovementAccessOnly
-end MergeMovementFrame
-end TempRangeInBounds
+end AccessTrace
 end CPythonListsort

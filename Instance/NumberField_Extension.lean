@@ -1,7 +1,12 @@
 -- Carved from Lemma/Definitions/Def_NumberField_Extension.lean: instance decls only.
-import Mathlib
-import Abbrev.NumberField_Extension
-import Class.NumberField_Extension
+
+module
+
+public import Mathlib
+public import Abbrev.NumberField_Extension
+public import Class.NumberField_Extension
+
+@[expose] public section
 
 section
 

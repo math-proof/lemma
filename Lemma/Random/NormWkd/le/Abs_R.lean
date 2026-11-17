@@ -1,5 +1,7 @@
 import Lemma.Random.NormRkd.le.Abs_R
 import Lemma.Real.NormIntegral.le.of.All_LeNormMul.EqIntegral_1
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory PolicyGradient Random Real
 
 
@@ -46,4 +48,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-16
+-- updated on 2026-11-17

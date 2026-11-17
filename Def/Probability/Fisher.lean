@@ -1,4 +1,9 @@
-import Mathlib.Probability.Distributions.Beta
+module
+
+public import Mathlib.Probability.Distributions.Beta
+
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory Real Set
 open scoped ENNReal NNReal
 

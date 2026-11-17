@@ -1,8 +1,10 @@
-import Structure.CerednikDrinfeld_QMModuliProps
+module
+
+public import Structure.CerednikDrinfeld_QMModuliProps
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open CategoryTheory AlgebraicGeometry NeronModelInfra GoodReductionJacobian
 open scoped Quaternion

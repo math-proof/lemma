@@ -7,12 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Combinatorics.Young.YoungDiagram
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Finsupp.Defs
-import Mathlib.Data.Finsupp.Basic
+public import Mathlib.Combinatorics.Young.YoungDiagram
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Finsupp.Defs
+public import Mathlib.Data.Finsupp.Basic
 
+public section
 
 noncomputable section
 

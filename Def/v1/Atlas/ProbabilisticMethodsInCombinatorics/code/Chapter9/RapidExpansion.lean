@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter9.HarperIsoperimetric
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import Mathlib.Algebra.Order.Floor.Semiring
+module
+
+public import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter9.HarperIsoperimetric
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+public import Mathlib.Algebra.Order.Floor.Semiring
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open Finset Real HarperIsoperimetric

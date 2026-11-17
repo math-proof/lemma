@@ -1,6 +1,6 @@
 import Def.Data.Tensor.Defs.Part4
 import Def.Data.Tensor.Reshape
-import Lemma.List.ProdInsertIdx.eq.Prod
+import Theorem.List.ProdInsertIdx.eq.Prod
 open Tensor List
 
 

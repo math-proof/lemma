@@ -7,16 +7,17 @@ Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -- reproducing the Flajolet-Sedgewick Chapter VIII.5 formulation (Hayman 1956).
 -- Auxiliary functions and admissibility conditions: tex lines 453-493;
 -- coefficient theorem: tex lines 495-506.
+module
 
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Mathlib.Analysis.Analytic.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Analysis.Analytic.OfScalars
-import Mathlib.Analysis.Calculus.FDeriv.Analytic
-import Mathlib.Analysis.Complex.CauchyIntegral
-import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
-import Mathlib.MeasureTheory.Integral.IntegralEqImproper
-import Def.Analysis.Complex.HaymanAdmissibility
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Mathlib.Analysis.Analytic.Basic
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Analysis.Analytic.OfScalars
+public import Mathlib.Analysis.Calculus.FDeriv.Analytic
+public import Mathlib.Analysis.Complex.CauchyIntegral
+public import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
+public import Mathlib.MeasureTheory.Integral.IntegralEqImproper
+public import Def.Analysis.Complex.HaymanAdmissibility
 set_option autoImplicit false
 
 open scoped ENNReal NNReal
@@ -28,6 +29,8 @@ This file defines finite-radius Hayman admissibility and proves the associated s
 coefficient asymptotic. The proof uses Cauchy's coefficient formula for power series on a disk
 and the asymptotic of truncated Gaussian integrals.
 -/
+
+public section
 
 
 namespace Complex.HaymanAdmissibility

@@ -8,13 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.LieGroups.code.CategoryO.Part3
-import Lemma.Int.IsInQPlus0
-import Lemma.Finset.EqMul_Mul.of.In_SimpleReflections
-import Def.v1.Atlas.LieGroups.code.HeckeKL.Part9
+module
+
+public import Def.v1.Atlas.LieGroups.code.CategoryO.Part3
+public import Lemma.Int.IsInQPlus0
+public import Lemma.Finset.EqMul_Mul.of.In_SimpleReflections
+public import Def.v1.Atlas.LieGroups.code.HeckeKL.Part9
 
 
-noncomputable section
+public noncomputable section
 
 open scoped BigOperators
 

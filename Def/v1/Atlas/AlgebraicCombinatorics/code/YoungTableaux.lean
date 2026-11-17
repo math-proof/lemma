@@ -8,12 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Combinatorics.Young.YoungDiagram
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Finsupp.Defs
-import Mathlib.Data.Finsupp.Basic
-import Theorem.v1.Atlas.AlgebraicCombinatorics.code.YoungTableaux
+module
 
+public import Mathlib.Combinatorics.Young.YoungDiagram
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Finsupp.Defs
+public import Mathlib.Data.Finsupp.Basic
+public import Theorem.v1.Atlas.AlgebraicCombinatorics.code.YoungTableaux
+
+@[expose] public section
 
 noncomputable section
 

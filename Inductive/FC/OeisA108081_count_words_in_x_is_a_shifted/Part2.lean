@@ -9,8 +9,10 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Def.FC.OeisA108081_count_words_in_x_is_a_shifted.Part3
+module
+
+public import Mathlib
+public import Def.FC.OeisA108081_count_words_in_x_is_a_shifted.Part3
 
 
 namespace OeisA108081
@@ -18,7 +20,7 @@ namespace OeisA108081
 open Nat
 
 
-inductive Expand : Word → Word → Prop
+public inductive Expand : Word → Word → Prop
   | left (p s : Word) (z : ℤ) :
       Expand (p ++ z :: s) (p ++ leftChild z :: z :: s)
   | right (p s : Word) (z : ℤ) :

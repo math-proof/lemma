@@ -9,13 +9,15 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexActiveKeyCapacityRouting.Part3
-import Def.StatisticalMechanics.Code.FrontierD.SixVertexActiveKeyComponentRouting
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexActiveKeyCapacityRouting.Part3
+public import Def.StatisticalMechanics.Code.FrontierD.SixVertexActiveKeyComponentRouting
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 attribute [instance]
   SixVertexHorizontalTwoCycleFiberReconnectionComponents.componentFintype

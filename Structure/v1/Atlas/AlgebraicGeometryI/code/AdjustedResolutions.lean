@@ -8,15 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Abelian.RightDerived
-import Mathlib.CategoryTheory.Preadditive.Injective.Basic
-import Mathlib.Algebra.Homology.HomologySequence
-import Mathlib.Algebra.Homology.ShortComplex.ShortExact
-import Mathlib.CategoryTheory.Limits.Preserves.Finite
-import Def.v1.Atlas.AlgebraicGeometryI.code.AdjustedResolutions
+module
+
+public import Mathlib.CategoryTheory.Abelian.RightDerived
+public import Mathlib.CategoryTheory.Preadditive.Injective.Basic
+public import Mathlib.Algebra.Homology.HomologySequence
+public import Mathlib.Algebra.Homology.ShortComplex.ShortExact
+public import Mathlib.CategoryTheory.Limits.Preserves.Finite
+public import Def.v1.Atlas.AlgebraicGeometryI.code.AdjustedResolutions
 
 
-noncomputable section
+public noncomputable section
 
 open CategoryTheory Category Limits
 

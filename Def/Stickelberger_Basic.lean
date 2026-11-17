@@ -1,6 +1,10 @@
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Algebra.Module.LinearMap.End
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+module
+
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Algebra.Module.LinearMap.End
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+
+@[expose] public section
 
 set_option autoImplicit false
 

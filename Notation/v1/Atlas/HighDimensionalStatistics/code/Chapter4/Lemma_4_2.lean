@@ -8,13 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Def_4_1.Part3
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_18
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_18
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.MeasureTheory.Measure.MeasureSpace
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.LinearAlgebra.Matrix.DotProduct
+module
+
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Def_4_1.Part3
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_18
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.MeasureTheory.Measure.MeasureSpace
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.LinearAlgebra.Matrix.DotProduct
+
+public section
+
 open MeasureTheory Matrix Real Finset ENNReal
 
 

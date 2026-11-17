@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter10.Entropy
-import Lemma.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter10.Entropy
+import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter10.Entropy
 import Mathlib.Data.Finset.Card
 open Finset BigOperators ShannonEntropy Real
 

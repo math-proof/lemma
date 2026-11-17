@@ -8,13 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Calculus.DifferentialForm.Basic
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.MeasureTheory.Function.LpSpace.Basic
-import Mathlib.Analysis.Calculus.ContDiff.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Def.v1.Atlas.GeometryOfManifolds.code.EllipticRegularityConcrete.Part3
+module
+
+public import Mathlib.Analysis.Calculus.DifferentialForm.Basic
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.MeasureTheory.Function.LpSpace.Basic
+public import Mathlib.Analysis.Calculus.ContDiff.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Def.v1.Atlas.GeometryOfManifolds.code.EllipticRegularityConcrete.Part3
+public section
+
 set_option autoImplicit false
 
 

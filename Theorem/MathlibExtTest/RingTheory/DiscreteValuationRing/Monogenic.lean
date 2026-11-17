@@ -6,7 +6,7 @@ Author: Muse Code
 
 import Mathlib.RingTheory.PowerSeries.Inverse
 import Theorem.RingTheory.DiscreteValuationRing.Monogenic
-import Lemma.Int.DiscreteValuationRing.Monogenic
+import Theorem.Int.DiscreteValuationRing.Monogenic
 open IsLocalRing IsDiscreteValuationRing
 open scoped PowerSeries
 

@@ -1,10 +1,12 @@
-import Structure.AlgebraicCurve_SemistableCharts
-import Structure.CerednikDrinfeld_Ribbon
-import Mathlib.FieldTheory.RatFunc.AsPolynomial
+module
+
+public import Structure.AlgebraicCurve_SemistableCharts
+public import Structure.CerednikDrinfeld_Ribbon
+public import Mathlib.FieldTheory.RatFunc.AsPolynomial
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace AlgebraicCurve
 

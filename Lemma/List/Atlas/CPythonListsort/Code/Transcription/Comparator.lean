@@ -1,6 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.CPythonListsort.Code.Transcription.Comparator
+module
+
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.CPythonListsort.Code.Transcription.Comparator
+
+public section
+
 open CPythonListsort
 
 
@@ -10,7 +15,7 @@ namespace CPythonListsort
 [iflt_eq](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/Comparator.lean)
 -/
 @[path]
-lemma iflt_eq
+public lemma iflt_eq
   {lt : BoolComparator α}
   {x y : α} :
 -- imply

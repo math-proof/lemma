@@ -12,7 +12,7 @@ import Mathlib.Analysis.Complex.Polynomial.Basic
 import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
 import Mathlib.RepresentationTheory.FinGroupCharZero
 import Def.GroupTheory.ClassFunction.Part2
-import Lemma.Fin.IsClassFunctionCharacter
+import Theorem.Fin.IsClassFunctionCharacter
 import Instance.GroupTheory.IrreducibleCharacterBasis
 open CategoryTheory
 open scoped MonoidAlgebra

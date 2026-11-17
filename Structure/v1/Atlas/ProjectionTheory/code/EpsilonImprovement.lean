@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.ProjectionTheory.code.SubmultiplicativeProjective
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.SubmultiplicativeProjective
-import Theorem.v1.Atlas.ProjectionTheory.code.BourgainPropositions
+module
 
+public import Structure.v1.Atlas.ProjectionTheory.code.SubmultiplicativeProjective
+public import Theorem.v1.Atlas.ProjectionTheory.code.BourgainPropositions
+
+
+public section
 
 namespace ProjectionTheory
 

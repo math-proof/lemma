@@ -7,12 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_2
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Def_1_2
-import Mathlib.Probability.Moments.Basic
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_2
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Def_1_2
+public import Mathlib.Probability.Moments.Basic
 open MeasureTheory Real ProbabilityTheory
 
+public section
 
 namespace SubGaussian
 

@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/GesselWord.lean -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Order.Interval.Finset.Nat
-import Abbrev.NumberTheory.GesselWord
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Order.Interval.Finset.Nat
+public import Abbrev.NumberTheory.GesselWord
+
+@[expose] public section
+
 /-!
 # Gessel words
 

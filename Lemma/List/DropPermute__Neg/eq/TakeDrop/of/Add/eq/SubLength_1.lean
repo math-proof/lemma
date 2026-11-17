@@ -1,4 +1,6 @@
+import Initialize.Tactic.Attr.Basic
 import Lemma.List.TakeDropPermute__Neg.eq.TakeDrop.of.GtLength_Add
+import Theorem.Data.List.List.Part2
 open List
 
 
@@ -13,7 +15,7 @@ private lemma main
 -- proof
   have := TakeDropPermute__Neg.eq.TakeDrop.of.GtLength_Add (s := s) (i := i) (d := d) (by omega)
   rwa [EqTake.of.LeLength] at this
-  simp
+  simp [List.length_permute]
   omega
 
 

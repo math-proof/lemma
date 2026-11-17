@@ -1,10 +1,12 @@
-import Structure.AlgebraicGeometry_CoherentBaseChange
-import Def.AlgebraicGeometry_CoherentBaseChange
-import Mathlib.AlgebraicGeometry.AffineScheme
+module
+
+public import Structure.AlgebraicGeometry_CoherentBaseChange
+public import Def.AlgebraicGeometry_CoherentBaseChange
+public import Mathlib.AlgebraicGeometry.AffineScheme
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open AlgebraicGeometry CategoryTheory Opposite
 

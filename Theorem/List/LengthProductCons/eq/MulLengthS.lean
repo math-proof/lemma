@@ -1,0 +1,18 @@
+module
+
+public import Def.Data.List.List.Basic
+
+public section
+
+public theorem List.LengthProductCons.eq.MulLengthS
+-- given
+  (head : List α)
+  (tail : List (List α)) :
+-- imply
+  (itertools.product (head :: tail)).length = head.length * (itertools.product tail).length := by
+-- proof
+  unfold itertools.product
+  simp_all
+
+
+-- created on 2025-06-13

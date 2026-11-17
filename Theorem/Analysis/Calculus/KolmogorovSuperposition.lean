@@ -1,38 +1,40 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
+module
 
-import Mathlib.Topology.UnitInterval
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Algebra.Order.Floor.Semiring
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.Normed.Group.InfiniteSum
-import Mathlib.Analysis.SpecificLimits.Basic
-import Mathlib.Order.Interval.Set.Infinite
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.GCongr
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.Algebra.InfiniteSum.Constructions
-import Mathlib.Topology.Algebra.InfiniteSum.Module
-import Mathlib.Topology.Baire.CompleteMetrizable
-import Mathlib.Topology.Baire.Lemmas
-import Mathlib.Topology.Bases
-import Mathlib.Topology.CompactOpen
-import Mathlib.Topology.ContinuousMap.Basic
-import Mathlib.Topology.ContinuousMap.Bounded.Basic
-import Mathlib.Topology.ContinuousMap.Compact
-import Mathlib.Topology.ContinuousMap.SecondCountableSpace
-import Mathlib.Topology.GDelta.MetrizableSpace
-import Mathlib.Topology.MetricSpace.Pseudo.Defs
-import Mathlib.Topology.MetricSpace.Pseudo.Pi
-import Mathlib.Topology.NoetherianSpace
-import Mathlib.Topology.TietzeExtension
-import Mathlib.Topology.UniformSpace.HeineCantor
-import Def.Analysis.Calculus.KolmogorovSuperposition
+public import Mathlib.Topology.UnitInterval
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Algebra.Order.Floor.Semiring
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Analysis.Normed.Group.InfiniteSum
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Mathlib.Order.Interval.Set.Infinite
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.GCongr
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.Algebra.InfiniteSum.Constructions
+public import Mathlib.Topology.Algebra.InfiniteSum.Module
+public import Mathlib.Topology.Baire.CompleteMetrizable
+public import Mathlib.Topology.Baire.Lemmas
+public import Mathlib.Topology.Bases
+public import Mathlib.Topology.CompactOpen
+public import Mathlib.Topology.ContinuousMap.Basic
+public import Mathlib.Topology.ContinuousMap.Bounded.Basic
+public import Mathlib.Topology.ContinuousMap.Compact
+public import Mathlib.Topology.ContinuousMap.SecondCountableSpace
+public import Mathlib.Topology.GDelta.MetrizableSpace
+public import Mathlib.Topology.MetricSpace.Pseudo.Defs
+public import Mathlib.Topology.MetricSpace.Pseudo.Pi
+public import Mathlib.Topology.NoetherianSpace
+public import Mathlib.Topology.TietzeExtension
+public import Mathlib.Topology.UniformSpace.HeineCantor
+public import Def.Analysis.Calculus.KolmogorovSuperposition
 open scoped BoundedContinuousFunction
 
+public section
 
 lemma continuous_stepRamp (c a : ℕ → ℝ) (K : ℕ) : Continuous (stepRamp c a K) := by
   unfold stepRamp

@@ -7,11 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
-import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
-import Structure.v1.Atlas.AlgebraicGeometryI.code.NormalExtension
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
+public import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
+public import Structure.v1.Atlas.AlgebraicGeometryI.code.NormalExtension
 
+public section
 
 namespace AlgebraicHartogs
 

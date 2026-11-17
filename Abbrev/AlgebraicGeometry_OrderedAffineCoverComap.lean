@@ -1,10 +1,12 @@
-import Instance.AlgebraicGeometry_OrderedAffineCoverCech
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Mathlib.AlgebraicGeometry.Morphisms.Affine
+module
+
+public import Instance.AlgebraicGeometry_OrderedAffineCoverCech
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Mathlib.AlgebraicGeometry.Morphisms.Affine
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 universe u
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Def.FormalGroup_NSeries
+module
+
+public import Mathlib
+public import Def.FormalGroup_NSeries
+
+@[expose] public section
 
 set_option autoImplicit false
 

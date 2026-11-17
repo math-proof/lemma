@@ -1,7 +1,12 @@
-import Batteries.Data.String
-import Lean.Meta
-import Def.Lean.Char
-import Macro.Data.String.String
+module
+
+public import Batteries.Data.String
+public import Lean.Meta
+public import Def.Lean.Char
+public import Macro.Data.String.String
+
+@[expose] public section
+
 open Lean.Meta
 open Lean (Json JsonNumber)
 

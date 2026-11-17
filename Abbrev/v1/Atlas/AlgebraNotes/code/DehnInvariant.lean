@@ -8,14 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.Instances.AddCircle.Defs
-import Mathlib.LinearAlgebra.TensorProduct.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
-import Mathlib.LinearAlgebra.Dimension.Free
-import Mathlib.LinearAlgebra.Dual.Lemmas
-import Mathlib.LinearAlgebra.Quotient.Defs
-import Mathlib.NumberTheory.Real.Irrational
+module
+
+public import Mathlib.Topology.Instances.AddCircle.Defs
+public import Mathlib.LinearAlgebra.TensorProduct.Basic
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
+public import Mathlib.LinearAlgebra.Dimension.Free
+public import Mathlib.LinearAlgebra.Dual.Lemmas
+public import Mathlib.LinearAlgebra.Quotient.Defs
+public import Mathlib.NumberTheory.Real.Irrational
+@[expose] public section
+
 open Real TensorProduct Module
 
 

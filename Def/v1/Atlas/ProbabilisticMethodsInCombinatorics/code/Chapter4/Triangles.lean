@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.SpecificLimits.Basic
-import Mathlib.Combinatorics.SimpleGraph.Clique
-import Mathlib.Data.Nat.Choose.Bounds
-import Mathlib.Topology.Algebra.Ring.Real
-import Mathlib.Topology.Instances.Real.Lemmas
+module
+
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Data.Nat.Choose.Bounds
+public import Mathlib.Topology.Algebra.Ring.Real
+public import Mathlib.Topology.Instances.Real.Lemmas
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 

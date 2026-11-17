@@ -9,9 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Lattice.EulerGeneral
-import Def.StatisticalMechanics.Code.BeffaraDC.EulerTorus
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Lattice.EulerGeneral
+public import Def.StatisticalMechanics.Code.BeffaraDC.EulerTorus
+public section
+
 open SimpleGraph Set
 
 set_option linter.unusedSectionVars false

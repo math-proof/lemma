@@ -9,10 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Walls.jc_core
-import Theorem.StatisticalMechanics.Code.Walls.jc_earanchor.Part2
-import Theorem.StatisticalMechanics.Code.Walls.jc2_thinthickdichotomy
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Walls.jc_core
+public import Theorem.StatisticalMechanics.Code.Walls.jc_earanchor.Part2
+public import Theorem.StatisticalMechanics.Code.Walls.jc2_thinthickdichotomy
+public section
+
 open SimpleGraph Function
 
 

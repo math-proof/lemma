@@ -2,7 +2,7 @@
 
 
 import Mathlib.Data.Nat.Choose.Sum
-import Lemma.Finset.Enumerative.PolyInitialExpansion
+import Theorem.Finset.Enumerative.PolyInitialExpansion
 
 
 namespace MetaMathlibExt

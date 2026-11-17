@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.SimpleGraph.GeneralizedExtremal
-import Lemma.SimpleGraph.GeneralizedExtremal
+import Theorem.SimpleGraph.GeneralizedExtremal
 open SimpleGraph
 
 variable {α β : Type*} [Fintype α]

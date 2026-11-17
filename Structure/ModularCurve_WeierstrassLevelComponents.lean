@@ -1,12 +1,14 @@
-import Mathlib
-import Structure.ModularCurve_WeierstrassLevelModuliDatum
-import Instance.ModularCurve_KatzLevelP
+module
+
+public import Mathlib
+public import Structure.ModularCurve_WeierstrassLevelModuliDatum
+public import Instance.ModularCurve_KatzLevelP
 
 set_option autoImplicit false
 
 universe u
 
-noncomputable section
+public noncomputable section
 
 open Polynomial
 

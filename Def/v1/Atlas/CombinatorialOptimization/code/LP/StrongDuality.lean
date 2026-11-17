@@ -8,8 +8,10 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Lemma.Finset.Atlas.v1.CombinatorialOptimization.code.LP.Farkas
-import Lemma.Finset.Atlas.v1.CombinatorialOptimization.code.LP.WeakDualityStandard
+module
+
+@[expose] public section
+
 open Matrix Finset
 
 

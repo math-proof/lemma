@@ -13,9 +13,9 @@ import Mathlib.NumberTheory.RamificationInertia.Unramified
 import Mathlib.RingTheory.Discriminant
 import Mathlib.RingTheory.Algebraic.Integral
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.NakayamaApplications
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.NakayamaApplications
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochGeneral
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.FiniteMorphismDimension
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NakayamaApplications
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochGeneral
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.FiniteMorphismDimension
 import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRochGeneral
 import Instance.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitz
 

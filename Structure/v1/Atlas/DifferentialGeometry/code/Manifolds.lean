@@ -8,15 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Calculus.Implicit
-import Mathlib.Analysis.Calculus.ContDiff.Basic
-import Mathlib.Analysis.Calculus.ContDiff.RCLike
-import Mathlib.Analysis.InnerProductSpace.EuclideanDist
-import Def.v1.Atlas.DifferentialGeometry.code.Hypersurfaces
-import Lemma.Real.Atlas.v1.DifferentialGeometry.code.Hypersurfaces
+module
+
+public import Mathlib.Analysis.Calculus.Implicit
+public import Mathlib.Analysis.Calculus.ContDiff.Basic
+public import Mathlib.Analysis.Calculus.ContDiff.RCLike
+public import Mathlib.Analysis.InnerProductSpace.EuclideanDist
+public import Def.v1.Atlas.DifferentialGeometry.code.Hypersurfaces
+public import Theorem.Real.Atlas.v1.DifferentialGeometry.code.Hypersurfaces
 
 
-noncomputable section
+public noncomputable section
 
 open scoped Topology
 

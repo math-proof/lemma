@@ -1,6 +1,9 @@
-import Mathlib.Analysis.SpecialFunctions.Log.Summable
-import Mathlib.Analysis.SpecificLimits.Normed
-import Def.Analysis.SpecialFunctions.QPochhammer.Part2
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Log.Summable
+public import Mathlib.Analysis.SpecificLimits.Normed
+public import Def.Analysis.SpecialFunctions.QPochhammer.Part2
+
 /-!
 # Infinite q-Pochhammer products
 
@@ -22,6 +25,8 @@ out-of-domain `q` cannot be passed silently.
 * `MetaMathlibExt.QPochhammer.hasProd_qPochhammerInf`
 * `MetaMathlibExt.QPochhammer.qPochhammerInfRaw_two_one`
 -/
+
+public section
 
 
 namespace MetaMathlibExt.QPochhammer

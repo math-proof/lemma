@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.CompleteGesselWord
-import Lemma.Nat.CompleteGesselWord
+import Theorem.Nat.CompleteGesselWord
 
 
 namespace MetaMathlibExt

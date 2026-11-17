@@ -8,17 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.LieGroups.code.CategoryOII.Part3
-import Lemma.Int.WeightLE.of.BruhatLE
-import Lemma.Int.FGUeaIotaRange
-import Lemma.Int.All_Eq_0.of.EqCompositionLengthO_0.IsCategoryO
-import Lemma.Int.IsCategoryOA.of.IsCategoryOB
-import Def.v1.Atlas.LieGroups.code.DufloJoseph.Part8
-import Def.v1.Atlas.LieGroups.code.BGGReciprocity.Part3
-import Structure.v1.Atlas.LieGroups.code.TensorO
-import Mathlib.RingTheory.SimpleRing.Basic
-import Mathlib.Algebra.Lie.TensorProduct
-import Mathlib.Algebra.Lie.Semisimple.Basic
+module
+
+public import Def.v1.Atlas.LieGroups.code.CategoryOII.Part3
+public import Def.v1.Atlas.LieGroups.code.DufloJoseph.Part8
+public import Def.v1.Atlas.LieGroups.code.BGGReciprocity.Part3
+public import Structure.v1.Atlas.LieGroups.code.TensorO
+public import Mathlib.RingTheory.SimpleRing.Basic
+public import Mathlib.Algebra.Lie.TensorProduct
+public import Mathlib.Algebra.Lie.Semisimple.Basic
+
+public section
 
 
 noncomputable section

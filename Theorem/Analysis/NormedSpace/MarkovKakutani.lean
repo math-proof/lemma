@@ -1,12 +1,15 @@
-import Mathlib.Analysis.Convex.Basic
-import Mathlib.Analysis.Normed.Group.AddTorsor
-import Mathlib.Analysis.Normed.Module.Basic
-import Mathlib.Topology.Algebra.ContinuousAffineMap
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Analysis.Convex.Combination
-import Mathlib.Order.Filter.AtTopBot.Archimedean
+module
+
+public import Mathlib.Analysis.Convex.Basic
+public import Mathlib.Analysis.Normed.Group.AddTorsor
+public import Mathlib.Analysis.Normed.Module.Basic
+public import Mathlib.Topology.Algebra.ContinuousAffineMap
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Analysis.Convex.Combination
+public import Mathlib.Order.Filter.AtTopBot.Archimedean
 open Set
 
+public section
 
 namespace FunctionalAnalysis.MarkovKakutani
 

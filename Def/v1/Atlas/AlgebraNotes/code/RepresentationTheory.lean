@@ -8,12 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RepresentationTheory.Maschke
-import Mathlib.RepresentationTheory.Character
-import Mathlib.RepresentationTheory.FDRep
-import Mathlib.RepresentationTheory.AlgebraRepresentation.Basic
-import Mathlib.Analysis.Complex.Basic
+module
 
+public import Mathlib.RepresentationTheory.Maschke
+public import Mathlib.RepresentationTheory.Character
+public import Mathlib.RepresentationTheory.FDRep
+public import Mathlib.RepresentationTheory.AlgebraRepresentation.Basic
+public import Mathlib.Analysis.Complex.Basic
+
+@[expose] public section
 
 namespace RepresentationTheory
 

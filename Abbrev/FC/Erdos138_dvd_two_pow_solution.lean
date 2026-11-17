@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Def.FC.Erdos138_dvd_two_pow_solution
+module
+
+public import Mathlib
+public import Def.FC.Erdos138_dvd_two_pow_solution
+@[expose] public section
+
 open Nat Filter
 
 

@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.AlgebraicGeometryI.code.BertiniDimensionCount.Part2
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.BertiniDimensionCount
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BertiniDimensionCount
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.GAGA
 
 

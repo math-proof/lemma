@@ -1,10 +1,12 @@
-import Mathlib
-import Class.MvFormalGroup_BasicV2
-import Def.MvFormalGroup_TwoCocycle
+module
+
+public import Mathlib
+public import Class.MvFormalGroup_BasicV2
+public import Def.MvFormalGroup_TwoCocycle
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open MvPowerSeries
 

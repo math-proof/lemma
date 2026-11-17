@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/HypercubeExtremal.lean -/
 
-import Mathlib.Combinatorics.SimpleGraph.Copy
-import Mathlib.Data.Set.Card
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Copy
+public import Mathlib.Data.Set.Card
+
+@[expose] public section
+
 /-!
 # Hypercube Turán extremal number for `Q_n`
 

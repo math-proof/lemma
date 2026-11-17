@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean -/
 
-import Def.CPythonListsort.Code.Assembly.AccessTrace.Part9
-import Mathlib
-import Def.CPythonListsort.Code.Assembly.SortSliceSafety.Part2
+module
+
+public import Def.CPythonListsort.Code.Assembly.SortSliceSafety
+
+public section
 /-!
 # Safety of the `sortslice` movement primitives
 
@@ -26,7 +28,7 @@ universe u v
 namespace SortSlice
 
 /-- The explicit displacement bounds imply validity of the advanced cursor. -/
-theorem CursorMovementInRange.result
+public theorem CursorMovementInRange.result
     {slice : SortSlice κ ν} {index amount : Int}
     (h : CursorMovementInRange slice index amount) :
     CursorInRange slice (advance index amount) := by

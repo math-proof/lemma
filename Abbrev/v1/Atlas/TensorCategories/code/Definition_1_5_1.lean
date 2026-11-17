@@ -8,7 +8,11 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.NaturalTransformation
+module
+
+public import Mathlib.CategoryTheory.Monoidal.NaturalTransformation
+@[expose] public section
+
 open CategoryTheory MonoidalCategory
 
 universe v₁ v₂ u₁ u₂

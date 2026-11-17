@@ -9,12 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.OSSS.AdaptiveCodingLaw.Part3
-import Theorem.StatisticalMechanics.Code.OSSS.AdaptiveTau
-import Theorem.StatisticalMechanics.Code.OSSS.AdaptDisintegration.Part4
-import Theorem.StatisticalMechanics.Code.OSSS.PredictableTreeQuery
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Theorem.StatisticalMechanics.Code.OSSS.AdaptiveCausalKernel.Part4
+module
+
+public import Theorem.StatisticalMechanics.Code.OSSS.AdaptiveCodingLaw.Part3
+public import Theorem.StatisticalMechanics.Code.OSSS.AdaptiveTau
+public import Theorem.StatisticalMechanics.Code.OSSS.AdaptDisintegration.Part4
+public import Theorem.StatisticalMechanics.Code.OSSS.PredictableTreeQuery
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Theorem.StatisticalMechanics.Code.OSSS.AdaptiveCausalKernel.Part4
 open scoped BigOperators
 open MeasureTheory
 
@@ -34,14 +36,14 @@ open Coding Monotonic
 variable {E : Type*} [Fintype E] [DecidableEq E]
 
 
-inductive TripleMode where
+public inductive TripleMode where
   | before
   | flip
   | after
   deriving DecidableEq
 
 
-inductive TripleOrder : Finset E → Type _
+public inductive TripleOrder : Finset E → Type _
   | done : TripleOrder ∅
   | node {R : Finset E} (e : E) (he : e ∈ R) (mode : TripleMode)
       (closed opened : TripleOrder (R.erase e)) : TripleOrder R

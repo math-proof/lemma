@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.InfiniteWord.Tribonacci.Part2
-import Lemma.Finset.InfiniteWord.Tribonacci
+import Theorem.Finset.InfiniteWord.Tribonacci
 
 
 namespace InfiniteWord

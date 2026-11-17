@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.BAryBinomialCoefficient
-import Lemma.Finset.Enumerative.BAryBinomialCoefficient
+import Theorem.Finset.Enumerative.BAryBinomialCoefficient
 
 
 namespace MetaMathlibExt

@@ -8,18 +8,21 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.MeasureTheory.Function.LpSpace.Basic
-import Mathlib.MeasureTheory.Function.LpSeminorm.CompareExp
-import Mathlib.MeasureTheory.Function.LpSeminorm.TriangleInequality
-import Mathlib.MeasureTheory.Function.LpSpace.Complete
-import Mathlib.MeasureTheory.Function.L1Space.Integrable
-import Mathlib.Topology.ContinuousMap.Compact
-import Mathlib.MeasureTheory.Measure.OpenPos
-import Mathlib.MeasureTheory.Measure.Haar.OfBasis
-import Mathlib.MeasureTheory.Function.ContinuousMapDense
-import Mathlib.Analysis.SpecialFunctions.JapaneseBracket
-import Def.v1.Atlas.IntroductionToFunctionalAnalysis.code.LpSpaces
+module
 
+public import Mathlib.MeasureTheory.Function.LpSpace.Basic
+public import Mathlib.MeasureTheory.Function.LpSeminorm.CompareExp
+public import Mathlib.MeasureTheory.Function.LpSeminorm.TriangleInequality
+public import Mathlib.MeasureTheory.Function.LpSpace.Complete
+public import Mathlib.MeasureTheory.Function.L1Space.Integrable
+public import Mathlib.Topology.ContinuousMap.Compact
+public import Mathlib.MeasureTheory.Measure.OpenPos
+public import Mathlib.MeasureTheory.Measure.Haar.OfBasis
+public import Mathlib.MeasureTheory.Function.ContinuousMapDense
+public import Mathlib.Analysis.SpecialFunctions.JapaneseBracket
+public import Def.v1.Atlas.IntroductionToFunctionalAnalysis.code.LpSpaces
+
+@[expose] public section
 
 noncomputable section
 

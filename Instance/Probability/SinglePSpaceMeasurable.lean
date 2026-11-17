@@ -1,5 +1,10 @@
-import Lemma.Random.SinglePSpace.of.Measurable
-import Lemma.Random.SinglePSpace.of.Measurable.Measurable
+module
+
+public import Theorem.Random.SinglePSpace.of.Measurable
+public import Theorem.Random.SinglePSpace.of.Measurable.Measurable
+
+@[expose] public section
+
 open MeasureTheory Random
 
 

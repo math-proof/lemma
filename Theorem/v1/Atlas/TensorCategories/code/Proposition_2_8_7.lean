@@ -9,6 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.TensorCategories.code.ZPlusModules.Part6
-import Lemma.Category.Atlas.v1.TensorCategories.code.ZPlusModules
+import Theorem.Category.Atlas.v1.TensorCategories.code.ZPlusModules
 
 

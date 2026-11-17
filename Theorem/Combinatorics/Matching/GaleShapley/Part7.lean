@@ -2,7 +2,7 @@
 
 import Mathlib.Data.Fintype.Card
 import Instance.Order.StrictTotalOrder
-import Lemma.Set.StrictTotalOrder
+import Theorem.Set.StrictTotalOrder
 import Mathlib.Algebra.Group.Action.Defs
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Def.Combinatorics.Matching.GaleShapley.Part7

@@ -9,15 +9,17 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Def.StatisticalMechanics.Code.FrontierD.FKRectMedialDualShift.Part3
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnMixedAnnulusCharge
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnMixedCandidates.Part4
+module
+
+public import Def.StatisticalMechanics.Code.FrontierD.FKRectMedialDualShift.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnMixedAnnulusCharge
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnMixedCandidates.Part4
 open SimpleGraph
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure FKRectZeroTurnMixedTouchedCertificate
     (R : FKRectTorus) (omega : R.Configuration) where

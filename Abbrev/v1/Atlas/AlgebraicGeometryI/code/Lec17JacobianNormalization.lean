@@ -8,23 +8,25 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Ideal.IntegralClosure
-import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
-import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.RingTheory.ClassGroup
-import Mathlib.Data.Complex.Basic
-import Mathlib.AlgebraicGeometry.Scheme
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.AlgebraicGeometry.FunctionField
-import Mathlib.AlgebraicGeometry.Morphisms.OpenImmersion
-import Mathlib.AlgebraicGeometry.Normalization
-import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
-import Mathlib.AlgebraicGeometry.Morphisms.Finite
+module
+
+public import Mathlib.RingTheory.Ideal.IntegralClosure
+public import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
+public import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.RingTheory.ClassGroup
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.AlgebraicGeometry.Scheme
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.AlgebraicGeometry.FunctionField
+public import Mathlib.AlgebraicGeometry.Morphisms.OpenImmersion
+public import Mathlib.AlgebraicGeometry.Normalization
+public import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
+public import Mathlib.AlgebraicGeometry.Morphisms.Finite
 set_option maxHeartbeats 800000
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 open Algebra AlgebraicGeometry CategoryTheory
 

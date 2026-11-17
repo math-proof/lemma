@@ -1,5 +1,9 @@
-import Mathlib
-import Class.WeierstrassCurve_GenusOnePic0
+module
+
+public import Mathlib
+public import Class.WeierstrassCurve_GenusOnePic0
+
+public section
 
 set_option autoImplicit false
 

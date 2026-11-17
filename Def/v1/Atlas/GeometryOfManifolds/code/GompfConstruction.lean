@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Geometry.Manifold.MFDeriv.Basic
-import Mathlib.LinearAlgebra.Orientation
-import Mathlib.Analysis.Calculus.DifferentialForm.Basic
-import Mathlib.Analysis.Complex.Basic
+module
+
+public import Mathlib.Geometry.Manifold.MFDeriv.Basic
+public import Mathlib.LinearAlgebra.Orientation
+public import Mathlib.Analysis.Calculus.DifferentialForm.Basic
+public import Mathlib.Analysis.Complex.Basic
+
+@[expose] public section
+
 set_option autoImplicit false
 
 open scoped Manifold

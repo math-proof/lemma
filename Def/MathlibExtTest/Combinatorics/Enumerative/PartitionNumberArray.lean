@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/PartitionNumberArray.lean -/
 
 
-import Def.Combinatorics.Enumerative.PartitionNumberArray.Part2
+module
 
+public import Def.Combinatorics.Enumerative.PartitionNumberArray.Part2
+
+@[expose] public section
 
 namespace MetaMathlibExt.PartitionNumberArray
 

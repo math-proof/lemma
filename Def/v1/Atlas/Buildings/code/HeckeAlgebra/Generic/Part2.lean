@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.GroupTheory.Coxeter.Basic
-import Mathlib.GroupTheory.Coxeter.Length
-import Structure.v1.Atlas.Buildings.code.HeckeAlgebra.Generic.Part2
+module
 
+public import Mathlib.GroupTheory.Coxeter.Basic
+public import Mathlib.GroupTheory.Coxeter.Length
+public import Structure.v1.Atlas.Buildings.code.HeckeAlgebra.Generic.Part2
+
+@[expose] public section
 
 namespace HeckeAlgebra
 

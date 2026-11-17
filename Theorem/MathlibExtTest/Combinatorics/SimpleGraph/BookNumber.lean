@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.SimpleGraph.BookNumber
-import Lemma.SimpleGraph.BookNumber
+import Theorem.SimpleGraph.BookNumber
 
 
 namespace SimpleGraph

@@ -1,9 +1,11 @@
-import Structure.HeckeGalois_EichlerShimura
-import Instance.ModularCurve_SpecializationWitness
+module
+
+public import Structure.HeckeGalois_EichlerShimura
+public import Instance.ModularCurve_SpecializationWitness
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace ModularCurve
 

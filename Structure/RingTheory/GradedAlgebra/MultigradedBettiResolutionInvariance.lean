@@ -4,7 +4,9 @@
   Author: Muse Code powered by Meta Muse Spark
 -/
 
-import Def.RingTheory.GradedAlgebra.MultigradedBetti.Part2
+module
+
+public import Def.RingTheory.GradedAlgebra.MultigradedBetti.Part2
 /-!
 # Invariance of multigraded Betti numbers across graded free resolutions
 
@@ -42,6 +44,9 @@ Main definitions and results:
   comparison implies equal `multigradedBettiNumber` values for every `α`
   and `i`.
 -/
+public section
+
+
 
 
 namespace MetaMathlibExt

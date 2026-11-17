@@ -8,13 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.TensorCategories.code.StarAlgebra
-import Lemma.Category.Atlas.v1.TensorCategories.code.StarAlgebra
-import Lemma.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
-import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part6
-import Mathlib.RingTheory.Polynomial.Basic
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Def.v1.Atlas.TensorCategories.code.StarAlgebraCorollaries
+module
+
+public import Theorem.v1.Atlas.TensorCategories.code.StarAlgebra
+public import Lemma.Category.Atlas.v1.TensorCategories.code.StarAlgebra
+public import Lemma.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
+public import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part6
+public import Mathlib.RingTheory.Polynomial.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Def.v1.Atlas.TensorCategories.code.StarAlgebraCorollaries
 set_option maxHeartbeats 400000
 set_option linter.unusedSimpArgs false
 
@@ -34,7 +36,7 @@ namespace FusionRing
 
 variable {ι : Type*} [DecidableEq ι] [Fintype ι] (R : FusionRing ι)
 
-noncomputable section
+public noncomputable section
 
 /-- The complexified Grothendieck ring of a fusion ring, wrapped as a structure with a single
 `coeff : ι → ℂ` field. -/

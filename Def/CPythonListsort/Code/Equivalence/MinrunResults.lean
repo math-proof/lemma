@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/MinrunResults.lean -/
 
-import Def.CPythonListsort.Code.Equivalence.Minrun.Part2
-import Def.CPythonListsort.Code.Equivalence.PowerloopResults.Part2
-import Mathlib
-import Structure.CPythonListsort.Code.Equivalence.MinrunResults.Part2
+module
+
+public import Def.CPythonListsort.Code.Equivalence.Minrun.Part2
+public import Def.CPythonListsort.Code.Equivalence.PowerloopResults.Part2
+public import Mathlib
+public import Structure.CPythonListsort.Code.Equivalence.MinrunResults.Part2
+
+@[expose] public section
+
 /-!
 # Adaptive-minrun sequence results
 

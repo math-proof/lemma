@@ -7,11 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.Basic.Part3
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.GeometricRepresentation.Part3
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.Basic.Part3
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.GeometricRepresentation
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.GeometricRepresentation.Part3
 open Finset BigOperators
 
+public section
 
 namespace CoxeterGroup
 
@@ -62,6 +65,42 @@ theorem wordSigma_smul (M : CoxeterMatrix B) (word : List B) (c : ℝ) (v : B �
 $B_M(\sigma_w v, \sigma_w w') = B_M(v, w')$. -/
 theorem wordSigma_preserves_form (M : CoxeterMatrix B) (word : List B) (v w : B → ℝ) :
     bilinForm M (wordSigma M word v) (wordSigma M word w) = bilinForm M v w := by
+  have add_right (v w₁ w₂ : B → ℝ) :
+      bilinForm M v (w₁ + w₂) = bilinForm M v w₁ + bilinForm M v w₂ := by
+    simp only [bilinForm, Pi.add_apply, mul_add]
+    simp_rw [Finset.sum_add_distrib]
+  have smul_right (v : B → ℝ) (c : ℝ) (w : B → ℝ) :
+      bilinForm M v (c • w) = c * bilinForm M v w := by
+    simp only [bilinForm, Pi.smul_apply, smul_eq_mul]
+    rw [Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro _ _
+    rw [Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro _ _
+    ring
+  have hsymm (v w : B → ℝ) : bilinForm M v w = bilinForm M w v := by
+    simp only [bilinForm]
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro _ _
+    apply Finset.sum_congr rfl
+    intro _ _
+    rw [formVal_symm]
+    ring
+  have sigma_as_sum (s : B) (u : B → ℝ) :
+      sigma M s u = u + (-2 * bilinForm M u (e s)) • e s := by
+    ext t
+    simp only [sigma, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
+    ring
+  have sigma_preserves_form (s : B) (v w : B → ℝ) :
+      bilinForm M (sigma M s v) (sigma M s w) = bilinForm M v w := by
+    rw [sigma_as_sum s v, sigma_as_sum s w]
+    rw [bilinForm_add_left, add_right, add_right]
+    rw [bilinForm_smul_left, smul_right]
+    rw [bilinForm_smul_left, smul_right]
+    rw [bilinForm_e_e, formVal_diag, hsymm (e s) w]
+    ring
   induction word with
   | nil => simp
   | cons s rest ih => simp [sigma_preserves_form, ih]

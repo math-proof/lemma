@@ -6,6 +6,7 @@ import Lemma.Matrix.GetPowKernelMatAugChainMarkov.eq.MulGetPowPSub_1P.of.Ge_1
 import Lemma.Random.AdaptedOnSamplePath.of.IteratesOfResidual
 import Lemma.Kernel.IntegralPow.eq.Sum_SMulPowKernelMat
 import Lemma.Measure.MEqCondExpIteratesUpdate.of.Measurable.Any_All_LeNorm.Measurable.Le
+import Initialize.Tactic.Attr.Basic
 open Finset MeasureTheory Filter Real Measure Preorder
 
 @[path]
@@ -82,3 +83,4 @@ private lemma main
     _ = _ := by ring
 
 -- created on 2026-09-26
+-- updated on 2026-11-17

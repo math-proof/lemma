@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Onsager.CellCount
+module
 
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Onsager.CellCount
+
+@[expose] public section
 
 namespace StatMech.Onsager.CellCount
 

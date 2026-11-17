@@ -1,11 +1,13 @@
-import Mathlib
+module
+
+public import Mathlib
 
 set_option autoImplicit false
 
 open Matrix UpperHalfPlane CongruenceSubgroup
 open scoped MatrixGroups ModularForm
 
-noncomputable section
+public noncomputable section
 
 namespace ModularForm
 

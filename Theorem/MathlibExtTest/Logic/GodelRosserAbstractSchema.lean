@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Logic/GodelRosserAbstractSchema.lean -/
 
 
-import Lemma.Set.GodelRosserAbstractSchema
+import Theorem.Set.GodelRosserAbstractSchema
 open MetaMathlibExt
 
 

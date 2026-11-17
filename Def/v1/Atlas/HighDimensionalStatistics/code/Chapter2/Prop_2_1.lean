@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.Matrix.Rank
-import Mathlib.LinearAlgebra.Matrix.ConjTranspose
-import Mathlib.Data.Real.StarOrdered
-import Mathlib.Analysis.Matrix.Spectrum
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Prop_2_1.Part2
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Rank
+public import Mathlib.LinearAlgebra.Matrix.ConjTranspose
+public import Mathlib.Data.Real.StarOrdered
+public import Mathlib.Analysis.Matrix.Spectrum
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Prop_2_1.Part2
+
+@[expose] public section
+
 open Matrix
 
 

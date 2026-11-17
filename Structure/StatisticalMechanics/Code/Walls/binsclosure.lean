@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Walls.binsinsertion.Part7
-import Theorem.StatisticalMechanics.Code.Walls.binsclosure
+module
+
+public import Theorem.StatisticalMechanics.Code.Walls.binsinsertion.Part7
+public import Theorem.StatisticalMechanics.Code.Walls.binsclosure
+public section
+
 open Set SimpleGraph Finset MeasureTheory Filter Topology
 open scoped BigOperators ENNReal NNReal
 open StatMech StatMech.Lattice StatMech.ConfigSpace

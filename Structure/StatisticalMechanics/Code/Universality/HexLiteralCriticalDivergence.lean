@@ -9,14 +9,18 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexCoefficientAggregation.Part2
-import Theorem.StatisticalMechanics.Code.Universality.HexInjections.Part7
-import Theorem.StatisticalMechanics.Code.Universality.HexBridgeRecon.Part3
-import Theorem.StatisticalMechanics.Code.Universality.HexColumnMembershipClose.Part4
-import Theorem.StatisticalMechanics.Code.Universality.HexMirrorPairFromReflection.Part5
-import Theorem.StatisticalMechanics.Code.Universality.HexMirrorOrbitBoundary.Part3
-import Theorem.StatisticalMechanics.Code.Universality.HexLiteralCriticalDivergence.Part2
+module
 
+public import Theorem.StatisticalMechanics.Code.Universality.HexCoefficientAggregation.Part2
+public import Theorem.StatisticalMechanics.Code.Universality.HexInjections.Part7
+public import Theorem.StatisticalMechanics.Code.Universality.HexBridgeRecon.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.HexColumnMembershipClose.Part4
+public import Theorem.StatisticalMechanics.Code.Universality.HexMirrorPairFromReflection.Part5
+public import Theorem.StatisticalMechanics.Code.Universality.HexMirrorOrbitBoundary.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.HexLiteralCriticalDivergence.Part2
+
+
+public section
 
 namespace StatMech.Universality
 

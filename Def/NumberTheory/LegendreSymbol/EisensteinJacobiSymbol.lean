@@ -1,9 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LegendreSymbol/EisensteinJacobiSymbol.lean -/
 
-import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.NumberTheory.LegendreSymbol.GaussEisensteinLemmas
+module
 
+public import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.NumberTheory.LegendreSymbol.GaussEisensteinLemmas
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

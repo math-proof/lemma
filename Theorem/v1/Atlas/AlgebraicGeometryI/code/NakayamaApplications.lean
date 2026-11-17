@@ -7,14 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.RingTheory.Nakayama
-import Mathlib.RingTheory.Finiteness.Basic
-import Mathlib.RingTheory.Spectrum.Prime.Topology
-import Mathlib.RingTheory.Algebraic.Integral
-import Mathlib.RingTheory.Jacobson.Ring
+public import Mathlib.RingTheory.Nakayama
+public import Mathlib.RingTheory.Finiteness.Basic
+public import Mathlib.RingTheory.Spectrum.Prime.Topology
+public import Mathlib.RingTheory.Algebraic.Integral
+public import Mathlib.RingTheory.Jacobson.Ring
 set_option maxHeartbeats 800000
 
+public section
 
 noncomputable section
 

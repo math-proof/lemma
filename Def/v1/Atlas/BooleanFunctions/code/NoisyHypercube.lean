@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.BooleanFunctions.code.FourierExpansion
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
 import Mathlib.Algebra.Order.BigOperators.GroupWithZero.Finset
 open Finset BigOperators
 

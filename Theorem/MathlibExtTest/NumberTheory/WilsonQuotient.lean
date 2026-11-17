@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/WilsonQuotient.lean -/
 
 import Def.NumberTheory.WilsonQuotient
-import Lemma.Int.WilsonQuotient
+import Theorem.Int.WilsonQuotient
 
 
 example : Int.wilsonQuotient 3 = 1 := by

@@ -9,7 +9,9 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.FKTrihexDuality
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierA.FKTrihexDuality
 open Finset
 open scoped BigOperators
 
@@ -23,7 +25,7 @@ namespace PeriodicPlanar
 open FrontierA
 
 
-inductive ThreeTerminalConnectivity
+public inductive ThreeTerminalConnectivity
   | separate
   | pair01
   | pair12

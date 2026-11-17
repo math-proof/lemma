@@ -8,19 +8,23 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Convex.Basic
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Analysis.Calculus.ContDiff.Basic
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Int.Cast.Lemmas
-import Mathlib.Tactic.LinearCombination
-import Def.v1.Atlas.DifferentialGeometry.code.GaussMapDegree.Part4
-import Lemma.Real.Atlas.v1.DifferentialGeometry.code.GaussMapDegree
-import Lemma.Real.Atlas.v1.DifferentialGeometry.code.Hypersurfaces
-import Def.v1.Atlas.DifferentialGeometry.code.Hypersurfaces
-import Def.v1.Atlas.DifferentialGeometry.code.GaussBonnet.Part5
+module
+
+public import Mathlib.Analysis.Convex.Basic
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Analysis.Calculus.ContDiff.Basic
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Data.Int.Cast.Lemmas
+public import Mathlib.Tactic.LinearCombination
+public import Def.v1.Atlas.DifferentialGeometry.code.GaussMapDegree.Part4
+public import Theorem.Real.Atlas.v1.DifferentialGeometry.code.GaussMapDegree
+public import Theorem.Real.Atlas.v1.DifferentialGeometry.code.Hypersurfaces
+public import Def.v1.Atlas.DifferentialGeometry.code.Hypersurfaces
+public import Def.v1.Atlas.DifferentialGeometry.code.GaussBonnet.Part5
+public section
+
 open Finset Real
 
 

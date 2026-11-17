@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/TaylorExpansion.lean -/
+module
 
-import Def.Analysis.Complex.Wiman
-import Lemma.Complex.Wiman
-import Mathlib.Analysis.Complex.TaylorSeries
+public import Def.Analysis.Complex.Wiman
+public import Theorem.Complex.Wiman
+public import Mathlib.Analysis.Complex.TaylorSeries
 
+public section
 
 noncomputable section
 end

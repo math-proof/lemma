@@ -1,19 +1,24 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
-import Mathlib.Analysis.Calculus.ContDiff.Basic
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.Topology.EMetricSpace.BoundedVariation
-import Mathlib.Analysis.Calculus.ContDiff.Deriv
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
-import Mathlib.MeasureTheory.VectorMeasure.IntegrationByParts
-import Mathlib.MeasureTheory.VectorMeasure.WithDensityVec
+module
+
+public import Mathlib.Analysis.Calculus.ContDiff.Basic
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.Topology.EMetricSpace.BoundedVariation
+public import Mathlib.Analysis.Calculus.ContDiff.Deriv
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+public import Mathlib.MeasureTheory.VectorMeasure.IntegrationByParts
+public import Mathlib.MeasureTheory.VectorMeasure.WithDensityVec
+
 /-!
 # Length of continuously differentiable curves
 
 This file proves that the variation of a continuously differentiable Banach-space-valued curve
 on a compact interval is the integral of the norm of its derivative.
 -/
+
+public section
 
 
 namespace Real.Calculus.CurveLength

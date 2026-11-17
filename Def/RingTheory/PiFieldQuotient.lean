@@ -2,9 +2,14 @@
 
 -- MathlibExt/RingTheory/PiFieldQuotient.lean
 
-import Mathlib.Algebra.Algebra.Pi
-import Mathlib.RingTheory.Ideal.Maps
-import Mathlib.RingTheory.Ideal.Quotient.Operations
+module
+
+public import Mathlib.Algebra.Algebra.Pi
+public import Mathlib.RingTheory.Ideal.Maps
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+
+@[expose] public section
+
 universe u v w
 
 /-!

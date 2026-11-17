@@ -1,5 +1,10 @@
 -- Carved from Lemma/Definitions/Def_Mathlib_RingTheory_Invariant_FixedSubringLocal.lean: instance decls only.
-import Mathlib
+
+module
+
+public import Mathlib
+
+@[expose] public section
 
 namespace FixedPoints
 

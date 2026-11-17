@@ -1,8 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/Localization/RegularAt.lean -/
 
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.RingTheory.Nullstellensatz
-import Def.RingTheory.Localization.RegularAt
+module
+
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.RingTheory.Nullstellensatz
+public import Def.RingTheory.Localization.RegularAt
+@[expose] public section
+
 /-!
 # Regularity of rational functions at a point
 

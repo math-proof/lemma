@@ -9,6 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.TensorCategories.code.PivotalSpherical.Part3
-import Lemma.Category.Atlas.v1.TensorCategories.code.PivotalSpherical
+import Theorem.Category.Atlas.v1.TensorCategories.code.PivotalSpherical
 
 

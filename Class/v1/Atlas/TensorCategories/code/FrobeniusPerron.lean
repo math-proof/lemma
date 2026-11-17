@@ -25,10 +25,8 @@ import Mathlib.LinearAlgebra.Matrix.Charpoly.Eigs
 import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
 import Mathlib.NumberTheory.NumberField.InfinitePlace.Embeddings
 import Def.v1.Atlas.TensorCategories.code.PerronFrobeniusProof.Part2
-import Lemma.Category.Atlas.v1.TensorCategories.code.PerronFrobeniusProof
 import Structure.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part2
 set_option maxHeartbeats 400000
-
 
 namespace FusionRing
 

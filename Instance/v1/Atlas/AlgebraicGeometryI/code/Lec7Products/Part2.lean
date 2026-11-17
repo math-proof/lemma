@@ -8,15 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Scheme
-import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Mathlib.CategoryTheory.Limits.Shapes.BinaryProducts
-import Mathlib.RingTheory.GradedAlgebra.Basic
-import Mathlib.LinearAlgebra.TensorProduct.RightExactness
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Basic
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Class.v1.Atlas.AlgebraicGeometryI.code.Lec7Products
+module
+
+public import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Scheme
+public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Mathlib.CategoryTheory.Limits.Shapes.BinaryProducts
+public import Mathlib.RingTheory.GradedAlgebra.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.RightExactness
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Basic
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Class.v1.Atlas.AlgebraicGeometryI.code.Lec7Products
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits

@@ -1,8 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/AlgebraicGeometry/Curve/Evaluation.lean -/
 
-import Def.AlgebraicGeometry.Curve.Divisor
-import Lemma.Finsupp.EqCoeff_Single
-import Mathlib.Algebra.BigOperators.Finsupp.Basic
+module
+
+public import Def.AlgebraicGeometry.Curve.Divisor
+public import Mathlib.Algebra.BigOperators.Finsupp.Basic
+
+@[expose] public section
+
 /-!
 # Evaluation of curve divisors
 

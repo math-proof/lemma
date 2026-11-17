@@ -7,15 +7,17 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.LinearAlgebra.BilinearForm.Basic
-import Mathlib.LinearAlgebra.BilinearForm.Orthogonal
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.Projection
-import Mathlib.Order.RelClasses
-import Def.v1.Atlas.Buildings.code.GeometricAlgebra.WittCancellationDirectSum
+public import Mathlib.LinearAlgebra.BilinearForm.Basic
+public import Mathlib.LinearAlgebra.BilinearForm.Orthogonal
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.Projection
+public import Mathlib.Order.RelClasses
+public import Def.v1.Atlas.Buildings.code.GeometricAlgebra.WittCancellationDirectSum
 set_option maxHeartbeats 2000000
 
+public section
 
 namespace Garrett
 

@@ -14,7 +14,7 @@ import Mathlib.Probability.BorelCantelli
 import Mathlib.Probability.Martingale.Convergence
 import Mathlib.Probability.Independence.Integration
 import Theorem.v1.Atlas.Probability.code.CenteredConvergence
-import Lemma.Measure.Atlas.v1.Probability.code.CenteredConvergence
+import Theorem.Measure.Atlas.v1.Probability.code.CenteredConvergence
 set_option maxHeartbeats 8000000
 
 open MeasureTheory ProbabilityTheory Filter

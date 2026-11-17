@@ -1,10 +1,12 @@
-import Mathlib
-import Structure.AlgebraicGeometry_TwoChartCech
-import Structure.AlgebraicGeometry_TwoChartCechLaurentChart
+module
+
+public import Mathlib
+public import Structure.AlgebraicGeometry_TwoChartCech
+public import Structure.AlgebraicGeometry_TwoChartCechLaurentChart
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 universe u v
 

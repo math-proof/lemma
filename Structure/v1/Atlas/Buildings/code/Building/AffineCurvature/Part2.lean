@@ -8,12 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.Building.AffineMetric.Part5
-import Lemma.Set.IsBoundedImage.of.IsBounded.IsSimilitude
-import Mathlib.Topology.MetricSpace.Basic
-import Mathlib.Topology.UniformSpace.Cauchy
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Def.v1.Atlas.Buildings.code.Building.AffineCurvature
+module
+
+public import Def.v1.Atlas.Buildings.code.Building.AffineMetric.Part5
+public import Lemma.Set.IsBoundedImage.of.IsBounded.IsSimilitude
+public import Mathlib.Topology.MetricSpace.Basic
+public import Mathlib.Topology.UniformSpace.Cauchy
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Def.v1.Atlas.Buildings.code.Building.AffineCurvature
+public section
+
 open ChamberComplex
 
 variable {V : Type*} [DecidableEq V]

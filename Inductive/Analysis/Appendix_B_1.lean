@@ -1,5 +1,7 @@
-import Mathlib
-import Theorem.Analysis.Appendix_B_1.Part6
+module
+
+public import Mathlib
+public import Theorem.Analysis.Appendix_B_1.Part6
 /-!
 # Analysis I, Appendix B.1: The decimal representation of natural numbers
 
@@ -11,7 +13,7 @@ This is separate from the way decimal numerals are already represenated in Mathl
 
 namespace AppendixB
 
-inductive IntDecimal where
+public inductive IntDecimal where
   | zero : IntDecimal
   | pos : PosintDecimal → IntDecimal
   | neg : PosintDecimal → IntDecimal

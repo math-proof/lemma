@@ -15,7 +15,7 @@ import Mathlib.Analysis.Convex.Hull
 import Mathlib.Analysis.InnerProductSpace.Dual
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Def.v1.Atlas.AnAlgorithmistsToolkit.code.PolarBody
-import Lemma.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.PolarBody
+import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.PolarBody
 import Mathlib.Analysis.LocallyConvex.Separation
 import Mathlib.MeasureTheory.Measure.Lebesgue.VolumeOfBalls
 import Mathlib.Topology.Basic

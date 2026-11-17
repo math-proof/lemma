@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.Kernel.MeasurableLIntegral
-import Mathlib.MeasureTheory.Measure.GiryMonad
-import Mathlib.MeasureTheory.Integral.Lebesgue.Map
-import Mathlib.Data.Fin.VecNotation
+module
+
+public import Mathlib.Probability.Kernel.MeasurableLIntegral
+public import Mathlib.MeasureTheory.Measure.GiryMonad
+public import Mathlib.MeasureTheory.Integral.Lebesgue.Map
+public import Mathlib.Data.Fin.VecNotation
+
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory ENNReal Set
 
 

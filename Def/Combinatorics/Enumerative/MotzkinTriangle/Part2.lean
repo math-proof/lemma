@@ -1,12 +1,17 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/MotzkinTriangle.lean -/
 
-import Mathlib.RingTheory.PowerSeries.Binomial
-import Mathlib.RingTheory.PowerSeries.Inverse
-import Mathlib.RingTheory.PowerSeries.Substitution
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
-import Theorem.Combinatorics.Enumerative.MotzkinTriangle
+module
+
+public import Mathlib.RingTheory.PowerSeries.Binomial
+public import Mathlib.RingTheory.PowerSeries.Inverse
+public import Mathlib.RingTheory.PowerSeries.Substitution
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Ring
+public import Theorem.Combinatorics.Enumerative.MotzkinTriangle
+
+@[expose] public section
+
 /-!
 # The Motzkin triangle as a Riordan array
 

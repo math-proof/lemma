@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Mathlib
 import Theorem.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM16.FourierInversion
-import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM16.FourierInversion
+import Theorem.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM16.FourierInversion
 open Complex Finset MeasureTheory
 
 

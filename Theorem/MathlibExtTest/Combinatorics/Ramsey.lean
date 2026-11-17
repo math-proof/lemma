@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Ramsey
-import Lemma.Finset.Ramsey
+import Theorem.Finset.Ramsey
 
 
 namespace MathlibExt.Combinatorics.Ramsey

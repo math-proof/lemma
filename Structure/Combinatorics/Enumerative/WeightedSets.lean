@@ -2,7 +2,9 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
+module
+
+public import Mathlib
 open PowerSeries Finset BigOperators
 
 /-!
@@ -53,7 +55,7 @@ weighted set, generating function, combinatorial class, domino tiling
 -/
 
 
-noncomputable section
+public noncomputable section
 
 variable {R : Type*} [CommSemiring R]
 

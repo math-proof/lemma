@@ -7,10 +7,12 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Analysis.Distribution.Support
-import Mathlib.Geometry.Manifold.PartitionOfUnity
+public import Mathlib.Analysis.Distribution.Support
+public import Mathlib.Geometry.Manifold.PartitionOfUnity
 
+public section
 
 noncomputable section
 

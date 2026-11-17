@@ -1,6 +1,10 @@
-import Def.AlgebraicCurve_PlaceEvaluation
-import Def.AlgebraicCurve_ComplexLineIntegral
-import Structure.AlgebraicCurve_CellDissection
+module
+
+public import Def.AlgebraicCurve_PlaceEvaluation
+public import Def.AlgebraicCurve_ComplexLineIntegral
+public import Structure.AlgebraicCurve_CellDissection
+
+@[expose] public section
 
 set_option autoImplicit false
 

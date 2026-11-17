@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Mathlib
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.IndependenceOfValuations
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.IndependenceOfValuations
 import Def.v1.Atlas.ArithmeticGeometry.code.Corollary_20_4
 open Finset
 

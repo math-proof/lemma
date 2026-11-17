@@ -7,15 +7,17 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.Algebra.Homology.ShortComplex.Exact
-import Mathlib.CategoryTheory.Abelian.Exact
-import Mathlib.GroupTheory.FreeAbelianGroup
-import Mathlib.GroupTheory.QuotientGroup.Defs
-import Structure.v1.Atlas.AlgebraicGeometryI.code.Proposition40DegreeMap
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.Algebra.Homology.ShortComplex.Exact
+public import Mathlib.CategoryTheory.Abelian.Exact
+public import Mathlib.GroupTheory.FreeAbelianGroup
+public import Mathlib.GroupTheory.QuotientGroup.Defs
+public import Structure.v1.Atlas.AlgebraicGeometryI.code.Proposition40DegreeMap
 set_option maxHeartbeats 400000
 
+public section
 
 noncomputable section
 

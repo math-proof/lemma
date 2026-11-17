@@ -1,11 +1,17 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean -/
 
-import Structure.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part5
-import Structure.CPythonListsort.Code.Assembly.MergeGetmemRequestBound
-import Def.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
-import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopLeftSafety
-import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopRightSafety
-import Theorem.CPythonListsort.Code.Assembly.MergeHiSafety.Part4
+module
+
+public import Structure.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part5
+public import Structure.CPythonListsort.Code.Assembly.MergeGetmemRequestBound
+public import Def.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
+public import Structure.CPythonListsort.Code.Assembly.MergeHiSafety.Part2
+public import Structure.CPythonListsort.Code.Assembly.MergeMemcpyProvenance
+public import Def.CPythonListsort.Code.Transcription.MergeHi.Part5
+public import Structure.CPythonListsort.Code.Transcription.MergeHi.Part2
+public import Def.CPythonListsort.Code.Assembly.MergeHiSafety.Part4
+public import Def.CPythonListsort.Code.Assembly.MergeHiSafety
+public import Def.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part4
 /-!
 # `merge_hi` traced execution and safety
 
@@ -16,6 +22,9 @@ is produced by the typed operation that emits its access events.  The three
 permit, main-data block movement uses the overlap-safe traced `memmove`, and
 temporary gallops read their live storage through `GallopKeySource.temporary`.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

@@ -1,5 +1,9 @@
-import Structure.HeckeGalois_EichlerShimura
-import Def.ModularCurve_MazurPrincipleCore
+module
+
+public import Structure.HeckeGalois_EichlerShimura
+public import Def.ModularCurve_MazurPrincipleCore
+
+public section
 
 set_option autoImplicit false
 

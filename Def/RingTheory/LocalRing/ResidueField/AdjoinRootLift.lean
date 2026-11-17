@@ -5,8 +5,8 @@ Author: @toskua, Avocado
 -/
 
 import Theorem.RingTheory.LocalRing.ResidueField.DVR.Part2
-import Lemma.AlgHom.LocalRing.ResidueField.DVR
-import Lemma.Polynomial.AdjoinRoot.LocalMaximal
+import Theorem.AlgHom.LocalRing.ResidueField.DVR
+import Theorem.Polynomial.AdjoinRoot.LocalMaximal
 import Mathlib.RingTheory.AdjoinRoot
 import Mathlib.FieldTheory.Separable
 import Theorem.RingTheory.AdjoinRoot.LocalMaximal

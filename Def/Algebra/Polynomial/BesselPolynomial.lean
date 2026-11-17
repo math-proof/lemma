@@ -1,5 +1,10 @@
-import Mathlib.Algebra.Polynomial.Basic
-import Mathlib.Tactic.NormNum
+module
+
+public import Mathlib.Algebra.Polynomial.Basic
+public import Mathlib.Tactic.NormNum
+
+@[expose] public section
+
 /-!
 # Bessel polynomials (classical definition)
 

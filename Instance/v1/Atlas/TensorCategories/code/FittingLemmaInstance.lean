@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Class.v1.Atlas.TensorCategories.code.FittingLemmaLocalEnd
-import Lemma.Category.Atlas.v1.TensorCategories.code.FittingLemmaLocalEnd
-import Lemma.Category.Atlas.v1.TensorCategories.code.FittingAlgebraLocalRing
+import Theorem.Category.Atlas.v1.TensorCategories.code.FittingLemmaLocalEnd
+import Theorem.Category.Atlas.v1.TensorCategories.code.FittingAlgebraLocalRing
 import Theorem.v1.Atlas.TensorCategories.code.FittingAlgebraLocalRing
 import Mathlib.CategoryTheory.Idempotents.Basic
 import Mathlib.CategoryTheory.Preadditive.Biproducts

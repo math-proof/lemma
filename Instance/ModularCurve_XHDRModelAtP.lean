@@ -5,7 +5,7 @@ import Lemma.UpperHalfPlane.XHOperators
 import Abbrev.ModularCurve_IgusaScheme
 import Instance.AlgebraicCurve_TwoChartIntegralModel
 import Lemma.Scheme.CurveModel
-import Lemma.Scheme.NeronModelPropertyBundleCarrier
+import Theorem.Scheme.NeronModelPropertyBundleCarrier
 import Abbrev.ModularCurve_XHDRModelAtP
 
 set_option autoImplicit false

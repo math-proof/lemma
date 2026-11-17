@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.StatisticalMechanics.Code.Exact3D.PolymerEnumeration.Part39
-import Theorem.StatisticalMechanics.Code.Exact3D.StableKeyCertificate
+module
 
+public import Theorem.StatisticalMechanics.Code.Exact3D.PolymerEnumeration.Part39
+public import Theorem.StatisticalMechanics.Code.Exact3D.StableKeyCertificate
+
+
+public section
 
 namespace StatMech
 

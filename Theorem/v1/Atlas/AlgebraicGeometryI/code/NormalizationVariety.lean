@@ -7,16 +7,18 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.AlgebraicGeometry.Normalization
-import Mathlib.AlgebraicGeometry.Morphisms.Finite
-import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
-import Mathlib.RingTheory.Finiteness.Defs
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.RingTheory.FiniteType
-import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
+public import Mathlib.AlgebraicGeometry.Normalization
+public import Mathlib.AlgebraicGeometry.Morphisms.Finite
+public import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
+public import Mathlib.RingTheory.Finiteness.Defs
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.RingTheory.FiniteType
+public import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
 set_option maxHeartbeats 400000
 
+public section
 
 noncomputable section
 

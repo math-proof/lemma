@@ -1,7 +1,11 @@
-import Mathlib
-import Abbrev.GroupCohomology_CochainCup
-import Abbrev.GroupCohomology_GradedCupFamily
-import Def.GroupCohomology_CochainCup
+module
+
+public import Mathlib
+public import Abbrev.GroupCohomology_CochainCup
+public import Abbrev.GroupCohomology_GradedCupFamily
+public import Def.GroupCohomology_CochainCup
+
+public section
 
 set_option autoImplicit false
 

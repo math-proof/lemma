@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.HigherOrderHarmonic
-import Lemma.Nat.HigherOrderHarmonic
+import Theorem.Nat.HigherOrderHarmonic
 
 
 example : higherHarmonic 0 2 = 0 :=

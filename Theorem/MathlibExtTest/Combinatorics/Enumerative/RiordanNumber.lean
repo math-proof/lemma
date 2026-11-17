@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.RiordanNumber
-import Lemma.Finset.Enumerative.RiordanNumber
+import Theorem.Finset.Enumerative.RiordanNumber
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Tactic.NormNum
 

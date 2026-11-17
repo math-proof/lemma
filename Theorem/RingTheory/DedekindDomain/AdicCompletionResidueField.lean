@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/AdicCompletionResidueField.lean -/
 
 import Theorem.RingTheory.DedekindDomain.AdicCompletionIntegers
-import Lemma.Int.DedekindDomain.AdicCompletionIntegers
+import Theorem.Int.DedekindDomain.AdicCompletionIntegers
 import Mathlib.Tactic.GCongr
 import Mathlib.Tactic.Ring
 import Def.RingTheory.DedekindDomain.AdicCompletionResidueField

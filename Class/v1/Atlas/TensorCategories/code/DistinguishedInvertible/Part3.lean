@@ -19,8 +19,6 @@ import Mathlib.RingTheory.TensorProduct.Basic
 import Mathlib.LinearAlgebra.Dual.Defs
 import Mathlib.CategoryTheory.Yoneda
 import Instance.v1.Atlas.TensorCategories.code.InvertibleObjects
-import Lemma.Category.Atlas.v1.TensorCategories.code.InvertibleObjects
-import Lemma.Category.Atlas.v1.TensorCategories.code.PivotalSpherical
 import Structure.v1.Atlas.TensorCategories.code.PivotalSpherical.Part3
 import Def.v1.Atlas.TensorCategories.code.CategoricalFreeness.Part2
 import Def.v1.Atlas.TensorCategories.code.DistinguishedInvertible.Part4
@@ -30,17 +28,14 @@ open CategoryTheory MonoidalCategory Category Limits TensorCategories
 
 universe v u
 
-
 namespace CategoryTheory
 
 variable {C : Type u} [Category.{v} C] [MonoidalCategory C] [RigidCategory C]
-
 
 namespace HasDistinguishedInvertible
 
 variable {C : Type u} [Category.{v} C] [MonoidalCategory C] [RigidCategory C]
   [HasDistinguishedInvertibleData C]
-
 
 open scoped TensorProduct in
 /-- A quasi-Hopf algebra over `k`: an algebra `H` equipped with a coproduct, counit, an

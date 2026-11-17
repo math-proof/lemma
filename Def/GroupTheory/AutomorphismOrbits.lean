@@ -1,9 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/AutomorphismOrbits.lean -/
 
-import Mathlib.Algebra.Group.Action.End
-import Mathlib.GroupTheory.Finiteness
-import Mathlib.GroupTheory.GroupAction.Defs
+module
 
+public import Mathlib.Algebra.Group.Action.End
+public import Mathlib.GroupTheory.Finiteness
+public import Mathlib.GroupTheory.GroupAction.Defs
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

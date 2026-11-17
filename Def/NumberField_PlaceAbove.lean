@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.Matrix.Any_EqComapAsIdealAsIdeal
+import Theorem.Matrix.Any_EqComapAsIdealAsIdeal
 
 set_option autoImplicit false
 open IsDedekindDomain NumberField

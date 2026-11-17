@@ -8,16 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.AffineCoxeter.TitsCone.Part3
-import Theorem.v1.Atlas.Buildings.code.ChamberComplex.Basic
-import Def.v1.Atlas.Buildings.code.ChamberComplex.CoxeterComplex.Part2
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Topology.MetricSpace.Basic
-import Def.v1.Atlas.Buildings.code.AffineCoxeter.GeometricRealization
+module
+
+public import Def.v1.Atlas.Buildings.code.AffineCoxeter.TitsCone.Part3
+public import Theorem.v1.Atlas.Buildings.code.ChamberComplex.Basic
+public import Def.v1.Atlas.Buildings.code.ChamberComplex.CoxeterComplex.Part2
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Topology.MetricSpace.Basic
+public import Def.v1.Atlas.Buildings.code.AffineCoxeter.GeometricRealization
 set_option linter.unusedSectionVars false
 
 
-noncomputable section
+public noncomputable section
 
 open Finset BigOperators
 

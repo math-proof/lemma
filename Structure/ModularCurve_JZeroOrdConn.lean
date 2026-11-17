@@ -1,6 +1,8 @@
-import Structure.ModularCurve_JZeroGoodReductionV3
-import Structure.ModularCurve_EichlerShimuraData
-import Def.ModularCurve_JZeroOrdConn
+module
+
+public import Structure.ModularCurve_JZeroGoodReductionV3
+public import Structure.ModularCurve_EichlerShimuraData
+public import Def.ModularCurve_JZeroOrdConn
 
 set_option autoImplicit false
 set_option synthInstance.maxHeartbeats 400000
@@ -17,7 +19,7 @@ variable {V₀ : Type} [AddCommGroup V₀] [Module R V₀]
 
 end KernelSpan
 
-noncomputable section OrdConn
+public noncomputable section OrdConn
 
 open AlgebraicCurve IsLocalRing
 

@@ -1,9 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Upper.lean -/
 
 import Def.NumberTheory.PrimeInterval.Breusch.Grid
-import Lemma.Nat.PrimeInterval.Breusch.Grid
+import Theorem.Nat.PrimeInterval.Breusch.Grid
 import Lemma.Nat.PrimeInterval.Breusch.Lower
-import Lemma.Nat.PrimeInterval.Breusch.Theta
+import Theorem.Nat.PrimeInterval.Breusch.Theta
 import Def.NumberTheory.PrimeInterval.Breusch.Lower
 import Def.NumberTheory.PrimeInterval.Breusch.Theta
 import Mathlib.Algebra.Order.Floor.Semiring

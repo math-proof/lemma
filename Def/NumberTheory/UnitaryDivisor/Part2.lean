@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/UnitaryDivisor.lean -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Nat.GCD.Basic
-import Mathlib.NumberTheory.Divisors
-import Theorem.NumberTheory.UnitaryDivisor
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Nat.GCD.Basic
+public import Mathlib.NumberTheory.Divisors
+public import Theorem.NumberTheory.UnitaryDivisor
+
+@[expose] public section
+
 /-!
 # Unitary divisors
 

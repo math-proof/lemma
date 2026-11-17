@@ -9,9 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexSectorTransferBridge.Part2
-import Theorem.StatisticalMechanics.Code.Foundations.ConfigSpace
-import Theorem.StatisticalMechanics.Code.FrontierD.FKLoopSixVertexLocalCorrespondence
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexSectorTransferBridge.Part2
+public import Theorem.StatisticalMechanics.Code.Foundations.ConfigSpace
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKLoopSixVertexLocalCorrespondence
+public section
+
 open Finset Matrix
 
 

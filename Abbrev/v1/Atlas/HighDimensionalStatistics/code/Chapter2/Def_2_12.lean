@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Def_2_12
+module
+
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Def_2_12
+@[expose] public section
+
 open Finset Matrix BigOperators
 
 

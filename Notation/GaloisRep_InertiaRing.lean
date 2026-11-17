@@ -1,3 +1,9 @@
+module
+
+public import Mathlib.Algebra.Algebra.Equiv
+
+public section
+
 set_option quotPrecheck false
 set_option hygiene false
 

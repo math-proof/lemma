@@ -9,11 +9,15 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FK.RussoDerivative.Part5
-import Theorem.StatisticalMechanics.Code.FK.FKQ2Sharp
-import Theorem.StatisticalMechanics.Code.FK.Comparison
-import Theorem.StatisticalMechanics.Code.Inequalities.IncreasingEvent.Part2
-import Theorem.StatisticalMechanics.Code.Walls.oc_boxobjects
+module
+
+public import Theorem.StatisticalMechanics.Code.FK.RussoDerivative.Part5
+public import Theorem.StatisticalMechanics.Code.FK.FKQ2Sharp
+public import Theorem.StatisticalMechanics.Code.FK.Comparison
+public import Theorem.StatisticalMechanics.Code.Inequalities.IncreasingEvent.Part2
+public import Theorem.StatisticalMechanics.Code.Walls.oc_boxobjects
+public section
+
 open scoped BigOperators
 open Finset Set
 open scoped Classical

@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/DirichletCharacter/Quadratic.lean -/
 
-import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
+module
+
+public import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
+
+@[expose] public section
+
 /-! Quadratic Dirichlet character support definitions.
 
 Source: Joshua Males, Andreas Mono, Larry Rolen, and Ian Wagner,

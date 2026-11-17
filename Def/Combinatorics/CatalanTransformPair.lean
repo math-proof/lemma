@@ -1,19 +1,24 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/CatalanTransformPair.lean -/
 
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Rat.Defs
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Analysis.Normed.Field.Lemmas
-import Mathlib.Data.Rat.Star
-import Mathlib.RingTheory.Binomial
-import Mathlib.RingTheory.PowerSeries.Catalan
-import Mathlib.RingTheory.PowerSeries.Substitution
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Rat.Defs
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Analysis.Normed.Field.Lemmas
+public import Mathlib.Data.Rat.Star
+public import Mathlib.RingTheory.Binomial
+public import Mathlib.RingTheory.PowerSeries.Catalan
+public import Mathlib.RingTheory.PowerSeries.Substitution
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 open scoped BigOperators
 
 

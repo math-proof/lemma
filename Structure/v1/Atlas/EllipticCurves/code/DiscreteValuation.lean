@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
+module
 
+public import Mathlib
+
+
+public section
 
 /-- A discrete valuation on a field $F$, i.e. a surjective homomorphism $v : F^\times \to
 \mathbb{Z}$ satisfying $v(x+y) \geq \min(v(x), v(y))$ (Definition 23.4). Packaged as a

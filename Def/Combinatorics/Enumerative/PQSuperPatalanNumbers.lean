@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/PQSuperPatalanNumbers.lean -/
 
-import Def.Combinatorics.Enumerative.PQPatalanNumbers.Part2
+module
+
+public import Def.Combinatorics.Enumerative.PQPatalanNumbers.Part2
+
+@[expose] public section
+
 /-!
 # (p,q)-super Patalan numbers
 

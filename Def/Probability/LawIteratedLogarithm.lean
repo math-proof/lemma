@@ -4,17 +4,22 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
 
-import Mathlib.Probability.IdentDistrib
-import Mathlib.Probability.BorelCantelli
-import Mathlib.Probability.CentralLimitTheorem
-import Mathlib.Probability.Martingale.OptionalStopping
-import Mathlib.Probability.Moments.SubGaussian
-import Mathlib.Probability.StrongLaw
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Mathlib.Analysis.PSeries
-import Mathlib.Analysis.SpecificLimits.Normed
-import Mathlib.MeasureTheory.Function.LpSpace.InfiniteSum
-import Mathlib.Probability.Independence.Integration
+module
+
+public import Mathlib.Probability.IdentDistrib
+public import Mathlib.Probability.BorelCantelli
+public import Mathlib.Probability.CentralLimitTheorem
+public import Mathlib.Probability.Martingale.OptionalStopping
+public import Mathlib.Probability.Moments.SubGaussian
+public import Mathlib.Probability.StrongLaw
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+public import Mathlib.Analysis.PSeries
+public import Mathlib.Analysis.SpecificLimits.Normed
+public import Mathlib.MeasureTheory.Function.LpSpace.InfiniteSum
+public import Mathlib.Probability.Independence.Integration
+
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory
 open scoped ProbabilityTheory ENNReal NNReal
 

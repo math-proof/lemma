@@ -1,0 +1,24 @@
+module
+
+public section
+
+
+public theorem List.Take.eq.Cons_TakeTail.of.Gt_0.GtLength_0
+  {s : List α}
+  {i : ℕ}
+-- given
+  (h : s.length > 0)
+  (h_i : i > 0) :
+-- imply
+  s.take i = s[0] :: s.tail.take (i - 1) := by
+-- proof
+  match s with
+  | [] =>
+    contradiction
+  | s₀ :: s =>
+    cases i <;>
+      grind
+
+
+-- created on 2025-07-05
+-- updated on 2026-10-26

@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldPairedRecurrence.Part27
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldNormalRotatedSlack
+module
+
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldPairedRecurrence.Part27
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldNormalRotatedSlack
+public section
+
 open Filter MeasureTheory Set Topology
 
 

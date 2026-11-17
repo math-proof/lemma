@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.GeneralizedFussCatalanNumbersFMNK
-import Lemma.Nat.GeneralizedFussCatalanNumbersFMNK
+import Theorem.Nat.GeneralizedFussCatalanNumbersFMNK
 
 
 namespace MetaMathlibExt

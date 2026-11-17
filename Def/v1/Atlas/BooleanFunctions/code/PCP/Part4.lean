@@ -8,12 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Fintype.Fin
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Data.Real.Basic
-import Mathlib.Data.Nat.Log
-import Abbrev.v1.Atlas.BooleanFunctions.code.PCP.Part2
+module
 
+public import Mathlib.Data.Fintype.Fin
+public import Mathlib.Data.Fintype.Pi
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Data.Nat.Log
+public import Abbrev.v1.Atlas.BooleanFunctions.code.PCP.Part2
+
+@[expose] public section
 
 namespace PCP
 

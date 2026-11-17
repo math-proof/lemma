@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/ClassGroup/CoprimeRepresentative.lean -/
 
 
-import Lemma.Int.ClassGroup.CoprimeRepresentative
+import Theorem.Int.ClassGroup.CoprimeRepresentative
 open Ideal
 
 variable {A : Type*} [CommRing A] [IsDedekindDomain A]

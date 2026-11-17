@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/MergeLoCorrectness.lean -/
 
-import Def.CPythonListsort.Code.Correctness.EntrySnapshotPermutation
-import Structure.CPythonListsort.Code.Correctness.MergeLoInvariant
-import Def.CPythonListsort.Code.Correctness.MergeLoRegressionKernel
+module
+
+public import Def.CPythonListsort.Code.Correctness.EntrySnapshotPermutation
+public import Structure.CPythonListsort.Code.Correctness.MergeLoInvariant
+public import Def.CPythonListsort.Code.Correctness.MergeLoRegressionKernel
 /-!
 # Functional correctness of `merge_lo`
 
@@ -11,6 +13,9 @@ with the shared left-biased mathematical merge.  Sortedness, occurrence
 stability, key/payload permutation, framing, and persistent snapshot
 preservation are exposed as public consequences of that equality.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

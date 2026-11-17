@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Cyclotomic/RealCyclotomicPolynomial.lean -/
 
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.FieldTheory.Minpoly.Basic
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.FieldTheory.Minpoly.Basic
+
+@[expose] public section
+
 /-!
 # Real cyclotomic polynomial — support definition
 -/

@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeState.lean -/
 
-import Def.CPythonListsort.Code.Transcription.Comparator
-import Def.CPythonListsort.Code.Transcription.Minrun.Part3
-import Theorem.CPythonListsort.Code.Transcription.SortSlice
-import Def.CPythonListsort.Code.Transcription.MergeState
+module
+
+public import Def.CPythonListsort.Code.Transcription.Comparator
+public import Def.CPythonListsort.Code.Transcription.Minrun.Part3
+public import Theorem.CPythonListsort.Code.Transcription.SortSlice
+public import Def.CPythonListsort.Code.Transcription.MergeState
 /-!
 # `MergeState` and pending runs
 
@@ -12,6 +14,9 @@ fixed-size stack, and temporary storage whose slots may be uninitialized. The
 model keeps those observable distinctions while replacing pointers by indices
 into one shared `SortSlice` store.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

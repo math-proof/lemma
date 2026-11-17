@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
-import Lemma.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
+import Theorem.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
 import Def.v1.Atlas.Buildings.code.Building.RetractionDef
 open scoped Classical
 

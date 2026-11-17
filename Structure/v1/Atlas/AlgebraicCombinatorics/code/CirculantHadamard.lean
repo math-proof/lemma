@@ -8,19 +8,23 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.NumberTheory.NumberField.InfinitePlace.Embeddings
-import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.RingTheory.Polynomial.Cyclotomic.Basic
-import Mathlib.RingTheory.Polynomial.Cyclotomic.Roots
-import Mathlib.Algebra.Ring.GeomSum
-import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
-import Mathlib.NumberTheory.NumberField.Cyclotomic.Galois
-import Mathlib.Data.Real.Sqrt
-import Mathlib.RingTheory.RootsOfUnity.Complex
-import Mathlib.RingTheory.Multiplicity
-import Mathlib.RingTheory.UniqueFactorizationDomain.Multiplicity
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Mathlib.NumberTheory.Cyclotomic.PrimitiveRoots
+module
+
+public import Mathlib.NumberTheory.NumberField.InfinitePlace.Embeddings
+public import Mathlib.Analysis.Complex.Polynomial.Basic
+public import Mathlib.RingTheory.Polynomial.Cyclotomic.Basic
+public import Mathlib.RingTheory.Polynomial.Cyclotomic.Roots
+public import Mathlib.Algebra.Ring.GeomSum
+public import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
+public import Mathlib.NumberTheory.NumberField.Cyclotomic.Galois
+public import Mathlib.Data.Real.Sqrt
+public import Mathlib.RingTheory.RootsOfUnity.Complex
+public import Mathlib.RingTheory.Multiplicity
+public import Mathlib.RingTheory.UniqueFactorizationDomain.Multiplicity
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Mathlib.NumberTheory.Cyclotomic.PrimitiveRoots
+public section
+
 open Complex NumberField
 
 

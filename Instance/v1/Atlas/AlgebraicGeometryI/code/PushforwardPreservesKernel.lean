@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Category.ModuleCat.Presheaf.Pushforward
-import Mathlib.Algebra.Category.ModuleCat.Presheaf.Limits
-import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Kernels
-import Mathlib.CategoryTheory.Limits.Preserves.Finite
+module
+
+public import Mathlib.Algebra.Category.ModuleCat.Presheaf.Pushforward
+public import Mathlib.Algebra.Category.ModuleCat.Presheaf.Limits
+public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Kernels
+public import Mathlib.CategoryTheory.Limits.Preserves.Finite
+
+@[expose] public section
+
 open CategoryTheory CategoryTheory.Limits
 
 universe v v₁ v₂ u₁ u₂ u

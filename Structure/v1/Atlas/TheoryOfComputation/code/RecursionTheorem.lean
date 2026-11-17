@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Set.Basic
-import Inductive.v1.Atlas.TheoryOfComputation.code.RecursionTheorem
+module
 
+public import Mathlib.Data.Set.Basic
+public import Inductive.v1.Atlas.TheoryOfComputation.code.RecursionTheorem
+
+
+public section
 
 namespace RecursionTheorem
 

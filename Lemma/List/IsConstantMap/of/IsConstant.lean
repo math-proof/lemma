@@ -1,5 +1,6 @@
 import Def.Data.List.List.Basic
 import Lemma.List.All_EqUFnS.of.All_Eq
+import Instance.Data.List.List
 open List
 
 
@@ -7,10 +8,10 @@ open List
 private lemma main
   {s : List α}
 -- given
-  (h : s is constant)
+  (h : IsConstant.is_constant s)
   (f : α → β) :
 -- imply
-  (s.map f) is constant := by
+  IsConstant.is_constant (s.map f) := by
 -- proof
   induction s with
   | nil =>

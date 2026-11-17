@@ -9,9 +9,10 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.PrescribedGallery.Part2
-import Lemma.Finset.AdjacentToSimplicialComplex.of.Adjacent.In_Faces.In_Faces.In_Apartments
-import Lemma.Group.Atlas.v1.Buildings.code.Building.CombinatorialGeometry.ThreeChamber
-import Lemma.Finset.Eq.In_H.of.GtGalleryDist
+import Theorem.Finset.AdjacentToSimplicialComplex.of.Adjacent.In_Faces.In_Faces.In_Apartments
+import Structure.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.ThreeChamber
+import Def.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.ThreeChamber
+import Theorem.Finset.Eq.In_H.of.GtGalleryDist
 import Structure.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.ThreeChamber.Part2
 import Structure.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.GateConvex
 import Structure.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.RetractionHalfApartments

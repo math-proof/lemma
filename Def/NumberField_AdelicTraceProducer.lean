@@ -1,4 +1,8 @@
-import Lemma.ContinuousMap.StandardGlobalAddChar
+module
+
+public import Structure.NumberField_StandardGlobalAddChar
+
+@[expose] public section
 
 open Function IsDedekindDomain NumberField NumberField.InfinitePlace NumberField.InfinitePlace.Completion
 
@@ -215,10 +219,8 @@ def archTraceDataOf
   continuous_traceInf := continuous_traceInfHom F
   traceInf_surjective := traceInfHom_surjective F
 
-example : AdelicTraceData ℚ :=
-  archTraceDataOf ℚ ratTraceData.traceFin ratTraceData.traceFin_algebraMap
-    ratTraceData.continuous_traceFin
-
 end NumberField.StandardAddChar
+
+end
 
 end

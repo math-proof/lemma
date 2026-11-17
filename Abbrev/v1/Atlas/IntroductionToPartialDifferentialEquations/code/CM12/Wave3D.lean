@@ -20,7 +20,7 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM11.Wave1D
-import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM11.Wave1D
+import Theorem.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM11.Wave1D
 set_option maxHeartbeats 3200000
 
 

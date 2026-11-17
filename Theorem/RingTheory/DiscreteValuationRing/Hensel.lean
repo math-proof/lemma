@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DiscreteValuationRing/Hensel.lean -/
+module
 
-import Mathlib.Algebra.Polynomial.Div
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Mathlib.RingTheory.Henselian
-import Mathlib.Tactic.LinearCombination
+public import Mathlib.Algebra.Polynomial.Div
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Mathlib.RingTheory.Henselian
+public import Mathlib.Tactic.LinearCombination
 
+public section
 
 namespace IsDiscreteValuationRing
 end IsDiscreteValuationRing

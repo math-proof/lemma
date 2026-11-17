@@ -1,12 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/DirichletCharacter/QuadraticDirichletCharacter.lean -/
 
 import Def.NumberTheory.DirichletCharacter.Quadratic
-import Lemma.Nat.DirichletCharacter.Quadratic
+import Theorem.Nat.DirichletCharacter.Quadratic
 import Mathlib.NumberTheory.DirichletCharacter.Basic
 import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
-import Lemma.Nat.DirichletCharacter.KroneckerJacobiOdd
 
 
 section

@@ -1,10 +1,12 @@
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Structure.AlgebraicGeometry_RelativeGroupLaw
-import Lemma.Scheme.NeronModelEndomorphismExtension
+module
+
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Structure.AlgebraicGeometry_RelativeGroupLaw
+public import Theorem.Scheme.NeronModelEndomorphismExtension
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 universe u
 

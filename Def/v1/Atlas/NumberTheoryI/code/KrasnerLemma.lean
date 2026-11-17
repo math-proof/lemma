@@ -8,19 +8,24 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Order.AbsoluteValue.Basic
-import Mathlib.Algebra.Order.BigOperators.Ring.Finset
-import Mathlib.Algebra.Polynomial.Basic
-import Mathlib.Algebra.Polynomial.Eval.Degree
-import Mathlib.Algebra.Polynomial.Degree.Support
-import Mathlib.Algebra.Polynomial.Degree.Operations
-import Mathlib.Algebra.Polynomial.Splits
-import Mathlib.Data.Real.Basic
-import Mathlib.Analysis.Normed.Unbundled.SpectralNorm
-import Mathlib.Analysis.Normed.Field.Krasner
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Mathlib.FieldTheory.IntermediateField.Algebraic
-import Mathlib.FieldTheory.SeparableDegree
+module
+
+public import Mathlib.Algebra.Order.AbsoluteValue.Basic
+public import Mathlib.Algebra.Order.BigOperators.Ring.Finset
+public import Mathlib.Algebra.Polynomial.Basic
+public import Mathlib.Algebra.Polynomial.Eval.Degree
+public import Mathlib.Algebra.Polynomial.Degree.Support
+public import Mathlib.Algebra.Polynomial.Degree.Operations
+public import Mathlib.Algebra.Polynomial.Splits
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Analysis.Normed.Unbundled.SpectralNorm
+public import Mathlib.Analysis.Normed.Field.Krasner
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Mathlib.FieldTheory.IntermediateField.Algebraic
+public import Mathlib.FieldTheory.SeparableDegree
+
+@[expose] public section
+
 open Polynomial Finset
 
 

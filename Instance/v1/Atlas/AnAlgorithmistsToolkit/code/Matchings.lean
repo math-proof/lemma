@@ -8,16 +8,21 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Fin.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Data.Fintype.Prod
-import Mathlib.Data.Fintype.Sum
-import Mathlib.Tactic
-import Mathlib.LinearAlgebra.Matrix.Permutation
-import Mathlib.Analysis.Convex.Birkhoff
-import Structure.v1.Atlas.AnAlgorithmistsToolkit.code.Matchings
+module
+
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Fin.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Data.Fintype.Prod
+public import Mathlib.Data.Fintype.Sum
+public import Mathlib.Tactic
+public import Mathlib.LinearAlgebra.Matrix.Permutation
+public import Mathlib.Analysis.Convex.Birkhoff
+public import Structure.v1.Atlas.AnAlgorithmistsToolkit.code.Matchings
+
+@[expose] public section
+
 open Finset
 
 

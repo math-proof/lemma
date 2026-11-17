@@ -1,9 +1,13 @@
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Algebra.Module.LinearMap.End
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Def.Stickelberger_Basic
+module
+
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Algebra.Module.LinearMap.End
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Def.Stickelberger_Basic
 
 set_option autoImplicit false
+
+public section
 
 namespace Stickelberger
 

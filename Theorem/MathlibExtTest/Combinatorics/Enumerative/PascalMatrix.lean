@@ -3,7 +3,7 @@
 
 import Mathlib.Tactic.NormNum
 import Def.Combinatorics.Enumerative.PascalMatrix
-import Lemma.Finset.Enumerative.PascalMatrix
+import Theorem.Finset.Enumerative.PascalMatrix
 open scoped BigOperators Topology
 
 

@@ -9,9 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.FK.DensityFiniteToInfinite.Part2
-import Theorem.StatisticalMechanics.Code.FK.TranslationInvariance.Part3
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.FK.DensityFiniteToInfinite.Part2
+public import Theorem.StatisticalMechanics.Code.FK.TranslationInvariance.Part3
+public section
+
 open MeasureTheory Filter Topology SimpleGraph Set
 open scoped BigOperators
 

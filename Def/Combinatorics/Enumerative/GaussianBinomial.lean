@@ -4,10 +4,15 @@
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Mathlib.Algebra.Ring.Defs
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Finset.Range
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Algebra.Ring.Defs
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Finset.Range
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 /-!
 # Gaussian binomial coefficients and finite q-Pochhammer symbols
 

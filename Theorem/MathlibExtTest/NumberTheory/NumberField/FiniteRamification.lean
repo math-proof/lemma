@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/FiniteRamification.lean -/
 
 
-import Lemma.Nat.NumberField.FiniteRamification
+import Theorem.Nat.NumberField.FiniteRamification
 open IsDedekindDomain
 open scoped NumberField
 

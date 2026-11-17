@@ -21,9 +21,7 @@ import Mathlib.Topology.Connected.TotallyDisconnected
 import Mathlib.Topology.Algebra.Group.ClosedSubgroup
 import Mathlib.GroupTheory.FiniteIndexNormalSubgroup
 import Def.v1.Atlas.NumberTheoryI.code.Adeles.Part10
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Adeles
 import Abbrev.v1.Atlas.NumberTheoryI.code.Ideles.Part3
-
 
 noncomputable section
 

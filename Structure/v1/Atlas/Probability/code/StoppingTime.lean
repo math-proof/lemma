@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.Process.Stopping
-import Def.Probability.StoppingTime
+module
+
+public import Mathlib.Probability.Process.Stopping
+public import Def.Probability.StoppingTime
+public section
+
 open MeasureTheory
 
 variable {Ω : Type*} {m : MeasurableSpace Ω}

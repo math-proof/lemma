@@ -1,4 +1,3 @@
-import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Notation.Fun
 import Instance.Probability.SinglePSpaceMeasurable
 import Instance.Algebra.Module.HDiv
@@ -22,6 +21,8 @@ import Mathlib.Probability.Kernel.MeasurableIntegral
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Syntax.Order.Sup
 import Instance.Analysis.Real.Numbers
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure Real
 open scoped ENNReal.ToRealCoe
 set_option maxHeartbeats 800000
@@ -230,10 +231,10 @@ private lemma ae_td_eq_return
 
 /-- Integral against a density-policy kernel is the reference integral weighted by `π`. -/
 private lemma integral_kernel
-  [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+  [NormedAddCommGroup ℰ] [NormedSpace ℝ ℰ] [CompleteSpace ℰ]
   [MeasurableSpace 𝒮] [μ : ReferenceMeasure 𝒜]
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
-  {f : 𝒜 → E}
+  {f : 𝒜 → ℰ}
 -- given
   (θ : Θ)
   (sₜ : 𝒮) :
@@ -249,7 +250,9 @@ private lemma integral_kernel
   rw [hker, integral_withDensity_eq_integral_toReal_smul hπm
     (Filter.Eventually.of_forall fun _ => ENNReal.ofReal_lt_top)]
   refine integral_congr_ae (Filter.Eventually.of_forall fun u => ?_)
-  simp [Policy.pdf, ENNReal.toReal_ofReal (hStoch.nonneg θ sₜ u)]
+  have hnn : 0 ≤ M.π[θ] sₜ u := hStoch.nonneg θ sₜ u
+  simp only [Policy.pdf]
+  rw [ENNReal.toReal_ofReal hnn]
 
 /-- Importance weight `π' • (c • (∇π / π'))` equals the on-policy score `π • (c • ∇ log π)`. -/
 private lemma is_weight_eq_score
@@ -300,25 +303,25 @@ private lemma is_weight_eq_score
 
 /-- Scalar-vector division `c • (v / π')` is the inverse-smul form used by `AEStronglyMeasurable`. -/
 private lemma smul_div_eq_inv_smul
-    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
-    (c π' : ℝ) (v : E) :
+    {ℰ : Type*} [NormedAddCommGroup ℰ] [NormedSpace ℝ ℰ]
+    (c π' : ℝ) (v : ℰ) :
     c • (v / π') = π'⁻¹ • (c • v) := by
   simp [HDiv.hDiv, smul_smul, mul_comm]
 
 private lemma div_smul_eq_smul_div
-    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
-    (c π' : ℝ) (v : E) :
+    {ℰ : Type*} [NormedAddCommGroup ℰ] [NormedSpace ℝ ℰ]
+    (c π' : ℝ) (v : ℰ) :
     (c • v) / π' = c • (v / π') := by
   simp [HDiv.hDiv, smul_smul, mul_comm]
 
 
 /-- A state-action score pulls out of the discounted return, via the tower property. -/
 private lemma integral_return_smul_eq_cond
-  [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+  [NormedAddCommGroup ℰ] [NormedSpace ℝ ℰ] [CompleteSpace ℰ]
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {γ C : ℝ}
-  {ψ : 𝒮 → 𝒜 → E}
+  {ψ : 𝒮 → 𝒜 → ℰ}
   {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
@@ -418,7 +421,10 @@ private lemma kernel_pdf
     exact Measure.rnDeriv_withDensity (ν := (μ.measure : Measure 𝒜)) hpdf
   filter_upwards [hrn] with u hu
   simp only [Measure.prob]
-  rw [hu, Policy.pdf, ENNReal.toReal_ofReal (hStoch.nonneg θ' sₜ u)]
+  have hnn : 0 ≤ M.π[θ'] sₜ u := hStoch.nonneg θ' sₜ u
+  rw [hu]
+  simp only [Policy.pdf]
+  rw [ENNReal.toReal_ofReal hnn]
 
 /-- Along almost every trajectory, `|Q_t(s_t, a_t)|` is bounded by the discounted reward envelope. -/
 private lemma ae_bound_Q
@@ -932,7 +938,7 @@ private lemma main
       · exact measurable_const
     have hdis0 :=
       Integral.eq.Integral_Integral_SMul.of.All_Eq_Joint.All_EqWithDensity
-        (M := M) (E := ℝ)
+        (M := M) (ℰ := ℝ)
         (φ := fun y u => if |Q θ t y u| ≤ BG then (0 : ℝ) else 1)
         (C := (1 : ℝ)) h₁ hφind (fun y u => by
           if h : |Q θ t y u| ≤ BG then
@@ -1035,7 +1041,9 @@ private lemma main
               simp [Policy.pdf, ENNReal.ofReal_lt_top])).1 h1
         convert h' using 1
         funext aₜ
-        simp [Policy.pdf, ENNReal.toReal_ofReal (hStoch.nonneg θ y aₜ)]
+        have hnn : 0 ≤ M.π[θ] y aₜ := hStoch.nonneg θ y aₜ
+        simp only [Policy.pdf]
+        rw [ENNReal.toReal_ofReal hnn, one_mul]
       have hprodint : Integrable
         (fun u => M.π[θ] y u *
           (if |Q θ t y u| ≤ BG then (0 : ℝ) else 1))
@@ -1577,4 +1585,4 @@ private lemma main
 
 
 -- created on 2026-11-11
--- updated on 2026-11-16
+-- updated on 2026-11-17

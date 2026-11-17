@@ -1,19 +1,24 @@
 /-
 Author: @akiezun, Avocado
 -/
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Analysis.Normed.Module.FiniteDimension
-import Mathlib.LinearAlgebra.Complex.FiniteDimensional
-import Mathlib.Topology.GDelta.MetrizableSpace
-import Mathlib.Topology.Separation.CompletelyRegular
-import Def.Analysis.SpecialFunctions.Part1Ch6Entry16InfiniteSum
+module
+
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.Normed.Module.FiniteDimension
+public import Mathlib.LinearAlgebra.Complex.FiniteDimensional
+public import Mathlib.Topology.GDelta.MetrizableSpace
+public import Mathlib.Topology.Separation.CompletelyRegular
+public import Def.Analysis.SpecialFunctions.Part1Ch6Entry16InfiniteSum
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 6, Entry 16
 
 Infinite sum of rᵏ/(1-axᵏ) splits into two related convergent series.
 -/
+
+public section
 
 
 namespace Ramanujan.Part1Ch6

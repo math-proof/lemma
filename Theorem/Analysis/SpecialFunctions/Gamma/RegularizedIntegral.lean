@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/RegularizedIntegral.lean -/
+module
 
-import Mathlib.Analysis.SpecialFunctions.Gamma.Deriv
-import Mathlib.NumberTheory.Harmonic.GammaDeriv
-import Mathlib.MeasureTheory.Integral.IntegralEqImproper
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Deriv
+public import Mathlib.NumberTheory.Harmonic.GammaDeriv
+public import Mathlib.MeasureTheory.Integral.IntegralEqImproper
 open Filter Set Topology MeasureTheory Asymptotics Real
 
 /-!
@@ -11,6 +12,8 @@ open Filter Set Topology MeasureTheory Asymptotics Real
 This file expresses the Euler-Mascheroni constant as the difference of two convergent
 integrals obtained by splitting and regularizing the logarithmic Gamma integral at one.
 -/
+
+public section
 
 
 namespace Real

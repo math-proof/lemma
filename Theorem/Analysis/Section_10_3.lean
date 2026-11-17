@@ -1,4 +1,7 @@
-import Mathlib
+module
+
+public import Mathlib
+
 /-!
 # Analysis I, Section 10.3: Monotone functions and derivatives
 
@@ -12,6 +15,8 @@ Main constructions and results of this section:
 - Relations between monotonicity and differentiability.
 
 -/
+
+public section
 
 
 namespace Chapter10

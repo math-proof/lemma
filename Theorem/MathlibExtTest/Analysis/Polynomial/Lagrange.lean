@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Polynomial/Lagrange.lean -/
+module
 
-
-import Theorem.LinearAlgebra.Lagrange
+public import Theorem.LinearAlgebra.Lagrange
 open Lagrange
 
+public section
 
 -- Normal API use: the evaluated basis, Lebesgue function, and interpolant
 -- accept nodes and elaborate at the expected types.

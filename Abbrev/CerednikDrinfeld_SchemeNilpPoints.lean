@@ -1,9 +1,11 @@
-import Mathlib
-import Structure.CerednikDrinfeld_FormalUpperHalfPlaneCharts
+module
+
+public import Mathlib
+public import Structure.CerednikDrinfeld_FormalUpperHalfPlaneCharts
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace AlgebraicGeometry
 

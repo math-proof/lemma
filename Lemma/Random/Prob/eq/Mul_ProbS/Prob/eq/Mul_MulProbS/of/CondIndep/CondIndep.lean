@@ -2,6 +2,7 @@ import Lemma.Random.Measure.eq.Mul_MulDivS.of.Subset
 import Lemma.Random.MulMeasure.eq.MulMeasure.of.CondIndep
 import Lemma.Random.Prob_Cond.eq.Div.of.SinglePSpace
 import Instance.Probability.Process.DiscreteHMM.Part2
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory Random IsDiscreteHMM
 
 
@@ -134,4 +135,4 @@ private lemma main
 
 
 -- created on 2026-10-02
--- updated on 2026-11-07
+-- updated on 2026-11-17

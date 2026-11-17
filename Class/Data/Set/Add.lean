@@ -1,6 +1,10 @@
-import Mathlib.Data.Set.Basic
-import Mathlib.Data.Nat.Basic
+module
 
+public import Mathlib.Data.Set.Basic
+public import Mathlib.Data.Nat.Basic
+
+
+public section
 
 /-!
 # Set addition handlers

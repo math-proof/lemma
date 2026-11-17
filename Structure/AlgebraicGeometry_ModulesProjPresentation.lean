@@ -1,9 +1,11 @@
-import Mathlib
-import Instance.AlgebraicGeometry_ProjSpace
+module
+
+public import Mathlib
+public import Instance.AlgebraicGeometry_ProjSpace
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 universe u
 

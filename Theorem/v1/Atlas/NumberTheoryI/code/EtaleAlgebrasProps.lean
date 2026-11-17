@@ -7,15 +7,17 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.FieldTheory.Separable
-import Mathlib.RingTheory.TensorProduct.Basic
-import Mathlib.LinearAlgebra.TensorProduct.Tower
-import Mathlib.Algebra.Algebra.Pi
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Def.v1.Atlas.NumberTheoryI.code.EtaleAlgebrasProps.Part2
+public import Mathlib.FieldTheory.Separable
+public import Mathlib.RingTheory.TensorProduct.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Mathlib.Algebra.Algebra.Pi
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Def.v1.Atlas.NumberTheoryI.code.EtaleAlgebrasProps.Part2
 open scoped Classical
 
+public section
 
 namespace EtaleAlgebra
 

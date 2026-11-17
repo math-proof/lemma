@@ -10,7 +10,7 @@ import Mathlib.NumberTheory.Harmonic.EulerMascheroni
 import Mathlib.Analysis.Calculus.SmoothSeries
 import Mathlib.Analysis.Complex.LocallyUniformLimit
 import Def.Analysis.SpecialFunctions.Gamma.Digamma
-import Lemma.Complex.Digamma
+import Theorem.Complex.Digamma
 import Lemma.Real.Digamma
 import Mathlib.NumberTheory.ZetaValues
 import Mathlib.Tactic.Abel

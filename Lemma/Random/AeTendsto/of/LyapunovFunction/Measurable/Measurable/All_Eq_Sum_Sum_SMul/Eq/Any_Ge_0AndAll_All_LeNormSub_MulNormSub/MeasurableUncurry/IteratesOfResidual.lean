@@ -7,6 +7,7 @@ import Lemma.Random.Any_Ge_0AndAll_LeNormSub_MulNormSub.of.Any_Ge_0AndAll_All_Le
 import Lemma.Real.Any_Ge_0AndAll_LeNorm_MulAddNorm1.of.Any_Ge_0AndAll_LeNormSub_MulNormSub
 import Lemma.Measure.Measurable_Apply_PiLE
 import Lemma.Measure.MEqCondExpIteratesUpdate.of.Measurable.Any_All_LeNorm.Measurable.Le
+import Initialize.Tactic.Attr.Basic
 open Filter MeasureTheory ProbabilityTheory Finset Topology Preorder Iterates Real Measure Random
 
 
@@ -89,3 +90,4 @@ private lemma main
   exact AeTendsto.of.LyapunovFunction.Measurable.Measurable.LipschitzWith.Eq.Adapted.Any_Ge_0AndAeAll_LeNormMulMulSquare.All_MEqCondExp_0.Adapted.Any_Ge_0AndAeAll_LeNormMulMul.Iterates hIt hb hAd hMDS ⟨0, le_rfl, ae_of_all _ fun ω n => by simp⟩ (fun n => measurable_const) h₃ hLip h₅ h₆ h₇
 
 -- created on 2026-09-26
+-- updated on 2026-11-17

@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.Scheme
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec3Morphisms
+module
 
+public import Mathlib.AlgebraicGeometry.Scheme
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec3Morphisms
+
+@[expose] public section
 
 noncomputable section
 

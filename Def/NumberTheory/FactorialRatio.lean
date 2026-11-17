@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FactorialRatio.lean -/
 
-import Mathlib.Algebra.BigOperators.Group.List.Basic
-import Mathlib.Data.Nat.Choose.Basic
+module
 
+public import Mathlib.Algebra.BigOperators.Group.List.Basic
+public import Mathlib.Data.Nat.Choose.Basic
+
+@[expose] public section
 
 /-!
 # Integral factorial ratios

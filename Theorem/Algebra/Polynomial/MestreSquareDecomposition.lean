@@ -1,12 +1,15 @@
-import Mathlib.Algebra.Polynomial.Degree.Defs
-import Mathlib.Algebra.Polynomial.Coeff
-import Mathlib.Algebra.Polynomial.Degree.Domain
-import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
-import Mathlib.Algebra.Polynomial.Degree.Lemmas
-import Mathlib.Algebra.Polynomial.Degree.Operations
-import Mathlib.Algebra.Polynomial.Monic
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Algebra.Polynomial.Degree.Defs
+public import Mathlib.Algebra.Polynomial.Coeff
+public import Mathlib.Algebra.Polynomial.Degree.Domain
+public import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
+public import Mathlib.Algebra.Polynomial.Degree.Lemmas
+public import Mathlib.Algebra.Polynomial.Degree.Operations
+public import Mathlib.Algebra.Polynomial.Monic
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.Ring
+
 /-!
 # Mestre's square decomposition
 
@@ -14,6 +17,8 @@ Over a field of characteristic different from 2, every monic `P` of degree
 `2 * d + 2` decomposes uniquely as `P = Q ^ 2 - R` with `Q` monic of degree
 `d + 1` and `R` of degree at most `d`.
 -/
+
+public section
 
 
 namespace MetaMathlibExt

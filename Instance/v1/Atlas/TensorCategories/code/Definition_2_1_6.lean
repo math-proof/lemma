@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Abbrev.v1.Atlas.TensorCategories.code.ModuleCategory.Part5
-import Mathlib.CategoryTheory.Simple
-import Mathlib.CategoryTheory.IsomorphismClasses
-import Class.v1.Atlas.TensorCategories.code.Definition_2_1_6
+module
+
+public import Abbrev.v1.Atlas.TensorCategories.code.ModuleCategory.Part5
+public import Mathlib.CategoryTheory.Simple
+public import Mathlib.CategoryTheory.IsomorphismClasses
+public import Class.v1.Atlas.TensorCategories.code.Definition_2_1_6
+
+@[expose] public section
+
 universe v₁ v₂ u₁ u₂
 
 

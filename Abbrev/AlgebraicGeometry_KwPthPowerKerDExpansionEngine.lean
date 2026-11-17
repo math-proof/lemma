@@ -1,9 +1,11 @@
-import Mathlib
+module
+
+public import Mathlib
 set_option maxHeartbeats 800000
 
 open Polynomial IntermediateField
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace AlgebraicCurve.KwPke
 

@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Theorem.v1.Atlas.AlgebraicTopologyI.code.SubdivisionSmall.Part3
 import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.SubdivisionSmall
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section6
+import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section6
 import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section13
 import Structure.v1.Atlas.AlgebraicTopologyI.code.Section6
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section13.Part3

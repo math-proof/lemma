@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/LambertSeriesVariants.lean -/
+module
 
+public import Def.NumberTheory.LambertSeriesVariants
 
-import Def.NumberTheory.LambertSeriesVariants
-
+public section
 
 namespace MetaMathlibExt
 

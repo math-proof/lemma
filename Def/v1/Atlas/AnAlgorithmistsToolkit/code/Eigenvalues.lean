@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.Eigenspace.Basic
-import Mathlib.LinearAlgebra.Matrix.ToLin
-import Mathlib.Data.Real.Basic
-import Mathlib.Combinatorics.SimpleGraph.LapMatrix
-import Mathlib.Analysis.Matrix.Spectrum
-import Mathlib.Combinatorics.SimpleGraph.DegreeSum
-import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
+module
+
+public import Mathlib.LinearAlgebra.Eigenspace.Basic
+public import Mathlib.LinearAlgebra.Matrix.ToLin
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Combinatorics.SimpleGraph.LapMatrix
+public import Mathlib.Analysis.Matrix.Spectrum
+public import Mathlib.Combinatorics.SimpleGraph.DegreeSum
+public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
+
+@[expose] public section
+
 open Module.End
 
 

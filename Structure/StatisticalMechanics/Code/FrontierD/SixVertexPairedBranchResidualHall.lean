@@ -9,14 +9,16 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexHorizontalOffDiagonalTwoCycleMatching
-import Instance.StatisticalMechanics.Code.FrontierD.SixVertexPairedBranchResidualHall
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexHorizontalOffDiagonalTwoCycleMatching
+public import Instance.StatisticalMechanics.Code.FrontierD.SixVertexPairedBranchResidualHall
 open Finset
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure SixVertexHorizontalPairedBranchResidualAtlas
     (T : EvenTorus) (middle : Fin (T.width + 1))

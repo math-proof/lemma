@@ -1,8 +1,10 @@
-import Structure.CerednikDrinfeld_QMCoarseModuli
+module
+
+public import Structure.CerednikDrinfeld_QMCoarseModuli
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 universe u
 

@@ -1,6 +1,10 @@
-import Mathlib.RingTheory.Valuation.ValuationSubring
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Mathlib.Algebra.Algebra.Rat
+module
+
+public import Mathlib.RingTheory.Valuation.ValuationSubring
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Mathlib.Algebra.Algebra.Rat
+
+@[expose] public section
 
 namespace ValuationSubring
 

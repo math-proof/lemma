@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Bernoulli/PolyBernoulliSymmetricExponentialGeneratingFunction.lean -/
 
 
-import Lemma.Nat.Bernoulli.PolyBernoulliSymmetricExponentialGeneratingFunction
+import Theorem.Nat.Bernoulli.PolyBernoulliSymmetricExponentialGeneratingFunction
 
 
 namespace MetaMathlibExt

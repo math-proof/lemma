@@ -9,9 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusSquareDevelopment.Part12
-import Theorem.StatisticalMechanics.Code.FrontierD.IntegralSquareTorusIntersection.Part9
-import Instance.StatisticalMechanics.Code.FrontierD.FKRectTorusSquareCoverIntersection
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusSquareDevelopment.Part12
+public import Theorem.StatisticalMechanics.Code.FrontierD.IntegralSquareTorusIntersection.Part9
+public import Instance.StatisticalMechanics.Code.FrontierD.FKRectTorusSquareCoverIntersection
 open scoped BigOperators
 
 
@@ -19,7 +21,7 @@ namespace StatMech.FrontierD
 
 open StatMech.Onsager
 
-noncomputable section
+public noncomputable section
 
 structure FKRectSquareCoverCycleWitness (R : FKRectTorus)
     (u : Int × Int) where

@@ -8,14 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.Order.LeftRightLim
-import Mathlib.Topology.Sequences
-import Mathlib.Topology.MetricSpace.Basic
-import Mathlib.Topology.Bases
-import Mathlib.Topology.Order.Compact
-import Mathlib.Data.Real.Archimedean
-import Mathlib.Data.Rat.Denumerable
-import Structure.v1.Atlas.Probability.code.HellySelection
+module
+
+public import Mathlib.Topology.Order.LeftRightLim
+public import Mathlib.Topology.Sequences
+public import Mathlib.Topology.MetricSpace.Basic
+public import Mathlib.Topology.Bases
+public import Mathlib.Topology.Order.Compact
+public import Mathlib.Data.Real.Archimedean
+public import Mathlib.Data.Rat.Denumerable
+public import Structure.v1.Atlas.Probability.code.HellySelection
+
+@[expose] public section
+
 open Filter Set Function
 open scoped Topology
 

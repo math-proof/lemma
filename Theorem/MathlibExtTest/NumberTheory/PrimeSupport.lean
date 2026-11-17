@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.PrimeSupport
-import Lemma.Nat.PrimeSupport
+import Theorem.Nat.PrimeSupport
 import Mathlib.Tactic.NormNum
 
 

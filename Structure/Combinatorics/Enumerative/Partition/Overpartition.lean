@@ -1,6 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/Partition/Overpartition.lean -/
 
-import Mathlib.Combinatorics.Enumerative.Partition.Basic
+module
+
+public import Mathlib.Combinatorics.Enumerative.Partition.Basic
 /-!
 # Overpartitions
 
@@ -27,6 +29,9 @@ carries no order to distinguish first from last.
 * [G. Andrews and M. Ghosh Dastidar, *The Partition Pairing
   Theorems I*](https://arxiv.org/abs/2608.22291)
 -/
+public section
+
+
 
 
 namespace Nat

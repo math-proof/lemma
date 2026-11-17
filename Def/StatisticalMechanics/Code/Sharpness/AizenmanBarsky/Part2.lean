@@ -9,8 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Sharpness.AizenmanBarsky
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Sharpness.AizenmanBarsky
+
+@[expose] public section
+
 open Set Real Filter Topology
 
 set_option linter.unusedSectionVars false

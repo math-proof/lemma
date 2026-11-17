@@ -49,9 +49,7 @@ import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
 import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
 import Mathlib.RingTheory.Ideal.IntegralClosure
 import Theorem.v1.Atlas.NumberTheoryI.code.HenselFactorization
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.HenselFactorization
 import Def.v1.Atlas.NumberTheoryI.code.LocalExtensions
-
 
 noncomputable section
 

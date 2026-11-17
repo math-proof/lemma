@@ -9,12 +9,10 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.ArithmeticGeometry.code.RiemannRoch.Part6
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.RiemannRoch
 import Mathlib.LinearAlgebra.Isomorphisms
 import Mathlib.RingTheory.Finiteness.Finsupp
 open scoped RestrictedProduct
 open FunctionFieldAdeleRing DiscreteValuationFamily
-
 
 /-- Structure capturing the residue-field surjection at each place. For each
 place $p \in P$, `degPlace p` is the $k$-degree of the residue field

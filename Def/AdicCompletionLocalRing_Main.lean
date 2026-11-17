@@ -1,9 +1,13 @@
-import Mathlib.RingTheory.AdicCompletion.Completeness
-import Mathlib.RingTheory.AdicCompletion.LocalRing
-import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.RingTheory.Noetherian.Defs
-import Instance.AdicCompletionLocalRing
+module
+
+public import Mathlib.RingTheory.AdicCompletion.Completeness
+public import Mathlib.RingTheory.AdicCompletion.LocalRing
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.RingTheory.Noetherian.Defs
+public import Instance.AdicCompletionLocalRing
+
+@[expose] public section
 
 set_option autoImplicit false
 

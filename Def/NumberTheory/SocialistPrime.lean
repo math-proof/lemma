@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SocialistPrime.lean -/
 
-import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.Data.Set.Pairwise.Basic
-import Mathlib.Order.Interval.Set.Nat
+module
+
+public import Mathlib.Data.Nat.Prime.Basic
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.Data.Set.Pairwise.Basic
+public import Mathlib.Order.Interval.Set.Nat
+
+@[expose] public section
+
 /-!
 # Socialist primes
 

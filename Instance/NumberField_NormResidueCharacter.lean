@@ -1,7 +1,5 @@
 -- Carved from Lemma/Definitions/Def_NumberField_NormResidueCharacter.lean: instance decls only.
 import Mathlib
-import Lemma.Ideal.NormClass
-import Lemma.Ideal.RayCharacterData
 import Lemma.Ideal.NormResidueCharacter
 
 set_option autoImplicit false

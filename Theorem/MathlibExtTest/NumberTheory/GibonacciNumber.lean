@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.GibonacciNumber
-import Lemma.Nat.GibonacciNumber
+import Theorem.Nat.GibonacciNumber
 import Mathlib.Tactic.NormNum
 
 

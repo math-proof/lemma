@@ -1,11 +1,13 @@
-import Mathlib
-import Def.AutomorphicForm_ModularFundamentalDomain
-import Def.CuspForm_PeterssonCoset
+module
+
+public import Mathlib
+public import Def.AutomorphicForm_ModularFundamentalDomain
+public import Def.CuspForm_PeterssonCoset
 
 set_option autoImplicit false
 set_option maxHeartbeats 800000
 
-noncomputable section
+public noncomputable section
 
 open MeasureTheory UpperHalfPlane ModularForm Filter CongruenceSubgroup
 open scoped MatrixGroups ModularForm ComplexConjugate Modular ENNReal Pointwise

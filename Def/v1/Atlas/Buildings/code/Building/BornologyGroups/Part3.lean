@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.Buildings.code.Building.ApplicationsToGroups.Part4
-import Lemma.Nat.TopologicalGroupDef
+import Theorem.Nat.TopologicalGroupDef
 import Mathlib.Topology.Bornology.Basic
 import Theorem.v1.Atlas.Buildings.code.Building.BornologyGroups
 set_option linter.unusedSectionVars false

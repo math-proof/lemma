@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Structure.v1.Atlas.LieGroups.code.InfinitesimalEquivalenceCore.Part3
 import Lemma.Complex.DenseRange_ι
-import Lemma.Submodule.All_NormSubtype.of.All_EqinnerS
+import Theorem.Submodule.All_NormSubtype.of.All_EqinnerS
 import Theorem.v1.Atlas.LieGroups.code.InfinitesimalEquivalenceProposition71
 
 

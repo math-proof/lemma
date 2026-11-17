@@ -5,7 +5,7 @@ All rights reserved.
 import Mathlib
 import Def.Data.Fin.SkipTwo
 import Def.LinearAlgebra.Matrix.Determinant.PermFinset
-import Lemma.Finset.PermFinset
+import Theorem.Finset.PermFinset
 import Def.LinearAlgebra.Matrix.Determinant.DesnanotJacobi.Part3
 open Matrix BigOperators Finset
 

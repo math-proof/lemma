@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.AlmostBeattyPartition
-import Lemma.Nat.AlmostBeattyPartition
+import Theorem.Nat.AlmostBeattyPartition
 
 
 namespace MetaMathlibExt

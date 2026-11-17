@@ -7,13 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Analysis.Calculus.Deriv.MeanValue
-import Mathlib.Analysis.Calculus.ContDiff.Operations
-import Mathlib.Topology.Order.IntermediateValue
-import Mathlib.Order.Monotone.Basic
-import Mathlib.Data.Fin.VecNotation
+public import Mathlib.Analysis.Calculus.Deriv.MeanValue
+public import Mathlib.Analysis.Calculus.ContDiff.Operations
+public import Mathlib.Topology.Order.IntermediateValue
+public import Mathlib.Order.Monotone.Basic
+public import Mathlib.Data.Fin.VecNotation
 
+public section
 
 namespace Reparametrization
 

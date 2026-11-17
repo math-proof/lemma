@@ -2,7 +2,7 @@
 
 
 import Def.Analysis.SpecialFunctions.Elliptic.FundamentalParallelogram
-import Lemma.Complex.FundamentalParallelogram
+import Theorem.Complex.FundamentalParallelogram
 
 
 example (L : PeriodPair) :

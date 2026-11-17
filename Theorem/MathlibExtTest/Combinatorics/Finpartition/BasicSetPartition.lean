@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Finpartition/BasicSetPartition.lean -/
+module
 
+public import Def.Combinatorics.Finpartition.BasicSetPartition
+public import Def.MathlibExtTest.Combinatorics.Finpartition.BasicSetPartition
 
-import Def.Combinatorics.Finpartition.BasicSetPartition
-import Def.MathlibExtTest.Combinatorics.Finpartition.BasicSetPartition
-
+public section
 
 namespace MetaMathlibExt
 

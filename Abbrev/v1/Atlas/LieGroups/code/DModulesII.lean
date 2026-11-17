@@ -8,21 +8,25 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Support
-import Structure.v1.Atlas.LieGroups.code.DModuleApplications.Part5
-import Mathlib.CategoryTheory.Equivalence
-import Mathlib.CategoryTheory.ObjectProperty.FullSubcategory
-import Mathlib.Algebra.Category.ModuleCat.Basic
-import Mathlib.Algebra.Lie.Basic
-import Mathlib.Algebra.Lie.OfAssociative
-import Mathlib.Algebra.Lie.Abelian
-import Mathlib.RingTheory.Ideal.Basic
-import Mathlib.RingTheory.Ideal.Quotient.Basic
-import Mathlib.Algebra.Algebra.Basic
-import Mathlib.Topology.Irreducible
-import Mathlib.RingTheory.SimpleModule.Basic
-import Mathlib.RingTheory.Spectrum.Prime.Topology
-import Def.v1.Atlas.LieGroups.code.DModulesII
+module
+
+public import Mathlib.RingTheory.Support
+public import Structure.v1.Atlas.LieGroups.code.DModuleApplications.Part5
+public import Mathlib.CategoryTheory.Equivalence
+public import Mathlib.CategoryTheory.ObjectProperty.FullSubcategory
+public import Mathlib.Algebra.Category.ModuleCat.Basic
+public import Mathlib.Algebra.Lie.Basic
+public import Mathlib.Algebra.Lie.OfAssociative
+public import Mathlib.Algebra.Lie.Abelian
+public import Mathlib.RingTheory.Ideal.Basic
+public import Mathlib.RingTheory.Ideal.Quotient.Basic
+public import Mathlib.Algebra.Algebra.Basic
+public import Mathlib.Topology.Irreducible
+public import Mathlib.RingTheory.SimpleModule.Basic
+public import Mathlib.RingTheory.Spectrum.Prime.Topology
+public import Def.v1.Atlas.LieGroups.code.DModulesII
+@[expose] public section
+
 open CategoryTheory
 
 

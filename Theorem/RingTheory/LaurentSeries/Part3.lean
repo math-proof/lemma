@@ -7,7 +7,7 @@ Copyright (c) 2024 AlgebraicCombinatorics contributors. All rights reserved.
 Authors: AlgebraicCombinatorics contributors
 -/
 import Mathlib
-import Lemma.PowerSeries.InfiniteProducts2
+import Theorem.PowerSeries.InfiniteProducts2
 import Lemma.Partition.NPartition
 import Structure.RingTheory.LaurentSeries.Part2
 open scoped LaurentPolynomial

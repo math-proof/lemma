@@ -4,11 +4,16 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.PSeries
-import Mathlib.NumberTheory.Harmonic.EulerMascheroni
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Analysis.PSeries
+public import Mathlib.NumberTheory.Harmonic.EulerMascheroni
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 2, Corollary to Entry 4
 

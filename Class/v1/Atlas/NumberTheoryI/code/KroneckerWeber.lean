@@ -33,11 +33,6 @@ import Mathlib.RingTheory.DiscreteValuationRing.Basic
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 import Mathlib.NumberTheory.Padics.HeightOneSpectrum
 import Theorem.v1.Atlas.NumberTheoryI.code.GroupCounts.Part8
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.GroupCounts
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.AdicCompletionAlgebra
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.KroneckerWeberLocal2
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.ResidueFieldHelper
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.CyclotomicDVRInstances
 import Mathlib.RingTheory.Valuation.Extension
 import Mathlib.RingTheory.Valuation.Discrete.RankOne
 import Mathlib.Topology.Algebra.Valued.NormedValued
@@ -50,7 +45,6 @@ import Mathlib.RingTheory.Unramified.Basic
 import Mathlib.RingTheory.Unramified.Field
 import Mathlib.RingTheory.RootsOfUnity.Lemmas
 import Instance.v1.Atlas.NumberTheoryI.code.CyclotomicDVRInstances
-
 
 noncomputable section
 

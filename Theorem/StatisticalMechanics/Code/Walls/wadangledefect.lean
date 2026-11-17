@@ -7,15 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Walls.euceuler.Part3
-import Def.StatisticalMechanics.Code.Walls.wadangledefect
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Walls.euceuler.Part3
+public import Def.StatisticalMechanics.Code.Walls.wadangledefect
 open scoped BigOperators
 open Finset
 open StatMech.Euc
 
+public section
 
 namespace StatMech.Wad
 

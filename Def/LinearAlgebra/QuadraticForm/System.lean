@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/QuadraticForm/System.lean -/
 
-import Mathlib.LinearAlgebra.QuadraticForm.Prod
+module
+
+public import Mathlib.LinearAlgebra.QuadraticForm.Prod
+
+@[expose] public section
+
 /-!
 # Systems of quadratic forms
 

@@ -9,13 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
-import Lemma.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
 import Mathlib.CategoryTheory.Preadditive.Projective.Preserves
 import Instance.v1.Atlas.TensorCategories.code.ModuleFunctorDefs
 set_option maxHeartbeats 400000
 
 universe v₁ v₂ v₃ v₄ u₁ u₂ u₃ u₄
-
 
 namespace CategoryTheory
 

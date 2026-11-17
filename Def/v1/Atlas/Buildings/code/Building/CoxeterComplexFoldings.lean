@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.Buildings.code.Building.AptIsCoxeterProof
 import Lemma.Set.ApartmentsToApartmentSystem.eq.Apartments.of.IsThick
-import Lemma.Nat.Any_And_EqAdd_1AndAll_Eq_Add_1.of.Gt.All_Eq_Add_1OrEqAdd_1.Eq_0
+import Theorem.Nat.Any_And_EqAdd_1AndAll_Eq_Add_1.of.Gt.All_Eq_Add_1OrEqAdd_1.Eq_0
 import Def.v1.Atlas.Buildings.code.CoxeterGroup.DeletionCondition
 import Mathlib.GroupTheory.Coxeter.Length
 import Mathlib.Tactic.Group

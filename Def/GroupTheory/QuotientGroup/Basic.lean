@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/QuotientGroup/Basic.lean -/
 
-import Mathlib.GroupTheory.QuotientGroup.Basic
+module
+
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+
+@[expose] public section
+
 /-!
 # Quotients by subgroups containing a homomorphism kernel
 

@@ -8,15 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Kaehler.Basic
-import Mathlib.RingTheory.Derivation.Basic
-import Mathlib.RingTheory.Ideal.Cotangent
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.Algebra.Module.SpanRankOperations
-import Mathlib.Algebra.MvPolynomial.PDeriv
-import Mathlib.LinearAlgebra.Matrix.Rank
-import Mathlib.RingTheory.Localization.AtPrime.Basic
-import Mathlib.RingTheory.Ideal.Maps
+module
+
+public import Mathlib.RingTheory.Kaehler.Basic
+public import Mathlib.RingTheory.Derivation.Basic
+public import Mathlib.RingTheory.Ideal.Cotangent
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.Algebra.Module.SpanRankOperations
+public import Mathlib.Algebra.MvPolynomial.PDeriv
+public import Mathlib.LinearAlgebra.Matrix.Rank
+public import Mathlib.RingTheory.Localization.AtPrime.Basic
+public import Mathlib.RingTheory.Ideal.Maps
+
+@[expose] public section
+
 set_option synthInstance.maxHeartbeats 80000
 set_option maxHeartbeats 400000
 

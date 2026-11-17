@@ -1,6 +1,11 @@
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.FieldTheory.AbsoluteGaloisGroup
-import Mathlib.Algebra.Module.Torsion.Basic
+module
+
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.FieldTheory.AbsoluteGaloisGroup
+public import Mathlib.Algebra.Module.Torsion.Basic
+
+@[expose] public section
+
 attribute [local instance] Classical.decEq
 
 /-!

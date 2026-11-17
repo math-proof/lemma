@@ -1,14 +1,17 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
-import Mathlib.Analysis.Fourier.FiniteAbelian.Orthogonality
-import Mathlib.Basic.Complex.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Analysis.Fourier.FiniteAbelian.PontryaginDuality
-import Mathlib.Algebra.Star.BigOperators
-import Def.Analysis.Fourier.FiniteAbelian.FiniteAbelianDFT
+module
+
+public import Mathlib.Analysis.Fourier.FiniteAbelian.Orthogonality
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Analysis.Fourier.FiniteAbelian.PontryaginDuality
+public import Mathlib.Algebra.Star.BigOperators
+public import Def.Analysis.Fourier.FiniteAbelian.FiniteAbelianDFT
 open scoped BigOperators
 
+public section
 
 namespace Fourier.FiniteAbelianDFTWanted
 

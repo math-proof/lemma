@@ -1,5 +1,8 @@
-import Mathlib.Algebra.Ring.Defs
+module
 
+public import Mathlib.Algebra.Ring.Defs
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

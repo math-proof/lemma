@@ -8,14 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra.Part3
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticLinearAlgebra
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticStandardBasis
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.HamiltonianVectorFields
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticEvenDim
-import Theorem.v1.Atlas.GeometryOfManifolds.code.SymplecticStandardBasis
-import Def.v1.Atlas.GeometryOfManifolds.code.HamiltonianVectorFields.Part3
-import Def.v1.Atlas.GeometryOfManifolds.code.MoserDarboux
+module
+
+public import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra.Part3
+public import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticStandardBasis
+public import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.HamiltonianVectorFields
+public import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticEvenDim
+public import Theorem.v1.Atlas.GeometryOfManifolds.code.SymplecticStandardBasis
+public import Def.v1.Atlas.GeometryOfManifolds.code.HamiltonianVectorFields.Part3
+public import Def.v1.Atlas.GeometryOfManifolds.code.MoserDarboux
+public section
+
 set_option autoImplicit false
 
 universe u_chart v_chart

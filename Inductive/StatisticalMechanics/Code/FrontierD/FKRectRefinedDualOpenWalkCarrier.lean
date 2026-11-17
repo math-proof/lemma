@@ -9,16 +9,18 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedDualEdgeCarrier
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedPathReversal
-import Def.StatisticalMechanics.Code.FrontierD.FKRectRefinedDualOpenWalkCarrier
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedDualEdgeCarrier
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedPathReversal
+public import Def.StatisticalMechanics.Code.FrontierD.FKRectRefinedDualOpenWalkCarrier
 
 
 namespace StatMech.FrontierD
 
 noncomputable section
 
-inductive FKRectRefinedDualOpenEdgeBlocks
+public inductive FKRectRefinedDualOpenEdgeBlocks
     (R : FKRectTorus) (omega : R.Configuration) :
     List FKRectIntegralSquareDart -> Prop
   | nil : FKRectRefinedDualOpenEdgeBlocks R omega []
@@ -43,7 +45,7 @@ inductive FKRectRefinedDualOpenEdgeBlocks
                 4 * (fkRectSquareDeckTranslation R u).2)) ++ l)
 
 
-inductive FKRectRefinedDualOpenWalkBlocksAlong
+public inductive FKRectRefinedDualOpenWalkBlocksAlong
     (R : FKRectTorus) (omega : R.Configuration) :
     {x y : R.Vertex} ->
       (fkRectOpenGraph R

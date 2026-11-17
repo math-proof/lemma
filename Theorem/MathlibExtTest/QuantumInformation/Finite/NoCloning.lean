@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/QuantumInformation/Finite/NoCloning.lean -/
 
 
-import Lemma.Matrix.Finite.NoCloning
+import Theorem.Matrix.Finite.NoCloning
 open scoped InnerProductSpace TensorProduct
 
 /-!

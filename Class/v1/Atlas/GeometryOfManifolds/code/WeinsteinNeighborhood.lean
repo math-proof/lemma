@@ -9,9 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra.Part3
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticLinearAlgebra
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.MoserDarboux
 import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
 import Structure.v1.Atlas.GeometryOfManifolds.code.MoserDarboux.Part2
 import Def.v1.Atlas.GeometryOfManifolds.code.BlockMatrixLp
@@ -25,7 +22,6 @@ set_option autoImplicit false
 open Module FiniteDimensional
 open SymplecticLinearAlgebra
 open DifferentialFormSpace
-
 
 /-- The data of an *exponential map* used in proving the tubular neighborhood theorem:
 an open neighborhood $U_0$ of $X$ in $NX$ together with a smooth map
@@ -79,5 +75,4 @@ class HasIFTData
   hDiffeo : @IsDFSDiffeomorphism Ω_U₀ VF_U₀ Ω_U₁ VF_U₁ inst_U₀ inst_U₁ φ φ_inv
   exp_factors : ∀ {p : ℕ} (α : Ω_M p),
     φ.pullback (incl_U₁_M.pullback α) = exp_map.pullback α
-
 

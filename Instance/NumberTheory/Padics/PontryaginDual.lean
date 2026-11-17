@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Padics/PontryaginDual.lean -/
 
-import Mathlib.NumberTheory.Padics.PadicIntegers
-import Def.NumberTheory.Padics.PontryaginDual
+module
+
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+public import Def.NumberTheory.Padics.PontryaginDual
 /-!
 # Algebraic p-adic Pontryagin duals
 
@@ -9,6 +11,7 @@ This file defines the `ℤ_p`-linear dual `Hom(·, ℚ_p / ℤ_p)` and its
 contragredient group action. No topology or continuity condition is imposed.
 -/
 
+@[expose] public section
 
 namespace MetaMathlibExt
 

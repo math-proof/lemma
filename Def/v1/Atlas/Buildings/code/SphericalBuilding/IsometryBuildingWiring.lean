@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.Buildings.code.SphericalBuilding.IsometryCommonApartment
 import Def.v1.Atlas.Buildings.code.SphericalBuilding.IsometryApartmentExchange
-import Lemma.Set.Simplices.of.In_StandardApartments.In_StandardApartments
+import Theorem.Set.Simplices.of.In_StandardApartments.In_StandardApartments
 
 
 namespace IsometryBuilding

@@ -7,7 +7,7 @@ Authors: Adam Kiezun, Muse Spark 1.3
 import Mathlib.InformationTheory.Coding.UniquelyDecodable
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Def.InformationTheory.PrefixFree
-import Lemma.Real.PrefixFree
+import Theorem.Real.PrefixFree
 import Lemma.Real.KraftMcMillan
 import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Algebra.Ring.IsFormallyReal

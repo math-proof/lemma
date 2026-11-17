@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
-import Mathlib.Analysis.Complex.UpperHalfPlane.MoebiusAction
-import Mathlib.GroupTheory.GroupAction.Defs
+module
 
+public import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
+public import Mathlib.Analysis.Complex.UpperHalfPlane.MoebiusAction
+public import Mathlib.GroupTheory.GroupAction.Defs
+
+@[expose] public section
 
 noncomputable section
 

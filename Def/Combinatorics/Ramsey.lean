@@ -1,16 +1,21 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Ramsey.lean -/
 
-import Mathlib.Data.Finset.Powerset
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Finset.Filter
-import Mathlib.Data.Finset.Image
-import Mathlib.Data.Finset.Erase
-import Mathlib.Data.Finset.Insert
-import Mathlib.Data.Finset.Sort
-import Mathlib.Data.Fintype.Card
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Order.Interval.Finset.Fin
+module
+
+public import Mathlib.Data.Finset.Powerset
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Finset.Filter
+public import Mathlib.Data.Finset.Image
+public import Mathlib.Data.Finset.Erase
+public import Mathlib.Data.Finset.Insert
+public import Mathlib.Data.Finset.Sort
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Order.Interval.Finset.Fin
+
+@[expose] public section
+
 open scoped BigOperators
 
 /-!

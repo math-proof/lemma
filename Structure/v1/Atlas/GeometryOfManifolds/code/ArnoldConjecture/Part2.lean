@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.GeometryOfManifolds.code.HamiltonianVectorFields.Part3
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.HamiltonianVectorFields
-import Def.v1.Atlas.GeometryOfManifolds.code.ArnoldConjecture.Part3
+module
+
+public import Def.v1.Atlas.GeometryOfManifolds.code.HamiltonianVectorFields.Part3
+public import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.HamiltonianVectorFields
+public import Def.v1.Atlas.GeometryOfManifolds.code.ArnoldConjecture.Part3
+public section
+
 set_option autoImplicit false
 
 open DifferentialFormSpace

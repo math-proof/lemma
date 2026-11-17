@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/OddLichtenbergNumbers.lean -/
+module
 
+public import Def.NumberTheory.OddLichtenbergNumbers
 
-import Def.NumberTheory.OddLichtenbergNumbers
-
+public section
 
 namespace MetaMathlibExt
 

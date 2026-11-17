@@ -1,7 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/LinearPartition.lean -/
 
-import Mathlib.Combinatorics.SimpleGraph.Basic
+module
 
+public import Mathlib.Combinatorics.SimpleGraph.Basic
+
+
+public section
 
 namespace MetaMathlibExt
 

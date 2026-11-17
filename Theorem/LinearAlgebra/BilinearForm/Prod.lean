@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/BilinearForm/Prod.lean -/
+module
 
-import Mathlib.LinearAlgebra.BilinearForm.DualLattice
-import Mathlib.LinearAlgebra.PerfectPairing.Basic
-import Def.LinearAlgebra.BilinearForm.Prod
+public import Mathlib.LinearAlgebra.BilinearForm.DualLattice
+public import Mathlib.LinearAlgebra.PerfectPairing.Basic
+public import Def.LinearAlgebra.BilinearForm.Prod
 open LinearMap (BilinForm)
 open Module
 
@@ -26,6 +27,8 @@ of modules and proves its basic properties.
   perfect pairing.
 * `BilinForm.dualSubmodule_prod`: dual submodules commute with products.
 -/
+
+public section
 
 
 namespace LinearMap

@@ -9,10 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib.Data.List.FinRange
-import Mathlib.Data.Rat.Defs
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic
+module
+
+public import Mathlib.Data.List.FinRange
+public import Mathlib.Data.Rat.Defs
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic
+public section
+
 open Finset
 
 

@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.CWComplex.Classical.Basic
-import Mathlib.Geometry.Manifold.IsManifold.Basic
+module
+
+public import Mathlib.Topology.CWComplex.Classical.Basic
+public import Mathlib.Geometry.Manifold.IsManifold.Basic
+@[expose] public section
+
 open Topology
 
 

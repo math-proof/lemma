@@ -8,18 +8,21 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.NumberTheory.Padics.PadicNumbers
-import Mathlib.NumberTheory.Padics.PadicNorm
-import Mathlib.NumberTheory.Padics.PadicIntegers
-import Mathlib.NumberTheory.Padics.RingHoms
-import Mathlib.NumberTheory.Padics.Hensel
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.BigOperators.GroupWithZero.Finset
-import Mathlib.Topology.Algebra.Nonarchimedean.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Data.Nat.ChineseRemainder
-import Mathlib.NumberTheory.LSeries.PrimesInAP
+module
 
+public import Mathlib.NumberTheory.Padics.PadicNumbers
+public import Mathlib.NumberTheory.Padics.PadicNorm
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+public import Mathlib.NumberTheory.Padics.RingHoms
+public import Mathlib.NumberTheory.Padics.Hensel
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.BigOperators.GroupWithZero.Finset
+public import Mathlib.Topology.Algebra.Nonarchimedean.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Data.Nat.ChineseRemainder
+public import Mathlib.NumberTheory.LSeries.PrimesInAP
+
+@[expose] public section
 
 noncomputable section
 

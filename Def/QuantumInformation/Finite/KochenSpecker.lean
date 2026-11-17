@@ -4,10 +4,13 @@
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Algebra.Order.Archimedean.Real.Hom
-import Mathlib.Tactic.FinCases
+module
 
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Algebra.Order.Archimedean.Real.Hom
+public import Mathlib.Tactic.FinCases
+
+@[expose] public section
 
 namespace MathlibExt.QuantumInformation.Finite.KochenSpeckerWanted
 

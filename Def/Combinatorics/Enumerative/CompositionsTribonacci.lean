@@ -4,9 +4,14 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Data.Fintype.BigOperators
-import Def.NumberTheory.TribonacciSequenceWithInitialValues001
-import Mathlib.Algebra.BigOperators.Fin
+module
+
+public import Mathlib.Data.Fintype.BigOperators
+public import Def.NumberTheory.TribonacciSequenceWithInitialValues001
+public import Mathlib.Algebra.BigOperators.Fin
+
+@[expose] public section
+
 /-!
 # Compositions with parts one, two, and three
 

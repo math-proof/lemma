@@ -9,14 +9,18 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
-import Theorem.StatisticalMechanics.Code.Lattice.PlanarDual.Part10
-import Theorem.StatisticalMechanics.Code.Lattice.PlanarTopology.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.UniqueInfiniteComponent.Part3
-import Theorem.StatisticalMechanics.Code.Lattice.EulerFaces2.Part2
-import Theorem.StatisticalMechanics.Code.Lattice.EulerGeneral
-import Theorem.StatisticalMechanics.Code.Lattice.PlanarFaceGeometric
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
+public import Theorem.StatisticalMechanics.Code.Lattice.PlanarDual.Part10
+public import Theorem.StatisticalMechanics.Code.Lattice.PlanarTopology.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.UniqueInfiniteComponent.Part3
+public import Theorem.StatisticalMechanics.Code.Lattice.EulerFaces2.Part2
+public import Theorem.StatisticalMechanics.Code.Lattice.EulerGeneral
+public import Theorem.StatisticalMechanics.Code.Lattice.PlanarFaceGeometric
+public section
+
 open SimpleGraph Set
 
 

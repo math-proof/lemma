@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/DickmanDeBruijn.lean -/
 
-import Mathlib.Analysis.Calculus.Deriv.Basic
+module
+
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+
+@[expose] public section
+
 /-!
 # The Dickman–de Bruijn function
 

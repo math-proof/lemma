@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.CPythonListsort.Code.Correctness.SortSliceRange
-open CPythonListsort CPythonListsort.SortSlice CPythonListsort.SortSlice.EqualOutsideRange
+open CPythonListsort CPythonListsort.SortSlice
 
 
 namespace CPythonListsort
@@ -11,8 +11,8 @@ namespace CPythonListsort
 -/
 @[path]
 lemma sortSliceRangeKeys_eq_map
-  {slice : SortSlice κ ν}
-  {start count : Nat} :
+  (slice : SortSlice κ ν)
+  (start count : Nat) :
 -- imply
   sortSliceRangeKeys slice start count = (sortSliceRangeEntries slice start count).map SortSliceEntry.key :=
 -- proof
@@ -27,8 +27,8 @@ namespace CPythonListsort
 -/
 @[path]
 lemma sortSliceRangeEntries_zero
-  {slice : SortSlice κ ν}
-  {start : Nat} :
+  (slice : SortSlice κ ν)
+  (start : Nat) :
 -- imply
   sortSliceRangeEntries slice start 0 = #[] := by
 -- proof
@@ -43,12 +43,12 @@ namespace CPythonListsort
 -/
 @[path]
 lemma sortSliceRangeKeys_zero
-  {slice : SortSlice κ ν}
-  {start : Nat} :
+  (slice : SortSlice κ ν)
+  (start : Nat) :
 -- imply
   sortSliceRangeKeys slice start 0 = #[] := by
 -- proof
-  simp [sortSliceRangeKeys]
+  simp [sortSliceRangeKeys, sortSliceRangeEntries_zero]
 
 end CPythonListsort
 
@@ -59,8 +59,8 @@ namespace CPythonListsort
 -/
 @[path]
 lemma sortSliceRangeEntries_size
-  {slice : SortSlice κ ν}
-  {start count : Nat}
+  (slice : SortSlice κ ν)
+  (start count : Nat)
 -- given
   (hstop : start + count ≤ slice.entries.size) :
 -- imply
@@ -78,8 +78,8 @@ namespace CPythonListsort
 -/
 @[path]
 lemma sortSliceRangeKeys_size
-  {slice : SortSlice κ ν}
-  {start count : Nat}
+  (slice : SortSlice κ ν)
+  (start count : Nat)
 -- given
   (hstop : start + count ≤ slice.entries.size) :
 -- imply
@@ -96,13 +96,13 @@ namespace CPythonListsort
 -/
 @[path]
 lemma sortSliceRangeEntries_getElem
-  {slice : SortSlice κ ν}
-  {start count i : Nat}
+  (slice : SortSlice κ ν)
+  (start count i : Nat)
 -- given
   (hstop : start + count ≤ slice.entries.size)
   (hi : i < count) :
 -- imply
-  (sortSliceRangeEntries slice start count)[i]'(by rw [sortSliceRangeEntries_size slice start count hstop] exact hi) = slice.entries[start + i]'(by omega) := by
+  (sortSliceRangeEntries slice start count)[i]'(by rw [sortSliceRangeEntries_size slice start count hstop]; exact hi) = slice.entries[start + i]'(by omega) := by
 -- proof
   simp only [sortSliceRangeEntries]
   rw [Array.getElem_extract]
@@ -116,13 +116,13 @@ namespace CPythonListsort
 -/
 @[path]
 lemma sortSliceRangeKeys_getElem
-  {slice : SortSlice κ ν}
-  {start count i : Nat}
+  (slice : SortSlice κ ν)
+  (start count i : Nat)
 -- given
   (hstop : start + count ≤ slice.entries.size)
   (hi : i < count) :
 -- imply
-  (sortSliceRangeKeys slice start count)[i]'(by rw [sortSliceRangeKeys_size slice start count hstop] exact hi) = (slice.entries[start + i]'(by omega)).key := by
+  (sortSliceRangeKeys slice start count)[i]'(by rw [sortSliceRangeKeys_size slice start count hstop]; exact hi) = (slice.entries[start + i]'(by omega)).key := by
 -- proof
   simp only [sortSliceRangeKeys, sortSliceRangeEntries, Array.getElem_map]
   rw [Array.getElem_extract]
@@ -136,8 +136,8 @@ namespace CPythonListsort
 -/
 @[path]
 lemma sortSliceRangeEntries_toList
-  {slice : SortSlice κ ν}
-  {start count : Nat} :
+  (slice : SortSlice κ ν)
+  (start count : Nat) :
 -- imply
   (sortSliceRangeEntries slice start count).toList = (slice.entries.toList.drop start).take count := by
 -- proof
@@ -152,8 +152,8 @@ namespace CPythonListsort
 -/
 @[path]
 lemma sortSliceRangeEntries_toList_add
-  {slice : SortSlice κ ν}
-  {start leftCount rightCount : Nat} :
+  (slice : SortSlice κ ν)
+  (start leftCount rightCount : Nat) :
 -- imply
   (sortSliceRangeEntries slice start (leftCount + rightCount)).toList = (sortSliceRangeEntries slice start leftCount).toList ++ (sortSliceRangeEntries slice (start + leftCount) rightCount).toList := by
 -- proof
@@ -168,8 +168,8 @@ namespace CPythonListsort
 -/
 @[path]
 lemma sortSliceRangeEntries_toList_drop
-  {slice : SortSlice κ ν}
-  {start count skipped : Nat} :
+  (slice : SortSlice κ ν)
+  (start count skipped : Nat) :
 -- imply
   (sortSliceRangeEntries slice start count).toList.drop skipped = (sortSliceRangeEntries slice (start + skipped) (count - skipped)).toList := by
 -- proof
@@ -185,8 +185,8 @@ namespace CPythonListsort
 -/
 @[path]
 lemma sortSliceRangeKeys_toList
-  {slice : SortSlice κ ν}
-  {start count : Nat} :
+  (slice : SortSlice κ ν)
+  (start count : Nat) :
 -- imply
   (sortSliceRangeKeys slice start count).toList = ((slice.entries.toList.drop start).take count).map SortSliceEntry.key := by
 -- proof
@@ -201,8 +201,8 @@ namespace CPythonListsort
 -/
 @[path]
 lemma sortSliceRangeKeys_toList_drop
-  {slice : SortSlice κ ν}
-  {start count skipped : Nat} :
+  (slice : SortSlice κ ν)
+  (start count skipped : Nat) :
 -- imply
   (sortSliceRangeKeys slice start count).toList.drop skipped = (sortSliceRangeKeys slice (start + skipped) (count - skipped)).toList := by
 -- proof
@@ -230,8 +230,8 @@ namespace CPythonListsort.SortSlice.EqualOutsideRange
 -/
 @[path]
 lemma size_eq
-  {before after : SortSlice κ ν}
-  {start count : Nat}
+  (before after : SortSlice κ ν)
+  (start count : Nat)
 -- given
   (h : EqualOutsideRange before after start count) :
 -- imply
@@ -248,9 +248,9 @@ namespace CPythonListsort.SortSlice.EqualOutsideRange
 -/
 @[path]
 lemma entries_eq_of_disjoint
-  {before after : SortSlice κ ν}
-  {start count : Nat}
-  {otherStart otherCount : Nat}
+  (before after : SortSlice κ ν)
+  (start count : Nat)
+  (otherStart otherCount : Nat)
 -- given
   (h : EqualOutsideRange before after start count)
   (hdisjoint : otherStart + otherCount ≤ start ∨ start + count ≤ otherStart) :
@@ -268,9 +268,9 @@ namespace CPythonListsort.SortSlice.EqualOutsideRange
 -/
 @[path]
 lemma keys_eq_of_disjoint
-  {before after : SortSlice κ ν}
-  {start count : Nat}
-  {otherStart otherCount : Nat}
+  (before after : SortSlice κ ν)
+  (start count : Nat)
+  (otherStart otherCount : Nat)
 -- given
   (h : EqualOutsideRange before after start count)
   (hdisjoint : otherStart + otherCount ≤ start ∨ start + count ≤ otherStart) :
@@ -278,7 +278,7 @@ lemma keys_eq_of_disjoint
   sortSliceRangeKeys before otherStart otherCount = sortSliceRangeKeys after otherStart otherCount := by
 -- proof
   simp only [sortSliceRangeKeys]
-  rw [h.entries_eq_of_disjoint otherStart otherCount hdisjoint]
+  rw [h.2 otherStart otherCount hdisjoint]
 
 end CPythonListsort.SortSlice.EqualOutsideRange
 
@@ -289,8 +289,8 @@ namespace CPythonListsort.SortSlice.EqualOutsideRange
 -/
 @[path]
 lemma refl
-  {slice : SortSlice κ ν}
-  {start count : Nat} :
+  (slice : SortSlice κ ν)
+  (start count : Nat) :
 -- imply
   EqualOutsideRange slice slice start count :=
 -- proof
@@ -305,16 +305,16 @@ namespace CPythonListsort.SortSlice.EqualOutsideRange
 -/
 @[path]
 lemma symm
-  {before after : SortSlice κ ν}
-  {start count : Nat}
+  (before after : SortSlice κ ν)
+  (start count : Nat)
 -- given
   (h : EqualOutsideRange before after start count) :
 -- imply
   EqualOutsideRange after before start count := by
 -- proof
-  refine ⟨h.size_eq.symm, ?_⟩
+  refine ⟨h.1.symm, ?_⟩
   intro otherStart otherCount hdisjoint
-  exact (h.entries_eq_of_disjoint otherStart otherCount hdisjoint).symm
+  exact (h.2 otherStart otherCount hdisjoint).symm
 
 end CPythonListsort.SortSlice.EqualOutsideRange
 
@@ -325,18 +325,18 @@ namespace CPythonListsort.SortSlice.EqualOutsideRange
 -/
 @[path]
 lemma trans
-  {first second third : SortSlice κ ν}
-  {start count : Nat}
+  (first second third : SortSlice κ ν)
+  (start count : Nat)
 -- given
   (h₁ : EqualOutsideRange first second start count)
   (h₂ : EqualOutsideRange second third start count) :
 -- imply
   EqualOutsideRange first third start count := by
 -- proof
-  refine ⟨h₁.size_eq.trans h₂.size_eq, ?_⟩
+  refine ⟨h₁.1.trans h₂.1, ?_⟩
   intro otherStart otherCount hdisjoint
-  exact (h₁.entries_eq_of_disjoint otherStart otherCount hdisjoint).trans
-    (h₂.entries_eq_of_disjoint otherStart otherCount hdisjoint)
+  exact (h₁.2 otherStart otherCount hdisjoint).trans
+    (h₂.2 otherStart otherCount hdisjoint)
 
 end CPythonListsort.SortSlice.EqualOutsideRange
 
@@ -347,8 +347,8 @@ namespace CPythonListsort.SortSlice.EqualOutsideRange
 -/
 @[path]
 lemma widen
-  {before after : SortSlice κ ν}
-  {smallStart smallCount bigStart bigCount : Nat}
+  (before after : SortSlice κ ν)
+  (smallStart smallCount bigStart bigCount : Nat)
 -- given
   (h : EqualOutsideRange before after smallStart smallCount)
   (hstart : bigStart ≤ smallStart)
@@ -356,9 +356,9 @@ lemma widen
 -- imply
   EqualOutsideRange before after bigStart bigCount := by
 -- proof
-  refine ⟨h.size_eq, ?_⟩
+  refine ⟨h.1, ?_⟩
   intro otherStart otherCount hdisjoint
-  apply h.entries_eq_of_disjoint otherStart otherCount
+  apply h.2 otherStart otherCount
   obtain hbefore | hafter := hdisjoint
   · exact Or.inl (by omega)
   · exact Or.inr (by omega)
@@ -372,8 +372,8 @@ namespace CPythonListsort.SortSlice.EqualOutsideRange
 -/
 @[path]
 lemma of_eq
-  {before after : SortSlice κ ν}
-  {start count : Nat}
+  (before after : SortSlice κ ν)
+  (start count : Nat)
 -- given
   (h : before = after) :
 -- imply
@@ -391,9 +391,9 @@ namespace CPythonListsort
 -/
 @[path]
 lemma sortSliceRangeEntries_toList_eq_of_reads
-  {slice : SortSlice κ ν}
-  {start count : Nat}
-  {entries : List (SortSliceEntry κ ν)}
+  (slice : SortSlice κ ν)
+  (start count : Nat)
+  (entries : List (SortSliceEntry κ ν))
 -- given
   (hstop : start + count ≤ slice.entries.size)
   (hlength : entries.length = count)
@@ -421,12 +421,12 @@ end CPythonListsort
 -/
 @[path]
 private lemma read_eq
-  {slice : SortSlice κ ν}
-  {index : Nat} :
+  (slice : SortSlice κ ν)
+  (index : Nat) :
 -- imply
   slice.read? (Int.ofNat index) = slice.entries[index]? := by
 -- proof
-  apply CPythonListsort.SortSlice.read slice index
+  exact CPythonListsort.SortSlice.read?_ofNat slice index
 
 
 -- created on 2026-10-23

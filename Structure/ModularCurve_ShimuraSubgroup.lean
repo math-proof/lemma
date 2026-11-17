@@ -1,11 +1,14 @@
-import Lemma.MvPolynomial.HeckeModule
-import Lemma.HahnSeries.ModularUnit
+module
+
+public import Lemma.MvPolynomial.HeckeModule
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace ModularCurve
+
+def eisensteinNumerator (p : ℕ) : ℕ := (p - 1) / Nat.gcd (p - 1) 12
 
 section MuType
 

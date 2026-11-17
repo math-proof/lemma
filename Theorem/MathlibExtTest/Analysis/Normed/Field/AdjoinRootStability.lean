@@ -2,7 +2,7 @@
 
 
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
-import Lemma.Polynomial.Normed.Field.AdjoinRootStability
+import Theorem.Polynomial.Normed.Field.AdjoinRootStability
 open Polynomial
 open scoped Polynomial Valued
 

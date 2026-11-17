@@ -1,8 +1,11 @@
-import Mathlib.NumberTheory.LegendreSymbol.Basic
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.Data.Nat.Totient
-import Mathlib.NumberTheory.Divisors
-import Lemma.HahnSeries.X0
+module
+
+public import Mathlib.NumberTheory.LegendreSymbol.Basic
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.Data.Nat.Totient
+public import Mathlib.NumberTheory.Divisors
+
+@[expose] public section
 
 namespace ModularCurve
 

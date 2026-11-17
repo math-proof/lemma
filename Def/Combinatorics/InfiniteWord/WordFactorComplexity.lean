@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/InfiniteWord/WordFactorComplexity.lean -/
 
 import Def.Combinatorics.InfiniteWord.Factor
-import Lemma.Finset.InfiniteWord.Factor
+import Theorem.Finset.InfiniteWord.Factor
 import Mathlib.Data.Set.Card
 
 

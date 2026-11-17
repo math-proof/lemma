@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.AssociatedStirlingSecond
-import Lemma.Finset.AssociatedStirlingSecond
+import Theorem.Finset.AssociatedStirlingSecond
 import Lemma.Nat.Ramanujan.Part1Ch3Entry10PoissonAsymptotic
 import Def.NumberTheory.Ramanujan.Part1Ch3Entry10PoissonAsymptotic
 

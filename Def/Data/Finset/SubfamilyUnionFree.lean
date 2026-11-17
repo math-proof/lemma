@@ -6,8 +6,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Avocado
 -/
 
-import Mathlib.Data.Finset.Basic
-import Mathlib.Data.Finset.Lattice.Fold
+module
+
+public import Mathlib.Data.Finset.Basic
+public import Mathlib.Data.Finset.Lattice.Fold
+
+@[expose] public section
+
 /-!
 # Union-free families of finite sets
 

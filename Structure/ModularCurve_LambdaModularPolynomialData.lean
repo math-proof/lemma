@@ -1,9 +1,11 @@
-import Mathlib
-import Def.ModularCurve_LambdaSeries
+module
+
+public import Mathlib
+public import Def.ModularCurve_LambdaSeries
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace ModularCurve
 

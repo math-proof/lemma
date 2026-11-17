@@ -4,7 +4,7 @@ All rights reserved.
 -/
 import Mathlib
 import Def.RingTheory.PowerSeries.InfiniteProducts
-import Lemma.PowerSeries.InfiniteProducts
+import Theorem.PowerSeries.InfiniteProducts
 import Theorem.RingTheory.PowerSeries.ExpLog.Part2
 /-!
 # Exponentials and Logarithms of Formal Power Series

@@ -2,7 +2,7 @@
 
 
 import Def.Analysis.Normed.Field.IsClosestConjugate
-import Lemma.AbsoluteValue.IsClosestConjugate
+import Theorem.AbsoluteValue.IsClosestConjugate
 
 
 namespace AlgebraicClosure

@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.DigitalBinomialTheorem
-import Lemma.Finset.Enumerative.DigitalBinomialTheorem
+import Theorem.Finset.Enumerative.DigitalBinomialTheorem
 
 
 namespace MetaMathlibExt

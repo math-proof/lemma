@@ -8,29 +8,34 @@ argument: a 2-dimensional subspace of a degree-3 field extension picks out a
 `(q + 1)`-element difference set in `ZMod (q ^ 2 + q + 1)`.
 -/
 
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Algebra.Algebra.Basic
-import Mathlib.Algebra.GroupWithZero.Units.Fintype
-import Mathlib.Algebra.IsPrimePow
-import Mathlib.Algebra.Module.Submodule.Lattice
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Fintype.Card
-import Mathlib.FieldTheory.Finiteness
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.FieldTheory.Finite.GaloisField
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Defs
-import Mathlib.FieldTheory.IntermediateField.Algebraic
-import Mathlib.GroupTheory.OrderOfElement
-import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.Dimension.Free
-import Mathlib.LinearAlgebra.FiniteDimensional.Basic
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Mathlib.LinearAlgebra.LinearIndependent.Defs
-import Mathlib.RingTheory.SimpleRing.Basic
+module
+
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Algebra.Algebra.Basic
+public import Mathlib.Algebra.GroupWithZero.Units.Fintype
+public import Mathlib.Algebra.IsPrimePow
+public import Mathlib.Algebra.Module.Submodule.Lattice
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.FieldTheory.Finiteness
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.FieldTheory.Finite.GaloisField
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Defs
+public import Mathlib.FieldTheory.IntermediateField.Algebraic
+public import Mathlib.GroupTheory.OrderOfElement
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.Dimension.Free
+public import Mathlib.LinearAlgebra.FiniteDimensional.Basic
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Mathlib.LinearAlgebra.LinearIndependent.Defs
+public import Mathlib.RingTheory.SimpleRing.Basic
+
+@[expose] public section
+
 open scoped IntermediateField
 
 /-!

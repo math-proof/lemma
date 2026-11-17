@@ -1,6 +1,8 @@
 import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Mathlib.Analysis.InnerProductSpace.Dual
 import Lemma.Random.Fderiv.eq.AddIntegral_SMulSMul.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.All_Measurable_Prob
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
@@ -86,4 +88,4 @@ private lemma main
 
 
 -- created on 2026-11-13
--- updated on 2026-11-16
+-- updated on 2026-11-17

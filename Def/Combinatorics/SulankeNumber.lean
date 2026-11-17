@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SulankeNumber.lean -/
 
-import Mathlib.Tactic
+module
 
+public import Mathlib.Tactic
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

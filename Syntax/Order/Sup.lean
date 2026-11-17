@@ -1,7 +1,10 @@
-import Mathlib.Order.ConditionallyCompleteLattice.Basic
-import Mathlib.Order.Bounds.Basic
-import Mathlib.Data.Set.Image
+module
 
+public import Mathlib.Order.ConditionallyCompleteLattice.Basic
+public import Mathlib.Order.Bounds.Basic
+public import Mathlib.Data.Set.Image
+
+public meta section
 
 /--
 [sympy.Sup](https://github.com/sympy/sympy) with a finiteness bound, as written in the sympy

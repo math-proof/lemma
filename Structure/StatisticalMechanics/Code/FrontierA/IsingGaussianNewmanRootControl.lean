@@ -9,9 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianNewmanBridge.Part2
-import Mathlib.Topology.Algebra.InfiniteSum.Real
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianNewmanRootControl
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianNewmanBridge.Part2
+public import Mathlib.Topology.Algebra.InfiniteSum.Real
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianNewmanRootControl
+public section
+
 open scoped BigOperators
 
 

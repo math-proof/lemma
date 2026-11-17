@@ -7,14 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.NumberTheory.NumberField.Basic
-import Mathlib.NumberTheory.NumberField.Ideal.KummerDedekind
-import Mathlib.GroupTheory.Index
-import Mathlib.RingTheory.Polynomial.Content
-import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Mathlib.NumberTheory.NumberField.Ideal.KummerDedekind
+public import Mathlib.GroupTheory.Index
+public import Mathlib.RingTheory.Polynomial.Content
+public import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
 open NumberField Polynomial
 
+public section
 
 namespace DedekindCriterion
 

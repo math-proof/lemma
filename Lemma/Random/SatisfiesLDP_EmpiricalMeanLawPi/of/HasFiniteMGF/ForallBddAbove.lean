@@ -1,4 +1,5 @@
 import Lemma.Random.SatisfiesLDP_EmpiricalMeanLawPi_CramerRateFromSanov.of.All_BddAbove.HasFiniteMGF
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityMeasure Random Set
 open scoped ENNReal Topology InnerProductSpace
 
@@ -34,4 +35,4 @@ private lemma main
 
 
 -- created on 2026-11-03
--- updated on 2026-11-04
+-- updated on 2026-11-17

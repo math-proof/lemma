@@ -4,20 +4,22 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
 
-import Mathlib.Combinatorics.HalesJewett
-import Mathlib.Basic.Real.Basic
-import Mathlib.Combinatorics.Pigeonhole
-import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Algebra.Order.BigOperators.Expect
-import Mathlib.Algebra.Order.Archimedean.Basic
-import Mathlib.Algebra.Order.Ring.Pow
-import Mathlib.Analysis.Real.Pi.Wallis
-import Mathlib.Combinatorics.SetFamily.LYM
-import Mathlib.Data.Nat.Choose.Central
-import Mathlib.Data.Finset.Lattice.Basic
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Tactic
-import Def.Combinatorics.DensityHalesJewett.Part3
+module
+
+public import Mathlib.Combinatorics.HalesJewett
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Combinatorics.Pigeonhole
+public import Mathlib.Algebra.BigOperators.Field
+public import Mathlib.Algebra.Order.BigOperators.Expect
+public import Mathlib.Algebra.Order.Archimedean.Basic
+public import Mathlib.Algebra.Order.Ring.Pow
+public import Mathlib.Analysis.Real.Pi.Wallis
+public import Mathlib.Combinatorics.SetFamily.LYM
+public import Mathlib.Data.Nat.Choose.Central
+public import Mathlib.Data.Finset.Lattice.Basic
+public import Mathlib.Data.Fintype.Pi
+public import Mathlib.Tactic
+public import Def.Combinatorics.DensityHalesJewett.Part3
 /-! Proves the density Hales–Jewett theorem and the Graham–Rothschild theorem for lines. -/
 
 
@@ -29,7 +31,7 @@ end MathlibExt.Combinatorics.DensityHalesJewettWanted
 
 namespace MathlibExt.Combinatorics.DensityHalesJewettWanted
 
-inductive dhjTiled (d k : ℕ) {ι : Type*}
+public inductive dhjTiled (d k : ℕ) {ι : Type*}
     [DecidableEq (ι → Fin (k + 1))] :
     Finset (ι → Fin (k + 1)) → Prop
   | empty : dhjTiled d k ∅

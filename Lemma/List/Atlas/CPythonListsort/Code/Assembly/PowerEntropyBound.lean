@@ -1,6 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.CPythonListsort.Code.Assembly.PowerEntropyBound
+import Lemma.List.Atlas.CPythonListsort.Code.Equivalence.PowerloopResults
 open CPythonListsort
 
 

@@ -9,7 +9,9 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Onsager.TorusIntersection.Part8
+module
+
+public import Theorem.StatisticalMechanics.Code.Onsager.TorusIntersection.Part8
 open scoped BigOperators
 open Finset
 
@@ -18,7 +20,7 @@ namespace StatMech.FrontierD
 
 open StatMech.Onsager
 
-noncomputable section
+public noncomputable section
 
 structure IntegralSquareTorusCycle (L : Nat) [NeZero L] where
   horizontal : (ZMod L × ZMod L) → Int

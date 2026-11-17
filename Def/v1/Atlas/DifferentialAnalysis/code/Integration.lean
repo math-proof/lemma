@@ -8,21 +8,24 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.MeasureTheory.Integral.Lebesgue.Basic
-import Mathlib.Analysis.MeanInequalities
-import Mathlib.Analysis.Normed.Module.Basic
-import Mathlib.MeasureTheory.Function.LpSeminorm.LpNorm
-import Mathlib.MeasureTheory.Function.LpSpace.Complete
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.MeasureTheory.Integral.MeanInequalities
-import Mathlib.Data.Real.ConjExponents
-import Mathlib.MeasureTheory.Integral.IntegrableOn
-import Mathlib.Algebra.Order.Group.PosPart
-import Mathlib.MeasureTheory.Integral.Lebesgue.Add
-import Mathlib.MeasureTheory.Constructions.BorelSpace.Order
-import Mathlib.Data.EReal.Operations
-import Abbrev.v1.Atlas.DifferentialAnalysis.code.Integration
+module
 
+public import Mathlib.MeasureTheory.Integral.Lebesgue.Basic
+public import Mathlib.Analysis.MeanInequalities
+public import Mathlib.Analysis.Normed.Module.Basic
+public import Mathlib.MeasureTheory.Function.LpSeminorm.LpNorm
+public import Mathlib.MeasureTheory.Function.LpSpace.Complete
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.MeasureTheory.Integral.MeanInequalities
+public import Mathlib.Data.Real.ConjExponents
+public import Mathlib.MeasureTheory.Integral.IntegrableOn
+public import Mathlib.Algebra.Order.Group.PosPart
+public import Mathlib.MeasureTheory.Integral.Lebesgue.Add
+public import Mathlib.MeasureTheory.Constructions.BorelSpace.Order
+public import Mathlib.Data.EReal.Operations
+public import Abbrev.v1.Atlas.DifferentialAnalysis.code.Integration
+
+@[expose] public section
 
 noncomputable section
 

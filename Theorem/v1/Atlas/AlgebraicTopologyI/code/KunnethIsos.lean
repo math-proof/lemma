@@ -7,14 +7,17 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Algebra.Homology.Monoidal
-import Mathlib.Algebra.Homology.QuasiIso
-import Mathlib.Algebra.Category.ModuleCat.Monoidal.Basic
-import Mathlib.Algebra.Category.ModuleCat.Colimits
-import Mathlib.LinearAlgebra.FreeModule.Basic
-import Mathlib.RingTheory.PrincipalIdealDomain
+public import Mathlib.Algebra.Homology.Monoidal
+public import Mathlib.Algebra.Homology.QuasiIso
+public import Mathlib.Algebra.Category.ModuleCat.Monoidal.Basic
+public import Mathlib.Algebra.Category.ModuleCat.Colimits
+public import Mathlib.LinearAlgebra.FreeModule.Basic
+public import Mathlib.RingTheory.PrincipalIdealDomain
 open CategoryTheory
+
+public section
 
 /-- **Tensor of quasi-isomorphisms is a quasi-isomorphism** (Section 25
 helper for the Künneth theorem).  Over a principal ideal ring `R`, if

@@ -1,6 +1,11 @@
 -- Carved from Lemma/Definitions/Def_NumberField_InfiniteAdeleRing_BaseChangeData.lean: instance decls only.
-import Mathlib
-import Class.NumberField_Extension
+
+module
+
+public import Mathlib
+public import Class.NumberField_Extension
+
+@[expose] public section
 
 open NumberField TensorProduct
 

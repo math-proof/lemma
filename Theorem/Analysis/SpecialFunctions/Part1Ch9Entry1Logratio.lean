@@ -1,33 +1,37 @@
 /-
 Author: @akiezun, Avocado
 -/
+module
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Data.Finset.Defs
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.Order.Filter.Basic
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Topology.Basic
-import Mathlib.Analysis.Calculus.Deriv.Add
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Mathlib.Analysis.Calculus.Deriv.Inv
-import Mathlib.Analysis.Calculus.Deriv.Mul
-import Mathlib.Analysis.Calculus.Deriv.Pow
-import Mathlib.Analysis.PSeries
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Sinc
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
-import Mathlib.Topology.Algebra.InfiniteSum.NatInt
-import Def.Analysis.SpecialFunctions.Part1Ch9Entry1Logratio
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Data.Finset.Defs
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.Order.Filter.Basic
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Topology.Basic
+public import Mathlib.Analysis.Calculus.Deriv.Add
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Mathlib.Analysis.Calculus.Deriv.Inv
+public import Mathlib.Analysis.Calculus.Deriv.Mul
+public import Mathlib.Analysis.Calculus.Deriv.Pow
+public import Mathlib.Analysis.PSeries
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Sinc
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
+public import Mathlib.Topology.Algebra.InfiniteSum.NatInt
+public import Def.Analysis.SpecialFunctions.Part1Ch9Entry1Logratio
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 9
 
 Statements of entries from B. C. Berndt, *Ramanujan's Notebooks, Part I*
 (Springer, 1985), with proofs.
 -/
+
+public section
 
 
 section

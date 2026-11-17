@@ -9,8 +9,10 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexEndpointLocalGeometry.Part8
-import Def.StatisticalMechanics.Code.Universality.HexEndpointLocalPartitionClosure
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.HexEndpointLocalGeometry.Part8
+public import Def.StatisticalMechanics.Code.Universality.HexEndpointLocalPartitionClosure
 
 
 namespace StatMech.Universality
@@ -21,7 +23,7 @@ open scoped BigOperators
 
 noncomputable section
 
-inductive HexEndpointCyclicLocalAtom (region : ℂ → Prop) (a : ℂ) (h0 : ℤ)
+public inductive HexEndpointCyclicLocalAtom (region : ℂ → Prop) (a : ℂ) (h0 : ℤ)
     (v du : ℂ) where
   | triplet : HexEndpointCyclicTriplet region a h0 v du →
       HexEndpointCyclicLocalAtom region a h0 v du

@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/GeneralizedRascalTriangle.lean -/
 
-import Mathlib.Data.Int.Basic
+module
+
+public import Mathlib.Data.Int.Basic
+
+@[expose] public section
+
 /-!
 # Generalized rascal triangle
 

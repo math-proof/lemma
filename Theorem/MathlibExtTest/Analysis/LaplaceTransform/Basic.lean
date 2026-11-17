@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/LaplaceTransform/Basic.lean -/
+module
 
-
-import Def.Analysis.LaplaceTransform.Basic
+public import Def.Analysis.LaplaceTransform.Basic
 open MeasureTheory
+
+public section
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
 

@@ -4,11 +4,16 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Geometry.Manifold.Submersion
-import Mathlib.Geometry.Manifold.MFDeriv.Basic
-import Mathlib.Algebra.Module.Projective
-import Mathlib.Analysis.Calculus.InverseFunctionTheorem.ContDiff
-import Mathlib.Geometry.Manifold.LocalDiffeomorph
+module
+
+public import Mathlib.Geometry.Manifold.Submersion
+public import Mathlib.Geometry.Manifold.MFDeriv.Basic
+public import Mathlib.Algebra.Module.Projective
+public import Mathlib.Analysis.Calculus.InverseFunctionTheorem.ContDiff
+public import Mathlib.Geometry.Manifold.LocalDiffeomorph
+
+@[expose] public section
+
 open scoped Topology ContDiff
 open Manifold
 

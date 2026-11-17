@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.StatisticalMechanics.Code.Exact3D.Certificate.Part6
-import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailClosedBall.Part4
-import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailClosedBallRG.Part2
+module
 
+public import Theorem.StatisticalMechanics.Code.Exact3D.Certificate.Part6
+public import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailClosedBall.Part4
+public import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailClosedBallRG.Part2
+
+
+public section
 
 namespace StatMech
 

@@ -8,11 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Set.Basic
-import Mathlib.Data.Nat.Log
-import Mathlib.Order.RelClasses
-import Def.v1.Atlas.TheoryOfComputation.code.TuringMachines.Part2
+module
 
+public import Mathlib.Data.Set.Basic
+public import Mathlib.Data.Nat.Log
+public import Mathlib.Order.RelClasses
+public import Def.v1.Atlas.TheoryOfComputation.code.TuringMachines.Part2
+
+
+public section
 
 namespace TuringMachine
 

@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/RiordanNumber.lean -/
 
-import Mathlib.Combinatorics.Enumerative.Catalan.Basic
+module
+
+public import Mathlib.Combinatorics.Enumerative.Catalan.Basic
+
+@[expose] public section
+
 open scoped BigOperators
 
 

@@ -7,13 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.GroupTheory.Coxeter.Basic
-import Mathlib.GroupTheory.Coxeter.Matrix
-import Mathlib.GroupTheory.Perm.Fin
-import Mathlib.SetTheory.Cardinal.Finite
+public import Mathlib.GroupTheory.Coxeter.Basic
+public import Mathlib.GroupTheory.Coxeter.Matrix
+public import Mathlib.GroupTheory.Perm.Fin
+public import Mathlib.SetTheory.Cardinal.Finite
 open Equiv Fin Function
 
+public section
 
 /-- Braid relation: $(\operatorname{swap}(a,b) \cdot \operatorname{swap}(b,c))^3 = 1$ for distinct $a,b,c$. -/
 theorem swap_mul_swap_cube {α : Type*} [DecidableEq α]

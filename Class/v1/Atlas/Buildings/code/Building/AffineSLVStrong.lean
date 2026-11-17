@@ -9,8 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.Buildings.code.Building.AffineSLV.Part4
-import Lemma.Set.IsHomothetic_πLattice
-import Lemma.Set.ConjSet.eq.Image
 import Structure.v1.Atlas.Buildings.code.Building.GroupApplicationsCh17
 import Mathlib.LinearAlgebra.Matrix.SpecialLinearGroup
 import Mathlib.RingTheory.DiscreteValuationRing.Basic
@@ -19,11 +17,9 @@ import Mathlib.Topology.Algebra.Group.Matrix
 set_option linter.unusedSectionVars false
 set_option linter.unusedVariables false
 
-
 namespace AffineBuildingSLVStrong
 
 open AffineBuildingSLV AffineBuildingSLVAxioms
-
 
 /-- Topological hypotheses on the fraction field $k$ of a complete DVR: the valuation
 ring $\mathfrak{o}$ is open and compact in $k$, its maximal ideal is open, $k$ is a
@@ -35,6 +31,5 @@ class DVRTopologicalAssumptions (C : DVRContext) [TopologicalSpace C.k] : Prop w
   isTopologicalRing : IsTopologicalRing C.k
   isCompact_valRing : IsCompact {x : C.k | C.isInO x}
   t1Space : T1Space C.k
-
 
 end AffineBuildingSLVStrong

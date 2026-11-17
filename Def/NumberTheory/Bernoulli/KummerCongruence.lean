@@ -4,10 +4,15 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.NumberTheory.Bernoulli
-import Mathlib.Algebra.BigOperators.ModEq
-import Mathlib.NumberTheory.PowModTotient
-import Mathlib.RingTheory.ZMod.UnitsCyclic
+module
+
+public import Mathlib.NumberTheory.Bernoulli
+public import Mathlib.Algebra.BigOperators.ModEq
+public import Mathlib.NumberTheory.PowModTotient
+public import Mathlib.RingTheory.ZMod.UnitsCyclic
+
+@[expose] public section
+
 /-!
 # Kummer's congruence
 

@@ -1,5 +1,8 @@
-import Lean
+module
 
+public import Lean
+
+@[expose] public section
 
 /--
 check whether the char is within range ₀₁₂₃₄₅₆₇₈₉

@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.Martingale.Basic
-import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
+module
 
+public import Mathlib.Probability.Martingale.Basic
+public import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
+
+@[expose] public section
 
 namespace MeasureTheory
 

@@ -1,4 +1,8 @@
-import Mathlib.MeasureTheory.Measure.WithDensity
+module
+
+public import Mathlib.MeasureTheory.Measure.WithDensity
+
+@[expose] public section
 
 open MeasureTheory
 open scoped ENNReal Pointwise

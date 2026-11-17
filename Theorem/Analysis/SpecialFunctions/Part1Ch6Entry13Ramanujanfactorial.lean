@@ -1,23 +1,27 @@
 /-
 Author: @akiezun, Avocado
 -/
+module
 
-import Mathlib.Topology.Algebra.InfiniteSum.Defs
-import Mathlib.Topology.MetricSpace.Pseudo.Defs
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Algebra.Ring.IsFormallyReal
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Analysis.RCLike.Lemmas
-import Mathlib.Data.Int.Star
-import Mathlib.NumberTheory.TsumDivisorsAntidiagonal
-import Mathlib.Topology.GDelta.MetrizableSpace
-import Mathlib.Topology.Separation.CompletelyRegular
-import Def.Analysis.SpecialFunctions.Part1Ch6Entry13Ramanujanfactorial
+public import Mathlib.Topology.Algebra.InfiniteSum.Defs
+public import Mathlib.Topology.MetricSpace.Pseudo.Defs
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Algebra.Ring.IsFormallyReal
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.RCLike.Lemmas
+public import Mathlib.Data.Int.Star
+public import Mathlib.NumberTheory.TsumDivisorsAntidiagonal
+public import Mathlib.Topology.GDelta.MetrizableSpace
+public import Mathlib.Topology.Separation.CompletelyRegular
+public import Def.Analysis.SpecialFunctions.Part1Ch6Entry13Ramanujanfactorial
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 6, Entry 13
 
 Two series in powers of x are summable and equal for |x|>1.
 -/
+
+public section
 
 
 namespace Ramanujan.Part1Ch6

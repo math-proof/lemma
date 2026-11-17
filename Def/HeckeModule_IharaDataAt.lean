@@ -1,5 +1,9 @@
-import Def.HeckeModule_IharaRungDatum
-import Instance.IharaLemma_IdempotentSplitting
+module
+
+public import Def.HeckeModule_IharaRungDatum
+public import Instance.IharaLemma_IdempotentSplitting
+
+@[expose] public section
 
 namespace IharaTower
 

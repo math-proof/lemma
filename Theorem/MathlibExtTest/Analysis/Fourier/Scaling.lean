@@ -1,9 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Fourier/Scaling.lean -/
 
 
-import Lemma.Real.Fourier_UFnMul.eq.SMulFourier.of.Ne_0
-import Lemma.Real.Fourier_UFnMul.eq.SMulFourier.of.Gt_0
-import Lemma.Real.Fourier_Coe_UFnMul.eq.SMulFourier.of.Gt_0
+import Theorem.Real.Fourier_UFnMul.eq.SMulFourier.of.Ne_0
+import Theorem.Real.Fourier_UFnMul.eq.SMulFourier.of.Gt_0
+import Theorem.Real.Fourier_Coe_UFnMul.eq.SMulFourier.of.Gt_0
 open scoped FourierTransform
 
 

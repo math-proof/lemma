@@ -8,12 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Abbrev.v1.Atlas.TensorCategories.code.ModuleCategory.Part5
-import Abbrev.v1.Atlas.TensorCategories.code.FiniteAbelianCategoryDef
-import Mathlib.CategoryTheory.Limits.Preserves.Finite
-import Mathlib.CategoryTheory.Linear.LinearFunctor
-import Mathlib.CategoryTheory.Preadditive.AdditiveFunctor
-import Class.v1.Atlas.TensorCategories.code.Definition_2_3_1
+module
+
+public import Abbrev.v1.Atlas.TensorCategories.code.ModuleCategory.Part5
+public import Abbrev.v1.Atlas.TensorCategories.code.FiniteAbelianCategoryDef
+public import Mathlib.CategoryTheory.Limits.Preserves.Finite
+public import Mathlib.CategoryTheory.Linear.LinearFunctor
+public import Mathlib.CategoryTheory.Preadditive.AdditiveFunctor
+public import Class.v1.Atlas.TensorCategories.code.Definition_2_3_1
+@[expose] public section
+
 open CategoryTheory CategoryTheory.Limits
 open LeftModCat
 

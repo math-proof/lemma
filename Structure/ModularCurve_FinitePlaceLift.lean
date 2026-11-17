@@ -1,10 +1,12 @@
-import Lemma.WeierstrassCurve.ReductionMap
-import Structure.AlgebraicCurve_ConstantReduction
-import Def.AlgebraicCurve_PlaceEvaluation
+module
+
+public import Lemma.WeierstrassCurve.ReductionMap
+public import Structure.AlgebraicCurve_ConstantReduction
+public import Def.AlgebraicCurve_PlaceEvaluation
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open AlgebraicCurve
 

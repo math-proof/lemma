@@ -1,6 +1,5 @@
 -- Carved from Lemma/Definitions/Def_Deformations_ClosedSubalgebra.lean: instance decls only.
 import Mathlib
-import Lemma.Matrix.TraceAlgebra
 import Instance.Deformations_ProartinianCompact
 import Lemma.Ideal.ClosedSubalgebra
 

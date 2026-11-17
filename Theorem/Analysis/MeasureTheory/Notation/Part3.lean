@@ -1,6 +1,9 @@
-import Mathlib
-import Notation.Analysis.MeasureTheory.Notation
+module
 
+public import Mathlib
+public import Notation.Analysis.MeasureTheory.Notation
+
+public section
 
 theorem EuclideanSpace'.dot_apply {n:ℕ} (x y: EuclideanSpace' n) : x ⬝ y = ∑ i, (x i)*(y i) := by
   convert PiLp.inner_apply x y using 2 with i

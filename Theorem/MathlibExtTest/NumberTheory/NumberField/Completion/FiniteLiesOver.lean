@@ -2,7 +2,7 @@
 
 
 import Theorem.NumberTheory.NumberField.Completion.FiniteLiesOver
-import Lemma.Nat.NumberField.Completion.FiniteLiesOver
+import Theorem.Nat.NumberField.Completion.FiniteLiesOver
 /-!
 # Tests for canonical finite-place completion maps
 

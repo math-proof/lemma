@@ -9,13 +9,10 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.EllipticCurves.code.WeierstrassP
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.WeierstrassP
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.Uniformization
 import Def.v1.Atlas.EllipticCurves.code.Uniformization
 import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
 import Def.v1.Atlas.EllipticCurves.code.Theorem151.Part3
 open Complex
-
 
 noncomputable section
 

@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExponentialIntegral/E1.lean -/
 
 import Def.Analysis.SpecialFunctions.EntireExponentialIntegral
-import Lemma.Complex.EntireExponentialIntegral
+import Theorem.Complex.EntireExponentialIntegral
 import Mathlib.Analysis.SpecialFunctions.Complex.Log
 import Mathlib.NumberTheory.Harmonic.EulerMascheroni
 import Def.Analysis.SpecialFunctions.ExponentialIntegral.E1

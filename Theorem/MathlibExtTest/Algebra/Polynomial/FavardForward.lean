@@ -4,7 +4,7 @@
 Author: @akiezun, Avocado
 -/
 
-import Lemma.Int.Polynomial.FavardForward
+import Theorem.Int.Polynomial.FavardForward
 
 
 namespace MetaMathlibExt

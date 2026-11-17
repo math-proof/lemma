@@ -1,10 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/MeromorphicStirlingNumber.lean -/
 
-import Mathlib.Data.Nat.Choose.Basic
-import Lean.Elab.Tactic.Omega
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Data.Nat.Choose.Basic
+public import Lean.Elab.Tactic.Omega
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 /-!
 # Meromorphic Stirling and Bessel numbers
 

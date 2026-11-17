@@ -8,12 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.GradedAlgebra.Basic
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.Algebra.DirectSum.Internal
+module
+
+public import Mathlib.RingTheory.GradedAlgebra.Basic
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.Algebra.DirectSum.Internal
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 open DirectSum BigOperators
 

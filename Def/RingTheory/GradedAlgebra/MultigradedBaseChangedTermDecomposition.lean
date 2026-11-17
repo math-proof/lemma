@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/GradedAlgebra/MultigradedBaseChangedTermDecomposition.lean -/
 
-import Def.RingTheory.GradedAlgebra.MultigradedBetti.Part2
+module
 
+public import Def.RingTheory.GradedAlgebra.MultigradedBetti.Part2
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

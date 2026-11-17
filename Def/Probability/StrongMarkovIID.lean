@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.IdentDistrib
-import Mathlib.Probability.Independence.Basic
-import Mathlib.Probability.Independence.ZeroOne
-import Mathlib.Probability.Process.Stopping
-import Structure.v1.Atlas.Probability.code.StoppingTime
+module
+
+public import Mathlib.Probability.IdentDistrib
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.Probability.Independence.ZeroOne
+public import Mathlib.Probability.Process.Stopping
+public import Structure.v1.Atlas.Probability.code.StoppingTime
+
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory
 
 

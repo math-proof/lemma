@@ -7,12 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass
-import Mathlib.Algebra.Module.ZLattice.Basic
-import Def.v1.Atlas.EllipticCurves.code.Lattice
+public import Mathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass
+public import Mathlib.Algebra.Module.ZLattice.Basic
+public import Def.v1.Atlas.EllipticCurves.code.Lattice
 open Complex Module ZSpan Set
 
+public section
 
 noncomputable section
 

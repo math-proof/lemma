@@ -8,11 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.LieGroups.code.SL2Representations.Part2
-import Lemma.Complex.IsIsomorphicGK.of.IsIsomorphicGK.IsIsomorphicGK
+module
+
+public import Def.v1.Atlas.LieGroups.code.SL2Representations.Part2
+public import Lemma.Complex.IsIsomorphicGK.of.IsIsomorphicGK.IsIsomorphicGK
 
 
-noncomputable section
+public noncomputable section
 
 open Complex
 

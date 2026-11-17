@@ -9,9 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldRectanglePreference.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.InterfaceConnected.Part8
-import Abbrev.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldPreferenceInterface
+module
+
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldRectanglePreference.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.InterfaceConnected.Part8
+public import Abbrev.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldPreferenceInterface
+public section
+
 open Set SimpleGraph
 
 

@@ -2,7 +2,7 @@
 
 
 import Def.Analysis.SpecialFunctions.Log.Integral
-import Lemma.Real.Integral
+import Theorem.Real.Integral
 open MeasureTheory
 
 

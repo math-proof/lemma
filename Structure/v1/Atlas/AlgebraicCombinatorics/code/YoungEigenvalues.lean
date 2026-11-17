@@ -8,26 +8,28 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.AlgebraicCombinatorics.code.YoungTableaux
-import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.YoungTableaux
-import Mathlib.Algebra.Module.LinearMap.End
-import Mathlib.Algebra.Module.Prod
-import Mathlib.Data.Real.Sqrt
-import Mathlib.Combinatorics.Enumerative.Partition.Basic
-import Mathlib.Tactic.Module
-import Mathlib.Tactic.NormNum
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.LinearAlgebra.Eigenspace.Basic
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.LinearAlgebra.Finsupp.VectorSpace
-import Mathlib.LinearAlgebra.Dimension.FreeAndStrongRankCondition
-import Abbrev.v1.Atlas.AlgebraicCombinatorics.code.YoungEigenvalues
+module
+
+public import Def.v1.Atlas.AlgebraicCombinatorics.code.YoungTableaux
+public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.YoungTableaux
+public import Mathlib.Algebra.Module.LinearMap.End
+public import Mathlib.Algebra.Module.Prod
+public import Mathlib.Data.Real.Sqrt
+public import Mathlib.Combinatorics.Enumerative.Partition.Basic
+public import Mathlib.Tactic.Module
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.LinearAlgebra.Eigenspace.Basic
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.LinearAlgebra.Finsupp.VectorSpace
+public import Mathlib.LinearAlgebra.Dimension.FreeAndStrongRankCondition
+public import Abbrev.v1.Atlas.AlgebraicCombinatorics.code.YoungEigenvalues
 set_option autoImplicit false
 
 
-noncomputable section
+public noncomputable section
 
 namespace YoungEigenvalues
 

@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialKacWardMetricClosure.Part3
-import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialKacWardLaplacianAtlas
-import Def.StatisticalMechanics.Code.FrontierA.IsoradialKacWardLaplacianMetricClosure
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialKacWardMetricClosure.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialKacWardLaplacianAtlas
+public import Def.StatisticalMechanics.Code.FrontierA.IsoradialKacWardLaplacianMetricClosure
+public section
+
 open scoped BigOperators
 open Finset SimpleGraph
 

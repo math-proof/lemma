@@ -1,4 +1,8 @@
-import Instance.CohCarrier_Level
+module
+
+public import Instance.CohCarrier_Level
+
+@[expose] public section
 
 set_option autoImplicit false
 

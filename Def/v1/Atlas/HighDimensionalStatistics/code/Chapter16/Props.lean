@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.InnerProductSpace.Adjoint
-import Mathlib.Analysis.Normed.Algebra.Spectrum
-import Mathlib.Algebra.Polynomial.Eval.Defs
+module
+
+public import Mathlib.Analysis.InnerProductSpace.Adjoint
+public import Mathlib.Analysis.Normed.Algebra.Spectrum
+public import Mathlib.Algebra.Polynomial.Eval.Defs
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 

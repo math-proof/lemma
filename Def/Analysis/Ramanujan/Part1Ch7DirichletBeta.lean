@@ -4,7 +4,12 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.NumberTheory.LSeries.ZMod
+module
+
+public import Mathlib.NumberTheory.LSeries.ZMod
+
+@[expose] public section
+
 /-!
 # Shared Dirichlet beta API for Chapter 7, Entries 17 and 18
 

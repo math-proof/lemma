@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.ProjectionTheory.code.LinnikLargeSieve
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.LinnikLargeSieve
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.ParsevalHighFreq
+import Theorem.Real.Atlas.v1.ProjectionTheory.code.LinnikLargeSieve
+import Theorem.Real.Atlas.v1.ProjectionTheory.code.ParsevalHighFreq
 import Def.v1.Atlas.ProjectionTheory.code.ParsevalHighFreq
 open Finset Complex ZMod
 

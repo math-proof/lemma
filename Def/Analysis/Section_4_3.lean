@@ -1,5 +1,8 @@
-import Mathlib
+module
 
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Analysis I, Section 4.3: Absolute value and exponentiation

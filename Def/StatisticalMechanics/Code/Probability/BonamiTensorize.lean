@@ -9,11 +9,16 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib.Analysis.MeanInequalities
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Data.Fin.Tuple.Basic
-import Mathlib.Logic.Equiv.Fin.Basic
+module
+
+public import Mathlib.Analysis.MeanInequalities
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Algebra.BigOperators.Ring.Finset
+public import Mathlib.Data.Fin.Tuple.Basic
+public import Mathlib.Logic.Equiv.Fin.Basic
+
+@[expose] public section
+
 open scoped BigOperators
 open Finset
 

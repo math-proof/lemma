@@ -7,11 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.LinearAlgebra.Projectivization.Basic
-import Abbrev.v1.Atlas.EllipticCurves.code.ProjectiveSpace.Part2
+public import Mathlib.LinearAlgebra.Projectivization.Basic
+public import Abbrev.v1.Atlas.EllipticCurves.code.ProjectiveSpace.Part2
 open scoped LinearAlgebra.Projectivization
 
+public section
 
 noncomputable section
 

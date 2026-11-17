@@ -8,12 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Kaehler.Basic
-import Mathlib.RingTheory.Derivation.Basic
-import Mathlib.RingTheory.Ideal.Cotangent
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.Algebra.Module.SpanRankOperations
+module
 
+public import Mathlib.RingTheory.Kaehler.Basic
+public import Mathlib.RingTheory.Derivation.Basic
+public import Mathlib.RingTheory.Ideal.Cotangent
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.Algebra.Module.SpanRankOperations
+
+@[expose] public section
 
 noncomputable section
 

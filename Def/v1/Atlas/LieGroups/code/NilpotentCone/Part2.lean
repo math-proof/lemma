@@ -8,24 +8,27 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Lie.Basic
-import Mathlib.Algebra.Lie.Nilpotent
-import Mathlib.Algebra.Lie.Semisimple.Basic
-import Mathlib.Algebra.Lie.CartanSubalgebra
-import Mathlib.Algebra.Lie.Sl2
-import Mathlib.Algebra.Lie.Rank
-import Mathlib.Algebra.Lie.CartanExists
-import Mathlib.Algebra.Lie.OfAssociative
-import Mathlib.Algebra.Lie.UniversalEnveloping
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.Topology.Basic
-import Mathlib.Topology.Irreducible
-import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Mathlib.Analysis.SpecialFunctions.Complex.Analytic
-import Mathlib.RingTheory.TwoSidedIdeal.Operations
-import Mathlib.RingTheory.Spectrum.Prime.Topology
-import Structure.v1.Atlas.LieGroups.code.NilpotentCone
+module
 
+public import Mathlib.Algebra.Lie.Basic
+public import Mathlib.Algebra.Lie.Nilpotent
+public import Mathlib.Algebra.Lie.Semisimple.Basic
+public import Mathlib.Algebra.Lie.CartanSubalgebra
+public import Mathlib.Algebra.Lie.Sl2
+public import Mathlib.Algebra.Lie.Rank
+public import Mathlib.Algebra.Lie.CartanExists
+public import Mathlib.Algebra.Lie.OfAssociative
+public import Mathlib.Algebra.Lie.UniversalEnveloping
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.Topology.Basic
+public import Mathlib.Topology.Irreducible
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Mathlib.Analysis.SpecialFunctions.Complex.Analytic
+public import Mathlib.RingTheory.TwoSidedIdeal.Operations
+public import Mathlib.RingTheory.Spectrum.Prime.Topology
+public import Structure.v1.Atlas.LieGroups.code.NilpotentCone
+
+@[expose] public section
 
 noncomputable section
 

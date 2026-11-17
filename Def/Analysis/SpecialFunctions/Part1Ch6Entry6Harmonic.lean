@@ -2,11 +2,16 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Analysis.Calculus.IteratedDeriv.Defs
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Analysis.Calculus.SmoothSeries
-import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
-import Mathlib.Topology.Algebra.Module.ModuleTopology
+module
+
+public import Mathlib.Analysis.Calculus.IteratedDeriv.Defs
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.Calculus.SmoothSeries
+public import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+public import Mathlib.Topology.Algebra.Module.ModuleTopology
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 6, Entry 6
 

@@ -8,15 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.LieGroups.code.GKModule.Part2
-import Theorem.v1.Atlas.LieGroups.code.SL2Basics.Part4
-import Lemma.Nat.basisHC.eq.SMul
-import Mathlib.LinearAlgebra.Eigenspace.Basic
-import Mathlib.LinearAlgebra.Eigenspace.Semisimple
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Mathlib.Algebra.Lie.OfAssociative
+module
+
+public import Def.v1.Atlas.LieGroups.code.GKModule.Part2
+public import Theorem.v1.Atlas.LieGroups.code.SL2Basics.Part4
+public import Lemma.Nat.basisHC.eq.SMul
+public import Mathlib.LinearAlgebra.Eigenspace.Basic
+public import Mathlib.LinearAlgebra.Eigenspace.Semisimple
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.Algebra.Lie.OfAssociative
 attribute [local instance 100] LieRing.ofAssociativeRing
 
 open Module
@@ -24,7 +26,7 @@ open Module
 -- Mathlib keeps LieRing.ofAssociativeRing as a local instance only
 
 
-noncomputable section
+public noncomputable section
 
 structure SL2GKModule
     (𝔤 : Type*) [LieRing 𝔤] [LieAlgebra ℂ 𝔤]

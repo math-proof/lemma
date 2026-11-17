@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FunctionField/AdeleRing.lean -/
 
-import Mathlib.RingTheory.Valuation.ValuationSubring
-import Mathlib.Set.Algebra.RestrictedProduct.Basic
+module
+
+public import Mathlib.RingTheory.Valuation.ValuationSubring
+public import Mathlib.Set.Algebra.RestrictedProduct.Basic
+
+@[expose] public section
+
 open scoped RestrictedProduct
 
 /-!

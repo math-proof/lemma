@@ -1,23 +1,26 @@
 /-
 Author: @akiezun, Avocado
 -/
-import Mathlib.Topology.Algebra.InfiniteSum.Defs
-import Mathlib.Topology.MetricSpace.Pseudo.Defs
-import Mathlib.Algebra.Field.GeomSum
-import Mathlib.Algebra.Ring.Parity
-import Mathlib.Analysis.SpecificLimits.Normed
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Topology.Algebra.InfiniteSum.Ring
-import Mathlib.Topology.Basic
-import Mathlib.Topology.MetricSpace.Pseudo.Lemmas
-import Def.Analysis.SpecialFunctions.Part1Ch6Entry17Stirlingcoeffs
+module
+
+public import Mathlib.Topology.Algebra.InfiniteSum.Defs
+public import Mathlib.Topology.MetricSpace.Pseudo.Defs
+public import Mathlib.Algebra.Field.GeomSum
+public import Mathlib.Algebra.Ring.Parity
+public import Mathlib.Analysis.SpecificLimits.Normed
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Topology.Algebra.InfiniteSum.Ring
+public import Mathlib.Topology.Basic
+public import Mathlib.Topology.MetricSpace.Pseudo.Lemmas
+public import Def.Analysis.SpecialFunctions.Part1Ch6Entry17Stirlingcoeffs
 open scoped BigOperators
 open Filter Finset Topology
 
+public section
 
 -- Norm bound for the geometric factor nu * x^k.
 theorem row_norm_aux (nu x : ℝ) (hx : |x| ≤ 1) (hnu : |nu| < 1) (k : ℕ) :

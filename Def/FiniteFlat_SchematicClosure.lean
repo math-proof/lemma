@@ -1,5 +1,9 @@
-import Mathlib
-import Instance.FiniteFlat_SchematicClosure
+module
+
+public import Mathlib
+public import Instance.FiniteFlat_SchematicClosure
+
+@[expose] public section
 
 open scoped TensorProduct
 

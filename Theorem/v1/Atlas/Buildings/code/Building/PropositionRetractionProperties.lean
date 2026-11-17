@@ -7,11 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Structure.v1.Atlas.Buildings.code.Building.FixedPointSubgroups
-import Lemma.Set.NonemptyOrbitSetSetGt
+public import Structure.v1.Atlas.Buildings.code.Building.FixedPointSubgroups
+public import Theorem.Set.NonemptyOrbitSetSetGt
 set_option linter.unusedSectionVars false
 
+public section
 
 noncomputable section
 

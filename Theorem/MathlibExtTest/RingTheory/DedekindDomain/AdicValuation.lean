@@ -3,7 +3,7 @@
 
 import Mathlib.NumberTheory.FunctionField
 import Theorem.RingTheory.DedekindDomain.AdicValuation
-import Lemma.Int.DedekindDomain.AdicValuation
+import Theorem.Int.DedekindDomain.AdicValuation
 open IsDedekindDomain
 
 

@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.QRWhitneyNumbers
-import Lemma.Finset.Enumerative.QRWhitneyNumbers
+import Theorem.Finset.Enumerative.QRWhitneyNumbers
 import Mathlib.Tactic.NormNum
 
 

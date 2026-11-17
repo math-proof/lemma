@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/PartialBellPolynomial.lean -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.Ring.Defs
-import Mathlib.Data.Fintype.Pi
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.Ring.Defs
+public import Mathlib.Data.Fintype.Pi
+
+@[expose] public section
+
 open scoped BigOperators
 
 /-!

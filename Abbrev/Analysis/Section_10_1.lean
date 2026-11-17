@@ -1,6 +1,10 @@
-import Mathlib
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Theorem.Analysis.Section_10_1
+module
+
+public import Mathlib
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Theorem.Analysis.Section_10_1
+@[expose] public section
+
 /-!
 # Analysis I, Section 10.1: Basic definitions
 

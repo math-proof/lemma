@@ -9,8 +9,10 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Foundations.ConfigSpace
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Foundations.ConfigSpace
 open scoped BigOperators
 
 
@@ -23,7 +25,7 @@ namespace StatMech
 
 namespace Lattice
 
-inductive BoundaryCondition
+public inductive BoundaryCondition
   | free
   | wired
   | periodic

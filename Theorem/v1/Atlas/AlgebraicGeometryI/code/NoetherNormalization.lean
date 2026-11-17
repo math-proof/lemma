@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.AlgebraicGeometryI.code.DimensionProduct
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.DimensionProduct
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.NakayamaApplications
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NakayamaApplications
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.NakayamaApplications
 import Instance.v1.Atlas.AlgebraicGeometryI.code.Lec2AlgebraicVariety
 set_option maxHeartbeats 800000

@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/AbsoluteValue/InducedTopology.lean -/
+module
 
+public import Theorem.Analysis.AbsoluteValue.InducedTopology
 
-import Theorem.Analysis.AbsoluteValue.InducedTopology
-
+public section
 
 namespace AbsoluteValue
 

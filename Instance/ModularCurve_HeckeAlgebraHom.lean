@@ -1,8 +1,13 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_HeckeAlgebraHom.lean: instance decls only.
-import Mathlib.RingTheory.Finiteness.Subalgebra
-import Mathlib.GroupTheory.Schreier
-import Mathlib.LinearAlgebra.Matrix.FixedDetMatrices
-import Mathlib.GroupTheory.Finiteness
+
+module
+
+public import Mathlib.RingTheory.Finiteness.Subalgebra
+public import Mathlib.GroupTheory.Schreier
+public import Mathlib.LinearAlgebra.Matrix.FixedDetMatrices
+public import Mathlib.GroupTheory.Finiteness
+
+@[expose] public section
 
 set_option autoImplicit false
 

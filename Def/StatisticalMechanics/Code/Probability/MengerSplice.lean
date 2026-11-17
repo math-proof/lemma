@@ -9,9 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib.Combinatorics.SimpleGraph.Paths
-import Theorem.StatisticalMechanics.Code.Probability.MengerSplice
+module
 
+public import Mathlib.Combinatorics.SimpleGraph.Paths
+public import Theorem.StatisticalMechanics.Code.Probability.MengerSplice
+
+@[expose] public section
 
 namespace StatMech.Combinatorics
 

@@ -1,13 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Convex/NewtonPolygon.lean -/
+module
 
+public import Theorem.Analysis.Convex.NewtonPolygon
 
-import Theorem.Analysis.Convex.NewtonPolygon
 /-!
 # Tests for Newton polygons
 
 Checks for zero support, polygon, interior, frontier, edge restrictions,
 and monomial point membership.
 -/
+
+public section
 
 
 noncomputable section

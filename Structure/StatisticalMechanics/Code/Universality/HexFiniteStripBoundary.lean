@@ -9,11 +9,15 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexBoundaryIdentityClose.Part3
-import Def.StatisticalMechanics.Code.Universality.HexContourDefs.Part2
-import Theorem.StatisticalMechanics.Code.Universality.HexFiniteRegion.Part4
-import Def.StatisticalMechanics.Code.Universality.HexFiniteStripBoundary
+module
 
+public import Theorem.StatisticalMechanics.Code.Universality.HexBoundaryIdentityClose.Part3
+public import Def.StatisticalMechanics.Code.Universality.HexContourDefs.Part2
+public import Theorem.StatisticalMechanics.Code.Universality.HexFiniteRegion.Part4
+public import Def.StatisticalMechanics.Code.Universality.HexFiniteStripBoundary
+
+
+public section
 
 namespace StatMech.Universality
 

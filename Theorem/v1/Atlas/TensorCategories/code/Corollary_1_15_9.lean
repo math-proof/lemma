@@ -7,13 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
-import Mathlib.CategoryTheory.Simple
-import Mathlib.CategoryTheory.Preadditive.Schur
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.CategoryTheory.Monoidal.Preadditive
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
+public import Mathlib.CategoryTheory.Simple
+public import Mathlib.CategoryTheory.Preadditive.Schur
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.CategoryTheory.Monoidal.Preadditive
 open CategoryTheory MonoidalCategory Limits
+
+public section
 
 universe u v
 

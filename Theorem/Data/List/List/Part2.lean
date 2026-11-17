@@ -1,7 +1,10 @@
-import Def.Data.List.Slice
-import Def.Data.List.List.Basic
+module
+
+public import Def.Data.List.Slice
+public import Def.Data.List.List.Basic
 open Lean
 
+public section
 
 @[simp]
 theorem List.length_permute (s : List α) (i : Fin s.length) (d : ℤ) :

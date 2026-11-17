@@ -8,15 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.Algebra.Homology.ShortComplex.Exact
-import Mathlib.CategoryTheory.Abelian.Exact
-import Mathlib.GroupTheory.FreeAbelianGroup
-import Mathlib.GroupTheory.QuotientGroup.Defs
+module
+
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.Algebra.Homology.ShortComplex.Exact
+public import Mathlib.CategoryTheory.Abelian.Exact
+public import Mathlib.GroupTheory.FreeAbelianGroup
+public import Mathlib.GroupTheory.QuotientGroup.Defs
 set_option maxHeartbeats 400000
 
 
-noncomputable section
+public noncomputable section
 
 open CategoryTheory
 

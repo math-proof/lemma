@@ -6,9 +6,11 @@ All rights reserved.
 Copyright (c) 2025 AlgebraicCombinatorics Project Contributors
 Authors: AlgebraicCombinatorics Project Contributors
 -/
-import Mathlib
-import Def.Combinatorics.Enumerative.Partition.Basics.Part8
-import Def.Combinatorics.Enumerative.Partition.PentagonalJacobi.Part5
+module
+
+public import Mathlib
+public import Def.Combinatorics.Enumerative.Partition.Basics.Part8
+public import Def.Combinatorics.Enumerative.Partition.PentagonalJacobi.Part5
 open scoped Nat PowerSeries
 
 /-!
@@ -55,7 +57,7 @@ variable {R : Type*} [CommRing R]
 namespace State
 
 /-- A state S is reachable from T by a sequence of jumps. -/
-inductive ReachableByJumps (T : State) : State → Prop where
+public inductive ReachableByJumps (T : State) : State → Prop where
   | refl : ReachableByJumps T T
   | step (S S' : State) (p : Level) (q : ℕ) (hp : p ∈ S.levels)
       (hpq : p + q ∉ S.levels) (hq : q > 0) :
@@ -64,7 +66,7 @@ inductive ReachableByJumps (T : State) : State → Prop where
 /-- A state S is reachable from T by a sequence of jumps with total jump amount m.
 This is an extended version of `ReachableByJumps` that tracks the cumulative sum
 of all jump sizes, which is needed to prove energy formulas. -/
-inductive ReachableByJumpsWithTotal (T : State) : State → ℕ → Prop where
+public inductive ReachableByJumpsWithTotal (T : State) : State → ℕ → Prop where
   | refl : ReachableByJumpsWithTotal T T 0
   | step (S S' : State) (p : Level) (q : ℕ) (m : ℕ) (hp : p ∈ S.levels)
       (hpq : p + q ∉ S.levels) (hq : q > 0) :

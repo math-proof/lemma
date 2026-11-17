@@ -1,5 +1,10 @@
-import Mathlib
-import Def.Mathlib_RingTheory_SmoothAlgebraOverFieldRegularStalks
+module
+
+public import Mathlib
+public import Def.Mathlib_RingTheory_SmoothAlgebraOverFieldRegularStalks
+
+public section
+
 universe u
 
 open IsLocalRing

@@ -1,11 +1,20 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeLoSafety.lean -/
 
-import Structure.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part5
-import Structure.CPythonListsort.Code.Assembly.MergeGetmemRequestBound
-import Def.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
-import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopLeftSafety
-import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopRightSafety
-import Theorem.CPythonListsort.Code.Assembly.MergeLoSafety
+module
+
+public import Structure.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part5
+public import Structure.CPythonListsort.Code.Assembly.MergeGetmemRequestBound
+public import Def.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
+public import Theorem.CPythonListsort.Code.Assembly.MergeLoSafety
+public import Def.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part2
+public import Def.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part6
+public import Def.CPythonListsort.Code.Assembly.GallopSafety
+public import Def.CPythonListsort.Code.Transcription.MergeLo.Part2
+public import Def.CPythonListsort.Code.Transcription.MergeLo.Part4
+public import Structure.CPythonListsort.Code.Transcription.MergeLo.Part2
+
+@[expose] public section
+
 /-!
 # `merge_lo` lockstep safety
 
@@ -20,6 +29,10 @@ reviewed evaluator.
 namespace CPythonListsort
 
 universe u v w
+
+open AccessTrace
+open TempRangeInBounds
+open GallopKeySource
 
 variable {κ : Type u} {ν : Type v}
 

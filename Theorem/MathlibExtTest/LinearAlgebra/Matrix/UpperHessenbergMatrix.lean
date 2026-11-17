@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Matrix/UpperHessenbergMatrix.lean -/
+module
 
+public import Def.LinearAlgebra.Matrix.UpperHessenbergMatrix
 
-import Def.LinearAlgebra.Matrix.UpperHessenbergMatrix
-
+public section
 
 namespace Matrix
 

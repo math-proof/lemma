@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonSiteBond.Part2
-import Theorem.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonLaw.Part3
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonSiteBond.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonLaw.Part3
+public section
+
 open MeasureTheory
 open scoped NNReal
 

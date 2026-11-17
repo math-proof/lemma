@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.GeometryOfManifolds.code.DifferentialForms.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.DifferentialForms
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.DifferentialForms
 import Theorem.v1.Atlas.GeometryOfManifolds.code.PolynomialDFS
 set_option autoImplicit false
 

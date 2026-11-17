@@ -7,12 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
-import Mathlib.Algebra.BigOperators.GroupWithZero.Finset
-import Mathlib.Tactic
-import Def.v1.Atlas.TensorCategories.code.QBinomial.Part2
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+public import Mathlib.Algebra.BigOperators.GroupWithZero.Finset
+public import Mathlib.Tactic
+public import Def.v1.Atlas.TensorCategories.code.QBinomial.Part2
 set_option maxHeartbeats 400000
+
+public section
 
 variable {k : Type*} [Field k]
 

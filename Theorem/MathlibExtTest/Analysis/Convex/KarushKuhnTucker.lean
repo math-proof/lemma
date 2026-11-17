@@ -3,9 +3,12 @@
 /-
 Author: @toskua, Avocado
 -/
+module
 
-import Theorem.Analysis.Convex.KarushKuhnTucker
+public import Theorem.Analysis.Convex.KarushKuhnTucker
 open MathlibExt.Analysis.Convex.KarushKuhnTucker
+
+public section
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   [FiniteDimensional ℝ E]

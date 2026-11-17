@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM19.TransportBurgers
-import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM19.TransportBurgers
+import Theorem.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM19.TransportBurgers
 set_option maxHeartbeats 1600000
 
 open Finset MeasureTheory Set

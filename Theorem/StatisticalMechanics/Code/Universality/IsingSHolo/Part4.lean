@@ -7,11 +7,12 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
+public import Mathlib
+public import Def.StatisticalMechanics.Code.Universality.IsingSHolo.Part4
 
-import Mathlib
-import Def.StatisticalMechanics.Code.Universality.IsingSHolo.Part4
-
+public section
 
 namespace StatMech.Universality
 

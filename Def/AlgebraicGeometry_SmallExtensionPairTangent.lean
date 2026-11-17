@@ -1,5 +1,9 @@
-import Mathlib
-import Abbrev.AlgebraicGeometry_SmallExtensionPairTangent
+module
+
+public import Mathlib
+public import Abbrev.AlgebraicGeometry_SmallExtensionPairTangent
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option linter.unusedSectionVars false

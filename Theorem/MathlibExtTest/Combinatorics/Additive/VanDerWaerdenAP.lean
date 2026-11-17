@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Additive/VanDerWaerdenAP.lean -/
 
 
-import Lemma.Finset.Additive.VanDerWaerdenAP
+import Theorem.Finset.Additive.VanDerWaerdenAP
 
 
 -- The finite interval theorem yields the infinite form for colorings of `ℕ`.

@@ -7,11 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.RingTheory.Coalgebra.Basic
-import Mathlib.LinearAlgebra.TensorProduct.Basic
-import Mathlib.LinearAlgebra.Quotient.Basic
-import Def.v1.Atlas.TensorCategories.code.Proposition_1_27_1.Part2
+public import Mathlib.RingTheory.Coalgebra.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.Basic
+public import Mathlib.LinearAlgebra.Quotient.Basic
+public import Def.v1.Atlas.TensorCategories.code.Proposition_1_27_1.Part2
+
+public section
+
 universe u
 
 

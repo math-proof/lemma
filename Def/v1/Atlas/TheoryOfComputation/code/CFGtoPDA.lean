@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.TheoryOfComputation.code.ContextFree.Part4
-import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.ContextFree
+import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.ContextFree
 universe u_pda
 
 

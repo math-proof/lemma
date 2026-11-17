@@ -8,16 +8,21 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Analysis.SpecificLimits.Basic
-import Mathlib.Analysis.Analytic.ConvergenceRadius
-import Mathlib.Analysis.Analytic.RadiusLiminf
-import Mathlib.Analysis.Analytic.OfScalars
-import Mathlib.Topology.Algebra.InfiniteSum.Real
-import Mathlib.Topology.Algebra.InfiniteSum.NatInt
-import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
-import Mathlib.Analysis.Normed.Group.FunctionSeries
-import Structure.v1.Atlas.RealAnalysis.code.FunctionSequences.PowerSeries
+module
+
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Mathlib.Analysis.Analytic.ConvergenceRadius
+public import Mathlib.Analysis.Analytic.RadiusLiminf
+public import Mathlib.Analysis.Analytic.OfScalars
+public import Mathlib.Topology.Algebra.InfiniteSum.Real
+public import Mathlib.Topology.Algebra.InfiniteSum.NatInt
+public import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
+public import Mathlib.Analysis.Normed.Group.FunctionSeries
+public import Structure.v1.Atlas.RealAnalysis.code.FunctionSequences.PowerSeries
+
+@[expose] public section
+
 open Filter Topology
 
 open scoped NNReal ENNReal

@@ -32,7 +32,7 @@ import Mathlib.Tactic.Ring
 import Mathlib.Topology.Algebra.InfiniteSum.NatInt
 import Mathlib.Topology.Algebra.InfiniteSum.Ring
 import Def.Combinatorics.Enumerative.GaussianBinomial
-import Lemma.Finset.Enumerative.GaussianBinomial
+import Theorem.Finset.Enumerative.GaussianBinomial
 /-!
 # Jacobi triple product identity
 

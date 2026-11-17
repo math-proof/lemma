@@ -1,7 +1,11 @@
-import Lemma.Scheme.Correspondence
-import Instance.AlgebraicCurve_IsCurveOver
-import Abbrev.CerednikDrinfeld_HeckeTower
-import Instance.CerednikDrinfeld_HeckeTower
+module
+
+public import Lemma.Scheme.Correspondence
+public import Instance.AlgebraicCurve_IsCurveOver
+public import Abbrev.CerednikDrinfeld_HeckeTower
+public import Instance.CerednikDrinfeld_HeckeTower
+
+public section
 
 set_option autoImplicit false
 

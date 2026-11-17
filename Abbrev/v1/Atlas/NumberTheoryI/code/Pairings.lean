@@ -8,15 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.PerfectPairing.Basic
-import Mathlib.LinearAlgebra.BilinearForm.Properties
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.RingTheory.Localization.Module
-import Def.v1.Atlas.NumberTheoryI.code.Pairings
+module
+
+public import Mathlib.LinearAlgebra.PerfectPairing.Basic
+public import Mathlib.LinearAlgebra.BilinearForm.Properties
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.RingTheory.Localization.Module
+public import Def.v1.Atlas.NumberTheoryI.code.Pairings
 open Submodule LinearMap
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 abbrev IsPerfectSelfPairing (A : Type*) [CommRing A] (M : Type*)
     [AddCommGroup M] [Module A M] (p : M →ₗ[A] M →ₗ[A] A) : Prop :=

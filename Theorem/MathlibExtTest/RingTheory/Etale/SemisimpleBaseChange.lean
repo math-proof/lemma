@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/Etale/SemisimpleBaseChange.lean -/
 
 
-import Lemma.Int.Etale.SemisimpleBaseChange
+import Theorem.Int.Etale.SemisimpleBaseChange
 import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
 open scoped TensorProduct
 

@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.EpiMono
-import Mathlib.AlgebraicTopology.SimplicialObject.Basic
-import Mathlib.CategoryTheory.Widesubcategory
+module
+
+public import Mathlib.CategoryTheory.EpiMono
+public import Mathlib.AlgebraicTopology.SimplicialObject.Basic
+public import Mathlib.CategoryTheory.Widesubcategory
+
+@[expose] public section
 
 
 namespace AlgebraicTopologyI

@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Computability.EpsilonNFA
-import Structure.v1.Atlas.TheoryOfComputation.code.NFA
+module
+
+public import Mathlib.Computability.EpsilonNFA
+public import Structure.v1.Atlas.TheoryOfComputation.code.NFA
+
+@[expose] public section
+
 open Computability Set
 
 

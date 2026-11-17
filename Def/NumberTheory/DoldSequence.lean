@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/DoldSequence.lean -/
 
-import Mathlib.LinearAlgebra.Matrix.Trace
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Trace
+
+@[expose] public section
+
 /-!
 # Dold sequences
 

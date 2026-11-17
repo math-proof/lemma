@@ -1,10 +1,12 @@
-import Mathlib
-import Structure.AutomorphicForm_HeckeEigensystem
-import Def.AutomorphicForm_FormalBaseChange
+module
+
+public import Mathlib
+public import Structure.AutomorphicForm_HeckeEigensystem
+public import Def.AutomorphicForm_FormalBaseChange
 
 open IsDedekindDomain NumberField AutomorphicForm
 
-noncomputable section
+public noncomputable section
 
 namespace AutomorphicForm
 

@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Tor
-import Mathlib.CategoryTheory.Abelian.LeftDerived
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Tor
+public import Mathlib.CategoryTheory.Abelian.LeftDerived
+
+@[expose] public section
+
 open CategoryTheory Category
 
 universe v u

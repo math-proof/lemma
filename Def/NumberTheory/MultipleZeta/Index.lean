@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/Index.lean -/
 
-import Mathlib.Algebra.FreeMonoid.Basic
-import Mathlib.Combinatorics.Enumerative.Composition
-import Mathlib.Data.PNat.Basic
+module
+
+public import Mathlib.Algebra.FreeMonoid.Basic
+public import Mathlib.Combinatorics.Enumerative.Composition
+public import Mathlib.Data.PNat.Basic
+
+@[expose] public section
+
 /-!
 # Multiple-zeta indices
 

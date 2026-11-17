@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianMomentConvergence
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianNewmanBridge
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianMomentConvergence
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianNewmanBridge
+public section
+
 open Filter MeasureTheory Set Topology
 
 

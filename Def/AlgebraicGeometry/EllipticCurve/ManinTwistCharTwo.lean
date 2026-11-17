@@ -5,9 +5,7 @@ Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
 
 import Def.AlgebraicGeometry.EllipticCurve.ManinSequence
-import Lemma.Int.EllipticCurve.ManinSequence
-import Lemma.Polynomial.PrimitiveTripleManinProjectiveDegreeEllipticCurve.of.All_False.Ne_0
-import Lemma.Nat.FrobeniusTrace.eq.SubAddCardF1CardPoint.of.AffineF
+import Theorem.Int.EllipticCurve.ManinSequence
 import Mathlib.AlgebraicGeometry.EllipticCurve.NormalForms
 import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
 import Def.AlgebraicGeometry.EllipticCurve.ManinProjectiveDegree

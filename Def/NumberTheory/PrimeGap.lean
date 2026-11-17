@@ -16,9 +16,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Data.Nat.Prime.Defs
-import Mathlib.Data.Nat.Nth
+module
 
+public import Mathlib.Data.Nat.Prime.Defs
+public import Mathlib.Data.Nat.Nth
+
+@[expose] public section
 
 /--
 The prime gap: the difference between the $n+1$-th and $n$-th prime.

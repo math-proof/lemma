@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/CountingOppermannPrimes.lean -/
+module
 
+public import Def.NumberTheory.CountingOppermannPrimes
 
-import Def.NumberTheory.CountingOppermannPrimes
-
+public section
 
 namespace MetaMathlibExt
 

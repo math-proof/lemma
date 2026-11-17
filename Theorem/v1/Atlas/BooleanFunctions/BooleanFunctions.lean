@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.BooleanFunctions.code.Arrow
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Arrow
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Arrow
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Boltzmann
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Borel
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.BorelCoordSymmetrization
@@ -19,16 +19,16 @@ import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Claim32Lec8
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Convolution
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Corollary12Lec9
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.DisagreementStability
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.EdgeExpansion
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.EdgeExpansion
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Friedgut
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.GaussianNoiseSemigroup
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.GaussianSpace
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.GaussianSpace
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Hardness
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Hypercontractivity
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Influence
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.InfluenceDerivative
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Influence
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.InfluenceDerivative
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Invariance
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Juntas
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Lemma26Lec10
@@ -46,11 +46,11 @@ import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Sheppard
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Stability
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Theorems
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.TwoPointDerivCompute
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.TwoPointInequality
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.TwoPointDerivCompute
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.TwoPointInequality
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.UncoveredBatch3
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.UncoveredTargets
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.UniqueGames
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.UniqueGames
 import Def.v1.Atlas.BooleanFunctions.code.Boltzmann
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.BonamilBeckner
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Corollary12Lec11
@@ -58,7 +58,7 @@ import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Corollary42Majority
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Corollary43Majority
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.FourierCoeffBasic
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.FourierConcentration
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.FourierSampling
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierSampling
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.FriedgutLevelConcentration
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.HypercontractivityThm
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Isoperimetric

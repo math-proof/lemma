@@ -1,7 +1,11 @@
-import Mathlib
-import Def.AutomorphicForm_HeckeEigensystem
-import Def.LanglandsTunnell_ExplicitLift
-import Structure.LanglandsTunnell_OctahedralDatum
+module
+
+public import Mathlib
+public import Def.AutomorphicForm_HeckeEigensystem
+public import Def.LanglandsTunnell_ExplicitLift
+public import Structure.LanglandsTunnell_OctahedralDatum
+
+@[expose] public section
 
 set_option autoImplicit false
 

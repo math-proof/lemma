@@ -15,8 +15,8 @@ import Mathlib.RingTheory.Polynomial.Resultant.Basic
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.RingTheory.Ideal.Norm.RelNorm
 import Instance.v1.Atlas.NumberTheoryI.code.EtaleAlgebrasProps
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.EtaleAlgebrasProps
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.IdealNorms
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.EtaleAlgebrasProps
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.IdealNorms
 import Def.v1.Atlas.NumberTheoryI.code.IdealNorms
 import Def.v1.Atlas.NumberTheoryI.code.DifferentDiscriminant
 

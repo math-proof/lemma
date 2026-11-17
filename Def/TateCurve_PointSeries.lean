@@ -1,5 +1,9 @@
-import Mathlib
-import Def.TateCurve_QSeries
+module
+
+public import Mathlib
+public import Def.TateCurve_QSeries
+
+@[expose] public section
 
 set_option autoImplicit false
 

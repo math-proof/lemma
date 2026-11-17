@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/Planarity.lean -/
+module
 
+public import Def.Combinatorics.SimpleGraph.Planarity
 
-import Def.Combinatorics.SimpleGraph.Planarity
-
+public section
 
 example (a b : ℝ × ℝ) : a ∈ SimpleGraph.Segment a b :=
   ⟨0, le_rfl, zero_le_one, by simp, by simp⟩

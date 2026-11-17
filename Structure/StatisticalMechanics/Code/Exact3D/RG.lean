@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Def.StatisticalMechanics.Code.Exact3D.CorrelationLength.Part3
+module
 
+public import Mathlib
+public import Def.StatisticalMechanics.Code.Exact3D.CorrelationLength.Part3
+
+
+public section
 
 namespace StatMech
 

@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/FermatSequence.lean -/
+module
 
+public import Def.NumberTheory.FermatSequence
 
-import Def.NumberTheory.FermatSequence
-
+public section
 
 namespace MetaMathlibExt
 

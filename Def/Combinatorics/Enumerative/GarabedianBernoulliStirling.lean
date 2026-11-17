@@ -1,13 +1,18 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/GarabedianBernoulliStirling.lean -/
 
-import Mathlib.Combinatorics.Enumerative.Stirling
-import Mathlib.NumberTheory.Bernoulli
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Algebra.Ring.IsFormallyReal
-import Mathlib.Data.Rat.Star
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Combinatorics.Enumerative.Stirling
+public import Mathlib.NumberTheory.Bernoulli
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Algebra.Ring.IsFormallyReal
+public import Mathlib.Data.Rat.Star
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 open scoped BigOperators
 
 

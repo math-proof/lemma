@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Convex.Hull
-import Mathlib.Algebra.MvPolynomial.Basic
-import Mathlib.Data.Real.Basic
+module
+
+public import Mathlib.Analysis.Convex.Hull
+public import Mathlib.Algebra.MvPolynomial.Basic
+public import Mathlib.Data.Real.Basic
+
+@[expose] public section
+
 open MvPolynomial
 
 variable {R : Type*} [CommSemiring R]

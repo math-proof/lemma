@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ModularForms/MeromorphicAtCusps.lean -/
 
-import Mathlib.Analysis.Complex.Periodic
-import Mathlib.Analysis.Complex.UpperHalfPlane.FunctionsBoundedAtInfty
-import Mathlib.Analysis.Complex.UpperHalfPlane.MoebiusAction
-import Mathlib.Analysis.Meromorphic.Basic
+module
+
+public import Mathlib.Analysis.Complex.Periodic
+public import Mathlib.Analysis.Complex.UpperHalfPlane.FunctionsBoundedAtInfty
+public import Mathlib.Analysis.Complex.UpperHalfPlane.MoebiusAction
+public import Mathlib.Analysis.Meromorphic.Basic
+
+@[expose] public section
+
 open scoped UpperHalfPlane MatrixGroups
 
 /-!

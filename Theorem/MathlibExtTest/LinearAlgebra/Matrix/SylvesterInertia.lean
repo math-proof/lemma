@@ -2,7 +2,7 @@
 
 
 import Mathlib.Analysis.Matrix.PosDef
-import Lemma.Matrix.SylvesterInertia
+import Theorem.Matrix.SylvesterInertia
 
 
 -- A concrete indefinite congruence has one positive and one negative eigenvalue.

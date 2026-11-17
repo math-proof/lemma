@@ -9,9 +9,9 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.TensorCategories.code.MacLaneCoherence
-import Lemma.Category.Atlas.v1.TensorCategories.code.MacLaneCoherence
+import Theorem.Category.Atlas.v1.TensorCategories.code.MacLaneCoherence
 import Lemma.Category.Atlas.v1.TensorCategories.code.MacLaneStrictness
-import Lemma.Category.Atlas.v1.TensorCategories.code.InvertibleObjects
+import Theorem.Category.Atlas.v1.TensorCategories.code.InvertibleObjects
 import Lemma.Category.Atlas.v1.TensorCategories.code.TensorCategoryDef
 import Lemma.Category.Atlas.v1.TensorCategories.code.TensorExact
 import Lemma.Category.Atlas.v1.TensorCategories.code.GrothendieckRing

@@ -16,9 +16,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Data.Nat.PrimeFin
-import Mathlib.Order.Lattice.Nat
+module
 
+public import Mathlib.Data.Nat.PrimeFin
+public import Mathlib.Order.Lattice.Nat
+
+@[expose] public section
 
 namespace Nat
 

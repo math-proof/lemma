@@ -9,10 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexFiniteStripNormalizedBoundary.Part6
-import Theorem.StatisticalMechanics.Code.Universality.HexBoundaryPhases.Part2
-import Def.StatisticalMechanics.Code.Universality.HexFiniteStripIncidenceObstruction.Part3
+module
 
+public import Theorem.StatisticalMechanics.Code.Universality.HexFiniteStripNormalizedBoundary.Part6
+public import Theorem.StatisticalMechanics.Code.Universality.HexBoundaryPhases.Part2
+public import Def.StatisticalMechanics.Code.Universality.HexFiniteStripIncidenceObstruction.Part3
+
+
+public section
 
 namespace StatMech.Universality
 

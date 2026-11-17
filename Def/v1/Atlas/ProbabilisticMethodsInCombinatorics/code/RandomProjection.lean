@@ -14,7 +14,7 @@ import Mathlib.MeasureTheory.Integral.Bochner.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.SubGaussian
-import Lemma.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.SubGaussian
+import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.SubGaussian
 open MeasureTheory Measure Real Set
 open scoped ENNReal NNReal
 

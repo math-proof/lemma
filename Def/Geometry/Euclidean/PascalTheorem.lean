@@ -1,14 +1,17 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Geometry/Euclidean/PascalTheorem.lean -/
 
-import Mathlib.LinearAlgebra.AffineSpace.FiniteDimensional
-import Mathlib.LinearAlgebra.BilinearForm.Properties
-import Mathlib.LinearAlgebra.Matrix.Nondegenerate
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Set
-import Mathlib.Tactic.SplitIfs
+module
 
+public import Mathlib.LinearAlgebra.AffineSpace.FiniteDimensional
+public import Mathlib.LinearAlgebra.BilinearForm.Properties
+public import Mathlib.LinearAlgebra.Matrix.Nondegenerate
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.Set
+public import Mathlib.Tactic.SplitIfs
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

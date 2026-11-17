@@ -15,7 +15,7 @@ import Mathlib.Order.Filter.Basic
 import Mathlib.Topology.Algebra.InfiniteSum.Basic
 import Mathlib.Topology.Defs.Filter
 import Def.NumberTheory.Ramanujan.Part1Ch3Entry9IiGeneralizedbellgeneratingDefining
-import Lemma.Nat.Ramanujan.Part1Ch3Entry9IiGeneralizedbellgeneratingDefining
+import Theorem.Nat.Ramanujan.Part1Ch3Entry9IiGeneralizedbellgeneratingDefining
 import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.Algebra.Order.Ring.Star
 import Mathlib.Algebra.Order.Star.Real

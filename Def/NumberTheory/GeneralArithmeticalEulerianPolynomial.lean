@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/GeneralArithmeticalEulerianPolynomial.lean -/
 
-import Mathlib.Algebra.Polynomial.Basic
+module
+
+public import Mathlib.Algebra.Polynomial.Basic
+
+@[expose] public section
+
 /-!
 # General arithmetical Eulerian polynomials
 

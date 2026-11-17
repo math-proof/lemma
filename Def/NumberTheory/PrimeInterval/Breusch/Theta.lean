@@ -1,22 +1,26 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Theta.lean -/
 
-import Mathlib.NumberTheory.Primorial
-import Lemma.Nat.PrimeInterval.Breusch.ThetaBaseCases
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.Data.Nat.Choose.Factorization
-import Mathlib.RingTheory.UniqueFactorizationDomain.Finsupp
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.Complex.ExponentialBounds
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Data.Finset.Defs
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.GCongr
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.NumberTheory.Primorial
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.Data.Nat.Choose.Factorization
+public import Mathlib.RingTheory.UniqueFactorizationDomain.Finsupp
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.Complex.ExponentialBounds
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Data.Finset.Defs
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.GCongr
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 /-!
 # Breusch primorial and logarithm bounds
 

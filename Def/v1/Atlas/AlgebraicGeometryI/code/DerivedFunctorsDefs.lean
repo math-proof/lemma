@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Abelian.RightDerived
-import Structure.v1.Atlas.AlgebraicGeometryI.code.DerivedFunctorsDefs
+module
+
+public import Mathlib.CategoryTheory.Abelian.RightDerived
+public import Structure.v1.Atlas.AlgebraicGeometryI.code.DerivedFunctorsDefs
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 

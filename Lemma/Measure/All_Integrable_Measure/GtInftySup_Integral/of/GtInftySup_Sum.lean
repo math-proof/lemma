@@ -3,6 +3,7 @@ import Syntax.Order.Sup
 import Mathlib.MeasureTheory.Integral.Bochner.SumMeasure
 import Mathlib.MeasureTheory.Function.L1Space.Integrable
 import Mathlib.Topology.Algebra.InfiniteSum.Basic
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory
 open scoped BigOperators
 

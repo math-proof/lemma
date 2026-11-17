@@ -16,8 +16,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Maps
-import Mathlib.Data.Set.Card
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Maps
+public import Mathlib.Data.Set.Card
+
+@[expose] public section
+
 /-!
 # Unique subgraphs
 

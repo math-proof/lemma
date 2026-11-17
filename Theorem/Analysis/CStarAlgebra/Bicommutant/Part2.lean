@@ -1,6 +1,9 @@
-import Mathlib.Analysis.InnerProductSpace.Adjoint
-import Def.Analysis.CStarAlgebra.Bicommutant.Part2
+module
 
+public import Mathlib.Analysis.InnerProductSpace.Adjoint
+public import Def.Analysis.CStarAlgebra.Bicommutant.Part2
+
+public section
 
 namespace Complex.CStarAlgebra.Bicommutant
 

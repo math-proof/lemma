@@ -1,9 +1,11 @@
-import Mathlib
+module
+
+public import Mathlib
 
 set_option autoImplicit false
 set_option linter.unusedSectionVars false
 
-noncomputable section
+@[expose] public noncomputable section
 
 universe u
 

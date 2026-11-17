@@ -1,22 +1,28 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Analysis.SpecialFunctions.Integrals.LogTrigonometric
-import Mathlib.Analysis.Calculus.SmoothSeries
-import Mathlib.Analysis.Complex.Exponential
-import Mathlib.Analysis.Normed.Group.Tannery
-import Mathlib.Analysis.SumOverResidueClass
-import Mathlib.Analysis.SpecialFunctions.Complex.LogBounds
-import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.InverseDeriv
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Sinc
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
-import Mathlib.NumberTheory.ZetaValues
-import Mathlib.Algebra.BigOperators.Fin
+
+module
+
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Analysis.SpecialFunctions.Integrals.Log
+public import Mathlib.Analysis.Calculus.SmoothSeries
+public import Mathlib.Analysis.Complex.Exponential
+public import Mathlib.Analysis.Normed.Group.Tannery
+public import Mathlib.Analysis.SumOverResidueClass
+public import Mathlib.Analysis.SpecialFunctions.Complex.LogBounds
+public import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.InverseDeriv
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Sinc
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
+public import Mathlib.MeasureTheory.Integral.DominatedConvergence
+public import Mathlib.NumberTheory.ZetaValues
+public import Mathlib.Algebra.BigOperators.Fin
+
+@[expose] public section
+
 /-!
 # Bhandari's arcsine-over-sine integral
 

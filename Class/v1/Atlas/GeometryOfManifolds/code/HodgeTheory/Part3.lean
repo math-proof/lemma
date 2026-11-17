@@ -9,17 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.KahlerManifolds
 import Def.v1.Atlas.GeometryOfManifolds.code.HodgeTheory.Part7
 set_option autoImplicit false
 
 open DifferentialFormSpace
 
-
 /-- A predicate giving the Sobolev regularity scale $H^s$ for differential forms. -/
 class HasSobolevSpaces (Ω : ℕ → Type*) (VF : Type*) [DifferentialFormSpace Ω VF] where
   IsSobolevRegular : ℕ → ∀ {p : ℕ}, Ω (p + 1) → Prop
-
 
 /-- A *smoothing operator* $S$: linear and raises Sobolev regularity by at least one
 order (and by two when iterated). -/
@@ -32,5 +29,4 @@ class IsSmoothing {Ω : ℕ → Type*} {VF : Type*} [inst : DifferentialFormSpac
     sob.IsSobolevRegular s α → sob.IsSobolevRegular (s + 1) (S α)
   compact_improvement : ∀ (s : ℕ) {p : ℕ} (α : Ω (p + 1)),
     sob.IsSobolevRegular s α → sob.IsSobolevRegular (s + 2) (S (S α))
-
 

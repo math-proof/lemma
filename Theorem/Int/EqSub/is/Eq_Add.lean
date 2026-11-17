@@ -1,0 +1,52 @@
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+
+public section
+
+
+@[comm, mp, mpr, mp.comm, mpr.comm, comm.is, is.comm, mp.mt, mpr.mt]
+public theorem Int.EqSub.is.Eq_Add.left
+  [AddCommGroup α]
+-- given
+  (d x y : α) :
+-- imply
+  y - d = x ↔ y = d + x := by
+-- proof
+  aesop
+
+
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Int.EqSub.is.Eq_Add |
+| comm | Int.Eq_Add.is.EqSub |
+| mp | Int.Eq_Add.of.EqSub |
+| mpr | Int.EqSub.of.Eq_Add |
+| mp.comm | Int.EqAdd.of.Eq_Sub |
+| mpr.comm | Int.Eq_Sub.of.EqAdd |
+| comm.is | Int.Eq_Sub.is.EqAdd |
+| is.comm | Int.EqAdd.is.Eq_Sub |
+| mp.mt | Int.NeSub.of.Ne_Add |
+| mpr.mt | Int.Ne_Add.of.NeSub |
+-/
+@[comm, mp, mpr, mp.comm, mpr.comm, comm.is, is.comm, mp.mt, mpr.mt]
+public theorem Int.EqSub.is.Eq_Add
+  [AddGroup α]
+-- given
+  (d x y : α) :
+-- imply
+  y - x = d ↔ y = d + x := by
+-- proof
+  aesop
+
+
+
+public theorem Int.Eq_Sub.of.EqAdd
+  [AddGroup α]
+  {d x y : α}
+  (h : y = x + d) :
+  y - d = x :=
+  (Int.EqSub.is.Eq_Add x d y).mpr h
+
+-- created on 2025-04-26

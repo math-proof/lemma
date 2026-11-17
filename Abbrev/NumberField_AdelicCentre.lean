@@ -1,10 +1,12 @@
-import Instance.NumberField_AdelicHaar
-import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Basic
+module
+
+public import Instance.NumberField_AdelicHaar
+public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Basic
 
 open IsDedekindDomain NumberField MeasureTheory
 open scoped Pointwise
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace NumberField.AdelicCentre
 

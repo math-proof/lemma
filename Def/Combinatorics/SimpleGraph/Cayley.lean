@@ -7,7 +7,7 @@ Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 import Mathlib.Combinatorics.SimpleGraph.Acyclic
 import Mathlib.Combinatorics.SimpleGraph.LapMatrix
 import Def.Combinatorics.SimpleGraph.MatrixTree.Part2
-import Lemma.Finset.SimpleGraph.MatrixTree
+import Theorem.Finset.SimpleGraph.MatrixTree
 import Mathlib.Data.Nat.Choose.Sum
 import Mathlib.LinearAlgebra.Matrix.Defs
 import Mathlib.Tactic.Ring

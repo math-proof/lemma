@@ -2,7 +2,7 @@
 
 
 import Def.Topology.MetricSpace.LipschitzParametrizable
-import Lemma.Set.MetricSpace.LipschitzParametrizable
+import Theorem.Set.MetricSpace.LipschitzParametrizable
 
 
 /-!

@@ -15,11 +15,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Data.Nat.PrimeFin
-import Mathlib.Order.Lattice.Nat
-import Def.Data.Nat.MaxPrimeFac
+public import Mathlib.Data.Nat.PrimeFin
+public import Mathlib.Order.Lattice.Nat
+public import Def.Data.Nat.MaxPrimeFac
 
+public section
 
 namespace Nat
 

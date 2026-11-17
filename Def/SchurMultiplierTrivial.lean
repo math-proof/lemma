@@ -1,6 +1,10 @@
-import Mathlib.GroupTheory.Commutator.Basic
-import Mathlib.GroupTheory.QuotientGroup.Basic
-import Mathlib.GroupTheory.SpecificGroups.Cyclic
+module
+
+public import Mathlib.GroupTheory.Commutator.Basic
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic
+
+@[expose] public section
 
 open scoped commutatorElement
 

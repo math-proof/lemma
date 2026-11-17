@@ -2,8 +2,12 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part28
+module
+
+public import Mathlib
+public import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part28
+public section
+
 open Finset BigOperators Matrix
 
 /-!

@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/HyperfactorialPartition.lean -/
+module
 
+public import Structure.NumberTheory.HyperfactorialPartition
+public import Def.MathlibExtTest.NumberTheory.HyperfactorialPartition
 
-import Structure.NumberTheory.HyperfactorialPartition
-import Def.MathlibExtTest.NumberTheory.HyperfactorialPartition
-
+public section
 
 namespace MetaMathlibExt
 

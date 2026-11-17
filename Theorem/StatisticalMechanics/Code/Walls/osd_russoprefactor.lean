@@ -7,16 +7,17 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib.Analysis.SpecialFunctions.Exp
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Theorem.StatisticalMechanics.Code.OSSS.RussoPrefactor
+public import Mathlib.Analysis.SpecialFunctions.Exp
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Theorem.StatisticalMechanics.Code.OSSS.RussoPrefactor
 open scoped BigOperators
 open Real Finset
 
 set_option linter.style.longLine false
 
+public section
 
 namespace StatMech
 

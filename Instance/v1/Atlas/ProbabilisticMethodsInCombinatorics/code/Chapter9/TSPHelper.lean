@@ -8,16 +8,21 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.MeasureTheory.Integral.Layercake
-import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.MeasureTheory.Measure.Prod
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.Topology.MetricSpace.Basic
-import Mathlib.Topology.MetricSpace.HausdorffDistance
-import Mathlib.MeasureTheory.Constructions.Pi
-import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
-import Theorem.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter9.TSPHelper
+module
+
+public import Mathlib.MeasureTheory.Integral.Layercake
+public import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.MeasureTheory.Measure.Prod
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.Topology.MetricSpace.Basic
+public import Mathlib.Topology.MetricSpace.HausdorffDistance
+public import Mathlib.MeasureTheory.Constructions.Pi
+public import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
+public import Theorem.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter9.TSPHelper
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 

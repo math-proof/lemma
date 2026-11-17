@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Finite
-import Mathlib.Combinatorics.SimpleGraph.DegreeSum
-import Mathlib.Combinatorics.SetFamily.FourFunctions
-import Mathlib.Order.UpperLower.Basic
-import Mathlib.Analysis.SpecificLimits.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
-import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter7.MaxDegree
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Mathlib.Combinatorics.SimpleGraph.DegreeSum
+public import Mathlib.Combinatorics.SetFamily.FourFunctions
+public import Mathlib.Order.UpperLower.Basic
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
+public import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter7.MaxDegree
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 set_option maxRecDepth 1000
 

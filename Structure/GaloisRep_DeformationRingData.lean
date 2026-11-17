@@ -1,10 +1,14 @@
-import Mathlib.RingTheory.AdicCompletion.Basic
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Mathlib.RingTheory.Noetherian.Basic
-import Structure.GaloisRep_Adic
-import Def.GaloisRep_Adic
-import Def.GaloisRep_Residual
-import Def.GaloisRep_ResidualEquiv
+module
+
+public import Mathlib.RingTheory.AdicCompletion.Basic
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Structure.GaloisRep_Adic
+public import Def.GaloisRep_Adic
+public import Def.GaloisRep_Residual
+public import Def.GaloisRep_ResidualEquiv
+
+public section
 
 namespace GaloisRep
 

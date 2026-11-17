@@ -30,8 +30,8 @@ import Mathlib.RingTheory.PowerSeries.NoZeroDivisors
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
 import Def.Combinatorics.Enumerative.PentagonalNumber
-import Lemma.Finset.Enumerative.PentagonalNumber
-import Lemma.Finset.Enumerative.GaussianBinomial
+import Theorem.Finset.Enumerative.PentagonalNumber
+import Theorem.Finset.Enumerative.GaussianBinomial
 import Def.Combinatorics.Enumerative.GaussianBinomial
 /-!
 # Ramanujan's partition congruences

@@ -1,6 +1,9 @@
-import Mathlib
-import Theorem.Analysis.Misc.FiniteChoice
+module
 
+public import Mathlib
+public import Theorem.Analysis.Misc.FiniteChoice
+
+@[expose] public section
 
 /-- Variants of the above that use {name}`Trunc` in place of {kw (of := Lean.«term∃__,_»)}`∃`.  Roughly speaking, this means that if the hypotheses are constructive, we can guarantee that the conclusion is constructive. -/
 

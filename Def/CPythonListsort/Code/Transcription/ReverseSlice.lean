@@ -1,7 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/ReverseSlice.lean -/
 
-import Theorem.CPythonListsort.Code.Transcription.SortSlice
-import Structure.CPythonListsort.Code.Transcription.ReverseSlice
+module
+
+public import Theorem.CPythonListsort.Code.Transcription.SortSlice
+public import Structure.CPythonListsort.Code.Transcription.ReverseSlice
+
+@[expose] public section
 /-!
 # Slice reversal transcription
 

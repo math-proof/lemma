@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.ReesAlgebra
-import Mathlib.Algebra.DirectSum.Ring
-import Def.v1.Atlas.AlgebraicGeometryI.code.TangentConeExceptionalLocus
+module
+
+public import Mathlib.RingTheory.ReesAlgebra
+public import Mathlib.Algebra.DirectSum.Ring
+public import Def.v1.Atlas.AlgebraicGeometryI.code.TangentConeExceptionalLocus
+
+@[expose] public section
+
 set_option synthInstance.maxHeartbeats 40000
 
 

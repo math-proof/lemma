@@ -1,7 +1,11 @@
-import Mathlib.RepresentationTheory.Homological.GroupCohomology.Functoriality
-import Mathlib.RepresentationTheory.Invariants
-import Mathlib.LinearAlgebra.Dual.Lemmas
-import Structure.GroupCohomology_Selmer
+module
+
+public import Mathlib.RepresentationTheory.Homological.GroupCohomology.Functoriality
+public import Mathlib.RepresentationTheory.Invariants
+public import Mathlib.LinearAlgebra.Dual.Lemmas
+public import Structure.GroupCohomology_Selmer
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,10 +1,12 @@
-import Mathlib
-import Instance.AlgebraicGeometry_DoubleComplex
-import Instance.AlgebraicGeometry_BiCech
+module
+
+public import Mathlib
+public import Instance.AlgebraicGeometry_DoubleComplex
+public import Instance.AlgebraicGeometry_BiCech
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 universe u
 

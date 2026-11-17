@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.AlgebraicTopologyI.code.ModelChains
-import Structure.v1.Atlas.AlgebraicTopologyI.code.CrossProductExistence.Part2
+module
+
+public import Structure.v1.Atlas.AlgebraicTopologyI.code.ModelChains
+public import Structure.v1.Atlas.AlgebraicTopologyI.code.CrossProductExistence.Part2
+
+@[expose] public section
+
 open Finset BigOperators
 
 

@@ -1,9 +1,11 @@
-import Mathlib
-import Structure.CerednikDrinfeld_SpecialFormalModule
+module
+
+public import Mathlib
+public import Structure.CerednikDrinfeld_SpecialFormalModule
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace CerednikDrinfeld
 

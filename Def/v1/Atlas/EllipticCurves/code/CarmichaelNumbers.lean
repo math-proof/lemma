@@ -8,8 +8,11 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
+module
 
+public import Mathlib
+
+@[expose] public section
 
 /-- A Carmichael number is a composite natural number `n > 1` such that
 `a ^ n = a` in `ZMod n` for every `a`, i.e. it satisfies the conclusion of

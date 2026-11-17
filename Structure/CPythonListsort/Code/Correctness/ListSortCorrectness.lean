@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/ListSortCorrectness.lean -/
 
-import Structure.CPythonListsort.Code.Correctness.ScanLoopCorrectness
-import Structure.CPythonListsort.Code.Correctness.ReverseModeCorrectness
-import Def.CPythonListsort.Code.Correctness.OccurrenceErasureScan.Part2
+module
+
+public import Structure.CPythonListsort.Code.Correctness.ScanLoopCorrectness
+public import Structure.CPythonListsort.Code.Correctness.ReverseModeCorrectness
+public import Def.CPythonListsort.Code.Correctness.OccurrenceErasureScan.Part2
 /-!
 # Public functional correctness of listsort
 
@@ -11,6 +13,9 @@ boundary.  The implementation sorts occurrence-tagged keys so origins travel
 through every modeled movement; the final post exposes requested-order
 sortedness, occurrence-level stability, and the whole key/payload snapshot.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

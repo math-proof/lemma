@@ -1,17 +1,19 @@
-import Mathlib
-import Def.ModularCurve_LevelOneGlueData
-import Lemma.Finset.SupersingularNodes
-import Def.ModularCurve_SupersingularModuli
-import Structure.AlgebraicCurve_RegularProlongation
-import Lemma.LaurentSeries.CharPReduction
-import Lemma.Finsupp.CuspidalClass
-import Def.ModularCurve_X0ModL
+module
+
+public import Mathlib
+public import Def.ModularCurve_LevelOneGlueData
+public import Lemma.Finset.SupersingularNodes
+public import Def.ModularCurve_SupersingularModuli
+public import Structure.AlgebraicCurve_RegularProlongation
+public import Lemma.LaurentSeries.CharPReduction
+public import Lemma.Finsupp.CuspidalClass
+public import Def.ModularCurve_X0ModL
 
 set_option autoImplicit false
 set_option synthInstance.maxHeartbeats 400000
 set_option maxHeartbeats 800000
 
-noncomputable section
+public noncomputable section
 
 open AlgebraicCurve IsLocalRing
 

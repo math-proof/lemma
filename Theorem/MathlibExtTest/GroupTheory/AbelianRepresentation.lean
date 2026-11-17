@@ -2,7 +2,7 @@
 
 
 import Def.GroupTheory.AbelianRepresentation
-import Lemma.Representation.IsIrreducible
+import Theorem.Representation.IsIrreducible
 import Mathlib.Analysis.Complex.Polynomial.Basic
 open CategoryTheory
 open scoped IsMulCommutative

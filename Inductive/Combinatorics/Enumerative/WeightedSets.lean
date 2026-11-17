@@ -2,8 +2,10 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Theorem.Combinatorics.Enumerative.WeightedSets
+module
+
+public import Mathlib
+public import Theorem.Combinatorics.Enumerative.WeightedSets
 open PowerSeries Finset BigOperators
 
 /-!
@@ -61,7 +63,7 @@ variable {R : Type*} [CommSemiring R]
 namespace DominoTilingsZ
 
 /-- A domino is either horizontal or vertical (Definition \ref{def.domino.shapes-and-tilings}(c)) -/
-inductive Domino : Type
+public inductive Domino : Type
   | horizontal (i j : ℤ) : Domino  -- {(i,j), (i+1,j)}
   | vertical (i j : ℤ) : Domino    -- {(i,j), (i,j+1)}
   deriving DecidableEq

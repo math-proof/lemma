@@ -6,7 +6,7 @@ Author: @akiezun, Avocado
 
 import Mathlib.Data.Nat.Choose.Basic
 import Def.Analysis.Ramanujan.Part1Ch5Entry4
-import Lemma.Complex.Part1Ch5Entry4
+import Theorem.Complex.Part1Ch5Entry4
 import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Algebra.Polynomial.Derivative
 import Mathlib.Algebra.Polynomial.Eval.Defs

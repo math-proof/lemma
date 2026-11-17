@@ -1,3 +1,4 @@
+import Initialize.Tactic.Attr.Basic
 import Lemma.List.TailAppend.eq.AppendTail.of.Ne_Nil
 open List
 

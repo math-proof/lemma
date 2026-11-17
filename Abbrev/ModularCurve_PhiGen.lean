@@ -1,10 +1,12 @@
-import Structure.ModularCurve_X0
-import Def.ModularCurve_LaurentCoeff
-import Mathlib.Algebra.Polynomial.BigOperators
+module
+
+public import Structure.ModularCurve_X0
+public import Def.ModularCurve_LaurentCoeff
+public import Mathlib.Algebra.Polynomial.BigOperators
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 open scoped PowerSeries.WithPiTopology
 open PowerSeries HahnSeries IntermediateField Polynomial

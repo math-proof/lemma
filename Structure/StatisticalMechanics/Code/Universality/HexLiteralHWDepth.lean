@@ -9,16 +9,18 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWColumns.Part5
-import Theorem.StatisticalMechanics.Code.Universality.HexEndpointLocalGeometry.Part8
-import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWDepth.Part12
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWColumns.Part5
+public import Theorem.StatisticalMechanics.Code.Universality.HexEndpointLocalGeometry.Part8
+public import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWDepth.Part12
 
 
 namespace StatMech.Universality
 
 open HexWalk
 
-noncomputable section
+public noncomputable section
 
 structure HLHDColumnTag where
   up : Bool

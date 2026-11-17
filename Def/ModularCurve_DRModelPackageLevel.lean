@@ -5,9 +5,9 @@ import Lemma.AlgEquiv.AtkinLehnerPartial
 import Lemma.Scheme.CurveModel
 import Lemma.LaurentSeries.GeometricBaseChange
 import Lemma.LaurentSeries.ArithmeticGalois
-import Lemma.Nat.PlaceWidthChar
+import Theorem.Nat.PlaceWidthChar
 import Lemma.LaurentSeries.CoeffSemilinearAut
-import Lemma.Scheme.NeronModelPropertyBundleCarrier
+import Theorem.Scheme.NeronModelPropertyBundleCarrier
 import Structure.ModularCurve_DRModelPackageLevel
 import Abbrev.ModularCurve_DRModelPackageLevel
 

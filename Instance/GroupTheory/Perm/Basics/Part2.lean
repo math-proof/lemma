@@ -2,8 +2,14 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.GroupTheory.Perm.Basics.Part4
+
+module
+
+public import Mathlib
+public import Def.GroupTheory.Perm.Basics.Part4
+
+@[expose] public section
+
 open Equiv Function Finset
 
 /-!

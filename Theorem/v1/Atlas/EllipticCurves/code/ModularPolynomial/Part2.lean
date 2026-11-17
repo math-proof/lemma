@@ -21,7 +21,7 @@ import Mathlib.RingTheory.Polynomial.Basic
 import Mathlib.Algebra.Polynomial.EraseLead
 import Mathlib.Algebra.CharP.Defs
 import Def.v1.Atlas.EllipticCurves.code.ModularCurves.Part3
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.ModularCurves
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.ModularCurves
 import Lemma.Complex.Atlas.v1.EllipticCurves.code.Uniformization
 import Def.v1.Atlas.EllipticCurves.code.Uniformization
 import Def.v1.Atlas.EllipticCurves.code.ModularPolynomial.Part3

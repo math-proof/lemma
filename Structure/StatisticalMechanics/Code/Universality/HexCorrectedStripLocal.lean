@@ -9,12 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripWindow.Part8
-import Theorem.StatisticalMechanics.Code.Universality.HexEndpointCyclicAtomSupport
-import Theorem.StatisticalMechanics.Code.Universality.HexEndpointPieceRigidity
-import Theorem.StatisticalMechanics.Code.Universality.HexEndpointTripletOrbit
-import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripStartReturn
-import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripLocal.Part2
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripWindow.Part8
+public import Theorem.StatisticalMechanics.Code.Universality.HexEndpointCyclicAtomSupport
+public import Theorem.StatisticalMechanics.Code.Universality.HexEndpointPieceRigidity
+public import Theorem.StatisticalMechanics.Code.Universality.HexEndpointTripletOrbit
+public import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripStartReturn
+public import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripLocal.Part2
 
 
 namespace StatMech.Universality
@@ -25,7 +27,7 @@ open scoped BigOperators
 
 open StatMech.Onsager
 
-noncomputable section
+public noncomputable section
 
 structure HexCSTerminalPairCertificate
     (T L : ℕ) (hT : 0 < T) (c : HexAWCoord) where

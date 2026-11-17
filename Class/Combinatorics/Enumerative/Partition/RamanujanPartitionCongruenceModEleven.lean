@@ -15,7 +15,6 @@ import Mathlib.Tactic.LinearCombination
 import Mathlib.Tactic.ReduceModChar
 import Mathlib.Tactic.Ring
 import Def.Combinatorics.Enumerative.Partition.RamanujanPartitionCongruence
-import Lemma.Finset.Enumerative.Partition.RamanujanPartitionCongruence
 import Theorem.Combinatorics.Enumerative.Partition.RamanujanPartitionCongruenceModEleven
 /-!
 # Ramanujan's partition congruence modulo 11
@@ -28,7 +27,6 @@ The proof decomposes Euler's pentagonal series and Jacobi's cube series by
 exponent modulo 11, verifies Hirschhorn's polynomial identity in characteristic
 11, and transfers the resulting coefficient divisibility to partition numbers.
 -/
-
 
 namespace MetaMathlibExt
 

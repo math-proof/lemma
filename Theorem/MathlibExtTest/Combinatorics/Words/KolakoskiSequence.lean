@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Words.KolakoskiSequence
-import Lemma.Finset.Words.KolakoskiSequence
+import Theorem.Finset.Words.KolakoskiSequence
 
 
 namespace MetaMathlibExt

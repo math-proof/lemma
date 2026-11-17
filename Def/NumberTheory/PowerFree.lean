@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PowerFree.lean -/
 
-import Mathlib.Data.Nat.Squarefree
+module
+
+public import Mathlib.Data.Nat.Squarefree
+
+@[expose] public section
+
 /-!
 # Power-free natural numbers
 

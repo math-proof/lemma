@@ -7,13 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Theorem.StatisticalMechanics.Code.FrontierA.MultivaluedMap
-import Def.StatisticalMechanics.Code.FrontierA.FiniteEventMultivalued
+public import Theorem.StatisticalMechanics.Code.FrontierA.MultivaluedMap
+public import Def.StatisticalMechanics.Code.FrontierA.FiniteEventMultivalued
 open MeasureTheory Set Finset
 open scoped ENNReal BigOperators
 
+public section
 
 namespace StatMech.FrontierA
 

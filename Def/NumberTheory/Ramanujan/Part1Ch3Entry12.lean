@@ -4,13 +4,17 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.Complex.Exponential
-import Mathlib.Analysis.Normed.Group.InfiniteSum
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Lemma.Nat.Ramanujan.Part1Ch3Entry12SummableSuccN
+module
+
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Complex.Exponential
+public import Mathlib.Analysis.Normed.Group.InfiniteSum
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 3, Entry 12
 

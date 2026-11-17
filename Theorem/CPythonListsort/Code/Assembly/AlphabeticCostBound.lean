@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AlphabeticCostBound.lean -/
+module
 
-import Def.CPythonListsort.Code.Assembly.MergeCost.Part3
-import Mathlib.Analysis.SpecialFunctions.BinaryEntropy
-import Def.CPythonListsort.Code.Assembly.AlphabeticCostBound
+public import Def.CPythonListsort.Code.Assembly.MergeCost.Part3
+public import Mathlib.Analysis.SpecialFunctions.BinaryEntropy
+public import Def.CPythonListsort.Code.Assembly.AlphabeticCostBound
+
 /-!
 # Entropy lower bound for alphabetic merge trees
 
@@ -11,6 +13,8 @@ alphabetic merge tree on the same formed leaves.  This module proves the
 standard Shannon lower bound directly for the concrete `MergeTree` cost used
 by the project.  It does not assume that an optimum has already been chosen.
 -/
+
+public section
 
 
 namespace CPythonListsort

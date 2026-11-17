@@ -1,6 +1,7 @@
 import Lemma.Random.ExpectedUpdateTarget.eq.ToLpAddMulSub
 import Lemma.Random.NormSubBellmanOp.le.MulNormSub
 import Lemma.Random.Gtμmin_0AndGeη_0AndLtη_1
+import Initialize.Tactic.Attr.Basic
 open Finset
 
 @[path]
@@ -42,3 +43,4 @@ private lemma main
       linarith
 
 -- created on 2026-09-26
+-- updated on 2026-11-17

@@ -1,11 +1,13 @@
-import Mathlib
-import Structure.AlgebraicGeometry_RelativeGroupLaw
-import Abbrev.GoodReductionJacobian_RelativeGroupLawKernel
-import Lemma.Scheme.NeronModelEndomorphismExtension
+module
+
+public import Mathlib
+public import Structure.AlgebraicGeometry_RelativeGroupLaw
+public import Abbrev.GoodReductionJacobian_RelativeGroupLawKernel
+public import Theorem.Scheme.NeronModelEndomorphismExtension
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 universe u
 

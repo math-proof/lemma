@@ -8,12 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Finite
-import Mathlib.Combinatorics.SimpleGraph.Subgraph
-import Mathlib.Order.Filter.AtTopBot.Ring
-import Mathlib.Topology.Algebra.Monoid
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter4.SubgraphThreshold
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Mathlib.Combinatorics.SimpleGraph.Subgraph
+public import Mathlib.Order.Filter.AtTopBot.Ring
+public import Mathlib.Topology.Algebra.Monoid
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter4.SubgraphThreshold
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open Filter Real SimpleGraph Classical

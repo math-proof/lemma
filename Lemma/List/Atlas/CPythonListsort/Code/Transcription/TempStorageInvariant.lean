@@ -95,9 +95,7 @@ namespace CPythonListsort
 [impossibleInlineKeyed255_not_inv](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/TempStorageInvariant.lean)
 -/
 @[path]
-lemma impossibleInlineKeyed255_not_inv
-  {κ : Type u}
-  {ν : Type v} :
+lemma impossibleInlineKeyed255_not_inv :
 -- imply
   ¬ TempStorageInv impossibleInlineKeyed255 (255 : PySSize) := by
 -- proof

@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/RamificationInertia/Valuation.lean -/
 
 
-import Lemma.Int.RamificationInertia.Valuation
+import Theorem.Int.RamificationInertia.Valuation
 import Mathlib.NumberTheory.Padics.PadicIntegers
 import Mathlib.NumberTheory.Padics.RingHoms
 

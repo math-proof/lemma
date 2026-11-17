@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.DedekindDomain.Different
-import Mathlib.RingTheory.Ideal.Norm.RelNorm
+module
+
+public import Mathlib.RingTheory.DedekindDomain.Different
+public import Mathlib.RingTheory.Ideal.Norm.RelNorm
+
+@[expose] public section
+
 open Module Ideal
 
 attribute [local instance] FractionRing.liftAlgebra FractionRing.isScalarTower_liftAlgebra

@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Scheme
-import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
+module
 
+public import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Scheme
+public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+
+@[expose] public section
 
 noncomputable section
 

@@ -10,7 +10,7 @@ import Mathlib.RingTheory.AdicCompletion.Completeness
 import Mathlib.RingTheory.HahnSeries.Summable
 import Mathlib.RingTheory.HahnSeries.Valuation
 import Mathlib.RingTheory.Valuation.ValuationSubring
-import Lemma.Polynomial.HenselFactorization
+import Theorem.Polynomial.HenselFactorization
 import Def.FieldTheory.PuiseuxTheorem.Part7
 /-!
 # Puiseux's theorem

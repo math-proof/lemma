@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.BooleanFunctions.code.InvarianceDefs
-import Def.v1.Atlas.BooleanFunctions.code.LindebergHybrid
+module
 
+public import Structure.v1.Atlas.BooleanFunctions.code.InvarianceDefs
+public import Def.v1.Atlas.BooleanFunctions.code.LindebergHybrid
+
+@[expose] public section
 
 noncomputable section
 

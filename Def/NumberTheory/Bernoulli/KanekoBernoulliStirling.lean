@@ -1,10 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Bernoulli/KanekoBernoulliStirling.lean -/
 
-import Mathlib.Combinatorics.Enumerative.Stirling
-import Mathlib.NumberTheory.Bernoulli
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Data.Rat.Star
+module
 
+public import Mathlib.Combinatorics.Enumerative.Stirling
+public import Mathlib.NumberTheory.Bernoulli
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Data.Rat.Star
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

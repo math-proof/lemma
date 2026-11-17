@@ -1,10 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/BilinearForm/DualLattice.lean -/
 
-import Mathlib.Algebra.Module.Lattice
-import Mathlib.LinearAlgebra.BilinearForm.DualLattice
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.RingTheory.Localization.Integer
-import Mathlib.RingTheory.Localization.Module
+module
+
+public import Mathlib.Algebra.Module.Lattice
+public import Mathlib.LinearAlgebra.BilinearForm.DualLattice
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.RingTheory.Localization.Integer
+public import Mathlib.RingTheory.Localization.Module
+
+@[expose] public section
+
 open scoped nonZeroDivisors
 
 open Submodule

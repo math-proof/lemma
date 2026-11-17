@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/JacobiThetaProduct.lean -/
 
 import Def.Analysis.SpecialFunctions.QPochhammer
-import Lemma.Complex.QPochhammer
+import Theorem.Complex.QPochhammer
 /-!
 # Jacobi theta product
 

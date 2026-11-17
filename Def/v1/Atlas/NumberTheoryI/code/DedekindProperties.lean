@@ -21,7 +21,7 @@ import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
 import Mathlib.RingTheory.Noetherian.Defs
 import Mathlib.RingTheory.Localization.LocalizationLocalization
 import Instance.v1.Atlas.NumberTheoryI.code.LocalizationDedekind
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.LocalizationDedekind
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.LocalizationDedekind
 import Theorem.v1.Atlas.NumberTheoryI.code.DedekindProperties
 open Ideal UniqueFactorizationMonoid
 

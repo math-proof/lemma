@@ -1,11 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/ConductorIdeal.lean -/
 
-import Mathlib.RingTheory.Conductor
-import Mathlib.RingTheory.Finiteness.Subalgebra
-import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.RingTheory.Localization.Integer
-import Mathlib.RingTheory.Noetherian.Basic
+module
+
+public import Mathlib.RingTheory.Conductor
+public import Mathlib.RingTheory.Finiteness.Subalgebra
+public import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.RingTheory.Localization.Integer
+public import Mathlib.RingTheory.Noetherian.Basic
+
+@[expose] public section
+
 variable {R S : Type*} [CommSemiring R] [CommSemiring S] [Algebra R S]
 
 /-!

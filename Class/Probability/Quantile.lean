@@ -1,6 +1,10 @@
-import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
-import Mathlib.MeasureTheory.Measure.Real
-import Mathlib.Order.Bounds.Basic
+module
+
+public import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+public import Mathlib.MeasureTheory.Measure.Real
+public import Mathlib.Order.Bounds.Basic
+public section
+
 open MeasureTheory
 
 universe u

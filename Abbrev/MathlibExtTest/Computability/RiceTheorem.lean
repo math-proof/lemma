@@ -2,7 +2,7 @@
 
 
 import Mathlib.Computability.PartrecCode
-import Lemma.Nat.RiceTheorem
+import Theorem.Nat.RiceTheorem
 
 
 abbrev riceTheoremTest_standardNumbering (e : ℕ) : ℕ →. ℕ :=

@@ -1,10 +1,15 @@
 -- Carved from Lemma/Definitions/Def_CohCarrier_Level.lean: instance decls only.
-import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
-import Mathlib.GroupTheory.Transfer
-import Mathlib.Algebra.Module.Hom
-import Mathlib.Data.ZMod.Units
-import Mathlib.Algebra.BigOperators.GroupWithZero.Action
-import Def.CohCarrier_Level
+
+module
+
+public import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
+public import Mathlib.GroupTheory.Transfer
+public import Mathlib.Algebra.Module.Hom
+public import Mathlib.Data.ZMod.Units
+public import Mathlib.Algebra.BigOperators.GroupWithZero.Action
+public import Def.CohCarrier_Level
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.ArithmeticFunction.SigmaR
-import Lemma.Nat.ArithmeticFunction.SigmaR
+import Theorem.Nat.ArithmeticFunction.SigmaR
 open ArithmeticFunction
 
 /-!

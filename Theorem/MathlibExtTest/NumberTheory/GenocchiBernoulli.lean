@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/GenocchiBernoulli.lean -/
 
 
-import Lemma.Nat.GenocchiBernoulli
+import Theorem.Nat.GenocchiBernoulli
 import Mathlib.Tactic.NormNum
 
 

@@ -1,7 +1,11 @@
-import Mathlib.Analysis.Polynomial.MahlerMeasure
-import Mathlib.MeasureTheory.Integral.TorusIntegral
-import Mathlib.Topology.Algebra.MvPolynomial
-import Mathlib.Algebra.MvPolynomial.Equiv
+module
+
+public import Mathlib.Analysis.Polynomial.MahlerMeasure
+public import Mathlib.MeasureTheory.Integral.TorusIntegral
+public import Mathlib.Topology.Algebra.MvPolynomial
+public import Mathlib.Algebra.MvPolynomial.Equiv
+
+@[expose] public section
 
 set_option autoImplicit false
 

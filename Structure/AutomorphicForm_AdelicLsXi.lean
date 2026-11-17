@@ -1,8 +1,10 @@
-import Mathlib
+module
+
+public import Mathlib
 
 open NumberField MeasureTheory Matrix
 
-noncomputable section
+public noncomputable section
 
 namespace AutomorphicForm
 

@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.TwoDim.ZhangLowerBound
-import Theorem.StatisticalMechanics.Code.TwoDim.ZhangClose
+module
+
+public import Theorem.StatisticalMechanics.Code.TwoDim.ZhangLowerBound
+public import Theorem.StatisticalMechanics.Code.TwoDim.ZhangClose
+public section
+
 open MeasureTheory Set Filter Topology
 open scoped ENNReal NNReal
 

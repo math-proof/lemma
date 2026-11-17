@@ -3,7 +3,7 @@ import Mathlib.Probability.Kernel.Composition.MapComap
 import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
 import Mathlib.Order.Interval.Finset.Nat
 import Instance.Probability.Process.StochasticProcessTypes.Part3
-import Lemma.Random.Sum_ToReal.eq.One
+import Theorem.Random.Sum_ToReal.eq.One
 import Structure.Probability.Process.MarkovChain
 open MeasureTheory ProbabilityTheory Finset
 

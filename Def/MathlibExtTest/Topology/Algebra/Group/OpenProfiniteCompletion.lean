@@ -2,7 +2,7 @@
 
 
 import Def.Topology.Algebra.Group.OpenProfiniteCompletion.Part2
-import Lemma.Set.Algebra.Group.OpenProfiniteCompletion
+import Theorem.Set.Algebra.Group.OpenProfiniteCompletion
 open ProfiniteGrp.OpenProfiniteCompletion
 
 universe u

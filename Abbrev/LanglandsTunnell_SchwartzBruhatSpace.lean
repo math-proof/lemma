@@ -1,12 +1,14 @@
-import Def.LanglandsTunnell_TateLocalZeta
-import Mathlib.Topology.Clopen
-import Mathlib.Topology.Compactness.Compact
+module
+
+public import Def.LanglandsTunnell_TateLocalZeta
+public import Mathlib.Topology.Clopen
+public import Mathlib.Topology.Compactness.Compact
 
 set_option autoImplicit false
 
 open LanglandsTunnell.TateLocal
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace SchwartzBruhatSpace
 

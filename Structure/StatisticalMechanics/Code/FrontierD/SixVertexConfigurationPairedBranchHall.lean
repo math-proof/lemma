@@ -9,15 +9,17 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexConfigurationPairBigrade.Part2
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexMarkedPairDecoratedHall.Part3
-import Def.StatisticalMechanics.Code.FrontierD.SixVertexConfigurationPairedBranchHall
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexConfigurationPairBigrade.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexMarkedPairDecoratedHall.Part3
+public import Def.StatisticalMechanics.Code.FrontierD.SixVertexConfigurationPairedBranchHall
 open Finset
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure SixVertexConfigurationPairedBranchGeometricConstruction
     (T : EvenTorus) (middle : Fin (T.width + 1))

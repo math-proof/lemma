@@ -1,8 +1,13 @@
-import Mathlib.Algebra.Order.Ring.Int
-import Mathlib.Algebra.Ring.Int.Parity
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Structure.AlgebraicGeometry.EllipticCurve.ManinSequence.Part2
+module
+
+public import Mathlib.Algebra.Order.Ring.Int
+public import Mathlib.Algebra.Ring.Int.Parity
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+public import Structure.AlgebraicGeometry.EllipticCurve.ManinSequence.Part2
+
+@[expose] public section
+
 /-!
 # Integer sequences in Manin's proof
 

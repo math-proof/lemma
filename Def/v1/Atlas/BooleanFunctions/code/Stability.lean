@@ -10,7 +10,6 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.BooleanFunctions.code.Hypercontractivity
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Hypercontractivity
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.BonamilBeckner
 import Mathlib.Data.Finset.SymmDiff
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Linarith

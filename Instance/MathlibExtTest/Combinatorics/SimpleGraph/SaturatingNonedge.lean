@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.SimpleGraph.SaturatingNonedge
-import Lemma.SimpleGraph.SaturatingNonedge
+import Theorem.SimpleGraph.SaturatingNonedge
 import Mathlib.Tactic.FinCases
 open SimpleGraph
 

@@ -9,9 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Structure.StatisticalMechanics.Code.Universality.CardyDiscreteHolo
+module
 
+public import Mathlib
+public import Structure.StatisticalMechanics.Code.Universality.CardyDiscreteHolo
+
+@[expose] public section
 
 namespace StatMech.Universality
 

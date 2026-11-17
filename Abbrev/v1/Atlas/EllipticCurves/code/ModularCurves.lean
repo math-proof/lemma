@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Def.v1.Atlas.EllipticCurves.code.ModularCurves
+module
+
+public import Mathlib
+public import Def.v1.Atlas.EllipticCurves.code.ModularCurves
+@[expose] public section
+
 open Manifold
 
 open scoped ContDiff

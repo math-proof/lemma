@@ -1,12 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/VertexConnectivity.lean -/
+module
 
-import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
-import Def.Combinatorics.SimpleGraph.VertexConnectivity
+public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
+public import Def.Combinatorics.SimpleGraph.VertexConnectivity
+
 /-!
 # Vertex connectivity
 
 A shared vertex-connectivity predicate for finite simple graphs.
 -/
+
+public section
 
 
 namespace SimpleGraph

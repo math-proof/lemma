@@ -8,21 +8,25 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Free.Coherence
-import Mathlib.CategoryTheory.Monoidal.Braided.Basic
-import Mathlib.CategoryTheory.Monoidal.Skeleton
-import Mathlib.CategoryTheory.Skeletal
-import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
-import Mathlib.CategoryTheory.Simple
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.CategoryTheory.Abelian.Projective.Basic
-import Mathlib.Algebra.Category.ModuleCat.Basic
-import Mathlib.RingTheory.HopfAlgebra.Basic
-import Def.v1.Atlas.TensorCategories.code.SemisimpleMultitensor.Part6
-import Lemma.Category.Atlas.v1.TensorCategories.code.SemisimpleMultitensor
-import Lemma.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctorProjective
-import Theorem.v1.Atlas.TensorCategories.code.UnitSemisimplicity
-import Class.v1.Atlas.TensorCategories.code.QuasiTensorFunctorProjective.Part3
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Free.Coherence
+public import Mathlib.CategoryTheory.Monoidal.Braided.Basic
+public import Mathlib.CategoryTheory.Monoidal.Skeleton
+public import Mathlib.CategoryTheory.Skeletal
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
+public import Mathlib.CategoryTheory.Simple
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.CategoryTheory.Abelian.Projective.Basic
+public import Mathlib.Algebra.Category.ModuleCat.Basic
+public import Mathlib.RingTheory.HopfAlgebra.Basic
+public import Def.v1.Atlas.TensorCategories.code.SemisimpleMultitensor.Part6
+public import Lemma.Category.Atlas.v1.TensorCategories.code.SemisimpleMultitensor
+public import Lemma.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctorProjective
+public import Theorem.v1.Atlas.TensorCategories.code.UnitSemisimplicity
+public import Class.v1.Atlas.TensorCategories.code.QuasiTensorFunctorProjective.Part3
+public section
+
 set_option maxHeartbeats 400000
 
 open CategoryTheory MonoidalCategory Limits

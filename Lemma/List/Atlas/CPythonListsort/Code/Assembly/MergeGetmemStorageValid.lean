@@ -1,6 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
+import Structure.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
+import Lemma.List.Atlas.CPythonListsort.Code.Transcription.TempStorageInvariant
+import Lemma.List.Atlas.CPythonListsort.Code.Transcription.MergeMemory
 open CPythonListsort CPythonListsort.MergeGetmemStoragePost
 
 
@@ -30,10 +33,10 @@ namespace CPythonListsort
 variable {κ : Type u} {ν : Type v}
 /--
 [toNat_le_of_sle_of_nonnegative](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeGetmemStorageValid.lean)
+capacity when viewed as a natural number.  The signed comparison itself forces
+the larger word to be nonnegative as well.
 -/
 @[path]
-capacity when viewed as a natural number.  The signed comparison itself forces
-the larger word to be nonnegative as well. -/
 private lemma toNat_le_of_sle_of_nonnegative
   {need capacity : PySSize} (hNeed : need.Nonnegative)
   (hReuse : need.sle capacity = true) :
@@ -58,9 +61,9 @@ namespace CPythonListsort
 variable {κ : Type u} {ν : Type v}
 /--
 [physicalSlots_le_of_allocationLimit](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeGetmemStorageValid.lean)
+fresh allocation.  `multiplier` is definitionally one or two.
 -/
 @[path]
-fresh allocation.  `multiplier` is definitionally one or two. -/
 private lemma physicalSlots_le_of_allocationLimit
   (storage : TempStorage κ ν) (need : PySSize)
   (hLimit : need.toNat ≤ mergeGetmemAllocationLimit storage) :
@@ -85,7 +88,7 @@ namespace CPythonListsort
 lemma mergeGetmem_growth_intermediate_free
   {κ : Type u}
   {ν : Type v}
-  {state : MergeState κ ν}
+  (state : MergeState κ ν)
 -- given
   (hInv : TempStorageInv state.a state.alloced)
   (hLive : state.a.Live) :
@@ -105,7 +108,7 @@ lemma mergeGetmem_growth_intermediate_free
   · cases hBacking : state.a.backing with
     | inline =>
       left
-      simp [hBacking]
+      simp [mergeFreemem, hBacking]
     | heap =>
       right
       simp [mergeFreemem, hBacking]
@@ -123,7 +126,7 @@ namespace CPythonListsort
 lemma mergeFreemem_nonStorageFrame
   {κ : Type u}
   {ν : Type v}
-  {state : MergeState κ ν} :
+  (state : MergeState κ ν) :
 -- imply
   (mergeFreemem state).mergeGetmemNonStorageFrame = state.mergeGetmemNonStorageFrame := by
 -- proof
@@ -141,8 +144,8 @@ namespace CPythonListsort
 lemma mergeGetmem_nonStorageFrame
   {κ : Type u}
   {ν : Type v}
-  {state : MergeState κ ν}
-  {need : PySSize} :
+  (state : MergeState κ ν)
+  (need : PySSize) :
 -- imply
   (mergeGetmem state need).state.mergeGetmemNonStorageFrame = state.mergeGetmemNonStorageFrame := by
 -- proof
@@ -168,6 +171,7 @@ lemma listlen_eq
   {ν : Type v}
   {before : MergeState κ ν}
   {need : PySSize}
+  {result : MergeGetmemResult κ ν}
 -- given
   (h : MergeGetmemStoragePost before need result) :
 -- imply
@@ -188,6 +192,7 @@ lemma basekeys_eq
   {ν : Type v}
   {before : MergeState κ ν}
   {need : PySSize}
+  {result : MergeGetmemResult κ ν}
 -- given
   (h : MergeGetmemStoragePost before need result) :
 -- imply
@@ -208,6 +213,7 @@ lemma data_eq
   {ν : Type v}
   {before : MergeState κ ν}
   {need : PySSize}
+  {result : MergeGetmemResult κ ν}
 -- given
   (h : MergeGetmemStoragePost before need result) :
 -- imply
@@ -228,6 +234,7 @@ lemma pending_eq
   {ν : Type v}
   {before : MergeState κ ν}
   {need : PySSize}
+  {result : MergeGetmemResult κ ν}
 -- given
   (h : MergeGetmemStoragePost before need result) :
 -- imply
@@ -248,6 +255,7 @@ lemma minGallop_eq
   {ν : Type v}
   {before : MergeState κ ν}
   {need : PySSize}
+  {result : MergeGetmemResult κ ν}
 -- given
   (h : MergeGetmemStoragePost before need result) :
 -- imply
@@ -268,6 +276,7 @@ lemma keyCompare_eq
   {ν : Type v}
   {before : MergeState κ ν}
   {need : PySSize}
+  {result : MergeGetmemResult κ ν}
 -- given
   (h : MergeGetmemStoragePost before need result) :
 -- imply
@@ -288,6 +297,7 @@ lemma minrun_eq
   {ν : Type v}
   {before : MergeState κ ν}
   {need : PySSize}
+  {result : MergeGetmemResult κ ν}
 -- given
   (h : MergeGetmemStoragePost before need result) :
 -- imply
@@ -308,15 +318,15 @@ namespace CPythonListsort
 lemma mergeGetmem_reused_storage_valid
   {κ : Type u}
   {ν : Type v}
-  {state : MergeState κ ν}
-  {need : PySSize}
+  (state : MergeState κ ν)
+  (need : PySSize)
 -- given
   (hInv : TempStorageInv state.a state.alloced)
   (hLive : state.a.Live)
   (hNeed : need.Nonnegative)
   (hReuse : need.sle state.alloced = true) :
 -- imply
-  let result := mergeGetmem state need result.state = state ∧ result.outcome = .reused ∧ MergeGetmemStoragePost state need result := by
+  let result := mergeGetmem state need; result.state = state ∧ result.outcome = .reused ∧ MergeGetmemStoragePost state need result := by
 -- proof
   rw [mergeGetmem_reused state need hReuse]
   refine ⟨rfl, rfl, ?_⟩
@@ -346,8 +356,8 @@ namespace CPythonListsort
 lemma mergeGetmem_grown_storage_valid
   {κ : Type u}
   {ν : Type v}
-  {state : MergeState κ ν}
-  {need : PySSize}
+  (state : MergeState κ ν)
+  (need : PySSize)
 -- given
   (hInv : TempStorageInv state.a state.alloced)
   (hLive : state.a.Live)
@@ -355,7 +365,7 @@ lemma mergeGetmem_grown_storage_valid
   (hGrowth : need.sle state.alloced = false)
   (hLimit : need.toNat ≤ mergeGetmemAllocationLimit state.a) :
 -- imply
-  let result := mergeGetmem state need result.outcome = .grown ∧ result.state.alloced = need ∧ result.state.a.backing = .heap ∧ result.state.a.cells.size = need.toNat ∧ result.state.a.physicalSlots = state.a.multiplier * need.toNat ∧ result.state.a.physicalSlots ≤ PY_SSIZE_T_MAX / PY_OBJECT_PTR_BYTES ∧ result.state.alloced.Nonnegative ∧ MergeGetmemIntermediateFree state (mergeFreemem state) ∧ MergeGetmemStoragePost state need result := by
+  let result := mergeGetmem state need; result.outcome = .grown ∧ result.state.alloced = need ∧ result.state.a.backing = .heap ∧ result.state.a.cells.size = need.toNat ∧ result.state.a.physicalSlots = state.a.multiplier * need.toNat ∧ result.state.a.physicalSlots ≤ PY_SSIZE_T_MAX / PY_OBJECT_PTR_BYTES ∧ result.state.alloced.Nonnegative ∧ MergeGetmemIntermediateFree state (mergeFreemem state) ∧ MergeGetmemStoragePost state need result := by
 -- proof
   have hIntermediate := mergeGetmem_growth_intermediate_free state hInv hLive
   have hGrown := mergeGetmem_grown state need hGrowth hLimit
@@ -419,8 +429,8 @@ namespace CPythonListsort
 lemma mergeGetmem_storage_valid
   {κ : Type u}
   {ν : Type v}
-  {state : MergeState κ ν}
-  {need : PySSize}
+  (state : MergeState κ ν)
+  (need : PySSize)
 -- given
   (hInv : TempStorageInv state.a state.alloced)
   (hLive : state.a.Live)
@@ -432,9 +442,9 @@ lemma mergeGetmem_storage_valid
   by_cases hReuse : need.sle state.alloced = true
   · exact (mergeGetmem_reused_storage_valid state need hInv hLive hNeed hReuse).2.2
   · have hGrowth : need.sle state.alloced = false := by
-    cases hComparison : need.sle state.alloced
-    · rfl
-    · exact (hReuse hComparison).elim
+      cases hComparison : need.sle state.alloced
+      · rfl
+      · exact (hReuse hComparison).elim
     exact
       (mergeGetmem_grown_storage_valid state need hInv hLive hNeed hGrowth
         (hLimit hGrowth)).2.2.2.2.2.2.2.2
@@ -466,11 +476,9 @@ namespace CPythonListsort
 [fabricatedStaleReleasedMergeState_reuses](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeGetmemStorageValid.lean)
 -/
 @[path]
-lemma fabricatedStaleReleasedMergeState_reuses
-  {κ : Type u}
-  {ν : Type v} :
+lemma fabricatedStaleReleasedMergeState_reuses :
 -- imply
-  let state := fabricatedStaleReleasedMergeState let need : PySSize := 4 TempStorageInv state.a state.alloced ∧ ¬ state.a.Live ∧ need.sle state.alloced = true ∧ (mergeGetmem state need).outcome = .reused ∧ (mergeGetmem state need).state = state ∧ (mergeGetmem state need).state.a.backing = .released := by
+  let state := fabricatedStaleReleasedMergeState; let need : PySSize := 4; TempStorageInv state.a state.alloced ∧ ¬ state.a.Live ∧ need.sle state.alloced = true ∧ (mergeGetmem state need).outcome = .reused ∧ (mergeGetmem state need).state = state ∧ (mergeGetmem state need).state.a.backing = .released := by
 -- proof
   simp [fabricatedStaleReleasedMergeState, TempStorageInv, TempStorage.Live,
     mergeGetmem]

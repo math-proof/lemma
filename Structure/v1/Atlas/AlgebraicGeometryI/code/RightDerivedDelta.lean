@@ -8,12 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.AlgebraicGeometryI.code.DerivedFunctorsDefs
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.DerivedFunctorsDefs
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.EffaceableUniversal
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CechDerivedInstantiate
-import Def.v1.Atlas.AlgebraicGeometryI.code.EffaceableUniversal
-import Def.v1.Atlas.AlgebraicGeometryI.code.CechDerivedInstantiate.Part2
+module
+
+public import Def.v1.Atlas.AlgebraicGeometryI.code.DerivedFunctorsDefs
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DerivedFunctorsDefs
+public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.EffaceableUniversal
+public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CechDerivedInstantiate
+public import Def.v1.Atlas.AlgebraicGeometryI.code.EffaceableUniversal
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CechDerivedInstantiate.Part2
 
 
 section PerDegreeEffaceability
@@ -24,7 +26,7 @@ variable {C : Type u} [Category.{v} C] [Abelian C] [EnoughInjectives C]
 end PerDegreeEffaceability
 
 
-noncomputable section
+public noncomputable section
 
 open CategoryTheory CategoryTheory.Limits
 

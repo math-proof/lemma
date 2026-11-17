@@ -7,10 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Analysis.Asymptotics.AsymptoticEquivalent
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Analysis.Asymptotics.AsymptoticEquivalent
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
 set_option maxHeartbeats 400000
+
+public section
 
 /-- Probability that the Erdős–Rényi random graph $G(n, p)$ has at least
 $(1 + \delta) \binom{n}{3} p^3$ triangles (the upper tail event). -/

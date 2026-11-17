@@ -2,20 +2,23 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
 
-import Mathlib.Analysis.Convex.Extreme
-import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
-import Mathlib.Algebra.Group.Pointwise.Set.Basic
-import Mathlib.Analysis.Convex.Cone.Extension
-import Mathlib.Analysis.LocallyConvex.SeparatingDual
-import Mathlib.Analysis.Normed.Module.Dual
-import Mathlib.Analysis.Normed.Module.HahnBanach
-import Mathlib.LinearAlgebra.LinearPMap
-import Mathlib.MeasureTheory.Integral.BoundedContinuousFunction
-import Mathlib.MeasureTheory.Integral.RieszMarkovKakutani.Real
-import Mathlib.Topology.Bases
-import Mathlib.Topology.ContinuousMap.Bounded.Basic
-import Mathlib.Topology.ContinuousMap.CompactlySupported
+module
 
+public import Mathlib.Analysis.Convex.Extreme
+public import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
+public import Mathlib.Algebra.Group.Pointwise.Set.Basic
+public import Mathlib.Analysis.Convex.Cone.Extension
+public import Mathlib.Analysis.LocallyConvex.SeparatingDual
+public import Mathlib.Analysis.Normed.Module.Dual
+public import Mathlib.Analysis.Normed.Module.HahnBanach
+public import Mathlib.LinearAlgebra.LinearPMap
+public import Mathlib.MeasureTheory.Integral.BoundedContinuousFunction
+public import Mathlib.MeasureTheory.Integral.RieszMarkovKakutani.Real
+public import Mathlib.Topology.Bases
+public import Mathlib.Topology.ContinuousMap.Bounded.Basic
+public import Mathlib.Topology.ContinuousMap.CompactlySupported
+
+@[expose] public section
 
 namespace Convex.ChoquetWanted
 

@@ -17,7 +17,7 @@ limitations under the License.
 -/
 
 import Def.Combinatorics.SimpleGraph.Clique
-import Lemma.SimpleGraph.Clique
+import Theorem.SimpleGraph.Clique
 import Mathlib.Data.NNRat.Floor
 import Mathlib.Combinatorics.Enumerative.DoubleCounting
 import Mathlib.Combinatorics.SimpleGraph.Coloring.EdgeLabeling

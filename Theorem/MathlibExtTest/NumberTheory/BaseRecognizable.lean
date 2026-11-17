@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.BaseRecognizable
-import Lemma.Nat.BaseRecognizable
+import Theorem.Nat.BaseRecognizable
 
 
 namespace MetaMathlibExt

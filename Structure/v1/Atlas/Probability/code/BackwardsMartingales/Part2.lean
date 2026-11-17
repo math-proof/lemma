@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.MeasureTheory.Function.ConditionalExpectation.Real
-import Mathlib.MeasureTheory.Function.UniformIntegrable
-import Mathlib.MeasureTheory.Function.ConvergenceInMeasure
-import Def.Probability.BackwardsMartingales
+module
+
+public import Mathlib.MeasureTheory.Function.ConditionalExpectation.Real
+public import Mathlib.MeasureTheory.Function.UniformIntegrable
+public import Mathlib.MeasureTheory.Function.ConvergenceInMeasure
+public import Def.Probability.BackwardsMartingales
+public section
+
 open MeasureTheory Filter
 
 open scoped NNReal ENNReal MeasureTheory ProbabilityTheory Topology

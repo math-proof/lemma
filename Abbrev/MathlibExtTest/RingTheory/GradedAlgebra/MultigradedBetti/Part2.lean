@@ -1,13 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/GradedAlgebra/MultigradedBetti.lean -/
 
 
-import Def.RingTheory.GradedAlgebra.MultigradedBetti.Part2
-import Instance.MathlibExtTest.RingTheory.GradedAlgebra.MultigradedBetti
+module
+
+public import Def.RingTheory.GradedAlgebra.MultigradedBetti.Part2
+public import Instance.MathlibExtTest.RingTheory.GradedAlgebra.MultigradedBetti
 open scoped DirectSum
 open CategoryTheory CategoryTheory.Limits
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace MetaMathlibExtTest
 

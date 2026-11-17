@@ -9,16 +9,18 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexEndpointVertex.Part14
-import Theorem.StatisticalMechanics.Code.Universality.HexBrickUmlaufsatz.Part4
-import Theorem.StatisticalMechanics.Code.Universality.HexEndpointLocalGeometry.Part4
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.HexEndpointVertex.Part14
+public import Theorem.StatisticalMechanics.Code.Universality.HexBrickUmlaufsatz.Part4
+public import Theorem.StatisticalMechanics.Code.Universality.HexEndpointLocalGeometry.Part4
 
 
 namespace StatMech.Universality
 
 open Complex Function HexWalk
 
-noncomputable section
+public noncomputable section
 
 structure HexEndpointCyclicLoopPair (region : ℂ → Prop) (a : ℂ) (h0 : ℤ)
     (v du : ℂ) where

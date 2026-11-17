@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.LSeries.PrimeLog
-import Lemma.Nat.LSeries.PrimeLog
+import Theorem.Nat.LSeries.PrimeLog
 
 
 namespace PrimeLogTest

@@ -7,11 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Data.Finset.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Data.Finset.Basic
 set_option maxHeartbeats 800000
+
+public section
 
 /-- **Probabilistic core of the Johnson–Lindenstrauss lemma.** There exists $c > 0$ such that
 whenever the union-bound quantity $N^{2}\,(2\,e^{-c\varepsilon^{2}d})$ is strictly less than

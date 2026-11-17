@@ -34,7 +34,7 @@ import Structure.v1.Atlas.AlgebraicTopologyI.code.Section14
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section1.Part3
 import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section1
 import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section16
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.ContractibleHomology
+import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.ContractibleHomology
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section16.Part4
 import Def.v1.Atlas.AlgebraicTopologyI.code.ContractibleHomology.Part2
 open Topology BigOperators AlgebraicTopology CategoryTheory

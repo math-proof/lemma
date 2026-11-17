@@ -1,12 +1,14 @@
-import Mathlib
-import Structure.AlgebraicCurve_SemistableCharts
-import Abbrev.AlgebraicCurve_SemistableModel
-import Instance.AlgebraicCurve_SemistableModel
-import Def.AlgebraicCurve_SemistableModel
+module
+
+public import Mathlib
+public import Structure.AlgebraicCurve_SemistableCharts
+public import Abbrev.AlgebraicCurve_SemistableModel
+public import Instance.AlgebraicCurve_SemistableModel
+public import Def.AlgebraicCurve_SemistableModel
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open CategoryTheory AlgebraicGeometry IsLocalRing
 

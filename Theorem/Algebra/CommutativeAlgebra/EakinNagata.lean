@@ -1,12 +1,17 @@
-import Mathlib.RingTheory.FiniteType
-import Mathlib.Order.CompletePartialOrder
-import Mathlib.RingTheory.Ideal.Colon
-import Mathlib.RingTheory.Noetherian.Basic
+module
+
+public import Mathlib.RingTheory.FiniteType
+public import Mathlib.Order.CompletePartialOrder
+public import Mathlib.RingTheory.Ideal.Colon
+public import Mathlib.RingTheory.Noetherian.Basic
+
 /-!
 # Eakin–Nagata theorem
 
 The Eakin–Nagata theorem on descent of Noetherianness.
 -/
+
+public section
 
 
 namespace EakinNagata

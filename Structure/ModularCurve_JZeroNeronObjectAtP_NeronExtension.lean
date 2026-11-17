@@ -1,13 +1,15 @@
-import Mathlib
-import Structure.ModularCurve_JZeroNeronObjectAtP
-import Structure.AlgebraicGeometry_NeronModelPropertyBundleCarrier
+module
+
+public import Mathlib
+public import Structure.ModularCurve_JZeroNeronObjectAtP
+public import Structure.AlgebraicGeometry_NeronModelPropertyBundleCarrier
 
 set_option autoImplicit false
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry NeronModelInfra GoodReductionJacobian
   AlgebraicCurve IsLocalRing
 
-noncomputable section
+public noncomputable section
 
 namespace ModularCurve
 

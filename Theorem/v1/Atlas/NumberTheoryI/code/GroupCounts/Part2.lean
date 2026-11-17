@@ -7,18 +7,20 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.GroupTheory.SpecificGroups.Cyclic
-import Mathlib.GroupTheory.OrderOfElement
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Algebra.Group.Subgroup.Basic
-import Mathlib.GroupTheory.Finiteness
-import Mathlib.Algebra.Group.TypeTags.Basic
-import Mathlib.GroupTheory.QuotientGroup.Basic
-import Def.v1.Atlas.NumberTheoryI.code.GroupCounts.Part2
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic
+public import Mathlib.GroupTheory.OrderOfElement
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Algebra.Group.Subgroup.Basic
+public import Mathlib.GroupTheory.Finiteness
+public import Mathlib.Algebra.Group.TypeTags.Basic
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+public import Def.v1.Atlas.NumberTheoryI.code.GroupCounts.Part2
 open scoped Classical
 
+public section
 
 namespace GroupCounts
 

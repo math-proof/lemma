@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.VandermondeTypeConvolutionForSRestrictedWeightedCompositions
-import Lemma.Finset.Enumerative.VandermondeTypeConvolutionForSRestrictedWeightedCompositions
+import Theorem.Finset.Enumerative.VandermondeTypeConvolutionForSRestrictedWeightedCompositions
 import Mathlib.Algebra.Ring.Int.Defs
 
 

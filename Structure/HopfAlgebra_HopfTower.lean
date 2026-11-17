@@ -1,7 +1,11 @@
-import Mathlib
-import Instance.HopfAlgebra_HopfKerHopf
-import Instance.HopfAlgebra_HopfTower
-import Class.HopfAlgebra_HopfTower
+module
+
+public import Mathlib
+public import Instance.HopfAlgebra_HopfKerHopf
+public import Instance.HopfAlgebra_HopfTower
+public import Class.HopfAlgebra_HopfTower
+
+public section
 
 set_option autoImplicit false
 set_option linter.unusedSectionVars false

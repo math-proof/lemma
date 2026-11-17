@@ -7,16 +7,17 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib
-import Def.StatisticalMechanics.Code.Sharpness.Switching
+public import Mathlib
+public import Def.StatisticalMechanics.Code.Sharpness.Switching
 open Finset BigOperators
 open scoped symmDiff
 open Classical
 
 set_option linter.unusedSectionVars false
 
+public section
 
 namespace StatMech
 

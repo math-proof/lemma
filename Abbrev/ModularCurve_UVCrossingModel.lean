@@ -1,4 +1,6 @@
-import Mathlib
+module
+
+public import Mathlib
 
 set_option autoImplicit false
 
@@ -6,7 +8,7 @@ universe u
 
 namespace ModularCurve
 
-noncomputable section
+@[expose] public noncomputable section
 
 abbrev uvCrossingIdeal (W : Type u) [CommRing W] (π : W) : Ideal (MvPowerSeries (Fin 2) W) :=
   Ideal.span {(MvPowerSeries.X 0 : MvPowerSeries (Fin 2) W) * MvPowerSeries.X 1 -

@@ -4,15 +4,18 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Data.Nat.Totient
-import Mathlib.NumberTheory.ArithmeticFunction.Moebius
-import Mathlib.Analysis.Complex.ExponentialBounds
-import Mathlib.NumberTheory.EulerProduct.Basic
-import Mathlib.NumberTheory.Harmonic.Bounds
-import Mathlib.NumberTheory.Harmonic.EulerMascheroni
-import Mathlib.Tactic
+module
 
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Data.Nat.Totient
+public import Mathlib.NumberTheory.ArithmeticFunction.Moebius
+public import Mathlib.Analysis.Complex.ExponentialBounds
+public import Mathlib.NumberTheory.EulerProduct.Basic
+public import Mathlib.NumberTheory.Harmonic.Bounds
+public import Mathlib.NumberTheory.Harmonic.EulerMascheroni
+public import Mathlib.Tactic
+
+@[expose] public section
 
 namespace MathlibExt.NumberTheory.PrimeCounting
 

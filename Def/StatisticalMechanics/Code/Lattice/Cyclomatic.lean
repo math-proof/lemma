@@ -9,10 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib.Combinatorics.SimpleGraph.Acyclic
-import Mathlib.Combinatorics.SimpleGraph.Finite
-import Theorem.StatisticalMechanics.Code.Lattice.Cyclomatic
+module
 
+public import Mathlib.Combinatorics.SimpleGraph.Acyclic
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Theorem.StatisticalMechanics.Code.Lattice.Cyclomatic
+
+@[expose] public section
 
 namespace StatMech.Lattice
 

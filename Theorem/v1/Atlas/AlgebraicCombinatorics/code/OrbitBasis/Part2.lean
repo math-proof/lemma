@@ -7,16 +7,18 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.GroupTheory.GroupAction.Basic
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Mathlib.Data.Finsupp.Basic
-import Mathlib.Data.Finsupp.SMul
-import Mathlib.Data.Real.Basic
-import Mathlib.GroupTheory.GroupAction.Quotient
-import Def.v1.Atlas.AlgebraicCombinatorics.code.OrbitBasis.Part2
+public import Mathlib.GroupTheory.GroupAction.Basic
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.Data.Finsupp.Basic
+public import Mathlib.Data.Finsupp.SMul
+public import Mathlib.Data.Real.Basic
+public import Mathlib.GroupTheory.GroupAction.Quotient
+public import Def.v1.Atlas.AlgebraicCombinatorics.code.OrbitBasis.Part2
 set_option autoImplicit false
 
+public section
 
 noncomputable section
 

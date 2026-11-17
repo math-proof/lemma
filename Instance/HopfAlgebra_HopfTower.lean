@@ -1,7 +1,12 @@
 -- Carved from Lemma/Definitions/Def_HopfAlgebra_HopfTower.lean: instance decls only.
-import Mathlib
-import Instance.HopfAlgebra_HopfKerHopf
-import Class.HopfAlgebra_HopfTower
+
+module
+
+public import Mathlib
+public import Instance.HopfAlgebra_HopfKerHopf
+public import Class.HopfAlgebra_HopfTower
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option linter.unusedSectionVars false

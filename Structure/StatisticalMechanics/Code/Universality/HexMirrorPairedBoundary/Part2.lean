@@ -9,9 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexGenuineStripPhaseObstruction
-import Theorem.StatisticalMechanics.Code.Universality.HexMirrorPairedBoundary
+module
 
+public import Theorem.StatisticalMechanics.Code.Universality.HexGenuineStripPhaseObstruction
+public import Theorem.StatisticalMechanics.Code.Universality.HexMirrorPairedBoundary
+
+
+public section
 
 namespace StatMech.Universality
 

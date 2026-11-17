@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/WieferichPrime.lean -/
 
-import Mathlib.Data.Nat.ModEq
-import Mathlib.Data.Nat.Prime.Defs
+module
+
+public import Mathlib.Data.Nat.ModEq
+public import Mathlib.Data.Nat.Prime.Defs
+
+@[expose] public section
+
 /-!
 # Wieferich primes to base two
 

@@ -1,8 +1,12 @@
-import Mathlib.RingTheory.PowerSeries.Basic
-import Mathlib.NumberTheory.Divisors
-import Mathlib.Algebra.MvPolynomial.PDeriv
-import Mathlib.Data.Fin.VecNotation
-import Mathlib.LinearAlgebra.Span.Defs
+module
+
+public import Mathlib.RingTheory.PowerSeries.Basic
+public import Mathlib.NumberTheory.Divisors
+public import Mathlib.Algebra.MvPolynomial.PDeriv
+public import Mathlib.Data.Fin.VecNotation
+public import Mathlib.LinearAlgebra.Span.Defs
+
+@[expose] public section
 
 set_option autoImplicit false
 

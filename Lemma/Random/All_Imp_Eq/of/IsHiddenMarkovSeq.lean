@@ -1,4 +1,5 @@
 import Def.Probability.Process.HiddenMarkovSequence.Part2
+import Initialize.Tactic.Attr.Basic
 
 
 /-- `P t` only depends on the prefix `ys 0, …, ys t`. -/
@@ -24,3 +25,4 @@ private lemma main
 
 
 -- created on 2026-10-07
+-- updated on 2026-11-17

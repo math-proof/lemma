@@ -6,7 +6,11 @@ All rights reserved.
 Copyright (c) 2024 AlgebraicCombinatorics Contributors. All rights reserved.
 Authors: AlgebraicCombinatorics Contributors
 -/
-import Mathlib
+module
+
+public import Mathlib
+@[expose] public section
+
 open Finset Nat BigOperators
 set_option allowUnsafeReducibility true
 attribute [local reducible] PNat

@@ -1,10 +1,12 @@
-import Structure.AlgebraicGeometry_TwoChartCech
-import Mathlib.Algebra.Polynomial.Laurent
-import Mathlib.Algebra.Algebra.Subalgebra.Prod
+module
+
+public import Structure.AlgebraicGeometry_TwoChartCech
+public import Mathlib.Algebra.Polynomial.Laurent
+public import Mathlib.Algebra.Algebra.Subalgebra.Prod
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 open LaurentPolynomial
 

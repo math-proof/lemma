@@ -3,7 +3,7 @@
 -- MathlibExt/RingTheory/PiFieldDecomposition.lean
 
 import Def.RingTheory.PiFieldQuotient
-import Lemma.Int.PiFieldQuotient
+import Theorem.Int.PiFieldQuotient
 universe u v w x y
 
 /-!

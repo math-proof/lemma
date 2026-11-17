@@ -1,22 +1,24 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
+module
 
-import Mathlib.Analysis.Normed.Module.DoubleDual
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
-import Mathlib.Analysis.LocallyConvex.Separation
-import Mathlib.Analysis.Normed.Module.RCLike.Extend
-import Mathlib.Order.CompletePartialOrder
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+public import Mathlib.Analysis.Normed.Module.DoubleDual
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+public import Mathlib.Analysis.LocallyConvex.Separation
+public import Mathlib.Analysis.Normed.Module.RCLike.Extend
+public import Mathlib.Order.CompletePartialOrder
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
 
+public section
 
 section
 

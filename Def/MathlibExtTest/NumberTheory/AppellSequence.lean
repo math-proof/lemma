@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/AppellSequence.lean -/
 
 
-import Def.NumberTheory.AppellSequence
+module
+
+public import Def.NumberTheory.AppellSequence
+
+@[expose] public section
+
 open MetaMathlibExt
 
 

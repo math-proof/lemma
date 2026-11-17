@@ -7,15 +7,17 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Algebra.Polynomial.Laurent
-import Mathlib.LinearAlgebra.Finsupp.Supported
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.LinearAlgebra.Dimension.Finite
-import Mathlib.Data.Int.Interval
-import Def.v1.Atlas.AlgebraicGeometryI.code.CohomologyP1
+public import Mathlib.Algebra.Polynomial.Laurent
+public import Mathlib.LinearAlgebra.Finsupp.Supported
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.LinearAlgebra.Dimension.Finite
+public import Mathlib.Data.Int.Interval
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CohomologyP1
 set_option maxHeartbeats 400000
 
+public section
 
 namespace CohomologyP1
 

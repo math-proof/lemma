@@ -1,12 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/BinomialTransformSecondOrderHarmonic.lean -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Defs
-import Mathlib.Data.Complex.Basic
-import Mathlib.Order.Interval.Finset.Nat
-import Mathlib.Algebra.Polynomial.Roots
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.RingTheory.SimpleRing.Principal
+module
 
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.Order.Interval.Finset.Nat
+public import Mathlib.Algebra.Polynomial.Roots
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.RingTheory.SimpleRing.Principal
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

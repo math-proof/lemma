@@ -1,11 +1,13 @@
-import Mathlib
-import Instance.MvFormalGroup_NegV2
-import Structure.CerednikDrinfeld_SpecialFormalModule
-import Structure.CerednikDrinfeld_FormalUpperHalfPlaneDatum
+module
+
+public import Mathlib
+public import Instance.MvFormalGroup_NegV2
+public import Structure.CerednikDrinfeld_SpecialFormalModule
+public import Structure.CerednikDrinfeld_FormalUpperHalfPlaneDatum
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 universe u v
 

@@ -4,10 +4,15 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Algebra.Polynomial.Taylor
-import Mathlib.NumberTheory.Bernoulli
-import Mathlib.NumberTheory.BernoulliPolynomials
-import Mathlib.Tactic.NormNum.NatFactorial
+module
+
+public import Mathlib.Algebra.Polynomial.Taylor
+public import Mathlib.NumberTheory.Bernoulli
+public import Mathlib.NumberTheory.BernoulliPolynomials
+public import Mathlib.Tactic.NormNum.NatFactorial
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 5, Entry 1
 

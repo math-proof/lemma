@@ -1,17 +1,20 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
-import Mathlib.Analysis.Normed.Module.DoubleDual
-import Mathlib.Analysis.LocallyConvex.Separation
-import Mathlib.Analysis.Normed.Group.InfiniteSum
-import Mathlib.Analysis.Normed.Module.Convex
-import Mathlib.Analysis.Normed.Module.Dual
-import Mathlib.Analysis.Normed.Module.WeakDual
-import Mathlib.Data.List.GetD
-import Mathlib.Basic.Real.Sign
-import Mathlib.Topology.ContinuousMap.ZeroAtInfty
-import Def.Analysis.NormedSpace.KreinSmulian
+module
 
+public import Mathlib.Analysis.Normed.Module.DoubleDual
+public import Mathlib.Analysis.LocallyConvex.Separation
+public import Mathlib.Analysis.Normed.Group.InfiniteSum
+public import Mathlib.Analysis.Normed.Module.Convex
+public import Mathlib.Analysis.Normed.Module.Dual
+public import Mathlib.Analysis.Normed.Module.WeakDual
+public import Mathlib.Data.List.GetD
+public import Mathlib.Basic.Real.Sign
+public import Mathlib.Topology.ContinuousMap.ZeroAtInfty
+public import Def.Analysis.NormedSpace.KreinSmulian
+
+public section
 
 namespace FunctionalAnalysis.BanachSpaceWanted
 

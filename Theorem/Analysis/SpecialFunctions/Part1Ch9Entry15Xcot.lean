@@ -1,14 +1,18 @@
 /-
 Author: @akiezun, Avocado
 -/
+module
 
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Def.Analysis.SpecialFunctions.Part1Ch9Entry15Xcot
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Def.Analysis.SpecialFunctions.Part1Ch9Entry15Xcot
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 9, Entry 15
 
 X·cot x integral of order n reduces via a binomial recurrence.
 -/
+
+public section
 
 
 namespace Ramanujan.Part1Ch9

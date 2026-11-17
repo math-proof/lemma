@@ -9,10 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarBurtonKeaneTrifurcation.Part5
-import Theorem.StatisticalMechanics.Code.Lattice.JordanContour.Part3
-import Mathlib.Combinatorics.SimpleGraph.Ends.Properties
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarBurtonKeaneTail.Part2
+module
+
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarBurtonKeaneTrifurcation.Part5
+public import Theorem.StatisticalMechanics.Code.Lattice.JordanContour.Part3
+public import Mathlib.Combinatorics.SimpleGraph.Ends.Properties
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarBurtonKeaneTail.Part2
+public section
+
 open Set SimpleGraph
 
 

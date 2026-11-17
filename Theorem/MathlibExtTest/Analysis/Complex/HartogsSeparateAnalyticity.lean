@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Complex/HartogsSeparateAnalyticity.lean -/
+module
 
+public import Theorem.Analysis.Complex.HartogsSeparateAnalyticity.Part2
+public import Mathlib.Analysis.Calculus.FDeriv.Mul
+public import Mathlib.Analysis.Complex.CauchyIntegral
+public import Mathlib.Analysis.SpecialFunctions.PolarCoord
 
-import Theorem.Analysis.Complex.HartogsSeparateAnalyticity.Part2
-import Mathlib.Analysis.Calculus.FDeriv.Mul
-import Mathlib.Analysis.Complex.CauchyIntegral
-import Mathlib.Analysis.SpecialFunctions.PolarCoord
-
+public section
 
 namespace MathlibExtTest.Analysis.Complex.HartogsSeparateAnalyticity
 

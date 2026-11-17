@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.Independence.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
+module
+
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 open MeasureTheory ProbabilityTheory Real Finset

@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.Buildings.code.ChamberComplex.Basic
-import Def.v1.Atlas.Buildings.code.ChamberComplex.Uniqueness
-import Def.v1.Atlas.Buildings.code.ChamberComplex.Folding
+module
+
+public import Theorem.v1.Atlas.Buildings.code.ChamberComplex.Basic
+public import Def.v1.Atlas.Buildings.code.ChamberComplex.Uniqueness
+public import Def.v1.Atlas.Buildings.code.ChamberComplex.Folding
+public section
+
 open scoped Classical
 
 variable {V : Type*} [DecidableEq V]

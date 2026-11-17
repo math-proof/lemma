@@ -1,10 +1,13 @@
-import Def.FLTPrelim_Ramification
-import Lemma.WeierstrassCurve.FrobeniusTrace
-import Mathlib.Algebra.MvPolynomial.CommRing
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.LinearAlgebra.Determinant
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Structure.HeckeGalois_EichlerShimura
+module
+
+public import Def.FLTPrelim_Ramification
+public import Mathlib.Algebra.MvPolynomial.CommRing
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.LinearAlgebra.Determinant
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Structure.HeckeGalois_EichlerShimura
+
+@[expose] public section
 
 set_option autoImplicit false
 

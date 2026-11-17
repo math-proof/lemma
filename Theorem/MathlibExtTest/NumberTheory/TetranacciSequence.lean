@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/TetranacciSequence.lean -/
+module
 
+public import Def.NumberTheory.TetranacciSequence
 
-import Def.NumberTheory.TetranacciSequence
-
+public section
 
 namespace MetaMathlibExt
 

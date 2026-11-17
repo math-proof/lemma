@@ -1,6 +1,9 @@
-import Mathlib
-import Abbrev.Analysis.MeasureTheory.Notation
+module
 
+public import Mathlib
+public import Abbrev.Analysis.MeasureTheory.Notation
+
+public section
 
 theorem Set.indicator'_apply {X: Type*} (E: Set X) (x: X) [Decidable (x ∈ E)] : indicator' E x = if x ∈ E then 1 else 0 := indicator_apply _ _ _
 

@@ -9,8 +9,10 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusSquareCoverIntersection.Part7
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusDisjointWinding.Part3
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusSquareCoverIntersection.Part7
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusDisjointWinding.Part3
 open SimpleGraph
 
 
@@ -18,7 +20,7 @@ namespace StatMech.FrontierD
 
 open StatMech.Onsager
 
-noncomputable section
+public noncomputable section
 
 structure FKRectSquareCoverDartWitness (R : FKRectTorus)
     (u : Int × Int) where

@@ -1,10 +1,12 @@
-import Mathlib
+module
 
-import Structure.AlgebraicGeometry_OModulePresheafHom
+public import Mathlib
+
+public import Structure.AlgebraicGeometry_OModulePresheafHom
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 universe u
 

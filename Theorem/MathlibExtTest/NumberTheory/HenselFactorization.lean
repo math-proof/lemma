@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/HenselFactorization.lean -/
 
 
-import Lemma.Polynomial.HenselFactorization
+import Theorem.Polynomial.HenselFactorization
 /-!
 # Tests for monic Hensel factor lifting
 

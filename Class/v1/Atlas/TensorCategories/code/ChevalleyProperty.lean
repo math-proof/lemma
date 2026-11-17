@@ -9,13 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.TensorCategories.code.SemisimpleMultitensor.Part6
-import Lemma.Category.Atlas.v1.TensorCategories.code.SemisimpleMultitensor
 set_option maxHeartbeats 400000
 
 open CategoryTheory MonoidalCategory CategoryTheory.Limits
 
 universe v u
-
 
 noncomputable section
 

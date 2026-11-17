@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ApostolBernoulliNumber.lean -/
+module
 
+public import Def.NumberTheory.ApostolBernoulliNumber
 
-import Def.NumberTheory.ApostolBernoulliNumber
-
+public section
 
 namespace MetaMathlibExt
 

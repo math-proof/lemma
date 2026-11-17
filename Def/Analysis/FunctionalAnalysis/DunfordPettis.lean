@@ -4,22 +4,25 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
 
-import Mathlib.MeasureTheory.Function.UniformIntegrable
-import Mathlib.Topology.Algebra.Module.Spaces.WeakDual
-import Mathlib.Analysis.InnerProductSpace.Convex
-import Mathlib.Analysis.Normed.Module.DoubleDual
-import Mathlib.Analysis.Normed.Module.WeakDual
-import Mathlib.Analysis.Normed.Operator.BanachSteinhaus
-import Mathlib.MeasureTheory.Function.L2Space
-import Mathlib.MeasureTheory.Function.LpSeminorm.CompareExp
-import Mathlib.MeasureTheory.Function.LpSeminorm.Indicator
-import Mathlib.MeasureTheory.Function.LpSpace.Basic
-import Mathlib.MeasureTheory.Function.LpSpace.Complete
-import Mathlib.MeasureTheory.Integral.Bochner.L1
-import Mathlib.MeasureTheory.Integral.Bochner.Set
-import Mathlib.Topology.Algebra.Module.Spaces.WeakBilin
-import Lemma.Set.IsCompact.is.IsSeqCompact
-import Lemma.Real.FunctionalAnalysis.MilmanPettis
+module
+
+public import Mathlib.MeasureTheory.Function.UniformIntegrable
+public import Mathlib.Topology.Algebra.Module.Spaces.WeakDual
+public import Mathlib.Analysis.InnerProductSpace.Convex
+public import Mathlib.Analysis.Normed.Module.DoubleDual
+public import Mathlib.Analysis.Normed.Module.WeakDual
+public import Mathlib.Analysis.Normed.Operator.BanachSteinhaus
+public import Mathlib.MeasureTheory.Function.L2Space
+public import Mathlib.MeasureTheory.Function.LpSeminorm.CompareExp
+public import Mathlib.MeasureTheory.Function.LpSeminorm.Indicator
+public import Mathlib.MeasureTheory.Function.LpSpace.Basic
+public import Mathlib.MeasureTheory.Function.LpSpace.Complete
+public import Mathlib.MeasureTheory.Integral.Bochner.L1
+public import Mathlib.MeasureTheory.Integral.Bochner.Set
+public import Mathlib.Topology.Algebra.Module.Spaces.WeakBilin
+
+@[expose] public section
+
 open MeasureTheory
 open scoped ENNReal
 open scoped Pointwise

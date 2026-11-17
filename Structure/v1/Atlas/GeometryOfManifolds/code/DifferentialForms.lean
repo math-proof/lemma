@@ -8,16 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Class.v1.Atlas.GeometryOfManifolds.code.DifferentialForms.Part2
+module
+
+public import Mathlib
+public import Class.v1.Atlas.GeometryOfManifolds.code.DifferentialForms
+public section
+
 set_option autoImplicit false
-
-attribute [reducible, instance] DifferentialFormSpace.instAddCommGroup
-attribute [reducible, instance] DifferentialFormSpace.instModule
-
-attribute [instance] HasComplexScalars.instComplexModule
-attribute [instance] HasComplexScalars.instScalarTower
-attribute [instance] HasComplexScalars.instSMulCommClass
 
 
 /-- Poincaré homotopy operator on Euclidean space: there exist linear maps $K_p : \Omega^{p+1} \to \Omega^p$ satisfying $dK + Kd = \mathrm{id}$ and $K\,0 = 0$. -/

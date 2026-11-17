@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeForceCollapse.lean -/
 
-import Theorem.CPythonListsort.Code.Transcription.MergeAt
-import Def.CPythonListsort.Code.Transcription.MergeForceCollapse
+module
+
+public import Theorem.CPythonListsort.Code.Transcription.MergeAt
+public import Def.CPythonListsort.Code.Transcription.MergeForceCollapse
 /-!
 # Final pending-stack collapse
 
@@ -10,6 +12,8 @@ choose one of the top two adjacent merge positions using the neighboring run
 lengths and call `merge_at`.
 -/
 
+
+public section
 
 namespace CPythonListsort
 

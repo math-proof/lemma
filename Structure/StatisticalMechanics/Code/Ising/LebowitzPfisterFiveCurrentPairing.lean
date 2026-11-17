@@ -9,8 +9,10 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReflectedMatchingCut
-import Theorem.StatisticalMechanics.Code.Sharpness.GhostCurrentRep
+module
+
+public import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReflectedMatchingCut
+public import Theorem.StatisticalMechanics.Code.Sharpness.GhostCurrentRep
 open Finset
 open scoped symmDiff
 
@@ -23,7 +25,7 @@ open StatMech.Sharpness.FluxEdgeCopy
 
 open StatMech.Sharpness.GhostCurrentRep
 
-noncomputable section
+public noncomputable section
 
 variable {W : Type*} [DecidableEq W]
 

@@ -1,19 +1,21 @@
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Affine
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.AlgebraicGeometry.ValuativeCriterion
-import Mathlib.Algebra.GCDMonoid.IntegrallyClosed
-import Mathlib.AlgebraicGeometry.FunctionField
-import Mathlib.AlgebraicGeometry.AlgClosed.Basic
-import Mathlib.AlgebraicGeometry.Limits
-import Mathlib.FieldTheory.RatFunc.AsPolynomial
-import Structure.AlgebraicCurve_CurveModel
-import Instance.JacJ1_ChartAlgebra
-import Instance.AlgebraicCurve_CurveModelSmooth
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Affine
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.AlgebraicGeometry.ValuativeCriterion
+public import Mathlib.Algebra.GCDMonoid.IntegrallyClosed
+public import Mathlib.AlgebraicGeometry.FunctionField
+public import Mathlib.AlgebraicGeometry.AlgClosed.Basic
+public import Mathlib.AlgebraicGeometry.Limits
+public import Mathlib.FieldTheory.RatFunc.AsPolynomial
+public import Structure.AlgebraicCurve_CurveModel
+public import Instance.JacJ1_ChartAlgebra
+public import Instance.AlgebraicCurve_CurveModelSmooth
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry IntermediateField IsDedekindDomain
 open Topology TopCat

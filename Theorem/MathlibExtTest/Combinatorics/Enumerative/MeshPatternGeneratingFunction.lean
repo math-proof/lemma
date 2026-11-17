@@ -2,7 +2,7 @@
 
 
 import Mathlib.Algebra.Polynomial.Basic
-import Lemma.Finset.Enumerative.MeshPatternGeneratingFunction
+import Theorem.Finset.Enumerative.MeshPatternGeneratingFunction
 
 
 namespace MetaMathlibExt

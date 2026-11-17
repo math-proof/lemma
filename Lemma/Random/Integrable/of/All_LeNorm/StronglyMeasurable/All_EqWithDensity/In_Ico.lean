@@ -1,5 +1,7 @@
 import Lemma.Random.All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
@@ -12,14 +14,14 @@ Continuous-action counterpart of `Random.Integrable.of.In_Ico`.
 private lemma main
   [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮]
   [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
-  [NormedAddCommGroup E] [NormedSpace ℝ E]
+  [NormedAddCommGroup ℰ] [NormedSpace ℝ ℰ]
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {γ : ℝ}
   {C : ℝ}
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
-  {ψ : 𝒮 → 𝒜 → E}
+  {ψ : 𝒮 → 𝒜 → ℰ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
@@ -71,4 +73,4 @@ private lemma main
 
 
 -- created on 2026-11-14
--- updated on 2026-11-16
+-- updated on 2026-11-17

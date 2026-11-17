@@ -1,4 +1,8 @@
-import Def.ModularCurve_PlaceWidth
+module
+
+public import Def.ModularCurve_PlaceWidth
+
+@[expose] public section
 
 set_option autoImplicit false
 

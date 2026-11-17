@@ -1,8 +1,10 @@
-import Instance.AlgebraicCurve_DivisorClassGroup
+module
+
+public import Instance.AlgebraicCurve_DivisorClassGroup
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 open IsLocalRing
 

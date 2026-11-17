@@ -40,7 +40,6 @@ import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
-import Lemma.Nat.Ramanujan.Part1Ch3Entry12SummableSuccN
 import Def.NumberTheory.Ramanujan.Part1Ch3Entry16Corollary1JensenSeries
 import Lemma.Nat.Ramanujan.Part1Ch3Entry16Corollary1JensenSeries
 /-!

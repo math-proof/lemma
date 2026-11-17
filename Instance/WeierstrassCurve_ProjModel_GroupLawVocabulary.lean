@@ -20,7 +20,6 @@ import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Functor
 import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
 import Mathlib.Algebra.Module.Torsion.Basic
 import Mathlib.AlgebraicGeometry.EllipticCurve.Projective.Point
-import Lemma.WeierstrassCurve.ProjModel_AddFormulas
 import Lemma.WeierstrassCurve.ProjModel_GroupLawVocabulary
 
 set_option Elab.async false

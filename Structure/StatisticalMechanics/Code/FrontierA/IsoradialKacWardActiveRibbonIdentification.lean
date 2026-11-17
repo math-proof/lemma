@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialKacWardRibbonIdentification.Part7
-import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialKacWardActiveRibbonIdentification
+module
 
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialKacWardRibbonIdentification.Part7
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialKacWardActiveRibbonIdentification
+
+
+public section
 
 namespace StatMech.FrontierA
 

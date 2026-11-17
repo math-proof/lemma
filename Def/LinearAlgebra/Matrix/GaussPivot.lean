@@ -4,9 +4,14 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.LinearAlgebra.Matrix.Echelon.Basic
-import Mathlib.LinearAlgebra.Matrix.Block
-import Mathlib.Data.Finset.Sort
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Echelon.Basic
+public import Mathlib.LinearAlgebra.Matrix.Block
+public import Mathlib.Data.Finset.Sort
+
+@[expose] public section
+
 /-!
 # Gaussian elimination with row pivots
 

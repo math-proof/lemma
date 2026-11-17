@@ -1,5 +1,10 @@
 -- Carved from Lemma/Definitions/Def_LanglandsTunnell_C4Character.lean: instance decls only.
-import Instance.LanglandsTunnell_QuatH
+
+module
+
+public import Instance.LanglandsTunnell_QuatH
+
+@[expose] public section
 
 set_option autoImplicit false
 

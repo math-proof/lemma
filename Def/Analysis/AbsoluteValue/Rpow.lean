@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/AbsoluteValue/Rpow.lean -/
 
-import Mathlib.Analysis.MeanInequalitiesPow
+module
+
+public import Mathlib.Analysis.MeanInequalitiesPow
+
+@[expose] public section
+
 /-!
 # Real powers of absolute values
 

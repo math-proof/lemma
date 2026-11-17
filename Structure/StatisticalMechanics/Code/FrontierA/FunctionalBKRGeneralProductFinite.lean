@@ -8,7 +8,11 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.StatisticalMechanics.Code.FrontierA.FunctionalBKRGeneralProductTransport
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierA.FunctionalBKRGeneralProductTransport
+public section
+
 open MeasureTheory Set
 open Filter Topology
 open scoped BigOperators ENNReal

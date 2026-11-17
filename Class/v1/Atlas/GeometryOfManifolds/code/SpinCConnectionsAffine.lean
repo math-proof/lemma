@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/GeometryOfManifolds/code/SpinCConnectionsAffine.lean -/
 
 /-
@@ -8,11 +10,11 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.GeometryOfManifolds.code.FourManifoldsSW.Part8
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.FourManifoldsSW
-import Structure.v1.Atlas.GeometryOfManifolds.code.SpinCConnectionsAffine
-set_option autoImplicit false
+public import Def.v1.Atlas.GeometryOfManifolds.code.FourManifoldsSW.Part8
+public import Structure.v1.Atlas.GeometryOfManifolds.code.SpinCConnectionsAffine
+public section
 
+set_option autoImplicit false
 
 /-- The space of spin-c connections is an **affine space over $\Omega^1(M)$**: any two
 connections differ by a $1$-form, translation by $0$ is the identity, and translation is

@@ -4,10 +4,14 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Avocado
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.RingTheory.PowerSeries.Catalan
-import Lemma.Finset.Enumerative.CatalanGeneratingFunction
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.RingTheory.PowerSeries.Catalan
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 3
 

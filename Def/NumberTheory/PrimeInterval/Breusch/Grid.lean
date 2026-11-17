@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean -/
 
-import Mathlib.NumberTheory.Divisors
-import Mathlib.Algebra.Ring.Int.Defs
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+module
+
+public import Mathlib.NumberTheory.Divisors
+public import Mathlib.Algebra.Ring.Int.Defs
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+
+@[expose] public section
+
 /-!
 # Breusch grid certificate (`k = 9`)
 

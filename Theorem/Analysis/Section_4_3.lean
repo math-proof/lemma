@@ -1,6 +1,9 @@
-import Mathlib
-import Abbrev.Analysis.Section_4_3
+module
 
+public import Mathlib
+public import Abbrev.Analysis.Section_4_3
+
+public section
 
 namespace Section_4_3
 

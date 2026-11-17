@@ -2,11 +2,11 @@
 
 
 import Def.AlgebraicGeometry.Curve.Evaluation
-import Lemma.Finsupp.Eval.eq.Prod_Pow
-import Lemma.Finsupp.Eval0.eq.One
-import Lemma.Finsupp.Eval_Single.eq.Pow
-import Lemma.Finsupp.EvalAdd.eq.MulEvalS
-import Lemma.Finsupp.Eval.eq.PowEval
+import Theorem.Finsupp.Eval.eq.Prod_Pow
+import Theorem.Finsupp.Eval0.eq.One
+import Theorem.Finsupp.Eval_Single.eq.Pow
+import Theorem.Finsupp.EvalAdd.eq.MulEvalS
+import Theorem.Finsupp.Eval.eq.PowEval
 open Finsupp
 
 

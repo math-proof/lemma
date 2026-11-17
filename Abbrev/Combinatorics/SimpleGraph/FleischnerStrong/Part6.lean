@@ -6,9 +6,9 @@ Authors: Adam Kiezun, Muse Spark 1.3, Codex
 
 import Def.Combinatorics.SimpleGraph.StrongSquareCycle
 import Lemma.SimpleGraph.StrongSquareCycle
-import Lemma.SimpleGraph.VertexConnectivity
+import Theorem.SimpleGraph.VertexConnectivity
 import Lemma.SimpleGraph.Contraction
-import Lemma.SimpleGraph.EdgeIndexedMultigraph
+import Theorem.SimpleGraph.EdgeIndexedMultigraph
 import Lemma.SimpleGraph.Riha
 import Theorem.Combinatorics.SimpleGraph.VertexConnectivity
 import Theorem.Combinatorics.SimpleGraph.Contraction.Part3

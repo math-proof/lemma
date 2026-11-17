@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Set.Finite.Basic
-import Mathlib.Data.Fintype.Basic
-import Mathlib.Data.Set.Lattice
-import Mathlib.NumberTheory.Padics.RingHoms
-import Mathlib.Algebra.Polynomial.Eval.Coeff
+module
+
+public import Mathlib.Data.Set.Finite.Basic
+public import Mathlib.Data.Fintype.Basic
+public import Mathlib.Data.Set.Lattice
+public import Mathlib.NumberTheory.Padics.RingHoms
+public import Mathlib.Algebra.Polynomial.Eval.Coeff
+
+@[expose] public section
+
 universe u
 
 

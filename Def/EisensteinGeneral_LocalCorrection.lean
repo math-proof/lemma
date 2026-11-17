@@ -1,4 +1,8 @@
-import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
+
+@[expose] public section
 
 set_option autoImplicit false
 

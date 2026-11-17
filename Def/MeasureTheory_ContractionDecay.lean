@@ -1,4 +1,8 @@
-import Mathlib.MeasureTheory.Group.Measure
+module
+
+public import Mathlib.MeasureTheory.Group.Measure
+
+@[expose] public section
 
 open MeasureTheory Set
 open scoped ENNReal

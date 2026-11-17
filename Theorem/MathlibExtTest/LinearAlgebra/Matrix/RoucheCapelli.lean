@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Matrix/RoucheCapelli.lean -/
 
 
-import Lemma.Matrix.RoucheCapelli
+import Theorem.Matrix.RoucheCapelli
 open scoped Matrix
 
 

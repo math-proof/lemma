@@ -1,6 +1,10 @@
-import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
-import Mathlib.RingTheory.LaurentSeries
-import Mathlib.NumberTheory.Divisors
+module
+
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
+public import Mathlib.RingTheory.LaurentSeries
+public import Mathlib.NumberTheory.Divisors
+
+@[expose] public section
 
 set_option autoImplicit false
 

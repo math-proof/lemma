@@ -22,7 +22,7 @@ import Mathlib.RingTheory.Coalgebra.Basic
 import Mathlib.Algebra.Category.FGModuleCat.Basic
 import Abbrev.v1.Atlas.TensorCategories.code.QuasiBialgebra
 import Abbrev.v1.Atlas.TensorCategories.code.QuasiTensorFunctor.Part5
-import Lemma.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctor
+import Theorem.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctor
 import Def.v1.Atlas.TensorCategories.code.TannakaReconstruction
 set_option maxHeartbeats 800000
 

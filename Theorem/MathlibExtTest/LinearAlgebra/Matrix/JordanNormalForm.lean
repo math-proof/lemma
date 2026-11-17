@@ -4,7 +4,7 @@
 import Mathlib.Tactic
 import Mathlib.LinearAlgebra.Matrix.Basis
 import Def.LinearAlgebra.Matrix.JordanNormalForm
-import Lemma.Matrix.JordanNormalForm
+import Theorem.Matrix.JordanNormalForm
 open MathlibExt.LinearAlgebra.Matrix.JordanNormalFormWanted
 open Module
 

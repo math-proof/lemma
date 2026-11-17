@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/ScanPowerForestInvariant.lean -/
 
-import Structure.CPythonListsort.Code.Assembly.PowerSortPolicyCost.Part2
-import Def.CPythonListsort.Code.Policy.StackPowers.Part2
-import Inductive.CPythonListsort.Code.Assembly.ScanPowerForestInvariant
+module
+
+public import Structure.CPythonListsort.Code.Assembly.PowerSortPolicyCost.Part2
+public import Def.CPythonListsort.Code.Policy.StackPowers.Part2
+public import Inductive.CPythonListsort.Code.Assembly.ScanPowerForestInvariant
 /-!
 # Historical PowerSort invariant for the open scan forest
 
@@ -17,6 +19,9 @@ internal root power.  The newest root is explicitly a leaf, matching
 No evaluator induction appears here.  A later bridge must prove preservation
 of this invariant from the actual `found_new_run` trace.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

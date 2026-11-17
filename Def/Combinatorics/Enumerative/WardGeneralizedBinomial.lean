@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/WardGeneralizedBinomial.lean -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Order.Interval.Finset.Nat
-import Mathlib.Algebra.Order.Ring.Nat
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Order.Interval.Finset.Nat
+public import Mathlib.Algebra.Order.Ring.Nat
+
+@[expose] public section
+
 open scoped BigOperators
 
 

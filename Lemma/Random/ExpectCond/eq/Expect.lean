@@ -1,4 +1,5 @@
 import Lemma.Random.ProbCond_Joint.eq.ProbCond
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory Function Random
 open scoped Classical
 
@@ -31,4 +32,4 @@ private lemma main
 
 
 -- created on 2026-09-20
--- updated on 2026-11-14
+-- updated on 2026-11-17

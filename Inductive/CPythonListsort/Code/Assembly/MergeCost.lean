@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeCost.lean -/
 
-import Mathlib.Analysis.SpecialFunctions.Log.Base
-import Mathlib.Algebra.BigOperators.Ring.List
-import Mathlib.Tactic
-import Def.CPythonListsort.Code.Assembly.MergeCost
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Log.Base
+public import Mathlib.Algebra.BigOperators.Ring.List
+public import Mathlib.Tactic
+public import Def.CPythonListsort.Code.Assembly.MergeCost
 /-!
 # Merge-cost accounting
 
@@ -21,7 +23,7 @@ namespace CPythonListsort
 
 /-- A binary merge tree.  Leaves store run lengths and each internal node
 retains its PowerSort node power for the later policy bridge. -/
-inductive MergeTree where
+public inductive MergeTree where
   | leaf (length : Nat)
   | merge (power : Nat) (left right : MergeTree)
   deriving DecidableEq, Repr

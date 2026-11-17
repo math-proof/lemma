@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.HahnSeries.X0
+import Theorem.HahnSeries.X0
 import Abbrev.ModularCurve_RouteBCoordRing
 
 noncomputable section

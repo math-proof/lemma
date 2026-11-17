@@ -8,11 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.TensorProduct.Basic
-import Mathlib.RingTheory.RingInvo
-import Def.v1.Atlas.EllipticCurves.code.TorsionEndomorphism.Part3
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.TorsionEndomorphism
+module
 
+public import Mathlib.RingTheory.TensorProduct.Basic
+public import Mathlib.RingTheory.RingInvo
+public import Def.v1.Atlas.EllipticCurves.code.TorsionEndomorphism.Part3
+public import Lemma.Complex.Atlas.v1.EllipticCurves.code.TorsionEndomorphism
+
+
+public section
 
 section Definition121
 

@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.AlgebraicGeometry.Properties
-import Mathlib.AlgebraicGeometry.Noetherian
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.AlgebraicGeometry.Properties
+public import Mathlib.AlgebraicGeometry.Noetherian
+
+@[expose] public section
+
 open AlgebraicGeometry CategoryTheory Opposite
 
 universe u

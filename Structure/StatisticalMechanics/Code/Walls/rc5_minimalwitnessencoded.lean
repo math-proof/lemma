@@ -9,7 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Walls.rc3_minimalwitnessencoded
+module
+
+public import Theorem.StatisticalMechanics.Code.Walls.rc3_minimalwitnessencoded
+public section
+
 open Finset
 
 

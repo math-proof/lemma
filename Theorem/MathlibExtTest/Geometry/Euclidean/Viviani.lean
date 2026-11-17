@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Geometry/Euclidean/Viviani.lean -/
 
 
-import Lemma.Set.Euclidean.Viviani
+import Theorem.Set.Euclidean.Viviani
 import Mathlib.Analysis.Normed.Affine.AddTorsorBases
 import Mathlib.Geometry.Euclidean.PerpBisector
 import Mathlib.Geometry.Euclidean.Projection

@@ -2,6 +2,7 @@ import Mathlib.Probability.Independence.Basic
 import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.MeasureTheory.MeasurableSpace.Prod
 import Lemma.Random.CondIndepJoint.of.Indep_Joint.Indep
+import Initialize.Tactic.Attr.Basic
 open ProbabilityTheory MeasureTheory
 
 
@@ -90,3 +91,4 @@ private lemma main
 
 
 -- created on 2023-04-01
+-- updated on 2026-11-17

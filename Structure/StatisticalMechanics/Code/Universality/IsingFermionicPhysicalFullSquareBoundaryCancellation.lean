@@ -9,9 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalFullSquareFaceLaplacian.Part9
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareBoundaryGeometry
-import Def.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalFullSquareBoundaryCancellation.Part3
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalFullSquareFaceLaplacian.Part9
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareBoundaryGeometry
+public import Def.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalFullSquareBoundaryCancellation.Part3
 
 
 namespace StatMech.Universality
@@ -20,7 +22,7 @@ open Complex SimpleGraph
 
 open StatMech StatMech.FK StatMech.Lattice StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure FKIsingSquarePerimeterCancellationSwitchingAt
     (n : Nat) (hn : 0 < n)

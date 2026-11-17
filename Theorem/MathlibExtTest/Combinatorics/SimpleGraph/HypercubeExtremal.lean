@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.SimpleGraph.HypercubeExtremal
-import Lemma.SimpleGraph.HypercubeExtremal
+import Theorem.SimpleGraph.HypercubeExtremal
 
 
 namespace SimpleGraph

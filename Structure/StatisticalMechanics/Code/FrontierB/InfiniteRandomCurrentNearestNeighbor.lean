@@ -9,10 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentChainClosure
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentSelectionIndependence.Part3
-import Theorem.StatisticalMechanics.Code.FrontierB.FreeCurrentFamilyMixing
-import Theorem.StatisticalMechanics.Code.FrontierB.PlusCurrentFamilyMixing.Part3
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentChainClosure
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentSelectionIndependence.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierB.FreeCurrentFamilyMixing
+public import Theorem.StatisticalMechanics.Code.FrontierB.PlusCurrentFamilyMixing.Part3
+public section
+
 open Filter MeasureTheory Set Topology
 
 

@@ -1,0 +1,106 @@
+module
+
+public import Mathlib
+
+public section
+
+
+/--
+[nondegenerate_of_orthogonal_top_eq_bot](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/GeometricAlgebra/BilinFormComplementation.lean)
+-/
+public theorem Fin.Nondegenerate.of.EqOrthogonalBilinFormTop_Bot.IsRefl
+  [Field k]
+  [AddCommGroup V]
+  [Module k V]
+  {B : LinearMap.BilinForm k V}
+-- given
+  (href : B.IsRefl)
+  (hnd : LinearMap.BilinForm.orthogonal B ⊤ = ⊥) :
+-- imply
+  B.Nondegenerate :=
+-- proof
+  href.nondegenerate_iff_separatingLeft.mpr
+    (LinearMap.separatingLeft_iff_ker_eq_bot.mpr
+      (by rwa [LinearMap.BilinForm.orthogonal_top_eq_ker href] at hnd))
+
+
+
+/--
+[orthogonal_top_eq_bot_of_nondegenerate](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/GeometricAlgebra/BilinFormComplementation.lean)
+-/
+public theorem orthogonal_top_eq_bot_of_nondegenerate
+  [Field k]
+  [AddCommGroup V]
+  [Module k V]
+  {B : LinearMap.BilinForm k V}
+-- given
+  (href : B.IsRefl)
+  (hnd : B.Nondegenerate) :
+-- imply
+  LinearMap.BilinForm.orthogonal B ⊤ = ⊥ := by
+-- proof
+  rw [LinearMap.BilinForm.orthogonal_top_eq_ker href]
+  exact hnd.ker_eq_bot
+
+
+
+/--
+[isCompl_span_singleton_orthogonal](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/GeometricAlgebra/BilinFormComplementation.lean)
+-/
+public theorem isCompl_span_singleton_orthogonal
+  [Field k]
+  [AddCommGroup V]
+  [Module k V]
+  {B : LinearMap.BilinForm k V}
+  {x : V}
+-- given
+  (hx : B x x ≠ 0) :
+-- imply
+  IsCompl (k ∙ x) (LinearMap.BilinForm.orthogonal B (k ∙ x)) :=
+-- proof
+  LinearMap.BilinForm.isCompl_span_singleton_orthogonal hx
+
+
+
+/--
+[restrict_nondegenerate_orthogonal_spanSingleton](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/GeometricAlgebra/BilinFormComplementation.lean)
+-/
+public theorem restrict_nondegenerate_orthogonal_spanSingleton
+  [Field k]
+  [AddCommGroup V]
+  [Module k V]
+  {B : LinearMap.BilinForm k V}
+  {x : V}
+-- given
+  (href : B.IsRefl)
+  (hnd : LinearMap.BilinForm.orthogonal B ⊤ = ⊥)
+  (hx : B x x ≠ 0) :
+-- imply
+  (LinearMap.BilinForm.restrict B (LinearMap.BilinForm.orthogonal B (k ∙ x))).Nondegenerate :=
+-- proof
+  LinearMap.BilinForm.restrict_nondegenerate_orthogonal_spanSingleton B
+    (Fin.Nondegenerate.of.EqOrthogonalBilinFormTop_Bot.IsRefl href hnd) href hx
+
+variable {k : Type*} [Field k]
+  {V : Type*} [AddCommGroup V] [Module k V] [FiniteDimensional k V]
+
+
+
+/--
+[orthogonal_isCompl_of_restrict_nondegenerate](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/GeometricAlgebra/BilinFormComplementation.lean)
+-/
+public theorem orthogonal_isCompl_of_restrict_nondegenerate
+  {B : LinearMap.BilinForm k V}
+  {S : Submodule k V}
+-- given
+  (href : ∀ x y : V, B x y = 0 → B y x = 0)
+  (hS : (LinearMap.BilinForm.restrict B S).Nondegenerate) :
+-- imply
+  IsCompl S (LinearMap.BilinForm.orthogonal B S) :=
+-- proof
+  LinearMap.BilinForm.isCompl_orthogonal_of_restrict_nondegenerate href hS
+
+
+
+-- created on 2026-10-23
+-- updated on 2026-11-13

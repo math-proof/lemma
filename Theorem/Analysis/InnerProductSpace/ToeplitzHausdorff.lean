@@ -1,7 +1,10 @@
-import Mathlib.Analysis.CStarAlgebra.Module.Constructions
-import Mathlib.Analysis.InnerProductSpace.Continuous
-import Def.Analysis.InnerProductSpace.ToeplitzHausdorff
+module
 
+public import Mathlib.Analysis.CStarAlgebra.Module.Constructions
+public import Mathlib.Analysis.InnerProductSpace.Continuous
+public import Def.Analysis.InnerProductSpace.ToeplitzHausdorff
+
+public section
 
 namespace InnerProductSpace.ToeplitzHausdorffWanted
 

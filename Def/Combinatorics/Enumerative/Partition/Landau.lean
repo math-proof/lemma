@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/Partition/Landau.lean -/
 
-import Mathlib.Algebra.GCDMonoid.Multiset
-import Mathlib.Algebra.GCDMonoid.Nat
-import Mathlib.Combinatorics.Enumerative.Partition.Basic
+module
+
+public import Mathlib.Algebra.GCDMonoid.Multiset
+public import Mathlib.Algebra.GCDMonoid.Nat
+public import Mathlib.Combinatorics.Enumerative.Partition.Basic
+
+@[expose] public section
+
 /-!
 # The Landau function
 

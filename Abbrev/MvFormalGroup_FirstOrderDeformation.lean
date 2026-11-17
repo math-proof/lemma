@@ -1,9 +1,11 @@
-import Mathlib
-import Def.MvFormalGroup_Deformation
+module
+
+public import Mathlib
+public import Def.MvFormalGroup_Deformation
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace MvFormalGroup
 

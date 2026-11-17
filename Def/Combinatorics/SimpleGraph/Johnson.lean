@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Johnson.lean -/
 
-import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
-import Mathlib.Data.Finset.Card
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
+public import Mathlib.Data.Finset.Card
+
+@[expose] public section
+
 /-!
 # Johnson graphs
 

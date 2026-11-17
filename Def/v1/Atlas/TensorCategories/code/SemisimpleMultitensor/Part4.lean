@@ -23,7 +23,7 @@ import Mathlib.CategoryTheory.Monoidal.Linear
 import Mathlib.LinearAlgebra.Dimension.Finrank
 import Mathlib.LinearAlgebra.FiniteDimensional.Defs
 import Structure.v1.Atlas.TensorCategories.code.PivotalSpherical.Part3
-import Lemma.Category.Atlas.v1.TensorCategories.code.PivotalSpherical
+import Theorem.Category.Atlas.v1.TensorCategories.code.PivotalSpherical
 import Theorem.v1.Atlas.TensorCategories.code.SemisimpleMultitensor.Part3
 set_option maxHeartbeats 800000
 

@@ -8,16 +8,21 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Calculus.DifferentialForm.Basic
-import Mathlib.Geometry.Manifold.MFDeriv.Basic
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.MeasureTheory.Function.LpSpace.Basic
-import Mathlib.Geometry.Manifold.VectorBundle.Hom
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Data.Finsupp.Basic
-import Mathlib.Data.Finsupp.Defs
-import Mathlib.Data.Finsupp.Interval
+module
+
+public import Mathlib.Analysis.Calculus.DifferentialForm.Basic
+public import Mathlib.Geometry.Manifold.MFDeriv.Basic
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.MeasureTheory.Function.LpSpace.Basic
+public import Mathlib.Geometry.Manifold.VectorBundle.Hom
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Data.Finsupp.Basic
+public import Mathlib.Data.Finsupp.Defs
+public import Mathlib.Data.Finsupp.Interval
+
+@[expose] public section
+
 set_option autoImplicit false
 
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Def.HeckeGalois_EichlerShimura
+module
+
+public import Mathlib
+public import Def.HeckeGalois_EichlerShimura
+
+@[expose] public section
 
 set_option autoImplicit false
 

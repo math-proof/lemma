@@ -1,6 +1,9 @@
-import Mathlib.Analysis.InnerProductSpace.Spectrum
-import Mathlib.Analysis.Matrix.Hermitian
-import Def.Analysis.InnerProductSpace.KyFan
+module
+
+public import Mathlib.Analysis.InnerProductSpace.Spectrum
+public import Mathlib.Analysis.Matrix.Hermitian
+public import Def.Analysis.InnerProductSpace.KyFan
+
 /-!
 # Ky Fan eigenvalue inequality
 
@@ -10,6 +13,8 @@ for `A` plus sum for `B`.
 Source: Ky Fan, On a theorem of Weyl concerning eigenvalues of linear
 transformations. I, PNAS 35 (1949), 652-655, DOI 10.1073/pnas.35.11.652.
 -/
+
+public section
 
 
 namespace InnerProductSpace.KyFanWanted

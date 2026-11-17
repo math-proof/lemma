@@ -9,13 +9,15 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnDevelopedIncidence.Part3
-import Def.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnAdaptiveMixedCharge
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnDevelopedIncidence.Part3
+public import Def.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnAdaptiveMixedCharge
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure FKRectZeroTurnAdaptiveMixedRouting
     (R : FKRectTorus) (omega : R.Configuration) where

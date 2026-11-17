@@ -1,7 +1,11 @@
-import Mathlib
-import Instance.ExtCitation_LocalLevelResidues
-import Def.GroupCohomology_CyclicCarry
-import Structure.ExtCitation_LocalLevel_FundamentalClass
+module
+
+public import Mathlib
+public import Instance.ExtCitation_LocalLevelResidues
+public import Def.GroupCohomology_CyclicCarry
+public import Structure.ExtCitation_LocalLevel_FundamentalClass
+
+@[expose] public section
 
 set_option autoImplicit false
 

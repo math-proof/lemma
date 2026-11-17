@@ -8,14 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Asymptotics.AsymptoticEquivalent
-import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
-import Mathlib.Analysis.SpecialFunctions.Stirling
-import Mathlib.Analysis.SpecialFunctions.Complex.LogBounds
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Nat.Choose.Cast
-import Mathlib.Topology.Order.Basic
-import Mathlib.Order.Filter.AtTopBot.Floor
+module
+
+public import Mathlib.Analysis.Asymptotics.AsymptoticEquivalent
+public import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
+public import Mathlib.Analysis.SpecialFunctions.Stirling
+public import Mathlib.Analysis.SpecialFunctions.Complex.LogBounds
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Data.Nat.Choose.Cast
+public import Mathlib.Topology.Order.Basic
+public import Mathlib.Order.Filter.AtTopBot.Floor
+
+@[expose] public section
+
 open Asymptotics Filter Real Topology Nat
 
 

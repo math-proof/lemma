@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NewtonSequence.lean -/
 
-import Mathlib.Algebra.BigOperators.Ring.Finset
+module
 
+public import Mathlib.Algebra.BigOperators.Ring.Finset
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

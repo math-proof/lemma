@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.Projectivization.Basic
-import Mathlib.Topology.Order
-import Mathlib.RingTheory.Nullstellensatz
-import Mathlib.Topology.Constructions
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec2ProjectiveSpace
+module
+
+public import Mathlib.LinearAlgebra.Projectivization.Basic
+public import Mathlib.Topology.Order
+public import Mathlib.RingTheory.Nullstellensatz
+public import Mathlib.Topology.Constructions
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec2ProjectiveSpace
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open scoped LinearAlgebra.Projectivization

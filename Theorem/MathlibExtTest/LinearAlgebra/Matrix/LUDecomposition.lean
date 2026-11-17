@@ -3,7 +3,7 @@
 
 import Mathlib.Tactic.IntervalCases
 import Mathlib.Tactic.NormNum
-import Lemma.Matrix.LUDecomposition
+import Theorem.Matrix.LUDecomposition
 open MathlibExt.LinearAlgebra.Matrix.LUDecompositionWanted
 
 

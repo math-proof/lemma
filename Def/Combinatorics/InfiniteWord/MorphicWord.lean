@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/InfiniteWord/MorphicWord.lean -/
 
 import Def.Combinatorics.InfiniteWord.PureMorphicWord
-import Lemma.Finset.InfiniteWord.PureMorphicWord
+import Theorem.Finset.InfiniteWord.PureMorphicWord
 
 
 namespace MetaMathlibExt

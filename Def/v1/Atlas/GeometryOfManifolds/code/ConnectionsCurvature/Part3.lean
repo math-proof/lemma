@@ -18,7 +18,7 @@ import Mathlib.Data.Complex.Basic
 import Mathlib.Tactic
 import Mathlib.Geometry.Manifold.VectorBundle.CovariantDerivative.Basic
 import Def.v1.Atlas.GeometryOfManifolds.code.DifferentialForms.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.DifferentialForms
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.DifferentialForms
 import Structure.v1.Atlas.GeometryOfManifolds.code.ConnectionsCurvature.Part2
 open Bundle NormedSpace
 open scoped Manifold ContDiff Topology

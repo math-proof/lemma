@@ -7,17 +7,19 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.RingTheory.Ideal.Cotangent
-import Mathlib.RingTheory.Ideal.Operations
-import Mathlib.RingTheory.GradedAlgebra.Basic
-import Mathlib.LinearAlgebra.SymmetricAlgebra.Basic
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.ReesAlgebra
-import Mathlib.AlgebraicGeometry.Scheme
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec20TangentCone
+public import Mathlib.RingTheory.Ideal.Cotangent
+public import Mathlib.RingTheory.Ideal.Operations
+public import Mathlib.RingTheory.GradedAlgebra.Basic
+public import Mathlib.LinearAlgebra.SymmetricAlgebra.Basic
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.ReesAlgebra
+public import Mathlib.AlgebraicGeometry.Scheme
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec20TangentCone
 open Polynomial
 
+public section
 
 namespace Lec20TangentCone
 

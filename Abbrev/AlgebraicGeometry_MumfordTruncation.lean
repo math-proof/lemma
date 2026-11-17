@@ -1,11 +1,13 @@
-import Mathlib.LinearAlgebra.Prod
-import Mathlib.LinearAlgebra.Quotient.Basic
-import Mathlib.RingTheory.Finiteness.Cardinality
-import Mathlib.Algebra.Module.Projective
+module
+
+public import Mathlib.LinearAlgebra.Prod
+public import Mathlib.LinearAlgebra.Quotient.Basic
+public import Mathlib.RingTheory.Finiteness.Cardinality
+public import Mathlib.Algebra.Module.Projective
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 universe u v w w'
 

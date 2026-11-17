@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Probability/Statistics/GaussMarkov.lean -/
 
 
-import Lemma.Measure.Statistics.GaussMarkov
+import Theorem.Measure.Statistics.GaussMarkov
 open Matrix MathlibExt.Probability.Statistics.GaussMarkov
 
 /-!

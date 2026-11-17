@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Mathlib.RingTheory.ReesAlgebra
 import Def.v1.Atlas.AlgebraicGeometryI.code.BlowupChart
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.BlowupChart
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BlowupChart
 open Polynomial
 
 

@@ -17,7 +17,7 @@ import Mathlib.GroupTheory.OrderOfElement
 import Mathlib.Data.Fintype.Units
 import Mathlib.Algebra.Ring.GeomSum
 import Def.v1.Atlas.EllipticCurves.code.Divisors.Part5
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.Divisors
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.Divisors
 import Lemma.Complex.Atlas.v1.EllipticCurves.code.TorsionEndomorphism
 import Def.v1.Atlas.EllipticCurves.code.TorsionEndomorphism.Part3
 

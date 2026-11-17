@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.Ramanujan.Part1Ch3Section8Example1Asymptotic
-import Lemma.Nat.Ramanujan.Part1Ch3Section8Example1Asymptotic
+import Theorem.Nat.Ramanujan.Part1Ch3Section8Example1Asymptotic
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
 

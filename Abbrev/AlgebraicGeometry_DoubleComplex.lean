@@ -1,9 +1,11 @@
-import Mathlib
-import Structure.AlgebraicGeometry_DoubleComplex
+module
+
+public import Mathlib
+public import Structure.AlgebraicGeometry_DoubleComplex
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 universe u
 

@@ -8,11 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.Building.Spherical
-import Lemma.Finset.AreOpposite.of.AreOpposite
-import Lemma.Finset.IsMaximalToSimplicialComplex.of.IsMaximal.In_Apartments
-import Theorem.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes
-import Structure.v1.Atlas.Buildings.code.Building.ApartmentsCoxeter
+module
+
+public import Def.v1.Atlas.Buildings.code.Building.Spherical
+public import Theorem.Finset.AreOpposite.of.AreOpposite
+public import Theorem.Finset.IsMaximalToSimplicialComplex.of.IsMaximal.In_Apartments
+public import Theorem.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes
+public import Structure.v1.Atlas.Buildings.code.Building.ApartmentsCoxeter
+public section
+
 open scoped Classical
 
 variable {V : Type*} [DecidableEq V]

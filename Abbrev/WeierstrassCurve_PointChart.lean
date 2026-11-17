@@ -1,13 +1,15 @@
-import Mathlib
-import Structure.WeierstrassCurve_ProjModel
-import Structure.WeierstrassCurve_DrinfeldBasisGlobal
-import Abbrev.WeierstrassCurve_SectionAtOrigin
+module
+
+public import Mathlib
+public import Structure.WeierstrassCurve_ProjModel
+public import Structure.WeierstrassCurve_DrinfeldBasisGlobal
+public import Abbrev.WeierstrassCurve_SectionAtOrigin
 
 set_option autoImplicit false
 
 universe u
 
-noncomputable section
+@[expose] public noncomputable section
 
 open AlgebraicGeometry CategoryTheory WeierstrassProjModel MvPolynomial HomogeneousLocalization
 open HomogeneousIdealQuotientGrading

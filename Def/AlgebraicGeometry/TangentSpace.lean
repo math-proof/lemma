@@ -1,5 +1,10 @@
-import Mathlib.Algebra.MvPolynomial.PDeriv
-import Mathlib.RingTheory.Ideal.Basic
+module
+
+public import Mathlib.Algebra.MvPolynomial.PDeriv
+public import Mathlib.RingTheory.Ideal.Basic
+
+@[expose] public section
+
 set_option autoImplicit false
 
 /-! # Translated tangent spaces (ATLAS ArithmeticGeometry Definition 17.1)

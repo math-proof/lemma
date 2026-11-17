@@ -20,8 +20,6 @@ import Mathlib.CategoryTheory.Preadditive.Projective.Basic
 import Mathlib.CategoryTheory.Limits.Constructions.EpiMono
 import Mathlib.LinearAlgebra.FiniteDimensional.Defs
 import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
-import Lemma.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
-import Lemma.Category.Atlas.v1.TensorCategories.code.HigherDerivation
 import Theorem.v1.Atlas.TensorCategories.code.UnitSemisimplicity
 import Instance.v1.Atlas.TensorCategories.code.HigherDerivation
 import Instance.v1.Atlas.TensorCategories.code.Ext1UnitVanishing
@@ -30,7 +28,6 @@ set_option maxHeartbeats 800000
 open CategoryTheory MonoidalCategory Category Limits
 
 universe v u w
-
 
 noncomputable section
 

@@ -1,8 +1,6 @@
 -- Carved from Lemma/Definitions/Def_CuspForm_TwoCuspLattice.lean: instance decls only.
 import Mathlib
-import Lemma.ZMod.Inst
 import Instance.CuspForm_HeckeOperatorFormsGammaH
-import Lemma.ModularForm.AtkinLehnerDatum
 import Instance.FLTPrelim_Modularity
 import Lemma.CuspForm.TwoCuspLattice
 

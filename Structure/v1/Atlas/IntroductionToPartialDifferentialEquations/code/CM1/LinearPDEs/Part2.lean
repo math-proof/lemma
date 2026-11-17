@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM1.LinearPDEs.Part2
+module
 
+public import Mathlib
+public import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM1.LinearPDEs.Part2
+
+
+public section
 
 /-- A PDE of order $N$ in $n$ variables (Definition 1.0.1): an equation $F(\text{jet}) = 0$
 where $F$ is a real-valued function of the $N$-jet $(u, \partial^{\alpha} u, x)$. -/

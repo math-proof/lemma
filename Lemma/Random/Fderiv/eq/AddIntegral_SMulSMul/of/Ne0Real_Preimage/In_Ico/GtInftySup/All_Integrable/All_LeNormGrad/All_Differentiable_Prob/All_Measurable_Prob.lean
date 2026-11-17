@@ -1,4 +1,3 @@
-import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Lemma.Random.Fderiv_V.eq.Fderiv_Vc.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob
 import Lemma.Random.Fderiv.eq.AddIntegral_SMulSMul.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob
 import Lemma.Random.Integral_MulEqS.eq.MulRealW.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
@@ -6,6 +5,8 @@ import Lemma.Random.Kf.eq.Integral_TW.of.All_LeNorm.StronglyMeasurable.All_EqWit
 import Lemma.Random.Integral.eq.Integral_SMul.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Lemma.Real.StronglyMeasurable_Eq12
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Finset Real
 set_option maxHeartbeats 800000
 
@@ -45,7 +46,8 @@ private lemma integral_stageK_eq
   rw [e]
   simp_rw [smul_eq_mul, hinner]
   if hxy : sₜ = y then
-    simpa [hxy] using hStoch.integral_eq_one θ y
+    simp [hxy]
+    convert hStoch.integral_eq_one θ y
   else
     simp [hxy]
 
@@ -72,7 +74,7 @@ private lemma integral_trans_real_stageK
     have : IsProbabilityMeasure ((M.trans z.2 : Measure 𝒮)) := inferInstance
     have hnonneg : (0 : ℝ) ≤ (M.trans z.2).toMeasure.real {y} := measureReal_nonneg
     have hle : (M.trans z.2).toMeasure.real {y} ≤ 1 := measureReal_le_one
-    simp [f, Real.norm_eq_abs, abs_of_nonneg hnonneg, hle]
+    simp [f, Real.norm_eq_abs]
   have e :=
     Integral.eq.Integral_SMul.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
       (M := M) hf hC θ sₜ
@@ -254,7 +256,7 @@ private lemma main
         have hnn : (0 : ℝ) ≤ (M.trans (sₜ, u)).toMeasure.real {y} := measureReal_nonneg
         have hle : (M.trans (sₜ, u)).toMeasure.real {y} ≤ 1 := measureReal_le_one
         have hπn : (0 : ℝ) ≤ M.π[θ] sₜ u := hStoch.nonneg θ sₜ u
-        simp [norm_mul, Real.norm_eq_abs, abs_of_nonneg hπn, abs_of_nonneg hnn]
+        simp [norm_mul, Real.norm_eq_abs, abs_of_nonneg hπn]
         exact mul_le_of_le_one_right hπn hle)
   have hswap : ∀ F : 𝒮 → Θ →L[ℝ] ℝ,
     ∫ u, (M.π[θ] sₜ u • (∫ y, F y ∂(M.trans (sₜ, u)))) ∂ReferenceMeasure.measure =
@@ -295,4 +297,4 @@ private lemma main
 
 
 -- created on 2026-11-13
--- updated on 2026-11-16
+-- updated on 2026-11-17

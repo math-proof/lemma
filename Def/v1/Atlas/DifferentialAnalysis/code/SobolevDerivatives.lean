@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.DifferentialAnalysis.code.FourierInversion.Part7
 import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.FourierInversion
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.TemperedDistributions
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TemperedDistributions
 import Def.v1.Atlas.DifferentialAnalysis.code.TemperedDistributions
 open scoped SchwartzMap FourierTransform
 open SobolevSpace TemperedDistributions TestFunctions MeasureTheory

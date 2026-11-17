@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LabosPrime.lean -/
 
-import Mathlib.NumberTheory.PrimeCounting
+module
+
+public import Mathlib.NumberTheory.PrimeCounting
+
+@[expose] public section
+
 /-!
 # Labos primes
 

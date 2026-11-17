@@ -8,13 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Computability.DFA
-import Def.v1.Atlas.TheoryOfComputation.code.Complexity.Part2
-import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.Complexity
-import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.SpaceComplexity
-import Def.v1.Atlas.TheoryOfComputation.code.SpaceComplexity.Part7
-import Def.v1.Atlas.TheoryOfComputation.code.HierarchyTheorems
+module
 
+public import Mathlib.Computability.DFA
+public import Def.v1.Atlas.TheoryOfComputation.code.Complexity.Part2
+public import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.Complexity
+public import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.SpaceComplexity
+public import Def.v1.Atlas.TheoryOfComputation.code.SpaceComplexity.Part7
+public import Def.v1.Atlas.TheoryOfComputation.code.HierarchyTheorems
+
+
+public section
 
 namespace HierarchyTheorems
 

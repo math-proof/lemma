@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/FoundNewRun.lean -/
 
-import Theorem.CPythonListsort.Code.Transcription.MergeAt
-import Def.CPythonListsort.Code.Transcription.Powerloop
-import Structure.CPythonListsort.Code.Transcription.FoundNewRun
+module
+
+public import Theorem.CPythonListsort.Code.Transcription.MergeAt
+public import Def.CPythonListsort.Code.Transcription.Powerloop
+public import Structure.CPythonListsort.Code.Transcription.FoundNewRun
+
+@[expose] public section
+
 /-!
 # PowerSort policy step for a newly found run
 

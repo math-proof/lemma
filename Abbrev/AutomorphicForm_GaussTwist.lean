@@ -1,11 +1,13 @@
-import Structure.HeckeCharacter_FiniteOrder
-import Structure.NumberField_AdelicLevel
-import Def.AutomorphicForm_ConstantTerm
+module
+
+public import Structure.HeckeCharacter_FiniteOrder
+public import Structure.NumberField_AdelicLevel
+public import Def.AutomorphicForm_ConstantTerm
 
 set_option autoImplicit false
 set_option maxSynthPendingDepth 3
 
-noncomputable section
+@[expose] public noncomputable section
 
 open NumberField IsDedekindDomain NumberField.AdelicLevel
 

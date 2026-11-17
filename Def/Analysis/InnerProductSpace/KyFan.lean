@@ -1,5 +1,10 @@
-import Mathlib.Analysis.InnerProductSpace.Spectrum
-import Mathlib.Analysis.Matrix.Hermitian
+module
+
+public import Mathlib.Analysis.InnerProductSpace.Spectrum
+public import Mathlib.Analysis.Matrix.Hermitian
+
+@[expose] public section
+
 /-!
 # Ky Fan eigenvalue inequality
 

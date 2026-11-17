@@ -9,8 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Def.FC.OeisA108081_count_words_in_x_is_a_shifted.Part6
+module
+
+public import Mathlib
+public import Def.FC.OeisA108081_count_words_in_x_is_a_shifted.Part5
+public import Def.FC.OeisA108081_count_words_in_x_is_a_shifted.Part6
+
+@[expose] public section
+
 
 
 namespace OeisA108081
@@ -18,7 +24,7 @@ namespace OeisA108081
 open Nat
 
 
-@[simp] lemma map_edgeValue_coordWord (w : Word) :
+@[simp] public theorem map_edgeValue_coordWord (w : Word) :
     (coordWord w).map edgeValue = w := by
   induction w with
   | nil => rfl
@@ -26,7 +32,7 @@ open Nat
       change edgeValue (edgeCoord x) :: (coordWord xs).map edgeValue = x :: xs
       simp [ih]
 
-@[simp] lemma coordWord_map_edgeValue (w : List EdgeCoord) :
+@[simp] public theorem coordWord_map_edgeValue (w : List EdgeCoord) :
     coordWord (w.map edgeValue) = w := by
   induction w with
   | nil => rfl
@@ -34,22 +40,22 @@ open Nat
       change edgeCoord (edgeValue x) :: coordWord (xs.map edgeValue) = x :: xs
       simp [ih]
 
-@[simp] lemma edgeValue_coordLeft (q : EdgeCoord) :
+@[simp] public theorem edgeValue_coordLeft (q : EdgeCoord) :
     edgeValue (coordLeft q) = leftChild (edgeValue q) := by
   rcases q with ⟨k, e⟩
   cases e <;> simp [coordLeft]
 
-@[simp] lemma edgeValue_coordRight (q : EdgeCoord) :
+@[simp] public theorem edgeValue_coordRight (q : EdgeCoord) :
     edgeValue (coordRight q) = rightChild (edgeValue q) := by
   rcases q with ⟨k, e⟩
   cases e <;> simp [coordRight]
 
-@[simp] lemma edgeCoord_leftChild (z : ℤ) :
+@[simp] public theorem edgeCoord_leftChild (z : ℤ) :
     edgeCoord (leftChild z) = coordLeft (edgeCoord z) := by
   apply (Equiv.injective edgeEquiv)
   simp [edgeEquiv]
 
-@[simp] lemma edgeCoord_rightChild (z : ℤ) :
+@[simp] public theorem edgeCoord_rightChild (z : ℤ) :
     edgeCoord (rightChild z) = coordRight (edgeCoord z) := by
   apply (Equiv.injective edgeEquiv)
   simp [edgeEquiv]

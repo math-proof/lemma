@@ -1,5 +1,9 @@
-import Mathlib
-import Def.WeierstrassCurve_VeluQuotientOfSums
+module
+
+public import Mathlib
+public import Def.WeierstrassCurve_VeluQuotientOfSums
+
+@[expose] public section
 
 set_option autoImplicit false
 

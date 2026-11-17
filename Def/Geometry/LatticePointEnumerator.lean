@@ -1,15 +1,20 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Geometry/LatticePointEnumerator.lean -/
 
-import Mathlib.Algebra.Group.Pointwise.Set.Basic
-import Mathlib.Algebra.Group.Pointwise.Set.Scalar
-import Mathlib.Algebra.Module.Submodule.Defs
-import Mathlib.Analysis.Normed.Group.Constructions
-import Mathlib.Data.Real.Basic
-import Mathlib.Data.Set.Card
-import Mathlib.LinearAlgebra.Span.Defs
-import Mathlib.LinearAlgebra.StdBasis
-import Mathlib.Topology.Bornology.Basic
-import Mathlib.Algebra.Module.ZLattice.Basic
+module
+
+public import Mathlib.Algebra.Group.Pointwise.Set.Basic
+public import Mathlib.Algebra.Group.Pointwise.Set.Scalar
+public import Mathlib.Algebra.Module.Submodule.Defs
+public import Mathlib.Analysis.Normed.Group.Constructions
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Data.Set.Card
+public import Mathlib.LinearAlgebra.Span.Defs
+public import Mathlib.LinearAlgebra.StdBasis
+public import Mathlib.Topology.Bornology.Basic
+public import Mathlib.Algebra.Module.ZLattice.Basic
+
+@[expose] public section
+
 /-!
 # Lattice-point enumerators
 

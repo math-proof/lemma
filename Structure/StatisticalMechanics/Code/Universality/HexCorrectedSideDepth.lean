@@ -9,16 +9,18 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedHighestCut.Part3
-import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripWindow.Part8
-import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWDepthCutBounds
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedHighestCut.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripWindow.Part8
+public import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWDepthCutBounds
 
 
 namespace StatMech.Universality
 
 open HexWalk
 
-noncomputable section
+public noncomputable section
 
 structure HexCSNewSideDepthData (T : ℕ) (ts : List ℤ) where
   legal : (ofTurns hexAWStart 1 ts).IsLegalSAW

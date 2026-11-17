@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ComplementarySequenceDeterminedBySubsequenceSumEquation.lean -/
 
-import Mathlib.Order.Monotone.Basic
+module
+
+public import Mathlib.Order.Monotone.Basic
+
+@[expose] public section
+
 /-!
 Complementary sequences determined by subsequence-sum equations.
 

@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Asymptotics/MonotoneIntegralCriterion.lean -/
+module
 
-
-import Theorem.Analysis.Asymptotics.MonotoneIntegralCriterion
-import Mathlib.NumberTheory.Chebyshev
-import Def.MathlibExtTest.Analysis.Asymptotics.MonotoneIntegralCriterion
+public import Theorem.Analysis.Asymptotics.MonotoneIntegralCriterion
+public import Mathlib.NumberTheory.Chebyshev
+public import Def.MathlibExtTest.Analysis.Asymptotics.MonotoneIntegralCriterion
 open Filter MeasureTheory Set Topology Asymptotics
 
+public section
 
 example : spikeBelowOne = fun x => if x < 1 then -x else x := rfl
 

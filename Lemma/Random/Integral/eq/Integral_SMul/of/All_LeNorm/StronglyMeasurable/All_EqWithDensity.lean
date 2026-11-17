@@ -1,5 +1,7 @@
 import Lemma.Random.Eq_WithDensity_Pdf
 import Mathlib.MeasureTheory.Integral.Prod
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
@@ -12,9 +14,9 @@ Continuous-action counterpart of
 @[path]
 private lemma main
   [MeasurableSpace 𝒮] [μ : ReferenceMeasure 𝒜]
-  [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+  [NormedAddCommGroup ℰ] [NormedSpace ℝ ℰ] [CompleteSpace ℰ]
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
-  {f : ℝ × 𝒮 × 𝒜 → E}
+  {f : ℝ × 𝒮 × 𝒜 → ℰ}
   {C : ℝ}
 -- given
   (hf : StronglyMeasurable f)
@@ -59,4 +61,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-16
+-- updated on 2026-11-17

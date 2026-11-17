@@ -8,10 +8,8 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Lemma.Finset.Atlas.v1.CombinatorialOptimization.code.Polyhedra.BipartiteIncidenceTU
-import Lemma.Finset.Atlas.v1.CombinatorialOptimization.code.Polyhedra.IntegralVertex
 import Def.v1.Atlas.CombinatorialOptimization.code.Matching.MatchingCharacterization
-import Lemma.Finset.Atlas.v1.CombinatorialOptimization.code.Matching.MatchingCharacterization
+import Theorem.Finset.Atlas.v1.CombinatorialOptimization.code.Matching.MatchingCharacterization
 open SimpleGraph Finset Matrix
 
 

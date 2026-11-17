@@ -1,5 +1,9 @@
-import Def.ModularCurve_JHTwistType
-import Structure.ModularCurve_JHTwistedDatum
+module
+
+public import Def.ModularCurve_JHTwistType
+public import Structure.ModularCurve_JHTwistedDatum
+
+@[expose] public section
 
 set_option autoImplicit false
 

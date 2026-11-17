@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.GroupTheory.Coxeter.Length
-import Mathlib.Data.Set.Card
+module
+
+public import Mathlib.GroupTheory.Coxeter.Length
+public import Mathlib.Data.Set.Card
+
+@[expose] public section
+
 open Function Set
 
 

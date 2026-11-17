@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.GroupTheory.Perm.Cycle.Type
-import Mathlib.LinearAlgebra.Matrix.Permanent
-import Structure.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.TournamentHamiltonCycles
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.GroupTheory.Perm.Cycle.Type
+public import Mathlib.LinearAlgebra.Matrix.Permanent
+public import Structure.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.TournamentHamiltonCycles
+
+@[expose] public section
+
 open Finset Real
 
 

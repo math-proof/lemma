@@ -4,7 +4,7 @@
 import Mathlib.FieldTheory.IsAlgClosed.Basic
 import Mathlib.LinearAlgebra.Determinant
 import Mathlib.LinearAlgebra.Matrix.Trace
-import Lemma.Matrix.Triangularization
+import Theorem.Matrix.Triangularization
 open scoped BigOperators
 
 open MathlibExt.LinearAlgebra.TriangularizationWanted

@@ -4,14 +4,18 @@
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Mathlib.Analysis.Asymptotics.Defs
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Data.List.Count
-import Mathlib.Data.Set.Card
-import Mathlib.Data.List.GetD
-import Mathlib.Data.Set.Finite.List
-import Mathlib.Tactic.Ring
-import Def.Combinatorics.Words.TernaryAbelianCubeFreeLowerBound
+module
+
+public import Mathlib.Analysis.Asymptotics.Defs
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Data.List.Count
+public import Mathlib.Data.Set.Card
+public import Mathlib.Data.List.GetD
+public import Mathlib.Data.Set.Finite.List
+public import Mathlib.Tactic.Ring
+public import Def.Combinatorics.Words.TernaryAbelianCubeFreeLowerBound
+
+@[expose] public section
 
 
 namespace MetaMathlibExt

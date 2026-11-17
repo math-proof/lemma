@@ -1,8 +1,8 @@
 import Instance.Data.Tensor.Tensor.Part2
-import Lemma.Nat.NotLt.is.Ge
-import Lemma.List.EqSetInsertIdxEraseIdx.of.GtLength
-import Lemma.List.GtLengthInsertIdxEraseIdx.of.GtLength
-import Lemma.List.EqEraseIdx.of.LeLength
+import Theorem.Nat.NotLt.is.Ge
+import Theorem.List.EqSetInsertIdxEraseIdx.of.GtLength
+import Theorem.List.GtLengthInsertIdxEraseIdx.of.GtLength
+import Theorem.List.EqEraseIdx.of.LeLength
 open List Tensor Nat
 
 

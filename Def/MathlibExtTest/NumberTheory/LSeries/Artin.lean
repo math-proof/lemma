@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.LSeries.Artin
-import Lemma.Nat.LSeries.Artin
+import Theorem.Nat.LSeries.Artin
 
 
 namespace RepresentationTest

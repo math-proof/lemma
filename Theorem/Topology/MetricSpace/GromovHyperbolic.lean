@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/MetricSpace/GromovHyperbolic.lean -/
+module
 
-import Mathlib.Topology.MetricSpace.Basic
-import Mathlib.Topology.MetricSpace.GromovProduct
-import Def.Topology.MetricSpace.GromovHyperbolic
+public import Mathlib.Topology.MetricSpace.Basic
+public import Mathlib.Topology.MetricSpace.GromovProduct
+public import Def.Topology.MetricSpace.GromovHyperbolic
+
 /-!
 # Gromov-hyperbolic pseudometric spaces
 
@@ -33,6 +35,8 @@ four-point / Gromov-product inequality.
 
 Gromov hyperbolic, hyperbolic metric space, Gromov product
 -/
+
+public section
 
 
 /-! ### Examples -/

@@ -21,7 +21,7 @@ import Mathlib.LinearAlgebra.Multilinear.Curry
 import Mathlib.Analysis.Calculus.FDeriv.Mul
 import Mathlib.Analysis.Calculus.DifferentialForm.Basic
 import Def.v1.Atlas.GeometryOfManifolds.code.DifferentialForms.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.DifferentialForms
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.DifferentialForms
 import Instance.v1.Atlas.GeometryOfManifolds.code.EuclideanDFS
 
 

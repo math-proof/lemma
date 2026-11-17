@@ -1,15 +1,17 @@
 -- Root of the `Inductive` library: carved from Lemma/Definitions.
-import Inductive.Basic
+module
 
-import Inductive.AutomorphicForm_ArchDir
-import Inductive.AutomorphicForm_ArchDirComplex
-import Inductive.CohCarrier_Gen
-import Inductive.CuspForm_TWLevelHeckeModule_Gen
-import Inductive.HopfAlgebra_HasFVectDevissage
-import Inductive.IncidenceSystem_Var
-import Inductive.LanglandsTunnell_RealArchParam
-import Inductive.LanglandsTunnell_ResolventDatum
-import Inductive.ModularCurve_JZeroFlagLayerKind
-import Inductive.MvPolynomial_GlueIndex
-import Inductive.WeierstrassCurve_Coeff
-import Inductive.WeierstrassCurve_EDSEngine_Param
+public import Inductive.Basic
+
+public import Inductive.AutomorphicForm_ArchDir
+public import Inductive.AutomorphicForm_ArchDirComplex
+public import Inductive.CohCarrier_Gen
+public import Inductive.CuspForm_TWLevelHeckeModule_Gen
+public import Inductive.HopfAlgebra_HasFVectDevissage
+public import Inductive.IncidenceSystem_Var
+public import Inductive.LanglandsTunnell_RealArchParam
+public import Inductive.LanglandsTunnell_ResolventDatum
+public import Inductive.ModularCurve_JZeroFlagLayerKind
+public import Inductive.MvPolynomial_GlueIndex
+public import Inductive.WeierstrassCurve_Coeff
+public import Inductive.WeierstrassCurve_EDSEngine_Param

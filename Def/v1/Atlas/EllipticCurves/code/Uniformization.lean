@@ -10,8 +10,8 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.EllipticCurves.code.EisensteinSeries
 import Lemma.Complex.Atlas.v1.EllipticCurves.code.EisensteinSeries
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.JInvariant
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.Isogenies
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.JInvariant
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.Isogenies
 import Lemma.Complex.Atlas.v1.EllipticCurves.code.WeierstrassPOrder
 import Def.v1.Atlas.EllipticCurves.code.JInvariant
 import Def.v1.Atlas.EllipticCurves.code.Isogenies.Part13

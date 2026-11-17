@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.HopfAlgebra.Basic
-import Mathlib.RingTheory.Coalgebra.TensorProduct
-import Mathlib.Algebra.BigOperators.GroupWithZero.Finset
-import Mathlib.Tactic
+module
+
+public import Mathlib.RingTheory.HopfAlgebra.Basic
+public import Mathlib.RingTheory.Coalgebra.TensorProduct
+public import Mathlib.Algebra.BigOperators.GroupWithZero.Finset
+public import Mathlib.Tactic
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open Coalgebra HopfAlgebra

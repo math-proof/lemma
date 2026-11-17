@@ -1,11 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/CarrollIdentity.lean -/
+module
 
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Mathlib.Algebra.AffineMonoid.Basic
-import Mathlib.LinearAlgebra.Matrix.Adjugate
-import Mathlib.Tactic.LinearCombination
-import Def.LinearAlgebra.Matrix.CarrollIdentity
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Mathlib.Algebra.AffineMonoid.Basic
+public import Mathlib.LinearAlgebra.Matrix.Adjugate
+public import Mathlib.Tactic.LinearCombination
+public import Def.LinearAlgebra.Matrix.CarrollIdentity
 
+public section
 
 namespace MetaMathlibExt.CarrollIdentity
 

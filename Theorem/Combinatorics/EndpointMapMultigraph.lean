@@ -5,11 +5,13 @@ Copyright (c) 2026 Adam Kiezun. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Adam Kiezun
 -/
+module
 
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Fintype.Card
-import Mathlib.Logic.Relation
-import Def.Combinatorics.EndpointMapMultigraph
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Logic.Relation
+public import Def.Combinatorics.EndpointMapMultigraph
+
 /-!
 # Finite edge-identity multigraphs
 
@@ -17,6 +19,8 @@ This file supplies small reusable definitions for finite undirected multigraphs 
 an edge type and two endpoint maps. Distinct edge values retain parallel-edge identity. Degrees
 count endpoint incidences, so a loop contributes two, while `incident` contains a loop only once.
 -/
+
+public section
 
 
 namespace EndpointMapMultigraph

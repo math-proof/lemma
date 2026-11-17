@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RoughNumbers.lean -/
 
-import Mathlib.NumberTheory.SmoothNumbers
+module
+
+public import Mathlib.NumberTheory.SmoothNumbers
+
+@[expose] public section
+
 /-!
 # Rough natural numbers
 

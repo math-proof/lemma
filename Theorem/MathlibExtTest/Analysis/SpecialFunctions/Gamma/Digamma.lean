@@ -2,7 +2,7 @@
 
 
 import Def.Analysis.SpecialFunctions.Gamma.Digamma
-import Lemma.Complex.Digamma
+import Theorem.Complex.Digamma
 import Lemma.Real.Digamma
 
 

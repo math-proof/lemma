@@ -7,16 +7,18 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.Buildings.code.Reflection.HyperplaneChambers.Part4
-import Mathlib.LinearAlgebra.Basis.Defs
-import Mathlib.LinearAlgebra.Basis.Basic
-import Mathlib.Data.List.OfFn
-import Mathlib.Data.Set.Finite.Basic
-import Def.v1.Atlas.Buildings.code.Reflection.FiniteReflectionGroups.Defs
+public import Def.v1.Atlas.Buildings.code.Reflection.HyperplaneChambers.Part4
+public import Mathlib.LinearAlgebra.Basis.Defs
+public import Mathlib.LinearAlgebra.Basis.Basic
+public import Mathlib.Data.List.OfFn
+public import Mathlib.Data.Set.Finite.Basic
+public import Def.v1.Atlas.Buildings.code.Reflection.FiniteReflectionGroups.Defs
 open scoped InnerProductSpace
 open Set
 
+public section
 
 noncomputable section
 

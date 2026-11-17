@@ -1,12 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Topology/Algebra/ContinuousSemilinearRepresentation.lean -/
 
+module
 
-import Class.Topology.Algebra.ContinuousSemilinearRepresentation
-import Mathlib.Algebra.Module.PUnit
-import Mathlib.Topology.Homeomorph.Lemmas
-import Mathlib.Topology.Instances.Int
-import Theorem.MathlibExtTest.Topology.Algebra.ContinuousSemilinearRepresentation
+public import Class.Topology.Algebra.ContinuousSemilinearRepresentation
+public import Mathlib.Algebra.Module.PUnit
+public import Mathlib.Topology.Homeomorph.Lemmas
+public import Mathlib.Topology.Instances.Int
+public import Theorem.MathlibExtTest.Topology.Algebra.ContinuousSemilinearRepresentation
 
+@[expose] public section
 
 -- A closed instance confirms that the conditions are jointly inhabitable.
 instance : MulSemiringAction PUnit Int where

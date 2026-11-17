@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Graph.MaxFlowMinCut
-import Lemma.Finset.Graph.MaxFlowMinCut
+import Theorem.Finset.Graph.MaxFlowMinCut
 
 
 namespace MathlibExt.Combinatorics.Graph.MaxFlowMinCutWanted

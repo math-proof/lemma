@@ -9,13 +9,17 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Sharpness.RandomCurrent.Part10
-import Theorem.StatisticalMechanics.Code.Sharpness.ClaimIsing.Part2
-import Theorem.StatisticalMechanics.Code.Sharpness.CurrentRep.Part5
-import Theorem.StatisticalMechanics.Code.Sharpness.TwoReplica.Part3
-import Theorem.StatisticalMechanics.Code.Sharpness.ClaimIsingFull.Part4
-import Theorem.StatisticalMechanics.Code.Sharpness.IsingSharpnessFull
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Sharpness.RandomCurrent.Part10
+public import Theorem.StatisticalMechanics.Code.Sharpness.ClaimIsing.Part2
+public import Theorem.StatisticalMechanics.Code.Sharpness.CurrentRep.Part5
+public import Theorem.StatisticalMechanics.Code.Sharpness.TwoReplica.Part3
+public import Theorem.StatisticalMechanics.Code.Sharpness.ClaimIsingFull.Part4
+public import Theorem.StatisticalMechanics.Code.Sharpness.IsingSharpnessFull
+public section
+
 open SimpleGraph Finset
 open scoped BigOperators symmDiff
 

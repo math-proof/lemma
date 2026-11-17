@@ -1,4 +1,8 @@
-import Abbrev.Analysis.InnerProductSpace.EuclideanVec
+module
+
+public import Abbrev.Analysis.InnerProductSpace.EuclideanVec
+public section
+
 variable {d : ℕ}
 
 /-!

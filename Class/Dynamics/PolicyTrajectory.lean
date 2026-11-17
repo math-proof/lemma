@@ -1,18 +1,19 @@
-import Structure.Dynamics.MarkovDecisionProcess
-import Class.Probability.Rv
-import Mathlib.Analysis.Calculus.Gradient.Basic
-import Mathlib.Probability.Kernel.WithDensity
-import Def.Order.Miscellaneous
-import Lemma.Random.SinglePSpace.of.Eq_WithDensity.Measurable.AEMeasurable
-import Lemma.Random.SinglePSpace.of.AEMeasurable.Distributed
-import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
-import Instance.Analysis.Real.Numbers
-import Def.Dynamics.PolicyTrajectory.ContinuousAction
-import Theorem.Dynamics.PolicyTrajectory.ContinuousAction
-import Syntax.Probability.Probability
+module
+
+public import Structure.Dynamics.MarkovDecisionProcess
+public import Class.Dynamics.MarkovDecisionProcess
+public import Class.Probability.Rv
+public import Mathlib.Analysis.Calculus.Gradient.Basic
+public import Mathlib.Probability.Kernel.WithDensity
+public import Def.Order.Miscellaneous
+public import Theorem.Random.SinglePSpace.of.Eq_WithDensity.Measurable.AEMeasurable
+public import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
+public import Instance.Analysis.Real.Numbers
+public import Def.Dynamics.PolicyTrajectory.ContinuousAction
+public import Syntax.Probability.Probability
+public section
 open MeasureTheory ProbabilityTheory Finset
 open scoped ENNReal ENNReal.ToRealCoe
-
 
 namespace PolicyGradient
 
@@ -106,12 +107,11 @@ instance Model.IsPolicyTrajectory.singlePSpace_as
     [h : Model.IsPolicyTrajectory M r s a]
     [haj : Model.AbsContJointAS M a s] (θ : Θ) (t : ℕ) :
     SinglePSpace (M.traj θ) (a t, s t) := by
-  have hxy : AEMeasurable (a t, s t) (M.traj θ) :=
+  have hxy : AEMeasurable (fun ω => (a t ω, s t ω)) (M.traj θ) :=
     (h.measurable_a t).aemeasurable.prodMk (h.measurable_s t).aemeasurable
-  have hacc : (M.traj θ).map (a t, s t) ≪
-      (ReferenceMeasure.measure.prod ReferenceMeasure.measure) := by
-    change (M.traj θ).map (fun ω => (a t ω, s t ω)) ≪ _
-    exact haj.map_as_ac θ t
+  have hacc : (M.traj θ).map (fun ω => (a t ω, s t ω)) ≪
+      (ReferenceMeasure.measure.prod ReferenceMeasure.measure) :=
+    haj.map_as_ac θ t
   exact Random.SinglePSpace.of.Eq_WithDensity.Measurable.AEMeasurable hxy
     (Measure.measurable_rnDeriv _ _)
     (Measure.withDensity_rnDeriv_eq _ _ hacc).symm

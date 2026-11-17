@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Abbrev.v1.Atlas.Probability.code.TransitionProbability
-import Abbrev.v1.Atlas.Probability.code.Filtration
-import Mathlib.Probability.Process.Adapted
-import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
+module
+
+public import Abbrev.v1.Atlas.Probability.code.TransitionProbability
+public import Abbrev.v1.Atlas.Probability.code.Filtration
+public import Mathlib.Probability.Process.Adapted
+public import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
+public section
+
 open MeasureTheory ProbabilityTheory
 
 variable {Ω S : Type*} {m : MeasurableSpace Ω} [MeasurableSpace S]

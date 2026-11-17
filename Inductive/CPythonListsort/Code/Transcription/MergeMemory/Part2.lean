@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeMemory.lean -/
 
-import Def.CPythonListsort.Code.Transcription.TempStorageInvariant
-import Def.CPythonListsort.Code.Transcription.MergeMemory
+module
+
+public import Def.CPythonListsort.Code.Transcription.TempStorageInvariant
+public import Def.CPythonListsort.Code.Transcription.MergeMemory
 /-!
 # Observable temporary-storage transitions
 
@@ -21,7 +23,7 @@ namespace CPythonListsort
 version-one successful-allocation abstraction. `.guardRejected` is not an
 allocator failure: it is the deterministic `size_t` overflow guard from the C
 source, which runs after `merge_freemem`. -/
-inductive MergeGetmemOutcome where
+public inductive MergeGetmemOutcome where
   | reused
   | grown
   | guardRejected

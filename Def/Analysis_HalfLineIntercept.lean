@@ -1,4 +1,8 @@
-import Mathlib.Analysis.Complex.Basic
+module
+
+public import Mathlib.Analysis.Complex.Basic
+
+@[expose] public section
 
 set_option autoImplicit false
 

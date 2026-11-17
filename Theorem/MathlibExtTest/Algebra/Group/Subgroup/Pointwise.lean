@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/Group/Subgroup/Pointwise.lean -/
 
 
-import Lemma.Set.Closure.eq.N.of.Eq
+import Theorem.Set.Closure.eq.N.of.Eq
 import Mathlib.Algebra.Group.Pointwise.Set.Basic
 open scoped Pointwise
 

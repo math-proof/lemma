@@ -1,4 +1,8 @@
-import Lean
+module
+
+public import Lean
+
+public section
 
 /-
 Scoped sugar: apply a function to a random variable by juxtaposition.
@@ -15,7 +19,7 @@ explicitly (it is not part of `open scoped ProbabilityTheory`).
 /-- Apply a function to a random variable: `applyRV g b` is `g ∘ b`.
 Kept as its own (reducible) constant so Infoview can pretty-print it as
 `g b` without rewriting ordinary `Function.comp`. -/
-@[reducible] def Function.applyRV {Ω : Sort _} {β : Sort _} {γ : Sort _} (g : β → γ) (b : Ω → β) : Ω → γ :=
+@[expose, reducible] def Function.applyRV {Ω : Sort _} {β : Sort _} {γ : Sort _} (g : β → γ) (b : Ω → β) : Ω → γ :=
   g ∘ b
 
 @[simp] theorem Function.applyRV_apply {Ω : Sort _} {β : Sort _} {γ : Sort _} (g : β → γ) (b : Ω → β) (ω : Ω) :
@@ -26,7 +30,7 @@ Kept as its own (reducible) constant so Infoview can pretty-print it as
 Over-application uses parentheses so `(g b) ω` does not re-parse as a
 two-argument application of `g`. Ordinary `g ∘ h` is not rewritten. -/
 @[app_unexpander Function.applyRV]
-def Function.applyRV.unexpand : Lean.PrettyPrinter.Unexpander
+meta def Function.applyRV.unexpand : Lean.PrettyPrinter.Unexpander
   | `($_ $g $b) => `($g $b)
   | `($_ $g $b $ω) => `(($g $b) $ω)
   | _ => throw ()
@@ -38,7 +42,7 @@ open Lean Meta Elab Term
 /-- Scoped application elaborator: `g b` ~> `Function.applyRV g b`
 when `g : β → γ` and `b : Ω → β`, and this is not ordinary application. -/
 @[scoped term_elab Lean.Parser.Term.app]
-def elabAppApplyRV : TermElab := fun stx expectedType? =>
+meta def elabAppApplyRV : TermElab := fun stx expectedType? =>
   match stx with
   | `($gStx $bStx) => do
     let g ← try withoutErrToSorry (elabTerm gStx none) catch _ => throwUnsupportedSyntax

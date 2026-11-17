@@ -8,21 +8,25 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.StatisticalMechanics.Code.Exact3D.FiniteIsingFKBridge.Part4
-import Theorem.StatisticalMechanics.Code.Exact3D.SurfaceTensionConvexity
-import Theorem.StatisticalMechanics.Code.FK.FKUniqPrimitives
-import Theorem.StatisticalMechanics.Code.FK.RotationInvariance.Part3
-import Theorem.StatisticalMechanics.Code.IsingFK.IsingBoxEncoding.Part4
-import Theorem.StatisticalMechanics.Code.IsingFK.MagPercoIdBox.Part3
-import Theorem.StatisticalMechanics.Code.Ising.GKS2.Part4
-import Theorem.StatisticalMechanics.Code.Sharpness.CurrentRep.Part5
-import Theorem.StatisticalMechanics.Code.Sharpness.TwoReplica.Part3
-import Theorem.StatisticalMechanics.Code.Sharpness.FluxEdgeCopyBridge.Part3
-import Theorem.StatisticalMechanics.Code.Sharpness.GhostCurrentRep
-import Theorem.StatisticalMechanics.Code.Sharpness.FieldGhostDict.Part4
-import Theorem.StatisticalMechanics.Code.Sharpness.BackboneProps.Part2
-import Theorem.StatisticalMechanics.Code.Sharpness.SimonLiebFull.Part2
-import Theorem.StatisticalMechanics.Code.Exact3D.FKPositiveSubcriticalQ2Bridge.Part40
+module
+
+public import Theorem.StatisticalMechanics.Code.Exact3D.FiniteIsingFKBridge.Part4
+public import Theorem.StatisticalMechanics.Code.Exact3D.SurfaceTensionConvexity
+public import Theorem.StatisticalMechanics.Code.FK.FKUniqPrimitives
+public import Theorem.StatisticalMechanics.Code.FK.RotationInvariance.Part3
+public import Theorem.StatisticalMechanics.Code.IsingFK.IsingBoxEncoding.Part4
+public import Theorem.StatisticalMechanics.Code.IsingFK.MagPercoIdBox.Part3
+public import Theorem.StatisticalMechanics.Code.Ising.GKS2.Part4
+public import Theorem.StatisticalMechanics.Code.Sharpness.CurrentRep.Part5
+public import Theorem.StatisticalMechanics.Code.Sharpness.TwoReplica.Part3
+public import Theorem.StatisticalMechanics.Code.Sharpness.FluxEdgeCopyBridge.Part3
+public import Theorem.StatisticalMechanics.Code.Sharpness.GhostCurrentRep
+public import Theorem.StatisticalMechanics.Code.Sharpness.FieldGhostDict.Part4
+public import Theorem.StatisticalMechanics.Code.Sharpness.BackboneProps.Part2
+public import Theorem.StatisticalMechanics.Code.Sharpness.SimonLiebFull.Part2
+public import Theorem.StatisticalMechanics.Code.Exact3D.FKPositiveSubcriticalQ2Bridge.Part40
+public section
+
 open Filter
 open MeasureTheory
 open scoped symmDiff

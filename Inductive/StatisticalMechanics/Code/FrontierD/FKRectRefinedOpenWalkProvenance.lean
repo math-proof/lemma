@@ -9,14 +9,16 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedOpenWalkCarrier
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedOpenWalkCarrier
 
 
 namespace StatMech.FrontierD
 
 noncomputable section
 
-inductive FKRectRefinedOpenWalkBlocksAlong
+public inductive FKRectRefinedOpenWalkBlocksAlong
     (R : FKRectTorus) (F : Finset R.EdgeIndex) :
     {x y : R.Vertex} ->
       (fkRectOpenGraph R (fkRectConfigurationOfEdges R F)).Walk x y ->

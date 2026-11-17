@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/InfiniteWord/RPRelation.lean -/
+module
 
+public import Def.Combinatorics.InfiniteWord.RPRelation
 
-import Def.Combinatorics.InfiniteWord.RPRelation
-
+public section
 
 namespace MetaMathlibExt.ReversePermute
 

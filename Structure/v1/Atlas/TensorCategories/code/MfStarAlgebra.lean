@@ -8,12 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.TensorCategories.code.StarAlgebra
-import Lemma.Category.Atlas.v1.TensorCategories.code.StarAlgebra
-import Lemma.Category.Atlas.v1.TensorCategories.code.BasedRings
-import Abbrev.v1.Atlas.TensorCategories.code.BasedRings
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Def.v1.Atlas.TensorCategories.code.MfStarAlgebra
+module
+
+public import Theorem.v1.Atlas.TensorCategories.code.StarAlgebra
+public import Lemma.Category.Atlas.v1.TensorCategories.code.StarAlgebra
+public import Lemma.Category.Atlas.v1.TensorCategories.code.BasedRings
+public import Abbrev.v1.Atlas.TensorCategories.code.BasedRings
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Def.v1.Atlas.TensorCategories.code.MfStarAlgebra
 set_option maxHeartbeats 400000
 set_option linter.unusedSimpArgs false
 
@@ -24,7 +26,7 @@ namespace MultifusionRingDef
 
 variable {ι : Type*} [DecidableEq ι] [Fintype ι] (R : MultifusionRingDef ι)
 
-noncomputable section
+public noncomputable section
 
 /-- The complexified Grothendieck ring of a multifusion ring, packaged as a structure
 with a single field `coeff : ι → ℂ`. -/

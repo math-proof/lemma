@@ -4,19 +4,24 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Analysis.Normed.Group.AddCircle
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Analysis.CStarAlgebra.Matrix
-import Mathlib.Analysis.Calculus.Deriv.Abs
-import Mathlib.Analysis.Convex.Deriv
-import Mathlib.Analysis.Convex.Integral
-import Mathlib.Analysis.Matrix.Spectrum
-import Mathlib.Analysis.Real.Pi.Bounds
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
-import Mathlib.MeasureTheory.Integral.Bochner.Set
-import Mathlib.Tactic
+module
+
+public import Mathlib.Analysis.Normed.Group.AddCircle
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Analysis.CStarAlgebra.Matrix
+public import Mathlib.Analysis.Calculus.Deriv.Abs
+public import Mathlib.Analysis.Convex.Deriv
+public import Mathlib.Analysis.Convex.Integral
+public import Mathlib.Analysis.Matrix.Spectrum
+public import Mathlib.Analysis.Real.Pi.Bounds
+public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
+public import Mathlib.MeasureTheory.Integral.Bochner.Set
+public import Mathlib.Tactic
+
+@[expose] public section
+
 /-!
 # Weighted Hilbert inequality
 

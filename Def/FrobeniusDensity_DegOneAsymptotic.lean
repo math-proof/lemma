@@ -1,8 +1,12 @@
-import Instance.TaylorWiles_Primes
-import Mathlib.Analysis.Asymptotics.Defs
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.FieldTheory.Fixed
+module
+
+public import Instance.TaylorWiles_Primes
+public import Mathlib.Analysis.Asymptotics.Defs
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.FieldTheory.Fixed
+
+@[expose] public section
 
 set_option autoImplicit false
 

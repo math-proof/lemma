@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.DedekindDomain.Factorization
-import Theorem.v1.Atlas.NumberTheoryI.code.IdealFactorization
+module
+
+public import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Theorem.v1.Atlas.NumberTheoryI.code.IdealFactorization
+
+@[expose] public section
+
 open scoped nonZeroDivisors
 open IsDedekindDomain
 

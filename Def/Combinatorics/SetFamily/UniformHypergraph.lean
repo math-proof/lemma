@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SetFamily/UniformHypergraph.lean -/
 
-import Mathlib.Data.Finset.Powerset
+module
+
+public import Mathlib.Data.Finset.Powerset
+
+@[expose] public section
+
 /-!
 # Uniform finite set families
 

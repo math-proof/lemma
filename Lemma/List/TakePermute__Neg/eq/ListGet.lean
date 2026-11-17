@@ -1,3 +1,4 @@
+import Initialize.Tactic.Attr.Basic
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
 import Lemma.List.TakeAppend.eq.Take.of.GeLength
 open List Nat

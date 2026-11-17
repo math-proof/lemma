@@ -8,11 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.GradedAlgebra.Basic
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.Algebra.DirectSum.Internal
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec19GradedQuotient
+module
 
+public import Mathlib.RingTheory.GradedAlgebra.Basic
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.Algebra.DirectSum.Internal
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec19GradedQuotient
+
+@[expose] public section
 
 noncomputable section
 

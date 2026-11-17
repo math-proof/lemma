@@ -9,11 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Algebra.Ring.Commute
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Lean.Elab.Tactic.Omega
+module
 
+public import Mathlib.Algebra.BigOperators.Field
+public import Mathlib.Algebra.Ring.Commute
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Lean.Elab.Tactic.Omega
+
+@[expose] public section
 
 namespace StatMech.FrontierA
 

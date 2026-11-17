@@ -1,5 +1,9 @@
-import Mathlib
-import Structure.AlgebraicGeometry_DescentAction
+module
+
+public import Mathlib
+public import Structure.AlgebraicGeometry_DescentAction
+
+@[expose] public section
 
 set_option autoImplicit false
 

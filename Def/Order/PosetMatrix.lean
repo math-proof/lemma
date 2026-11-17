@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Order/PosetMatrix.lean -/
 
-import Mathlib.Data.Matrix.Basic
+module
 
+public import Mathlib.Data.Matrix.Basic
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

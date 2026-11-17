@@ -8,11 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Analysis.Normed.Module.RCLike.Real
-import Mathlib.Topology.MetricSpace.Basic
-import Structure.v1.Atlas.ComplexVariables.code.Lecture6
+module
 
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Analysis.Normed.Module.RCLike.Real
+public import Mathlib.Topology.MetricSpace.Basic
+public import Structure.v1.Atlas.ComplexVariables.code.Lecture6
+
+@[expose] public section
 
 namespace Lecture6
 

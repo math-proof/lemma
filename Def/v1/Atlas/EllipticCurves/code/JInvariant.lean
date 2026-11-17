@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
-import Mathlib.AlgebraicGeometry.EllipticCurve.VariableChange
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
-import Mathlib.Tactic
+module
+
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
+public import Mathlib.AlgebraicGeometry.EllipticCurve.VariableChange
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+public import Mathlib.Tactic
+
+@[expose] public section
+
 variable {k : Type*} [Field k]
 
 

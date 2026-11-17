@@ -1,7 +1,10 @@
-import Mathlib
+module
 
+public import Mathlib
 
 /-! An implementation of finite choice, see https://leanprover.zulipchat.com/#narrow/channel/217875-Is-there-code-for-X.3F/topic/Theorem.20for.20.22finite.20choice.22.3F/with/529925010 -/
+
+public section
 
 theorem finite_choice {X:Type*} {f:X → ℕ} {N:ℕ} (h: ∀ n < N, ∃ x, f x = n) :
   ∃ g: Fin N → X, ∀ n, f (g n) = n := by

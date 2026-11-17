@@ -8,27 +8,29 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Lie.Basic
-import Mathlib.Algebra.Lie.Semisimple.Basic
-import Mathlib.Algebra.Lie.Nilpotent
-import Mathlib.Algebra.Lie.Rank
-import Mathlib.LinearAlgebra.Dual.Defs
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
-import Mathlib.RepresentationTheory.Intertwining
-import Mathlib.RingTheory.Ideal.Height
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.Localization.AtPrime.Basic
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.RingTheory.Spectrum.Prime.Topology
-import Mathlib.RingTheory.GradedAlgebra.Basic
-import Mathlib.RingTheory.DiscreteValuationRing.TFAE
-import Mathlib.Algebra.Lie.Weights.Killing
-import Mathlib.Algebra.Lie.Weights.RootSystem
-import Def.v1.Atlas.LieGroups.code.BorelWeil.Part3
+module
+
+public import Mathlib.Algebra.Lie.Basic
+public import Mathlib.Algebra.Lie.Semisimple.Basic
+public import Mathlib.Algebra.Lie.Nilpotent
+public import Mathlib.Algebra.Lie.Rank
+public import Mathlib.LinearAlgebra.Dual.Defs
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
+public import Mathlib.RepresentationTheory.Intertwining
+public import Mathlib.RingTheory.Ideal.Height
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.Localization.AtPrime.Basic
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.RingTheory.Spectrum.Prime.Topology
+public import Mathlib.RingTheory.GradedAlgebra.Basic
+public import Mathlib.RingTheory.DiscreteValuationRing.TFAE
+public import Mathlib.Algebra.Lie.Weights.Killing
+public import Mathlib.Algebra.Lie.Weights.RootSystem
+public import Def.v1.Atlas.LieGroups.code.BorelWeil.Part3
 
 
-noncomputable section
+public noncomputable section
 
 universe u v
 

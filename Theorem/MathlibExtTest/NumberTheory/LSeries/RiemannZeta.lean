@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/LSeries/RiemannZeta.lean -/
 
 
-import Lemma.Nat.LSeries.RiemannZeta
+import Theorem.Nat.LSeries.RiemannZeta
 /-!
 # Tests for meromorphicity of the Riemann zeta function
 -/

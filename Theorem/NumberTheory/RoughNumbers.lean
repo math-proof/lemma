@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RoughNumbers.lean -/
+module
 
-import Mathlib.NumberTheory.SmoothNumbers
-import Def.NumberTheory.RoughNumbers
+public import Mathlib.NumberTheory.SmoothNumbers
+public import Def.NumberTheory.RoughNumbers
+
 /-!
 # Rough natural numbers
 
@@ -20,6 +22,8 @@ Mathlib's `Nat.roughNumbersUpTo N k` is only the positive complement of
 not the source predicate, which demands that *every* prime factor exceed the
 bound. We bridge to it below without conflating the two notions.
 -/
+
+public section
 
 
 namespace Nat

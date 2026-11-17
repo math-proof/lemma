@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.Buildings.code.Building.Infinity
-import Theorem.v1.Atlas.Buildings.code.Building.InfinityConstruction.Part2
+module
+
+public import Theorem.v1.Atlas.Buildings.code.Building.Infinity
+public import Theorem.v1.Atlas.Buildings.code.Building.InfinityConstruction.Part2
+public section
+
 set_option maxHeartbeats 3200000
 
 set_option linter.unusedSectionVars false

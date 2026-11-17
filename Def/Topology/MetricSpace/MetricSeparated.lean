@@ -16,7 +16,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Topology.EMetricSpace.Defs
+module
+
+public import Mathlib.Topology.EMetricSpace.Defs
+
+@[expose] public section
+
 open EMetric Set
 open scoped ENNReal
 

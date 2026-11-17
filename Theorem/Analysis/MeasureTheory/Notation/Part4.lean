@@ -1,7 +1,10 @@
-import Mathlib
-import Def.Analysis.MeasureTheory.Notation
+module
+
+public import Mathlib
+public import Def.Analysis.MeasureTheory.Notation
 open Filter
 
+public section
 
 theorem ENNReal.upward_continuous {x y:ℕ → ENNReal} (hx: Monotone x) (hy: Monotone y)
  {x₀ y₀ : ENNReal} (hx_lim: atTop.Tendsto x (nhds x₀))

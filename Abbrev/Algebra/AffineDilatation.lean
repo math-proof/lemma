@@ -1,9 +1,11 @@
-import Mathlib
-import Def.Algebra.AffineDilatation
+module
+
+public import Mathlib
+public import Def.Algebra.AffineDilatation
 set_option autoImplicit false
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 universe u
 

@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Yoneda
-import Mathlib.RingTheory.Discriminant
-import Mathlib.RingTheory.Spectrum.Prime.Topology
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.RamificationYoneda
+module
+
+public import Mathlib.CategoryTheory.Yoneda
+public import Mathlib.RingTheory.Discriminant
+public import Mathlib.RingTheory.Spectrum.Prime.Topology
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RamificationYoneda
+
+@[expose] public section
+
 open CategoryTheory Opposite
 
 

@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.SchreierRefinement
-import Lemma.Fin.SchreierCell_0.eq.SpacesSubVal1.of.GtVal_0
+import Theorem.Fin.SchreierCell_0.eq.SpacesSubVal1.of.GtVal_0
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 import Mathlib.Order.ModularLattice
 

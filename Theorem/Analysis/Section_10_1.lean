@@ -1,5 +1,8 @@
-import Mathlib
-import Mathlib.Analysis.Calculus.Deriv.Basic
+module
+
+public import Mathlib
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+
 /-!
 # Analysis I, Section 10.1: Basic definitions
 
@@ -18,6 +21,8 @@ derivatives in such cases may not be unique, but {name}`derivWithin` still selec
 derivative in such cases (or {lean}`0`, if no derivative exists).
 
 -/
+
+public section
 
 
 namespace Chapter10

@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/GeometryOfManifolds/code/SpinCConnectionsAffine.lean -/
 
 /-
@@ -8,14 +10,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.GeometryOfManifolds.code.FourManifoldsSW.Part8
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.FourManifoldsSW
-import Structure.v1.Atlas.GeometryOfManifolds.code.SpinCConnectionsAffine.Part2
+public import Def.v1.Atlas.GeometryOfManifolds.code.FourManifoldsSW.Part8
+public import Structure.v1.Atlas.GeometryOfManifolds.code.SpinCConnectionsAffine.Part2
+public section
+
 set_option autoImplicit false
 
-
 attribute [instance] DeterminantLineBundle.instACGL DeterminantLineBundle.instModL
-
 
 /-- **A spin-c connection is determined by its induced connection on the determinant line
 bundle $L = \wedge^2 S^+$.** The map sending a spin-c connection $A$ to the induced

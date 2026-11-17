@@ -8,13 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.GroupTheory.Coxeter.Basic
-import Mathlib.GroupTheory.Coxeter.Length
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
-import Lemma.List.Any_And_IsReduced_EraseIdx.of.LtLengthMulWordProdSimple_Length_WordProd.IsReduced
-import Lemma.Int.LengthMulMulSimpleSimple.gt.LengthMulSimple.of.GtLengthMul_Simple_Length.LtLengthMulSimple_Length
-import Def.v1.Atlas.Buildings.code.HeckeAlgebra.Generic.Part2
-import Def.v1.Atlas.Buildings.code.HeckeAlgebra.OperatorCommutativity
+module
+
+public import Mathlib.GroupTheory.Coxeter.Basic
+public import Mathlib.GroupTheory.Coxeter.Length
+public import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+public import Lemma.List.Any_And_IsReduced_EraseIdx.of.LtLengthMulWordProdSimple_Length_WordProd.IsReduced
+public import Theorem.Int.LengthMulMulSimpleSimple.gt.LengthMulSimple.of.GtLengthMul_Simple_Length.LtLengthMulSimple_Length
+public import Def.v1.Atlas.Buildings.code.HeckeAlgebra.Generic.Part2
+public import Def.v1.Atlas.Buildings.code.HeckeAlgebra.OperatorCommutativity
+public section
+
 open scoped Classical
 
 

@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.Independence.Basic
-import Mathlib.MeasureTheory.Measure.MeasureSpace
-import Mathlib.Combinatorics.Digraph.Basic
-import Mathlib.Data.ENNReal.BigOperators
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
+module
+
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.MeasureTheory.Measure.MeasureSpace
+public import Mathlib.Combinatorics.Digraph.Basic
+public import Mathlib.Data.ENNReal.BigOperators
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory Set Finset ENNReal
 
 

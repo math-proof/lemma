@@ -1,8 +1,12 @@
-import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
-import Mathlib.LinearAlgebra.Prod
-import Mathlib.Topology.Algebra.OpenSubgroup
-import Mathlib.Topology.Compactness.Compact
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+module
+
+public import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
+public import Mathlib.LinearAlgebra.Prod
+public import Mathlib.Topology.Algebra.OpenSubgroup
+public import Mathlib.Topology.Compactness.Compact
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+
+@[expose] public section
 
 set_option autoImplicit false
 

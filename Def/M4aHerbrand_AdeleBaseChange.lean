@@ -1,5 +1,9 @@
-import Def.M4aHerbrand_IdeleClassVocab
-import Structure.M4aHerbrand_AdeleBaseChange
+module
+
+public import Def.M4aHerbrand_IdeleClassVocab
+public import Structure.M4aHerbrand_AdeleBaseChange
+
+@[expose] public section
 
 set_option autoImplicit false
 

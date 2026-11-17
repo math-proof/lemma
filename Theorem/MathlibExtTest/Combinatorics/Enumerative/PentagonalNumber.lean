@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.PentagonalNumber
-import Lemma.Finset.Enumerative.PentagonalNumber
+import Theorem.Finset.Enumerative.PentagonalNumber
 
 
 namespace MetaMathlibExt

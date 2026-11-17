@@ -9,15 +9,17 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectHorizontalCylinderExploration
-import Theorem.StatisticalMechanics.Code.FrontierD.FKFreeConnectionBoxEmbedding
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusWindingEvent.Part3
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectFaithfulHorizontalExtension
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectFaithfulCarrierDisjoint
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectFaithfulShearCoordinates
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectFaithfulWalkVerticalBound
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusDisjointWinding.Part4
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectHorizontalCylinderPlanarization.Part7
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectHorizontalCylinderExploration
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKFreeConnectionBoxEmbedding
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusWindingEvent.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectFaithfulHorizontalExtension
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectFaithfulCarrierDisjoint
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectFaithfulShearCoordinates
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectFaithfulWalkVerticalBound
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusDisjointWinding.Part4
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectHorizontalCylinderPlanarization.Part7
 open Finset SimpleGraph
 
 
@@ -25,7 +27,7 @@ namespace StatMech.FrontierD
 
 open StatMech.Lattice StatMech.RSW.Box
 
-noncomputable section
+public noncomputable section
 
 structure FKRectHorizontalCylinderUnexploredPlanarization
     (R : FKRectTorus) (rho : ConfigSpace (Sym2 R.Vertex))

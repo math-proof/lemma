@@ -15,17 +15,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Algebra.Ring.Parity
-import Mathlib.Combinatorics.SimpleGraph.Paths
-import Mathlib.Order.Lattice.Nat
-import Def.Combinatorics.SimpleGraph.Circumference
+public import Mathlib.Algebra.Ring.Parity
+public import Mathlib.Combinatorics.SimpleGraph.Paths
+public import Mathlib.Order.Lattice.Nat
+public import Def.Combinatorics.SimpleGraph.Circumference
+
 /-!
 # Cycle lengths and circumference
 
 Ported from `FormalConjecturesForMathlib/Combinatorics/SimpleGraph/Circumference.lean`
 in google-deepmind/formal-conjectures (cycle-length fragment only).
 -/
+
+public section
 
 
 namespace SimpleGraph

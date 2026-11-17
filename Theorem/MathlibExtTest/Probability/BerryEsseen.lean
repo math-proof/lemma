@@ -2,7 +2,7 @@
 
 
 import Def.Probability.BerryEsseen
-import Lemma.Measure.BerryEsseen
+import Theorem.Measure.BerryEsseen
 open MeasureTheory ProbabilityTheory Finset Set
 open scoped ProbabilityTheory ENNReal NNReal
 

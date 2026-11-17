@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/Order.lean -/
+module
 
-import Def.CPythonListsort.Code.Transcription.Comparator
-import Mathlib.Data.List.Sort
-import Def.CPythonListsort.Code.Assembly.Order.Part2
+public import Def.CPythonListsort.Code.Transcription.Comparator
+public import Mathlib.Data.List.Sort
+public import Def.CPythonListsort.Code.Assembly.Order.Part2
+
 /-!
 # Order, sortedness, and occurrence-level stability specifications
 
@@ -11,6 +13,8 @@ adds a strict-weak-order hypothesis only at the theorem boundary.  Stability
 is phrased over occurrence tags that are attached to the input before any
 movement; the output cannot be retagged after sorting.
 -/
+
+public section
 
 
 namespace CPythonListsort

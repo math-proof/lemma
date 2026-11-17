@@ -1,4 +1,8 @@
-import Mathlib.Algebra.Module.Torsion.Basic
+module
+
+public import Mathlib.Algebra.Module.Torsion.Basic
+
+public section
 
 set_option autoImplicit false
 

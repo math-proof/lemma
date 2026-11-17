@@ -1,18 +1,21 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Recurrences/CubicRecurrenceDiscriminant.lean -/
 
-import Mathlib.Algebra.Divisibility.Basic
-import Mathlib.Basic.Complex.Basic
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.NumberTheory.Niven
-import Mathlib.RingTheory.Polynomial.IsIntegral
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.Tactic.ComputeDegree
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
+module
 
+public import Mathlib.Algebra.Divisibility.Basic
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.NumberTheory.Niven
+public import Mathlib.RingTheory.Polynomial.IsIntegral
+public import Mathlib.RingTheory.SimpleRing.Principal
+public import Mathlib.Tactic.ComputeDegree
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

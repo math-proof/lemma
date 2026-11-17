@@ -1,11 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/KCyclicPartition.lean -/
+module
 
-
-import Def.Combinatorics.KCyclicPartition
-import Mathlib.Logic.Equiv.Fin.Rotate
+public import Def.Combinatorics.KCyclicPartition
+public import Mathlib.Logic.Equiv.Fin.Rotate
 open Equiv
 open Equiv.Perm
 open Fin
+
+public section
 
 #check @MetaMathlibExt.TruncatedSucc
 #check @MetaMathlibExt.IsKCyclicPartition

@@ -9,7 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardPortChainGeneral.Part32
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardPortChainGeneral.Part32
+public section
+
 open scoped BigOperators
 
 

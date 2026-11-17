@@ -7,24 +7,26 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Data.EReal.Basic
-import Mathlib.Data.EReal.Inv
-import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
-import Mathlib.MeasureTheory.Measure.Map
-import Mathlib.MeasureTheory.Measure.Real
-import Mathlib.Order.LiminfLimsup
-import Mathlib.Topology.Semicontinuity.Basic
-import Mathlib.Topology.Sequences
-import Mathlib.Topology.MetricSpace.Thickening
-import Mathlib.Topology.MetricSpace.HausdorffDistance
-import Mathlib.Analysis.SpecialFunctions.Log.ENNRealLog
-import Mathlib.Topology.Instances.EReal.Lemmas
-import Mathlib.Topology.Algebra.Order.Field
-import Structure.v1.Atlas.Probability.code.LargeDeviations
+public import Mathlib.Data.EReal.Basic
+public import Mathlib.Data.EReal.Inv
+public import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
+public import Mathlib.MeasureTheory.Measure.Map
+public import Mathlib.MeasureTheory.Measure.Real
+public import Mathlib.Order.LiminfLimsup
+public import Mathlib.Topology.Semicontinuity.Basic
+public import Mathlib.Topology.Sequences
+public import Mathlib.Topology.MetricSpace.Thickening
+public import Mathlib.Topology.MetricSpace.HausdorffDistance
+public import Mathlib.Analysis.SpecialFunctions.Log.ENNRealLog
+public import Mathlib.Topology.Instances.EReal.Lemmas
+public import Mathlib.Topology.Algebra.Order.Field
+public import Structure.v1.Atlas.Probability.code.LargeDeviations
 open Filter MeasureTheory Set
 open scoped ENNReal Topology
 
+@[expose] public section
 
 /-- Infimal projection of a rate along the fibers of `f`. -/
 noncomputable def contractedRate {X Y : Type*} (I : X → ENNReal) (f : X → Y) (y : Y) : ENNReal :=

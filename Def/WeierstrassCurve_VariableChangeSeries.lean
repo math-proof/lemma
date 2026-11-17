@@ -1,5 +1,9 @@
-import Def.WeierstrassCurve_FormalGroupLaw
-import Mathlib.AlgebraicGeometry.EllipticCurve.VariableChange
+module
+
+public import Def.WeierstrassCurve_FormalGroupLaw
+public import Mathlib.AlgebraicGeometry.EllipticCurve.VariableChange
+
+@[expose] public section
 
 set_option autoImplicit false
 

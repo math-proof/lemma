@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Foundations.FiniteNonnegativeMatrixRate
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Foundations.FiniteNonnegativeMatrixRate
+
+@[expose] public section
+
 open Finset Matrix Filter Topology
 open scoped Matrix.Norms.Operator NNReal
 

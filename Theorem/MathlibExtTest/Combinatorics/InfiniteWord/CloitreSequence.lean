@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/InfiniteWord/CloitreSequence.lean -/
+module
 
+public import Def.Combinatorics.InfiniteWord.CloitreSequence
 
-import Def.Combinatorics.InfiniteWord.CloitreSequence
-
+public section
 
 namespace MetaMathlibExt
 

@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.SimpleGraph.Degeneracy
-import Lemma.SimpleGraph.Degeneracy
+import Theorem.SimpleGraph.Degeneracy
 
 
 namespace SimpleGraph

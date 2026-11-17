@@ -1,7 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeForceCollapseSafety.lean -/
 
-import Def.CPythonListsort.Code.Assembly.MergeAtSafety.Part4
-import Lemma.List.Atlas.CPythonListsort.Code.Policy.MergeForceCollapsePreservation
+module
+
+public import Def.CPythonListsort.Code.Assembly.MergeAtSafety.Part3
+public import Def.CPythonListsort.Code.Assembly.AccessTrace.Part9
+public import Structure.CPythonListsort.Code.Transcription.MergeForceCollapse
+
+@[expose] public section
+
 /-!
 # `merge_force_collapse` safety
 
@@ -18,6 +24,9 @@ nonempty valid layout.
 namespace CPythonListsort
 
 universe u v
+
+open AccessTrace
+open MergeAtStableFrame
 
 variable {κ : Type u} {ν : Type v}
 

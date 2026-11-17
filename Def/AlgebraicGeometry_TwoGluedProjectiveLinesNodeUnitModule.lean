@@ -1,7 +1,7 @@
 import Mathlib
 import Lemma.Scheme.CurveModel
 import Instance.AlgebraicCurve_RatFuncPlaces
-import Lemma.Scheme.NeronModelPropertyBundleCarrier
+import Theorem.Scheme.NeronModelPropertyBundleCarrier
 import Instance.AlgebraicGeometry_RelativePicardFunctor
 import Lemma.Scheme.RelPicardPullback
 

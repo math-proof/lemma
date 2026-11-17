@@ -1,10 +1,12 @@
-import Structure.MvFormalGroup_BasicV2
-import Mathlib.RingTheory.AdicCompletion.Topology
-import Mathlib.RingTheory.Finiteness.Ideal
+module
+
+public import Structure.MvFormalGroup_BasicV2
+public import Mathlib.RingTheory.AdicCompletion.Topology
+public import Mathlib.RingTheory.Finiteness.Ideal
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open MvPowerSeries
 

@@ -1,10 +1,12 @@
-import Mathlib
+module
+
+public import Mathlib
 set_option autoImplicit false
 
 
 namespace AutomorphicForm
 
-inductive ArchDir where
+public inductive ArchDir where
   | H : ArchDir
   | E : ArchDir
   | Fm : ArchDir

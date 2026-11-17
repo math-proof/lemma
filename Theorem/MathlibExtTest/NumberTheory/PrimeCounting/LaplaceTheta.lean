@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PrimeCounting/LaplaceTheta.lean -/
 
 import Def.NumberTheory.PrimeCounting.LaplaceTheta
-import Lemma.Nat.PrimeCounting.LaplaceTheta
+import Theorem.Nat.PrimeCounting.LaplaceTheta
 
 
 /-!

@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/QuadraticForms/LagrangeQuadraticConvergent.lean -/
 
 
-import Lemma.Nat.QuadraticForms.LagrangeQuadraticConvergent
+import Theorem.Nat.QuadraticForms.LagrangeQuadraticConvergent
 
 
 namespace MetaMathlibExt

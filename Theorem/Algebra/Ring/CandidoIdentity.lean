@@ -1,10 +1,15 @@
-import Mathlib.Algebra.Ring.Defs
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Algebra.Ring.Defs
+public import Mathlib.Tactic.Ring
+
 /-!
 # Candido polynomial identity
 
 This module formalizes the Candido polynomial identity.
 -/
+
+public section
 
 
 namespace MetaMathlibExt

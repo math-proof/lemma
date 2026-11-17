@@ -9,14 +9,16 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexHorizontalTwoCutSwitch.Part2
-import Instance.StatisticalMechanics.Code.FrontierD.SixVertexHorizontalProfileAggregate
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexHorizontalTwoCutSwitch.Part2
+public import Instance.StatisticalMechanics.Code.FrontierD.SixVertexHorizontalProfileAggregate
 open Finset
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure SixVertexHorizontalCompletionProfile (T : EvenTorus) where
   forcedTrue : Fin (T.width + 1)

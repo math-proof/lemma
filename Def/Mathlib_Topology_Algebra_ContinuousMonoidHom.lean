@@ -1,5 +1,9 @@
-import Mathlib
-import Def.Mathlib_Topology_Algebra_Module_Quotient
+module
+
+public import Mathlib
+public import Def.Mathlib_Topology_Algebra_Module_Quotient
+
+@[expose] public section
 
 section
 

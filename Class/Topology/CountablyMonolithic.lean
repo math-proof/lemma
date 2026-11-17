@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/CountablyMonolithic.lean -/
 
 /-
@@ -16,9 +18,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Topology.Bases
-import Def.Topology.CountablyMonolithic
+public import Mathlib.Topology.Bases
+public import Def.Topology.CountablyMonolithic
 
+
+public section
 
 /-- A topological space is countably monolithic (ω-monolithic) if the closure
 of every countable subspace has a countable network. -/

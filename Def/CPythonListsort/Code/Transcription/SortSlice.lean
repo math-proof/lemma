@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/SortSlice.lean -/
 
-import Mathlib
-import Structure.CPythonListsort.Code.Transcription.SortSlice
+module
+
+public import Mathlib
+public import Structure.CPythonListsort.Code.Transcription.SortSlice
+
+@[expose] public section
+
 /-!
 # `sortslice` model and movement primitives
 

@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_CerednikDrinfeld_ShimuraCurve.lean: instance decls only.
 import Lemma.QuaternionAlgebra.EichlerOrder
-import Lemma.QuaternionAlgebra.ReducedNorm
+import Theorem.QuaternionAlgebra.ReducedNorm
 import Def.ModularCurve_UniformizedHeckeCurve
 import Instance.AlgebraicCurve_BaseChangeGalois
 import Instance.AlgebraicCurve_IsCurveOver

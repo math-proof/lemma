@@ -9,9 +9,9 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.Buildings.code.GeometricAlgebra.ExtendingIsometries
-import Lemma.Submodule.OfEq.eq.M.of.Eq
-import Lemma.Fin.Nondegenerate.of.EqOrthogonalBilinFormTop_Bot.IsRefl
-import Lemma.Submodule.Any_EqAndAll_Eq_V.of.IsSubspaceIsometry.EqOrthogonalBilinFormTop
+import Theorem.Submodule.OfEq.eq.M.of.Eq
+import Theorem.Fin.Nondegenerate.of.EqOrthogonalBilinFormTop_Bot.IsRefl
+import Theorem.Submodule.Any_EqAndAll_Eq_V.of.IsSubspaceIsometry.EqOrthogonalBilinFormTop
 import Def.v1.Atlas.Buildings.code.GeometricAlgebra.WittTheorem
 set_option maxHeartbeats 4000000
 

@@ -1,5 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Structure.CPythonListsort.Code.Transcription.MergeAt
+import Def.CPythonListsort.Code.Transcription.MergeAt.Part3
 import Theorem.CPythonListsort.Code.Transcription.FoundNewRun
 open CPythonListsort
 
@@ -49,7 +51,7 @@ lemma foundNewRunFromMergeAt_eq
   {ν : Type v}
   {result : MergeAtResult κ ν} :
 -- imply
-  fromMergeAt result = { state := result.state returnCode := result.returnCode fuelExhausted := result.fuelExhausted } :=
+  fromMergeAt result = { state := result.state, returnCode := result.returnCode, fuelExhausted := result.fuelExhausted } :=
 -- proof
   rfl
 

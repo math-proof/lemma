@@ -2,12 +2,17 @@
 
 -- Author: @toskua, Avocado
 
-import Mathlib.Combinatorics.Enumerative.Stirling
-import Mathlib.Data.Rat.Defs
-import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Combinatorics.Enumerative.Stirling
+public import Mathlib.Data.Rat.Defs
+public import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 open scoped BigOperators
 
 

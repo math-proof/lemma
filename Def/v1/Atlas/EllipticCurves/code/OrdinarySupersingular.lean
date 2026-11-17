@@ -9,11 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.EllipticCurves.code.Isogenies.Part13
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.Isogenies
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.Isogenies
 import Lemma.Complex.Atlas.v1.EllipticCurves.code.PointCounting
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.JInvariant
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.JInvariant
 import Lemma.Complex.Atlas.v1.EllipticCurves.code.EndomorphismAlgebra
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.EndAlgClassification
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.EndAlgClassification
 import Def.v1.Atlas.EllipticCurves.code.PointCounting.Part2
 import Def.v1.Atlas.EllipticCurves.code.JInvariant
 import Instance.v1.Atlas.EllipticCurves.code.EndomorphismAlgebra.Part2

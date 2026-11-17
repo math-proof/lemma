@@ -1,6 +1,11 @@
-import Def.Lean.Name
-import Mathlib.Basic.Real.Basic
-import Instance.Lean.Expr.Singleton
+module
+
+public import Def.Lean.Name
+public import Mathlib.Basic.Real.Basic
+public import Instance.Lean.Expr.Singleton
+
+@[expose] public section
+
 open Lean
 
 
@@ -27,5 +32,4 @@ def Constant.toLatex : Constant → String
     | `Hyperreal.epsilon => "0^+"
     | `Hyperreal.omega => "\\infty"
     | _ => name.escape_specials "."
-
 

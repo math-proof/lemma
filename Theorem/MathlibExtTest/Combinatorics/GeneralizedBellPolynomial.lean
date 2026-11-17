@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.GeneralizedBellPolynomial
-import Lemma.Finset.GeneralizedBellPolynomial
+import Theorem.Finset.GeneralizedBellPolynomial
 import Mathlib.Algebra.Ring.Int.Defs
 open MetaMathlibExt
 

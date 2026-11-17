@@ -1,6 +1,10 @@
-import Mathlib.Order.ConditionallyCompleteLattice.Basic
-import Def.Order.ExprWithLimits
+module
 
+public meta import Lean
+public import Mathlib.Order.ConditionallyCompleteLattice.Basic
+public import Def.Order.ExprWithLimits
+
+public meta section
 
 /--
 Argmax / argmin big operators, written like `max[i] e` (see `Syntax/Order/Max.lean`):

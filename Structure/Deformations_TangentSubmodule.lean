@@ -1,6 +1,10 @@
-import Mathlib
-import Class.Deformations_ProartinianCat
-import Structure.Deformations_ProartinianCat
+module
+
+public import Mathlib
+public import Class.Deformations_ProartinianCat
+public import Structure.Deformations_ProartinianCat
+
+public section
 
 set_option autoImplicit false
 

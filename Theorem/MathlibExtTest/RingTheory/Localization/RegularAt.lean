@@ -2,7 +2,7 @@
 
 
 import Def.RingTheory.Localization.RegularAt.Part2
-import Lemma.MvPolynomial.Localization.RegularAt
+import Theorem.MvPolynomial.Localization.RegularAt
 
 
 example (ev : ℤ →+* ℚ) (a : ℤ) :

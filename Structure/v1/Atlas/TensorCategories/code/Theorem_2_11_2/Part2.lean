@@ -8,11 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Category
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.CategoryTheory.Functor.Category
-import Mathlib.CategoryTheory.Equivalence
-import Def.v1.Atlas.TensorCategories.code.Theorem_2_11_2
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Category
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.CategoryTheory.Functor.Category
+public import Mathlib.CategoryTheory.Equivalence
+public import Def.v1.Atlas.TensorCategories.code.Theorem_2_11_2
+public section
+
 set_option maxHeartbeats 800000
 
 set_option autoImplicit false

@@ -8,15 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Lie.Basic
-import Mathlib.Algebra.Lie.Semisimple.Basic
-import Mathlib.Algebra.Lie.UniversalEnveloping
-import Mathlib.CategoryTheory.Equivalence
-import Mathlib.Algebra.Category.ModuleCat.Basic
-import Mathlib.RingTheory.TwoSidedIdeal.Operations
-import Mathlib.Data.Complex.Basic
-import Mathlib.RingTheory.Adjoin.Basic
-import Structure.v1.Atlas.LieGroups.code.BeilinsonBernstein.Part2
+module
+
+public import Mathlib.Algebra.Lie.Basic
+public import Mathlib.Algebra.Lie.Semisimple.Basic
+public import Mathlib.Algebra.Lie.UniversalEnveloping
+public import Mathlib.CategoryTheory.Equivalence
+public import Mathlib.Algebra.Category.ModuleCat.Basic
+public import Mathlib.RingTheory.TwoSidedIdeal.Operations
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.RingTheory.Adjoin.Basic
+public import Structure.v1.Atlas.LieGroups.code.BeilinsonBernstein.Part2
+
+@[expose] public section
+
 open CategoryTheory
 
 

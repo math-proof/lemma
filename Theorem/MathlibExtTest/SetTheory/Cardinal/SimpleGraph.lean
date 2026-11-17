@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/SetTheory/Cardinal/SimpleGraph.lean -/
+module
 
-
-import Def.SetTheory.Cardinal.SimpleGraph
+public import Def.SetTheory.Cardinal.SimpleGraph
 open Ordinal Cardinal
 
+public section
 
 -- Normal API use: the ordinal-cardinal Ramsey predicate accepts two
 -- ordinals and a cardinal.

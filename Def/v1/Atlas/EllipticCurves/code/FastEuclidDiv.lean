@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Nat.Log
-import Mathlib.Tactic
+module
 
+public import Mathlib.Data.Nat.Log
+public import Mathlib.Tactic
+
+@[expose] public section
 
 namespace IntegerLongDivision
 

@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/Powerloop.lean -/
 
-import Def.CPythonListsort.Code.Transcription.Powerloop
-import Mathlib
-import Structure.CPythonListsort.Code.Equivalence.Powerloop
+module
+
+public import Def.CPythonListsort.Code.Transcription.Powerloop
+public import Mathlib
+public import Structure.CPythonListsort.Code.Equivalence.Powerloop
+
+@[expose] public section
+
 /-!
 # `powerloop` recurrence equivalence
 

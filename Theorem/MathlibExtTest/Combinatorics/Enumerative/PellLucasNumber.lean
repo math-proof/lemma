@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.PellLucasNumber
-import Lemma.Finset.Enumerative.PellLucasNumber
+import Theorem.Finset.Enumerative.PellLucasNumber
 
 
 namespace MetaMathlibExt

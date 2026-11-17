@@ -1,7 +1,12 @@
-import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
-import Mathlib.MeasureTheory.Measure.Real
-import Mathlib.Order.Bounds.Basic
-import Class.Probability.Quantile
+module
+
+public import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+public import Mathlib.MeasureTheory.Measure.Real
+public import Mathlib.Order.Bounds.Basic
+public import Class.Probability.Quantile
+
+@[expose] public section
+
 open MeasureTheory
 
 universe u

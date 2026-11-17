@@ -9,9 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoBranchClosedPhysicalKey.Part6
-import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoSynchronizedComponents.Part32
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoBranchClosedPhysicalKey.Part6
+public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoSynchronizedComponents.Part32
 
 
 namespace StatMech.FrontierD
@@ -22,7 +24,7 @@ noncomputable section
 
 set_option maxHeartbeats 800000
 
-inductive SixVertexDegreeTwoSynchronizedReconnectionSeed
+public inductive SixVertexDegreeTwoSynchronizedReconnectionSeed
     {T : EvenTorus} {omega eta : SixVertexArrows T}
     (homega : omega.IceRule) (heta : eta.IceRule)
     (hdegree : SixVertexLocallyDegreeTwo omega eta) : Type

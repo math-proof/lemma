@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.Probability.code.FiniteMarkovChain
-import Mathlib.Data.Matrix.Basic
+module
+
+public import Structure.v1.Atlas.Probability.code.FiniteMarkovChain
+public import Mathlib.Data.Matrix.Basic
+
+@[expose] public section
+
 open Matrix Finset BigOperators
 
 

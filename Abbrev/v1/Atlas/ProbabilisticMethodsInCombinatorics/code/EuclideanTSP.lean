@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.SpaceFillingCurve
-import Lemma.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.SpaceFillingCurve
+import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.SpaceFillingCurve
 set_option maxHeartbeats 800000
 
 open scoped Classical

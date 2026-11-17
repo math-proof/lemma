@@ -1,4 +1,9 @@
-import Mathlib.Analysis.Matrix.LDL
+module
+
+public import Mathlib.Analysis.Matrix.LDL
+
+@[expose] public section
+
 open Matrix
 open scoped ComplexOrder
 

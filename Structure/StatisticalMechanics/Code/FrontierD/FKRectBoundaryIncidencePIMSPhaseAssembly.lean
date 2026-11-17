@@ -9,8 +9,10 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryIncidencePIMSSchedule.Part4
-import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4PIMSTwoByOnePhaseAssembly
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryIncidencePIMSSchedule.Part4
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4PIMSTwoByOnePhaseAssembly
 open Filter MeasureTheory Topology
 
 
@@ -18,7 +20,7 @@ namespace StatMech.FrontierD
 
 open StatMech.FK StatMech.Lattice StatMech.Percolation StatMech.BeffaraDC
 
-noncomputable section
+public noncomputable section
 
 structure FKQgt4BoundaryIncidenceScheduledFourCopy
     (q xiInv : Real) : Prop where

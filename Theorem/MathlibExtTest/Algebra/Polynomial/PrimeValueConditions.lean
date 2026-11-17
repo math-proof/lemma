@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/Polynomial/PrimeValueConditions.lean -/
+module
 
-
-import Def.Algebra.Polynomial.PrimeValueConditions
+public import Def.Algebra.Polynomial.PrimeValueConditions
 open scoped Polynomial
 
+public section
 
 example (f : ℤ[X]) :
     Polynomial.BunyakovskyCondition f ↔

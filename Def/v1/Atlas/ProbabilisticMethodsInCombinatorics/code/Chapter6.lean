@@ -8,16 +8,21 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Tactic
-import Mathlib.Data.Real.Basic
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Fin.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Topology.Compactness.Compact
-import Mathlib.Topology.Constructions
-import Mathlib.Topology.Instances.Discrete
-import Mathlib.Topology.Order.Basic
+module
+
+public import Mathlib.Tactic
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Fin.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Topology.Compactness.Compact
+public import Mathlib.Topology.Constructions
+public import Mathlib.Topology.Instances.Discrete
+public import Mathlib.Topology.Order.Basic
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 

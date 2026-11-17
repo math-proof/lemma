@@ -52,7 +52,7 @@ import Mathlib.Topology.ContinuousOn
 import Mathlib.Topology.MetricSpace.HausdorffDimension
 import Mathlib.Topology.MetricSpace.Pseudo.Constructions
 import Theorem.MeasureTheory.Measure.ImageNull
-import Lemma.Measure.ImageNull
+import Theorem.Measure.ImageNull
 open scoped Manifold ContDiff Topology ENNReal MeasureTheory
 open MeasureTheory
 

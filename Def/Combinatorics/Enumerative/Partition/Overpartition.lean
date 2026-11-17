@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/Partition/Overpartition.lean -/
 
-import Mathlib.Combinatorics.Enumerative.Partition.Basic
-import Structure.Combinatorics.Enumerative.Partition.Overpartition
+module
+
+public import Mathlib.Combinatorics.Enumerative.Partition.Basic
+public import Structure.Combinatorics.Enumerative.Partition.Overpartition
+
+@[expose] public section
+
 /-!
 # Overpartitions
 

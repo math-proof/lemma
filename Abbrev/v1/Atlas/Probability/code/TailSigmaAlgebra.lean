@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.MeasureTheory.MeasurableSpace.Basic
-import Def.Probability.TailSigmaAlgebra
+module
+
+public import Mathlib.MeasureTheory.MeasurableSpace.Basic
+public import Def.Probability.TailSigmaAlgebra
+@[expose] public section
+
 open MeasurableSpace
 
 variable {Ω : Type*}

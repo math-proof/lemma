@@ -9,17 +9,19 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectWindingOneResidualLower
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBalancedSectorThermodynamicBridge.Part2
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectUnitLeftBarrier.Part2
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectSourceChainWindingUpper.Part2
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectWindingOneThermodynamicBridge
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectWindingOneResidualLower
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBalancedSectorThermodynamicBridge.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectUnitLeftBarrier.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectSourceChainWindingUpper.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectWindingOneThermodynamicBridge
 open Filter Topology
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure FKRectWindingOneSource (R : FKRectTorus) (q : Real) where
   leftRight : Nat

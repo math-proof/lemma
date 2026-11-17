@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/GHarmonic.lean -/
 
-import Mathlib.GroupTheory.Index
+module
+
+public import Mathlib.GroupTheory.Index
+
+@[expose] public section
+
 open scoped Pointwise
 
 

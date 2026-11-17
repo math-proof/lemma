@@ -9,9 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicDobrushin.Part8
-import Theorem.StatisticalMechanics.Code.FK.FinitePatternEnergy.Part3
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicLocalSwitching.Part11
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicDobrushin.Part8
+public import Theorem.StatisticalMechanics.Code.FK.FinitePatternEnergy.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicLocalSwitching.Part11
 open Finset Complex
 open scoped BigOperators
 
@@ -28,7 +30,7 @@ variable {P : PlanarZ2Subgraph} {M : Type*} [Fintype M] [DecidableEq M]
 
 variable (D : FKIsingDobrushinDomain P M)
 
-inductive PointwiseExplorationSwitchingCase
+public inductive PointwiseExplorationSwitchingCase
     (crossingEdge : Sym2 P.V) (edges : Fin 4 -> M)
     (omega : ConfigSpace (Sym2 P.V)) : Type
   | caseOne

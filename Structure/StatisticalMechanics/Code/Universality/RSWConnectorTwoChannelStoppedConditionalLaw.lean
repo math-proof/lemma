@@ -9,12 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FK.EdgeSubsetDomainMarkov.Part5
-import Theorem.StatisticalMechanics.Code.FK.BoundaryEdgeAbsorption.Part3
-import Theorem.StatisticalMechanics.Code.FK.ConditionalFibreMass
-import Theorem.StatisticalMechanics.Code.Universality.RSWConnectorTwoChannelStaticCutEndpoint
-import Theorem.StatisticalMechanics.Code.Universality.RSWSequentialStoppedConditionalLaw.Part16
-import Theorem.StatisticalMechanics.Code.Universality.RSWConnectorTwoChannelStoppedConditionalLaw
+module
+
+public import Theorem.StatisticalMechanics.Code.FK.EdgeSubsetDomainMarkov.Part5
+public import Theorem.StatisticalMechanics.Code.FK.BoundaryEdgeAbsorption.Part3
+public import Theorem.StatisticalMechanics.Code.FK.ConditionalFibreMass
+public import Theorem.StatisticalMechanics.Code.Universality.RSWConnectorTwoChannelStaticCutEndpoint
+public import Theorem.StatisticalMechanics.Code.Universality.RSWSequentialStoppedConditionalLaw.Part16
+public import Theorem.StatisticalMechanics.Code.Universality.RSWConnectorTwoChannelStoppedConditionalLaw
 open Finset SimpleGraph Set
 
 
@@ -22,7 +24,7 @@ namespace StatMech.Universality
 
 open StatMech.Percolation StatMech.Lattice StatMech.RSW.Box
 
-noncomputable section
+public noncomputable section
 
 structure RlcTwoChannelCompatibleExteriorFibre {n : Int}
     (gamma : RlcRightDiagonalPath n) (gamma' : RlcLeftDiagonalPath n)

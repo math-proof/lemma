@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/OriginRelabelScan.lean -/
 
-import Structure.CPythonListsort.Code.Correctness.OriginRelabelMerges
-import Structure.CPythonListsort.Code.Correctness.ScanLoopCorrectness
-import Theorem.CPythonListsort.Code.Correctness.OriginRelabelScan
+module
+
+public import Structure.CPythonListsort.Code.Correctness.OriginRelabelMerges
+public import Structure.CPythonListsort.Code.Correctness.ScanLoopCorrectness
+public import Theorem.CPythonListsort.Code.Correctness.OriginRelabelScan
+
+@[expose] public section
+
 /-!
 # Origin relabeling through policy and scan evaluators
 

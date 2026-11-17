@@ -3,17 +3,21 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
+module
 
-import Mathlib.LinearAlgebra.Matrix.Echelon.Basic
-import Mathlib.LinearAlgebra.Matrix.Block
-import Mathlib.Data.Finset.Sort
-import Def.LinearAlgebra.Matrix.GaussPivot
+public import Mathlib.LinearAlgebra.Matrix.Echelon.Basic
+public import Mathlib.LinearAlgebra.Matrix.Block
+public import Mathlib.Data.Finset.Sort
+public import Def.LinearAlgebra.Matrix.GaussPivot
+
 /-!
 # Gaussian elimination with row pivots
 
 This file constructs unit lower-triangular row operations for a pivot step and proves that a row
 permutation followed by such operations puts every finite matrix over a field in row echelon form.
 -/
+
+public section
 
 
 namespace MathlibExt.LinearAlgebra.Matrix.GaussPivotWanted

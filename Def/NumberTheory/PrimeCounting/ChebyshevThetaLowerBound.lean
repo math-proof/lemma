@@ -1,14 +1,19 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeCounting/ChebyshevThetaLowerBound.lean -/
 
-import Mathlib.NumberTheory.Chebyshev
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.Complex.ExponentialBounds
-import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
-import Mathlib.Tactic.GCongr
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum.Prime
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.NumberTheory.Chebyshev
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Analysis.Complex.ExponentialBounds
+public import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+public import Mathlib.Tactic.GCongr
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum.Prime
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 open Real
 
 

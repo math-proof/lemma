@@ -1,7 +1,25 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.CPythonListsort.Code.Assembly.GallopSafety
-open CPythonListsort CPythonListsort.GallopKeySource
+module
+
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.CPythonListsort.Code.Assembly.GallopSafety
+public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.AccessTrace
+public import Lemma.List.Atlas.CPythonListsort.Code.Transcription.Comparator
+public import Theorem.CPythonListsort.Code.Assembly.AccessTrace.Part2
+
+public section
+
+open CPythonListsort
+open CPythonListsort.GallopKeySource
+open CPythonListsort.AccessTrace
+
+attribute [local simp]
+  TraceResult.erase_pure
+  TraceResult.erase_failure
+  TraceResult.erase_markFuelExhausted
+  TraceResult.erase_tempPayloadRead
+  TraceResult.trace_tempPayloadRead
+  iflt_eq
 
 
 namespace CPythonListsort.GallopKeySource
@@ -10,7 +28,7 @@ namespace CPythonListsort.GallopKeySource
 [main_agreesWithSlice](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma main_agreesWithSlice
+public lemma main_agreesWithSlice
   {κ : Type u}
   {ν : Type v}
   {slice : SortSlice κ ν}
@@ -30,7 +48,7 @@ namespace CPythonListsort.GallopKeySource
 [AgreesWithSlice.read_eq](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma AgreesWithSlice.read_eq
+public lemma AgreesWithSlice.read_eq
   {κ : Type u}
   {ν : Type v}
   {source : GallopKeySource κ ν}
@@ -55,7 +73,7 @@ namespace CPythonListsort.GallopKeySource
 [temporary_agreesWithSlice_of_entries](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma temporary_agreesWithSlice_of_entries
+public lemma temporary_agreesWithSlice_of_entries
   {κ : Type u}
   {ν : Type v}
   {storage : TempStorage κ ν}
@@ -91,11 +109,11 @@ namespace CPythonListsort.GallopKeySource
 [erase_readTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma erase_readTraced
+public lemma erase_readTraced
   {κ : Type u}
   {ν : Type v}
   {source : GallopKeySource κ ν}
-  {index : Int} :
+  (index : Int) :
 -- imply
   (source.readTraced? index).erase = source.read? index := by
 -- proof
@@ -113,11 +131,11 @@ namespace CPythonListsort.GallopKeySource
 [trace_readTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma trace_readTraced
+public lemma trace_readTraced
   {κ : Type u}
   {ν : Type v}
   {source : GallopKeySource κ ν}
-  {index : Int} :
+  (index : Int) :
 -- imply
   (source.readTraced? index).trace = AccessTrace.singletonAccess .read (match source with | .main _ _ => .inputKeys | .temporary storage _ => .tempPayload storage.backing) (source.base + index) source.extent := by
 -- proof
@@ -134,7 +152,7 @@ namespace CPythonListsort.GallopKeySource
 [read_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma read_eq_some
+public lemma read_eq_some
   {κ : Type u}
   {ν : Type v}
   {source : GallopKeySource κ ν}
@@ -155,7 +173,7 @@ namespace CPythonListsort.GallopKeySource
 [readTraced_inBounds](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma readTraced_inBounds
+public lemma readTraced_inBounds
   {κ : Type u}
   {ν : Type v}
   {source : GallopKeySource κ ν}
@@ -185,11 +203,11 @@ namespace CPythonListsort.GallopKeySource
 [readTraced_live](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma readTraced_live
+public lemma readTraced_live
   {κ : Type u}
   {ν : Type v}
   {source : GallopKeySource κ ν}
-  {index : Int}
+  (index : Int)
 -- given
   (hlive : source.Live) :
 -- imply
@@ -243,9 +261,9 @@ private lemma gallopMemoryEventFree_bind (current : TraceResult α)
   (hnext : ∀ value, GallopMemoryEventFree (next value)) :
   GallopMemoryEventFree (current.bind next) := by
   exact
-    ⟨TraceResult.memoryEvents_bind_eq_nil current next hcurrent.1
+    ⟨TraceResult.memoryEvents_bind_eq_nil hcurrent.1
       (fun value => (hnext value).1),
-      TraceResult.policyEvents_bind_eq_nil current next hcurrent.2
+      TraceResult.policyEvents_bind_eq_nil hcurrent.2
         (fun value => (hnext value).2)⟩
 
 end CPythonListsort
@@ -262,8 +280,6 @@ private lemma gallopMemoryEventFree_sourceRead
   GallopMemoryEventFree (source.readTraced? index) := by
   simp [GallopMemoryEventFree, GallopKeySource.trace_readTraced,
     AccessTrace.singletonAccess]
-set_option linter.flexible false in
-
 end CPythonListsort
 
 namespace CPythonListsort
@@ -296,8 +312,6 @@ private lemma gallopMemoryEventFree_leftRightExponential
           · exact gallopMemoryEventFree_failure
         · exact gallopMemoryEventFree_pure _
     · exact gallopMemoryEventFree_pure _
-set_option linter.flexible false in
-
 end CPythonListsort
 
 namespace CPythonListsort
@@ -330,8 +344,6 @@ private lemma gallopMemoryEventFree_leftLeftExponential
           · exact ih _ _
           · exact gallopMemoryEventFree_failure
     · exact gallopMemoryEventFree_pure _
-set_option linter.flexible false in
-
 end CPythonListsort
 
 namespace CPythonListsort
@@ -364,8 +376,6 @@ private lemma gallopMemoryEventFree_rightLeftExponential
           · exact gallopMemoryEventFree_failure
         · exact gallopMemoryEventFree_pure _
     · exact gallopMemoryEventFree_pure _
-set_option linter.flexible false in
-
 end CPythonListsort
 
 namespace CPythonListsort
@@ -398,8 +408,6 @@ private lemma gallopMemoryEventFree_rightRightExponential
           · exact ih _ _
           · exact gallopMemoryEventFree_failure
     · exact gallopMemoryEventFree_pure _
-set_option linter.flexible false in
-
 end CPythonListsort
 
 namespace CPythonListsort
@@ -427,8 +435,6 @@ private lemma gallopMemoryEventFree_leftBinary
       · intro entry
         split <;> exact ih _ _
     · exact gallopMemoryEventFree_pure _
-set_option linter.flexible false in
-
 end CPythonListsort
 
 namespace CPythonListsort
@@ -573,12 +579,12 @@ namespace CPythonListsort
 [gallopLeftTraced_memoryEvents_eq_nil](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopLeftTraced_memoryEvents_eq_nil
+public lemma gallopLeftTraced_memoryEvents_eq_nil
   {κ : Type u}
   {ν : Type v}
-  {state : MergeState κ ν}
-  {source : GallopKeySource κ ν}
-  {key : κ}
+  (state : MergeState κ ν)
+  (source : GallopKeySource κ ν)
+  (key : κ)
 -- given
   (n hint : Nat) :
 -- imply
@@ -594,12 +600,12 @@ namespace CPythonListsort
 [gallopLeftTraced_policyEvents_eq_nil](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopLeftTraced_policyEvents_eq_nil
+public lemma gallopLeftTraced_policyEvents_eq_nil
   {κ : Type u}
   {ν : Type v}
-  {state : MergeState κ ν}
-  {source : GallopKeySource κ ν}
-  {key : κ}
+  (state : MergeState κ ν)
+  (source : GallopKeySource κ ν)
+  (key : κ)
 -- given
   (n hint : Nat) :
 -- imply
@@ -615,12 +621,12 @@ namespace CPythonListsort
 [gallopRightTraced_memoryEvents_eq_nil](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopRightTraced_memoryEvents_eq_nil
+public lemma gallopRightTraced_memoryEvents_eq_nil
   {κ : Type u}
   {ν : Type v}
-  {state : MergeState κ ν}
-  {source : GallopKeySource κ ν}
-  {key : κ}
+  (state : MergeState κ ν)
+  (source : GallopKeySource κ ν)
+  (key : κ)
 -- given
   (n hint : Nat) :
 -- imply
@@ -636,12 +642,12 @@ namespace CPythonListsort
 [gallopRightTraced_policyEvents_eq_nil](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopRightTraced_policyEvents_eq_nil
+public lemma gallopRightTraced_policyEvents_eq_nil
   {κ : Type u}
   {ν : Type v}
-  {state : MergeState κ ν}
-  {source : GallopKeySource κ ν}
-  {key : κ}
+  (state : MergeState κ ν)
+  (source : GallopKeySource κ ν)
+  (key : κ)
 -- given
   (n hint : Nat) :
 -- imply
@@ -657,9 +663,7 @@ namespace CPythonListsort
 [TraceResult.erase_bind_gallop](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma TraceResult.erase_bind_gallop
-  {κ : Type u}
-  {ν : Type v}
+public lemma TraceResult.erase_bind_gallop
   {current : TraceResult α}
   {next : α → TraceResult β} :
 -- imply
@@ -696,6 +700,10 @@ private lemma erase_tracedGallopResult (result : GallopResult) :
   cases h : result.fuelExhausted <;>
     simp [tracedGallopResult, h]
 
+attribute [local simp]
+  erase_tracedExponentialResult
+  erase_tracedGallopResult
+
 end CPythonListsort
 
 namespace CPythonListsort
@@ -704,13 +712,13 @@ namespace CPythonListsort
 [erase_gallopLeftRightExponentialTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma erase_gallopLeftRightExponentialTraced
+public lemma erase_gallopLeftRightExponentialTraced
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {lt : BoolComparator κ}
-  {source : GallopKeySource κ ν}
-  {key : κ}
+  (fuel : Nat)
+  (lt : BoolComparator κ)
+  (source : GallopKeySource κ ν)
+  (key : κ)
 -- given
   (hint maxOffset lastOffset offset : Nat) :
 -- imply
@@ -718,7 +726,7 @@ lemma erase_gallopLeftRightExponentialTraced
 -- proof
   induction fuel generalizing lastOffset offset with
   | zero => simp [gallopLeftRightExponentialTraced?,
-    gallopLeftRightExponentialFromSource?]
+    gallopLeftRightExponentialFromSource?, erase_tracedExponentialResult]
   | succ fuel ih =>
     simp only [gallopLeftRightExponentialTraced?,
       gallopLeftRightExponentialFromSource?]
@@ -742,13 +750,13 @@ namespace CPythonListsort
 [erase_gallopLeftLeftExponentialTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma erase_gallopLeftLeftExponentialTraced
+public lemma erase_gallopLeftLeftExponentialTraced
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {lt : BoolComparator κ}
-  {source : GallopKeySource κ ν}
-  {key : κ}
+  (fuel : Nat)
+  (lt : BoolComparator κ)
+  (source : GallopKeySource κ ν)
+  (key : κ)
 -- given
   (hint maxOffset lastOffset offset : Nat) :
 -- imply
@@ -756,7 +764,7 @@ lemma erase_gallopLeftLeftExponentialTraced
 -- proof
   induction fuel generalizing lastOffset offset with
   | zero => simp [gallopLeftLeftExponentialTraced?,
-    gallopLeftLeftExponentialFromSource?]
+    gallopLeftLeftExponentialFromSource?, erase_tracedExponentialResult]
   | succ fuel ih =>
     simp only [gallopLeftLeftExponentialTraced?,
       gallopLeftLeftExponentialFromSource?]
@@ -780,19 +788,20 @@ namespace CPythonListsort
 [erase_gallopLeftBinaryTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma erase_gallopLeftBinaryTraced
+public lemma erase_gallopLeftBinaryTraced
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {lt : BoolComparator κ}
-  {source : GallopKeySource κ ν}
-  {key : κ}
+  (fuel : Nat)
+  (lt : BoolComparator κ)
+  (source : GallopKeySource κ ν)
+  (key : κ)
   {lower upper : Nat} :
 -- imply
   (gallopLeftBinaryTraced? fuel lt source key lower upper).erase = gallopLeftBinaryFromSource? fuel lt source key lower upper := by
 -- proof
   induction fuel generalizing lower upper with
-  | zero => simp [gallopLeftBinaryTraced?, gallopLeftBinaryFromSource?]
+  | zero => simp [gallopLeftBinaryTraced?, gallopLeftBinaryFromSource?,
+    erase_tracedGallopResult]
   | succ fuel ih =>
     simp only [gallopLeftBinaryTraced?, gallopLeftBinaryFromSource?]
     split
@@ -811,13 +820,13 @@ namespace CPythonListsort
 [erase_gallopRightLeftExponentialTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma erase_gallopRightLeftExponentialTraced
+public lemma erase_gallopRightLeftExponentialTraced
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {lt : BoolComparator κ}
-  {source : GallopKeySource κ ν}
-  {key : κ}
+  (fuel : Nat)
+  (lt : BoolComparator κ)
+  (source : GallopKeySource κ ν)
+  (key : κ)
 -- given
   (hint maxOffset lastOffset offset : Nat) :
 -- imply
@@ -825,7 +834,7 @@ lemma erase_gallopRightLeftExponentialTraced
 -- proof
   induction fuel generalizing lastOffset offset with
   | zero => simp [gallopRightLeftExponentialTraced?,
-    gallopRightLeftExponentialFromSource?]
+    gallopRightLeftExponentialFromSource?, erase_tracedExponentialResult]
   | succ fuel ih =>
     simp only [gallopRightLeftExponentialTraced?,
       gallopRightLeftExponentialFromSource?]
@@ -849,13 +858,13 @@ namespace CPythonListsort
 [erase_gallopRightRightExponentialTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma erase_gallopRightRightExponentialTraced
+public lemma erase_gallopRightRightExponentialTraced
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {lt : BoolComparator κ}
-  {source : GallopKeySource κ ν}
-  {key : κ}
+  (fuel : Nat)
+  (lt : BoolComparator κ)
+  (source : GallopKeySource κ ν)
+  (key : κ)
 -- given
   (hint maxOffset lastOffset offset : Nat) :
 -- imply
@@ -863,7 +872,7 @@ lemma erase_gallopRightRightExponentialTraced
 -- proof
   induction fuel generalizing lastOffset offset with
   | zero => simp [gallopRightRightExponentialTraced?,
-    gallopRightRightExponentialFromSource?]
+    gallopRightRightExponentialFromSource?, erase_tracedExponentialResult]
   | succ fuel ih =>
     simp only [gallopRightRightExponentialTraced?,
       gallopRightRightExponentialFromSource?]
@@ -887,19 +896,20 @@ namespace CPythonListsort
 [erase_gallopRightBinaryTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma erase_gallopRightBinaryTraced
+public lemma erase_gallopRightBinaryTraced
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {lt : BoolComparator κ}
-  {source : GallopKeySource κ ν}
-  {key : κ}
+  (fuel : Nat)
+  (lt : BoolComparator κ)
+  (source : GallopKeySource κ ν)
+  (key : κ)
   {lower upper : Nat} :
 -- imply
   (gallopRightBinaryTraced? fuel lt source key lower upper).erase = gallopRightBinaryFromSource? fuel lt source key lower upper := by
 -- proof
   induction fuel generalizing lower upper with
-  | zero => simp [gallopRightBinaryTraced?, gallopRightBinaryFromSource?]
+  | zero => simp [gallopRightBinaryTraced?, gallopRightBinaryFromSource?,
+    erase_tracedGallopResult]
   | succ fuel ih =>
     simp only [gallopRightBinaryTraced?, gallopRightBinaryFromSource?]
     split
@@ -918,16 +928,16 @@ namespace CPythonListsort
 [erase_finishGallopLeftTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma erase_finishGallopLeftTraced
+public lemma erase_finishGallopLeftTraced
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {lt : BoolComparator κ}
-  {source : GallopKeySource κ ν}
-  {key : κ}
-  {n : Nat}
-  {lastOffset upperOffset : Int}
-  {exhausted : Bool} :
+  (fuel : Nat)
+  (lt : BoolComparator κ)
+  (source : GallopKeySource κ ν)
+  (key : κ)
+  (n : Nat)
+  (lastOffset upperOffset : Int)
+  (exhausted : Bool) :
 -- imply
   (finishGallopLeftTraced? fuel lt source key n lastOffset upperOffset exhausted).erase = finishGallopLeftFromSource? fuel lt source key n lastOffset upperOffset exhausted := by
 -- proof
@@ -938,7 +948,8 @@ lemma erase_finishGallopLeftTraced
     · unfold finishGallopLeftTraced? finishGallopLeftFromSource?
       rw [if_pos houter, if_pos houter]
       rw [if_pos hinner, if_pos hinner]
-      cases exhausted <;> simp
+      cases exhausted <;> simp [erase_gallopLeftBinaryTraced, erase_gallopRightBinaryTraced,
+        erase_tracedGallopResult]
     · unfold finishGallopLeftTraced? finishGallopLeftFromSource?
       rw [if_pos houter, if_pos houter]
       dsimp only
@@ -956,16 +967,16 @@ namespace CPythonListsort
 [erase_finishGallopRightTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma erase_finishGallopRightTraced
+public lemma erase_finishGallopRightTraced
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {lt : BoolComparator κ}
-  {source : GallopKeySource κ ν}
-  {key : κ}
-  {n : Nat}
-  {lastOffset upperOffset : Int}
-  {exhausted : Bool} :
+  (fuel : Nat)
+  (lt : BoolComparator κ)
+  (source : GallopKeySource κ ν)
+  (key : κ)
+  (n : Nat)
+  (lastOffset upperOffset : Int)
+  (exhausted : Bool) :
 -- imply
   (finishGallopRightTraced? fuel lt source key n lastOffset upperOffset exhausted).erase = finishGallopRightFromSource? fuel lt source key n lastOffset upperOffset exhausted := by
 -- proof
@@ -976,7 +987,8 @@ lemma erase_finishGallopRightTraced
     · unfold finishGallopRightTraced? finishGallopRightFromSource?
       rw [if_pos houter, if_pos houter]
       rw [if_pos hinner, if_pos hinner]
-      cases exhausted <;> simp
+      cases exhausted <;> simp [erase_gallopLeftBinaryTraced, erase_gallopRightBinaryTraced,
+        erase_tracedGallopResult]
     · unfold finishGallopRightTraced? finishGallopRightFromSource?
       rw [if_pos houter, if_pos houter]
       dsimp only
@@ -994,12 +1006,12 @@ namespace CPythonListsort
 [erase_gallopLeftTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma erase_gallopLeftTraced
+public lemma erase_gallopLeftTraced
   {κ : Type u}
   {ν : Type v}
-  {state : MergeState κ ν}
-  {source : GallopKeySource κ ν}
-  {key : κ}
+  (state : MergeState κ ν)
+  (source : GallopKeySource κ ν)
+  (key : κ)
 -- given
   (n hint : Nat) :
 -- imply
@@ -1018,13 +1030,13 @@ lemma erase_gallopLeftTraced
         erase_gallopLeftRightExponentialTraced]
       cases hphase : gallopLeftRightExponentialFromSource? (n + 1)
         state.key_compare source key hint (n - hint) 0 1 <;>
-        simp [gallopBindOptionAcross, hphase]
+        simp [gallopBindOptionAcross, hphase, erase_finishGallopLeftTraced, erase_finishGallopRightTraced]
     · rw [if_neg hcompare, if_neg hcompare]
       rw [TraceResult.erase_bind_gallop,
         erase_gallopLeftLeftExponentialTraced]
       cases hphase : gallopLeftLeftExponentialFromSource? (n + 1)
         state.key_compare source key hint (hint + 1) 0 1 <;>
-        simp [gallopBindOptionAcross, hphase]
+        simp [gallopBindOptionAcross, hphase, erase_finishGallopLeftTraced, erase_finishGallopRightTraced]
   · simp [gallopLeftTraced?, gallopLeftFromSource?, hinput]
 
 end CPythonListsort
@@ -1035,12 +1047,12 @@ namespace CPythonListsort
 [erase_gallopRightTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma erase_gallopRightTraced
+public lemma erase_gallopRightTraced
   {κ : Type u}
   {ν : Type v}
-  {state : MergeState κ ν}
-  {source : GallopKeySource κ ν}
-  {key : κ}
+  (state : MergeState κ ν)
+  (source : GallopKeySource κ ν)
+  (key : κ)
 -- given
   (n hint : Nat) :
 -- imply
@@ -1059,13 +1071,13 @@ lemma erase_gallopRightTraced
         erase_gallopRightLeftExponentialTraced]
       cases hphase : gallopRightLeftExponentialFromSource? (n + 1)
         state.key_compare source key hint (hint + 1) 0 1 <;>
-        simp [gallopBindOptionAcross, hphase]
+        simp [gallopBindOptionAcross, hphase, erase_finishGallopLeftTraced, erase_finishGallopRightTraced]
     · rw [if_neg hcompare, if_neg hcompare]
       rw [TraceResult.erase_bind_gallop,
         erase_gallopRightRightExponentialTraced]
       cases hphase : gallopRightRightExponentialFromSource? (n + 1)
         state.key_compare source key hint (n - hint) 0 1 <;>
-        simp [gallopBindOptionAcross, hphase]
+        simp [gallopBindOptionAcross, hphase, erase_finishGallopLeftTraced, erase_finishGallopRightTraced]
   · simp [gallopRightTraced?, gallopRightFromSource?, hinput]
 
 end CPythonListsort
@@ -1262,7 +1274,7 @@ namespace CPythonListsort
 [gallopLeftFromSource_main](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopLeftFromSource_main
+public lemma gallopLeftFromSource_main
   {κ : Type u}
   {ν : Type v}
   {state : MergeState κ ν}
@@ -1286,7 +1298,7 @@ namespace CPythonListsort
 [gallopRightFromSource_main](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopRightFromSource_main
+public lemma gallopRightFromSource_main
   {κ : Type u}
   {ν : Type v}
   {state : MergeState κ ν}
@@ -1310,15 +1322,15 @@ namespace CPythonListsort
 [gallopLeftRightExponentialFromSource_eq_slice](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopLeftRightExponentialFromSource_eq_slice
+public lemma gallopLeftRightExponentialFromSource_eq_slice
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {lt : BoolComparator κ}
-  {source : GallopKeySource κ ν}
-  {slice : SortSlice κ ν}
-  {sliceBase : Int}
-  {key : κ}
+  (fuel : Nat)
+  (lt : BoolComparator κ)
+  (source : GallopKeySource κ ν)
+  (slice : SortSlice κ ν)
+  (sliceBase : Int)
+  (key : κ)
 -- given
   (hint maxOffset lastOffset offset n : Nat)
   (hagrees : source.AgreesWithSlice slice sliceBase n)
@@ -1355,15 +1367,15 @@ namespace CPythonListsort
 [gallopLeftLeftExponentialFromSource_eq_slice](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopLeftLeftExponentialFromSource_eq_slice
+public lemma gallopLeftLeftExponentialFromSource_eq_slice
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {lt : BoolComparator κ}
-  {source : GallopKeySource κ ν}
-  {slice : SortSlice κ ν}
-  {sliceBase : Int}
-  {key : κ}
+  (fuel : Nat)
+  (lt : BoolComparator κ)
+  (source : GallopKeySource κ ν)
+  (slice : SortSlice κ ν)
+  (sliceBase : Int)
+  (key : κ)
 -- given
   (hint maxOffset lastOffset offset n : Nat)
   (hagrees : source.AgreesWithSlice slice sliceBase n)
@@ -1406,16 +1418,16 @@ namespace CPythonListsort
 [gallopLeftBinaryFromSource_eq_slice](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopLeftBinaryFromSource_eq_slice
+public lemma gallopLeftBinaryFromSource_eq_slice
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {lt : BoolComparator κ}
-  {source : GallopKeySource κ ν}
-  {slice : SortSlice κ ν}
-  {sliceBase : Int}
-  {key : κ}
-  {lower upper n : Nat}
+  (fuel : Nat)
+  (lt : BoolComparator κ)
+  (source : GallopKeySource κ ν)
+  (slice : SortSlice κ ν)
+  (sliceBase : Int)
+  (key : κ)
+  (lower upper n : Nat)
 -- given
   (hagrees : source.AgreesWithSlice slice sliceBase n)
   (hupper : upper ≤ n) :
@@ -1456,15 +1468,15 @@ namespace CPythonListsort
 [gallopRightLeftExponentialFromSource_eq_slice](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopRightLeftExponentialFromSource_eq_slice
+public lemma gallopRightLeftExponentialFromSource_eq_slice
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {lt : BoolComparator κ}
-  {source : GallopKeySource κ ν}
-  {slice : SortSlice κ ν}
-  {sliceBase : Int}
-  {key : κ}
+  (fuel : Nat)
+  (lt : BoolComparator κ)
+  (source : GallopKeySource κ ν)
+  (slice : SortSlice κ ν)
+  (sliceBase : Int)
+  (key : κ)
 -- given
   (hint maxOffset lastOffset offset n : Nat)
   (hagrees : source.AgreesWithSlice slice sliceBase n)
@@ -1507,15 +1519,15 @@ namespace CPythonListsort
 [gallopRightRightExponentialFromSource_eq_slice](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopRightRightExponentialFromSource_eq_slice
+public lemma gallopRightRightExponentialFromSource_eq_slice
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {lt : BoolComparator κ}
-  {source : GallopKeySource κ ν}
-  {slice : SortSlice κ ν}
-  {sliceBase : Int}
-  {key : κ}
+  (fuel : Nat)
+  (lt : BoolComparator κ)
+  (source : GallopKeySource κ ν)
+  (slice : SortSlice κ ν)
+  (sliceBase : Int)
+  (key : κ)
 -- given
   (hint maxOffset lastOffset offset n : Nat)
   (hagrees : source.AgreesWithSlice slice sliceBase n)
@@ -1552,16 +1564,16 @@ namespace CPythonListsort
 [gallopRightBinaryFromSource_eq_slice](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopRightBinaryFromSource_eq_slice
+public lemma gallopRightBinaryFromSource_eq_slice
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {lt : BoolComparator κ}
-  {source : GallopKeySource κ ν}
-  {slice : SortSlice κ ν}
-  {sliceBase : Int}
-  {key : κ}
-  {lower upper n : Nat}
+  (fuel : Nat)
+  (lt : BoolComparator κ)
+  (source : GallopKeySource κ ν)
+  (slice : SortSlice κ ν)
+  (sliceBase : Int)
+  (key : κ)
+  (lower upper n : Nat)
 -- given
   (hagrees : source.AgreesWithSlice slice sliceBase n)
   (hupper : upper ≤ n) :
@@ -1602,18 +1614,18 @@ namespace CPythonListsort
 [finishGallopLeftFromSource_eq_slice](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma finishGallopLeftFromSource_eq_slice
+public lemma finishGallopLeftFromSource_eq_slice
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {lt : BoolComparator κ}
-  {source : GallopKeySource κ ν}
-  {slice : SortSlice κ ν}
-  {sliceBase : Int}
-  {key : κ}
-  {n : Nat}
-  {lastOffset upperOffset : Int}
-  {exhausted : Bool}
+  (fuel : Nat)
+  (lt : BoolComparator κ)
+  (source : GallopKeySource κ ν)
+  (slice : SortSlice κ ν)
+  (sliceBase : Int)
+  (key : κ)
+  (n : Nat)
+  (lastOffset upperOffset : Int)
+  (exhausted : Bool)
 -- given
   (hagrees : source.AgreesWithSlice slice sliceBase n) :
 -- imply
@@ -1648,18 +1660,18 @@ namespace CPythonListsort
 [finishGallopRightFromSource_eq_slice](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma finishGallopRightFromSource_eq_slice
+public lemma finishGallopRightFromSource_eq_slice
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {lt : BoolComparator κ}
-  {source : GallopKeySource κ ν}
-  {slice : SortSlice κ ν}
-  {sliceBase : Int}
-  {key : κ}
-  {n : Nat}
-  {lastOffset upperOffset : Int}
-  {exhausted : Bool}
+  (fuel : Nat)
+  (lt : BoolComparator κ)
+  (source : GallopKeySource κ ν)
+  (slice : SortSlice κ ν)
+  (sliceBase : Int)
+  (key : κ)
+  (n : Nat)
+  (lastOffset upperOffset : Int)
+  (exhausted : Bool)
 -- given
   (hagrees : source.AgreesWithSlice slice sliceBase n) :
 -- imply
@@ -1694,14 +1706,14 @@ namespace CPythonListsort
 [gallopLeftFromSource_eq_slice_of_ssize](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopLeftFromSource_eq_slice_of_ssize
+public lemma gallopLeftFromSource_eq_slice_of_ssize
   {κ : Type u}
   {ν : Type v}
-  {state : MergeState κ ν}
-  {source : GallopKeySource κ ν}
-  {slice : SortSlice κ ν}
-  {sliceBase : Int}
-  {key : κ}
+  (state : MergeState κ ν)
+  (source : GallopKeySource κ ν)
+  (slice : SortSlice κ ν)
+  (sliceBase : Int)
+  (key : κ)
 -- given
   (n hint : Nat)
   (hagrees : source.AgreesWithSlice slice sliceBase n)
@@ -1780,14 +1792,14 @@ namespace CPythonListsort
 [gallopRightFromSource_eq_slice_of_ssize](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopRightFromSource_eq_slice_of_ssize
+public lemma gallopRightFromSource_eq_slice_of_ssize
   {κ : Type u}
   {ν : Type v}
-  {state : MergeState κ ν}
-  {source : GallopKeySource κ ν}
-  {slice : SortSlice κ ν}
-  {sliceBase : Int}
-  {key : κ}
+  (state : MergeState κ ν)
+  (source : GallopKeySource κ ν)
+  (slice : SortSlice κ ν)
+  (sliceBase : Int)
+  (key : κ)
 -- given
   (n hint : Nat)
   (hagrees : source.AgreesWithSlice slice sliceBase n)
@@ -1866,14 +1878,14 @@ namespace CPythonListsort
 [gallopLeftFromSource_eq_slice](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopLeftFromSource_eq_slice
+public lemma gallopLeftFromSource_eq_slice
   {κ : Type u}
   {ν : Type v}
-  {state : MergeState κ ν}
-  {source : GallopKeySource κ ν}
-  {slice : SortSlice κ ν}
-  {sliceBase : Int}
-  {key : κ}
+  (state : MergeState κ ν)
+  (source : GallopKeySource κ ν)
+  (slice : SortSlice κ ν)
+  (sliceBase : Int)
+  (key : κ)
 -- given
   (n hint : Nat)
   (_hvalid : source.ValidRange n)
@@ -1898,14 +1910,14 @@ namespace CPythonListsort
 [gallopRightFromSource_eq_slice](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopRightFromSource_eq_slice
+public lemma gallopRightFromSource_eq_slice
   {κ : Type u}
   {ν : Type v}
-  {state : MergeState κ ν}
-  {source : GallopKeySource κ ν}
-  {slice : SortSlice κ ν}
-  {sliceBase : Int}
-  {key : κ}
+  (state : MergeState κ ν)
+  (source : GallopKeySource κ ν)
+  (slice : SortSlice κ ν)
+  (sliceBase : Int)
+  (key : κ)
 -- given
   (n hint : Nat)
   (_hvalid : source.ValidRange n)
@@ -1930,14 +1942,14 @@ namespace CPythonListsort
 [erase_gallopLeftTraced_eq_slice](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma erase_gallopLeftTraced_eq_slice
+public lemma erase_gallopLeftTraced_eq_slice
   {κ : Type u}
   {ν : Type v}
-  {state : MergeState κ ν}
-  {source : GallopKeySource κ ν}
-  {slice : SortSlice κ ν}
-  {sliceBase : Int}
-  {key : κ}
+  (state : MergeState κ ν)
+  (source : GallopKeySource κ ν)
+  (slice : SortSlice κ ν)
+  (sliceBase : Int)
+  (key : κ)
 -- given
   (n hint : Nat)
   (hvalid : source.ValidRange n)
@@ -1960,14 +1972,14 @@ namespace CPythonListsort
 [erase_gallopRightTraced_eq_slice](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma erase_gallopRightTraced_eq_slice
+public lemma erase_gallopRightTraced_eq_slice
   {κ : Type u}
   {ν : Type v}
-  {state : MergeState κ ν}
-  {source : GallopKeySource κ ν}
-  {slice : SortSlice κ ν}
-  {sliceBase : Int}
-  {key : κ}
+  (state : MergeState κ ν)
+  (source : GallopKeySource κ ν)
+  (slice : SortSlice κ ν)
+  (sliceBase : Int)
+  (key : κ)
 -- given
   (n hint : Nat)
   (hvalid : source.ValidRange n)
@@ -1990,7 +2002,7 @@ namespace CPythonListsort
 [erase_gallopLeftTraced_main](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma erase_gallopLeftTraced_main
+public lemma erase_gallopLeftTraced_main
   {κ : Type u}
   {ν : Type v}
   {state : MergeState κ ν}
@@ -2012,7 +2024,7 @@ namespace CPythonListsort
 [erase_gallopRightTraced_main](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma erase_gallopRightTraced_main
+public lemma erase_gallopRightTraced_main
   {κ : Type u}
   {ν : Type v}
   {state : MergeState κ ν}
@@ -2034,15 +2046,15 @@ namespace CPythonListsort
 [gallopTraceSafe_pure](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopTraceSafe_pure
-  {κ : Type u}
-  {ν : Type v}
-  {value : α} :
+public lemma gallopTraceSafe_pure
+  (value : α) :
 -- imply
   GallopTraceSafe (TraceResult.pure value) := by
 -- proof
   refine ⟨rfl, rfl, AccessTrace.allAccessesInBounds_empty,
     AccessTrace.tempPayloadAccessesLive_empty⟩
+
+attribute [local simp] gallopTraceSafe_pure
 
 end CPythonListsort
 
@@ -2052,12 +2064,10 @@ namespace CPythonListsort
 [gallopTraceSafe_bind](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopTraceSafe_bind
-  {κ : Type u}
-  {ν : Type v}
-  {current : TraceResult α}
-  {next : α → TraceResult β}
-  {value : α}
+public lemma gallopTraceSafe_bind
+  (current : TraceResult α)
+  (next : α → TraceResult β)
+  (value : α)
 -- given
   (hresult : current.result = some value)
   (hcurrent : GallopTraceSafe current)
@@ -2070,12 +2080,13 @@ lemma gallopTraceSafe_bind
   obtain ⟨hnextFuel, hnextPushes, hnextBounds, hnextLive⟩ := hnext
   rw [GallopTraceSafe, TraceResult.trace_bind, hresult]
   refine ⟨?_, ?_, ?_, ?_⟩
-  · simp [hcurrentFuel, hnextFuel]
+  · simp [AccessTrace.compose, AccessTrace.fuelExhausted_compose,
+      hcurrentFuel, hnextFuel]
   · simp [AccessTrace.compose, hcurrentPushes, hnextPushes]
-  · exact (AccessTrace.allAccessesInBounds_compose _ _).2
-    ⟨hcurrentBounds, hnextBounds⟩
-  · exact (AccessTrace.tempPayloadAccessesLive_compose _ _).2
-    ⟨hcurrentLive, hnextLive⟩
+  · exact (AccessTrace.allAccessesInBounds_compose).mpr
+      ⟨hcurrentBounds, hnextBounds⟩
+  · exact (AccessTrace.tempPayloadAccessesLive_compose).mpr
+      ⟨hcurrentLive, hnextLive⟩
 
 end CPythonListsort
 
@@ -2085,7 +2096,7 @@ namespace CPythonListsort
 [GallopKeySource.readTraced_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma GallopKeySource.readTraced_safe
+public lemma GallopKeySource.readTraced_safe
   {κ : Type u}
   {ν : Type v}
   {source : GallopKeySource κ ν}
@@ -2116,9 +2127,7 @@ namespace CPythonListsort
 [gallop_doubling_guard](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallop_doubling_guard
-  {κ : Type u}
-  {ν : Type v}
+public lemma gallop_doubling_guard
   {offset maxOffset n : Nat}
 -- given
   (hoffset : offset < maxOffset)
@@ -2138,13 +2147,13 @@ namespace CPythonListsort
 [gallopLeftRightExponential_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopLeftRightExponential_safe
+public lemma gallopLeftRightExponential_safe
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {lt : BoolComparator κ}
-  {source : GallopKeySource κ ν}
-  {key : κ}
+  (fuel : Nat)
+  (lt : BoolComparator κ)
+  (source : GallopKeySource κ ν)
+  (key : κ)
 -- given
   (hint maxOffset lastOffset offset n : Nat)
   (hvalid : source.ValidRange n)
@@ -2166,7 +2175,7 @@ lemma gallopLeftRightExponential_safe
     · simp [gallopLeftRightExponentialTraced?, hstop,
       tracedExponentialResult, TraceResult.pure, outcome]
     · simp [gallopLeftRightExponentialTraced?, hstop,
-      tracedExponentialResult]
+      tracedExponentialResult, gallopTraceSafe_pure]
   | succ fuel ih =>
     by_cases hprobe : offset < maxOffset
     · have hindex : hint + offset < n := by omega
@@ -2187,20 +2196,20 @@ lemma gallopLeftRightExponential_safe
           TraceResult.bind, hreadResult, if_pos hcompare,
           if_pos hguard, hresult]
         · have hbound := gallopTraceSafe_bind
-          (source.readTraced? (Int.ofNat (hint + offset)))
-          (fun readEntry =>
-            if iflt lt readEntry.key key then
-              if offset ≤ (PY_SSIZE_T_MAX - 1) / 2 then
-                gallopLeftRightExponentialTraced? fuel lt source key hint
-                  maxOffset offset (2 * offset + 1)
-              else TraceResult.failure
-            else TraceResult.pure {
-              lastOffset := lastOffset
-              offset := offset
-              fuelExhausted := false })
-          entry hreadResult hreadSafe
-          (by simpa only [if_pos hcompare, if_pos hguard]
-            using htrace)
+            (source.readTraced? (Int.ofNat (hint + offset)))
+            (fun readEntry =>
+              if iflt lt readEntry.key key then
+                if offset ≤ (PY_SSIZE_T_MAX - 1) / 2 then
+                  gallopLeftRightExponentialTraced? fuel lt source key hint
+                    maxOffset offset (2 * offset + 1)
+                else TraceResult.failure
+              else TraceResult.pure {
+                lastOffset := lastOffset
+                offset := offset
+                fuelExhausted := false })
+            entry hreadResult hreadSafe
+            (by simpa only [if_pos hcompare, if_pos hguard]
+              using htrace)
           rwa [gallopLeftRightExponentialTraced?, if_pos hprobe]
       · let outcome : ExponentialResult := ⟨lastOffset, offset, false⟩
         refine ⟨outcome, ?_, rfl, hlastOffset, hlastMax, ?_⟩
@@ -2208,26 +2217,26 @@ lemma gallopLeftRightExponential_safe
           TraceResult.bind, hreadResult, if_neg hcompare,
           TraceResult.pure, outcome]
         · have hbound := gallopTraceSafe_bind
-          (source.readTraced? (Int.ofNat (hint + offset)))
-          (fun readEntry =>
-            if iflt lt readEntry.key key then
-              if offset ≤ (PY_SSIZE_T_MAX - 1) / 2 then
-                gallopLeftRightExponentialTraced? fuel lt source key hint
-                  maxOffset offset (2 * offset + 1)
-              else TraceResult.failure
-            else TraceResult.pure {
-              lastOffset := lastOffset
-              offset := offset
-              fuelExhausted := false })
-          entry hreadResult hreadSafe
-          (by simpa only [if_neg hcompare] using
-            (gallopTraceSafe_pure outcome))
+            (source.readTraced? (Int.ofNat (hint + offset)))
+            (fun readEntry =>
+              if iflt lt readEntry.key key then
+                if offset ≤ (PY_SSIZE_T_MAX - 1) / 2 then
+                  gallopLeftRightExponentialTraced? fuel lt source key hint
+                    maxOffset offset (2 * offset + 1)
+                else TraceResult.failure
+              else TraceResult.pure {
+                lastOffset := lastOffset
+                offset := offset
+                fuelExhausted := false })
+            entry hreadResult hreadSafe
+            (by simpa only [if_neg hcompare] using
+              (gallopTraceSafe_pure outcome))
           rwa [gallopLeftRightExponentialTraced?, if_pos hprobe]
     · let outcome : ExponentialResult := ⟨lastOffset, offset, false⟩
       refine ⟨outcome, ?_, rfl, hlastOffset, hlastMax, ?_⟩
       · simp [gallopLeftRightExponentialTraced?, hprobe,
         TraceResult.pure, outcome]
-      · simp [gallopLeftRightExponentialTraced?, hprobe]
+      · simp [gallopLeftRightExponentialTraced?, hprobe, gallopTraceSafe_pure]
 
 end CPythonListsort
 
@@ -2237,13 +2246,13 @@ namespace CPythonListsort
 [gallopLeftLeftExponential_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopLeftLeftExponential_safe
+public lemma gallopLeftLeftExponential_safe
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {lt : BoolComparator κ}
-  {source : GallopKeySource κ ν}
-  {key : κ}
+  (fuel : Nat)
+  (lt : BoolComparator κ)
+  (source : GallopKeySource κ ν)
+  (key : κ)
 -- given
   (hint maxOffset lastOffset offset n : Nat)
   (hvalid : source.ValidRange n)
@@ -2266,7 +2275,7 @@ lemma gallopLeftLeftExponential_safe
     · simp [gallopLeftLeftExponentialTraced?, hstop,
       tracedExponentialResult, TraceResult.pure, outcome]
     · simp [gallopLeftLeftExponentialTraced?, hstop,
-      tracedExponentialResult]
+      tracedExponentialResult, gallopTraceSafe_pure]
   | succ fuel ih =>
     by_cases hprobe : offset < maxOffset
     · have hoffsetHint : offset ≤ hint := by omega
@@ -2290,20 +2299,20 @@ lemma gallopLeftLeftExponential_safe
           TraceResult.bind, hreadResult, if_pos hcompare,
           TraceResult.pure, outcome]
         · have hbound := gallopTraceSafe_bind
-          (source.readTraced? (Int.ofNat hint - Int.ofNat offset))
-          (fun readEntry =>
-            if iflt lt readEntry.key key then
-              TraceResult.pure {
-                lastOffset := lastOffset
-                offset := offset
-                fuelExhausted := false }
-            else if offset ≤ (PY_SSIZE_T_MAX - 1) / 2 then
-              gallopLeftLeftExponentialTraced? fuel lt source key hint
-                maxOffset offset (2 * offset + 1)
-            else TraceResult.failure)
-          entry hreadResult hreadSafe
-          (by simpa only [if_pos hcompare] using
-            (gallopTraceSafe_pure outcome))
+            (source.readTraced? (Int.ofNat hint - Int.ofNat offset))
+            (fun readEntry =>
+              if iflt lt readEntry.key key then
+                TraceResult.pure {
+                  lastOffset := lastOffset
+                  offset := offset
+                  fuelExhausted := false }
+              else if offset ≤ (PY_SSIZE_T_MAX - 1) / 2 then
+                gallopLeftLeftExponentialTraced? fuel lt source key hint
+                  maxOffset offset (2 * offset + 1)
+              else TraceResult.failure)
+            entry hreadResult hreadSafe
+            (by simpa only [if_pos hcompare] using
+              (gallopTraceSafe_pure outcome))
           rwa [gallopLeftLeftExponentialTraced?, if_pos hprobe]
       · have hmax : maxOffset ≤ n := by omega
         have hguard := gallop_doubling_guard hprobe hmax hnmax
@@ -2319,25 +2328,25 @@ lemma gallopLeftLeftExponential_safe
           TraceResult.bind, hreadResult, if_neg hcompare,
           if_pos hguard, hresult]
         · have hbound := gallopTraceSafe_bind
-          (source.readTraced? (Int.ofNat hint - Int.ofNat offset))
-          (fun readEntry =>
-            if iflt lt readEntry.key key then
-              TraceResult.pure {
-                lastOffset := lastOffset
-                offset := offset
-                fuelExhausted := false }
-            else if offset ≤ (PY_SSIZE_T_MAX - 1) / 2 then
-              gallopLeftLeftExponentialTraced? fuel lt source key hint
-                maxOffset offset (2 * offset + 1)
-            else TraceResult.failure)
-          entry hreadResult hreadSafe
-          (by simpa only [if_neg hcompare, if_pos hguard] using htrace)
+            (source.readTraced? (Int.ofNat hint - Int.ofNat offset))
+            (fun readEntry =>
+              if iflt lt readEntry.key key then
+                TraceResult.pure {
+                  lastOffset := lastOffset
+                  offset := offset
+                  fuelExhausted := false }
+              else if offset ≤ (PY_SSIZE_T_MAX - 1) / 2 then
+                gallopLeftLeftExponentialTraced? fuel lt source key hint
+                  maxOffset offset (2 * offset + 1)
+              else TraceResult.failure)
+            entry hreadResult hreadSafe
+            (by simpa only [if_neg hcompare, if_pos hguard] using htrace)
           rwa [gallopLeftLeftExponentialTraced?, if_pos hprobe]
     · let outcome : ExponentialResult := ⟨lastOffset, offset, false⟩
       refine ⟨outcome, ?_, rfl, hlastOffset, hlastMax, ?_⟩
       · simp [gallopLeftLeftExponentialTraced?, hprobe,
         TraceResult.pure, outcome]
-      · simp [gallopLeftLeftExponentialTraced?, hprobe]
+      · simp [gallopLeftLeftExponentialTraced?, hprobe, gallopTraceSafe_pure]
 
 end CPythonListsort
 
@@ -2347,14 +2356,14 @@ namespace CPythonListsort
 [gallopLeftBinary_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopLeftBinary_safe
+public lemma gallopLeftBinary_safe
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {lt : BoolComparator κ}
-  {source : GallopKeySource κ ν}
-  {key : κ}
-  {lower upper n : Nat}
+  (fuel : Nat)
+  (lt : BoolComparator κ)
+  (source : GallopKeySource κ ν)
+  (key : κ)
+  (lower upper n : Nat)
 -- given
   (hvalid : source.ValidRange n)
   (hlive : source.Live)
@@ -2372,7 +2381,8 @@ lemma gallopLeftBinary_safe
     · simp [gallopLeftBinaryTraced?, hstop, tracedGallopResult,
       TraceResult.pure, outcome]
     · omega
-    · simp [gallopLeftBinaryTraced?, hstop, tracedGallopResult]
+    · simp [gallopLeftBinaryTraced?, hstop, tracedGallopResult,
+      gallopTraceSafe_pure]
   | succ fuel ih =>
     by_cases hsearch : lower < upper
     · let middle := lower + (upper - lower) / 2
@@ -2407,13 +2417,13 @@ lemma gallopLeftBinary_safe
           TraceResult.bind, hreadResult', if_pos hcompare, hresult']
         · omega
         · have hbound := gallopTraceSafe_bind
-          (source.readTraced? (Int.ofNat middle))
-          (fun readEntry =>
-            if iflt lt readEntry.key key then
-              gallopLeftBinaryTraced? fuel lt source key (middle + 1) upper
-            else gallopLeftBinaryTraced? fuel lt source key lower middle)
-          entry hreadResult hreadSafe
-          (by simpa only [if_pos hcompare] using htrace)
+            (source.readTraced? (Int.ofNat middle))
+            (fun readEntry =>
+              if iflt lt readEntry.key key then
+                gallopLeftBinaryTraced? fuel lt source key (middle + 1) upper
+              else gallopLeftBinaryTraced? fuel lt source key lower middle)
+            entry hreadResult hreadSafe
+            (by simpa only [if_pos hcompare] using htrace)
           rwa [gallopLeftBinaryTraced?, if_pos hsearch]
       · have hnextUpper : middle ≤ n := by omega
         have hnextBudget : middle - lower ≤ fuel := by
@@ -2436,20 +2446,20 @@ lemma gallopLeftBinary_safe
           TraceResult.bind, hreadResult', if_neg hcompare, hresult']
         · omega
         · have hbound := gallopTraceSafe_bind
-          (source.readTraced? (Int.ofNat middle))
-          (fun readEntry =>
-            if iflt lt readEntry.key key then
-              gallopLeftBinaryTraced? fuel lt source key (middle + 1) upper
-            else gallopLeftBinaryTraced? fuel lt source key lower middle)
-          entry hreadResult hreadSafe
-          (by simpa only [if_neg hcompare] using htrace)
+            (source.readTraced? (Int.ofNat middle))
+            (fun readEntry =>
+              if iflt lt readEntry.key key then
+                gallopLeftBinaryTraced? fuel lt source key (middle + 1) upper
+              else gallopLeftBinaryTraced? fuel lt source key lower middle)
+            entry hreadResult hreadSafe
+            (by simpa only [if_neg hcompare] using htrace)
           rwa [gallopLeftBinaryTraced?, if_pos hsearch]
     · have hequal : lower = upper := by omega
       let outcome : GallopResult := ⟨upper, false⟩
       refine ⟨outcome, ?_, rfl, ?_, Nat.le_refl upper, ?_⟩
       · simp [gallopLeftBinaryTraced?, hsearch, TraceResult.pure, outcome]
       · omega
-      · simp [gallopLeftBinaryTraced?, hsearch]
+      · simp [gallopLeftBinaryTraced?, hsearch, gallopTraceSafe_pure]
 
 end CPythonListsort
 
@@ -2459,7 +2469,7 @@ namespace CPythonListsort
 [gallopComparatorDual_apply](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopComparatorDual_apply
+public lemma gallopComparatorDual_apply
   {κ : Type u}
   {ν : Type v}
   {lt : BoolComparator κ}
@@ -2477,13 +2487,13 @@ namespace CPythonListsort
 [gallopRightRight_eq_leftRight_dual](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopRightRight_eq_leftRight_dual
+public lemma gallopRightRight_eq_leftRight_dual
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {lt : BoolComparator κ}
-  {source : GallopKeySource κ ν}
-  {key : κ}
+  (fuel : Nat)
+  (lt : BoolComparator κ)
+  (source : GallopKeySource κ ν)
+  (key : κ)
 -- given
   (hint maxOffset lastOffset offset : Nat) :
 -- imply
@@ -2515,13 +2525,13 @@ namespace CPythonListsort
 [gallopRightLeft_eq_leftLeft_dual](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopRightLeft_eq_leftLeft_dual
+public lemma gallopRightLeft_eq_leftLeft_dual
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {lt : BoolComparator κ}
-  {source : GallopKeySource κ ν}
-  {key : κ}
+  (fuel : Nat)
+  (lt : BoolComparator κ)
+  (source : GallopKeySource κ ν)
+  (key : κ)
 -- given
   (hint maxOffset lastOffset offset : Nat) :
 -- imply
@@ -2553,13 +2563,13 @@ namespace CPythonListsort
 [gallopRightBinary_eq_leftBinary_dual](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopRightBinary_eq_leftBinary_dual
+public lemma gallopRightBinary_eq_leftBinary_dual
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {lt : BoolComparator κ}
-  {source : GallopKeySource κ ν}
-  {key : κ}
+  (fuel : Nat)
+  (lt : BoolComparator κ)
+  (source : GallopKeySource κ ν)
+  (key : κ)
   {lower upper : Nat} :
 -- imply
   gallopRightBinaryTraced? fuel lt source key lower upper = gallopLeftBinaryTraced? fuel (gallopComparatorDual lt) source key lower upper := by
@@ -2589,13 +2599,13 @@ namespace CPythonListsort
 [gallopRightRightExponential_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopRightRightExponential_safe
+public lemma gallopRightRightExponential_safe
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {lt : BoolComparator κ}
-  {source : GallopKeySource κ ν}
-  {key : κ}
+  (fuel : Nat)
+  (lt : BoolComparator κ)
+  (source : GallopKeySource κ ν)
+  (key : κ)
 -- given
   (hint maxOffset lastOffset offset n : Nat)
   (hvalid : source.ValidRange n)
@@ -2622,13 +2632,13 @@ namespace CPythonListsort
 [gallopRightLeftExponential_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopRightLeftExponential_safe
+public lemma gallopRightLeftExponential_safe
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {lt : BoolComparator κ}
-  {source : GallopKeySource κ ν}
-  {key : κ}
+  (fuel : Nat)
+  (lt : BoolComparator κ)
+  (source : GallopKeySource κ ν)
+  (key : κ)
 -- given
   (hint maxOffset lastOffset offset n : Nat)
   (hvalid : source.ValidRange n)
@@ -2656,14 +2666,14 @@ namespace CPythonListsort
 [gallopRightBinary_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopRightBinary_safe
+public lemma gallopRightBinary_safe
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {lt : BoolComparator κ}
-  {source : GallopKeySource κ ν}
-  {key : κ}
-  {lower upper n : Nat}
+  (fuel : Nat)
+  (lt : BoolComparator κ)
+  (source : GallopKeySource κ ν)
+  (key : κ)
+  (lower upper n : Nat)
 -- given
   (hvalid : source.ValidRange n)
   (hlive : source.Live)
@@ -2685,15 +2695,15 @@ namespace CPythonListsort
 [finishGallopLeft_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma finishGallopLeft_safe
+public lemma finishGallopLeft_safe
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {lt : BoolComparator κ}
-  {source : GallopKeySource κ ν}
-  {key : κ}
-  {n : Nat}
-  {lastOffset upperOffset : Int}
+  (fuel : Nat)
+  (lt : BoolComparator κ)
+  (source : GallopKeySource κ ν)
+  (key : κ)
+  (n : Nat)
+  (lastOffset upperOffset : Int)
 -- given
   (hvalid : source.ValidRange n)
   (hlive : source.Live)
@@ -2740,15 +2750,15 @@ namespace CPythonListsort
 [finishGallopRight_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma finishGallopRight_safe
+public lemma finishGallopRight_safe
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {lt : BoolComparator κ}
-  {source : GallopKeySource κ ν}
-  {key : κ}
-  {n : Nat}
-  {lastOffset upperOffset : Int}
+  (fuel : Nat)
+  (lt : BoolComparator κ)
+  (source : GallopKeySource κ ν)
+  (key : κ)
+  (n : Nat)
+  (lastOffset upperOffset : Int)
 -- given
   (hvalid : source.ValidRange n)
   (hlive : source.Live)
@@ -2795,12 +2805,12 @@ namespace CPythonListsort
 [gallopLeftFromSource_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopLeftFromSource_safe
+public lemma gallopLeftFromSource_safe
   {κ : Type u}
   {ν : Type v}
-  {state : MergeState κ ν}
-  {source : GallopKeySource κ ν}
-  {key : κ}
+  (state : MergeState κ ν)
+  (source : GallopKeySource κ ν)
+  (key : κ)
 -- given
   (n hint : Nat)
   (hvalid : source.ValidRange n)
@@ -2896,26 +2906,26 @@ lemma gallopLeftFromSource_safe
       hhintedResult, if_pos hcompare]
       exact hbranchResult
     · have hwhole := gallopTraceSafe_bind
-      (source.readTraced? (Int.ofNat hint))
-      (fun current =>
-        if iflt state.key_compare current.key key then
-          (gallopLeftRightExponentialTraced? (n + 1) state.key_compare source
-            key hint (n - hint) 0 1).bind fun exponentialCurrent =>
-              let currentCapped := min exponentialCurrent.offset (n - hint)
-              finishGallopLeftTraced? (n + 1) state.key_compare source key n
-                (Int.ofNat exponentialCurrent.lastOffset + Int.ofNat hint)
-                (Int.ofNat currentCapped + Int.ofNat hint)
-                exponentialCurrent.fuelExhausted
-        else
-          (gallopLeftLeftExponentialTraced? (n + 1) state.key_compare source
-            key hint (hint + 1) 0 1).bind fun exponentialCurrent =>
-              let currentCapped := min exponentialCurrent.offset (hint + 1)
-              finishGallopLeftTraced? (n + 1) state.key_compare source key n
-                (Int.ofNat hint - Int.ofNat currentCapped)
-                (Int.ofNat hint - Int.ofNat exponentialCurrent.lastOffset)
-                exponentialCurrent.fuelExhausted)
-      hinted hhintedResult hhintedSafe
-      (by simpa only [if_pos hcompare] using hbranchTrace)
+        (source.readTraced? (Int.ofNat hint))
+        (fun current =>
+          if iflt state.key_compare current.key key then
+            (gallopLeftRightExponentialTraced? (n + 1) state.key_compare source
+              key hint (n - hint) 0 1).bind fun exponentialCurrent =>
+                let currentCapped := min exponentialCurrent.offset (n - hint)
+                finishGallopLeftTraced? (n + 1) state.key_compare source key n
+                  (Int.ofNat exponentialCurrent.lastOffset + Int.ofNat hint)
+                  (Int.ofNat currentCapped + Int.ofNat hint)
+                  exponentialCurrent.fuelExhausted
+          else
+            (gallopLeftLeftExponentialTraced? (n + 1) state.key_compare source
+              key hint (hint + 1) 0 1).bind fun exponentialCurrent =>
+                let currentCapped := min exponentialCurrent.offset (hint + 1)
+                finishGallopLeftTraced? (n + 1) state.key_compare source key n
+                  (Int.ofNat hint - Int.ofNat currentCapped)
+                  (Int.ofNat hint - Int.ofNat exponentialCurrent.lastOffset)
+                  exponentialCurrent.fuelExhausted)
+        hinted hhintedResult hhintedSafe
+        (by simpa only [if_pos hcompare] using hbranchTrace)
       rwa [gallopLeftTraced?, if_pos hinput]
   · let maxOffset := hint + 1
     have hmaxPositive : 0 < maxOffset := by
@@ -2995,26 +3005,26 @@ lemma gallopLeftFromSource_safe
       hhintedResult, if_neg hcompare]
       exact hbranchResult
     · have hwhole := gallopTraceSafe_bind
-      (source.readTraced? (Int.ofNat hint))
-      (fun current =>
-        if iflt state.key_compare current.key key then
-          (gallopLeftRightExponentialTraced? (n + 1) state.key_compare source
-            key hint (n - hint) 0 1).bind fun exponentialCurrent =>
-              let currentCapped := min exponentialCurrent.offset (n - hint)
-              finishGallopLeftTraced? (n + 1) state.key_compare source key n
-                (Int.ofNat exponentialCurrent.lastOffset + Int.ofNat hint)
-                (Int.ofNat currentCapped + Int.ofNat hint)
-                exponentialCurrent.fuelExhausted
-        else
-          (gallopLeftLeftExponentialTraced? (n + 1) state.key_compare source
-            key hint (hint + 1) 0 1).bind fun exponentialCurrent =>
-              let currentCapped := min exponentialCurrent.offset (hint + 1)
-              finishGallopLeftTraced? (n + 1) state.key_compare source key n
-                (Int.ofNat hint - Int.ofNat currentCapped)
-                (Int.ofNat hint - Int.ofNat exponentialCurrent.lastOffset)
-                exponentialCurrent.fuelExhausted)
-      hinted hhintedResult hhintedSafe
-      (by simpa only [if_neg hcompare] using hbranchTrace)
+        (source.readTraced? (Int.ofNat hint))
+        (fun current =>
+          if iflt state.key_compare current.key key then
+            (gallopLeftRightExponentialTraced? (n + 1) state.key_compare source
+              key hint (n - hint) 0 1).bind fun exponentialCurrent =>
+                let currentCapped := min exponentialCurrent.offset (n - hint)
+                finishGallopLeftTraced? (n + 1) state.key_compare source key n
+                  (Int.ofNat exponentialCurrent.lastOffset + Int.ofNat hint)
+                  (Int.ofNat currentCapped + Int.ofNat hint)
+                  exponentialCurrent.fuelExhausted
+          else
+            (gallopLeftLeftExponentialTraced? (n + 1) state.key_compare source
+              key hint (hint + 1) 0 1).bind fun exponentialCurrent =>
+                let currentCapped := min exponentialCurrent.offset (hint + 1)
+                finishGallopLeftTraced? (n + 1) state.key_compare source key n
+                  (Int.ofNat hint - Int.ofNat currentCapped)
+                  (Int.ofNat hint - Int.ofNat exponentialCurrent.lastOffset)
+                  exponentialCurrent.fuelExhausted)
+        hinted hhintedResult hhintedSafe
+        (by simpa only [if_neg hcompare] using hbranchTrace)
       rwa [gallopLeftTraced?, if_pos hinput]
 
 end CPythonListsort
@@ -3025,7 +3035,7 @@ namespace CPythonListsort
 [gallopDualState_keyCompare](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopDualState_keyCompare
+public lemma gallopDualState_keyCompare
   {κ : Type u}
   {ν : Type v}
   {state : MergeState κ ν} :
@@ -3042,12 +3052,12 @@ namespace CPythonListsort
 [gallopRight_eq_left_dual](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopRight_eq_left_dual
+public lemma gallopRight_eq_left_dual
   {κ : Type u}
   {ν : Type v}
-  {state : MergeState κ ν}
-  {source : GallopKeySource κ ν}
-  {key : κ}
+  (state : MergeState κ ν)
+  (source : GallopKeySource κ ν)
+  (key : κ)
 -- given
   (n hint : Nat) :
 -- imply
@@ -3079,12 +3089,12 @@ namespace CPythonListsort
 [gallopRightFromSource_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/GallopSafety.lean)
 -/
 @[path]
-lemma gallopRightFromSource_safe
+public lemma gallopRightFromSource_safe
   {κ : Type u}
   {ν : Type v}
-  {state : MergeState κ ν}
-  {source : GallopKeySource κ ν}
-  {key : κ}
+  (state : MergeState κ ν)
+  (source : GallopKeySource κ ν)
+  (key : κ)
 -- given
   (n hint : Nat)
   (hvalid : source.ValidRange n)

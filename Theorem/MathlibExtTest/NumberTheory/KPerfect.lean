@@ -2,7 +2,7 @@
 
 
 import Instance.NumberTheory.KPerfect
-import Lemma.Nat.KPerfect
+import Theorem.Nat.KPerfect
 
 
 example : Nat.IsKPerfect 2 6 := by

@@ -1,6 +1,10 @@
-import Mathlib
-import Def.Algebra_PointDerivations
+module
+
+public import Mathlib
+public import Def.Algebra_PointDerivations
 set_option autoImplicit false
+
+public section
 
 universe u v w w'
 

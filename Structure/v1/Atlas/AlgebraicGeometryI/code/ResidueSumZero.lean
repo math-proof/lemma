@@ -8,20 +8,22 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.AlgebraicGeometryI.code.ResidueSum
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.ResidueSum
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Over
-import Mathlib.AlgebraicGeometry.FunctionField
-import Mathlib.AlgebraicGeometry.Spec
-import Mathlib.RingTheory.LaurentSeries
-import Mathlib.RingTheory.DedekindDomain.AdicValuation
-import Mathlib.RingTheory.Kaehler.Basic
-import Def.v1.Atlas.AlgebraicGeometryI.code.ResidueSumZero.Part2
+module
+
+public import Def.v1.Atlas.AlgebraicGeometryI.code.ResidueSum
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ResidueSum
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Over
+public import Mathlib.AlgebraicGeometry.FunctionField
+public import Mathlib.AlgebraicGeometry.Spec
+public import Mathlib.RingTheory.LaurentSeries
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation
+public import Mathlib.RingTheory.Kaehler.Basic
+public import Def.v1.Atlas.AlgebraicGeometryI.code.ResidueSumZero.Part2
 
 
-noncomputable section
+public noncomputable section
 
 open AlgebraicGeometry CategoryTheory Polynomial Finset BigOperators HahnSeries Classical
   IsDedekindDomain

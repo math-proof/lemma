@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Functor
-import Mathlib.CategoryTheory.Monoidal.Subcategory
-import Mathlib.CategoryTheory.Monoidal.NaturalTransformation
-import Def.v1.Atlas.TensorCategories.code.MonoidalFunctorDef.Part2
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Functor
+public import Mathlib.CategoryTheory.Monoidal.Subcategory
+public import Mathlib.CategoryTheory.Monoidal.NaturalTransformation
+public import Def.v1.Atlas.TensorCategories.code.MonoidalFunctorDef.Part2
+@[expose] public section
+
 open CategoryTheory MonoidalCategory
 
 universe v₁ v₂ u₁ u₂

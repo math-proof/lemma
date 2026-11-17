@@ -1,13 +1,15 @@
-import Mathlib
-import Instance.AlgebraicGeometry_RelativePicardFunctor
-import Structure.AlgebraicGeometry_RepresentsRelSubPic
-import Def.AlgebraicGeometry_RelSubPicPresheaf
-import Def.AlgebraicGeometry_RelativeGroupLawGrpObj
-import Structure.JacJ1Iface
-import Instance.SheafOfModules_Monoidal
-import Instance.AlgebraicGeometry_ModulesPullbackMonoidal
-import Theorems.Thm_AlgebraicGeometry_Scheme_Modules_IsInvertible_tensor
-import Theorems.Thm_AlgebraicGeometry_Scheme_Modules_IsInvertible_exists_tensor_inverse
+module
+
+public import Mathlib
+public import Instance.AlgebraicGeometry_RelativePicardFunctor
+public import Structure.AlgebraicGeometry_RepresentsRelSubPic
+public import Def.AlgebraicGeometry_RelSubPicPresheaf
+public import Def.AlgebraicGeometry_RelativeGroupLawGrpObj
+public import Structure.JacJ1Iface
+public import Instance.SheafOfModules_Monoidal
+public import Instance.AlgebraicGeometry_ModulesPullbackMonoidal
+public import Theorems.Thm_AlgebraicGeometry_Scheme_Modules_IsInvertible_tensor
+public import Theorems.Thm_AlgebraicGeometry_Scheme_Modules_IsInvertible_exists_tensor_inverse
 
 set_option autoImplicit false
 
@@ -18,7 +20,7 @@ open CategoryTheory CategoryTheory.Limits MonoidalCategory AlgebraicGeometry Alg
 
 open scoped CategoryTheory.MonObj
 
-noncomputable section
+public noncomputable section
 
 namespace AlgebraicGeometry.RelPicard
 

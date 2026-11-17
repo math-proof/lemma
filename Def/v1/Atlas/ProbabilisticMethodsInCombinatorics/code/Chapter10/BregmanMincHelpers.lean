@@ -8,12 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.Matrix.Permanent
-import Mathlib.GroupTheory.Perm.Fin
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Logic.Equiv.Fin.Basic
-import Mathlib.Data.Fin.SuccPred
-import Mathlib.Data.Real.Basic
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Permanent
+public import Mathlib.GroupTheory.Perm.Fin
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Logic.Equiv.Fin.Basic
+public import Mathlib.Data.Fin.SuccPred
+public import Mathlib.Data.Real.Basic
+
+@[expose] public section
+
 open Finset Matrix BigOperators Equiv Classical
 
 

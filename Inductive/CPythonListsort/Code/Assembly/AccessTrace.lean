@@ -1,6 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean -/
 
-import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
+module
+
+public import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
 /-!
 # Compositional access and pending-push traces
 
@@ -30,7 +32,7 @@ namespace CPythonListsort
 universe u v w
 
 /-- Whether an ordinary indexed access attempts to read or write its region. -/
-inductive AccessKind where
+public inductive AccessKind where
   | read
   | write
   deriving DecidableEq, Repr
@@ -41,7 +43,7 @@ The backing constructor argument is observed at the temporary payload access
 itself.  Encoding it in the region prevents a temporary event from silently
 omitting the backing state.  Pending-stack `Array.push` is not a
 `pendingRuns` access; only indexed reads and writes use that constructor. -/
-inductive AccessRegion where
+public inductive AccessRegion where
   | inputKeys
   | synchronizedValues
   | tempPayload (backingAtAttempt : TempBacking)

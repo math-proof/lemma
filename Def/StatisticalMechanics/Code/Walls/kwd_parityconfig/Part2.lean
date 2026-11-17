@@ -9,8 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Walls.kwd_parityconfig
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Walls.kwd_parityconfig
+
+@[expose] public section
+
 open scoped BigOperators
 open Finset SimpleGraph
 

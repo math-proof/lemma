@@ -10,11 +10,9 @@ LICENSE file in the root directory of this source tree.
 
 import Instance.v1.Atlas.AlgebraicGeometryI.code.ChowLemmaHelper
 import Def.v1.Atlas.AlgebraicGeometryI.code.ChowHelperBlowupProjective
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.ChowHelperBlowupProjective
 open AlgebraicGeometry CategoryTheory Limits
 
 universe u
-
 
 noncomputable section
 

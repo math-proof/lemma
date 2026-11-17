@@ -8,7 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Distribution.Support
+module
+
+public import Mathlib.Analysis.Distribution.Support
+
+@[expose] public section
+
 open scoped SchwartzMap Topology
 open MeasureTheory Distribution Set
 

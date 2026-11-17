@@ -22,13 +22,9 @@ import Mathlib.Topology.Connected.Basic
 import Mathlib.Topology.Compactification.OnePoint.ProjectiveLine
 import Mathlib.LinearAlgebra.Lagrange
 import Instance.v1.Atlas.ArithmeticGeometry.code.CompleteVarieties
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.CompleteVarieties
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.RationalLineCriterion
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.ProjectiveComplete
 import Def.v1.Atlas.ArithmeticGeometry.code.RationalLineCriterion
 import Structure.v1.Atlas.ArithmeticGeometry.code.ProjectiveComplete
 universe u
-
 
 class IsProjectiveVariety (k : outParam (Type u)) [Field k] (V : Type u) [TopologicalSpace V] :
     Prop where
@@ -38,5 +34,4 @@ class IsProjectiveVariety (k : outParam (Type u)) [Field k] (V : Type u) [Topolo
       (hcarrier : algV.carrier = V),
       (hcarrier ▸ algV.topInst = ‹TopologicalSpace V›) ∧
       Nonempty (AlgebraicGeometry.CompletenessValuationCriterion.IsProjectiveVariety algV)
-
 

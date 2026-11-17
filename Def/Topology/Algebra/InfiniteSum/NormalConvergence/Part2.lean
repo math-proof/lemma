@@ -1,6 +1,11 @@
-import Mathlib.Analysis.Normed.Group.Basic
-import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
-import Theorem.Topology.Algebra.InfiniteSum.NormalConvergence
+module
+
+public import Mathlib.Analysis.Normed.Group.Basic
+public import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
+public import Theorem.Topology.Algebra.InfiniteSum.NormalConvergence
+
+@[expose] public section
+
 open Topology
 open scoped ENNReal
 

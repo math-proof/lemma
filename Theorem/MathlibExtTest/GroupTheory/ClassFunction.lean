@@ -2,7 +2,7 @@
 
 
 import Def.GroupTheory.ClassFunction.Part2
-import Lemma.Fin.IsClassFunctionCharacter
+import Theorem.Fin.IsClassFunctionCharacter
 import Mathlib.Data.ZMod.Basic
 import Mathlib.SetTheory.Cardinal.Finite
 open MathlibExt.GroupTheory.ClassFunctionWanted

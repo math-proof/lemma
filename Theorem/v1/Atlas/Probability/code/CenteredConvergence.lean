@@ -7,16 +7,18 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Probability.Independence.Basic
-import Mathlib.Probability.Moments.Variance
-import Mathlib.Probability.BorelCantelli
-import Mathlib.Probability.Martingale.Convergence
-import Mathlib.Probability.Independence.Integration
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.Probability.Moments.Variance
+public import Mathlib.Probability.BorelCantelli
+public import Mathlib.Probability.Martingale.Convergence
+public import Mathlib.Probability.Independence.Integration
 set_option maxHeartbeats 8000000
 
 open MeasureTheory ProbabilityTheory Filter Finset ENNReal
 
+public section
 
 noncomputable section
 

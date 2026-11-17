@@ -6,9 +6,15 @@ All rights reserved.
 Copyright (c) 2024 AlgebraicCombinatorics Contributors. All rights reserved.
 Authors: AlgebraicCombinatorics Contributors
 -/
-import Mathlib
-import Notation.RingTheory.PowerSeries.XnEquivalence
-import Abbrev.RingTheory.PowerSeries.Limits
+
+module
+
+public import Mathlib
+public import Notation.RingTheory.PowerSeries.XnEquivalence
+public import Abbrev.RingTheory.PowerSeries.Limits
+
+@[expose] public section
+
 open scoped Polynomial
 
 /-!

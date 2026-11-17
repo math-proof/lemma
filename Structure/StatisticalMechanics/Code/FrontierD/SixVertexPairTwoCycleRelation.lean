@@ -9,13 +9,15 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPairUnionCirculation.Part6
-import Def.StatisticalMechanics.Code.FrontierD.SixVertexPairTwoCycleRelation
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPairUnionCirculation.Part6
+public import Def.StatisticalMechanics.Code.FrontierD.SixVertexPairTwoCycleRelation
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure SixVertexDirectedSimpleCycle (T : EvenTorus) where
   length : Nat

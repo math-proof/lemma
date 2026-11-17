@@ -2,9 +2,11 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part29
-import Instance.LinearAlgebra.Matrix.Determinant.LGV1
+module
+
+public import Mathlib
+public import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part29
+public import Instance.LinearAlgebra.Matrix.Determinant.LGV1
 open Finset BigOperators Matrix
 
 /-!
@@ -103,7 +105,7 @@ it easier to work with path concatenation and step counting.
     The equivalence is provided by `latticeStepEquiv : LatticeStep ≃ LGV.LatticeStep'`.
     
     Label: eq.def.lgv.lattice.east, eq.def.lgv.lattice.north -/
-inductive LatticeStep : Type
+public inductive LatticeStep : Type
   | east : LatticeStep  -- (i,j) → (i+1,j)
   | north : LatticeStep -- (i,j) → (i,j+1)
   deriving DecidableEq, Repr

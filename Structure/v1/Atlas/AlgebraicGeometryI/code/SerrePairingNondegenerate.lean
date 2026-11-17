@@ -8,14 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.BilinearForm.Properties
-import Mathlib.LinearAlgebra.Dual.Lemmas
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.Quotient.Basic
-import Mathlib.Algebra.Module.Submodule.Ker
+module
+
+public import Mathlib.LinearAlgebra.BilinearForm.Properties
+public import Mathlib.LinearAlgebra.Dual.Lemmas
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.Quotient.Basic
+public import Mathlib.Algebra.Module.Submodule.Ker
 
 
-noncomputable section
+public noncomputable section
 
 namespace SerrePairingNondegenerate
 

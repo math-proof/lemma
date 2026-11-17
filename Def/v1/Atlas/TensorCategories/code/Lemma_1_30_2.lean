@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.GeneralLinearGroup.Basic
-import Mathlib.Algebra.Group.Subgroup.Basic
-import Mathlib.Algebra.Module.Submodule.Lattice
-import Mathlib.RingTheory.Nilpotent.Defs
-import Mathlib.RingTheory.Finiteness.Defs
+module
+
+public import Mathlib.LinearAlgebra.GeneralLinearGroup.Basic
+public import Mathlib.Algebra.Group.Subgroup.Basic
+public import Mathlib.Algebra.Module.Submodule.Lattice
+public import Mathlib.RingTheory.Nilpotent.Defs
+public import Mathlib.RingTheory.Finiteness.Defs
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 universe u v

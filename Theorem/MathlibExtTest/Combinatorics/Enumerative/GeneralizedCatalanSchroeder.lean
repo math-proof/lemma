@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/GeneralizedCatalanSchroeder.lean -/
 
 
-import Lemma.Finset.Enumerative.GeneralizedCatalanSchroeder
+import Theorem.Finset.Enumerative.GeneralizedCatalanSchroeder
 import Mathlib.Tactic.NormNum
 open scoped BigOperators
 

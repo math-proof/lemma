@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.Buildings.code.ChamberComplex.Basic
-import Mathlib.GroupTheory.Coxeter.Basic
-import Structure.v1.Atlas.Buildings.code.ChamberComplex.CoxeterComplex
+module
+
+public import Theorem.v1.Atlas.Buildings.code.ChamberComplex.Basic
+public import Mathlib.GroupTheory.Coxeter.Basic
+public import Structure.v1.Atlas.Buildings.code.ChamberComplex.CoxeterComplex
+
+@[expose] public section
+
 variable {B : Type*} [DecidableEq B] [Fintype B]
 
 

@@ -1,6 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Topology/KuratowskiClosureComplement.lean -/
 
-import Lemma.Set.KuratowskiClosureComplement
+module
+
+@[expose] public section
+
 open Set
 open Topology.ClosureCompl
 open MathlibExt.Topology.KuratowskiClosureComplement

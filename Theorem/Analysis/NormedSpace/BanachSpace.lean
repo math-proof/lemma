@@ -1,5 +1,10 @@
-import Mathlib.Analysis.Normed.Module.DoubleDual
-import Mathlib.Analysis.InnerProductSpace.Basic
+module
+
+public import Mathlib.Analysis.Normed.Module.DoubleDual
+public import Mathlib.Analysis.InnerProductSpace.Basic
+
+public section
+
 -- Brings `RCLike.innerProductSpace` into scope, so the `NormedSpace 𝕜 𝕜` instance in the
 -- statement is `InnerProductSpace.toNormedSpace`, as it is under `import Mathlib`.
 

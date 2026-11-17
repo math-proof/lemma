@@ -9,19 +9,21 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheAnalyticContinuation.Part2
-import Mathlib.Analysis.Calculus.InverseFunctionTheorem.Analytic
-import Mathlib.Topology.Homotopy.Lifting
-import Mathlib.Topology.Homotopy.Contractible
-import Mathlib.Topology.Homotopy.Affine
-import Mathlib.Topology.Algebra.Module.LocallyConvex
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheLocalAnalytic.Part6
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheAnalyticContinuation.Part2
+public import Mathlib.Analysis.Calculus.InverseFunctionTheorem.Analytic
+public import Mathlib.Topology.Homotopy.Lifting
+public import Mathlib.Topology.Homotopy.Contractible
+public import Mathlib.Topology.Homotopy.Affine
+public import Mathlib.Topology.Algebra.Module.LocallyConvex
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheLocalAnalytic.Part6
 open Finset Filter Topology
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure SixVertexLocalAnalyticBetheBranch
     (N n : Nat) (c : Real) (p : Fin n → Real) where

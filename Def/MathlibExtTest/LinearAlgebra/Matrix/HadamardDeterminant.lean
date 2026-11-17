@@ -4,7 +4,7 @@
 Author: Muse Spark 1.3
 -/
 
-import Lemma.Matrix.HadamardDeterminant
+import Theorem.Matrix.HadamardDeterminant
 import Mathlib.Tactic.NormNum
 import Theorem.MathlibExtTest.LinearAlgebra.Matrix.HadamardDeterminant
 open MathlibExt.LinearAlgebra.Matrix.HadamardDeterminant

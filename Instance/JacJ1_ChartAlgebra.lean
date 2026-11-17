@@ -1,15 +1,20 @@
 -- Carved from Lemma/Definitions/Def_JacJ1_ChartAlgebra.lean: instance decls only.
-import Mathlib.RingTheory.Ideal.IntegralClosure
-import Mathlib.RingTheory.DedekindDomain.AdicValuation
-import Mathlib.RingTheory.Localization.Integral
-import Mathlib.RingTheory.Valuation.Integral
-import Mathlib.RingTheory.Polynomial.ScaleRoots
-import Mathlib.Algebra.Polynomial.Lifts
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
-import Mathlib.RingTheory.Adjoin.Polynomial.Basic
-import Mathlib.RingTheory.Algebraic.Basic
-import Mathlib.FieldTheory.Perfect
-import Class.AlgebraicCurve_DivisorClassGroup
+
+module
+
+public import Mathlib.RingTheory.Ideal.IntegralClosure
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation
+public import Mathlib.RingTheory.Localization.Integral
+public import Mathlib.RingTheory.Valuation.Integral
+public import Mathlib.RingTheory.Polynomial.ScaleRoots
+public import Mathlib.Algebra.Polynomial.Lifts
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
+public import Mathlib.RingTheory.Adjoin.Polynomial.Basic
+public import Mathlib.RingTheory.Algebraic.Basic
+public import Mathlib.FieldTheory.Perfect
+public import Class.AlgebraicCurve_DivisorClassGroup
+
+@[expose] public section
 
 set_option autoImplicit false
 

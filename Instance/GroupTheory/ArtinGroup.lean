@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/ArtinGroup.lean -/
 
-import Mathlib.GroupTheory.PresentedGroup
-import Mathlib.GroupTheory.Coxeter.Matrix
-import Def.GroupTheory.ArtinGroup
+module
+
+public import Mathlib.GroupTheory.PresentedGroup
+public import Mathlib.GroupTheory.Coxeter.Matrix
+public import Def.GroupTheory.ArtinGroup
 /-!
 # Artin groups (Artinâ€“Tits groups) of a Coxeter matrix
 
@@ -47,6 +49,7 @@ particular the braid group on `n + 1` strands is the Artin group of the type `Aâ
 Artin group, Artin-Tits group, braid group, Coxeter matrix, presented group
 -/
 
+@[expose] public section
 
 namespace CoxeterMatrix
 

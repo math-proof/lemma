@@ -8,11 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Abelian.FunctorCategory
-import Mathlib.Topology.Sheaves.Presheaf
-import Mathlib.Algebra.Category.Ring.Basic
-import Mathlib.LinearAlgebra.FreeModule.Basic
-import Mathlib.LinearAlgebra.Dimension.Finrank
+module
+
+public import Mathlib.CategoryTheory.Abelian.FunctorCategory
+public import Mathlib.Topology.Sheaves.Presheaf
+public import Mathlib.Algebra.Category.Ring.Basic
+public import Mathlib.LinearAlgebra.FreeModule.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+@[expose] public section
+
 set_option linter.unusedVariables false
 
 

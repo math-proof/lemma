@@ -9,9 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexProjPhaseClose.Part3
-import Theorem.StatisticalMechanics.Code.Universality.HexFiniteStripNormalizedBoundary.Part6
+module
 
+public import Theorem.StatisticalMechanics.Code.Universality.HexProjPhaseClose.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.HexFiniteStripNormalizedBoundary.Part6
+
+
+public section
 
 namespace StatMech.Universality
 

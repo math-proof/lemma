@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/TribonacciSequenceWithInitialValues001.lean -/
 
-import Mathlib.Data.Nat.Basic
+module
+
+public import Mathlib.Data.Nat.Basic
+
+@[expose] public section
+
 /-!
 # Tribonacci sequence with initial values 0, 0, 1
 

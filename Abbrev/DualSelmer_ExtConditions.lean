@@ -1,5 +1,9 @@
-import Structure.GroupCohomology_Selmer
-import Abbrev.GroupCohomology_Selmer
+module
+
+public import Structure.GroupCohomology_Selmer
+public import Abbrev.GroupCohomology_Selmer
+
+@[expose] public section
 
 set_option autoImplicit false
 

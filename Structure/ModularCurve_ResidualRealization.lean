@@ -1,12 +1,14 @@
-import Structure.HeckeGalois_EichlerShimura
-import Def.FLTPrelim_Ramification
-import Instance.EllipticCurve_FrobeniusTrace
-import Mathlib.LinearAlgebra.Determinant
-import Def.ModularCurve_ResidualRealization
+module
+
+public import Structure.HeckeGalois_EichlerShimura
+public import Def.FLTPrelim_Ramification
+public import Instance.EllipticCurve_FrobeniusTrace
+public import Mathlib.LinearAlgebra.Determinant
+public import Def.ModularCurve_ResidualRealization
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace ModularCurve
 

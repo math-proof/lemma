@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Inequalities.ReimerSwapInjClose.Part3
-import Theorem.StatisticalMechanics.Code.Inequalities.PerOrbitCardClose.Part5
+module
+
+public import Theorem.StatisticalMechanics.Code.Inequalities.ReimerSwapInjClose.Part3
+public import Theorem.StatisticalMechanics.Code.Inequalities.PerOrbitCardClose.Part5
+public section
+
 open Finset MeasureTheory
 open scoped NNReal FinsetFamily
 

@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeGetmemStorageValid.lean -/
 
-import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
-import Mathlib
+module
+
+public import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
+public import Mathlib
 /-!
 # `merge_getmem` storage validity
 
@@ -11,6 +13,9 @@ the raw transcription intentionally admits a fabricated released state with a
 stale `alloced`, but none of the theorems here do.  Growth uses the exact
 allocation-limit premise supplied by the call-site request-bound theorem.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

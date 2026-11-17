@@ -4,18 +4,21 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
 
-import Mathlib.Probability.Distributions.Gaussian.Real
-import Mathlib.Analysis.Complex.ExponentialBounds
-import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
-import Mathlib.Analysis.Real.Pi.Bounds
-import Mathlib.Order.CompletePartialOrder
-import Mathlib.Probability.IdentDistrib
-import Mathlib.Probability.Independence.Integration
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.Separation.CompletelyRegular
+module
 
+public import Mathlib.Probability.Distributions.Gaussian.Real
+public import Mathlib.Analysis.Complex.ExponentialBounds
+public import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+public import Mathlib.Analysis.Real.Pi.Bounds
+public import Mathlib.Order.CompletePartialOrder
+public import Mathlib.Probability.IdentDistrib
+public import Mathlib.Probability.Independence.Integration
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.Separation.CompletelyRegular
+
+@[expose] public section
 
 section
 

@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.RamificationInertia.Tame
-import Lemma.Int.RamificationInertia.Tame
+import Theorem.Int.RamificationInertia.Tame
 variable (R : Type*) {S : Type*} [CommRing R] [CommRing S] [Algebra R S]
 variable (q : Ideal S) [q.IsPrime]
 

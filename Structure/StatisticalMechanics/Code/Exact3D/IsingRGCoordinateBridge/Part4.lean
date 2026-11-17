@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.StatisticalMechanics.Code.Exact3D.IsingAnalyticBridgeTarget.Part17
-import Theorem.StatisticalMechanics.Code.Exact3D.LatticeRG.Part17
-import Theorem.StatisticalMechanics.Code.Exact3D.IsingRGCoordinateBridge.Part6
+module
 
+public import Def.StatisticalMechanics.Code.Exact3D.IsingAnalyticBridgeTarget.Part17
+public import Theorem.StatisticalMechanics.Code.Exact3D.LatticeRG.Part17
+public import Theorem.StatisticalMechanics.Code.Exact3D.IsingRGCoordinateBridge.Part6
+
+
+public section
 
 namespace StatMech
 

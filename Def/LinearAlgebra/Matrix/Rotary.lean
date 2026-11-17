@@ -1,6 +1,9 @@
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+module
 
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+
+@[expose] public section
 
 /--
 Half-split or adjacent-pair plane rotation.

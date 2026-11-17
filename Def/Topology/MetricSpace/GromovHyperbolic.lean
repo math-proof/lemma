@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/MetricSpace/GromovHyperbolic.lean -/
 
-import Mathlib.Topology.MetricSpace.Basic
-import Mathlib.Topology.MetricSpace.GromovProduct
+module
+
+public import Mathlib.Topology.MetricSpace.Basic
+public import Mathlib.Topology.MetricSpace.GromovProduct
+
+@[expose] public section
+
 /-!
 # Gromov-hyperbolic pseudometric spaces
 

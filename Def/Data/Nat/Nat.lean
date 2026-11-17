@@ -1,5 +1,10 @@
-import Mathlib.Tactic
-import Instance.Data.Nat.Nat
+module
+
+public import Mathlib.Tactic
+public import Instance.Data.Nat.Nat
+
+@[expose] public section
+
 open Lean
 
 

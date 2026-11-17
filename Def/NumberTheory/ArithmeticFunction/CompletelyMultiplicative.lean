@@ -6,7 +6,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Alex Kontorovich and contributors, Adam Kiezun
 -/
 
-import Mathlib.NumberTheory.ArithmeticFunction.Defs
+module
+
+public import Mathlib.NumberTheory.ArithmeticFunction.Defs
+
+@[expose] public section
+
 /-!
 # Completely multiplicative arithmetic functions
 

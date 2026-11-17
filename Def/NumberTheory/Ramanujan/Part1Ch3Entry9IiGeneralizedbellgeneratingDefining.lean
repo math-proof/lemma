@@ -4,10 +4,15 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.Complex.Exponential
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Analysis.SpecificLimits.Normed
+module
+
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Complex.Exponential
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Analysis.SpecificLimits.Normed
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 3, Entry 9(ii)
 

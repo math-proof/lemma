@@ -4,10 +4,15 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
 
-import Mathlib.FieldTheory.RatFunc.Degree
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Ring
-import Instance.AlgebraicGeometry.EllipticCurve.ManinProjectiveDegree
+module
+
+public import Mathlib.FieldTheory.RatFunc.Degree
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Ring
+public import Instance.AlgebraicGeometry.EllipticCurve.ManinProjectiveDegree
+
+@[expose] public section
+
 /-!
 # Projective numerator degrees for Manin's proof
 

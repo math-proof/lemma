@@ -1,7 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/CountRun.lean -/
 
-import Def.CPythonListsort.Code.Transcription.MergeState.Part3
-import Def.CPythonListsort.Code.Transcription.ReverseSlice
+module
+
+public import Def.CPythonListsort.Code.Transcription.MergeState.Part3
+public import Def.CPythonListsort.Code.Transcription.ReverseSlice
+
+@[expose] public section
 /-!
 # Natural-run detection transcription
 

@@ -8,7 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Abelian.Projective.Ext
+module
+
+public import Mathlib.CategoryTheory.Abelian.Projective.Ext
+
+@[expose] public section
+
 open CategoryTheory CochainComplex HomComplex Abelian
 
 universe w v u

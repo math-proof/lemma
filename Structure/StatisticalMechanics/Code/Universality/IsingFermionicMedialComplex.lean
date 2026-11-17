@@ -9,9 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicLocalSwitching.Part12
-import Theorem.StatisticalMechanics.Code.Universality.MedialTwoEdgeSwitch
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicMedialComplex.Part2
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicLocalSwitching.Part12
+public import Theorem.StatisticalMechanics.Code.Universality.MedialTwoEdgeSwitch
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicMedialComplex.Part2
 open Finset SimpleGraph
 open scoped BigOperators
 
@@ -20,7 +22,7 @@ namespace StatMech.Universality
 
 open StatMech StatMech.FK StatMech.Lattice
 
-noncomputable section
+public noncomputable section
 
 structure FKIsingDobrushinMedialComplex (P : PlanarZ2Subgraph) where
   bondMate : Equiv.Perm (FKIsingMedialDart P)

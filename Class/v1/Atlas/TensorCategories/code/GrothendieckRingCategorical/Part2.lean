@@ -9,16 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.TensorCategories.code.GrothendieckRing.Part2
-import Lemma.Category.Atlas.v1.TensorCategories.code.GrothendieckRing
-import Lemma.Category.Atlas.v1.TensorCategories.code.TensorCategoryDef
 import Abbrev.v1.Atlas.TensorCategories.code.TensorCategoryDef.Part3
-import Lemma.Category.Atlas.v1.TensorCategories.code.Prop_1_45_10
 import Structure.v1.Atlas.TensorCategories.code.GrothendieckRingCategorical.Part2
 open CategoryTheory MonoidalCategory Limits Finset
 open TensorCategories
 
 universe v u
-
 
 namespace FusionCategoryBridge
 

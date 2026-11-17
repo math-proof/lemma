@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/LongestCycle.lean -/
 
-import Mathlib.Combinatorics.SimpleGraph.Paths
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Paths
+
+@[expose] public section
+
 /-!
 # Longest cycles in simple graphs
 

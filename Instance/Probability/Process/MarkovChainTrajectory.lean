@@ -1,9 +1,10 @@
-import Mathlib.Probability.Kernel.IonescuTulcea.Traj
-import Instance.Probability.Process.MarkovChain.Part3
-import Def.Probability.Process.MarkovChainTrajectory
-open MeasureTheory ProbabilityTheory Finset
+module
 
-universe u
+public import Mathlib.Probability.Kernel.IonescuTulcea.Traj
+public import Instance.Probability.Process.MarkovChain.Part2
+public import Instance.Probability.Process.MarkovChain.Part3
+public import Def.Probability.Process.MarkovChainTrajectory
+public import Def.Probability.Process.MarkovChain
 
 /-!
 # Trajectory measure of a time-homogeneous Markov chain
@@ -14,6 +15,11 @@ kernels are `M.kernel.comap_last n`, and the law of the whole path is Mathlib's 
 `Kernel.trajMeasure` started from `M.init`.
 -/
 
+@[expose] public section
+
+open MeasureTheory ProbabilityTheory Finset
+
+universe u
 
 namespace HomMarkovChainSpec
 

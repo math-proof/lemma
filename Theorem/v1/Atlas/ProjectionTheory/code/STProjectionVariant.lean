@@ -7,12 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Finset.Image
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Finset.Image
 open scoped InnerProductSpace
 
+public section
 
 namespace SzemerediTrotter
 

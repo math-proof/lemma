@@ -1,5 +1,9 @@
-import Mathlib.NumberTheory.NumberField.AdeleRing
-import Structure.M4aHerbrand_IdeleClassVocab
+module
+
+public import Mathlib.NumberTheory.NumberField.AdeleRing
+public import Structure.M4aHerbrand_IdeleClassVocab
+
+@[expose] public section
 
 set_option autoImplicit false
 

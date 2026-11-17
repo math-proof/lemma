@@ -7,13 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.GeneralLinearGroup.Basic
-import Mathlib.Order.RelClasses
-import Mathlib.Tactic.Group
-import Def.v1.Atlas.Buildings.code.GeometricAlgebra.FlagsParabolics.Part4
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.GeneralLinearGroup.Basic
+public import Mathlib.Order.RelClasses
+public import Mathlib.Tactic.Group
+public import Def.v1.Atlas.Buildings.code.GeometricAlgebra.FlagsParabolics.Part4
 
+public section
 
 namespace GeometricAlgebra
 

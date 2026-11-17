@@ -3,11 +3,12 @@
 /-
 Author: Muse Code
 -/
+module
 
-import Mathlib.Algebra.Polynomial.Lifts
-import Lemma.Int.LocalRing.Etale
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Mathlib.RingTheory.LocalRing.Etale
+public import Mathlib.Algebra.Polynomial.Lifts
+public import Theorem.Int.LocalRing.Etale
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Mathlib.RingTheory.LocalRing.Etale
 open IsLocalRing
 
 /-!
@@ -64,6 +65,8 @@ not used in this implication; N211 needs it elsewhere to construct/lift the
 objects, not to turn an already finite local DVR extension satisfying these two
 unramified conditions into an étale algebra.
 -/
+
+public section
 
 
 namespace IsDiscreteValuationRing

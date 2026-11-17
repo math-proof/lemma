@@ -1,14 +1,15 @@
 import Mathlib.MeasureTheory.Integral.DominatedConvergence
 import Lemma.Random.Expect.eq.Lim
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory Filter Topology Random
 
 
 @[path]
 private lemma main
-  [MeasurableSpace Ω] [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+  [MeasurableSpace Ω] [NormedAddCommGroup ℰ] [NormedSpace ℝ ℰ] [CompleteSpace ℰ]
   {π : Measure Ω}
-  {F : ℕ → Ω → E}
-  {f : Ω → E}
+  {F : ℕ → Ω → ℰ}
+  {f : Ω → ℰ}
   {bound : Ω → ℝ}
 -- given
   (h₀ : ∀ n, AEStronglyMeasurable (F n) π)
@@ -22,4 +23,4 @@ private lemma main
 
 
 -- created on 2023-04-04
--- updated on 2026-10-17
+-- updated on 2026-11-17

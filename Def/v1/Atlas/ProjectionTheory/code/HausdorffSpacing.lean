@@ -8,12 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.MetricSpace.Basic
-import Mathlib.Data.Finset.Basic
-import Mathlib.Data.Real.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Order.ConditionallyCompleteLattice.Basic
+module
 
+public import Mathlib.Topology.MetricSpace.Basic
+public import Mathlib.Data.Finset.Basic
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Order.ConditionallyCompleteLattice.Basic
+
+@[expose] public section
 
 namespace ProjectionTheory
 

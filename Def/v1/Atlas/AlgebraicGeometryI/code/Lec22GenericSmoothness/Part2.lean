@@ -8,13 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.MvPolynomial.PDeriv
-import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Topology.Basic
-import Mathlib.Topology.Order
-import Structure.v1.Atlas.AlgebraicGeometryI.code.Lec22GenericSmoothness
+module
 
+public import Mathlib.Algebra.MvPolynomial.PDeriv
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Topology.Basic
+public import Mathlib.Topology.Order
+public import Structure.v1.Atlas.AlgebraicGeometryI.code.Lec22GenericSmoothness
+
+@[expose] public section
 
 noncomputable section
 

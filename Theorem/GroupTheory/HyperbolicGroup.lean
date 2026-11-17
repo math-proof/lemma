@@ -3,7 +3,7 @@
 import Mathlib.Geometry.Group.WordMetric
 import Mathlib.GroupTheory.Finiteness
 import Theorem.Topology.MetricSpace.GromovHyperbolic
-import Lemma.Set.MetricSpace.GromovHyperbolic
+import Theorem.Set.MetricSpace.GromovHyperbolic
 import Def.GroupTheory.HyperbolicGroup
 /-!
 # Hyperbolic groups

@@ -4,10 +4,15 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.RepresentationTheory.Character
-import Mathlib.Basic.Complex.Basic
-import Mathlib.Algebra.Category.ModuleCat.Simple
-import Mathlib.Analysis.Complex.Polynomial.Basic
+module
+
+public import Mathlib.RepresentationTheory.Character
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.Algebra.Category.ModuleCat.Simple
+public import Mathlib.Analysis.Complex.Polynomial.Basic
+
+@[expose] public section
+
 open CategoryTheory
 open scoped IsMulCommutative
 

@@ -1,18 +1,21 @@
-import Mathlib.Analysis.Normed.Module.Basic
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
-import Mathlib.Analysis.Normed.Operator.Banach
-import Mathlib.Analysis.Normed.Order.Lattice
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.Algebra.InfiniteSum.Module
-import Mathlib.Topology.EMetricSpace.Paracompact
-import Mathlib.Topology.GDelta.MetrizableSpace
-import Mathlib.Topology.PartitionOfUnity
+module
 
+public import Mathlib.Analysis.Normed.Module.Basic
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+public import Mathlib.Analysis.Normed.Operator.Banach
+public import Mathlib.Analysis.Normed.Order.Lattice
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.Algebra.InfiniteSum.Module
+public import Mathlib.Topology.EMetricSpace.Paracompact
+public import Mathlib.Topology.GDelta.MetrizableSpace
+public import Mathlib.Topology.PartitionOfUnity
+
+public section
 
 section
 

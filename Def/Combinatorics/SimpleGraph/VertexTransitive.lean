@@ -6,8 +6,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Adam Kiezun
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Maps
+module
 
+public import Mathlib.Combinatorics.SimpleGraph.Maps
+
+@[expose] public section
 
 namespace SimpleGraph
 

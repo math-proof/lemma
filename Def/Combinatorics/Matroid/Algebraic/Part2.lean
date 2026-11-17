@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Matroid/Algebraic.lean -/
 
-import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
-import Structure.Combinatorics.Matroid.Algebraic.Part2
+module
+
+public import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
+public import Structure.Combinatorics.Matroid.Algebraic.Part2
+
+@[expose] public section
+
 universe u v w
 
 /-! # Algebraic matroids

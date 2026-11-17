@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/GeneralizedLucasnomialFussCatalanNumber.lean -/
 
 import Def.NumberTheory.LucasPolytopicNumber.Part2
-import Lemma.Nat.LucasPolytopicNumber
+import Theorem.Nat.LucasPolytopicNumber
 
 
 namespace MetaMathlibExt

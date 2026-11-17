@@ -1,11 +1,15 @@
-import Mathlib.Algebra.Module.LinearMap.Defs
-import Mathlib.Algebra.Ring.Action.Submonoid
-import Mathlib.Algebra.BigOperators.Finprod
-import Mathlib.Algebra.Group.Subgroup.Actions
-import Mathlib.GroupTheory.Coset.Defs
-import Mathlib.Algebra.BigOperators.GroupWithZero.Action
-import Mathlib.GroupTheory.GroupAction.Quotient
-import Instance.AbstractHeckeOperator
+module
+
+public import Mathlib.Algebra.Module.LinearMap.Defs
+public import Mathlib.Algebra.Ring.Action.Submonoid
+public import Mathlib.Algebra.BigOperators.Finprod
+public import Mathlib.Algebra.Group.Subgroup.Actions
+public import Mathlib.GroupTheory.Coset.Defs
+public import Mathlib.Algebra.BigOperators.GroupWithZero.Action
+public import Mathlib.GroupTheory.GroupAction.Quotient
+public import Instance.AbstractHeckeOperator
+
+@[expose] public section
 
 variable {G : Type*} [Group G] {A : Type*} [AddCommMonoid A]
     [DistribMulAction G A] {g : G} {U V : Subgroup G}

@@ -16,13 +16,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Algebra.Group.Pointwise.Set.Basic
-import Mathlib.Algebra.Module.Submodule.Lattice
-import Mathlib.Data.Finset.Image
-import Mathlib.Data.Fintype.Fin
-import Mathlib.Data.Int.ModEq
-import Mathlib.RingTheory.Ideal.Defs
-import Structure.NumberTheory.CoveringSystem
+module
+
+public import Mathlib.Algebra.Group.Pointwise.Set.Basic
+public import Mathlib.Algebra.Module.Submodule.Lattice
+public import Mathlib.Data.Finset.Image
+public import Mathlib.Data.Fintype.Fin
+public import Mathlib.Data.Int.ModEq
+public import Mathlib.RingTheory.Ideal.Defs
+public import Structure.NumberTheory.CoveringSystem
+
+@[expose] public section
+
 open Pointwise
 
 

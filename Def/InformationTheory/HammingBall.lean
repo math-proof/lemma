@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/InformationTheory/HammingBall.lean -/
 
-import Mathlib.InformationTheory.Hamming
+module
+
+public import Mathlib.InformationTheory.Hamming
+
+@[expose] public section
+
 open scoped BigOperators
 
 

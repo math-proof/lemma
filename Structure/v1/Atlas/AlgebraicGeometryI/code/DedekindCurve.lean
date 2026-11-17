@@ -8,10 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannRochCurves
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochCurves
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
-import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafCurves.Part2
+module
+
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannRochCurves
+public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochCurves
+public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafCurves.Part2
 set_option maxHeartbeats 1600000
 
 open scoped TensorProduct
@@ -19,7 +21,7 @@ open nonZeroDivisors
 open RiemannRochCurves CanonicalSheafCurves
 
 
-noncomputable section
+public noncomputable section
 
 /-- A Dedekind curve over a field `k`: the data of a finite `k`-algebra `A` which is a
 Dedekind domain. Models a smooth affine curve over `k`. -/

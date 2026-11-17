@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.Padics.CasselsEmbedding
-import Lemma.Int.Padics.CasselsEmbedding
+import Theorem.Int.Padics.CasselsEmbedding
 import Mathlib.Basic.Real.Basic
 
 

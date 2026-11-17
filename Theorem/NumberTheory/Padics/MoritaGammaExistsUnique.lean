@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Padics/MoritaGammaExistsUnique.lean -/
 
 import Def.NumberTheory.Padics.MoritaGamma
-import Lemma.Nat.Padics.MoritaGamma
+import Theorem.Nat.Padics.MoritaGamma
 import Mathlib.Algebra.Order.Ring.Star
 import Mathlib.NumberTheory.Padics.RingHoms
 import Mathlib.RingTheory.ZMod.UnitsCyclic

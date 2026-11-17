@@ -9,9 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardRawSimpleFromEdges
-import Def.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveVertexConnector.Part2
+module
 
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardRawSimpleFromEdges
+public import Def.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveVertexConnector.Part2
+
+
+public section
 
 namespace StatMech.FrontierA
 

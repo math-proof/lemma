@@ -1,9 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Graph/RobbinsTheorem.lean -/
 
-import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
-import Mathlib.Order.CompletePartialOrder
-import Mathlib.SetTheory.Cardinal.NatCard
+module
 
+public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
+public import Mathlib.Order.CompletePartialOrder
+public import Mathlib.SetTheory.Cardinal.NatCard
+
+@[expose] public section
 
 section
 

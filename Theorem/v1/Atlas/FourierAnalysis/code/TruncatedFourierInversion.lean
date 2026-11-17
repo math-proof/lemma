@@ -7,17 +7,19 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Analysis.Fourier.LpSpace
-import Mathlib.Analysis.Distribution.SchwartzSpace.Fourier
-import Mathlib.MeasureTheory.Function.LpSeminorm.Basic
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
-import Mathlib.MeasureTheory.Function.LpSpace.Indicator
-import Mathlib.MeasureTheory.Function.LpSeminorm.CompareExp
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
+public import Mathlib.Analysis.Fourier.LpSpace
+public import Mathlib.Analysis.Distribution.SchwartzSpace.Fourier
+public import Mathlib.MeasureTheory.Function.LpSeminorm.Basic
+public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+public import Mathlib.MeasureTheory.Function.LpSpace.Indicator
+public import Mathlib.MeasureTheory.Function.LpSeminorm.CompareExp
+public import Mathlib.MeasureTheory.Integral.DominatedConvergence
 open MeasureTheory Filter Topology Set
 open scoped FourierTransform ENNReal NNReal
 
+public section
 
 noncomputable section
 

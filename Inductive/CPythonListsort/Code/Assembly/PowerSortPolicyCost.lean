@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/PowerSortPolicyCost.lean -/
 
-import Def.CPythonListsort.Code.Assembly.MergePolicyReplay.Part4
-import Def.CPythonListsort.Code.Assembly.PowerTreeEntropy
-import Def.CPythonListsort.Code.Policy.BoundaryPowerGeometry
-import Def.CPythonListsort.Code.Assembly.PowerSortPolicyCost
+module
+
+public import Def.CPythonListsort.Code.Assembly.MergePolicyReplay.Part4
+public import Def.CPythonListsort.Code.Assembly.PowerTreeEntropy
+public import Def.CPythonListsort.Code.Policy.BoundaryPowerGeometry
+public import Def.CPythonListsort.Code.Assembly.PowerSortPolicyCost
 /-!
 # PowerSort policy and cost bridge
 
@@ -24,7 +26,7 @@ namespace RunSpan
 in-bounds spans.  The recursive endpoint is also the next root's base, so this
 single relation exposes start, adjacency, containment, and exact suffix
 coverage without hiding any of them behind list arithmetic. -/
-inductive OpenSpanChain (input : RunSpan) :
+public inductive OpenSpanChain (input : RunSpan) :
     Nat → List SpannedMergeTree → Prop
   | empty {start : Nat} (end_eq : start = input.endIndex) :
       OpenSpanChain input start []
@@ -38,7 +40,7 @@ inductive OpenSpanChain (input : RunSpan) :
 /-- Exact boundary powers together with the local heap edge from every open
 root except the newest one.  The terminal open root is explicitly a leaf,
 matching the scan loop's merge-before-push order. -/
-inductive OpenBoundaryCertificate (input : RunSpan) :
+public inductive OpenBoundaryCertificate (input : RunSpan) :
     List SpannedMergeTree → List Nat → Prop
   | empty : OpenBoundaryCertificate input [] []
   | singleton (entry : SpannedMergeTree) (length : Nat)

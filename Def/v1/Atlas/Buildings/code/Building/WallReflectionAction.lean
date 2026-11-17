@@ -10,8 +10,8 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.Buildings.code.Building.TitsTheoremProof
 import Lemma.Finset.Any_And_EqImageToFunMorph.of.AdjacentToSimplicialComplex.HasSufficientFoldings
-import Lemma.Finset.Adjacent
-import Lemma.Finset.AgreeOnImage.of.AgreeOn
+import Theorem.Finset.Adjacent
+import Theorem.Finset.AgreeOnImage.of.AgreeOn
 import Theorem.v1.Atlas.Buildings.code.ChamberComplex.Basic
 import Def.v1.Atlas.Buildings.code.ChamberComplex.Uniqueness
 open ChamberComplex AptIsCoxeterProof

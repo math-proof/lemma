@@ -8,16 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section1.Part3
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section1
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section5
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section11
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.LocalityPrinciple
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section5.Part6
-import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section11
-import Def.v1.Atlas.AlgebraicTopologyI.code.LocalityPrinciple.Part5
-import Instance.v1.Atlas.AlgebraicTopologyI.code.Section10.Part11
+module
+
+public import Mathlib
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section1.Part3
+public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section1
+public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section5
+public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section11
+public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.LocalityPrinciple
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section5.Part6
+public import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section11
+public import Def.v1.Atlas.AlgebraicTopologyI.code.LocalityPrinciple.Part5
+public import Instance.v1.Atlas.AlgebraicTopologyI.code.Section10.Part11
+public section
+
 open CategoryTheory CategoryTheory.Limits AlgebraicTopologyI
 
 

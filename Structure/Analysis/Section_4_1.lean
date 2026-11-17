@@ -1,5 +1,9 @@
-import Mathlib
-import Mathlib.Algebra.Group.MinimalAxioms
+module
+
+public import Mathlib
+public import Mathlib.Algebra.Group.MinimalAxioms
+public section
+
 set_option doc.verso.suggestions false
 
 /-!

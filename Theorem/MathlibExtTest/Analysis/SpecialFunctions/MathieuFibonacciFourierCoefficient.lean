@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/MathieuFibonacciFourierCoefficient.lean -/
+module
 
+public import Def.Analysis.SpecialFunctions.MathieuFibonacciFourierCoefficient
 
-import Def.Analysis.SpecialFunctions.MathieuFibonacciFourierCoefficient
-
+public section
 
 namespace MetaMathlibExt
 

@@ -9,12 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexEndpointWalk.Part3
-import Theorem.StatisticalMechanics.Code.Universality.HexCyclicVertexPartition.Part9
-import Theorem.StatisticalMechanics.Code.Universality.HexReturnUniqueness.Part3
-import Theorem.StatisticalMechanics.Code.Universality.HexStripBandClose.Part7
-import Theorem.StatisticalMechanics.Code.Universality.HexAllWidthStripGeometry.Part18
-import Theorem.StatisticalMechanics.Code.Universality.HexEndpointVertex.Part12
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.HexEndpointWalk.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.HexCyclicVertexPartition.Part9
+public import Theorem.StatisticalMechanics.Code.Universality.HexReturnUniqueness.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.HexStripBandClose.Part7
+public import Theorem.StatisticalMechanics.Code.Universality.HexAllWidthStripGeometry.Part18
+public import Theorem.StatisticalMechanics.Code.Universality.HexEndpointVertex.Part12
 
 
 namespace StatMech.Universality
@@ -25,7 +27,7 @@ open scoped BigOperators
 
 noncomputable section
 
-inductive HexEndpointLocalAtom (region : ℂ → Prop) (a : ℂ) (h0 : ℤ)
+public inductive HexEndpointLocalAtom (region : ℂ → Prop) (a : ℂ) (h0 : ℤ)
     (v du : ℂ) where
   | triplet : HexEndpointCyclicTriplet region a h0 v du →
       HexEndpointLocalAtom region a h0 v du

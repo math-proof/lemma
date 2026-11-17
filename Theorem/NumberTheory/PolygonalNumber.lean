@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PolygonalNumber.lean -/
+module
 
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Tactic.Ring
-import Def.NumberTheory.PolygonalNumber
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Tactic.Ring
+public import Def.NumberTheory.PolygonalNumber
+
 /-!
 # Polygonal numbers
 
@@ -17,6 +19,8 @@ The Lean definition below is the total natural-number extension of that
 binomial formula to all `s : ℕ`, using `Nat.choose` so no unintended
 truncated-subtraction semantics enter the definition itself.
 -/
+
+public section
 
 
 namespace Nat

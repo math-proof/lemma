@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Normed.Operator.Completeness
-import Mathlib.Topology.Algebra.Module.LinearMap
+module
+
+public import Mathlib.Analysis.Normed.Operator.Completeness
+public import Mathlib.Topology.Algebra.Module.LinearMap
+
+@[expose] public section
 
 
 namespace DualSpace

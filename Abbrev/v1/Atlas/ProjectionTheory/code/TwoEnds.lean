@@ -8,12 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Topology.MetricSpace.Basic
-import Mathlib.Combinatorics.Enumerative.DoubleCounting
+module
+
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Topology.MetricSpace.Basic
+public import Mathlib.Combinatorics.Enumerative.DoubleCounting
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 open Classical Finset BigOperators
 

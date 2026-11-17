@@ -4,8 +4,13 @@
   Author: Muse Code powered by Meta Muse Spark
 -/
 
-import Mathlib.Algebra.MvPolynomial.Basic
-import Mathlib.Algebra.DirectSum.Decomposition
+module
+
+public import Mathlib.Algebra.MvPolynomial.Basic
+public import Mathlib.Algebra.DirectSum.Decomposition
+
+@[expose] public section
+
 /-!
 # Multigraded polynomial modules
 

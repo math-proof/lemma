@@ -22,8 +22,6 @@ import Mathlib.CategoryTheory.Preadditive.Projective.Preserves
 import Mathlib.CategoryTheory.Adjunction.Limits
 import Mathlib.CategoryTheory.Limits.Constructions.EpiMono
 import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
-import Lemma.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
-import Lemma.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
 import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
 import Instance.v1.Atlas.TensorCategories.code.QuasiTensorFunctorProjective
 set_option maxHeartbeats 800000
@@ -33,7 +31,6 @@ set_option autoImplicit false
 open CategoryTheory CategoryTheory.Limits MonoidalCategory
 
 universe v u v₁ u₁ w
-
 
 namespace CategoryTheory
 

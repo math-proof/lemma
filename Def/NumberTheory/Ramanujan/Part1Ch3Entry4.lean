@@ -5,11 +5,10 @@ Author: @akiezun, Avocado
 -/
 
 import Def.NumberTheory.Ramanujan.Part1Ch3Entry9IiGeneralizedbellgeneratingDefining
-import Lemma.Nat.Ramanujan.Part1Ch3Entry9IiGeneralizedbellgeneratingDefining
+import Theorem.Nat.Ramanujan.Part1Ch3Entry9IiGeneralizedbellgeneratingDefining
 import Mathlib.Analysis.SpecialFunctions.Exponential
 import Mathlib.Topology.GDelta.MetrizableSpace
 import Mathlib.Topology.UniformSpace.Uniformizable
-import Lemma.Nat.Ramanujan.Part1Ch3Entry4InnerSummable
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 3, Entry 4
 

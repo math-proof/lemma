@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.CoveringSystem
-import Lemma.Int.CoveringSystem
+import Theorem.Int.CoveringSystem
 
 
 example : ¬ Int.IsCoveringSystem ∅ := by

@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.GeometryOfManifolds.code.HodgeTheoryMathlib.Part6
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.HodgeTheoryMathlib
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.HodgeTheoryMathlib
 open HodgeMathlib
 
 

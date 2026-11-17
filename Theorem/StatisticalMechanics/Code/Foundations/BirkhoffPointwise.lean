@@ -7,14 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Foundations.MaximalErgodicGarsia
-import Def.StatisticalMechanics.Code.Foundations.BirkhoffPointwise
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Foundations.MaximalErgodicGarsia
+public import Def.StatisticalMechanics.Code.Foundations.BirkhoffPointwise
 open MeasureTheory Filter Finset Function MeasurableSpace
 open scoped Topology ENNReal
 
+public section
 
 namespace StatMech
 

@@ -9,8 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
+module
 
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+
+@[expose] public section
 
 namespace StatMech.FrontierA
 

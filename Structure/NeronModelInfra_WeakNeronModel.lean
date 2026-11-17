@@ -1,9 +1,11 @@
-import Mathlib
-import Lemma.Scheme.NeronModelEndomorphismExtension
+module
+
+public import Mathlib
+public import Theorem.Scheme.NeronModelEndomorphismExtension
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 universe u
 

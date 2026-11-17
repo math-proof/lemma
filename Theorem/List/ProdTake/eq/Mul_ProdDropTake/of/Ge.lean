@@ -1,0 +1,23 @@
+module
+
+public import Theorem.List.Prod.eq.MulProdS
+public import Theorem.List.TakeTake.eq.Take.of.Ge
+
+public section
+
+open List
+
+
+public theorem List.ProdTake.eq.Mul_ProdDropTake.of.Ge
+  [Monoid α]
+-- given
+  (h : i ≥ j)
+  (s : List α) :
+-- imply
+  (s.take i).prod = (s.take j).prod * ((s.take i).drop j).prod := by
+-- proof
+  rw [Prod.eq.MulProdS (s.take i) j]
+  rw [TakeTake.eq.Take.of.Ge (by assumption)]
+
+
+-- created on 2025-11-28

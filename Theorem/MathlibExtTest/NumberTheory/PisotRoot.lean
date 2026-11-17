@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PisotRoot.lean -/
+module
 
+public import Def.NumberTheory.PisotRoot
 
-import Def.NumberTheory.PisotRoot
-
+public section
 
 namespace MetaMathlibExt
 

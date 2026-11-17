@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.ArithmeticGeometry.code.GenusOnePlaneCubic
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.GenusOnePlaneCubic
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.GenusOnePlaneCubic
 
 
 noncomputable section

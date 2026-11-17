@@ -2,8 +2,10 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part22
+module
+
+public import Mathlib
+public import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part22
 open Finset BigOperators Matrix
 
 /-!
@@ -132,7 +134,7 @@ any vertex appears in multiple paths of the tuple.
     
     Note: The duplication exists because LGV1 imports LGV2, so LGV2 cannot reference
     LGV1's definitions. Both definitions are intentionally kept compatible. -/
-inductive LatticeStep' : Type
+public inductive LatticeStep' : Type
   | east : LatticeStep'
   | north : LatticeStep'
   deriving DecidableEq, Repr

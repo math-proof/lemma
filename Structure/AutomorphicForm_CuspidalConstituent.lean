@@ -1,11 +1,13 @@
-import Structure.AutomorphicForm_IsotypicCuspSpace
-import Def.AutomorphicForm_FactorizableTestFn
+module
+
+public import Structure.AutomorphicForm_IsotypicCuspSpace
+public import Def.AutomorphicForm_FactorizableTestFn
 
 set_option autoImplicit false
 
 open IsDedekindDomain NumberField
 
-noncomputable section
+public noncomputable section
 
 namespace AutomorphicForm
 

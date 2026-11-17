@@ -8,13 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Instance.v1.Atlas.LieGroups.code.MaximalQuotients
-import Lemma.Int.Any_EqUeaAction
-import Mathlib.Algebra.Lie.Semisimple.Defs
-import Def.v1.Atlas.LieGroups.code.HCBimoduleProjectives
+module
+
+public import Instance.v1.Atlas.LieGroups.code.MaximalQuotients
+public import Lemma.Int.Any_EqUeaAction
+public import Mathlib.Algebra.Lie.Semisimple.Defs
+public import Def.v1.Atlas.LieGroups.code.HCBimoduleProjectives
 
 
-noncomputable section
+public noncomputable section
 
 universe u_R u_𝔤 u_mod
 

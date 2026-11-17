@@ -9,11 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicProjectedFullMedialInterpolation.Part5
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareCaratheodory.Part5
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicBoundaryLayerConsistency.Part3
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicCalibratedRobinConsistency
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalRobinCompatibility.Part2
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicProjectedFullMedialInterpolation.Part5
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareCaratheodory.Part5
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicBoundaryLayerConsistency.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicCalibratedRobinConsistency
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalRobinCompatibility.Part2
 
 
 namespace StatMech.Universality
@@ -22,7 +24,7 @@ open Filter Metric Set Topology
 
 open StatMech StatMech.FK StatMech.Lattice StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 namespace FKIsingSquareBoundaryLayerCoordinateOneForm
 

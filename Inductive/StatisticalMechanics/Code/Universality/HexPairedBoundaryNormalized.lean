@@ -9,8 +9,10 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexMirrorPairedBoundary.Part3
-import Theorem.StatisticalMechanics.Code.Universality.HexConnEndgame
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.HexMirrorPairedBoundary.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.HexConnEndgame
 
 
 namespace StatMech.Universality
@@ -18,7 +20,7 @@ namespace StatMech.Universality
 open scoped BigOperators
 
 
-inductive HexPairedBoundaryClass
+public inductive HexPairedBoundaryClass
   | side
   | slant
   | top

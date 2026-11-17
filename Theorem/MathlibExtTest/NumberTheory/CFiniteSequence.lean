@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.CFiniteSequence
-import Lemma.Nat.CFiniteSequence
+import Theorem.Nat.CFiniteSequence
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 

@@ -2,7 +2,7 @@
 
 
 import Instance.Topology.MetricSpace.HausdorffDimensionFunction
-import Lemma.Set.MetricSpace.HausdorffDimensionFunction
+import Theorem.Set.MetricSpace.HausdorffDimensionFunction
 import Mathlib.Topology.Instances.NNReal.Lemmas
 import Def.MathlibExtTest.Topology.MetricSpace.HausdorffDimensionFunction
 open scoped NNReal Topology

@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/Polynomial/DegreeStability.lean -/
 
 
-import Lemma.Polynomial.DegreeStability
+import Theorem.Polynomial.DegreeStability
 import Mathlib.Algebra.Polynomial.Monic
 
 

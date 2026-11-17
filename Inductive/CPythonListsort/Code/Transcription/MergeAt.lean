@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeAt.lean -/
 
-import Def.CPythonListsort.Code.Transcription.MergeHi.Part6
-import Def.CPythonListsort.Code.Transcription.MergeLo.Part6
-import Structure.CPythonListsort.Code.Transcription.MergeAt.Part2
+module
+
+public import Def.CPythonListsort.Code.Transcription.MergeHi.Part6
+public import Def.CPythonListsort.Code.Transcription.MergeLo.Part6
+public import Structure.CPythonListsort.Code.Transcription.MergeAt
+public import Structure.CPythonListsort.Code.Transcription.MergeAt.Part2
 /-!
 # Pending-stack merge dispatch
 
@@ -24,7 +27,7 @@ variable {κ : Type u} {ν : Type v}
 pending stack and completed both trimming gallops.  Keeping the two merge
 continuations explicit makes the exact state and request at the subsequent
 `merge_getmem` call available to assembly proofs. -/
-inductive MergeAtPreparation (κ : Type u) (ν : Type v) where
+public inductive MergeAtPreparation (κ : Type u) (ν : Type v) where
   | finished (result : MergeAtResult κ ν)
   | mergeLo (call : MergeAtCall κ ν)
   | mergeHi (call : MergeAtCall κ ν)

@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.GroupTheory.Coxeter.Length
-import Mathlib.GroupTheory.Coxeter.Basic
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.ParitySign
+module
 
+public import Mathlib.GroupTheory.Coxeter.Length
+public import Mathlib.GroupTheory.Coxeter.Basic
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.ParitySign
+
+@[expose] public section
 
 namespace CoxeterSystem
 

@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.BilinearForm.Basic
-import Mathlib.LinearAlgebra.BilinearForm.Orthogonal
-import Mathlib.Tactic.LinearCombination
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.LinearAlgebra.Matrix.BilinearForm
+module
+
+public import Mathlib.LinearAlgebra.BilinearForm.Basic
+public import Mathlib.LinearAlgebra.BilinearForm.Orthogonal
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.LinearAlgebra.Matrix.BilinearForm
+
+@[expose] public section
+
 set_option maxHeartbeats 0
 
 

@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.PicardGroup
-import Mathlib.RingTheory.ClassGroup
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Prop22PicCaCl
+module
 
+public import Mathlib.RingTheory.PicardGroup
+public import Mathlib.RingTheory.ClassGroup
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Prop22PicCaCl
+
+@[expose] public section
 
 noncomputable section
 

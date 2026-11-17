@@ -8,16 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.LieGroups.code.SL2Basics.Part4
-import Lemma.Nat.basisHC.eq.SMul
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Data.Complex.Basic
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Analysis.InnerProductSpace.l2Space
-import Def.v1.Atlas.LieGroups.code.SL2CRepresentations
+module
+
+public import Theorem.v1.Atlas.LieGroups.code.SL2Basics.Part4
+public import Lemma.Nat.basisHC.eq.SMul
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.InnerProductSpace.l2Space
+public import Def.v1.Atlas.LieGroups.code.SL2CRepresentations
 
 
-noncomputable section
+public noncomputable section
 
 open Complex
 

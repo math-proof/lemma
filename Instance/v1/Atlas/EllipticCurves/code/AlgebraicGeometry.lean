@@ -8,18 +8,23 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Nullstellensatz
-import Mathlib.Topology.Irreducible
-import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
-import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.FieldTheory.Galois.Infinite
-import Mathlib.RingTheory.Ideal.Quotient.Basic
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.FieldTheory.Perfect
-import Mathlib.FieldTheory.PurelyInseparable.PerfectClosure
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Def.v1.Atlas.EllipticCurves.code.AlgebraicGeometry.Part4
+module
+
+public import Mathlib.RingTheory.Nullstellensatz
+public import Mathlib.Topology.Irreducible
+public import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.FieldTheory.Galois.Infinite
+public import Mathlib.RingTheory.Ideal.Quotient.Basic
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.FieldTheory.Perfect
+public import Mathlib.FieldTheory.PurelyInseparable.PerfectClosure
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Def.v1.Atlas.EllipticCurves.code.AlgebraicGeometry.Part4
+
+@[expose] public section
+
 open MvPolynomial Set
 
 

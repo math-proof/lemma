@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/InnerProductSpace/ToeplitzHausdorff.lean -/
+module
 
+public import Theorem.Analysis.InnerProductSpace.ToeplitzHausdorff
 
-import Theorem.Analysis.InnerProductSpace.ToeplitzHausdorff
-
+public section
 
 namespace MathlibExtTest.Analysis.InnerProductSpace.ToeplitzHausdorff
 

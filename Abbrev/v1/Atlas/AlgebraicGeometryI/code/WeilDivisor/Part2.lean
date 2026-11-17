@@ -8,12 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.FreeAbelianGroup.Finsupp
-import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
-import Def.v1.Atlas.AlgebraicGeometryI.code.WeilDivisor
+module
+
+public import Mathlib.Algebra.FreeAbelianGroup.Finsupp
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
+public import Def.v1.Atlas.AlgebraicGeometryI.code.WeilDivisor
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace WeilDivisor
 

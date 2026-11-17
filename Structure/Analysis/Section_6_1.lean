@@ -1,9 +1,13 @@
-import Mathlib
-import Theorem.Analysis.Section_5_1.Part9
-import Theorem.Analysis.Section_5_3.Part12
-import Theorem.Analysis.Section_5_epilogue.Part5
-import Theorem.Analysis.Section_6_1
+module
 
+public import Mathlib
+public import Theorem.Analysis.Section_5_1.Part9
+public import Theorem.Analysis.Section_5_3.Part12
+public import Theorem.Analysis.Section_5_epilogue.Part5
+public import Theorem.Analysis.Section_6_1
+
+
+public section
 
 namespace Chapter6
 

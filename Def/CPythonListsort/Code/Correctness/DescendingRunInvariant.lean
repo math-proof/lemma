@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/DescendingRunInvariant.lean -/
 
-import Def.CPythonListsort.Code.Assembly.Order.Part4
-import Def.CPythonListsort.Code.Correctness.DescendingRunNormalization
+module
+
+public import Def.CPythonListsort.Code.Assembly.Order.Part4
+public import Def.CPythonListsort.Code.Correctness.DescendingRunNormalization
+
+@[expose] public section
+
 /-!
 # Stable-order invariant for `count_run`'s descending phase
 

@@ -5,12 +5,14 @@ import Lemma.Random.Integral.eq.Integral_SMul.of.All_LeNorm.StronglyMeasurable.A
 import Lemma.Random.WAdd_1.eq.Integral_MulProbIntegral_TW.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Lemma.Real.HasFDerivAt.LeNorm.of.All_LeNormFderiv.All_LeNorm.All_Differentiable.All_Measurable.Integrable.All_LeNormFderiv.All_EqIntegral_1.All_Ge_0.All_Differentiable.All_Measurable
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory PolicyGradient PolicyGradient.Model Random Real
 
 
 private lemma W_bnd
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
+  {M : Model Θ 𝒮 𝒜} [StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {f : ℝ × 𝒮 × 𝒜 → ℝ}
   {C : ℝ}
 -- given
@@ -30,7 +32,7 @@ private lemma W_bnd
 
 private lemma reward_int_bdd
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
+  {M : Model Θ 𝒮 𝒜} [StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {f : ℝ × 𝒮 × 𝒜 → ℝ}
   {C : ℝ}
 -- given
@@ -46,7 +48,7 @@ private lemma reward_int_bdd
 
 private lemma measurable_integral_reward
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
+  {M : Model Θ 𝒮 𝒜} [StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {f : ℝ × 𝒮 × 𝒜 → ℝ}
 -- given
   (hf : StronglyMeasurable f)
@@ -61,7 +63,7 @@ private lemma measurable_integral_reward
 
 private lemma measurable_integral_W
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
+  {M : Model Θ 𝒮 𝒜} [StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {f : ℝ × 𝒮 × 𝒜 → ℝ}
   {C : ℝ}
 -- given
@@ -243,4 +245,4 @@ private lemma main
 
 
 -- created on 2026-11-13
--- updated on 2026-11-16
+-- updated on 2026-11-17

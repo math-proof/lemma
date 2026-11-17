@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/SchurZassenhaus.lean -/
 
-import Mathlib.GroupTheory.SchurZassenhaus
-import Mathlib.GroupTheory.Solvable
-import Mathlib.Algebra.Torsor.Defs
-import Mathlib.Order.CompletePartialOrder
+module
+
+public import Mathlib.GroupTheory.SchurZassenhaus
+public import Mathlib.GroupTheory.Solvable
+public import Mathlib.Algebra.Torsor.Defs
+public import Mathlib.Order.CompletePartialOrder
+
+@[expose] public section
+
 /-!
 # Schur–Zassenhaus theorem
 

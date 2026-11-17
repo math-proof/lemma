@@ -9,10 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexContourDecomp.Part2
-import Theorem.StatisticalMechanics.Code.Universality.HexLattice.Part11
-import Theorem.StatisticalMechanics.Code.Universality.HexFamilyAssign
+module
 
+public import Theorem.StatisticalMechanics.Code.Universality.HexContourDecomp.Part2
+public import Theorem.StatisticalMechanics.Code.Universality.HexLattice.Part11
+public import Theorem.StatisticalMechanics.Code.Universality.HexFamilyAssign
+
+
+public section
 
 namespace StatMech.Universality
 

@@ -1,12 +1,14 @@
-import Structure.AlgebraicGeometry_CoherentBaseChange
-import Mathlib.Algebra.Algebra.Hom
-import Mathlib.LinearAlgebra.Prod
-import Mathlib.LinearAlgebra.TensorProduct.Tower
-import Mathlib.RingTheory.TensorProduct.Basic
+module
+
+public import Structure.AlgebraicGeometry_CoherentBaseChange
+public import Mathlib.Algebra.Algebra.Hom
+public import Mathlib.LinearAlgebra.Prod
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Mathlib.RingTheory.TensorProduct.Basic
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open scoped TensorProduct
 

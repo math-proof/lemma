@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PierceExpansion.lean -/
+module
 
-import Mathlib.Data.Finset.Basic
-import Mathlib.Data.Finset.Lattice.Fold
-import Mathlib.Data.Nat.Find
-import Mathlib.Order.Interval.Finset.Nat
-import Def.NumberTheory.PierceExpansion
+public import Mathlib.Data.Finset.Basic
+public import Mathlib.Data.Finset.Lattice.Fold
+public import Mathlib.Data.Nat.Find
+public import Mathlib.Order.Interval.Finset.Nat
+public import Def.NumberTheory.PierceExpansion
+
 /-!
 # Pierce expansion trajectories
 
@@ -13,6 +15,8 @@ Erdős–Shallit ("New bounds on the length of finite Pierce and Engel series").
 For `1 ≤ a ≤ n`, the Pierce trajectory starts at `a` and iterates `t ↦ n % t`
 until reaching `0`; its length is the length of the Pierce expansion of `a / n`.
 -/
+
+public section
 
 
 namespace PierceExpansion

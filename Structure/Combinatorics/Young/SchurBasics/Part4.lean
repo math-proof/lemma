@@ -2,12 +2,14 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.Combinatorics.Young.LittlewoodRichardson.Part17
-import Def.Combinatorics.Enumerative.Partition.NPartition.Part9
-import Instance.GroupTheory.Perm.Basics.Part2
-import Lemma.MvPolynomial.LittlewoodRichardson
-import Def.Combinatorics.Young.SchurBasics.Part8
+module
+
+public import Mathlib
+public import Def.Combinatorics.Young.LittlewoodRichardson.Part17
+public import Def.Combinatorics.Enumerative.Partition.NPartition.Part9
+public import Instance.GroupTheory.Perm.Basics.Part2
+public import Lemma.MvPolynomial.LittlewoodRichardson
+public import Def.Combinatorics.Young.SchurBasics.Part8
 /-!
 # Schur Polynomials
 
@@ -42,7 +44,7 @@ Schur polynomial, Young diagram, semistandard tableau, alternant, symmetric poly
 -/
 
 
-noncomputable section
+public noncomputable section
 
 open Finset Matrix Polynomial MvPolynomial BigOperators
 

@@ -9,9 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexConnFinal
-import Theorem.StatisticalMechanics.Code.Universality.HexBoundaryIdentityClose
+module
 
+public import Theorem.StatisticalMechanics.Code.Universality.HexConnFinal
+public import Theorem.StatisticalMechanics.Code.Universality.HexBoundaryIdentityClose
+
+
+public section
 
 namespace StatMech.Universality
 

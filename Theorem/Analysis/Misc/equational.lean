@@ -1,5 +1,10 @@
-import Mathlib
-import Abbrev.Analysis.Misc.equational
+module
+
+public import Mathlib
+public import Abbrev.Analysis.Misc.equational
+
+public section
+
 variable {M : Type _} [Magma M]
 
 /-

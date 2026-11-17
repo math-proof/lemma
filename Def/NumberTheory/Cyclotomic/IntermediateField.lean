@@ -4,7 +4,7 @@ import Mathlib.NumberTheory.NumberField.Cyclotomic.Galois
 import Mathlib.Order.ModularLattice
 import Mathlib.RingTheory.ZMod.UnitsCyclic
 import Theorem.FieldTheory.Galois.Abelian
-import Lemma.Rat.Galois.Abelian
+import Theorem.Rat.Galois.Abelian
 import Theorem.NumberTheory.Cyclotomic.IntermediateField
 open scoped IntermediateField IsMulCommutative
 

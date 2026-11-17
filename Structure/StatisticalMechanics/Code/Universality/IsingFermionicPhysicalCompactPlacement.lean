@@ -9,15 +9,17 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Def.StatisticalMechanics.Code.Universality.IsingFermionicEndpointAnalyticAssembly.Part2
-import Def.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalCompactPlacement.Part3
+module
+
+public import Def.StatisticalMechanics.Code.Universality.IsingFermionicEndpointAnalyticAssembly.Part2
+public import Def.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalCompactPlacement.Part3
 
 
 namespace StatMech.Universality
 
 open Filter Metric Set
 
-noncomputable section
+public noncomputable section
 
 namespace FKIsingSquareBoundaryLayerCoordinateOneForm
 

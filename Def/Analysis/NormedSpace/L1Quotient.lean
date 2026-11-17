@@ -1,10 +1,15 @@
-import Mathlib.Analysis.Normed.Lp.lpSpace
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
-import Mathlib.Analysis.Normed.Group.AddTorsor
-import Mathlib.Analysis.Normed.Lp.lpHolder
+module
+
+public import Mathlib.Analysis.Normed.Lp.lpSpace
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+public import Mathlib.Analysis.Normed.Group.AddTorsor
+public import Mathlib.Analysis.Normed.Lp.lpHolder
+
+@[expose] public section
+
 /-!
 # Separable Banach spaces are quotients of `ℓ¹`
 

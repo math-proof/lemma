@@ -2,7 +2,7 @@
 
 import Theorem.Analysis.SpecialFunctions.ExponentialIntegral.E1.Basic
 import Lemma.Complex.SpecialFunctions.ExponentialIntegral.E1.Basic
-import Lemma.Real.RegularizedIntegral
+import Theorem.Real.RegularizedIntegral
 import Theorem.Analysis.SpecialFunctions.Gamma.RegularizedIntegral
 import Mathlib.Analysis.Complex.RealDeriv
 open Filter Set Topology MeasureTheory

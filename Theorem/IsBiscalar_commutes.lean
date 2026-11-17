@@ -1,6 +1,9 @@
-import Mathlib
-import Class.Mathlib_IsModuleTopology
+module
 
+public import Mathlib
+public import Class.Mathlib_IsModuleTopology
+
+public section
 
 theorem IsBiscalar.commutes {S : Type*} (S' : Type*) {A B : Type*} [CommSemiring S']
     [CommSemiring S] [Semiring A] [Semiring B] [Algebra S' A] [Algebra S' B] [Algebra S A]

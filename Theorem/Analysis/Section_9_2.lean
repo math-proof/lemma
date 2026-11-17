@@ -1,5 +1,8 @@
-import Mathlib
-import Abbrev.Analysis.Section_9_2
+module
+
+public import Mathlib
+public import Abbrev.Analysis.Section_9_2
+
 /-!
 # Analysis I, Section 9.2: The algebra of real-valued functions
 
@@ -14,6 +17,8 @@ Main constructions and results of this section:
 - Recalling basic pointwise operations on functions.
 
 -/
+
+public section
 
 
 namespace Chapter9

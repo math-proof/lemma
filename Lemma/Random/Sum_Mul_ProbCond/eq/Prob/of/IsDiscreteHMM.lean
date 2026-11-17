@@ -3,6 +3,7 @@ import Lemma.Random.Measure.eq.Mul_MulDivS.of.Subset
 import Lemma.Random.Prob_Cond.eq.Div.of.SinglePSpace
 import Instance.Probability.Process.DiscreteHMM.Part2
 import Syntax.Algebra.BigOperators.Summations
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory Random IsDiscreteHMM Fun
 
 
@@ -433,4 +434,4 @@ private lemma main
 
 
 -- created on 2026-10-03
--- updated on 2026-11-15
+-- updated on 2026-11-17

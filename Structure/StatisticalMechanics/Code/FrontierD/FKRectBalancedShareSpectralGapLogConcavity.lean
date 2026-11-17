@@ -9,9 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryIncidenceSpectralSchedule.Part4
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPositiveEvenTraceLogConcavity.Part3
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBalancedShareSpectralGapLogConcavity.Part2
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryIncidenceSpectralSchedule.Part4
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPositiveEvenTraceLogConcavity.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBalancedShareSpectralGapLogConcavity.Part2
 open Filter MeasureTheory Topology
 
 
@@ -19,7 +21,7 @@ namespace StatMech.FrontierD
 
 open StatMech.FK StatMech.Lattice StatMech.Percolation StatMech.BeffaraDC
 
-noncomputable section
+public noncomputable section
 
 structure FKQgt4BoundaryIncidenceScheduledWindingTraceLogConcavity
     (q xiInv : Real) : Prop where

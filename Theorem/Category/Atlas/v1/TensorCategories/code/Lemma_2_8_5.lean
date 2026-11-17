@@ -1,0 +1,29 @@
+module
+
+public import Mathlib
+public import Structure.v1.Atlas.TensorCategories.code.ZPlusModules.Part6
+public import Theorem.Category.Atlas.v1.TensorCategories.code.ZPlusModules
+
+public section
+
+
+/--
+[Lemma_2_8_5](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/Lemma_2_8_5.lean)
+-/
+public theorem Lemma_2_8_5
+  [DecidableEq ι]
+  [Fintype ι]
+  {R : ZPlusRing ι}
+  [DecidableEq κ]
+  [Fintype κ]
+  {M : ZPlusModule R κ}
+-- given
+  (hindec : M.IsIndecomposable)
+  (hexact : M.IsExact) :
+-- imply
+  M.IsIrreducible :=
+-- proof
+  M.lemma_2_8_5 hindec hexact
+
+
+-- created on 2026-10-23

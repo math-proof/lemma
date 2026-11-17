@@ -9,10 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexW2Weight.Part4
-import Theorem.StatisticalMechanics.Code.Universality.HexPerScaleBijClose.Part4
-import Theorem.StatisticalMechanics.Code.Universality.HexHalfEdgeClose
+module
 
+public import Theorem.StatisticalMechanics.Code.Universality.HexW2Weight.Part4
+public import Theorem.StatisticalMechanics.Code.Universality.HexPerScaleBijClose.Part4
+public import Theorem.StatisticalMechanics.Code.Universality.HexHalfEdgeClose
+
+
+public section
 
 namespace StatMech.Universality
 

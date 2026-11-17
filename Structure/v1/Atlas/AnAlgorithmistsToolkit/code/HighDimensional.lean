@@ -8,18 +8,22 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.Normed.Group.Uniform
-import Mathlib.Topology.MetricSpace.Lipschitz
-import Mathlib.MeasureTheory.Constructions.HaarToSphere
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import Mathlib.Analysis.Normed.Lp.MeasurableSpace
-import Mathlib.Probability.Independence.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Topology.MetricSpace.Thickening
-import Mathlib.Analysis.Convex.Body
-import Def.v1.Atlas.AnAlgorithmistsToolkit.code.HighDimensional
+module
+
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.Normed.Group.Uniform
+public import Mathlib.Topology.MetricSpace.Lipschitz
+public import Mathlib.MeasureTheory.Constructions.HaarToSphere
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+public import Mathlib.Analysis.Normed.Lp.MeasurableSpace
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Topology.MetricSpace.Thickening
+public import Mathlib.Analysis.Convex.Body
+public import Def.v1.Atlas.AnAlgorithmistsToolkit.code.HighDimensional
+public section
+
 open MeasureTheory
 
 set_option maxHeartbeats 800000

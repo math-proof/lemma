@@ -1,5 +1,9 @@
 -- Carved from Lemma/Definitions/Def_LocalNewvector_AdelicSpanCarrier.lean: instance decls only.
 
+module
+
+@[expose] public section
+
 open NumberField MeasureTheory AutomorphicForm
 
 noncomputable section

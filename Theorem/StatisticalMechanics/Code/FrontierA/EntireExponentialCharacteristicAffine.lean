@@ -7,14 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib.Analysis.Complex.Harmonic.Poisson
-import Mathlib.Analysis.Complex.ValueDistribution.FirstMainTheorem
-import Theorem.StatisticalMechanics.Code.FrontierA.EntireExponentialLogAffine
+public import Mathlib.Analysis.Complex.Harmonic.Poisson
+public import Mathlib.Analysis.Complex.ValueDistribution.FirstMainTheorem
+public import Theorem.StatisticalMechanics.Code.FrontierA.EntireExponentialLogAffine
 open Filter Metric Real Set Topology
 open ValueDistribution
 
+public section
 
 namespace StatMech.FrontierA
 

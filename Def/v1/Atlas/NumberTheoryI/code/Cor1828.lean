@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.NumberTheoryI.code.StieltjesIntegral.Part2
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.StieltjesIntegral
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.StieltjesIntegral
 open scoped BigOperators
 
 

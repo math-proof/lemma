@@ -5,7 +5,7 @@ import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Data.Matrix.Basic
 import Mathlib.Tactic.NormNum
 import Def.NumberTheory.SumSquares.RepresentationCount
-import Lemma.Nat.SumSquares.RepresentationCount
+import Theorem.Nat.SumSquares.RepresentationCount
 open SumSquares
 
 /-!

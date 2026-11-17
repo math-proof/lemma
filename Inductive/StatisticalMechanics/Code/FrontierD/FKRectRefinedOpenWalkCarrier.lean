@@ -9,15 +9,17 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedPathReversal
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedRepeatedAppend
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedPathReversal
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedRepeatedAppend
 
 
 namespace StatMech.FrontierD
 
 noncomputable section
 
-inductive FKRectRefinedOpenEdgeBlocks
+public inductive FKRectRefinedOpenEdgeBlocks
     (R : FKRectTorus) (F : Finset R.EdgeIndex) :
     List FKRectIntegralSquareDart -> Prop
   | nil : FKRectRefinedOpenEdgeBlocks R F []

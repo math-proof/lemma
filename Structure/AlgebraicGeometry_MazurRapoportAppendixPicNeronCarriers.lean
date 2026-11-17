@@ -1,9 +1,11 @@
-import Mathlib
-import Structure.AlgebraicGeometry_NeronModelPropertyBundleCarrier
+module
+
+public import Mathlib
+public import Structure.AlgebraicGeometry_NeronModelPropertyBundleCarrier
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 universe u
 

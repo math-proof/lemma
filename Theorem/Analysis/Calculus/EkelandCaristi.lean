@@ -1,7 +1,10 @@
-import Mathlib.Topology.Semicontinuity.Basic
-import Mathlib.Analysis.SpecificLimits.Basic
+module
+
+public import Mathlib.Topology.Semicontinuity.Basic
+public import Mathlib.Analysis.SpecificLimits.Basic
 open Set
 
+public section
 
 namespace MetaMathlibExt
 

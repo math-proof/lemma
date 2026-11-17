@@ -1,15 +1,17 @@
-import Mathlib
-import Structure.WeierstrassCurve_ProjModel
-import Structure.ModularCurve_WeierstrassLevelComponents
-import Structure.WeierstrassCurve_DrinfeldBasisGlobal
-import Def.WeierstrassCurve_DrinfeldTransportPin
-import Def.WeierstrassCurve_SectionAtOrigin
+module
+
+public import Mathlib
+public import Structure.WeierstrassCurve_ProjModel
+public import Structure.ModularCurve_WeierstrassLevelComponents
+public import Structure.WeierstrassCurve_DrinfeldBasisGlobal
+public import Def.WeierstrassCurve_DrinfeldTransportPin
+public import Def.WeierstrassCurve_SectionAtOrigin
 
 set_option autoImplicit false
 
 universe u
 
-noncomputable section
+public noncomputable section
 
 open AlgebraicGeometry CategoryTheory WeierstrassProjModel
 

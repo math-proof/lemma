@@ -7,11 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.LinearAlgebra.Contraction
-import Mathlib.RingTheory.TensorProduct.Maps
+public import Mathlib.LinearAlgebra.Contraction
+public import Mathlib.RingTheory.TensorProduct.Maps
 set_option maxHeartbeats 800000
 
+public section
 
 noncomputable section
 

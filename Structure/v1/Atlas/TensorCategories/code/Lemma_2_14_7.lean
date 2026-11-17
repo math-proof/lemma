@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
-import Mathlib.CategoryTheory.Monoidal.Mon_
-import Def.v1.Atlas.TensorCategories.code.Lemma_2_14_7
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
+public import Mathlib.CategoryTheory.Monoidal.Mon_
+public import Def.v1.Atlas.TensorCategories.code.Lemma_2_14_7
+public section
+
 set_option linter.unusedSimpArgs false
 
 universe u v

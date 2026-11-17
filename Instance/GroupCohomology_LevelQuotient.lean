@@ -1,7 +1,12 @@
 -- Carved from Lemma/Definitions/Def_GroupCohomology_LevelQuotient.lean: instance decls only.
-import Mathlib
-import Instance.GroupCohomology_LevelSubgroup
-import Instance.FieldTheory_RatAlgClosureGalois
+
+module
+
+public import Mathlib
+public import Instance.GroupCohomology_LevelSubgroup
+public import Instance.FieldTheory_RatAlgClosureGalois
+
+@[expose] public section
 
 set_option autoImplicit false
 

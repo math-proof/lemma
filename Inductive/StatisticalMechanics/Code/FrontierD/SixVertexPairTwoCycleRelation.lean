@@ -9,14 +9,16 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPairUnionCirculation.Part6
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPairUnionCirculation.Part6
 
 
 namespace StatMech.FrontierD
 
 noncomputable section
 
-inductive SixVertexDirectedTorusEdge (T : EvenTorus) where
+public inductive SixVertexDirectedTorusEdge (T : EvenTorus) where
   | horizontal (base : T.Vertex) (positive : Bool)
   | vertical (base : T.Vertex) (positive : Bool)
 

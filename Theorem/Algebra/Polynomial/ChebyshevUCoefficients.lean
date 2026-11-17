@@ -1,4 +1,7 @@
-import Mathlib.RingTheory.Polynomial.Chebyshev
+module
+
+public import Mathlib.RingTheory.Polynomial.Chebyshev
+
 /-!
 # Coefficients of Chebyshev polynomials of the second kind
 
@@ -7,6 +10,8 @@ explicit binomial sum when `n` and `k` have the same parity, and is zero
 otherwise.  Source: Milan Janjić, "On a Class of Polynomials with Integer
 Coefficients", Journal of Integer Sequences 11 (2008), Article 08.5.2.
 -/
+
+public section
 
 
 namespace MetaMathlibExt

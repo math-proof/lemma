@@ -1,5 +1,7 @@
 import Lemma.Random.MEq_Clip.of.All_Eq.All_EqWithDensity
 import Lemma.Random.NormClip.le.Abs_R
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
@@ -36,4 +38,4 @@ private lemma main
 
 
 -- created on 2026-09-26
--- updated on 2026-11-16
+-- updated on 2026-11-17

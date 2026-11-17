@@ -9,6 +9,8 @@ import Lemma.Real.LeNorm_Mul1.of.All_LeNorm
 import Lemma.Random.Integral_MulIte.eq.MulKroneckerDeltaIntegral.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Lemma.Random.Integral.eq.Integral.of.All_LeNorm.StronglyMeasurable
 import Notation.Probability.JointRv
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Nat Random Real
 set_option linter.deprecated false
 
@@ -215,4 +217,4 @@ private lemma main
 
 
 -- created on 2026-11-04
--- updated on 2026-11-16
+-- updated on 2026-11-17

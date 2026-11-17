@@ -1,6 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/Powerloop.lean -/
 
-import Def.CPythonListsort.Code.Transcription.Word
+module
+
+public import Def.CPythonListsort.Code.Transcription.Word
 /-!
 # Transcription of CPython `powerloop`
 
@@ -10,6 +12,9 @@ Source: `Objects/listobject.c`, lines 2652-2691 at CPython commit
 The recursive fuel makes the C loop total without `partial`. Sixty-four
 iterations are exposed as an adequacy obligation in the equivalence layer.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

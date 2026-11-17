@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/FormalSequence.lean -/
 
-import Mathlib.Algebra.Field.Basic
+module
 
+public import Mathlib.Algebra.Field.Basic
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

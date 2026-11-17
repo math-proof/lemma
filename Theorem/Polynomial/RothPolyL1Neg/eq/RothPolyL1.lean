@@ -1,0 +1,32 @@
+module
+
+public import Mathlib
+public import Def.NumberTheory.RothAuxiliary
+public import Def.NumberTheory.RothAuxiliary.Part2
+
+public section
+
+open MathlibExt.NumberTheory.RothAuxiliary
+open Polynomial
+
+
+/--
+[rothPolyL1_neg](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)
+-/
+public theorem Polynomial.RothPolyL1Neg.eq.RothPolyL1
+  (P : ℤ[X]) :
+-- imply
+  rothPolyL1 (-P) = rothPolyL1 P := by
+-- proof
+  classical
+  unfold rothPolyL1 rothFinsuppL1
+  rw [toFinsupp_neg]
+  change ∑ a ∈ (-P.toFinsupp.coeff).support, ((-P.toFinsupp.coeff) a).natAbs =
+    ∑ a ∈ P.toFinsupp.coeff.support, (P.toFinsupp.coeff a).natAbs
+  rw [Finsupp.support_neg]
+  congr with a
+  apply Int.natAbs_neg
+
+
+-- created on 2026-10-21
+-- updated on 2026-11-13

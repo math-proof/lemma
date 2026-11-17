@@ -9,14 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.KahlerManifolds
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.ConnectionsCurvature
 import Structure.v1.Atlas.GeometryOfManifolds.code.ConnectionsCurvature.Part7
 import Def.v1.Atlas.GeometryOfManifolds.code.AdvancedKahler
 set_option autoImplicit false
 
 open DifferentialFormSpace
-
 
 /-- The symplectic class $[\omega] \in H^2(M, \mathbb{R})$ is integral and
 nontrivial: no integer multiple $k\omega$ ($k \neq 0$) is exact. This is the
@@ -26,5 +23,4 @@ class IsIntegralClass
     (S : SymplecticManifold Ω VF) where
   not_exact : ∀ (α : Ω 1), inst.d α ≠ S.ω
   smul_not_exact : ∀ (k : ℤ), k ≠ 0 → ∀ (α : Ω 1), inst.d α ≠ k • S.ω
-
 

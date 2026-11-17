@@ -1,5 +1,8 @@
-import Mathlib.Data.Matrix.Basic
+module
 
+public import Mathlib.Data.Matrix.Basic
+
+public meta section
 
 /-- All-ones matrix `𝟙[m, n] : Matrix (Fin m) (Fin n) ℕ`. -/
 syntax:max "𝟙[" term:60 ", " term:60 "]" : term

@@ -1,13 +1,15 @@
-import Def.Lean.Meta.Expr.Part4
-import Def.Lean.Expr.Singleton.Part2
-import Def.Lean.Expr.Part10
+module
+
+public import Def.Lean.Meta.Expr.Part4
+public import Def.Lean.Expr.Singleton.Part2
+public import Def.Lean.Expr.Part10
 open Lean.Meta
 open Lean (Name Json Level BinderInfo getMCtx)
 set_option linter.unusedVariables false
 
 
 /-- Direction of `lim[x → …]`. -/
-inductive LimTo where
+public inductive LimTo where
   | inf
   | ninf
   | nhds (x : Expr)

@@ -2,7 +2,7 @@
 
 
 import Def.LinearAlgebra.BilinearFormRank
-import Lemma.Matrix.BilinearFormRank
+import Theorem.Matrix.BilinearFormRank
 
 
 noncomputable section

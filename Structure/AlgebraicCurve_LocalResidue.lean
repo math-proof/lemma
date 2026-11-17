@@ -1,8 +1,10 @@
-import Structure.AlgebraicCurve_Place
+module
+
+public import Structure.AlgebraicCurve_Place
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open IsLocalRing
 

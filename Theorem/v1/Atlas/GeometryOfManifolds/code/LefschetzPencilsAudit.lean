@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.GeometryOfManifolds.code.LefschetzPencils.Part7
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.LefschetzPencils
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.LefschetzPencils
 set_option autoImplicit false
 
 

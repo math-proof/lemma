@@ -4,25 +4,30 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Analysis.Asymptotics.Defs
-import Mathlib.Analysis.Real.Sqrt
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.Order.Filter.AtTopBot.Defs
-import Mathlib.Topology.Algebra.InfiniteSum.Defs
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Analysis.Complex.Exponential
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Mathlib.Data.Finset.Range
-import Mathlib.Probability.Distributions.Poisson.Basic
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
-import Mathlib.Topology.Algebra.InfiniteSum.NatInt
-import Mathlib.Topology.Algebra.InfiniteSum.Order
+module
+
+public import Mathlib.Analysis.Asymptotics.Defs
+public import Mathlib.Analysis.Real.Sqrt
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.Order.Filter.AtTopBot.Defs
+public import Mathlib.Topology.Algebra.InfiniteSum.Defs
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Analysis.Complex.Exponential
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+public import Mathlib.Data.Finset.Range
+public import Mathlib.Probability.Distributions.Poisson.Basic
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
+public import Mathlib.Topology.Algebra.InfiniteSum.NatInt
+public import Mathlib.Topology.Algebra.InfiniteSum.Order
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 3
 

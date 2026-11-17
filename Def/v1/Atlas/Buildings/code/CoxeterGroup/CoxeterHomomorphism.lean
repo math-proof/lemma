@@ -8,9 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.BraidRelationProof
-import Mathlib.GroupTheory.Coxeter.Basic
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.CoxeterHomomorphism
+module
+
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.BraidRelationProof
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.GeometricRepresentation.Part2
+public import Mathlib.GroupTheory.Coxeter.Basic
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.CoxeterHomomorphism
+
+@[expose] public section
+
 open Finset BigOperators CoxeterGroup
 
 

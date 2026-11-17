@@ -8,12 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.GroupTheory.GroupAction.Basic
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Mathlib.Data.Finsupp.Basic
-import Mathlib.Data.Finsupp.SMul
-import Mathlib.Data.Real.Basic
-import Mathlib.GroupTheory.GroupAction.Quotient
+module
+
+public import Mathlib.GroupTheory.GroupAction.Basic
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.Data.Finsupp.Basic
+public import Mathlib.Data.Finsupp.SMul
+public import Mathlib.Data.Real.Basic
+public import Mathlib.GroupTheory.GroupAction.Quotient
+
+@[expose] public section
+
 set_option autoImplicit false
 
 

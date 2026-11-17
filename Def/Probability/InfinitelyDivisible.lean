@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.MeasureTheory.Group.Convolution
-import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
-import Mathlib.MeasureTheory.Measure.Dirac
+module
+
+public import Mathlib.MeasureTheory.Group.Convolution
+public import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+public import Mathlib.MeasureTheory.Measure.Dirac
+
+@[expose] public section
+
 open MeasureTheory Measure
 
 

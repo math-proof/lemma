@@ -1,5 +1,9 @@
-import Instance.TaylorWiles_Primes
-import Mathlib.FieldTheory.Galois.IsGaloisGroup
+module
+
+public import Instance.TaylorWiles_Primes
+public import Mathlib.FieldTheory.Galois.IsGaloisGroup
+
+@[expose] public section
 
 set_option autoImplicit false
 

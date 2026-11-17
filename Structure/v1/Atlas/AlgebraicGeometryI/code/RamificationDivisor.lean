@@ -8,11 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.NumberTheory.RamificationInertia.Ramification
-import Mathlib.RingTheory.DedekindDomain.Basic
-import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
-import Mathlib.Data.Finsupp.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+module
+
+public import Mathlib.NumberTheory.RamificationInertia.Ramification
+public import Mathlib.RingTheory.DedekindDomain.Basic
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
+public import Mathlib.Data.Finsupp.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public section
+
 set_option maxHeartbeats 800000
 
 open IsDedekindDomain

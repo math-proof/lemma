@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
-import Mathlib.Analysis.SpecialFunctions.JapaneseBracket
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Algebra.Order.Chebyshev
-import Mathlib.Data.Fintype.BigOperators
+module
+
+public import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
+public import Mathlib.Analysis.SpecialFunctions.JapaneseBracket
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Algebra.Order.Chebyshev
+public import Mathlib.Data.Fintype.BigOperators
+
+@[expose] public section
+
 open scoped SchwartzMap
 
 

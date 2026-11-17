@@ -1,9 +1,14 @@
-import Mathlib.Algebra.Polynomial.Eval.Defs
-import Mathlib.Analysis.Complex.Norm
-import Mathlib.Analysis.CStarAlgebra.Classes
+module
+
+public import Mathlib.Algebra.Polynomial.Eval.Defs
+public import Mathlib.Analysis.Complex.Norm
+public import Mathlib.Analysis.CStarAlgebra.Classes
+
 /-!
 # Eneström–Kakeya zero localization for polynomials with positive coefficients
 -/
+
+public section
 
 
 namespace Complex.EnestromKakeya

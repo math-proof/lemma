@@ -9,13 +9,17 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Lattice.EarExistence.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.EarContraction.Part9
-import Theorem.StatisticalMechanics.Code.Walls.nbcnoncut.Part2
-import Theorem.StatisticalMechanics.Code.Walls.jc_leafremoval.Part2
-import Theorem.StatisticalMechanics.Code.Walls.atcattachstep.Part2
-import Theorem.StatisticalMechanics.Code.Walls.earremovable.Part3
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Lattice.EarExistence.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.EarContraction.Part9
+public import Theorem.StatisticalMechanics.Code.Walls.nbcnoncut.Part2
+public import Theorem.StatisticalMechanics.Code.Walls.jc_leafremoval.Part2
+public import Theorem.StatisticalMechanics.Code.Walls.atcattachstep.Part2
+public import Theorem.StatisticalMechanics.Code.Walls.earremovable.Part3
+public section
+
 open Finset Set SimpleGraph Function
 
 

@@ -8,14 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.RingTheory.Flat.Stability
-import Mathlib.RingTheory.Flat.Localization
-import Mathlib.LinearAlgebra.TensorProduct.Basic
-import Mathlib.RingTheory.Localization.Away.Basic
-import Mathlib.RingTheory.Localization.Module
-import Mathlib.LinearAlgebra.Dimension.Finrank
+module
 
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.RingTheory.Flat.Stability
+public import Mathlib.RingTheory.Flat.Localization
+public import Mathlib.LinearAlgebra.TensorProduct.Basic
+public import Mathlib.RingTheory.Localization.Away.Basic
+public import Mathlib.RingTheory.Localization.Module
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+
+@[expose] public section
 
 namespace SheafTensorExact
 

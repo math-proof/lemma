@@ -8,7 +8,7 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.NoetherianCoverFinite
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NoetherianCoverFinite
 import Instance.v1.Atlas.AlgebraicGeometryI.code.FilteredColimitFiniteLimits.Part2
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.FilteredColimitFiniteLimits
 import Mathlib.Topology.Sheaves.Limits

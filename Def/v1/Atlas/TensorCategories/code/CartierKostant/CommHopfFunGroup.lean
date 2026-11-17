@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Lemma.Category.Atlas.v1.TensorCategories.code.CartierKostant.Theorems
-import Mathlib.RingTheory.Artinian.Module
-import Mathlib.RingTheory.Spectrum.Maximal.Basic
+module
+
+public import Mathlib.RingTheory.Artinian.Module
+public import Mathlib.RingTheory.Spectrum.Maximal.Basic
+
+@[expose] public section
+
 open Coalgebra HopfAlgebra
 open scoped TensorProduct
 

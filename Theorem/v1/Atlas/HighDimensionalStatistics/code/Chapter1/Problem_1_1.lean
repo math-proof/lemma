@@ -7,11 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_11
-import Mathlib.Probability.Independence.Basic
-import Mathlib.Analysis.Normed.Group.Constructions
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_11
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.Analysis.Normed.Group.Constructions
 open MeasureTheory ProbabilityTheory
+
+public section
 
 /-- **Problem 1.1 (weighted sums of sub-exponentials).** For independent
 sub-exponential variables `X₁,…,Xₙ` with parameter `λ`, there is a constant

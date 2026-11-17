@@ -1,0 +1,635 @@
+module
+
+public import Mathlib
+public import Def.NumberTheory.PrimeInterval.Breusch.Grid
+
+public section
+
+open MathlibExt.NumberTheory.BreuschWanted.Internal
+set_option maxRecDepth 65536
+set_option maxHeartbeats 800000
+
+
+namespace MathlibExt.NumberTheory.BreuschWanted.Internal
+
+/--
+[w9_length](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
+-/
+public theorem w9_length :
+-- imply
+  w9.length = 16 :=
+-- proof
+  rfl
+
+end MathlibExt.NumberTheory.BreuschWanted.Internal
+
+namespace MathlibExt.NumberTheory.BreuschWanted.Internal
+
+/--
+[w9_complete](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
+-/
+public theorem w9_complete :
+-- imply
+  (w9.map Prod.fst).toFinset = Nat.divisors Q9 := by
+-- proof
+  decide
+
+end MathlibExt.NumberTheory.BreuschWanted.Internal
+
+namespace MathlibExt.NumberTheory.BreuschWanted.Internal
+
+/--
+[w9_pos](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
+-/
+public theorem w9_pos :
+-- imply
+  ∀ p ∈ w9, 1 ≤ p.1 := by decide
+end MathlibExt.NumberTheory.BreuschWanted.Internal
+
+namespace MathlibExt.NumberTheory.BreuschWanted.Internal
+
+/--
+[w9_dvd](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
+-/
+public theorem w9_dvd :
+-- imply
+  ∀ p ∈ w9, p.1 ∣ Q9 := by decide
+
+-- Single `G`-term: each `Nat` floor is cast with `Int.ofNat` first, so the
+-- subtraction happens in `Int` (no `Nat` truncation).
+end MathlibExt.NumberTheory.BreuschWanted.Internal
+
+namespace MathlibExt.NumberTheory.BreuschWanted.Internal
+
+/--
+[M9_block0](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
+-/
+public theorem M9_block0_part0 :
+  ∀ k < 450, G9 (0 + k) ≤ 3 := by decide
+
+public theorem M9_block0_part1 :
+  ∀ k < 450, G9 (0 + (450 + k)) ≤ 3 := by decide
+
+public theorem M9_block0_part2 :
+  ∀ k < 450, G9 (0 + (900 + k)) ≤ 3 := by decide
+
+public theorem M9_block0_part3 :
+  ∀ k < 450, G9 (0 + (1350 + k)) ≤ 3 := by decide
+
+public theorem M9_block0_part4 :
+  ∀ k < 450, G9 (0 + (1800 + k)) ≤ 3 := by decide
+
+public theorem M9_block0_part5 :
+  ∀ k < 450, G9 (0 + (2250 + k)) ≤ 3 := by decide
+
+public theorem M9_block0 :
+-- imply
+  ∀ k < 2700, G9 (0 + k) ≤ 3 := by
+-- proof
+  intro k hk
+  have hsplit :
+      k < 450 ∨
+        450 ≤ k ∧ k < 900 ∨
+        900 ≤ k ∧ k < 1350 ∨
+        1350 ≤ k ∧ k < 1800 ∨
+        1800 ≤ k ∧ k < 2250 ∨
+        2250 ≤ k := by
+    omega
+  rcases hsplit with h | h | h | h | h | h
+  · exact M9_block0_part0 k h
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block0_part1 t (by omega)
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block0_part2 t (by omega)
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block0_part3 t (by omega)
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block0_part4 t (by omega)
+  · obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le h
+    exact M9_block0_part5 t (by omega)
+end MathlibExt.NumberTheory.BreuschWanted.Internal
+
+namespace MathlibExt.NumberTheory.BreuschWanted.Internal
+
+/--
+[M9_block1](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
+-/
+public theorem M9_block1_part0 :
+  ∀ k < 450, G9 (2700 + k) ≤ 3 := by decide
+
+public theorem M9_block1_part1 :
+  ∀ k < 450, G9 (2700 + (450 + k)) ≤ 3 := by decide
+
+public theorem M9_block1_part2 :
+  ∀ k < 450, G9 (2700 + (900 + k)) ≤ 3 := by decide
+
+public theorem M9_block1_part3 :
+  ∀ k < 450, G9 (2700 + (1350 + k)) ≤ 3 := by decide
+
+public theorem M9_block1_part4 :
+  ∀ k < 450, G9 (2700 + (1800 + k)) ≤ 3 := by decide
+
+public theorem M9_block1_part5 :
+  ∀ k < 450, G9 (2700 + (2250 + k)) ≤ 3 := by decide
+
+public theorem M9_block1 :
+-- imply
+  ∀ k < 2700, G9 (2700 + k) ≤ 3 := by
+-- proof
+  intro k hk
+  have hsplit :
+      k < 450 ∨
+        450 ≤ k ∧ k < 900 ∨
+        900 ≤ k ∧ k < 1350 ∨
+        1350 ≤ k ∧ k < 1800 ∨
+        1800 ≤ k ∧ k < 2250 ∨
+        2250 ≤ k := by
+    omega
+  rcases hsplit with h | h | h | h | h | h
+  · exact M9_block1_part0 k h
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block1_part1 t (by omega)
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block1_part2 t (by omega)
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block1_part3 t (by omega)
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block1_part4 t (by omega)
+  · obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le h
+    exact M9_block1_part5 t (by omega)
+end MathlibExt.NumberTheory.BreuschWanted.Internal
+
+namespace MathlibExt.NumberTheory.BreuschWanted.Internal
+
+/--
+[M9_block2](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
+-/
+public theorem M9_block2_part0 :
+  ∀ k < 450, G9 (5400 + k) ≤ 3 := by decide
+
+public theorem M9_block2_part1 :
+  ∀ k < 450, G9 (5400 + (450 + k)) ≤ 3 := by decide
+
+public theorem M9_block2_part2 :
+  ∀ k < 450, G9 (5400 + (900 + k)) ≤ 3 := by decide
+
+public theorem M9_block2_part3 :
+  ∀ k < 450, G9 (5400 + (1350 + k)) ≤ 3 := by decide
+
+public theorem M9_block2_part4 :
+  ∀ k < 450, G9 (5400 + (1800 + k)) ≤ 3 := by decide
+
+public theorem M9_block2_part5 :
+  ∀ k < 450, G9 (5400 + (2250 + k)) ≤ 3 := by decide
+
+public theorem M9_block2 :
+-- imply
+  ∀ k < 2700, G9 (5400 + k) ≤ 3 := by
+-- proof
+  intro k hk
+  have hsplit :
+      k < 450 ∨
+        450 ≤ k ∧ k < 900 ∨
+        900 ≤ k ∧ k < 1350 ∨
+        1350 ≤ k ∧ k < 1800 ∨
+        1800 ≤ k ∧ k < 2250 ∨
+        2250 ≤ k := by
+    omega
+  rcases hsplit with h | h | h | h | h | h
+  · exact M9_block2_part0 k h
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block2_part1 t (by omega)
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block2_part2 t (by omega)
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block2_part3 t (by omega)
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block2_part4 t (by omega)
+  · obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le h
+    exact M9_block2_part5 t (by omega)
+end MathlibExt.NumberTheory.BreuschWanted.Internal
+
+namespace MathlibExt.NumberTheory.BreuschWanted.Internal
+
+/--
+[M9_block3](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
+-/
+public theorem M9_block3_part0 :
+  ∀ k < 450, G9 (8100 + k) ≤ 3 := by decide
+
+public theorem M9_block3_part1 :
+  ∀ k < 450, G9 (8100 + (450 + k)) ≤ 3 := by decide
+
+public theorem M9_block3_part2 :
+  ∀ k < 450, G9 (8100 + (900 + k)) ≤ 3 := by decide
+
+public theorem M9_block3_part3 :
+  ∀ k < 450, G9 (8100 + (1350 + k)) ≤ 3 := by decide
+
+public theorem M9_block3_part4 :
+  ∀ k < 450, G9 (8100 + (1800 + k)) ≤ 3 := by decide
+
+public theorem M9_block3_part5 :
+  ∀ k < 450, G9 (8100 + (2250 + k)) ≤ 3 := by decide
+
+public theorem M9_block3 :
+-- imply
+  ∀ k < 2700, G9 (8100 + k) ≤ 3 := by
+-- proof
+  intro k hk
+  have hsplit :
+      k < 450 ∨
+        450 ≤ k ∧ k < 900 ∨
+        900 ≤ k ∧ k < 1350 ∨
+        1350 ≤ k ∧ k < 1800 ∨
+        1800 ≤ k ∧ k < 2250 ∨
+        2250 ≤ k := by
+    omega
+  rcases hsplit with h | h | h | h | h | h
+  · exact M9_block3_part0 k h
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block3_part1 t (by omega)
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block3_part2 t (by omega)
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block3_part3 t (by omega)
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block3_part4 t (by omega)
+  · obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le h
+    exact M9_block3_part5 t (by omega)
+end MathlibExt.NumberTheory.BreuschWanted.Internal
+
+namespace MathlibExt.NumberTheory.BreuschWanted.Internal
+
+/--
+[M9_block4](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
+-/
+public theorem M9_block4_part0 :
+  ∀ k < 450, G9 (10800 + k) ≤ 3 := by decide
+
+public theorem M9_block4_part1 :
+  ∀ k < 450, G9 (10800 + (450 + k)) ≤ 3 := by decide
+
+public theorem M9_block4_part2 :
+  ∀ k < 450, G9 (10800 + (900 + k)) ≤ 3 := by decide
+
+public theorem M9_block4_part3 :
+  ∀ k < 450, G9 (10800 + (1350 + k)) ≤ 3 := by decide
+
+public theorem M9_block4_part4 :
+  ∀ k < 450, G9 (10800 + (1800 + k)) ≤ 3 := by decide
+
+public theorem M9_block4_part5 :
+  ∀ k < 450, G9 (10800 + (2250 + k)) ≤ 3 := by decide
+
+public theorem M9_block4 :
+-- imply
+  ∀ k < 2700, G9 (10800 + k) ≤ 3 := by
+-- proof
+  intro k hk
+  have hsplit :
+      k < 450 ∨
+        450 ≤ k ∧ k < 900 ∨
+        900 ≤ k ∧ k < 1350 ∨
+        1350 ≤ k ∧ k < 1800 ∨
+        1800 ≤ k ∧ k < 2250 ∨
+        2250 ≤ k := by
+    omega
+  rcases hsplit with h | h | h | h | h | h
+  · exact M9_block4_part0 k h
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block4_part1 t (by omega)
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block4_part2 t (by omega)
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block4_part3 t (by omega)
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block4_part4 t (by omega)
+  · obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le h
+    exact M9_block4_part5 t (by omega)
+end MathlibExt.NumberTheory.BreuschWanted.Internal
+
+namespace MathlibExt.NumberTheory.BreuschWanted.Internal
+
+/--
+[M9_block5](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
+-/
+public theorem M9_block5_part0 :
+  ∀ k < 450, G9 (13500 + k) ≤ 3 := by decide
+
+public theorem M9_block5_part1 :
+  ∀ k < 450, G9 (13500 + (450 + k)) ≤ 3 := by decide
+
+public theorem M9_block5_part2 :
+  ∀ k < 450, G9 (13500 + (900 + k)) ≤ 3 := by decide
+
+public theorem M9_block5_part3 :
+  ∀ k < 450, G9 (13500 + (1350 + k)) ≤ 3 := by decide
+
+public theorem M9_block5_part4 :
+  ∀ k < 450, G9 (13500 + (1800 + k)) ≤ 3 := by decide
+
+public theorem M9_block5_part5 :
+  ∀ k < 450, G9 (13500 + (2250 + k)) ≤ 3 := by decide
+
+public theorem M9_block5 :
+-- imply
+  ∀ k < 2700, G9 (13500 + k) ≤ 3 := by
+-- proof
+  intro k hk
+  have hsplit :
+      k < 450 ∨
+        450 ≤ k ∧ k < 900 ∨
+        900 ≤ k ∧ k < 1350 ∨
+        1350 ≤ k ∧ k < 1800 ∨
+        1800 ≤ k ∧ k < 2250 ∨
+        2250 ≤ k := by
+    omega
+  rcases hsplit with h | h | h | h | h | h
+  · exact M9_block5_part0 k h
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block5_part1 t (by omega)
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block5_part2 t (by omega)
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block5_part3 t (by omega)
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block5_part4 t (by omega)
+  · obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le h
+    exact M9_block5_part5 t (by omega)
+end MathlibExt.NumberTheory.BreuschWanted.Internal
+
+namespace MathlibExt.NumberTheory.BreuschWanted.Internal
+
+/--
+[M9_block6](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
+-/
+public theorem M9_block6_part0 :
+  ∀ k < 450, G9 (16200 + k) ≤ 3 := by decide
+
+public theorem M9_block6_part1 :
+  ∀ k < 450, G9 (16200 + (450 + k)) ≤ 3 := by decide
+
+public theorem M9_block6_part2 :
+  ∀ k < 450, G9 (16200 + (900 + k)) ≤ 3 := by decide
+
+public theorem M9_block6_part3 :
+  ∀ k < 450, G9 (16200 + (1350 + k)) ≤ 3 := by decide
+
+public theorem M9_block6_part4 :
+  ∀ k < 450, G9 (16200 + (1800 + k)) ≤ 3 := by decide
+
+public theorem M9_block6_part5 :
+  ∀ k < 450, G9 (16200 + (2250 + k)) ≤ 3 := by decide
+
+public theorem M9_block6 :
+-- imply
+  ∀ k < 2700, G9 (16200 + k) ≤ 3 := by
+-- proof
+  intro k hk
+  have hsplit :
+      k < 450 ∨
+        450 ≤ k ∧ k < 900 ∨
+        900 ≤ k ∧ k < 1350 ∨
+        1350 ≤ k ∧ k < 1800 ∨
+        1800 ≤ k ∧ k < 2250 ∨
+        2250 ≤ k := by
+    omega
+  rcases hsplit with h | h | h | h | h | h
+  · exact M9_block6_part0 k h
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block6_part1 t (by omega)
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block6_part2 t (by omega)
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block6_part3 t (by omega)
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block6_part4 t (by omega)
+  · obtain ⟨t, rfl⟩ := Nat.exists_eq_add_of_le h
+    exact M9_block6_part5 t (by omega)
+end MathlibExt.NumberTheory.BreuschWanted.Internal
+
+namespace MathlibExt.NumberTheory.BreuschWanted.Internal
+
+/--
+[M9_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
+-/
+public theorem M9_le
+  :
+-- imply
+  ∀ j < 18900, G9 j ≤ 3 := by
+-- proof
+  intro j hj
+  have hsplit :
+      j < 2700 ∨
+        2700 ≤ j ∧ j < 5400 ∨
+          5400 ≤ j ∧ j < 8100 ∨
+            8100 ≤ j ∧ j < 10800 ∨
+              10800 ≤ j ∧ j < 13500 ∨ 13500 ≤ j ∧ j < 16200 ∨
+                16200 ≤ j := by
+    omega
+  rcases hsplit with h | h | h | h | h | h | h
+  · obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le (Nat.zero_le j)
+    exact M9_block0 k (by omega)
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block1 k (by omega)
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block2 k (by omega)
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block3 k (by omega)
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block4 k (by omega)
+  · obtain ⟨lo, hi⟩ := h
+    obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le lo
+    exact M9_block5 k (by omega)
+  · obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le h
+    exact M9_block6 k (by omega)
+
+end MathlibExt.NumberTheory.BreuschWanted.Internal
+
+namespace MathlibExt.NumberTheory.BreuschWanted.Internal
+
+/--
+[jmin1_attained](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
+-/
+public theorem jmin1_attained
+  :
+-- imply
+  G9 279 ≥ 1 := by decide
+end MathlibExt.NumberTheory.BreuschWanted.Internal
+
+namespace MathlibExt.NumberTheory.BreuschWanted.Internal
+
+/--
+[jmin1_core](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
+-/
+public theorem jmin1_core
+  :
+-- imply
+  ∀ j < 279, 10 ≤ j → G9 j < 1 := by decide
+end MathlibExt.NumberTheory.BreuschWanted.Internal
+
+namespace MathlibExt.NumberTheory.BreuschWanted.Internal
+
+/--
+[jmin1](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
+-/
+public theorem jmin1
+  :
+-- imply
+  G9 279 ≥ 1 ∧ ∀ j, 10 ≤ j → j < 279 → G9 j < 1 :=
+-- proof
+  ⟨jmin1_attained, fun j h1 h2 => jmin1_core j h2 h1⟩
+
+end MathlibExt.NumberTheory.BreuschWanted.Internal
+
+namespace MathlibExt.NumberTheory.BreuschWanted.Internal
+
+/--
+[jmin2_attained](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
+-/
+public theorem jmin2_attained
+  :
+-- imply
+  G9 657 ≥ 2 := by decide
+end MathlibExt.NumberTheory.BreuschWanted.Internal
+
+namespace MathlibExt.NumberTheory.BreuschWanted.Internal
+
+/--
+[jmin2_core](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
+-/
+public theorem jmin2_core
+  :
+-- imply
+  ∀ j < 657, 10 ≤ j → G9 j < 2 := by decide
+end MathlibExt.NumberTheory.BreuschWanted.Internal
+
+namespace MathlibExt.NumberTheory.BreuschWanted.Internal
+
+/--
+[jmin2](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
+-/
+public theorem jmin2
+  :
+-- imply
+  G9 657 ≥ 2 ∧ ∀ j, 10 ≤ j → j < 657 → G9 j < 2 :=
+-- proof
+  ⟨jmin2_attained, fun j h1 h2 => jmin2_core j h2 h1⟩
+
+end MathlibExt.NumberTheory.BreuschWanted.Internal
+
+namespace MathlibExt.NumberTheory.BreuschWanted.Internal
+
+/--
+[jmin3_attained](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
+-/
+public theorem jmin3_attained
+  :
+-- imply
+  G9 963 ≥ 3 := by decide
+end MathlibExt.NumberTheory.BreuschWanted.Internal
+
+namespace MathlibExt.NumberTheory.BreuschWanted.Internal
+
+/--
+[jmin3_core](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
+-/
+public theorem jmin3_core
+  :
+-- imply
+  ∀ j < 963, 10 ≤ j → G9 j < 3 := by decide
+end MathlibExt.NumberTheory.BreuschWanted.Internal
+
+namespace MathlibExt.NumberTheory.BreuschWanted.Internal
+
+/--
+[jmin3](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
+-/
+public theorem jmin3
+  :
+-- imply
+  G9 963 ≥ 3 ∧ ∀ j, 10 ≤ j → j < 963 → G9 j < 3 :=
+-- proof
+  ⟨jmin3_attained, fun j h1 h2 => jmin3_core j h2 h1⟩
+
+end MathlibExt.NumberTheory.BreuschWanted.Internal
+
+namespace MathlibExt.NumberTheory.BreuschWanted.Internal
+
+/--
+[w9_mu_sign](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
+-/
+public theorem w9_mu_sign :
+-- imply
+  ∀ q ∈ w9, q.2 = 1 ∨ q.2 = -1 := by decide
+end MathlibExt.NumberTheory.BreuschWanted.Internal
+
+namespace MathlibExt.NumberTheory.BreuschWanted.Internal
+
+/--
+[w9_nodup](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
+-/
+public theorem w9_nodup :
+-- imply
+  w9.Nodup := by decide
+end MathlibExt.NumberTheory.BreuschWanted.Internal
+
+namespace MathlibExt.NumberTheory.BreuschWanted.Internal
+
+/--
+[map_sum_toFinset](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Grid.lean)
+-/
+public theorem map_sum_toFinset
+  [AddCommMonoid M]
+  {l : List (ℕ × ℤ)}
+  {f : (ℕ × ℤ) → M}
+-- given
+  (hl : l.Nodup) :
+-- imply
+  (l.map f).sum = l.toFinset.sum f := by
+-- proof
+  induction l with
+  | nil => rfl
+  | cons a t ih =>
+    rw [List.nodup_cons] at hl
+    rw [List.map_cons, List.sum_cons, ih hl.2, List.toFinset_cons,
+      Finset.sum_insert (by simpa using hl.1)]
+
+end MathlibExt.NumberTheory.BreuschWanted.Internal
+
+
+-- created on 2026-10-20
+-- updated on 2026-10-28

@@ -1,5 +1,9 @@
-import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Mathlib.RingTheory.Jacobson.Ring
+module
+
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Mathlib.RingTheory.Jacobson.Ring
+
+@[expose] public section
 
 universe u v
 

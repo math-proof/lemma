@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/ReverseModeCorrectness.lean -/
 
-import Structure.CPythonListsort.Code.Correctness.ReverseScanTransport
-import Def.CPythonListsort.Code.Correctness.ReverseModeCorrectness
+module
+
+public import Structure.CPythonListsort.Code.Correctness.ReverseScanTransport
+public import Def.CPythonListsort.Code.Correctness.ReverseModeCorrectness
 /-!
 # Correctness of CPython's reverse-mode pattern
 
@@ -11,6 +13,9 @@ labels.  This module proves that the transcribed final whole-slice reversal
 turns that state into a sorted, stable result for the swapped comparator while
 preserving every key/payload pair.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

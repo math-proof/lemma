@@ -1,7 +1,11 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/ThreeManifold.lean -/
 
-import Mathlib.Geometry.Manifold.Instances.Real
+public import Mathlib.Geometry.Manifold.Instances.Real
 
+
+public section
 
 /-!
 # Topological 3-manifolds

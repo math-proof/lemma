@@ -1,13 +1,18 @@
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.Meromorphic.Divisor
-import Mathlib.MeasureTheory.Integral.CircleIntegral
-import Mathlib.Analysis.Complex.CauchyIntegral
-import Mathlib.Analysis.Meromorphic.FactorizedRational
+module
+
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Meromorphic.Divisor
+public import Mathlib.MeasureTheory.Integral.CircleIntegral
+public import Mathlib.Analysis.Complex.CauchyIntegral
+public import Mathlib.Analysis.Meromorphic.FactorizedRational
+
 /-!
 # Argument principle on a disc
 
 Proves `Wanted` entry `argumentPrinciple_closedBall`.
 -/
+
+public section
 
 
 namespace Complex.ArgumentPrinciple

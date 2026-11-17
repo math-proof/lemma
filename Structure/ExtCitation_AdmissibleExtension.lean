@@ -1,6 +1,10 @@
-import Mathlib.NumberTheory.Cyclotomic.CyclotomicCharacter
-import Mathlib.RingTheory.RootsOfUnity.AlgebraicallyClosed
-import Def.FLTPrelim_Ramification
+module
+
+public import Mathlib.NumberTheory.Cyclotomic.CyclotomicCharacter
+public import Mathlib.RingTheory.RootsOfUnity.AlgebraicallyClosed
+public import Def.FLTPrelim_Ramification
+
+public section
 
 set_option autoImplicit false
 

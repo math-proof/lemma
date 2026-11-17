@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PerrinSequence.lean -/
+module
 
+public import Def.NumberTheory.PerrinSequence
 
-import Def.NumberTheory.PerrinSequence
-
+public section
 
 namespace MetaMathlibExt
 

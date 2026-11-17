@@ -2,7 +2,7 @@
 
 
 import Instance.NumberTheory.Padics.PontryaginDual
-import Lemma.Nat.Padics.PontryaginDual
+import Theorem.Nat.Padics.PontryaginDual
 import Instance.MathlibExtTest.NumberTheory.Padics.PontryaginDual
 
 

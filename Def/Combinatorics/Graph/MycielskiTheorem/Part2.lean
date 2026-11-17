@@ -1,10 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Graph/MycielskiTheorem.lean -/
 
-import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
-import Mathlib.Algebra.CharP.Defs
-import Mathlib.Order.CompletePartialOrder
-import Theorem.Combinatorics.Graph.MycielskiTheorem
+module
 
+public import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
+public import Mathlib.Algebra.CharP.Defs
+public import Mathlib.Order.CompletePartialOrder
+public import Theorem.Combinatorics.Graph.MycielskiTheorem
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

@@ -1,16 +1,19 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/DilcherFiniteMultipleHarmonic.lean -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Defs
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Data.Rat.Defs
-import Mathlib.Order.Interval.Finset.Nat
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Data.Nat.Choose.Sum
-import Mathlib.Data.Rat.Star
-import Mathlib.GroupTheory.Finiteness
-import Mathlib.Tactic.LinearCombination
+module
 
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Data.Fintype.Pi
+public import Mathlib.Data.Rat.Defs
+public import Mathlib.Order.Interval.Finset.Nat
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Data.Nat.Choose.Sum
+public import Mathlib.Data.Rat.Star
+public import Mathlib.GroupTheory.Finiteness
+public import Mathlib.Tactic.LinearCombination
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

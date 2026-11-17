@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.Partition.PartitionPolynomial
-import Lemma.Finset.Enumerative.Partition.PartitionPolynomial
+import Theorem.Finset.Enumerative.Partition.PartitionPolynomial
 import Def.MathlibExtTest.Combinatorics.Enumerative.Partition.PartitionPolynomial
 
 

@@ -1,12 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Sequences/AronsonTransform.lean -/
 
-import Mathlib.Data.Set.Finite.Basic
-import Mathlib.Order.Monotone.Basic
-import Mathlib.Algebra.Order.Ring.Nat
-import Mathlib.Algebra.Order.Sub.Basic
-import Mathlib.Data.Nat.SuccPred
-import Mathlib.Order.Lattice.Nat
+module
 
+public import Mathlib.Data.Set.Finite.Basic
+public import Mathlib.Order.Monotone.Basic
+public import Mathlib.Algebra.Order.Ring.Nat
+public import Mathlib.Algebra.Order.Sub.Basic
+public import Mathlib.Data.Nat.SuccPred
+public import Mathlib.Order.Lattice.Nat
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

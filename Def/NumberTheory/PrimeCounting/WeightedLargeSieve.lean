@@ -8,7 +8,7 @@ import Mathlib.Analysis.Complex.Exponential
 import Mathlib.Analysis.Normed.Group.AddCircle
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Def.NumberTheory.PrimeCounting.WeightedHilbert
-import Lemma.Nat.PrimeCounting.WeightedHilbert
+import Theorem.Nat.PrimeCounting.WeightedHilbert
 import Mathlib.Algebra.Field.GeomSum
 import Mathlib.Analysis.Complex.Trigonometric
 import Mathlib.Tactic

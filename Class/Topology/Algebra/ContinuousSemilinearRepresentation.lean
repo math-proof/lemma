@@ -1,8 +1,12 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/Algebra/ContinuousSemilinearRepresentation.lean -/
 
-import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
-import Mathlib.Topology.Algebra.Ring.Basic
+public import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
+public import Mathlib.Topology.Algebra.Ring.Basic
 
+
+public section
 
 /-!
 # Continuous semilinear representations

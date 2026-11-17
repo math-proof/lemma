@@ -1,6 +1,8 @@
-import Mathlib.Algebra.MvPolynomial.PDeriv
-import Mathlib.RingTheory.Ideal.Basic
-import Def.AlgebraicGeometry.TangentSpace
+module
+
+public import Mathlib.Algebra.MvPolynomial.PDeriv
+public import Mathlib.RingTheory.Ideal.Basic
+public import Def.AlgebraicGeometry.TangentSpace
 set_option autoImplicit false
 
 /-! # Translated tangent spaces (ATLAS ArithmeticGeometry Definition 17.1)
@@ -9,6 +11,8 @@ This module formalizes translated tangent vectors at a point `P`:
 the total derivative of a polynomial along a direction `v`,
 its linearization, and the tangent spaces of a hypersurface and of an ideal.
 -/
+
+public section
 
 
 noncomputable section

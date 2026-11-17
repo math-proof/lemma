@@ -1,11 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/Partition/TwoDistantPolarized.lean -/
+module
 
-import Mathlib.Combinatorics.Enumerative.Partition.Basic
-import Mathlib.Data.List.Indexes
-import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.Ring
-import Def.Combinatorics.Enumerative.Partition.TwoDistantPolarized.Part2
+public import Mathlib.Combinatorics.Enumerative.Partition.Basic
+public import Mathlib.Data.List.Indexes
+public import Mathlib.Tactic.IntervalCases
+public import Mathlib.Tactic.Ring
+public import Def.Combinatorics.Enumerative.Partition.TwoDistantPolarized.Part2
 
+public section
 
 namespace MetaMathlibExt.TwoDistantPolarized
 

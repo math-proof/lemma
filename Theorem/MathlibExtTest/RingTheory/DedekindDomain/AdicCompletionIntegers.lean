@@ -3,7 +3,7 @@
 
 import Mathlib.NumberTheory.Padics.HeightOneSpectrum
 import Theorem.RingTheory.DedekindDomain.AdicCompletionIntegers
-import Lemma.Int.DedekindDomain.AdicCompletionIntegers
+import Theorem.Int.DedekindDomain.AdicCompletionIntegers
 open IsDedekindDomain
 
 

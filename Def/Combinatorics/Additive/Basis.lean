@@ -16,8 +16,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Algebra.Group.Pointwise.Set.Basic
-import Mathlib.Order.Filter.Cofinite
+module
+
+public import Mathlib.Algebra.Group.Pointwise.Set.Basic
+public import Mathlib.Order.Filter.Cofinite
+
+@[expose] public section
+
 open Filter
 open scoped Pointwise
 

@@ -8,16 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Abbrev.v1.Atlas.NumberTheoryI.code.EisensteinRamified
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.EisensteinRamified
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Thm1023
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Cor1015
-import Theorem.v1.Atlas.NumberTheoryI.code.Thm1023
-import Abbrev.v1.Atlas.NumberTheoryI.code.Cor1015
-import Mathlib.RingTheory.AdicCompletion.Algebra
-import Mathlib.RingTheory.AdicCompletion.Functoriality
-import Mathlib.RingTheory.AdicCompletion.AsTensorProduct
-import Def.v1.Atlas.NumberTheoryI.code.RamificationTypes
+module
+
+public import Abbrev.v1.Atlas.NumberTheoryI.code.EisensteinRamified
+public import Lemma.Nat.Atlas.v1.NumberTheoryI.code.EisensteinRamified
+public import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Thm1023
+public import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Cor1015
+public import Theorem.v1.Atlas.NumberTheoryI.code.Thm1023
+public import Abbrev.v1.Atlas.NumberTheoryI.code.Cor1015
+public import Mathlib.RingTheory.AdicCompletion.Algebra
+public import Mathlib.RingTheory.AdicCompletion.Functoriality
+public import Mathlib.RingTheory.AdicCompletion.AsTensorProduct
+public import Def.v1.Atlas.NumberTheoryI.code.RamificationTypes
+public section
+
 open Ideal IsLocalRing
 
 

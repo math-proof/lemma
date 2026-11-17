@@ -2,7 +2,7 @@
 
 
 import Def.Analysis.SpecialFunctions.DickmanDeBruijn
-import Lemma.Real.DickmanDeBruijn
+import Theorem.Real.DickmanDeBruijn
 import Mathlib.Tactic.NormNum
 open Set
 

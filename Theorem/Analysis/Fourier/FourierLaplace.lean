@@ -1,7 +1,9 @@
-import Mathlib.Analysis.Calculus.ParametricIntegral
-import Mathlib.Analysis.Fourier.FourierTransform
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import Def.Analysis.Fourier.FourierLaplace
+module
+
+public import Mathlib.Analysis.Calculus.ParametricIntegral
+public import Mathlib.Analysis.Fourier.FourierTransform
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+public import Def.Analysis.Fourier.FourierLaplace
 open MeasureTheory
 open scoped FourierTransform
 
@@ -28,6 +30,8 @@ fourierLaplace f z = ∫ x, f x * exp (-2π I x z)
 is entire in `z : ℂ`. On the real axis it agrees with the Mathlib Fourier
 integral `fourierIntegral Real.fourierChar volume f`.
 -/
+
+public section
 
 
 namespace Fourier.FourierLaplace

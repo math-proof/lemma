@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/ScanLoopCorrectness.lean -/
 
-import Def.CPythonListsort.Code.Correctness.MergeForceCollapseCorrectness.Part2
-import Def.CPythonListsort.Code.Correctness.ScanStepCorrectness.Part3
+module
+
+public import Def.CPythonListsort.Code.Correctness.MergeForceCollapseCorrectness.Part2
+public import Def.CPythonListsort.Code.Correctness.ScanStepCorrectness.Part3
 /-!
 # Correctness of the complete scan and final collapse
 
@@ -13,6 +15,9 @@ public post retains that pre-finish collapse result, passes an arbitrary
 `reverse` flag to the actual cleanup call, and records the successful scan
 result.  A separate corollary exposes the simpler forward cleanup state.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

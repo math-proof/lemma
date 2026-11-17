@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/NumberTheory/RandomMultiplicativeFunction.lean -/
 
-import Mathlib.NumberTheory.ArithmeticFunction.Moebius
-import Mathlib.Probability.Distributions.Uniform
-import Mathlib.Probability.HasLawExists
+module
+
+public import Mathlib.NumberTheory.ArithmeticFunction.Moebius
+public import Mathlib.Probability.Distributions.Uniform
+public import Mathlib.Probability.HasLawExists
+
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory ArithmeticFunction
 open scoped ENNReal
 

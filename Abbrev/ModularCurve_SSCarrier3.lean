@@ -1,8 +1,10 @@
-import Def.ModularCurve_ModPFormFn
+module
+
+public import Def.ModularCurve_ModPFormFn
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace ModularCurve
 

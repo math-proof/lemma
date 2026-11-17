@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Ideal.IntegralClosure
-import Mathlib.RingTheory.Trace.Basic
-import Mathlib.RingTheory.Norm.Transitivity
+module
+
+public import Mathlib.RingTheory.Ideal.IntegralClosure
+public import Mathlib.RingTheory.Trace.Basic
+public import Mathlib.RingTheory.Norm.Transitivity
+
+@[expose] public section
+
 open Algebra
 
 

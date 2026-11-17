@@ -1,5 +1,10 @@
-import Mathlib.RingTheory.Nullstellensatz
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+module
+
+public import Mathlib.RingTheory.Nullstellensatz
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+
+@[expose] public section
+
 /-!
 # Defined-over for affine algebraic sets
 

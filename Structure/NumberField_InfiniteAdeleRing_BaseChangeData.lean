@@ -1,6 +1,8 @@
-import Mathlib
-import Class.NumberField_Extension
-import Instance.NumberField_InfiniteAdeleRing_BaseChangeData
+module
+
+public import Mathlib
+public import Class.NumberField_Extension
+public import Instance.NumberField_InfiniteAdeleRing_BaseChangeData
 
 open NumberField TensorProduct
 
@@ -8,7 +10,7 @@ open scoped TensorProduct
 
 namespace FLT.InfiniteAdeleBaseChange
 
-noncomputable section
+public noncomputable section
 
 variable (K L : Type*) [Field K] [Field L] [Algebra K L]
 

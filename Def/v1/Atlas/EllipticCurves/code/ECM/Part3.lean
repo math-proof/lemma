@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Mathlib
 import Def.v1.Atlas.EllipticCurves.code.IntegerFactorization.Part4
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.IntegerFactorization
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.IntegerFactorization
 import Inductive.v1.Atlas.EllipticCurves.code.ECM
 
 

@@ -1,16 +1,18 @@
-import Mathlib.AlgebraicGeometry.Sites.ConstantSheaf
-import Mathlib.AlgebraicGeometry.AffineSpace
-import Mathlib.AlgebraicGeometry.Limits
-import Mathlib.CategoryTheory.Sites.SubcanonicalOver
-import Mathlib.CategoryTheory.Monoidal.Cartesian.CommGrp_
-import Mathlib.Algebra.Category.Grp.Adjunctions
-import Mathlib.Algebra.Category.Grp.EquivalenceGroupAddGroup
+module
+
+public import Mathlib.AlgebraicGeometry.Sites.ConstantSheaf
+public import Mathlib.AlgebraicGeometry.AffineSpace
+public import Mathlib.AlgebraicGeometry.Limits
+public import Mathlib.CategoryTheory.Sites.SubcanonicalOver
+public import Mathlib.CategoryTheory.Monoidal.Cartesian.CommGrp_
+public import Mathlib.Algebra.Category.Grp.Adjunctions
+public import Mathlib.Algebra.Category.Grp.EquivalenceGroupAddGroup
 
 set_option autoImplicit false
 set_option maxHeartbeats 800000
 set_option synthInstance.maxHeartbeats 200000
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace FppfRepresentableGroupSchemeSheaf
 

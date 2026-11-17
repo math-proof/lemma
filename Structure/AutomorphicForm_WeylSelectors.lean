@@ -1,7 +1,9 @@
-import Def.NumberField_AdelicBox
-import Mathlib.MeasureTheory.Measure.Haar.DistribChar
+module
 
-noncomputable section
+public import Def.NumberField_AdelicBox
+public import Mathlib.MeasureTheory.Measure.Haar.DistribChar
+
+public noncomputable section
 
 open MeasureTheory NumberField NumberField.AdelicBox IsDedekindDomain
 open scoped Classical Pointwise

@@ -1,6 +1,9 @@
-import Mathlib.Data.Fintype.Basic
-import Mathlib.Data.Finset.Max
+module
 
+public import Mathlib.Data.Fintype.Basic
+public import Mathlib.Data.Finset.Max
+
+public meta section
 
 /--
 Value-level maximum over a finite nonempty index type, written like the py

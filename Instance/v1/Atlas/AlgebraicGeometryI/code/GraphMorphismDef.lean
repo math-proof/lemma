@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.GraphMorphismDef
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.GraphMorphismDef
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry

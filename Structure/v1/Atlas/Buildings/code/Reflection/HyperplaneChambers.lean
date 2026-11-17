@@ -8,17 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Geometry.Euclidean.Projection
-import Mathlib.Topology.Connected.Basic
-import Mathlib.Analysis.Convex.Basic
-import Mathlib.Topology.Order.Basic
-import Mathlib.Topology.MetricSpace.Basic
+module
+
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Geometry.Euclidean.Projection
+public import Mathlib.Topology.Connected.Basic
+public import Mathlib.Analysis.Convex.Basic
+public import Mathlib.Topology.Order.Basic
+public import Mathlib.Topology.MetricSpace.Basic
 open scoped InnerProductSpace
 open Set
 
 
-noncomputable section
+public noncomputable section
 
 /-- An affine hyperplane $H = \{x ∈ E : ⟨n, x⟩ = c\}$ specified by a nonzero normal
 vector $n$ and an offset $c$. -/

@@ -7,7 +7,7 @@ Authors: Adam Kiezun, Muse Spark 1.3
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Data.Nat.ModEq
 import Def.Combinatorics.Enumerative.EulerSeidelMatrix
-import Lemma.Finset.Enumerative.EulerSeidelMatrix
+import Theorem.Finset.Enumerative.EulerSeidelMatrix
 import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Algebra.BigOperators.NatAntidiagonal
 import Mathlib.Algebra.Ring.Parity

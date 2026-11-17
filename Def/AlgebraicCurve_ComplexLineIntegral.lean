@@ -1,6 +1,10 @@
-import Mathlib
-import Def.AlgebraicCurve_PlaceEvaluation
-import Def.AlgebraicCurve_RegularDifferentials
+module
+
+public import Mathlib
+public import Def.AlgebraicCurve_PlaceEvaluation
+public import Def.AlgebraicCurve_RegularDifferentials
+
+@[expose] public section
 
 set_option autoImplicit false
 

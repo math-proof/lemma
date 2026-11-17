@@ -2,14 +2,18 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part29
-import Def.Combinatorics.Young.OmegaInvolution.Part2
-import Def.Combinatorics.Enumerative.Partition.NPartition.Part9
-import Def.Combinatorics.Young.LittlewoodRichardson.Part17
-import Lemma.Matrix.LGV2
-import Lemma.Partition.NPartition
-import Def.Combinatorics.Young.PieriJacobiTrudi.Part21
+module
+
+public import Mathlib
+public import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part29
+public import Def.Combinatorics.Young.OmegaInvolution.Part2
+public import Def.Combinatorics.Enumerative.Partition.NPartition.Part9
+public import Def.Combinatorics.Young.LittlewoodRichardson.Part17
+public import Lemma.Matrix.LGV2
+public import Lemma.Partition.NPartition
+public import Def.Combinatorics.Young.PieriJacobiTrudi.Part21
+public section
+
 open Finset BigOperators Matrix MvPolynomial
 
 /-!

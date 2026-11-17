@@ -1,9 +1,11 @@
-import Structure.AlgebraicGeometry_FramedPolarisedAbelianScheme
-import Def.AlgebraicGeometry_PolarisationRosati
+module
+
+public import Structure.AlgebraicGeometry_FramedPolarisedAbelianScheme
+public import Def.AlgebraicGeometry_PolarisationRosati
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 universe u
 

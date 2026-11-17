@@ -1,10 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RamificationInertia/MaximalUnramified.lean -/
 
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Defs
-import Mathlib.LinearAlgebra.FiniteDimensional.Basic
-import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
-import Mathlib.RingTheory.Unramified.Basic
-import Mathlib.Algebra.Algebra.RestrictScalars
+module
+
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Defs
+public import Mathlib.LinearAlgebra.FiniteDimensional.Basic
+public import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
+public import Mathlib.RingTheory.Unramified.Basic
+public import Mathlib.Algebra.Algebra.RestrictScalars
+
+@[expose] public section
+
 /-! Finite formally unramified intermediate fields relative to a base ring, their
 supremum, its universal property, and automorphism invariance. -/
 

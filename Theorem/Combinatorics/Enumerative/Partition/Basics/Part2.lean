@@ -6,10 +6,13 @@ All rights reserved.
 Copyright (c) 2025 AlgebraicCombinatorics contributors. All rights reserved.
 Authors: AlgebraicCombinatorics contributors
 -/
-import Mathlib
-import Def.Combinatorics.Enumerative.Partition.Basics
+module
+
+public import Mathlib
+public import Def.Combinatorics.Enumerative.Partition.Basics
 open Nat Finset BigOperators PowerSeries
 open scoped PowerSeries.WithPiTopology
+
 /-!
 # Partition basics
 
@@ -106,6 +109,8 @@ in the power series topology. The identity `∏_{k≥1} 1/(1-x^k)` is expressed 
 * Mathlib: `Mathlib.Combinatorics.Enumerative.Partition.GenFun`
 * Mathlib: `Mathlib.Combinatorics.Enumerative.Partition.Glaisher`
 -/
+
+public section
 
 
 /-! ### Iverson bracket notation (Definition \ref{def.pars.iverson})

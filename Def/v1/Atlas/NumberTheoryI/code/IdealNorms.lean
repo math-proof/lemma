@@ -8,19 +8,24 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.NumberTheory.KummerDedekind
-import Mathlib.RingTheory.DedekindDomain.Ideal.Basic
-import Mathlib.RingTheory.FractionalIdeal.Basic
-import Mathlib.RingTheory.FractionalIdeal.Inverse
-import Mathlib.LinearAlgebra.Determinant
-import Mathlib.LinearAlgebra.FreeModule.PID
-import Mathlib.LinearAlgebra.FreeModule.Finite.Quotient
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.RingTheory.DedekindDomain.Factorization
-import Mathlib.RingTheory.DedekindDomain.AdicValuation
-import Mathlib.LinearAlgebra.DirectSum.TensorProduct
-import Mathlib.RingTheory.Ideal.Norm.RelNorm
-import Mathlib.NumberTheory.NumberField.Ideal.KummerDedekind
+module
+
+public import Mathlib.NumberTheory.KummerDedekind
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Basic
+public import Mathlib.RingTheory.FractionalIdeal.Basic
+public import Mathlib.RingTheory.FractionalIdeal.Inverse
+public import Mathlib.LinearAlgebra.Determinant
+public import Mathlib.LinearAlgebra.FreeModule.PID
+public import Mathlib.LinearAlgebra.FreeModule.Finite.Quotient
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation
+public import Mathlib.LinearAlgebra.DirectSum.TensorProduct
+public import Mathlib.RingTheory.Ideal.Norm.RelNorm
+public import Mathlib.NumberTheory.NumberField.Ideal.KummerDedekind
+
+@[expose] public section
+
 open nonZeroDivisors DirectSum
 
 

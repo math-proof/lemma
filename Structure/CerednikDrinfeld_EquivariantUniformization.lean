@@ -1,9 +1,11 @@
-import Structure.CerednikDrinfeld_MumfordUniformization
-import Instance.Compat_Mathlib430
+module
+
+public import Structure.CerednikDrinfeld_MumfordUniformization
+public import Instance.Compat_Mathlib430
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace CerednikDrinfeld
 namespace Mumford

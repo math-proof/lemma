@@ -12,7 +12,7 @@ import Mathlib
 import Def.v1.Atlas.ProjectionTheory.code.HausdorffSpacing
 import Def.v1.Atlas.ProjectionTheory.code.OSRW
 import Structure.v1.Atlas.ProjectionTheory.code.DoubleCountingRealCor
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.DoubleCountingRealCor
+import Theorem.Real.Atlas.v1.ProjectionTheory.code.DoubleCountingRealCor
 
 
 namespace ProjectionTheory

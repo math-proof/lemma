@@ -1,10 +1,15 @@
-import Mathlib
+module
+
+public import Mathlib
+
 /-!
 # Analysis I, Appendix A.4: Variables and quantifiers
 
 Some examples of how variables and quantifiers are used in Lean
 
 -/
+
+public section
 
 
 namespace VariableExample1

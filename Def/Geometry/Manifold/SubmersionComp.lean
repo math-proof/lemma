@@ -4,8 +4,13 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Geometry.Manifold.Submersion
-import all Mathlib.Geometry.Manifold.Submersion
+module
+
+public import Mathlib.Geometry.Manifold.Submersion
+public import all Mathlib.Geometry.Manifold.Submersion
+
+@[expose] public section
+
 open scoped Topology ContDiff
 open Manifold
 

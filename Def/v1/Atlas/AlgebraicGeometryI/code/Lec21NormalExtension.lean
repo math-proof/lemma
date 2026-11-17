@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
 import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
 import Def.v1.Atlas.AlgebraicGeometryI.code.NormalExtension
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.NormalExtension
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NormalExtension
 
 
 /-- Key technical step: if `x ∈ K` is locally regular at every height-one prime and

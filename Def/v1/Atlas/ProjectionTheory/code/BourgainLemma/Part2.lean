@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.InnerProductSpace.EuclideanDist
-import Mathlib.Topology.MetricSpace.Bounded
-import Mathlib.Order.Filter.Basic
-import Structure.v1.Atlas.ProjectionTheory.code.BourgainLemma
+module
+
+public import Mathlib.Analysis.InnerProductSpace.EuclideanDist
+public import Mathlib.Topology.MetricSpace.Bounded
+public import Mathlib.Order.Filter.Basic
+public import Structure.v1.Atlas.ProjectionTheory.code.BourgainLemma
+
+@[expose] public section
+
 open scoped NNReal ENNReal
 open Set
 

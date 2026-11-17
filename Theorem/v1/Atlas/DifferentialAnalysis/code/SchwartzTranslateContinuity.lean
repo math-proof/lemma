@@ -12,7 +12,7 @@ import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
 import Mathlib.Analysis.Calculus.MeanValue
 import Mathlib.Analysis.InnerProductSpace.Basic
 import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzTranslation
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzTranslation
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzTranslation
 open scoped SchwartzMap Topology
 open Metric Filter
 

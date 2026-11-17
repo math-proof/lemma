@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Mathlib
 import Structure.v1.Atlas.TensorCategories.code.PivotalSpherical.Part3
-import Lemma.Category.Atlas.v1.TensorCategories.code.PivotalSpherical
+import Theorem.Category.Atlas.v1.TensorCategories.code.PivotalSpherical
 import Lemma.Category.Atlas.v1.TensorCategories.code.VecInstances
 import Lemma.Category.Atlas.v1.TensorCategories.code.VecDualMapBridge
 import Abbrev.v1.Atlas.TensorCategories.code.VecInstances.Part2

@@ -1,4 +1,6 @@
-import Mathlib
+module
+
+public import Mathlib
 set_option doc.verso.suggestions false
 
 open BigOperators
@@ -19,6 +21,8 @@ functions on the entire integers.
 
 Main constructions and results of this section:
 -/
+
+public section
 
 -- This makes available the convenient notation `∑ n ∈ A, f n` to denote summation of `f n` for
 -- `n` ranging over a finite set `A`.

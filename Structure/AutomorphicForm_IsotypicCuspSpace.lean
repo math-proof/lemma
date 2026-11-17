@@ -1,13 +1,15 @@
-import Lemma.ClassGroup.ProductionPinsGeneral
-import Def.AutomorphicForm_RightConvolution
-import Def.AutomorphicForm_SigmaAdelicAction
-import Lemma.Matrix.ArchWeightChar
+module
+
+public import Lemma.ClassGroup.ProductionPinsGeneral
+public import Def.AutomorphicForm_RightConvolution
+public import Def.AutomorphicForm_SigmaAdelicAction
+public import Lemma.Matrix.ArchWeightChar
 
 set_option autoImplicit false
 
 open IsDedekindDomain NumberField
 
-noncomputable section
+public noncomputable section
 
 namespace AutomorphicForm
 

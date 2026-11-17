@@ -6,10 +6,16 @@ All rights reserved.
 Copyright (c) 2024 AlgebraicCombinatorics Contributors. All rights reserved.
 Authors: AlgebraicCombinatorics Contributors
 -/
-import Mathlib
-import Def.RingTheory.PowerSeries.InfiniteProducts
-import Notation.RingTheory.PowerSeries.XnEquivalence
-import Abbrev.RingTheory.PowerSeries.InfiniteProducts1
+
+module
+
+public import Mathlib
+public import Def.RingTheory.PowerSeries.InfiniteProducts
+public import Notation.RingTheory.PowerSeries.XnEquivalence
+public import Abbrev.RingTheory.PowerSeries.InfiniteProducts1
+
+public section
+
 open scoped Polynomial
 open PowerSeries Finset
 

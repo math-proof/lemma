@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/ParkingFunction.lean -/
 
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Fintype.Pi
+module
 
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Fintype.Pi
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

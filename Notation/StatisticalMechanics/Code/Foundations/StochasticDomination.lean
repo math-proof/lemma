@@ -9,8 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Inequalities.IncreasingEvent.Part2
-import Def.StatisticalMechanics.Code.Foundations.StochasticDomination
+module
+
+public import Theorem.StatisticalMechanics.Code.Inequalities.IncreasingEvent.Part2
+public import Def.StatisticalMechanics.Code.Foundations.StochasticDomination
+
+public section
+
 open MeasureTheory
 
 

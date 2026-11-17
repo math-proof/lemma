@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/InfiniteWord/ThueMorse.lean -/
+module
 
+public import Def.Combinatorics.InfiniteWord.ThueMorse
 
-import Def.Combinatorics.InfiniteWord.ThueMorse
-
+public section
 
 namespace MetaMathlibExt
 

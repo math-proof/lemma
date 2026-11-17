@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Theorem.v1.Atlas.AlgebraNotes.code.GaloisTheory
+module
 
+public import Mathlib
+public import Theorem.v1.Atlas.AlgebraNotes.code.GaloisTheory
+
+@[expose] public section
 
 namespace GaloisTheory
 

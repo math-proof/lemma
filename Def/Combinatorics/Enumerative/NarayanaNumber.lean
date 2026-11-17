@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/NarayanaNumber.lean -/
 
-import Mathlib.Data.Nat.Choose.Basic
+module
+
+public import Mathlib.Data.Nat.Choose.Basic
+
+@[expose] public section
+
 /-!
 # Narayana numbers.
 -/

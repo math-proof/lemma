@@ -2,12 +2,17 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
 
-import Mathlib.Analysis.CStarAlgebra.Matrix
-import Mathlib.LinearAlgebra.Matrix.Hermitian
-import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
-import Mathlib.Analysis.Matrix.Order
-import Mathlib.LinearAlgebra.Matrix.PosDef
-import Abbrev.Analysis.CStarAlgebra.KadisonSinger.Paving
+module
+
+public import Mathlib.Analysis.CStarAlgebra.Matrix
+public import Mathlib.LinearAlgebra.Matrix.Hermitian
+public import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
+public import Mathlib.Analysis.Matrix.Order
+public import Mathlib.LinearAlgebra.Matrix.PosDef
+public import Abbrev.Analysis.CStarAlgebra.KadisonSinger.Paving
+
+@[expose] public section
+
 open scoped BigOperators
 
 /-!

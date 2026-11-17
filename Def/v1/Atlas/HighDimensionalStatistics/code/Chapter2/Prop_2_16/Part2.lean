@@ -8,7 +8,7 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_9
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_9
 import Mathlib.Probability.Independence.Basic
 import Mathlib.Probability.Independence.Integration
 import Mathlib.MeasureTheory.Constructions.Pi

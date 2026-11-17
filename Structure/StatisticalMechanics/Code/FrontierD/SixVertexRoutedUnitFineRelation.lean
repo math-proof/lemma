@@ -9,14 +9,16 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexResolvedUnitCrossFineRelation.Part6
-import Abbrev.StatisticalMechanics.Code.FrontierD.SixVertexResolvedRoutedKey
-import Instance.StatisticalMechanics.Code.FrontierD.SixVertexRoutedUnitFineRelation
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexResolvedUnitCrossFineRelation.Part6
+public import Abbrev.StatisticalMechanics.Code.FrontierD.SixVertexResolvedRoutedKey
+public import Instance.StatisticalMechanics.Code.FrontierD.SixVertexRoutedUnitFineRelation
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure FKColoredFineTwoCycleUnitTransferRoutedKey
     {T : EvenTorus} (source : FKColoredLoopPairingPair T)

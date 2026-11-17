@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.JacobiStirlingFirstKind
-import Lemma.Finset.Enumerative.JacobiStirlingFirstKind
+import Theorem.Finset.Enumerative.JacobiStirlingFirstKind
 import Mathlib.Tactic.NormNum
 
 

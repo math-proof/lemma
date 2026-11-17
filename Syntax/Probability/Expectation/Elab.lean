@@ -1,18 +1,23 @@
-import Mathlib.MeasureTheory.Measure.Prod
-import Mathlib.MeasureTheory.Measure.WithDensity
-import Mathlib.MeasureTheory.Measure.Decomposition.Lebesgue
-import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
-import Mathlib.MeasureTheory.MeasurableSpace.Constructions
-import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
-import Mathlib.Probability.Independence.Basic
-import Mathlib.Probability.Independence.Conditional
-import Def.Probability.SymbolicProbability
-import Theorem.Function
-import Def.Probability.Expectation
-import Theorem.Probability.JointRv.AsRV
-import Syntax.Probability.Expectation
-import Syntax.Probability.Probability
-import Syntax.Probability.Probability.LiftRV
+module
+
+public import Mathlib.MeasureTheory.Measure.Prod
+public import Mathlib.MeasureTheory.Measure.WithDensity
+public import Mathlib.MeasureTheory.Measure.Decomposition.Lebesgue
+public import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
+public import Mathlib.MeasureTheory.MeasurableSpace.Constructions
+public import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.Probability.Independence.Conditional
+public import Def.Probability.SymbolicProbability
+public meta import Theorem.Function
+public import Def.Probability.Expectation
+public import Theorem.Probability.JointRv.AsRV
+public meta import Syntax.Probability.Expectation
+public import Syntax.Probability.Probability
+public meta import Syntax.Probability.Probability.LiftRV
+
+public meta section
+
 open MeasureTheory
 open scoped ProbabilityTheory
 

@@ -8,15 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Clique
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Nat.Find
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Analysis.SpecificLimits.Basic
-import Mathlib.Order.Filter.AtTopBot.Basic
-import Mathlib.Tactic
-import Lemma.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter8.JansonInequality
+module
 
+public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Data.Nat.Find
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Mathlib.Order.Filter.AtTopBot.Basic
+public import Mathlib.Tactic
+
+@[expose] public section
 
 namespace ChromaticNumber
 

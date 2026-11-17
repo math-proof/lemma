@@ -1,4 +1,6 @@
 import Def.Data.List.List.Basic
+import Instance.Data.List.List
+import Initialize.Tactic.Attr.Basic
 @[path]
 private lemma main
   {s : List α}
@@ -6,7 +8,7 @@ private lemma main
 -- given
   (h: ∀ x ∈ s, x = x₀) :
 -- imply
-  s is constant := by
+  IsConstant.is_constant s := by
 -- proof
   match s with
   | .nil =>

@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Kaehler.Basic
-import Mathlib.RingTheory.Derivation.Basic
+module
 
+public import Mathlib.RingTheory.Kaehler.Basic
+public import Mathlib.RingTheory.Derivation.Basic
+
+@[expose] public section
 
 noncomputable section
 

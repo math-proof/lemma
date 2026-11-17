@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Category
-import Mathlib.CategoryTheory.Monoidal.CoherenceLemmas
-import Structure.v1.Atlas.TensorCategories.code.Proposition_1_2_4
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Category
+public import Mathlib.CategoryTheory.Monoidal.CoherenceLemmas
+public import Structure.v1.Atlas.TensorCategories.code.Proposition_1_2_4
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 open CategoryTheory MonoidalCategory

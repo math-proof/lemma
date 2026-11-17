@@ -1,5 +1,10 @@
 -- Carved from Lemma/Definitions/Def_FiniteFlat_SchematicClosure.lean: instance decls only.
-import Mathlib
+
+module
+
+public import Mathlib
+
+@[expose] public section
 
 open scoped TensorProduct
 

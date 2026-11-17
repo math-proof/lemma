@@ -18,7 +18,7 @@ import Mathlib.Topology.Compactness.LocallyCompact
 import Mathlib.Topology.Algebra.Module.Basic
 import Mathlib.Topology.UniformSpace.Cauchy
 import Def.v1.Atlas.LieGroups.code.CompactMeasures
-import Lemma.Complex.Eq_Sum_Mul
+import Theorem.Complex.Eq_Sum_Mul
 import Mathlib.Topology.ContinuousMap.Compact
 import Mathlib.Topology.ContinuousMap.Algebra
 import Mathlib.Topology.UniformSpace.CompactConvergence

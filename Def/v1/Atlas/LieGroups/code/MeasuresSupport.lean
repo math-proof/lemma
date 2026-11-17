@@ -8,25 +8,27 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Topology.PartitionOfUnity
-import Mathlib.Topology.Algebra.Module.WeakDual
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
-import Mathlib.LinearAlgebra.DirectSum.Finsupp
-import Mathlib.LinearAlgebra.TensorProduct.Basic
-import Mathlib.Topology.Compactness.LocallyCompact
-import Mathlib.Topology.Algebra.Module.Basic
-import Mathlib.Topology.UniformSpace.Cauchy
-import Def.v1.Atlas.LieGroups.code.CompactMeasures
-import Lemma.Complex.Eq_Sum_Mul
-import Mathlib.Topology.ContinuousMap.Compact
-import Mathlib.Topology.ContinuousMap.Algebra
-import Mathlib.Topology.UniformSpace.CompactConvergence
-import Mathlib.Topology.Algebra.UniformConvergence
-import Mathlib.Topology.Algebra.IsUniformGroup.Constructions
-import Mathlib.Analysis.LocallyConvex.Barrelled
-import Mathlib.Analysis.Normed.Operator.BanachSteinhaus
+module
 
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Topology.PartitionOfUnity
+public import Mathlib.Topology.Algebra.Module.WeakDual
+public import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+public import Mathlib.LinearAlgebra.DirectSum.Finsupp
+public import Mathlib.LinearAlgebra.TensorProduct.Basic
+public import Mathlib.Topology.Compactness.LocallyCompact
+public import Mathlib.Topology.Algebra.Module.Basic
+public import Mathlib.Topology.UniformSpace.Cauchy
+public import Def.v1.Atlas.LieGroups.code.CompactMeasures
+public import Mathlib.Topology.ContinuousMap.Compact
+public import Mathlib.Topology.ContinuousMap.Algebra
+public import Mathlib.Topology.UniformSpace.CompactConvergence
+public import Mathlib.Topology.Algebra.UniformConvergence
+public import Mathlib.Topology.Algebra.IsUniformGroup.Constructions
+public import Mathlib.Analysis.LocallyConvex.Barrelled
+public import Mathlib.Analysis.Normed.Operator.BanachSteinhaus
+
+@[expose] public section
 
 noncomputable section
 

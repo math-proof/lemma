@@ -9,11 +9,9 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Class.v1.Atlas.GeometryOfManifolds.code.AdvancedKahler.Part11
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.AdvancedKahler
 set_option autoImplicit false
 
 open DifferentialFormSpace
-
 
 /-- A Kähler manifold with Hodge number data, additionally tracking the integral
 $\int_M \omega^n$ of the top power of the Kähler form. -/
@@ -22,7 +20,6 @@ class HasKahlerHodgeNumbers
     [inst : DifferentialFormSpace Ω VF]
     extends @HasHodgeNumbers Ω VF inst where
   omega_n_integral : ℝ
-
 
 /-- Axiom: $\int_M \omega^n > 0$ on a Kähler manifold (since $\omega^n$ is a volume form). -/
 class HasHardLefschetzPairing
@@ -39,7 +36,6 @@ class HasHardLefschetzPairing
   Q_smul_left : ∀ (n k : ℕ) (r : ℝ) (α β : H k),
     Q n k (@HSMul.hSMul ℝ _ _ (@instHSMul _ _ (H_module k).toSMul) r α) β =
     r * Q n k α β
-
 
 /-- The Lefschetz decomposition of cohomology: every class $\alpha \in H^k$ decomposes as
 $\alpha = \sum_r L^r \alpha_{k-2r}^{\text{prim}}$, where the primitive components are

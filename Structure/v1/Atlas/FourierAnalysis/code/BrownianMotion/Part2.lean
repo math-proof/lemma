@@ -8,32 +8,36 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.Distributions.Gaussian.Basic
-import Mathlib.Probability.Distributions.Gaussian.Multivariate
-import Mathlib.Probability.Distributions.Gaussian.IsGaussianProcess.Basic
-import Mathlib.Probability.Distributions.Gaussian.HasGaussianLaw.Independence
-import Mathlib.Probability.Independence.Basic
-import Mathlib.Probability.CentralLimitTheorem
-import Mathlib.Analysis.CStarAlgebra.Matrix
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.MeasureTheory.Integral.Gamma
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
-import Mathlib.MeasureTheory.Integral.Bochner.Set
-import Mathlib.Analysis.PSeries
-import Mathlib.Topology.Algebra.InfiniteSum.Real
-import Mathlib.Analysis.Normed.Ring.InfiniteSum
-import Mathlib.NumberTheory.ZetaValues
-import Mathlib.MeasureTheory.Measure.FiniteMeasurePi
-import Mathlib.Analysis.Complex.LocallyUniformLimit
-import Mathlib.Analysis.Calculus.FDeriv.RestrictScalars
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Analysis.Complex.Conformal
-import Mathlib.Analysis.Complex.Liouville
-import Mathlib.Analysis.Real.Pi.Bounds
-import Def.v1.Atlas.FourierAnalysis.code.BrownianMotion.Part2
+module
+
+public import Mathlib.Probability.Distributions.Gaussian.Basic
+public import Mathlib.Probability.Distributions.Gaussian.Multivariate
+public import Mathlib.Probability.Distributions.Gaussian.IsGaussianProcess.Basic
+public import Mathlib.Probability.Distributions.Gaussian.HasGaussianLaw.Independence
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.Probability.CentralLimitTheorem
+public import Mathlib.Analysis.CStarAlgebra.Matrix
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.MeasureTheory.Integral.Gamma
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+public import Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+public import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
+public import Mathlib.MeasureTheory.Integral.Bochner.Set
+public import Mathlib.Analysis.PSeries
+public import Mathlib.Topology.Algebra.InfiniteSum.Real
+public import Mathlib.Analysis.Normed.Ring.InfiniteSum
+public import Mathlib.NumberTheory.ZetaValues
+public import Mathlib.MeasureTheory.Measure.FiniteMeasurePi
+public import Mathlib.Analysis.Complex.LocallyUniformLimit
+public import Mathlib.Analysis.Calculus.FDeriv.RestrictScalars
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Analysis.Complex.Conformal
+public import Mathlib.Analysis.Complex.Liouville
+public import Mathlib.Analysis.Real.Pi.Bounds
+public import Def.v1.Atlas.FourierAnalysis.code.BrownianMotion.Part2
+public section
+
 open MeasureTheory ProbabilityTheory Complex Matrix
 open scoped ENNReal NNReal
 

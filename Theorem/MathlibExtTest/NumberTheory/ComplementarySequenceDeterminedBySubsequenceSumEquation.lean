@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ComplementarySequenceDeterminedBySubsequenceSumEquation.lean -/
+module
 
+public import Def.NumberTheory.ComplementarySequenceDeterminedBySubsequenceSumEquation
 
-import Def.NumberTheory.ComplementarySequenceDeterminedBySubsequenceSumEquation
-
+public section
 
 namespace MetaMathlibExt
 

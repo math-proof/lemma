@@ -1,19 +1,21 @@
-import Mathlib.NumberTheory.ModularForms.QExpansion
-import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
-import Mathlib.NumberTheory.ModularForms.ArithmeticSubgroups
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.AlgebraicGeometry.EllipticCurve.VariableChange
-import Mathlib.Data.Finset.Attr
-import Mathlib.Tactic.Bound.Init
-import Mathlib.Tactic.Common
-import Mathlib.Tactic.Finiteness.Attr
-import Mathlib.Tactic.SetLike
-import Mathlib.Util.CompileInductive
-import Mathlib.Data.ZMod.Basic
+module
+
+public import Mathlib.NumberTheory.ModularForms.QExpansion
+public import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
+public import Mathlib.NumberTheory.ModularForms.ArithmeticSubgroups
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.AlgebraicGeometry.EllipticCurve.VariableChange
+public import Mathlib.Data.Finset.Attr
+public import Mathlib.Tactic.Bound.Init
+public import Mathlib.Tactic.Common
+public import Mathlib.Tactic.Finiteness.Attr
+public import Mathlib.Tactic.SetLike
+public import Mathlib.Util.CompileInductive
+public import Mathlib.Data.ZMod.Basic
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open UpperHalfPlane
 

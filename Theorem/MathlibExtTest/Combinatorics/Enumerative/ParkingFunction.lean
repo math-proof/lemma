@@ -2,7 +2,7 @@
 
 
 import Instance.Combinatorics.Enumerative.ParkingFunction
-import Lemma.Finset.Enumerative.ParkingFunction
+import Theorem.Finset.Enumerative.ParkingFunction
 open MetaMathlibExt
 
 

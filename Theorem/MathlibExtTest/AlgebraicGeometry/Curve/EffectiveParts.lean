@@ -2,11 +2,11 @@
 
 
 import Def.AlgebraicGeometry.Curve.EffectiveParts
-import Lemma.Finsupp.DivZeros.eq.Max0
-import Lemma.Finsupp.DivPoles.eq.Max
-import Lemma.Finsupp.DivZeros.ge.Zero
-import Lemma.Finsupp.DivPoles.ge.Zero
-import Lemma.Finsupp.EqSubDivZerosDivPoles
+import Theorem.Finsupp.DivZeros.eq.Max0
+import Theorem.Finsupp.DivPoles.eq.Max
+import Theorem.Finsupp.DivZeros.ge.Zero
+import Theorem.Finsupp.DivPoles.ge.Zero
+import Theorem.Finsupp.EqSubDivZerosDivPoles
 open Finsupp
 
 

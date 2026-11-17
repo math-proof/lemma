@@ -1,0 +1,22 @@
+module
+
+public import Mathlib
+public import Theorem.Analysis.AbsoluteValue.Rpow
+
+public section
+
+/--
+[rpow_apply](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/AbsoluteValue/Rpow.lean)
+-/
+public theorem rpow_apply_eq
+  [Semiring R]
+-- given
+  (v : AbsoluteValue R ℝ) (c : ℝ) (hc₀ : 0 < c) (hc₁ : c ≤ 1) (x : R) :
+-- imply
+  v.rpow c hc₀ hc₁ x = v x ^ c := by
+-- proof
+  apply AbsoluteValue.rpow_apply
+
+
+-- created on 2026-10-09
+-- updated on 2026-10-26

@@ -2,6 +2,8 @@ import Lemma.Kernel.Integral.eq.Integral_Integral.of.Integrable_Bind
 import Lemma.Random.Integral.eq.Integral_SMul.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Lemma.Random.Map.eq.BindStageK.of.All_Eq_Joint.All_EqWithDensity
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Kernel
 
 
@@ -13,13 +15,13 @@ integrals against `law(s[t])` and the reference measure of `𝒜`, via `Model.st
 -/
 @[path]
 private lemma main
-  [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+  [NormedAddCommGroup ℰ] [NormedSpace ℝ ℰ] [CompleteSpace ℰ]
   [MeasurableSpace 𝒮] [μ : ReferenceMeasure 𝒜]
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
-  {φ : 𝒮 → 𝒜 → E}
+  {φ : 𝒮 → 𝒜 → ℰ}
   {C : ℝ}
 -- given
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
@@ -72,4 +74,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-16
+-- updated on 2026-11-17

@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/OriginRelabelMerges.lean -/
 
-import Def.CPythonListsort.Code.Correctness.OriginRelabelEquivariance.Part6
-import Theorem.CPythonListsort.Code.Correctness.OriginRelabelMerges.Part4
+module
+
+public import Def.CPythonListsort.Code.Correctness.OriginRelabelEquivariance.Part6
+public import Theorem.CPythonListsort.Code.Correctness.OriginRelabelMerges.Part4
 /-!
 # Origin-relabel equivariance for merge evaluators
 
@@ -10,6 +12,9 @@ occurrence keys.  This module proves that temporary-storage allocation,
 galloping, and both concrete merge engines commute with that relabeling.
 These are evaluator equations only: no ordering or stability law is assumed.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

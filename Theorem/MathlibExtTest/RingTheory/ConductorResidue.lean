@@ -3,7 +3,7 @@
 
 import Mathlib.Data.ZMod.Basic
 import Def.RingTheory.ConductorResidue
-import Lemma.Ideal.ConductorResidue
+import Theorem.Ideal.ConductorResidue
 
 
 noncomputable section

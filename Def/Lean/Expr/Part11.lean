@@ -1,6 +1,11 @@
-import Def.Lean.Meta.Expr.Part4
-import Def.Lean.Expr.Singleton.Part2
-import Inductive.Lean.Expr.Part6
+module
+
+public import Def.Lean.Meta.Expr.Part4
+public import Def.Lean.Expr.Singleton.Part2
+public import Inductive.Lean.Expr.Part6
+
+@[expose] public section
+
 open Lean.Meta
 open Lean (Name Json Level BinderInfo getMCtx)
 set_option linter.unusedVariables false
@@ -108,4 +113,3 @@ def Expr.asLimBound? : List Expr → Option (Name × LimTo × Expr)
     mapped.asMapAtTopBotLambda?
   | _ =>
     none
-

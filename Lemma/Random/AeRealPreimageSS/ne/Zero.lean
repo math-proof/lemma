@@ -1,4 +1,6 @@
 import Def.Dynamics.PolicyTrajectory.ContinuousAction
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
@@ -27,4 +29,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-11-16
+-- updated on 2026-11-17

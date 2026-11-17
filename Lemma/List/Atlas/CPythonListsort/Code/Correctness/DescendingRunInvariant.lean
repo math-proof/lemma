@@ -1,6 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.CPythonListsort.Code.Correctness.DescendingRunInvariant.Part2
+import Lemma.List.Atlas.CPythonListsort.Code.Assembly.Order
+import Lemma.List.Atlas.CPythonListsort.Code.Correctness.DescendingRunNormalization
 open CPythonListsort CPythonListsort.DescendingRunSpec CPythonListsort.DescendingRunSpec.Invariant
 
 
@@ -93,9 +95,9 @@ namespace CPythonListsort.DescendingRunSpec
 -/
 @[path]
 lemma normalize_append_equivalent_perm
-  {current canonical : List α}
-  {x : α}
-  {tailLength : Nat}
+  (current canonical : List α)
+  (x : α)
+  (tailLength : Nat)
 -- given
   (htail : tailLength ≤ current.length)
   (hperm : (normalize current tailLength).Perm canonical) :
@@ -125,9 +127,9 @@ namespace CPythonListsort.DescendingRunSpec
 -/
 @[path]
 lemma normalize_after_strict_perm
-  {current canonical : List α}
-  {x : α}
-  {tailLength : Nat}
+  (current canonical : List α)
+  (x : α)
+  (tailLength : Nat)
 -- given
   (hperm : (normalize current tailLength).Perm canonical) :
 -- imply
@@ -226,16 +228,16 @@ lemma of_equivalent_block
     { current_ne := hne
       tail_pos := List.length_pos_of_ne_nil hne
       tail_le := le_rfl
-      sorted := by simpa using hsorted
-      stable := ⟨by simp, by
+      sorted := by simpa [normalize_full] using hsorted
+      stable := ⟨by simp [normalize_full], by
         unfold StableRelation at hstable
         simpa only [normalize_full] using hstable⟩
       tail_equiv := ?_
       rest_greater := ?_ }
   · intro x hx
-    simpa using hall x (by simpa using hx)
+    simpa [normalize_full] using hall x (by simpa [normalize_full] using hx)
   · intro x hx
-    simp at hx
+    simp [normalize_full] at hx
 
 end CPythonListsort.DescendingRunSpec.Invariant
 
@@ -247,9 +249,8 @@ namespace CPythonListsort.DescendingRunSpec.Invariant
 @[path]
 lemma singleton
   {lt : BoolComparator α}
-  {x : Occurrence α}
--- given
-  (horder : BoolStrictWeakOrder lt) :
+  (horder : BoolStrictWeakOrder lt)
+  (x : Occurrence α) :
 -- imply
   Invariant lt [x] [x] 1 := by
 -- proof
@@ -257,7 +258,7 @@ lemma singleton
   intro y hy
   simp only [List.mem_singleton] at hy
   subst y
-  exact horder.comparatorEquivalent_equivalence.refl x.value
+  exact (BoolStrictWeakOrder.comparatorEquivalent_equivalence horder).refl x.value
 
 end CPythonListsort.DescendingRunSpec.Invariant
 
@@ -271,10 +272,10 @@ lemma extend_equivalent
   {lt : BoolComparator α}
   {canonical current : List (Occurrence α)}
   {tailLength : Nat}
-  {x : Occurrence α}
 -- given
   (horder : BoolStrictWeakOrder lt)
   (h : Invariant lt canonical current tailLength)
+  (x : Occurrence α)
   (hequivalent : ComparatorEquivalent lt x.value (current.getLast h.current_ne).value)
   (horigin : ∀ y ∈ canonical, ComparatorEquivalent lt y.value x.value → y.origin < x.origin) :
 -- imply
@@ -287,10 +288,10 @@ lemma extend_equivalent
     change normalized.take tailLength ++ normalized.drop tailLength = normalized
     exact List.take_append_drop tailLength normalized
   have hsortedSplit : (pre ++ suf).Pairwise (SortedRelation lt) := by
-    rwa [hsplit]
+    rw [hsplit]; exact h.sorted
   have hstableSplit : (pre ++ suf).Pairwise (StableRelation lt) := by
-    rwa [hsplit]
-  have hequivRel := horder.comparatorEquivalent_equivalence
+    rw [hsplit]; exact h.stable.2
+  have hequivRel := BoolStrictWeakOrder.comparatorEquivalent_equivalence horder
   have hxRest : ∀ y ∈ suf, lt x.value y.value = true := by
     intro y hy
     exact strict_of_equivalent_left horder hequivalent
@@ -310,26 +311,30 @@ lemma extend_equivalent
       apply horigin y
       · apply h.stable.1.mem_iff.mp
         exact List.mem_of_mem_take (by simpa [pre] using hy)
-      · exact hequivRel.trans
-        (h.tail_equiv y (by simpa [pre] using hy))
-        (hequivRel.symm hequivalent)
+      · exact hequivRel.trans (h.tail_equiv y (by simpa [pre] using hy)) (hequivRel.symm hequivalent)
     · intro y hy hxy
       have htrue := hxRest y hy
       simp [hxy.1] at htrue
   have hnorm :
     normalize (current ++ [x]) (tailLength + 1) = pre ++ [x] ++ suf := by
-    simpa [pre, suf, normalized] using
-      normalize_append_equivalent current x tailLength h.tail_le
+    change normalize (current ++ [x]) (tailLength + 1) =
+      (normalize current tailLength).take tailLength ++ [x] ++
+        (normalize current tailLength).drop tailLength
+    exact normalize_append_equivalent current x tailLength h.tail_le
   have hpreLength : pre.length = tailLength := by
-    simp [pre, normalized, h.tail_le]
+    have hle : tailLength ≤ normalized.length := by
+      simpa [normalized, normalize_length] using h.tail_le
+    simpa [pre] using List.length_take_of_le hle
   have hprefixLength : (pre ++ [x]).length = tailLength + 1 := by
     simp [hpreLength]
   have htake :
     (pre ++ [x] ++ suf).take (tailLength + 1) = pre ++ [x] := by
-    rwa [← hprefixLength]
+    rw [← hprefixLength]
+    exact List.take_left
   have hdrop :
     (pre ++ [x] ++ suf).drop (tailLength + 1) = suf := by
-    rwa [← hprefixLength]
+    rw [← hprefixLength]
+    exact List.drop_left
   refine
     { current_ne := by simp
       tail_pos := by omega
@@ -343,8 +348,7 @@ lemma extend_equivalent
   · rw [hnorm]
     exact hsortedNew
   · constructor
-    · exact normalize_append_equivalent_perm current canonical x tailLength
-      h.tail_le h.stable.1
+    · exact normalize_append_equivalent_perm current canonical x tailLength h.tail_le h.stable.1
     · rw [hnorm]
       exact hstableNew
   · intro y hy
@@ -352,9 +356,7 @@ lemma extend_equivalent
     rw [List.getLast_append_singleton]
     rw [List.mem_append] at hy
     obtain hy | hy := hy
-    · exact hequivRel.trans
-      (h.tail_equiv y (by simpa [pre] using hy))
-      (hequivRel.symm hequivalent)
+    · exact hequivRel.trans (h.tail_equiv y (by simpa [pre] using hy)) (hequivRel.symm hequivalent)
     · simp only [List.mem_singleton] at hy
       subst y
       exact hequivRel.refl x.value
@@ -375,16 +377,16 @@ lemma extend_strict
   {lt : BoolComparator α}
   {canonical current : List (Occurrence α)}
   {tailLength : Nat}
-  {x : Occurrence α}
 -- given
   (horder : BoolStrictWeakOrder lt)
   (h : Invariant lt canonical current tailLength)
+  (x : Occurrence α)
   (hstrict : lt x.value (current.getLast h.current_ne).value = true) :
 -- imply
   Invariant lt (canonical ++ [x]) (reverseSuffix current tailLength ++ [x]) 1 := by
 -- proof
   let normalized := normalize current tailLength
-  have hequivRel := horder.comparatorEquivalent_equivalence
+  have hequivRel := BoolStrictWeakOrder.comparatorEquivalent_equivalence horder
   have hxAll : ∀ y ∈ normalized, lt x.value y.value = true := by
     intro y hy
     have hySplit :
@@ -393,12 +395,8 @@ lemma extend_strict
       rw [← List.mem_append]
       simpa only [List.take_append_drop] using hy
     obtain hy | hy := hySplit
-    · exact strict_of_equivalent_right horder hstrict
-      (hequivRel.symm
-        (h.tail_equiv y (by simpa [normalized] using hy)))
-    · exact horder.trans x.value (current.getLast h.current_ne).value
-      y.value hstrict
-      (h.rest_greater y (by simpa [normalized] using hy))
+    · exact strict_of_equivalent_right horder hstrict (hequivRel.symm (h.tail_equiv y (by simpa [normalized] using hy)))
+    · exact horder.trans x.value (current.getLast h.current_ne).value y.value hstrict (h.rest_greater y (by simpa [normalized] using hy))
   have hnorm :
     normalize (reverseSuffix current tailLength ++ [x]) 1 =
       x :: normalized := by
@@ -417,8 +415,7 @@ lemma extend_strict
     intro y hy
     exact strict_reverse_false horder (hxAll y (by simpa [normalized] using hy))
   · constructor
-    · exact normalize_after_strict_perm current canonical x tailLength
-      h.stable.1
+    · exact normalize_after_strict_perm current canonical x tailLength h.stable.1
     · rw [hnorm]
       apply List.pairwise_cons.mpr
       refine ⟨?_, h.stable.2⟩
@@ -471,7 +468,7 @@ namespace CPythonListsort.DescendingRunSpec
 [descendingRunInvariant_strict_equivalent_regression](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/DescendingRunInvariant.lean)
 -/
 @[path]
-lemma descendingRunInvariant_strict_equivalent_regression
+lemma descendingRunInvariant_strict_equivalent_regression :
 -- imply
   Invariant descendingInvariantRegressionLt [descendingInvariantThree, descendingInvariantTwoOne, descendingInvariantTwoTwo] [descendingInvariantThree, descendingInvariantTwoOne, descendingInvariantTwoTwo] 2 ∧ normalize [descendingInvariantThree, descendingInvariantTwoOne, descendingInvariantTwoTwo] 2 = [descendingInvariantTwoOne, descendingInvariantTwoTwo, descendingInvariantThree] := by
 -- proof

@@ -1,0 +1,97 @@
+module
+
+public import Theorem.Int.EqSub.is.Eq_Add
+public import Theorem.Rat.EqToNatCeil_0.of.Le
+public import Theorem.Rat.ToNatCeilDivNeg.eq.Zero
+public import Theorem.Rat.CoeAdd.eq.AddCoeS
+public import Theorem.List.LengthSlicedIndices'.eq.ToNatCeilDivSub.of.Gt_0.Le.Gt
+public import Theorem.List.LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt
+public import Def.Data.List.Slice
+
+public section
+
+open Int Rat List
+
+
+public theorem List.LengthRange.eq.Length
+  {s : Slice} :
+-- imply
+  (s.range n).length = s.length n := by
+-- proof
+  unfold Slice.range Slice.length
+  match s.step with
+  | .ofNat step =>
+    simp
+    match step with
+    | 0 =>
+      simp
+    | step + 1 =>
+      simp
+      let stop := Slice.Add_Mul_DivSub1Sign_2 n s.stop
+      have h_stop_def : stop = Slice.Add_Mul_DivSub1Sign_2 n s.stop := rfl
+      let start := Slice.Add_Mul_DivSub1Sign_2 n s.start
+      have h_start_def : start = Slice.Add_Mul_DivSub1Sign_2 n s.start := rfl
+      split_ifs with h_Ge
+      ·
+        simp
+        simp only [
+          ← h_stop_def,
+          (show (stop.toNat : ℚ) ⊓ (n : ℚ) = stop.toNat.min n by simp),
+          (show (step : ℚ) + 1 = step.succ by simp)
+        ]
+        have h_Le : stop.toNat.min n ≤ start.toNat := by
+          simp_all
+        rw [EqToNatCeil_0.of.Le h_Le]
+      ·
+        simp only [
+          ← h_stop_def,
+          (show (stop.toNat : ℚ) ⊓ (n : ℚ) = stop.toNat.min n by simp),
+          (show (step : ℚ) + 1 = step.succ by simp)
+        ]
+        let start := start.toNat
+        let stop := stop.toNat.min n
+        let step := step.succ
+        have h_start : start < stop := by
+          simp_all [start, stop]
+        have h_stop : stop ≤ n := by
+          simp [stop]
+        have h_step : step > 0 := by
+          apply Nat.succ_pos
+        apply LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt h_start h_stop h_step
+  | .negSucc step =>
+    simp
+    let start := Slice.Add_Mul_DivSub1Sign_2 n s.start + 1
+    have h_start_def : start = Slice.Add_Mul_DivSub1Sign_2 n s.start + 1 := rfl
+    let stop := Slice.Add_Mul_DivSub1Sign_2 n s.stop + 1
+    have h_stop_def : stop = Slice.Add_Mul_DivSub1Sign_2 n s.stop + 1 := rfl
+    split_ifs with h_Le
+    ·
+      simp
+      simp only [
+        ← h_start_def,
+        (show (start.toNat : ℚ) ⊓ (n : ℚ) = start.toNat.min n by simp),
+        (show (step : ℚ) + 1 = step.succ by simp)
+      ]
+      have h_Le : start.toNat.min n ≤ stop.toNat := by
+        simp_all
+      rw [EqToNatCeil_0.of.Le h_Le]
+    ·
+      simp only [
+        ← h_start_def,
+        (show (start.toNat : ℚ) ⊓ (n : ℚ) = start.toNat.min n by simp),
+        (show (step : ℚ) + 1 = step.succ by simp)
+      ]
+      rw [← Eq_Sub.of.EqAdd h_start_def] at h_Le
+      let start := start.toNat.min n
+      let stop := stop.toNat
+      let step := step.succ
+      have h_start : start ≤ n := by
+        simp [start]
+      have h_stop : start > stop := by
+        simp_all [start, stop]
+      have h_step : step > 0 := by
+        apply Nat.succ_pos
+      apply LengthSlicedIndices'.eq.ToNatCeilDivSub.of.Gt_0.Le.Gt h_stop h_start h_step
+
+
+-- created on 2025-05-05

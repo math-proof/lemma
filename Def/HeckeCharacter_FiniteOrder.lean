@@ -1,4 +1,8 @@
-import Def.AutomorphicForm_AdelicLsXi
+module
+
+public import Def.AutomorphicForm_AdelicLsXi
+
+@[expose] public section
 
 set_option autoImplicit false
 

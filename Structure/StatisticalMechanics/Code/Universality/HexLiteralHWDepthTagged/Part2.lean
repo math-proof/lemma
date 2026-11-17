@@ -9,11 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWDepth.Part26
-import Theorem.StatisticalMechanics.Code.Universality.HexTaggedColumnBound
-import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripColumn.Part2
-import Theorem.StatisticalMechanics.Code.Universality.HexContentHalfBound.Part3
-import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWDepthTagged.Part5
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWDepth.Part26
+public import Theorem.StatisticalMechanics.Code.Universality.HexTaggedColumnBound
+public import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripColumn.Part2
+public import Theorem.StatisticalMechanics.Code.Universality.HexContentHalfBound.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWDepthTagged.Part5
 
 
 namespace StatMech.Universality
@@ -22,7 +24,7 @@ open HexWalk
 
 open scoped BigOperators
 
-noncomputable section
+public noncomputable section
 
 structure HLHDTaggedTwoHalfData (a : ℂ) (h0 : ℤ) (N extra : ℕ) where
   lower : hhc_Dn a h0 N → List ℤ

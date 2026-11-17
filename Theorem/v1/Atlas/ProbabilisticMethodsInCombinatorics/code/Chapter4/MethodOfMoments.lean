@@ -7,12 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Probability.CentralLimitTheorem
-import Mathlib.Probability.Moments.Basic
+public import Mathlib.Probability.CentralLimitTheorem
+public import Mathlib.Probability.Moments.Basic
 open MeasureTheory ProbabilityTheory Filter
 
 open scoped Topology
+
+public section
 
 /-- Method of moments (Theorem 4.5.4): if a sequence of random variables has moments of every
     positive order converging to those of the standard Gaussian, then it converges in

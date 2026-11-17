@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Foundations.StochasticDomination
-import Def.StatisticalMechanics.Code.Foundations.Strassen
+module
+
+public import Theorem.StatisticalMechanics.Code.Foundations.StochasticDomination
+public import Def.StatisticalMechanics.Code.Foundations.Strassen
+public section
+
 open MeasureTheory
 
 set_option linter.unusedSectionVars false

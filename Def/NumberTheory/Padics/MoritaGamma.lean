@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Padics/MoritaGamma.lean -/
 
-import Mathlib.NumberTheory.Padics.PadicIntegers
+module
+
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+
+@[expose] public section
+
 /-!
 # Morita's p-adic gamma function
 

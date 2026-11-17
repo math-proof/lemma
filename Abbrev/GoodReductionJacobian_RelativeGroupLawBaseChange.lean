@@ -1,12 +1,14 @@
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Abbrev.GoodReductionJacobian_RelativeGroupLawKernel
-import Lemma.Scheme.NeronModelEndomorphismExtension
-import Def.AlgebraicGeometry_NeronSpecialFibreRestriction
-import Abbrev.GoodReductionJacobian_RelativeGroupLawFibre
+module
+
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Abbrev.GoodReductionJacobian_RelativeGroupLawKernel
+public import Theorem.Scheme.NeronModelEndomorphismExtension
+public import Def.AlgebraicGeometry_NeronSpecialFibreRestriction
+public import Abbrev.GoodReductionJacobian_RelativeGroupLawFibre
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 universe u
 

@@ -1,1 +1,3 @@
-import Syntax.Data.List
+module
+
+public import Syntax.Data.List

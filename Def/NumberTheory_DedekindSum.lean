@@ -1,10 +1,14 @@
-import Mathlib.Data.Rat.Floor
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.Order.BigOperators.Group.LocallyFinite
-import Mathlib.Order.Interval.Finset.Nat
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Linarith
+module
+
+public import Mathlib.Data.Rat.Floor
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.Order.BigOperators.Group.LocallyFinite
+public import Mathlib.Order.Interval.Finset.Nat
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.Linarith
+
+@[expose] public section
 
 set_option autoImplicit false
 

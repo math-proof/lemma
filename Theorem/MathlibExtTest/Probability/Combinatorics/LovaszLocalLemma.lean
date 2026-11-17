@@ -2,7 +2,7 @@
 
 
 import Def.Probability.Combinatorics.LovaszLocalLemma
-import Lemma.Measure.Combinatorics.LovaszLocalLemma
+import Theorem.Measure.Combinatorics.LovaszLocalLemma
 open scoped BigOperators
 attribute [local instance] Classical.propDecidable
 

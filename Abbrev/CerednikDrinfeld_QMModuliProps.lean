@@ -1,10 +1,12 @@
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Structure.CerednikDrinfeld_QMModuli
-import Structure.CerednikDrinfeld_QMModuliProps
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Structure.CerednikDrinfeld_QMModuli
+public import Structure.CerednikDrinfeld_QMModuliProps
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 universe u
 

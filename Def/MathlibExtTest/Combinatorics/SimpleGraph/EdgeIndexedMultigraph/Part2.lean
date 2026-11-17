@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.SimpleGraph.EdgeIndexedMultigraph.Part4
-import Lemma.SimpleGraph.EdgeIndexedMultigraph
+import Theorem.SimpleGraph.EdgeIndexedMultigraph
 import Mathlib.Tactic.FinCases
 import Theorem.MathlibExtTest.Combinatorics.SimpleGraph.EdgeIndexedMultigraph
 open scoped BigOperators

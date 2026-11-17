@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/FermatQuotient.lean -/
 
 import Def.NumberTheory.FermatQuotient
-import Lemma.Int.FermatQuotient
+import Theorem.Int.FermatQuotient
 
 
 -- Small exact values via the public evaluation theorem.

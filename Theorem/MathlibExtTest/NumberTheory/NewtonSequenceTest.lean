@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.NewtonSequence
-import Lemma.Nat.NewtonSequence
+import Theorem.Nat.NewtonSequence
 
 
 namespace MetaMathlibExt

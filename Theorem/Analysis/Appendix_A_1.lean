@@ -1,3 +1,5 @@
-import Mathlib
+module
 
+public import Mathlib
 
+public section

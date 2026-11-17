@@ -1,7 +1,38 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.CPythonListsort.Code.Assembly.AccessTrace.Part9
-open CPythonListsort CPythonListsort.MergeMemorySnapshot CPythonListsort.AccessTrace CPythonListsort.TraceResult
+module
+
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.CPythonListsort.Code.Assembly.AccessTrace.Part6
+public import Def.CPythonListsort.Code.Assembly.AccessTrace.Part7
+public import Def.CPythonListsort.Code.Assembly.AccessTrace.Part9
+
+public section
+
+open CPythonListsort.MergeMemorySnapshot CPythonListsort.AccessTrace
+
+
+namespace CPythonListsort.AccessEvent
+
+public instance {event : AccessEvent} : Decidable (InBounds event) :=
+  inferInstanceAs (Decidable (0 ≤ event.index ∧ event.index < Int.ofNat event.extent))
+
+public instance {event : AccessEvent} : Decidable (TempPayloadLive event) := by
+  unfold TempPayloadLive
+  cases event.region <;> infer_instance
+
+end CPythonListsort.AccessEvent
+
+namespace CPythonListsort.AccessTrace
+
+public instance {trace : AccessTrace} : Decidable (allAccessesInBounds trace) := by
+  unfold allAccessesInBounds
+  infer_instance
+
+public instance {trace : AccessTrace} : Decidable (tempPayloadAccessesLive trace) := by
+  unfold tempPayloadAccessesLive
+  infer_instance
+
+end CPythonListsort.AccessTrace
 
 
 namespace CPythonListsort.MergeMemorySnapshot
@@ -10,7 +41,7 @@ namespace CPythonListsort.MergeMemorySnapshot
 [ext](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma ext
+public lemma ext
   {left right : MergeMemorySnapshot}
 -- given
   (backing : left.backing = right.backing)
@@ -34,7 +65,7 @@ namespace CPythonListsort.AccessTrace
 [compose_empty_left](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma compose_empty_left
+public lemma compose_empty_left
   {trace : AccessTrace} :
 -- imply
   compose empty trace = trace := by
@@ -50,7 +81,7 @@ namespace CPythonListsort.AccessTrace
 [compose_empty_right](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma compose_empty_right
+public lemma compose_empty_right
   {trace : AccessTrace} :
 -- imply
   compose trace empty = trace := by
@@ -66,7 +97,7 @@ namespace CPythonListsort.AccessTrace
 [compose_assoc](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma compose_assoc
+public lemma compose_assoc
   {first second third : AccessTrace} :
 -- imply
   compose (compose first second) third = compose first (compose second third) := by
@@ -84,7 +115,7 @@ namespace CPythonListsort.AccessTrace
 [fuelExhausted_compose](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma fuelExhausted_compose
+public lemma fuelExhausted_compose
   {earlier later : AccessTrace} :
 -- imply
   (compose earlier later).fuelExhausted = (earlier.fuelExhausted || later.fuelExhausted) := by
@@ -99,7 +130,7 @@ namespace CPythonListsort.AccessTrace
 [policyEvents_compose](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma policyEvents_compose
+public lemma policyEvents_compose
   {earlier later : AccessTrace} :
 -- imply
   (compose earlier later).policyEvents = earlier.policyEvents ++ later.policyEvents := by
@@ -114,7 +145,7 @@ namespace CPythonListsort.AccessTrace
 [policyEvents_empty](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma policyEvents_empty
+public lemma policyEvents_empty :
 -- imply
   empty.policyEvents = [] := by
 -- proof
@@ -128,7 +159,7 @@ namespace CPythonListsort.AccessTrace
 [policyEvents_singletonPolicyEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma policyEvents_singletonPolicyEvent
+public lemma policyEvents_singletonPolicyEvent
   {event : PolicyEvent} :
 -- imply
   (singletonPolicyEvent event).policyEvents = [event] := by
@@ -143,7 +174,7 @@ namespace CPythonListsort.AccessTrace
 [policyEvents_singletonFormedRun](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma policyEvents_singletonFormedRun
+public lemma policyEvents_singletonFormedRun
   {event : PendingPushEvent} :
 -- imply
   (singletonFormedRun event).policyEvents = [.formed event] := by
@@ -158,7 +189,7 @@ namespace CPythonListsort.AccessTrace
 [fuelExhausted_compose_eq_false](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma fuelExhausted_compose_eq_false
+public lemma fuelExhausted_compose_eq_false
   {earlier later : AccessTrace} :
 -- imply
   (compose earlier later).fuelExhausted = false ↔ earlier.fuelExhausted = false ∧ later.fuelExhausted = false := by
@@ -175,7 +206,7 @@ namespace CPythonListsort.AccessTrace
 [allAccessesInBounds_empty](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma allAccessesInBounds_empty
+public lemma allAccessesInBounds_empty :
 -- imply
   empty.allAccessesInBounds := by
 -- proof
@@ -185,11 +216,53 @@ end CPythonListsort.AccessTrace
 
 namespace CPythonListsort.AccessTrace
 
+public lemma allAccessesInBounds_compose
+    {earlier later : AccessTrace} :
+    (compose earlier later).allAccessesInBounds ↔
+      earlier.allAccessesInBounds ∧ later.allAccessesInBounds := by
+  simp [allAccessesInBounds, compose]
+  constructor
+  · intro h
+    exact ⟨fun event he => h event (.inl he), fun event he => h event (.inr he)⟩
+  · rintro ⟨h₁, h₂⟩ event hmem
+    cases hmem with
+    | inl he => exact h₁ event he
+    | inr he => exact h₂ event he
+
+end CPythonListsort.AccessTrace
+
+namespace CPythonListsort.AccessTrace
+
+public lemma tempPayloadAccessesLive_empty :
+    empty.tempPayloadAccessesLive := by
+  simp [tempPayloadAccessesLive, empty]
+
+end CPythonListsort.AccessTrace
+
+namespace CPythonListsort.AccessTrace
+
+public lemma tempPayloadAccessesLive_compose
+    {earlier later : AccessTrace} :
+    (compose earlier later).tempPayloadAccessesLive ↔
+      earlier.tempPayloadAccessesLive ∧ later.tempPayloadAccessesLive := by
+  simp [tempPayloadAccessesLive, compose]
+  constructor
+  · intro h
+    exact ⟨fun event he => h event (.inl he), fun event he => h event (.inr he)⟩
+  · rintro ⟨h₁, h₂⟩ event hmem
+    cases hmem with
+    | inl he => exact h₁ event he
+    | inr he => exact h₂ event he
+
+end CPythonListsort.AccessTrace
+
+namespace CPythonListsort.AccessTrace
+
 /--
 [stackDepthMax_empty](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma stackDepthMax_empty
+public lemma stackDepthMax_empty :
 -- imply
   empty.stackDepthMax = 0 := by
 -- proof
@@ -203,7 +276,7 @@ namespace CPythonListsort.AccessTrace
 [stackDepthMax_singletonPushDepth](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma stackDepthMax_singletonPushDepth
+public lemma stackDepthMax_singletonPushDepth
   {depth : Nat} :
 -- imply
   (singletonPushDepth depth).stackDepthMax = depth := by
@@ -218,7 +291,7 @@ namespace CPythonListsort.AccessTrace
 [stackDepthMax_singletonFormedRun](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma stackDepthMax_singletonFormedRun
+public lemma stackDepthMax_singletonFormedRun
   {event : PendingPushEvent} :
 -- imply
   (singletonFormedRun event).stackDepthMax = event.depthAfter := by
@@ -253,7 +326,7 @@ namespace CPythonListsort.AccessTrace
 [stackDepthMax_compose](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma stackDepthMax_compose
+public lemma stackDepthMax_compose
   {earlier later : AccessTrace} :
 -- imply
   (compose earlier later).stackDepthMax = Nat.max earlier.stackDepthMax later.stackDepthMax := by
@@ -264,42 +337,42 @@ lemma stackDepthMax_compose
 
 end CPythonListsort.AccessTrace
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [erase_pure](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma erase_pure
+public lemma erase_pure
   {value : α} :
 -- imply
   (pure value).erase = some value := by
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [erase_failure](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma erase_failure
+public lemma erase_failure :
 -- imply
   (failure : TraceResult α).erase = none := by
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [erase_map](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma erase_map
+public lemma erase_map
   {transform : α → β}
   {current : TraceResult α} :
 -- imply
@@ -307,15 +380,15 @@ lemma erase_map
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [result_prependMemoryEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma result_prependMemoryEvent
+public lemma result_prependMemoryEvent
   {current : TraceResult α}
   {event : MergeMemoryEvent} :
 -- imply
@@ -323,15 +396,15 @@ lemma result_prependMemoryEvent
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [result_appendMemoryEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma result_appendMemoryEvent
+public lemma result_appendMemoryEvent
   {current : TraceResult α}
   {event : MergeMemoryEvent} :
 -- imply
@@ -339,15 +412,15 @@ lemma result_appendMemoryEvent
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [erase_prependMemoryEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma erase_prependMemoryEvent
+public lemma erase_prependMemoryEvent
   {current : TraceResult α}
   {event : MergeMemoryEvent} :
 -- imply
@@ -355,15 +428,15 @@ lemma erase_prependMemoryEvent
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [erase_appendMemoryEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma erase_appendMemoryEvent
+public lemma erase_appendMemoryEvent
   {current : TraceResult α}
   {event : MergeMemoryEvent} :
 -- imply
@@ -371,48 +444,50 @@ lemma erase_appendMemoryEvent
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [result_recordSuccessMemoryEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma result_recordSuccessMemoryEvent
+public lemma result_recordSuccessMemoryEvent
   {current : TraceResult α}
   {event : α → MergeMemoryEvent} :
 -- imply
   (current.recordSuccessMemoryEvent event).result = current.result := by
 -- proof
   cases hresult : current.result <;>
-    simp [recordSuccessMemoryEvent, hresult]
+    simp [recordSuccessMemoryEvent, appendMemoryEvent, AccessTrace.compose,
+      AccessTrace.singletonMemoryEvent, hresult]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [erase_recordSuccessMemoryEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma erase_recordSuccessMemoryEvent
+public lemma erase_recordSuccessMemoryEvent
   {current : TraceResult α}
   {event : α → MergeMemoryEvent} :
 -- imply
   (current.recordSuccessMemoryEvent event).erase = current.erase := by
 -- proof
-  simp [TraceResult.erase]
+  cases hresult : current.result <;>
+    simp [recordSuccessMemoryEvent, appendMemoryEvent, TraceResult.erase, hresult]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [result_appendPolicyEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma result_appendPolicyEvent
+public lemma result_appendPolicyEvent
   {current : TraceResult α}
   {event : PolicyEvent} :
 -- imply
@@ -420,15 +495,15 @@ lemma result_appendPolicyEvent
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [erase_appendPolicyEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma erase_appendPolicyEvent
+public lemma erase_appendPolicyEvent
   {current : TraceResult α}
   {event : PolicyEvent} :
 -- imply
@@ -436,48 +511,50 @@ lemma erase_appendPolicyEvent
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [result_recordSuccessPolicyEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma result_recordSuccessPolicyEvent
+public lemma result_recordSuccessPolicyEvent
   {current : TraceResult α}
   {event : α → PolicyEvent} :
 -- imply
   (current.recordSuccessPolicyEvent event).result = current.result := by
 -- proof
   cases hresult : current.result <;>
-    simp [recordSuccessPolicyEvent, hresult]
+    simp [recordSuccessPolicyEvent, appendPolicyEvent, AccessTrace.compose,
+      AccessTrace.singletonPolicyEvent, hresult]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [erase_recordSuccessPolicyEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma erase_recordSuccessPolicyEvent
+public lemma erase_recordSuccessPolicyEvent
   {current : TraceResult α}
   {event : α → PolicyEvent} :
 -- imply
   (current.recordSuccessPolicyEvent event).erase = current.erase := by
 -- proof
-  simp [TraceResult.erase]
+  cases hresult : current.result <;>
+    simp [recordSuccessPolicyEvent, appendPolicyEvent, TraceResult.erase, hresult]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [accesses_prependMemoryEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma accesses_prependMemoryEvent
+public lemma accesses_prependMemoryEvent
   {current : TraceResult α}
   {event : MergeMemoryEvent} :
 -- imply
@@ -485,15 +562,15 @@ lemma accesses_prependMemoryEvent
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [accesses_appendMemoryEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma accesses_appendMemoryEvent
+public lemma accesses_appendMemoryEvent
   {current : TraceResult α}
   {event : MergeMemoryEvent} :
 -- imply
@@ -502,15 +579,15 @@ lemma accesses_appendMemoryEvent
   simp [appendMemoryEvent, AccessTrace.compose,
     AccessTrace.singletonMemoryEvent]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [pushDepths_prependMemoryEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma pushDepths_prependMemoryEvent
+public lemma pushDepths_prependMemoryEvent
   {current : TraceResult α}
   {event : MergeMemoryEvent} :
 -- imply
@@ -518,15 +595,15 @@ lemma pushDepths_prependMemoryEvent
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [pushDepths_appendMemoryEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma pushDepths_appendMemoryEvent
+public lemma pushDepths_appendMemoryEvent
   {current : TraceResult α}
   {event : MergeMemoryEvent} :
 -- imply
@@ -535,15 +612,15 @@ lemma pushDepths_appendMemoryEvent
   simp [appendMemoryEvent, AccessTrace.compose,
     AccessTrace.singletonMemoryEvent]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [memoryEvents_prependMemoryEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma memoryEvents_prependMemoryEvent
+public lemma memoryEvents_prependMemoryEvent
   {current : TraceResult α}
   {event : MergeMemoryEvent} :
 -- imply
@@ -551,15 +628,15 @@ lemma memoryEvents_prependMemoryEvent
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [memoryEvents_appendMemoryEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma memoryEvents_appendMemoryEvent
+public lemma memoryEvents_appendMemoryEvent
   {current : TraceResult α}
   {event : MergeMemoryEvent} :
 -- imply
@@ -567,15 +644,15 @@ lemma memoryEvents_appendMemoryEvent
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [memoryEvents_recordSuccessMemoryEvent_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma memoryEvents_recordSuccessMemoryEvent_of_eq_some
+public lemma memoryEvents_recordSuccessMemoryEvent_of_eq_some
   {current : TraceResult α}
   {event : α → MergeMemoryEvent}
   {value : α}
@@ -584,17 +661,17 @@ lemma memoryEvents_recordSuccessMemoryEvent_of_eq_some
 -- imply
   (current.recordSuccessMemoryEvent event).trace.memoryEvents = current.trace.memoryEvents ++ [event value] := by
 -- proof
-  simp [recordSuccessMemoryEvent, hresult]
+  simp [recordSuccessMemoryEvent, appendMemoryEvent, AccessTrace.compose, AccessTrace.singletonMemoryEvent, hresult]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [policyEvents_prependMemoryEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma policyEvents_prependMemoryEvent
+public lemma policyEvents_prependMemoryEvent
   {current : TraceResult α}
   {event : MergeMemoryEvent} :
 -- imply
@@ -602,15 +679,15 @@ lemma policyEvents_prependMemoryEvent
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [policyEvents_appendMemoryEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma policyEvents_appendMemoryEvent
+public lemma policyEvents_appendMemoryEvent
   {current : TraceResult α}
   {event : MergeMemoryEvent} :
 -- imply
@@ -619,32 +696,33 @@ lemma policyEvents_appendMemoryEvent
   simp [appendMemoryEvent, AccessTrace.compose,
     AccessTrace.singletonMemoryEvent]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [policyEvents_recordSuccessMemoryEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma policyEvents_recordSuccessMemoryEvent
+public lemma policyEvents_recordSuccessMemoryEvent
   {current : TraceResult α}
   {event : α → MergeMemoryEvent} :
 -- imply
   (current.recordSuccessMemoryEvent event).trace.policyEvents = current.trace.policyEvents := by
 -- proof
   cases hresult : current.result <;>
-    simp [recordSuccessMemoryEvent, hresult]
+    simp [recordSuccessMemoryEvent, appendMemoryEvent, AccessTrace.compose,
+      AccessTrace.singletonMemoryEvent, hresult]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [policyEvents_appendPolicyEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma policyEvents_appendPolicyEvent
+public lemma policyEvents_appendPolicyEvent
   {current : TraceResult α}
   {event : PolicyEvent} :
 -- imply
@@ -652,15 +730,15 @@ lemma policyEvents_appendPolicyEvent
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [policyEvents_recordSuccessPolicyEvent_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma policyEvents_recordSuccessPolicyEvent_of_eq_some
+public lemma policyEvents_recordSuccessPolicyEvent_of_eq_some
   {current : TraceResult α}
   {event : α → PolicyEvent}
   {value : α}
@@ -669,17 +747,17 @@ lemma policyEvents_recordSuccessPolicyEvent_of_eq_some
 -- imply
   (current.recordSuccessPolicyEvent event).trace.policyEvents = current.trace.policyEvents ++ [event value] := by
 -- proof
-  simp [recordSuccessPolicyEvent, hresult]
+  simp [recordSuccessPolicyEvent, appendPolicyEvent, AccessTrace.compose, AccessTrace.singletonPolicyEvent, hresult]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [policyEvents_recordSuccessPolicyEvent_of_eq_none](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma policyEvents_recordSuccessPolicyEvent_of_eq_none
+public lemma policyEvents_recordSuccessPolicyEvent_of_eq_none
   {current : TraceResult α}
   {event : α → PolicyEvent}
 -- given
@@ -689,15 +767,15 @@ lemma policyEvents_recordSuccessPolicyEvent_of_eq_none
 -- proof
   simp [recordSuccessPolicyEvent, hresult]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [fuelExhausted_prependMemoryEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma fuelExhausted_prependMemoryEvent
+public lemma fuelExhausted_prependMemoryEvent
   {current : TraceResult α}
   {event : MergeMemoryEvent} :
 -- imply
@@ -705,15 +783,15 @@ lemma fuelExhausted_prependMemoryEvent
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [fuelExhausted_appendMemoryEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma fuelExhausted_appendMemoryEvent
+public lemma fuelExhausted_appendMemoryEvent
   {current : TraceResult α}
   {event : MergeMemoryEvent} :
 -- imply
@@ -722,98 +800,100 @@ lemma fuelExhausted_appendMemoryEvent
   simp [appendMemoryEvent, AccessTrace.compose,
     AccessTrace.singletonMemoryEvent]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [accesses_recordSuccessMemoryEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma accesses_recordSuccessMemoryEvent
+public lemma accesses_recordSuccessMemoryEvent
   {current : TraceResult α}
   {event : α → MergeMemoryEvent} :
 -- imply
   (current.recordSuccessMemoryEvent event).trace.accesses = current.trace.accesses := by
 -- proof
   cases hresult : current.result <;>
-    simp [recordSuccessMemoryEvent, hresult]
+    simp [recordSuccessMemoryEvent, appendMemoryEvent, AccessTrace.compose, AccessTrace.singletonMemoryEvent, hresult]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [pushDepths_recordSuccessMemoryEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma pushDepths_recordSuccessMemoryEvent
+public lemma pushDepths_recordSuccessMemoryEvent
   {current : TraceResult α}
   {event : α → MergeMemoryEvent} :
 -- imply
   (current.recordSuccessMemoryEvent event).trace.pushDepths = current.trace.pushDepths := by
 -- proof
   cases hresult : current.result <;>
-    simp [recordSuccessMemoryEvent, hresult]
+    simp [recordSuccessMemoryEvent, appendMemoryEvent, AccessTrace.compose, AccessTrace.singletonMemoryEvent, hresult]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [fuelExhausted_recordSuccessMemoryEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma fuelExhausted_recordSuccessMemoryEvent
+public lemma fuelExhausted_recordSuccessMemoryEvent
   {current : TraceResult α}
   {event : α → MergeMemoryEvent} :
 -- imply
   (current.recordSuccessMemoryEvent event).trace.fuelExhausted = current.trace.fuelExhausted := by
 -- proof
   cases hresult : current.result <;>
-    simp [recordSuccessMemoryEvent, hresult]
+    simp [recordSuccessMemoryEvent, appendMemoryEvent, AccessTrace.compose, AccessTrace.singletonMemoryEvent, hresult]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [allAccessesInBounds_recordSuccessMemoryEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma allAccessesInBounds_recordSuccessMemoryEvent
+public lemma allAccessesInBounds_recordSuccessMemoryEvent
   {current : TraceResult α}
   {event : α → MergeMemoryEvent} :
 -- imply
   (current.recordSuccessMemoryEvent event).trace.allAccessesInBounds ↔ current.trace.allAccessesInBounds := by
 -- proof
-  simp [AccessTrace.allAccessesInBounds]
+  cases hresult : current.result <;>
+    simp [recordSuccessMemoryEvent, appendMemoryEvent, AccessTrace.compose, AccessTrace.singletonMemoryEvent, AccessTrace.allAccessesInBounds, hresult]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [tempPayloadAccessesLive_recordSuccessMemoryEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma tempPayloadAccessesLive_recordSuccessMemoryEvent
+public lemma tempPayloadAccessesLive_recordSuccessMemoryEvent
   {current : TraceResult α}
   {event : α → MergeMemoryEvent} :
 -- imply
   (current.recordSuccessMemoryEvent event).trace.tempPayloadAccessesLive ↔ current.trace.tempPayloadAccessesLive := by
 -- proof
-  simp [AccessTrace.tempPayloadAccessesLive]
+  cases hresult : current.result <;>
+    simp [recordSuccessMemoryEvent, appendMemoryEvent, AccessTrace.compose, AccessTrace.singletonMemoryEvent, AccessTrace.tempPayloadAccessesLive, hresult]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [stackDepthMax_prependMemoryEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma stackDepthMax_prependMemoryEvent
+public lemma stackDepthMax_prependMemoryEvent
   {current : TraceResult α}
   {event : MergeMemoryEvent} :
 -- imply
@@ -822,15 +902,15 @@ lemma stackDepthMax_prependMemoryEvent
   simp only [prependMemoryEvent, AccessTrace.stackDepthMax,
     AccessTrace.compose, AccessTrace.singletonMemoryEvent, List.nil_append]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [stackDepthMax_appendMemoryEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma stackDepthMax_appendMemoryEvent
+public lemma stackDepthMax_appendMemoryEvent
   {current : TraceResult α}
   {event : MergeMemoryEvent} :
 -- imply
@@ -839,32 +919,34 @@ lemma stackDepthMax_appendMemoryEvent
   simp only [appendMemoryEvent, AccessTrace.stackDepthMax,
     AccessTrace.compose, AccessTrace.singletonMemoryEvent, List.append_nil]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [stackDepthMax_recordSuccessMemoryEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma stackDepthMax_recordSuccessMemoryEvent
+public lemma stackDepthMax_recordSuccessMemoryEvent
   {current : TraceResult α}
   {event : α → MergeMemoryEvent} :
 -- imply
   (current.recordSuccessMemoryEvent event).trace.stackDepthMax = current.trace.stackDepthMax := by
 -- proof
-  cases hresult : current.result <;>
-    simp [recordSuccessMemoryEvent, hresult]
+  cases hresult : current.result
+  · simp [recordSuccessMemoryEvent, hresult]
+  · simp [recordSuccessMemoryEvent, hresult]
+    exact stackDepthMax_appendMemoryEvent
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [accesses_appendPolicyEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma accesses_appendPolicyEvent
+public lemma accesses_appendPolicyEvent
   {current : TraceResult α}
   {event : PolicyEvent} :
 -- imply
@@ -873,15 +955,15 @@ lemma accesses_appendPolicyEvent
   simp [appendPolicyEvent, AccessTrace.compose,
     AccessTrace.singletonPolicyEvent]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [pushDepths_appendPolicyEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma pushDepths_appendPolicyEvent
+public lemma pushDepths_appendPolicyEvent
   {current : TraceResult α}
   {event : PolicyEvent} :
 -- imply
@@ -890,15 +972,15 @@ lemma pushDepths_appendPolicyEvent
   simp [appendPolicyEvent, AccessTrace.compose,
     AccessTrace.singletonPolicyEvent]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [memoryEvents_appendPolicyEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma memoryEvents_appendPolicyEvent
+public lemma memoryEvents_appendPolicyEvent
   {current : TraceResult α}
   {event : PolicyEvent} :
 -- imply
@@ -907,15 +989,15 @@ lemma memoryEvents_appendPolicyEvent
   simp [appendPolicyEvent, AccessTrace.compose,
     AccessTrace.singletonPolicyEvent]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [fuelExhausted_appendPolicyEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma fuelExhausted_appendPolicyEvent
+public lemma fuelExhausted_appendPolicyEvent
   {current : TraceResult α}
   {event : PolicyEvent} :
 -- imply
@@ -924,115 +1006,118 @@ lemma fuelExhausted_appendPolicyEvent
   simp [appendPolicyEvent, AccessTrace.compose,
     AccessTrace.singletonPolicyEvent]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [accesses_recordSuccessPolicyEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma accesses_recordSuccessPolicyEvent
+public lemma accesses_recordSuccessPolicyEvent
   {current : TraceResult α}
   {event : α → PolicyEvent} :
 -- imply
   (current.recordSuccessPolicyEvent event).trace.accesses = current.trace.accesses := by
 -- proof
   cases hresult : current.result <;>
-    simp [recordSuccessPolicyEvent, hresult]
+    simp [recordSuccessPolicyEvent, appendPolicyEvent, AccessTrace.compose,
+      AccessTrace.singletonPolicyEvent, hresult]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [pushDepths_recordSuccessPolicyEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma pushDepths_recordSuccessPolicyEvent
+public lemma pushDepths_recordSuccessPolicyEvent
   {current : TraceResult α}
   {event : α → PolicyEvent} :
 -- imply
   (current.recordSuccessPolicyEvent event).trace.pushDepths = current.trace.pushDepths := by
 -- proof
   cases hresult : current.result <;>
-    simp [recordSuccessPolicyEvent, hresult]
+    simp [recordSuccessPolicyEvent, appendPolicyEvent, AccessTrace.compose, AccessTrace.singletonPolicyEvent, hresult]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [memoryEvents_recordSuccessPolicyEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma memoryEvents_recordSuccessPolicyEvent
+public lemma memoryEvents_recordSuccessPolicyEvent
   {current : TraceResult α}
   {event : α → PolicyEvent} :
 -- imply
   (current.recordSuccessPolicyEvent event).trace.memoryEvents = current.trace.memoryEvents := by
 -- proof
   cases hresult : current.result <;>
-    simp [recordSuccessPolicyEvent, hresult]
+    simp [recordSuccessPolicyEvent, appendPolicyEvent, AccessTrace.compose, AccessTrace.singletonPolicyEvent, hresult]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [fuelExhausted_recordSuccessPolicyEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma fuelExhausted_recordSuccessPolicyEvent
+public lemma fuelExhausted_recordSuccessPolicyEvent
   {current : TraceResult α}
   {event : α → PolicyEvent} :
 -- imply
   (current.recordSuccessPolicyEvent event).trace.fuelExhausted = current.trace.fuelExhausted := by
 -- proof
   cases hresult : current.result <;>
-    simp [recordSuccessPolicyEvent, hresult]
+    simp [recordSuccessPolicyEvent, appendPolicyEvent, AccessTrace.compose, AccessTrace.singletonPolicyEvent, hresult]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [allAccessesInBounds_recordSuccessPolicyEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma allAccessesInBounds_recordSuccessPolicyEvent
+public lemma allAccessesInBounds_recordSuccessPolicyEvent
   {current : TraceResult α}
   {event : α → PolicyEvent} :
 -- imply
   (current.recordSuccessPolicyEvent event).trace.allAccessesInBounds ↔ current.trace.allAccessesInBounds := by
 -- proof
-  simp [AccessTrace.allAccessesInBounds]
+  cases hresult : current.result <;>
+    simp [recordSuccessPolicyEvent, appendPolicyEvent, AccessTrace.compose, AccessTrace.singletonPolicyEvent, AccessTrace.allAccessesInBounds, hresult]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [tempPayloadAccessesLive_recordSuccessPolicyEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma tempPayloadAccessesLive_recordSuccessPolicyEvent
+public lemma tempPayloadAccessesLive_recordSuccessPolicyEvent
   {current : TraceResult α}
   {event : α → PolicyEvent} :
 -- imply
   (current.recordSuccessPolicyEvent event).trace.tempPayloadAccessesLive ↔ current.trace.tempPayloadAccessesLive := by
 -- proof
-  simp [AccessTrace.tempPayloadAccessesLive]
+  cases hresult : current.result <;>
+    simp [recordSuccessPolicyEvent, appendPolicyEvent, AccessTrace.compose, AccessTrace.singletonPolicyEvent, AccessTrace.tempPayloadAccessesLive, hresult]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [stackDepthMax_appendPolicyEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma stackDepthMax_appendPolicyEvent
+public lemma stackDepthMax_appendPolicyEvent
   {current : TraceResult α}
   {event : PolicyEvent} :
 -- imply
@@ -1041,32 +1126,34 @@ lemma stackDepthMax_appendPolicyEvent
   simp only [appendPolicyEvent, AccessTrace.stackDepthMax,
     AccessTrace.compose, AccessTrace.singletonPolicyEvent, List.append_nil]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [stackDepthMax_recordSuccessPolicyEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma stackDepthMax_recordSuccessPolicyEvent
+public lemma stackDepthMax_recordSuccessPolicyEvent
   {current : TraceResult α}
   {event : α → PolicyEvent} :
 -- imply
   (current.recordSuccessPolicyEvent event).trace.stackDepthMax = current.trace.stackDepthMax := by
 -- proof
-  cases hresult : current.result <;>
-    simp [recordSuccessPolicyEvent, hresult]
+  cases hresult : current.result
+  · simp [recordSuccessPolicyEvent, hresult]
+  · simp [recordSuccessPolicyEvent, hresult]
+    exact stackDepthMax_appendPolicyEvent
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [erase_bind](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma erase_bind
+public lemma erase_bind
   {current : TraceResult α}
   {next : α → TraceResult β} :
 -- imply
@@ -1076,15 +1163,15 @@ lemma erase_bind
   | mk result trace =>
     cases result <;> rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [memoryEvents_bind_eq_nil](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma memoryEvents_bind_eq_nil
+public lemma memoryEvents_bind_eq_nil
   {current : TraceResult α}
   {next : α → TraceResult β}
 -- given
@@ -1093,21 +1180,21 @@ lemma memoryEvents_bind_eq_nil
 -- imply
   (current.bind next).trace.memoryEvents = [] := by
 -- proof
-  rw [trace_bind]
+  rw [TraceResult.bind]
   cases hresult : current.result with
   | none => exact hcurrent
   | some value =>
     simp [AccessTrace.compose, hcurrent, hnext value]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [policyEvents_bind_eq_nil](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma policyEvents_bind_eq_nil
+public lemma policyEvents_bind_eq_nil
   {current : TraceResult α}
   {next : α → TraceResult β}
 -- given
@@ -1116,21 +1203,21 @@ lemma policyEvents_bind_eq_nil
 -- imply
   (current.bind next).trace.policyEvents = [] := by
 -- proof
-  rw [trace_bind]
+  rw [TraceResult.bind]
   cases hresult : current.result with
   | none => exact hcurrent
   | some value =>
     simp [AccessTrace.compose, hcurrent, hnext value]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [memoryEvents_map](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma memoryEvents_map
+public lemma memoryEvents_map
   {current : TraceResult α}
   {transform : α → β} :
 -- imply
@@ -1138,15 +1225,15 @@ lemma memoryEvents_map
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [policyEvents_map](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma policyEvents_map
+public lemma policyEvents_map
   {current : TraceResult α}
   {transform : α → β} :
 -- imply
@@ -1154,47 +1241,50 @@ lemma policyEvents_map
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [policyEvents_bind](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma policyEvents_bind
+public lemma policyEvents_bind
   {current : TraceResult α}
   {next : α → TraceResult β} :
 -- imply
-  (current.bind next).trace.policyEvents = match current.result with := by
+  (current.bind next).trace.policyEvents =
+    match current.result with
+    | none => current.trace.policyEvents
+    | some value => current.trace.policyEvents ++ (next value).trace.policyEvents := by
 -- proof
-  rw [trace_bind]
-  cases current.result <;> rfl
+  rw [TraceResult.bind]
+  cases current.result <;> simp [AccessTrace.compose]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [erase_markFuelExhausted](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma erase_markFuelExhausted
+public lemma erase_markFuelExhausted
   {current : TraceResult α} :
 -- imply
   current.markFuelExhausted.erase = current.erase := by
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [trace_captureAccess](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma trace_captureAccess
+public lemma trace_captureAccess
   {kind : AccessKind}
   {region : AccessRegion}
   {index : Int}
@@ -1205,15 +1295,15 @@ lemma trace_captureAccess
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [trace_arrayRead](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma trace_arrayRead
+public lemma trace_arrayRead
   {region : AccessRegion}
   {array : Array α}
   {index : Int} :
@@ -1222,15 +1312,15 @@ lemma trace_arrayRead
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [trace_arrayWrite](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma trace_arrayWrite
+public lemma trace_arrayWrite
   {region : AccessRegion}
   {array : Array α}
   {index : Int}
@@ -1240,15 +1330,15 @@ lemma trace_arrayWrite
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [erase_captureAccess](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma erase_captureAccess
+public lemma erase_captureAccess
   {kind : AccessKind}
   {region : AccessRegion}
   {index : Int}
@@ -1259,15 +1349,15 @@ lemma erase_captureAccess
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [erase_arrayRead](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma erase_arrayRead
+public lemma erase_arrayRead
   {region : AccessRegion}
   {array : Array α}
   {index : Int} :
@@ -1276,15 +1366,15 @@ lemma erase_arrayRead
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [erase_arrayWrite](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma erase_arrayWrite
+public lemma erase_arrayWrite
   {region : AccessRegion}
   {array : Array α}
   {index : Int}
@@ -1294,17 +1384,16 @@ lemma erase_arrayWrite
 -- proof
   rfl
 /-! ## State-derived access wrappers -/
-namespace TraceResult
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [trace_tempPayloadRead](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma trace_tempPayloadRead
+public lemma trace_tempPayloadRead
   {storage : TempStorage κ ν}
   {index : Int} :
 -- imply
@@ -1313,24 +1402,24 @@ lemma trace_tempPayloadRead
   by_cases hNonnegative : 0 ≤ index
   · cases hCell : storage.cells[index.toNat]? with
     | none =>
-      simp [tempPayloadRead?, trace_bind, arrayRead?, captureAccess,
+      simp [tempPayloadRead?, TraceResult.bind, arrayRead?, captureAccess,
         hNonnegative, hCell]
     | some cell =>
       cases cell <;>
-        simp [tempPayloadRead?, trace_bind, arrayRead?, captureAccess,
-          pure, failure, hNonnegative, hCell]
-  · simp [tempPayloadRead?, trace_bind, arrayRead?, captureAccess,
-    hNonnegative]
+        simp [tempPayloadRead?, TraceResult.bind, arrayRead?, captureAccess,
+          pure, failure, hNonnegative, hCell, AccessTrace.compose_empty_right]
+  · simp [tempPayloadRead?, TraceResult.bind, arrayRead?, captureAccess,
+      hNonnegative]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [trace_tempPayloadWrite](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma trace_tempPayloadWrite
+public lemma trace_tempPayloadWrite
   {storage : TempStorage κ ν}
   {index : Int}
   {entry : SortSliceEntry κ ν} :
@@ -1339,15 +1428,15 @@ lemma trace_tempPayloadWrite
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [erase_tempPayloadRead](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma erase_tempPayloadRead
+public lemma erase_tempPayloadRead
   {storage : TempStorage κ ν}
   {index : Int} :
 -- imply
@@ -1356,20 +1445,22 @@ lemma erase_tempPayloadRead
   by_cases hNonnegative : 0 ≤ index
   · cases hCell : storage.cells[index.toNat]? with
     | none =>
-      simp [tempPayloadRead?, hNonnegative, hCell]
+      simp [tempPayloadRead?, hNonnegative, hCell, erase_bind, erase_arrayRead]
     | some cell =>
-      cases cell <;> simp [tempPayloadRead?, hNonnegative, hCell]
-  · simp [tempPayloadRead?, hNonnegative]
+      cases cell <;>
+        simp [tempPayloadRead?, hNonnegative, hCell, erase_bind, erase_arrayRead,
+          erase_failure, erase_pure]
+  · simp [tempPayloadRead?, hNonnegative, erase_bind, erase_arrayRead]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [erase_tempPayloadWrite](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma erase_tempPayloadWrite
+public lemma erase_tempPayloadWrite
   {storage : TempStorage κ ν}
   {index : Int}
   {entry : SortSliceEntry κ ν} :
@@ -1377,17 +1468,17 @@ lemma erase_tempPayloadWrite
   (tempPayloadWrite? storage index entry).erase = if 0 ≤ index ∧ index.toNat < storage.cells.size then some { storage with cells := storage.cells.setIfInBounds index.toNat (some entry) } else none := by
 -- proof
   by_cases hBounds : 0 ≤ index ∧ index.toNat < storage.cells.size <;>
-    simp [tempPayloadWrite?, hBounds]
+    simp [tempPayloadWrite?, hBounds, erase_map, erase_arrayWrite]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [erase_sortSliceKeysRead](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma erase_sortSliceKeysRead
+public lemma erase_sortSliceKeysRead
   {slice : SortSlice κ ν}
   {index : Int} :
 -- imply
@@ -1395,15 +1486,15 @@ lemma erase_sortSliceKeysRead
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [erase_sortSliceValuesRead](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma erase_sortSliceValuesRead
+public lemma erase_sortSliceValuesRead
   {slice : SortSlice κ ν}
   {index : Int} :
 -- imply
@@ -1411,15 +1502,15 @@ lemma erase_sortSliceValuesRead
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [erase_sortSliceKeysWrite](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma erase_sortSliceKeysWrite
+public lemma erase_sortSliceKeysWrite
   {slice : SortSlice κ ν}
   {index : Int}
   {entry : SortSliceEntry κ ν} :
@@ -1428,15 +1519,15 @@ lemma erase_sortSliceKeysWrite
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [erase_sortSliceValuesWrite](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma erase_sortSliceValuesWrite
+public lemma erase_sortSliceValuesWrite
   {slice : SortSlice κ ν}
   {index : Int}
   {entry : SortSliceEntry κ ν} :
@@ -1445,15 +1536,15 @@ lemma erase_sortSliceValuesWrite
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [trace_sortSliceKeysRead](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma trace_sortSliceKeysRead
+public lemma trace_sortSliceKeysRead
   {slice : SortSlice κ ν}
   {index : Int} :
 -- imply
@@ -1461,15 +1552,15 @@ lemma trace_sortSliceKeysRead
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [trace_sortSliceValuesRead](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma trace_sortSliceValuesRead
+public lemma trace_sortSliceValuesRead
   {slice : SortSlice κ ν}
   {index : Int} :
 -- imply
@@ -1477,15 +1568,15 @@ lemma trace_sortSliceValuesRead
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [trace_sortSliceKeysWrite](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma trace_sortSliceKeysWrite
+public lemma trace_sortSliceKeysWrite
   {slice : SortSlice κ ν}
   {index : Int}
   {entry : SortSliceEntry κ ν} :
@@ -1494,15 +1585,15 @@ lemma trace_sortSliceKeysWrite
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [trace_sortSliceValuesWrite](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma trace_sortSliceValuesWrite
+public lemma trace_sortSliceValuesWrite
   {slice : SortSlice κ ν}
   {index : Int}
   {entry : SortSliceEntry κ ν} :
@@ -1511,15 +1602,15 @@ lemma trace_sortSliceValuesWrite
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [erase_pendingRunRead](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma erase_pendingRunRead
+public lemma erase_pendingRunRead
   {state : MergeState κ ν}
   {index : Int} :
 -- imply
@@ -1527,15 +1618,15 @@ lemma erase_pendingRunRead
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [erase_pendingRunWrite](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma erase_pendingRunWrite
+public lemma erase_pendingRunWrite
   {state : MergeState κ ν}
   {index : Int}
   {run : PendingRun} :
@@ -1543,17 +1634,17 @@ lemma erase_pendingRunWrite
   (pendingRunWrite? state index run).erase = if 0 ≤ index ∧ index.toNat < state.pending.size then some { state with pending := state.pending.setIfInBounds index.toNat run } else none := by
 -- proof
   by_cases hBounds : 0 ≤ index ∧ index.toNat < state.pending.size <;>
-    simp [pendingRunWrite?, hBounds]
+    simp [pendingRunWrite?, hBounds, erase_map, erase_arrayWrite]
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [erase_pendingRunPowerWrite](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma erase_pendingRunPowerWrite
+public lemma erase_pendingRunPowerWrite
   {state : MergeState κ ν}
   {index : Int}
   {power : Nat} :
@@ -1562,15 +1653,15 @@ lemma erase_pendingRunPowerWrite
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [trace_pendingRunRead](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma trace_pendingRunRead
+public lemma trace_pendingRunRead
   {state : MergeState κ ν}
   {index : Int} :
 -- imply
@@ -1578,15 +1669,15 @@ lemma trace_pendingRunRead
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [trace_pendingRunWrite](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma trace_pendingRunWrite
+public lemma trace_pendingRunWrite
   {state : MergeState κ ν}
   {index : Int}
   {run : PendingRun} :
@@ -1595,15 +1686,15 @@ lemma trace_pendingRunWrite
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
-namespace CPythonListsort.TraceResult
+namespace CPythonListsort.AccessTrace.TraceResult
 
 /--
 [trace_pendingRunPowerWrite](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma trace_pendingRunPowerWrite
+public lemma trace_pendingRunPowerWrite
   {state : MergeState κ ν}
   {index : Int}
   {power : Nat} :
@@ -1612,19 +1703,19 @@ lemma trace_pendingRunPowerWrite
 -- proof
   rfl
 
-end CPythonListsort.TraceResult
+end CPythonListsort.AccessTrace.TraceResult
 
 namespace CPythonListsort
 
 /--
-[erase_pushPendingRunTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
+[erase_AccessTrace.TraceResult.pushPendingRunTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma erase_pushPendingRunTraced
+public lemma erase_AccessTrace.TraceResult.pushPendingRunTraced
   {state : MergeState κ ν}
   {run : PendingRun} :
 -- imply
-  (pushPendingRunTraced state run).erase = some { state with pending := state.pending.push run } := by
+  (AccessTrace.TraceResult.pushPendingRunTraced state run).erase = some { state with pending := state.pending.push run } := by
 -- proof
   rfl
 
@@ -1633,31 +1724,31 @@ end CPythonListsort
 namespace CPythonListsort
 
 /--
-[trace_pushPendingRunTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
+[trace_AccessTrace.TraceResult.pushPendingRunTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma trace_pushPendingRunTraced
+public lemma trace_AccessTrace.TraceResult.pushPendingRunTraced
   {state : MergeState κ ν}
   {run : PendingRun} :
 -- imply
-  (pushPendingRunTraced state run).trace = AccessTrace.singletonPushDepth (state.pending.size + 1) := by
+  (AccessTrace.TraceResult.pushPendingRunTraced state run).trace = AccessTrace.singletonPushDepth (state.pending.size + 1) := by
 -- proof
-  simp [pushPendingRunTraced, AccessTrace.singletonPushDepth]
+  simp [AccessTrace.TraceResult.pushPendingRunTraced, AccessTrace.singletonPushDepth]
 
 end CPythonListsort
 
 namespace CPythonListsort
 
 /--
-[erase_pushFormedRunTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
+[erase_AccessTrace.TraceResult.pushFormedRunTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma erase_pushFormedRunTraced
+public lemma erase_AccessTrace.TraceResult.pushFormedRunTraced
   {state : MergeState κ ν}
   {run : PendingRun}
   {naturalLength target remainingBefore : Nat} :
 -- imply
-  (pushFormedRunTraced state run naturalLength target remainingBefore).erase = some { state with pending := state.pending.push run } := by
+  (AccessTrace.TraceResult.pushFormedRunTraced state run naturalLength target remainingBefore).erase = some { state with pending := state.pending.push run } := by
 -- proof
   rfl
 
@@ -1666,35 +1757,35 @@ end CPythonListsort
 namespace CPythonListsort
 
 /--
-[trace_pushFormedRunTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
+[trace_AccessTrace.TraceResult.pushFormedRunTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma trace_pushFormedRunTraced
+public lemma trace_AccessTrace.TraceResult.pushFormedRunTraced
   {state : MergeState κ ν}
   {run : PendingRun}
   {naturalLength target remainingBefore : Nat} :
 -- imply
-  (pushFormedRunTraced state run naturalLength target remainingBefore).trace = AccessTrace.singletonFormedRun { run := RunSpan.ofPendingRun run depthAfter := state.pending.size + 1 naturalLength := naturalLength target := target remainingBefore := remainingBefore } := by
+  (AccessTrace.TraceResult.pushFormedRunTraced state run naturalLength target remainingBefore).trace = AccessTrace.singletonFormedRun { run := RunSpan.ofPendingRun run, depthAfter := state.pending.size + 1, naturalLength := naturalLength, target := target, remainingBefore := remainingBefore } := by
 -- proof
-  simp [pushFormedRunTraced, AccessTrace.singletonFormedRun]
+  simp [AccessTrace.TraceResult.pushFormedRunTraced, AccessTrace.singletonFormedRun]
 
 end CPythonListsort
 
 namespace CPythonListsort
 
 /--
-[pushFormedRunTraced_legacyProjection](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
+[AccessTrace.TraceResult.pushFormedRunTraced_legacyProjection](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma pushFormedRunTraced_legacyProjection
+public lemma AccessTrace.TraceResult.pushFormedRunTraced_legacyProjection
   {state : MergeState κ ν}
   {run : PendingRun}
   {naturalLength target remainingBefore : Nat} :
 -- imply
-  (pushFormedRunTraced state run naturalLength target remainingBefore).erase = (pushPendingRunTraced state run).erase ∧ (pushFormedRunTraced state run naturalLength target remainingBefore).trace.accesses = (pushPendingRunTraced state run).trace.accesses ∧ (pushFormedRunTraced state run naturalLength target remainingBefore).trace.pushDepths = (pushPendingRunTraced state run).trace.pushDepths ∧ (pushFormedRunTraced state run naturalLength target remainingBefore).trace.memoryEvents = (pushPendingRunTraced state run).trace.memoryEvents ∧ (pushFormedRunTraced state run naturalLength target remainingBefore).trace.fuelExhausted = (pushPendingRunTraced state run).trace.fuelExhausted := by
+  (AccessTrace.TraceResult.pushFormedRunTraced state run naturalLength target remainingBefore).erase = (AccessTrace.TraceResult.pushPendingRunTraced state run).erase ∧ (AccessTrace.TraceResult.pushFormedRunTraced state run naturalLength target remainingBefore).trace.accesses = (AccessTrace.TraceResult.pushPendingRunTraced state run).trace.accesses ∧ (AccessTrace.TraceResult.pushFormedRunTraced state run naturalLength target remainingBefore).trace.pushDepths = (AccessTrace.TraceResult.pushPendingRunTraced state run).trace.pushDepths ∧ (AccessTrace.TraceResult.pushFormedRunTraced state run naturalLength target remainingBefore).trace.memoryEvents = (AccessTrace.TraceResult.pushPendingRunTraced state run).trace.memoryEvents ∧ (AccessTrace.TraceResult.pushFormedRunTraced state run naturalLength target remainingBefore).trace.fuelExhausted = (AccessTrace.TraceResult.pushPendingRunTraced state run).trace.fuelExhausted := by
 -- proof
   refine ⟨rfl, ?_⟩
-  simp [pushFormedRunTraced, pushPendingRunTraced,
+  simp [AccessTrace.TraceResult.pushFormedRunTraced, AccessTrace.TraceResult.pushPendingRunTraced,
     AccessTrace.singletonFormedRun, AccessTrace.singletonPushDepth]
 
 end CPythonListsort
@@ -1702,17 +1793,17 @@ end CPythonListsort
 namespace CPythonListsort
 
 /--
-[pushFormedRunTraced_policyEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
+[AccessTrace.TraceResult.pushFormedRunTraced_policyEvent](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma pushFormedRunTraced_policyEvent
+public lemma AccessTrace.TraceResult.pushFormedRunTraced_policyEvent
   {state : MergeState κ ν}
   {run : PendingRun}
   {naturalLength target remainingBefore : Nat} :
 -- imply
-  (pushFormedRunTraced state run naturalLength target remainingBefore).trace.policyEvents = [.formed { run := RunSpan.ofPendingRun run depthAfter := state.pending.size + 1 naturalLength := naturalLength target := target remainingBefore := remainingBefore }] ∧ (pushFormedRunTraced state run naturalLength target remainingBefore).trace.pushDepths = [state.pending.size + 1] := by
+  (AccessTrace.TraceResult.pushFormedRunTraced state run naturalLength target remainingBefore).trace.policyEvents = [.formed { run := RunSpan.ofPendingRun run, depthAfter := state.pending.size + 1, naturalLength := naturalLength, target := target, remainingBefore := remainingBefore }] ∧ (AccessTrace.TraceResult.pushFormedRunTraced state run naturalLength target remainingBefore).trace.pushDepths = [state.pending.size + 1] := by
 -- proof
-  simp [trace_pushFormedRunTraced, AccessTrace.singletonFormedRun]
+  simp [trace_AccessTrace.TraceResult.pushFormedRunTraced, AccessTrace.singletonFormedRun]
 
 end CPythonListsort
 
@@ -1722,9 +1813,9 @@ namespace CPythonListsort
 [forcedPushAtCapacity_records65](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma forcedPushAtCapacity_records65
+public lemma forcedPushAtCapacity_records65 :
 -- imply
-  accessTraceForcedPush.result.map Array.size = some 65 ∧ accessTraceForcedPush.trace.pushDepths = [65] ∧ accessTraceForcedPush.trace.stackDepthMax = 65 := by
+  AccessTrace.TraceResult.accessTraceForcedPush.result.map Array.size = some 65 ∧ AccessTrace.TraceResult.accessTraceForcedPush.trace.pushDepths = [65] ∧ AccessTrace.TraceResult.accessTraceForcedPush.trace.stackDepthMax = 65 := by
 -- proof
   decide
 
@@ -1733,18 +1824,18 @@ end CPythonListsort
 namespace CPythonListsort
 
 /--
-[pushPendingRunTraced_at_capacity](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
+[AccessTrace.TraceResult.pushPendingRunTraced_at_capacity](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma pushPendingRunTraced_at_capacity
+public lemma pushPendingRunTraced_at_capacity
   {state : MergeState κ ν}
   {run : PendingRun}
 -- given
   (hDepth : state.pending.size = MAX_MERGE_PENDING) :
 -- imply
-  (pushPendingRunTraced state run).result.map (fun pushed => pushed.pending.size) = some 65 ∧ (pushPendingRunTraced state run).trace.pushDepths = [65] ∧ (pushPendingRunTraced state run).trace.stackDepthMax = 65 := by
+  (AccessTrace.TraceResult.pushPendingRunTraced state run).result.map (fun pushed => pushed.pending.size) = some 65 ∧ (AccessTrace.TraceResult.pushPendingRunTraced state run).trace.pushDepths = [65] ∧ (AccessTrace.TraceResult.pushPendingRunTraced state run).trace.stackDepthMax = 65 := by
 -- proof
-  simp [pushPendingRunTraced, hDepth, MAX_MERGE_PENDING,
+  simp [AccessTrace.TraceResult.pushPendingRunTraced, hDepth, MAX_MERGE_PENDING,
     AccessTrace.singletonPushDepth, AccessTrace.stackDepthMax]
 
 end CPythonListsort
@@ -1752,28 +1843,54 @@ end CPythonListsort
 namespace CPythonListsort
 
 /--
-[rejectedReleasedTempRead_is_observable](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
+[AccessTrace.TraceResult.rejectedReleasedTempRead_is_observable](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma rejectedReleasedTempRead_is_observable
+public lemma rejectedReleasedTempRead_is_observable :
 -- imply
-  rejectedReleasedTempRead.result = none ∧ rejectedReleasedTempRead.trace.accesses = [{ kind := .read, region := .tempPayload .released, index := 0, extent := 0 }] ∧ ¬rejectedReleasedTempRead.trace.allAccessesInBounds ∧ ¬rejectedReleasedTempRead.trace.tempPayloadAccessesLive := by
+  AccessTrace.TraceResult.rejectedReleasedTempRead.result = none ∧ AccessTrace.TraceResult.rejectedReleasedTempRead.trace.accesses = [{ kind := .read, region := .tempPayload .released, index := 0, extent := 0 }] ∧ ¬AccessTrace.TraceResult.rejectedReleasedTempRead.trace.allAccessesInBounds ∧ ¬AccessTrace.TraceResult.rejectedReleasedTempRead.trace.tempPayloadAccessesLive := by
 -- proof
-  decide
+  -- `decide` cannot unfold unexposed `instDecidableEqAccessEvent.decEq`
+  -- (Structure.AccessTrace is not `@[expose]`).
+  have htrace :=
+    AccessTrace.TraceResult.trace_tempPayloadRead
+      (storage := AccessTrace.TraceResult.releasedTempStorage) (index := (0 : Int))
+  have herase :=
+    AccessTrace.TraceResult.erase_tempPayloadRead
+      (storage := AccessTrace.TraceResult.releasedTempStorage) (index := (0 : Int))
+  simp [AccessTrace.TraceResult.rejectedReleasedTempRead,
+    AccessTrace.TraceResult.releasedTempStorage, AccessTrace.TraceResult.erase,
+    AccessTrace.singletonAccess, AccessTrace.allAccessesInBounds,
+    AccessTrace.tempPayloadAccessesLive, AccessEvent.InBounds,
+    AccessEvent.TempPayloadLive] at htrace herase ⊢
+  exact ⟨herase, htrace ▸ rfl, by simp [htrace], by simp [htrace]⟩
 
 end CPythonListsort
 
 namespace CPythonListsort
 
 /--
-[rejectedUninitializedTempRead_is_observable](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
+[AccessTrace.TraceResult.rejectedUninitializedTempRead_is_observable](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma rejectedUninitializedTempRead_is_observable
+public lemma rejectedUninitializedTempRead_is_observable :
 -- imply
-  rejectedUninitializedTempRead.result = none ∧ rejectedUninitializedTempRead.trace.accesses = [{ kind := .read, region := .tempPayload .inline, index := 0, extent := 1 }] ∧ rejectedUninitializedTempRead.trace.allAccessesInBounds ∧ rejectedUninitializedTempRead.trace.tempPayloadAccessesLive := by
+  AccessTrace.TraceResult.rejectedUninitializedTempRead.result = none ∧ AccessTrace.TraceResult.rejectedUninitializedTempRead.trace.accesses = [{ kind := .read, region := .tempPayload .inline, index := 0, extent := 1 }] ∧ AccessTrace.TraceResult.rejectedUninitializedTempRead.trace.allAccessesInBounds ∧ AccessTrace.TraceResult.rejectedUninitializedTempRead.trace.tempPayloadAccessesLive := by
 -- proof
-  decide
+  -- `decide` cannot unfold unexposed `instDecidableEqAccessEvent.decEq`
+  -- (Structure.AccessTrace is not `@[expose]`).
+  have htrace :=
+    AccessTrace.TraceResult.trace_tempPayloadRead
+      (storage := AccessTrace.TraceResult.uninitializedTempStorage) (index := (0 : Int))
+  have herase :=
+    AccessTrace.TraceResult.erase_tempPayloadRead
+      (storage := AccessTrace.TraceResult.uninitializedTempStorage) (index := (0 : Int))
+  simp [AccessTrace.TraceResult.rejectedUninitializedTempRead,
+    AccessTrace.TraceResult.uninitializedTempStorage, AccessTrace.TraceResult.erase,
+    AccessTrace.singletonAccess, AccessTrace.allAccessesInBounds,
+    AccessTrace.tempPayloadAccessesLive, AccessEvent.InBounds,
+    AccessEvent.TempPayloadLive] at htrace herase ⊢
+  exact ⟨herase, htrace ▸ rfl, by simp [htrace], by simp [htrace]⟩
 
 end CPythonListsort
 
@@ -1783,57 +1900,38 @@ namespace CPythonListsort
 [localTraceComposition_preserves_order](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
 -/
 @[path]
-lemma localTraceComposition_preserves_order
+public lemma localTraceComposition_preserves_order :
 -- imply
-  orderedAccessRegression.trace.accesses = [{ kind := .read, region := .inputKeys, index := 1, extent := 2 }, { kind := .write, region := .synchronizedValues, index := 0, extent := 2 }] ∧ orderedAccessRegression.trace.allAccessesInBounds ∧ orderedAccessRegression.trace.tempPayloadAccessesLive := by
+  AccessTrace.TraceResult.orderedAccessRegression.trace.accesses = [{ kind := .read, region := .inputKeys, index := 1, extent := 2 }, { kind := .write, region := .synchronizedValues, index := 0, extent := 2 }] ∧ AccessTrace.TraceResult.orderedAccessRegression.trace.allAccessesInBounds ∧ AccessTrace.TraceResult.orderedAccessRegression.trace.tempPayloadAccessesLive := by
 -- proof
-  decide
+  -- `decide` cannot unfold unexposed `instDecidableEqAccessEvent.decEq`
+  -- (Structure.AccessTrace is not `@[expose]`).
+  have hread_trace :=
+    AccessTrace.TraceResult.trace_sortSliceKeysRead
+      (slice := AccessTrace.TraceResult.orderedAccessSlice) (index := (1 : Int))
+  have hread_erase :=
+    AccessTrace.TraceResult.erase_sortSliceKeysRead
+      (slice := AccessTrace.TraceResult.orderedAccessSlice) (index := (1 : Int))
+  have hread_some :
+      (AccessTrace.TraceResult.sortSliceKeysRead?
+        AccessTrace.TraceResult.orderedAccessSlice 1).result =
+        some { key := 9, value := some 90 } := by
+    simpa [AccessTrace.TraceResult.erase, AccessTrace.TraceResult.orderedAccessSlice,
+      SortSlice.read?] using hread_erase
+  unfold AccessTrace.TraceResult.orderedAccessRegression
+  simp only [AccessTrace.TraceResult.bind, hread_some]
+  have hwrite_trace :=
+    AccessTrace.TraceResult.trace_sortSliceValuesWrite
+      (slice := AccessTrace.TraceResult.orderedAccessSlice)
+      (index := (0 : Int))
+      (entry := { key := 9, value := some 90 })
+  rw [hread_trace, hwrite_trace]
+  simp [AccessTrace.compose, AccessTrace.singletonAccess,
+    AccessTrace.TraceResult.orderedAccessSlice, AccessTrace.allAccessesInBounds,
+    AccessTrace.tempPayloadAccessesLive, AccessEvent.InBounds,
+    AccessEvent.TempPayloadLive]
 
 end CPythonListsort
-
-/--
-[allAccessesInBounds_compose](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
--/
-@[path]
-private lemma allAccessesInBounds_compose_eq
-  {earlier later : AccessTrace} :
--- imply
-  (compose earlier later).allAccessesInBounds ↔ earlier.allAccessesInBounds ∧ later.allAccessesInBounds := by
--- proof
-  apply CPythonListsort.AccessTrace.allAccessesInBounds_compose earlier later
-
-/--
-[tempPayloadAccessesLive_empty](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
--/
-@[path]
-private lemma tempPayloadAccessesLive_empty_eq :
--- imply
-  empty.tempPayloadAccessesLive := by
--- proof
-  apply CPythonListsort.AccessTrace.tempPayloadAccessesLive_empty
-
-/--
-[tempPayloadAccessesLive_compose](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
--/
-@[path]
-private lemma tempPayloadAccessesLive_compose_eq
-  {earlier later : AccessTrace} :
--- imply
-  (compose earlier later).tempPayloadAccessesLive ↔ earlier.tempPayloadAccessesLive ∧ later.tempPayloadAccessesLive := by
--- proof
-  apply CPythonListsort.AccessTrace.tempPayloadAccessesLive_compose earlier later
-
-/--
-[trace_bind](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean)
--/
-@[path]
-private lemma trace_bind_eq
-  {current : TraceResult α}
-  {next : α → TraceResult β} :
--- imply
-  (current.bind next).trace = match current.result with := by
--- proof
-  apply CPythonListsort.TraceResult.trace_bind current next
 
 
 -- created on 2026-10-23

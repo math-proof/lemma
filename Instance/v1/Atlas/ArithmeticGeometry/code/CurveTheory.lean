@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 import Mathlib
 import Def.v1.Atlas.ArithmeticGeometry.code.MorphismsCurves
 import Abbrev.v1.Atlas.ArithmeticGeometry.code.RegularLocalRings
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.RegularLocalRings
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.RegularLocalRings
 import Def.v1.Atlas.ArithmeticGeometry.code.CurveTheory.Part5
 
 

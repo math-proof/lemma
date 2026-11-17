@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/GradedAlgebra/MultigradedFreeResolution.lean -/
+module
 
+public import Structure.RingTheory.GradedAlgebra.MultigradedFreeResolution
 
-import Structure.RingTheory.GradedAlgebra.MultigradedFreeResolution
-
+public section
 
 -- The identity linear map preserves each homogeneous piece.
 example {K : Type*} [Field K] {n : ℕ} {M : Type*} [AddCommGroup M]

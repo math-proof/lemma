@@ -2,7 +2,7 @@ import Mathlib
 import Class.AlgebraicCurve_DivisorClassGroup
 import Class.AlgebraicCurve_DivisorPushPull
 import Class.ModularCurve_CanonicalDivisor
-import Lemma.Scheme.CanonicalDivisorUniformizer
+import Theorem.Scheme.CanonicalDivisorUniformizer
 import Class.AlgebraicCurve_CanonicalDivisor
 import Structure.AlgebraicCurve_AdelicIndex
 import Class.AlgebraicCurve_LocalResidue

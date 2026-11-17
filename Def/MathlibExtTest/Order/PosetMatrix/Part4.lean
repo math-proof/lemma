@@ -2,7 +2,7 @@
 
 
 import Def.Order.PosetMatrix
-import Lemma.Set.PosetMatrix
+import Theorem.Set.PosetMatrix
 import Mathlib.Tactic.FinCases
 import Theorem.MathlibExtTest.Order.PosetMatrix.Part3
 

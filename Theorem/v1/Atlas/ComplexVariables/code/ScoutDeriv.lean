@@ -7,9 +7,11 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib
+public import Mathlib
 
+public section
 
 example {g : ℂ → ℂ} {U : Set ℂ} {S : Set ℂ}
     (hU : IsOpen U) (hSU : S ⊆ U) (hg : DifferentiableOn ℂ g U) :

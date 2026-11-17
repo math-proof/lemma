@@ -5,10 +5,9 @@ Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
 import Def.Combinatorics.Enumerative.MedianGenocchiNumber
-import Lemma.Finset.Enumerative.MedianGenocchiNumber
-import Lemma.Finset.Enumerative.EulerSeidelMatrix
+import Theorem.Finset.Enumerative.MedianGenocchiNumber
+import Theorem.Finset.Enumerative.EulerSeidelMatrix
 import Def.Combinatorics.Enumerative.EulerSeidelMatrix
-import Lemma.Nat.GenocchiBernoulli
 import Mathlib.Algebra.Ring.Parity
 import Mathlib.Data.Int.ModEq
 import Mathlib.Tactic.FieldSimp

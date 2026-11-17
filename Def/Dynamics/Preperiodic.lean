@@ -1,10 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Dynamics/Preperiodic.lean -/
 
-import Mathlib.Data.Set.Finite.Basic
-import Mathlib.Data.Set.Finite.Range
-import Mathlib.Dynamics.PeriodicPts.Defs
-import Lean.Elab.Tactic.Omega
+module
 
+public import Mathlib.Data.Set.Finite.Basic
+public import Mathlib.Data.Set.Finite.Range
+public import Mathlib.Dynamics.PeriodicPts.Defs
+public import Lean.Elab.Tactic.Omega
+
+@[expose] public section
 
 namespace Function
 

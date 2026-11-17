@@ -2,7 +2,7 @@
 
 
 import Def.AlgebraicGeometry.EllipticCurve.ManinProjectiveDegree
-import Lemma.Polynomial.PrimitiveTripleManinProjectiveDegreeEllipticCurve.of.All_False.Ne_0
+import Theorem.Polynomial.PrimitiveTripleManinProjectiveDegreeEllipticCurve.of.All_False.Ne_0
 import Mathlib.Tactic.Ring
 
 

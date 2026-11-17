@@ -1,6 +1,10 @@
-import Mathlib.Data.Fintype.Basic
-import Mathlib.Data.Finset.Max
-import Def.Probability.Quantile
+module
+
+public import Mathlib.Data.Fintype.Basic
+public import Mathlib.Data.Finset.Max
+public import Def.Probability.Quantile
+public section
+
 open MeasureTheory
 
 universe u

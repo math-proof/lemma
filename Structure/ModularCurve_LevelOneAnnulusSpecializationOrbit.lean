@@ -1,13 +1,15 @@
-import Mathlib
-import Def.ModularCurve_LevelOneGlueData
-import Lemma.ResidueField.GluedPic0
-import Def.ModularCurve_NodeDepth
-import Structure.ModularCurve_NodeLocalizedPlaces
-import Structure.ModularCurve_ProlongationTuple
-import Structure.ModularCurve_LevelOneAnnulusSpecialization
+module
+
+public import Mathlib
+public import Def.ModularCurve_LevelOneGlueData
+public import Lemma.ResidueField.GluedPic0
+public import Def.ModularCurve_NodeDepth
+public import Structure.ModularCurve_NodeLocalizedPlaces
+public import Structure.ModularCurve_ProlongationTuple
+public import Structure.ModularCurve_LevelOneAnnulusSpecialization
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open AlgebraicCurve IsLocalRing ModularCurve
 

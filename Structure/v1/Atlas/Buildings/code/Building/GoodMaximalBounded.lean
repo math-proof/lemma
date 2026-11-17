@@ -8,15 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.Buildings.code.Building.FixedPointSubgroups
-import Lemma.Set.NonemptyOrbitSetSetGt
-import Def.v1.Atlas.Buildings.code.Building.GoodMaximalBounded
+module
+
+public import Structure.v1.Atlas.Buildings.code.Building.FixedPointSubgroups
+public import Theorem.Set.NonemptyOrbitSetSetGt
+public import Def.v1.Atlas.Buildings.code.Building.GoodMaximalBounded
 set_option maxHeartbeats 1600000
 
 set_option linter.unusedSectionVars false
 
 
-noncomputable section
+public noncomputable section
 
 open Set
 

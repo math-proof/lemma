@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingTrotterLocal
+module
 
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingTrotterLocal
+
+@[expose] public section
 
 namespace StatMech.FrontierA
 

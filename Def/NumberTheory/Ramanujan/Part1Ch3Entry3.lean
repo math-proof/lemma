@@ -14,7 +14,7 @@ import Mathlib.Order.Filter.Defs
 import Mathlib.Topology.Algebra.InfiniteSum.Defs
 import Mathlib.Topology.Defs.Filter
 import Def.NumberTheory.Ramanujan.Part1Ch3Entry9IiGeneralizedbellgeneratingDefining
-import Lemma.Nat.Ramanujan.Part1Ch3Entry9IiGeneralizedbellgeneratingDefining
+import Theorem.Nat.Ramanujan.Part1Ch3Entry9IiGeneralizedbellgeneratingDefining
 import Lemma.Nat.Ramanujan.Part1Ch3Entry9Odd
 import Def.NumberTheory.Ramanujan.Part1Ch3Entry9Odd
 import Mathlib.Algebra.BigOperators.Field

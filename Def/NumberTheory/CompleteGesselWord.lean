@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/CompleteGesselWord.lean -/
 
-import Def.NumberTheory.GesselWord
+module
+
+public import Def.NumberTheory.GesselWord
+
+@[expose] public section
+
 /-!
 # Complete Gessel words
 

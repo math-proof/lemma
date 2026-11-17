@@ -1,6 +1,10 @@
-import Instance.ModularCurve_MultCoveringCharts
-import Def.ModularCurve_JWidth
-import Abbrev.ModularCurve_MultCoveringAnnuli
+module
+
+public import Instance.ModularCurve_MultCoveringCharts
+public import Def.ModularCurve_JWidth
+public import Abbrev.ModularCurve_MultCoveringAnnuli
+
+public section
 
 set_option maxHeartbeats 200000
 set_option synthInstance.maxHeartbeats 400000

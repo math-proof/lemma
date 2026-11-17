@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LSeries/Artin.lean -/
 
-import Mathlib.Analysis.SpecialFunctions.Pow.Complex
-import Mathlib.RepresentationTheory.Invariants
-import Structure.NumberTheory.LSeries.Artin
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Pow.Complex
+public import Mathlib.RepresentationTheory.Invariants
+public import Structure.NumberTheory.LSeries.Artin
+
+@[expose] public section
+
 /-!
 # Artin L-functions
 

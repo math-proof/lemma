@@ -8,8 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.Basic.Part3
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.GeometricRepresentation
+module
+
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.Basic.Part3
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.GeometricRepresentation
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.GeometricRepresentation
+
+public section
+
 open Finset BigOperators
 
 

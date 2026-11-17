@@ -1,8 +1,13 @@
 -- Carved from Lemma/Definitions/Def_FieldTheory_RatFuncTower.lean: instance decls only.
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.Algebra.Polynomial.AlgebraMap
-import Mathlib.Algebra.Algebra.Rat
+
+module
+
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.Algebra.Polynomial.AlgebraMap
+public import Mathlib.Algebra.Algebra.Rat
+
+@[expose] public section
 
 set_option autoImplicit false
 

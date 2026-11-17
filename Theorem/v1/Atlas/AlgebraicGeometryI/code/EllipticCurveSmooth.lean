@@ -7,16 +7,18 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Basic
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.Algebra.Polynomial.SpecificDegree
-import Mathlib.RingTheory.AdjoinRoot
-import Mathlib.Tactic
-import Def.v1.Atlas.AlgebraicGeometryI.code.EllipticCurveSmooth
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Basic
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.Algebra.Polynomial.SpecificDegree
+public import Mathlib.RingTheory.AdjoinRoot
+public import Mathlib.Tactic
+public import Def.v1.Atlas.AlgebraicGeometryI.code.EllipticCurveSmooth
 open Polynomial
 open scoped Polynomial.Bivariate
 
+public section
 
 namespace EllipticCurveSmooth
 

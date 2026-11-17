@@ -1,5 +1,9 @@
-import Mathlib.Algebra.Group.Subgroup.Finite
-import Mathlib.Algebra.BigOperators.Intervals
+module
+
+public import Mathlib.Algebra.Group.Subgroup.Finite
+public import Mathlib.Algebra.BigOperators.Intervals
+
+@[expose] public section
 
 set_option autoImplicit false
 

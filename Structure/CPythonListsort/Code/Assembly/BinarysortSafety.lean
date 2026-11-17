@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/BinarysortSafety.lean -/
 
-import Structure.CPythonListsort.Code.Assembly.SortSliceSafety
-import Def.CPythonListsort.Code.Transcription.Binarysort.Part3
-import Mathlib
-import Def.CPythonListsort.Code.Assembly.BinarysortSafety
+module
+
+public import Structure.CPythonListsort.Code.Assembly.SortSliceSafety
+public import Def.CPythonListsort.Code.Transcription.Binarysort.Part3
+public import Mathlib
+public import Def.CPythonListsort.Code.Assembly.BinarysortSafety
 /-!
 # `binarysort` safety
 
@@ -20,6 +22,9 @@ traced evaluator therefore has no comparator-failure result or comparator
 event; exact erasure below is to the reviewed Lean transcription on that
 explicitly narrower comparator model.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

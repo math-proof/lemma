@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/CongruenceSubgroup.lean -/
 
-import Def.NumberTheory.NumberField.RayClass.Group
-import Lemma.Nat.NumberField.RayClass.Group
+module
+
+public import Def.NumberTheory.NumberField.RayClass.Group
+public import Lemma.Nat.NumberField.RayClass.Group
 /-!
 # Congruence subgroups (N419 Definition 22.1)
 A congruence subgroup is a subgroup of the coprime ideals
@@ -10,7 +12,7 @@ ambient version, smallest/largest examples follow.
 -/
 
 
-noncomputable section
+public noncomputable section
 
 open scoped nonZeroDivisors
 

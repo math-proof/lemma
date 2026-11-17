@@ -1,11 +1,7 @@
-import Lemma.Random.SinglePSpace.of.All_Measurable.All_Measurable
-import Lemma.Random.SinglePSpace.of.Measurable.Measurable
-import Lemma.Random.SinglePSpace.of.Measurable
 import Def.Probability.Process.HiddenMarkovSequence.Part2
 import Notation.Fun
 import Notation.Probability.JointRv
 open MeasureTheory
-
 
 /-- `x` (observations) and `y` (hidden labels) form a first-order hidden Markov model over discrete
 (counting-measure) spaces: every `x k`, `y k` is measurable, `X` and `Y` carry the counting measure

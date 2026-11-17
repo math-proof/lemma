@@ -2,7 +2,7 @@
 
 
 import Def.Probability.LawIteratedLogarithm
-import Lemma.Measure.LawIteratedLogarithm
+import Theorem.Measure.LawIteratedLogarithm
 open MeasureTheory ProbabilityTheory
 open scoped ProbabilityTheory
 

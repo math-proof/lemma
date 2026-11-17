@@ -1,4 +1,9 @@
-import Mathlib.Probability.Process.Filtration
+module
+
+public import Mathlib.Probability.Process.Filtration
+
+@[expose] public section
+
 /-!
 # Shifted filtrations
 

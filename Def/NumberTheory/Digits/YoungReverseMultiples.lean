@@ -1,12 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Digits/YoungReverseMultiples.lean -/
 
-import Mathlib.Algebra.Ring.Parity
-import Mathlib.Data.List.Basic
-import Mathlib.Data.List.Forall2
-import Mathlib.Data.Nat.Digits.Defs
-import Mathlib.Tactic.Ring
-import Inductive.NumberTheory.Digits.YoungReverseMultiples
+module
 
+public import Mathlib.Algebra.Ring.Parity
+public import Mathlib.Data.List.Basic
+public import Mathlib.Data.List.Forall2
+public import Mathlib.Data.Nat.Digits.Defs
+public import Mathlib.Tactic.Ring
+public import Inductive.NumberTheory.Digits.YoungReverseMultiples
+
+@[expose] public section
 
 section
 

@@ -9,14 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.Buildings.code.Building.Link
-import Lemma.Finset.Disjoint.of.In_FacesLinkComplex.In_Faces
-import Lemma.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
+import Theorem.Finset.Disjoint.of.In_FacesLinkComplex.In_Faces
+import Theorem.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
 import Lemma.Finset.IsMaximalUnion.of.IsMaximalLinkComplex.In_Faces
 import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
 import Theorem.v1.Atlas.Buildings.code.Building.LinkBuildingIsoHelper
-import Lemma.Finset.IsMaximalLinkComplex.of.IsMaximalUnion.In_FacesLinkComplex.In_Faces
+import Theorem.Finset.IsMaximalLinkComplex.of.IsMaximalUnion.In_FacesLinkComplex.In_Faces
 import Lemma.Finset.IsFacetToSimplicialComplexAndIsMaximalToSimplicialComplex.Unique.of.IsMaximalToSimplicialComplex.IsFacetToSimplicialComplex.IsThin
-import Lemma.Finset.IsMaximalToSimplicialComplexToChamberComplexUnion.of.IsMaximalLinkComplexToSimplicialComplexToChamberComplex.In_FacesToSimplicialComplexToChamberComplex
+import Theorem.Finset.IsMaximalToSimplicialComplexToChamberComplexUnion.of.IsMaximalLinkComplexToSimplicialComplexToChamberComplex.In_FacesToSimplicialComplexToChamberComplex
 open scoped Classical
 
 

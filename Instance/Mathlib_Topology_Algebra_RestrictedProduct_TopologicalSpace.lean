@@ -1,10 +1,10 @@
 -- Carved from Lemma/Definitions/Def_Mathlib_Topology_Algebra_RestrictedProduct_TopologicalSpace.lean: instance decls only.
 import Mathlib
 import Def.Mathlib_Topology_Algebra_ContinuousMonoidHom
-import Lemma.Set.IsOpenUnits.of.IsOpenSet
-import Lemma.Filter.Algebra.RestrictedProduct.Equiv
+import Theorem.Set.IsOpenUnits.of.IsOpenSet
+import Theorem.Filter.Algebra.RestrictedProduct.Equiv
 import Lemma.Filter.CountableSetsCofinite
-import Lemma.Filter.SecondCountableBases
+import Theorem.Filter.SecondCountableBases
 import Lemma.Filter.Algebra.RestrictedProduct.TopologicalSpace
 
 section

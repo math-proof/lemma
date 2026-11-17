@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/ODE/ExplicitEuler.lean -/
 
 
-import Lemma.Real.ODE.ExplicitEuler
+import Theorem.Real.ODE.ExplicitEuler
 import Mathlib.Analysis.SpecialFunctions.ExpDeriv
 open Set
 open MathlibExt.Analysis.ODE.ExplicitEulerWanted

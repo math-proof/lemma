@@ -1,5 +1,9 @@
-import Mathlib
-import Theorem.Analysis.Section_9_2
+module
+
+public import Mathlib
+public import Theorem.Analysis.Section_9_2
+@[expose] public section
+
 /-!
 # Analysis I, Section 9.2: The algebra of real-valued functions
 

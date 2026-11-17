@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.BooleanFunctions.code.FourierExpansion
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Influence
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Influence
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Convolution
 import Def.v1.Atlas.BooleanFunctions.code.Influence

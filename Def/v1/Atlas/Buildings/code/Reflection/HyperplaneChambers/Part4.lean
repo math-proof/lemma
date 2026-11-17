@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Geometry.Euclidean.Projection
-import Mathlib.Topology.Connected.Basic
-import Mathlib.Analysis.Convex.Basic
-import Mathlib.Topology.Order.Basic
-import Mathlib.Topology.MetricSpace.Basic
-import Structure.v1.Atlas.Buildings.code.Reflection.HyperplaneChambers.Part3
+module
+
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Geometry.Euclidean.Projection
+public import Mathlib.Topology.Connected.Basic
+public import Mathlib.Analysis.Convex.Basic
+public import Mathlib.Topology.Order.Basic
+public import Mathlib.Topology.MetricSpace.Basic
+public import Structure.v1.Atlas.Buildings.code.Reflection.HyperplaneChambers.Part3
+
+@[expose] public section
+
 open scoped InnerProductSpace
 open Set
 

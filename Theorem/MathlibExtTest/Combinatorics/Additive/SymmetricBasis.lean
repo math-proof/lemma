@@ -1,6 +1,6 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Additive/SymmetricBasis.lean -/
 
-import Lemma.Finset.Additive.SymmetricBasis
+import Theorem.Finset.Additive.SymmetricBasis
 
 
 example (A : Finset ℕ) (a : ℕ)

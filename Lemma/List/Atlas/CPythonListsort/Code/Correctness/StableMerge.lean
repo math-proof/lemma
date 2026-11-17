@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.CPythonListsort.Code.Correctness.StableMerge
-open CPythonListsort
+import Lemma.List.Atlas.CPythonListsort.Code.Assembly.Order
 
 
 namespace CPythonListsort
@@ -12,7 +12,6 @@ namespace CPythonListsort
 @[path]
 lemma stableOccurrenceLE_eq_true
   {alpha : Type u}
-  {nu : Type v}
   {lt : BoolComparator alpha}
   {left right : Occurrence alpha} :
 -- imply
@@ -36,7 +35,7 @@ lemma stableEntryLE_eq_true
 -- imply
   stableEntryLE lt left right = true ↔ lt right.key.value left.key.value = false := by
 -- proof
-  simp [stableEntryLE]
+  simp [stableEntryLE, stableOccurrenceLE]
 
 end CPythonListsort
 
@@ -70,8 +69,8 @@ namespace CPythonListsort
 lemma stableEntryMerge_perm_append
   {alpha : Type u}
   {nu : Type v}
-  {lt : BoolComparator alpha}
-  {left right : List (SortSliceEntry (Occurrence alpha) nu)} :
+  (lt : BoolComparator alpha)
+  (left right : List (SortSliceEntry (Occurrence alpha) nu)) :
 -- imply
   (stableEntryMerge lt left right).Perm (left ++ right) :=
 -- proof
@@ -87,9 +86,8 @@ namespace CPythonListsort
 @[path]
 lemma stableOccurrenceMerge_perm_append
   {alpha : Type u}
-  {nu : Type v}
-  {lt : BoolComparator alpha}
-  {left right : List (Occurrence alpha)} :
+  (lt : BoolComparator alpha)
+  (left right : List (Occurrence alpha)) :
 -- imply
   (stableOccurrenceMerge lt left right).Perm (left ++ right) :=
 -- proof
@@ -99,7 +97,7 @@ end CPythonListsort
 
 namespace CPythonListsort
 
-variable {alpha : Type u} {nu : Type v}
+variable {alpha : Type u}
 /--
 [stableOccurrenceLE_trans](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/StableMerge.lean)
 -/
@@ -111,14 +109,13 @@ private lemma stableOccurrenceLE_trans
   (hbc : stableOccurrenceLE lt b c = true) :
   stableOccurrenceLE lt a c = true := by
   rw [stableOccurrenceLE_eq_true] at hab hbc ⊢
-  exact horder.false_trans hab hbc
-set_option linter.flexible false in
+  exact BoolStrictWeakOrder.false_trans horder hab hbc
 
 end CPythonListsort
 
 namespace CPythonListsort
 
-variable {alpha : Type u} {nu : Type v}
+variable {alpha : Type u}
 /--
 [stableOccurrenceLE_total](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/StableMerge.lean)
 -/
@@ -137,7 +134,7 @@ end CPythonListsort
 
 namespace CPythonListsort
 
-variable {alpha : Type u} {nu : Type v}
+variable {alpha : Type u}
 /--
 [sortedRelation_pairwise_merge](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/StableMerge.lean)
 -/
@@ -152,23 +149,23 @@ private lemma sortedRelation_pairwise_merge
   have hleft' : left.Pairwise
     (fun a b => stableOccurrenceLE lt a b = true) := by
     change left.Pairwise (fun a b => lt b.value a.value = false) at hleft
-    simpa using hleft
+    simpa [stableOccurrenceLE] using hleft
   have hright' : right.Pairwise
     (fun a b => stableOccurrenceLE lt a b = true) := by
     change right.Pairwise (fun a b => lt b.value a.value = false) at hright
-    simpa using hright
+    simpa [stableOccurrenceLE] using hright
   have hmerged := List.pairwise_merge
     (stableOccurrenceLE_trans horder)
     (stableOccurrenceLE_total horder) left right hleft' hright'
   change (stableOccurrenceMerge lt left right).Pairwise
     (fun a b => lt b.value a.value = false)
-  simpa [stableOccurrenceMerge] using hmerged
+  simpa [stableOccurrenceMerge, stableOccurrenceLE] using hmerged
 
 end CPythonListsort
 
 namespace CPythonListsort
 
-variable {alpha : Type u} {nu : Type v}
+variable {alpha : Type u}
 /--
 [pairwise_stable_merge](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/StableMerge.lean)
 -/
@@ -188,7 +185,7 @@ private lemma pairwise_stable_merge
   | a :: left, b :: right, hleftSorted, hrightSorted, hstable => by
     rw [stableOccurrenceMerge, List.cons_merge_cons]
     by_cases hchoose : stableOccurrenceLE lt a b = true
-    · rw [if_pos hchoose]
+    · rw [ite_eq_left hchoose]
       apply List.Pairwise.cons
       · intro x hx
         rw [List.mem_merge] at hx
@@ -196,15 +193,14 @@ private lemma pairwise_stable_merge
         rcases hx with hx | hx
         · exact List.rel_of_pairwise_cons hparts.1 hx
         · exact hparts.2.2 a (by simp) x hx
-      · have hparts :=
-  List.pairwise_append.mp hstable
-    apply pairwise_stable_merge horder left (b :: right)
-    · exact hleftSorted.tail
-    · exact hrightSorted
-    · apply List.pairwise_append.mpr
-      exact ⟨hparts.1.tail, hparts.2.1,
-        fun x hx y hy => hparts.2.2 x (by simp [hx]) y hy⟩
-    · rw [if_neg hchoose]
+      · have hparts := List.pairwise_append.mp hstable
+        apply pairwise_stable_merge horder left (b :: right)
+        · exact hleftSorted.tail
+        · exact hrightSorted
+        · apply List.pairwise_append.mpr
+          exact ⟨hparts.1.tail, hparts.2.1,
+            fun x hx y hy => hparts.2.2 x (by simp [hx]) y hy⟩
+    · rw [ite_eq_right hchoose]
       apply List.Pairwise.cons
       · intro x hx
         rw [List.mem_merge] at hx
@@ -219,7 +215,7 @@ private lemma pairwise_stable_merge
             · subst x
               exact Bool.eq_false_iff.mpr (horder.irrefl a.value)
             · exact List.rel_of_pairwise_cons hleftSorted hx
-          have hbx := horder.strict_of_strict_of_not_reverse hba hxa
+          have hbx := BoolStrictWeakOrder.strict_of_strict_of_not_reverse horder hba hxa
           exact Bool.noConfusion (hequiv.1.symm.trans hbx)
         · exact List.rel_of_pairwise_cons hparts.2.1 hx
       · have hparts := List.pairwise_append.mp hstable
@@ -242,27 +238,36 @@ namespace CPythonListsort
 lemma stableEntryMerge_append_right_block
   {alpha : Type u}
   {nu : Type v}
-  {lt : BoolComparator alpha}
-  {suffix : List (SortSliceEntry (Occurrence alpha) nu)} :
--- imply
-  ∀ (left right : List (SortSliceEntry (Occurrence alpha) nu)), (∀ leftEntry ∈ left, ∀ suffixEntry ∈ suffix, lt suffixEntry.key.value leftEntry.key.value = false) → stableEntryMerge lt left (right ++ suffix) = stableEntryMerge lt left right ++ suffix :=
--- proof
-  hafter leftHead (by simp) suffixHead (by simp)
-  have htail :
-    ∀ leftEntry ∈ left,
-      ∀ suffixEntry ∈ suffixHead :: suffixTail,
-        lt suffixEntry.key.value leftEntry.key.value = false := by
-    intro leftEntry hleft suffixEntry hsuffix
-    exact hafter leftEntry (by simp [hleft]) suffixEntry hsuffix
-  simp only [List.nil_append]
-  unfold stableEntryMerge
-  rw [List.cons_merge_cons]
-  have hchoose : stableEntryLE lt leftHead suffixHead = true := by
-    simp [stableEntryLE, stableOccurrenceLE, hnotStrict]
-  rw [if_pos hchoose]
-  have ih := stableEntryMerge_append_right_block lt
-    (suffixHead :: suffixTail) left [] htail
-  simpa [stableEntryMerge] using congrArg (List.cons leftHead) ih
+  (lt : BoolComparator alpha)
+  (suffix : List (SortSliceEntry (Occurrence alpha) nu)) :
+  ∀ (left right : List (SortSliceEntry (Occurrence alpha) nu)),
+    (∀ leftEntry ∈ left, ∀ suffixEntry ∈ suffix,
+      lt suffixEntry.key.value leftEntry.key.value = false) →
+    stableEntryMerge lt left (right ++ suffix) =
+      stableEntryMerge lt left right ++ suffix
+  | [], right, _ => by simp [stableEntryMerge]
+  | leftHead :: left, [], hafter => by
+    cases suffix with
+    | nil => simp [stableEntryMerge]
+    | cons suffixHead suffixTail =>
+      have hnotStrict :
+        lt suffixHead.key.value leftHead.key.value = false :=
+        hafter leftHead (by simp) suffixHead (by simp)
+      have htail :
+        ∀ leftEntry ∈ left,
+          ∀ suffixEntry ∈ suffixHead :: suffixTail,
+            lt suffixEntry.key.value leftEntry.key.value = false := by
+        intro leftEntry hleft suffixEntry hsuffix
+        exact hafter leftEntry (by simp [hleft]) suffixEntry hsuffix
+      simp only [List.nil_append]
+      unfold stableEntryMerge
+      rw [List.cons_merge_cons]
+      have hchoose : stableEntryLE lt leftHead suffixHead = true := by
+        simp [stableEntryLE, stableOccurrenceLE, hnotStrict]
+      rw [ite_eq_left hchoose]
+      have ih := stableEntryMerge_append_right_block lt
+        (suffixHead :: suffixTail) left [] htail
+      simpa [stableEntryMerge] using congrArg (List.cons leftHead) ih
   | leftHead :: left, rightHead :: right, hafter => by
     have hleft :
       ∀ leftEntry ∈ left, ∀ suffixEntry ∈ suffix,
@@ -296,11 +301,10 @@ namespace CPythonListsort
 @[path]
 lemma stableOccurrenceMerge_correct
   {alpha : Type u}
-  {nu : Type v}
   {lt : BoolComparator alpha}
-  {canonical left right : List (Occurrence alpha)}
--- given
   (horder : BoolStrictWeakOrder lt)
+  (canonical left right : List (Occurrence alpha))
+-- given
   (hleft : left.Pairwise (DescendingRunSpec.SortedRelation lt))
   (hright : right.Pairwise (DescendingRunSpec.SortedRelation lt))
   (hstable : StableOccurrencePermutation lt canonical (left ++ right)) :
@@ -350,28 +354,37 @@ namespace CPythonListsort
 lemma stableEntryMerge_append_left_block
   {alpha : Type u}
   {nu : Type v}
-  {lt : BoolComparator alpha}
-  {suffix : List (SortSliceEntry (Occurrence alpha) nu)} :
--- imply
-  ∀ (left right : List (SortSliceEntry (Occurrence alpha) nu)), (∀ rightEntry ∈ right, ∀ suffixEntry ∈ suffix, lt rightEntry.key.value suffixEntry.key.value = true) → stableEntryMerge lt (left ++ suffix) right = stableEntryMerge lt left right ++ suffix :=
--- proof
-  hafter rightHead (by simp) suffixHead (by simp)
-  have htail :
-    ∀ rightEntry ∈ right,
-      ∀ suffixEntry ∈ suffixHead :: suffixTail,
-        lt rightEntry.key.value suffixEntry.key.value = true := by
-    intro rightEntry hright suffixEntry hsuffix
-    exact hafter rightEntry (by simp [hright]) suffixEntry hsuffix
-  simp only [List.nil_append]
-  unfold stableEntryMerge
-  rw [List.cons_merge_cons]
-  have hnot :
-    ¬stableEntryLE lt suffixHead rightHead = true := by
-    simp [stableEntryLE, stableOccurrenceLE, hstrict]
-  rw [if_neg hnot]
-  have ih := stableEntryMerge_append_left_block lt
-    (suffixHead :: suffixTail) [] right htail
-  simpa [stableEntryMerge] using congrArg (List.cons rightHead) ih
+  (lt : BoolComparator alpha)
+  (suffix : List (SortSliceEntry (Occurrence alpha) nu)) :
+  ∀ (left right : List (SortSliceEntry (Occurrence alpha) nu)),
+    (∀ rightEntry ∈ right, ∀ suffixEntry ∈ suffix,
+      lt rightEntry.key.value suffixEntry.key.value = true) →
+    stableEntryMerge lt (left ++ suffix) right =
+      stableEntryMerge lt left right ++ suffix
+  | [], [], _ => by simp [stableEntryMerge]
+  | [], rightHead :: right, hafter => by
+    cases suffix with
+    | nil => simp [stableEntryMerge]
+    | cons suffixHead suffixTail =>
+      have hstrict :
+        lt rightHead.key.value suffixHead.key.value = true :=
+        hafter rightHead (by simp) suffixHead (by simp)
+      have htail :
+        ∀ rightEntry ∈ right,
+          ∀ suffixEntry ∈ suffixHead :: suffixTail,
+            lt rightEntry.key.value suffixEntry.key.value = true := by
+        intro rightEntry hright suffixEntry hsuffix
+        exact hafter rightEntry (by simp [hright]) suffixEntry hsuffix
+      simp only [List.nil_append]
+      unfold stableEntryMerge
+      rw [List.cons_merge_cons]
+      have hnot :
+        ¬stableEntryLE lt suffixHead rightHead = true := by
+        simp [stableEntryLE, stableOccurrenceLE, hstrict]
+      rw [ite_eq_right hnot]
+      have ih := stableEntryMerge_append_left_block lt
+        (suffixHead :: suffixTail) [] right htail
+      simpa [stableEntryMerge] using congrArg (List.cons rightHead) ih
   | leftHead :: left, [], _ => by simp [stableEntryMerge]
   | leftHead :: left, rightHead :: right, hafter => by
     have hleft :
@@ -473,7 +486,7 @@ lemma all_right_lt_suffix_of_pairwise_of_last_lt
     apply hright.rel_getLast_of_rel_getLast_getLast hrightMem
     exact Bool.eq_false_iff.mpr
       (horder.irrefl (right.getLast hrightNe).key.value)
-  exact horder.strict_of_not_reverse_of_strict hlastNotBefore
+  exact BoolStrictWeakOrder.strict_of_not_reverse_of_strict horder hlastNotBefore
     (hboundary suffixEntry hsuffix)
 
 end CPythonListsort
@@ -505,7 +518,7 @@ lemma all_suffix_not_lt_left_of_pairwise_of_not_lt_last
       (horder.irrefl (left.getLast hleftNe).key.value)
   apply Bool.eq_false_iff.mpr
   intro hsuffixLeft
-  have hsuffixLast := horder.strict_of_strict_of_not_reverse hsuffixLeft
+  have hsuffixLast := BoolStrictWeakOrder.strict_of_strict_of_not_reverse horder hsuffixLeft
     hlastNotBefore
   have hnot :
     ¬lt suffixEntry.key.value (left.getLast hleftNe).key.value = true := by
@@ -520,9 +533,7 @@ namespace CPythonListsort
 [stableEntryMerge_equivalent_unequal_left_first_regression](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/StableMerge.lean)
 -/
 @[path]
-lemma stableEntryMerge_equivalent_unequal_left_first_regression
-  {alpha : Type u}
-  {nu : Type v} :
+lemma stableEntryMerge_equivalent_unequal_left_first_regression :
 -- imply
   stableMergeLeftEquivalentEntry.key.value ≠ stableMergeRightEquivalentEntry.key.value ∧ ComparatorEquivalent decadeLt stableMergeLeftEquivalentEntry.key.value stableMergeRightEquivalentEntry.key.value ∧ stableEntryMerge decadeLt [stableMergeLeftEquivalentEntry] [stableMergeRightEquivalentEntry] = [stableMergeLeftEquivalentEntry, stableMergeRightEquivalentEntry] := by
 -- proof
@@ -542,9 +553,7 @@ namespace CPythonListsort
 [stableEntryMerge_strict_right_first_regression](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/StableMerge.lean)
 -/
 @[path]
-lemma stableEntryMerge_strict_right_first_regression
-  {alpha : Type u}
-  {nu : Type v} :
+lemma stableEntryMerge_strict_right_first_regression :
 -- imply
   stableEntryMerge decadeLt [stableMergeLargerEntry] [stableMergeSmallerEntry] = [stableMergeSmallerEntry, stableMergeLargerEntry] := by
 -- proof

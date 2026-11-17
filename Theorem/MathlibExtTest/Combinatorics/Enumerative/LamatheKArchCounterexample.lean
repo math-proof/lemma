@@ -1,8 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/LamatheKArchCounterexample.lean -/
+module
 
-
-import Mathlib.Data.Finset.Basic
-
+public import Mathlib.Data.Finset.Basic
 
 /-!
 # Lamathe k-arch counterexample
@@ -18,6 +17,8 @@ k-arch Graphs*, Journal of Integer Sequences 10 (2007), Article 07.7.5,
 counterexample lines 363–367,
 <https://cs.uwaterloo.ca/journals/JIS/VOL10/Caminiti/caminiti.tex>.
 -/
+
+public section
 
 example :
     ¬ ∃ v ∈ ({1, 2, 3, 4, 5, 6} : Finset ℕ),

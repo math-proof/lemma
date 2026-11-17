@@ -1,9 +1,12 @@
-import Def.Lean.Name
-import Def.Lean.BinderInfo.Part2
-import Def.Lean.Meta.Expr.Part3
+module
+
+public import Def.Lean.Name
+public import Def.Lean.BinderInfo
+public import Def.Lean.Meta.Expr.Part3
 open Lean.Meta
 open Lean (BinderInfo PPContext FormatWithInfos Expr Core.Context getEnv getMCtx getLCtx getOptions ppExt)
 
+public section
 
 @[symm]
 theorem LT.symm [LT α] {a b : α} (h : a < b) : b > a := h

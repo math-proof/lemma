@@ -2,8 +2,14 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Abbrev.RingTheory.MvPowerSeries.Multivariate
+
+module
+
+public import Mathlib
+public import Abbrev.RingTheory.MvPowerSeries.Multivariate
+
+@[expose] public section
+
 open MvPowerSeries Finset BigOperators Finsupp
 
 variable {R : Type*} [CommSemiring R]

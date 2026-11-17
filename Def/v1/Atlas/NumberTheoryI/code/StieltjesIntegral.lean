@@ -8,14 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Normed.Field.Basic
-import Mathlib.Data.Complex.Basic
-import Mathlib.Order.Fin.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Structure.v1.Atlas.NumberTheoryI.code.StieltjesIntegral
+module
 
+public import Mathlib.Analysis.Normed.Field.Basic
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.Order.Fin.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Structure.v1.Atlas.NumberTheoryI.code.StieltjesIntegral
+
+@[expose] public section
 
 namespace RiemannStieltjes
 

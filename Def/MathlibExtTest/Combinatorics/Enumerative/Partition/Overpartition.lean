@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.Partition.Overpartition
-import Lemma.Nat.Enumerative.Partition.Overpartition
+import Theorem.Nat.Enumerative.Partition.Overpartition
 import Theorem.MathlibExtTest.Combinatorics.Enumerative.Partition.Overpartition
 
 

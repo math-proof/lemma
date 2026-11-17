@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Padics/Polynomial.lean -/
 
-import Mathlib.Algebra.Polynomial.Basic
-import Mathlib.NumberTheory.Padics.PadicVal.Basic
+module
 
+public import Mathlib.Algebra.Polynomial.Basic
+public import Mathlib.NumberTheory.Padics.PadicVal.Basic
+
+@[expose] public section
 
 namespace Polynomial
 

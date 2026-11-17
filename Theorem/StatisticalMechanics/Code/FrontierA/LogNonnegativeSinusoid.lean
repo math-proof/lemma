@@ -7,12 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Analysis.Polynomial.MahlerMeasure
-import Def.StatisticalMechanics.Code.FrontierA.LogNonnegativeSinusoid
+public import Mathlib.Analysis.Polynomial.MahlerMeasure
+public import Def.StatisticalMechanics.Code.FrontierA.LogNonnegativeSinusoid
 open scoped ComplexConjugate
 open MeasureTheory Polynomial
 
+public section
 
 namespace StatMech.FrontierA
 

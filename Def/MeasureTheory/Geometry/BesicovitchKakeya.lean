@@ -4,15 +4,20 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
 
-import Mathlib.MeasureTheory.Measure.Haar.OfBasis
-import Mathlib.Topology.MetricSpace.Closeds
-import Mathlib.Topology.Sets.VietorisTopology
-import Mathlib.Topology.Baire.Lemmas
-import Mathlib.MeasureTheory.Constructions.BorelSpace.Metric
-import Mathlib.MeasureTheory.Measure.Prod
-import Mathlib.MeasureTheory.Constructions.Pi
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
-import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
+module
+
+public import Mathlib.MeasureTheory.Measure.Haar.OfBasis
+public import Mathlib.Topology.MetricSpace.Closeds
+public import Mathlib.Topology.Sets.VietorisTopology
+public import Mathlib.Topology.Baire.Lemmas
+public import Mathlib.MeasureTheory.Constructions.BorelSpace.Metric
+public import Mathlib.MeasureTheory.Measure.Prod
+public import Mathlib.MeasureTheory.Constructions.Pi
+public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+public import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
+
+@[expose] public section
+
 open MeasureTheory
 open scoped MeasureTheory ENNReal
 

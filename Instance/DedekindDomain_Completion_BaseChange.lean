@@ -1,6 +1,11 @@
 -- Carved from Lemma/Definitions/Def_DedekindDomain_Completion_BaseChange.lean: instance decls only.
-import Instance.DedekindDomain_AdicValuation_InlineSpecific
-import Class.Mathlib_IsModuleTopology
+
+module
+
+public import Instance.DedekindDomain_AdicValuation_InlineSpecific
+public import Class.Mathlib_IsModuleTopology
+
+@[expose] public section
 
 set_option maxHeartbeats 1200000
 set_option synthInstance.maxHeartbeats 400000

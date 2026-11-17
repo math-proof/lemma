@@ -1,12 +1,14 @@
-import Structure.AdelicDock_LocalEmbedding
-import Def.NumberField_TateGlobalZeta
-import Lemma.Set.HeckeEigenfunction
-import Def.NumberField_IdeleBox
-import Def.UnramifiedWhittaker_ZetaIntegrand
+module
+
+public import Structure.AdelicDock_LocalEmbedding
+public import Def.NumberField_TateGlobalZeta
+public import Lemma.Set.HeckeEigenfunction
+public import Def.NumberField_IdeleBox
+public import Def.UnramifiedWhittaker_ZetaIntegrand
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open Matrix MeasureTheory Polynomial
 open IsDedekindDomain NumberField NumberField.AdelicLevel NumberField.AdeleRing NumberField.TateGlobal

@@ -2,7 +2,7 @@
 
 import Mathlib.Algebra.FreeAlgebra
 import Theorem.NumberTheory.MultipleZeta.Index.Part2
-import Lemma.Nat.MultipleZeta.Index
+import Theorem.Nat.MultipleZeta.Index
 import Def.NumberTheory.MultipleZeta.WordAlgebra.Part2
 
 

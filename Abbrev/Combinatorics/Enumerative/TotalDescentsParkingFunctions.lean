@@ -3,7 +3,7 @@
 import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Data.Nat.Choose.Basic
 import Instance.Combinatorics.Enumerative.ParkingFunction
-import Lemma.Finset.Enumerative.ParkingFunction
+import Theorem.Finset.Enumerative.ParkingFunction
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Tactic.Abel
 import Mathlib.Tactic.Ring

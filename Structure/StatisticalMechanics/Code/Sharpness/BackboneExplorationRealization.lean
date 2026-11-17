@@ -9,10 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Sharpness.BackboneExplorationSelector.Part4
-import Theorem.StatisticalMechanics.Code.Sharpness.BackboneP2CutResummation.Part3
-import Theorem.StatisticalMechanics.Code.Sharpness.BackboneP3Domain
-import Theorem.StatisticalMechanics.Code.Sharpness.BackboneExplorationRealization.Part3
+module
+
+public import Theorem.StatisticalMechanics.Code.Sharpness.BackboneExplorationSelector.Part4
+public import Theorem.StatisticalMechanics.Code.Sharpness.BackboneP2CutResummation.Part3
+public import Theorem.StatisticalMechanics.Code.Sharpness.BackboneP3Domain
+public import Theorem.StatisticalMechanics.Code.Sharpness.BackboneExplorationRealization.Part3
 open SimpleGraph Finset
 open scoped BigOperators
 
@@ -21,7 +23,7 @@ set_option linter.unusedSectionVars false
 
 namespace StatMech.Sharpness
 
-noncomputable section
+public noncomputable section
 
 variable {V : Type*} [Fintype V] [DecidableEq V] [LinearOrder V]
 

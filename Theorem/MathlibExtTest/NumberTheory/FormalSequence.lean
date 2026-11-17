@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/FormalSequence.lean -/
+module
 
+public import Def.NumberTheory.FormalSequence
+public import Mathlib.Tactic.NormNum
 
-import Def.NumberTheory.FormalSequence
-import Mathlib.Tactic.NormNum
-
+public section
 
 namespace MetaMathlibExt
 

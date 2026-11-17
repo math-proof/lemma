@@ -1,9 +1,13 @@
-import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
-import Mathlib.GroupTheory.Transfer
-import Mathlib.Algebra.Module.Hom
-import Mathlib.Data.ZMod.Units
-import Mathlib.Algebra.BigOperators.GroupWithZero.Action
-import Structure.CohCarrier_Level
+module
+
+public import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
+public import Mathlib.GroupTheory.Transfer
+public import Mathlib.Algebra.Module.Hom
+public import Mathlib.Data.ZMod.Units
+public import Mathlib.Algebra.BigOperators.GroupWithZero.Action
+public import Structure.CohCarrier_Level
+
+@[expose] public section
 
 set_option autoImplicit false
 

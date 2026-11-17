@@ -1,13 +1,16 @@
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.Analysis.Normed.Module.Basic
-import Mathlib.Analysis.Normed.Group.Basic
-import Mathlib.Data.Vector.Basic
-import Mathlib.Topology.UniformSpace.UniformEmbedding
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Lemma.Vector.Zero.eq.Replicate
-import Lemma.Tensor.Eq.is.EqDataS
-import Instance.Data.Tensor.Tensor.Part2
-import Instance.MeasureTheory.Integral.IntervalIntegral.Integrals
+module
+
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.Analysis.Normed.Module.Basic
+public import Mathlib.Analysis.Normed.Group.Basic
+public import Mathlib.Data.Vector.Basic
+public import Mathlib.Topology.UniformSpace.UniformEmbedding
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Instance.Data.Tensor.Tensor.Part2
+public import Instance.MeasureTheory.Integral.IntervalIntegral.Integrals
+
+public section
+
 open Tensor
 
 

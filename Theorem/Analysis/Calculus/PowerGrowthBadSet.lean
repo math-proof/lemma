@@ -1,14 +1,19 @@
-import Mathlib.Analysis.Calculus.ContDiff.Deriv
-import Mathlib.Analysis.Calculus.Deriv.Slope
-import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
-import Def.Analysis.Calculus.PowerGrowthBadSet.Part2
+module
+
+public import Mathlib.Analysis.Calculus.ContDiff.Deriv
+public import Mathlib.Analysis.Calculus.Deriv.Slope
+public import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+public import Def.Analysis.Calculus.PowerGrowthBadSet.Part2
+
 /-!
 # Power-growth exceptional sets
 
 This file proves that the points where a positive monotone smooth real function grows at
 least as fast as a fixed power greater than one form a set of finite Lebesgue measure.
 -/
+
+public section
 
 
 namespace Real.Calculus.PowerGrowthBadSet

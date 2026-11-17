@@ -8,13 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Combinatorics.Young.YoungDiagram
-import Mathlib.Data.Finset.Grade
-import Mathlib.Data.Finset.Max
-import Mathlib.Data.List.TakeDrop
-import Mathlib.Tactic.Linarith
-import Inductive.v1.Atlas.AlgebraicCombinatorics.code.HasseWalks
+module
 
+public import Mathlib.Combinatorics.Young.YoungDiagram
+public import Mathlib.Data.Finset.Grade
+public import Mathlib.Data.Finset.Max
+public import Mathlib.Data.List.TakeDrop
+public import Mathlib.Tactic.Linarith
+public import Inductive.v1.Atlas.AlgebraicCombinatorics.code.HasseWalks
+
+@[expose] public section
 
 namespace HasseWalks
 

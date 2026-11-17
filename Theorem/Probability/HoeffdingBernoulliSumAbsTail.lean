@@ -1,10 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/HoeffdingBernoulliSumAbsTail.lean -/
+module
 
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.Probability.Independence.Basic
-import Mathlib.Probability.Moments.SubGaussian
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.Probability.Moments.SubGaussian
 open scoped BigOperators MeasureTheory
+
+public section
 
 variable {Ω : Type*} [MeasurableSpace Ω] {μ : MeasureTheory.Measure Ω}
   [MeasureTheory.IsProbabilityMeasure μ]

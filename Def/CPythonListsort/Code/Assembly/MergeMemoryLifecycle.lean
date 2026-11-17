@@ -1,10 +1,20 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeMemoryLifecycle.lean -/
 
-import Structure.CPythonListsort.Code.Assembly.MergeGetmemRequestBound
-import Def.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
-import Def.CPythonListsort.Code.Assembly.MergeMemcpyProvenance
-import Structure.CPythonListsort.Code.Assembly.MergeLoSafety.Part4
-import Theorem.CPythonListsort.Code.Assembly.MergeHiSafety.Part5
+module
+
+public import Structure.CPythonListsort.Code.Assembly.MergeGetmemRequestBound
+public import Def.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
+public import Def.CPythonListsort.Code.Assembly.MergeMemcpyProvenance
+public import Def.CPythonListsort.Code.Assembly.MergeLoSafety.Part3
+public import Def.CPythonListsort.Code.Assembly.MergeHiSafety.Part4
+public import Structure.CPythonListsort.Code.Assembly.AccessTrace.Part2
+public import Structure.CPythonListsort.Code.Assembly.AccessTrace.Part3
+public import Def.CPythonListsort.Code.Transcription.MergeMemory
+public import Structure.CPythonListsort.Code.Transcription.MergeLo
+public import Structure.CPythonListsort.Code.Transcription.MergeHi.Part2
+
+@[expose] public section
+
 /-!
 # Semantic validation for the real merge-memory trace
 
@@ -19,6 +29,9 @@ field returned by `listSortImplTraced?`.
 namespace CPythonListsort
 
 universe u v
+
+open MergeLoStableFrame.MergeLoStorageFrame.MergeLoMachineInvariant
+open MergeHiStableFrame.MergeHiStorageFrame.MergeHiCursorInvariant
 
 namespace MergeMemorySnapshot
 

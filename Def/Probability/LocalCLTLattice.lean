@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.Probability.LatticeRV
-import Mathlib.Probability.Independence.Basic
-import Mathlib.Probability.IdentDistrib
+module
+
+public import Def.Probability.LatticeRV
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.Probability.IdentDistrib
+
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory Filter
 open scoped Topology ENNReal NNReal
 

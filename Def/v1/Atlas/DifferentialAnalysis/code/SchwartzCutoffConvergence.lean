@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
-import Mathlib.Analysis.Calculus.BumpFunction.Basic
-import Mathlib.Analysis.Distribution.TemperateGrowth
-import Mathlib.Topology.Order.Basic
-import Mathlib.Analysis.Calculus.ContDiff.FTaylorSeries
+module
+
+public import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
+public import Mathlib.Analysis.Calculus.BumpFunction.Basic
+public import Mathlib.Analysis.Distribution.TemperateGrowth
+public import Mathlib.Topology.Order.Basic
+public import Mathlib.Analysis.Calculus.ContDiff.FTaylorSeries
+
+@[expose] public section
+
 open Filter Topology Metric
 open scoped NNReal
 

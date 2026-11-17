@@ -7,13 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib
-import Def.StatisticalMechanics.Code.FrontierA.Z2GaugeHighTemp
+public import Mathlib
+public import Def.StatisticalMechanics.Code.FrontierA.Z2GaugeHighTemp
 open scoped BigOperators
 open Finset
 
+public section
 
 namespace StatMech.FrontierA
 

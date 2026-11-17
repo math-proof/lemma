@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Complex/HaymanAdmissibility.lean -/
+module
 
+public import Theorem.Analysis.Complex.HaymanAdmissibility
 
-import Theorem.Analysis.Complex.HaymanAdmissibility
-
+public section
 
 namespace MathlibExtTest.Analysis.Complex.HaymanAdmissibility
 

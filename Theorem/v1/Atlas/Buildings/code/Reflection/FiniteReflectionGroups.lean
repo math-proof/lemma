@@ -7,8 +7,9 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.Buildings.code.Reflection.FiniteReflectionGroups.Defs.Part4
-import Def.v1.Atlas.Buildings.code.Reflection.FiniteReflectionGroups.Theorems
+public import Def.v1.Atlas.Buildings.code.Reflection.FiniteReflectionGroups.Defs.Part4
+public import Def.v1.Atlas.Buildings.code.Reflection.FiniteReflectionGroups.Theorems
 
-
+public section

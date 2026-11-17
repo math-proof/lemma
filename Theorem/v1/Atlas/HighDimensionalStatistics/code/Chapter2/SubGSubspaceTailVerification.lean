@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_6
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Cor_2_8
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Cor_2_9
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Cor_2_8
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Cor_2_9
 
 

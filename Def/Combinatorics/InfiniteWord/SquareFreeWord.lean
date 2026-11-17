@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/InfiniteWord/SquareFreeWord.lean -/
 
-import Mathlib.Data.List.Infix
+module
+
+public import Mathlib.Data.List.Infix
+
+@[expose] public section
+
 /-!
 Square-free words: finite and infinite words with no ordinary square factor,
 including the ternary-alphabet and fixed-length specializations.

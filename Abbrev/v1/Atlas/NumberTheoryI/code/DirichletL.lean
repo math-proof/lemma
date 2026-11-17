@@ -8,17 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.NumberTheory.LSeries.PrimesInAP
-import Mathlib.NumberTheory.LSeries.DirichletContinuation
-import Mathlib.NumberTheory.EulerProduct.DirichletLSeries
-import Mathlib.NumberTheory.LSeries.Nonvanishing
-import Mathlib.NumberTheory.LSeries.RiemannZeta
+module
+
+public import Mathlib.NumberTheory.LSeries.PrimesInAP
+public import Mathlib.NumberTheory.LSeries.DirichletContinuation
+public import Mathlib.NumberTheory.EulerProduct.DirichletLSeries
+public import Mathlib.NumberTheory.LSeries.Nonvanishing
+public import Mathlib.NumberTheory.LSeries.RiemannZeta
 open Complex Filter Topology Nat
 
 open scoped LSeries.notation
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace DirichletLFunction
 

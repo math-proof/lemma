@@ -9,14 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.KahlerManifolds
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.ConnectionsCurvature
 import Structure.v1.Atlas.GeometryOfManifolds.code.ConnectionsCurvature.Part7
 import Structure.v1.Atlas.GeometryOfManifolds.code.AdvancedKahler
 set_option autoImplicit false
 
 open DifferentialFormSpace
-
 
 /-- A line bundle $L$ is ample if its curvature form is nondegenerate, i.e.
 $X \mapsto \iota_X R^\nabla$ is injective. Geometrically this expresses
@@ -35,7 +32,6 @@ class IsVeryAmple
   sections_give_embedding : Function.Injective (fun (X : VF) => inst.ι X L.curvature)
   has_sections : ∃ (s₁ s₂ : Ω 0), s₁ ≠ s₂ ∧ inst.d s₁ ≠ inst.d s₂
 
-
 /-- A $2$-form $\omega$ is a Kähler form if it is closed ($d\omega = 0$) and
 nondegenerate ($X \mapsto \iota_X \omega$ is injective). -/
 class IsKahlerForm
@@ -43,5 +39,4 @@ class IsKahlerForm
     (ω : Ω 2) : Prop where
   closed : inst.d ω = 0
   nondegenerate : Function.Injective (fun (X : VF) => inst.ι X ω)
-
 

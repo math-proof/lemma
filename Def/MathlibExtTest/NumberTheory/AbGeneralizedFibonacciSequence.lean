@@ -2,7 +2,7 @@
 
 
 import Structure.NumberTheory.AbGeneralizedFibonacciSequence
-import Lemma.Nat.AbGeneralizedFibonacciSequence
+import Theorem.Nat.AbGeneralizedFibonacciSequence
 
 
 namespace MetaMathlibExt

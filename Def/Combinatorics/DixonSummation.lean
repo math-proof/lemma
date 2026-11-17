@@ -3,15 +3,21 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Int.Interval
-import Mathlib.Tactic.NormNum
-import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Algebra.Ring.Int.Parity
-import Mathlib.Data.Nat.Choose.Cast
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Int.Interval
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Algebra.BigOperators.Field
+public import Mathlib.Algebra.Ring.Int.Parity
+public import Mathlib.Data.Nat.Choose.Cast
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 /-!
 Source: Abdelmalek Abdesselam, "An algebraic independence result related to a
 conjecture of Dixmier on binary form invariants", arXiv:1903.11147v2,

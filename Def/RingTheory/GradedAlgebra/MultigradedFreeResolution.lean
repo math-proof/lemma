@@ -4,9 +4,14 @@
   Author: Muse Code powered by Meta Muse Spark
 -/
 
-import Structure.RingTheory.GradedAlgebra.MultigradedPolynomialModule
-import Mathlib.Algebra.Category.ModuleCat.Basic
-import Mathlib.CategoryTheory.Preadditive.Projective.Resolution
+module
+
+public import Structure.RingTheory.GradedAlgebra.MultigradedPolynomialModule
+public import Mathlib.Algebra.Category.ModuleCat.Basic
+public import Mathlib.CategoryTheory.Preadditive.Projective.Resolution
+
+@[expose] public section
+
 /-!
 # Multigraded free modules and graded free resolutions
 

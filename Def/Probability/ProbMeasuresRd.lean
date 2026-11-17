@@ -8,16 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.MeasureTheory.Measure.Typeclasses.Finite
-import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
-import Mathlib.MeasureTheory.MeasurableSpace.Pi
-import Mathlib.MeasureTheory.Constructions.BorelSpace.Order
-import Mathlib.MeasureTheory.PiSystem
-import Mathlib.Topology.Order.Basic
-import Mathlib.Order.Filter.Basic
-import Mathlib.Data.ENNReal.Basic
-import Mathlib.Analysis.SpecificLimits.Basic
+module
 
+public import Mathlib.MeasureTheory.Measure.Typeclasses.Finite
+public import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+public import Mathlib.MeasureTheory.MeasurableSpace.Pi
+public import Mathlib.MeasureTheory.Constructions.BorelSpace.Order
+public import Mathlib.MeasureTheory.PiSystem
+public import Mathlib.Topology.Order.Basic
+public import Mathlib.Order.Filter.Basic
+public import Mathlib.Data.ENNReal.Basic
+public import Mathlib.Analysis.SpecificLimits.Basic
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ClassicalLteTest.lean -/
 
 
-import Lemma.Nat.ClassicalLte
+import Theorem.Nat.ClassicalLte
 import Mathlib.Tactic
 
 

@@ -1,9 +1,11 @@
-import Mathlib
-import Def.AlgebraicCurve_PlaceEvaluation
+module
+
+public import Mathlib
+public import Def.AlgebraicCurve_PlaceEvaluation
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace AlgebraicCurve
 

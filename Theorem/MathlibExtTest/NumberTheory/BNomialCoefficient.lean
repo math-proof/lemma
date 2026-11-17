@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/BNomialCoefficient.lean -/
+module
 
-
-import Def.NumberTheory.BNomialCoefficient
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
+public import Def.NumberTheory.BNomialCoefficient
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Ring
 open Polynomial
 
+public section
 
 namespace MetaMathlibExt
 

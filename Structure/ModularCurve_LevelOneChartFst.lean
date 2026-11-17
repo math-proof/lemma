@@ -1,15 +1,17 @@
-import Mathlib
-import Structure.ModularCurve_LevelOneProlongationPair
-import Structure.AlgebraicCurve_SemistableCharts
-import Lemma.Finsupp.SpecializeModuli
-import Def.ModularCurve_SupersingularModuli
-import Lemma.Finset.SupersingularNodePlaces
+module
+
+public import Mathlib
+public import Structure.ModularCurve_LevelOneProlongationPair
+public import Structure.AlgebraicCurve_SemistableCharts
+public import Lemma.Finsupp.SpecializeModuli
+public import Def.ModularCurve_SupersingularModuli
+public import Lemma.Finset.SupersingularNodePlaces
 
 set_option autoImplicit false
 set_option synthInstance.maxHeartbeats 400000
 set_option maxHeartbeats 800000
 
-noncomputable section
+public noncomputable section
 
 open AlgebraicCurve IsLocalRing ModularCurve
 

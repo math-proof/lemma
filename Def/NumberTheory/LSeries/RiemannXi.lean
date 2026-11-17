@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LSeries/RiemannXi.lean -/
 
-import Mathlib.NumberTheory.LSeries.Nonvanishing
+module
+
+public import Mathlib.NumberTheory.LSeries.Nonvanishing
+
+@[expose] public section
+
 /-!
 # The Riemann xi function
 

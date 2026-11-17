@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.Distributions.Poisson.Basic
-import Mathlib.Probability.Independence.Basic
-import Mathlib.MeasureTheory.Measure.MeasureSpace
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Exp
-import Mathlib.Topology.Algebra.InfiniteSum.Real
-import Def.Probability.PoissonRV
+module
+
+public import Mathlib.Probability.Distributions.Poisson.Basic
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.MeasureTheory.Measure.MeasureSpace
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Exp
+public import Mathlib.Topology.Algebra.InfiniteSum.Real
+public import Def.Probability.PoissonRV
+
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory Filter Real Finset
 open scoped ENNReal NNReal Topology Nat
 

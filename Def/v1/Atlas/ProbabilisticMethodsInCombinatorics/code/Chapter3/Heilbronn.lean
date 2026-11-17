@@ -8,17 +8,22 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Real.Archimedean
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.Algebra.Field.ZMod
-import Mathlib.NumberTheory.Bertrand
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.NormNum
+module
+
+public import Mathlib.Data.Real.Archimedean
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Data.Nat.Prime.Basic
+public import Mathlib.Algebra.Field.ZMod
+public import Mathlib.NumberTheory.Bertrand
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.NormNum
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open Set Finset

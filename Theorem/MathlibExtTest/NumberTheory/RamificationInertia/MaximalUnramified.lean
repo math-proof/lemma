@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.RamificationInertia.MaximalUnramified
-import Lemma.Nat.RamificationInertia.MaximalUnramified
+import Theorem.Nat.RamificationInertia.MaximalUnramified
 open IntermediateField
 
 variable (A K L : Type*) [CommRing A] [Field K] [Field L]

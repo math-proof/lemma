@@ -1,14 +1,17 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Digits/KaprekarStructuralClassification.lean -/
 
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Set.Function
-import Mathlib.Logic.Function.Iterate
-import Mathlib.Data.List.Sort
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.Push
+module
 
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Set.Function
+public import Mathlib.Logic.Function.Iterate
+public import Mathlib.Data.List.Sort
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.IntervalCases
+public import Mathlib.Tactic.Push
+
+@[expose] public section
 
 section
 

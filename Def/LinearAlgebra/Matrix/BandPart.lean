@@ -1,5 +1,8 @@
-import Mathlib.Data.Matrix.Basic
+module
 
+public import Mathlib.Data.Matrix.Basic
+
+@[expose] public section
 
 /--
 Dilated band, matching [tf.linalg.band_part](https://tensorflow.google.cn/api_docs/python/tf/linalg/band_part)

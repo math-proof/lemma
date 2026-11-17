@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.ArithmeticGeometry.code.FiniteFields
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.FiniteFields
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.FiniteFields
 import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Varieties
 import Def.v1.Atlas.ArithmeticGeometry.code.Varieties.Part9
 

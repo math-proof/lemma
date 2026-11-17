@@ -8,14 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.LieGroups.code.CategoryOII.Part3
-import Lemma.Int.WeightLE.of.BruhatLE
-import Mathlib.LinearAlgebra.TensorProduct.Basic
-import Mathlib.Data.Multiset.Basic
+module
+
+public import Def.v1.Atlas.LieGroups.code.CategoryOII.Part3
+public import Lemma.Int.WeightLE.of.BruhatLE
+public import Mathlib.LinearAlgebra.TensorProduct.Basic
+public import Mathlib.Data.Multiset.Basic
 universe v
 
 
-noncomputable section
+public noncomputable section
 
 structure HasVermaFiltration
     {R : Type*} [CommRing R]

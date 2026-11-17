@@ -1,14 +1,16 @@
-import Mathlib.NumberTheory.ModularForms.QExpansion
-import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
-import Mathlib.Analysis.Meromorphic.Order
-import Structure.ModularCurve_X0
-import Def.ModularCurve_LaurentCoeff
-import Class.AlgebraicCurve_DivisorClassGroup
-import Def.ModularCurve_ComplexPlaceDictionary
+module
+
+public import Mathlib.NumberTheory.ModularForms.QExpansion
+public import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
+public import Mathlib.Analysis.Meromorphic.Order
+public import Structure.ModularCurve_X0
+public import Def.ModularCurve_LaurentCoeff
+public import Class.AlgebraicCurve_DivisorClassGroup
+public import Def.ModularCurve_ComplexPlaceDictionary
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open UpperHalfPlane
 open scoped MatrixGroups Topology

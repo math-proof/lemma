@@ -2,7 +2,7 @@
 
 
 import Instance.NumberTheory.FunctionField.AdeleRing
-import Lemma.Nat.FunctionField.AdeleRing
+import Theorem.Nat.FunctionField.AdeleRing
 open scoped RestrictedProduct
 
 

@@ -8,15 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Complex.Liouville
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
-import Mathlib.Analysis.Complex.RemovableSingularity
-import Mathlib.Analysis.Complex.PhragmenLindelof
-import Mathlib.Analysis.Complex.Periodic
-import Mathlib.Analysis.Analytic.IsolatedZeros
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Complex
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
-import Mathlib.Analysis.Real.Pi.Bounds
+module
+
+public import Mathlib.Analysis.Complex.Liouville
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
+public import Mathlib.Analysis.Complex.RemovableSingularity
+public import Mathlib.Analysis.Complex.PhragmenLindelof
+public import Mathlib.Analysis.Complex.Periodic
+public import Mathlib.Analysis.Analytic.IsolatedZeros
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Complex
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
+public import Mathlib.Analysis.Real.Pi.Bounds
+
+@[expose] public section
+
 open Complex Filter Asymptotics Function Set
 open scoped Real Topology
 

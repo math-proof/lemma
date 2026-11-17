@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Convolution
-import Mathlib.Analysis.InnerProductSpace.EuclideanDist
-import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
-import Mathlib.Analysis.Fourier.FourierTransform
+module
+
+public import Mathlib.Analysis.Convolution
+public import Mathlib.Analysis.InnerProductSpace.EuclideanDist
+public import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
+public import Mathlib.Analysis.Fourier.FourierTransform
+
+@[expose] public section
+
 open MeasureTheory Function Set Metric
 open scoped Convolution
 

@@ -1,9 +1,11 @@
-import Mathlib
-import Structure.CerednikDrinfeld_FormalUpperHalfPlanePoints
+module
+
+public import Mathlib
+public import Structure.CerednikDrinfeld_FormalUpperHalfPlanePoints
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open scoped TensorProduct MatrixGroups
 open LT.LatticeTree TensorProduct

@@ -1,4 +1,9 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
+
 /-!
 # Analysis I, Appendix B.1: The decimal representation of natural numbers
 

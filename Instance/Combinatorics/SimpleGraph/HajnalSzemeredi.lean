@@ -4,22 +4,25 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
-import Mathlib.Data.Set.Card
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Combinatorics.Enumerative.DoubleCounting
-import Mathlib.Combinatorics.SimpleGraph.Finite
-import Mathlib.Combinatorics.SimpleGraph.Sum
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Finset.Max
-import Mathlib.Data.Finset.Powerset
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Fintype.EquivFin
-import Mathlib.Data.Fintype.Sum
-import Mathlib.Logic.Equiv.Fin.Basic
-import Mathlib.Logic.Relation
-import Def.Combinatorics.SimpleGraph.HajnalSzemeredi
+module
 
+public import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
+public import Mathlib.Data.Set.Card
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Combinatorics.Enumerative.DoubleCounting
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Mathlib.Combinatorics.SimpleGraph.Sum
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Finset.Max
+public import Mathlib.Data.Finset.Powerset
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Fintype.EquivFin
+public import Mathlib.Data.Fintype.Sum
+public import Mathlib.Logic.Equiv.Fin.Basic
+public import Mathlib.Logic.Relation
+public import Def.Combinatorics.SimpleGraph.HajnalSzemeredi
+
+@[expose] public section
 
 namespace MathlibExt.Combinatorics.SimpleGraph.HajnalSzemerediWanted
 

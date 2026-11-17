@@ -1,5 +1,10 @@
-import Mathlib
-import Instance.Analysis.MeasureTheory.Notation.Part2
+module
+
+public import Mathlib
+public import Instance.Analysis.MeasureTheory.Notation.Part2
+
+@[expose] public section
+
 open Filter
 
 

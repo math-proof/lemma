@@ -8,7 +8,10 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Lemma22_10
+module
+
+@[expose] public section
+
 open scoped RestrictedProduct
 open FunctionFieldAdeleRing DiscreteValuationFamily
 

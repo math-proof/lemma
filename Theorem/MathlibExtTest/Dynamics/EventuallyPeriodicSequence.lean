@@ -2,7 +2,7 @@
 
 
 import Abbrev.Dynamics.EventuallyPeriodicSequence
-import Lemma.Set.EventuallyPeriodicSequence
+import Theorem.Set.EventuallyPeriodicSequence
 import Mathlib.Data.ZMod.Defs
 
 

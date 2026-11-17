@@ -9,12 +9,10 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.GeometryOfManifolds.code.HamiltonianVectorFields.Part3
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.HamiltonianVectorFields
 import Def.v1.Atlas.GeometryOfManifolds.code.ArnoldConjecture
 set_option autoImplicit false
 
 open DifferentialFormSpace
-
 
 /-- The fixed-point set $\mathrm{Fix}(\varphi)$ of a Hamiltonian diffeomorphism, exposed as a
 finite indexing type with evaluation $\mathrm{ev}_x(g) = g(x)$ satisfying $\mathrm{ev}_x(\varphi^* g)
@@ -39,7 +37,6 @@ class IsNondegenerate
     (f : HamiltonianDiffeomorphism S)
     extends HasFixedPoints S f where
   eval_injective : Function.Injective eval
-
 
 /-- A graded cohomology theory $H^k(M, \mathbb{R})$ taking finite-dimensional real values. -/
 class HasCohomology

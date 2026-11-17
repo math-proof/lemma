@@ -8,16 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.ArithmeticGeometry.code.WeilChatelet.Part2
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.WeilChatelet
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.JInvariant
-import Def.v1.Atlas.ArithmeticGeometry.code.JInvariant.Part3
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Instance.v1.Atlas.ArithmeticGeometry.code.TorsorIffJacobian
+module
+
+public import Def.v1.Atlas.ArithmeticGeometry.code.WeilChatelet.Part2
+public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.WeilChatelet
+public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.JInvariant
+public import Def.v1.Atlas.ArithmeticGeometry.code.JInvariant.Part3
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Instance.v1.Atlas.ArithmeticGeometry.code.TorsorIffJacobian
 set_option autoImplicit false
 
 
-noncomputable section
+public noncomputable section
 
 universe u
 

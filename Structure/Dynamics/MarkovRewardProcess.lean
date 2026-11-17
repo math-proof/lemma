@@ -1,7 +1,13 @@
-import Mathlib.Probability.ProbabilityMassFunction.Constructions
-import Def.Probability.Process.MarkovChainTrajectory.Part2
-import Lemma.Matrix.Any_And_Stationary.of.RowStochastic
-import Lemma.Matrix.Sum_Mul.eq.One.of.StochasticVec.RowStochastic
+module
+
+public import Mathlib.Probability.ProbabilityMassFunction.Constructions
+public import Structure.Probability.Process.MarkovChain
+public import Class.Probability.Process.StochasticProcessTypes.Part2
+public import Class.Probability.Process.StochasticProcessTypes.Part3
+public import Def.Probability.Process.MarkovChain.Part2
+public import Instance.Probability.Process.MarkovChain.Part3
+public section
+
 open MeasureTheory ProbabilityTheory Finset
 open scoped ENNReal Matrix
 

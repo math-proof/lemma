@@ -8,14 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
-import Mathlib.Algebra.BigOperators.Finprod
-import Mathlib.Tactic.FinCases
-import Mathlib.Algebra.Algebra.Basic
-import Mathlib.LinearAlgebra.Dimension.Free
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Structure.v1.Atlas.TensorCategories.code.SweedlerConcrete
+module
+
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
+public import Mathlib.Algebra.BigOperators.Finprod
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Algebra.Algebra.Basic
+public import Mathlib.LinearAlgebra.Dimension.Free
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Structure.v1.Atlas.TensorCategories.code.SweedlerConcrete
+
+@[expose] public section
+
 variable {k : Type*} [Field k]
 
 

@@ -8,16 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Nat.Choose.Sum
-import Mathlib.RingTheory.MvPolynomial.EulerIdentity
-import Mathlib.Topology.Basic
-import Mathlib.Topology.Order
-import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Def.v1.Atlas.AlgebraicGeometryI.code.BertiniVeronese.Part2
+module
+
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Data.Nat.Choose.Sum
+public import Mathlib.RingTheory.MvPolynomial.EulerIdentity
+public import Mathlib.Topology.Basic
+public import Mathlib.Topology.Order
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Def.v1.Atlas.AlgebraicGeometryI.code.BertiniVeronese.Part2
 
 
-noncomputable section
+public noncomputable section
 
 open MvPolynomial Finset
 

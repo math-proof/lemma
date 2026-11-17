@@ -4,10 +4,15 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.Calculus.IteratedDeriv.Defs
-import Mathlib.Analysis.Complex.TaylorSeries
-import Mathlib.Topology.UniformSpace.Uniformizable
+module
+
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Calculus.IteratedDeriv.Defs
+public import Mathlib.Analysis.Complex.TaylorSeries
+public import Mathlib.Topology.UniformSpace.Uniformizable
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 3, Entry 1
 

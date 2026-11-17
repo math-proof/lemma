@@ -1,5 +1,6 @@
 import Mathlib.Probability.Independence.Integration
 import Lemma.Random.Cov.eq.Integral
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory
 
 
@@ -18,3 +19,4 @@ private lemma main
 
 
 -- created on 2023-03-24
+-- updated on 2026-11-17

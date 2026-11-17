@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Mathlib.AlgebraicGeometry.Modules.Tilde
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.QCohTildeFunctor
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.QCohTildeFunctor
 import Def.v1.Atlas.AlgebraicGeometryI.code.QCohMathlib
 
 

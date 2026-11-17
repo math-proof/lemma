@@ -2,7 +2,7 @@
 
 
 import Theorem.NumberTheory.Padics.Digits.Part2
-import Lemma.Nat.Padics.Digits
+import Theorem.Nat.Padics.Digits
 set_option autoImplicit false
 
 open PadicInt Finset

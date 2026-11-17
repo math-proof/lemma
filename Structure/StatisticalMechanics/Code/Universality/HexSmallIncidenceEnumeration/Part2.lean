@@ -9,10 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexStartPhaseRepair.Part4
-import Theorem.StatisticalMechanics.Code.Universality.HexBoundaryUncond.Part2
-import Theorem.StatisticalMechanics.Code.Universality.HexSmallIncidenceEnumeration.Part3
+module
 
+public import Theorem.StatisticalMechanics.Code.Universality.HexStartPhaseRepair.Part4
+public import Theorem.StatisticalMechanics.Code.Universality.HexBoundaryUncond.Part2
+public import Theorem.StatisticalMechanics.Code.Universality.HexSmallIncidenceEnumeration.Part3
+
+
+public section
 
 namespace StatMech.Universality
 

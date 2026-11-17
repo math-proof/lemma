@@ -2,11 +2,16 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.NumberTheory.Harmonic.Defs
-import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
-import Mathlib.Analysis.SpecialFunctions.Gamma.Digamma
-import Mathlib.NumberTheory.Harmonic.Bounds
+module
+
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.NumberTheory.Harmonic.Defs
+public import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Digamma
+public import Mathlib.NumberTheory.Harmonic.Bounds
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 9, Entry 33
 

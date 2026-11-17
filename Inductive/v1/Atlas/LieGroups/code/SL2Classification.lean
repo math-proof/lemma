@@ -8,12 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.LieGroups.code.SL2Representations.Part2
-import Lemma.Complex.IsIsomorphicGK.of.IsIsomorphicGK.IsIsomorphicGK
-import Def.v1.Atlas.LieGroups.code.SL2Classification
+module
 
+public import Def.v1.Atlas.LieGroups.code.SL2Representations.Part2
+public import Def.v1.Atlas.LieGroups.code.SL2Classification
 
-inductive SL2SimpleModule where
+public inductive SL2SimpleModule where
   | finiteDim (m : ℕ)
   | discreteSeriesMinus (m : ℕ) (hm : m ≥ 1)
   | discreteSeriesPlus (m : ℕ) (hm : m ≥ 1)

@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.CarmichaelNumber
-import Lemma.Nat.CarmichaelNumber
+import Theorem.Nat.CarmichaelNumber
 import Mathlib.Tactic.NormNum.Prime
 
 

@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Structure.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM1.LinearPDEs
+module
 
+public import Mathlib
+public import Structure.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM1.LinearPDEs
+
+@[expose] public section
 
 /-- The $N$-jet of the function $u$ at the point $x$: bundles $x$ together with
 $\{\partial^{\alpha} u(x)\}_{|\alpha| \le N}$. -/

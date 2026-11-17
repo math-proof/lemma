@@ -1,10 +1,12 @@
-import Def.ModularCurve_ComponentGroupHecke
-import Structure.HeckeGalois_EichlerShimura
-import Structure.CerednikDrinfeld_Ribbon
+module
+
+public import Def.ModularCurve_ComponentGroupHecke
+public import Structure.HeckeGalois_EichlerShimura
+public import Structure.CerednikDrinfeld_Ribbon
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace ModularCurve
 

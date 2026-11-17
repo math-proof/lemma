@@ -1,6 +1,15 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.CPythonListsort.Code.Transcription.MergeForceCollapse
+module
+
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.CPythonListsort.Code.Policy.PendingLayout
+public import Def.CPythonListsort.Code.Transcription.MergeAt.Part3
+public import Theorem.CPythonListsort.Code.Transcription.MergeForceCollapse
+public import Lemma.List.Atlas.CPythonListsort.Code.Policy.PendingLayout
+public import Lemma.List.Atlas.CPythonListsort.Code.Transcription.MergeAt
+public import Lemma.List.Atlas.CPythonListsort.Code.Policy.MergeAtPreservation
+
+public section
 
 
 namespace CPythonListsort
@@ -9,9 +18,7 @@ namespace CPythonListsort
 [PendingRunsCover.singleton_geometry](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Policy/MergeForceCollapsePreservation.lean)
 -/
 @[path]
-lemma PendingRunsCover.singleton_geometry
-  {κ : Type u}
-  {ν : Type v}
+public lemma PendingRunsCover.singleton_geometry
   {cursor limit : Nat}
   {run : PendingRun}
 -- given
@@ -29,12 +36,12 @@ namespace CPythonListsort
 variable {κ : Type u} {ν : Type v}
 /--
 [mergeForceCollapseLoop_preserves_pendingLayout](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Policy/MergeForceCollapsePreservation.lean)
--/
-@[path]
 successful recursive step preserves the structural frame and pending layout;
 an initially nonempty stack therefore stops with exactly one run.
 The lemma makes no claim that a successful, non-fuel-exhausted result
-exists. -/
+exists.
+-/
+@[path]
 private theorem mergeForceCollapseLoop_preserves_pendingLayout
   (fuel : Nat) (state : MergeState κ ν) (scanned : Nat)
   (result : MergeForceCollapseResult κ ν)
@@ -52,7 +59,7 @@ private theorem mergeForceCollapseLoop_preserves_pendingLayout
   | zero =>
     simp only [mergeForceCollapseLoop?] at hloop
     by_cases hsmall : state.pending.size ≤ 1
-    · rw [if_pos hsmall] at hloop
+    · rw [ite_eq_left hsmall] at hloop
       injection hloop with hresult
       subst result
       have hlengthLe : state.pending.toList.length ≤ 1 := by
@@ -62,7 +69,7 @@ private theorem mergeForceCollapseLoop_preserves_pendingLayout
       have hlength : state.pending.toList.length = 1 := by omega
       obtain ⟨run, hruns⟩ := List.length_eq_one_iff.mp hlength
       exact ⟨rfl, rfl, rfl, hlayout, run, hruns⟩
-    · rw [if_neg hsmall] at hloop
+    · rw [ite_eq_right hsmall] at hloop
       injection hloop with hresult
       subst result
       change true = false at hfuel
@@ -70,7 +77,7 @@ private theorem mergeForceCollapseLoop_preserves_pendingLayout
   | succ remaining ih =>
     simp only [mergeForceCollapseLoop?] at hloop
     by_cases hmany : 1 < state.pending.size
-    · rw [if_pos hmany] at hloop
+    · rw [ite_eq_left hmany] at hloop
       cases hindex : forceCollapseIndex? state with
       | none => simp [hindex] at hloop
       | some i =>
@@ -81,13 +88,11 @@ private theorem mergeForceCollapseLoop_preserves_pendingLayout
           simp only [hmerge] at hloop
           by_cases hmergeSuccess :
             merged.returnCode = 0 ∧ !merged.fuelExhausted
-          · rw [if_pos hmergeSuccess] at hloop
-            rcases mergeAt_preserves_pendingLayout state scanned i
-              merged hlayout hmerge with
+          · rw [ite_eq_left hmergeSuccess] at hloop
+            rcases mergeAt_preserves_pendingLayout hlayout hmerge with
               ⟨before, left, right, after, _, _, hmergedPending,
                 _, _, _, _, _, _, hmergedLayout⟩
-            rcases mergeAt_pending_frame_of_eq_some state i merged
-              hmerge with
+            rcases mergeAt_pending_frame_of_eq_some hmerge with
               ⟨_, _, _, _, hmergedListlen, hmergedBasekeys,
                 hmergedDataSize, _⟩
             have hmergedNonempty :
@@ -103,7 +108,7 @@ private theorem mergeForceCollapseLoop_preserves_pendingLayout
                 hresultBasekeys.trans hmergedBasekeys,
                 hresultDataSize.trans hmergedDataSize,
                 hresultLayout, run, hresultPending⟩
-          · rw [if_neg hmergeSuccess] at hloop
+          · rw [ite_eq_right hmergeSuccess] at hloop
             injection hloop with hresult
             subst result
             change merged.returnCode = 0 at hcode
@@ -111,7 +116,7 @@ private theorem mergeForceCollapseLoop_preserves_pendingLayout
             exfalso
             apply hmergeSuccess
             exact ⟨hcode, by simp [hfuel]⟩
-    · rw [if_neg hmany] at hloop
+    · rw [ite_eq_right hmany] at hloop
       injection hloop with hresult
       subst result
       have hsmall : state.pending.size ≤ 1 := by omega
@@ -131,7 +136,7 @@ namespace CPythonListsort
 [mergeForceCollapse_preserves_pendingLayout](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Policy/MergeForceCollapsePreservation.lean)
 -/
 @[path]
-lemma mergeForceCollapse_preserves_pendingLayout
+public lemma mergeForceCollapse_preserves_pendingLayout
   {κ : Type u}
   {ν : Type v}
   {state : MergeState κ ν}

@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/DiagonalSumsOfARiordanOrTriangularArray.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.DiagonalSumsOfARiordanOrTriangularArray
 
-import Def.Combinatorics.Enumerative.DiagonalSumsOfARiordanOrTriangularArray
-
+public section
 
 namespace MetaMathlibExt
 

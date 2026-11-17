@@ -4,11 +4,16 @@
   Author: Muse Code powered by Meta Muse Spark (Muse Spark 1.3)
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.NumberTheory.LegendreSymbol.Basic
-import Mathlib.Tactic
-import Mathlib.Tactic.NormNum.LegendreSymbol
-import Instance.NumberTheory.QuadraticGaussSumFive
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.NumberTheory.LegendreSymbol.Basic
+public import Mathlib.Tactic
+public import Mathlib.Tactic.NormNum.LegendreSymbol
+public import Instance.NumberTheory.QuadraticGaussSumFive
+
+@[expose] public section
+
 /-!
 # Quadratic Gauss sum modulo five
 

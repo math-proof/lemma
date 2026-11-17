@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ExtremelyAbundantNumber.lean -/
+module
 
+public import Def.NumberTheory.ExtremelyAbundantNumber
+public import Mathlib.Tactic
 
-import Def.NumberTheory.ExtremelyAbundantNumber
-import Mathlib.Tactic
-
+public section
 
 namespace MetaMathlibExt
 

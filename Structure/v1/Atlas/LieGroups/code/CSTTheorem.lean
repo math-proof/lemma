@@ -8,27 +8,29 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.LieGroups.code.ChevalleyRestriction.Part7
-import Lemma.Rat.EqProjectToH.of.Given
-import Lemma.Ideal.IsHomogeneous_AugmentationIdealGraded
-import Instance.v1.Atlas.LieGroups.code.SyzygiesKoszul.Part2
-import Mathlib.Data.Complex.Basic
-import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.RepresentationTheory.Invariants
-import Mathlib.RepresentationTheory.Irreducible
-import Mathlib.RepresentationTheory.Equiv
-import Mathlib.RepresentationTheory.Basic
-import Mathlib.RepresentationTheory.Character
-import Mathlib.RingTheory.PowerSeries.Basic
-import Mathlib.LinearAlgebra.FreeModule.Basic
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.RingTheory.AlgebraicIndependent.Defs
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Mathlib.RingTheory.Invariant.Basic
-import Def.v1.Atlas.LieGroups.code.CSTTheorem
+module
+
+public import Def.v1.Atlas.LieGroups.code.ChevalleyRestriction.Part7
+public import Lemma.Rat.EqProjectToH.of.Given
+public import Theorem.Ideal.IsHomogeneous_AugmentationIdealGraded
+public import Instance.v1.Atlas.LieGroups.code.SyzygiesKoszul.Part2
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.Analysis.Complex.Polynomial.Basic
+public import Mathlib.RepresentationTheory.Invariants
+public import Mathlib.RepresentationTheory.Irreducible
+public import Mathlib.RepresentationTheory.Equiv
+public import Mathlib.RepresentationTheory.Basic
+public import Mathlib.RepresentationTheory.Character
+public import Mathlib.RingTheory.PowerSeries.Basic
+public import Mathlib.LinearAlgebra.FreeModule.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.RingTheory.AlgebraicIndependent.Defs
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Mathlib.RingTheory.Invariant.Basic
+public import Def.v1.Atlas.LieGroups.code.CSTTheorem
 
 
-noncomputable section
+public noncomputable section
 
 universe u
 

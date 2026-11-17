@@ -1,7 +1,10 @@
-import Mathlib.Analysis.Normed.Lp.PiLp
-import Abbrev.Analysis.InnerProductSpace.EuclideanVec
-import Def.Analysis.Normed.Lp.LpSpace
+module
 
+public import Mathlib.Analysis.Normed.Lp.PiLp
+public import Abbrev.Analysis.InnerProductSpace.EuclideanVec
+public import Def.Analysis.Normed.Lp.LpSpace
+
+public section
 
 namespace LpSpace
 

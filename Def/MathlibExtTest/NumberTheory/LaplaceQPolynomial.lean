@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/LaplaceQPolynomial.lean -/
 
 
-import Def.NumberTheory.LaplaceQPolynomial
+module
 
+public import Def.NumberTheory.LaplaceQPolynomial
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

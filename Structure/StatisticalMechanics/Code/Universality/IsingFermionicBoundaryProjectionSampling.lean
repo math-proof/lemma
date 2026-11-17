@@ -9,8 +9,10 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicEndpointClampedTarget.Part3
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicBoundaryProjectionSampling
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicEndpointClampedTarget.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicBoundaryProjectionSampling
 
 
 namespace StatMech.Universality
@@ -19,7 +21,7 @@ open Filter Metric Set
 
 open StatMech StatMech.FK StatMech.Lattice StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 namespace FKIsingSquareBoundaryLayerCoordinateOneForm
 

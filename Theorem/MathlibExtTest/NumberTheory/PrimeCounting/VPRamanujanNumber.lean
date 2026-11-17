@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PrimeCounting/VPRamanujanNumber.lean -/
+module
 
+public import Def.NumberTheory.PrimeCounting.VPRamanujanNumber
 
-import Def.NumberTheory.PrimeCounting.VPRamanujanNumber
-
+public section
 
 namespace MetaMathlibExt
 

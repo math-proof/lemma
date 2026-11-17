@@ -1,0 +1,17 @@
+module
+
+public section
+
+
+public theorem Fin.Eq_Fin.of.EqVal
+  {a : Fin n}
+-- given
+  (h : a.val = b) :
+-- imply
+  a = ⟨b, by simp_all [← h]⟩ := by
+-- proof
+  ext
+  assumption
+
+
+-- created on 2025-06-20

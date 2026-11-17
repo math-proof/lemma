@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Calculus/Bisection.lean -/
+module
 
+public import Theorem.Analysis.Calculus.Bisection.Part2
+public import Mathlib.Analysis.Real.Sqrt
+public import Mathlib.Topology.Algebra.Ring.Real
 
-import Theorem.Analysis.Calculus.Bisection.Part2
-import Mathlib.Analysis.Real.Sqrt
-import Mathlib.Topology.Algebra.Ring.Real
-
+public section
 
 -- Constant-positive bisection sequences stay ordered without bracketing a root.
 example :

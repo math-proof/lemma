@@ -4,7 +4,7 @@
 import Lean.Elab.Tactic.Omega
 import Mathlib.Tactic.Ring
 import Def.NumberTheory.NormalNumberSequence
-import Lemma.Nat.NormalNumberSequence
+import Theorem.Nat.NormalNumberSequence
 
 
 namespace MetaMathlibExt

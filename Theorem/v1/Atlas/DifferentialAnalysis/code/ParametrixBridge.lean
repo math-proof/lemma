@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.DifferentialAnalysis.code.PseudoDiffOps
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.PseudoDiffOps
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.PseudoDiffOps
 open DifferentialOperators
 open TemperedDistribution MvPolynomial
 open scoped SchwartzMap Pointwise

@@ -7,13 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib.Combinatorics.SimpleGraph.Metric
-import Mathlib.Combinatorics.SimpleGraph.Walk.Decomp
-import Mathlib.Combinatorics.SimpleGraph.Paths
+public import Mathlib.Combinatorics.SimpleGraph.Metric
+public import Mathlib.Combinatorics.SimpleGraph.Walk.Decomp
+public import Mathlib.Combinatorics.SimpleGraph.Paths
 open SimpleGraph SimpleGraph.Walk
 
+public section
 
 namespace StatMech.Lattice
 

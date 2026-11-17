@@ -1,7 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Cyclotomic/CubicResidueSymbol.lean -/
 
-import Mathlib.NumberTheory.NumberField.Cyclotomic.Three
-import Mathlib.NumberTheory.NumberField.Ideal.Basic
+module
+
+public import Mathlib.NumberTheory.NumberField.Cyclotomic.Three
+public import Mathlib.NumberTheory.NumberField.Ideal.Basic
+
+@[expose] public section
 
 
 namespace MetaMathlibExt

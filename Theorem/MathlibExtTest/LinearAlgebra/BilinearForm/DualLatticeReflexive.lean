@@ -2,7 +2,7 @@
 
 
 import Theorem.LinearAlgebra.BilinearForm.DualLatticeReflexive
-import Lemma.Matrix.BilinearForm.DualLatticeReflexive
+import Theorem.Matrix.BilinearForm.DualLatticeReflexive
 open LinearMap (BilinForm)
 
 variable {A K V : Type*} [CommRing A] [Field K] [Algebra A K]

@@ -1,5 +1,9 @@
-import Mathlib
-import Def.WeierstrassCurve_HasseInvariant
+module
+
+public import Mathlib
+public import Def.WeierstrassCurve_HasseInvariant
+
+@[expose] public section
 
 namespace WeierstrassCurve
 

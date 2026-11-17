@@ -1,14 +1,19 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/DescendingRunInvariant.lean -/
 
-import Def.CPythonListsort.Code.Assembly.Order.Part4
-import Def.CPythonListsort.Code.Correctness.DescendingRunNormalization
-import Def.CPythonListsort.Code.Correctness.DescendingRunInvariant
+module
+
+public import Def.CPythonListsort.Code.Assembly.Order.Part4
+public import Def.CPythonListsort.Code.Correctness.DescendingRunNormalization
+public import Def.CPythonListsort.Code.Correctness.DescendingRunInvariant
 /-!
 # Stable-order invariant for `count_run`'s descending phase
 
 This file contains only pure list/order algebra.  The executable count-run
 proof instantiates it with the range read from the transcribed machine.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

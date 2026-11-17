@@ -1,0 +1,126 @@
+module
+
+public import Mathlib
+public import Instance.Topology.MetricSpace.HausdorffDimensionFunction
+
+public section
+
+open scoped NNReal Topology
+open Filter
+open HausdorffDimensionFunction
+
+
+namespace HausdorffDimensionFunction
+
+/--
+[ext](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/MetricSpace/HausdorffDimensionFunction.lean)
+-/
+public theorem ext
+  {ψ₁ ψ₂ : HausdorffDimensionFunction}
+-- given
+  (h : ∀ x, ψ₁ x = ψ₂ x) :
+-- imply
+  ψ₁ = ψ₂ :=
+-- proof
+  DFunLike.ext ψ₁ ψ₂ h
+
+end HausdorffDimensionFunction
+
+/--
+[continuous](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/MetricSpace/HausdorffDimensionFunction.lean)
+-/
+public theorem continuous
+  {ψ : HausdorffDimensionFunction} :
+-- imply
+  Continuous (ψ : NNReal → NNReal) :=
+-- proof
+  ψ.toContinuousOrderHom.continuous_toFun
+
+
+namespace HausdorffDimensionFunction
+
+/--
+[monotone](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/MetricSpace/HausdorffDimensionFunction.lean)
+-/
+public theorem monotone
+  {ψ : HausdorffDimensionFunction} :
+-- imply
+  Monotone (ψ : NNReal → NNReal) :=
+-- proof
+  ψ.toContinuousOrderHom.monotone
+
+end HausdorffDimensionFunction
+
+namespace HausdorffDimensionFunction
+
+/--
+[map_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/MetricSpace/HausdorffDimensionFunction.lean)
+-/
+public theorem map_zero
+  {ψ : HausdorffDimensionFunction} :
+-- imply
+  ψ (0 : NNReal) = 0 :=
+-- proof
+  ψ.map_zero'
+
+end HausdorffDimensionFunction
+
+namespace HausdorffDimensionFunction
+
+/--
+[map_pos](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/MetricSpace/HausdorffDimensionFunction.lean)
+-/
+public theorem map_pos
+  {ψ : HausdorffDimensionFunction}
+  {r : NNReal}
+-- given
+  (hr : 0 < r) :
+-- imply
+  0 < ψ r :=
+-- proof
+  ψ.map_pos' hr
+
+end HausdorffDimensionFunction
+
+namespace HausdorffDimensionFunction
+
+/--
+[map_eq_zero_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/MetricSpace/HausdorffDimensionFunction.lean)
+-/
+public theorem map_eq_zero_iff
+  {ψ : HausdorffDimensionFunction}
+  {r : NNReal} :
+-- imply
+  ψ r = 0 ↔ r = 0 := by
+-- proof
+  constructor
+  · intro h
+    by_contra hr
+    have hrpos : 0 < r := pos_iff_ne_zero.mpr hr
+    have hpos : 0 < ψ r := ψ.map_pos hrpos
+    exact ne_of_gt hpos h
+  · rintro rfl
+    exact ψ.map_zero
+
+end HausdorffDimensionFunction
+
+namespace HausdorffDimensionFunction
+
+/--
+[tendsto_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/MetricSpace/HausdorffDimensionFunction.lean)
+-/
+public theorem tendsto_zero
+  {ψ : HausdorffDimensionFunction} :
+-- imply
+  Tendsto (ψ : NNReal → NNReal) (𝓝[>] (0 : NNReal)) (𝓝 0) := by
+-- proof
+  have h : Tendsto (ψ : NNReal → NNReal) (𝓝 (0 : NNReal)) (𝓝 (ψ (0 : NNReal))) :=
+    ψ.continuous.continuousAt
+  rw [ψ.map_zero] at h
+  exact h.mono_left inf_le_left
+
+end HausdorffDimensionFunction
+
+
+-- created on 2026-10-20
+-- updated on 2026-10-26

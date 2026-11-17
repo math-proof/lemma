@@ -2,7 +2,7 @@
 
 
 import Def.GroupTheory.CyclicSublattice
-import Lemma.Int.IsCyclicSublattice.is.LeAndIsAddCyclic_AddSubgroupOf
+import Theorem.Int.IsCyclicSublattice.is.LeAndIsAddCyclic_AddSubgroupOf
 import Mathlib.Data.ZMod.Basic
 import Mathlib.GroupTheory.SpecificGroups.Cyclic
 

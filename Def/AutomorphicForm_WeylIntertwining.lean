@@ -1,5 +1,9 @@
-import Def.AutomorphicForm_AdelicLsXi
-import Def.AutomorphicForm_ConstantTerm
+module
+
+public import Def.AutomorphicForm_AdelicLsXi
+public import Def.AutomorphicForm_ConstantTerm
+
+@[expose] public section
 
 noncomputable section
 

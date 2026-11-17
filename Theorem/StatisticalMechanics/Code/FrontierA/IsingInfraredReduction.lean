@@ -7,14 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib.Analysis.Fourier.FiniteAbelian.Orthogonality
-import Mathlib.Topology.Algebra.Order.LiminfLimsup
-import Def.StatisticalMechanics.Code.FrontierA.IsingInfraredReduction
+public import Mathlib.Analysis.Fourier.FiniteAbelian.Orthogonality
+public import Mathlib.Topology.Algebra.Order.LiminfLimsup
+public import Def.StatisticalMechanics.Code.FrontierA.IsingInfraredReduction
 open Finset Filter Set Topology
 open scoped BigOperators ComplexConjugate
 
+public section
 
 namespace StatMech.FrontierA
 

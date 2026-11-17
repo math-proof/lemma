@@ -8,10 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
+module
 
-import Mathlib
-import Def.StatisticalMechanics.Code.Onsager.ChordCut.Part4
+public import Mathlib
+public import Def.StatisticalMechanics.Code.Onsager.ChordCut.Part4
 
+@[expose] public section
 
 namespace StatMech.Onsager.ChordCut
 

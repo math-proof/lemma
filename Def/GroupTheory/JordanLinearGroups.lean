@@ -4,12 +4,15 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
 
-import Mathlib.Basic.Complex.Basic
-import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
-import Mathlib.Analysis.Matrix.Order
-import Mathlib.Analysis.Matrix.Normed
-import Mathlib.LinearAlgebra.Matrix.FiniteDimensional
+module
 
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
+public import Mathlib.Analysis.Matrix.Order
+public import Mathlib.Analysis.Matrix.Normed
+public import Mathlib.LinearAlgebra.Matrix.FiniteDimensional
+
+@[expose] public section
 
 section jlBridge
 end jlBridge

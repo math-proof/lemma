@@ -6,12 +6,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Adam Kiezun
 -/
 
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.NumberTheory.PrimeCounting
-import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.NormNum.NatFactorial
-import Mathlib.Tactic.Ring
-import Lemma.Nat.SylvesterSchur.ResidualFinite
+module
+
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.NumberTheory.PrimeCounting
+public import Mathlib.Tactic.IntervalCases
+public import Mathlib.Tactic.NormNum.NatFactorial
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 /-!
 # Finite certificates for the large residual Sylvester-Schur estimates
 

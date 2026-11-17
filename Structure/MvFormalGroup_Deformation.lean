@@ -1,9 +1,11 @@
-import Class.MvFormalGroup_BasicV2
-import Def.MvFormalGroup_BasicV2
+module
+
+public import Class.MvFormalGroup_BasicV2
+public import Def.MvFormalGroup_BasicV2
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace MvFormalGroup
 

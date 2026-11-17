@@ -3,7 +3,7 @@
 
 import Mathlib.Tactic.FinCases
 import Def.NumberTheory.MultipleZeta.Series.Part3
-import Lemma.Nat.MultipleZeta.Series
+import Theorem.Nat.MultipleZeta.Series
 import Def.MathlibExtTest.NumberTheory.MultipleZeta.Series
 
 

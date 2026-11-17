@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Mathlib.NumberTheory.DirichletCharacter.Basic
-import Abbrev.v1.Atlas.NumberTheoryI.code.DirichletCharacters
+module
 
+public import Mathlib
+public import Mathlib.NumberTheory.DirichletCharacter.Basic
+public import Abbrev.v1.Atlas.NumberTheoryI.code.DirichletCharacters
+
+@[expose] public section
 
 namespace CharacterGroup
 

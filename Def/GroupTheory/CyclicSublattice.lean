@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/CyclicSublattice.lean -/
 
-import Mathlib.Algebra.Group.Subgroup.Map
-import Mathlib.GroupTheory.QuotientGroup.Basic
-import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
+module
+
+public import Mathlib.Algebra.Group.Subgroup.Map
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
+
+@[expose] public section
+
 /-!
 # Cyclic sublattices of additive commutative groups
 

@@ -16,14 +16,11 @@ import Mathlib.LinearAlgebra.FiniteDimensional.Basic
 import Mathlib.Algebra.Quaternion
 import Mathlib.Algebra.QuaternionBasis
 import Instance.v1.Atlas.EllipticCurves.code.EndAlgebra.Part5
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.EndAlgebra
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.EndomorphismAlgebra
 import Instance.v1.Atlas.EllipticCurves.code.EndomorphismAlgebra.Part2
 import Mathlib.RingTheory.Flat.Localization
 import Mathlib.RingTheory.SimpleRing.Basic
 open Module
 open scoped Quaternion TensorProduct
-
 
 /-- A `ℚ`-algebra `A` equipped with an anti-involution `invol` together with a positive-definite
 reduced norm `normMap : A → ℚ` satisfying `a * invol a = normMap a`. This abstracts the structure

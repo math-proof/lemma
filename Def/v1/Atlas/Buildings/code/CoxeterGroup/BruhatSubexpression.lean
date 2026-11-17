@@ -8,7 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.BruhatOrder
+module
+
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.BruhatOrder
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 variable {B : Type*}

@@ -1,13 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/FractionalIdeal/Spectrum.lean -/
+module
 
-import Abbrev.RingTheory.FractionalIdeal.GroupAction
-import Lemma.Int.FractionalIdeal.GroupAction
-import Lemma.Int.Spectrum.Prime.GroupAction
+public import Abbrev.RingTheory.FractionalIdeal.GroupAction
+public import Theorem.Int.FractionalIdeal.GroupAction
+public import Theorem.Int.Spectrum.Prime.GroupAction
 open scoped nonZeroDivisors Pointwise
 
 /-!
 # Compatibility of fractional-ideal and prime-spectrum actions
 -/
+
+public section
 
 
 namespace PrimeSpectrum

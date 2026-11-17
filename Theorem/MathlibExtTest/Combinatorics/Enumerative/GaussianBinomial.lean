@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.GaussianBinomial
-import Lemma.Finset.Enumerative.GaussianBinomial
+import Theorem.Finset.Enumerative.GaussianBinomial
 import Mathlib.Algebra.Ring.Nat
 open MathlibExt
 

@@ -33,20 +33,15 @@ import Mathlib.Algebra.Category.ModuleCat.Monoidal.Symmetric
 import Mathlib.Algebra.Category.ModuleCat.Projective
 import Mathlib.Algebra.Module.Projective
 import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part6
-import Lemma.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
-import Lemma.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctor
-import Lemma.Category.Atlas.v1.TensorCategories.code.RegularObject
 import Abbrev.v1.Atlas.TensorCategories.code.QuasiTensorFunctor.Part5
 import Theorem.v1.Atlas.TensorCategories.code.SimpleObjectHelpers
 import Abbrev.v1.Atlas.TensorCategories.code.RegularObject.Part2
 import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part4
 set_option maxHeartbeats 800000
 
-
 universe w₀
 
 open scoped TensorProduct
-
 
 namespace CategoryTheory
 

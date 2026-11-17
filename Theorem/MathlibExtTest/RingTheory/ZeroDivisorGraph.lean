@@ -2,7 +2,7 @@
 
 -- MathlibExtTest/RingTheory/ZeroDivisorGraph.lean
 import Def.RingTheory.ZeroDivisorGraph
-import Lemma.Int.ZeroDivisorGraph
+import Theorem.Int.ZeroDivisorGraph
 import Mathlib.Data.ZMod.Basic
 import Def.MathlibExtTest.RingTheory.ZeroDivisorGraph
 open ZeroDivisorGraph

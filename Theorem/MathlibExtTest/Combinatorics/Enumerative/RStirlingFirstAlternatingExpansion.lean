@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.RStirlingFirstAlternatingExpansion
-import Lemma.Finset.Enumerative.RStirlingFirstAlternatingExpansion
+import Theorem.Finset.Enumerative.RStirlingFirstAlternatingExpansion
 
 
 namespace MetaMathlibExt

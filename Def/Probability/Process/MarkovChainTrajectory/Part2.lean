@@ -1,6 +1,11 @@
-import Mathlib.Probability.Kernel.IonescuTulcea.Traj
-import Instance.Probability.Process.MarkovChain.Part3
-import Instance.Probability.Process.MarkovChainTrajectory
+module
+
+public import Mathlib.Probability.Kernel.IonescuTulcea.Traj
+public import Instance.Probability.Process.MarkovChain.Part3
+public import Instance.Probability.Process.MarkovChainTrajectory
+
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory Finset
 
 universe u

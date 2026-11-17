@@ -1,8 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/LaplaceTransform/ExponentialBound.lean -/
 
 import Mathlib.NumberTheory.Chebyshev
-import Lemma.Real.LaplaceTransform.BasicProperties
-import Lemma.Real.LaplaceTransform.ExponentialBound
+import Theorem.Real.LaplaceTransform.BasicProperties
+import Theorem.Real.LaplaceTransform.ExponentialBound
 open MeasureTheory Asymptotics
 
 /-!

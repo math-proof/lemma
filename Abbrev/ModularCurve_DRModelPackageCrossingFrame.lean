@@ -1,11 +1,13 @@
-import Mathlib
-import Structure.ModularCurve_DRResolvedModelPackageV4
+module
+
+public import Mathlib
+public import Structure.ModularCurve_DRResolvedModelPackageV4
 
 set_option autoImplicit false
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry ModularCurve
 
-noncomputable section
+@[expose] public noncomputable section
 
 universe u
 

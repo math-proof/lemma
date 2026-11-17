@@ -2,7 +2,7 @@
 
 
 import Theorem.Combinatorics.EndpointMapMultigraph
-import Lemma.Finset.EndpointMapMultigraph
+import Theorem.Finset.EndpointMapMultigraph
 
 
 namespace EndpointMapMultigraphTest

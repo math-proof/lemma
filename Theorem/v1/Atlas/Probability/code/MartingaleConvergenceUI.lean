@@ -7,12 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Probability.Martingale.Convergence
-import Mathlib.Tactic.TFAE
+public import Mathlib.Probability.Martingale.Convergence
+public import Mathlib.Tactic.TFAE
 open scoped MeasureTheory NNReal ENNReal Topology
 open MeasureTheory Filter
 
+public section
 
 noncomputable section
 

@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/FieldTheory/SeparableAdjoinRoot.lean -/
 
 
-import Lemma.Int.SeparableAdjoinRoot
+import Theorem.Int.SeparableAdjoinRoot
 set_option autoImplicit false
 
 open scoped Polynomial

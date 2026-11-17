@@ -1,6 +1,7 @@
 import Lemma.Random.SinglePSpace.SinglePSpace.of.SinglePSpace
 import Lemma.Random.Map.eq.WithDensityProb
 import Theorem.Probability.SymbolicProbability
+import Initialize.Tactic.Attr.Basic
 open Function Random
 open scoped Classical
 
@@ -572,3 +573,4 @@ private lemma main
 
 
 -- created on 2026-09-20
+-- updated on 2026-11-17

@@ -1,4 +1,6 @@
-import Mathlib.NumberTheory.NumberField.AdeleRing
+module
+
+public import Mathlib.NumberTheory.NumberField.AdeleRing
 
 set_option autoImplicit false
 
@@ -6,7 +8,7 @@ open NumberField
 
 namespace M4aHerbrand
 
-noncomputable section
+public noncomputable section
 
 section Carrier
 

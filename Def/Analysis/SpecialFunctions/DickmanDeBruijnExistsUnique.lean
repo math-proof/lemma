@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/DickmanDeBruijnExistsUnique.lean -/
 
 import Def.Analysis.SpecialFunctions.DickmanDeBruijn
-import Lemma.Real.DickmanDeBruijn
+import Theorem.Real.DickmanDeBruijn
 import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.Analysis.Calculus.MeanValue

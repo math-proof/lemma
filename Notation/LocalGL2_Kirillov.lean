@@ -1,3 +1,10 @@
+module
+
+public import Mathlib.Algebra.Group.Units.Defs
+public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
+
+public section
+
 set_option quotPrecheck false
 set_option hygiene false
 

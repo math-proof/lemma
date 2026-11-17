@@ -8,20 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Lemma.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.BaireCategory
-import Lemma.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.BanachSpace
-import Lemma.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.BoundedOperators
-import Lemma.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.ClosedGraph
-import Lemma.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.Integration
-import Lemma.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.MeasureTheory
-import Lemma.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.UniformBoundedness
+import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.BaireCategory
+import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.BanachSpace
+import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.BoundedOperators
+import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.ClosedGraph
+import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.Integration
+import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.MeasureTheory
+import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.UniformBoundedness
 import Abbrev.v1.Atlas.IntroductionToFunctionalAnalysis.code.DualSpace
 import Def.v1.Atlas.IntroductionToFunctionalAnalysis.code.FourierSeries
-import Lemma.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.FourierSeries
-import Lemma.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.HahnBanach
-import Lemma.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.HilbertSpace
-import Lemma.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.LpSpaces
-import Lemma.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.OpenMapping
+import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.FourierSeries
+import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.HahnBanach
+import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.HilbertSpace
+import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.LpSpaces
+import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.OpenMapping
 import Lemma.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.SpectralTheory
 import Def.v1.Atlas.IntroductionToFunctionalAnalysis.code.HahnBanach
 import Def.v1.Atlas.IntroductionToFunctionalAnalysis.code.HilbertSpace

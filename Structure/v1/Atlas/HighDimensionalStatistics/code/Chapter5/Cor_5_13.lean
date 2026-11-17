@@ -8,19 +8,21 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.MeasureTheory.Measure.MeasureSpace
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.Complex.ExponentialBounds
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.InfoTheory.Part3
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.InfoTheory
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Lemma_5_3_5_4_5_8
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Lemma_5_3_5_4_5_8
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Cor_5_13.Part2
+module
+
+public import Mathlib.MeasureTheory.Measure.MeasureSpace
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.Complex.ExponentialBounds
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.InfoTheory.Part3
+public import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.InfoTheory
+public import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Lemma_5_3_5_4_5_8
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Lemma_5_3_5_4_5_8
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Cor_5_13.Part2
 open MeasureTheory InformationTheory
 
 
-noncomputable section
+public noncomputable section
 
 namespace GaussianSequenceModel
 

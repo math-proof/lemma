@@ -4,6 +4,8 @@ import Lemma.Measure.All_Integrable_Measure.GtInftySup_Integral.of.GtInftySup_Su
 import Mathlib.MeasureTheory.Integral.Bochner.SumMeasure
 import Mathlib.MeasureTheory.Function.L1Space.Integrable
 import Mathlib.Topology.Algebra.InfiniteSum.Basic
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure Real
 open scoped ENNReal.ToRealCoe
 set_option maxHeartbeats 800000
@@ -103,4 +105,4 @@ private lemma main
     exact hMspath
 
 -- created on 2026-11-01
--- updated on 2026-11-16
+-- updated on 2026-11-17

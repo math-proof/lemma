@@ -9,14 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.GeometryOfManifolds.code.DifferentialForms.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.DifferentialForms
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticLinearAlgebra
 import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra.Part3
 import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part2
 set_option autoImplicit false
 
 open DifferentialFormSpace
-
 
 /-- Axiomatic interface for the **cotangent bundle** $T^*X$ of a manifold $X$: equips $T^*X$ with
 the tautological Liouville 1-form $\theta$, the canonical symplectic form $\omega = d\theta$, and a
@@ -33,5 +30,4 @@ class CotangentBundleDFS
   symplectic_eq_d_liouville : canonical_symplectic.ω = inst_TX.d liouville
   zeroSection : DFSMorphism Ω_X VF_X Ω_TX VF_TX
   liouville_zero_section : zeroSection.pullback liouville = (0 : Ω_X 1)
-
 

@@ -1,6 +1,9 @@
-import Def.ModularCurve_TateFormal
-import Structure.ModularCurve_X0
-import Lemma.WeierstrassCurve.VeluQuotientMap
+module
+
+public import Def.ModularCurve_TateFormal
+public import Structure.ModularCurve_X0
+
+@[expose] public section
 
 set_option autoImplicit false
 

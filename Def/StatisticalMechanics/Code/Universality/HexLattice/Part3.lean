@@ -9,9 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Universality.HexLattice.Part2
+module
 
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Universality.HexLattice.Part2
+
+@[expose] public section
 
 namespace StatMech.Universality
 

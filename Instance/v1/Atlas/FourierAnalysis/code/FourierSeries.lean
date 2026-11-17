@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Def.v1.Atlas.FourierAnalysis.code.FourierSeries
+module
+
+public import Mathlib
+public import Def.v1.Atlas.FourierAnalysis.code.FourierSeries
+
+@[expose] public section
+
 open MeasureTheory MeasureTheory.Measure AddCircle
 open scoped ENNReal NNReal Convolution
 

@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.SophieGermainPrime
-import Lemma.Nat.SophieGermainPrime
+import Theorem.Nat.SophieGermainPrime
 
 
 -- `2` is prime and `2 * 2 + 1 = 5` is prime.

@@ -9,8 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
+module
 
+public import Mathlib
+
+@[expose] public section
 
 namespace Erdos337
 

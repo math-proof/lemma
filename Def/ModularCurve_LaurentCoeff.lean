@@ -1,5 +1,9 @@
-import Mathlib.RingTheory.LaurentSeries
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+module
+
+public import Mathlib.RingTheory.LaurentSeries
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+
+@[expose] public section
 
 set_option autoImplicit false
 

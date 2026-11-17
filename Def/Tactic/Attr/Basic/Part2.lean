@@ -1,9 +1,15 @@
-import Mathlib.Tactic
-import Def.Lean.Syntax
-import Def.Lean.Environment
-import Def.Lean.Meta.Expr.Part4
-import Def.Lean.ConstantInfo.Part5
-import Structure.Tactic.Attr.Basic
+module
+
+public import Mathlib.Tactic
+public import Def.Lean.Syntax
+public import Def.Lean.Environment
+public import Def.Lean.Meta.Expr.Part4
+public import Def.Lean.ConstantInfo.Part5
+public import Structure.Tactic.Attr.Basic
+public import Def.Tactic.Attr.Basic
+
+@[expose] public section
+
 open Lean
 open Lean.Meta
 

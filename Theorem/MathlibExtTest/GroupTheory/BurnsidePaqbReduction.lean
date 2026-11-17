@@ -1,8 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/GroupTheory/BurnsidePaqbReduction.lean -/
+module
 
-
-import Theorem.GroupTheory.BurnsidePaqbReduction.Part2
-import Mathlib.Data.ZMod.Basic
+public import Theorem.GroupTheory.BurnsidePaqbReduction.Part2
+public import Mathlib.Data.ZMod.Basic
 open BurnsidePaqb
 
 /-!
@@ -10,6 +10,8 @@ open BurnsidePaqb
 
 Authors: Muse Spark 1.3
 -/
+
+public section
 
 
 -- Membership characterization of the conjugacy-class finset.

@@ -8,15 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Normed.Field.Basic
-import Mathlib.Analysis.Normed.Field.Lemmas
-import Mathlib.Topology.Algebra.Ring.Basic
-import Mathlib.Topology.MetricSpace.Pseudo.Defs
-import Mathlib.Topology.MetricSpace.Cauchy
-import Mathlib.Analysis.Normed.Group.Continuity
-import Mathlib.Topology.Algebra.Group.Basic
-import Mathlib.Analysis.Normed.Module.Completion
-import Mathlib.Topology.Algebra.UniformField
+module
+
+public import Mathlib.Analysis.Normed.Field.Basic
+public import Mathlib.Analysis.Normed.Field.Lemmas
+public import Mathlib.Topology.Algebra.Ring.Basic
+public import Mathlib.Topology.MetricSpace.Pseudo.Defs
+public import Mathlib.Topology.MetricSpace.Cauchy
+public import Mathlib.Analysis.Normed.Group.Continuity
+public import Mathlib.Topology.Algebra.Group.Basic
+public import Mathlib.Analysis.Normed.Module.Completion
+public import Mathlib.Topology.Algebra.UniformField
+
+@[expose] public section
+
 open Filter Topology
 
 

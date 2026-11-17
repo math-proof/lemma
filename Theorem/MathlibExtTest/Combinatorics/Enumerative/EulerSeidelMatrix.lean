@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.EulerSeidelMatrix
-import Lemma.Finset.Enumerative.EulerSeidelMatrix
+import Theorem.Finset.Enumerative.EulerSeidelMatrix
 
 
 namespace MetaMathlibExt

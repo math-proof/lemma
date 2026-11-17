@@ -3,7 +3,7 @@
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
 import Def.Analysis.AbsoluteValue.Rpow
-import Lemma.AbsoluteValue.Rpow
+import Theorem.AbsoluteValue.Rpow
 /-!
 # Degree-normalized places of a number field
 

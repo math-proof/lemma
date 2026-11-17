@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.TensorCategories.code.Twists.Part2
-import Lemma.Category.Atlas.v1.TensorCategories.code.Twists
+import Theorem.Category.Atlas.v1.TensorCategories.code.Twists
 open CategoryTheory TensorCategories
 
 universe u

@@ -9,8 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
+module
+
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
+
+@[expose] public section
+
 open Finset
 
 

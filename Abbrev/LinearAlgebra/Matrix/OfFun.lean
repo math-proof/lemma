@@ -1,4 +1,8 @@
-import Mathlib.LinearAlgebra.Matrix.Defs
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Defs
+
+@[expose] public section
 
 
 /-- Fin-indexed matrix from an entry function (sugar target for `[i < m, j < n]`). -/

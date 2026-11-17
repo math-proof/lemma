@@ -1,5 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Structure.CPythonListsort.Code.Assembly.ListSortTermination
+import Lemma.List.Atlas.CPythonListsort.Code.Assembly.ListSortLocalBounds
+open CPythonListsort
 
 
 namespace CPythonListsort
@@ -17,7 +20,7 @@ lemma listsort_safe
 -- given
   (hSize : input.slice.entries.size ≤ PY_LIST_MAX) :
 -- imply
-  let execution := listSortTraced? lt reverse input (∃ result, execution.result = some result) ∧ execution.trace.fuelExhausted = false ∧ execution.trace.stackDepthMax ≤ 61 ∧ 61 < MAX_MERGE_PENDING ∧ execution.trace.allAccessesInBounds := by
+  let execution := listSortTraced? lt reverse input; (∃ result, execution.result = some result) ∧ execution.trace.fuelExhausted = false ∧ execution.trace.stackDepthMax ≤ 61 ∧ 61 < MAX_MERGE_PENDING ∧ execution.trace.allAccessesInBounds := by
 -- proof
   obtain ⟨result, hSafe⟩ := listSortTraced_safe lt reverse input hSize
   exact ⟨⟨result, hSafe.resultEq⟩, hSafe.traceSafety.fuel,
@@ -42,7 +45,7 @@ lemma listsort_safe_keyed
 -- given
   (hSize : entries.size ≤ PY_LIST_MAX) :
 -- imply
-  let execution := listSortTraced? lt reverse (ListSortInput.keyed entries) (∃ result, execution.result = some result) ∧ execution.trace.fuelExhausted = false ∧ execution.trace.stackDepthMax ≤ 61 ∧ 61 < MAX_MERGE_PENDING ∧ execution.trace.allAccessesInBounds := by
+  let execution := listSortTraced? lt reverse (ListSortInput.keyed entries); (∃ result, execution.result = some result) ∧ execution.trace.fuelExhausted = false ∧ execution.trace.stackDepthMax ≤ 61 ∧ 61 < MAX_MERGE_PENDING ∧ execution.trace.allAccessesInBounds := by
 -- proof
   apply listsort_safe lt reverse (ListSortInput.keyed entries)
   simpa [ListSortInput.keyed] using hSize
@@ -64,7 +67,7 @@ lemma listsort_safe_unkeyed
 -- given
   (hSize : xs.size ≤ PY_LIST_MAX) :
 -- imply
-  let execution := listSortTraced? lt reverse (ListSortInput.unkeyed xs) (∃ result, execution.result = some result) ∧ execution.trace.fuelExhausted = false ∧ execution.trace.stackDepthMax ≤ 61 ∧ 61 < MAX_MERGE_PENDING ∧ execution.trace.allAccessesInBounds := by
+  let execution := listSortTraced? lt reverse (ListSortInput.unkeyed xs); (∃ result, execution.result = some result) ∧ execution.trace.fuelExhausted = false ∧ execution.trace.stackDepthMax ≤ 61 ∧ 61 < MAX_MERGE_PENDING ∧ execution.trace.allAccessesInBounds := by
 -- proof
   simpa using
     listsort_safe (κ := α) (ν := PUnit) lt reverse (ListSortInput.unkeyed xs)

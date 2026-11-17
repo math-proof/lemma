@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.LSeries.RiemannXi
-import Lemma.Nat.LSeries.RiemannXi
+import Theorem.Nat.LSeries.RiemannXi
 /-!
 # Tests for the Riemann xi function
 

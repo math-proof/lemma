@@ -1,6 +1,8 @@
-import Mathlib.Algebra.MvPolynomial.Monad
-import Mathlib.Algebra.MvPolynomial.PDeriv
-import Mathlib.Data.Matrix.Basic
+module
+
+public import Mathlib.Algebra.MvPolynomial.Monad
+public import Mathlib.Algebra.MvPolynomial.PDeriv
+public import Mathlib.Data.Matrix.Basic
 /-!
 # Regular functions between affine spaces
 
@@ -11,7 +13,7 @@ a point.
 -/
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace MvPolynomial
 

@@ -1,7 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/Binarysort.lean -/
 
-import Def.CPythonListsort.Code.Transcription.MergeState.Part3
-import Structure.CPythonListsort.Code.Transcription.Binarysort.Part2
+module
+
+public import Def.CPythonListsort.Code.Transcription.MergeState.Part3
+public import Structure.CPythonListsort.Code.Transcription.Binarysort.Part2
+
+@[expose] public section
 /-!
 # Stable binary insertion transcription
 

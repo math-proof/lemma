@@ -1,8 +1,17 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeAt.lean -/
 
-import Def.CPythonListsort.Code.Transcription.MergeHi.Part6
-import Def.CPythonListsort.Code.Transcription.MergeLo.Part6
-import Inductive.CPythonListsort.Code.Transcription.MergeAt
+module
+
+public import Def.CPythonListsort.Code.Transcription.MergeHi.Part6
+public import Def.CPythonListsort.Code.Transcription.MergeLo.Part6
+public import Inductive.CPythonListsort.Code.Transcription.MergeAt
+public import Def.CPythonListsort.Code.Transcription.MergeAt
+public import Def.CPythonListsort.Code.Transcription.MergeAt.Part2
+public import Def.CPythonListsort.Code.Transcription.MergeLo.Part5
+public import Def.CPythonListsort.Code.Transcription.MergeHi.Part5
+
+@[expose] public section
+
 /-!
 # Pending-stack merge dispatch
 

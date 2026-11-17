@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.NumberTheory.NumberField.Units.Regulator
-import Mathlib.NumberTheory.FunctionField
-import Mathlib.NumberTheory.NumberField.CanonicalEmbedding.ConvexBody
-import Mathlib.NumberTheory.NumberField.ProductFormula
+module
+
+public import Mathlib.NumberTheory.NumberField.Units.Regulator
+public import Mathlib.NumberTheory.FunctionField
+public import Mathlib.NumberTheory.NumberField.CanonicalEmbedding.ConvexBody
+public import Mathlib.NumberTheory.NumberField.ProductFormula
+
+@[expose] public section
+
 open scoped NumberField Classical Polynomial nonZeroDivisors NNReal
 open NumberField NumberField.Units NumberField.InfinitePlace
 open NumberField.Units.dirichletUnitTheorem Module

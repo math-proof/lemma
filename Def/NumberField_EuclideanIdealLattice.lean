@@ -1,6 +1,10 @@
-import Mathlib.NumberTheory.NumberField.CanonicalEmbedding.Basic
-import Mathlib.NumberTheory.NumberField.Discriminant.Defs
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
+module
+
+public import Mathlib.NumberTheory.NumberField.CanonicalEmbedding.Basic
+public import Mathlib.NumberTheory.NumberField.Discriminant.Defs
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+
+@[expose] public section
 
 set_option autoImplicit false
 

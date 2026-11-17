@@ -1,17 +1,18 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/ClassicalOrthogonalPolynomial.lean -/
+module
 
+public import Structure.Analysis.SpecialFunctions.ClassicalOrthogonalPolynomial
+public import Mathlib.Algebra.Polynomial.FieldDivision
+public import Mathlib.Analysis.Calculus.Deriv.Add
+public import Mathlib.Analysis.Calculus.Deriv.Inv
+public import Mathlib.Analysis.Calculus.Deriv.Pow
+public import Mathlib.Analysis.SpecialFunctions.Sqrt
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Chebyshev.Orthogonality
+public import Mathlib.Data.ENNReal.Real
+public import Mathlib.Tactic
+public import Def.MathlibExtTest.Analysis.SpecialFunctions.ClassicalOrthogonalPolynomial
 
-import Structure.Analysis.SpecialFunctions.ClassicalOrthogonalPolynomial
-import Mathlib.Algebra.Polynomial.FieldDivision
-import Mathlib.Analysis.Calculus.Deriv.Add
-import Mathlib.Analysis.Calculus.Deriv.Inv
-import Mathlib.Analysis.Calculus.Deriv.Pow
-import Mathlib.Analysis.SpecialFunctions.Sqrt
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Chebyshev.Orthogonality
-import Mathlib.Data.ENNReal.Real
-import Mathlib.Tactic
-import Def.MathlibExtTest.Analysis.SpecialFunctions.ClassicalOrthogonalPolynomial
-
+public section
 
 namespace MetaMathlibExt
 

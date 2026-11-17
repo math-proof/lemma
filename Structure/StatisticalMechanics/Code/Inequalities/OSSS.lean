@@ -9,9 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Foundations.ProductMeasure.Part2
-import Theorem.StatisticalMechanics.Code.Inequalities.Pivotal.Part2
-import Def.StatisticalMechanics.Code.Inequalities.OSSS
+module
+
+public import Theorem.StatisticalMechanics.Code.Foundations.ProductMeasure.Part2
+public import Theorem.StatisticalMechanics.Code.Inequalities.Pivotal.Part2
+public import Def.StatisticalMechanics.Code.Inequalities.OSSS
+public section
+
 open scoped BigOperators
 open Finset
 

@@ -7,23 +7,25 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Structure.v1.Atlas.TensorCategories.code.DeligneTensorProductDef
-import Mathlib.CategoryTheory.Linear.LinearFunctor
-import Mathlib.RingTheory.TensorProduct.Basic
-import Mathlib.LinearAlgebra.TensorProduct.Map
-import Mathlib.Algebra.Category.ModuleCat.Basic
-import Mathlib.Algebra.Category.ModuleCat.Algebra
-import Mathlib.RingTheory.TensorProduct.Finite
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.CategoryTheory.Limits.ExactFunctor
-import Mathlib.CategoryTheory.Products.Basic
-import Mathlib.CategoryTheory.Equivalence
-import Mathlib.CategoryTheory.Monoidal.Category
-import Mathlib.Algebra.Category.ModuleCat.Abelian
-import Def.v1.Atlas.TensorCategories.code.DeligneTensorProduct
+public import Structure.v1.Atlas.TensorCategories.code.DeligneTensorProductDef
+public import Mathlib.CategoryTheory.Linear.LinearFunctor
+public import Mathlib.RingTheory.TensorProduct.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.Map
+public import Mathlib.Algebra.Category.ModuleCat.Basic
+public import Mathlib.Algebra.Category.ModuleCat.Algebra
+public import Mathlib.RingTheory.TensorProduct.Finite
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.CategoryTheory.Limits.ExactFunctor
+public import Mathlib.CategoryTheory.Products.Basic
+public import Mathlib.CategoryTheory.Equivalence
+public import Mathlib.CategoryTheory.Monoidal.Category
+public import Mathlib.Algebra.Category.ModuleCat.Abelian
+public import Def.v1.Atlas.TensorCategories.code.DeligneTensorProduct
 set_option maxHeartbeats 400000
 
+public section
 
 noncomputable section
 

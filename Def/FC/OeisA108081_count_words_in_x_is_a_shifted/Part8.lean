@@ -9,9 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Inductive.FC.OeisA108081_count_words_in_x_is_a_shifted.Part4
+module
 
+public import Mathlib
+public import Inductive.FC.OeisA108081_count_words_in_x_is_a_shifted.Part4
+
+@[expose] public section
 
 namespace OeisA108081
 

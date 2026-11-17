@@ -9,9 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.RandomWalkHighDimensionalReduction.Part3
-import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
-import Def.StatisticalMechanics.Code.FrontierA.RandomWalkHighDimensional
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierA.RandomWalkHighDimensionalReduction.Part3
+public import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
+public import Def.StatisticalMechanics.Code.FrontierA.RandomWalkHighDimensional
+public section
+
 open Filter Finset Topology
 open scoped BigOperators
 

@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Complex.Basic
-import Mathlib.RingTheory.Algebraic.Basic
-import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
-import Mathlib.NumberTheory.NumberField.Basic
+module
+
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.RingTheory.Algebraic.Basic
+public import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
+public import Mathlib.NumberTheory.NumberField.Basic
+
+@[expose] public section
 
 
 namespace AlgebraicNumber

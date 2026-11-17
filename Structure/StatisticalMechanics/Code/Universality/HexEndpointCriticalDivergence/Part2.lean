@@ -9,16 +9,18 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexEndpointAggregation.Part2
-import Theorem.StatisticalMechanics.Code.Universality.HexBridgeRecon.Part3
-import Theorem.StatisticalMechanics.Code.Universality.HexEndpointCriticalDivergence.Part2
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.HexEndpointAggregation.Part2
+public import Theorem.StatisticalMechanics.Code.Universality.HexBridgeRecon.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.HexEndpointCriticalDivergence.Part2
 
 
 namespace StatMech.Universality
 
 open HexWalk
 
-noncomputable section
+public noncomputable section
 
 structure HexEndpointSideLimits
     (a : ℂ) (h0 : ℤ) (tau : ℕ → ℝ) where

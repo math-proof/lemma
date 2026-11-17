@@ -7,12 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib
-import Def.FC.Green25_upper_solution
+public import Mathlib
+public import Def.FC.Green25_upper_solution
 open Asymptotics Filter Finset
 
+public section
 
 namespace Green25
 

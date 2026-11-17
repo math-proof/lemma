@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.LieGroups.code.KFiniteProps.Part4
 import Lemma.Complex.inner.of.IsUnitary
-import Lemma.Set.Dense_KFiniteSubspace.of.IsAdmissible
+import Theorem.Set.Dense_KFiniteSubspace.of.IsAdmissible
 import Lemma.Complex.ConvolutionOp.eq.Integral_MulConvolutionKernel
 import Structure.v1.Atlas.LieGroups.code.HarishChandraFunctor
 import Abbrev.v1.Atlas.LieGroups.code.PlancherelCompact.Part3

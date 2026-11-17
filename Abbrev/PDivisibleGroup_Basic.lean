@@ -1,6 +1,10 @@
-import Mathlib
-import Instance.PDivisibleGroup_Basic
-import Structure.PDivisibleGroup_Basic
+module
+
+public import Mathlib
+public import Instance.PDivisibleGroup_Basic
+public import Structure.PDivisibleGroup_Basic
+
+@[expose] public section
 
 set_option autoImplicit false
 

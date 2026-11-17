@@ -8,11 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Field.Basic
-import Mathlib.Algebra.Algebra.Basic
-import Mathlib.Algebra.BigOperators.GroupWithZero.Finset
-import Mathlib.Tactic
-import Structure.v1.Atlas.TensorCategories.code.QuantumGroups
+module
+
+public import Mathlib.Algebra.Field.Basic
+public import Mathlib.Algebra.Algebra.Basic
+public import Mathlib.Algebra.BigOperators.GroupWithZero.Finset
+public import Mathlib.Tactic
+public import Structure.v1.Atlas.TensorCategories.code.QuantumGroups
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 universe u v

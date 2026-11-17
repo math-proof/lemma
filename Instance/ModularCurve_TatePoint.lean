@@ -1,7 +1,7 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_TatePoint.lean: instance decls only.
 import Instance.ModularCurve_TateFormal
 import Instance.ModularCurve_PhiGen
-import Lemma.WeierstrassCurve.VeluQuotientMap
+import Theorem.WeierstrassCurve.VeluQuotientMap
 import Def.ModularCurve_TatePoint
 
 set_option autoImplicit false

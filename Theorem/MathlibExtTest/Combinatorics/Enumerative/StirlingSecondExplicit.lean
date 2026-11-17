@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/StirlingSecondExplicit.lean -/
 
 
-import Lemma.Finset.Enumerative.StirlingSecondExplicit
+import Theorem.Finset.Enumerative.StirlingSecondExplicit
 open scoped BigOperators
 
 

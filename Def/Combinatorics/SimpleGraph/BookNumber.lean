@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/BookNumber.lean -/
 
-import Mathlib.Combinatorics.SimpleGraph.Finite
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+
+@[expose] public section
+
 /-!
 # Book numbers of finite graphs
 

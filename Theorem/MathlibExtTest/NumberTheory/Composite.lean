@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.Composite
-import Lemma.Nat.Composite
+import Theorem.Nat.Composite
 
 
 example : Nat.IsComposite 4 := by

@@ -6,9 +6,9 @@ Authors: Adam Kiezun, Muse Spark 1.3, Codex
 
 import Structure.RingTheory.GradedAlgebra.MultigradedFreeResolution
 import Mathlib.LinearAlgebra.Dimension.Finite
-import Lemma.Int.GradedAlgebra.FiniteHomogeneousGenerators
+import Theorem.Int.GradedAlgebra.FiniteHomogeneousGenerators
 import Def.RingTheory.Polynomial.HilbertSyzygy
-import Lemma.Int.Polynomial.HilbertSyzygy
+import Theorem.Int.Polynomial.HilbertSyzygy
 import Mathlib.Algebra.Category.ModuleCat.Projective
 import Mathlib.Algebra.Category.ModuleCat.Abelian
 import Mathlib.Algebra.Homology.ShortComplex.ModuleCat

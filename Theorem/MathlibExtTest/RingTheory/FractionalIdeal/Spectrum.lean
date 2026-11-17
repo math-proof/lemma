@@ -2,7 +2,7 @@
 
 
 import Theorem.RingTheory.FractionalIdeal.Spectrum
-import Lemma.Int.FractionalIdeal.Spectrum
+import Theorem.Int.FractionalIdeal.Spectrum
 open scoped nonZeroDivisors Pointwise
 
 /-!

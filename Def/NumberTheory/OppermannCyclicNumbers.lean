@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/OppermannCyclicNumbers.lean -/
 
-import Mathlib.Data.Nat.Totient
-import Mathlib.NumberTheory.Harmonic.EulerMascheroni
-import Mathlib.Order.Interval.Finset.Nat
+module
+
+public import Mathlib.Data.Nat.Totient
+public import Mathlib.NumberTheory.Harmonic.EulerMascheroni
+public import Mathlib.Order.Interval.Finset.Nat
+
+@[expose] public section
+
 /-!
 # Cyclic numbers and Oppermann interval counts
 

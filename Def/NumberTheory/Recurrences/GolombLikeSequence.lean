@@ -4,10 +4,15 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Data.PNat.Defs
-import Mathlib.Data.Rat.Cast.Order
-import Mathlib.Order.Monotone.Basic
-import Mathlib.Tactic
+module
+
+public import Mathlib.Data.PNat.Defs
+public import Mathlib.Data.Rat.Cast.Order
+public import Mathlib.Order.Monotone.Basic
+public import Mathlib.Tactic
+
+@[expose] public section
+
 /-!
 # Closed forms for Golomb-like sequences
 

@@ -8,18 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.LieGroups.code.SmoothVectors
-import Lemma.Real.GetToMonoidHom.in.SmoothSubspace.of.In_SmoothSubspace
-import Lemma.Complex.IsStronglyContinuousToMonoidHom
-import Def.v1.Atlas.LieGroups.code.ContinuousRep.Part3
-import Mathlib.Algebra.Lie.UniversalEnveloping
-import Mathlib.Algebra.Lie.OfAssociative
-import Mathlib.Algebra.Lie.Killing
-import Mathlib.RingTheory.SimpleModule.Basic
-import Mathlib.LinearAlgebra.Eigenspace.Basic
-import Mathlib.FieldTheory.IsAlgClosed.Spectrum
-import Structure.v1.Atlas.LieGroups.code.UnivEnvelopingAction
+module
 
+public import Def.v1.Atlas.LieGroups.code.SmoothVectors
+public import Def.v1.Atlas.LieGroups.code.ContinuousRep.Part3
+public import Mathlib.Algebra.Lie.UniversalEnveloping
+public import Mathlib.Algebra.Lie.OfAssociative
+public import Mathlib.Algebra.Lie.Killing
+public import Mathlib.RingTheory.SimpleModule.Basic
+public import Mathlib.LinearAlgebra.Eigenspace.Basic
+public import Mathlib.FieldTheory.IsAlgClosed.Spectrum
+public import Structure.v1.Atlas.LieGroups.code.UnivEnvelopingAction
+
+@[expose] public section
 
 noncomputable section
 

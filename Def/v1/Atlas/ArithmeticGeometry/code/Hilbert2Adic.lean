@@ -15,7 +15,7 @@ import Mathlib.NumberTheory.Padics.RingHoms
 import Mathlib.RingTheory.Polynomial.Basic
 import Mathlib.Tactic.LinearCombination
 import Def.v1.Atlas.ArithmeticGeometry.code.HilbertSymbol.Part2
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertSymbol
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertSymbol
 import Theorem.v1.Atlas.ArithmeticGeometry.code.Hilbert2Adic
 open Polynomial PadicInt HilbertSymbol
 

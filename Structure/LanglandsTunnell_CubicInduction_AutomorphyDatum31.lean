@@ -1,11 +1,13 @@
-import Def.LanglandsTunnell_CubicInduction_GlobalZeta31
-import Structure.AdelicDock_LocalEmbedding
+module
+
+public import Def.LanglandsTunnell_CubicInduction_GlobalZeta31
+public import Structure.AdelicDock_LocalEmbedding
 
 set_option autoImplicit false
 
 open Matrix IsDedekindDomain NumberField MeasureTheory AutomorphicForm
 
-noncomputable section
+public noncomputable section
 
 namespace LanglandsTunnell.CubicInduction
 

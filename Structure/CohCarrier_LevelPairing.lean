@@ -1,6 +1,10 @@
-import Instance.CohCarrier_Level
-import Structure.HeckeModule_IharaRungDatum
-import Structure.HeckeModule_IharaDataAt
+module
+
+public import Instance.CohCarrier_Level
+public import Structure.HeckeModule_IharaRungDatum
+public import Structure.HeckeModule_IharaDataAt
+
+public section
 
 set_option autoImplicit false
 

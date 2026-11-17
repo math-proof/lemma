@@ -1,11 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Digits/HappySixMin.lean -/
 
-import Mathlib.Data.Nat.Digits.Defs
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Data.Nat.SuccPred
-import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.Ring
+module
 
+public import Mathlib.Data.Nat.Digits.Defs
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Data.Nat.SuccPred
+public import Mathlib.Tactic.IntervalCases
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 namespace MetaMathlibExt.HappySix
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Structure.AlgebraicGeometry_DoubleComplex
-import Abbrev.AlgebraicGeometry_DoubleComplex
+module
+
+public import Mathlib
+public import Structure.AlgebraicGeometry_DoubleComplex
+public import Abbrev.AlgebraicGeometry_DoubleComplex
+
+@[expose] public section
 
 set_option autoImplicit false
 

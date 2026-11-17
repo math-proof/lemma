@@ -2,7 +2,7 @@
 
 
 import Instance.NumberTheory.WieferichPrime
-import Lemma.Nat.WieferichPrime
+import Theorem.Nat.WieferichPrime
 import Mathlib.Tactic.NormNum
 
 

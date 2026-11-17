@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Class.v1.Atlas.Buildings.code.Valuation.LatticesValuations
-import Lemma.Nat.IsInO
-import Lemma.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
+import Theorem.Nat.IsInO
+import Theorem.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
 import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
 import Def.v1.Atlas.Buildings.code.Building.Affine.Part2
 import Structure.v1.Atlas.Buildings.code.Building.AffineSLV

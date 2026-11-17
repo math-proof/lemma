@@ -1,9 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/Toeplitz.lean -/
 
-import Mathlib.Data.Matrix.Basic
-import Mathlib.Data.Real.Basic
-import Mathlib.Tactic.Order
+module
 
+public import Mathlib.Data.Matrix.Basic
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Tactic.Order
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

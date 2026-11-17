@@ -1,14 +1,16 @@
-import Mathlib
-import Def.Submodule_FiniteAdeleBox
-import Structure.QuaternionAlgebra_Order
-import Def.QuaternionAlgebra_ReducedNorm
+module
+
+public import Mathlib
+public import Def.Submodule_FiniteAdeleBox
+public import Structure.QuaternionAlgebra_Order
+public import Def.QuaternionAlgebra_ReducedNorm
 
 set_option autoImplicit false
 
 open scoped TensorProduct Pointwise Quaternion
 open IsDedekindDomain NumberField
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace QuaternionAlgebra
 

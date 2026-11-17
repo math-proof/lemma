@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Smooth.Basic
-import Mathlib.RingTheory.Kaehler.Basic
-import Mathlib.RingTheory.FinitePresentation
+module
+
+public import Mathlib.RingTheory.Smooth.Basic
+public import Mathlib.RingTheory.Kaehler.Basic
+public import Mathlib.RingTheory.FinitePresentation
+
+@[expose] public section
+
 universe u v w
 
 open scoped TensorProduct

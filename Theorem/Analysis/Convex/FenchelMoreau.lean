@@ -1,14 +1,17 @@
-import Mathlib.Topology.Semicontinuity.Basic
-import Mathlib.Topology.Instances.EReal.Lemmas
-import Mathlib.Topology.Algebra.Module.LocallyConvex
-import Mathlib.Analysis.LocallyConvex.WithSeminorms
-import Mathlib.Analysis.LocallyConvex.Separation
-import Mathlib.Analysis.Normed.Operator.ContinuousLinearMap
-import Mathlib.Analysis.Convex.Basic
-import Mathlib.Basic.Real.Basic
-import Mathlib.Topology.Basic
-import Mathlib.Topology.Constructions
-import Def.Analysis.Convex.FenchelMoreau
+module
+
+public import Mathlib.Topology.Semicontinuity.Basic
+public import Mathlib.Topology.Instances.EReal.Lemmas
+public import Mathlib.Topology.Algebra.Module.LocallyConvex
+public import Mathlib.Analysis.LocallyConvex.WithSeminorms
+public import Mathlib.Analysis.LocallyConvex.Separation
+public import Mathlib.Analysis.Normed.Operator.ContinuousLinearMap
+public import Mathlib.Analysis.Convex.Basic
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Topology.Basic
+public import Mathlib.Topology.Constructions
+public import Def.Analysis.Convex.FenchelMoreau
+
 /-!
 # Fenchel conjugates and epigraph API
 
@@ -25,6 +28,8 @@ University Department of Mathematics, 1953, Open Library OL1430688W; and
 Jean-Jacques Moreau, "Fonctions convexes duales et points proximaux,"
 C. R. Acad. Sci. Paris 255 (1962), 2897–2899, zbMATH 0118.10502.
 -/
+
+public section
 
 
 namespace Convex.FenchelMoreau

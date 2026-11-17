@@ -21,7 +21,7 @@ import Mathlib.Combinatorics.SimpleGraph.Connectivity.Finite
 import Mathlib.Combinatorics.SimpleGraph.Paths
 import Mathlib.Combinatorics.SimpleGraph.Walk.Counting
 import Theorem.Combinatorics.SimpleGraph.VertexConnectivity
-import Lemma.SimpleGraph.VertexConnectivity
+import Theorem.SimpleGraph.VertexConnectivity
 
 
 namespace SimpleGraph

@@ -1,13 +1,15 @@
-import Mathlib
-import Structure.ModularCurve_JZeroNeronObjectAtP
-import Abbrev.GoodReductionJacobian_RelativeGroupLawBaseChange
-import Def.AlgebraicGeometry_NeronSpecialFibreRestriction
-import Instance.ModularCurve_XHDifferentialsModL
-import Def.ModularCurve_XHOperators
-import Lemma.ResidueField.GluedPic0
-import Def.GaloisRep_Flat
-import Def.FLTPrelim_Ramification
-import Instance.ModularCurve_JHNeronObjectAtP
+module
+
+public import Mathlib
+public import Structure.ModularCurve_JZeroNeronObjectAtP
+public import Abbrev.GoodReductionJacobian_RelativeGroupLawBaseChange
+public import Def.AlgebraicGeometry_NeronSpecialFibreRestriction
+public import Instance.ModularCurve_XHDifferentialsModL
+public import Def.ModularCurve_XHOperators
+public import Lemma.ResidueField.GluedPic0
+public import Def.GaloisRep_Flat
+public import Def.FLTPrelim_Ramification
+public import Instance.ModularCurve_JHNeronObjectAtP
 
 set_option autoImplicit false
 set_option maxHeartbeats 800000
@@ -18,7 +20,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry NeronModelInfra Good
 open ModularCurve.JZeroNeronObjectAtP
 open scoped MatrixGroups
 
-noncomputable section
+public noncomputable section
 
 namespace ModularCurve
 

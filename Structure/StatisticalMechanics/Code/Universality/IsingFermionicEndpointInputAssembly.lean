@@ -9,15 +9,17 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicEndpointRangeBound
-import Mathlib.Analysis.Calculus.MeanValue
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicEndpointRangeBound
+public import Mathlib.Analysis.Calculus.MeanValue
 
 
 namespace StatMech.Universality
 
 open Filter Set Topology
 
-noncomputable section
+public noncomputable section
 
 namespace FKIsingSquareBoundaryLayerCoordinateOneForm
 

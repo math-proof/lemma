@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/LambertSeries.lean -/
+module
 
+public import Mathlib.Tactic.NormNum
+public import Def.Analysis.SpecialFunctions.LambertSeries
+public import Def.MathlibExtTest.Analysis.SpecialFunctions.LambertSeries
 
-import Mathlib.Tactic.NormNum
-import Def.Analysis.SpecialFunctions.LambertSeries
-import Def.MathlibExtTest.Analysis.SpecialFunctions.LambertSeries
-
+public section
 
 namespace MetaMathlibExt
 

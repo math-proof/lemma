@@ -8,16 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.Process.Filtration
-import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
-import Mathlib.Probability.Independence.Basic
-import Mathlib.Probability.Distributions.Gaussian.Real
+module
+
+public import Mathlib.Probability.Process.Filtration
+public import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.Probability.Distributions.Gaussian.Real
 set_option autoImplicit false
 
 open MeasureTheory Filtration ProbabilityTheory Filter
 
 
-noncomputable section
+public noncomputable section
 
 namespace BrownianFiltration
 

@@ -8,21 +8,23 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityLinear.Part4
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityLinear
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityCurves
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.ResidueSum
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityGeneral
-import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityCurves.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.ResidueSum
-import Instance.v1.Atlas.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
-import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafCurves.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityTate.Part2
+module
+
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityLinear.Part4
+public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityLinear
+public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ResidueSum
+public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
+public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
+public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityGeneral
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityCurves.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.ResidueSum
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafCurves.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityTate.Part2
 
 
-noncomputable section
+public noncomputable section
 
 namespace SerreDualityTate
 

@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/ConnellSequence.lean -/
 
-import Mathlib.Data.Finset.Image
+module
+
+public import Mathlib.Data.Finset.Image
+
+@[expose] public section
+
 /-!
 # Connell sequences
 

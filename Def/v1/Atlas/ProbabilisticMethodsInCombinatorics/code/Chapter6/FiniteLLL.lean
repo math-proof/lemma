@@ -14,7 +14,7 @@ import Mathlib.MeasureTheory.Measure.MeasureSpace
 import Mathlib.Combinatorics.Digraph.Basic
 import Mathlib.Data.Fintype.Card
 import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter6.LovaszLocalLemma
-import Lemma.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter6.LovaszLocalLemma
+import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter6.LovaszLocalLemma
 open MeasureTheory ProbabilityTheory Set Finset ENNReal
 
 

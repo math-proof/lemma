@@ -9,8 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Sharpness.Switching
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Sharpness.Switching
+
+@[expose] public section
+
 open Finset BigOperators
 open scoped symmDiff
 open Classical

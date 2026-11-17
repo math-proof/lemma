@@ -4,18 +4,23 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Analysis.Normed.Algebra.MatrixExponential
-import Mathlib.Analysis.Complex.Exponential
-import Mathlib.LinearAlgebra.Matrix.Trace
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Mathlib.LinearAlgebra.Eigenspace.Semisimple
-import Mathlib.LinearAlgebra.Finsupp.VectorSpace
-import Mathlib.LinearAlgebra.JordanChevalley
-import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
-import Mathlib.LinearAlgebra.Trace
-import Mathlib.RingTheory.Nilpotent.Exp
-import Mathlib.Analysis.SpecialFunctions.Exponential
-import Mathlib.Analysis.Complex.Polynomial.Basic
+module
+
+public import Mathlib.Analysis.Normed.Algebra.MatrixExponential
+public import Mathlib.Analysis.Complex.Exponential
+public import Mathlib.LinearAlgebra.Matrix.Trace
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Mathlib.LinearAlgebra.Eigenspace.Semisimple
+public import Mathlib.LinearAlgebra.Finsupp.VectorSpace
+public import Mathlib.LinearAlgebra.JordanChevalley
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
+public import Mathlib.LinearAlgebra.Trace
+public import Mathlib.RingTheory.Nilpotent.Exp
+public import Mathlib.Analysis.SpecialFunctions.Exponential
+public import Mathlib.Analysis.Complex.Polynomial.Basic
+
+@[expose] public section
+
 open scoped BigOperators
 
 /-!

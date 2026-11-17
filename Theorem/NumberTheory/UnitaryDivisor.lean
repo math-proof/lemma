@@ -1,15 +1,19 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/UnitaryDivisor.lean -/
+module
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Nat.GCD.Basic
-import Mathlib.NumberTheory.Divisors
-import Def.NumberTheory.UnitaryDivisor
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Nat.GCD.Basic
+public import Mathlib.NumberTheory.Divisors
+public import Def.NumberTheory.UnitaryDivisor
+
 /-!
 # Unitary divisors
 
 Reusable definitions for unitary divisors, their sum, and divisibility-minimal
 members of sets of natural numbers.
 -/
+
+public section
 
 
 namespace Nat

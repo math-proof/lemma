@@ -1,8 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeAtSafety.lean -/
 
-import Def.CPythonListsort.Code.Assembly.MergeMemoryLifecycle.Part2
-import Lemma.List.Atlas.CPythonListsort.Code.Policy.MergeAtPreservation
-import Structure.CPythonListsort.Code.Assembly.MergeAtSafety.Part2
+module
+
+public import Def.CPythonListsort.Code.Assembly.MergeAtSafety.Part2
+public import Def.CPythonListsort.Code.Assembly.MergeLoSafety
+public import Def.CPythonListsort.Code.Assembly.MergeHiSafety
+public import Def.CPythonListsort.Code.Assembly.MergeMemoryLifecycle
+
+@[expose] public section
+
 /-!
 # `merge_at` safety
 
@@ -17,6 +23,9 @@ which precede it are recorded in source order.
 namespace CPythonListsort
 
 universe u v
+
+open AccessTrace
+open MergeMemorySnapshot
 
 variable {κ : Type u} {ν : Type v}
 
@@ -33,14 +42,14 @@ def finishMergeAtPreparationTraced? :
         (mergeLoTraced? call.state call.ssa call.ssb call.na call.nb)
         (fun result =>
           .mergeCall
-            (MergeMemoryCallEvent.mergeLoMemoryCallEvent call result))).map
+            (MergeMemorySnapshot.mergeLoMemoryCallEvent call result))).map
         mergeAtFromLo
   | .mergeHi call =>
       (TraceResult.recordSuccessMemoryEvent
         (mergeHiTraced? call.state call.ssa call.ssb call.na call.nb)
         (fun result =>
           .mergeCall
-            (MergeMemoryCallEvent.mergeHiMemoryCallEvent call result))).map
+            (MergeMemorySnapshot.mergeHiMemoryCallEvent call result))).map
         mergeAtFromHi
 
 /-- Fully traced `merge_at` evaluator. -/

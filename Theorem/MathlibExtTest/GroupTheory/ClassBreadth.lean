@@ -2,7 +2,7 @@
 
 
 import Def.GroupTheory.ClassBreadth
-import Lemma.Nat.CardCarrier.dvd.CardG
+import Theorem.Nat.CardCarrier.dvd.CardG
 import Mathlib.Data.ZMod.Basic
 import Mathlib.GroupTheory.PGroup
 open ClassBreadth

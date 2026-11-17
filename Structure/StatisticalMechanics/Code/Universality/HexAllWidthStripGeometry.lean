@@ -9,16 +9,18 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexFiniteStripEnum.Part6
-import Theorem.StatisticalMechanics.Code.Universality.HexStripCountsClose.Part3
-import Inductive.StatisticalMechanics.Code.Universality.HexAllWidthStripGeometry
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.HexFiniteStripEnum.Part6
+public import Theorem.StatisticalMechanics.Code.Universality.HexStripCountsClose.Part3
+public import Inductive.StatisticalMechanics.Code.Universality.HexAllWidthStripGeometry
 
 
 namespace StatMech.Universality
 
 open Complex HexWalk
 
-noncomputable section
+public noncomputable section
 
 structure HexAWCoord where
   i : ℤ

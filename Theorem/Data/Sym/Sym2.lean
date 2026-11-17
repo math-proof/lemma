@@ -18,7 +18,8 @@ limitations under the License.
 /-
 Author: @toskua, Avocado
 -/
+module
 
-import Mathlib.Data.Sym.Sym2
+public import Mathlib.Data.Sym.Sym2
 
-
+public section

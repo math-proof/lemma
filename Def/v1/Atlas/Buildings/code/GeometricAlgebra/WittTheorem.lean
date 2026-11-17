@@ -8,10 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.GeometricAlgebra.ExtendingIsometries
-import Lemma.Submodule.OfEq.eq.M.of.Eq
-import Lemma.Fin.Nondegenerate.of.EqOrthogonalBilinFormTop_Bot.IsRefl
-import Lemma.Submodule.Any_EqAndAll_Eq_V.of.IsSubspaceIsometry.EqOrthogonalBilinFormTop
+module
+
+public import Def.v1.Atlas.Buildings.code.GeometricAlgebra.ExtendingIsometries
+
+@[expose] public section
+
 set_option maxHeartbeats 4000000
 
 

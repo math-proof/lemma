@@ -1,13 +1,16 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
-import Mathlib.Data.Finset.Card
-import Mathlib.Algebra.Group.Even
-import Mathlib.Algebra.Ring.Parity
-import Mathlib.Data.Nat.Find
-import Mathlib.Data.Finset.Range
-import Mathlib.Tactic
+module
 
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Algebra.Group.Even
+public import Mathlib.Algebra.Ring.Parity
+public import Mathlib.Data.Nat.Find
+public import Mathlib.Data.Finset.Range
+public import Mathlib.Tactic
+
+public section
 
 namespace MetaMathlibExt
 

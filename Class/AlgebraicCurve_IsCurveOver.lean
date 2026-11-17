@@ -1,5 +1,9 @@
-import Class.AlgebraicCurve_DivisorClassGroup
-import Mathlib.RingTheory.Kaehler.Basic
+module
+
+public import Class.AlgebraicCurve_DivisorClassGroup
+public import Mathlib.RingTheory.Kaehler.Basic
+
+public section
 
 set_option autoImplicit false
 

@@ -8,13 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Topology.MetricSpace.Basic
-import Mathlib.Combinatorics.Enumerative.DoubleCounting
-import Def.v1.Atlas.ProjectionTheory.code.TwoEnds
+module
+
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Topology.MetricSpace.Basic
+public import Mathlib.Combinatorics.Enumerative.DoubleCounting
+public import Def.v1.Atlas.ProjectionTheory.code.TwoEnds
 
 
-noncomputable section
+public noncomputable section
 
 open Classical Finset BigOperators
 

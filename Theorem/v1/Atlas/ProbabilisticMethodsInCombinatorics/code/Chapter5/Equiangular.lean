@@ -7,9 +7,12 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib
+public import Mathlib
 open Real Finset BigOperators
+
+public section
 
 /-- **Exponentially many approximately equiangular vectors** (Theorem 5.2.1).
 For any target inner product $\alpha \in (0, 1)$ and tolerance $\varepsilon > 0$, there is

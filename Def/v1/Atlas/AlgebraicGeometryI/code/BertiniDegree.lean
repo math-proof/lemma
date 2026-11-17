@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Length
-import Mathlib.Algebra.Exact
-import Mathlib.RingTheory.MvPolynomial.EulerIdentity
+module
 
+public import Mathlib.RingTheory.Length
+public import Mathlib.Algebra.Exact
+public import Mathlib.RingTheory.MvPolynomial.EulerIdentity
+
+@[expose] public section
 
 noncomputable section
 

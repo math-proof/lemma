@@ -11,6 +11,8 @@ import Lemma.Random.NormWkd.le.Abs_R
 import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Lemma.Random.Vkd.eq.TSum_MulPowWkd.of.Ne0Real_Preimage.In_Ico
 import Theorem.Probability.JointRv.AsRV
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open Classical MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Finset Kernel
 set_option maxHeartbeats 900000
 
@@ -489,4 +491,4 @@ private lemma main
 
 
 -- created on 2026-11-02
--- updated on 2026-11-16
+-- updated on 2026-11-17

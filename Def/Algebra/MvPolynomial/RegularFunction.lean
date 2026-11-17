@@ -1,7 +1,12 @@
-import Mathlib.Algebra.MvPolynomial.Monad
-import Mathlib.Algebra.MvPolynomial.PDeriv
-import Mathlib.Data.Matrix.Basic
-import Abbrev.Algebra.MvPolynomial.RegularFunction
+module
+
+public import Mathlib.Algebra.MvPolynomial.Monad
+public import Mathlib.Algebra.MvPolynomial.PDeriv
+public import Mathlib.Data.Matrix.Basic
+public import Abbrev.Algebra.MvPolynomial.RegularFunction
+
+@[expose] public section
+
 /-!
 # Regular functions between affine spaces
 

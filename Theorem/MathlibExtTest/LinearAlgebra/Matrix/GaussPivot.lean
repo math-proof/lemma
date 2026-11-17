@@ -3,7 +3,7 @@
 
 import Mathlib.Tactic.NormNum
 import Def.LinearAlgebra.Matrix.GaussPivot.Part2
-import Lemma.Matrix.GaussPivot
+import Theorem.Matrix.GaussPivot
 open MathlibExt.LinearAlgebra.Matrix.GaussPivotWanted
 
 

@@ -14,11 +14,11 @@ import Mathlib.Algebra.Polynomial.RingDivision
 import Mathlib.RingTheory.Polynomial.Wronskian
 import Mathlib.FieldTheory.SeparableDegree
 import Def.v1.Atlas.EllipticCurves.code.IsogenyKernels.Part4
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.IsogenyKernels
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.Isogenies
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.IsogenyKernels
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.Isogenies
 import Lemma.Complex.Atlas.v1.EllipticCurves.code.TorsionEndomorphism
 import Def.v1.Atlas.EllipticCurves.code.Isogenies.Part13
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.Lemma53
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.Lemma53
 import Def.v1.Atlas.EllipticCurves.code.TorsionEndomorphism.Part3
 import Structure.v1.Atlas.EllipticCurves.code.DivisionPolynomials.Part2
 open Polynomial

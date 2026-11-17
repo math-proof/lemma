@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.DirichletCharacter.Period
-import Lemma.Nat.DirichletCharacter.Period
+import Theorem.Nat.DirichletCharacter.Period
 import Mathlib.Data.Complex.Basic
 open MonoidHom
 

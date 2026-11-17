@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.ConditionalProbability
-import Mathlib.MeasureTheory.Measure.MeasureSpace
-import Mathlib.Data.Finset.Basic
+module
+
+public import Mathlib.Probability.ConditionalProbability
+public import Mathlib.MeasureTheory.Measure.MeasureSpace
+public import Mathlib.Data.Finset.Basic
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open MeasureTheory ProbabilityTheory ENNReal Set Finset

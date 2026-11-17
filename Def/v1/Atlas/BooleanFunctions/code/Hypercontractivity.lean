@@ -9,9 +9,9 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.BooleanFunctions.code.FourierExpansion
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Parseval
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.TwoPointInequality
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.TwoPointInequality
 import Def.v1.Atlas.BooleanFunctions.code.Definitions
 import Def.v1.Atlas.BooleanFunctions.code.Parseval
 import Def.v1.Atlas.BooleanFunctions.code.TwoPointInequality

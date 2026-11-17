@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.NumberField.Completion.FiniteLiesOverValuation
-import Lemma.Nat.NumberField.Completion.FiniteLiesOverValuation
+import Theorem.Nat.NumberField.Completion.FiniteLiesOverValuation
 /-!
 # Checks for the completion valuation formula
 -/

@@ -1,10 +1,12 @@
-import Mathlib
-import Instance.PadicComplex_GaloisAction
-import Def.PadicComplex_TateTrace
+module
+
+public import Mathlib
+public import Instance.PadicComplex_GaloisAction
+public import Def.PadicComplex_TateTrace
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace PadicComplex
 

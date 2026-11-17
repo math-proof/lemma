@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/AlgebraicGeometry/Curve/Divisor.lean -/
 
-import Mathlib.Data.Finsupp.Basic
-import Abbrev.AlgebraicGeometry.Curve.Divisor
+module
 
+public import Mathlib.Data.Finsupp.Basic
+public import Abbrev.AlgebraicGeometry.Curve.Divisor
+
+@[expose] public section
 
 namespace CurveDivisor
 

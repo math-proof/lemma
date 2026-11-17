@@ -1,6 +1,5 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_ModulesGlueOfCocycle.lean: instance decls only.
 import Mathlib
-import Lemma.Scheme.ModulesSectionsTensor
 import Lemma.Scheme.ModulesGlueOfCocycle
 
 set_option autoImplicit false

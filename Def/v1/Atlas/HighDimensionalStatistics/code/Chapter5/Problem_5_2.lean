@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.MeasureTheory.Measure.MeasureSpace
-import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.InformationTheory.KullbackLeibler.Basic
+module
+
+public import Mathlib.MeasureTheory.Measure.MeasureSpace
+public import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.InformationTheory.KullbackLeibler.Basic
+
+@[expose] public section
+
 open MeasureTheory InformationTheory
 
 

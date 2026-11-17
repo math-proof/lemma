@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean -/
 
-import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
-import Inductive.CPythonListsort.Code.Assembly.AccessTrace
+module
+
+public import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
+public import Inductive.CPythonListsort.Code.Assembly.AccessTrace
 /-!
 # Compositional access and pending-push traces
 
@@ -24,6 +26,9 @@ wrapper below performs the existing unconditional `Array.push` first and then
 records its resulting depth.  There is no capacity guard, refusal result,
 clamping operation, or assertion-failure event in this trace model.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

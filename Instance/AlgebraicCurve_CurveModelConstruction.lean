@@ -8,7 +8,6 @@ import Mathlib.AlgebraicGeometry.FunctionField
 import Mathlib.AlgebraicGeometry.AlgClosed.Basic
 import Mathlib.AlgebraicGeometry.Limits
 import Mathlib.FieldTheory.RatFunc.AsPolynomial
-import Lemma.Scheme.CurveModel
 import Instance.JacJ1_ChartAlgebra
 import Instance.AlgebraicCurve_CurveModelSmooth
 import Lemma.Scheme.CurveModelConstruction

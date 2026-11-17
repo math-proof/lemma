@@ -2,7 +2,7 @@
 
 
 import Def.Order.BooleanFunction.SelfDual
-import Lemma.Set.BooleanFunction.SelfDual
+import Theorem.Set.BooleanFunction.SelfDual
 
 
 namespace MetaMathlibExt

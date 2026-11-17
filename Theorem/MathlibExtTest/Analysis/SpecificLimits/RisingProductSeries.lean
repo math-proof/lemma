@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecificLimits/RisingProductSeries.lean -/
 
 
-import Lemma.Complex.RisingProductSeries
+import Theorem.Complex.RisingProductSeries
 
 
 example (x : ℂ) :

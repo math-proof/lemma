@@ -2,7 +2,7 @@
 
 
 import Structure.Combinatorics.LinearPartition
-import Lemma.Finset.LinearPartition
+import Theorem.Finset.LinearPartition
 import Mathlib.Tactic
 
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Abbrev.Algebra_DescentCofaces
+module
+
+public import Mathlib
+public import Abbrev.Algebra_DescentCofaces
+
+@[expose] public section
 
 set_option autoImplicit false
 

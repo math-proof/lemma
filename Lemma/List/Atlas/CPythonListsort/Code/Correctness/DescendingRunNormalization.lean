@@ -71,16 +71,16 @@ namespace CPythonListsort.DescendingRunSpec
 -/
 @[path]
 lemma normalize_append_equivalent
-  {xs : List α}
-  {x : α}
-  {tailLength : Nat}
+  (xs : List α)
+  (x : α)
+  (tailLength : Nat)
 -- given
   (htail : tailLength ≤ xs.length) :
 -- imply
   normalize (xs ++ [x]) (tailLength + 1) = (normalize xs tailLength).take tailLength ++ [x] ++ (normalize xs tailLength).drop tailLength := by
 -- proof
-  rw [normalize_take_eq_suffix xs tailLength htail,
-    normalize_drop_eq_reverse_prefix xs tailLength htail]
+  rw [normalize_take_eq_suffix htail,
+    normalize_drop_eq_reverse_prefix htail]
   simp only [normalize, List.length_append, List.length_singleton]
   have hsub : xs.length + 1 - (tailLength + 1) =
     xs.length - tailLength := by
@@ -100,9 +100,9 @@ namespace CPythonListsort.DescendingRunSpec
 -/
 @[path]
 lemma normalize_after_strict
-  {xs : List α}
-  {x : α}
-  {tailLength : Nat} :
+  (xs : List α)
+  (x : α)
+  (tailLength : Nat) :
 -- imply
   normalize (reverseSuffix xs tailLength ++ [x]) 1 = x :: normalize xs tailLength := by
 -- proof

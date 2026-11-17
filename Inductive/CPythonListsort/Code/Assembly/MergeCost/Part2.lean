@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeCost.lean -/
 
-import Mathlib.Analysis.SpecialFunctions.Log.Base
-import Mathlib.Algebra.BigOperators.Ring.List
-import Mathlib.Tactic
-import Theorem.CPythonListsort.Code.Assembly.MergeCost
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Log.Base
+public import Mathlib.Algebra.BigOperators.Ring.List
+public import Mathlib.Tactic
+public import Theorem.CPythonListsort.Code.Assembly.MergeCost
 /-!
 # Merge-cost accounting
 
@@ -22,7 +24,7 @@ namespace CPythonListsort
 namespace MergeTree
 
 /-- A full merge plan, including the empty-input case. -/
-inductive MergePlan where
+public inductive MergePlan where
   | empty
   | tree (root : MergeTree)
   deriving DecidableEq, Repr

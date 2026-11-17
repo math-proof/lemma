@@ -1,5 +1,6 @@
 import Lemma.Finset.And.Eq.of.Eq_Inv
 import Mathlib.Probability.HasLaw
+import Initialize.Tactic.Attr.Basic
 open Finset Matrix MeasureTheory ProbabilityTheory
 
 
@@ -43,3 +44,4 @@ private lemma main
 
 
 -- created on 2023-04-30
+-- updated on 2026-11-17

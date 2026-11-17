@@ -1,9 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ArithmeticFunction/GcdSumDirichlet.lean -/
 
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.NumberTheory.LSeries.RiemannZeta
-import Mathlib.NumberTheory.LSeries.Dirichlet
+module
 
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.NumberTheory.LSeries.RiemannZeta
+public import Mathlib.NumberTheory.LSeries.Dirichlet
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

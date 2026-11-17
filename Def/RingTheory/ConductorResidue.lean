@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/ConductorResidue.lean -/
 
-import Mathlib.RingTheory.Ideal.Maximal
-import Mathlib.RingTheory.Ideal.Norm.AbsNorm
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.SetTheory.Cardinal.Finite
+module
+
+public import Mathlib.RingTheory.Ideal.Maximal
+public import Mathlib.RingTheory.Ideal.Norm.AbsNorm
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.SetTheory.Cardinal.Finite
+
+@[expose] public section
+
 /-!
 # Residue rings at primes avoiding a denominator-clearing ideal
 

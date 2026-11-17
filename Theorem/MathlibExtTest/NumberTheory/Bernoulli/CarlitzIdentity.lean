@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.Bernoulli.CarlitzIdentity
-import Lemma.Nat.Bernoulli.CarlitzIdentity
+import Theorem.Nat.Bernoulli.CarlitzIdentity
 
 
 namespace MetaMathlibExt

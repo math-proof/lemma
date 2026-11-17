@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Recurrences/PrimitiveDivisor.lean -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
-import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.Order.Interval.Finset.Nat
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
+public import Mathlib.Data.Nat.Prime.Basic
+public import Mathlib.Order.Interval.Finset.Nat
+
+@[expose] public section
+
 open scoped BigOperators
 
 /-!

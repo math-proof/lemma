@@ -8,12 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.Maps.Proper.Basic
-import Mathlib.Topology.Separation.Hausdorff
-import Mathlib.Topology.NoetherianSpace
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.AlgebraicGeometry.AffineScheme
-import Mathlib.RingTheory.KrullDimension.Zero
+module
+
+public import Mathlib.Topology.Maps.Proper.Basic
+public import Mathlib.Topology.Separation.Hausdorff
+public import Mathlib.Topology.NoetherianSpace
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.AlgebraicGeometry.AffineScheme
+public import Mathlib.RingTheory.KrullDimension.Zero
+@[expose] public section
+
 universe u
 
 

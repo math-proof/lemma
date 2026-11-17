@@ -9,9 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.RSW.SelfDuality.Part2
-import Theorem.StatisticalMechanics.Code.Universality.FrameChangeIso.Part8
-import Theorem.StatisticalMechanics.Code.Universality.RSWStripSymmetry.Part2
+module
+
+public import Theorem.StatisticalMechanics.Code.RSW.SelfDuality.Part2
+public import Theorem.StatisticalMechanics.Code.Universality.FrameChangeIso.Part8
+public import Theorem.StatisticalMechanics.Code.Universality.RSWStripSymmetry.Part2
 open Set SimpleGraph MeasureTheory ProbabilityTheory
 open scoped ENNReal NNReal
 
@@ -23,7 +25,7 @@ namespace Universality
 open StatMech.Lattice
 
 
-inductive rss_StripEnd
+public inductive rss_StripEnd
   | bottom
   | top
   deriving DecidableEq, Repr

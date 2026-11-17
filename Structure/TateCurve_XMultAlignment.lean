@@ -1,11 +1,15 @@
-import Mathlib
-import Structure.TateCurve_XMultStructure
-import Def.TateCurve_TateParameter
-import Lemma.WeierstrassCurve.AddFormula
-import Def.NetPairing_Basic
-import Theorems.Thm_TateCurve_equation_pointX_pointY
-import Theorems.Thm_TateCurve_pointX_inv
-import Theorems.Thm_TateCurve_pointX_zpow_mul
+module
+
+public import Mathlib
+public import Structure.TateCurve_XMultStructure
+public import Def.TateCurve_TateParameter
+public import Theorem.WeierstrassCurve.AddFormula
+public import Def.NetPairing_Basic
+public import Theorems.Thm_TateCurve_equation_pointX_pointY
+public import Theorems.Thm_TateCurve_pointX_inv
+public import Theorems.Thm_TateCurve_pointX_zpow_mul
+
+public section
 
 set_option autoImplicit false
 set_option linter.unusedSectionVars false

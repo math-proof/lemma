@@ -2,6 +2,7 @@ import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.List.DropDrop.eq.Drop_Add
 import Lemma.List.DropPermute.eq.AppendRotateTakeDrop
 import Lemma.Nat.EqMin.of.Le
+import Theorem.Data.List.List.Part2
 open Nat List
 
 
@@ -26,10 +27,10 @@ private lemma main
     omega
   else
     repeat rw [Drop.eq.Nil.of.LeLength]
-    .
+    ·
       omega
-    .
-      simp
+    ·
+      rw [List.length_permute]
       omega
 
 

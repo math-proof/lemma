@@ -1,25 +1,28 @@
-import Mathlib.Data.Vector.MapLemmas
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Data.Matrix.Mul
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Lemma.Nat.EqMin_SubMulS
-import Lemma.Nat.EqAddMulDiv
-import Lemma.List.LengthRange.eq.Length
-import Lemma.List.Prod.eq.MulProdS
-import Theorem.Algebra.Power.Part2
-import Theorem.Function
-import Def.Data.Vector.Basic.Part2
-import Lean.Elab.Term
-import Notation.Data.Dot
+module
+
+public import Mathlib.Data.Vector.MapLemmas
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Data.Matrix.Mul
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Theorem.Algebra.Power.Part2
+public import Theorem.Function
+public import Def.Data.Vector.Basic.Part2
+public import Lean.Elab.Term
+public import Class.Data.Vector.Basic
+public import Notation.Data.Dot
+public import Instance.Data.Vector.Basic.Arithmetic
+
 open Nat Lean
 open scoped BigOperators
+
+@[expose] public section
 
 open Lean Elab Term Meta in
 /-- Path/sequence notation `f ⬝ᵥ g` for `Dot.dot` (typically `∑' t, f t * g t`).
 Hooks Mathlib's `⬝ᵥ` glyph: try `Dot.dot` first (infinite path tsums, no `Fintype`), then fall back
 to Mathlib `dotProduct` for finite-index vectors. -/
 @[term_elab termDotV]
-def elabPathDotV : TermElab := fun stx expectedType? => do
+meta def elabPathDotV : TermElab := fun stx expectedType? => do
   match stx with
   | `($x ⬝ᵥ $y) => do
     let saved ← saveState

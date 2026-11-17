@@ -9,16 +9,18 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoComponentStrand.Part2
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoUnitComponentOrbitHall.Part6
-import Abbrev.StatisticalMechanics.Code.FrontierD.SixVertexPositiveUnitComponentOrbit
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoComponentStrand.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoUnitComponentOrbitHall.Part6
+public import Abbrev.StatisticalMechanics.Code.FrontierD.SixVertexPositiveUnitComponentOrbit
 open Finset
 open scoped symmDiff
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure SixVertexPositiveUnitComponentOrbitCover
     (T : EvenTorus) (middle : Fin (T.width + 1))

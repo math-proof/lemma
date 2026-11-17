@@ -1,10 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PierceExpansion.lean -/
 
-import Mathlib.Data.Finset.Basic
-import Mathlib.Data.Finset.Lattice.Fold
-import Mathlib.Data.Nat.Find
-import Mathlib.Order.Interval.Finset.Nat
-import Theorem.NumberTheory.PierceExpansion
+module
+
+public import Mathlib.Data.Finset.Basic
+public import Mathlib.Data.Finset.Lattice.Fold
+public import Mathlib.Data.Nat.Find
+public import Mathlib.Order.Interval.Finset.Nat
+public import Theorem.NumberTheory.PierceExpansion
+
+@[expose] public section
+
 /-!
 # Pierce expansion trajectories
 

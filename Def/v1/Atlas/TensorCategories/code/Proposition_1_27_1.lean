@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Coalgebra.Basic
-import Mathlib.LinearAlgebra.TensorProduct.Basic
-import Mathlib.LinearAlgebra.Quotient.Basic
+module
+
+public import Mathlib.RingTheory.Coalgebra.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.Basic
+public import Mathlib.LinearAlgebra.Quotient.Basic
+
+@[expose] public section
+
 universe u
 
 

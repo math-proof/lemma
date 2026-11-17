@@ -1,5 +1,9 @@
-import Def.AutomorphicForm_GL2TwistedOrbitalTransforms
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
+module
+
+public import Def.AutomorphicForm_GL2TwistedOrbitalTransforms
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
+
+@[expose] public section
 
 open MeasureTheory
 

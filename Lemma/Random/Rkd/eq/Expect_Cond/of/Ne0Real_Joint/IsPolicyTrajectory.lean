@@ -5,6 +5,8 @@ import Lemma.Random.Map.eq.BindStageK.of.All_Eq_Joint.All_EqWithDensity
 import Lemma.Random.MEq_Clip.of.All_Eq.All_EqWithDensity
 import Lemma.Random.NormClip.le.Abs_R
 import Lemma.Kernel.Integral.eq.Integral_Integral.of.Integrable_Bind
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Kernel
 
 
@@ -13,7 +15,7 @@ attribute [local instance] Classical.propDecidable
 private lemma stronglyMeasurable_indClip
   [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮]
   [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
-  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
+  {M : Model Θ 𝒮 𝒜} [StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
 -- given
   (sₜ : 𝒮)
   (aₜ : 𝒜) :
@@ -32,7 +34,7 @@ private lemma stronglyMeasurable_indClip
 
 private lemma leNorm_indClip
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
+  {M : Model Θ 𝒮 𝒜} [StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
 -- given
   (sₜ : 𝒮)
   (aₜ : 𝒜)
@@ -51,7 +53,7 @@ private lemma leNorm_indClip
 private lemma integral_stageK_indClip
   [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮]
   [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
-  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
+  {M : Model Θ 𝒮 𝒜} [StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
 -- given
   (θ : Θ)
   (y sₜ : 𝒮)
@@ -108,7 +110,7 @@ private lemma integral_stageK_indClip
 private lemma integral_stageK_ind
   [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮]
   [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
-  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
+  {M : Model Θ 𝒮 𝒜} [StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
 -- given
   (θ : Θ)
   (y sₜ : 𝒮)
@@ -164,7 +166,7 @@ stage reward because `r[t] =ᵐ clip r[t] (-R) R`
 private lemma main
   [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮]
   [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
-  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
+  {M : Model Θ 𝒮 𝒜} [StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
@@ -359,4 +361,4 @@ private lemma main
 
 
 -- created on 2026-11-13
--- updated on 2026-11-16
+-- updated on 2026-11-17

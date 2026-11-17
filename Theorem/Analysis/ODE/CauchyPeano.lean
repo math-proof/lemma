@@ -1,22 +1,25 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
-import Mathlib.Analysis.ODE.PicardLindelof
-import Mathlib.Geometry.Manifold.SmoothApprox
-import Mathlib.RingTheory.Finiteness.Prod
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.GCongr
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.ContinuousMap.Bounded.ArzelaAscoli
+module
 
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+public import Mathlib.Analysis.ODE.PicardLindelof
+public import Mathlib.Geometry.Manifold.SmoothApprox
+public import Mathlib.RingTheory.Finiteness.Prod
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.GCongr
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.ContinuousMap.Bounded.ArzelaAscoli
+
+public section
 
 section
 

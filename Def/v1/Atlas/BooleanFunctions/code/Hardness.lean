@@ -18,7 +18,7 @@ import Mathlib.Data.Finset.Card
 import Mathlib.Data.Fin.Basic
 import Def.v1.Atlas.BooleanFunctions.code.PCP.Part5
 import Def.v1.Atlas.BooleanFunctions.code.UniqueGames.Part8
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.UniqueGames
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.UniqueGames
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Borel
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier

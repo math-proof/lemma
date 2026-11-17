@@ -1,7 +1,10 @@
-import Mathlib.Data.Matrix.Basic
-import Notation.Fun
-import Syntax.Data.List
+module
 
+public import Mathlib.Data.Matrix.Basic
+public import Notation.Fun
+public import Syntax.Data.List
+
+@[expose] public section
 
 /-- Unit-step slice of `ℕ ⇀ Fin d ⇀ ℝ` as a real matrix.
 Rows are `Fin (stop.toNat - start.toNat)`. -/

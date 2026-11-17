@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Order.lean -/
 
-import Mathlib.NumberTheory.NumberField.Basic
+module
 
+public import Mathlib.NumberTheory.NumberField.Basic
+
+@[expose] public section
 
 /-! An order in a number field `K` is a `ℤ`-subalgebra of `K` contained in the
 integral closure `integralClosure ℤ K = 𝓞 K` whose fraction field is `K`.

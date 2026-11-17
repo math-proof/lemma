@@ -20,7 +20,6 @@ import Mathlib.LinearAlgebra.FiniteDimensional.Defs
 import Mathlib.LinearAlgebra.FiniteDimensional.Basic
 import Mathlib.LinearAlgebra.Dimension.Finrank
 import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
-import Lemma.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
 set_option maxHeartbeats 800000
 
 open CategoryTheory MonoidalCategory Category Limits

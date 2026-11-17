@@ -4,11 +4,14 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
 
-import Mathlib.LinearAlgebra.Matrix.MvPolynomial
-import Mathlib.Algebra.Polynomial.Basic
-import Mathlib.LinearAlgebra.Matrix.SchurComplement
-import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
+module
 
+public import Mathlib.LinearAlgebra.Matrix.MvPolynomial
+public import Mathlib.Algebra.Polynomial.Basic
+public import Mathlib.LinearAlgebra.Matrix.SchurComplement
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
+
+@[expose] public section
 
 namespace Matrix
 

@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Homology.ShortComplex.SnakeLemma
-import Mathlib.Algebra.Category.ModuleCat.Abelian
-import Mathlib.CategoryTheory.Abelian.RightDerived
+module
 
+public import Mathlib.Algebra.Homology.ShortComplex.SnakeLemma
+public import Mathlib.Algebra.Category.ModuleCat.Abelian
+public import Mathlib.CategoryTheory.Abelian.RightDerived
+
+@[expose] public section
 
 noncomputable section
 

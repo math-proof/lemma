@@ -1,8 +1,6 @@
 import Mathlib
-import Lemma.Finsupp.GlueData
 import Lemma.ResidueField.GluedPic0
 import Def.ModularCurve_NodeDepth
-import Lemma.IntermediateField.NodeLocalizedPlaces
 import Def.ModularCurve_ProlongationTuple
 import Structure.ModularCurve_AnnulusSpecializationLevel
 set_option autoImplicit false

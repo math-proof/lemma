@@ -1,5 +1,9 @@
-import Mathlib.RepresentationTheory.Homological.GroupCohomology.LowDegree
-import Mathlib.GroupTheory.Index
+module
+
+public import Mathlib.RepresentationTheory.Homological.GroupCohomology.LowDegree
+public import Mathlib.GroupTheory.Index
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Instance.AlgebraicGeometry_FGSubalgebra
+module
+
+public import Mathlib
+public import Instance.AlgebraicGeometry_FGSubalgebra
+
+@[expose] public section
 
 set_option autoImplicit false
 

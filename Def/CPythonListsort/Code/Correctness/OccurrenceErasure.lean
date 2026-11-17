@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/OccurrenceErasure.lean -/
 
-import Def.CPythonListsort.Code.Correctness.OriginRelabelScan.Part2
+module
+
+public import Def.CPythonListsort.Code.Correctness.OriginRelabelScan.Part2
+
+@[expose] public section
+
 /-!
 # Erasure of occurrence tags
 

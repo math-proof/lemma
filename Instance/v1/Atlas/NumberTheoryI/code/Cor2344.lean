@@ -9,7 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Instance.v1.Atlas.NumberTheoryI.code.TateCohomology.Part4
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.TateCohomology
 import Mathlib.Algebra.Module.Torsion.Basic
 import Mathlib.GroupTheory.FiniteAbelian.Basic
 import Mathlib.RingTheory.Noetherian.Basic

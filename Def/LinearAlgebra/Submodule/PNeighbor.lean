@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Submodule/PNeighbor.lean -/
 
-import Mathlib.Algebra.Module.Submodule.Map
-import Mathlib.Data.Nat.Prime.Defs
-import Mathlib.LinearAlgebra.Quotient.Defs
-import Mathlib.SetTheory.Cardinal.Finite
+module
+
+public import Mathlib.Algebra.Module.Submodule.Map
+public import Mathlib.Data.Nat.Prime.Defs
+public import Mathlib.LinearAlgebra.Quotient.Defs
+public import Mathlib.SetTheory.Cardinal.Finite
+
+@[expose] public section
+
 /-!
 # Kneser p-neighbors
 

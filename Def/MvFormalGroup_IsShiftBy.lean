@@ -1,5 +1,9 @@
-import Mathlib
-import Abbrev.MvFormalGroup_FirstOrderDeformation
+module
+
+public import Mathlib
+public import Abbrev.MvFormalGroup_FirstOrderDeformation
+
+@[expose] public section
 
 set_option autoImplicit false
 

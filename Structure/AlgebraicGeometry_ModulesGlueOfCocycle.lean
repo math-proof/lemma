@@ -1,6 +1,10 @@
-import Mathlib
-import Lemma.Scheme.ModulesSectionsTensor
-import Instance.AlgebraicGeometry_ModulesGlueOfCocycle
+module
+
+public import Mathlib
+public import Lemma.Scheme.ModulesSectionsTensor
+public import Instance.AlgebraicGeometry_ModulesGlueOfCocycle
+
+public section
 
 set_option autoImplicit false
 

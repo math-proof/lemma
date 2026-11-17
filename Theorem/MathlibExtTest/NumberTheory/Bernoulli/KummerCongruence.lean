@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.Bernoulli.KummerCongruence
-import Lemma.Nat.Bernoulli.KummerCongruence
+import Theorem.Nat.Bernoulli.KummerCongruence
 import Mathlib.Tactic.NormNum
 
 

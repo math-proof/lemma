@@ -8,20 +8,22 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.ContinuousMap.ZeroAtInfty
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.Calculus.FDeriv.Basic
-import Mathlib.Analysis.Calculus.ContDiff.Defs
-import Mathlib.Analysis.Normed.Operator.Bilinear
-import Mathlib.Topology.DenseEmbedding
-import Mathlib.Analysis.Calculus.ContDiff.FTaylorSeries
-import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
-import Mathlib.Topology.UniformSpace.UniformConvergence
+module
+
+public import Mathlib.Topology.ContinuousMap.ZeroAtInfty
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.Calculus.FDeriv.Basic
+public import Mathlib.Analysis.Calculus.ContDiff.Defs
+public import Mathlib.Analysis.Normed.Operator.Bilinear
+public import Mathlib.Topology.DenseEmbedding
+public import Mathlib.Analysis.Calculus.ContDiff.FTaylorSeries
+public import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
+public import Mathlib.Topology.UniformSpace.UniformConvergence
 open scoped ZeroAtInfty
 open Filter Topology
 
 
-noncomputable section
+public noncomputable section
 
 namespace TestFunctions
 

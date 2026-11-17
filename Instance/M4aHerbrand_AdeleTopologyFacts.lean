@@ -1,6 +1,11 @@
 -- Carved from Lemma/Definitions/Def_M4aHerbrand_AdeleTopologyFacts.lean: instance decls only.
-import Instance.NumberField_AdelicHaar
-import Instance.M4aHerbrand_OpenMappingBridge
+
+module
+
+public import Instance.NumberField_AdelicHaar
+public import Instance.M4aHerbrand_OpenMappingBridge
+
+@[expose] public section
 
 namespace M4aHerbrand.Bridge
 

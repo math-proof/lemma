@@ -1,14 +1,16 @@
-import Structure.AutomorphicForm_CarrierPins
-import Structure.AutomorphicForm_HeckeEigensystem
-import Structure.NumberField_AdelicLevel
-import Instance.AbstractHeckeOperator
+module
+
+public import Structure.AutomorphicForm_CarrierPins
+public import Structure.AutomorphicForm_HeckeEigensystem
+public import Structure.NumberField_AdelicLevel
+public import Instance.AbstractHeckeOperator
 
 set_option autoImplicit false
 
 open IsDedekindDomain NumberField MulAction NumberField.AdelicLevel
 open scoped Pointwise
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace AutomorphicForm
 

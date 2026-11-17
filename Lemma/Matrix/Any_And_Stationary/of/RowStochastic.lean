@@ -2,6 +2,7 @@ import Lemma.Matrix.VecMul.Continuous
 import Lemma.Matrix.NormOfL1Sub.le.Div2Add
 import Lemma.Matrix.StochasticVecCesaroAverage
 import Lemma.Matrix.IsCompactSimplex
+import Class.Probability.Process.StochasticProcessTypes.Part4
 open WithLp Matrix Metric Topology Function PiLp
 open scoped Matrix BigOperators Topology NNReal
 set_option maxHeartbeats 800000

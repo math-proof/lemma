@@ -1,7 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean -/
 
-import Def.CPythonListsort.Code.Assembly.MergeMemcpyProvenance
-import Def.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part2
+module
+
+public import Structure.CPythonListsort.Code.Transcription.MergeState.Part3
 /-!
 # Typed trace support for merge movement
 
@@ -18,6 +19,9 @@ its exact direction, and its distinct-backing certificate at every recursive
 call.  Key accesses for the complete range precede the optional synchronized-
 values phase, which is selected solely by `state.a.hasValues`.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

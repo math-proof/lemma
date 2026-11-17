@@ -5,6 +5,8 @@ import Lemma.Random.MeasurableRkd
 import Lemma.Random.NormRkd.le.Abs_R
 import Lemma.Random.Eq_WithDensity_Pdf
 import Theorem.Probability.SymbolicProbability
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Real
 
 
@@ -288,4 +290,4 @@ private lemma main
 
 
 -- created on 2023-04-20
--- updated on 2026-11-16
+-- updated on 2026-11-17

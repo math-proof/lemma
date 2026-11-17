@@ -9,15 +9,17 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedCriticalDivergence
-import Abbrev.StatisticalMechanics.Code.Universality.HexCorrectedHighestCut
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedCriticalDivergence
+public import Abbrev.StatisticalMechanics.Code.Universality.HexCorrectedHighestCut
 
 
 namespace StatMech.Universality
 
 open HexWalk
 
-noncomputable section
+public noncomputable section
 
 set_option maxHeartbeats 800000 in
 

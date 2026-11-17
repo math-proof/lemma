@@ -1,5 +1,7 @@
+import Initialize.Tactic.Attr.Basic
 import Lemma.List.Get.of.Eq.GtLength
 import Lemma.List.TakePermute__Neg.eq.ListGet
+import Theorem.Data.List.List.Part2
 open List Nat
 
 
@@ -10,7 +12,7 @@ private lemma main
   (i : Fin s.length) :
 -- imply
   have h := Gt_0 i
-  have : (s.permute i (-i)).length > 0 := by simpa
+  have : (s.permute i (-i)).length > 0 := by simpa [List.length_permute]
   (s.permute i (-i))[0] = s[i] := by
 -- proof
   intro h h_length

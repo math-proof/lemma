@@ -4,10 +4,12 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
 
-import Mathlib.Geometry.Manifold.Instances.Real
-import Mathlib.Topology.LocalAtTarget
-import Mathlib.Topology.PartitionOfUnity
-import Theorem.Geometry.Manifold.CollarNeighborhood
+module
+
+public import Mathlib.Geometry.Manifold.Instances.Real
+public import Mathlib.Topology.LocalAtTarget
+public import Mathlib.Topology.PartitionOfUnity
+public import Theorem.Geometry.Manifold.CollarNeighborhood
 /-!
 # Collar neighborhoods of smooth manifold boundaries
 
@@ -16,7 +18,7 @@ Euclidean half-space admits a topological collar neighborhood.
 -/
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 open Filter Function Manifold Set WithLp
 

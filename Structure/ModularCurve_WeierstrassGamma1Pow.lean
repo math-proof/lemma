@@ -1,5 +1,9 @@
-import Mathlib
-import Structure.ModularCurve_WeierstrassGamma0Pow
+module
+
+public import Mathlib
+public import Structure.ModularCurve_WeierstrassGamma0Pow
+
+public section
 
 set_option autoImplicit false
 

@@ -1,9 +1,13 @@
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.LinearAlgebra.Quotient.Basic
-import Mathlib.LinearAlgebra.Dual.Defs
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.RingTheory.Ideal.Quotient.Basic
+module
+
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.LinearAlgebra.Quotient.Basic
+public import Mathlib.LinearAlgebra.Dual.Defs
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.RingTheory.Ideal.Quotient.Basic
+
+@[expose] public section
 
 set_option autoImplicit false
 

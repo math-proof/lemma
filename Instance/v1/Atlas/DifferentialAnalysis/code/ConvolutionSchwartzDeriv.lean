@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Calculus.ParametricIntegral
-import Mathlib.Analysis.Distribution.SchwartzSpace.Deriv
-import Mathlib.Topology.ContinuousMap.ZeroAtInfty
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
+module
+
+public import Mathlib.Analysis.Calculus.ParametricIntegral
+public import Mathlib.Analysis.Distribution.SchwartzSpace.Deriv
+public import Mathlib.Topology.ContinuousMap.ZeroAtInfty
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
+
+@[expose] public section
+
 open MeasureTheory Filter Topology Metric Set
 open scoped ZeroAtInfty ContDiff
 

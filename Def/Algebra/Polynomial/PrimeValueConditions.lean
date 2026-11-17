@@ -14,9 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Algebra.Polynomial.Degree.Defs
-import Mathlib.Algebra.Polynomial.Eval.Defs
-import Mathlib.Data.Nat.Prime.Defs
+module
+
+public import Mathlib.Algebra.Polynomial.Degree.Defs
+public import Mathlib.Algebra.Polynomial.Eval.Defs
+public import Mathlib.Data.Nat.Prime.Defs
+
+@[expose] public section
+
 /-!
 # Conditions for simultaneous prime values of polynomials
 

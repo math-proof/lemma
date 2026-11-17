@@ -8,14 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Set.Basic
-import Mathlib.Data.Fintype.Basic
-import Mathlib.Data.List.Nodup
-import Def.v1.Atlas.TheoryOfComputation.code.Complexity.Part2
-import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.Complexity
-import Structure.v1.Atlas.TheoryOfComputation.code.Tableau
-import Def.v1.Atlas.TheoryOfComputation.code.NPCompleteness.Part2
+module
 
+public import Mathlib.Data.Set.Basic
+public import Mathlib.Data.Fintype.Basic
+public import Mathlib.Data.List.Nodup
+public import Def.v1.Atlas.TheoryOfComputation.code.Complexity.Part2
+public import Structure.v1.Atlas.TheoryOfComputation.code.Tableau
+public import Def.v1.Atlas.TheoryOfComputation.code.NPCompleteness.Part2
 
 namespace CookLevin
 
@@ -26,7 +26,7 @@ Correctness of the Cook–Levin formula: `buildTableauFormula M k w` is satisfia
 iff the NTM `M` accepts the input `w`. This is the central lemma of the Cook–Levin
 theorem.
 -/
-inductive SATState
+public inductive SATState
   | start
   | goodHead
   | badHead

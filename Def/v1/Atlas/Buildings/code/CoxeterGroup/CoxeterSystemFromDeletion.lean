@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.GroupTheory.Coxeter.Basic
-import Mathlib.GroupTheory.OrderOfElement
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.CoxeterSystemFromDeletion
+module
+
+public import Mathlib.GroupTheory.Coxeter.Basic
+public import Mathlib.GroupTheory.OrderOfElement
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.CoxeterSystemFromDeletion
+
+@[expose] public section
+
 open Function Set
 
 

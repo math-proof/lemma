@@ -4,14 +4,19 @@
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Mathlib.Topology.MetricSpace.Polish
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Order.CompletePartialOrder
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.GDelta.MetrizableSpace
-import Mathlib.Topology.MetricSpace.CantorScheme
+module
+
+public import Mathlib.Topology.MetricSpace.Polish
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Order.CompletePartialOrder
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.GDelta.MetrizableSpace
+public import Mathlib.Topology.MetricSpace.CantorScheme
+
+@[expose] public section
+
 /-!
 # Baire space characterization
 -/

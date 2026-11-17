@@ -7,9 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib
-import Structure.v1.Atlas.ProjectionTheory.code.FurstenbergProposition
+public import Mathlib
+public import Structure.v1.Atlas.ProjectionTheory.code.FurstenbergProposition
+
+public section
+
 /-- **Orponen–Shmerkin (2021)** sharp lower bound towards the Furstenberg conjecture:
 for parameters $0 < s < t$ there exists $\varepsilon > 0$ such that for any constant
 $C \ge 1$ there is $c > 0$ so that for every Furstenberg configuration with parameters

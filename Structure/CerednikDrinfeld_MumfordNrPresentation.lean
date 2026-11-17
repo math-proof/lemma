@@ -1,5 +1,9 @@
-import Mathlib
-import Structure.CerednikDrinfeld_MumfordTower
+module
+
+public import Mathlib
+public import Structure.CerednikDrinfeld_MumfordTower
+
+public section
 
 set_option autoImplicit false
 

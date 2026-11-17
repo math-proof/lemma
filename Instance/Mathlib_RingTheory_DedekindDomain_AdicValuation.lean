@@ -1,5 +1,10 @@
 -- Carved from Lemma/Definitions/Def_Mathlib_RingTheory_DedekindDomain_AdicValuation.lean: instance decls only.
-import Mathlib
+
+module
+
+public import Mathlib
+
+@[expose] public section
 
 section
 

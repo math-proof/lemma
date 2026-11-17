@@ -2,9 +2,12 @@
 # Sidon sets
 -/
 
-import Mathlib.Algebra.Group.Defs
-import Mathlib.Data.Set.Basic
+module
 
+public import Mathlib.Algebra.Group.Defs
+public import Mathlib.Data.Set.Basic
+
+@[expose] public section
 
 namespace Set
 

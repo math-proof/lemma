@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/EvenTableWeight.lean -/
+module
 
-
-import Def.Combinatorics.Enumerative.EvenTableWeight
-import Def.MathlibExtTest.Combinatorics.Enumerative.EvenTableWeight
+public import Def.Combinatorics.Enumerative.EvenTableWeight
+public import Def.MathlibExtTest.Combinatorics.Enumerative.EvenTableWeight
 open scoped BigOperators
 
+public section
 
 namespace MetaMathlibExt
 

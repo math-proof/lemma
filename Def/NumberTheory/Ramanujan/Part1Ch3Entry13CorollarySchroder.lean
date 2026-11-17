@@ -4,15 +4,20 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @akiezun, Avocado, Codex
 -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Analysis.Complex.Exponential
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.Topology.Algebra.InfiniteSum.Defs
-import Mathlib.Analysis.Complex.Convex
-import Mathlib.Analysis.Complex.LocallyUniformLimit
-import Mathlib.Analysis.PSeries
-import Mathlib.Analysis.SpecialFunctions.Stirling
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Analysis.Complex.Exponential
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.Topology.Algebra.InfiniteSum.Defs
+public import Mathlib.Analysis.Complex.Convex
+public import Mathlib.Analysis.Complex.LocallyUniformLimit
+public import Mathlib.Analysis.PSeries
+public import Mathlib.Analysis.SpecialFunctions.Stirling
+
+@[expose] public section
+
 /-!
 # Schröder's exponential series
 

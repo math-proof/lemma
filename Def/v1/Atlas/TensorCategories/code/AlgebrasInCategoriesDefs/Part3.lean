@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.TensorCategories.code.AlgebrasInCategories.Part4
 import Lemma.Category.Atlas.v1.TensorCategories.code.AlgebrasInCategories
-import Lemma.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
+import Theorem.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
 import Lemma.Category.Atlas.v1.TensorCategories.code.InternalHom
 import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
 import Def.v1.Atlas.TensorCategories.code.InternalHom.Part4

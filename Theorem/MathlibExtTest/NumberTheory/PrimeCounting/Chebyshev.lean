@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PrimeCounting/Chebyshev.lean -/
 
 
-import Lemma.Nat.PrimeCounting.Chebyshev
+import Theorem.Nat.PrimeCounting.Chebyshev
 open scoped Asymptotics
 
 

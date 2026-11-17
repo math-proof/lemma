@@ -1,5 +1,9 @@
-import Instance.TaylorWiles_Primes
-import Mathlib
+module
+
+public import Instance.TaylorWiles_Primes
+public import Mathlib
+
+public section
 
 set_option autoImplicit false
 

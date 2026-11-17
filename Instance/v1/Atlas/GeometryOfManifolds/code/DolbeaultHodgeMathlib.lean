@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Calculus.DifferentialForm.Basic
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Def.v1.Atlas.GeometryOfManifolds.code.DolbeaultHodgeMathlib
+module
+
+public import Mathlib.Analysis.Calculus.DifferentialForm.Basic
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Def.v1.Atlas.GeometryOfManifolds.code.DolbeaultHodgeMathlib
+
+@[expose] public section
+
 set_option autoImplicit false
 
 open ContinuousAlternatingMap

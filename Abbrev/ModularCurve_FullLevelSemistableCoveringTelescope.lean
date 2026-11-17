@@ -1,8 +1,10 @@
-import Structure.ModularCurve_FullLevelSemistableCovering
+module
+
+public import Structure.ModularCurve_FullLevelSemistableCovering
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace ModularCurve.FullLevel.SemistableCovering
 

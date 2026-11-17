@@ -23,7 +23,7 @@ import Mathlib.RingTheory.DedekindDomain.AdicValuation
 import Mathlib.RingTheory.Ideal.IntegralClosure
 import Mathlib.RingTheory.Ideal.Over
 import Def.v1.Atlas.NumberTheoryI.code.Chapter1.AbsoluteValues.Part2
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Chapter1.AbsoluteValues
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Chapter1.AbsoluteValues
 import Theorem.v1.Atlas.NumberTheoryI.code.CompleteFields
 
 

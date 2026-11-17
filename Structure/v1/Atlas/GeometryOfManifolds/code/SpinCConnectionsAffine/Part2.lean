@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.GeometryOfManifolds.code.FourManifoldsSW.Part8
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.FourManifoldsSW
-import Class.v1.Atlas.GeometryOfManifolds.code.SpinCConnectionsAffine
+module
+
+public import Def.v1.Atlas.GeometryOfManifolds.code.FourManifoldsSW.Part8
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.FourManifoldsSW
+public import Class.v1.Atlas.GeometryOfManifolds.code.SpinCConnectionsAffine
+public section
+
 set_option autoImplicit false
 
 

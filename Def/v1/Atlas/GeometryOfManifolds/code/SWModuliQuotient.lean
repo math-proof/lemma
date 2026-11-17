@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.GeometryOfManifolds.code.GaugeAction.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.GaugeAction
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SWModuliGoal62
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.GaugeAction
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SWModuliGoal62
 import Structure.v1.Atlas.GeometryOfManifolds.code.SWModuliGoal62
 set_option autoImplicit false
 

@@ -8,15 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Maps
-import Mathlib.Algebra.Polynomial.Roots
-import Def.v1.Atlas.TheoryOfComputation.code.BPP.Part3
-import Mathlib.Algebra.MvPolynomial.SchwartzZippel
-import Mathlib.Algebra.MvPolynomial.CommRing
-import Mathlib.Data.Nat.Prime.Infinite
-import Mathlib.Algebra.Order.Archimedean.Basic
-import Def.v1.Atlas.TheoryOfComputation.code.Probabilistic
+module
 
+public import Mathlib.Combinatorics.SimpleGraph.Maps
+public import Mathlib.Algebra.Polynomial.Roots
+public import Def.v1.Atlas.TheoryOfComputation.code.BPP.Part3
+public import Mathlib.Algebra.MvPolynomial.SchwartzZippel
+public import Mathlib.Algebra.MvPolynomial.CommRing
+public import Mathlib.Data.Nat.Prime.Infinite
+public import Mathlib.Algebra.Order.Archimedean.Basic
+public import Def.v1.Atlas.TheoryOfComputation.code.Probabilistic
+
+
+public section
 
 namespace Probabilistic
 

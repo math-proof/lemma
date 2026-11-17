@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Fourier/FourierLaplace.lean -/
+module
 
-
-import Theorem.Analysis.Fourier.FourierLaplace
-import Def.MathlibExtTest.Analysis.Fourier.FourierLaplace
+public import Theorem.Analysis.Fourier.FourierLaplace
+public import Def.MathlibExtTest.Analysis.Fourier.FourierLaplace
 open MeasureTheory
 
+public section
 
 namespace FourierTest
 

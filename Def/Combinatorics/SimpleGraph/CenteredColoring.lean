@@ -2,7 +2,12 @@
 
 -- MathlibExt/Combinatorics/SimpleGraph/CenteredColoring.lean
 
-import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
+
+@[expose] public section
+
 /-!
 # Centered vertex colorings
 

@@ -1,5 +1,8 @@
-import Mathlib
+module
 
+public import Mathlib
+
+@[expose] public section
 
 /-! Formalizing a proof (the prime case of) Erdos problem \#707 recently proven by Alexeev, ChatGPT, Lean, and Mixon at https://borisalexeev.com/papers/erdos707.html, following Theorem 8 proven on page 5 -/
 

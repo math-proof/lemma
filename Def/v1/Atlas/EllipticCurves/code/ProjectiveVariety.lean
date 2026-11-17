@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Mathlib.LinearAlgebra.Projectivization.Basic
-import Mathlib.RingTheory.Nullstellensatz
-import Mathlib.Topology.Irreducible
+module
+
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Mathlib.LinearAlgebra.Projectivization.Basic
+public import Mathlib.RingTheory.Nullstellensatz
+public import Mathlib.Topology.Irreducible
+
+@[expose] public section
+
 open MvPolynomial Set
 
 

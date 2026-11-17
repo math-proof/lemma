@@ -15,7 +15,7 @@ import Mathlib.LinearAlgebra.Dual.Defs
 import Mathlib.GroupTheory.FreeAbelianGroup
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Structure.v1.Atlas.AlgebraicGeometryI.code.SerreDualityStatement
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityStatement
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityStatement
 import Structure.v1.Atlas.AlgebraicGeometryI.code.Lec24RiemannRochSerre.Part3
 set_option maxHeartbeats 800000
 

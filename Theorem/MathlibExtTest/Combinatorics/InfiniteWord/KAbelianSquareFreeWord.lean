@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/InfiniteWord/KAbelianSquareFreeWord.lean -/
+module
 
+public import Def.Combinatorics.InfiniteWord.KAbelianSquareFreeWord
 
-import Def.Combinatorics.InfiniteWord.KAbelianSquareFreeWord
-
+public section
 
 namespace MetaMathlibExt
 

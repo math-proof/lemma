@@ -1,13 +1,15 @@
-import Mathlib
-import Lemma.Submodule.HopfKer
-import Def.HopfAlgebra_HopfKerHopf
-import Lemma.AlgHom.FVectStructure
+module
+
+public import Mathlib
+public import Def.HopfAlgebra_HopfKerHopf
+public import Instance.HopfAlgebra_HopfKerHopf
+public import Structure.HopfAlgebra_FVectStructure
 
 set_option autoImplicit false
 
 universe u v
 
-inductive HopfAlgebra.HasFVectDevissage (R : Type u) [CommRing R] [IsLocalRing R] (K : Type u) [Field K] [Algebra R K]
+public inductive HopfAlgebra.HasFVectDevissage (R : Type u) [CommRing R] [IsLocalRing R] (K : Type u) [Field K] [Algebra R K]
     (p : ℕ) [Fact p.Prime] : ∀ (A : Type v) [CommRing A] [HopfAlgebra K A], Prop
   | nil (A : Type v) [CommRing A] [HopfAlgebra K A] (h1 : Module.finrank K A = 1) : HasFVectDevissage R K p A
   | step (A : Type v) [CommRing A] [HopfAlgebra K A] [Coalgebra.IsCocomm K A] [Module.Finite K A]
@@ -18,5 +20,5 @@ inductive HopfAlgebra.HasFVectDevissage (R : Type u) [CommRing R] [IsLocalRing R
       (χ : Fˣ →* Rˣ) (ι : F →+* IsLocalRing.ResidueField R)
       (hχ : ∀ l : Fˣ, IsLocalRing.residue R (χ l : R) = ι l)
       (hrank : Module.finrank K ↥(HopfAlgebra.hopfKer π) = p ^ r)
-      (σ : AlgHom.FVectStructure F K ↥(HopfAlgebra.hopfKer π))
+      (σ : HopfAlgebra.FVectStructure F K ↥(HopfAlgebra.hopfKer π))
       (hĀ : HasFVectDevissage R K p Ā) : HasFVectDevissage R K p A

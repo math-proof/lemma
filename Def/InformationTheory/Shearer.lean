@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/InformationTheory/Shearer.lean -/
 
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+
+@[expose] public section
+
 open Finset BigOperators Real
 
 

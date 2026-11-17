@@ -1,17 +1,22 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/SetPartitionPeaks.lean -/
 
-import Mathlib.Combinatorics.Enumerative.Stirling
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Order.Interval.Finset.Nat
-import Mathlib.Algebra.BigOperators.Intervals
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Data.Int.Star
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Linarith.Lemmas
-import Mathlib.Tactic.NormNum.BigOperators
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Zify
+module
+
+public import Mathlib.Combinatorics.Enumerative.Stirling
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Fintype.Pi
+public import Mathlib.Order.Interval.Finset.Nat
+public import Mathlib.Algebra.BigOperators.Intervals
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Data.Int.Star
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Linarith.Lemmas
+public import Mathlib.Tactic.NormNum.BigOperators
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.Zify
+
+@[expose] public section
+
 open scoped BigOperators
 
 

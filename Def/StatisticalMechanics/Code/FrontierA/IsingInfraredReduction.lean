@@ -9,8 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib.Analysis.Fourier.FiniteAbelian.Orthogonality
-import Mathlib.Topology.Algebra.Order.LiminfLimsup
+module
+
+public import Mathlib.Analysis.Fourier.FiniteAbelian.Orthogonality
+public import Mathlib.Topology.Algebra.Order.LiminfLimsup
+
+@[expose] public section
+
 open Finset Filter Set Topology
 open scoped BigOperators ComplexConjugate
 

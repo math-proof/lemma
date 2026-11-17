@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Balanced.lean -/
 
-import Mathlib.Combinatorics.SimpleGraph.Basic
-import Mathlib.Combinatorics.SimpleGraph.Finite
-import Mathlib.Data.Real.Basic
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Basic
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Mathlib.Data.Real.Basic
+
+@[expose] public section
+
 /-!
 # Balanced graphs
 

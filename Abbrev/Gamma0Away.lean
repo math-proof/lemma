@@ -1,6 +1,10 @@
-import Mathlib.LinearAlgebra.Matrix.SpecialLinearGroup
-import Mathlib.LinearAlgebra.Matrix.Notation
-import Mathlib.RingTheory.Localization.Away.Basic
+module
+
+public import Mathlib.LinearAlgebra.Matrix.SpecialLinearGroup
+public import Mathlib.LinearAlgebra.Matrix.Notation
+public import Mathlib.RingTheory.Localization.Away.Basic
+
+@[expose] public section
 
 namespace Ihara
 

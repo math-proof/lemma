@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
+module
 
-import Theorem.StatisticalMechanics.Code.Foundations.ConfigSpace
-import Def.StatisticalMechanics.Code.Foundations.Kolmogorov
+public import Theorem.StatisticalMechanics.Code.Foundations.ConfigSpace
+public import Def.StatisticalMechanics.Code.Foundations.Kolmogorov
+
+@[expose] public section
+
 open MeasureTheory
 
 

@@ -4,15 +4,19 @@
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Mathlib.Algebra.Group.Subgroup.Lattice
-import Mathlib.Basic.Countable.Defs
-import Mathlib.Algebra.CharP.Defs
-import Mathlib.GroupTheory.FreeGroup.Basic
-import Mathlib.GroupTheory.HNNExtension
-import Mathlib.GroupTheory.SemidirectProduct
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.Group
-import Def.GroupTheory.HNNEmbedding
+module
+
+public import Mathlib.Algebra.Group.Subgroup.Lattice
+public import Mathlib.Basic.Countable.Defs
+public import Mathlib.Algebra.CharP.Defs
+public import Mathlib.GroupTheory.FreeGroup.Basic
+public import Mathlib.GroupTheory.HNNExtension
+public import Mathlib.GroupTheory.SemidirectProduct
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.Group
+public import Def.GroupTheory.HNNEmbedding
+@[expose] public section
+
 /-!
 # Higman–Neumann–Neumann embedding theorem
 

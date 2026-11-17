@@ -19,11 +19,11 @@ import Mathlib.FieldTheory.Separable
 import Mathlib.FieldTheory.PurelyInseparable.Basic
 import Def.v1.Atlas.ArithmeticGeometry.code.EllipticCurves.Part7
 import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.EllipticCurves
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.PadicElliptic
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.PadicElliptic
 import Mathlib.NumberTheory.Padics.PadicNumbers
 import Mathlib.NumberTheory.Padics.PadicVal.Basic
 import Theorem.v1.Atlas.ArithmeticGeometry.code.PadicElliptic
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.WeierstrassValBound
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.WeierstrassValBound
 open WeierstrassCurve
 
 /-- The function-field extension data associated to an isogeny $\varphi$: a pair of

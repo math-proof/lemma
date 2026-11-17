@@ -18,13 +18,11 @@ import Mathlib.Data.Complex.Basic
 import Mathlib.Tactic
 import Mathlib.Geometry.Manifold.VectorBundle.CovariantDerivative.Basic
 import Def.v1.Atlas.GeometryOfManifolds.code.DifferentialForms.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.DifferentialForms
 import Def.v1.Atlas.GeometryOfManifolds.code.ConnectionsCurvature.Part4
 open Bundle NormedSpace
 open scoped Manifold ContDiff Topology
 
 open DifferentialFormSpace
-
 
 /-- A graded form algebra: a commutative ring with a notion of homogeneous degree-$p$ elements,
 projection maps onto each degree, and the usual graded multiplication property. Used to encode

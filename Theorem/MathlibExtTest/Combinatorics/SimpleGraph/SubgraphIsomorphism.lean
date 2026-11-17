@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/SubgraphIsomorphism.lean -/
+module
 
-
-import Def.Combinatorics.SimpleGraph.SubgraphIsomorphism
+public import Def.Combinatorics.SimpleGraph.SubgraphIsomorphism
 open SimpleGraph
 
+public section
 
 -- Normal API use: the unique-subgraph predicate and count accept graphs.
 noncomputable example (G H : SimpleGraph (Fin 4)) : Prop :=

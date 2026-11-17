@@ -9,9 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexAllWidthStripGeometry.Part18
-import Theorem.StatisticalMechanics.Code.Universality.HexMirrorOrbitBoundary.Part3
-import Theorem.StatisticalMechanics.Code.Universality.HexAllWidthStripOrbits.Part4
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.HexAllWidthStripGeometry.Part18
+public import Theorem.StatisticalMechanics.Code.Universality.HexMirrorOrbitBoundary.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.HexAllWidthStripOrbits.Part4
 
 
 namespace StatMech.Universality
@@ -20,7 +22,7 @@ open Complex HexWalk Set
 
 open scoped BigOperators
 
-noncomputable section
+public noncomputable section
 
 structure HexFiniteStripGeometricOrbitData
     {I K V : Type*} [Fintype I] [Fintype K]

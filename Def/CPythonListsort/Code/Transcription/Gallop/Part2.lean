@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/Gallop.lean -/
 
-import Def.CPythonListsort.Code.Transcription.MergeState.Part3
-import Structure.CPythonListsort.Code.Transcription.Gallop
+module
+
+public import Def.CPythonListsort.Code.Transcription.MergeState.Part3
+public import Structure.CPythonListsort.Code.Transcription.Gallop
+
+@[expose] public section
+
 /-!
 # Hinted galloping searches
 

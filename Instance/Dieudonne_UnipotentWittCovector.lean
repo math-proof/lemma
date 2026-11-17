@@ -1,9 +1,7 @@
 -- Carved from Lemma/Definitions/Def_Dieudonne_UnipotentWittCovector.lean: instance decls only.
 import Mathlib
-import Lemma.LinearMap.DatumAndHonda
 import Instance.Dieudonne_WittVectorHom
 import Instance.Dieudonne_WittHomColimit
-import Lemma.Ideal.FontaineHodge
 import Lemma.Int.UnipotentWittCovector
 
 set_option autoImplicit false

@@ -8,13 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Ideal.Cotangent
-import Mathlib.RingTheory.Derivation.Basic
-import Mathlib.LinearAlgebra.Dual.Defs
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.CotangentSpaceDef
+module
+
+public import Mathlib.RingTheory.Ideal.Cotangent
+public import Mathlib.RingTheory.Derivation.Basic
+public import Mathlib.LinearAlgebra.Dual.Defs
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.CotangentSpaceDef
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace ZariskiCotangentSpace
 

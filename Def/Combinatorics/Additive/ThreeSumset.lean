@@ -1,10 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Additive/ThreeSumset.lean -/
 
-import Mathlib.Algebra.Group.Pointwise.Finset.Basic
-import Mathlib.Algebra.Order.BigOperators.Ring.Finset
-import Mathlib.Data.Prod.Lex
-import Mathlib.Data.ZMod.Basic
-import Abbrev.Combinatorics.Additive.ThreeSumset
+module
+
+public import Mathlib.Algebra.Group.Pointwise.Finset.Basic
+public import Mathlib.Algebra.Order.BigOperators.Ring.Finset
+public import Mathlib.Data.Prod.Lex
+public import Mathlib.Data.ZMod.Basic
+public import Abbrev.Combinatorics.Additive.ThreeSumset
+
+@[expose] public section
+
 open scoped Pointwise
 
 /-!

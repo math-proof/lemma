@@ -1,4 +1,8 @@
-import Instance.CerednikDrinfeld_DrinfeldUpperHalfPlane
+module
+
+public import Instance.CerednikDrinfeld_DrinfeldUpperHalfPlane
+
+@[expose] public section
 
 set_option autoImplicit false
 

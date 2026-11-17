@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.PrimeCounting.WeightedHilbert
-import Lemma.Nat.PrimeCounting.WeightedHilbert
+import Theorem.Nat.PrimeCounting.WeightedHilbert
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
 

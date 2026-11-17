@@ -2,7 +2,7 @@
 
 
 import Def.Geometry.Manifold.ImmersionComp
-import Lemma.Set.Manifold.ImmersionComp
+import Theorem.Set.Manifold.ImmersionComp
 open Manifold
 open scoped ContDiff Manifold
 

@@ -2,7 +2,7 @@
 
 
 import Def.Algebra.Polynomial.MomentGeneratingJFraction
-import Lemma.Int.Polynomial.MomentGeneratingJFraction
+import Theorem.Int.Polynomial.MomentGeneratingJFraction
 
 
 namespace MetaMathlibExt

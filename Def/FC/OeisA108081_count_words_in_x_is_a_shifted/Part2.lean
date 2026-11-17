@@ -9,9 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Abbrev.FC.OeisA108081_count_words_in_x_is_a_shifted
+module
 
+public import Mathlib
+public import Abbrev.FC.OeisA108081_count_words_in_x_is_a_shifted
+
+@[expose] public section
 
 namespace OeisA108081
 

@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Finpartition/BasicSetPartition.lean -/
 
-import Mathlib.Order.Partition.Finpartition
-import Mathlib.Order.Interval.Finset.Nat
+module
 
+public import Mathlib.Order.Partition.Finpartition
+public import Mathlib.Order.Interval.Finset.Nat
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

@@ -1,12 +1,14 @@
-import Mathlib
-import Def.ModularCurve_JZeroToricTorsion
-import Lemma.MvPolynomial.HeckeModule
-import Def.FLTPrelim_Ramification
-import Def.GaloisRep_Flat
+module
+
+public import Mathlib
+public import Def.ModularCurve_JZeroToricTorsion
+public import Lemma.MvPolynomial.HeckeModule
+public import Def.FLTPrelim_Ramification
+public import Def.GaloisRep_Flat
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace ModularCurve
 

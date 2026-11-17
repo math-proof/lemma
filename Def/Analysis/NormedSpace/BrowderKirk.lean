@@ -1,19 +1,23 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
-import Mathlib.Analysis.Convex.Uniform
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.Normed.Order.Lattice
-import Mathlib.Analysis.RCLike.Basic
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.MetricSpace.Contracting
-import Theorem.Analysis.NormedSpace.BrowderKirk
 
+module
+
+public import Mathlib.Analysis.Convex.Uniform
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Analysis.Normed.Order.Lattice
+public import Mathlib.Analysis.RCLike.Basic
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.MetricSpace.Contracting
+public import Theorem.Analysis.NormedSpace.BrowderKirk
+
+@[expose] public section
 
 section
 

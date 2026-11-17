@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.ArithmeticFunction.AlderTotient
-import Lemma.Nat.ArithmeticFunction.AlderTotient
+import Theorem.Nat.ArithmeticFunction.AlderTotient
 open ArithmeticFunction
 
 

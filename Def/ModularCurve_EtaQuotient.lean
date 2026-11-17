@@ -1,4 +1,4 @@
-import Lemma.HahnSeries.ModularUnit
+import Theorem.HahnSeries.ModularUnit
 import Def.ModularForm_HeckeOperator
 import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
 import Mathlib.NumberTheory.ModularForms.Discriminant

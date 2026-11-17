@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Def.v1.Atlas.ProjectionTheory.code.DeltaRegular
-import Abbrev.v1.Atlas.ProjectionTheory.code.GGGHMW
+module
+
+public import Mathlib
+public import Def.v1.Atlas.ProjectionTheory.code.DeltaRegular
+public import Abbrev.v1.Atlas.ProjectionTheory.code.GGGHMW
+
+@[expose] public section
+
 open MeasureTheory Metric Set DeltaRegular
 open scoped ENNReal NNReal
 

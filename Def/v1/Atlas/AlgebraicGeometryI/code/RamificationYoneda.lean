@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Yoneda
-import Mathlib.RingTheory.Discriminant
-import Mathlib.RingTheory.Spectrum.Prime.Topology
+module
+
+public import Mathlib.CategoryTheory.Yoneda
+public import Mathlib.RingTheory.Discriminant
+public import Mathlib.RingTheory.Spectrum.Prime.Topology
+
+@[expose] public section
+
 open CategoryTheory Opposite
 
 

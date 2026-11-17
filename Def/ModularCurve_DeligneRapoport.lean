@@ -1,6 +1,10 @@
-import Mathlib.Algebra.Module.Submodule.Lattice
-import Mathlib.Algebra.Group.Subgroup.Basic
-import Mathlib.GroupTheory.GroupAction.Defs
+module
+
+public import Mathlib.Algebra.Module.Submodule.Lattice
+public import Mathlib.Algebra.Group.Subgroup.Basic
+public import Mathlib.GroupTheory.GroupAction.Defs
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -8,13 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Spectrum.Prime.Chevalley
-import Mathlib.RingTheory.KrullDimension.Basic
-import Mathlib.RingTheory.Noetherian.Defs
-import Mathlib.RingTheory.FiniteType
-import Mathlib.RingTheory.FinitePresentation
-import Mathlib.RingTheory.Ideal.Quotient.Operations
+module
 
+public import Mathlib.RingTheory.Spectrum.Prime.Chevalley
+public import Mathlib.RingTheory.KrullDimension.Basic
+public import Mathlib.RingTheory.Noetherian.Defs
+public import Mathlib.RingTheory.FiniteType
+public import Mathlib.RingTheory.FinitePresentation
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+
+@[expose] public section
 
 noncomputable section
 

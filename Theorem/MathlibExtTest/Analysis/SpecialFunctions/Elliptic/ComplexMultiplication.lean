@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/Elliptic/ComplexMultiplication.lean -/
+module
 
+public import Theorem.Analysis.SpecialFunctions.Elliptic.ComplexMultiplication.Part2
 
-import Theorem.Analysis.SpecialFunctions.Elliptic.ComplexMultiplication.Part2
-
+public section
 
 namespace PeriodPair
 

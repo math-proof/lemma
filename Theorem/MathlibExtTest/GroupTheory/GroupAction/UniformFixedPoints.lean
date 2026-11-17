@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/GroupTheory/GroupAction/UniformFixedPoints.lean -/
 
 
-import Lemma.Nat.AddCardMul_SubCard1.eq.MulCard_QuotientOrbitRelCard
+import Theorem.Nat.AddCardMul_SubCard1.eq.MulCard_QuotientOrbitRelCard
 import Mathlib.Algebra.Group.Action.TypeTags
 import Mathlib.Algebra.Group.TypeTags.Finite
 import Mathlib.Data.ZMod.Defs

@@ -8,7 +8,7 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.FunctionFieldGenerators
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.FunctionFieldGenerators
 import Def.v1.Atlas.ArithmeticGeometry.code.ProductVarieties.Part5
 import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.ProductVarieties
 import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.CotangentLocal

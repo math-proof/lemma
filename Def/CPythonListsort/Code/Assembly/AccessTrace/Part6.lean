@@ -1,7 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean -/
 
-import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
-import Instance.CPythonListsort.Code.Assembly.AccessTrace.Part3
+module
+
+public import Def.CPythonListsort.Code.Assembly.AccessTrace.Part2
+public import Structure.CPythonListsort.Code.Assembly.AccessTrace.Part6
+
+@[expose] public section
 /-!
 # Compositional access and pending-push traces
 

@@ -1,5 +1,7 @@
-import Theorem.Dynamics.PolicyTrajectory.ContinuousAction
+import Def.Dynamics.PolicyTrajectory.ContinuousAction
 import Mathlib.Probability.Kernel.MeasurableIntegral
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory PolicyGradient
 
 
@@ -9,7 +11,7 @@ open MeasureTheory PolicyGradient
 @[path]
 private lemma main
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M] :
+  {M : Model Θ 𝒮 𝒜} [StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M] :
 -- imply
   Measurable (fun z : 𝒮 × 𝒜 => M.rkd z.1 z.2) := by
 -- proof
@@ -21,4 +23,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-16
+-- updated on 2026-11-17

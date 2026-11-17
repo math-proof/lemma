@@ -7,13 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
-import Def.StatisticalMechanics.Code.FrontierD.FiniteBipartiteFlowSparse
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
+public import Def.StatisticalMechanics.Code.FrontierD.FiniteBipartiteFlowSparse
 open Finset
 
+public section
 
 namespace StatMech.FrontierD
 

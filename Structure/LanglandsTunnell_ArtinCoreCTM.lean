@@ -1,10 +1,12 @@
-import Instance.LanglandsTunnell_ArtinFrobenius
-import Structure.M4aHerbrand_IdeleClassVocab
-import Instance.LanglandsTunnell_ArtinCoreCTM
+module
+
+public import Instance.LanglandsTunnell_ArtinFrobenius
+public import Structure.M4aHerbrand_IdeleClassVocab
+public import Instance.LanglandsTunnell_ArtinCoreCTM
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open Deep.NTSupply NumberField IsDedekindDomain WithZero
 open scoped nonZeroDivisors IsMulCommutative Pointwise

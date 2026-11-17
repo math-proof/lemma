@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/DiagonalSumsOfARiordanOrTriangularArray.lean -/
 
-import Mathlib.Algebra.BigOperators.NatAntidiagonal
+module
+
+public import Mathlib.Algebra.BigOperators.NatAntidiagonal
+
+@[expose] public section
+
 open scoped BigOperators
 
 

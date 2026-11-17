@@ -6,8 +6,10 @@ All rights reserved.
 Copyright (c) 2025 AlgebraicCombinatorics Contributors. All rights reserved.
 Authors:
 -/
-import Mathlib
-import Def.RingTheory.PowerSeries.InfiniteProducts2
+module
+
+public import Mathlib
+public import Def.RingTheory.PowerSeries.InfiniteProducts2
 open scoped Polynomial
 open Finset PowerSeries
 
@@ -57,6 +59,8 @@ constant term 0 or 1 (`PowerSeries₀` and `PowerSeries₁`) are in `FPS/ExpLog.
 
 * AlgebraicCombinatorics book, Section on Infinite Products (InfiniteProducts2.tex)
 -/
+
+public section
 
 
 noncomputable section

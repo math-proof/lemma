@@ -7,12 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.GroupTheory.Coxeter.Basic
-import Mathlib.GroupTheory.OrderOfElement
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.CoxeterSystemFromDeletion
+public import Mathlib.GroupTheory.Coxeter.Basic
+public import Mathlib.GroupTheory.OrderOfElement
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.CoxeterSystemFromDeletion
 open Function Set
 
+public section
 
 namespace CoxeterSystemFromDeletion
 

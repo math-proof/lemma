@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.HolomorphicFamilyEquicontinuity
-import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangRealAnchor.Part5
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierA.HolomorphicFamilyEquicontinuity
+public import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangRealAnchor.Part5
+public section
+
 open Filter Metric Set Topology
 open scoped UniformConvergence
 

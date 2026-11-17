@@ -1,9 +1,11 @@
 import Def.Data.List.List.Basic
+import Instance.Data.List.List
+import Initialize.Tactic.Attr.Basic
 @[path]
 private lemma main
   {s : List α}
 -- given
-  (h : s is constant)
+  (h : IsConstant.is_constant s)
   (default : α) :
 -- imply
   ∀ x ∈ s, x = s.headD default := by

@@ -9,8 +9,8 @@ import Mathlib.Basic.Complex.Basic
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
 import Mathlib.LinearAlgebra.Matrix.SchurComplement
 import Def.Algebra.MvPolynomial.PDeriv
-import Lemma.MvPolynomial.PDeriv
-import Lemma.Matrix.MvPolynomial
+import Theorem.MvPolynomial.PDeriv
+import Theorem.Matrix.MvPolynomial
 import Def.LinearAlgebra.Matrix.MvPolynomial
 import Mathlib.Algebra.CharZero.Infinite
 import Mathlib.Algebra.MvPolynomial.Funext

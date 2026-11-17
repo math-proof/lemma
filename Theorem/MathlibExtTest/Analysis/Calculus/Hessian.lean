@@ -1,12 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Calculus/Hessian.lean -/
+module
 
-
-import Theorem.Analysis.Calculus.Hessian
-import Mathlib.Analysis.Calculus.ContDiff.Comp
-import Mathlib.Analysis.Calculus.ContDiff.Operations
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
+public import Theorem.Analysis.Calculus.Hessian
+public import Mathlib.Analysis.Calculus.ContDiff.Comp
+public import Mathlib.Analysis.Calculus.ContDiff.Operations
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
 open MetaMathlibExt
 
+public section
 
 -- Coordinate evaluations of the second Fréchet derivative agree after swapping directions.
 example {n : ℕ} (f : (Fin n → ℝ) → ℝ) (hf : ContDiff ℝ 2 f)

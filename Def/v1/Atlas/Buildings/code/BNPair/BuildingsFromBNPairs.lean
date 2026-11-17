@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Structure.v1.Atlas.Buildings.code.BNPair.Basic.Part2
 import Def.v1.Atlas.Buildings.code.BNPair.ParabolicDefs.Part2
-import Lemma.Nat.NonemptyBruhatCell
+import Theorem.Nat.NonemptyBruhatCell
 import Lemma.Set.All_In_StandardParabolic
 import Lemma.Nat.B.le.Closure_BruhatCell
 import Theorem.v1.Atlas.Buildings.code.BNPair.ConjugatorProof

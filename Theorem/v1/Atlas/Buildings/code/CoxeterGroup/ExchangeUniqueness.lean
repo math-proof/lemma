@@ -7,9 +7,12 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.GroupTheory.Coxeter.Inversion
+public import Mathlib.GroupTheory.Coxeter.Inversion
 open CoxeterSystem List
+
+public section
 
 variable {B : Type*}
 

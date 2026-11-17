@@ -9,9 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicMarkedEndpointInputAssembly
-import Def.StatisticalMechanics.Code.Universality.IsingFermionicEndpointAnalyticAssembly.Part2
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicVariableFourthOrderBulk
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicMarkedEndpointInputAssembly
+public import Def.StatisticalMechanics.Code.Universality.IsingFermionicEndpointAnalyticAssembly.Part2
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicVariableFourthOrderBulk
 
 
 namespace StatMech.Universality
@@ -20,7 +22,7 @@ open Filter
 
 open StatMech StatMech.FK StatMech.Lattice StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 namespace FKIsingSquareBoundaryLayerCoordinateOneForm
 

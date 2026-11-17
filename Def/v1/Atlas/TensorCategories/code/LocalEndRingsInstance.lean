@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
 import Lemma.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
-import Lemma.Category.Atlas.v1.TensorCategories.code.FittingLemmaLocalEnd
+import Theorem.Category.Atlas.v1.TensorCategories.code.FittingLemmaLocalEnd
 import Class.v1.Atlas.TensorCategories.code.FittingLemmaLocalEnd
 set_option autoImplicit false
 

@@ -8,16 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLn.Part3
-import Lemma.Nat.TypeA_CoxeterMatrixA
-import Mathlib.LinearAlgebra.Basis.Basic
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Mathlib.LinearAlgebra.Dimension.Free
-import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Mathlib.Order.CompleteLattice.Finset
+module
 
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLn.Part3
+public import Mathlib.LinearAlgebra.Basis.Basic
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.LinearAlgebra.Dimension.Free
+public import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Mathlib.Order.CompleteLattice.Finset
+
+@[expose] public section
 
 namespace GLnBuilding
 

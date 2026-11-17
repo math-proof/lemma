@@ -1,9 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/Algebra/Group/OpenProfiniteCompletion.lean -/
+module
 
-import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Completion
-import Def.Topology.Algebra.Group.OpenProfiniteCompletion
+public import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Completion
+public import Def.Topology.Algebra.Group.OpenProfiniteCompletion
 open CategoryTheory
 open scoped Pointwise
+
+public section
 
 universe u
 

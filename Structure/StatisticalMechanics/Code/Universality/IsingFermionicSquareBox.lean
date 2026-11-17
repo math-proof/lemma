@@ -9,11 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Def.StatisticalMechanics.Code.Universality.IsingFermionicMedialComplex.Part7
-import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareFiniteDuality
-import Theorem.StatisticalMechanics.Code.Lattice.EarContraction.Part9
-import Mathlib.Combinatorics.SimpleGraph.Matching
-import Inductive.StatisticalMechanics.Code.Universality.IsingFermionicSquareBox.Part3
+module
+
+public import Def.StatisticalMechanics.Code.Universality.IsingFermionicMedialComplex.Part7
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareFiniteDuality
+public import Theorem.StatisticalMechanics.Code.Lattice.EarContraction.Part9
+public import Mathlib.Combinatorics.SimpleGraph.Matching
+public import Inductive.StatisticalMechanics.Code.Universality.IsingFermionicSquareBox.Part3
 
 
 namespace StatMech.Universality
@@ -22,7 +24,7 @@ open Finset SimpleGraph
 
 open StatMech StatMech.FK StatMech.Lattice StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure FKIsingSquareEdgeOrientation (n : Nat)
     (e : FKIsingMedialVertex (fkSquareBoxPlanar n)) where

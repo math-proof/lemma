@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Fourier/FiniteAbelianDFT.lean -/
+module
 
-
-import Theorem.Analysis.Fourier.FiniteAbelian.FiniteAbelianDFT
-import Mathlib.Analysis.Complex.Norm
-import Mathlib.Basic.Complex.BigOperators
+public import Theorem.Analysis.Fourier.FiniteAbelian.FiniteAbelianDFT
+public import Mathlib.Analysis.Complex.Norm
+public import Mathlib.Basic.Complex.BigOperators
 open scoped BigOperators
 
+public section
 
 namespace MathlibExt.Analysis.Fourier.FiniteAbelianDFTWanted
 

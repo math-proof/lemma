@@ -8,12 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Ideal.Norm.AbsNorm
-import Mathlib.LinearAlgebra.FreeModule.PID
-import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
-import Mathlib.LinearAlgebra.Quotient.Card
-import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
+module
 
+public import Mathlib.RingTheory.Ideal.Norm.AbsNorm
+public import Mathlib.LinearAlgebra.FreeModule.PID
+public import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
+public import Mathlib.LinearAlgebra.Quotient.Card
+public import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
+
+@[expose] public section
 
 namespace IdealNorm
 

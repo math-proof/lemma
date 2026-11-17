@@ -1,19 +1,24 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/Combinatorics/LovaszLocalLemma.lean -/
 
-import Mathlib.Combinatorics.SimpleGraph.Finite
-import Mathlib.Analysis.SpecialFunctions.Exp
-import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
-import Mathlib.Algebra.BigOperators.GroupWithZero.Finset
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Algebra.Order.BigOperators.GroupWithZero.Finset
-import Mathlib.Data.Finset.Powerset
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Push
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Mathlib.Analysis.SpecialFunctions.Exp
+public import Mathlib.Algebra.BigOperators.Ring.Finset
+public import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
+public import Mathlib.Algebra.BigOperators.GroupWithZero.Finset
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Algebra.Order.BigOperators.GroupWithZero.Finset
+public import Mathlib.Data.Finset.Powerset
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Push
+
+@[expose] public section
+
 set_option linter.unusedSectionVars false
 
 open Finset SimpleGraph

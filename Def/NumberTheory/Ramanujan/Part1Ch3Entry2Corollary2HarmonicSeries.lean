@@ -4,27 +4,32 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Analysis.Complex.Exponential
-import Mathlib.Data.Finset.Range
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.NumberTheory.Harmonic.Defs
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Algebra.BigOperators.Intervals
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.Normed.Algebra.Exponential
-import Mathlib.Analysis.Normed.Ring.InfiniteSum
-import Mathlib.Analysis.SpecialFunctions.Exponential
-import Mathlib.Analysis.SpecificLimits.Normed
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Rat.Star
-import Mathlib.Topology.Algebra.InfiniteSum.NatInt
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Analysis.Complex.Exponential
+public import Mathlib.Data.Finset.Range
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.NumberTheory.Harmonic.Defs
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Algebra.BigOperators.Intervals
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Normed.Algebra.Exponential
+public import Mathlib.Analysis.Normed.Ring.InfiniteSum
+public import Mathlib.Analysis.SpecialFunctions.Exponential
+public import Mathlib.Analysis.SpecificLimits.Normed
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Data.Rat.Star
+public import Mathlib.Topology.Algebra.InfiniteSum.NatInt
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 3
 

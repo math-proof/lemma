@@ -1,14 +1,20 @@
 /-
 Author: @akiezun, Avocado
 -/
-import Mathlib.Analysis.Asymptotics.Defs
-import Mathlib.Combinatorics.Enumerative.Bell
-import Mathlib.Topology.Algebra.InfiniteSum.Defs
-import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Algebra.CharP.Defs
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Algebra.Ring.IsFormallyReal
-import Mathlib.Analysis.SpecificLimits.Normed
+
+module
+
+public import Mathlib.Analysis.Asymptotics.Defs
+public import Mathlib.Combinatorics.Enumerative.Bell
+public import Mathlib.Topology.Algebra.InfiniteSum.Defs
+public import Mathlib.Algebra.BigOperators.Field
+public import Mathlib.Algebra.CharP.Defs
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Algebra.Ring.IsFormallyReal
+public import Mathlib.Analysis.SpecificLimits.Normed
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 6, Entry 5
 

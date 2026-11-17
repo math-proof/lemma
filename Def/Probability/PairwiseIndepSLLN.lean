@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.StrongLaw
-import Mathlib.Probability.Independence.Basic
-import Mathlib.Analysis.PSeries
-import Mathlib.Topology.Algebra.InfiniteSum.Real
+module
+
+public import Mathlib.Probability.StrongLaw
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.Analysis.PSeries
+public import Mathlib.Topology.Algebra.InfiniteSum.Real
+
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory Filter Set
 open scoped ENNReal NNReal MeasureTheory
 

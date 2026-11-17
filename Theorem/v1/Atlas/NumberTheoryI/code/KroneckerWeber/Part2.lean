@@ -36,7 +36,7 @@ import Theorem.v1.Atlas.NumberTheoryI.code.GroupCounts.Part8
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.GroupCounts
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.AdicCompletionAlgebra
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.KroneckerWeberLocal2
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.ResidueFieldHelper
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.ResidueFieldHelper
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.CyclotomicDVRInstances
 import Mathlib.RingTheory.Valuation.Extension
 import Mathlib.RingTheory.Valuation.Discrete.RankOne

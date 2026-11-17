@@ -1,7 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/ThreeManifold.lean -/
+module
 
-import Mathlib.Geometry.Manifold.Instances.Real
-import Class.Topology.ThreeManifold
+public import Mathlib.Geometry.Manifold.Instances.Real
+public import Class.Topology.ThreeManifold
+
+public section
+
 variable (M : Type*) [TopologicalSpace M]
 
 

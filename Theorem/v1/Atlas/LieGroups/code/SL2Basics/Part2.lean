@@ -7,17 +7,21 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.LinearAlgebra.Matrix.SpecialLinearGroup
-import Mathlib.LinearAlgebra.Matrix.Trace
-import Mathlib.Algebra.Lie.OfAssociative
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Mathlib.Algebra.Lie.Sl2
-import Mathlib.Algebra.Lie.Abelian
-import Def.v1.Atlas.LieGroups.code.SL2Basics.Part2
+public import Mathlib.LinearAlgebra.Matrix.SpecialLinearGroup
+public import Mathlib.LinearAlgebra.Matrix.Trace
+public import Mathlib.Algebra.Lie.OfAssociative
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Mathlib.Algebra.Lie.Sl2
+public import Mathlib.Algebra.Lie.Abelian
+public import Def.v1.Atlas.LieGroups.code.SL2Basics.Part2
+
+public section
+
 attribute [local instance 100] LieRing.ofAssociativeRing
 
 -- Mathlib keeps LieRing.ofAssociativeRing as a local instance only

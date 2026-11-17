@@ -23,6 +23,8 @@ import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Syntax.Order.Sup
 import Instance.Analysis.Real.Numbers
 import Class.Dynamics.PolicyTrajectory
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure Real
 open scoped ENNReal.ToRealCoe
 set_option maxHeartbeats 800000
@@ -232,10 +234,10 @@ private lemma ae_td_eq_return
 
 /-- Integral against a density-policy kernel is the reference integral weighted by `π`. -/
 private lemma integral_kernel
-  [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+  [NormedAddCommGroup ℰ] [NormedSpace ℝ ℰ] [CompleteSpace ℰ]
   [MeasurableSpace 𝒮] [μ : ReferenceMeasure 𝒜]
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
-  {f : 𝒜 → E}
+  {f : 𝒜 → ℰ}
 -- given
   (θ : Θ)
   (sₜ : 𝒮) :
@@ -302,9 +304,9 @@ private lemma is_weight_eq_score
 
 /-- Scalar-vector division `c • (v / π')` is the inverse-smul form used by `AEStronglyMeasurable`. -/
 private lemma smul_div_eq_inv_smul
-  [NormedAddCommGroup E] [NormedSpace ℝ E]
+  [NormedAddCommGroup ℰ] [NormedSpace ℝ ℰ]
 -- given
-  (c π' : ℝ) (v : E) :
+  (c π' : ℝ) (v : ℰ) :
 -- imply
   c • (v / π') = π'⁻¹ • (c • v) := by
 -- proof
@@ -312,11 +314,11 @@ private lemma smul_div_eq_inv_smul
 
 /-- A state-action score pulls out of the discounted return, via the tower property. -/
 private lemma integral_return_smul_eq_cond
-  [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+  [NormedAddCommGroup ℰ] [NormedSpace ℝ ℰ] [CompleteSpace ℰ]
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {γ C : ℝ}
-  {ψ : 𝒮 → 𝒜 → E}
+  {ψ : 𝒮 → 𝒜 → ℰ}
   {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
@@ -928,7 +930,7 @@ private lemma main
       · exact measurable_const
     have hdis0 :=
       Integral.eq.Integral_Integral_SMul.of.All_Eq_Joint.All_EqWithDensity
-        (M := M) (E := ℝ)
+        (M := M) (ℰ := ℝ)
         (φ := fun y u => if |A θ t y u| ≤ 2 * BG then (0 : ℝ) else 1)
         (C := (1 : ℝ)) hEq hφind (fun y u => by
           if h : |A θ t y u| ≤ 2 * BG then
@@ -1570,4 +1572,4 @@ private lemma main
 
 
 -- created on 2026-11-08
--- updated on 2026-11-16
+-- updated on 2026-11-17

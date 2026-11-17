@@ -2,7 +2,7 @@
 
 
 import Def.InformationTheory.HammingBall
-import Lemma.Real.HammingBall
+import Theorem.Real.HammingBall
 variable {ι F : Type*} [Fintype ι] [DecidableEq ι] [Fintype F] [DecidableEq F]
 
 

@@ -8,15 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
-import Lemma.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
-import Lemma.Finset.IsMaximalToSimplicialComplex.of.IsMaximal.In_Apartments
-import Structure.v1.Atlas.Buildings.code.Building.ApartmentsCoxeter
-import Structure.v1.Atlas.Buildings.code.BNPair.Basic.Part2
-import Mathlib.GroupTheory.Coxeter.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.LinearAlgebra.Matrix.PosDef
-import Structure.v1.Atlas.Buildings.code.Building.Affine
+module
+
+public import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
+public import Structure.v1.Atlas.Buildings.code.Building.ApartmentsCoxeter
+public import Structure.v1.Atlas.Buildings.code.BNPair.Basic.Part2
+public import Mathlib.GroupTheory.Coxeter.Basic
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.LinearAlgebra.Matrix.PosDef
+public import Structure.v1.Atlas.Buildings.code.Building.Affine
+
+@[expose] public section
+
 set_option linter.unusedSectionVars false
 
 open ChamberComplex

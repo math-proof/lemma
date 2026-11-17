@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTracePrimitives.lean -/
 
-import Def.CPythonListsort.Code.Assembly.MergeMemcpyProvenance
-import Structure.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part3
+module
+
+public import Structure.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part3
+public import Theorem.CPythonListsort.Code.Assembly.AccessTrace
+public import Theorem.CPythonListsort.Code.Assembly.AccessTrace.Part2
 /-!
 # Typed trace support for merge movement
 
@@ -19,12 +22,15 @@ call.  Key accesses for the complete range precede the optional synchronized-
 values phase, which is selected solely by `state.a.hasValues`.
 -/
 
+public section
+
 
 namespace CPythonListsort
 
 universe u v
 
 open SortSlice
+open AccessTrace
 
 namespace TempRangeInBounds
 
@@ -36,7 +42,7 @@ namespace AccessTrace.HasAccess
 
 namespace MovementTraceSafe
 
-theorem bind (current : TraceResult α) (next : α → TraceResult β)
+public theorem bind (current : TraceResult α) (next : α → TraceResult β)
     (value : α) (hresult : current.result = some value)
     (hcurrent : MovementTraceSafe current)
     (hnext : MovementTraceSafe (next value)) :
@@ -44,7 +50,7 @@ theorem bind (current : TraceResult α) (next : α → TraceResult β)
   rcases hcurrent with ⟨hcurrentFuel, hcurrentPush, hcurrentBounds, hcurrentLive⟩
   rcases hnext with ⟨hnextFuel, hnextPush, hnextBounds, hnextLive⟩
   constructor
-  · simp [TraceResult.trace_bind, hresult, hcurrentFuel, hnextFuel]
+  · simp [TraceResult.trace_bind, hresult, AccessTrace.compose, hcurrentFuel, hnextFuel]
   · simp [TraceResult.trace_bind, hresult, AccessTrace.compose,
       hcurrentPush, hnextPush]
   · rw [TraceResult.trace_bind, hresult,

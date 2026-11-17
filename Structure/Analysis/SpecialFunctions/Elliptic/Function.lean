@@ -1,10 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Elliptic/Function.lean -/
 
-import Mathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass
-import Def.Analysis.SpecialFunctions.Elliptic.Function
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass
+public import Def.Analysis.SpecialFunctions.Elliptic.Function
 /-!
 # Elliptic functions
 -/
+public section
+
+
 
 
 namespace PeriodPair

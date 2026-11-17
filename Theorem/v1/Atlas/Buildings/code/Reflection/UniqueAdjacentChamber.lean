@@ -7,14 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.Buildings.code.Reflection.HyperplaneChambers.Part4
-import Def.v1.Atlas.Buildings.code.Reflection.WallSeparation
+public import Def.v1.Atlas.Buildings.code.Reflection.HyperplaneChambers.Part4
+public import Def.v1.Atlas.Buildings.code.Reflection.WallSeparation
 set_option maxHeartbeats 0
 
 open scoped InnerProductSpace
 open Set
 
+public section
 
 noncomputable section
 

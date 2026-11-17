@@ -1,11 +1,16 @@
-import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Mathlib.RepresentationTheory.AlgebraRepresentation.Basic
+module
+
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Mathlib.RepresentationTheory.AlgebraRepresentation.Basic
+
 /-!
 # Burnside's theorem on matrix algebras
 
 Records that an irreducible subalgebra of `M_n(k)` over an algebraically
 closed field is the whole matrix algebra.
 -/
+
+public section
 
 
 namespace BurnsideMatrix

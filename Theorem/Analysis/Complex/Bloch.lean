@@ -1,15 +1,20 @@
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.Calculus.InverseFunctionTheorem.ApproximatesLinearOn
-import Mathlib.Analysis.Complex.Liouville
-import Mathlib.Analysis.Normed.Module.Connected
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Calculus.InverseFunctionTheorem.ApproximatesLinearOn
+public import Mathlib.Analysis.Complex.Liouville
+public import Mathlib.Analysis.Normed.Module.Connected
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+
 /-!
 # Bloch's theorem (universal schlicht disc)
 -/
+
+public section
 
 
 namespace Complex.BlochWanted

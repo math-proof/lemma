@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.CWComplex.Classical.Basic
-import Mathlib.Geometry.Manifold.IsManifold.Basic
-import Abbrev.v1.Atlas.AlgebraicTopologyI.code.Section14
+module
+
+public import Mathlib.Topology.CWComplex.Classical.Basic
+public import Mathlib.Geometry.Manifold.IsManifold.Basic
+public import Abbrev.v1.Atlas.AlgebraicTopologyI.code.Section14
+
+@[expose] public section
+
 open Topology
 
 

@@ -1,2 +1,4 @@
 -- Macro library (carved from Lemma/Definitions)
-import Macro.WeierstrassCurve.SimpEvalNeg
+module
+
+public import Macro.WeierstrassCurve.SimpEvalNeg

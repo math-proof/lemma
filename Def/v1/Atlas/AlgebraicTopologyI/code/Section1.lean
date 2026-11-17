@@ -8,16 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Convex.StdSimplex
-import Mathlib.Topology.ContinuousMap.Basic
-import Mathlib.GroupTheory.FreeAbelianGroup
-import Mathlib.AlgebraicTopology.SingularHomology.Basic
-import Mathlib.Algebra.Category.Grp.Basic
-import Mathlib.Algebra.Category.Grp.Colimits
-import Mathlib.Algebra.Category.Grp.Preadditive
-import Mathlib.Algebra.Homology.HomologicalComplex
-import Mathlib.Algebra.Category.Grp.Abelian
+module
 
+public import Mathlib.Analysis.Convex.StdSimplex
+public import Mathlib.Topology.ContinuousMap.Basic
+public import Mathlib.GroupTheory.FreeAbelianGroup
+public import Mathlib.AlgebraicTopology.SingularHomology.Basic
+public import Mathlib.Algebra.Category.Grp.Basic
+public import Mathlib.Algebra.Category.Grp.Colimits
+public import Mathlib.Algebra.Category.Grp.Preadditive
+public import Mathlib.Algebra.Homology.HomologicalComplex
+public import Mathlib.Algebra.Category.Grp.Abelian
+
+@[expose] public section
 
 namespace AlgebraicTopologyI
 

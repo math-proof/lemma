@@ -1,10 +1,12 @@
-import Mathlib
-import Lemma.Scheme.Correspondence
-import Def.AlgebraicCurve_Differentials
+module
+
+public import Mathlib
+public import Lemma.Scheme.Correspondence
+public import Def.AlgebraicCurve_Differentials
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace ModularCurve.IgusaCover
 

@@ -1,4 +1,9 @@
-import Mathlib.Analysis.Calculus.Deriv.Basic
+module
+
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+
+@[expose] public section
+
 /-!
 # The Dickman–de Bruijn function
 

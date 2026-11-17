@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/PQPatalanNumbers.lean -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Rat.Cast.Order
-import Structure.Combinatorics.Enumerative.PQPatalanNumbers
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Rat.Cast.Order
+public import Structure.Combinatorics.Enumerative.PQPatalanNumbers
+
+@[expose] public section
+
 /-!
 # (p,q)-Patalan numbers
 

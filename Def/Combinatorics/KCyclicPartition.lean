@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/KCyclicPartition.lean -/
 
-import Mathlib.GroupTheory.Perm.Cycle.Type
+module
 
+public import Mathlib.GroupTheory.Perm.Cycle.Type
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

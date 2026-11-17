@@ -8,16 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Mathlib.AlgebraicGeometry.Morphisms.Finite
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Properties
-import Mathlib.Topology.Connected.Basic
-import Def.v1.Atlas.AlgebraicGeometryI.code.AlgebraicEquivalence.Part2
+module
+
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Mathlib.AlgebraicGeometry.Morphisms.Finite
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Properties
+public import Mathlib.Topology.Connected.Basic
+public import Def.v1.Atlas.AlgebraicGeometryI.code.AlgebraicEquivalence.Part2
 
 
-noncomputable section
+public noncomputable section
 
 namespace AlgebraicEquivalence
 

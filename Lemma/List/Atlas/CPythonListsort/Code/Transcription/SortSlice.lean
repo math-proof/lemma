@@ -1,6 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.CPythonListsort.Code.Transcription.SortSlice
+module
+
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.CPythonListsort.Code.Transcription.SortSlice
+
+public section
+
 open CPythonListsort CPythonListsort.SortSlice
 
 
@@ -10,10 +15,10 @@ namespace CPythonListsort.SortSlice
 [memcpy_sameBacking_overlap_rejected](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/SortSlice.lean)
 -/
 @[path]
-lemma memcpy_sameBacking_overlap_rejected
-  {count : Nat}
-  {destination : SortSlice κ ν}
-  {dst src : Int}
+public lemma memcpy_sameBacking_overlap_rejected
+  (count : Nat)
+  (destination : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hoverlap : ¬ MemcpyRangesDisjoint dst src count) :
 -- imply
@@ -29,10 +34,10 @@ namespace CPythonListsort.SortSlice
 [memmoveFrom_sameBacking](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/SortSlice.lean)
 -/
 @[path]
-lemma memmoveFrom_sameBacking
-  {destination : SortSlice κ ν}
-  {dst src : Int}
-  {count : Nat} :
+public lemma memmoveFrom_sameBacking
+  (destination : SortSlice κ ν)
+  (dst src : Int)
+  (count : Nat) :
 -- imply
   memmoveFrom? destination .sameBacking dst src count = destination.memmove? dst src count := by
 -- proof
@@ -46,10 +51,10 @@ namespace CPythonListsort.SortSlice
 [memmoveFrom_distinctBacking](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/SortSlice.lean)
 -/
 @[path]
-lemma memmoveFrom_distinctBacking
-  {destination source : SortSlice κ ν}
-  {dst src : Int}
-  {count : Nat} :
+public lemma memmoveFrom_distinctBacking
+  (destination source : SortSlice κ ν)
+  (dst src : Int)
+  (count : Nat) :
 -- imply
   memmoveFrom? destination (.distinctBacking source) dst src count = memcpyCore? count destination source dst src := by
 -- proof
@@ -63,10 +68,10 @@ namespace CPythonListsort.SortSlice
 [write_entries_size_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/SortSlice.lean)
 -/
 @[path]
-lemma write_entries_size_of_eq_some
-  {slice updated : SortSlice κ ν}
-  {index : Int}
-  {entry : SortSliceEntry κ ν}
+public lemma write_entries_size_of_eq_some
+  (slice updated : SortSlice κ ν)
+  (index : Int)
+  (entry : SortSliceEntry κ ν)
 -- given
   (h : slice.write? index entry = some updated) :
 -- imply
@@ -90,9 +95,9 @@ namespace CPythonListsort.SortSlice
 [copyFrom_entries_size_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/SortSlice.lean)
 -/
 @[path]
-lemma copyFrom_entries_size_of_eq_some
-  {destination source updated : SortSlice κ ν}
-  {dst src : Int}
+public lemma copyFrom_entries_size_of_eq_some
+  (destination source updated : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (h : destination.copyFrom? source dst src = some updated) :
 -- imply
@@ -111,9 +116,9 @@ namespace CPythonListsort.SortSlice
 [copy_entries_size_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/SortSlice.lean)
 -/
 @[path]
-lemma copy_entries_size_of_eq_some
-  {slice updated : SortSlice κ ν}
-  {dst src : Int}
+public lemma copy_entries_size_of_eq_some
+  (slice updated : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (h : slice.copy? dst src = some updated) :
 -- imply
@@ -129,10 +134,10 @@ namespace CPythonListsort.SortSlice
 [copyFromIncr_entries_size_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/SortSlice.lean)
 -/
 @[path]
-lemma copyFromIncr_entries_size_of_eq_some
-  {destination source : SortSlice κ ν}
-  {dst src : Int}
-  {result : CursorResult κ ν}
+public lemma copyFromIncr_entries_size_of_eq_some
+  (destination source : SortSlice κ ν)
+  (dst src : Int)
+  (result : CursorResult κ ν)
 -- given
   (h : destination.copyFromIncr? source dst src = some result) :
 -- imply
@@ -156,10 +161,10 @@ namespace CPythonListsort.SortSlice
 [copyFromDecr_entries_size_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/SortSlice.lean)
 -/
 @[path]
-lemma copyFromDecr_entries_size_of_eq_some
-  {destination source : SortSlice κ ν}
-  {dst src : Int}
-  {result : CursorResult κ ν}
+public lemma copyFromDecr_entries_size_of_eq_some
+  (destination source : SortSlice κ ν)
+  (dst src : Int)
+  (result : CursorResult κ ν)
 -- given
   (h : destination.copyFromDecr? source dst src = some result) :
 -- imply
@@ -183,10 +188,10 @@ namespace CPythonListsort.SortSlice
 [copyIncr_entries_size_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/SortSlice.lean)
 -/
 @[path]
-lemma copyIncr_entries_size_of_eq_some
-  {slice : SortSlice κ ν}
-  {dst src : Int}
-  {result : CursorResult κ ν}
+public lemma copyIncr_entries_size_of_eq_some
+  (slice : SortSlice κ ν)
+  (dst src : Int)
+  (result : CursorResult κ ν)
 -- given
   (h : slice.copyIncr? dst src = some result) :
 -- imply
@@ -202,10 +207,10 @@ namespace CPythonListsort.SortSlice
 [copyDecr_entries_size_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/SortSlice.lean)
 -/
 @[path]
-lemma copyDecr_entries_size_of_eq_some
-  {slice : SortSlice κ ν}
-  {dst src : Int}
-  {result : CursorResult κ ν}
+public lemma copyDecr_entries_size_of_eq_some
+  (slice : SortSlice κ ν)
+  (dst src : Int)
+  (result : CursorResult κ ν)
 -- given
   (h : slice.copyDecr? dst src = some result) :
 -- imply
@@ -243,12 +248,12 @@ namespace CPythonListsort.SortSlice
 [memcpy_entries_size_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/SortSlice.lean)
 -/
 @[path]
-lemma memcpy_entries_size_of_eq_some
-  {count : Nat}
-  {destination : SortSlice κ ν}
-  {source : MemcpySource destination}
-  {updated : SortSlice κ ν}
-  {dst src : Int}
+public lemma memcpy_entries_size_of_eq_some
+  (count : Nat)
+  (destination : SortSlice κ ν)
+  (source : MemcpySource destination)
+  (updated : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (h : memcpy? count destination source dst src = some updated) :
 -- imply
@@ -311,10 +316,10 @@ namespace CPythonListsort.SortSlice
 [memmove_entries_size_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/SortSlice.lean)
 -/
 @[path]
-lemma memmove_entries_size_of_eq_some
-  {slice updated : SortSlice κ ν}
-  {dst src : Int}
-  {count : Nat}
+public lemma memmove_entries_size_of_eq_some
+  (slice updated : SortSlice κ ν)
+  (dst src : Int)
+  (count : Nat)
 -- given
   (h : slice.memmove? dst src count = some updated) :
 -- imply
@@ -333,12 +338,12 @@ namespace CPythonListsort.SortSlice
 [memmoveFrom_entries_size_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/SortSlice.lean)
 -/
 @[path]
-lemma memmoveFrom_entries_size_of_eq_some
-  {destination : SortSlice κ ν}
-  {source : MemmoveSource destination}
-  {updated : SortSlice κ ν}
-  {dst src : Int}
-  {count : Nat}
+public lemma memmoveFrom_entries_size_of_eq_some
+  (destination : SortSlice κ ν)
+  (source : MemmoveSource destination)
+  (updated : SortSlice κ ν)
+  (dst src : Int)
+  (count : Nat)
 -- given
   (h : memmoveFrom? destination source dst src count = some updated) :
 -- imply

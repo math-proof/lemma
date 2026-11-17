@@ -2,8 +2,8 @@
 
 
 import Def.NumberTheory.Recurrences.LucasSequenceFirstKind
-import Lemma.Nat.Recurrences.LucasSequenceFirstKind
-import Lemma.Nat.LucasSequence
+import Theorem.Nat.Recurrences.LucasSequenceFirstKind
+import Theorem.Nat.LucasSequence
 import Def.NumberTheory.Recurrences.NondegenerateLucasPair
 import Def.NumberTheory.LucasSequence
 

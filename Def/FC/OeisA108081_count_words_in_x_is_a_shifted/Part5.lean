@@ -8,10 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
+module
 
-import Mathlib
-import Theorem.FC.OeisA108081_count_words_in_x_is_a_shifted.Part2
+public import Mathlib
+public import Theorem.FC.OeisA108081_count_words_in_x_is_a_shifted.Part2
 
+@[expose] public section
 
 namespace OeisA108081
 

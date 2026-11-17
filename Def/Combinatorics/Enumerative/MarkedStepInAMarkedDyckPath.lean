@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/MarkedStepInAMarkedDyckPath.lean -/
 
-import Mathlib.Data.List.Basic
-import Lean.Elab.Tactic.Omega
-import Inductive.Combinatorics.Enumerative.MarkedStepInAMarkedDyckPath
+module
+
+public import Mathlib.Data.List.Basic
+public import Lean.Elab.Tactic.Omega
+public import Inductive.Combinatorics.Enumerative.MarkedStepInAMarkedDyckPath
+
+@[expose] public section
+
 /-!
 # Marked step in a marked Dyck path
 

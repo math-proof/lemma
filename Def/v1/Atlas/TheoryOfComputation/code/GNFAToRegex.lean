@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.TheoryOfComputation.code.GNFA
-import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.GNFA
-import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.RegularLanguages
+import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.GNFA
+import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.RegularLanguages
 import Def.v1.Atlas.TheoryOfComputation.code.RegularLanguages
 import Mathlib.Computability.RegularExpressions
 import Mathlib.Computability.DFA

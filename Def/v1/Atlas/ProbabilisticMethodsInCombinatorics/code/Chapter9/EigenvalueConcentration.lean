@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Mathlib.Analysis.Matrix.Spectrum
 import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter9.WeightedCertificates
-import Lemma.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter9.WeightedCertificates
+import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter9.WeightedCertificates
 open MeasureTheory Matrix Real BigOperators Finset
 
 

@@ -4,7 +4,7 @@
 import Mathlib.Tactic.IntervalCases
 import Mathlib.Tactic.NormNum
 import Def.NumberTheory.HighlyComposite
-import Lemma.Nat.HighlyComposite
+import Theorem.Nat.HighlyComposite
 
 
 example : Nat.IsHighlyComposite 1 := by simp [Nat.IsHighlyComposite]

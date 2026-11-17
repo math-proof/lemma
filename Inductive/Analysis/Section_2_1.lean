@@ -1,4 +1,6 @@
-import Mathlib
+module
+
+public import Mathlib
 /-!
 # Analysis I, Section 2.1: The Peano Axioms
 
@@ -36,7 +38,7 @@ namespace Chapter2
   natural numbers (using an inductive type). For a more axiomatic approach, see the epilogue to
   this chapter.
 -/
-inductive Nat where
+public inductive Nat where
 | zero : Nat
 | succ : Nat → Nat
 deriving Repr, DecidableEq  -- this allows `decide` to work on `Nat`

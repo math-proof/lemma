@@ -2,7 +2,7 @@
 
 
 import Theorem.Combinatorics.InfiniteWord.FibonacciWord
-import Lemma.Finset.InfiniteWord.FibonacciWord
+import Theorem.Finset.InfiniteWord.FibonacciWord
 
 
 namespace MetaMathlibExt

@@ -1,10 +1,14 @@
-import Mathlib
-import Abbrev.GroupCohomology_TateCohomology
-import Lemma.Rep.TateSeam
-import Def.GroupCohomology_TateShiftMaps
-import Abbrev.GroupCohomology_CochainCup
-import Structure.GroupCohomology_IsGradedCupProduct
-import Abbrev.GroupCohomology_TateCupFamily
+module
+
+public import Mathlib
+public import Abbrev.GroupCohomology_TateCohomology
+public import Lemma.Rep.TateSeam
+public import Def.GroupCohomology_TateShiftMaps
+public import Abbrev.GroupCohomology_CochainCup
+public import Structure.GroupCohomology_IsGradedCupProduct
+public import Abbrev.GroupCohomology_TateCupFamily
+
+public section
 
 set_option autoImplicit false
 

@@ -1,6 +1,18 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.CPythonListsort.Code.Transcription.MergeLo.Part6
+module
+
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.CPythonListsort.Code.Transcription.MergeLo
+public import Def.CPythonListsort.Code.Transcription.MergeLo.Part4
+public import Def.CPythonListsort.Code.Transcription.MergeLo.Part5
+public import Def.CPythonListsort.Code.Transcription.MergeLo.Part6
+public import Def.CPythonListsort.Code.Transcription.MergeState.Part2
+public import Structure.CPythonListsort.Code.Transcription.MergeState.Part2
+public import Theorem.CPythonListsort.Code.Transcription.MergeLo
+public import Lemma.List.Atlas.CPythonListsort.Code.Transcription.SortSlice
+
+public section
+
 open CPythonListsort
 
 
@@ -10,7 +22,7 @@ namespace CPythonListsort
 [mergeLoTempWrite_eq_some_of_lt](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
 @[path]
-lemma mergeLoTempWrite_eq_some_of_lt
+public lemma mergeLoTempWrite_eq_some_of_lt
   {κ : Type u}
   {ν : Type v}
   {storage : TempStorage κ ν}
@@ -31,7 +43,7 @@ namespace CPythonListsort
 [mergeLoTempWrite_eq_none_of_le](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
 @[path]
-lemma mergeLoTempWrite_eq_none_of_le
+public lemma mergeLoTempWrite_eq_none_of_le
   {κ : Type u}
   {ν : Type v}
   {storage : TempStorage κ ν}
@@ -52,12 +64,12 @@ namespace CPythonListsort
 [mergeLoTempRead_write_self_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
 @[path]
-lemma mergeLoTempRead_write_self_of_eq_some
+public lemma mergeLoTempRead_write_self_of_eq_some
   {κ : Type u}
   {ν : Type v}
-  {storage updated : TempStorage κ ν}
-  {index : Nat}
-  {entry : SortSliceEntry κ ν}
+  (storage updated : TempStorage κ ν)
+  (index : Nat)
+  (entry : SortSliceEntry κ ν)
 -- given
   (hwrite : mergeLoTempWrite? storage index entry = some updated) :
 -- imply
@@ -78,12 +90,12 @@ namespace CPythonListsort
 [mergeLoTempRead_write_ne_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
 @[path]
-lemma mergeLoTempRead_write_ne_of_eq_some
+public lemma mergeLoTempRead_write_ne_of_eq_some
   {κ : Type u}
   {ν : Type v}
-  {storage updated : TempStorage κ ν}
-  {index other : Nat}
-  {entry : SortSliceEntry κ ν}
+  (storage updated : TempStorage κ ν)
+  (index other : Nat)
+  (entry : SortSliceEntry κ ν)
 -- given
   (hwrite : mergeLoTempWrite? storage index entry = some updated)
   (hne : other ≠ index) :
@@ -106,15 +118,16 @@ namespace CPythonListsort
 [mergeLoMemcpyDataToTemp_read_before_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
 @[path]
-lemma mergeLoMemcpyDataToTemp_read_before_of_eq_some
+public lemma mergeLoMemcpyDataToTemp_read_before_of_eq_some
   {κ : Type u}
   {ν : Type v}
-  {site : MergeLoMemcpyCallsite}
-  {count : Nat}
-  {state state' : MergeState κ ν}
-  {destination : Nat}
-  {source : Int}
-  {other : Nat}
+  (site : MergeLoMemcpyCallsite)
+  (count : Nat)
+  (state : MergeState κ ν)
+  {state' : MergeState κ ν}
+  (destination : Nat)
+  (source : Int)
+  (other : Nat)
 -- given
   (hDirection : site.backings = { destination := .temporary, source := .main })
   (hresult : mergeLoMemcpyDataToTemp? site hDirection count state destination source = some state')
@@ -157,14 +170,15 @@ namespace CPythonListsort
 [mergeLoMemcpyDataToTemp_initialized_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
 @[path]
-lemma mergeLoMemcpyDataToTemp_initialized_of_eq_some
+public lemma mergeLoMemcpyDataToTemp_initialized_of_eq_some
   {κ : Type u}
   {ν : Type v}
-  {site : MergeLoMemcpyCallsite}
-  {count : Nat}
-  {state state' : MergeState κ ν}
-  {destination : Nat}
-  {source : Int}
+  (site : MergeLoMemcpyCallsite)
+  (count : Nat)
+  (state : MergeState κ ν)
+  {state' : MergeState κ ν}
+  (destination : Nat)
+  (source : Int)
 -- given
   (hDirection : site.backings = { destination := .temporary, source := .main })
   (hresult : mergeLoMemcpyDataToTemp? site hDirection count state destination source = some state') :
@@ -195,9 +209,9 @@ lemma mergeLoMemcpyDataToTemp_initialized_of_eq_some
         cases i with
         | zero =>
           have hpreserved :=
-            mergeLoMemcpyDataToTemp_read_before_of_eq_some site
-              hDirection count { state with a := storage } state'
-              (destination + 1) (source + 1) htail destination (by omega)
+            mergeLoMemcpyDataToTemp_read_before_of_eq_some site count
+              { state with a := storage } (destination + 1) (source + 1)
+              destination hDirection htail (by omega)
           have hinitialized :=
             mergeLoTempRead_write_self_of_eq_some state.a storage
               destination entry hwrite
@@ -215,13 +229,13 @@ namespace CPythonListsort
 [mergeLoGatherTempEntries_spec](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
 @[path]
-lemma mergeLoGatherTempEntries_spec
+public lemma mergeLoGatherTempEntries_spec
   {κ : Type u}
   {ν : Type v}
-  {count : Nat}
-  {storage : TempStorage κ ν}
-  {source : Nat}
-  {initial result : Array (SortSliceEntry κ ν)}
+  (count : Nat)
+  (storage : TempStorage κ ν)
+  (source : Nat)
+  (initial result : Array (SortSliceEntry κ ν))
 -- given
   (hresult : mergeLoGatherTempEntries? count storage source initial = some result) :
 -- imply
@@ -272,12 +286,12 @@ namespace CPythonListsort
 [mergeLoGatherTempEntries_exists_of_initialized](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
 @[path]
-lemma mergeLoGatherTempEntries_exists_of_initialized
+public lemma mergeLoGatherTempEntries_exists_of_initialized
   {κ : Type u}
   {ν : Type v}
-  {storage : TempStorage κ ν}
-  {source count : Nat}
-  {initial : Array (SortSliceEntry κ ν)}
+  (storage : TempStorage κ ν)
+  (source count : Nat)
+  (initial : Array (SortSliceEntry κ ν))
 -- given
   (hinitialized : MergeLoTempRangeInitialized storage source count) :
 -- imply
@@ -308,18 +322,18 @@ namespace CPythonListsort
 [tempRun_cells_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
 @[path]
-lemma tempRun_cells_of_eq_some
+public lemma tempRun_cells_of_eq_some
   {κ : Type u}
   {ν : Type v}
-  {storage : TempStorage κ ν}
-  {source count : Nat}
-  {slice : SortSlice κ ν}
+  (storage : TempStorage κ ν)
+  (source count : Nat)
+  (slice : SortSlice κ ν)
 -- given
-  (hresult : tempRun? storage source count = some slice) :
+  (hresult : mergeLoTempRun? storage source count = some slice) :
 -- imply
   slice.entries.size = count ∧ ∀ i < count, storage.cells[source + i]?.bind id = slice.entries[i]? := by
 -- proof
-  unfold tempRun? mergeLoTempRun? at hresult
+  unfold mergeLoTempRun? at hresult
   cases hentries : mergeLoGatherTempEntries? count storage source #[] with
   | none => simp [hentries] at hresult
   | some entries =>
@@ -341,12 +355,12 @@ namespace CPythonListsort
 [mergeLoTempRun_cells_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
 @[path]
-lemma mergeLoTempRun_cells_of_eq_some
+public lemma mergeLoTempRun_cells_of_eq_some
   {κ : Type u}
   {ν : Type v}
-  {storage : TempStorage κ ν}
-  {source count : Nat}
-  {slice : SortSlice κ ν}
+  (storage : TempStorage κ ν)
+  (source count : Nat)
+  (slice : SortSlice κ ν)
 -- given
   (hresult : mergeLoTempRun? storage source count = some slice) :
 -- imply
@@ -362,11 +376,11 @@ namespace CPythonListsort
 [mergeLoTempRun_exists_of_initialized](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
 @[path]
-lemma mergeLoTempRun_exists_of_initialized
+public lemma mergeLoTempRun_exists_of_initialized
   {κ : Type u}
   {ν : Type v}
-  {storage : TempStorage κ ν}
-  {source count : Nat}
+  (storage : TempStorage κ ν)
+  (source count : Nat)
 -- given
   (hinitialized : MergeLoTempRangeInitialized storage source count) :
 -- imply
@@ -385,12 +399,12 @@ namespace CPythonListsort
 [mergeLoTempRun_initialized_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
 @[path]
-lemma mergeLoTempRun_initialized_of_eq_some
+public lemma mergeLoTempRun_initialized_of_eq_some
   {κ : Type u}
   {ν : Type v}
-  {storage : TempStorage κ ν}
-  {source count : Nat}
-  {slice : SortSlice κ ν}
+  (storage : TempStorage κ ν)
+  (source count : Nat)
+  (slice : SortSlice κ ν)
 -- given
   (hresult : mergeLoTempRun? storage source count = some slice) :
 -- imply
@@ -413,11 +427,11 @@ namespace CPythonListsort
 [mergeLoTempRun_exists_iff_initialized](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
 @[path]
-lemma mergeLoTempRun_exists_iff_initialized
+public lemma mergeLoTempRun_exists_iff_initialized
   {κ : Type u}
   {ν : Type v}
-  {storage : TempStorage κ ν}
-  {source count : Nat} :
+  (storage : TempStorage κ ν)
+  (source count : Nat) :
 -- imply
   (∃ slice, mergeLoTempRun? storage source count = some slice) ↔ MergeLoTempRangeInitialized storage source count := by
 -- proof
@@ -434,12 +448,20 @@ namespace CPythonListsort
 [mergeLoCopyAIncr_equation](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
 @[path]
-lemma mergeLoCopyAIncr_equation
+public lemma mergeLoCopyAIncr_equation
   {κ : Type u}
   {ν : Type v}
   {machine : MergeLoMachine κ ν} :
 -- imply
-  mergeLoCopyAIncr? machine = (do let entry ← mergeLoTempRead? machine.state.a machine.aPos let data ← machine.state.data.write? machine.dest entry pure { machine with state := { machine.state with data := data } dest := machine.dest + 1 aPos := machine.aPos + 1 na := machine.na - 1 }) := by
+  mergeLoCopyAIncr? machine = (do
+    let entry ← mergeLoTempRead? machine.state.a machine.aPos
+    let data ← machine.state.data.write? machine.dest entry
+    pure
+      { machine with
+        state := { machine.state with data := data }
+        dest := machine.dest + 1
+        aPos := machine.aPos + 1
+        na := machine.na - 1 }) := by
 -- proof
   rfl
 
@@ -451,12 +473,20 @@ namespace CPythonListsort
 [mergeLoCopyBIncr_equation](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
 @[path]
-lemma mergeLoCopyBIncr_equation
+public lemma mergeLoCopyBIncr_equation
   {κ : Type u}
   {ν : Type v}
   {machine : MergeLoMachine κ ν} :
 -- imply
-  mergeLoCopyBIncr? machine = (do let entry ← machine.state.data.read? machine.bPos let data ← machine.state.data.write? machine.dest entry pure { machine with state := { machine.state with data := data } dest := machine.dest + 1 bPos := machine.bPos + 1 nb := machine.nb - 1 }) := by
+  mergeLoCopyBIncr? machine = (do
+    let entry ← machine.state.data.read? machine.bPos
+    let data ← machine.state.data.write? machine.dest entry
+    pure
+      { machine with
+        state := { machine.state with data := data }
+        dest := machine.dest + 1
+        bPos := machine.bPos + 1
+        nb := machine.nb - 1 }) := by
 -- proof
   rfl
 
@@ -468,12 +498,21 @@ namespace CPythonListsort
 [mergeLoCopyB_memmove_equation](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
 @[path]
-lemma mergeLoCopyB_memmove_equation
+public lemma mergeLoCopyB_memmove_equation
   {κ : Type u}
   {ν : Type v}
   {machine : MergeLoMachine κ ν} :
 -- imply
-  mergeLoCopyB? machine = (do if machine.na = 1 ∧ 0 < machine.nb then let data ← mergeDataMemmove? .loCopyBTail machine.state.data machine.dest machine.bPos machine.nb let state := { machine.state with data := data } let entry ← mergeLoTempRead? state.a machine.aPos let data ← state.data.write? (machine.dest + Int.ofNat machine.nb) entry pure (mergeLoSuccess { state with data := data }) else none) := by
+  mergeLoCopyB? machine = (do
+    if machine.na = 1 ∧ 0 < machine.nb then
+      let data ← mergeDataMemmove? .loCopyBTail machine.state.data
+        machine.dest machine.bPos machine.nb
+      let state := { machine.state with data := data }
+      let entry ← mergeLoTempRead? state.a machine.aPos
+      let data ← state.data.write? (machine.dest + Int.ofNat machine.nb) entry
+      pure (mergeLoSuccess { state with data := data })
+    else
+      none) := by
 -- proof
   rfl
 
@@ -485,13 +524,78 @@ namespace CPythonListsort
 [mergeLoGallopRound_equation](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
 @[path]
-lemma mergeLoGallopRound_equation
+public lemma mergeLoGallopRound_equation
   {κ : Type u}
   {ν : Type v}
   {machine : MergeLoMachine κ ν}
   {next : MergeLoMachine κ ν → Nat → Nat → Option (MergeLoResult κ ν)} :
 -- imply
-  mergeLoGallopRound? machine next = (do if machine.na ≤ 1 ∨ machine.nb = 0 then none else let minGallop := if (1 : PySSize).slt machine.minGallop then machine.minGallop - 1 else machine.minGallop let state := { machine.state with min_gallop := minGallop } let machine := { machine with state := state, minGallop := minGallop } let firstB ← machine.state.data.read? machine.bPos let activeA ← mergeLoTempRun? machine.state.a machine.aPos machine.na mergeLoBindOptionAcross (gallopRight? machine.state activeA 0 firstB.key machine.na 0) fun gallopA => if gallopA.fuelExhausted then mergeLoGallopFuelFailure machine else let aCount := gallopA.index if aCount > machine.na then none else do let state ← mergeLoMemcpyTempToData? .gallopTempToData rfl aCount machine.state machine.dest machine.aPos let machine : MergeLoMachine κ ν := { machine with state := state dest := machine.dest + Int.ofNat aCount aPos := machine.aPos + aCount na := machine.na - aCount } if machine.na = 0 then mergeLoSucceed? machine else if machine.na = 1 then mergeLoCopyB? machine else let machine ← mergeLoCopyBIncr? machine if machine.nb = 0 then mergeLoSucceed? machine else let firstA ← mergeLoTempRead? machine.state.a machine.aPos mergeLoBindOptionAcross (gallopLeft? machine.state machine.state.data machine.bPos firstA.key machine.nb 0) fun gallopB => if gallopB.fuelExhausted then mergeLoGallopFuelFailure machine else let bCount := gallopB.index if bCount > machine.nb then none else do let data ← mergeDataMemmove? .loGallopB machine.state.data machine.dest machine.bPos bCount let machine : MergeLoMachine κ ν := { machine with state := { machine.state with data := data } dest := machine.dest + Int.ofNat bCount bPos := machine.bPos + Int.ofNat bCount nb := machine.nb - bCount } if machine.nb = 0 then mergeLoSucceed? machine else let machine ← mergeLoCopyAIncr? machine if machine.na = 1 then mergeLoCopyB? machine else next machine aCount bCount) := by
+  mergeLoGallopRound? machine next = (do
+    if machine.na ≤ 1 ∨ machine.nb = 0 then
+      none
+    else
+      let minGallop :=
+        if (1 : PySSize).slt machine.minGallop then
+          machine.minGallop - 1
+        else
+          machine.minGallop
+      let state := { machine.state with min_gallop := minGallop }
+      let machine := { machine with state := state, minGallop := minGallop }
+      let firstB ← machine.state.data.read? machine.bPos
+      let activeA ← mergeLoTempRun? machine.state.a machine.aPos machine.na
+      mergeLoBindOptionAcross
+          (gallopRight? machine.state activeA 0 firstB.key machine.na 0) fun gallopA =>
+        if gallopA.fuelExhausted then
+          mergeLoGallopFuelFailure machine
+        else
+          let aCount := gallopA.index
+          if aCount > machine.na then
+            none
+          else do
+            let state ← mergeLoMemcpyTempToData? .gallopTempToData rfl
+              aCount machine.state machine.dest machine.aPos
+            let machine : MergeLoMachine κ ν :=
+              { machine with
+                state := state
+                dest := machine.dest + Int.ofNat aCount
+                aPos := machine.aPos + aCount
+                na := machine.na - aCount }
+            if machine.na = 0 then
+              mergeLoSucceed? machine
+            else if machine.na = 1 then
+              mergeLoCopyB? machine
+            else
+              let machine ← mergeLoCopyBIncr? machine
+              if machine.nb = 0 then
+                mergeLoSucceed? machine
+              else
+                let firstA ← mergeLoTempRead? machine.state.a machine.aPos
+                mergeLoBindOptionAcross
+                    (gallopLeft? machine.state machine.state.data
+                      machine.bPos firstA.key machine.nb 0) fun gallopB =>
+                  if gallopB.fuelExhausted then
+                    mergeLoGallopFuelFailure machine
+                  else
+                    let bCount := gallopB.index
+                    if bCount > machine.nb then
+                      none
+                    else do
+                      let data ← mergeDataMemmove? .loGallopB machine.state.data
+                        machine.dest machine.bPos bCount
+                      let machine : MergeLoMachine κ ν :=
+                        { machine with
+                          state := { machine.state with data := data }
+                          dest := machine.dest + Int.ofNat bCount
+                          bPos := machine.bPos + Int.ofNat bCount
+                          nb := machine.nb - bCount }
+                      if machine.nb = 0 then
+                        mergeLoSucceed? machine
+                      else
+                        let machine ← mergeLoCopyAIncr? machine
+                        if machine.na = 1 then
+                          mergeLoCopyB? machine
+                        else
+                          next machine aCount bCount) := by
 -- proof
   rfl
 
@@ -503,20 +607,30 @@ namespace CPythonListsort
 [mergeLoLoop_ordinary_copyB_equation](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
 @[path]
-lemma mergeLoLoop_ordinary_copyB_equation
+public lemma mergeLoLoop_ordinary_copyB_equation
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {machine : MergeLoMachine κ ν}
-  {aCount bCount : Nat}
-  {firstA firstB : SortSliceEntry κ ν}
+  (fuel : Nat)
+  (machine : MergeLoMachine κ ν)
+  (aCount bCount : Nat)
+  (firstA firstB : SortSliceEntry κ ν)
 -- given
   (hactive : ¬ (machine.na ≤ 1 ∨ machine.nb = 0))
   (hfirstA : mergeLoTempRead? machine.state.a machine.aPos = some firstA)
   (hfirstB : machine.state.data.read? machine.bPos = some firstB)
   (hcompare : machine.state.key_compare firstB.key firstA.key = true) :
 -- imply
-  mergeLoLoop? (fuel + 1) machine (.ordinary aCount bCount) = (do let machine ← mergeLoCopyBIncr? machine let bCount := bCount + 1 if machine.nb = 0 then mergeLoSucceed? machine else if mergeLoCountAtLeastWord bCount machine.minGallop then mergeLoLoop? fuel { machine with minGallop := machine.minGallop + 1 } .galloping else mergeLoLoop? fuel machine (.ordinary 0 bCount)) := by
+  mergeLoLoop? (fuel + 1) machine (.ordinary aCount bCount) = (do
+    let machine ← mergeLoCopyBIncr? machine
+    let bCount := bCount + 1
+    if machine.nb = 0 then
+      mergeLoSucceed? machine
+    else if mergeLoCountAtLeastWord bCount machine.minGallop then
+      mergeLoLoop? fuel
+        { machine with minGallop := machine.minGallop + 1 }
+        .galloping
+    else
+      mergeLoLoop? fuel machine (.ordinary 0 bCount)) := by
 -- proof
   rw [mergeLoLoop?]
   simp [hactive, hfirstA, hfirstB, iflt, hcompare]
@@ -529,20 +643,30 @@ namespace CPythonListsort
 [mergeLoLoop_ordinary_copyA_equation](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
 @[path]
-lemma mergeLoLoop_ordinary_copyA_equation
+public lemma mergeLoLoop_ordinary_copyA_equation
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {machine : MergeLoMachine κ ν}
-  {aCount bCount : Nat}
-  {firstA firstB : SortSliceEntry κ ν}
+  (fuel : Nat)
+  (machine : MergeLoMachine κ ν)
+  (aCount bCount : Nat)
+  (firstA firstB : SortSliceEntry κ ν)
 -- given
   (hactive : ¬ (machine.na ≤ 1 ∨ machine.nb = 0))
   (hfirstA : mergeLoTempRead? machine.state.a machine.aPos = some firstA)
   (hfirstB : machine.state.data.read? machine.bPos = some firstB)
   (hcompare : machine.state.key_compare firstB.key firstA.key = false) :
 -- imply
-  mergeLoLoop? (fuel + 1) machine (.ordinary aCount bCount) = (do let machine ← mergeLoCopyAIncr? machine let aCount := aCount + 1 if machine.na = 1 then mergeLoCopyB? machine else if mergeLoCountAtLeastWord aCount machine.minGallop then mergeLoLoop? fuel { machine with minGallop := machine.minGallop + 1 } .galloping else mergeLoLoop? fuel machine (.ordinary aCount 0)) := by
+  mergeLoLoop? (fuel + 1) machine (.ordinary aCount bCount) = (do
+    let machine ← mergeLoCopyAIncr? machine
+    let aCount := aCount + 1
+    if machine.na = 1 then
+      mergeLoCopyB? machine
+    else if mergeLoCountAtLeastWord aCount machine.minGallop then
+      mergeLoLoop? fuel
+        { machine with minGallop := machine.minGallop + 1 }
+        .galloping
+    else
+      mergeLoLoop? fuel machine (.ordinary aCount 0)) := by
 -- proof
   rw [mergeLoLoop?]
   simp [hactive, hfirstA, hfirstB, iflt, hcompare]
@@ -555,13 +679,13 @@ namespace CPythonListsort
 [mergeLoLoop_ordinary_equal_keys_equation](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
 @[path]
-lemma mergeLoLoop_ordinary_equal_keys_equation
+public lemma mergeLoLoop_ordinary_equal_keys_equation
   {κ : Type u}
   {ν : Type v}
-  {fuel : Nat}
-  {machine : MergeLoMachine κ ν}
-  {aCount bCount : Nat}
-  {firstA firstB : SortSliceEntry κ ν}
+  (fuel : Nat)
+  (machine : MergeLoMachine κ ν)
+  (aCount bCount : Nat)
+  (firstA firstB : SortSliceEntry κ ν)
 -- given
   (hactive : ¬ (machine.na ≤ 1 ∨ machine.nb = 0))
   (hfirstA : mergeLoTempRead? machine.state.a machine.aPos = some firstA)
@@ -569,7 +693,17 @@ lemma mergeLoLoop_ordinary_equal_keys_equation
   (hkeys : firstB.key = firstA.key)
   (hirrefl : machine.state.key_compare firstA.key firstA.key = false) :
 -- imply
-  mergeLoLoop? (fuel + 1) machine (.ordinary aCount bCount) = (do let machine ← mergeLoCopyAIncr? machine let aCount := aCount + 1 if machine.na = 1 then mergeLoCopyB? machine else if mergeLoCountAtLeastWord aCount machine.minGallop then mergeLoLoop? fuel { machine with minGallop := machine.minGallop + 1 } .galloping else mergeLoLoop? fuel machine (.ordinary aCount 0)) := by
+  mergeLoLoop? (fuel + 1) machine (.ordinary aCount bCount) = (do
+    let machine ← mergeLoCopyAIncr? machine
+    let aCount := aCount + 1
+    if machine.na = 1 then
+      mergeLoCopyB? machine
+    else if mergeLoCountAtLeastWord aCount machine.minGallop then
+      mergeLoLoop? fuel
+        { machine with minGallop := machine.minGallop + 1 }
+        .galloping
+    else
+      mergeLoLoop? fuel machine (.ordinary aCount 0)) := by
 -- proof
   apply mergeLoLoop_ordinary_copyA_equation fuel machine aCount bCount
     firstA firstB hactive hfirstA hfirstB
@@ -583,7 +717,7 @@ variable {κ : Type u} {ν : Type v}
 /--
 [dataWrite_layout](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
-@[path]
+@[path, aesop safe forward]
 private lemma dataWrite_layout (state : MergeState κ ν)
   (updated : SortSlice κ ν) (index : Int) (entry : SortSliceEntry κ ν)
   (h : state.data.write? index entry = some updated) :
@@ -599,7 +733,7 @@ variable {κ : Type u} {ν : Type v}
 /--
 [dataMemmove_layout](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
-@[path]
+@[path, aesop safe forward]
 private lemma dataMemmove_layout (state : MergeState κ ν)
   (updated : SortSlice κ ν) (dst src : Int) (count : Nat)
   (h : state.data.memmove? dst src count = some updated) :
@@ -615,7 +749,7 @@ variable {κ : Type u} {ν : Type v}
 /--
 [mergeLoMemcpyDataToTemp_layout](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
-@[path]
+@[path, aesop safe forward]
 private lemma mergeLoMemcpyDataToTemp_layout
   (site : MergeLoMemcpyCallsite)
   (hDirection : site.backings =
@@ -643,7 +777,7 @@ variable {κ : Type u} {ν : Type v}
 /--
 [mergeLoMemcpyTempToData_layout](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
-@[path]
+@[path, aesop safe forward]
 private lemma mergeLoMemcpyTempToData_layout
   (site : MergeLoMemcpyCallsite)
   (hDirection : site.backings =
@@ -673,7 +807,7 @@ variable {κ : Type u} {ν : Type v}
 /--
 [mergeLoInitialDataToTemp_layout](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
-@[path]
+@[path, aesop safe forward]
 private lemma mergeLoInitialDataToTemp_layout
   (count : Nat) (state state' : MergeState κ ν) (destination : Nat)
   (source : Int)
@@ -691,7 +825,7 @@ variable {κ : Type u} {ν : Type v}
 /--
 [mergeLoGallopTempToData_layout](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
-@[path]
+@[path, aesop safe forward]
 private lemma mergeLoGallopTempToData_layout
   (count : Nat) (state state' : MergeState κ ν) (destination : Int)
   (source : Nat)
@@ -709,7 +843,7 @@ variable {κ : Type u} {ν : Type v}
 /--
 [mergeLoFinalTempToData_layout](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
-@[path]
+@[path, aesop safe forward]
 private lemma mergeLoFinalTempToData_layout
   (count : Nat) (state state' : MergeState κ ν) (destination : Int)
   (source : Nat)
@@ -758,7 +892,6 @@ private lemma copyBIncr_layout
   subst machine'
   have hsize := SortSlice.write_entries_size_of_eq_some _ _ _ _ ‹_›
   simp [mergeLoLayoutFrame, hsize]
-set_option linter.flexible false in
 
 end CPythonListsort
 
@@ -814,7 +947,7 @@ variable {κ : Type u} {ν : Type v}
 /--
 [layoutEqTrans](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
-@[path]
+@[path, aesop safe forward]
 private lemma layoutEqTrans (first second third : MergeLoLayoutFrame)
   (h₁ : first = second) (h₂ : second = third) : first = third :=
   h₁.trans h₂
@@ -827,7 +960,7 @@ variable {κ : Type u} {ν : Type v}
 /--
 [mergeLoGallopFuelFailure_layout](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
-@[path]
+@[path, aesop safe forward]
 private lemma mergeLoGallopFuelFailure_layout
   (machine : MergeLoMachine κ ν) (result : MergeLoResult κ ν)
   (h : mergeLoGallopFuelFailure machine = some result) :
@@ -844,7 +977,7 @@ variable {κ : Type u} {ν : Type v}
 /--
 [mergeGetmem_layout](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
-@[path]
+@[path, aesop safe forward]
 private lemma mergeGetmem_layout (state : MergeState κ ν) (need : PySSize) :
   mergeLoLayoutFrame (mergeGetmem state need).state = mergeLoLayoutFrame state := by
   simp only [mergeGetmem]
@@ -862,21 +995,32 @@ variable {κ : Type u} {ν : Type v}
 /--
 [mergeLoFailure_layout](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
-@[path]
+@[path, aesop safe forward]
 private lemma mergeLoFailure_layout (state : MergeState κ ν)
   (result : MergeLoResult κ ν) (h : mergeLoFailure state = result) :
   mergeLoLayoutFrame result.state = mergeLoLayoutFrame state := by
   subst result
   rfl
-set_option linter.flexible false in
-set_option maxHeartbeats 5000000 in
-set_option maxRecDepth 10000 in
 
 end CPythonListsort
 
 namespace CPythonListsort
 
 variable {κ : Type u} {ν : Type v}
+
+@[aesop safe apply]
+private lemma mergeLoLayoutFrame_congr (s t : MergeState κ ν)
+    (h₁ : s.listlen = t.listlen) (h₂ : s.basekeys = t.basekeys)
+    (h₃ : s.data.entries.size = t.data.entries.size)
+    (h₄ : s.pending = t.pending) :
+    mergeLoLayoutFrame s = mergeLoLayoutFrame t := by
+  simp [mergeLoLayoutFrame, h₁, h₂, h₃, h₄]
+
+set_option linter.flexible false in
+set_option linter.unusedTactic false in
+set_option linter.unreachableTactic false in
+set_option maxHeartbeats 5000000 in
+set_option maxRecDepth 10000 in
 /--
 [mergeLoGallopRound_layout](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
@@ -909,26 +1053,124 @@ private lemma mergeLoGallopRound_layout
   all_goals try split at h <;> try simp at h
   all_goals try aesop (config := {
     enableSimp := false, maxRuleApplications := 500, warnOnNonterminal := false })
-  all_goals
-    obtain ⟨_, _, hresult⟩ := h
+  all_goals try
+    rcases h with ⟨_, _, hresult⟩
     split at hresult
     · have hr := mergeLoCopyB_layout _ _ hresult
       aesop (config := { enableSimp := false, maxRuleApplications := 500 })
     · have hr := hnext _ _ _ _ hresult
       aesop (config := { enableSimp := false, maxRuleApplications := 500 })
-set_option linter.flexible false in
-set_option maxHeartbeats 5000000 in
-set_option maxRecDepth 10000 in
+  all_goals try exact (fwd.trans (by unfold mergeLoLayoutFrame; rfl))
+  all_goals try exact (fwd.trans ((mergeLoGallopTempToData_layout _ _ _ _ _ (by assumption)).trans (by unfold mergeLoLayoutFrame; rfl)))
+  all_goals try exact (fwd.trans ((copyBIncr_layout _ _ (by assumption)).trans (by unfold mergeLoLayoutFrame; rfl)))
+  all_goals try exact (fwd.trans ((copyAIncr_layout _ _ (by assumption)).trans (by unfold mergeLoLayoutFrame; rfl)))
+  all_goals try exact (fwd.trans ((mergeLoSucceed_layout _ _ (by assumption)).trans (by unfold mergeLoLayoutFrame; rfl)))
+  all_goals try exact (fwd.trans ((mergeLoCopyB_layout _ _ (by assumption)).trans (by unfold mergeLoLayoutFrame; rfl)))
+  all_goals try exact (fwd.trans ((hnext _ _ _ _ (by assumption)).trans (by unfold mergeLoLayoutFrame; rfl)))
+  all_goals try exact (congrArg MergeLoLayoutFrame.listlen (fwd.trans (by unfold mergeLoLayoutFrame; rfl)))
+  all_goals try exact (congrArg MergeLoLayoutFrame.basekeys (fwd.trans (by unfold mergeLoLayoutFrame; rfl)))
+  all_goals try exact (congrArg MergeLoLayoutFrame.dataSize (fwd.trans (by unfold mergeLoLayoutFrame; rfl)))
+  all_goals try exact (congrArg MergeLoLayoutFrame.pending (fwd.trans (by unfold mergeLoLayoutFrame; rfl)))
+  all_goals try exact (congrArg MergeLoLayoutFrame.listlen (fwd.trans ((mergeLoGallopTempToData_layout _ _ _ _ _ (by assumption)).trans (by unfold mergeLoLayoutFrame; rfl))))
+  all_goals try exact (congrArg MergeLoLayoutFrame.basekeys (fwd.trans ((mergeLoGallopTempToData_layout _ _ _ _ _ (by assumption)).trans (by unfold mergeLoLayoutFrame; rfl))))
+  all_goals try exact (congrArg MergeLoLayoutFrame.dataSize (fwd.trans ((mergeLoGallopTempToData_layout _ _ _ _ _ (by assumption)).trans (by unfold mergeLoLayoutFrame; rfl))))
+  all_goals try exact (congrArg MergeLoLayoutFrame.pending (fwd.trans ((mergeLoGallopTempToData_layout _ _ _ _ _ (by assumption)).trans (by unfold mergeLoLayoutFrame; rfl))))
+  all_goals try
+    exact (mergeLoSucceed_layout _ _ h.2).trans
+      ((mergeLoGallopTempToData_layout _ _ _ _ _ ‹_›).trans (by unfold mergeLoLayoutFrame; rfl))
+  all_goals try
+    exact (mergeLoCopyB_layout _ _ h.2).trans
+      ((mergeLoGallopTempToData_layout _ _ _ _ _ ‹_›).trans (by unfold mergeLoLayoutFrame; rfl))
+  all_goals try
+    exact (mergeLoSucceed_layout _ _ h.2).trans
+      ((copyBIncr_layout _ _ ‹_›).trans
+        ((mergeLoGallopTempToData_layout _ _ _ _ _ ‹_›).trans (by unfold mergeLoLayoutFrame; rfl)))
+  all_goals try
+    exact (mergeLoGallopFuelFailure_layout _ _ h.2).trans
+      ((copyBIncr_layout _ _ ‹_›).trans
+        ((mergeLoGallopTempToData_layout _ _ _ _ _ ‹_›).trans (by unfold mergeLoLayoutFrame; rfl)))
+  all_goals try
+    exact (mergeLoSucceed_layout _ _ h.2).trans
+      ((dataMemmove_layout _ _ _ _ _ (by simpa [mergeDataMemmove?] using ‹_›)).trans
+        ((copyBIncr_layout _ _ ‹_›).trans
+          ((mergeLoGallopTempToData_layout _ _ _ _ _ ‹_›).trans (by unfold mergeLoLayoutFrame; rfl))))
+  all_goals try
+    exact (mergeLoSucceed_layout _ _ ‹_›).trans
+      ((dataMemmove_layout _ _ _ _ _ (by simpa [mergeDataMemmove?] using ‹_›)).trans
+        ((copyBIncr_layout _ _ ‹_›).trans
+          ((mergeLoGallopTempToData_layout _ _ _ _ _ ‹_›).trans (by unfold mergeLoLayoutFrame; rfl))))
+  all_goals try
+    exact (mergeLoCopyB_layout _ _ h.2).trans
+      ((copyAIncr_layout _ _ ‹_›).trans
+        ((dataMemmove_layout _ _ _ _ _ (by simpa [mergeDataMemmove?] using ‹_›)).trans
+          ((copyBIncr_layout _ _ ‹_›).trans
+            ((mergeLoGallopTempToData_layout _ _ _ _ _ ‹_›).trans (by unfold mergeLoLayoutFrame; rfl)))))
+  all_goals try
+    exact (hnext _ _ _ _ h.2).trans
+      ((copyAIncr_layout _ _ ‹_›).trans
+        ((dataMemmove_layout _ _ _ _ _ (by simpa [mergeDataMemmove?] using ‹_›)).trans
+          ((copyBIncr_layout _ _ ‹_›).trans
+            ((mergeLoGallopTempToData_layout _ _ _ _ _ ‹_›).trans (by unfold mergeLoLayoutFrame; rfl)))))
+  all_goals try
+    (have hterm := h.2.2
+     split at hterm
+     · exact (mergeLoCopyB_layout _ _ hterm).trans
+         ((copyAIncr_layout _ _ ‹_›).trans
+           ((dataMemmove_layout _ _ _ _ _ (by simpa [mergeDataMemmove?] using ‹_›)).trans
+             ((copyBIncr_layout _ _ ‹_›).trans
+               ((mergeLoGallopTempToData_layout _ _ _ _ _ ‹_›).trans
+                 (by unfold mergeLoLayoutFrame; rfl)))))
+     · exact (hnext _ _ _ _ hterm).trans
+         ((copyAIncr_layout _ _ ‹_›).trans
+           ((dataMemmove_layout _ _ _ _ _ (by simpa [mergeDataMemmove?] using ‹_›)).trans
+             ((copyBIncr_layout _ _ ‹_›).trans
+               ((mergeLoGallopTempToData_layout _ _ _ _ _ ‹_›).trans
+                 (by unfold mergeLoLayoutFrame; rfl))))))
+  -- Terminal succeed after memmove: h is `_ ∧ _ ∧ mergeLoSucceed? _ = some result`.
+  all_goals try
+    exact (mergeLoSucceed_layout _ _ h.2.2).trans
+      ((dataMemmove_layout _ _ _ _ _ (by simpa [mergeDataMemmove?] using ‹_›)).trans
+        ((copyBIncr_layout _ _ ‹_›).trans
+          ((mergeLoMemcpyTempToData_layout .gallopTempToData _ _ _ _ _ _ ‹_›).trans
+            (by unfold mergeLoLayoutFrame; rfl))))
+  -- Terminal copyB / next after copyAIncr: h is `_ ∧ _ ∧ (if na = 1 then copyB else next) = some result`.
+  -- Step through `Eq.trans` so each lemma is elaborated with an expected type
+  -- (bare `_`/`‹_›` chains otherwise mis-unify the memmove state).
+  -- Use the general memcpy layout lemma so the direction proof can be
+  -- `mergeLoGallopRound?._proof_1` rather than definitional `rfl`.
+  have hterm := h.2.2
+  split at hterm
+  · refine (mergeLoCopyB_layout _ _ hterm).trans ?_
+    refine (copyAIncr_layout _ _ ‹mergeLoCopyAIncr? _ = some _›).trans ?_
+    refine (dataMemmove_layout _ _ _ _ _ (by
+      simpa [mergeDataMemmove?] using ‹mergeDataMemmove? _ _ _ _ _ = some _›)).trans ?_
+    refine (copyBIncr_layout _ _ ‹mergeLoCopyBIncr? _ = some _›).trans ?_
+    refine (mergeLoMemcpyTempToData_layout .gallopTempToData _ _ _ _ _ _
+      ‹mergeLoMemcpyTempToData? .gallopTempToData _ _ _ _ _ = some _›).trans ?_
+    unfold mergeLoLayoutFrame; rfl
+  · refine (hnext _ _ _ _ hterm).trans ?_
+    refine (copyAIncr_layout _ _ ‹mergeLoCopyAIncr? _ = some _›).trans ?_
+    refine (dataMemmove_layout _ _ _ _ _ (by
+      simpa [mergeDataMemmove?] using ‹mergeDataMemmove? _ _ _ _ _ = some _›)).trans ?_
+    refine (copyBIncr_layout _ _ ‹mergeLoCopyBIncr? _ = some _›).trans ?_
+    refine (mergeLoMemcpyTempToData_layout .gallopTempToData _ _ _ _ _ _
+      ‹mergeLoMemcpyTempToData? .gallopTempToData _ _ _ _ _ = some _›).trans ?_
+    unfold mergeLoLayoutFrame; rfl
 
 end CPythonListsort
 
 namespace CPythonListsort
 
 variable {κ : Type u} {ν : Type v}
+set_option linter.flexible false in
+set_option linter.unusedTactic false in
+set_option linter.unreachableTactic false in
+set_option maxHeartbeats 5000000 in
+set_option maxRecDepth 10000 in
 /--
 [mergeLoLoop_layout](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
-@[path]
+@[path, aesop safe forward]
 private lemma mergeLoLoop_layout
   (fuel : Nat) (machine : MergeLoMachine κ ν) (phase : MergeLoPhase)
   (result : MergeLoResult κ ν)
@@ -953,7 +1195,23 @@ private lemma mergeLoLoop_layout
       all_goals try aesop (config := {
         enableSimp := false, maxRuleApplications := 500,
         warnOnNonterminal := false })
-      all_goals exact (ih _ _ _ h).trans fwd
+      all_goals try exact ((ih _ _ _ h).trans fwd)
+      all_goals try exact ((mergeLoSucceed_layout _ _ h).trans fwd)
+      all_goals try exact ((mergeLoCopyB_layout _ _ h).trans fwd)
+      all_goals try exact (fwd.trans (by unfold mergeLoLayoutFrame; rfl))
+      all_goals try exact (congrArg MergeLoLayoutFrame.listlen (fwd.trans (by unfold mergeLoLayoutFrame; rfl)))
+      all_goals try exact (congrArg MergeLoLayoutFrame.basekeys (fwd.trans (by unfold mergeLoLayoutFrame; rfl)))
+      all_goals try exact (congrArg MergeLoLayoutFrame.dataSize (fwd.trans (by unfold mergeLoLayoutFrame; rfl)))
+      all_goals try exact (congrArg MergeLoLayoutFrame.pending (fwd.trans (by unfold mergeLoLayoutFrame; rfl)))
+      -- aesop may apply mergeLoLayoutFrame_congr and leave field-level goals.
+      all_goals try exact (congrArg MergeLoLayoutFrame.listlen fwd_2)
+      all_goals try exact (congrArg MergeLoLayoutFrame.basekeys fwd_2)
+      all_goals try exact (congrArg MergeLoLayoutFrame.dataSize fwd_2)
+      all_goals try exact (congrArg MergeLoLayoutFrame.pending fwd_2)
+      all_goals try exact (congrArg MergeLoLayoutFrame.listlen ((ih _ _ _ h).trans fwd))
+      all_goals try exact (congrArg MergeLoLayoutFrame.basekeys ((ih _ _ _ h).trans fwd))
+      all_goals try exact (congrArg MergeLoLayoutFrame.dataSize ((ih _ _ _ h).trans fwd))
+      all_goals try exact (congrArg MergeLoLayoutFrame.pending ((ih _ _ _ h).trans fwd))
     | galloping =>
       let next : MergeLoMachine κ ν → Nat → Nat → Option (MergeLoResult κ ν) :=
         fun machine' aCount bCount =>
@@ -974,23 +1232,24 @@ private lemma mergeLoLoop_layout
         · exact ih machine' .galloping result' hresult
         · have hframe := ih _ (.ordinary 0 0) result' hresult
           simpa [mergeLoLayoutFrame] using hframe
-set_option linter.flexible false in
 
 end CPythonListsort
 
 namespace CPythonListsort
 
+set_option linter.unusedTactic false in
+set_option linter.unreachableTactic false in
 /--
 [mergeLo_layout_frame_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
 @[path]
-lemma mergeLo_layout_frame_of_eq_some
+public lemma mergeLo_layout_frame_of_eq_some
   {κ : Type u}
   {ν : Type v}
-  {state : MergeState κ ν}
-  {ssa ssb : Int}
-  {na nb : Nat}
-  {result : MergeLoResult κ ν}
+  (state : MergeState κ ν)
+  (ssa ssb : Int)
+  (na nb : Nat)
+  (result : MergeLoResult κ ν)
 -- given
   (h : mergeLo? state ssa ssb na nb = some result) :
 -- imply
@@ -1009,8 +1268,75 @@ lemma mergeLo_layout_frame_of_eq_some
     all_goals first
       | simpa [mergeLoFailure] using
         (mergeGetmem_layout state (BitVec.ofNat 64 na))
+      | exact congrArg MergeLoLayoutFrame.listlen
+          ((by simp [mergeLoFailure] :
+              mergeLoLayoutFrame (mergeLoFailure (mergeGetmem state (BitVec.ofNat 64 na)).state).state =
+                mergeLoLayoutFrame (mergeGetmem state (BitVec.ofNat 64 na)).state).trans
+            (mergeGetmem_layout state (BitVec.ofNat 64 na)))
+      | exact congrArg MergeLoLayoutFrame.basekeys
+          ((by simp [mergeLoFailure] :
+              mergeLoLayoutFrame (mergeLoFailure (mergeGetmem state (BitVec.ofNat 64 na)).state).state =
+                mergeLoLayoutFrame (mergeGetmem state (BitVec.ofNat 64 na)).state).trans
+            (mergeGetmem_layout state (BitVec.ofNat 64 na)))
+      | exact congrArg MergeLoLayoutFrame.dataSize
+          ((by simp [mergeLoFailure] :
+              mergeLoLayoutFrame (mergeLoFailure (mergeGetmem state (BitVec.ofNat 64 na)).state).state =
+                mergeLoLayoutFrame (mergeGetmem state (BitVec.ofNat 64 na)).state).trans
+            (mergeGetmem_layout state (BitVec.ofNat 64 na)))
+      | exact congrArg MergeLoLayoutFrame.pending
+          ((by simp [mergeLoFailure] :
+              mergeLoLayoutFrame (mergeLoFailure (mergeGetmem state (BitVec.ofNat 64 na)).state).state =
+                mergeLoLayoutFrame (mergeGetmem state (BitVec.ofNat 64 na)).state).trans
+            (mergeGetmem_layout state (BitVec.ofNat 64 na)))
+      | exact congrArg MergeLoLayoutFrame.listlen (by
+          trans mergeLoLayoutFrame (mergeGetmem state (BitVec.ofNat 64 na)).state
+          · assumption
+          · exact mergeGetmem_layout state (BitVec.ofNat 64 na))
+      | exact congrArg MergeLoLayoutFrame.basekeys (by
+          trans mergeLoLayoutFrame (mergeGetmem state (BitVec.ofNat 64 na)).state
+          · assumption
+          · exact mergeGetmem_layout state (BitVec.ofNat 64 na))
+      | exact congrArg MergeLoLayoutFrame.dataSize (by
+          trans mergeLoLayoutFrame (mergeGetmem state (BitVec.ofNat 64 na)).state
+          · assumption
+          · exact mergeGetmem_layout state (BitVec.ofNat 64 na))
+      | exact congrArg MergeLoLayoutFrame.pending (by
+          trans mergeLoLayoutFrame (mergeGetmem state (BitVec.ofNat 64 na)).state
+          · assumption
+          · exact mergeGetmem_layout state (BitVec.ofNat 64 na))
       | apply Eq.trans ?_ (mergeGetmem_layout state (BitVec.ofNat 64 na))
-        assumption
+        first
+          | exact fwd_1.trans (fwd.trans
+              (mergeLoInitialDataToTemp_layout na
+                (mergeGetmem state (BitVec.ofNat 64 na)).state a 0 ssa heq))
+          | exact (mergeLoLoop_layout (na + nb + 1) a_1 (.ordinary 0 0) result h).trans
+              (fwd.trans
+                (mergeLoInitialDataToTemp_layout na
+                  (mergeGetmem state (BitVec.ofNat 64 na)).state a 0 ssa heq))
+          | exact (mergeLoSucceed_layout a_1 result h).trans
+              (fwd.trans
+                (mergeLoInitialDataToTemp_layout na
+                  (mergeGetmem state (BitVec.ofNat 64 na)).state a 0 ssa heq))
+          | exact (mergeLoCopyB_layout a_1 result h).trans
+              (fwd.trans
+                (mergeLoInitialDataToTemp_layout na
+                  (mergeGetmem state (BitVec.ofNat 64 na)).state a 0 ssa heq))
+          | exact congrArg MergeLoLayoutFrame.listlen
+              (fwd_1.trans (fwd.trans
+                (mergeLoInitialDataToTemp_layout na
+                  (mergeGetmem state (BitVec.ofNat 64 na)).state a 0 ssa heq)))
+          | exact congrArg MergeLoLayoutFrame.basekeys
+              (fwd_1.trans (fwd.trans
+                (mergeLoInitialDataToTemp_layout na
+                  (mergeGetmem state (BitVec.ofNat 64 na)).state a 0 ssa heq)))
+          | exact congrArg MergeLoLayoutFrame.dataSize
+              (fwd_1.trans (fwd.trans
+                (mergeLoInitialDataToTemp_layout na
+                  (mergeGetmem state (BitVec.ofNat 64 na)).state a 0 ssa heq)))
+          | exact congrArg MergeLoLayoutFrame.pending
+              (fwd_1.trans (fwd.trans
+                (mergeLoInitialDataToTemp_layout na
+                  (mergeGetmem state (BitVec.ofNat 64 na)).state a 0 ssa heq)))
   exact
     ⟨congrArg MergeLoLayoutFrame.listlen hframe,
       congrArg MergeLoLayoutFrame.basekeys hframe,
@@ -1025,7 +1351,7 @@ namespace CPythonListsort
 [mergeLo_pending_eq_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
 @[path]
-lemma mergeLo_pending_eq_of_eq_some
+public lemma mergeLo_pending_eq_of_eq_some
   {κ : Type u}
   {ν : Type v}
   {state : MergeState κ ν}
@@ -1047,9 +1373,7 @@ namespace CPythonListsort
 [mergeLo_straight_stability_regression](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
 @[path]
-lemma mergeLo_straight_stability_regression
-  {κ : Type u}
-  {ν : Type v} :
+public lemma mergeLo_straight_stability_regression :
 -- imply
   (mergeLo? mergeLoStabilityRegressionState 0 2 2 3).map (fun result => (result.returnCode, result.fuelExhausted, result.state.data.entries.toList)) = some (0, false, [{ key := 2, value := some 20 }, { key := 3, value := some 30 }, { key := 3, value := some 32 }, { key := 3, value := some 33 }, { key := 4, value := some 40 }]) := by
 -- proof
@@ -1063,9 +1387,7 @@ namespace CPythonListsort
 [mergeLo_gallop_stability_regression](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
 @[path]
-lemma mergeLo_gallop_stability_regression
-  {κ : Type u}
-  {ν : Type v} :
+public lemma mergeLo_gallop_stability_regression :
 -- imply
   (mergeLo? mergeLoGallopStabilityRegressionState 0 3 3 3).map (fun result => (result.returnCode, result.fuelExhausted, result.state.min_gallop, result.state.data.entries.toList)) = some (0, false, 1, [{ key := 1, value := some 10 }, { key := 2, value := some 20 }, { key := 3, value := some 30 }, { key := 3, value := some 31 }, { key := 4, value := some 40 }, { key := 5, value := some 50 }]) := by
 -- proof
@@ -1079,28 +1401,35 @@ namespace CPythonListsort
 [mergeLo_inconsistentComparator_naZero_succeed_regression](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
 @[path]
-lemma mergeLo_inconsistentComparator_naZero_succeed_regression
-  {κ : Type u}
-  {ν : Type v} :
+public lemma mergeLo_inconsistentComparator_naZero_succeed_regression :
 -- imply
   mergeLoNaZeroHedgeRegressionState.key_compare 1 1 = true ∧ ((mergeLoTempRun? mergeLoNaZeroHedgeRegressionState.a 0 2).bind (fun activeA => gallopRight? mergeLoNaZeroHedgeRegressionState activeA 0 0 2 0)) = some { index := 2, fuelExhausted := false } ∧ ((mergeLoTempRun? mergeLoNaZeroHedgeStrictControlState.a 0 2).bind (fun activeA => gallopRight? mergeLoNaZeroHedgeStrictControlState activeA 0 0 2 0)) = some { index := 0, fuelExhausted := false } ∧ (mergeLoGallopRound? mergeLoNaZeroHedgeRegressionMachine (fun _ _ _ => none)).map (fun result => (result.returnCode, result.fuelExhausted, result.state.data.entries.toList)) = some (0, false, [{ key := 1, value := some 10 }, { key := 2, value := some 20 }, { key := 0, value := some 0 }]) ∧ (mergeLoGallopRound? mergeLoNaZeroHedgeStrictControlMachine (fun _ _ _ => none)).map (fun result => (result.returnCode, result.fuelExhausted, result.state.data.entries.toList)) = some (0, false, [{ key := 0, value := some 0 }, { key := 1, value := some 10 }, { key := 2, value := some 20 }]) := by
 -- proof
-  decide
+  -- `decide` cannot unfold unexposed `instDecidableEqGallopResult.decEq`
+  -- (Structure.Gallop is not `@[expose]`), so split and use `rfl` on the
+  -- `GallopResult` equalities, which reduce `{ lastOffset := ... }.lastOffset`.
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+  · decide
+  · rfl
+  · rfl
+  · decide
+  · decide
 
 end CPythonListsort
+
+namespace CPythonListsort
 
 /--
 [mergeLo_memcpyCallsite_distinct](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeLo.lean)
 -/
 @[path]
 private lemma mergeLo_memcpyCallsite_distinct_eq
-  {κ : Type u}
-  {ν : Type v}
-  {site : MergeLoMemcpyCallsite} :
+  (site : MergeLoMemcpyCallsite) :
 -- imply
-  site.backings.Distinct := by
+  site.backings.Distinct :=
 -- proof
-  apply CPythonListsort.mergeLo_memcpyCallsite_distinct site
+  mergeLo_memcpyCallsite_distinct site
 
+end CPythonListsort
 
 -- created on 2026-10-23

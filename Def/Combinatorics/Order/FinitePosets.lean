@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Order/FinitePosets.lean -/
 
-import Mathlib.Order.Lattice.Nat
+module
+
+public import Mathlib.Order.Lattice.Nat
+
+@[expose] public section
+
 /-!
 # Mirsky's theorem
 

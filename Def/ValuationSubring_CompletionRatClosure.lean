@@ -1,6 +1,10 @@
-import Mathlib.Topology.Algebra.Field
-import Mathlib.Algebra.Algebra.Subalgebra.Basic
-import Instance.ValuationSubring_CompletionDecompositionAction
+module
+
+public import Mathlib.Topology.Algebra.Field
+public import Mathlib.Algebra.Algebra.Subalgebra.Basic
+public import Instance.ValuationSubring_CompletionDecompositionAction
+
+@[expose] public section
 
 set_option autoImplicit false
 

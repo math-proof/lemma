@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/InfiniteWord/CrochemoreSquarefreeCriterion.lean -/
 
 
-import Lemma.Finset.InfiniteWord.CrochemoreSquarefreeCriterion
+import Theorem.Finset.InfiniteWord.CrochemoreSquarefreeCriterion
 import Mathlib.Tactic
 
 

@@ -1,5 +1,10 @@
-import Lean
-import Class.Lean.Meta.CtorName
+module
+
+public import Lean
+public import Class.Lean.Meta.CtorName
+
+@[expose] public section
+
 open Lean Elab Command Parser.Term
 
 export CtorName (ctorName)

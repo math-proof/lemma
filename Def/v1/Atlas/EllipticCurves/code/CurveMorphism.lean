@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.EllipticCurves.code.Isogenies.Part13
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.Isogenies
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.Isogenies
 open Polynomial
 
 open scoped Polynomial.Bivariate

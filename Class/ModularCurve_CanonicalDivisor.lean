@@ -1,4 +1,8 @@
-import Def.ModularCurve_CanonicalDivisor
+module
+
+public import Def.ModularCurve_CanonicalDivisor
+
+public section
 
 set_option autoImplicit false
 

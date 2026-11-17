@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/SignedStirlingFirst.lean -/
 
-import Mathlib.Combinatorics.Enumerative.Stirling
-import Mathlib.Tactic.Ring
+module
 
+public import Mathlib.Combinatorics.Enumerative.Stirling
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

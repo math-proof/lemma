@@ -2,7 +2,7 @@
 
 
 import Theorem.RingTheory.LocalRing.ResidueField.DVR.Part2
-import Lemma.AlgHom.LocalRing.ResidueField.DVR
+import Theorem.AlgHom.LocalRing.ResidueField.DVR
 variable {A B C D : Type*}
 variable [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
 variable [CommRing B] [IsDomain B] [IsDiscreteValuationRing B]

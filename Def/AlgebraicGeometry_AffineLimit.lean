@@ -1,5 +1,9 @@
-import Mathlib
-import Abbrev.AlgebraicGeometry_AffineLimit
+module
+
+public import Mathlib
+public import Abbrev.AlgebraicGeometry_AffineLimit
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,5 +1,9 @@
-import Structure.GaloisRep_Adic
-import Instance.CuspForm_HeckeAlgebra
+module
+
+public import Structure.GaloisRep_Adic
+public import Instance.CuspForm_HeckeAlgebra
+
+public section
 
 open Polynomial
 

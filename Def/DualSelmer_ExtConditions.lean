@@ -1,4 +1,8 @@
-import Mathlib.RepresentationTheory.Homological.GroupCohomology.Functoriality
+module
+
+public import Mathlib.RepresentationTheory.Homological.GroupCohomology.Functoriality
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,8 +1,10 @@
-import Mathlib
+module
+
+public import Mathlib
 
 section
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace NumberField.ComplexEmbedding
 

@@ -1,7 +1,10 @@
-import Mathlib
-import Def.Algebra.AffineDilatation.Part2
+module
+
+public import Mathlib
+public import Def.Algebra.AffineDilatation.Part2
 set_option autoImplicit false
 
+public section
 
 noncomputable section
 

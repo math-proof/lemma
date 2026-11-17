@@ -1,6 +1,10 @@
 -- Carved from Lemma/Definitions/Def_Deformations_Deformations_Lemmas.lean: instance decls only.
-import Mathlib
 
+module
+
+public import Mathlib
+
+@[expose] public section
 
 instance {α M G : Type*} [Monoid M] [Monoid G] [Monoid α] [MulDistribMulAction α G] :
     MulAction α (M →* G) where

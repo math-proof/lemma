@@ -1,6 +1,9 @@
-import Mathlib
-import Def.Analysis.Misc.erdos_707.Part2
+module
 
+public import Mathlib
+public import Def.Analysis.Misc.erdos_707.Part2
+
+public section
 
 namespace Mainstep
 

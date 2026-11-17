@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/CommaSequence.lean -/
 
-import Mathlib.Data.Nat.Log
+module
 
+public import Mathlib.Data.Nat.Log
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

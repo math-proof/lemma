@@ -9,10 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
-import Theorem.StatisticalMechanics.Code.Lattice.PlanarDual.Part10
-import Theorem.StatisticalMechanics.Code.Lattice.DartDef
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
+public import Theorem.StatisticalMechanics.Code.Lattice.PlanarDual.Part10
+public import Theorem.StatisticalMechanics.Code.Lattice.DartDef
+public section
+
 open SimpleGraph
 
 

@@ -1,12 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/Filevych.lean -/
 
-import Lemma.Complex.Wiman.CorrectedEstimateAbsorption
-import Lemma.Measure.Lebesgue.Finite
-import Lemma.Complex.Wiman.MaximumTermTendsToInfinity
+import Theorem.Complex.Wiman.CorrectedEstimateAbsorption
+import Theorem.Measure.Lebesgue.Finite
+import Theorem.Complex.Wiman.MaximumTermTendsToInfinity
 import Theorem.Analysis.Complex.Wiman.CorrectedMajorantBoundOffExceptionalSet
-import Lemma.Complex.Wiman.CorrectedMajorantBoundOffExceptionalSet
-import Lemma.Complex.Wiman.MaximumModulusLeMajorant
-import Lemma.Complex.Wiman.MaximumTermLeModulus
+import Theorem.Complex.Wiman.CorrectedMajorantBoundOffExceptionalSet
+import Theorem.Complex.Wiman.MaximumModulusLeMajorant
+import Theorem.Complex.Wiman.MaximumTermLeModulus
 import Theorem.Analysis.Complex.Wiman.MaximumModulusLeMajorant
 import Theorem.Analysis.Complex.Wiman.MaximumTermLeModulus
 /-!

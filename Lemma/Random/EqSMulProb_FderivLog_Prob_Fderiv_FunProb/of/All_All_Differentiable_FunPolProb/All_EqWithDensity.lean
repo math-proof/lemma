@@ -1,5 +1,7 @@
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Lemma.Random.Fderiv_FunProbPol.eq.Zero.of.ProbPolEq0.All_EqWithDensity
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient Random
 
 
@@ -30,4 +32,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-16
+-- updated on 2026-11-17

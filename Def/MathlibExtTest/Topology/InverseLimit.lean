@@ -2,7 +2,7 @@
 
 
 import Def.Topology.InverseLimit
-import Lemma.Set.InverseLimit
+import Theorem.Set.InverseLimit
 /-!
 # Inverse-limit smoke tests
 

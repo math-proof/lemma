@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Diagonalization.lean -/
 
 
-import Lemma.Matrix.Diagonalization
+import Theorem.Matrix.Diagonalization
 import Mathlib.LinearAlgebra.Projection
 import Mathlib.LinearAlgebra.Trace
 

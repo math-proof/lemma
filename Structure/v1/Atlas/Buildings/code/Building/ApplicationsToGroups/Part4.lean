@@ -8,14 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.Building.Affine.Part2
-import Def.v1.Atlas.Buildings.code.BNPair.ParabolicDefs.Part2
-import Lemma.Nat.NonemptyBruhatCell
-import Mathlib.Topology.Algebra.Group.Basic
-import Mathlib.Topology.Compactness.Compact
-import Mathlib.Order.Filter.AtTopBot.Group
-import Mathlib.Topology.Algebra.OpenSubgroup
-import Def.v1.Atlas.Buildings.code.Building.ApplicationsToGroups.Part3
+module
+
+public import Def.v1.Atlas.Buildings.code.Building.Affine.Part2
+public import Def.v1.Atlas.Buildings.code.BNPair.ParabolicDefs.Part2
+public import Theorem.Nat.NonemptyBruhatCell
+public import Mathlib.Topology.Algebra.Group.Basic
+public import Mathlib.Topology.Compactness.Compact
+public import Mathlib.Order.Filter.AtTopBot.Group
+public import Mathlib.Topology.Algebra.OpenSubgroup
+public import Def.v1.Atlas.Buildings.code.Building.ApplicationsToGroups.Part3
+public section
+
 set_option linter.unusedSectionVars false
 
 open ChamberComplex

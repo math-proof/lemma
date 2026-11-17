@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PolygonalNumber.lean -/
 
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 /-!
 # Polygonal numbers
 

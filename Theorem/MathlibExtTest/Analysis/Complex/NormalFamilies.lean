@@ -2,7 +2,7 @@
 
 
 import Def.Analysis.Complex.NormalFamilies
-import Lemma.Set.IsLocallyUniformlyBoundedOn.of.All_All_LeNorm.Ge_0.IsOpen
+import Theorem.Set.IsLocallyUniformlyBoundedOn.of.All_All_LeNorm.Ge_0.IsOpen
 import Mathlib.Analysis.Calculus.FDeriv.Pow
 import Mathlib.Analysis.Normed.Module.Convex
 /-!

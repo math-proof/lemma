@@ -1,18 +1,23 @@
 /-
 Author: @akiezun, Avocado
 -/
-import Mathlib.Algebra.BigOperators.Group.Finset.Defs
-import Mathlib.Basic.Real.Basic
-import Mathlib.Order.Interval.Finset.Nat
-import Mathlib.Algebra.Field.GeomSum
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Ring.RingNF
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Order.Interval.Finset.Nat
+public import Mathlib.Algebra.Field.GeomSum
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Ring.RingNF
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 6, Entry 16
 
 Finite sum of rᵏ/(1-axᵏ) splits into two partial-fraction-type sums.
 -/
+
+public section
 
 
 namespace Ramanujan.Part1Ch6

@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
-import Lemma.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
-import Lemma.Finset.Eq.of.Eq.Any_And_Any_All_Eq_Mul.IsMaximal.In_Faces.IsMaximal.In_Faces.IsMaximal.In_Apartments
-import Mathlib.GroupTheory.Coxeter.Length
+module
+
+public import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
+public import Theorem.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
+public import Theorem.Finset.Eq.of.Eq.Any_And_Any_All_Eq_Mul.IsMaximal.In_Faces.IsMaximal.In_Faces.IsMaximal.In_Apartments
+public import Mathlib.GroupTheory.Coxeter.Length
+public section
+
 set_option maxHeartbeats 800000
 
 variable {V : Type*} [DecidableEq V]

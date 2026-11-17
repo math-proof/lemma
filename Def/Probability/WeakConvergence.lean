@@ -8,7 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
+module
+
+public import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
+
+@[expose] public section
+
 open MeasureTheory Filter ProbabilityTheory
 open scoped Topology BoundedContinuousFunction
 

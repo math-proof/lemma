@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 import Theorem.v1.Atlas.TensorCategories.code.UnitSemisimplicity.MonoidalBiexact.Part4
 import Lemma.Category.Atlas.v1.TensorCategories.code.UnitSemisimplicity.MonoidalBiexact
 import Lemma.Category.Atlas.v1.TensorCategories.code.UnitSemisimplicity.TensorExactness
-import Lemma.Category.Atlas.v1.TensorCategories.code.UnitSemisimplicity.UnitSimple
+import Theorem.Category.Atlas.v1.TensorCategories.code.UnitSemisimplicity.UnitSimple
 import Lemma.Category.Atlas.v1.TensorCategories.code.UnitSemisimplicity.EvalCoeval
 import Instance.v1.Atlas.TensorCategories.code.UnitSemisimplicity.TensorExactness
 import Structure.v1.Atlas.TensorCategories.code.UnitSemisimplicity.UnitSimple

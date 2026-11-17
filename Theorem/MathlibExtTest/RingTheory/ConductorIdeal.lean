@@ -2,7 +2,7 @@
 
 
 import Def.RingTheory.ConductorIdeal
-import Lemma.Int.ConductorIdeal
+import Theorem.Int.ConductorIdeal
 
 
 -- Conductor of the top subalgebra.

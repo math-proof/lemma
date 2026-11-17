@@ -4,14 +4,19 @@
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Mathlib.NumberTheory.Chebyshev
-import Mathlib.Analysis.SpecialFunctions.Stirling
-import Mathlib.Analysis.Real.Pi.Bounds
-import Mathlib.Analysis.Convex.SpecificFunctions.Basic
-import Mathlib.Analysis.Complex.ExponentialBounds
-import Mathlib.Analysis.MeanInequalities
-import Mathlib.NumberTheory.ArithmeticFunction.VonMangoldt
-import Mathlib.NumberTheory.ArithmeticFunction.Misc
+module
+
+public import Mathlib.NumberTheory.Chebyshev
+public import Mathlib.Analysis.SpecialFunctions.Stirling
+public import Mathlib.Analysis.Real.Pi.Bounds
+public import Mathlib.Analysis.Convex.SpecificFunctions.Basic
+public import Mathlib.Analysis.Complex.ExponentialBounds
+public import Mathlib.Analysis.MeanInequalities
+public import Mathlib.NumberTheory.ArithmeticFunction.VonMangoldt
+public import Mathlib.NumberTheory.ArithmeticFunction.Misc
+
+@[expose] public section
+
 open Nat hiding log
 open Finset Real
 open ArithmeticFunction hiding log id

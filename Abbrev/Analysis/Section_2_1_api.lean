@@ -1,18 +1,18 @@
 import Abbrev.Analysis.Section_2_1
-import Lemma.Nat.Zero.eq.One
-import Lemma.Nat.One.eq.Two
-import Lemma.Nat.Two.eq.Three
-import Lemma.Nat.Ne0
-import Lemma.Nat.Four.ne.Zero
-import Lemma.Nat.Eq.of.Eq_Nat_succ_cancel
-import Lemma.Nat.Ne_Nat_succ_ne_succ
-import Lemma.Nat.Six.ne.Two
-import Lemma.Nat.Ne62
-import Lemma.Nat.All.of.All_Nat_induction
-import Lemma.Nat.EqRecurseNat0
-import Lemma.Nat.EqRecurse
-import Lemma.Nat.EqAndAll_Eq.is.Eq_Recurse
-import Lemma.Nat.All_Eq.Unique
+import Theorem.Nat.Zero.eq.One
+import Theorem.Nat.One.eq.Two
+import Theorem.Nat.Two.eq.Three
+import Theorem.Nat.Ne0
+import Theorem.Nat.Four.ne.Zero
+import Theorem.Nat.Eq.of.Eq_Nat_succ_cancel
+import Theorem.Nat.Ne_Nat_succ_ne_succ
+import Theorem.Nat.Six.ne.Two
+import Theorem.Nat.Ne62
+import Theorem.Nat.All.of.All_Nat_induction
+import Theorem.Nat.EqRecurseNat0
+import Theorem.Nat.EqRecurse
+import Theorem.Nat.EqAndAll_Eq.is.Eq_Recurse
+import Theorem.Nat.All_Eq.Unique
 
 
 namespace Chapter2

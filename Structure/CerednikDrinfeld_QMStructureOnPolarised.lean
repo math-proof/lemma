@@ -1,8 +1,10 @@
-import Def.CerednikDrinfeld_QMCanonicalPol
+module
+
+public import Def.CerednikDrinfeld_QMCanonicalPol
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open scoped Quaternion
 open CategoryTheory CategoryTheory.Limits MonoidalCategory AlgebraicGeometry NeronModelInfra GoodReductionJacobian

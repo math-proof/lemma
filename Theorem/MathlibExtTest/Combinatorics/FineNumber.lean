@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.FineNumber
-import Lemma.Finset.FineNumber
+import Theorem.Finset.FineNumber
 import Mathlib.Tactic
 open MetaMathlibExt
 

@@ -22,12 +22,12 @@ private lemma main
   have h_s := Gt_0.of.Gt h_i
   rw [MulProdS.eq.ProdAppend]
   rw [EqMin.of.Le]
-  rw [← Tail.eq.AppendTakeTail__Drop.of.Gt_0]
-  rwa [DivProd.eq.ProdTail.of.GtLength_0.Gt_0 (by assumption) (by assumption)]
-  rw [DivProd.eq.ProdTail.of.GtLength_0.Gt_0]
-  rw [Prod.eq.Mul_ProdTail.of.GtLength_0 (s := s) (by linarith)]
-  apply Le_SubMulS.of.Lt
-  repeat assumption
+  · rw [← Tail.eq.AppendTakeTail__Drop.of.Gt_0 s h_d]
+    rw [DivProd.eq.ProdTail.of.GtLength_0.Gt_0 (by assumption) (by assumption)]
+  · rw [DivProd.eq.ProdTail.of.GtLength_0.Gt_0 (by assumption) (by assumption)]
+    rw [Prod.eq.Mul_ProdTail.of.GtLength_0 (s := s) (by linarith)]
+    apply Le_SubMulS.of.Lt
+    repeat assumption
 
 
 -- created on 2025-07-07

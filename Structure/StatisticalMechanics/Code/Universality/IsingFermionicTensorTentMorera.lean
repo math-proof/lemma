@@ -9,10 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicDenseIncidencePrimitiveBridge.Part2
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicReflectedTensorTent.Part2
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalCenteredRadialPatch.Part12
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicTensorTentMorera
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicDenseIncidencePrimitiveBridge.Part2
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicReflectedTensorTent.Part2
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalCenteredRadialPatch.Part12
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicTensorTentMorera
 
 
 namespace StatMech.Universality
@@ -21,7 +23,7 @@ open Filter Set Topology
 
 open scoped BigOperators
 
-noncomputable section
+public noncomputable section
 
 structure VanishingRectangleContourError
     (F : Nat -> Complex -> Complex) where

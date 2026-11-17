@@ -1,6 +1,10 @@
-import Mathlib
-import Def.Submodule_FiniteAdeleBox
-import Def.QuaternionAlgebra_Order
+module
+
+public import Mathlib
+public import Def.Submodule_FiniteAdeleBox
+public import Def.QuaternionAlgebra_Order
+
+@[expose] public section
 
 set_option autoImplicit false
 

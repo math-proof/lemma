@@ -12,7 +12,7 @@ import Mathlib
 import Def.v1.Atlas.NumberTheoryI.code.LocalFields.Part9
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.LocalFields
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.RayClassFields
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.GlobalCFT
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.GlobalCFT
 import Def.v1.Atlas.NumberTheoryI.code.RayClassFields.Part28
 import Structure.v1.Atlas.NumberTheoryI.code.GlobalCFT.Part3
 

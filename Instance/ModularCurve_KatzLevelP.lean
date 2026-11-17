@@ -1,7 +1,11 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_KatzLevelP.lean: instance decls only.
-import Mathlib
-import Instance.ModularForm_KatzLevelOne
-import Lemma.WeierstrassCurve.KatzLevelP
+
+module
+
+public import Mathlib
+public import Instance.ModularForm_KatzLevelOne
+
+@[expose] public section
 
 set_option autoImplicit false
 

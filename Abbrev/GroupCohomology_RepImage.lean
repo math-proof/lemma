@@ -1,5 +1,9 @@
-import Mathlib
-import Abbrev.GroupCohomology_RepCokernel
+module
+
+public import Mathlib
+public import Abbrev.GroupCohomology_RepCokernel
+
+@[expose] public section
 
 set_option autoImplicit false
 

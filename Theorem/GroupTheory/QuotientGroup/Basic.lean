@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/QuotientGroup/Basic.lean -/
+module
 
-import Mathlib.GroupTheory.QuotientGroup.Basic
-import Def.GroupTheory.QuotientGroup.Basic
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+public import Def.GroupTheory.QuotientGroup.Basic
+
 /-!
 # Quotients by subgroups containing a homomorphism kernel
 
@@ -16,6 +18,8 @@ corresponding quotient of the homomorphism range.
   `A ⧸ B ≃* f.range ⧸ (B.map f).subgroupOf f.range`.
 * `QuotientGroup.quotientEquivRangeQuotient_mk`: evaluation on representatives.
 -/
+
+public section
 
 
 namespace QuotientGroup

@@ -11,9 +11,7 @@ namespace CPythonListsort
 -/
 @[path]
 lemma mergeInitTempCapacity_keyed_toNat
-  {κ : Type u}
-  {ν : Type v}
-  {listSize : PySSize}
+  (listSize : PySSize)
 -- given
   (hmax : listSize.toNat ≤ PY_LIST_MAX) :
 -- imply
@@ -114,7 +112,7 @@ lemma mergeInitTemp_keyed_shape
 -- given
   (hmax : listSize.toNat ≤ PY_LIST_MAX) :
 -- imply
-  let init := mergeInitTemp (κ := κ) (ν := ν) listSize true init.storage.backing = .inline ∧ init.storage.hasValues = true ∧ init.storage.cells.size = min ((listSize.toNat + 1) / 2) 128 := by
+  let init := mergeInitTemp (κ := κ) (ν := ν) listSize true; init.storage.backing = .inline ∧ init.storage.hasValues = true ∧ init.storage.cells.size = min ((listSize.toNat + 1) / 2) 128 := by
 -- proof
   simp only [mergeInitTemp, Array.size_replicate, true_and]
   exact mergeInitTempCapacity_keyed_toNat listSize hmax
@@ -132,7 +130,7 @@ lemma mergeInitTemp_unkeyed_shape
   {ν : Type v}
   {listSize : PySSize} :
 -- imply
-  let init := mergeInitTemp (κ := κ) (ν := ν) listSize false init.storage.backing = .inline ∧ init.storage.hasValues = false ∧ init.storage.cells.size = 256 := by
+  let init := mergeInitTemp (κ := κ) (ν := ν) listSize false; init.storage.backing = .inline ∧ init.storage.hasValues = false ∧ init.storage.cells.size = 256 := by
 -- proof
   simp [mergeInitTemp, mergeInitTempCapacity, MERGESTATE_TEMP_SIZE]
 

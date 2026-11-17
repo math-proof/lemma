@@ -1,8 +1,12 @@
-import Mathlib.Analysis.Normed.Lp.MeasurableSpace
-import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
-import Def.Dynamics.MarkovRewardProcess.Part4
-import Def.Dynamics.Iterates
-import Def.Dynamics.StepSize.Part2
+module
+
+public import Mathlib.Analysis.Normed.Lp.MeasurableSpace
+public import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
+public import Def.Dynamics.MarkovRewardProcess.Part4
+public import Def.Dynamics.Iterates
+public import Def.Dynamics.StepSize.Part2
+public section
+
 open MeasureTheory Finset
 
 universe u

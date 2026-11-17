@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter10.BregmanMincHelpers
 import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter10.Permanent
-import Lemma.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter10.Permanent
+import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter10.Permanent
 import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 open Finset Equiv Classical BigOperators Real

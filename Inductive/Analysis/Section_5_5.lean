@@ -1,6 +1,8 @@
-import Mathlib
-import Theorem.Analysis.Section_5_4.Part4
-import Theorem.Analysis.Section_5_5
+module
+
+public import Mathlib
+public import Theorem.Analysis.Section_5_4.Part4
+public import Theorem.Analysis.Section_5_5
 /-!
 # Analysis I, Section 5.5: The least upper bound property
 
@@ -26,7 +28,7 @@ Users of the companion who have completed the exercises in this section are welc
 namespace Chapter5
 
 /-- A bare-bones extended real class to define supremum. -/
-inductive ExtendedReal where
+public inductive ExtendedReal where
 | neg_infty : ExtendedReal
 | real (x:Real) : ExtendedReal
 | infty : ExtendedReal

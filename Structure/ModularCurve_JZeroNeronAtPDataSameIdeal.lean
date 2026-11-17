@@ -1,9 +1,11 @@
-import Mathlib
-import Structure.ModularCurve_JZeroNeronAtPData
+module
+
+public import Mathlib
+public import Structure.ModularCurve_JZeroNeronAtPData
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace ModularCurve
 

@@ -8,14 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.LieGroups.code.BeilinsonBernstein.Part3
-import Lemma.AlgHom.EqLiftOfSurjectiveNC.of.All_Eq_0.Surjective
+module
+
+public import Structure.v1.Atlas.LieGroups.code.BeilinsonBernstein.Part3
+public import Theorem.AlgHom.EqLiftOfSurjectiveNC.of.All_Eq_0.Surjective
 open CategoryTheory
 
 
 namespace BeilinsonBernstein
 
-noncomputable section
+public noncomputable section
 
 universe u
 

@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean -/
 
-import Def.CPythonListsort.Code.Assembly.AccessTrace.Part9
-import Mathlib
-import Theorem.CPythonListsort.Code.Assembly.SortSliceSafety.Part2
+module
+
+public import Def.CPythonListsort.Code.Assembly.AccessTrace.Part9
+public import Mathlib
+public import Theorem.CPythonListsort.Code.Assembly.SortSliceSafety.Part2
+public import Def.CPythonListsort.Code.Assembly.SortSliceSafety.Part2
 /-!
 # Safety of the `sortslice` movement primitives
 
@@ -17,6 +20,9 @@ executes the paired-entry transcription.  This is intentional: one execution
 models movement of the key array and the other movement of the values array;
 both erase to the same atomic paired-entry operation.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

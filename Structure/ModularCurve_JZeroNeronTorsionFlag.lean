@@ -1,7 +1,11 @@
-import Mathlib
-import Abbrev.ModularCurve_JZeroNeronTorsionSheafV4
-import Def.GaloisRep_Flat
-import Inductive.ModularCurve_JZeroFlagLayerKind
+module
+
+public import Mathlib
+public import Abbrev.ModularCurve_JZeroNeronTorsionSheafV4
+public import Def.GaloisRep_Flat
+public import Inductive.ModularCurve_JZeroFlagLayerKind
+
+public section
 
 namespace ModularCurve
 

@@ -1,0 +1,17 @@
+module
+
+public section
+
+
+public theorem List.LengthTake.eq.Min_Length
+-- given
+  (s : List α)
+  (n : ℕ) :
+-- imply
+  (s.take n).length = n ⊓ s.length := by
+-- proof
+  simp
+
+
+-- created on 2025-05-13
+-- updated on 2026-10-26

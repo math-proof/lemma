@@ -7,6 +7,8 @@ import Theorem.Function
 import Lemma.Random.Measurable_Vkd.of.All_Measurable_Prob
 import Lemma.Random.NormVkd.le.MulInvSub1Abs_R.of.In_Ico
 import Lemma.Random.MEq_V0.of.In_Ico.All_Eq.All_EqWithDensity
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Real Finset Filter Kernel
 set_option maxHeartbeats 800000
 
@@ -316,4 +318,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-16
+-- updated on 2026-11-17

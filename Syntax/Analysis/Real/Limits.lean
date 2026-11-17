@@ -1,5 +1,10 @@
-import Mathlib.Analysis.Real.Hyperreal
-import Mathlib.Topology.Defs.Filter
+module
+
+public import Mathlib.Analysis.Real.Hyperreal
+public import Mathlib.Topology.Defs.Filter
+
+public meta section
+
 open Lean
 open scoped Topology
 

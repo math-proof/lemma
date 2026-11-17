@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/Frobenius/Splitting.lean -/
+module
 
-import Mathlib.NumberTheory.RamificationInertia.Galois
-import Mathlib.NumberTheory.RamificationInertia.Unramified
-import Mathlib.RingTheory.Frobenius
+public import Mathlib.NumberTheory.RamificationInertia.Galois
+public import Mathlib.NumberTheory.RamificationInertia.Unramified
+public import Mathlib.RingTheory.Frobenius
 open scoped Pointwise
 
+public section
 
 section SplitsCompletely
 

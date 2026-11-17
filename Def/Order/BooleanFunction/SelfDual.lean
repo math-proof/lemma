@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Order/BooleanFunction/SelfDual.lean -/
 
-import Mathlib.Data.Bool.Basic
+module
 
+public import Mathlib.Data.Bool.Basic
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

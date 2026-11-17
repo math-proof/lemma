@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.DifferentialGeometry.code.Manifolds.Part6
-import Lemma.Real.Atlas.v1.DifferentialGeometry.code.Manifolds
+import Theorem.Real.Atlas.v1.DifferentialGeometry.code.Manifolds
 
 
 noncomputable section

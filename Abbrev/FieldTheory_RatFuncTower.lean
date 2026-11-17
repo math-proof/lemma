@@ -1,12 +1,14 @@
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.Algebra.Polynomial.AlgebraMap
-import Mathlib.Algebra.Algebra.Rat
-import Instance.FieldTheory_RatFuncTower
+module
+
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.Algebra.Polynomial.AlgebraMap
+public import Mathlib.Algebra.Algebra.Rat
+public import Instance.FieldTheory_RatFuncTower
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace RatFuncTower
 

@@ -8,13 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Exact
-import Mathlib.Algebra.Homology.ShortComplex.ShortExact
-import Mathlib.GroupTheory.QuotientGroup.Basic
-import Structure.v1.Atlas.AlgebraicTopologyI.code.Section6
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section6
-import Abbrev.v1.Atlas.AlgebraicTopologyI.code.Section8
+module
 
+public import Mathlib.Algebra.Exact
+public import Mathlib.Algebra.Homology.ShortComplex.ShortExact
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+public import Structure.v1.Atlas.AlgebraicTopologyI.code.Section6
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section6
+public import Abbrev.v1.Atlas.AlgebraicTopologyI.code.Section8
+
+
+public section
 
 namespace ExactSequence
 

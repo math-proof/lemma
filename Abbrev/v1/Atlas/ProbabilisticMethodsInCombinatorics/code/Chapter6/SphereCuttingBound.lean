@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Topology.Connected.Clopen
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
+module
+
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Topology.Connected.Clopen
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 open Set

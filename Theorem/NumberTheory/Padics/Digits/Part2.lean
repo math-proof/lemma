@@ -1,7 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Padics/Digits.lean -/
+module
 
-import Mathlib.NumberTheory.Padics.RingHoms
-import Def.NumberTheory.Padics.Digits.Part2
+public import Mathlib.NumberTheory.Padics.RingHoms
+public import Def.NumberTheory.Padics.Digits.Part2
 set_option autoImplicit false
 
 /-!
@@ -10,6 +11,8 @@ set_option autoImplicit false
 This file defines the digits of a p-adic integer from consecutive `PadicInt.appr` values and
 proves the one-step and finite-sum reconstruction formulas.
 -/
+
+public section
 
 
 namespace PadicInt

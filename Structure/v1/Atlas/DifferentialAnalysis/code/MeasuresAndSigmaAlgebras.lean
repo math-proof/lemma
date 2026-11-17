@@ -8,13 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.MeasureTheory.OuterMeasure.Caratheodory
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
-import Mathlib.MeasureTheory.Measure.Regular
-import Mathlib.MeasureTheory.Measure.Content
-import Mathlib.MeasureTheory.Integral.RieszMarkovKakutani.Basic
-import Mathlib.MeasureTheory.Integral.RieszMarkovKakutani.Real
-import Mathlib.Topology.MetricSpace.Basic
+module
+
+public import Mathlib.MeasureTheory.OuterMeasure.Caratheodory
+public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+public import Mathlib.MeasureTheory.Measure.Regular
+public import Mathlib.MeasureTheory.Measure.Content
+public import Mathlib.MeasureTheory.Integral.RieszMarkovKakutani.Basic
+public import Mathlib.MeasureTheory.Integral.RieszMarkovKakutani.Real
+public import Mathlib.Topology.MetricSpace.Basic
+public section
+
 open MeasureTheory Set
 
 open scoped ENNReal

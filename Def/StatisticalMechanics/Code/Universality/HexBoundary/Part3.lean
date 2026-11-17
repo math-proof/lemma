@@ -9,10 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Universality.HexVertex.Part5
-import Theorem.StatisticalMechanics.Code.Universality.HexBoundary.Part3
+module
 
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Universality.HexVertex.Part5
+public import Theorem.StatisticalMechanics.Code.Universality.HexBoundary.Part3
+
+@[expose] public section
 
 namespace StatMech.Universality
 

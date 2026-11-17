@@ -1,4 +1,8 @@
-import Instance.EllipticCurve_FunctionFieldPullback
+module
+
+public import Instance.EllipticCurve_FunctionFieldPullback
+
+@[expose] public section
 
 namespace WeierstrassCurve.Affine
 

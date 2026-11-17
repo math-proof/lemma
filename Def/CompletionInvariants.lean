@@ -1,4 +1,4 @@
-import Lemma.LinearMap.Main
+import Theorem.LinearMap.Main
 import Theorem.Algebra.AdicCompletion.TensorRing.Part4
 import Lemma.AdicCompletion.StabilizerCompletionAction
 

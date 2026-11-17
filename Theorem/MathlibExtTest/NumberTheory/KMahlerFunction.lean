@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/KMahlerFunction.lean -/
+module
 
+public import Def.NumberTheory.KMahlerFunction
 
-import Def.NumberTheory.KMahlerFunction
-
+public section
 
 namespace MetaMathlibExt
 

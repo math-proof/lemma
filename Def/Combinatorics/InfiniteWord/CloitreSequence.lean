@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/InfiniteWord/CloitreSequence.lean -/
 
-import Mathlib.Order.Monotone.Basic
+module
+
+public import Mathlib.Order.Monotone.Basic
+
+@[expose] public section
+
 /-!
 # Cloitre's self-describing sequence
 

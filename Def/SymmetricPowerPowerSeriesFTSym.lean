@@ -1,7 +1,11 @@
-import Mathlib.RingTheory.MvPolynomial.Symmetric.FundamentalTheorem
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Mathlib.RingTheory.MvPowerSeries.Rename
-import Mathlib.Algebra.Algebra.Subalgebra.Operations
+module
+
+public import Mathlib.RingTheory.MvPolynomial.Symmetric.FundamentalTheorem
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Mathlib.RingTheory.MvPowerSeries.Rename
+public import Mathlib.Algebra.Algebra.Subalgebra.Operations
+
+@[expose] public section
 
 set_option autoImplicit false
 

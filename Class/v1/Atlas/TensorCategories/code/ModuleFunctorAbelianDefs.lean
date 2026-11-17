@@ -9,7 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Class.v1.Atlas.TensorCategories.code.ModuleFunctorDefs
-import Lemma.Category.Atlas.v1.TensorCategories.code.ModuleFunctorDefs
 import Mathlib.CategoryTheory.Abelian.Basic
 import Mathlib.CategoryTheory.Monoidal.Mon_
 set_option maxHeartbeats 400000
@@ -17,7 +16,6 @@ set_option maxHeartbeats 400000
 set_option linter.all false
 
 universe v₁ v₂ v₃ u₁ u₂ u₃
-
 
 namespace CategoryTheory
 

@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.MotzkinTriangle.Part5
-import Lemma.Finset.Enumerative.MotzkinTriangle
+import Theorem.Finset.Enumerative.MotzkinTriangle
 import Mathlib.Tactic
 
 

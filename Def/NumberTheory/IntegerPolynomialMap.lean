@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/IntegerPolynomialMap.lean -/
 
-import Mathlib.Algebra.MvPolynomial.Eval
-import Mathlib.Data.ZMod.Basic
+module
+
+public import Mathlib.Algebra.MvPolynomial.Eval
+public import Mathlib.Data.ZMod.Basic
+
+@[expose] public section
+
 /-!
 # Integer polynomial maps
 

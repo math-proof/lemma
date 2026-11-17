@@ -1,9 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Dynamics/EventuallyPeriodicSequence.lean -/
 
-import Mathlib.Data.Fintype.Pigeonhole
-import Mathlib.Data.Nat.Basic
-import Mathlib.Tactic.WLOG
-import Def.Dynamics.EventuallyPeriodicSequence
+module
+
+public import Mathlib.Data.Fintype.Pigeonhole
+public import Mathlib.Data.Nat.Basic
+public import Mathlib.Tactic.WLOG
+public import Def.Dynamics.EventuallyPeriodicSequence
+
+@[expose] public section
 
 
 namespace MetaMathlibExt

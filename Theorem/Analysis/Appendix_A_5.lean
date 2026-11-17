@@ -1,10 +1,15 @@
-import Mathlib
+module
+
+public import Mathlib
+
 /-!
 # Analysis I, Appendix A.5: Nested quantifiers
 
 Some examples of nested quantifiers in Lean
 
 -/
+
+public section
 
 
 namespace SwanExample

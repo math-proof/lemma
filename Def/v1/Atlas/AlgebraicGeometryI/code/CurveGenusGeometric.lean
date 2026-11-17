@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.Dual.Lemmas
-import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
-import Mathlib.RingTheory.Kaehler.Basic
-import Mathlib.RingTheory.DedekindDomain.Basic
-import Mathlib.LinearAlgebra.Dimension.Finrank
+module
+
+public import Mathlib.LinearAlgebra.Dual.Lemmas
+public import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
+public import Mathlib.RingTheory.Kaehler.Basic
+public import Mathlib.RingTheory.DedekindDomain.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 

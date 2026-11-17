@@ -27,8 +27,8 @@ import Mathlib.Tactic
 import Def.NumberTheory.RothAuxiliary.Part7
 import Lemma.Fin.CardRothLowIndex.Gt_0.of.Lt_Div1'2.Gt_0.Gt_0
 import Lemma.Real.RothCoordinateBase.Gt_0
-import Lemma.Fin.CardRothBox.le.Pow2Sum.of.All_Gt_0
-import Lemma.Fin.RothMvL1_RothMvOfCoeff.le.Sum_NatAbs.of.RothCoeff
+import Theorem.Fin.CardRothBox.le.Pow2Sum.of.All_Gt_0
+import Theorem.Fin.RothMvL1_RothMvOfCoeff.le.Sum_NatAbs.of.RothCoeff
 import Lemma.Real.NormRothRidoutAuxMatrix.le.PowMul_2RothCoordinateBaseSum
 import Lemma.Matrix.MulVecRothAuxMatrix.eq.Zero.of.EqMulVecRothRidoutAuxMatrix_0.RothCoeff
 import Lemma.Matrix.RothHasseEval_1.eq.Zero.of.EqMulVecRothAuxMatrix_0.RothCoeff.IsAlgebraic

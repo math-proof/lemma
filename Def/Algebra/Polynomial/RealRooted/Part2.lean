@@ -1,6 +1,11 @@
-import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.Analysis.Complex.Order
-import Theorem.Algebra.Polynomial.RealRooted
+module
+
+public import Mathlib.Analysis.Complex.Polynomial.Basic
+public import Mathlib.Analysis.Complex.Order
+public import Theorem.Algebra.Polynomial.RealRooted
+
+@[expose] public section
+
 open scoped ComplexOrder
 
 /-!

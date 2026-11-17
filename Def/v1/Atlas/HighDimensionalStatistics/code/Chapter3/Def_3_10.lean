@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Mathlib
 import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Ex_3_8
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Ex_3_8
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Ex_3_8
 open MeasureTheory Set
 
 

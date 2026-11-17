@@ -1,10 +1,11 @@
-import Mathlib.Analysis.SpecialFunctions.Exp
-import Lean.Elab.Tactic.Omega
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
-import Def.Analysis.SpecialFunctions.CompleteExponentialAutonomousFunction
-open scoped BigOperators
+module
 
+public import Mathlib.Analysis.SpecialFunctions.Exp
+public import Lean.Elab.Tactic.Omega
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Ring
+public import Def.Analysis.SpecialFunctions.CompleteExponentialAutonomousFunction
+open scoped BigOperators
 
 /-!
 # Complete exponential autonomous functions
@@ -12,6 +13,8 @@ open scoped BigOperators
 Source: José Luis López, *Exponential Autonomous Functions*:
 <https://cs.uwaterloo.ca/journals/JIS/VOL24/Orozco/orozco5.tex>.
 -/
+
+public section
 
 
 namespace MetaMathlibExt

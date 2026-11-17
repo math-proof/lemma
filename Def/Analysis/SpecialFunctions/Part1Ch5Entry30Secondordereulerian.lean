@@ -2,11 +2,16 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Data.Nat.Squarefree
-import Mathlib.NumberTheory.LSeries.RiemannZeta
-import Mathlib.NumberTheory.EulerProduct.DirichletLSeries
-import Mathlib.RingTheory.UniqueFactorizationDomain.Finsupp
+module
+
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Data.Nat.Squarefree
+public import Mathlib.NumberTheory.LSeries.RiemannZeta
+public import Mathlib.NumberTheory.EulerProduct.DirichletLSeries
+public import Mathlib.RingTheory.UniqueFactorizationDomain.Finsupp
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 5, Entry 30
 

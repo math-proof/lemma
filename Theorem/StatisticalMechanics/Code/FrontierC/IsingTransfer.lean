@@ -7,16 +7,18 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Theorem.StatisticalMechanics.Code.Onsager.DetLoopExpansion
-import Theorem.StatisticalMechanics.Code.Onsager.TracePowWalk
-import Mathlib.Analysis.SpecificLimits.Normed
-import Mathlib.Analysis.SpecialFunctions.Complex.Analytic
-import Mathlib.Order.Filter.AtTopBot.Basic
-import Def.StatisticalMechanics.Code.FrontierC.IsingTransfer
+public import Theorem.StatisticalMechanics.Code.Onsager.DetLoopExpansion
+public import Theorem.StatisticalMechanics.Code.Onsager.TracePowWalk
+public import Mathlib.Analysis.SpecificLimits.Normed
+public import Mathlib.Analysis.SpecialFunctions.Complex.Analytic
+public import Mathlib.Order.Filter.AtTopBot.Basic
+public import Def.StatisticalMechanics.Code.FrontierC.IsingTransfer
 open scoped BigOperators
 open Matrix Polynomial
 
+public section
 
 namespace StatMech.FrontierC
 

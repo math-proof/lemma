@@ -1,13 +1,18 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/ConnellSequence.lean -/
 
-import Mathlib.Data.Finset.Image
-import Def.Combinatorics.Enumerative.ConnellSequence
+module
+
+public import Mathlib.Data.Finset.Image
+public import Def.Combinatorics.Enumerative.ConnellSequence
 /-!
 # Connell sequences
 
 This file formalizes Definition 1 from Grady D. Bullington, *The Connell Sum Sequence*:
 <https://cs.uwaterloo.ca/journals/JIS/VOL10/Bullington/bullington7.tex>.
 -/
+public section
+
+
 
 
 namespace MetaMathlibExt

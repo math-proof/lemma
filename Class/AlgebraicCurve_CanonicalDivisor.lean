@@ -1,5 +1,9 @@
-import Def.ModularCurve_CanonicalDivisor
-import Class.AlgebraicCurve_DivisorClassGroup
+module
+
+public import Def.ModularCurve_CanonicalDivisor
+public import Class.AlgebraicCurve_DivisorClassGroup
+
+public section
 
 set_option autoImplicit false
 

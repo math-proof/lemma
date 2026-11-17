@@ -1,6 +1,12 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
+module
+
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
+public import Lemma.List.Atlas.CPythonListsort.Code.Transcription.SortSlice
+
+public section
+
 open CPythonListsort
 
 
@@ -10,11 +16,11 @@ namespace CPythonListsort
 [mergeDataMemmove_eq](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeMemory.lean)
 -/
 @[path]
-lemma mergeDataMemmove_eq
-  {site : MergeMemmoveCallsite}
-  {data : SortSlice κ ν}
-  {dst src : Int}
-  {count : Nat} :
+public lemma mergeDataMemmove_eq
+  (site : MergeMemmoveCallsite)
+  (data : SortSlice κ ν)
+  (dst src : Int)
+  (count : Nat) :
 -- imply
   mergeDataMemmove? site data dst src count = data.memmove? dst src count :=
 -- proof
@@ -28,11 +34,11 @@ namespace CPythonListsort
 [mergeDataMemmove_entries_size_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeMemory.lean)
 -/
 @[path]
-lemma mergeDataMemmove_entries_size_of_eq_some
-  {site : MergeMemmoveCallsite}
-  {data updated : SortSlice κ ν}
-  {dst src : Int}
-  {count : Nat}
+public lemma mergeDataMemmove_entries_size_of_eq_some
+  (site : MergeMemmoveCallsite)
+  (data updated : SortSlice κ ν)
+  (dst src : Int)
+  (count : Nat)
 -- given
   (h : mergeDataMemmove? site data dst src count = some updated) :
 -- imply
@@ -48,8 +54,8 @@ namespace CPythonListsort
 [mergeFreemem_inline](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeMemory.lean)
 -/
 @[path]
-lemma mergeFreemem_inline
-  {state : MergeState κ ν}
+public lemma mergeFreemem_inline
+  (state : MergeState κ ν)
 -- given
   (h : state.a.backing = .inline) :
 -- imply
@@ -65,8 +71,8 @@ namespace CPythonListsort
 [mergeFreemem_noninline](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeMemory.lean)
 -/
 @[path]
-lemma mergeFreemem_noninline
-  {state : MergeState κ ν}
+public lemma mergeFreemem_noninline
+  (state : MergeState κ ν)
 -- given
   (h : state.a.backing ≠ .inline) :
 -- imply
@@ -82,8 +88,8 @@ namespace CPythonListsort
 [mergeFreemem_tempStorageInv](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeMemory.lean)
 -/
 @[path]
-lemma mergeFreemem_tempStorageInv
-  {state : MergeState κ ν}
+public lemma mergeFreemem_tempStorageInv
+  (state : MergeState κ ν)
 -- given
   (hInv : TempStorageInv state.a state.alloced) :
 -- imply
@@ -102,9 +108,9 @@ namespace CPythonListsort
 [mergeGetmem_reused](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeMemory.lean)
 -/
 @[path]
-lemma mergeGetmem_reused
-  {state : MergeState κ ν}
-  {need : PySSize}
+public lemma mergeGetmem_reused
+  (state : MergeState κ ν)
+  (need : PySSize)
 -- given
   (hReuse : need.sle state.alloced = true) :
 -- imply
@@ -120,9 +126,9 @@ namespace CPythonListsort
 [mergeGetmem_guardRejected](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeMemory.lean)
 -/
 @[path]
-lemma mergeGetmem_guardRejected
-  {state : MergeState κ ν}
-  {need : PySSize}
+public lemma mergeGetmem_guardRejected
+  (state : MergeState κ ν)
+  (need : PySSize)
 -- given
   (hReuse : need.sle state.alloced = false)
   (hGuard : mergeGetmemAllocationLimit state.a < need.toNat) :
@@ -139,14 +145,14 @@ namespace CPythonListsort
 [mergeGetmem_grown](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeMemory.lean)
 -/
 @[path]
-lemma mergeGetmem_grown
-  {state : MergeState κ ν}
-  {need : PySSize}
+public lemma mergeGetmem_grown
+  (state : MergeState κ ν)
+  (need : PySSize)
 -- given
   (hReuse : need.sle state.alloced = false)
   (hGuard : need.toNat ≤ mergeGetmemAllocationLimit state.a) :
 -- imply
-  let result := mergeGetmem state need result.outcome = .grown ∧ result.state.alloced = need ∧ result.state.a.backing = .heap ∧ result.state.a.hasValues = state.a.hasValues ∧ result.state.a.cells = Array.replicate need.toNat none := by
+  let result := mergeGetmem state need; result.outcome = .grown ∧ result.state.alloced = need ∧ result.state.a.backing = .heap ∧ result.state.a.hasValues = state.a.hasValues ∧ result.state.a.cells = Array.replicate need.toNat none := by
 -- proof
   by_cases hInline : state.a.backing = .inline <;>
     simp [mergeGetmem, hReuse, Nat.not_lt.mpr hGuard, mergeFreemem, hInline]
@@ -159,9 +165,9 @@ namespace CPythonListsort
 [mergeGetmem_grown_physicalSlots](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeMemory.lean)
 -/
 @[path]
-lemma mergeGetmem_grown_physicalSlots
-  {state : MergeState κ ν}
-  {need : PySSize}
+public lemma mergeGetmem_grown_physicalSlots
+  (state : MergeState κ ν)
+  (need : PySSize)
 -- given
   (hReuse : need.sle state.alloced = false)
   (hGuard : need.toNat ≤ mergeGetmemAllocationLimit state.a) :
@@ -181,16 +187,16 @@ namespace CPythonListsort
 [mergeGetmem_atAllocationLimit](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeMemory.lean)
 -/
 @[path]
-lemma mergeGetmem_atAllocationLimit
-  {state : MergeState κ ν}
-  {need : PySSize}
+public lemma mergeGetmem_atAllocationLimit
+  (state : MergeState κ ν)
+  (need : PySSize)
 -- given
   (hReuse : need.sle state.alloced = false)
   (hLimit : need.toNat = mergeGetmemAllocationLimit state.a) :
 -- imply
-  (mergeGetmem state need).outcome = .grown :=
+  (mergeGetmem state need).outcome = .grown := by
 -- proof
-(mergeGetmem_grown state need hReuse (by omega)).1
+  exact (mergeGetmem_grown state need hReuse (by omega)).1
 
 end CPythonListsort
 
@@ -200,9 +206,9 @@ namespace CPythonListsort
 [mergeGetmem_onePastAllocationLimit](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeMemory.lean)
 -/
 @[path]
-lemma mergeGetmem_onePastAllocationLimit
-  {state : MergeState κ ν}
-  {need : PySSize}
+public lemma mergeGetmem_onePastAllocationLimit
+  (state : MergeState κ ν)
+  (need : PySSize)
 -- given
   (hReuse : need.sle state.alloced = false)
   (hLimit : need.toNat = mergeGetmemAllocationLimit state.a + 1) :
@@ -219,8 +225,8 @@ namespace CPythonListsort
 [mergeGetmem_keyed_boundary_regression](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeMemory.lean)
 -/
 @[path]
-lemma mergeGetmem_keyed_boundary_regression
-  {state : MergeState κ ν}
+public lemma mergeGetmem_keyed_boundary_regression
+  (state : MergeState κ ν)
 -- given
   (hValues : state.a.hasValues = true)
   (hGrowth : (((2 ^ 59 - 1 : Nat) : PySSize).sle state.alloced) = false) :

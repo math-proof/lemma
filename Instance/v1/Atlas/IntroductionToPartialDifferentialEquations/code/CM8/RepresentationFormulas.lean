@@ -18,7 +18,7 @@ import Mathlib.Topology.Algebra.Support
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
 import Structure.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM8.GreenFunctions.Part2
-import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM8.GreenFunctions
+import Theorem.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM8.GreenFunctions
 import Structure.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM8.RepresentationFormulas
 open Real Set MeasureTheory
 

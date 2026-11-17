@@ -1,9 +1,11 @@
-import Class.CerednikDrinfeld_MumfordPeriod
-import Mathlib.Algebra.Group.Action.Faithful
+module
+
+public import Class.CerednikDrinfeld_MumfordPeriod
+public import Mathlib.Algebra.Group.Action.Faithful
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace CerednikDrinfeld
 namespace Mumford

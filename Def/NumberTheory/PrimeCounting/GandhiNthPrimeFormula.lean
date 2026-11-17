@@ -1,15 +1,20 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeCounting/GandhiNthPrimeFormula.lean -/
 
-import Mathlib.Analysis.SpecialFunctions.Log.Base
-import Mathlib.Data.Nat.Nth
-import Mathlib.NumberTheory.ArithmeticFunction.Moebius
-import Mathlib.NumberTheory.PrimeCounting
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.SplitIfs
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Log.Base
+public import Mathlib.Data.Nat.Nth
+public import Mathlib.NumberTheory.ArithmeticFunction.Moebius
+public import Mathlib.NumberTheory.PrimeCounting
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.SplitIfs
+
+@[expose] public section
+
 open scoped BigOperators
 
 

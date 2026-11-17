@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.Fourier.PrincipalMinor
-import Lemma.Nat.Fourier.PrincipalMinor
+import Theorem.Nat.Fourier.PrincipalMinor
 
 
 namespace Fourier

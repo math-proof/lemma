@@ -6,7 +6,7 @@ Authors: Adam Kiezun, Muse Spark 1.3, Avocado, Codex
 
 import Mathlib.NumberTheory.Harmonic.EulerMascheroni
 import Def.Analysis.Ramanujan.Part1Ch7Entry13Bernoullipolyadd
-import Lemma.Real.Part1Ch7Entry13Bernoullipolyadd
+import Theorem.Real.Part1Ch7Entry13Bernoullipolyadd
 import Lemma.Real.Ramanujan.Part1Ch7Entry13Bernoullirecurrence
 import Def.Analysis.Ramanujan.Part1Ch7Entry13Bernoullirecurrence
 /-!

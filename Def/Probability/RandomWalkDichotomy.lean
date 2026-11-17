@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.Independence.ZeroOne
-import Mathlib.Probability.IdentDistrib
-import Mathlib.MeasureTheory.Measure.MeasureSpace
+module
+
+public import Mathlib.Probability.Independence.ZeroOne
+public import Mathlib.Probability.IdentDistrib
+public import Mathlib.MeasureTheory.Measure.MeasureSpace
+
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory Filter Finset Topology
 
 

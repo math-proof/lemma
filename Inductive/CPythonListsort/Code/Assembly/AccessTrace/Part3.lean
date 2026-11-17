@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean -/
 
-import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
-import Structure.CPythonListsort.Code.Assembly.AccessTrace.Part3
+module
+
+public import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
+public import Structure.CPythonListsort.Code.Assembly.AccessTrace.Part3
 /-!
 # Compositional access and pending-push traces
 
@@ -36,7 +38,7 @@ These constructors are intentionally non-validating.  They retain enough raw
 data for a separate lifecycle predicate to compare the snapshots with
 `merge_init`, `merge_getmem`, the directional merge, and `merge_freemem`
 without making any of those obligations true by construction. -/
-inductive MergeMemoryEvent where
+public inductive MergeMemoryEvent where
   | initial (state : MergeMemorySnapshot)
   | mergeCall (call : MergeMemoryCallEvent)
   | cleanup (before after : MergeMemorySnapshot)

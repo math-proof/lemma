@@ -6,7 +6,7 @@ Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 import Theorem.MeasureTheory.Measure.Atomless.Part3
-import Lemma.Measure.Atomless
+import Theorem.Measure.Atomless
 import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Asymptotics.SpecificAsymptotics
 import Mathlib.Analysis.InnerProductSpace.Dual

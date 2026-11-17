@@ -9,11 +9,15 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierB.BoundaryCurrentTail.Part2
-import Theorem.StatisticalMechanics.Code.FrontierB.InfiniteCurrentFiniteMarginals
-import Theorem.StatisticalMechanics.Code.FrontierB.InfiniteCurrentCompactness
-import Theorem.StatisticalMechanics.Code.FK.InfiniteVolume.Part7
-import Theorem.StatisticalMechanics.Code.FrontierB.GeneralInteractionCurrentLimits.Part6
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierB.BoundaryCurrentTail.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierB.InfiniteCurrentFiniteMarginals
+public import Theorem.StatisticalMechanics.Code.FrontierB.InfiniteCurrentCompactness
+public import Theorem.StatisticalMechanics.Code.FK.InfiniteVolume.Part7
+public import Theorem.StatisticalMechanics.Code.FrontierB.GeneralInteractionCurrentLimits.Part6
+public section
+
 open Filter MeasureTheory Set Topology
 open scoped ENNReal
 

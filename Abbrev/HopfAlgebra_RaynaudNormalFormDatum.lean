@@ -1,12 +1,14 @@
-import Mathlib
-import Structure.HopfAlgebra_FVectStructure
-import Class.HopfAlgebra_HopfTower
-import Instance.Compat_Mathlib430
-import Structure.HopfAlgebra_RaynaudNormalFormDatum
+module
+
+public import Mathlib
+public import Structure.HopfAlgebra_FVectStructure
+public import Class.HopfAlgebra_HopfTower
+public import Instance.Compat_Mathlib430
+public import Structure.HopfAlgebra_RaynaudNormalFormDatum
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 open scoped TensorProduct
 

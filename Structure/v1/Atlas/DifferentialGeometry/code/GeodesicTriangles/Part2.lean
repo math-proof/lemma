@@ -8,18 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.MetricSpace.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
-import Mathlib.Geometry.Euclidean.Angle.Unoriented.Affine
-import Class.v1.Atlas.DifferentialGeometry.code.Geodesics
-import Lemma.Real.Atlas.v1.DifferentialGeometry.code.Geodesics
-import Def.v1.Atlas.DifferentialGeometry.code.GeodesicTriangles
+module
+
+public import Mathlib.Topology.MetricSpace.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
+public import Mathlib.Geometry.Euclidean.Angle.Unoriented.Affine
+public import Class.v1.Atlas.DifferentialGeometry.code.Geodesics
+public import Lemma.Real.Atlas.v1.DifferentialGeometry.code.Geodesics
+public import Def.v1.Atlas.DifferentialGeometry.code.GeodesicTriangles
 open scoped InnerProductSpace
 open EuclideanGeometry
 
 
-noncomputable section
+public noncomputable section
 
 namespace Geodesics
 

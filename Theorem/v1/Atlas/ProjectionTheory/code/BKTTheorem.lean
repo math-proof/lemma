@@ -7,9 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib
-import Theorem.v1.Atlas.ProjectionTheory.code.BKTLemma4
+public import Mathlib
+public import Theorem.v1.Atlas.ProjectionTheory.code.BKTLemma4
+
+public section
+
 /-- Structured-subset version of BKT: assuming `X ⊆ A × A` for some `A ⊆ 𝔽_p` with
 `|A|² ≥ |X|`, there exist `ε > 0` and a direction `t ∈ D` so that the projection
 `π_t(X) = {x₁ + t · x₂ : x ∈ X}` satisfies `|π_t(X)| ≥ p^ε · |X|^{1/2}`. This is the

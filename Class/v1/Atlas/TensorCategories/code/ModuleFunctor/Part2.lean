@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/ModuleFunctor.lean -/
 
 /-
@@ -8,8 +10,10 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Category
-import Notation.v1.Atlas.TensorCategories.code.ModuleFunctor
+public import Mathlib.CategoryTheory.Monoidal.Category
+public import Notation.v1.Atlas.TensorCategories.code.ModuleFunctor
+public section
+
 set_option maxHeartbeats 800000
 
 universe v₁ v₂ v₃ u₁ u₂ u₃

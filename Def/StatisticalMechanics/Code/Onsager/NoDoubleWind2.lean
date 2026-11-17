@@ -9,10 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Onsager.NoDoubleWind
-import Theorem.StatisticalMechanics.Code.Onsager.NoDoubleWind2
+module
 
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Onsager.NoDoubleWind
+public import Theorem.StatisticalMechanics.Code.Onsager.NoDoubleWind2
+
+@[expose] public section
 
 namespace StatMech.Onsager.NoDoubleWind2
 

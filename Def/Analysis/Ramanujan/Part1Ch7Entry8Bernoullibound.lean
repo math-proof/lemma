@@ -9,7 +9,7 @@ import Mathlib.NumberTheory.LSeries.RiemannZeta
 import Def.Analysis.Ramanujan.Part1Ch7Phi
 import Mathlib.NumberTheory.LSeries.HurwitzZetaValues
 import Theorem.Analysis.Ramanujan.Part1Ch7Entry8
-import Lemma.Complex.Part1Ch7Entry8
+import Theorem.Complex.Part1Ch7Entry8
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 7, Entry 8
 

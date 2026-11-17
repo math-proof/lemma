@@ -1,6 +1,9 @@
-import Mathlib.Algebra.Polynomial.Taylor
-import Mathlib.Algebra.Polynomial.Div
-import Mathlib.Tactic.LinearCombination
+module
+
+public import Mathlib.Algebra.Polynomial.Taylor
+public import Mathlib.Algebra.Polynomial.Div
+public import Mathlib.Tactic.LinearCombination
+
 /-!
 # First-order Taylor remainder for univariate polynomials
 
@@ -9,6 +12,8 @@ first-order Taylor expansion at a point up to a multiple of the squared
 monic divisor `(X - C a) ^ 2`, and the quotient is unique. Uniqueness is by
 cancellation against the monic divisor, so no domain hypothesis is needed.
 -/
+
+public section
 
 
 namespace Polynomial

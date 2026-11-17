@@ -1,14 +1,18 @@
 /-
 Author: @akiezun, Avocado
 -/
+module
 
-import Mathlib.Basic.Complex.Basic
-import Mathlib.NumberTheory.BernoulliPolynomials
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.NumberTheory.BernoulliPolynomials
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 7, Entry 8
 
 Bernoulli-polynomial difference over r+1 equals a Bernoulli-number sum.
 -/
+
+public section
 
 
 section

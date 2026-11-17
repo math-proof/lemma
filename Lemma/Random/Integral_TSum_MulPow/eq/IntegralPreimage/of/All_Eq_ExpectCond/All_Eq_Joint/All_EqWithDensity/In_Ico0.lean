@@ -4,6 +4,8 @@ import Lemma.Random.Measurable_G.of.All_Measurable
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
 import Theorem.Probability.CondExpectation
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Filter
 
 
@@ -136,4 +138,4 @@ private lemma main
 
 
 -- created on 2026-11-14
--- updated on 2026-11-16
+-- updated on 2026-11-17

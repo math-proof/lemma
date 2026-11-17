@@ -1,5 +1,10 @@
-import Mathlib.Algebra.Polynomial.Basic
-import Mathlib.Tactic
+module
+
+public import Mathlib.Algebra.Polynomial.Basic
+public import Mathlib.Tactic
+
+@[expose] public section
+
 /-!
 # Generalized Chebyshev polynomials of the second kind
 

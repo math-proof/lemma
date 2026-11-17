@@ -8,14 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.RealAnalysis.code.Integration.Basic.Part2
-import Lemma.Real.Atlas.v1.RealAnalysis.code.Integration.Basic
-import Mathlib.Analysis.SpecificLimits.Basic
-import Mathlib.Data.Finset.Sort
-import Mathlib.Topology.UniformSpace.HeineCantor
-import Mathlib.Analysis.Normed.Field.Basic
-import Mathlib.Analysis.Normed.Group.Bounded
-import Def.v1.Atlas.RealAnalysis.code.Integration.ModulusContinuity
+module
+
+public import Def.v1.Atlas.RealAnalysis.code.Integration.Basic.Part2
+public import Theorem.Real.Atlas.v1.RealAnalysis.code.Integration.Basic
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Mathlib.Data.Finset.Sort
+public import Mathlib.Topology.UniformSpace.HeineCantor
+public import Mathlib.Analysis.Normed.Field.Basic
+public import Mathlib.Analysis.Normed.Group.Bounded
+public import Def.v1.Atlas.RealAnalysis.code.Integration.ModulusContinuity
+public section
+
 open Set Filter Topology Finset
 
 

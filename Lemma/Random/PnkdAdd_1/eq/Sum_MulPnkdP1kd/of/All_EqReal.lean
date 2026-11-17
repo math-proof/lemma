@@ -1,6 +1,8 @@
 import Lemma.Random.Pnkd0.eq.Eq
 import Lemma.Random.Pnkd1.eq.P1kd.of.All_EqReal
 import Lemma.Random.PnkdAdd_1.eq.Integral_MulProbIntegral_TPnkd
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
@@ -178,4 +180,4 @@ private lemma main
 
 
 -- created on 2026-11-13
--- updated on 2026-11-16
+-- updated on 2026-11-17

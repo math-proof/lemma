@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/WilsonQuotient.lean -/
 
-import Mathlib.NumberTheory.Wilson
+module
+
+public import Mathlib.NumberTheory.Wilson
+
+@[expose] public section
+
 /-!
 # Wilson quotient
 

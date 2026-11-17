@@ -91,11 +91,12 @@ export function resolveStatementFile(lemmaPath, options = {}) {
  * Markdown table: path imply/given stems vs hole-regex + suggested token[].
  * Columns: token | regex | consistent | suggested.
  *
- * A normal path is header + one imply row + the first `of/` stem.
- * A house `/eq/` path is header + LHS imply + RHS imply + the first `of/` stem.
- * A conjunction path (imply tokens joined by `/`, not `/eq/`) is header + one
- * row per imply token + the first `of/` stem — e.g. two identical tokens plus
- * the of-stem is three data rows.
+ * A normal path is header + one imply row + one row per `of/` stem.
+ * A house `/eq/` or `/ae/` path is header + LHS imply + RHS imply + one row
+ * per `of/` stem.
+ * A conjunction path (imply tokens joined by `/`, not `/eq/` or `/ae/`) is
+ * header + one row per imply token + one row per `of/` stem — e.g. two
+ * identical tokens plus one of-stem is three data rows.
  * `Add_Expect_Cond/eq/Expect_CondAdd` is two imply tokens, not one combined stem.
  * `All_EqProb_Cond/All_EqProb_Cond` is likewise two imply tokens (they may be identical).
  * The slash-form regex `(LHS)/eq/(RHS)` is split the same way: the LHS token is
@@ -103,7 +104,7 @@ export function resolveStatementFile(lemmaPath, options = {}) {
  * A conjunction regex `A/B` (or `(A)/(B)`) is split the same way on `/`.
  * The regex column prints the stored form `(Fill)`. Matching still expands `(_|Fill)`.
  *
- * - token: imply side / first-of stem from `lemmaPath` (after Lemma/<Section>/)
+ * - token: imply side / each `of/` stem from `lemmaPath` (after Lemma/<Section>/)
  * - regex: hole-regex alternative that admits that token (consistent and suggested),
  *   otherwise the first alternative (for a house side, that side of the `/eq/` regex;
  *   for a conjunction, that side of the `/` regex)
@@ -154,26 +155,44 @@ function pickMatchingAlt(entryOrList, tok, fallback) {
   };
 }
 
-/** `Add_Expect_Cond/eq/Expect_CondAdd` → both sides; a path with no `/eq/` → null. */
-function houseStemSides(stem) {
-  const s = String(stem || "");
-  const i = s.indexOf("/eq/");
-  if (i < 0) return null;
-  const lhs = s.slice(0, i);
-  const rhs = s.slice(i + "/eq/".length);
-  if (!lhs || !rhs || rhs.includes("/eq/")) return null;
-  return { lhs, rhs };
+function topLevelDelimIndex(s, needle) {
+  const t = String(s || "");
+  let depth = 0;
+  for (let i = 0; i <= t.length - needle.length; i++) {
+    const ch = t[i];
+    if (ch === "(") depth++;
+    else if (ch === ")") depth = Math.max(0, depth - 1);
+    else if (depth === 0 && t.startsWith(needle, i)) return i;
+  }
+  return -1;
 }
 
-/** `(LHS)/eq/(RHS)` → both alternatives. */
+/** `Add_Expect_Cond/eq/Expect_CondAdd` or `Prob_Cond/ae/Prod_…` → both sides; no house delim → null. */
+function houseStemSides(stem) {
+  const s = String(stem || "");
+  for (const delim of ["/ae/", "/eq/"]) {
+    const i = topLevelDelimIndex(s, delim);
+    if (i < 0) continue;
+    const lhs = s.slice(0, i);
+    const rhs = s.slice(i + delim.length);
+    if (!lhs || !rhs || topLevelDelimIndex(rhs, delim) >= 0) continue;
+    return { lhs, rhs, delim };
+  }
+  return null;
+}
+
+/** `(LHS)/eq/(RHS)` or `(LHS)/ae/(RHS)` → both alternatives. */
 function houseRegexSides(regex) {
   const s = String(regex || "");
-  const i = s.indexOf("/eq/");
-  if (i < 0) return null;
-  const lhs = s.slice(0, i);
-  const rhs = s.slice(i + "/eq/".length);
-  if (!lhs || !rhs) return null;
-  return { lhs, rhs };
+  for (const delim of ["/ae/", "/eq/"]) {
+    const i = topLevelDelimIndex(s, delim);
+    if (i < 0) continue;
+    const lhs = s.slice(0, i);
+    const rhs = s.slice(i + delim.length);
+    if (!lhs || !rhs) continue;
+    return { lhs, rhs, delim };
+  }
+  return null;
 }
 
 /**
@@ -240,7 +259,7 @@ function splitTopLevel(s, sep) {
 /** `All_EqProb_Cond/All_EqProb_Cond` → tokens; no `/`, or a `/eq/` house, → null. */
 function conjStemSides(stem) {
   const s = String(stem || "");
-  if (!s || s.includes("/eq/")) return null;
+  if (!s || s.includes("/eq/") || s.includes("/ae/")) return null;
   const sides = splitTopLevel(s, "/").filter(Boolean);
   if (sides.length < 2) return null;
   return sides;
@@ -249,7 +268,7 @@ function conjStemSides(stem) {
 /** `AeAll_EqProbCond_Prob/AeAll_EqProbCond_Prob` or `(LHS)/(RHS)` → sides. */
 function conjRegexSides(regex) {
   const s = String(regex || "");
-  if (!s || s.includes("/eq/")) return null;
+  if (!s || s.includes("/eq/") || s.includes("/ae/")) return null;
   const sides = splitTopLevel(s, "/");
   if (sides.length < 2 || sides.some((x) => !x)) return null;
   return sides;
@@ -291,9 +310,7 @@ export function implyGivenConsistencyTable(lemmaPath, options = {}) {
   const statementAbs = resolveStatementFile(rel, options);
   const r = suggest(statementAbs, options.lemma, options);
   const implyTok = implyStemFromRelPath(rel);
-  const givenTok = ofStemsFromRelPath(rel)[0] || "";
-  const given0 = Array.isArray(r.givens) && r.givens[0];
-  const givenPick = pickMatchingAlt(given0, givenTok, { regex: "_", pad: 0 });
+  const givenToks = ofStemsFromRelPath(rel);
   const house = houseStemSides(implyTok);
   const conj = !house && conjStemSides(implyTok);
   const lines = ["| token | regex | consistent | suggested |"];
@@ -326,7 +343,12 @@ export function implyGivenConsistencyTable(lemmaPath, options = {}) {
     });
     lines.push(row(implyTok, implyPick));
   }
-  if (givenTok) lines.push(row(givenTok, givenPick));
+  for (let i = 0; i < givenToks.length; i++) {
+    const givenTok = givenToks[i];
+    const givenEntry = Array.isArray(r.givens) ? r.givens[i] : null;
+    const givenPick = pickMatchingAlt(givenEntry, givenTok, { regex: "_", pad: 0 });
+    lines.push(row(givenTok, givenPick));
+  }
   return lines.join("\n");
 }
 

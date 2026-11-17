@@ -22,7 +22,7 @@ import Mathlib.Topology.Algebra.InfiniteSum.Order
 import Mathlib.Algebra.Order.BigOperators.GroupWithZero.Finset
 import Mathlib.Analysis.Real.Pi.Bounds
 import Def.v1.Atlas.EllipticCurves.code.Isogenies.Part13
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.Isogenies
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.Isogenies
 import Def.v1.Atlas.EllipticCurves.code.PointCounting
 
 

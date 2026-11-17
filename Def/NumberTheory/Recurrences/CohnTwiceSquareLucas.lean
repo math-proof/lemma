@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Recurrences/CohnTwiceSquareLucas.lean -/
 
 import Def.NumberTheory.LucasSequence
-import Lemma.Nat.LucasSequence
+import Theorem.Nat.LucasSequence
 import Mathlib.Algebra.Order.Ring.Star
 import Mathlib.Data.Nat.Fib.Basic
 import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol

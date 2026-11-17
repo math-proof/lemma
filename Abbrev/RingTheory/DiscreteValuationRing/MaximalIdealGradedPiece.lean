@@ -4,10 +4,14 @@
 Author: Muse Code
 -/
 
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Mathlib.RingTheory.Ideal.IsPrincipalPowQuotient
-import Mathlib.RingTheory.LocalRing.ResidueField.Defs
+module
+
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Mathlib.RingTheory.Ideal.IsPrincipalPowQuotient
+public import Mathlib.RingTheory.LocalRing.ResidueField.Defs
+@[expose] public section
+
 /-!
 # Maximal-ideal graded pieces of a discrete valuation ring
 

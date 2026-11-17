@@ -8,7 +8,11 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+@[expose] public section
+
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits Opposite
 
 universe u

@@ -5,6 +5,8 @@ import Class.Dynamics.PolicyTrajectory
 import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Mathlib.Analysis.Calculus.Gradient.Basic
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Real Measure
 open scoped ENNReal.ToRealCoe
 
@@ -63,4 +65,4 @@ private lemma main
 
 
 -- created on 2026-10-21
--- updated on 2026-11-16
+-- updated on 2026-11-17

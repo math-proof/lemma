@@ -1,11 +1,16 @@
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Analysis.Meromorphic.Basic
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Analysis.Complex.SummableUniformlyOn
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.Algebra.InfiniteSum.TsumUniformlyOn
+module
+
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Analysis.Meromorphic.Basic
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Analysis.Complex.SummableUniformlyOn
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.Algebra.InfiniteSum.TsumUniformlyOn
+
+@[expose] public section
+
 open scoped BigOperators Topology ENNReal NNReal
 open Metric
 

@@ -1,11 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Normed/Series/NormalConvergence.lean -/
 
-import Mathlib.Analysis.Normed.Group.Basic
-import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
+module
+
+public import Mathlib.Analysis.Normed.Group.Basic
+public import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
+
+@[expose] public section
+
 open Topology
 open scoped ENNReal
 
-variable {X E : Type*} [SeminormedAddCommGroup E]
+variable {X E : Type*} [TopologicalSpace X] [SeminormedAddCommGroup E]
 
 /-!
 # Normal convergence of series of functions

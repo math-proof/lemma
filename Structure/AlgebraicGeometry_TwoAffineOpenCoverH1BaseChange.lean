@@ -1,8 +1,10 @@
-import Def.AlgebraicGeometry_RelPicardStageHom
+module
+
+public import Def.AlgebraicGeometry_RelPicardStageHom
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 universe u
 

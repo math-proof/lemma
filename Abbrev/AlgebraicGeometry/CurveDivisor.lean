@@ -1,4 +1,8 @@
-import Mathlib.Data.Finsupp.Basic
+module
+
+public import Mathlib.Data.Finsupp.Basic
+
+@[expose] public section
 
 
 /-!

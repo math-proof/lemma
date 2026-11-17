@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/SCullenNumber.lean -/
+module
 
+public import Def.NumberTheory.SCullenNumber
 
-import Def.NumberTheory.SCullenNumber
-
+public section
 
 example : MetaMathlibExt.sCullenNumber 2 1 = 3 := rfl
 

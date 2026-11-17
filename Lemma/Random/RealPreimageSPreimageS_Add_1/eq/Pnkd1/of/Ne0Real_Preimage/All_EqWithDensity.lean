@@ -1,4 +1,6 @@
 import Lemma.Random.RealPreimageSPreimageS_Add.eq.Pnkd.of.Ne0Real_Preimage.All_EqWithDensity
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
@@ -28,4 +30,4 @@ private lemma main
 
 
 -- created on 2026-11-13
--- updated on 2026-11-16
+-- updated on 2026-11-17

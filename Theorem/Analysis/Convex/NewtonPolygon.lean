@@ -1,17 +1,21 @@
 /-
 Author: @toskua, Avocado
 -/
+module
 
-import Mathlib.Algebra.MvPolynomial.Basic
-import Mathlib.Analysis.Convex.Hull
-import Mathlib.Topology.Instances.RealVectorSpace
-import Def.Analysis.Convex.NewtonPolygon
+public import Mathlib.Algebra.MvPolynomial.Basic
+public import Mathlib.Analysis.Convex.Hull
+public import Mathlib.Topology.Instances.RealVectorSpace
+public import Def.Analysis.Convex.NewtonPolygon
+
 /-!
 # Newton polygon for bivariate polynomials
 
 This module defines the Newton support, Newton polygon, its interior and
 frontier, and edge restrictions for bivariate polynomials.
 -/
+
+public section
 
 
 noncomputable section

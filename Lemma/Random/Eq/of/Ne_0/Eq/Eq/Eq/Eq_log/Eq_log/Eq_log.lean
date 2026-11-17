@@ -1,4 +1,5 @@
 import Def.Probability.Process.HiddenMarkovSequence.Part2
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -29,3 +30,4 @@ private lemma crf.markov.logits
 
 
 -- created on 2026-09-27
+-- updated on 2026-11-17

@@ -1,5 +1,7 @@
-import Mathlib
-import Instance.HopfAlgebra_CartierDual
+module
+
+public import Mathlib
+public import Instance.HopfAlgebra_CartierDual
 
 set_option autoImplicit false
 set_option maxHeartbeats 1600000
@@ -13,7 +15,7 @@ universe u v
 
 namespace CartierDual
 
-noncomputable section
+public noncomputable section
 
 section TransposeOfComul
 
@@ -111,7 +113,7 @@ end HeldLayer
 
 end
 
-noncomputable section
+public noncomputable section
 
 variable (R : Type u) (A : Type v) [CommRing R] [CommRing A]
 
@@ -159,7 +161,7 @@ end HopfDischarge
 
 end
 
-noncomputable section
+public noncomputable section
 
 section ConvIdentities
 
@@ -200,7 +202,7 @@ end HopfPackage
 
 end
 
-noncomputable section
+public noncomputable section
 
 section PairingSwap
 
@@ -235,7 +237,7 @@ end CommHopfPackage
 
 end
 
-noncomputable section
+public noncomputable section
 
 section Instances
 

@@ -9,9 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Def.StatisticalMechanics.Code.Sharpness.BackboneExplorationRealization.Part12
-import Theorem.StatisticalMechanics.Code.Sharpness.FluxEdgeCopyBridge.Part3
-import Instance.StatisticalMechanics.Code.Sharpness.BackbonePartialEdgeCopySwitching
+module
+
+public import Def.StatisticalMechanics.Code.Sharpness.BackboneExplorationRealization.Part12
+public import Theorem.StatisticalMechanics.Code.Sharpness.FluxEdgeCopyBridge.Part3
+public import Instance.StatisticalMechanics.Code.Sharpness.BackbonePartialEdgeCopySwitching
 open SimpleGraph Finset BigOperators
 open scoped symmDiff
 
@@ -20,7 +22,7 @@ set_option linter.unusedSectionVars false
 
 namespace StatMech.Sharpness
 
-noncomputable section
+public noncomputable section
 
 variable {V : Type*} [Fintype V] [DecidableEq V] [LinearOrder V]
 

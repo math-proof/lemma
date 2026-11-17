@@ -9,11 +9,15 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWContent.Part12
-import Theorem.StatisticalMechanics.Code.Universality.HexW2Summable.Part3
-import Theorem.StatisticalMechanics.Code.Universality.HexReturnUniqueness.Part3
-import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWRecursive.Part12
+module
 
+public import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWContent.Part12
+public import Theorem.StatisticalMechanics.Code.Universality.HexW2Summable.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.HexReturnUniqueness.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWRecursive.Part12
+
+
+public section
 
 namespace StatMech.Universality
 

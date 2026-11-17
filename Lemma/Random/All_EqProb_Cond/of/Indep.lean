@@ -1,5 +1,6 @@
 import Lemma.Random.SinglePSpace.of.IndepFun
 import Lemma.Random.Map.eq.WithDensityProb
+import Initialize.Tactic.Attr.Basic
 open Random MeasureTheory ProbabilityTheory
 
 
@@ -98,4 +99,4 @@ private lemma main
 
 
 -- created on 2026-11-12
--- updated on 2026-11-16
+-- updated on 2026-11-17

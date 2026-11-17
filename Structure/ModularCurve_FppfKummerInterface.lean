@@ -1,9 +1,11 @@
-import Mathlib.Algebra.Exact
-import Mathlib.GroupTheory.Index
+module
+
+public import Mathlib.Algebra.Exact
+public import Mathlib.GroupTheory.Index
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace ModularCurve
 

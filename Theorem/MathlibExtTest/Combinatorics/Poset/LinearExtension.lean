@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Poset.LinearExtension
-import Lemma.Finset.Poset.LinearExtension
+import Theorem.Finset.Poset.LinearExtension
 import Mathlib.Tactic.FinCases
 import Mathlib.Data.Fintype.Card
 open FinPoset

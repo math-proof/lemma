@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
-import Lemma.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
+import Theorem.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
 import Mathlib.CategoryTheory.Preadditive.Projective.Preserves
 import Def.v1.Atlas.TensorCategories.code.ModuleFunctorDefs
 set_option maxHeartbeats 400000

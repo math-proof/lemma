@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/MultipleHarmonic.lean -/
+module
 
-import Def.NumberTheory.MultipleHarmonic
+public import Def.NumberTheory.MultipleHarmonic
 open MetaMathlibExt
 
+public section
 
 example : multipleHarmonic 5 0 0 = 1 := by decide
 

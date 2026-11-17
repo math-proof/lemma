@@ -1,12 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/CallanSequence.lean -/
 
 
-import Structure.Combinatorics.Enumerative.CallanSequence
-import Mathlib.Data.Fin.Basic
-import Mathlib.Data.Finset.Basic
-import Mathlib.Data.Fintype.Option
-import Mathlib.Tactic.FinCases
+module
 
+public import Structure.Combinatorics.Enumerative.CallanSequence
+public import Mathlib.Data.Fin.Basic
+public import Mathlib.Data.Finset.Basic
+public import Mathlib.Data.Fintype.Option
+public import Mathlib.Tactic.FinCases
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

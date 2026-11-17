@@ -1,6 +1,10 @@
-import Mathlib.AlgebraicGeometry.EllipticCurve.DivisionPolynomial.Basic
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Formula
-import Def.WeierstrassCurve_Velu
+module
+
+public import Mathlib.AlgebraicGeometry.EllipticCurve.DivisionPolynomial.Basic
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Formula
+public import Def.WeierstrassCurve_Velu
+
+public section
 
 open Polynomial
 

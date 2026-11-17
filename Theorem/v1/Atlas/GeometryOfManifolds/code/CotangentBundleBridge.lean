@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.GeometryOfManifolds.code.ManifoldDFS.Part2
 import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.ManifoldDFS
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
 import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
 import Def.v1.Atlas.GeometryOfManifolds.code.CotangentBundleBridge
 set_option autoImplicit false

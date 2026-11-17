@@ -1,0 +1,33 @@
+module
+
+public import Theorem.Nat.Eq_Sub_1.of.Val.eq.Sub_1
+public import Theorem.List.Permute_SubLength_0.eq.AppendRotateTake___Drop.of.GtLength_0
+public import Theorem.Nat.MinSubS.eq.SubMin.of.Ge.Ge
+
+public section
+
+open List Nat Int
+
+
+public theorem List.Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1
+  {s : List α}
+  {i : Fin s.length}
+-- given
+  (h : i.val = s.length - 1)
+  (d : ℕ) :
+-- imply
+  s.permute i (-d) = s.take (s.length - (d + 1)) ++ (s.drop (s.length - (d + 1))).rotate ((d + 1) ⊓ s.length - 1) := by
+-- proof
+  have h_i := i.isLt
+  simp_all [Eq_Sub_1.of.Val.eq.Sub_1 h]
+  simp_all [Permute_SubLength_0.eq.AppendRotateTake___Drop.of.GtLength_0 h_i d]
+  rw [SubSub.eq.Sub_Add]
+  rw [Add.comm (a := 1)]
+  norm_num
+  congr
+  rw [SubMin.eq.MinSubS.of.Ge.Ge]
+  simp
+  repeat linarith
+
+
+-- created on 2025-07-14

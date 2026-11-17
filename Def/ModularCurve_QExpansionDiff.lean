@@ -1,5 +1,9 @@
-import Mathlib.RingTheory.LaurentSeries
-import Mathlib.RingTheory.Kaehler.Basic
+module
+
+public import Mathlib.RingTheory.LaurentSeries
+public import Mathlib.RingTheory.Kaehler.Basic
+
+@[expose] public section
 
 set_option autoImplicit false
 

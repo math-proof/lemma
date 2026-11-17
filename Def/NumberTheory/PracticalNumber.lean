@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PracticalNumber.lean -/
 
-import Mathlib.NumberTheory.Divisors
+module
 
+public import Mathlib.NumberTheory.Divisors
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

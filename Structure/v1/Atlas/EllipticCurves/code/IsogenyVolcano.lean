@@ -8,18 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Polynomial.Div
-import Mathlib.Algebra.Polynomial.BigOperators
-import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.Data.Nat.GCD.Basic
-import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
-import Mathlib.Combinatorics.SimpleGraph.Finite
-import Mathlib.Data.ZMod.Basic
-import Def.v1.Atlas.EllipticCurves.code.RingClassField.Part3
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.RingClassField
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.HilbertClassPolynomial
-import Def.v1.Atlas.EllipticCurves.code.HilbertClassPolynomial.Part2
-import Def.v1.Atlas.EllipticCurves.code.IsogenyVolcano.Part2
+module
+
+public import Mathlib.Algebra.Polynomial.Div
+public import Mathlib.Algebra.Polynomial.BigOperators
+public import Mathlib.Data.Nat.Prime.Basic
+public import Mathlib.Data.Nat.GCD.Basic
+public import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Mathlib.Data.ZMod.Basic
+public import Def.v1.Atlas.EllipticCurves.code.RingClassField.Part3
+public import Lemma.Complex.Atlas.v1.EllipticCurves.code.RingClassField
+public import Lemma.Complex.Atlas.v1.EllipticCurves.code.HilbertClassPolynomial
+public import Def.v1.Atlas.EllipticCurves.code.HilbertClassPolynomial.Part2
+public import Def.v1.Atlas.EllipticCurves.code.IsogenyVolcano.Part2
 /-- A multigraph on vertex set `V`: each unordered pair `(v, w)` carries a
 multiplicity `edgeMult v w : ℕ`, required to be symmetric in `v, w`. -/
 /-- Two vertices `v, w` are adjacent in `G` iff their edge multiplicity is positive. -/
@@ -34,7 +36,7 @@ variable {V : Type*} (G : Multigraph V)
 
 end Multigraph
 
-noncomputable section
+public noncomputable section
 
 open Polynomial Finset
 

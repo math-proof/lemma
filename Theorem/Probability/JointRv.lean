@@ -1,17 +1,20 @@
-import Mathlib.MeasureTheory.Measure.Prod
-import Mathlib.MeasureTheory.Measure.WithDensity
-import Mathlib.MeasureTheory.Measure.Decomposition.Lebesgue
-import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
-import Mathlib.MeasureTheory.MeasurableSpace.Constructions
-import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
-import Mathlib.Probability.Independence.Basic
-import Mathlib.Probability.Independence.Conditional
-import Def.Probability.SymbolicProbability
-import Theorem.Function
-import Instance.Probability.JointRv.Part2
+module
+
+public import Mathlib.MeasureTheory.Measure.Prod
+public import Mathlib.MeasureTheory.Measure.WithDensity
+public import Mathlib.MeasureTheory.Measure.Decomposition.Lebesgue
+public import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
+public import Mathlib.MeasureTheory.MeasurableSpace.Constructions
+public import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.Probability.Independence.Conditional
+public import Def.Probability.SymbolicProbability
+public import Theorem.Function
+public import Instance.Probability.JointRv.Part2
 open MeasureTheory
 open scoped ProbabilityTheory
 
+public section
 
 /-- `AsPathRV.path` is the identity on an ordinary random variable. -/
 @[simp] theorem AsPathRV.path_function {Ω α : Type*} (f : Ω → α) :

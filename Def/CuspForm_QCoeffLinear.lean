@@ -1,5 +1,9 @@
-import Mathlib
-import Def.FLTPrelim_Modularity
+module
+
+public import Mathlib
+public import Def.FLTPrelim_Modularity
+
+@[expose] public section
 
 set_option autoImplicit false
 

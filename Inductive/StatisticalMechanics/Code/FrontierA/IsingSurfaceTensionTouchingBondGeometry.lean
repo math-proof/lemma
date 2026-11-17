@@ -9,8 +9,10 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionPrismFaces.Part2
-import Theorem.StatisticalMechanics.Code.IsingFK.HisingBoxClose.Part3
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionPrismFaces.Part2
+public import Theorem.StatisticalMechanics.Code.IsingFK.HisingBoxClose.Part3
 
 
 namespace StatMech.FrontierA
@@ -19,7 +21,7 @@ open StatMech StatMech.Lattice StatMech.Ising StatMech.IsingFK
   StatMech.Percolation
 
 
-inductive OddPrismTouchIndex (n : Nat)
+public inductive OddPrismTouchIndex (n : Nat)
   | xInternal (x : Fin (2 * n)) (y z : Fin (2 * n + 1))
   | yInternal (x : Fin (2 * n + 1)) (y : Fin (2 * n))
       (z : Fin (2 * n + 1))

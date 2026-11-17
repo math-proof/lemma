@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ExponentialPascalMatrix.lean -/
+module
 
+public import Def.NumberTheory.ExponentialPascalMatrix
 
-import Def.NumberTheory.ExponentialPascalMatrix
-
+public section
 
 namespace MetaMathlibExt
 

@@ -1,4 +1,8 @@
-import Def.WeierstrassCurve_Velu
+module
+
+public import Def.WeierstrassCurve_Velu
+
+@[expose] public section
 
 set_option autoImplicit false
 

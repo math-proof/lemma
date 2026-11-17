@@ -1,19 +1,22 @@
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Analysis.Meromorphic.Basic
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Analysis.Complex.SummableUniformlyOn
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.Algebra.InfiniteSum.TsumUniformlyOn
-import Def.Analysis.Complex.MittagLeffler
+module
+
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Analysis.Meromorphic.Basic
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Analysis.Complex.SummableUniformlyOn
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.Algebra.InfiniteSum.TsumUniformlyOn
+public import Def.Analysis.Complex.MittagLeffler
 open scoped BigOperators Topology ENNReal NNReal
 open Metric
-
 
 /-!
 # Mittag-Leffler theorem (prescribed principal parts on `ℂ`)
 -/
+
+public section
 
 
 section

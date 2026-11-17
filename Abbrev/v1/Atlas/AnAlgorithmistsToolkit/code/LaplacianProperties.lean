@@ -21,7 +21,7 @@ import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 import Mathlib.Analysis.Matrix.Order
 import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Basic
 import Def.v1.Atlas.AnAlgorithmistsToolkit.code.GraphMatrices
-import Lemma.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.GraphMatrices
+import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.GraphMatrices
 import Def.v1.Atlas.AnAlgorithmistsToolkit.code.SingleEdgeLaplacian
 
 

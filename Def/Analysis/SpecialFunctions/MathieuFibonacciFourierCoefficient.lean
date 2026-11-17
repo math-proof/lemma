@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/MathieuFibonacciFourierCoefficient.lean -/
 
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+
+@[expose] public section
+
 /-!
 # Fourier series coefficient
 

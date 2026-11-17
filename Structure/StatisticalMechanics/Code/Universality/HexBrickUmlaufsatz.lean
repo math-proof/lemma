@@ -9,11 +9,15 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Onsager.GeneralUmlaufsatz
-import Theorem.StatisticalMechanics.Code.Universality.HexAllWidthStripGeometry.Part18
-import Theorem.StatisticalMechanics.Code.Universality.HexBrickUmlaufsatz
+module
 
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Onsager.GeneralUmlaufsatz
+public import Theorem.StatisticalMechanics.Code.Universality.HexAllWidthStripGeometry.Part18
+public import Theorem.StatisticalMechanics.Code.Universality.HexBrickUmlaufsatz
+
+
+public section
 
 namespace StatMech.Universality
 

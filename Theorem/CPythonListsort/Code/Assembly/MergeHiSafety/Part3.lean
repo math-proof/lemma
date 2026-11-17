@@ -1,11 +1,17 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean -/
 
-import Structure.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part5
-import Structure.CPythonListsort.Code.Assembly.MergeGetmemRequestBound
-import Def.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
-import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopLeftSafety
-import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopRightSafety
-import Def.CPythonListsort.Code.Assembly.MergeHiSafety.Part3
+module
+
+public import Structure.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part5
+public import Structure.CPythonListsort.Code.Assembly.MergeGetmemRequestBound
+public import Def.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
+public import Def.CPythonListsort.Code.Assembly.MergeHiSafety.Part3
+public import Theorem.CPythonListsort.Code.Assembly.MergeHiSafety.Part2
+public import Theorem.CPythonListsort.Code.Assembly.MergeHiSafety.Helpers
+public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.AccessTrace
+public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.MergeTracePrimitives
+public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.SortSliceSafety
+public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopSafety
 /-!
 # `merge_hi` traced execution and safety
 
@@ -17,6 +23,7 @@ permit, main-data block movement uses the overlap-safe traced `memmove`, and
 temporary gallops read their live storage through `GallopKeySource.temporary`.
 -/
 
+public section
 
 namespace CPythonListsort
 
@@ -30,7 +37,7 @@ namespace MergeHiStorageFrame
 
 namespace MergeHiCursorInvariant
 
-theorem MergeHiCorePost.bind
+public theorem MergeHiCorePost.bind
     (origin : MergeState κ ν) (request : Nat)
     (current : TraceResult α)
     (next : α → TraceResult (MergeHiResult κ ν)) (value : α)
@@ -57,7 +64,7 @@ theorem MergeHiCorePost.bind
       stableFrame := hnext.stableFrame
       storageFrame := hnext.storageFrame }
 
-theorem mergeHiGallopBTraced_safe
+public theorem mergeHiGallopBTraced_safe
     (origin : MergeState κ ν) (request fuel : Nat)
     (afterB : MergeHiCursor κ ν) (aCount : Nat)
     (hinvariant : MergeHiCursorInvariant origin request afterB)
@@ -181,7 +188,7 @@ theorem mergeHiGallopBTraced_safe
     simpa only [mergeHiGallopBTraced?, TraceResult.erase_sortSliceKeysRead]
       using hleftPost'⟩
 
-theorem mergeHiGallopRoundFinishTraced_safe
+public theorem mergeHiGallopRoundFinishTraced_safe
     (origin : MergeState κ ν) (request fuel : Nat)
     (movedA : MergeHiCursor κ ν) (aCount : Nat)
     (hinvariant : MergeHiCursorInvariant origin request movedA)
@@ -263,7 +270,7 @@ theorem mergeHiGallopRoundFinishTraced_safe
       simpa [mergeHiGallopRoundFinishTraced?, mergeHiGallopRoundFinish?,
         hnaZero, tracedTail, tail] using hpost⟩
 
-theorem mergeHiGallopRoundAfterTraced_safe
+public theorem mergeHiGallopRoundAfterTraced_safe
     (origin : MergeState κ ν) (request fuel : Nat)
     (cursor : MergeHiCursor κ ν) (minGallop : PySSize)
     (state : MergeState κ ν) (gallopA : GallopResult)
@@ -323,7 +330,7 @@ theorem mergeHiGallopRoundAfterTraced_safe
     simpa [mergeHiGallopRoundAfterTraced?, mergeHiGallopRoundAfter?,
       hnotFuel, adjusted, aCount] using hpost⟩
 
-theorem mergeHiGallopRoundTraced_safe
+public theorem mergeHiGallopRoundTraced_safe
     (origin : MergeState κ ν) (request fuel : Nat)
     (cursor : MergeHiCursor κ ν)
     (hinvariant : MergeHiCursorInvariant origin request cursor)
@@ -432,7 +439,7 @@ theorem mergeHiGallopRoundTraced_safe
 /-- Complete recursive driver contract.  The strict slack is consumed by one
 real backward copy before each recursive call, while both terminal labels are
 handled before phase dispatch. -/
-theorem mergeHiLoopTraced_safe
+public theorem mergeHiLoopTraced_safe
     (origin : MergeState κ ν) (request fuel : Nat)
     (cursor : MergeHiCursor κ ν)
     (hinvariant : MergeHiCursorInvariant origin request cursor)

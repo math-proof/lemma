@@ -1,21 +1,25 @@
 /-
 Author: @akiezun, Avocado
 -/
+module
 
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Algebra.Ring.IsFormallyReal
-import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.ArctanDeriv
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
-import Def.Analysis.SpecialFunctions.Part1Ch8Entry14VIntegral5
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Algebra.Ring.IsFormallyReal
+public import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.ArctanDeriv
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+public import Def.Analysis.SpecialFunctions.Part1Ch8Entry14VIntegral5
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 8, Entry 14(v)
 
 Closed form for ∫₀ˣ 1/(1+u⁵) du via log and arctan terms.
 -/
+
+public section
 
 
 namespace Ramanujan.Part1Ch8

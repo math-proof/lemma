@@ -8,12 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Computability.ContextFreeGrammar
-import Mathlib.Computability.Language
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Fintype.Pigeonhole
-import Mathlib.Data.Set.Finite.Lattice
-import Abbrev.v1.Atlas.TheoryOfComputation.code.ContextFree.Part2
+module
+
+public import Mathlib.Computability.ContextFreeGrammar
+public import Mathlib.Computability.Language
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Fintype.Pigeonhole
+public import Mathlib.Data.Set.Finite.Lattice
+public import Abbrev.v1.Atlas.TheoryOfComputation.code.ContextFree.Part2
 
 
 namespace ChomskyNormalForm
@@ -29,7 +31,7 @@ variable (M : PDA α σ γ)
 /-- One step of the PDA: read (optionally) an input symbol `a`, pop (optionally)
 `pop` from the top of the stack, transition to `q'`, and push (optionally) `push`
 on top of the stack. -/
-inductive Step : Config (α := α) (σ := σ) (γ := γ) →
+public inductive Step : Config (α := α) (σ := σ) (γ := γ) →
     Config (α := α) (σ := σ) (γ := γ) → Prop where
   | mk (q q' : σ) (a : Option α) (pop : Option γ) (push : Option γ)
       (input : List α) (stack : List γ) :

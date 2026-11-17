@@ -1,11 +1,13 @@
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
 import Def.Analysis.Calculus.Gradient.Operators.Part2
-import Theorem.Dynamics.PolicyTrajectory.ContinuousAction
+import Def.Dynamics.PolicyTrajectory.ContinuousAction
 import Theorem.Probability.SymbolicProbability
 import Lemma.Random.PSpace_Path.of.All_PSpace
 import Instance.Probability.Moments.Variance
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure
 
 
@@ -154,4 +156,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-16
+-- updated on 2026-11-17

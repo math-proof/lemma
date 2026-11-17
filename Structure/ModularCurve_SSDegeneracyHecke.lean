@@ -1,10 +1,12 @@
-import Lemma.LaurentSeries.CharLDegeneracyHecke
-import Def.ModularCurve_PlaceWidth
-import Structure.CerednikDrinfeld_Ribbon
+module
+
+public import Lemma.LaurentSeries.CharLDegeneracyHecke
+public import Def.ModularCurve_PlaceWidth
+public import Structure.CerednikDrinfeld_Ribbon
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open AlgebraicCurve
 

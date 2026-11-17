@@ -9,17 +9,19 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianWeightedHadamardPrereq
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianNewmanRootControl.Part2
-import Mathlib.Analysis.Calculus.LogDerivUniformlyOn
-import Mathlib.Analysis.Normed.Module.MultipliableUniformlyOn
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianHadamardLogDerivative.Part2
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianWeightedHadamardPrereq
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianNewmanRootControl.Part2
+public import Mathlib.Analysis.Calculus.LogDerivUniformlyOn
+public import Mathlib.Analysis.Normed.Module.MultipliableUniformlyOn
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianHadamardLogDerivative.Part2
 open scoped BigOperators
 
 
 namespace StatMech.FrontierA
 
-noncomputable section
+public noncomputable section
 
 structure EvenHadamardFactorization (F : Complex → Complex) where
   roots : Nat → Real

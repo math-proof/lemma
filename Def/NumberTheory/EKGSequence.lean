@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/EKGSequence.lean -/
 
-import Mathlib.Data.Nat.GCD.Basic
+module
 
+public import Mathlib.Data.Nat.GCD.Basic
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

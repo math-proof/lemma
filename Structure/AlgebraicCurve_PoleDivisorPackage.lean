@@ -1,10 +1,12 @@
-import Mathlib
-import Class.AlgebraicCurve_DivisorPushPull
-import Structure.AlgebraicCurve_AdelicIndex
+module
+
+public import Mathlib
+public import Class.AlgebraicCurve_DivisorPushPull
+public import Structure.AlgebraicCurve_AdelicIndex
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace AlgebraicCurve
 

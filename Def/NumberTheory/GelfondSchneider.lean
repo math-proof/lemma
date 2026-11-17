@@ -4,29 +4,32 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.NumberTheory.Real.Irrational
-import Mathlib.Algebra.BigOperators.Finprod
-import Mathlib.Analysis.Analytic.IteratedFDeriv
-import Mathlib.Analysis.Analytic.Order
-import Mathlib.Analysis.Calculus.FDeriv.Analytic
-import Mathlib.Analysis.Calculus.IteratedDeriv.Defs
-import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Analysis.Complex.CauchyIntegral
-import Mathlib.Analysis.Complex.JensenFormula
-import Mathlib.Analysis.Meromorphic.Divisor
-import Mathlib.Analysis.Meromorphic.TrailingCoefficient
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import Mathlib.Analysis.SpecialFunctions.Integrability.Log
-import Mathlib.LinearAlgebra.Vandermonde
-import Mathlib.MeasureTheory.Integral.CircleAverage
-import Mathlib.NumberTheory.NumberField.Basic
-import Mathlib.NumberTheory.NumberField.House
-import Mathlib.NumberTheory.NumberField.Norm
-import Mathlib.RingTheory.Localization.Integral
-import Mathlib.Tactic
+module
 
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.NumberTheory.Real.Irrational
+public import Mathlib.Algebra.BigOperators.Finprod
+public import Mathlib.Analysis.Analytic.IteratedFDeriv
+public import Mathlib.Analysis.Analytic.Order
+public import Mathlib.Analysis.Calculus.FDeriv.Analytic
+public import Mathlib.Analysis.Calculus.IteratedDeriv.Defs
+public import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Analysis.Complex.CauchyIntegral
+public import Mathlib.Analysis.Complex.JensenFormula
+public import Mathlib.Analysis.Meromorphic.Divisor
+public import Mathlib.Analysis.Meromorphic.TrailingCoefficient
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+public import Mathlib.Analysis.SpecialFunctions.Integrability.Log
+public import Mathlib.LinearAlgebra.Vandermonde
+public import Mathlib.MeasureTheory.Integral.CircleAverage
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Mathlib.NumberTheory.NumberField.House
+public import Mathlib.NumberTheory.NumberField.Norm
+public import Mathlib.RingTheory.Localization.Integral
+public import Mathlib.Tactic
+
+@[expose] public section
 
 section GS_N2
 end GS_N2

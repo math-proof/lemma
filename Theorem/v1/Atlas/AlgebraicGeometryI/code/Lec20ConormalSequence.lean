@@ -7,16 +7,18 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.RingTheory.Kaehler.Basic
-import Mathlib.RingTheory.Smooth.Basic
-import Mathlib.RingTheory.Ideal.Cotangent
+public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.RingTheory.Kaehler.Basic
+public import Mathlib.RingTheory.Smooth.Basic
+public import Mathlib.RingTheory.Ideal.Cotangent
 set_option maxHeartbeats 400000
 
 open AlgebraicGeometry CategoryTheory KaehlerDifferential
 
+public section
 
 noncomputable section
 

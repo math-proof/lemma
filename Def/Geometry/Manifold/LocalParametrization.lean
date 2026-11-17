@@ -10,7 +10,7 @@ import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Geometry.Manifold.Immersion
 import Mathlib.Analysis.Calculus.BumpFunction.FiniteDimension
 import Theorem.Geometry.Manifold.LocalGraph
-import Lemma.Set.Manifold.LocalGraph
+import Theorem.Set.Manifold.LocalGraph
 open scoped Topology Manifold ContDiff
 open Manifold
 

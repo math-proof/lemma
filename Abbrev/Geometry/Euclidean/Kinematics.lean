@@ -1,7 +1,11 @@
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
-import Abbrev.Analysis.InnerProductSpace.EuclideanVec
+module
+
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
+public import Abbrev.Analysis.InnerProductSpace.EuclideanVec
+
+@[expose] public section
 
 
 /-!

@@ -8,11 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.GroupTheory.Perm.Basic
-import Mathlib.Data.Fin.Basic
-import Mathlib.Basic.Real.Basic
-import Mathlib.Data.Fintype.BigOperators
+module
 
+public import Mathlib.GroupTheory.Perm.Basic
+public import Mathlib.Data.Fin.Basic
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Data.Fintype.BigOperators
+
+@[expose] public section
 
 namespace BooleanFourier
 

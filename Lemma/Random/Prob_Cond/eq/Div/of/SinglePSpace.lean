@@ -1,5 +1,6 @@
 import Lemma.Random.EqProb
 import Instance.Probability.Rv.Part2
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory Measure Random
 
 
@@ -42,4 +43,4 @@ private lemma main
 
 
 -- created on 2026-10-02
--- updated on 2026-11-16
+-- updated on 2026-11-17

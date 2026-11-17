@@ -1,9 +1,13 @@
-import Mathlib
-import Instance.Deformations_IsProartinian
-import Class.Deformations_IsResidueAlgebra
-import Instance.Deformations_ProartinianCat
-import Class.Deformations_ProartinianCat
-import Structure.Deformations_ProartinianCat
+module
+
+public import Mathlib
+public import Instance.Deformations_IsProartinian
+public import Class.Deformations_IsResidueAlgebra
+public import Instance.Deformations_ProartinianCat
+public import Class.Deformations_ProartinianCat
+public import Structure.Deformations_ProartinianCat
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -7,13 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Analysis.Distribution.Support
-import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzPartition
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzPartition
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzCutoffConvergence
-import Def.v1.Atlas.DifferentialAnalysis.code.SchwartzCutoffConvergence
+public import Mathlib.Analysis.Distribution.Support
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzPartition
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzPartition
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzCutoffConvergence
+public import Def.v1.Atlas.DifferentialAnalysis.code.SchwartzCutoffConvergence
 
+public section
 
 noncomputable section
 

@@ -1,10 +1,12 @@
-import Mathlib
-import Structure.ModularCurve_JZeroNeronData
-import Structure.ModularCurve_MazurPrincipleCore
+module
+
+public import Mathlib
+public import Structure.ModularCurve_JZeroNeronData
+public import Structure.ModularCurve_MazurPrincipleCore
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace ModularCurve
 

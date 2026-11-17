@@ -9,7 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.MultivaluedMap
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierA.MultivaluedMap
+
+@[expose] public section
+
 open MeasureTheory Set Finset
 open scoped ENNReal BigOperators
 

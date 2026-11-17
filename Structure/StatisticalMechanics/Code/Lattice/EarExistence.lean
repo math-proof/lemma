@@ -9,17 +9,21 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
-import Theorem.StatisticalMechanics.Code.Lattice.PlanarDual.Part10
-import Theorem.StatisticalMechanics.Code.Lattice.DartDef.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.DartNext.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.DartInjective
-import Theorem.StatisticalMechanics.Code.Lattice.DartOrbit.Part6
-import Theorem.StatisticalMechanics.Code.Lattice.TurningNumber.Part6
-import Theorem.StatisticalMechanics.Code.Lattice.CornerBalance.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.EarRemoval.Part5
-import Def.StatisticalMechanics.Code.Lattice.EarExistence.Part2
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
+public import Theorem.StatisticalMechanics.Code.Lattice.PlanarDual.Part10
+public import Theorem.StatisticalMechanics.Code.Lattice.DartDef.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.DartNext.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.DartInjective
+public import Theorem.StatisticalMechanics.Code.Lattice.DartOrbit.Part6
+public import Theorem.StatisticalMechanics.Code.Lattice.TurningNumber.Part6
+public import Theorem.StatisticalMechanics.Code.Lattice.CornerBalance.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.EarRemoval.Part5
+public import Def.StatisticalMechanics.Code.Lattice.EarExistence.Part2
+public section
+
 open SimpleGraph Function
 
 

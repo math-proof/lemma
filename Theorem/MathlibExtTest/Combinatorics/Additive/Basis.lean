@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Additive/Basis.lean -/
+module
 
-
-import Def.Combinatorics.Additive.Basis
+public import Def.Combinatorics.Additive.Basis
 open Set Filter
 open scoped Pointwise
 
+public section
 
 -- Normal API use: the basis predicates accept a set and order.
 noncomputable example (A : Set ℕ) (n : ℕ) : Prop :=

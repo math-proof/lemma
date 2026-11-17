@@ -9,11 +9,9 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Class.v1.Atlas.TensorCategories.code.ModuleFunctorDefs
-import Lemma.Category.Atlas.v1.TensorCategories.code.ModuleFunctorDefs
 set_option maxHeartbeats 800000
 
 universe v₁ v₂ v₃ u₁ u₂ u₃
-
 
 namespace CategoryTheory
 

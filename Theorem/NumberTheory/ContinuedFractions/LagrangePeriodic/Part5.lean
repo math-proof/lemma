@@ -9,7 +9,7 @@ import Mathlib.Algebra.ContinuedFractions.Computation.TerminatesIffRat
 import Mathlib.Algebra.Order.Archimedean.Real.Basic
 import Mathlib.FieldTheory.Minpoly.Basic
 import Abbrev.Dynamics.EventuallyPeriodicSequence
-import Lemma.Set.EventuallyPeriodicSequence
+import Theorem.Set.EventuallyPeriodicSequence
 import Mathlib.Algebra.Order.Ring.Star
 import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Algebra.Ring.IsFormallyReal

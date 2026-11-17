@@ -1,11 +1,11 @@
 import Instance.Data.Tensor.Tensor.Part2
 import Instance.Data.Vector.Functions.Part2
-import Lemma.Nat.Lt_Sub.of.LtAdd
-import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
+import Theorem.Nat.Lt_Sub.of.LtAdd
+import Theorem.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.List.ProdTake.ne.Zero.of.NeProd_0
 import Lemma.List.ProdTail.ne.Zero.of.NeProd_0
-import Lemma.List.EraseIdx.eq.Cons_EraseIdxTail.of.GtLengthTail
-import Lemma.List.EqEraseIdx.of.LeLength
+import Theorem.List.EraseIdx.eq.Cons_EraseIdxTail.of.GtLengthTail
+import Theorem.List.EqEraseIdx.of.LeLength
 open List Tensor Nat
 
 

@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LSeries/AbelContinuation.lean -/
 
-import Mathlib.Analysis.Complex.CauchyIntegral
-import Mathlib.Analysis.MellinTransform
-import Mathlib.NumberTheory.AbelSummation
-import Mathlib.NumberTheory.LSeries.SumCoeff
+module
+
+public import Mathlib.Analysis.Complex.CauchyIntegral
+public import Mathlib.Analysis.MellinTransform
+public import Mathlib.NumberTheory.AbelSummation
+public import Mathlib.NumberTheory.LSeries.SumCoeff
+
+@[expose] public section
+
 open Filter Asymptotics MeasureTheory Topology Set Complex
 
 /-!

@@ -1,11 +1,15 @@
-import Abbrev.RepTheory_TestFunctionAction
-import Abbrev.LanglandsTunnell_SchwartzBruhatSpace
-import Def.RepTheory_SmoothAdmissibleSchurCommutant
-import Mathlib.MeasureTheory.Group.Measure
-import Mathlib.Algebra.GroupWithZero.Action.End
-import Mathlib.Algebra.Module.LinearMap.End
-import Mathlib.Data.Complex.Basic
-import Mathlib.LinearAlgebra.Complex.Module
+module
+
+public import Abbrev.RepTheory_TestFunctionAction
+public import Abbrev.LanglandsTunnell_SchwartzBruhatSpace
+public import Def.RepTheory_SmoothAdmissibleSchurCommutant
+public import Mathlib.MeasureTheory.Group.Measure
+public import Mathlib.Algebra.GroupWithZero.Action.End
+public import Mathlib.Algebra.Module.LinearMap.End
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.LinearAlgebra.Complex.Module
+
+@[expose] public section
 
 set_option autoImplicit false
 

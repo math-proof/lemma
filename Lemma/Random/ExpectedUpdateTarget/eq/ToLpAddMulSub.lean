@@ -1,6 +1,7 @@
 import Class.Dynamics.QLearning
 import Lemma.Matrix.PMRP.eq.MulPPi
 import Lemma.Random.Sum.eq.One.of.ProbabilityMeasure
+import Initialize.Tactic.Attr.Basic
 open Finset Matrix Random
 
 
@@ -44,4 +45,4 @@ private lemma main
 
 
 -- created on 2026-09-26
--- updated on 2026-10-26
+-- updated on 2026-11-17

@@ -9,7 +9,7 @@ import Mathlib.Analysis.Meromorphic.Basic
 import Mathlib.NumberTheory.LSeries.RiemannZeta
 import Def.Analysis.Ramanujan.Part1Ch7Entry10ZetaSide
 import Lemma.Real.Ramanujan.Part1Ch7Entry10ZetaSide
-import Lemma.Complex.Part1Ch7PowerDifference
+import Theorem.Complex.Part1Ch7PowerDifference
 import Def.Analysis.Ramanujan.Part1Ch7PowerDifference
 import Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected
 import Mathlib.Analysis.Convex.Contractible

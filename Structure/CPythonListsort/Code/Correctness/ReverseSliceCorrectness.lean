@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/ReverseSliceCorrectness.lean -/
 
-import Def.CPythonListsort.Code.Assembly.ReverseSliceSafety.Part2
-import Def.CPythonListsort.Code.Correctness.ReverseSliceCorrectness
+module
+
+public import Def.CPythonListsort.Code.Assembly.ReverseSliceSafety.Part2
+public import Def.CPythonListsort.Code.Correctness.ReverseSliceCorrectness
 /-!
 # Exact correctness of slice reversal
 
@@ -9,6 +11,9 @@ This file connects the executable `reverse_slice` transcription to a reusable
 mathematical operation on half-open array ranges.  The specification retains
 the prefix and suffix verbatim and reverses exactly the selected middle.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

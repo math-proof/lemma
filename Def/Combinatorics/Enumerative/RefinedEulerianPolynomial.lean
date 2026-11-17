@@ -4,23 +4,26 @@
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Mathlib.Algebra.Polynomial.Eval.Defs
-import Mathlib.Basic.Real.Basic
-import Mathlib.GroupTheory.Perm.Fin
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Algebra.Ring.IsFormallyReal
-import Mathlib.Analysis.Normed.Field.Basic
-import Mathlib.Data.Fintype.Perm
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
-import Mathlib.Algebra.BigOperators.Intervals
-import Mathlib.Data.Finset.Powerset
-import Mathlib.Data.Nat.Choose.Sum
+module
 
+public import Mathlib.Algebra.Polynomial.Eval.Defs
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.GroupTheory.Perm.Fin
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Algebra.Ring.IsFormallyReal
+public import Mathlib.Analysis.Normed.Field.Basic
+public import Mathlib.Data.Fintype.Perm
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
+public import Mathlib.Algebra.BigOperators.Intervals
+public import Mathlib.Data.Finset.Powerset
+public import Mathlib.Data.Nat.Choose.Sum
+
+@[expose] public section
 
 section
 

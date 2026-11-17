@@ -6,7 +6,13 @@ All rights reserved.
 Copyright (c) 2025 AlgebraicCombinatorics Contributors. All rights reserved.
 Authors:
 -/
-import Mathlib
+
+module
+
+public import Mathlib
+
+@[expose] public section
+
 open scoped Polynomial
 open Finset PowerSeries
 

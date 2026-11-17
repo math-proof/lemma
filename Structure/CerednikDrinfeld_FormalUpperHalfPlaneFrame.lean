@@ -1,5 +1,9 @@
-import Mathlib
-import Structure.CerednikDrinfeld_FormalUpperHalfPlanePoints
+module
+
+public import Mathlib
+public import Structure.CerednikDrinfeld_FormalUpperHalfPlanePoints
+
+public section
 
 set_option autoImplicit false
 

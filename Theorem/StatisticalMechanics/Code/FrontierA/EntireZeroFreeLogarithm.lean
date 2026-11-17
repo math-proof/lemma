@@ -7,13 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib.Analysis.Complex.HasPrimitives
-import Mathlib.Analysis.Calculus.LogDeriv
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+public import Mathlib.Analysis.Complex.HasPrimitives
+public import Mathlib.Analysis.Calculus.LogDeriv
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
 open Set
 
+public section
 
 namespace StatMech.FrontierA
 

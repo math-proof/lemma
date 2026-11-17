@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/OctanacciNumber.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.OctanacciNumber
 
-import Def.Combinatorics.Enumerative.OctanacciNumber
-
+public section
 
 namespace MetaMathlibExt
 

@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/OctagonalPyramidalNumber.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.OctagonalPyramidalNumber
 
-import Def.Combinatorics.Enumerative.OctagonalPyramidalNumber
-
+public section
 
 namespace MetaMathlibExt
 

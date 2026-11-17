@@ -14,7 +14,7 @@ import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.DedekindCurve
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochCurves
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzFormula
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzApplications
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.BertiniDimensionCount
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BertiniDimensionCount
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityCurves
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochRiemannForm
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckBirkhoffGeometric

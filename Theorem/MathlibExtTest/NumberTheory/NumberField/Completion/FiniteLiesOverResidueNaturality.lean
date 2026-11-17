@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.NumberField.Completion.FiniteLiesOverResidueNaturality
-import Lemma.Nat.NumberField.Completion.FiniteLiesOverResidueNaturality
+import Theorem.Nat.NumberField.Completion.FiniteLiesOverResidueNaturality
 /-!
 # Checks for the explicit residue-field naturality square
 -/

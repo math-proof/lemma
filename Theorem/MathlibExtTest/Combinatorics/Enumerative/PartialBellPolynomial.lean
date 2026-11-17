@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/PartialBellPolynomial.lean -/
+module
 
+public import Mathlib.Tactic
+public import Def.Combinatorics.Enumerative.PartialBellPolynomial
 
-import Mathlib.Tactic
-import Def.Combinatorics.Enumerative.PartialBellPolynomial
-
+public section
 
 namespace MetaMathlibExt
 

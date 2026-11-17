@@ -9,9 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section26.Part8
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section26
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section32
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Lemma32_4
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section32.Part2
 import Def.v1.Atlas.AlgebraicTopologyI.code.Lemma32_4
 import Mathlib.Topology.Covering.Quotient
@@ -32,7 +29,6 @@ import Mathlib.Topology.Homotopy.Path
 import Mathlib.Topology.LocallyConstant.Basic
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section31
 open Topology MulAction CategoryTheory TopologicalSpace
-
 
 namespace CoveringSpaces
 

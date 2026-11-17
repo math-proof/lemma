@@ -1,25 +1,27 @@
-import Mathlib
-import Abbrev.ModularCurve_DRModelPackage
-import Structure.ModularCurve_DRModelLegTwoInput
-import Instance.AlgebraicGeometry_RelativePicardFunctor
-import Structure.AlgebraicGeometry_RepresentsRelSubPic
-import Def.AlgebraicGeometry_RelPicardAlgEquivZeroCut
-import Def.AlgebraicGeometry_RelPicardChartSections
-import Instance.AlgebraicGeometry_SmoothProperCurveBase
-import Structure.AlgebraicGeometry_TwoAffineOpenCover
-import Lemma.Scheme.TwoChartCechSectionsOf
-import Structure.AlgebraicCurve_CurveModel
-import Instance.AlgebraicCurve_RatFuncPlaces
-import Lemma.Valuation.RatFuncPlaceInfty
-import Structure.JacJ1Iface
-import Instance.SheafOfModules_Monoidal
+module
+
+public import Mathlib
+public import Abbrev.ModularCurve_DRModelPackage
+public import Structure.ModularCurve_DRModelLegTwoInput
+public import Instance.AlgebraicGeometry_RelativePicardFunctor
+public import Structure.AlgebraicGeometry_RepresentsRelSubPic
+public import Def.AlgebraicGeometry_RelPicardAlgEquivZeroCut
+public import Def.AlgebraicGeometry_RelPicardChartSections
+public import Instance.AlgebraicGeometry_SmoothProperCurveBase
+public import Structure.AlgebraicGeometry_TwoAffineOpenCover
+public import Lemma.Scheme.TwoChartCechSectionsOf
+public import Structure.AlgebraicCurve_CurveModel
+public import Instance.AlgebraicCurve_RatFuncPlaces
+public import Lemma.Valuation.RatFuncPlaceInfty
+public import Structure.JacJ1Iface
+public import Instance.SheafOfModules_Monoidal
 
 set_option autoImplicit false
 
 open CategoryTheory CategoryTheory.Limits MonoidalCategory AlgebraicGeometry AlgebraicGeometry.RelPicard
   AlgebraicGeometry.SmoothProperCurve NeronModelInfra GoodReductionJacobian ModularCurve AlgebraicCurve IsLocalRing
 
-noncomputable section
+public noncomputable section
 
 namespace ModularCurve
 

@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarPercolationApproximation.Part3
-import Theorem.StatisticalMechanics.Code.Lattice.BoxSurfaceVolume.Part5
+module
+
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarPercolationApproximation.Part3
+public import Theorem.StatisticalMechanics.Code.Lattice.BoxSurfaceVolume.Part5
+public section
+
 open Filter MeasureTheory Set SimpleGraph Topology
 
 

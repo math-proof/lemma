@@ -8,15 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Mathlib.AlgebraicGeometry.Scheme
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.AlgebraicGeometry.Normalization
-import Mathlib.AlgebraicGeometry.FunctionField
-import Mathlib.AlgebraicGeometry.Morphisms.OpenImmersion
-import Mathlib.AlgebraicGeometry.Stalk
-import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
+module
 
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Mathlib.AlgebraicGeometry.Scheme
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.AlgebraicGeometry.Normalization
+public import Mathlib.AlgebraicGeometry.FunctionField
+public import Mathlib.AlgebraicGeometry.Morphisms.OpenImmersion
+public import Mathlib.AlgebraicGeometry.Stalk
+public import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
+
+@[expose] public section
 
 noncomputable section
 

@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.NumberTheoryI.code.GlobalCFT.Part3
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.GlobalCFT
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.GlobalCFT
 
 
 noncomputable section

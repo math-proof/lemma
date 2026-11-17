@@ -1,5 +1,5 @@
-import Lemma.Hyperreal.UFn.of.All_UFn
-import Lemma.Int.Abs.eq.Max_Neg
+import Theorem.Hyperreal.UFn.of.All_UFn
+import Theorem.Int.Abs.eq.Max_Neg
 import Class.Analysis.SpecialFunctions.Exponential.Part5
 open Filter Hyperreal Int
 

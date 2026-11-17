@@ -4,21 +4,24 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
 
-import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Mathlib.FieldTheory.RatFunc.Basic
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Data.Int.Star
-import Mathlib.Order.CompletePartialOrder
-import Mathlib.RingTheory.KrullDimension.Polynomial
-import Mathlib.RingTheory.Nullstellensatz
-import Mathlib.RingTheory.PicardGroup
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.Tactic.GCongr
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
+module
 
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Mathlib.FieldTheory.RatFunc.Basic
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Data.Int.Star
+public import Mathlib.Order.CompletePartialOrder
+public import Mathlib.RingTheory.KrullDimension.Polynomial
+public import Mathlib.RingTheory.Nullstellensatz
+public import Mathlib.RingTheory.PicardGroup
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.SimpleRing.Principal
+public import Mathlib.Tactic.GCongr
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 section
 

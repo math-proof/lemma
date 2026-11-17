@@ -1,21 +1,23 @@
-import Mathlib
-import Structure.ModularCurve_JZeroNeronIdentityComponent
-import Lemma.Finsupp.ReductionModL
-import Structure.JacJ1Iface
-import Structure.AlgebraicGeometry_RelativeGroupLaw
-import Lemma.Scheme.NeronModelEndomorphismExtension
-import Def.ModularCurve_ReductionOfPointsAgreesModL
-import Instance.ModularCurve_ArithmeticGalois
-import Lemma.MvPolynomial.HeckeModule
-import Def.FLTPrelim_Ramification
-import Def.GaloisRep_Flat
+module
+
+public import Mathlib
+public import Structure.ModularCurve_JZeroNeronIdentityComponent
+public import Lemma.Finsupp.ReductionModL
+public import Structure.JacJ1Iface
+public import Structure.AlgebraicGeometry_RelativeGroupLaw
+public import Theorem.Scheme.NeronModelEndomorphismExtension
+public import Def.ModularCurve_ReductionOfPointsAgreesModL
+public import Instance.ModularCurve_ArithmeticGalois
+public import Lemma.MvPolynomial.HeckeModule
+public import Def.FLTPrelim_Ramification
+public import Def.GaloisRep_Flat
 
 set_option autoImplicit false
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry AlgebraicGeometry.Scheme NeronModelInfra GoodReductionJacobian
   AlgebraicCurve IsLocalRing
 
-noncomputable section
+public noncomputable section
 
 namespace ModularCurve
 

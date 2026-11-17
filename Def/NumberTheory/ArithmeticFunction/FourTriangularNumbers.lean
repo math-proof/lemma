@@ -4,24 +4,27 @@
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Fintype.Fin
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.NumberTheory.Divisors
-import Mathlib.Algebra.BigOperators.NatAntidiagonal
-import Mathlib.Data.Fin.VecNotation
-import Mathlib.Data.Int.Interval
-import Mathlib.Data.Finset.NatAntidiagonal
-import Mathlib.Data.Finset.Prod
-import Mathlib.Data.Set.Card
-import Mathlib.NumberTheory.Zsqrtd.GaussianInt
-import Mathlib.NumberTheory.Zsqrtd.QuadraticReciprocity
-import Mathlib.NumberTheory.SumTwoSquares
-import Mathlib.NumberTheory.LegendreSymbol.ZModChar
-import Mathlib.NumberTheory.ArithmeticFunction.Zeta
-import Mathlib.Order.Interval.Finset.Nat
+module
 
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Fintype.Fin
+public import Mathlib.Data.Fintype.Pi
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.NumberTheory.Divisors
+public import Mathlib.Algebra.BigOperators.NatAntidiagonal
+public import Mathlib.Data.Fin.VecNotation
+public import Mathlib.Data.Int.Interval
+public import Mathlib.Data.Finset.NatAntidiagonal
+public import Mathlib.Data.Finset.Prod
+public import Mathlib.Data.Set.Card
+public import Mathlib.NumberTheory.Zsqrtd.GaussianInt
+public import Mathlib.NumberTheory.Zsqrtd.QuadraticReciprocity
+public import Mathlib.NumberTheory.SumTwoSquares
+public import Mathlib.NumberTheory.LegendreSymbol.ZModChar
+public import Mathlib.NumberTheory.ArithmeticFunction.Zeta
+public import Mathlib.Order.Interval.Finset.Nat
+
+@[expose] public section
 
 namespace MetaMathlibExt.FourTriangular
 

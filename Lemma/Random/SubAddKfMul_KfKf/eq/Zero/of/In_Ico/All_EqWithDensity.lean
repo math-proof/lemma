@@ -9,6 +9,8 @@ import Lemma.Random.NormVkd.le.MulInvSub1Abs_R.of.In_Ico
 import Lemma.Random.NormWkd.le.Abs_R
 import Lemma.Random.NormClip.le.Abs_R
 import Lemma.Real.NormIntegral.le.of.All_LeNormMul.EqIntegral_1
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Real Kernel
 set_option maxHeartbeats 800000
 
@@ -265,4 +267,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-16
+-- updated on 2026-11-17

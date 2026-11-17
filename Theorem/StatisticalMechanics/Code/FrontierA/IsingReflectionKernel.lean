@@ -7,13 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib.Analysis.SpecialFunctions.Exponential
-import Mathlib.Algebra.BigOperators.Ring.Finset
+public import Mathlib.Analysis.SpecialFunctions.Exponential
+public import Mathlib.Algebra.BigOperators.Ring.Finset
 open Finset Filter
 open scoped BigOperators
 
+public section
 
 namespace StatMech.FrontierA
 

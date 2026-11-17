@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.SimsekNumber
-import Lemma.Nat.SimsekNumber
+import Theorem.Nat.SimsekNumber
 
 
 namespace MetaMathlibExt

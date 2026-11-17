@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.LucasPolytopicNumber.Part2
-import Lemma.Nat.LucasPolytopicNumber
+import Theorem.Nat.LucasPolytopicNumber
 import Mathlib.Tactic
 import Def.MathlibExtTest.NumberTheory.LucasPolytopicNumber
 

@@ -1,7 +1,9 @@
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Mathlib.RingTheory.MvPolynomial.EulerIdentity
-import Mathlib.Algebra.MvPolynomial.PDeriv
-import Mathlib.FieldTheory.IsAlgClosed.Basic
+module
+
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Mathlib.RingTheory.MvPolynomial.EulerIdentity
+public import Mathlib.Algebra.MvPolynomial.PDeriv
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
 /-!
 # Cubic surfaces in ℙ³
 
@@ -12,7 +14,7 @@ projective zero locus `V(f) ⊆ ℙ³`.
 -/
 
 
-noncomputable section
+public noncomputable section
 
 namespace AlgebraicGeometry
 

@@ -2,7 +2,7 @@
 
 
 import Theorem.RingTheory.Frobenius.Abelian
-import Lemma.Int.Frobenius.Abelian
+import Theorem.Int.Frobenius.Abelian
 import Mathlib.FieldTheory.Galois.Abelian
 import Mathlib.NumberTheory.NumberField.Basic
 variable {R S G : Type*} [CommRing R] [CommRing S] [Algebra R S]

@@ -2,6 +2,7 @@ import Lemma.Real.Anchors.RobbinsMonroβ
 import Lemma.Real.Any_And_Ge_0_All_Le.of.Summable
 import Lemma.Random.Any_Ge_0AndAll_All_LeNormSub_MulNormSub
 import Lemma.Random.Any_Ge_0AndAll_All_LeNormSub_MulSumIco_Exp.of.Any_Ge_0AndAll_All_LeNormSub_MulNormSub.All_Ge_0.IteratesOfResidual
+import Initialize.Tactic.Attr.Basic
 open Real Iterates Random Finset
 
 @[path]
@@ -36,3 +37,4 @@ private lemma main
     _ = _ := by ring
 
 -- created on 2026-09-26
+-- updated on 2026-11-17

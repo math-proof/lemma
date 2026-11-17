@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/TransferMatrixOfGRH.lean -/
 
-import Mathlib.Combinatorics.SimpleGraph.Clique
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Clique
+
+@[expose] public section
+
 open scoped BigOperators
 
 /-!

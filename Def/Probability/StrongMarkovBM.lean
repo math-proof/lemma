@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Abbrev.v1.Atlas.Probability.code.StoppingTimeContinuous
-import Mathlib.Probability.Independence.Basic
-import Mathlib.Probability.Distributions.Gaussian.Real
+module
+
+public import Abbrev.v1.Atlas.Probability.code.StoppingTimeContinuous
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.Probability.Distributions.Gaussian.Real
+
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory MeasurableSpace
 open scoped NNReal ENNReal
 

@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.TwoSidedIdeal.Basic
-import Mathlib.RingTheory.SimpleModule.Basic
+module
 
+public import Mathlib.RingTheory.TwoSidedIdeal.Basic
+public import Mathlib.RingTheory.SimpleModule.Basic
+
+@[expose] public section
 
 noncomputable section
 

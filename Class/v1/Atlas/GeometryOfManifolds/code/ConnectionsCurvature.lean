@@ -18,13 +18,11 @@ import Mathlib.Data.Complex.Basic
 import Mathlib.Tactic
 import Mathlib.Geometry.Manifold.VectorBundle.CovariantDerivative.Basic
 import Def.v1.Atlas.GeometryOfManifolds.code.DifferentialForms.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.DifferentialForms
 import Def.v1.Atlas.GeometryOfManifolds.code.ConnectionsCurvature.Part2
 open Bundle NormedSpace
 open scoped Manifold ContDiff Topology
 
 open DifferentialFormSpace
-
 
 /-- A ring $R$ equipped with a differential $d$ satisfying $d \circ d = 0$, abstracting the
 exterior derivative on matrix-valued forms. -/

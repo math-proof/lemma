@@ -1,5 +1,6 @@
 import Lemma.Random.MEqExpectS.of.CondIndep.Integrable.MeasurableJoint.Measurable
 import Def.Probability.Process.HiddenMarkovSequence.Part2
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Random
 
 
@@ -42,4 +43,4 @@ private lemma main
 
 
 -- created on 2023-04-05
--- updated on 2026-10-26
+-- updated on 2026-11-17

@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.AlgebraicGeometryI.code.CohomologyConnection
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CohomologyConnection
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CohomologyConnection
 
 
 noncomputable section

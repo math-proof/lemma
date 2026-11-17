@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/ULDMotzkinNumberOfRankR.lean -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Data.Fintype.Sigma
-import Mathlib.Data.Fintype.Sum
-import Def.Combinatorics.Enumerative.ULDMotzkinNumberOfRankR
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Fintype.Pi
+public import Mathlib.Data.Fintype.Sigma
+public import Mathlib.Data.Fintype.Sum
+public import Def.Combinatorics.Enumerative.ULDMotzkinNumberOfRankR
 /-!
 # (u,l,d)-Motzkin numbers of rank r
 
@@ -14,6 +16,7 @@ source `jis_source_ed70e97a9239ad812ad2e1c8`
 Boundary evidence only: statement `jis_6323169e4d744a20966ea9c4`.
 -/
 
+@[expose] public section
 
 namespace MetaMathlibExt
 

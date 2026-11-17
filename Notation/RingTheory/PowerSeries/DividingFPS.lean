@@ -2,8 +2,14 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.RingTheory.PowerSeries.DividingFPS
+
+module
+
+public import Mathlib
+public import Def.RingTheory.PowerSeries.DividingFPS
+
+public section
+
 /-!
 # Dividing Formal Power Series
 

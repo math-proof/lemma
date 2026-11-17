@@ -4,17 +4,22 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.NumberTheory.Padics.PadicIntegers
-import Mathlib.Algebra.AlgebraicCard
-import Mathlib.Algebra.MvPolynomial.Cardinal
-import Mathlib.Algebra.MvPolynomial.Funext
-import Mathlib.Analysis.Normed.Group.Ultra
-import Mathlib.FieldTheory.PrimitiveElement
-import Mathlib.NumberTheory.Padics.Hensel
-import Mathlib.NumberTheory.Padics.RingHoms
-import Mathlib.RingTheory.AlgebraicIndependent.Adjoin
-import Mathlib.RingTheory.AlgebraicIndependent.Transcendental
-import Mathlib.Topology.Algebra.Module.Cardinality
+module
+
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+public import Mathlib.Algebra.AlgebraicCard
+public import Mathlib.Algebra.MvPolynomial.Cardinal
+public import Mathlib.Algebra.MvPolynomial.Funext
+public import Mathlib.Analysis.Normed.Group.Ultra
+public import Mathlib.FieldTheory.PrimitiveElement
+public import Mathlib.NumberTheory.Padics.Hensel
+public import Mathlib.NumberTheory.Padics.RingHoms
+public import Mathlib.RingTheory.AlgebraicIndependent.Adjoin
+public import Mathlib.RingTheory.AlgebraicIndependent.Transcendental
+public import Mathlib.Topology.Algebra.Module.Cardinality
+
+@[expose] public section
+
 /-!
 # Cassels' embedding theorem
 

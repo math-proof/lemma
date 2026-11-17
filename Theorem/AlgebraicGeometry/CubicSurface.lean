@@ -1,8 +1,11 @@
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Mathlib.RingTheory.MvPolynomial.EulerIdentity
-import Mathlib.Algebra.MvPolynomial.PDeriv
-import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Structure.AlgebraicGeometry.CubicSurface
+module
+
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Mathlib.RingTheory.MvPolynomial.EulerIdentity
+public import Mathlib.Algebra.MvPolynomial.PDeriv
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Structure.AlgebraicGeometry.CubicSurface
+
 /-!
 # Cubic surfaces in ℙ³
 
@@ -11,6 +14,8 @@ We present such a surface by its **defining equation**: a nonzero homogeneous po
 degree `3` in the four homogeneous coordinates `x₀, x₁, x₂, x₃`. The surface itself is the
 projective zero locus `V(f) ⊆ ℙ³`.
 -/
+
+public section
 
 
 noncomputable section

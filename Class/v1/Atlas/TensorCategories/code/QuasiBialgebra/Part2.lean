@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/QuasiBialgebra.lean -/
 
 /-
@@ -8,18 +10,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Bialgebra.Basic
-import Mathlib.LinearAlgebra.TensorProduct.Basic
-import Mathlib.Algebra.Algebra.Bilinear
-import Mathlib.CategoryTheory.Monoidal.Functor
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.CategoryTheory.Functor.EpiMono
-import Mathlib.Algebra.Category.ModuleCat.Basic
-import Mathlib.CategoryTheory.Linear.Basic
-import Mathlib.CategoryTheory.Monoidal.Preadditive
-import Mathlib.CategoryTheory.Monoidal.Linear
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Structure.v1.Atlas.TensorCategories.code.QuasiBialgebra
+public import Mathlib.RingTheory.Bialgebra.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.Basic
+public import Mathlib.Algebra.Algebra.Bilinear
+public import Mathlib.CategoryTheory.Monoidal.Functor
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.CategoryTheory.Functor.EpiMono
+public import Mathlib.Algebra.Category.ModuleCat.Basic
+public import Mathlib.CategoryTheory.Linear.Basic
+public import Mathlib.CategoryTheory.Monoidal.Preadditive
+public import Mathlib.CategoryTheory.Monoidal.Linear
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Structure.v1.Atlas.TensorCategories.code.QuasiBialgebra
+public section
+
 set_option maxHeartbeats 800000
 
 open scoped TensorProduct

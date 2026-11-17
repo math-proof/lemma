@@ -1,5 +1,9 @@
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+
+@[expose] public section
 
 set_option autoImplicit false
 

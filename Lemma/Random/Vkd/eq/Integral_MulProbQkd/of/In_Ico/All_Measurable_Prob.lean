@@ -3,6 +3,8 @@ import Mathlib.MeasureTheory.Integral.Prod
 import Lemma.Random.Summable_MulPowWkd.of.In_Ico
 import Lemma.Random.Measurable_Vkd.of.All_Measurable_Prob
 import Lemma.Random.NormVkd.le.MulInvSub1Abs_R.of.In_Ico
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory PolicyGradient Random Real
 set_option maxHeartbeats 900000
 
@@ -107,4 +109,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-16
+-- updated on 2026-11-17

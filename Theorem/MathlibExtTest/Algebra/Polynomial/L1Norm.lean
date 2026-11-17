@@ -2,7 +2,7 @@
 
 
 import Def.Algebra.Polynomial.L1Norm
-import Lemma.Polynomial.L1Norm
+import Theorem.Polynomial.L1Norm
 
 
 namespace Polynomial

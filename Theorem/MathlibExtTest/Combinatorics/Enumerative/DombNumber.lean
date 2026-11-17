@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.DombNumber
-import Lemma.Finset.Enumerative.DombNumber
+import Theorem.Finset.Enumerative.DombNumber
 open scoped BigOperators
 
 

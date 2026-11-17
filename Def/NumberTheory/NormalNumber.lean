@@ -16,8 +16,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Algebra.Order.Archimedean.Real.Basic
-import Mathlib.Topology.MetricSpace.Pseudo.Defs
+module
+
+public import Mathlib.Algebra.Order.Archimedean.Real.Basic
+public import Mathlib.Topology.MetricSpace.Pseudo.Defs
+
+@[expose] public section
+
 open Real Filter
 
 /-!

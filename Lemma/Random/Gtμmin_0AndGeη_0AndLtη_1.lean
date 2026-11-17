@@ -1,5 +1,6 @@
 import Class.Dynamics.QLearning
 import Lemma.Matrix.All_Gt_0.of.Stationary.StochasticIrreducible
+import Initialize.Tactic.Attr.Basic
 open Finset
 
 @[path]
@@ -20,3 +21,4 @@ private lemma main
   refine ⟨h₀, ?_, ?_⟩ <;> unfold QLearningSpec.η <;> nlinarith
 
 -- created on 2026-09-26
+-- updated on 2026-11-17

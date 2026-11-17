@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NormalNumberSequence.lean -/
 
-import Mathlib.Data.Int.Basic
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Data.Int.Basic
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 /-!
 # A normal second-order number sequence
 

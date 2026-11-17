@@ -1,10 +1,12 @@
-import Structure.ModularCurve_ShimuraSubgroup
-import Lemma.PowerSeries.ShimuraGenerator
-import Lemma.Scheme.Correspondence
+module
+
+public import Structure.ModularCurve_ShimuraSubgroup
+public import Lemma.PowerSeries.ShimuraGenerator
+public import Lemma.Scheme.Correspondence
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace AlgebraicCurve
 

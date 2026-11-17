@@ -9,8 +9,10 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Def.FC.OeisA108081_count_words_in_x_is_a_shifted.Part8
+module
+
+public import Mathlib
+public import Def.FC.OeisA108081_count_words_in_x_is_a_shifted.Part8
 
 
 namespace OeisA108081
@@ -18,7 +20,7 @@ namespace OeisA108081
 open Nat
 
 
-inductive CoordPath : List EdgeCoord → Prop
+public inductive CoordPath : List EdgeCoord → Prop
   | nil : CoordPath []
   | singleton (q : EdgeCoord) : CoordPath [q]
   | cons {q r : EdgeCoord} {s : List EdgeCoord}

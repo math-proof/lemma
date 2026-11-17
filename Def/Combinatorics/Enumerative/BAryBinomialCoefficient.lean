@@ -1,11 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/BAryBinomialCoefficient.lean -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Defs
-import Mathlib.Data.Nat.Digits.Defs
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.List.GetD
+module
 
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Data.Nat.Digits.Defs
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.List.GetD
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

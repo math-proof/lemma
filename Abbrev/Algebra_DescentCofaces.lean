@@ -1,4 +1,6 @@
-import Mathlib
+module
+
+public import Mathlib
 
 set_option autoImplicit false
 
@@ -6,7 +8,7 @@ universe u
 
 open TensorProduct CategoryTheory
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace Algebra.DescentCofaces
 

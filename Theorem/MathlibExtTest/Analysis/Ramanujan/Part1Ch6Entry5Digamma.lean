@@ -1,13 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Ramanujan/Part1Ch6Entry5Digamma.lean -/
+module
 
+public import Theorem.Analysis.SpecialFunctions.Part1Ch6Entry5Digamma
 
-import Theorem.Analysis.SpecialFunctions.Part1Ch6Entry5Digamma
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 6, Entry 5 API checks
 
 The first terms of the factorial series, its convergence and functional equation at `x = 1`, and
 the first asymptotic orders.
 -/
+
+public section
 
 
 namespace MathlibExtTest.Analysis.Ramanujan.Part1Ch6Entry5Digamma

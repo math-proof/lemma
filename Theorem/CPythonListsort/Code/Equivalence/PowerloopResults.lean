@@ -1,14 +1,18 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/PowerloopResults.lean -/
+module
 
-import Def.CPythonListsort.Code.Equivalence.Powerloop
-import Mathlib
-import Def.CPythonListsort.Code.Equivalence.PowerloopResults
+public import Def.CPythonListsort.Code.Equivalence.Powerloop
+public import Mathlib
+public import Def.CPythonListsort.Code.Equivalence.PowerloopResults
+
 /-!
 # Total correctness of `powerloop`
 
 This file discharges the input bounds, trace-safety, termination, quotient-bit,
 and concrete range obligations for CPython's 64-bit `powerloop` transcription.
 -/
+
+public section
 
 
 namespace CPythonListsort

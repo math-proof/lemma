@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeSupport.lean -/
 
-import Mathlib.Data.Nat.Prime.Basic
+module
 
+public import Mathlib.Data.Nat.Prime.Basic
+
+@[expose] public section
 
 namespace Nat
 

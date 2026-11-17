@@ -6,7 +6,13 @@ All rights reserved.
 Copyright (c) 2024 AlgebraicCombinatorics Contributors. All rights reserved.
 Authors: AlgebraicCombinatorics Contributors
 -/
-import Mathlib
+
+module
+
+public import Mathlib
+
+@[expose] public section
+
 /-!
 # Polynomials
 

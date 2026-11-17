@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Structure.v1.Atlas.Buildings.code.BNPair.Basic.Part2
 import Def.v1.Atlas.Buildings.code.BNPair.ParabolicDefs.Part2
-import Lemma.Nat.NonemptyBruhatCell
+import Theorem.Nat.NonemptyBruhatCell
 import Mathlib.Tactic.Group
 set_option linter.unusedSectionVars false
 

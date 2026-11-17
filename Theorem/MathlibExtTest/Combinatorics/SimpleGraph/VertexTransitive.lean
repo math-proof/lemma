@@ -2,7 +2,7 @@
 
 
 import Theorem.Combinatorics.SimpleGraph.VertexTransitive
-import Lemma.SimpleGraph.VertexTransitive
+import Theorem.SimpleGraph.VertexTransitive
 open SimpleGraph
 
 

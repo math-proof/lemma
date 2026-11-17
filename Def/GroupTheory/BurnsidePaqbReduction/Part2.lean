@@ -1,10 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqbReduction.lean -/
 
-import Mathlib.GroupTheory.GroupAction.ConjAct
-import Mathlib.GroupTheory.GroupAction.Quotient
-import Mathlib.GroupTheory.PGroup
-import Mathlib.GroupTheory.Sylow
-import Theorem.GroupTheory.BurnsidePaqbReduction
+module
+
+public import Mathlib.GroupTheory.GroupAction.ConjAct
+public import Mathlib.GroupTheory.GroupAction.Quotient
+public import Mathlib.GroupTheory.PGroup
+public import Mathlib.GroupTheory.Sylow
+public import Theorem.GroupTheory.BurnsidePaqbReduction
+
+@[expose] public section
+
 /-!
 # Conjugacy classes and a Sylow-center reduction step for groups of order `p ^ a * q ^ b`
 

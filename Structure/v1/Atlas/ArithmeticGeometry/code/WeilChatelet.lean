@@ -8,12 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.ArithmeticGeometry.code.Torsors
-import Def.v1.Atlas.ArithmeticGeometry.code.EllipticCurves.Part7
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.EllipticCurves
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Divisors
-import Def.v1.Atlas.ArithmeticGeometry.code.Divisors.Part11
-import Theorem.v1.Atlas.ArithmeticGeometry.code.WeilChatelet
+module
+
+public import Def.v1.Atlas.ArithmeticGeometry.code.Torsors
+public import Def.v1.Atlas.ArithmeticGeometry.code.EllipticCurves.Part7
+public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.EllipticCurves
+public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Divisors
+public import Def.v1.Atlas.ArithmeticGeometry.code.Divisors.Part11
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.WeilChatelet
 /-- Abstract predicate: the type `C_pts` represents the points of a smooth curve of arithmetic
 genus 1 over $k$. The concrete content is deferred via `sorry`. -/
 /-- An $E$-torsor over $k$ is nonempty (since `AddTorsor` requires nonemptiness). -/
@@ -30,7 +32,7 @@ variable {k : Type u} [Field k] {W : WeierstrassCurve k} [W.IsElliptic]
 
 end ETorsor
 
-noncomputable section
+public noncomputable section
 
 universe u
 

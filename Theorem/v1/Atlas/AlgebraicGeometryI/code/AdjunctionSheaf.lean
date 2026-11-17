@@ -7,15 +7,17 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.RingTheory.Kaehler.Polynomial
-import Mathlib.RingTheory.Ideal.Cotangent
-import Mathlib.LinearAlgebra.Dimension.StrongRankCondition
-import Mathlib.RingTheory.Smooth.Basic
-import Mathlib.LinearAlgebra.ExteriorPower.Basic
+public import Mathlib.RingTheory.Kaehler.Polynomial
+public import Mathlib.RingTheory.Ideal.Cotangent
+public import Mathlib.LinearAlgebra.Dimension.StrongRankCondition
+public import Mathlib.RingTheory.Smooth.Basic
+public import Mathlib.LinearAlgebra.ExteriorPower.Basic
 set_option synthInstance.maxHeartbeats 80000
 set_option maxHeartbeats 400000
 
+public section
 
 noncomputable section
 

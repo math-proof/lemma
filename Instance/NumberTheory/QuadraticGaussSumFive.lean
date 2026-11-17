@@ -4,10 +4,12 @@
   Author: Muse Code powered by Meta Muse Spark (Muse Spark 1.3)
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.NumberTheory.LegendreSymbol.Basic
-import Mathlib.Tactic
-import Mathlib.Tactic.NormNum.LegendreSymbol
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.NumberTheory.LegendreSymbol.Basic
+public import Mathlib.Tactic
+public import Mathlib.Tactic.NormNum.LegendreSymbol
 /-!
 # Quadratic Gauss sum modulo five
 
@@ -23,6 +25,7 @@ classical; the JIS source cites Berndt, Evans, and Williams, Theorem 1.5.2,
 and this module makes no claim that the JIS authors originated it.
 -/
 
+@[expose] public section
 
 namespace MetaMathlibExt
 

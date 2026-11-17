@@ -1,8 +1,10 @@
-import Structure.AlgebraicGeometry_NeronModelPropertyBundleCarrier
+module
+
+public import Structure.AlgebraicGeometry_NeronModelPropertyBundleCarrier
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 universe u
 
@@ -21,8 +23,6 @@ namespace GoodReductionJacobian
 def schemeHomOverComp {B T' T A : Scheme.{u}} {t : T ⟶ B} {t' : T' ⟶ B} {f : A ⟶ B}
     (ψ : T' ⟶ T) (hψ : ψ ≫ t = t') (x : SchemeHomOver t f) : SchemeHomOver t' f :=
   ⟨ψ ≫ x.1, by rw [Category.assoc, x.2, hψ]⟩
-
-@[simp]
 
 structure RelativeGroupLaw (R : Type u) [CommRing R] {A : Scheme.{u}}
     (f : A ⟶ Spec (CommRingCat.of R)) where

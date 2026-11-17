@@ -1,7 +1,10 @@
-import Mathlib.Algebra.Group.Pointwise.Finset.Basic
-import Mathlib.Data.Finset.Sort
-import Mathlib.Tactic.Abel
+module
 
+public import Mathlib.Algebra.Group.Pointwise.Finset.Basic
+public import Mathlib.Data.Finset.Sort
+public import Mathlib.Tactic.Abel
+
+public section
 
 section
 

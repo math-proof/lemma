@@ -10,8 +10,8 @@ LICENSE file in the root directory of this source tree.
 
 import Theorem.v1.Atlas.GeometryOfManifolds.code.CompatibleComplexStructures
 import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.CompatibleComplexStructures
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.ConnectionsCurvature
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.ConnectionsCurvature
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
 import Structure.v1.Atlas.GeometryOfManifolds.code.ConnectionsCurvature.Part7
 import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
 import Mathlib.Geometry.Manifold.VectorBundle.CovariantDerivative.Basic

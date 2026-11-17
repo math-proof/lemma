@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergePolicyReplay.lean -/
 
-import Inductive.CPythonListsort.Code.Assembly.MergeTreeCost
-import Def.CPythonListsort.Code.Transcription.Powerloop
-import Mathlib.Tactic
-import Def.CPythonListsort.Code.Assembly.MergePolicyReplay
+module
+
+public import Inductive.CPythonListsort.Code.Assembly.MergeTreeCost
+public import Def.CPythonListsort.Code.Transcription.Powerloop
+public import Mathlib.Tactic
+public import Def.CPythonListsort.Code.Assembly.MergePolicyReplay
 /-!
 # Checked replay of the interleaved PowerSort policy trace
 
@@ -21,6 +23,7 @@ is trusted, and physical trimming does not alter the logical merge cost.
 
 /-! ## Raw event projections -/
 
+@[expose] public section
 
 namespace CPythonListsort
 

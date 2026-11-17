@@ -1,5 +1,8 @@
-import Mathlib
+module
 
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # API for ExistsUnique

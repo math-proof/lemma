@@ -9,10 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.TensorCategories.code.AlgebrasInCategories.Part4
-import Lemma.Category.Atlas.v1.TensorCategories.code.AlgebrasInCategories
-import Lemma.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
-import Lemma.Category.Atlas.v1.TensorCategories.code.InternalHom
-import Lemma.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
 import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
 import Def.v1.Atlas.TensorCategories.code.InternalHom.Part4
 import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
@@ -28,13 +24,11 @@ set_option autoImplicit false
 
 universe v₁ v₂ u₁ u₂
 
-
 namespace CategoryTheory
 
 open Category MonoidalCategory MonObj LeftModCat
 
 variable {C : Type u₁} [Category.{v₁} C] [MonoidalCategory C]
-
 
 attribute [instance] InternalEndAlgebra.monObj
 
@@ -58,13 +52,11 @@ class IsIndecomposableModuleCategoryBasic
   nonempty : Nonempty M
   indecomposable : True
 
-
 /-- Specialization of `exact_module_cat_equiv` to the indecomposable case. -/
 class HasProjectiveGenerator
     (C : Type u₁) [Category.{v₁} C] [MonoidalCategory C]
     (M : Type u₂) [Category.{v₂} M]
     [ExactModuleCategory C M] extends
     ExactModCatInternalHom C M
-
 
 end CategoryTheory

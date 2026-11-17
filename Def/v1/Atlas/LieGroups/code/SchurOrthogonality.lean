@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.LieGroups.code.SchurLemma
-import Lemma.Fin.Any_Eq_SMul.of.All_ToMonoidHom.IsIrreducible
+import Theorem.Fin.Any_Eq_SMul.of.All_ToMonoidHom.IsIrreducible
 import Def.v1.Atlas.LieGroups.code.IsotypicPeterWeyl.Part3
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 import Mathlib.Analysis.InnerProductSpace.Adjoint

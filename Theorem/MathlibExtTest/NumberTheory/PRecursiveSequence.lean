@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PRecursiveSequence.lean -/
+module
 
+public import Def.NumberTheory.PRecursiveSequence
 
-import Def.NumberTheory.PRecursiveSequence
-
+public section
 
 namespace MetaMathlibExt
 

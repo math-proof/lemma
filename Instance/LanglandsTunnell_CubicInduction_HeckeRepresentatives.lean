@@ -1,5 +1,4 @@
 -- Carved from Lemma/Definitions/Def_LanglandsTunnell_CubicInduction_HeckeRepresentatives.lean: instance decls only.
-import Lemma.Matrix.CubicInduction_Structure
 import Lemma.Matrix.CubicInduction_HeckeRepresentatives
 
 set_option autoImplicit false

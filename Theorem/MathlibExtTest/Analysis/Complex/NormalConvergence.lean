@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Complex/NormalConvergence.lean -/
 
 
-import Lemma.Real.Complex.NormalConvergence
+import Theorem.Real.Complex.NormalConvergence
 import Def.MathlibExtTest.Analysis.Complex.NormalConvergence
 open Complex MeasureTheory Topology Set Filter
 

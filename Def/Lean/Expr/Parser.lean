@@ -1,4 +1,10 @@
-import Instance.Lean.PrettyPrinter.Str
+module
+
+public import Instance.Lean.PrettyPrinter.Str
+public import Mathlib.Control.Basic
+
+@[expose] public section
+
 open Lean.Meta
 open Lean (Name Level Literal FormatWithInfos PPContext getExprMVarAssignment? getEnv getConstInfo getLCtx BinderInfo)
 set_option linter.unusedVariables false

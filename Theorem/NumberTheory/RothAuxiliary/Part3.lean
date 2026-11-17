@@ -25,7 +25,7 @@ import Mathlib.RingTheory.Polynomial.Wronskian
 import Mathlib.RingTheory.Algebraic.Integral
 import Mathlib.Tactic
 import Def.NumberTheory.RothAuxiliary.Part5
-import Lemma.Fin.RothWeight.eq.AddRothCenteredSumDiv_2.of.RothBox
+import Theorem.Fin.RothWeight.eq.AddRothCenteredSumDiv_2.of.RothBox
 set_option maxHeartbeats 999999
 
 open scoped BigOperators

@@ -1,15 +1,17 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GameTheory/SpragueGrundy.lean -/
+module
 
-import Mathlib.Data.Finset.Basic
-import Mathlib.Data.Finset.Filter
-import Mathlib.Data.Finset.Image
-import Mathlib.Data.Finset.Union
-import Mathlib.Data.Fin.Basic
-import Mathlib.Data.Fintype.Basic
-import Mathlib.Order.WellFounded
-import Mathlib.Order.Lattice.Nat
-import Def.GameTheory.SpragueGrundy
+public import Mathlib.Data.Finset.Basic
+public import Mathlib.Data.Finset.Filter
+public import Mathlib.Data.Finset.Image
+public import Mathlib.Data.Finset.Union
+public import Mathlib.Data.Fin.Basic
+public import Mathlib.Data.Fintype.Basic
+public import Mathlib.Order.WellFounded
+public import Mathlib.Order.Lattice.Nat
+public import Def.GameTheory.SpragueGrundy
 
+public section
 
 namespace MetaMathlibExt.SpragueGrundy
 

@@ -1,15 +1,17 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/W4PathDominoTilings.lean -/
+module
 
-import Mathlib.Combinatorics.SimpleGraph.Prod
-import Mathlib.Combinatorics.SimpleGraph.Hasse
-import Mathlib.Combinatorics.SimpleGraph.DeleteEdges
-import Mathlib.Combinatorics.SimpleGraph.Matching
-import Mathlib.Data.Nat.Fib.Basic
-import Def.NumberTheory.PellNumberSequence
-import Mathlib.Tactic.Ring
-import Def.Combinatorics.Enumerative.W4PathDominoTilings
+public import Mathlib.Combinatorics.SimpleGraph.Prod
+public import Mathlib.Combinatorics.SimpleGraph.Hasse
+public import Mathlib.Combinatorics.SimpleGraph.DeleteEdges
+public import Mathlib.Combinatorics.SimpleGraph.Matching
+public import Mathlib.Data.Nat.Fib.Basic
+public import Def.NumberTheory.PellNumberSequence
+public import Mathlib.Tactic.Ring
+public import Def.Combinatorics.Enumerative.W4PathDominoTilings
 open SimpleGraph
 
+public section
 
 section
 

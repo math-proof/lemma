@@ -1,5 +1,8 @@
-import Mathlib.Order.Defs.LinearOrder
+module
 
+public import Mathlib.Order.Defs.LinearOrder
+
+@[expose] public section
 
 /-- Clamp `x` to `[a, b]` (NumPy `clip`; Lemma path `Clip`).
 When `a ≤ b`, equal to `max a (min b x)` and to `(Set.projIcc a b h x : α)`. -/

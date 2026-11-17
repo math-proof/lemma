@@ -10,14 +10,19 @@ Proof: standard 4x4 CHSH observables (Pauli-type block matrices with
   entry by entry against the archive candidate before retention.
 -/
 
-import Mathlib.Algebra.Star.CHSH
-import Mathlib.Data.Complex.Basic
-import Mathlib.LinearAlgebra.Eigenspace.Basic
-import Mathlib.LinearAlgebra.Matrix.ToLin
-import Mathlib.LinearAlgebra.Matrix.ConjTranspose
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Algebra.Star.CHSH
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.LinearAlgebra.Eigenspace.Basic
+public import Mathlib.LinearAlgebra.Matrix.ToLin
+public import Mathlib.LinearAlgebra.Matrix.ConjTranspose
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 open Matrix
 
 

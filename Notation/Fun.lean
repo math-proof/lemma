@@ -1,5 +1,10 @@
-import Structure.Fun
-import Structure.Data.List.Slice
+module
+
+public import Structure.Fun
+public import Structure.Data.List.Slice
+
+public section
+
 open Lean
 
 /-- Type sugar: `ℕ ⇀ ℝ` means `Fun ℕ ℝ`, and `(k : ℕ) ⇀ α k` means `PiFun (fun k => α k)`. -/
@@ -14,7 +19,7 @@ macro_rules
 /-- Infoview: print `Fun α β` as `α ⇀ β`. Same precedence and right-associativity as `→`,
 so `ℕ ⇀ 𝒫 → ℝ` is `Fun ℕ (𝒫 → ℝ)` and needs no extra parens on the right of `⇀`. -/
 @[app_unexpander Fun]
-def Fun.unexpandType : PrettyPrinter.Unexpander
+meta def Fun.unexpandType : PrettyPrinter.Unexpander
   | `($_ $α $β) => `($α ⇀ $β)
   | _ => throw ()
 
@@ -23,7 +28,7 @@ open PrettyPrinter Delaborator SubExpr in
 Uses a delaborator so the binder type is kept (`pp` would otherwise omit it,
 yielding `(k) ⇀ α k`). Ordinary `Fun` stays on `Fun.unexpandType`. -/
 @[app_delab PiFun]
-def PiFun.delabType : Delab := whenNotPPOption getPPExplicit do
+meta def PiFun.delabType : Delab := whenNotPPOption getPPExplicit do
   guard <| (← getExpr).consumeMData.getAppNumArgs == 2
   withAppArg do
     guard (← getExpr).isLambda
@@ -45,12 +50,13 @@ instance : GetElem (Fun ι α) ι α (fun _ _ => True) where
 Over-application (e.g. a residual call after the index) pretty-prints as `f[i] x`.
 Takes priority over field notation, which would otherwise show `f.toFun i`. -/
 @[app_unexpander Fun.toFun]
-def toFun.unexpand : PrettyPrinter.Unexpander
+meta def toFun.unexpand : PrettyPrinter.Unexpander
   | `($_ $f $i) => `($f[$i])
   | _ => throw ()
 
 /-- Open-ended path slice: `r[t:]` for `r : Fun ℕ α` is `k ↦ r.toFun (t + k)`,
 same shape as `Function.getSliceFrom` on bare sequences (so `⬝ᵥ` / Dot keep working). -/
+@[expose]
 def getSliceFrom (f : Fun ℕ α) (t : ℕ) : ℕ → α :=
   fun k ↦ f.toFun (t + k)
 
@@ -65,7 +71,7 @@ open Elab Term Meta in
 /-- `r[t:]` when `r : Fun ℕ _` → `Fun.getSliceFrom r t`.
 Otherwise `throwUnsupportedSyntax` so other elaborators handle bare `ℕ → α` / lists. -/
 @[term_elab «term__[_:]»]
-def Fun.elabGetSliceFrom : TermElab := fun stx expectedType? =>
+meta def Fun.elabGetSliceFrom : TermElab := fun stx expectedType? =>
   match stx with
   | `($x[$start :]) => do
     let saved ← saveState
@@ -86,7 +92,7 @@ namespace Fun
 
 /-- Infoview: print `Fun.getSliceFrom r t` as `r[t:]`. -/
 @[app_unexpander getSliceFrom]
-def getSliceFrom.unexpand : PrettyPrinter.Unexpander
+meta def getSliceFrom.unexpand : PrettyPrinter.Unexpander
   | `($_ $f $t) => `($f[$t :])
   | `($_ $f $t $k) => `($f[$t :] $k)
   | _ => throw ()
@@ -111,7 +117,7 @@ def Function.getSlice {β : Type*} [FunSlice β] (x : ℕ → β) (s : Slice) : 
 /-- Closed-slice infoview sugar needs `Syntax.Data.List` slice forms; skip here to stay
 cycle-free. Prefer importing that module at use sites that care about `f[a:b]` pretty-printing. -/
 @[app_unexpander Function.getSlice]
-def Function.getSlice.unexpand : PrettyPrinter.Unexpander
+meta def Function.getSlice.unexpand : PrettyPrinter.Unexpander
   | _ => throw ()
 
 namespace Fun
@@ -121,7 +127,7 @@ abbrev getSlice {α : Type*} [FunSlice α] (f : Fun ℕ α) (s : Slice) : FunSli
   Function.getSlice f.toFun s
 
 @[app_unexpander Fun.getSlice]
-def getSlice.unexpand : PrettyPrinter.Unexpander
+meta def getSlice.unexpand : PrettyPrinter.Unexpander
   | _ => throw ()
 
 /-- NumPy-style top-left block: `y[:i, :j]` for `y : Fun ℕ (Fun ℕ α)`. -/
@@ -144,7 +150,7 @@ syntax:max term noWs "[:" withoutPosition(term:60) "," ":" withoutPosition(term:
 open Elab Term Meta in
 /-- `y[:i, :j]` → `Fun.getSlice2` when `y : Fun ℕ (Fun ℕ _)`, else `Function.getSlice2`. -/
 @[term_elab «term__[:_,:_]»]
-def Fun.elabGetSlice2 : TermElab := fun stx expectedType? =>
+meta def Fun.elabGetSlice2 : TermElab := fun stx expectedType? =>
   match stx with
   | `($x[:$rows, :$cols]) => do
     let saved ← saveState

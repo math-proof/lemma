@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/LahNumber.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.LahNumber
 
-import Def.Combinatorics.Enumerative.LahNumber
-
+public section
 
 namespace MetaMathlibExt
 

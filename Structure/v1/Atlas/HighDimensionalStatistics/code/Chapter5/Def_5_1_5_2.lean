@@ -8,15 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.MeasureTheory.Measure.MeasureSpace
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.InformationTheory.KullbackLeibler.Basic
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Def_5_1_5_2
+module
+
+public import Mathlib.MeasureTheory.Measure.MeasureSpace
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.InformationTheory.KullbackLeibler.Basic
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Def_5_1_5_2
 open MeasureTheory
 
 
-noncomputable section
+public noncomputable section
 
 namespace Minimax
 

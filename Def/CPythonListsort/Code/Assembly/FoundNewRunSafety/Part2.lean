@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/FoundNewRunSafety.lean -/
 
-import Def.CPythonListsort.Code.Assembly.MergeAtSafety.Part4
-import Lemma.List.Atlas.CPythonListsort.Code.Policy.FoundNewRunPreservation
-import Structure.CPythonListsort.Code.Assembly.FoundNewRunSafety
+module
+
+public import Structure.CPythonListsort.Code.Transcription.MergeState.Part3
+
+@[expose] public section
 /-!
 # `found_new_run` safety
 

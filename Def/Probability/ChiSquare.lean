@@ -1,6 +1,11 @@
-import Mathlib.Probability.Distributions.Gamma
-import Mathlib.Probability.Distributions.Gaussian.Real
-import Mathlib.Algebra.BigOperators.Fin
+module
+
+public import Mathlib.Probability.Distributions.Gamma
+public import Mathlib.Probability.Distributions.Gaussian.Real
+public import Mathlib.Algebra.BigOperators.Fin
+
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory
 open scoped ENNReal NNReal
 

@@ -2,7 +2,7 @@
 
 
 import Class.Topology.CountablyMonolithic
-import Lemma.Set.CountablyMonolithic
+import Theorem.Set.CountablyMonolithic
 import Mathlib.Topology.Metrizable.Basic
 
 

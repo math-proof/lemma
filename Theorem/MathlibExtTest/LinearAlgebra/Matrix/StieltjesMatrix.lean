@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Matrix/StieltjesMatrix.lean -/
+module
 
+public import Def.LinearAlgebra.Matrix.StieltjesMatrix
 
-import Def.LinearAlgebra.Matrix.StieltjesMatrix
-
+public section
 
 namespace MetaMathlibExt
 

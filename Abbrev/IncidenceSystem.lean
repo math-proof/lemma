@@ -1,6 +1,10 @@
-import Mathlib
-import Inductive.IncidenceSystem_Var
-import Structure.IncidenceSystem
+module
+
+public import Mathlib
+public import Inductive.IncidenceSystem_Var
+public import Structure.IncidenceSystem
+
+@[expose] public section
 
 set_option autoImplicit false
 

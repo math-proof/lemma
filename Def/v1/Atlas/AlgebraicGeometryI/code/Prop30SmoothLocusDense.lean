@@ -8,11 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.Noetherian
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.Topology.Basic
-import Mathlib.AlgebraicGeometry.FunctionField
+module
 
+public import Mathlib.AlgebraicGeometry.Noetherian
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.Topology.Basic
+public import Mathlib.AlgebraicGeometry.FunctionField
+
+@[expose] public section
 
 noncomputable section
 

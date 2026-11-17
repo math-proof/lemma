@@ -1,5 +1,9 @@
-import Mathlib
-import Def.LocalReciprocity_IsLocalReciprocityMap
+module
+
+public import Mathlib
+public import Def.LocalReciprocity_IsLocalReciprocityMap
+
+public section
 
 set_option autoImplicit false
 

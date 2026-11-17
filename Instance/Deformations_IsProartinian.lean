@@ -1,7 +1,12 @@
 -- Carved from Lemma/Definitions/Def_Deformations_IsProartinian.lean: instance decls only.
-import Mathlib
-import Class.Patching_SystemTypes
-import Instance.Deformations_Deformations_Lemmas
+
+module
+
+public import Mathlib
+public import Class.Patching_SystemTypes
+public import Instance.Deformations_Deformations_Lemmas
+
+@[expose] public section
 
 set_option autoImplicit false
 

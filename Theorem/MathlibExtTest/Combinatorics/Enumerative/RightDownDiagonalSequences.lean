@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/RightDownDiagonalSequences.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.RightDownDiagonalSequences
 
-import Def.Combinatorics.Enumerative.RightDownDiagonalSequences
-
+public section
 
 namespace MetaMathlibExt
 

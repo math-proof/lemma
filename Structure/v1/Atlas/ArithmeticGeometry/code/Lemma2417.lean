@@ -8,11 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.NumberTheory.Padics.PadicIntegers
-import Mathlib.Tactic
+module
+
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+public import Mathlib.Tactic
 
 
-noncomputable section
+public noncomputable section
 
 variable {p : ℕ} [hp : Fact (Nat.Prime p)]
 

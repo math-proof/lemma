@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/TribonacciSequenceWithInitialValues001.lean -/
+module
 
+public import Def.NumberTheory.TribonacciSequenceWithInitialValues001
 
-import Def.NumberTheory.TribonacciSequenceWithInitialValues001
-
+public section
 
 namespace MetaMathlibExt
 

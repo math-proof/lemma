@@ -1,12 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeCounting/LaplaceTheta.lean -/
 
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
-import Mathlib.NumberTheory.PrimeCounting
-import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
-import Mathlib.Analysis.PSeries
-import Mathlib.NumberTheory.SumPrimeReciprocals
-import Mathlib.NumberTheory.Chebyshev
-import Lemma.Real.LaplaceTransform.ExponentialBound
+module
+
+public import Mathlib.MeasureTheory.Integral.DominatedConvergence
+public import Mathlib.NumberTheory.PrimeCounting
+public import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
+public import Mathlib.Analysis.PSeries
+public import Mathlib.NumberTheory.SumPrimeReciprocals
+public import Mathlib.NumberTheory.Chebyshev
+
+@[expose] public section
+
 open MeasureTheory Finset
 
 /-!

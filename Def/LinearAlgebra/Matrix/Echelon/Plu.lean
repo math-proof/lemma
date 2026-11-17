@@ -1,7 +1,12 @@
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.Basic.Complex.Basic
-import Mathlib.Order.Interval.Finset.Fin
-import Def.LinearAlgebra.Matrix.Permutation
+module
+
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.Order.Interval.Finset.Fin
+public import Def.LinearAlgebra.Matrix.Permutation
+
+@[expose] public section
+
 open Matrix
 
 

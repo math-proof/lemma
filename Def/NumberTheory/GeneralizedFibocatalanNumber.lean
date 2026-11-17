@@ -1,13 +1,18 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/GeneralizedFibocatalanNumber.lean -/
 
-import Mathlib.Data.Nat.Fib.Basic
-import Mathlib.Algebra.Order.BigOperators.GroupWithZero.Finset
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Data.Nat.Factorization.Basic
-import Mathlib.Data.Rat.Star
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.NormNum
+module
+
+public import Mathlib.Data.Nat.Fib.Basic
+public import Mathlib.Algebra.Order.BigOperators.GroupWithZero.Finset
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Data.Nat.Factorization.Basic
+public import Mathlib.Data.Rat.Star
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.NormNum
+
+@[expose] public section
+
 /-!
 Source: Killpatrick, JIS VOL 28, `killp6.tex`,
 SHA256 `660c140f0fb7d3932abbea93631978efa4b1bf33bb089ba35a36a0556d5c40ec`.

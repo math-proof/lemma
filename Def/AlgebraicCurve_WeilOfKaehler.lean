@@ -1,5 +1,9 @@
-import Mathlib
-import Class.AlgebraicCurve_LocalResidue
+module
+
+public import Mathlib
+public import Class.AlgebraicCurve_LocalResidue
+
+@[expose] public section
 
 set_option autoImplicit false
 

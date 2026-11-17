@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Degeneracy.lean -/
 
-import Mathlib.Combinatorics.SimpleGraph.Basic
-import Mathlib.Data.Set.Card
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Basic
+public import Mathlib.Data.Set.Card
+
+@[expose] public section
+
 /-!
 # Degenerate graphs
 

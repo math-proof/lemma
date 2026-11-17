@@ -8,11 +8,10 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.LieGroups.code.SL2Classification
-import Lemma.Complex.Nonempty_Realization
+module
 
-
-inductive KTypeBoundedness' where
+public import Theorem.v1.Atlas.LieGroups.code.SL2Classification
+public inductive KTypeBoundedness' where
   | boundedBoth
   | unboundedBoth
   | boundedBelow

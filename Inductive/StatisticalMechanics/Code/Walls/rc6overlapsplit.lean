@@ -9,7 +9,9 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Walls.rc3_minimalwitnessencoded
+module
+
+public import Theorem.StatisticalMechanics.Code.Walls.rc3_minimalwitnessencoded
 open Finset
 
 
@@ -18,7 +20,7 @@ namespace StatMech.Walls
 open StatMech ConfigSpace
 
 
-inductive WitnessClass where
+public inductive WitnessClass where
   
   | neither : WitnessClass
   

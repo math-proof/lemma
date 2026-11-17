@@ -1,8 +1,10 @@
-import Structure.AlgebraicGeometry_PolarisedAbelianScheme
+module
+
+public import Structure.AlgebraicGeometry_PolarisedAbelianScheme
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 universe u
 

@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
-import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.AlgebraicGeometry.Scheme
+module
+
+public import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
+public import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.AlgebraicGeometry.Scheme
+
+@[expose] public section
+
 open AlgebraicGeometry CategoryTheory
 
 

@@ -9,15 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.TensorCategories.code.TensorNondegen.ZeroTensorZero
-import Lemma.Category.Atlas.v1.TensorCategories.code.TensorNondegen.ZeroTensorZero
-import Lemma.Category.Atlas.v1.TensorCategories.code.TensorNondegen.DualZero
-import Lemma.Category.Atlas.v1.TensorCategories.code.TensorNondegen.EvalCoevalArg
 import Theorem.v1.Atlas.TensorCategories.code.TensorNondegen.DualZero
 import Theorem.v1.Atlas.TensorCategories.code.TensorNondegen.EvalCoevalArg
 open CategoryTheory MonoidalCategory Category CategoryTheory.Limits
 
 universe v u
-
 
 noncomputable section
 

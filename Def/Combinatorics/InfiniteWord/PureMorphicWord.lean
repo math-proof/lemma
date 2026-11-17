@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/InfiniteWord/PureMorphicWord.lean -/
 
-import Mathlib.Data.Finite.Defs
-import Mathlib.Data.List.Basic
+module
+
+public import Mathlib.Data.Finite.Defs
+public import Mathlib.Data.List.Basic
+
+@[expose] public section
+
 /-!
 Pure morphic words after Huova and Durand.
 

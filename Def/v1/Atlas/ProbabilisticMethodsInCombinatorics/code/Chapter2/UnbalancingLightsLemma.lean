@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.MvPolynomial.Basic
-import Mathlib.Algebra.MvPolynomial.Degrees
-import Mathlib.Algebra.MvPolynomial.Funext
-import Mathlib.Analysis.Normed.Group.Basic
-import Mathlib.Data.Fintype.Powerset
+module
+
+public import Mathlib.Algebra.MvPolynomial.Basic
+public import Mathlib.Algebra.MvPolynomial.Degrees
+public import Mathlib.Algebra.MvPolynomial.Funext
+public import Mathlib.Analysis.Normed.Group.Basic
+public import Mathlib.Data.Fintype.Powerset
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open MvPolynomial Finset

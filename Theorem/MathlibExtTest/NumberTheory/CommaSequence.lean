@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/CommaSequence.lean -/
+module
 
-import Def.NumberTheory.CommaSequence
+public import Def.NumberTheory.CommaSequence
 open MetaMathlibExt
+
+public section
 
 #check MetaMathlibExt.commaMsd
 #check MetaMathlibExt.IsCommaCandidate

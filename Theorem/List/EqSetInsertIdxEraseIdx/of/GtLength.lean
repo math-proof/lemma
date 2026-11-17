@@ -1,0 +1,35 @@
+module
+
+public import Theorem.List.GtLengthInsertIdxEraseIdx.of.GtLength
+public import Theorem.List.Set.eq.AppendTake__Cons_Drop.of.GtLength
+public import Theorem.List.TakeInsertIdx.eq.Take.of.Ge
+public import Theorem.List.TakeEraseIdx.eq.Take.of.Ge
+public import Theorem.List.DropInsertIdx.eq.Drop.of.Lt
+public import Theorem.List.DropEraseIdx.eq.Drop.of.Le
+
+public section
+
+open List Nat
+
+
+public theorem List.EqSetInsertIdxEraseIdx.of.GtLength
+  {d : ℕ}
+  {s : List α}
+-- given
+  (h : s.length > d)
+  (a : α):
+-- imply
+  ((s.eraseIdx d).insertIdx d a).set d s[d] = s := by
+-- proof
+  rw [Set.eq.AppendTake__Cons_Drop.of.GtLength]
+  .
+    rw [TakeInsertIdx.eq.Take.of.Ge (by simp)]
+    rw [TakeEraseIdx.eq.Take.of.Ge (by simp)]
+    simp only [GetElem.getElem]
+    rw [DropInsertIdx.eq.Drop.of.Lt (by simp)]
+    rw [DropEraseIdx.eq.Drop.of.Le (by rfl)]
+    simp
+  .
+    apply GtLengthInsertIdxEraseIdx.of.GtLength h
+
+-- created on 2025-10-04

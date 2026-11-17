@@ -1,4 +1,11 @@
-import Initialize.Lean.Meta.CtorName
+module
+
+public meta import Def.Lean.Meta.CtorName
+public import Class.Lean.Meta.CtorName
+public import Lean
+
+@[expose] public section
+
 
 
 #eval mkCtorName ``Lean.Level
@@ -19,4 +26,3 @@ def Lean.Level.toString : Level → String
     s!"Sort {name}"
   | mvar id  =>
     s!"{id.name}"
-

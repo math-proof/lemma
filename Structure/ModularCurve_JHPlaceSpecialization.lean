@@ -1,10 +1,12 @@
-import Mathlib
-import Instance.ModularCurve_JHNeronObjectAtP
-import Structure.AlgebraicCurve_RegularProlongation
+module
+
+public import Mathlib
+public import Instance.ModularCurve_JHNeronObjectAtP
+public import Structure.AlgebraicCurve_RegularProlongation
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open AlgebraicCurve IsLocalRing ModularCurve
 open scoped MatrixGroups

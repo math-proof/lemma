@@ -8,12 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.Sheaves.Abelian
-import Mathlib.Topology.Sheaves.AddCommGrpCat
-import Mathlib.CategoryTheory.Sites.Sheafification
-import Mathlib.CategoryTheory.Sites.LeftExact
-import Mathlib.CategoryTheory.Adjunction.Limits
-import Mathlib.Algebra.Homology.ShortComplex.ExactFunctor
+module
+
+public import Mathlib.Topology.Sheaves.Abelian
+public import Mathlib.Topology.Sheaves.AddCommGrpCat
+public import Mathlib.CategoryTheory.Sites.Sheafification
+public import Mathlib.CategoryTheory.Sites.LeftExact
+public import Mathlib.CategoryTheory.Adjunction.Limits
+public import Mathlib.Algebra.Homology.ShortComplex.ExactFunctor
+
+@[expose] public section
+
 open CategoryTheory CategoryTheory.Limits TopCat
 
 universe u

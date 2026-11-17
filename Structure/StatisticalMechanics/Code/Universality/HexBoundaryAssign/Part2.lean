@@ -9,9 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexFamilyAssign.Part3
-import Def.StatisticalMechanics.Code.Universality.HexBoundaryAssign.Part2
+module
 
+public import Theorem.StatisticalMechanics.Code.Universality.HexFamilyAssign.Part3
+public import Def.StatisticalMechanics.Code.Universality.HexBoundaryAssign.Part2
+
+
+public section
 
 namespace StatMech.Universality
 

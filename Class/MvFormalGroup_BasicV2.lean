@@ -1,4 +1,8 @@
-import Structure.MvFormalGroup_BasicV2
+module
+
+public import Structure.MvFormalGroup_BasicV2
+
+public section
 
 set_option autoImplicit false
 

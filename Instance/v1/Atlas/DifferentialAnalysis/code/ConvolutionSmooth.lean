@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Instance.v1.Atlas.DifferentialAnalysis.code.TestFunctions
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.TestFunctions
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TestFunctions
 import Mathlib.Analysis.Convolution
 import Mathlib.Analysis.Calculus.ContDiff.Convolution
 import Mathlib.Topology.ContinuousMap.ZeroAtInfty

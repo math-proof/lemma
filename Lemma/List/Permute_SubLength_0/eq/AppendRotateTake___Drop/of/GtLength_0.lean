@@ -1,3 +1,4 @@
+import Initialize.Tactic.Attr.Basic
 import Lemma.List.Cons.eq.Append
 import Lemma.List.AppendAppend.eq.Append_Append
 import Lemma.List.Append.of.Eq

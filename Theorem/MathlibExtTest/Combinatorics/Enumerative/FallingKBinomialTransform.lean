@@ -3,7 +3,7 @@
 
 import Mathlib.Tactic.NormNum
 import Def.Combinatorics.Enumerative.FallingKBinomialTransform
-import Lemma.Finset.Enumerative.FallingKBinomialTransform
+import Theorem.Finset.Enumerative.FallingKBinomialTransform
 
 
 namespace MetaMathlibExt

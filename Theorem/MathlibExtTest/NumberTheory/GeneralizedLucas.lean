@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.GeneralizedLucas
-import Lemma.Nat.GeneralizedLucas
+import Theorem.Nat.GeneralizedLucas
 open Finset
 
 

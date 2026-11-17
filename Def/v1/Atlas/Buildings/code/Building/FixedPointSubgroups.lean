@@ -9,8 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.Buildings.code.Building.BruhatTitsFixedPoint.Part2
-import Lemma.Set.RadiusFrom.ge.Zero
-import Lemma.Set.BNPairBoundedPredicate_SetMul.of.BNPairBoundedPredicate.BNPairBoundedPredicate
+import Theorem.Set.RadiusFrom.ge.Zero
 import Structure.v1.Atlas.Buildings.code.Building.CompactSubgroups.Part2
 import Structure.v1.Atlas.Buildings.code.BNPair.Generalized.Defs
 set_option maxHeartbeats 800000

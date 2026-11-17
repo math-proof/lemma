@@ -2,7 +2,6 @@
 import Mathlib
 import Instance.PresheafOfModules_InternalHom
 import Instance.SheafOfModules_Monoidal
-import Lemma.Scheme.ModulesSectionsTensor
 import Lemma.Scheme.ModulesIhomSections
 
 set_option autoImplicit false

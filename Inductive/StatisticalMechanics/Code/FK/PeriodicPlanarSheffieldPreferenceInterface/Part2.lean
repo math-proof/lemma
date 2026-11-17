@@ -9,9 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldRectanglePreference.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.InterfaceConnected.Part8
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldPreferenceInterface.Part9
+module
+
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldRectanglePreference.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.InterfaceConnected.Part8
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldPreferenceInterface.Part9
 open Set SimpleGraph
 
 
@@ -20,7 +22,7 @@ namespace StatMech.FK.PeriodicPlanar
 open Lattice
 
 
-inductive PreferenceRightFlagChain {n m : Nat}
+public inductive PreferenceRightFlagChain {n m : Nat}
     (color : PreferenceGridVertex n m → Bool) :
     PreferenceTriangle n m → Prop
   | last {t : PreferenceTriangle n m} {k : Fin 3}

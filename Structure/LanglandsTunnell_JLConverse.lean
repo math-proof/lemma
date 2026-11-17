@@ -1,14 +1,16 @@
-import Structure.LanglandsTunnell_JLData
-import Def.LanglandsTunnell_ArchEpsilon
-import Def.UnramifiedWhittaker_HeckeRecursion
-import Lemma.Ideal.ArithCuspRealization
-import Def.LanglandsTunnell_StandardLocalConstantsAt
+module
+
+public import Structure.LanglandsTunnell_JLData
+public import Def.LanglandsTunnell_ArchEpsilon
+public import Def.UnramifiedWhittaker_HeckeRecursion
+public import Lemma.Ideal.ArithCuspRealization
+public import Def.LanglandsTunnell_StandardLocalConstantsAt
 
 set_option autoImplicit false
 
 open Complex
 
-noncomputable section
+public noncomputable section
 
 namespace LanglandsTunnell.Converse
 
@@ -144,7 +146,7 @@ end LanglandsTunnell.Converse
 
 end
 
-noncomputable section
+public noncomputable section
 
 open IsDedekindDomain NumberField NumberField.AdelicLevel AutomorphicForm AutomorphicForm.SmoothCusp
 open UnramifiedWhittaker
@@ -187,7 +189,7 @@ end LanglandsTunnell.Converse
 
 end
 
-noncomputable section
+public noncomputable section
 
 namespace LanglandsTunnell.Converse
 
@@ -208,7 +210,7 @@ end LanglandsTunnell.Converse
 
 end
 
-noncomputable section
+public noncomputable section
 
 namespace LanglandsTunnell.Converse
 

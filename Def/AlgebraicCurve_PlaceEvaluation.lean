@@ -1,6 +1,10 @@
-import Mathlib
-import Structure.AlgebraicCurve_Place
-import Abbrev.AlgebraicCurve_DivisorClassGroup
+module
+
+public import Mathlib
+public import Structure.AlgebraicCurve_Place
+public import Abbrev.AlgebraicCurve_DivisorClassGroup
+
+@[expose] public section
 
 set_option autoImplicit false
 

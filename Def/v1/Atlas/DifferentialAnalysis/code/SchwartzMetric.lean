@@ -13,8 +13,8 @@ import Mathlib.Topology.Algebra.InfiniteSum.Basic
 import Mathlib.Topology.Algebra.InfiniteSum.Order
 import Mathlib.Analysis.Normed.Group.Tannery
 import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzComplete
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzComplete
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzSeminormsFix
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzComplete
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzSeminormsFix
 import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzSeminormsFix
 open scoped SchwartzMap
 open Filter

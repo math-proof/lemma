@@ -8,6 +8,8 @@ import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
 import Mathlib.MeasureTheory.Function.ConditionalExpectation.PullOut
 import Mathlib.Probability.Kernel.CondDistrib
 import Theorem.Probability.CondExpectation
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Filter Measure
 
 
@@ -18,10 +20,10 @@ under the continuous-action trajectory model.
 @[path]
 private lemma main
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+  [NormedAddCommGroup ℰ] [NormedSpace ℝ ℰ] [CompleteSpace ℰ]
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {γ C : ℝ}
-  {ψ : 𝒮 → 𝒜 → E}
+  {ψ : 𝒮 → 𝒜 → ℰ}
   {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
@@ -182,4 +184,4 @@ private lemma main
 
 
 -- created on 2026-11-14
--- updated on 2026-11-16
+-- updated on 2026-11-17

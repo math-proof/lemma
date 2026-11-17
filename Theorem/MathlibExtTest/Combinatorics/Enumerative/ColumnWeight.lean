@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/ColumnWeight.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.ColumnWeight
 
-import Def.Combinatorics.Enumerative.ColumnWeight
-
+public section
 
 namespace MetaMathlibExt
 

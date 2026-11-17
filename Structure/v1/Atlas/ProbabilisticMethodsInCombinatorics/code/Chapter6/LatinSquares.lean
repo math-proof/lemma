@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Fintype.Perm
-import Mathlib.Algebra.Ring.Parity
-import Mathlib.Analysis.SpecialFunctions.Exp
+module
+
+public import Mathlib.Data.Fintype.Perm
+public import Mathlib.Algebra.Ring.Parity
+public import Mathlib.Analysis.SpecialFunctions.Exp
+public section
+
 set_option maxHeartbeats 400000
 
 open Function

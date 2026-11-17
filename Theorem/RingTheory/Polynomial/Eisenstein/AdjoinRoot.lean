@@ -3,14 +3,15 @@
 /-
 Author: @toskua, Avocado
 -/
+module
 
-import Theorem.RingTheory.AdjoinRoot.LocalMaximal
-import Lemma.Polynomial.AdjoinRoot.LocalMaximal
-import Mathlib.RingTheory.AdjoinRoot
-import Mathlib.RingTheory.Polynomial.Eisenstein.Basic
-import Mathlib.RingTheory.Polynomial.Eisenstein.Distinguished
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Mathlib.RingTheory.DiscreteValuationRing.TFAE
+public import Theorem.RingTheory.AdjoinRoot.LocalMaximal
+public import Theorem.Polynomial.AdjoinRoot.LocalMaximal
+public import Mathlib.RingTheory.AdjoinRoot
+public import Mathlib.RingTheory.Polynomial.Eisenstein.Basic
+public import Mathlib.RingTheory.Polynomial.Eisenstein.Distinguished
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Mathlib.RingTheory.DiscreteValuationRing.TFAE
 open Polynomial Ideal IsLocalRing
 
 /-!
@@ -42,6 +43,8 @@ positive-degree Eisenstein polynomials over a DVR. It strengthens the ATLAS
 implementation by deriving the locality and maximal-ideal hypotheses that ATLAS
 assumes in its final theorem.
 -/
+
+public section
 
 
 namespace AdjoinRoot

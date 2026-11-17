@@ -8,12 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.BilinearForm.Basic
-import Mathlib.LinearAlgebra.BilinearForm.Orthogonal
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.Projection
-import Mathlib.Order.RelClasses
-import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.WittCancellationDirectSum
+module
+
+public import Mathlib.LinearAlgebra.BilinearForm.Basic
+public import Mathlib.LinearAlgebra.BilinearForm.Orthogonal
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.Projection
+public import Mathlib.Order.RelClasses
+public import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.WittCancellationDirectSum
+
+@[expose] public section
+
 set_option maxHeartbeats 2000000
 
 

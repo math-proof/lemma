@@ -8,16 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Real.Basic
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Fin.Basic
-import Mathlib.Data.Fintype.Basic
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Data.Fintype.Prod
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
+module
 
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Fin.Basic
+public import Mathlib.Data.Fintype.Basic
+public import Mathlib.Data.Fintype.Pi
+public import Mathlib.Data.Fintype.Prod
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.BigOperators.Ring.Finset
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+
+
+public section
 
 namespace BooleanAnalysis
 

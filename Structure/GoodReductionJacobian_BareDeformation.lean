@@ -1,10 +1,12 @@
-import Structure.JacJ1Iface
-import Structure.AlgebraicGeometry_RelativeGroupLaw
-import Def.AlgebraicGeometry_FormalGroupAlongSection
+module
+
+public import Structure.JacJ1Iface
+public import Structure.AlgebraicGeometry_RelativeGroupLaw
+public import Def.AlgebraicGeometry_FormalGroupAlongSection
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open CategoryTheory AlgebraicGeometry NeronModelInfra
 

@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.Buildings.code.AffineCoxeter.TitsConeFiniteParabolic.Part4
-import Theorem.v1.Atlas.Buildings.code.AffineCoxeter.FiniteProperParabolicsInstance
+module
+
+public import Theorem.v1.Atlas.Buildings.code.AffineCoxeter.TitsConeFiniteParabolic.Part4
+public import Theorem.v1.Atlas.Buildings.code.AffineCoxeter.FiniteProperParabolicsInstance
+public section
+
 set_option linter.unusedSectionVars false
 
 open Finset BigOperators CoxeterGroup TitsCone

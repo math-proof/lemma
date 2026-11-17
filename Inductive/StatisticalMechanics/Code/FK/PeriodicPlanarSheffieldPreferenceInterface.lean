@@ -9,9 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldRectanglePreference.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.InterfaceConnected.Part8
-import Structure.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldPreferenceInterface
+module
+
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldRectanglePreference.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.InterfaceConnected.Part8
+public import Structure.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldPreferenceInterface
 open Set SimpleGraph
 
 
@@ -20,7 +22,7 @@ namespace StatMech.FK.PeriodicPlanar
 open Lattice
 
 
-inductive PreferenceInterfaceNode (n m : Nat)
+public inductive PreferenceInterfaceNode (n m : Nat)
   | left
   | right
   | bottom

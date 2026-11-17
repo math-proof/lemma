@@ -1,5 +1,9 @@
-import Lemma.Filter.AdelicTraceFin
-import Def.LanglandsTunnell_TateLocalConstantsAt
+module
+
+public import Def.NumberField_AdelicTraceFin
+public import Def.LanglandsTunnell_TateLocalConstantsAt
+
+@[expose] public section
 
 set_option autoImplicit false
 
@@ -86,5 +90,7 @@ def stdRootNumberAt (χ : (v.adicCompletion K)ˣ →* ℂˣ) : ℂ :=
 end Std
 
 end LanglandsTunnell.TateLocal
+
+end
 
 end

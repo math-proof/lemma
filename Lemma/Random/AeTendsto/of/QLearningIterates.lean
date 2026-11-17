@@ -7,6 +7,7 @@ import Lemma.Random.ExpectedUpdateTarget.eq.Sum_Sum_SMul
 import Lemma.Random.ExpectedUpdateTargetOptimalQ.eq.OptimalQ
 import Lemma.Random.LyapunovFunctionHalfSq
 import Lemma.Random.AeTendsto.of.LyapunovFunction.Measurable.Measurable.All_Eq_Sum_Sum_SMul.Eq.Any_Ge_0AndAll_All_LeNormSub_MulNormSub.MeasurableUncurry.IteratesOfResidual
+import Initialize.Tactic.Attr.Basic
 open Filter Topology
 
 
@@ -31,3 +32,4 @@ private lemma main
 
 
 -- created on 2026-09-26
+-- updated on 2026-11-17

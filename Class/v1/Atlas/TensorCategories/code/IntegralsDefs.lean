@@ -20,7 +20,6 @@ import Mathlib.Data.Matrix.Basic
 import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
 import Mathlib.RingTheory.SimpleModule.Basic
 import Instance.v1.Atlas.TensorCategories.code.DistinguishedInvertible.Part2
-import Lemma.Category.Atlas.v1.TensorCategories.code.DistinguishedInvertible
 import Def.v1.Atlas.TensorCategories.code.IntegralsDefs
 set_option maxHeartbeats 400000
 
@@ -30,7 +29,6 @@ open Coalgebra
 open scoped TensorProduct
 
 universe u v w
-
 
 section IntegralDefs
 

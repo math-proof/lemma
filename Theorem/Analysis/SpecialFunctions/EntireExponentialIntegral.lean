@@ -1,12 +1,15 @@
 -- Author: @toskua, Avocado
-import Mathlib.Analysis.Calculus.SmoothSeries
-import Mathlib.Analysis.Complex.CauchyIntegral
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.GCongr
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Def.Analysis.SpecialFunctions.EntireExponentialIntegral.Part2
+module
+
+public import Mathlib.Analysis.Calculus.SmoothSeries
+public import Mathlib.Analysis.Complex.CauchyIntegral
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.GCongr
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Def.Analysis.SpecialFunctions.EntireExponentialIntegral.Part2
+
 /-!
 # The entire exponential integral
 
@@ -16,6 +19,8 @@ This file defines
 
 and proves its elementary analytic and derivative properties.
 -/
+
+public section
 
 
 namespace Complex

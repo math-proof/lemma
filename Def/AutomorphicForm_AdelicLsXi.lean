@@ -1,5 +1,9 @@
-import Mathlib
-import Structure.AutomorphicForm_AdelicLsXi
+module
+
+public import Mathlib
+public import Structure.AutomorphicForm_AdelicLsXi
+
+@[expose] public section
 
 open NumberField MeasureTheory Matrix
 

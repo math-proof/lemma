@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.Tactic
+module
+
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.Tactic
+
+@[expose] public section
+
 set_option autoImplicit false
 
 

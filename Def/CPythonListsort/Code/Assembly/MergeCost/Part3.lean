@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeCost.lean -/
 
-import Mathlib.Analysis.SpecialFunctions.Log.Base
-import Mathlib.Algebra.BigOperators.Ring.List
-import Mathlib.Tactic
-import Inductive.CPythonListsort.Code.Assembly.MergeCost.Part2
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Log.Base
+public import Mathlib.Algebra.BigOperators.Ring.List
+public import Mathlib.Tactic
+public import Inductive.CPythonListsort.Code.Assembly.MergeCost.Part2
+
+@[expose] public section
+
 /-!
 # Merge-cost accounting
 

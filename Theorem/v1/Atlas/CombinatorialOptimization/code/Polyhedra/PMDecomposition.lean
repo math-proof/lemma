@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.CombinatorialOptimization.code.Polyhedra.EdmondsPolytope
-import Lemma.Finset.Atlas.v1.CombinatorialOptimization.code.Polyhedra.EdmondsPolytope
+import Theorem.Finset.Atlas.v1.CombinatorialOptimization.code.Polyhedra.EdmondsPolytope
 open SimpleGraph Finset BigOperators Classical
 
 

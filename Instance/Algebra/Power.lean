@@ -1,6 +1,9 @@
-import Mathlib.Data.Finset.Basic
-import Notation.Algebra.Power
+module
 
+public import Mathlib.Data.Finset.Basic
+public import Notation.Algebra.Power
+
+@[expose] public section
 
 /-- `γ ^ f` for an exponent sequence `f : ℕ → ℕ`: the sequence `k ↦ γ ^ f k`; e.g. the discount
 weights `γ ^ (id : ℕ → ℕ) = fun k ↦ γ ^ k`. -/

@@ -8,17 +8,22 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Scheme
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.Algebra.Category.ModuleCat.Sheaf.Quasicoherent
-import Mathlib.Algebra.Homology.ShortComplex.Exact
-import Mathlib.Algebra.Homology.ShortComplex.ShortExact
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.CategoryTheory.Limits.Shapes.Products
-import Mathlib.RingTheory.GradedAlgebra.Basic
-import Mathlib.RingTheory.GradedAlgebra.Homogeneous.Ideal
-import Mathlib.Algebra.DirectSum.Basic
-import Structure.v1.Atlas.AlgebraicGeometryI.code.ProjectiveQCohProperties
+module
+
+public import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Scheme
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.Algebra.Category.ModuleCat.Sheaf.Quasicoherent
+public import Mathlib.Algebra.Homology.ShortComplex.Exact
+public import Mathlib.Algebra.Homology.ShortComplex.ShortExact
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.CategoryTheory.Limits.Shapes.Products
+public import Mathlib.RingTheory.GradedAlgebra.Basic
+public import Mathlib.RingTheory.GradedAlgebra.Homogeneous.Ideal
+public import Mathlib.Algebra.DirectSum.Basic
+public import Structure.v1.Atlas.AlgebraicGeometryI.code.ProjectiveQCohProperties
+
+@[expose] public section
+
 open CategoryTheory Limits AlgebraicGeometry
 
 universe u

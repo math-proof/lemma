@@ -9,7 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.SLE.Defs.Part9
+module
+
+public import Theorem.StatisticalMechanics.Code.SLE.Defs.Part9
+
+@[expose] public section
+
 open Complex Set Metric Filter Topology
 open scoped NNReal
 

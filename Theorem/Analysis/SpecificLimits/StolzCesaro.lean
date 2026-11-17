@@ -1,8 +1,11 @@
-import Mathlib.Topology.MetricSpace.Pseudo.Defs
-import Mathlib.Algebra.BigOperators.Intervals
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Analysis.Normed.Ring.Basic
+module
 
+public import Mathlib.Topology.MetricSpace.Pseudo.Defs
+public import Mathlib.Algebra.BigOperators.Intervals
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Analysis.Normed.Ring.Basic
+
+public section
 
 namespace MetaMathlibExt
 

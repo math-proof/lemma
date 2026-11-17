@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.AlgebraicGeometryI.code.DegreeAdditivity
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.DegreeAdditivity
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DegreeAdditivity
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckGroup
 import Def.v1.Atlas.AlgebraicGeometryI.code.GrothendieckGroup.Part3
 import Mathlib.RingTheory.DedekindDomain.Basic

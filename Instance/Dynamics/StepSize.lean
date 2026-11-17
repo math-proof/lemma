@@ -1,8 +1,13 @@
-import Mathlib.Order.Filter.AtTopBot.Basic
-import Mathlib.Topology.Algebra.InfiniteSum.Real
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Def.Dynamics.StepSize
+module
+
+public import Mathlib.Order.Filter.AtTopBot.Basic
+public import Mathlib.Topology.Algebra.InfiniteSum.Real
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Def.Dynamics.StepSize
+
+@[expose] public section
+
 open Finset Filter
 
 /-!

@@ -2,8 +2,10 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Theorem.Combinatorics.Enumerative.WeightedSets.Part2
+module
+
+public import Mathlib
+public import Theorem.Combinatorics.Enumerative.WeightedSets.Part2
 open PowerSeries Finset BigOperators
 
 /-!
@@ -54,7 +56,7 @@ weighted set, generating function, combinatorial class, domino tiling
 -/
 
 
-noncomputable section
+public noncomputable section
 
 variable {R : Type*} [CommSemiring R]
 

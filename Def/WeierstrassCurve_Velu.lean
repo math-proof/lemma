@@ -1,5 +1,9 @@
-import Mathlib.AlgebraicGeometry.EllipticCurve.DivisionPolynomial.Basic
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Formula
+module
+
+public import Mathlib.AlgebraicGeometry.EllipticCurve.DivisionPolynomial.Basic
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Formula
+
+@[expose] public section
 
 open Polynomial
 

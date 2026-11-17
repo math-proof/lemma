@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.GeometryOfManifolds.code.EuclideanDFS.Part3
 import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.EuclideanDFS
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
 import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
 import Theorem.v1.Atlas.GeometryOfManifolds.code.EuclideanSymplectic
 

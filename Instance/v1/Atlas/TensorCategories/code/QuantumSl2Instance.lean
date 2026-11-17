@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Instance.v1.Atlas.TensorCategories.code.QuantumSl2Concrete.Part5
 import Lemma.Category.Atlas.v1.TensorCategories.code.QuantumSl2Concrete
-import Lemma.Category.Atlas.v1.TensorCategories.code.QBinomial
+import Theorem.Category.Atlas.v1.TensorCategories.code.QBinomial
 import Theorem.v1.Atlas.TensorCategories.code.QBinomial.Part2
 import Theorem.v1.Atlas.TensorCategories.code.QuantumSl2Instance.Part3
 open Coalgebra HopfAlgebra

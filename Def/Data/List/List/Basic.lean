@@ -1,9 +1,12 @@
-import Def.Data.List.List
-import Def.Data.List.Slice
-import Structure.Fun
-import Notation.Fun
-import Syntax.Data.List.List
+module
 
+public import Def.Data.List.List
+public import Def.Data.List.Slice
+public import Structure.Fun
+public import Notation.Fun
+public import Syntax.Data.List.List
+
+@[expose] public section
 open Lean
 
 /-- Python's open-ended slice `f[t:]` of an infinite sequence `f : ℕ → α`: the shifted sequence
@@ -15,7 +18,7 @@ open Elab Term Meta in
 other receiver (lists, vectors, tensors, …) it is `x.getSlice ⟨start, x.length, 1⟩` as before.
 The receiver's type is inspected (without committing the elaboration) to choose the expansion. -/
 @[term_elab «term__[_:]»]
-def Slice.elabGetSliceFrom : TermElab := fun stx expectedType? =>
+meta def Slice.elabGetSliceFrom : TermElab := fun stx expectedType? =>
   match stx with
   | `($x[$start :]) => do
     let saved ← saveState
@@ -43,12 +46,12 @@ def Slice.elabGetSliceFrom : TermElab := fun stx expectedType? =>
 
 /-- Infoview: print `Function.getSliceFrom f t` as `f[t:]`. -/
 @[app_unexpander Function.getSliceFrom]
-def Function.getSliceFrom.unexpand : PrettyPrinter.Unexpander
+meta def Function.getSliceFrom.unexpand : PrettyPrinter.Unexpander
   | `($_ $f $t) => `($f[$t :])
   | `($_ $f $t $k) => `($f[$t :] $k)
   | _ => throw ()
 
-partial def Slice.natLitValue? : Syntax → Option Nat
+meta partial def Slice.natLitValue? : Syntax → Option Nat
   | `(($n:num)) => some n.getNat
   | `(($n:num : $_)) => some n.getNat
   | `($n:num) => some n.getNat
@@ -57,7 +60,7 @@ partial def Slice.natLitValue? : Syntax → Option Nat
   | _ => none
 
 /-- Infoview: print `getSlice` as Python `base[start:stop:step]`. -/
-def Slice.getSliceUnexpand : PrettyPrinter.Unexpander
+meta def Slice.getSliceUnexpand : PrettyPrinter.Unexpander
   | `($_ $x (Slice.mk $start $stop $step))
   | `($_ $x ⟨$start, $stop, $step⟩) =>
     let startZero := natLitValue? start == some 0
@@ -75,7 +78,7 @@ def Slice.getSliceUnexpand : PrettyPrinter.Unexpander
     throw ()
 
 @[app_unexpander List.getSlice]
-def List.getSlice.unexpand := Slice.getSliceUnexpand
+meta def List.getSlice.unexpand := Slice.getSliceUnexpand
 
 def List.enumerate (s : List α) : List (Fin s.length × α) :=
   List.range s.length |>.pmap
@@ -138,14 +141,14 @@ def List.splice (list : List α) (start : Nat) (deleteCount : Nat) (items : List
   front ++ items ++ (back.drop deleteCount)
 
 @[app_unexpander List.take]
-def List.take.unexpand : PrettyPrinter.Unexpander
+meta def List.take.unexpand : PrettyPrinter.Unexpander
   | `($_ $n:term $xs:term) =>
     `($xs.$(mkIdent `take) $n)
   | _ =>
     throw ()
 
 @[app_unexpander List.drop]
-def List.drop.unexpand : PrettyPrinter.Unexpander
+meta def List.drop.unexpand : PrettyPrinter.Unexpander
   | `($_ $n:term $xs:term) =>
     `($xs.$(mkIdent `drop) $n)
   | _ =>

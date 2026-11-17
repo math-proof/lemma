@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.NumberField.PartialDedekindZeta
-import Lemma.Nat.NumberField.PartialDedekindZeta
+import Theorem.Nat.NumberField.PartialDedekindZeta
 
 
 namespace NumberField

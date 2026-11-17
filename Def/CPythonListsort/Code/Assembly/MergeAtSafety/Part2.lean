@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeAtSafety.lean -/
 
-import Def.CPythonListsort.Code.Assembly.MergeMemoryLifecycle.Part2
-import Lemma.List.Atlas.CPythonListsort.Code.Policy.MergeAtPreservation
-import Structure.CPythonListsort.Code.Assembly.MergeAtSafety
+module
+
+public import Def.CPythonListsort.Code.Assembly.MergeAtSafety
+
+@[expose] public section
+
 /-!
 # `merge_at` safety
 
@@ -17,6 +20,9 @@ which precede it are recorded in source order.
 namespace CPythonListsort
 
 universe u v
+
+open AccessTrace
+open GallopKeySource
 
 variable {κ : Type u} {ν : Type v}
 

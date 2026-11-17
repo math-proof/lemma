@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTreeCost.lean -/
 
-import Def.CPythonListsort.Code.Assembly.AccessTrace.Part9
-import Def.CPythonListsort.Code.Assembly.MergeCost.Part3
-import Theorem.CPythonListsort.Code.Assembly.MergeTreeCost
+module
+
+public import Def.CPythonListsort.Code.Assembly.AccessTrace.Part9
+public import Def.CPythonListsort.Code.Assembly.MergeCost.Part3
+public import Theorem.CPythonListsort.Code.Assembly.MergeTreeCost
 /-!
 # Logical merge replay and final-collapse cost dominance
 
@@ -35,7 +37,7 @@ namespace SpannedMergeTree
 For at least three pending runs, `a`, `b`, and `c` are the final three lengths.
 The strict source guard chooses the third-last pair exactly when `a < c`;
 otherwise the top pair is merged. -/
-inductive CPythonForceCollapseCost : List Nat → Nat → Prop
+public inductive CPythonForceCollapseCost : List Nat → Nat → Prop
   | empty : CPythonForceCollapseCost [] 0
   | singleton (length : Nat) : CPythonForceCollapseCost [length] 0
   | pair (left right : Nat) :

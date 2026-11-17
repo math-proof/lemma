@@ -1,5 +1,6 @@
 import Lemma.Random.Any_Ge_0AndAeLeNorm.of.All_Gt_0.Any_LipschitzWith.Any_Ge_0AndAeAll_LeNormMulMulSquare.Any_Ge_0AndAeAll_LeNormMulMul.Iterates
 import Lemma.Real.Any_And_Ge_0_All_LeInner.of.LyapunovCandidate
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory
 
 
@@ -38,3 +39,4 @@ private lemma main
 
 
 -- created on 2026-09-26
+-- updated on 2026-11-17

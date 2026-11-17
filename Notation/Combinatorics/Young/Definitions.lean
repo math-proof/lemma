@@ -2,10 +2,15 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Instance.GroupTheory.Perm.Basics.Part2
-import Lemma.PowerSeries.CommutativeRings
-import Def.Combinatorics.Young.Definitions
+
+module
+
+public import Mathlib
+public import Instance.GroupTheory.Perm.Basics.Part2
+public import Def.Combinatorics.Young.Definitions
+
+public section
+
 open scoped Polynomial
 open MvPolynomial Finset
 

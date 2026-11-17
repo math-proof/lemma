@@ -8,11 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Geometry.Manifold.VectorBundle.SmoothSection
-import Mathlib.Geometry.Manifold.IsManifold.Basic
-import Mathlib.Topology.Compactness.Compact
-import Mathlib.Analysis.Normed.Module.Basic
-import Abbrev.v1.Atlas.GeometryOfManifolds.code.ParametrixOnManifold
+module
+
+public import Mathlib.Geometry.Manifold.VectorBundle.SmoothSection
+public import Mathlib.Geometry.Manifold.IsManifold.Basic
+public import Mathlib.Topology.Compactness.Compact
+public import Mathlib.Analysis.Normed.Module.Basic
+public import Abbrev.v1.Atlas.GeometryOfManifolds.code.ParametrixOnManifold
+public section
+
 set_option autoImplicit false
 
 open scoped Manifold

@@ -1,7 +1,11 @@
-import Structure.CerednikDrinfeld_QMRigidification
-import Structure.CerednikDrinfeld_QMFineModuli
-import Structure.CerednikDrinfeld_QMFineModuliT
-import Structure.CerednikDrinfeld_FormalUpperHalfPlaneCharts
+module
+
+public import Structure.CerednikDrinfeld_QMRigidification
+public import Structure.CerednikDrinfeld_QMFineModuli
+public import Structure.CerednikDrinfeld_QMFineModuliT
+public import Structure.CerednikDrinfeld_FormalUpperHalfPlaneCharts
+
+public section
 
 set_option autoImplicit false
 

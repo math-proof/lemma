@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 import Def.v1.Atlas.AlgebraicGeometryI.code.CoherentSheavesCurves.Part2
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoherentSheavesCurves
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleProjective
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleGeneral
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleGeneral
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochCurves
 import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleProjective.Part4
 import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleGeneral

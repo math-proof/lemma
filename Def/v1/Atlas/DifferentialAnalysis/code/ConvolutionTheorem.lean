@@ -10,9 +10,9 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
 import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzTranslation
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzTranslation
 import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.HormanderFundamental
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.DistributionSupport
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DistributionSupport
 import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SobolevDerivatives
 import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SobolevEmbedding
 import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzTranslation

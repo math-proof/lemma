@@ -7,10 +7,12 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec5DimensionResults
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec5DimensionResults
 set_option maxHeartbeats 400000
 
+public section
 
 noncomputable section
 

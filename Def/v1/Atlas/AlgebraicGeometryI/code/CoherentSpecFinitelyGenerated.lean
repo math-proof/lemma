@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Localization.Finiteness
-import Mathlib.Algebra.Module.LocalizedModule.Basic
+module
 
+public import Mathlib.RingTheory.Localization.Finiteness
+public import Mathlib.Algebra.Module.LocalizedModule.Basic
+
+@[expose] public section
 
 namespace CoherentSpecFinitelyGenerated
 

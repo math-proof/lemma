@@ -16,11 +16,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Theorem.Data.Sym.Sym2
-import Mathlib.Data.Finset.Sym
-import Mathlib.Data.Sym.Card
-import Mathlib.Order.Lattice.Nat
-import Mathlib.Topology.MetricSpace.Defs
+module
+
+public import Theorem.Data.Sym.Sym2
+public import Mathlib.Data.Finset.Sym
+public import Mathlib.Data.Sym.Card
+public import Mathlib.Order.Lattice.Nat
+public import Mathlib.Topology.MetricSpace.Defs
+
+@[expose] public section
+
 open scoped Finset
 
 variable {X : Type*} [MetricSpace X]

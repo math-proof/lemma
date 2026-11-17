@@ -8,14 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.KrullDimension.PID
-import Mathlib.Algebra.Polynomial.Div
-import Mathlib.Topology.Homeomorph.Defs
-import Mathlib.Topology.Constructions
-import Mathlib.RingTheory.Spectrum.Prime.Topology
-import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.PascalCurves
+module
 
+public import Mathlib.RingTheory.KrullDimension.PID
+public import Mathlib.Algebra.Polynomial.Div
+public import Mathlib.Topology.Homeomorph.Defs
+public import Mathlib.Topology.Constructions
+public import Mathlib.RingTheory.Spectrum.Prime.Topology
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.PascalCurves
+
+@[expose] public section
 
 /-- A type equivalence promotes to a homeomorphism between cofinite topologies. -/
 noncomputable def cofiniteHomeomorph (X Y : Type*) (e : X ≃ Y) :

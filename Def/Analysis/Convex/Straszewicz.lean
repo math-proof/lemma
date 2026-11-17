@@ -5,21 +5,26 @@
 -- (commit 8a13ba393c1d23f85b900081c600941a4bdd56dc); @toskua, Avocado
 -- authored only the Convexity.StdSimplex representation migration.
 
-import Mathlib.Analysis.Convex.Caratheodory
-import Mathlib.Analysis.Convex.Exposed
-import Mathlib.Analysis.Convex.Segment
-import Mathlib.Analysis.Convex.Slope
-import Mathlib.Analysis.Convex.Topology
-import Mathlib.Analysis.LocallyConvex.Separation
-import Mathlib.Analysis.Normed.Module.FiniteDimension
-import Mathlib.LinearAlgebra.AffineSpace.FiniteDimensional
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.LinearAlgebra.Dual.Lemmas
-import Mathlib.Topology.Algebra.Module.FiniteDimension
-import Mathlib.Topology.Baire.Lemmas
-import Mathlib.Topology.Baire.CompleteMetrizable
-import Mathlib.Tactic.Module
-import Mathlib.Topology.Bases
+module
+
+public import Mathlib.Analysis.Convex.Caratheodory
+public import Mathlib.Analysis.Convex.Exposed
+public import Mathlib.Analysis.Convex.Segment
+public import Mathlib.Analysis.Convex.Slope
+public import Mathlib.Analysis.Convex.Topology
+public import Mathlib.Analysis.LocallyConvex.Separation
+public import Mathlib.Analysis.Normed.Module.FiniteDimension
+public import Mathlib.LinearAlgebra.AffineSpace.FiniteDimensional
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.LinearAlgebra.Dual.Lemmas
+public import Mathlib.Topology.Algebra.Module.FiniteDimension
+public import Mathlib.Topology.Baire.Lemmas
+public import Mathlib.Topology.Baire.CompleteMetrizable
+public import Mathlib.Tactic.Module
+public import Mathlib.Topology.Bases
+
+@[expose] public section
+
 /-!
 # Straszewicz's theorem on exposed points
 

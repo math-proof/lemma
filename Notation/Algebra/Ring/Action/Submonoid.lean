@@ -1,4 +1,8 @@
-import Mathlib.Algebra.Ring.Action.Submonoid
+module
+
+public import Mathlib.Algebra.Ring.Action.Submonoid
+
+public section
 
 /-!
 # FixedPoints additive-subgroup notation

@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/GeneralizedFermatNumber.lean -/
 
-import Mathlib.Algebra.Ring.Parity
+module
 
+public import Mathlib.Algebra.Ring.Parity
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

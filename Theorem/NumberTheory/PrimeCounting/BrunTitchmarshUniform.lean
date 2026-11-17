@@ -6,8 +6,8 @@ Authors: Adam Kiezun, Muse Spark 1.3, Codex
 
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Def.NumberTheory.PrimeCounting.ResidueClass
-import Lemma.Nat.PrimeCounting.ResidueClass
-import Lemma.Nat.SelbergSieve
+import Theorem.Nat.PrimeCounting.ResidueClass
+import Theorem.Nat.SelbergSieve
 import Mathlib.Data.Int.CardIntervalMod
 import Mathlib.NumberTheory.EulerProduct.Basic
 import Mathlib.NumberTheory.Harmonic.Bounds

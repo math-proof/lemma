@@ -14,7 +14,7 @@ import Mathlib.Geometry.Manifold.MFDeriv.SpecificFunctions
 import Mathlib.Analysis.Normed.Module.Alternating.Uncurry.Fin
 import Mathlib.Analysis.Calculus.VectorField
 import Def.v1.Atlas.GeometryOfManifolds.code.DifferentialForms.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.DifferentialForms
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.DifferentialForms
 import Def.v1.Atlas.GeometryOfManifolds.code.OmitIndex
 set_option autoImplicit false
 set_option maxHeartbeats 400000

@@ -1,10 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/HeilermannWeightedMotzkinDeterminant.lean -/
 
-import Def.NumberTheory.HankelTransform
-import Mathlib.LinearAlgebra.Matrix.Block
-import Mathlib.RingTheory.PowerSeries.Basic
-import Mathlib.Tactic.Ring
+module
 
+public import Def.NumberTheory.HankelTransform
+public import Mathlib.LinearAlgebra.Matrix.Block
+public import Mathlib.RingTheory.PowerSeries.Basic
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

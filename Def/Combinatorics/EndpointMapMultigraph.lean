@@ -6,9 +6,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Adam Kiezun
 -/
 
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Fintype.Card
-import Mathlib.Logic.Relation
+module
+
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Logic.Relation
+
+@[expose] public section
+
 /-!
 # Finite edge-identity multigraphs
 

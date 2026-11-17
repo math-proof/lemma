@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NStepLucasSequence.lean -/
+module
 
+public import Def.NumberTheory.NStepLucasSequence
 
-import Def.NumberTheory.NStepLucasSequence
-
+public section
 
 namespace MetaMathlibExt
 

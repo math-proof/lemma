@@ -1,10 +1,12 @@
-import Structure.AlgebraicCurve_WeilDatum
-import Structure.AlgebraicCurve_JacobianH1Autoduality
-import Lemma.Scheme.PlaceEvaluationAlgebra
+module
+
+public import Structure.AlgebraicCurve_WeilDatum
+public import Structure.AlgebraicCurve_JacobianH1Autoduality
+public import Theorem.Scheme.PlaceEvaluationAlgebra
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open IsLocalRing
 

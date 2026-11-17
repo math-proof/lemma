@@ -9,7 +9,9 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Onsager.Torus
+module
+
+public import Theorem.StatisticalMechanics.Code.Onsager.Torus
 open SimpleGraph
 
 
@@ -18,7 +20,7 @@ namespace StatMech.BeffaraDC
 open StatMech.Onsager
 
 
-inductive TorusEdgeOrientation
+public inductive TorusEdgeOrientation
   | horizontal
   | vertical
   deriving DecidableEq

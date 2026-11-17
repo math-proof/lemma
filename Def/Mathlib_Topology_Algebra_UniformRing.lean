@@ -1,5 +1,9 @@
-import Mathlib
-import Class.Mathlib_Algebra_Algebra_Hom
+module
+
+public import Mathlib
+public import Class.Mathlib_Algebra_Algebra_Hom
+
+@[expose] public section
 
 section
 

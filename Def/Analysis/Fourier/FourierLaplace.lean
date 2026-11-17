@@ -1,6 +1,11 @@
-import Mathlib.Analysis.Calculus.ParametricIntegral
-import Mathlib.Analysis.Fourier.FourierTransform
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+module
+
+public import Mathlib.Analysis.Calculus.ParametricIntegral
+public import Mathlib.Analysis.Fourier.FourierTransform
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+
+@[expose] public section
+
 open MeasureTheory
 open scoped FourierTransform
 

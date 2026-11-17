@@ -1,5 +1,9 @@
-import Mathlib
-import Class.Patching_SystemTypes
+module
+
+public import Mathlib
+public import Class.Patching_SystemTypes
+
+@[expose] public section
 
 set_option autoImplicit false
 

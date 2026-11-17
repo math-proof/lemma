@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.RisingDiagonalSequence
-import Lemma.Finset.Enumerative.RisingDiagonalSequence
+import Theorem.Finset.Enumerative.RisingDiagonalSequence
 import Mathlib.Tactic.NormNum
 import Def.MathlibExtTest.Combinatorics.Enumerative.RisingDiagonalSequence
 

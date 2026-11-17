@@ -4,22 +4,24 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.RingTheory.PowerSeries.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Basic.Real.Basic
-import Def.Algebra.Polynomial.FormalOrthogonality
-import Def.LinearAlgebra.Matrix.StieltjesMatrix
-import Mathlib.Analysis.Normed.Field.Basic
-import Mathlib.RingTheory.PowerSeries.Order
-import Mathlib.RingTheory.PowerSeries.Inverse
-import Lemma.Int.Polynomial.FavardIff
-import Mathlib.Algebra.Polynomial.Degree.Lemmas
-import Mathlib.Algebra.Polynomial.Coeff
-import Mathlib.Algebra.Polynomial.Monic
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
+module
 
+public import Mathlib.RingTheory.PowerSeries.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Basic.Real.Basic
+public import Def.Algebra.Polynomial.FormalOrthogonality
+public import Def.LinearAlgebra.Matrix.StieltjesMatrix
+public import Mathlib.Analysis.Normed.Field.Basic
+public import Mathlib.RingTheory.PowerSeries.Order
+public import Mathlib.RingTheory.PowerSeries.Inverse
+public import Mathlib.Algebra.Polynomial.Degree.Lemmas
+public import Mathlib.Algebra.Polynomial.Coeff
+public import Mathlib.Algebra.Polynomial.Monic
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.LinearCombination
+
+@[expose] public section
 
 section
 

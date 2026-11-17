@@ -1,17 +1,5 @@
-import Initialize.Tactic.Attr.Basic
-
-
-@[path]
-private lemma main
-  [Preorder α]
-  {a b c : α}
--- given
-  (h₀ : a ≥ b)
-  (h₁ : b > c) :
--- imply
-  a > c :=
--- proof
-  lt_of_le_of_lt' h₀ h₁
+import Theorem.Nat.Gt.of.Ge.Gt
 
 
 -- created on 2018-03-13
+-- updated on 2026-11-17

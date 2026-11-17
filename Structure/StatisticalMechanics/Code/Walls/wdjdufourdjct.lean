@@ -9,12 +9,16 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
-import Theorem.StatisticalMechanics.Code.Lattice.DartDef.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.DartNext.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.DartOrbit.Part6
-import Theorem.StatisticalMechanics.Code.Walls.welenterleave.Part2
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
+public import Theorem.StatisticalMechanics.Code.Lattice.DartDef.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.DartNext.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.DartOrbit.Part6
+public import Theorem.StatisticalMechanics.Code.Walls.welenterleave.Part2
+public section
+
 open Finset Set SimpleGraph
 open scoped BigOperators
 

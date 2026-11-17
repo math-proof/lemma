@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Fintype.Pi
+module
+
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Fintype.Pi
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open Finset

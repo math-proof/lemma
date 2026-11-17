@@ -9,15 +9,17 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareGridConsistency.Part4
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicLocalFourthOrder
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareGridConsistency.Part4
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicLocalFourthOrder
 
 
 namespace StatMech.Universality
 
 open Set
 
-noncomputable section
+public noncomputable section
 
 structure CenteredFourthOrderSegmentData
     (g : Real -> Real) (h M : Real) : Prop where

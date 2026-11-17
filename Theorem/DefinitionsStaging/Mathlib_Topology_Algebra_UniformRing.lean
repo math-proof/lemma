@@ -1,7 +1,10 @@
-import Mathlib
-import Class.Mathlib_Algebra_Algebra_Hom
-import Def.Mathlib_Topology_Algebra_UniformRing
+module
 
+public import Mathlib
+public import Class.Mathlib_Algebra_Algebra_Hom
+public import Def.Mathlib_Topology_Algebra_UniformRing
+
+public section
 
 section
 

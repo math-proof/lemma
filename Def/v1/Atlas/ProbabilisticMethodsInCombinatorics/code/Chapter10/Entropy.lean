@@ -8,15 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.ProbabilityMassFunction.Basic
-import Mathlib.Probability.ProbabilityMassFunction.Constructions
-import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
-import Mathlib.Analysis.Convex.Jensen
-import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
-import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Algebra.BigOperators.GroupWithZero.Action
-import Mathlib.Data.Nat.Choose.Sum
-import Mathlib.Logic.Equiv.Fin.Basic
+module
+
+public import Mathlib.Probability.ProbabilityMassFunction.Basic
+public import Mathlib.Probability.ProbabilityMassFunction.Constructions
+public import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
+public import Mathlib.Analysis.Convex.Jensen
+public import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
+public import Mathlib.Algebra.BigOperators.Field
+public import Mathlib.Algebra.BigOperators.GroupWithZero.Action
+public import Mathlib.Data.Nat.Choose.Sum
+public import Mathlib.Logic.Equiv.Fin.Basic
+
+@[expose] public section
+
 open Finset Real
 
 

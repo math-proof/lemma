@@ -11,7 +11,7 @@ import Mathlib.Order.Filter.Basic
 import Mathlib.Topology.Algebra.InfiniteSum.Basic
 import Mathlib.Topology.Basic
 import Def.Analysis.Ramanujan.Part1Ch7Entry13Bernoullipolyadd
-import Lemma.Real.Part1Ch7Entry13Bernoullipolyadd
+import Theorem.Real.Part1Ch7Entry13Bernoullipolyadd
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Analysis.Calculus.ContDiff.Basic
 import Mathlib.Analysis.SpecialFunctions.Complex.Log

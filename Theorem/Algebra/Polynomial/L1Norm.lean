@@ -1,12 +1,17 @@
-import Mathlib.Algebra.Order.AbsoluteValue.Basic
-import Mathlib.Algebra.Polynomial.Degree.Support
-import Mathlib.Basic.Real.Basic
-import Def.Algebra.Polynomial.L1Norm
+module
+
+public import Mathlib.Algebra.Order.AbsoluteValue.Basic
+public import Mathlib.Algebra.Polynomial.Degree.Support
+public import Mathlib.Basic.Real.Basic
+public import Def.Algebra.Polynomial.L1Norm
+
 /-!
 # L1 norm of a polynomial
 
 This file defines the sum of the absolute values of a polynomial's coefficients.
 -/
+
+public section
 
 
 namespace Polynomial

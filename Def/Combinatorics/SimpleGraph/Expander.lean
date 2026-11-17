@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Expander.lean -/
 
-import Mathlib.Combinatorics.SimpleGraph.Basic
-import Mathlib.Data.Set.Card
-import Mathlib.SetTheory.Cardinal.NatCard
-import Mathlib.Data.Real.Basic
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Basic
+public import Mathlib.Data.Set.Card
+public import Mathlib.SetTheory.Cardinal.NatCard
+public import Mathlib.Data.Real.Basic
+
+@[expose] public section
+
 /-!
 # `C`-expanders
 

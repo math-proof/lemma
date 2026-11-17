@@ -27,7 +27,7 @@ import Mathlib.NumberTheory.Divisors
 import Mathlib.NumberTheory.EulerProduct.Basic
 import Mathlib.NumberTheory.Harmonic.Bounds
 import Def.NumberTheory.SelbergSieve
-import Lemma.Nat.SelbergSieve
+import Theorem.Nat.SelbergSieve
 import Mathlib.NumberTheory.SmoothNumbers
 import Mathlib.Topology.Algebra.InfiniteSum.NatInt
 import Mathlib.Topology.Algebra.InfiniteSum.Order

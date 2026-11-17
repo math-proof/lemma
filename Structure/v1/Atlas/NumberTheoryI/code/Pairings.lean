@@ -8,15 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.PerfectPairing.Basic
-import Mathlib.LinearAlgebra.BilinearForm.Properties
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.RingTheory.Localization.Module
-import Abbrev.v1.Atlas.NumberTheoryI.code.Pairings
+module
+
+public import Mathlib.LinearAlgebra.PerfectPairing.Basic
+public import Mathlib.LinearAlgebra.BilinearForm.Properties
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.RingTheory.Localization.Module
+public import Abbrev.v1.Atlas.NumberTheoryI.code.Pairings
 open Submodule LinearMap
 
 
-noncomputable section
+public noncomputable section
 
 structure IsALattice
     (A : Type*) [CommRing A] [IsDomain A]

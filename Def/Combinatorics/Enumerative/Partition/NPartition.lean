@@ -2,7 +2,13 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
+
+module
+
+public import Mathlib
+
+@[expose] public section
+
 open Finset BigOperators
 
 variable {N : ℕ}

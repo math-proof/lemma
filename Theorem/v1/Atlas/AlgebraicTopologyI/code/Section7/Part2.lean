@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.AlgebraicTopologyI.code.Section6
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section6
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.CrossProductExistence
+import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section6
+import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.CrossProductExistence
 import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section8
 import Def.v1.Atlas.AlgebraicTopologyI.code.CrossProductExistence.Part3
 import Instance.v1.Atlas.AlgebraicTopologyI.code.Section8.Part3

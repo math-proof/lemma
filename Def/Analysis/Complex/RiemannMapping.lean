@@ -19,8 +19,8 @@ import Mathlib.Analysis.Complex.Schwarz
 import Mathlib.Analysis.SpecialFunctions.Complex.Analytic
 import Mathlib.RingTheory.RootsOfUnity.Complex
 import Theorem.Analysis.Complex.Hurwitz
-import Lemma.Complex.Hurwitz
-import Lemma.Set.IsLocallyUniformlyBoundedOn.of.All_All_LeNorm.Ge_0.IsOpen
+import Theorem.Complex.Hurwitz
+import Theorem.Set.IsLocallyUniformlyBoundedOn.of.All_All_LeNorm.Ge_0.IsOpen
 import Def.Analysis.Complex.NormalFamilies
 
 

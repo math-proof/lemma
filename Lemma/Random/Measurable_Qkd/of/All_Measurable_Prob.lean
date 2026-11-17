@@ -1,6 +1,8 @@
 import Mathlib.Probability.Kernel.MeasurableIntegral
 import Lemma.Random.Measurable_Vkd.of.All_Measurable_Prob
 import Lemma.Random.Qkd.eq.AddRkd_MulIntegral_Vkd.of.Ne0Real_Joint.In_Ico
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory PolicyGradient Random
 
 
@@ -36,4 +38,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-16
+-- updated on 2026-11-17

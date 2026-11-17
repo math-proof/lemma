@@ -9,11 +9,15 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Walls.jwd_earexists
-import Theorem.StatisticalMechanics.Code.Lattice.EarExistence.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.EarContraction.Part9
-import Theorem.StatisticalMechanics.Code.Walls.jc_earanchor
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Walls.jwd_earexists
+public import Theorem.StatisticalMechanics.Code.Lattice.EarExistence.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.EarContraction.Part9
+public import Theorem.StatisticalMechanics.Code.Walls.jc_earanchor
+public section
+
 open SimpleGraph Function
 
 

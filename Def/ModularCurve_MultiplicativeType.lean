@@ -1,5 +1,9 @@
-import Mathlib.Algebra.Module.Submodule.Basic
-import Mathlib.Algebra.Group.Subgroup.Basic
+module
+
+public import Mathlib.Algebra.Module.Submodule.Basic
+public import Mathlib.Algebra.Group.Subgroup.Basic
+
+@[expose] public section
 
 namespace ModularCurve
 

@@ -1,10 +1,12 @@
-import Mathlib
+module
+
+public import Mathlib
 
 set_option autoImplicit false
 
 open MeasureTheory
 
-noncomputable section
+public noncomputable section
 
 namespace AutomorphicForm
 

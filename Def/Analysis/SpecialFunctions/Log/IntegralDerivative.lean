@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Log/IntegralDerivative.lean -/
 
 import Def.Analysis.SpecialFunctions.Log.Integral
-import Lemma.Real.Integral
+import Theorem.Real.Integral
 import Mathlib.Analysis.Calculus.Deriv.Basic
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 import Mathlib.Analysis.SpecialFunctions.Log.Basic

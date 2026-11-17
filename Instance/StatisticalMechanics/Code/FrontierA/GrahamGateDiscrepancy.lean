@@ -8,14 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
+module
 
-import Mathlib.Data.Fintype.EquivFin
-import Mathlib.Data.Fintype.Option
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Data.Fintype.Prod
-import Mathlib.Data.Finset.Max
-import Structure.StatisticalMechanics.Code.FrontierA.GrahamGateDiscrepancy
+public import Mathlib.Data.Fintype.EquivFin
+public import Mathlib.Data.Fintype.Option
+public import Mathlib.Data.Fintype.Pi
+public import Mathlib.Data.Fintype.Prod
+public import Mathlib.Data.Finset.Max
+public import Structure.StatisticalMechanics.Code.FrontierA.GrahamGateDiscrepancy
 
+@[expose] public section
 
 namespace StatMech.FrontierA
 

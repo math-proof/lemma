@@ -1,6 +1,11 @@
 -- Carved from Lemma/Definitions/Def_Deformations_ProartinianCompact.lean: instance decls only.
-import Mathlib
-import Class.Deformations_ProartinianCat
+
+module
+
+public import Mathlib
+public import Class.Deformations_ProartinianCat
+
+@[expose] public section
 
 set_option autoImplicit false
 

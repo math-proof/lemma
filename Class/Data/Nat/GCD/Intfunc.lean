@@ -1,7 +1,11 @@
-import Mathlib.Data.Set.Basic
-import Mathlib.Data.Finset.Basic
-import Mathlib.Algebra.GCDMonoid.Finset
+module
 
+public import Mathlib.Data.Set.Basic
+public import Mathlib.Data.Finset.Basic
+public import Mathlib.Algebra.GCDMonoid.Finset
+
+
+public section
 
 /-!
 # Integer functions

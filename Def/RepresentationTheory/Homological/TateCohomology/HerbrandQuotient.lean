@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RepresentationTheory/Homological/TateCohomology/HerbrandQuotient.lean -/
 
-import Mathlib.RepresentationTheory.Homological.TateCohomology.Basic
-import Mathlib.SetTheory.Cardinal.Finite
+module
+
+public import Mathlib.RepresentationTheory.Homological.TateCohomology.Basic
+public import Mathlib.SetTheory.Cardinal.Finite
+
+@[expose] public section
+
 universe u
 
 /-!

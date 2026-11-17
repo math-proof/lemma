@@ -9,9 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicKilledKernel.Part9
-import Def.StatisticalMechanics.Code.Universality.IsingFermionicWalkReflection
+module
 
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicKilledKernel.Part9
+public import Def.StatisticalMechanics.Code.Universality.IsingFermionicWalkReflection
+
+
+public section
 
 namespace StatMech.Universality
 

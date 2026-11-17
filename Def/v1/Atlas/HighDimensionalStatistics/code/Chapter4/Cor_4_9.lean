@@ -18,9 +18,9 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 import Mathlib.Analysis.Matrix.LDL
 import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Thm_4_8
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Thm_4_8
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Lemma_4_2
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_18
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Thm_4_8
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Lemma_4_2
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_18
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Thm_4_6
 import Notation.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Lemma_4_2
 import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_18

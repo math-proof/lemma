@@ -6,10 +6,10 @@ All rights reserved.
 Copyright (c) 2024 AlgebraicCombinatorics contributors. All rights reserved.
 Authors: AlgebraicCombinatorics contributors
 -/
-import Mathlib
-import Lemma.PowerSeries.InfiniteProducts2
-import Lemma.Partition.NPartition
-import Def.RingTheory.LaurentSeries.Part2
+module
+
+public import Mathlib
+public import Def.RingTheory.LaurentSeries.Part2
 open scoped LaurentPolynomial
 
 /-!
@@ -42,7 +42,6 @@ covering Laurent power series and related concepts.
 * [Grinberg, *Algebraic Combinatorics*], Section on Laurent power series
 -/
 
-
 noncomputable section
 
 namespace AlgebraicCombinatorics
@@ -53,9 +52,8 @@ A balanced ternary representation uses digits from {-1, 0, 1} with base 3.
 Unlike binary representations, this can represent negative integers.
 -/
 
-
 /-- The set of balanced ternary digits: {-1, 0, 1} -/
-inductive BalancedTernaryDigit : Type
+public inductive BalancedTernaryDigit : Type
   | negOne : BalancedTernaryDigit
   | zero : BalancedTernaryDigit
   | one : BalancedTernaryDigit

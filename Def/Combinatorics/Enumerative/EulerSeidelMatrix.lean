@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/EulerSeidelMatrix.lean -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.Group.Defs
-import Mathlib.Algebra.Group.Monoid
-import Mathlib.Data.Nat.Choose.Basic
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.Group.Defs
+public import Mathlib.Algebra.Group.Monoid
+public import Mathlib.Data.Nat.Choose.Basic
+
+@[expose] public section
+
 /-!
 # Euler–Seidel matrices
 

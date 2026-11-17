@@ -1,5 +1,6 @@
 import Lemma.Matrix.NegDefAsymmK
 import Lemma.Random.LinearTD.NeMulVecX_0.of.Ne_0
+import Initialize.Tactic.Attr.Basic
 open Matrix
 
 
@@ -19,3 +20,4 @@ private lemma main
 
 
 -- created on 2026-09-26
+-- updated on 2026-11-17

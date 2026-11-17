@@ -2,7 +2,7 @@
 
 
 import Instance.NumberTheory.RoughNumbers
-import Lemma.Nat.RoughNumbers
+import Theorem.Nat.RoughNumbers
 /-!
 # Examples for rough natural numbers
 

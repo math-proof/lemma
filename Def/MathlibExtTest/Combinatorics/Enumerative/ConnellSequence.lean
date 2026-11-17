@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/ConnellSequence.lean -/
 
 
-import Def.Combinatorics.Enumerative.ConnellSequence.Part2
+module
 
+public import Def.Combinatorics.Enumerative.ConnellSequence.Part2
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

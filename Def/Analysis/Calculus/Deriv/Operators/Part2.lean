@@ -1,11 +1,14 @@
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Syntax.Analysis.Calculus.Deriv.Operators
+module
 
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Syntax.Analysis.Calculus.Deriv.Operators
+
+@[expose] public meta section
 
 /-- Infoview: `deriv (fun t ↦ e) t` ↦ `∂[t] e`; `deriv (fun t ↦ e) p` ↦ `∂[t = p] e`;
 non-lambda `deriv F p` with `p` an ident ↦ `∂[p] (F p)`. -/
 @[app_unexpander deriv]
-def deriv.unexpand : Lean.PrettyPrinter.Unexpander
+meta def deriv.unexpand : Lean.PrettyPrinter.Unexpander
   | `($_ $f $p) =>
     match f with
     | `(fun $x:ident ↦ $body) => do

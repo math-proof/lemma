@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/AbGeneralizedFibonacciSequence.lean -/
 
-import Mathlib.Data.Real.Basic
-import Mathlib.RingTheory.PowerSeries.Basic
+module
+
+public import Mathlib.Data.Real.Basic
+public import Mathlib.RingTheory.PowerSeries.Basic
 /-!
 # Kalman–Mena (a, b)-generalized Fibonacci sequence
 
@@ -11,6 +13,9 @@ for real parameters `a` and `b`, the sequence with `F 0 = 0`, `F 1 = 1`,
 recurrence `F (n + 2) = a * F (n + 1) + b * F n`, and ordinary formal
 generating series `x / (1 - a * x - b * x ^ 2)`.
 -/
+public section
+
+
 
 
 namespace MetaMathlibExt

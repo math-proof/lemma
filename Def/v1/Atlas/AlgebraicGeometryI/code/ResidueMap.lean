@@ -8,11 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.LaurentSeries
-import Mathlib.RingTheory.HahnSeries.Multiplication
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Mathlib.RingTheory.LocalRing.ResidueField.Defs
+module
 
+public import Mathlib.RingTheory.LaurentSeries
+public import Mathlib.RingTheory.HahnSeries.Multiplication
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Mathlib.RingTheory.LocalRing.ResidueField.Defs
+
+@[expose] public section
 
 noncomputable section
 

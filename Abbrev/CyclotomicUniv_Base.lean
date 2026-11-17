@@ -1,8 +1,10 @@
-import Mathlib
+module
+
+public import Mathlib
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 open Polynomial
 

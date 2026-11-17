@@ -7,12 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Theorem.StatisticalMechanics.Code.Onsager.RiemannPeriodic
-import Def.StatisticalMechanics.Code.FrontierA.QuantumIsingBogoliubovLimit
+public import Theorem.StatisticalMechanics.Code.Onsager.RiemannPeriodic
+public import Def.StatisticalMechanics.Code.FrontierA.QuantumIsingBogoliubovLimit
 open scoped BigOperators
 open MeasureTheory
 
+public section
 
 namespace StatMech.FrontierA
 

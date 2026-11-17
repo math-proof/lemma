@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/GradedAlgebra/FiniteHomogeneousGenerators.lean -/
 
 
-import Lemma.Int.GradedAlgebra.FiniteHomogeneousGenerators
+import Theorem.Int.GradedAlgebra.FiniteHomogeneousGenerators
 open MetaMathlibExt
 
 #check @MetaMathlibExt.MultigradedPolynomialModule.exists_finset_homogeneous_generators

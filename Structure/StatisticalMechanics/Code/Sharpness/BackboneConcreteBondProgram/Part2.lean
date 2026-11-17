@@ -9,8 +9,10 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Def.StatisticalMechanics.Code.Sharpness.BackboneAsymmetricCoordinateCertificate.Part13
-import Theorem.StatisticalMechanics.Code.Sharpness.BackboneConcreteBondProgram
+module
+
+public import Def.StatisticalMechanics.Code.Sharpness.BackboneAsymmetricCoordinateCertificate.Part13
+public import Theorem.StatisticalMechanics.Code.Sharpness.BackboneConcreteBondProgram
 open SimpleGraph Finset
 
 set_option linter.unusedSectionVars false
@@ -18,7 +20,7 @@ set_option linter.unusedSectionVars false
 
 namespace StatMech.Sharpness
 
-noncomputable section
+public noncomputable section
 
 variable {V : Type*} [Fintype V] [DecidableEq V] [LinearOrder V]
 

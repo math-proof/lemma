@@ -12,6 +12,7 @@ scope = "leanprover-community"
 
 [[lean_lib]]
 name = "Lemma"
+allowNonModules = true
 leanOptions = {linter.dupNamespace = false, linter.unusedTactic = false, linter.style.nameCheck = false, diagnostics.threshold = 1000}
 
 [[lean_lib]]

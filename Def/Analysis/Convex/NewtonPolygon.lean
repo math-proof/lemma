@@ -2,9 +2,14 @@
 Author: @toskua, Avocado
 -/
 
-import Mathlib.Algebra.MvPolynomial.Basic
-import Mathlib.Analysis.Convex.Hull
-import Mathlib.Topology.Instances.RealVectorSpace
+module
+
+public import Mathlib.Algebra.MvPolynomial.Basic
+public import Mathlib.Analysis.Convex.Hull
+public import Mathlib.Topology.Instances.RealVectorSpace
+
+@[expose] public section
+
 /-!
 # Newton polygon for bivariate polynomials
 

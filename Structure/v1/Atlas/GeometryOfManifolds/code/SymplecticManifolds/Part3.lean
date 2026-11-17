@@ -8,11 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.GeometryOfManifolds.code.DifferentialForms.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.DifferentialForms
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticLinearAlgebra
-import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra.Part3
-import Class.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part2
+module
+
+public import Structure.v1.Atlas.GeometryOfManifolds.code.DifferentialForms
+public import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds
+public section
+
 set_option autoImplicit false
 
 open DifferentialFormSpace

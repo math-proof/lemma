@@ -4,10 +4,15 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.LinearAlgebra.UnitaryGroup
-import Mathlib.Basic.Real.Basic
-import Mathlib.Analysis.InnerProductSpace.SingularValues
-import Mathlib.LinearAlgebra.Matrix.Basis
+module
+
+public import Mathlib.LinearAlgebra.UnitaryGroup
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Analysis.InnerProductSpace.SingularValues
+public import Mathlib.LinearAlgebra.Matrix.Basis
+
+@[expose] public section
+
 /-!
 # Rectangular real singular value decomposition
 

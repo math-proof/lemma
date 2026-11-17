@@ -1,7 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeInitStorage.lean -/
 
-import Def.CPythonListsort.Code.Transcription.TempStorageInvariant
-import Structure.CPythonListsort.Code.Transcription.MergeInitStorage
+module
+
+public import Def.CPythonListsort.Code.Transcription.TempStorageInvariant
+public import Structure.CPythonListsort.Code.Transcription.MergeInitStorage
+
+@[expose] public section
 /-!
 # `merge_init` temporary-storage initialization
 

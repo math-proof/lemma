@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/Instances/VecFiniteTensorCategory.lean -/
 
 /-
@@ -8,18 +10,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
-import Mathlib.CategoryTheory.Monoidal.Linear
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.CategoryTheory.Preadditive.Projective.Basic
-import Mathlib.CategoryTheory.Linear.Basic
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Mathlib.Algebra.Category.FGModuleCat.Basic
-import Mathlib.Algebra.Category.FGModuleCat.Abelian
-import Mathlib.CategoryTheory.Monoidal.Rigid.Braided
-import Mathlib.Algebra.Category.ModuleCat.Monoidal.Symmetric
-import Mathlib.Algebra.Category.ModuleCat.Projective
-import Mathlib.Algebra.Module.Projective
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
+public import Mathlib.CategoryTheory.Monoidal.Linear
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.CategoryTheory.Preadditive.Projective.Basic
+public import Mathlib.CategoryTheory.Linear.Basic
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.Algebra.Category.FGModuleCat.Basic
+public import Mathlib.Algebra.Category.FGModuleCat.Abelian
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Braided
+public import Mathlib.Algebra.Category.ModuleCat.Monoidal.Symmetric
+public import Mathlib.Algebra.Category.ModuleCat.Projective
+public import Mathlib.Algebra.Module.Projective
+public section
+
 set_option maxHeartbeats 400000
 
 open CategoryTheory

@@ -9,9 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Onsager.ChordCut
+module
 
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Onsager.ChordCut
+
+@[expose] public section
 
 namespace StatMech.Onsager.ChordCut
 

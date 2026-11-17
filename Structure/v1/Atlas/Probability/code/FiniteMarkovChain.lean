@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
-import Mathlib.Probability.Kernel.Basic
-import Abbrev.v1.Atlas.Probability.code.Filtration
+module
+
+public import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
+public import Mathlib.Probability.Kernel.Basic
+public import Abbrev.v1.Atlas.Probability.code.Filtration
+public section
+
 open MeasureTheory ProbabilityTheory Finset BigOperators
 
 variable {Ω : Type*} {m : MeasurableSpace Ω}

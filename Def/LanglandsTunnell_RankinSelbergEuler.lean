@@ -1,11 +1,15 @@
-import Mathlib.Algebra.Polynomial.Basic
-import Mathlib.Algebra.BigOperators.Finprod
-import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
-import Mathlib.RingTheory.Ideal.Norm.AbsNorm
-import Mathlib.NumberTheory.RamificationInertia.Inertia
-import Mathlib.NumberTheory.NumberField.Basic
-import Mathlib.Tactic.Ring
-import Lemma.Polynomial.HonestLDatum
+module
+
+public import Mathlib.Algebra.Polynomial.Basic
+public import Mathlib.Algebra.BigOperators.Finprod
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
+public import Mathlib.RingTheory.Ideal.Norm.AbsNorm
+public import Mathlib.NumberTheory.RamificationInertia.Inertia
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Mathlib.Tactic.Ring
+public import Def.LanglandsTunnell_HonestLDatum
+
+@[expose] public section
 
 noncomputable section
 
@@ -58,7 +62,8 @@ end RankinSelberg
 
 section Datum
 
-variable (F : Type*) [Field F] [NumberField F] {K : Type*} [Field K] [Algebra (𝓞 F) (𝓞 K)]
+variable (F : Type*) [Field F] [NumberField F] [Infinite (𝓞 F)]
+    {K : Type*} [Field K] [Algebra (𝓞 F) (𝓞 K)]
   [Algebra.IsIntegral (𝓞 F) (𝓞 K)]
 
 def rsDatum (S : Finset (HeightOneSpectrum (𝓞 F))) (a b : HeightOneSpectrum (𝓞 F) → ℂ)

@@ -1,19 +1,22 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
-import Mathlib.Topology.ContinuousMap.Polynomial
-import Mathlib.Topology.ContinuousMap.Weierstrass
-import Mathlib.LinearAlgebra.Lagrange
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.Analysis.Calculus.Deriv.MeanValue
-import Mathlib.Analysis.Calculus.Deriv.Polynomial
-import Mathlib.Analysis.Calculus.Deriv.ZPow
-import Mathlib.Analysis.PSeries
-import Mathlib.Topology.Algebra.InfiniteSum.Real
-import Mathlib.Analysis.Complex.Exponential
-import Def.Analysis.NormedSpace.MuntzSzasz
+module
+
+public import Mathlib.Topology.ContinuousMap.Polynomial
+public import Mathlib.Topology.ContinuousMap.Weierstrass
+public import Mathlib.LinearAlgebra.Lagrange
+public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+public import Mathlib.Analysis.Calculus.Deriv.MeanValue
+public import Mathlib.Analysis.Calculus.Deriv.Polynomial
+public import Mathlib.Analysis.Calculus.Deriv.ZPow
+public import Mathlib.Analysis.PSeries
+public import Mathlib.Topology.Algebra.InfiniteSum.Real
+public import Mathlib.Analysis.Complex.Exponential
+public import Def.Analysis.NormedSpace.MuntzSzasz
 open scoped unitInterval
 
+public section
 
 section
 

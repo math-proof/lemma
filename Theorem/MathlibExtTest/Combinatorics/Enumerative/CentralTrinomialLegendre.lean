@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.CentralTrinomialLegendre
-import Lemma.Finset.Enumerative.CentralTrinomialLegendre
+import Theorem.Finset.Enumerative.CentralTrinomialLegendre
 
 
 namespace MetaMathlibExt

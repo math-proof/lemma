@@ -8,19 +8,22 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Calculus.ContDiff.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Mathlib.LinearAlgebra.Matrix.PosDef
-import Mathlib.Analysis.Matrix.PosDef
-import Mathlib.Data.Real.StarOrdered
-import Mathlib.Analysis.Calculus.FDeriv.Symmetric
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
-import Mathlib.LinearAlgebra.Eigenspace.Charpoly
-import Mathlib.Topology.Connected.Basic
-import Structure.v1.Atlas.DifferentialGeometry.code.Hypersurfaces
+module
 
+public import Mathlib.Analysis.Calculus.ContDiff.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Mathlib.LinearAlgebra.Matrix.PosDef
+public import Mathlib.Analysis.Matrix.PosDef
+public import Mathlib.Data.Real.StarOrdered
+public import Mathlib.Analysis.Calculus.FDeriv.Symmetric
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
+public import Mathlib.LinearAlgebra.Eigenspace.Charpoly
+public import Mathlib.Topology.Connected.Basic
+public import Structure.v1.Atlas.DifferentialGeometry.code.Hypersurfaces
+
+@[expose] public section
 
 noncomputable section
 

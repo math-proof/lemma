@@ -1,10 +1,12 @@
-import Def.WeierstrassCurve_FormalGroupLaw
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.RingTheory.FormalGroup.Basic
-import Mathlib.Algebra.BigOperators.Finprod
-import Mathlib.RingTheory.MvPowerSeries.NoZeroDivisors
-import Mathlib.RingTheory.MvPowerSeries.Evaluation
+module
+
+public import Def.WeierstrassCurve_FormalGroupLaw
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.RingTheory.FormalGroup.Basic
+public import Mathlib.Algebra.BigOperators.Finprod
+public import Mathlib.RingTheory.MvPowerSeries.NoZeroDivisors
+public import Mathlib.RingTheory.MvPowerSeries.Evaluation
 
 set_option autoImplicit false
 set_option linter.unusedSectionVars false
@@ -15,7 +17,7 @@ variable {R : Type*} [CommRing R]
 
 end MvPowerSeries
 
-noncomputable section
+@[expose] public noncomputable section
 
 open PowerSeries MvPowerSeries
 

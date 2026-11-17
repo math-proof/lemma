@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Inductive.v1.Atlas.EllipticCurves.code.EndAlgClassification
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.EndAlgClassification
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.EndAlgClassification
 import Instance.v1.Atlas.EllipticCurves.code.EndomorphismNorm.Part2
 open scoped TensorProduct
 

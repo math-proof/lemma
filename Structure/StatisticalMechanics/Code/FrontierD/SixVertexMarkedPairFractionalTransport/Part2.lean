@@ -9,14 +9,16 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexMarkedPairSwitchInterface.Part3
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexMarkedPairFractionalTransport
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexMarkedPairSwitchInterface.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexMarkedPairFractionalTransport
 open Finset Matrix Polynomial
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure FiniteFractionalTransportOn
     (Source Target : Type*) [Fintype Source] [Fintype Target]

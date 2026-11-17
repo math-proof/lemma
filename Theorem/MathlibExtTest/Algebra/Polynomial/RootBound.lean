@@ -4,7 +4,7 @@
 
 import Mathlib.Algebra.Polynomial.Monic
 import Theorem.Algebra.Polynomial.RootBound
-import Lemma.Polynomial.RootBound
+import Theorem.Polynomial.RootBound
 import Instance.MathlibExtTest.Algebra.Polynomial.RootBound
 
 

@@ -1,5 +1,8 @@
-import Mathlib.Algebra.MvPolynomial.PDeriv
-import Def.Algebra.MvPolynomial.PDeriv
+module
+
+public import Mathlib.Algebra.MvPolynomial.PDeriv
+public import Def.Algebra.MvPolynomial.PDeriv
+
 /-!
 # Commutativity of partial derivatives and mixed differentials
 
@@ -9,6 +12,8 @@ in list order. Several algebraic identities of the mixed differential are
 proved: it depends only on the multiset of indices, distributes over
 append as function composition, and commutes with each `∂ᵢ`.
 -/
+
+public section
 
 
 namespace MvPolynomial

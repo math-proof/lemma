@@ -9,7 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Sharpness.Switching.Part3
+module
+
+public import Theorem.StatisticalMechanics.Code.Sharpness.Switching.Part3
+public section
+
 open Finset SimpleGraph
 open scoped symmDiff
 open Classical

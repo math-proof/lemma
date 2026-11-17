@@ -3,6 +3,7 @@ import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
 import Mathlib.Topology.EMetricSpace.Lipschitz
 import Lemma.Real.Any_And_Ge_0_All_LeInner.of.LyapunovCandidate
 import Lemma.Real.Any_Ge_0AndAll_LeAddNorm_MulAddSqrtUFnSub1.of.LyapunovCandidate
+import Initialize.Tactic.Attr.Basic
 open Filter MeasureTheory
 set_option maxHeartbeats 1000000
 
@@ -148,3 +149,4 @@ private lemma main
 
 
 -- created on 2026-09-26
+-- updated on 2026-11-17

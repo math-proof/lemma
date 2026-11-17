@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.KrullDimensionAffineSpace
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.KrullDimensionAffineSpace
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.FiniteMorphismDimension
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.KrullDimensionAffineSpace
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.FiniteMorphismDimension
 import Mathlib.RingTheory.TensorProduct.MvPolynomial
 import Mathlib.RingTheory.NoetherNormalization
 import Mathlib.RingTheory.Flat.Basic

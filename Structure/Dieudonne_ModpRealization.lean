@@ -1,6 +1,10 @@
-import Mathlib
-import Structure.Dieudonne_DatumAndHonda
-import Def.Dieudonne_ModpRealization
+module
+
+public import Mathlib
+public import Structure.Dieudonne_DatumAndHonda
+public import Def.Dieudonne_ModpRealization
+
+public section
 
 set_option autoImplicit false
 

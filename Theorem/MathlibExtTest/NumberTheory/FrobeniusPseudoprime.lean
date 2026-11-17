@@ -7,7 +7,7 @@ and nonmonic `0`, and gives concrete gcmd examples including the composite
 ring `ZMod 6`. No nontrivial Frobenius pseudoprime is exhibited.
 -/
 import Def.NumberTheory.FrobeniusPseudoprime
-import Lemma.Nat.FrobeniusPseudoprime
+import Theorem.Nat.FrobeniusPseudoprime
 
 
 /-- `n = 1` cannot satisfy the probable-prime predicate. -/

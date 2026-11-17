@@ -1,9 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/ZeroDivisorGraph.lean -/
 
 -- MathlibExt/RingTheory/ZeroDivisorGraph.lean
-import Mathlib.Algebra.Ring.Defs
-import Mathlib.Algebra.GroupWithZero.NonZeroDivisors
-import Mathlib.Combinatorics.SimpleGraph.Basic
+module
+
+public import Mathlib.Algebra.Ring.Defs
+public import Mathlib.Algebra.GroupWithZero.NonZeroDivisors
+public import Mathlib.Combinatorics.SimpleGraph.Basic
+@[expose] public section
+
 universe u
 
 /-!

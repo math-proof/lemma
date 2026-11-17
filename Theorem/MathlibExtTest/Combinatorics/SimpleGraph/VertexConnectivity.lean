@@ -2,7 +2,7 @@
 
 
 import Theorem.Combinatorics.SimpleGraph.VertexConnectivity
-import Lemma.SimpleGraph.VertexConnectivity
+import Theorem.SimpleGraph.VertexConnectivity
 
 
 example {V : Type*} [Fintype V] (G : SimpleGraph V) :

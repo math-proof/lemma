@@ -1,9 +1,11 @@
-import Mathlib
-import Def.FormalGroup_NSeries
+module
+
+public import Mathlib
+public import Def.FormalGroup_NSeries
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace FormalGroup
 

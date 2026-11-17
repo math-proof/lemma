@@ -1,7 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/FactorizationEquiv.lean -/
+module
 
-import Mathlib.RingTheory.DedekindDomain.Factorization
-import Def.RingTheory.DedekindDomain.FactorizationEquiv.Part2
+public import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Def.RingTheory.DedekindDomain.FactorizationEquiv.Part2
 open scoped nonZeroDivisors
 
 open IsDedekindDomain
@@ -31,6 +32,8 @@ fractional ideals and the finitely supported prime-exponent functions.
 * `FractionalIdeal.unitsToFinsupp_mul`: valuations add under multiplication, from
   `FractionalIdeal.count_mul`.
 -/
+
+public section
 
 
 namespace FractionalIdeal

@@ -9,9 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexEndpointLocalGeometry.Part8
-import Def.StatisticalMechanics.Code.Universality.HexEndpointLocalPartitionClosure
-import Theorem.StatisticalMechanics.Code.Universality.HexEndpointCyclicLocalPartition
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.HexEndpointLocalGeometry.Part8
+public import Def.StatisticalMechanics.Code.Universality.HexEndpointLocalPartitionClosure
+public import Theorem.StatisticalMechanics.Code.Universality.HexEndpointCyclicLocalPartition
 
 
 namespace StatMech.Universality
@@ -20,7 +22,7 @@ open Complex HexWalk
 
 open scoped BigOperators
 
-noncomputable section
+public noncomputable section
 
 structure HexEndpointCyclicLocalPartition
     (R : HexFiniteRegion) (a : ℂ) (h0 : ℤ) (v du : ℂ) where

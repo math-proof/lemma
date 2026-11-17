@@ -1,5 +1,9 @@
-import Mathlib
-import Structure.FLTPrelim_FreyPackage
+module
+
+public import Mathlib
+public import Structure.FLTPrelim_FreyPackage
+
+public section
 
 set_option autoImplicit false
 

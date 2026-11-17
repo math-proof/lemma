@@ -7,9 +7,12 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Theorem.StatisticalMechanics.Code.FrontierD.FiniteTwoBranchWeightedTransport
+public import Theorem.StatisticalMechanics.Code.FrontierD.FiniteTwoBranchWeightedTransport
 open StatMech.FrontierD
+
+public section
 
 #print axioms fintype_sum_comp_le_sum_of_injective
 #print axioms fintype_sum_le_of_twoBranchWeight

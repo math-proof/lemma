@@ -1,5 +1,9 @@
-import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
-import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
+public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
+
+@[expose] public section
 
 set_option autoImplicit false
 

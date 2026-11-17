@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/CollatzTests.lean -/
+module
 
+public import Def.NumberTheory.Collatz
 
-import Def.NumberTheory.Collatz
-
+public section
 
 example : Nat.collatzStep 6 = 3 := by decide
 

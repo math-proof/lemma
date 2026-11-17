@@ -1,5 +1,6 @@
 import Instance.Probability.Moments.Variance
 import Lemma.Random.Expect_Cond.eq.Expect.of.Integrable.Measurable
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory Random
 
 
@@ -26,4 +27,4 @@ private lemma main
 
 
 -- created on 2023-04-01
--- updated on 2026-11-10
+-- updated on 2026-11-17

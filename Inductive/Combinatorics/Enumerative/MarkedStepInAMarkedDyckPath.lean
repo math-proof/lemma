@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/MarkedStepInAMarkedDyckPath.lean -/
 
-import Mathlib.Data.List.Basic
-import Lean.Elab.Tactic.Omega
+module
+
+public import Mathlib.Data.List.Basic
+public import Lean.Elab.Tactic.Omega
 /-!
 # Marked step in a marked Dyck path
 
@@ -22,7 +24,7 @@ namespace MetaMathlibExt
 and the two kinds of vertical steps `(0, 1)`, unmarked `N` and marked `N*`.
 Source statement `jis_f51c1ff9625da95f812ce507`;
 concept `jis_sem_1ec0710af356bb3047cb9588`. -/
-inductive MarkedDyckStep : Type where
+public inductive MarkedDyckStep : Type where
   | E : MarkedDyckStep
   | N : MarkedDyckStep
   | Nstar : MarkedDyckStep

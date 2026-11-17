@@ -1,5 +1,9 @@
-import Mathlib.AlgebraicGeometry.IdealSheaf.Basic
-import Instance.AlgebraicGeometry_IdealSheafHom
+module
+
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Basic
+public import Instance.AlgebraicGeometry_IdealSheafHom
+
+public section
 
 open CategoryTheory TopologicalSpace Opposite
 

@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Module.ZLattice.Covolume
-import Mathlib.MeasureTheory.Group.GeometryOfNumbers
-import Mathlib.Analysis.InnerProductSpace.GramSchmidtOrtho
+module
 
+public import Mathlib.Algebra.Module.ZLattice.Covolume
+public import Mathlib.MeasureTheory.Group.GeometryOfNumbers
+public import Mathlib.Analysis.InnerProductSpace.GramSchmidtOrtho
+
+@[expose] public section
 
 noncomputable section
 

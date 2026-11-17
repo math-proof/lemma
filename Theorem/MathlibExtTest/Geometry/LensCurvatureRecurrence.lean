@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Geometry/LensCurvatureRecurrence.lean -/
+module
 
+public import Def.Geometry.LensCurvatureRecurrence
 
-import Def.Geometry.LensCurvatureRecurrence
-
+public section
 
 namespace MetaMathlibExt
 

@@ -1,10 +1,14 @@
-import Mathlib
-import Def.CategoryTheory_OverTotalPresheaf
-import Abbrev.CategoryTheory_OverTotalPresheaf
+module
+
+public import Mathlib
+public import Def.CategoryTheory_OverTotalPresheaf
+public import Abbrev.CategoryTheory_OverTotalPresheaf
 
 set_option autoImplicit false
 
 open CategoryTheory Category Opposite
+
+public section
 
 namespace CategoryTheory.Functor
 

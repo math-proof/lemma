@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeCounting/VPRamanujanNumber.lean -/
 
-import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.Data.Real.Basic
-import Mathlib.Data.Set.Card
+module
+
+public import Mathlib.Data.Nat.Prime.Basic
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Data.Set.Card
+
+@[expose] public section
+
 /-!
 # Generalized Ramanujan numbers
 

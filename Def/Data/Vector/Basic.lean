@@ -1,17 +1,12 @@
-import Mathlib.Data.Vector.MapLemmas
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Data.Matrix.Mul
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Lemma.Nat.EqMin_SubMulS
-import Lemma.Nat.EqAddMulDiv
-import Lemma.List.LengthRange.eq.Length
-import Lemma.List.Prod.eq.MulProdS
-import Theorem.Algebra.Power.Part2
-import Theorem.Function
-import Instance.Data.Vector.Basic
-import Def.Data.List.List.Basic
+module
+
+public import Mathlib.Data.Vector.MapLemmas
+public import Theorem.List.LengthRange.eq.Length
+public import Theorem.Function
+public import Def.Data.List.List.Basic
+
+@[expose] public section
 open Nat Lean
-open scoped BigOperators
 
 
 namespace List.Vector
@@ -51,7 +46,13 @@ def array_slice (L : Vector α n) (start : Nat) (step : Nat) : Vector α (min st
   (take step ∘ drop start) L
 
 def unflatten (xs : Vector α (m * n)) : Vector (Vector α n) m :=
-  (range m).map fun i : Fin m => cast (by rw [EqMin_SubMulS]) (xs.array_slice (i * n) n)
+  (range m).map fun i : Fin m =>
+    -- Inline of Nat.EqMin_SubMulS: that Theorem module and
+    -- Theorem.List.LengthRange.eq.Length both export a public `left`.
+    cast (by
+      rw [Nat.mul_comm m n, Nat.mul_comm (i : ℕ) n, ← Nat.mul_sub_left_distrib]
+      rw [Nat.min_eq_left (Nat.le_mul_of_pos_right n (Nat.sub_pos_of_lt i.isLt))])
+      (xs.array_slice (i * n) n)
 
 /--
 Python-like slicing operator for List/Vector
@@ -80,6 +81,6 @@ def getSlice (L : Vector α n) (s : Slice) : Vector α (s.length n) :=
 
 /-- Infoview: reverse `getSlice` to Python slice syntax. -/
 @[app_unexpander getSlice]
-def getSlice.unexpand := Slice.getSliceUnexpand
+meta def getSlice.unexpand := Slice.getSliceUnexpand
 
 end List.Vector

@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.Reflection.AffineWeylGroupConstruction
-import Mathlib.GroupTheory.SemidirectProduct
+module
+
+public import Def.v1.Atlas.Buildings.code.Reflection.AffineWeylGroupConstruction
+public import Mathlib.GroupTheory.SemidirectProduct
+
+@[expose] public section
+
 open scoped InnerProductSpace
 open Set
 

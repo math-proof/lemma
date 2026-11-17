@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.MeasureTheory.Measure.MeasureSpace
-import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
-import Mathlib.Dynamics.Ergodic.Ergodic
-import Mathlib.Dynamics.BirkhoffSum.Average
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
+module
+
+public import Mathlib.MeasureTheory.Measure.MeasureSpace
+public import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
+public import Mathlib.Dynamics.Ergodic.Ergodic
+public import Mathlib.Dynamics.BirkhoffSum.Average
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+
+@[expose] public section
+
 open MeasureTheory Filter Function Set Finset Topology
 
 

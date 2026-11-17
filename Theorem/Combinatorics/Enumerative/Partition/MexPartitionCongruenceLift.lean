@@ -3,15 +3,19 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
+module
 
-import Mathlib.Combinatorics.Enumerative.Partition.Basic
-import Mathlib.Tactic.Ring
+public import Mathlib.Combinatorics.Enumerative.Partition.Basic
+public import Mathlib.Tactic.Ring
+
 /-!
 # Lifting partition congruences to mex partition functions
 
 This file proves the Barman-Singh lift by removing the forced parts preceding a partition's
 minimal excludant and then summing the resulting exact-mex fibers.
 -/
+
+public section
 
 
 namespace MetaMathlibExt

@@ -9,16 +9,18 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWDepthAugment.Part12
-import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWDepthCutBounds
-import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWDepthCompletion.Part5
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWDepthAugment.Part12
+public import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWDepthCutBounds
+public import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWDepthCompletion.Part5
 
 
 namespace StatMech.Universality
 
 open HexWalk
 
-noncomputable section
+public noncomputable section
 
 structure HLHDAEndpointColumnWalk (T : ℕ) (ts : List ℤ) where
   legal : (ofTurns hexAWStart 1 ts).EndpointIsLegalSAW

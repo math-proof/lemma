@@ -9,10 +9,15 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Mathlib.Analysis.Calculus.Deriv.MeanValue
-import Mathlib.Topology.Order.OrderClosed
-import Theorem.StatisticalMechanics.Code.OSSS.Integration
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+public import Mathlib.Analysis.Calculus.Deriv.MeanValue
+public import Mathlib.Topology.Order.OrderClosed
+public import Theorem.StatisticalMechanics.Code.OSSS.Integration
+
+@[expose] public section
+
 open scoped BigOperators
 open Real Set Finset Filter Topology
 

@@ -9,16 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Class.v1.Atlas.GeometryOfManifolds.code.AdvancedKahler.Part11
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.AdvancedKahler
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.HodgeTheory
 import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
 import Def.v1.Atlas.GeometryOfManifolds.code.HodgeTheory.Part12
 import Mathlib.Geometry.Manifold.MFDeriv.Basic
 set_option autoImplicit false
 
 open DifferentialFormSpace
-
 
 /-- A tangent-bundle splitting compatible with a 2-form $\eta$.
 
@@ -42,5 +38,4 @@ class TangentSplitting
     inst.ι (projH (projV X)) α = 0
   orthogonal : ∀ (X Y : VF),
     inst.ι (projV Y) (inst.ι (projH X) η) = 0
-
 

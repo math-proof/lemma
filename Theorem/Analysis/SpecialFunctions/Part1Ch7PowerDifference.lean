@@ -1,11 +1,13 @@
 /-
 Author: @akiezun, Avocado
 -/
+module
 
-import Mathlib.Analysis.SpecialFunctions.Pow.Complex
-import Mathlib.Basic.Complex.Basic
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Def.Analysis.SpecialFunctions.Part1Ch7PowerDifference
+public import Mathlib.Analysis.SpecialFunctions.Pow.Complex
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Def.Analysis.SpecialFunctions.Part1Ch7PowerDifference
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 7: power-difference series
 
@@ -13,6 +15,8 @@ The parametrized sum `φ_r(x) = ∑_{j ≥ 0} ((j + 1)ʳ - (j + 1 + x)ʳ)` of
 B. C. Berndt, *Ramanujan's Notebooks, Part I* (Springer, 1985), Chapter 7,
 shared by Entries 9 and 10 of that chapter.
 -/
+
+public section
 
 
 namespace Ramanujan.Part1Ch7

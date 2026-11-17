@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/ModifiedBesselFirstKind.lean -/
+module
 
+public import Def.Analysis.SpecialFunctions.ModifiedBesselFirstKind
+public import Mathlib.Tactic.NormNum
 
-import Def.Analysis.SpecialFunctions.ModifiedBesselFirstKind
-import Mathlib.Tactic.NormNum
-
+public section
 
 namespace MetaMathlibExt
 

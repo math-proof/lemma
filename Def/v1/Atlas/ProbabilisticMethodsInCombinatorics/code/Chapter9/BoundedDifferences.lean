@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.Moments.SubGaussian
-import Mathlib.Probability.Independence.Basic
-import Mathlib.Probability.Martingale.Basic
+module
+
+public import Mathlib.Probability.Moments.SubGaussian
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.Probability.Martingale.Basic
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 

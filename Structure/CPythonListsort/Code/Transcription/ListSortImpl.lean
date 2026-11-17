@@ -1,12 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/ListSortImpl.lean -/
 
-import Def.CPythonListsort.Code.Transcription.Binarysort.Part3
-import Def.CPythonListsort.Code.Transcription.CountRun.Part4
-import Theorem.CPythonListsort.Code.Transcription.FoundNewRun
-import Theorem.CPythonListsort.Code.Transcription.MergeForceCollapse
-import Def.CPythonListsort.Code.Transcription.MergeInitStorage
-import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
-import Def.CPythonListsort.Code.Transcription.ReverseSlice
+module
+
+public import Def.CPythonListsort.Code.Transcription.Binarysort.Part3
+public import Def.CPythonListsort.Code.Transcription.CountRun.Part4
+public import Theorem.CPythonListsort.Code.Transcription.FoundNewRun
+public import Theorem.CPythonListsort.Code.Transcription.MergeForceCollapse
+public import Def.CPythonListsort.Code.Transcription.MergeInitStorage
+public import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
+public import Def.CPythonListsort.Code.Transcription.ReverseSlice
 /-!
 # Snapshot-model `list_sort_impl`
 
@@ -17,6 +19,9 @@ control flow retains initial/final reverse handling, natural-run discovery,
 adaptive minrun extension, policy merges, the unconditional pending push,
 final collapse, and temporary-storage cleanup.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

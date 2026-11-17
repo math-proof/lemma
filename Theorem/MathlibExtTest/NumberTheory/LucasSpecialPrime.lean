@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.LucasSpecialPrime
-import Lemma.Nat.LucasSpecialPrime
+import Theorem.Nat.LucasSpecialPrime
 import Mathlib.Tactic
 
 

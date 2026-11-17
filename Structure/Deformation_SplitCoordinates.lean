@@ -1,11 +1,15 @@
-import Mathlib
-import Structure.Dieudonne_DatumAndHonda
-import Instance.Dieudonne_WittVectorHom
-import Instance.Dieudonne_WittHomColimit
-import Instance.PDivisibleGroup_Basic
-import Class.MvFormalGroup_BasicV2
-import Def.MvFormalGroup_LinearPart
-import Instance.MvFormalGroup_PointsV2
+module
+
+public import Mathlib
+public import Structure.Dieudonne_DatumAndHonda
+public import Instance.Dieudonne_WittVectorHom
+public import Instance.Dieudonne_WittHomColimit
+public import Instance.PDivisibleGroup_Basic
+public import Class.MvFormalGroup_BasicV2
+public import Def.MvFormalGroup_LinearPart
+public import Instance.MvFormalGroup_PointsV2
+
+public section
 
 set_option autoImplicit false
 

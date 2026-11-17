@@ -11,6 +11,7 @@ import Lemma.Random.All_Eq_MulProbCond.of.PSpace_Joint
 import Lemma.Random.Map.eq.WithDensityProb
 import Notation.Probability.JointRv
 import Syntax.Probability.Indep
+import Initialize.Tactic.Attr.Basic
 open ProbabilityTheory MeasureTheory Random
 open scoped ProbabilityTheory
 
@@ -326,4 +327,4 @@ private lemma main
   simpa [mul_comm (π.prob z c), mul_comm (π.prob (y, z) (b, c))] using hDens
 
 -- created on 2026-09-21
--- updated on 2026-11-16
+-- updated on 2026-11-17

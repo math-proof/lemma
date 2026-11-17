@@ -9,8 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib.RingTheory.RootsOfUnity.Complex
-import Mathlib.FieldTheory.KummerExtension
+module
+
+public import Mathlib.RingTheory.RootsOfUnity.Complex
+public import Mathlib.FieldTheory.KummerExtension
+
+@[expose] public section
+
 open scoped BigOperators
 
 

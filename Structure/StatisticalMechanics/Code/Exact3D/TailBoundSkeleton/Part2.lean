@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.StatisticalMechanics.Code.Exact3D.PolymerEnumeration.Part39
-import Def.StatisticalMechanics.Code.Exact3D.TailBoundSkeleton.Part2
+module
+
+public import Theorem.StatisticalMechanics.Code.Exact3D.PolymerEnumeration.Part39
+public import Def.StatisticalMechanics.Code.Exact3D.TailBoundSkeleton.Part2
+public section
+
 open scoped BigOperators
 
 

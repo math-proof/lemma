@@ -1,9 +1,12 @@
-import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
-import Mathlib.Analysis.Fourier.FourierTransform
-import Mathlib.MeasureTheory.Measure.Haar.NormedSpace
+module
+
+public import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
+public import Mathlib.Analysis.Fourier.FourierTransform
+public import Mathlib.MeasureTheory.Measure.Haar.NormedSpace
 open scoped FourierTransform
 open MeasureTheory
 
+public section
 
 namespace Fourier.Scaling.Real
 

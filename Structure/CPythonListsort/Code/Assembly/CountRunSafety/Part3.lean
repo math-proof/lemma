@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/CountRunSafety.lean -/
 
-import Def.CPythonListsort.Code.Assembly.ReverseSliceSafety.Part2
-import Def.CPythonListsort.Code.Transcription.CountRun.Part4
-import Theorem.CPythonListsort.Code.Assembly.CountRunSafety.Part3
+module
+
+public import Def.CPythonListsort.Code.Assembly.ReverseSliceSafety.Part2
+public import Def.CPythonListsort.Code.Transcription.CountRun.Part4
+public import Theorem.CPythonListsort.Code.Assembly.CountRunSafety.Part3
 /-!
 # `count_run` safety
 
@@ -18,6 +20,9 @@ As in the v1 transcription, `BoolComparator` is total.  CPython's comparator
 error/failure return path is therefore outside this model; the safety theorem is
 for every total Boolean comparator, including inconsistent ones.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

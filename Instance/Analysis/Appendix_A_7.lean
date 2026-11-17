@@ -1,6 +1,9 @@
-import Mathlib
-import Abbrev.Analysis.Appendix_A_7
+module
 
+public import Mathlib
+public import Abbrev.Analysis.Appendix_A_7
+
+@[expose] public section
 
 /-- A coercion from integers to new integers -/
 instance : Coe ℤ NewInt where

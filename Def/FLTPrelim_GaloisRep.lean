@@ -1,9 +1,13 @@
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.Algebra.GroupWithZero.Action.Basic
-import Mathlib.Algebra.Module.ZMod
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Instance.FLTPrelim_GaloisRep
+module
+
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.Algebra.GroupWithZero.Action.Basic
+public import Mathlib.Algebra.Module.ZMod
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Instance.FLTPrelim_GaloisRep
+
+@[expose] public section
 
 /-
 Copyright (c) 2024 Imperial College London FLT project contributors.

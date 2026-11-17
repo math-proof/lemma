@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Category
-import Mathlib.CategoryTheory.Category.Basic
-import Class.v1.Atlas.TensorCategories.code.Definition_2_5_4
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Category
+public import Mathlib.CategoryTheory.Category.Basic
+public import Class.v1.Atlas.TensorCategories.code.Definition_2_5_4
+@[expose] public section
+
 open CategoryTheory MonoidalCategory
 
 universe v₁ v₂ v₃ u₁ u₂ u₃

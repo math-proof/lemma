@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/Minrun.lean -/
 
-import Def.CPythonListsort.Code.Transcription.Word
-import Structure.CPythonListsort.Code.Transcription.Minrun.Part3
+module
+
+public import Def.CPythonListsort.Code.Transcription.Word
+public import Structure.CPythonListsort.Code.Transcription.Minrun.Part3
+
+@[expose] public section
+
 /-!
 # Adaptive-minrun transcription
 

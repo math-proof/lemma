@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/HighlyComposite.lean -/
 
-import Mathlib.NumberTheory.ArithmeticFunction.Misc
+module
 
+public import Mathlib.NumberTheory.ArithmeticFunction.Misc
+
+@[expose] public section
 
 namespace Nat
 

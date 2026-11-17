@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/AccessTrace.lean -/
 
-import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
-import Structure.CPythonListsort.Code.Assembly.AccessTrace.Part5
+module
+
+public import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
+public import Structure.CPythonListsort.Code.Assembly.AccessTrace.Part5
 /-!
 # Compositional access and pending-push traces
 
@@ -32,7 +34,7 @@ universe u v w
 
 /-- Policy-level events needed to reconstruct formed leaves and logical merge
 nodes independently of physical access and merge-memory traces. -/
-inductive PolicyEvent where
+public inductive PolicyEvent where
   | formed (push : PendingPushEvent)
   | merge (event : LogicalMergeEvent)
   deriving DecidableEq, Repr

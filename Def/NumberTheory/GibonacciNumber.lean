@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/GibonacciNumber.lean -/
 
-import Mathlib.Data.Nat.Fib.Basic
+module
+
+public import Mathlib.Data.Nat.Fib.Basic
+
+@[expose] public section
+
 /-!
 # Gibonacci numbers
 

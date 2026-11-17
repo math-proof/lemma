@@ -1,4 +1,8 @@
-import Def.AutomorphicForm_ConstantTerm
+module
+
+public import Def.AutomorphicForm_ConstantTerm
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Def.WeierstrassCurve_RationalEnd
+module
+
+public import Mathlib
+public import Def.WeierstrassCurve_RationalEnd
+
+@[expose] public section
 
 namespace WeierstrassCurve
 

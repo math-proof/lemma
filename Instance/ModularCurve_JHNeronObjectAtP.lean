@@ -2,7 +2,7 @@
 import Mathlib
 import Def.ModularCurve_JZeroNeronObjectAtP
 import Abbrev.GoodReductionJacobian_RelativeGroupLawBaseChange
-import Lemma.Scheme.NeronSpecialFibreRestriction
+import Theorem.Scheme.NeronSpecialFibreRestriction
 import Instance.ModularCurve_XHDifferentialsModL
 import Lemma.UpperHalfPlane.XHOperators
 import Lemma.ResidueField.GluedPic0

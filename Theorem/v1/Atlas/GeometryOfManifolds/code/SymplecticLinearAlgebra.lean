@@ -7,11 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib
-import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra
+public import Mathlib
+public import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra
 open Module
 
+public section
 
 namespace SymplecticLinearAlgebra
 
@@ -31,7 +33,9 @@ lemma symplecticOrtho_finrank_add [FiniteDimensional ℝ V]
     finrank ℝ ↥E + finrank ℝ ↥(symplecticOrtho Ω E) = finrank ℝ V := by
   have hRefl : Ω.IsRefl := hΩ.alt.isRefl
   have key := LinearMap.BilinForm.finrank_add_finrank_orthogonal hRefl E
-  have htop : Ω.orthogonal ⊤ = ⊥ := hΩ.orthogonal_top_eq_bot
+  have htop : Ω.orthogonal ⊤ = ⊥ := by
+    rw [LinearMap.BilinForm.orthogonal_top_eq_ker hRefl]
+    exact LinearMap.separatingLeft_iff_ker_eq_bot.mp hΩ.nondeg
   rw [htop] at key
   have hbot : finrank ℝ ↥(E ⊓ ⊥) = 0 := by rw [inf_bot_eq]; exact finrank_bot ℝ V
   unfold symplecticOrtho

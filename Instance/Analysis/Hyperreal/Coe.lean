@@ -1,5 +1,8 @@
-import Mathlib.Analysis.Real.Hyperreal
+module
 
+public import Mathlib.Analysis.Real.Hyperreal
+
+@[expose] public section
 
 /-- Pointwise lift ℝ → ℝ to ℝ* → ℝ* via Filter.Germ.map.
 

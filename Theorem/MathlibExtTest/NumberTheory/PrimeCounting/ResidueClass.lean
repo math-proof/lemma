@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.PrimeCounting.ResidueClass
-import Lemma.Nat.PrimeCounting.ResidueClass
+import Theorem.Nat.PrimeCounting.ResidueClass
 
 
 -- `X = 0` has no primes.

@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/InfiniteWord/GeneralizedThueMorseSequence.lean -/
 
-import Mathlib.Data.List.FinRange
-import Mathlib.Data.List.Flatten
-import Mathlib.Data.List.TakeDrop
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Data.List.FinRange
+public import Mathlib.Data.List.Flatten
+public import Mathlib.Data.List.TakeDrop
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 /-!
 # Generalized Thue-Morse sequence of type `(L, k, κ)`
 

@@ -2,7 +2,7 @@
 
 
 import Def.LinearAlgebra.PerfectPairing.DualBasis
-import Lemma.Matrix.PerfectPairing.DualBasis
+import Theorem.Matrix.PerfectPairing.DualBasis
 open Module
 
 

@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ConsecutivePrime.lean -/
 
-import Mathlib.Data.List.Defs
-import Mathlib.Data.Nat.Prime.Basic
+module
 
+public import Mathlib.Data.List.Defs
+public import Mathlib.Data.Nat.Prime.Basic
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

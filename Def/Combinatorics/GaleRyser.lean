@@ -4,15 +4,18 @@
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Algebra.Order.Ring.Nat
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Data.Fin.Tuple.Sort
-import Mathlib.Order.Lattice.Nat
-import Mathlib.Tactic.Ring
+module
 
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Algebra.Order.Ring.Nat
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Data.Fin.Tuple.Sort
+public import Mathlib.Order.Lattice.Nat
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 section
 

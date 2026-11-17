@@ -1,4 +1,8 @@
-import Def.AutomorphicForm_FormalBaseChange
+module
+
+public import Def.AutomorphicForm_FormalBaseChange
+
+@[expose] public section
 
 set_option autoImplicit false
 

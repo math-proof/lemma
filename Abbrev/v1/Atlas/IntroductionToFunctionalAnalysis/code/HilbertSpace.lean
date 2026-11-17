@@ -8,16 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.InnerProductSpace.Projection.Minimal
-import Mathlib.Analysis.InnerProductSpace.OfNorm
-import Mathlib.Analysis.InnerProductSpace.Orthonormal
-import Mathlib.Analysis.InnerProductSpace.Continuous
-import Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional
-import Mathlib.Analysis.InnerProductSpace.l2Space
-import Mathlib.Analysis.InnerProductSpace.Dual
-import Mathlib.Topology.Bases
-import Mathlib.Topology.Metrizable.Basic
-import Mathlib.Topology.Algebra.Module.Basic
+module
+
+public import Mathlib.Analysis.InnerProductSpace.Projection.Minimal
+public import Mathlib.Analysis.InnerProductSpace.OfNorm
+public import Mathlib.Analysis.InnerProductSpace.Orthonormal
+public import Mathlib.Analysis.InnerProductSpace.Continuous
+public import Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional
+public import Mathlib.Analysis.InnerProductSpace.l2Space
+public import Mathlib.Analysis.InnerProductSpace.Dual
+public import Mathlib.Topology.Bases
+public import Mathlib.Topology.Metrizable.Basic
+public import Mathlib.Topology.Algebra.Module.Basic
+@[expose] public section
+
 open scoped InnerProductSpace
 
 

@@ -1,8 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CorrectedMajorantBoundOffExceptionalSet.lean -/
 
 import Theorem.Analysis.Complex.Wiman.CorrectedRosenbloom
-import Lemma.Complex.Wiman.CorrectedRosenbloom
-import Lemma.Complex.Wiman.TwoPowerBadSets
+import Theorem.Complex.Wiman.CorrectedRosenbloom
+import Theorem.Complex.Wiman.TwoPowerBadSets
 import Def.Analysis.Complex.Wiman.TwoPowerBadSets
 
 

@@ -1,7 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ModularForms/ModularFunction.lean -/
+module
 
-import Structure.NumberTheory.ModularForms.ModularFunction
+public import Structure.NumberTheory.ModularForms.ModularFunction
 open scoped UpperHalfPlane MatrixGroups
+
+public section
+
 variable {f : ℍ → ℂ} {Gamma : Subgroup SL(2, ℤ)}
 /-! # Tests for modular functions -/
 

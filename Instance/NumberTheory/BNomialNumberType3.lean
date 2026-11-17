@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/BNomialNumberType3.lean -/
 
-import Mathlib.Data.Fintype.Pi
-import Def.NumberTheory.BNomialNumberType3
+module
+
+public import Mathlib.Data.Fintype.Pi
+public import Def.NumberTheory.BNomialNumberType3
 /-!
 # Type-3 b-nomial numbers
 
@@ -16,6 +18,7 @@ indispensable digits and type-3 `b`-nomial numbers.
 JIS concept: `jis_sem_c0908e8c24b869247eba442f`.
 -/
 
+@[expose] public section
 
 namespace MetaMathlibExt
 

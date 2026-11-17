@@ -1,13 +1,18 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/PentagonalNumber.lean -/
 
-import Mathlib.Combinatorics.Enumerative.Partition.GenFun
-import Mathlib.Combinatorics.Enumerative.Pentagonal.PowerSeries
-import Mathlib.Algebra.EuclideanDomain.Basic
-import Mathlib.Algebra.EuclideanDomain.Int
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Data.Int.Star
-import Mathlib.Topology.Connected.Separation
-import Mathlib.Topology.Separation.Lemmas
+module
+
+public import Mathlib.Combinatorics.Enumerative.Partition.GenFun
+public import Mathlib.Combinatorics.Enumerative.Pentagonal.PowerSeries
+public import Mathlib.Algebra.EuclideanDomain.Basic
+public import Mathlib.Algebra.EuclideanDomain.Int
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Data.Int.Star
+public import Mathlib.Topology.Connected.Separation
+public import Mathlib.Topology.Separation.Lemmas
+
+@[expose] public section
+
 open scoped BigOperators
 open scoped PowerSeries.WithPiTopology
 

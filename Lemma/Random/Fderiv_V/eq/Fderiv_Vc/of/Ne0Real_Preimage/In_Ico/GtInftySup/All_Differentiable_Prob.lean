@@ -1,6 +1,8 @@
 import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Lemma.Random.V.eq.Vc.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob
 import Syntax.Order.Sup
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Filter
 
 
@@ -39,4 +41,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-11-16
+-- updated on 2026-11-17

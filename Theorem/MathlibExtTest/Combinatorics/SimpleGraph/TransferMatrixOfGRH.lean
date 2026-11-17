@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/TransferMatrixOfGRH.lean -/
+module
 
+public import Def.Combinatorics.SimpleGraph.TransferMatrixOfGRH
 
-import Def.Combinatorics.SimpleGraph.TransferMatrixOfGRH
-
+public section
 
 namespace MetaMathlibExt
 

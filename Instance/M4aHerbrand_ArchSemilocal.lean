@@ -1,5 +1,10 @@
 -- Carved from Lemma/Definitions/Def_M4aHerbrand_ArchSemilocal.lean: instance decls only.
-import Instance.NumberField_InfiniteAdeleRing_BaseChangeData
+
+module
+
+public import Instance.NumberField_InfiniteAdeleRing_BaseChangeData
+
+@[expose] public section
 
 namespace M4aHerbrand.ArchSemilocal
 

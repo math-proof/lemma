@@ -1,11 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/ListSortCostBound.lean -/
 
-import Def.CPythonListsort.Code.Assembly.AlphabeticCostBound.Part2
-import Def.CPythonListsort.Code.Assembly.ListSortCollapseCost
-import Structure.CPythonListsort.Code.Assembly.ListSortPolicyEndpoints
-import Lemma.List.Atlas.CPythonListsort.Code.Assembly.ListSortPolicyBridge
-import Lemma.List.Atlas.CPythonListsort.Code.Assembly.ListSortScanPolicy
-import Inductive.CPythonListsort.Code.Assembly.ListSortScanReached
+module
+
+public import Def.CPythonListsort.Code.Assembly.AlphabeticCostBound.Part2
+public import Def.CPythonListsort.Code.Assembly.ListSortCollapseCost
+public import Structure.CPythonListsort.Code.Assembly.ListSortPolicyEndpoints
+public import Theorem.List.Atlas.CPythonListsort.Code.Assembly.ListSortPolicyBridge
+public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.ListSortScanPolicy
+public import Inductive.CPythonListsort.Code.Assembly.ListSortScanReached
 /-!
 # Public PowerSort merge-cost bound for the real top-level evaluator
 
@@ -23,6 +25,9 @@ separately because the genuine machine trace contains no formed-run event in
 either bypass case; the singleton leaf exists only at the paper-facing
 normalization boundary.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

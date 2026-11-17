@@ -8,12 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
+module
 
-import Mathlib.Data.List.FinRange
-import Mathlib.Data.Rat.Defs
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic
-import Def.StatisticalMechanics.Code.Ising.LebowitzPfisterLowFaceCertificateCore
+public import Mathlib.Data.List.FinRange
+public import Mathlib.Data.Rat.Defs
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic
+public import Def.StatisticalMechanics.Code.Ising.LebowitzPfisterLowFaceCertificateCore
+
+@[expose] public section
+
 open Finset
 
 

@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Lemma.Category.Atlas.v1.TensorCategories.code.Prop_1_45_10
 import Abbrev.v1.Atlas.TensorCategories.code.QuasiTensorFunctor.Part5
-import Lemma.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctor
+import Theorem.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctor
 open Finset BigOperators FusionRing FusionRing.FPdimData
 
 /-- A quasi-tensor functor between fusion rings induces a fusion ring homomorphism whose

@@ -1,11 +1,13 @@
-import Mathlib.Algebra.Algebra.Basic
-import Mathlib.Algebra.Ring.Defs
-import Mathlib.Basic.Complex.Basic
-import Mathlib.LinearAlgebra.Span.Defs
-import Mathlib.Order.Bounds.Defs
-import Mathlib.RingTheory.Ideal.Defs
-import Mathlib.RingTheory.Ideal.Lattice
-import Mathlib.RingTheory.Ideal.Prime
+module
+
+public import Mathlib.Algebra.Algebra.Basic
+public import Mathlib.Algebra.Ring.Defs
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.LinearAlgebra.Span.Defs
+public import Mathlib.Order.Bounds.Defs
+public import Mathlib.RingTheory.Ideal.Defs
+public import Mathlib.RingTheory.Ideal.Lattice
+public import Mathlib.RingTheory.Ideal.Prime
 /-!
 # Poisson brackets over commutative `ℂ`-algebras
 
@@ -15,7 +17,7 @@ property, and basic closure lemmas.
 -/
 
 
-noncomputable section
+public noncomputable section
 
 namespace Poisson
 

@@ -1,10 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Bernoulli/AbelBernoulliSums.lean -/
 
-import Mathlib.Data.Complex.Basic
-import Mathlib.NumberTheory.BernoulliPolynomials
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.RingTheory.SimpleRing.Principal
+module
 
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.NumberTheory.BernoulliPolynomials
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.RingTheory.SimpleRing.Principal
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

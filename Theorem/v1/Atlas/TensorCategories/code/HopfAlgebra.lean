@@ -7,19 +7,22 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.RingTheory.HopfAlgebra.Basic
-import Mathlib.RingTheory.Coalgebra.Convolution
-import Mathlib.RingTheory.Coalgebra.TensorProduct
-import Mathlib.RingTheory.Coalgebra.GroupLike
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Mathlib.LinearAlgebra.FiniteDimensional.Basic
-import Mathlib.RingTheory.Artinian.Module
-import Def.v1.Atlas.TensorCategories.code.HopfAlgebra
+public import Mathlib.RingTheory.HopfAlgebra.Basic
+public import Mathlib.RingTheory.Coalgebra.Convolution
+public import Mathlib.RingTheory.Coalgebra.TensorProduct
+public import Mathlib.RingTheory.Coalgebra.GroupLike
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.LinearAlgebra.FiniteDimensional.Basic
+public import Mathlib.RingTheory.Artinian.Module
+public import Def.v1.Atlas.TensorCategories.code.HopfAlgebra
 set_option maxHeartbeats 800000
 
 open Coalgebra HopfAlgebra WithConv LinearMap
 open scoped TensorProduct
+
+public section
 
 universe u v
 

@@ -8,17 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannRochEulerCurves
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochEulerCurves
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannFormRR
-import Instance.v1.Atlas.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
-import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannFormRR
+module
+
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannRochEulerCurves
+public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochEulerCurves
+public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
+public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannFormRR
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
+public import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannFormRR
 open CanonicalSheafCurves RiemannRochEulerCurves RiemannFormRR
 open SheafCohCurvesFiniteness
 
 
-noncomputable section
+public noncomputable section
 
 namespace RiemannRochRiemannForm
 

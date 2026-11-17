@@ -2,7 +2,7 @@
 
 
 import Def.LinearAlgebra.BilinearForm.DualLattice
-import Lemma.Matrix.BilinearForm.DualLattice
+import Theorem.Matrix.BilinearForm.DualLattice
 open scoped nonZeroDivisors
 
 open Submodule

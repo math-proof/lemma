@@ -1,4 +1,8 @@
-import Instance.NumberField_AdelicHaar
+module
+
+public import Instance.NumberField_AdelicHaar
+
+@[expose] public section
 
 open IsDedekindDomain NumberField MeasureTheory
 open scoped RestrictedProduct

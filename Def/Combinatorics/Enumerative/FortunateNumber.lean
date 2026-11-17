@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/FortunateNumber.lean -/
 
-import Mathlib.NumberTheory.Primorial
+module
+
+public import Mathlib.NumberTheory.Primorial
+
+@[expose] public section
+
 /-!
 # Fortunate numbers
 

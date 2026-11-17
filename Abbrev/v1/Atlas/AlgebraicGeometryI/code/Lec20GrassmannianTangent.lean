@@ -8,21 +8,23 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Smooth.Basic
-import Mathlib.RingTheory.Kaehler.Polynomial
-import Mathlib.RingTheory.Grassmannian
-import Mathlib.LinearAlgebra.ExteriorPower.Basis
-import Mathlib.LinearAlgebra.FreeModule.Finite.Matrix
-import Mathlib.LinearAlgebra.FiniteDimensional.Basic
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Mathlib.LinearAlgebra.Dimension.RankNullity
-import Mathlib.LinearAlgebra.Trace
+module
+
+public import Mathlib.RingTheory.Smooth.Basic
+public import Mathlib.RingTheory.Kaehler.Polynomial
+public import Mathlib.RingTheory.Grassmannian
+public import Mathlib.LinearAlgebra.ExteriorPower.Basis
+public import Mathlib.LinearAlgebra.FreeModule.Finite.Matrix
+public import Mathlib.LinearAlgebra.FiniteDimensional.Basic
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.LinearAlgebra.Dimension.RankNullity
+public import Mathlib.LinearAlgebra.Trace
 set_option maxHeartbeats 400000
 
 open KaehlerDifferential Module
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 universe u v w
 

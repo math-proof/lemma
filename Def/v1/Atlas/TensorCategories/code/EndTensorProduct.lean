@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Abbrev.v1.Atlas.TensorCategories.code.FiniteAbelianCategoryDef
-import Mathlib.Algebra.Category.FGModuleCat.Basic
-import Mathlib.CategoryTheory.Linear.FunctorCategory
-import Mathlib.CategoryTheory.Endomorphism
-import Mathlib.CategoryTheory.Products.Basic
-import Mathlib.RingTheory.TensorProduct.Basic
-import Mathlib.CategoryTheory.Limits.Preserves.Finite
+module
+
+public import Abbrev.v1.Atlas.TensorCategories.code.FiniteAbelianCategoryDef
+public import Mathlib.Algebra.Category.FGModuleCat.Basic
+public import Mathlib.CategoryTheory.Linear.FunctorCategory
+public import Mathlib.CategoryTheory.Endomorphism
+public import Mathlib.CategoryTheory.Products.Basic
+public import Mathlib.RingTheory.TensorProduct.Basic
+public import Mathlib.CategoryTheory.Limits.Preserves.Finite
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 

@@ -1,7 +1,11 @@
-import Mathlib.LinearAlgebra.Matrix.FixedDetMatrices
-import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
-import Mathlib.GroupTheory.Index
-import Mathlib.Tactic.NoncommRing
+module
+
+public import Mathlib.LinearAlgebra.Matrix.FixedDetMatrices
+public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
+public import Mathlib.GroupTheory.Index
+public import Mathlib.Tactic.NoncommRing
+
+@[expose] public section
 
 set_option autoImplicit false
 

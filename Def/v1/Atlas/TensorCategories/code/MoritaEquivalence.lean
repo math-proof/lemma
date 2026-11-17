@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.TensorCategories.code.ModuleFunctor
-import Mathlib.CategoryTheory.Monoidal.Mod_
+module
+
+public import Structure.v1.Atlas.TensorCategories.code.ModuleFunctor
+public import Mathlib.CategoryTheory.Monoidal.Mod_
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 universe v₁ v₂ v₃ u₁ u₂ u₃

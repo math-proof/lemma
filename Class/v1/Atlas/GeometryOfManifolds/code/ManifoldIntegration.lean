@@ -9,15 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.GeometryOfManifolds.code.Integration
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.Integration
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.ManifoldDFS
 import Def.v1.Atlas.GeometryOfManifolds.code.ManifoldDFS.Part2
 set_option autoImplicit false
 
 open DifferentialFormSpace
 
 open scoped Manifold ContDiff
-
 
 /-- A smooth manifold $M$ is compact and oriented: it carries a compact topology together with
 an (abstractly recorded) orientation, the standard hypothesis under which Stokes-type integration

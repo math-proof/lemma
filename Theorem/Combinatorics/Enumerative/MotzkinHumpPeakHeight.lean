@@ -3,24 +3,26 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
+module
 
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Rat.Defs
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
-import Mathlib.Algebra.BigOperators.Intervals
-import Mathlib.Data.Fin.Basic
-import Mathlib.Data.Fin.Tuple.Basic
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Fintype.Sigma
-import Mathlib.Logic.Equiv.Basic
-import Mathlib.Logic.Equiv.Prod
-import Mathlib.SetTheory.Cardinal.Finite
-import Mathlib.Tactic
-import Def.Combinatorics.Enumerative.MotzkinHumpPeakHeight
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Data.Rat.Defs
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
+public import Mathlib.Algebra.BigOperators.Intervals
+public import Mathlib.Data.Fin.Basic
+public import Mathlib.Data.Fin.Tuple.Basic
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Fintype.Sigma
+public import Mathlib.Logic.Equiv.Basic
+public import Mathlib.Logic.Equiv.Prod
+public import Mathlib.SetTheory.Cardinal.Finite
+public import Mathlib.Tactic
+public import Def.Combinatorics.Enumerative.MotzkinHumpPeakHeight
 
+public section
 
 namespace MetaMathlibExt
 

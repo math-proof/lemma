@@ -1,11 +1,16 @@
-import Mathlib.Analysis.Normed.Field.Krasner
-import Def.Analysis.Normed.IsClosestConjugate
+module
+
+public import Mathlib.Analysis.Normed.Field.Krasner
+public import Def.Analysis.Normed.IsClosestConjugate
+
 /-!
 # Closest conjugates and Krasner's lemma
 
 This file defines when an algebraic element is closer to one element than to all of its
 other conjugates, and connects this condition to Krasner's lemma.
 -/
+
+public section
 
 
 namespace AlgebraicClosure

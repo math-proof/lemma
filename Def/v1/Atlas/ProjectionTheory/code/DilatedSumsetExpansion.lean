@@ -10,9 +10,9 @@ LICENSE file in the root directory of this source tree.
 
 import Mathlib
 import Theorem.v1.Atlas.ProjectionTheory.code.PolyKGrowth
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.ContagiousStructure
+import Theorem.Real.Atlas.v1.ProjectionTheory.code.ContagiousStructure
 import Def.v1.Atlas.ProjectionTheory.code.DoubleCountingFF
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.DoubleCountingFF
+import Theorem.Real.Atlas.v1.ProjectionTheory.code.DoubleCountingFF
 open Pointwise
 
 

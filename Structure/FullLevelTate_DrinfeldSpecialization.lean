@@ -1,9 +1,11 @@
-import Structure.FullLevelTate_Datum
-import Lemma.Matrix.TateProdRep.eq.TateRep
+module
+
+public import Structure.FullLevelTate_Datum
+public import Lemma.Matrix.TateProdRep.eq.TateRep
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open scoped TensorProduct
 

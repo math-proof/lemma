@@ -1,8 +1,13 @@
 -- Carved from Lemma/Definitions/Def_Mathlib_Algebra_Algebra_Hom.lean: instance decls only.
-import Mathlib
-import Notation.Mathlib_Algebra_Algebra_Hom
-import Class.Mathlib_Algebra_Algebra_Hom
-import Structure.Mathlib_Algebra_Algebra_Hom
+
+module
+
+public import Mathlib
+public import Notation.Mathlib_Algebra_Algebra_Hom
+public import Class.Mathlib_Algebra_Algebra_Hom
+public import Structure.Mathlib_Algebra_Algebra_Hom
+
+@[expose] public section
 
 section
 

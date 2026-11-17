@@ -9,7 +9,7 @@ import Mathlib.Data.Finset.Defs
 import Mathlib.Data.Nat.Factorial.Basic
 import Mathlib.Topology.Algebra.InfiniteSum.Basic
 import Def.Analysis.Ramanujan.Part1Ch9Entry8Arcsin
-import Lemma.Real.Part1Ch9Entry8Arcsin
+import Theorem.Real.Part1Ch9Entry8Arcsin
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.Order.Antidiag.Prod
 import Mathlib.Algebra.Order.Ring.Star

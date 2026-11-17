@@ -1,6 +1,11 @@
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.RingTheory.Polynomial.Pochhammer
-import Notation.Data.Nat.Factorial.Factorials
+module
+
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.RingTheory.Polynomial.Pochhammer
+public import Notation.Data.Nat.Factorial.Factorials
+
+@[expose] public section
+
 export Nat (factorial)
 open Polynomial
 

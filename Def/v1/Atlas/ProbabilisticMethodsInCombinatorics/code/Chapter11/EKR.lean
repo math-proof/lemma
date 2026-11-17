@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter11.Containers
-import Mathlib.Combinatorics.SimpleGraph.Clique
-import Mathlib.Combinatorics.SimpleGraph.Finite
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Fintype.Powerset
-import Mathlib.SetTheory.Cardinal.Finite
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+module
+
+public import Theorem.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter11.Containers
+public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Fintype.Powerset
+public import Mathlib.SetTheory.Cardinal.Finite
+public import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 open SimpleGraph Finset Filter Real Asymptotics

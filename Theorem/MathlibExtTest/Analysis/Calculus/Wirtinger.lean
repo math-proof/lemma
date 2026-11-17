@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Calculus/Wirtinger.lean -/
+module
 
+public import Theorem.Analysis.Calculus.Wirtinger
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
 
-import Theorem.Analysis.Calculus.Wirtinger
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
-
+public section
 
 -- Applying Wirtinger's inequality to sine compares its square with its derivative's square.
 example :

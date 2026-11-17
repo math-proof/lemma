@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PellNumberSequence.lean -/
+module
 
+public import Def.NumberTheory.PellNumberSequence
 
-import Def.NumberTheory.PellNumberSequence
-
+public section
 
 namespace MetaMathlibExt
 

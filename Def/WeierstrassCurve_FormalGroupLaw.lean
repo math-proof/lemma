@@ -1,10 +1,14 @@
-import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
-import Mathlib.RingTheory.PowerSeries.Basic
-import Mathlib.RingTheory.PowerSeries.Inverse
-import Mathlib.RingTheory.PowerSeries.Order
-import Mathlib.RingTheory.PowerSeries.Substitution
-import Mathlib.RingTheory.MvPowerSeries.Substitution
-import Mathlib.RingTheory.MvPowerSeries.Order
+module
+
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
+public import Mathlib.RingTheory.PowerSeries.Basic
+public import Mathlib.RingTheory.PowerSeries.Inverse
+public import Mathlib.RingTheory.PowerSeries.Order
+public import Mathlib.RingTheory.PowerSeries.Substitution
+public import Mathlib.RingTheory.MvPowerSeries.Substitution
+public import Mathlib.RingTheory.MvPowerSeries.Order
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,10 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/EdgeColoring.lean -/
 
-import Mathlib.Combinatorics.SimpleGraph.Coloring.EdgeLabeling
-import Mathlib.Combinatorics.SimpleGraph.Bipartite
-import Mathlib.Algebra.Order.Star.Basic
-import Mathlib.Combinatorics.Hall.Basic
+module
 
+public import Mathlib.Combinatorics.SimpleGraph.Coloring.EdgeLabeling
+public import Mathlib.Combinatorics.SimpleGraph.Bipartite
+public import Mathlib.Algebra.Order.Star.Basic
+public import Mathlib.Combinatorics.Hall.Basic
+
+@[expose] public section
 
 section
 

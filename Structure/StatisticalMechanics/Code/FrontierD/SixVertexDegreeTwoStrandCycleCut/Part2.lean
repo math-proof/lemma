@@ -9,13 +9,15 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoCanonicalPositiveSeamPair.Part5
-import Def.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoStrandCycleCut
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoCanonicalPositiveSeamPair.Part5
+public import Def.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoStrandCycleCut
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure SixVertexDirectedComplementaryArcPair (T : EvenTorus) where
   first : SixVertexDirectedSimpleArc T

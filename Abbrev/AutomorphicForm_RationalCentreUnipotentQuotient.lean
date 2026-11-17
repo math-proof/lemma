@@ -1,8 +1,10 @@
-import Abbrev.AutomorphicForm_UnipotentQuotient
+module
+
+public import Abbrev.AutomorphicForm_UnipotentQuotient
 
 open MeasureTheory NumberField NumberField.AdelicHaar NumberField.AdelicBox
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace AutomorphicForm
 

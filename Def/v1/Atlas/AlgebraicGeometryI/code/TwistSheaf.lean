@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.AlgebraicGeometryI.code.QCohProjective.Part2
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.QCohProjective
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.QCohEquivalenceProof
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.QCohEquivalenceProof
 import Instance.v1.Atlas.AlgebraicGeometryI.code.QCohEquivalenceProof
 import Instance.v1.Atlas.AlgebraicGeometryI.code.TwistSheaf
 set_option maxHeartbeats 4000000

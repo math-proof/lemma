@@ -1,12 +1,14 @@
-import Mathlib
-import Structure.NeronModelInfra_WeakNeronModel
-import Def.AlgebraicGeometry_KaehlerModule
-import Def.NeronModelInfra_TopFormOrder
-import Lemma.Scheme.SmoothnessDefect
+module
+
+public import Mathlib
+public import Structure.NeronModelInfra_WeakNeronModel
+public import Def.AlgebraicGeometry_KaehlerModule
+public import Def.NeronModelInfra_TopFormOrder
+public import Lemma.Scheme.SmoothnessDefect
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 universe u
 

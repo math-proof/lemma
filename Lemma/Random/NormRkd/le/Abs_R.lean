@@ -1,4 +1,6 @@
-import Theorem.Dynamics.PolicyTrajectory.ContinuousAction
+import Def.Dynamics.PolicyTrajectory.ContinuousAction
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory PolicyGradient
 
 
@@ -8,7 +10,7 @@ The expected clamped reward is bounded: `‖rkd x u‖ = ‖𝔼[r[t] | s[t] = x
 @[path]
 private lemma main
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
-  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy]
+  {M : Model Θ 𝒮 𝒜} [StochasticPolicy M.toPolicy]
 -- given
   (sₜ : 𝒮)
   (aₜ : 𝒜) :
@@ -34,4 +36,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-16
+-- updated on 2026-11-17

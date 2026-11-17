@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.KrullDimension.NonZeroDivisors
-import Mathlib.LinearAlgebra.Eigenspace.Basic
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.LocalIntersectionMultiplicity
+module
+
+public import Mathlib.RingTheory.KrullDimension.NonZeroDivisors
+public import Mathlib.LinearAlgebra.Eigenspace.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.LocalIntersectionMultiplicity
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 

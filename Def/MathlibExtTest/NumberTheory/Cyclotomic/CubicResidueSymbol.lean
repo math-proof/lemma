@@ -4,7 +4,7 @@
 import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
 import Mathlib.NumberTheory.NumberField.Cyclotomic.PID
 import Def.NumberTheory.Cyclotomic.CubicResidueSymbol
-import Lemma.Nat.Cyclotomic.CubicResidueSymbol
+import Theorem.Nat.Cyclotomic.CubicResidueSymbol
 import Instance.MathlibExtTest.NumberTheory.Cyclotomic.CubicResidueSymbol
 
 

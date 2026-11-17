@@ -9,15 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.Buildings.code.BNPair.CellCoverProof
-import Lemma.Nat.In_BruhatCell1.of.In_B
-import Lemma.Nat.In_BruhatCell.of.In_BruhatCell
+import Theorem.Nat.In_BruhatCell1.of.In_B
+import Theorem.Nat.In_BruhatCell.of.In_BruhatCell
 import Lemma.Nat.Simple.ne.One
-import Lemma.Group.Atlas.v1.Buildings.code.BNPair.CellMulParabolicProof
-import Lemma.Set.SetMul_SetMul
+import Theorem.Set.SetMul_SetMul
 import Lemma.Set.BruhatCell.sub.SetG.of.In_BruhatCell.In_SetG.LeB
 import Lemma.Nat.B.le.Closure_BruhatCell
 import Lemma.Set.All_In_StandardParabolic
-import Lemma.Nat.NonemptyBruhatCell
+import Theorem.Nat.NonemptyBruhatCell
 import Theorem.v1.Atlas.Buildings.code.BNPair.CellInvProof
 import Theorem.v1.Atlas.Buildings.code.BNPair.CellDisjointProof
 import Theorem.v1.Atlas.Buildings.code.BNPair.CellMulParabolicProof

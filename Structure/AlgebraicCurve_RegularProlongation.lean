@@ -1,9 +1,11 @@
-import Mathlib
-import Structure.AlgebraicCurve_ConstantReduction
+module
+
+public import Mathlib
+public import Structure.AlgebraicCurve_ConstantReduction
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace AlgebraicCurve
 

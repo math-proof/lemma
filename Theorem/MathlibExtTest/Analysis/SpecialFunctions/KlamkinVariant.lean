@@ -1,9 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/KlamkinVariant.lean -/
 
 
-import Lemma.Real.SpecialFunctions.KlamkinVariant
+import Theorem.Real.SpecialFunctions.KlamkinVariant
 import Def.Analysis.SpecialFunctions.GaussHypergeometricSummationKlamkin
-import Lemma.Real.GaussHypergeometricSummationKlamkin
+import Theorem.Real.GaussHypergeometricSummationKlamkin
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Order

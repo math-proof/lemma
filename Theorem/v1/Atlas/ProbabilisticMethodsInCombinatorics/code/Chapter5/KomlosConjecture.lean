@@ -7,8 +7,12 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+
+public section
+
 /-- **Komlós conjecture** (Conjecture 5.1.5). There exists an absolute constant $K > 0$
 such that for any vectors $v_1, \dots, v_m \in \mathbb{R}^n$ with $\|v_i\| \leq 1$,
 one can choose signs $\varepsilon_i \in \{\pm 1\}$ so that

@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.EllipticCurves.code.IsogenyVolcano.Part3
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.IsogenyVolcano
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.IsogenyVolcano
 import Structure.v1.Atlas.EllipticCurves.code.OrdinaryVolcanoStructure
 
 

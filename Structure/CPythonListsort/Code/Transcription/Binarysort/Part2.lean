@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/Binarysort.lean -/
 
-import Def.CPythonListsort.Code.Transcription.MergeState.Part3
-import Def.CPythonListsort.Code.Transcription.Binarysort.Part2
+module
+
+public import Def.CPythonListsort.Code.Transcription.MergeState.Part3
+public import Def.CPythonListsort.Code.Transcription.Binarysort.Part2
 /-!
 # Stable binary insertion transcription
 
@@ -10,6 +12,9 @@ return `none`.  Fuel exhaustion remains distinct.  A comparator-false result
 (including equality for a strict comparator) follows the right-hand branch of
 the binary search; stability is therefore obtained for strict comparators.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

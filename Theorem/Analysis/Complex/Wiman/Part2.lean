@@ -1,6 +1,9 @@
-import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.Analysis.Complex.TaylorSeries
-import Def.Analysis.Complex.Wiman.Part3
+module
+
+public import Mathlib.Analysis.Complex.Polynomial.Basic
+public import Mathlib.Analysis.Complex.TaylorSeries
+public import Def.Analysis.Complex.Wiman.Part3
+
 /-!
 # The Wiman maximum-term theorem
 
@@ -10,6 +13,8 @@ the classical Wiman-Valiron inequality quoted by Filevych (2003), specialized
 to transcendental entire functions and exponent `2 / 3`, is proved in
 `MathlibExt.Analysis.Complex.Wiman.Filevych`.
 -/
+
+public section
 
 
 namespace Complex.Wiman

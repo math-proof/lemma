@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Recurrences/NondegenerateLucasPair.lean -/
 
-import Mathlib.Data.Complex.Basic
-import Mathlib.GroupTheory.OrderOfElement
+module
 
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.GroupTheory.OrderOfElement
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

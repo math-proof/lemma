@@ -8,16 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Smooth.Basic
-import Mathlib.LinearAlgebra.ExteriorPower.Basic
-import Mathlib.LinearAlgebra.ExteriorPower.Basis
-import Mathlib.LinearAlgebra.Dimension.Free
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.LinearAlgebra.FreeModule.Finite.Matrix
+module
+
+public import Mathlib.RingTheory.Smooth.Basic
+public import Mathlib.LinearAlgebra.ExteriorPower.Basic
+public import Mathlib.LinearAlgebra.ExteriorPower.Basis
+public import Mathlib.LinearAlgebra.Dimension.Free
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.LinearAlgebra.FreeModule.Finite.Matrix
 set_option maxHeartbeats 400000
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 open KaehlerDifferential TensorProduct
 

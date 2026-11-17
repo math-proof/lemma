@@ -4,8 +4,13 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.LinearAlgebra.Matrix.BilinearForm
-import Mathlib.LinearAlgebra.Matrix.Rank
+module
+
+public import Mathlib.LinearAlgebra.Matrix.BilinearForm
+public import Mathlib.LinearAlgebra.Matrix.Rank
+
+@[expose] public section
+
 /-!
 # Rank of a bilinear form
 

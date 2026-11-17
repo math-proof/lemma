@@ -1,6 +1,8 @@
 import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Lemma.Random.ProbCond.eq.OfRealPol.of.NeDens_0.All_EqWithDensity.All_Eq_JointDens
 import Mathlib.Analysis.Calculus.Gradient.Basic
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Real Measure
 open scoped ENNReal.ToRealCoe
 open IsPolicyTrajectory
@@ -52,4 +54,4 @@ private lemma main
 
 
 -- created on 2026-11-13
--- updated on 2026-11-16
+-- updated on 2026-11-17

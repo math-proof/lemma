@@ -8,18 +8,22 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.NumberTheoryI.code.Thm2375
-import Mathlib.Algebra.Category.ModuleCat.Monoidal.Basic
-import Mathlib.Algebra.Category.ModuleCat.Projective
-import Mathlib.Algebra.Category.ModuleCat.Abelian
-import Mathlib.CategoryTheory.Abelian.Projective.Resolution
-import Mathlib.Algebra.Homology.ShortComplex.ShortExact
-import Mathlib.Algebra.Homology.HomologySequenceLemmas
-import Mathlib.Algebra.Homology.HomologicalComplexAbelian
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.RingTheory.Flat.CategoryTheory
-import Mathlib.CategoryTheory.Limits.Preserves.Finite
-import Def.v1.Atlas.NumberTheoryI.code.Def2376
+module
+
+public import Def.v1.Atlas.NumberTheoryI.code.Thm2375
+public import Mathlib.Algebra.Category.ModuleCat.Monoidal.Basic
+public import Mathlib.Algebra.Category.ModuleCat.Projective
+public import Mathlib.Algebra.Category.ModuleCat.Abelian
+public import Mathlib.CategoryTheory.Abelian.Projective.Resolution
+public import Mathlib.Algebra.Homology.ShortComplex.ShortExact
+public import Mathlib.Algebra.Homology.HomologySequenceLemmas
+public import Mathlib.Algebra.Homology.HomologicalComplexAbelian
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.RingTheory.Flat.CategoryTheory
+public import Mathlib.CategoryTheory.Limits.Preserves.Finite
+public import Def.v1.Atlas.NumberTheoryI.code.Def2376
+@[expose] public section
+
 open CategoryTheory Category MonoidalCategory
 
 universe u

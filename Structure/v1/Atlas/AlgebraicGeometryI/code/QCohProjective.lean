@@ -8,26 +8,28 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.AlgebraicGeometryI.code.GradedPolynomial
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.GradedPolynomial
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.RingTheory.Finiteness.Defs
-import Mathlib.Algebra.Module.LocalizedModule.Exact
-import Mathlib.RingTheory.Localization.Module
-import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Scheme
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.Algebra.Category.ModuleCat.Sheaf.Quasicoherent
-import Mathlib.RingTheory.GradedAlgebra.Homogeneous.Ideal
-import Mathlib.CategoryTheory.Limits.Shapes.ZeroObjects
-import Mathlib.Algebra.DirectSum.Basic
-import Def.v1.Atlas.AlgebraicGeometryI.code.QCohProjective
+module
+
+public import Def.v1.Atlas.AlgebraicGeometryI.code.GradedPolynomial
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GradedPolynomial
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.RingTheory.Finiteness.Defs
+public import Mathlib.Algebra.Module.LocalizedModule.Exact
+public import Mathlib.RingTheory.Localization.Module
+public import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Scheme
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.Algebra.Category.ModuleCat.Sheaf.Quasicoherent
+public import Mathlib.RingTheory.GradedAlgebra.Homogeneous.Ideal
+public import Mathlib.CategoryTheory.Limits.Shapes.ZeroObjects
+public import Mathlib.Algebra.DirectSum.Basic
+public import Def.v1.Atlas.AlgebraicGeometryI.code.QCohProjective
 set_option maxHeartbeats 4000000
 
 open MvPolynomial
 
 
-noncomputable section
+public noncomputable section
 
 namespace QCohProjective
 

@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/Comparator.lean -/
 
-import Mathlib
-import Abbrev.CPythonListsort.Code.Transcription.Comparator
+module
+
+public import Mathlib
+public import Abbrev.CPythonListsort.Code.Transcription.Comparator
+
+@[expose] public section
+
 /-!
 # Total Boolean comparator model
 

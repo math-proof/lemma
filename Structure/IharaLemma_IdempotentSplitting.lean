@@ -1,6 +1,10 @@
-import Mathlib.RingTheory.Idempotents
-import Mathlib.RingTheory.Localization.AtPrime.Basic
-import Mathlib.Tactic.LinearCombination
+module
+
+public import Mathlib.RingTheory.Idempotents
+public import Mathlib.RingTheory.Localization.AtPrime.Basic
+public import Mathlib.Tactic.LinearCombination
+
+public section
 
 namespace IharaLemma
 

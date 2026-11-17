@@ -1,8 +1,28 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Structure.CPythonListsort.Code.Assembly.SortSliceSafety
-open CPythonListsort
+module
 
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Structure.CPythonListsort.Code.Assembly.SortSliceSafety
+public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.AccessTrace
+public import Lemma.List.Atlas.CPythonListsort.Code.Transcription.SortSlice
+public import Theorem.CPythonListsort.Code.Assembly.AccessTrace.Part2
+public import Theorem.CPythonListsort.Code.Assembly.SortSliceSafety
+
+public section
+
+open CPythonListsort
+open CPythonListsort.AccessTrace
+
+attribute [local simp]
+  TraceResult.erase_bind
+  TraceResult.erase_map
+  TraceResult.erase_pure
+  TraceResult.erase_failure
+  TraceResult.erase_sortSliceKeysRead
+  TraceResult.erase_sortSliceKeysWrite
+  TraceResult.erase_sortSliceValuesRead
+  TraceResult.erase_sortSliceValuesWrite
+  AccessTrace.allAccessesInBounds_empty
 
 namespace CPythonListsort.SortSlice
 
@@ -10,7 +30,7 @@ namespace CPythonListsort.SortSlice
 [memmoveFromTraced_sameBacking](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma memmoveFromTraced_sameBacking
+public lemma memmoveFromTraced_sameBacking
   {valuesPresent : Bool}
   {destination : SortSlice κ ν}
   {dst src : Int}
@@ -28,7 +48,7 @@ namespace CPythonListsort.SortSlice
 [erase_copyKeysFromTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma erase_copyKeysFromTraced
+public lemma erase_copyKeysFromTraced
   {destination source : SortSlice κ ν}
   {dst src : Int} :
 -- imply
@@ -44,7 +64,7 @@ namespace CPythonListsort.SortSlice
 [erase_copyValuesFromTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma erase_copyValuesFromTraced
+public lemma erase_copyValuesFromTraced
   {destination source : SortSlice κ ν}
   {dst src : Int} :
 -- imply
@@ -60,17 +80,17 @@ namespace CPythonListsort.SortSlice
 [erase_copyFromTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma erase_copyFromTraced
-  {valuesPresent : Bool}
-  {destination source : SortSlice κ ν}
-  {dst src : Int} :
+public lemma erase_copyFromTraced
+  (valuesPresent : Bool)
+  (destination source : SortSlice κ ν)
+  (dst src : Int) :
 -- imply
   (copyFromTraced? valuesPresent destination source dst src).erase = destination.copyFrom? source dst src := by
 -- proof
   unfold copyFromTraced?
   rw [TraceResult.erase_bind, erase_copyKeysFromTraced]
   cases hcopy : destination.copyFrom? source dst src <;>
-    cases valuesPresent <;> simp [hcopy]
+    cases valuesPresent <;> simp [hcopy, erase_copyValuesFromTraced]
 
 end CPythonListsort.SortSlice
 
@@ -80,14 +100,14 @@ namespace CPythonListsort.SortSlice
 [erase_copyTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma erase_copyTraced
-  {valuesPresent : Bool}
-  {slice : SortSlice κ ν}
-  {dst src : Int} :
+public lemma erase_copyTraced
+  (valuesPresent : Bool)
+  (slice : SortSlice κ ν)
+  (dst src : Int) :
 -- imply
   (copyTraced? valuesPresent slice dst src).erase = slice.copy? dst src := by
 -- proof
-  simp [copyTraced?, copy?]
+  simp [copyTraced?, copy?, erase_copyFromTraced]
 
 end CPythonListsort.SortSlice
 
@@ -97,10 +117,10 @@ namespace CPythonListsort.SortSlice
 [erase_copyFromIncrTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma erase_copyFromIncrTraced
-  {valuesPresent : Bool}
-  {destination source : SortSlice κ ν}
-  {dst src : Int} :
+public lemma erase_copyFromIncrTraced
+  (valuesPresent : Bool)
+  (destination source : SortSlice κ ν)
+  (dst src : Int) :
 -- imply
   (copyFromIncrTraced? valuesPresent destination source dst src).erase = destination.copyFromIncr? source dst src := by
 -- proof
@@ -117,10 +137,10 @@ namespace CPythonListsort.SortSlice
 [erase_copyFromDecrTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma erase_copyFromDecrTraced
-  {valuesPresent : Bool}
-  {destination source : SortSlice κ ν}
-  {dst src : Int} :
+public lemma erase_copyFromDecrTraced
+  (valuesPresent : Bool)
+  (destination source : SortSlice κ ν)
+  (dst src : Int) :
 -- imply
   (copyFromDecrTraced? valuesPresent destination source dst src).erase = destination.copyFromDecr? source dst src := by
 -- proof
@@ -137,14 +157,14 @@ namespace CPythonListsort.SortSlice
 [erase_copyIncrTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma erase_copyIncrTraced
-  {valuesPresent : Bool}
-  {slice : SortSlice κ ν}
-  {dst src : Int} :
+public lemma erase_copyIncrTraced
+  (valuesPresent : Bool)
+  (slice : SortSlice κ ν)
+  (dst src : Int) :
 -- imply
   (copyIncrTraced? valuesPresent slice dst src).erase = slice.copyIncr? dst src := by
 -- proof
-  simp [copyIncrTraced?, copyIncr?]
+  simp [copyIncrTraced?, copyIncr?, erase_copyFromIncrTraced]
 
 end CPythonListsort.SortSlice
 
@@ -154,14 +174,14 @@ namespace CPythonListsort.SortSlice
 [erase_copyDecrTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma erase_copyDecrTraced
-  {valuesPresent : Bool}
-  {slice : SortSlice κ ν}
-  {dst src : Int} :
+public lemma erase_copyDecrTraced
+  (valuesPresent : Bool)
+  (slice : SortSlice κ ν)
+  (dst src : Int) :
 -- imply
   (copyDecrTraced? valuesPresent slice dst src).erase = slice.copyDecr? dst src := by
 -- proof
-  simp [copyDecrTraced?, copyDecr?]
+  simp [copyDecrTraced?, copyDecr?, erase_copyFromDecrTraced]
 
 end CPythonListsort.SortSlice
 
@@ -171,7 +191,7 @@ namespace CPythonListsort.SortSlice
 [erase_memcpyKeysTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma erase_memcpyKeysTraced
+public lemma erase_memcpyKeysTraced
   {count : Nat}
   {destination source : SortSlice κ ν}
   {dst src : Int} :
@@ -181,7 +201,7 @@ lemma erase_memcpyKeysTraced
   induction count generalizing destination dst src with
   | zero => rfl
   | succ count ih =>
-    simp [memcpyKeysTraced?, memcpyCore?, ih]
+    simp [memcpyKeysTraced?, memcpyCore?, ih, erase_copyKeysFromTraced]
 
 end CPythonListsort.SortSlice
 
@@ -191,7 +211,7 @@ namespace CPythonListsort.SortSlice
 [erase_memcpyValuesTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma erase_memcpyValuesTraced
+public lemma erase_memcpyValuesTraced
   {count : Nat}
   {destination source : SortSlice κ ν}
   {dst src : Int} :
@@ -201,7 +221,7 @@ lemma erase_memcpyValuesTraced
   induction count generalizing destination dst src with
   | zero => rfl
   | succ count ih =>
-    simp [memcpyValuesTraced?, memcpyCore?, ih]
+    simp [memcpyValuesTraced?, memcpyCore?, ih, erase_copyValuesFromTraced]
 
 end CPythonListsort.SortSlice
 
@@ -211,12 +231,12 @@ namespace CPythonListsort.SortSlice
 [erase_memcpyTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma erase_memcpyTraced
-  {valuesPresent : Bool}
-  {count : Nat}
-  {destination : SortSlice κ ν}
-  {source : MemcpySource destination}
-  {dst src : Int} :
+public lemma erase_memcpyTraced
+  (valuesPresent : Bool)
+  (count : Nat)
+  (destination : SortSlice κ ν)
+  (source : MemcpySource destination)
+  (dst src : Int) :
 -- imply
   (memcpyTraced? valuesPresent count destination source dst src).erase = memcpy? count destination source dst src := by
 -- proof
@@ -224,7 +244,7 @@ lemma erase_memcpyTraced
   split
   · rw [TraceResult.erase_bind, erase_memcpyKeysTraced]
     cases hcopy : memcpyCore? count destination source.store dst src <;>
-      cases valuesPresent <;> simp [hcopy]
+      cases valuesPresent <;> simp [hcopy, erase_memcpyValuesTraced]
   · rfl
 
 end CPythonListsort.SortSlice
@@ -235,7 +255,7 @@ namespace CPythonListsort.SortSlice
 [erase_memmoveForwardKeysTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma erase_memmoveForwardKeysTraced
+public lemma erase_memmoveForwardKeysTraced
   {count : Nat}
   {slice : SortSlice κ ν}
   {dst src : Int} :
@@ -245,7 +265,7 @@ lemma erase_memmoveForwardKeysTraced
   induction count generalizing slice dst src with
   | zero => rfl
   | succ count ih =>
-    simp [memmoveForwardKeysTraced?, memmoveForward?, ih, copy?]
+    simp [memmoveForwardKeysTraced?, memmoveForward?, ih, copy?, erase_copyKeysFromTraced]
 
 end CPythonListsort.SortSlice
 
@@ -255,7 +275,7 @@ namespace CPythonListsort.SortSlice
 [erase_memmoveForwardValuesTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma erase_memmoveForwardValuesTraced
+public lemma erase_memmoveForwardValuesTraced
   {count : Nat}
   {slice : SortSlice κ ν}
   {dst src : Int} :
@@ -265,7 +285,7 @@ lemma erase_memmoveForwardValuesTraced
   induction count generalizing slice dst src with
   | zero => rfl
   | succ count ih =>
-    simp [memmoveForwardValuesTraced?, memmoveForward?, ih, copy?]
+    simp [memmoveForwardValuesTraced?, memmoveForward?, ih, copy?, erase_copyValuesFromTraced]
 
 end CPythonListsort.SortSlice
 
@@ -275,7 +295,7 @@ namespace CPythonListsort.SortSlice
 [erase_memmoveBackwardKeysTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma erase_memmoveBackwardKeysTraced
+public lemma erase_memmoveBackwardKeysTraced
   {count : Nat}
   {slice : SortSlice κ ν}
   {dst src : Int} :
@@ -285,7 +305,7 @@ lemma erase_memmoveBackwardKeysTraced
   induction count generalizing slice dst src with
   | zero => rfl
   | succ count ih =>
-    simp [memmoveBackwardKeysTraced?, memmoveBackward?, ih, copy?]
+    simp [memmoveBackwardKeysTraced?, memmoveBackward?, ih, copy?, erase_copyKeysFromTraced]
 
 end CPythonListsort.SortSlice
 
@@ -295,7 +315,7 @@ namespace CPythonListsort.SortSlice
 [erase_memmoveBackwardValuesTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma erase_memmoveBackwardValuesTraced
+public lemma erase_memmoveBackwardValuesTraced
   {count : Nat}
   {slice : SortSlice κ ν}
   {dst src : Int} :
@@ -305,7 +325,7 @@ lemma erase_memmoveBackwardValuesTraced
   induction count generalizing slice dst src with
   | zero => rfl
   | succ count ih =>
-    simp [memmoveBackwardValuesTraced?, memmoveBackward?, ih, copy?]
+    simp [memmoveBackwardValuesTraced?, memmoveBackward?, ih, copy?, erase_copyValuesFromTraced]
 
 end CPythonListsort.SortSlice
 
@@ -315,11 +335,11 @@ namespace CPythonListsort.SortSlice
 [erase_memmoveTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma erase_memmoveTraced
-  {valuesPresent : Bool}
-  {slice : SortSlice κ ν}
-  {dst src : Int}
-  {count : Nat} :
+public lemma erase_memmoveTraced
+  (valuesPresent : Bool)
+  (slice : SortSlice κ ν)
+  (dst src : Int)
+  (count : Nat) :
 -- imply
   (memmoveTraced? valuesPresent slice dst src count).erase = slice.memmove? dst src count := by
 -- proof
@@ -328,12 +348,12 @@ lemma erase_memmoveTraced
     simp only [memmoveTraced?, memmove?, hdir, TraceResult.erase_bind,
       erase_memmoveForwardKeysTraced]
     cases hmove : memmoveForward? count slice dst src <;>
-      cases valuesPresent <;> simp [hmove]
+      cases valuesPresent <;> simp [hmove, erase_memmoveForwardValuesTraced]
   | backward =>
     simp only [memmoveTraced?, memmove?, hdir, TraceResult.erase_bind,
       erase_memmoveBackwardKeysTraced]
     cases hmove : memmoveBackward? count slice dst src <;>
-      cases valuesPresent <;> simp [hmove]
+      cases valuesPresent <;> simp [hmove, erase_memmoveBackwardValuesTraced]
 
 end CPythonListsort.SortSlice
 
@@ -343,22 +363,22 @@ namespace CPythonListsort.SortSlice
 [erase_memmoveFromTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma erase_memmoveFromTraced
-  {valuesPresent : Bool}
-  {destination : SortSlice κ ν}
-  {source : MemmoveSource destination}
-  {dst src : Int}
-  {count : Nat} :
+public lemma erase_memmoveFromTraced
+  (valuesPresent : Bool)
+  (destination : SortSlice κ ν)
+  (source : MemmoveSource destination)
+  (dst src : Int)
+  (count : Nat) :
 -- imply
   (memmoveFromTraced? valuesPresent destination source dst src count).erase = memmoveFrom? destination source dst src count := by
 -- proof
   cases source with
-  | sameBacking => simp [memmoveFromTraced?, memmoveFrom?]
+  | sameBacking => simp [memmoveFromTraced?, memmoveFrom?, erase_memmoveTraced]
   | distinctBacking source =>
     simp only [memmoveFromTraced?, memmoveFrom?, TraceResult.erase_bind,
       erase_memcpyKeysTraced]
     cases hmove : memcpyCore? count destination source dst src <;>
-      cases valuesPresent <;> simp [hmove]
+      cases valuesPresent <;> simp [hmove, erase_memcpyValuesTraced]
 
 end CPythonListsort.SortSlice
 
@@ -368,9 +388,9 @@ namespace CPythonListsort.SortSlice
 [erase_advanceTraced](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma erase_advanceTraced
-  {valuesPresent : Bool}
-  {index amount : Int} :
+public lemma erase_advanceTraced
+  (valuesPresent : Bool)
+  (index amount : Int) :
 -- imply
   (advanceTraced valuesPresent index amount).erase = some (advance index amount) := by
 -- proof
@@ -384,9 +404,9 @@ namespace CPythonListsort.SortSlice
 [read_eq_some_of_indexInBounds](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma read_eq_some_of_indexInBounds
-  {slice : SortSlice κ ν}
-  {index : Int}
+public lemma read_eq_some_of_indexInBounds
+  (slice : SortSlice κ ν)
+  (index : Int)
 -- given
   (h : IndexInBounds slice index) :
 -- imply
@@ -406,10 +426,10 @@ namespace CPythonListsort.SortSlice
 [write_eq_some_of_indexInBounds](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma write_eq_some_of_indexInBounds
-  {slice : SortSlice κ ν}
-  {index : Int}
-  {entry : SortSliceEntry κ ν}
+public lemma write_eq_some_of_indexInBounds
+  (slice : SortSlice κ ν)
+  (index : Int)
+  (entry : SortSliceEntry κ ν)
 -- given
   (h : IndexInBounds slice index) :
 -- imply
@@ -429,9 +449,9 @@ namespace CPythonListsort.SortSlice
 [falseMode_somePayload_violates_invariant](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma falseMode_somePayload_violates_invariant
-  {key : κ}
-  {value : ν} :
+public lemma falseMode_somePayload_violates_invariant
+  (key : κ)
+  (value : ν) :
 -- imply
   ¬ ValuesModeInvariant false ({ entries := #[{ key := key, value := some value }] } : SortSlice κ ν) := by
 -- proof
@@ -447,7 +467,7 @@ namespace CPythonListsort.SortSlice
 [ValuesModeInvariant.read_matches_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma ValuesModeInvariant.read_matches_of_eq_some
+public lemma ValuesModeInvariant.read_matches_of_eq_some
   {valuesPresent : Bool}
   {slice : SortSlice κ ν}
   {index : Int}
@@ -480,7 +500,7 @@ namespace CPythonListsort.SortSlice
 [ValuesModeInvariant.write_preserved_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma ValuesModeInvariant.write_preserved_of_eq_some
+public lemma ValuesModeInvariant.write_preserved_of_eq_some
   {valuesPresent : Bool}
   {slice updated : SortSlice κ ν}
   {index : Int}
@@ -515,7 +535,7 @@ namespace CPythonListsort.SortSlice
 [ValuesModeInvariant.copyFrom_preserved_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma ValuesModeInvariant.copyFrom_preserved_of_eq_some
+public lemma ValuesModeInvariant.copyFrom_preserved_of_eq_some
   {valuesPresent : Bool}
   {destination source updated : SortSlice κ ν}
   {dst src : Int}
@@ -541,7 +561,7 @@ namespace CPythonListsort.SortSlice
 [ValuesModeInvariant.copy_preserved_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma ValuesModeInvariant.copy_preserved_of_eq_some
+public lemma ValuesModeInvariant.copy_preserved_of_eq_some
   {valuesPresent : Bool}
   {slice updated : SortSlice κ ν}
   {dst src : Int}
@@ -561,7 +581,7 @@ namespace CPythonListsort.SortSlice
 [ValuesModeInvariant.copyFromIncr_preserved_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma ValuesModeInvariant.copyFromIncr_preserved_of_eq_some
+public lemma ValuesModeInvariant.copyFromIncr_preserved_of_eq_some
   {valuesPresent : Bool}
   {destination source : SortSlice κ ν}
   {dst src : Int}
@@ -592,7 +612,7 @@ namespace CPythonListsort.SortSlice
 [ValuesModeInvariant.copyFromDecr_preserved_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma ValuesModeInvariant.copyFromDecr_preserved_of_eq_some
+public lemma ValuesModeInvariant.copyFromDecr_preserved_of_eq_some
   {valuesPresent : Bool}
   {destination source : SortSlice κ ν}
   {dst src : Int}
@@ -623,7 +643,7 @@ namespace CPythonListsort.SortSlice
 [ValuesModeInvariant.copyIncr_preserved_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma ValuesModeInvariant.copyIncr_preserved_of_eq_some
+public lemma ValuesModeInvariant.copyIncr_preserved_of_eq_some
   {valuesPresent : Bool}
   {slice : SortSlice κ ν}
   {dst src : Int}
@@ -644,7 +664,7 @@ namespace CPythonListsort.SortSlice
 [ValuesModeInvariant.copyDecr_preserved_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma ValuesModeInvariant.copyDecr_preserved_of_eq_some
+public lemma ValuesModeInvariant.copyDecr_preserved_of_eq_some
   {valuesPresent : Bool}
   {slice : SortSlice κ ν}
   {dst src : Int}
@@ -665,13 +685,13 @@ namespace CPythonListsort.SortSlice
 [ValuesModeInvariant.memcpyCore_preserved_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma ValuesModeInvariant.memcpyCore_preserved_of_eq_some
+public lemma ValuesModeInvariant.memcpyCore_preserved_of_eq_some
   {valuesPresent : Bool}
-  {count : Nat}
   {destination source updated : SortSlice κ ν}
   {dst src : Int}
 -- given
   (hdestination : ValuesModeInvariant valuesPresent destination)
+  (count : Nat)
   (hsource : ValuesModeInvariant valuesPresent source)
   (hcopy : memcpyCore? count destination source dst src = some updated) :
 -- imply
@@ -699,14 +719,14 @@ namespace CPythonListsort.SortSlice
 [ValuesModeInvariant.memcpy_preserved_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma ValuesModeInvariant.memcpy_preserved_of_eq_some
+public lemma ValuesModeInvariant.memcpy_preserved_of_eq_some
   {valuesPresent : Bool}
-  {count : Nat}
   {destination updated : SortSlice κ ν}
-  {source : MemcpySource destination}
   {dst src : Int}
 -- given
   (hdestination : ValuesModeInvariant valuesPresent destination)
+  (count : Nat)
+  (source : MemcpySource destination)
   (hsource : ValuesModeInvariant valuesPresent source.store)
   (hcopy : memcpy? count destination source dst src = some updated) :
 -- imply
@@ -725,13 +745,13 @@ namespace CPythonListsort.SortSlice
 [ValuesModeInvariant.memmoveForward_preserved_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma ValuesModeInvariant.memmoveForward_preserved_of_eq_some
+public lemma ValuesModeInvariant.memmoveForward_preserved_of_eq_some
   {valuesPresent : Bool}
-  {count : Nat}
   {slice updated : SortSlice κ ν}
   {dst src : Int}
 -- given
   (hinvariant : ValuesModeInvariant valuesPresent slice)
+  (count : Nat)
   (hmove : memmoveForward? count slice dst src = some updated) :
 -- imply
   ValuesModeInvariant valuesPresent updated := by
@@ -756,13 +776,13 @@ namespace CPythonListsort.SortSlice
 [ValuesModeInvariant.memmoveBackward_preserved_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma ValuesModeInvariant.memmoveBackward_preserved_of_eq_some
+public lemma ValuesModeInvariant.memmoveBackward_preserved_of_eq_some
   {valuesPresent : Bool}
-  {count : Nat}
   {slice updated : SortSlice κ ν}
   {dst src : Int}
 -- given
   (hinvariant : ValuesModeInvariant valuesPresent slice)
+  (count : Nat)
   (hmove : memmoveBackward? count slice dst src = some updated) :
 -- imply
   ValuesModeInvariant valuesPresent updated := by
@@ -787,7 +807,7 @@ namespace CPythonListsort.SortSlice
 [ValuesModeInvariant.memmove_preserved_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma ValuesModeInvariant.memmove_preserved_of_eq_some
+public lemma ValuesModeInvariant.memmove_preserved_of_eq_some
   {valuesPresent : Bool}
   {slice updated : SortSlice κ ν}
   {dst src : Int}
@@ -811,14 +831,14 @@ namespace CPythonListsort.SortSlice
 [ValuesModeInvariant.memmoveFrom_preserved_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma ValuesModeInvariant.memmoveFrom_preserved_of_eq_some
+public lemma ValuesModeInvariant.memmoveFrom_preserved_of_eq_some
   {valuesPresent : Bool}
   {destination updated : SortSlice κ ν}
-  {source : MemmoveSource destination}
   {dst src : Int}
   {count : Nat}
 -- given
   (hdestination : ValuesModeInvariant valuesPresent destination)
+  (source : MemmoveSource destination)
   (hsource : ValuesModeInvariant valuesPresent source.store)
   (hmove : memmoveFrom? destination source dst src count = some updated) :
 -- imply
@@ -838,10 +858,10 @@ namespace CPythonListsort.SortSlice
 [copyFromTraced_valuesModeInvariant](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyFromTraced_valuesModeInvariant
-  {valuesPresent : Bool}
-  {destination source updated : SortSlice κ ν}
-  {dst src : Int}
+public lemma copyFromTraced_valuesModeInvariant
+  (valuesPresent : Bool)
+  (destination source updated : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hdestination : ValuesModeInvariant valuesPresent destination)
   (hsource : ValuesModeInvariant valuesPresent source)
@@ -860,10 +880,10 @@ namespace CPythonListsort.SortSlice
 [copyTraced_valuesModeInvariant](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyTraced_valuesModeInvariant
-  {valuesPresent : Bool}
-  {slice updated : SortSlice κ ν}
-  {dst src : Int}
+public lemma copyTraced_valuesModeInvariant
+  (valuesPresent : Bool)
+  (slice updated : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hinvariant : ValuesModeInvariant valuesPresent slice)
   (hresult : (copyTraced? valuesPresent slice dst src).result = some updated) :
@@ -881,11 +901,11 @@ namespace CPythonListsort.SortSlice
 [copyFromIncrTraced_valuesModeInvariant](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyFromIncrTraced_valuesModeInvariant
-  {valuesPresent : Bool}
-  {destination source : SortSlice κ ν}
-  {dst src : Int}
-  {result : CursorResult κ ν}
+public lemma copyFromIncrTraced_valuesModeInvariant
+  (valuesPresent : Bool)
+  (destination source : SortSlice κ ν)
+  (dst src : Int)
+  (result : CursorResult κ ν)
 -- given
   (hdestination : ValuesModeInvariant valuesPresent destination)
   (hsource : ValuesModeInvariant valuesPresent source)
@@ -904,11 +924,11 @@ namespace CPythonListsort.SortSlice
 [copyFromDecrTraced_valuesModeInvariant](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyFromDecrTraced_valuesModeInvariant
-  {valuesPresent : Bool}
-  {destination source : SortSlice κ ν}
-  {dst src : Int}
-  {result : CursorResult κ ν}
+public lemma copyFromDecrTraced_valuesModeInvariant
+  (valuesPresent : Bool)
+  (destination source : SortSlice κ ν)
+  (dst src : Int)
+  (result : CursorResult κ ν)
 -- given
   (hdestination : ValuesModeInvariant valuesPresent destination)
   (hsource : ValuesModeInvariant valuesPresent source)
@@ -927,11 +947,11 @@ namespace CPythonListsort.SortSlice
 [copyIncrTraced_valuesModeInvariant](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyIncrTraced_valuesModeInvariant
-  {valuesPresent : Bool}
-  {slice : SortSlice κ ν}
-  {dst src : Int}
-  {result : CursorResult κ ν}
+public lemma copyIncrTraced_valuesModeInvariant
+  (valuesPresent : Bool)
+  (slice : SortSlice κ ν)
+  (dst src : Int)
+  (result : CursorResult κ ν)
 -- given
   (hinvariant : ValuesModeInvariant valuesPresent slice)
   (hresult : (copyIncrTraced? valuesPresent slice dst src).result = some result) :
@@ -949,11 +969,11 @@ namespace CPythonListsort.SortSlice
 [copyDecrTraced_valuesModeInvariant](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyDecrTraced_valuesModeInvariant
-  {valuesPresent : Bool}
-  {slice : SortSlice κ ν}
-  {dst src : Int}
-  {result : CursorResult κ ν}
+public lemma copyDecrTraced_valuesModeInvariant
+  (valuesPresent : Bool)
+  (slice : SortSlice κ ν)
+  (dst src : Int)
+  (result : CursorResult κ ν)
 -- given
   (hinvariant : ValuesModeInvariant valuesPresent slice)
   (hresult : (copyDecrTraced? valuesPresent slice dst src).result = some result) :
@@ -971,13 +991,13 @@ namespace CPythonListsort.SortSlice
 [memcpyTraced_valuesModeInvariant](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma memcpyTraced_valuesModeInvariant
-  {valuesPresent : Bool}
-  {count : Nat}
-  {destination : SortSlice κ ν}
-  {source : MemcpySource destination}
-  {updated : SortSlice κ ν}
-  {dst src : Int}
+public lemma memcpyTraced_valuesModeInvariant
+  (valuesPresent : Bool)
+  (count : Nat)
+  (destination : SortSlice κ ν)
+  (source : MemcpySource destination)
+  (updated : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hdestination : ValuesModeInvariant valuesPresent destination)
   (hsource : ValuesModeInvariant valuesPresent source.store)
@@ -996,11 +1016,11 @@ namespace CPythonListsort.SortSlice
 [memmoveTraced_valuesModeInvariant](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma memmoveTraced_valuesModeInvariant
-  {valuesPresent : Bool}
-  {slice updated : SortSlice κ ν}
-  {dst src : Int}
-  {count : Nat}
+public lemma memmoveTraced_valuesModeInvariant
+  (valuesPresent : Bool)
+  (slice updated : SortSlice κ ν)
+  (dst src : Int)
+  (count : Nat)
 -- given
   (hinvariant : ValuesModeInvariant valuesPresent slice)
   (hresult : (memmoveTraced? valuesPresent slice dst src count).result = some updated) :
@@ -1018,13 +1038,13 @@ namespace CPythonListsort.SortSlice
 [memmoveFromTraced_valuesModeInvariant](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma memmoveFromTraced_valuesModeInvariant
-  {valuesPresent : Bool}
-  {destination : SortSlice κ ν}
-  {source : MemmoveSource destination}
-  {updated : SortSlice κ ν}
-  {dst src : Int}
-  {count : Nat}
+public lemma memmoveFromTraced_valuesModeInvariant
+  (valuesPresent : Bool)
+  (destination : SortSlice κ ν)
+  (source : MemmoveSource destination)
+  (updated : SortSlice κ ν)
+  (dst src : Int)
+  (count : Nat)
 -- given
   (hdestination : ValuesModeInvariant valuesPresent destination)
   (hsource : ValuesModeInvariant valuesPresent source.store)
@@ -1043,9 +1063,9 @@ namespace CPythonListsort.SortSlice
 [copyKeysFromTraced_accesses](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyKeysFromTraced_accesses
-  {destination source : SortSlice κ ν}
-  {dst src : Int}
+public lemma copyKeysFromTraced_accesses
+  (destination source : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (_hdst : IndexInBounds destination dst)
   (hsrc : IndexInBounds source src) :
@@ -1053,7 +1073,7 @@ lemma copyKeysFromTraced_accesses
   (copyKeysFromTraced? destination source dst src).trace.accesses = keyCopyAccesses destination.entries.size source.entries.size dst src := by
 -- proof
   obtain ⟨entry, hread⟩ := read_eq_some_of_indexInBounds source src hsrc
-  simp [copyKeysFromTraced?, TraceResult.trace_bind,
+  simp [copyKeysFromTraced?, TraceResult.trace_bind, AccessTrace.compose,
     TraceResult.sortSliceKeysRead?, TraceResult.sortSliceKeysWrite?,
     hread, TraceResult.captureAccess, AccessTrace.singletonAccess,
     AccessTrace.compose, keyCopyAccesses]
@@ -1066,9 +1086,9 @@ namespace CPythonListsort.SortSlice
 [copyValuesFromTraced_accesses](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyValuesFromTraced_accesses
-  {destination source : SortSlice κ ν}
-  {dst src : Int}
+public lemma copyValuesFromTraced_accesses
+  (destination source : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (_hdst : IndexInBounds destination dst)
   (hsrc : IndexInBounds source src) :
@@ -1076,7 +1096,7 @@ lemma copyValuesFromTraced_accesses
   (copyValuesFromTraced? destination source dst src).trace.accesses = valuesCopyAccesses destination.entries.size source.entries.size dst src := by
 -- proof
   obtain ⟨entry, hread⟩ := read_eq_some_of_indexInBounds source src hsrc
-  simp [copyValuesFromTraced?, TraceResult.trace_bind,
+  simp [copyValuesFromTraced?, TraceResult.trace_bind, AccessTrace.compose,
     TraceResult.sortSliceValuesRead?, TraceResult.sortSliceValuesWrite?,
     hread, TraceResult.captureAccess, AccessTrace.singletonAccess,
     AccessTrace.compose, valuesCopyAccesses]
@@ -1089,10 +1109,10 @@ namespace CPythonListsort.SortSlice
 [copyFromTraced_accesses](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyFromTraced_accesses
-  {valuesPresent : Bool}
-  {destination source : SortSlice κ ν}
-  {dst src : Int}
+public lemma copyFromTraced_accesses
+  (valuesPresent : Bool)
+  (destination source : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hdst : IndexInBounds destination dst)
   (hsrc : IndexInBounds source src) :
@@ -1123,10 +1143,10 @@ namespace CPythonListsort.SortSlice
 [copyFromIncrTraced_accesses](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyFromIncrTraced_accesses
-  {valuesPresent : Bool}
-  {destination source : SortSlice κ ν}
-  {dst src : Int}
+public lemma copyFromIncrTraced_accesses
+  (valuesPresent : Bool)
+  (destination source : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hdst : IndexInBounds destination dst)
   (hsrc : IndexInBounds source src) :
@@ -1144,10 +1164,10 @@ namespace CPythonListsort.SortSlice
 [copyFromDecrTraced_accesses](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyFromDecrTraced_accesses
-  {valuesPresent : Bool}
-  {destination source : SortSlice κ ν}
-  {dst src : Int}
+public lemma copyFromDecrTraced_accesses
+  (valuesPresent : Bool)
+  (destination source : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hdst : IndexInBounds destination dst)
   (hsrc : IndexInBounds source src) :
@@ -1165,15 +1185,15 @@ namespace CPythonListsort.SortSlice
 [copyFromTraced_allAccessesInBounds](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyFromTraced_allAccessesInBounds
-  {valuesPresent : Bool}
-  {destination source : SortSlice κ ν}
-  {dst src : Int}
+public lemma copyFromTraced_allAccessesInBounds
+  (valuesPresent : Bool)
+  (destination source : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hdst : IndexInBounds destination dst)
   (hsrc : IndexInBounds source src) :
 -- imply
-  (copyFromTraced? valuesPresent destination source dst src).trace := by
+  (copyFromTraced? valuesPresent destination source dst src).trace |>.allAccessesInBounds := by
 -- proof
   rw [AccessTrace.allAccessesInBounds]
   rw [copyFromTraced_accesses valuesPresent destination source dst src hdst hsrc]
@@ -1205,10 +1225,10 @@ namespace CPythonListsort.SortSlice
 [copyTraced_allAccessesInBounds](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyTraced_allAccessesInBounds
-  {valuesPresent : Bool}
-  {slice : SortSlice κ ν}
-  {dst src : Int}
+public lemma copyTraced_allAccessesInBounds
+  (valuesPresent : Bool)
+  (slice : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hdst : IndexInBounds slice dst)
   (hsrc : IndexInBounds slice src) :
@@ -1226,15 +1246,15 @@ namespace CPythonListsort.SortSlice
 [copyFromIncrTraced_allAccessesInBounds](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyFromIncrTraced_allAccessesInBounds
-  {valuesPresent : Bool}
-  {destination source : SortSlice κ ν}
-  {dst src : Int}
+public lemma copyFromIncrTraced_allAccessesInBounds
+  (valuesPresent : Bool)
+  (destination source : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hdst : IndexInBounds destination dst)
   (hsrc : IndexInBounds source src) :
 -- imply
-  (copyFromIncrTraced? valuesPresent destination source dst src).trace := by
+  (copyFromIncrTraced? valuesPresent destination source dst src).trace |>.allAccessesInBounds := by
 -- proof
   simpa [copyFromIncrTraced?, TraceResult.map] using
     copyFromTraced_allAccessesInBounds valuesPresent destination source dst src
@@ -1248,15 +1268,15 @@ namespace CPythonListsort.SortSlice
 [copyFromDecrTraced_allAccessesInBounds](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyFromDecrTraced_allAccessesInBounds
-  {valuesPresent : Bool}
-  {destination source : SortSlice κ ν}
-  {dst src : Int}
+public lemma copyFromDecrTraced_allAccessesInBounds
+  (valuesPresent : Bool)
+  (destination source : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hdst : IndexInBounds destination dst)
   (hsrc : IndexInBounds source src) :
 -- imply
-  (copyFromDecrTraced? valuesPresent destination source dst src).trace := by
+  (copyFromDecrTraced? valuesPresent destination source dst src).trace |>.allAccessesInBounds := by
 -- proof
   simpa [copyFromDecrTraced?, TraceResult.map] using
     copyFromTraced_allAccessesInBounds valuesPresent destination source dst src
@@ -1270,10 +1290,10 @@ namespace CPythonListsort.SortSlice
 [copyIncrTraced_allAccessesInBounds](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyIncrTraced_allAccessesInBounds
-  {valuesPresent : Bool}
-  {slice : SortSlice κ ν}
-  {dst src : Int}
+public lemma copyIncrTraced_allAccessesInBounds
+  (valuesPresent : Bool)
+  (slice : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hdst : IndexInBounds slice dst)
   (hsrc : IndexInBounds slice src) :
@@ -1291,10 +1311,10 @@ namespace CPythonListsort.SortSlice
 [copyDecrTraced_allAccessesInBounds](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyDecrTraced_allAccessesInBounds
-  {valuesPresent : Bool}
-  {slice : SortSlice κ ν}
-  {dst src : Int}
+public lemma copyDecrTraced_allAccessesInBounds
+  (valuesPresent : Bool)
+  (slice : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hdst : IndexInBounds slice dst)
   (hsrc : IndexInBounds slice src) :
@@ -1312,14 +1332,14 @@ namespace CPythonListsort.SortSlice
 [copyKeysFromTraced_allAccessesInBounds](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyKeysFromTraced_allAccessesInBounds
-  {destination source : SortSlice κ ν}
-  {dst src : Int}
+public lemma copyKeysFromTraced_allAccessesInBounds
+  (destination source : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hdst : IndexInBounds destination dst)
   (hsrc : IndexInBounds source src) :
 -- imply
-  (copyKeysFromTraced? destination source dst src).trace := by
+  (copyKeysFromTraced? destination source dst src).trace |>.allAccessesInBounds := by
 -- proof
   rw [AccessTrace.allAccessesInBounds,
     copyKeysFromTraced_accesses destination source dst src hdst hsrc]
@@ -1338,14 +1358,14 @@ namespace CPythonListsort.SortSlice
 [copyValuesFromTraced_allAccessesInBounds](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyValuesFromTraced_allAccessesInBounds
-  {destination source : SortSlice κ ν}
-  {dst src : Int}
+public lemma copyValuesFromTraced_allAccessesInBounds
+  (destination source : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hdst : IndexInBounds destination dst)
   (hsrc : IndexInBounds source src) :
 -- imply
-  (copyValuesFromTraced? destination source dst src).trace := by
+  (copyValuesFromTraced? destination source dst src).trace |>.allAccessesInBounds := by
 -- proof
   rw [AccessTrace.allAccessesInBounds,
     copyValuesFromTraced_accesses destination source dst src hdst hsrc]
@@ -1364,9 +1384,9 @@ namespace CPythonListsort.SortSlice
 [copyFrom_eq_some_of_bounds](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyFrom_eq_some_of_bounds
-  {destination source : SortSlice κ ν}
-  {dst src : Int}
+public lemma copyFrom_eq_some_of_bounds
+  (destination source : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hdst : IndexInBounds destination dst)
   (hsrc : IndexInBounds source src) :
@@ -1386,7 +1406,7 @@ namespace CPythonListsort.SortSlice
 [RangeInBounds.head](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma RangeInBounds.head
+public lemma RangeInBounds.head
   {slice : SortSlice κ ν}
   {start : Int}
   {count : Nat}
@@ -1409,7 +1429,7 @@ namespace CPythonListsort.SortSlice
 [RangeInBounds.tail](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma RangeInBounds.tail
+public lemma RangeInBounds.tail
   {slice : SortSlice κ ν}
   {start : Int}
   {count : Nat}
@@ -1432,7 +1452,7 @@ namespace CPythonListsort.SortSlice
 [RangeInBounds.prefix](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma RangeInBounds.prefix
+public lemma RangeInBounds.prefix
   {slice : SortSlice κ ν}
   {start : Int}
   {count : Nat}
@@ -1455,7 +1475,7 @@ namespace CPythonListsort.SortSlice
 [RangeInBounds.last](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma RangeInBounds.last
+public lemma RangeInBounds.last
   {slice : SortSlice κ ν}
   {start : Int}
   {count : Nat}
@@ -1478,7 +1498,7 @@ namespace CPythonListsort.SortSlice
 [RangeInBounds.of_size_eq](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma RangeInBounds.of_size_eq
+public lemma RangeInBounds.of_size_eq
   {first second : SortSlice κ ν}
   {start : Int}
   {count : Nat}
@@ -1498,7 +1518,7 @@ namespace CPythonListsort.SortSlice
 [IndexInBounds.of_size_eq](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma IndexInBounds.of_size_eq
+public lemma IndexInBounds.of_size_eq
   {first second : SortSlice κ ν}
   {index : Int}
 -- given
@@ -1517,7 +1537,7 @@ namespace CPythonListsort.SortSlice
 [IndexInBounds.cursorInRange](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma IndexInBounds.cursorInRange
+public lemma IndexInBounds.cursorInRange
   {slice : SortSlice κ ν}
   {index : Int}
 -- given
@@ -1535,7 +1555,7 @@ namespace CPythonListsort.SortSlice
 [IndexInBounds.increment_cursorInRange](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma IndexInBounds.increment_cursorInRange
+public lemma IndexInBounds.increment_cursorInRange
   {slice : SortSlice κ ν}
   {index : Int}
 -- given
@@ -1554,7 +1574,7 @@ namespace CPythonListsort.SortSlice
 [IndexInBounds.decrement_cursorInRange](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma IndexInBounds.decrement_cursorInRange
+public lemma IndexInBounds.decrement_cursorInRange
   {slice : SortSlice κ ν}
   {index : Int}
 -- given
@@ -1574,7 +1594,7 @@ namespace CPythonListsort.SortSlice
 [CursorInRange.of_size_eq](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma CursorInRange.of_size_eq
+public lemma CursorInRange.of_size_eq
   {first second : SortSlice κ ν}
   {cursor : Int}
 -- given
@@ -1593,10 +1613,10 @@ namespace CPythonListsort.SortSlice
 [memcpyKeysTraced_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma memcpyKeysTraced_safe
-  {count : Nat}
-  {destination source : SortSlice κ ν}
-  {dst src : Int}
+public lemma memcpyKeysTraced_safe
+  (count : Nat)
+  (destination source : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hdst : RangeInBounds destination dst count)
   (hsrc : RangeInBounds source src count) :
@@ -1627,8 +1647,7 @@ lemma memcpyKeysTraced_safe
     · have htrace :
       (memcpyKeysTraced? (count + 1) destination source dst src).trace =
         (copyKeysFromTraced? destination source dst src).trace.compose
-          (memcpyKeysTraced? count first source (dst + 1) (src + 1)).trace := by
-      simp [memcpyKeysTraced?, TraceResult.trace_bind, hfirst]
+          (memcpyKeysTraced? count first source (dst + 1) (src + 1)).trace := by dsimp only [memcpyKeysTraced?]; rw [TraceResult.trace_bind, hfirst]
       rw [htrace, AccessTrace.allAccessesInBounds_compose]
       exact ⟨copyKeysFromTraced_allAccessesInBounds destination source dst src
         hdstHead hsrcHead, hrestBounds⟩
@@ -1641,10 +1660,10 @@ namespace CPythonListsort.SortSlice
 [memcpyValuesTraced_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma memcpyValuesTraced_safe
-  {count : Nat}
-  {destination source : SortSlice κ ν}
-  {dst src : Int}
+public lemma memcpyValuesTraced_safe
+  (count : Nat)
+  (destination source : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hdst : RangeInBounds destination dst count)
   (hsrc : RangeInBounds source src count) :
@@ -1675,8 +1694,7 @@ lemma memcpyValuesTraced_safe
     · have htrace :
       (memcpyValuesTraced? (count + 1) destination source dst src).trace =
         (copyValuesFromTraced? destination source dst src).trace.compose
-          (memcpyValuesTraced? count first source (dst + 1) (src + 1)).trace := by
-      simp [memcpyValuesTraced?, TraceResult.trace_bind, hfirst]
+          (memcpyValuesTraced? count first source (dst + 1) (src + 1)).trace := by dsimp only [memcpyValuesTraced?]; rw [TraceResult.trace_bind, hfirst]
       rw [htrace, AccessTrace.allAccessesInBounds_compose]
       exact ⟨copyValuesFromTraced_allAccessesInBounds destination source dst src
         hdstHead hsrcHead, hrestBounds⟩
@@ -1689,12 +1707,12 @@ namespace CPythonListsort.SortSlice
 [memcpyTraced_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma memcpyTraced_safe
-  {valuesPresent : Bool}
-  {count : Nat}
-  {destination : SortSlice κ ν}
-  {source : MemcpySource destination}
-  {dst src : Int}
+public lemma memcpyTraced_safe
+  (valuesPresent : Bool)
+  (count : Nat)
+  (destination : SortSlice κ ν)
+  (source : MemcpySource destination)
+  (dst src : Int)
 -- given
   (hadmissible : source.Admissible dst src count)
   (hdst : RangeInBounds destination dst count)
@@ -1710,7 +1728,7 @@ lemma memcpyTraced_safe
     · simp [memcpyTraced?, hadmissible, TraceResult.bind, TraceResult.pure,
       hkeys]
     · simpa [memcpyTraced?, hadmissible, TraceResult.trace_bind, hkeys,
-      TraceResult.pure] using hkeysBounds
+      TraceResult.pure, AccessTrace.compose_empty_right] using hkeysBounds
   | true =>
     rcases memcpyValuesTraced_safe count destination source.store dst src hdst hsrc with
       ⟨valuesResult, hvalues, hvaluesBounds, hvaluesSize⟩
@@ -1719,8 +1737,7 @@ lemma memcpyTraced_safe
     · have htrace :
       (memcpyTraced? true count destination source dst src).trace =
         (memcpyKeysTraced? count destination source.store dst src).trace.compose
-          (memcpyValuesTraced? count destination source.store dst src).trace := by
-      simp [memcpyTraced?, hadmissible, TraceResult.trace_bind, hkeys]
+          (memcpyValuesTraced? count destination source.store dst src).trace := by dsimp only [memcpyTraced?]; simp [hadmissible, TraceResult.trace_bind, hkeys]
       rw [htrace, AccessTrace.allAccessesInBounds_compose]
       exact ⟨hkeysBounds, hvaluesBounds⟩
 
@@ -1732,12 +1749,12 @@ namespace CPythonListsort.SortSlice
 [memcpyTraced_phase_order](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma memcpyTraced_phase_order
-  {valuesPresent : Bool}
-  {count : Nat}
-  {destination : SortSlice κ ν}
-  {source : MemcpySource destination}
-  {dst src : Int}
+public lemma memcpyTraced_phase_order
+  (valuesPresent : Bool)
+  (count : Nat)
+  (destination : SortSlice κ ν)
+  (source : MemcpySource destination)
+  (dst src : Int)
 -- given
   (hadmissible : source.Admissible dst src count)
   (hdst : RangeInBounds destination dst count)
@@ -1748,7 +1765,7 @@ lemma memcpyTraced_phase_order
   rcases memcpyKeysTraced_safe count destination source.store dst src hdst hsrc with
     ⟨keyResult, hkeys, _, _⟩
   cases valuesPresent <;>
-    simp [memcpyTraced?, hadmissible, TraceResult.trace_bind, hkeys,
+    simp [memcpyTraced?, hadmissible, TraceResult.trace_bind, AccessTrace.compose, hkeys,
       TraceResult.pure, AccessTrace.compose, AccessTrace.empty]
 
 end CPythonListsort.SortSlice
@@ -1759,10 +1776,10 @@ namespace CPythonListsort.SortSlice
 [memcpyTraced_distinctBacking_values_phase_order](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma memcpyTraced_distinctBacking_values_phase_order
-  {count : Nat}
-  {destination source : SortSlice κ ν}
-  {dst src : Int}
+public lemma memcpyTraced_distinctBacking_values_phase_order
+  (count : Nat)
+  (destination source : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hdst : RangeInBounds destination dst count)
   (hsrc : RangeInBounds source src count) :
@@ -1781,10 +1798,10 @@ namespace CPythonListsort.SortSlice
 [memmoveForwardKeysTraced_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma memmoveForwardKeysTraced_safe
-  {count : Nat}
-  {slice : SortSlice κ ν}
-  {dst src : Int}
+public lemma memmoveForwardKeysTraced_safe
+  (count : Nat)
+  (slice : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hdst : RangeInBounds slice dst count)
   (hsrc : RangeInBounds slice src count) :
@@ -1816,8 +1833,7 @@ lemma memmoveForwardKeysTraced_safe
     · have htrace :
       (memmoveForwardKeysTraced? (count + 1) slice dst src).trace =
         (copyKeysFromTraced? slice slice dst src).trace.compose
-          (memmoveForwardKeysTraced? count first (dst + 1) (src + 1)).trace := by
-      simp [memmoveForwardKeysTraced?, TraceResult.trace_bind, hfirst]
+          (memmoveForwardKeysTraced? count first (dst + 1) (src + 1)).trace := by dsimp only [memmoveForwardKeysTraced?]; rw [TraceResult.trace_bind, hfirst]
       rw [htrace, AccessTrace.allAccessesInBounds_compose]
       exact ⟨copyKeysFromTraced_allAccessesInBounds slice slice dst src
         hdstHead hsrcHead, hrestBounds⟩
@@ -1830,10 +1846,10 @@ namespace CPythonListsort.SortSlice
 [memmoveForwardValuesTraced_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma memmoveForwardValuesTraced_safe
-  {count : Nat}
-  {slice : SortSlice κ ν}
-  {dst src : Int}
+public lemma memmoveForwardValuesTraced_safe
+  (count : Nat)
+  (slice : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hdst : RangeInBounds slice dst count)
   (hsrc : RangeInBounds slice src count) :
@@ -1865,8 +1881,7 @@ lemma memmoveForwardValuesTraced_safe
     · have htrace :
       (memmoveForwardValuesTraced? (count + 1) slice dst src).trace =
         (copyValuesFromTraced? slice slice dst src).trace.compose
-          (memmoveForwardValuesTraced? count first (dst + 1) (src + 1)).trace := by
-      simp [memmoveForwardValuesTraced?, TraceResult.trace_bind, hfirst]
+          (memmoveForwardValuesTraced? count first (dst + 1) (src + 1)).trace := by dsimp only [memmoveForwardValuesTraced?]; rw [TraceResult.trace_bind, hfirst]
       rw [htrace, AccessTrace.allAccessesInBounds_compose]
       exact ⟨copyValuesFromTraced_allAccessesInBounds slice slice dst src
         hdstHead hsrcHead, hrestBounds⟩
@@ -1879,10 +1894,10 @@ namespace CPythonListsort.SortSlice
 [memmoveBackwardKeysTraced_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma memmoveBackwardKeysTraced_safe
-  {count : Nat}
-  {slice : SortSlice κ ν}
-  {dst src : Int}
+public lemma memmoveBackwardKeysTraced_safe
+  (count : Nat)
+  (slice : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hdst : RangeInBounds slice dst count)
   (hsrc : RangeInBounds slice src count) :
@@ -1923,8 +1938,7 @@ lemma memmoveBackwardKeysTraced_safe
       (memmoveBackwardKeysTraced? (count + 1) slice dst src).trace =
         (copyKeysFromTraced? slice slice (dst + Int.ofNat count)
           (src + Int.ofNat count)).trace.compose
-          (memmoveBackwardKeysTraced? count first dst src).trace := by
-      simp [memmoveBackwardKeysTraced?, TraceResult.trace_bind, hfirst']
+          (memmoveBackwardKeysTraced? count first dst src).trace := by dsimp only [memmoveBackwardKeysTraced?]; rw [TraceResult.trace_bind]; simp [hfirst']
       rw [htrace, AccessTrace.allAccessesInBounds_compose]
       exact ⟨copyKeysFromTraced_allAccessesInBounds slice slice
         (dst + Int.ofNat count) (src + Int.ofNat count) hdstLast hsrcLast,
@@ -1938,10 +1952,10 @@ namespace CPythonListsort.SortSlice
 [memmoveBackwardValuesTraced_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma memmoveBackwardValuesTraced_safe
-  {count : Nat}
-  {slice : SortSlice κ ν}
-  {dst src : Int}
+public lemma memmoveBackwardValuesTraced_safe
+  (count : Nat)
+  (slice : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hdst : RangeInBounds slice dst count)
   (hsrc : RangeInBounds slice src count) :
@@ -1982,8 +1996,7 @@ lemma memmoveBackwardValuesTraced_safe
       (memmoveBackwardValuesTraced? (count + 1) slice dst src).trace =
         (copyValuesFromTraced? slice slice (dst + Int.ofNat count)
           (src + Int.ofNat count)).trace.compose
-          (memmoveBackwardValuesTraced? count first dst src).trace := by
-      simp [memmoveBackwardValuesTraced?, TraceResult.trace_bind, hfirst']
+          (memmoveBackwardValuesTraced? count first dst src).trace := by dsimp only [memmoveBackwardValuesTraced?]; rw [TraceResult.trace_bind]; simp [hfirst']
       rw [htrace, AccessTrace.allAccessesInBounds_compose]
       exact ⟨copyValuesFromTraced_allAccessesInBounds slice slice
         (dst + Int.ofNat count) (src + Int.ofNat count) hdstLast hsrcLast,
@@ -1997,11 +2010,11 @@ namespace CPythonListsort.SortSlice
 [memmoveTraced_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma memmoveTraced_safe
-  {valuesPresent : Bool}
-  {slice : SortSlice κ ν}
-  {dst src : Int}
-  {count : Nat}
+public lemma memmoveTraced_safe
+  (valuesPresent : Bool)
+  (slice : SortSlice κ ν)
+  (dst src : Int)
+  (count : Nat)
 -- given
   (hdst : RangeInBounds slice dst count)
   (hsrc : RangeInBounds slice src count) :
@@ -2017,7 +2030,7 @@ lemma memmoveTraced_safe
       refine ⟨keyResult, ?_, ?_, hkeysSize⟩
       · simp [memmoveTraced?, hdir, TraceResult.bind, TraceResult.pure, hkeys]
       · simpa [memmoveTraced?, hdir, TraceResult.trace_bind, TraceResult.pure,
-        hkeys] using hkeysBounds
+        hkeys, AccessTrace.compose_empty_right] using hkeysBounds
     | true =>
       rcases memmoveForwardValuesTraced_safe count slice dst src hdst hsrc with
         ⟨valuesResult, hvalues, hvaluesBounds, hvaluesSize⟩
@@ -2026,8 +2039,7 @@ lemma memmoveTraced_safe
       · have htrace :
         (memmoveTraced? true slice dst src count).trace =
           (memmoveForwardKeysTraced? count slice dst src).trace.compose
-            (memmoveForwardValuesTraced? count slice dst src).trace := by
-        simp [memmoveTraced?, hdir, TraceResult.trace_bind, hkeys]
+            (memmoveForwardValuesTraced? count slice dst src).trace := by dsimp only [memmoveTraced?]; simp [hdir, TraceResult.trace_bind, hkeys]
         rw [htrace, AccessTrace.allAccessesInBounds_compose]
         exact ⟨hkeysBounds, hvaluesBounds⟩
   | backward =>
@@ -2038,7 +2050,7 @@ lemma memmoveTraced_safe
       refine ⟨keyResult, ?_, ?_, hkeysSize⟩
       · simp [memmoveTraced?, hdir, TraceResult.bind, TraceResult.pure, hkeys]
       · simpa [memmoveTraced?, hdir, TraceResult.trace_bind, TraceResult.pure,
-        hkeys] using hkeysBounds
+        hkeys, AccessTrace.compose_empty_right] using hkeysBounds
     | true =>
       rcases memmoveBackwardValuesTraced_safe count slice dst src hdst hsrc with
         ⟨valuesResult, hvalues, hvaluesBounds, hvaluesSize⟩
@@ -2047,8 +2059,7 @@ lemma memmoveTraced_safe
       · have htrace :
         (memmoveTraced? true slice dst src count).trace =
           (memmoveBackwardKeysTraced? count slice dst src).trace.compose
-            (memmoveBackwardValuesTraced? count slice dst src).trace := by
-        simp [memmoveTraced?, hdir, TraceResult.trace_bind, hkeys]
+            (memmoveBackwardValuesTraced? count slice dst src).trace := by dsimp only [memmoveTraced?]; simp [hdir, TraceResult.trace_bind, hkeys]
         rw [htrace, AccessTrace.allAccessesInBounds_compose]
         exact ⟨hkeysBounds, hvaluesBounds⟩
 
@@ -2060,29 +2071,40 @@ namespace CPythonListsort.SortSlice
 [memmoveTraced_phase_order](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma memmoveTraced_phase_order
-  {valuesPresent : Bool}
-  {slice : SortSlice κ ν}
-  {dst src : Int}
-  {count : Nat}
+public lemma memmoveTraced_phase_order
+  (valuesPresent : Bool)
+  (slice : SortSlice κ ν)
+  (dst src : Int)
+  (count : Nat)
 -- given
   (hdst : RangeInBounds slice dst count)
   (hsrc : RangeInBounds slice src count) :
 -- imply
-  (memmoveTraced? valuesPresent slice dst src count).trace.accesses = match memmoveDirection dst src with := by
+  (memmoveTraced? valuesPresent slice dst src count).trace.accesses =
+    match memmoveDirection dst src with
+    | .forward =>
+      (memmoveForwardKeysTraced? count slice dst src).trace.accesses ++
+        if valuesPresent then
+          (memmoveForwardValuesTraced? count slice dst src).trace.accesses
+        else []
+    | .backward =>
+      (memmoveBackwardKeysTraced? count slice dst src).trace.accesses ++
+        if valuesPresent then
+          (memmoveBackwardValuesTraced? count slice dst src).trace.accesses
+        else [] := by
 -- proof
   cases hdir : memmoveDirection dst src with
   | forward =>
     rcases memmoveForwardKeysTraced_safe count slice dst src hdst hsrc with
       ⟨keyResult, hkeys, _, _⟩
     cases valuesPresent <;>
-      simp [memmoveTraced?, hdir, TraceResult.trace_bind, hkeys,
+      simp [memmoveTraced?, hdir, TraceResult.trace_bind, AccessTrace.compose, hkeys,
         TraceResult.pure, AccessTrace.compose, AccessTrace.empty]
   | backward =>
     rcases memmoveBackwardKeysTraced_safe count slice dst src hdst hsrc with
       ⟨keyResult, hkeys, _, _⟩
     cases valuesPresent <;>
-      simp [memmoveTraced?, hdir, TraceResult.trace_bind, hkeys,
+      simp [memmoveTraced?, hdir, TraceResult.trace_bind, AccessTrace.compose, hkeys,
         TraceResult.pure, AccessTrace.compose, AccessTrace.empty]
 
 end CPythonListsort.SortSlice
@@ -2093,12 +2115,12 @@ namespace CPythonListsort.SortSlice
 [memmoveFromTraced_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma memmoveFromTraced_safe
-  {valuesPresent : Bool}
-  {destination : SortSlice κ ν}
-  {source : MemmoveSource destination}
-  {dst src : Int}
-  {count : Nat}
+public lemma memmoveFromTraced_safe
+  (valuesPresent : Bool)
+  (destination : SortSlice κ ν)
+  (source : MemmoveSource destination)
+  (dst src : Int)
+  (count : Nat)
 -- given
   (hdst : RangeInBounds destination dst count)
   (hsrc : RangeInBounds source.store src count) :
@@ -2124,17 +2146,35 @@ namespace CPythonListsort.SortSlice
 [memmoveFromTraced_phase_order](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma memmoveFromTraced_phase_order
-  {valuesPresent : Bool}
-  {destination : SortSlice κ ν}
-  {source : MemmoveSource destination}
-  {dst src : Int}
-  {count : Nat}
+public lemma memmoveFromTraced_phase_order
+  (valuesPresent : Bool)
+  (destination : SortSlice κ ν)
+  (source : MemmoveSource destination)
+  (dst src : Int)
+  (count : Nat)
 -- given
   (hdst : RangeInBounds destination dst count)
   (hsrc : RangeInBounds source.store src count) :
 -- imply
-  (memmoveFromTraced? valuesPresent destination source dst src count).trace.accesses = match source with := by
+  (memmoveFromTraced? valuesPresent destination source dst src count).trace.accesses =
+    match source with
+    | .sameBacking =>
+      match memmoveDirection dst src with
+      | .forward =>
+        (memmoveForwardKeysTraced? count destination dst src).trace.accesses ++
+          if valuesPresent then
+            (memmoveForwardValuesTraced? count destination dst src).trace.accesses
+          else []
+      | .backward =>
+        (memmoveBackwardKeysTraced? count destination dst src).trace.accesses ++
+          if valuesPresent then
+            (memmoveBackwardValuesTraced? count destination dst src).trace.accesses
+          else []
+    | .distinctBacking source =>
+      (memcpyKeysTraced? count destination source dst src).trace.accesses ++
+        if valuesPresent then
+          (memcpyValuesTraced? count destination source dst src).trace.accesses
+        else [] := by
 -- proof
   cases source with
   | sameBacking =>
@@ -2155,16 +2195,27 @@ namespace CPythonListsort.SortSlice
 [memmoveFromTraced_sameBacking_phase_order](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma memmoveFromTraced_sameBacking_phase_order
-  {valuesPresent : Bool}
-  {destination : SortSlice κ ν}
-  {dst src : Int}
-  {count : Nat}
+public lemma memmoveFromTraced_sameBacking_phase_order
+  (valuesPresent : Bool)
+  (destination : SortSlice κ ν)
+  (dst src : Int)
+  (count : Nat)
 -- given
   (hdst : RangeInBounds destination dst count)
   (hsrc : RangeInBounds destination src count) :
 -- imply
-  (memmoveFromTraced? valuesPresent destination .sameBacking dst src count).trace.accesses = match memmoveDirection dst src with := by
+  (memmoveFromTraced? valuesPresent destination .sameBacking dst src count).trace.accesses =
+    match memmoveDirection dst src with
+    | .forward =>
+      (memmoveForwardKeysTraced? count destination dst src).trace.accesses ++
+        if valuesPresent then
+          (memmoveForwardValuesTraced? count destination dst src).trace.accesses
+        else []
+    | .backward =>
+      (memmoveBackwardKeysTraced? count destination dst src).trace.accesses ++
+        if valuesPresent then
+          (memmoveBackwardValuesTraced? count destination dst src).trace.accesses
+        else [] := by
 -- proof
   simpa [MemcpySource.store] using
     memmoveFromTraced_phase_order valuesPresent destination .sameBacking dst src
@@ -2178,11 +2229,11 @@ namespace CPythonListsort.SortSlice
 [memmoveFromTraced_distinctBacking_phase_order](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma memmoveFromTraced_distinctBacking_phase_order
-  {valuesPresent : Bool}
-  {count : Nat}
-  {destination source : SortSlice κ ν}
-  {dst src : Int}
+public lemma memmoveFromTraced_distinctBacking_phase_order
+  (valuesPresent : Bool)
+  (count : Nat)
+  (destination source : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hdst : RangeInBounds destination dst count)
   (hsrc : RangeInBounds source src count) :
@@ -2201,10 +2252,10 @@ namespace CPythonListsort.SortSlice
 [copyFromTraced_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyFromTraced_safe
-  {valuesPresent : Bool}
-  {destination source : SortSlice κ ν}
-  {dst src : Int}
+public lemma copyFromTraced_safe
+  (valuesPresent : Bool)
+  (destination source : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hdst : IndexInBounds destination dst)
   (hsrc : IndexInBounds source src) :
@@ -2232,10 +2283,10 @@ namespace CPythonListsort.SortSlice
 [copyTraced_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyTraced_safe
-  {valuesPresent : Bool}
-  {slice : SortSlice κ ν}
-  {dst src : Int}
+public lemma copyTraced_safe
+  (valuesPresent : Bool)
+  (slice : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hdst : IndexInBounds slice dst)
   (hsrc : IndexInBounds slice src) :
@@ -2253,10 +2304,10 @@ namespace CPythonListsort.SortSlice
 [copyFromIncrTraced_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyFromIncrTraced_safe
-  {valuesPresent : Bool}
-  {destination source : SortSlice κ ν}
-  {dst src : Int}
+public lemma copyFromIncrTraced_safe
+  (valuesPresent : Bool)
+  (destination source : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hdestination : ValuesModeInvariant valuesPresent destination)
   (hsource : ValuesModeInvariant valuesPresent source)
@@ -2276,7 +2327,7 @@ lemma copyFromIncrTraced_safe
   refine ⟨result, hresult, ?_, hsize, ?_, hsource, ?_, ?_⟩
   · simpa [copyFromIncrTraced?, TraceResult.map] using hbounds
   · exact copyFromIncrTraced_valuesModeInvariant valuesPresent destination
-    source dst src result hdestination hsource hresult
+      source dst src result hdestination hsource hresult
   · change CursorInRange updated (dst + 1)
     exact hdst.increment_cursorInRange.of_size_eq hsize
   · change CursorInRange source (src + 1)
@@ -2290,10 +2341,10 @@ namespace CPythonListsort.SortSlice
 [copyFromDecrTraced_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyFromDecrTraced_safe
-  {valuesPresent : Bool}
-  {destination source : SortSlice κ ν}
-  {dst src : Int}
+public lemma copyFromDecrTraced_safe
+  (valuesPresent : Bool)
+  (destination source : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hdestination : ValuesModeInvariant valuesPresent destination)
   (hsource : ValuesModeInvariant valuesPresent source)
@@ -2315,7 +2366,7 @@ lemma copyFromDecrTraced_safe
   refine ⟨result, hresult, ?_, hsize, ?_, hsource, ?_, ?_⟩
   · simpa [copyFromDecrTraced?, TraceResult.map] using hbounds
   · exact copyFromDecrTraced_valuesModeInvariant valuesPresent destination
-    source dst src result hdestination hsource hresult
+      source dst src result hdestination hsource hresult
   · change CursorInRange updated (dst - 1)
     exact (hdst.decrement_cursorInRange hdstPositive).of_size_eq hsize
   · change CursorInRange source (src - 1)
@@ -2329,10 +2380,10 @@ namespace CPythonListsort.SortSlice
 [copyIncrTraced_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyIncrTraced_safe
-  {valuesPresent : Bool}
-  {slice : SortSlice κ ν}
-  {dst src : Int}
+public lemma copyIncrTraced_safe
+  (valuesPresent : Bool)
+  (slice : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hdst : IndexInBounds slice dst)
   (hsrc : IndexInBounds slice src)
@@ -2354,10 +2405,10 @@ namespace CPythonListsort.SortSlice
 [copyDecrTraced_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyDecrTraced_safe
-  {valuesPresent : Bool}
-  {slice : SortSlice κ ν}
-  {dst src : Int}
+public lemma copyDecrTraced_safe
+  (valuesPresent : Bool)
+  (slice : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hdst : IndexInBounds slice dst)
   (hsrc : IndexInBounds slice src)
@@ -2381,10 +2432,10 @@ namespace CPythonListsort.SortSlice
 [advanceTraced_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma advanceTraced_safe
-  {valuesPresent : Bool}
-  {slice : SortSlice κ ν}
-  {index amount : Int}
+public lemma advanceTraced_safe
+  (valuesPresent : Bool)
+  (slice : SortSlice κ ν)
+  (index amount : Int)
 -- given
   (hinvariant : ValuesModeInvariant valuesPresent slice)
   (hmovement : CursorMovementInRange slice index amount) :
@@ -2402,10 +2453,10 @@ namespace CPythonListsort.SortSlice
 [copyFromTraced_mode_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyFromTraced_mode_safe
-  {valuesPresent : Bool}
-  {destination source : SortSlice κ ν}
-  {dst src : Int}
+public lemma copyFromTraced_mode_safe
+  (valuesPresent : Bool)
+  (destination source : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hdestination : ValuesModeInvariant valuesPresent destination)
   (hsource : ValuesModeInvariant valuesPresent source)
@@ -2428,10 +2479,10 @@ namespace CPythonListsort.SortSlice
 [copyTraced_mode_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyTraced_mode_safe
-  {valuesPresent : Bool}
-  {slice : SortSlice κ ν}
-  {dst src : Int}
+public lemma copyTraced_mode_safe
+  (valuesPresent : Bool)
+  (slice : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (hinvariant : ValuesModeInvariant valuesPresent slice)
   (hdst : IndexInBounds slice dst)
@@ -2453,12 +2504,12 @@ namespace CPythonListsort.SortSlice
 [memcpyTraced_mode_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma memcpyTraced_mode_safe
-  {valuesPresent : Bool}
-  {count : Nat}
-  {destination : SortSlice κ ν}
-  {source : MemcpySource destination}
-  {dst src : Int}
+public lemma memcpyTraced_mode_safe
+  (valuesPresent : Bool)
+  (count : Nat)
+  (destination : SortSlice κ ν)
+  (source : MemcpySource destination)
+  (dst src : Int)
 -- given
   (hadmissible : source.Admissible dst src count)
   (hdestination : ValuesModeInvariant valuesPresent destination)
@@ -2483,11 +2534,11 @@ namespace CPythonListsort.SortSlice
 [memmoveTraced_mode_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma memmoveTraced_mode_safe
-  {valuesPresent : Bool}
-  {slice : SortSlice κ ν}
-  {dst src : Int}
-  {count : Nat}
+public lemma memmoveTraced_mode_safe
+  (valuesPresent : Bool)
+  (slice : SortSlice κ ν)
+  (dst src : Int)
+  (count : Nat)
 -- given
   (hinvariant : ValuesModeInvariant valuesPresent slice)
   (hdst : RangeInBounds slice dst count)
@@ -2509,12 +2560,12 @@ namespace CPythonListsort.SortSlice
 [memmoveFromTraced_mode_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma memmoveFromTraced_mode_safe
-  {valuesPresent : Bool}
-  {destination : SortSlice κ ν}
-  {source : MemmoveSource destination}
-  {dst src : Int}
-  {count : Nat}
+public lemma memmoveFromTraced_mode_safe
+  (valuesPresent : Bool)
+  (destination : SortSlice κ ν)
+  (source : MemmoveSource destination)
+  (dst src : Int)
+  (count : Nat)
 -- given
   (hdestination : ValuesModeInvariant valuesPresent destination)
   (hsource : ValuesModeInvariant valuesPresent source.store)
@@ -2538,10 +2589,10 @@ namespace CPythonListsort.SortSlice
 [copyFromTraced_entries_size_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyFromTraced_entries_size_of_eq_some
-  {valuesPresent : Bool}
-  {destination source updated : SortSlice κ ν}
-  {dst src : Int}
+public lemma copyFromTraced_entries_size_of_eq_some
+  (valuesPresent : Bool)
+  (destination source updated : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (h : (copyFromTraced? valuesPresent destination source dst src).result = some updated) :
 -- imply
@@ -2558,10 +2609,10 @@ namespace CPythonListsort.SortSlice
 [copyTraced_entries_size_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyTraced_entries_size_of_eq_some
-  {valuesPresent : Bool}
-  {slice updated : SortSlice κ ν}
-  {dst src : Int}
+public lemma copyTraced_entries_size_of_eq_some
+  (valuesPresent : Bool)
+  (slice updated : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (h : (copyTraced? valuesPresent slice dst src).result = some updated) :
 -- imply
@@ -2578,11 +2629,11 @@ namespace CPythonListsort.SortSlice
 [copyFromIncrTraced_entries_size_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyFromIncrTraced_entries_size_of_eq_some
-  {valuesPresent : Bool}
-  {destination source : SortSlice κ ν}
-  {dst src : Int}
-  {result : CursorResult κ ν}
+public lemma copyFromIncrTraced_entries_size_of_eq_some
+  (valuesPresent : Bool)
+  (destination source : SortSlice κ ν)
+  (dst src : Int)
+  (result : CursorResult κ ν)
 -- given
   (h : (copyFromIncrTraced? valuesPresent destination source dst src).result = some result) :
 -- imply
@@ -2599,11 +2650,11 @@ namespace CPythonListsort.SortSlice
 [copyFromDecrTraced_entries_size_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyFromDecrTraced_entries_size_of_eq_some
-  {valuesPresent : Bool}
-  {destination source : SortSlice κ ν}
-  {dst src : Int}
-  {result : CursorResult κ ν}
+public lemma copyFromDecrTraced_entries_size_of_eq_some
+  (valuesPresent : Bool)
+  (destination source : SortSlice κ ν)
+  (dst src : Int)
+  (result : CursorResult κ ν)
 -- given
   (h : (copyFromDecrTraced? valuesPresent destination source dst src).result = some result) :
 -- imply
@@ -2620,11 +2671,11 @@ namespace CPythonListsort.SortSlice
 [copyIncrTraced_entries_size_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyIncrTraced_entries_size_of_eq_some
-  {valuesPresent : Bool}
-  {slice : SortSlice κ ν}
-  {dst src : Int}
-  {result : CursorResult κ ν}
+public lemma copyIncrTraced_entries_size_of_eq_some
+  (valuesPresent : Bool)
+  (slice : SortSlice κ ν)
+  (dst src : Int)
+  (result : CursorResult κ ν)
 -- given
   (h : (copyIncrTraced? valuesPresent slice dst src).result = some result) :
 -- imply
@@ -2641,11 +2692,11 @@ namespace CPythonListsort.SortSlice
 [copyDecrTraced_entries_size_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma copyDecrTraced_entries_size_of_eq_some
-  {valuesPresent : Bool}
-  {slice : SortSlice κ ν}
-  {dst src : Int}
-  {result : CursorResult κ ν}
+public lemma copyDecrTraced_entries_size_of_eq_some
+  (valuesPresent : Bool)
+  (slice : SortSlice κ ν)
+  (dst src : Int)
+  (result : CursorResult κ ν)
 -- given
   (h : (copyDecrTraced? valuesPresent slice dst src).result = some result) :
 -- imply
@@ -2662,13 +2713,13 @@ namespace CPythonListsort.SortSlice
 [memcpyTraced_entries_size_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma memcpyTraced_entries_size_of_eq_some
-  {valuesPresent : Bool}
-  {count : Nat}
-  {destination : SortSlice κ ν}
-  {source : MemcpySource destination}
-  {updated : SortSlice κ ν}
-  {dst src : Int}
+public lemma memcpyTraced_entries_size_of_eq_some
+  (valuesPresent : Bool)
+  (count : Nat)
+  (destination : SortSlice κ ν)
+  (source : MemcpySource destination)
+  (updated : SortSlice κ ν)
+  (dst src : Int)
 -- given
   (h : (memcpyTraced? valuesPresent count destination source dst src).result = some updated) :
 -- imply
@@ -2685,11 +2736,11 @@ namespace CPythonListsort.SortSlice
 [memmoveTraced_entries_size_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma memmoveTraced_entries_size_of_eq_some
-  {valuesPresent : Bool}
-  {slice updated : SortSlice κ ν}
-  {dst src : Int}
-  {count : Nat}
+public lemma memmoveTraced_entries_size_of_eq_some
+  (valuesPresent : Bool)
+  (slice updated : SortSlice κ ν)
+  (dst src : Int)
+  (count : Nat)
 -- given
   (h : (memmoveTraced? valuesPresent slice dst src count).result = some updated) :
 -- imply
@@ -2706,13 +2757,13 @@ namespace CPythonListsort.SortSlice
 [memmoveFromTraced_entries_size_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma memmoveFromTraced_entries_size_of_eq_some
-  {valuesPresent : Bool}
-  {destination : SortSlice κ ν}
-  {source : MemmoveSource destination}
-  {updated : SortSlice κ ν}
-  {dst src : Int}
-  {count : Nat}
+public lemma memmoveFromTraced_entries_size_of_eq_some
+  (valuesPresent : Bool)
+  (destination : SortSlice κ ν)
+  (source : MemmoveSource destination)
+  (updated : SortSlice κ ν)
+  (dst src : Int)
+  (count : Nat)
 -- given
   (h : (memmoveFromTraced? valuesPresent destination source dst src count).result = some updated) :
 -- imply
@@ -2729,7 +2780,7 @@ namespace CPythonListsort.SortSlice
 [sortslice_primitives_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
 -/
 @[path]
-lemma sortslice_primitives_safe
+public lemma sortslice_primitives_safe :
 -- imply
   SortSlicePrimitiveSafety κ ν := by
 -- proof
@@ -2800,12 +2851,11 @@ lemma sortslice_primitives_safe
     exact copyTraced_mode_safe valuesPresent slice dst src hinvariant hdst hsrc
   · intro valuesPresent slice dst src hinvariant hdst hsrc
     exact copyIncrTraced_safe valuesPresent slice dst src hdst hsrc hinvariant
-  · intro valuesPresent slice dst src hinvariant hdst hsrc hdstPositive
-    hsrcPositive
+  · intro valuesPresent slice dst src hinvariant hdst hsrc hdstPositive hsrcPositive
     exact copyDecrTraced_safe valuesPresent slice dst src hdst hsrc hdstPositive
       hsrcPositive hinvariant
   · intro valuesPresent count destination source dst src hdestination hsource
-    hadmissible hdst hsrc
+      hadmissible hdst hsrc
     exact memcpyTraced_mode_safe valuesPresent count destination source dst src
       hadmissible hdestination hsource hdst hsrc
   · intro valuesPresent slice dst src count hinvariant hdst hsrc
@@ -2813,6 +2863,8 @@ lemma sortslice_primitives_safe
       hdst hsrc
 
 end CPythonListsort.SortSlice
+
+namespace CPythonListsort.SortSlice
 
 /--
 [memcpyTraced_sameBacking_overlap_rejected](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
@@ -2828,7 +2880,7 @@ private lemma memcpyTraced_sameBacking_overlap_rejected_eq
 -- imply
   (memcpyTraced? valuesPresent count destination .sameBacking dst src).result = none ∧ (memcpyTraced? valuesPresent count destination .sameBacking dst src).trace = AccessTrace.empty ∧ (memcpyTraced? valuesPresent count destination .sameBacking dst src).erase = memcpy? count destination .sameBacking dst src := by
 -- proof
-  apply CPythonListsort.memcpyTraced_sameBacking_overlap_rejected valuesPresent count destination dst src hoverlap
+  apply memcpyTraced_sameBacking_overlap_rejected valuesPresent count destination dst src hoverlap
 
 /--
 [CursorMovementInRange.result](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/SortSliceSafety.lean)
@@ -2842,7 +2894,8 @@ private lemma result_eq
 -- imply
   CursorInRange slice (advance index amount) := by
 -- proof
-  apply CPythonListsort.CursorMovementInRange.result h
+  apply CursorMovementInRange.result h
+end CPythonListsort.SortSlice
 
 
 -- created on 2026-10-23

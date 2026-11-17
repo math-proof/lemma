@@ -2,13 +2,18 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
 
-import Mathlib.Algebra.Lie.Semisimple.Defs
-import Mathlib.Algebra.Lie.CartanCriterion
-import Mathlib.Algebra.Lie.Quotient
-import Mathlib.LinearAlgebra.Basis.Defs
-import Mathlib.LinearAlgebra.Eigenspace.Zero
-import Mathlib.LinearAlgebra.Matrix.BilinearForm
-import Theorem.Algebra.Lie.LeviDecomposition
+module
+
+public import Mathlib.Algebra.Lie.Semisimple.Defs
+public import Mathlib.Algebra.Lie.CartanCriterion
+public import Mathlib.Algebra.Lie.Quotient
+public import Mathlib.LinearAlgebra.Basis.Defs
+public import Mathlib.LinearAlgebra.Eigenspace.Zero
+public import Mathlib.LinearAlgebra.Matrix.BilinearForm
+public import Theorem.Algebra.Lie.LeviDecomposition
+
+@[expose] public section
+
 /-!
 # Levi decomposition
 

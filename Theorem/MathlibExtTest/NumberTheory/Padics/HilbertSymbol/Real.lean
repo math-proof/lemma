@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.Padics.HilbertSymbol.Real
-import Lemma.Nat.Padics.HilbertSymbol.Real
+import Theorem.Nat.Padics.HilbertSymbol.Real
 set_option autoImplicit false
 
 

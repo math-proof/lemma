@@ -1,6 +1,11 @@
-import Mathlib
-import Def.ModularCurve_PlaceWidth
-import Def.ModularCurve_QExpansionDiff
+module
+
+public import Mathlib
+public import Def.ModularCurve_PlaceWidth
+public import Def.ModularCurve_QExpansionDiff
+
+@[expose] public section
+
 set_option autoImplicit false
 
 noncomputable section

@@ -1,13 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Recurrences/OesperWeavingDeterminant.lean -/
 
-import Mathlib.Data.Nat.Fib.Basic
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Data.Int.Star
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Algebra.BigOperators.Intervals
-import Mathlib.Tactic.Linarith.Frontend
+module
 
+public import Mathlib.Data.Nat.Fib.Basic
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Data.Int.Star
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Algebra.BigOperators.Intervals
+public import Mathlib.Tactic.Linarith.Frontend
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

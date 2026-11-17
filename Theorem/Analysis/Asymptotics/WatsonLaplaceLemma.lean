@@ -1,9 +1,12 @@
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.MeasureTheory.Integral.IntegrableOn
-import Mathlib.MeasureTheory.Measure.Haar.OfBasis
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
-import Mathlib.Order.CompletePartialOrder
+module
+
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.MeasureTheory.Integral.IntegrableOn
+public import Mathlib.MeasureTheory.Measure.Haar.OfBasis
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
+public import Mathlib.Order.CompletePartialOrder
+
 /-!
 # Watson's lemma for Laplace integrals
 
@@ -11,6 +14,8 @@ Watson's lemma for real Laplace integrals: an all-orders right-hand expansion of
 at zero with coefficients `c` integrates termwise against `Real.exp (-m * ·)` over
 `(0, ∞)`, leaving a `1 / m ^ (N + 2)` remainder for every truncation order `N`.
 -/
+
+public section
 
 
 namespace MetaMathlibExt

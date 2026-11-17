@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.SpecialFunctions.PolarCoord
-import Mathlib.MeasureTheory.Integral.IntegrableOn
-import Mathlib.MeasureTheory.Function.LocallyIntegrable
+module
+
+public import Mathlib.Analysis.SpecialFunctions.PolarCoord
+public import Mathlib.MeasureTheory.Integral.IntegrableOn
+public import Mathlib.MeasureTheory.Function.LocallyIntegrable
+
+@[expose] public section
+
 open Real Set MeasureTheory Metric
 open scoped ENNReal Real Topology
 

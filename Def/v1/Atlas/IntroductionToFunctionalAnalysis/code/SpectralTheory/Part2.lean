@@ -8,24 +8,29 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.MetricSpace.Bounded
-import Mathlib.Analysis.RCLike.Lemmas
-import Mathlib.Analysis.Normed.Module.FiniteDimension
-import Mathlib.Analysis.Normed.Operator.Compact
-import Mathlib.Analysis.Normed.Operator.FredholmAlternative
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Analysis.InnerProductSpace.Adjoint
-import Mathlib.Analysis.InnerProductSpace.Spectrum
-import Mathlib.Analysis.InnerProductSpace.Rayleigh
-import Mathlib.Topology.Sequences
-import Mathlib.Analysis.InnerProductSpace.l2Space
-import Mathlib.Analysis.Calculus.IteratedDeriv.Defs
-import Mathlib.MeasureTheory.Function.L2Space
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
-import Abbrev.v1.Atlas.IntroductionToFunctionalAnalysis.code.SpectralTheory
+module
+
+public import Mathlib.Topology.MetricSpace.Bounded
+public import Mathlib.Analysis.RCLike.Lemmas
+public import Mathlib.Analysis.Normed.Module.FiniteDimension
+public import Mathlib.Analysis.Normed.Operator.Compact
+public import Mathlib.Analysis.Normed.Operator.FredholmAlternative
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.InnerProductSpace.Adjoint
+public import Mathlib.Analysis.InnerProductSpace.Spectrum
+public import Mathlib.Analysis.InnerProductSpace.Rayleigh
+public import Mathlib.Topology.Sequences
+public import Mathlib.Analysis.InnerProductSpace.l2Space
+public import Mathlib.Analysis.Calculus.IteratedDeriv.Defs
+public import Mathlib.MeasureTheory.Function.L2Space
+public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
+public import Abbrev.v1.Atlas.IntroductionToFunctionalAnalysis.code.SpectralTheory
+
+@[expose] public section
+
 open Function Set Filter Bornology Metric Pointwise Topology
 
 

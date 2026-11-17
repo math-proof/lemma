@@ -2,7 +2,7 @@
 
 import Mathlib.Data.Fintype.Basic
 import Instance.Order.StrictTotalOrder
-import Lemma.Set.StrictTotalOrder
+import Theorem.Set.StrictTotalOrder
 import Mathlib.Algebra.Order.Ring.Nat
 import Mathlib.Data.Fintype.EquivFin
 import Mathlib.Data.Nat.Cast.Order.Basic

@@ -6,6 +6,8 @@ import Lemma.Random.Integral_SMul.eq.Zero.of.All_Differentiable_Prob.All_Integra
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Syntax.Order.Sup
 import Instance.Analysis.Real.Numbers
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random
 open scoped ENNReal.ToRealCoe
 set_option maxHeartbeats 800000
@@ -549,4 +551,4 @@ private lemma main
 
 
 -- created on 2023-04-13
--- updated on 2026-11-16
+-- updated on 2026-11-17

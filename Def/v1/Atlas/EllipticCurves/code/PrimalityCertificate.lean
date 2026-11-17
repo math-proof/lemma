@@ -8,12 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.Algebra.Field.ZMod
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Data.Int.GCD
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
+module
 
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.Algebra.Field.ZMod
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Data.Int.GCD
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+
+@[expose] public section
 
 namespace ECPrimality
 

@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/HigherDerivation.lean -/
 
 /-
@@ -8,9 +10,11 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Mathlib.LinearAlgebra.Dimension.Finite
-import Theorem.v1.Atlas.TensorCategories.code.HigherDerivation
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.LinearAlgebra.Dimension.Finite
+public import Theorem.v1.Atlas.TensorCategories.code.HigherDerivation
+public section
+
 set_option maxHeartbeats 800000
 
 universe v u w

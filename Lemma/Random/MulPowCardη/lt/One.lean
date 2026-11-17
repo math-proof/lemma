@@ -1,5 +1,5 @@
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Lemma.Random.Gtμmin_0AndGeη_0AndLtη_1
+import Initialize.Tactic.Attr.Basic
 
 @[path]
 private lemma main
@@ -33,3 +33,4 @@ private lemma main
     _ = 1 := Real.exp_zero
 
 -- created on 2026-09-26
+-- updated on 2026-11-17

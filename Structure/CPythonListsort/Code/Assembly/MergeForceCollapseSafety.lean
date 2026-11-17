@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeForceCollapseSafety.lean -/
 
-import Def.CPythonListsort.Code.Assembly.MergeAtSafety.Part4
-import Lemma.List.Atlas.CPythonListsort.Code.Policy.MergeForceCollapsePreservation
-import Def.CPythonListsort.Code.Assembly.MergeForceCollapseSafety
+module
+
+public import Def.CPythonListsort.Code.Assembly.MergeAtSafety.Part4
+public import Lemma.List.Atlas.CPythonListsort.Code.Policy.MergeForceCollapsePreservation
+public import Def.CPythonListsort.Code.Assembly.MergeForceCollapseSafety
 /-!
 # `merge_force_collapse` safety
 
@@ -14,6 +16,9 @@ operands of C's `<` operator.  The public safety theorem proves that the
 pending-depth fuel supplied by the transcription is adequate for every
 nonempty valid layout.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

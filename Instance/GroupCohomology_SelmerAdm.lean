@@ -1,6 +1,11 @@
 -- Carved from Lemma/Definitions/Def_GroupCohomology_SelmerAdm.lean: instance decls only.
-import Mathlib
-import Def.GroupCohomology_SelmerAdm
+
+module
+
+public import Mathlib
+public import Def.GroupCohomology_SelmerAdm
+
+@[expose] public section
 
 set_option autoImplicit false
 

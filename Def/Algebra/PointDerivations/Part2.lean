@@ -1,5 +1,10 @@
-import Mathlib
-import Theorem.Algebra.PointDerivations
+module
+
+public import Mathlib
+public import Theorem.Algebra.PointDerivations
+
+@[expose] public section
+
 universe u v w w'
 
 

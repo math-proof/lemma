@@ -1,25 +1,30 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Matching/BergeLemma.lean -/
 
-import Mathlib.Combinatorics.SimpleGraph.Matching
-import Mathlib.Combinatorics.SimpleGraph.Walk.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.Order.Ring.Nat
-import Mathlib.Combinatorics.SimpleGraph.Basic
-import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
-import Mathlib.Combinatorics.SimpleGraph.DegreeSum
-import Mathlib.Combinatorics.SimpleGraph.Finite
-import Mathlib.Combinatorics.SimpleGraph.Maps
-import Mathlib.Combinatorics.SimpleGraph.Paths
-import Mathlib.Combinatorics.SimpleGraph.Subgraph
-import Mathlib.Combinatorics.SimpleGraph.Walk.Maps
-import Mathlib.Combinatorics.SimpleGraph.Walk.Operations
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Finset.SymmDiff
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Nat.SuccPred
-import Mathlib.Data.Set.Card
-import Mathlib.Data.Sym.Sym2
-import Mathlib.Order.Lattice.Nat
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Matching
+public import Mathlib.Combinatorics.SimpleGraph.Walk.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.Order.Ring.Nat
+public import Mathlib.Combinatorics.SimpleGraph.Basic
+public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
+public import Mathlib.Combinatorics.SimpleGraph.DegreeSum
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Mathlib.Combinatorics.SimpleGraph.Maps
+public import Mathlib.Combinatorics.SimpleGraph.Paths
+public import Mathlib.Combinatorics.SimpleGraph.Subgraph
+public import Mathlib.Combinatorics.SimpleGraph.Walk.Maps
+public import Mathlib.Combinatorics.SimpleGraph.Walk.Operations
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Finset.SymmDiff
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Nat.SuccPred
+public import Mathlib.Data.Set.Card
+public import Mathlib.Data.Sym.Sym2
+public import Mathlib.Order.Lattice.Nat
+
+@[expose] public section
+
 open scoped symmDiff
 
 

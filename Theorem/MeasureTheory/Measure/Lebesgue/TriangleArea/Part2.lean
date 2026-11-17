@@ -3,18 +3,22 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
+module
 
-import Mathlib.Analysis.Convex.Hull
-import Mathlib.Analysis.Normed.Lp.MeasurableSpace
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
-import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
-import Def.MeasureTheory.Measure.Lebesgue.TriangleArea
+public import Mathlib.Analysis.Convex.Hull
+public import Mathlib.Analysis.Normed.Lp.MeasurableSpace
+public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+public import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
+public import Def.MeasureTheory.Measure.Lebesgue.TriangleArea
+
 /-!
 # Areas of triangles in the Euclidean plane
 
 This file proves the determinant formula for the area of a planar triangle and computes the
 volume of the closed unit square.
 -/
+
+public section
 
 
 namespace MetaMathlibExt

@@ -7,11 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.MeasureTheory.Integral.Lebesgue.Basic
+public import Mathlib.MeasureTheory.Integral.Lebesgue.Basic
 open MeasureTheory
 open scoped ENNReal
 
+public section
 
 namespace SimpleApproximation
 

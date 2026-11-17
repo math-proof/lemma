@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Functor
-import Mathlib.CategoryTheory.Monoidal.NaturalTransformation
-import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
-import Theorem.v1.Atlas.TensorCategories.code.MonoidalFunctorProps
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Functor
+public import Mathlib.CategoryTheory.Monoidal.NaturalTransformation
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
+public import Theorem.v1.Atlas.TensorCategories.code.MonoidalFunctorProps
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 

@@ -4,17 +4,20 @@
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Mathlib.Data.Finset.Powerset
-import Mathlib.Data.Fintype.Fin
-import Mathlib.Algebra.GroupWithZero.Divisibility
-import Mathlib.Algebra.GroupWithZero.Nat
-import Mathlib.Data.Fintype.Card
-import Mathlib.Combinatorics.Hall.Basic
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Data.Fintype.BigOperators
+module
 
+public import Mathlib.Data.Finset.Powerset
+public import Mathlib.Data.Fintype.Fin
+public import Mathlib.Algebra.GroupWithZero.Divisibility
+public import Mathlib.Algebra.GroupWithZero.Nat
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Combinatorics.Hall.Basic
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Algebra.BigOperators.Ring.Finset
+public import Mathlib.Data.Fintype.BigOperators
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

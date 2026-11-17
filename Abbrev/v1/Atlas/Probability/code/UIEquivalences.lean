@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.MeasureTheory.Function.UniformIntegrable
-import Def.Probability.UIEquivalences
+module
+
+public import Mathlib.MeasureTheory.Function.UniformIntegrable
+public import Def.Probability.UIEquivalences
+@[expose] public section
+
 open scoped MeasureTheory NNReal ENNReal
 open MeasureTheory
 

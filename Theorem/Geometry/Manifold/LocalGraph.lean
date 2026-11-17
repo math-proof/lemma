@@ -3,11 +3,12 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
+module
 
-import Mathlib.Analysis.Calculus.ContDiff.Basic
-import Mathlib.Analysis.Calculus.FDeriv.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.Calculus.ImplicitContDiff
+public import Mathlib.Analysis.Calculus.ContDiff.Basic
+public import Mathlib.Analysis.Calculus.FDeriv.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.Calculus.ImplicitContDiff
 open scoped Topology
 
 /-!
@@ -16,6 +17,8 @@ open scoped Topology
 This file proves that a level set of a continuously differentiable map is locally a graph at
 points where its derivative is surjective.
 -/
+
+public section
 
 
 namespace MathlibExt.Geometry.Manifold.LocalGraphWanted

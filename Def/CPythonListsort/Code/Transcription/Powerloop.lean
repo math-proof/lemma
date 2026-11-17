@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/Powerloop.lean -/
 
-import Def.CPythonListsort.Code.Transcription.Word
-import Structure.CPythonListsort.Code.Transcription.Powerloop
+module
+
+public import Def.CPythonListsort.Code.Transcription.Word
+public import Structure.CPythonListsort.Code.Transcription.Powerloop
+
+@[expose] public section
+
 /-!
 # Transcription of CPython `powerloop`
 

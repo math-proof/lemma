@@ -1,13 +1,18 @@
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Analysis.SpecialFunctions.OrdinaryHypergeometric
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Analysis.PSeries
-import Mathlib.Analysis.SpecialFunctions.Gamma.Beta
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+public import Mathlib.Analysis.SpecialFunctions.OrdinaryHypergeometric
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Analysis.PSeries
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Beta
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 /-!
 # Gauss hypergeometric summation of Klamkin
 

@@ -7,9 +7,12 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Mathlib.RingTheory.DedekindDomain.Factorization
 open IsDedekindDomain
+
+public section
 
 variable {R : Type*} [CommRing R] [IsDedekindDomain R]
   (K : Type*) [Field K] [Algebra R K] [IsFractionRing R K]

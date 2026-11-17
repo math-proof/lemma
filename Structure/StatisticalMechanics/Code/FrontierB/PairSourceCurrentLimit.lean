@@ -9,11 +9,15 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierB.PairSourceBoxCurrent.Part3
-import Theorem.StatisticalMechanics.Code.FrontierB.FreeBoxSpinLimit
-import Theorem.StatisticalMechanics.Code.FrontierB.FreeBoxCurrentParity
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentSelectionIndependence.Part3
-import Theorem.StatisticalMechanics.Code.FrontierB.PairSourceCurrentLimit.Part3
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierB.PairSourceBoxCurrent.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierB.FreeBoxSpinLimit
+public import Theorem.StatisticalMechanics.Code.FrontierB.FreeBoxCurrentParity
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentSelectionIndependence.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierB.PairSourceCurrentLimit.Part3
+public section
+
 open Filter MeasureTheory
 open scoped ENNReal
 

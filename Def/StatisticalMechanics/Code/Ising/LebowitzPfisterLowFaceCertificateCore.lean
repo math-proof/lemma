@@ -9,11 +9,16 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib.Data.List.FinRange
-import Mathlib.Data.Rat.Defs
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic
-import Structure.StatisticalMechanics.Code.Ising.LebowitzPfisterLowFaceCertificateCore
+module
+
+public import Mathlib.Data.List.FinRange
+public import Mathlib.Data.Rat.Defs
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic
+public import Structure.StatisticalMechanics.Code.Ising.LebowitzPfisterLowFaceCertificateCore
+
+@[expose] public section
+
 open Finset
 
 

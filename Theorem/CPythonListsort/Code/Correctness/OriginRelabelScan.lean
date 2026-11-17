@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/OriginRelabelScan.lean -/
+module
 
-import Structure.CPythonListsort.Code.Correctness.OriginRelabelMerges
-import Structure.CPythonListsort.Code.Correctness.ScanLoopCorrectness
-import Def.CPythonListsort.Code.Correctness.OriginRelabelScan
+public import Structure.CPythonListsort.Code.Correctness.OriginRelabelMerges
+public import Structure.CPythonListsort.Code.Correctness.ScanLoopCorrectness
+public import Def.CPythonListsort.Code.Correctness.OriginRelabelScan
+
 /-!
 # Origin relabeling through policy and scan evaluators
 
@@ -16,6 +18,8 @@ The statements here are deliberately about the raw, untraced evaluator.  The
 trace model records concrete entries and therefore needs its own separately
 reviewed transport argument.
 -/
+
+public section
 
 
 namespace CPythonListsort

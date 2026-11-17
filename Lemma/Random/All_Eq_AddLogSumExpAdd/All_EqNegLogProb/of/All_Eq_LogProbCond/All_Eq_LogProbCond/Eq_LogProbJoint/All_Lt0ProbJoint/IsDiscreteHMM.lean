@@ -6,6 +6,7 @@ import Lemma.Fin.Snoc_Last.eq.Last
 import Lemma.Fin.Sum.eq.SumSumSnoc
 import Lemma.Random.All_Imp_Eq.of.IsHiddenMarkovFac
 import Lemma.Random.IsHiddenMarkovFac.of.All_Eq.IsHiddenMarkovPr
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory Measure Random ENNReal.ToRealCoe Fin IsDiscreteHMM Fun
 
 
@@ -201,4 +202,4 @@ private lemma main
 
 
 -- created on 2026-10-22
--- updated on 2026-11-07
+-- updated on 2026-11-17

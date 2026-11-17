@@ -2,7 +2,7 @@
 
 
 import Theorem.RingTheory.Frobenius.Splitting
-import Lemma.Ideal.Frobenius.Splitting
+import Theorem.Ideal.Frobenius.Splitting
 open Ideal
 open scoped Pointwise
 

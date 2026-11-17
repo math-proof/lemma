@@ -4,10 +4,15 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
 
-import Mathlib.Geometry.Manifold.Instances.Real
-import Mathlib.Topology.LocalAtTarget
-import Mathlib.Topology.PartitionOfUnity
-import Structure.Geometry.Manifold.CollarNeighborhood
+module
+
+public import Mathlib.Geometry.Manifold.Instances.Real
+public import Mathlib.Topology.LocalAtTarget
+public import Mathlib.Topology.PartitionOfUnity
+public import Structure.Geometry.Manifold.CollarNeighborhood
+
+@[expose] public section
+
 /-!
 # Collar neighborhoods of smooth manifold boundaries
 

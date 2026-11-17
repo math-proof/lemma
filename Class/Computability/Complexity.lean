@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Computability/Complexity.lean -/
 
 /-
@@ -19,9 +21,11 @@ limitations under the License.
 # Basic computational-complexity definitions
 -/
 
-import Mathlib.Algebra.Polynomial.Eval.Defs
-import Mathlib.Computability.Encoding
-import Mathlib.Computability.TuringMachine.Computable
+public import Mathlib.Algebra.Polynomial.Eval.Defs
+public import Mathlib.Computability.Encoding
+public import Mathlib.Computability.TuringMachine.Computable
+public section
+
 /-! A bitstring-specialized encoding API and basic definitions of `P`, `NP`,
 and `coNP`.
 

@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
-import Mathlib.Data.Matrix.Block
-import Abbrev.v1.Atlas.Buildings.code.GeometricAlgebra.CoordinateExamples
+module
+
+public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
+public import Mathlib.Data.Matrix.Block
+public import Abbrev.v1.Atlas.Buildings.code.GeometricAlgebra.CoordinateExamples
+
+@[expose] public section
+
 open Matrix
 
 

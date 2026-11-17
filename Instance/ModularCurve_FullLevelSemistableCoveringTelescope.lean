@@ -1,5 +1,4 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_FullLevelSemistableCoveringTelescope.lean: instance decls only.
-import Lemma.ResidueField.FullLevelSemistableCovering
 import Lemma.ResidueField.FullLevelSemistableCoveringTelescope
 
 set_option autoImplicit false

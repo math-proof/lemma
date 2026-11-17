@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Preadditive.Yoneda.Basic
-import Mathlib.Algebra.Category.ModuleCat.Basic
+module
+
+public import Mathlib.CategoryTheory.Preadditive.Yoneda.Basic
+public import Mathlib.Algebra.Category.ModuleCat.Basic
+
+@[expose] public section
+
 universe u
 
 open CategoryTheory

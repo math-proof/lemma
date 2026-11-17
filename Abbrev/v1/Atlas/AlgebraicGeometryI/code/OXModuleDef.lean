@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Category.ModuleCat.Sheaf
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
+module
+
+public import Mathlib.Algebra.Category.ModuleCat.Sheaf
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+@[expose] public section
+
 open CategoryTheory
 
 universe u

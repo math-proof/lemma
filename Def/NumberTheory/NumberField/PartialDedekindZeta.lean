@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/PartialDedekindZeta.lean -/
 
-import Mathlib.NumberTheory.NumberField.DedekindZeta
+module
+
+public import Mathlib.NumberTheory.NumberField.DedekindZeta
+
+@[expose] public section
+
 /-!
 # Partial Dedekind zeta functions
 

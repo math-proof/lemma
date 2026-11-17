@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/FermatPrime.lean -/
+module
 
+public import Def.NumberTheory.FermatPrime
+public import Mathlib.Tactic.NormNum.Prime
 
-import Def.NumberTheory.FermatPrime
-import Mathlib.Tactic.NormNum.Prime
-
+public section
 
 namespace MetaMathlibExt
 

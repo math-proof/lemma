@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.SimpleGraph.Dichromatic
-import Lemma.SimpleGraph.Dichromatic
+import Theorem.SimpleGraph.Dichromatic
 open SimpleGraph
 
 

@@ -1,4 +1,8 @@
-import Structure.ModularCurve_LevelOneProlongationPair
+module
+
+public import Structure.ModularCurve_LevelOneProlongationPair
+
+public section
 
 set_option autoImplicit false
 set_option synthInstance.maxHeartbeats 400000

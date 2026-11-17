@@ -8,12 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.NumberTheory.RamificationInertia.Basic
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.RingTheory.Algebraic.Integral
-import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
-import Mathlib.Data.Set.Card
+module
 
+public import Mathlib.NumberTheory.RamificationInertia.Basic
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.RingTheory.Algebraic.Integral
+public import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
+public import Mathlib.Data.Set.Card
+
+@[expose] public section
 
 noncomputable section
 

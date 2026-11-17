@@ -1,5 +1,9 @@
-import Mathlib
-import Class.Deformations_ProartinianCat
+module
+
+public import Mathlib
+public import Class.Deformations_ProartinianCat
+
+public section
 
 set_option autoImplicit false
 

@@ -7,11 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLn.Part3
-import Lemma.Nat.TypeA_CoxeterMatrixA
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.SchreierRefinement
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLn.Part3
+public import Theorem.Nat.TypeA_CoxeterMatrixA
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.SchreierRefinement
 
+public section
 
 namespace GLnBuilding
 

@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/RParameterGeneralizedFibonacciSequence.lean -/
+module
 
+public import Mathlib.Tactic
+public import Def.Combinatorics.Enumerative.RParameterGeneralizedFibonacciSequence
 
-import Mathlib.Tactic
-import Def.Combinatorics.Enumerative.RParameterGeneralizedFibonacciSequence
-
+public section
 
 namespace MetaMathlibExt
 

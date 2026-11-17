@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.JaccardLattice
-import Lemma.Finset.JaccardLattice
+import Theorem.Finset.JaccardLattice
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
 import Def.MathlibExtTest.Combinatorics.JaccardLattice

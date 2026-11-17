@@ -8,12 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Geometry.Manifold.IsManifold.Basic
-import Mathlib.Geometry.Manifold.Instances.Real
-import Mathlib.Geometry.Manifold.MFDeriv.Basic
-import Mathlib.Geometry.Manifold.ContMDiff.Defs
-import Mathlib.Analysis.Calculus.DifferentialForm.Basic
-import Def.v1.Atlas.GeometryOfManifolds.code.LefschetzFibrationMathlib
+module
+
+public import Mathlib.Geometry.Manifold.IsManifold.Basic
+public import Mathlib.Geometry.Manifold.Instances.Real
+public import Mathlib.Geometry.Manifold.MFDeriv.Basic
+public import Mathlib.Geometry.Manifold.ContMDiff.Defs
+public import Mathlib.Analysis.Calculus.DifferentialForm.Basic
+public import Def.v1.Atlas.GeometryOfManifolds.code.LefschetzFibrationMathlib
+public section
+
 open Manifold
 
 set_option autoImplicit false

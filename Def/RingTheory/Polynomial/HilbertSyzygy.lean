@@ -4,22 +4,27 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
 
-import Mathlib.Algebra.MvPolynomial.Basic
-import Mathlib.CategoryTheory.Abelian.Projective.Dimension
-import Mathlib.RingTheory.Finiteness.Basic
-import Mathlib.Algebra.Category.ModuleCat.ProjectiveDimension
-import Mathlib.Algebra.Category.ModuleCat.Projective
-import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
-import Mathlib.Algebra.Polynomial.Module.TensorProduct
-import Mathlib.Algebra.MvPolynomial.Equiv
-import Mathlib.RingTheory.MvPolynomial.Basic
-import Mathlib.Algebra.Module.Projective
-import Mathlib.LinearAlgebra.Finsupp.Pi
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Mathlib.RingTheory.TensorProduct.Basic
-import Mathlib.Algebra.Exact.Basic
-import Mathlib.Logic.Small.Basic
-import Mathlib.CategoryTheory.Preadditive.Projective.Basic
+module
+
+public import Mathlib.Algebra.MvPolynomial.Basic
+public import Mathlib.CategoryTheory.Abelian.Projective.Dimension
+public import Mathlib.RingTheory.Finiteness.Basic
+public import Mathlib.Algebra.Category.ModuleCat.ProjectiveDimension
+public import Mathlib.Algebra.Category.ModuleCat.Projective
+public import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
+public import Mathlib.Algebra.Polynomial.Module.TensorProduct
+public import Mathlib.Algebra.MvPolynomial.Equiv
+public import Mathlib.RingTheory.MvPolynomial.Basic
+public import Mathlib.Algebra.Module.Projective
+public import Mathlib.LinearAlgebra.Finsupp.Pi
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.RingTheory.TensorProduct.Basic
+public import Mathlib.Algebra.Exact.Basic
+public import Mathlib.Logic.Small.Basic
+public import Mathlib.CategoryTheory.Preadditive.Projective.Basic
+
+@[expose] public section
+
 open CategoryTheory Polynomial TensorProduct
 
 

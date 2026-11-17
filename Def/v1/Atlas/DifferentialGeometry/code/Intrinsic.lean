@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.DifferentialGeometry.code.Hypersurfaces
-import Lemma.Real.Atlas.v1.DifferentialGeometry.code.Hypersurfaces
+import Theorem.Real.Atlas.v1.DifferentialGeometry.code.Hypersurfaces
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.Analysis.Matrix.Normed
 import Mathlib.Tactic.NoncommRing

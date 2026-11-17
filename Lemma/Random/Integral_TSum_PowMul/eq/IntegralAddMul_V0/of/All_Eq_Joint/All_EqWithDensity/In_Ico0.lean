@@ -9,11 +9,12 @@ import Lemma.Random.Measurable_Vkd.of.All_Measurable_Prob
 import Lemma.Random.NormVkd.le.MulInvSub1Abs_R.of.In_Ico
 import Lemma.Random.MEq_Clip.of.All_Eq.All_EqWithDensity
 import Lemma.Random.NormClip.le.Abs_R
-import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
-import Theorem.Probability.CondExpectation
 import Lemma.Kernel.Integral.eq.Integral_Integral.of.Integrable_Bind
+import Lemma.Random.Integral_V0.eq.Integral_V0.of.In_Ico
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Kernel Finset Filter
-set_option maxHeartbeats 400000
+set_option maxHeartbeats 800000
 
 
 attribute [local instance] Classical.propDecidable
@@ -45,68 +46,6 @@ private lemma ae_state_stageK
     (f := fun z : ℝ × 𝒮 × 𝒜 => z.2.1) (hf := measurable_snd.fst), hsk,
     Kernel.deterministic_apply, Measure.dirac_apply' _ (measurableSet_singleton y).compl]
   simp
-
-/-- The stage kernel `stageK θ y` is supported on the state `y`. -/
-private lemma integral_V0_stageK
-  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [ReferenceMeasure 𝒜]
-  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
-  {γ : ℝ}
--- given
-  (θ : Θ)
-  (y : 𝒮) :
--- imply
-  ∫ z, M.V0 θ γ z.2.1 ∂(M.stageK θ y) = M.V0 θ γ y := by
--- proof
-  have hV0 : Measurable (M.V0 θ γ) :=
-    Measurable_Vkd.of.All_Measurable_Prob (M := M)
-      (fun θ => hStoch.measurable_π θ) θ γ
-  have hsk :
-    (M.stageK θ).map (fun z : ℝ × 𝒮 × 𝒜 => z.2.1) =
-      Kernel.deterministic (id : 𝒮 → 𝒮) measurable_id := by
-    unfold Model.stageK
-    rw [← Kernel.map_comp_right _ (by fun_prop) (by fun_prop)]
-    show (Kernel.deterministic id measurable_id ×ₖ
-        (M.kernel θ ⊗ₖ M.rewardK)).map Prod.fst = _
-    rw [← Kernel.fst_eq]
-    exact Kernel.fst_prod _ _
-  rw [← integral_map measurable_snd.fst.aemeasurable hV0.aestronglyMeasurable]
-  rw [← Kernel.map_apply (M.stageK θ) (f := fun z : ℝ × 𝒮 × 𝒜 => z.2.1)
-    (hf := measurable_snd.fst)]
-  rw [hsk, Kernel.deterministic_apply]
-  exact integral_dirac' _ y hV0.stronglyMeasurable
-
-/-- Integrating a function of the next state against `K θ w` is integrating it against the transition. -/
-private lemma integral_V0_K
-  [MeasurableSpace 𝒮] [MeasurableSingletonClass 𝒮] [ReferenceMeasure 𝒜]
-  {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
-  {γ : ℝ}
-  {h : γ ∈ Set.Ico 0 1}
--- given
-  (θ : Θ)
-  (w : ℝ × 𝒮 × 𝒜) :
--- imply
-  ∫ z, M.V0 θ γ z.2.1 ∂(M.K θ w) =
-    ∫ y, M.V0 θ γ y ∂(M.trans w.2) := by
--- proof
-  have hV0 : Measurable (M.V0 θ γ) :=
-    Measurable_Vkd.of.All_Measurable_Prob (M := M)
-      (fun θ => hStoch.measurable_π θ) θ γ
-  have hg : StronglyMeasurable fun z : ℝ × 𝒮 × 𝒜 => M.V0 θ γ z.2.1 :=
-    (hV0.comp measurable_snd.fst).stronglyMeasurable
-  have hK : M.K θ w = M.stageK θ ∘ₘ M.trans w.2 := by
-    rw [Model.K, Kernel.comp_apply, Kernel.comap_apply]
-  rw [hK]
-  have hV0b : ∀ y, ‖M.V0 θ γ y‖ ≤ (1 - γ)⁻¹ * |M.R| :=
-    fun y => NormVkd.le.MulInvSub1Abs_R.of.In_Ico (M := M) h θ y
-  have hint : Integrable (fun z : ℝ × 𝒮 × 𝒜 => M.V0 θ γ z.2.1)
-      (M.stageK θ ∘ₘ M.trans w.2) :=
-    Integrable.of_bound hg.aestronglyMeasurable ((1 - γ)⁻¹ * |M.R|)
-      (Filter.Eventually.of_forall fun z => hV0b z.2.1)
-  have := Integral.eq.Integral_Integral.of.Integrable_Bind (κ := M.stageK θ)
-    (μ := M.trans w.2) hint
-  rw [this]
-  refine integral_congr_ae (Filter.Eventually.of_forall fun y => ?_)
-  exact integral_V0_stageK (M := M) θ y
 
 /--
 Bellman identity for the state-value, in integral form, under a continuous-action
@@ -365,7 +304,11 @@ private lemma main
               (∫ y, M.V0 θ γ y ∂(M.trans (s t ω, a t ω))) := by
         intro ω
         if hω : (ω t).2.1 = sₜ then
-          rw [integral_V0_K (M := M) (h := h₀) θ (ω t)]
+          have hKw : M.K θ (ω t) =
+              (M.trans (ω t).2).toMeasure.bind (M.stageK θ) := by
+            rw [Model.K, Kernel.comp_apply, Kernel.comap_apply]
+            simp [Model.transK]
+          rw [hKw, Integral_V0.eq.Integral_V0.of.In_Ico (M := M) h₀ θ (ω t)]
         else
           simp [hω]
       simp_rw [hKpt]
@@ -402,7 +345,7 @@ private lemma main
         · simp [φ, hy, this]
       have hmarg :=
         Integral.eq.Integral_Integral_SMul.of.All_Eq_Joint.All_EqWithDensity
-          (M := M) (E := ℝ) h₁ hφm hφC θ t
+          (M := M) (ℰ := ℝ) h₁ hφm hφC θ t
       rw [hmarg]
       have hy : ∀ y,
           (∫ u, M.π[θ] y u • φ y u ∂μ.measure) =
@@ -436,4 +379,4 @@ private lemma main
 
 
 -- created on 2023-03-27
--- updated on 2026-11-16
+-- updated on 2026-11-17

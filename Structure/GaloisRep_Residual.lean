@@ -1,15 +1,17 @@
-import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
-import Mathlib.LinearAlgebra.Charpoly.Basic
-import Mathlib.LinearAlgebra.Determinant
-import Mathlib.LinearAlgebra.TensorProduct.Tower
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.FieldTheory.Finiteness
-import Mathlib.FieldTheory.IntermediateField.Basic
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+module
+
+public import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
+public import Mathlib.LinearAlgebra.Charpoly.Basic
+public import Mathlib.LinearAlgebra.Determinant
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.FieldTheory.Finiteness
+public import Mathlib.FieldTheory.IntermediateField.Basic
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open scoped TensorProduct
 open Polynomial

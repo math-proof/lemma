@@ -1,4 +1,8 @@
-import Lemma.Nat.LtSub_1.of.Le.Gt_0
+module
+
+public import Mathlib
+public section
+
 open Nat Lean
 
 

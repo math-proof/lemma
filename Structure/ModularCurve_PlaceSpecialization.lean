@@ -1,6 +1,10 @@
-import Lemma.LaurentSeries.HeckeOperator
-import Lemma.LaurentSeries.CharLFrobeniusGeomLevel
-import Structure.HeckeGalois_EichlerShimura
+module
+
+public import Lemma.LaurentSeries.HeckeOperator
+public import Lemma.LaurentSeries.CharLFrobeniusGeomLevel
+public import Structure.HeckeGalois_EichlerShimura
+
+public section
 
 set_option autoImplicit false
 

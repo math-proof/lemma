@@ -9,14 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.KahlerManifolds
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.ConnectionsCurvature
 import Structure.v1.Atlas.GeometryOfManifolds.code.ConnectionsCurvature.Part7
 import Theorem.v1.Atlas.GeometryOfManifolds.code.AdvancedKahler.Part4
 set_option autoImplicit false
 
 open DifferentialFormSpace
-
 
 /-- Donaldson's PDE-axiom package: provides cutoff Gaussian data for every
 section family, Cauchy estimates for every Green operator, holomorphicity of

@@ -8,15 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Instance.v1.Atlas.NumberTheoryI.code.Ch22WeberLFunction
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Ch22WeberLFunction
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.AnalyticClassNumber
-import Instance.v1.Atlas.NumberTheoryI.code.AnalyticClassNumber.Part3
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Cor1838
-import Def.v1.Atlas.NumberTheoryI.code.Prop2219
+module
+
+public import Instance.v1.Atlas.NumberTheoryI.code.Ch22WeberLFunction
+public import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Ch22WeberLFunction
+public import Lemma.Nat.Atlas.v1.NumberTheoryI.code.AnalyticClassNumber
+public import Instance.v1.Atlas.NumberTheoryI.code.AnalyticClassNumber.Part3
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor1838
+public import Def.v1.Atlas.NumberTheoryI.code.Prop2219
 
 
-noncomputable section
+public noncomputable section
 
 open scoped NumberField
 

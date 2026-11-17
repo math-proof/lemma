@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.Farey
-import Lemma.Nat.Farey
+import Theorem.Nat.Farey
 import Mathlib.Tactic
 open Farey
 

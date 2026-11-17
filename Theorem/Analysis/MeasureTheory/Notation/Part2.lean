@@ -1,6 +1,9 @@
-import Mathlib
-import Abbrev.Analysis.MeasureTheory.Notation.Part3
+module
 
+public import Mathlib
+public import Abbrev.Analysis.MeasureTheory.Notation.Part3
+
+public section
 
 theorem EuclideanSpace'.norm_eq {n:ℕ} (x: EuclideanSpace' n) : ‖x‖ = √(∑ i, (x i)^2) := by
   convert EuclideanSpace.norm_eq x using 3 with i

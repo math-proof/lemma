@@ -8,12 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Real.Sqrt
-import Mathlib.Data.Finset.Lattice.Fold
-import Structure.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter11.HypergraphContainers
+module
+
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Data.Real.Sqrt
+public import Mathlib.Data.Finset.Lattice.Fold
+public import Structure.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter11.HypergraphContainers
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open Finset Real

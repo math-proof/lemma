@@ -8,12 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Category.ModuleCat.Sheaf.Quasicoherent
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.AlgebraicGeometry.Modules.Tilde
-import Mathlib.Algebra.Module.FinitePresentation
-import Mathlib.RingTheory.Noetherian.Basic
-import Class.v1.Atlas.AlgebraicGeometryI.code.Lec10CoherentSheaf
+module
+
+public import Mathlib.Algebra.Category.ModuleCat.Sheaf.Quasicoherent
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.AlgebraicGeometry.Modules.Tilde
+public import Mathlib.Algebra.Module.FinitePresentation
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Class.v1.Atlas.AlgebraicGeometryI.code.Lec10CoherentSheaf
+
+@[expose] public section
+
 open AlgebraicGeometry CategoryTheory
 
 

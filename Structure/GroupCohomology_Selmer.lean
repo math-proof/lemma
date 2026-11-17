@@ -1,6 +1,10 @@
-import Mathlib.RepresentationTheory.Homological.GroupCohomology.Functoriality
-import Mathlib.RepresentationTheory.Invariants
-import Mathlib.LinearAlgebra.Dual.Lemmas
+module
+
+public import Mathlib.RepresentationTheory.Homological.GroupCohomology.Functoriality
+public import Mathlib.RepresentationTheory.Invariants
+public import Mathlib.LinearAlgebra.Dual.Lemmas
+
+public section
 
 set_option autoImplicit false
 

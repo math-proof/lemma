@@ -1,14 +1,16 @@
-import Structure.GaloisRep_Residual
-import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
-import Mathlib.LinearAlgebra.Charpoly.Basic
-import Mathlib.LinearAlgebra.Determinant
-import Mathlib.LinearAlgebra.TensorProduct.Tower
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.FieldTheory.Finiteness
+module
+
+public import Structure.GaloisRep_Residual
+public import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
+public import Mathlib.LinearAlgebra.Charpoly.Basic
+public import Mathlib.LinearAlgebra.Determinant
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.FieldTheory.Finiteness
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 open scoped TensorProduct
 open Polynomial

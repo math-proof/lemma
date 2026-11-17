@@ -1,9 +1,13 @@
-import Mathlib
-import Def.TateCurve_QShift
-import Theorems.Thm_TateCurve_pointX_inv
-import Theorems.Thm_TateCurve_pointX_q_mul
-import Theorems.Thm_TateCurve_pointX_zpow_mul
-import Def.TateCurve_XMultStructure
+module
+
+public import Mathlib
+public import Def.TateCurve_QShift
+public import Theorems.Thm_TateCurve_pointX_inv
+public import Theorems.Thm_TateCurve_pointX_q_mul
+public import Theorems.Thm_TateCurve_pointX_zpow_mul
+public import Def.TateCurve_XMultStructure
+
+public section
 
 set_option autoImplicit false
 

@@ -1,13 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Ramanujan/Part1Ch6Entry6Harmonic.lean -/
+module
 
+public import Theorem.Analysis.SpecialFunctions.Part1Ch6Entry6Harmonic
 
-import Theorem.Analysis.SpecialFunctions.Part1Ch6Entry6Harmonic
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 6, Entry 6 API checks
 
 Partial sums at `0` and successors, values of the extension at `0`, `1`, `1/2` and naturals, the
 first derivative at the origin, and the Taylor expansion.
 -/
+
+public section
 
 
 namespace MathlibExtTest.Analysis.Ramanujan.Part1Ch6Entry6Harmonic

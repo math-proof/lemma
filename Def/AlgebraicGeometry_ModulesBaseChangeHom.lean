@@ -1,5 +1,9 @@
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.CategoryTheory.Adjunction.Mates
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.CategoryTheory.Adjunction.Mates
+
+@[expose] public section
 
 set_option autoImplicit false
 

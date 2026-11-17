@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Polynomial.Taylor
-import Mathlib.Algebra.Polynomial.Div
-import Mathlib.Tactic.LinearCombination
+module
+
+public import Mathlib.Algebra.Polynomial.Taylor
+public import Mathlib.Algebra.Polynomial.Div
+public import Mathlib.Tactic.LinearCombination
+
+@[expose] public section
+
 open Polynomial
 
 

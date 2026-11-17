@@ -14,7 +14,7 @@ import Mathlib.Data.Rat.Star
 import Mathlib.Data.Nat.Squarefree
 import Def.v1.Atlas.ArithmeticGeometry.code.HasseMinkowskiProof.Part3
 import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.HasseMinkowskiProof
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.SquareClassApprox
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.SquareClassApprox
 import Def.v1.Atlas.ArithmeticGeometry.code.SquareClassApprox
 open scoped Classical
 

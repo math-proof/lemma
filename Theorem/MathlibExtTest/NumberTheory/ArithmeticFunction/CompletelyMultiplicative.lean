@@ -8,7 +8,7 @@ Authors: Adam Kiezun
 
 
 import Def.NumberTheory.ArithmeticFunction.CompletelyMultiplicative
-import Lemma.Nat.ArithmeticFunction.CompletelyMultiplicative
+import Theorem.Nat.ArithmeticFunction.CompletelyMultiplicative
 /-!
 # Tests for completely multiplicative arithmetic functions
 

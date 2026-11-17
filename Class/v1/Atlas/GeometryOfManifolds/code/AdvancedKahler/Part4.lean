@@ -9,14 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.KahlerManifolds
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.ConnectionsCurvature
 import Structure.v1.Atlas.GeometryOfManifolds.code.ConnectionsCurvature.Part7
 import Structure.v1.Atlas.GeometryOfManifolds.code.AdvancedKahler.Part2
 set_option autoImplicit false
 
 open DifferentialFormSpace
-
 
 /-- An $L^2$-norm structure on differential forms: a seminorm
 $\|\cdot\|_{L^2}$ on each $\Omega^p$ satisfying the triangle inequality and

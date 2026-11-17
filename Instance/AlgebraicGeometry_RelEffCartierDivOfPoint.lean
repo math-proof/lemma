@@ -1,6 +1,5 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_RelEffCartierDivOfPoint.lean: instance decls only.
 import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Lemma.Scheme.RelEffCartierDiv
 import Lemma.Scheme.RelEffCartierDivOfPoint
 
 set_option autoImplicit false

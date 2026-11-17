@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Normed/Field/IsClosestConjugate.lean -/
 
-import Mathlib.Analysis.Normed.Field.Krasner
+module
+
+public import Mathlib.Analysis.Normed.Field.Krasner
+
+@[expose] public section
+
 /-!
 # Closest conjugates and Krasner's lemma
 

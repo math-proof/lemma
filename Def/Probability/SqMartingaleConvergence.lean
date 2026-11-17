@@ -13,7 +13,7 @@ import Mathlib.Probability.Martingale.Basic
 import Mathlib.Probability.Martingale.BorelCantelli
 import Mathlib.MeasureTheory.Function.LpSeminorm.CompareExp
 import Theorem.v1.Atlas.Probability.code.MartingaleOrthogonality
-import Lemma.Measure.Atlas.v1.Probability.code.MartingaleOrthogonality
+import Theorem.Measure.Atlas.v1.Probability.code.MartingaleOrthogonality
 import Theorem.v1.Atlas.Probability.code.MartingaleLpConvergence
 open MeasureTheory Filter Topology
 

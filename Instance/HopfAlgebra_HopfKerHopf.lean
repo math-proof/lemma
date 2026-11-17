@@ -1,9 +1,11 @@
 -- Carved from Lemma/Definitions/Def_HopfAlgebra_HopfKerHopf.lean: instance decls only.
 -- Carved: defs+theorems -> Def.HopfAlgebra_HopfKerHopf; instances remain here
-import Mathlib
-import Lemma.Submodule.HopfKer
-import Def.HopfAlgebra_HopfKerHopf
+module
 
+public import Mathlib
+public import Def.HopfAlgebra_HopfKerHopf
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option linter.unusedSectionVars false
@@ -49,6 +51,16 @@ noncomputable instance instCoalgebra : Coalgebra R ↥(hopfKer π) where
     simp only [LinearMap.comp_apply, LinearMap.flip_apply, TensorProduct.mk_apply, LinearMap.rTensor_tmul,
       valL_apply]
     rw [lTensor_counitK, ι₂_comulK, Coalgebra.lTensor_counit_comul]
+
+theorem counit_coe (s : ↥(hopfKer π)) :
+    Coalgebra.counit (R := R) s = Coalgebra.counit (R := R) (s : A) := by
+  change counitK π s = Coalgebra.counit (R := R) (s : A)
+  exact counitK_apply π s
+
+@[simp] theorem ι₂_comul (s : ↥(hopfKer π)) :
+    ι₂ π (Coalgebra.comul (R := R) s) = Coalgebra.comul (R := R) (s : A) := by
+  change ι₂ π (comulK π s) = Coalgebra.comul (R := R) (s : A)
+  exact ι₂_comulK π s
 
 noncomputable instance instBialgebra : Bialgebra R ↥(hopfKer π) where
   counit_one := by rw [counit_coe]; simp

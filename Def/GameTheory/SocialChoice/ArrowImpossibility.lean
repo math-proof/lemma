@@ -1,9 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GameTheory/SocialChoice/ArrowImpossibility.lean -/
 
-import Mathlib.Data.Finset.Defs
-import Mathlib.Data.Finset.Card
-import Mathlib.Tactic.Push
+module
 
+public import Mathlib.Data.Finset.Defs
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Tactic.Push
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

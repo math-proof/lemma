@@ -7,12 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.CategoryTheory.Monoidal.Functor
-import Mathlib.CategoryTheory.Monoidal.NaturalTransformation
-import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
+public import Mathlib.CategoryTheory.Monoidal.Functor
+public import Mathlib.CategoryTheory.Monoidal.NaturalTransformation
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
 set_option maxHeartbeats 800000
 
+public section
 
 namespace TensorCategories.MonoidalFunctorProps
 

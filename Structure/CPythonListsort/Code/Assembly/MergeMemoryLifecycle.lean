@@ -1,11 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeMemoryLifecycle.lean -/
 
-import Structure.CPythonListsort.Code.Assembly.MergeGetmemRequestBound
-import Def.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
-import Def.CPythonListsort.Code.Assembly.MergeMemcpyProvenance
-import Structure.CPythonListsort.Code.Assembly.MergeLoSafety.Part4
-import Theorem.CPythonListsort.Code.Assembly.MergeHiSafety.Part5
-import Def.CPythonListsort.Code.Assembly.MergeMemoryLifecycle
+module
+
+public import Structure.CPythonListsort.Code.Assembly.MergeGetmemRequestBound
+public import Def.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
+public import Def.CPythonListsort.Code.Assembly.MergeMemcpyProvenance
+public import Structure.CPythonListsort.Code.Assembly.MergeLoSafety.Part4
+public import Theorem.CPythonListsort.Code.Assembly.MergeHiSafety.Part5
+public import Def.CPythonListsort.Code.Assembly.MergeMemoryLifecycle
 /-!
 # Semantic validation for the real merge-memory trace
 
@@ -15,6 +17,9 @@ predicates below changes the evaluator or manufactures a reachability
 relation: later assembly theorems apply them to the literal `memoryEvents`
 field returned by `listSortImplTraced?`.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

@@ -8,16 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.AlgebraicTopologyI.code.ConvexAcyclicity.Part2
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.ConvexAcyclicity
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section8
-import Instance.v1.Atlas.AlgebraicTopologyI.code.Section8.Part3
-import Def.v1.Atlas.AlgebraicTopologyI.code.ModelChains
+module
+
+public import Theorem.v1.Atlas.AlgebraicTopologyI.code.ConvexAcyclicity.Part2
+public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.ConvexAcyclicity
+public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section8
+public import Instance.v1.Atlas.AlgebraicTopologyI.code.Section8.Part3
+public import Def.v1.Atlas.AlgebraicTopologyI.code.ModelChains
 
 
 namespace AlgebraicTopologyI
 
-noncomputable section
+public noncomputable section
 
 open scoped Topology
 

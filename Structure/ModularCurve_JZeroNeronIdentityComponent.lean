@@ -1,15 +1,17 @@
-import Mathlib
-import Structure.ModularCurve_JZeroNeronPrimaryTorsionSheaf
-import Structure.AlgebraicGeometry_RelativeGroupLaw
-import Lemma.Scheme.RelativeGroupLawKernel
-import Lemma.Scheme.NeronModelEndomorphismExtension
+module
+
+public import Mathlib
+public import Structure.ModularCurve_JZeroNeronPrimaryTorsionSheaf
+public import Structure.AlgebraicGeometry_RelativeGroupLaw
+public import Lemma.Scheme.RelativeGroupLawKernel
+public import Theorem.Scheme.NeronModelEndomorphismExtension
 
 set_option autoImplicit false
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry AlgebraicGeometry.Scheme NeronModelInfra
   GoodReductionJacobian
 
-noncomputable section
+public noncomputable section
 
 namespace ModularCurve
 

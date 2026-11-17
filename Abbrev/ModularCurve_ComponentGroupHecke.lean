@@ -1,12 +1,14 @@
-import Abbrev.ModularCurve_ComponentGroup
-import Mathlib.LinearAlgebra.Dual.Defs
-import Mathlib.Data.Matrix.Basic
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Ring
+module
+
+public import Abbrev.ModularCurve_ComponentGroup
+public import Mathlib.LinearAlgebra.Dual.Defs
+public import Mathlib.Data.Matrix.Basic
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Ring
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace ModularCurve
 

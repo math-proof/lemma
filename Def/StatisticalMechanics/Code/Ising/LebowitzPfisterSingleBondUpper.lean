@@ -9,9 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib.Analysis.SpecialFunctions.Artanh
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
-import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterSingleBondUpper
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Artanh
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
+public import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterSingleBondUpper
+
+@[expose] public section
+
 open Set
 
 

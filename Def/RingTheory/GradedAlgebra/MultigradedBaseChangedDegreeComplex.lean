@@ -6,9 +6,9 @@ Authors: Adam Kiezun, Muse Spark 1.3, Codex
 
 import Def.RingTheory.GradedAlgebra.MultigradedBetti.Part2
 import Theorem.RingTheory.GradedAlgebra.MultigradedBaseChangedDifferential
-import Lemma.Int.GradedAlgebra.MultigradedBaseChangedDifferential
+import Theorem.Int.GradedAlgebra.MultigradedBaseChangedDifferential
 import Def.RingTheory.GradedAlgebra.MultigradedBaseChangedTermDecomposition
-import Lemma.Int.GradedAlgebra.MultigradedBaseChangedDegreePieceFinite
+import Theorem.Int.GradedAlgebra.MultigradedBaseChangedDegreePieceFinite
 import Mathlib.Algebra.Homology.HomologicalComplex
 import Mathlib.Algebra.Homology.ShortComplex.HomologicalComplex
 import Mathlib.Algebra.Homology.ShortComplex.Abelian

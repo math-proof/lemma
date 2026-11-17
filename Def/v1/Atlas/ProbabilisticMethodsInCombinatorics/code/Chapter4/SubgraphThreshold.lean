@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.Instances.Real.Lemmas
-import Mathlib.Order.Filter.AtTopBot.Tendsto
-import Mathlib.Combinatorics.SimpleGraph.Finite
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
+module
+
+public import Mathlib.Topology.Instances.Real.Lemmas
+public import Mathlib.Order.Filter.AtTopBot.Tendsto
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 open Filter Real SimpleGraph Classical

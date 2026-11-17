@@ -5,7 +5,7 @@ Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
 
 import Def.Algebra.Polynomial.RealRooted.Part2
-import Lemma.Polynomial.RealRooted
+import Theorem.Polynomial.RealRooted
 import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
 import Mathlib.Analysis.Complex.Polynomial.Basic
 import Mathlib.Analysis.Normed.Field.Approximation

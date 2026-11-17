@@ -5,10 +5,10 @@ open MeasureTheory Filter Topology
 
 @[path]
 private lemma main
-  [MeasurableSpace Ω] [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+  [MeasurableSpace Ω] [NormedAddCommGroup ℰ] [NormedSpace ℝ ℰ] [CompleteSpace ℰ]
   {π : Measure Ω}
-  {F : ℕ → Ω → E}
-  {f : Ω → E}
+  {F : ℕ → Ω → ℰ}
+  {f : Ω → ℰ}
   {bound : Ω → ℝ}
 -- given
   (h₀ : ∀ n, AEStronglyMeasurable (F n) π)
@@ -22,4 +22,4 @@ private lemma main
 
 
 -- created on 2023-04-04
--- updated on 2026-10-26
+-- updated on 2026-11-17

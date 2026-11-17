@@ -7,20 +7,22 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.NumberTheoryI.code.Pairings.Part2
-import Mathlib.LinearAlgebra.BilinearForm.DualLattice
-import Mathlib.LinearAlgebra.BilinearForm.Properties
-import Mathlib.LinearAlgebra.PerfectPairing.Basic
-import Mathlib.RingTheory.DedekindDomain.Basic
-import Mathlib.RingTheory.DedekindDomain.Dvr
-import Mathlib.RingTheory.Localization.Finiteness
-import Mathlib.LinearAlgebra.Dual.Basis
-import Mathlib.Algebra.Module.LocalizedModule.Basic
-import Mathlib.Algebra.Module.Lattice
-import Def.v1.Atlas.NumberTheoryI.code.PairingsTheorems.Part2
+public import Def.v1.Atlas.NumberTheoryI.code.Pairings.Part2
+public import Mathlib.LinearAlgebra.BilinearForm.DualLattice
+public import Mathlib.LinearAlgebra.BilinearForm.Properties
+public import Mathlib.LinearAlgebra.PerfectPairing.Basic
+public import Mathlib.RingTheory.DedekindDomain.Basic
+public import Mathlib.RingTheory.DedekindDomain.Dvr
+public import Mathlib.RingTheory.Localization.Finiteness
+public import Mathlib.LinearAlgebra.Dual.Basis
+public import Mathlib.Algebra.Module.LocalizedModule.Basic
+public import Mathlib.Algebra.Module.Lattice
+public import Def.v1.Atlas.NumberTheoryI.code.PairingsTheorems.Part2
 open Submodule LinearMap Module
 
+public section
 
 noncomputable section
 

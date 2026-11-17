@@ -5,7 +5,7 @@ import Mathlib.LinearAlgebra.Eigenspace.Charpoly
 import Mathlib.RingTheory.Norm.Transitivity
 import Def.GroupTheory.BurnsidePaqb.CentralCharacter.Part3
 import Lemma.Representation.MulCentralScalarFinrankV.eq.Sum_Character
-import Lemma.Complex.In_CycSubfield.of.EqPow_1.Ne_0
+import Theorem.Complex.In_CycSubfield.of.EqPow_1.Ne_0
 import Instance.GroupTheory.BurnsidePaqb.CyclotomicField
 /-!
 Norm/killing stage of the complete Burnside proof.

@@ -1,5 +1,9 @@
-import Mathlib
-import Theorem.Analysis.MeasureTheory.Notation
+module
+
+public import Mathlib
+public import Theorem.Analysis.MeasureTheory.Notation
+
+@[expose] public section
 
 
 /-- A version of {name}`EuclideanSpace` suitable for this text. -/

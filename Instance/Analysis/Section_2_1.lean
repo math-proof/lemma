@@ -1,5 +1,7 @@
-import Mathlib
-import Inductive.Analysis.Section_2_1
+module
+
+public import Mathlib
+public import Inductive.Analysis.Section_2_1
 /-!
 # Analysis I, Section 2.1: The Peano Axioms
 
@@ -29,6 +31,7 @@ standard Mathlib class {name}`_root_.Nat`, or {lean}`ℕ`.  However, we will dev
 
 -/
 
+@[expose] public section
 
 namespace Chapter2
 

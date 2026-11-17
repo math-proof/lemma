@@ -1,14 +1,19 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/CyclotomicField.lean -/
 
-import Mathlib.Data.Complex.Basic
-import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.Algebra.Polynomial.Roots
-import Mathlib.Algebra.Polynomial.FieldDivision
-import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
-import Mathlib.FieldTheory.SplittingField.IsSplittingField
-import Mathlib.FieldTheory.Separable
-import Mathlib.FieldTheory.Galois.Basic
+module
+
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.Analysis.Complex.Polynomial.Basic
+public import Mathlib.Algebra.Polynomial.Roots
+public import Mathlib.Algebra.Polynomial.FieldDivision
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+public import Mathlib.FieldTheory.SplittingField.IsSplittingField
+public import Mathlib.FieldTheory.Separable
+public import Mathlib.FieldTheory.Galois.Basic
+
+@[expose] public section
+
 /-!
 Cyclotomic-field stage of the complete Burnside proof.
 

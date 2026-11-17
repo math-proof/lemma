@@ -21,7 +21,7 @@ import Mathlib.LinearAlgebra.Projectivization.Action
 import Mathlib.RepresentationTheory.Maschke
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.Simproc.Factors
-import Lemma.Nat.AddCardMul_SubCard1.eq.MulCard_QuotientOrbitRelCard
+import Theorem.Nat.AddCardMul_SubCard1.eq.MulCard_QuotientOrbitRelCard
 import Def.GroupTheory.DicksonPGL2Tame
 /-!
 # Tame finite subgroups of `PGL₂`

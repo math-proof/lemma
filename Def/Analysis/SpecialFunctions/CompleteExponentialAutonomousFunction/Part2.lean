@@ -1,8 +1,13 @@
-import Mathlib.Analysis.SpecialFunctions.Exp
-import Lean.Elab.Tactic.Omega
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
-import Theorem.Analysis.SpecialFunctions.CompleteExponentialAutonomousFunction
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Exp
+public import Lean.Elab.Tactic.Omega
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Ring
+public import Theorem.Analysis.SpecialFunctions.CompleteExponentialAutonomousFunction
+
+@[expose] public section
+
 open scoped BigOperators
 
 

@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/CFiniteSequence.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.CFiniteSequence
 
-import Def.Combinatorics.Enumerative.CFiniteSequence
-
+public section
 
 namespace MetaMathlibExt
 

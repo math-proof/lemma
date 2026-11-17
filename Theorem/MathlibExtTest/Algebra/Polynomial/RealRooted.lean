@@ -2,7 +2,7 @@
 
 
 import Def.Algebra.Polynomial.RealRooted.Part2
-import Lemma.Polynomial.RealRooted
+import Theorem.Polynomial.RealRooted
 import Def.MathlibExtTest.Algebra.Polynomial.RealRooted
 open scoped ComplexOrder
 

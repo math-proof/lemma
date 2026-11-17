@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Padics/PontryaginDual.lean -/
 
-import Mathlib.NumberTheory.Padics.PadicIntegers
-import Abbrev.NumberTheory.Padics.PontryaginDual
+module
+
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+public import Abbrev.NumberTheory.Padics.PontryaginDual
+
+@[expose] public section
+
 /-!
 # Algebraic p-adic Pontryagin duals
 

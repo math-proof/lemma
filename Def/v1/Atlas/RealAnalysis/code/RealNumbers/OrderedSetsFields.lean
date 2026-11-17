@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Class.v1.Atlas.RealAnalysis.code.RealNumbers.OrderedSetsFields
+module
 
+public import Mathlib
+public import Class.v1.Atlas.RealAnalysis.code.RealNumbers.OrderedSetsFields
+
+@[expose] public section
 
 namespace OrderedSetsFields
 

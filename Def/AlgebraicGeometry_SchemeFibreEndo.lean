@@ -1,4 +1,8 @@
-import Mathlib.AlgebraicGeometry.ResidueField
+module
+
+public import Mathlib.AlgebraicGeometry.ResidueField
+
+@[expose] public section
 
 noncomputable section
 universe u

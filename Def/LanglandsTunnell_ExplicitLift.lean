@@ -1,7 +1,11 @@
-import Mathlib.NumberTheory.Zsqrtd.Basic
-import Mathlib.Data.ZMod.Basic
-import Mathlib.LinearAlgebra.Matrix.Notation
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+module
+
+public import Mathlib.NumberTheory.Zsqrtd.Basic
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.LinearAlgebra.Matrix.Notation
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+
+@[expose] public section
 
 set_option autoImplicit false
 

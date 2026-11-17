@@ -6,7 +6,7 @@ Author: Muse Code
 
 import Mathlib.RingTheory.Trace.Quotient
 import Theorem.LinearAlgebra.Trace.InvariantSubmodule
-import Lemma.Matrix.Trace.InvariantSubmodule
+import Theorem.Matrix.Trace.InvariantSubmodule
 import Lemma.Int.DiscreteValuationRing.MaximalIdealGradedPieceMul
 import Lemma.Int.DiscreteValuationRing.MaximalIdealPowFactor
 import Def.RingTheory.DiscreteValuationRing.MaximalIdealGradedPieceMul

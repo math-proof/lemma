@@ -9,11 +9,15 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexW2Weight.Part4
-import Theorem.StatisticalMechanics.Code.Universality.HexSurgerySeams.Part5
-import Theorem.StatisticalMechanics.Code.Universality.HexStripCountsClose.Part3
-import Theorem.StatisticalMechanics.Code.Universality.HexPerScaleBijClose.Part2
+module
 
+public import Theorem.StatisticalMechanics.Code.Universality.HexW2Weight.Part4
+public import Theorem.StatisticalMechanics.Code.Universality.HexSurgerySeams.Part5
+public import Theorem.StatisticalMechanics.Code.Universality.HexStripCountsClose.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.HexPerScaleBijClose.Part2
+
+
+public section
 
 namespace StatMech.Universality
 

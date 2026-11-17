@@ -1,13 +1,17 @@
-import Mathlib.Topology.Algebra.Valued.ValuationTopology
-import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
-import Mathlib.RingTheory.LocalRing.MaximalIdeal.Defs
-import Mathlib.RingTheory.DedekindDomain.AdicValuation
-import Mathlib.Analysis.Normed.Ring.Lemmas
-import Mathlib.NumberTheory.RamificationInertia.Inertia
-import Mathlib.RingTheory.Valuation.Discrete.Basic
-import Mathlib.Topology.Path
-import Mathlib.Algebra.Group.Int.TypeTags
-import Mathlib.RingTheory.Valuation.Discrete.RankOne
+module
+
+public import Mathlib.Topology.Algebra.Valued.ValuationTopology
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Defs
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation
+public import Mathlib.Analysis.Normed.Ring.Lemmas
+public import Mathlib.NumberTheory.RamificationInertia.Inertia
+public import Mathlib.RingTheory.Valuation.Discrete.Basic
+public import Mathlib.Topology.Path
+public import Mathlib.Algebra.Group.Int.TypeTags
+public import Mathlib.RingTheory.Valuation.Discrete.RankOne
+@[expose] public section
+
 set_option maxHeartbeats 1200000
 set_option synthInstance.maxHeartbeats 400000
 

@@ -1,4 +1,8 @@
-import Mathlib.Basic.Real.Basic
+module
+
+public import Mathlib.Basic.Real.Basic
+
+@[expose] public section
 
 namespace ProbabilityTheory
 

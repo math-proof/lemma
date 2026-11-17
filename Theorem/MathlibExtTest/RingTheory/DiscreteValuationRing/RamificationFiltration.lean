@@ -2,7 +2,7 @@
 
 
 import Theorem.RingTheory.DiscreteValuationRing.RamificationFiltration
-import Lemma.Int.DiscreteValuationRing.RamificationFiltration
+import Theorem.Int.DiscreteValuationRing.RamificationFiltration
 open IsLocalRing
 
 /-!

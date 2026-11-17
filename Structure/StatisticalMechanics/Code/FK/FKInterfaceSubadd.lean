@@ -9,11 +9,15 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.FK.RandomCluster.Part6
-import Theorem.StatisticalMechanics.Code.FK.SuperMultiplicative.Part4
-import Theorem.StatisticalMechanics.Code.FK.BoxFeketeData.Part2
-import Def.StatisticalMechanics.Code.FK.FKInterfaceSubadd
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.FK.RandomCluster.Part6
+public import Theorem.StatisticalMechanics.Code.FK.SuperMultiplicative.Part4
+public import Theorem.StatisticalMechanics.Code.FK.BoxFeketeData.Part2
+public import Def.StatisticalMechanics.Code.FK.FKInterfaceSubadd
+public section
+
 open scoped BigOperators
 open SimpleGraph Filter Topology
 

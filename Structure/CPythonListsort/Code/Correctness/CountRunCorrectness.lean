@@ -1,14 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/CountRunCorrectness.lean -/
 
-import Def.CPythonListsort.Code.Assembly.CountRunSafety.Part3
-import Def.CPythonListsort.Code.Assembly.Order.Part4
-import Structure.CPythonListsort.Code.Correctness.ReverseSliceCorrectness
-import Def.CPythonListsort.Code.Correctness.SortSliceRange
-import Def.CPythonListsort.Code.Correctness.DescendingRunNormalization
-import Def.CPythonListsort.Code.Correctness.DescendingRunInvariant.Part2
-import Lemma.List.Atlas.CPythonListsort.Code.Correctness.ReverseRangeSupport
-import Def.CPythonListsort.Code.Correctness.ScanRemainder.Part3
-import Def.CPythonListsort.Code.Correctness.CountRunCorrectness
+module
+
+public import Def.CPythonListsort.Code.Assembly.CountRunSafety.Part3
+public import Def.CPythonListsort.Code.Assembly.Order.Part4
+public import Structure.CPythonListsort.Code.Correctness.ReverseSliceCorrectness
+public import Def.CPythonListsort.Code.Correctness.SortSliceRange
+public import Def.CPythonListsort.Code.Correctness.DescendingRunNormalization
+public import Def.CPythonListsort.Code.Correctness.DescendingRunInvariant.Part2
+public import Lemma.List.Atlas.CPythonListsort.Code.Correctness.ReverseRangeSupport
+public import Def.CPythonListsort.Code.Correctness.ScanRemainder.Part3
+public import Def.CPythonListsort.Code.Correctness.CountRunCorrectness
 /-!
 # Functional correctness of `count_run`
 
@@ -24,6 +26,9 @@ reversed at the boundary, and then the complete descending prefix is
 reversed.  Thus the temporary order inside equal blocks is not exposed by the
 public postcondition.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

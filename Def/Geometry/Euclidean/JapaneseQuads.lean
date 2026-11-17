@@ -1,14 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Geometry/Euclidean/JapaneseQuads.lean -/
 
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional
-import Mathlib.Geometry.Euclidean.Sphere.Basic
-import Mathlib.LinearAlgebra.AffineSpace.FiniteDimensional
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Ring
-import Lemma.Set.Euclidean.CarnotInradius
+module
 
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional
+public import Mathlib.Geometry.Euclidean.Sphere.Basic
+public import Mathlib.LinearAlgebra.AffineSpace.FiniteDimensional
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 section
 

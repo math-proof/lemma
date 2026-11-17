@@ -8,24 +8,28 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Category
-import Mathlib.CategoryTheory.Monoidal.Opposite
-import Mathlib.CategoryTheory.Monoidal.Functor
-import Mathlib.CategoryTheory.Monoidal.NaturalTransformation
-import Mathlib.CategoryTheory.Monoidal.Free.Coherence
-import Mathlib.CategoryTheory.Monoidal.CoherenceLemmas
-import Mathlib.CategoryTheory.Monoidal.End
-import Mathlib.CategoryTheory.Monoidal.Skeleton
-import Mathlib.CategoryTheory.Monoidal.Transport
-import Mathlib.CategoryTheory.Monoidal.Subcategory
-import Mathlib.CategoryTheory.Endomorphism
-import Mathlib.Tactic.CategoryTheory.Monoidal.PureCoherence
-import Mathlib.RingTheory.TensorProduct.Basic
-import Mathlib.Algebra.Category.ModuleCat.Basic
-import Mathlib.CategoryTheory.Limits.ExactFunctor
-import Mathlib.CategoryTheory.Equivalence
-import Mathlib.RingTheory.Finiteness.Basic
-import Instance.v1.Atlas.TensorCategories.code.BasicMonoidalDefs
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Category
+public import Mathlib.CategoryTheory.Monoidal.Opposite
+public import Mathlib.CategoryTheory.Monoidal.Functor
+public import Mathlib.CategoryTheory.Monoidal.NaturalTransformation
+public import Mathlib.CategoryTheory.Monoidal.Free.Coherence
+public import Mathlib.CategoryTheory.Monoidal.CoherenceLemmas
+public import Mathlib.CategoryTheory.Monoidal.End
+public import Mathlib.CategoryTheory.Monoidal.Skeleton
+public import Mathlib.CategoryTheory.Monoidal.Transport
+public import Mathlib.CategoryTheory.Monoidal.Subcategory
+public import Mathlib.CategoryTheory.Endomorphism
+public import Mathlib.Tactic.CategoryTheory.Monoidal.PureCoherence
+public import Mathlib.RingTheory.TensorProduct.Basic
+public import Mathlib.Algebra.Category.ModuleCat.Basic
+public import Mathlib.CategoryTheory.Limits.ExactFunctor
+public import Mathlib.CategoryTheory.Equivalence
+public import Mathlib.RingTheory.Finiteness.Basic
+public import Instance.v1.Atlas.TensorCategories.code.BasicMonoidalDefs
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open CategoryTheory MonoidalCategory Category

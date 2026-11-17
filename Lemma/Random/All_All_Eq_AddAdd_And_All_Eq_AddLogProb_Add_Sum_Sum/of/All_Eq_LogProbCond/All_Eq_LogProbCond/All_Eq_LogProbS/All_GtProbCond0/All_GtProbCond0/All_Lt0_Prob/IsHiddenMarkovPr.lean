@@ -1,4 +1,5 @@
 import Lemma.Random.IsHiddenMarkovFac.of.All_Eq.IsHiddenMarkovPr
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory
 open scoped ENNReal.ToRealCoe
 
@@ -59,4 +60,4 @@ private lemma crf.logits
 
 
 -- created on 2020-12-17
--- updated on 2025-04-20
+-- updated on 2026-11-17

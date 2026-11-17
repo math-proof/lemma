@@ -1,5 +1,8 @@
-import Theorem.Data.Set.Sets
+module
 
+public import Theorem.Data.Set.Sets
+
+@[expose] public section
 
 /--
 SymPy [`Range(start, stop, step)`](https://docs.sympy.org/latest/modules/sets/fancysets.html#sympy.sets.fancysets.Range)

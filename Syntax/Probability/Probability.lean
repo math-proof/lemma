@@ -1,15 +1,20 @@
-import Mathlib.MeasureTheory.Measure.Prod
-import Mathlib.MeasureTheory.Measure.WithDensity
-import Mathlib.MeasureTheory.Measure.Decomposition.Lebesgue
-import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
-import Mathlib.MeasureTheory.MeasurableSpace.Constructions
-import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
-import Mathlib.Probability.Independence.Basic
-import Mathlib.Probability.Independence.Conditional
-import Def.Probability.SymbolicProbability
-import Theorem.Function
-import Syntax.Probability.Expectation
-import Def.Probability.JointRv
+module
+
+public import Mathlib.MeasureTheory.Measure.Prod
+public import Mathlib.MeasureTheory.Measure.WithDensity
+public import Mathlib.MeasureTheory.Measure.Decomposition.Lebesgue
+public import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
+public import Mathlib.MeasureTheory.MeasurableSpace.Constructions
+public import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.Probability.Independence.Conditional
+public import Def.Probability.SymbolicProbability
+public meta import Theorem.Function
+public meta import Syntax.Probability.Expectation
+public import Def.Probability.JointRv
+
+public meta section
+
 open MeasureTheory
 open scoped ProbabilityTheory
 

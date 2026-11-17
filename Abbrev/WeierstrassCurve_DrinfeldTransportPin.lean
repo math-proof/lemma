@@ -1,12 +1,14 @@
-import Mathlib
-import Structure.WeierstrassCurve_ProjModel
-import Structure.WeierstrassCurve_DrinfeldBasisGlobal
+module
+
+public import Mathlib
+public import Structure.WeierstrassCurve_ProjModel
+public import Structure.WeierstrassCurve_DrinfeldBasisGlobal
 
 set_option autoImplicit false
 
 universe u
 
-noncomputable section
+@[expose] public noncomputable section
 
 open AlgebraicGeometry CategoryTheory WeierstrassProjModel MvPolynomial
 

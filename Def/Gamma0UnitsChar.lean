@@ -1,4 +1,8 @@
-import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
+module
+
+public import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
+
+@[expose] public section
 
 namespace Ihara
 

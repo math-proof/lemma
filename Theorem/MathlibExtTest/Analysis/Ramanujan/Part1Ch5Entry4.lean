@@ -2,7 +2,7 @@
 
 
 import Def.Analysis.Ramanujan.Part1Ch5Entry4
-import Lemma.Complex.Part1Ch5Entry4
+import Theorem.Complex.Part1Ch5Entry4
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 5, Entry 4 API checks
 

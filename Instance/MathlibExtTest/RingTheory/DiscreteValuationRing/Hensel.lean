@@ -2,7 +2,7 @@
 
 
 import Theorem.RingTheory.DiscreteValuationRing.Hensel
-import Lemma.Int.DiscreteValuationRing.Hensel
+import Theorem.Int.DiscreteValuationRing.Hensel
 import Mathlib.NumberTheory.Padics.PadicIntegers
 import Mathlib.Tactic.NormNum
 import Theorem.MathlibExtTest.RingTheory.DiscreteValuationRing.Hensel

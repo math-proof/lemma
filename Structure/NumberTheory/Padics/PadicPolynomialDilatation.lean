@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Padics/PadicPolynomialDilatation.lean -/
 
-import Mathlib.NumberTheory.Padics.RingHoms
-import Mathlib.Algebra.Polynomial.Degree.Lemmas
+module
+
+public import Mathlib.NumberTheory.Padics.RingHoms
+public import Mathlib.Algebra.Polynomial.Degree.Lemmas
 
 
 /-!
@@ -20,6 +22,9 @@ unit coefficient, and every p-adic integer point, the scaled translate by
 `x0 + p * X` divided by the minimal uniform power of `p` stays integral
 with at least one unit coefficient.
 -/
+public section
+
+
 
 /-- Dilatation data at a point: exponent plus integral polynomial whose
 coercion equals the normalized translate, with nonzero reduction. -/

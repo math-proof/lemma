@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.ProjectionTheory.code.MultiplicativeConvolution
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.MultiplicativeConvolution
+import Theorem.Real.Atlas.v1.ProjectionTheory.code.MultiplicativeConvolution
 open Nat Finset
 
 

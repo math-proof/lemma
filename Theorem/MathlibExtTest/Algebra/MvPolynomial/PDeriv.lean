@@ -2,7 +2,7 @@
 
 
 import Def.Algebra.MvPolynomial.PDeriv
-import Lemma.MvPolynomial.PDeriv
+import Theorem.MvPolynomial.PDeriv
 open MvPolynomial
 
 

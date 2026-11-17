@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.AnAlgorithmistsToolkit.code.GraphMatrices
-import Lemma.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.GraphMatrices
+import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.GraphMatrices
 import Mathlib.Combinatorics.SimpleGraph.LapMatrix
 import Mathlib.Combinatorics.SimpleGraph.Finite
 import Mathlib.LinearAlgebra.Eigenspace.Basic

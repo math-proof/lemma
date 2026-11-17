@@ -1,9 +1,14 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_OrderedAffineCoverCech.lean: instance decls only.
-import Mathlib.AlgebraicGeometry.AffineScheme
-import Mathlib.RingTheory.Finiteness.Defs
-import Mathlib.LinearAlgebra.Quotient.Defs
-import Mathlib.LinearAlgebra.Pi
-import Structure.AlgebraicGeometry_OrderedAffineCoverCech
+
+module
+
+public import Mathlib.AlgebraicGeometry.AffineScheme
+public import Mathlib.RingTheory.Finiteness.Defs
+public import Mathlib.LinearAlgebra.Quotient.Defs
+public import Mathlib.LinearAlgebra.Pi
+public import Structure.AlgebraicGeometry_OrderedAffineCoverCech
+
+@[expose] public section
 
 set_option autoImplicit false
 

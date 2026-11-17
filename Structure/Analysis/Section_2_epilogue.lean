@@ -1,7 +1,11 @@
-import Mathlib
-import Instance.Analysis.Section_2_3_api
-import Abbrev.Analysis.Section_2_epilogue
+module
 
+public import Mathlib
+public import Instance.Analysis.Section_2_3_api
+public import Abbrev.Analysis.Section_2_epilogue
+
+
+public section
 
 /-- The Peano axioms for an abstract type {name}`Nat` -/
 @[ext]

@@ -1,6 +1,10 @@
-import Mathlib
-import Structure.ModularCurve_JOnePGeom
-import Instance.Compat_Mathlib430
+module
+
+public import Mathlib
+public import Structure.ModularCurve_JOnePGeom
+public import Instance.Compat_Mathlib430
+
+public section
 
 set_option autoImplicit false
 

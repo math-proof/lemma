@@ -8,17 +8,22 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Maps
-import Mathlib.Combinatorics.SimpleGraph.Finite
-import Mathlib.Combinatorics.SimpleGraph.Bipartite
-import Mathlib.Combinatorics.SimpleGraph.Hasse
-import Mathlib.Combinatorics.SimpleGraph.DegreeSum
-import Mathlib.Data.Real.Basic
-import Mathlib.Algebra.Order.Chebyshev
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Data.Nat.SuccPred
-import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter10.Sidorenko
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Maps
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Mathlib.Combinatorics.SimpleGraph.Bipartite
+public import Mathlib.Combinatorics.SimpleGraph.Hasse
+public import Mathlib.Combinatorics.SimpleGraph.DegreeSum
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Algebra.Order.Chebyshev
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Fintype.Pi
+public import Mathlib.Data.Nat.SuccPred
+public import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter10.Sidorenko
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 open SimpleGraph Finset BigOperators

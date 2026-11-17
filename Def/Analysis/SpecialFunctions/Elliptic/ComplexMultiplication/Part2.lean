@@ -1,5 +1,10 @@
-import Mathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass
-import Theorem.Analysis.SpecialFunctions.Elliptic.ComplexMultiplication
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass
+public import Theorem.Analysis.SpecialFunctions.Elliptic.ComplexMultiplication
+
+@[expose] public section
+
 /-!
 # Complex multiplication of period lattices
 

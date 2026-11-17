@@ -2,7 +2,7 @@
 
 
 import Def.Probability.KolmogorovMaximal
-import Lemma.Measure.KolmogorovMaximal
+import Theorem.Measure.KolmogorovMaximal
 open Finset BigOperators
 
 

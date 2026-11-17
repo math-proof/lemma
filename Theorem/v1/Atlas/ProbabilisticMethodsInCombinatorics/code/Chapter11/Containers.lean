@@ -7,11 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Combinatorics.SimpleGraph.Clique
-import Mathlib.Combinatorics.SimpleGraph.Finite
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
 set_option maxHeartbeats 400000
+
+public section
 
 /-- **Theorem 11.1.1 (Containers for triangle-free graphs).** For every $\varepsilon > 0$,
 there is a constant $C > 0$ such that for every $n$ there is a family $\mathcal{C}$ of

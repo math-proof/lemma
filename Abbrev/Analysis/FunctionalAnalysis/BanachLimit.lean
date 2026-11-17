@@ -1,11 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/FunctionalAnalysis/BanachLimit.lean -/
 
-import Mathlib.Topology.ContinuousMap.Bounded.Basic
-import Mathlib.Topology.ContinuousMap.Bounded.Normed
-import Mathlib.Analysis.Convex.Cone.Extension
-import Mathlib.Topology.Algebra.Order.LiminfLimsup
-import Mathlib.Analysis.Asymptotics.SpecificAsymptotics
-import Mathlib.Analysis.SpecificLimits.Basic
+module
+
+public import Mathlib.Topology.ContinuousMap.Bounded.Basic
+public import Mathlib.Topology.ContinuousMap.Bounded.Normed
+public import Mathlib.Analysis.Convex.Cone.Extension
+public import Mathlib.Topology.Algebra.Order.LiminfLimsup
+public import Mathlib.Analysis.Asymptotics.SpecificAsymptotics
+public import Mathlib.Analysis.SpecificLimits.Basic
 /-!
 # Banach limits on bounded real sequences
 
@@ -27,7 +29,7 @@ namespace MathlibExt.Analysis.FunctionalAnalysis.BanachLimit
 
 open scoped BoundedContinuousFunction
 
-noncomputable section
+@[expose] public noncomputable section
 
 abbrev BoundedSeq := ℕ →ᵇ ℝ
 

@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/FoundNewRun.lean -/
 
-import Theorem.CPythonListsort.Code.Transcription.MergeAt
-import Def.CPythonListsort.Code.Transcription.Powerloop
-import Def.CPythonListsort.Code.Transcription.FoundNewRun
+module
+
+public import Theorem.CPythonListsort.Code.Transcription.MergeAt
+public import Def.CPythonListsort.Code.Transcription.Powerloop
+public meta import Def.CPythonListsort.Code.Transcription.FoundNewRun
+public meta import Structure.CPythonListsort.Code.Transcription.MergeState
 /-!
 # PowerSort policy step for a newly found run
 
@@ -12,6 +15,8 @@ stores the new power on the surviving top run.  The caller remains responsible
 for pushing the new run.
 -/
 
+
+public section
 
 namespace CPythonListsort
 
@@ -31,7 +36,7 @@ example :
               result.state.data.entries.toList)) =
       some
         (0, false, [], foundNewRunExampleState.data.entries.toList) := by
-  decide
+  native_decide
 
 set_option linter.style.nativeDecide false in
 /-- Collapse uses strict `>` rather than `≥`: equality leaves both runs in
@@ -45,6 +50,6 @@ example :
         (0, false,
           [{ base := 0, len := 1, power := some 2 },
            { base := 1, len := 1, power := some 2 }]) := by
-  decide
+  native_decide
 
 end CPythonListsort

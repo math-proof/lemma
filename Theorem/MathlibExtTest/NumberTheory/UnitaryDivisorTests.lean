@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.UnitaryDivisor.Part2
-import Lemma.Set.UnitaryDivisor
+import Theorem.Set.UnitaryDivisor
 
 
 example : Nat.unitaryDivisors 12 = {1, 3, 4, 12} := by decide

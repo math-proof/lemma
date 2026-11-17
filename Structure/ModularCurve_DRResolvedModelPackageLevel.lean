@@ -1,13 +1,15 @@
-import Mathlib
-import Structure.ModularCurve_DRModelPackageLevel
-import Def.ModularCurve_X0MqResolvedTable
-import Def.AlgebraicCurve_RelCartier
+module
+
+public import Mathlib
+public import Structure.ModularCurve_DRModelPackageLevel
+public import Def.ModularCurve_X0MqResolvedTable
+public import Def.AlgebraicCurve_RelCartier
 
 set_option autoImplicit false
 set_option maxHeartbeats 800000
 set_option synthInstance.maxHeartbeats 400000
 
-noncomputable section
+public noncomputable section
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry NeronModelInfra
 open ModularCurve.IgusaScheme

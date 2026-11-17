@@ -2,7 +2,7 @@
 
 
 import Def.InformationTheory.Shearer
-import Lemma.Real.Shearer
+import Theorem.Real.Shearer
 /-!
 # Shearer's entropy inequality API checks
 

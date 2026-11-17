@@ -1,6 +1,5 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_ProjTwistDatum.lean: instance decls only.
 import Mathlib
-import Lemma.MvPolynomial.ProjSpaceCover
 import Instance.AlgebraicGeometry_ProjSpaceCechGradedModule
 import Lemma.Scheme.ProjTwistDatum
 

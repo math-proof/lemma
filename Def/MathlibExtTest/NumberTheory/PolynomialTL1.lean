@@ -1,11 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PolynomialTL1.lean -/
 
 
-import Def.NumberTheory.PolynomialTL1
-import Mathlib.Analysis.Calculus.Deriv.Polynomial
-import Mathlib.Analysis.SpecialFunctions.Sqrt
-import Theorem.MathlibExtTest.NumberTheory.PolynomialTL1
+module
 
+public import Def.NumberTheory.PolynomialTL1
+public import Mathlib.Analysis.Calculus.Deriv.Polynomial
+public import Mathlib.Analysis.SpecialFunctions.Sqrt
+public import Theorem.MathlibExtTest.NumberTheory.PolynomialTL1
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

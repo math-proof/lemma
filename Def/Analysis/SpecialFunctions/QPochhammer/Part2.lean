@@ -1,5 +1,10 @@
-import Mathlib.Analysis.SpecialFunctions.Log.Summable
-import Mathlib.Analysis.SpecificLimits.Normed
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Log.Summable
+public import Mathlib.Analysis.SpecificLimits.Normed
+
+@[expose] public section
+
 /-!
 # Infinite q-Pochhammer products
 

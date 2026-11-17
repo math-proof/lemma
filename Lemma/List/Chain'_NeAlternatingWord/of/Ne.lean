@@ -21,7 +21,7 @@ lemma alternatingWord_chain'
 -- given
   (hst : s ≠ t) :
 -- imply
-  List.Chain' (· ≠ ·) (alternatingWord s t n) := by
+  List.IsChain (· ≠ ·) (alternatingWord s t n) := by
 -- proof
   induction n with
   | zero => exact List.IsChain.nil
@@ -37,10 +37,10 @@ lemma alternatingWord_chain'
       subst hy
       by_cases hk : Even k
       · have hk1 : ¬Even (k + 1) := fun h => (Nat.even_add_one.mp h) hk
-        simp only [if_pos hk, if_neg hk1]
+        simp only [ite_eq_left hk, ite_eq_right hk1]
         exact hst
       · have hk1 : Even (k + 1) := Nat.even_add_one.mpr hk
-        simp only [if_neg hk, if_pos hk1]
+        simp only [ite_eq_right hk, ite_eq_left hk1]
         exact hst.symm
 
 end CoxeterGroup
@@ -78,6 +78,20 @@ end CoxeterGroup
 
 namespace CoxeterGroup
 
+private lemma mem_alternatingWord_eq
+  {s t : B} {n : ℕ} {b : B}
+  (hb : b ∈ alternatingWord s t n) :
+  b = s ∨ b = t := by
+  induction n generalizing s t with
+  | zero =>
+    simp [alternatingWord] at hb
+  | succ n ih =>
+    rw [alternatingWord_succ, List.concat_eq_append] at hb
+    simp only [List.mem_append, List.mem_singleton] at hb
+    obtain hb | hb := hb
+    · exact (ih (s := t) (t := s) hb).symm
+    · exact Or.inr hb
+
 /--
 [alternatingWord_pos](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/DihedralWordPositivity.lean)
 -/
@@ -95,14 +109,12 @@ lemma alternatingWord_pos
   IsPositive (wordSigma M (alternatingWord s t n) (e s)) := by
 -- proof
   apply parabolic_pos M s t hst (alternatingWord s t n)
-  · exact CoxeterSystem.mem_alternatingWord s t n
+  · exact fun b hb => mem_alternatingWord_eq hb
   · rcases hlen with hlt | hm0
     · left; rwa [length_alternatingWord]
     · right; exact hm0
-  · exact alternatingWord_chain' s t hst n
-  · exact alternatingWord_last_cond s t n
-set_option linter.unusedVariables false in
-
+  · exact alternatingWord_chain' hst
+  · exact alternatingWord_last_cond
 end CoxeterGroup
 
 namespace CoxeterGroup
@@ -121,8 +133,6 @@ lemma wordSigma_pos_of_word_in_two
   {word : List B}
 -- given
   (hst : s ≠ t)
-  (hmem : ∀ b ∈ word, b = s ∨ b = t)
-  (hlen : cs.length (cs.wordProd word) < M s t ∨ M s t = 0)
   (hform : ∃ n, cs.wordProd word = cs.wordProd (alternatingWord s t n) ∧ (n < M s t ∨ M s t = 0)) :
 -- imply
   IsPositive (wordSigma M word (e s)) := by
@@ -130,7 +140,7 @@ lemma wordSigma_pos_of_word_in_two
   obtain ⟨n, hprod_eq, hn_bound⟩ := hform
   have h := wordSigma_eq_of_wordProd_eq M cs word (alternatingWord s t n) hprod_eq (e s)
   rw [h]
-  exact alternatingWord_pos M s t hst n hn_bound
+  exact alternatingWord_pos hst hn_bound
 
 end CoxeterGroup
 

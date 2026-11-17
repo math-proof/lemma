@@ -8,14 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec23DeltaFunctorDefs
+module
+
+public import Mathlib
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec23DeltaFunctorDefs
 open CategoryTheory Category Limits Finset
 
 set_option maxHeartbeats 1600000
 
 
-noncomputable section
+public noncomputable section
 
 universe v u
 

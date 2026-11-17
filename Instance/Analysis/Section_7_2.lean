@@ -1,6 +1,8 @@
-import Mathlib
-import Mathlib.Algebra.Field.Power
-import Structure.Analysis.Section_7_2
+module
+
+public import Mathlib
+public import Mathlib.Algebra.Field.Power
+public import Structure.Analysis.Section_7_2
 /-!
 # Analysis I, Section 7.2: Infinite series
 
@@ -17,6 +19,7 @@ Main constructions and results of this section:
 
 -/
 
+@[expose] public section
 
 namespace Chapter7
 

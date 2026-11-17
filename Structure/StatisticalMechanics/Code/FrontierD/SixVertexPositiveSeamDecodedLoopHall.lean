@@ -9,14 +9,16 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPositiveSeamWindingFlows.Part4
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoHighChargeLoopHallRouting.Part11
-import Def.StatisticalMechanics.Code.FrontierD.SixVertexPositiveSeamDecodedLoopHall
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPositiveSeamWindingFlows.Part4
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoHighChargeLoopHallRouting.Part11
+public import Def.StatisticalMechanics.Code.FrontierD.SixVertexPositiveSeamDecodedLoopHall
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure SixVertexHorizontalDegreeTwoLoopDecodedWindingReconnection
     (T : EvenTorus) (middle : Fin (T.width + 1))

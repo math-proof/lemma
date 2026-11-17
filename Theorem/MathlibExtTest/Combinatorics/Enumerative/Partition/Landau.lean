@@ -1,6 +1,10 @@
-meta import Def.Combinatorics.Enumerative.Partition.Landau
+module
+
+public meta import Def.Combinatorics.Enumerative.Partition.Landau
 
 open Nat
+
+public section
 
 variable {n : ℕ}
 

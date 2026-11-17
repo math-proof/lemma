@@ -1,6 +1,10 @@
-import Mathlib
-import Lemma.WeierstrassCurve.ReduceHom
-import Instance.WeierstrassCurve_ZeroComponentReduction
+module
+
+public import Mathlib
+public import Lemma.WeierstrassCurve.ReduceHom
+public import Instance.WeierstrassCurve_ZeroComponentReduction
+
+public section
 
 set_option autoImplicit false
 

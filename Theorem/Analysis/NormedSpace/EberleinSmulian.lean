@@ -1,20 +1,22 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
+module
 
-import Mathlib.Analysis.Normed.Module.DoubleDual
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
-import Mathlib.Analysis.LocallyConvex.WeakSpace
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.GCongr
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.Compactness.CountablyCompact
+public import Mathlib.Analysis.Normed.Module.DoubleDual
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+public import Mathlib.Analysis.LocallyConvex.WeakSpace
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.GCongr
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.Compactness.CountablyCompact
 open Set Metric Filter Topology
 
+public section
 
 theorem exists_finset_norming_of_span_finset
     {𝕜 : Type*} [RCLike 𝕜]

@@ -2,18 +2,23 @@
 
 -- Author: @toskua, Avocado
 
-import Mathlib.Geometry.Manifold.SmoothEmbedding
-import Mathlib.Geometry.Manifold.Instances.Real
-import Mathlib.Analysis.Calculus.ImplicitContDiff
-import Mathlib.Analysis.Calculus.LocalExtr.Basic
-import Mathlib.Analysis.InnerProductSpace.Calculus
-import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
-import Mathlib.Geometry.Manifold.Sheaf.Basic
-import Mathlib.LinearAlgebra.FreeModule.PID
-import Mathlib.Order.CompletePartialOrder
-import Mathlib.RingTheory.Flat.TorsionFree
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.Tactic.Linarith
+module
+
+public import Mathlib.Geometry.Manifold.SmoothEmbedding
+public import Mathlib.Geometry.Manifold.Instances.Real
+public import Mathlib.Analysis.Calculus.ImplicitContDiff
+public import Mathlib.Analysis.Calculus.LocalExtr.Basic
+public import Mathlib.Analysis.InnerProductSpace.Calculus
+public import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+public import Mathlib.Geometry.Manifold.Sheaf.Basic
+public import Mathlib.LinearAlgebra.FreeModule.PID
+public import Mathlib.Order.CompletePartialOrder
+public import Mathlib.RingTheory.Flat.TorsionFree
+public import Mathlib.RingTheory.SimpleRing.Principal
+public import Mathlib.Tactic.Linarith
+
+@[expose] public section
+
 open Manifold Topology Filter Metric
 open scoped Manifold ContDiff
 

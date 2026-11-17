@@ -4,6 +4,8 @@ import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Real.Sum_Eq.eq.One
 import Lemma.Real.Norm_Eq12.le.One
 import Lemma.Real.StronglyMeasurable_Eq12
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Real Finset
 
 
@@ -73,4 +75,4 @@ private lemma main
 
 
 -- created on 2026-11-13
--- updated on 2026-11-16
+-- updated on 2026-11-17

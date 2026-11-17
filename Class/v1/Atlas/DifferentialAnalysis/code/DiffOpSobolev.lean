@@ -9,10 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SobolevEmbedding
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.FourierInversion
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SobolevDerivatives
 import Def.v1.Atlas.DifferentialAnalysis.code.SobolevEmbedding.Part5
 import Def.v1.Atlas.DifferentialAnalysis.code.FourierInversion.Part7
 import Def.v1.Atlas.DifferentialAnalysis.code.SobolevDerivatives
@@ -20,7 +16,6 @@ import Mathlib.Algebra.MvPolynomial.Degrees
 import Def.v1.Atlas.DifferentialAnalysis.code.DiffOpSobolev
 open scoped SchwartzMap ContDiff FourierTransform
 open DifferentialOperators SobolevEmbedding SobolevSpace MvPolynomial Filter Topology MeasureTheory
-
 
 noncomputable section
 

@@ -1,7 +1,7 @@
 import Mathlib.MeasureTheory.Measure.Count
 import Mathlib.MeasureTheory.Measure.WithDensity
 import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
-import Lemma.Measure.Count.eq.ProdCountS
+import Theorem.Measure.Count.eq.ProdCountS
 import Class.Probability.Rv
 import Instance.Probability.Rv
 open MeasureTheory

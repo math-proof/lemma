@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Bridgeless.lean -/
 
-import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
+module
 
+public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
+
+@[expose] public section
 
 namespace SimpleGraph
 

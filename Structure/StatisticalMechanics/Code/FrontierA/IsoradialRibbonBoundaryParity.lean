@@ -9,10 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialDualSubgraphSum.Part3
-import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialRibbonBoundaryParity
+module
 
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialDualSubgraphSum.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialRibbonBoundaryParity
+
+
+public section
 
 namespace StatMech.FrontierA
 

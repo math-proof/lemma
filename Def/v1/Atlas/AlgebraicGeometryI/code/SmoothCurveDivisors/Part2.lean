@@ -8,11 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.DedekindDomain.Factorization
-import Mathlib.RingTheory.ClassGroup
-import Mathlib.RingTheory.PicardGroup
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.SmoothCurveDivisors
+module
 
+public import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Mathlib.RingTheory.ClassGroup
+public import Mathlib.RingTheory.PicardGroup
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.SmoothCurveDivisors
+
+@[expose] public section
 
 noncomputable section
 

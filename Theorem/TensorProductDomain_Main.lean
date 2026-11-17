@@ -1,10 +1,14 @@
-import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Mathlib.RingTheory.Jacobson.Ring
-import Mathlib.RingTheory.TensorProduct.Nontrivial
-import Mathlib.RingTheory.TensorProduct.Free
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.LinearAlgebra.TensorProduct.Finiteness
-import Def.TensorProductDomain_Main
+module
+
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Mathlib.RingTheory.Jacobson.Ring
+public import Mathlib.RingTheory.TensorProduct.Nontrivial
+public import Mathlib.RingTheory.TensorProduct.Free
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.Finiteness
+public import Def.TensorProductDomain_Main
+
+public section
 
 universe u v w
 

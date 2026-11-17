@@ -9,15 +9,17 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Ising.PressureBCIndep
-import Theorem.StatisticalMechanics.Code.Ising.MonomialDisorder
+module
+
+public import Theorem.StatisticalMechanics.Code.Ising.PressureBCIndep
+public import Theorem.StatisticalMechanics.Code.Ising.MonomialDisorder
 open scoped BigOperators
 open Finset
 
 
 namespace StatMech.Ising
 
-noncomputable section
+public noncomputable section
 
 structure RectangularPrismSite (m n h : Nat) where
   x : Fin m

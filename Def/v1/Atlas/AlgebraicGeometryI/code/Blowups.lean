@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Polynomial.Quotient
-import Mathlib.RingTheory.AdjoinRoot
+module
 
+public import Mathlib.RingTheory.Polynomial.Quotient
+public import Mathlib.RingTheory.AdjoinRoot
+
+@[expose] public section
 
 /-- Algebra isomorphism resolving a nodal singularity: the quotient
 `k[X][Y] / ⟨Y - C(X² - 1)⟩` is isomorphic (over `k[X]`) to `k[X]`. -/

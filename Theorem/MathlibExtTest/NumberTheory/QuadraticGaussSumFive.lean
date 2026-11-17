@@ -5,7 +5,7 @@
 -/
 
 import Def.NumberTheory.QuadraticGaussSumFive
-import Lemma.Nat.QuadraticGaussSumFive
+import Theorem.Nat.QuadraticGaussSumFive
 import Mathlib.Tactic
 
 

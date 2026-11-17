@@ -1,8 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Matrix/PolarDecompositionGL.lean -/
 
 
-import Lemma.Matrix.Factorizations.Polar
-import Lemma.Matrix.PolarDecompositionGL
+import Theorem.Matrix.Factorizations.Polar
+import Theorem.Matrix.PolarDecompositionGL
 open scoped ComplexOrder
 
 variable {n : Type*} [Fintype n] [DecidableEq n]

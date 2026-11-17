@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Mathlib
 import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter1.RamseyLowerBound
-import Lemma.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter1.RamseyLowerBound
+import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter1.RamseyLowerBound
 
 
 namespace RamseyAlteration

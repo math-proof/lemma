@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/RestrictedGaussianPartition.lean -/
 
-import Mathlib.Algebra.IsPrimePow
-import Structure.Combinatorics.RestrictedGaussianPartition
+module
 
+public import Mathlib.Algebra.IsPrimePow
+public import Structure.Combinatorics.RestrictedGaussianPartition
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

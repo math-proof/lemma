@@ -1,16 +1,20 @@
 /-
 Author: @akiezun, Avocado
 -/
+module
 
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Analysis.SpecificLimits.Normed
-import Def.Analysis.SpecialFunctions.Part1Ch5Entry4
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Algebra.BigOperators.Field
+public import Mathlib.Analysis.SpecificLimits.Normed
+public import Def.Analysis.SpecialFunctions.Part1Ch5Entry4
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 5, Entry 4
 
 Eulerian polynomial: Ψₙ(p)/(p+1)ⁿ⁺¹ equals Σ(k+1)ⁿ(-p)ᵏ.
 -/
+
+public section
 
 
 namespace Ramanujan.Part1Ch5

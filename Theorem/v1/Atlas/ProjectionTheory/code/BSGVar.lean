@@ -7,10 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Combinatorics.Additive.Energy
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Combinatorics.Additive.Energy
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
 open Finset Pointwise
+
+public section
 
 /--
 Balog–Szemerédi–Gowers variant (energy form). Let `A`, `B` be subsets of an

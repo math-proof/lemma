@@ -7,9 +7,11 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Analysis.Fourier.RiemannLebesgueLemma
+public import Mathlib.Analysis.Fourier.RiemannLebesgueLemma
 
+public section
 
 noncomputable section
 

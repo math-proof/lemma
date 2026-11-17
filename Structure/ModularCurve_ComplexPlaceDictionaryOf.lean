@@ -1,11 +1,13 @@
-import Mathlib
-import Def.ModularCurve_LaurentCoeff
-import Class.AlgebraicCurve_DivisorClassGroup
-import Structure.ModularCurve_ComplexPlaceDictionary
+module
+
+public import Mathlib
+public import Def.ModularCurve_LaurentCoeff
+public import Class.AlgebraicCurve_DivisorClassGroup
+public import Structure.ModularCurve_ComplexPlaceDictionary
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open UpperHalfPlane
 open scoped MatrixGroups Topology

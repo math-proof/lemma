@@ -1,15 +1,17 @@
-import Mathlib
-import Def.ModularCurve_X0ModL
-import Lemma.HahnSeries.QAdicPlaceMod
-import Lemma.WeierstrassCurve.ModuliPointMap
-import Lemma.WeierstrassCurve.ReduceHom
-import Lemma.WeierstrassCurve.CyclicQuotientJ
-import Lemma.Scheme.Correspondence
-import Instance.ModularCurve_ModuliPlace
+module
+
+public import Mathlib
+public import Def.ModularCurve_X0ModL
+public import Lemma.HahnSeries.QAdicPlaceMod
+public import Lemma.WeierstrassCurve.ModuliPointMap
+public import Lemma.WeierstrassCurve.ReduceHom
+public import Lemma.WeierstrassCurve.CyclicQuotientJ
+public import Lemma.Scheme.Correspondence
+public import Instance.ModularCurve_ModuliPlace
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open IsLocalRing AlgebraicCurve WeierstrassCurve WeierstrassCurve.Affine
 

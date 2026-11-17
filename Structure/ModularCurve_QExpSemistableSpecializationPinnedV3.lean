@@ -1,16 +1,18 @@
-import Mathlib
-import Def.FLTPrelim_Ramification
-import Instance.EllipticCurve_FrobeniusTrace
-import Lemma.ResidueField.GluedPic0
-import Lemma.Scheme.Correspondence
-import Structure.AlgebraicCurve_WeilDatum
-import Instance.ModularCurve_ArithmeticGalois
-import Lemma.Finsupp.QExpReductionModL
-import Structure.ModularCurve_QExpSemistableSpecializationPinned
+module
+
+public import Mathlib
+public import Def.FLTPrelim_Ramification
+public import Instance.EllipticCurve_FrobeniusTrace
+public import Lemma.ResidueField.GluedPic0
+public import Lemma.Scheme.Correspondence
+public import Structure.AlgebraicCurve_WeilDatum
+public import Instance.ModularCurve_ArithmeticGalois
+public import Lemma.Finsupp.QExpReductionModL
+public import Structure.ModularCurve_QExpSemistableSpecializationPinned
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open AlgebraicCurve IntermediateField
 

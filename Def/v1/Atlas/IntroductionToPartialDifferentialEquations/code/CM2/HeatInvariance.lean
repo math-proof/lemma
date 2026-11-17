@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Tactic
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Mathlib.Analysis.Calculus.Deriv.Shift
-import Mathlib.Analysis.Calculus.Deriv.CompMul
-import Mathlib.Analysis.Calculus.FDeriv.Basic
+module
+
+public import Mathlib.Tactic
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Mathlib.Analysis.Calculus.Deriv.Shift
+public import Mathlib.Analysis.Calculus.Deriv.CompMul
+public import Mathlib.Analysis.Calculus.FDeriv.Basic
+
+@[expose] public section
+
 open Finset
 
 

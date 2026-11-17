@@ -1,10 +1,12 @@
-import Mathlib
-import Def.AlgebraicCurve_RegularDifferentials
-import Lemma.ResidueField.GluedPic0
+module
+
+public import Mathlib
+public import Def.AlgebraicCurve_RegularDifferentials
+public import Lemma.ResidueField.GluedPic0
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open KaehlerDifferential
 

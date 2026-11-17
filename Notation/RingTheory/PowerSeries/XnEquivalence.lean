@@ -2,8 +2,14 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.RingTheory.PowerSeries.XnEquivalence
+
+module
+
+public import Mathlib
+public import Def.RingTheory.PowerSeries.XnEquivalence
+
+public section
+
 /-!
 # x^n-Equivalence of Formal Power Series
 

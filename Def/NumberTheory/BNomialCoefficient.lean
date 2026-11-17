@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/BNomialCoefficient.lean -/
 
-import Mathlib.Algebra.Polynomial.Coeff
+module
+
+public import Mathlib.Algebra.Polynomial.Coeff
+
+@[expose] public section
+
 open scoped BigOperators
 open Polynomial
 

@@ -1,19 +1,21 @@
-import Mathlib
-import Instance.MvFormalGroup_NegV2
-import Instance.MvFormalGroup_CartierModule
-import Lemma.PowerSeries.CartierModuleHomothety
-import Structure.CerednikDrinfeld_SpecialFormalModule
-import Instance.MvFormalGroup_CartierModuleWittAction
-import Instance.MvFormalGroup_CartierModuleBaseChange
-import Def.CerednikDrinfeld_CartierGradedPiece
-import Lemma.FormalGroup.CriticalIndexChart
-import Lemma.Int.CartierNModule
-import Abbrev.CerednikDrinfeld_CartierLMapFibre
-import Def.CerednikDrinfeld_CartierLMapFibre
+module
+
+public import Mathlib
+public import Instance.MvFormalGroup_NegV2
+public import Instance.MvFormalGroup_CartierModule
+public import Lemma.PowerSeries.CartierModuleHomothety
+public import Structure.CerednikDrinfeld_SpecialFormalModule
+public import Instance.MvFormalGroup_CartierModuleWittAction
+public import Instance.MvFormalGroup_CartierModuleBaseChange
+public import Def.CerednikDrinfeld_CartierGradedPiece
+public import Lemma.FormalGroup.CriticalIndexChart
+public import Lemma.Int.CartierNModule
+public import Abbrev.CerednikDrinfeld_CartierLMapFibre
+public import Def.CerednikDrinfeld_CartierLMapFibre
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 universe u
 

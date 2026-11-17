@@ -9,12 +9,16 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Foundations.ConfigSpace
-import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
-import Def.StatisticalMechanics.Code.Lattice.Clusters.Part7
-import Theorem.StatisticalMechanics.Code.TwoDim.Crossings.Part4
-import Theorem.StatisticalMechanics.Code.BeffaraDC.AnnulusDefs.Part8
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Foundations.ConfigSpace
+public import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
+public import Def.StatisticalMechanics.Code.Lattice.Clusters.Part7
+public import Theorem.StatisticalMechanics.Code.TwoDim.Crossings.Part4
+public import Theorem.StatisticalMechanics.Code.BeffaraDC.AnnulusDefs.Part8
+public section
+
 open Set
 open StatMech.Lattice
 open SimpleGraph

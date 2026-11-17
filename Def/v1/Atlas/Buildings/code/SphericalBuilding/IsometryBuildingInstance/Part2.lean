@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.IsometryGroups.Part3
-import Structure.v1.Atlas.Buildings.code.SphericalBuilding.IsometryBuildingInstance
+module
 
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.IsometryGroups.Part3
+public import Structure.v1.Atlas.Buildings.code.SphericalBuilding.IsometryBuildingInstance
+
+@[expose] public section
 
 namespace IsometryBuilding
 

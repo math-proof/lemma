@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ModularForms/JacobiTheta/Ramanujan.lean -/
 
-import Mathlib.Topology.Instances.Complex
-import Mathlib.Analysis.Normed.Module.FiniteDimension
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Topology.Instances.Complex
+public import Mathlib.Analysis.Normed.Module.FiniteDimension
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 /-!
 # Ramanujan's general theta function
 

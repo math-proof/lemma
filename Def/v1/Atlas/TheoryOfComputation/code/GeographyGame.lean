@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Combinatorics.Digraph.Basic
-import Structure.v1.Atlas.TheoryOfComputation.code.GeographyGame
+module
 
+public import Mathlib.Combinatorics.Digraph.Basic
+public import Structure.v1.Atlas.TheoryOfComputation.code.GeographyGame
+
+@[expose] public section
 
 namespace GeographyGame
 

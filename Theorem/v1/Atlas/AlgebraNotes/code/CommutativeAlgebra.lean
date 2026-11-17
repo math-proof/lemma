@@ -7,11 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.RingTheory.Nullstellensatz
-import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
+public import Mathlib.RingTheory.Nullstellensatz
+public import Mathlib.Analysis.Complex.Polynomial.Basic
+public import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
 
+public section
 
 noncomputable section
 

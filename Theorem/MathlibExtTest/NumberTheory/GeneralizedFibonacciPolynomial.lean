@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.GeneralizedFibonacciPolynomial
-import Lemma.Nat.GeneralizedFibonacciPolynomial
+import Theorem.Nat.GeneralizedFibonacciPolynomial
 import Mathlib.Tactic
 
 

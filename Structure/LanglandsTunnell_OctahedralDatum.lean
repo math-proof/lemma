@@ -1,6 +1,10 @@
-import Mathlib
-import Structure.AutomorphicForm_HeckeEigensystem
-import Def.LanglandsTunnell_ExplicitLift
+module
+
+public import Mathlib
+public import Structure.AutomorphicForm_HeckeEigensystem
+public import Def.LanglandsTunnell_ExplicitLift
+
+public section
 
 set_option autoImplicit false
 

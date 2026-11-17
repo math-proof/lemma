@@ -8,29 +8,29 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.NumberTheory.NumberField.Basic
-import Mathlib.NumberTheory.NumberField.Norm
-import Mathlib.NumberTheory.NumberField.ClassNumber
-import Mathlib.NumberTheory.NumberField.Units.Basic
-import Mathlib.NumberTheory.NumberField.Units.DirichletTheorem
-import Mathlib.GroupTheory.FiniteAbelian.Basic
-import Mathlib.NumberTheory.RamificationInertia.Galois
-import Mathlib.NumberTheory.NumberField.InfinitePlace.Ramification
-import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.GroupTheory.QuotientGroup.Basic
-import Mathlib.GroupTheory.Index
-import Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90
-import Lemma.Set.Closure.eq.N.of.Eq
-import Mathlib.RingTheory.Trace.Basic
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.RingTheory.Ideal.Norm.RelNorm
-import Mathlib.RingTheory.FractionalIdeal.Extended
-import Mathlib.RingTheory.Invariant.Basic
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Lemma247
-import Structure.v1.Atlas.NumberTheoryI.code.ArtinUnramified
+module
+
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Mathlib.NumberTheory.NumberField.Norm
+public import Mathlib.NumberTheory.NumberField.ClassNumber
+public import Mathlib.NumberTheory.NumberField.Units.Basic
+public import Mathlib.NumberTheory.NumberField.Units.DirichletTheorem
+public import Mathlib.GroupTheory.FiniteAbelian.Basic
+public import Mathlib.NumberTheory.RamificationInertia.Galois
+public import Mathlib.NumberTheory.NumberField.InfinitePlace.Ramification
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+public import Mathlib.GroupTheory.Index
+public import Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90
+public import Mathlib.RingTheory.Trace.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.RingTheory.Ideal.Norm.RelNorm
+public import Mathlib.RingTheory.FractionalIdeal.Extended
+public import Mathlib.RingTheory.Invariant.Basic
+public import Structure.v1.Atlas.NumberTheoryI.code.ArtinUnramified
 
 
-noncomputable section
+public noncomputable section
 
 open scoped Pointwise
 

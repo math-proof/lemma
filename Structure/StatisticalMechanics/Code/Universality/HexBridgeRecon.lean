@@ -9,13 +9,17 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Universality.HexLattice.Part11
-import Theorem.StatisticalMechanics.Code.Universality.HexConnEndgame
-import Theorem.StatisticalMechanics.Code.Universality.HexBridge.Part6
-import Theorem.StatisticalMechanics.Code.Universality.HexInjections.Part7
-import Theorem.StatisticalMechanics.Code.Universality.HexBridgeRecon.Part2
+module
 
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Universality.HexLattice.Part11
+public import Theorem.StatisticalMechanics.Code.Universality.HexConnEndgame
+public import Theorem.StatisticalMechanics.Code.Universality.HexBridge.Part6
+public import Theorem.StatisticalMechanics.Code.Universality.HexInjections.Part7
+public import Theorem.StatisticalMechanics.Code.Universality.HexBridgeRecon.Part2
+
+
+public section
 
 namespace StatMech.Universality
 

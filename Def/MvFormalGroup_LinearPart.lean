@@ -1,5 +1,9 @@
-import Mathlib.RingTheory.MvPowerSeries.Substitution
-import Mathlib.LinearAlgebra.Matrix.Defs
+module
+
+public import Mathlib.RingTheory.MvPowerSeries.Substitution
+public import Mathlib.LinearAlgebra.Matrix.Defs
+
+@[expose] public section
 
 open MvPowerSeries
 

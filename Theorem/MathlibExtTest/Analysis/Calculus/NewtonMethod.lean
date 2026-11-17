@@ -1,12 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Calculus/NewtonMethod.lean -/
+module
 
-
-import Theorem.Analysis.Calculus.NewtonMethod
-import Mathlib.Analysis.Calculus.ContDiff.Operations
-import Mathlib.Analysis.Calculus.Deriv.Add
-import Mathlib.Analysis.Calculus.Deriv.Pow
+public import Theorem.Analysis.Calculus.NewtonMethod
+public import Mathlib.Analysis.Calculus.ContDiff.Operations
+public import Mathlib.Analysis.Calculus.Deriv.Add
+public import Mathlib.Analysis.Calculus.Deriv.Pow
 open MetaMathlibExt
 
+public section
 
 -- Newton iteration for `x² - 4` converges to `2` from every sufficiently close start.
 example :

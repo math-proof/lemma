@@ -2,7 +2,7 @@
 
 
 import Def.Algebra.Polynomial.RiordanOrthogonalPolynomials
-import Lemma.Int.Polynomial.RiordanOrthogonalPolynomials
+import Theorem.Int.Polynomial.RiordanOrthogonalPolynomials
 
 
 namespace MetaMathlibExt

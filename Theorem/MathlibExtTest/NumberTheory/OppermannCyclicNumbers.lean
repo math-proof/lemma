@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/OppermannCyclicNumbers.lean -/
+module
 
+public import Mathlib.Tactic
+public import Def.NumberTheory.OppermannCyclicNumbers
 
-import Mathlib.Tactic
-import Def.NumberTheory.OppermannCyclicNumbers
-
+public section
 
 namespace MetaMathlibExt
 

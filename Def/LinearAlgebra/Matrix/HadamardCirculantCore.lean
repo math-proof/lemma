@@ -9,19 +9,22 @@ with `p` and `p + 2` prime). Proves `Wanted` entry
 `exists_hadamard_matrix_with_circulant_core`.
 -/
 
-import Mathlib.Algebra.Group.Fin.Basic
-import Mathlib.Data.Matrix.Basic
-import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.LinearAlgebra.Matrix.Circulant
-import Mathlib.LinearAlgebra.Matrix.Defs
-import Mathlib.LinearAlgebra.Matrix.HadamardMatrix
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.GroupWithZero.Equiv
-import Mathlib.Data.ZMod.Basic
-import Mathlib.NumberTheory.JacobiSum.Basic
-import Mathlib.NumberTheory.LegendreSymbol.QuadraticChar.Basic
-import Mathlib.NumberTheory.LegendreSymbol.ZModChar
+module
 
+public import Mathlib.Algebra.Group.Fin.Basic
+public import Mathlib.Data.Matrix.Basic
+public import Mathlib.Data.Nat.Prime.Basic
+public import Mathlib.LinearAlgebra.Matrix.Circulant
+public import Mathlib.LinearAlgebra.Matrix.Defs
+public import Mathlib.LinearAlgebra.Matrix.HadamardMatrix
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.GroupWithZero.Equiv
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.NumberTheory.JacobiSum.Basic
+public import Mathlib.NumberTheory.LegendreSymbol.QuadraticChar.Basic
+public import Mathlib.NumberTheory.LegendreSymbol.ZModChar
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

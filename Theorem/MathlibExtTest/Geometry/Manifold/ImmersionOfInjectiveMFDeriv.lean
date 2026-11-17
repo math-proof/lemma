@@ -4,7 +4,7 @@
 import Mathlib.Analysis.LocallyConvex.HahnBanach
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
 import Theorem.Geometry.Manifold.ImmersionOfInjectiveMFDeriv
-import Lemma.Set.Manifold.ImmersionOfInjectiveMFDeriv
+import Theorem.Set.Manifold.ImmersionOfInjectiveMFDeriv
 open scoped Topology ContDiff
 open Manifold
 open MathlibExt.Geometry.Manifold.ImmersionOfInjectiveMFDerivWanted

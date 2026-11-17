@@ -1,8 +1,13 @@
-import Mathlib.Tactic
-import Def.Lean.Syntax
-import Def.Lean.Environment
-import Def.Lean.Meta.Expr.Part4
-import Def.Lean.ConstantInfo.Part5
+module
+
+public import Mathlib.Tactic
+public import Def.Lean.Syntax
+public import Def.Lean.Environment
+public import Def.Lean.Meta.Expr.Part4
+public import Def.Lean.ConstantInfo.Part5
+
+@[expose] public section
+
 open Lean
 open Lean.Meta
 
@@ -17,7 +22,7 @@ def List.parseInfixSegments (list : List String) : List (List String) :=
   | [x] => [[x]]
   | x :: op :: y =>
     match op with
-    | "eq" | "is" | "as" | "ne" | "lt" | "le" | "gt" | "ge" | "in" | "ou" | "et" =>
+    | "eq" | "is" | "as" | "ne" | "lt" | "le" | "gt" | "ge" | "in" | "ou" | "et" | "ae" =>
       list.take 3 :: parseInfixSegments (y.drop 1)
     | _ =>
       [x] :: parseInfixSegments (op :: y)
@@ -28,7 +33,7 @@ def List.transformPrefix (list : List String) : List String :=
     [list.head!.transformPrefix]
   else
     match list[1]! with
-    | "eq" | "is" | "as" | "ne" =>
+    | "eq" | "is" | "as" | "ne" | "ae" =>
       list.reverse
     | _ =>
       list
@@ -62,7 +67,7 @@ def List.comm (list : List String) (parity : List Bool) : List String :=
       if let first :: rest := list then
         if let op :: second :: rest := rest then
           match op with
-          | "eq" | "as" | "ne" | "le" | "ge" | "lt" | "gt" | "ou" =>
+          | "eq" | "as" | "ne" | "le" | "ge" | "lt" | "gt" | "ou" | "ae" =>
             [second, op, first] ++ rest
           | _ =>
             panic! s!"Expected the operator 'eq', 'as or 'ne', got: {op}"

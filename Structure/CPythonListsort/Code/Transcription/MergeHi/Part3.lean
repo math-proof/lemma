@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeHi.lean -/
 
-import Def.CPythonListsort.Code.Transcription.Gallop.Part2
-import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
-import Inductive.CPythonListsort.Code.Transcription.MergeHi.Part2
+module
+
+public import Def.CPythonListsort.Code.Transcription.Gallop.Part2
+public import Structure.CPythonListsort.Code.Transcription.MergeState.Part3
+public import Inductive.CPythonListsort.Code.Transcription.MergeHi.Part2
 /-!
 # Right-to-left stable merge transcription
 
@@ -27,6 +29,9 @@ C's `Succeed` and `Fail` labels remains on successful exits.  Distinct
 temp/data block copies model `sortslice_memcpy`; blocks moved within `data` use
 overlap-safe `SortSlice.memmove?`.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

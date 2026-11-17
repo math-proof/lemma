@@ -1,6 +1,10 @@
-import Structure.HeckeModule_IharaRungDatum
-import Instance.IharaLemma_IdempotentSplitting
-import Def.HeckeModule_IharaDataAt
+module
+
+public import Structure.HeckeModule_IharaRungDatum
+public import Instance.IharaLemma_IdempotentSplitting
+public import Def.HeckeModule_IharaDataAt
+
+public section
 
 namespace IharaTower
 

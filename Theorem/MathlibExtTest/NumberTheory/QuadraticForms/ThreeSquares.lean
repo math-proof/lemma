@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.QuadraticForms.ThreeSquares
-import Lemma.Nat.QuadraticForms.ThreeSquares
+import Theorem.Nat.QuadraticForms.ThreeSquares
 
 
 namespace Nat

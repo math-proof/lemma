@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.GeometryOfManifolds.code.FourManifoldsSW.Part8
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.FourManifoldsSW
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.FourManifoldsSW
 import Class.v1.Atlas.GeometryOfManifolds.code.SWModuliGoal62
 set_option autoImplicit false
 

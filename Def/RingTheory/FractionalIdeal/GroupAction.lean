@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/FractionalIdeal/GroupAction.lean -/
 
-import Mathlib.RingTheory.FractionalIdeal.Operations
-import Mathlib.RingTheory.Ideal.Pointwise
+module
+
+public import Mathlib.RingTheory.FractionalIdeal.Operations
+public import Mathlib.RingTheory.Ideal.Pointwise
+
+@[expose] public section
+
 open scoped nonZeroDivisors
 open scoped Pointwise
 

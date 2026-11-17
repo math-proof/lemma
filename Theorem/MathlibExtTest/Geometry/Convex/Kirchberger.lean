@@ -2,7 +2,7 @@
 
 
 import Def.Geometry.Convex.Kirchberger
-import Lemma.Set.Convex.Kirchberger
+import Theorem.Set.Convex.Kirchberger
 
 
 namespace MetaMathlibExt

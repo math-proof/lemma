@@ -9,8 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib.Analysis.Analytic.Order
-import Mathlib.Analysis.Complex.Basic
+module
+
+public import Mathlib.Analysis.Analytic.Order
+public import Mathlib.Analysis.Complex.Basic
+
+@[expose] public section
+
 open Finset
 
 

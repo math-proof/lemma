@@ -2,7 +2,7 @@
 
 
 import Structure.Analysis.SpecialFunctions.Elliptic.Function
-import Lemma.Complex.Function
+import Theorem.Complex.Function
 
 
 example (L : PeriodPair) (c : ℂ) : L.IsEllipticFunction fun _ ↦ c :=

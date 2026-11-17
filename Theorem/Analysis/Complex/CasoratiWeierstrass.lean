@@ -1,8 +1,11 @@
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.Meromorphic.Basic
-import Mathlib.Analysis.Complex.RemovableSingularity
+module
+
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Meromorphic.Basic
+public import Mathlib.Analysis.Complex.RemovableSingularity
 open Set Metric Filter Topology
 
+public section
 
 namespace Complex.CasoratiWeierstrass
 

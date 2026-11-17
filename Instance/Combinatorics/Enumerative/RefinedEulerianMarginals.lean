@@ -1,15 +1,18 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/RefinedEulerianMarginals.lean -/
 
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Fintype.Perm
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.Basic.Real.Basic
-import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Algebra.Order.Archimedean.Real.Basic
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Def.Combinatorics.Enumerative.RefinedEulerianMarginals
+module
 
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Data.Fintype.Perm
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Algebra.BigOperators.Ring.Finset
+public import Mathlib.Algebra.Order.Archimedean.Real.Basic
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+public import Def.Combinatorics.Enumerative.RefinedEulerianMarginals
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

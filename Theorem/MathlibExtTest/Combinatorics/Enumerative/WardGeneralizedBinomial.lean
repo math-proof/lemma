@@ -3,7 +3,7 @@
 
 import Mathlib.Tactic.NormNum
 import Def.Combinatorics.Enumerative.WardGeneralizedBinomial
-import Lemma.Finset.Enumerative.WardGeneralizedBinomial
+import Theorem.Finset.Enumerative.WardGeneralizedBinomial
 
 
 namespace MetaMathlibExt

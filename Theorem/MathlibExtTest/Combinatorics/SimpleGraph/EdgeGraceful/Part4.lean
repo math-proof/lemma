@@ -7,7 +7,7 @@ import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Tactic.FinCases
 import Def.Combinatorics.SimpleGraph.EdgeGraceful
-import Lemma.SimpleGraph.EdgeGraceful
+import Theorem.SimpleGraph.EdgeGraceful
 import Def.MathlibExtTest.Combinatorics.SimpleGraph.EdgeGraceful.Part3
 
 

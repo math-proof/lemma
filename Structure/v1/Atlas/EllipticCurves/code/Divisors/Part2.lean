@@ -8,22 +8,24 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Finsupp.Defs
-import Mathlib.Data.Finsupp.Basic
-import Mathlib.Algebra.BigOperators.Finsupp.Basic
-import Mathlib.GroupTheory.QuotientGroup.Basic
-import Mathlib.Algebra.Group.Subgroup.Basic
-import Mathlib.Algebra.Order.Monoid.Unbundled.WithTop
-import Def.v1.Atlas.EllipticCurves.code.Divisors.Part4
+module
+
+public import Mathlib.Data.Finsupp.Defs
+public import Mathlib.Data.Finsupp.Basic
+public import Mathlib.Algebra.BigOperators.Finsupp.Basic
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+public import Mathlib.Algebra.Group.Subgroup.Basic
+public import Mathlib.Algebra.Order.Monoid.Unbundled.WithTop
+public import Def.v1.Atlas.EllipticCurves.code.Divisors.Part4
 
 
-noncomputable section
+public noncomputable section
 
 open Finsupp
 
 variable {P : Type*}
 
-noncomputable section
+public noncomputable section
 
 /-- A smooth projective curve, represented abstractly by a type of points
 `Point`, a function field `FunctionField` (a field), and a discrete-valuation

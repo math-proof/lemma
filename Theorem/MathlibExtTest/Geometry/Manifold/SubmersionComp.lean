@@ -2,7 +2,7 @@
 
 
 import Def.Geometry.Manifold.SubmersionComp
-import Lemma.Set.Manifold.SubmersionComp
+import Theorem.Set.Manifold.SubmersionComp
 open scoped ContDiff Manifold Topology
 open Manifold
 

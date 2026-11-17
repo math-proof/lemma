@@ -7,13 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Algebra.Polynomial.Expand
-import Mathlib.FieldTheory.Separable
-import Mathlib.RingTheory.Polynomial.Wronskian
-import Mathlib.Tactic.LinearCombination
-import Def.v1.Atlas.EllipticCurves.code.IsogenyKernels.Part2
+public import Mathlib.Algebra.Polynomial.Expand
+public import Mathlib.FieldTheory.Separable
+public import Mathlib.RingTheory.Polynomial.Wronskian
+public import Mathlib.Tactic.LinearCombination
+public import Def.v1.Atlas.EllipticCurves.code.IsogenyKernels.Part2
 open Polynomial
+
+public section
 
 variable {E : ShortWeierstrassCurve k}
 

@@ -8,8 +8,8 @@ import Mathlib.Algebra.Polynomial.Derivative
 import Mathlib.Algebra.Polynomial.Taylor
 import Mathlib.Data.Complex.Basic
 import Def.Analysis.Ramanujan.Part1Ch5Entry1Euleriangf
-import Lemma.Real.Part1Ch5Entry1Euleriangf
-import Lemma.Complex.Part1Ch5Entry4
+import Theorem.Real.Part1Ch5Entry1Euleriangf
+import Theorem.Complex.Part1Ch5Entry4
 import Def.Analysis.Ramanujan.Part1Ch5Entry4
 import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Analysis.Complex.Polynomial.Basic

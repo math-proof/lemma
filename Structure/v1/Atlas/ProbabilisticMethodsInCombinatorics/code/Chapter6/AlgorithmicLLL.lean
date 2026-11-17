@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.BigOperators.Finprod
-import Mathlib.Data.Real.Basic
-import Mathlib.Tactic.Linarith
+module
+
+public import Mathlib.Algebra.BigOperators.Finprod
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Tactic.Linarith
+public section
+
 set_option maxHeartbeats 400000
 
 open Finset

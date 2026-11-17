@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/LaplaceTransform/Basic.lean -/
 
-import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
+module
+
+public import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
+
+@[expose] public section
+
 open MeasureTheory
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]

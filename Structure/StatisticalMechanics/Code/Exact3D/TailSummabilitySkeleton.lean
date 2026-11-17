@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.StatisticalMechanics.Code.Exact3D.TailBoundSkeleton.Part2
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Theorem.StatisticalMechanics.Code.Exact3D.TailSummabilitySkeleton
+module
+
+public import Theorem.StatisticalMechanics.Code.Exact3D.TailBoundSkeleton.Part2
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Theorem.StatisticalMechanics.Code.Exact3D.TailSummabilitySkeleton
+public section
+
 open scoped BigOperators
 
 

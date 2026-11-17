@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+@[expose] public section
+
 /-!
 # Analysis I, Section 9.2: The algebra of real-valued functions
 

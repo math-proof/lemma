@@ -45,7 +45,7 @@ import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
 import Mathlib.Topology.Algebra.Polynomial
 import Def.NumberTheory.Ramanujan.Part1Ch3Entry14Cor1Catalanpowerseries
-import Lemma.Nat.Ramanujan.Part1Ch3Entry14Cor1Catalanpowerseries
+import Theorem.Nat.Ramanujan.Part1Ch3Entry14Cor1Catalanpowerseries
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 3
 

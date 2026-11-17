@@ -1,12 +1,14 @@
-import Structure.AlgebraicCurve_SemistableCharts
-import Instance.ModularCurve_FullLevelJacobian
-import Lemma.HahnSeries.QAdicPlace
-import Instance.ModularCurve_JZeroSemistableSpecialization
-import Lemma.AlgEquiv.SemistableChartsComap
+module
+
+public import Structure.AlgebraicCurve_SemistableCharts
+public import Instance.ModularCurve_FullLevelJacobian
+public import Lemma.HahnSeries.QAdicPlace
+public import Instance.ModularCurve_JZeroSemistableSpecialization
+public import Lemma.AlgEquiv.SemistableChartsComap
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace ModularCurve.FullLevel
 

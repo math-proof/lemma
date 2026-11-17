@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/Sinkhorn.lean -/
 
-import Mathlib.Analysis.Convex.DoublyStochasticMatrix
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+module
+
+public import Mathlib.Analysis.Convex.DoublyStochasticMatrix
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+
+@[expose] public section
+
 open Matrix
 
 

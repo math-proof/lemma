@@ -8,12 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.GroupTheory.FreeAbelianGroup
-import Mathlib.Algebra.Category.ModuleCat.Basic
-import Mathlib.GroupTheory.QuotientGroup.Defs
-import Mathlib.Algebra.Module.Prod
-import Mathlib.Algebra.Exact
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.GrothendieckGroup
+module
+
+public import Mathlib.GroupTheory.FreeAbelianGroup
+public import Mathlib.Algebra.Category.ModuleCat.Basic
+public import Mathlib.GroupTheory.QuotientGroup.Defs
+public import Mathlib.Algebra.Module.Prod
+public import Mathlib.Algebra.Exact
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.GrothendieckGroup
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 

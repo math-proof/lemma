@@ -8,12 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.StatisticalMechanics.Code.Onsager.DecorationCycleWeight
-import Theorem.StatisticalMechanics.Code.Onsager.DecorationEdgeComponent
-import Theorem.StatisticalMechanics.Code.Onsager.TorusIntersection.Part8
-import Theorem.StatisticalMechanics.Code.Onsager.SpinCoefficientInduction.Part2
-import Abbrev.StatisticalMechanics.Code.Onsager.DecorationCoefficientAssembly
+module
 
+public import Theorem.StatisticalMechanics.Code.Onsager.DecorationCycleWeight
+public import Theorem.StatisticalMechanics.Code.Onsager.DecorationEdgeComponent
+public import Theorem.StatisticalMechanics.Code.Onsager.TorusIntersection.Part8
+public import Theorem.StatisticalMechanics.Code.Onsager.SpinCoefficientInduction.Part2
+public import Abbrev.StatisticalMechanics.Code.Onsager.DecorationCoefficientAssembly
+
+
+public section
 
 namespace StatMech.Onsager
 

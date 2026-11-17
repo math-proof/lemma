@@ -9,14 +9,16 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnAnnulusCharge.Part10
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDualBoundaryWiring
-import Abbrev.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnMixedAnnulusCharge.Part2
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnAnnulusCharge.Part10
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDualBoundaryWiring
+public import Abbrev.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnMixedAnnulusCharge.Part2
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure FKRectZeroTurnMixedAnnulusCharge
     (R : FKRectTorus) (omega : R.Configuration) where

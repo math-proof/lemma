@@ -1,12 +1,14 @@
-import Def.AutomorphicForm_ConstantTerm
-import Structure.AutomorphicForm_AdelicLsXi
-import Instance.NumberField_AdelicHaar
-import Def.NumberField_AdelicBox
-import Def.HaarQuotient
+module
+
+public import Def.AutomorphicForm_ConstantTerm
+public import Structure.AutomorphicForm_AdelicLsXi
+public import Instance.NumberField_AdelicHaar
+public import Def.NumberField_AdelicBox
+public import Def.HaarQuotient
 
 open MeasureTheory NumberField NumberField.AdelicHaar NumberField.AdelicBox
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace AutomorphicForm
 

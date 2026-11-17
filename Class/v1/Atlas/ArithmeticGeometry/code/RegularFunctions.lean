@@ -9,7 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.ArithmeticGeometry.code.AffineVarieties.Part5
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.AffineVarieties
 import Mathlib.RingTheory.Localization.FractionRing
 import Mathlib.CategoryTheory.Category.Basic
 import Mathlib.CategoryTheory.Functor.Basic
@@ -22,7 +21,6 @@ set_option autoImplicit false
 set_option linter.unusedSectionVars false
 
 variable (k : Type*) [Field k]
-
 
 section Theorem158
 

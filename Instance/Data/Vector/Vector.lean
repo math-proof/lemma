@@ -8,7 +8,7 @@ import Lemma.Vector.GetMul.eq.MulGetS
 import Lemma.Vector.GetAdd.eq.AddGetS
 import Lemma.Vector.GetInv.eq.InvGet
 import Lemma.Vector.GetNeg.eq.NegGet
-import Lemma.Vector.NeReplicateS.of.Ne.Gt_0
+import Theorem.Vector.NeReplicateS.of.Ne.Gt_0
 import Lemma.Vector.EqGet1_1
 import Lemma.Vector.EqGet0_0
 open Vector

@@ -1,9 +1,13 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_JZeroNaiveHeight.lean: instance decls only.
-import Lemma.HahnSeries.AtkinLehner
-import Mathlib.Algebra.Ring.Action.Submonoid
-import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.NumberTheory.Height.NumberField
-import Instance.Compat_Mathlib430
+
+module
+
+public import Mathlib.Algebra.Ring.Action.Submonoid
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.NumberTheory.Height.NumberField
+public import Instance.Compat_Mathlib430
+
+@[expose] public section
 
 noncomputable section
 

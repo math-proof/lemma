@@ -4,18 +4,21 @@
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
-import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
-import Mathlib.MeasureTheory.Measure.Portmanteau
-import Mathlib.Probability.CDF
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.Algebra.Module.Cardinality
-import Mathlib.Topology.UniformSpace.Uniformizable
+module
 
+public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+public import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+public import Mathlib.MeasureTheory.Measure.Portmanteau
+public import Mathlib.Probability.CDF
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.Algebra.Module.Cardinality
+public import Mathlib.Topology.UniformSpace.Uniformizable
+
+@[expose] public section
 
 section
 

@@ -1,12 +1,14 @@
-import Class.AlgebraicCurve_DivisorPushPull
-import Mathlib.RingTheory.Ideal.IntegralClosure
-import Mathlib.RingTheory.RamificationInertia.Basic
-import Mathlib.RingTheory.DedekindDomain.Factorization
-import Mathlib.Algebra.Polynomial.Lifts
+module
+
+public import Class.AlgebraicCurve_DivisorPushPull
+public import Mathlib.RingTheory.Ideal.IntegralClosure
+public import Mathlib.RingTheory.RamificationInertia.Basic
+public import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Mathlib.Algebra.Polynomial.Lifts
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 open IsDedekindDomain WithZero IsLocalRing
 

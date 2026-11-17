@@ -1,9 +1,8 @@
-import Mathlib.Tactic
-import Def.Lean.Syntax
-import Def.Lean.Environment
-import Def.Lean.Meta.Expr.Part4
-import Def.Lean.ConstantInfo.Part5
-import Def.Tactic.Attr.Basic
+module
+
+public import Mathlib.Tactic
+public section
+
 open Lean
 open Lean.Meta
 

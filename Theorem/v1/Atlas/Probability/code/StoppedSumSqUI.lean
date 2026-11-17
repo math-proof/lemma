@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.Probability.WaldSecondEquation
-import Lemma.Measure.Atlas.v1.Probability.code.WaldSecondEquation
+import Theorem.Measure.Atlas.v1.Probability.code.WaldSecondEquation
 open MeasureTheory ProbabilityTheory MeasureTheory.Measure Finset ENNReal Filter
 
 /-- Let `X₁, X₂, …` be i.i.d. with `E[X₁] = 0` and `E[X₁²] < ∞`, and let `T` be a

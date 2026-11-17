@@ -2,7 +2,7 @@
 
 
 import Def.LinearAlgebra.Matrix.ZagierMatrixInverse
-import Lemma.Matrix.ZagierMatrixInverse
+import Theorem.Matrix.ZagierMatrixInverse
 
 
 example (K : ℕ) : Matrix (Fin (K - 1)) (Fin (K - 1)) ℚ := MetaMathlibExt.zagierMatrix K

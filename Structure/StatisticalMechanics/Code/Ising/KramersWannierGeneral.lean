@@ -9,9 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Ising.KramersWannierDuality.Part4
-import Theorem.StatisticalMechanics.Code.Ising.KramersWannierGeneral
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Ising.KramersWannierDuality.Part4
+public import Theorem.StatisticalMechanics.Code.Ising.KramersWannierGeneral
+public section
+
 open scoped BigOperators
 open Finset SimpleGraph
 

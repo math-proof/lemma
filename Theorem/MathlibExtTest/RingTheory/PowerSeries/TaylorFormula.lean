@@ -2,7 +2,7 @@
 
 -- Author: @toskua, Avocado
 
-import Lemma.PowerSeries.TaylorFormula
+import Theorem.PowerSeries.TaylorFormula
 
 
 namespace PowerSeriesTaylorFormulaTest

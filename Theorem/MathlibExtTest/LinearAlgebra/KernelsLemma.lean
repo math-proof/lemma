@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/KernelsLemma.lean -/
 
 
-import Lemma.Matrix.KernelsLemma
+import Theorem.Matrix.KernelsLemma
 open Polynomial
 open scoped BigOperators
 

@@ -1,5 +1,5 @@
 import Def.Data.Tensor.Defs.Part4
-import Lemma.Nat.EqMulDiv.of.Dvd
+import Theorem.Nat.EqMulDiv.of.Dvd
 open Tensor Nat
 
 

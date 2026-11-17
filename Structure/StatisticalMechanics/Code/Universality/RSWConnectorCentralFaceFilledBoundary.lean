@@ -8,12 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.StatisticalMechanics.Code.Universality.RSWConnectorCentralFaceJordan.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.PeierlsHoleFreeBoundary.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.PeierlsContourFinal.Part4
-import Theorem.StatisticalMechanics.Code.Ising.KWGeometricDual.Part22
-import Theorem.StatisticalMechanics.Code.Walls.fwrfaceregion.Part3
-import Theorem.StatisticalMechanics.Code.Universality.RSWConnectorCentralFaceFilledBoundary.Part3
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.RSWConnectorCentralFaceJordan.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.PeierlsHoleFreeBoundary.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.PeierlsContourFinal.Part4
+public import Theorem.StatisticalMechanics.Code.Ising.KWGeometricDual.Part22
+public import Theorem.StatisticalMechanics.Code.Walls.fwrfaceregion.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.RSWConnectorCentralFaceFilledBoundary.Part3
 open Finset SimpleGraph Set
 
 
@@ -23,7 +25,7 @@ open StatMech.Percolation StatMech.Lattice StatMech.RSW.Box
 
 open StatMech.Walls
 
-noncomputable section
+public noncomputable section
 
 structure RlcCentralFaceLowestFilledAxisGap {n : Int}
     (gamma : RlcRightDiagonalPath n) (gamma' : RlcLeftDiagonalPath n)

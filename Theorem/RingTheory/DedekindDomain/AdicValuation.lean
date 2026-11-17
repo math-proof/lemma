@@ -1,6 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/AdicValuation.lean -/
+module
 
-import Mathlib.RingTheory.DedekindDomain.AdicValuation
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation
+
 /-!
 # Global-local valuation ring compatibility
 
@@ -15,6 +17,8 @@ completion along the canonical embedding.
 * [G. Hu, *Anisotropy of quadratic forms over global fields of characteristic ≠ 2 is
   diophantine*](https://arxiv.org/abs/2401.00537v3)
 -/
+
+public section
 
 
 namespace IsDedekindDomain.HeightOneSpectrum

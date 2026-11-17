@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.GeometryOfManifolds.code.DifferentialForms.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.DifferentialForms
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.DifferentialForms
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
 import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
 set_option autoImplicit false
 set_option maxHeartbeats 800000

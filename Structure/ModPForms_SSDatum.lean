@@ -1,4 +1,8 @@
-import Def.CuspForm_ModPForms
+module
+
+public import Def.CuspForm_ModPForms
+
+public section
 
 set_option autoImplicit false
 

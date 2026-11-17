@@ -1,8 +1,13 @@
 -- Carved from Lemma/Definitions/Def_M4aHerbrand_OpenMappingBridge.lean: instance decls only.
-import Mathlib.Topology.Algebra.Group.OpenMapping
-import Mathlib.Topology.Baire.LocallyCompactRegular
-import Mathlib.RingTheory.TensorProduct.Free
-import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
+
+module
+
+public import Mathlib.Topology.Algebra.Group.OpenMapping
+public import Mathlib.Topology.Baire.LocallyCompactRegular
+public import Mathlib.RingTheory.TensorProduct.Free
+public import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
+
+@[expose] public section
 
 namespace M4aHerbrand.Bridge
 

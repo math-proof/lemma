@@ -1,12 +1,14 @@
-import Lemma.ResidueField.GluedPic0
-import Lemma.Scheme.GluedPic0Functoriality
-import Instance.ModularCurve_ArithmeticGalois
-import Def.ModularCurve_JqCoeff
-import Structure.HeckeGalois_EichlerShimura
-import Def.ModularCurve_ComponentGroup
-import Instance.ModularCurve_JZeroSemistableSpecialization
+module
 
-noncomputable section
+public import Lemma.ResidueField.GluedPic0
+public import Lemma.Scheme.GluedPic0Functoriality
+public import Instance.ModularCurve_ArithmeticGalois
+public import Def.ModularCurve_JqCoeff
+public import Structure.HeckeGalois_EichlerShimura
+public import Def.ModularCurve_ComponentGroup
+public import Instance.ModularCurve_JZeroSemistableSpecialization
+
+public noncomputable section
 
 namespace ModularCurve
 

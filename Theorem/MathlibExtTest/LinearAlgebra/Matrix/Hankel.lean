@@ -2,7 +2,7 @@
 
 
 import Def.LinearAlgebra.Matrix.Hankel
-import Lemma.Matrix.Hankel
+import Theorem.Matrix.Hankel
 
 
 namespace Matrix

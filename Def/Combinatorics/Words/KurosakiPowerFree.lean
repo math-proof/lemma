@@ -1,13 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Words/KurosakiPowerFree.lean -/
 
-import Mathlib.Data.List.Basic
-import Mathlib.Data.Fintype.Perm
-import Mathlib.Data.Nat.SuccPred
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.Push
-import Mathlib.Tactic.Ring
+module
 
+public import Mathlib.Data.List.Basic
+public import Mathlib.Data.Fintype.Perm
+public import Mathlib.Data.Nat.SuccPred
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.IntervalCases
+public import Mathlib.Tactic.Push
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 section
 

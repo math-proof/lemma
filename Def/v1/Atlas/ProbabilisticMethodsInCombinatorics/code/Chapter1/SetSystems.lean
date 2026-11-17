@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Combinatorics.SetFamily.LYM
-import Mathlib.GroupTheory.Perm.Basic
+module
+
+public import Mathlib.Combinatorics.SetFamily.LYM
+public import Mathlib.GroupTheory.Perm.Basic
+
+@[expose] public section
+
 open Finset Nat
 
 

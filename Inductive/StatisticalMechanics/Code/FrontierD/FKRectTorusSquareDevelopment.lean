@@ -9,16 +9,18 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusDevelopedWinding.Part2
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusNetFull.Part4
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusSquareDevelopment.Part9
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusDevelopedWinding.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusNetFull.Part4
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusSquareDevelopment.Part9
 
 
 namespace StatMech.FrontierD
 
 noncomputable section
 
-inductive FKRectSquareWalkLift (R : FKRectTorus)
+public inductive FKRectSquareWalkLift (R : FKRectTorus)
     {G : SimpleGraph R.Vertex} :
     {x y : R.Vertex} → G.Walk x y →
       (Int × Int) → (Int × Int) → Prop

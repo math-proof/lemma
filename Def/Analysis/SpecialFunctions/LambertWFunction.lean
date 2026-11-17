@@ -1,6 +1,11 @@
-import Mathlib.Analysis.SpecialFunctions.Exp
-import Mathlib.Analysis.Calculus.Deriv.MeanValue
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Exp
+public import Mathlib.Analysis.Calculus.Deriv.MeanValue
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+
+@[expose] public section
+
 /-!
 # Lambert W function, principal real branch (Ouellet JIS VOL20, rank 320)
 

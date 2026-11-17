@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/OrdinaryEhrhartCount.lean -/
 
-import Mathlib.Data.Rat.Defs
-import Mathlib.Data.Set.Card
+module
+
+public import Mathlib.Data.Rat.Defs
+public import Mathlib.Data.Set.Card
+
+@[expose] public section
+
 /-!
 # Ordinary Ehrhart counts
 

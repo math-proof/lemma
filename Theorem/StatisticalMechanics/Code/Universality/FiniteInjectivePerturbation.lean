@@ -7,12 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib.Topology.Instances.Complex
-import Mathlib.Order.Interval.Set.Infinite
+public import Mathlib.Topology.Instances.Complex
+public import Mathlib.Order.Interval.Set.Infinite
 open Metric Set
 
+public section
 
 noncomputable section
 

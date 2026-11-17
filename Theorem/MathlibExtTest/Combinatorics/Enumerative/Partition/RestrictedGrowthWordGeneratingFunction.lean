@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.Partition.RestrictedGrowthWordGeneratingFunction
-import Lemma.Finset.Enumerative.Partition.RestrictedGrowthWordGeneratingFunction
+import Theorem.Finset.Enumerative.Partition.RestrictedGrowthWordGeneratingFunction
 
 
 namespace MetaMathlibExt

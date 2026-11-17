@@ -1,0 +1,49 @@
+module
+
+public import Theorem.Nat.Le_Sub_1.of.Lt
+public import Theorem.List.InsertIdx.eq.Append_InsertIdxDrop.of.Ge.GeLength
+public import Theorem.List.DropAppend.eq.Drop.of.LeLength
+public import Theorem.List.DropCons.eq.Drop_Sub_1.of.Gt_0
+public import Theorem.Nat.SubAdd.eq.Add_Sub.of.Ge
+public import Theorem.Nat.EqAdd_Sub.of.Gt
+
+public section
+
+open List Nat
+
+
+public theorem List.DropInsertIdx.eq.Drop.of.Lt
+-- given
+  (h : i < j)
+  (s : List α)
+  (x : α) :
+-- imply
+  (s.insertIdx i x).drop j = s.drop (j - 1) := by
+-- proof
+  if h_i : i ≤ s.length then
+    rw [InsertIdx.eq.Append_InsertIdxDrop.of.Ge.GeLength h_i (by rfl) (j := i)]
+    simp
+    rw [DropAppend.eq.Drop.of.LeLength] <;>
+      rw [LengthTake.eq.Min_Length]
+    ·
+      rw [EqMin.of.Le h_i]
+      have h_ji : j - i > 0 := by simpa
+      rw [DropCons.eq.Drop_Sub_1.of.Gt_0 h_ji]
+      simp
+      rw [Add_Sub.eq.SubAdd.of.Ge (by linarith)]
+      rw [EqAdd_Sub.of.Gt h]
+    ·
+      apply Ge_Min.of.Ge ∘ Ge.of.Gt
+      assumption
+  else
+    simp at h_i
+    rw [EqInsertIdx.of.LtLength h_i]
+    repeat rw [Drop.eq.Nil.of.LeLength]
+    ·
+      apply GeSub_1.of.Gt
+      linarith
+    ·
+      linarith
+
+
+-- created on 2025-10-03

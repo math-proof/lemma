@@ -1,6 +1,10 @@
-import Mathlib
-import Structure.ModularCurve_JZeroNeronPrimaryTorsionSheaf
-import Structure.ModularCurve_JZeroNeronTorsionFlag
+module
+
+public import Mathlib
+public import Structure.ModularCurve_JZeroNeronPrimaryTorsionSheaf
+public import Structure.ModularCurve_JZeroNeronTorsionFlag
+
+public section
 
 set_option autoImplicit false
 

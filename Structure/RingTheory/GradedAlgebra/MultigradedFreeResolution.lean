@@ -4,10 +4,12 @@
   Author: Muse Code powered by Meta Muse Spark
 -/
 
-import Structure.RingTheory.GradedAlgebra.MultigradedPolynomialModule
-import Mathlib.Algebra.Category.ModuleCat.Basic
-import Mathlib.CategoryTheory.Preadditive.Projective.Resolution
-import Def.RingTheory.GradedAlgebra.MultigradedFreeResolution
+module
+
+public import Structure.RingTheory.GradedAlgebra.MultigradedPolynomialModule
+public import Mathlib.Algebra.Category.ModuleCat.Basic
+public import Mathlib.CategoryTheory.Preadditive.Projective.Resolution
+public import Def.RingTheory.GradedAlgebra.MultigradedFreeResolution
 /-!
 # Multigraded free modules and graded free resolutions
 
@@ -45,6 +47,9 @@ Main definitions:
   is the local `Module.compHom` instance via `MvPolynomial.C`; no global
   `Module K` instance is installed.
 -/
+public section
+
+
 
 
 namespace MetaMathlibExt

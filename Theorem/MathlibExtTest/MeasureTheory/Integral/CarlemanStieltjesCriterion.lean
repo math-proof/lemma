@@ -2,7 +2,7 @@
 
 
 import Def.MeasureTheory.Integral.CarlemanStieltjesCriterion
-import Lemma.Measure.Integral.CarlemanStieltjesCriterion
+import Theorem.Measure.Integral.CarlemanStieltjesCriterion
 open MeasureTheory Set
 open scoped BigOperators
 

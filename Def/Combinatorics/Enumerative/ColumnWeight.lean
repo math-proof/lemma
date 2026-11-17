@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/ColumnWeight.lean -/
 
-import Mathlib.Algebra.BigOperators.Fin
+module
+
+public import Mathlib.Algebra.BigOperators.Fin
+
+@[expose] public section
+
 open scoped BigOperators
 
 /-!

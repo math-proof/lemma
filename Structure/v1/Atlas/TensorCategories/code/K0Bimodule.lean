@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.TensorCategories.code.GrothendieckRing.Part2
-import Lemma.Category.Atlas.v1.TensorCategories.code.GrothendieckRing
-import Mathlib.Algebra.Module.Defs
-import Mathlib.Algebra.Group.Opposite
+module
+
+public import Theorem.v1.Atlas.TensorCategories.code.GrothendieckRing.Part2
+public import Lemma.Category.Atlas.v1.TensorCategories.code.GrothendieckRing
+public import Mathlib.Algebra.Module.Defs
+public import Mathlib.Algebra.Group.Opposite
+public section
+
 set_option maxHeartbeats 800000
 
 open Finset FusionRing

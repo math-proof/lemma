@@ -1,5 +1,9 @@
-import Mathlib
-import Def.Deformations_LiftFunctor
+module
+
+public import Mathlib
+public import Def.Deformations_LiftFunctor
+
+@[expose] public section
 
 set_option autoImplicit false
 

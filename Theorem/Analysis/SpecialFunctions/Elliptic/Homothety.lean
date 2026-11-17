@@ -1,5 +1,7 @@
-import Mathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass
-import Def.Analysis.SpecialFunctions.Elliptic.Homothety
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass
+public import Def.Analysis.SpecialFunctions.Elliptic.Homothety
 open scoped Pointwise
 
 /-!
@@ -7,6 +9,8 @@ open scoped Pointwise
 
 Two period lattices are homothetic when one is a nonzero complex scaling of the other.
 -/
+
+public section
 
 
 namespace PeriodPair

@@ -1,11 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/CycleCover.lean -/
 
-import Mathlib.Algebra.BigOperators.Group.Multiset.Basic
-import Mathlib.Combinatorics.SimpleGraph.Basic
-import Mathlib.Combinatorics.SimpleGraph.Finite
-import Mathlib.Combinatorics.SimpleGraph.Paths
-import Mathlib.Data.Multiset.Basic
+module
 
+public import Mathlib.Algebra.BigOperators.Group.Multiset.Basic
+public import Mathlib.Combinatorics.SimpleGraph.Basic
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Mathlib.Combinatorics.SimpleGraph.Paths
+public import Mathlib.Data.Multiset.Basic
+
+
+public section
 
 namespace SimpleGraph
 

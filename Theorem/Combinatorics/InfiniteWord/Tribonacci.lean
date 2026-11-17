@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/InfiniteWord/Tribonacci.lean -/
+module
 
-import Mathlib.Data.List.Basic
-import Def.Combinatorics.InfiniteWord.Tribonacci
+public import Mathlib.Data.List.Basic
+public import Def.Combinatorics.InfiniteWord.Tribonacci
+
 /-!
 # The Tribonacci word
 
@@ -16,6 +18,8 @@ The source prints `W(3) = abacabaabacab`, but its stated recurrence makes this w
   Tribonacci Numbers*](https://cs.uwaterloo.ca/journals/JIS/VOL28/Khovanova/khova43.tex),
   Section 5.1 (source statement `jis_e3c891cabe6bea6b4eecdf73`).
 -/
+
+public section
 
 
 namespace InfiniteWord

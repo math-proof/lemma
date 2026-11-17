@@ -9,9 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopDisorderKacWard
-import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopCriticalWeight
-import Instance.StatisticalMechanics.Code.Onsager.SignedLoopRectangularDualPath.Part2
+module
+
+public import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopDisorderKacWard
+public import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopCriticalWeight
+public import Instance.StatisticalMechanics.Code.Onsager.SignedLoopRectangularDualPath.Part2
 open Finset SimpleGraph
 
 
@@ -19,7 +21,7 @@ namespace StatMech.Onsager
 
 open StatMech.FrontierA StatMech.Sharpness
 
-noncomputable section
+public noncomputable section
 
 structure ons_RectDualPath (M N : Nat) where
   source : ons_RectDualVertex M N

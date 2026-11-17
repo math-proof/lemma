@@ -19,7 +19,7 @@ import Mathlib.Analysis.Calculus.ContDiff.Basic
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM11.Wave1D
-import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM11.Wave1D
+import Theorem.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM11.Wave1D
 open Real Set MeasureTheory intervalIntegral
 
 

@@ -1,6 +1,6 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/DifferentLocalization.lean -/
 
-import Lemma.Matrix.BilinearForm.DualLocalization
+import Theorem.Matrix.BilinearForm.DualLocalization
 import Mathlib.RingTheory.DedekindDomain.Different
 import Mathlib.Tactic.LinearCombination
 import Notation.RingTheory.DedekindDomain.DifferentLocalization

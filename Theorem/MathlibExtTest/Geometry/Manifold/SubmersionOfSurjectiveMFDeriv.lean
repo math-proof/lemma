@@ -4,7 +4,7 @@
 import Mathlib.Analysis.Calculus.FDeriv.Pow
 import Mathlib.Geometry.Manifold.MFDeriv.NormedSpace
 import Def.Geometry.Manifold.SubmersionOfSurjectiveMFDeriv
-import Lemma.Set.Manifold.SubmersionOfSurjectiveMFDeriv
+import Theorem.Set.Manifold.SubmersionOfSurjectiveMFDeriv
 open scoped ContDiff Manifold Topology
 open MathlibExt.Geometry.Manifold.SubmersionOfSurjectiveMFDerivWanted
 

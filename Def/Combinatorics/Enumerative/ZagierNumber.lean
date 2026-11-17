@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/ZagierNumber.lean -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+
+@[expose] public section
+
 open scoped BigOperators
 
 

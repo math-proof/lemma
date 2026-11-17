@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Order.Dilworth
-import Lemma.Finset.Order.Dilworth
+import Theorem.Finset.Order.Dilworth
 import Mathlib.Data.Fintype.Card
 import Mathlib.Data.Fintype.Defs
 import Mathlib.Order.Defs.PartialOrder

@@ -1,9 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/HilbertClassField.lean -/
 
-import Mathlib.FieldTheory.Galois.Abelian
-import Mathlib.NumberTheory.NumberField.InfinitePlace.Ramification
-import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
-import Mathlib.RingTheory.Unramified.Locus
+module
+
+public import Mathlib.FieldTheory.Galois.Abelian
+public import Mathlib.NumberTheory.NumberField.InfinitePlace.Ramification
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
+public import Mathlib.RingTheory.Unramified.Locus
+public section
+
 open scoped NumberField
 
 /-!

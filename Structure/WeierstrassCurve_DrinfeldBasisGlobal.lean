@@ -1,13 +1,15 @@
-import Mathlib
-import Structure.WeierstrassCurve_ProjModel
-import Abbrev.AlgebraicGeometry_RelEffCartierDivSum
-import Structure.ModularCurve_WeierstrassLevelComponents
+module
+
+public import Mathlib
+public import Structure.WeierstrassCurve_ProjModel
+public import Abbrev.AlgebraicGeometry_RelEffCartierDivSum
+public import Structure.ModularCurve_WeierstrassLevelComponents
 
 set_option autoImplicit false
 
 universe u
 
-noncomputable section
+public noncomputable section
 
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits NeronModelInfra WeierstrassProjModel
 

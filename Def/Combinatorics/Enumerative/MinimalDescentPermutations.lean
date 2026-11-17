@@ -1,11 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/MinimalDescentPermutations.lean -/
 
-import Mathlib.Data.Set.Function
-import Mathlib.Order.Interval.Finset.Nat
-import Mathlib.Algebra.Order.Ring.Nat
-import Mathlib.Algebra.Order.Sub.Basic
-import Mathlib.Data.Nat.SuccPred
+module
 
+public import Mathlib.Data.Set.Function
+public import Mathlib.Order.Interval.Finset.Nat
+public import Mathlib.Algebra.Order.Ring.Nat
+public import Mathlib.Algebra.Order.Sub.Basic
+public import Mathlib.Data.Nat.SuccPred
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.ProjectionTheory.code.MultiplicativeConvolution
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.MultiplicativeConvolution
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.LinnikLargeSieve
+import Theorem.Real.Atlas.v1.ProjectionTheory.code.MultiplicativeConvolution
+import Theorem.Real.Atlas.v1.ProjectionTheory.code.LinnikLargeSieve
 import Def.v1.Atlas.ProjectionTheory.code.LinnikLargeSieve
 open Finset Complex Nat BigOperators
 

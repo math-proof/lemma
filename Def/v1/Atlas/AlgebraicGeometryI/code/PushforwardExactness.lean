@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Category.ModuleCat.ChangeOfRings
-import Mathlib.CategoryTheory.Limits.Preserves.Finite
-import Mathlib.CategoryTheory.Adjunction.Limits
-import Mathlib.Topology.Sheaves.Functors
-import Mathlib.AlgebraicGeometry.Scheme
-import Mathlib.Algebra.Category.Grp.Basic
-import Instance.v1.Atlas.AlgebraicGeometryI.code.PushforwardExactness
+module
+
+public import Mathlib.Algebra.Category.ModuleCat.ChangeOfRings
+public import Mathlib.CategoryTheory.Limits.Preserves.Finite
+public import Mathlib.CategoryTheory.Adjunction.Limits
+public import Mathlib.Topology.Sheaves.Functors
+public import Mathlib.AlgebraicGeometry.Scheme
+public import Mathlib.Algebra.Category.Grp.Basic
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.PushforwardExactness
+
+@[expose] public section
+
 open AlgebraicGeometry CategoryTheory CategoryTheory.Limits TopCat
 
 universe u v

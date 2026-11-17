@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.HeckeAlgebra.OperatorCommutativity.Part2
-import Lemma.Finsupp.LambdaLift.eq.SMul
+module
+
+public import Def.v1.Atlas.Buildings.code.HeckeAlgebra.OperatorCommutativity.Part2
+public import Theorem.Finsupp.LambdaLift.eq.SMul
+public section
+
 open scoped Classical
 
 

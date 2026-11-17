@@ -1,7 +1,6 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicCurve_RatFuncPlaceClassification.lean: instance decls only.
 import Mathlib
 import Instance.AlgebraicCurve_RatFuncPlaces
-import Lemma.Valuation.RatFuncPlaceInfty
 
 set_option autoImplicit false
 

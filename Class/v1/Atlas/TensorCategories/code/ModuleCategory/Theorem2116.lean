@@ -10,10 +10,8 @@ LICENSE file in the root directory of this source tree.
 
 import Structure.v1.Atlas.TensorCategories.code.ModuleCategory.Theorem2112
 import Def.v1.Atlas.TensorCategories.code.InternalHom.Part4
-import Lemma.Category.Atlas.v1.TensorCategories.code.InternalHom
 import Mathlib.CategoryTheory.Monoidal.Mod_
 open CategoryTheory MonoidalCategory LeftModCat
-
 
 namespace CategoryTheory
 

@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeState.lean -/
 
-import Def.CPythonListsort.Code.Transcription.Comparator
-import Def.CPythonListsort.Code.Transcription.Minrun.Part3
-import Theorem.CPythonListsort.Code.Transcription.SortSlice
-import Structure.CPythonListsort.Code.Transcription.MergeState
+module
+
+public import Def.CPythonListsort.Code.Transcription.Comparator
+public import Def.CPythonListsort.Code.Transcription.Minrun.Part3
+public import Theorem.CPythonListsort.Code.Transcription.SortSlice
+public import Structure.CPythonListsort.Code.Transcription.MergeState
 /-!
 # `MergeState` and pending runs
 
@@ -20,7 +22,7 @@ universe u v
 
 /-- Whether the temporary key pointer denotes the inline array, heap storage,
 or storage that has already been released. -/
-inductive TempBacking where
+public inductive TempBacking where
   | inline
   | heap
   | released
@@ -28,7 +30,7 @@ inductive TempBacking where
 
 /-- The two logically distinct payload regions participating in merge bulk
 copies.  `main` is `MergeState.data`; `temporary` is `MergeState.a`. -/
-inductive MergeStorageRegion where
+public inductive MergeStorageRegion where
   | main
   | temporary
   deriving DecidableEq, Repr

@@ -8,16 +8,21 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Calculus.DifferentialForm.Basic
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.MeasureTheory.Function.LpSpace.Basic
-import Mathlib.MeasureTheory.Function.LpSeminorm.Basic
-import Mathlib.Analysis.Calculus.ContDiff.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Geometry.Manifold.ContMDiff.NormedSpace
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
-import Structure.v1.Atlas.GeometryOfManifolds.code.EllipticRegularityBridge
+module
+
+public import Mathlib.Analysis.Calculus.DifferentialForm.Basic
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.MeasureTheory.Function.LpSpace.Basic
+public import Mathlib.MeasureTheory.Function.LpSeminorm.Basic
+public import Mathlib.Analysis.Calculus.ContDiff.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Geometry.Manifold.ContMDiff.NormedSpace
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
+public import Structure.v1.Atlas.GeometryOfManifolds.code.EllipticRegularityBridge
+
+@[expose] public section
+
 set_option autoImplicit false
 
 

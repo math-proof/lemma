@@ -8,18 +8,23 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
-import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
-import Mathlib.Analysis.SpecialFunctions.Pow.Continuity
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
-import Mathlib.Analysis.Calculus.MeanValue
-import Mathlib.Analysis.MeanInequalitiesPow
-import Mathlib.Analysis.MeanInequalities
-import Mathlib.Analysis.Convex.SpecificFunctions.Basic
-import Mathlib.Data.Real.Basic
-import Mathlib.Tactic
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
+public import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
+public import Mathlib.Analysis.SpecialFunctions.Pow.Continuity
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+public import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
+public import Mathlib.Analysis.Calculus.MeanValue
+public import Mathlib.Analysis.MeanInequalitiesPow
+public import Mathlib.Analysis.MeanInequalities
+public import Mathlib.Analysis.Convex.SpecificFunctions.Basic
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Tactic
+
+@[expose] public section
+
 open Real Set
 
 

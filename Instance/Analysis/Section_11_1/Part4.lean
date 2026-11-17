@@ -1,5 +1,7 @@
-import Mathlib
-import Theorem.Analysis.Section_11_1.Part3
+module
+
+public import Mathlib
+public import Instance.Analysis.Section_11_1
 /-!
 # Analysis I, Section 11.1: Partitions
 
@@ -16,6 +18,7 @@ Main constructions and results of this section:
 
 -/
 
+@[expose] public section
 
 namespace Chapter11
 

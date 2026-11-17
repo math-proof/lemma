@@ -1,10 +1,12 @@
-import Structure.CerednikDrinfeld_JPrimeTorsionDatum
-import Instance.Compat_Mathlib430
-import Def.CerednikDrinfeld_ToricUniformization
+module
+
+public import Structure.CerednikDrinfeld_JPrimeTorsionDatum
+public import Instance.Compat_Mathlib430
+public import Def.CerednikDrinfeld_ToricUniformization
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace CerednikDrinfeld
 

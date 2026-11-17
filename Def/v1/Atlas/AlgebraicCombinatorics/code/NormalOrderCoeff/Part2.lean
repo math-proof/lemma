@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.Tactic
-import Abbrev.v1.Atlas.AlgebraicCombinatorics.code.NormalOrderCoeff
+module
+
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.Tactic
+public import Abbrev.v1.Atlas.AlgebraicCombinatorics.code.NormalOrderCoeff
+
+@[expose] public section
+
 set_option autoImplicit false
 
 

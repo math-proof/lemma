@@ -8,17 +8,22 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.DedekindDomain.Basic
-import Mathlib.RingTheory.DedekindDomain.Dvr
-import Mathlib.RingTheory.DedekindDomain.Ideal.Basic
-import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
-import Mathlib.RingTheory.DedekindDomain.Factorization
-import Mathlib.RingTheory.PrincipalIdealDomain
-import Mathlib.RingTheory.FractionalIdeal.Operations
-import Mathlib.RingTheory.FractionalIdeal.Extended
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.RingTheory.Localization.AtPrime.Basic
-import Mathlib.RingTheory.Ideal.Quotient.Operations
+module
+
+public import Mathlib.RingTheory.DedekindDomain.Basic
+public import Mathlib.RingTheory.DedekindDomain.Dvr
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Basic
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
+public import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Mathlib.RingTheory.PrincipalIdealDomain
+public import Mathlib.RingTheory.FractionalIdeal.Operations
+public import Mathlib.RingTheory.FractionalIdeal.Extended
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.RingTheory.Localization.AtPrime.Basic
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+
+@[expose] public section
+
 open Ideal
 
 

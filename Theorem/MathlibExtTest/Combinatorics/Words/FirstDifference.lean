@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Words.FirstDifference
-import Lemma.Finset.Words.FirstDifference
+import Theorem.Finset.Words.FirstDifference
 
 
 namespace MetaMathlibExt

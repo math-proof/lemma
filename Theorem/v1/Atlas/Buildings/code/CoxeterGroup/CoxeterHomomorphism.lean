@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.BraidRelationProof
-import Mathlib.GroupTheory.Coxeter.Basic
+module
+
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.BraidRelationProof
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.GeometricRepresentation.Part2
+public import Mathlib.GroupTheory.Coxeter.Basic
 open Finset BigOperators CoxeterGroup
+
+public section
 
 
 namespace CoxeterGroup
@@ -20,7 +25,7 @@ variable {B : Type*} [DecidableEq B] [Fintype B]
 
 /-- The family of reflections $\sigma_s \in GL(\mathbb{R}^B)$ satisfies the
 Coxeter braid relations, so it satisfies the lifting hypothesis for $M$. -/
-theorem sigmaLinearEquiv_isLiftable (M : CoxeterMatrix B) :
+public theorem sigmaLinearEquiv_isLiftable (M : CoxeterMatrix B) :
     M.IsLiftable (fun s => sigmaLinearEquiv M s) := by
   intro s t
 

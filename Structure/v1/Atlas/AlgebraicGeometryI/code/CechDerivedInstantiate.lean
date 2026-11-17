@@ -8,12 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.AlgebraicGeometryI.code.CohomologyConnection
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CohomologyConnection
-import Def.v1.Atlas.AlgebraicGeometryI.code.CechDerivedInstantiate
+module
+
+public import Structure.v1.Atlas.AlgebraicGeometryI.code.CohomologyConnection
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CohomologyConnection
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CechDerivedInstantiate
 
 
-noncomputable section
+public noncomputable section
 
 open CategoryTheory CategoryTheory.Limits
 

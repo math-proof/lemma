@@ -2,7 +2,7 @@
 
 
 import Def.RepresentationTheory.Homological.TateCohomology.HerbrandQuotient.Part2
-import Lemma.Int.TateCohomologyCard.eq.CardTateCohomology
+import Theorem.Int.TateCohomologyCard.eq.CardTateCohomology
 open CategoryTheory TateCohomology
 
 universe u

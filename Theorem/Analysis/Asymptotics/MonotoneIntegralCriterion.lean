@@ -1,6 +1,9 @@
-import Mathlib.Analysis.Asymptotics.AsymptoticEquivalent
-import Mathlib.MeasureTheory.Integral.Bochner.Set
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+module
+
+public import Mathlib.Analysis.Asymptotics.AsymptoticEquivalent
+public import Mathlib.MeasureTheory.Integral.Bochner.Set
+public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+
 /-!
 # Integral criterion for asymptotic equivalence to the identity
 
@@ -9,6 +12,8 @@ if `f : ℝ → ℝ` is nondecreasing on `[1, ∞)` and the integral
 `x ↦ ∫ t in Set.Ioc 1 x, (f t - t) / t ^ 2` converges to a finite limit as
 `x → ∞`, then `f x ~ x`.
 -/
+
+public section
 
 
 namespace Asymptotics

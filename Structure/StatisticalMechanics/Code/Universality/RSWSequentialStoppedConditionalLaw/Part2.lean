@@ -8,12 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.StatisticalMechanics.Code.Universality.RSWSequentialStoppedExplorationBridge
-import Theorem.StatisticalMechanics.Code.Universality.RSWConnectorSeededMassCapstone.Part2
-import Theorem.StatisticalMechanics.Code.FK.ActiveBoundaryEquiv.Part2
-import Theorem.StatisticalMechanics.Code.FK.BoundaryEdgeAbsorption.Part3
-import Theorem.StatisticalMechanics.Code.FK.FKDisjointBoxDomainMarkov.Part3
-import Theorem.StatisticalMechanics.Code.Universality.RSWSequentialStoppedConditionalLaw.Part10
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.RSWSequentialStoppedExplorationBridge
+public import Theorem.StatisticalMechanics.Code.Universality.RSWConnectorSeededMassCapstone.Part2
+public import Theorem.StatisticalMechanics.Code.FK.ActiveBoundaryEquiv.Part2
+public import Theorem.StatisticalMechanics.Code.FK.BoundaryEdgeAbsorption.Part3
+public import Theorem.StatisticalMechanics.Code.FK.FKDisjointBoxDomainMarkov.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.RSWSequentialStoppedConditionalLaw.Part10
 open Finset SimpleGraph Set
 
 
@@ -21,7 +23,7 @@ namespace StatMech.Universality
 
 open StatMech.Percolation StatMech.Lattice StatMech.RSW.Box
 
-noncomputable section
+public noncomputable section
 
 structure RlcBookFaithfulStratumReplacement {n : Int}
     (gamma : RlcRightDiagonalPath n) (gamma' : RlcLeftDiagonalPath n)

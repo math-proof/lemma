@@ -1,7 +1,5 @@
 -- Carved from Lemma/Definitions/Def_CuspForm_HeckeOperatorFormsGammaH.lean: instance decls only.
 import Mathlib.NumberTheory.ModularForms.Basic
-import Lemma.ZMod.Inst
-import Lemma.ModularForm.HeckeOperator
 import Lemma.CuspForm.HeckeOperatorFormsGammaH
 
 set_option autoImplicit false

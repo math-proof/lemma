@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.TheoryOfComputation.code.TuringMachines.Part4
-import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.TuringMachines
+import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.TuringMachines
 import Def.v1.Atlas.TheoryOfComputation.code.NondeterministicTM
 import Notation.v1.Atlas.TheoryOfComputation.code.Reductions
 import Mathlib.Data.Fintype.Basic

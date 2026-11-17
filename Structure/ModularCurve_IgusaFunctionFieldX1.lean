@@ -1,10 +1,12 @@
-import Mathlib
-import Structure.ModularCurve_IgusaFunctionField
-import Lemma.UpperHalfPlane.X1
+module
+
+public import Mathlib
+public import Structure.ModularCurve_IgusaFunctionField
+public import Lemma.UpperHalfPlane.X1
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open CongruenceSubgroup
 open scoped MatrixGroups

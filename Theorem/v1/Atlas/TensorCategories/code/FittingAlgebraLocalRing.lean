@@ -7,13 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.RingTheory.Artinian.Module
-import Mathlib.RingTheory.LocalRing.Basic
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Mathlib.RingTheory.Nilpotent.Basic
+public import Mathlib.RingTheory.Artinian.Module
+public import Mathlib.RingTheory.LocalRing.Basic
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.RingTheory.Nilpotent.Basic
 set_option maxHeartbeats 800000
 
+public section
 
 /-- The `n`-fold composition of right-multiplication by `a` equals right-multiplication
 by `a ^ n`, as a `k`-linear endomorphism of `R`. -/

@@ -1,10 +1,12 @@
-import Structure.ModularCurve_ProlongationTuple
-import Def.ModularCurve_NodeDescent
+module
+
+public import Structure.ModularCurve_ProlongationTuple
+public import Def.ModularCurve_NodeDescent
 set_option synthInstance.maxHeartbeats 400000
 set_option maxHeartbeats 800000
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open AlgebraicCurve IsLocalRing ModularCurve
 

@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.QRDowlingPolynomial
-import Lemma.Nat.QRDowlingPolynomial
+import Theorem.Nat.QRDowlingPolynomial
 open MetaMathlibExt
 
 

@@ -1,15 +1,20 @@
-import Mathlib.MeasureTheory.Measure.WithDensity
-import Mathlib.Data.EReal.Operations
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
-import Class.Probability.Rv
-import Class.Probability.SymbolicProbability
+module
+
+public import Mathlib.MeasureTheory.Measure.WithDensity
+public import Mathlib.Data.EReal.Operations
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
+public import Class.Probability.Rv
+public import Class.Probability.SymbolicProbability
+
 open MeasureTheory
 
 
 export Expectation (expectation)
 
+
+@[expose] public section
 
 /--
 [sympy.Expectation](https://github.com/sympy/sympy/blob/master/sympy/stats/symbolic_probability.py)

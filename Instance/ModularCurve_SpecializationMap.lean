@@ -1,6 +1,6 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_SpecializationMap.lean: instance decls only.
 import Lemma.HahnSeries.JqCoeff
-import Lemma.LaurentSeries.LaurentCoeff
+import Theorem.LaurentSeries.LaurentCoeff
 import Instance.ModularCurve_PhiGen
 import Class.AlgebraicCurve_DivisorClassGroup
 import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure

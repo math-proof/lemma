@@ -1,11 +1,15 @@
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Data.Matrix.Mul
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Instance.Probability.Process.StochasticProcessTypes.Part3
-import Abbrev.Analysis.InnerProductSpace.EuclideanVec
-import Def.Dynamics.ActorCritic.Part2
+module
+
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Data.Matrix.Mul
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Instance.Probability.Process.StochasticProcessTypes.Part3
+public import Abbrev.Analysis.InnerProductSpace.EuclideanVec
+public import Def.Dynamics.ActorCritic.Part2
+public section
+
 open Matrix
 
 universe u v

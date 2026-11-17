@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/Corollary_1_51_5.lean -/
 
 /-
@@ -8,10 +10,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.TensorProduct.Basic
-import Mathlib.RingTheory.Finiteness.Basic
-import Mathlib.LinearAlgebra.Dual.Defs
-import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.RingTheory.TensorProduct.Basic
+public import Mathlib.RingTheory.Finiteness.Basic
+public import Mathlib.LinearAlgebra.Dual.Defs
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public section
+
 open scoped TensorProduct
 
 universe u₁ u₂

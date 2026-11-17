@@ -17,7 +17,7 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 import Mathlib.Algebra.Order.Ring.Abs
 import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Thm_4_8
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Thm_4_8
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Thm_4_8
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Thm_4_10_Bridges
 import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Thm_4_10_Bridges
 open MeasureTheory Matrix Real Finset BigOperators

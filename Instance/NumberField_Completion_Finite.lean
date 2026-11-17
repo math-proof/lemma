@@ -1,7 +1,13 @@
 -- Carved from Lemma/Definitions/Def_NumberField_Completion_Finite.lean: instance decls only.
-import Mathlib
-import Instance.DedekindDomain_AdicValuation_InlineSpecific
-import Instance.Mathlib_LinearAlgebra_Countable
+
+module
+
+public import Mathlib
+public import Instance.DedekindDomain_AdicValuation_InlineSpecific
+public import Instance.Mathlib_LinearAlgebra_Countable
+
+@[expose] public section
+
 set_option maxHeartbeats 1200000
 set_option synthInstance.maxHeartbeats 400000
 

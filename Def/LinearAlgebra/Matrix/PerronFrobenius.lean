@@ -1,18 +1,21 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/PerronFrobenius.lean -/
 
-import Mathlib.LinearAlgebra.Matrix.Irreducible.Defs
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.Normed.Order.Lattice
-import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.Tactic.FunProp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Push
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.Instances.Matrix
+module
 
+public import Mathlib.LinearAlgebra.Matrix.Irreducible.Defs
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Normed.Order.Lattice
+public import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
+public import Mathlib.RingTheory.SimpleRing.Principal
+public import Mathlib.Tactic.FunProp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Push
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.Instances.Matrix
+
+@[expose] public section
 
 section
 

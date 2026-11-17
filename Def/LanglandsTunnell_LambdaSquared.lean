@@ -1,9 +1,13 @@
-import Mathlib.NumberTheory.NumberField.Basic
-import Mathlib.RingTheory.DedekindDomain.AdicValuation
-import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
-import Mathlib.RingTheory.Discriminant
-import Mathlib.NumberTheory.RamificationInertia.Basic
-import Mathlib.Data.Complex.Basic
+module
+
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
+public import Mathlib.RingTheory.Discriminant
+public import Mathlib.NumberTheory.RamificationInertia.Basic
+public import Mathlib.Data.Complex.Basic
+
+@[expose] public section
 
 set_option autoImplicit false
 

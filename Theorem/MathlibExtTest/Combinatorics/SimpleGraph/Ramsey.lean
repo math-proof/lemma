@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.SimpleGraph.Ramsey
-import Lemma.SimpleGraph.Ramsey
+import Theorem.SimpleGraph.Ramsey
 
 
 namespace SimpleGraph

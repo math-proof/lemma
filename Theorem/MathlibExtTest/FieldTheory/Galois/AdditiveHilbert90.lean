@@ -3,7 +3,7 @@
 
 import Mathlib.GroupTheory.SpecificGroups.Cyclic
 import Theorem.FieldTheory.Galois.AdditiveHilbert90
-import Lemma.Int.Galois.AdditiveHilbert90
+import Theorem.Int.Galois.AdditiveHilbert90
 variable {K L : Type*} [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
   [IsGalois K L]
 

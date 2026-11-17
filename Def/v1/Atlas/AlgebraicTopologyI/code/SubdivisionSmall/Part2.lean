@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section11
 import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section11
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section6
+import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section6
 import Structure.v1.Atlas.AlgebraicTopologyI.code.Section6
 import Mathlib.Algebra.FreeAbelianGroup.Finsupp
 import Mathlib.GroupTheory.Perm.Sign

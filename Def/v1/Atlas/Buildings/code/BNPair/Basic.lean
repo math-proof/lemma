@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.GroupTheory.Coxeter.Basic
-import Mathlib.GroupTheory.Coxeter.Length
-import Structure.v1.Atlas.Buildings.code.BNPair.Basic
+module
+
+public import Mathlib.GroupTheory.Coxeter.Basic
+public import Mathlib.GroupTheory.Coxeter.Length
+public import Structure.v1.Atlas.Buildings.code.BNPair.Basic
+
+@[expose] public section
+
 set_option linter.unusedSectionVars false
 
 

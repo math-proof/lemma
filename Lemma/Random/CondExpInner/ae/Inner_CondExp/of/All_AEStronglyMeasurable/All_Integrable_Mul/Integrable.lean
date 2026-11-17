@@ -1,6 +1,7 @@
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.MeasureTheory.Function.ConditionalExpectation.PullOut
 import Lemma.Filter.Sum.of.All_Eq
+import Initialize.Tactic.Attr.Basic
 open Filter MeasureTheory
 open scoped RealInnerProductSpace
 
@@ -36,3 +37,4 @@ private lemma main
 
 
 -- created on 2026-09-26
+-- updated on 2026-11-17

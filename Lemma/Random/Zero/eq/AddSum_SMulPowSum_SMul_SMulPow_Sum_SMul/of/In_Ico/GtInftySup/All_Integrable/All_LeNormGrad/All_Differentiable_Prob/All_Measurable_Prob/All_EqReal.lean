@@ -2,6 +2,8 @@ import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Lemma.Random.GradVkd.eq.AddIntegral_SMul_Sum_SMul.of.All_EqReal.All_Measurable_Prob.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.In_Ico
 import Lemma.Random.Pnkd0.eq.Eq
 import Lemma.Random.PnkdAdd_1.eq.Sum_MulPnkdP1kd.of.All_EqReal
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
@@ -86,4 +88,4 @@ private lemma main
 
 
 -- created on 2026-11-13
--- updated on 2026-11-16
+-- updated on 2026-11-17

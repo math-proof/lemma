@@ -30,11 +30,11 @@ import Lemma.List.Atlas.CPythonListsort.Code.Policy.FoundNewRunPreservation
 import Lemma.List.Atlas.CPythonListsort.Code.Policy.StackDepth
 import Lemma.List.Atlas.CPythonListsort.Code.Policy.MergeForceCollapsePreservation
 import Lemma.List.Atlas.CPythonListsort.Code.Assembly.ListSortScanPolicy
-import Lemma.List.Atlas.CPythonListsort.Code.Assembly.ListSortPolicyBridge
+import Theorem.List.Atlas.CPythonListsort.Code.Assembly.ListSortPolicyBridge
 import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopLeftSafety
 import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopRightSafety
-import Lemma.List.Atlas.CPythonListsort.Code.Assembly.TempStorageLiveness
-import Lemma.List.Atlas.CPythonListsort.Code.Assembly.ListSortSafety
+import Theorem.List.Atlas.CPythonListsort.Code.Assembly.TempStorageLiveness
+import Theorem.List.Atlas.CPythonListsort.Code.Assembly.ListSortSafety
 import Lemma.List.Atlas.CPythonListsort.Code.Correctness.ReverseRangeSupport
 import Lemma.List.Atlas.CPythonListsort.Code.Correctness.MergeTargetConsistency
 import Def.CPythonListsort.Code.Policy.BoundaryPowerGeometry

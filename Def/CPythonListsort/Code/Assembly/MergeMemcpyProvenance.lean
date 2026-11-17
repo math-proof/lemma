@@ -1,10 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeMemcpyProvenance.lean -/
 
-import Structure.CPythonListsort.Code.Assembly.SortSliceSafety
-import Def.CPythonListsort.Code.Transcription.MergeLo.Part6
-import Def.CPythonListsort.Code.Transcription.MergeHi.Part6
-import Lean.Elab.Command
-import Inductive.CPythonListsort.Code.Assembly.MergeMemcpyProvenance
+module
+
+public import Structure.CPythonListsort.Code.Assembly.SortSliceSafety
+public import Def.CPythonListsort.Code.Transcription.MergeLo.Part6
+public import Def.CPythonListsort.Code.Transcription.MergeHi.Part6
+public import Inductive.CPythonListsort.Code.Assembly.MergeMemcpyProvenance
+
+@[expose] public section
+
 /-!
 # Merge memcpy call-site provenance
 

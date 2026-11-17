@@ -2,6 +2,7 @@ import Mathlib.Probability.Independence.Integration
 import Syntax.Probability.Expectation.Elab
 import Theorem.Function
 import Instance.Probability.Moments.Variance
+import Instance.Probability.SymbolicProbability
 open MeasureTheory
 
 

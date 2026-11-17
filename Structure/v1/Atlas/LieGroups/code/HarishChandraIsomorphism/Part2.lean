@@ -8,16 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.LieGroups.code.VermaModules.Part7
-import Lemma.Int.WeightSubspace.eq.ToSubmoduleWeightSpace
-import Theorem.v1.Atlas.LieGroups.code.PBW
-import Mathlib.Algebra.Algebra.Subalgebra.Basic
-import Mathlib.Algebra.Lie.OfAssociative
-import Def.v1.Atlas.LieGroups.code.HarishChandraIsomorphism.Part4
+module
+
+public import Def.v1.Atlas.LieGroups.code.VermaModules.Part7
+public import Lemma.Int.WeightSubspace.eq.ToSubmoduleWeightSpace
+public import Theorem.v1.Atlas.LieGroups.code.PBW
+public import Mathlib.Algebra.Algebra.Subalgebra.Basic
+public import Mathlib.Algebra.Lie.OfAssociative
+public import Def.v1.Atlas.LieGroups.code.HarishChandraIsomorphism.Part4
 -- Mathlib keeps LieRing.ofAssociativeRing as a local instance only
 
 
-noncomputable section
+public noncomputable section
 
 attribute [local instance 100] LieRing.ofAssociativeRing
 

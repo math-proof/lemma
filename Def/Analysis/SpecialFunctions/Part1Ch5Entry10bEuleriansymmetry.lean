@@ -2,11 +2,16 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Data.Finset.Defs
-import Mathlib.Data.Finset.Range
-import Mathlib.NumberTheory.Bernoulli
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Data.Int.Star
+module
+
+public import Mathlib.Data.Finset.Defs
+public import Mathlib.Data.Finset.Range
+public import Mathlib.NumberTheory.Bernoulli
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Data.Int.Star
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 5
 

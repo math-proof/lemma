@@ -8,6 +8,7 @@ import Lemma.Random.Var.eq.Integral
 import Lemma.Random.Expect.eq.Integral
 import Lemma.Random.All_Indep.of.All_Indep_GetSlice
 import Theorem.Probability.JointRv.AsRV
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Finset Filter Fun Random
 
 
@@ -90,4 +91,4 @@ private lemma main
 
 
 -- created on 2023-04-18
--- updated on 2026-11-12
+-- updated on 2026-11-17

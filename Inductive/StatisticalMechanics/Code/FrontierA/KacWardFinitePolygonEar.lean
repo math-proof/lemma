@@ -9,18 +9,20 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardPolygonTurning.Part2
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardFourSignMajority
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardHalfPlaneSegment
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardInteriorSideSplice
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAntipodalExclusion
-import Mathlib.Data.List.Rotate
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardFinitePolygonEar.Part10
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardPolygonTurning.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardFourSignMajority
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardHalfPlaneSegment
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardInteriorSideSplice
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAntipodalExclusion
+public import Mathlib.Data.List.Rotate
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardFinitePolygonEar.Part10
 
 
 namespace StatMech.FrontierA
 
-inductive KWVectorEarDecomposition : List ℂ → Prop
+public inductive KWVectorEarDecomposition : List ℂ → Prop
   | triangle (x y z : ℂ)
       (hx : x ≠ 0) (hy : y ≠ 0) (hz : z ≠ 0)
       (hsum : x + y + z = 0)

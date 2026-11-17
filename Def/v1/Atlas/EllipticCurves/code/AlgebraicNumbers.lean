@@ -8,12 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Complex.Basic
-import Mathlib.RingTheory.Algebraic.Basic
-import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
-import Mathlib.NumberTheory.NumberField.Basic
-import Abbrev.v1.Atlas.EllipticCurves.code.AlgebraicNumbers
+module
 
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.RingTheory.Algebraic.Basic
+public import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Abbrev.v1.Atlas.EllipticCurves.code.AlgebraicNumbers
+
+@[expose] public section
 
 namespace AlgebraicNumber
 

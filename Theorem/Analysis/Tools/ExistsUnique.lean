@@ -1,6 +1,9 @@
-import Mathlib
-import Def.Analysis.Tools.ExistsUnique
+module
 
+public import Mathlib
+public import Def.Analysis.Tools.ExistsUnique
+
+public section
 
 theorem ExistsUnique.choose_spec {α: Sort*} {p: α → Prop} (h : ∃! x, p x) :
   p h.choose := h.exists.choose_spec

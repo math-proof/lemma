@@ -1,4 +1,8 @@
-import Mathlib.Algebra.Star.Basic
+module
+
+public import Mathlib.Algebra.Star.Basic
+
+public section
 
 
 /-- Prefix `~a` for `star a`. On `ℂ` this is the conjugate; on a function it is entrywise. -/

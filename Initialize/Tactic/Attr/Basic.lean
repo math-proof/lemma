@@ -1,5 +1,11 @@
-import Def.Tactic.Attr.Basic.Part2
-import Initialize.Lean.Meta.Fun2Arrow
+module
+
+public meta import Def.Tactic.Attr.Basic.Part2
+public meta import Initialize.Lean.Meta.Fun2Arrow
+public import Theorem.Lean.Meta.Expr
+public meta import Theorem.Lean.Meta.Expr
+public meta section
+
 open Lean
 open Lean.Meta
 
@@ -32,7 +38,7 @@ initialize registerBuiltinAttribute {
   descr := "An attribute that exports a private lemma under a file-path-based public name"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let levelParams := decl.levelParams
     addDecl <| .defnDecl {
       name := (← getEnv).module.lemmaName declName
@@ -66,7 +72,7 @@ initialize registerBuiltinAttribute {
   descr := "Automatically generate the commutative version of an equality theorem"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let levelParams := decl.levelParams
     let ⟨parity, type, value⟩ := Expr.comm decl.type (.const declName (levelParams.map .param)) stx.getNum
     let ⟨moduleTokens, parity⟩ ← parity.extractParity
@@ -100,7 +106,7 @@ initialize registerBuiltinAttribute {
   descr := "Automatically generate the mp implication of an equivalence theorem"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let levelParams := decl.levelParams
     let parity := stx.getNum
     let ⟨_, type, value⟩ := Expr.mp decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param)) parity (and := stx.getIdent == `and)
@@ -135,7 +141,7 @@ initialize registerBuiltinAttribute {
   descr := "Automatically generate the mpr implication of an equivalence theorem"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let levelParams := decl.levelParams
     let parity := stx.getNum
     let ⟨_, type, value⟩ := Expr.mpr decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param)) parity (stx.getIdent == `and)
@@ -170,7 +176,7 @@ initialize registerBuiltinAttribute {
   descr := "Automatically generate the commutative mp implication of an equivalence theorem"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let levelParams := decl.levelParams
     let parity := stx.getNum
     let ⟨n, type, value⟩ := Expr.mp decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param)) parity (and := stx.getIdent == `and)
@@ -200,7 +206,7 @@ initialize registerBuiltinAttribute {
   descr := "Automatically generate the commutative mpr implication of an equivalence theorem"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let levelParams := decl.levelParams
     let parity := stx.getNum
     let ⟨n, type, value⟩ := Expr.mpr decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param)) parity (stx.getIdent == `and)
@@ -229,7 +235,7 @@ initialize registerBuiltinAttribute {
   descr := "Automatically generate the commutative version of an equivalence theorem"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let levelParams := decl.levelParams
 
     let proof := .const declName (levelParams.map .param)
@@ -264,7 +270,7 @@ initialize registerBuiltinAttribute {
   descr := "Automatically generate the swapped commutative version of an equivalence theorem"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let levelParams := decl.levelParams
 
     let proof := .const declName (levelParams.map .param)
@@ -299,7 +305,7 @@ initialize registerBuiltinAttribute {
   descr := "Automatically generate the contraposition (modus tollens) of an implication theorem"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let constructor_order ← constructor_order declName
     let levelParams := decl.levelParams
     let ⟨index, type, value⟩ := Expr.mt decl.type (.const declName (levelParams.map .param)) stx.getNum
@@ -327,7 +333,7 @@ initialize registerBuiltinAttribute {
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
     let constructor_order ← constructor_order declName
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let levelParams := decl.levelParams
     let parity := stx.getNum
     let ⟨_, type, value⟩ := Expr.mp decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param)) parity (and := stx.getIdent == `and)
@@ -357,7 +363,7 @@ initialize registerBuiltinAttribute {
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
     let constructor_order ← constructor_order declName
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let levelParams := decl.levelParams
     let parity := stx.getNum
     let ⟨_, type, value⟩ := Expr.mpr decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param)) parity (stx.getIdent == `and)
@@ -386,7 +392,7 @@ initialize registerBuiltinAttribute {
   descr := "Automatically generate the mt version (both sides negated) of an equivalence theorem"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let levelParams := decl.levelParams
     let ⟨type, value⟩ := Expr.is.mt decl.type (.const declName (levelParams.map .param))
     addAndCompile <| .thmDecl {
@@ -402,7 +408,7 @@ initialize registerBuiltinAttribute {
   descr := "Automatically generate the left introduction of a disjunction theorem"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let levelParams := decl.levelParams
     let parity := stx.getNum
     let ⟨parity, type, value⟩ := Expr.disjunction decl.type (.const declName (levelParams.map .param)) parity
@@ -419,7 +425,7 @@ initialize registerBuiltinAttribute {
   descr := "Automatically generate the right introduction of a disjunction theorem"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let levelParams := decl.levelParams
     let parity := stx.getNum
     let ⟨parity, type, value⟩ := Expr.disjunction decl.type (.const declName (levelParams.map .param)) parity false
@@ -447,7 +453,7 @@ initialize registerBuiltinAttribute {
   descr := "Extract the left conjunct (Type1.Type2.of.G → Type1.of.G; triple → Type1.of.G.fst when Type1 = Type2)"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let (type, value) :=
       Expr.andProj decl.type (.const declName (decl.levelParams.map .param)) true
     addAndCompile <| .thmDecl {
@@ -470,7 +476,7 @@ initialize registerBuiltinAttribute {
   descr := "Extract the right conjunct of the conclusion (Type1.Type2.of.G → Type2.of.G, .snd when Type1 = Type2)"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let (type, value) :=
       Expr.andProj decl.type (.const declName (decl.levelParams.map .param)) false
     addAndCompile <| .thmDecl {
@@ -494,7 +500,7 @@ initialize registerBuiltinAttribute {
   descr := "Extract And.right then And.left (Type1.Type2.Type3.of.G → Type2.of.G, .snd.fst when Type2 = Type3)"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let value0 := .const declName (decl.levelParams.map .param)
     let (type1, value1) := Expr.andProj decl.type value0 false
     let (type, value) := Expr.andProj type1 value1 true
@@ -519,7 +525,7 @@ initialize registerBuiltinAttribute {
   descr := "Extract And.right then And.right (Type1.Type2.Type3.of.G → Type3.of.G, .snd.snd when Type2 = Type3)"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let value0 := .const declName (decl.levelParams.map .param)
     let (type1, value1) := Expr.andProj decl.type value0 false
     let (type, value) := Expr.andProj type1 value1 false
@@ -544,7 +550,7 @@ initialize registerBuiltinAttribute {
   descr := "Apply mp to an equivalence, then project the LEFT conjunct (Int.LtAbs.is.LtNeg.Lt → Int.LtNeg.of.LtAbs)"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let levelParams := decl.levelParams
     let parity := stx.getNum
     -- Step 1: mp (P ↔ Q  →  P → Q)
@@ -574,7 +580,7 @@ initialize registerBuiltinAttribute {
   descr := "Apply mp to an equivalence, then project the RIGHT conjunct (Int.LtAbs.is.LtNeg.Lt → Int.Lt.of.LtAbs)"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let levelParams := decl.levelParams
     let parity := stx.getNum
     let ⟨_, mpType, mpValue⟩ :=
@@ -594,7 +600,7 @@ initialize registerBuiltinAttribute {
   descr := "Automatically generate the left introduction of a disjunction theorem from the mpr part of an equivalence theorem"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let levelParams := decl.levelParams
     let parity := stx.getNum
     let and := stx.getIdent == `and
@@ -615,7 +621,7 @@ initialize registerBuiltinAttribute {
   descr := "Automatically generate the right introduction of a disjunction theorem from the mpr part of an equivalence theorem"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let levelParams := decl.levelParams
     let parity := stx.getNum
     let and := stx.getIdent == `and
@@ -647,7 +653,7 @@ initialize registerBuiltinAttribute {
   descr := "Automatically generate the theorem with .getElem substituted by .get"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let levelParams := decl.levelParams
     let ⟨type, value⟩ := Expr.subst decl.type (.const declName (levelParams.map .param)) Expr.getElem2get stx.getNum
     addAndCompile <| .thmDecl {
@@ -663,7 +669,7 @@ initialize registerBuiltinAttribute {
   descr := "Automatically generate the comm theorem with .getElem substituted by .get"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let levelParams := decl.levelParams
     let ⟨type, value⟩ := Expr.subst decl.type (.const declName (levelParams.map .param)) Expr.getElem2get stx.getNum
     let ⟨parity, type, value⟩ := Expr.comm type value
@@ -681,7 +687,7 @@ initialize registerBuiltinAttribute {
   descr := "Automatically generate the mp theorem with .getElem substituted by .get"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let levelParams := decl.levelParams
     let ⟨type, value⟩ := Expr.subst decl.type (.const declName (levelParams.map .param)) Expr.getElem2get stx.getNum
     let ⟨_, type, value⟩ := Expr.mp type value
@@ -698,7 +704,7 @@ initialize registerBuiltinAttribute {
   descr := "Automatically generate the mpr theorem with .getElem substituted by .get"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let levelParams := decl.levelParams
     let ⟨type, value⟩ := Expr.subst decl.type (.const declName (levelParams.map .param)) Expr.getElem2get stx.getNum
     let ⟨_, type, value⟩ := Expr.mpr type value
@@ -726,7 +732,7 @@ initialize registerBuiltinAttribute {
   descr := "Automatically generate the theorem with Fin type substituted by its val type"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let levelParams := decl.levelParams
     let ⟨type, value⟩ := Expr.subst decl.type (.const declName (levelParams.map .param)) Expr.fin2val stx.getNum
     addAndCompile <| .thmDecl {
@@ -761,7 +767,7 @@ initialize registerBuiltinAttribute {
   descr := "Automatically generate the theorem with Fun/⇀ binders as bare arrows and GetElem as application"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let levelParams := decl.levelParams
     let ⟨type, value⟩ := Expr.substFun decl.type (.const declName (levelParams.map .param)) stx.getNum
     addAndCompile <| .thmDecl {
@@ -789,7 +795,7 @@ initialize registerBuiltinAttribute {
   descr := "Automatically generate the theorem with an OfNat literal substituted by a variable and an Eq hypothesis"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let levelParams := decl.levelParams
     let lit := stx.getNum
     let ⟨type, value⟩ ← MetaM.run' <| Expr.substNat decl.type (.const declName (levelParams.map .param)) lit
@@ -816,7 +822,7 @@ initialize registerBuiltinAttribute {
   descr := "Automatically generate the cast equality from an as / ≃ theorem."
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let levelParams := decl.levelParams
     let comm := stx.getIdent != `false
     let parity := stx.getNum
@@ -848,7 +854,7 @@ initialize registerBuiltinAttribute {
   descr := "Automatically generate the commuted cast equality from an as / ≃ theorem (cast then comm)."
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let levelParams := decl.levelParams
     let ⟨_, castType, castValue⟩ :=
       Expr.cast decl.type (.const declName (levelParams.map .param)) 0 true
@@ -870,7 +876,7 @@ initialize registerBuiltinAttribute {
   descr := "Automatically generate the cast.fin equality from an as / ≃ theorem."
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    let decl ← getConstInfo declName
+    let decl ← withoutExporting do getConstInfo declName
     let levelParams := decl.levelParams
     let comm := stx.getIdent != `false
     let ⟨parity, type, value⟩ := Expr.cast decl.type (.const declName (levelParams.map .param)) stx.getNum comm

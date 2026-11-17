@@ -8,17 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.AlgebraicGeometryI.code.TwistSheaf.Part2
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.TwistSheaf
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleProjective
-import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleProjective.Part4
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec20EulerSequence
+module
+
+public import Def.v1.Atlas.AlgebraicGeometryI.code.TwistSheaf.Part2
+public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.TwistSheaf
+public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleProjective
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleProjective.Part4
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec20EulerSequence
 set_option maxHeartbeats 800000
 
 open QCohProjective TwistSheaf
 
 
-noncomputable section
+public noncomputable section
 
 namespace EulerSequence
 

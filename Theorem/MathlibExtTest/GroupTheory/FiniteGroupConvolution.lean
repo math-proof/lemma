@@ -2,7 +2,7 @@
 
 
 import Def.GroupTheory.FiniteGroupConvolution
-import Lemma.Complex.Conv_Conv
+import Theorem.Complex.Conv_Conv
 open scoped BigOperators
 
 open MathlibExt.GroupTheory.FiniteGroupConvolutionWanted

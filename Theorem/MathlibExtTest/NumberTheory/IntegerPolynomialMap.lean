@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/IntegerPolynomialMap.lean -/
+module
 
+public import Def.NumberTheory.IntegerPolynomialMap
 
-import Def.NumberTheory.IntegerPolynomialMap
-
+public section
 
 namespace MetaMathlibExt
 

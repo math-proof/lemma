@@ -7,24 +7,27 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Scheme
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.Algebra.Category.ModuleCat.Sheaf.Quasicoherent
-import Mathlib.Topology.NoetherianSpace
-import Mathlib.Topology.Sheaves.Sheaf
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.Algebra.Homology.ShortComplex.Exact
-import Mathlib.Algebra.Homology.ShortComplex.ShortExact
-import Mathlib.Algebra.Category.Grp.Basic
-import Mathlib.CategoryTheory.Limits.FilteredColimitCommutesFiniteLimit
-import Mathlib.RingTheory.GradedAlgebra.Basic
-import Mathlib.RingTheory.GradedAlgebra.Homogeneous.Ideal
-import Mathlib.Algebra.DirectSum.Basic
-import Mathlib.CategoryTheory.Equivalence
-import Mathlib.CategoryTheory.ObjectProperty.FullSubcategory
-import Structure.v1.Atlas.AlgebraicGeometryI.code.Lec14QCohProjective.Part2
+public import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Scheme
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.Algebra.Category.ModuleCat.Sheaf.Quasicoherent
+public import Mathlib.Topology.NoetherianSpace
+public import Mathlib.Topology.Sheaves.Sheaf
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.Algebra.Homology.ShortComplex.Exact
+public import Mathlib.Algebra.Homology.ShortComplex.ShortExact
+public import Mathlib.Algebra.Category.Grp.Basic
+public import Mathlib.CategoryTheory.Limits.FilteredColimitCommutesFiniteLimit
+public import Mathlib.RingTheory.GradedAlgebra.Basic
+public import Mathlib.RingTheory.GradedAlgebra.Homogeneous.Ideal
+public import Mathlib.Algebra.DirectSum.Basic
+public import Mathlib.CategoryTheory.Equivalence
+public import Mathlib.CategoryTheory.ObjectProperty.FullSubcategory
+public import Structure.v1.Atlas.AlgebraicGeometryI.code.Lec14QCohProjective.Part2
 open CategoryTheory Limits TopologicalSpace AlgebraicGeometry
+
+public section
 
 universe u
 

@@ -10,8 +10,8 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.DifferentialAnalysis.code.ConvolutionDensityFix
 import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.ConvolutionDensityFix
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.TestFunctions
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzCutoffConvergence
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TestFunctions
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzCutoffConvergence
 import Instance.v1.Atlas.DifferentialAnalysis.code.TestFunctions
 import Def.v1.Atlas.DifferentialAnalysis.code.SchwartzCutoffConvergence
 import Mathlib.Analysis.Convolution

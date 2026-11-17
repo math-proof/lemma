@@ -9,12 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPairTwoCycleRelation
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPairTwoCycleRelation
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure SixVertexSignedWindingCycleTarget
     {T : EvenTorus} (source : SixVertexArrows T × SixVertexArrows T)

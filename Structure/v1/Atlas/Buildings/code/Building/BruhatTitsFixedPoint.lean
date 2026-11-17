@@ -8,20 +8,22 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.MetricSpace.Basic
-import Mathlib.Topology.MetricSpace.Isometry
-import Mathlib.Order.ConditionallyCompleteLattice.Basic
-import Mathlib.Topology.Bornology.Basic
-import Mathlib.Topology.Algebra.Order.LiminfLimsup
-import Mathlib.Analysis.SpecificLimits.Basic
-import Mathlib.Data.Real.Sqrt
-import Def.v1.Atlas.Buildings.code.Building.BruhatTitsFixedPoint
+module
+
+public import Mathlib.Topology.MetricSpace.Basic
+public import Mathlib.Topology.MetricSpace.Isometry
+public import Mathlib.Order.ConditionallyCompleteLattice.Basic
+public import Mathlib.Topology.Bornology.Basic
+public import Mathlib.Topology.Algebra.Order.LiminfLimsup
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Mathlib.Data.Real.Sqrt
+public import Def.v1.Atlas.Buildings.code.Building.BruhatTitsFixedPoint
 set_option maxHeartbeats 400000
 
 open Set Filter Topology
 
 
-noncomputable section
+public noncomputable section
 
 variable {M : Type*} [MetricSpace M]
 

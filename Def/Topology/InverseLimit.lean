@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Topology/InverseLimit.lean -/
 
-import Mathlib.Topology.Separation.Hausdorff
+module
+
+public import Mathlib.Topology.Separation.Hausdorff
+
+@[expose] public section
+
 /-!
 # Inverse limits of spaces over a preorder
 

@@ -7,9 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib
-import Def.v1.Atlas.ProjectionTheory.code.BourgainLemma.Part2
+public import Mathlib
+public import Def.v1.Atlas.ProjectionTheory.code.BourgainLemma.Part2
+
+public section
+
 /-- **ε-bootstrap step for Continuum Beck's Theorem.** If `0 < s < min(u, 1)` then
 there exist `ε > 0` and `η ∈ (0, 1)` such that the following holds: for any scale
 `Δ ∈ (0, 1)`, any `m`, any planar set `E` with a uniform "good" subset `G ⊆ E` of

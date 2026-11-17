@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldExclusion
-import Def.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldConnectorReadyCommonSquare
+module
+
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldExclusion
+public import Def.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldConnectorReadyCommonSquare
+public section
+
 open Filter MeasureTheory Set Topology
 
 

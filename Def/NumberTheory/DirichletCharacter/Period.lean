@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/DirichletCharacter/Period.lean -/
 
-import Mathlib.Algebra.Ring.Periodic
-import Mathlib.RingTheory.Coprime.Basic
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.RingTheory.Int.Basic
+module
+
+public import Mathlib.Algebra.Ring.Periodic
+public import Mathlib.RingTheory.Coprime.Basic
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.RingTheory.Int.Basic
+
+@[expose] public section
+
 /-!
 # Periods of multiplicative maps `ℤ →* R` and Dirichlet moduli
 

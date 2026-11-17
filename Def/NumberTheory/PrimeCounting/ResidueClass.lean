@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeCounting/ResidueClass.lean -/
 
-import Mathlib.NumberTheory.PrimeCounting
-import Mathlib.Data.Nat.ModEq
+module
+
+public import Mathlib.NumberTheory.PrimeCounting
+public import Mathlib.Data.Nat.ModEq
+
+@[expose] public section
+
 /-!
 # Prime counting in a residue class
 

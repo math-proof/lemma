@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/Order.lean -/
 
-import Def.CPythonListsort.Code.Transcription.Comparator
-import Mathlib.Data.List.Sort
-import Structure.CPythonListsort.Code.Assembly.Order.Part3
+module
+
+public import Def.CPythonListsort.Code.Transcription.Comparator
+public import Mathlib.Data.List.Sort
+public import Structure.CPythonListsort.Code.Assembly.Order.Part3
+
+@[expose] public section
+
 /-!
 # Order, sortedness, and occurrence-level stability specifications
 

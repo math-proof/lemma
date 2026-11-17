@@ -8,18 +8,21 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Smooth.Locus
-import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
-import Mathlib.RingTheory.KrullDimension.Field
-import Mathlib.RingTheory.KrullDimension.PID
-import Mathlib.RingTheory.KrullDimension.Polynomial
-import Mathlib.RingTheory.KrullDimension.NonZeroDivisors
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Mathlib.RingTheory.PowerSeries.Inverse
-import Mathlib.RingTheory.PowerSeries.NoZeroDivisors
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.SmoothnessOmega
+module
 
+public import Mathlib.RingTheory.Smooth.Locus
+public import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
+public import Mathlib.RingTheory.KrullDimension.Field
+public import Mathlib.RingTheory.KrullDimension.PID
+public import Mathlib.RingTheory.KrullDimension.Polynomial
+public import Mathlib.RingTheory.KrullDimension.NonZeroDivisors
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Mathlib.RingTheory.PowerSeries.Inverse
+public import Mathlib.RingTheory.PowerSeries.NoZeroDivisors
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.SmoothnessOmega
+
+@[expose] public section
 
 noncomputable section
 

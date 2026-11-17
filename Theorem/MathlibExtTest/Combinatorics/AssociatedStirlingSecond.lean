@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.AssociatedStirlingSecond
-import Lemma.Finset.AssociatedStirlingSecond
+import Theorem.Finset.AssociatedStirlingSecond
 
 
 namespace MetaMathlibExt

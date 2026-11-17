@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/MultipleCountingJacobsthalSequence.lean -/
+module
 
+public import Def.NumberTheory.MultipleCountingJacobsthalSequence
 
-import Def.NumberTheory.MultipleCountingJacobsthalSequence
-
+public section
 
 namespace MetaMathlibExt
 

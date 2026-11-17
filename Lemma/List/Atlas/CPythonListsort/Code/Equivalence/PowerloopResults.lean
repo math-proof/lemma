@@ -1,6 +1,12 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.CPythonListsort.Code.Equivalence.PowerloopResults.Part2
+module
+
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.CPythonListsort.Code.Equivalence.PowerloopResults.Part2
+public import Lemma.List.Atlas.CPythonListsort.Code.Equivalence.Powerloop
+
+public section
+
 open CPythonListsort
 
 
@@ -10,12 +16,12 @@ namespace CPythonListsort
 [powerloopInputBounds](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/PowerloopResults.lean)
 -/
 @[path]
-lemma powerloopInputBounds
-  {s1 n1 n2 n : PySSize}
+public lemma powerloopInputBounds
+  (s1 n1 n2 n : PySSize)
 -- given
   (hvalid : ValidPowerloopInput s1 n1 n2 n) :
 -- imply
-  let a := 2 * s1.toNat + n1.toNat let b := a + n1.toNat + n2.toNat 0 < n.toNat ∧ a < b ∧ b < 2 * n.toNat ∧ a < 2 ^ 63 ∧ b < 2 ^ 63 ∧ 2 * a < 2 ^ 63 ∧ 2 * b < 2 ^ 63 := by
+  let a := 2 * s1.toNat + n1.toNat; let b := a + n1.toNat + n2.toNat; 0 < n.toNat ∧ a < b ∧ b < 2 * n.toNat ∧ a < 2 ^ 63 ∧ b < 2 ^ 63 ∧ 2 * a < 2 ^ 63 ∧ 2 * b < 2 ^ 63 := by
 -- proof
   obtain ⟨_, _, _, _, hn1, hn2, hsum, hnmax⟩ := hvalid
   rw [pyListMax_eq] at hnmax
@@ -30,14 +36,14 @@ namespace CPythonListsort
 [powerloopNatStep_bounds](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/PowerloopResults.lean)
 -/
 @[path]
-lemma powerloopNatStep_bounds
-  {n : Nat}
-  {state : PowerloopNatState}
+public lemma powerloopNatStep_bounds
+  (n : Nat)
+  (state : PowerloopNatState)
 -- given
   (hstopped : state.stopped = false)
   (hbounds : PowerloopNatBounds n state) :
 -- imply
-  let next := powerloopNatStep n state next.stopped = true ∨ (next.stopped = false ∧ PowerloopNatBounds n next ∧ next.b - next.a = 2 * (state.b - state.a)) := by
+  let next := powerloopNatStep n state; next.stopped = true ∨ (next.stopped = false ∧ PowerloopNatBounds n next ∧ next.b - next.a = 2 * (state.b - state.a)) := by
 -- proof
   obtain ⟨hn, hab, hbn⟩ := hbounds
   by_cases hna : n ≤ state.a
@@ -60,15 +66,15 @@ namespace CPythonListsort
 [powerloopNatStep_result](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/PowerloopResults.lean)
 -/
 @[path]
-lemma powerloopNatStep_result
-  {n : Nat}
-  {state : PowerloopNatState}
+public lemma powerloopNatStep_result
+  (n : Nat)
+  (state : PowerloopNatState)
 -- given
   (hstopped : state.stopped = false) :
 -- imply
   (powerloopNatStep n state).result = state.result + 1 := by
 -- proof
-  simp only [powerloopNatStep, hstopped, Bool.false_eq_true, if_false]
+  simp only [powerloopNatStep, hstopped, Bool.false_eq_true, ite_false]
   split <;> split <;> simp_all
 @[simp] theorem powerloopNatLoop_of_stopped (fuel n : Nat) (state : PowerloopNatState)
   (hstopped : state.stopped = true) :
@@ -83,20 +89,20 @@ namespace CPythonListsort
 [powerloopNatLoop_unstopped_gap](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/PowerloopResults.lean)
 -/
 @[path]
-lemma powerloopNatLoop_unstopped_gap
-  {fuel n : Nat}
-  {state : PowerloopNatState}
+public lemma powerloopNatLoop_unstopped_gap
+  (fuel n : Nat)
+  (state : PowerloopNatState)
 -- given
   (hstopped : state.stopped = false)
   (hbounds : PowerloopNatBounds n state) :
 -- imply
-  let out := powerloopNatLoop fuel n state out.stopped = false → PowerloopNatBounds n out ∧ out.result = state.result + fuel ∧ out.b - out.a = 2 ^ fuel * (state.b - state.a) := by
+  let out := powerloopNatLoop fuel n state; out.stopped = false → PowerloopNatBounds n out ∧ out.result = state.result + fuel ∧ out.b - out.a = 2 ^ fuel * (state.b - state.a) := by
 -- proof
   induction fuel generalizing state with
   | zero =>
     simp [powerloopNatLoop, hbounds, hstopped]
   | succ fuel ih =>
-    simp only [powerloopNatLoop, hstopped, Bool.false_eq_true, if_false]
+    simp only [powerloopNatLoop, hstopped, Bool.false_eq_true, ite_false]
     let next := powerloopNatStep n state
     have hstep := powerloopNatStep_bounds n state hstopped hbounds
     change next.stopped = true ∨
@@ -110,7 +116,7 @@ lemma powerloopNatLoop_unstopped_gap
       obtain ⟨houtBounds, hresult, htailGap⟩ := htail
       refine ⟨houtBounds, ?_, ?_⟩
       · have hstepResult : next.result = state.result + 1 := by
-        simpa [next] using powerloopNatStep_result n state hstopped
+          simpa [next] using powerloopNatStep_result n state hstopped
         change (powerloopNatLoop fuel n next).result = state.result + (fuel + 1)
         omega
       · rw [htailGap, hgap, Nat.pow_succ]
@@ -124,9 +130,9 @@ namespace CPythonListsort
 [powerloopNatLoop_result_le](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/PowerloopResults.lean)
 -/
 @[path]
-lemma powerloopNatLoop_result_le
-  {fuel n : Nat}
-  {state : PowerloopNatState} :
+public lemma powerloopNatLoop_result_le
+  (fuel n : Nat)
+  (state : PowerloopNatState) :
 -- imply
   (powerloopNatLoop fuel n state).result ≤ state.result + fuel := by
 -- proof
@@ -136,7 +142,7 @@ lemma powerloopNatLoop_result_le
     cases hstopped : state.stopped with
     | true => simp [powerloopNatLoop, hstopped]
     | false =>
-      simp only [powerloopNatLoop, hstopped, Bool.false_eq_true, if_false]
+      simp only [powerloopNatLoop, hstopped, Bool.false_eq_true, ite_false]
       have htail := ih (powerloopNatStep n state)
       have hstep := powerloopNatStep_result n state hstopped
       omega
@@ -149,9 +155,9 @@ namespace CPythonListsort
 [powerloopNatLoop_stops_by_sixty](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/PowerloopResults.lean)
 -/
 @[path]
-lemma powerloopNatLoop_stops_by_sixty
-  {n : Nat}
-  {state : PowerloopNatState}
+public lemma powerloopNatLoop_stops_by_sixty
+  (n : Nat)
+  (state : PowerloopNatState)
 -- given
   (hstopped : state.stopped = false)
   (hbounds : PowerloopNatBounds n state)
@@ -195,10 +201,10 @@ namespace CPythonListsort
 [powerloopTraceSafe_of_bounds](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/PowerloopResults.lean)
 -/
 @[path]
-lemma powerloopTraceSafe_of_bounds
-  {fuel : Nat}
-  {n : PySSize}
-  {state : PowerloopState}
+public lemma powerloopTraceSafe_of_bounds
+  (fuel : Nat)
+  (n : PySSize)
+  (state : PowerloopState)
 -- given
   (hn : n.Nonnegative)
   (hnmax : n.toNat ≤ PY_LIST_MAX)
@@ -222,7 +228,7 @@ lemma powerloopTraceSafe_of_bounds
     have hbNonnegative := pySSize_nonnegative_of_double_lt state.b hbFit
     have hsafe : PowerloopStepSafe n state :=
       ⟨hn, haNonnegative, hbNonnegative, hab.le, haFit, hbFit⟩
-    simp only [PowerloopTraceSafe, hstopped, Bool.false_eq_true, if_false]
+    simp only [PowerloopTraceSafe, hstopped, Bool.false_eq_true, ite_false]
     refine ⟨hsafe, ?_⟩
     have heq := powerloopStep_eq_spec n state hsafe
     have hstateStopped : state.toNatState.stopped = false := by
@@ -232,12 +238,12 @@ lemma powerloopTraceSafe_of_bounds
     have hstoppedEq := congrArg (fun s : PowerloopNatState => s.stopped) heq
     obtain hnextStopped | ⟨hnextRunning, hnextBounds, _⟩ := hstep
     · have hbitStopped : (powerloopStep n state).stopped = true := by
-      change (powerloopStep n state).toNatState.stopped = true
-      exact hstoppedEq.trans hnextStopped
+        change (powerloopStep n state).toNatState.stopped = true
+        exact hstoppedEq.trans hnextStopped
       cases fuel <;> simp [PowerloopTraceSafe, hbitStopped]
     · have hbitRunning : (powerloopStep n state).stopped = false := by
-      change (powerloopStep n state).toNatState.stopped = false
-      exact hstoppedEq.trans hnextRunning
+        change (powerloopStep n state).toNatState.stopped = false
+        exact hstoppedEq.trans hnextRunning
       apply ih (powerloopStep n state) hbitRunning
       rwa [heq]
 
@@ -249,12 +255,12 @@ namespace CPythonListsort
 [powerloopInitial_toNat](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/PowerloopResults.lean)
 -/
 @[path]
-lemma powerloopInitial_toNat
-  {s1 n1 n2 n : PySSize}
+public lemma powerloopInitial_toNat
+  (s1 n1 n2 n : PySSize)
 -- given
   (hvalid : ValidPowerloopInput s1 n1 n2 n) :
 -- imply
-  let a : PySSize := 2 * s1 + n1 let b : PySSize := a + n1 + n2 a.toNat = 2 * s1.toNat + n1.toNat ∧ b.toNat = 2 * s1.toNat + n1.toNat + n1.toNat + n2.toNat := by
+  let a : PySSize := 2 * s1 + n1; let b : PySSize := a + n1 + n2; a.toNat = 2 * s1.toNat + n1.toNat ∧ b.toNat = 2 * s1.toNat + n1.toNat + n1.toNat + n2.toNat := by
 -- proof
   have hbounds := powerloopInputBounds s1 n1 n2 n hvalid
   dsimp only at hbounds ⊢
@@ -318,8 +324,8 @@ namespace CPythonListsort
 [powerloopQuotientBit_eq_residue_div](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/PowerloopResults.lean)
 -/
 @[path]
-lemma powerloopQuotientBit_eq_residue_div
-  {x n k : Nat} :
+public lemma powerloopQuotientBit_eq_residue_div
+  (x n k : Nat) :
 -- imply
   powerloopQuotientBit x n k = powerloopResidue x n k / n := by
 -- proof
@@ -353,8 +359,8 @@ namespace CPythonListsort
 [powerloopResidue_succ_of_lt](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/PowerloopResults.lean)
 -/
 @[path]
-lemma powerloopResidue_succ_of_lt
-  {x n k : Nat}
+public lemma powerloopResidue_succ_of_lt
+  (x n k : Nat)
 -- given
   (hres : powerloopResidue x n k < n) :
 -- imply
@@ -372,8 +378,8 @@ namespace CPythonListsort
 [powerloopResidue_succ_of_ge](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/PowerloopResults.lean)
 -/
 @[path]
-lemma powerloopResidue_succ_of_ge
-  {x n k : Nat}
+public lemma powerloopResidue_succ_of_ge
+  (x n k : Nat)
 -- given
   (hn : 0 < n)
   (hge : n ≤ powerloopResidue x n k) :
@@ -395,8 +401,8 @@ namespace CPythonListsort
 [powerloopQuotientBit_eq_zero_iff](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/PowerloopResults.lean)
 -/
 @[path]
-lemma powerloopQuotientBit_eq_zero_iff
-  {x n k : Nat}
+public lemma powerloopQuotientBit_eq_zero_iff
+  (x n k : Nat)
 -- given
   (hn : 0 < n) :
 -- imply
@@ -423,8 +429,8 @@ namespace CPythonListsort
 [powerloopQuotientBit_eq_one_iff](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/PowerloopResults.lean)
 -/
 @[path]
-lemma powerloopQuotientBit_eq_one_iff
-  {x n k : Nat}
+public lemma powerloopQuotientBit_eq_one_iff
+  (x n k : Nat)
 -- given
   (hn : 0 < n) :
 -- imply
@@ -450,8 +456,8 @@ namespace CPythonListsort
 [powerloopNatQuotientInvariant_init](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/PowerloopResults.lean)
 -/
 @[path]
-lemma powerloopNatQuotientInvariant_init
-  {a b n : Nat}
+public lemma powerloopNatQuotientInvariant_init
+  (a b n : Nat)
 -- given
   (ha : a < 2 * n)
   (hb : b < 2 * n) :
@@ -469,9 +475,9 @@ namespace CPythonListsort
 [powerloopNatQuotientInvariant_step](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/PowerloopResults.lean)
 -/
 @[path]
-lemma powerloopNatQuotientInvariant_step
-  {a b n : Nat}
-  {state : PowerloopNatState}
+public lemma powerloopNatQuotientInvariant_step
+  (a b n : Nat)
+  (state : PowerloopNatState)
 -- given
   (hstopped : state.stopped = false)
   (hbounds : PowerloopNatBounds n state)
@@ -480,7 +486,7 @@ lemma powerloopNatQuotientInvariant_step
   PowerloopNatQuotientInvariant a b n (powerloopNatStep n state) := by
 -- proof
   obtain ⟨hn, hab, hbn⟩ := hbounds
-  simp only [PowerloopNatQuotientInvariant, hstopped, Bool.false_eq_true, if_false] at hinvariant
+  simp only [PowerloopNatQuotientInvariant, hstopped, Bool.false_eq_true, ite_false] at hinvariant
   obtain ⟨k, hresult, haState, hbState, hprior⟩ := hinvariant
   by_cases hna : n ≤ state.a
   · have hnb : n ≤ state.b := le_trans hna hab.le
@@ -492,8 +498,8 @@ lemma powerloopNatQuotientInvariant_step
       rwa [← hbState]
     have haNext := powerloopResidue_succ_of_ge a n k hn (by rwa [← haState])
     have hbNext := powerloopResidue_succ_of_ge b n k hn (by rwa [← hbState])
-    simp only [powerloopNatStep, hstopped, Bool.false_eq_true, if_false, hna, if_true]
-    simp only [PowerloopNatQuotientInvariant, Bool.false_eq_true, if_false]
+    simp only [powerloopNatStep, hstopped, Bool.false_eq_true, ite_false, hna, ite_true]
+    simp only [PowerloopNatQuotientInvariant, Bool.false_eq_true, ite_false]
     refine ⟨k + 1, by omega, ?_, ?_, ?_⟩
     · simpa [haState] using haNext.symm
     · simpa [hbState] using hbNext.symm
@@ -505,27 +511,27 @@ lemma powerloopNatQuotientInvariant_step
         rw [haBit, hbBit]
   · by_cases hnb : n ≤ state.b
     · have haBit : powerloopQuotientBit a n k = 0 := by
-      rw [powerloopQuotientBit_eq_zero_iff a n k hn]
-      rw [← haState]
-      omega
+        rw [powerloopQuotientBit_eq_zero_iff a n k hn]
+        rw [← haState]
+        omega
       have hbBit : powerloopQuotientBit b n k = 1 := by
         rw [powerloopQuotientBit_eq_one_iff b n k hn]
         rwa [← hbState]
-      simp only [powerloopNatStep, hstopped, Bool.false_eq_true, if_false, hna, hnb,
-        if_true, PowerloopNatQuotientInvariant]
+      simp only [powerloopNatStep, hstopped, Bool.false_eq_true, ite_false, hna, hnb,
+        ite_true, PowerloopNatQuotientInvariant]
       exact ⟨k, by omega, haBit, hbBit, hprior⟩
     · have haBit : powerloopQuotientBit a n k = 0 := by
-      rw [powerloopQuotientBit_eq_zero_iff a n k hn]
-      rw [← haState]
-      omega
+        rw [powerloopQuotientBit_eq_zero_iff a n k hn]
+        rw [← haState]
+        omega
       have hbBit : powerloopQuotientBit b n k = 0 := by
         rw [powerloopQuotientBit_eq_zero_iff b n k hn]
         rw [← hbState]
         omega
       have haNext := powerloopResidue_succ_of_lt a n k (by rw [← haState]; omega)
       have hbNext := powerloopResidue_succ_of_lt b n k (by rw [← hbState]; omega)
-      simp only [powerloopNatStep, hstopped, Bool.false_eq_true, if_false, hna, hnb]
-      simp only [PowerloopNatQuotientInvariant, Bool.false_eq_true, if_false]
+      simp only [powerloopNatStep, hstopped, Bool.false_eq_true, ite_false, hna, hnb]
+      simp only [PowerloopNatQuotientInvariant, Bool.false_eq_true, ite_false]
       refine ⟨k + 1, by omega, ?_, ?_, ?_⟩
       · simpa [haState] using haNext.symm
       · simpa [hbState] using hbNext.symm
@@ -544,9 +550,9 @@ namespace CPythonListsort
 [powerloopNatQuotientInvariant_loop](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/PowerloopResults.lean)
 -/
 @[path]
-lemma powerloopNatQuotientInvariant_loop
-  {fuel a b n : Nat}
-  {state : PowerloopNatState}
+public lemma powerloopNatQuotientInvariant_loop
+  (fuel a b n : Nat)
+  (state : PowerloopNatState)
 -- given
   (hstopped : state.stopped = false)
   (hbounds : PowerloopNatBounds n state)
@@ -557,7 +563,7 @@ lemma powerloopNatQuotientInvariant_loop
   induction fuel generalizing state with
   | zero => simpa [powerloopNatLoop] using hinvariant
   | succ fuel ih =>
-    simp only [powerloopNatLoop, hstopped, Bool.false_eq_true, if_false]
+    simp only [powerloopNatLoop, hstopped, Bool.false_eq_true, ite_false]
     let next := powerloopNatStep n state
     have hnextInvariant :=
       powerloopNatQuotientInvariant_step a b n state hstopped hbounds hinvariant
@@ -578,9 +584,9 @@ namespace CPythonListsort
 [powerloopNatLoop_add](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/PowerloopResults.lean)
 -/
 @[path]
-lemma powerloopNatLoop_add
-  {first second n : Nat}
-  {state : PowerloopNatState} :
+public lemma powerloopNatLoop_add
+  (first second n : Nat)
+  (state : PowerloopNatState) :
 -- imply
   powerloopNatLoop (first + second) n state = powerloopNatLoop second n (powerloopNatLoop first n state) := by
 -- proof
@@ -590,7 +596,7 @@ lemma powerloopNatLoop_add
     cases hstopped : state.stopped with
     | true => simp [powerloopNatLoop, hstopped]
     | false =>
-      simp only [Nat.succ_add, powerloopNatLoop, hstopped, Bool.false_eq_true, if_false]
+      simp only [Nat.succ_add, powerloopNatLoop, hstopped, Bool.false_eq_true, ite_false]
       exact ih (powerloopNatStep n state)
 
 end CPythonListsort
@@ -601,8 +607,8 @@ namespace CPythonListsort
 [powerloopNatResult_of_gap_two](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/PowerloopResults.lean)
 -/
 @[path]
-lemma powerloopNatResult_of_gap_two
-  {a b n : Nat}
+public lemma powerloopNatResult_of_gap_two
+  (a b n : Nat)
 -- given
   (hn : 0 < n)
   (hab : a < b)
@@ -610,7 +616,7 @@ lemma powerloopNatResult_of_gap_two
   (hgap : 2 ≤ b - a)
   (hnmax : n ≤ PY_LIST_MAX) :
 -- imply
-  let initial : PowerloopNatState := { result := 0, a := a, b := b, stopped := false } let out := powerloopNatLoop 64 n initial out.stopped = true ∧ ∃ k < 60, out.result = k + 1 ∧ IsFirstDifferingQuotientBit a b n k := by
+  let initial : PowerloopNatState := { result := 0, a := a, b := b, stopped := false }; let out := powerloopNatLoop 64 n initial; out.stopped = true ∧ ∃ k < 60, out.result = k + 1 ∧ IsFirstDifferingQuotientBit a b n k := by
 -- proof
   let initial : PowerloopNatState :=
     { result := 0, a := a, b := b, stopped := false }
@@ -647,15 +653,15 @@ namespace CPythonListsort
 [powerloopNatResult](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/PowerloopResults.lean)
 -/
 @[path]
-lemma powerloopNatResult
-  {a b n : Nat}
+public lemma powerloopNatResult
+  (a b n : Nat)
 -- given
   (hn : 0 < n)
   (hab : a < b)
   (hbn : b < 2 * n)
   (hnmax : n ≤ PY_LIST_MAX) :
 -- imply
-  let initial : PowerloopNatState := { result := 0, a := a, b := b, stopped := false } let out := powerloopNatLoop 64 n initial out.stopped = true ∧ ∃ k < 61, out.result = k + 1 ∧ IsFirstDifferingQuotientBit a b n k := by
+  let initial : PowerloopNatState := { result := 0, a := a, b := b, stopped := false }; let out := powerloopNatLoop 64 n initial; out.stopped = true ∧ ∃ k < 61, out.result = k + 1 ∧ IsFirstDifferingQuotientBit a b n k := by
 -- proof
   let initial : PowerloopNatState :=
     { result := 0, a := a, b := b, stopped := false }
@@ -708,12 +714,12 @@ namespace CPythonListsort
 [powerloopResult](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/PowerloopResults.lean)
 -/
 @[path]
-lemma powerloopResult
-  {s1 n1 n2 n : PySSize}
+public lemma powerloopResult
+  (s1 n1 n2 n : PySSize)
 -- given
   (hvalid : ValidPowerloopInput s1 n1 n2 n) :
 -- imply
-  let a := 2 * s1.toNat + n1.toNat let b := a + n1.toNat + n2.toNat (powerloopTraced s1 n1 n2 n).stopped = true ∧ ∃ k < 60, powerloop s1 n1 n2 n = k + 1 ∧ IsFirstDifferingQuotientBit a b n.toNat k := by
+  let a := 2 * s1.toNat + n1.toNat; let b := a + n1.toNat + n2.toNat; (powerloopTraced s1 n1 n2 n).stopped = true ∧ ∃ k < 60, powerloop s1 n1 n2 n = k + 1 ∧ IsFirstDifferingQuotientBit a b n.toNat k := by
 -- proof
   have hbounds := powerloopInputBounds s1 n1 n2 n hvalid
   have htrace := powerloopTraceSafetyCore s1 n1 n2 n hvalid
@@ -752,12 +758,12 @@ namespace CPythonListsort
 [powerloopTraceSafety](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/PowerloopResults.lean)
 -/
 @[path]
-lemma powerloopTraceSafety
-  {s1 n1 n2 n : PySSize}
+public lemma powerloopTraceSafety
+  (s1 n1 n2 n : PySSize)
 -- given
   (hvalid : ValidPowerloopInput s1 n1 n2 n) :
 -- imply
-  let a := 2 * s1 + n1 let b := a + n1 + n2 PowerloopTraceSafe 64 n { result := 0, a := a, b := b, stopped := false } ∧ (powerloopTraced s1 n1 n2 n).stopped = true := by
+  let a := 2 * s1 + n1; let b := a + n1 + n2; PowerloopTraceSafe 64 n { result := 0, a := a, b := b, stopped := false } ∧ (powerloopTraced s1 n1 n2 n).stopped = true := by
 -- proof
   exact ⟨powerloopTraceSafetyCore s1 n1 n2 n hvalid,
     (powerloopResult s1 n1 n2 n hvalid).1⟩
@@ -770,7 +776,7 @@ namespace CPythonListsort
 [powerBound_relation](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/PowerloopResults.lean)
 -/
 @[path]
-lemma powerBound_relation
+public lemma powerBound_relation :
 -- imply
   POWER_BOUND + 1 = 61 ∧ 61 < MAX_MERGE_PENDING := by
 -- proof
@@ -784,8 +790,8 @@ namespace CPythonListsort
 [powerRange](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/PowerloopResults.lean)
 -/
 @[path]
-lemma powerRange
-  {s1 n1 n2 n : PySSize}
+public lemma powerRange
+  (s1 n1 n2 n : PySSize)
 -- given
   (hvalid : ValidPowerloopInput s1 n1 n2 n) :
 -- imply
@@ -818,8 +824,8 @@ private lemma pyListMax_eq_eq :
 -/
 @[path]
 private lemma powerloopNatLoop_of_stopped_eq
-  {fuel n : Nat}
-  {state : PowerloopNatState}
+  (fuel n : Nat)
+  (state : PowerloopNatState)
 -- given
   (hstopped : state.stopped = true) :
 -- imply

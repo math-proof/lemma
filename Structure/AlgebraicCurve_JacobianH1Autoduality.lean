@@ -1,10 +1,12 @@
-import Class.AlgebraicCurve_DivisorClassGroup
-import Mathlib.GroupTheory.QuotientGroup.Defs
-import Mathlib.Algebra.Group.AddChar
+module
+
+public import Class.AlgebraicCurve_DivisorClassGroup
+public import Mathlib.GroupTheory.QuotientGroup.Defs
+public import Mathlib.Algebra.Group.AddChar
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open IsDedekindDomain WithZero IsLocalRing
 

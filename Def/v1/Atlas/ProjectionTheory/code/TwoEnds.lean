@@ -8,11 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Topology.MetricSpace.Basic
-import Mathlib.Combinatorics.Enumerative.DoubleCounting
-import Abbrev.v1.Atlas.ProjectionTheory.code.TwoEnds
+module
 
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Topology.MetricSpace.Basic
+public import Mathlib.Combinatorics.Enumerative.DoubleCounting
+public import Abbrev.v1.Atlas.ProjectionTheory.code.TwoEnds
+
+@[expose] public section
 
 noncomputable section
 

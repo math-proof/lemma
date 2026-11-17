@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/ReverseSliceSafety.lean -/
 
-import Structure.CPythonListsort.Code.Assembly.SortSliceSafety
-import Def.CPythonListsort.Code.Transcription.ReverseSlice
-import Theorem.CPythonListsort.Code.Assembly.ReverseSliceSafety.Part2
+module
+
+public import Def.CPythonListsort.Code.Transcription.ReverseSlice
+public import Inductive.CPythonListsort.Code.Assembly.ReverseSliceSafety
+public import Def.CPythonListsort.Code.Assembly.ReverseSliceSafety
+public import Def.CPythonListsort.Code.Assembly.AccessTrace.Part6
 /-!
 # Slice-reversal safety
 
@@ -13,6 +16,9 @@ mode is enabled.  Each phase performs the reviewed reversal itself through
 typed access wrappers, so the trace is produced by execution rather than
 attached to an independently computed result.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

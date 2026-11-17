@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/Matrix/UpperHessenbergMatrix.lean -/
 
-import Mathlib.Data.Matrix.Basic
+module
+
+public import Mathlib.Data.Matrix.Basic
+
+@[expose] public section
+
 /-!
 # Upper Hessenberg matrices
 

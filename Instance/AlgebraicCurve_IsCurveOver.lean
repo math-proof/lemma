@@ -1,6 +1,11 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicCurve_IsCurveOver.lean: instance decls only.
-import Class.AlgebraicCurve_IsCurveOver
-import Mathlib.FieldTheory.IsAlgClosed.Basic
+
+module
+
+public import Class.AlgebraicCurve_IsCurveOver
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+
+@[expose] public section
 
 set_option autoImplicit false
 

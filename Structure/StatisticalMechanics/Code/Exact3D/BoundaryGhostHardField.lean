@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.StatisticalMechanics.Code.Exact3D.FKPositiveSubcriticalQ2Bridge.Part121
-import Theorem.StatisticalMechanics.Code.Exact3D.FiniteHardField.Part3
-import Theorem.StatisticalMechanics.Code.Sharpness.FieldGhostDict.Part4
-import Theorem.StatisticalMechanics.Code.Exact3D.BoundaryGhostHardField.Part5
+module
+
+public import Theorem.StatisticalMechanics.Code.Exact3D.FKPositiveSubcriticalQ2Bridge.Part121
+public import Theorem.StatisticalMechanics.Code.Exact3D.FiniteHardField.Part3
+public import Theorem.StatisticalMechanics.Code.Sharpness.FieldGhostDict.Part4
+public import Theorem.StatisticalMechanics.Code.Exact3D.BoundaryGhostHardField.Part5
+public section
+
 open Filter
 open scoped BigOperators Topology
 

@@ -1,14 +1,16 @@
-import Def.FLTPrelim_Ramification
-import Def.EllipticCurve_FrobeniusTrace
-import Instance.EllipticCurve_FrobeniusTrace
-import Mathlib.Algebra.MvPolynomial.CommRing
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.LinearAlgebra.Determinant
-import Mathlib.LinearAlgebra.Dimension.Finrank
+module
+
+public import Def.FLTPrelim_Ramification
+public import Def.EllipticCurve_FrobeniusTrace
+public import Instance.EllipticCurve_FrobeniusTrace
+public import Mathlib.Algebra.MvPolynomial.CommRing
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.LinearAlgebra.Determinant
+public import Mathlib.LinearAlgebra.Dimension.Finrank
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace ModularCurve
 

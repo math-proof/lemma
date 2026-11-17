@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/TrinomialCoefficient.lean -/
+module
 
+public import Def.NumberTheory.TrinomialCoefficient
+public import Mathlib.Algebra.Polynomial.Coeff
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Ring
 
-import Def.NumberTheory.TrinomialCoefficient
-import Mathlib.Algebra.Polynomial.Coeff
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
-
+public section
 
 namespace MetaMathlibExt
 

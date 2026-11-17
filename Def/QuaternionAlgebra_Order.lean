@@ -1,5 +1,9 @@
-import Mathlib
-import Structure.QuaternionAlgebra_Order
+module
+
+public import Mathlib
+public import Structure.QuaternionAlgebra_Order
+
+@[expose] public section
 
 set_option autoImplicit false
 

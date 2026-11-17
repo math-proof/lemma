@@ -37,7 +37,8 @@ lemma alternating_word_prod_eq_pow_local
       have : rest = [] := List.eq_nil_of_length_eq_zero (by omega)
       subst this; simp [pow_one]
     · have hrest_len : rest.length = 2 * (n - 1) := by
-      simp only [List.length_cons] at hlen; omega
+        simp only [List.length_cons] at hlen
+        omega
       have hge : n - 1 ≥ 1 := by omega
       have hrest0 : rest.get ⟨0, by omega⟩ = a := by
         have := halt 0 (by simp only [List.length_cons]; omega)
@@ -50,7 +51,7 @@ lemma alternating_word_prod_eq_pow_local
         intro k hk
         have := halt (k + 2) (by simp only [List.length_cons]; omega)
         simp only [List.get_cons_succ] at this; exact this
-      have ih_rest := ih (n - 1) (by omega) rest hrest_len hge halt_rest
+      have ih_rest := ih (n - 1) (by omega) (word := rest) hrest_len hge halt_rest
       have hget0' : rest.get ⟨0, by omega⟩ = a := hrest0
       have hget1' : rest.get ⟨1, by omega⟩ = b := hrest1
       rw [hget0', hget1'] at ih_rest

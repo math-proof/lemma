@@ -1,6 +1,9 @@
-import Mathlib
-import Lemma.ValuationSubring.JZeroNeronAtPData
-import Structure.ModularCurve_JZeroNeronAtPDataSameIdeal
+module
+
+public import Mathlib
+public import Structure.ModularCurve_JZeroNeronAtPDataSameIdeal
+
+@[expose] public section
 
 set_option autoImplicit false
 

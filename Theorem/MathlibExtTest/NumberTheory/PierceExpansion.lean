@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.PierceExpansion.Part2
-import Lemma.Nat.PierceExpansion
+import Theorem.Nat.PierceExpansion
 import Mathlib.Tactic.IntervalCases
 
 

@@ -9,12 +9,16 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Universality.HexStripWindingClose.Part5
-import Theorem.StatisticalMechanics.Code.Universality.HexInfraDisplacement.Part4
-import Theorem.StatisticalMechanics.Code.Universality.HexFiniteStripEnum.Part6
-import Theorem.StatisticalMechanics.Code.Universality.HexStripBandClose.Part2
+module
 
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Universality.HexStripWindingClose.Part5
+public import Theorem.StatisticalMechanics.Code.Universality.HexInfraDisplacement.Part4
+public import Theorem.StatisticalMechanics.Code.Universality.HexFiniteStripEnum.Part6
+public import Theorem.StatisticalMechanics.Code.Universality.HexStripBandClose.Part2
+
+
+public section
 
 namespace StatMech.Universality
 

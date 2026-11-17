@@ -9,14 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.KahlerManifolds
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.ConnectionsCurvature
 import Structure.v1.Atlas.GeometryOfManifolds.code.ConnectionsCurvature.Part7
 import Structure.v1.Atlas.GeometryOfManifolds.code.AdvancedKahler.Part11
 set_option autoImplicit false
 
 open DifferentialFormSpace
-
 
 /-- Linear-decay variant of the cutoff $\bar\partial$ bound:
 $\|\bar\partial s_{k,p}\|_{L^2} \le C_g\, e^{-\lambda k / 3}$. -/

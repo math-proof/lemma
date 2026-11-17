@@ -1,5 +1,10 @@
 -- Carved from Lemma/Definitions/Def_AutomorphicForm_AdelicMaximalCompact.lean: instance decls only.
-import Instance.NumberField_AdelicHaar
+
+module
+
+public import Instance.NumberField_AdelicHaar
+
+@[expose] public section
 
 set_option autoImplicit false
 

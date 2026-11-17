@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 import Def.v1.Atlas.TensorCategories.code.VecPivotal.DoubleDualIso
 import Def.v1.Atlas.TensorCategories.code.VecPivotal.MonoidalCoherence
 import Structure.v1.Atlas.TensorCategories.code.PivotalSpherical.Part3
-import Lemma.Category.Atlas.v1.TensorCategories.code.PivotalSpherical
+import Theorem.Category.Atlas.v1.TensorCategories.code.PivotalSpherical
 set_option maxHeartbeats 800000
 
 open CategoryTheory MonoidalCategory Module Category

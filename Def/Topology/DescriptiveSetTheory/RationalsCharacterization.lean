@@ -4,16 +4,21 @@
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Mathlib.Topology.Perfect
-import Mathlib.Topology.Instances.Rat
-import Mathlib.Order.CompletePartialOrder
-import Mathlib.Topology.Algebra.Module.PerfectSpace
-import Mathlib.Topology.Baire.LocallyCompactRegular
-import Mathlib.Tactic.Linarith
-import Mathlib.Topology.GDelta.MetrizableSpace
-import Mathlib.Topology.Metrizable.Uniformity
-import Mathlib.Topology.UniformSpace.Uniformizable
-import Structure.Topology.DescriptiveSetTheory.RationalsCharacterization
+module
+
+public import Mathlib.Topology.Perfect
+public import Mathlib.Topology.Instances.Rat
+public import Mathlib.Order.CompletePartialOrder
+public import Mathlib.Topology.Algebra.Module.PerfectSpace
+public import Mathlib.Topology.Baire.LocallyCompactRegular
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Topology.GDelta.MetrizableSpace
+public import Mathlib.Topology.Metrizable.Uniformity
+public import Mathlib.Topology.UniformSpace.Uniformizable
+public import Structure.Topology.DescriptiveSetTheory.RationalsCharacterization
+
+@[expose] public section
+
 /-!
 # Sierpinski's characterization of the rationals
 -/

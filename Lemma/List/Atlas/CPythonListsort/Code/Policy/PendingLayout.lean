@@ -1,6 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.CPythonListsort.Code.Policy.PendingLayout
+module
+
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.CPythonListsort.Code.Policy.PendingLayout
+
+public section
+
 open CPythonListsort
 
 
@@ -10,7 +15,7 @@ namespace CPythonListsort
 [PendingRunsCover.totalLength](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Policy/PendingLayout.lean)
 -/
 @[path]
-lemma PendingRunsCover.totalLength
+public lemma PendingRunsCover.totalLength
   {cursor limit : Nat}
   {runs : List PendingRun}
 -- given
@@ -32,10 +37,10 @@ namespace CPythonListsort
 
 /--
 [exists_pair_split_of_getElem?_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Policy/PendingLayout.lean)
+prefix/pair/suffix decomposition of `toList`.
 -/
 @[path]
-prefix/pair/suffix decomposition of `toList`. -/
-lemma Array.exists_pair_split_of_getElem?_eq_some
+public lemma Array.exists_pair_split_of_getElem?_eq_some
   {α : Type u} {xs : Array α} {i : Nat} {left right : α}
   (hleft : xs[i]? = some left)
   (hright : xs[i + 1]? = some right) :
@@ -49,7 +54,7 @@ lemma Array.exists_pair_split_of_getElem?_eq_some
   refine ⟨before, after, ?_, ?_⟩
   · simp [before, Nat.le_of_lt hi]
   · have hleftList : xs.toList[i] = left := by
-    simpa using hleft'
+      simpa using hleft'
     have hrightList : xs.toList[i + 1] = right := by
       simpa using hright'
     rw [← List.take_append_drop i xs.toList]
@@ -75,7 +80,7 @@ private lemma exists_pair_split_of_getElem_eq
 -- imply
   ∃ before after, before.length = i ∧ xs.toList = before ++ left :: right :: after := by
 -- proof
-  apply CPythonListsort.Array.exists_pair_split_of_getElem hleft hright
+  apply CPythonListsort.Array.exists_pair_split_of_getElem?_eq_some hleft hright
 
 
 -- created on 2026-10-23

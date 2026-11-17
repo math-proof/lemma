@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/MergingFreePartition.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.MergingFreePartition
+public import Mathlib.Tactic
 
-import Def.Combinatorics.Enumerative.MergingFreePartition
-import Mathlib.Tactic
-
+public section
 
 namespace MetaMathlibExt
 

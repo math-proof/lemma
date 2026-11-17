@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeMemorySafety.lean -/
 
-import Structure.CPythonListsort.Code.Assembly.ListSortTermination
-import Structure.CPythonListsort.Code.Assembly.MergeMemorySafety
+module
+
+public import Structure.CPythonListsort.Code.Assembly.ListSortTermination
+public import Structure.CPythonListsort.Code.Assembly.MergeMemorySafety
+
+@[expose] public section
+
 /-!
 # Aggregate temporary merge-memory safety
 

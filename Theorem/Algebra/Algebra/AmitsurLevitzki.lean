@@ -1,18 +1,20 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
+module
 
-import Mathlib.Data.Matrix.Basic
-import Mathlib.GroupTheory.Perm.Sign
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.LinearAlgebra.Determinant
-import Mathlib.LinearAlgebra.ExteriorAlgebra.OfAlternating
-import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Push
-import Mathlib.Tactic.Ring
+public import Mathlib.Data.Matrix.Basic
+public import Mathlib.GroupTheory.Perm.Sign
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.LinearAlgebra.Determinant
+public import Mathlib.LinearAlgebra.ExteriorAlgebra.OfAlternating
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Push
+public import Mathlib.Tactic.Ring
 
+public section
 
 namespace AmitsurLevitzki
 

@@ -1,4 +1,9 @@
-import Mathlib.Analysis.InnerProductSpace.Basic
+module
+
+public import Mathlib.Analysis.InnerProductSpace.Basic
+
+@[expose] public section
+
 /-!
 # Polar of a set in a real inner-product space
 

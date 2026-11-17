@@ -1,7 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/CallanSequence.lean -/
 
-import Mathlib.Data.Finset.Empty
+module
 
+public import Mathlib.Data.Finset.Empty
+
+
+public section
 
 namespace MetaMathlibExt
 

@@ -8,19 +8,21 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Geometry.Manifold.ContMDiff.Defs
-import Mathlib.Analysis.Complex.Circle
-import Mathlib.Topology.Algebra.Group.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Topology.ContinuousMap.Algebra
-import Mathlib.LinearAlgebra.CliffordAlgebra.Basic
-import Mathlib.LinearAlgebra.CliffordAlgebra.SpinGroup
-import Mathlib.Topology.VectorBundle.Basic
-import Def.v1.Atlas.GeometryOfManifolds.code.GaugeAction
+module
+
+public import Mathlib.Geometry.Manifold.ContMDiff.Defs
+public import Mathlib.Analysis.Complex.Circle
+public import Mathlib.Topology.Algebra.Group.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Topology.ContinuousMap.Algebra
+public import Mathlib.LinearAlgebra.CliffordAlgebra.Basic
+public import Mathlib.LinearAlgebra.CliffordAlgebra.SpinGroup
+public import Mathlib.Topology.VectorBundle.Basic
+public import Def.v1.Atlas.GeometryOfManifolds.code.GaugeAction
 set_option autoImplicit false
 
 
-noncomputable section
+public noncomputable section
 
 /-- Concrete data packaging the Seiberg–Witten setup on a $4$-manifold: spaces of connections, spinors, self-dual $2$-forms, the logarithmic derivative $f \mapsto f^{-1}df$, the Dirac operator, the self-dual curvature, Clifford multiplication, the traceless quadratic $\psi \otimes \psi^*$, and a perturbation $\mu$, together with the gauge-equivariance axioms. -/
 structure ConcreteGaugeActionData

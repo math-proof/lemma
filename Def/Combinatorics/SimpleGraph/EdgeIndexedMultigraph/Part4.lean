@@ -4,11 +4,15 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.DegreeSum
-import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
-import Mathlib.Combinatorics.SimpleGraph.Trails
-import Lemma.SimpleGraph.EulerCircuit
-import Structure.Combinatorics.SimpleGraph.EdgeIndexedMultigraph.Part2
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.DegreeSum
+public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
+public import Mathlib.Combinatorics.SimpleGraph.Trails
+public import Structure.Combinatorics.SimpleGraph.EdgeIndexedMultigraph.Part2
+
+@[expose] public section
+
 /-!
 # Finite edge-indexed multigraphs
 

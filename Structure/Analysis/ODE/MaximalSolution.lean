@@ -4,15 +4,19 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Mathlib.Topology.MetricSpace.Lipschitz
-import Mathlib.Analysis.Calculus.MeanValue
-import Mathlib.Analysis.ODE.Basic
-import Mathlib.Analysis.ODE.ExistUnique
-import Mathlib.Analysis.ODE.Gronwall
-import Mathlib.Analysis.SpecificLimits.Basic
-import Mathlib.Data.Set.Piecewise
-import Mathlib.Topology.Sequences
+module
+
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Mathlib.Topology.MetricSpace.Lipschitz
+public import Mathlib.Analysis.Calculus.MeanValue
+public import Mathlib.Analysis.ODE.Basic
+public import Mathlib.Analysis.ODE.ExistUnique
+public import Mathlib.Analysis.ODE.Gronwall
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Mathlib.Data.Set.Piecewise
+public import Mathlib.Topology.Sequences
+public section
+
 open Filter Function Metric Set
 open scoped NNReal Topology
 

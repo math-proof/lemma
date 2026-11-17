@@ -7,16 +7,18 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_2
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Def_1_2
-import Mathlib.Probability.Independence.Basic
-import Mathlib.Probability.Independence.Integration
-import Mathlib.Probability.Moments.Basic
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_2
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Def_1_2
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.Probability.Independence.Integration
+public import Mathlib.Probability.Moments.Basic
 open MeasureTheory ProbabilityTheory Real BigOperators Finset
 
 set_option maxHeartbeats 800000
 
+public section
 
 /-- **Theorem 1.6 (Sub-Gaussianity of linear combinations).** Let
 `X₁, …, Xₙ` be independent sub-Gaussian random variables with the same

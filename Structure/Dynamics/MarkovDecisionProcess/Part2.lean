@@ -1,6 +1,10 @@
-import Mathlib.Probability.Kernel.Composition.MeasureCompProd
-import Def.Dynamics.MarkovRewardProcess.Part4
-import Def.Dynamics.MarkovDecisionProcess.Part4
+module
+
+public import Mathlib.Probability.Kernel.Composition.MeasureCompProd
+public import Def.Dynamics.MarkovRewardProcess.Part4
+public import Def.Dynamics.MarkovDecisionProcess.Part4
+public section
+
 open MeasureTheory ProbabilityTheory
 
 universe u v

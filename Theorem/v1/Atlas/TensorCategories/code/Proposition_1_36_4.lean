@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Abbrev.v1.Atlas.TensorCategories.code.QuasiTensorFunctor.Part5
-import Lemma.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctor
+import Theorem.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctor
 import Abbrev.v1.Atlas.TensorCategories.code.QuasiBialgebra
 open scoped TensorProduct
 open CategoryTheory

@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/StronglyRegular.lean -/
 
 
-import Lemma.Finset.SimpleGraph.StronglyRegular
+import Theorem.Finset.SimpleGraph.StronglyRegular
 
 
 -- The Petersen parameters force every nonprincipal adjacency eigenvalue to be `1` or `-2`.

@@ -9,10 +9,15 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.SLE.Defs.Part9
-import Theorem.StatisticalMechanics.Code.SLE.Cardy.Part8
-import Inductive.StatisticalMechanics.Code.SLE.CardyCLE
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.SLE.Defs.Part9
+public import Theorem.StatisticalMechanics.Code.SLE.Cardy.Part8
+public import Inductive.StatisticalMechanics.Code.SLE.CardyCLE
+
+@[expose] public section
+
 open scoped UpperHalfPlane NNReal
 open Complex Filter Topology
 

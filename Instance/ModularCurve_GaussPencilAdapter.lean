@@ -1,5 +1,10 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_GaussPencilAdapter.lean: instance decls only.
-import Mathlib
+
+module
+
+public import Mathlib
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option synthInstance.maxHeartbeats 400000

@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.ExteriorAlgebra.Basic
-import Mathlib.LinearAlgebra.ExteriorPower.Basis
-import Mathlib.LinearAlgebra.Dimension.Finrank
+module
+
+public import Mathlib.LinearAlgebra.ExteriorAlgebra.Basic
+public import Mathlib.LinearAlgebra.ExteriorPower.Basis
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+
+@[expose] public section
+
 open ExteriorAlgebra
 
 

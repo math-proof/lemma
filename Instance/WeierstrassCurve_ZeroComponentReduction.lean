@@ -1,6 +1,10 @@
 -- Carved from Lemma/Definitions/Def_WeierstrassCurve_ZeroComponentReduction.lean: instance decls only.
-import Mathlib
-import Lemma.WeierstrassCurve.ReduceHom
+
+module
+
+public import Mathlib
+
+@[expose] public section
 
 set_option autoImplicit false
 

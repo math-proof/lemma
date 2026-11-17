@@ -1,9 +1,14 @@
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.Algebra.Polynomial.Roots
-import Mathlib.Tactic.ComputeDegree
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.NormNum
-import Theorem.AlgebraicGeometry.EllipticCurve.PointCount
+module
+
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.Algebra.Polynomial.Roots
+public import Mathlib.Tactic.ComputeDegree
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.NormNum
+public import Theorem.AlgebraicGeometry.EllipticCurve.PointCount
+
+@[expose] public section
+
 open Polynomial
 
 /-!

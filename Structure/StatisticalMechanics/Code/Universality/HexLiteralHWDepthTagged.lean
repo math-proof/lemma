@@ -9,10 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWDepth.Part26
-import Theorem.StatisticalMechanics.Code.Universality.HexTaggedColumnBound
-import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripColumn.Part2
-import Theorem.StatisticalMechanics.Code.Universality.HexContentHalfBound.Part3
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWDepth.Part26
+public import Theorem.StatisticalMechanics.Code.Universality.HexTaggedColumnBound
+public import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripColumn.Part2
+public import Theorem.StatisticalMechanics.Code.Universality.HexContentHalfBound.Part3
 
 
 namespace StatMech.Universality
@@ -21,7 +23,7 @@ open HexWalk
 
 open scoped BigOperators
 
-noncomputable section
+public noncomputable section
 
 structure HLHDBridgeOrigin (b : HexBridge) where
   turns : List ℤ

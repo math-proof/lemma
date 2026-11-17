@@ -1,12 +1,10 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_ModuliPlace.lean: instance decls only.
-import Mathlib
-import Lemma.HahnSeries.X0ModL
-import Lemma.HahnSeries.QAdicPlaceMod
-import Lemma.WeierstrassCurve.ModuliPointMap
-import Lemma.WeierstrassCurve.ReduceHom
-import Lemma.WeierstrassCurve.CyclicQuotientJ
-import Lemma.Scheme.Correspondence
-import Lemma.WeierstrassCurve.ModuliPlace
+
+module
+
+public import Mathlib
+
+@[expose] public section
 
 set_option autoImplicit false
 

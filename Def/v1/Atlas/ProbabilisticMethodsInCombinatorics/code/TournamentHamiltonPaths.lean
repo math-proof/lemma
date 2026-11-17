@@ -13,7 +13,7 @@ import Mathlib.Data.Nat.Factorial.Basic
 import Mathlib.Data.Fintype.Perm
 import Mathlib.LinearAlgebra.Matrix.Permanent
 import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter10.Permanent
-import Lemma.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter10.Permanent
+import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter10.Permanent
 import Structure.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.TournamentHamiltonPaths
 set_option maxHeartbeats 3200000
 

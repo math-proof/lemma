@@ -1,11 +1,13 @@
-import Mathlib
-import Instance.GroupCohomology_LevelSubgroup
-import Instance.FieldTheory_RatAlgClosureGalois
-import Instance.GroupCohomology_LevelQuotient
+module
+
+public import Mathlib
+public import Instance.GroupCohomology_LevelSubgroup
+public import Instance.FieldTheory_RatAlgClosureGalois
+public import Instance.GroupCohomology_LevelQuotient
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace groupCohomology
 

@@ -1,7 +1,5 @@
 import Mathlib
-import Lemma.Scheme.NeronModelPropertyBundleCarrier
 import Lemma.Scheme.CurveModel
-import Lemma.Submodule.AdelicIndex
 
 set_option autoImplicit false
 

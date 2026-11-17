@@ -1,7 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/FractalSequence.lean -/
 
-import Mathlib.Data.Set.Card
+module
 
+public import Mathlib.Data.Set.Card
+
+
+public section
 
 namespace MetaMathlibExt
 

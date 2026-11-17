@@ -1,10 +1,12 @@
-import Mathlib
-import Structure.JacJ1Iface
-import Instance.AlgebraicGeometry_SmoothProperCurveBase
+module
+
+public import Mathlib
+public import Structure.JacJ1Iface
+public import Instance.AlgebraicGeometry_SmoothProperCurveBase
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 universe u
 

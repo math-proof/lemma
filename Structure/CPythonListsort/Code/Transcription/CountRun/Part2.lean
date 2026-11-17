@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/CountRun.lean -/
 
-import Def.CPythonListsort.Code.Transcription.MergeState.Part3
-import Def.CPythonListsort.Code.Transcription.ReverseSlice
-import Def.CPythonListsort.Code.Transcription.CountRun.Part2
+module
+
+public import Def.CPythonListsort.Code.Transcription.MergeState.Part3
+public import Def.CPythonListsort.Code.Transcription.ReverseSlice
+public import Def.CPythonListsort.Code.Transcription.CountRun.Part2
 /-!
 # Natural-run detection transcription
 
@@ -19,6 +21,9 @@ return false) are reversed as they are encountered before the complete
 descending run is reversed.  Interpreting those blocks as key equality, and
 therefore as a stability statement, requires the later strict-weak-order node.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

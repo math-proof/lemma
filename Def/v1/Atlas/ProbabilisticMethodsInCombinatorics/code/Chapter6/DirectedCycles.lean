@@ -8,16 +8,21 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Combinatorics.Digraph.Basic
-import Mathlib.Combinatorics.SimpleGraph.Finite
-import Mathlib.Combinatorics.SimpleGraph.Paths
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Fintype.Basic
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Data.List.Nodup
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Inductive.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter6.DirectedCycles
+module
+
+public import Mathlib.Combinatorics.Digraph.Basic
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Mathlib.Combinatorics.SimpleGraph.Paths
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Fintype.Basic
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Data.List.Nodup
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Inductive.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter6.DirectedCycles
+
+@[expose] public section
+
 open Real Finset
 
 

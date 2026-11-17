@@ -1,12 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/LocalRing/ResidueField/DVR.lean -/
+module
 
-import Mathlib.RingTheory.LocalRing.ResidueField.Basic
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Mathlib.RingTheory.DedekindDomain.Basic
-import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
-import Mathlib.RingTheory.Ideal.GoingUp
-import Mathlib.RingTheory.Unramified.Basic
-import Mathlib.RingTheory.Filtration
+public import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Mathlib.RingTheory.DedekindDomain.Basic
+public import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
+public import Mathlib.RingTheory.Ideal.GoingUp
+public import Mathlib.RingTheory.Unramified.Basic
+public import Mathlib.RingTheory.Filtration
+
+public section
+
 variable {A B C D : Type*}
 variable [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
 variable [CommRing B] [IsDomain B] [IsDiscreteValuationRing B]

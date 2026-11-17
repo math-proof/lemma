@@ -8,16 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.LieGroups.code.CategoryOII.Part3
-import Lemma.Int.WeightLE.of.BruhatLE
-import Lemma.Int.FGUeaIotaRange
-import Lemma.Int.IsCategoryOA.of.IsCategoryOB
-import Def.v1.Atlas.LieGroups.code.DufloJoseph.Part8
-import Structure.v1.Atlas.LieGroups.code.TensorO
-import Theorem.v1.Atlas.LieGroups.code.ProjectiveFunctors
+module
+
+public import Def.v1.Atlas.LieGroups.code.CategoryOII.Part3
+public import Lemma.Int.WeightLE.of.BruhatLE
+public import Lemma.Int.FGUeaIotaRange
+public import Theorem.Int.IsCategoryOA.of.IsCategoryOB
+public import Def.v1.Atlas.LieGroups.code.DufloJoseph.Part8
+public import Structure.v1.Atlas.LieGroups.code.TensorO
+public import Theorem.v1.Atlas.LieGroups.code.ProjectiveFunctors
 
 
-noncomputable section
+public noncomputable section
 
 open scoped TensorProduct
 

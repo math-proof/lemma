@@ -5,7 +5,7 @@ Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
 import Def.NumberTheory.PrimitiveDivisor
-import Lemma.Nat.PrimitiveDivisor
+import Theorem.Nat.PrimitiveDivisor
 import Mathlib.Algebra.Polynomial.Eval.Degree
 import Mathlib.FieldTheory.Finite.Basic
 import Mathlib.NumberTheory.Multiplicity

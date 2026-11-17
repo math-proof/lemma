@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/InvertTransform.lean -/
 
-import Mathlib.RingTheory.PowerSeries.Inverse
+module
 
+public import Mathlib.RingTheory.PowerSeries.Inverse
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

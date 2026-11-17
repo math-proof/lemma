@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Asymptotics/MonotoneIntegralCriterion.lean -/
+module
 
-
-import Theorem.Analysis.Asymptotics.MonotoneIntegralCriterion
-import Mathlib.NumberTheory.Chebyshev
+public import Theorem.Analysis.Asymptotics.MonotoneIntegralCriterion
+public import Mathlib.NumberTheory.Chebyshev
 open Filter MeasureTheory Set Topology Asymptotics
 
+public section
 
 /-- Abstract signature: the criterion applies to any `MonotoneOn` function with
 convergent normalized-deviation integral. -/

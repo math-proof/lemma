@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/POrdering.lean -/
 
-import Mathlib.RingTheory.DedekindDomain.AdicValuation
+module
+
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation
+
+@[expose] public section
+
 /-!
 # Bhargava p-ordering of an infinite subset of a Dedekind domain
 

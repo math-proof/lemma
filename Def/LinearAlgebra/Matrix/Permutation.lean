@@ -1,7 +1,10 @@
-import Def.Analysis.SpecialFunctions.TensorFunctions
-import Mathlib.Data.Matrix.Basic
-import Mathlib.Logic.Equiv.Defs
+module
 
+public import Def.Analysis.SpecialFunctions.TensorFunctions
+public import Mathlib.Data.Matrix.Basic
+public import Mathlib.Logic.Equiv.Defs
+
+@[expose] public section
 
 /-- py `SwapMatrix(n, i, j)`: the permutation matrix of the transposition `(i j)`.
 Lean `Matrix` form (Fin indices; entries via `NatCast` from `KroneckerDelta`). -/

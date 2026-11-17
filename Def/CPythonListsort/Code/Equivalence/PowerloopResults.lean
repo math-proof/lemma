@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/PowerloopResults.lean -/
 
-import Def.CPythonListsort.Code.Equivalence.Powerloop
-import Mathlib
+module
+
+public import Def.CPythonListsort.Code.Equivalence.Powerloop
+public import Mathlib
+
+@[expose] public section
+
 /-!
 # Total correctness of `powerloop`
 

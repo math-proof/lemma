@@ -1,5 +1,8 @@
-import Lemma.Finset.ConverseData
-import Structure.LanglandsTunnell_JLData
+module
+
+public import Structure.LanglandsTunnell_JLData
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -6,9 +6,13 @@ All rights reserved.
 Copyright (c) 2025 AlgebraicCombinatorics Project Contributors
 Authors: AlgebraicCombinatorics Project Contributors
 -/
-import Mathlib
-import Def.Combinatorics.Enumerative.Partition.Basics.Part8
-import Abbrev.Combinatorics.Enumerative.Partition.PentagonalJacobi.Part3
+module
+
+public import Mathlib
+public import Def.Combinatorics.Enumerative.Partition.Basics.Part8
+public import Abbrev.Combinatorics.Enumerative.Partition.PentagonalJacobi.Part3
+public section
+
 open scoped Nat PowerSeries
 
 /-!

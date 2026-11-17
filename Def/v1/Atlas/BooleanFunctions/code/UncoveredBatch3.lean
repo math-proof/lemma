@@ -12,7 +12,7 @@ import Def.v1.Atlas.BooleanFunctions.code.Monotone
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Monotone
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.NoiseSensitivity
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.UniqueGames
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.UniqueGames
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Theorems
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Lemma26Lec10
 import Def.v1.Atlas.BooleanFunctions.code.NoiseSensitivity

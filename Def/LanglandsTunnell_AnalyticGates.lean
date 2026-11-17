@@ -1,10 +1,14 @@
-import Def.LanglandsTunnell_TowerCounting
-import Mathlib.Analysis.Asymptotics.Lemmas
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.RingTheory.RootsOfUnity.Complex
-import Mathlib.Topology.Algebra.InfiniteSum.Real
+module
+
+public import Def.LanglandsTunnell_TowerCounting
+public import Mathlib.Analysis.Asymptotics.Lemmas
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.RingTheory.RootsOfUnity.Complex
+public import Mathlib.Topology.Algebra.InfiniteSum.Real
+
+@[expose] public section
 
 set_option autoImplicit false
 

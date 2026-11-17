@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Sharpness.HighTempSources.Part3
-import Theorem.StatisticalMechanics.Code.Sharpness.HighTempSwitching.Part2
+module
+
+public import Theorem.StatisticalMechanics.Code.Sharpness.HighTempSources.Part3
+public import Theorem.StatisticalMechanics.Code.Sharpness.HighTempSwitching.Part2
+public section
+
 open Finset
 open scoped symmDiff
 

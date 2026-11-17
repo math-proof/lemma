@@ -7,14 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Foundations.ConfigSpace
-import Def.StatisticalMechanics.Code.Ising.Gibbs
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Foundations.ConfigSpace
+public import Def.StatisticalMechanics.Code.Ising.Gibbs
 open scoped BigOperators
 open Finset
 
+public section
 
 namespace StatMech
 

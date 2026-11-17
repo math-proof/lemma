@@ -8,11 +8,11 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TheoryOfComputation.code.ContextFree.Part4
-import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.ContextFree
-import Def.v1.Atlas.TheoryOfComputation.code.CFGtoPDA
-universe u_pda
+module
 
+public import Def.v1.Atlas.TheoryOfComputation.code.ContextFree.Part4
+public import Def.v1.Atlas.TheoryOfComputation.code.CFGtoPDA
+universe u_pda
 
 namespace CFGtoPDA
 
@@ -28,7 +28,7 @@ variable {T : Type u_pda}
 * `pushing L` — intermediate states used to push a list `L` of grammar symbols onto
   the stack one symbol per step;
 * `accept` — the unique accepting state. -/
-inductive QState (T : Type*) (N : Type) where
+public inductive QState (T : Type*) (N : Type) where
   | start | loop | pushing : List (Symbol T N) → QState T N | accept
 
 end CFGtoPDA

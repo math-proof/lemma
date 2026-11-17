@@ -2,7 +2,7 @@
 
 
 import Def.QuantumInformation.Finite.TsirelsonTight
-import Lemma.Matrix.Finite.TsirelsonTight
+import Theorem.Matrix.Finite.TsirelsonTight
 
 
 namespace MetaMathlibExt

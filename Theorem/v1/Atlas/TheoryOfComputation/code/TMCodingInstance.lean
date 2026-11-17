@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.TheoryOfComputation.code.RecursionTheorem
-import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.RecursionTheorem
+import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.RecursionTheorem
 import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.SelfReference
 import Def.v1.Atlas.TheoryOfComputation.code.SelfReference.Part7
 /-- A fixed binary encoding `⟨·⟩ : ℕ → List Bool` of natural-number TM indices. -/

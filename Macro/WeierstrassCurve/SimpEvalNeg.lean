@@ -1,3 +1,7 @@
+module
+
+public meta section
+
 /-!
 # `simp_evalNeg` tactic macro
 

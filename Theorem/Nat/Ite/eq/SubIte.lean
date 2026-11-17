@@ -1,0 +1,25 @@
+module
+
+public section
+
+
+@[comm]
+public theorem Nat.Ite.eq.SubIte
+  [Decidable p]
+  [Sub α]
+  {a b c : α} :
+-- imply
+  (if p then
+    a - c
+  else
+    b - c) = (if p then
+    a
+  else
+    b) - c := by
+-- proof
+  split_ifs <;>
+    rfl
+
+
+-- created on 2018-02-22
+-- updated on 2026-10-26

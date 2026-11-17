@@ -2,7 +2,12 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+module
+
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 9, Entry 15
 

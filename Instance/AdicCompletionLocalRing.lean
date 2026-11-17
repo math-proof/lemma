@@ -1,9 +1,14 @@
 -- Carved from Lemma/Definitions/Def_AdicCompletionLocalRing.lean: instance decls only.
-import Mathlib.RingTheory.AdicCompletion.Completeness
-import Mathlib.RingTheory.AdicCompletion.LocalRing
-import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.RingTheory.Noetherian.Defs
+
+module
+
+public import Mathlib.RingTheory.AdicCompletion.Completeness
+public import Mathlib.RingTheory.AdicCompletion.LocalRing
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.RingTheory.Noetherian.Defs
+
+@[expose] public section
 
 set_option autoImplicit false
 

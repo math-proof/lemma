@@ -4,6 +4,7 @@ import Mathlib.MeasureTheory.Measure.Decomposition.Lebesgue
 import Mathlib.MeasureTheory.MeasurableSpace.Constructions
 import Lemma.Random.All_EqIntegral_ProbJoint.of.PSpace_Joint
 import Lemma.Random.Map.eq.WithDensityProb
+import Initialize.Tactic.Attr.Basic
 open Random MeasureTheory
 
 
@@ -99,4 +100,4 @@ private lemma main
 
 
 -- created on 2020-12-08
--- updated on 2026-11-14
+-- updated on 2026-11-17

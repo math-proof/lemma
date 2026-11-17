@@ -8,19 +8,22 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Finite
-import Mathlib.Combinatorics.SimpleGraph.LapMatrix
-import Mathlib.Combinatorics.SimpleGraph.AdjMatrix
-import Mathlib.Combinatorics.SimpleGraph.Diam
-import Mathlib.Analysis.Matrix.Spectrum
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Data.Real.Basic
-import Mathlib.Data.Prod.Lex
-import Mathlib.Data.Fintype.Prod
-import Mathlib.LinearAlgebra.Matrix.Gershgorin
-import Structure.v1.Atlas.AnAlgorithmistsToolkit.code.Expanders
+module
 
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Mathlib.Combinatorics.SimpleGraph.LapMatrix
+public import Mathlib.Combinatorics.SimpleGraph.AdjMatrix
+public import Mathlib.Combinatorics.SimpleGraph.Diam
+public import Mathlib.Analysis.Matrix.Spectrum
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Data.Prod.Lex
+public import Mathlib.Data.Fintype.Prod
+public import Mathlib.LinearAlgebra.Matrix.Gershgorin
+public import Structure.v1.Atlas.AnAlgorithmistsToolkit.code.Expanders
+
+@[expose] public section
 
 namespace SpectralExpanders
 

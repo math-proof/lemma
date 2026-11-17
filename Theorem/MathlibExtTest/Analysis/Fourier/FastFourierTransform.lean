@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Fourier/FastFourierTransform.lean -/
+module
 
+public import Theorem.Analysis.Fourier.FastFourierTransform.Part2
+public import Mathlib.Tactic.NormNum
 
-import Theorem.Analysis.Fourier.FastFourierTransform.Part2
-import Mathlib.Tactic.NormNum
-
+public section
 
 namespace MathlibExt.Analysis.Fourier.FastFourierTransformWanted
 

@@ -9,10 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardPortChainGeneral.Part32
-import Mathlib.Analysis.Convex.StrictConvexSpace
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAngularPortGeometry
+module
 
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardPortChainGeneral.Part32
+public import Mathlib.Analysis.Convex.StrictConvexSpace
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAngularPortGeometry
+
+
+public section
 
 namespace StatMech.FrontierA
 

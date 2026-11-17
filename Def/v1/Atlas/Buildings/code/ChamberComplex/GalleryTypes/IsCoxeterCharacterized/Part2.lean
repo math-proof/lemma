@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.Buildings.code.ChamberComplex.Folding.Part3
-import Lemma.List.All.of.All.IsChain.Ne
-import Lemma.Finset.LabelMap.eq.ImageLabelMap.of.EqLabelMap_Head_ImageLabelMap_Head.IsChainAdjacent.Ne.All_EqLabelMap_ImageLabelMap
+import Theorem.List.All.of.All.IsChain.Ne
+import Theorem.Finset.LabelMap.eq.ImageLabelMap.of.EqLabelMap_Head_ImageLabelMap_Head.IsChainAdjacent.Ne.All_EqLabelMap_ImageLabelMap
 import Def.v1.Atlas.Buildings.code.Building.Labels
 import Structure.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes.IsCoxeterCharacterized
 open scoped Classical

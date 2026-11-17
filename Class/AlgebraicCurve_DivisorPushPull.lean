@@ -1,9 +1,13 @@
-import Class.AlgebraicCurve_DivisorClassGroup
-import Mathlib.RingTheory.Valuation.LocalSubring
-import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
-import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
-import Mathlib.RingTheory.Norm.Basic
-import Mathlib.LinearAlgebra.Dimension.Free
+module
+
+public import Class.AlgebraicCurve_DivisorClassGroup
+public import Mathlib.RingTheory.Valuation.LocalSubring
+public import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
+public import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
+public import Mathlib.RingTheory.Norm.Basic
+public import Mathlib.LinearAlgebra.Dimension.Free
+
+public section
 
 /-!
 Full Divisor push/pull / FundamentalIdentity / SumRamificationInertia API.

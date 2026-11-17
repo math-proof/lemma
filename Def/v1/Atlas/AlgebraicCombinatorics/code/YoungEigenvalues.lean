@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.AlgebraicCombinatorics.code.YoungTableaux
-import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.YoungTableaux
+import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.YoungTableaux
 import Mathlib.Algebra.Module.LinearMap.End
 import Mathlib.Algebra.Module.Prod
 import Mathlib.Data.Real.Sqrt

@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.CombinatorialOptimization.code.Matching.Berge
-import Lemma.Finset.Atlas.v1.CombinatorialOptimization.code.Matching.Berge
+import Theorem.Finset.Atlas.v1.CombinatorialOptimization.code.Matching.Berge
 import Structure.v1.Atlas.CombinatorialOptimization.code.Matching.BlossomShrinking
 open SimpleGraph
 

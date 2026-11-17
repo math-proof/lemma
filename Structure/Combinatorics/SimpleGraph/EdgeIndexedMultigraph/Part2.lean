@@ -4,11 +4,12 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.DegreeSum
-import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
-import Mathlib.Combinatorics.SimpleGraph.Trails
-import Lemma.SimpleGraph.EulerCircuit
-import Def.Combinatorics.SimpleGraph.EdgeIndexedMultigraph.Part3
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.DegreeSum
+public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
+public import Mathlib.Combinatorics.SimpleGraph.Trails
+public import Def.Combinatorics.SimpleGraph.EdgeIndexedMultigraph.Part3
 /-!
 # Finite edge-indexed multigraphs
 
@@ -16,6 +17,9 @@ Parallel edges are represented by distinct elements of the edge type. The incide
 turns such a multigraph into a simple bipartite graph and transfers Euler circuits back to an
 edge-distinguishing representation.
 -/
+public section
+
+
 
 
 namespace SimpleGraph

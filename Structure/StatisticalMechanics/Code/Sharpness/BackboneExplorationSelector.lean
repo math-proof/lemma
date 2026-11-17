@@ -9,7 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
+module
+
+public import Mathlib
+public section
+
 open Finset
 
 set_option linter.unusedSectionVars false

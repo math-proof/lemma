@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.RiordanAZSequences
-import Lemma.Finset.Enumerative.RiordanAZSequences
+import Theorem.Finset.Enumerative.RiordanAZSequences
 
 
 namespace MetaMathlibExt

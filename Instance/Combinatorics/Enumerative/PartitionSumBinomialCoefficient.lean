@@ -1,12 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/PartitionSumBinomialCoefficient.lean -/
 
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Algebra.Polynomial.Coeff
-import Mathlib.Data.Nat.Choose.Multinomial
-import Mathlib.Tactic.Ring
-import Def.Combinatorics.Enumerative.PartitionSumBinomialCoefficient
+module
 
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Algebra.Polynomial.Coeff
+public import Mathlib.Data.Nat.Choose.Multinomial
+public import Mathlib.Tactic.Ring
+public import Def.Combinatorics.Enumerative.PartitionSumBinomialCoefficient
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

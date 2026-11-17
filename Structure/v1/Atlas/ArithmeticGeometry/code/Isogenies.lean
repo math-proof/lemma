@@ -8,23 +8,27 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.GroupTheory.Torsion
-import Mathlib.GroupTheory.QuotientGroup.Basic
-import Mathlib.GroupTheory.Coset.Card
-import Mathlib.Algebra.Module.Torsion.Free
-import Mathlib.Data.ZMod.Basic
-import Mathlib.RingTheory.Algebraic.Defs
-import Mathlib.FieldTheory.Separable
-import Mathlib.FieldTheory.PurelyInseparable.Basic
-import Def.v1.Atlas.ArithmeticGeometry.code.EllipticCurves.Part7
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.EllipticCurves
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.PadicElliptic
-import Mathlib.NumberTheory.Padics.PadicNumbers
-import Mathlib.NumberTheory.Padics.PadicVal.Basic
-import Theorem.v1.Atlas.ArithmeticGeometry.code.PadicElliptic
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.WeierstrassValBound
-import Instance.v1.Atlas.ArithmeticGeometry.code.Isogenies.Part2
+module
+
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.GroupTheory.Torsion
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+public import Mathlib.GroupTheory.Coset.Card
+public import Mathlib.Algebra.Module.Torsion.Free
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.RingTheory.Algebraic.Defs
+public import Mathlib.FieldTheory.Separable
+public import Mathlib.FieldTheory.PurelyInseparable.Basic
+public import Def.v1.Atlas.ArithmeticGeometry.code.EllipticCurves.Part7
+public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.EllipticCurves
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.PadicElliptic
+public import Mathlib.NumberTheory.Padics.PadicNumbers
+public import Mathlib.NumberTheory.Padics.PadicVal.Basic
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.PadicElliptic
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.WeierstrassValBound
+public import Instance.v1.Atlas.ArithmeticGeometry.code.Isogenies.Part2
+public section
+
 open WeierstrassCurve
 
 /-- The function-field extension data associated to an isogeny $\varphi$: a pair of

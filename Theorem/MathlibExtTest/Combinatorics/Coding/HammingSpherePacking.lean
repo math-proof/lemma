@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Coding/HammingSpherePacking.lean -/
 
 
-import Lemma.Finset.Coding.HammingSpherePacking
+import Theorem.Finset.Coding.HammingSpherePacking
 open MathlibExt.Combinatorics.Coding.HammingSpherePacking
 
 

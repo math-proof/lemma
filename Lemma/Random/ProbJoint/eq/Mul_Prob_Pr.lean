@@ -1,4 +1,6 @@
 import Lemma.Random.Integral.eq.Integral_Integral_SMul.of.All_Eq_Joint.All_EqWithDensity
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
@@ -94,4 +96,4 @@ private lemma main
 
 
 -- created on 2026-09-26
--- updated on 2026-11-16
+-- updated on 2026-11-17

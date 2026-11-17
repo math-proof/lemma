@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Class.v1.Atlas.TensorCategories.code.ModuleFunctorDefs
-import Lemma.Category.Atlas.v1.TensorCategories.code.ModuleFunctorDefs
-import Def.v1.Atlas.TensorCategories.code.HomExactImpliesExact
+module
+
+public import Class.v1.Atlas.TensorCategories.code.ModuleFunctorDefs
+public import Lemma.Category.Atlas.v1.TensorCategories.code.ModuleFunctorDefs
+public import Def.v1.Atlas.TensorCategories.code.HomExactImpliesExact
+public section
+
 set_option maxHeartbeats 800000
 
 universe v₁ v₂ v₃ u₁ u₂ u₃

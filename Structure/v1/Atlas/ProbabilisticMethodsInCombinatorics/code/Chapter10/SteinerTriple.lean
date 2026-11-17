@@ -8,11 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
+module
+
+public import Mathlib
 open MeasureTheory Filter Topology Real Set
 
 
-noncomputable section
+public noncomputable section
 
 /-- A Steiner triple system on $\alpha$ (Definition 10.2.8): a collection of 3-element subsets
 ("triples") such that every pair of distinct elements is contained in exactly one triple. -/

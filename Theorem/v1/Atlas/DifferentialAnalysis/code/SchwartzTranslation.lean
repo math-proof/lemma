@@ -7,12 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
-import Def.v1.Atlas.DifferentialAnalysis.code.SchwartzSeminorms
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzSeminorms
+public import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
+public import Def.v1.Atlas.DifferentialAnalysis.code.SchwartzSeminorms
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzSeminorms
 open scoped SchwartzMap
 
+public section
 
 noncomputable section
 

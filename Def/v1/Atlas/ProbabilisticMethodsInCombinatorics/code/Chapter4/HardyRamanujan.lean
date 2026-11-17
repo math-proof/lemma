@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Data.Nat.Factorization.Basic
+module
+
+public import Mathlib.Data.Nat.Prime.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Data.Nat.Factorization.Basic
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 open Filter Real Finset

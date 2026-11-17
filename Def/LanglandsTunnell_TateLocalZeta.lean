@@ -1,5 +1,9 @@
-import Mathlib.MeasureTheory.Measure.Haar.DistribChar
-import Mathlib.Topology.LocallyConstant.Basic
+module
+
+public import Mathlib.MeasureTheory.Measure.Haar.DistribChar
+public import Mathlib.Topology.LocallyConstant.Basic
+
+@[expose] public section
 
 noncomputable section
 

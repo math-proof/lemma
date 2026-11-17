@@ -9,10 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexBoundaryPhases.Part2
-import Theorem.StatisticalMechanics.Code.Universality.HexBoundaryIdentityClose.Part3
-import Theorem.StatisticalMechanics.Code.Universality.HexProjPhaseClose
+module
 
+public import Theorem.StatisticalMechanics.Code.Universality.HexBoundaryPhases.Part2
+public import Theorem.StatisticalMechanics.Code.Universality.HexBoundaryIdentityClose.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.HexProjPhaseClose
+
+
+public section
 
 namespace StatMech.Universality
 

@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Def.v1.Atlas.GeometryOfManifolds.code.HodgeRepresentative
+module
+
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Def.v1.Atlas.GeometryOfManifolds.code.HodgeRepresentative
+public section
+
 set_option autoImplicit false
 
 

@@ -8,14 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.LieGroups.code.CategoryO.Part3
-import Lemma.Int.IsInQPlus0
-import Lemma.Int.Surjective_Comp.of.Surjective
-import Def.v1.Atlas.LieGroups.code.TensorHomAxiom
-import Theorem.v1.Atlas.LieGroups.code.CategoryOII
+module
+
+public import Def.v1.Atlas.LieGroups.code.CategoryO.Part3
+public import Lemma.Int.IsInQPlus0
+public import Lemma.Int.Surjective_Comp.of.Surjective
+public import Def.v1.Atlas.LieGroups.code.TensorHomAxiom
+public import Theorem.v1.Atlas.LieGroups.code.CategoryOII
 
 
-noncomputable section
+public noncomputable section
 
 open Classical
 

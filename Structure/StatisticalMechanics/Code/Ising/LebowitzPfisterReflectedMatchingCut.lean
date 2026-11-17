@@ -9,8 +9,10 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterMatchingCutCurrent.Part3
-import Theorem.StatisticalMechanics.Code.Ising.FiniteVolumeRelabel
+module
+
+public import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterMatchingCutCurrent.Part3
+public import Theorem.StatisticalMechanics.Code.Ising.FiniteVolumeRelabel
 open Finset
 open scoped symmDiff
 
@@ -19,7 +21,7 @@ namespace StatMech.Ising
 
 open StatMech.Sharpness
 
-noncomputable section
+public noncomputable section
 
 variable {W I : Type*} [Fintype W] [DecidableEq W]
   [Fintype I] [DecidableEq I]

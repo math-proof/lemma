@@ -8,14 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.BigOperators.Finsupp.Basic
-import Mathlib.GroupTheory.QuotientGroup.Defs
-import Mathlib.LinearAlgebra.FreeModule.Norm
-import Mathlib.RingTheory.Polynomial.Quotient
+module
+
+public import Mathlib.Algebra.BigOperators.Finsupp.Basic
+public import Mathlib.GroupTheory.QuotientGroup.Defs
+public import Mathlib.LinearAlgebra.FreeModule.Norm
+public import Mathlib.RingTheory.Polynomial.Quotient
 open Polynomial
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace Prop24Picard
 

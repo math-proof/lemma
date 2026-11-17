@@ -1,5 +1,9 @@
-import Mathlib
-import Inductive.IncidenceSystem_Var
+module
+
+public import Mathlib
+public import Inductive.IncidenceSystem_Var
+
+public section
 
 set_option autoImplicit false
 

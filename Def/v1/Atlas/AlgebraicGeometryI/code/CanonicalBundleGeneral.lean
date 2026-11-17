@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Kaehler.Polynomial
-import Mathlib.LinearAlgebra.ExteriorPower.Basis
-import Instance.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleGeneral
+module
 
+public import Mathlib.RingTheory.Kaehler.Polynomial
+public import Mathlib.LinearAlgebra.ExteriorPower.Basis
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleGeneral
+
+@[expose] public section
 
 noncomputable section
 

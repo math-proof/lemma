@@ -9,9 +9,9 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.DifferentialAnalysis.code.WavefrontSet.Part3
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.WavefrontSet
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzSingularSupport
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SmoothPartitionOfUnity
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.WavefrontSet
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzSingularSupport
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SmoothPartitionOfUnity
 import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzSingularSupport
 import Theorem.v1.Atlas.DifferentialAnalysis.code.SmoothPartitionOfUnity
 

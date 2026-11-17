@@ -9,8 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Abbrev.v1.Atlas.TensorCategories.code.IntegralsDefs
-import Lemma.Category.Atlas.v1.TensorCategories.code.IntegralsDefs
-import Lemma.Category.Atlas.v1.TensorCategories.code.DistinguishedInvertible
 import Mathlib.Data.Matrix.Basic
 import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
 import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
@@ -30,7 +28,6 @@ open Coalgebra
 open scoped TensorProduct
 
 universe u v w
-
 
 section CartanMatrix
 

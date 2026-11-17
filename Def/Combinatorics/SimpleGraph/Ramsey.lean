@@ -4,10 +4,15 @@
 # Classical graph Ramsey numbers
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Copy
-import Mathlib.Data.Real.Basic
-import Mathlib.Data.Set.Card
-import Mathlib.Topology.Instances.Nat
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Copy
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Data.Set.Card
+public import Mathlib.Topology.Instances.Nat
+
+@[expose] public section
+
 /-!
 The arbitrary-graph Ramsey API is adapted from
 `google-deepmind/formal-conjectures@62f56e8e4dab933a720f649721875c478b0ecf1c`,

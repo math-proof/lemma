@@ -3,7 +3,7 @@
 
 import Mathlib.Tactic
 import Def.NumberTheory.Recurrences.DresdenDuSimplifiedBinet
-import Lemma.Nat.Recurrences.DresdenDuSimplifiedBinet
+import Theorem.Nat.Recurrences.DresdenDuSimplifiedBinet
 
 
 namespace MetaMathlibExt

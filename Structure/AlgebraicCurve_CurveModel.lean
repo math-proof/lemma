@@ -1,13 +1,15 @@
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.AlgebraicGeometry.FunctionField
-import Mathlib.AlgebraicGeometry.AlgClosed.Basic
-import Mathlib.FieldTheory.RatFunc.Basic
-import Class.AlgebraicCurve_DivisorClassGroup
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.AlgebraicGeometry.FunctionField
+public import Mathlib.AlgebraicGeometry.AlgClosed.Basic
+public import Mathlib.FieldTheory.RatFunc.Basic
+public import Class.AlgebraicCurve_DivisorClassGroup
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open CategoryTheory AlgebraicGeometry
 

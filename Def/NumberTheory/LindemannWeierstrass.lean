@@ -4,23 +4,26 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
 
-import Mathlib.Analysis.Complex.Exponential
-import Mathlib.RingTheory.Algebraic.Defs
-import Mathlib.Algebra.Group.UniqueProds.VectorSpace
-import Mathlib.Algebra.MonoidAlgebra.NoZeroDivisors
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.Data.Nat.Prime.Int
-import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.FieldTheory.Normal.Basic
-import Mathlib.FieldTheory.SplittingField.IsSplittingField
-import Mathlib.NumberTheory.Transcendental.Lindemann.AnalyticalPart
-import Mathlib.RingTheory.Ideal.IntegralClosure
-import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
-import Mathlib.RingTheory.IsGaloisGroup.Defs
-import Mathlib.RingTheory.Polynomial.ScaleRoots
-import Mathlib.Topology.Algebra.Order.Floor
+module
 
+public import Mathlib.Analysis.Complex.Exponential
+public import Mathlib.RingTheory.Algebraic.Defs
+public import Mathlib.Algebra.Group.UniqueProds.VectorSpace
+public import Mathlib.Algebra.MonoidAlgebra.NoZeroDivisors
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Analysis.Complex.Polynomial.Basic
+public import Mathlib.Data.Nat.Prime.Int
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.FieldTheory.Normal.Basic
+public import Mathlib.FieldTheory.SplittingField.IsSplittingField
+public import Mathlib.NumberTheory.Transcendental.Lindemann.AnalyticalPart
+public import Mathlib.RingTheory.Ideal.IntegralClosure
+public import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
+public import Mathlib.RingTheory.IsGaloisGroup.Defs
+public import Mathlib.RingTheory.Polynomial.ScaleRoots
+public import Mathlib.Topology.Algebra.Order.Floor
+
+@[expose] public section
 
 section
 

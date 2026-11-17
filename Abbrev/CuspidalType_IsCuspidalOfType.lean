@@ -1,12 +1,16 @@
-import Mathlib.RepresentationTheory.Subrepresentation
-import Mathlib.LinearAlgebra.Projectivization.Action
-import Mathlib.LinearAlgebra.Projectivization.Cardinality
-import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
-import Mathlib.LinearAlgebra.Matrix.ToLin
-import Mathlib.LinearAlgebra.Charpoly.Basic
-import Mathlib.LinearAlgebra.Dimension.Free
-import Mathlib.FieldTheory.Finite.GaloisField
-import Instance.Compat_Mathlib430
+module
+
+public import Mathlib.RepresentationTheory.Subrepresentation
+public import Mathlib.LinearAlgebra.Projectivization.Action
+public import Mathlib.LinearAlgebra.Projectivization.Cardinality
+public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
+public import Mathlib.LinearAlgebra.Matrix.ToLin
+public import Mathlib.LinearAlgebra.Charpoly.Basic
+public import Mathlib.LinearAlgebra.Dimension.Free
+public import Mathlib.FieldTheory.Finite.GaloisField
+public import Instance.Compat_Mathlib430
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -8,11 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.SheafCohomology.Part2
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohomology
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoherentSheavesCurves
-import Def.v1.Atlas.AlgebraicGeometryI.code.CoherentSheavesCurves.Part2
+module
 
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.SheafCohomology.Part2
+public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohomology
+public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoherentSheavesCurves
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CoherentSheavesCurves.Part2
+
+
+public section
 
 namespace SheafCohCurvesFiniteness
 

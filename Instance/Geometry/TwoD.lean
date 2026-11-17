@@ -25,7 +25,7 @@ import Mathlib.Analysis.Convex.Independent
 import Mathlib.Geometry.Euclidean.Sphere.Basic
 import Def.Geometry.Metric.Part2
 import Lemma.Set.Metric
-import Lemma.Set.Triplewise
+import Theorem.Set.Triplewise
 import Mathlib.Logic.Equiv.Fin.Rotate
 import Def.Data.Set.Triplewise
 open scoped EuclideanGeometry Finset

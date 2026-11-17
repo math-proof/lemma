@@ -1,10 +1,12 @@
-import Mathlib.AlgebraicGeometry.EllipticCurve.DivisionPolynomial.Basic
-import Mathlib.Algebra.MvPolynomial.CommRing
+module
+
+public import Mathlib.AlgebraicGeometry.EllipticCurve.DivisionPolynomial.Basic
+public import Mathlib.Algebra.MvPolynomial.CommRing
 
 open Polynomial
 open scoped Polynomial.Bivariate
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace WeierstrassCurve
 

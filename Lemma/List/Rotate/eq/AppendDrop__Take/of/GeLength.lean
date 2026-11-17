@@ -1,3 +1,4 @@
+import Initialize.Tactic.Attr.Basic
 import Def.Data.List.List.Basic
 @[path, comm]
 private lemma main

@@ -1,12 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Calculus/HigherPartials.lean -/
+module
 
-
-import Theorem.Analysis.Calculus.HigherPartials
-import Mathlib.Analysis.Calculus.ContDiff.Operations
-import Mathlib.Analysis.Calculus.Deriv.Mul
-import Mathlib.Analysis.Calculus.Deriv.Pow
+public import Theorem.Analysis.Calculus.HigherPartials
+public import Mathlib.Analysis.Calculus.ContDiff.Operations
+public import Mathlib.Analysis.Calculus.Deriv.Mul
+public import Mathlib.Analysis.Calculus.Deriv.Pow
 open MetaMathlibExt
 
+public section
 
 -- A continuous linear functional has the expected constant coordinate partial.
 example {n : ℕ} (L : (Fin n → ℝ) →L[ℝ] ℝ) (i : Fin n) (x : Fin n → ℝ) :

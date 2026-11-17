@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/Polynomial/Taylor.lean -/
+module
 
-
-import Theorem.Algebra.Polynomial.Taylor
-import Mathlib.Data.ZMod.Basic
+public import Theorem.Algebra.Polynomial.Taylor
+public import Mathlib.Data.ZMod.Basic
 open Polynomial
 
+public section
 
 -- Abstract signature use over a general commutative ring.
 example {R : Type*} [CommRing R] (f : R[X]) (a : R) :

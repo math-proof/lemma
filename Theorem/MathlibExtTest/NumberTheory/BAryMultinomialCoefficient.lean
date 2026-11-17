@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/BAryMultinomialCoefficient.lean -/
+module
 
-
-import Def.NumberTheory.BAryMultinomialCoefficient
+public import Def.NumberTheory.BAryMultinomialCoefficient
 open MetaMathlibExt
 
+public section
 
 example : bAryDigit 2 6 0 = 0 := by decide
 

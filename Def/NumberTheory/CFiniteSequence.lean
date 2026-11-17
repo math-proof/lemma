@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/CFiniteSequence.lean -/
 
-import Mathlib.Algebra.LinearRecurrence
-import Mathlib.Tactic.Order
+module
 
+public import Mathlib.Algebra.LinearRecurrence
+public import Mathlib.Tactic.Order
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

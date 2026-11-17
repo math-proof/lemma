@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.AlgebraicCombinatorics.code.YoungEigenvalues
-import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.YoungEigenvalues
+import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.YoungEigenvalues
 import Mathlib.Data.List.Sort
 
 

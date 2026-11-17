@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/HardyLittlewoodPrimeTuple.lean -/
+module
 
+public import Def.NumberTheory.HardyLittlewoodPrimeTuple
 
-import Def.NumberTheory.HardyLittlewoodPrimeTuple
-
+public section
 
 namespace MetaMathlibExt
 

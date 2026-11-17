@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/BilinearForm/DualLocalization.lean -/
 
 
-import Lemma.Matrix.BilinearForm.DualLocalization
+import Theorem.Matrix.BilinearForm.DualLocalization
 import Mathlib.Algebra.Algebra.Bilinear
 import Mathlib.Tactic.NormNum
 

@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM1.LinearPDEs
+module
 
+public import Mathlib
+public import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM1.LinearPDEs
+
+@[expose] public section
 
 /-- The set of multi-indices of order at most $N$ in $n$ variables is finite. -/
 noncomputable instance multiIndexFintype (n N : ℕ) :

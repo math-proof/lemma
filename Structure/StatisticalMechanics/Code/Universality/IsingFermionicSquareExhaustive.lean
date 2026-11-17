@@ -9,8 +9,10 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquarePrimalConnectivity.Part2
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareExhaustive
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquarePrimalConnectivity.Part2
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareExhaustive
 
 
 namespace StatMech.Universality
@@ -18,7 +20,7 @@ namespace StatMech.Universality
 open StatMech StatMech.FK StatMech.Lattice StatMech.BeffaraDC
   StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure FKIsingSquareSwitchingGeometry (n : Nat) (hn : 0 < n) where
   oneVisitSeparated : ∀

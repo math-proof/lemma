@@ -8,17 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.GeometryOfManifolds.code.AlmostComplexManifolds.Part4
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.AlmostComplexManifolds
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.ArnoldConjecture
-import Class.v1.Atlas.GeometryOfManifolds.code.ArnoldConjecture.Part4
-import Mathlib.Geometry.Manifold.VectorField.LieBracket
-import Mathlib.Geometry.Manifold.IsManifold.Basic
-import Class.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds
+module
+
+public import Structure.v1.Atlas.GeometryOfManifolds.code.AlmostComplexManifolds.Part4
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.AlmostComplexManifolds
+public import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.ArnoldConjecture
+public import Class.v1.Atlas.GeometryOfManifolds.code.ArnoldConjecture.Part4
+public import Mathlib.Geometry.Manifold.VectorField.LieBracket
+public import Mathlib.Geometry.Manifold.IsManifold.Basic
+public import Class.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds
 set_option autoImplicit false
 
 
-noncomputable section
+public noncomputable section
 
 open scoped Manifold
 

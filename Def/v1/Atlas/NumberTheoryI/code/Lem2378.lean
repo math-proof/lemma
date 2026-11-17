@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Tor
-import Mathlib.CategoryTheory.Abelian.LeftDerived
-import Mathlib.Algebra.Category.ModuleCat.Abelian
-import Mathlib.Algebra.Category.ModuleCat.Monoidal.Basic
-import Mathlib.Algebra.Category.ModuleCat.Monoidal.Closed
-import Mathlib.Algebra.Category.ModuleCat.Projective
-import Mathlib.CategoryTheory.Abelian.Projective.Resolution
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Tor
+public import Mathlib.CategoryTheory.Abelian.LeftDerived
+public import Mathlib.Algebra.Category.ModuleCat.Abelian
+public import Mathlib.Algebra.Category.ModuleCat.Monoidal.Basic
+public import Mathlib.Algebra.Category.ModuleCat.Monoidal.Closed
+public import Mathlib.Algebra.Category.ModuleCat.Projective
+public import Mathlib.CategoryTheory.Abelian.Projective.Resolution
+
+@[expose] public section
+
 open CategoryTheory MonoidalCategory Limits
 
 universe u

@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.StatisticalMechanics.Code.Universality.RSWReflectedRegion
-import Theorem.StatisticalMechanics.Code.Universality.RSWShiftedEndpoint.Part2
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.RSWReflectedRegion
+public import Theorem.StatisticalMechanics.Code.Universality.RSWShiftedEndpoint.Part2
+public section
+
 open Function MeasureTheory Set
 
 

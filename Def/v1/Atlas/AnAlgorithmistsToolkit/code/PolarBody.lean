@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Analysis.InnerProductSpace.Dual
-import Mathlib.Analysis.LocallyConvex.Polar
-import Mathlib.Analysis.LocallyConvex.Separation
+module
+
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.InnerProductSpace.Dual
+public import Mathlib.Analysis.LocallyConvex.Polar
+public import Mathlib.Analysis.LocallyConvex.Separation
+
+@[expose] public section
+
 open RealInnerProductSpace
 
 

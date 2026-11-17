@@ -1,10 +1,12 @@
-import Mathlib
+module
+
+public import Mathlib
 set_option autoImplicit false
 
 
 namespace AutomorphicForm
 
-inductive ArchDirComplex where
+public inductive ArchDirComplex where
   | H : ArchDirComplex
   | E : ArchDirComplex
   | Fm : ArchDirComplex

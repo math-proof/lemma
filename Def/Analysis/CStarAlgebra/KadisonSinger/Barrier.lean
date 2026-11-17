@@ -6,10 +6,10 @@ Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 
 import Def.Analysis.CStarAlgebra.KadisonSinger.MixedCharPoly
 import Lemma.Real.CStarAlgebra.KadisonSinger.MixedCharPoly
-import Lemma.Polynomial.RealRooted
+import Theorem.Polynomial.RealRooted
 import Lemma.Real.CStarAlgebra.KadisonSinger.RealStable
-import Lemma.MvPolynomial.PDeriv
-import Lemma.Matrix.MvPolynomial
+import Theorem.MvPolynomial.PDeriv
+import Theorem.Matrix.MvPolynomial
 import Def.Algebra.Polynomial.RealRooted.Part2
 import Mathlib.Analysis.Matrix.PosDef
 import Def.Analysis.CStarAlgebra.KadisonSinger.RealStable

@@ -1,8 +1,12 @@
-import Mathlib
-import Structure.LatticeTreeOrbital
-import Instance.CerednikDrinfeld_BruhatTitsTree
-import Structure.CerednikDrinfeld_FormalUpperHalfPlaneCharts
-import Structure.CerednikDrinfeld_FormalUpperHalfPlaneDatum
+module
+
+public import Mathlib
+public import Structure.LatticeTreeOrbital
+public import Instance.CerednikDrinfeld_BruhatTitsTree
+public import Structure.CerednikDrinfeld_FormalUpperHalfPlaneCharts
+public import Structure.CerednikDrinfeld_FormalUpperHalfPlaneDatum
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,13 +1,16 @@
-import Mathlib.Analysis.Calculus.FDeriv.Defs
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Analysis.Real.Pi.Bounds
-import Mathlib.Topology.Baire.CompleteMetrizable
-import Mathlib.Topology.ContinuousMap.Bounded.Normed
-import Mathlib.Topology.GDelta.MetrizableSpace
-import Mathlib.Topology.Separation.CompletelyRegular
-import Def.Analysis.Calculus.NowhereDifferentiable
+module
 
+public import Mathlib.Analysis.Calculus.FDeriv.Defs
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.Real.Pi.Bounds
+public import Mathlib.Topology.Baire.CompleteMetrizable
+public import Mathlib.Topology.ContinuousMap.Bounded.Normed
+public import Mathlib.Topology.GDelta.MetrizableSpace
+public import Mathlib.Topology.Separation.CompletelyRegular
+public import Def.Analysis.Calculus.NowhereDifferentiable
+
+public section
 
 namespace Real.Calculus.NowhereDifferentiable
 

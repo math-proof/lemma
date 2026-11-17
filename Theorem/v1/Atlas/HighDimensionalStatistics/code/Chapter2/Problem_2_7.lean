@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Abbrev.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Def_2_12
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Def_2_12
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Def_2_12
 import Mathlib
 open Finset Matrix BigOperators Rigollet
 

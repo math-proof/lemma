@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Additive/BhSet.lean -/
+module
 
-
-import Def.Combinatorics.Additive.BhSet.Part2
-import Mathlib.Algebra.Group.Nat.Defs
-import Mathlib.Data.Set.Insert
+public import Def.Combinatorics.Additive.BhSet.Part2
+public import Mathlib.Algebra.Group.Nat.Defs
+public import Mathlib.Data.Set.Insert
 open AdditiveCombinatorics
 
+public section
 
 /-- The singleton `{7}` is a `B_1`-set over `Nat`: a length-one list over `{7}`
 must be `[7]`. -/

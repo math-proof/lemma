@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/Word.lean -/
 
-import Mathlib.Data.BitVec
-import Abbrev.CPythonListsort.Code.Transcription.Word
+module
+
+public import Mathlib.Data.BitVec
+public import Abbrev.CPythonListsort.Code.Transcription.Word
+
+@[expose] public section
+
 /-!
 # CPython finite-width words
 

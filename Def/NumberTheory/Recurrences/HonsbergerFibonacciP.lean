@@ -4,8 +4,13 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Data.Nat.Fib.Basic
-import Lean.Elab.Tactic.Omega
+module
+
+public import Mathlib.Data.Nat.Fib.Basic
+public import Lean.Elab.Tactic.Omega
+
+@[expose] public section
+
 /-! # Honsberger's identity for Fibonacci p-numbers
 
 This file defines the Fibonacci `p`-numbers, proves their basic recurrence properties and their

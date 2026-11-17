@@ -8,12 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Adjunction.FullyFaithful
-import Mathlib.CategoryTheory.Functor.ReflectsIso.Basic
-import Mathlib.CategoryTheory.Functor.ReflectsIso.Exact
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.Algebra.Homology.ShortComplex.Exact
-import Mathlib.Algebra.Homology.ShortComplex.PreservesHomology
+module
+
+public import Mathlib.CategoryTheory.Adjunction.FullyFaithful
+public import Mathlib.CategoryTheory.Functor.ReflectsIso.Basic
+public import Mathlib.CategoryTheory.Functor.ReflectsIso.Exact
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.Algebra.Homology.ShortComplex.Exact
+public import Mathlib.Algebra.Homology.ShortComplex.PreservesHomology
+@[expose] public section
+
 open CategoryTheory
 
 universe v₁ v₂ u₁ u₂

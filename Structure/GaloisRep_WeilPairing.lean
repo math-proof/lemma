@@ -1,5 +1,9 @@
-import Mathlib
-import Instance.FreyPackage_GaloisRep
+module
+
+public import Mathlib
+public import Instance.FreyPackage_GaloisRep
+
+public section
 
 set_option autoImplicit false
 

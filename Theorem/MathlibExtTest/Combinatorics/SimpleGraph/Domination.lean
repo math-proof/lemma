@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.SimpleGraph.Domination
-import Lemma.SimpleGraph.Domination
+import Theorem.SimpleGraph.Domination
 
 
 namespace SimpleGraph

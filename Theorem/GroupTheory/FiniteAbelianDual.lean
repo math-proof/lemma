@@ -3,12 +3,14 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
+module
 
-import Mathlib.Algebra.Group.AddChar
-import Mathlib.Basic.Complex.Basic
-import Mathlib.Analysis.Fourier.FiniteAbelian.PontryaginDuality
-import Def.GroupTheory.FiniteAbelianDual
+public import Mathlib.Algebra.Group.AddChar
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.Analysis.Fourier.FiniteAbelian.PontryaginDuality
+public import Def.GroupTheory.FiniteAbelianDual
 
+public section
 
 namespace MathlibExt.GroupTheory.FiniteAbelianDualWanted
 

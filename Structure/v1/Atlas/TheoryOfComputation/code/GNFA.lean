@@ -8,7 +8,11 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Computability.RegularExpressions
+module
+
+public import Mathlib.Computability.RegularExpressions
+public section
+
 open List Set
 
 

@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Mathlib
 import Def.v1.Atlas.ProjectionTheory.code.BorsukUlam
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.BorsukUlam
+import Theorem.Real.Atlas.v1.ProjectionTheory.code.BorsukUlam
 open MeasureTheory InnerProductSpace Set Filter Topology
 
 

@@ -8,18 +8,23 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.NumberTheory.SmoothNumbers
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.Asymptotics.Defs
-import Mathlib.NumberTheory.Harmonic.EulerMascheroni
-import Mathlib.Topology.Order.Basic
-import Mathlib.NumberTheory.ArithmeticFunction.Defs
-import Mathlib.NumberTheory.DirichletCharacter.Basic
-import Mathlib.NumberTheory.ArithmeticFunction.Moebius
-import Mathlib.NumberTheory.ArithmeticFunction.VonMangoldt
-import Mathlib.NumberTheory.ArithmeticFunction.Misc
-import Mathlib.Data.Nat.Totient
-import Def.v1.Atlas.NumberTheoryI.code.ArithmeticFunctions
+module
+
+public import Mathlib.NumberTheory.SmoothNumbers
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.Asymptotics.Defs
+public import Mathlib.NumberTheory.Harmonic.EulerMascheroni
+public import Mathlib.Topology.Order.Basic
+public import Mathlib.NumberTheory.ArithmeticFunction.Defs
+public import Mathlib.NumberTheory.DirichletCharacter.Basic
+public import Mathlib.NumberTheory.ArithmeticFunction.Moebius
+public import Mathlib.NumberTheory.ArithmeticFunction.VonMangoldt
+public import Mathlib.NumberTheory.ArithmeticFunction.Misc
+public import Mathlib.Data.Nat.Totient
+public import Def.v1.Atlas.NumberTheoryI.code.ArithmeticFunctions
+
+@[expose] public section
+
 open scoped Nat
 open Finset Real Filter Asymptotics
 

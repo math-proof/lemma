@@ -1,6 +1,8 @@
-import Mathlib
-import Def.AutomorphicForm_ConstantTerm
-import Instance.NumberField_Completion_Finite
+module
+
+public import Mathlib
+public import Def.AutomorphicForm_ConstantTerm
+public import Instance.NumberField_Completion_Finite
 
 set_option autoImplicit false
 set_option linter.unusedVariables false
@@ -9,7 +11,7 @@ set_option linter.style.longLine false
 
 open scoped Classical
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace LocalGL2.Kirillov
 

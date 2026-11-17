@@ -4,7 +4,7 @@
 
 import Mathlib.Combinatorics.SimpleGraph.Coloring.Constructions
 import Def.Combinatorics.SimpleGraph.CenteredColoring
-import Lemma.SimpleGraph.CenteredColoring
+import Theorem.SimpleGraph.CenteredColoring
 open SimpleGraph
 
 

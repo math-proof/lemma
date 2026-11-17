@@ -2,7 +2,7 @@
 
 
 import Instance.NumberTheory.NumberField.Completion.FiniteLiesOverInertiaDegree
-import Lemma.Nat.NumberField.Completion.FiniteLiesOverInertiaDegree
+import Theorem.Nat.NumberField.Completion.FiniteLiesOverInertiaDegree
 /-!
 # Test file
 -/

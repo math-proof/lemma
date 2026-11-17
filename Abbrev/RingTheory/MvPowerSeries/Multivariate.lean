@@ -2,7 +2,11 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
+module
+
+public import Mathlib
+@[expose] public section
+
 open MvPowerSeries Finset BigOperators Finsupp
 
 variable {R : Type*} [CommSemiring R]

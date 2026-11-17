@@ -4,6 +4,8 @@ import Lemma.Random.PSpace_Path.of.All_PSpace
 import Mathlib.Analysis.Calculus.Gradient.Basic
 import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Instance.Analysis.Real.Numbers
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Filter Topology Measure
 open scoped ENNReal.ToRealCoe
 
@@ -60,4 +62,4 @@ private lemma main
 
 
 -- created on 2026-11-14
--- updated on 2026-11-16
+-- updated on 2026-11-17

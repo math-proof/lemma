@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec14QCohProjective
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec14QCohProjective
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec14QCohProjective
 open CategoryTheory Limits TopologicalSpace AlgebraicGeometry
 
 universe u

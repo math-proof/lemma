@@ -1,5 +1,4 @@
 import Lemma.LaurentSeries.XHHeckeOperator
-import Lemma.ZMod.Inst
 
 set_option autoImplicit false
 

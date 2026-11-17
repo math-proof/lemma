@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.Buildings.code.CoxeterGroup.BraidRelation
-import Lemma.Real.EqSigma.of.EqBilinForm_E_0
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.BraidRelationProof.DihedralHelpers
+module
+
+public import Structure.v1.Atlas.Buildings.code.CoxeterGroup.BraidRelation
+public import Theorem.Real.EqSigma.of.EqBilinForm_E_0
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.BraidRelationProof.DihedralHelpers
+
+@[expose] public section
+
 open Finset BigOperators Real
 
 

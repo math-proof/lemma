@@ -7,13 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Probability.Martingale.Basic
-import Mathlib.MeasureTheory.Function.UniformIntegrable
-import Mathlib.Probability.Notation
+public import Mathlib.Probability.Martingale.Basic
+public import Mathlib.MeasureTheory.Function.UniformIntegrable
+public import Mathlib.Probability.Notation
 open MeasureTheory
 open scoped ProbabilityTheory
 
+public section
 
 namespace MeasureTheory
 

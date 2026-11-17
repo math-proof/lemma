@@ -1,23 +1,29 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.Calculus.FDeriv.Basic
-import Mathlib.Analysis.Complex.JensenFormula
-import Mathlib.Analysis.Calculus.FDeriv.Pi
-import Mathlib.Analysis.Calculus.FDeriv.Partial
-import Mathlib.Analysis.Calculus.FDeriv.Measurable
-import Mathlib.Analysis.Calculus.ParametricIntegral
-import Mathlib.Analysis.Complex.CauchyIntegral
-import Mathlib.Analysis.Complex.Liouville
-import Mathlib.Analysis.Normed.Operator.Mul
-import Mathlib.Analysis.SpecialFunctions.PolarCoord
-import Mathlib.Analysis.SpecificLimits.Normed
-import Mathlib.MeasureTheory.Integral.Prod
-import Mathlib.MeasureTheory.Measure.Lebesgue.VolumeOfBalls
-import Mathlib.Topology.Baire.CompleteMetrizable
-import Mathlib.Topology.TietzeExtension
-import Theorem.Analysis.Complex.HartogsSeparateAnalyticity
+
+module
+
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.Calculus.FDeriv.Basic
+public import Mathlib.Analysis.Complex.JensenFormula
+public import Mathlib.Analysis.Calculus.FDeriv.Pi
+public import Mathlib.Analysis.Calculus.FDeriv.Partial
+public import Mathlib.Analysis.Calculus.FDeriv.Measurable
+public import Mathlib.Analysis.Calculus.ParametricIntegral
+public import Mathlib.Analysis.Complex.CauchyIntegral
+public import Mathlib.Analysis.Complex.Liouville
+public import Mathlib.Analysis.Normed.Operator.Mul
+public import Mathlib.Analysis.SpecialFunctions.PolarCoord
+public import Mathlib.Analysis.SpecificLimits.Normed
+public import Mathlib.MeasureTheory.Integral.Prod
+public import Mathlib.MeasureTheory.Measure.Lebesgue.VolumeOfBalls
+public import Mathlib.Topology.Baire.CompleteMetrizable
+public import Mathlib.Topology.TietzeExtension
+public import Theorem.Analysis.Complex.HartogsSeparateAnalyticity
+
+@[expose] public section
+
 /-!
 # Hartogs' theorem on separate analyticity
 

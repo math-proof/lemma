@@ -1,9 +1,13 @@
 /-
 # Catalan's constant
 -/
-import Mathlib.Analysis.PSeries
-import Mathlib.Topology.Algebra.InfiniteSum.Real
 
+module
+
+public import Mathlib.Analysis.PSeries
+public import Mathlib.Topology.Algebra.InfiniteSum.Real
+
+@[expose] public section
 
 namespace Real
 

@@ -2,7 +2,7 @@
 
 import Mathlib.Data.Nat.Totient
 import Def.NumberTheory.UnitaryDivisor.Part2
-import Lemma.Set.UnitaryDivisor
+import Theorem.Set.UnitaryDivisor
 import Mathlib.FieldTheory.Finite.Basic
 open scoped BigOperators
 

@@ -1,5 +1,10 @@
-import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.Analysis.Complex.Order
+module
+
+public import Mathlib.Analysis.Complex.Polynomial.Basic
+public import Mathlib.Analysis.Complex.Order
+
+@[expose] public section
+
 open scoped ComplexOrder
 
 /-!

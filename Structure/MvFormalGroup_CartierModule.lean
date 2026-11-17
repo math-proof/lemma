@@ -1,9 +1,11 @@
-import Mathlib
-import Structure.MvFormalGroup_BasicV2
+module
+
+public import Mathlib
+public import Structure.MvFormalGroup_BasicV2
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 universe u
 

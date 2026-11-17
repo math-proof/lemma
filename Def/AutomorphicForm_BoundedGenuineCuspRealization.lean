@@ -1,4 +1,3 @@
-import Lemma.ClassGroup.ProductionPinsGeneral
 import Def.AutomorphicForm_WhittakerCoefficient
 import Lemma.Filter.AdelicTraceFin
 

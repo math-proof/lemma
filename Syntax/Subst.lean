@@ -1,4 +1,9 @@
-import Abbrev.Subst
+module
+
+public meta import Lean
+public import Abbrev.Subst
+
+public meta section
 
 /-- One substitution `x = x₀` in the `Subst` sugar. -/
 syntax substBinding := ident ppHardSpace "=" ppHardSpace term:36

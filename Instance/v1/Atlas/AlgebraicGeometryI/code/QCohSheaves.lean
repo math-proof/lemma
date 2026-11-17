@@ -8,14 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Tilde
-import Mathlib.Algebra.Category.ModuleCat.Sheaf.Quasicoherent
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.Topology.NoetherianSpace
-import Mathlib.CategoryTheory.Filtered.Basic
-import Mathlib.RingTheory.Localization.Away.Basic
-import Def.v1.Atlas.AlgebraicGeometryI.code.QCohSheaves
+module
 
+public import Mathlib.AlgebraicGeometry.Modules.Tilde
+public import Mathlib.Algebra.Category.ModuleCat.Sheaf.Quasicoherent
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.Topology.NoetherianSpace
+public import Mathlib.CategoryTheory.Filtered.Basic
+public import Mathlib.RingTheory.Localization.Away.Basic
+public import Def.v1.Atlas.AlgebraicGeometryI.code.QCohSheaves
+
+@[expose] public section
 
 noncomputable section
 

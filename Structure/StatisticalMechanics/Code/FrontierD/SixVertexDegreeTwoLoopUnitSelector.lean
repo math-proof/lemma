@@ -9,14 +9,16 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoHighChargeLoopHallRouting.Part11
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoSynchronizedUnitSelector.Part3
-import Instance.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoLoopUnitSelector
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoHighChargeLoopHallRouting.Part11
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoSynchronizedUnitSelector.Part3
+public import Instance.StatisticalMechanics.Code.FrontierD.SixVertexDegreeTwoLoopUnitSelector
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure SixVertexHorizontalDegreeTwoLoopUnitSelector
     {T : EvenTorus} {middle : Fin (T.width + 1)}

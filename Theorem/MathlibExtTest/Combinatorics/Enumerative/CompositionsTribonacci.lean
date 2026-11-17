@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.CompositionsTribonacci
-import Lemma.Finset.Enumerative.CompositionsTribonacci
+import Theorem.Finset.Enumerative.CompositionsTribonacci
 
 
 namespace MetaMathlibExt

@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Equivalence/Powerloop.lean -/
 
-import Def.CPythonListsort.Code.Transcription.Powerloop
-import Mathlib
+module
+
+public import Def.CPythonListsort.Code.Transcription.Powerloop
+public import Mathlib
 /-!
 # `powerloop` recurrence equivalence
 
@@ -9,6 +11,9 @@ This file projects the reviewed 64-bit transcription to a recurrence over
 arbitrary-precision natural numbers.  The explicit safety trace records the
 signed-comparison and shift-representability obligations inherited from C.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

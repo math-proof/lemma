@@ -8,21 +8,23 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.LieGroups.code.HarishChandraIsomorphism.Part2
-import Mathlib.RingTheory.MvPolynomial.Basic
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Mathlib.RingTheory.AlgebraicIndependent.Basic
-import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
-import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
-import Mathlib.Algebra.Lie.Killing
-import Mathlib.Algebra.Lie.Weights.Killing
-import Mathlib.LinearAlgebra.BilinearForm.Properties
-import Mathlib.LinearAlgebra.Matrix.BilinearForm
-import Def.v1.Atlas.LieGroups.code.ChevalleyRestriction.Part4
+module
+
+public import Structure.v1.Atlas.LieGroups.code.HarishChandraIsomorphism.Part2
+public import Mathlib.RingTheory.MvPolynomial.Basic
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Mathlib.RingTheory.AlgebraicIndependent.Basic
+public import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
+public import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
+public import Mathlib.Algebra.Lie.Killing
+public import Mathlib.Algebra.Lie.Weights.Killing
+public import Mathlib.LinearAlgebra.BilinearForm.Properties
+public import Mathlib.LinearAlgebra.Matrix.BilinearForm
+public import Def.v1.Atlas.LieGroups.code.ChevalleyRestriction.Part4
 
 
-noncomputable section
+public noncomputable section
 
 open scoped TensorProduct
 

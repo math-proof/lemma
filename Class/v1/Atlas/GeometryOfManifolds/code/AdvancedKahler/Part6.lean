@@ -9,14 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.KahlerManifolds
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.ConnectionsCurvature
 import Structure.v1.Atlas.GeometryOfManifolds.code.ConnectionsCurvature.Part7
 import Structure.v1.Atlas.GeometryOfManifolds.code.AdvancedKahler.Part4
 set_option autoImplicit false
 
 open DifferentialFormSpace
-
 
 /-- A Green operator for the $\bar\partial$-Laplacian: produces a correction
 $\xi = G(s)$ such that $s + \xi$ is holomorphic and the $L^2$-norm of $\xi$
@@ -35,5 +32,4 @@ class HasGreenOperator
     ∃ (c : ℝ), c > 0 ∧
       l2.l2norm (greenCorrection k s) * l2.l2norm (greenCorrection k s) ≤
         c / (k : ℝ) * (l2.l2norm (dol.delbar s) * l2.l2norm (dol.delbar s))
-
 

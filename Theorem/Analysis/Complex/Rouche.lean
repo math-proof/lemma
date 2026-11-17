@@ -1,13 +1,18 @@
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.Meromorphic.Divisor
-import Mathlib.Analysis.Complex.CauchyIntegral
-import Mathlib.Analysis.Normed.Module.Connected
-import Mathlib.Analysis.SpecialFunctions.Complex.LogDeriv
+module
+
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Meromorphic.Divisor
+public import Mathlib.Analysis.Complex.CauchyIntegral
+public import Mathlib.Analysis.Normed.Module.Connected
+public import Mathlib.Analysis.SpecialFunctions.Complex.LogDeriv
+
 /-!
 # Rouché's theorem for the disc
 
 Proves `Wanted` entry `rouche_closedBall`.
 -/
+
+public section
 
 
 namespace Complex.Rouche

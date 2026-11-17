@@ -1,11 +1,13 @@
-import Instance.ModularCurve_TateFormal
-import Instance.ModularCurve_PhiGen
-import Structure.WeierstrassCurve_VeluQuotientMap
-import Instance.ModularCurve_TatePoint
+module
+
+public import Instance.ModularCurve_TateFormal
+public import Instance.ModularCurve_PhiGen
+public import Structure.WeierstrassCurve_VeluQuotientMap
+public import Instance.ModularCurve_TatePoint
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 open ModularCurve WeierstrassCurve Polynomial
 

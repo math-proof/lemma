@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTreeCost.lean -/
 
-import Def.CPythonListsort.Code.Assembly.AccessTrace.Part9
-import Def.CPythonListsort.Code.Assembly.MergeCost.Part3
-import Def.CPythonListsort.Code.Assembly.MergeTreeCost.Part3
+module
+
+public import Def.CPythonListsort.Code.Assembly.AccessTrace.Part9
+public import Def.CPythonListsort.Code.Assembly.MergeCost.Part3
+public import Def.CPythonListsort.Code.Assembly.MergeTreeCost.Part3
 /-!
 # Logical merge replay and final-collapse cost dominance
 
@@ -20,6 +22,9 @@ has one additional branch: for a final triple `A, B, C`, it merges `A` with
 `B` when `|A| < |C|`.  This is a cost-nonincreasing local tree rotation, not a
 tree-equality fact.
 -/
+public section
+
+
 
 /-! ## Checked replay of logical pre-trim merges -/
 

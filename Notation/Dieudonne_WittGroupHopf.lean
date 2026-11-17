@@ -1,5 +1,13 @@
+module
+
+public import Mathlib.LinearAlgebra.TensorProduct.Defs
+
+public section
+
 set_option quotPrecheck false
 set_option hygiene false
+
+open scoped TensorProduct
 
 /-!
 # Notations from `Lemma/Definitions/Def_Dieudonne_WittGroupHopf.lean`

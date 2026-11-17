@@ -6,8 +6,8 @@ Authors: Adam Kiezun, Muse Spark 1.3, Codex
 
 import Mathlib.Combinatorics.SimpleGraph.Hamiltonian
 import Theorem.Combinatorics.SimpleGraph.VertexConnectivity
-import Lemma.SimpleGraph.VertexConnectivity
-import Lemma.SimpleGraph.HamiltonianCycle
+import Theorem.SimpleGraph.VertexConnectivity
+import Theorem.SimpleGraph.HamiltonianCycle
 /-!
 # Squares of simple graphs
 

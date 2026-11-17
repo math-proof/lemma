@@ -1,4 +1,3 @@
-import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Lemma.Random.Fderiv.eq.AddIntegral_SMulSMul.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob
 import Lemma.Random.EqSMulProb_FderivLog_Prob_Fderiv_FunProb.of.All_All_Differentiable_FunPolProb.All_EqWithDensity
 import Lemma.Random.Integral.eq.Integral_Integral_SMul.of.All_Eq_Joint.All_EqWithDensity
@@ -11,6 +10,8 @@ import Lemma.Random.NormRkd.le.Abs_R
 import Lemma.Random.MeasurableRkd
 import Lemma.Kernel.Integral.eq.Integral_Integral.of.Integrable_Bind
 import Lemma.Real.StronglyMeasurable_Fderiv.of.All_DifferentiableAt.All_Measurable
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Real Kernel
 set_option maxHeartbeats 800000
 
@@ -158,7 +159,16 @@ private lemma main
       (integral_map (μ := M.traj θ) hsa.aemeasurable
         (f := fun p : 𝒮 × 𝒜 =>
           ∫ y, fderiv ℝ (fun θ => M.V0 θ γ y) θ ∂(M.trans p))
-        hφV.aestronglyMeasurable).symm
+        (by
+          have hf : (fun p : 𝒮 × 𝒜 =>
+              ∫ y, fderiv ℝ (fun θ => M.V0 θ γ y) θ ∂(M.trans p)) =
+              Function.uncurry fun sₜ aₜ =>
+                ∫ y, fderiv ℝ (fun θ => M.V0 θ γ y) θ ∂(M.trans (sₜ, aₜ)) := by
+            funext p
+            rcases p with ⟨sx, ax⟩
+            rfl
+          rw [hf]
+          exact hφV.aestronglyMeasurable)).symm
     have hlaw := Map.eq.Trans.of.All_Eq_Joint.All_EqWithDensity (M := M) h₁ θ t
     have hInt : Integrable (fun y => fderiv ℝ (fun θ => M.V0 θ γ y) θ)
         (M.transK ∘ₘ (M.traj θ).map (fun ω ↦ (s t ω, a t ω))) := by
@@ -214,18 +224,25 @@ private lemma main
     have hbd : ∀ aₜ, ‖M.π[θ] sₜ aₜ •
         ∫ y, fderiv ℝ (fun θ => M.V0 θ γ y) θ ∂(M.trans (sₜ, aₜ))‖ ≤
         M.π[θ] sₜ aₜ * C := fun u => by
-      rw [norm_smul, Real.norm_of_nonneg (hStoch.nonneg θ sₜ u)]
-      exact mul_le_mul_of_nonneg_left (hCV sₜ u) (hStoch.nonneg θ sₜ u)
+      have hπnn : 0 ≤ M.π[θ] sₜ u := hStoch.nonneg θ sₜ u
+      rw [norm_smul, Real.norm_of_nonneg hπnn]
+      exact mul_le_mul_of_nonneg_left (hCV sₜ u) hπnn
     calc
       _ ≤ ∫ aₜ, M.π[θ] sₜ aₜ * C ∂ReferenceMeasure.measure :=
         (norm_integral_le_integral_norm _).trans
           (integral_mono_of_nonneg (Filter.Eventually.of_forall fun _ => norm_nonneg _)
-            ((Integrable.of_integral_ne_zero
-              (by simp [hStoch.integral_eq_one θ sₜ])).mul_const C)
+            ((Integrable.of_integral_ne_zero (by
+              have h1 : ∫ a, M.π[θ] sₜ a ∂μ.measure = 1 :=
+                hStoch.integral_eq_one θ sₜ
+              rw [h1]
+              apply one_ne_zero)).mul_const C)
             (Filter.Eventually.of_forall hbd))
       _ = (∫ aₜ, M.π[θ] sₜ aₜ ∂ReferenceMeasure.measure) * C := by
         rw [← integral_mul_const]
-      _ = C := by rw [hStoch.integral_eq_one, one_mul]
+      _ = C := by
+        have h1 : ∫ aₜ, M.π[θ] sₜ aₜ ∂μ.measure = 1 :=
+          hStoch.integral_eq_one θ sₜ
+        rw [h1, one_mul]
   have hL :
     ∫ x, fderiv ℝ (fun θ => M.V0 θ γ x) θ ∂((M.traj θ).map (s t)) =
         ∫ sₜ, ∫ aₜ, Qf sₜ aₜ • fderiv ℝ (fun θ => M.π[θ] sₜ aₜ) θ
@@ -252,4 +269,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-16
+-- updated on 2026-11-17

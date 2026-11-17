@@ -9,10 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexMirrorPairedBoundary.Part3
-import Theorem.StatisticalMechanics.Code.Universality.HexConnEndgame
-import Inductive.StatisticalMechanics.Code.Universality.HexPairedBoundaryNormalized
+module
 
+public import Theorem.StatisticalMechanics.Code.Universality.HexMirrorPairedBoundary.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.HexConnEndgame
+public import Inductive.StatisticalMechanics.Code.Universality.HexPairedBoundaryNormalized
+
+
+public section
 
 namespace StatMech.Universality
 

@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardVertexEdgeSeparation
+module
 
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardVertexEdgeSeparation
+
+
+public section
 
 namespace StatMech.FrontierA
 

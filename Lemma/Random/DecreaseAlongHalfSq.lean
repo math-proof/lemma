@@ -5,6 +5,7 @@ import Lemma.Matrix.Norm.le.MulPow_NormOfLp.of.Ge_1
 import Lemma.Matrix.NormOfLp.le.Norm.of.Ge_1
 import Lemma.Matrix.SumMulAbsHalfSq'_Abs.le.MulNormS.of.Ge_2
 import Lemma.Matrix.InnerToL2HalfSq'_ToL2.eq.SquareNorm.of.Ge_1
+import Initialize.Tactic.Attr.Basic
 open Finset LpSpace Matrix
 
 
@@ -40,3 +41,4 @@ private lemma main
 
 
 -- created on 2026-09-26
+-- updated on 2026-11-17

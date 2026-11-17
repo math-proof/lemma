@@ -4,7 +4,12 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.NumberTheory.LSeries.RiemannZeta
+module
+
+public import Mathlib.NumberTheory.LSeries.RiemannZeta
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 7: Berndt's `φ_r(x)`
 

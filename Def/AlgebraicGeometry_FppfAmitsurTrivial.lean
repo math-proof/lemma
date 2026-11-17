@@ -1,4 +1,8 @@
-import Def.Algebra_DescentCofaces
+module
+
+public import Def.Algebra_DescentCofaces
+
+@[expose] public section
 
 set_option autoImplicit false
 

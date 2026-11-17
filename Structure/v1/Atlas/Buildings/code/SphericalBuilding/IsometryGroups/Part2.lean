@@ -8,11 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.BilinearForm.Basic
-import Mathlib.LinearAlgebra.BilinearForm.Orthogonal
-import Mathlib.GroupTheory.Coxeter.Basic
-import Mathlib.GroupTheory.Coxeter.Length
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.IsometryGroups.Part2
+module
+
+public import Mathlib.LinearAlgebra.BilinearForm.Basic
+public import Mathlib.LinearAlgebra.BilinearForm.Orthogonal
+public import Mathlib.GroupTheory.Coxeter.Basic
+public import Mathlib.GroupTheory.Coxeter.Length
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.IsometryGroups.Part2
+public section
+
 set_option linter.unusedSectionVars false
 
 

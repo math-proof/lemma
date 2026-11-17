@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.UnionClosedOrderly
-import Lemma.Finset.Enumerative.UnionClosedOrderly
+import Theorem.Finset.Enumerative.UnionClosedOrderly
 
 
 namespace MetaMathlibExt

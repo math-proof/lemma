@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Topology/HomogeneousSpace.lean -/
+module
 
+public import Class.Topology.HomogeneousSpace
 
-import Class.Topology.HomogeneousSpace
-
+public section
 
 example {X : Type*} [TopologicalSpace X] [HomogeneousSpace X] (x y : X) :
     ∃ f : Homeomorph X X, f x = y :=

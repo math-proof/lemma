@@ -4,54 +4,59 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.Order.Floor.Defs
-import Mathlib.Algebra.Polynomial.Basic
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.Calculus.ContDiff.Basic
-import Mathlib.Analysis.Complex.Exponential
-import Mathlib.Analysis.Complex.Trigonometric
-import Mathlib.Analysis.Meromorphic.Basic
-import Mathlib.Analysis.Real.Sqrt
-import Mathlib.Analysis.SpecialFunctions.Complex.Log
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Complex
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Basic.Complex.Basic
-import Mathlib.Data.Finset.Defs
-import Mathlib.Data.Finset.Range
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.Data.Set.Defs
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.NumberTheory.Bernoulli
-import Mathlib.NumberTheory.BernoulliPolynomials
-import Mathlib.NumberTheory.Harmonic.EulerMascheroni
-import Mathlib.NumberTheory.LSeries.HurwitzZeta
-import Mathlib.NumberTheory.LSeries.ZMod
-import Mathlib.Order.Filter.Basic
-import Mathlib.Order.Interval.Set.Defs
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Topology.Basic
-import Def.Analysis.Ramanujan.Part1Ch7Phi
-import Mathlib.Algebra.Ring.GeomSum
-import Mathlib.Analysis.Analytic.Uniqueness
-import Mathlib.Analysis.Calculus.MeanValue
-import Mathlib.Analysis.Complex.CauchyIntegral
-import Mathlib.Analysis.Complex.HalfPlane
-import Mathlib.Analysis.Complex.SummableUniformlyOn
-import Mathlib.Analysis.Convex.PathConnected
-import Mathlib.Analysis.PSeries
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
-import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
-import Mathlib.Basic.Complex.BigOperators
-import Mathlib.NumberTheory.LSeries.RiemannZeta
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.Algebra.InfiniteSum.TsumUniformlyOn
-import Mathlib.Topology.Order.Compact
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.Order.Floor.Defs
+public import Mathlib.Algebra.Polynomial.Basic
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Calculus.ContDiff.Basic
+public import Mathlib.Analysis.Complex.Exponential
+public import Mathlib.Analysis.Complex.Trigonometric
+public import Mathlib.Analysis.Meromorphic.Basic
+public import Mathlib.Analysis.Real.Sqrt
+public import Mathlib.Analysis.SpecialFunctions.Complex.Log
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Complex
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.Data.Finset.Defs
+public import Mathlib.Data.Finset.Range
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.Data.Set.Defs
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.NumberTheory.Bernoulli
+public import Mathlib.NumberTheory.BernoulliPolynomials
+public import Mathlib.NumberTheory.Harmonic.EulerMascheroni
+public import Mathlib.NumberTheory.LSeries.HurwitzZeta
+public import Mathlib.NumberTheory.LSeries.ZMod
+public import Mathlib.Order.Filter.Basic
+public import Mathlib.Order.Interval.Set.Defs
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Topology.Basic
+public import Def.Analysis.Ramanujan.Part1Ch7Phi
+public import Mathlib.Algebra.Ring.GeomSum
+public import Mathlib.Analysis.Analytic.Uniqueness
+public import Mathlib.Analysis.Calculus.MeanValue
+public import Mathlib.Analysis.Complex.CauchyIntegral
+public import Mathlib.Analysis.Complex.HalfPlane
+public import Mathlib.Analysis.Complex.SummableUniformlyOn
+public import Mathlib.Analysis.Convex.PathConnected
+public import Mathlib.Analysis.PSeries
+public import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+public import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
+public import Mathlib.Basic.Complex.BigOperators
+public import Mathlib.NumberTheory.LSeries.RiemannZeta
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.Algebra.InfiniteSum.TsumUniformlyOn
+public import Mathlib.Topology.Order.Compact
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 7
 

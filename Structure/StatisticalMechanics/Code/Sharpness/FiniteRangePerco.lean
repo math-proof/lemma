@@ -9,10 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Probability.InhomogeneousProduct.Part2
-import Theorem.StatisticalMechanics.Code.Percolation.SubcriticalDecayFull.Part2
-import Theorem.StatisticalMechanics.Code.Percolation.SurfaceReassembly
-import Theorem.StatisticalMechanics.Code.Sharpness.BkCriterionFull.Part2
+module
+
+public import Theorem.StatisticalMechanics.Code.Probability.InhomogeneousProduct.Part2
+public import Theorem.StatisticalMechanics.Code.Percolation.SubcriticalDecayFull.Part2
+public import Theorem.StatisticalMechanics.Code.Percolation.SurfaceReassembly
+public import Theorem.StatisticalMechanics.Code.Sharpness.BkCriterionFull.Part2
+public section
+
 open MeasureTheory
 open scoped NNReal
 

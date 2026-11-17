@@ -1,0 +1,29 @@
+module
+
+public import Mathlib
+public import Theorem.Nat.Add_1.le.Pow2.of.Gt_0
+
+public section
+
+open Nat
+
+
+/--
+[roth_factorial_le_two_pow_sq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)
+-/
+public theorem Nat.Factorial.le.Pow2Mul.of.Gt_0
+  {k : ℕ}
+-- given
+  (hk : 0 < k) :
+-- imply
+  k.factorial ≤ 2 ^ (k * k) := by
+-- proof
+  have hktwo : k ≤ 2 ^ k :=
+    (Nat.le_add_right k 1).trans (Add_1.le.Pow2.of.Gt_0 hk)
+  calc
+    _ ≤ k ^ k := Nat.factorial_le_pow k
+    _ ≤ (2 ^ k) ^ k := by gcongr
+    _ = 2 ^ (k * k) := by rw [pow_mul]
+
+
+-- created on 2026-10-21

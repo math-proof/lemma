@@ -2,7 +2,7 @@
 
 
 import Def.Geometry.LatticePointEnumerator
-import Lemma.Set.LatticePointEnumerator
+import Theorem.Set.LatticePointEnumerator
 open LatticePointEnumerator
 
 open scoped Pointwise

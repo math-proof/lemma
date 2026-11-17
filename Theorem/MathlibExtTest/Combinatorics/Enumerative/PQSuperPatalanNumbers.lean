@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/PQSuperPatalanNumbers.lean -/
+module
 
+public import Mathlib.Tactic
+public import Def.Combinatorics.Enumerative.PQSuperPatalanNumbers
+public import Def.MathlibExtTest.Combinatorics.Enumerative.PQSuperPatalanNumbers
 
-import Mathlib.Tactic
-import Def.Combinatorics.Enumerative.PQSuperPatalanNumbers
-import Def.MathlibExtTest.Combinatorics.Enumerative.PQSuperPatalanNumbers
-
+public section
 
 namespace MetaMathlibExt
 

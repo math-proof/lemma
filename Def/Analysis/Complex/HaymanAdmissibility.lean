@@ -8,14 +8,19 @@ Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -- Auxiliary functions and admissibility conditions: tex lines 453-493;
 -- coefficient theorem: tex lines 495-506.
 
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Mathlib.Analysis.Analytic.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Analysis.Analytic.OfScalars
-import Mathlib.Analysis.Calculus.FDeriv.Analytic
-import Mathlib.Analysis.Complex.CauchyIntegral
-import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
-import Mathlib.MeasureTheory.Integral.IntegralEqImproper
+module
+
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Mathlib.Analysis.Analytic.Basic
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Analysis.Analytic.OfScalars
+public import Mathlib.Analysis.Calculus.FDeriv.Analytic
+public import Mathlib.Analysis.Complex.CauchyIntegral
+public import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
+public import Mathlib.MeasureTheory.Integral.IntegralEqImproper
+
+@[expose] public section
+
 set_option autoImplicit false
 
 open scoped ENNReal NNReal

@@ -9,9 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardGenericPolygonReduction
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardPolygonPerturbation
+module
 
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardGenericPolygonReduction
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardPolygonPerturbation
+
+
+public section
 
 namespace StatMech.FrontierA
 

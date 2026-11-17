@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Elliptic/Function.lean -/
 
-import Mathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass
+
+@[expose] public section
+
 /-!
 # Elliptic functions
 -/

@@ -9,13 +9,15 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicCenteredNESectorRate
-import Def.StatisticalMechanics.Code.Universality.IsingFermionicCenteredFourSectorAssembly.Part4
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicCenteredNESectorRate
+public import Def.StatisticalMechanics.Code.Universality.IsingFermionicCenteredFourSectorAssembly.Part4
 
 
 namespace StatMech.Universality
 
-noncomputable section
+public noncomputable section
 
 structure FKIsingExpandingCenteredTopRightBoundaryEdgeBounds
     (L : NNReal) (k : Nat) : Prop where

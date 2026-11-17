@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/FieldTheory/Galois/Infinite.lean -/
 
 
-import Lemma.Rat.Galois.Infinite
+import Theorem.Rat.Galois.Infinite
 set_option autoImplicit false
 
 open InfiniteGalois

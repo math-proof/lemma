@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Structure.v1.Atlas.GeometryOfManifolds.code.AlmostComplexManifolds.Part4
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.AlmostComplexManifolds
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.AlmostComplexManifolds
 import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.ArnoldConjecture
 import Class.v1.Atlas.GeometryOfManifolds.code.ArnoldConjecture.Part4
 import Mathlib.Geometry.Manifold.VectorField.LieBracket

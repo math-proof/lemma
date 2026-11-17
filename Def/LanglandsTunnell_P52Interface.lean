@@ -1,6 +1,10 @@
-import Def.AutomorphicForm_HeckeEigensystem
-import Def.AutomorphicForm_FormalBaseChange
-import Def.ModularForm_EisensteinChiNegThree
+module
+
+public import Def.AutomorphicForm_HeckeEigensystem
+public import Def.AutomorphicForm_FormalBaseChange
+public import Def.ModularForm_EisensteinChiNegThree
+
+@[expose] public section
 
 set_option autoImplicit false
 

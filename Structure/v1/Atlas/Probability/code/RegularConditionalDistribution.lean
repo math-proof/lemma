@@ -8,11 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.Kernel.CondDistrib
+module
+
+public import Mathlib.Probability.Kernel.CondDistrib
 open MeasureTheory ProbabilityTheory MeasureTheory.Measure
 
 
-noncomputable section
+public noncomputable section
 
 /-- **Regular conditional distribution (textbook form).** A family of measures
 `μ_rcd : Ω → Measure S` is a regular conditional distribution for `X` given the

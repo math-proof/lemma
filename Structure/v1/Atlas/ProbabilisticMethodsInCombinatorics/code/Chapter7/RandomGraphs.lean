@@ -8,13 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Fin.Basic
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Tactic
+module
+
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Data.Fin.Basic
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Tactic
 
 
-noncomputable section
+public noncomputable section
 
 open Finset BigOperators
 

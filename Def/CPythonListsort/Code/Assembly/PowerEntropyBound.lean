@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/PowerEntropyBound.lean -/
 
-import Def.CPythonListsort.Code.Equivalence.PowerloopResults.Part2
-import Mathlib.Analysis.SpecialFunctions.Log.Base
-import Mathlib.Tactic
+module
+
+public import Def.CPythonListsort.Code.Equivalence.PowerloopResults.Part2
+public import Mathlib.Analysis.SpecialFunctions.Log.Base
+public import Mathlib.Tactic
+
+@[expose] public section
+
 /-!
 # Analytic bound for one transcribed node power
 

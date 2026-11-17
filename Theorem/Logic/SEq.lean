@@ -1,6 +1,9 @@
-import Mathlib.Tactic
-import Notation.Logic.SEq
+module
 
+public import Mathlib.Tactic
+public import Notation.Logic.SEq
+
+public section
 
 @[symm]
 lemma SEq.symm

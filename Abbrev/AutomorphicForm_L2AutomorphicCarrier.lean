@@ -1,9 +1,11 @@
-import Mathlib
+module
+
+public import Mathlib
 
 open MeasureTheory UpperHalfPlane Set
 open scoped MatrixGroups ENNReal RealInnerProductSpace
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace FLT.L2Carrier
 

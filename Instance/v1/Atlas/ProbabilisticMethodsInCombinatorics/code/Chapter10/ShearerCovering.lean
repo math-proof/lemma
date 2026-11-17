@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Basic
-import Mathlib.Combinatorics.SimpleGraph.Bipartite
-import Mathlib.Data.Fintype.Powerset
-import Mathlib.Data.Fintype.Sum
-import Mathlib.Data.Fintype.Prod
-import Mathlib.Data.Finset.Card
-import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter10.ShearerCovering
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Basic
+public import Mathlib.Combinatorics.SimpleGraph.Bipartite
+public import Mathlib.Data.Fintype.Powerset
+public import Mathlib.Data.Fintype.Sum
+public import Mathlib.Data.Fintype.Prod
+public import Mathlib.Data.Finset.Card
+public import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter10.ShearerCovering
+
+@[expose] public section
+
 set_option maxHeartbeats 1600000
 
 open Finset SimpleGraph

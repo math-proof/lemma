@@ -1,7 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/FieldTheory/Galois/AdditiveHilbert90.lean -/
+module
 
-import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.RingTheory.Trace.Basic
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.RingTheory.Trace.Basic
+
+public section
+
 variable {K L : Type*} [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
   [IsGalois K L]
 

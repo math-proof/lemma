@@ -1,6 +1,10 @@
-import Mathlib.MeasureTheory.Measure.Count
-import Mathlib.MeasureTheory.Measure.WithDensity
-import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+module
+
+public import Mathlib.MeasureTheory.Measure.Count
+public import Mathlib.MeasureTheory.Measure.WithDensity
+public import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+public section
+
 open MeasureTheory
 
 

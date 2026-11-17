@@ -10,7 +10,7 @@ import Mathlib.NumberTheory.LSeries.RiemannZeta
 import Def.Analysis.Ramanujan.Part1Ch7Entry10ZetaSide
 import Lemma.Real.Ramanujan.Part1Ch7Entry10ZetaSide
 import Mathlib.Analysis.Meromorphic.Complex
-import Lemma.Nat.LSeries.RiemannZeta
+import Theorem.Nat.LSeries.RiemannZeta
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 7, Entry 10
 

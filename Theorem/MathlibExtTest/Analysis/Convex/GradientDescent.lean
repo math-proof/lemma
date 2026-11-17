@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Convex/GradientDescent.lean -/
+module
 
+public import Theorem.Analysis.Convex.GradientDescent
+public import Mathlib.Analysis.Calculus.Deriv.Mul
+public import Mathlib.Analysis.Calculus.Deriv.Pow
+public import Mathlib.Analysis.Convex.Mul
 
-import Theorem.Analysis.Convex.GradientDescent
-import Mathlib.Analysis.Calculus.Deriv.Mul
-import Mathlib.Analysis.Calculus.Deriv.Pow
-import Mathlib.Analysis.Convex.Mul
-
+public section
 
 namespace MetaMathlibExt
 

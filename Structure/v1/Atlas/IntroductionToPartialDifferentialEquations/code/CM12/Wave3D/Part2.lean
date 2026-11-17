@@ -8,24 +8,26 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Calculus.FDeriv.Basic
-import Mathlib.Analysis.Calculus.FDeriv.Mul
-import Mathlib.Analysis.Calculus.ContDiff.Defs
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM11.Wave1D
-import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM11.Wave1D
-import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM12.Wave3D
+module
+
+public import Mathlib.Analysis.Calculus.FDeriv.Basic
+public import Mathlib.Analysis.Calculus.FDeriv.Mul
+public import Mathlib.Analysis.Calculus.ContDiff.Defs
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.MeasureTheory.Integral.DominatedConvergence
+public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+public import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM11.Wave1D
+public import Theorem.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM11.Wave1D
+public import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM12.Wave3D
 set_option maxHeartbeats 3200000
 
 
-noncomputable section
+public noncomputable section
 
 open Matrix Real MeasureTheory Filter intervalIntegral
 

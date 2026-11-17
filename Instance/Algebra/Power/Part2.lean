@@ -1,6 +1,9 @@
-import Mathlib.Data.Finset.Basic
-import Structure.Algebra.Power
+module
 
+public import Mathlib.Data.Finset.Basic
+public import Structure.Algebra.Power
+
+@[expose] public section
 
 namespace FinsetPow
 

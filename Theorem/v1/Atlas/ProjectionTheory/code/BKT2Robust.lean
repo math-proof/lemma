@@ -7,10 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Data.Finset.Image
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Data.Finset.Image
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+
+public section
+
 /-- **Bourgain–Katz–Tao 2 (robust version).** With the same setup as BKT (`X ⊂ 𝔽_p²`
 of size `p^{s_X}`, `D ⊂ 𝔽_p` of size `p^{s_D}` with `0 < s_X < 2`, `0 < s_D`), there
 exists `ε = ε(s_X, s_D) > 0` and a direction `t ∈ D` such that the projection

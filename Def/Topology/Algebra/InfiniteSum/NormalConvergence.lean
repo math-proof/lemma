@@ -1,5 +1,10 @@
-import Mathlib.Analysis.Normed.Group.Basic
-import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
+module
+
+public import Mathlib.Analysis.Normed.Group.Basic
+public import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
+
+@[expose] public section
+
 open Topology
 open scoped ENNReal
 

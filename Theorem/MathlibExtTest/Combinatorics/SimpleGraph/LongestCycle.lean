@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/LongestCycle.lean -/
+module
 
+public import Def.Combinatorics.SimpleGraph.LongestCycle
 
-import Def.Combinatorics.SimpleGraph.LongestCycle
-
+public section
 
 namespace SimpleGraph.Walk
 

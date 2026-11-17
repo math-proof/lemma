@@ -8,14 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.LapMatrix
-import Mathlib.Combinatorics.SimpleGraph.DegreeSum
-import Mathlib.Combinatorics.SimpleGraph.Prod
-import Mathlib.LinearAlgebra.Matrix.Symmetric
-import Mathlib.LinearAlgebra.Matrix.PosDef
-import Mathlib.Data.Real.Basic
-import Structure.v1.Atlas.AnAlgorithmistsToolkit.code.GraphMatrices
+module
 
+public import Mathlib.Combinatorics.SimpleGraph.LapMatrix
+public import Mathlib.Combinatorics.SimpleGraph.DegreeSum
+public import Mathlib.Combinatorics.SimpleGraph.Prod
+public import Mathlib.LinearAlgebra.Matrix.Symmetric
+public import Mathlib.LinearAlgebra.Matrix.PosDef
+public import Mathlib.Data.Real.Basic
+public import Structure.v1.Atlas.AnAlgorithmistsToolkit.code.GraphMatrices
+
+@[expose] public section
 
 namespace GraphMatrices
 

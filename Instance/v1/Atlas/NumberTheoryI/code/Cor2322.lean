@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RepresentationTheory.Homological.GroupHomology.Functoriality
-import Mathlib.CategoryTheory.Preadditive.AdditiveFunctor
-import Theorem.v1.Atlas.NumberTheoryI.code.Cor2322
+module
+
+public import Mathlib.RepresentationTheory.Homological.GroupHomology.Functoriality
+public import Mathlib.CategoryTheory.Preadditive.AdditiveFunctor
+public import Theorem.v1.Atlas.NumberTheoryI.code.Cor2322
+
+@[expose] public section
+
 universe u
 
 

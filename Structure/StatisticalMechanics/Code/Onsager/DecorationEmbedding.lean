@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.StatisticalMechanics.Code.Onsager.DecorationEdgeComponent
-import Theorem.StatisticalMechanics.Code.Onsager.DecorationEmbedding.Part4
+module
 
+public import Theorem.StatisticalMechanics.Code.Onsager.DecorationEdgeComponent
+public import Theorem.StatisticalMechanics.Code.Onsager.DecorationEmbedding.Part4
+
+
+public section
 
 namespace StatMech.Onsager
 

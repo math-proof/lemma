@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.StatisticalMechanics.Code.Exact3D.FinitePlusTailContraction.Part12
-import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailCone.Part3
+module
 
+public import Def.StatisticalMechanics.Code.Exact3D.FinitePlusTailContraction.Part12
+public import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailCone.Part3
+
+
+public section
 
 namespace StatMech
 

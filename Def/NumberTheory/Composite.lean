@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Composite.lean -/
 
-import Mathlib.Data.Nat.Prime.Defs
+module
+
+public import Mathlib.Data.Nat.Prime.Defs
+
+@[expose] public section
+
 /-!
 # Composite natural numbers
 

@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Real.Basic
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+module
+
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+
+@[expose] public section
 
 
 /-- A formal real-coefficient combination of objects indexed by `I`, used to

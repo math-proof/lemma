@@ -8,12 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM17.FlowSymmetry
+module
+
+public import Mathlib
+public import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM17.FlowSymmetry
 open Real Set MeasureTheory
 
 
-noncomputable section
+public noncomputable section
 
 namespace ODEFlow
 

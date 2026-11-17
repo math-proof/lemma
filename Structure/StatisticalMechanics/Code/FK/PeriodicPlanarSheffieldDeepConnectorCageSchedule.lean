@@ -9,9 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldDeepConnectorRows.Part2
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldExclusion
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarDualBurtonKeane.Part2
+module
+
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldDeepConnectorRows.Part2
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldExclusion
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarDualBurtonKeane.Part2
+public section
+
 open MeasureTheory Set
 
 

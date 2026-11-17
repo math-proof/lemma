@@ -9,9 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexMirrorPairFromReflection.Part5
-import Theorem.StatisticalMechanics.Code.Universality.HexMirrorOrbitBoundary.Part2
+module
 
+public import Theorem.StatisticalMechanics.Code.Universality.HexMirrorPairFromReflection.Part5
+public import Theorem.StatisticalMechanics.Code.Universality.HexMirrorOrbitBoundary.Part2
+
+
+public section
 
 namespace StatMech.Universality
 

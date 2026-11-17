@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/Lie/PoissonBracket.lean -/
+module
 
+public import Theorem.Algebra.Lie.PoissonBracket
+public import Def.MathlibExtTest.Algebra.Lie.PoissonBracket
 
-import Theorem.Algebra.Lie.PoissonBracket
-import Def.MathlibExtTest.Algebra.Lie.PoissonBracket
-
+public section
 
 namespace MathlibExtTest.Algebra.Lie.PoissonBracket
 

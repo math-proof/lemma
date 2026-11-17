@@ -6,7 +6,7 @@ Authors: Adam Kiezun, Muse Spark 1.3, Codex
 
 import Mathlib.NumberTheory.LegendreSymbol.Basic
 import Def.NumberTheory.QuadraticForms.ThreeSquares
-import Lemma.Nat.QuadraticForms.ThreeSquares
+import Theorem.Nat.QuadraticForms.ThreeSquares
 import Mathlib.Algebra.Quaternion
 import Mathlib.Data.ZMod.ValMinAbs
 import Mathlib.FieldTheory.Finite.Basic

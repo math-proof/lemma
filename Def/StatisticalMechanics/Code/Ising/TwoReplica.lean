@@ -9,8 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Abbrev.StatisticalMechanics.Code.Ising.TwoReplica
+module
+
+public import Mathlib
+public import Abbrev.StatisticalMechanics.Code.Ising.TwoReplica
+
+@[expose] public section
+
 open Finset Classical
 open scoped symmDiff BigOperators
 

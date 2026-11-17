@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Padics/Digits.lean -/
 
-import Mathlib.NumberTheory.Padics.RingHoms
-import Theorem.NumberTheory.Padics.Digits
+module
+
+public import Mathlib.NumberTheory.Padics.RingHoms
+public import Theorem.NumberTheory.Padics.Digits
+
+@[expose] public section
+
 set_option autoImplicit false
 
 /-!

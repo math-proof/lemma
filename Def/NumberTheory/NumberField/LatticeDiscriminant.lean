@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/LatticeDiscriminant.lean -/
 
-import Mathlib.RingTheory.Discriminant
-import Mathlib.RingTheory.FractionalIdeal.Operations
+module
+
+public import Mathlib.RingTheory.Discriminant
+public import Mathlib.RingTheory.FractionalIdeal.Operations
+
+@[expose] public section
+
 open scoped Matrix
 
 universe u

@@ -1,5 +1,6 @@
 import Mathlib.InformationTheory.KullbackLeibler.Basic
 import Lemma.Random.KL.eq.Expect
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory InformationTheory Random
 
 
@@ -19,4 +20,4 @@ private lemma main
 
 
 -- created on 2023-03-25
--- updated on 2026-10-17
+-- updated on 2026-11-17

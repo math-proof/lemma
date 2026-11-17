@@ -4,6 +4,8 @@ import Mathlib.Probability.Kernel.MeasurableIntegral
 import Lemma.Random.NormWkd.le.Abs_R
 import Lemma.Random.Measurable_Wkd.of.All_Measurable_Prob
 import Lemma.Real.HasFDerivAt.LeNorm.of.All_LeNormFderiv.All_LeNorm.All_Differentiable.All_Measurable.Integrable.All_LeNormFderiv.All_EqIntegral_1.All_Ge_0.All_Differentiable.All_Measurable
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory PolicyGradient Random Real
 
 
@@ -102,4 +104,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-16
+-- updated on 2026-11-17

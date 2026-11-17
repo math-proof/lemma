@@ -1,8 +1,12 @@
-import Mathlib
-import Abbrev.Analysis.Misc.erdos_379
+module
+
+public import Mathlib
+public import Abbrev.Analysis.Misc.erdos_379
 open Nat
 
 /-! Formalizing a proof of Erdos problem \#379, arising from conversations between Stijn Cambie, Vjeko Kovac, and Terry Tao.  See the discussion at https://www.erdosproblems.com/forum/thread/379 -/
+
+public section
 
 
 /-- The condition {lean}`1<n` is necessary to avoid the range of {lit}`k` being vacuous. -/

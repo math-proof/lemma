@@ -1,5 +1,11 @@
 -- Carved from Lemma/Definitions/Def_ExtCitation_LocalLevelSubgroupsPD.lean: instance decls only.
-import Mathlib
+
+module
+
+public import Mathlib
+
+@[expose] public section
+
 set_option autoImplicit false
 
 open ExtCitation

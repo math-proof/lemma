@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.GrahamStableRawHoleCollisionSplit.Part2
-import Theorem.StatisticalMechanics.Code.FrontierA.GrahamStableRawComponentForest.Part47
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierA.GrahamStableRawHoleCollisionSplit.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierA.GrahamStableRawComponentForest.Part47
+public section
+
 open Finset
 
 

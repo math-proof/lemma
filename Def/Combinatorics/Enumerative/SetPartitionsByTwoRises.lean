@@ -1,17 +1,20 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/SetPartitionsByTwoRises.lean -/
 
-import Mathlib.Data.Fintype.Card
-import Mathlib.RingTheory.MvPowerSeries.Inverse
-import Mathlib.Algebra.BigOperators.Intervals
-import Mathlib.Algebra.Group.Finsupp
-import Mathlib.Algebra.Ring.GeomSum
-import Mathlib.Data.Fin.Basic
-import Mathlib.Data.Fin.Tuple.Basic
-import Mathlib.Data.Fintype.Sigma
-import Mathlib.Data.Fintype.Sum
-import Mathlib.Data.Finsupp.Order
-import Mathlib.Tactic.Ring
+module
 
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.RingTheory.MvPowerSeries.Inverse
+public import Mathlib.Algebra.BigOperators.Intervals
+public import Mathlib.Algebra.Group.Finsupp
+public import Mathlib.Algebra.Ring.GeomSum
+public import Mathlib.Data.Fin.Basic
+public import Mathlib.Data.Fin.Tuple.Basic
+public import Mathlib.Data.Fintype.Sigma
+public import Mathlib.Data.Fintype.Sum
+public import Mathlib.Data.Finsupp.Order
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 section
 

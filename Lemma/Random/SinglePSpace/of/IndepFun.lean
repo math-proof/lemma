@@ -1,5 +1,6 @@
 import Lemma.Random.SinglePSpace.of.Eq_WithDensity.Measurable.AEMeasurable
 import Lemma.Random.Map.eq.WithDensityProb
+import Initialize.Tactic.Attr.Basic
 open Random MeasureTheory
 open scoped ProbabilityTheory
 
@@ -44,3 +45,4 @@ private lemma main
 
 
 -- created on 2026-10-07
+-- updated on 2026-11-17

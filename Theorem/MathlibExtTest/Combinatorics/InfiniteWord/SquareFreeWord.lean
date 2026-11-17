@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.InfiniteWord.SquareFreeWord.Part2
-import Lemma.Finset.InfiniteWord.SquareFreeWord
+import Theorem.Finset.InfiniteWord.SquareFreeWord
 
 
 namespace MetaMathlibExt

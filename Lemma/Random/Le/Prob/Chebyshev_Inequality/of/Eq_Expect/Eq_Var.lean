@@ -1,5 +1,6 @@
 import Mathlib.Probability.Moments.Variance
 import Lemma.Random.Var.eq.Integral
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Random
 
 
@@ -28,4 +29,4 @@ private lemma main
 
 
 -- created on 2023-04-18
--- updated on 2026-10-17
+-- updated on 2026-11-17

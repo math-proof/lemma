@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.BooleanFunctions.code.PCP.Part5
-import Mathlib.Data.Real.Basic
+module
 
+public import Def.v1.Atlas.BooleanFunctions.code.PCP.Part5
+public import Mathlib.Data.Real.Basic
+
+@[expose] public section
 
 namespace Hastad
 

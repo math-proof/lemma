@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/SimsekNumber.lean -/
 
-import Mathlib.Data.Complex.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+module
 
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

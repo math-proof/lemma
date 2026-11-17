@@ -1,12 +1,14 @@
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.AlgebraicGeometry.Geometrically.Integral
-import Mathlib.AlgebraicGeometry.Fiber
-import Structure.AlgebraicGeometry_NeronModelPropertyBundleCarrier
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.AlgebraicGeometry.Geometrically.Integral
+public import Mathlib.AlgebraicGeometry.Fiber
+public import Structure.AlgebraicGeometry_NeronModelPropertyBundleCarrier
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 open CategoryTheory CategoryTheory.Limits NeronModelInfra
 

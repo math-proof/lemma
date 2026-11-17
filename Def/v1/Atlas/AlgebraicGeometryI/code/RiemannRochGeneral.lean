@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.DedekindDomain.Ideal.Basic
-import Mathlib.RingTheory.Kaehler.Polynomial
+module
+
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Basic
+public import Mathlib.RingTheory.Kaehler.Polynomial
+
+@[expose] public section
+
 open scoped TensorProduct
 open nonZeroDivisors
 

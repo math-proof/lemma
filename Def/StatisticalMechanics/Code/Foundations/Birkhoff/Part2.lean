@@ -9,8 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Foundations.Birkhoff
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Foundations.Birkhoff
+
+@[expose] public section
+
 open MeasureTheory Filter Finset Function
 open scoped Topology
 

@@ -7,9 +7,10 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Def_2_10
-import Mathlib
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Def_2_10
+public import Mathlib
 open Finset BigOperators
 
-
+public section

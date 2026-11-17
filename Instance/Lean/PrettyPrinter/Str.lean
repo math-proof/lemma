@@ -1,6 +1,11 @@
-import Def.Lean.Expr.Part11
-import Def.Lean.Level
-import Def.Lean.PrettyPrinter.Str
+module
+
+public import Def.Lean.Expr.Part11
+public import Def.Lean.Level
+public import Def.Lean.PrettyPrinter.Str
+
+@[expose] public section
+
 open Lean (FVarId Name)
 
 

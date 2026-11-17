@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/OrderedSetPartition.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.OrderedSetPartition
+public import Mathlib.Tactic.NormNum
 
-import Def.Combinatorics.Enumerative.OrderedSetPartition
-import Mathlib.Tactic.NormNum
-
+public section
 
 namespace MetaMathlibExt
 

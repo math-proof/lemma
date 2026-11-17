@@ -1,8 +1,12 @@
-import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
-import Mathlib.GroupTheory.Transfer
-import Mathlib.Algebra.Module.Hom
-import Mathlib.Data.ZMod.Units
-import Mathlib.Algebra.BigOperators.GroupWithZero.Action
+module
+
+public import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
+public import Mathlib.GroupTheory.Transfer
+public import Mathlib.Algebra.Module.Hom
+public import Mathlib.Data.ZMod.Units
+public import Mathlib.Algebra.BigOperators.GroupWithZero.Action
+
+public section
 
 set_option autoImplicit false
 

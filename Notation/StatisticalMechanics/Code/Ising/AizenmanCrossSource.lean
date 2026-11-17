@@ -9,12 +9,17 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Sharpness.Switching.Part3
-import Theorem.StatisticalMechanics.Code.Sharpness.MultiReplica.Part2
-import Theorem.StatisticalMechanics.Code.Ising.AizenmanSignDominance.Part2
-import Theorem.StatisticalMechanics.Code.Ising.AizenmanInclusionExclusion.Part3
-import Theorem.StatisticalMechanics.Code.Ising.AizenmanHdom.Part2
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Sharpness.Switching.Part3
+public import Theorem.StatisticalMechanics.Code.Sharpness.MultiReplica.Part2
+public import Theorem.StatisticalMechanics.Code.Ising.AizenmanSignDominance.Part2
+public import Theorem.StatisticalMechanics.Code.Ising.AizenmanInclusionExclusion.Part3
+public import Theorem.StatisticalMechanics.Code.Ising.AizenmanHdom.Part2
+
+public section
+
 open Finset BigOperators SimpleGraph
 open scoped symmDiff
 open Classical

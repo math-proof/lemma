@@ -1,6 +1,9 @@
-import Mathlib.Analysis.CStarAlgebra.Module.Constructions
-import Mathlib.Analysis.InnerProductSpace.Continuous
+module
 
+public import Mathlib.Analysis.CStarAlgebra.Module.Constructions
+public import Mathlib.Analysis.InnerProductSpace.Continuous
+
+@[expose] public section
 
 namespace InnerProductSpace.ToeplitzHausdorffWanted
 

@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.AlgebraicGeometryI.code.BezoutTheorem
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.BezoutTheorem
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochGeneral
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BezoutTheorem
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochGeneral
 import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRochGeneral
 set_option maxHeartbeats 1600000
 

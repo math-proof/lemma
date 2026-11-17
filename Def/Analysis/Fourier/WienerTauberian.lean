@@ -4,15 +4,17 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
 
-import Mathlib.Analysis.Fourier.FourierTransform
-import Mathlib.Analysis.Fourier.Convolution
-import Mathlib.Analysis.Distribution.AEEqOfIntegralContDiff
-import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
-import Mathlib.Analysis.Distribution.SchwartzSpace.Fourier
-import Mathlib.Analysis.Calculus.BumpFunction.Basic
-import Lemma.Real.Fourier_UFnMul.eq.SMulFourier.of.Ne_0
-import Lemma.Real.Fourier_UFnMul.eq.SMulFourier.of.Gt_0
-import Lemma.Real.Fourier_Coe_UFnMul.eq.SMulFourier.of.Gt_0
+module
+
+public import Mathlib.Analysis.Fourier.FourierTransform
+public import Mathlib.Analysis.Fourier.Convolution
+public import Mathlib.Analysis.Distribution.AEEqOfIntegralContDiff
+public import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
+public import Mathlib.Analysis.Distribution.SchwartzSpace.Fourier
+public import Mathlib.Analysis.Calculus.BumpFunction.Basic
+
+@[expose] public section
+
 open MeasureTheory
 open scoped Convolution FourierTransform
 

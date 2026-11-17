@@ -1,4 +1,6 @@
-import Structure.AutomorphicForm_CuspidalSpectrumCarrier
+module
+
+public import Structure.AutomorphicForm_CuspidalSpectrumCarrier
 
 set_option autoImplicit false
 
@@ -6,7 +8,7 @@ open MeasureTheory NumberField NumberField.AdelicHaar NumberField.AdelicLevel Nu
 open IsDedekindDomain AutomorphicForm.CuspidalConstituent
 
 
-noncomputable section
+public noncomputable section
 
 namespace AutomorphicForm
 

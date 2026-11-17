@@ -1,4 +1,10 @@
-import Theorem.LinearAlgebra.Matrix.OfFun
+module
+
+public meta import Lean
+public import Theorem.LinearAlgebra.Matrix.OfFun
+
+public meta section
+
 open Lean
 
 

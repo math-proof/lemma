@@ -7,10 +7,12 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.AlgebraicGeometry.Modules.Tilde
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec10Quasicoherent
+public import Mathlib.AlgebraicGeometry.Modules.Tilde
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec10Quasicoherent
 
+public section
 
 noncomputable section
 

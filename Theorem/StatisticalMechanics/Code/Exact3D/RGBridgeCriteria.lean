@@ -7,10 +7,12 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Theorem.StatisticalMechanics.Code.Exact3D.Certificate.Part6
-import Theorem.StatisticalMechanics.Code.Exact3D.CriticalExponentCriteria
+public import Theorem.StatisticalMechanics.Code.Exact3D.Certificate.Part6
+public import Theorem.StatisticalMechanics.Code.Exact3D.CriticalExponentCriteria
 
+public section
 
 namespace StatMech
 

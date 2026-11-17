@@ -5,7 +5,7 @@ import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Order
 import Def.LinearAlgebra.Matrix.Toeplitz
-import Lemma.Matrix.Toeplitz
+import Theorem.Matrix.Toeplitz
 import Theorem.MathlibExtTest.LinearAlgebra.Matrix.Toeplitz
 open MetaMathlibExt
 

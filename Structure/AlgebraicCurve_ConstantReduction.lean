@@ -1,10 +1,12 @@
-import Mathlib
-import Instance.AlgebraicCurve_DivisorClassGroup
-import Lemma.Submodule.Repartitions
+module
+
+public import Mathlib
+public import Instance.AlgebraicCurve_DivisorClassGroup
+public import Lemma.Submodule.Repartitions
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 namespace AlgebraicCurve
 

@@ -3,6 +3,8 @@ import Lemma.Random.PnkdAdd_1.eq.Integral_MulProbIntegral_TPnkd
 import Lemma.Random.RealPreimageS.eq.Sum_MulRealPn.of.All_EqWithDensity
 import Lemma.Random.RealPreimageS0.eq.Real.of.All_EqWithDensity
 import Lemma.Random.Pnkd.eq.Integral
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
@@ -58,4 +60,4 @@ private lemma main
 
 
 -- created on 2026-11-13
--- updated on 2026-11-16
+-- updated on 2026-11-17

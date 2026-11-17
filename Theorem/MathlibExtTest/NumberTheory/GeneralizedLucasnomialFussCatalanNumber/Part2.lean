@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.GeneralizedLucasnomialFussCatalanNumber
-import Lemma.Nat.GeneralizedLucasnomialFussCatalanNumber
+import Theorem.Nat.GeneralizedLucasnomialFussCatalanNumber
 import Mathlib.Tactic
 import Def.MathlibExtTest.NumberTheory.GeneralizedLucasnomialFussCatalanNumber
 

@@ -1,6 +1,8 @@
-import Mathlib
-import Lemma.Submodule.ContinuousH2
-import Lemma.Rep.ContinuousH2Map
+module
+
+public import Mathlib
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -7,14 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Mathlib.Analysis.Calculus.Deriv.Mul
-import Mathlib.Analysis.Complex.Basic
-import Def.StatisticalMechanics.Code.Universality.FiniteHolomorphicInterpolation
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Mathlib.Analysis.Calculus.Deriv.Mul
+public import Mathlib.Analysis.Complex.Basic
+public import Def.StatisticalMechanics.Code.Universality.FiniteHolomorphicInterpolation
 open Finset
 
+public section
 
 noncomputable section
 

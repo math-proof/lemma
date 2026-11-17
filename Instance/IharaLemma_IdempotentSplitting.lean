@@ -1,7 +1,12 @@
 -- Carved from Lemma/Definitions/Def_IharaLemma_IdempotentSplitting.lean: instance decls only.
-import Mathlib.RingTheory.Idempotents
-import Mathlib.RingTheory.Localization.AtPrime.Basic
-import Mathlib.Tactic.LinearCombination
+
+module
+
+public import Mathlib.RingTheory.Idempotents
+public import Mathlib.RingTheory.Localization.AtPrime.Basic
+public import Mathlib.Tactic.LinearCombination
+
+@[expose] public section
 
 namespace IharaLemma
 

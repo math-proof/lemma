@@ -9,12 +9,10 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.GeometryOfManifolds.code.HamiltonianVectorFields.Part3
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.HamiltonianVectorFields
 import Def.v1.Atlas.GeometryOfManifolds.code.ArnoldConjecture.Part2
 set_option autoImplicit false
 
 open DifferentialFormSpace
-
 
 /-- Betti-number data for a manifold of dimension `manifoldDim`: total Betti number
 $\sum_{i=0}^{\dim M} b_i(M)$ packaged with the cohomology groups. -/

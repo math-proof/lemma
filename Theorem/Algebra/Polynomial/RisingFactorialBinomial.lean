@@ -1,8 +1,11 @@
-import Mathlib.Basic.Real.Basic
-import Mathlib.RingTheory.Polynomial.Pochhammer
-import Mathlib.Algebra.Order.Archimedean.Real.Basic
+module
+
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.RingTheory.Polynomial.Pochhammer
+public import Mathlib.Algebra.Order.Archimedean.Real.Basic
 open scoped BigOperators
 
+public section
 
 namespace MetaMathlibExt
 

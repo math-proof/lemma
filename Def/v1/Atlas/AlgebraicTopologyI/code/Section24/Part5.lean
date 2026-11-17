@@ -8,25 +8,30 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Tor
-import Mathlib.Algebra.Category.ModuleCat.Monoidal.Basic
-import Mathlib.Algebra.Category.ModuleCat.Abelian
-import Mathlib.Algebra.Category.ModuleCat.Projective
-import Mathlib.Algebra.Homology.ShortComplex.ShortExact
-import Mathlib.Algebra.Homology.Additive
-import Mathlib.Algebra.Homology.HomologySequence
-import Mathlib.Algebra.Homology.HomologySequenceLemmas
-import Mathlib.RingTheory.PrincipalIdealDomain
-import Mathlib.CategoryTheory.Abelian.Projective.Resolution
-import Mathlib.LinearAlgebra.FreeModule.Basic
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.CategoryTheory.Monoidal.Braided.Basic
-import Mathlib.Algebra.Category.ModuleCat.Monoidal.Symmetric
-import Mathlib.Algebra.Category.ModuleCat.Monoidal.Closed
-import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Kernels
-import Mathlib.Algebra.Homology.HomologicalComplexAbelian
-import Mathlib.RingTheory.Flat.CategoryTheory
-import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section24.Part3
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Tor
+public import Mathlib.Algebra.Category.ModuleCat.Monoidal.Basic
+public import Mathlib.Algebra.Category.ModuleCat.Abelian
+public import Mathlib.Algebra.Category.ModuleCat.Projective
+public import Mathlib.Algebra.Homology.ShortComplex.ShortExact
+public import Mathlib.Algebra.Homology.Additive
+public import Mathlib.Algebra.Homology.HomologySequence
+public import Mathlib.Algebra.Homology.HomologySequenceLemmas
+public import Mathlib.RingTheory.PrincipalIdealDomain
+public import Mathlib.CategoryTheory.Abelian.Projective.Resolution
+public import Mathlib.LinearAlgebra.FreeModule.Basic
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.CategoryTheory.Monoidal.Braided.Basic
+public import Mathlib.Algebra.Category.ModuleCat.Monoidal.Symmetric
+public import Mathlib.Algebra.Category.ModuleCat.Monoidal.Closed
+public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Kernels
+public import Mathlib.Algebra.Homology.HomologicalComplexAbelian
+public import Mathlib.RingTheory.Flat.CategoryTheory
+public import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section24.Part3
+
+@[expose] public section
+
 open CategoryTheory MonoidalCategory Limits
 
 

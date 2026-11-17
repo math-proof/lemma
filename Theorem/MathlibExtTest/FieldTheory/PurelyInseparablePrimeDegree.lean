@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/FieldTheory/PurelyInseparablePrimeDegree.lean -/
 
 
-import Lemma.Rat.PurelyInseparablePrimeDegree
+import Theorem.Rat.PurelyInseparablePrimeDegree
 set_option autoImplicit false
 
 open IntermediateField Module Polynomial

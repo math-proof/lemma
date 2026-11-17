@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/Gallop.lean -/
 
-import Def.CPythonListsort.Code.Transcription.MergeState.Part3
-import Def.CPythonListsort.Code.Transcription.Gallop
+module
+
+public import Def.CPythonListsort.Code.Transcription.MergeState.Part3
+public import Def.CPythonListsort.Code.Transcription.Gallop
 /-!
 # Hinted galloping searches
 
@@ -13,6 +15,9 @@ The searched run starts at the signed index `base`.  Invalid assertion inputs,
 failed bounds checks, and failure of the doubling assertion return `none`.
 Fuel exhaustion is represented separately in the successful result.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/RisingDiagonalSequence.lean -/
 
-import Mathlib.Data.Real.Basic
+module
+
+public import Mathlib.Data.Real.Basic
+
+@[expose] public section
+
 /-!
 # Rising diagonals of binary binomial interpolated triangles
 

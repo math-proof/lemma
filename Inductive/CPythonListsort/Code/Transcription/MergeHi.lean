@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeHi.lean -/
 
-import Def.CPythonListsort.Code.Transcription.Gallop.Part2
-import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
-import Def.CPythonListsort.Code.Transcription.MergeHi
+module
+
+public import Def.CPythonListsort.Code.Transcription.Gallop.Part2
+public import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
+public import Def.CPythonListsort.Code.Transcription.MergeHi
 /-!
 # Right-to-left stable merge transcription
 
@@ -37,7 +39,7 @@ variable {κ : Type u} {ν : Type v}
 
 /-- The three `sortslice_memcpy` sites in CPython's `merge_hi`, kept separate
 so source coverage and backing direction remain machine-visible. -/
-inductive MergeHiMemcpyCallsite where
+public inductive MergeHiMemcpyCallsite where
   | initialDataToTemp
   | gallopTempToData
   | finalTempToData

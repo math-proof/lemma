@@ -8,15 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Sites.SheafCohomology.Basic
-import Mathlib.CategoryTheory.Sites.PreservesSheafification
-import Mathlib.CategoryTheory.Sites.Spaces
-import Mathlib.CategoryTheory.Abelian.GrothendieckCategory.HasExt
-import Mathlib.Topology.Sheaves.Abelian
-import Mathlib.AlgebraicGeometry.Scheme
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.Algebra.Category.Ring.Basic
-import Def.v1.Atlas.AlgebraicGeometryI.code.ZariskiSheafCohomology
+module
+
+public import Mathlib.CategoryTheory.Sites.SheafCohomology.Basic
+public import Mathlib.CategoryTheory.Sites.PreservesSheafification
+public import Mathlib.CategoryTheory.Sites.Spaces
+public import Mathlib.CategoryTheory.Abelian.GrothendieckCategory.HasExt
+public import Mathlib.Topology.Sheaves.Abelian
+public import Mathlib.AlgebraicGeometry.Scheme
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.Algebra.Category.Ring.Basic
+public import Def.v1.Atlas.AlgebraicGeometryI.code.ZariskiSheafCohomology
+
+@[expose] public section
+
 open AlgebraicGeometry CategoryTheory CategoryTheory.Abelian TopologicalSpace
 
 

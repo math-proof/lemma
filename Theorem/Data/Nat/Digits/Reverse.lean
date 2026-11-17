@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Data/Nat/Digits/Reverse.lean -/
+module
 
-import Mathlib.Data.Nat.Digits.Defs
-import Def.Data.Nat.Digits.Reverse
+public import Mathlib.Data.Nat.Digits.Defs
+public import Def.Data.Nat.Digits.Reverse
 
+public section
 
 namespace Nat
 

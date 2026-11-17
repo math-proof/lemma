@@ -11,7 +11,7 @@ import Mathlib.Data.Nat.Factorial.Basic
 import Mathlib.NumberTheory.Bernoulli
 import Mathlib.Topology.Algebra.InfiniteSum.Basic
 import Def.Analysis.Ramanujan.Part1Ch5Entry4
-import Lemma.Complex.Part1Ch5Entry4
+import Theorem.Complex.Part1Ch5Entry4
 import Mathlib.Algebra.Polynomial.Basic
 import Mathlib.Algebra.Polynomial.Derivative
 import Mathlib.Algebra.Polynomial.Eval.Defs

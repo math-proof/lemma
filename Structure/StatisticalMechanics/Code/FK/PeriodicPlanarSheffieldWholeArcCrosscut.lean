@@ -9,9 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FK.ContinuousRectangleCrossing.Part9
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldHalfPlaneCage.Part9
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldWholeArcCrosscut
+module
+
+public import Theorem.StatisticalMechanics.Code.FK.ContinuousRectangleCrossing.Part9
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldHalfPlaneCage.Part9
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldWholeArcCrosscut
+public section
+
 open Set SimpleGraph Topology
 open scoped unitInterval
 

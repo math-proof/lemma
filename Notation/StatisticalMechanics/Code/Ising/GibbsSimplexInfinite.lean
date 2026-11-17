@@ -9,12 +9,17 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Ising.GibbsSimplex.Part3
-import Theorem.StatisticalMechanics.Code.Ising.GibbsExtreme
-import Theorem.StatisticalMechanics.Code.Ising.GibbsChoquet.Part2
-import Theorem.StatisticalMechanics.Code.Foundations.StochasticDomination
-import Def.StatisticalMechanics.Code.Ising.GibbsSimplexInfinite
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Ising.GibbsSimplex.Part3
+public import Theorem.StatisticalMechanics.Code.Ising.GibbsExtreme
+public import Theorem.StatisticalMechanics.Code.Ising.GibbsChoquet.Part2
+public import Theorem.StatisticalMechanics.Code.Foundations.StochasticDomination
+public import Def.StatisticalMechanics.Code.Ising.GibbsSimplexInfinite
+
+public section
+
 open MeasureTheory ProbabilityTheory MeasurableSpace Set Filter Topology
 open scoped BigOperators ENNReal StatMech
 

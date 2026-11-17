@@ -1,6 +1,10 @@
-import Def.LanglandsTunnell_ExplicitLift
-import Mathlib.Algebra.Group.Submonoid.Membership
-import Mathlib.LinearAlgebra.Matrix.Trace
+module
+
+public import Def.LanglandsTunnell_ExplicitLift
+public import Mathlib.Algebra.Group.Submonoid.Membership
+public import Mathlib.LinearAlgebra.Matrix.Trace
+
+@[expose] public section
 
 set_option autoImplicit false
 

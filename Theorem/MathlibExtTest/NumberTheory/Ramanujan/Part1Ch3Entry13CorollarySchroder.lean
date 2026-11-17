@@ -4,7 +4,7 @@
 import Mathlib.Tactic.LinearCombination
 import Mathlib.Tactic.NormNum
 import Def.NumberTheory.Ramanujan.Part1Ch3Entry13CorollarySchroder
-import Lemma.Nat.Ramanujan.Part1Ch3Entry13CorollarySchroder
+import Theorem.Nat.Ramanujan.Part1Ch3Entry13CorollarySchroder
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry13CorollarySchroder
 
 

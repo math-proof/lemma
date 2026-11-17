@@ -1,6 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.v1.Atlas.Buildings.code.ChamberComplex.UniquenessBook
+import Theorem.Finset.AgreeOnImage.of.AgreeOn
 open ChamberComplex
 open scoped Classical
 

@@ -9,9 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra.Part3
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticLinearAlgebra
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.MoserDarboux
 import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
 import Structure.v1.Atlas.GeometryOfManifolds.code.MoserDarboux.Part2
 import Def.v1.Atlas.GeometryOfManifolds.code.BlockMatrixLp
@@ -25,7 +22,6 @@ set_option autoImplicit false
 open Module FiniteDimensional
 open SymplecticLinearAlgebra
 open DifferentialFormSpace
-
 
 /-- Mathlib-flavored predicate that $i : X \to M$ is a Lagrangian embedding:
 $i$ is smooth and injective. -/

@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.SimpleGraph.SimplexGraph
-import Lemma.SimpleGraph.SimplexGraph
+import Theorem.SimpleGraph.SimplexGraph
 open scoped symmDiff
 
 

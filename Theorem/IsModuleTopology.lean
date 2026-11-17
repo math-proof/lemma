@@ -1,7 +1,10 @@
-import Mathlib
-import Class.Mathlib_IsModuleTopology
-import Def.IsModuleTopology
+module
 
+public import Mathlib
+public import Class.Mathlib_IsModuleTopology
+public import Def.IsModuleTopology
+
+public section
 
 namespace IsModuleTopology
 

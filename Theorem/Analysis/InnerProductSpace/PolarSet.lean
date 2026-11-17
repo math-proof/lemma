@@ -1,5 +1,8 @@
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Def.Analysis.InnerProductSpace.PolarSet
+module
+
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Def.Analysis.InnerProductSpace.PolarSet
+
 /-!
 # Polar of a set in a real inner-product space
 
@@ -29,6 +32,8 @@ This is deliberately distinct from the API already in Mathlib:
 
 The inner product is written `inner ℝ x y`, i.e. `𝕜 = ℝ` made explicit.
 -/
+
+public section
 
 
 namespace InnerProductSpace.PolarSet.MetaMathlibExt

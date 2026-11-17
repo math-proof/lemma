@@ -1,4 +1,6 @@
-import Mathlib
+module
+
+public import Mathlib
 open Filter Complex Finset
 
 /-! A solution to Erdos problem \#987.  It is convenient to rephrase things using
@@ -7,6 +9,8 @@ rather than 1, for greater compatibility with Mathlib.
 
 The proof follows the second proof given in https://www.erdosproblems.com/987
  -/
+
+public section
 
 
 theorem Erdos_987 (z: ℕ → Circle) :

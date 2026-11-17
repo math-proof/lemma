@@ -8,29 +8,28 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Algebra.Basic
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.FreeModule.StrongRankCondition
-import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
-import Mathlib.LinearAlgebra.FiniteDimensional.Basic
-import Mathlib.Algebra.Quaternion
-import Mathlib.Algebra.QuaternionBasis
-import Instance.v1.Atlas.EllipticCurves.code.EndAlgebra.Part5
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.EndAlgebra
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.EndomorphismAlgebra
-import Instance.v1.Atlas.EllipticCurves.code.EndomorphismAlgebra.Part2
-import Mathlib.RingTheory.Flat.Localization
-import Mathlib.RingTheory.SimpleRing.Basic
-import Def.v1.Atlas.EllipticCurves.code.EndAlgClassification
+module
+
+public import Mathlib.Algebra.Algebra.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.FreeModule.StrongRankCondition
+public import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
+public import Mathlib.LinearAlgebra.FiniteDimensional.Basic
+public import Mathlib.Algebra.Quaternion
+public import Mathlib.Algebra.QuaternionBasis
+public import Instance.v1.Atlas.EllipticCurves.code.EndAlgebra.Part5
+public import Instance.v1.Atlas.EllipticCurves.code.EndomorphismAlgebra.Part2
+public import Mathlib.RingTheory.Flat.Localization
+public import Mathlib.RingTheory.SimpleRing.Basic
+public import Def.v1.Atlas.EllipticCurves.code.EndAlgClassification
 open Module
 open scoped Quaternion TensorProduct
-
 
 /-- Albert's classification of finite-dimensional positive-definite involution `ℚ`-algebras `A`:
 either `A = ℚ` (dimension `1`), or `A` is an imaginary quadratic field (dimension `2` with a
 non-rational element squaring to a negative rational), or `A` is a definite quaternion algebra
 (dimension `4` with anticommuting generators squaring to negative rationals). -/
-inductive EndAlgClassification (A : Type*) [Ring A] [Algebra ℚ A] : Prop where
+public inductive EndAlgClassification (A : Type*) [Ring A] [Algebra ℚ A] : Prop where
   | rational (h : finrank ℚ A = 1) : EndAlgClassification A
   | imaginaryQuadratic (hdim : finrank ℚ A = 2)
       (hα : ∃ α : A, (∀ q : ℚ, α ≠ (algebraMap ℚ A) q) ∧

@@ -9,9 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierA.Z2GaugeCubicalWilson.Part3
-import Theorem.StatisticalMechanics.Code.FrontierA.Z2GaugeMultibondAdapter.Part2
-import Instance.StatisticalMechanics.Code.FrontierA.Z2GaugeCubicalDualGeometry
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierA.Z2GaugeCubicalWilson.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierA.Z2GaugeMultibondAdapter.Part2
+public import Instance.StatisticalMechanics.Code.FrontierA.Z2GaugeCubicalDualGeometry
 open scoped BigOperators symmDiff
 open Finset
 
@@ -22,7 +24,7 @@ set_option linter.unusedFintypeInType false
 
 namespace StatMech.FrontierA
 
-noncomputable section
+public noncomputable section
 
 structure CubicalCell (a b c : Nat) where
   x : Fin a

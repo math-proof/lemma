@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RoughNumbers.lean -/
 
-import Mathlib.NumberTheory.SmoothNumbers
-import Theorem.NumberTheory.RoughNumbers
+module
+
+public import Mathlib.NumberTheory.SmoothNumbers
+public import Theorem.NumberTheory.RoughNumbers
 /-!
 # Rough natural numbers
 
@@ -21,6 +23,7 @@ not the source predicate, which demands that *every* prime factor exceed the
 bound. We bridge to it below without conflating the two notions.
 -/
 
+@[expose] public section
 
 namespace Nat
 

@@ -5,6 +5,8 @@ import Lemma.Random.WAdd_1.eq.Integral_MulProbIntegral_TW.of.All_LeNorm.Strongly
 import Lemma.Real.Norm.le.Sum_Norm
 import Lemma.Real.Norm_1.le.One
 import Lemma.Real.StronglyMeasurable_Eq12
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Real
 
 
@@ -81,4 +83,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-16
+-- updated on 2026-11-17

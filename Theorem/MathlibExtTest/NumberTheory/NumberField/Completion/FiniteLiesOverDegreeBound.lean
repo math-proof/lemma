@@ -2,7 +2,7 @@
 
 
 import Theorem.NumberTheory.NumberField.Completion.FiniteLiesOverDegreeBound
-import Lemma.Nat.NumberField.Completion.FiniteLiesOverDegreeBound
+import Theorem.Nat.NumberField.Completion.FiniteLiesOverDegreeBound
 /-!
 # Tests for the local degree bound under finite-place completion
 

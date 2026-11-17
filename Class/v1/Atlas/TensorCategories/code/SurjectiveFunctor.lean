@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/SurjectiveFunctor.lean -/
 
 /-
@@ -8,11 +10,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Category.Basic
-import Mathlib.CategoryTheory.Functor.Basic
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.CategoryTheory.Monoidal.Category
-import Def.v1.Atlas.TensorCategories.code.SurjectiveFunctor
+public import Mathlib.CategoryTheory.Category.Basic
+public import Mathlib.CategoryTheory.Functor.Basic
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.CategoryTheory.Monoidal.Category
+public import Def.v1.Atlas.TensorCategories.code.SurjectiveFunctor
+public section
+
 set_option maxHeartbeats 800000
 
 open CategoryTheory

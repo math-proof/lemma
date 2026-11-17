@@ -1,5 +1,7 @@
-import Theorem.Dynamics.PolicyTrajectory.ContinuousAction
+import Def.Dynamics.PolicyTrajectory.ContinuousAction
 import Class.Dynamics.PolicyTrajectory
+import Class.Dynamics.MarkovDecisionProcess
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 open scoped ENNReal.ToRealCoe
 open IsPolicyTrajectory
@@ -45,4 +47,4 @@ private lemma main
 
 
 -- created on 2026-10-21
--- updated on 2026-11-16
+-- updated on 2026-11-17

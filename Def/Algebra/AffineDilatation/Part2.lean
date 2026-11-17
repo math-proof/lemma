@@ -1,5 +1,10 @@
-import Mathlib
-import Abbrev.Algebra.AffineDilatation
+module
+
+public import Mathlib
+public import Abbrev.Algebra.AffineDilatation
+
+@[expose] public section
+
 set_option autoImplicit false
 
 

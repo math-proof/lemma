@@ -1,4 +1,8 @@
-import Def.Data.List.Slice
+module
+
+public import Def.Data.List.Slice
+
+@[expose] public section
 open Lean
 
 

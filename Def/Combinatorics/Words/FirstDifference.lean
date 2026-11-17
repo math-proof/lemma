@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Words/FirstDifference.lean -/
 
-import Mathlib.Data.ZMod.Basic
+module
+
+public import Mathlib.Data.ZMod.Basic
+
+@[expose] public section
+
 /-!
 # First differences of binary words
 

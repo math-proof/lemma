@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Tilde
-import Mathlib.AlgebraicGeometry.Morphisms.Affine
-import Mathlib.CategoryTheory.Abelian.RightDerived
-import Mathlib.Algebra.Category.Grp.Abelian
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Tilde
+public import Mathlib.AlgebraicGeometry.Morphisms.Affine
+public import Mathlib.CategoryTheory.Abelian.RightDerived
+public import Mathlib.Algebra.Category.Grp.Abelian
+
+@[expose] public section
+
 open AlgebraicGeometry CategoryTheory Limits
 
 

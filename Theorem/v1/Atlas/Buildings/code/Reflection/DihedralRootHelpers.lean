@@ -7,12 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Theorem.v1.Atlas.Buildings.code.Reflection.FiniteReflectionGroups
-import Mathlib.Analysis.InnerProductSpace.Basic
+public import Theorem.v1.Atlas.Buildings.code.Reflection.FiniteReflectionGroups
+public import Mathlib.Analysis.InnerProductSpace.Basic
 open scoped InnerProductSpace
 open Set
 
+public section
 
 namespace FiniteReflectionGroups
 

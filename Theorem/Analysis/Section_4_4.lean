@@ -1,5 +1,8 @@
-import Mathlib
+module
 
+public import Mathlib
+
+public section
 
 /-- Proposition 4.4.3 (Interspersing of rationals) -/
 theorem Rat.exists_between_rat {x y:ℚ} (h: x < y) : ∃ z:ℚ, x < z ∧ z < y := by

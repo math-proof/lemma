@@ -1,5 +1,6 @@
 import Mathlib.Probability.HasLaw
 import Lemma.Random.Distributed.is.EqAe_Prob
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory
 
 
@@ -21,4 +22,4 @@ private lemma main
 
 
 -- created on 2023-04-30
--- updated on 2026-11-14
+-- updated on 2026-11-17

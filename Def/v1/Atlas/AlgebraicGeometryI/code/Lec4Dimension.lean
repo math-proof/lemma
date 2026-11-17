@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.KrullDimension
-import Mathlib.Topology.NoetherianSpace
+module
+
+public import Mathlib.Topology.KrullDimension
+public import Mathlib.Topology.NoetherianSpace
+
+@[expose] public section
+
 open TopologicalSpace
 
 

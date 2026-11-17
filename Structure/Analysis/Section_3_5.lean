@@ -1,7 +1,9 @@
-import Mathlib
-import Abbrev.Analysis.Section_3_1_api
-import Abbrev.Analysis.Section_3_2_api
-import Theorem.Analysis.Section_3_4.Part8
+module
+
+public import Mathlib
+public import Abbrev.Analysis.Section_3_1_api
+public import Abbrev.Analysis.Section_3_2_api
+public import Theorem.Analysis.Section_3_4.Part8
 /-!
 # Analysis I, Section 3.5: Cartesian products
 
@@ -25,6 +27,9 @@ Users of the companion who have completed the exercises in this section are welc
 - (Add tip here)
 
 -/
+public section
+
+
 
 
 namespace Chapter3

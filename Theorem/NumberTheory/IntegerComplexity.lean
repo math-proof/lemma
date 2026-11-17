@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/IntegerComplexity.lean -/
+module
 
-import Mathlib.Data.PNat.Basic
-import Mathlib.Data.Nat.Find
-import Def.NumberTheory.IntegerComplexity
+public import Mathlib.Data.PNat.Basic
+public import Mathlib.Data.Nat.Find
+public import Def.NumberTheory.IntegerComplexity
 
+public section
 
 namespace IntegerComplexity
 

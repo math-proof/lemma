@@ -1,6 +1,10 @@
-import Mathlib
-import Class.Deformations_ProartinianCat
-import Def.CategoryTheory_Subfunctor_OfIsTerminal
+module
+
+public import Mathlib
+public import Class.Deformations_ProartinianCat
+public import Def.CategoryTheory_Subfunctor_OfIsTerminal
+
+@[expose] public section
 
 set_option autoImplicit false
 

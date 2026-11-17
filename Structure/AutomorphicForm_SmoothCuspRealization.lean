@@ -1,11 +1,13 @@
-import Def.AutomorphicForm_SmoothAutomorphicFnAt
-import Def.AutomorphicForm_HeckeEigensystemMap
-import Structure.LocalLanglands_HeckeCosetSystem
+module
+
+public import Def.AutomorphicForm_SmoothAutomorphicFnAt
+public import Def.AutomorphicForm_HeckeEigensystemMap
+public import Structure.LocalLanglands_HeckeCosetSystem
 
 open IsDedekindDomain NumberField MeasureTheory Matrix
 open AutomorphicForm HeckeIntegralSeam
 
-noncomputable section
+public noncomputable section
 
 namespace AutomorphicForm
 

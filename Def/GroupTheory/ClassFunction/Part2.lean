@@ -4,10 +4,13 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.RepresentationTheory.Character
-import Mathlib.Algebra.Group.Conj
-import Theorem.GroupTheory.ClassFunction
+module
 
+public import Mathlib.RepresentationTheory.Character
+public import Mathlib.Algebra.Group.Conj
+public import Theorem.GroupTheory.ClassFunction
+
+@[expose] public section
 
 namespace MathlibExt.GroupTheory.ClassFunctionWanted
 

@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/GeneralizedExtremal.lean -/
 
-import Mathlib.Combinatorics.SimpleGraph.Extremal.Basic
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Extremal.Basic
+
+@[expose] public section
+
 /-!
 # Generalized Turán number
 

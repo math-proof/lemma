@@ -7,7 +7,7 @@ Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Data.Fintype.Basic
 import Def.Combinatorics.Schnirelmann
-import Lemma.Finset.Schnirelmann
+import Theorem.Finset.Schnirelmann
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.Order.Chebyshev
 import Mathlib.Analysis.Fourier.ZMod

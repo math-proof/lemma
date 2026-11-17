@@ -1,7 +1,62 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.CPythonListsort.Code.Policy.BoundaryPowerGeometry
-import Def.CPythonListsort.Code.Policy.StackPowers.Part2
+import Def.CPythonListsort.Code.Policy.StackPowers
+
+namespace CPythonListsort
+
+/-- Empty power list is increasing. -/
+lemma increasingPendingPowers_nil :
+    IncreasingPendingPowers [] :=
+  ⟨[], rfl, by simp, by simp⟩
+
+lemma ExactBoundaryPowers.head
+    {basekeys : Nat} {listlen : PySSize}
+    {left right : PendingRun} {rest : List PendingRun}
+    (h : ExactBoundaryPowers basekeys listlen (left :: right :: rest)) :
+    left.power = some (pendingBoundaryPower basekeys listlen left right) :=
+  h.1
+
+lemma ExactBoundaryPowers.tail
+    {basekeys : Nat} {listlen : PySSize}
+    {head : PendingRun} {tail : List PendingRun}
+    (h : ExactBoundaryPowers basekeys listlen (head :: tail)) :
+    ExactBoundaryPowers basekeys listlen tail := by
+  cases tail with
+  | nil => simp [ExactBoundaryPowers]
+  | cons next rest => exact h.2
+
+lemma ExactBoundaryPowers.pair_of_append
+    {basekeys : Nat} {listlen : PySSize}
+    {before after : List PendingRun}
+    {left right : PendingRun}
+    (h : ExactBoundaryPowers basekeys listlen
+      (before ++ left :: right :: after)) :
+    left.power = some (pendingBoundaryPower basekeys listlen left right) := by
+  induction before with
+  | nil => exact h.head
+  | cons _head before ih => exact ih h.tail
+
+lemma PoweredPrefix.exact_boundary_powers
+    {κ : Type u} {ν : Type v} {state : MergeState κ ν}
+    (h : PoweredPrefix state) :
+    ExactBoundaryPowers state.basekeys state.listlen state.pending.toList := by
+  obtain hempty | ⟨_, _, _, _, hexact⟩ := h
+  · simp [hempty, ExactBoundaryPowers]
+  · exact hexact
+
+lemma PoweredPrefix.boundary_power
+    {κ : Type u} {ν : Type v} {state : MergeState κ ν}
+    {before after : List PendingRun} {left right : PendingRun}
+    (h : PoweredPrefix state)
+    (hsplit : state.pending.toList = before ++ left :: right :: after) :
+    left.power =
+      some (pendingBoundaryPower state.basekeys state.listlen left right) := by
+  apply ExactBoundaryPowers.pair_of_append
+  simpa [hsplit] using h.exact_boundary_powers
+
+end CPythonListsort
+
 
 
 namespace CPythonListsort
@@ -27,7 +82,15 @@ lemma pendingBoundaryPower_geometry
   (hrightPositive : 0 < right.len.toNat)
   (hrightFits : right.endIndex ≤ basekeys + listlen.toNat) :
 -- imply
-  let pLM := pendingBoundaryPower basekeys listlen left middle let pMR := pendingBoundaryPower basekeys listlen middle right pLM ≠ pMR ∧ (pLM < pMR → pendingBoundaryPower basekeys listlen left { middle with len := middle.len + right.len } = pLM) ∧ (pMR < pLM → pendingBoundaryPower basekeys listlen { left with len := left.len + middle.len } right = pMR) := by
+  let pLM := pendingBoundaryPower basekeys listlen left middle
+  let pMR := pendingBoundaryPower basekeys listlen middle right
+  pLM ≠ pMR ∧
+    (pLM < pMR →
+      pendingBoundaryPower basekeys listlen left
+        { middle with len := middle.len + right.len } = pLM) ∧
+    (pMR < pLM →
+      pendingBoundaryPower basekeys listlen
+        { left with len := left.len + middle.len } right = pMR) := by
 -- proof
   dsimp only
   let s := left.base - basekeys
@@ -364,7 +427,13 @@ lemma mergeTop_preserves_poweredPrefix
   (_hcode : result.returnCode = 0)
   (_hfuel : result.fuelExhausted = false) :
 -- imply
-  let merged : PendingRun := { left with len := left.len + right.len } result.state.pending.toList = before ++ [merged] ∧ merged.power = some pInternal ∧ PendingLayout result.state scanned ∧ PoweredPrefix result.state ∧ q = pendingBoundaryPower result.state.basekeys result.state.listlen merged newRun := by
+  let merged : PendingRun := { left with len := left.len + right.len }
+  result.state.pending.toList = before ++ [merged] ∧
+    merged.power = some pInternal ∧
+    PendingLayout result.state scanned ∧
+    PoweredPrefix result.state ∧
+    q = pendingBoundaryPower result.state.basekeys result.state.listlen
+      merged newRun := by
 -- proof
   dsimp only
   let merged : PendingRun := { left with len := left.len + right.len }

@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Normed.Lp.lpSpace
-import Theorem.StatisticalMechanics.Code.Exact3D.FixedPointSkeleton.Part23
-import Theorem.StatisticalMechanics.Code.Exact3D.InfiniteTailSummability.Part5
+module
+
+public import Mathlib.Analysis.Normed.Lp.lpSpace
+public import Theorem.StatisticalMechanics.Code.Exact3D.FixedPointSkeleton.Part23
+public import Theorem.StatisticalMechanics.Code.Exact3D.InfiniteTailSummability.Part5
+public section
+
 open scoped BigOperators ENNReal NNReal
 
 

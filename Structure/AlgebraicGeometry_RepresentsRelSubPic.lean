@@ -1,6 +1,10 @@
-import Mathlib
-import Instance.AlgebraicGeometry_RelativePicardFunctor
-import Structure.JacJ1Iface
+module
+
+public import Mathlib
+public import Instance.AlgebraicGeometry_RelativePicardFunctor
+public import Structure.JacJ1Iface
+
+public section
 
 set_option autoImplicit false
 

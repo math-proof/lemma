@@ -8,27 +8,29 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section26.Part8
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section26
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section33
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section33.Part2
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.LinearAlgebra.Matrix.Notation
-import Mathlib.LinearAlgebra.PerfectPairing.Basic
-import Mathlib.Geometry.Manifold.IsManifold.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.LinearAlgebra.SesquilinearForm.Basic
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Mathlib.Algebra.Field.ZMod
-import Mathlib.Algebra.Group.Equiv.Basic
-import Mathlib.LinearAlgebra.BilinearForm.Orthogonal
-import Mathlib.LinearAlgebra.BilinearForm.Properties
-import Mathlib.LinearAlgebra.Projection
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section30.Part2
+module
+
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section26.Part8
+public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section26
+public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section33
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section33.Part2
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+public import Mathlib.LinearAlgebra.Matrix.Notation
+public import Mathlib.LinearAlgebra.PerfectPairing.Basic
+public import Mathlib.Geometry.Manifold.IsManifold.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.LinearAlgebra.SesquilinearForm.Basic
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.Algebra.Field.ZMod
+public import Mathlib.Algebra.Group.Equiv.Basic
+public import Mathlib.LinearAlgebra.BilinearForm.Orthogonal
+public import Mathlib.LinearAlgebra.BilinearForm.Properties
+public import Mathlib.LinearAlgebra.Projection
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section30.Part2
 open Matrix
 
 
-noncomputable section
+public noncomputable section
 
 namespace SurfacesAndBilinearForms
 

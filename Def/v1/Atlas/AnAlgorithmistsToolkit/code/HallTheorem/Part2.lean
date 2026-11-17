@@ -13,7 +13,7 @@ import Mathlib.Combinatorics.SimpleGraph.Hall
 import Mathlib.Order.Defs.PartialOrder
 import Mathlib.Tactic
 import Abbrev.v1.Atlas.AnAlgorithmistsToolkit.code.Expanders.Part2
-import Lemma.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.Expanders
+import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.Expanders
 import Structure.v1.Atlas.AnAlgorithmistsToolkit.code.HallTheorem
 open Finset Function SimpleGraph
 

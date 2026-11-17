@@ -1,9 +1,14 @@
-import Mathlib.Algebra.Module.ZLattice.Basic
-import Mathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass
-import Def.Analysis.SpecialFunctions.Elliptic.FundamentalParallelogram.Part2
+module
+
+public import Mathlib.Algebra.Module.ZLattice.Basic
+public import Mathlib.Analysis.SpecialFunctions.Elliptic.Weierstrass
+public import Def.Analysis.SpecialFunctions.Elliptic.FundamentalParallelogram.Part2
+
 /-!
 # Fundamental parallelograms of complex lattices
 -/
+
+public section
 
 
 namespace PeriodPair

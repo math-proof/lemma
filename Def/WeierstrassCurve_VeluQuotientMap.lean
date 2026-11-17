@@ -1,5 +1,9 @@
-import Mathlib
-import Def.WeierstrassCurve_Velu
+module
+
+public import Mathlib
+public import Def.WeierstrassCurve_Velu
+
+@[expose] public section
 
 open Polynomial
 

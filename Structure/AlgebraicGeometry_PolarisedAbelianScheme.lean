@@ -1,12 +1,14 @@
-import Mathlib.Topology.KrullDimension
-import Structure.JacJ1Iface
-import Lemma.Scheme.RelativeGroupLawKernel
-import Instance.AlgebraicGeometry_RelativePicardFunctor
-import Structure.AlgebraicGeometry_ModulesProjPresentation
+module
+
+public import Mathlib.Topology.KrullDimension
+public import Structure.JacJ1Iface
+public import Lemma.Scheme.RelativeGroupLawKernel
+public import Instance.AlgebraicGeometry_RelativePicardFunctor
+public import Structure.AlgebraicGeometry_ModulesProjPresentation
 
 set_option autoImplicit false
 
-noncomputable section
+public noncomputable section
 
 universe u
 

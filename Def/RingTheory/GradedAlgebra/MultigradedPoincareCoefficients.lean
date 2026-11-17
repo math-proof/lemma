@@ -5,7 +5,7 @@
 -/
 
 import Structure.RingTheory.GradedAlgebra.MultigradedBettiResolutionInvariance
-import Lemma.Int.GradedAlgebra.MultigradedBettiResolutionInvariance
+import Theorem.Int.GradedAlgebra.MultigradedBettiResolutionInvariance
 /-!
 # Multigraded Poincaré-series coefficient family
 

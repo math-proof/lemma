@@ -1,7 +1,10 @@
-import Mathlib
-import Def.Algebra.AdicCompletion.PolynomialCompletion
+module
+
+public import Mathlib
+public import Def.Algebra.AdicCompletion.PolynomialCompletion
 set_option autoImplicit false
 
+public section
 
 namespace AdicCompletion
 

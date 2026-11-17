@@ -9,7 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Def.StatisticalMechanics.Code.FrontierD.SixVertex.Part9
+module
+
+public import Def.StatisticalMechanics.Code.FrontierD.SixVertex.Part9
+public section
+
 open Finset
 
 

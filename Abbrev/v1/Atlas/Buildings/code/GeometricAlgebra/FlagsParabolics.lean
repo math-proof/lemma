@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.GeneralLinearGroup.Basic
-import Mathlib.Order.RelClasses
-import Mathlib.Tactic.Group
+module
+
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.GeneralLinearGroup.Basic
+public import Mathlib.Order.RelClasses
+public import Mathlib.Tactic.Group
+
+@[expose] public section
 
 
 namespace GeometricAlgebra

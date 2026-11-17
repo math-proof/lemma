@@ -5,7 +5,7 @@ Author: @akiezun, Avocado
 -/
 
 import Def.Analysis.Ramanujan.Part1Ch5Entry1Euleriangf
-import Lemma.Real.Part1Ch5Entry1Euleriangf
+import Theorem.Real.Part1Ch5Entry1Euleriangf
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 5, Entry 1
 

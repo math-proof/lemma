@@ -9,14 +9,16 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexColoredLoopPairing.Part16
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexColoredStrandSplice.Part3
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexColoredLoopPairing.Part16
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexColoredStrandSplice.Part3
 open Finset
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure FKColoredStrandSplice
     {T : EvenTorus} (source : FKColoredLoopPairingPair T) where

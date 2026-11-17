@@ -1,9 +1,11 @@
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.Calculus.FDeriv.Defs
-import Mathlib.Analysis.Complex.Liouville
-import Mathlib.Analysis.Complex.LocallyUniformLimit
-import Mathlib.Topology.ContinuousMap.Bounded.ArzelaAscoli
-import Def.Analysis.Complex.NormalFamilies.Part2
+module
+
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Calculus.FDeriv.Defs
+public import Mathlib.Analysis.Complex.Liouville
+public import Mathlib.Analysis.Complex.LocallyUniformLimit
+public import Mathlib.Topology.ContinuousMap.Bounded.ArzelaAscoli
+public import Def.Analysis.Complex.NormalFamilies.Part2
 open Set Filter Topology
 
 /-!
@@ -11,6 +13,8 @@ open Set Filter Topology
 
 Proves `Wanted` entries `montel` and `vitali`.
 -/
+
+public section
 
 
 namespace Complex.NormalFamilies

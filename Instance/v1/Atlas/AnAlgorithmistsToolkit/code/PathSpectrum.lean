@@ -12,8 +12,8 @@ import Mathlib.Combinatorics.SimpleGraph.LapMatrix
 import Mathlib.Combinatorics.SimpleGraph.Hasse
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Def.v1.Atlas.AnAlgorithmistsToolkit.code.GraphMatrices
-import Lemma.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.GraphMatrices
-import Lemma.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.SpectraCommonGraphs
+import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.GraphMatrices
+import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.SpectraCommonGraphs
 import Instance.v1.Atlas.AnAlgorithmistsToolkit.code.SpectraCommonGraphs
 open Real SimpleGraph Matrix Finset
 

@@ -7,9 +7,12 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM2.HeatEquationSetup
+public import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM2.HeatEquationSetup
 open MeasureTheory Real Filter Topology Set
+
+public section
 
 /-- Basic facts about the Fourier sine series on $[0, 1]$ (Theorem 4.1):
 for $f \in L^2([0, 1])$, the Fourier sine partial sums converge to $f$ in $L^2$,

@@ -1,5 +1,6 @@
 import Mathlib.Probability.HasLaw
 import Lemma.Random.Map.eq.WithDensityProb
+import Initialize.Tactic.Attr.Basic
 open Random MeasureTheory ProbabilityTheory
 
 
@@ -32,4 +33,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-14
+-- updated on 2026-11-17

@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/KPerfect.lean -/
 
-import Mathlib.NumberTheory.ArithmeticFunction.Misc
-import Def.NumberTheory.KPerfect
+module
+
+public import Mathlib.NumberTheory.ArithmeticFunction.Misc
+public import Def.NumberTheory.KPerfect
 /-!
 # Parameterized perfect numbers
 
@@ -13,6 +15,7 @@ A positive natural number `n` is `k`-perfect when its sum of positive divisors i
   2ℓn² = 1 + q + ⋯ + q^α and application to odd perfect numbers*, arXiv:2309.17084v3
 -/
 
+@[expose] public section
 
 namespace Nat
 

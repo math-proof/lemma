@@ -2,7 +2,7 @@
 
 
 import Theorem.Topology.MetricSpace.GromovHyperbolic
-import Lemma.Set.MetricSpace.GromovHyperbolic
+import Theorem.Set.MetricSpace.GromovHyperbolic
 
 
 /-- Regression test for the Gromov-product basepoint ordering: from the public

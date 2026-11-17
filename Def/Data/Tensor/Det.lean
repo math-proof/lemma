@@ -1,5 +1,5 @@
-import Lemma.List.Take.eq.Cons_TakeTail.of.Gt_0.GtLength_0
-import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
+import Theorem.List.Take.eq.Cons_TakeTail.of.Gt_0.GtLength_0
+import Theorem.List.HeadD.eq.Get_0.of.GtLength_0
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Instance.LinearAlgebra.Matrix.Dense
 open List

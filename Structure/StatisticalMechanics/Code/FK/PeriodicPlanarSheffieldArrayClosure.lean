@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldMacroArrayAssembly.Part2
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldArrayClosure
+module
+
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldMacroArrayAssembly.Part2
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldArrayClosure
+public section
+
 open Filter MeasureTheory Set Topology
 
 

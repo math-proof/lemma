@@ -1,5 +1,6 @@
 import Lemma.Random.Eq_Expect.Eq_Expect.MEq_Expect.of.Expect.All_Eq_Expect.All_MEq_Expect.All_Measurable.GtInftySup.All_MeasurableJoint.In_Ico
 import Lemma.Random.MEqExpectS.of.CondIndep.Integrable.MeasurableJoint.Measurable
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory
 
 
@@ -88,4 +89,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-11-11
+-- updated on 2026-11-17

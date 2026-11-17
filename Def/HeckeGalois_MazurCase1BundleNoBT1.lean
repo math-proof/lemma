@@ -1,6 +1,10 @@
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.LinearAlgebra.Quotient.Basic
-import Mathlib.RingTheory.Ideal.Quotient.Basic
+module
+
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.LinearAlgebra.Quotient.Basic
+public import Mathlib.RingTheory.Ideal.Quotient.Basic
+
+@[expose] public section
 
 set_option autoImplicit false
 

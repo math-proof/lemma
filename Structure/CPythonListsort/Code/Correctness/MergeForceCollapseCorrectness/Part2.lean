@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/MergeForceCollapseCorrectness.lean -/
 
-import Def.CPythonListsort.Code.Assembly.MergeForceCollapseSafety.Part2
-import Def.CPythonListsort.Code.Correctness.MergeAtCorrectness.Part2
-import Def.CPythonListsort.Code.Correctness.MergeForceCollapseCorrectness
+module
+
+public import Def.CPythonListsort.Code.Assembly.MergeForceCollapseSafety.Part2
+public import Def.CPythonListsort.Code.Correctness.MergeAtCorrectness.Part2
+public import Def.CPythonListsort.Code.Correctness.MergeForceCollapseCorrectness
 /-!
 # Functional correctness of `merge_force_collapse`
 
@@ -11,6 +13,9 @@ implementation.  This module carries the pending-run correctness and complete
 entry snapshot through the actual fuel-bounded collapse evaluator; it does not
 replace that evaluator by a mathematical fold.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

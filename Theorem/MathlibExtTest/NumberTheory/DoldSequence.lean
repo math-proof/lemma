@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DoldSequence.lean -/
+module
 
+public import Def.NumberTheory.DoldSequence
 
-import Def.NumberTheory.DoldSequence
-
+public section
 
 namespace MetaMathlibExt
 

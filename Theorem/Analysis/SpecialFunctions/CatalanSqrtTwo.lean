@@ -1,9 +1,12 @@
 -- Author: @toskua, Avocado
-import Mathlib.Analysis.SpecialFunctions.Stirling
-import Mathlib.Analysis.SpecialFunctions.Log.Summable
-import Mathlib.Analysis.PSeries
-import Def.Analysis.SpecialFunctions.CatalanSqrtTwo
+module
 
+public import Mathlib.Analysis.SpecialFunctions.Stirling
+public import Mathlib.Analysis.SpecialFunctions.Log.Summable
+public import Mathlib.Analysis.PSeries
+public import Def.Analysis.SpecialFunctions.CatalanSqrtTwo
+
+public section
 
 namespace SpecialFunctions.CatalanSqrtTwo
 

@@ -8,11 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Nat.Choose.Factorization
-import Mathlib.Data.Rat.Cast.Defs
-import Mathlib.Tactic
+module
 
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Data.Nat.Choose.Factorization
+public import Mathlib.Data.Rat.Cast.Defs
+public import Mathlib.Tactic
+
+@[expose] public section
 
 /-- The combinatorial *ballot count* `ballotCount a b`: the number of
 ways to order `a` votes for candidate A and `b` votes for candidate B so that A

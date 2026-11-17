@@ -8,13 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Def.v1.Atlas.ProjectionTheory.code.HausdorffSpacing
-import Def.v1.Atlas.ProjectionTheory.code.OSRW
-import Structure.v1.Atlas.ProjectionTheory.code.DoubleCountingRealCor
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.DoubleCountingRealCor
-import Abbrev.v1.Atlas.ProjectionTheory.code.FourierBoundReal
+module
 
+public import Mathlib
+public import Def.v1.Atlas.ProjectionTheory.code.HausdorffSpacing
+public import Def.v1.Atlas.ProjectionTheory.code.OSRW
+public import Structure.v1.Atlas.ProjectionTheory.code.DoubleCountingRealCor
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.DoubleCountingRealCor
+public import Abbrev.v1.Atlas.ProjectionTheory.code.FourierBoundReal
+
+
+public section
 
 namespace ProjectionTheory
 

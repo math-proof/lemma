@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.NumberTheory.RamificationInertia.Basic
-import Class.v1.Atlas.AlgebraicGeometryI.code.DegreeFormula
+module
+
+public import Mathlib.NumberTheory.RamificationInertia.Basic
+public import Class.v1.Atlas.AlgebraicGeometryI.code.DegreeFormula
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open Ideal Module

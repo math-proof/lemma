@@ -10,10 +10,10 @@ LICENSE file in the root directory of this source tree.
 
 import Structure.v1.Atlas.Buildings.code.BNPair.Basic.Part2
 import Def.v1.Atlas.Buildings.code.BNPair.ParabolicDefs.Part2
-import Lemma.Nat.NonemptyBruhatCell
-import Lemma.Nat.In_BruhatCell1.of.In_B
+import Theorem.Nat.NonemptyBruhatCell
+import Theorem.Nat.In_BruhatCell1.of.In_B
 import Lemma.Nat.Simple.ne.One
-import Lemma.Nat.In_BruhatCell.of.In_BruhatCell
+import Theorem.Nat.In_BruhatCell.of.In_BruhatCell
 import Theorem.v1.Atlas.Buildings.code.BNPair.CellCoverProof
 import Theorem.v1.Atlas.Buildings.code.BNPair.CellDisjointProof
 import Theorem.v1.Atlas.Buildings.code.BNPair.CellMulParabolicProof

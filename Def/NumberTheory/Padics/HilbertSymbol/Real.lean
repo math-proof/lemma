@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Padics/HilbertSymbol/Real.lean -/
 
 import Def.NumberTheory.Padics.HilbertSymbol
-import Lemma.Nat.Padics.HilbertSymbol
+import Theorem.Nat.Padics.HilbertSymbol
 import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.LinearCombination

@@ -9,14 +9,16 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexAgreementCapEndpoint.Part2
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPositiveEvenPhysicalPairedBranch.Part7
-import Def.StatisticalMechanics.Code.FrontierD.SixVertexDisjointCapPhysicalRepair
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexAgreementCapEndpoint.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPositiveEvenPhysicalPairedBranch.Part7
+public import Def.StatisticalMechanics.Code.FrontierD.SixVertexDisjointCapPhysicalRepair
 
 
 namespace StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure SixVertexFollowedAgreementCapCertificate
     {T : EvenTorus} (omega eta : SixVertexArrows T) where

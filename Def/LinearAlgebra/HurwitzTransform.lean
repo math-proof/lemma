@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/HurwitzTransform.lean -/
 
-import Mathlib.LinearAlgebra.Matrix.Determinant.Misc
+module
 
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Misc
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

@@ -1,12 +1,16 @@
-import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
-import Mathlib.LinearAlgebra.Matrix.ToLin
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.NumberTheory.Padics.PadicIntegers
-import Mathlib.LinearAlgebra.Projectivization.Cardinality
-import Mathlib.RingTheory.Ideal.Quotient.Defs
-import Mathlib.Data.Complex.Basic
-import Structure.LatticeTreeOrbital
+module
+
+public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
+public import Mathlib.LinearAlgebra.Matrix.ToLin
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+public import Mathlib.LinearAlgebra.Projectivization.Cardinality
+public import Mathlib.RingTheory.Ideal.Quotient.Defs
+public import Mathlib.Data.Complex.Basic
+public import Structure.LatticeTreeOrbital
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -8,14 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.ArithmeticGeometry.code.AffineVarieties.Part5
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.AffineVarieties
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.CategoryTheory.Category.Basic
-import Mathlib.CategoryTheory.Functor.Basic
-import Mathlib.CategoryTheory.Equivalence
-import Mathlib.CategoryTheory.Opposites
-import Def.v1.Atlas.ArithmeticGeometry.code.RegularFunctions.Part2
+module
+
+public import Def.v1.Atlas.ArithmeticGeometry.code.AffineVarieties.Part5
+public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.AffineVarieties
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.CategoryTheory.Category.Basic
+public import Mathlib.CategoryTheory.Functor.Basic
+public import Mathlib.CategoryTheory.Equivalence
+public import Mathlib.CategoryTheory.Opposites
+public import Def.v1.Atlas.ArithmeticGeometry.code.RegularFunctions.Part2
+public section
+
 open MvPolynomial
 
 set_option autoImplicit false

@@ -1,6 +1,10 @@
-import Notation.Analysis.Real.Numbers
-import Notation.Algebra.Power
-import Mathlib.Basic.NNReal.Defs
+module
+
+public import Notation.Analysis.Real.Numbers
+public import Notation.Algebra.Power
+public import Mathlib.Basic.NNReal.Defs
+
+@[expose] public section
 
 /-- {σ : ℝ⁺} as NNReal via ⟨σ.1, σ.2.le⟩. -/
 instance : Coe ℝ⁺ NNReal where

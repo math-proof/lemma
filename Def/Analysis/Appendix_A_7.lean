@@ -1,5 +1,8 @@
-import Mathlib
+module
 
+public import Mathlib
+
+@[expose] public section
 
 /-!
 # Analysis I, Appendix A.7: Equality

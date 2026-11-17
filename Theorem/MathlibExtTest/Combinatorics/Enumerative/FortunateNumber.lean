@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/FortunateNumber.lean -/
+module
 
+public import Mathlib.Tactic
+public import Def.Combinatorics.Enumerative.FortunateNumber
 
-import Mathlib.Tactic
-import Def.Combinatorics.Enumerative.FortunateNumber
-
+public section
 
 namespace MetaMathlibExt
 

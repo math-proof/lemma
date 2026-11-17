@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.DifferentialAnalysis.code.ContinuousFunctions.Part2
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.ContinuousFunctions
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ContinuousFunctions
 import Mathlib.Topology.ContinuousMap.ZeroAtInfty
 import Mathlib.Analysis.Normed.Operator.ContinuousLinearMap
 import Mathlib.Order.ConditionallyCompleteLattice.Basic

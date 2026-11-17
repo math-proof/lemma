@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Computability.DFA
-import Mathlib.Computability.MyhillNerode
-import Mathlib.Data.Finite.Prod
-import Mathlib.Data.Set.Finite.Powerset
+module
+
+public import Mathlib.Computability.DFA
+public import Mathlib.Computability.MyhillNerode
+public import Mathlib.Data.Finite.Prod
+public import Mathlib.Data.Set.Finite.Powerset
+@[expose] public section
+
 open Computability
 
 

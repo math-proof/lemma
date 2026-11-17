@@ -2,6 +2,7 @@ import Instance.Analysis.Real.Numbers
 import Instance.Probability.SinglePSpaceMeasurable
 import Theorem.Probability.CondExpectation
 import Lemma.Random.Prob_Cond.eq.Div.of.SinglePSpace
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Random
 open scoped ENNReal.ToRealCoe
 
@@ -19,13 +20,13 @@ Unconditional form:
 @[path]
 private lemma main
   [MeasurableSpace Ω]
-  [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+  [NormedAddCommGroup ℰ] [NormedSpace ℝ ℰ] [CompleteSpace ℰ]
   [CountableMeasure α] [Fintype α] [Nonempty α] [StandardBorelSpace α] [MeasurableSingletonClass α]
   [CountableMeasure β] [Countable β] [MeasurableSingletonClass β]
   {π π' : Measure Ω} [IsProbabilityMeasure π] [IsProbabilityMeasure π']
   {x : Ω → α} [Fact (Measurable x)]
   {s : Ω → β} [Fact (Measurable s)]
-  {f : α → E}
+  {f : α → ℰ}
 -- given
   (h₀ : ∀ «\sf{x}» «\sf{s}»,
     ℙ[π'](x = «\sf{x}» ∧ s = «\sf{s}») = 0 →
@@ -76,7 +77,7 @@ private lemma main
   simp only [Expectation.asRV_function]
   rw [Expectation.condEval_eq_condEvent hx hs hpos,
       Expectation.condEval_eq_condEvent hx hs hpos']
-  have hto (φ : Measure Ω) [IsProbabilityMeasure φ] (g : α → E) :
+  have hto (φ : Measure Ω) [IsProbabilityMeasure φ] (g : α → ℰ) :
     Expectation.condEvent φ x s g «\sf{s}» =
       ∫ ω, g (x ω) ∂φ[|s ⁻¹' {«\sf{s}»}] := by
     rw [Expectation.condEvent, expectation_bochner]
@@ -88,7 +89,7 @@ private lemma main
       cond_apply (hs (measurableSet_singleton «\sf{s}»)), Set.inter_comm,
       ← ENNReal.div_eq_inv_mul,
       _root_.Random.Prob_Cond.eq.Div.of.SinglePSpace inferInstance «\sf{x}» «\sf{s}»]
-  have hSum (φ : Measure Ω) [IsProbabilityMeasure φ] (g : α → E) :
+  have hSum (φ : Measure Ω) [IsProbabilityMeasure φ] (g : α → ℰ) :
     ∫ ω, g (x ω) ∂φ[|s ⁻¹' {«\sf{s}»}] =
       ∑ «\sf{x}», (φ[|s ⁻¹' {«\sf{s}»}].map x).real {«\sf{x}»} • g «\sf{x}» := by
     rw [(integral_map (μ := φ[|s ⁻¹' {«\sf{s}»}]) hx.aemeasurable
@@ -135,4 +136,4 @@ private lemma main
 
 
 -- created on 2023-04-03
--- updated on 2026-11-15
+-- updated on 2026-11-17

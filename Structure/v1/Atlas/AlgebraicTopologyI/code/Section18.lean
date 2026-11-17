@@ -8,36 +8,40 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.TensorProduct.Basic
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.LinearAlgebra.Dimension.RankNullity
-import Mathlib.LinearAlgebra.DirectSum.Finsupp
-import Mathlib.Algebra.Module.Submodule.Ker
-import Mathlib.RingTheory.Finiteness.Defs
-import Mathlib.RingTheory.Finiteness.Finsupp
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.LinearAlgebra.TensorProduct.RightExactness
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Mathlib.GroupTheory.Torsion
-import Mathlib.Topology.CWComplex.Classical.Basic
-import Mathlib.Algebra.Category.Grp.Colimits
-import Mathlib.Algebra.Category.Grp.Abelian
-import Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected
-import Mathlib.AlgebraicTopology.SingularHomology.Basic
-import Mathlib.AlgebraicTopology.SingularHomology.HomotopyInvarianceTopCat
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Tactic.Linarith
-import Mathlib.Algebra.Module.PID
-import Mathlib.Algebra.FreeAbelianGroup.Finsupp
-import Structure.v1.Atlas.AlgebraicTopologyI.code.Section14
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section1.Part3
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section1
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section16
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.ContractibleHomology
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section16.Part4
-import Def.v1.Atlas.AlgebraicTopologyI.code.ContractibleHomology.Part2
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section18
+module
+
+public import Mathlib.LinearAlgebra.TensorProduct.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.LinearAlgebra.Dimension.RankNullity
+public import Mathlib.LinearAlgebra.DirectSum.Finsupp
+public import Mathlib.Algebra.Module.Submodule.Ker
+public import Mathlib.RingTheory.Finiteness.Defs
+public import Mathlib.RingTheory.Finiteness.Finsupp
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.RightExactness
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Mathlib.GroupTheory.Torsion
+public import Mathlib.Topology.CWComplex.Classical.Basic
+public import Mathlib.Algebra.Category.Grp.Colimits
+public import Mathlib.Algebra.Category.Grp.Abelian
+public import Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected
+public import Mathlib.AlgebraicTopology.SingularHomology.Basic
+public import Mathlib.AlgebraicTopology.SingularHomology.HomotopyInvarianceTopCat
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Algebra.Module.PID
+public import Mathlib.Algebra.FreeAbelianGroup.Finsupp
+public import Structure.v1.Atlas.AlgebraicTopologyI.code.Section14
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section1.Part3
+public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section1
+public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section16
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.ContractibleHomology
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section16.Part4
+public import Def.v1.Atlas.AlgebraicTopologyI.code.ContractibleHomology.Part2
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section18
+public section
+
 open Topology BigOperators AlgebraicTopology CategoryTheory
 
 

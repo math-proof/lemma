@@ -8,11 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Convex.Cone.Extension
-import Mathlib.Analysis.Normed.Module.HahnBanach
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Mathlib.Order.Zorn
+module
 
+public import Mathlib.Analysis.Convex.Cone.Extension
+public import Mathlib.Analysis.Normed.Module.HahnBanach
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.Order.Zorn
+
+@[expose] public section
 
 namespace HahnBanach
 

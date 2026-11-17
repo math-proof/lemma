@@ -1,6 +1,22 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.CPythonListsort.Code.Transcription.MergeAt
+module
+
+public meta import Structure.CPythonListsort.Code.Transcription.MergeState
+public meta import Def.CPythonListsort.Code.Transcription.MergeAt.Part3
+public meta import Def.CPythonListsort.Code.Transcription.MergeAt.Part4
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Structure.CPythonListsort.Code.Transcription.MergeAt
+public import Structure.CPythonListsort.Code.Transcription.MergeLo
+public import Def.CPythonListsort.Code.Transcription.MergeAt
+public import Def.CPythonListsort.Code.Transcription.MergeAt.Part2
+public import Def.CPythonListsort.Code.Transcription.MergeAt.Part3
+public import Def.CPythonListsort.Code.Transcription.MergeAt.Part4
+public import Def.CPythonListsort.Code.Transcription.MergeLo.Part5
+public import Lemma.List.Atlas.CPythonListsort.Code.Transcription.MergeLo
+public import Lemma.List.Atlas.CPythonListsort.Code.Transcription.MergeHi
+
+public section
+
 open CPythonListsort
 
 
@@ -10,9 +26,7 @@ namespace CPythonListsort
 [mergeAt_bindOptionAcross_none](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeAt.lean)
 -/
 @[path]
-lemma mergeAt_bindOptionAcross_none
-  {κ : Type u}
-  {ν : Type v}
+public lemma mergeAt_bindOptionAcross_none
   {α : Type w}
   {β : Type x}
   {next : α → Option β} :
@@ -29,9 +43,7 @@ namespace CPythonListsort
 [mergeAt_bindOptionAcross_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeAt.lean)
 -/
 @[path]
-lemma mergeAt_bindOptionAcross_some
-  {κ : Type u}
-  {ν : Type v}
+public lemma mergeAt_bindOptionAcross_some
   {α : Type w}
   {β : Type x}
   {value : α}
@@ -49,7 +61,7 @@ namespace CPythonListsort
 [mergeAtSuccess_eq](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeAt.lean)
 -/
 @[path]
-lemma mergeAtSuccess_eq
+public lemma mergeAtSuccess_eq
   {κ : Type u}
   {ν : Type v}
   {state : MergeState κ ν} :
@@ -66,7 +78,7 @@ namespace CPythonListsort
 [mergeAtOutOfFuel_eq](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeAt.lean)
 -/
 @[path]
-lemma mergeAtOutOfFuel_eq
+public lemma mergeAtOutOfFuel_eq
   {κ : Type u}
   {ν : Type v}
   {state : MergeState κ ν} :
@@ -83,12 +95,12 @@ namespace CPythonListsort
 [fromMergeLo_eq](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeAt.lean)
 -/
 @[path]
-lemma fromMergeLo_eq
+public lemma fromMergeLo_eq
   {κ : Type u}
   {ν : Type v}
   {result : MergeLoResult κ ν} :
 -- imply
-  fromMergeLo result = { state := result.state returnCode := result.returnCode fuelExhausted := result.fuelExhausted } :=
+  fromMergeLo result = { state := result.state, returnCode := result.returnCode, fuelExhausted := result.fuelExhausted } :=
 -- proof
   rfl
 
@@ -100,12 +112,12 @@ namespace CPythonListsort
 [fromMergeHi_eq](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeAt.lean)
 -/
 @[path]
-lemma fromMergeHi_eq
+public lemma fromMergeHi_eq
   {κ : Type u}
   {ν : Type v}
   {result : MergeHiResult κ ν} :
 -- imply
-  fromMergeHi result = { state := result.state returnCode := result.returnCode fuelExhausted := result.fuelExhausted } :=
+  fromMergeHi result = { state := result.state, returnCode := result.returnCode, fuelExhausted := result.fuelExhausted } :=
 -- proof
   rfl
 
@@ -117,7 +129,7 @@ namespace CPythonListsort
 [combinePendingAt_eq](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeAt.lean)
 -/
 @[path]
-lemma combinePendingAt_eq
+public lemma combinePendingAt_eq
   {κ : Type u}
   {ν : Type v}
   {state : MergeState κ ν}
@@ -156,11 +168,14 @@ end CPythonListsort
 
 namespace CPythonListsort
 
+set_option linter.flexible false in
+set_option maxHeartbeats 5000000 in
+set_option maxRecDepth 10000 in
 /--
 [prepareMergeAt_lo_callsite_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeAt.lean)
 -/
 @[path]
-lemma prepareMergeAt_lo_callsite_of_eq_some
+public lemma prepareMergeAt_lo_callsite_of_eq_some
   {κ : Type u}
   {ν : Type v}
   {pre : MergeState κ ν}
@@ -190,20 +205,20 @@ lemma prepareMergeAt_lo_callsite_of_eq_some
       enableSimp := true, maxRuleApplications := 200,
       warnOnNonterminal := false })
   all_goals constructor <;> simp_all
-  all_goals omega
-set_option linter.flexible false in
-set_option maxHeartbeats 5000000 in
-set_option maxRecDepth 10000 in
+  all_goals first | omega | rfl
 
 end CPythonListsort
 
 namespace CPythonListsort
 
+set_option linter.flexible false in
+set_option maxHeartbeats 5000000 in
+set_option maxRecDepth 10000 in
 /--
 [prepareMergeAt_hi_callsite_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeAt.lean)
 -/
 @[path]
-lemma prepareMergeAt_hi_callsite_of_eq_some
+public lemma prepareMergeAt_hi_callsite_of_eq_some
   {κ : Type u}
   {ν : Type v}
   {pre : MergeState κ ν}
@@ -234,16 +249,14 @@ lemma prepareMergeAt_hi_callsite_of_eq_some
       warnOnNonterminal := false })
   all_goals try omega
   all_goals constructor <;> simp_all
-  all_goals omega
-set_option linter.flexible false in
-set_option maxHeartbeats 5000000 in
-set_option maxRecDepth 10000 in
+  all_goals first | omega | rfl
 
 end CPythonListsort
 
 namespace CPythonListsort
 
 variable {κ : Type u} {ν : Type v}
+set_option linter.flexible false in
 /--
 [prepareMergeAt_frame_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeAt.lean)
 -/
@@ -278,13 +291,13 @@ private lemma prepareMergeAt_frame_of_eq_some
     aesop (config := {
       enableSimp := false, maxRuleApplications := 100,
       warnOnNonterminal := false })
-set_option linter.flexible false in
 
 end CPythonListsort
 
 namespace CPythonListsort
 
 variable {κ : Type u} {ν : Type v}
+set_option maxHeartbeats 5000000 in
 /--
 [finishMergeAtPreparation_layoutFrame](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeAt.lean)
 -/
@@ -318,7 +331,6 @@ private lemma finishMergeAtPreparation_layoutFrame
     simpa [fromMergeHi, MergeAtPreparation.state] using
       mergeHi_layoutFrame_of_eq_some call.state call.ssa call.ssb call.na
         call.nb mergeResult hmerge
-set_option maxHeartbeats 5000000 in
 
 end CPythonListsort
 
@@ -328,7 +340,7 @@ namespace CPythonListsort
 [mergeAt_pending_frame_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeAt.lean)
 -/
 @[path]
-lemma mergeAt_pending_frame_of_eq_some
+public lemma mergeAt_pending_frame_of_eq_some
   {κ : Type u}
   {ν : Type v}
   {state : MergeState κ ν}
@@ -363,9 +375,7 @@ namespace CPythonListsort
 [mergeAt_slide_regression](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeAt.lean)
 -/
 @[path]
-lemma mergeAt_slide_regression
-  {κ : Type u}
-  {ν : Type v} :
+public lemma mergeAt_slide_regression :
 -- imply
   (mergeAt? mergeAtSlideExampleState 0).map (fun result => (result.returnCode, result.fuelExhausted, result.state.pending.toList)) = some (0, false, [{ base := 0, len := 2, power := some 4 }, { base := 2, len := 1, power := none }]) := by
 -- proof
@@ -375,3 +385,4 @@ end CPythonListsort
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-17

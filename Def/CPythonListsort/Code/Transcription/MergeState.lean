@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeState.lean -/
 
-import Def.CPythonListsort.Code.Transcription.Comparator
-import Def.CPythonListsort.Code.Transcription.Minrun.Part3
-import Theorem.CPythonListsort.Code.Transcription.SortSlice
+module
+
+public import Def.CPythonListsort.Code.Transcription.Comparator
+public import Def.CPythonListsort.Code.Transcription.Minrun.Part3
+public import Theorem.CPythonListsort.Code.Transcription.SortSlice
+
+@[expose] public section
+
 /-!
 # `MergeState` and pending runs
 

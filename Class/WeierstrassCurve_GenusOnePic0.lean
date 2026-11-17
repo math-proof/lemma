@@ -1,5 +1,9 @@
-import Mathlib
-import Class.AlgebraicCurve_DivisorClassGroup
+module
+
+public import Mathlib
+public import Class.AlgebraicCurve_DivisorClassGroup
+
+public section
 
 set_option autoImplicit false
 

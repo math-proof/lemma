@@ -9,9 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.FK.InfiniteVolume.Part7
-import Theorem.StatisticalMechanics.Code.Lattice.PlanarTopology.Part4
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarGraph
+module
+
+public import Theorem.StatisticalMechanics.Code.FK.InfiniteVolume.Part7
+public import Theorem.StatisticalMechanics.Code.Lattice.PlanarTopology.Part4
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarGraph
+public section
+
 open Finset Set SimpleGraph
 open MeasureTheory
 

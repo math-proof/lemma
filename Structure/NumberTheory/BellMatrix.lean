@@ -1,6 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/BellMatrix.lean -/
 
-import Mathlib.RingTheory.PowerSeries.Basic
+module
+
+public import Mathlib.RingTheory.PowerSeries.Basic
 /-!
 # Bell matrices
 
@@ -13,6 +15,9 @@ Source: Paul Barry, *On the Central Coefficients of Bell Matrices*,
 
 JIS concept: `jis_sem_70c33473bf189e979a585e79`.
 -/
+public section
+
+
 
 
 namespace MetaMathlibExt

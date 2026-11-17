@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Homology.DerivedCategory.Ext.ExactSequences
-import Mathlib.Algebra.Homology.ShortComplex.Exact
+module
+
+public import Mathlib.Algebra.Homology.DerivedCategory.Ext.ExactSequences
+public import Mathlib.Algebra.Homology.ShortComplex.Exact
+
+@[expose] public section
+
 open CategoryTheory CategoryTheory.Abelian CategoryTheory.Limits CategoryTheory.ShortComplex
 
 universe w v u

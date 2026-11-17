@@ -1,24 +1,28 @@
 /-
 Author: @akiezun, Avocado
 -/
+module
 
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Algebra.Ring.IsFormallyReal
-import Mathlib.Analysis.Calculus.SmoothSeries
-import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
-import Mathlib.RingTheory.Etale.Weakly
-import Mathlib.RingTheory.Flat.TorsionFree
-import Mathlib.RingTheory.TotallySplit
-import Def.Analysis.SpecialFunctions.Part1Ch9Entry8Arcsin
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Algebra.Ring.IsFormallyReal
+public import Mathlib.Analysis.Calculus.SmoothSeries
+public import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+public import Mathlib.RingTheory.Etale.Weakly
+public import Mathlib.RingTheory.Flat.TorsionFree
+public import Mathlib.RingTheory.TotallySplit
+public import Def.Analysis.SpecialFunctions.Part1Ch9Entry8Arcsin
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 9, Entry 8
 
 Odd-harmonic power series at x/(2-x) equals (log(1-x))²/8 + Li₂(x)/2.
 -/
+
+public section
 
 
 namespace Ramanujan.Part1Ch9

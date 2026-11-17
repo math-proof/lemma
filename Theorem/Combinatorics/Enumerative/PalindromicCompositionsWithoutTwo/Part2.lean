@@ -1,17 +1,19 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/PalindromicCompositionsWithoutTwo.lean -/
+module
 
-import Mathlib.Data.List.Basic
-import Mathlib.Data.Set.Card
-import Mathlib.RingTheory.PowerSeries.Basic
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Combinatorics.Enumerative.Composition
-import Mathlib.Data.Int.Star
-import Mathlib.Order.CompletePartialOrder
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Def.Combinatorics.Enumerative.PalindromicCompositionsWithoutTwo.Part2
+public import Mathlib.Data.List.Basic
+public import Mathlib.Data.Set.Card
+public import Mathlib.RingTheory.PowerSeries.Basic
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Combinatorics.Enumerative.Composition
+public import Mathlib.Data.Int.Star
+public import Mathlib.Order.CompletePartialOrder
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Def.Combinatorics.Enumerative.PalindromicCompositionsWithoutTwo.Part2
 
+public section
 
 namespace MetaMathlibExt
 

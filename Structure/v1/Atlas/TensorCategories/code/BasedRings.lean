@@ -8,12 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TensorCategories.code.GrothendieckRingCategorical.Part4
-import Lemma.Category.Atlas.v1.TensorCategories.code.GrothendieckRingCategorical
-import Lemma.Category.Atlas.v1.TensorCategories.code.GradedVec
-import Lemma.Category.Atlas.v1.TensorCategories.code.TannakaReconstruction
-import Theorem.v1.Atlas.TensorCategories.code.GradedVec.Part6
-import Structure.v1.Atlas.TensorCategories.code.TannakaReconstruction
+module
+
+public import Def.v1.Atlas.TensorCategories.code.GrothendieckRingCategorical.Part4
+public import Lemma.Category.Atlas.v1.TensorCategories.code.GrothendieckRingCategorical
+public import Lemma.Category.Atlas.v1.TensorCategories.code.GradedVec
+public import Theorem.Category.Atlas.v1.TensorCategories.code.TannakaReconstruction
+public import Theorem.v1.Atlas.TensorCategories.code.GradedVec.Part6
+public import Structure.v1.Atlas.TensorCategories.code.TannakaReconstruction
+public section
+
 open Finset
 
 

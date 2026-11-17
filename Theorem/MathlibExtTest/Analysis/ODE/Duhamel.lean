@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/ODE/Duhamel.lean -/
+module
 
-
-import Theorem.Analysis.ODE.Duhamel
+public import Theorem.Analysis.ODE.Duhamel
 open MathlibExt.Analysis.ODE.DuhamelWanted
 
+public section
 
 -- Zero operator and unit forcing give the identity solution.
 example : ∃ x : ℝ → ℝ, x = id ∧ ∀ t, HasDerivAt x 1 t := by

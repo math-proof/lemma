@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Additive/MinimumRestrictedAdditiveBasis.lean -/
+module
 
-
-import Theorem.Combinatorics.Additive.MinimumRestrictedAdditiveBasis.Part2
-import Mathlib.Tactic
+public import Theorem.Combinatorics.Additive.MinimumRestrictedAdditiveBasis.Part2
+public import Mathlib.Tactic
 open MetaMathlibExt
 
+public section
 
 example (s : ℕ) :
     (minimumRestrictedAdditiveBasisCard s).val = none ↔ s % 2 = 1 :=

@@ -1,17 +1,20 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/LaymanCatalanHankel.lean -/
 
-import Mathlib.Combinatorics.Enumerative.Catalan.Basic
-import Mathlib.Data.Nat.Fib.Basic
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Analysis.Normed.Ring.Lemmas
-import Mathlib.Data.Int.Star
-import Mathlib.LinearAlgebra.Matrix.Block
-import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+module
 
+public import Mathlib.Combinatorics.Enumerative.Catalan.Basic
+public import Mathlib.Data.Nat.Fib.Basic
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Analysis.Normed.Ring.Lemmas
+public import Mathlib.Data.Int.Star
+public import Mathlib.LinearAlgebra.Matrix.Block
+public import Mathlib.Tactic.IntervalCases
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

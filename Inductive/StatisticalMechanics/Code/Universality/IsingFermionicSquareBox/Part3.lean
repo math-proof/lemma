@@ -9,11 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Def.StatisticalMechanics.Code.Universality.IsingFermionicMedialComplex.Part7
-import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareFiniteDuality
-import Theorem.StatisticalMechanics.Code.Lattice.EarContraction.Part9
-import Mathlib.Combinatorics.SimpleGraph.Matching
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareBox.Part10
+module
+
+public import Def.StatisticalMechanics.Code.Universality.IsingFermionicMedialComplex.Part7
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareFiniteDuality
+public import Theorem.StatisticalMechanics.Code.Lattice.EarContraction.Part9
+public import Mathlib.Combinatorics.SimpleGraph.Matching
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareBox.Part10
 
 
 namespace StatMech.Universality
@@ -24,7 +26,7 @@ open StatMech StatMech.FK StatMech.Lattice StatMech.FrontierD
 
 noncomputable section
 
-inductive FKIsingSquareEdgeAxis
+public inductive FKIsingSquareEdgeAxis
   | horizontal | vertical
 deriving DecidableEq
 

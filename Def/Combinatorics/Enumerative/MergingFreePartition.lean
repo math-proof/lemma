@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/MergingFreePartition.lean -/
 
-import Mathlib.Data.Finset.Basic
+module
 
+public import Mathlib.Data.Finset.Basic
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

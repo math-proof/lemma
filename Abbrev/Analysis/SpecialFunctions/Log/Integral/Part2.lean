@@ -1,4 +1,8 @@
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+module
+
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+@[expose] public section
+
 /-!
 # Logarithmic integral (normalized principal value)
 

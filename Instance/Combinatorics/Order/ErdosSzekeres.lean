@@ -1,10 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Order/ErdosSzekeres.lean -/
 
-import Mathlib.Data.Finset.Max
-import Mathlib.Data.Fintype.Prod
-import Mathlib.Data.Real.Basic
-import Def.Combinatorics.Order.ErdosSzekeres
+module
 
+public import Mathlib.Data.Finset.Max
+public import Mathlib.Data.Fintype.Prod
+public import Mathlib.Data.Real.Basic
+public import Def.Combinatorics.Order.ErdosSzekeres
+
+@[expose] public section
 
 namespace MathlibExt.Combinatorics.Order.ErdosSzekeres
 

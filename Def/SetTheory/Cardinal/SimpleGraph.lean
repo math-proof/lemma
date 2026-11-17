@@ -16,8 +16,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Clique
-import Mathlib.SetTheory.Ordinal.Exponential
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.SetTheory.Ordinal.Exponential
+
+@[expose] public section
+
 open Cardinal Ordinal
 
 universe u

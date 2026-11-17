@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Category
-import Mathlib.CategoryTheory.Category.Basic
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Category
+public import Mathlib.CategoryTheory.Category.Basic
+public section
+
 open CategoryTheory MonoidalCategory
 
 universe v₁ v₂ v₃ u₁ u₂ u₃

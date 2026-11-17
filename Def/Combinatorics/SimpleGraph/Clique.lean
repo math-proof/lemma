@@ -16,11 +16,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Clique
-import Mathlib.Data.ENat.Lattice
-import Mathlib.Order.CompletePartialOrder
-import Theorem.Combinatorics.SimpleGraph.Clique
+module
 
+public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Data.ENat.Lattice
+public import Mathlib.Order.CompletePartialOrder
+public import Theorem.Combinatorics.SimpleGraph.Clique
+
+@[expose] public section
 
 namespace SimpleGraph
 

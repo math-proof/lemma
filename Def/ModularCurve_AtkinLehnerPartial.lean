@@ -1,4 +1,4 @@
-import Lemma.HahnSeries.X0
+import Theorem.HahnSeries.X0
 
 set_option autoImplicit false
 

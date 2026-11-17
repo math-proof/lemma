@@ -1,5 +1,10 @@
 -- Carved from Lemma/Definitions/Def_M4aHerbrand_FiniteTensorEquiv.lean: instance decls only.
-import Mathlib.RingTheory.Flat.TorsionFree
+
+module
+
+public import Mathlib.RingTheory.Flat.TorsionFree
+
+@[expose] public section
 
 noncomputable section
 

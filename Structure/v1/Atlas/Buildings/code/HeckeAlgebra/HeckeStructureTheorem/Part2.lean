@@ -8,14 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.MonoidAlgebra.Basic
-import Mathlib.LinearAlgebra.Basis.Basic
-import Mathlib.Algebra.Algebra.Subalgebra.Basic
-import Def.v1.Atlas.Buildings.code.HeckeAlgebra.HeckeStructureTheorem
+module
+
+public import Mathlib.Algebra.MonoidAlgebra.Basic
+public import Mathlib.LinearAlgebra.Basis.Basic
+public import Mathlib.Algebra.Algebra.Subalgebra.Basic
+public import Def.v1.Atlas.Buildings.code.HeckeAlgebra.HeckeStructureTheorem
 universe u
 
 
-noncomputable section
+public noncomputable section
 
 open Module
 

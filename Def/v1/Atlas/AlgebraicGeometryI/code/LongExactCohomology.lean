@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Homology.HomologySequence
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.LongExactCohomology
+module
 
+public import Mathlib.Algebra.Homology.HomologySequence
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.LongExactCohomology
+
+@[expose] public section
 
 noncomputable section
 

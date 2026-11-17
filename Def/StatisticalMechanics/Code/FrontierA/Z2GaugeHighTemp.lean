@@ -9,8 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Abbrev.StatisticalMechanics.Code.FrontierA.Z2GaugeHighTemp
+module
+
+public import Mathlib
+public import Abbrev.StatisticalMechanics.Code.FrontierA.Z2GaugeHighTemp
+
+@[expose] public section
+
 open scoped BigOperators
 open Finset
 

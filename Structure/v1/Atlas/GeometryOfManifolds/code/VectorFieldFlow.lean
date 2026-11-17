@@ -8,18 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Geometry.Manifold.IsManifold.Basic
-import Mathlib.Geometry.Manifold.Instances.Real
-import Mathlib.Geometry.Manifold.ContMDiffMFDeriv
-import Mathlib.Geometry.Manifold.VectorBundle.Tangent
-import Mathlib.Analysis.ODE.PicardLindelof
-import Mathlib.Topology.Compactness.Compact
+module
+
+public import Mathlib.Geometry.Manifold.IsManifold.Basic
+public import Mathlib.Geometry.Manifold.Instances.Real
+public import Mathlib.Geometry.Manifold.ContMDiffMFDeriv
+public import Mathlib.Geometry.Manifold.VectorBundle.Tangent
+public import Mathlib.Analysis.ODE.PicardLindelof
+public import Mathlib.Topology.Compactness.Compact
 open Manifold Topology Metric Set
 
 set_option checkBinderAnnotations false
 
 
-noncomputable section
+public noncomputable section
 
 /-- A smooth flow $\varphi_t : M \to M$ on a smooth $n$-manifold $M$: a time-parameterized
 family of smooth self-maps with $\varphi_0 = \mathrm{id}_M$. -/

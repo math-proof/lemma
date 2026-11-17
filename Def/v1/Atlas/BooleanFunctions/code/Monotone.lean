@@ -12,8 +12,8 @@ import Mathlib.Order.Monotone.Basic
 import Mathlib.Data.Bool.Basic
 import Mathlib.Tactic
 import Def.v1.Atlas.BooleanFunctions.code.FourierExpansion
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Influence
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Influence
 import Def.v1.Atlas.BooleanFunctions.code.Influence
 
 

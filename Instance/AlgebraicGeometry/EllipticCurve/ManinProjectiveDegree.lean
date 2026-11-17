@@ -4,9 +4,11 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
 
-import Mathlib.FieldTheory.RatFunc.Degree
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.FieldTheory.RatFunc.Degree
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Ring
 /-!
 # Projective numerator degrees for Manin's proof
 
@@ -14,6 +16,7 @@ This file isolates the characteristic-free commutative algebra used to recover t
 degrees of two rational functions from primitive projective product and sum coordinates.
 -/
 
+@[expose] public section
 
 namespace MathlibExt.AlgebraicGeometry.EllipticCurve.ManinProjectiveDegree
 

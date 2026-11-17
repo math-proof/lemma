@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Poset/LinearExtension.lean -/
 
-import Mathlib.Data.Finset.Sort
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Order.Extension.Linear
+module
+
+public import Mathlib.Data.Finset.Sort
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Fintype.Pi
+public import Mathlib.Order.Extension.Linear
+
+@[expose] public section
+
 /-!
 # Linear extensions of finite posets
 

@@ -1,6 +1,9 @@
-import Mathlib.Basic.Complex.Basic
-import Mathlib.RingTheory.PowerSeries.Basic
-import Def.Analysis.SpecialFunctions.BasicHypergeometric
+module
+
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.RingTheory.PowerSeries.Basic
+public import Def.Analysis.SpecialFunctions.BasicHypergeometric
+
 /-!
 # Basic hypergeometric series `{}_r φ_s`
 
@@ -43,6 +46,8 @@ are covered as totalized values.
 
 [dlmf17.4]: https://dlmf.nist.gov/17.4
 -/
+
+public section
 
 
 namespace MetaMathlibExt.BasicHypergeometric

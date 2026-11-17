@@ -2,7 +2,7 @@
 
 
 import Structure.Combinatorics.FractalSequence
-import Lemma.Finset.FractalSequence
+import Theorem.Finset.FractalSequence
 import Mathlib.Tactic
 import Def.MathlibExtTest.Combinatorics.FractalSequenceTest.Part3
 

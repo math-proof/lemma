@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.HexVertexClassification.Part3
+module
 
+public import Theorem.StatisticalMechanics.Code.Universality.HexVertexClassification.Part3
+
+
+public section
 
 namespace StatMech.Universality
 

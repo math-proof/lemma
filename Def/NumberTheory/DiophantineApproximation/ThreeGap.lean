@@ -4,9 +4,14 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Algebra.Order.Archimedean.Real.Basic
-import Mathlib.Data.Finset.Card
-import Mathlib.NumberTheory.Real.Irrational
+module
+
+public import Mathlib.Algebra.Order.Archimedean.Real.Basic
+public import Mathlib.Data.Finset.Card
+public import Mathlib.NumberTheory.Real.Irrational
+
+@[expose] public section
+
 /-!
 # The three-gap theorem
 

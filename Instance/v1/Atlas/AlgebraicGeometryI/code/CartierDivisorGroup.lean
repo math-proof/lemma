@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.GroupTheory.QuotientGroup.Basic
-import Mathlib.RingTheory.ClassGroup
-import Def.v1.Atlas.AlgebraicGeometryI.code.CartierDivisorGroup
+module
+
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+public import Mathlib.RingTheory.ClassGroup
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CartierDivisorGroup
+
+@[expose] public section
+
 set_option maxHeartbeats 1600000
 
 

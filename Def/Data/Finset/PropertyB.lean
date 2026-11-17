@@ -6,7 +6,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Avocado
 -/
 
-import Mathlib.Data.Finset.Basic
+module
+
+public import Mathlib.Data.Finset.Basic
+
+@[expose] public section
+
 /-!
 # Property B for families of finite sets
 

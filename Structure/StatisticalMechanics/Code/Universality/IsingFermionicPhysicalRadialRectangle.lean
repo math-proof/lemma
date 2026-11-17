@@ -9,16 +9,18 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalRadialIncidence.Part6
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalEnergy
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPrimitiveFiniteIntegration
+module
+
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalRadialIncidence.Part6
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalEnergy
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPrimitiveFiniteIntegration
 
 
 namespace StatMech.Universality
 
 open StatMech StatMech.FK StatMech.Lattice StatMech.FrontierD
 
-noncomputable section
+public noncomputable section
 
 structure FKIsingSquareInteriorRadialRectanglePlacement
     (n : Nat) (hn : 0 < n) where

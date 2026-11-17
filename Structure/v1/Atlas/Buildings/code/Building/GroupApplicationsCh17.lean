@@ -8,13 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.Buildings.code.Building.ApplicationsToGroups.Part4
-import Lemma.Nat.TopologicalGroupDef
-import Mathlib.Topology.Algebra.Group.Basic
-import Mathlib.Topology.Algebra.OpenSubgroup
-import Mathlib.Topology.Compactness.Compact
-import Mathlib.Order.Filter.AtTopBot.Group
-import Def.v1.Atlas.Buildings.code.Building.GroupApplicationsCh17
+module
+
+public import Structure.v1.Atlas.Buildings.code.Building.ApplicationsToGroups.Part4
+public import Theorem.Nat.TopologicalGroupDef
+public import Mathlib.Topology.Algebra.Group.Basic
+public import Mathlib.Topology.Algebra.OpenSubgroup
+public import Mathlib.Topology.Compactness.Compact
+public import Mathlib.Order.Filter.AtTopBot.Group
+public import Def.v1.Atlas.Buildings.code.Building.GroupApplicationsCh17
+public section
+
 set_option linter.unusedSectionVars false
 set_option linter.unusedVariables false
 

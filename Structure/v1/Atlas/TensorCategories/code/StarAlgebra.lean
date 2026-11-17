@@ -8,17 +8,21 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.TensorCategories.code.GrothendieckRing.Part2
-import Lemma.Category.Atlas.v1.TensorCategories.code.GrothendieckRing
-import Lemma.Category.Atlas.v1.TensorCategories.code.BasedRings
-import Abbrev.v1.Atlas.TensorCategories.code.BasedRings
-import Mathlib.Data.Complex.Basic
-import Mathlib.Algebra.Star.Basic
-import Mathlib.RingTheory.SimpleModule.Basic
-import Mathlib.RingTheory.Artinian.Ring
-import Mathlib.RingTheory.Artinian.Module
-import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
+module
+
+public import Theorem.v1.Atlas.TensorCategories.code.GrothendieckRing.Part2
+public import Lemma.Category.Atlas.v1.TensorCategories.code.GrothendieckRing
+public import Lemma.Category.Atlas.v1.TensorCategories.code.BasedRings
+public import Abbrev.v1.Atlas.TensorCategories.code.BasedRings
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.Algebra.Star.Basic
+public import Mathlib.RingTheory.SimpleModule.Basic
+public import Mathlib.RingTheory.Artinian.Ring
+public import Mathlib.RingTheory.Artinian.Module
+public import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public section
+
 set_option maxHeartbeats 800000
 
 open Finset Complex

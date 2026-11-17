@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/ListSortInputMode.lean -/
 
-import Structure.CPythonListsort.Code.Assembly.SortSliceSafety
-import Theorem.CPythonListsort.Code.Transcription.ListSortImpl
+module
+
+public import Structure.CPythonListsort.Code.Assembly.SortSliceSafety
+public import Theorem.CPythonListsort.Code.Transcription.ListSortImpl
 /-!
 # Valid top-level listsort inputs
 
@@ -11,6 +13,9 @@ pointer.  This module provides the public proof-carrying boundary: callers can
 construct only inputs whose entries agree with that mode, while execution
 still delegates unchanged to `listSortImpl?`.
 -/
+public section
+
+
 
 
 namespace CPythonListsort

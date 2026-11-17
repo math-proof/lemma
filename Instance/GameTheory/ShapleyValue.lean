@@ -1,18 +1,20 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GameTheory/ShapleyValue.lean -/
 
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Real.Basic
-import Mathlib.Algebra.Module.LinearMap.Basic
-import Mathlib.Data.Finset.Powerset
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Finset.Image
-import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Set.Finite.Basic
-import Mathlib.Logic.Equiv.Basic
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Ext
-import Structure.GameTheory.ShapleyValue
+module
+
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Algebra.Module.LinearMap.Basic
+public import Mathlib.Data.Finset.Powerset
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Finset.Image
+public import Mathlib.Algebra.BigOperators.Ring.Finset
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Set.Finite.Basic
+public import Mathlib.Logic.Equiv.Basic
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.Ext
+public import Structure.GameTheory.ShapleyValue
 /-! # Shapley value characterization for cooperative games
 
 Existence and uniqueness of the linear value satisfying efficiency, symmetry,
@@ -36,6 +38,7 @@ this adapted formulation rather than a literal transcription of the source
 theorem.
 -/
 
+@[expose] public section
 
 namespace MathlibExt.GameTheory.ShapleyValue
 

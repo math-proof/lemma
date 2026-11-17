@@ -10,17 +10,17 @@ LICENSE file in the root directory of this source tree.
 
 import Structure.v1.Atlas.Buildings.code.BNPair.Basic.Part2
 import Def.v1.Atlas.Buildings.code.BNPair.ParabolicDefs.Part2
-import Lemma.Nat.NonemptyBruhatCell
-import Lemma.Nat.In_BruhatCell1.of.In_B
+import Theorem.Nat.NonemptyBruhatCell
+import Theorem.Nat.In_BruhatCell1.of.In_B
 import Lemma.Nat.Simple.ne.One
-import Lemma.Nat.In_BruhatCell.of.In_BruhatCell
+import Theorem.Nat.In_BruhatCell.of.In_BruhatCell
 import Lemma.Set.BruhatCell.sub.SetG.of.In_BruhatCell.In_SetG.LeB
 import Theorem.v1.Atlas.Buildings.code.BNPair.CellCoverProof
 import Theorem.v1.Atlas.Buildings.code.BNPair.CellDisjointProof
 import Theorem.v1.Atlas.Buildings.code.BNPair.CellMulParabolicProof
 import Theorem.v1.Atlas.Buildings.code.BNPair.CellInvProof
 import Theorem.v1.Atlas.Buildings.code.BNPair.SubgroupOverBProof
-import Lemma.Nat.Mul.in.BruhatCell.of.In_B.In_BruhatCell
+import Theorem.Nat.Mul.in.BruhatCell.of.In_B.In_BruhatCell
 import Mathlib.Tactic.Group
 set_option linter.unusedSectionVars false
 set_option maxHeartbeats 800000

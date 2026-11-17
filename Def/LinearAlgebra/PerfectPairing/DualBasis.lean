@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/LinearAlgebra/PerfectPairing/DualBasis.lean -/
 
-import Mathlib.LinearAlgebra.Dual.Basis
-import Mathlib.LinearAlgebra.PerfectPairing.Basic
+module
+
+public import Mathlib.LinearAlgebra.Dual.Basis
+public import Mathlib.LinearAlgebra.PerfectPairing.Basic
+
+@[expose] public section
+
 open Module
 
 /-!

@@ -1,13 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Probability/Statistics/GlivenkoCantelli.lean -/
 
-import Mathlib.Probability.IdentDistrib
-import Mathlib.Probability.CDF
-import Mathlib.Probability.StrongLaw
-import Mathlib.Tactic.GCongr
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+module
 
+public import Mathlib.Probability.IdentDistrib
+public import Mathlib.Probability.CDF
+public import Mathlib.Probability.StrongLaw
+public import Mathlib.Tactic.GCongr
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 section
 

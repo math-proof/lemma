@@ -3,15 +3,17 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
+module
 
-import Mathlib.Data.Finsupp.Basic
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Algebra.Order.Ring.Nat
-import Mathlib.Data.Nat.Find
-import Mathlib.Order.Fin.Basic
-import Mathlib.Order.Fin.Tuple
+public import Mathlib.Data.Finsupp.Basic
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Algebra.Order.Ring.Nat
+public import Mathlib.Data.Nat.Find
+public import Mathlib.Order.Fin.Basic
+public import Mathlib.Order.Fin.Tuple
 
+public section
 
 namespace MetaMathlibExt
 

@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.BooleanFunctions.code.Definitions
-import Mathlib.Data.Fin.Tuple.Basic
+module
 
+public import Def.v1.Atlas.BooleanFunctions.code.Definitions
+public import Mathlib.Data.Fin.Tuple.Basic
+
+@[expose] public section
 
 namespace BooleanFourier
 

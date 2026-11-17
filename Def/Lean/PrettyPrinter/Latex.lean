@@ -1,7 +1,12 @@
-import Def.Lean.Level
-import Def.Lean.Name
-import Def.Data.List.List.Basic
-import Def.Lean.Expr.Part11
+module
+
+public import Def.Lean.Level
+public import Def.Lean.Name
+public import Def.Lean.Expr.Part11
+public import Def.Data.List.List.Basic
+
+@[expose] public section
+
 open Lean (Name)
 set_option linter.unusedVariables false
 
@@ -736,9 +741,15 @@ partial def Expr.markAsRandomArgument : Expr → Expr
   | e@(Basic f (x :: rest) level) =>
     match e.asNamedApp? with
     | some ("getSlice", _)
-    | some ("getSliceFrom", _) => Basic f (x.markAsRandomArgument :: rest) level
+    | some ("getSliceFrom", _)
+    | some ("getElem", _)
+    | some ("toFun", _) => Basic f (x.markAsRandomArgument :: rest) level
     | some ("JointRandomSymbol", _) => Basic f ((x :: rest).map markAsRandomArgument) level
-    | _ => e
+    | _ =>
+      -- `s[k]` is often `Special GetElem.getElem`, which `asNamedApp?` does not see
+      match f with
+      | .Special ⟨`GetElem.getElem⟩ => Basic f (x.markAsRandomArgument :: rest) level
+      | _ => e
   | e => e
 
 /-- lean.js token text for RV-head matching: last segment, `«\sf{x}»` → `x`.
@@ -1029,7 +1040,8 @@ def Expr.asProb? : Expr → Option (Expr × List Expr)
   | e =>
     let e := e.peelToReal
     if let some ("probRA", base :: x :: _) := e.asNamedApp? then
-      some (base, [x.markAsRandomVariable])
+      -- `ℙ[π](x)` is the RA form: lean.js markProbBinderArgs paints x magenta
+      some (base, [x.markAsRandomArgument])
     else if let some ("prob", base :: rest) := e.asNamedApp? then
       match rest with
       | [] => none
@@ -1273,4 +1285,3 @@ partial def Expr.asDeriv? (e : Expr) : Option (List String × Expr × Option Exp
         some ([binder], juxta f, none)
     | _ => none
   | _ => none
-

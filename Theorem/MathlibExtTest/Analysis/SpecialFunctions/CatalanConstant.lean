@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/CatalanConstant.lean -/
+module
 
+public import Theorem.Analysis.SpecialFunctions.CatalanConstant
 
-import Theorem.Analysis.SpecialFunctions.CatalanConstant
-
+public section
 
 example : Real.catalanConstant =
     ∑' n : ℕ, (-1 : ℝ) ^ n / (2 * (n : ℝ) + 1) ^ 2 :=
