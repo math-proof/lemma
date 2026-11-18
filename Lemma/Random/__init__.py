@@ -5,7 +5,6 @@ from . import Distributed
 from . import Eq
 from . import EqConditioned
 from . import EqExpect
-from . import EqProd
 from . import Expect
 from . import ExpectAdd
 from . import ExpectMul

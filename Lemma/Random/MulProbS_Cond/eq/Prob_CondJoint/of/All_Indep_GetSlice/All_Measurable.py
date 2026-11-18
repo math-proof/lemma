@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.find(Equal & Equal).apply(Tensor.Stack.UFn.Is.Stack)
 
-    Eq << Random.EqProd.of.Eq.markov.first_order.apply(Eq[0], k)
+    Eq << Random.Prob_GetSlice.ae.Mul_Prod_ProbCond.of.All_SinglePSpaceJointGet_Add_1_Get.All_SinglePSpace.All_SinglePSpace.All_CondIndep.All_Measurable.apply(Eq[0], k)
     Eq << Eq[-2].subs(Eq[-1])
     Eq << Bool.And_And.given.And.Cond.apply(Eq[-1], None)
     Eq << Eq[-1].this.lhs.apply(Real.Mul_Integral.eq.Integral_Mul)
@@ -36,7 +36,7 @@ def prove(Eq):
     Eq << Eq[-1].this.rhs.apply(Random.All_Eq_Integral_ProbJoint.of.PSpace_Joint, s[1:k])
     Eq << Eq[-1].this.find(And).args[::2].apply(Tensor.Stack.UFn.Is.Stack)
     Eq << Eq[-1].this.find(And).apply(Tensor.Stack.UFn.Is.Stack)
-    Eq << Random.EqProd.of.Eq.markov.first_order.apply(Eq[0], k + 1)
+    Eq << Random.Prob_GetSlice.ae.Mul_Prod_ProbCond.of.All_SinglePSpaceJointGet_Add_1_Get.All_SinglePSpace.All_SinglePSpace.All_CondIndep.All_Measurable.apply(Eq[0], k + 1)
     Eq << Eq[-2].subs(Eq[-1])
 
 
