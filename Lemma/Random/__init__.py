@@ -42,7 +42,6 @@ from . import EqMul
 from . import Ge
 from . import Lim
 from . import Conditioned
-from . import ProbSlice
 from . import Eq_Prob
 from . import Prob
 from . import ProbEqAdd
@@ -102,3 +101,4 @@ from . import All_EqExpect_Cond
 from . import EqDot
 from . import Prob_Cond
 from . import Prod_Prob_Cond_Joint
+from . import Prob_GetSlice
