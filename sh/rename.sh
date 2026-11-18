@@ -127,11 +127,12 @@ dst=$(normalize $2)
 echo dst = $dst
 
 # Last dotted segment matching @[path] / moduleResolve lowercase suffix → sublemma merge.
-# Charset aligned with mjs/lean/moduleResolve.mjs: /^[a-z]+$/
+# Charset aligned with mjs/lean/moduleResolve.mjs: /^[a-z_]+$/
+# Underscores are allowed (e.g. future_reward).
 dst_last=${dst##*.}
 sublemma=
 real_dst=$dst
-if [[ "$dst" == *.* && "$dst_last" =~ ^[a-z]+$ ]]; then
+if [[ "$dst" == *.* && "$dst_last" =~ ^[a-z_]+$ ]]; then
   sublemma=$dst_last
   real_dst=${dst%.*}
   echo sublemma = $sublemma
