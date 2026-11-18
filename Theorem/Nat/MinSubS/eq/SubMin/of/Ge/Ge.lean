@@ -1,5 +1,7 @@
 module
 
+public import Initialize.Tactic.Attr.Basic
+
 public import Theorem.Nat.EqSubAdd
 public import Theorem.Nat.MinAddS.eq.AddMin
 
@@ -26,6 +28,14 @@ public theorem Nat.MinSubS.eq.SubMin.of.Ge.Ge
   rw [h_a, h_b]
   rw [MinAddS.eq.AddMin]
   repeat rw [EqSubAdd]
+
+
+public theorem Nat.SubMin.eq.MinSubS.of.Ge.Ge
+  {a b c : ℕ}
+  (h₀ : a ≥ c)
+  (h₁ : b ≥ c) :
+  a ⊓ b - c = (a - c) ⊓ (b - c) :=
+  (Nat.MinSubS.eq.SubMin.of.Ge.Ge h₀ h₁).symm
 
 
 -- created on 2025-06-20

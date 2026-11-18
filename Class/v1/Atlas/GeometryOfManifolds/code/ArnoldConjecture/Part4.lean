@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/GeometryOfManifolds/code/ArnoldConjecture.lean -/
 
 /-
@@ -8,8 +10,9 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.GeometryOfManifolds.code.HamiltonianVectorFields.Part3
-import Structure.v1.Atlas.GeometryOfManifolds.code.ArnoldConjecture.Part3
+public import Def.v1.Atlas.GeometryOfManifolds.code.HamiltonianVectorFields.Part3
+public import Structure.v1.Atlas.GeometryOfManifolds.code.ArnoldConjecture.Part3
+public section
 set_option autoImplicit false
 
 open DifferentialFormSpace

@@ -1,5 +1,14 @@
-import Mathlib
-import Macro.Analysis.Section_11_1
+module
+
+public import Mathlib
+public import Macro.Analysis.Section_11_1
+public import Abbrev.Analysis.Section_11_1
+public import Abbrev.Analysis.Section_11_1.Part2
+public import Instance.Analysis.Section_11_1
+public import Instance.Analysis.Section_11_1.Part4
+public import Theorem.Analysis.Section_11_1.Part4
+public import Theorem.Analysis.Section_11_1.Part6
+
 /-!
 # Analysis I, Section 11.1: Partitions
 
@@ -16,12 +25,14 @@ Main constructions and results of this section:
 
 -/
 
+public section
+
 
 namespace Chapter11
 
 open BoundedInterval
 
-theorem BoundedInterval.length_nonneg (I: BoundedInterval) : 0 ≤ |I|ₗ := by
+theorem BoundedInterval.length_nonneg (I: BoundedInterval) : 0 ≤ I.length := by
   simp
 
 theorem BoundedInterval.empty_of_lt {I: BoundedInterval} (h: I.b < I.a) : (I:Set ℝ) = ∅ := by
@@ -31,7 +42,7 @@ theorem BoundedInterval.empty_of_lt {I: BoundedInterval} (h: I.b < I.a) : (I:Set
   | Ioc _ _ => simp [le_of_lt h]
   | Ico _ _ => simp [le_of_lt h]
 
-theorem BoundedInterval.dist_le_length {I:BoundedInterval} {x y:ℝ} (hx: x ∈ I) (hy: y ∈ I) : |x - y| ≤ |I|ₗ := by
+theorem BoundedInterval.dist_le_length {I:BoundedInterval} {x y:ℝ} (hx: x ∈ I) (hy: y ∈ I) : |x - y| ≤ I.length := by
   apply subset_Icc I at hx; apply subset_Icc I at hy; simp_all [mem_iff, abs_le']; grind
 
 end Chapter11

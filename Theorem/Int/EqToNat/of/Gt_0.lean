@@ -1,5 +1,7 @@
 module
 
+public import Initialize.Tactic.Attr.Basic
+
 public import Theorem.Int.EqToNat.of.Ge_0
 public import Theorem.Nat.Ge.of.Gt
 

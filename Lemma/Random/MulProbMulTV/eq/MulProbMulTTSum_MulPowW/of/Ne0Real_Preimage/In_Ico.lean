@@ -7,15 +7,14 @@ import Lemma.Random.MEq_Clip.of.All_Eq.All_EqWithDensity
 import Lemma.Random.NormClip.le.Abs_R
 import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Theorem.Probability.CondExpectation
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
+import Instance.Dynamics.PolicyTrajectory
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
 /--
 On a reachable state `x`:
 `π_θ(u | x) * μ({u}) * T(x, u, {y}) * V θ γ (t+1) y
-= π_θ(u | x) * μ({u}) * T(x, u, {y}) * ∑' k, γ ^ k * W θ (fun z ↦ clip z.1 (-M.R) M.R) k y`.
+= π_θ(u | x) * μ({u}) * T(x, u, {y}) * ∑' k, γ ^ k * W θ (fun z ↦ clip z.1 (-R) R) k y`.
 -/
 @[path]
 private lemma main
@@ -29,18 +28,20 @@ private lemma main
   {θ : Θ}
   {t : ℕ}
   {sₜ : 𝒮}
+  {R : ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (hP : (M.traj θ).real (s t ⁻¹' {sₜ}) ≠ 0)
+  (hP : (M θ).real (s t ⁻¹' {sₜ}) ≠ 0)
+  (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1)
   (aₜ : 𝒜)
   (y : 𝒮) :
 -- imply
   let V (θ : Θ) (t : ℕ) (sₜ : 𝒮) : ℝ :=
-    𝔼[r : M.traj θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = sₜ);
+    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = sₜ);
   M.π[θ] sₜ aₜ * μ.measure.real {aₜ} * (M.trans (sₜ, aₜ)).toMeasure.real {y} * V θ (t + 1) y =
     M.π[θ] sₜ aₜ * μ.measure.real {aₜ} * (M.trans (sₜ, aₜ)).toMeasure.real {y} *
-      ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.R) M.R) k z
+      ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-R) R) k z
         ∂(M.stageK θ y) := by
 -- proof
   intro Vθ
@@ -75,8 +76,8 @@ private lemma main
       rw [hfeq, integral_indicator_one (measurableSet_singleton y)]
     have hE :
       ∫ ω, (if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) *
-          (if s (t + 1) ω = y then (1:ℝ) else 0) ∂(M.traj θ) =
-        (M.traj θ).real (s t ⁻¹' {sₜ}) *
+          (if s (t + 1) ω = y then (1:ℝ) else 0) ∂(M θ) =
+        (M θ).real (s t ⁻¹' {sₜ}) *
           (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}) *
           (M.trans (sₜ, aₜ)).toMeasure.real {y} := by
       rw [Integral_MulEqAndEq.eq.MulMulRealProbSum_MulT.of.All_Eq
@@ -112,12 +113,12 @@ private lemma main
           Set.mem_singleton_iff]
     have hle :
       ∫ ω, (if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) *
-          (if s (t + 1) ω = y then (1:ℝ) else 0) ∂(M.traj θ) ≤
-        (M.traj θ).real (s (t + 1) ⁻¹' {y}) := by
+          (if s (t + 1) ω = y then (1:ℝ) else 0) ∂(M θ) ≤
+        (M θ).real (s (t + 1) ⁻¹' {y}) := by
       rw [hindp, integral_indicator_one (hSA.inter hY)]
       exact measureReal_mono (fun ω hω => hω.2)
     have hpos : 0 <
-        (M.traj θ).real (s t ⁻¹' {sₜ}) *
+        (M θ).real (s t ⁻¹' {sₜ}) *
           (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}) *
           (M.trans (sₜ, aₜ)).toMeasure.real {y} := by
       apply mul_pos
@@ -129,19 +130,19 @@ private lemma main
           (fun h0 => hz (by rw [← h0, zero_mul]))
       exact lt_of_le_of_ne measureReal_nonneg
         (fun h0 => hz (by rw [← h0, mul_zero]))
-    have hPy : (M.traj θ).real (s (t + 1) ⁻¹' {y}) ≠ 0 := by
+    have hPy : (M θ).real (s (t + 1) ⁻¹' {y}) ≠ 0 := by
       intro h0
       have hle' := hle
       rw [hE, h0] at hle'
       exact (not_le_of_gt hpos) hle'
     have hclip : StronglyMeasurable
-      (fun z : ℝ × 𝒮 × 𝒜 ↦ clip z.1 (-M.R) M.R) := by
+      (fun z : ℝ × 𝒮 × 𝒜 ↦ clip z.1 (-R) R) := by
       unfold clip
       apply
         ((measurable_fst.max measurable_const).min measurable_const).stronglyMeasurable
     have hclipbound : ∀ z : ℝ × 𝒮 × 𝒜,
-        ‖clip z.1 (-M.R) M.R‖ ≤ |M.R| :=
-      fun z => NormClip.le.Abs_R M.R z.1
+        ‖clip z.1 (-R) R‖ ≤ |R| :=
+      fun z => NormClip.le.Abs_R R z.1
     have hGx : StronglyMeasurable
       (fun z : ℝ × 𝒮 × 𝒜 => if z.2.1 = y then (1:ℝ) else 0) :=
       (StronglyMeasurable.of_discrete
@@ -156,18 +157,18 @@ private lemma main
           simp [hz']
     have hSW : ∀ k,
         ∫ ω, (if s (t + 1) ω = y then (1:ℝ) else 0) *
-            r (t + 1 + k) ω ∂(M.traj θ) =
-          (M.traj θ).real (s (t + 1) ⁻¹' {y}) *
-            ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.R) M.R) k z
+            r (t + 1 + k) ω ∂(M θ) =
+          (M θ).real (s (t + 1) ⁻¹' {y}) *
+            ∫ z, M.Kf θ (fun z ↦ clip z.1 (-R) R) k z
               ∂(M.stageK θ y) := by
       intro k
       have hrc :
         ∫ ω, (if s (t + 1) ω = y then (1:ℝ) else 0) *
-            r (t + 1 + k) ω ∂(M.traj θ) =
+            r (t + 1 + k) ω ∂(M θ) =
           ∫ ω, (if s (t + 1) ω = y then (1:ℝ) else 0) *
-            clip (ω (t + 1 + k)).1 (-M.R) M.R ∂(M.traj θ) :=
+            clip (ω (t + 1 + k)).1 (-R) R ∂(M θ) :=
         integral_congr_ae
-          ((MEq_Clip.of.All_Eq.All_EqWithDensity h₁ (M := M) θ (t + 1 + k)).mono
+          ((MEq_Clip.of.All_Eq.All_EqWithDensity h₁ (M := M) hR θ (t + 1 + k)).mono
             fun ω h => by
               dsimp only
               rw [h])
@@ -180,7 +181,7 @@ private lemma main
         Integral_MulEqS.eq.MulRealPreimageSIntegral.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
           h₁ (M := M) hK.1 hK.2 θ (t + 1) y]
     have hV : Vθ θ (t + 1) y =
-        ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.R) M.R) k z
+        ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-R) R) k z
           ∂(M.stageK θ y) := by
       dsimp only [Vθ]
       have hpR : Measurable (fun ω t ↦ r t ω) :=
@@ -191,15 +192,15 @@ private lemma main
         (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[t + 1:]) :=
         Measurable.tsum fun k =>
           (measurable_pi_apply (t + 1 + k)).const_mul _
-      have hmap : (M.traj θ).map (s (t + 1)) {y} ≠ 0 := by
+      have hmap : (M θ).map (s (t + 1)) {y} ≠ 0 := by
         rwa [Measure.map_apply hs (measurableSet_singleton y),
           ← measureReal_ne_zero_iff]
       simp only [Expectation.asRV_process]
       rw [Expectation.condEval_eq_integral hpR hs hfG hmap]
       show ∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t + 1:]) ω
-        ∂(M.traj θ)[|s (t + 1) ⁻¹' {y}] = _
+        ∂(M θ)[|s (t + 1) ⁻¹' {y}] = _
       rw [Integral_G.eq.TSum_MulPowIntegral_R_Add.of.All_EqWithDensity.In_Ico
-        (M := M) h₀ h₁ θ (s (t + 1) ⁻¹' {y}) (t + 1)]
+        (M := M) h₀ h₁ hR θ (s (t + 1) ⁻¹' {y}) (t + 1)]
       congr 1
       funext k
       rw [Integral.eq.MulRealPreimageSIntegral_MulEqS.of.All_EqWithDensity h₁,
@@ -208,4 +209,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-17
+-- updated on 2026-11-18

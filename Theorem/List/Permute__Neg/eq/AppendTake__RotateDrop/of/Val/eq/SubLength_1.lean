@@ -4,6 +4,8 @@ public import Theorem.Nat.Eq_Sub_1.of.Val.eq.Sub_1
 public import Theorem.List.Permute_SubLength_0.eq.AppendRotateTake___Drop.of.GtLength_0
 public import Theorem.Nat.MinSubS.eq.SubMin.of.Ge.Ge
 
+public import Theorem.Nat.Sub_Add.eq.SubSub
+public import Theorem.Nat.Add
 public section
 
 open List Nat Int

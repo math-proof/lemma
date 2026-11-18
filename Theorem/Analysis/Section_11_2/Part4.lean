@@ -1,6 +1,11 @@
-import Mathlib
-import Instance.Analysis.Section_11_1.Part8
-import Abbrev.Analysis.Section_11_2.Part4
+module
+
+public import Mathlib
+public import Instance.Analysis.Section_11_1.Part8
+public import Abbrev.Analysis.Section_11_2.Part4
+public import Theorem.Analysis.Section_11_2.Part3
+
+public section
 /-!
 # Analysis I, Section 11.2: Piecewise constant functions
 
@@ -21,13 +26,13 @@ namespace Chapter11
 
 open BoundedInterval
 
-theorem PiecewiseConstantOn.def (f:ℝ → ℝ) (I: BoundedInterval):
+public theorem PiecewiseConstantOn.def (f:ℝ → ℝ) (I: BoundedInterval):
   PiecewiseConstantOn f I ↔ ∃ P : Partition I, ∀ J ∈ P, ConstantOn f (J:Set ℝ) := by rfl
 
-theorem PiecewiseConstantOn.congr {f g: ℝ → ℝ} {I: BoundedInterval} (h: ∀ x ∈ (I:Set ℝ), f x = g x) :
+public theorem PiecewiseConstantOn.congr {f g: ℝ → ℝ} {I: BoundedInterval} (h: ∀ x ∈ (I:Set ℝ), f x = g x) :
   PiecewiseConstantOn f I ↔ PiecewiseConstantOn g I := by
   simp_rw [PiecewiseConstantOn, PiecewiseConstantWith.congr h]
 
-theorem PiecewiseConstantOn.congr' {f g: ℝ → ℝ} {I: BoundedInterval} (hf: PiecewiseConstantOn f I) (h: ∀ x ∈ (I:Set ℝ), f x = g x) : PiecewiseConstantOn g I := (congr h).mp hf
+public theorem PiecewiseConstantOn.congr' {f g: ℝ → ℝ} {I: BoundedInterval} (hf: PiecewiseConstantOn f I) (h: ∀ x ∈ (I:Set ℝ), f x = g x) : PiecewiseConstantOn g I := (congr h).mp hf
 
 end Chapter11

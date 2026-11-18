@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Initialize.Tactic.Attr.Basic
 public import Theorem.Int.Sub.gt.Zero.is.Lt
 
 public section

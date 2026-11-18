@@ -20,7 +20,7 @@ public theorem Nat.Lt_Sub.of.LtAdd
 
 
 @[comm 1]
-public theorem left
+public theorem Nat.Lt_Sub.of.LtAdd.left
   {a b c : ℕ}
 -- given
   (h : a + b < c) :

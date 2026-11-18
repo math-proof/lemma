@@ -1,6 +1,8 @@
-import Mathlib
-import Theorem.Analysis.Section_4_3.Part2
-import Theorem.Analysis.Section_5_1.Part2
+module
+
+public import Mathlib
+public import Abbrev.Analysis.Section_5_1
+@[expose] public section
 set_option doc.verso.suggestions false
 
 /-!
@@ -33,6 +35,6 @@ Not in textbook: the sequence 3, 3 ... is 1-steady.
 Intended as a demonstration of {name}`Rat.Steady.coe`.
 -/
 abbrev Sequence.from (a:Sequence) (n₁:ℤ) : Sequence :=
-  mk' (max a.n₀ n₁) (fun n ↦ a (n:ℤ))
+  mk' (max a.n₀ n₁) (fun n ↦ a.seq (n:ℤ))
 
 end Chapter5

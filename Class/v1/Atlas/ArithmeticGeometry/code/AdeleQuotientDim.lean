@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/code/AdeleQuotientDim.lean -/
 
 /-
@@ -8,9 +10,10 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.ArithmeticGeometry.code.RiemannRoch.Part6
-import Mathlib.LinearAlgebra.Isomorphisms
-import Mathlib.RingTheory.Finiteness.Finsupp
+public import Def.v1.Atlas.ArithmeticGeometry.code.RiemannRoch.Part6
+public import Mathlib.LinearAlgebra.Isomorphisms
+public import Mathlib.RingTheory.Finiteness.Finsupp
+public section
 open scoped RestrictedProduct
 open FunctionFieldAdeleRing DiscreteValuationFamily
 

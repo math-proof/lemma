@@ -130,6 +130,7 @@ Now you can work on yourLeanProject on your Target machine with no trouble.
 # related resources
 ## paper to read
 ```
+https://github.com/leanprover-community/physlib
 https://arxiv.org/abs/2511.03618
 https://github.com/ShangtongZhang/rl-theory-in-lean
 https://lean-lang.org/doc/reference/latest/

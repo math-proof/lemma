@@ -1,6 +1,7 @@
 import Lemma.Random.Integral.eq.Integral_Integral_SMul.of.All_Eq_Joint.All_EqWithDensity
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
@@ -26,10 +27,10 @@ private lemma main
   {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
 -- given
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
-  (h₁ : (M.traj θ).real (s t ⁻¹' {sₜ}) ≠ 0)
+  (h₁ : (M θ).real (s t ⁻¹' {sₜ}) ≠ 0)
   (aₜ : 𝒜) :
 -- imply
-  ((M.traj θ)[|s t ⁻¹' {sₜ}]).real (a t ⁻¹' {aₜ}) =
+  ((M θ)[|s t ⁻¹' {sₜ}]).real (a t ⁻¹' {aₜ}) =
     M.π[θ] sₜ aₜ * μ.measure.real {aₜ} := by
 -- proof
   have hS : MeasurableSet (s t ⁻¹' {sₜ}) :=
@@ -59,8 +60,8 @@ private lemma main
     ← measureReal_def,
     ← measureReal_def]
   have hnum :
-      (M.traj θ).real (s t ⁻¹' {sₜ} ∩ a t ⁻¹' {aₜ}) =
-        (M.traj θ).real (s t ⁻¹' {sₜ}) *
+      (M θ).real (s t ⁻¹' {sₜ} ∩ a t ⁻¹' {aₜ}) =
+        (M θ).real (s t ⁻¹' {sₜ}) *
           (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}) := by
     have hind :
         (s t ⁻¹' {sₜ} ∩ a t ⁻¹' {aₜ}).indicator (1 : (ℕ → ℝ × 𝒮 × 𝒜) → ℝ) =
@@ -105,4 +106,4 @@ private lemma main
 
 
 -- created on 2026-11-14
--- updated on 2026-11-17
+-- updated on 2026-11-18

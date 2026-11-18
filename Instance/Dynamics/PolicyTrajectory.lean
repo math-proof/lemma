@@ -7,6 +7,7 @@ import Theorem.Random.SinglePSpace.of.Eq_WithDensity.Measurable.AEMeasurable
 import Theorem.Random.SinglePSpace.of.AEMeasurable.Distributed
 import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
 import Class.Dynamics.PolicyTrajectory
+import Def.Dynamics.PolicyTrajectory.ContinuousAction
 open MeasureTheory ProbabilityTheory Finset
 open scoped ENNReal
 
@@ -38,4 +39,13 @@ instance instCanonical (M : Model Θ 𝒮 𝒜) :
     rfl
 
 end Model.IsPolicyTrajectory
+
+set_option synthInstance.checkSynthOrder false in
+/-- `M θ` is the trajectory law `M.traj θ`. -/
+noncomputable instance instCoeFunModelTraj
+  {Θ 𝒮 𝒜 : Type*} [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
+  {M : Model Θ 𝒮 𝒜} [StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M] :
+    CoeFun (Model Θ 𝒮 𝒜) (fun _ ↦ Θ → Measure (ℕ → ℝ × 𝒮 × 𝒜)) where
+  coe _ := M.traj
+
 end PolicyGradient

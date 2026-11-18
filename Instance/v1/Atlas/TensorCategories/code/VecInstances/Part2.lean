@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Abbrev.v1.Atlas.TensorCategories.code.TensorCategoryDef.Part3
-import Lemma.Category.Atlas.v1.TensorCategories.code.TensorCategoryDef
-import Theorem.v1.Atlas.TensorCategories.code.VecInstances.Part2
+module
+
+public import Mathlib
+public import Abbrev.v1.Atlas.TensorCategories.code.TensorCategoryDef.Part3
+public import Theorem.Category.Atlas.v1.TensorCategories.code.TensorCategoryDef
+public import Theorem.v1.Atlas.TensorCategories.code.VecInstances.Part2
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Braided
+@[expose] public section
 set_option maxHeartbeats 800000
 
 open CategoryTheory MonoidalCategory Limits
@@ -26,6 +30,12 @@ namespace VecInstances
 section FiniteLength
 
 variable (k : Type u) [Field k]
+
+-- Mathlib registers only `RightRigidCategory (FGModuleCat K)`.
+-- `LeftRigidCategory` / `RigidCategory` are existing BraidedCategory constructions,
+-- not registered as instances (Mathlib: not canonical enough). Use those defs.
+instance : RigidCategory (Vec k) := BraidedCategory.rigidCategoryOfRightRigidCategory
+instance : LeftRigidCategory (Vec k) := BraidedCategory.leftRigidCategoryOfRightRigidCategory
 
 /-- `Vec k` is locally finite (Definition 1.12.1): finite-dimensional hom-spaces and
 finite-length objects. -/

@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/Corollary_2_14_9.lean -/
 
 /-
@@ -8,9 +10,10 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Class.v1.Atlas.TensorCategories.code.DualCatDefs
-import Abbrev.v1.Atlas.TensorCategories.code.IndecomposableModuleCat
-import Mathlib.CategoryTheory.Simple
+public import Class.v1.Atlas.TensorCategories.code.DualCatDefs
+public import Abbrev.v1.Atlas.TensorCategories.code.IndecomposableModuleCat
+public import Mathlib.CategoryTheory.Simple
+public section
 set_option maxHeartbeats 400000
 
 universe v₁ v₂ u₁ u₂

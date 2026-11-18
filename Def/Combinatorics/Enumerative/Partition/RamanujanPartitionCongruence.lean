@@ -1,38 +1,43 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/Partition/RamanujanPartitionCongruence.lean -/
 
-import Mathlib.Combinatorics.Enumerative.Partition.Basic
-import Mathlib.Data.Nat.ModEq
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.BigOperators.GroupWithZero.Finset
-import Mathlib.Algebra.BigOperators.Intervals
-import Mathlib.Algebra.CharP.Defs
-import Mathlib.Algebra.Group.Nat.Even
-import Mathlib.Algebra.GroupWithZero.NonZeroDivisors
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Algebra.Polynomial.Basic
-import Mathlib.Algebra.Polynomial.Coeff
-import Mathlib.Algebra.Polynomial.Derivative
-import Mathlib.Algebra.Polynomial.Eval.Degree
-import Mathlib.Algebra.Polynomial.Eval.Defs
-import Mathlib.Combinatorics.Enumerative.Pentagonal.Basic
-import Mathlib.Combinatorics.Enumerative.Pentagonal.PowerSeries
-import Mathlib.Data.Finset.Range
-import Mathlib.Data.Int.Cast.Lemmas
-import Mathlib.Data.Int.Star
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Nat.Prime.Defs
-import Mathlib.Data.ZMod.Basic
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.Order.Filter.AtTopBot.Basic
-import Mathlib.RingTheory.PowerSeries.Basic
-import Mathlib.RingTheory.PowerSeries.Expand
-import Mathlib.RingTheory.PowerSeries.NoZeroDivisors
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Def.Combinatorics.Enumerative.PentagonalNumber
-import Theorem.Finset.Enumerative.PentagonalNumber
-import Theorem.Finset.Enumerative.GaussianBinomial
-import Def.Combinatorics.Enumerative.GaussianBinomial
+module
+
+public import Mathlib.Combinatorics.Enumerative.Partition.Basic
+public import Mathlib.Data.Nat.ModEq
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.BigOperators.GroupWithZero.Finset
+public import Mathlib.Algebra.BigOperators.Intervals
+public import Mathlib.Algebra.CharP.Defs
+public import Mathlib.Algebra.Group.Nat.Even
+public import Mathlib.Algebra.GroupWithZero.NonZeroDivisors
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Algebra.Polynomial.Basic
+public import Mathlib.Algebra.Polynomial.Coeff
+public import Mathlib.Algebra.Polynomial.Derivative
+public import Mathlib.Algebra.Polynomial.Eval.Degree
+public import Mathlib.Algebra.Polynomial.Eval.Defs
+public import Mathlib.Combinatorics.Enumerative.Pentagonal.Basic
+public import Mathlib.Combinatorics.Enumerative.Pentagonal.PowerSeries
+public import Mathlib.Data.Finset.Range
+public import Mathlib.Data.Int.Cast.Lemmas
+public import Mathlib.Data.Int.Star
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Data.Nat.Prime.Defs
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.Order.Filter.AtTopBot.Basic
+public import Mathlib.RingTheory.PowerSeries.Basic
+public import Mathlib.RingTheory.PowerSeries.Expand
+public import Mathlib.RingTheory.PowerSeries.NoZeroDivisors
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+public import Def.Combinatorics.Enumerative.PentagonalNumber
+public import Theorem.Finset.Enumerative.PentagonalNumber
+public import Theorem.Finset.Enumerative.GaussianBinomial
+public import Def.Combinatorics.Enumerative.GaussianBinomial
+
+@[expose] public section
+
 /-!
 # Ramanujan's partition congruences
 

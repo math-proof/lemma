@@ -1,7 +1,5 @@
 import Lemma.Random.NormClip.le.Abs_R
 import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
@@ -17,21 +15,22 @@ private lemma main
   {γ : ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
+  (R : ℝ)
   (θ : Θ)
   (y : 𝒮) :
 -- imply
   Summable (fun k =>
-    γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.R) M.R) k z
+    γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-R) R) k z
       ∂(M.stageK θ y)) := by
 -- proof
   have hclip : StronglyMeasurable
-    (fun z : ℝ × 𝒮 × 𝒜 => clip z.1 (-M.R) M.R) := by
+    (fun z : ℝ × 𝒮 × 𝒜 => clip z.1 (-R) R) := by
     unfold clip
     apply ((measurable_fst.max measurable_const).min measurable_const).stronglyMeasurable
-  have hbound : ∀ z : ℝ × 𝒮 × 𝒜, ‖clip z.1 (-M.R) M.R‖ ≤ |M.R| :=
-    fun z => NormClip.le.Abs_R M.R z.1
+  have hbound : ∀ z : ℝ × 𝒮 × 𝒜, ‖clip z.1 (-R) R‖ ≤ |R| :=
+    fun z => NormClip.le.Abs_R R z.1
   refine Summable.of_norm_bounded
-    ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right |M.R|) ?_
+    ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right |R|) ?_
   intro k
   have : IsProbabilityMeasure (M.stageK θ y) := inferInstance
   have h :=
@@ -45,4 +44,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-17
+-- updated on 2026-11-18

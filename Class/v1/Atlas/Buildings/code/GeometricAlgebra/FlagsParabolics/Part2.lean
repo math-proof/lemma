@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/GeometricAlgebra/FlagsParabolics.lean -/
 
 /-
@@ -8,11 +10,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.GeneralLinearGroup.Basic
-import Mathlib.Order.RelClasses
-import Mathlib.Tactic.Group
-import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.FlagsParabolics.Part5
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.GeneralLinearGroup.Basic
+public import Mathlib.Order.RelClasses
+public import Mathlib.Tactic.Group
+public import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.FlagsParabolics.Part5
+public section
 
 
 namespace GeometricAlgebra

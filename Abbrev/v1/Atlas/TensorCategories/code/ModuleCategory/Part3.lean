@@ -25,22 +25,6 @@ open Category MonoidalCategory
 
 open LeftModCat
 
-attribute [reassoc] LeftModuleCategory.actTensorHom_def
-
-attribute [reassoc, simp] LeftModuleCategory.actWhiskerLeft_id
-
-attribute [reassoc, simp] LeftModuleCategory.actId_whiskerRight
-
-attribute [reassoc (attr := simp)] LeftModuleCategory.actTensorHom_comp
-
-attribute [reassoc] LeftModuleCategory.actAssociator_naturality
-
-attribute [reassoc] LeftModuleCategory.actLeftUnitor_naturality
-
-attribute [reassoc (attr := simp)] LeftModuleCategory.actPentagon
-
-attribute [reassoc (attr := simp)] LeftModuleCategory.actTriangle
-
 /-- Alias for `IsModuleSubcategory` matching the textbook numbering in EGNO. -/
 abbrev Definition_2_1_6 := @IsModuleSubcategory
 

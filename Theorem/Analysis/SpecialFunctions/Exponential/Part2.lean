@@ -1,6 +1,10 @@
-import Theorem.Hyperreal.UFn.of.All_UFn
-import Theorem.Int.Abs.eq.Max_Neg
-import Def.Analysis.SpecialFunctions.Exponential.Part2
+module
+
+public import Theorem.Hyperreal.UFn.of.All_UFn
+public import Theorem.Int.Abs.eq.Max_Neg
+public import Theorem.Analysis.SpecialFunctions.Exponential
+public section
+
 open Filter Hyperreal Int
 
 

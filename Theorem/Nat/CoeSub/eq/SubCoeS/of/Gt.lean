@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Initialize.Tactic.Attr.Basic
 public import Theorem.Nat.CoeSub.eq.SubCoeS.of.Ge
 public import Theorem.Nat.Ge.of.Gt
 

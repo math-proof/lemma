@@ -1,5 +1,7 @@
 module
 
+public import Initialize.Tactic.Attr.Basic
+
 public import Def.Analysis.Real.Limits.Basic
 public import Notation.Analysis.Real.Numbers
 public import Theorem.Int.LtAbs.is.LtNeg.Lt

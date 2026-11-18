@@ -1,4 +1,7 @@
-import Instance.Probability.Process.StochasticProcessTypes.Part3
+module
+
+public import Instance.Probability.Process.StochasticProcessTypes.Part3
+public section
 open Matrix
 
 universe u

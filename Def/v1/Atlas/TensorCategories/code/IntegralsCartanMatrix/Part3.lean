@@ -8,33 +8,24 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Abbrev.v1.Atlas.TensorCategories.code.IntegralsDefs
-import Lemma.Category.Atlas.v1.TensorCategories.code.IntegralsDefs
-import Lemma.Category.Atlas.v1.TensorCategories.code.DistinguishedInvertible
-import Mathlib.Data.Matrix.Basic
-import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
-import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.CategoryTheory.Preadditive.Projective.Basic
-import Mathlib.CategoryTheory.Simple
-import Mathlib.CategoryTheory.Linear.Basic
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Instance.v1.Atlas.TensorCategories.code.DistinguishedInvertible.Part2
-import Mathlib.RingTheory.SimpleModule.Basic
-import Structure.v1.Atlas.TensorCategories.code.IntegralsCartanMatrix
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
+public import Structure.v1.Atlas.TensorCategories.code.IntegralsCartanMatrix
+
+@[expose] public section
 set_option maxHeartbeats 400000
 
 set_option autoImplicit false
 
-open Coalgebra
-open scoped TensorProduct
+open CategoryTheory MonoidalCategory
 
 universe u v w
 
 
 section CartanMatrix
 
-variable {k : Type w} [Field k] {ι : Type*} [Fintype ι] [DecidableEq ι]
+variable (C : Type u) [Category.{v} C] [MonoidalCategory C] [RigidCategory C]
 
 /-- The pivotal dimension of `V` with respect to the pivotal structure `u`, namely
 the left quantum trace of `u.pivotalIso V` (Definition 1.38.4). -/

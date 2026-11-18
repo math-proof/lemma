@@ -5,7 +5,13 @@ public import Abbrev.v1.Atlas.TensorCategories.code.QuasiTensorFunctor.Part5
 
 public section
 
-open CategoryTheory MonoidalCategory TensorCategories in
+open CategoryTheory MonoidalCategory TensorCategories
+
+universe v u v₁ u₁ w
+
+variable {k : Type w} [Field k]
+  {C : Type u} [Category.{v} C] [MonoidalCategory C] [Abelian C]
+  {D : Type u₁} [Category.{v₁} D] [MonoidalCategory D] [Abelian D]
 
 
 namespace TensorCategories
@@ -103,6 +109,8 @@ public theorem TensorFunctor.isFaithful
   TF.faithful
 
 end TensorCategories
+
+end
 
 
 -- created on 2026-10-23

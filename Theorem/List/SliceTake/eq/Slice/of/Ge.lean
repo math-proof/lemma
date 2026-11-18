@@ -5,7 +5,6 @@ public import Theorem.Nat.Gt.of.Ge.Gt
 public import Theorem.List.EqAppendTake__Drop
 public import Theorem.Bool.UFn.of.Eq
 public import Theorem.List.DropAppend.eq.AppendDrop.of.GeLength
-public import Theorem.Nat.Le.of.Le.Lt
 public import Theorem.Bool.NotAnd.is.OrNotS
 public import Theorem.Nat.Ge.of.Gt.Ge
 public import Theorem.List.EqTake.of.LeLength
@@ -27,7 +26,7 @@ public theorem List.SliceTake.eq.Slice.of.Ge
 -- proof
   if h_and : i < j ∧ j ≤ s.length then
     let ⟨h_ij, h_j⟩ := h_and
-    have h_i := Le.of.Le.Lt h_ij h_j
+    have h_i := le_trans (le_of_lt h_ij) h_j
     unfold List.slice List.array_slice Function.comp
     have h_j' := Gt.of.Ge.Gt h h_ij
     have := EqAppendTake__Drop s j'

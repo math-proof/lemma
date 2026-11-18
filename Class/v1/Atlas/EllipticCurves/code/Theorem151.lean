@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Theorem151.lean -/
 
 /-
@@ -8,10 +10,11 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.EllipticCurves.code.WeierstrassP
-import Def.v1.Atlas.EllipticCurves.code.Uniformization
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Def.v1.Atlas.EllipticCurves.code.Theorem151.Part3
+public import Def.v1.Atlas.EllipticCurves.code.WeierstrassP
+public import Def.v1.Atlas.EllipticCurves.code.Uniformization
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Def.v1.Atlas.EllipticCurves.code.Theorem151.Part3
+public section
 open Complex
 
 noncomputable section

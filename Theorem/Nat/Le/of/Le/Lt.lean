@@ -32,7 +32,7 @@ public theorem relax
   exact le_trans h₀ h₁.le
 
 
-public theorem subst
+public theorem Nat.Le.of.Le.Lt.subst
   {t x y b k : ℝ}
 -- given
   (hk : k ≥ 0)

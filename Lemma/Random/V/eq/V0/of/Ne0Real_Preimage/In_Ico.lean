@@ -1,7 +1,6 @@
 import Lemma.Random.MEq_V.of.In_Ico.All_Eq.All_EqWithDensity
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
+import Instance.Dynamics.PolicyTrajectory
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
@@ -21,11 +20,13 @@ private lemma main
   {θ : Θ}
   {t : ℕ}
   {sₜ : 𝒮}
+  {R : ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
-  (hP : (M.traj θ).real ((fun ω : ℕ → ℝ × 𝒮 × 𝒜 => (ω t).2.1) ⁻¹' {sₜ}) ≠ 0) :
+  (hP : (M θ).real ((fun ω : ℕ → ℝ × 𝒮 × 𝒜 => (ω t).2.1) ⁻¹' {sₜ}) ≠ 0)
+  (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1) :
 -- imply
-  M.V θ γ t sₜ = M.V0 θ γ sₜ := by
+  M.V θ γ t sₜ = M.V0 R θ γ sₜ := by
 -- proof
   let r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ := fun t ω => (ω t).1
   let s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮 := fun t ω => (ω t).2.1
@@ -36,19 +37,19 @@ private lemma main
   have hs : Measurable (s t) := Random.Measurable.of.All_Eq.snd.fst h₁ t
   have hset : MeasurableSet (s t ⁻¹' ({sₜ} : Set 𝒮)) :=
     hs (measurableSet_singleton sₜ)
-  have hpos : (M.traj θ) (s t ⁻¹' ({sₜ} : Set 𝒮)) ≠ 0 := by
+  have hpos : (M θ) (s t ⁻¹' ({sₜ} : Set 𝒮)) ≠ 0 := by
     intro hz
-    have hP' : (M.traj θ).real (s t ⁻¹' ({sₜ} : Set 𝒮)) ≠ 0 := hP
+    have hP' : (M θ).real (s t ⁻¹' ({sₜ} : Set 𝒮)) ≠ 0 := hP
     apply hP'
     simp [Measure.real, hz]
   have hae :=
-    MEq_V.of.In_Ico.All_Eq.All_EqWithDensity (M := M) h₀ h₁ hπ θ t
-  have hnull : (M.traj θ) {ω | M.V θ γ t (s t ω) ≠ M.V0 θ γ (s t ω)} = 0 := by
+    MEq_V.of.In_Ico.All_Eq.All_EqWithDensity (M := M) h₀ h₁ hπ hR θ t
+  have hnull : (M θ) {ω | M.V θ γ t (s t ω) ≠ M.V0 R θ γ (s t ω)} = 0 := by
     simpa [Filter.EventuallyEq, ae_iff] using hae
   by_contra hne
   have hsubset :
       s t ⁻¹' ({sₜ} : Set 𝒮) ⊆
-        {ω | M.V θ γ t (s t ω) ≠ M.V0 θ γ (s t ω)} := by
+        {ω | M.V θ γ t (s t ω) ≠ M.V0 R θ γ (s t ω)} := by
     intro ω hω
     have hx : s t ω = sₜ := by
       simpa [Set.mem_preimage, Set.mem_singleton_iff] using hω
@@ -59,4 +60,4 @@ private lemma main
 
 
 -- created on 2026-11-12
--- updated on 2026-11-17
+-- updated on 2026-11-18

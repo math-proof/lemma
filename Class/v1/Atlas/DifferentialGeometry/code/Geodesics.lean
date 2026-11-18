@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/DifferentialGeometry/code/Geodesics.lean -/
 
 /-
@@ -8,21 +10,22 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Calculus.ContDiff.Deriv
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.InnerProductSpace.Calculus
-import Mathlib.Analysis.Calculus.MeanValue
-import Mathlib.Analysis.Calculus.Deriv.Shift
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
-import Structure.v1.Atlas.DifferentialGeometry.code.Manifolds.Part6
-import Mathlib.Analysis.Convex.StrictConvexSpace
-import Mathlib.Analysis.InnerProductSpace.Convex
-import Def.v1.Atlas.DifferentialGeometry.code.Intrinsic.Part4
-import Mathlib.Analysis.Calculus.LocalExtr.Basic
-import Mathlib.Topology.Connected.Clopen
-import Mathlib.SetTheory.Cardinal.Finite
-import Abbrev.v1.Atlas.DifferentialGeometry.code.GaussMap
-import Def.v1.Atlas.DifferentialGeometry.code.Geodesics.Part5
+public import Mathlib.Analysis.Calculus.ContDiff.Deriv
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.InnerProductSpace.Calculus
+public import Mathlib.Analysis.Calculus.MeanValue
+public import Mathlib.Analysis.Calculus.Deriv.Shift
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+public import Structure.v1.Atlas.DifferentialGeometry.code.Manifolds.Part6
+public import Mathlib.Analysis.Convex.StrictConvexSpace
+public import Mathlib.Analysis.InnerProductSpace.Convex
+public import Def.v1.Atlas.DifferentialGeometry.code.Intrinsic.Part4
+public import Mathlib.Analysis.Calculus.LocalExtr.Basic
+public import Mathlib.Topology.Connected.Clopen
+public import Mathlib.SetTheory.Cardinal.Finite
+public import Abbrev.v1.Atlas.DifferentialGeometry.code.GaussMap
+public import Def.v1.Atlas.DifferentialGeometry.code.Geodesics.Part5
+public section
 open MeasureTheory intervalIntegral Hypersurface Finset
 open scoped InnerProductSpace BigOperators
 

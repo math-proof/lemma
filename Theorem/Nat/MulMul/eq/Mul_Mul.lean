@@ -59,7 +59,7 @@ public theorem permute
 
 
 @[comm]
-public theorem reverse
+public theorem Nat.MulMul.eq.Mul_Mul.reverse
   [CommSemigroup α]
   {a b : α} :
 -- imply

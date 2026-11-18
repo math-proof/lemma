@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Abbrev.v1.Atlas.TensorCategories.code.ModuleCategory.Part5
-import Mathlib.CategoryTheory.Products.Basic
-import Instance.v1.Atlas.TensorCategories.code.DirectSumModuleCategory
+module
+
+public import Abbrev.v1.Atlas.TensorCategories.code.ModuleCategory.Part5
+public import Mathlib.CategoryTheory.Products.Basic
+public import Instance.v1.Atlas.TensorCategories.code.DirectSumModuleCategory
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 universe v₁ v₂ v₃ v₄ u₁ u₂ u₃ u₄

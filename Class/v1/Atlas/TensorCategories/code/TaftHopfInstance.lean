@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/TaftHopfInstance.lean -/
 
 /-
@@ -8,9 +10,10 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.TensorCategories.code.TaftConcrete.Part4
-import Def.v1.Atlas.TensorCategories.code.HopfAlgebraExamples.Part2
-import Notation.v1.Atlas.TensorCategories.code.TaftHopfInstance
+public import Theorem.v1.Atlas.TensorCategories.code.TaftConcrete.Part4
+public import Def.v1.Atlas.TensorCategories.code.HopfAlgebraExamples.Part2
+public import Notation.v1.Atlas.TensorCategories.code.TaftHopfInstance
+public section
 open Coalgebra HopfAlgebra
 open scoped TensorProduct
 

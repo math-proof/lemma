@@ -1,7 +1,7 @@
 module
 
-public import Def.Lean.Meta.Expr.Part4
-public import Def.Lean.Expr.Singleton.Part2
+public import Def.Lean.Meta.Expr
+public import Def.Lean.Expr.Singleton
 public import Def.Lean.Expr.Part5
 open Lean.Meta
 open Lean (Name Json Level BinderInfo getMCtx)

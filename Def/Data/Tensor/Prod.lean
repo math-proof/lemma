@@ -1,4 +1,9 @@
-import Def.Data.Tensor.Defs.Part4
+module
+
+public import Def.Data.Tensor.Defs.Part4
+public import Def.Data.Vector.Basic.Part2
+
+@[expose] public section
 open Tensor
 
 

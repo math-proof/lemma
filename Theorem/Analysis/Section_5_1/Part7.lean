@@ -1,6 +1,8 @@
-import Mathlib
-import Theorem.Analysis.Section_4_3.Part2
-import Abbrev.Analysis.Section_5_1.Part6
+module
+
+public import Mathlib
+public import Theorem.Analysis.Section_4_3.Part2
+public import Abbrev.Analysis.Section_5_1.Part6
 set_option doc.verso.suggestions false
 
 /-!
@@ -25,6 +27,8 @@ Users of the companion who have completed the exercises in this section are welc
 
 -/
 
+public section
+
 
 namespace Chapter5
 
@@ -32,6 +36,6 @@ namespace Chapter5
   Definition 5.1.12 (bounded sequences). Here we start sequences from {lean}`0` rather than {lean}`1` to align
   better with Mathlib conventions.
 -/
-lemma boundedBy_def {n:ℕ} (a: Fin n → ℚ) (M:ℚ) : BoundedBy a M ↔ ∀ i, |a i| ≤ M := by rfl
+public theorem boundedBy_def {n:ℕ} (a: Fin n → ℚ) (M:ℚ) : BoundedBy a M ↔ ∀ i, |a i| ≤ M := by rfl
 
 end Chapter5

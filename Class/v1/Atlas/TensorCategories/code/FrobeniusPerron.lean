@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/FrobeniusPerron.lean -/
 
 /-
@@ -8,24 +10,25 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Matrix.Basic
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Tactic
-import Mathlib.Data.Complex.Basic
-import Mathlib.Analysis.Complex.Norm
-import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
-import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Data.Nat.GCD.Basic
-import Mathlib.LinearAlgebra.Matrix.Charpoly.Eigs
-import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
-import Mathlib.NumberTheory.NumberField.InfinitePlace.Embeddings
-import Def.v1.Atlas.TensorCategories.code.PerronFrobeniusProof.Part2
-import Structure.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part2
+public import Mathlib.Data.Matrix.Basic
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Tactic
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.Analysis.Complex.Norm
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+public import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Data.Nat.GCD.Basic
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Eigs
+public import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
+public import Mathlib.NumberTheory.NumberField.InfinitePlace.Embeddings
+public import Def.v1.Atlas.TensorCategories.code.PerronFrobeniusProof.Part2
+public import Structure.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part2
+public section
 set_option maxHeartbeats 400000
 
 namespace FusionRing

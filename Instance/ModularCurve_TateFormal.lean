@@ -1,9 +1,14 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_TateFormal.lean: instance decls only.
-import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
-import Mathlib.RingTheory.LaurentSeries
-import Mathlib.NumberTheory.Divisors
-import Def.ModularCurve_TateFormal
-import Theorem.PowerSeries.TateFormal
+
+module
+
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
+public import Mathlib.RingTheory.LaurentSeries
+public import Mathlib.NumberTheory.Divisors
+public import Def.ModularCurve_TateFormal
+public import Theorem.PowerSeries.TateFormal
+
+@[expose] public section
 
 set_option autoImplicit false
 

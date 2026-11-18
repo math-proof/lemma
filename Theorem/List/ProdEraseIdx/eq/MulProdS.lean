@@ -1,5 +1,7 @@
 module
 
+public import Initialize.Tactic.Attr.Basic
+
 public import Theorem.List.EraseIdx.eq.Append_Drop_Add_1
 
 public section

@@ -1,6 +1,9 @@
-import Mathlib
-import Instance.Analysis.Section_11_1.Part8
-import Theorem.Analysis.Section_11_2.Part5
+module
+
+public import Mathlib
+public import Instance.Analysis.Section_11_1.Part8
+public import Abbrev.Analysis.Section_11_2.Part5
+@[expose] public noncomputable section
 /-!
 # Analysis I, Section 11.2: Piecewise constant functions
 

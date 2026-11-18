@@ -1,5 +1,6 @@
 import Def.Dynamics.PolicyTrajectory.ContinuousAction
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model
 
@@ -17,7 +18,7 @@ private lemma main
   (θ : Θ)
   (f : (ℕ → ℝ × 𝒮 × 𝒜) → ℝ) :
 -- imply
-  ∫ ω, f ω ∂(M.traj θ)[|B] = ((M.traj θ).real B)⁻¹ * ∫ ω, B.indicator 1 ω * f ω ∂(M.traj θ) := by
+  ∫ ω, f ω ∂(M θ)[|B] = ((M θ).real B)⁻¹ * ∫ ω, B.indicator 1 ω * f ω ∂(M θ) := by
 -- proof
   rw [ProbabilityTheory.cond, integral_smul_measure, ← integral_indicator hB, ENNReal.toReal_inv,
     ← measureReal_def, smul_eq_mul]
@@ -28,4 +29,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-17
+-- updated on 2026-11-18

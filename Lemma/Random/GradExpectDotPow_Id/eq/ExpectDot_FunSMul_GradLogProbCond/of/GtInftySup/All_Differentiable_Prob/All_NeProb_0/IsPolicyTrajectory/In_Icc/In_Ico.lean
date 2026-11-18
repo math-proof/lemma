@@ -2,8 +2,7 @@ import Lemma.Random.GradExpectDotPow_Id.eq.ExpectDot_SMul_GradLogProbCond.of.GtI
 import Lemma.Random.PSpace_Path.of.All_PSpace
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
+import Instance.Dynamics.PolicyTrajectory
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure Real
 open scoped ENNReal.ToRealCoe
 set_option maxHeartbeats 800000
@@ -32,27 +31,29 @@ private lemma main
   {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {R : ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ℓ ∈ Set.Icc 0 1)
   (hπ : Model.IsConditionalProbability M r s a)
   (h₂ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π[θ] sₜ aₜ))
-  (h₃ : sup[θ, sₜ, aₜ] ‖∇[θ] M.π[θ] sₜ aₜ‖ < ∞) :
+  (h₃ : sup[θ, sₜ, aₜ] ‖∇[θ] M.π[θ] sₜ aₜ‖ < ∞)
+  (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1) :
 -- imply
   letI : Model.IsPolicyTrajectory M r s a := hπ.htr
   letI : Model.AbsContJointAS M a s := hπ.haj
-  have : ∀ θ', PSpace (M.traj θ') (AsPathRV.path r) := fun _ =>
+  have : ∀ θ', PSpace (M θ') (AsPathRV.path r) := fun _ =>
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) hπ.htr.stage_eq t).aemeasurable⟩)
-  have : PSpace (M.traj θ) (AsPathRV.path s) :=
+  have : PSpace (M θ) (AsPathRV.path s) :=
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) hπ.htr.stage_eq t).aemeasurable⟩)
-  have : PSpace (M.traj θ) (AsPathRV.path a) :=
+  have : PSpace (M θ) (AsPathRV.path a) :=
     PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) hπ.htr.stage_eq t).aemeasurable⟩)
   let : MeasurableSpace Θ := borel Θ
   let V_θ : ℕ ⇀ (ℕ → 𝒮) → ℕ → ℝ := ⟨fun t δ k => M.V θ γ (t + k) (δ k)⟩
-  ∇[θ] 𝔼[r: M.traj θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) =
-    𝔼[r, s, a : M.traj θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
+  ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) =
+    𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
       (((γ * ℓ) ^ (id : ℕ → ℕ) ⬝ᵥ (r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:])) •
-        ∇[θ] (ℙ[M.traj θ](a[t] | s[t]) : ℝ).log)) := by
+        ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log)) := by
 -- proof
   have hmeas : ∀ θ', Measurable (fun z : 𝒮 × 𝒜 => M.π[θ'] z.1 z.2) :=
     hStoch.measurable_π
@@ -87,8 +88,8 @@ private lemma main
   have hMssup : sup[y, u] ‖∇[θ] Real.log (M.π[θ] y u)‖ < ∞ :=
     ⟨Ms, by rintro _ ⟨p, rfl⟩; exact hMs p.1 p.2⟩
   exact GradExpectDotPow_Id.eq.ExpectDot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_LeSum.CountableMeasure.In_Icc.In_Ico
-    (M := M) h₀ h₁ hπ hmeas h₂ h₃sum hBdd hφ hMssup
+    (M := M) h₀ h₁ hπ hmeas h₂ h₃sum hBdd hφ hMssup hR
 
 
 -- created on 2026-10-21
--- updated on 2026-11-17
+-- updated on 2026-11-18

@@ -1,6 +1,4 @@
 import Lemma.Random.Measurable_Wkd.of.All_Measurable_Prob
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
 open MeasureTheory PolicyGradient Random
 
 
@@ -13,15 +11,16 @@ private lemma main
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
 -- given
   (h : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π[θ] z.1 z.2))
+  (R : ℝ)
   (θ : Θ)
   (γ : ℝ) :
 -- imply
-  Measurable (M.V0 θ γ) := by
+  Measurable (M.V0 R θ γ) := by
 -- proof
-  change Measurable fun x => ∑' k, γ ^ k * M.Wkd θ k x
+  change Measurable fun x => ∑' k, γ ^ k * M.Wkd R θ k x
   exact Measurable.tsum fun k =>
-    (Measurable_Wkd.of.All_Measurable_Prob (M := M) h θ k).const_mul (γ ^ k)
+    (Measurable_Wkd.of.All_Measurable_Prob (M := M) h R θ k).const_mul (γ ^ k)
 
 
 -- created on 2026-10-07
--- updated on 2026-11-17
+-- updated on 2026-11-18

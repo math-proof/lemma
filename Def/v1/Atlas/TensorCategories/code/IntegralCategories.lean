@@ -9,9 +9,9 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part6
-import Lemma.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
+import Theorem.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
 import Lemma.Category.Atlas.v1.TensorCategories.code.GrothendieckRingCategorical
-import Lemma.Category.Atlas.v1.TensorCategories.code.TensorCategoryDef
+import Theorem.Category.Atlas.v1.TensorCategories.code.TensorCategoryDef
 import Def.v1.Atlas.TensorCategories.code.GrothendieckRingCategorical.Part4
 import Abbrev.v1.Atlas.TensorCategories.code.TensorCategoryDef.Part3
 open CategoryTheory MonoidalCategory

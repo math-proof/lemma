@@ -2,6 +2,7 @@ import Lemma.Real.Norm_Eq12.le.One
 import Lemma.Random.Integral_MulEqS.eq.MulRealW.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Lemma.Random.Pnkd.eq.Integral
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Real
 
@@ -19,8 +20,8 @@ private lemma real_inter
   (t t' : ℕ)
   (sₜ y : 𝒮) :
 -- imply
-  (M.traj θ).real (s t ⁻¹' {sₜ} ∩ s t' ⁻¹' {y}) =
-    ∫ ω, (if s t ω = sₜ then (1:ℝ) else 0) * (if s t' ω = y then (1:ℝ) else 0) ∂(M.traj θ) := by
+  (M θ).real (s t ⁻¹' {sₜ} ∩ s t' ⁻¹' {y}) =
+    ∫ ω, (if s t ω = sₜ then (1:ℝ) else 0) * (if s t' ω = y then (1:ℝ) else 0) ∂(M θ) := by
 -- proof
   rw [← integral_indicator_one ((Random.Measurable.of.All_Eq.snd.fst h₀ t (measurableSet_singleton sₜ)).inter
     (Random.Measurable.of.All_Eq.snd.fst h₀ t' (measurableSet_singleton y)))]
@@ -54,17 +55,17 @@ private lemma main
   {sₜ : 𝒮}
 -- given
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
-  (h₁ : (M.traj θ).real (s t ⁻¹' {sₜ}) ≠ 0)
+  (h₁ : (M θ).real (s t ⁻¹' {sₜ}) ≠ 0)
   (n : ℕ)
   (y : 𝒮) :
 -- imply
-  (M.traj θ)[|s t ⁻¹' {sₜ}].real (s (t + n) ⁻¹' {y}) = M.Pnkd θ n sₜ y := by
+  (M θ)[|s t ⁻¹' {sₜ}].real (s (t + n) ⁻¹' {y}) = M.Pnkd θ n sₜ y := by
 -- proof
   obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₀ t) ω)).symm
   set s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮 := fun t ω ↦ (ω t).2.1
   have hInt :
-    ∫ ω, (if s t ω = sₜ then (1:ℝ) else 0) * (if s (t + n) ω = y then (1:ℝ) else 0) ∂(M.traj θ) =
-      (M.traj θ).real (s t ⁻¹' {sₜ}) * M.Pnkd θ n sₜ y :=
+    ∫ ω, (if s t ω = sₜ then (1:ℝ) else 0) * (if s (t + n) ω = y then (1:ℝ) else 0) ∂(M θ) =
+      (M θ).real (s t ⁻¹' {sₜ}) * M.Pnkd θ n sₜ y :=
     (Integral_MulEqS.eq.MulRealW.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity h₀ (M := M)
       (Real.StronglyMeasurable_Eq12 y) (Norm_Eq12.le.One y) θ t n sₜ).trans
       (by rw [← Pnkd.eq.Integral (M := M) θ n sₜ y])
@@ -74,4 +75,4 @@ private lemma main
 
 
 -- created on 2026-11-13
--- updated on 2026-11-17
+-- updated on 2026-11-18

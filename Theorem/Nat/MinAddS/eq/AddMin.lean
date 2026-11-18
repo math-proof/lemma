@@ -22,12 +22,12 @@ public theorem Nat.MinAddS.eq.AddMin
 -- proof
   if h : a ≤ b then
     rw [EqMin.of.Le h]
-    have h' := LeAddS.of.Le c h
+    have h' := LeAddS.of.Le (a := c) h
     rw [EqMin.of.Le h']
   else
     simp at h
     rw [EqMin.of.Gt h]
-    have h' := GtAddS.of.Gt c h
+    have h' := GtAddS.of.Gt (a := c) h
     rw [EqMin.of.Gt h']
 
 

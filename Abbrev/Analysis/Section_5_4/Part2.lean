@@ -1,6 +1,9 @@
-import Mathlib
-import Theorem.Analysis.Section_5_3.Part12
-import Theorem.Analysis.Section_5_4
+module
+
+public import Mathlib
+public import Theorem.Analysis.Section_5_3.Part12
+public import Abbrev.Analysis.Section_5_4
+@[expose] public section
 /-!
 # Analysis I, Section 5.4: Ordering the reals
 
@@ -26,9 +29,9 @@ Users of the companion who have completed the exercises in this section are welc
 namespace Chapter5
 
 abbrev Real.IsPos (x:Real) : Prop :=
-  ∃ a:ℕ → ℚ, BoundedAwayPos a ∧ (a:Sequence).IsCauchy ∧ x = LIM a
+  ∃ a:ℕ → ℚ, BoundedAwayPos a ∧ (Sequence.ofNatFun a).IsCauchy ∧ x = LIM a
 
 abbrev Real.IsNeg (x:Real) : Prop :=
-  ∃ a:ℕ → ℚ, BoundedAwayNeg a ∧ (a:Sequence).IsCauchy ∧ x = LIM a
+  ∃ a:ℕ → ℚ, BoundedAwayNeg a ∧ (Sequence.ofNatFun a).IsCauchy ∧ x = LIM a
 
 end Chapter5

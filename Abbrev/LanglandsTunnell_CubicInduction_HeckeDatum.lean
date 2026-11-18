@@ -1,6 +1,9 @@
-import Def.LanglandsTunnell_ConverseData
-import Def.LanglandsTunnell_RankinSelbergEuler
-import Structure.LocalLanglands_HeckeCosetSystem
+module
+
+public import Def.LanglandsTunnell_ConverseData
+public import Def.LanglandsTunnell_RankinSelbergEuler
+public import Structure.LocalLanglands_HeckeCosetSystem
+@[expose] public section
 
 set_option autoImplicit false
 

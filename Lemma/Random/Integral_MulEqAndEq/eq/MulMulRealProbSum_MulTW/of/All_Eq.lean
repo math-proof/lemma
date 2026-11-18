@@ -3,8 +3,7 @@ import Lemma.Random.Kf.eq.Integral_TW.of.All_LeNorm.StronglyMeasurable.All_EqWit
 import Lemma.Random.MEq_Clip.of.All_Eq.All_EqWithDensity
 import Lemma.Random.NormClip.le.Abs_R
 import Lemma.Random.ProbJoint.eq.Mul_Prob_Pr
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
+import Instance.Dynamics.PolicyTrajectory
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
@@ -19,16 +18,18 @@ private lemma main
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {R : ℝ}
 -- given
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
+  (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1)
   (θ : Θ)
   (t j : ℕ)
   (sₜ : 𝒮)
   (aₜ : 𝒜) :
 -- imply
-  ∫ ω, (if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) * r (t + (j + 1)) ω ∂(M.traj θ) =
-    (M.traj θ).real (s t ⁻¹' {sₜ}) * (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}) *
-      ∫ y, (∫ w, M.Kf θ (fun z ↦ clip z.1 (-M.R) M.R) j w ∂(M.stageK θ y))
+  ∫ ω, (if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) * r (t + (j + 1)) ω ∂(M θ) =
+    (M θ).real (s t ⁻¹' {sₜ}) * (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}) *
+      ∫ y, (∫ w, M.Kf θ (fun z ↦ clip z.1 (-R) R) j w ∂(M.stageK θ y))
         ∂(M.trans (sₜ, aₜ)) := by
 -- proof
   obtain rfl : s = fun t ω ↦ (ω t).2.1 :=
@@ -38,12 +39,12 @@ private lemma main
   set s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮 := fun t ω ↦ (ω t).2.1
   set a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜 := fun t ω ↦ (ω t).2.2
   have hclip : StronglyMeasurable
-    (fun z : ℝ × 𝒮 × 𝒜 ↦ clip z.1 (-M.R) M.R) := by
+    (fun z : ℝ × 𝒮 × 𝒜 ↦ clip z.1 (-R) R) := by
     unfold clip
     apply ((measurable_fst.max measurable_const).min measurable_const).stronglyMeasurable
   have hclipbound : ∀ z : ℝ × 𝒮 × 𝒜,
-    ‖clip z.1 (-M.R) M.R‖ ≤ |M.R| :=
-    fun z => NormClip.le.Abs_R M.R z.1
+    ‖clip z.1 (-R) R‖ ≤ |R| :=
+    fun z => NormClip.le.Abs_R R z.1
   have hGeq :
     (fun z : ℝ × 𝒮 × 𝒜 => if z.2.1 = sₜ ∧ z.2.2 = aₜ then (1:ℝ) else 0) =
       ((fun z : ℝ × 𝒮 × 𝒜 => z.2) ⁻¹' {(sₜ, aₜ)}).indicator (fun _ => (1:ℝ)) := by
@@ -65,11 +66,11 @@ private lemma main
     else
       simp [h]
   have hrc :
-    ∫ ω, (if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) * r (t + (j + 1)) ω ∂(M.traj θ) =
+    ∫ ω, (if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) * r (t + (j + 1)) ω ∂(M θ) =
       ∫ ω, (if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) *
-        clip (ω (t + (j + 1))).1 (-M.R) M.R ∂(M.traj θ) :=
+        clip (ω (t + (j + 1))).1 (-R) R ∂(M θ) :=
     integral_congr_ae
-      ((MEq_Clip.of.All_Eq.All_EqWithDensity h₀ (M := M) θ (t + (j + 1))).mono
+      ((MEq_Clip.of.All_Eq.All_EqWithDensity h₀ (M := M) hR θ (t + (j + 1))).mono
         fun ω h => by
           dsimp only
           rw [h])
@@ -77,8 +78,8 @@ private lemma main
   rw [Integral_Mul.eq.Integral_Mul_Kf.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable.All_EqWithDensity
     (M := M) hclip hclipbound hG hGbound θ t (j + 1)]
   have hKf : ∀ z,
-      M.Kf θ (fun z ↦ clip z.1 (-M.R) M.R) (j + 1) z =
-        ∫ y, (∫ w, M.Kf θ (fun z ↦ clip z.1 (-M.R) M.R) j w
+      M.Kf θ (fun z ↦ clip z.1 (-R) R) (j + 1) z =
+        ∫ y, (∫ w, M.Kf θ (fun z ↦ clip z.1 (-R) R) j w
           ∂(M.stageK θ y)) ∂(M.trans (z.2.1, z.2.2)) :=
     fun z =>
       Kf.eq.Integral_TW.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
@@ -86,10 +87,10 @@ private lemma main
   have hfun :
     (fun ω =>
       (if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) *
-        M.Kf θ (fun z ↦ clip z.1 (-M.R) M.R) (j + 1) (ω t)) =
+        M.Kf θ (fun z ↦ clip z.1 (-R) R) (j + 1) (ω t)) =
       fun ω =>
         (if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) *
-          ∫ y, (∫ w, M.Kf θ (fun z ↦ clip z.1 (-M.R) M.R) j w
+          ∫ y, (∫ w, M.Kf θ (fun z ↦ clip z.1 (-R) R) j w
             ∂(M.stageK θ y)) ∂(M.trans (sₜ, aₜ)) := by
     funext ω
     if h : s t ω = sₜ ∧ a t ω = aₜ then
@@ -121,4 +122,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-17
+-- updated on 2026-11-18

@@ -9,7 +9,7 @@ public section
 open Nat
 
 
-public theorem left
+public theorem Nat.Gt_0.of.GtMul.left
   {k n m : ℕ}
 -- given
   (h : n * m > k) :
@@ -27,7 +27,7 @@ public theorem Nat.Gt_0.of.GtMul
   m > 0 := by
 -- proof
   rw [Mul.comm] at h
-  apply left h
+  apply Gt_0.of.GtMul.left h
 
 
 -- created on 2025-05-29

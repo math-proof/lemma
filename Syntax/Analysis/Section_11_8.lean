@@ -1,7 +1,13 @@
-import Mathlib
-import Mathlib.Topology.Instances.Irrational
-import Theorem.Analysis.Section_11_6
-import Abbrev.Analysis.Section_11_8.Part3
+module
+
+public meta import Lean
+public import Mathlib
+public import Mathlib.Topology.Instances.Irrational
+public import Theorem.Analysis.Section_11_6
+public import Abbrev.Analysis.Section_11_8.Part3
+
+public meta section
+
 set_option doc.verso.suggestions false
 
 /-!
@@ -45,6 +51,6 @@ open BoundedInterval Chapter9
 
 syntax:max term "[" term "]ₗ" : term
 
-macro_rules | ([]ₗ) => (α_length  )
+macro_rules | `($α[$I]ₗ) => `(α_length $α $I)
 
 end Chapter11

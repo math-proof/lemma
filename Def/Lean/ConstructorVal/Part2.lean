@@ -1,5 +1,10 @@
-import Lean
-import Instance.Lean.ConstructorVal
+module
+
+public import Lean
+public import Instance.Lean.ConstructorVal
+
+@[expose] public section
+
 open Lean
 
 

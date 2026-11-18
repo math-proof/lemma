@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part6
-import Lemma.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
+import Theorem.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
 import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
@@ -19,6 +19,7 @@ import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Tactic.Ring
 import Mathlib.Algebra.Ring.Defs
 import Structure.v1.Atlas.TensorCategories.code.GrothendieckRing.Part2
+import Instance.v1.Atlas.TensorCategories.code.GrothendieckRing.Part2
 set_option maxHeartbeats 800000
 
 open Finset
@@ -28,8 +29,8 @@ namespace FusionRing
 
 variable {ι : Type*} [DecidableEq ι] [Fintype ι] (R : FusionRing ι)
 
-/-- The integer-valued action of a `FusionRingHom` on `GrRing` elements: linear extension
-of the matrix `φ.M` along the basis. -/
+/-- The integer-valued action of a FusionRingHom on GrRing elements: linear extension
+of the matrix φ.M along the basis. -/
 def FusionRingHom.grMap
     {ι : Type*} [DecidableEq ι] [Fintype ι]
     {κ : Type*} [DecidableEq κ] [Fintype κ]
@@ -37,7 +38,7 @@ def FusionRingHom.grMap
     (φ : FusionRingHom R S) (f : GrRing ι) : GrRing κ :=
   fun l => Finset.univ.sum fun i => f i * φ.M i l
 
-/-- The ring homomorphism `GrRingOf R →+* GrRingOf S` induced by a `FusionRingHom`. -/
+/-- The ring homomorphism GrRingOf R →+* GrRingOf S induced by a FusionRingHom. -/
 def FusionRingHom.inducedRingHom
     {ι : Type*} [DecidableEq ι] [Fintype ι]
     {κ : Type*} [DecidableEq κ] [Fintype κ]
@@ -63,7 +64,7 @@ def FusionRingHom.inducedRingHom
 
 end FusionRing
 
-/-- The fusion ring of representations of `ℤ/2`, with basis `Fin 2` and product
+/-- The fusion ring of representations of ℤ/2, with basis Fin 2 and product
 given by addition modulo 2. -/
 def repZ2 : FusionRing (Fin 2) where
   unit := 0
@@ -75,4 +76,3 @@ def repZ2 : FusionRing (Fin 2) where
   duality := by decide
   assoc := by decide
   N_star_transpose := by decide
-

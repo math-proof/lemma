@@ -1,7 +1,12 @@
-import Mathlib
-import Theorem.Analysis.Section_5_2.Part2
-import Mathlib.Algebra.Group.MinimalAxioms
-import Instance.Analysis.Section_5_3.Part9
+module
+
+public import Mathlib
+public import Theorem.Analysis.Section_5_2.Part2
+public import Mathlib.Algebra.Group.MinimalAxioms
+public import Instance.Analysis.Section_5_3.Part9
+public import Theorem.Analysis.Section_5_1.Part6
+
+public section
 /-!
 # Analysis I, Section 5.3: The construction of the real numbers
 
@@ -28,14 +33,14 @@ Users of the companion who have completed the exercises in this section are welc
 
 namespace Chapter5
 
-theorem Real.div_eq (x y:Real) : x/y = x * y⁻¹ := rfl
+public theorem Real.div_eq (x y:Real) : x/y = x * y⁻¹ := rfl
 
 /--
   Same as {name}`Sequence.IsCauchy.harmonic` but reindexing the sequence as a₀ = 1, a₁ = 1/2, ...
   This form is more convenient for the upcoming proof of Theorem 5.5.9.
 -/
-theorem Sequence.IsCauchy.harmonic' : ((fun n ↦ 1/((n:ℚ)+1): ℕ → ℚ):Sequence).IsCauchy := by
-  rw [coe]; intro ε hε; choose N h1 h2 using (mk _).mp harmonic ε hε
+public theorem Sequence.IsCauchy.harmonic' : (Sequence.ofNatFun (fun n ↦ 1/((n:ℚ)+1))).IsCauchy := by
+  rw [IsCauchy.coe]; intro ε hε; choose N h1 h2 using (IsCauchy.mk _).mp harmonic ε hε
   use N.toNat; intro j _ k _; specialize h2 (j+1) _ (k+1) _ <;> try omega
   simp_all
 

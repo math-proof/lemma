@@ -1,9 +1,12 @@
-import Mathlib.Analysis.Normed.Algebra.MatrixExponential
-import Mathlib.MeasureTheory.Integral.Bochner.Set
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
-import Class.Probability.Process.GeneratorMatrix
-import Structure.Dynamics.ActorCritic.Part6
-import Structure.Probability.Process.FrozenInvariantLaw.Part2
+module
+
+public import Mathlib.Analysis.Normed.Algebra.MatrixExponential
+public import Mathlib.MeasureTheory.Integral.Bochner.Set
+public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+public import Class.Probability.Process.GeneratorMatrix
+public import Structure.Dynamics.ActorCritic.Part6
+public import Structure.Probability.Process.FrozenInvariantLaw.Part2
+public section
 open Matrix NormedSpace MeasureTheory
 
 universe u

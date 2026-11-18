@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Abbrev.v1.Atlas.TensorCategories.code.TensorCategoryDef.Part3
-import Lemma.Category.Atlas.v1.TensorCategories.code.TensorCategoryDef
-import Instance.v1.Atlas.TensorCategories.code.VecInstances
+module
+
+public import Mathlib
+public import Abbrev.v1.Atlas.TensorCategories.code.TensorCategoryDef.Part3
+public import Theorem.Category.Atlas.v1.TensorCategories.code.TensorCategoryDef
+public import Instance.v1.Atlas.TensorCategories.code.VecInstances
+
+@[expose] public section
 set_option maxHeartbeats 800000
 
 open CategoryTheory MonoidalCategory Limits
@@ -50,11 +54,14 @@ example : SymmetricCategory (Vec k) := inferInstance
 example : MonoidalClosed (Vec k) := inferInstance
 
 
-example : RigidCategory (Vec k) := inferInstance
+-- Mathlib registers only `RightRigidCategory (FGModuleCat K)`.
+-- `LeftRigidCategory` / `RigidCategory` are existing BraidedCategory constructions,
+-- not registered as instances (Mathlib: "not canonical enough"). Use those defs.
+example : RigidCategory (Vec k) := BraidedCategory.rigidCategoryOfRightRigidCategory
 
 example : RightRigidCategory (Vec k) := inferInstance
 
-example : LeftRigidCategory (Vec k) := inferInstance
+example : LeftRigidCategory (Vec k) := BraidedCategory.leftRigidCategoryOfRightRigidCategory
 
 
 example : HasFiniteLimits (Vec k) := inferInstance

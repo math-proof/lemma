@@ -1,7 +1,11 @@
-import Mathlib
-import Theorem.Analysis.Section_5_2.Part2
-import Mathlib.Algebra.Group.MinimalAxioms
-import Instance.Analysis.Section_5_3.Part6
+module
+
+public import Mathlib
+public import Theorem.Analysis.Section_5_2.Part2
+public import Mathlib.Algebra.Group.MinimalAxioms
+public import Instance.Analysis.Section_5_3.Part6
+
+public section
 /-!
 # Analysis I, Section 5.3: The construction of the real numbers
 
@@ -29,6 +33,6 @@ Users of the companion who have completed the exercises in this section are welc
 namespace Chapter5
 
 @[simp]
-theorem Real.LIM.zero : LIM (fun _ ↦ (0:ℚ)) = 0 := by rw [←ratCast_def 0]; rfl
+public theorem Real.LIM.zero : LIM (fun _ ↦ (0:ℚ)) = 0 := by rw [←ratCast_def 0]; rfl
 
 end Chapter5

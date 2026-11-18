@@ -1,5 +1,7 @@
 module
 
+public import Initialize.Tactic.Attr.Basic
+
 public import Theorem.Nat.Lt.is.Le.Ne
 
 public section
@@ -24,6 +26,15 @@ public theorem Nat.Gt.is.Ge.Ne
 -- proof
   simp [Lt.is.Le.Ne]
   grind
+
+
+public theorem Nat.Gt.of.Ge.Ne
+  [LinearOrder α]
+  {a b : α}
+  (h₀ : a ≥ b)
+  (h₁ : a ≠ b) :
+  a > b :=
+  (Nat.Gt.is.Ge.Ne).mpr ⟨h₀, h₁⟩
 
 
 -- created on 2025-04-18

@@ -8,12 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.DifferentialGeometry.code.Manifolds.Part6
-import Theorem.Real.Atlas.v1.DifferentialGeometry.code.Manifolds
-import Mathlib.Topology.Connected.Basic
+module
+
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+@[expose] public noncomputable section
 
 
-noncomputable section
 
 open Metric Set
 

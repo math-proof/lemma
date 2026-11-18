@@ -25,21 +25,6 @@ open Category MonoidalCategory
 
 open LeftModCat
 
-attribute [reassoc] LeftModuleCategory.actTensorHom_def
-
-attribute [reassoc, simp] LeftModuleCategory.actWhiskerLeft_id
-
-attribute [reassoc, simp] LeftModuleCategory.actId_whiskerRight
-
-attribute [reassoc (attr := simp)] LeftModuleCategory.actTensorHom_comp
-
-attribute [reassoc] LeftModuleCategory.actAssociator_naturality
-
-attribute [reassoc] LeftModuleCategory.actLeftUnitor_naturality
-
-attribute [reassoc (attr := simp)] LeftModuleCategory.actPentagon
-
-attribute [reassoc (attr := simp)] LeftModuleCategory.actTriangle
 
 /-- A module functor between left `C`-module categories `M₁` and `M₂`: an underlying functor
 together with a natural isomorphism `F(X ⊗ N) ≅ X ⊗ F(N)` compatible with the action

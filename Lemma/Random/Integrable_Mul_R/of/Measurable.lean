@@ -1,8 +1,7 @@
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Random.MEq_Clip.of.All_Eq.All_EqWithDensity
 import Lemma.Random.NormClip.le.Abs_R
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
+import Instance.Dynamics.PolicyTrajectory
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Real
 
 
@@ -18,24 +17,26 @@ private lemma main
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
   {X : (ℕ → ℝ × 𝒮 × 𝒜) → B}
+  {R : ℝ}
 -- given
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
   (hX : Measurable X)
+  (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1)
   (θ : Θ)
   (φ : B → ℝ)
   (t : ℕ) :
 -- imply
-  Integrable (fun ω => φ (X ω) * r t ω) (M.traj θ) := by
+  Integrable (fun ω => φ (X ω) * r t ω) (M θ) := by
 -- proof
-  refine Integrable.of_bound (C := (∑ b, ‖φ b‖) * |M.R|) ?_ ((MEq_Clip.of.All_Eq.All_EqWithDensity h₀ (M := M) θ t).mono fun ω h => ?_)
+  refine Integrable.of_bound (C := (∑ b, ‖φ b‖) * |R|) ?_ ((MEq_Clip.of.All_Eq.All_EqWithDensity h₀ (M := M) hR θ t).mono fun ω h => ?_)
   · exact (((StronglyMeasurable.of_discrete (f := φ)).comp_measurable hX).mul
       (Random.Measurable.of.All_Eq.fst h₀ t).stronglyMeasurable).aestronglyMeasurable
   ·
     rw [norm_mul, h]
     exact mul_le_mul (Finset.single_le_sum (f := fun b => ‖φ b‖) (fun _ _ => norm_nonneg _)
-      (Finset.mem_univ _)) (NormClip.le.Abs_R M.R _) (norm_nonneg _)
+      (Finset.mem_univ _)) (NormClip.le.Abs_R R _) (norm_nonneg _)
       (Finset.sum_nonneg (fun _ _ => norm_nonneg _))
 
 
 -- created on 2026-10-07
--- updated on 2026-11-17
+-- updated on 2026-11-18

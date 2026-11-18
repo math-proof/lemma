@@ -1,6 +1,10 @@
-import Mathlib
-import Theorem.Analysis.Section_4_3.Part2
-import Def.Analysis.Section_5_1.Part2
+module
+
+public import Mathlib
+public import Theorem.Analysis.Section_4_3.Part2
+public import Def.Analysis.Section_5_1.Part2
+public import Theorem.Analysis.Section_5_1.Part5
+public import Abbrev.Analysis.Section_5_1
 set_option doc.verso.suggestions false
 
 /-!
@@ -25,18 +29,19 @@ Users of the companion who have completed the exercises in this section are welc
 
 -/
 
+public section
+
 
 namespace Chapter5
 
 /-- Proposition 5.1.11. The harmonic sequence, defined as a₁ = 1, a₂ = 1/2, ... is a Cauchy sequence. -/
-theorem Sequence.IsCauchy.harmonic : (mk' 1 (fun n ↦ (1:ℚ)/n)).IsCauchy := by
+public theorem Sequence.IsCauchy.harmonic : (mk' 1 (fun n ↦ (1:ℚ)/n)).IsCauchy := by
   rw [IsCauchy.mk]
   intro ε hε
   -- We go by reverse from the book - first choose N such that N > 1/ε
   obtain ⟨ N, hN : N > 1/ε ⟩ := exists_nat_gt (1 / ε)
   have hN' : N > 0 := by
-    observe : (1/ε) > 0
-    observe : (N:ℚ) > 0
+    have : (N:ℚ) > 0 := lt_trans (one_div_pos.mpr (by positivity)) hN
     norm_cast at this
   refine ⟨ N, by norm_cast, ?_ ⟩
   intro j hj k hk

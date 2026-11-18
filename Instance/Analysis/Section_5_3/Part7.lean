@@ -1,7 +1,11 @@
-import Mathlib
-import Theorem.Analysis.Section_5_2.Part2
-import Mathlib.Algebra.Group.MinimalAxioms
-import Theorem.Analysis.Section_5_3.Part8
+module
+
+public import Mathlib
+public import Theorem.Analysis.Section_5_2.Part2
+public import Mathlib.Algebra.Group.MinimalAxioms
+public import Theorem.Analysis.Section_5_3.Part8
+public import Theorem.Analysis.Section_5_3.Part7
+@[expose] public section
 /-!
 # Analysis I, Section 5.3: The construction of the real numbers
 
@@ -33,5 +37,16 @@ instance Real.instIntCast : IntCast Real where
 
 noncomputable instance Real.instNeg : Neg Real where
   neg x := ((-1:ℚ):Real) * x
+
+/-- Proposition 5.3.11 (laws of algebra) -/
+noncomputable instance Real.addGroup_inst : AddGroup Real :=
+  AddGroup.ofLeftAxioms Real.add_assoc (fun a => Real.zero_add a) (fun a => Real.neg_add_cancel a)
+
+/-- Proposition 5.3.11 (laws of algebra) -/
+noncomputable instance Real.instCommMonoid : CommMonoid Real where
+  mul_assoc := Real.mul_assoc
+  one_mul := fun a => Real.one_mul a
+  mul_one := fun a => Real.mul_one a
+  mul_comm := Real.mul_comm
 
 end Chapter5

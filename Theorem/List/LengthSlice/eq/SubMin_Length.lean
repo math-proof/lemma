@@ -17,7 +17,7 @@ public theorem List.LengthSlice.eq.SubMin_Length
 -- proof
   unfold List.slice
   rw [LengthArraySlice.eq.Min_SubLength]
-  rw [MinSubS.eq.SubMin]
+  rw [← SubMin.eq.MinSubS]
 
 
 -- created on 2025-05-13

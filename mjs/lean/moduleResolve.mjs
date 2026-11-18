@@ -8,7 +8,8 @@ import { REPO_ROOT } from './modulePath.mjs';
 
 /** @param {string} op */
 export function isInfixOperator(op) {
-  return ['eq', 'is', 'as', 'ne', 'lt', 'le', 'gt', 'ge', 'in', 'ou', 'et'].includes(op);
+  // ae is almost-everywhere equality; @[comm] swaps sides around it like eq.
+  return ['eq', 'ae', 'is', 'as', 'ne', 'lt', 'le', 'gt', 'ge', 'in', 'ou', 'et'].includes(op);
 }
 
 /**
@@ -62,7 +63,7 @@ function tryCastEqLemmaRedirect(module) {
 
 /** @param {string} op */
 function isSymmOperator(op) {
-  return ['eq', 'is', 'as', 'ne'].includes(op);
+  return ['eq', 'ae', 'is', 'as', 'ne'].includes(op);
 }
 
 /** @param {string} s0 @param {string} s */

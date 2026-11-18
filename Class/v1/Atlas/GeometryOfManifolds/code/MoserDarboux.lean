@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/GeometryOfManifolds/code/MoserDarboux.lean -/
 
 /-
@@ -8,10 +10,11 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra.Part3
-import Theorem.v1.Atlas.GeometryOfManifolds.code.SymplecticStandardBasis
-import Def.v1.Atlas.GeometryOfManifolds.code.HamiltonianVectorFields.Part3
-import Structure.v1.Atlas.GeometryOfManifolds.code.MoserDarboux
+public import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra.Part3
+public import Theorem.v1.Atlas.GeometryOfManifolds.code.SymplecticStandardBasis
+public import Def.v1.Atlas.GeometryOfManifolds.code.HamiltonianVectorFields.Part3
+public import Structure.v1.Atlas.GeometryOfManifolds.code.MoserDarboux
+public section
 set_option autoImplicit false
 
 universe u_chart v_chart

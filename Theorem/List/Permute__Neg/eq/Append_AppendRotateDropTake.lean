@@ -15,6 +15,19 @@ public import Theorem.Nat.NotLe.is.Gt
 public import Theorem.Nat.SubAdd.eq.Add_Sub.of.Ge
 public import Theorem.Nat.SubAdd.eq.Sub_Sub.of.Ge
 
+public import Theorem.List.Slice.eq.Nil
+public import Theorem.List.AppendAppend.eq.Append_Append
+public import Theorem.List.Rotate.eq.AppendDrop__Take.of.GeLength
+public import Theorem.Nat.EqAddSub.of.Ge
+public import Theorem.List.Cons.eq.Append
+public import Theorem.List.Append.of.Eq
+public import Theorem.List.TakeTake.eq.Take.of.Ge
+public import Theorem.List.LengthDrop.eq.SubLength
+public import Theorem.Nat.EqMin.of.Le
+public import Theorem.Nat.EqMin.of.Gt
+public import Theorem.Nat.Sub.eq.Zero.of.Lt
+public import Theorem.List.Slice_0.eq.Take
+public import Theorem.Nat.Add
 public section
 
 open List Nat Fin Set
@@ -92,7 +105,7 @@ public theorem List.Permute__Neg.eq.Append_AppendRotateDropTake
           simp_all
 
 
-public theorem simp
+public theorem List.Permute__Neg.eq.Append_AppendRotateDropTake.simp
   {s : List α}
 -- given
   (i : Fin s.length)
@@ -100,7 +113,7 @@ public theorem simp
 -- imply
   s.permute i (-d) = s.take (i - d) ++ ((s.take (i + 1)).drop (i - d)).rotate (d ⊓ i) ++ s.drop (i + 1) := by
 -- proof
-  rw [main i d]
+  rw [Permute__Neg.eq.Append_AppendRotateDropTake i d]
   rw [TakeTake.eq.Take.of.Ge (by simp_all; linarith)]
 
 

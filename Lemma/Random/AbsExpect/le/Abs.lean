@@ -1,7 +1,6 @@
 import Lemma.Random.MEq_Clip.of.All_Eq.All_EqWithDensity
 import Lemma.Random.NormClip.le.Abs_R
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
+import Instance.Dynamics.PolicyTrajectory
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
@@ -17,25 +16,27 @@ private lemma main
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {R : ℝ}
 -- given
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
+  (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1)
   (B : Set (ℕ → ℝ × 𝒮 × 𝒜))
   (t : ℕ) :
 -- imply
-  ‖∫ ω, r t ω ∂(M.traj θ)[|B]‖ ≤ |M.R| := by
+  ‖∫ ω, r t ω ∂(M θ)[|B]‖ ≤ |R| := by
 -- proof
-  have hae : ∀ᵐ ω ∂(M.traj θ)[|B], ‖r t ω‖ ≤ |M.R| :=
+  have hae : ∀ᵐ ω ∂(M θ)[|B], ‖r t ω‖ ≤ |R| :=
     cond_absolutelyContinuous.ae_le
-      ((MEq_Clip.of.All_Eq.All_EqWithDensity h₀ (M := M) θ t).mono fun ω h => by
+      ((MEq_Clip.of.All_Eq.All_EqWithDensity h₀ (M := M) hR θ t).mono fun ω h => by
         rw [h]
-        exact NormClip.le.Abs_R M.R _)
-  if hB : M.traj θ B = 0 then
+        exact NormClip.le.Abs_R R _)
+  if hB : M θ B = 0 then
     rw [cond_eq_zero_of_meas_eq_zero hB]
     simp
   else
-    have := cond_isProbabilityMeasure (μ := M.traj θ) hB
+    have := cond_isProbabilityMeasure (μ := M θ) hB
     simpa using norm_integral_le_of_norm_le_const hae
 
 
 -- created on 2026-09-26
--- updated on 2026-11-17
+-- updated on 2026-11-18

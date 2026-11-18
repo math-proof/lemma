@@ -1,5 +1,7 @@
 module
 
+public import Initialize.Tactic.Attr.Basic
+
 public import Theorem.Bool.Any.is.NotAll_Not
 
 public section

@@ -8,7 +8,7 @@ public section
 open Nat
 
 
-public theorem left
+public theorem Nat.Gt_0.of.Lt0Mul.left
   {a b : ℕ}
 -- given
   (h : a * b > 0) :

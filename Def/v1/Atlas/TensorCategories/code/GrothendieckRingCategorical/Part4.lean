@@ -8,12 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.TensorCategories.code.GrothendieckRing.Part2
-import Lemma.Category.Atlas.v1.TensorCategories.code.GrothendieckRing
-import Lemma.Category.Atlas.v1.TensorCategories.code.TensorCategoryDef
-import Abbrev.v1.Atlas.TensorCategories.code.TensorCategoryDef.Part3
-import Lemma.Category.Atlas.v1.TensorCategories.code.Prop_1_45_10
-import Class.v1.Atlas.TensorCategories.code.GrothendieckRingCategorical.Part2
+module
+
+public import Class.v1.Atlas.TensorCategories.code.GrothendieckRingCategorical.Part2
+public import Structure.v1.Atlas.TensorCategories.code.GrothendieckRingCategorical
+
+@[expose] public section
 open CategoryTheory MonoidalCategory Limits Finset
 open TensorCategories
 
@@ -39,11 +39,10 @@ variable {κ : Type*} [Field κ] {C : Type u} [Category.{v} C]
 
 variable [cmd : CategoricalMultitensorData κ C]
 
+instance : Fintype cmd.ι := cmd.ι_fintype
+instance : DecidableEq cmd.ι := cmd.ι_deceq
 
-attribute [reducible, instance] CategoricalMultitensorData.ι_fintype
-  CategoricalMultitensorData.ι_deceq
-
-/-- Extract a `BasedRing` from `CategoricalMultitensorData`, realising the Grothendieck
+/-- Extract a BasedRing from CategoricalMultitensorData, realising the Grothendieck
 based ring of a multitensor category. -/
 def toBasedRing : BasedRing cmd.ι where
   N := cmd.N

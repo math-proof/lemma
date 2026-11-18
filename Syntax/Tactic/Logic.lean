@@ -5,7 +5,7 @@ public import Theorem.Bool.Or.of.Or.Imp
 public import Theorem.Bool.And.of.And.Imp
 public import Theorem.Bool.Imp.is.ImpNotS
 public import Theorem.Bool.Imp.of.Imp.Imp
-public import Def.Lean.Meta.Expr.Part4 -- using Lean.Expr.is_Prop
+public import Def.Lean.Meta.Expr -- using Lean.Expr.is_Prop
 public import Def.Lean.FVarId
 public import Def.Tactic.Logic
 

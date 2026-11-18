@@ -1,6 +1,7 @@
 import Mathlib.MeasureTheory.Measure.Count
 import Lemma.Measure.EqRnDeriv_Count
 import Instance.Probability.SinglePSpaceMeasurable
+import Syntax.Probability.Probability
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory Measure Random
 

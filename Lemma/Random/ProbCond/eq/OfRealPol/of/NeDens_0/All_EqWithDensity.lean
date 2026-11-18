@@ -1,6 +1,7 @@
 import Def.Dynamics.PolicyTrajectory.ContinuousAction
 import Class.Dynamics.PolicyTrajectory
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 open scoped ENNReal.ToRealCoe
@@ -11,7 +12,7 @@ open IsPolicyTrajectory
 Continuous-action bridge between the `ℙ` binder sugar and a density policy:
 given absolute continuity of `law(a[t], s[t])` (so `SinglePSpace` elaborates) and a
 pointwise factorization of the joint density into policy dens × state RN derivative,
-the conditional density `ℙ[M.traj θ](a[t] = u | s[t] = x)` equals `ENNReal.ofReal (π_θ(u | x))`
+the conditional density `ℙ[M θ](a[t] = u | s[t] = x)` equals `ENNReal.ofReal (π_θ(u | x))`
 whenever the state density at `x` is positive and finite.
 
 The factorization does not follow from `StochasticMDP` alone (Radon–Nikodym derivatives are unique
@@ -29,22 +30,22 @@ private lemma main
 -- given
   (h₀ : Model.IsPolicyTrajectory M r s a)
   (h₁ : Model.AbsContJointAS M a s)
-  (h₂ : (M.traj θ).prob (a t, s t) (aₜ, sₜ) =
+  (h₂ : (M θ).prob (a t, s t) (aₜ, sₜ) =
     ENNReal.ofReal (M.π[θ] sₜ aₜ) *
-      ((M.traj θ).map (s t)).rnDeriv (μ.measure : Measure 𝒮) sₜ)
-  (h₃ : ((M.traj θ).map (s t)).rnDeriv (μ.measure : Measure 𝒮) sₜ ≠ 0)
-  (h₄ : ((M.traj θ).map (s t)).rnDeriv (μ.measure : Measure 𝒮) sₜ ≠ ⊤) :
+      ((M θ).map (s t)).rnDeriv (μ.measure : Measure 𝒮) sₜ)
+  (h₃ : ((M θ).map (s t)).rnDeriv (μ.measure : Measure 𝒮) sₜ ≠ 0)
+  (h₄ : ((M θ).map (s t)).rnDeriv (μ.measure : Measure 𝒮) sₜ ≠ ⊤) :
 -- imply
-  have : SinglePSpace (M.traj θ) (a t, s t) := h₀.singlePSpace_as (haj := h₁) θ t
-  ℙ[M.traj θ]((a t) = aₜ | (s t) = sₜ) = ENNReal.ofReal (M.π[θ] sₜ aₜ) := by
+  have : SinglePSpace (M θ) (a t, s t) := h₀.singlePSpace_as (haj := h₁) θ t
+  ℙ[M θ]((a t) = aₜ | (s t) = sₜ) = ENNReal.ofReal (M.π[θ] sₜ aₜ) := by
 -- proof
   intro hP
-  change (M.traj θ).prob (a t, s t) (aₜ, sₜ) /
-      ((M.traj θ).map (fun ω ↦ ((a t, s t) ω).2)).rnDeriv ReferenceMeasure.measure sₜ =
+  change (M θ).prob (a t, s t) (aₜ, sₜ) /
+      ((M θ).map (fun ω ↦ ((a t, s t) ω).2)).rnDeriv ReferenceMeasure.measure sₜ =
     ENNReal.ofReal (M.π[θ] sₜ aₜ)
   have hsnd : (fun ω ↦ ((a t, s t) ω).2) = s t := rfl
   rw [hsnd, h₂, ENNReal.mul_div_cancel_right h₃ h₄]
 
 
 -- created on 2026-10-21
--- updated on 2026-11-17
+-- updated on 2026-11-18

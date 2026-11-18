@@ -1,9 +1,6 @@
-import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Lemma.Random.GradVkd.eq.AddIntegral_SMul_Sum_SMul.of.All_EqReal.All_Measurable_Prob.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.In_Ico
 import Lemma.Random.Pnkd0.eq.Eq
 import Lemma.Random.PnkdAdd_1.eq.Sum_MulPnkdP1kd.of.All_EqReal
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
@@ -32,15 +29,16 @@ private lemma main
   (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) ReferenceMeasure.measure)
   (h₅ : ∀ θ x, Measurable (M.π[θ] x))
   (h₆ : ∀ x u y, (M.trans (x, u)).toMeasure.real {y} = p x u y)
+  (R : ℝ)
   (n : ℕ)
   (sₜ : 𝒮) :
 -- imply
   let S :=
     ∑ t ∈ Finset.range n,
       γ ^ t • ∑ y, M.Pnkd θ t sₜ y •
-        (∫ u, ((M.rkd y u + γ * ∫ y', M.V0 θ γ y' ∂(M.trans (y, u))) •
+        (∫ u, ((M.rkd R y u + γ * ∫ y', M.V0 R θ γ y' ∂(M.trans (y, u))) •
           ∇[θ] M.π[θ] y u) ∂ReferenceMeasure.measure)
-  ∇[θ] M.V0 θ γ sₜ = S + γ ^ n • ∑ y, M.Pnkd θ n sₜ y • ∇[θ] M.V0 θ γ y := by
+  ∇[θ] M.V0 R θ γ sₜ = S + γ ^ n • ∑ y, M.Pnkd θ n sₜ y • ∇[θ] M.V0 R θ γ y := by
 -- proof
   induction n with
   | zero =>
@@ -49,43 +47,43 @@ private lemma main
   | succ n ih =>
     dsimp only at ih ⊢
     have hBell : ∀ y,
-        ∇[θ] M.V0 θ γ y =
-          (∫ u, ((M.rkd y u + γ * ∫ y', M.V0 θ γ y' ∂(M.trans (y, u))) •
+        ∇[θ] M.V0 R θ γ y =
+          (∫ u, ((M.rkd R y u + γ * ∫ y', M.V0 R θ γ y' ∂(M.trans (y, u))) •
               ∇[θ] M.π[θ] y u) ∂ReferenceMeasure.measure) +
-            γ • ∑ z, M.P1kd θ p y z • ∇[θ] M.V0 θ γ z := by
+            γ • ∑ z, M.P1kd θ p y z • ∇[θ] M.V0 R θ γ z := by
       intro y
       exact
         GradVkd.eq.AddIntegral_SMul_Sum_SMul.of.All_EqReal.All_Measurable_Prob.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.In_Ico
-          (M := M) (θ := θ) (t := 0) («\sf{s}» := fun _ => y) h₀ h₁ h₂ hBdd hIntg h₅ h₆
+          (M := M) (θ := θ) (t := 0) («\sf{s}» := fun _ => y) h₀ h₁ h₂ hBdd hIntg h₅ h₆ R
     rw [ih, Finset.sum_range_succ, add_assoc]
     congr 1
     rw [Finset.sum_congr rfl fun y _ => congrArg (fun v => M.Pnkd θ n sₜ y • v) (hBell y)]
     simp_rw [smul_add, Finset.sum_add_distrib, smul_add]
     congr 1
     calc
-      _ = γ ^ n • ∑ y, γ • (M.Pnkd θ n sₜ y • ∑ z, M.P1kd θ p y z • ∇[θ] M.V0 θ γ z) := by
+      _ = γ ^ n • ∑ y, γ • (M.Pnkd θ n sₜ y • ∑ z, M.P1kd θ p y z • ∇[θ] M.V0 R θ γ z) := by
         refine congrArg _ (Finset.sum_congr rfl fun y _ => ?_)
         exact smul_comm (M.Pnkd θ n sₜ y) γ _
-      _ = γ ^ n • γ • ∑ y, M.Pnkd θ n sₜ y • ∑ z, M.P1kd θ p y z • ∇[θ] M.V0 θ γ z := by
+      _ = γ ^ n • γ • ∑ y, M.Pnkd θ n sₜ y • ∑ z, M.P1kd θ p y z • ∇[θ] M.V0 R θ γ z := by
         rw [← Finset.smul_sum]
-      _ = (γ ^ n * γ) • ∑ y, M.Pnkd θ n sₜ y • ∑ z, M.P1kd θ p y z • ∇[θ] M.V0 θ γ z := by
+      _ = (γ ^ n * γ) • ∑ y, M.Pnkd θ n sₜ y • ∑ z, M.P1kd θ p y z • ∇[θ] M.V0 R θ γ z := by
         rw [← mul_smul]
-      _ = γ ^ (n + 1) • ∑ y, M.Pnkd θ n sₜ y • ∑ z, M.P1kd θ p y z • ∇[θ] M.V0 θ γ z := by
+      _ = γ ^ (n + 1) • ∑ y, M.Pnkd θ n sₜ y • ∑ z, M.P1kd θ p y z • ∇[θ] M.V0 R θ γ z := by
         have hpow : γ ^ n * γ = γ ^ (n + 1) := by
           rw [mul_comm, pow_succ']
         rw [hpow]
-      _ = γ ^ (n + 1) • ∑ y, ∑ z, (M.Pnkd θ n sₜ y * M.P1kd θ p y z) • ∇[θ] M.V0 θ γ z := by
+      _ = γ ^ (n + 1) • ∑ y, ∑ z, (M.Pnkd θ n sₜ y * M.P1kd θ p y z) • ∇[θ] M.V0 R θ γ z := by
         refine congrArg _ (Finset.sum_congr rfl fun y _ => ?_)
         simp [Finset.smul_sum, smul_smul]
-      _ = γ ^ (n + 1) • ∑ z, ∑ y, (M.Pnkd θ n sₜ y * M.P1kd θ p y z) • ∇[θ] M.V0 θ γ z := by
+      _ = γ ^ (n + 1) • ∑ z, ∑ y, (M.Pnkd θ n sₜ y * M.P1kd θ p y z) • ∇[θ] M.V0 R θ γ z := by
         rw [Finset.sum_comm]
-      _ = γ ^ (n + 1) • ∑ z, (∑ y, M.Pnkd θ n sₜ y * M.P1kd θ p y z) • ∇[θ] M.V0 θ γ z := by
+      _ = γ ^ (n + 1) • ∑ z, (∑ y, M.Pnkd θ n sₜ y * M.P1kd θ p y z) • ∇[θ] M.V0 R θ γ z := by
         refine congrArg _ (Finset.sum_congr rfl fun z _ => ?_)
         rw [← Finset.sum_smul]
-      _ = γ ^ (n + 1) • ∑ z, M.Pnkd θ (n + 1) sₜ z • ∇[θ] M.V0 θ γ z := by
+      _ = γ ^ (n + 1) • ∑ z, M.Pnkd θ (n + 1) sₜ z • ∇[θ] M.V0 R θ γ z := by
         refine congrArg _ (Finset.sum_congr rfl fun z _ => ?_)
         rw [← PnkdAdd_1.eq.Sum_MulPnkdP1kd.of.All_EqReal (M := M) h₆ θ n sₜ z]
 
 
 -- created on 2026-11-13
--- updated on 2026-11-17
+-- updated on 2026-11-18

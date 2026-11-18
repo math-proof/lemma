@@ -1,5 +1,7 @@
 module
 
+public import Mathlib
+
 public section
 
 
@@ -15,7 +17,7 @@ public theorem Nat.Ge.of.Ge.Ge
   ge_trans h₀ h₁
 
 
-public theorem subst
+public theorem Nat.Ge.of.Ge.Ge.subst
   {y b x t k : ℝ}
 -- given
   (hk : k > 0)

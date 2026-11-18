@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/GeometryOfManifolds/code/AdvancedKahler.lean -/
 
 /-
@@ -8,9 +10,10 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
-import Structure.v1.Atlas.GeometryOfManifolds.code.ConnectionsCurvature.Part7
-import Structure.v1.Atlas.GeometryOfManifolds.code.AdvancedKahler.Part4
+public import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
+public import Structure.v1.Atlas.GeometryOfManifolds.code.ConnectionsCurvature.Part7
+public import Structure.v1.Atlas.GeometryOfManifolds.code.AdvancedKahler.Part4
+public section
 set_option autoImplicit false
 
 open DifferentialFormSpace

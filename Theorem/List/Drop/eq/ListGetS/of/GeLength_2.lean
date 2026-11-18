@@ -1,5 +1,7 @@
 module
 
+public import Initialize.Tactic.Attr.Basic
+
 public import Theorem.List.Drop.eq.ListGet.of.GeLength_1
 public import Theorem.List.Cons.is.Eq.Eq
 

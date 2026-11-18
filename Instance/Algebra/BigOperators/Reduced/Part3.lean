@@ -3,7 +3,7 @@ import Mathlib.Algebra.BigOperators.Group.Finset.Defs
 import Mathlib.Data.Fintype.Basic
 import Mathlib.Data.Fintype.Lattice
 import Mathlib.Data.Finset.Max
-import Class.Algebra.BigOperators.Reduced.Part3
+import Class.Algebra.BigOperators.Reduced
 
 
 instance {α : Type*} [Fintype α] [Nonempty α] : Function.ReduceMax (α → ℝ) ℝ :=

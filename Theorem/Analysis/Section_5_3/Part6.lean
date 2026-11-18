@@ -1,7 +1,11 @@
-import Mathlib
-import Theorem.Analysis.Section_5_2.Part2
-import Mathlib.Algebra.Group.MinimalAxioms
-import Instance.Analysis.Section_5_3.Part4
+module
+
+public import Mathlib
+public import Theorem.Analysis.Section_5_2.Part2
+public import Mathlib.Algebra.Group.MinimalAxioms
+public import Instance.Analysis.Section_5_3.Part4
+
+public section
 /-!
 # Analysis I, Section 5.3: The construction of the real numbers
 
@@ -28,17 +32,15 @@ Users of the companion who have completed the exercises in this section are welc
 
 namespace Chapter5
 
-theorem Real.LIM_mul {a b:ℕ → ℚ} (ha: (a:Sequence).IsCauchy) (hb: (b:Sequence).IsCauchy) :
-  LIM a * LIM b = LIM (a * b) := by
+public theorem Real.LIM_mul {a b:ℕ → ℚ}
+    (ha: (Sequence.ofNatFun a).IsCauchy) (hb: (Sequence.ofNatFun b).IsCauchy) :
+    LIM a * LIM b = LIM (a * b) := by
   change Real.mul_inst.mul (LIM a) (LIM b) = LIM (a * b)
   unfold Real.mul_inst
   dsimp only
   rw [LIM_def ha, LIM_def hb, Quotient.liftOn₂_mk]
-  have hfun :
-      ((fun n : ℕ ↦ (CauchySequence.mk' ha).seq (n : ℤ)) *
-        fun n : ℕ ↦ (CauchySequence.mk' hb).seq (n : ℤ)) = a * b := by
-    ext n
-    simp [Sequence.eval_coe_at_int, Int.toNat_natCast]
+  have hfun : (CauchySequence.mk' ha : ℕ → ℚ) * (CauchySequence.mk' hb : ℕ → ℚ) = a * b := by
+    rw [CauchySequence.coe_coe, CauchySequence.coe_coe]
   rw [hfun]
 
 end Chapter5

@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/HomExactImpliesExact.lean -/
 
 /-
@@ -8,7 +10,8 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Class.v1.Atlas.TensorCategories.code.ModuleFunctorDefs
+public import Class.v1.Atlas.TensorCategories.code.ModuleFunctorDefs
+public section
 set_option maxHeartbeats 800000
 
 universe v₁ v₂ v₃ u₁ u₂ u₃

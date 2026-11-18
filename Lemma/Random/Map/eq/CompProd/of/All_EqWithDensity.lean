@@ -1,6 +1,7 @@
 import Lemma.Measure.MapComap_MapId.eq.Map.of.Measurable
 import Def.Dynamics.PolicyTrajectory.ContinuousAction
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Measure Finset
 
@@ -17,7 +18,7 @@ private lemma main
   (θ : Θ)
   (t : ℕ) :
 -- imply
-  (M.traj θ).map (fun ω => (ω t, ω (t + 1))) = ((M.traj θ).map (fun ω => ω t)) ⊗ₘ M.K θ := by
+  (M θ).map (fun ω => (ω t, ω (t + 1))) = ((M θ).map (fun ω => ω t)) ⊗ₘ M.K θ := by
 -- proof
   let μ₀ : Measure (ℝ × 𝒮 × 𝒜) := M.stageK θ ∘ₘ (M.init : Measure _)
   have h := Kernel.map_frestrictLe_trajMeasure_compProd_eq_map_trajMeasure
@@ -32,4 +33,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-17
+-- updated on 2026-11-18

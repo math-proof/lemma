@@ -5,6 +5,7 @@ import Notation.Fun
 import Notation.Probability.HasLaw
 import Instance.Probability.Process.HiddenMarkovSequence
 import Instance.NNReal.Coe
+import Instance.Probability.JointRv
 import Def.Probability.ChiSquare
 import Lemma.Measure.MapPi_GaussianReal.eq.ProdChiSquareS.of.Gt_1.Gt_1
 import Initialize.Tactic.Attr.Basic

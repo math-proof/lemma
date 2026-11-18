@@ -1,14 +1,11 @@
-import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Lemma.Random.HasFDerivAt.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
 open MeasureTheory PolicyGradient Random Set
 
 
 /--
 For a differentiable density policy with a dominated gradient, `θ ↦ V0 θ γ x` is
 differentiable on every state. This is the `HasFDerivAt` form
-`HasFDerivAt.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob`
+`HasFDerivAt.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob R`
 packaged as differentiability.
 -/
 @[path]
@@ -24,14 +21,15 @@ private lemma main
   (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) ReferenceMeasure.measure)
   (h₄ : γ ∈ Set.Ico 0 1)
   (h₅ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π[θ] z.1 z.2))
+  (R : ℝ)
   (sₜ : 𝒮) :
 -- imply
-  Differentiable ℝ (fun θ => M.V0 θ γ sₜ) := by
+  Differentiable ℝ (fun θ => M.V0 R θ γ sₜ) := by
 -- proof
   exact fun θ =>
     (HasFDerivAt.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob
-      (M := M) h₀ h₁ hBdd hIntg h₄ h₅ sₜ θ).differentiableAt
+      (M := M) h₀ h₁ hBdd hIntg h₄ h₅ R sₜ θ).differentiableAt
 
 
 -- created on 2026-11-13
--- updated on 2026-11-17
+-- updated on 2026-11-18

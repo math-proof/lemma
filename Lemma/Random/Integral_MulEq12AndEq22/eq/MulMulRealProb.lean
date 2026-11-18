@@ -1,5 +1,6 @@
 import Lemma.Random.ProbJoint.eq.Mul_Prob_Pr
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
@@ -25,8 +26,8 @@ private lemma main
   (aₜ : 𝒜)
   (φ : 𝒮 → 𝒜 → ℝ) :
 -- imply
-  ∫ ω, (if (ω t).2.1 = sₜ ∧ (ω t).2.2 = aₜ then (1:ℝ) else 0) * φ (ω t).2.1 (ω t).2.2 ∂(M.traj θ) =
-    (M.traj θ).real (s t ⁻¹' {sₜ}) * (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}) * φ sₜ aₜ := by
+  ∫ ω, (if (ω t).2.1 = sₜ ∧ (ω t).2.2 = aₜ then (1:ℝ) else 0) * φ (ω t).2.1 (ω t).2.2 ∂(M θ) =
+    (M θ).real (s t ⁻¹' {sₜ}) * (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}) * φ sₜ aₜ := by
 -- proof
   have h₂ : ∀ ω : ℕ → ℝ × 𝒮 × 𝒜,
       (if (ω t).2.1 = sₜ ∧ (ω t).2.2 = aₜ then (1:ℝ) else 0) * φ (ω t).2.1 (ω t).2.2 =
@@ -67,4 +68,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-17
+-- updated on 2026-11-18

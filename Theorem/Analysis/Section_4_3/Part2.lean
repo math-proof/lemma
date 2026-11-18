@@ -1,6 +1,10 @@
-import Mathlib
-import Abbrev.Analysis.Section_4_3.Part2
+module
 
+public import Mathlib
+public import Abbrev.Analysis.Section_4_3.Part2
+
+
+public section
 
 namespace Section_4_3
 
@@ -16,6 +20,32 @@ theorem dist_eq (x y: ℚ) : dist x y = |x-y| := rfl
   allows some relaxations of hypotheses in the lemmas that follow.
 -/
 theorem close_iff (ε x y:ℚ): ε.Close x y ↔ |x - y| ≤ ε := by rfl
+
+theorem close_refl (x:ℚ) : (0:ℚ).Close x x := by
+  rw [close_iff]
+  simp
+
+/-- Proposition 4.3.7(b) / Exercise 4.3.2 -/
+theorem close_symm (ε x y:ℚ) : ε.Close x y ↔ ε.Close y x := by
+  rw [close_iff, close_iff, abs_sub_comm]
+
+/-- Proposition 4.3.7(c) / Exercise 4.3.2 -/
+theorem close_trans {ε δ x y z:ℚ} (hxy: ε.Close x y) (hyz: δ.Close y z) :
+    (ε + δ).Close x z := by
+  rw [close_iff] at *
+  calc
+    |x - z| = |(x - y) + (y - z)| := by ring
+    _ ≤ |x - y| + |y - z| := abs_add_le _ _
+    _ ≤ ε + δ := add_le_add hxy hyz
+
+/-- Proposition 4.3.7(d) (addition) / Exercise 4.3.2 -/
+theorem add_close {ε δ x y z w:ℚ} (hxy: ε.Close x y) (hzw: δ.Close z w) :
+    (ε + δ).Close (x + z) (y + w) := by
+  rw [close_iff] at *
+  calc
+    |(x + z) - (y + w)| = |(x - y) + (z - w)| := by ring
+    _ ≤ |x - y| + |z - w| := abs_add_le _ _
+    _ ≤ ε + δ := add_le_add hxy hzw
 
 /-- Proposition 4.3.7(h) / Exercise 4.3.2 -/
 theorem close_mul_mul {ε δ x y z w:ℚ} (hxy: ε.Close x y) (hzw: δ.Close z w) :
@@ -34,8 +64,8 @@ theorem close_mul_mul {ε δ x y z w:ℚ} (hxy: ε.Close x y) (hzw: δ.Close z w
   rw [close_symm, close_iff]
   calc
     _ = |a * z + b * x + a * b| := by grind
-    _ ≤ |a * z + b * x| + |a * b| := abs_add _ _
-    _ ≤ |a * z| + |b * x| + |a * b| := by grind [abs_add]
+    _ ≤ |a * z + b * x| + |a * b| := abs_add_le _ _
+    _ ≤ |a * z| + |b * x| + |a * b| := by grind [abs_add_le]
     _ = |a| * |z| + |b| * |x| + |a| * |b| := by grind [abs_mul]
     _ ≤ _ := by gcongr
 

@@ -11,8 +11,8 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Abbrev.v1.Atlas.TensorCategories.code.IntegralsDefs
-public import Lemma.Category.Atlas.v1.TensorCategories.code.IntegralsDefs
-public import Lemma.Category.Atlas.v1.TensorCategories.code.DistinguishedInvertible
+public import Theorem.Category.Atlas.v1.TensorCategories.code.IntegralsDefs
+public import Theorem.Category.Atlas.v1.TensorCategories.code.DistinguishedInvertible
 public import Mathlib.Data.Matrix.Basic
 public import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
 public import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
@@ -43,6 +43,7 @@ open CategoryTheory MonoidalCategory
 variable {k : Type w} [Field k]
 
 variable {C : Type u} [Category.{v} C] [MonoidalCategory C] [RigidCategory C]
+variable {H : Type v} [Semiring H] [Algebra k H] [Coalgebra k H]
 
 /-- A linear functional `l : H → k` is a left cointegral if the convolution identity
 `(id ⊗ l) ∘ Δ = η ∘ l` holds, dualizing the notion of a left integral. -/

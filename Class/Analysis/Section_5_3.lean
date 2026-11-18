@@ -1,6 +1,10 @@
-import Mathlib
-import Theorem.Analysis.Section_5_2.Part2
-import Mathlib.Algebra.Group.MinimalAxioms
+module
+
+public import Mathlib
+public import Theorem.Analysis.Section_5_2.Part2
+public import Abbrev.Analysis.Section_5_1.Part5
+public import Mathlib.Algebra.Group.MinimalAxioms
+public section
 /-!
 # Analysis I, Section 5.3: The construction of the real numbers
 

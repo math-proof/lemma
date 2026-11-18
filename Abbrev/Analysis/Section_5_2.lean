@@ -1,6 +1,9 @@
-import Mathlib
-import Theorem.Analysis.Section_5_1.Part9
+module
 
+public import Mathlib
+public import Abbrev.Analysis.Section_5_1.Part3
+public import Def.Analysis.Section_4_3
+@[expose] public section
 
 /-!
 # Analysis I, Section 5.2: Equivalent Cauchy sequences
@@ -24,8 +27,7 @@ Users of the companion who have completed the exercises in this section are welc
 -/
 
 abbrev Rat.CloseSeq (ε: ℚ) (a b: Chapter5.Sequence) : Prop :=
-  ∀ n, n ≥ a.n₀ → n ≥ b.n₀ → ε.Close (a n) (b n)
+  ∀ n, n ≥ a.n₀ → n ≥ b.n₀ → ε.Close (a.seq n) (b.seq n)
 
 abbrev Rat.EventuallyClose (ε: ℚ) (a b: Chapter5.Sequence) : Prop :=
   ∃ N, ε.CloseSeq (a.from N) (b.from N)
-

@@ -12,13 +12,14 @@ private lemma main
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
   {M : Model Θ 𝒮 𝒜} [StochasticPolicy M.toPolicy]
 -- given
+  (R : ℝ)
   (sₜ : 𝒮)
   (aₜ : 𝒜) :
 -- imply
-  ‖M.rkd sₜ aₜ‖ ≤ |M.R| := by
+  ‖M.rkd R sₜ aₜ‖ ≤ |R| := by
 -- proof
   have h := norm_integral_le_of_norm_le_const (μ := M.reward (sₜ, aₜ))
-    (f := fun ρ => clip ρ (-M.R) M.R) (C := |M.R|)
+    (f := fun ρ => clip ρ (-R) R) (C := |R|)
     (Filter.Eventually.of_forall fun ρ => by
       rw [Real.norm_eq_abs, abs_le, clip]
       constructor
@@ -36,4 +37,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-17
+-- updated on 2026-11-18

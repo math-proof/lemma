@@ -1,6 +1,9 @@
-import Mathlib
-import Theorem.Analysis.Section_4_3.Part2
-import Theorem.Analysis.Section_5_1.Part5
+module
+
+public import Mathlib
+public import Def.Analysis.Section_5_1
+
+@[expose] public section
 set_option doc.verso.suggestions false
 
 /-!
@@ -28,6 +31,6 @@ Users of the companion who have completed the exercises in this section are welc
 
 namespace Chapter5
 
-noncomputable def Sequence.sqrt_two : Sequence := (fun n:ℕ ↦ ((⌊ (Real.sqrt 2)*10^n ⌋ / 10^n):ℚ))
+noncomputable def Sequence.sqrt_two : Sequence := Sequence.ofNatFun (fun n:ℕ ↦ ((⌊ (Real.sqrt 2)*10^n ⌋ / 10^n):ℚ))
 
 end Chapter5

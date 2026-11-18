@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/DualCatDefs.lean -/
 
 /-
@@ -8,11 +10,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.TensorCategories.code.ModuleFunctor
-import Mathlib.CategoryTheory.Preadditive.Projective.Basic
-import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
-import Mathlib.Logic.UnivLE
-import Instance.v1.Atlas.TensorCategories.code.DualCatDefs
+public import Structure.v1.Atlas.TensorCategories.code.ModuleFunctor
+public import Mathlib.CategoryTheory.Preadditive.Projective.Basic
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
+public import Mathlib.Logic.UnivLE
+public import Instance.v1.Atlas.TensorCategories.code.DualCatDefs
+public section
 set_option maxHeartbeats 800000
 
 universe v₁ v₂ u₁ u₂

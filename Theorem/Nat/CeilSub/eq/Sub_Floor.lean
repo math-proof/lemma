@@ -16,7 +16,7 @@ public theorem Nat.CeilSub.eq.Sub_Floor
 -- imply
   ⌈d - x⌉ = d - ⌊x⌋ := by
 -- proof
-  simp [← CeilSub.eq.Sub_Floor]
+  simp [← Int.CeilSub.eq.Sub_Floor]
 
 
 -- created on 2025-11-07

@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicTopologyI/code/Section34.lean -/
 
 /-
@@ -8,20 +10,21 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section26.Part8
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section31.Part7
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section33.Part2
-import Mathlib.Algebra.Colimit.Module
-import Mathlib.Algebra.Module.LinearMap.Basic
-import Mathlib.Order.Directed
-import Mathlib.Analysis.InnerProductSpace.EuclideanDist
-import Mathlib.Topology.Sets.Opens
-import Mathlib.AlgebraicTopology.SingularHomology.Basic
-import Mathlib.Algebra.Category.ModuleCat.Abelian
-import Mathlib.CategoryTheory.Abelian.Ext
-import Mathlib.LinearAlgebra.TensorProduct.Basic
-import Mathlib.Geometry.Manifold.ChartedSpace
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section34.Part9
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section26.Part8
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section31.Part7
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section33.Part2
+public import Mathlib.Algebra.Colimit.Module
+public import Mathlib.Algebra.Module.LinearMap.Basic
+public import Mathlib.Order.Directed
+public import Mathlib.Analysis.InnerProductSpace.EuclideanDist
+public import Mathlib.Topology.Sets.Opens
+public import Mathlib.AlgebraicTopology.SingularHomology.Basic
+public import Mathlib.Algebra.Category.ModuleCat.Abelian
+public import Mathlib.CategoryTheory.Abelian.Ext
+public import Mathlib.LinearAlgebra.TensorProduct.Basic
+public import Mathlib.Geometry.Manifold.ChartedSpace
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section34.Part9
+public section
 open CategoryTheory AlgebraicTopology TopologicalSpace SingularCohomology
 
 noncomputable section

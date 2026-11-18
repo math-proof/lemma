@@ -8,29 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Category.ModuleCat.Tannaka
-import Mathlib.Algebra.Algebra.Equiv
-import Mathlib.CategoryTheory.Monoidal.Functor
-import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.CategoryTheory.Linear.Basic
-import Mathlib.Algebra.Category.ModuleCat.Basic
-import Mathlib.Algebra.Category.ModuleCat.Monoidal.Basic
-import Mathlib.RingTheory.HopfAlgebra.Basic
-import Mathlib.RingTheory.Bialgebra.Basic
-import Mathlib.RingTheory.Coalgebra.Basic
-import Mathlib.Algebra.Category.FGModuleCat.Basic
-import Abbrev.v1.Atlas.TensorCategories.code.QuasiBialgebra
-import Abbrev.v1.Atlas.TensorCategories.code.QuasiTensorFunctor.Part5
-import Theorem.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctor
+module
+
+public import Mathlib.Algebra.Category.ModuleCat.Tannaka
+@[expose] public noncomputable section
 set_option maxHeartbeats 800000
 
 open CategoryTheory
 
-universe u v w
+universe u
 
-
-noncomputable section
 
 /-- The endomorphism ring of the additive forgetful functor `ModuleCat R ⥤ AddCommGrpCat`,
 which by Tannaka reconstruction is canonically isomorphic to `R`. -/

@@ -7,6 +7,8 @@ public import Theorem.List.ProdAppend.eq.MulProdS
 public import Theorem.Nat.MinAddS.eq.AddMin
 public import Theorem.Nat.Val.lt.Sub_1.of.Val.ne.Sub_1
 
+public import Theorem.Bool.UFn.of.Eq
+public import Theorem.List.AppendAppend.eq.Append_Append
 public section
 
 open List Bool Nat Int

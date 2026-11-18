@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.TensorCategories.code.PerronFrobeniusProof.Part2
 import Lemma.Category.Atlas.v1.TensorCategories.code.PerronFrobeniusProof
-import Lemma.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
+import Theorem.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
 import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part6
 open FusionRing
 

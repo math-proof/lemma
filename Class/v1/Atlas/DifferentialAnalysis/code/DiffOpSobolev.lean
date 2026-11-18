@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/DifferentialAnalysis/code/DiffOpSobolev.lean -/
 
 /-
@@ -8,12 +10,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
-import Def.v1.Atlas.DifferentialAnalysis.code.SobolevEmbedding.Part5
-import Def.v1.Atlas.DifferentialAnalysis.code.FourierInversion.Part7
-import Def.v1.Atlas.DifferentialAnalysis.code.SobolevDerivatives
-import Mathlib.Algebra.MvPolynomial.Degrees
-import Def.v1.Atlas.DifferentialAnalysis.code.DiffOpSobolev
+public import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
+public import Def.v1.Atlas.DifferentialAnalysis.code.SobolevEmbedding.Part5
+public import Def.v1.Atlas.DifferentialAnalysis.code.FourierInversion.Part7
+public import Def.v1.Atlas.DifferentialAnalysis.code.SobolevDerivatives
+public import Mathlib.Algebra.MvPolynomial.Degrees
+public import Def.v1.Atlas.DifferentialAnalysis.code.DiffOpSobolev
+public section
 open scoped SchwartzMap ContDiff FourierTransform
 open DifferentialOperators SobolevEmbedding SobolevSpace MvPolynomial Filter Topology MeasureTheory
 

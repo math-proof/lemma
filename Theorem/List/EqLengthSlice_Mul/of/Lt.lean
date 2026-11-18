@@ -19,7 +19,7 @@ public theorem List.EqLengthSlice_Mul.of.Lt
   simp_all
 
 
-public theorem Comm
+public theorem List.EqLengthSlice_Mul.of.Lt.comm
   {i : ℕ}
 -- given
   (h : i < n)

@@ -1,5 +1,9 @@
-import Mathlib
-import Instance.Analysis.Section_11_1
+module
+
+public import Mathlib
+public import Instance.Analysis.Section_11_1
+
+public section
 /-!
 # Analysis I, Section 11.1: Partitions
 
@@ -22,7 +26,7 @@ namespace Chapter11
 open BoundedInterval
 
 @[simp]
-theorem BoundedInterval.coe_empty : ((∅ : BoundedInterval):Set ℝ) = ∅ := by
+public theorem BoundedInterval.coe_empty : ((∅ : BoundedInterval):Set ℝ) = ∅ := by
   change Set.Ioo (0 : ℝ) 0 = ∅
   exact Set.Ioo_eq_empty (lt_irrefl _)
 

@@ -1,5 +1,10 @@
-import Def.Data.Tensor.Defs.Part4
-import Theorem.List.ProdSet.eq.MulProd_Mul_Prod.of.GtLength
+module
+
+public import Def.Data.Tensor.Defs.Part4
+public import Def.Data.Vector.Basic.Part2
+public import Theorem.List.ProdSet.eq.MulProd_Mul_Prod.of.GtLength
+
+@[expose] public section
 open List Tensor
 
 
@@ -16,5 +21,5 @@ The closest PyTorch API is the `torch.Tensor` method
 there is no top-level `torch.resize`.
 -/
 def Tensor.resize [Zero α] (X : Tensor α s) (dim : Fin s.length) (n : ℕ) : Tensor α (s.set dim n) :=
-  ⟨cast (congrArg (List.Vector α) (MulProd_Mul_Prod.eq.ProdSet.of.GtLength dim.isLt n)) ((X.data.splitAt dim).map (·.resize (n * (s.drop dim.succ).prod))).flatten⟩
+  ⟨cast (congrArg (List.Vector α) ((ProdSet.eq.MulProd_Mul_Prod.of.GtLength dim.isLt n).symm)) ((X.data.splitAt dim).map (·.resize (n * (s.drop dim.succ).prod))).flatten⟩
 

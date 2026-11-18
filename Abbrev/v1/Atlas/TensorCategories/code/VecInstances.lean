@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Abbrev.v1.Atlas.TensorCategories.code.TensorCategoryDef.Part3
-import Lemma.Category.Atlas.v1.TensorCategories.code.TensorCategoryDef
+module
+
+public import Mathlib
+public import Abbrev.v1.Atlas.TensorCategories.code.TensorCategoryDef.Part3
+public import Theorem.Category.Atlas.v1.TensorCategories.code.TensorCategoryDef
+@[expose] public noncomputable section
 set_option maxHeartbeats 800000
 
 open CategoryTheory MonoidalCategory Limits
@@ -18,7 +21,6 @@ open CategoryTheory MonoidalCategory Limits
 universe v u
 
 
-noncomputable section
 
 namespace VecInstances
 

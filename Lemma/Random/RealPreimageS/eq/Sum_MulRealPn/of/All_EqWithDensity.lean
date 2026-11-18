@@ -5,6 +5,7 @@ import Lemma.Real.Sum_Eq.eq.One
 import Lemma.Real.Norm_Eq12.le.One
 import Lemma.Real.StronglyMeasurable_Eq12
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Real Finset
 
@@ -27,25 +28,25 @@ private lemma main
   (t : ℕ)
   (y : 𝒮) :
 -- imply
-  (M.traj θ).real (s t ⁻¹' {y}) =
+  (M θ).real (s t ⁻¹' {y}) =
     ∑ x, M.init.toMeasure.real {x} * ∫ z, M.Kf θ (fun z => if z.2.1 = y then (1:ℝ) else 0) t z ∂(M.stageK θ x) := by
 -- proof
   have hst : Measurable (s t) := Random.Measurable.of.All_Eq.snd.fst h₀ t
   have h0s : Measurable (s 0) := Random.Measurable.of.All_Eq.snd.fst h₀ 0
   have hinter :
-    ∫ ω, (if s t ω = y then (1:ℝ) else 0) ∂(M.traj θ) = (M.traj θ).real (s t ⁻¹' {y}) := by
+    ∫ ω, (if s t ω = y then (1:ℝ) else 0) ∂(M θ) = (M θ).real (s t ⁻¹' {y}) := by
     have hm : MeasurableSet (s t ⁻¹' {y}) := hst (measurableSet_singleton y)
     have : (fun ω => if s t ω = y then (1:ℝ) else 0) =
       Set.indicator (s t ⁻¹' {y}) (fun _ => (1:ℝ)) := by
       funext ω; simp [Set.indicator]
     rw [this, integral_indicator hm]
-    change (∫ _ in s t ⁻¹' {y}, (1:ℝ) ∂(M.traj θ)) = _
+    change (∫ _ in s t ⁻¹' {y}, (1:ℝ) ∂(M θ)) = _
     rw [setIntegral_const, smul_eq_mul, mul_one, measureReal_def]
   have hsum : ∀ ω, (if s t ω = y then (1:ℝ) else 0) =
     ∑ x, (if s 0 ω = x then (1:ℝ) else 0) * (if s t ω = y then (1:ℝ) else 0) := by
     intro ω
     rw [← Finset.sum_mul, Sum_Eq.eq.One (s 0 ω), one_mul]
-  have hI : ∀ x, Integrable (fun ω => (if s 0 ω = x then (1:ℝ) else 0) * (if s t ω = y then (1:ℝ) else 0)) (M.traj θ) := by
+  have hI : ∀ x, Integrable (fun ω => (if s 0 ω = x then (1:ℝ) else 0) * (if s t ω = y then (1:ℝ) else 0)) (M θ) := by
     intro x
     have hsm :
       StronglyMeasurable (fun ω => (if s 0 ω = x then (1:ℝ) else 0) * (if s t ω = y then (1:ℝ) else 0)) :=
@@ -75,4 +76,4 @@ private lemma main
 
 
 -- created on 2026-11-13
--- updated on 2026-11-17
+-- updated on 2026-11-18

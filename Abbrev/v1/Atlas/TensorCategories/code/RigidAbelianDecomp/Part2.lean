@@ -13,7 +13,7 @@ import Theorem.Category.Atlas.v1.TensorCategories.code.MacLaneCoherence
 import Lemma.Category.Atlas.v1.TensorCategories.code.MacLaneStrictness
 import Theorem.Category.Atlas.v1.TensorCategories.code.InvertibleObjects
 import Lemma.Category.Atlas.v1.TensorCategories.code.TensorCategoryDef
-import Lemma.Category.Atlas.v1.TensorCategories.code.TensorExact
+import Theorem.Category.Atlas.v1.TensorCategories.code.TensorExact
 import Lemma.Category.Atlas.v1.TensorCategories.code.GrothendieckRing
 import Instance.v1.Atlas.TensorCategories.code.MacLaneStrictness.Part2
 import Instance.v1.Atlas.TensorCategories.code.InvertibleObjects

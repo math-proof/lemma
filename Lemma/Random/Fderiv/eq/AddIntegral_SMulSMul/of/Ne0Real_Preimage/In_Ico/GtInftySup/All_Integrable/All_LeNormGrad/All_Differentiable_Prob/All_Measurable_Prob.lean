@@ -5,8 +5,7 @@ import Lemma.Random.Kf.eq.Integral_TW.of.All_LeNorm.StronglyMeasurable.All_EqWit
 import Lemma.Random.Integral.eq.Integral_SMul.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Lemma.Real.StronglyMeasurable_Eq12
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
+import Instance.Dynamics.PolicyTrajectory
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Finset Real
 set_option maxHeartbeats 800000
 
@@ -107,10 +106,10 @@ private lemma RealPreimageS_succ
   {sₜ y : 𝒮}
 -- given
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
-  (hP : (M.traj θ).real (s t ⁻¹' {sₜ}) ≠ 0)
+  (hP : (M θ).real (s t ⁻¹' {sₜ}) ≠ 0)
   (hμ : ∫ u, M.π[θ] sₜ u * (M.trans (sₜ, u)).toMeasure.real {y} ∂ReferenceMeasure.measure ≠ 0) :
 -- imply
-  (M.traj θ).real (s (t + 1) ⁻¹' {y}) ≠ 0 := by
+  (M θ).real (s (t + 1) ⁻¹' {y}) ≠ 0 := by
 -- proof
   let f : ℝ × 𝒮 × 𝒜 → ℝ := fun w => if w.2.1 = y then (1 : ℝ) else 0
   have hf : StronglyMeasurable f := Real.StronglyMeasurable_Eq12 y
@@ -118,8 +117,8 @@ private lemma RealPreimageS_succ
     simp [f]
     split_ifs <;> simp
   have hE :
-    ∫ ω, (if s t ω = sₜ then (1 : ℝ) else 0) * f (ω (t + 1)) ∂(M.traj θ) =
-      (M.traj θ).real (s t ⁻¹' {sₜ}) *
+    ∫ ω, (if s t ω = sₜ then (1 : ℝ) else 0) * f (ω (t + 1)) ∂(M θ) =
+      (M θ).real (s t ⁻¹' {sₜ}) *
         ∫ u, M.π[θ] sₜ u * (M.trans (sₜ, u)).toMeasure.real {y} ∂ReferenceMeasure.measure := by
     have hw :=
       Integral_MulEqS.eq.MulRealW.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
@@ -133,7 +132,7 @@ private lemma RealPreimageS_succ
     have hy' : ∀ y', ∫ w, f w ∂(M.stageK θ y') = if y' = y then (1 : ℝ) else 0 :=
       fun y' => integral_stageK_eq (M := M) θ y' y
     apply hw.trans
-    refine congrArg (fun z => (M.traj θ).real (s t ⁻¹' {sₜ}) * z) ?_
+    refine congrArg (fun z => (M θ).real (s t ⁻¹' {sₜ}) * z) ?_
     trans ∫ z, (M.trans z.2).toMeasure.real {y} ∂(M.stageK θ sₜ)
     ·
       refine integral_congr_ae (Filter.Eventually.of_forall fun z => ?_)
@@ -149,16 +148,16 @@ private lemma RealPreimageS_succ
     ·
       exact integral_trans_real_stageK (M := M) θ sₜ y
   have hpos :
-    0 < (M.traj θ).real (s t ⁻¹' {sₜ}) *
+    0 < (M θ).real (s t ⁻¹' {sₜ}) *
       ∫ u, M.π[θ] sₜ u * (M.trans (sₜ, u)).toMeasure.real {y} ∂ReferenceMeasure.measure := by
-    have hx : 0 < (M.traj θ).real (s t ⁻¹' {sₜ}) :=
+    have hx : 0 < (M θ).real (s t ⁻¹' {sₜ}) :=
       lt_of_le_of_ne measureReal_nonneg (Ne.symm hP)
     refine mul_pos hx (lt_of_le_of_ne ?_ (Ne.symm hμ))
     exact integral_nonneg fun u =>
       mul_nonneg (hStoch.nonneg θ sₜ u) measureReal_nonneg
   have hle :
-    ∫ ω, (if s t ω = sₜ then (1 : ℝ) else 0) * f (ω (t + 1)) ∂(M.traj θ) ≤
-      (M.traj θ).real (s (t + 1) ⁻¹' {y}) := by
+    ∫ ω, (if s t ω = sₜ then (1 : ℝ) else 0) * f (ω (t + 1)) ∂(M θ) ≤
+      (M θ).real (s (t + 1) ⁻¹' {y}) := by
     have hs1 : Measurable (s (t + 1)) := Random.Measurable.of.All_Eq.snd.fst h₀ (t + 1)
     have hset : MeasurableSet (s (t + 1) ⁻¹' {y}) := hs1 (measurableSet_singleton y)
     have hrew : (fun ω => (if s t ω = sₜ then (1 : ℝ) else 0) * f (ω (t + 1))) =
@@ -215,6 +214,7 @@ private lemma main
   {t : ℕ}
   {sₜ : 𝒮}
   {θ : Θ}
+  {R : ℝ}
 -- given
   (hγ : γ ∈ Set.Ico 0 1)
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
@@ -223,10 +223,11 @@ private lemma main
   (h₂ : sup[sₜ] (∫ u, sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ u‖) ∂ReferenceMeasure.measure) < ∞)
   (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖))
   (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) ReferenceMeasure.measure)
-  (h₃ : (M.traj θ).real (s t ⁻¹' {sₜ}) ≠ 0) :
+  (h₃ : (M θ).real (s t ⁻¹' {sₜ}) ≠ 0)
+  (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1) :
 -- imply
   fderiv ℝ (fun θ' => M.V θ' γ t sₜ) θ =
-    ∫ u, (M.rkd sₜ u + γ * ∫ y, M.V0 θ γ y ∂(M.trans (sₜ, u))) •
+    ∫ u, (M.rkd R sₜ u + γ * ∫ y, M.V0 R θ γ y ∂(M.trans (sₜ, u))) •
       fderiv ℝ (fun θ' => M.π[θ'] sₜ u) θ ∂ReferenceMeasure.measure +
       γ • ∫ u, (M.π[θ] sₜ u •
         ∫ y, fderiv ℝ (fun θ' => M.V θ' γ (t + 1) y) θ ∂(M.trans (sₜ, u)))
@@ -234,11 +235,11 @@ private lemma main
 -- proof
   have h₂fderiv := h₂
   rw [Fderiv_V.eq.Fderiv_Vc.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob
-    (M := M) hγ h₀ hπ h₁ h₂fderiv hBdd hIntg h₃]
-  rw [bellmanFderivClosed (M := M) h₁ h₂ hBdd hIntg hγ hπ sₜ θ]
+    (M := M) hγ h₀ hπ h₁ h₂fderiv hBdd hIntg h₃ hR]
+  rw [bellmanFderivClosed (M := M) (R := R) h₁ h₂ hBdd hIntg hγ hπ sₜ θ]
   congr 1
   refine congrArg (fun z => γ • z) ?_
-  let FV0 : 𝒮 → Θ →L[ℝ] ℝ := fun y => fderiv ℝ (fun θ' => M.V0 θ' γ y) θ
+  let FV0 : 𝒮 → Θ →L[ℝ] ℝ := fun y => fderiv ℝ (fun θ' => M.V0 R θ' γ y) θ
   let FV : 𝒮 → Θ →L[ℝ] ℝ := fun y => fderiv ℝ (fun θ' => M.V θ' γ (t + 1) y) θ
   have hπint : Integrable (fun u => M.π[θ] sₜ u) ReferenceMeasure.measure :=
     integrable_of_integral_eq_one (hStoch.integral_eq_one θ sₜ)
@@ -288,13 +289,13 @@ private lemma main
   if hμ : μy = 0 then
     simp [hμ]
   else
-    have hy : (M.traj θ).real (s (t + 1) ⁻¹' {y}) ≠ 0 :=
+    have hy : (M θ).real (s (t + 1) ⁻¹' {y}) ≠ 0 :=
       RealPreimageS_succ (M := M) h₀ h₃ hμ
     have hfd :=
       Fderiv_V.eq.Fderiv_Vc.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob
-        (M := M) hγ h₀ hπ h₁ h₂fderiv hBdd hIntg hy
+        (M := M) hγ h₀ hπ h₁ h₂fderiv hBdd hIntg hy hR
     simp [FV0, FV, hfd]
 
 
 -- created on 2026-11-13
--- updated on 2026-11-17
+-- updated on 2026-11-18

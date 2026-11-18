@@ -1,5 +1,7 @@
 module
 
+public import Initialize.Tactic.Attr.Basic
+
 public import Theorem.Rat.EqMul_Div.of.Ne_0
 public import Theorem.Nat.LtMulS.of.Gt_0.Lt
 public import Theorem.Rat.LtDivS.of.Lt.Gt_0
@@ -43,5 +45,13 @@ public theorem Rat.LtDiv.is.Lt_Mul.of.Gt_0
     rwa [EqDivMul.of.Ne_0.left] at this
     apply Ne.of.Gt h
 
+
+public theorem Rat.LtDiv.of.Lt_Mul.Gt_0
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α]
+  {x y k : α}
+  (h : x > 0)
+  (h_lt : y < x * k) :
+  y / x < k :=
+  (Rat.LtDiv.is.Lt_Mul.of.Gt_0 h y k).mpr h_lt
 
 -- created on 2025-07-06

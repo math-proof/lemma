@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/ModuleFunctorAbelianDefs.lean -/
 
 /-
@@ -8,9 +10,10 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Class.v1.Atlas.TensorCategories.code.ModuleFunctorDefs
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.CategoryTheory.Monoidal.Mon_
+public import Class.v1.Atlas.TensorCategories.code.ModuleFunctorDefs
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.CategoryTheory.Monoidal.Mon_
+public section
 set_option maxHeartbeats 400000
 
 set_option linter.all false

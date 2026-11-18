@@ -1,5 +1,6 @@
 import Lemma.Random.Integral.eq.Integral_Integral_SMul.of.All_Eq_Joint.All_EqWithDensity
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
@@ -26,8 +27,8 @@ private lemma main
   (sₜ : 𝒮)
   (aₜ : 𝒜) :
 -- imply
-  (M.traj θ).real (s t ⁻¹' {sₜ} ∩ a t ⁻¹' {aₜ}) =
-    (M.traj θ).real (s t ⁻¹' {sₜ}) * (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}) := by
+  (M θ).real (s t ⁻¹' {sₜ} ∩ a t ⁻¹' {aₜ}) =
+    (M θ).real (s t ⁻¹' {sₜ}) * (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}) := by
 -- proof
   have hS : MeasurableSet (s t ⁻¹' {sₜ}) :=
     Random.Measurable.of.All_Eq.snd.fst h₀ t (measurableSet_singleton sₜ)
@@ -96,4 +97,4 @@ private lemma main
 
 
 -- created on 2026-09-26
--- updated on 2026-11-17
+-- updated on 2026-11-18

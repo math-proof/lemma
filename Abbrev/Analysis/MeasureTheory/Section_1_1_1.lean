@@ -1,6 +1,9 @@
-import Def.Analysis.MeasureTheory.Notation.Part2
-import Theorem.Analysis.Section_9_1.Part3
-import Theorem.Analysis.MeasureTheory.Section_1_1_1.Part6
+module
+
+public import Mathlib
+public import Inductive.Analysis.MeasureTheory.Section_1_1_1
+@[expose] public section
+
 open BoundedInterval
 
 
@@ -17,4 +20,3 @@ abbrev BoundedInterval.b (I: BoundedInterval) : ℝ := match I with
   | Icc _ b => b
   | Ioc _ b => b
   | Ico _ b => b
-

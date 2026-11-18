@@ -8,20 +8,23 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.HopfAlgebra.Basic
-import Mathlib.RingTheory.Coalgebra.Convolution
-import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.CategoryTheory.Preadditive.Projective.Basic
-import Mathlib.CategoryTheory.Simple
-import Mathlib.CategoryTheory.Linear.Basic
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Mathlib.Data.Matrix.Basic
-import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
-import Mathlib.RingTheory.SimpleModule.Basic
-import Instance.v1.Atlas.TensorCategories.code.DistinguishedInvertible.Part2
-import Lemma.Category.Atlas.v1.TensorCategories.code.DistinguishedInvertible
-import Structure.v1.Atlas.TensorCategories.code.IntegralsDefs
+module
+
+public import Mathlib.RingTheory.HopfAlgebra.Basic
+public import Mathlib.RingTheory.Coalgebra.Convolution
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.CategoryTheory.Preadditive.Projective.Basic
+public import Mathlib.CategoryTheory.Simple
+public import Mathlib.CategoryTheory.Linear.Basic
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.Data.Matrix.Basic
+public import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
+public import Mathlib.RingTheory.SimpleModule.Basic
+public import Instance.v1.Atlas.TensorCategories.code.DistinguishedInvertible.Part2
+public import Theorem.Category.Atlas.v1.TensorCategories.code.DistinguishedInvertible
+public import Structure.v1.Atlas.TensorCategories.code.IntegralsDefs
+@[expose] public section
 set_option maxHeartbeats 400000
 
 set_option autoImplicit false
@@ -45,8 +48,8 @@ def Def_1_52_1_IsRightIntegral (I : H) : Prop :=
   ∀ x : H, I * x = Coalgebra.counit (R := R) x • I
 
 /-- The `k`-submodule of left integrals in `H`. -/
-def leftIntSubmodule : Submodule k H where
-  carrier := { I : H | IsLeftIntegral k H I }
+def leftIntSubmodule : Submodule R H where
+  carrier := { I : H | IsLeftIntegral R H I }
   add_mem' := by
     intro a b ha hb; exact ⟨fun x => by
       rw [mul_add, ha.left_integral x, hb.left_integral x, smul_add]⟩
@@ -56,8 +59,8 @@ def leftIntSubmodule : Submodule k H where
       rw [mul_smul_comm, hI.left_integral x, smul_comm]⟩
 
 /-- The `k`-submodule of right integrals in `H`. -/
-def rightIntSubmodule : Submodule k H where
-  carrier := { I : H | IsRightIntegral k H I }
+def rightIntSubmodule : Submodule R H where
+  carrier := { I : H | IsRightIntegral R H I }
   add_mem' := by
     intro a b ha hb; exact ⟨fun x => by
       rw [add_mul, ha.right_integral x, hb.right_integral x, smul_add]⟩

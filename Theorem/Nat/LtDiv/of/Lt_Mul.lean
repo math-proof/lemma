@@ -7,7 +7,7 @@ public section
 open Nat
 
 
-public theorem left
+public theorem Nat.LtDiv.of.Lt_Mul.left
   {k n m : ℕ}
 -- given
   (h : k < n * m) :
@@ -24,7 +24,7 @@ public theorem Nat.LtDiv.of.Lt_Mul
 -- imply
   k / n < m := by
 -- proof
-  apply left
+  apply LtDiv.of.Lt_Mul.left
   rwa [Nat.Mul.Comm]
 
 

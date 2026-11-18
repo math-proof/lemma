@@ -1,12 +1,14 @@
 module
 
+public import Mathlib
+
 public section
 
 
 /--
 This lemma applies to Nat, Int as well
 -/
-public theorem left
+public theorem Nat.EqDivMul.of.Ne_0.left
   [CommMonoidWithZero α]
   [Div α]
   [MulDivCancelClass α]

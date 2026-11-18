@@ -27,5 +27,11 @@ public theorem Int.Le0Sub.is.Ge
   sub_nonneg
 
 
+
+public theorem Int.Le0Sub.of.Ge
+  [AddGroup α] [LE α] [AddRightMono α]
+  {x y : α} (h : x ≥ y) : x - y ≥ 0 :=
+  (Int.Le0Sub.is.Ge).mpr h
+
 -- created on 2018-07-03
 -- updated on 2026-10-26

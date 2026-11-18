@@ -1,5 +1,7 @@
 module
 
+public import Initialize.Tactic.Attr.Basic
+
 public import Theorem.Nat.EqSubAdd
 public import Theorem.Nat.Sub_Add.eq.SubSub
 public import Theorem.Nat.EqAddSub.of.Ge

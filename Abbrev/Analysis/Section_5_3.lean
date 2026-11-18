@@ -1,7 +1,10 @@
-import Mathlib
-import Theorem.Analysis.Section_5_2.Part2
-import Mathlib.Algebra.Group.MinimalAxioms
-import Theorem.Analysis.Section_5_3
+module
+
+public import Mathlib
+public import Theorem.Analysis.Section_5_2.Part2
+public import Mathlib.Algebra.Group.MinimalAxioms
+public import Theorem.Analysis.Section_5_3
+@[expose] public section
 /-!
 # Analysis I, Section 5.3: The construction of the real numbers
 
@@ -29,10 +32,10 @@ Users of the companion who have completed the exercises in this section are welc
 namespace Chapter5
 
 /-- A sequence starting at zero that is Cauchy, can be viewed as a {name}`CauchySequence`. -/
-abbrev CauchySequence.mk' {a:ℕ → ℚ} (ha: (a:Sequence).IsCauchy) : CauchySequence where
+abbrev CauchySequence.mk' {a:ℕ → ℚ} (ha: (Sequence.ofNatFun a).IsCauchy) : CauchySequence where
   n₀ := 0
-  seq := (a:Sequence).seq
-  vanish := by aesop
+  seq := (Sequence.ofNatFun a).seq
+  vanish := (Sequence.ofNatFun a).vanish
   zero := rfl
   cauchy := ha
 

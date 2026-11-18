@@ -2,10 +2,13 @@
 
 -- Author: @toskua, Avocado
 
-import Mathlib.Algebra.Polynomial.Monic
-import Theorem.Algebra.Polynomial.RootBound
-import Theorem.Polynomial.RootBound
+module
 
+public import Mathlib.Algebra.Polynomial.Monic
+public import Theorem.Algebra.Polynomial.RootBound
+public import Theorem.Polynomial.RootBound
+
+@[expose] public section
 
 namespace Polynomial
 

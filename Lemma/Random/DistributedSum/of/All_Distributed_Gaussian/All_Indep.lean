@@ -18,8 +18,8 @@ private lemma main
   {x : ℕ ⇀ Ω → ℝ}
   {μ : ℕ ⇀ ℝ} {σ : ℕ ⇀ NNReal}
 -- given
-  (h₀ : ∀ k, x[k] ⟂ᵢ[π] x[:k])
-  (h₁ : ∀ k, x[k] ∼[π] gaussianReal μ[k] σ[k]²) :
+  (h₀ : ∀ (k : ℕ), x[k] ⟂ᵢ[π] x[:k])
+  (h₁ : ∀ (k : ℕ), x[k] ∼[π] gaussianReal μ[k] σ[k]²) :
 -- imply
   ∑ k : Fin n, x[k] ∼[π] gaussianReal (∑ k : Fin n, μ[k]) (∑ k : Fin n, σ[k]²) := by
 -- proof

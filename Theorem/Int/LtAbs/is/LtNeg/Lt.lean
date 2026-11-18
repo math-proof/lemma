@@ -1,5 +1,7 @@
 module
 
+public import Initialize.Tactic.Attr.Basic
+
 public import Theorem.Int.LtAbsSub.is.LtSub.Lt_Add
 
 public section

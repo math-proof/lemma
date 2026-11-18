@@ -1,6 +1,10 @@
-import Mathlib
-import Instance.Analysis.Section_11_1.Part8
-import Abbrev.Analysis.Section_11_2.Part3
+module
+
+public import Mathlib
+public import Instance.Analysis.Section_11_1.Part8
+public import Abbrev.Analysis.Section_11_2.Part3
+
+public section
 /-!
 # Analysis I, Section 11.2: Piecewise constant functions
 
@@ -21,14 +25,18 @@ namespace Chapter11
 
 open BoundedInterval
 
-theorem PiecewiseConstantWith.def (f:ℝ → ℝ) {I: BoundedInterval} {P: Partition I} :
+public theorem PiecewiseConstantWith.def (f:ℝ → ℝ) {I: BoundedInterval} {P: Partition I} :
   PiecewiseConstantWith f P ↔ ∀ J ∈ P, ∃ c, ∀ x ∈ J, f x = c := by
     simp [PiecewiseConstantWith, ConstantOn, Constant, mem_iff]
 
-theorem PiecewiseConstantWith.congr {f g:ℝ → ℝ} {I: BoundedInterval} {P: Partition I}
+public theorem PiecewiseConstantWith.congr {f g:ℝ → ℝ} {I: BoundedInterval} {P: Partition I}
   (h: ∀ x ∈ (I:Set ℝ), f x = g x) :
   PiecewiseConstantWith f P ↔ PiecewiseConstantWith g P := by
-  simp [PiecewiseConstantWith]; peel with J hJ
-  apply ConstantOn.congr; have := P.contains _ hJ; grind [subset_iff]
+  simp [PiecewiseConstantWith, ConstantOn]
+  peel with J hJ
+  simp_rw [iff_iff_eq]
+  congr
+  have := P.contains _ hJ
+  grind [subset_iff]
 
 end Chapter11

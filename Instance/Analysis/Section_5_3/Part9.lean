@@ -1,7 +1,11 @@
-import Mathlib
-import Theorem.Analysis.Section_5_2.Part2
-import Mathlib.Algebra.Group.MinimalAxioms
-import Theorem.Analysis.Section_5_3.Part11
+module
+
+public import Mathlib
+public import Theorem.Analysis.Section_5_2.Part2
+public import Mathlib.Algebra.Group.MinimalAxioms
+public import Theorem.Analysis.Section_5_3.Part11
+public import Theorem.Analysis.Section_5_3.Part7
+@[expose] public section
 /-!
 # Analysis I, Section 5.3: The construction of the real numbers
 
@@ -30,5 +34,8 @@ namespace Chapter5
 
 /-- Default definition of division. -/
 noncomputable instance Real.instDivInvMonoid : DivInvMonoid Real where
+  mul_assoc := Real.mul_assoc
+  one_mul := fun a => Real.one_mul a
+  mul_one := fun a => Real.mul_one a
 
 end Chapter5

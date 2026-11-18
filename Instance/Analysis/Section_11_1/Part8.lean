@@ -1,5 +1,14 @@
-import Mathlib
-import Theorem.Analysis.Section_11_1.Part12
+module
+
+public import Mathlib
+public import Theorem.Analysis.Section_11_1.Part12
+public import Instance.Analysis.Section_11_1.Part2
+public import Instance.Analysis.Section_11_1.Part3
+public import Instance.Analysis.Section_11_1.Part4
+public import Instance.Analysis.Section_11_1.Part7
+public import Theorem.Analysis.Section_11_1.Part6
+public import Theorem.Analysis.Section_11_1.Part7
+@[expose] public section
 /-!
 # Analysis I, Section 11.1: Partitions
 
@@ -38,7 +47,10 @@ noncomputable instance Partition.instMax (I: BoundedInterval) : Max (Partition I
     contains L hL := by
       simp at hL; obtain ⟨ J, hJ, K, hK, rfl ⟩ := hL
       apply P.contains at hJ; apply P'.contains at hK
-      simp [subset_iff] at *; grind [Set.inter_subset_left]
+      simp [subset_iff] at *
+      intro w hw
+      have hwJK := (BoundedInterval.mem_inter J K w).mp hw
+      exact hJ hwJK.1
     }
 
 end Chapter11

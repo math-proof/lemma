@@ -8,20 +8,25 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.TensorCategories.code.DeligneTensorProductDef
-import Mathlib.CategoryTheory.Linear.LinearFunctor
-import Mathlib.RingTheory.TensorProduct.Basic
-import Mathlib.LinearAlgebra.TensorProduct.Map
-import Mathlib.Algebra.Category.ModuleCat.Basic
-import Mathlib.Algebra.Category.ModuleCat.Algebra
-import Mathlib.RingTheory.TensorProduct.Finite
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.CategoryTheory.Limits.ExactFunctor
-import Mathlib.CategoryTheory.Products.Basic
-import Mathlib.CategoryTheory.Equivalence
-import Mathlib.CategoryTheory.Monoidal.Category
-import Mathlib.Algebra.Category.ModuleCat.Abelian
-import Theorem.v1.Atlas.TensorCategories.code.DeligneTensorProduct.Part2
+module
+
+public import Structure.v1.Atlas.TensorCategories.code.DeligneTensorProductDef
+public import Mathlib.CategoryTheory.Linear.LinearFunctor
+public import Mathlib.RingTheory.TensorProduct.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.Map
+public import Mathlib.Algebra.Category.ModuleCat.Basic
+public import Mathlib.Algebra.Category.ModuleCat.Algebra
+public import Mathlib.RingTheory.TensorProduct.Finite
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.CategoryTheory.Limits.ExactFunctor
+public import Mathlib.CategoryTheory.Products.Basic
+public import Mathlib.CategoryTheory.Equivalence
+public import Mathlib.CategoryTheory.Monoidal.Category
+public import Mathlib.Algebra.Category.ModuleCat.Abelian
+public import Theorem.v1.Atlas.TensorCategories.code.DeligneTensorProduct.Part2
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 
@@ -120,6 +125,24 @@ def boxtimesMap (f : M₁ →ₗ[A] M₂) (g : N₁ →ₗ[B] N₂) :
         simp only [map_add, LinearMap.add_apply] at hr₁ hr₂ ⊢; rw [hr₁, hr₂]
   }
 
+end BoxtimesMap
+
+section HomMap
+
+variable (A : Type) [Ring A] [Algebra k A]
+
+variable (B : Type) [Ring B] [Algebra k B]
+
+variable (M₁ N₁ : Type) [AddCommGroup M₁] [Module k M₁] [Module A M₁]
+  [IsScalarTower k A M₁]
+  [AddCommGroup N₁] [Module k N₁] [Module A N₁]
+  [IsScalarTower k A N₁] [SMulCommClass k A N₁]
+
+variable (M₂ N₂ : Type) [AddCommGroup M₂] [Module k M₂] [Module B M₂]
+  [IsScalarTower k B M₂]
+  [AddCommGroup N₂] [Module k N₂] [Module B N₂]
+  [IsScalarTower k B N₂] [SMulCommClass k B N₂]
+
 /-- The `k`-bilinear map `(f, g) ↦ f ⊗ g` from `Hom_A(M₁, N₁) × Hom_B(M₂, N₂)` to
 `Hom_k(M₁ ⊗ M₂, N₁ ⊗ N₂)`. -/
 def homMapBilinear :
@@ -155,15 +178,6 @@ categories `ModuleCat A` and `ModuleCat B` admit a Deligne tensor product whose
 underlying category is equivalent to `ModuleCat (A ⊗[k] B)`. -/
 def prop_1_46_2_i_abelian :
     Abelian (ModuleCat (A ⊗[k] B)) := inferInstance
-
-/-- Proposition 1.46.2(ii): the Deligne tensor product is unique up to equivalence;
-any two witnesses `T₁` and `T₂` for `HasDeligneTensorProduct k C D` give equivalent
-underlying categories `T₁.tensorCat ≌ T₂.tensorCat`. -/
-
-variable. -/
-
-variable extends to an exact `k`-linear functor `F_bar : T.tensorCat ⥤ A` with
-`F_bar ∘ ⊠ ≅ F`. -/
 
 end Properties
 

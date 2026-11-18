@@ -1,6 +1,7 @@
 import Class.Dynamics.PolicyTrajectory
 import Mathlib.MeasureTheory.Measure.Prod
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory PolicyGradient PolicyGradient.Model
 
@@ -24,8 +25,8 @@ private lemma main
   refine ⟨fun θ t => ?_⟩
   have hmeas : Measurable fun ω => (a t ω, s t ω) :=
     (htr.measurable_a t).prodMk (htr.measurable_s t)
-  have hmap : (M.traj θ).map (s t) =
-      ((M.traj θ).map (fun ω => (a t ω, s t ω))).map Prod.snd := by
+  have hmap : (M θ).map (s t) =
+      ((M θ).map (fun ω => (a t ω, s t ω))).map Prod.snd := by
     rw [Measure.map_map measurable_snd hmeas]
     rfl
   rw [hmap]
@@ -35,4 +36,4 @@ private lemma main
 
 
 -- created on 2026-11-03
--- updated on 2026-11-17
+-- updated on 2026-11-18

@@ -28,6 +28,8 @@ universe v u
 
 variable (C : Type u) [Category.{v} C] [MonoidalCategory C]
 
+attribute [local instance] endofunctorMonoidalCategory
+
 /-- The right-tensoring functor `C → C ⥤ C`, `X ↦ • ⊗ X`, is naturally a monoidal functor,
 giving the monoidal embedding of `C` into its category of endofunctors. -/
 instance tensoringRight_monoidal : (tensoringRight C).Monoidal := inferInstance

@@ -1,6 +1,8 @@
-import Mathlib
-import Theorem.Analysis.Section_4_3.Part2
-import Theorem.Analysis.Section_5_1.Part7
+module
+
+public import Mathlib
+public import Structure.Analysis.Section_5_1
+@[expose] public section
 set_option doc.verso.suggestions false
 
 /-!
@@ -28,6 +30,6 @@ Users of the companion who have completed the exercises in this section are welc
 
 namespace Chapter5
 
-abbrev Sequence.BoundedBy (a:Sequence) (M:ℚ) : Prop := ∀ n, |a n| ≤ M
+abbrev Sequence.BoundedBy (a:Sequence) (M:ℚ) : Prop := ∀ n, |a.seq n| ≤ M
 
 end Chapter5

@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/ChowLemmaAssembly.lean -/
 
 /-
@@ -8,8 +10,9 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Instance.v1.Atlas.AlgebraicGeometryI.code.ChowLemmaHelper
-import Def.v1.Atlas.AlgebraicGeometryI.code.ChowHelperBlowupProjective
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.ChowLemmaHelper
+public import Def.v1.Atlas.AlgebraicGeometryI.code.ChowHelperBlowupProjective
+public section
 open AlgebraicGeometry CategoryTheory Limits
 
 universe u

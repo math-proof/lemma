@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.AlgebraicGeometryI.code.BezoutTheorem
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BezoutTheorem
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochGeneral
-import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRochGeneral
+module
+
+public import Def.v1.Atlas.AlgebraicGeometryI.code.BezoutTheorem
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BezoutTheorem
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochGeneral
+public import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRochGeneral
+
+@[expose] public section
+
 set_option maxHeartbeats 1600000
 
 open Polynomial

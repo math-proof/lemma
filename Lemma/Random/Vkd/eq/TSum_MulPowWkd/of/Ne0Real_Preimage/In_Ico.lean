@@ -1,6 +1,5 @@
 import Lemma.Random.NormWkd.le.Abs_R
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
+import Instance.Dynamics.PolicyTrajectory
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
@@ -18,10 +17,11 @@ private lemma main
   (_h : γ ∈ Set.Ico 0 1)
   (θ : Θ)
   (sₜ : 𝒮)
-  (_hP : (M.traj θ).real ((fun ω : ℕ → ℝ × 𝒮 × 𝒜 => (ω 0).2.1) ⁻¹' {sₜ}) ≠ 0) :
+  (_hP : (M θ).real ((fun ω : ℕ → ℝ × 𝒮 × 𝒜 => (ω 0).2.1) ⁻¹' {sₜ}) ≠ 0)
+  (R : ℝ) :
 -- imply
-  M.V0 θ γ sₜ = ∑' k, γ ^ k * M.Wkd θ k sₜ := rfl
+  M.V0 R θ γ sₜ = ∑' k, γ ^ k * M.Wkd R θ k sₜ := rfl
 
 
 -- created on 2026-10-07
--- updated on 2026-11-17
+-- updated on 2026-11-18

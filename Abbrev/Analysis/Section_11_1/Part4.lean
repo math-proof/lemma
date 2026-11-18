@@ -1,5 +1,12 @@
-import Mathlib
-import Theorem.Analysis.Section_11_1.Part10
+module
+
+public import Mathlib
+public import Abbrev.Analysis.Section_11_1.Part3
+public import Instance.Analysis.Section_11_1.Part2
+public import Structure.Analysis.Section_11_1
+public import Theorem.Analysis.Section_11_1.Part4
+public import Theorem.Analysis.Section_11_1.Part6
+@[expose] public noncomputable section
 /-!
 # Analysis I, Section 11.1: Partitions
 
@@ -21,7 +28,7 @@ namespace Chapter11
 
 open BoundedInterval
 
-noncomputable abbrev Partition.join {I J K:BoundedInterval} (P: Partition I) (Q: Partition J) (h: K.joins I J) : Partition K
+abbrev Partition.join {I J K:BoundedInterval} (P: Partition I) (Q: Partition J) (h: K.joins I J) : Partition K
 :=
 {
   intervals := P.intervals ∪ Q.intervals

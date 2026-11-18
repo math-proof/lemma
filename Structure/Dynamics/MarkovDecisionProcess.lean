@@ -38,17 +38,11 @@ structure MDPSpec (S : Type u) (A : Type v) [MeasurableSpace S] [MeasurableSpace
 namespace PolicyGradient
 
 /-- Standard stochastic MDP environment with bounded rewards. -/
-structure StochasticMDP (S A : Type*) [MeasurableSpace S] [MeasurableSpace A] where
-  init : ProbabilityMeasure S
-  trans : S × A → ProbabilityMeasure S
-  reward : S × A → ProbabilityMeasure ℝ
-  R : ℝ
-  reward_bdd : ∀ p, (reward p : Measure ℝ) (Set.Icc (-R) R) = 1
-
-/-- `init` is a probability measure (compatibility with the former structure field `init_prob`). -/
-theorem StochasticMDP.init_prob {S A : Type*} [MeasurableSpace S] [MeasurableSpace A]
-    (m : StochasticMDP S A) :
-    IsProbabilityMeasure (m.init : Measure S) := inferInstance
+structure StochasticMDP (𝒮 𝒜 : Type*) [MeasurableSpace 𝒮] [MeasurableSpace 𝒜] where
+  init : ProbabilityMeasure 𝒮
+  trans : 𝒮 × 𝒜 → ProbabilityMeasure 𝒮
+  reward : 𝒮 × 𝒜 → ProbabilityMeasure ℝ
+  reward_bdd : ∃ R, ∀ p, (reward p : Measure ℝ) (Set.Icc (-R) R) = 1
 
 /-- A parameterized policy `π[θ] sₜ aₜ = π_θ(aₜ | sₜ)` on a general (e.g. continuous) action space. -/
 structure Policy (Θ 𝒮 𝒜 : Type*) [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜] where

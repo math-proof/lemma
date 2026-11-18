@@ -12,7 +12,7 @@ module
 
 public import Theorem.v1.Atlas.TensorCategories.code.GrothendieckRing.Part2
 public import Lemma.Category.Atlas.v1.TensorCategories.code.GrothendieckRing
-public import Lemma.Category.Atlas.v1.TensorCategories.code.TensorCategoryDef
+public import Theorem.Category.Atlas.v1.TensorCategories.code.TensorCategoryDef
 public import Abbrev.v1.Atlas.TensorCategories.code.TensorCategoryDef.Part3
 public import Lemma.Category.Atlas.v1.TensorCategories.code.Prop_1_45_10
 public import Def.v1.Atlas.TensorCategories.code.GrothendieckRingCategorical.Part3

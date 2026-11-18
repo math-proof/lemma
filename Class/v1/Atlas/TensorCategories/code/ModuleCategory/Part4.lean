@@ -25,22 +25,6 @@ open Category MonoidalCategory
 
 open LeftModCat
 
-attribute [reassoc] LeftModuleCategory.actTensorHom_def
-
-attribute [reassoc, simp] LeftModuleCategory.actWhiskerLeft_id
-
-attribute [reassoc, simp] LeftModuleCategory.actId_whiskerRight
-
-attribute [reassoc (attr := simp)] LeftModuleCategory.actTensorHom_comp
-
-attribute [reassoc] LeftModuleCategory.actAssociator_naturality
-
-attribute [reassoc] LeftModuleCategory.actLeftUnitor_naturality
-
-attribute [reassoc (attr := simp)] LeftModuleCategory.actPentagon
-
-attribute [reassoc (attr := simp)] LeftModuleCategory.actTriangle
-
 /-- Definition 2.1.6 (EGNO): A predicate `P : M → Prop` defines a module subcategory of the
 left module category `M` if it is closed under the action of `C`, i.e. `P N` implies
 `P (X ⊗ᵐ N)` for every `X : C`. -/

@@ -1,4 +1,5 @@
 import Def.Probability.Process.HiddenMarkovSequence.Part2
+import Def.Probability.Process.HiddenMarkovSequence
 import Initialize.Tactic.Attr.Basic
 
 

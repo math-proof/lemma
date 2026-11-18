@@ -15,4 +15,10 @@ public theorem List.LengthAppend.eq.AddLengthS
   apply List.length_append
 
 
+public theorem List.AddLengthS.eq.LengthAppend
+  (a b : List α) :
+  a.length + b.length = (a ++ b).length :=
+  (List.LengthAppend.eq.AddLengthS a b).symm
+
+
 -- created on 2025-05-08

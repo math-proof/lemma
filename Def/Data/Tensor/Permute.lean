@@ -1,11 +1,16 @@
-import Def.Data.Tensor.Defs.Part4
+module
+
+public import Def.Data.Tensor.Defs.Part4
+public import Def.Data.Vector.Basic.Part2
+
+@[expose] public section
 open Bool Nat Int List Lean Tensor
 
 
 def Tensor.rotate (X : Tensor α s) (i : ℕ): Tensor α (s.rotate i) :=
   let k := i % s.length
   let data : List.Vector α (List.drop k s ++ List.take k s).prod := cast (by simp) (X.data.splitAt k).transpose.flatten
-  ⟨cast (by rw [AppendDrop__Take.eq.Rotate s i]) data⟩
+  ⟨cast (by rw [Eq.symm (Rotate.eq.AppendDrop__Take s i)]) data⟩
 
 def Tensor.permuteHead (X : Tensor α s) (size : ℕ) : Tensor α ((s.take size).rotate 1 ++ s.drop size) :=
   let X : Tensor _ (s.take size) := ⟨X.data.splitAt size⟩
@@ -70,7 +75,7 @@ def Tensor.transpose (X : Tensor α s) (i j : ℕ) : Tensor α (s.swap i j) :=
     cast
       (by
         apply UFn.of.Eq (f := Tensor α)
-        rw [PermutePermute.eq.Swap.of.Lt.GtLength h_j h_lt]
+        rw [Eq.symm (Swap.eq.PermutePermute.of.Lt.GtLength h_j h_lt)]
         rw [Swap.of.Prod.eq.IteGt h_ite]
       )
       ((X.permute ⟨i, h_i⟩ (d - 1)).permute ⟨j, h_j'⟩ (-d))

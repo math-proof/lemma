@@ -1,4 +1,5 @@
 import Theorem.Data.Vector.Basic.Part2
+import Instance.Data.Vector.Basic.Dot
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory
@@ -22,4 +23,4 @@ private lemma main
 
 
 -- created on 2026-10-09
--- updated on 2026-11-17
+-- updated on 2026-11-18

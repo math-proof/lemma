@@ -1,5 +1,7 @@
 module
 
+public import Initialize.Tactic.Attr.Basic
+
 public import Theorem.Nat.EqAdd_Sub.of.Ge
 
 public section
@@ -8,7 +10,7 @@ open Nat
 
 
 @[comm 2]
-public theorem left
+public theorem Nat.Ne_Sub.of.NeAdd.Ge.left
   {x a b : ℕ}
 -- given
   (h₀ : a ≥ b)

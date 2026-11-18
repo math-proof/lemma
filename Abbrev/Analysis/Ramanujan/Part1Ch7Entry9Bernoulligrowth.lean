@@ -4,45 +4,48 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.Calculus.FDeriv.Defs
-import Mathlib.Analysis.SpecialFunctions.Pow.Complex
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Def.Analysis.Ramanujan.Part1Ch7PowerDifference
-import Theorem.Complex.Part1Ch7PowerDifference
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.Order.Floor.Defs
-import Mathlib.Algebra.Polynomial.Basic
-import Mathlib.Analysis.Calculus.ContDiff.Basic
-import Mathlib.Analysis.Complex.Convex
-import Mathlib.Analysis.Complex.Exponential
-import Mathlib.Analysis.Complex.LocallyUniformLimit
-import Mathlib.Analysis.Complex.Trigonometric
-import Mathlib.Analysis.Meromorphic.Basic
-import Mathlib.Analysis.PSeries
-import Mathlib.Analysis.Real.Sqrt
-import Mathlib.Analysis.SpecialFunctions.Complex.Log
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Basic.Complex.Basic
-import Mathlib.Data.Finset.Defs
-import Mathlib.Data.Finset.Range
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.Data.Set.Defs
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.NumberTheory.Bernoulli
-import Mathlib.NumberTheory.BernoulliPolynomials
-import Mathlib.NumberTheory.Harmonic.EulerMascheroni
-import Mathlib.NumberTheory.LSeries.HurwitzZeta
-import Mathlib.NumberTheory.LSeries.ZMod
-import Mathlib.Order.Filter.Basic
-import Mathlib.Order.Interval.Set.Defs
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.Basic
+module
+
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Calculus.FDeriv.Defs
+public import Mathlib.Analysis.SpecialFunctions.Pow.Complex
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Def.Analysis.Ramanujan.Part1Ch7PowerDifference
+public import Theorem.Complex.Part1Ch7PowerDifference
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.Order.Floor.Defs
+public import Mathlib.Algebra.Polynomial.Basic
+public import Mathlib.Analysis.Calculus.ContDiff.Basic
+public import Mathlib.Analysis.Complex.Convex
+public import Mathlib.Analysis.Complex.Exponential
+public import Mathlib.Analysis.Complex.LocallyUniformLimit
+public import Mathlib.Analysis.Complex.Trigonometric
+public import Mathlib.Analysis.Meromorphic.Basic
+public import Mathlib.Analysis.PSeries
+public import Mathlib.Analysis.Real.Sqrt
+public import Mathlib.Analysis.SpecialFunctions.Complex.Log
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.Data.Finset.Defs
+public import Mathlib.Data.Finset.Range
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.Data.Set.Defs
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.NumberTheory.Bernoulli
+public import Mathlib.NumberTheory.BernoulliPolynomials
+public import Mathlib.NumberTheory.Harmonic.EulerMascheroni
+public import Mathlib.NumberTheory.LSeries.HurwitzZeta
+public import Mathlib.NumberTheory.LSeries.ZMod
+public import Mathlib.Order.Filter.Basic
+public import Mathlib.Order.Interval.Set.Defs
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.Basic
+@[expose] public section
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 7
 

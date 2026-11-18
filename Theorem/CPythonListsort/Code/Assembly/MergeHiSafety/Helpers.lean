@@ -4,6 +4,9 @@ module
 
 public import Structure.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part5
 public import Structure.CPythonListsort.Code.Assembly.MergeGetmemRequestBound
+public import Theorem.CPythonListsort.Code.Assembly.MergeGetmemRequestBound
+public import Theorem.CPythonListsort.Code.Assembly.MergeGetmemStorageValid
+public import Lemma.List.Atlas.CPythonListsort.Code.Transcription.MergeAt
 public import Def.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
 public import Def.CPythonListsort.Code.Assembly.MergeHiSafety
 public import Def.CPythonListsort.Code.Assembly.MergeHiSafety.Part2
@@ -11,11 +14,14 @@ public import Def.CPythonListsort.Code.Assembly.MergeHiSafety.Part3
 public import Structure.CPythonListsort.Code.Assembly.MergeHiSafety
 public import Structure.CPythonListsort.Code.Assembly.MergeHiSafety.Part2
 public import Structure.CPythonListsort.Code.Assembly.MergeHiSafety.Part3
+public import Structure.CPythonListsort.Code.Assembly.MergeHiSafety.Part4
+public import Structure.CPythonListsort.Code.Assembly.MergeHiSafety.Part5
 public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.AccessTrace
 public import Lemma.List.Atlas.CPythonListsort.Code.Transcription.MergeMemory
 public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.SortSliceSafety
 public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.MergeTracePrimitives
 public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopSafety
+public import Lemma.List.Atlas.CPythonListsort.Code.Transcription.MergeHi
 public import Theorem.CPythonListsort.Code.Assembly.AccessTrace.Part2
 /-!
 # `merge_hi` traced execution and safety
@@ -28,10 +34,12 @@ public section
 
 open CPythonListsort
 open CPythonListsort.MergeHiStableFrame
-open CPythonListsort.MergeHiStorageFrame
-open CPythonListsort.MergeHiCursorInvariant
+open CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame
+open CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame.MergeHiCursorInvariant
 open CPythonListsort.AccessTrace
 open CPythonListsort.TempRangeInBounds
+open CPythonListsort.GallopKeySource
+open CPythonListsort.TempRangeInBounds.MergeMovementFrame.MovementAccessOnly.AccessTrace.HasAccess
 open SortSlice
 
 attribute [local simp]
@@ -39,6 +47,7 @@ attribute [local simp]
   TraceResult.erase_map
   TraceResult.erase_pure
   TraceResult.erase_failure
+  TraceResult.erase_markFuelExhausted
 
 universe u v
 
@@ -48,8 +57,7 @@ namespace CPythonListsort
 [erase_mergeHiTraceOption](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean)
 -/
 public theorem erase_mergeHiTraceOption
-  {κ : Type u}
-  {ν : Type v}
+  {α : Type _}
   {value : Option α} :
 -- imply
   (mergeHiTraceOption value).erase = value := by
@@ -106,9 +114,9 @@ private theorem mergeHiMemoryEventFree_bind (current : TraceResult α)
   (hnext : ∀ value, MergeHiMemoryEventFree (next value)) :
   MergeHiMemoryEventFree (current.bind next) := by
   exact
-    ⟨TraceResult.memoryEvents_bind_eq_nil current next hcurrent.1
+    ⟨TraceResult.memoryEvents_bind_eq_nil hcurrent.1
       (fun value => (hnext value).1),
-      TraceResult.policyEvents_bind_eq_nil current next hcurrent.2
+      TraceResult.policyEvents_bind_eq_nil hcurrent.2
         (fun value => (hnext value).2)⟩
 
 end CPythonListsort
@@ -604,7 +612,6 @@ private theorem mergeHiMemoryEventFree_mainDataMemmove
   unfold mainDataMemmoveTraced?
   apply mergeHiMemoryEventFree_map
   exact mergeHiMemoryEventFree_memmove _ _ _ _ _
-set_option linter.flexible false in
 
 end CPythonListsort
 
@@ -637,7 +644,6 @@ private theorem mergeHiMemoryEventFree_leftRightExponential
           · exact mergeHiMemoryEventFree_failure
         · exact mergeHiMemoryEventFree_pure _
     · exact mergeHiMemoryEventFree_pure _
-set_option linter.flexible false in
 
 end CPythonListsort
 
@@ -670,7 +676,6 @@ private theorem mergeHiMemoryEventFree_leftLeftExponential
           · exact ih _ _
           · exact mergeHiMemoryEventFree_failure
     · exact mergeHiMemoryEventFree_pure _
-set_option linter.flexible false in
 
 end CPythonListsort
 
@@ -703,7 +708,6 @@ private theorem mergeHiMemoryEventFree_rightLeftExponential
           · exact mergeHiMemoryEventFree_failure
         · exact mergeHiMemoryEventFree_pure _
     · exact mergeHiMemoryEventFree_pure _
-set_option linter.flexible false in
 
 end CPythonListsort
 
@@ -736,7 +740,6 @@ private theorem mergeHiMemoryEventFree_rightRightExponential
           · exact ih _ _
           · exact mergeHiMemoryEventFree_failure
     · exact mergeHiMemoryEventFree_pure _
-set_option linter.flexible false in
 
 end CPythonListsort
 
@@ -766,7 +769,6 @@ private theorem mergeHiMemoryEventFree_leftBinary
         · exact ih _ _
         · exact ih _ _
     · exact mergeHiMemoryEventFree_pure _
-set_option linter.flexible false in
 
 end CPythonListsort
 
@@ -1350,6 +1352,45 @@ end CPythonListsort
 namespace CPythonListsort
 
 /--
+[mergeTempWrite_eq_mergeHiTempWrite](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean)
+-/
+public theorem mergeTempWrite_eq_mergeHiTempWrite
+  {κ : Type u}
+  {ν : Type v}
+  {storage : TempStorage κ ν}
+  {index : Int}
+  {entry : SortSliceEntry κ ν} :
+-- imply
+  mergeTempWrite? storage index entry = mergeHiTempWrite? storage index entry := by
+-- proof
+  by_cases hindex : 0 ≤ index
+  · by_cases hbounds : index.toNat < storage.cells.size <;>
+    simp [mergeTempWrite?, mergeHiTempWrite?, hindex, hbounds,
+      Array.setIfInBounds]
+  · simp [mergeTempWrite?, mergeHiTempWrite?, hindex]
+
+end CPythonListsort
+
+namespace CPythonListsort
+
+/--
+[mainToTempCell_eq_mergeHiCopyDataToTemp](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean)
+-/
+public theorem mainToTempCell_eq_mergeHiCopyDataToTemp
+  {κ : Type u}
+  {ν : Type v}
+  {state : MergeState κ ν}
+  {dst src : Int} :
+-- imply
+  mainToTempCell? state dst src = mergeHiCopyDataToTemp? state dst src := by
+-- proof
+  simp [mainToTempCell?, mergeHiCopyDataToTemp?, mergeTempWrite_eq_mergeHiTempWrite]
+
+end CPythonListsort
+
+namespace CPythonListsort
+
+/--
 [tempToMainCell_eq_mergeHiCopyTempToData](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean)
 -/
 public theorem tempToMainCell_eq_mergeHiCopyTempToData
@@ -1360,7 +1401,7 @@ public theorem tempToMainCell_eq_mergeHiCopyTempToData
 -- imply
   tempToMainCell? state dst src = mergeHiCopyTempToData? state dst src := by
 -- proof
-  simp [tempToMainCell?, mergeHiCopyTempToData?]
+  simp [tempToMainCell?, mergeHiCopyTempToData?, mergeTempRead_eq_mergeHiTempRead]
 
 end CPythonListsort
 
@@ -1384,7 +1425,8 @@ public theorem mainToTempMemcpy_eq_mergeHiMemcpyDataToTemp
   induction count generalizing state dst src with
   | zero => rfl
   | succ count ih =>
-    simp [mainToTempMemcpy?, mergeHiMemcpyDataToTemp?, ih]
+    simp [mainToTempMemcpy?, mergeHiMemcpyDataToTemp?, ih,
+      mainToTempCell_eq_mergeHiCopyDataToTemp]
 
 end CPythonListsort
 
@@ -1408,7 +1450,8 @@ public theorem tempToMainMemcpy_eq_mergeHiMemcpyTempToData
   induction count generalizing state dst src with
   | zero => rfl
   | succ count ih =>
-    simp [tempToMainMemcpy?, mergeHiMemcpyTempToData?, ih]
+    simp [tempToMainMemcpy?, mergeHiMemcpyTempToData?, ih,
+      tempToMainCell_eq_mergeHiCopyTempToData]
 
 end CPythonListsort
 
@@ -1489,7 +1532,7 @@ public theorem erase_mergeHiMoveBBlockTraced
   · simp [hcount]
   · simp only [hcount, ↓reduceIte, TraceResult.erase_map,
     erase_tempToMainMemcpyTraced]
-    rw [tempToMainMemcpy_eq_mergeHiMemcpyTempToData .gallopTempToData rfl]
+    rw [tempToMainMemcpy_eq_mergeHiMemcpyTempToData (site := .gallopTempToData) rfl]
     exact optionMap_eq_bindSome _ _
 
 end CPythonListsort
@@ -1555,8 +1598,8 @@ public theorem erase_mergeHiSucceedTraced
   · simp [hnb]
   · simp only [hnb, ↓reduceIte, TraceResult.erase_map,
     erase_tempToMainMemcpyTraced]
-    rw [tempToMainMemcpy_eq_mergeHiMemcpyTempToData .finalTempToData rfl]
-    cases hcopy : mergeHiMemcpyTempToData? .finalTempToData rfl cursor.nb
+    rw [tempToMainMemcpy_eq_mergeHiMemcpyTempToData (site := .finalTempToData) rfl]
+    cases hcopy : mergeHiMemcpyTempToData? (site := .finalTempToData) rfl cursor.nb
       cursor.state (cursor.dest - Int.ofNat (cursor.nb - 1)) 0 <;>
       simp
 
@@ -1595,10 +1638,23 @@ end CPythonListsort
 
 namespace CPythonListsort
 
+public theorem initializedTempPrefix_agreesWithSlice_of_eq_some
+  {κ : Type u} {ν : Type v}
+  {storage : TempStorage κ ν} {count : Nat} {slice : SortSlice κ ν}
+  (hresult : initializedTempPrefix? storage count = some slice) :
+  (GallopKeySource.temporary storage 0).AgreesWithSlice slice 0 count := by
+  apply GallopKeySource.temporary_agreesWithSlice_of_entries
+  simpa using
+    (initializedTempPrefix_cells_of_eq_some storage count slice hresult).2
+
+end CPythonListsort
+
+namespace CPythonListsort
+
 variable {κ : Type u} {ν : Type v}
 /--
 [erase_mergeHiTemporaryGallopLeft_of_eq_some](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean)
--/
+
 gallop whenever prefix materialization succeeds.  No safety premise is needed:
 outside the signed gallop domain both evaluators reject by the same guard. -/
 public theorem erase_mergeHiTemporaryGallopLeft_of_eq_some
@@ -1609,13 +1665,12 @@ public theorem erase_mergeHiTemporaryGallopLeft_of_eq_some
     gallopLeft? state slice 0 key count hint := by
   rw [erase_gallopLeftTraced]
   by_cases hInput : 0 < count ∧ hint < count ∧ count ≤ PY_SSIZE_T_MAX
-  · exact gallopLeftFromSource_eq_slice_of_ssize state
-    (.temporary state.a 0) slice 0 key count hint
-    (initializedTempPrefix_agreesWithSlice_of_eq_some state.a count slice
-      hSlice)
-    hInput.1 hInput.2.1 hInput.2.2
+  · exact (gallopLeftFromSource_eq_slice_of_ssize state
+      (.temporary state.a 0) slice 0 key count hint
+      (initializedTempPrefix_agreesWithSlice_of_eq_some hSlice)
+      hInput.1 hInput.2.1 hInput.2.2)
   · unfold gallopLeftFromSource? gallopLeft?
-    simp only [hInput, if_false]
+    simp [hInput]
 
 end CPythonListsort
 
@@ -1752,6 +1807,7 @@ public theorem of_movement
 
 end CPythonListsort.MergeHiStableFrame
 
+
 namespace CPythonListsort.MergeHiStableFrame
 
 /--
@@ -1780,7 +1836,7 @@ public theorem of_getmem
 
 end CPythonListsort.MergeHiStableFrame
 
-namespace CPythonListsort.MergeHiStorageFrame
+namespace CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame
 
 /--
 [refl](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean)
@@ -1794,9 +1850,9 @@ public theorem refl
 -- proof
   constructor <;> rfl
 
-end CPythonListsort.MergeHiStorageFrame
+end CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame
 
-namespace CPythonListsort.MergeHiStorageFrame
+namespace CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame
 
 /--
 [trans](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean)
@@ -1817,9 +1873,9 @@ public theorem trans
       hasValues := hsecond.hasValues.trans hfirst.hasValues
       alloced := hsecond.alloced.trans hfirst.alloced }
 
-end CPythonListsort.MergeHiStorageFrame
+end CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame
 
-namespace CPythonListsort.MergeHiStorageFrame
+namespace CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame
 
 /--
 [of_movement](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean)
@@ -1838,9 +1894,9 @@ public theorem of_movement
     hasValues := hframe.tempValuesMode
     alloced := hframe.alloced }
 
-end CPythonListsort.MergeHiStorageFrame
+end CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame
 
-namespace CPythonListsort.MergeHiStorageFrame
+namespace CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame
 
 /--
 [physicalSlots_eq](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean)
@@ -1857,9 +1913,9 @@ public theorem physicalSlots_eq
   simp only [TempStorage.physicalSlots, TempStorage.multiplier]
   rw [hframe.cellsSize, hframe.hasValues]
 
-end CPythonListsort.MergeHiStorageFrame
+end CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame
 
-namespace CPythonListsort.MergeHiCursorInvariant
+namespace CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame.MergeHiCursorInvariant
 
 /--
 [ssaInBounds](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean)
@@ -1886,9 +1942,9 @@ public theorem ssaInBounds
   simp only [Int.ofNat_eq_natCast, Nat.cast_add] at heq hrange ⊢
   constructor <;> omega
 
-end CPythonListsort.MergeHiCursorInvariant
+end CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame.MergeHiCursorInvariant
 
-namespace CPythonListsort.MergeHiCursorInvariant
+namespace CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame.MergeHiCursorInvariant
 
 /--
 [ssbInBounds](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean)
@@ -1914,9 +1970,9 @@ public theorem ssbInBounds
   simp only [Int.ofNat_eq_natCast] at heq ⊢
   constructor <;> omega
 
-end CPythonListsort.MergeHiCursorInvariant
+end CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame.MergeHiCursorInvariant
 
-namespace CPythonListsort.MergeHiCursorInvariant
+namespace CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame.MergeHiCursorInvariant
 
 /--
 [destInBounds](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean)
@@ -1943,9 +1999,9 @@ public theorem destInBounds
   simp only [Int.ofNat_eq_natCast, Nat.cast_add] at heq hrange ⊢
   constructor <;> omega
 
-end CPythonListsort.MergeHiCursorInvariant
+end CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame.MergeHiCursorInvariant
 
-namespace CPythonListsort.MergeHiCursorInvariant
+namespace CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame.MergeHiCursorInvariant
 
 /--
 [tempReadable](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean)
@@ -1972,9 +2028,9 @@ public theorem tempReadable
   rw [hindex]
   exact ⟨entry, by simpa using hread⟩
 
-end CPythonListsort.MergeHiCursorInvariant
+end CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame.MergeHiCursorInvariant
 
-namespace CPythonListsort.MergeHiCursorInvariant
+namespace CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame.MergeHiCursorInvariant
 
 /--
 [temporaryValidRange](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean)
@@ -1990,12 +2046,12 @@ public theorem temporaryValidRange
 -- imply
   (GallopKeySource.temporary cursor.state.a 0).ValidRange cursor.nb :=
 -- proof
-  mergeHiTemporary_validRange cursor.state.a cursor.nb h.tempCapacity
+  mergeHiTemporary_validRange h.tempCapacity
     h.tempValuesMode.initialized
 
-end CPythonListsort.MergeHiCursorInvariant
+end CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame.MergeHiCursorInvariant
 
-namespace CPythonListsort.MergeHiCursorInvariant
+namespace CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame.MergeHiCursorInvariant
 
 /--
 [mainValidRange](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean)
@@ -2011,7 +2067,7 @@ public theorem mainValidRange
 -- imply
   (GallopKeySource.main cursor.state.data cursor.basea).ValidRange cursor.na := by
 -- proof
-  apply mergeHiMain_validRange cursor.state.data cursor.basea cursor.na
+  apply mergeHiMain_validRange
     h.baseNonnegative
   have hrange := h.mainRange
   simp only [Int.ofNat_eq_natCast, Nat.cast_add] at hrange ⊢
@@ -2019,9 +2075,9 @@ public theorem mainValidRange
     Int.natCast_nonneg _
   omega
 
-end CPythonListsort.MergeHiCursorInvariant
+end CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame.MergeHiCursorInvariant
 
-namespace CPythonListsort.MergeHiCursorInvariant
+namespace CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame.MergeHiCursorInvariant
 
 /--
 [replaceState](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean)
@@ -2058,9 +2114,9 @@ public theorem replaceState
       stableFrame := h.stableFrame.trans (.of_movement hframe)
       storageFrame := h.storageFrame.trans (.of_movement hframe) }
 
-end CPythonListsort.MergeHiCursorInvariant
+end CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame.MergeHiCursorInvariant
 
-namespace CPythonListsort.MergeHiCursorInvariant
+namespace CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame.MergeHiCursorInvariant
 
 /--
 [setMinGallop](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean)
@@ -2075,7 +2131,7 @@ public theorem setMinGallop
 -- given
   (h : MergeHiCursorInvariant origin request cursor) :
 -- imply
-  MergeHiCursorInvariant origin request { cursor with state := { cursor.state with min_gallop := minGallop } minGallop := minGallop } := by
+  MergeHiCursorInvariant origin request { cursor with state := { cursor.state with min_gallop := minGallop }, minGallop := minGallop } := by
 -- proof
   exact
     { baseNonnegative := h.baseNonnegative
@@ -2107,9 +2163,9 @@ public theorem setMinGallop
           hasValues := h.storageFrame.hasValues
           alloced := h.storageFrame.alloced } }
 
-end CPythonListsort.MergeHiCursorInvariant
+end CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame.MergeHiCursorInvariant
 
-namespace CPythonListsort.MergeHiCursorInvariant
+namespace CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame.MergeHiCursorInvariant
 
 /--
 [setControl](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean)
@@ -2144,9 +2200,9 @@ public theorem setControl
       stableFrame := h.stableFrame
       storageFrame := h.storageFrame }
 
-end CPythonListsort.MergeHiCursorInvariant
+end CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame.MergeHiCursorInvariant
 
-namespace CPythonListsort.MergeHiCursorInvariant
+namespace CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame.MergeHiCursorInvariant
 
 /--
 [copyA](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean)
@@ -2165,9 +2221,9 @@ public theorem copyA
   (hmode : SortSlice.ValuesModeInvariant after.a.hasValues after.data)
   (hna : 0 < cursor.na) :
 -- imply
-  MergeHiCursorInvariant origin request { cursor with state := after dest := cursor.dest - 1 ssa := cursor.ssa - 1 na := cursor.na - 1 } := by
+  MergeHiCursorInvariant origin request { cursor with state := after, dest := cursor.dest - 1, ssa := cursor.ssa - 1, na := cursor.na - 1 } := by
 -- proof
-  have hs := h.replaceState after hframe htemp hmode
+  have hs := h.replaceState hframe htemp hmode
   exact
     { baseNonnegative := h.baseNonnegative
       ssaEquation := by
@@ -2196,9 +2252,9 @@ public theorem copyA
       stableFrame := hs.stableFrame
       storageFrame := hs.storageFrame }
 
-end CPythonListsort.MergeHiCursorInvariant
+end CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame.MergeHiCursorInvariant
 
-namespace CPythonListsort.MergeHiCursorInvariant
+namespace CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame.MergeHiCursorInvariant
 
 /--
 [copyB](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean)
@@ -2217,9 +2273,9 @@ public theorem copyB
   (hmode : SortSlice.ValuesModeInvariant after.a.hasValues after.data)
   (hnb : 0 < cursor.nb) :
 -- imply
-  MergeHiCursorInvariant origin request { cursor with state := after dest := cursor.dest - 1 ssb := cursor.ssb - 1 nb := cursor.nb - 1 } := by
+  MergeHiCursorInvariant origin request { cursor with state := after, dest := cursor.dest - 1, ssb := cursor.ssb - 1, nb := cursor.nb - 1 } := by
 -- proof
-  have hs := h.replaceState after hframe htemp hmode
+  have hs := h.replaceState hframe htemp hmode
   exact
     { baseNonnegative := h.baseNonnegative
       ssaEquation := h.ssaEquation
@@ -2252,9 +2308,9 @@ public theorem copyB
       stableFrame := hs.stableFrame
       storageFrame := hs.storageFrame }
 
-end CPythonListsort.MergeHiCursorInvariant
+end CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame.MergeHiCursorInvariant
 
-namespace CPythonListsort.MergeHiCursorInvariant
+namespace CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame.MergeHiCursorInvariant
 
 /--
 [copyABlock](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean)
@@ -2274,9 +2330,9 @@ public theorem copyABlock
   (htemp : after.a = cursor.state.a)
   (hmode : SortSlice.ValuesModeInvariant after.a.hasValues after.data) :
 -- imply
-  MergeHiCursorInvariant origin request { cursor with state := after dest := cursor.dest - Int.ofNat count ssa := cursor.ssa - Int.ofNat count na := cursor.na - count } := by
+  MergeHiCursorInvariant origin request { cursor with state := after, dest := cursor.dest - Int.ofNat count, ssa := cursor.ssa - Int.ofNat count, na := cursor.na - count } := by
 -- proof
-  have hs := h.replaceState after hframe htemp hmode
+  have hs := h.replaceState hframe htemp hmode
   exact
     { baseNonnegative := h.baseNonnegative
       ssaEquation := by
@@ -2305,9 +2361,9 @@ public theorem copyABlock
       stableFrame := hs.stableFrame
       storageFrame := hs.storageFrame }
 
-end CPythonListsort.MergeHiCursorInvariant
+end CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame.MergeHiCursorInvariant
 
-namespace CPythonListsort.MergeHiCursorInvariant
+namespace CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame.MergeHiCursorInvariant
 
 /--
 [copyBBlock](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean)
@@ -2327,9 +2383,9 @@ public theorem copyBBlock
   (htemp : after.a = cursor.state.a)
   (hmode : SortSlice.ValuesModeInvariant after.a.hasValues after.data) :
 -- imply
-  MergeHiCursorInvariant origin request { cursor with state := after dest := cursor.dest - Int.ofNat count ssb := cursor.ssb - Int.ofNat count nb := cursor.nb - count } := by
+  MergeHiCursorInvariant origin request { cursor with state := after, dest := cursor.dest - Int.ofNat count, ssb := cursor.ssb - Int.ofNat count, nb := cursor.nb - count } := by
 -- proof
-  have hs := h.replaceState after hframe htemp hmode
+  have hs := h.replaceState hframe htemp hmode
   exact
     { baseNonnegative := h.baseNonnegative
       ssaEquation := h.ssaEquation
@@ -2362,7 +2418,7 @@ public theorem copyBBlock
       stableFrame := hs.stableFrame
       storageFrame := hs.storageFrame }
 
-end CPythonListsort.MergeHiCursorInvariant
+end CPythonListsort.MergeHiStableFrame.MergeHiStorageFrame.MergeHiCursorInvariant
 
 namespace CPythonListsort
 
@@ -2384,7 +2440,7 @@ public theorem MergeHiCorePost.prepend
     (current.erase.bind reference) result := by
   exact
     { resultEq := by
-      simp [TraceResult.bind, hcurrent, hnext.resultEq]
+        simp [TraceResult.bind, hcurrent, hnext.resultEq]
       returnCode := hnext.returnCode
       resultFuel := hnext.resultFuel
       traceSafe := MovementTraceSafe.bind current next value hcurrent
@@ -2502,7 +2558,7 @@ public theorem mergeHiCopyDataDecrTraced_safe
   (hinvariant : MergeHiCursorInvariant origin request cursor)
   (hna : 0 < cursor.na) :
 -- imply
-  ∃ copied, (mergeHiCopyDataDecrTraced? cursor.state cursor.dest cursor.ssa).result = some copied ∧ MovementTraceSafe (mergeHiCopyDataDecrTraced? cursor.state cursor.dest cursor.ssa) ∧ MergeHiCursorInvariant origin request { cursor with state := copied.state dest := copied.dst ssa := copied.src na := cursor.na - 1 } ∧ copied.dst = cursor.dest - 1 ∧ copied.src = cursor.ssa - 1 := by
+  ∃ copied, (mergeHiCopyDataDecrTraced? cursor.state cursor.dest cursor.ssa).result = some copied ∧ MovementTraceSafe (mergeHiCopyDataDecrTraced? cursor.state cursor.dest cursor.ssa) ∧ MergeHiCursorInvariant origin request { cursor with state := copied.state, dest := copied.dst, ssa := copied.src, na := cursor.na - 1 } ∧ copied.dst = cursor.dest - 1 ∧ copied.src = cursor.ssa - 1 := by
 -- proof
   have hdest := hinvariant.destInBounds (by omega)
   have hsrc := hinvariant.ssaInBounds hna
@@ -2518,7 +2574,7 @@ public theorem mergeHiCopyDataDecrTraced_safe
       ssa := copied.src
       na := cursor.na - 1 } := by
     simpa only [hpost.dstDecrement, hpost.srcDecrement] using
-      hinvariant.copyA copied.state hpost.frame htemp hpost.valuesMode hna
+      hinvariant.copyA hpost.frame htemp hpost.valuesMode hna
   exact ⟨copied, hpost.success, hpost.traceSafe, hnextInv,
     hpost.dstDecrement, hpost.srcDecrement⟩
 
@@ -2539,7 +2595,7 @@ public theorem mergeHiCopyTempDecrTraced_safe
   (hinvariant : MergeHiCursorInvariant origin request cursor)
   (hnb : 0 < cursor.nb) :
 -- imply
-  ∃ copied, (mergeHiCopyTempDecrTraced? cursor.state cursor.dest cursor.ssb).result = some copied ∧ MovementTraceSafe (mergeHiCopyTempDecrTraced? cursor.state cursor.dest cursor.ssb) ∧ MergeHiCursorInvariant origin request { cursor with state := copied.state dest := copied.dst ssb := copied.src nb := cursor.nb - 1 } ∧ copied.dst = cursor.dest - 1 ∧ copied.src = cursor.ssb - 1 := by
+  ∃ copied, (mergeHiCopyTempDecrTraced? cursor.state cursor.dest cursor.ssb).result = some copied ∧ MovementTraceSafe (mergeHiCopyTempDecrTraced? cursor.state cursor.dest cursor.ssb) ∧ MergeHiCursorInvariant origin request { cursor with state := copied.state, dest := copied.dst, ssb := copied.src, nb := cursor.nb - 1 } ∧ copied.dst = cursor.dest - 1 ∧ copied.src = cursor.ssb - 1 := by
 -- proof
   have hdest := hinvariant.destInBounds (by omega)
   have htemp := hinvariant.ssbInBounds hnb
@@ -2581,8 +2637,8 @@ public theorem mergeHiCopyTempDecrTraced_safe
       dest := copied.dst
       ssb := copied.src
       nb := cursor.nb - 1 } := by
-    exact hinvariant.copyB state hframe htempEq hmode hnb
-  exact ⟨copied, hcopied, MovementTraceSafe.map _ _ htraceSafe,
+    exact hinvariant.copyB hframe htempEq hmode hnb
+  exact ⟨copied, hcopied, MovementTraceSafe.map htraceSafe,
     hnextInv, rfl, rfl⟩
 
 end CPythonListsort
@@ -2592,7 +2648,7 @@ namespace CPythonListsort
 variable {κ : Type u} {ν : Type v}
 /--
 [mergeHiSucceedTraced_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean)
--/
+
 The `nb = 0` hedge is retained as an access-free success; the nonempty branch
 consumes the classified final-copy provenance permit. -/
 public theorem mergeHiSucceedTraced_safe
@@ -2609,7 +2665,7 @@ public theorem mergeHiSucceedTraced_safe
         returnCode := rfl
         resultFuel := rfl
         traceSafe := ?_
-        exactErasure := erase_mergeHiSucceedTraced cursor
+        exactErasure := erase_mergeHiSucceedTraced
         tempInvariant := hinvariant.tempInvariant
         tempLive := hinvariant.tempLive
         requestFits := hinvariant.requestFits
@@ -2619,7 +2675,7 @@ public theorem mergeHiSucceedTraced_safe
     · simp [mergeHiSucceedTraced?, hnb, TraceResult.map,
       TraceResult.pure, result]
     · rw [mergeHiSucceedTraced?, if_pos hnb]
-      exact MovementTraceSafe.map _ _
+      exact MovementTraceSafe.map
         (MovementTraceSafe.pure cursor.state)
   · have hnbPositive : 0 < cursor.nb := Nat.pos_of_ne_zero hnb
     have hstart :
@@ -2653,7 +2709,7 @@ public theorem mergeHiSucceedTraced_safe
         returnCode := rfl
         resultFuel := rfl
         traceSafe := ?_
-        exactErasure := erase_mergeHiSucceedTraced cursor
+        exactErasure := erase_mergeHiSucceedTraced
         tempInvariant := hpost.tempInvariant
         tempLive := hpost.tempLive
         requestFits := ?_
@@ -2667,9 +2723,8 @@ public theorem mergeHiSucceedTraced_safe
       rw [hpost.success]
       rfl
     · rw [mergeHiSucceedTraced?, if_neg hnb]
-      exact MovementTraceSafe.map _ _ hpost.traceSafe
-    · change request ≤ state.alloced.toNat
-      rwa [hpost.frame.alloced]
+      exact MovementTraceSafe.map hpost.traceSafe
+    · simpa [result, hpost.frame.alloced] using hinvariant.requestFits
 
 end CPythonListsort
 
@@ -2764,7 +2819,7 @@ public theorem mergeHiMoveABlockTraced_safe
         ssa := cursor.ssa - Int.ofNat count
         na := cursor.na - count }
     have hmovedInv : MergeHiCursorInvariant origin request moved := by
-      exact hinvariant.copyABlock count hcount state hpost.frame htemp
+      exact hinvariant.copyABlock hcount hpost.frame htemp
         hpost.valuesMode
     refine ⟨moved, ?_, ?_, hmovedInv, rfl, rfl⟩
     · rw [mergeHiMoveABlockTraced?, if_neg hzero]
@@ -2772,7 +2827,7 @@ public theorem mergeHiMoveABlockTraced_safe
       rw [hpost.success]
       rfl
     · rw [mergeHiMoveABlockTraced?, if_neg hzero]
-      exact MovementTraceSafe.map _ _ hpost.traceSafe
+      exact MovementTraceSafe.map hpost.traceSafe
 
 end CPythonListsort
 
@@ -2800,10 +2855,13 @@ public theorem mergeHiMoveBBlockTraced_safe
     · rfl
     · exact MovementTraceSafe.pure cursor
   · have hsrcStart : cursor.ssb - Int.ofNat count + 1 =
-    Int.ofNat (cursor.nb - count) := by
-    have heq := hinvariant.ssbEquation
-    simp only [Int.ofNat_eq_natCast, Nat.cast_sub hcount] at heq ⊢
-    omega
+      Int.ofNat (cursor.nb - count) := by
+      have heq := hinvariant.ssbEquation
+      rw [Int.ofNat_eq_natCast] at heq
+      rw [Int.ofNat_eq_natCast, Int.ofNat_eq_natCast]
+      have hrearr : cursor.ssb - (count : Int) + 1 =
+          cursor.ssb + 1 - (count : Int) := by ring
+      rw [hrearr, heq, Nat.cast_sub hcount]
     have hdstStart : cursor.dest - Int.ofNat count + 1 =
       cursor.basea + Int.ofNat (cursor.na + cursor.nb - count) := by
       have heq := hinvariant.destEquation
@@ -2852,7 +2910,8 @@ public theorem mergeHiMoveBBlockTraced_safe
     have hcore : tempToMainMemcpy? count cursor.state
       (cursor.dest - Int.ofNat count + 1)
       (cursor.ssb - Int.ofNat count + 1) = some state := by
-      rwa [← hpost.exactErasure]
+      rw [← hpost.exactErasure]
+      exact hpost.success
     have htempEq := tempToMainMemcpy_temp_eq_of_eq_some count cursor.state state
       (cursor.dest - Int.ofNat count + 1)
       (cursor.ssb - Int.ofNat count + 1) hcore
@@ -2863,7 +2922,7 @@ public theorem mergeHiMoveBBlockTraced_safe
         ssb := cursor.ssb - Int.ofNat count
         nb := cursor.nb - count }
     have hmovedInv : MergeHiCursorInvariant origin request moved := by
-      exact hinvariant.copyBBlock count hcount state hpost.frame htempEq
+      exact hinvariant.copyBBlock hcount hpost.frame htempEq
         hpost.valuesMode
     refine ⟨moved, ?_, ?_, hmovedInv, rfl, rfl⟩
     · rw [mergeHiMoveBBlockTraced?, if_neg hzero]
@@ -2871,7 +2930,7 @@ public theorem mergeHiMoveBBlockTraced_safe
       rw [hpost.success]
       rfl
     · rw [mergeHiMoveBBlockTraced?, if_neg hzero]
-      exact MovementTraceSafe.map _ _ hpost.traceSafe
+      exact MovementTraceSafe.map hpost.traceSafe
 
 end CPythonListsort
 
@@ -2899,8 +2958,8 @@ private theorem mergeHiGallopBFinishTraced_safe
     exact ⟨result, by
       simpa [mergeHiGallopBFinishTraced?, mergeHiGallopBFinish?, hterminal]
         using hresult⟩
-  · rcases mergeHiCopyDataDecrTraced_safe origin request movedB hinvariant
-    hna with ⟨copiedA, hcopy, hcopySafe, hcopiedInv, _hdst, _hsrc⟩
+  · rcases mergeHiCopyDataDecrTraced_safe hinvariant hna with
+      ⟨copiedA, hcopy, hcopySafe, hcopiedInv, _hdst, _hsrc⟩
     let afterA : MergeHiCursor κ ν :=
       { movedB with
         state := copiedA.state
@@ -2969,8 +3028,7 @@ private theorem mergeHiGallopBFinishTraced_safe
         · let nextCursor : MergeHiCursor κ ν :=
           { afterA with phase := .galloping aCount bCount }
           have hnextInv : MergeHiCursorInvariant origin request nextCursor := by
-            exact hafterInv.setControl afterA.minGallop
-              (.galloping aCount bCount)
+            exact hafterInv.setControl
           have hnextFuel : MergeHiFuelInvariant fuel nextCursor := by
             change afterA.na + afterA.nb < fuel
             exact hafterFuel
@@ -2991,8 +3049,7 @@ private theorem mergeHiGallopBFinishTraced_safe
               minGallop := minGallop
               phase := .straight 0 0 }
           have hnextInv : MergeHiCursorInvariant origin request nextCursor := by
-            exact (hafterInv.setMinGallop minGallop).setControl minGallop
-              (.straight 0 0)
+            exact (hafterInv.setMinGallop).setControl
           have hnextFuel : MergeHiFuelInvariant fuel nextCursor := by
             change afterA.na + afterA.nb < fuel
             exact hafterFuel
@@ -3012,7 +3069,7 @@ private theorem mergeHiGallopBFinishTraced_safe
       tracedTail tail copiedA result hcopy hcopySafe htail
     exact ⟨result, by
       simpa [mergeHiGallopBFinishTraced?, mergeHiGallopBFinish?, hterminal,
-        tracedTail, tail] using hpost⟩
+        tracedTail, tail, erase_mergeHiCopyDataDecrTraced] using hpost⟩
 
 end CPythonListsort
 
@@ -3039,8 +3096,7 @@ public theorem mergeHiGallopBAfterTraced_safe
     (mergeHiGallopBAfter? afterB aCount gallopB next) result := by
   let bCount := afterB.nb - gallopB.index
   have hbCount : bCount ≤ afterB.nb := Nat.sub_le _ _
-  rcases mergeHiMoveBBlockTraced_safe origin request afterB hinvariant
-    bCount hbCount with
+  rcases mergeHiMoveBBlockTraced_safe hinvariant hbCount with
     ⟨movedB, hmove, hmoveSafe, hmovedInv, hmovedNa, hmovedNb⟩
   have hmovedFuel : MergeHiFuelInvariant fuel movedB := by
     have hf := hfuel
@@ -3060,7 +3116,7 @@ public theorem mergeHiGallopBAfterTraced_safe
     movedB result hmove hmoveSafe hfinish
   exact ⟨result, by
     simpa [mergeHiGallopBAfterTraced?, mergeHiGallopBAfter?, hnotFuel,
-      bCount] using hpost⟩
+      bCount, erase_mergeHiMoveBBlockTraced] using hpost⟩
 
 end CPythonListsort
 
@@ -3069,7 +3125,7 @@ namespace CPythonListsort
 variable {κ : Type u} {ν : Type v}
 /--
 [mergeHiCopyATraced_safe](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean)
--/
+
 where CPython jumps to it.  Its right-shift is overlap-safe memmove, followed
 by the one physical temporary read that installs the smallest right entry. -/
 public theorem mergeHiCopyATraced_safe
@@ -3114,7 +3170,8 @@ public theorem mergeHiCopyATraced_safe
   have hshiftCore : mainDataMemmove? cursor.state
     (cursor.dest + (1 - Int.ofNat cursor.na))
     (cursor.ssa + (1 - Int.ofNat cursor.na)) cursor.na = some shifted := by
-    rwa [← hshift.exactErasure]
+    rw [← hshift.exactErasure]
+    exact hshift.success
   have htempEq : shifted.a = cursor.state.a :=
     mainDataMemmove_temp_eq_of_eq_some cursor.state shifted _ _ _ hshiftCore
   have hcellDstEq : cursor.dest - Int.ofNat cursor.na = cursor.basea := by
@@ -3178,7 +3235,7 @@ public theorem mergeHiCopyATraced_safe
       returnCode := rfl
       resultFuel := rfl
       traceSafe := ?_
-      exactErasure := erase_mergeHiCopyATraced cursor
+      exactErasure := erase_mergeHiCopyATraced
       tempInvariant := hcellFrame.tempStorageInv hshift.tempInvariant
       tempLive := hcellFrame.live hshift.tempLive
       requestFits := ?_
@@ -3200,9 +3257,10 @@ public theorem mergeHiCopyATraced_safe
     rfl
   · rw [mergeHiCopyATraced?, if_pos htail]
     apply MovementTraceSafe.bind _ _ shifted hshift.success hshift.traceSafe
-    exact MovementTraceSafe.map _ _ hcellSafe
+    exact MovementTraceSafe.map hcellSafe
   · change request ≤ state.alloced.toNat
-    rwa [hcellFrame.alloced, hshift.frame.alloced]
+    simpa [hcellFrame.alloced, hshift.frame.alloced] using
+      hinvariant.requestFits
 
 end CPythonListsort
 
@@ -3236,7 +3294,8 @@ private theorem mergeHiHasAccess_bind_right
   (hresult : current.result = some value)
   (hnext : (next value).trace.HasAccess kind region) :
   (current.bind next).trace.HasAccess kind region := by
-  rwa [TraceResult.trace_bind, hresult]
+  rw [TraceResult.trace_bind, hresult]
+  exact hnext.compose_right
 
 end CPythonListsort
 
@@ -3440,11 +3499,11 @@ public theorem mergeHi_prepare
 -- imply
   ∃ copied forced, MergeHiPrepared pre scanned i call copied forced := by
 -- proof
-  have hrequest := mergeGetmem_hi_request_bound pre scanned i call hlayout hmax
+  have hrequest := mergeGetmem_hi_request_bound hlayout hmax
     hprepare
-  have hgeometry := mergeHi_callsite_safety_geometry pre scanned i call hlayout
+  have hgeometry := mergeHi_callsite_safety_geometry hlayout
     hmax hprepare
-  have hdispatch := (prepareMergeAt_hi_callsite_of_eq_some pre i call hprepare).2
+  have hdispatch := (prepareMergeAt_hi_callsite_of_eq_some hprepare).2
   have hevidence := hgeometry.evidence
   have hcallInv : TempStorageInv call.state.a call.state.alloced := by
     simpa only [hevidence.storage_eq, hevidence.alloced_eq] using hInv
@@ -3513,7 +3572,8 @@ public theorem mergeHi_prepare
       omega
     · change call.ssa + Int.ofNat (call.na + call.nb) ≤
       Int.ofNat copied.data.entries.size
-      rwa [hcopy.frame.dataSize, hallocPost.data_eq]
+      rw [hcopy.frame.dataSize, hallocPost.data_eq]
+      exact hgeometry.mergedRange
     · change call.na ≤ PY_LIST_MAX
       have hrun := hgeometry.runLengthBound
       omega
@@ -3527,13 +3587,12 @@ public theorem mergeHi_prepare
     · change call.nb ≤ copied.alloced.toNat
       rw [hcopy.frame.alloced]
       simpa only [hrequest.requestRoundtrip] using hallocPost.requestFits
-  rcases mergeHiCopyDataDecrTraced_safe (mergeHiAllocated call).state call.nb
-    (mergeHiFullCursor call copied) hfull hgeometry.leftPositive with
+  rcases mergeHiCopyDataDecrTraced_safe hfull hgeometry.leftPositive with
     ⟨forced, hforced, hforcedSafe, hforcedInv, _hdst, _hsrc⟩
   have hinitial : MergeHiCursorInvariant (mergeHiAllocated call).state call.nb
     (mergeHiInitialCursor call forced) := by
     simpa [mergeHiInitialCursor, mergeHiFullCursor] using
-      hforcedInv.setControl forced.state.min_gallop (.straight 0 0)
+      hforcedInv.setControl
   have hinitialFuel : MergeHiFuelInvariant (call.na + call.nb)
     (mergeHiInitialCursor call forced) := by
     unfold MergeHiFuelInvariant
@@ -3563,7 +3622,7 @@ namespace CPythonListsort
 variable {κ : Type u} {ν : Type v}
 /--
 [mergeHi_observables](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeHiSafety.lean)
--/
+
 through the exact entry equation exported by `mergeHi_lockstep`. -/
 public theorem mergeHi_observables
   (pre : MergeState κ ν) (scanned i : Nat) (call : MergeAtCall κ ν)

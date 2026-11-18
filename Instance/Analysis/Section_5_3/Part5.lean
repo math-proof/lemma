@@ -1,7 +1,11 @@
-import Mathlib
-import Theorem.Analysis.Section_5_2.Part2
-import Mathlib.Algebra.Group.MinimalAxioms
-import Theorem.Analysis.Section_5_3.Part6
+module
+
+public import Mathlib
+public import Theorem.Analysis.Section_5_2.Part2
+public import Mathlib.Algebra.Group.MinimalAxioms
+public import Theorem.Analysis.Section_5_3.Part6
+public import Theorem.Analysis.Section_5_1.Part5
+@[expose] public section
 /-!
 # Analysis I, Section 5.3: The construction of the real numbers
 
@@ -30,6 +34,12 @@ namespace Chapter5
 
 instance Real.instRatCast : RatCast Real where
   ratCast := fun q ↦
-    Quotient.mk _ (CauchySequence.mk' (a := fun _ ↦ q) (Sequence.IsCauchy.const q))
+    Quotient.mk _ (CauchySequence.mk' (a := fun _ ↦ q) (by
+      rw [Sequence.IsCauchy.coe]
+      intro ε hε
+      refine ⟨0, ?_⟩
+      intro j _ k _
+      rw [Section_4_3.dist_eq]
+      simpa using le_of_lt hε))
 
 end Chapter5

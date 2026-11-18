@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/ModuleCategory/Theorem2116.lean -/
 
 /-
@@ -8,9 +10,10 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.TensorCategories.code.ModuleCategory.Theorem2112
-import Def.v1.Atlas.TensorCategories.code.InternalHom.Part4
-import Mathlib.CategoryTheory.Monoidal.Mod_
+public import Structure.v1.Atlas.TensorCategories.code.ModuleCategory.Theorem2112
+public import Def.v1.Atlas.TensorCategories.code.InternalHom.Part4
+public import Mathlib.CategoryTheory.Monoidal.Mod_
+public section
 open CategoryTheory MonoidalCategory LeftModCat
 
 namespace CategoryTheory

@@ -1,4 +1,7 @@
-import Def.Analysis.MeasureTheory.Section_1_4_2.Part8
+module
+
+public import Def.Analysis.MeasureTheory.Section_1_4_2.Part8
+public section
 
 
 /-!

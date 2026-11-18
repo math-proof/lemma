@@ -1,8 +1,7 @@
 import Lemma.Random.AeNormSub.le.DeltaBound.of.In_Ico
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Random.Measurable_Vkd.of.All_Measurable_Prob
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
+import Instance.Dynamics.PolicyTrajectory
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
@@ -38,31 +37,33 @@ private lemma main
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
   {ψ : 𝒮 → 𝒜 → ℰ}
+  {R : ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 ↦ M.π[θ] z.1 z.2))
   (hψ : StronglyMeasurable (Function.uncurry ψ))
   (hMs : ∃ Ms : ℝ, ∀ y u, ‖ψ y u‖ ≤ Ms)
+  (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1)
   (θ : Θ)
   (t j : ℕ) :
 -- imply
-  Integrable (fun ω => (r j ω + γ * M.V0 θ γ (s (j + 1) ω) - M.V0 θ γ (s j ω)) •
-    ψ (s t ω) (a t ω)) (M.traj θ) := by
+  Integrable (fun ω => (r j ω + γ * M.V0 R θ γ (s (j + 1) ω) - M.V0 R θ γ (s j ω)) •
+    ψ (s t ω) (a t ω)) (M θ) := by
 -- proof
   obtain ⟨Ms, hMs⟩ := hMs
-  have hV : Measurable (M.V0 θ γ) := Measurable_Vkd.of.All_Measurable_Prob (M := M) hπ θ γ
+  have hV : Measurable (M.V0 R θ γ) := Measurable_Vkd.of.All_Measurable_Prob (M := M) hπ R θ γ
   have hX : Measurable (fun ω : ℕ → ℝ × 𝒮 × 𝒜 => (s t ω, a t ω)) :=
     (Random.Measurable.of.All_Eq.snd.fst h₁ t).prodMk
       (Random.Measurable.of.All_Eq.snd.snd h₁ t)
-  refine Integrable.of_bound (C := (3 / (1 - γ) - 1) * |M.R| * Ms)
+  refine Integrable.of_bound (C := (3 / (1 - γ) - 1) * |R| * Ms)
     ((delta_meas h₁ hV γ j).stronglyMeasurable.smul
       (hψ.comp_measurable hX)).aestronglyMeasurable ?_
-  filter_upwards [AeNormSub.le.DeltaBound.of.In_Ico (M := M) h₀ h₁ θ] with ω h
+  filter_upwards [AeNormSub.le.DeltaBound.of.In_Ico (M := M) h₀ h₁ hR θ] with ω h
   rw [norm_smul]
   exact mul_le_mul (h j) (hMs (s t ω) (a t ω)) (norm_nonneg _)
     ((norm_nonneg _).trans (h j))
 
 
 -- created on 2026-10-06
--- updated on 2026-11-17
+-- updated on 2026-11-18

@@ -3,6 +3,7 @@ module
 public import Theorem.List.Swap.eq.Ite
 public import Theorem.Bool.Ne.is.NotEq
 public import Theorem.List.ProdAppend_Cons_Drop.eq.Prod.of.Lt.GtLength
+public import Theorem.Nat.NotLt.is.Ge
 
 public section
 

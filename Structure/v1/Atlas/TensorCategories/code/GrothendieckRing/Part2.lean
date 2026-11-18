@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part6
-public import Lemma.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
 public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 public import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
 public import Mathlib.Algebra.BigOperators.Group.Finset.Sigma

@@ -8,16 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
+module
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
-import Theorem.StatisticalMechanics.Code.Lattice.PlanarDual.Part10
-import Theorem.StatisticalMechanics.Code.Lattice.PlanarFaceGeometric.Part5
-import Theorem.StatisticalMechanics.Code.Lattice.CrossingParity.Part2
-import Theorem.StatisticalMechanics.Code.Lattice.JordanEnclosure.Part6
-import Theorem.StatisticalMechanics.Code.Lattice.WhitneyBridge.Part3
-import Theorem.StatisticalMechanics.Code.Lattice.JordanBridgeCycle.Part10
-import Theorem.StatisticalMechanics.Code.Lattice.WhitneyCorrect.Part5
+public import Mathlib
+
+public meta section
+
 open SimpleGraph Set
 
 

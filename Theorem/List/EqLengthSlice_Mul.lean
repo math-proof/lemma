@@ -27,14 +27,14 @@ public theorem List.EqLengthSlice_Mul
   simp
 
 
-public theorem Comm
+public theorem List.EqLengthSlice_Mul.comm
 -- given
   (i : Fin n)
   (m : ℕ) :
 -- imply
   (⟨i, n * m, n⟩ : Slice).length (n * m) = m := by
 -- proof
-  have := main i m
+  have := EqLengthSlice_Mul i m
   rw [Mul.comm m n] at this
   rw [Mul.comm] at this
   exact this

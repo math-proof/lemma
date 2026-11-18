@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/GeometryOfManifolds/code/SWModuliGoal62.lean -/
 
 /-
@@ -8,8 +10,9 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.GeometryOfManifolds.code.FourManifoldsSW.Part8
-import Def.v1.Atlas.GeometryOfManifolds.code.SWModuliGoal62
+public import Def.v1.Atlas.GeometryOfManifolds.code.FourManifoldsSW.Part8
+public import Def.v1.Atlas.GeometryOfManifolds.code.SWModuliGoal62
+public section
 set_option autoImplicit false
 
 /-- A generic pair $(g, \mu)$ ensures that the Seiberg–Witten linearization is surjective at irreducible solutions, the cokernel dimension is zero, and the Fredholm index equals $\tfrac{1}{4}(c_1(L)^2 \cdot [X] - (2\chi + 3\sigma))$. -/

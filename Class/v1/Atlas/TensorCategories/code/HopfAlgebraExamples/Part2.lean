@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/HopfAlgebraExamples.lean -/
 
 /-
@@ -8,13 +10,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.TensorCategories.code.HopfAlgebra.Part3
-import Def.v1.Atlas.TensorCategories.code.CoradicalFiltration.Part8
-import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.RingTheory.Adjoin.Basic
-import Mathlib.Algebra.Lie.UniversalEnveloping
-import Def.v1.Atlas.TensorCategories.code.HopfAlgebraExamples
+public import Theorem.v1.Atlas.TensorCategories.code.HopfAlgebra.Part3
+public import Def.v1.Atlas.TensorCategories.code.CoradicalFiltration.Part8
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.RingTheory.Adjoin.Basic
+public import Mathlib.Algebra.Lie.UniversalEnveloping
+public import Def.v1.Atlas.TensorCategories.code.HopfAlgebraExamples
+public section
 set_option maxHeartbeats 800000
 
 open Coalgebra HopfAlgebra

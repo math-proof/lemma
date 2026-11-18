@@ -2,6 +2,7 @@ module
 
 public import Mathlib
 public import Abbrev.Analysis.Section_2_1
+public import Theorem.Nat.Six.ne.Two
 
 public section
 
@@ -17,8 +18,7 @@ public theorem Nat.Ne62
 -- imply
   (6:Chapter2.Nat) ≠ 2 :=
 -- proof
-  by
-    decide
+  Nat.Six.ne.Two
 
 
 -- created on 2026-10-22

@@ -22,8 +22,8 @@ private lemma main
   {n : ℕ}
   {x : ℕ ⇀ Ω → ℝ}
 -- given
-  (h₀ : ∀ k, x[k] ⟂ᵢ[π] x[:k])
-  (h₁ : ∀ k, x[k] ∼[π] gaussianReal 0 1) :
+  (h₀ : ∀ (k : ℕ), x[k] ⟂ᵢ[π] x[:k])
+  (h₁ : ∀ (k : ℕ), x[k] ∼[π] gaussianReal 0 1) :
 -- imply
   ∑ i : Fin n, x[i]² ∼[π] Real.chiSquare n := by
 -- proof

@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/EndAlgClassification.lean -/
 
 /-
@@ -8,17 +10,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Algebra.Basic
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.FreeModule.StrongRankCondition
-import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
-import Mathlib.LinearAlgebra.FiniteDimensional.Basic
-import Mathlib.Algebra.Quaternion
-import Mathlib.Algebra.QuaternionBasis
-import Instance.v1.Atlas.EllipticCurves.code.EndAlgebra.Part5
-import Instance.v1.Atlas.EllipticCurves.code.EndomorphismAlgebra.Part2
-import Mathlib.RingTheory.Flat.Localization
-import Mathlib.RingTheory.SimpleRing.Basic
+public import Mathlib.Algebra.Algebra.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.FreeModule.StrongRankCondition
+public import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
+public import Mathlib.LinearAlgebra.FiniteDimensional.Basic
+public import Mathlib.Algebra.Quaternion
+public import Mathlib.Algebra.QuaternionBasis
+public import Instance.v1.Atlas.EllipticCurves.code.EndAlgebra.Part5
+public import Instance.v1.Atlas.EllipticCurves.code.EndomorphismAlgebra.Part2
+public import Mathlib.RingTheory.Flat.Localization
+public import Mathlib.RingTheory.SimpleRing.Basic
+public section
 open Module
 open scoped Quaternion TensorProduct
 

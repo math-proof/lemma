@@ -1,7 +1,7 @@
 module
 
 public import Class.Lean.Meta.CtorName
-public import Inductive.Lean.Meta.Expr
+public import Inductive.Lean.Binder
 
 @[expose] public section
 

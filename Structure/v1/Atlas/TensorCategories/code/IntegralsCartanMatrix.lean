@@ -11,8 +11,8 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Abbrev.v1.Atlas.TensorCategories.code.IntegralsDefs
-public import Lemma.Category.Atlas.v1.TensorCategories.code.IntegralsDefs
-public import Lemma.Category.Atlas.v1.TensorCategories.code.DistinguishedInvertible
+public import Theorem.Category.Atlas.v1.TensorCategories.code.IntegralsDefs
+public import Theorem.Category.Atlas.v1.TensorCategories.code.DistinguishedInvertible
 public import Mathlib.Data.Matrix.Basic
 public import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
 public import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
@@ -37,6 +37,8 @@ universe u v w
 
 
 section CartanMatrix
+
+open CategoryTheory MonoidalCategory
 
 variable {k : Type w} [Field k] {ι : Type*} [Fintype ι] [DecidableEq ι]
 

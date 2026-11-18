@@ -48,7 +48,7 @@ instance rightDualizationFunctor_full :
     (rightDualizationFunctor (C := C)).Full where
   map_surjective {X Y} g := by
     obtain ⟨h, hh⟩ := (rightAdjointMateEquiv Y.unop X.unop).surjective g
-    exact ⟨h.op, by simp [rightDualizationFunctor, ← rightAdjointMateEquiv_apply, hh]⟩
+    exact ⟨h.op, by simp [rightDualizationFunctor, ← rightAdjointMateEquiv_apply, hh]; rfl⟩
 
 /-- The right dualization functor `Cᵒᵖ ⥤ C` is essentially surjective: every `Z` is `(ᘁZ)ᘁ`. -/
 instance rightDualizationFunctor_essSurj :
@@ -99,7 +99,7 @@ instance leftDualizationFunctor_full :
     (leftDualizationFunctor (C := C)).Full where
   map_surjective {X Y} g := by
     obtain ⟨h, hh⟩ := (leftAdjointMateEquiv Y.unop X.unop).surjective g
-    exact ⟨h.op, by simp [leftDualizationFunctor, ← leftAdjointMateEquiv_apply, hh]⟩
+    exact ⟨h.op, by simp [leftDualizationFunctor, ← leftAdjointMateEquiv_apply, hh]; rfl⟩
 
 /-- The left dualization functor `Cᵒᵖ ⥤ C` is essentially surjective: every `Z` is `ᘁ(Zᘁ)`. -/
 instance leftDualizationFunctor_essSurj :

@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/KroneckerWeberLocal2.lean -/
 
 /-
@@ -8,16 +10,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.NumberTheory.Cyclotomic.Basic
-import Mathlib.NumberTheory.Padics.PadicNumbers
-import Mathlib.GroupTheory.SpecificGroups.Cyclic
-import Mathlib.GroupTheory.OrderOfElement
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Algebra.Group.Subgroup.Basic
-import Mathlib.GroupTheory.Finiteness
-import Mathlib.Algebra.Group.TypeTags.Basic
-import Theorem.v1.Atlas.NumberTheoryI.code.GroupCounts.Part8
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.NumberTheory.Cyclotomic.Basic
+public import Mathlib.NumberTheory.Padics.PadicNumbers
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic
+public import Mathlib.GroupTheory.OrderOfElement
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Algebra.Group.Subgroup.Basic
+public import Mathlib.GroupTheory.Finiteness
+public import Mathlib.Algebra.Group.TypeTags.Basic
+public import Theorem.v1.Atlas.NumberTheoryI.code.GroupCounts.Part8
+public section
 
 noncomputable section
 

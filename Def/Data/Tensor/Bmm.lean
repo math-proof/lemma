@@ -1,8 +1,12 @@
-import Def.Data.Tensor.Defs.Part4
-import Def.Data.Tensor.Sum
-import Def.Data.Tensor.Unsqueeze
-import Def.Data.Tensor.Repeat
-import Notation.Data.Tensor.Permute
+module
+
+public import Def.Data.Tensor.Sum
+public import Def.Data.Tensor.Unsqueeze
+public import Def.Data.Tensor.Repeat
+public import Notation.Data.Tensor.Permute
+public import Instance.Data.Tensor.Defs.Part2
+
+@[expose] public section
 open List Tensor
 
 

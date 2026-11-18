@@ -1,7 +1,11 @@
-import Mathlib
-import Theorem.Analysis.Section_5_2.Part2
-import Mathlib.Algebra.Group.MinimalAxioms
-import Class.Analysis.Section_5_3
+module
+
+public import Mathlib
+public import Theorem.Analysis.Section_5_2.Part2
+public import Mathlib.Algebra.Group.MinimalAxioms
+public import Class.Analysis.Section_5_3
+
+public section
 /-!
 # Analysis I, Section 5.3: The construction of the real numbers
 
@@ -28,7 +32,7 @@ Users of the companion who have completed the exercises in this section are welc
 
 namespace Chapter5
 
-theorem CauchySequence.ext' {a b: CauchySequence} (h: a.seq = b.seq) : a = b := by
+public theorem CauchySequence.ext' {a b: CauchySequence} (h: a.seq = b.seq) : a = b := by
   apply CauchySequence.ext _ h
   rw [a.zero, b.zero]
 

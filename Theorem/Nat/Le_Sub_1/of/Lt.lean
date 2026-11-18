@@ -19,4 +19,11 @@ public theorem Nat.Le_Sub_1.of.Lt
   IntegerRing.le_pred_of_lt h
 
 
+public theorem Nat.GeSub_1.of.Gt
+  [IntegerRing Z]
+  {a b : Z}
+  (h : a > b) :
+  a - 1 ≥ b :=
+  Nat.Le_Sub_1.of.Lt h
+
 -- created on 2018-05-05

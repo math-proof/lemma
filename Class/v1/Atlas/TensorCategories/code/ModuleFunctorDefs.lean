@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/ModuleFunctorDefs.lean -/
 
 /-
@@ -8,9 +10,10 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
-import Mathlib.CategoryTheory.Preadditive.Projective.Preserves
-import Instance.v1.Atlas.TensorCategories.code.ModuleFunctorDefs
+public import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
+public import Mathlib.CategoryTheory.Preadditive.Projective.Preserves
+public import Instance.v1.Atlas.TensorCategories.code.ModuleFunctorDefs
+public section
 set_option maxHeartbeats 400000
 
 universe v₁ v₂ v₃ v₄ u₁ u₂ u₃ u₄

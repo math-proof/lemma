@@ -31,7 +31,8 @@ private lemma main
   have hid : (id ∘ s[k + 1]) = s[k + 1] := funext fun _ ↦ rfl
   have hs0 : ((fun p : Fin k → 𝒮 ↦ p ⟨0, hk⟩) ∘ s[:k]) = s[0] := by
     funext ω
-    simp [Function.comp, Fun.getSlice, Function.getSlice, FunSlice.slice]
+    simp [Function.comp, Fun.getSlice, Function.getSlice, FunSlice.slice, Int.toNat_zero]
+    rfl
   rwa [hid, hs0] at hCI
 
 

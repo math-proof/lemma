@@ -7,6 +7,7 @@ import Lemma.Random.PSpace_Path.of.All_PSpace
 import Instance.Probability.Moments.Variance
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure
 
@@ -34,7 +35,7 @@ private lemma main
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (h₂ : ∀ k, Measurable fun ω : ℕ → ℝ × 𝒮 × 𝒜 =>
     X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) k)
-  (h₃ : ∀ᵐ ω ∂(M.traj θ), ∀ t,
+  (h₃ : ∀ᵐ ω ∂(M θ), ∀ t,
     ‖∑' k, c ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)‖ ≤ B)
   (hφ : StronglyMeasurable
     (fun z : 𝒮 × 𝒜 =>
@@ -42,24 +43,24 @@ private lemma main
   (hMs : ∀ y u,
     ‖gradient (fun θ' => Real.log (M.π[θ'] y u)) θ‖ ≤ Ms) :
 -- imply
-  have hs : ∀ t, PSpace (M.traj θ) (s t) := fun t =>
+  have hs : ∀ t, PSpace (M θ) (s t) := fun t =>
     ⟨(Random.Measurable.of.All_Eq.snd.fst h₁ t).aemeasurable⟩
-  have ha : ∀ t, PSpace (M.traj θ) (a t) := fun t =>
+  have ha : ∀ t, PSpace (M θ) (a t) := fun t =>
     ⟨(Random.Measurable.of.All_Eq.snd.snd h₁ t).aemeasurable⟩
-  have hr : ∀ t, PSpace (M.traj θ) (r t) := fun t =>
+  have hr : ∀ t, PSpace (M θ) (r t) := fun t =>
     ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩
-  have : PSpace (M.traj θ) (AsPathRV.path s) :=
+  have : PSpace (M θ) (AsPathRV.path s) :=
     PSpace_Path.of.All_PSpace hs
-  have : PSpace (M.traj θ) (AsPathRV.path a) :=
+  have : PSpace (M θ) (AsPathRV.path a) :=
     PSpace_Path.of.All_PSpace ha
-  have : PSpace (M.traj θ) (AsPathRV.path r) :=
+  have : PSpace (M θ) (AsPathRV.path r) :=
     PSpace_Path.of.All_PSpace hr
   let : MeasurableSpace Θ := borel Θ
   have : BorelSpace Θ := ⟨rfl⟩
   (InnerProductSpace.toDual ℝ Θ).symm (∑' t, γ ^ t • ∫ ω,
       (∑' k, c ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)) •
-        fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ ∂(M.traj θ)) =
-    𝔼[r, s, a : M.traj θ](
+        fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ ∂(M θ)) =
+    𝔼[r, s, a : M θ](
       ∑' t, γ ^ t •
         (((fun k : ℕ => c ^ k) ⬝ᵥ (fun k : ℕ => X s a r (t + k))) •
           ∇[θ] Real.log (M.π[θ] (s t) (a t)))) := by
@@ -74,15 +75,15 @@ private lemma main
   set a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜 := fun t ω ↦ (ω t).2.2
   let _ : MeasurableSpace Θ := borel Θ
   have : BorelSpace Θ := ⟨rfl⟩
-  have hs' : ∀ t, PSpace (M.traj θ) (s t) := fun t =>
+  have hs' : ∀ t, PSpace (M θ) (s t) := fun t =>
     ⟨(Random.Measurable.of.All_Eq.snd.fst h₁ t).aemeasurable⟩
-  have ha' : ∀ t, PSpace (M.traj θ) (a t) := fun t =>
+  have ha' : ∀ t, PSpace (M θ) (a t) := fun t =>
     ⟨(Random.Measurable.of.All_Eq.snd.snd h₁ t).aemeasurable⟩
-  have hr' : ∀ t, PSpace (M.traj θ) (r t) := fun t =>
+  have hr' : ∀ t, PSpace (M θ) (r t) := fun t =>
     ⟨(Random.Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩
-  have : PSpace (M.traj θ) (AsPathRV.path s) := PSpace_Path.of.All_PSpace hs'
-  have : PSpace (M.traj θ) (AsPathRV.path a) := PSpace_Path.of.All_PSpace ha'
-  have : PSpace (M.traj θ) (AsPathRV.path r) := PSpace_Path.of.All_PSpace hr'
+  have : PSpace (M θ) (AsPathRV.path s) := PSpace_Path.of.All_PSpace hs'
+  have : PSpace (M θ) (AsPathRV.path a) := PSpace_Path.of.All_PSpace ha'
+  have : PSpace (M θ) (AsPathRV.path r) := PSpace_Path.of.All_PSpace hr'
   let L : StrongDual ℝ Θ ≃L[ℝ] Θ := (InnerProductSpace.toDual ℝ Θ).symm.toContinuousLinearEquiv
   have hL : ∀ φ, (InnerProductSpace.toDual ℝ Θ).symm φ = L φ := fun _ => rfl
   let G : (ℕ → ℝ × 𝒮 × 𝒜) → Θ := fun ω => ∑' t, γ ^ t •
@@ -96,7 +97,7 @@ private lemma main
         ((Random.Measurable.of.All_Eq.snd.fst h₁ t).prodMk
           (Random.Measurable.of.All_Eq.snd.snd h₁ t)))
   obtain ⟨K, hK⟩ : ∃ K : ℝ, K = B * Ms := ⟨_, rfl⟩
-  have hFb : ∀ t, ∀ᵐ ω ∂(M.traj θ),
+  have hFb : ∀ t, ∀ᵐ ω ∂(M θ),
       ‖γ ^ t • ((∑' k, c ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)) •
         gradient (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ)‖ ≤ γ ^ t * K := by
     intro t
@@ -108,15 +109,15 @@ private lemma main
         (pow_nonneg h₀.1 t)
   have hint : ∀ t, Integrable (fun ω =>
       γ ^ t • ((∑' k, c ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)) •
-        gradient (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ)) (M.traj θ) :=
+        gradient (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ)) (M θ) :=
     fun t => Integrable.of_bound ((hg t).const_smul (γ ^ t)).aestronglyMeasurable _ (hFb t)
   have hsum : Summable fun t => ∫ ω,
       ‖γ ^ t • ((∑' k, c ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)) •
-        gradient (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ)‖ ∂(M.traj θ) := by
+        gradient (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ)‖ ∂(M θ) := by
     refine Summable.of_nonneg_of_le (fun t => integral_nonneg fun _ => norm_nonneg _) (fun t => ?_)
       ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right K)
     calc
-      _ ≤ ∫ _, γ ^ t * K ∂(M.traj θ) :=
+      _ ≤ ∫ _, γ ^ t * K ∂(M θ) :=
         integral_mono_ae (hint t).norm (integrable_const _) (hFb t)
       _ = γ ^ t * K := by simp
   have hGsm : StronglyMeasurable G :=
@@ -130,13 +131,13 @@ private lemma main
         (((measurable_pi_apply t).comp (measurable_fst.comp measurable_snd)).prodMk
           ((measurable_pi_apply t).comp (measurable_snd.comp measurable_snd)))
   have hpath :
-    𝔼[r, s, a : M.traj θ](
+    𝔼[r, s, a : M θ](
       ∑' t, γ ^ t •
         (((fun k : ℕ => c ^ k) ⬝ᵥ (fun k : ℕ => X s a r (t + k))) •
           ∇[θ] Real.log (M.π[θ] (s t) (a t)))) =
-      ∫ ω, G ω ∂(M.traj θ) := by
+      ∫ ω, G ω ∂(M θ) := by
     have hx : AEMeasurable
-      (AsPathRV.path r, AsPathRV.path s, AsPathRV.path a) (M.traj θ) :=
+      (AsPathRV.path r, AsPathRV.path s, AsPathRV.path a) (M θ) :=
       PSpace.aemeasurable
     simp only [AsPathRV.path_process, Dot.dot]
     rw [Expectation.ofRV, expectation_bochner]
@@ -156,4 +157,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-17
+-- updated on 2026-11-18

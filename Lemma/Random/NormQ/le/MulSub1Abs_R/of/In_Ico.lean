@@ -1,8 +1,7 @@
 import Lemma.Random.All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Theorem.Probability.CondExpectation
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
+import Instance.Dynamics.PolicyTrajectory
 open MeasureTheory ProbabilityTheory Topology Filter PolicyGradient PolicyGradient.Model Random
 
 
@@ -22,14 +21,16 @@ private lemma main
   {t : ℕ}
   {sₜ : 𝒮}
   {aₜ : 𝒜}
+  {R : ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (hpos : (M.traj θ) (s t ⁻¹' {sₜ} ∩ a t ⁻¹' {aₜ}) ≠ 0) :
+  (hpos : (M θ) (s t ⁻¹' {sₜ} ∩ a t ⁻¹' {aₜ}) ≠ 0)
+  (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1) :
 -- imply
   let Q (θ : Θ) (t : ℕ) (sₜ : 𝒮) (aₜ : 𝒜) : ℝ :=
-    𝔼[r : M.traj θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = sₜ ∧ a t = aₜ);
-  ‖Q θ t sₜ aₜ‖ ≤ (1 - γ)⁻¹ * |M.R| := by
+    𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = sₜ ∧ a t = aₜ);
+  ‖Q θ t sₜ aₜ‖ ≤ (1 - γ)⁻¹ * |R| := by
 -- proof
   have hpR : Measurable (fun ω t ↦ r t ω) :=
     Measurable.of_eval (Random.Measurable.of.All_Eq.fst h₁)
@@ -42,28 +43,28 @@ private lemma main
   have hpre : (s t, a t) ⁻¹' {(sₜ, aₜ)} = s t ⁻¹' {sₜ} ∩ a t ⁻¹' {aₜ} := by
     ext ω
     simp [JointRandomSymbol]
-  have hmap : (M.traj θ).map (s t, a t) {(sₜ, aₜ)} ≠ 0 := by
+  have hmap : (M θ).map (s t, a t) {(sₜ, aₜ)} ≠ 0 := by
     rwa [Measure.map_apply hy (measurableSet_singleton (sₜ, aₜ)), hpre]
   simp only [Expectation.asRV_process]
   rw [Expectation.condEval_eq_integral hpR hy hfG hmap]
   rw [hpre]
   show ‖∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω
-    ∂(M.traj θ)[|s t ⁻¹' {sₜ} ∩ a t ⁻¹' {aₜ}]‖ ≤ _
-  have hbound : ∀ᵐ ω ∂(M.traj θ),
-    ‖((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω‖ ≤ (1 - γ)⁻¹ * |M.R| := by
-    filter_upwards [All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity h₁ θ] with ω h
+    ∂(M θ)[|s t ⁻¹' {sₜ} ∩ a t ⁻¹' {aₜ}]‖ ≤ _
+  have hbound : ∀ᵐ ω ∂(M θ),
+    ‖((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω‖ ≤ (1 - γ)⁻¹ * |R| := by
+    filter_upwards [All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity h₁ hR θ] with ω h
     apply tsum_of_norm_bounded
       ((hasSum_geometric_of_lt_one h₀.1 h₀.2).mul_right _)
     intro k
-    change ‖γ ^ k * r (t + k) ω‖ ≤ γ ^ k * |M.R|
+    change ‖γ ^ k * r (t + k) ω‖ ≤ γ ^ k * |R|
     rw [norm_mul, Real.norm_of_nonneg (pow_nonneg h₀.1 k)]
     apply mul_le_mul_of_nonneg_left (h (t + k)) (pow_nonneg h₀.1 k)
-  have hae : ∀ᵐ ω ∂(M.traj θ)[|s t ⁻¹' {sₜ} ∩ a t ⁻¹' {aₜ}],
-      ‖((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω‖ ≤ (1 - γ)⁻¹ * |M.R| :=
+  have hae : ∀ᵐ ω ∂(M θ)[|s t ⁻¹' {sₜ} ∩ a t ⁻¹' {aₜ}],
+      ‖((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω‖ ≤ (1 - γ)⁻¹ * |R| :=
     cond_absolutelyContinuous.ae_le hbound
-  have := cond_isProbabilityMeasure (μ := M.traj θ) hpos
+  have := cond_isProbabilityMeasure (μ := M θ) hpos
   simpa using norm_integral_le_of_norm_le_const hae
 
 
 -- created on 2026-10-06
--- updated on 2026-11-17
+-- updated on 2026-11-18

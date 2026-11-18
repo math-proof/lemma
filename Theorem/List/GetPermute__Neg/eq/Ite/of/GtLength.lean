@@ -15,6 +15,7 @@ public import Theorem.Nat.Lt.is.Le.Ne
 public import Theorem.Nat.Sub.ge.One.of.Gt
 public import Theorem.Nat.LtSub
 
+public import Theorem.List.LengthSlice.eq.SubMin_Length
 public section
 
 open List Nat Matrix

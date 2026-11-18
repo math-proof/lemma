@@ -38,4 +38,11 @@ public theorem Congr
   aesop
 
 
+public theorem Bool.EqCast.of.HEq.Eq
+  {a : α} {b : β}
+  (h : α = β)
+  (hheq : HEq a b) :
+  cast h a = b :=
+  (Bool.HEq.is.EqCast.of.Eq h).mp hheq
+
 -- created on 2025-07-16

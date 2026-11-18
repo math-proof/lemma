@@ -1,4 +1,3 @@
-import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Notation.Fun
 import Lemma.Random.All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity
 import Lemma.Random.GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_ExpectCondDot.All_Eq_ExpectCondDot.All_Eq_Joint.All_EqWithDensity.In_Ico
@@ -6,8 +5,7 @@ import Lemma.Random.Integral_SMul.eq.Zero.of.All_Differentiable_Prob.All_Integra
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Syntax.Order.Sup
 import Instance.Analysis.Real.Numbers
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
+import Instance.Dynamics.PolicyTrajectory
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random
 open scoped ENNReal.ToRealCoe
 set_option maxHeartbeats 800000
@@ -25,19 +23,19 @@ lemma expect_weight_score_eq_integral
   {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
 -- given
-  (hsP : PSpace (M.traj θ) (AsPathRV.path s))
-  (haP : PSpace (M.traj θ) (AsPathRV.path a)) :
+  (hsP : PSpace (M θ) (AsPathRV.path s))
+  (haP : PSpace (M θ) (AsPathRV.path a)) :
 -- imply
-  𝔼[s, a : M.traj θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
+  𝔼[s, a : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
       W t s[t] a[t] • ∇[θ] Real.log (M.π[θ] s[t] a[t])) =
     ∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
       W t (s[t] ω) (a[t] ω) •
-        ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))) ∂(M.traj θ) := by
+        ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))) ∂(M θ) := by
 -- proof
-  have : PSpace (M.traj θ) (AsPathRV.path s) := hsP
-  have : PSpace (M.traj θ) (AsPathRV.path a) := haP
+  have : PSpace (M θ) (AsPathRV.path s) := hsP
+  have : PSpace (M θ) (AsPathRV.path a) := haP
   rw [Expectation.ofRV, expectation_bochner]
-  have hx : AEMeasurable (AsPathRV.path s, AsPathRV.path a) (M.traj θ) :=
+  have hx : AEMeasurable (AsPathRV.path s, AsPathRV.path a) (M θ) :=
     PSpace.aemeasurable
   refine (integral_map hx ?_).trans ?_
   ·
@@ -80,13 +78,13 @@ private lemma integral_state_score_zero
 -- imply
   ∫ ω, h (s[t] ω) •
       ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))
-    ∂(M.traj θ) = 0 := by
+    ∂(M θ) = 0 := by
 -- proof
   let e := (InnerProductSpace.toDual ℝ Θ).symm
   have hfd :
     ∫ ω, h (s[t] ω) •
         fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s[t] ω) (a[t] ω))) θ
-      ∂(M.traj θ) = 0 :=
+      ∂(M θ) = 0 :=
     Integral_SMul.eq.Zero.of.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity
       (M := M) (r := r.toFun) (s := s.toFun) (a := a.toFun) θ h₀ h₁ h₂ hBdd h hh hC hφ hMs t
   have hfun :
@@ -98,7 +96,7 @@ private lemma integral_state_score_zero
   have hint :
     Integrable (fun ω => h (s[t] ω) •
         fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s[t] ω) (a[t] ω))) θ)
-      (M.traj θ) := by
+      (M θ) := by
     have hmeas : Measurable (fun ω : ℕ → ℝ × 𝒮 × 𝒜 => (s[t] ω, a[t] ω)) :=
       (Measurable.of.All_Eq.snd.fst h₀ t).prodMk (Measurable.of.All_Eq.snd.snd h₀ t)
     have hbound : ∀ ω,
@@ -121,7 +119,7 @@ private lemma integral_state_score_zero
   let eCLM := e.toContinuousLinearEquiv.toContinuousLinearMap
   change ∫ ω, eCLM
     (h (s[t] ω) • fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s[t] ω) (a[t] ω))) θ)
-    ∂(M.traj θ) = 0
+    ∂(M θ) = 0
   rw [eCLM.integral_comp_comm hint, hfd, map_zero]
 
 
@@ -145,7 +143,7 @@ lemma integrable_weight_score
   (t : ℕ) :
 -- imply
   Integrable (fun ω =>
-    W (s[t] ω) (a[t] ω) • ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))) (M.traj θ) := by
+    W (s[t] ω) (a[t] ω) • ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))) (M θ) := by
 -- proof
   have hmeas : Measurable (fun ω : ℕ → ℝ × 𝒮 × 𝒜 => (s[t] ω, a[t] ω)) :=
     (Measurable.of.All_Eq.snd.fst h₀ t).prodMk (Measurable.of.All_Eq.snd.snd h₀ t)
@@ -179,20 +177,20 @@ lemma integral_dot_score_eq_tsum
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r[t], s[t], a[t]))
-  (hsP : PSpace (M.traj θ) (AsPathRV.path s))
+  (hsP : PSpace (M θ) (AsPathRV.path s))
   (hB : 0 ≤ B)
   (hW : ∀ t x u, ‖W t x u‖ ≤ B)
   (hMs : ∀ y u, ‖fderiv ℝ (fun θ' => Real.log (M.π[θ'] y u)) θ‖ ≤ Ms) :
 -- imply
   ∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
       W t (s[t] ω) (a[t] ω) •
-        ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))) ∂(M.traj θ) =
+        ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))) ∂(M θ) =
     ∑' t, γ ^ t • ∫ ω,
       (W t (s[t] ω) (a[t] ω) •
         ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω)))
-    ∂(M.traj θ) := by
+    ∂(M θ) := by
 -- proof
-  have : PSpace (M.traj θ) (AsPathRV.path s) := hsP
+  have : PSpace (M θ) (AsPathRV.path s) := hsP
   have hMsg : ∀ y u, ‖∇[θ] Real.log (M.π[θ] y u)‖ ≤ Ms := fun y u => by
     simpa [gradient, LinearIsometryEquiv.norm_map] using hMs y u
   let F : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → Θ := fun t ω =>
@@ -210,7 +208,7 @@ lemma integral_dot_score_eq_tsum
           (mul_le_mul (hW t (s[t] ω) (a[t] ω))
             ((hMsg _ _).trans (le_max_left _ _)) (norm_nonneg _) hB)
           (pow_nonneg h₀.1 t)
-  have hInt : ∀ t, Integrable (F t) (M.traj θ) := by
+  have hInt : ∀ t, Integrable (F t) (M θ) := by
     intro t
     have hmeas : Measurable (fun ω : ℕ → ℝ × 𝒮 × 𝒜 => (s[t] ω, a[t] ω)) :=
       (Measurable.of.All_Eq.snd.fst h₁ t).prodMk (Measurable.of.All_Eq.snd.snd h₁ t)
@@ -219,11 +217,11 @@ lemma integral_dot_score_eq_tsum
       (f := fun q : 𝒮 × 𝒜 =>
         γ ^ t • (W t q.1 q.2 • ∇[θ] Real.log (M.π[θ] q.1 q.2)))
       StronglyMeasurable.of_discrete hmeas).aestronglyMeasurable
-  have hSum : Summable fun t => ∫ ω, ‖F t ω‖ ∂(M.traj θ) := by
+  have hSum : Summable fun t => ∫ ω, ‖F t ω‖ ∂(M θ) := by
     refine Summable.of_nonneg_of_le (fun _ => integral_nonneg fun _ => norm_nonneg _) (fun t => ?_)
       ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right (B * max Ms 0))
     calc
-      _ ≤ ∫ _, γ ^ t * (B * max Ms 0) ∂(M.traj θ) :=
+      _ ≤ ∫ _, γ ^ t * (B * max Ms 0) ∂(M θ) :=
         integral_mono_ae (hInt t).norm (integrable_const _) (Eventually.of_forall (hBound t))
       _ = γ ^ t * (B * max Ms 0) := by
         rw [integral_const]
@@ -256,11 +254,12 @@ private lemma main
   {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {R : ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r[t], s[t], a[t]))
-  (h₂ : ∀ θ t («\sf{s}» : ℕ ⇀ 𝒮) («\sf{a}» : ℕ ⇀ 𝒜), Q θ t «\sf{s}»[t] «\sf{a}»[t] = 𝔼[r : M.traj θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s[t] = «\sf{s}»[t] ∧ a[t] = «\sf{a}»[t]))
-  (h₃ : ∀ θ t («\sf{s}» : ℕ ⇀ 𝒮), V θ t «\sf{s}»[t] = 𝔼[r : M.traj θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s[t] = «\sf{s}»[t]))
+  (h₂ : ∀ θ t («\sf{s}» : ℕ ⇀ 𝒮) («\sf{a}» : ℕ ⇀ 𝒜), Q θ t «\sf{s}»[t] «\sf{a}»[t] = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s[t] = «\sf{s}»[t] ∧ a[t] = «\sf{a}»[t]))
+  (h₃ : ∀ θ t («\sf{s}» : ℕ ⇀ 𝒮), V θ t «\sf{s}»[t] = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s[t] = «\sf{s}»[t]))
   (h₄ : ∀ θ t x u, A θ t x u = Q θ t x u - V θ t x)
   (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π[θ] z.1 z.2))
   (h₅ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π[θ] sₜ aₜ))
@@ -269,16 +268,17 @@ private lemma main
   (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) μ.measure)
   (hφ : StronglyMeasurable
     (fun z : 𝒮 × 𝒜 => fderiv ℝ (fun θ' => Real.log (M.π[θ'] z.1 z.2)) θ))
-  (hMs : sup[y, u] ‖fderiv ℝ (fun θ' => Real.log (M.π[θ'] y u)) θ‖ < ∞) :
+  (hMs : sup[y, u] ‖fderiv ℝ (fun θ' => Real.log (M.π[θ'] y u)) θ‖ < ∞)
+  (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1) :
 -- imply
-  have : ∀ θ, PSpace (M.traj θ) (AsPathRV.path r) := fun _ ↦
+  have : ∀ θ, PSpace (M θ) (AsPathRV.path r) := fun _ ↦
     PSpace_Path.of.All_PSpace (fun t ↦ ⟨(Measurable.of.All_Eq.fst h₁ t).aemeasurable⟩)
-  have : PSpace (M.traj θ) (AsPathRV.path s) :=
+  have : PSpace (M θ) (AsPathRV.path s) :=
     PSpace_Path.of.All_PSpace (fun t ↦ ⟨(Measurable.of.All_Eq.snd.fst h₁ t).aemeasurable⟩)
-  have : PSpace (M.traj θ) (AsPathRV.path a) :=
+  have : PSpace (M θ) (AsPathRV.path a) :=
     PSpace_Path.of.All_PSpace (fun t ↦ ⟨(Measurable.of.All_Eq.snd.snd h₁ t).aemeasurable⟩)
-  ∇[θ] 𝔼[r: M.traj θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) =
-    𝔼[s, a : M.traj θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
+  ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) =
+    𝔼[s, a : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
       A θ t s[t] a[t] • ∇[θ] Real.log (M.π[θ] s[t] a[t])) := by
 -- proof
   intro hrP hsP haP
@@ -289,14 +289,14 @@ private lemma main
   have h₃' := fun θ t (sb : ℕ → 𝒮) => h₃ θ t ⟨sb⟩
   have hQ :=
     GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_ExpectCondDot.All_Eq_ExpectCondDot.All_Eq_Joint.All_EqWithDensity.In_Ico
-      (M := M) (θ := θ) (γ := γ) (Q := Q) (V := V) (r := r) (s := s) (a := a) h₀ h₁ h₂' h₃' hπ h₅ h₆ hBdd hIntg hφ hMs
+      (M := M) (θ := θ) (γ := γ) (Q := Q) (V := V) (r := r) (s := s) (a := a) h₀ h₁ h₂' h₃' hπ h₅ h₆ hBdd hIntg hφ hMs hR
   refine hQ.trans ?_
   have hIntQ := expect_weight_score_eq_integral (W := fun t x u => Q θ t x u) (γ := γ)
     (s := s) (a := a) hsP haP
   have hIntA := expect_weight_score_eq_integral (W := fun t x u => A θ t x u) (γ := γ)
     (s := s) (a := a) hsP haP
   rw [hIntQ, hIntA]
-  set B : ℝ := (1 - γ)⁻¹ * |M.R|
+  set B : ℝ := (1 - γ)⁻¹ * |R|
   have hB : 0 ≤ B := mul_nonneg (inv_nonneg.mpr (sub_nonneg.mpr (le_of_lt h₀.2))) (abs_nonneg _)
   have hpR : Measurable (fun ω t ↦ r[t] ω) :=
     Measurable.of_eval (Random.Measurable.of.All_Eq.fst h₁)
@@ -306,13 +306,13 @@ private lemma main
     refine Measurable.tsum fun k => ?_
     have hm : Measurable (fun integ : ℕ → ℝ => integ (t + k)) := measurable_pi_apply (t + k)
     simpa using hm.const_mul ((γ ^ (id : ℕ → ℕ)) k)
-  have hGbd : ∀ t, ∀ᵐ ω ∂(M.traj θ), ‖((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω‖ ≤ B := by
+  have hGbd : ∀ t, ∀ᵐ ω ∂(M θ), ‖((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω‖ ≤ B := by
     intro t
     filter_upwards [All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity
-      (M := M) (r := r.toFun) (s := s.toFun) (a := a.toFun) h₁ θ] with ω hrω
-    have hsum : Summable fun k => γ ^ k * |M.R| :=
-      (summable_geometric_of_lt_one h₀.1 h₀.2).mul_right |M.R|
-    have hle : ∀ k, ‖γ ^ k * r[t + k] ω‖ ≤ γ ^ k * |M.R| := fun k => by
+      (M := M) (r := r.toFun) (s := s.toFun) (a := a.toFun) h₁ hR θ] with ω hrω
+    have hsum : Summable fun k => γ ^ k * |R| :=
+      (summable_geometric_of_lt_one h₀.1 h₀.2).mul_right |R|
+    have hle : ∀ k, ‖γ ^ k * r[t + k] ω‖ ≤ γ ^ k * |R| := fun k => by
       rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
       apply mul_le_mul_of_nonneg_left (by simpa [Real.norm_eq_abs] using hrω (t + k))
         (pow_nonneg h₀.1 k)
@@ -323,64 +323,64 @@ private lemma main
     rw [hG]
     calc
       _ ≤ ∑' k, ‖γ ^ k * r[t + k] ω‖ := norm_tsum_le_tsum_norm hsn
-      _ ≤ ∑' k, γ ^ k * |M.R| := Summable.tsum_le_tsum hle hsn hsum
+      _ ≤ ∑' k, γ ^ k * |R| := Summable.tsum_le_tsum hle hsn hsum
       _ = B := by
         rw [tsum_mul_right, tsum_geometric_of_lt_one h₀.1 h₀.2]
   have hQB_pos (t : ℕ) (sₜ : 𝒮) (aₜ : 𝒜)
-    (hpos : (M.traj θ).map (fun ω => (s[t] ω, a[t] ω)) {(sₜ, aₜ)} ≠ 0) :
+    (hpos : (M θ).map (fun ω => (s[t] ω, a[t] ω)) {(sₜ, aₜ)} ≠ 0) :
     ‖Q θ t sₜ aₜ‖ ≤ B := by
     have hsa : Measurable (fun ω => (s[t] ω, a[t] ω)) :=
       (Measurable.of.All_Eq.snd.fst h₁ t).prodMk (Measurable.of.All_Eq.snd.snd h₁ t)
-    have h0 : (M.traj θ) ((fun ω => (s[t] ω, a[t] ω)) ⁻¹' {(sₜ, aₜ)}) ≠ 0 := by
+    have h0 : (M θ) ((fun ω => (s[t] ω, a[t] ω)) ⁻¹' {(sₜ, aₜ)}) ≠ 0 := by
       rwa [← Measure.map_apply hsa (measurableSet_singleton (sₜ, aₜ))]
     have : Q θ t sₜ aₜ =
       ∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω
-        ∂(M.traj θ)[|(fun ω => (s[t] ω, a[t] ω)) ⁻¹' {(sₜ, aₜ)}] := by
+        ∂(M θ)[|(fun ω => (s[t] ω, a[t] ω)) ⁻¹' {(sₜ, aₜ)}] := by
       rw [h₂ θ t ⟨fun _ => sₜ⟩ ⟨fun _ => aₜ⟩]
       simp only [Expectation.asRV, AsPathRV.path_fun]
       rw [show (s[t], a[t]) = (fun ω => (s[t] ω, a[t] ω)) from rfl]
       rw [Expectation.condEval_eq_integral hpR hsa (hfG t) hpos]
       rfl
     rw [this]
-    have hae : ∀ᵐ ω ∂(M.traj θ)[|(fun ω => (s[t] ω, a[t] ω)) ⁻¹' {(sₜ, aₜ)}],
+    have hae : ∀ᵐ ω ∂(M θ)[|(fun ω => (s[t] ω, a[t] ω)) ⁻¹' {(sₜ, aₜ)}],
       ‖((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω‖ ≤ B :=
       cond_absolutelyContinuous.ae_le (hGbd t)
     have : IsProbabilityMeasure
-      (M.traj θ)[|(fun ω => (s[t] ω, a[t] ω)) ⁻¹' {(sₜ, aₜ)}] :=
+      (M θ)[|(fun ω => (s[t] ω, a[t] ω)) ⁻¹' {(sₜ, aₜ)}] :=
       cond_isProbabilityMeasure h0
     simpa using
       norm_integral_le_of_norm_le_const
-        (μ := (M.traj θ)[|(fun ω => (s[t] ω, a[t] ω)) ⁻¹' {(sₜ, aₜ)}]) hae
+        (μ := (M θ)[|(fun ω => (s[t] ω, a[t] ω)) ⁻¹' {(sₜ, aₜ)}]) hae
   have hVB_pos (t : ℕ) (sₜ : 𝒮)
-    (hpos : (M.traj θ).map s[t] {sₜ} ≠ 0) :
+    (hpos : (M θ).map s[t] {sₜ} ≠ 0) :
     ‖V θ t sₜ‖ ≤ B := by
     have hs : Measurable (s[t] : (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮) :=
       Measurable.of.All_Eq.snd.fst h₁ t
-    have h0 : (M.traj θ) (s[t] ⁻¹' {sₜ}) ≠ 0 := by
+    have h0 : (M θ) (s[t] ⁻¹' {sₜ}) ≠ 0 := by
       rwa [← Measure.map_apply hs (measurableSet_singleton sₜ)]
     have : V θ t sₜ =
       ∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω
-        ∂(M.traj θ)[|s[t] ⁻¹' {sₜ}] := by
+        ∂(M θ)[|s[t] ⁻¹' {sₜ}] := by
       rw [h₃ θ t ⟨fun _ => sₜ⟩]
       simp only [Expectation.asRV, AsPathRV.path_fun]
       rw [Expectation.condEval_eq_integral hpR hs (hfG t) hpos]
       rfl
     rw [this]
-    have hae : ∀ᵐ ω ∂(M.traj θ)[|s[t] ⁻¹' {sₜ}],
+    have hae : ∀ᵐ ω ∂(M θ)[|s[t] ⁻¹' {sₜ}],
       ‖((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω‖ ≤ B :=
       cond_absolutelyContinuous.ae_le (hGbd t)
-    have : IsProbabilityMeasure (M.traj θ)[|s[t] ⁻¹' {sₜ}] :=
+    have : IsProbabilityMeasure (M θ)[|s[t] ⁻¹' {sₜ}] :=
       cond_isProbabilityMeasure h0
     simpa using
       norm_integral_le_of_norm_le_const
-        (μ := (M.traj θ)[|s[t] ⁻¹' {sₜ}]) hae
+        (μ := (M θ)[|s[t] ⁻¹' {sₜ}]) hae
   have hAB_pos (t : ℕ) (sₜ : 𝒮) (aₜ : 𝒜)
-    (hpos : (M.traj θ).map (fun ω => (s[t] ω, a[t] ω)) {(sₜ, aₜ)} ≠ 0) :
+    (hpos : (M θ).map (fun ω => (s[t] ω, a[t] ω)) {(sₜ, aₜ)} ≠ 0) :
     ‖A θ t sₜ aₜ‖ ≤ 2 * B := by
     have hsa : Measurable (fun ω => (s[t] ω, a[t] ω)) :=
       (Measurable.of.All_Eq.snd.fst h₁ t).prodMk (Measurable.of.All_Eq.snd.snd h₁ t)
-    have hx : (M.traj θ).map s[t] {sₜ} ≠ 0 := by
-      have h0 : (M.traj θ) ((fun ω => (s[t] ω, a[t] ω)) ⁻¹' {(sₜ, aₜ)}) ≠ 0 := by
+    have hx : (M θ).map s[t] {sₜ} ≠ 0 := by
+      have h0 : (M θ) ((fun ω => (s[t] ω, a[t] ω)) ⁻¹' {(sₜ, aₜ)}) ≠ 0 := by
         rwa [← Measure.map_apply hsa (measurableSet_singleton (sₜ, aₜ))]
       have hs : Measurable (s[t] : (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮) :=
         Measurable.of.All_Eq.snd.fst h₁ t
@@ -397,11 +397,11 @@ private lemma main
       _ ≤ B + B := add_le_add (hQB_pos t sₜ aₜ hpos) (hVB_pos t sₜ hx)
       _ = 2 * B := by ring
   let Q₀ : ℕ → 𝒮 → 𝒜 → ℝ := fun t x u =>
-    if (M.traj θ).map (fun ω => (s[t] ω, a[t] ω)) {(x, u)} = 0 then 0 else Q θ t x u
+    if (M θ).map (fun ω => (s[t] ω, a[t] ω)) {(x, u)} = 0 then 0 else Q θ t x u
   let A₀ : ℕ → 𝒮 → 𝒜 → ℝ := fun t x u =>
-    if (M.traj θ).map (fun ω => (s[t] ω, a[t] ω)) {(x, u)} = 0 then 0 else A θ t x u
+    if (M θ).map (fun ω => (s[t] ω, a[t] ω)) {(x, u)} = 0 then 0 else A θ t x u
   let V₀ : ℕ → 𝒮 → ℝ := fun t x =>
-    if (M.traj θ).map s[t] {x} = 0 then 0 else V θ t x
+    if (M θ).map s[t] {x} = 0 then 0 else V θ t x
   have hQ0B : ∀ t x u, ‖Q₀ t x u‖ ≤ B := fun t x u => by
     simp only [Q₀]
     split_ifs with h0
@@ -424,35 +424,35 @@ private lemma main
       apply hB
     · apply hVB_pos t x h0
   have h2B : 0 ≤ 2 * B := mul_nonneg (by norm_num) hB
-  have hposSA : ∀ t, ∀ᵐ ω ∂(M.traj θ),
-    (M.traj θ).map (fun ω => (s[t] ω, a[t] ω)) {(s[t] ω, a[t] ω)} ≠ 0 := by
+  have hposSA : ∀ t, ∀ᵐ ω ∂(M θ),
+    (M θ).map (fun ω => (s[t] ω, a[t] ω)) {(s[t] ω, a[t] ω)} ≠ 0 := by
     intro t
     let pair : (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮 × 𝒜 := fun ω => (s[t] ω, a[t] ω)
     have hpair : Measurable pair :=
       (Measurable.of.All_Eq.snd.fst h₁ t).prodMk (Measurable.of.All_Eq.snd.snd h₁ t)
     rw [ae_iff]
     have e :
-      {ω | ¬(M.traj θ).map pair {pair ω} ≠ 0} =
-        ⋃ z ∈ {z : 𝒮 × 𝒜 | (M.traj θ).map pair {z} = 0}, pair ⁻¹' {z} := by
+      {ω | ¬(M θ).map pair {pair ω} ≠ 0} =
+        ⋃ z ∈ {z : 𝒮 × 𝒜 | (M θ).map pair {z} = 0}, pair ⁻¹' {z} := by
       ext ω
       simp
     rw [e]
     refine (measure_biUnion_null_iff (Set.to_countable _)).2 fun z hz => ?_
     simpa [Measure.map_apply hpair (measurableSet_singleton z)] using hz
-  have hposS : ∀ t, ∀ᵐ ω ∂(M.traj θ), (M.traj θ).map s[t] {s[t] ω} ≠ 0 := by
+  have hposS : ∀ t, ∀ᵐ ω ∂(M θ), (M θ).map s[t] {s[t] ω} ≠ 0 := by
     intro t
     have hs : Measurable (s[t] : (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮) :=
       Measurable.of.All_Eq.snd.fst h₁ t
     rw [ae_iff]
     have e :
-      {ω | ¬(M.traj θ).map s[t] {s[t] ω} ≠ 0} =
-        ⋃ z ∈ {z : 𝒮 | (M.traj θ).map s[t] {z} = 0}, s[t] ⁻¹' {z} := by
+      {ω | ¬(M θ).map s[t] {s[t] ω} ≠ 0} =
+        ⋃ z ∈ {z : 𝒮 | (M θ).map s[t] {z} = 0}, s[t] ⁻¹' {z} := by
       ext ω
       simp
     rw [e]
     refine (measure_biUnion_null_iff (Set.to_countable _)).2 fun z hz => ?_
     simpa [Measure.map_apply hs (measurableSet_singleton z)] using hz
-  have hscoreQ : ∀ t, ∀ᵐ ω ∂(M.traj θ),
+  have hscoreQ : ∀ t, ∀ᵐ ω ∂(M θ),
     Q θ t (s[t] ω) (a[t] ω) •
       ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω)) =
     Q₀ t (s[t] ω) (a[t] ω) •
@@ -460,7 +460,7 @@ private lemma main
     intro t
     filter_upwards [hposSA t] with ω hpos
     simp [Q₀, hpos]
-  have hscoreA : ∀ t, ∀ᵐ ω ∂(M.traj θ),
+  have hscoreA : ∀ t, ∀ᵐ ω ∂(M θ),
     A θ t (s[t] ω) (a[t] ω) •
       ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω)) =
     A₀ t (s[t] ω) (a[t] ω) •
@@ -468,7 +468,7 @@ private lemma main
     intro t
     filter_upwards [hposSA t] with ω hpos
     simp [A₀, hpos]
-  have hscoreV : ∀ t, ∀ᵐ ω ∂(M.traj θ),
+  have hscoreV : ∀ t, ∀ᵐ ω ∂(M θ),
     V θ t (s[t] ω) •
       ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω)) =
     V₀ t (s[t] ω) •
@@ -479,20 +479,20 @@ private lemma main
   have hIntQ0 :
     ∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
       Q θ t (s[t] ω) (a[t] ω) •
-        ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))) ∂(M.traj θ) =
+        ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))) ∂(M θ) =
     ∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
       Q₀ t (s[t] ω) (a[t] ω) •
-        ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))) ∂(M.traj θ) := by
+        ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))) ∂(M θ) := by
     refine integral_congr_ae ?_
     filter_upwards [ae_all_iff.2 hscoreQ] with ω hω
     simp only [Dot.dot, Function.hPow_apply, id_eq, hω]
   have hIntA0 :
     ∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
       A θ t (s[t] ω) (a[t] ω) •
-        ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))) ∂(M.traj θ) =
+        ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))) ∂(M θ) =
     ∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
       A₀ t (s[t] ω) (a[t] ω) •
-        ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))) ∂(M.traj θ) := by
+        ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))) ∂(M θ) := by
     refine integral_congr_ae ?_
     filter_upwards [ae_all_iff.2 hscoreA] with ω hω
     simp only [Dot.dot, Function.hPow_apply, id_eq, hω]
@@ -503,16 +503,16 @@ private lemma main
       (M := M) (θ := θ) (γ := γ) (r := r) (s := s) (a := a) h₀ h₁ hsP h2B hA0B hMsle]
   have hIntQ0t : ∀ t,
     ∫ ω, (Q₀ t (s[t] ω) (a[t] ω) •
-      ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))) ∂(M.traj θ) =
+      ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))) ∂(M θ) =
     ∫ ω, (Q θ t (s[t] ω) (a[t] ω) •
-      ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))) ∂(M.traj θ) := by
+      ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))) ∂(M θ) := by
     intro t
     apply (integral_congr_ae (hscoreQ t)).symm
   have hIntA0t : ∀ t,
     ∫ ω, (A₀ t (s[t] ω) (a[t] ω) •
-      ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))) ∂(M.traj θ) =
+      ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))) ∂(M θ) =
     ∫ ω, (A θ t (s[t] ω) (a[t] ω) •
-      ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))) ∂(M.traj θ) := by
+      ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))) ∂(M θ) := by
     intro t
     apply (integral_congr_ae (hscoreA t)).symm
   simp_rw [hIntQ0t, hIntA0t]
@@ -526,11 +526,11 @@ private lemma main
     h₁ hB (fun x _ => hV0B t x) hMsle t
   have hintA : Integrable (fun ω =>
     A θ t (s[t] ω) (a[t] ω) •
-      ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))) (M.traj θ) :=
+      ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))) (M θ) :=
     hintA0.congr ((hscoreA t).mono fun _ h => h.symm)
   have hintV : Integrable (fun ω =>
     V θ t (s[t] ω) •
-      ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))) (M.traj θ) :=
+      ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))) (M θ) :=
     hintV0.congr ((hscoreV t).mono fun _ h => h.symm)
   have hV0 :=
     integral_state_score_zero (M := M) (θ := θ) (r := r) (s := s) (a := a) (C := B) (Ms := Ms) h₁ h₅ hIntg hBdd (V₀ t) StronglyMeasurable.of_discrete.measurable (hV0B t) hφ hMsle t
@@ -544,11 +544,11 @@ private lemma main
     rw [h₄]
     ring
   have hVeq : ∫ ω, (V θ t (s[t] ω) •
-        ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))) ∂(M.traj θ) = 0 :=
+        ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))) ∂(M θ) = 0 :=
     (integral_congr_ae (hscoreV t)).trans hV0
   rw [integral_congr_ae (Filter.Eventually.of_forall hsum), integral_add hintA hintV, hVeq,
     add_zero]
 
 
 -- created on 2023-04-13
--- updated on 2026-11-17
+-- updated on 2026-11-18

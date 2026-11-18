@@ -34,7 +34,7 @@ public theorem fpdimRegularObject_eq
 -- imply
   D.fpdimRegularObject = ∑ i : D.I, D.fpDimSimple i * D.fpDimProjCover i := by
 -- proof
-  simp [fpdimRegularObject, FormalProjectiveSum.fpdim]
+  simp [fpdimRegularObject, FormalProjectiveSum.fpdim, regularObject_coeff]
 
 end FiniteTensorCategoryFPData
 

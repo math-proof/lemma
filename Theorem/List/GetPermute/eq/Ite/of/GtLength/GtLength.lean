@@ -24,6 +24,10 @@ public import Theorem.Nat.Gt.is.Ge.Ne
 public import Theorem.Nat.LeAdd_1.of.Lt
 public import Theorem.Nat.Le_Sub.of.LeAdd
 
+public import Theorem.List.LengthSlice.eq.SubMin_Length
+public import Theorem.Nat.Le_Sub.is.LeAdd.of.Le
+public import Theorem.Nat.EqMin.of.Le
+public import Theorem.Nat.LeAdd_1
 public section
 
 open List Nat

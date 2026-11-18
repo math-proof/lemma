@@ -1,7 +1,11 @@
-import Mathlib
-import Theorem.Analysis.Section_5_2.Part2
-import Mathlib.Algebra.Group.MinimalAxioms
-import Instance.Analysis.Section_5_3
+module
+
+public import Mathlib
+public import Theorem.Analysis.Section_5_2.Part2
+public import Mathlib.Algebra.Group.MinimalAxioms
+public import Instance.Analysis.Section_5_3
+
+public section
 /-!
 # Analysis I, Section 5.3: The construction of the real numbers
 
@@ -29,15 +33,24 @@ Users of the companion who have completed the exercises in this section are welc
 namespace Chapter5
 
 @[simp]
-theorem CauchySequence.coe_to_sequence (a: CauchySequence) :
-    ((a:ℕ → ℚ):Sequence) = a.toSequence := by
-  apply Sequence.ext (by simp [Sequence.n0_coe, a.zero])
-  ext n; by_cases h:n ≥ 0 <;> simp_all
-  rw [a.vanish]; rwa [a.zero]
+public theorem CauchySequence.coe_to_sequence (a: CauchySequence) :
+    Sequence.ofNatFun (a : ℕ → ℚ) = a.toSequence := by
+  apply Sequence.ext
+  · simp [Sequence.ofNatFun, a.zero]
+  · funext n
+    by_cases h : n ≥ 0
+    · simp [Sequence.ofNatFun, h]
+    · simp [Sequence.ofNatFun, h]
+      rw [a.vanish]
+      rw [a.zero]
+      omega
 
 @[simp]
-theorem CauchySequence.coe_coe {a:ℕ → ℚ} (ha: (a:Sequence).IsCauchy) : mk' ha = a := by rfl
+public theorem CauchySequence.coe_coe {a:ℕ → ℚ} (ha: (Sequence.ofNatFun a).IsCauchy) :
+    (mk' ha : ℕ → ℚ) = a := by
+  rfl
 
-theorem CauchySequence.equiv_iff (a b: CauchySequence) : a ≈ b ↔ Sequence.Equiv a b := by rfl
+public theorem CauchySequence.equiv_iff (a b: CauchySequence) : a ≈ b ↔ Sequence.Equiv a b := by
+  rfl
 
 end Chapter5

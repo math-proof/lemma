@@ -1,8 +1,8 @@
 module
 
-public import Def.Lean.Meta.Expr.Part4
-public import Def.Lean.Expr.Singleton.Part2
-public import Def.Lean.Expr.Part7
+public import Def.Lean.Meta.Expr
+public import Def.Lean.Expr.Singleton
+public import Def.Lean.Expr.Operator
 
 @[expose] public section
 

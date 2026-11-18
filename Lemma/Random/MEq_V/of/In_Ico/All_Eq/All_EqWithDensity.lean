@@ -1,8 +1,7 @@
 import Lemma.Random.MEq_V0.of.In_Ico.All_Eq.All_EqWithDensity
 import Lemma.Random.MEq_Clip.of.All_Eq.All_EqWithDensity
 import Lemma.Random.NormClip.le.Abs_R
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
+import Instance.Dynamics.PolicyTrajectory
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Real Filter
 
 
@@ -23,14 +22,16 @@ private lemma main
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {R : ℝ}
 -- given
   (hγ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 ↦ M.π[θ] z.1 z.2))
+  (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1)
   (θ : Θ)
   (k : ℕ) :
 -- imply
-  (fun ω => M.V θ γ k (s k ω)) =ᵐ[M.traj θ] (fun ω => M.V0 θ γ (s k ω)) := by
+  (fun ω => M.V θ γ k (s k ω)) =ᵐ[M θ] (fun ω => M.V0 R θ γ (s k ω)) := by
 -- proof
   have hs : Measurable (s k) := Random.Measurable.of.All_Eq.snd.fst h₁ k
   have hrm : ∀ j, Measurable (r j) := fun j => Random.Measurable.of.All_Eq.fst h₁ j
@@ -38,19 +39,19 @@ private lemma main
   have hfGret : Measurable
       (fun integ : ℕ → ℝ => (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[k:]) :=
     Measurable.tsum fun j => (measurable_pi_apply (k + j)).const_mul _
-  set BV : ℝ := (1 - γ)⁻¹ * |M.R|
-  have hr_bd : ∀ᵐ ω ∂(M.traj θ), ∀ j, |r j ω| ≤ |M.R| := by
-    have hcl : ∀ j, r j =ᵐ[M.traj θ] fun ω => clip (ω j).1 (-M.R) M.R :=
-      fun j => MEq_Clip.of.All_Eq.All_EqWithDensity h₁ (M := M) θ j
-    have hcl' : ∀ᵐ ω ∂(M.traj θ), ∀ j,
-        r j ω = clip (ω j).1 (-M.R) M.R :=
+  set BV : ℝ := (1 - γ)⁻¹ * |R|
+  have hr_bd : ∀ᵐ ω ∂(M θ), ∀ j, |r j ω| ≤ |R| := by
+    have hcl : ∀ j, r j =ᵐ[M θ] fun ω => clip (ω j).1 (-R) R :=
+      fun j => MEq_Clip.of.All_Eq.All_EqWithDensity h₁ (M := M) hR θ j
+    have hcl' : ∀ᵐ ω ∂(M θ), ∀ j,
+        r j ω = clip (ω j).1 (-R) R :=
       (ae_all_iff (ι := ℕ)).mpr hcl
     filter_upwards [hcl'] with ω hω j
     rw [hω j, ← Real.norm_eq_abs]
-    exact NormClip.le.Abs_R (R := M.R) (ρ := (ω j).1)
-  have hret_bd : ∀ᵐ ω ∂(M.traj θ),
+    exact NormClip.le.Abs_R (R := R) (ρ := (ω j).1)
+  have hret_bd : ∀ᵐ ω ∂(M θ),
       ‖((γ ^ (id : ℕ → ℕ)) ⬝ᵥ (fun j => r j ω)[k:])‖ ≤ BV := by
-    have hgeo := (hasSum_geometric_of_lt_one hγ.1 hγ.2).mul_right |M.R|
+    have hgeo := (hasSum_geometric_of_lt_one hγ.1 hγ.2).mul_right |R|
     filter_upwards [hr_bd] with ω hω
     refine tsum_of_norm_bounded hgeo fun j => ?_
     have hid : (γ ^ (id : ℕ → ℕ)) j = γ ^ j := rfl
@@ -61,18 +62,18 @@ private lemma main
       (γ ^ (id : ℕ → ℕ)) ⬝ᵥ (fun j => r j ω)[k:] :=
     hfGret.comp hpR
   have hGi : Integrable
-      (fun ω => (γ ^ (id : ℕ → ℕ)) ⬝ᵥ (fun j => r j ω)[k:]) (M.traj θ) :=
+      (fun ω => (γ ^ (id : ℕ → ℕ)) ⬝ᵥ (fun j => r j ω)[k:]) (M θ) :=
     Integrable.of_bound hret.aestronglyMeasurable BV
       (by filter_upwards [hret_bd] with ω hω; exact hω)
   have hV0 :=
-    MEq_V0.of.In_Ico.All_Eq.All_EqWithDensity (M := M) hγ h₁ hπ θ k
+    MEq_V0.of.In_Ico.All_Eq.All_EqWithDensity (M := M) hγ h₁ hπ hR θ k
   have hcomp :=
     Expectation.condEval_comp_ae_eq_condSigma
       (x := fun ω i => r i ω) (y := s k)
       (f := fun integ => (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[k:])
       hpR.aemeasurable hs hfGret.stronglyMeasurable hGi
   have hdef : (fun ω => M.V θ γ k (s k ω)) =
-      (fun ω => Expectation.condEval (M.traj θ) (fun ω i => r i ω) (s k)
+      (fun ω => Expectation.condEval (M θ) (fun ω i => r i ω) (s k)
         (fun integ => (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[k:]) (s k ω)) := by
     obtain rfl : r = fun t ω ↦ (ω t).1 :=
       funext₂ fun t ω ↦ (congrArg Prod.fst (congrFun (h₁ t) ω)).symm
@@ -84,4 +85,4 @@ private lemma main
 
 
 -- created on 2026-11-12
--- updated on 2026-11-17
+-- updated on 2026-11-18

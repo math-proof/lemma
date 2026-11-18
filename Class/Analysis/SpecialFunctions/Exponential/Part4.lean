@@ -1,5 +1,6 @@
-import Instance.Analysis.SpecialFunctions.Exponential.Part3
-open Filter Hyperreal Int
+module
+
+public section
 
 class Log (α : Type u) extends Zero α, One α, Div α where
   log : α → α

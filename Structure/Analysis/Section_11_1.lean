@@ -1,6 +1,8 @@
 module
 
 public import Mathlib
+public import Instance.Analysis.Section_11_1.Part4
+public import Theorem.Analysis.Section_11_1.Part6
 public import Theorem.Analysis.Section_11_1.Part9
 /-!
 # Analysis I, Section 11.1: Partitions

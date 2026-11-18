@@ -1,5 +1,6 @@
 import Lemma.Random.RealPreimageSPreimageS_Add.eq.Pnkd.of.Ne0Real_Preimage.All_EqWithDensity
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
@@ -20,14 +21,14 @@ private lemma main
   {sₜ : 𝒮}
 -- given
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
-  (h₁ : (M.traj θ).real (s t ⁻¹' {sₜ}) ≠ 0)
+  (h₁ : (M θ).real (s t ⁻¹' {sₜ}) ≠ 0)
   (y : 𝒮) :
 -- imply
-  (M.traj θ)[|s t ⁻¹' {sₜ}].real (s (t + 1) ⁻¹' {y}) = M.Pnkd θ 1 sₜ y :=
+  (M θ)[|s t ⁻¹' {sₜ}].real (s (t + 1) ⁻¹' {y}) = M.Pnkd θ 1 sₜ y :=
 -- proof
   RealPreimageSPreimageS_Add.eq.Pnkd.of.Ne0Real_Preimage.All_EqWithDensity
     (M := M) h₀ h₁ 1 y
 
 
 -- created on 2026-11-13
--- updated on 2026-11-17
+-- updated on 2026-11-18

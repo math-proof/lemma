@@ -8,11 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Instance.v1.Atlas.ArithmeticGeometry.code.ClassGroupRatFunc
-import Def.v1.Atlas.ArithmeticGeometry.code.DegreePullback
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.DegreePullback
-import Structure.v1.Atlas.ArithmeticGeometry.code.RationalLineCriterion
+module
+
+public import Mathlib
+public import Instance.v1.Atlas.ArithmeticGeometry.code.ClassGroupRatFunc
+public import Def.v1.Atlas.ArithmeticGeometry.code.DegreePullback
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.DegreePullback
+public import Structure.v1.Atlas.ArithmeticGeometry.code.RationalLineCriterion
+
+@[expose] public section
 
 
 namespace ArithmeticGeometry

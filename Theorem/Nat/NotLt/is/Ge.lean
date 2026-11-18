@@ -31,4 +31,9 @@ public theorem Nat.Ge.of.NotLt
   {a b : α} (h : ¬a < b) : a ≥ b :=
   (Nat.NotLt.is.Ge).mp h
 
+public theorem Nat.Le.of.NotGt
+  [LinearOrder α]
+  {a b : α} (h : ¬a > b) : a ≤ b :=
+  le_of_not_gt h
+
 -- created on 2025-04-18

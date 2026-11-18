@@ -87,14 +87,14 @@ namespace Model
 variable {Θ 𝒮 𝒜 : Type*} [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
 
 /-- `rkd` (reward kernel density): `rkd sₜ aₜ = 𝔼[r[t] | s[t] = sₜ, a[t] = aₜ]`, the expected reward clamped to `[-R, R]` -/
-noncomputable def rkd (M : Model Θ 𝒮 𝒜) (sₜ : 𝒮) (aₜ : 𝒜) : ℝ :=
-  ∫ r_t, clip r_t (-M.R) M.R ∂(M.reward (sₜ, aₜ))
+noncomputable def rkd (M : Model Θ 𝒮 𝒜) (R : ℝ) (sₜ : 𝒮) (aₜ : 𝒜) : ℝ :=
+  ∫ r_t, clip r_t (-R) R ∂(M.reward (sₜ, aₜ))
 
 /-- `Wkd θ k sₜ = 𝔼[r[t+k] | s[t] = sₜ]` with a density policy: one policy step (an integral over the actions) and one
 transition per `k` -/
-noncomputable def Wkd (M : Model Θ 𝒮 𝒜) (θ : Θ) : ℕ → 𝒮 → ℝ
-  | 0 => fun sₜ => ∫ aₜ, M.π[θ] sₜ aₜ * M.rkd sₜ aₜ ∂ReferenceMeasure.measure
-  | k + 1 => fun sₜ => ∫ aₜ, M.π[θ] sₜ aₜ * ∫ y, M.Wkd θ k y ∂(M.trans (sₜ, aₜ)) ∂ReferenceMeasure.measure
+noncomputable def Wkd (M : Model Θ 𝒮 𝒜) (R : ℝ) (θ : Θ) : ℕ → 𝒮 → ℝ
+  | 0 => fun sₜ => ∫ aₜ, M.π[θ] sₜ aₜ * M.rkd R sₜ aₜ ∂ReferenceMeasure.measure
+  | k + 1 => fun sₜ => ∫ aₜ, M.π[θ] sₜ aₜ * ∫ y, M.Wkd R θ k y ∂(M.trans (sₜ, aₜ)) ∂ReferenceMeasure.measure
 
 /-- `P1kd θ p sₜ y = ℙ(s[t+1] = y | s[t] = sₜ) = ∫ aₜ, π_θ(aₜ | sₜ) * p(y | sₜ, aₜ) daₜ`, the next-state density
 when `p sₜ aₜ` is a density of the transition `M.trans (sₜ, aₜ)` -/
@@ -188,8 +188,8 @@ instance instGetElemIsProbabilityMeasure (M : Model Θ 𝒮 𝒜) [StochasticPol
 `V0 θ γ sₜ = ∑' k, γ ^ k * Wkd θ k sₜ`.
 Agrees with the conditional expectation `𝔼[(γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[0:] | s 0 = sₜ]` whenever
 `ℙ(s[0] = sₜ) ≠ 0`. -/
-noncomputable def V0 (M : Model Θ 𝒮 𝒜) (θ : Θ) (γ : ℝ) (sₜ : 𝒮) : ℝ :=
-  ∑' k, γ ^ k * M.Wkd θ k sₜ
+noncomputable def V0 (M : Model Θ 𝒮 𝒜) (R : ℝ) (θ : Θ) (γ : ℝ) (sₜ : 𝒮) : ℝ :=
+  ∑' k, γ ^ k * M.Wkd R θ k sₜ
 
 /-- State-value function:
 `V θ γ t sₜ = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = sₜ)`,

@@ -2,6 +2,7 @@ import Lemma.Random.Integral_Mul.eq.Integral_Mul_Kf.of.All_LeNorm.StronglyMeasur
 import Lemma.Random.Kf.eq.Integral_TW.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Lemma.Random.ProbJoint.eq.Mul_Prob_Pr
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Kernel
 
@@ -28,8 +29,8 @@ private lemma main
   (sₜ : 𝒮)
   (aₜ : 𝒜) :
 -- imply
-  ∫ ω, (if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) * f (s (t + 1) ω) ∂(M.traj θ) =
-    (M.traj θ).real (s t ⁻¹' {sₜ}) * (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}) *
+  ∫ ω, (if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) * f (s (t + 1) ω) ∂(M θ) =
+    (M θ).real (s t ⁻¹' {sₜ}) * (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}) *
       ∫ y, f y ∂(M.trans (sₜ, aₜ)) := by
 -- proof
   obtain rfl : s = fun t ω ↦ (ω t).2.1 :=
@@ -124,4 +125,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-17
+-- updated on 2026-11-18

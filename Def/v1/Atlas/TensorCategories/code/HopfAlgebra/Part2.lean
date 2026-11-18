@@ -31,7 +31,7 @@ universe u v
 
 section Proposition_1_22_1
 
-variable {R : Type u} {A : Type v} [CommSemiring R] [Semiring A] [HopfAlgebra R A]
+variable {R : Type u} {A : Type v} [CommSemiring R] [CommSemiring A] [HopfAlgebra R A]
 
 /-- The candidate "antimultiplication" map `A ⊗ A → A` in the commutative case, defined as
 `μ ∘ (S ⊗ S)`. Used to show `S` is an algebra antihomomorphism. -/

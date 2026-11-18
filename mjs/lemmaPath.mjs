@@ -1480,10 +1480,11 @@ function validModuleComponentBasic(c) {
   return /^[\p{L}_][\p{L}\p{N}_'!?\u2080-\u209C\u1D62-\u1D6A\u2070-\u207F]*$/u.test(c || "");
 }
 
-/** Top-level house soft delimiters. Nested `.eq.` / `/eq/` inside parentheses stay inside a side. */
+/** Top-level house soft delimiters. Nested `.eq.` / `/eq/` / `.is.` / `/is/` inside parentheses stay inside a side. */
 const HOUSE_SOFTS = [
   { slash: "/ae/", dot: ".ae.", name: "ae" },
   { slash: "/eq/", dot: ".eq.", name: "eq" },
+  { slash: "/is/", dot: ".is.", name: "is" },
 ];
 
 function topLevelIndex(s, needle) {
@@ -1498,7 +1499,7 @@ function topLevelIndex(s, needle) {
   return -1;
 }
 
-/** Split a house stem on the first top-level `/ae/`, `.ae.`, `/eq/`, or `.eq.`. */
+/** Split a house stem on the first top-level `/ae/`, `.ae.`, `/eq/`, `.eq.`, `/is/`, or `.is.`. */
 function splitTopHouse(s) {
   const t = String(s || "");
   for (const soft of HOUSE_SOFTS) {
@@ -1512,12 +1513,32 @@ function splitTopHouse(s) {
   return null;
 }
 
+function houseSoftOf(name) {
+  return HOUSE_SOFTS.find((s) => s.name === name) || null;
+}
+
 function houseDelimSlash(soft) {
-  return soft === "ae" ? "/ae/" : "/eq/";
+  return houseSoftOf(soft)?.slash || "/eq/";
 }
 
 function houseDelimDot(soft) {
-  return soft === "ae" ? ".ae." : ".eq.";
+  return houseSoftOf(soft)?.dot || ".eq.";
+}
+
+/** True when `s` contains a house delimiter (`/eq/`, `/ae/`, `/is/`, or dotted). */
+function sourceHasHouseDelim(s) {
+  const t = String(s || "");
+  return HOUSE_SOFTS.some((soft) => t.includes(soft.slash) || t.includes(soft.dot));
+}
+
+/** Length of a house delimiter starting at `s[i]`, or 0. */
+function houseDelimLenAt(s, i) {
+  const t = String(s || "");
+  for (const soft of HOUSE_SOFTS) {
+    if (t.startsWith(soft.slash, i)) return soft.slash.length;
+    if (t.startsWith(soft.dot, i)) return soft.dot.length;
+  }
+  return 0;
 }
 
 /**
@@ -3495,9 +3516,10 @@ function expandHouseStoredGroups(s) {
   let out = "";
   let i = 0;
   while (i < s.length) {
-    if (s.startsWith("/eq/", i) || s.startsWith(".eq.", i) || s.startsWith("/ae/", i) || s.startsWith(".ae.", i)) {
-      out += s.slice(i, i + 4);
-      i += 4;
+    const delimLen = houseDelimLenAt(s, i);
+    if (delimLen) {
+      out += s.slice(i, i + delimLen);
+      i += delimLen;
       continue;
     }
     if (s[i] === "(") {
@@ -3529,7 +3551,7 @@ function expandHouseStoredGroups(s) {
 export function expandSimplifiedHoleOpts(reSource) {
   const s = String(reSource || "");
   if (!s || s.includes("(_|")) return s;
-  if (s.includes("/eq/") || s.includes(".eq.") || s.includes("/ae/") || s.includes(".ae.")) return expandHouseStoredGroups(s);
+  if (sourceHasHouseDelim(s)) return expandHouseStoredGroups(s);
   if (!s.includes("(")) return s;
   return expandOptionalParens(s);
 }
@@ -3698,7 +3720,7 @@ export function holeRegexLastNodeDepth(reSource) {
   // Required-side house `/eq/(Expect_…)` ends in a group (not `(_|Expect_…)`).
   // Group depth alone under-pads Prob__/omit (Expect_DivMul_Prob needs the same
   // trailing-_ budget as fused wrapHoleOpt RHS depth = 1 + inner).
-  if ((src.includes("/eq/") || src.includes("/ae/")) && last && last.kind === "group") {
+  if (sourceHasHouseDelim(src) && last && last.kind === "group") {
     d = Math.max(d, 1 + holeRegexNodeDepth(last));
   }
   return d;
@@ -3714,7 +3736,7 @@ export function normalizeHouseEqTokenToRegex(token, reSource) {
   // Canonical house regex uses `/eq/` or `/ae/`; dotted module spelling normalizes to slash.
   // Only the top-level delimiter is rewritten; a nested `(Cond.eq.Prod)` stays dotted until
   // consistent() maps every `.` to `/` for matching.
-  if (splitTopHouse(re) || re.includes("/eq/") || re.includes("/ae/") || /\.eq\./.test(re) || /\.ae\./.test(re)) {
+  if (splitTopHouse(re) || sourceHasHouseDelim(re)) {
     const h = splitTopHouse(s);
     if (h) s = h.left + houseDelimSlash(h.soft) + h.right;
   }
@@ -4510,6 +4532,23 @@ function decompImplyStruct(node, opts, binders) {
     return tag + storedHoleOpt(L) + storedHoleOpt(R);
   }
 
+  // SinglePSpace π X: walk the RV as GetSlice__ / Joint(Get__)(GetSlice__),
+  // not a nameExpr freeze SinglePSpaceGetSlice.
+  {
+    const sps = singlePSpaceHoleRegex(u, opts);
+    if (sps) return sps;
+  }
+
+  // f ^{-1'} B: walk Preimage__ (or filled sides), not a pad-0 camel Preimage freeze.
+  if (c === "LeanPreimage") {
+    const L = decompImplyStruct(u.lhs ?? u.args?.[0], opts, binders);
+    const R = decompImplyStruct(u.rhs ?? u.args?.[1], opts, binders);
+    if (!L && !R) return "Preimage__";
+    if (!L) return R ? "Preimage_" + storedHoleOpt(R) : "Preimage_";
+    if (!R) return "Preimage" + storedHoleOpt(L) + "_";
+    return "Preimage" + storedHoleOpt(L) + storedHoleOpt(R);
+  }
+
   if (opts.isHole(u, opts, binders)) return null;
   return null;
 }
@@ -4915,6 +4954,17 @@ function isCommaCondProbFrag(s) {
   return t === "(Cond/eq/Prod)_Prob" || t === "(Cond.eq.Prod)_Prob";
 }
 
+/**
+ * Product body is a conditional ℙ, including the non-comma form
+ * `ℙ[π](s[k] | s[:k])` → `Prob_(Cond(Get__)(GetSlice__))`.
+ * Without this, Lean_prod falls through to a nameExpr freeze Prod_ProbCond.
+ */
+function isCondProbProductBody(s) {
+  const t = String(s || "");
+  if (t.startsWith("Prob_(Cond")) return true;
+  return isCommaCondProbFrag(t);
+}
+
 function isProbFamilyFrag(s) {
   const t = String(s || "");
   return isProbHoleFrag(t) || isProbProductFrag(t) || t.startsWith("Prod_") || isCommaCondProbFrag(t);
@@ -5174,6 +5224,93 @@ function measurableGetHoleRegex(node, opts) {
   return "Measurable(Get__)";
 }
 
+/**
+ * `SinglePSpace π (s[:n] : Ω → Fin n → 𝒮)` → `SinglePSpace(GetSlice__)`.
+ * `SinglePSpace π (s[k], fun ω => s[:k] ω)` (or an ascribed pair `(s[k], s[:k])`)
+ * → `SinglePSpace(Joint(Get__)(GetSlice__))`.
+ * Do not freeze to a pad-0 camel `SinglePSpaceGetSlice` (no `()` group around
+ * the GetSlice / Joint argument). The measure argument is a hole.
+ * @returns {string|null}
+ */
+function singlePSpaceHoleRegex(node, opts) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanArgsSpaceSeparated") return null;
+  const args = u.args || [];
+  if (args.length < 2) return null;
+  const head = unwrapParen(args[0]);
+  if (cls(head) !== "LeanToken" || head.text !== "SinglePSpace") return null;
+  const argFrag = rvOperandHoleFrag(args[args.length - 1], opts);
+  if (!argFrag || argFrag === "_") return "SinglePSpace";
+  return "SinglePSpace" + storedHoleOpt(argFrag);
+}
+
+/**
+ * `f ^{-1'} B` -> `Preimage__` when both sides are holes; filled sides nest as
+ * `Preimage(L)_` / `Preimage_(R)` / `Preimage(L)(R)`. Do not freeze to a
+ * pad-0 camel `Preimage` or glue it as `MeasurableSet_Preimage`.
+ * @returns {string|null}
+ */
+function preimageHoleRegex(node, opts) {
+  const u = peelHoleExpr(node);
+  if (cls(u) !== "LeanPreimage") return null;
+  const L = holeRegexExpr(u.lhs ?? u.args?.[0], opts);
+  const R = holeRegexExpr(u.rhs ?? u.args?.[1], opts);
+  const lFrag = (L && L !== "_") ? L : "";
+  const rFrag = (R && R !== "_") ? R : "";
+  if (!lFrag && !rFrag) return "Preimage__";
+  if (!lFrag) return "Preimage_" + storedHoleOpt(rFrag);
+  if (!rFrag) return "Preimage" + storedHoleOpt(lFrag) + "_";
+  return "Preimage" + storedHoleOpt(lFrag) + storedHoleOpt(rFrag);
+}
+
+/** Predicate / typeclass heads walked as apps with argument holes (not pad-0 freeze). */
+const PREDICATE_APP_HEADS = new Set([
+  "Measurable",
+  "MeasurableSet",
+  "AEMeasurable",
+  "StronglyMeasurable",
+  "AEStronglyMeasurable",
+]);
+
+/**
+ * `Measurable f` -> `Measurable_`; `MeasurableSet B` -> `MeasurableSet_`;
+ * `MeasurableSet (f ^{-1'} B)` -> `MeasurableSet_(Preimage__)`.
+ * Leave Get / GetSlice / Joint spellings to existing walkers and nameExpr.
+ * @returns {string|null}
+ */
+function predicateAppHoleRegex(node, opts) {
+  const u = unwrapParen(node);
+  if (cls(u) !== "LeanArgsSpaceSeparated") return null;
+  const args = u.args || [];
+  if (args.length < 2) return null;
+  const head = unwrapParen(args[0]);
+  if (cls(head) !== "LeanToken") return null;
+  const headName = nameToken(head.text || "");
+  if (!PREDICATE_APP_HEADS.has(headName)) return null;
+  const last = unwrapParen(args[args.length - 1]);
+  // Measurable(Get__) / MeasurableGet / MeasurableGetSlice / MeasurableJoint stay special.
+  if (cls(last) === "LeanGetElem") return null;
+  if (typeof isMeasurableJointArg === "function" && isMeasurableJointArg(last)) return null;
+  const frags = [];
+  for (let i = 1; i < args.length; i++) {
+    const a = args[i];
+    if (isImplyHole(a, opts, implyBinderSet(opts))) {
+      frags.push("");
+      continue;
+    }
+    const f = holeRegexExpr(a, opts);
+    frags.push((f && f !== "_") ? f : "");
+  }
+  if (!frags.length) return null;
+  if (frags.every((f) => !f)) return headName + "_".repeat(frags.length);
+  let s = headName;
+  for (const f of frags) {
+    if (!f) s += "_";
+    else s += "_" + storedHoleOpt(f);
+  }
+  return s;
+}
+
 function propertyAppHoleRegex(node, opts) {
   const u = unwrapParen(node);
   if (cls(u) !== "LeanArgsSpaceSeparated") return null;
@@ -5199,6 +5336,147 @@ function propertyAppHoleRegex(node, opts) {
   return s;
 }
 
+
+/**
+ * The `⟂ᵢ` node of a (conditional) independence atom, preferring the parser
+ * static `Lean_perp.independenceOf` when present.
+ * @returns {object|null}
+ */
+function independencePerp(node) {
+  if (node && typeof node.constructor?.independenceOf === "function") {
+    const hit = node.constructor.independenceOf(node);
+    if (hit) return hit;
+  }
+  const u = stripIndepWrap(node);
+  if (cls(u) === "Lean_perp" && u.isIndependence !== false) return u;
+  return null;
+}
+
+/**
+ * `X ⟂ᵢ[π] Y | Z` as `(X ⟂ᵢ[π] Y) | Z` (`LeanBitOr` over `Lean_perp`).
+ * @returns {{ perp: object, cond: any }|null}
+ */
+function condIndepBits(node) {
+  const u = stripIndepWrap(node);
+  if (cls(u) !== "LeanBitOr") return null;
+  const perp = independencePerp(u.lhs ?? u.args?.[0]);
+  if (!perp) return null;
+  return { perp, cond: u.rhs ?? u.args?.[1] };
+}
+
+/**
+ * Stored n-ary operator `Tag(A)(B)(C)`. Empty slots stay `_` so positions
+ * are preserved (`Tag(A)_(C)`, `Tag(A)__`, `Tag__(C)`), matching binary
+ * Indep (`Indep(L)_` / `Indep_(R)`).
+ * @param {string} tag
+ * @param {string[]} frags
+ * @returns {string}
+ */
+function storedNary(tag, frags) {
+  const xs = (frags || []).map((f) => (f && f !== "_") ? f : "");
+  if (!xs.length || xs.every((x) => !x)) return tag;
+  let last = -1;
+  for (let i = 0; i < xs.length; i++) if (xs[i]) last = i;
+  let s = tag;
+  for (let i = 0; i <= last; i++) s += xs[i] ? storedHoleOpt(xs[i]) : "_";
+  if (last < xs.length - 1) s += "_".repeat(xs.length - 1 - last);
+  return s;
+}
+
+/**
+ * `fun ω => s[:k] ω` peels to the RV `s[:k]`. The eta-applied binder is not
+ * a Joint / SinglePSpace operand. Bare `fun ω => s[:k]` peels to the body.
+ * @returns {object}
+ */
+function peelEtaFun(node) {
+  const n = unwrapParen(node);
+  if (cls(n) !== "Lean_fun") return node;
+  const arrow = n.args?.[n.args.length - 1];
+  const ac = cls(arrow);
+  if (ac !== "LeanRightarrow" && ac !== "Lean_mapsto") return node;
+  const binders = new Set();
+  quantBinderNames(n, binders);
+  quantBinderNames(arrow.args?.[0], binders);
+  let body = peelHoleExpr(arrow.args?.[arrow.args.length - 1]);
+  if (!body) return node;
+  if (cls(body) === "LeanArgsSpaceSeparated" && (body.args || []).length >= 2) {
+    const args = body.args;
+    const last = unwrapParen(args[args.length - 1]);
+    if (cls(last) === "LeanToken" && binders.has(last.text)) {
+      if (args.length === 2) body = args[0];
+      else return node;
+    }
+  }
+  return body;
+}
+
+/**
+ * Independence operand as a hole-regex fragment. A joint tuple is walked as
+ * `Joint(Get_(Add_(1)))(Get__)`, not an opaque `Joint__` stub. A Get whose
+ * index is only a binder hole still spells `Get__` (generic holeRegexExpr
+ * would drop it as index noise). `fun ω => s[:k] ω` peels to `GetSlice__`.
+ * @returns {string}
+ */
+function rvOperandHoleFrag(node, opts) {
+  const u = peelHoleExpr(peelEtaFun(node));
+  if (!u) return "";
+  const parts = commaParts(u) || jrsParts(u);
+  if (parts && parts.length >= 2) {
+    const frags = parts.map((p) => rvOperandHoleFrag(p, opts));
+    return jointHoleFrag(frags) || "Joint__";
+  }
+  if (isGetElemColonSlice(u)) return "GetSlice__";
+  if (cls(u) === "LeanGetElem") {
+    const ge = getElemHoleRegexFrag(u, opts);
+    if (ge && ge !== "_" && ge !== "") return ge;
+    return "Get__";
+  }
+  const f = holeRegexExpr(u, opts);
+  return (f && f !== "_") ? f : "";
+}
+
+/**
+ * `(x, y) ⟂ᵢ[π] (z, w) | (u, v)` is AST `LeanBitOr` over `Lean_perp`,
+ * not a `LeanCondIndep` atom (there is no such class).
+ * Hole-regex follows the existing `|` / BitOr style (`Cond(event)(cond)`),
+ * with the independence atom as the event group:
+ * `Cond(Indep(Joint(…))(Joint(…)))(Joint(…))`.
+ * Not a camel-glued `CondIndep(…)(…)(…)` or literal `CondIndepJoint_Joint`.
+ * @returns {string|null}
+ */
+function condIndepHoleRegex(node, opts) {
+  const bits = condIndepBits(node);
+  if (!bits) return null;
+  const L = rvOperandHoleFrag(bits.perp.lhs ?? bits.perp.args?.[0], opts);
+  const R = rvOperandHoleFrag(bits.perp.rhs ?? bits.perp.args?.[1], opts);
+  const C = rvOperandHoleFrag(bits.cond, opts);
+  const indep = storedNary("Indep", [L, R]);
+  return storedNary("Cond", [indep, C]);
+}
+
+/**
+ * `(· t) = (r[t], s[t], a[t])` → `Eq_(Joint(Get__)(Get__)(Get__))`.
+ * The cdot / single-var side is a hole; the joint tuple is walked as n-ary
+ * Joint groups (same Get / GetSlice fragments as imply-side RV operands),
+ * not the glued literal `Eq_Joint` / `All_Eq_Joint`.
+ * @returns {string|null}
+ */
+function eqJointHoleRegex(node, opts) {
+  const u = unwrapParen(node);
+  if (!eqJointSides(u)) return null;
+  const sideFrag = (n) => {
+    if (isCdotSection(n) || isSingleVarSide(n)) return "";
+    if (isJointRvTuple(n)) {
+      const parts = commaParts(peelHoleExpr(n)) || jrsParts(peelHoleExpr(n)) || [];
+      const frags = parts.map((p) => rvOperandHoleFrag(p, opts));
+      return storedNary("Joint", frags) || "Joint__";
+    }
+    const f = holeRegexExpr(n, opts);
+    return (f && f !== "_") ? f : "";
+  };
+  return storedNary("Eq", [sideFrag(u.lhs ?? u.args?.[0]), sideFrag(u.rhs ?? u.args?.[1])]);
+}
+
 function holeRegexExpr(node, opts) {
   const frag = holeRegexExprWalk(node, opts);
   return typeof frag === "string" ? flattenStackedAll(flattenStackedExpect(frag)) : frag;
@@ -5213,6 +5491,18 @@ function holeRegexExprWalk(node, opts) {
     const meas = measurableGetHoleRegex(u, opts);
     if (meas) return meas;
   }
+  {
+    const sps = singlePSpaceHoleRegex(u, opts);
+    if (sps) return sps;
+  }
+  {
+    const pre = preimageHoleRegex(u, opts);
+    if (pre) return pre;
+  }
+  {
+    const pred = predicateAppHoleRegex(u, opts);
+    if (pred) return pred;
+  }
   const ratioRe = likelihoodRatioExpectRegex(u);
   if (ratioRe) return ratioRe;
 
@@ -5224,10 +5514,11 @@ function holeRegexExprWalk(node, opts) {
     if (cond) return cond;
   }
 
-  // ∏ ℙ[π](s[k] | s[:k], Z): a product of comma-conditioned probabilities.
+  // ∏ ℙ[π](s[k] | s[:k], Z) and ∏ ℙ[π](s[k] | s[:k]): product of conditional ℙ.
+  // Walk Prod_(Prob_(Cond…)), never a glued nameExpr freeze Prod_ProbCond.
   if (cls(u) === "Lean_prod") {
     const body = holeRegexExpr(u.scope ?? u.args?.[u.args.length - 1], opts);
-    if (isCommaCondProbFrag(body)) return "Prod_" + storedHoleOpt(body);
+    if (isCondProbProductBody(body)) return "Prod_" + storedHoleOpt(body);
   }
 
   // `(x, y) ⟂ᵢ[π] z` → Indep(Joint__)_, not camel IndepJoint.
@@ -5245,6 +5536,19 @@ function holeRegexExprWalk(node, opts) {
     if (!lFrag) return "Indep_" + storedHoleOpt(rFrag);
     if (!rFrag) return "Indep" + storedHoleOpt(lFrag) + "_";
     return "Indep" + storedHoleOpt(lFrag) + storedHoleOpt(rFrag);
+  }
+
+  // `(x, y) ⟂ᵢ[π] (z, w) | (u, v)` → Cond(Indep(Joint(…))(Joint(…)))(Joint(…)),
+  // reflecting LeanBitOr over Lean_perp, not a camel CondIndep atom.
+  {
+    const ci = condIndepHoleRegex(u, opts);
+    if (ci) return ci;
+  }
+
+  // `(· t) = (r[t], s[t], a[t])` → Eq_(Joint(Get__)(Get__)(Get__)), not Eq_Joint.
+  {
+    const ej = eqJointHoleRegex(u, opts);
+    if (ej) return ej;
   }
 
   // ∫ … ∂μ: Deriv is a hidden/padded part of Integral, not a glued camel token.
@@ -5318,6 +5622,18 @@ function holeRegexExprWalk(node, opts) {
         const meas = measurableGetHoleRegex(n, opts);
         if (meas) return meas;
       }
+      {
+        const sps = singlePSpaceHoleRegex(n, opts);
+        if (sps) return sps;
+      }
+      {
+        const pre = preimageHoleRegex(n, opts);
+        if (pre) return pre;
+      }
+      {
+        const pred = predicateAppHoleRegex(n, opts);
+        if (pred) return pred;
+      }
       const frozen = nameExpr(n, opts);
       return frozen ? escapeHoleReLit(sanitizePathSeg(frozen)) : null;
     },
@@ -5355,9 +5671,10 @@ function holeRegexExprWalk(node, opts) {
       return dec;
     // decompImplyStruct does not walk ⟂ᵢ; keep imply Get__ / GetSlice__ there.
     // Given `∀ t, s[t + 1] ⟂ᵢ[π] s[:t]` → All_(Indep(Get_(Add_(1)))(GetSlice__)).
+    // Given `∀ t, (· t) = (r[t], s[t], a[t])` → All_(Eq_(Joint(Get__)(Get__)(Get__))).
     let body = u.scope ?? u.args?.[u.args.length - 1];
     body = peelHoleExpr(peelGuardForalls(body));
-    if (cls(stripIndepWrap(body)) === "Lean_perp") {
+    if (cls(stripIndepWrap(body)) === "Lean_perp" || condIndepBits(body) || eqJointSides(body)) {
       const inner = holeRegexExpr(body, givenOpts);
       if (inner && inner !== "_" && inner !== "All") {
         if (inner === "All" || inner.startsWith("All_")) return inner;
@@ -5366,8 +5683,10 @@ function holeRegexExprWalk(node, opts) {
     }
     if (allNeProb0GivenName(u) === "All_NeProb_0") return "All_(Ne(Prob__)(0))";
     // `∀ k, Measurable s[k]` → All_(Measurable(Get__)), not All_(Measurable).
+    // `∀ n, SinglePSpace π (s[:n])` → All_(SinglePSpace(GetSlice__)).
+    // `∀ k, SinglePSpace π (s[k], s[:k])` → All_(SinglePSpace(Joint(Get__)(GetSlice__))).
     const inner = holeRegexExpr(body, givenOpts);
-    if (inner && /Measurable\(Get__\)/.test(inner)) {
+    if (inner && (/Measurable\(Get__\)/.test(inner) || /SinglePSpace\(/.test(inner))) {
       if (inner === "All" || inner.startsWith("All_")) return inner;
       return "All_" + storedHoleOpt(inner);
     }
@@ -5714,9 +6033,11 @@ function houseExpectLhsForms(frag) {
 const SUB_VAR_S_RHS = "Sub(Var__)(Var_(Mul_(Div(Prob__)(Prob__))))";
 
 /**
- * House/module imply hole-regex alternative for Eq (Body / Random).
- * Parallel to fused `Eq(LHS)(RHS)`: one slash spelling `(LHS)/eq/(RHS)`.
- * Required sides (no omit) so `_/eq/_` is illegal; `.eq.` → `/eq/` in consistent.
+ * House/module imply hole-regex alternative for Eq and Iff (Body / Random).
+ * Parallel to fused `Eq(LHS)(RHS)` / `Iff(LHS)(RHS)`: slash spelling
+ * `(LHS)/eq/(RHS)` or `(LHS)/is/(RHS)` (`=ᵐ` uses `/ae/`).
+ * Required sides (no omit) so `_/eq/_` / `_/is/_` is illegal; dotted module
+ * spelling normalizes to slash in consistent.
  * Bare `Name__` sides also allow the stripped head (`Expect__` → Expect) for house.
  * @returns {string[]}
  */
@@ -5731,7 +6052,21 @@ function eqHouseHoleRegexAlts(node, opts = {}) {
   if (c === "Lean_rightarrow" || c === "LeanRightarrow") {
     return eqHouseHoleRegexAlts(u.args?.[u.args.length - 1], opts);
   }
-  if (CLASS_TOKEN[c] !== "Eq") return [];
+  const relTag = CLASS_TOKEN[c];
+  if (relTag === "Iff") {
+    const L = holeRegexExpr(u.args?.[0] ?? u.lhs, opts);
+    const R = holeRegexExpr(u.args?.[1] ?? u.rhs, opts);
+    if (!L || L === "_" || !R || R === "_") return [];
+    const houseSide = (frag) => {
+      let f = frag;
+      // Bare Name__ house heads strip trailing holes, like Eq; keep structured sides.
+      if (/^[A-Za-z][A-Za-z0-9]*__$/.test(f)) f = f.slice(0, -2);
+      return "(" + f + ")";
+    };
+    const house = storeHoleGroups(houseSide(L) + "/is/" + houseSide(R));
+    return house ? [house] : [];
+  }
+  if (relTag !== "Eq") return [];
   const args = u.args || [];
   const lhsForms = houseExpectLhsForms(holeRegexExpr(args[0], opts));
   const R = houseCollapseDivToRealProb(holeRegexExpr(args[1], opts), true);
@@ -5825,19 +6160,32 @@ function pluralEqualAppendChild(arg) {
  * @returns {string} compact source, or "" when no equal Append was rewritten
  */
 function appendEqualPluralHoleRegex(reSource) {
+  return equalBinaryPluralHoleRegex(reSource, "Append");
+}
+
+/**
+ * Compact plural of equal `Tag(A)(A)` using `pluralEqualAppendChild`.
+ * `Append(GetSlice__)(GetSlice__)` → `AppendGetSliceS__`;
+ * `Indep(Joint__)(Joint__)` → `IndepJointS__`.
+ * @param {string} reSource
+ * @param {string} tag
+ * @returns {string}
+ */
+function equalBinaryPluralHoleRegex(reSource, tag) {
   const s = String(reSource || "");
-  if (!s.includes("Append(")) return "";
+  const head = String(tag || "");
+  if (!head || !s.includes(head + "(")) return "";
   let out = "";
   let i = 0;
   let changed = false;
   while (i < s.length) {
-    const atAppend = s.startsWith("Append(", i) && (i === 0 || !/[A-Za-z0-9]/.test(s[i - 1]));
-    if (!atAppend) {
+    const atTag = s.startsWith(head + "(", i) && (i === 0 || !/[A-Za-z0-9]/.test(s[i - 1]));
+    if (!atTag) {
       out += s[i];
       i++;
       continue;
     }
-    const aOpen = i + "Append".length;
+    const aOpen = i + head.length;
     const aClose = holeRegexMatchingParen(s, aOpen);
     const bOpen = aClose >= 0 ? aClose + 1 : -1;
     const bClose = bOpen >= 0 && s[bOpen] === "(" ? holeRegexMatchingParen(s, bOpen) : -1;
@@ -5854,11 +6202,95 @@ function appendEqualPluralHoleRegex(reSource) {
       i++;
       continue;
     }
-    out += "Append" + plural;
+    out += head + plural;
     i = bClose + 1;
     changed = true;
   }
   return changed ? out : "";
+}
+
+/** True when a stored Indep operand is a Joint fragment (`Joint__` or `Joint(…)`). */
+function isJointHoleFrag(frag) {
+  const s = String(frag || "");
+  return s === "Joint" || /^Joint_+$/.test(s) || s.startsWith("Joint(");
+}
+
+/**
+ * Rewrite `Indep(Joint(…))(Joint(…))` operands to opaque `Joint__` stubs.
+ * The surrounding regex, including a walked conditioner `Joint(Get__)(Get__)`,
+ * is left in place. Empty when there is no two-Joint Indep to stub.
+ * @param {string} reSource
+ * @returns {string}
+ */
+function stubIndepJointOperands(reSource) {
+  const s = String(reSource || "");
+  if (!s.includes("Indep(")) return "";
+  let out = "";
+  let i = 0;
+  let changed = false;
+  while (i < s.length) {
+    const atIndep = s.startsWith("Indep(", i) && (i === 0 || !/[A-Za-z0-9]/.test(s[i - 1]));
+    if (!atIndep) {
+      out += s[i];
+      i++;
+      continue;
+    }
+    const aOpen = i + "Indep".length;
+    const aClose = holeRegexMatchingParen(s, aOpen);
+    const bOpen = aClose >= 0 ? aClose + 1 : -1;
+    const bClose = bOpen >= 0 && s[bOpen] === "(" ? holeRegexMatchingParen(s, bOpen) : -1;
+    if (aClose < 0 || bClose < 0) {
+      out += s[i];
+      i++;
+      continue;
+    }
+    const left = s.slice(aOpen + 1, aClose);
+    const right = s.slice(bOpen + 1, bClose);
+    if (!isJointHoleFrag(left) || !isJointHoleFrag(right)) {
+      out += s[i];
+      i++;
+      continue;
+    }
+    if (left === "Joint__" && right === "Joint__") {
+      out += s.slice(i, bClose + 1);
+      i = bClose + 1;
+      continue;
+    }
+    out += "Indep(Joint__)(Joint__)";
+    i = bClose + 1;
+    changed = true;
+  }
+  return changed ? out : (out === s ? s : "");
+}
+
+/**
+ * Compact imply alt for equal opaque Joint operands of Indep.
+ *
+ * The primary CondIndep regex walks every Joint child in full:
+ *   `Cond(Indep(Joint(Get_(Add_(1)))(Get__))(Joint(GetSlice__)(GetSlice__)))(Joint(Get__)(Get__))`
+ * Those two Indep Joints are not equal when fully walked, so the Append-style
+ * equal-child rewrite cannot fire on the primary.
+ *
+ * An imply alt first keeps the Indep operands as opaque `Joint__` stubs
+ * (the conditioner stays walked):
+ *   `Cond(Indep(Joint__)(Joint__))(Joint(Get__)(Get__))`
+ * The stubs are equal, so the same compact rule as
+ *   `Append(GetSlice__)(GetSlice__)` → `AppendGetSliceS__`
+ * (`pluralEqualAppendChild`: S before trailing `_` holes on a flat token)
+ * spells
+ *   `Cond(IndepJointS__)(Joint(Get__)(Get__))`
+ * which admits the imply stem `CondIndepJointS`.
+ *
+ * Only the compact form is published, matching Append (primary stays expanded;
+ * the uncollapsed stub is an intermediate, not a stored regex).
+ * @param {string} reSource stored hole regex (no `_|` prefixes)
+ * @returns {string} compact source, or "" when no two-Joint Indep was rewritten
+ */
+function indepEqualJointSHoleRegex(reSource) {
+  const stubbed = stubIndepJointOperands(reSource);
+  if (!stubbed) return "";
+  const compact = equalBinaryPluralHoleRegex(stubbed, "Indep");
+  return compact && compact !== String(reSource || "") ? compact : "";
 }
 
 export function holeRegexAlternatives(typeNode, opts = {}) {
@@ -5870,6 +6302,8 @@ export function holeRegexAlternatives(typeNode, opts = {}) {
   if (!opts.asGiven && primary) {
     const compact = appendEqualPluralHoleRegex(primary);
     if (compact && compact !== primary && !out.includes(storeHoleGroups(compact))) out.push(storeHoleGroups(compact));
+    const indepJointS = indepEqualJointSHoleRegex(primary);
+    if (indepJointS && indepJointS !== primary && !out.includes(storeHoleGroups(indepJointS))) out.push(storeHoleGroups(indepJointS));
     const divS = divProbSCondHoleRegex(primary);
     if (divS && divS !== primary && !out.includes(storeHoleGroups(divS))) out.push(storeHoleGroups(divS));
     for (const alt of mulProbSCondGetHoleRegexAlts(primary)) {
@@ -5938,7 +6372,7 @@ export function holeRegexAlternatives(typeNode, opts = {}) {
   const named = nameExpr(typeNode, opts);
   // A decomposed `All_(Eq(…)(…))` already spells the equality. Do not also publish
   // the glued `All_Eq…` atom. Fused givens whose primary is still `All_(_|Eq…)` stay.
-  const primaryDecomp = out.some((r) => /(?:Any|All)_\(_\|Eq/.test(String(r)) || String(r).includes("All_(Eq(") || String(r).includes("All_(Eq_(") || String(r).includes("Any_(Eq(") || String(r).includes("Any_(Eq_(") || String(r).includes("All_(Ne(") || String(r).includes("And(") || /(?:Any|All)_\(And\(/.test(String(r)) || String(r).includes("Ite("));
+  const primaryDecomp = out.some((r) => /(?:Any|All)_\(_\|Eq/.test(String(r)) || String(r).includes("All_(Eq(") || String(r).includes("All_(Eq_(") || String(r).includes("Any_(Eq(") || String(r).includes("Any_(Eq_(") || String(r).includes("All_(Ne(") || String(r).includes("And(") || /(?:Any|All)_\(And\(/.test(String(r)) || String(r).includes("Ite(") || /(?:Any|All)_\([A-Za-z][A-Za-z0-9]*\(/.test(String(r)));
   // `x ≠ 0 → …` is a guard. Once the body is grouped, the glued `All_Imp…` atom is not a regex.
   const guardGlued = /Imp/.test(String(named || "")) && out.some((r) => /(?:Any|All)_\(/.test(String(r)));
   // `All_Gt_0` is the fill of `All_(Gt_(0))`, not a second regex.
@@ -6180,6 +6614,27 @@ function holeFillStems(node, opts = {}) {
       else if (l && !r) joined.push("Indep" + l);
       else joined.push("Indep");
     }
+    return uniq([...joined, ""]);
+  }
+
+  // Conditional independence is Cond wrapping an Indep atom plus conditioner
+  // (`Cond(Indep…)(Joint…)`). Fills camel-glue as CondIndep…; a missing
+  // conditioner stays a trailing hole. Joint / Get / GetSlice come from
+  // the `Lean_perp` and conditioner walks.
+  if (c === "LeanBitOr" && condIndepBits(u)) {
+    const bits = condIndepBits(u);
+    const indeps = holeFillStems(bits.perp, opts);
+    const Cs = holeFillStems(bits.cond, opts);
+    const joined = [];
+    for (const ind of indeps.length ? indeps : [""])
+      for (const cnd of Cs.length ? Cs : [""]) {
+        let stem = "Cond";
+        if (ind) stem += ind;
+        else if (cnd) stem += "_";
+        if (cnd) stem += (ind ? "_" : "") + cnd;
+        if (!ind && !cnd) stem = "Cond";
+        joined.push(stem);
+      }
     return uniq([...joined, ""]);
   }
 
@@ -10587,6 +11042,18 @@ function classChain(node, out = []) {
   const name = cls(node);
   if (CLASS_TOKEN[name] || name === "LeanEq" || name === "Lean_bullet" || name === "LeanConstruct" || name === "LeanProperty" || name === "LeanDistributed") out.push(name);
   else if (name === "LeanToken" && node.text && /^[A-Z]/.test(node.text)) out.push("Token:" + node.text);
+  // Independence atoms are the imply root (`x ⟂ᵢ y` / `x ⟂ᵢ y | z`). Record them
+  // before walking into an index `Add` (`s[t + 1]`), which is not the root.
+  if (name === "Lean_perp") {
+    out.push("Lean_perp");
+    for (const a of node.args || []) classChain(a, out);
+    return out;
+  }
+  if (name === "LeanBitOr" && condIndepBits(node)) {
+    out.push("LeanBitOr");
+    for (const a of node.args || []) classChain(a, out);
+    return out;
+  }
   if (name === "Lean_exists" || name === "Lean_forall") { classChain(node.args?.[node.args.length - 1], out); return out; }
   if (name === "LeanEq" || name === "Lean_lt" || name === "LeanSub") {
     for (const a of node.args || []) classChain(a, out); return out;

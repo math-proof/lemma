@@ -2,6 +2,7 @@ import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Lemma.Random.Integral.eq.Integral_Integral_SMul.of.All_Eq_Joint.All_EqWithDensity
 import Lemma.Random.Integral_SMulProbFderiv_FunLog_Prob.eq.Zero.of.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_EqWithDensity
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
@@ -37,7 +38,7 @@ private lemma main
   (t : ℕ) :
 -- imply
   ∫ ω, h (s t ω) • fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ
-    ∂(M.traj θ) = 0 := by
+    ∂(M θ) = 0 := by
 -- proof
   have hφm : StronglyMeasurable
     (Function.uncurry fun y u => h y •
@@ -66,4 +67,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-17
+-- updated on 2026-11-18

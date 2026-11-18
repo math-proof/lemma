@@ -1,6 +1,8 @@
-import Mathlib
-import Theorem.Analysis.Section_4_3.Part2
-import Abbrev.Analysis.Section_5_1.Part7
+module
+
+public import Mathlib
+public import Theorem.Analysis.Section_4_3.Part2
+public import Abbrev.Analysis.Section_5_1.Part7
 set_option doc.verso.suggestions false
 
 /-!
@@ -26,9 +28,11 @@ Users of the companion who have completed the exercises in this section are welc
 -/
 
 
+public section
+
 namespace Chapter5
 
 /-- Definition 5.1.12 (bounded sequences) -/
-lemma Sequence.boundedBy_def (a:Sequence) (M:ℚ) : a.BoundedBy M ↔ ∀ n, |a n| ≤ M := by rfl
+public theorem Sequence.boundedBy_def (a:Sequence) (M:ℚ) : a.BoundedBy M ↔ ∀ n, |a.seq n| ≤ M := by rfl
 
 end Chapter5

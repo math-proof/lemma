@@ -29,7 +29,7 @@ universe u v
 
 section Proposition_1_22_1
 
-variable {R : Type u} {A : Type v} [CommSemiring R] [Semiring A] [HopfAlgebra R A]
+variable {R : Type u} {A : Type v} [CommSemiring R] [CommSemiring A] [HopfAlgebra R A]
 
 /-- Evaluation of `antimulComm` on a pure tensor: `(a ⊗ b) ↦ S(a) * S(b)`. -/
 @[simp]

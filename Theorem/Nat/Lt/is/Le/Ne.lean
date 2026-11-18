@@ -23,5 +23,14 @@ public theorem Nat.Lt.is.Le.Ne
   grind
 
 
+
+public theorem Nat.Lt.of.Le.Ne
+  [LinearOrder α]
+  {a b : α}
+  (h₀ : a ≤ b)
+  (h₁ : a ≠ b) :
+  a < b :=
+  (Nat.Lt.is.Le.Ne).mpr ⟨h₀, h₁⟩
+
 -- created on 2025-11-13
 -- updated on 2026-10-26

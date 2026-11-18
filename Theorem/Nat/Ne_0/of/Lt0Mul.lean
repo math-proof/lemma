@@ -1,9 +1,11 @@
 module
 
+public import Mathlib
+
 public section
 
 
-public theorem left
+public theorem Nat.Ne_0.of.Lt0Mul.left
   [PartialOrder α] [MulZeroClass α]
   {a b : α}
 -- given

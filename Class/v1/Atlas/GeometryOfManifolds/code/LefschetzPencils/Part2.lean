@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/GeometryOfManifolds/code/LefschetzPencils.lean -/
 
 /-
@@ -8,11 +10,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Class.v1.Atlas.GeometryOfManifolds.code.AdvancedKahler.Part11
-import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
-import Def.v1.Atlas.GeometryOfManifolds.code.HodgeTheory.Part12
-import Mathlib.Geometry.Manifold.MFDeriv.Basic
-import Structure.v1.Atlas.GeometryOfManifolds.code.LefschetzPencils
+public import Class.v1.Atlas.GeometryOfManifolds.code.AdvancedKahler.Part11
+public import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
+public import Def.v1.Atlas.GeometryOfManifolds.code.HodgeTheory.Part12
+public import Mathlib.Geometry.Manifold.MFDeriv.Basic
+public import Structure.v1.Atlas.GeometryOfManifolds.code.LefschetzPencils
+public section
 set_option autoImplicit false
 
 open DifferentialFormSpace

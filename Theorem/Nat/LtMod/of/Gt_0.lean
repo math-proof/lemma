@@ -1,6 +1,6 @@
 module
 
-public import Instance.Data.Int.Integers
+public import Class.Data.Int.Integers
 
 public section
 

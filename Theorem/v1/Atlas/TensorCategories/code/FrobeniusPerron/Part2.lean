@@ -8,26 +8,29 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Matrix.Basic
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Tactic
-import Mathlib.Data.Complex.Basic
-import Mathlib.Analysis.Complex.Norm
-import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
-import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Data.Nat.GCD.Basic
-import Mathlib.LinearAlgebra.Matrix.Charpoly.Eigs
-import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
-import Mathlib.NumberTheory.NumberField.InfinitePlace.Embeddings
-import Def.v1.Atlas.TensorCategories.code.PerronFrobeniusProof.Part2
-import Lemma.Category.Atlas.v1.TensorCategories.code.PerronFrobeniusProof
-import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part3
+module
+
+public import Mathlib.Data.Matrix.Basic
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Tactic
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.Analysis.Complex.Norm
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+public import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Data.Nat.GCD.Basic
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Eigs
+public import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
+public import Mathlib.NumberTheory.NumberField.InfinitePlace.Embeddings
+public import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part3
+
 set_option maxHeartbeats 400000
+
+public section
 
 
 namespace FusionRing
@@ -42,21 +45,21 @@ noncomputable section
 
 /-- The discriminant `pfDiscriminant M` of a strictly positive 2×2
 matrix is positive. -/
-lemma pfDiscriminant_pos (M : Matrix (Fin 2) (Fin 2) ℝ) (hM : ∀ i j, 0 < M i j) :
+public theorem pfDiscriminant_pos (M : Matrix (Fin 2) (Fin 2) ℝ) (hM : ∀ i j, 0 < M i j) :
     0 < pfDiscriminant M := by
   unfold pfDiscriminant
   nlinarith [sq_nonneg (M 0 0 - M 1 1), hM 0 1, hM 1 0]
 
 /-- The Perron–Frobenius eigenvalue of a strictly positive 2×2 matrix
 is positive. -/
-lemma pfEigenvalue_pos (M : Matrix (Fin 2) (Fin 2) ℝ) (hM : ∀ i j, 0 < M i j) :
+public theorem pfEigenvalue_pos (M : Matrix (Fin 2) (Fin 2) ℝ) (hM : ∀ i j, 0 < M i j) :
     0 < pfEigenvalue M := by
   unfold pfEigenvalue
   linarith [pfDiscriminant_pos M hM |> Real.sqrt_pos_of_pos, hM 0 0, hM 1 1]
 
 /-- For a strictly positive 2×2 matrix,
 `M 0 0 - M 1 1 < sqrt(pfDiscriminant M)`. -/
-lemma sqrt_disc_gt_diff (M : Matrix (Fin 2) (Fin 2) ℝ) (hM : ∀ i j, 0 < M i j) :
+public theorem sqrt_disc_gt_diff (M : Matrix (Fin 2) (Fin 2) ℝ) (hM : ∀ i j, 0 < M i j) :
     M 0 0 - M 1 1 < Real.sqrt (pfDiscriminant M) := by
   have hΔ := pfDiscriminant_pos M hM
   have hΔ_ge : (M 0 0 - M 1 1) ^ 2 < pfDiscriminant M := by
@@ -68,7 +71,7 @@ lemma sqrt_disc_gt_diff (M : Matrix (Fin 2) (Fin 2) ℝ) (hM : ∀ i j, 0 < M i 
 
 /-- The explicit eigenvector `pfEigenvec M` has strictly positive
 entries when `M` does. -/
-lemma pfEigenvec_pos (M : Matrix (Fin 2) (Fin 2) ℝ) (hM : ∀ i j, 0 < M i j) :
+public theorem pfEigenvec_pos (M : Matrix (Fin 2) (Fin 2) ℝ) (hM : ∀ i j, 0 < M i j) :
     ∀ i, 0 < pfEigenvec M i := by
   intro i; fin_cases i
   · show 0 < (pfEigenvec M) 0
@@ -78,7 +81,7 @@ lemma pfEigenvec_pos (M : Matrix (Fin 2) (Fin 2) ℝ) (hM : ∀ i j, 0 < M i j) 
     unfold pfEigenvalue; linarith [sqrt_disc_gt_diff M hM]
 
 /-- `pfEigenvalue M` is a root of the characteristic polynomial of `M`. -/
-lemma pfEigenvalue_char_poly (M : Matrix (Fin 2) (Fin 2) ℝ) (hM : ∀ i j, 0 < M i j) :
+public theorem pfEigenvalue_char_poly (M : Matrix (Fin 2) (Fin 2) ℝ) (hM : ∀ i j, 0 < M i j) :
     pfEigenvalue M ^ 2 - (M 0 0 + M 1 1) * pfEigenvalue M +
     (M 0 0 * M 1 1 - M 0 1 * M 1 0) = 0 := by
   unfold pfEigenvalue pfDiscriminant
@@ -88,7 +91,7 @@ lemma pfEigenvalue_char_poly (M : Matrix (Fin 2) (Fin 2) ℝ) (hM : ∀ i j, 0 <
 
 /-- `pfEigenvec M` is an eigenvector of `M` with eigenvalue
 `pfEigenvalue M`. -/
-lemma pfEigenvec_is_eigenvec (M : Matrix (Fin 2) (Fin 2) ℝ) (hM : ∀ i j, 0 < M i j) :
+public theorem pfEigenvec_is_eigenvec (M : Matrix (Fin 2) (Fin 2) ℝ) (hM : ∀ i j, 0 < M i j) :
     M.mulVec (pfEigenvec M) = pfEigenvalue M • pfEigenvec M := by
   ext i; fin_cases i
   ·
@@ -101,7 +104,7 @@ lemma pfEigenvec_is_eigenvec (M : Matrix (Fin 2) (Fin 2) ℝ) (hM : ∀ i j, 0 <
 
 /-- Uniqueness of positive eigenvectors of a strictly positive 2×2
 matrix up to scaling. -/
-lemma pfUnique_fin2 (M : Matrix (Fin 2) (Fin 2) ℝ) (hM : ∀ i j, 0 < M i j)
+public theorem pfUnique_fin2 (M : Matrix (Fin 2) (Fin 2) ℝ) (hM : ∀ i j, 0 < M i j)
     (r₁ r₂ : ℝ) (v w : Fin 2 → ℝ)
     (hv : ∀ i, 0 < v i) (hev : M.mulVec v = r₁ • v)
     (hw : ∀ i, 0 < w i) (hew : M.mulVec w = r₂ • w) :

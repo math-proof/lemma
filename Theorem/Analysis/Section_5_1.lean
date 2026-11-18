@@ -29,13 +29,13 @@ Users of the companion who have completed the exercises in this section are welc
 namespace Chapter5
 
 lemma Sequence.eval_mk {n n₀:ℤ} (a: { n // n ≥ n₀ } → ℚ) (h: n ≥ n₀) :
-    (Sequence.mk' n₀ a) n = a ⟨ n, h ⟩ := by grind
+    (Sequence.mk' n₀ a).seq n = a ⟨ n, h ⟩ := by grind
 
 @[simp]
-lemma Sequence.eval_coe (n:ℕ) (a: ℕ → ℚ) : (a:Sequence) n = a n := by norm_cast
+lemma Sequence.eval_coe (n:ℕ) (a: ℕ → ℚ) : (a:Sequence).seq n = a n := by norm_cast
 
 @[simp]
-lemma Sequence.eval_coe_at_int (n:ℤ) (a: ℕ → ℚ) : (a:Sequence) n = if n ≥ 0 then a n.toNat else 0 := by norm_cast
+lemma Sequence.eval_coe_at_int (n:ℤ) (a: ℕ → ℚ) : (a:Sequence).seq n = if n ≥ 0 then a n.toNat else 0 := by norm_cast
 
 @[simp]
 lemma Sequence.n0_coe (a: ℕ → ℚ) : (a:Sequence).n₀ = 0 := by norm_cast

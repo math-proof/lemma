@@ -1,5 +1,6 @@
 import Lemma.Random.Map.eq.BindK.of.All_EqWithDensity
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Kernel
 
@@ -32,8 +33,8 @@ private lemma main
   (θ : Θ)
   (t : ℕ) :
 -- imply
-  (M.traj θ).map (s (t + 1)) =
-    M.transK ∘ₘ (M.traj θ).map (fun ω ↦ (s t ω, a t ω)) := by
+  (M θ).map (s (t + 1)) =
+    M.transK ∘ₘ (M θ).map (fun ω ↦ (s t ω, a t ω)) := by
 -- proof
   obtain rfl : s = fun t ω ↦ (ω t).2.1 :=
     funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₀ t) ω)).symm
@@ -41,14 +42,14 @@ private lemma main
     funext₂ fun t ω ↦ (congrArg (·.2.2) (congrFun (h₀ t) ω)).symm
   set s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮 := fun t ω ↦ (ω t).2.1
   set a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜 := fun t ω ↦ (ω t).2.2
-  set μ := (M.traj θ).map (fun ω ↦ ω t)
+  set μ := (M θ).map (fun ω ↦ ω t)
   have hK := Map.eq.BindK.of.All_EqWithDensity (M := M) θ t
   have hmap :
-    (M.traj θ).map (s (t + 1)) =
-      ((M.traj θ).map (fun ω ↦ ω (t + 1))).map (fun z ↦ z.2.1) := by
+    (M θ).map (s (t + 1)) =
+      ((M θ).map (fun ω ↦ ω (t + 1))).map (fun z ↦ z.2.1) := by
     rw [Measure.map_map measurable_snd.fst (measurable_pi_apply (t + 1))]; rfl
   have hsa :
-    (M.traj θ).map (fun ω ↦ (s t ω, a t ω)) = μ.map (fun z ↦ z.2) := by
+    (M θ).map (fun ω ↦ (s t ω, a t ω)) = μ.map (fun z ↦ z.2) := by
     rw [Measure.map_map (measurable_snd.fst.prodMk measurable_snd.snd)
       (measurable_pi_apply t)]
     rfl
@@ -68,4 +69,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-17
+-- updated on 2026-11-18

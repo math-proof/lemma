@@ -1,6 +1,9 @@
-import Mathlib
-import Theorem.Analysis.Section_4_3.Part2
-import Theorem.Analysis.Section_5_1.Part3
+module
+
+public import Mathlib
+public import Abbrev.Analysis.Section_5_1.Part2
+public import Abbrev.Analysis.Section_5_1.Part3
+@[expose] public section
 set_option doc.verso.suggestions false
 
 /-!
@@ -28,4 +31,3 @@ Users of the companion who have completed the exercises in this section are welc
 
 /-- Definition 5.1.6 (Eventually ε-steady) -/
 abbrev Rat.EventuallySteady (ε: ℚ) (a: Chapter5.Sequence) : Prop := ∃ N ≥ a.n₀, ε.Steady (a.from N)
-

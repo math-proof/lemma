@@ -7,7 +7,7 @@ public section
 
 
 @[comm, mp 8, mpr 4, mp.comm 8, mpr.comm 4, comm.is]
-public theorem left
+public theorem Nat.LeAddS.is.Le.left
   [Add α]
   [LE α]
   [AddLeftReflectLE α]
@@ -44,5 +44,29 @@ public theorem Nat.LeAddS.is.Le
 -- proof
   ⟨le_of_add_le_add_right, (add_le_add_left · a)⟩
 
+
+
+public theorem Nat.Le.of.LeAddS
+  [Add α] [LE α] [AddRightReflectLE α] [AddRightMono α]
+  {a b c : α}
+  (h : b + a ≤ c + a) :
+  b ≤ c :=
+  (Nat.LeAddS.is.Le a b c).mp h
+
+public theorem Nat.LeAddS.of.Le
+  [Add α] [LE α] [AddRightMono α]
+  {b c : α}
+  (a : α)
+  (h : b ≤ c) :
+  b + a ≤ c + a :=
+  add_le_add_left h a
+
+public theorem Nat.LeAddS.of.Le.left
+  [Add α] [LE α] [AddLeftMono α]
+  {b c : α}
+  (a : α)
+  (h : b ≤ c) :
+  a + b ≤ a + c :=
+  add_le_add_right h a
 
 -- created on 2018-02-25

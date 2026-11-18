@@ -3,6 +3,7 @@ module
 public import Mathlib.MeasureTheory.Measure.Count
 public import Mathlib.MeasureTheory.Measure.WithDensity
 public import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+public import Mathlib.MeasureTheory.Constructions.Pi
 public import Def.Probability.Rv
 
 @[expose] public section
@@ -32,4 +33,13 @@ noncomputable instance {n : ℕ} {α : Type*} [MeasurableSpace α] [Countable α
   measure := (Measure.count : Measure (Fin n → α))
   toSigmaFinite := inferInstance
 
+/-- Product of the component reference measures on a prefix `Fin n → α`. Lower priority
+than the counting-measure instance for `[Countable α]`, so discrete lemmas keep
+`ReferenceMeasure.measure (Fin n → α) = Measure.count`. -/
+noncomputable instance (priority := 50) ReferenceMeasure.piFin
+    {n : ℕ} {α : Type*} [ReferenceMeasure α] :
+    ReferenceMeasure (Fin n → α) where
+  toMeasurableSpace := inferInstance
+  measure := Measure.pi fun _ : Fin n => ReferenceMeasure.measure
+  toSigmaFinite := inferInstance
 

@@ -44,7 +44,7 @@ the concept of a Tensor is a generalization of a matrix, like the Tensor concept
 the declaration syntax is similar
 ```lean
 -- in lean:
-import Instance.Data.Tensor.Tensor.Part2
+import Def.Data.Tensor.Defs
 def n : ℕ := 2
 def m : ℕ := 2
 def l : ℕ := 2

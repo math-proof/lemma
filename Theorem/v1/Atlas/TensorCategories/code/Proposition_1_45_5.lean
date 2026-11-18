@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part6
-import Lemma.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
+module
+
+public import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part6
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
+
+public section
 open FusionRing Matrix BigOperators
 
 
@@ -26,14 +30,14 @@ normalization has positive coefficients, satisfies `FPdim(R) > 0` and `RY = FPdi
 (3) `FPdim` is the unique nonzero character of `A` taking nonnegative values on the basis;
 and (4) if `X` has nonnegative coefficients then `FPdim(X)` is the largest nonnegative
 eigenvalue of the multiplication matrix `N_X`. -/
-theorem Proposition_1_45_5 [Nonempty ι] [HasPerronFrobeniusProperty ι] :
+public theorem Proposition_1_45_5 [Nonempty ι] [HasPerronFrobeniusProperty ι] :
 
     (fpd.d R.unit = 1 ∧
      (∀ i j, fpd.d i * fpd.d j = ∑ k : ι, (R.N i j k : ℝ) * fpd.d k)) ∧
 
     ((∀ X, (R.leftMulMatrixR X).mulVec fpd.d = fpd.d X • fpd.d) ∧
      (∀ i, fpd.d i > 0) ∧
-     (fpd.catDim > 0) ∧
+     (FusionRing.catDim R fpd > 0) ∧
      (∀ j Y, ∑ k, (R.N j Y k : ℝ) * fpd.d k = fpd.d j * fpd.d Y) ∧
      (∀ (w : ι → ℝ) (r : ℝ), (∀ i, 0 < w i) →
        R.rightMulMatrix.mulVec w = r • w →
@@ -44,9 +48,10 @@ theorem Proposition_1_45_5 [Nonempty ι] [HasPerronFrobeniusProperty ι] :
      ∀ i, χ i = fpd.d i) ∧
 
     (∀ X, (R.leftMulMatrixR X).mulVec fpd.d = fpd.d X • fpd.d) :=
-  ⟨fpd.proposition_1_45_5_part1,
-   fpd.proposition_1_45_5_part2,
-   fun χ hχ_unit hχ_nonneg hχ_mul => fpd.proposition_1_45_5_part3 χ hχ_unit hχ_nonneg hχ_mul,
-   fpd.proposition_1_45_5_part4⟩
+  ⟨FusionRing.FPdimData.proposition_1_45_5_part1 (R := R) (fpd := fpd),
+   FusionRing.FPdimData.proposition_1_45_5_part2 (R := R) (fpd := fpd),
+   fun χ hχ_unit hχ_nonneg hχ_mul =>
+     FusionRing.FPdimData.proposition_1_45_5_part3 (R := R) (fpd := fpd) χ hχ_unit hχ_nonneg hχ_mul,
+   FusionRing.FPdimData.proposition_1_45_5_part4 (R := R) (fpd := fpd)⟩
 
 end FusionRing

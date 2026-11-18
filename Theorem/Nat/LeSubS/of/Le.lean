@@ -18,5 +18,13 @@ public theorem Nat.LeSubS.of.Le
   Nat.sub_le_sub_right h z
 
 
+public theorem Nat.GeSubS.of.Ge
+  {x y : ℕ}
+  (h : x ≥ y)
+  (z : ℕ) :
+  x - z ≥ y - z :=
+  Nat.sub_le_sub_right h z
+
+
 -- created on 2024-07-01
 -- updated on 2026-10-26

@@ -15,4 +15,9 @@ public theorem List.Tail.eq.Drop_1
   simp
 
 
+public theorem List.Drop_1.eq.Tail
+  (s : List α) :
+  s.drop 1 = s.tail :=
+  (List.Tail.eq.Drop_1 s).symm
+
 -- created on 2025-05-05

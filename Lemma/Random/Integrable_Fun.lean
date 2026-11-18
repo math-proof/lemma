@@ -1,6 +1,7 @@
 import Def.Dynamics.PolicyTrajectory.ContinuousAction
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
@@ -23,7 +24,7 @@ private lemma main
   (t : ℕ)
   (φ : 𝒮 → 𝒜 → ℰ) :
 -- imply
-  Integrable (fun ω => φ (s t ω) (a t ω)) (M.traj θ) := by
+  Integrable (fun ω => φ (s t ω) (a t ω)) (M θ) := by
 -- proof
   have hX : Measurable (fun ω : ℕ → ℝ × 𝒮 × 𝒜 => (s t ω, a t ω)) :=
     (Random.Measurable.of.All_Eq.snd.fst h₀ t).prodMk
@@ -36,4 +37,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-11-17
+-- updated on 2026-11-18

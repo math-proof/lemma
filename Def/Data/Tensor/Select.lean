@@ -1,5 +1,10 @@
-import Def.Data.Tensor.Defs.Part4
-import Theorem.List.MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength
+module
+
+public import Def.Data.Tensor.Defs.Part4
+public import Def.Data.Vector.Basic.Part2
+public import Theorem.List.MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength
+
+@[expose] public section
 open List Tensor
 
 

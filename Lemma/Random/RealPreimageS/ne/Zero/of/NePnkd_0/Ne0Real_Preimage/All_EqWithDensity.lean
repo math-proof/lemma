@@ -4,6 +4,7 @@ import Lemma.Random.RealPreimageS.eq.Sum_MulRealPn.of.All_EqWithDensity
 import Lemma.Random.RealPreimageS0.eq.Real.of.All_EqWithDensity
 import Lemma.Random.Pnkd.eq.Integral
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
@@ -44,10 +45,10 @@ private lemma main
   {sₜ y : 𝒮}
 -- given
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
-  (h₁ : (M.traj θ).real (s 0 ⁻¹' {sₜ}) ≠ 0)
+  (h₁ : (M θ).real (s 0 ⁻¹' {sₜ}) ≠ 0)
   (h₂ : M.Pnkd θ n sₜ y ≠ 0) :
 -- imply
-  (M.traj θ).real (s n ⁻¹' {y}) ≠ 0 := by
+  (M θ).real (s n ⁻¹' {y}) ≠ 0 := by
 -- proof
   rw [RealPreimageS.eq.Sum_MulRealPn.of.All_EqWithDensity h₀]
   simp_rw [← Pnkd.eq.Integral (M := M) θ n _ y]
@@ -60,4 +61,4 @@ private lemma main
 
 
 -- created on 2026-11-13
--- updated on 2026-11-17
+-- updated on 2026-11-18

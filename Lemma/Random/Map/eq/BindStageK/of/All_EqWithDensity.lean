@@ -1,5 +1,6 @@
 import Def.Dynamics.PolicyTrajectory.ContinuousAction
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Finset
 
@@ -15,7 +16,7 @@ private lemma main
 -- given
   (θ : Θ) :
 -- imply
-  (M.traj θ).map (fun ω => ω 0) = M.stageK θ ∘ₘ (M.init : Measure _) := by
+  (M θ).map (fun ω => ω 0) = M.stageK θ ∘ₘ (M.init : Measure _) := by
 -- proof
   unfold Model.traj Kernel.trajMeasure
   rw [Measure.map_comp _ _ (measurable_pi_apply 0)]
@@ -33,4 +34,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-17
+-- updated on 2026-11-18

@@ -1,28 +1,31 @@
--- Root of the `Class` library: carved from Lemma/Definitions.
-import Class.Basic
+module
 
-import Class.AlgebraicCurve_CanonicalDivisor
-import Class.AlgebraicCurve_ConstantFieldPullback
-import Class.AlgebraicCurve_DivisorClassGroup
-import Class.AlgebraicCurve_DivisorPushPull
-import Class.AlgebraicCurve_IsCurveOver
-import Class.AlgebraicCurve_LocalResidue
-import Class.CerednikDrinfeld_MumfordPeriod
-import Class.DedekindDomain_FiniteAdeleRing_BaseChange
-import Class.Deformations_ContinuousSMulDiscrete
-import Class.Deformations_IsProartinian
-import Class.Deformations_IsResidueAlgebra
-import Class.Deformations_ProartinianCat
-import Class.HopfAlgebra_HopfIdealQuotient
-import Class.HopfAlgebra_HopfTower
-import Class.Mathlib_Algebra_Algebra_Hom
-import Class.Mathlib_Algebra_IsDirectLimit
-import Class.Mathlib_IsModuleTopology
-import Class.ModularCurve_CanonicalDivisor
-import Class.ModularCurve_GaussPencilAdapter
-import Class.MvFormalGroup_BasicV2
-import Class.NumberField_Extension
-import Class.Patching_SystemTypes
-import Class.Representation_AbsolutelyIrreducible
-import Class.WeierstrassCurve_GenusOnePic0
-import Class.WeierstrassCurve_GenusOnePlaceGateCentred
+-- Root of the `Class` library: carved from Lemma/Definitions.
+public import Class.Basic
+
+public import Class.AlgebraicCurve_CanonicalDivisor
+public import Class.AlgebraicCurve_ConstantFieldPullback
+public import Class.AlgebraicCurve_DivisorClassGroup
+public import Class.AlgebraicCurve_DivisorPushPull
+public import Class.AlgebraicCurve_IsCurveOver
+public import Class.AlgebraicCurve_LocalResidue
+public import Class.CerednikDrinfeld_MumfordPeriod
+public import Class.DedekindDomain_FiniteAdeleRing_BaseChange
+public import Class.Deformations_ContinuousSMulDiscrete
+public import Class.Deformations_IsProartinian
+public import Class.Deformations_IsResidueAlgebra
+public import Class.Deformations_ProartinianCat
+public import Class.HopfAlgebra_HopfIdealQuotient
+public import Class.HopfAlgebra_HopfTower
+public import Class.Mathlib_Algebra_Algebra_Hom
+public import Class.Mathlib_Algebra_IsDirectLimit
+public import Class.Mathlib_IsModuleTopology
+public import Class.ModularCurve_CanonicalDivisor
+public import Class.ModularCurve_GaussPencilAdapter
+public import Class.MvFormalGroup_BasicV2
+public import Class.NumberField_Extension
+public import Class.Patching_SystemTypes
+public import Class.Representation_AbsolutelyIrreducible
+public import Class.WeierstrassCurve_GenusOnePic0
+public import Class.WeierstrassCurve_GenusOnePlaceGateCentred
+public section

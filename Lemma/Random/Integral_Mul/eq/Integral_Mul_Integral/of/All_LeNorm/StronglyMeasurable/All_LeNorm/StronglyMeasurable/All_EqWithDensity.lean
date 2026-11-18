@@ -1,5 +1,6 @@
 import Lemma.Random.Integral.of.All_LeNorm.StronglyMeasurable.history.All_EqWithDensity
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Finset
 
@@ -23,8 +24,8 @@ private lemma main
   (hC : ∀ z, ‖g z‖ ≤ C)
   (θ : Θ) :
 -- imply
-  ∫ ω, G (Preorder.frestrictLe n ω) * g (ω (n + 1)) ∂(M.traj θ) =
-    ∫ ω, G (Preorder.frestrictLe n ω) * ∫ z, g z ∂(M.K θ (ω n)) ∂(M.traj θ) := by
+  ∫ ω, G (Preorder.frestrictLe n ω) * g (ω (n + 1)) ∂(M θ) =
+    ∫ ω, G (Preorder.frestrictLe n ω) * ∫ z, g z ∂(M.K θ (ω n)) ∂(M θ) := by
 -- proof
   rw [Integral.of.All_LeNorm.StronglyMeasurable.history.All_EqWithDensity (M := M)
     ((hG.comp_measurable measurable_fst).mul (hg.comp_measurable measurable_snd)) (n := n)
@@ -43,4 +44,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-17
+-- updated on 2026-11-18

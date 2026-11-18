@@ -36,8 +36,26 @@ universe v u v₁ u₁ w
 
 namespace CategoryTheory
 
-attribute [reducible, instance] FiniteMultitensorDecompData.instFintype
-  FiniteMultitensorDecompData.instDecEq
+/-- Forwarding instances for the class fields
+`FiniteMultitensorDecompData.instFintype` and
+`FiniteMultitensorDecompData.instDecEq`, which are defined in
+`Class.v1.Atlas.TensorCategories.code.CategoricalFreeness` and cannot
+have reducibility attributes set from this module. -/
+@[reducible] instance instFintype_FiniteMultitensorDecompData
+    {k : Type w} [Field k]
+    {C : Type u} [Category.{v} C] [Preadditive C] [Linear k C]
+    [MonoidalCategory C] [MonoidalPreadditive C] [MonoidalLinear k C]
+    [RigidCategory C]
+    [decomp : FiniteMultitensorDecompData k C] : Fintype decomp.I :=
+  decomp.instFintype
+
+@[reducible] instance instDecEq_FiniteMultitensorDecompData
+    {k : Type w} [Field k]
+    {C : Type u} [Category.{v} C] [Preadditive C] [Linear k C]
+    [MonoidalCategory C] [MonoidalPreadditive C] [MonoidalLinear k C]
+    [RigidCategory C]
+    [decomp : FiniteMultitensorDecompData k C] : DecidableEq decomp.I :=
+  decomp.instDecEq
 
 /-- The Frobenius-Perron dimension `FPdim(C)` of a finite tensor category
 (Definition 1.47.5): `Σ FPdim(X_i) FPdim(P_i)` summed over simple objects `X_i` and their

@@ -2,6 +2,7 @@ import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Lemma.Random.ProbCond.eq.OfRealPol.of.NeDens_0.All_EqWithDensity.All_Eq_JointDens
 import Mathlib.Analysis.Calculus.Gradient.Basic
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Real Measure
 open scoped ENNReal.ToRealCoe
@@ -27,24 +28,24 @@ private lemma main
   (h₀ : Model.IsPolicyTrajectory M r s a)
   (h₁ : Model.AbsContJointAS M a s)
   (hSm : Model.AbsContStateMarginal M s)
-  (h₂ : ∀ θ t aₜ sₜ, (M.traj θ).prob (a t, s t) (aₜ, sₜ) =
+  (h₂ : ∀ θ t aₜ sₜ, (M θ).prob (a t, s t) (aₜ, sₜ) =
     ENNReal.ofReal (M.π[θ] sₜ aₜ) *
-      ((M.traj θ).map (s t)).rnDeriv ReferenceMeasure.measure sₜ)
-  (h₃ : ∀ θ t x, ((M.traj θ).map (s t)).rnDeriv ReferenceMeasure.measure x ≠ 0)
-  (h₄ : ∀ θ t x, ((M.traj θ).map (s t)).rnDeriv ReferenceMeasure.measure x ≠ ⊤) :
+      ((M θ).map (s t)).rnDeriv ReferenceMeasure.measure sₜ)
+  (h₃ : ∀ θ t x, ((M θ).map (s t)).rnDeriv ReferenceMeasure.measure x ≠ 0)
+  (h₄ : ∀ θ t x, ((M θ).map (s t)).rnDeriv ReferenceMeasure.measure x ≠ ⊤) :
 -- imply
-  have : ∀ θ t, SinglePSpace (M.traj θ) (a t, s t) := fun θ t =>
+  have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun θ t =>
     h₀.singlePSpace_as (haj := h₁) θ t
-  have : ∀ θ t, SinglePSpace (M.traj θ) (s t) := fun θ t =>
+  have : ∀ θ t, SinglePSpace (M θ) (s t) := fun θ t =>
     h₀.singlePSpace_s (hac := hSm) θ t
-  ∀ t, ∀ᵐ ω ∂(M.traj θ),
-      ∇[θ] (ℙ[M.traj θ]((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log =
+  ∀ t, ∀ᵐ ω ∂(M θ),
+      ∇[θ] (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log =
         ∇[θ] (Real.log (M.π[θ] (s t ω) (a t ω))) := by
 -- proof
   intro hP _ t
-  refine ae_of_all (M.traj θ) fun ω => ?_
+  refine ae_of_all (M θ) fun ω => ?_
   have hfun :
-    (fun θ' => (ℙ[M.traj θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) =
+    (fun θ' => (ℙ[M θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) =
         (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) := by
     funext θ'
     rw [ProbCond.eq.OfRealPol.of.NeDens_0.All_EqWithDensity.All_Eq_JointDens
@@ -54,4 +55,4 @@ private lemma main
 
 
 -- created on 2026-11-13
--- updated on 2026-11-17
+-- updated on 2026-11-18

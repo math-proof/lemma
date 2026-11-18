@@ -1,9 +1,11 @@
 module
 
+public import Mathlib
+
 public section
 
 
-public theorem left
+public theorem Nat.Mul.of.Eq.left
   [Mul α]
   {x y : α}
 -- given

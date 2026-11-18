@@ -23,6 +23,20 @@ temporary gallops read their live storage through `GallopKeySource.temporary`.
 
 public section
 
+open CPythonListsort
+open CPythonListsort.AccessTrace
+open CPythonListsort.GallopKeySource
+open CPythonListsort.TempRangeInBounds
+
+attribute [local simp]
+  TraceResult.erase_bind
+  TraceResult.erase_map
+  TraceResult.erase_pure
+  TraceResult.erase_failure
+  TraceResult.erase_markFuelExhausted
+  erase_mergeHiTraceOption
+  erase_mergeHiFuelExhaustedTraced
+
 namespace CPythonListsort
 
 universe u v
@@ -171,7 +185,7 @@ public theorem erase_mergeHiGallopBTraced
       simp only [Option.bind_some, TraceResult.erase_bind,
         erase_mergeHiTraceOption]
       cases hTemp : initializedTempPrefix? afterB.state.a afterB.nb with
-      | none => simp
+      | none => rfl
       | some temp =>
           simp only [Option.bind_some]
           rw [erase_mergeHiTemporaryGallopLeft_of_eq_some afterB.state

@@ -1,53 +1,56 @@
-import Def.Data.Tensor.Defs.Part4
-import Def.Data.Tensor.Select
-import Def.Data.Tensor.Resize
-import Def.Data.Tensor.Shape
-import Def.Data.Tensor.Sum
-import Def.Data.Tensor.Mean
-import Def.Data.Tensor.Bmm
-import Def.Data.Tensor.Prod
-import Def.Data.Tensor.Reshape
-import Def.Data.Tensor.Unsqueeze
-import Def.Data.Tensor.Repeat
-import Notation.Data.Tensor.Permute
-import Def.Data.Tensor.Item
-import Def.Data.Tensor.HStack
-import Theorem.Bool.HEq.of.All_HEq
-import Theorem.Nat.Le_Sub_1.of.Lt
-import Theorem.Nat.LtAddS.is.Lt
-import Theorem.Nat.GtVal_0.of.Ne_0
-import Theorem.Nat.LtSubS_1.of.Lt.Ne_0
-import Theorem.Nat.Ge_1.of.Gt_0
-import Theorem.Nat.EqAddSub.of.Ge
-import Theorem.Nat.EqAddMulDiv
-import Theorem.Int.LtToNatAdd_Mul_DivSub1Sign_2.of.In_IcoNeg
-import Lemma.List.MapEnumerate.eq.Cons_MapEnumerate.of.All_Eq
-import Theorem.List.HeadD.eq.Get_0.of.GtLength_0
-import Theorem.List.LengthDrop_1.ge.Sub_1.of.GeLength.Gt_1
-import Theorem.List.GtLength_0.of.Cons.in.CartesianProduct
-import Theorem.List.EqCons_Tail.of.GtLength_0
-import Theorem.List.LengthTake.gt.Zero.of.LengthTake.gt.Zero
-import Theorem.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1
-import Theorem.List.Sub_1.lt.LengthTail.of.In_Ioo0Length
-import Theorem.List.GetTail.eq.Get_Add_1.of.Lt_SubLength_1
-import Theorem.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
-import Theorem.List.GetEraseIdx.eq.Get.of.Gt.GtLength
-import Theorem.List.In_CartesianProduct.of.In_CartesianProductCons
-import Theorem.List.Lt.of.In_CartesianProductCons
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Tensor.GtLength_0.of.GtLength_0
-import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Tensor.DataAdd.eq.AddDataS
-import Lemma.Tensor.DataMul.eq.MulDataS
-import Lemma.Tensor.DataDiv.eq.DivDataS
-import Lemma.Tensor.DataNeg.eq.NegData
-import Lemma.Tensor.DataInv.eq.InvData
-import Lemma.Tensor.EqData0'0
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength
-import Lemma.Tensor.EqLength
-import Lemma.Tensor.LengthMap.eq.Length
-import Lemma.Tensor.Eq.is.Item
-import Def.Data.Tensor.Tensor.Part2
+module
+
+public import Def.Data.Tensor.Defs.Part4
+public import Def.Data.Tensor.Select
+public import Def.Data.Tensor.Resize
+public import Def.Data.Tensor.Shape
+public import Def.Data.Tensor.Sum
+public import Def.Data.Tensor.Mean
+public import Def.Data.Tensor.Bmm
+public import Def.Data.Tensor.Prod
+public import Def.Data.Tensor.Reshape
+public import Def.Data.Tensor.Unsqueeze
+public import Def.Data.Tensor.Repeat
+public import Notation.Data.Tensor.Permute
+public import Def.Data.Tensor.Item
+public import Def.Data.Tensor.HStack
+public import Theorem.Bool.HEq.of.All_HEq
+public import Theorem.Nat.Le_Sub_1.of.Lt
+public import Theorem.Nat.LtAddS.is.Lt
+public import Theorem.Nat.GtVal_0.of.Ne_0
+public import Theorem.Nat.LtSubS_1.of.Lt.Ne_0
+public import Theorem.Nat.Ge_1.of.Gt_0
+public import Theorem.Nat.EqAddSub.of.Ge
+public import Theorem.Nat.EqAddMulDiv
+public import Theorem.Int.LtToNatAdd_Mul_DivSub1Sign_2.of.In_IcoNeg
+public import Theorem.List.MapEnumerate.eq.Cons_MapEnumerate.of.All_Eq
+public import Theorem.List.HeadD.eq.Get_0.of.GtLength_0
+public import Theorem.List.LengthDrop_1.ge.Sub_1.of.GeLength.Gt_1
+public import Theorem.List.GtLength_0.of.Cons.in.CartesianProduct
+public import Theorem.List.EqCons_Tail.of.GtLength_0
+public import Theorem.List.LengthTake.gt.Zero.of.LengthTake.gt.Zero
+public import Theorem.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1
+public import Theorem.List.Sub_1.lt.LengthTail.of.In_Ioo0Length
+public import Theorem.List.GetTail.eq.Get_Add_1.of.Lt_SubLength_1
+public import Theorem.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
+public import Theorem.List.GetEraseIdx.eq.Get.of.Gt.GtLength
+public import Theorem.List.In_CartesianProduct.of.In_CartesianProductCons
+public import Theorem.List.Lt.of.In_CartesianProductCons
+public import Theorem.Tensor.Length.eq.Get_0.of.GtLength_0
+public import Theorem.Tensor.GtLength_0.of.GtLength_0
+public import Theorem.Tensor.Eq.is.EqDataS
+public import Theorem.Tensor.DataAdd.eq.AddDataS
+public import Theorem.Tensor.DataMul.eq.MulDataS
+public import Theorem.Tensor.DataDiv.eq.DivDataS
+public import Theorem.Tensor.DataNeg.eq.NegData
+public import Theorem.Tensor.DataInv.eq.InvData
+public import Theorem.Tensor.EqData0'0
+public import Theorem.Tensor.Length.eq.Get_0.of.GtLength
+public import Theorem.Tensor.EqLength
+public import Theorem.Tensor.LengthMap.eq.Length
+public import Theorem.Tensor.Eq.is.Item
+public import Def.Data.Tensor.Tensor.Part2
+@[expose] public section
 open Bool Nat Int List Tensor
 
 
@@ -270,7 +273,6 @@ instance [AddGroupWithOne α] : AddGroupWithOne (Tensor α s) where
 instance [Ring α] : Ring (Tensor α s) where
 
 instance [CommRing α] : CommRing (Tensor α s) where
-  mul_comm := mul_comm
 
 instance [Add α] [IsLeftCancelAdd α] : IsLeftCancelAdd (Tensor α s) where
   add_left_cancel a := by
@@ -283,13 +285,10 @@ instance [Add α] [IsLeftCancelAdd α] : IsLeftCancelAdd (Tensor α s) where
     assumption
 
 instance [AddLeftCancelSemigroup α] : AddLeftCancelSemigroup (Tensor α s) where
-  add_left_cancel := IsLeftCancelAdd.add_left_cancel
 
 instance [AddLeftCancelMonoid α] : AddLeftCancelMonoid (Tensor α s) where
-  add_left_cancel := IsLeftCancelAdd.add_left_cancel
 
 instance [AddCancelCommMonoid α] : AddCancelCommMonoid (Tensor α s) where
-  add_left_cancel := IsLeftCancelAdd.add_left_cancel
 
 /--
 0-d tensors inherit a linear order from the underlying scalar type.

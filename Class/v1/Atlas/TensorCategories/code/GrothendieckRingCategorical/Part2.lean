@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/GrothendieckRingCategorical.lean -/
 
 /-
@@ -8,9 +10,9 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.TensorCategories.code.GrothendieckRing.Part2
-import Abbrev.v1.Atlas.TensorCategories.code.TensorCategoryDef.Part3
-import Structure.v1.Atlas.TensorCategories.code.GrothendieckRingCategorical.Part2
+public import Abbrev.v1.Atlas.TensorCategories.code.TensorCategoryDef.Part3
+public import Class.v1.Atlas.TensorCategories.code.GrothendieckRingCategorical
+public section
 open CategoryTheory MonoidalCategory Limits Finset
 open TensorCategories
 
@@ -18,7 +20,7 @@ universe v u
 
 namespace FusionCategoryBridge
 
-open CategoricalFusionData FusionRing
+open CategoricalFusionData
 
 variable {κ : Type*} [Field κ] {C : Type u} [Category.{v} C]
   [Preadditive C] [Linear κ C] [Abelian C]

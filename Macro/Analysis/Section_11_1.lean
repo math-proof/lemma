@@ -1,5 +1,9 @@
-import Mathlib
-import Abbrev.Analysis.Section_11_1.Part2
+module
+
+public import Mathlib
+
+public meta section
+
 /-!
 # Analysis I, Section 11.1: Partitions
 
@@ -18,8 +22,6 @@ Main constructions and results of this section:
 
 
 namespace Chapter11
-
-open BoundedInterval
 
 /-- Using ||ₗ subscript here to not override || -/
 macro:max atomic("|" noWs) a:term noWs "|ₗ" : term => `(BoundedInterval.length $a)

@@ -1,5 +1,6 @@
 import Def.Dynamics.PolicyTrajectory.ContinuousAction
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Finset
 
@@ -20,15 +21,15 @@ private lemma main
   (hC : ∀ p, ‖φ p‖ ≤ C)
   (θ : Θ) :
 -- imply
-  ∫ ω, φ (Preorder.frestrictLe n ω, ω (n + 1)) ∂(M.traj θ) =
+  ∫ ω, φ (Preorder.frestrictLe n ω, ω (n + 1)) ∂(M θ) =
     ∫ h, ∫ z, φ (h, z) ∂(M.K θ (h ⟨n, mem_Iic.2 le_rfl⟩))
-      ∂((M.traj θ).map (Preorder.frestrictLe n)) := by
+      ∂((M θ).map (Preorder.frestrictLe n)) := by
 -- proof
   let μ₀ : Measure (ℝ × 𝒮 × 𝒜) := M.stageK θ ∘ₘ (M.init : Measure _)
   have h := Kernel.map_frestrictLe_trajMeasure_compProd_eq_map_trajMeasure
     (X := fun _ ↦ ℝ × 𝒮 × 𝒜) (μ₀ := μ₀) (κ := M.step θ) (a := n)
-  have e : ∫ ω, φ (Preorder.frestrictLe n ω, ω (n + 1)) ∂(M.traj θ) =
-      ∫ p, φ p ∂((M.traj θ).map (fun x ↦ (Preorder.frestrictLe n x, x (n + 1)))) := by
+  have e : ∫ ω, φ (Preorder.frestrictLe n ω, ω (n + 1)) ∂(M θ) =
+      ∫ p, φ p ∂((M θ).map (fun x ↦ (Preorder.frestrictLe n x, x (n + 1)))) := by
     rw [integral_map (by fun_prop) hφ.aestronglyMeasurable]
   rw [e]
   unfold Model.traj
@@ -38,4 +39,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-17
+-- updated on 2026-11-18

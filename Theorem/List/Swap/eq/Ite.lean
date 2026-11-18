@@ -1,5 +1,7 @@
 module
 
+public import Mathlib
+
 public import Batteries.Data.List.Lemmas
 public import Theorem.List.DropSet.eq.Drop.of.Lt
 public import Theorem.List.TakeSet.eq.SetTake.of.Lt

@@ -1,7 +1,6 @@
 import Lemma.Random.Map.eq.BindStageK.of.All_Eq_Joint.All_EqWithDensity
 import Lemma.Random.StageKSetOf1.eq.Zero.of.All_EqWithDensity
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
+import Instance.Dynamics.PolicyTrajectory
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
@@ -16,19 +15,21 @@ private lemma main
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {R : ℝ}
 -- given
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
+  (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1)
   (θ : Θ)
   (t : ℕ) :
 -- imply
-  r t =ᵐ[M.traj θ] fun ω ↦ clip (ω t).1 (-M.R) M.R := by
+  r t =ᵐ[M θ] fun ω ↦ clip (ω t).1 (-R) R := by
 -- proof
   obtain rfl : r = fun t ω ↦ (ω t).1 := funext₂ fun t ω ↦ (congrArg Prod.fst (congrFun (h₀ t) ω)).symm
-  have hs : MeasurableSet {z : ℝ × 𝒮 × 𝒜 | z.1 ∉ Set.Icc (-M.R) M.R} :=
+  have hs : MeasurableSet {z : ℝ × 𝒮 × 𝒜 | z.1 ∉ Set.Icc (-R) R} :=
     (measurableSet_Icc.compl).preimage measurable_fst
-  have h : (M.traj θ).map (fun ω => ω t) {z | z.1 ∉ Set.Icc (-M.R) M.R} = 0 := by
+  have h : (M θ).map (fun ω => ω t) {z | z.1 ∉ Set.Icc (-R) R} = 0 := by
     rw [Map.eq.BindStageK.of.All_Eq_Joint.All_EqWithDensity h₀, Measure.bind_apply hs (Kernel.aemeasurable _)]
-    apply (lintegral_congr (fun y => StageKSetOf1.eq.Zero.of.All_EqWithDensity (M := M) θ y)).trans
+    apply (lintegral_congr (fun y => StageKSetOf1.eq.Zero.of.All_EqWithDensity (M := M) hR θ y)).trans
       lintegral_zero
   rw [Measure.map_apply (measurable_pi_apply t) hs] at h
   rw [Filter.EventuallyEq, ae_iff]
@@ -41,4 +42,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-17
+-- updated on 2026-11-18

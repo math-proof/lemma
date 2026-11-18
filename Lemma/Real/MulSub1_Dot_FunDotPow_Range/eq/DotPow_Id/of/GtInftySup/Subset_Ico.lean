@@ -1,5 +1,6 @@
 import Mathlib.Analysis.SpecificLimits.Normed
 import Mathlib.Analysis.Normed.Ring.InfiniteSum
+import Theorem.Data.Vector.Basic
 import Theorem.Data.Vector.Basic.Part2
 import Syntax.Order.Sup
 import Theorem.Function
@@ -70,4 +71,4 @@ private lemma main
 
 
 -- created on 2023-04-08
--- updated on 2026-11-11
+-- updated on 2026-11-18

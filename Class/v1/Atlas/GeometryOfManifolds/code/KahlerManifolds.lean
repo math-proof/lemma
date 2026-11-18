@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/GeometryOfManifolds/code/KahlerManifolds.lean -/
 
 /-
@@ -8,11 +10,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.GeometryOfManifolds.code.AlmostComplexManifolds.Part4
-import Class.v1.Atlas.GeometryOfManifolds.code.ArnoldConjecture.Part4
-import Mathlib.Geometry.Manifold.VectorField.LieBracket
-import Mathlib.Geometry.Manifold.IsManifold.Basic
-import Structure.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
+public import Structure.v1.Atlas.GeometryOfManifolds.code.AlmostComplexManifolds.Part4
+public import Class.v1.Atlas.GeometryOfManifolds.code.ArnoldConjecture.Part4
+public import Mathlib.Geometry.Manifold.VectorField.LieBracket
+public import Mathlib.Geometry.Manifold.IsManifold.Basic
+public import Structure.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
+public section
 set_option autoImplicit false
 
 noncomputable section

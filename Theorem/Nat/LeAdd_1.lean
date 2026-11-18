@@ -18,5 +18,12 @@ public theorem Nat.LeAdd_1
   simp
 
 
+public theorem Nat.Ge_Add_1.of.Gt
+  {x y : ℕ}
+  (h : x > y) :
+  x ≥ y + 1 :=
+  Nat.succ_le_of_lt h
+
+
 -- created on 2025-05-06
 -- updated on 2025-06-18

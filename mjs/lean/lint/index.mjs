@@ -80,6 +80,14 @@ export const RULES = {
     'redundant-set-ascription': null,
     // not an AGENTS.md rule (user request): unused `-- given` hypothesis should be dropped, even if already `_`
     'given-unused': null,
+    // not an AGENTS.md rule (user request via Random): unused named instImplicit `[h : T]` → anonymous `[T]`;
+    // uses count only in later signature binders / `-- given` / `-- imply`, not the proof
+    'inst-unused': null,
+    // not an AGENTS.md rule (user request via Random): semicolon-separated `-- imply` statements → omit `;` and use a newline
+    'imply-semicolon': null,
+    // not an AGENTS.md rule (user request via Random): unused named `let` / `have` in `-- imply` → drop the name
+    // (`let h : T :=` → `let : T :=`); uses count in the rest of `-- imply` and the `-- proof`
+    'imply-unused': null,
     'binder-combine': Q.combine,
     'section-given': Q.given,
     // not an AGENTS.md rule: a `-- given` with no binders under it should be deleted
@@ -253,9 +261,10 @@ export function lintLean(source, opts = {}) {
         (w.rule === 'by-exact' && w.line - 1 === r.byLine && w.col === r.byCol + 1)));
     if (tm.length) warnings.splice(0, warnings.length, ...warnings.filter((w) => !superseded(w)));
 
-    // unused `-- given` should be dropped, not merely renamed to `_`
+    // unused `-- given` should be dropped, unused named instImplicit should be `[T]`,
+    // and unused named `let` / `have` in `-- imply` should drop the name, not merely be renamed to `_`
     {
-        const dropLines = new Set(warnings.filter((w) => w.rule === 'given-unused').map((w) => w.line));
+        const dropLines = new Set(warnings.filter((w) => w.rule === 'given-unused' || w.rule === 'inst-unused' || w.rule === 'imply-unused').map((w) => w.line));
         if (dropLines.size) {
             for (let i = warnings.length - 1; i >= 0; i--) {
                 if (warnings[i].rule === 'binder-underscore-name' && dropLines.has(warnings[i].line))

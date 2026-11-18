@@ -1,5 +1,6 @@
 import Lemma.Random.ProbJoint.eq.Mul_Prob_Pr
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Real
 
@@ -25,8 +26,8 @@ private lemma main
   (sₜ : 𝒮)
   (aₜ : 𝒜) :
 -- imply
-  ∫ ω, (if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) ∂(M.traj θ) =
-    (M.traj θ).real (s t ⁻¹' {sₜ}) * (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}) := by
+  ∫ ω, (if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) ∂(M θ) =
+    (M θ).real (s t ⁻¹' {sₜ}) * (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}) := by
 -- proof
   have hS : MeasurableSet (s t ⁻¹' {sₜ}) :=
     Random.Measurable.of.All_Eq.snd.fst h₀ t (measurableSet_singleton sₜ)
@@ -45,4 +46,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-17
+-- updated on 2026-11-18

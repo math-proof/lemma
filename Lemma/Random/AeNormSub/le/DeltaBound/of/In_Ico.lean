@@ -1,6 +1,5 @@
 import Lemma.Random.AeNormSub.le.DeltaBound.of.In_Ico.All_EqWithDensity
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
+import Instance.Dynamics.PolicyTrajectory
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
@@ -16,16 +15,18 @@ private lemma main
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {R : ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
+  (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1)
   (θ : Θ) :
 -- imply
-  ∀ᵐ ω ∂(M.traj θ), ∀ j, ‖r j ω + γ * M.V0 θ γ (s (j + 1) ω) - M.V0 θ γ (s j ω)‖ ≤
-    (3 / (1 - γ) - 1) * |M.R| := by
+  ∀ᵐ ω ∂(M θ), ∀ j, ‖r j ω + γ * M.V0 R θ γ (s (j + 1) ω) - M.V0 R θ γ (s j ω)‖ ≤
+    (3 / (1 - γ) - 1) * |R| := by
 -- proof
-  exact AeNormSub.le.DeltaBound.of.In_Ico.All_EqWithDensity h₀ h₁ θ
+  exact AeNormSub.le.DeltaBound.of.In_Ico.All_EqWithDensity h₀ h₁ hR θ
 
 
 -- created on 2026-10-21
--- updated on 2026-11-17
+-- updated on 2026-11-18

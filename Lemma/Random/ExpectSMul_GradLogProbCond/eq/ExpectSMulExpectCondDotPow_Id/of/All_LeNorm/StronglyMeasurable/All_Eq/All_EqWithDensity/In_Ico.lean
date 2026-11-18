@@ -1,11 +1,9 @@
 import Lemma.Random.ExpectSMul.eq.ExpectSMulExpectCond.of.All_LeNorm.StronglyMeasurable.All_Eq.All_EqWithDensity.In_Ico
-import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Random.PSpace_Path.of.All_PSpace
 import Mathlib.Analysis.Calculus.Gradient.Basic
 import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Instance.Analysis.Real.Numbers
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
+import Instance.Dynamics.PolicyTrajectory
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Filter Topology Measure
 open scoped ENNReal.ToRealCoe
 
@@ -26,40 +24,42 @@ private lemma main
   {C : ℝ}
   {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
-  {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜} [∀ θ t, SinglePSpace (M.traj θ) (a t, s t)]
+  {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜} [∀ θ t, SinglePSpace (M θ) (a t, s t)]
+  {R : ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (hψ : StronglyMeasurable (fun p : 𝒮 × 𝒜 =>
-    ∇[θ] (ℙ[M.traj θ]((a t) = p.2 | (s t) = p.1) : ℝ).log))
-  (hC : ∀ x u, ‖∇[θ] (ℙ[M.traj θ]((a t) = u | (s t) = x) : ℝ).log‖ ≤ C) :
+    ∇[θ] (ℙ[M θ]((a t) = p.2 | (s t) = p.1) : ℝ).log))
+  (hC : ∀ x u, ‖∇[θ] (ℙ[M θ]((a t) = u | (s t) = x) : ℝ).log‖ ≤ C)
+  (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1) :
 -- imply
-  have : PSpace (M.traj θ) (AsPathRV.path s) :=
+  have : PSpace (M θ) (AsPathRV.path s) :=
     PSpace_Path.of.All_PSpace
       (fun t => ⟨(Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).aemeasurable⟩)
-  have : PSpace (M.traj θ) (AsPathRV.path a) :=
+  have : PSpace (M θ) (AsPathRV.path a) :=
     PSpace_Path.of.All_PSpace
       (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).aemeasurable⟩)
-  have : ∀ θ, PSpace (M.traj θ) (AsPathRV.path r) := fun _ =>
+  have : ∀ θ, PSpace (M θ) (AsPathRV.path r) := fun _ =>
     PSpace_Path.of.All_PSpace
       (fun t => ⟨(Random.Measurable.of.All_Eq.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).aemeasurable⟩)
   let : MeasurableSpace Θ := borel Θ
-  𝔼[r, s, a : M.traj θ](((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) • ∇[θ] (ℙ[M.traj θ](a[t] | s[t]) : ℝ).log) =
-    𝔼[s, a : M.traj θ](
-      𝔼[r : M.traj θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s[t], a[t]) •
-        ∇[θ] (ℙ[M.traj θ](a[t] | s[t]) : ℝ).log) := by
+  𝔼[r, s, a : M θ](((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) • ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log) =
+    𝔼[s, a : M θ](
+      𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s[t], a[t]) •
+        ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log) := by
 -- proof
   intro _ _ _
   let _ : MeasurableSpace Θ := borel Θ
   let ψ : 𝒮 → 𝒜 → Θ := fun x u =>
-    ∇[θ] (ℙ[M.traj θ]((a t) = u | (s t) = x) : ℝ).log
+    ∇[θ] (ℙ[M θ]((a t) = u | (s t) = x) : ℝ).log
   have hψ' : StronglyMeasurable (Function.uncurry ψ) := by
     change StronglyMeasurable (fun p : 𝒮 × 𝒜 => ψ p.1 p.2)
     simpa [ψ] using hψ
   convert
     ExpectSMul.eq.ExpectSMulExpectCond.of.All_LeNorm.StronglyMeasurable.All_Eq.All_EqWithDensity.In_Ico
-      (M := M) (ψ := ψ) h₀ h₁ hψ' hC θ t
+      (M := M) (ψ := ψ) h₀ h₁ hψ' hC hR θ t
 
 
 -- created on 2026-11-14
--- updated on 2026-11-17
+-- updated on 2026-11-18

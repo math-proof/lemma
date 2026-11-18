@@ -8,7 +8,7 @@ public section
 open List
 
 
-public theorem simp
+public theorem List.LengthSlice.eq.ProdTake.of.GtGet.GtLength.simp
   {s : List ℕ}
 -- given
   (h_d : s.length > d)
@@ -32,7 +32,7 @@ public theorem List.LengthSlice.eq.ProdTake.of.GtGet.GtLength
   (⟨i, ((List.map Nat.cast s).take (d + 1)).prod, s[d]⟩ : Slice).length (s.take (d + 1)).prod = (s.take d).prod := by
 -- proof
   rw [List.ProdTakeMapCast.eq.ProdTake]
-  apply simp h_d h_i
+  apply List.LengthSlice.eq.ProdTake.of.GtGet.GtLength.simp h_d h_i
 
 
 -- created on 2025-11-15

@@ -4,6 +4,7 @@ import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyM
 import Lemma.Real.Norm_1.le.One
 import Lemma.Real.StronglyMeasurable_Eq12
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Real
 
@@ -30,8 +31,8 @@ private lemma main
   (t j : ℕ)
   (sₜ : 𝒮) :
 -- imply
-  ∫ ω, (if s t ω = sₜ then (1:ℝ) else 0) * f (ω (t + j)) ∂(M.traj θ) =
-    (M.traj θ).real (s t ⁻¹' {sₜ}) * ∫ z, M.Kf θ f j z ∂(M.stageK θ sₜ) := by
+  ∫ ω, (if s t ω = sₜ then (1:ℝ) else 0) * f (ω (t + j)) ∂(M θ) =
+    (M θ).real (s t ⁻¹' {sₜ}) * ∫ z, M.Kf θ f j z ∂(M.stageK θ sₜ) := by
 -- proof
   obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₀ t) ω)).symm
   have hK := StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
@@ -43,4 +44,4 @@ private lemma main
 
 
 -- created on 2026-11-13
--- updated on 2026-11-17
+-- updated on 2026-11-18

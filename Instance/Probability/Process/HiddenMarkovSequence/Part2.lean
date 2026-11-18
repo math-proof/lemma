@@ -29,3 +29,17 @@ instance Function.coeFunProdPiSlice {Ω α β : Type*} {s t : Slice} :
     CoeFun (FunSlice.Out (Ω → α) s × FunSlice.Out (Ω → β) t)
       (fun _ => Ω → FunSlice.Vec α s × FunSlice.Vec β t) :=
   ⟨fun p ↦ JointRandomSymbol p.1 p.2⟩
+
+/-- Pairing coercion for a random variable and a random vector `x`, `y[c:d]` (see `Function.coeProdPi`): the type of
+`y[c:d]` is the family `FunSlice.Out (Ω → α) s`, which typeclass search does not unfold to `Ω → …`, so
+the generic instances do not fire; these two make a bare pair `(x, y[:n])` an
+`Ω → α × FunSlice.Vec α s`, i.e. `JointRandomSymbol x y[:n]`, both as a term of function
+type (`CoeFun`, used when an `Ω → ?` is expected, e.g. `SinglePSpace π (s[k], s[:k])`) and as a `Coe`. -/
+instance Function.coeProdPiGetSlice {Ω α : Type*} {s : Slice} :
+    Coe ((Ω → α) × FunSlice.Out (Ω → α) s) (Ω → α × FunSlice.Vec α s) :=
+  ⟨fun p ↦ JointRandomSymbol p.1 p.2⟩
+
+instance Function.coeFunProdPiGetSlice {Ω α : Type*} {s : Slice} :
+    CoeFun ((Ω → α) × FunSlice.Out (Ω → α) s)
+      (fun _ => Ω → α × FunSlice.Vec α s) :=
+  ⟨fun p ↦ JointRandomSymbol p.1 p.2⟩

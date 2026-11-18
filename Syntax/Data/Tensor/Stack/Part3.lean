@@ -1,5 +1,11 @@
-import Instance.Data.Tensor.Tensor.Part2
-import Syntax.Data.Tensor.Stack.Part2
+module
+
+public meta import Lean
+public import Instance.Data.Tensor.Tensor.Part2
+public import Syntax.Data.Tensor.Stack.Part2
+
+public meta section
+
 open Lean
 
 

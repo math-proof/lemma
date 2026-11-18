@@ -1,3 +1,4 @@
+import Initialize.Tactic.Attr.Basic
 import Def.Algebra.ContinuedFractions.ContinuedFraction
 open Continuant
 
@@ -18,3 +19,4 @@ private lemma main
 
 
 -- created on 2026-10-07
+-- updated on 2026-11-18

@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FiniteLiesOverInstances.lean -/
 
-import Theorem.NumberTheory.NumberField.Completion.FiniteLiesOver
-import Theorem.Nat.NumberField.Completion.FiniteLiesOver
+module
+
+public import Theorem.NumberTheory.NumberField.Completion.FiniteLiesOver
+public import Theorem.Nat.NumberField.Completion.FiniteLiesOver
+
+@[expose] public section
+
 /-!
 # Finite-place completion instances over a base completion
 

@@ -1,5 +1,6 @@
 import Lemma.Random.ProbCond.eq.OfRealPol.of.NeDens_0.All_EqWithDensity
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 open scoped ENNReal.ToRealCoe
@@ -17,18 +18,18 @@ private lemma main
 -- given
   (h₀ : Model.IsPolicyTrajectory M r s a)
   (h₁ : Model.AbsContJointAS M a s)
-  (h₂ : (M.traj θ).prob (a t, s t) (aₜ, sₜ) =
+  (h₂ : (M θ).prob (a t, s t) (aₜ, sₜ) =
     ENNReal.ofReal (M.π[θ] sₜ aₜ) *
-      ((M.traj θ).map (s t)).rnDeriv (μ.measure : Measure 𝒮) sₜ)
-  (h₃ : ((M.traj θ).map (s t)).rnDeriv (μ.measure : Measure 𝒮) sₜ ≠ 0)
-  (h₄ : ((M.traj θ).map (s t)).rnDeriv (μ.measure : Measure 𝒮) sₜ ≠ ⊤) :
+      ((M θ).map (s t)).rnDeriv (μ.measure : Measure 𝒮) sₜ)
+  (h₃ : ((M θ).map (s t)).rnDeriv (μ.measure : Measure 𝒮) sₜ ≠ 0)
+  (h₄ : ((M θ).map (s t)).rnDeriv (μ.measure : Measure 𝒮) sₜ ≠ ⊤) :
 -- imply
-  have : SinglePSpace (M.traj θ) (a t, s t) := h₀.singlePSpace_as (haj := h₁) θ t
-  (ℙ[M.traj θ]((a t) = aₜ | (s t) = sₜ) : ℝ) = M.π[θ] sₜ aₜ := by
+  have : SinglePSpace (M θ) (a t, s t) := h₀.singlePSpace_as (haj := h₁) θ t
+  (ℙ[M θ]((a t) = aₜ | (s t) = sₜ) : ℝ) = M.π[θ] sₜ aₜ := by
 -- proof
   intro hP
   have hENN :
-    ℙ[M.traj θ]((a t) = aₜ | (s t) = sₜ) =
+    ℙ[M θ]((a t) = aₜ | (s t) = sₜ) =
       ENNReal.ofReal (M.π[θ] sₜ aₜ) :=
     ProbCond.eq.OfRealPol.of.NeDens_0.All_EqWithDensity (M := M) h₀ h₁ h₂ h₃ h₄
   rw [hENN]
@@ -36,4 +37,4 @@ private lemma main
 
 
 -- created on 2026-10-21
--- updated on 2026-11-17
+-- updated on 2026-11-18

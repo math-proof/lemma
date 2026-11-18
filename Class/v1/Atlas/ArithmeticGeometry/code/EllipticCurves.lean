@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/code/EllipticCurves.lean -/
 
 /-
@@ -8,22 +10,23 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.AlgebraicGeometry.EllipticCurve.NormalForms
-import Mathlib.AlgebraicGeometry.EllipticCurve.VariableChange
-import Mathlib.GroupTheory.Torsion
-import Mathlib.GroupTheory.SpecificGroups.Cyclic
-import Mathlib.Data.ZMod.Basic
-import Mathlib.RingTheory.IntegralDomain
-import Mathlib.RingTheory.RootsOfUnity.Basic
-import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
-import Mathlib.Topology.Algebra.Group.Defs
-import Mathlib.Topology.Connected.Basic
-import Mathlib.Topology.Compactification.OnePoint.ProjectiveLine
-import Mathlib.LinearAlgebra.Lagrange
-import Instance.v1.Atlas.ArithmeticGeometry.code.CompleteVarieties
-import Def.v1.Atlas.ArithmeticGeometry.code.RationalLineCriterion
-import Structure.v1.Atlas.ArithmeticGeometry.code.ProjectiveComplete
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.AlgebraicGeometry.EllipticCurve.NormalForms
+public import Mathlib.AlgebraicGeometry.EllipticCurve.VariableChange
+public import Mathlib.GroupTheory.Torsion
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.RingTheory.IntegralDomain
+public import Mathlib.RingTheory.RootsOfUnity.Basic
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+public import Mathlib.Topology.Algebra.Group.Defs
+public import Mathlib.Topology.Connected.Basic
+public import Mathlib.Topology.Compactification.OnePoint.ProjectiveLine
+public import Mathlib.LinearAlgebra.Lagrange
+public import Instance.v1.Atlas.ArithmeticGeometry.code.CompleteVarieties
+public import Def.v1.Atlas.ArithmeticGeometry.code.RationalLineCriterion
+public import Structure.v1.Atlas.ArithmeticGeometry.code.ProjectiveComplete
+public section
 universe u
 
 class IsProjectiveVariety (k : outParam (Type u)) [Field k] (V : Type u) [TopologicalSpace V] :

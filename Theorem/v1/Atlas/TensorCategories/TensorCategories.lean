@@ -34,7 +34,7 @@ import Lemma.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
 import Theorem.Category.Atlas.v1.TensorCategories.code.FittingAlgebraLocalRing
 import Lemma.Category.Atlas.v1.TensorCategories.code.FittingLemmaInstance
 import Theorem.Category.Atlas.v1.TensorCategories.code.FittingLemmaLocalEnd
-import Lemma.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
+import Theorem.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
 import Lemma.Category.Atlas.v1.TensorCategories.code.GradedVec
 import Lemma.Category.Atlas.v1.TensorCategories.code.GrothendieckFusionRingInstance
 import Theorem.Category.Atlas.v1.TensorCategories.code.GrothendieckModuleIrreducible
@@ -79,7 +79,7 @@ import Lemma.Category.Atlas.v1.TensorCategories.code.SemisimpleMultitensor
 import Theorem.Category.Atlas.v1.TensorCategories.code.SurjectiveTensorFunctor
 import Lemma.Category.Atlas.v1.TensorCategories.code.SweedlerHopfInstance
 import Lemma.Category.Atlas.v1.TensorCategories.code.TensorCategoryDef
-import Lemma.Category.Atlas.v1.TensorCategories.code.TensorExact
+import Theorem.Category.Atlas.v1.TensorCategories.code.TensorExact
 import Theorem.Category.Atlas.v1.TensorCategories.code.TensorNondegen.DualZero
 import Lemma.Category.Atlas.v1.TensorCategories.code.TensorNondegen.EvalCoevalArg
 import Theorem.Category.Atlas.v1.TensorCategories.code.TensorNondegen.ZeroTensorZero

@@ -22,7 +22,7 @@ public import Mathlib.Data.Matrix.Basic
 public import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
 public import Mathlib.RingTheory.SimpleModule.Basic
 public import Instance.v1.Atlas.TensorCategories.code.DistinguishedInvertible.Part2
-public import Lemma.Category.Atlas.v1.TensorCategories.code.DistinguishedInvertible
+public import Theorem.Category.Atlas.v1.TensorCategories.code.DistinguishedInvertible
 public import Class.v1.Atlas.TensorCategories.code.IntegralsDefs
 public section
 

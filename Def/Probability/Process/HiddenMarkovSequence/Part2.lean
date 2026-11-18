@@ -1,12 +1,17 @@
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Algebra.BigOperators.Intervals
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Data.Fintype.Pi
-import Syntax.Probability.Expectation.Elab
-import Def.Data.List.List.Basic
-import Instance.Analysis.Real.Numbers
-import Notation.Fun
-import Syntax.Probability.Process.HiddenMarkovSequence
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Algebra.BigOperators.Intervals
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Data.Fintype.Pi
+public import Syntax.Probability.Expectation.Elab
+public import Def.Data.List.List.Basic
+public import Instance.Analysis.Real.Numbers
+public import Notation.Fun
+public import Syntax.Probability.Process.HiddenMarkovSequence
+
+@[expose] public section
+
 open MeasureTheory
 open scoped ENNReal.ToRealCoe
 

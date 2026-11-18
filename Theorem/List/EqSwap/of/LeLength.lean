@@ -1,11 +1,13 @@
 module
 
+public import Mathlib
+
 public import Batteries.Data.List.Lemmas
 
 public section
 
 
-public theorem left
+public theorem List.EqSwap.of.LeLength.left
   {s : List α}
   {i : ℕ}
 -- given

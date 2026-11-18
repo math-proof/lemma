@@ -1,6 +1,7 @@
 module
 
 public import Theorem.Nat.Le.of.LtSub_1
+public import Theorem.Nat.LtSub_1.of.Le.Gt_0
 public import Theorem.Nat.Sub.gt.Zero.is.Gt
 public import Theorem.List.LengthTail.gt.Sub_1.of.GtLength.Gt_0
 

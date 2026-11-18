@@ -2,7 +2,7 @@ module
 
 public import Def.Lean.Name
 public import Def.Lean.BinderInfo
-public import Def.Lean.Meta.Expr.Part3
+public import Def.Lean.Meta.Expr
 open Lean.Meta
 open Lean (BinderInfo PPContext FormatWithInfos Expr Core.Context getEnv getMCtx getLCtx getOptions ppExt)
 
@@ -33,4 +33,3 @@ theorem Not.Iff.symm {a b : Prop} (h : ¬(a ↔ b)) : ¬(b ↔ a) := fun h' => h
 theorem Not.And.symm {a b : Prop} (h : ¬(a ∧ b)) : ¬(b ∧ a) := fun h' => h h'.symm
 
 theorem Not.Or.symm {a b : Prop} (h : ¬(a ∨ b)) : ¬(b ∨ a) := fun h' => h h'.symm
-

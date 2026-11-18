@@ -3,7 +3,7 @@ import Mathlib.Algebra.BigOperators.Group.Finset.Defs
 import Mathlib.Data.Fintype.Basic
 import Mathlib.Data.Fintype.Lattice
 import Mathlib.Data.Finset.Max
-import Instance.Algebra.BigOperators.Reduced.Part3
+import Class.Algebra.BigOperators.Reduced
 
 
 /-- `v.exp = (fun b => (v b).exp)`, entrywise (py `Exp(v)`). -/

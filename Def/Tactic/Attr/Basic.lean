@@ -3,7 +3,7 @@ module
 public import Mathlib.Tactic
 public import Def.Lean.Syntax
 public import Def.Lean.Environment
-public import Def.Lean.Meta.Expr.Part4
+public import Def.Lean.Meta.Expr
 public import Def.Lean.ConstantInfo.Part5
 
 @[expose] public section

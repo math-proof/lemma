@@ -1,6 +1,4 @@
 import Lemma.Random.NormWkd.le.Abs_R
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
@@ -14,17 +12,18 @@ private lemma main
   {γ : ℝ}
 -- given
   (h : γ ∈ Set.Ico 0 1)
+  (R : ℝ)
   (θ : Θ)
   (sₜ : 𝒮) :
 -- imply
-  ‖M.V0 θ γ sₜ‖ ≤ (1 - γ)⁻¹ * |M.R| := by
+  ‖M.V0 R θ γ sₜ‖ ≤ (1 - γ)⁻¹ * |R| := by
 -- proof
   unfold Model.V0
-  apply tsum_of_norm_bounded ((hasSum_geometric_of_lt_one h.1 h.2).mul_right |M.R|)
+  apply tsum_of_norm_bounded ((hasSum_geometric_of_lt_one h.1 h.2).mul_right |R|)
   intro k
   rw [norm_mul, norm_pow, Real.norm_of_nonneg h.1]
-  apply mul_le_mul_of_nonneg_left (NormWkd.le.Abs_R (M := M) θ k sₜ) (pow_nonneg h.1 k)
+  apply mul_le_mul_of_nonneg_left (NormWkd.le.Abs_R (M := M) R θ k sₜ) (pow_nonneg h.1 k)
 
 
 -- created on 2026-10-07
--- updated on 2026-11-17
+-- updated on 2026-11-18

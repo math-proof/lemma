@@ -1,9 +1,11 @@
 module
 
+public import Mathlib
+
 public section
 
 
-public theorem left
+public theorem List.Append.of.Eq.left
   {a b : List α}
 -- given
   (h : a = b)

@@ -1,8 +1,6 @@
-import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Lemma.Random.V.eq.Vc.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob
 import Syntax.Order.Sup
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
+import Instance.Dynamics.PolicyTrajectory
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Filter
 
 
@@ -23,6 +21,7 @@ private lemma main
   {t : ℕ}
   {sₜ : 𝒮}
   {θ : Θ}
+  {R : ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
@@ -31,14 +30,15 @@ private lemma main
   (h₃ : sup[sₜ] (∫ u, sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ u‖) ∂μ.measure) < ∞)
   (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖))
   (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) μ.measure)
-  (h₄ : (M.traj θ).real (s t ⁻¹' {sₜ}) ≠ 0) :
+  (h₄ : (M θ).real (s t ⁻¹' {sₜ}) ≠ 0)
+  (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1) :
 -- imply
-  fderiv ℝ (fun θ' => M.V θ' γ t sₜ) θ = fderiv ℝ (fun θ' => M.V0 θ' γ sₜ) θ := by
+  fderiv ℝ (fun θ' => M.V θ' γ t sₜ) θ = fderiv ℝ (fun θ' => M.V0 R θ' γ sₜ) θ := by
 -- proof
   exact EventuallyEq.fderiv_eq
     (V.eq.Vc.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Differentiable_Prob
-      (M := M) h₀ h₁ hπ h₂ h₃ hBdd hIntg h₄)
+      (M := M) h₀ h₁ hπ h₂ h₃ hBdd hIntg h₄ hR)
 
 
 -- created on 2026-10-06
--- updated on 2026-11-17
+-- updated on 2026-11-18

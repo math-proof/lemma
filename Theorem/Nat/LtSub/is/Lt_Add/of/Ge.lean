@@ -9,7 +9,7 @@ open Nat
 
 
 @[comm, mp, mpr]
-public theorem right
+public theorem Nat.LtSub.is.Lt_Add.of.Ge.right
   {a b : ℕ}
 -- given
   (h : a ≥ b)
@@ -29,8 +29,16 @@ public theorem Nat.LtSub.is.Lt_Add.of.Ge
 -- imply
   a - b < c ↔ a < b + c := by
 -- proof
-  rw [right h]
+  rw [LtSub.is.Lt_Add.of.Ge.right h]
   rw [Nat.Add.Comm]
+
+
+public theorem Nat.LtSub.of.Lt_Add.Ge
+  {a b c : ℕ}
+  (h₀ : a ≥ b)
+  (h₁ : a < b + c) :
+  a - b < c :=
+  (Nat.LtSub.is.Lt_Add.of.Ge h₀ c).mpr h₁
 
 
 -- created on 2025-08-02

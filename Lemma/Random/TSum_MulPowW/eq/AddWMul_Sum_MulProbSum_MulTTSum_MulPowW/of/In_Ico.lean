@@ -2,8 +2,6 @@ import Lemma.Random.NormClip.le.Abs_R
 import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Lemma.Random.WAdd_1.eq.Integral_MulProbIntegral_TW.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Lemma.Real.NormIntegral.le.of.All_LeNormMul.EqIntegral_1
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Real
 
 
@@ -20,38 +18,39 @@ private lemma main
   {γ : ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
+  (R : ℝ)
   (θ : Θ)
   (sₜ : 𝒮) :
 -- imply
-  ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.R) M.R) k z ∂(M.stageK θ sₜ) =
-    ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.R) M.R) 0 z ∂(M.stageK θ sₜ) +
+  ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-R) R) k z ∂(M.stageK θ sₜ) =
+    ∫ z, M.Kf θ (fun z ↦ clip z.1 (-R) R) 0 z ∂(M.stageK θ sₜ) +
       γ * ∫ u, M.π[θ] sₜ u *
         (∫ y, (∑' k, γ ^ k *
-          ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.R) M.R) k z ∂(M.stageK θ y))
+          ∫ z, M.Kf θ (fun z ↦ clip z.1 (-R) R) k z ∂(M.stageK θ y))
           ∂(M.trans (sₜ, u))) ∂μ.measure := by
 -- proof
   have hclip : StronglyMeasurable
-    (fun z : ℝ × 𝒮 × 𝒜 => clip z.1 (-M.R) M.R) := by
+    (fun z : ℝ × 𝒮 × 𝒜 => clip z.1 (-R) R) := by
     unfold clip
     apply ((measurable_fst.max measurable_const).min measurable_const).stronglyMeasurable
-  have hbound : ∀ z : ℝ × 𝒮 × 𝒜, ‖clip z.1 (-M.R) M.R‖ ≤ |M.R| :=
-    fun z => NormClip.le.Abs_R M.R z.1
+  have hbound : ∀ z : ℝ × 𝒮 × 𝒜, ‖clip z.1 (-R) R‖ ≤ |R| :=
+    fun z => NormClip.le.Abs_R R z.1
   have hK := fun k =>
     StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
       (M := M) hclip hbound θ k
   have hW : ∀ y k,
-    ‖∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.R) M.R) k z ∂(M.stageK θ y)‖ ≤
-      |M.R| := fun y k => by
+    ‖∫ z, M.Kf θ (fun z ↦ clip z.1 (-R) R) k z ∂(M.stageK θ y)‖ ≤
+      |R| := fun y k => by
     have : IsProbabilityMeasure (M.stageK θ y) := inferInstance
     have h :=
       norm_integral_le_of_norm_le_const (μ := M.stageK θ y)
         (Filter.Eventually.of_forall (hK k).2)
     rwa [Measure.real, measure_univ, ENNReal.toReal_one, mul_one] at h
   have hsum : ∀ y, Summable (fun k =>
-    γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.R) M.R) k z
+    γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-R) R) k z
       ∂(M.stageK θ y)) := fun y => by
     refine Summable.of_norm_bounded
-      ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right |M.R|) ?_
+      ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right |R|) ?_
     intro k
     rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
     apply mul_le_mul_of_nonneg_left (hW y k) (pow_nonneg h₀.1 k)
@@ -62,13 +61,13 @@ private lemma main
   rw [tsum_mul_left]
   congr 1
   let W : ℕ → 𝒮 → ℝ := fun k y =>
-    ∫ z, M.Kf θ (fun z ↦ clip z.1 (-M.R) M.R) k z ∂(M.stageK θ y)
+    ∫ z, M.Kf θ (fun z ↦ clip z.1 (-R) R) k z ∂(M.stageK θ y)
   have hWm : ∀ k, Measurable (W k) := fun k =>
     (StronglyMeasurable.integral_kernel_prod_right' (κ := M.stageK θ)
       (f := fun p : 𝒮 × (ℝ × 𝒮 × 𝒜) =>
-        M.Kf θ (fun z ↦ clip z.1 (-M.R) M.R) k p.2)
+        M.Kf θ (fun z ↦ clip z.1 (-R) R) k p.2)
       ((hK k).1.comp_measurable measurable_snd)).measurable
-  have hb : ∀ k y, ‖γ ^ k * W k y‖ ≤ γ ^ k * |M.R| := fun k y => by
+  have hb : ∀ k y, ‖γ ^ k * W k y‖ ≤ γ ^ k * |R| := fun k y => by
     rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
     apply mul_le_mul_of_nonneg_left (hW y k) (pow_nonneg h₀.1 k)
   have hinner : ∀ u,
@@ -77,11 +76,11 @@ private lemma main
     intro u
     have hri : ∀ k, Integrable (fun y => γ ^ k * W k y) (M.trans (sₜ, u)) :=
       fun k => Integrable.of_bound ((hWm k).const_mul (γ ^ k)).aestronglyMeasurable
-        (γ ^ k * |M.R|) (Filter.Eventually.of_forall (hb k))
+        (γ ^ k * |R|) (Filter.Eventually.of_forall (hb k))
     have hsn : Summable (fun k =>
       ∫ y, ‖γ ^ k * W k y‖ ∂(M.trans (sₜ, u))) := by
       refine Summable.of_norm_bounded
-        ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right |M.R|) fun k => ?_
+        ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right |R|) fun k => ?_
       have h :=
         norm_integral_le_of_norm_le_const (μ := M.trans (sₜ, u))
           (Filter.Eventually.of_forall fun y =>
@@ -102,7 +101,7 @@ private lemma main
         measurable_prodMk_left
   have hFb : ∀ k u,
     ‖M.π[θ] sₜ u * (γ ^ k * ∫ y, W k y ∂(M.trans (sₜ, u)))‖ ≤
-      M.π[θ] sₜ u * (γ ^ k * |M.R|) := fun k u => by
+      M.π[θ] sₜ u * (γ ^ k * |R|) := fun k u => by
     have h :=
       norm_integral_le_of_norm_le_const (μ := M.trans (sₜ, u))
         (Filter.Eventually.of_forall fun y => hW y k)
@@ -112,7 +111,7 @@ private lemma main
           = M.π[θ] sₜ u * (γ ^ k * |∫ y, W k y ∂(M.trans (sₜ, u))|) := by
         congr 1
         exact abs_of_nonneg (hStoch.nonneg θ sₜ u)
-      _ ≤ M.π[θ] sₜ u * (γ ^ k * |M.R|) := by
+      _ ≤ M.π[θ] sₜ u * (γ ^ k * |R|) := by
         apply mul_le_mul_of_nonneg_left _ (hStoch.nonneg θ sₜ u)
         apply mul_le_mul_of_nonneg_left _ (pow_nonneg h₀.1 k)
         simpa using h
@@ -125,7 +124,7 @@ private lemma main
     ∫ u, ‖M.π[θ] sₜ u * (γ ^ k * ∫ y, W k y ∂(M.trans (sₜ, u)))‖
       ∂μ.measure) := by
     refine Summable.of_norm_bounded
-      ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right |M.R|) fun k => ?_
+      ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right |R|) fun k => ?_
     apply NormIntegral.le.of.All_LeNormMul.EqIntegral_1 (hStoch.integral_eq_one θ sₜ)
     intro u
     rw [norm_norm]
@@ -154,4 +153,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-17
+-- updated on 2026-11-18

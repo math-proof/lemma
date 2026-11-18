@@ -1,5 +1,10 @@
-import Def.Data.Tensor.Defs.Part4
-import Theorem.List.ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength
+module
+
+public import Def.Data.Tensor.Defs.Part4
+public import Def.Data.Vector.Basic.Part2
+public import Theorem.List.ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength
+
+@[expose] public section
 open Tensor List
 
 

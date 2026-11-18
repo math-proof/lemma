@@ -18,7 +18,7 @@ public theorem Nat.ModMod_Mul.eq.Mod
   IntegerRing.mod_mul
 
 
-public theorem left
+public theorem Nat.ModMod_Mul.eq.Mod.left
   [IntegerRing Z]
 -- given
   (k m n : Z) :

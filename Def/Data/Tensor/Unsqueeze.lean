@@ -1,6 +1,9 @@
-import Def.Data.Tensor.Defs.Part4
-import Def.Data.Tensor.Reshape
-import Theorem.List.ProdInsertIdx.eq.Prod
+module
+
+public import Def.Data.Tensor.Reshape
+public import Theorem.List.ProdInsertIdx.eq.Prod
+
+@[expose] public section
 open Tensor List
 
 
@@ -20,5 +23,5 @@ the following eqaulity holds:
 X[i₀, i₁, i₂, i₃, i₄, i₅, i₆, i₇, i₈, i₉] = t'[i₀, i₁, i₂, i₃, 0, i₄, i₅, i₆, i₇, i₈, i₉]
 -/
 def Tensor.unsqueeze (X : Tensor α s) (dim : ℕ) : Tensor α (s.insertIdx dim 1) :=
-  X.reshape (s.insertIdx dim 1) (by simp [Prod.eq.ProdInsertIdx s dim])
+  X.reshape (s.insertIdx dim 1) (by simp [ProdInsertIdx.eq.Prod s dim])
 

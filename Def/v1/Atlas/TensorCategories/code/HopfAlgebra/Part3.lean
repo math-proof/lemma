@@ -8,14 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.HopfAlgebra.Basic
-import Mathlib.RingTheory.Coalgebra.Convolution
-import Mathlib.RingTheory.Coalgebra.TensorProduct
-import Mathlib.RingTheory.Coalgebra.GroupLike
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Mathlib.LinearAlgebra.FiniteDimensional.Basic
-import Mathlib.RingTheory.Artinian.Module
-import Theorem.v1.Atlas.TensorCategories.code.HopfAlgebra.Part2
+module
+public import Mathlib.RingTheory.HopfAlgebra.Basic
+public import Mathlib.RingTheory.Coalgebra.Convolution
+public import Mathlib.RingTheory.Coalgebra.TensorProduct
+public import Mathlib.RingTheory.Coalgebra.GroupLike
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.LinearAlgebra.FiniteDimensional.Basic
+public import Mathlib.RingTheory.Artinian.Module
+public import Def.v1.Atlas.TensorCategories.code.HopfAlgebra.Part2
+public import Theorem.v1.Atlas.TensorCategories.code.HopfAlgebra.Part2
+
+@[expose] public section
 set_option maxHeartbeats 800000
 
 open Coalgebra HopfAlgebra WithConv LinearMap
@@ -27,6 +31,8 @@ universe u v
 section AntipodeSq
 
 noncomputable section
+
+section AntipodeComm
 
 variable {R : Type u} {A : Type v} [CommSemiring R] [CommSemiring A] [HopfAlgebra R A]
 
@@ -42,9 +48,8 @@ def HopfAlgebra.antipodeAlgHom : A →ₐ[R] A :=
 
 /-- Sigma-notation representative of `Δ(a * b)` obtained by multiplying termwise the
 representatives of `Δ(a)` and `Δ(b)`. -/
-def Coalgebra.Repr.mulRepr {a b : A} (ra : Coalgebra.Repr R a) (rb : Coalgebra.Repr R b) :
-    Coalgebra.Repr R (a * b) where
-  ι := ra.ι × rb.ι
+def Coalgebra.Repr.mulRepr {a b : A} {ι κ : Type*} (ra : Coalgebra.Repr R a ι) (rb : Coalgebra.Repr R b κ) :
+    Coalgebra.Repr R (a * b) (ι × κ) where
   index := ra.index ×ˢ rb.index
   left := fun ⟨i, j⟩ => ra.left i * rb.left j
   right := fun ⟨i, j⟩ => ra.right i * rb.right j
@@ -58,6 +63,13 @@ defined as `μ ∘ τ ∘ (S ⊗ S)` where `τ` is the tensor swap. Sends `a ⊗
 def HopfAlgebra.antimul : A ⊗[R] A →ₗ[R] A :=
   (mul' R A).comp ((TensorProduct.comm R A A).toLinearMap.comp
     (TensorProduct.map (antipode R) (antipode R)))
+
+end AntipodeComm
+
+section DualAction
+
+variable {k : Type u} [CommSemiring k] {H : Type v} [Semiring H] [Algebra k H] [HopfAlgebra k H]
+variable {V : Type v} [AddCommGroup V] [Module k V] [Module H V] [SMulCommClass k H V]
 
 /-- The `k`-linear map on `V` given by scalar multiplication by an element `h : H` (used to
 build the right-dual `H`-action on `V^*`). -/
@@ -74,5 +86,6 @@ noncomputable def HopfAlgebra.rightDualSMulMap (h : H) : V →ₗ[k] V where
 noncomputable def HopfAlgebra.rightDualAction (a : H) (f : Module.Dual k V) : Module.Dual k V :=
   f.comp (HopfAlgebra.rightDualSMulMap (k := k) (HopfAlgebra.antipode k a))
 
+end DualAction
 end
 end AntipodeSq

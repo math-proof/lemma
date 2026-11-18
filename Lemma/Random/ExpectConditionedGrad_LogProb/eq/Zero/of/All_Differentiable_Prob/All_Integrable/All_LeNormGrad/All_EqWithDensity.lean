@@ -2,6 +2,7 @@ import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Lemma.Random.Integral.eq.Integral_Integral_SMul.of.All_Eq_Joint.All_EqWithDensity
 import Lemma.Random.Integral_SMulProbFderiv_FunLog_Prob.eq.Zero.of.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_EqWithDensity
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
@@ -37,11 +38,11 @@ private lemma main
   (sₜ : 𝒮) :
 -- imply
   ∫ ω, fderiv ℝ (fun θ' => Real.log (M.π[θ'] sₜ (a t ω))) θ
-    ∂(M.traj θ)[|s t ⁻¹' {sₜ}] = 0 := by
+    ∂(M θ)[|s t ⁻¹' {sₜ}] = 0 := by
 -- proof
   have hS : MeasurableSet (s t ⁻¹' {sₜ}) :=
     Random.Measurable.of.All_Eq.snd.fst h₀ t (measurableSet_singleton sₜ)
-  if hP : M.traj θ (s t ⁻¹' {sₜ}) = 0 then
+  if hP : M θ (s t ⁻¹' {sₜ}) = 0 then
     simp [cond_eq_zero_of_meas_eq_zero hP]
   else
     have hψ : StronglyMeasurable
@@ -98,4 +99,4 @@ private lemma main
 
 
 -- created on 2023-04-03
--- updated on 2026-11-17
+-- updated on 2026-11-18

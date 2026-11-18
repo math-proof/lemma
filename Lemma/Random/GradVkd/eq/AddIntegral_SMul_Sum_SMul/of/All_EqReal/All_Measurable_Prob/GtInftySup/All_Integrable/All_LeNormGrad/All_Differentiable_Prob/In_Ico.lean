@@ -1,9 +1,6 @@
-import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Lemma.Random.GradVkd.eq.AddIntegral_SMul_Integral_SMul.of.All_EqWithDensity.All_Ge_0.All_Measurable.All_Measurable_Prob.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.In_Ico
 import Syntax.Algebra.BigOperators.Summations
 import Mathlib.MeasureTheory.Integral.Bochner.SumMeasure
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
 open MeasureTheory PolicyGradient Random
 
 
@@ -41,12 +38,13 @@ private lemma main
   (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖))
   (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) μ.measure)
   (h₅ : ∀ θ x, Measurable (M.π[θ] x))
-  (h₆ : ∀ x u y, (M.trans (x, u)).toMeasure.real {y} = p x u y) :
+  (h₆ : ∀ x u y, (M.trans (x, u)).toMeasure.real {y} = p x u y)
+  (R : ℝ) :
 -- imply
-  ∇[θ] M.V0 θ γ («\sf{s}» t) =
-    ∫ u, ((M.rkd («\sf{s}» t) u + γ * ∫ y, M.V0 θ γ y ∂(M.trans («\sf{s}» t, u))) •
+  ∇[θ] M.V0 R θ γ («\sf{s}» t) =
+    ∫ u, ((M.rkd R («\sf{s}» t) u + γ * ∫ y, M.V0 R θ γ y ∂(M.trans («\sf{s}» t, u))) •
         ∇[θ] M.π[θ] («\sf{s}» t) u) ∂μ.measure +
-      γ • (∑ «\sf{s}» (t + 1), M.P1kd θ p («\sf{s}» t) («\sf{s}» (t + 1)) • ∇[θ] M.V0 θ γ («\sf{s}» (t + 1))) := by
+      γ • (∑ «\sf{s}» (t + 1), M.P1kd θ p («\sf{s}» t) («\sf{s}» (t + 1)) • ∇[θ] M.V0 R θ γ («\sf{s}» (t + 1))) := by
 -- proof
   let : ReferenceMeasure 𝒮 := ReferenceMeasure.of Measure.count
   have hT : ∀ x u, M.trans (x, u) =
@@ -62,10 +60,10 @@ private lemma main
       simp_rw [← h₆]
       apply ((M.transK.measurable_coe (measurableSet_singleton y)).comp measurable_prodMk_left).ennreal_toReal) (fun x u y => by
       rw [← h₆]
-      apply measureReal_nonneg) hT]
+      apply measureReal_nonneg) hT R]
   congr 2
   apply integral_count
 
 
 -- created on 2026-10-07
--- updated on 2026-11-17
+-- updated on 2026-11-18

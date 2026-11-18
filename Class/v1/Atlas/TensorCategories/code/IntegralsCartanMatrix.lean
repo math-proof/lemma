@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/IntegralsCartanMatrix.lean -/
 
 /-
@@ -8,22 +10,24 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Abbrev.v1.Atlas.TensorCategories.code.IntegralsDefs
-import Mathlib.Data.Matrix.Basic
-import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
-import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.CategoryTheory.Preadditive.Projective.Basic
-import Mathlib.CategoryTheory.Simple
-import Mathlib.CategoryTheory.Linear.Basic
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Instance.v1.Atlas.TensorCategories.code.DistinguishedInvertible.Part2
-import Mathlib.RingTheory.SimpleModule.Basic
-import Def.v1.Atlas.TensorCategories.code.IntegralsCartanMatrix
+public import Abbrev.v1.Atlas.TensorCategories.code.IntegralsDefs
+public import Mathlib.Data.Matrix.Basic
+public import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.CategoryTheory.Preadditive.Projective.Basic
+public import Mathlib.CategoryTheory.Simple
+public import Mathlib.CategoryTheory.Linear.Basic
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Instance.v1.Atlas.TensorCategories.code.DistinguishedInvertible.Part2
+public import Mathlib.RingTheory.SimpleModule.Basic
+public import Def.v1.Atlas.TensorCategories.code.IntegralsCartanMatrix
+public section
 set_option maxHeartbeats 400000
 
 set_option autoImplicit false
 
+open CategoryTheory MonoidalCategory
 open Coalgebra
 open scoped TensorProduct
 

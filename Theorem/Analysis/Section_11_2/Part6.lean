@@ -1,6 +1,12 @@
-import Mathlib
-import Instance.Analysis.Section_11_1.Part8
-import Abbrev.Analysis.Section_11_2.Part6
+module
+
+public import Mathlib
+public import Instance.Analysis.Section_11_1.Part8
+public import Abbrev.Analysis.Section_11_2.Part6
+public import Theorem.Analysis.Section_11_2.Part5
+public import Theorem.Analysis.Section_11_2.Part4
+
+public section
 /-!
 # Analysis I, Section 11.2: Piecewise constant functions
 
@@ -21,12 +27,12 @@ namespace Chapter11
 
 open BoundedInterval
 
-theorem PiecewiseConstantOn.integ_def {f:ℝ → ℝ} {I: BoundedInterval} {P: Partition I}
+public theorem PiecewiseConstantOn.integ_def {f:ℝ → ℝ} {I: BoundedInterval} {P: Partition I}
   (h: PiecewiseConstantWith f P) : integ f I = PiecewiseConstantWith.integ f P := by
   have h' : PiecewiseConstantOn f I := by use P
   simp [integ, h']; exact PiecewiseConstantWith.integ_eq h'.choose_spec h
 
-theorem PiecewiseConstantOn.integ_congr {f g:ℝ → ℝ} {I: BoundedInterval}
+public theorem PiecewiseConstantOn.integ_congr {f g:ℝ → ℝ} {I: BoundedInterval}
   (h: ∀ x ∈ (I:Set ℝ), f x = g x) : integ f I = integ g I := by
   by_cases hf : PiecewiseConstantOn f I
   <;> (have hg := hf; rw [congr h] at hg; simp [integ, hf, hg])

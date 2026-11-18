@@ -1,5 +1,8 @@
-import Initialize.Tactic.Attr.Basic
-import Notation.Algebra.BigOperators.PrefixSum.AllPrefixSums.Part2
+module
+
+public import Initialize.Tactic.Attr.Basic
+public import Notation.Algebra.BigOperators.PrefixSum.AllPrefixSums.Part2
+public section
 
 
 -- define the circled dot operator, the companion operator of ⊗

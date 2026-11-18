@@ -2,8 +2,7 @@ import Theorem.Probability.CondExpectation
 import Lemma.Random.MEq_Clip.of.All_Eq.All_EqWithDensity
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Lemma.Random.NormClip.le.Abs_R
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
+import Instance.Dynamics.PolicyTrajectory
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
@@ -27,53 +26,55 @@ private lemma main
   {θ : Θ}
   {y : (ℕ → ℝ × 𝒮 × 𝒜) → β}
   {«\sf{y}» : β}
+  {R : ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (hy : Measurable y)
-  (hpos : (M.traj θ) (y ⁻¹' {«\sf{y}»}) ≠ 0)
+  (hpos : (M θ) (y ⁻¹' {«\sf{y}»}) ≠ 0)
+  (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1)
   (t : ℕ) :
 -- imply
-  𝔼[r : M.traj θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | y = «\sf{y}») =
-    (γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun k => 𝔼[r : M.traj θ](r (t + k) | y = «\sf{y}») := by
+  𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | y = «\sf{y}») =
+    (γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun k => 𝔼[r : M θ](r (t + k) | y = «\sf{y}») := by
 -- proof
   have hr : Measurable (fun ω k ↦ r k ω) :=
     Measurable.of_eval (Random.Measurable.of.All_Eq.fst h₁)
-  have hmap : (M.traj θ).map y {«\sf{y}»} ≠ 0 := by
+  have hmap : (M θ).map y {«\sf{y}»} ≠ 0 := by
     rwa [Measure.map_apply hy (measurableSet_singleton _)]
-  have h : ∀ k, 𝔼[r : M.traj θ](r (t + k) | y = «\sf{y}») =
-      ∫ ω, r (t + k) ω ∂(M.traj θ)[|y ⁻¹' {«\sf{y}»}] := fun k =>
+  have h : ∀ k, 𝔼[r : M θ](r (t + k) | y = «\sf{y}») =
+      ∫ ω, r (t + k) ω ∂(M θ)[|y ⁻¹' {«\sf{y}»}] := fun k =>
     Expectation.condEval_eq_integral hr hy (measurable_pi_apply (t + k)) hmap
   simp only [h]
   simp only [Expectation.asRV_process]
   have hG : Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[t:]) :=
     Measurable.tsum fun k => (measurable_pi_apply (t + k)).const_mul _
   rw [Expectation.condEval_eq_integral hr hy hG hmap]
-  show ∫ ω, ∑' k, γ ^ k * r (t + k) ω ∂(M.traj θ)[|y ⁻¹' {«\sf{y}»}] =
-    ∑' k, γ ^ k * ∫ ω, r (t + k) ω ∂(M.traj θ)[|y ⁻¹' {«\sf{y}»}]
-  have := cond_isProbabilityMeasure (μ := M.traj θ) hpos
-  have hae : ∀ᵐ ω ∂(M.traj θ)[|y ⁻¹' {«\sf{y}»}], ∀ k, ‖r k ω‖ ≤ |M.R| := by
+  show ∫ ω, ∑' k, γ ^ k * r (t + k) ω ∂(M θ)[|y ⁻¹' {«\sf{y}»}] =
+    ∑' k, γ ^ k * ∫ ω, r (t + k) ω ∂(M θ)[|y ⁻¹' {«\sf{y}»}]
+  have := cond_isProbabilityMeasure (μ := M θ) hpos
+  have hae : ∀ᵐ ω ∂(M θ)[|y ⁻¹' {«\sf{y}»}], ∀ k, ‖r k ω‖ ≤ |R| := by
     apply cond_absolutelyContinuous.ae_le
     exact ae_all_iff.2 fun k =>
-      (MEq_Clip.of.All_Eq.All_EqWithDensity h₁ (M := M) θ k).mono fun ω h => by
+      (MEq_Clip.of.All_Eq.All_EqWithDensity h₁ (M := M) hR θ k).mono fun ω h => by
         rw [h]
-        exact NormClip.le.Abs_R M.R _
+        exact NormClip.le.Abs_R R _
   have hm : ∀ k, Measurable (r k) := fun k =>
     Random.Measurable.of.All_Eq.fst h₁ k
   have hF : ∀ k, Integrable (fun ω => γ ^ k * r (t + k) ω)
-      (M.traj θ)[|y ⁻¹' {«\sf{y}»}] := fun k =>
+      (M θ)[|y ⁻¹' {«\sf{y}»}] := fun k =>
     Integrable.of_bound ((hm (t + k)).const_mul (γ ^ k)).aestronglyMeasurable
-      (γ ^ k * |M.R|)
+      (γ ^ k * |R|)
       (hae.mono fun ω h => by
         rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
         apply mul_le_mul_of_nonneg_left (h (t + k)) (pow_nonneg h₀.1 k))
   have hS : Summable (fun k =>
-      ∫ ω, ‖γ ^ k * r (t + k) ω‖ ∂(M.traj θ)[|y ⁻¹' {«\sf{y}»}]) := by
+      ∫ ω, ‖γ ^ k * r (t + k) ω‖ ∂(M θ)[|y ⁻¹' {«\sf{y}»}]) := by
     refine Summable.of_nonneg_of_le (fun k => integral_nonneg fun ω => norm_nonneg _)
       (fun k => ?_)
-      ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right |M.R|)
-    have hb : ∀ᵐ ω ∂(M.traj θ)[|y ⁻¹' {«\sf{y}»}],
-        ‖‖γ ^ k * r (t + k) ω‖‖ ≤ γ ^ k * |M.R| :=
+      ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right |R|)
+    have hb : ∀ᵐ ω ∂(M θ)[|y ⁻¹' {«\sf{y}»}],
+        ‖‖γ ^ k * r (t + k) ω‖‖ ≤ γ ^ k * |R| :=
       hae.mono fun ω h => by
         rw [norm_norm, norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
         apply mul_le_mul_of_nonneg_left (h (t + k)) (pow_nonneg h₀.1 k)
@@ -87,4 +88,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-17
+-- updated on 2026-11-18

@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/TensorNondegenInstance.lean -/
 
 /-
@@ -8,9 +10,10 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TensorCategories.code.TensorNondegen.ZeroTensorZero
-import Theorem.v1.Atlas.TensorCategories.code.TensorNondegen.DualZero
-import Theorem.v1.Atlas.TensorCategories.code.TensorNondegen.EvalCoevalArg
+public import Def.v1.Atlas.TensorCategories.code.TensorNondegen.ZeroTensorZero
+public import Theorem.v1.Atlas.TensorCategories.code.TensorNondegen.DualZero
+public import Theorem.v1.Atlas.TensorCategories.code.TensorNondegen.EvalCoevalArg
+public section
 open CategoryTheory MonoidalCategory Category CategoryTheory.Limits
 
 universe v u

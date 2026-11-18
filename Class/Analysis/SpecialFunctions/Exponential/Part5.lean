@@ -1,4 +1,7 @@
-import Instance.Analysis.SpecialFunctions.Exponential.Part4
+module
+
+public import Instance.Analysis.SpecialFunctions.Exponential.Part4
+public section
 open Filter Hyperreal Int
 
 class LogPos (α : Type u) extends Log α, ExpPos α where

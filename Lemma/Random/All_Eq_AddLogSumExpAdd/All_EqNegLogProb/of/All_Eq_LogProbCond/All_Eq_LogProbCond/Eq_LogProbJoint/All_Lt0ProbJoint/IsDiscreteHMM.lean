@@ -6,6 +6,9 @@ import Lemma.Fin.Snoc_Last.eq.Last
 import Lemma.Fin.Sum.eq.SumSumSnoc
 import Lemma.Random.All_Imp_Eq.of.IsHiddenMarkovFac
 import Lemma.Random.IsHiddenMarkovFac.of.All_Eq.IsHiddenMarkovPr
+import Instance.Algebra.BigOperators.Reduced
+import Instance.Algebra.BigOperators.Reduced.Part2
+import Instance.Algebra.BigOperators.Reduced.Part3
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory Measure Random ENNReal.ToRealCoe Fin IsDiscreteHMM Fun
 

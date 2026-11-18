@@ -1,5 +1,7 @@
 module
 
+public import Mathlib
+
 public section
 
 
@@ -19,7 +21,7 @@ public theorem Nat.Lt.of.Lt.Lt
   lt_trans h₀ h₁
 
 
-public theorem subst
+public theorem Nat.Lt.of.Lt.Lt.subst
   {y b x t k : ℝ}
 -- given
   (hk : k > 0)

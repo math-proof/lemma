@@ -1,9 +1,7 @@
-import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Lemma.Random.Integral_Fderiv_Vkd.eq.Add_SMul_Integral_SMul_FderivLog.of.All_Eq_Joint.All_EqWithDensity
 import Lemma.Random.Map.eq.Init.of.All_Eq_Joint.All_EqWithDensity
 import Lemma.Random.TSum_SMul.eq.Integral_Fderiv_Vkd.of.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.All_Measurable_Prob.All_EqWithDensity
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
+import Instance.Dynamics.PolicyTrajectory
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Filter Random Real
 
 
@@ -24,6 +22,7 @@ private lemma main
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {R : ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
@@ -35,20 +34,21 @@ private lemma main
   (hφ : StronglyMeasurable
     (fun z : 𝒮 × 𝒜 => fderiv ℝ (fun θ' => Real.log (M.π[θ'] z.1 z.2)) θ))
   (hMs : sup[y, u] ‖fderiv ℝ (fun θ' => Real.log (M.π[θ'] y u)) θ‖ < ∞)
+  (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1)
   (n : ℕ) :
 -- imply
   let S :=
     ∑ t ∈ Finset.range n,
-      γ ^ t • ∫ ω, (M.rkd (s t ω) (a t ω) +
-          γ * ∫ y, M.V0 θ γ y ∂(M.trans (s t ω, a t ω))) •
-        fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ ∂(M.traj θ)
-  ∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M.traj θ)) θ =
-    S + γ ^ n • ∫ x, fderiv ℝ (fun θ => M.V0 θ γ x) θ ∂((M.traj θ).map (s n)) := by
+      γ ^ t • ∫ ω, (M.rkd R (s t ω) (a t ω) +
+          γ * ∫ y, M.V0 R θ γ y ∂(M.trans (s t ω, a t ω))) •
+        fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ ∂(M θ)
+  ∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ =
+    S + γ ^ n • ∫ x, fderiv ℝ (fun θ => M.V0 R θ γ x) θ ∂((M θ).map (s n)) := by
 -- proof
   have hinit := Map.eq.Init.of.All_Eq_Joint.All_EqWithDensity (M := M) h₁ θ
   rw [
     TSum_SMul.eq.Integral_Fderiv_Vkd.of.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.All_Measurable_Prob.All_EqWithDensity
-      (M := M) h₀ h₁ hπ h₂ h₃ hBdd hIntg θ,
+      (M := M) h₀ h₁ hπ h₂ h₃ hBdd hIntg hR θ,
     ← hinit]
   induction n with
   | zero =>
@@ -58,7 +58,7 @@ private lemma main
     dsimp only at ih ⊢
     have hstep :=
       Integral_Fderiv_Vkd.eq.Add_SMul_Integral_SMul_FderivLog.of.All_Eq_Joint.All_EqWithDensity
-        (M := M) h₀ h₁ hπ h₂ h₃ hBdd hIntg hφ hMs n
+        (M := M) h₀ h₁ hπ h₂ h₃ hBdd hIntg hφ hMs R n
     rw [ih, Finset.sum_range_succ, hstep, smul_add, add_assoc]
     congr 1
     rw [smul_smul]
@@ -68,4 +68,4 @@ private lemma main
 
 
 -- created on 2026-11-13
--- updated on 2026-11-17
+-- updated on 2026-11-18

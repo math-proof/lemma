@@ -1,4 +1,7 @@
-import Theorem.Analysis.SpecialFunctions.Exponential.Part2
+module
+
+public import Def.Analysis.SpecialFunctions.Exponential
+public section
 open Filter Hyperreal Int
 
 class Exp (α : Type u) extends AddCommGroup α, DivInvMonoid α where

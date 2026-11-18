@@ -1,5 +1,7 @@
 module
 
+public import Initialize.Tactic.Attr.Basic
+
 public import Theorem.Nat.Min.eq.IteLe
 public import Theorem.Nat.Ite.eq.SubIte
 public import Theorem.Nat.LeSubS.is.Le.of.Le
@@ -33,6 +35,12 @@ public theorem Nat.SubMin.eq.MinSubS
     rw [Min.comm] at h
     have h := Sub.eq.Zero.of.Lt h
     rw [h]
+
+
+public theorem Nat.MinSubS.eq.SubMin
+  (a b d : ℕ) :
+  (a - d) ⊓ (b - d) = a ⊓ b - d :=
+  (SubMin.eq.MinSubS a b d).symm
 
 
 -- created on 2025-10-16

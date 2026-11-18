@@ -1,5 +1,7 @@
 module
 
+public import Initialize.Tactic.Attr.Basic
+
 public import Theorem.Bool.IffEqS.of.Eq
 public import Theorem.List.LengthSwap.eq.Length
 public import Theorem.List.GetSwap.eq.Ite.of.GtLength.GtLength.Lt

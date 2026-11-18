@@ -1,7 +1,7 @@
 module
 
-public import Def.Lean.Meta.Expr.Part4
-public import Def.Lean.Expr.Singleton.Part2
+public import Def.Lean.Meta.Expr
+public import Def.Lean.Expr.Singleton
 public import Inductive.Lean.Expr
 
 @[expose] public section
@@ -46,11 +46,11 @@ def ExprWithLimits.name : ExprWithLimits → Name
 
 
 def Binder.func : Binder → Func
-  | implicit => ⟨47, "{%s : %s}", "\\left\\lbrace %s : %s\\right\\rbrace"⟩
-  | strictImplicit => ⟨47, "⦃%s : %s⦄", "⦃%s : %s⦄"⟩
-  | instImplicit => ⟨47, "[%s]", "\\left[%s\\right]"⟩
-  | given => ⟨47, "(%s : %s)", "\\left(%s : %s\\right)"⟩
-  | default => ⟨47, "(%s : %s)", "\\left(%s : %s\\right)"⟩
-  | contains => ⟨47, "%s ∈ %s", "{%s \\in %s}"⟩
+  | .implicit => ⟨47, "{%s : %s}", "\\left\\lbrace %s : %s\\right\\rbrace"⟩
+  | .strictImplicit => ⟨47, "⦃%s : %s⦄", "⦃%s : %s⦄"⟩
+  | .instImplicit => ⟨47, "[%s]", "\\left[%s\\right]"⟩
+  | .given => ⟨47, "(%s : %s)", "\\left(%s : %s\\right)"⟩
+  | .default => ⟨47, "(%s : %s)", "\\left(%s : %s\\right)"⟩
+  | .contains => ⟨47, "%s ∈ %s", "{%s \\in %s}"⟩
 
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Instance.Analysis.Section_11_1.Part8
-import Theorem.Analysis.Section_11_2.Part4
+module
+
+public import Mathlib
+public import Instance.Analysis.Section_11_1.Part8
+public import Abbrev.Analysis.Section_11_2.Part4
+public import Abbrev.Analysis.Section_11_1.Part2
+@[expose] public noncomputable section
 /-!
 # Analysis I, Section 11.2: Piecewise constant functions
 
@@ -32,6 +36,6 @@ noncomputable abbrev f_11_2_4 : ℝ → ℝ := fun x ↦
 
 /-- Definition 11.2.9 (Piecewise constant integral I). -/
 noncomputable abbrev PiecewiseConstantWith.integ (f:ℝ → ℝ) {I: BoundedInterval} (P: Partition I)  :
-  ℝ := ∑ J ∈ P.intervals, constant_value_on f (J:Set ℝ) * |J|ₗ
+  ℝ := ∑ J ∈ P.intervals, constant_value_on f (J:Set ℝ) * J.length
 
 end Chapter11

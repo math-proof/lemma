@@ -1,6 +1,7 @@
 module
 
 public import Theorem.Vector.Get.of.Eq
+public import Mathlib.Data.Vector.Basic
 
 public section
 
@@ -16,9 +17,9 @@ public theorem Vector.NeReplicateS.of.Ne.Gt_0
   List.Vector.replicate n x ≠ List.Vector.replicate n y := by
 -- proof
   intro h_eq
-  have h_head := Get.of.Eq.fin h_eq ⟨0, hn⟩
-  simp at h_head
-  simp_all
+  apply h
+  have h_head := congrArg (fun v : List.Vector α n => v.get ⟨0, hn⟩) h_eq
+  simpa [List.Vector.get_replicate] using h_head
 
 
 -- created on 2025-09-23

@@ -1,6 +1,7 @@
 import Def.Dynamics.PolicyTrajectory.ContinuousAction
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Real
 
@@ -24,7 +25,7 @@ private lemma main
   (aₜ : 𝒜)
   (c : ℝ) :
 -- imply
-  Integrable (fun ω => (if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) * c) (M.traj θ) := by
+  Integrable (fun ω => (if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) * c) (M θ) := by
 -- proof
   refine Integrable.of_bound (C := ‖c‖) ?_ (Filter.Eventually.of_forall fun ω => ?_)
   · exact (((StronglyMeasurable.of_discrete (f := (fun p : 𝒮 × 𝒜 => if p.1 = sₜ ∧ p.2 = aₜ then (1:ℝ) else 0))).comp_measurable
@@ -35,4 +36,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-17
+-- updated on 2026-11-18

@@ -1,5 +1,7 @@
 module
 
+public import Initialize.Tactic.Attr.Basic
+
 public import Theorem.Nat.Le_Sub.is.LeAdd.of.Le
 
 public section

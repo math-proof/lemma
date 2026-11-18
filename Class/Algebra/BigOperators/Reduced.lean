@@ -27,3 +27,10 @@ vector (`G + x' t`) can be written the way py writes it, via dot notation (`Func
 class Function.Elementwise (β : Type*) where
   map : (ℝ → ℝ) → β → β
 
+/-- Reduction along the last axis: a vector `α → ℝ` reduces to a scalar, a matrix `α → β → ℝ` to a vector. -/
+class Function.Reduce (γ : Type*) (δ : outParam (Type*)) where
+  reduce : γ → δ
+
+/-- Maximum along the last axis: a vector `α → ℝ` reduces to a scalar, a matrix `α → β → ℝ` to a vector. -/
+class Function.ReduceMax (γ : Type*) (δ : outParam (Type*)) where
+  reduce : γ → δ

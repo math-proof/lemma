@@ -9,8 +9,9 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part6
-import Lemma.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
+import Theorem.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+
 set_option maxHeartbeats 800000
 
 

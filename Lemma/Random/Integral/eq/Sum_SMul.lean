@@ -1,6 +1,7 @@
 import Def.Dynamics.PolicyTrajectory.ContinuousAction
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
@@ -25,9 +26,9 @@ private lemma main
   (t : ℕ)
   (φ : 𝒮 → ℰ) :
 -- imply
-  ∫ ω, φ (s t ω) ∂(M.traj θ) = ∑ y, (M.traj θ).real (s t ⁻¹' {y}) • φ y := by
+  ∫ ω, φ (s t ω) ∂(M θ) = ∑ y, (M θ).real (s t ⁻¹' {y}) • φ y := by
 -- proof
-  have e := integral_map (μ := M.traj θ) (Random.Measurable.of.All_Eq.snd.fst h₀ t).aemeasurable
+  have e := integral_map (μ := M θ) (Random.Measurable.of.All_Eq.snd.fst h₀ t).aemeasurable
     (f := φ) StronglyMeasurable.of_discrete.aestronglyMeasurable
   refine e.symm.trans ?_
   rw [integral_fintype Integrable.of_finite]
@@ -36,4 +37,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-11-17
+-- updated on 2026-11-18

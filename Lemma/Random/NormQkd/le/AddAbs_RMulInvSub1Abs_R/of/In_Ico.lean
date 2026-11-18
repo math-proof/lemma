@@ -1,8 +1,6 @@
 import Theorem.Probability.CondExpectation
 import Lemma.Random.All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity
-import Theorem.Probability.JointRv.AsRV
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
+import Instance.Dynamics.PolicyTrajectory
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
@@ -16,20 +14,22 @@ private lemma main
   [ReferenceMeasure 𝒜] [MeasurableSingletonClass 𝒜]
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {γ : ℝ}
+  {R : ℝ}
 -- given
   (h : γ ∈ Set.Ico 0 1)
   (θ : Θ)
   (sₜ : 𝒮)
   (aₜ : 𝒜)
-  (hpos : (M.traj θ) ((fun ω => (ω 0).2.1) ⁻¹' {sₜ} ∩ (fun ω => (ω 0).2.2) ⁻¹' {aₜ}) ≠ 0) :
+  (hpos : (M θ) ((fun ω => (ω 0).2.1) ⁻¹' {sₜ} ∩ (fun ω => (ω 0).2.2) ⁻¹' {aₜ}) ≠ 0)
+  (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1) :
 -- imply
-  ‖M.Q0 θ γ sₜ aₜ‖ ≤ |M.R| + γ * ((1 - γ)⁻¹ * |M.R|) := by
+  ‖M.Q0 θ γ sₜ aₜ‖ ≤ |R| + γ * ((1 - γ)⁻¹ * |R|) := by
 -- proof
   let r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ := fun t ω => (ω t).1
   let s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮 := fun t ω => (ω t).2.1
   let a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜 := fun t ω => (ω t).2.2
   have h₁ : ∀ t, (· t) = (r t, s t, a t) := fun t => funext fun ω => rfl
-  have hq : 0 ≤ (1 - γ)⁻¹ * |M.R| :=
+  have hq : 0 ≤ (1 - γ)⁻¹ * |R| :=
     mul_nonneg (inv_nonneg.2 (by linarith [h.2])) (abs_nonneg _)
   unfold Model.Q0 Model.Q
   simp only [Expectation.asRV_process]
@@ -47,28 +47,28 @@ private lemma main
     ext ω
     simp [JointRandomSymbol, s, a, Set.mem_preimage, Set.mem_inter_iff,
       Set.mem_singleton_iff, Prod.ext_iff]
-  have hmap : (M.traj θ).map (s 0, a 0) {(sₜ, aₜ)} ≠ 0 := by
+  have hmap : (M θ).map (s 0, a 0) {(sₜ, aₜ)} ≠ 0 := by
     rwa [Measure.map_apply hy (measurableSet_singleton (sₜ, aₜ)), hpre]
   rw [Expectation.condEval_eq_integral hpR hy hfG hmap]
-  show ‖∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[0:]) ω ∂(M.traj θ)[|(s 0, a 0) ⁻¹' {(sₜ, aₜ)}]‖ ≤ _
-  have hG : ∀ᵐ ω ∂(M.traj θ), ‖((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[0:]) ω‖ ≤ (1 - γ)⁻¹ * |M.R| := by
-    filter_upwards [All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity h₁ (M := M) θ] with ω hr
+  show ‖∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[0:]) ω ∂(M θ)[|(s 0, a 0) ⁻¹' {(sₜ, aₜ)}]‖ ≤ _
+  have hG : ∀ᵐ ω ∂(M θ), ‖((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[0:]) ω‖ ≤ (1 - γ)⁻¹ * |R| := by
+    filter_upwards [All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity h₁ (M := M) hR θ] with ω hr
     unfold instDotNatArrowProcess Dot.dot Function.getSliceFrom
     simp only [zero_add]
-    have hb : ∀ k, ‖γ ^ k * r k ω‖ ≤ γ ^ k * |M.R| := fun k => by
+    have hb : ∀ k, ‖γ ^ k * r k ω‖ ≤ γ ^ k * |R| := fun k => by
       rw [norm_mul, norm_pow, Real.norm_of_nonneg h.1]
       apply mul_le_mul_of_nonneg_left (hr k) (pow_nonneg h.1 k)
     apply tsum_of_norm_bounded ((hasSum_geometric_of_lt_one h.1 h.2).mul_right _) hb
-  have hae : ∀ᵐ ω ∂(M.traj θ)[|(s 0, a 0) ⁻¹' {(sₜ, aₜ)}],
-      ‖((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[0:]) ω‖ ≤ (1 - γ)⁻¹ * |M.R| :=
+  have hae : ∀ᵐ ω ∂(M θ)[|(s 0, a 0) ⁻¹' {(sₜ, aₜ)}],
+      ‖((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[0:]) ω‖ ≤ (1 - γ)⁻¹ * |R| :=
     cond_absolutelyContinuous.ae_le hG
-  have hle : ‖∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[0:]) ω ∂(M.traj θ)[|(s 0, a 0) ⁻¹' {(sₜ, aₜ)}]‖ ≤
-      (1 - γ)⁻¹ * |M.R| := by
-    have : (M.traj θ) ((s 0, a 0) ⁻¹' {(sₜ, aₜ)}) ≠ 0 := by
+  have hle : ‖∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[0:]) ω ∂(M θ)[|(s 0, a 0) ⁻¹' {(sₜ, aₜ)}]‖ ≤
+      (1 - γ)⁻¹ * |R| := by
+    have : (M θ) ((s 0, a 0) ⁻¹' {(sₜ, aₜ)}) ≠ 0 := by
       rwa [hpre]
-    have := cond_isProbabilityMeasure (μ := M.traj θ) this
+    have := cond_isProbabilityMeasure (μ := M θ) this
     simpa using norm_integral_le_of_norm_le_const hae
-  have hid : (1 - γ)⁻¹ * |M.R| = |M.R| + γ * ((1 - γ)⁻¹ * |M.R|) := by
+  have hid : (1 - γ)⁻¹ * |R| = |R| + γ * ((1 - γ)⁻¹ * |R|) := by
     have hne : (1 - γ) ≠ 0 := sub_ne_zero.2 (ne_of_lt h.2).symm
     have hinv : (1 - γ)⁻¹ = 1 + γ * (1 - γ)⁻¹ := by
       apply mul_left_cancel₀ hne
@@ -82,4 +82,4 @@ private lemma main
 
 
 -- created on 2026-11-02
--- updated on 2026-11-17
+-- updated on 2026-11-18

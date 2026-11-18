@@ -1,6 +1,9 @@
-import Mathlib
-import Instance.Analysis.Section_2_3_api
-import Abbrev.Analysis.Section_2_epilogue.Part2
+module
+
+public import Mathlib
+public import Instance.Analysis.Section_2_3_api
+public import Abbrev.Analysis.Section_2_epilogue.Part2
+public section
 
 
 namespace PeanoAxioms

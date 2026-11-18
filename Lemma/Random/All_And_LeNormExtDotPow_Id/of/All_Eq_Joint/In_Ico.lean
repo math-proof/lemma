@@ -1,6 +1,5 @@
 import Lemma.Random.All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
+import Instance.Dynamics.PolicyTrajectory
 open MeasureTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
@@ -16,19 +15,21 @@ private lemma main
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {R : ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
+  (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1)
   (θ : Θ)
   (t : ℕ) :
 -- imply
-  ∀ᵐ ω ∂(M.traj θ), HasSum (fun k => γ ^ k * r (t + k) ω) (((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω) ∧
-    ‖((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω‖ ≤ (1 - γ)⁻¹ * |M.R| := by
+  ∀ᵐ ω ∂(M θ), HasSum (fun k => γ ^ k * r (t + k) ω) (((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω) ∧
+    ‖((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω‖ ≤ (1 - γ)⁻¹ * |R| := by
 -- proof
   obtain rfl : r = fun t ω ↦ (ω t).1 := funext₂ fun t ω ↦ (congrArg (·.1) (congrFun (h₁ t) ω)).symm
   set r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ := fun t ω ↦ (ω t).1
-  filter_upwards [All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity h₁ (M := M) θ] with ω h
-  have hb : ∀ k, ‖γ ^ k * r (t + k) ω‖ ≤ γ ^ k * |M.R| := fun k => by
+  filter_upwards [All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity h₁ (M := M) hR θ] with ω h
+  have hb : ∀ k, ‖γ ^ k * r (t + k) ω‖ ≤ γ ^ k * |R| := fun k => by
     rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
     apply mul_le_mul_of_nonneg_left (h (t + k)) (pow_nonneg h₀.1 k)
   apply And.intro
@@ -39,4 +40,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-11-17
+-- updated on 2026-11-18

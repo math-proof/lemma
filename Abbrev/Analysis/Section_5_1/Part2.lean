@@ -1,6 +1,9 @@
-import Mathlib
-import Theorem.Analysis.Section_4_3.Part2
-import Theorem.Analysis.Section_5_1
+module
+
+public import Mathlib
+public import Abbrev.Analysis.Section_5_1
+public import Def.Analysis.Section_4_3
+@[expose] public section
 set_option doc.verso.suggestions false
 
 /-!
@@ -29,9 +32,9 @@ Users of the companion who have completed the exercises in this section are welc
 namespace Chapter5
 
 /-- Example 5.1.2 (a) -/
-abbrev Sequence.squares : Sequence := ((fun n:ℕ ↦ (n^2:ℚ)):Sequence)
+abbrev Sequence.squares : Sequence := Sequence.ofNatFun (fun n:ℕ ↦ (n^2:ℚ))
 
-abbrev Sequence.three : Sequence := ((fun (_:ℕ) ↦ (3:ℚ)):Sequence)
+abbrev Sequence.three : Sequence := Sequence.ofNatFun (fun (_:ℕ) ↦ (3:ℚ))
 
 abbrev Sequence.squares_from_three : Sequence := mk' 3 (·^2)
 
@@ -42,5 +45,4 @@ A slight generalization of Definition 5.1.3 - definition of {name}`ε`-steadines
 arbitrary starting point {lean}`a.n₀`
 -/
 abbrev Rat.Steady (ε: ℚ) (a: Chapter5.Sequence) : Prop :=
-  ∀ n ≥ a.n₀, ∀ m ≥ a.n₀, ε.Close (a n) (a m)
-
+  ∀ n ≥ a.n₀, ∀ m ≥ a.n₀, ε.Close (a.seq n) (a.seq m)

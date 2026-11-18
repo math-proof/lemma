@@ -1,4 +1,7 @@
-import Initialize.Tactic.Attr.Basic
+module
+
+public import Initialize.Tactic.Attr.Basic
+public section
 
 
 -- define the circled plus operator

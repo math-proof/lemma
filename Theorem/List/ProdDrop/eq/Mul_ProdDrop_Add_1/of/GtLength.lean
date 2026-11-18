@@ -1,5 +1,7 @@
 module
 
+public import Initialize.Tactic.Attr.Basic
+
 public import Theorem.List.Drop.eq.Cons_Drop_Add_1.of.GtLength
 public import Theorem.List.ProdCons.eq.Mul_Prod
 
@@ -20,6 +22,14 @@ public theorem List.ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength
   rw [Drop.eq.Cons_Drop_Add_1.of.GtLength h]
   rw [ProdCons.eq.Mul_Prod]
 
+
+
+public theorem List.Mul_ProdDrop_Add_1.eq.ProdDrop.of.GtLength
+  [Mul α] [One α]
+  {s : List α}
+  (h : s.length > i) :
+  s[i] * (s.drop (i + 1)).prod = (s.drop i).prod :=
+  (List.ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength h).symm
 
 -- created on 2025-06-08
 -- updated on 2025-11-30

@@ -1,5 +1,9 @@
-import Def.Data.Tensor.Defs.Part4
-import Def.Data.Tensor.Sum
+module
+
+public import Def.Data.Tensor.Sum
+public import Instance.Data.Tensor.Defs.Part2
+
+@[expose] public section
 open Tensor
 
 

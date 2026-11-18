@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/QuantumSl2Instance.lean -/
 
 /-
@@ -8,9 +10,10 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Instance.v1.Atlas.TensorCategories.code.QuantumSl2Concrete.Part5
-import Theorem.v1.Atlas.TensorCategories.code.QBinomial.Part2
-import Notation.v1.Atlas.TensorCategories.code.QuantumSl2Instance
+public import Instance.v1.Atlas.TensorCategories.code.QuantumSl2Concrete.Part5
+public import Theorem.v1.Atlas.TensorCategories.code.QBinomial.Part2
+public import Notation.v1.Atlas.TensorCategories.code.QuantumSl2Instance
+public section
 open Coalgebra HopfAlgebra
 open scoped TensorProduct
 

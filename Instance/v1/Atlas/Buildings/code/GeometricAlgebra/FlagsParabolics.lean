@@ -8,12 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.GeneralLinearGroup.Basic
-import Mathlib.Order.RelClasses
-import Mathlib.Tactic.Group
-import Class.v1.Atlas.Buildings.code.GeometricAlgebra.FlagsParabolics.Part2
+module
 
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.GeneralLinearGroup.Basic
+public import Mathlib.Order.RelClasses
+public import Mathlib.Tactic.Group
+public import Class.v1.Atlas.Buildings.code.GeometricAlgebra.FlagsParabolics.Part2
+
+@[expose] public section
 
 namespace GeometricAlgebra
 

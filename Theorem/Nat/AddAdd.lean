@@ -1,5 +1,7 @@
 module
 
+public import Initialize.Tactic.Attr.Basic
+
 public import Theorem.Nat.AddAdd.eq.Add_Add
 
 public section
@@ -7,7 +9,7 @@ public section
 open Nat
 
 
-public theorem Comm
+public theorem Nat.AddAdd.comm
   [AddCommSemigroup α]
 -- given
   (a b c : α) :
@@ -15,11 +17,11 @@ public theorem Comm
   a + b + c = a + c + b := by
 -- proof
   repeat rw [Add.comm (b := c)]
-  rw [Add_Add.eq.AddAdd]
+  rw [← AddAdd.eq.Add_Add]
 
 
 @[comm]
-public theorem rotate
+public theorem Nat.AddAdd.rotate
   [AddCommSemigroup α]
 -- given
   (a b c : α) :
@@ -31,7 +33,7 @@ public theorem rotate
 
 
 @[comm]
-public theorem swap
+public theorem Nat.AddAdd.swap
   [AddCommSemigroup α]
 -- given
   (a b c : α) :

@@ -1,5 +1,10 @@
-import Mathlib
-import Theorem.Analysis.Section_11_1.Part8
+module
+
+public import Mathlib
+public import Abbrev.Analysis.Section_11_1
+public import Abbrev.Analysis.Section_11_1.Part2
+public import Instance.Analysis.Section_11_1
+@[expose] public section
 /-!
 # Analysis I, Section 11.1: Partitions
 
@@ -22,6 +27,6 @@ namespace Chapter11
 open BoundedInterval
 
 abbrev BoundedInterval.joins (K I J: BoundedInterval) : Prop := (I:Set ℝ) ∩ (J:Set ℝ) = ∅
-  ∧ (K:Set ℝ) = (I:Set ℝ) ∪ (J:Set ℝ) ∧ |K|ₗ = |I|ₗ + |J|ₗ
+  ∧ (K:Set ℝ) = (I:Set ℝ) ∪ (J:Set ℝ) ∧ K.length = I.length + J.length
 
 end Chapter11

@@ -8,11 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Category
-import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
-import Mathlib.CategoryTheory.GradedObject
-import Mathlib.Tactic.Group
-import Def.v1.Atlas.TensorCategories.code.GradedVec.Part4
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Category
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
+public import Mathlib.CategoryTheory.GradedObject
+public import Mathlib.Tactic.Group
+public import Def.v1.Atlas.TensorCategories.code.GradedVec.Part4
+
+@[expose] public section
 set_option maxHeartbeats 800000
 
 open CategoryTheory
@@ -27,7 +31,7 @@ variable {G : Type u} [Monoid G] {A : Type v} [CommGroup A]
 variable {ω : NormalizedGroupCocycle3 G A}
 
 /-- The underlying scalar of the right unitor in `CG G A ω` is `1`. -/
-@[simp] theorem rightUnitor'_hom_val (X : CG G A ω) :
+@[simp] public theorem rightUnitor'_hom_val (X : CG G A ω) :
     (rightUnitor' X).hom.val = 1 := rfl
 
 end CG

@@ -1,4 +1,7 @@
-import Theorem.Analysis.SpecialFunctions.Exponential.Part3
+module
+
+public import Class.Analysis.SpecialFunctions.Exponential
+public section
 open Filter Hyperreal Int
 
 /--

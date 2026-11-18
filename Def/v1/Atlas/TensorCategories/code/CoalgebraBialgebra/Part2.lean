@@ -8,16 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Bialgebra.Basic
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Mathlib.LinearAlgebra.TensorProduct.Submodule
-import Mathlib.CategoryTheory.Monoidal.Functor
-import Mathlib.Algebra.Category.ModuleCat.Monoidal.Basic
-import Mathlib.CategoryTheory.Preadditive.FunctorCategory
-import Mathlib.CategoryTheory.Linear.FunctorCategory
-import Mathlib.CategoryTheory.Monoidal.Preadditive
-import Mathlib.CategoryTheory.Products.Basic
-import Instance.v1.Atlas.TensorCategories.code.CoalgebraBialgebra.Part4
+module
+
+public import Mathlib.RingTheory.Bialgebra.Basic
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.LinearAlgebra.TensorProduct.Submodule
+public import Mathlib.CategoryTheory.Monoidal.Functor
+public import Mathlib.Algebra.Category.ModuleCat.Monoidal.Basic
+public import Mathlib.CategoryTheory.Preadditive.FunctorCategory
+public import Mathlib.CategoryTheory.Linear.FunctorCategory
+public import Mathlib.CategoryTheory.Monoidal.Preadditive
+public import Mathlib.CategoryTheory.Products.Basic
+public import Mathlib.CategoryTheory.Endomorphism
+
+@[expose] public section
 set_option maxHeartbeats 400000
 
 open scoped TensorProduct
@@ -41,14 +45,14 @@ set_option synthInstance.maxHeartbeats 400000
 /-- Proposition 1.18.3: the canonical algebra isomorphism
 `End(F₁) ⊗ End(F₂) ≅ End(F₁ ⊗ F₂)`, here specialized to `F₁ = F₂ = F`. -/
 def evalAtHom (Z : C) : End F →ₗ[k] (↑(F.obj Z) →ₗ[k] ↑(F.obj Z)) where
-  toFun η := (η.app Z).hom
+  toFun η := (η.asHom.app Z).hom
   map_add' _ _ := rfl
   map_smul' _ _ := rfl
 
 /-- Wrap a `k`-linear endomorphism of the underlying module into the corresponding
 endomorphism in `ModuleCat k`. -/
 def wrapEnd (M : ModuleCat.{u} k) : (↑M →ₗ[k] ↑M) →ₗ[k] End M where
-  toFun f := ModuleCat.ofHom f
+  toFun f := .of (ModuleCat.ofHom f)
   map_add' _ _ := rfl
   map_smul' _ _ := rfl
 

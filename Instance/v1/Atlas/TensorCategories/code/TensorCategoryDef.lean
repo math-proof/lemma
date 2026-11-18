@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
 import Mathlib.CategoryTheory.Abelian.Basic
 import Def.v1.Atlas.TensorCategories.code.TensorExact.Part3
-import Lemma.Category.Atlas.v1.TensorCategories.code.TensorExact
+import Theorem.Category.Atlas.v1.TensorCategories.code.TensorExact
 import Mathlib.CategoryTheory.Linear.Basic
 import Mathlib.CategoryTheory.Simple
 import Mathlib.CategoryTheory.Preadditive.Schur

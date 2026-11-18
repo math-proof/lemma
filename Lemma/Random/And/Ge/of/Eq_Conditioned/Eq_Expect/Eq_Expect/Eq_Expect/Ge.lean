@@ -5,8 +5,6 @@ import Lemma.Random.MeasurableRkd
 import Lemma.Random.NormRkd.le.Abs_R
 import Lemma.Random.Eq_WithDensity_Pdf
 import Theorem.Probability.SymbolicProbability
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Real
 
 
@@ -26,11 +24,11 @@ instance instPSpace_policy_asRV_id
 private noncomputable def mirror
   {Θ 𝒮 𝒜 : Type*} [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
   (M : Model Θ 𝒮 𝒜) [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M] (𝔇 : Θ → Θ → 𝒮 → ℝ)
-  (θ_π θ_bar : Θ) (γ : ℝ) (sₜ : 𝒮) : ℝ :=
+  (θ_π θ_bar : Θ) (γ : ℝ) {R : ℝ} (sₜ : 𝒮) : ℝ :=
   let a : 𝒜 → 𝒜 := id
   have : PSpace (M.kernel θ_bar sₜ) (Expectation.asRV a) :=
     ⟨(measurable_id : Measurable a).aemeasurable⟩
-  𝔼[a : M.kernel θ_bar sₜ](M.rkd sₜ a + γ * ∫ y, M.V0 θ_π γ y ∂(M.trans (sₜ, a))) - 𝔇 θ_π θ_bar sₜ
+  𝔼[a : M.kernel θ_bar sₜ](M.rkd R sₜ a + γ * ∫ y, M.V0 R θ_π γ y ∂(M.trans (sₜ, a))) - 𝔇 θ_π θ_bar sₜ
 
 
 /--
@@ -53,21 +51,22 @@ private lemma main
   {θ θ' : Θ}
   {γ : ℝ}
   {𝔇 : Θ → Θ → 𝒮 → ℝ}
+  {R : ℝ}
 -- given
   (hγ : γ ∈ Set.Ico 0 1)
   (hD0 : ∀ x, 𝔇 θ θ x = 0)
   (hD : ∀ x, 0 ≤ 𝔇 θ θ' x)
-  (hℳ : ∀ x, mirror M 𝔇 θ θ' γ x ≥ mirror M 𝔇 θ θ γ x) :
+  (hℳ : ∀ x, mirror M 𝔇 θ θ' γ (R := R) x ≥ mirror M 𝔇 θ θ γ (R := R) x) :
 -- imply
-  (∀ x, M.V0 θ' γ x ≥ M.V0 θ γ x) ∧
-    (∫ x, M.V0 θ' γ x ∂(M.init : Measure _) ≥ ∫ x, M.V0 θ γ x ∂(M.init : Measure _)) := by
+  (∀ x, M.V0 R θ' γ x ≥ M.V0 R θ γ x) ∧
+    (∫ x, M.V0 R θ' γ x ∂(M.init : Measure _) ≥ ∫ x, M.V0 R θ γ x ∂(M.init : Measure _)) := by
 -- proof
   have hπm : ∀ κ, Measurable (fun z : 𝒮 × 𝒜 => M.π[κ] z.1 z.2) :=
     hStoch.measurable_π
-  have hV : ∀ κ, Measurable (M.V0 κ γ) := fun κ =>
-    Measurable_Vkd.of.All_Measurable_Prob (M := M) hπm κ γ
-  have hBound : ∀ κ x, ‖M.V0 κ γ x‖ ≤ (1 - γ)⁻¹ * |M.R| := fun κ x =>
-    NormVkd.le.MulInvSub1Abs_R.of.In_Ico (M := M) hγ κ x
+  have hV : ∀ κ, Measurable (M.V0 R κ γ) := fun κ =>
+    Measurable_Vkd.of.All_Measurable_Prob (M := M) hπm R κ γ
+  have hBound : ∀ κ x, ‖M.V0 R κ γ x‖ ≤ (1 - γ)⁻¹ * |R| := fun κ x =>
+    NormVkd.le.MulInvSub1Abs_R.of.In_Ico (M := M) hγ R κ x
   have hIntBound : ∀ {f : 𝒮 → ℝ} {C : ℝ} (sₜ : 𝒮) (aₜ : 𝒜),
       (∀ y, ‖f y‖ ≤ C) → ‖∫ y, f y ∂(M.trans (sₜ, aₜ))‖ ≤ C := by
     intro f C sₜ aₜ hf
@@ -75,9 +74,9 @@ private lemma main
       norm_integral_le_of_norm_le_const (μ := M.trans (sₜ, aₜ))
         (Filter.Eventually.of_forall hf)
   let T (κ : Θ) (sₜ : 𝒮) (aₜ : 𝒜) : ℝ :=
-    ∫ y, M.V0 κ γ y ∂(M.trans (sₜ, aₜ))
+    ∫ y, M.V0 R κ γ y ∂(M.trans (sₜ, aₜ))
   let Q (κ : Θ) (sₜ : 𝒮) (aₜ : 𝒜) : ℝ :=
-    M.rkd sₜ aₜ + γ * T κ sₜ aₜ
+    M.rkd R sₜ aₜ + γ * T κ sₜ aₜ
   let backup (κ_π κ_bar : Θ) (sₜ : 𝒮) : ℝ :=
     ∫ u, M.π[κ_bar] sₜ u * Q κ_π sₜ u ∂ReferenceMeasure.measure
   have hπI : ∀ κ x, Integrable (M.π[κ] x) ReferenceMeasure.measure := by
@@ -89,11 +88,11 @@ private lemma main
   have hT : ∀ κ x, Measurable (T κ x) :=
     fun κ x =>
       ((StronglyMeasurable.integral_kernel_prod_right' (κ := M.transK)
-        (f := fun z => M.V0 κ γ z.2)
+        (f := fun z => M.V0 R κ γ z.2)
         ((hV κ).stronglyMeasurable.comp_measurable measurable_snd)).measurable).comp
         measurable_prodMk_left
   have hQmeas : ∀ κ x, Measurable (Q κ x) := fun κ x =>
-    ((MeasurableRkd (M := M)).comp measurable_prodMk_left).add
+    ((MeasurableRkd (M := M) R).comp measurable_prodMk_left).add
       (measurable_const.mul (hT κ x))
   have hmulI : ∀ {κ : Θ} {g : 𝒜 → ℝ} {C : ℝ} (sₜ : 𝒮),
       Measurable g →
@@ -118,17 +117,17 @@ private lemma main
       Integrable (fun aₜ => M.π[κ_bar] sₜ aₜ * Q κ_π sₜ aₜ)
         ReferenceMeasure.measure := by
     intro κ_π κ_bar x
-    apply hmulI (C := |M.R| + |γ| * ((1 - γ)⁻¹ * |M.R|)) x
+    apply hmulI (C := |R| + |γ| * ((1 - γ)⁻¹ * |R|)) x
       (hQmeas κ_π x)
     intro u
-    have hR := NormRkd.le.Abs_R (M := M) x u
+    have hR := NormRkd.le.Abs_R (M := M) R x u
     have hVint := hIntBound (sₜ := x) (aₜ := u) (hBound κ_π)
     calc
-      _ ≤ ‖M.rkd x u‖ + ‖γ * T κ_π x u‖ :=
+      _ ≤ ‖M.rkd R x u‖ + ‖γ * T κ_π x u‖ :=
         norm_add_le _ _
-      _ = ‖M.rkd x u‖ + |γ| * ‖T κ_π x u‖ := by
+      _ = ‖M.rkd R x u‖ + |γ| * ‖T κ_π x u‖ := by
         simp [Real.norm_eq_abs]
-      _ ≤ |M.R| + |γ| * ((1 - γ)⁻¹ * |M.R|) :=
+      _ ≤ |R| + |γ| * ((1 - γ)⁻¹ * |R|) :=
         add_le_add (by simpa [Real.norm_eq_abs] using hR)
           (mul_le_mul_of_nonneg_left hVint (abs_nonneg _))
   have hE : ∀ κ_π κ_bar x,
@@ -148,19 +147,19 @@ private lemma main
     rw [show (ENNReal.ofReal (M.π[κ_bar] x u)).toReal =
         M.π[κ_bar] x u from
       ENNReal.toReal_ofReal (hStoch.nonneg κ_bar x u)]
-  have hVQ : ∀ κ x, M.V0 κ γ x = backup κ κ x := by
+  have hVQ : ∀ κ x, M.V0 R κ γ x = backup κ κ x := by
     intro κ sₜ
     have hBell :=
-      Vkd.eq.Integral_MulProbQkd.of.In_Ico.All_Measurable_Prob (M := M) hπm hγ κ sₜ
-    have hr : Integrable (fun aₜ => M.π[κ] sₜ aₜ * M.rkd sₜ aₜ)
+      Vkd.eq.Integral_MulProbQkd.of.In_Ico.All_Measurable_Prob (M := M) hπm hγ R κ sₜ
+    have hr : Integrable (fun aₜ => M.π[κ] sₜ aₜ * M.rkd R sₜ aₜ)
         ReferenceMeasure.measure :=
-      hmulI sₜ ((MeasurableRkd (M := M)).comp measurable_prodMk_left)
-        fun u => NormRkd.le.Abs_R (M := M) sₜ u
+      hmulI sₜ ((MeasurableRkd (M := M) R).comp measurable_prodMk_left)
+        fun u => NormRkd.le.Abs_R (M := M) R sₜ u
     have hc : Integrable (fun aₜ => M.π[κ] sₜ aₜ * T κ sₜ aₜ)
         ReferenceMeasure.measure :=
       hmulI sₜ (hT κ sₜ) fun u => hIntBound sₜ u (hBound κ)
     have hsum :
-      ∫ aₜ, M.π[κ] sₜ aₜ * M.rkd sₜ aₜ ∂ReferenceMeasure.measure +
+      ∫ aₜ, M.π[κ] sₜ aₜ * M.rkd R sₜ aₜ ∂ReferenceMeasure.measure +
           ∫ aₜ, γ * (M.π[κ] sₜ aₜ * T κ sₜ aₜ) ∂ReferenceMeasure.measure =
         ∫ aₜ, M.π[κ] sₜ aₜ * Q κ sₜ aₜ ∂ReferenceMeasure.measure := by
       rw [← integral_add hr (hc.const_mul γ)]
@@ -170,16 +169,16 @@ private lemma main
       simp only [Q]
       ring
     rw [hBell, ← integral_const_mul, hsum]
-  let Δ : 𝒮 → ℝ := fun x => M.V0 θ' γ x - M.V0 θ γ x
+  let Δ : 𝒮 → ℝ := fun x => M.V0 R θ' γ x - M.V0 R θ γ x
   let TΔ (sₜ : 𝒮) (aₜ : 𝒜) : ℝ := ∫ y, Δ y ∂(M.trans (sₜ, aₜ))
   have hΔm : Measurable Δ := (hV θ').sub (hV θ)
-  have hΔb : ∀ y, ‖Δ y‖ ≤ 2 * ((1 - γ)⁻¹ * |M.R|) := by
+  have hΔb : ∀ y, ‖Δ y‖ ≤ 2 * ((1 - γ)⁻¹ * |R|) := by
     intro y
     apply (norm_sub_le _ _).trans
     have := add_le_add (hBound θ' y) (hBound θ y)
     simpa [two_mul] using this
   have hΔbb : BddBelow (Set.range Δ) := by
-    refine ⟨-(2 * ((1 - γ)⁻¹ * |M.R|)), ?_⟩
+    refine ⟨-(2 * ((1 - γ)⁻¹ * |R|)), ?_⟩
     rintro _ ⟨y, rfl⟩
     apply (abs_le.mp _).1
     simpa [Real.norm_eq_abs] using hΔb y
@@ -234,11 +233,11 @@ private lemma main
       ring
     have hQΔ : ∀ u, Q θ' sₜ u - Q θ sₜ u = γ * TΔ sₜ u := by
       intro u
-      have hIntV (κ : Θ) : Integrable (M.V0 κ γ) (M.trans (sₜ, u)) :=
+      have hIntV (κ : Θ) : Integrable (M.V0 R κ γ) (M.trans (sₜ, u)) :=
         Integrable.of_bound (hV κ).aestronglyMeasurable _
           (Filter.Eventually.of_forall (hBound κ))
       calc
-        _ = M.rkd sₜ u + γ * T θ' sₜ u - (M.rkd sₜ u + γ * T θ sₜ u) :=
+        _ = M.rkd R sₜ u + γ * T θ' sₜ u - (M.rkd R sₜ u + γ * T θ sₜ u) :=
           rfl
         _ = γ * T θ' sₜ u - γ * T θ sₜ u := by
           ring
@@ -256,7 +255,7 @@ private lemma main
       rw [hQΔ u]
       ring
     have hsplit : Δ sₜ = γ * I + (backup θ θ' sₜ - backup θ θ sₜ) := by
-      change M.V0 θ' γ sₜ - M.V0 θ γ sₜ = _
+      change M.V0 R θ' γ sₜ - M.V0 R θ γ sₜ = _
       rw [hVQ θ' sₜ, hVQ θ sₜ, sub_eq_iff_eq_add.mp hγI]
       ring
     have hpen : 𝔇 θ θ' sₜ ≤ backup θ θ' sₜ - backup θ θ sₜ := by
@@ -280,14 +279,14 @@ private lemma main
     apply (mul_nonneg_iff_of_pos_left (sub_pos.mpr hγ.2)).mp
     convert sub_nonneg.mpr (le_ciInf fun x => hleft x)
     ring
-  have hVge : ∀ x, M.V0 θ' γ x ≥ M.V0 θ γ x := fun x =>
+  have hVge : ∀ x, M.V0 R θ' γ x ≥ M.V0 R θ γ x := fun x =>
     sub_nonneg.mp (le_trans hinf (ciInf_le hΔbb x))
   refine And.intro hVge ?_
-  have hInt (κ : Θ) : Integrable (M.V0 κ γ) (M.init : Measure _) :=
+  have hInt (κ : Θ) : Integrable (M.V0 R κ γ) (M.init : Measure _) :=
     Integrable.of_bound (hV κ).aestronglyMeasurable _
       (Filter.Eventually.of_forall (hBound κ))
   exact integral_mono (hInt θ) (hInt θ') hVge
 
 
 -- created on 2023-04-20
--- updated on 2026-11-17
+-- updated on 2026-11-18

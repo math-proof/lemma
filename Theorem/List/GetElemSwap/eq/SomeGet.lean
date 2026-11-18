@@ -1,5 +1,7 @@
 module
 
+public import Mathlib
+
 public import Batteries.Data.List.Lemmas
 public import Theorem.List.Swap
 
@@ -22,7 +24,7 @@ public theorem List.GetElemSwap.eq.SomeGet
   simp
 
 
-public theorem left
+public theorem List.GetElemSwap.eq.SomeGet.left
 -- given
   (s : List α)
   (i j : Fin s.length) :
@@ -30,7 +32,7 @@ public theorem left
   (s.swap i j)[j]? = some s[i] := by
 -- proof
   rw [Swap]
-  rw [main]
+  exact GetElemSwap.eq.SomeGet s j i
 
 
 -- created on 2025-05-15

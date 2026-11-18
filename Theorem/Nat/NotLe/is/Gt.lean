@@ -24,5 +24,13 @@ public theorem Nat.NotLe.is.Gt
   not_le
 
 
+
+public theorem Nat.Gt.of.NotLe
+  [LinearOrder α]
+  {a b : α}
+  (h : ¬a ≤ b) :
+  a > b :=
+  (Nat.NotLe.is.Gt).mp h
+
 -- created on 2025-03-29
 -- updated on 2026-10-26

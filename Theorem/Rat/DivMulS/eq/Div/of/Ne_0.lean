@@ -24,7 +24,7 @@ public theorem Rat.DivMulS.eq.Div.of.Ne_0
   rw [Div.eq.Mul_Inv]
 
 
-public theorem left
+public theorem Rat.DivMulS.eq.Div.of.Ne_0.left
   [Semifield α]
   {a n d : α}
 -- given

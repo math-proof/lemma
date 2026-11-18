@@ -1,6 +1,9 @@
-import Def.Probability.Process.HiddenMarkovSequence.Part2
-import Notation.Fun
-import Notation.Probability.JointRv
+module
+
+public import Def.Probability.Process.HiddenMarkovSequence.Part2
+public import Notation.Fun
+public import Notation.Probability.JointRv
+public section
 open MeasureTheory
 
 /-- `x` (observations) and `y` (hidden labels) form a first-order hidden Markov model over discrete

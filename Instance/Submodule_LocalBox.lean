@@ -1,7 +1,12 @@
 -- Carved from Lemma/Definitions/Def_Submodule_LocalBox.lean: instance decls only.
-import Mathlib
-import Theorem.Submodule.FiniteAdeleBox
-import Def.QuaternionAlgebra_Order_FiniteIdele
+
+module
+
+public import Mathlib
+public import Theorem.Submodule.FiniteAdeleBox
+public import Def.QuaternionAlgebra_Order_FiniteIdele
+
+@[expose] public section
 
 set_option autoImplicit false
 

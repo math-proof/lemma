@@ -3,6 +3,7 @@ module
 public import Def.Data.List.List.Basic
 public import Theorem.List.SwapAppend.eq.Append_Swap
 
+public import Theorem.Nat.EqAdd_Sub.of.Ge
 public section
 
 open List Nat

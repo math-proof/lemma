@@ -5,6 +5,15 @@ public import Mathlib
 public section
 
 
+public theorem Nat.Mul.comm
+  [CommMagma α]
+-- given
+  (a b : α) :
+-- imply
+  a * b = b * a :=
+-- proof
+  mul_comm a b
+
 public theorem Nat.Mul.Comm
   [CommMagma α]
 -- given

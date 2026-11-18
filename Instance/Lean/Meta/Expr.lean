@@ -2,7 +2,7 @@ module
 
 public import Def.Lean.Name
 public import Def.Lean.BinderInfo
-public import Def.Lean.Meta.Expr.Part2
+public import Def.Lean.Binder
 
 @[expose] public section
 

@@ -7,7 +7,7 @@ Rewrite helpers for `@[Fun]` / `@[Fun']`:
 -/
 module
 
-public import Def.Lean.Meta.Expr.Part4
+public import Def.Lean.Meta.Expr
 public section
 
 open Lean

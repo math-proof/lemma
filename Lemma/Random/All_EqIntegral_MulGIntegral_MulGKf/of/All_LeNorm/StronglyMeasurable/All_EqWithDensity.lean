@@ -2,6 +2,7 @@ import Lemma.Random.Integral_Mul.eq.Integral_Mul_Integral.of.All_LeNorm.Strongly
 import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Lemma.Random.Kf.eq.Integral.All_EqWithDensity
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Finset
 
@@ -22,8 +23,8 @@ private lemma main
   (j : ℕ) :
 -- imply
   ∀ n {G : (Π _ : Finset.Iic n, ℝ × 𝒮 × 𝒜) → ℝ}, StronglyMeasurable G → ∀ {CG : ℝ}, (∀ h, ‖G h‖ ≤ CG) →
-    ∫ ω, G (Preorder.frestrictLe n ω) * f (ω (n + j)) ∂(M.traj θ) =
-      ∫ ω, G (Preorder.frestrictLe n ω) * M.Kf θ f j (ω n) ∂(M.traj θ) := by
+    ∫ ω, G (Preorder.frestrictLe n ω) * f (ω (n + j)) ∂(M θ) =
+      ∫ ω, G (Preorder.frestrictLe n ω) * M.Kf θ f j (ω n) ∂(M θ) := by
 -- proof
   induction j with
   | zero =>
@@ -44,4 +45,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-17
+-- updated on 2026-11-18

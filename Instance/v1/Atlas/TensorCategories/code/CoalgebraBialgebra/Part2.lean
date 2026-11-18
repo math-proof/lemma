@@ -8,16 +8,21 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Bialgebra.Basic
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Mathlib.LinearAlgebra.TensorProduct.Submodule
-import Mathlib.CategoryTheory.Monoidal.Functor
-import Mathlib.Algebra.Category.ModuleCat.Monoidal.Basic
-import Mathlib.CategoryTheory.Preadditive.FunctorCategory
-import Mathlib.CategoryTheory.Linear.FunctorCategory
-import Mathlib.CategoryTheory.Monoidal.Preadditive
-import Mathlib.CategoryTheory.Products.Basic
-import Abbrev.v1.Atlas.TensorCategories.code.CoalgebraBialgebra.Part2
+module
+
+public import Mathlib.RingTheory.Bialgebra.Basic
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.LinearAlgebra.TensorProduct.Submodule
+public import Mathlib.CategoryTheory.Monoidal.Functor
+public import Mathlib.Algebra.Category.ModuleCat.Monoidal.Basic
+public import Mathlib.CategoryTheory.Preadditive.FunctorCategory
+public import Mathlib.CategoryTheory.Linear.FunctorCategory
+public import Mathlib.CategoryTheory.Monoidal.Preadditive
+public import Mathlib.CategoryTheory.Products.Basic
+public import Abbrev.v1.Atlas.TensorCategories.code.CoalgebraBialgebra.Part2
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 open scoped TensorProduct

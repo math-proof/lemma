@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/Lec10SheavesP1.lean -/
 
 /-
@@ -8,20 +10,21 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.Sheaves.Sheaf
-import Mathlib.Topology.Sheaves.Stalks
-import Mathlib.Topology.Sheaves.Functors
-import Mathlib.Topology.Sheaves.Sheafify
-import Mathlib.Topology.Sheaves.Abelian
-import Mathlib.Algebra.Category.ModuleCat.Sheaf.Quasicoherent
-import Mathlib.Algebra.Category.ModuleCat.Sheaf.Free
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.CategoryTheory.Sites.Sheafification
-import Mathlib.CategoryTheory.Sites.LeftExact
-import Mathlib.CategoryTheory.Adjunction.Limits
-import Mathlib.Data.Multiset.Sort
-import Mathlib.AlgebraicGeometry.Modules.Tilde
-import Instance.v1.Atlas.AlgebraicGeometryI.code.Lec10SheavesP1.Part2
+public import Mathlib.Topology.Sheaves.Sheaf
+public import Mathlib.Topology.Sheaves.Stalks
+public import Mathlib.Topology.Sheaves.Functors
+public import Mathlib.Topology.Sheaves.Sheafify
+public import Mathlib.Topology.Sheaves.Abelian
+public import Mathlib.Algebra.Category.ModuleCat.Sheaf.Quasicoherent
+public import Mathlib.Algebra.Category.ModuleCat.Sheaf.Free
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.CategoryTheory.Sites.Sheafification
+public import Mathlib.CategoryTheory.Sites.LeftExact
+public import Mathlib.CategoryTheory.Adjunction.Limits
+public import Mathlib.Data.Multiset.Sort
+public import Mathlib.AlgebraicGeometry.Modules.Tilde
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.Lec10SheavesP1.Part2
+public section
 
 
 noncomputable section

@@ -1,8 +1,6 @@
-import Def.Analysis.Calculus.Gradient.Operators.Part2
 import Mathlib.Analysis.InnerProductSpace.Dual
 import Lemma.Random.Fderiv.eq.AddIntegral_SMulSMul.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.All_Measurable_Prob
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
+import Instance.Dynamics.PolicyTrajectory
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
@@ -25,6 +23,7 @@ private lemma main
   {t : ℕ}
   {sₜ : 𝒮}
   {θ : Θ}
+  {R : ℝ}
 -- given
   (hγ : γ ∈ Set.Ico 0 1)
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
@@ -33,10 +32,11 @@ private lemma main
   (h₂ : sup[sₜ] (∫ u, sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ u‖) ∂ReferenceMeasure.measure) < ∞)
   (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖))
   (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) ReferenceMeasure.measure)
-  (h₃ : (M.traj θ).real (s t ⁻¹' {sₜ}) ≠ 0) :
+  (h₃ : (M θ).real (s t ⁻¹' {sₜ}) ≠ 0)
+  (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1) :
 -- imply
   let Q (aₜ : 𝒜) : ℝ :=
-    M.rkd sₜ aₜ + γ * ∫ y, M.V0 θ γ y ∂(M.trans (sₜ, aₜ));
+    M.rkd R sₜ aₜ + γ * ∫ y, M.V0 R θ γ y ∂(M.trans (sₜ, aₜ));
   ∇[θ] M.V θ γ t sₜ =
     ∫ u, (Q u • ∇[θ] M.π[θ] sₜ u) ∂ReferenceMeasure.measure +
       γ • ∫ u, (M.π[θ] sₜ u •
@@ -45,17 +45,17 @@ private lemma main
   intro Q
   have hF :=
     Fderiv.eq.AddIntegral_SMulSMul.of.Ne0Real_Preimage.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.All_Measurable_Prob
-      (M := M) hγ h₀ hπ h₁ h₂ hBdd hIntg h₃
+      (M := M) hγ h₀ hπ h₁ h₂ hBdd hIntg h₃ hR
   have hint₁ :
     (InnerProductSpace.toDual ℝ Θ).symm
-      (∫ u, (M.rkd sₜ u + γ * ∫ y, M.V0 θ γ y ∂(M.trans (sₜ, u))) •
+      (∫ u, (M.rkd R sₜ u + γ * ∫ y, M.V0 R θ γ y ∂(M.trans (sₜ, u))) •
         fderiv ℝ (fun θ' => M.π[θ'] sₜ u) θ ∂ReferenceMeasure.measure) =
     ∫ u, (InnerProductSpace.toDual ℝ Θ).symm
-      ((M.rkd sₜ u + γ * ∫ y, M.V0 θ γ y ∂(M.trans (sₜ, u))) •
+      ((M.rkd R sₜ u + γ * ∫ y, M.V0 R θ γ y ∂(M.trans (sₜ, u))) •
         fderiv ℝ (fun θ' => M.π[θ'] sₜ u) θ) ∂ReferenceMeasure.measure := by
     have h := (InnerProductSpace.toDual ℝ Θ).symm.toContinuousLinearEquiv.integral_comp_comm
       (μ := ReferenceMeasure.measure)
-      (fun u => (M.rkd sₜ u + γ * ∫ y, M.V0 θ γ y ∂(M.trans (sₜ, u))) •
+      (fun u => (M.rkd R sₜ u + γ * ∫ y, M.V0 R θ γ y ∂(M.trans (sₜ, u))) •
         fderiv ℝ (fun θ' => M.π[θ'] sₜ u) θ)
     simpa using h.symm
   have hint₂ :
@@ -88,4 +88,4 @@ private lemma main
 
 
 -- created on 2026-11-13
--- updated on 2026-11-17
+-- updated on 2026-11-18

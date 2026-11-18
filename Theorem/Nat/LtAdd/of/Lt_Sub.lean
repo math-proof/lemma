@@ -1,5 +1,7 @@
 module
 
+public import Mathlib
+
 public section
 
 
@@ -13,7 +15,7 @@ public theorem Nat.LtAdd.of.Lt_Sub
   Nat.add_lt_of_lt_sub h
 
 
-public theorem left
+public theorem Nat.LtAdd.of.Lt_Sub.left
   {a b c : ℕ}
 -- given
   (h : b < c - a) :

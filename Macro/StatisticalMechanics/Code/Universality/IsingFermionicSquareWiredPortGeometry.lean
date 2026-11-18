@@ -8,19 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
+module
 
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredOneVisitInsertedPhase
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredTangentCode
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveClosure
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardRectilinearPolygonBridge.Part2
-import Def.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredPortGeometry.Part34
+public import Mathlib
 
+
+public meta section
 
 namespace StatMech.Universality
-
-open StatMech StatMech.FK StatMech.Lattice StatMech.FrontierD
-
-open scoped Affine
 
 noncomputable section
 

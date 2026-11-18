@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.ArithmeticGeometry.code.HilbertSymbol.Part2
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertSymbol
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HenselsLemma
-import Abbrev.v1.Atlas.ArithmeticGeometry.code.HenselsLemma
-import Mathlib.NumberTheory.LegendreSymbol.QuadraticReciprocity
+module
+
+public import Def.v1.Atlas.ArithmeticGeometry.code.HilbertSymbol.Part2
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertSymbol
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HenselsLemma
+public import Abbrev.v1.Atlas.ArithmeticGeometry.code.HenselsLemma
+public import Mathlib.NumberTheory.LegendreSymbol.QuadraticReciprocity
+
+@[expose] public section
+
 open HilbertSymbol
 
 

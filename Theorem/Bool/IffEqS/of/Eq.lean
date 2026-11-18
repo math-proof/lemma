@@ -13,7 +13,7 @@ public theorem Bool.IffEqS.of.Eq
   rw [h]
 
 
-public theorem left
+public theorem Bool.IffEqS.of.Eq.left
   {a b : α}
 -- given
   (h : a = b) :

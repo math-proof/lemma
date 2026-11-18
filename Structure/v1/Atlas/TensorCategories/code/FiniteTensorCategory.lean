@@ -35,7 +35,7 @@ public import Mathlib.Algebra.Category.ModuleCat.Monoidal.Symmetric
 public import Mathlib.Algebra.Category.ModuleCat.Projective
 public import Mathlib.Algebra.Module.Projective
 public import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part6
-public import Lemma.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
 public import Theorem.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctor
 public import Theorem.Category.Atlas.v1.TensorCategories.code.RegularObject
 public import Abbrev.v1.Atlas.TensorCategories.code.QuasiTensorFunctor.Part5

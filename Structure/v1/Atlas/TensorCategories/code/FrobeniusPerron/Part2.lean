@@ -27,7 +27,7 @@ public import Mathlib.LinearAlgebra.Matrix.Charpoly.Eigs
 public import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
 public import Mathlib.NumberTheory.NumberField.InfinitePlace.Embeddings
 public import Def.v1.Atlas.TensorCategories.code.PerronFrobeniusProof.Part2
-public import Lemma.Category.Atlas.v1.TensorCategories.code.PerronFrobeniusProof
+public import Theorem.Category.Atlas.v1.TensorCategories.code.PerronFrobeniusProof
 public import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron
 public section
 

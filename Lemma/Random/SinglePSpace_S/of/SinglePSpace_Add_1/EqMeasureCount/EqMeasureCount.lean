@@ -34,7 +34,7 @@ private lemma main
   have he : MeasurePreserving e Measure.count
     ((Measure.count : Measure (Fin t → S × A)).prod ((ReferenceMeasure.measure (α := S)).prod ReferenceMeasure.measure)) := by
     refine ⟨measurable_of_countable e, ?_⟩
-    rw [hS, hA, ProdCountS.eq.Count, ProdCountS.eq.Count]
+    rw [hS, hA, ← Count.eq.ProdCountS, ← Count.eq.ProdCountS]
     refine Measure.ext_iff_singleton.mpr fun z ↦ ?_
     have hpre : e ⁻¹' {z} = {Fin.snoc (α := fun _ ↦ S × A) z.1 z.2} := by
       ext f

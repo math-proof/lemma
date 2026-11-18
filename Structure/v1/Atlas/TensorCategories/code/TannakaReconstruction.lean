@@ -28,7 +28,7 @@ public import Theorem.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctor
 public import Def.v1.Atlas.TensorCategories.code.TannakaReconstruction.Part2
 set_option maxHeartbeats 800000
 
-open CategoryTheory
+open CategoryTheory TensorCategories
 
 universe u v w
 

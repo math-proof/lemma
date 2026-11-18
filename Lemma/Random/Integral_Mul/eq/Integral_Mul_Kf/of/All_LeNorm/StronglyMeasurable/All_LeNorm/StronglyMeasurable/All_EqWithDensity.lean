@@ -1,5 +1,6 @@
 import Lemma.Random.All_EqIntegral_MulGIntegral_MulGKf.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Finset
 
@@ -24,7 +25,7 @@ private lemma main
   (θ : Θ)
   (t j : ℕ) :
 -- imply
-  ∫ ω, G (ω t) * f (ω (t + j)) ∂(M.traj θ) = ∫ ω, G (ω t) * M.Kf θ f j (ω t) ∂(M.traj θ) :=
+  ∫ ω, G (ω t) * f (ω (t + j)) ∂(M θ) = ∫ ω, G (ω t) * M.Kf θ f j (ω t) ∂(M θ) :=
 -- proof
   All_EqIntegral_MulGIntegral_MulGKf.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
     (M := M) hf hC θ j t
@@ -33,4 +34,4 @@ private lemma main
 
 
 -- created on 2026-11-13
--- updated on 2026-11-17
+-- updated on 2026-11-18

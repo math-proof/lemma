@@ -1,5 +1,9 @@
-import Mathlib
-import Abbrev.Analysis.Section_11_1.Part5
+module
+
+public import Mathlib
+public import Abbrev.Analysis.Section_11_1.Part5
+
+public section
 /-!
 # Analysis I, Section 11.1: Partitions
 
@@ -22,7 +26,7 @@ namespace Chapter11
 open BoundedInterval
 
 @[simp]
-theorem Partition.intervals_of_add_empty (I: BoundedInterval) (P: Partition I) : (P.add_empty).intervals = P.intervals ∪ {∅} := by
+public theorem Partition.intervals_of_add_empty (I: BoundedInterval) (P: Partition I) : (P.add_empty).intervals = P.intervals ∪ {∅} := by
   simp
 
 end Chapter11

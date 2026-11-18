@@ -1,54 +1,36 @@
-import Def.Data.Tensor.Defs.Part4
-import Def.Data.List.List.Basic
-import Def.Data.Tensor.Select
-import Def.Data.Tensor.Resize
-import Def.Data.Tensor.Shape
-import Def.Data.Tensor.Sum
-import Def.Data.Tensor.Mean
-import Def.Data.Tensor.Bmm
-import Def.Data.Tensor.Prod
-import Def.Data.Tensor.Reshape
-import Def.Data.Tensor.Unsqueeze
-import Def.Data.Tensor.Repeat
-import Notation.Data.Tensor.Permute
-import Def.Data.Tensor.Item
-import Def.Data.Tensor.HStack
-import Theorem.Bool.HEq.of.All_HEq
-import Theorem.Nat.Le_Sub_1.of.Lt
-import Theorem.Nat.LtAddS.is.Lt
-import Theorem.Nat.GtVal_0.of.Ne_0
-import Theorem.Nat.LtSubS_1.of.Lt.Ne_0
-import Theorem.Nat.Ge_1.of.Gt_0
-import Theorem.Nat.EqAddSub.of.Ge
-import Theorem.Nat.EqAddMulDiv
-import Theorem.Int.LtToNatAdd_Mul_DivSub1Sign_2.of.In_IcoNeg
-import Lemma.List.MapEnumerate.eq.Cons_MapEnumerate.of.All_Eq
-import Theorem.List.HeadD.eq.Get_0.of.GtLength_0
-import Theorem.List.LengthDrop_1.ge.Sub_1.of.GeLength.Gt_1
-import Theorem.List.GtLength_0.of.Cons.in.CartesianProduct
-import Theorem.List.EqCons_Tail.of.GtLength_0
-import Theorem.List.LengthTake.gt.Zero.of.LengthTake.gt.Zero
-import Theorem.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1
-import Theorem.List.Sub_1.lt.LengthTail.of.In_Ioo0Length
-import Theorem.List.GetTail.eq.Get_Add_1.of.Lt_SubLength_1
-import Theorem.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
-import Theorem.List.GetEraseIdx.eq.Get.of.Gt.GtLength
-import Theorem.List.In_CartesianProduct.of.In_CartesianProductCons
-import Theorem.List.Lt.of.In_CartesianProductCons
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Tensor.GtLength_0.of.GtLength_0
-import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Tensor.DataAdd.eq.AddDataS
-import Lemma.Tensor.DataMul.eq.MulDataS
-import Lemma.Tensor.DataDiv.eq.DivDataS
-import Lemma.Tensor.DataNeg.eq.NegData
-import Lemma.Tensor.DataInv.eq.InvData
-import Lemma.Tensor.EqData0'0
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength
-import Lemma.Tensor.EqLength
-import Lemma.Tensor.LengthMap.eq.Length
-import Lemma.Tensor.Eq.is.Item
-import Instance.Data.Tensor.Tensor
+module
+
+public import Def.Data.Tensor.Defs.Part4
+public import Def.Data.List.List.Basic
+public import Def.Data.Tensor.Resize
+public import Def.Data.Tensor.Shape
+public import Def.Data.Tensor.Sum
+public import Def.Data.Tensor.Mean
+public import Def.Data.Tensor.Bmm
+public import Def.Data.Tensor.Prod
+public import Def.Data.Tensor.Reshape
+public import Def.Data.Tensor.Unsqueeze
+public import Def.Data.Tensor.Repeat
+public import Notation.Data.Tensor.Permute
+public import Def.Data.Tensor.Item
+public import Def.Data.Tensor.HStack
+public import Theorem.Bool.HEq.of.All_HEq
+public import Theorem.Nat.Le_Sub_1.of.Lt
+public import Theorem.Nat.LtAddS.is.Lt
+public import Theorem.List.MapEnumerate.eq.Cons_MapEnumerate.of.All_Eq
+public import Theorem.List.HeadD.eq.Get_0.of.GtLength_0
+public import Theorem.List.LengthDrop_1.ge.Sub_1.of.GeLength.Gt_1
+public import Theorem.List.GtLength_0.of.Cons.in.CartesianProduct
+public import Theorem.List.EqCons_Tail.of.GtLength_0
+public import Theorem.List.LengthTake.gt.Zero.of.LengthTake.gt.Zero
+public import Theorem.List.In_CartesianProduct.of.In_CartesianProductCons
+public import Theorem.List.Lt.of.In_CartesianProductCons
+public import Theorem.Tensor.Length.eq.Get_0.of.GtLength_0
+public import Theorem.Tensor.GtLength_0.of.GtLength_0
+public import Theorem.Tensor.Length.eq.Get_0.of.GtLength
+public import Def.Data.Tensor.Tensor
+public import Theorem.Nat.MulMul.eq.Mul_Mul
+@[expose] public section
 open Bool Nat Int List Tensor
 
 
@@ -63,7 +45,7 @@ def Tensor.getElem (base : Tensor α s) (indices : List ℕ) (h : indices ∈ (s
   | index :: indices =>
     have h_pos := GtLength_0.of.Cons.in.CartesianProduct h
     have h_pos := LengthTake.gt.Zero.of.LengthTake.gt.Zero h_pos
-    have h_in : index :: indices ∈ (s[0] :: s.tail.take indices.length).cartesianProduct := by rwa [Eq_Cons_Tail.of.GtLength_0 h_pos] at h
+    have h_in : index :: indices ∈ (s[0] :: s.tail.take indices.length).cartesianProduct := by rwa [← EqCons_Tail.of.GtLength_0 h_pos] at h
     have h := In_CartesianProduct.of.In_CartesianProductCons h_in
     have := Lt.of.In_CartesianProductCons h_in
     cast (by simp) (getElem (base.get ⟨index, by rwa [Length.eq.Get_0.of.GtLength_0 h_pos base]⟩) indices h)
@@ -76,12 +58,12 @@ def Tensor.getSlice
   (slice : Slice) :
   Tensor α (slice.length X.length :: s.tail) :=
   let tensors := (List.Vector.indices slice X.length).map fun i =>
-    X[i].data
+    (X.get i).data
   ⟨cast (by simp) tensors.flatten⟩
 
 /-- Infoview: reverse `getSlice` to Python/PyTorch slice syntax. -/
 @[app_unexpander Tensor.getSlice]
-def Tensor.getSlice.unexpand := Slice.getSliceUnexpand
+meta def Tensor.getSlice.unexpand := Slice.getSliceUnexpand
 
 def Tensor.getSlices
   (X : Tensor α s)
@@ -116,7 +98,7 @@ def Tensor.getSlices
         indices.map fun i : Fin s[0] =>
           have : i < X.length := by
             simp_all [Length.eq.Get_0.of.GtLength (by assumption) X]
-          let ti : Tensor α (s.drop 1) := ⟨X[i].data.val, by simp⟩
+          let ti : Tensor α (s.drop 1) := ⟨(X.get ⟨i.val, this⟩).data.val, by simp⟩
           have h_shape : slices.length ≤ (s.drop 1).length := LengthDrop_1.ge.Sub_1.of.GeLength.Gt_1 (by simp_all) h_shape
           let sliced : Tensor α (shape ++ s_rest) := getSlices ti slices (h_shape := h_shape)
           have h_eq : (shape ++ s_rest).prod = shape.prod * s_rest.prod := by
@@ -128,7 +110,7 @@ def Tensor.getSlices
         let f := fun x : Fin (slices.length + 1) × Slice => x.2.length s[x.1]
         have h_all : ∀ (i: Fin slices.length) (a : Slice), f ⟨
             ⟨i + 1, by
-              apply LtAddS.of.Lt
+              rw [LtAddS.is.Lt]
               simp
             ⟩,
             a
@@ -147,7 +129,7 @@ def Tensor.getSlices
         simp_all
       ⟨
         cast (by
-            simp [Mul_Mul.eq.MulMul]
+            simp [← MulMul.eq.Mul_Mul]
             rw [h_prod]
             simp [← h_length]
             congr

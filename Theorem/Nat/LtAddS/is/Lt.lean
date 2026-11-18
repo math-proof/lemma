@@ -33,7 +33,7 @@ public theorem Nat.LtAddS.is.Lt
 
 
 @[comm, mp 4, mpr 8, mp.comm 4, mpr.comm 8, comm.is]
-public theorem left
+public theorem Nat.LtAddS.is.Lt.left
   [Add α]
   [LT α]
   [AddLeftStrictMono α]
@@ -46,5 +46,20 @@ public theorem left
   -- add_lt_add_iff_left a
   ⟨lt_of_add_lt_add_left, (add_lt_add_right · a)⟩
 
+
+
+public theorem Nat.GtAddS.of.Gt
+  [Add α] [LT α] [AddRightStrictMono α]
+  {a x y : α}
+  (h : x > y) :
+  x + a > y + a :=
+  add_lt_add_left h a
+
+public theorem Nat.Lt.of.LtAddS.left
+  [Add α] [LT α] [AddLeftStrictMono α] [AddLeftReflectLT α]
+  {a x y : α}
+  (h : a + x < a + y) :
+  x < y :=
+  (Nat.LtAddS.is.Lt.left a x y).mp h
 
 -- created on 2018-10-10

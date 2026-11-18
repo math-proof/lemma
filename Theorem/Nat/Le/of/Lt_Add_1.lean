@@ -1,5 +1,7 @@
 module
 
+public import Initialize.Tactic.Attr.Basic
+
 public import Theorem.Nat.LeAdd_1.of.Lt
 public import Theorem.Nat.NotLe.is.Gt
 public import Theorem.Nat.LtAddS.is.Lt

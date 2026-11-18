@@ -8,14 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Matrix.Basic
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Tactic
-import Mathlib.Topology.Order.Compact
-import Mathlib.Analysis.Convex.StdSimplex
-import Theorem.v1.Atlas.TensorCategories.code.PerronFrobeniusProof.Part2
+module
+
+public import Mathlib.Data.Matrix.Basic
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Tactic
+public import Mathlib.Topology.Order.Compact
+public import Mathlib.Analysis.Convex.StdSimplex
+public import Theorem.v1.Atlas.TensorCategories.code.PerronFrobeniusProof.Part2
+
+@[expose] public section
+
 open Finset BigOperators Matrix
 
 set_option maxHeartbeats 800000

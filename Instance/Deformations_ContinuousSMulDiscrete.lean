@@ -1,7 +1,12 @@
 -- Carved from Lemma/Definitions/Def_Deformations_ContinuousSMulDiscrete.lean: instance decls only.
-import Mathlib
-import Class.Deformations_ContinuousSMulDiscrete
-import Theorem.Filter.ContinuousSMulDiscrete
+
+module
+
+public import Mathlib
+public import Class.Deformations_ContinuousSMulDiscrete
+public import Theorem.Filter.ContinuousSMulDiscrete
+
+@[expose] public section
 
 section
 

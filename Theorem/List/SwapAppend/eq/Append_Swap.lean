@@ -13,6 +13,7 @@ public import Theorem.List.GetElem.eq.None.of.LeLength
 public import Theorem.Bool.NotAnd.is.OrNotS
 public import Theorem.List.EqSwap.of.LeLength
 
+public import Theorem.List.LengthSwap.eq.Length
 public section
 
 open List Bool Nat
@@ -60,9 +61,9 @@ public theorem List.SwapAppend.eq.Append_Swap
           simp_all
           rw [GetSwap.eq.Ite.of.GtLength.GtLength.GtLength (by simp_all) (by simp_all)]
           ·
-            have h_ki := NeSub.of.Ne_Add.Ge.left (by assumption) h_ki
-            have h_kj := NeSub.of.Ne_Add.Ge.left (by assumption) h_kj
-            simp_all
+            have h_ki := Ne_Sub.of.NeAdd.Ge.left (by assumption) (Ne.symm h_ki)
+            have h_kj := Ne_Sub.of.NeAdd.Ge.left (by assumption) (Ne.symm h_kj)
+            simp_all [eq_comm]
           ·
             apply LtSub.of.Lt_Add.Ge (by assumption) (by assumption)
     else

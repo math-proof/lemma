@@ -10,7 +10,7 @@ public section
 open Nat
 
 
-public theorem left
+public theorem Nat.Any_EqAddMul.of.Lt_Mul.left
   {k n m : ℕ}
 -- given
   (h : k < n * m) :
@@ -31,7 +31,7 @@ public theorem Nat.Any_EqAddMul.of.Lt_Mul
   ∃ (i : Fin m) (j : Fin n), i * n + j = k := by
 -- proof
   rw [Mul.comm] at h
-  apply left h
+  apply Any_EqAddMul.of.Lt_Mul.left h
 
 
 -- created on 2025-05-29

@@ -1,5 +1,7 @@
 module
 
+public import Mathlib
+
 public section
 
 
@@ -15,7 +17,7 @@ public theorem Nat.Le.of.Le.Le
   le_trans h₀ h₁
 
 
-public theorem subst
+public theorem Nat.Le.of.Le.Le.subst
   {y b x t k : ℝ}
 -- given
   (h₀ : y ≤ x * k + b)

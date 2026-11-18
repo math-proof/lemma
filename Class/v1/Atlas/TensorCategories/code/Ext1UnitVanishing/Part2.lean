@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/Ext1UnitVanishing.lean -/
 
 /-
@@ -8,21 +10,22 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Homology.ShortComplex.ShortExact
-import Mathlib.CategoryTheory.Simple
-import Mathlib.CategoryTheory.Monoidal.Category
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.CategoryTheory.Monoidal.Preadditive
-import Mathlib.CategoryTheory.Preadditive.Biproducts
-import Mathlib.CategoryTheory.Linear.Basic
-import Mathlib.CategoryTheory.Preadditive.Schur
-import Mathlib.CategoryTheory.Preadditive.Projective.Basic
-import Mathlib.CategoryTheory.Limits.Constructions.EpiMono
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
-import Theorem.v1.Atlas.TensorCategories.code.UnitSemisimplicity
-import Instance.v1.Atlas.TensorCategories.code.HigherDerivation
-import Instance.v1.Atlas.TensorCategories.code.Ext1UnitVanishing
+public import Mathlib.Algebra.Homology.ShortComplex.ShortExact
+public import Mathlib.CategoryTheory.Simple
+public import Mathlib.CategoryTheory.Monoidal.Category
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.CategoryTheory.Monoidal.Preadditive
+public import Mathlib.CategoryTheory.Preadditive.Biproducts
+public import Mathlib.CategoryTheory.Linear.Basic
+public import Mathlib.CategoryTheory.Preadditive.Schur
+public import Mathlib.CategoryTheory.Preadditive.Projective.Basic
+public import Mathlib.CategoryTheory.Limits.Constructions.EpiMono
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
+public import Theorem.v1.Atlas.TensorCategories.code.UnitSemisimplicity
+public import Instance.v1.Atlas.TensorCategories.code.HigherDerivation
+public import Instance.v1.Atlas.TensorCategories.code.Ext1UnitVanishing
+public section
 set_option maxHeartbeats 800000
 
 open CategoryTheory MonoidalCategory Category Limits

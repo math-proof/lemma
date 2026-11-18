@@ -1,5 +1,7 @@
 module
 
+public import Initialize.Tactic.Attr.Basic
+
 public import Theorem.Hyperreal.Infinitesimal.is.All_LtAbs
 
 public section

@@ -1,9 +1,11 @@
 module
 
+public import Mathlib
+
 public section
 
 
-public theorem left
+public theorem Nat.LeMin.left
   [LinearOrder α]
 -- given
   (a b : α) :

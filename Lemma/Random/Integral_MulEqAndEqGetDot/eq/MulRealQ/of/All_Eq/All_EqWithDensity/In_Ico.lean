@@ -1,9 +1,7 @@
 import Lemma.Random.All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
-import Theorem.Probability.JointRv.AsRV
 import Theorem.Probability.CondExpectation
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
+import Instance.Dynamics.PolicyTrajectory
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
 
@@ -25,17 +23,19 @@ private lemma main
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {R : ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
+  (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1)
   (θ : Θ)
   (t : ℕ)
   (sₜ : 𝒮)
   (aₜ : 𝒜) :
 -- imply
   ∫ ω, (if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) *
-      ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω ∂(M.traj θ) =
-    (M.traj θ).real (s t ⁻¹' {sₜ} ∩ a t ⁻¹' {aₜ}) * M.Q θ γ t sₜ aₜ := by
+      ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω ∂(M θ) =
+    (M θ).real (s t ⁻¹' {sₜ} ∩ a t ⁻¹' {aₜ}) * M.Q θ γ t sₜ aₜ := by
 -- proof
   set G := (γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]
   obtain rfl : r = fun t ω ↦ (ω t).1 :=
@@ -77,10 +77,10 @@ private lemma main
         B.indicator G := by
     funext ω
     by_cases hω : ω ∈ B <;> simp [hω, Set.indicator]
-  have hbound : ∀ᵐ ω ∂(M.traj θ),
-      ‖G ω‖ ≤ (1 - γ)⁻¹ * |M.R| := by
-    filter_upwards [All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity h₁ (M := M) θ] with ω h
-    have hb : ∀ k, ‖γ ^ k * r (t + k) ω‖ ≤ γ ^ k * |M.R| := fun k => by
+  have hbound : ∀ᵐ ω ∂(M θ),
+      ‖G ω‖ ≤ (1 - γ)⁻¹ * |R| := by
+    filter_upwards [All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity h₁ (M := M) hR θ] with ω h
+    have hb : ∀ k, ‖γ ^ k * r (t + k) ω‖ ≤ γ ^ k * |R| := fun k => by
       rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1]
       exact mul_le_mul_of_nonneg_left (h (t + k)) (pow_nonneg h₀.1 k)
     have hGω : G ω = ∑' k, γ ^ k * r (t + k) ω := by
@@ -88,35 +88,35 @@ private lemma main
       rfl
     rw [hGω]
     exact tsum_of_norm_bounded ((hasSum_geometric_of_lt_one h₀.1 h₀.2).mul_right _) hb
-  have hInt : Integrable G (M.traj θ) :=
+  have hInt : Integrable G (M θ) :=
     Integrable.of_bound hG.aestronglyMeasurable _ hbound
   rw [hι]
-  if hB : (M.traj θ) B = 0 then
-    have hreal : (M.traj θ).real B = 0 := by
+  if hB : (M θ) B = 0 then
+    have hreal : (M θ).real B = 0 := by
       simp [Measure.real, hB]
     rw [integral_indicator hBm, setIntegral_measure_zero _ hB, hreal, zero_mul]
   else
-    have := cond_isProbabilityMeasure (μ := M.traj θ) hB
-    have hQA : (M.traj θ).real B ≠ 0 := by
+    have := cond_isProbabilityMeasure (μ := M θ) hB
+    have hQA : (M θ).real B ≠ 0 := by
       intro hz
       exact hB ((ENNReal.toReal_eq_zero_iff _).1 hz |>.resolve_right
-        (measure_ne_top (M.traj θ) B))
-    have hmap : (M.traj θ).map (fun ω => (s t ω, a t ω)) {(sₜ, aₜ)} ≠ 0 := by
+        (measure_ne_top (M θ) B))
+    have hmap : (M θ).map (fun ω => (s t ω, a t ω)) {(sₜ, aₜ)} ≠ 0 := by
       rw [Measure.map_apply hX (measurableSet_singleton _), hpre]
       exact hB
-    have hQ : M.Q θ γ t sₜ aₜ = ∫ ω, G ω ∂(M.traj θ)[|B] := by
+    have hQ : M.Q θ γ t sₜ aₜ = ∫ ω, G ω ∂(M θ)[|B] := by
       unfold Model.Q
       simp only [Expectation.asRV_process]
-      show Expectation.condEval (M.traj θ) (fun ω k ↦ r k ω)
+      show Expectation.condEval (M θ) (fun ω k ↦ r k ω)
           (fun ω => (s t ω, a t ω))
           (fun integ ↦ (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[t:]) (sₜ, aₜ) =
-        ∫ ω, G ω ∂(M.traj θ)[|B]
+        ∫ ω, G ω ∂(M θ)[|B]
       rw [Expectation.condEval_eq_integral hpR hX hfG hmap, hpre]
       rfl
     have hcond :
-        ∫ ω, G ω ∂(M.traj θ)[|B] =
-          ((M.traj θ).real B)⁻¹ *
-            ∫ ω, B.indicator (1 : (ℕ → ℝ × 𝒮 × 𝒜) → ℝ) ω * G ω ∂(M.traj θ) := by
+        ∫ ω, G ω ∂(M θ)[|B] =
+          ((M θ).real B)⁻¹ *
+            ∫ ω, B.indicator (1 : (ℕ → ℝ × 𝒮 × 𝒜) → ℝ) ω * G ω ∂(M θ) := by
       rw [ProbabilityTheory.cond, integral_smul_measure, ← integral_indicator hBm,
         ENNReal.toReal_inv, ← measureReal_def, smul_eq_mul]
       congr 1
@@ -126,4 +126,4 @@ private lemma main
     rw [← hι1, hQ, hcond, ← mul_assoc, mul_inv_cancel₀ hQA, one_mul]
 
 -- created on 2026-11-14
--- updated on 2026-11-17
+-- updated on 2026-11-18

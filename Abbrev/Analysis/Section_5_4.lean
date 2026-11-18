@@ -1,5 +1,8 @@
-import Mathlib
-import Theorem.Analysis.Section_5_3.Part12
+module
+
+public import Mathlib
+public import Theorem.Analysis.Section_5_3.Part12
+@[expose] public section
 /-!
 # Analysis I, Section 5.4: Ordering the reals
 

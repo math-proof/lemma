@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/GeometryOfManifolds/code/SymplecticManifolds.lean -/
 
 /-
@@ -8,9 +10,10 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.GeometryOfManifolds.code.DifferentialForms.Part2
-import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra.Part3
-import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds
+public import Def.v1.Atlas.GeometryOfManifolds.code.DifferentialForms.Part2
+public import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra.Part3
+public import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds
+public section
 set_option autoImplicit false
 
 open DifferentialFormSpace

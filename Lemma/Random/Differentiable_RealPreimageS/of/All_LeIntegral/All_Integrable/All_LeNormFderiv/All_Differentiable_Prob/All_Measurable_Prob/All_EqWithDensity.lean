@@ -4,6 +4,7 @@ import Lemma.Random.Differentiable.All_LeNormFderivMulAdd_1Mul_C.of.All_LeNorm.S
 import Lemma.Real.StronglyMeasurable_Eq12
 import Lemma.Real.Norm_Eq12.le.One
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Real
 
@@ -31,9 +32,9 @@ private lemma main
   (t : ℕ)
   (y : 𝒮) :
 -- imply
-  Differentiable ℝ (fun θ => (M.traj θ).real (s t ⁻¹' {y})) := by
+  Differentiable ℝ (fun θ => (M θ).real (s t ⁻¹' {y})) := by
 -- proof
-  have e : (fun θ => (M.traj θ).real (s t ⁻¹' {y})) =
+  have e : (fun θ => (M θ).real (s t ⁻¹' {y})) =
       fun θ => ∑ x, M.init.toMeasure.real {x} *
         ∫ z, M.Kf θ (fun z => if z.2.1 = y then (1:ℝ) else 0) t z ∂(M.stageK θ x) :=
     funext fun θ =>
@@ -45,4 +46,4 @@ private lemma main
 
 
 -- created on 2026-11-13
--- updated on 2026-11-17
+-- updated on 2026-11-18

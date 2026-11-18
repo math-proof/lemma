@@ -1,6 +1,11 @@
-import Mathlib
-import Theorem.Analysis.Section_5_3.Part12
-import Abbrev.Analysis.Section_5_4.Part3
+module
+
+public import Mathlib
+public import Theorem.Analysis.Section_5_3.Part12
+public import Abbrev.Analysis.Section_5_4.Part3
+public import Theorem.Analysis.Section_5_4.Part2
+
+public section
 /-!
 # Analysis I, Section 5.4: Ordering the reals
 
@@ -27,18 +32,18 @@ namespace Chapter5
 
 /-- Definition 5.4.5 (absolute value) -/
 @[simp]
-theorem Real.abs_of_pos (x:Real) (hx: x.IsPos) : abs x = x := by
+public theorem Real.abs_of_pos (x:Real) (hx: x.IsPos) : abs x = x := by
   simp [abs, hx]
 
 /-- Definition 5.4.5 (absolute value) -/
 @[simp]
-theorem Real.abs_of_neg (x:Real) (hx: x.IsNeg) : abs x = -x := by
+public theorem Real.abs_of_neg (x:Real) (hx: x.IsNeg) : abs x = -x := by
   have : ¬x.IsPos := by have := not_pos_neg x; simpa [hx] using this
   simp [abs, hx, this]
 
 /-- Definition 5.4.5 (absolute value) -/
 @[simp]
-theorem Real.abs_of_zero : abs 0 = 0 := by
+public theorem Real.abs_of_zero : abs 0 = 0 := by
   have hpos: ¬(0:Real).IsPos := by have := not_zero_pos 0; simpa using this
   have hneg: ¬(0:Real).IsNeg := by have := not_zero_neg 0; simpa using this
   simp [abs, hpos, hneg]

@@ -1,9 +1,11 @@
 module
 
+public import Mathlib
+
 public section
 
 
-public theorem Comm
+public theorem Nat.Max.comm
   [LinearOrder α]
   {a b : α} :
 -- imply

@@ -4,6 +4,9 @@ import Mathlib.Data.Fintype.Basic
 import Mathlib.Data.Fintype.Lattice
 import Mathlib.Data.Finset.Max
 import Def.Algebra.BigOperators.Reduced
+import Instance.Algebra.BigOperators.Reduced
+import Instance.Algebra.BigOperators.Reduced.Part2
+import Instance.Algebra.BigOperators.Reduced.Part3
 
 
 @[simp] theorem Function.exp_apply {α : Type*} (v : α → ℝ) (b : α) : v.exp b = Real.exp (v b) := rfl

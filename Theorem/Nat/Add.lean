@@ -5,6 +5,15 @@ public import Mathlib
 public section
 
 
+public theorem Nat.Add.comm
+  [AddCommMagma α]
+-- given
+  (a b : α) :
+-- imply
+  a + b = b + a :=
+-- proof
+  add_comm a b
+
 public theorem Nat.Add.Comm
   [AddCommMagma α]
 -- given

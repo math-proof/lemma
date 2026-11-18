@@ -4,7 +4,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseSignature, hasWord, isBinderKeywordContext } from './scan.mjs';
+import { parseSignature, hasWord, isBinderKeywordContext, isIdentChar } from './scan.mjs';
 
 const REL = /[=≠<>≤≥∈∉⊆⊂⊇⊃∣↔∧∨¬≈≡]|∀|∃|\bTrue\b|\bFalse\b/;
 const isLemma = (d) => d.kind === 'lemma' || d.kind === 'theorem';
@@ -287,13 +287,20 @@ function findRedundantSetAscription(type) {
 }
 
 /** Identifier uses of `name` on [from, end) of the comment-blanked source (same idea as binder-underscore-name). */
-function countNameUses(P, name, from, end) {
+/** Identifier uses of `name` in the half-open source range [fromLine:fromCol, toLine:toCol). */
+function countNameUsesRange(P, name, fromLine, fromCol, toLine, toCol) {
     if (!name || name === '_') return 0;
+    if (toLine < fromLine || (toLine === fromLine && toCol <= fromCol)) return 0;
     let n = 0;
-    for (let i = from; i < end; i++) {
+    for (let i = fromLine; i <= toLine; i++) {
         const l = P.code[i];
-        let k = -1;
-        while ((k = l.indexOf(name, k + 1)) >= 0) {
+        if (l == null) break;
+        const start = i === fromLine ? fromCol : 0;
+        const stop = i === toLine ? Math.min(toCol, l.length) : l.length;
+        if (start >= stop) continue;
+        let k = start - 1;
+        while ((k = l.indexOf(name, k + 1)) >= 0 && k < stop) {
+            if (k + name.length > stop) break;
             const before = l[k - 1];
             const after = l[k + name.length];
             if ((before && /[\p{L}\p{N}_'.!?]/u.test(before)) || (after && /[\p{L}\p{N}_'!?₀-₉]/u.test(after))) continue;
@@ -304,6 +311,10 @@ function countNameUses(P, name, from, end) {
         }
     }
     return n;
+}
+
+function countNameUses(P, name, from, end) {
+    return countNameUsesRange(P, name, from, 0, end, 0);
 }
 
 /**
@@ -382,6 +393,399 @@ function givenUnusedRule(ctx, d, sig, gg) {
             ? `${shown} is unused in the proof: this \`-- given\` hypothesis is unnecessary and should be dropped`
             : `\`${unused.join('`, `')}\` in ${shown} is unused in the proof: this \`-- given\` hypothesis is unnecessary and should be dropped`;
         ctx.warn('given-unused', g.line + 1, g.col + 1, msg);
+    }
+}
+
+/**
+ * Named instance binder `[h : T]` above `-- given` that is never used in a later
+ * signature binder, the `-- given` section, or the `-- imply` / conclusion should
+ * be written anonymously as `[T]`. Mentions in the `-- proof` body do not count.
+ * `[_ : T]` is the same unused named form and should also become `[T]`.
+ * Already-anonymous `[T]` is left alone. Binders under `-- given` stay on
+ * `inst-under-given` (named `[h : T]` becomes `(h : T)` there).
+ */
+function instUnusedRule(ctx, d, sig) {
+    const { P } = ctx;
+    const { given, imply, proof } = d.markers;
+    const preEnd = given ?? imply ?? (sig.colon ? sig.colon.line + 1 : (sig.assign ? sig.assign.line : d.end));
+    let toLine;
+    let toCol;
+    if (proof != null) {
+        // given + imply only; the `-- proof` line and body are excluded
+        toLine = proof;
+        toCol = 0;
+    } else if (sig.assign != null) {
+        // conclusion up to `:=`; tactics after `:=` are the proof
+        toLine = sig.assign.line;
+        toCol = sig.assign.col;
+    } else {
+        toLine = d.end - 1;
+        toCol = (P.code[d.end - 1] || '').length;
+        if (toLine < d.line) return;
+    }
+    for (const g of sig.groups) {
+        if (g.kind !== 'instImplicit' || !g.names.length || g.line >= preEnd) continue;
+        const fromLine = g.endLine != null ? g.endLine : g.line;
+        const fromCol = (g.endCol != null ? g.endCol : g.col) + 1;
+        const unused = [];
+        for (const name of g.names) {
+            if (name !== '_' && countNameUsesRange(P, name, fromLine, fromCol, toLine, toCol) > 0) continue;
+            unused.push(name);
+        }
+        if (!unused.length) continue;
+        const shown = `[${g.flat}]`;
+        const anon = `[${g.type}]`;
+        const all = unused.length === g.names.length;
+        const msg = all
+            ? `${shown} is unused in \`-- given\` / \`-- imply\`: simplify to the anonymous instance binder \`${anon}\``
+            : `\`${unused.join('`, `')}\` in ${shown} is unused in \`-- given\` / \`-- imply\`: simplify the unused name to the anonymous instance binder \`${anon}\``;
+        ctx.warn('inst-unused', g.line + 1, g.col + 1, msg);
+    }
+}
+
+/**
+ * Semicolon-separated statements in `-- imply` should be newline-separated
+ * by omitting `;`. Tactic-mode `;` in `-- proof` and separators in `-- given`
+ * are out of scope. Comments / strings are already blanked by `prepare()`.
+ */
+const IMPLY_OPEN = { '(': ')', '[': ']', '{': '}', '⟨': '⟩', '⦃': '⦄', '⁅': '⁆' };
+const IMPLY_CLOSE = { ')': '(', ']': '[', '}': '{', '⟩': '⟨', '⦄': '⦃', '⁆': '⁅' };
+
+/**
+ * True when `assign` (`:=`) ends the `-- imply` region rather than belonging
+ * to a `let` / `have` / similar binding whose right-hand side or a later imply
+ * statement still follows. `:= by` / `:= calc` ends the region only when no
+ * later line at the same indent remains before `stopLine`.
+ */
+function implyAssignEndsRegion(P, assign, stopLine) {
+    const line = P.code[assign.line] ?? '';
+    const stmtIndent = line.length - line.trimStart().length;
+    const after = line.slice(assign.col + 2);
+    const trimmed = after.trim();
+    if (trimmed && !/^(by|calc)\b/.test(trimmed)) return false;
+    for (let i = assign.line + 1; i < stopLine && i < P.code.length; i++) {
+        const l = P.code[i] ?? '';
+        if (!l.trim()) continue;
+        const indent = l.length - l.trimStart().length;
+        if (indent <= stmtIndent) return false;
+    }
+    return true;
+}
+
+/** First line/col that ends the `-- imply` region: the lemma `:=`, else `-- proof`. */
+function implyRegionEnd(P, d, sig) {
+    const { imply, proof } = d.markers;
+    const stopLine = proof != null && proof > imply ? proof : d.end;
+    const st = [];
+    let lastAssign = null;
+    const lastLine = Math.min(stopLine, P.code.length - 1);
+    for (let i = imply + 1; i <= lastLine; i++) {
+        if (proof != null && i === proof) break;
+        const l = P.code[i] ?? '';
+        for (let j = 0; j < l.length; j++) {
+            const ch = l[j];
+            if (IMPLY_CLOSE[ch] && st.length && st[st.length - 1] === IMPLY_CLOSE[ch]) st.pop();
+            else if (IMPLY_OPEN[ch]) st.push(ch);
+            if (st.length === 0 && ch === ':' && l[j + 1] === '=') {
+                lastAssign = { line: i, col: j };
+                j++;
+            }
+        }
+    }
+    if (lastAssign && implyAssignEndsRegion(P, lastAssign, stopLine)) return lastAssign;
+    if (sig.assign && (sig.assign.line > imply || (sig.assign.line === imply && sig.assign.col > 0))
+        && implyAssignEndsRegion(P, sig.assign, stopLine))
+        return sig.assign;
+    return { line: stopLine, col: 0 };
+}
+
+/** True when more non-space code follows `;` on the same line, still inside the imply span. */
+function implySemicolonHasSameLineFollow(P, line, col, end) {
+    const l = P.code[line] ?? '';
+    const limit = line === end.line ? end.col : l.length;
+    return /\S/.test(l.slice(col + 1, limit));
+}
+
+/**
+ * After a `by` at depth 0, a `;` that still has a more-indented (or same-line)
+ * continuation is a tactic separator, not an imply statement separator.
+ */
+function implySemicolonIsInteriorBy(P, line, col, stmtIndent, end) {
+    if (implySemicolonHasSameLineFollow(P, line, col, end)) return true;
+    const last = Math.min(end.line, P.code.length - 1);
+    for (let i = line + 1; i <= last; i++) {
+        const raw = P.code[i] ?? '';
+        const slice = raw.slice(0, i === end.line ? end.col : raw.length);
+        if (!slice.trim()) continue;
+        const indent = slice.length - slice.trimStart().length;
+        return indent > stmtIndent;
+    }
+    return false;
+}
+
+/**
+ * Top-level `;` in `-- imply` (e.g. `let` / `have` terminated with `;` before
+ * the conclusion, or several imply statements joined by `;`) should be omitted
+ * in favor of a newline.
+ */
+function implySemicolonRule(ctx, d, sig) {
+    const { P } = ctx;
+    const { imply } = d.markers;
+    if (imply == null) return;
+    const end = implyRegionEnd(P, d, sig);
+    const lastLine = Math.min(end.line, P.code.length - 1);
+    if (imply + 1 > lastLine) return;
+    const st = [];
+    let stmtIndent = null;
+    let inBy = false;
+    for (let i = imply + 1; i <= lastLine; i++) {
+        const l = P.code[i] ?? '';
+        const limit = i === end.line ? end.col : l.length;
+        const prefix = l.slice(0, limit);
+        if (prefix.trim()) {
+            const indent = prefix.length - prefix.trimStart().length;
+            if (st.length === 0 && (stmtIndent == null || indent <= stmtIndent)) {
+                stmtIndent = indent;
+                inBy = false;
+            }
+        }
+        for (let j = 0; j < limit; j++) {
+            const ch = l[j];
+            if (IMPLY_CLOSE[ch] && st.length && st[st.length - 1] === IMPLY_CLOSE[ch]) st.pop();
+            else if (IMPLY_OPEN[ch]) st.push(ch);
+            if (st.length !== 0) continue;
+            if (ch === ';') {
+                const interior = inBy && implySemicolonIsInteriorBy(P, i, j, stmtIndent ?? 0, end);
+                if (!interior) {
+                    const sameLine = implySemicolonHasSameLineFollow(P, i, j, end);
+                    const msg = sameLine
+                        ? 'semicolon-separated statements in `-- imply`: omit `;` and put the following statement on a new line'
+                        : 'semicolon-separated statements in `-- imply`: omit `;` and keep the following statement on a new line';
+                    ctx.warn('imply-semicolon', i + 1, j + 1, msg);
+                    inBy = false;
+                }
+                continue;
+            }
+            if (l.startsWith('by', j) && !isIdentChar(l[j - 1]) && !isIdentChar(l[j + 2])) inBy = true;
+        }
+    }
+}
+
+/**
+ * Named `let` / `have` binders in `-- imply` that are never used later in
+ * `-- imply` or in the `-- proof` should drop the name (`let h : T :=` →
+ * `let : T :=`, `have h :=` → `have :=`). Mentions in the proof *do* count:
+ * dropping the name would break a proof that refers to it (unlike `inst-unused`,
+ * where an anonymous instImplicit is still found by typeclass inference).
+ * Already-anonymous `let : T :=` / `have : T :=` / `let :=` / `have :=` are
+ * left alone. `let _ : T :=` / `have _ :=` are the same unused named form and
+ * should also drop `_`. Pattern binders (`let ⟨a, b⟩ :=`), `let rec` / `let mut`,
+ * and function lets (`let f x :=`, `let f (x : T) :=`) are left alone.
+ * Only statement-level `-- imply` binders (not `-- given`, not `-- proof`,
+ * not a `let` / `have` interior to a depth-0 `by` block).
+ */
+function implyPosBefore(line, col, end) {
+    return line < end.line || (line === end.line && col < end.col);
+}
+
+function implySkipWs(P, line, col, end) {
+    while (implyPosBefore(line, col, end)) {
+        const l = P.code[line] ?? '';
+        const limit = line === end.line ? Math.min(end.col, l.length) : l.length;
+        while (col < limit && /\s/.test(l[col])) col++;
+        if (col < limit) return { line, col };
+        line++;
+        col = 0;
+    }
+    return null;
+}
+
+function implyStartsWith(P, line, col, end, token) {
+    const l = P.code[line] ?? '';
+    const limit = line === end.line ? Math.min(end.col, l.length) : l.length;
+    return col + token.length <= limit && l.startsWith(token, col);
+}
+
+function implySliceFlat(P, fromLine, fromCol, toLine, toCol) {
+    let text;
+    if (fromLine === toLine) text = (P.raw[fromLine] ?? '').slice(fromCol, toCol);
+    else {
+        const parts = [(P.raw[fromLine] ?? '').slice(fromCol)];
+        for (let i = fromLine + 1; i < toLine; i++) parts.push(P.raw[i] ?? '');
+        parts.push((P.raw[toLine] ?? '').slice(0, toCol));
+        text = parts.join(' ');
+    }
+    return text.replace(/\s+/g, ' ').trim();
+}
+
+function implyTruncate(s, max = 80) {
+    return s.length > max ? `${s.slice(0, max - 1)}…` : s;
+}
+
+const IMPLY_LET_HAVE_IDENT = /^[\p{L}_][\p{L}\p{N}_'!?₀-₉ₐ-ₜ]*/u;
+const IMPLY_LET_HAVE_SPECIAL = /^(rec|mut)(?![\p{L}\p{N}_'])/u;
+const IMPLY_PATTERN_OPEN = new Set(['⟨', '(', '{', '[', '⦃']);
+
+/** First depth-0 `:=` in the imply span starting at (line, col). */
+function implyFindAssign(P, line, col, end) {
+    const st = [];
+    while (implyPosBefore(line, col, end)) {
+        const l = P.code[line] ?? '';
+        const limit = line === end.line ? Math.min(end.col, l.length) : l.length;
+        if (col >= limit) {
+            line++;
+            col = 0;
+            continue;
+        }
+        const ch = l[col];
+        if (IMPLY_CLOSE[ch] && st.length && st[st.length - 1] === IMPLY_CLOSE[ch]) st.pop();
+        else if (IMPLY_OPEN[ch]) st.push(ch);
+        else if (st.length === 0 && ch === ':' && l[col + 1] === '=' && col + 1 < limit) return { line, col };
+        col++;
+    }
+    return null;
+}
+
+/**
+ * End of a `let` / `have` RHS starting just after `:=`, still inside the imply
+ * span: a depth-0 `;` (returned after the semicolon), a later line at
+ * `stmtIndent` or less, or `end` itself.
+ */
+function implyLetHaveRhsEnd(P, fromLine, fromCol, end, stmtIndent) {
+    const st = [];
+    let line = fromLine;
+    let col = fromCol;
+    let last = { line: fromLine, col: fromCol };
+    while (implyPosBefore(line, col, end)) {
+        const l = P.code[line] ?? '';
+        const limit = line === end.line ? Math.min(end.col, l.length) : l.length;
+        if (col >= limit) {
+            let next = line + 1;
+            while (true) {
+                if (next > end.line) return { line: end.line, col: end.col };
+                if (next === end.line && end.col === 0) return { line: end.line, col: end.col };
+                if (!implyPosBefore(next, 0, end) && !(next === end.line && end.col > 0)) {
+                    return { line: end.line, col: end.col };
+                }
+                const nl = P.code[next] ?? '';
+                const nlimit = next === end.line ? Math.min(end.col, nl.length) : nl.length;
+                const slice = nl.slice(0, nlimit);
+                if (!slice.trim()) {
+                    next++;
+                    continue;
+                }
+                const indent = slice.length - slice.trimStart().length;
+                if (st.length > 0 || indent > stmtIndent) {
+                    line = next;
+                    col = 0;
+                    break;
+                }
+                return last;
+            }
+            continue;
+        }
+        const ch = l[col];
+        if (IMPLY_CLOSE[ch] && st.length && st[st.length - 1] === IMPLY_CLOSE[ch]) st.pop();
+        else if (IMPLY_OPEN[ch]) st.push(ch);
+        else if (st.length === 0 && ch === ';') return { line, col: col + 1 };
+        last = { line, col: col + 1 };
+        col++;
+    }
+    return { line: end.line, col: end.col };
+}
+
+/**
+ * Parse a statement-level `let` / `have` at (line, col) (the keyword start).
+ * Returns the binder, or null when the form is skipped (already anonymous,
+ * pattern, `let rec` / `let mut`, function let, or no `:=`).
+ */
+function parseImplyLetHave(P, line, col, end) {
+    const l0 = P.code[line] ?? '';
+    let kw = null;
+    if (l0.startsWith('let', col) && !isIdentChar(l0[col + 3])) kw = 'let';
+    else if (l0.startsWith('have', col) && !isIdentChar(l0[col + 4])) kw = 'have';
+    if (!kw) return null;
+    let pos = implySkipWs(P, line, col + kw.length, end);
+    if (!pos) return null;
+    const afterKw = (P.code[pos.line] ?? '').slice(pos.col);
+    if (IMPLY_LET_HAVE_SPECIAL.test(afterKw)) return null;
+    if (implyStartsWith(P, pos.line, pos.col, end, ':=')) return null;
+    if (implyStartsWith(P, pos.line, pos.col, end, ':')) return null;
+    const ch = (P.code[pos.line] ?? '')[pos.col];
+    if (IMPLY_PATTERN_OPEN.has(ch)) return null;
+    const ident = IMPLY_LET_HAVE_IDENT.exec(afterKw);
+    if (!ident) return null;
+    const name = ident[0];
+    const nameLine = pos.line;
+    const nameCol = pos.col;
+    pos = implySkipWs(P, nameLine, nameCol + name.length, end);
+    if (!pos) return null;
+    if (implyStartsWith(P, pos.line, pos.col, end, ':=')) {
+        return { kw, name, nameLine, nameCol, typed: false, type: '', assign: pos };
+    }
+    const nextCh = (P.code[pos.line] ?? '')[pos.col];
+    if (nextCh === ':' && !implyStartsWith(P, pos.line, pos.col, end, ':=')) {
+        const typeStart = { line: pos.line, col: pos.col + 1 };
+        const assign = implyFindAssign(P, typeStart.line, typeStart.col, end);
+        if (!assign) return null;
+        const type = implySliceFlat(P, typeStart.line, typeStart.col, assign.line, assign.col);
+        return { kw, name, nameLine, nameCol, typed: true, type, assign };
+    }
+    // function let (`let f x :=`, `let f (x : T) :=`) or other special form
+    return null;
+}
+
+function implyUnusedRule(ctx, d, sig) {
+    const { P } = ctx;
+    const { imply } = d.markers;
+    if (imply == null) return;
+    const end = implyRegionEnd(P, d, sig);
+    const lastLine = Math.min(end.line, P.code.length - 1);
+    if (imply + 1 > lastLine) return;
+    const useToLine = d.end - 1;
+    const useToCol = (P.code[useToLine] || '').length;
+    const st = [];
+    let stmtIndent = null;
+    let inBy = false;
+    for (let i = imply + 1; i <= lastLine; i++) {
+        const l = P.code[i] ?? '';
+        const limit = i === end.line ? end.col : l.length;
+        const prefix = l.slice(0, limit);
+        if (prefix.trim()) {
+            const indent = prefix.length - prefix.trimStart().length;
+            if (st.length === 0 && (stmtIndent == null || indent <= stmtIndent)) {
+                stmtIndent = indent;
+                inBy = false;
+            }
+        }
+        for (let j = 0; j < limit; j++) {
+            const ch = l[j];
+            if (IMPLY_CLOSE[ch] && st.length && st[st.length - 1] === IMPLY_CLOSE[ch]) st.pop();
+            else if (IMPLY_OPEN[ch]) st.push(ch);
+            if (st.length !== 0) continue;
+            if (l.startsWith('by', j) && !isIdentChar(l[j - 1]) && !isIdentChar(l[j + 2])) inBy = true;
+            if (inBy) continue;
+            const isLet = l.startsWith('let', j) && !isIdentChar(l[j - 1]) && !isIdentChar(l[j + 3]);
+            const isHave = l.startsWith('have', j) && !isIdentChar(l[j - 1]) && !isIdentChar(l[j + 4]);
+            if (!isLet && !isHave) continue;
+            const binder = parseImplyLetHave(P, i, j, end);
+            if (!binder) continue;
+            const rhsEnd = implyLetHaveRhsEnd(P, binder.assign.line, binder.assign.col + 2, end, stmtIndent ?? 0);
+            if (binder.name !== '_' && countNameUsesRange(P, binder.name, rhsEnd.line, rhsEnd.col, useToLine, useToCol) > 0) continue;
+            const shownType = binder.typed ? implyTruncate(binder.type) : '';
+            const shown = binder.typed
+                ? `${binder.kw} ${binder.name} : ${shownType} :=`
+                : `${binder.kw} ${binder.name} :=`;
+            const anon = binder.typed
+                ? `${binder.kw} : ${shownType} :=`
+                : `${binder.kw} :=`;
+            ctx.warn(
+                'imply-unused',
+                binder.nameLine + 1,
+                binder.nameCol + 1,
+                `\`${shown}\` is unused in the rest of \`-- imply\` and the \`-- proof\`: drop the name and write \`${anon}\``,
+            );
+        }
     }
 }
 
@@ -819,6 +1223,15 @@ export function signatureRules(ctx) {
 
         // ---- given: unused hypothesis (incl. already `_`) should be dropped --------------------------
         if (given != null) givenUnusedRule(ctx, d, sig, gg);
+
+        // ---- unused named instImplicit `[h : T]` above `-- given` should be `[T]` --------------------
+        instUnusedRule(ctx, d, sig);
+
+        // ---- semicolon-separated `-- imply` statements should be newline-separated ------------------
+        implySemicolonRule(ctx, d, sig);
+
+        // ---- unused named `let` / `have` in `-- imply` should drop the name --------------------------
+        implyUnusedRule(ctx, d, sig);
 
         // ---- combine adjacent binders of the same kind and type ------------------------------------------------
         for (let a = 0; a + 1 < groups.length; a++) {

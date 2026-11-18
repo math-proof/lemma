@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/Lec2AlgebraicVariety.lean -/
 
 /-
@@ -8,11 +10,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.AffineScheme
-import Mathlib.AlgebraicGeometry.Properties
-import Mathlib.AlgebraicGeometry.Morphisms.FiniteType
-import Mathlib.AlgebraicGeometry.Over
-import Instance.v1.Atlas.AlgebraicGeometryI.code.AffineVarietyDef
+public import Mathlib.AlgebraicGeometry.AffineScheme
+public import Mathlib.AlgebraicGeometry.Properties
+public import Mathlib.AlgebraicGeometry.Morphisms.FiniteType
+public import Mathlib.AlgebraicGeometry.Over
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.AffineVarietyDef
+public section
 set_option maxHeartbeats 800000
 
 namespace AlgebraicGeometry.Scheme

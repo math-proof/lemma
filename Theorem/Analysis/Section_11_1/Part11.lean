@@ -1,5 +1,9 @@
-import Mathlib
-import Abbrev.Analysis.Section_11_1.Part4
+module
+
+public import Mathlib
+public import Abbrev.Analysis.Section_11_1.Part4
+
+public section
 /-!
 # Analysis I, Section 11.1: Partitions
 
@@ -22,7 +26,7 @@ namespace Chapter11
 open BoundedInterval
 
 @[simp]
-theorem Partition.intervals_of_join {I J K:BoundedInterval} {h:K.joins I J} (P: Partition I) (Q: Partition J) : (P.join Q h).intervals = P.intervals ∪ Q.intervals := by
+public theorem Partition.intervals_of_join {I J K:BoundedInterval} {h:K.joins I J} (P: Partition I) (Q: Partition J) : (P.join Q h).intervals = P.intervals ∪ Q.intervals := by
   simp
 
 end Chapter11

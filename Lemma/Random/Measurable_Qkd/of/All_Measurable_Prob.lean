@@ -1,8 +1,7 @@
 import Mathlib.Probability.Kernel.MeasurableIntegral
 import Lemma.Random.Measurable_Vkd.of.All_Measurable_Prob
 import Lemma.Random.Qkd.eq.AddRkd_MulIntegral_Vkd.of.Ne0Real_Joint.In_Ico
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
+import Instance.Dynamics.PolicyTrajectory
 open MeasureTheory PolicyGradient Random
 
 
@@ -16,26 +15,28 @@ private lemma main
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {θ : Θ}
   {γ : ℝ}
+  {R : ℝ}
 -- given
   (h : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π[θ] z.1 z.2))
   (hγ : γ ∈ Set.Ico 0 1)
   (hQA : ∀ x u,
-    (M.traj θ).real
+    (M θ).real
       (((fun ω : ℕ → ℝ × 𝒮 × 𝒜 => (ω 0).2.1) ⁻¹' {x}) ∩
-        ((fun ω : ℕ → ℝ × 𝒮 × 𝒜 => (ω 0).2.2) ⁻¹' {u})) ≠ 0) :
+        ((fun ω : ℕ → ℝ × 𝒮 × 𝒜 => (ω 0).2.2) ⁻¹' {u})) ≠ 0)
+  (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1) :
 -- imply
   Measurable (fun z : 𝒮 × 𝒜 => M.Q0 θ γ z.1 z.2) := by
 -- proof
   have hEq : (fun z : 𝒮 × 𝒜 => M.Q0 θ γ z.1 z.2) =
-      fun z => M.rkd z.1 z.2 + γ * ∫ y, M.V0 θ γ y ∂(M.trans z) := by
+      fun z => M.rkd R z.1 z.2 + γ * ∫ y, M.V0 R θ γ y ∂(M.trans z) := by
     funext z
     exact Qkd.eq.AddRkd_MulIntegral_Vkd.of.Ne0Real_Joint.In_Ico
-      (M := M) hγ (hQA z.1 z.2)
+      (M := M) hγ (hQA z.1 z.2) hR
   rw [hEq]
-  apply (MeasurableRkd (M := M)).add (Measurable.const_mul _ γ)
-  apply (StronglyMeasurable.integral_kernel_prod_right' (κ := M.transK) (f := fun z => M.V0 θ γ z.2)
-    ((Measurable_Vkd.of.All_Measurable_Prob (M := M) h θ γ).stronglyMeasurable.comp_measurable measurable_snd)).measurable
+  apply (MeasurableRkd (M := M) R).add (Measurable.const_mul _ γ)
+  apply (StronglyMeasurable.integral_kernel_prod_right' (κ := M.transK) (f := fun z => M.V0 R θ γ z.2)
+    ((Measurable_Vkd.of.All_Measurable_Prob (M := M) h R θ γ).stronglyMeasurable.comp_measurable measurable_snd)).measurable
 
 
 -- created on 2026-10-07
--- updated on 2026-11-17
+-- updated on 2026-11-18

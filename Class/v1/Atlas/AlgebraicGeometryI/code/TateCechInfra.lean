@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/TateCechInfra.lean -/
 
 /-
@@ -8,9 +10,10 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityTate.Part3
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.SerreDualityAnnihilator
-import Def.v1.Atlas.AlgebraicGeometryI.code.TateCechInfra
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityTate.Part3
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.SerreDualityAnnihilator
+public import Def.v1.Atlas.AlgebraicGeometryI.code.TateCechInfra
+public section
 
 section TateVectorSpaceDef
 

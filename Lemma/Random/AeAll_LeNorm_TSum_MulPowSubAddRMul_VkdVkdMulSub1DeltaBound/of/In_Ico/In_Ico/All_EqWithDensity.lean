@@ -1,6 +1,5 @@
 import Lemma.Random.AeNormSub.le.DeltaBound.of.In_Ico.All_EqWithDensity
-import Class.Dynamics.MarkovDecisionProcess
-import Initialize.Tactic.Attr.Basic
+import Instance.Dynamics.PolicyTrajectory
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random
 
 
@@ -16,20 +15,22 @@ private lemma main
   {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
   {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
   {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {R : ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
   (h₂ : c ∈ Set.Ico 0 1)
+  (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1)
   (θ : Θ) :
 -- imply
-  ∀ᵐ ω ∂(M.traj θ), ∀ t, ‖∑' k, c ^ k * (r (t + k) ω + γ * M.V0 θ γ (s (t + k + 1) ω) -
-    M.V0 θ γ (s (t + k) ω))‖ ≤ (1 - c)⁻¹ * ((3 / (1 - γ) - 1) * |M.R|) := by
+  ∀ᵐ ω ∂(M θ), ∀ t, ‖∑' k, c ^ k * (r (t + k) ω + γ * M.V0 R θ γ (s (t + k + 1) ω) -
+    M.V0 R θ γ (s (t + k) ω))‖ ≤ (1 - c)⁻¹ * ((3 / (1 - γ) - 1) * |R|) := by
 -- proof
-  filter_upwards [AeNormSub.le.DeltaBound.of.In_Ico.All_EqWithDensity (M := M) h₀ h₁ θ] with ω h t
+  filter_upwards [AeNormSub.le.DeltaBound.of.In_Ico.All_EqWithDensity (M := M) h₀ h₁ hR θ] with ω h t
   refine tsum_of_norm_bounded ((hasSum_geometric_of_lt_one h₂.1 h₂.2).mul_right _) fun k => ?_
   rw [norm_mul, norm_pow, Real.norm_of_nonneg h₂.1]
   exact mul_le_mul_of_nonneg_left (h (t + k)) (pow_nonneg h₂.1 k)
 
 
 -- created on 2026-10-20
--- updated on 2026-11-17
+-- updated on 2026-11-18

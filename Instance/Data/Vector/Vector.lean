@@ -1,16 +1,21 @@
-import Theorem.Data.Vector.Basic.Part2
-import Lemma.Vector.Zero.eq.Replicate
-import Lemma.Vector.One.eq.Replicate
-import Lemma.Vector.Add.eq.Map₂
-import Lemma.Vector.Mul.eq.Map₂
-import Lemma.Vector.GetDiv.eq.DivGetS
-import Lemma.Vector.GetMul.eq.MulGetS
-import Lemma.Vector.GetAdd.eq.AddGetS
-import Lemma.Vector.GetInv.eq.InvGet
-import Lemma.Vector.GetNeg.eq.NegGet
-import Theorem.Vector.NeReplicateS.of.Ne.Gt_0
-import Lemma.Vector.EqGet1_1
-import Lemma.Vector.EqGet0_0
+module
+
+public import Theorem.Data.Vector.Basic.Part2
+public import Theorem.Vector.Zero.eq.Replicate
+public import Theorem.Vector.One.eq.Replicate
+public import Theorem.Vector.Add.eq.Map₂
+public import Theorem.Vector.Mul.eq.Map₂
+public import Theorem.Vector.GetDiv.eq.DivGetS
+public import Theorem.Vector.GetMul.eq.MulGetS
+public import Theorem.Vector.GetAdd.eq.AddGetS
+public import Theorem.Vector.GetInv.eq.InvGet
+public import Theorem.Vector.GetNeg.eq.NegGet
+public import Theorem.Vector.NeReplicateS.of.Ne.Gt_0
+public import Theorem.Vector.EqGet1_1
+public import Theorem.Vector.EqGet0_0
+
+@[expose] public section
+
 open Vector
 
 

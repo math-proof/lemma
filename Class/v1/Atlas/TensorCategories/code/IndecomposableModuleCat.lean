@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/IndecomposableModuleCat.lean -/
 
 /-
@@ -8,9 +10,10 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TensorCategories.code.DirectSumModuleCategory.Part2
-import Mathlib.CategoryTheory.Limits.Shapes.ZeroObjects
-import Def.v1.Atlas.TensorCategories.code.IndecomposableModuleCat
+public import Def.v1.Atlas.TensorCategories.code.DirectSumModuleCategory.Part2
+public import Mathlib.CategoryTheory.Limits.Shapes.ZeroObjects
+public import Def.v1.Atlas.TensorCategories.code.IndecomposableModuleCat
+public section
 set_option maxHeartbeats 800000
 
 open CategoryTheory

@@ -31,5 +31,12 @@ public theorem Nat.AddAdd.eq.Add_Add.comm
   rw [Nat.Add.Comm (a := b)]
 
 
+public theorem Nat.Add_Add.eq.AddAdd
+  [AddSemigroup α]
+  (a b c : α) :
+  a + (b + c) = a + b + c :=
+  (AddAdd.eq.Add_Add a b c).symm
+
+
 -- created on 2024-07-01
 -- updated on 2025-05-24

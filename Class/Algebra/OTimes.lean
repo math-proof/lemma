@@ -1,5 +1,8 @@
-import Initialize.Tactic.Attr.Basic
-import Notation.Algebra.BigOperators.PrefixSum.AllPrefixSums
+module
+
+public import Initialize.Tactic.Attr.Basic
+public import Notation.Algebra.BigOperators.PrefixSum.AllPrefixSums
+public section
 
 
 -- define the circled times operator

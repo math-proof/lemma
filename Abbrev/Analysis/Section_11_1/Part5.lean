@@ -1,5 +1,8 @@
-import Mathlib
-import Theorem.Analysis.Section_11_1.Part11
+module
+
+public import Mathlib
+public import Theorem.Analysis.Section_11_1.Part11
+@[expose] public noncomputable section
 /-!
 # Analysis I, Section 11.1: Partitions
 

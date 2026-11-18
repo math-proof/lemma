@@ -1,5 +1,9 @@
-import Initialize.Tactic.Attr.Basic
-import Notation.Algebra.BigOperators.PrefixSum.AllPrefixSums.Part3
+module
+
+public import Initialize.Tactic.Attr.Basic
+public import Notation.Algebra.BigOperators.PrefixSum.AllPrefixSums.Part3
+
+@[expose] public section
 
 
 -- Define the all-prefix-sums function

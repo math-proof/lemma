@@ -43,5 +43,12 @@ public theorem Nat.GeAdd.of.Ge_Sub
   {a b c : ℕ} (h : c ≥ a - b) : c + b ≥ a :=
   (Nat.LeSub.is.Le_Add c b a).mp h
 
+public theorem Nat.LeSub.of.Le_Add
+  {a b c : ℕ}
+  (h : c ≤ a + b) :
+  c - b ≤ a :=
+  (Nat.LeSub.is.Le_Add a b c).mpr h
+
+
 -- created on 2024-11-27
 -- updated on 2026-10-26

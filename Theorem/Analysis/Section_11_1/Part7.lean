@@ -1,5 +1,10 @@
-import Mathlib
-import Instance.Analysis.Section_11_1.Part6
+module
+
+public import Mathlib
+public import Instance.Analysis.Section_11_1.Part3
+public import Theorem.Analysis.Section_11_1.Part4
+
+public section
 /-!
 # Analysis I, Section 11.1: Partitions
 
@@ -22,7 +27,12 @@ namespace Chapter11
 open BoundedInterval
 
 @[simp]
-theorem BoundedInterval.mem_inter (I J: BoundedInterval) (x:ℝ) :
-  x ∈ (I ∩ J : BoundedInterval) ↔ x ∈ I ∧ x ∈ J := by simp [mem_iff]
+public theorem BoundedInterval.mem_inter (I J: BoundedInterval) (x:ℝ) :
+  x ∈ (I ∩ J : BoundedInterval) ↔ x ∈ I ∧ x ∈ J := by
+  simp [mem_iff]
+  change x ∈ ((BoundedInterval.inter I J).choose : Set ℝ) ↔
+    x ∈ (I : Set ℝ) ∧ x ∈ (J : Set ℝ)
+  rw [← (BoundedInterval.inter I J).choose_spec]
+  rfl
 
 end Chapter11

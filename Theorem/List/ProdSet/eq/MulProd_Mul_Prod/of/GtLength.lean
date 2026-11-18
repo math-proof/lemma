@@ -1,5 +1,7 @@
 module
 
+public import Initialize.Tactic.Attr.Basic
+
 public import Theorem.List.Set.eq.AppendTake__Cons_Drop.of.GtLength
 public import Theorem.List.ProdAppend.eq.MulProdS
 public import Theorem.List.ProdCons.eq.Mul_Prod

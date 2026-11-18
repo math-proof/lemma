@@ -1,5 +1,8 @@
-import Initialize.Tactic.Attr.Basic
-import Def.Algebra.BigOperators.PrefixSum.AllPrefixSums
+module
+
+public import Initialize.Tactic.Attr.Basic
+public import Def.Algebra.BigOperators.PrefixSum.AllPrefixSums
+public section
 
 
 class Bullet (α : Type u) [OPlus α] [OTimes α] [ODot α] where

@@ -5,8 +5,9 @@ public import Theorem.Bool.Or.of.Or.Imp
 public import Theorem.Bool.And.of.And.Imp
 public import Theorem.Bool.Imp.is.ImpNotS
 public import Theorem.Bool.Imp.of.Imp.Imp
-public import Def.Lean.Meta.Expr.Part4 -- using Lean.Expr.is_Prop
+public import Def.Lean.Meta.Expr -- using Lean.Expr.is_Prop
 public import Def.Lean.FVarId
+public meta import Def.Tactic.Logic
 public import Syntax.Tactic.Logic.Part2
 
 @[expose] public section
@@ -15,7 +16,7 @@ open Lean Elab.Tactic Meta Parser.Tactic
 
 
 @[tactic mpr]
-def evalMpr : Tactic
+meta def evalMpr : Tactic
 | `(tactic| mpr [ $[ $h₀ ],* ] $[$loc:location]?) => employModusPonens `mpr h₀ loc true
 | _ => throwError "Usage: mpr [ <term>,+ ] at <location>?"
 

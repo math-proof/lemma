@@ -1,4 +1,7 @@
+import Initialize.Tactic.Attr.Basic
 import Def.Data.List.List.Basic
+
+
 @[path]
 private lemma main
   {s s' : List α}
@@ -17,4 +20,4 @@ private lemma main
 
 
 -- created on 2026-07-03
--- updated on 2026-10-26
+-- updated on 2026-11-18

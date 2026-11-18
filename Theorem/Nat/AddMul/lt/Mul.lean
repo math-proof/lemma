@@ -38,15 +38,15 @@ public theorem Nat.AddMul.lt.Mul
   assumption
 
 
-public theorem Comm
+public theorem Nat.AddMul.lt.Mul.comm
 -- given
   (i : Fin m)
   (j : Fin n) :
 -- imply
   i * n + j < n * m := by
 -- proof
-  have := main i j
-  conv_rhs at this=> rw [Mul.comm]
+  have := AddMul.lt.Mul i j
+  conv_rhs at this => rw [Nat.mul_comm]
   assumption
 
 

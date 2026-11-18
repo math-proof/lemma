@@ -8,11 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Category
-import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
-import Mathlib.CategoryTheory.GradedObject
-import Mathlib.Tactic.Group
-import Theorem.v1.Atlas.TensorCategories.code.GradedVec.Part5
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Category
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
+public import Mathlib.CategoryTheory.GradedObject
+public import Mathlib.Tactic.Group
+public import Theorem.v1.Atlas.TensorCategories.code.GradedVec.Part5
+public import Def.v1.Atlas.TensorCategories.code.GradedVec.Part2
+public import Def.v1.Atlas.TensorCategories.code.GradedVec.Part3
+public import Def.v1.Atlas.TensorCategories.code.GradedVec.Part4
+@[expose] public section
 set_option maxHeartbeats 800000
 
 open CategoryTheory

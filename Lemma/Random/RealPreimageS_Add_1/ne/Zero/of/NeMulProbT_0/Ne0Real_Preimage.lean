@@ -1,5 +1,6 @@
 import Lemma.Random.Integral_MulEqAndEq.eq.MulMulRealProbSum_MulT.of.All_Eq
 import Class.Dynamics.MarkovDecisionProcess
+import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 
@@ -23,11 +24,11 @@ private lemma main
   {y : 𝒮}
 -- given
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
-  (hP : (M.traj θ).real (s t ⁻¹' {sₜ}) ≠ 0)
+  (hP : (M θ).real (s t ⁻¹' {sₜ}) ≠ 0)
   (hz : M.π[θ] sₜ aₜ * μ.measure.real {aₜ} *
     (M.trans (sₜ, aₜ)).toMeasure.real {y} ≠ 0) :
 -- imply
-  (M.traj θ).real (s (t + 1) ⁻¹' {y}) ≠ 0 := by
+  (M θ).real (s (t + 1) ⁻¹' {y}) ≠ 0 := by
 -- proof
   have hfeq : (fun y' : 𝒮 => if y' = y then (1:ℝ) else 0) =
       ({y} : Set 𝒮).indicator (1 : 𝒮 → ℝ) := by
@@ -52,8 +53,8 @@ private lemma main
     rw [hfeq, integral_indicator_one (measurableSet_singleton y)]
   have hE :
     ∫ ω, (if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) *
-        (if s (t + 1) ω = y then (1:ℝ) else 0) ∂(M.traj θ) =
-      (M.traj θ).real (s t ⁻¹' {sₜ}) *
+        (if s (t + 1) ω = y then (1:ℝ) else 0) ∂(M θ) =
+      (M θ).real (s t ⁻¹' {sₜ}) *
         (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}) *
         (M.trans (sₜ, aₜ)).toMeasure.real {y} := by
     rw [Integral_MulEqAndEq.eq.MulMulRealProbSum_MulT.of.All_Eq
@@ -89,12 +90,12 @@ private lemma main
         Set.mem_singleton_iff]
   have hle :
     ∫ ω, (if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) *
-        (if s (t + 1) ω = y then (1:ℝ) else 0) ∂(M.traj θ) ≤
-      (M.traj θ).real (s (t + 1) ⁻¹' {y}) := by
+        (if s (t + 1) ω = y then (1:ℝ) else 0) ∂(M θ) ≤
+      (M θ).real (s (t + 1) ⁻¹' {y}) := by
     rw [hindp, integral_indicator_one (hSA.inter hY)]
     exact measureReal_mono (fun ω hω => hω.2)
   have hpos : 0 <
-      (M.traj θ).real (s t ⁻¹' {sₜ}) *
+      (M θ).real (s t ⁻¹' {sₜ}) *
         (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}) *
         (M.trans (sₜ, aₜ)).toMeasure.real {y} := by
     apply mul_pos
@@ -112,4 +113,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-11-17
+-- updated on 2026-11-18

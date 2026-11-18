@@ -15,7 +15,7 @@ public theorem Nat.Ge_1.of.Gt_0
 -- imply
   x ≥ 1 := by
 -- proof
-  have := Ge_Add_1.of.Gt h
+  have := IntegerRing.succ_le_of_lt h
   simp_all
 
 

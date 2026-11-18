@@ -1,3 +1,5 @@
+module
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/GeometryOfManifolds/code/WeinsteinNeighborhood.lean -/
 
 /-
@@ -8,15 +10,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra.Part3
-import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
-import Structure.v1.Atlas.GeometryOfManifolds.code.MoserDarboux.Part2
-import Def.v1.Atlas.GeometryOfManifolds.code.BlockMatrixLp
-import Mathlib.Geometry.Manifold.Diffeomorph
-import Mathlib.Geometry.Manifold.MFDeriv.Basic
-import Mathlib.Analysis.Calculus.DifferentialForm.Basic
-import Mathlib.Analysis.ODE.PicardLindelof
-import Structure.v1.Atlas.GeometryOfManifolds.code.WeinsteinNeighborhood.Part5
+public import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra.Part3
+public import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
+public import Structure.v1.Atlas.GeometryOfManifolds.code.MoserDarboux.Part2
+public import Def.v1.Atlas.GeometryOfManifolds.code.BlockMatrixLp
+public import Mathlib.Geometry.Manifold.Diffeomorph
+public import Mathlib.Geometry.Manifold.MFDeriv.Basic
+public import Mathlib.Analysis.Calculus.DifferentialForm.Basic
+public import Mathlib.Analysis.ODE.PicardLindelof
+public import Structure.v1.Atlas.GeometryOfManifolds.code.WeinsteinNeighborhood.Part5
+public section
 set_option autoImplicit false
 
 open Module FiniteDimensional

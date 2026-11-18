@@ -25,7 +25,7 @@ public theorem List.GetSwap.eq.Get.of.GtLengthSwap.GtLength
   aesop
 
 
-public theorem left
+public theorem List.GetSwap.eq.Get.of.GtLengthSwap.GtLength.left
   {s : List α}
   {i j : ℕ}
 -- given

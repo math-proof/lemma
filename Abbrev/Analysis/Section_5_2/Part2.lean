@@ -1,11 +1,12 @@
-import Mathlib
-import Theorem.Analysis.Section_5_1.Part9
-import Theorem.Analysis.Section_5_2
+module
 
+public import Mathlib
+public import Abbrev.Analysis.Section_5_2
+@[expose] public section
 
 namespace Chapter5
 
 abbrev Sequence.Equiv (a b: ℕ → ℚ) : Prop :=
-  ∀ ε > (0:ℚ), ε.EventuallyClose (a:Sequence) (b:Sequence)
+  ∀ ε > (0:ℚ), ε.EventuallyClose (Sequence.ofNatFun a) (Sequence.ofNatFun b)
 
 end Chapter5
