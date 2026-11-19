@@ -1,6 +1,6 @@
 import Lemma.Random.GetSlice.eq.SnocGetSlice
 import Lemma.Random.All_MeasurableGet.is.All_MeasurableGetSlice
-import Lemma.Random.All_SinglePSpace_JointGet__GetSlice.of.All_SinglePSpace_GetSlice
+import Lemma.Random.All_SinglePSpace_Joint.of.All_SinglePSpace_GetSlice
 import Lemma.Random.All_SinglePSpace_JointGet_Add_1_Get.of.All_SinglePSpace_GetSlice
 import Lemma.Random.All_Imp_EqProbSCond.of.CondIndep
 import Lemma.Random.Map.eq.WithDensityProb
@@ -38,7 +38,7 @@ private lemma main
 -- imply
   have : ∀ k : ℕ, Measurable s[:k] :=
     All_MeasurableGetSlice.of.All_MeasurableGet hs
-  have : SinglePSpace π (s[t + 1], s[:t.succ]) := All_SinglePSpace_JointGet__GetSlice.of.All_SinglePSpace_GetSlice hP t.succ
+  have : SinglePSpace π (s[t + 1], s[:t.succ]) := All_SinglePSpace_Joint.of.All_SinglePSpace_GetSlice hP t.succ
   have : SinglePSpace π (s[t + 1], s[t]) := All_SinglePSpace_JointGet_Add_1_Get.of.All_SinglePSpace_GetSlice hP t
   ℙ[π](s[t + 1] | s[:t.succ]) =ᵐ[π] ℙ[π](s[t + 1] | s[t]) := by
 -- proof

@@ -1,4 +1,4 @@
-import Lemma.Random.All_SinglePSpace_JointGet__GetSlice.of.All_SinglePSpace_GetSlice
+import Lemma.Random.All_SinglePSpace_Joint.of.All_SinglePSpace_GetSlice
 import Notation.Fun
 import Mathlib.MeasureTheory.Constructions.Pi
 import Mathlib.MeasureTheory.Measure.Prod
@@ -206,7 +206,7 @@ private lemma main
 -- proof
   intro k
   apply SinglePSpace_Get_succ_Get_of_Get_succ_GetSlice
-  exact All_SinglePSpace_JointGet__GetSlice.of.All_SinglePSpace_GetSlice hP (k + 1)
+  exact All_SinglePSpace_Joint.of.All_SinglePSpace_GetSlice hP (k + 1)
 
 
 -- created on 2026-11-18

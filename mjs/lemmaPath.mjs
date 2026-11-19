@@ -2499,12 +2499,12 @@ function nablaBoundScope(node) {
   return { bound: node.args?.[0] ?? null, scope: node.args?.[1] ?? null };
 }
 
-function nablaPathChoicesToGrad(choices) {
+function nablaPathChoicesToGrad(choices, gradTok) {
   const out = [];
   for (const raw of choices || []) {
     const s = String(raw ?? "");
     if (s === "Nabla" || s.startsWith("Nabla_") || /^Nabla[A-Z0-9]/.test(s)) {
-      out.push("Grad" + s.slice("Nabla".length));
+      out.push(gradTok + s.slice("Nabla".length));
     } else {
       out.push(s);
 
@@ -2515,14 +2515,15 @@ function nablaPathChoicesToGrad(choices) {
 
 function nablaGradAlts(node, opts = {}) {
   if (!nablaBoundScope(node)) return [];
+  const T = node.pathToken;
   let ch = [];
   if (typeof node.pathChoices === "function") {
-    ch = nablaPathChoicesToGrad(node.pathChoices(opts) || []);
+    ch = nablaPathChoicesToGrad(node.pathChoices(opts) || [], T);
   }
   ch = [...new Set(ch.filter((x) => x != null))];
-  if (!ch.includes("Grad") && !ch.includes("")) ch.push("Grad");
+  if (!ch.includes(T) && !ch.includes("")) ch.push(T);
   const nonempty = ch.filter(Boolean);
-  if (!nonempty.includes("Grad")) nonempty.unshift("Grad");
+  if (!nonempty.includes(T)) nonempty.unshift(T);
   return nonempty;
 }
 
@@ -3343,9 +3344,9 @@ function decompImplyStruct(node, opts, binders) {
 
   if (c === "Lean_sqrt") {
     const arg = u.arg ?? u.args?.[0];
-    if (opts.isHole(arg, opts, binders)) return "Sqrt_";
+    if (opts.isHole(arg, opts, binders)) return u.pathToken + "_";
     const inner = decompImplyStruct(arg, opts, binders);
-    return inner ? "Sqrt" + storedHoleOpt(inner) : "Sqrt_";
+    return inner ? u.pathToken + storedHoleOpt(inner) : u.pathToken + "_";
   }
 
   if (c === "LeanAbs") {
@@ -3862,10 +3863,10 @@ function integrandHoleRegex(node, opts, measure) {
     const R = integrandHoleRegex(u.rhs ?? u.args?.[1], opts, measure);
     const lFrag = (L && L !== "_") ? L : "";
     const rFrag = (R && R !== "_") ? R : "";
-    if (!lFrag && !rFrag) return "SMul__";
-    if (!lFrag) return "SMul_" + storedHoleOpt(rFrag);
-    if (!rFrag) return "SMul" + storedHoleOpt(lFrag) + "_";
-    return "SMul" + storedHoleOpt(lFrag) + storedHoleOpt(rFrag);
+    if (!lFrag && !rFrag) return u.pathToken + "__";
+    if (!lFrag) return u.pathToken + "_" + storedHoleOpt(rFrag);
+    if (!rFrag) return u.pathToken + storedHoleOpt(lFrag) + "_";
+    return u.pathToken + storedHoleOpt(lFrag) + storedHoleOpt(rFrag);
   }
   if (measure && integrandContainsNode(u, measure)) {
     const tag = u.pathToken || CLASS_TOKEN[cls(u)];
@@ -3891,9 +3892,9 @@ function integralHoleRegex(node, opts) {
   const measure = integralMeasurePartial(u);
   const body = u.scope ?? u.args?.[u.args.length - 1];
   const inner = integrandHoleRegex(body, opts, measure);
-  if (!inner || inner === "_") return "Integral__";
-  if (inner === "Integral" || inner.startsWith("Integral_")) return inner;
-  return "Integral_" + storedHoleOpt(inner);
+  if (!inner || inner === "_") return u.pathToken + "__";
+  if (inner === u.pathToken || inner.startsWith(u.pathToken + "_")) return inner;
+  return u.pathToken + "_" + storedHoleOpt(inner);
 }
 
 const MEASURABLE_RV_HEADS = new Set([
@@ -4030,7 +4031,7 @@ function condIndepBits(node) {
   if (cls(u) !== "LeanBitOr") return null;
   const perp = independencePerp(u.lhs ?? u.args?.[0]);
   if (!perp) return null;
-  return { perp, cond: u.rhs ?? u.args?.[1] };
+  return { perp, cond: u.rhs ?? u.args?.[1], bitor: u };
 }
 
 function storedNary(tag, frags) {
@@ -4090,8 +4091,8 @@ function condIndepHoleRegex(node, opts) {
   const L = rvOperandHoleFrag(bits.perp.lhs ?? bits.perp.args?.[0], opts);
   const R = rvOperandHoleFrag(bits.perp.rhs ?? bits.perp.args?.[1], opts);
   const C = rvOperandHoleFrag(bits.cond, opts);
-  const indep = storedNary("Indep", [L, R]);
-  return storedNary("Cond", [indep, C]);
+  const indep = storedNary(bits.perp.pathToken, [L, R]);
+  return storedNary(bits.bitor.pathToken, [indep, C]);
 }
 
 function eqJointHoleRegex(node, opts) {
@@ -4222,8 +4223,8 @@ function holeRegexExprWalk(node, opts) {
           const tag = left?.pathToken || CLASS_TOKEN[cls(left)];
           if (tag && leftFrag === tag && (left?.args || []).length === 2)
             leftFrag = tag + "__";
-          if (!leftFrag || leftFrag === "_") return "Cond__";
-          return "Cond" + storedHoleOpt(leftFrag) + "_";
+          if (!leftFrag || leftFrag === "_") return n.pathToken + "__";
+          return n.pathToken + storedHoleOpt(leftFrag) + "_";
         }
       }
       {
@@ -4254,10 +4255,10 @@ function holeRegexExprWalk(node, opts) {
     const pc = cls(u);
     if (pc === "Lean_partial" || pc === "LeanPartial") {
       const ps = partialBoundScope(u);
-      if (!ps) return "Deriv__";
+      if (!ps) return u.pathToken + "__";
       const scopeFrag = holeRegexExpr(ps.scope, opts);
-      if (scopeFrag == null || scopeFrag === "" || scopeFrag === "_") return "Deriv__";
-      return "Deriv_(" + scopeFrag + ")";
+      if (scopeFrag == null || scopeFrag === "" || scopeFrag === "_") return u.pathToken + "__";
+      return u.pathToken + "_(" + scopeFrag + ")";
     }
   }
   if (cls(u) === "Lean_approx") {
@@ -4937,15 +4938,15 @@ function holeFillStems(node, opts = {}) {
     if (!ps) return [""];
     const scopes = holeFillStems(ps.scope, opts);
     const filled = scopes.filter(Boolean);
-    if (!filled.length) return ["Deriv_", ""];
+    if (!filled.length) return [u.pathToken + "_", ""];
     return uniq([
-      ...filled.map((s) => "Deriv_" + s),
-      "Deriv_",
+      ...filled.map((s) => u.pathToken + "_" + s),
+      u.pathToken + "_",
       "",
     ]);
   }
   if (c === "Lean_nabla" || c === "LeanNabla") {
-    return nablaBoundScope(u) ? ["Grad_", ""] : [""];
+    return nablaBoundScope(u) ? [u.pathToken + "_", ""] : [""];
   }
   if (c === "LeanProperty") {
     const obj = u.args?.[0];
@@ -4960,7 +4961,7 @@ function holeFillStems(node, opts = {}) {
   }
   if (c === "Lean_sqrt") {
     const inners = holeFillStems(u.args?.[0], opts);
-    return uniq(inners.flatMap((inner) => inner ? ["Sqrt" + inner, ""] : ["Sqrt", ""]));
+    return uniq(inners.flatMap((inner) => inner ? [u.pathToken + inner, ""] : [u.pathToken, ""]));
   }
   if (c === "LeanNeg" || c === "LeanInv") {
     const tag = u.pathToken;
@@ -5576,11 +5577,11 @@ function preAlts(node, opts, canon) {
         const x = A(gb);
         const ranked = [];
         for (const y of x) {
-          ranked.push("Grad" + y);
+          ranked.push(node.pathToken + y);
           if (y.startsWith("Expect") && !y.startsWith("Expect_") && /[A-Z]/.test(y.slice(6, 7) || "")) {
-            ranked.push("GradExpect_" + y.slice("Expect".length));
+            ranked.push(node.pathToken + "Expect_" + y.slice("Expect".length));
           }
-          ranked.push("Grad_" + y);
+          ranked.push(node.pathToken + "_" + y);
         }
         return ranked.length ? uniq([...ranked, ...alts]) : uniq(alts);
       }
@@ -5611,7 +5612,7 @@ function preAlts(node, opts, canon) {
     return p.length ? uniq(p.map((x) => "SetOf" + x)) : ["SetOf"];
   }
   if (c === "Lean_cup" || c === "Lean_cap") {
-    const tag = c === "Lean_cup" ? "Union" : "Inter";
+    const tag = node.pathToken;
     const L = A(args[0]);
     const R = A(args[1]);
     const out = [];
@@ -5635,7 +5636,7 @@ function preAlts(node, opts, canon) {
     const sub = unwrapParen(args[0]);
     const l = nameExpr(sub.args?.[0], opts);
     const r = nameExpr(sub.args?.[1], opts);
-    const pre = c === "LeanNorm" ? "Norm" : "Abs";
+    const pre = node.pathToken;
     if (l && l === r && !l.includes("/")) return uniq([pre + "Sub" + l, pre + "Sub" + l.replace(/_/g, ""), pre + "Sub"]);
   }
   if (c === "LeanArgsSpaceSeparated" && args.length >= 2) {
@@ -5734,21 +5735,21 @@ function preAlts(node, opts, canon) {
   if (c === "Lean_mapsto") return A(args[args.length - 1]);
   if (c === "Lean_sqrt") {
     const x = A(args[0]);
-    return x.length ? uniq(x.flatMap((y) => ["Sqrt" + y, "Sqrt_" + y])) : ["Sqrt"];
+    return x.length ? uniq(x.flatMap((y) => [node.pathToken + y, node.pathToken + "_" + y])) : [node.pathToken];
   }
   if (c === "LeanPreimage") {
     const f = A(args[0]);
-    return f.length ? uniq(f.flatMap((y) => ["Preimage" + y, "Preimage_" + y])) : ["Preimage"];
+    return f.length ? uniq(f.flatMap((y) => [node.pathToken + y, node.pathToken + "_" + y])) : [node.pathToken];
   }
   if (c === "LeanInner") {
     let xs = args;
     if (xs.length === 1 && cls(xs[0]) === "LeanArgsCommaSeparated") xs = xs[0].args || [];
     const a = A(xs[0]);
     const b = A(xs[1]);
-    if (!a.length && !b.length) return ["Inner"];
-    if (!a.length) return uniq(b.map((y) => "Inner_" + y));
-    if (!b.length) return uniq(a.map((x) => "Inner" + x));
-    return uniq(a.flatMap((x) => b.flatMap((y) => ["Inner" + x + "_" + y, "Inner" + x + y])));
+    if (!a.length && !b.length) return [node.pathToken];
+    if (!a.length) return uniq(b.map((y) => node.pathToken + "_" + y));
+    if (!b.length) return uniq(a.map((x) => node.pathToken + x));
+    return uniq(a.flatMap((x) => b.flatMap((y) => [node.pathToken + x + "_" + y, node.pathToken + x + y])));
   }
   if (c === "LeanGetElem") {
     const h = args[0];
@@ -5822,18 +5823,18 @@ function postAlts(node, opts, alts, canon) {
   }
   if (c === "LeanPow" && !canon && cls(args[1]) !== "LeanBracket") {
     const b = A(args[0]);
-    if (b.length) alts = uniq([...alts, ...b.map((y) => "Pow" + y)]);
+    if (b.length) alts = uniq([...alts, ...b.map((y) => node.pathToken + y)]);
   }
   if (c === "Lean_bullet" && !canon) {
     const L = A(args[0]);
     const R = A(args[1]);
     const extra = [];
     for (const l of L.length ? L : [""]) for (const r of R.length ? R : [""]) {
-      if (l || r) extra.push("SMul" + l + r);
-      if (l && r) extra.push("SMul" + l + "_" + r);
+      if (l || r) extra.push(node.pathToken + l + r);
+      if (l && r) extra.push(node.pathToken + l + "_" + r);
     }
-    for (const l of L) if (l) extra.push("SMul" + l);
-    for (const r of R) if (r) extra.push("SMul_" + r);
+    for (const l of L) if (l) extra.push(node.pathToken + l);
+    for (const r of R) if (r) extra.push(node.pathToken + "_" + r);
     return uniq([...alts, ...extra]);
   }
   return alts;
@@ -6768,14 +6769,14 @@ function nameExprBase(node, opts = {}) {
     const gb = gradientBody(node);
     if (gb) {
       const y = nameExpr(gb, opts);
-      if (!y) return "Grad";
+      if (!y) return node.pathToken;
       if (y.startsWith("Expect") && !y.startsWith("Expect_") && /[A-Z]/.test(y.slice(6, 7) || "")) {
-        return "Grad" + y;
+        return node.pathToken + y;
       }
-      return joinHeadChild("Grad", y);
+      return joinHeadChild(node.pathToken, y);
     }
     const alts = nablaGradAlts(node, opts);
-    return alts[0] || "Grad";
+    return alts[0] || node.pathToken;
   }
   {
     const gb = gradientBody(node);
@@ -6896,7 +6897,7 @@ function nameExprBase(node, opts = {}) {
     if (arityRange) return arityRange;
     const dom = sumDomainName(node);
     const keepDom = dom && isSumIntervalDom(dom);
-    const tag = (node.superscript === "'" ? "TSum" : "Sum") + (keepDom ? dom : "");
+    const tag = (node.superscript === "'" ? "TSum" : node.pathToken) + (keepDom ? dom : "");
     const args = node.args || [];
     const body = nameExpr(args[args.length - 1], opts);
     if (body && /^Sum_Square/.test(body)) return tag + "_" + body.replace(/^Sum_/, "");
@@ -6905,7 +6906,7 @@ function nameExprBase(node, opts = {}) {
   if (name === "LeanStack") {
     const scope = peelEntryStmt(node.scope ?? node.args?.[1]);
     const body = nameExpr(scope, opts);
-    return body ? "Stack_" + body : "Stack";
+    return body ? node.pathToken + "_" + body : node.pathToken;
   }
 
   const WRAP_OP_PREFIX = {
@@ -7116,7 +7117,7 @@ if (name === "LeanToken") {
     if (name === "LeanPow" && cls(args[1]) === "LeanBracket") tag = "Iterate";
     if (name === "LeanNeg") {
       const body = nameExpr(args[0], opts);
-      return body ? "Neg" + body : "Neg";
+      return body ? node.pathToken + body : node.pathToken;
     }
     if (name === "LeanMul") {
       const sub = subscriptedMulAtom(node);
@@ -7180,10 +7181,10 @@ if (name === "LeanToken") {
   if (name === "Lean_bullet") {
     const left = nameExpr(node.args?.[0], opts) || "";
     const right = nameExpr(node.args?.[1], opts) || "";
-    if (!left && !right) return "SMul__";
-    if (left && !right) return "SMul" + left;
-    if (!left && right) return "SMul_" + right;
-    return "SMul" + left + "_" + right;
+    if (!left && !right) return node.pathToken + "__";
+    if (left && !right) return node.pathToken + left;
+    if (!left && right) return node.pathToken + "_" + right;
+    return node.pathToken + left + "_" + right;
   }
   if (name === "Lean_Expect") {
     const body = expectCondBody(node.scope);
@@ -7192,12 +7193,12 @@ if (name === "LeanToken") {
       return x ? EXPECT_COND + x : EXPECT_COND;
     }
     const b = nameExpr(node.scope, opts);
-    if (!b) return "Expect__";
-    return b === "Mul" ? "Expect_Mul" : "Expect_" + b;
+    if (!b) return node.pathToken + "__";
+    return b === "Mul" ? node.pathToken + "_Mul" : node.pathToken + "_" + b;
   }
   if (name === "Lean_Var") {
     const b = nameExpr(node.scope, opts);
-    return b ? "Var_" + b : "Var__";
+    return b ? node.pathToken + "_" + b : node.pathToken + "__";
   }
   if (name === "Lean_Prob") {
     const probName = nameProbApp(node);
@@ -7205,7 +7206,7 @@ if (name === "LeanToken") {
       const ev = matchProbApp(node);
       return probName === "ProbS" && ev && isProbJointEvent(ev) ? "ProbJoint" : probName;
     }
-    return "Prob";
+    return node.pathToken;
   }
   {
     const lim = limitsBigOpBoundScope(node);
@@ -7345,15 +7346,15 @@ if (name === "Lean_partial" || name === "LeanPartial") {
       const x = nameExprAlts(gb, opts);
       const ranked = [];
       for (const y of x) {
-        ranked.push("Grad" + y);
+        ranked.push(node.pathToken + y);
         if (y.startsWith("Expect") && !y.startsWith("Expect_") && /[A-Z]/.test(y.slice(6, 7) || "")) {
-          ranked.push("GradExpect_" + y.slice("Expect".length));
+          ranked.push(node.pathToken + "Expect_" + y.slice("Expect".length));
         }
-        ranked.push("Grad_" + y);
+        ranked.push(node.pathToken + "_" + y);
       }
-      return ranked.length ? uniq([...ranked, ...alts]) : uniq(alts.length ? alts : ["Grad"]);
+      return ranked.length ? uniq([...ranked, ...alts]) : uniq(alts.length ? alts : [node.pathToken]);
     }
-    return uniq(alts.length ? alts : ["Grad"]);
+    return uniq(alts.length ? alts : [node.pathToken]);
   }
   {
     const gb = gradientBody(node);
@@ -7527,7 +7528,7 @@ if (name === "Lean_partial" || name === "LeanPartial") {
     const arityRange = sumRangeArityName(node, opts);
     const dom = sumDomainName(node);
     const keepDom = dom && isSumIntervalDom(dom);
-    const tag = (node.superscript === "'" ? "TSum" : "Sum") + (keepDom ? dom : "");
+    const tag = (node.superscript === "'" ? "TSum" : node.pathToken) + (keepDom ? dom : "");
     const args = node.args || [];
     const bodyAlts = nameExprAlts(args[args.length - 1], opts);
     const base = !bodyAlts.length ? [tag] : bodyAlts.flatMap((b) => [tag + "_" + b, tag + b]);
@@ -7536,8 +7537,8 @@ if (name === "Lean_partial" || name === "LeanPartial") {
   if (name === "LeanStack") {
     const scope = peelEntryStmt(node.scope ?? node.args?.[1]);
     const bodyAlts = nameExprAlts(scope, opts);
-    if (!bodyAlts.length) return ["Stack"];
-    return uniq(bodyAlts.flatMap((b) => ["Stack_" + b, "Stack" + b]).concat(["Stack"]));
+    if (!bodyAlts.length) return [node.pathToken];
+    return uniq(bodyAlts.flatMap((b) => [node.pathToken + "_" + b, node.pathToken + b]).concat([node.pathToken]));
   }
 
   const WRAP_OP_PREFIX = { LeanNorm: "Norm", LeanAbs: "Abs", LeanCeil: "Ceil", LeanFloor: "Floor" };

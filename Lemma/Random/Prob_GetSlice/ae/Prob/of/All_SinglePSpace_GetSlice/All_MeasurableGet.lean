@@ -1,5 +1,5 @@
 import Lemma.Random.All_MeasurableGet.is.All_MeasurableGetSlice
-import Lemma.Random.All_SinglePSpace_JointGet__GetSlice.of.All_SinglePSpace_GetSlice
+import Lemma.Random.All_SinglePSpace_Joint.of.All_SinglePSpace_GetSlice
 import Notation.Probability.JointRv
 import Notation.Fun
 import Syntax.Probability.Probability
@@ -29,7 +29,7 @@ private lemma main
   have : Measurable s[:1] := All_MeasurableGetSlice.of.All_MeasurableGet hs 1
   have : SinglePSpace π (s[:1] : Ω → Fin 1 → 𝒮) := hP 1
   have : SinglePSpace π s[0] :=
-    SinglePSpace.of.SinglePSpace.fst (All_SinglePSpace_JointGet__GetSlice.of.All_SinglePSpace_GetSlice hP 0)
+    SinglePSpace.of.SinglePSpace.fst (All_SinglePSpace_Joint.of.All_SinglePSpace_GetSlice hP 0)
   ℙ[π](s[:1]) =ᵐ[π] ℙ[π](s[0]) := by
 -- proof
   intro _ hP1 hP0

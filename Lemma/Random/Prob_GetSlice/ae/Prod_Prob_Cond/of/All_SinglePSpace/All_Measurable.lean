@@ -3,7 +3,7 @@ import Lemma.Random.Prob_Cond_Joint.ae.Prob_Cond.of.SinglePSpace
 import Lemma.Random.Prob_Cond.ae.Prob.of.SinglePSpace.SinglePSpace
 import Lemma.Random.Prob_Cond.ae.Prod_Prob_Cond_Joint.of.Measurable.All_Measurable
 import Lemma.Random.All_MeasurableGet.is.All_MeasurableGetSlice
-import Lemma.Random.All_SinglePSpace_JointGet__GetSlice.of.All_SinglePSpace_GetSlice
+import Lemma.Random.All_SinglePSpace_Joint.of.All_SinglePSpace_GetSlice
 import Syntax.Probability.Probability
 import Notation.Fun
 import Mathlib.MeasureTheory.Constructions.Pi
@@ -36,11 +36,11 @@ private lemma main
   have : ∀ k : ℕ, Measurable s[:k] :=
     All_MeasurableGetSlice.of.All_MeasurableGet hs
   have : ∀ k, SinglePSpace π (s[k], s[:k]) :=
-    All_SinglePSpace_JointGet__GetSlice.of.All_SinglePSpace_GetSlice hP
+    All_SinglePSpace_Joint.of.All_SinglePSpace_GetSlice hP
   ℙ[π](s[:n]) =ᵐ[π] ∏ k ∈ Finset.range n, ℙ[π](s[k] | s[:k]) := by
 -- proof
   have hPstep : ∀ k, SinglePSpace π (s[k], s[:k]) :=
-    All_SinglePSpace_JointGet__GetSlice.of.All_SinglePSpace_GetSlice hP
+    All_SinglePSpace_Joint.of.All_SinglePSpace_GetSlice hP
   let Z : Ω → Fin 0 → 𝒮 := fun _ => Fin.elim0
   have hZ : Measurable Z := measurable_const
   have hPZ' :

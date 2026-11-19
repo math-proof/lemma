@@ -9,10 +9,6 @@ open MeasureTheory ProbabilityTheory Random Fun
 /--
 If every process prefix `s[:n]` admits a density against the product reference
 measure, then so does the joint `(s[k], s[:k])`.
-
-| attributes | lemma |
-| :---: | :---: |
-| path | Random.All_SinglePSpace_JointGet__GetSlice.of.All_SinglePSpace_GetSlice |
 -/
 @[path]
 private lemma main
