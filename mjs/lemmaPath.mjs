@@ -3910,8 +3910,7 @@ function measurableGetHoleRegex(node, opts) {
   if (!MEASURABLE_RV_HEADS.has(headName)) return null;
   const rv = unwrapParen(args[1]);
   if (cls(rv) !== "LeanGetElem") return null;
-  if (isGetElemColonSlice(rv)) return null;
-  let out = headName + "(Get__)";
+  let out = headName + (isGetElemColonSlice(rv) ? "(GetSlice__)" : "(Get__)");
   for (let i = 2; i < args.length; i++) {
     const a = args[i];
     if (isImplyHole(a, opts, implyBinderSet(opts))) {
@@ -4343,7 +4342,15 @@ function holeRegexExprWalk(node, opts) {
       const dec = decompImplyStruct(u, opts);
       if (dec) return dec;
     }
-    return simplifyQuantRelDigit(simplifyIteHoleRegex(raw));
+    const simple = simplifyQuantRelDigit(simplifyIteHoleRegex(raw));
+    if ((simple === "All" || simple === "Any") && (cls(u) === "Lean_forall" || cls(u) === "Lean_exists")) {
+      let body = u.scope ?? u.args?.[u.args.length - 1];
+      if (simple === "All") body = peelQuantBody(peelGuardForalls(body));
+      const inner = holeRegexExpr(body, opts);
+      if (inner && inner !== "_" && inner !== simple)
+        return simple + "_" + storedHoleOpt(inner);
+    }
+    return simple;
   }
   return holeOpts.frozen(u);
 }
@@ -4827,10 +4834,15 @@ export function holeRegexAlternatives(typeNode, opts = {}) {
   const primaryDecomp = out.some((r) => /(?:Any|All)_\(_\|Eq/.test(String(r)) || String(r).includes("All_(Eq(") || String(r).includes("All_(Eq_(") || String(r).includes("Any_(Eq(") || String(r).includes("Any_(Eq_(") || String(r).includes("All_(Ne(") || String(r).includes("And(") || /(?:Any|All)_\(And\(/.test(String(r)) || String(r).includes("Ite(") || /(?:Any|All)_\([A-Za-z][A-Za-z0-9]*_?\(/.test(String(r)));
   const guardGlued = /Imp/.test(String(named || "")) && out.some((r) => /(?:Any|All)_\(/.test(String(r)));
   const admitted = out.some((re) => String(re).includes("(") && matchImplyHoleRegex(re, named));
+  // `All_(Body)` and `All_Body` are the same language: don't re-add the paren-free spelling.
+  const namedSubsumed = /^(?:Any|All)_/.test(String(named || ""))
+    && /^(?:Any|All)_\(/.test(String(primary || ""))
+    && String(named).replace(/[()]/g, "") === String(primary).replace(/[()]/g, "");
   if (named && !named.includes("/") && !hasQuantEqSlash(named) && /^(?:Any|All)_/.test(named) && !out.includes(named)
       && !(primaryDecomp && !named.includes("("))
       && !guardGlued
-      && !admitted)
+      && !admitted
+      && !namedSubsumed)
     out.push(storeHoleGroups(named));
   if (!opts.asGiven && !opts.skipCollectHoleAlternatives) {
     const altOpts = {
@@ -4847,7 +4859,8 @@ export function holeRegexAlternatives(typeNode, opts = {}) {
   const informative = alts.filter((alt) => {
     const m = /^([A-Za-z][A-Za-z0-9]*)__$/.exec(String(alt));
     if (!m) return true;
-    return !alts.some((other) => other !== alt && String(other).startsWith(m[1] + "("));
+    return !alts.some((other) => other !== alt
+      && (String(other).startsWith(m[1] + "(") || String(other).startsWith(m[1] + "_(")));
   });
   const relaxPads = (s) => s.replace(/([A-Za-z][A-Za-z0-9]*)__/g, "$1");
   const padded = informative.filter((alt) => {
@@ -7073,7 +7086,7 @@ if (name === "LeanToken") {
       if (headName && argNames.length === 1) {
         const [argNode, arg] = argPairs[0];
         if (arg === "Fun") return headName + arg;
-        if (arg === "GetSlice") return headName + arg;
+        if (arg === "GetSlice") return headName + "(GetSlice__)";
         if (cls(unwrapParen(argNode)) === "Lean_fun") return funBodyUnary(argNode) ? headName + arg : headName + "_" + arg;
         if (arg.startsWith("Fun")) return headName + "_" + arg;
         if (!isSimpleArg(argNode, opts)) {
