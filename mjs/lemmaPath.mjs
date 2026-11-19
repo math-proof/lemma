@@ -3068,16 +3068,16 @@ function decompQuantEqExpr(node, opts) {
     const ps = partialBoundScope(u);
     if (!ps || isQuantEqHoleNode(ps.scope, opts)) return quantEqPartialToken(u);
     const inner = decompQuantEqExpr(ps.scope, opts);
-    return inner ? "Deriv_" + opt(inner) : null;
+    return inner ? u.pathToken + "_" + opt(inner) : null;
   }
   if (c === "Lean_sqrt") {
     const arg = u.arg ?? u.args?.[0];
-    if (isQuantEqHoleNode(arg, opts)) return "Sqrt";
+    if (isQuantEqHoleNode(arg, opts)) return u.pathToken;
     const inner = decompQuantEqExpr(arg, opts);
-    return inner ? "Sqrt" + opt(inner) : null;
+    return inner ? u.pathToken + opt(inner) : null;
   }
   if (c === "LeanInv" || c === "LeanNeg") {
-    const tag = c === "LeanInv" ? "Inv" : "Neg";
+    const tag = u.pathToken;
     const arg = u.arg ?? u.args?.[0];
     if (isQuantEqHoleNode(arg, opts)) return tag;
     const inner = decompQuantEqExpr(arg, opts);
@@ -3350,7 +3350,7 @@ function decompImplyStruct(node, opts, binders) {
 
   if (c === "LeanAbs") {
     const inner = decompImplyStruct(u.arg ?? u.args?.[0], opts, binders);
-    return inner ? "Abs" + storedHoleOpt(inner) : "Abs_";
+    return inner ? u.pathToken + storedHoleOpt(inner) : u.pathToken + "_";
   }
 
   if (c === "Lean_sum" || c === "Lean_prod") {
