@@ -2476,8 +2476,8 @@ function partialNameFromScope(node, opts = {}) {
   const ps = partialBoundScope(node);
   if (!ps) return "";
   const scopeName = nameExpr(ps.scope, opts) || "";
-  if (!scopeName) return "Deriv";
-  return "Deriv_" + scopeName;
+  if (!scopeName) return node.pathToken;
+  return node.pathToken + "_" + scopeName;
 }
 
 function partialNameAltsFromScope(node, opts = {}, A) {
@@ -2485,8 +2485,8 @@ function partialNameAltsFromScope(node, opts = {}, A) {
   if (!ps) return [];
   const bodies = typeof A === "function" ? A(ps.scope) : nameExprAlts(ps.scope, opts);
   const nonempty = (bodies || []).filter(Boolean);
-  if (!nonempty.length) return ["Deriv"];
-  return [...new Set([...nonempty.map((y) => "Deriv_" + y), "Deriv"])];
+  if (!nonempty.length) return [node.pathToken];
+  return [...new Set([...nonempty.map((y) => node.pathToken + "_" + y), node.pathToken])];
 }
 
 function nablaBoundScope(node) {
@@ -8215,8 +8215,10 @@ function definitionsRenameRefuseReason(source) {
 }
 
 export function suggest(filePath, lemmaName, options = {}) {
-  const abs = path.resolve(filePath);
-  const source = fs.readFileSync(abs, "utf8").replace(/\r\n/g, "\n");
+  const abs = options.file ? path.resolve(options.file) : path.resolve(filePath);
+  const source = options.source != null
+    ? String(options.source).replace(/\r\n/g, "\n")
+    : fs.readFileSync(abs, "utf8").replace(/\r\n/g, "\n");
   const curTopEarly = path.relative(LEMMA_ROOT, abs).replace(/\\/g, "/").split("/")[0];
   if (curTopEarly === "Definitions") {
     const refuse = definitionsRenameRefuseReason(source);
@@ -8247,7 +8249,7 @@ export function suggest(filePath, lemmaName, options = {}) {
       ...openDataSections(source),
     ],
   });
-  const section = picked.section;
+  const section = options.section || picked.section;
   if (curTop === "Definitions" && refusedSectionFolder(section) && !(sectionKindMap().get(section) === "type class" && section === curTop)) {
     throw new Error(
       `Topic/unknown or illegal section "${section}" - leave in Definitions (not a Lemma/ rename candidate)`

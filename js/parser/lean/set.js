@@ -34,6 +34,10 @@ export class Lean_setminus extends LeanSetOperator {
         return '\\';
     }
 
+    get pathToken() {
+        return "SDiff";
+    }
+
     get holeRegexAltTag() {
         return "SDiff";
     }
@@ -49,6 +53,10 @@ export class Lean_cup extends LeanSetOperator {
         return '∪';
     }
 
+    get pathToken() {
+        return "Union";
+    }
+
     get holeRegexAltTag() {
         return "Union";
     }
@@ -62,6 +70,10 @@ export class Lean_cap extends LeanSetOperator {
 
     get operator() {
         return '∩';
+    }
+
+    get pathToken() {
+        return "Inter";
     }
 
     get holeRegexAltTag() {

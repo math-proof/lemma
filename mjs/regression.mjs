@@ -1,13 +1,21 @@
+/**
+ * regression.mjs — hole-regex regression over `mjs/*.json` fixtures.
+ *
+ * Each fixture is `{ "lean": <Lean type expression>, "regex": [<expected>] }`.
+ * The runner parses `lean` into the AST, generates the hole-regex alternatives
+ * for that node, and requires an exact match with the fixture's `regex` list.
+ *
+ * Run: node mjs/regression.mjs
+ */
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { compile } from "../js/parser/lean.js";
 import { strStmt } from "../js/parser/lean/utility.js";
-import { suggest, holeRegexAlternatives } from "./lemmaPath.mjs";
+import { holeRegexAlternatives } from "./lemmaPath.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const REPO = path.resolve(__dirname, "..");
-const REG_DIR = path.join(__dirname, "regression");
-const LEMMA_ROOT = path.join(REPO, "Lemma");
+const CLASS = (n) => n?.constructor?.name || "";
 
 const norm = (s) => String(s || "")
   .split("\n")
@@ -15,8 +23,6 @@ const norm = (s) => String(s || "")
   .join("\n")
   .replace(/\s+/g, "");
 const loose = (s) => norm(s).replace(/[()]/g, "");
-
-const eqFree = (regexes) => regexes.filter((re) => !String(re).includes("/eq/"));
 
 function findNodeByText(root, text) {
   const target = loose(text);
@@ -39,93 +45,76 @@ function findNodeByText(root, text) {
   return hit;
 }
 
-let failures = 0;
-const UPDATE = process.argv.includes("--update");
-const files = fs.readdirSync(REG_DIR).filter((f) => f.endsWith(".json")).sort();
-for (const name of files) {
-  const doc = JSON.parse(fs.readFileSync(path.join(REG_DIR, name), "utf8"));
-  const rel = name.replace(/\.json$/, "").split(".").join("/") + ".lean";
-  const abs = path.join(LEMMA_ROOT, rel);
-  const fail = (msg) => {
-    failures++;
-    console.log("FAIL " + name + "\n  " + msg);
-  };
-  if (!fs.existsSync(abs)) {
-    fail("source not found: Lemma/" + rel);
-    continue;
-  }
-  let r;
-  try {
-    r = suggest(abs, "main");
-  } catch (e) {
-    fail("suggest threw: " + e.message);
-    continue;
-  }
-  const candidates = [
-    {
-      from: "imply",
-      lean: r.implyLean,
-      node: r.implyNode,
-      opts: r.implyOpts,
-      regexes: (r.imply || []).map((x) => x.regex),
-    },
-    ...(r.givens || []).map((gs, i) => ({
-      from: "given[" + i + "]",
-      lean: gs[0]?.lean,
-      node: gs[0]?.node,
-      opts: { ...r.implyOpts, asGiven: true },
-      regexes: gs.map((x) => x.regex),
-    })),
-  ].filter((c) => c.lean);
-
-  const target = norm(doc.lean);
-  const score = (c) => {
-    const s = norm(c.lean);
-    if (!s || !target) return -1;
-    if (s === target) return 3;
-    if (s.endsWith(target)) return 2;
-    if (s.includes(target)) return 1;
-    const ls = loose(c.lean);
-    const lt = loose(doc.lean);
-    if (ls && lt && ls === lt) return 0.8;
-    if (ls && lt && ls.includes(lt)) return 0.5;
-    return -1;
-  };
-  const hit = candidates
-    .map((c) => ({ c, score: score(c) }))
-    .filter((x) => x.score >= 0)
-    .sort((a, b) => b.score - a.score)[0];
-  if (!hit) {
-    fail("no imply/given matches lean:\n  " + doc.lean);
-    continue;
-  }
-
-  let got;
-  if (hit.score >= 2) {
-    got = eqFree(hit.c.regexes);
-  } else {
-    const node = findNodeByText(hit.c.node, doc.lean);
-    if (!node) {
-      fail("no sub-expression of " + hit.c.from + " matches lean:\n  " + doc.lean);
-      continue;
+/**
+ * Free identifiers of a standalone statement become holes: lowercase names
+ * (`f`, `n`, `s`, `π`, …) and single uppercase letters (`X`, `Y`, `L`, …).
+ * Numeric literals are kept literal.
+ */
+function collectLeaves(root) {
+  const leaves = new Set();
+  (function walk(n) {
+    if (!n || typeof n !== "object") return;
+    if (Array.isArray(n)) {
+      for (const x of n) walk(x);
+      return;
     }
-    got = eqFree(holeRegexAlternatives(node, { ...hit.c.opts, skipCollectHoleAlternatives: true }));
-  }
-
-  if (JSON.stringify(got) !== JSON.stringify(doc.regex)) {
-    if (UPDATE) {
-      fs.writeFileSync(path.join(REG_DIR, name), JSON.stringify({ ...doc, regex: got }, null, 2) + "\n");
-      console.log("updated " + name);
-      continue;
+    if (CLASS(n) === "LeanToken") {
+      const text = n.text || "";
+      if (!/^-?\d+$/.test(text) && (/^\p{Ll}/u.test(text) || /^[A-Z]$/.test(text))) leaves.add(text);
+      return;
     }
-    fail(
-      "regex drift (" + hit.c.from + ")\n  got:  " + JSON.stringify(got) +
-      "\n  want: " + JSON.stringify(doc.regex),
-    );
-    continue;
-  }
-  console.log("ok   " + name);
+    for (const a of n.args || []) walk(a);
+  })(root);
+  return leaves;
 }
 
-console.log("\n" + (failures === 0 ? "all passed" : failures + " failed") + " (" + files.length + " fixtures)");
+function parseStatement(lean) {
+  const tree = compile(`private lemma main : ${lean} := by\n  sorry\n`);
+  return findNodeByText(tree, lean);
+}
+
+let failures = 0;
+let checked = 0;
+const files = fs.readdirSync(__dirname).filter((f) => f.endsWith(".json")).sort();
+for (const name of files) {
+  const abs = path.join(__dirname, name);
+  let doc;
+  try {
+    doc = JSON.parse(fs.readFileSync(abs, "utf8"));
+  } catch (e) {
+    failures++;
+    console.log(`FAIL ${name}\n  invalid JSON: ${e.message}`);
+    continue;
+  }
+  if (!doc || typeof doc.lean !== "string" || !Array.isArray(doc.regex)) {
+    console.log(`skip ${name} (not a fixture)`);
+    continue;
+  }
+  checked++;
+  const fail = (msg) => {
+    failures++;
+    console.log(`FAIL ${name}\n  ${msg}`);
+  };
+
+  let node;
+  try {
+    node = parseStatement(doc.lean);
+  } catch (e) {
+    fail(`parse error: ${e.message}`);
+    continue;
+  }
+  if (!node) {
+    fail(`no AST node matches lean:\n  ${doc.lean}`);
+    continue;
+  }
+
+  const got = holeRegexAlternatives(node, { leaves: collectLeaves(node) });
+  if (JSON.stringify(got) !== JSON.stringify(doc.regex)) {
+    fail(`regex mismatch\n  got:  ${JSON.stringify(got)}\n  want: ${JSON.stringify(doc.regex)}`);
+    continue;
+  }
+  console.log(`OK   ${name}`);
+}
+
+console.log(`\n${failures === 0 ? "all passed" : failures + " failed"} (${checked} fixtures)`);
 process.exit(failures === 0 ? 0 : 1);
