@@ -3056,7 +3056,7 @@ function quantEqPartialToken(node) {
   const ps = partialBoundScope(node);
   const b = ps ? peelHoleExpr(ps.bound) : null;
   const n = b && cls(b) === "LeanArgsCommaSeparated" ? Math.max(1, (b.args || []).length) : 1;
-  return n >= 2 ? "Deriv__" : "Deriv";
+  return n >= 2 ? node.pathToken + "__" : node.pathToken;
 }
 
 function decompQuantEqExpr(node, opts) {
