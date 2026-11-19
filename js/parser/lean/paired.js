@@ -11,6 +11,7 @@
 import { Closable } from '../node.js';
 import { LeanUnary } from './abstract.js';
 import { Lean } from './base.js';
+import { collectHoleRegexAlternatives } from './holeRegexAlternatives.js';
 
 const L = Lean.classes;
 
@@ -250,6 +251,19 @@ export class LeanParenthesis extends LeanPairedGroup {
 
     get operator() {
         return '()';
+    }
+
+    /**
+     * Parentheses are display only; alternatives come from the inner node.
+     * @param {object} [opts]
+     * @returns {string[]}
+     */
+    holeRegexAlternatives(opts = {}) {
+        const inner = this.arg ?? this.args?.[0];
+        if (inner && typeof inner.holeRegexAlternatives === "function") {
+            return inner.holeRegexAlternatives(opts);
+        }
+        return collectHoleRegexAlternatives(inner ?? this, opts);
     }
 
     argFormat() {
@@ -522,7 +536,8 @@ export class LeanParenthesis extends LeanPairedGroup {
             // parentheses leaves `V : Matrix … ℝ : Matrix … ℝ*` with the second
             // colon looking like it belongs to `ℝ`.
             !(arg instanceof L.LeanColon) &&
-            !this.latexParenRequired()
+            !this.latexParenRequired() &&
+            !this.latexParenLoadBearing()
         )
             // Multi-row content (e.g. `(by …)` tactic block rendering as `align*`):
             // `\mathord{\left(...\right)}` would stretch to the full block height.
@@ -549,6 +564,34 @@ export class LeanParenthesis extends LeanPairedGroup {
             arg instanceof L.LeanArgsCommaNewLineSeparated
         ) return true;
         return LeanParenthesis.hasOwnCdot(arg);
+    }
+
+    /**
+     * Whether the multiline-content parentheses carry a grouping the surrounding infix operator
+     * would otherwise lose. The parent is usually an argument block created for the line break,
+     * so walk through those to the first real operator. Keep the pair when the content binds
+     * looser than the operator, or when it sits on the left of a right-associative operator at
+     * the same precedence (`(A ∧ B) ∧ C` must not become `A ∧ B ∧ C`).
+     */
+    latexParenLoadBearing() {
+        const child = this.arg;
+        // Only an infix operator's grouping is decided by precedence here; big operators,
+        // `if/cases` blocks and applications carry their own visual delimiters.
+        if (!(child instanceof L.LeanBinary) || typeof child.operator !== 'string') return false;
+        const childPriority = child.constructor.input_priority;
+        if (childPriority == null) return false;
+        let below = this;
+        let p = this.parent;
+        while (p && !(p instanceof L.LeanBinary && typeof p.operator === 'string')) {
+            if (!(p instanceof L.LeanArgs)) return false;
+            below = p;
+            p = p.parent;
+        }
+        if (!p) return false;
+        const parentPriority = p.constructor.input_priority;
+        if (parentPriority == null) return false;
+        if (childPriority !== parentPriority) return childPriority < parentPriority;
+        return p.lhs === below && p.constructor.isRightAssociative === true;
     }
 
     /** A `·` placeholder bound by the enclosing `( … )`: not inside a nested `( … )` (which binds its own). */
@@ -1115,6 +1158,32 @@ export class LeanVecNotation extends LeanPairedGroup {
 
 export class LeanBrace extends LeanPairedGroup {
     static { this.register(); }
+
+    /** Alternatives walk only: `{y'}` → Brace_, `{a, b}` → Brace__, `{x | P}` → Brace(Cond__). */
+    get holeRegexAltTag() {
+        if (this.inline) return null;
+        const a = this.arg ?? this.args?.[0];
+        if (!a) return null;
+        const c = a.constructor?.name || "";
+        if (c === "LeanStatements" || c === "LeanAssign" || c === "LeanWith") return null;
+        if (typeof LeanBrace.isStructInstField === "function" && LeanBrace.isStructInstField(a)) return null;
+        return "Brace";
+    }
+
+    holeRegexAltOperands() {
+        if (this.holeRegexAltTag !== "Brace")
+            return this.arg != null ? [this.arg] : (this.args || []);
+        const peel = (n) => {
+            while (n && (n.constructor?.name || "") === "LeanParenthesis")
+                n = n.arg ?? n.args?.[0];
+            return n;
+        };
+        const a = peel(this.arg ?? this.args?.[0]);
+        if (!a) return [];
+        if ((a.constructor?.name || "") === "LeanArgsCommaSeparated") return a.args || [];
+        return [a];
+    }
+
 
     /**
      * Structure-instance literal written with its first field on the `{` line and the other fields on

@@ -8,7 +8,6 @@ public import Syntax.Probability.Expectation.Elab
 public import Def.Data.List.List.Basic
 public import Instance.Analysis.Real.Numbers
 public import Notation.Fun
-public import Instance.Probability.Process.HiddenMarkovSequence
 @[expose] public section
 
 open MeasureTheory

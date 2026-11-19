@@ -23,6 +23,10 @@ export class Lean_lnot extends LeanProp(LeanUnary) {
         return '¬';
     }
 
+    get pathToken() {
+        return "Not";
+    }
+
     strFormat() {
         return `${this.operator}%s`;
     }

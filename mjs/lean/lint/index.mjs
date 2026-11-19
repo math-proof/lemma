@@ -120,6 +120,8 @@ export const RULES = {
     'paren-redundant-type': null,
     // not an AGENTS.md rule (Body via Real / @js): ASCII Nat/Int/Rat/Real/Complex/Hyperreal in binder/ascription → Unicode
     'prefer-unicode-type': null,
+    // not an AGENTS.md rule (user request): `x ^ 2` / `x ^ 3` / `x ^ 4` → `x²` / `x³` / `x⁴`
+    'prefer-unicode-pow': null,
     // not an AGENTS.md rule (user request via Matrix/Body): `a - (∑ …)` -> drop parens around ∑/∏ RHS of `-`
     'paren-redundant-sum-sub': null,
     // not an AGENTS.md rule (user request via Random / @js): `((sub) ^ 2)` -> drop outer parens around pow
@@ -330,12 +332,22 @@ function isLemmaLean(p) {
     return p.startsWith('Lemma/') && p.endsWith('.lean') && !p.endsWith('.echo.lean');
 }
 
+/**
+ * Lemmas that moved away: deleted in the worktree, deleted in the index, or renamed in the index.
+ * A staged rename is invisible to `--name-only --diff-filter=D` (git reports it as `R`, not `D`),
+ * so `--name-status -M` is used to reach its **source** path.
+ */
 function deletedLemmaPaths(gitRoot) {
-    const parts = [
-        gitOut(gitRoot, ['ls-files', '-z', '--deleted', '--', 'Lemma']),
-        gitOut(gitRoot, ['diff', '-z', '--name-only', '--diff-filter=D', '--cached', '--', 'Lemma']),
-    ].join('\0');
-    return [...new Set(parts.split('\0').filter(isLemmaLean))];
+    const out = gitOut(gitRoot, ['ls-files', '-z', '--deleted', '--', 'Lemma']).split('\0');
+    // `-z --name-status`: `<status>\0<path>\0`, and `<status>\0<old>\0<new>\0` for a rename
+    const staged = gitOut(gitRoot, ['diff', '-z', '--name-status', '-M', '--diff-filter=DR', '--cached', '--', 'Lemma']).split('\0');
+    for (let i = 0; i < staged.length; ) {
+        const st = staged[i++];
+        if (!st) continue;
+        out.push(staged[i]); // the path for `D`; the old path for `R<score>`
+        i += st[0] === 'R' ? 2 : 1;
+    }
+    return [...new Set(out.filter(isLemmaLean))];
 }
 
 /** `Lemma/Foo/Bar/Baz.lean` → `Foo.Bar.Baz` (rename.sh module form). */
@@ -374,10 +386,11 @@ function moduleTokenOverlap(a, b) {
 }
 
 /**
- * `mv` / `rename.sh`: deleted old lemma + untracked/added dest with the same blob, same created
- * date + body overlap, same created date + related module path, same created date + shared module
- * tokens, or a **unique** deleted lemma with the same `-- created on` (covers radical renames when
- * HEAD still has a tiny axiom stub so line overlap is low).
+ * `mv` / `rename.sh`: old lemma gone (deleted in the worktree or index, or the source of a staged
+ * rename) + untracked/added dest with the same blob, same created date + body overlap, same created
+ * date + related module path, same created date + shared module tokens, or a **unique** old lemma
+ * with the same `-- created on` (covers radical renames when HEAD still has a tiny axiom stub so
+ * line overlap is low).
  */
 function isMoveOfExistingLemma(gitRoot, abs) {
     const now = fs.readFileSync(abs, 'utf8');
@@ -402,7 +415,7 @@ function isMoveOfExistingLemma(gitRoot, abs) {
             continue;
         }
     }
-    // Unique `-- created on` among deletions ⇒ rename kept its birth date (do not demand today).
+    // Unique `-- created on` among old paths ⇒ rename kept its birth date (do not demand today).
     if (sameDateOlds.length === 1) return true;
     return false;
 }

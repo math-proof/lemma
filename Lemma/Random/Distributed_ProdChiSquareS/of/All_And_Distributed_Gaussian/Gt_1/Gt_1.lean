@@ -3,13 +3,10 @@ import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.BigOperators.Pi
 import Notation.Fun
 import Notation.Probability.HasLaw
-import Instance.Probability.Process.HiddenMarkovSequence
-import Instance.NNReal.Coe
 import Instance.Probability.JointRv
-import Def.Probability.ChiSquare
 import Lemma.Measure.MapPi_GaussianReal.eq.ProdChiSquareS.of.Gt_1.Gt_1
-import Initialize.Tactic.Attr.Basic
-open MeasureTheory ProbabilityTheory Fun Measure
+import Lemma.Random.GetSlice.eq.SnocGetSlice
+open MeasureTheory ProbabilityTheory Fun Measure Random
 open scoped NNReal
 set_option maxHeartbeats 800000
 
@@ -78,15 +75,8 @@ private lemma main
       have hlaw := hmp.hasLaw.fun_comp hswap
       have hsnoc : (fun ω (j : Fin (N + 1)) ↦ y[i][j] ω) =
           fun ω ↦ Fin.snoc (y[i][:N] ω) (y[i][N] ω) := by
-        funext ω j
-        refine Fin.lastCases ?_ ?_ j
-        ·
-          rw [Fin.snoc_last]
-          rfl
-        ·
-          intro k
-          rw [Fin.snoc_castSucc, hx]
-          rfl
+        funext ω
+        exact GetSlice.eq.SnocGetSlice N ω
       rw [hsnoc]
       convert hlaw using 1
       funext ω
@@ -226,6 +216,7 @@ private lemma main
       Pi.pow_apply, Pi.mul_apply, Finset.sum_apply, Pi.natCast_apply]
   rw [hfun]
   exact hφ.fun_comp hgrid
+
 
 -- created on 2026-10-31
 -- updated on 2026-11-17

@@ -11,7 +11,7 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
   - py/docstring.py
     add attribute docstrings for `@[path, ...]` private lemma main
   - mjs/lemmaPath.mjs
-    suggest a better lemma path if it isn't consistent; use `sh/rename.sh` to rename the Lean lemma module
+    suggest a better lemma path if it isn't consistent; use `sh/rename.sh` to rename the Lean lemma module if demanded
 - Attribute-generated lemmas
   - Read `Initialize/Tactic/Attr/Basic.lean` to understand attribute-generated lemmas (`@[comm]`, `@[cast]`, `@[mp]`, `@[mpr]`, `@[fin]`, `@[mt]`, …) and apply them wisely.
   - For `LHS.is.RHS` tagged with `@[mp]` / `@[mpr]`, prefer the generated one-direction lemmas `RHS.of.LHS` / `LHS.of.RHS` over calling `.mp` / `.mpr` on the iff.
@@ -28,7 +28,7 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
   - within the `proof` section, tactics convention:
     - prefer `apply` instead of `exact`, perhaps by creating some holes
     - inline `have` without introducing `show` if it is referenced only once
-    - A sub lemma without @[path], referenced only once, can be inlined if no `have` is introduced
+    - A sub lemma without @[path], referenced only once, can be inlined if no extra `have` is introduced
     - delete `classical` when redundant (proof/def still elaborates and builds without it)
     - use `grind`/`aesop` as much as possible
     - Prefer `√` (Root.sqrt notation) over `Real.sqrt` at call sites when both mean the same thing.

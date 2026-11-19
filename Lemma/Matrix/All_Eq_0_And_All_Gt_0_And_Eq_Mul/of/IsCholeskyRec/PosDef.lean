@@ -10,6 +10,7 @@ open scoped ComplexOrder
 recursion is lower triangular with positive diagonal and `A = L Lᴴ`. -/
 @[path]
 private lemma main
+  {𝕜 : Type*}
   [RCLike 𝕜]
   {n : ℕ}
   {A L : Matrix (Fin n) (Fin n) 𝕜}

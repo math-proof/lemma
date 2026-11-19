@@ -1,7 +1,7 @@
 module
 
 public import Theorem.Random.SinglePSpace.of.Measurable.Measurable
-public import Instance.Probability.Process.HiddenMarkovSequence.Part2
+public import Instance.Probability.Process.HiddenMarkovSequence
 public import Syntax.Data.List
 public import Instance.Probability.Rv
 public import Instance.Probability.JointRv

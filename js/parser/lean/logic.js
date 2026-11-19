@@ -125,12 +125,18 @@ export class Lean_lor extends LeanLogic {
 
     static input_priority = 30;
 
+    static isRightAssociative = true;
+
     get stack_priority() {
         return 29;
     }
 
     get operator() {
         return '∨';
+    }
+
+    get pathToken() {
+        return "Or";
     }
 
     insert_newline(caret, newline_count, indent, next) {
@@ -210,12 +216,18 @@ export class Lean_land extends LeanLogic {
 
     static input_priority = 35;
 
+    static isRightAssociative = true;
+
     get stack_priority() {
         return 34;
     }
 
     get operator() {
         return '∧';
+    }
+
+    get pathToken() {
+        return "And";
     }
 
     /** `P ∧ Q` stored as `And(P)(Q)`. */

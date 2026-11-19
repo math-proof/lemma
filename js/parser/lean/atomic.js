@@ -9,6 +9,7 @@ import { escapeSpecialsForLatex } from './utility.js';
 import { LeanBinary } from './abstract.js';
 import { Lean } from './base.js';
 import { escapeHoleReLit, holeRegexDefaultNameToken } from './pathChoices.js';
+import { holeRegexAltFill } from './holeRegexAlternatives.js';
 
 const L = Lean.classes;
 
@@ -317,6 +318,16 @@ export class LeanToken extends Lean {
         const nameToken = opts.nameToken || holeRegexDefaultNameToken;
         const tok = nameToken(raw);
         return tok ? escapeHoleReLit(tok) : null;
+    }
+
+    /**
+     * A token is a single fill (`2`) or a hole (empty list of alts).
+     * @param {object} [opts]
+     * @returns {string[]}
+     */
+    holeRegexAlternatives(opts = {}) {
+        const fill = holeRegexAltFill(this, opts);
+        return fill ? [fill] : [];
     }
 
     /** A grouped digit (`(1)`, `(0)`) when `opts.digitLiteral` is set. */

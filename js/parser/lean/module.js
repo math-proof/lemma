@@ -79,15 +79,16 @@ function implyLetAlignLatex(imply, syntax) {
 }
 
 /**
- * `:= by` / `:= calc` is a right-margin `\tag*`, same as a given name (`\tag*{$hrec$}`).
+ * `:=` / `:= by` / `:= calc` is a right-margin `\tag*`, same as a given name (`\tag*{$hrec$}`).
+ * A term-style proof has no `by`/`calc`, but the Lean source still ends in `:=`, so keep a bare `:=`.
  * PHP `module.php` appends `\tag*{ := by}` to `imply.latex`.
  * @param {string} latex
  * @param {string} by
  */
 function withImplyAssignLatex(latex, by) {
-    if (!by || latex == null || latex === '') return latex;
+    if (latex == null || latex === '') return latex;
     const word = by === 'by' ? '{\\color{#00f}by}' : by;
-    const assign = ` := ${word}`;
+    const assign = by ? ` := ${word}` : ' :=';
     // Always right-margin \tag* (same as given names / PHP module.php).
     // Do not switch wide single-line implies to inline \quad — Body wants
     // `:= by` aligned with h₀/h₁/… tags even when the formula is long.

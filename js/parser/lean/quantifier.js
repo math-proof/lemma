@@ -118,6 +118,10 @@ export class LeanQuantifier extends LeanProp(LeanBigOperator) {
 export class Lean_forall extends LeanQuantifier {
     static { this.register(); }
 
+    get pathToken() {
+        return "All";
+    }
+
     get holeRegexTag() {
         return "All";
     }
@@ -134,6 +138,10 @@ export class Lean_forall extends LeanQuantifier {
 
 export class Lean_exists extends LeanQuantifier {
     static { this.register(); }
+
+    get pathToken() {
+        return "Any";
+    }
 
     get holeRegexTag() {
         return "Any";

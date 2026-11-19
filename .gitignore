@@ -26,3 +26,4 @@ sh/rename.tsv
 
 # Node/lean.js unit tests (keep local; do not track)
 *.test.mjs
+.trae

@@ -20,6 +20,12 @@ export class LeanGetElem extends LeanGetElemBaseBinary(LeanBinary) {
 
     static input_priority = 67;
 
+    /** Alternatives walk only; does not set `holeRegexTag`. */
+    get holeRegexAltTag() {
+        return "Get";
+    }
+
+
     /**
      * Colon-slice GetElem `x[:k]` / `(⇑x)[:n]` → GetSlice for IndepFun operand walk.
      * Big-op / Expect / Prob binder colons stay holes (omit).

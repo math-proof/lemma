@@ -3,13 +3,9 @@ import Mathlib.Algebra.BigOperators.Fin
 import Notation.Fun
 import Notation.Probability.HasLaw
 import Notation.Algebra.Power
-import Def.Probability.ChiSquare
 import Lemma.Measure.SumSqGaussians.eq.ChiSquaredReal
-import Instance.Probability.Process.HiddenMarkovSequence
-import Initialize.Tactic.Attr.Basic
-open MeasureTheory ProbabilityTheory
-open Fun
-open Measure
+import Lemma.Random.GetSlice.eq.SnocGetSlice
+open MeasureTheory ProbabilityTheory Fun Measure Random
 
 
 /--
@@ -55,15 +51,8 @@ private lemma main
       have hlaw := hmp.hasLaw.fun_comp hswap
       have hsnoc : (fun ω (i : Fin (n + 1)) ↦ x[i] ω) =
           fun ω ↦ Fin.snoc (x[:n] ω) (x[n] ω) := by
-        funext ω i
-        refine Fin.lastCases ?_ ?_ i
-        ·
-          rw [Fin.snoc_last]
-          rfl
-        ·
-          intro j
-          rw [Fin.snoc_castSucc, hx]
-          rfl
+        funext ω
+        exact GetSlice.eq.SnocGetSlice n ω
       rw [hsnoc]
       convert hlaw using 1
       funext ω

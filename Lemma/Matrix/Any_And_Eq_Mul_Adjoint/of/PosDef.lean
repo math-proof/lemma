@@ -7,6 +7,7 @@ open scoped ComplexOrder
 
 @[path]
 private lemma main
+  {𝕜 : Type*}
   [RCLike 𝕜]
   {n : ℕ}
   {A : Matrix (Fin n) (Fin n) 𝕜}

@@ -352,6 +352,25 @@ export class Lean_sum extends LeanBigOperator {
         return '∑';
     }
 
+    /** Alternatives walk only; does not set `holeRegexTag`. */
+    get holeRegexAltTag() {
+        return "Sum";
+    }
+
+    /** Binder is a hole; operands are the domain (from `x ∈ s`) and the scope. */
+    holeRegexAltOperands() {
+        const peel = (n) => {
+            while (n && (n.constructor?.name || "") === "LeanParenthesis")
+                n = n.arg ?? n.args?.[0];
+            return n;
+        };
+        const bound = peel(this.bound);
+        const scope = this.scope;
+        if (bound && (bound.constructor?.name || "") === "Lean_in" && bound.rhs != null && scope != null)
+            return [bound.rhs, scope];
+        return scope != null ? [scope] : [];
+    }
+
     /** Peel `(∑ …)` so nested display stacking still sees the inner sum. */
     static peelSum(n) {
         while (n instanceof L.LeanParenthesis) n = n.arg;
@@ -576,6 +595,10 @@ export class Lean_int extends LeanBigOperator {
     static input_priority = 60;
     get baseOperator() {
         return '∫';
+    }
+
+    get pathToken() {
+        return 'Integral';
     }
 
     binderVar() {
@@ -825,6 +848,10 @@ export class Lean_partial extends LeanBigOperator {
         return '\\partial';
     }
 
+    get pathToken() {
+        return 'Deriv';
+    }
+
     get stack_priority() {
         if (this.scope) return L.LeanAdd.input_priority;
         if (!(this.bound instanceof L.LeanCaret)) return 67;
@@ -935,6 +962,10 @@ export class Lean_nabla extends LeanBigOperator {
 
     get command() {
         return '\\nabla';
+    }
+
+    get pathToken() {
+        return 'Grad';
     }
 
     get stack_priority() {

@@ -1,13 +1,128 @@
-import Lemma.Random.All_MeasurableGetSlice.of.All_Measurable
+import Lemma.Random.All_MeasurableGet.is.All_MeasurableGetSlice
 import Syntax.Probability.Probability
 import Notation.Fun
-import Initialize.Tactic.Attr.Basic
 import Mathlib.MeasureTheory.Constructions.Pi
 import Mathlib.MeasureTheory.MeasurableSpace.Embedding
 import Mathlib.MeasureTheory.MeasurableSpace.Prod
 import Mathlib.MeasureTheory.Measure.Prod
 open MeasureTheory ProbabilityTheory Random Fun
 
+
+/--
+Peeling the last coordinate off the prefix joint with an auxiliary variable:
+`SinglePSpace` of `(s[:k + 1], Z)` transfers to `(s[k], s[:k], Z)`.
+-/
+private lemma SinglePSpace_Get_GetSlice_prod
+  [MeasurableSpace Ω]
+  [ReferenceMeasure 𝒮] [ReferenceMeasure 𝒵]
+  {π : Measure Ω} [IsProbabilityMeasure π]
+  {s : ℕ ⇀ Ω → 𝒮} {Z : Ω → 𝒵}
+-- given
+  (hPZ : ∀ k : ℕ, SinglePSpace π (s[:k], Z))
+  (k : ℕ) :
+-- imply
+  SinglePSpace π (s[k], (((s[:k] : Ω → Fin k → 𝒮), Z) : Ω → (Fin k → 𝒮) × 𝒵)) := by
+-- proof
+  let e :=
+    MeasurableEquiv.piFinSuccAbove (fun _ : Fin k.succ => 𝒮) (Fin.last k)
+  let φ : (Fin k.succ → 𝒮) × 𝒵 ≃ᵐ 𝒮 × ((Fin k → 𝒮) × 𝒵) :=
+    (MeasurableEquiv.prodCongr e (MeasurableEquiv.refl 𝒵)).trans
+      MeasurableEquiv.prodAssoc
+  let E : Ω → (Fin k.succ → 𝒮) × 𝒵 :=
+    fun ω => ((s[:k.succ] : Ω → Fin k.succ → 𝒮) ω, Z ω)
+  have hφ_apply (p : (Fin k.succ → 𝒮) × 𝒵) :
+    φ p = ((e p.1).1, (e p.1).2, p.2) := rfl
+  have hsplit (ω : Ω) :
+    e ((s[:k.succ] : Ω → Fin k.succ → 𝒮) ω) =
+      (s[k] ω, (s[:k] : Ω → Fin k → 𝒮) ω) := by
+    refine Prod.ext ?_ ?_
+    · simp [e, MeasurableEquiv.piFinSuccAbove_apply, Fun.getSlice, Function.getSlice,
+        FunSlice.slice, Int.toNat_zero, Fin.last]
+    ·
+      funext j
+      simp only [e, MeasurableEquiv.piFinSuccAbove_apply, Fun.getSlice,
+        Function.getSlice, FunSlice.slice, Int.toNat_zero]
+      refine congrArg (fun i : ℕ => s[i] ω) ?_
+      rw [Fin.succAbove_last_apply, Fin.val_castSucc]
+  have hcomp :
+    (φ ∘ E) = fun ω => (s[k] ω, (s[:k] : Ω → Fin k → 𝒮) ω, Z ω) := by
+    funext ω
+    change φ (((s[:k.succ] : Ω → Fin k.succ → 𝒮) ω), Z ω) =
+      (s[k] ω, (s[:k] : Ω → Fin k → 𝒮) ω, Z ω)
+    rw [hφ_apply, hsplit]
+  have he :
+    MeasurePreserving e
+      (ReferenceMeasure.measure (α := Fin k.succ → 𝒮))
+      (ReferenceMeasure.measure (α := 𝒮 × (Fin k → 𝒮))) := by
+    change MeasurePreserving e
+      (Measure.pi fun _ : Fin k.succ => ReferenceMeasure.measure (α := 𝒮))
+      ((ReferenceMeasure.measure (α := 𝒮)).prod
+        (Measure.pi fun _ : Fin k => ReferenceMeasure.measure (α := 𝒮)))
+    exact measurePreserving_piFinSuccAbove
+      (fun _ : Fin k.succ => ReferenceMeasure.measure (α := 𝒮)) (Fin.last k)
+  have hpres_map :
+    MeasurePreserving (Prod.map e (id : 𝒵 → 𝒵))
+      (ReferenceMeasure.measure (α := (Fin k.succ → 𝒮) × 𝒵))
+      (((ReferenceMeasure.measure (α := 𝒮)).prod
+          (ReferenceMeasure.measure (α := Fin k → 𝒮))).prod
+        (ReferenceMeasure.measure (α := 𝒵))) :=
+    he.prod (MeasurePreserving.id (μ := ReferenceMeasure.measure (α := 𝒵)))
+  have hpres_assoc :
+    MeasurePreserving MeasurableEquiv.prodAssoc
+      (((ReferenceMeasure.measure (α := 𝒮)).prod
+          (ReferenceMeasure.measure (α := Fin k → 𝒮))).prod
+        (ReferenceMeasure.measure (α := 𝒵)))
+      ((ReferenceMeasure.measure (α := 𝒮)).prod
+        ((ReferenceMeasure.measure (α := Fin k → 𝒮)).prod
+          (ReferenceMeasure.measure (α := 𝒵)))) :=
+    ⟨MeasurableEquiv.prodAssoc.measurable, Measure.prodAssoc_prod⟩
+  have hpres :
+    MeasurePreserving φ
+      (ReferenceMeasure.measure (α := (Fin k.succ → 𝒮) × 𝒵))
+      (ReferenceMeasure.measure (α := 𝒮 × ((Fin k → 𝒮) × 𝒵))) := by
+    have h := hpres_assoc.comp hpres_map
+    convert h
+    funext x
+    rfl
+  obtain ⟨ρ, hρm, hlaw⟩ := (hPZ k.succ).exists_distribution
+  have hlaw' :
+    π.map E =
+      (ReferenceMeasure.measure
+        (α := (Fin k.succ → 𝒮) × 𝒵)).withDensity ρ := by
+    exact hlaw
+  let ρ' : 𝒮 × ((Fin k → 𝒮) × 𝒵) → ENNReal := ρ ∘ φ.symm
+  have hρ'm : Measurable ρ' := hρm.comp φ.symm.measurable
+  have hE_ae : AEMeasurable E π := by
+    exact (hPZ k.succ).aemeasurable
+  have hmapE : π.map (φ ∘ E) = (π.map E).map φ :=
+    (AEMeasurable.map_map_of_aemeasurable φ.measurable.aemeasurable hE_ae).symm
+  have hwd :
+    ((ReferenceMeasure.measure
+        (α := (Fin k.succ → 𝒮) × 𝒵)).withDensity ρ).map φ =
+      (ReferenceMeasure.measure (α := 𝒮 × ((Fin k → 𝒮) × 𝒵))).withDensity ρ' := by
+    ext t ht
+    rw [Measure.map_apply φ.measurable ht,
+      withDensity_apply _ (φ.measurable ht),
+      withDensity_apply _ ht, ← hpres.map_eq,
+      setLIntegral_map ht hρ'm φ.measurable]
+    refine setLIntegral_congr_fun (φ.measurable ht) ?_
+    intro x _
+    change ρ x = ρ (φ.symm (φ x))
+    rw [φ.symm_apply_apply]
+  refine {
+    toIsProbabilityMeasure := inferInstance
+    aemeasurable := ?_
+    exists_distribution := ⟨ρ', hρ'm, ?_⟩
+  }
+  ·
+    change AEMeasurable
+      (fun ω => (s[k] ω, (s[:k] : Ω → Fin k → 𝒮) ω, Z ω)) π
+    rw [← hcomp]
+    exact φ.measurable.comp_aemeasurable hE_ae
+  ·
+    change π.map (fun ω => (s[k] ω, (s[:k] : Ω → Fin k → 𝒮) ω, Z ω)) =
+      (ReferenceMeasure.measure (α := 𝒮 × ((Fin k → 𝒮) × 𝒵))).withDensity ρ'
+    rw [← hcomp, hmapE, hlaw', hwd]
 
 /--
 Chain rule for a process prefix, conditioned on an auxiliary random variable \(Z\).
@@ -19,6 +134,11 @@ reference measures of the state spaces:
 The empty product (\(n = 0\)) is \(1\) off a \(\pi\)-null set where the density of \(Z\)
 vanishes. Prefixes are taken with respect to the product reference measure on
 \(\mathrm{Fin}\, n \to \mathcal{S}\).
+
+| attributes | lemma |
+| :---: | :---: |
+| path | Random.Prob_Cond.ae.Prod_Prob_Cond_Joint.of.Measurable.All_Measurable |
+| comm | Random.Prod_Prob_Cond_Joint.ae.Prob_Cond.of.Measurable.All_Measurable |
 -/
 @[path, comm]
 private lemma main
@@ -29,17 +149,20 @@ private lemma main
 -- given
   (hs : ∀ k : ℕ, Measurable s[k])
   (hZ : Measurable Z)
-  (hPZ : ∀ k : ℕ, SinglePSpace π (fun ω => (s[:k] : Ω → Fin k → 𝒮) ω, Z))
-  (hPstep : ∀ k : ℕ, SinglePSpace π (s[k], fun ω => (s[:k] : Ω → Fin k → 𝒮) ω, Z))
+  (hPZ : ∀ k : ℕ, SinglePSpace π (s[:k], Z))
   (n : ℕ) :
 -- imply
   have : ∀ k : ℕ, Measurable s[:k] :=
-    All_MeasurableGetSlice.of.All_Measurable hs
+    All_MeasurableGetSlice.of.All_MeasurableGet hs
+  have :
+    ∀ k : ℕ, SinglePSpace π (s[k], fun ω => (s[:k] : Ω → Fin k → 𝒮) ω, Z) :=
+    SinglePSpace_Get_GetSlice_prod hPZ
   ℙ[π](s[:n] | Z) =ᵐ[π]
     ∏ k ∈ Finset.range n, ℙ[π](s[k] | s[:k], Z) := by
 -- proof
+  intro _ hPstep
   have hslice : ∀ k : ℕ, Measurable s[:k] :=
-    All_MeasurableGetSlice.of.All_Measurable hs
+    All_MeasurableGetSlice.of.All_MeasurableGet hs
   induction n with
   | zero =>
     simp only [Finset.range_zero, Finset.prod_empty]
@@ -295,4 +418,4 @@ private lemma main
 
 
 -- created on 2023-10-13
--- updated on 2026-11-18
+-- updated on 2026-11-19

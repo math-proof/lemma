@@ -33,7 +33,12 @@ export class Lean_setminus extends LeanSetOperator {
     get operator() {
         return '\\';
     }
+
+    get holeRegexAltTag() {
+        return "SDiff";
+    }
 }
+
 
 export class Lean_cup extends LeanSetOperator {
     static { this.register(); }
@@ -43,7 +48,12 @@ export class Lean_cup extends LeanSetOperator {
     get operator() {
         return '∪';
     }
+
+    get holeRegexAltTag() {
+        return "Union";
+    }
 }
+
 
 export class Lean_cap extends LeanSetOperator {
     static { this.register(); }
@@ -53,7 +63,12 @@ export class Lean_cap extends LeanSetOperator {
     get operator() {
         return '∩';
     }
+
+    get holeRegexAltTag() {
+        return "Inter";
+    }
 }
+
 
 /** `⊆`. */
 export class Lean_subseteq extends LeanBinaryBoolean {
@@ -63,6 +78,10 @@ export class Lean_subseteq extends LeanBinaryBoolean {
 
     get operator() {
         return '⊆';
+    }
+
+    get pathToken() {
+        return "Subset";
     }
 
     get holeRegexTag() {

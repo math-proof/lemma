@@ -346,6 +346,10 @@ export class LeanMatMul extends LeanArithmetic {
         return this.superscript ? `⊗${this.superscript}` : '@';
     }
 
+    get pathToken() {
+        return "Dot";
+    }
+
     get holeRegexTag() {
         return "Dot";
     }
@@ -373,6 +377,10 @@ export class Lean_bullet extends LeanArithmetic {
 
     get operator() {
         return '•';
+    }
+
+    get pathToken() {
+        return "SMul";
     }
 
     get holeRegexTag() {
@@ -588,6 +596,15 @@ export class LeanBitOr extends LeanArithmetic {
         return '|';
     }
 
+    get pathToken() {
+        return "Cond";
+    }
+
+    /** Alternatives walk only; same token as `pathToken`. */
+    get holeRegexAltTag() {
+        return "Cond";
+    }
+
     insert_bar(caret, prevToken, next) {
         if (caret instanceof L.LeanToken) {
             const newCaret = new L.LeanCaret(this.indent, caret.level);
@@ -677,6 +694,9 @@ export class LeanPow extends LeanArithmetic {
 
     static input_priority = 80;
 
+    /** Lean `^` is `infixr:80`: `(a ^ b) ^ c` must keep its pair. */
+    static isRightAssociative = true;
+
     get operator() {
         return '^';
     }
@@ -684,7 +704,6 @@ export class LeanPow extends LeanArithmetic {
     get holeRegexTag() {
         return "Pow";
     }
-
 
     get command() {
         return '^';
@@ -870,6 +889,10 @@ export class Lean_cdotp extends LeanArithmetic {
 
     get operator() {
         return this.subscript ? `⬝${this.subscript}` : '⬝';
+    }
+
+    get pathToken() {
+        return "Dot";
     }
 
     get command() {
@@ -1204,6 +1227,11 @@ export class Lean_sqrt extends LeanUnaryArithmeticPre {
     get operator() {
         return '√';
     }
+
+    get holeRegexTag() {
+        return "Sqrt";
+    }
+
     latexArgs(syntax) {
         let arg = this.arg.peelLatexCoe();
         if (arg instanceof L.LeanParenthesis) arg = arg.arg;
@@ -1249,6 +1277,10 @@ export class LeanSquare extends LeanUnaryArithmeticPost {
     static { this.register(); }
 
     static input_priority = 66;
+    get holeRegexAltTag() {
+        return "Square";
+    }
+
     get operator() {
         return '²';
     }

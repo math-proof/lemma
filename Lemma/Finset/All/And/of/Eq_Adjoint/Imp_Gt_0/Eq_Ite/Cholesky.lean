@@ -2,6 +2,7 @@ import Lemma.Matrix.All_Eq_0_And_All_Gt_0_And_Eq_Mul.of.IsCholeskyRec.PosDef
 import Lemma.Matrix.Any_And_Eq_Mul_Adjoint.of.PosDef
 import Lemma.Matrix.IsCholeskyRec_Mul_L.of.All_Gt_0.All_All_Eq_0
 import Mathlib.Analysis.RCLike.Sqrt
+import Notation.Algebra.Power
 import Notation.Analysis.Complex.Star
 open Matrix
 open scoped ComplexOrder
@@ -15,9 +16,9 @@ private lemma main
 -- given
   (h₀ : Aᴴ = A)
   (h₁ : ∀ x : Fin n → ℂ, x ≠ 0 → 0 < ~x ⬝ᵥ A *ᵥ x)
-  (h₂ : ∀ i j : Fin n, L[i][j] = if j < i then (A[i][j] - ∑ k ∈ Finset.Iio j, L[i][k] * ~L[j][k]) / L[j][j] else if j = i then (A[i][i] - ∑ k ∈ Finset.Iio i, ‖L[i][k]‖ ^ 2).sqrt else 0) :
+  (h₂ : ∀ i j : Fin n, L[i][j] = if j < i then (A[i][j] - ∑ k ∈ Finset.Iio j, L[i][k] * ~L[j][k]) / L[j][j] else if j = i then (A[i][i] - ∑ k ∈ Finset.Iio i, ‖L[i][k]‖²).sqrt else 0) :
 -- imply
-  ∀ i : Fin n, i.val < t → 0 < L[i][i] ∧ A[i][i] = ((∑ k ∈ Finset.Iic i, ‖L[i][k]‖ ^ 2 : ℝ) : ℂ) ∧ ∀ j : Fin n, j < i → A[i][j] = ∑ k ∈ Finset.Iic j, L[i][k] * ~L[j][k] := by
+  ∀ i : Fin n, i.val < t → 0 < L[i][i] ∧ A[i][i] = ((∑ k ∈ Finset.Iic i, ‖L[i][k]‖² : ℝ) : ℂ) ∧ ∀ j : Fin n, j < i → A[i][j] = ∑ k ∈ Finset.Iic j, L[i][k] * ~L[j][k] := by
 -- proof
   have hA : A.PosDef := Matrix.PosDef.of_dotProduct_mulVec_pos h₀ (fun x hx => h₁ x hx)
   obtain ⟨L₀, htri, hL₀⟩ := Any_And_Eq_Mul_Adjoint.of.PosDef hA
@@ -116,4 +117,4 @@ private lemma main
 
 
 -- created on 2023-05-01
--- updated on 2026-11-07
+-- updated on 2026-11-19

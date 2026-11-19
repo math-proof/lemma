@@ -9,7 +9,7 @@ import '../../../js/py.js';
 import { compile, Lean, LeanModule } from '../../../js/parser/lean.js';
 
 /** rule ids implemented here; their text-scan versions only run when the AST is unavailable */
-export const AST_RULES = new Set(['have-inline-once', 'have-underscore', 'given-prop-first', 'given-prop-consecutive', 'given-implicit-dep', 'tactic-haveI', 'tactic-letI', 'calc-after-assign', 'decl-keyword-dir', 'paren-getelem', 'fin-index-val', 'paren-apparg', 'paren-redundant-type', 'paren-redundant-sum-sub', 'paren-redundant-pow', 'paren-redundant-arith', 'prefer-unicode-type']);
+export const AST_RULES = new Set(['have-inline-once', 'have-underscore', 'given-prop-first', 'given-prop-consecutive', 'given-implicit-dep', 'tactic-haveI', 'tactic-letI', 'calc-after-assign', 'decl-keyword-dir', 'paren-getelem', 'fin-index-val', 'paren-apparg', 'paren-redundant-type', 'paren-redundant-sum-sub', 'paren-redundant-pow', 'paren-redundant-arith', 'prefer-unicode-type', 'prefer-unicode-pow']);
 
 /** parse `source`, or null when the parser throws / does not return a module */
 export function parseAst(source) {
@@ -560,6 +560,39 @@ function preferUnicodeType(ctx, node) {
         1);
 }
 
+/** does the reprint hold a space outside brackets/parentheses (an application or infix operand)? */
+function hasTopLevelSpace(text) {
+    let depth = 0;
+    for (const c of String(text ?? '')) {
+        if ('([{⟨'.includes(c)) depth++;
+        else if (')]}⟩'.includes(c)) depth--;
+        else if (c === ' ' && depth <= 0) return true;
+    }
+    return false;
+}
+
+const SUPERSCRIPT_POW = { 2: '²', 3: '³', 4: '⁴' };
+
+/**
+ * `prefer-unicode-pow`: `x ^ 2` / `x ^ 3` / `x ^ 4` → `x²` / `x³` / `x⁴`. The exponent must be the
+ * literal `2` / `3` / `4` (parentheses allowed). The base must be one term: postfix `²` binds to the
+ * last atom, so `f x ^ 2` is skipped (`f x²` would be `f (x²)`). Not an AGENTS.md rule (user request).
+ */
+function preferUnicodePow(ctx, node) {
+    const { LeanPow, LeanToken } = Lean.classes;
+    if (!(node instanceof LeanPow)) return;
+    const exp = unwrapParens(node.rhs);
+    if (!(exp instanceof LeanToken)) return;
+    const sup = SUPERSCRIPT_POW[exp.text];
+    if (!sup) return;
+    const base = String(node.lhs ?? '').replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');
+    if (!base || hasTopLevelSpace(base)) return;
+    const show = (s) => (s.length > 60 ? `${s.slice(0, 57)}…` : s);
+    ctx.warnAst('prefer-unicode-pow', node,
+        `\`${show(`${base} ^ ${exp.text}`)}\` → \`${show(base + sup)}\`: write \`… ^ ${exp.text}\` with the postfix \`${sup}\``,
+        1);
+}
+
 /**
  * `(h : (T))`: the type of an explicit binder is already a complete term; an outer parenthesis
  * pair around it is redundant against the binder's closing `)` (`(hMs : (sup[…] e < ∞))` →
@@ -862,6 +895,7 @@ export function astRules(ctx, tree) {
             parenRedundantPow(sink, node);
             parenRedundantArith(sink, node);
             preferUnicodeType(sink, node);
+            preferUnicodePow(sink, node);
         }
     }
     found.sort((a, b) => order.get(a.node) - order.get(b.node));

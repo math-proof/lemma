@@ -1,0 +1,6 @@
+{
+  "lean": "∀ k : ℕ, Measurable s[:k]",
+  "regex": [
+    "All_(Measurable(GetSlice__))"
+  ]
+}

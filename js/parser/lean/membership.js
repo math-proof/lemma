@@ -58,6 +58,10 @@ export class Lean_notin extends LeanBinaryBoolean {
         return '∉';
     }
 
+    get pathToken() {
+        return "NotIn";
+    }
+
     latexArgs(syntax) {
         const lhs = L.Lean_in.peelLatexElem(this.lhs);
         return [lhs.toLatex(syntax), this.rhs.toLatex(syntax)];
@@ -71,6 +75,10 @@ export class Lean_leftrightarrow extends LeanBinaryBoolean {
 
     get operator() {
         return '↔';
+    }
+
+    get pathToken() {
+        return "Iff";
     }
 
     get holeRegexTag() {

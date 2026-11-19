@@ -110,6 +110,19 @@ export class Node {
     }
 
     /**
+     * Alternative hole-regex spellings for this subtree (primary + same-head
+     * collapses). Lean nodes override; the default is the single holeRegex
+     * fragment when one exists.
+     * @param {object} [opts]
+     * @returns {string[]}
+     */
+    holeRegexAlternatives(opts = {}) {
+        const frag = this.holeRegex(opts);
+        if (frag == null || frag === "" || frag === "_") return [];
+        return [String(frag).replace(/\(_\|/g, "(")];
+    }
+
+    /**
      * Stored hole-regex for this node: groups are `(Fill)`, not `(_|Fill)`.
      * null means this node does not spell a stored group.
      * Subclasses override. Recurse with `opts.decomp(child, binders)`.

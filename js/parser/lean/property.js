@@ -28,6 +28,20 @@ export class LeanProperty extends LeanBinary {
         return '.';
     }
 
+    /** Alternatives walk only; `.card` is Card. */
+    get holeRegexAltTag() {
+        const prop = this.rhs;
+        const raw = prop instanceof L.LeanToken ? (prop.text || "") : "";
+        if (raw === "card") return "Card";
+        return null;
+    }
+
+    holeRegexAltOperands() {
+        if (this.holeRegexAltTag === "Card") return [this.lhs];
+        return [this.lhs, this.rhs];
+    }
+
+
     equals(other) {
         if (other instanceof LeanProperty) {
             return this.lhs.equals(other.lhs) && this.rhs.equals(other.rhs);

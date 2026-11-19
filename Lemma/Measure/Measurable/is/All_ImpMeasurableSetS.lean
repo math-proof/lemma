@@ -10,7 +10,7 @@ private lemma main
   [MeasurableSpace α] [MeasurableSpace β]
   {f : α → β} :
 -- imply
-  Measurable f ↔ ∀ (B : β → Prop), MeasurableSet B → MeasurableSet (f ⁻¹' B) :=
+  Measurable f ↔ ∀ B : Set β, MeasurableSet B → MeasurableSet (f ⁻¹' B) :=
 -- proof
   Iff.rfl
 

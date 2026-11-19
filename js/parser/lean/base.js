@@ -66,6 +66,27 @@ export class Lean extends IndentedNode {
         return typeof c.input_priority === 'number' ? c.input_priority : 100;
     }
 
+    /**
+     * Path/hole token for this node. Defaults to the class name with the leading
+     * `Lean`/`Lean_` stripped and the first letter capitalized (`Lean_sum`→`Sum`,
+     * `LeanStack`→`Stack`, `LeanBitOr`→`BitOr`). Subclasses override where the
+     * derived name is wrong (e.g. `LeanBitOr`→`Cond`, `Lean_partial`→`Deriv`,
+     * `Lean_int`→`Integral`). This is the single source of truth for the token
+     * used in path generation (`mjs/lemmaPath.mjs` reads `node.pathToken`).
+     *
+     * Note: `holeRegexTag` is a *separate* legacy property (defined explicitly on
+     * concrete operator classes, with `null` sentinels on abstract bases like
+     * `LeanArithmetic`). It is intentionally NOT aliased to `pathToken` on this
+     * base: the alternatives walk (`holeRegexAlternatives.js`) reads
+     * `holeRegexTag` and must stay conservative — giving every node a non-null
+     * tag would over-broaden emitted regexes. New code should read `pathToken`.
+     * @returns {string}
+     */
+    get pathToken() {
+        const n = (this.constructor?.name || '').replace(/^Lean_?/, '');
+        return n ? n.charAt(0).toUpperCase() + n.slice(1) : '';
+    }
+
     get level() {
         return this.kwargs.level ?? 0;
     }

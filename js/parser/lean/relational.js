@@ -310,6 +310,10 @@ export class Lean_perp extends LeanRelational {
         return '⟂';
     }
 
+    get pathToken() {
+        return "Indep";
+    }
+
     /** Echo operator: `⟂` + subscript + optional `[modifier]`. */
     opStr() {
         let op = this.operator + (this.subscript || '');
@@ -482,6 +486,10 @@ export class Lean_equiv extends LeanRelational {
     get operator() {
         return '≡';
     }
+
+    get pathToken() {
+        return "Iff";
+    }
 }
 export class LeanNotEquiv extends LeanRelational {
     static { this.register(); }
@@ -494,6 +502,10 @@ export class LeanNotEquiv extends LeanRelational {
 
     get operator() {
         return '≢';
+    }
+
+    get pathToken() {
+        return "NotIff";
     }
 }
 export class Lean_simeq extends LeanRelational {
@@ -557,6 +569,10 @@ export class Lean_approx extends LeanRelational {
 
     get operator() {
         return '≈';
+    }
+
+    get pathToken() {
+        return "XEq";
     }
 
     latexArgs(syntax) {

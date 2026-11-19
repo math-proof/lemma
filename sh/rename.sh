@@ -18,9 +18,10 @@ update_axiom_module_row() {
   local old_mod=$1
   local new_mod=$2
   local project_user host port database
-  local candidates cand u p login_user login_pass
+  local candidates cand u p login_user login_pass login_ok
   local old_q new_q user_q lemma_old_q lemma_new_q
   local out module_rows import_rows
+  local -a mysql_env mysql_login
 
   if ! command -v mysql >/dev/null 2>&1; then
     echo "warning: mysql client not found; skipped axiom.lemma hierarchy update" >&2
@@ -40,22 +41,39 @@ update_axiom_module_row() {
   if [ -n "${MYSQL_HOST:-}" ] && [ -n "${MYSQL_PWD+x}" ]; then
     candidates+=("${MYSQL_USER:-${USER:-prod}}:${MYSQL_PWD}")
   fi
-  candidates+=("prod:prod" "user:user")
+  # Last candidate is empty: passwordless login (socket / trust auth), no -u/-p.
+  candidates+=("prod:prod" "user:user" "")
 
-  login_user= login_pass=
+  login_user= login_pass= login_ok=0
+  # IDE runtimes (e.g. Trae) prepend their own libstdc++ to LD_LIBRARY_PATH, which the
+  # system mysql client rejects; drop it for every mysql invocation.
   for cand in "${candidates[@]}"; do
     u=${cand%%:*}
     p=${cand#*:}
-    if MYSQL_PWD="$p" mysql -h"$host" -P"$port" -u"$u" -D"$database" -N -e "SELECT 1" >/dev/null 2>&1; then
+    if [ -z "$u" ]; then
+      if env -u MYSQL_PWD -u LD_LIBRARY_PATH mysql -h"$host" -P"$port" -D"$database" -N -e "SELECT 1" >/dev/null 2>&1; then
+        login_user= login_pass= login_ok=1
+        break
+      fi
+    elif MYSQL_PWD="$p" env -u LD_LIBRARY_PATH mysql -h"$host" -P"$port" -u"$u" -D"$database" -N -e "SELECT 1" >/dev/null 2>&1; then
       login_user=$u
       login_pass=$p
+      login_ok=1
       break
     fi
   done
 
-  if [ -z "$login_user" ]; then
+  if [ "$login_ok" -ne 1 ]; then
     echo "warning: could not connect to MySQL ($host/$database); skipped axiom.lemma hierarchy update" >&2
     return 0
+  fi
+
+  if [ -n "$login_user" ]; then
+    mysql_env=(env -u LD_LIBRARY_PATH MYSQL_PWD="$login_pass")
+    mysql_login=(-u"$login_user")
+  else
+    mysql_env=(env -u MYSQL_PWD -u LD_LIBRARY_PATH)
+    mysql_login=()
   fi
 
   old_q=$(sql_quote "$old_mod")
@@ -64,9 +82,9 @@ update_axiom_module_row() {
   lemma_old_q=$(sql_quote "Lemma.$old_mod")
   lemma_new_q=$(sql_quote "Lemma.$new_mod")
 
-  echo "MySQL axiom.lemma: user=$project_user module $old_mod -> $new_mod (login $login_user@$host)"
+  echo "MySQL axiom.lemma: user=$project_user module $old_mod -> $new_mod (login ${login_user:-passwordless}@$host)"
 
-  out=$(MYSQL_PWD="$login_pass" mysql -h"$host" -P"$port" -u"$login_user" -D"$database" -N -e "
+  out=$("${mysql_env[@]}" mysql -h"$host" -P"$port" "${mysql_login[@]}" -D"$database" -N -e "
 UPDATE lemma SET module = ${new_q} WHERE user = ${user_q} AND module = ${old_q};
 SELECT ROW_COUNT();
 UPDATE lemma SET imports = JSON_REPLACE(
@@ -293,7 +311,20 @@ else
     exit 1
   fi
 
+  # *.echo.lean tracing files follow their *.lean module on rename.
+  srcEchoFile=${srcFile%.lean}.echo.lean
+  dstEchoFile=${dstFile%.lean}.echo.lean
+  if [ -f "$srcEchoFile" ] && [ -f "$dstEchoFile" ]; then
+    echo "error: $dstEchoFile already exists"
+    exit 1
+  fi
+
   mv $srcFile $dstFile
+
+  if [ -f "$srcEchoFile" ]; then
+    echo mv $srcEchoFile $dstEchoFile
+    mv "$srcEchoFile" "$dstEchoFile"
+  fi
 fi
 
 srcReg=${src//./\\.}

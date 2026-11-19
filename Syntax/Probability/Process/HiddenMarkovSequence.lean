@@ -10,7 +10,7 @@ public meta import Syntax.Data.List
 public import Def.Data.List.List.Basic
 public import Instance.Analysis.Real.Numbers
 public import Notation.Fun
-public import Instance.Probability.Process.HiddenMarkovSequence.Part2
+public import Instance.Probability.Process.HiddenMarkovSequence
 
 public meta section
 
