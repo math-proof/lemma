@@ -322,6 +322,7 @@ def process_file(
         print(f"updated {rel}")
     elif not changed:
         print(f"unchanged: {rel}")
+        print("  please don't add the markdown table manually yourself")
 
 
 def main() -> None:

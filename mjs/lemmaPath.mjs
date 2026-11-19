@@ -144,20 +144,23 @@ const CLASS_TOKEN = {
 
 function cls(n) { return n?.constructor?.name || ""; }
 
-const BIG_OP_CLASS_CACHE = new Map();
-function isBigOp(node) {
+const CLASS_ANCESTOR_CACHE = new Map();
+function hasAncestorClass(node, ancestorName) {
   const c = cls(node);
   if (!c) return false;
-  if (BIG_OP_CLASS_CACHE.has(c)) return BIG_OP_CLASS_CACHE.get(c);
-  let big = false;
+  const key = c + "|" + ancestorName;
+  if (CLASS_ANCESTOR_CACHE.has(key)) return CLASS_ANCESTOR_CACHE.get(key);
+  let hit = false;
   for (let p = Object.getPrototypeOf(node); p; p = Object.getPrototypeOf(p)) {
-    const n = p.constructor?.name;
-    if (n === "LeanQuantifier") break;
-    if (n === "LeanBigOperator") { big = true; break; }
+    if (p.constructor?.name === ancestorName) { hit = true; break; }
   }
-  BIG_OP_CLASS_CACHE.set(c, big);
-  return big;
+  CLASS_ANCESTOR_CACHE.set(key, hit);
+  return hit;
 }
+// Any binder big-operator (`∑ ∏ ∫ ∂ ∇ ℙ 𝔼` …): its token always comes from `pathToken`.
+function isBigOp(node) { return hasAncestorClass(node, "LeanBigOperator"); }
+function isLimitsBigOp(node) { return hasAncestorClass(node, "LeanLimitsBigOp"); }
+function isRandomBigOp(node) { return hasAncestorClass(node, "LeanRandomBigOp"); }
 
 function bigOpDomainAtom(node) {
   if (!isBigOp(node)) return "";
@@ -914,7 +917,7 @@ function pickSection(sigNode, sections, extra = {}) {
   const concl = conclusionNode(sigNode);
   if (concl && (cls(concl) === "LeanEq" || cls(concl) === "Lean_le") && concl.superscript === "ᶠ") add("Filter", 3);
   if (concl && CLASS_TOKEN[cls(concl)] && (concl.args || []).length === 2 &&
-      concl.args.every((a) => { const u = unwrapParen(a); return (cls(u) === "Lean_sum" || cls(u) === "Lean_prod") && (u.args || []).some((b) => cls(b) === "Lean_in"); })) {
+      concl.args.every((a) => { const u = unwrapParen(a); return isBigOp(u) && (u.args || []).some((b) => cls(b) === "Lean_in"); })) {
     add("Finset", 2);
   }
   const hasVecMul = (n) => !!n && typeof n === "object" && (subscriptedMulAtom(n) !== null || (n.args || []).some(hasVecMul));
@@ -980,7 +983,7 @@ function pickSection(sigNode, sections, extra = {}) {
     const bothFinsetBigOps = !!(concl && CLASS_TOKEN[cls(concl)] && (concl.args || []).length === 2 &&
       concl.args.every((a) => {
         const u = unwrapParen(a);
-        return (cls(u) === "Lean_sum" || cls(u) === "Lean_prod") && (u.args || []).some((b) => cls(b) === "Lean_in");
+        return isBigOp(u) && (u.args || []).some((b) => cls(b) === "Lean_in");
       }));
     if (realAnalysis && !bothFinsetBigOps && tokens.has("ℝ") && (scores.get("Finset") ?? 0) > 1) {
       scores.set("Finset", 1);
@@ -1556,7 +1559,8 @@ function condExpArg(node) {
 function fnLikeHead(head) {
   const h = unwrapParen(head);
   const c = cls(h);
-  return c === "LeanPreimage" || !!condExpArg(h) || isArgMaxMinGetElem(h) || c === "Lean_argmax" || c === "Lean_argmin";
+  return c === "LeanPreimage" || !!condExpArg(h) || isArgMaxMinGetElem(h) ||
+    (isLimitsBigOp(h) && (h.pathToken === "ArgMax" || h.pathToken === "ArgMin"));
 }
 
 function normHead(head, opts) {
@@ -1724,7 +1728,7 @@ function applyEvalPrefix(head) {
   if (cls(unwrapParen(head)) === "LeanVecNotation") return "";
   const h = unwrapParen(head);
   if (cls(h) === "LeanGetElem" && cls(h.args?.[0]) === "LeanToken" && (h.args[0].text === "ℙ" || h.args[0].text === "𝔼")) return "";
-  if (cls(h) === "Lean_Expect" || cls(h) === "Lean_Prob" || cls(h) === "Lean_Var") return "";
+  if (isRandomBigOp(h)) return "";
   return "Get";
 }
 
@@ -1982,9 +1986,8 @@ function mentionsUpdateCol(node) {
 
 function expectProbVarBoundScope(node) {
   const u = unwrapParen(node);
-  const c = cls(u);
-  if (c !== "Lean_Expect" && c !== "Lean_Prob" && c !== "Lean_Var") return null;
-  return { bound: u.bound ?? u.args?.[0] ?? null, scope: u.scope ?? null, kind: c };
+  if (!isRandomBigOp(u)) return null;
+  return { bound: u.bound ?? u.args?.[0] ?? null, scope: u.scope ?? null, kind: cls(u), pathToken: u.pathToken };
 }
 
 function legacyExpectProbVarApp(node, opText) {
@@ -1997,18 +2000,10 @@ function legacyExpectProbVarApp(node, opText) {
 }
 
 function isVarApp(node) {
-  if (expectProbVarBoundScope(node)?.kind === "Lean_Var") return true;
+  if (expectProbVarBoundScope(node)?.pathToken === "Var") return true;
   return !!legacyExpectProbVarApp(node, "𝕍𝕒𝕣");
 }
 
-const LIMITS_BIGOP_KIND = {
-  Lean_max: "Max",
-  Lean_min: "Min",
-  Lean_sup: "Sup",
-  Lean_inf: "Inf",
-  Lean_argmax: "ArgMax",
-  Lean_argmin: "ArgMin",
-};
 const LIMITS_LEGACY_OP_TEXT = {
   max: "Max",
   min: "Min",
@@ -2020,10 +2015,9 @@ const LIMITS_LEGACY_OP_TEXT = {
 
 function limitsBigOpBoundScope(node) {
   const u = unwrapParen(node);
-  const c = cls(u);
-  if (!LIMITS_BIGOP_KIND[c]) return null;
+  if (!isLimitsBigOp(u)) return null;
   const pathToken = u.pathToken;
-  return { bound: u.bound ?? u.args?.[0] ?? null, scope: u.scope ?? null, kind: c, pathToken };
+  return { bound: u.bound ?? u.args?.[0] ?? null, scope: u.scope ?? null, kind: cls(u), pathToken };
 }
 
 function legacyLimitsBigOpApp(node, opText) {
@@ -2396,7 +2390,7 @@ function isSupLtInfty(node) {
   if (cls(u) !== "Lean_lt" || (u.args || []).length !== 2) return false;
   if (!isInftyToken(u.args[1])) return false;
   let lhs = unwrapParen(u.args[0]);
-  if (limitsBigOpBoundScope(lhs)?.kind === "Lean_sup") return true;
+  if (limitsBigOpBoundScope(lhs)?.pathToken === "Sup") return true;
   const head = cls(lhs) === "LeanArgsSpaceSeparated" ? lhs.args?.[0] : lhs;
   return cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === "sup";
 }
@@ -2418,7 +2412,7 @@ function supBoundKind(node) {
   if (isSupLtInfty(u)) {
     const lhs = unwrapParen(u.args[0]);
     const lim = limitsBigOpBoundScope(lhs);
-    if (lim?.kind === "Lean_sup") body = lim.scope;
+    if (lim?.pathToken === "Sup") body = lim.scope;
     else body = cls(lhs) === "LeanArgsSpaceSeparated" ? lhs.args?.[lhs.args.length - 1] : null;
   } else {
     let a = unwrapParen(u.args?.[1]);
@@ -2430,7 +2424,8 @@ function supBoundKind(node) {
   }
   const b = unwrapParen(body);
   const k = cls(b);
-  if (k === "Lean_sum" || k === "Lean_int" || k === "LeanNorm" || k === "LeanAbs") return b?.pathToken || "";
+  // Any binder big-operator (∑ ∏ ∫ …) inside the sup; Norm/Abs keep their own tokens.
+  if (isBigOp(b) || k === "LeanNorm" || k === "LeanAbs") return b?.pathToken || "";
   return "";
 }
 function supBoundCanon(node) {
@@ -2460,7 +2455,7 @@ function peelHoleExpr(node) {
 function partialBoundScope(node) {
   if (!node) return null;
   const c = cls(node);
-  if (c !== "Lean_partial" && c !== "LeanPartial") return null;
+  if (c !== "Lean_partial") return null;
   if (node.bound != null || node.scope != null) {
     return { bound: node.bound ?? null, scope: node.scope ?? null };
   }
@@ -2492,7 +2487,7 @@ function partialNameAltsFromScope(node, opts = {}, A) {
 function nablaBoundScope(node) {
   if (!node) return null;
   const c = cls(node);
-  if (c !== "Lean_nabla" && c !== "LeanNabla") return null;
+  if (c !== "Lean_nabla") return null;
   if (node.bound != null || node.scope != null) {
     return { bound: node.bound ?? null, scope: node.scope ?? null };
   }
@@ -3065,7 +3060,7 @@ function decompQuantEqExpr(node, opts) {
   if (!u) return null;
   const c = cls(u);
   const opt = (frag) => wrapHoleOpt(frag);
-  if (c === "Lean_partial" || c === "LeanPartial") {
+  if (c === "Lean_partial") {
     const ps = partialBoundScope(u);
     if (!ps || isQuantEqHoleNode(ps.scope, opts)) return quantEqPartialToken(u);
     const inner = decompQuantEqExpr(ps.scope, opts);
@@ -4253,7 +4248,7 @@ function holeRegexExprWalk(node, opts) {
   };
   {
     const pc = cls(u);
-    if (pc === "Lean_partial" || pc === "LeanPartial") {
+    if (pc === "Lean_partial") {
       const ps = partialBoundScope(u);
       if (!ps) return u.pathToken + "__";
       const scopeFrag = holeRegexExpr(ps.scope, opts);
@@ -4933,7 +4928,7 @@ function holeFillStems(node, opts = {}) {
       return [tag + "_" + b, ""];
     }));
   }
-  if (c === "Lean_partial" || c === "LeanPartial") {
+  if (c === "Lean_partial") {
     const ps = partialBoundScope(u);
     if (!ps) return [""];
     const scopes = holeFillStems(ps.scope, opts);
@@ -4945,7 +4940,7 @@ function holeFillStems(node, opts = {}) {
       "",
     ]);
   }
-  if (c === "Lean_nabla" || c === "LeanNabla") {
+  if (c === "Lean_nabla") {
     return nablaBoundScope(u) ? [u.pathToken + "_", ""] : [""];
   }
   if (c === "LeanProperty") {
@@ -5023,7 +5018,7 @@ function holeFillStems(node, opts = {}) {
     }
   }
 
-  if (c === "Lean_Expect" || c === "Lean_Prob" || c === "Lean_Var") {
+  if (isRandomBigOp(u)) {
     const tok = u.pathToken;
     const scopes = holeFillStems(u.scope ?? u.args?.[1], opts);
     const filled = scopes.filter(Boolean);
@@ -5357,7 +5352,7 @@ function mapPiGaussianRealEqProdChiSquareSBodyName(implyStmts, houseFromDisk = "
 export function mulInvSqrtNodeChoices(node, opts = {}) {
   if (node && typeof node.pathChoices === "function") {
     const ch = node.pathChoices(opts);
-    if (cls(node) === "Lean_nabla" || cls(node) === "LeanNabla") return nablaPathChoicesToGrad(ch);
+    if (cls(node) === "Lean_nabla") return nablaPathChoicesToGrad(ch);
     return ch;
   }
   return [""];
@@ -5434,7 +5429,7 @@ function peelImplyEq(implyStmts) {
 }
 
 function isExpectAppNode(node) {
-  if (expectProbVarBoundScope(node)?.kind === "Lean_Expect") return true;
+  if (expectProbVarBoundScope(node)?.pathToken === "Expect") return true;
   return !!legacyExpectProbVarApp(node, "𝔼");
 }
 
@@ -5447,7 +5442,7 @@ function isArgMaxMinGetElem(node) {
 function argMaxMinTokenName(node) {
   const u = unwrapParen(node);
   const lim = limitsBigOpBoundScope(u);
-  if (lim && (lim.kind === "Lean_argmax" || lim.kind === "Lean_argmin")) return lim.pathToken;
+  if (lim && (lim.pathToken === "ArgMax" || lim.pathToken === "ArgMin")) return lim.pathToken;
   if (cls(u) === "LeanArgsSpaceSeparated" && isArgMaxMinGetElem(u.args?.[0])) {
     return argMaxMinTokenName(u.args[0]);
   }
@@ -5457,7 +5452,7 @@ function argMaxMinTokenName(node) {
 function isArgMaxMinApp(node) {
   const u = unwrapParen(node);
   const lim = limitsBigOpBoundScope(u);
-  if (lim && (lim.kind === "Lean_argmax" || lim.kind === "Lean_argmin") && lim.scope != null) return true;
+  if (lim && (lim.pathToken === "ArgMax" || lim.pathToken === "ArgMin") && lim.scope != null) return true;
   return cls(u) === "LeanArgsSpaceSeparated" && isArgMaxMinGetElem(u.args?.[0]) && (u.args || []).length >= 2;
 }
 function argMaxMinBody(node) {
@@ -5544,7 +5539,7 @@ function matrixOfFunBody(node) {
 
 function gradientBody(node) {
   const u = unwrapParen(node);
-  if (cls(u) === "Lean_nabla" || cls(u) === "LeanNabla") {
+  if (cls(u) === "Lean_nabla") {
     const bs = nablaBoundScope(u);
     if (!bs) return null;
     if (bs.scope != null && cls(bs.scope) !== "LeanCaret") return bs.scope;
@@ -5569,7 +5564,7 @@ function preAlts(node, opts, canon) {
   if (opts.asGiven && c === "LeanArgsSpaceSeparated" && cls(args[0]) === "LeanToken" && args[0].text === "IsPolicyTrajectory") {
     return canon ? ["IsPolicyTrajectory"] : uniq(["IsPolicyTrajectory", "All_Eq"]);
   }
-  if (c === "Lean_nabla" || c === "LeanNabla") {
+  if (c === "Lean_nabla") {
     const alts = nablaGradAlts(node, opts);
     if (alts.length) {
       const gb = gradientBody(node);
@@ -5715,7 +5710,7 @@ function preAlts(node, opts, canon) {
     }
   }
 
-  if (c === "Lean_partial" || c === "LeanPartial") {
+  if (c === "Lean_partial") {
     if (!partialPathAtom(node)) return [];
     return partialNameAltsFromScope(node, opts, A);
   }
@@ -5767,7 +5762,7 @@ function preAlts(node, opts, canon) {
     const body = args[args.length - 1];
     let core = body;
     if (cls(body) === "LeanArgsSpaceSeparated") {
-      const bs = (body.args || []).filter((x) => cls(x) !== "Lean_partial" && cls(x) !== "LeanPartial");
+      const bs = (body.args || []).filter((x) => cls(x) !== "Lean_partial");
       if (bs.length !== (body.args || []).length) {
         if (bs.length === 1) core = bs[0];
         else {
@@ -5789,7 +5784,7 @@ function preAlts(node, opts, canon) {
       return uniq([...xs, ...extra]);
     };
     if (b.length) return asExpect(uniq(b.flatMap((y) => [T + "_" + y, T + y])));
-    const part = cls(body) === "LeanArgsSpaceSeparated" ? (body.args || []).find((x) => cls(x) === "Lean_partial" || cls(x) === "LeanPartial") : null;
+    const part = cls(body) === "LeanArgsSpaceSeparated" ? (body.args || []).find((x) => cls(x) === "Lean_partial") : null;
     const m = !canon && part ? A(part.args?.[0]) : [];
     return asExpect(uniq([T, ...m.map((y) => T + y)]));
   }
@@ -6303,7 +6298,7 @@ function divProbEventName(ln, rn) {
 
 function matchProbApp(node) {
   const bs = expectProbVarBoundScope(node);
-  if (bs?.kind === "Lean_Prob") {
+  if (bs?.pathToken === "Prob") {
     const sc = bs.scope;
     if (!sc) return null;
     if (cls(sc) === "LeanParenthesis" || cls(sc) === "LeanBrace") return unwrapParen(sc);
@@ -6520,7 +6515,7 @@ function isBvarJointEvent(event) {
 function maxBvarOperands(node) {
   const n = unwrapParen(node);
   const lim = limitsBigOpBoundScope(n);
-  if (lim?.kind === "Lean_max") {
+  if (lim?.pathToken === "Max") {
     const bind = lim.bound;
     if (cls(bind) !== "LeanColon" || !isBvarQuotation(bind.args?.[0])) return null;
     const sc = unwrapParen(lim.scope);
@@ -6593,7 +6588,7 @@ function isAeQuantifier(node) {
   const walk = (n) => {
     if (!n || typeof n !== "object" || (foundPartial && foundBvar)) return;
     const c = cls(n);
-    if (c === "Lean_partial" || c === "LeanPartial") foundPartial = true;
+    if (c === "Lean_partial") foundPartial = true;
     if (isBvarQuotation(n)) foundBvar = true;
     if (c === "LeanToken" && (n.text === "ReferenceMeasure" || n.text === "measure")) foundPartial = true;
     if (Array.isArray(n.args)) for (const a of n.args) walk(a);
@@ -6609,7 +6604,7 @@ function isMixedBvarForall(node) {
   (function walk(n) {
     if (!n || typeof n !== "object" || measure) return;
     const c = cls(n);
-    if (c === "Lean_partial" || c === "LeanPartial" || (c === "LeanToken" && (n.text === "ReferenceMeasure" || n.text === "measure"))) { measure = true; return; }
+    if (c === "Lean_partial" || (c === "LeanToken" && (n.text === "ReferenceMeasure" || n.text === "measure"))) { measure = true; return; }
     for (const a of n.args || []) walk(a);
   })(u.args?.[0]);
   if (measure) return false;
@@ -6765,7 +6760,7 @@ function nameExprBase(node, opts = {}) {
   if (name === "Lean_have" || name === "Lean_let") return "";
   if (isBvarQuotation(node)) return "";
   if (name === "LeanVecNotation") return "";
-  if (name === "Lean_nabla" || name === "LeanNabla") {
+  if (name === "Lean_nabla") {
     const gb = gradientBody(node);
     if (gb) {
       const y = nameExpr(gb, opts);
@@ -6809,7 +6804,7 @@ function nameExprBase(node, opts = {}) {
     return nameExpr(firstConclusion(node), opts);
   }
 
-  if (name === "Lean_partial" || name === "LeanPartial") {
+  if (name === "Lean_partial") {
     return partialNameFromScope(node, opts);
   }
 
@@ -7327,19 +7322,19 @@ function nameExprAltsBase(node, opts = {}) {
 
   if (name === "Lean_have" || name === "Lean_let" || isBvarQuotation(node)) return [];
   if (name === "LeanVecNotation") return [];
-    if (name === "Lean_Expect" || name === "Lean_Var" || name === "Lean_Prob") {
+    if (isRandomBigOp(node)) {
     const got = preAlts(node, opts, false);
     return got && got.length ? got : [];
   }
-  if (LIMITS_BIGOP_KIND[name]) {
+  if (isLimitsBigOp(node)) {
     const got = preAlts(node, opts, false);
     return got && got.length ? got : [];
   }
-if (name === "Lean_partial" || name === "LeanPartial") {
+if (name === "Lean_partial") {
     if (!partialPathAtom(node)) return [];
     return partialNameAltsFromScope(node, opts);
   }
-  if (name === "Lean_nabla" || name === "LeanNabla") {
+  if (name === "Lean_nabla") {
     const alts = nablaGradAlts(node, opts);
     const gb = gradientBody(node);
     if (gb) {
@@ -8312,7 +8307,7 @@ export function suggest(filePath, lemmaName, options = {}) {
         return t && !t.includes("/") && !t.includes("And") && !t.includes("Or");
       });
       let walked = typeof node?.pathChoices === "function" ? node.pathChoices(no) : [];
-      if (cls(node) === "Lean_nabla" || cls(node) === "LeanNabla"
+      if (cls(node) === "Lean_nabla"
           || (walked || []).some((s) => String(s).startsWith("Nabla"))) {
         walked = nablaPathChoicesToGrad(walked);
       }

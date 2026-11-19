@@ -5,16 +5,6 @@ import Initialize.Tactic.Attr.Basic
 open MeasureTheory
 
 
-/--
-Additivity of expectation:
-\(\mathbb{E}_{\pi}(f(x)) + \mathbb{E}_{\pi}(g(x)) = \mathbb{E}_{\pi}(f(x) + g(x))
-\)
-for integrable `f` and `g`.
-
-| attributes | lemma |
-| :---: | :---: |
-| path | Random.AddExpectS.eq.Expect_Add.of.Integrable.Integrable |
--/
 @[path]
 private lemma main
   [MeasurableSpace Ω]
@@ -33,4 +23,4 @@ private lemma main
 
 
 -- created on 2023-04-13
--- updated on 2026-11-17
+-- updated on 2026-11-19
