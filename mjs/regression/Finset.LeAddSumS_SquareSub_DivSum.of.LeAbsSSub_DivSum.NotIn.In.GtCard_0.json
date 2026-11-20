@@ -1,7 +1,7 @@
 {
   "lean": "(∑ x ∈ X ∪ {y'}, (a[x] - (∑ x ∈ X ∪ {y'}, a[x]) / ((X.card + 1 : ℕ) : ℝ))²) + (∑ y ∈ Y \\ {y'}, (a[y] - (∑ y ∈ Y \\ {y'}, a[y]) / ((Y.card - 1 : ℕ) : ℝ))²) ≤ (∑ x ∈ X, (a[x] - (∑ x ∈ X, a[x]) / (X.card : ℝ))²) + (∑ y ∈ Y, (a[y] - (∑ y ∈ Y, a[y]) / (Y.card : ℝ))²)",
-  "regex": "Le(Add(Sum_(Square(Sub(Get__)(Div(Sum(Union_(Brace_))(Get__))(Add(Card_)(1))))))(Sum_(Square(Sub(Get__)(Div(Sum(SDiff_(Brace_))(Get__))(Sub(Card_)(1)))))))(Add(Sum_(Square(Sub(Get__)(Div(Sum_(Get__))(Card_)))))(Sum_(Square(Sub(Get__)(Div(Sum_(Get__))(Card_))))))",
-  "alternative": [
+  "regex": "Le(Add(Sum(Union_(Brace_))(Square(Sub(Get__)(Div(Sum(Union_(Brace_))(Get__))(Add(Card_)(1))))))(Sum(SDiff_(Brace_))(Square(Sub(Get__)(Div(Sum(SDiff_(Brace_))(Get__))(Sub(Card_)(1)))))))(Add(Sum_(Square(Sub(Get__)(Div(Sum_(Get__))(Card_)))))(Sum_(Square(Sub(Get__)(Div(Sum_(Get__))(Card_))))))",
+  "plural": [
     "Le(Add(Sum_(Square(Sub(Get__)(Div(Sum(Union_(Brace_))(Get__))(Add(Card_)(1))))))(Sum_(Square(Sub(Get__)(Div(Sum(SDiff_(Brace_))(Get__))(Sub(Card_)(1)))))))(AddSumS_(Square(Sub(Get__)(Div(Sum_(Get__))(Card_)))))",
     "Le(Add(Sum(Union_(Brace_))(Square(Sub(Get__)(Div(Sum(Union_(Brace_))(Get__))(Add(Card_)(1))))))(Sum(SDiff_(Brace_))(Square(Sub(Get__)(Div(Sum(SDiff_(Brace_))(Get__))(Sub(Card_)(1)))))))(Add(Sum_(Square(Sub(Get__)(Div(Sum_(Get__))(Card_)))))(Sum_(Square(Sub(Get__)(Div(Sum_(Get__))(Card_))))))",
     "LeAddS(Sum_(Square(Sub(Get__)(Div(Sum_(Get__))_))))(Sum_(Square(Sub(Get__)(Div(Sum_(Get__))_))))",

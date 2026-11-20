@@ -1,7 +1,7 @@
 {
   "lean": "|a[y'] - (∑ x ∈ X, a[x]) / (X.card : ℝ)| < |a[y'] - (∑ y ∈ Y, a[y]) / (Y.card : ℝ)|",
   "regex": "Lt(Abs(Sub(Get__)(Div(Sum_(Get__))(Card_))))(Abs(Sub(Get__)(Div(Sum_(Get__))(Card_))))",
-  "alternative": [
+  "plural": [
     "LtAbsS(Sub(Get__)(Div(Sum_(Get__))(Card_)))"
   ],
   "json": {

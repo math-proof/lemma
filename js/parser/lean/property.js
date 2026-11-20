@@ -49,13 +49,6 @@ export class LeanProperty extends LeanBinary {
         return raw ? raw.charAt(0).toUpperCase() + raw.slice(1) : null;
     }
 
-    /** `obj` stays an explicit JSON argument only when it is a plain identifier. */
-    get jsonObjectArg() {
-        const obj = this.lhs;
-        const word = obj instanceof L.LeanToken && /^[\p{L}_][\p{L}\p{N}_]*$/u.test(obj.text || "");
-        return word ? obj.toJSON() : null;
-    }
-
     /** In an application head, a capitalised object (`Finset.range`) is a namespace, not an argument. */
     get jsonAppObjectArg() {
         const obj = this.lhs;
@@ -64,9 +57,10 @@ export class LeanProperty extends LeanBinary {
     }
 
     /**
-     * `obj.attribute` → `{Attribute: [obj]}` for an identifier object, otherwise
-     * just `"Attribute"`. As an application head, the parent
-     * `LeanArgsSpaceSeparated` owns the JSON (`obj.attribute a b`).
+     * `obj.attribute` → `{Attribute: [obj]}`: the object is always an argument,
+     * so `(n - k).partitionCount` → `{"PartitionCount":[{"Sub":["_","_"]}]}`.
+     * As an application head, the parent `LeanArgsSpaceSeparated` owns the JSON
+     * (`obj.attribute a b`).
      */
     toJSON() {
         const head = this.jsonHeadName;
@@ -74,8 +68,7 @@ export class LeanProperty extends LeanBinary {
         const parent = this.parent;
         if (parent instanceof L.LeanArgsSpaceSeparated && parent.args[0] === this)
             return parent.toJSON();
-        const obj = this.jsonObjectArg;
-        return obj !== null ? { [head]: [obj] } : head;
+        return { [head]: [this.lhs.toJSON()] };
     }
 
     equals(other) {

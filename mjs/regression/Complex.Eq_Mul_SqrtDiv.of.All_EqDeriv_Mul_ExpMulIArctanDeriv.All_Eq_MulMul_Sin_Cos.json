@@ -1,7 +1,7 @@
 {
   "lean": "f = (n : ℝ) / (2 * L) * √((T : ℝ) / μ)",
   "regex": "Eq_(Mul(Div_(Mul(2)_))(Sqrt(Div__)))",
-  "alternative": [],
+  "plural": [],
   "json": {
     "Eq": [
       "_",

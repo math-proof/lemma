@@ -10,8 +10,8 @@
  * - `{"Get":[obj, {Slice: [lo, hi]}]}` keeps both constructors; the empty lower
  *   bound of `s[:k]` is dropped, so it becomes `Get_(Slice_)`.
  *
- * Redundant binder domains are already holed by `LeanBigOperator.toJSON`
- * (stacked big operators), so no hole policy lives here.
+ * Big-operator domains come from `LeanBigOperator.jsonDomain` (rhs of a typed
+ * or membership binder); every domain present in the JSON is rendered.
  */
 
 const isHole = (node) => node == null || node === "_";
@@ -45,4 +45,75 @@ function convert(node) {
  */
 export function json2regex(node) {
     return convert(node) ?? "_";
+}
+
+/** Canonical text, used only to decide whether two arguments are identical. */
+function canon(node) {
+    if (Array.isArray(node)) return `[${node.map(canon).join(",")}]`;
+    if (node && typeof node === "object") {
+        return `{${Object.keys(node).sort().map((k) => k + ":" + canon(node[k])).join(",")}}`;
+    }
+    return JSON.stringify(node);
+}
+
+const headOf = (node) =>
+    node && typeof node === "object" && !Array.isArray(node) && Object.keys(node).length === 1
+        ? Object.keys(node)[0]
+        : null;
+const argsOf = (node) => {
+    const value = node[headOf(node)];
+    return Array.isArray(value) ? value : [value];
+};
+
+/**
+ * JSON trees with one S-plural collapse applied.
+ *
+ * A node whose arguments all share one head collapses into a single head that
+ * absorbs the repeated one: `Cond[Get…, Get…]` → `CondGetS`, `Lt[Abs…, Abs…]` →
+ * `LtAbsS`. Identical arguments contribute one shared copy of their own
+ * arguments (`Lt[Abs(s), Abs(s)]` → `LtAbsS[s]`); differing arguments leave one
+ * hole each (`Cond[Get…, Get…]` → `CondGetS__`).
+ */
+function pluralTrees(node) {
+    if (node == null || typeof node !== "object") return [];
+    if (Array.isArray(node)) {
+        const out = [];
+        node.forEach((item, i) => {
+            for (const v of pluralTrees(item)) {
+                const copy = node.slice();
+                copy[i] = v;
+                out.push(copy);
+            }
+        });
+        return out;
+    }
+    const head = headOf(node);
+    if (!head) return [];
+    const args = argsOf(node);
+    const out = [];
+
+    const heads = args.map(headOf);
+    if (args.length >= 2 && heads.every((h) => h && h === heads[0])) {
+        const shared = heads[0];
+        const identical = args.every((a) => canon(a) === canon(args[0]));
+        out.push({ [head + shared + "S"]: identical ? argsOf(args[0]) : args.map(() => "_") });
+    }
+
+    args.forEach((arg, i) => {
+        for (const v of pluralTrees(arg)) {
+            const copy = args.slice();
+            copy[i] = v;
+            out.push({ [head]: copy });
+        }
+    });
+    return out;
+}
+
+/**
+ * S-plural hole regexes for a `toJSON()` tree, one per collapsible node.
+ * @param {object|string} node result of `LeanNode.toJSON()`
+ * @returns {string[]} e.g. `Prob_(Cond(Get_(Add_(1)))(Get__))` → `Prob_(CondGetS__)`
+ */
+export function json2plural(node) {
+    return [...new Set(pluralTrees(node).map((tree) => json2regex(tree)))];
 }

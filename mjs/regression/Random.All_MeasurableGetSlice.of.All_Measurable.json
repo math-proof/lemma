@@ -1,7 +1,7 @@
 {
   "lean": "∀ k : ℕ, Measurable s[:k]",
   "regex": "All_(Measurable(Get_(Slice_)))",
-  "alternative": [],
+  "plural": [],
   "json": {
     "All": [
       "_",

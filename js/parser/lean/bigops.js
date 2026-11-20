@@ -290,34 +290,27 @@ export class LeanBigOperator extends LeanArgs {
             : bound;
     }
 
-    /**
-     * Stacked big operators: does `node` contain an operator of this class whose
-     * JSON domain stringifies to `want`? Each operator is compared through its
-     * own unholed `jsonDomain`, so the answer does not depend on nesting depth.
-     */
-    static jsonNestedSameDomain(node, want) {
-        if (!node || typeof node !== "object") return false;
-        if (node instanceof this) {
-            const domain = node.jsonDomain;
-            if (domain && JSON.stringify(domain.toJSON()) === want) return true;
-        }
-        for (const arg of node.args ?? []) {
-            if (this.jsonNestedSameDomain(arg, want)) return true;
-        }
-        return false;
-    }
-
     toJSON() {
-        const args = [this.jsonDomain, this.scope].filter(Boolean).map((a) => a.toJSON());
-        // Stacked big operators: an outer domain that a nested same-class
-        // operator already states is redundant, so it serialises as a hole.
-        if (args.length === 2 && args[0] !== "_" &&
-            this.constructor.jsonNestedSameDomain(this.scope, JSON.stringify(args[0]))) {
-            args[0] = "_";
+        // Stacked big operators `∑ i ∈ s, ∑ j ∈ t, body` are a single operator
+        // whose domain is the conjunction of the binders, innermost first:
+        // `∑ k ∈ Icc 1 n, ∑ d ∈ k.divisors, f` →
+        // `{"Sum":[{"And":[{"Divisors":[_]},{"Icc":["1",_]}]}, f]}`.
+        // Only direct nesting merges — `∑ i, (∑ j, f)²` keeps both heads.
+        const domains = [];
+        let node = this;
+        for (;;) {
+            const domain = node.jsonDomain;
+            if (domain) domains.push(domain.toJSON());
+            const scope = node.scope;
+            if (!(scope instanceof this.constructor)) {
+                const args = [];
+                if (domains.length > 1) args.push({ And: domains.reverse() });
+                else if (domains.length === 1) args.push(domains[0]);
+                if (scope) args.push(scope.toJSON());
+                return { [this.jsonHeadName]: args };
+            }
+            node = scope;
         }
-        return {
-            [this.jsonHeadName]: args,
-        };
     }
 
     /**
