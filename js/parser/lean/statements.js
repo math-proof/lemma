@@ -164,13 +164,13 @@ export class LeanStatements extends LeanMultipleLine(LeanArgs) {
                     result[1] = new L.LeanTactic('try', e, e.indent, e.level);
                 }
                 for (const echo of result) echo.parent = this;
-                // A head tactic followed by statement-level `LeanBitOr` lines
+                // A head tactic followed by statement-level `LeanCond` lines
                 // forms one multi-line alternative group (`first | …`,
                 // `rcases … | …`): trailing `echo` placeholders must stay after
                 // the whole group, never between the head and its `|` branches
                 // (the latter generates invalid Lean: `first echo ⊢ | …`).
                 let barRun = 0;
-                for (let j = index + length; j < args.length - void_lines && args[j] instanceof L.LeanBitOr; j++) barRun++;
+                for (let j = index + length; j < args.length - void_lines && args[j] instanceof L.LeanCond; j++) barRun++;
                 const trailingEchoes = [];
                 if (barRun) {
                     while (result.length > 1 && result[result.length - 1] instanceof L.LeanTactic && result[result.length - 1].tacticName === 'echo') {

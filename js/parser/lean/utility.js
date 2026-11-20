@@ -59,7 +59,7 @@ export const token2classname = Object.freeze({
     '⊟': 'Lean_boxminus',
     '⊠': 'Lean_boxtimes',
     '⊡': 'Lean_dotsquare',
-    '|': 'LeanBitOr',
+    '|': 'LeanCond',
     '&': 'LeanBitAnd',
     '||': 'LeanLogicOr',
     '|||': 'LeanBitwiseOr',

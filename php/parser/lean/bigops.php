@@ -704,7 +704,7 @@ class LeanRandomBigOp extends LeanBigOperator
             $ty = $ix->rhs;
             if ($ty instanceof LeanParenthesis)
                 $ty = $ty->arg;
-            if ($ty instanceof LeanBitOr)
+            if ($ty instanceof LeanCond)
                 return '{' . $ix->lhs->toLatex($syntax) . '} : {' . $ty->lhs->toLatex($syntax) . '}';
         }
         return $ix->toLatex($syntax);
@@ -732,7 +732,7 @@ class LeanRandomBigOp extends LeanBigOperator
         if ($i === false || $i <= 0)
             return null;
         $head = $p->args[$i - 1];
-        if (!($head instanceof LeanGetElem))
+        if (!($head instanceof LeanGet))
             return null;
         $base = $head->lhs ?? $head->args[0] ?? null;
         if (!($base instanceof LeanToken))
@@ -854,7 +854,7 @@ class LeanLimitsBigOp extends LeanBigOperator
 
     public static function isLimitsGetElem($head)
     {
-        if (!($head instanceof LeanGetElem))
+        if (!($head instanceof LeanGet))
             return null;
         $base = $head->lhs ?? $head->args[0] ?? null;
         if (!($base instanceof LeanToken))
@@ -909,13 +909,13 @@ class LeanLimitsBigOp extends LeanBigOperator
 
     public function binderLatex(&$syntax = null)
     {
-        // Mirror JS LeanGetElem::expectBinderIndexLatex
+        // Mirror JS LeanGet::expectBinderIndexLatex
         $ix = $this->bound;
         if ($ix instanceof LeanColon) {
             $ty = $ix->rhs;
             if ($ty instanceof LeanParenthesis)
                 $ty = $ty->arg;
-            if ($ty instanceof LeanBitOr)
+            if ($ty instanceof LeanCond)
                 return '{' . $ix->lhs->toLatex($syntax) . '} : {' . $ty->lhs->toLatex($syntax) . '}';
         }
         return $ix->toLatex($syntax);

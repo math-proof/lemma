@@ -86,7 +86,7 @@ abstract class LeanPairedGroup extends LeanUnary
             $parent instanceof LeanColon || 
             $parent instanceof LeanUnaryArithmeticPost || 
             $parent instanceof LeanPairedGroup ||
-            $parent instanceof LeanGetElem ||
+            $parent instanceof LeanGet ||
             $parent instanceof LeanGetElemQue ||
             $parent instanceof LeanGetElemQuote
         );
@@ -259,7 +259,7 @@ class LeanParenthesis extends LeanPairedGroup
     public function isProbExpectParen()
     {
         $isHead = function ($n) {
-            return $n instanceof LeanGetElem && $n->args[0] instanceof LeanToken && in_array($n->args[0]->text, ['ℙ', '𝔼'], true);
+            return $n instanceof LeanGet && $n->args[0] instanceof LeanToken && in_array($n->args[0]->text, ['ℙ', '𝔼'], true);
         };
         $self = $this;
         $p = $this->parent;
@@ -289,9 +289,9 @@ class LeanParenthesis extends LeanPairedGroup
     {
         $arg = $this->arg;
         $probExpect = $this->isProbExpectParen();
-        if ($arg instanceof LeanBitOr)
+        if ($arg instanceof LeanCond)
             $bar = $arg;
-        elseif ($probExpect && $arg instanceof LeanArgsCommaSeparated && $arg->args[0] instanceof LeanBitOr)
+        elseif ($probExpect && $arg instanceof LeanArgsCommaSeparated && $arg->args[0] instanceof LeanCond)
             $bar = $arg->args[0];
         else
             return null;
@@ -302,7 +302,7 @@ class LeanParenthesis extends LeanPairedGroup
 
     /**
      * `\middle|` must be at the same group level as its `\left(` / `\right)`, so the bar goes directly into the
-     * paren body, not inside the `{…}` group of LeanBitOr / LeanArgsCommaSeparated (mirrors JS `conditioningLatex`).
+     * paren body, not inside the `{…}` group of LeanCond / LeanArgsCommaSeparated (mirrors JS `conditioningLatex`).
      */
     public function conditioningLatex(&$syntax = null)
     {
@@ -385,7 +385,7 @@ class LeanParenthesis extends LeanPairedGroup
     public function isLatexGetElemOperand()
     {
         $p = $this->parent;
-        return $p instanceof LeanGetElem ||
+        return $p instanceof LeanGet ||
             $p instanceof LeanGetElemQue ||
             $p instanceof LeanGetElemQuote;
     }
@@ -411,7 +411,7 @@ class LeanParenthesis extends LeanPairedGroup
         // Binders keep ascriptions (paren parent is forall / sum / fun, not the cases below).
         if ($p instanceof LeanArgsSpaceSeparated ||
             $p instanceof LeanArgsCommaSeparated ||
-            $p instanceof LeanGetElem ||
+            $p instanceof LeanGet ||
             $p instanceof LeanGetElemQue ||
             $p instanceof LeanGetElemQuote ||
             $p instanceof LeanRelational ||
@@ -443,7 +443,7 @@ class LeanParenthesis extends LeanPairedGroup
         foreach ($node->args as $i => $head) {
             if ($i >= count($node->args) - 1)
                 break;
-            $base = $head instanceof LeanGetElem ? ($head->args[0] ?? null) : null;
+            $base = $head instanceof LeanGet ? ($head->args[0] ?? null) : null;
             if ($base instanceof LeanToken && ($base->text === 'ℙ' || $base->text === '𝔼' || $base->text === '𝕍𝕒𝕣'))
                 return true;
         }

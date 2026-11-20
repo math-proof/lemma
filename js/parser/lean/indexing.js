@@ -1,5 +1,5 @@
 /**
- * Indexing: `LeanGetElem`, `LeanGetWhiteSquareBracket`, `LeanGetElemQue`,
+ * Indexing: `LeanGet`, `LeanGetWhiteSquareBracket`, `LeanGetElemQue`,
  * `LeanGetElemQuote`.
  *
  * The `LeanGetElemBase` / `LeanGetElemBaseBinary` mixins live in `utility.js`.
@@ -15,7 +15,7 @@ import { pathUniqKeepEmpty } from './pathChoices.js';
 
 const L = Lean.classes;
 
-export class LeanGetElem extends LeanGetElemBaseBinary(LeanBinary) {
+export class LeanGet extends LeanGetElemBaseBinary(LeanBinary) {
     static { this.register(); }
 
     static input_priority = 67;
@@ -48,7 +48,7 @@ export class LeanGetElem extends LeanGetElemBaseBinary(LeanBinary) {
     collectGetElemChain() {
         const indices = [];
         let node = /** @type {Lean} */ (this);
-        while (node instanceof LeanGetElem) {
+        while (node instanceof LeanGet) {
             indices.unshift(node.rhs);
             node = node.lhs;
         }
@@ -73,7 +73,7 @@ export class LeanGetElem extends LeanGetElemBaseBinary(LeanBinary) {
         if (ix instanceof L.LeanColon) {
             let ty = ix.rhs;
             if (ty instanceof L.LeanParenthesis) ty = ty.arg;
-            if (ty instanceof L.LeanBitOr) {
+            if (ty instanceof L.LeanCond) {
                 return `{${ix.lhs.toLatex(syntax)}} : {${ty.lhs.toLatex(syntax)}}`;
             }
         }
@@ -82,20 +82,20 @@ export class LeanGetElem extends LeanGetElemBaseBinary(LeanBinary) {
 
     latexArgs(syntax) {
         // Nested segment of a longer chain: outer node owns multi-index LaTeX.
-        if (this.parent instanceof LeanGetElem) return super.latexArgs(syntax);
+        if (this.parent instanceof LeanGet) return super.latexArgs(syntax);
 
         const {base, indices} = this.collectGetElemChain();
         if (base instanceof L.LeanToken && base.text === '𝔼') {
             return [
                 base.toLatex(syntax),
-                ...indices.map((ix) => LeanGetElem.expectBinderIndexLatex(ix, syntax)),
+                ...indices.map((ix) => LeanGet.expectBinderIndexLatex(ix, syntax)),
             ];
         }
-        if (LeanGetElem.limitsOperator(base, indices))
-            return [LeanGetElem.expectBinderIndexLatex(indices[0], syntax)];
+        if (LeanGet.limitsOperator(base, indices))
+            return [LeanGet.expectBinderIndexLatex(indices[0], syntax)];
         if (indices.length === 1 && indices[0] instanceof L.LeanCondBar)
             return [base.toLatex(syntax), indices[0].arg.toLatex(syntax)];
-        const condExp = indices.length === 1 ? LeanGetElem.condExpLatex(indices[0], syntax) : null;
+        const condExp = indices.length === 1 ? LeanGet.condExpLatex(indices[0], syntax) : null;
         if (condExp) return [base.toLatex(syntax), ...condExp];
         const indexParts = indices.map((ix) => ix.toLatex(syntax));
         const indexLatex = indexParts.join(', ');
@@ -122,8 +122,8 @@ export class LeanGetElem extends LeanGetElemBaseBinary(LeanBinary) {
      * @returns {[string, string] | null} LaTeX of `f` and `m`
      */
     static condExpLatex(ix, syntax) {
-        if (ix instanceof L.LeanBitOr) return [ix.lhs.toLatex(syntax), ix.rhs.toLatex(syntax)];
-        if (ix instanceof L.Lean_fun && ix.arg instanceof L.LeanBinary && ix.arg.rhs instanceof L.LeanBitOr) {
+        if (ix instanceof L.LeanCond) return [ix.lhs.toLatex(syntax), ix.rhs.toLatex(syntax)];
+        if (ix instanceof L.Lean_fun && ix.arg instanceof L.LeanBinary && ix.arg.rhs instanceof L.LeanCond) {
             const arrow = ix.arg;
             const bar = arrow.rhs;
             const saved = arrow.args[1];
@@ -140,11 +140,11 @@ export class LeanGetElem extends LeanGetElemBaseBinary(LeanBinary) {
     }
 
     latexFormat() {
-        if (this.parent instanceof LeanGetElem) return '{%s}_{%s}';
+        if (this.parent instanceof LeanGet) return '{%s}_{%s}';
 
         const {base, indices} = this.collectGetElemChain();
         // `μ[|s]` — conditional measure `cond μ s`
-        const limitsOp = LeanGetElem.limitsOperator(base, indices);
+        const limitsOp = LeanGet.limitsOperator(base, indices);
         // `\foo^{-1}\limits_{i}` / `\mathop{\foo^{-1}}\limits_{i}` promote `^{-1}` to an
         // *overscript*. Keep `^{-1}` as a side superscript and put the binder under:
         if (limitsOp === 'argmax') return '\\underset{%s}{\\operatorname{max}^{-1}}';
@@ -156,8 +156,8 @@ export class LeanGetElem extends LeanGetElemBaseBinary(LeanBinary) {
         // Mathlib `μ[f | m]` (`condExp`), base is the measure — not Expect-sugar `𝔼[…](…)`.
         // Keep the measure as the left operand; do not wrap in `\mathbb{E}`.
         if (indices.length === 1 && !(base instanceof L.LeanToken && base.text === '𝔼') &&
-            (indices[0] instanceof L.LeanBitOr ||
-                (indices[0] instanceof L.Lean_fun && indices[0].arg instanceof L.LeanBinary && indices[0].arg.rhs instanceof L.LeanBitOr)))
+            (indices[0] instanceof L.LeanCond ||
+                (indices[0] instanceof L.Lean_fun && indices[0].arg instanceof L.LeanBinary && indices[0].arg.rhs instanceof L.LeanCond)))
             return '{%s}\\left[{%s} \\,\\middle|\\, {%s}\\right]';
         if (base instanceof L.LeanProperty && base.rhs instanceof L.LeanToken) {
             const fmt = base.latexFormat();

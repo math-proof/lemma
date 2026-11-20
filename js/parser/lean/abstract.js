@@ -8,7 +8,7 @@
  * call time, so the import graph follows the inheritance tree.
  */
 import { leanSubtreeContains, token2classname } from './utility.js';
-import { Lean } from './base.js';
+import { Lean, jsonHead } from './base.js';
 import { collectHoleRegexAlternatives } from './holeRegexAlternatives.js';
 
 const L = Lean.classes;
@@ -264,7 +264,7 @@ export class LeanBinary extends LeanArgs {
     }
 
     toJSON() {
-        return { [this.func]: [this.lhs.toJSON(), this.rhs.toJSON()] };
+        return { [jsonHead(this.func)]: [this.lhs.toJSON(), this.rhs.toJSON()] };
     }
 
     /**

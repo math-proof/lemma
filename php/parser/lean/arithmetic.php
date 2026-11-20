@@ -413,7 +413,7 @@ class LeanBitwiseXor extends LeanArithmetic
     }
 }
 
-class LeanBitOr extends LeanArithmetic
+class LeanCond extends LeanArithmetic
 {
     // used in the syntax:
     // rcases lt_trichotomy 0 a with ha | h_0 | ha
@@ -432,7 +432,7 @@ class LeanBitOr extends LeanArithmetic
     {
         if ($caret instanceof LeanToken) {
             $new = new LeanCaret($this->indent, $caret->level);
-            $this->replace($caret, new LeanBitOr($caret, $new, $this->indent, $caret->level));
+            $this->replace($caret, new LeanCond($caret, $new, $this->indent, $caret->level));
             return $new;
         }
 
@@ -457,7 +457,7 @@ class LeanBitOr extends LeanArithmetic
     {
         $tokens = [];
         foreach ($this->args as $arg) {
-            if ($arg instanceof LeanBitOr)
+            if ($arg instanceof LeanCond)
                 $tokens = [...$tokens, ...$arg->tokens_bar_separated()];
             elseif ($arg instanceof LeanAngleBracket) {
                 $ts = $arg->tokens_comma_separated();

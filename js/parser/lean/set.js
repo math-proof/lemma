@@ -23,6 +23,11 @@ export class LeanSetOperator extends LeanBinary {
     strFormat() {
         return `%s ${this.operator} %s`;
     }
+
+    /** JSON head is the path token: `SDiff`, `Union`, `Inter`. */
+    toJSON() {
+        return { [this.pathToken]: [this.lhs.toJSON(), this.rhs.toJSON()] };
+    }
 }
 
 export class Lean_setminus extends LeanSetOperator {

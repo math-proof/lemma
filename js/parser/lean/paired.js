@@ -158,7 +158,7 @@ export class LeanPairedGroup extends Closable(LeanUnary) {
             parent instanceof L.LeanUnaryArithmeticPost ||
             parent instanceof LeanPairedGroup ||
             parent instanceof L.LeanBigOperator ||
-            parent instanceof L.LeanGetElem ||
+            parent instanceof L.LeanGet ||
             parent instanceof L.LeanGetElemQue ||
             parent instanceof L.LeanGetElemQuote
         );
@@ -417,16 +417,16 @@ export class LeanParenthesis extends LeanPairedGroup {
 
     /**
      * The conditioning `|` directly inside these parentheses: `𝔼[…](body | cond)`, `𝔼[…](body | y, z)`,
-     * `ℙ[…](x = a | y = b)` or `(X ⟂ᵢ Y | Z)`. Returns the `LeanBitOr`, or null when the parentheses do not
+     * `ℙ[…](x = a | y = b)` or `(X ⟂ᵢ Y | Z)`. Returns the `LeanCond`, or null when the parentheses do not
      * stretch (then the bar stays a plain `|`). Set-builder / match / abs bars never reach here.
      */
     conditioningBar() {
-        const {LeanBitOr, LeanArgsCommaSeparated, Lean_perp} = L;
+        const {LeanCond, LeanArgsCommaSeparated, Lean_perp} = L;
         const arg = this.latexContentArg();
         const probExpect = this.isProbExpectParen();
         const bar =
-            arg instanceof LeanBitOr ? arg
-            : probExpect && arg instanceof LeanArgsCommaSeparated && arg.args[0] instanceof LeanBitOr ? arg.args[0]
+            arg instanceof LeanCond ? arg
+            : probExpect && arg instanceof LeanArgsCommaSeparated && arg.args[0] instanceof LeanCond ? arg.args[0]
             : null;
         if (!bar || !(probExpect || Lean_perp.independenceOf(bar.lhs))) return null;
         return this.isLatexStretchy() ? bar : null;
@@ -435,7 +435,7 @@ export class LeanParenthesis extends LeanPairedGroup {
     /**
      * `\middle|` must be at the same group level as its `\left(` / `\right)` (KaTeX: "\middle without
      * preceding \left" otherwise), so the bar is emitted directly in the paren body, not inside the
-     * `{…}` group of `LeanBitOr` / `LeanArgsCommaSeparated`: `\left({body} \,\middle|\, {cond}, {…}\right)`.
+     * `{…}` group of `LeanCond` / `LeanArgsCommaSeparated`: `\left({body} \,\middle|\, {cond}, {…}\right)`.
      */
     conditioningLatex(syntax) {
         const bar = this.conditioningBar();
@@ -470,7 +470,7 @@ export class LeanParenthesis extends LeanPairedGroup {
             if (rvs) return [rvs.map((t) => t.toLatex(syntax)).join(', ')];
             const peel = (n) => (n instanceof LeanParenthesis ? n.arg : n);
             const body = peel(arg);
-            if (body instanceof L.LeanBitOr) {
+            if (body instanceof L.LeanCond) {
                 // `s = «\sf{s}»` (bound letter matching the RV) elides to `s`, including
                 // the RA event `ℙ[π](x | s = «\sf{s}»)` → `ℙ[π](x | s)`. An observation
                 // event on the left (`x = «\sf{x}»`) still elides to the RV name.
@@ -488,7 +488,7 @@ export class LeanParenthesis extends LeanPairedGroup {
         if (this.isExpectBodyParen()) {
             const peel = (n) => (n instanceof LeanParenthesis ? n.arg : n);
             const body = peel(arg);
-            if (body instanceof L.LeanBitOr) {
+            if (body instanceof L.LeanCond) {
                 const right = L.LeanArgsSpaceSeparated.collectProbEventRVs(body.rhs);
                 if (right) {
                     const R = right.map((t) => t.toLatex(syntax)).join(', ');
@@ -680,7 +680,7 @@ export class LeanParenthesis extends LeanPairedGroup {
     isLatexGetElemOperand() {
         const p = this.parent;
         if (!(
-            p instanceof L.LeanGetElem ||
+            p instanceof L.LeanGet ||
             p instanceof L.LeanGetElemQue ||
             p instanceof L.LeanGetElemQuote
         )) return false;
@@ -691,7 +691,7 @@ export class LeanParenthesis extends LeanPairedGroup {
                 arg instanceof L.LeanToken ||
                 arg instanceof L.LeanProperty ||
                 arg instanceof LeanPairedGroup ||
-                arg instanceof L.LeanGetElem ||
+                arg instanceof L.LeanGet ||
                 arg instanceof L.LeanGetElemQue ||
                 arg instanceof L.LeanGetElemQuote
             );
@@ -782,7 +782,7 @@ export class LeanParenthesis extends LeanPairedGroup {
         if (
             p instanceof L.LeanArgsSpaceSeparated ||
             p instanceof L.LeanArgsCommaSeparated ||
-            p instanceof L.LeanGetElem ||
+            p instanceof L.LeanGet ||
             p instanceof L.LeanGetElemQue ||
             p instanceof L.LeanGetElemQuote ||
             p instanceof L.LeanRelational ||
@@ -839,7 +839,7 @@ export class LeanParenthesis extends LeanPairedGroup {
         let subj = this.latexContentArg().lhs;
         while (subj instanceof LeanParenthesis && !(subj.arg instanceof L.LeanColon))
             subj = subj.arg;
-        const head = subj instanceof L.LeanGetElem ? subj.args?.[0] : subj;
+        const head = subj instanceof L.LeanGet ? subj.args?.[0] : subj;
         return head instanceof L.LeanToken && head.text === '𝟙';
     }
 
@@ -974,7 +974,7 @@ export class LeanAngleBracket extends LeanPairedGroup {
             p instanceof L.LeanRightarrow || 
             p instanceof L.LeanColon || 
             p instanceof L.LeanArgsCommaSeparated ||
-            p instanceof L.LeanBitOr | 
+            p instanceof L.LeanCond | 
             p instanceof L.LeanWith ||
             p instanceof LeanAngleBracket
         );
@@ -1158,6 +1158,17 @@ export class LeanVecNotation extends LeanPairedGroup {
 
 export class LeanBrace extends LeanPairedGroup {
     static { this.register(); }
+
+    /**
+     * `{a}` → `{Brace: [a]}`; `{a, b, …}` (a `LeanArgsCommaSeparated` body) →
+     * `{Brace: [a, b, …]}`. Overrides `LeanUnary.toJSON`, which unwraps the brace.
+     */
+    toJSON() {
+        const inner = this.arg ?? this.args?.[0];
+        if (!inner) return { Brace: [] };
+        const parts = inner instanceof L.LeanArgsCommaSeparated ? inner.args : [inner];
+        return { Brace: parts.map((a) => a.toJSON()).filter((s) => s !== "") };
+    }
 
     /** Alternatives walk only: `{y'}` → Brace_, `{a, b}` → Brace__, `{x | P}` → Brace(Cond__). */
     get holeRegexAltTag() {
@@ -1347,6 +1358,12 @@ export class LeanBrace extends LeanPairedGroup {
 
 export class LeanAbs extends LeanPairedGroup {
     static { this.register(); }
+
+    /** `|x|` keeps its head: `{Abs: [x]}` instead of unwrapping to `x`. */
+    toJSON() {
+        const inner = this.arg ?? this.args?.[0];
+        return { Abs: [inner ? inner.toJSON() : ""] };
+    }
 
     get operator() {
         return '||';

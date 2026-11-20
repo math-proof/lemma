@@ -441,8 +441,8 @@ function* getElemIndexAtoms(idx) {
 }
 
 function finIndexVal(ctx, node) {
-    const { LeanGetElem } = Lean.classes;
-    if (!(node instanceof LeanGetElem)) return;
+    const { LeanGet } = Lean.classes;
+    if (!(node instanceof LeanGet)) return;
     const hits = [];
     for (const atom of getElemIndexAtoms(node.args[1])) {
         const prop = isValProjection(atom);
@@ -476,10 +476,10 @@ function finIndexVal(ctx, node) {
  * Not an AGENTS.md rule (user request).
  */
 function parenGetElem(ctx, node) {
-    const { LeanParenthesis, LeanGetElem } = Lean.classes;
+    const { LeanParenthesis, LeanGet } = Lean.classes;
     if (!(node instanceof LeanParenthesis)) return;
     const arg = node.arg;
-    if (!(arg instanceof LeanGetElem)) return;
+    if (!(arg instanceof LeanGet)) return;
     // tuples / cdot sections keep their parentheses even if nested oddly
     if (typeof node.latexParenRequired === 'function' && node.latexParenRequired()) return;
     const inner = String(arg).replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');
@@ -654,7 +654,7 @@ function parenRedundantSumSub(ctx, node) {
 function parenRedundantPow(ctx, node) {
     const {
         LeanParenthesis, LeanPow, LeanArgsSpaceSeparated, LeanProperty,
-        LeanGetElem, LeanGetElemQue, LeanGetElemQuote, LeanColon, LeanMatMul,
+        LeanGet, LeanGetElemQue, LeanGetElemQuote, LeanColon, LeanMatMul,
     } = Lean.classes;
     if (!(node instanceof LeanParenthesis)) return;
     const pow = node.arg;
@@ -670,7 +670,7 @@ function parenRedundantPow(ctx, node) {
     // ((a - b) ^ 2).foo
     if (parent instanceof LeanProperty && parent.lhs === node) return;
     // ((a - b) ^ 2)[i]
-    if (parent instanceof LeanGetElem && parent.lhs === node) return;
+    if (parent instanceof LeanGet && parent.lhs === node) return;
     if (LeanGetElemQue && parent instanceof LeanGetElemQue && parent.lhs === node) return;
     if (LeanGetElemQuote && parent instanceof LeanGetElemQuote && parent.args?.[0] === node) return;
     // ((a - b) ^ 2) ^ 3 -- right-assoc without paren

@@ -74,7 +74,7 @@ function find(n, pred) {
 
 {
   const mod = compile("lemma m : x[i] = 0 := by sorry");
-  check("ordinary x[i] stays GetElem", !!find(mod, (n) => n.constructor?.name === "LeanGetElem"));
+  check("ordinary x[i] stays GetElem", !!find(mod, (n) => n.constructor?.name === "LeanGet"));
   check("ordinary x[i] not limits bigop", !find(mod, (n) => n.constructor?.name === "Lean_max"));
 }
 

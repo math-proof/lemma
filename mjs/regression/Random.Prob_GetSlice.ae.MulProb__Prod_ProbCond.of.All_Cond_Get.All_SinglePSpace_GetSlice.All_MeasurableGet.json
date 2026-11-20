@@ -1,7 +1,57 @@
 {
   "lean": "ℙ[π](s[0]) * (∏ k ∈ Finset.range n, ℙ[π](s[k + 1] | s[k]))",
-  "regex": [
-    "Mul(Prob_(Get_(0)))(Prod(Range_)(Prob_(Cond(Get_(Add_(1)))(Get__))))",
+  "regex": "Mul(Prob_(Get_(0)))(Prod(Range_)(Prob_(Cond(Get_(Add_(1)))(Get__))))",
+  "alternative": [
     "Mul(Prob_(Get_(0)))(Prod(Range_)(Prob_(CondGetS__)))"
-  ]
+  ],
+  "json": {
+    "Mul": [
+      {
+        "Prob": [
+          "_",
+          {
+            "Get": [
+              "_",
+              "0"
+            ]
+          }
+        ]
+      },
+      {
+        "Prod": [
+          {
+            "Range": [
+              "_"
+            ]
+          },
+          {
+            "Prob": [
+              "_",
+              {
+                "Cond": [
+                  {
+                    "Get": [
+                      "_",
+                      {
+                        "Add": [
+                          "_",
+                          "1"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "Get": [
+                      "_",
+                      "_"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }

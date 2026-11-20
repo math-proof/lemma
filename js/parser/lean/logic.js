@@ -6,7 +6,7 @@
  * call time, so the import graph follows the inheritance tree.
  */
 import { LeanBinaryBoolean } from './boolean.js';
-import { Lean } from './base.js';
+import { Lean, jsonHead } from './base.js';
 import { pathAndInfixChoices, storedHoleOpt } from './pathChoices.js';
 import { strStmt } from './utility.js';
 
@@ -56,7 +56,7 @@ export class LeanLogicAnd extends LeanLogic {
     toJSON() {
         const lhs = this.lhs.toJSON();
         const rhs = this.rhs.toJSON();
-        const f = this.func;
+        const f = jsonHead(this.func);
         const rec = lhs && typeof lhs === 'object' ? lhs : null;
         if (this.lhs instanceof LeanLogicAnd && rec && Array.isArray(rec[f])) {
             return { [f]: [.../** @type {unknown[]} */ (rec[f]), rhs] };
@@ -89,7 +89,7 @@ export class LeanLogicOr extends LeanLogic {
     toJSON() {
         const lhs = this.lhs.toJSON();
         const rhs = this.rhs.toJSON();
-        const f = this.func;
+        const f = jsonHead(this.func);
         const rec = lhs && typeof lhs === 'object' ? lhs : null;
         if (this.lhs instanceof LeanLogicOr && rec && Array.isArray(rec[f])) {
             return { [f]: [.../** @type {unknown[]} */ (rec[f]), rhs] };
@@ -152,7 +152,7 @@ export class Lean_lor extends LeanLogic {
     }
 
     toJSON() {
-        return { [this.func]: [this.lhs.toJSON(), this.rhs.toJSON()] };
+        return { [jsonHead(this.func)]: [this.lhs.toJSON(), this.rhs.toJSON()] };
     }
 }
 
@@ -275,6 +275,6 @@ export class Lean_land extends LeanLogic {
     }
 
     toJSON() {
-        return { [this.func]: [this.lhs.toJSON(), this.rhs.toJSON()] };
+        return { [jsonHead(this.func)]: [this.lhs.toJSON(), this.rhs.toJSON()] };
     }
 }

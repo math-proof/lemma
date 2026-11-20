@@ -15,6 +15,12 @@ import {
 import { IndentedNode } from '../node.js';
 import { tactics } from '../../codemirror-lean-tactics.js';
 
+/** `toJSON` head names are Title-cased (`le`→`Le`, `sum`→`Sum`, `fun`→`Fun`). */
+export function jsonHead(name) {
+    const s = String(name || '');
+    return s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+}
+
 export class Lean extends IndentedNode {
     /**
      * Every registered Lean AST class, keyed by `cls.name`. Classes that are not base classes
@@ -66,22 +72,6 @@ export class Lean extends IndentedNode {
         return typeof c.input_priority === 'number' ? c.input_priority : 100;
     }
 
-    /**
-     * Path/hole token for this node. Defaults to the class name with the leading
-     * `Lean`/`Lean_` stripped and the first letter capitalized (`Lean_sum`→`Sum`,
-     * `LeanStack`→`Stack`, `LeanBitOr`→`BitOr`). Subclasses override where the
-     * derived name is wrong (e.g. `LeanBitOr`→`Cond`, `Lean_partial`→`Deriv`,
-     * `Lean_int`→`Integral`). This is the single source of truth for the token
-     * used in path generation (`mjs/lemmaPath.mjs` reads `node.pathToken`).
-     *
-     * Note: `holeRegexTag` is a *separate* legacy property (defined explicitly on
-     * concrete operator classes, with `null` sentinels on abstract bases like
-     * `LeanArithmetic`). It is intentionally NOT aliased to `pathToken` on this
-     * base: the alternatives walk (`holeRegexAlternatives.js`) reads
-     * `holeRegexTag` and must stay conservative — giving every node a non-null
-     * tag would over-broaden emitted regexes. New code should read `pathToken`.
-     * @returns {string}
-     */
     get pathToken() {
         const n = (this.constructor?.name || '').replace(/^Lean_?/, '');
         return n ? n.charAt(0).toUpperCase() + n.slice(1) : '';
@@ -514,7 +504,7 @@ export class Lean extends IndentedNode {
 
         // `rv%[μ] x` — `liftRV` syntax (`syntax "rv%[" term "] " term:max`, stats/joint_rv.lean): the Lean token
         // is `rv%[`, so this `%` is never `HMod.hMod`. The tokenizer splits it into `rv` `%` `[`; glue `rv%` into one word so
-        // `[μ]` attaches as its index (`LeanGetElem`) and the source / echo keep `rv%[μ]` instead of `rv % [μ]` (Lean rejects that).
+        // `[μ]` attaches as its index (`LeanGet`) and the source / echo keep `rv%[μ]` instead of `rv % [μ]` (Lean rejects that).
         if (token === 'rv' && tokens[self.start_idx + 1] === '%' && tokens[self.start_idx + 2] === '[' && tokens[self.start_idx - 1] !== '.') {
             self.start_idx++;
             return this.parent.insert_word(this, 'rv%');
@@ -807,7 +797,7 @@ export class Lean extends IndentedNode {
             case '›':
                 return this.parent.push_right('LeanSingleAngleQuotation');
             case '?':
-                if (this instanceof L.LeanGetElem) {
+                if (this instanceof L.LeanGet) {
                     const parent = this.parent;
                     const [lhs, rhs] = this.args;
                     const newNode = new L.LeanGetElemQue(lhs, rhs, this.indent, this.level);
@@ -1072,7 +1062,7 @@ export class Lean extends IndentedNode {
                 if (
                     tokens[self.start_idx - 1] === '[' &&
                     this instanceof L.LeanCaret &&
-                    (this.parent instanceof L.LeanGetElem || this.parent instanceof L.LeanBracket)
+                    (this.parent instanceof L.LeanGet || this.parent instanceof L.LeanBracket)
                 ) {
                     // `μ[|s]` — ProbabilityTheory `cond μ s`: the bar belongs to the bracket, never to `|x|`.
                     const parent = this.parent;
@@ -1094,7 +1084,7 @@ export class Lean extends IndentedNode {
                 }
                 return this.push_arithmetic(token);
             case "'":
-                if (this instanceof L.LeanGetElem && tokens[self.start_idx - 1] === ']') {
+                if (this instanceof L.LeanGet && tokens[self.start_idx - 1] === ']') {
                     const [lhs, rhs] = this.args;
                     const caret = new L.LeanCaret(this.indent, this.level);
                     this.parent.replace(this, new L.LeanGetElemQuote([lhs, rhs, caret], this.indent, this.level));
@@ -1596,12 +1586,12 @@ export class Lean extends IndentedNode {
      * @returns {Lean[]} `LeanToken`s
      */
     static headTokens(x) {
-        const {LeanToken, LeanParenthesis, LeanArgsCommaSeparated, LeanArgsSpaceSeparated, LeanGetElem,
+        const {LeanToken, LeanParenthesis, LeanArgsCommaSeparated, LeanArgsSpaceSeparated, LeanGet,
             LeanColon, LeanProperty, Lean_fun, Lean_mapsto} = L;
         if (!x || typeof x !== 'object') return [];
         if (x instanceof LeanToken) return /^\d/.test(x.text) ? [] : [x];
         if (x instanceof LeanParenthesis) return Lean.headTokens(x.arg);
-        if (x instanceof LeanArgsSpaceSeparated || x instanceof LeanGetElem) return Lean.headTokens(x.args[0]);
+        if (x instanceof LeanArgsSpaceSeparated || x instanceof LeanGet) return Lean.headTokens(x.args[0]);
         if (x instanceof LeanColon) {
             // (n : Omega -> R) constant Pi cast used as HDiv scalar: not an RV head
             const ty = x.rhs?.peelGroup?.() ?? x.rhs;
@@ -1847,7 +1837,7 @@ export class Lean extends IndentedNode {
                     } else if (
                         this instanceof L.LeanToken ||
                         this instanceof L.LeanProperty ||
-                        this instanceof L.LeanGetElem ||
+                        this instanceof L.LeanGet ||
                         this instanceof L.LeanGetElemQue ||
                         this instanceof L.LeanGetElemQuote ||
                         this instanceof L.LeanUnaryArithmeticPost ||
@@ -1855,7 +1845,7 @@ export class Lean extends IndentedNode {
                         this instanceof L.LeanDoubleAngleQuotation ||
                         (this instanceof L.LeanPairedGroup && this.is_Expr())
                     ) {
-                        this.parent.replace(this, new L.LeanGetElem(this, caret, indent, level));
+                        this.parent.replace(this, new L.LeanGet(this, caret, indent, level));
                         return caret;
                     }
                 }
@@ -1864,7 +1854,7 @@ export class Lean extends IndentedNode {
                     prevToken !== ' ' &&
                     (this instanceof L.LeanToken ||
                         this instanceof L.LeanProperty ||
-                        this instanceof L.LeanGetElem ||
+                        this instanceof L.LeanGet ||
                         this instanceof L.LeanGetElemQue ||
                         this instanceof L.LeanGetElemQuote ||
                         this instanceof L.LeanGetWhiteSquareBracket ||

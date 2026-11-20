@@ -324,7 +324,7 @@ export class LeanTactic extends LeanSyntax {
                         for (const t of lhs.tokens_comma_separated()) {
                             if (t.text !== 'rfl') token.push(t);
                         }
-                    } else if (lhs instanceof L.LeanBitOr) {
+                    } else if (lhs instanceof L.LeanCond) {
                         if (this.has_tactic_block_followed()) return;
                         for (const br of lhs.tokens_bar_separated()) {
                             if (Array.isArray(br))
@@ -1523,7 +1523,7 @@ export class LeanTacticBlock extends LeanUnary {
                                             new LeanTactic('echo', token, indent, level),
                                         );
                                     }
-                                } else if (lhs instanceof L.LeanBitOr) {
+                                } else if (lhs instanceof L.LeanCond) {
                                     const tokens = lhs.tokens_bar_separated();
                                     if (tokens.length && tacticBlockCount < tokens.length) {
                                         const token = tokens[tacticBlockCount].clone();
@@ -1769,7 +1769,7 @@ export class LeanWith extends LeanArgs {
         // `match … with` then `| pat =>`: first case is `LeanBar`; `tokens_space_separated()` is `[]` but
         // `[]` is truthy in JS, so we wrongly used ` ` and re-parse merged `with` and `|` (round-trip loss).
         if (caret instanceof L.LeanBar) return '\n';
-        return caret instanceof L.LeanCaret || caret.tokens_space_separated() || caret instanceof L.LeanBitOr
+        return caret instanceof L.LeanCaret || caret.tokens_space_separated() || caret instanceof L.LeanCond
             ? ' '
             : '\n';
     }
@@ -1834,7 +1834,7 @@ export class LeanWith extends LeanArgs {
                 return caret;
             }
             const $new = new L.LeanCaret(this.indent, caret.level);
-            this.replace(caret, new L.LeanBitOr(caret, $new, this.indent, caret.level));
+            this.replace(caret, new L.LeanCond(caret, $new, this.indent, caret.level));
             return $new;
         }
         throw new Error(`LeanWith.insert_bar: unexpected for ${this.constructor.name}`);
@@ -1864,7 +1864,7 @@ export class LeanWith extends LeanArgs {
     }
 
     tokens_bar_separated() {
-        if (this.args.length === 1 && this.args[0] instanceof L.LeanBitOr) {
+        if (this.args.length === 1 && this.args[0] instanceof L.LeanCond) {
             return this.args[0].tokens_bar_separated();
         }
         return [];
@@ -1873,7 +1873,7 @@ export class LeanWith extends LeanArgs {
     unique_token(indent) {
         if (this.args.length === 1) {
             const stmt = this.args[0];
-            if (stmt instanceof L.LeanBitOr || stmt instanceof L.LeanArgsSpaceSeparated) {
+            if (stmt instanceof L.LeanCond || stmt instanceof L.LeanArgsSpaceSeparated) {
                 return stmt.unique_token(indent);
             }
         }

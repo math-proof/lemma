@@ -9,7 +9,7 @@
  */
 import { LeanArgs, LeanBinary } from './abstract.js';
 import { LeanSyntax } from './tactic.js';
-import { Lean } from './base.js';
+import { Lean, jsonHead } from './base.js';
 
 const L = Lean.classes;
 
@@ -88,7 +88,7 @@ export class Lean_def extends LeanArgs {
 
     toJSON() {
         const json = {
-            [this.operator]: super.toJSON(),
+            [jsonHead(this.operator)]: super.toJSON(),
             accessibility: this.accessibility,
         };
         if (this.attribute) json.attribute = this.attribute.toJSON();
@@ -428,7 +428,7 @@ export class Lean_let extends LeanSyntax {
 
     toJSON() {
         return {
-            [this.operator]: this.args[0].toJSON(),
+            [jsonHead(this.operator)]: this.args[0].toJSON(),
         };
     }
 
@@ -635,7 +635,7 @@ export class Lean_show extends LeanSyntax {
 
     toJSON() {
         return {
-            [this.operator]: super.toJSON(),
+            [jsonHead(this.operator)]: super.toJSON(),
         };
     }
 

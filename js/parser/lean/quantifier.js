@@ -47,6 +47,11 @@ export class LeanQuantifier extends LeanProp(LeanBigOperator) {
 
     static input_priority = 24;
 
+    /** JSON head is `All` / `Any`, not the class-derived `Forall` / `Exists`. */
+    get jsonHeadName() {
+        return this.pathToken;
+    }
+
     /** @returns {string|null} */
     get holeRegexTag() {
         return null;

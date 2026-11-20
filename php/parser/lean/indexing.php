@@ -1,13 +1,13 @@
 <?php
 /**
- * Indexing (`LeanGetElem`, `LeanGetElemQue`, `LeanGetElemQuote`).
+ * Indexing (`LeanGet`, `LeanGetElemQue`, `LeanGetElemQuote`).
  *
  * Loaded by lean.php after the `LeanGetElemBase` traits. JS also has
  * `LeanGetWhiteSquareBracket`; this file does not.
  * Mirrors js/parser/lean/indexing.js. Not a standalone entry point.
  */
 
-class LeanGetElem extends LeanBinary
+class LeanGet extends LeanBinary
 {
     public static $input_priority = 67;
     use LeanGetElemBaseBinary;
@@ -16,7 +16,7 @@ class LeanGetElem extends LeanBinary
     {
         $indices = [];
         $node = $this;
-        while ($node instanceof LeanGetElem) {
+        while ($node instanceof LeanGet) {
             array_unshift($indices, $node->rhs);
             $node = $node->lhs;
         }
@@ -26,7 +26,7 @@ class LeanGetElem extends LeanBinary
     public function latexArgs(&$syntax = null)
     {
         // Nested segment of a longer chain: outer node owns multi-index LaTeX.
-        if ($this->parent instanceof LeanGetElem)
+        if ($this->parent instanceof LeanGet)
             return parent::latexArgs($syntax);
 
         ['base' => $base, 'indices' => $indices] = $this->collectGetElemChain();
@@ -50,7 +50,7 @@ class LeanGetElem extends LeanBinary
 
     public function latexFormat()
     {
-        if ($this->parent instanceof LeanGetElem)
+        if ($this->parent instanceof LeanGet)
             return '{%s}_{%s}';
 
         ['base' => $base, 'indices' => $indices] = $this->collectGetElemChain();

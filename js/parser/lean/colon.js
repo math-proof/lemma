@@ -25,6 +25,18 @@ export class LeanColon extends LeanBinary {
         return ':';
     }
 
+    /**
+     * A colon in `Obj[index]` position is a slice: `s[:k]` → `{Slice: [lo, hi]}`.
+     * Anywhere else it is only a type ascription, so the type is dropped and the
+     * JSON is just the variable's.
+     */
+    toJSON() {
+        const parent = this.parent;
+        if (parent instanceof L.LeanGet && parent.rhs === this)
+            return { Slice: [this.lhs.toJSON(), this.rhs.toJSON()] };
+        return this.lhs.toJSON();
+    }
+
     insert(caret, func, type) {
         if (this.rhs === caret && !(caret instanceof L.LeanCaret) && type !== 'modifier') {
             const c = new L.LeanCaret(this.indent, caret.level);
@@ -63,10 +75,10 @@ export class LeanColon extends LeanBinary {
             // this, paren.arg becomes ArgsIndented and given-html drops/mis-zips the binder.
             if (
                 !(caret instanceof L.LeanCaret) && indent > this.indent &&
-                caret instanceof L.LeanGetElem
+                caret instanceof L.LeanGet
             ) {
                 const {base, indices} = caret.collectGetElemChain();
-                if (L.LeanGetElem.limitsOperator(base, indices))
+                if (L.LeanGet.limitsOperator(base, indices))
                     return caret;
             }
             // After promote, binder-only limits bigop still needs a newline body (rare).
@@ -159,10 +171,10 @@ export class LeanColon extends LeanBinary {
     /** `:i` / `:i, :j` inside `y[...]` stay tight; ascriptions keep spaces. */
     isGetElemIndexColon() {
         const p = this.parent;
-        if (p instanceof L.LeanGetElem) return true;
+        if (p instanceof L.LeanGet) return true;
         if (p instanceof L.LeanLimitsBigOp) return true;
         if (p instanceof L.LeanArgsCommaSeparated && (
-            p.parent instanceof L.LeanGetElem || p.parent instanceof L.LeanLimitsBigOp
+            p.parent instanceof L.LeanGet || p.parent instanceof L.LeanLimitsBigOp
         )) return true;
         return false;
     }

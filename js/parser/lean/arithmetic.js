@@ -9,7 +9,7 @@
  */
 import '../../py.js';
 import { LeanBinary, LeanUnary } from './abstract.js';
-import { Lean } from './base.js';
+import { Lean, jsonHead } from './base.js';
 import { pathCombineMulChoices, pathStripTrailingHoles, pathUniqKeepEmpty, storedHoleOpt } from './pathChoices.js';
 import { holeRegexCombineArith, holeRegexCombineUnary } from './pathChoices.js';
 
@@ -236,8 +236,8 @@ export class LeanMul extends LeanArithmetic {
             (lhs instanceof L.LeanProperty && rhs instanceof L.LeanProperty) ||
             // `c₀ * h[k]` / `B * n.descFactorial e` — a vanished space reads as one symbol
             // (`c₀h_k`, `Bn^{\underline{e}}`)
-            lhs instanceof L.LeanGetElem ||
-            rhs instanceof L.LeanGetElem ||
+            lhs instanceof L.LeanGet ||
+            rhs instanceof L.LeanGet ||
             factorialPower(lhs) ||
             factorialPower(rhs)
         ) {
@@ -577,7 +577,7 @@ export class LeanBitwiseXor extends LeanArithmetic {
     }
 }
 
-export class LeanBitOr extends LeanArithmetic {
+export class LeanCond extends LeanArithmetic {
     static { this.register(); }
 
     // Below Eq (50) and ∧ (35): Prob conditional `x = «\sf{x}» | y = «\sf{y}»`
@@ -608,14 +608,14 @@ export class LeanBitOr extends LeanArithmetic {
     insert_bar(caret, prevToken, next) {
         if (caret instanceof L.LeanToken) {
             const newCaret = new L.LeanCaret(this.indent, caret.level);
-            this.replace(caret, new LeanBitOr(caret, newCaret, this.indent, caret.level));
+            this.replace(caret, new LeanCond(caret, newCaret, this.indent, caret.level));
             return newCaret;
         }
         if (caret instanceof L.LeanCaret) {
             this.replace(caret, new L.LeanAbs(caret, this.indent, caret.level));
             return caret;
         }
-        throw new Error(`LeanBitOr.insert_bar: unexpected for ${this.constructor.name}`);
+        throw new Error(`LeanCond.insert_bar: unexpected for ${this.constructor.name}`);
     }
 
     is_indented() {
@@ -640,7 +640,7 @@ export class LeanBitOr extends LeanArithmetic {
     tokens_bar_separated() {
         const tokens = [];
         for (const arg of this.args) {
-            if (arg instanceof LeanBitOr) tokens.push(...arg.tokens_bar_separated());
+            if (arg instanceof LeanCond) tokens.push(...arg.tokens_bar_separated());
             else if (arg instanceof L.LeanAngleBracket) {
                 const ts = arg.tokens_comma_separated();
                 tokens.push(ts.length === 1 ? ts[0] : new L.LeanArgsCommaSeparated(ts, this.indent, this.level));
@@ -953,6 +953,11 @@ export class Lean_blacktriangleright extends LeanArithmetic {
 
 export class LeanUnaryArithmetic extends LeanUnary {
     static { this.register(); }
+
+    /** Keep the operator head instead of unwrapping: `x²` → `{Square: [x]}`. */
+    toJSON() {
+        return { [jsonHead(this.func)]: [this.arg.toJSON()] };
+    }
 }
 
 export class LeanUnaryArithmeticPost extends LeanUnaryArithmetic {

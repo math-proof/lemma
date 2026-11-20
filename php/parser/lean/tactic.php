@@ -281,7 +281,7 @@ class LeanTactic extends LeanSyntax
                                 if ($t->text != 'rfl')
                                     $token[] = $t;
                             }
-                        } elseif ($arg instanceof LeanBitOr) {
+                        } elseif ($arg instanceof LeanCond) {
                             if ($this->has_tactic_block_followed())
                                 return;
                             foreach ($arg->tokens_bar_separated() as $arg) {
@@ -1392,7 +1392,7 @@ class LeanTacticBlock extends LeanUnary
                                 }
                                 break;
                             case 'obtain':
-                                if (($assign = $stmt->arg) instanceof LeanAssign && (($bitOr = $assign->lhs) instanceof LeanBitOr) && ($tokens = $bitOr->tokens_bar_separated()) && $tacticBlockCount < count($tokens)) {
+                                if (($assign = $stmt->arg) instanceof LeanAssign && (($bitOr = $assign->lhs) instanceof LeanCond) && ($tokens = $bitOr->tokens_bar_separated()) && $tacticBlockCount < count($tokens)) {
                                     $token = $tokens[$tacticBlockCount];
                                     $token = clone $token;
                                     $token->indent = $statements->indent;
@@ -1708,7 +1708,7 @@ class LeanWith extends LeanArgs
                 return $caret;
             } else {
                 $new = new LeanCaret($this->indent, $caret->level);
-                $this->replace($caret, new LeanBitOr($caret, $new, $this->indent, $caret->level));
+                $this->replace($caret, new LeanCond($caret, $new, $this->indent, $caret->level));
                 return $new;
             }
         }
@@ -1799,7 +1799,7 @@ class LeanWith extends LeanArgs
         [$caret] = $this->args;
         if ($caret instanceof LeanStatements && $caret->structInst === true)
             return $this->inline ? ' ' : "\n";
-        return $caret instanceof LeanCaret || $caret->tokens_space_separated() || $caret instanceof LeanBitOr ? ' ' : "\n";
+        return $caret instanceof LeanCaret || $caret->tokens_space_separated() || $caret instanceof LeanCond ? ' ' : "\n";
     }
 
     public function set_line($line)
@@ -1820,7 +1820,7 @@ class LeanWith extends LeanArgs
 
     public function tokens_bar_separated()
     {
-        if (count($this->args) == 1 && $this->args[0] instanceof LeanBitOr)
+        if (count($this->args) == 1 && $this->args[0] instanceof LeanCond)
             return $this->args[0]->tokens_bar_separated();
         return [];
     }
@@ -1835,7 +1835,7 @@ class LeanWith extends LeanArgs
     {
         if (count($this->args) == 1) {
             $stmt = $this->args[0];
-            if ($stmt instanceof LeanBitOr || $stmt instanceof LeanArgsSpaceSeparated)
+            if ($stmt instanceof LeanCond || $stmt instanceof LeanArgsSpaceSeparated)
                 return $stmt->unique_token($indent);
         }
     }

@@ -490,7 +490,7 @@ abstract class Lean extends IndentedNode
             case '›':
                 return $this->parent->push_right('LeanSingleAngleQuotation');
             case '?':
-                if ($this instanceof LeanGetElem) {
+                if ($this instanceof LeanGet) {
                     $parent = $this->parent;
                     [$lhs, $rhs] = $this->args;
                     $new = new LeanGetElemQue($lhs, $rhs, $this->indent, $this->level);
@@ -675,7 +675,7 @@ abstract class Lean extends IndentedNode
                 }
                 return $this->push_arithmetic($token);
             case "'":
-                if ($this instanceof LeanGetElem && $tokens[$i - 1] == ']') {
+                if ($this instanceof LeanGet && $tokens[$i - 1] == ']') {
                     [$lhs, $rhs] = $this->args;
                     $caret = new LeanCaret($this->indent, $this->level);
                     $this->parent->replace($this, new LeanGetElemQuote([$lhs, $rhs, $caret], $this->indent, $this->level));
@@ -998,7 +998,7 @@ abstract class Lean extends IndentedNode
         if (!$x || !is_object($x)) return [];
         if ($x instanceof LeanToken) return preg_match('/^\d/', $x->text) ? [] : [$x];
         if ($x instanceof LeanParenthesis) return Lean::headTokens($x->arg);
-        if ($x instanceof LeanArgsSpaceSeparated || $x instanceof LeanGetElem) return Lean::headTokens($x->args[0]);
+        if ($x instanceof LeanArgsSpaceSeparated || $x instanceof LeanGet) return Lean::headTokens($x->args[0]);
         if ($x instanceof LeanColon) {
             // (n : Omega -> R) constant Pi cast used as HDiv scalar: not an RV head
             $ty = $x->rhs;
@@ -1173,12 +1173,12 @@ abstract class Lean extends IndentedNode
                     } elseif (
                         $this instanceof LeanToken || 
                         $this instanceof LeanProperty || 
-                        $this instanceof LeanGetElem || $this instanceof LeanGetElemQue || $this instanceof LeanGetElemQuote || 
+                        $this instanceof LeanGet || $this instanceof LeanGetElemQue || $this instanceof LeanGetElemQuote || 
                         $this instanceof LeanUnaryArithmeticPost || 
                         $this instanceof LeanBracket ||
                         $this instanceof LeanPairedGroup && $this->is_Expr()
                     ) {
-                        $this->parent->replace($this, new LeanGetElem($this, $caret, $indent, $level));
+                        $this->parent->replace($this, new LeanGet($this, $caret, $indent, $level));
                         return $caret;
                     }
                 }

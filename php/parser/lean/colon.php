@@ -112,9 +112,9 @@ class LeanColon extends LeanBinary
     public function isGetElemIndexColon()
     {
         $p = $this->parent;
-        if ($p instanceof LeanGetElem)
+        if ($p instanceof LeanGet)
             return true;
-        if ($p instanceof LeanArgsCommaSeparated && $p->parent instanceof LeanGetElem)
+        if ($p instanceof LeanArgsCommaSeparated && $p->parent instanceof LeanGet)
             return true;
         return false;
     }

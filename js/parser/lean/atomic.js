@@ -229,8 +229,9 @@ export class LeanToken extends Lean {
         return /^[a-zA-Z_][a-zA-Z_0-9]*$/.test(this.text);
     }
 
+    /** JSON keeps numeric literals only; every other token is an anonymous slot. */
     toJSON() {
-        return this.text;
+        return /^\d+$/.test(this.text) ? this.text : "_";
     }
 
     latexArgs(_syntax) {

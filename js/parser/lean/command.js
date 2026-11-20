@@ -9,7 +9,7 @@
  * call time, so the import graph follows the inheritance tree.
  */
 import { LeanUnary } from './abstract.js';
-import { Lean } from './base.js';
+import { Lean, jsonHead } from './base.js';
 
 const L = Lean.classes;
 
@@ -26,7 +26,7 @@ export class LeanCommand extends LeanUnary {
     }
 
     toJSON() {
-        return { [this.func]: this.arg.toJSON() };
+        return { [jsonHead(this.func)]: this.arg.toJSON() };
     }
 
     latexFormat() {

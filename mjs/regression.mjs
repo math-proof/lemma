@@ -1,9 +1,9 @@
 /**
- * regression.mjs — hole-regex regression over `mjs/*.json` fixtures.
+ * regression.mjs — hole-regex regression over `mjs/regression/*.json` fixtures.
  *
- * Each fixture is `{ "lean": <Lean type expression>, "regex": [<expected>] }`.
+ * Each fixture is `{ "lean": <Lean type expression>, "regex": <primary>, "alternative": [<rest>] }`.
  * The runner parses `lean` into the AST, generates the hole-regex alternatives
- * for that node, and requires an exact match with the fixture's `regex` list.
+ * for that node, and requires an exact match with `[regex, ...alternative]`.
  *
  * Run: node mjs/regression.mjs
  */
@@ -75,9 +75,10 @@ function parseStatement(lean) {
 
 let failures = 0;
 let checked = 0;
-const files = fs.readdirSync(__dirname).filter((f) => f.endsWith(".json")).sort();
+const dir = path.join(__dirname, "regression");
+const files = fs.readdirSync(dir).filter((f) => f.endsWith(".json")).sort();
 for (const name of files) {
-  const abs = path.join(__dirname, name);
+  const abs = path.join(dir, name);
   let doc;
   try {
     doc = JSON.parse(fs.readFileSync(abs, "utf8"));
@@ -86,7 +87,7 @@ for (const name of files) {
     console.log(`FAIL ${name}\n  invalid JSON: ${e.message}`);
     continue;
   }
-  if (!doc || typeof doc.lean !== "string" || !Array.isArray(doc.regex)) {
+  if (!doc || typeof doc.lean !== "string" || typeof doc.regex !== "string" || !Array.isArray(doc.alternative)) {
     console.log(`skip ${name} (not a fixture)`);
     continue;
   }
@@ -109,8 +110,9 @@ for (const name of files) {
   }
 
   const got = holeRegexAlternatives(node, { leaves: collectLeaves(node) });
-  if (JSON.stringify(got) !== JSON.stringify(doc.regex)) {
-    fail(`regex mismatch\n  got:  ${JSON.stringify(got)}\n  want: ${JSON.stringify(doc.regex)}`);
+  const want = [doc.regex, ...doc.alternative];
+  if (JSON.stringify(got) !== JSON.stringify(want)) {
+    fail(`regex mismatch\n  got:  ${JSON.stringify(got)}\n  want: ${JSON.stringify(want)}`);
     continue;
   }
   console.log(`OK   ${name}`);

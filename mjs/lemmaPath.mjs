@@ -804,7 +804,7 @@ function customSection(sections, conclNode, givenTypes, importDecls = new Map(),
   for (const g of givenTypes) {
     let h = unwrapParen(g);
     if (cls(h) === "LeanArgsSpaceSeparated") h = h.args?.[0];
-    if (cls(h) === "LeanGetElem") h = h.args?.[0];
+    if (cls(h) === "LeanGet") h = h.args?.[0];
     const s = cls(h) === "LeanToken" ? match(h.text) : null;
     if (s) return s;
     if (cls(h) === "LeanToken") for (const [sec, names] of importDecls) if (custom.includes(sec) && names.has(h.text)) return sec;
@@ -1006,7 +1006,7 @@ function pickSection(sigNode, sections, extra = {}) {
     }
   }
   if (scores.has("Polynomial") && hasNode(sigNode, (n) =>
-    cls(n) === "LeanGetElem" && cls(n.args?.[1]) === "LeanToken" && n.args[1].text === "X")) {
+    cls(n) === "LeanGet" && cls(n.args?.[1]) === "LeanToken" && n.args[1].text === "X")) {
     add("Polynomial", 4);
   }
   {
@@ -1087,7 +1087,7 @@ function isPropHyp(typeNode) {
   if (name === "LeanArgsSpaceSeparated") {
     let head = typeNode.args?.[0];
     if (cls(head) === "LeanProperty" && cls(head.args?.[1]) === "LeanToken" && /^[A-Z][A-Za-z0-9]+$/.test(head.args[1].text || "") && !TYPE_TO_SECTION[head.args[1].text]) return true;
-    if (cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken") head = head.args[0];
+    if (cls(head) === "LeanGet" && cls(head.args?.[0]) === "LeanToken") head = head.args[0];
 
     if (cls(head) === "LeanToken") {
       const t = head.text;
@@ -1110,7 +1110,7 @@ function isPropHyp(typeNode) {
 
 const TOKEN_ALIAS = {
   "ℙ": "Prob",
-  GetElem: "Get",
+  Get: "Get",
   StdPart: "St",
   stdPart: "St",
   val: "Val",
@@ -1230,7 +1230,7 @@ function collectLeafBinders(node, out = new Set(), noBinders = false) {
     }
   }
   if (name === "Lean_int") for (const b of (node.args || []).slice(0, -1)) quantBinderNames(b, out);
-  if (name === "LeanBrace" && cls(node.args?.[0]) === "LeanBitOr") quantBinderNames(node.args[0].args?.[0], out);
+  if (name === "LeanBrace" && cls(node.args?.[0]) === "LeanCond") quantBinderNames(node.args[0].args?.[0], out);
   if (name === "Lean_fun" && cls(node.args?.[0]) === "Lean_mapsto") quantBinderNames(node.args[0].args?.[0], out);
   if (name === "Lean_fun" && cls(node.args?.[0]) === "LeanRightarrow" && cls(node.args[0].args?.[0]) === "LeanArgsSpaceSeparated") {
     quantBinderNames(node.args[0].args[0], out);
@@ -1537,12 +1537,12 @@ function funBodyUnary(funNode) {
 }
 
 function condExpArg(node) {
-  if (cls(node) !== "LeanGetElem") return null;
+  if (cls(node) !== "LeanGet") return null;
   const h = node.args?.[0];
   if (cls(h) === "LeanToken" && (h.text === "ℙ" || h.text === "𝔼")) return null;
   const idx = node.args?.[1];
-  if (cls(idx) === "LeanBitOr") return idx.args?.[0];
-  if (cls(idx) === "LeanArgsSpaceSeparated" && cls(idx.args?.[idx.args.length - 1]) === "LeanBitOr") {
+  if (cls(idx) === "LeanCond") return idx.args?.[0];
+  if (cls(idx) === "LeanArgsSpaceSeparated" && cls(idx.args?.[idx.args.length - 1]) === "LeanCond") {
     const app = Object.create(Object.getPrototypeOf(idx));
     Object.assign(app, idx);
     app.args = [...idx.args.slice(0, -1), idx.args[idx.args.length - 1].args?.[0]];
@@ -1551,7 +1551,7 @@ function condExpArg(node) {
   if (cls(idx) === "Lean_fun") {
     const arrow = idx.args?.[idx.args.length - 1];
     const body = arrow?.args?.[arrow.args.length - 1];
-    if (cls(body) === "LeanBitOr") return body.args?.[0];
+    if (cls(body) === "LeanCond") return body.args?.[0];
   }
   return null;
 }
@@ -1565,7 +1565,7 @@ function fnLikeHead(head) {
 
 function normHead(head, opts) {
   const h = head;
-  if (cls(h) === "LeanGetElem" && !condExpArg(h)) {
+  if (cls(h) === "LeanGet" && !condExpArg(h)) {
     const t = h.args?.[0];
     if (cls(t) === "LeanToken" && /^[A-Z]/.test(t.text || "") && !isLeafName(t.text, opts.leaves)) return t;
   }
@@ -1573,10 +1573,6 @@ function normHead(head, opts) {
 }
 
 const ARITH_OP = new Set(["LeanSub", "LeanAdd", "LeanMul", "LeanDiv", "LeanPow", "LeanNeg", "LeanInv", "LeanMatMul"]);
-
-const COND_SUFFIX = "Cond";
-const PROB_COND = "Prob" + COND_SUFFIX;
-const EXPECT_COND = "Expect" + COND_SUFFIX;
 
 function isGetIndexNoise(node, opts) {
   const u = unwrapParen(node);
@@ -1592,7 +1588,7 @@ function isGetIndexNoise(node, opts) {
 }
 
 function isBinderGetAtLiteral(node, opts) {
-  if (cls(node) !== "LeanGetElem") return false;
+  if (cls(node) !== "LeanGet") return false;
   if (!isBinderHole(node.args?.[0], opts)) return false;
   const idx = unwrapParen(node.args?.[1]);
   if (!idx || cls(idx) !== "LeanToken") return false;
@@ -1610,7 +1606,7 @@ function isQuantBinderHole(node, opts) {
   }
   if (c === "LeanAdjoint" || c === "LeanTranspose" || c === "LeanConj" || c === "LeanInv")
     return isQuantBinderHole(u.args?.[0], opts);
-  if (c === "LeanGetElem") {
+  if (c === "LeanGet") {
     return isQuantBinderHole(u.args?.[0], opts) && isGetIndexNoise(u.args?.[1], opts);
   }
   if (c === "LeanParenthesis") return isQuantBinderHole(u.args?.[0], opts);
@@ -1627,7 +1623,7 @@ function isBinderHole(node, opts) {
   }
   if (c === "LeanAdjoint" || c === "LeanTranspose" || c === "LeanConj" || c === "LeanInv")
     return isQuantBinderHole(u.args?.[0], opts);
-  if (c === "LeanGetElem") {
+  if (c === "LeanGet") {
     return isBinderHole(u.args?.[0], opts) && isGetIndexNoise(u.args?.[1], opts);
   }
   if (c === "LeanParenthesis") return isBinderHole(u.args?.[0], opts);
@@ -1652,7 +1648,7 @@ function isHoleyExpr(node, opts) {
   }
   if (c === "LeanAdjoint" || c === "LeanTranspose" || c === "LeanConj" || c === "LeanInv")
     return isQuantBinderHole(u.args?.[0], opts) && isHoleyExpr(u.args?.[0], opts);
-  if (c === "LeanGetElem") {
+  if (c === "LeanGet") {
     return isHoleyExpr(u.args?.[0], opts) && isGetIndexNoise(u.args?.[1], opts);
   }
   if (c === "LeanVecNotation") return true;
@@ -1727,7 +1723,7 @@ function applyEvalPrefix(head) {
   if (fnLikeHead(head)) return "";
   if (cls(unwrapParen(head)) === "LeanVecNotation") return "";
   const h = unwrapParen(head);
-  if (cls(h) === "LeanGetElem" && cls(h.args?.[0]) === "LeanToken" && (h.args[0].text === "ℙ" || h.args[0].text === "𝔼")) return "";
+  if (cls(h) === "LeanGet" && cls(h.args?.[0]) === "LeanToken" && (h.args[0].text === "ℙ" || h.args[0].text === "𝔼")) return "";
   if (isRandomBigOp(h)) return "";
   return "Get";
 }
@@ -1994,7 +1990,7 @@ function legacyExpectProbVarApp(node, opText) {
   const u = unwrapParen(node);
   if (cls(u) !== "LeanArgsSpaceSeparated" || (u.args || []).length < 2) return null;
   const head = u.args[0];
-  if (!(cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === opText))
+  if (!(cls(head) === "LeanGet" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === opText))
     return null;
   return { bound: head.args?.[1] ?? null, scope: u.args[1], head, args: u.args };
 }
@@ -2024,7 +2020,7 @@ function legacyLimitsBigOpApp(node, opText) {
   const u = unwrapParen(node);
   if (cls(u) !== "LeanArgsSpaceSeparated" || (u.args || []).length < 2) return null;
   const head = u.args[0];
-  if (!(cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === opText))
+  if (!(cls(head) === "LeanGet" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === opText))
     return null;
   const pathToken = LIMITS_LEGACY_OP_TEXT[opText] || "";
   return { bound: head.args?.[1] ?? null, scope: u.args[1], head, args: u.args, pathToken, opText };
@@ -2335,11 +2331,11 @@ function setBuilderCond(n) {
   const u = unwrapParen(n);
   if (cls(u) !== "LeanBrace") return null;
   const a = u.args?.[0];
-  if (cls(a) === "LeanBitOr") return a.args?.[1] || null;
+  if (cls(a) === "LeanCond") return a.args?.[1] || null;
   if (cls(a) === "LeanColon") {
     let t = a.args?.[1];
-    while (t && cls(t) !== "LeanBitOr" && (cls(t) === "Lean_rightarrow" || cls(t) === "LeanArgsSpaceSeparated")) t = t.args?.[t.args.length - 1];
-    if (cls(t) === "LeanBitOr") return t.args?.[1] || null;
+    while (t && cls(t) !== "LeanCond" && (cls(t) === "Lean_rightarrow" || cls(t) === "LeanArgsSpaceSeparated")) t = t.args?.[t.args.length - 1];
+    if (cls(t) === "LeanCond") return t.args?.[1] || null;
   }
   return null;
 }
@@ -2392,7 +2388,7 @@ function isSupLtInfty(node) {
   let lhs = unwrapParen(u.args[0]);
   if (limitsBigOpBoundScope(lhs)?.pathToken === "Sup") return true;
   const head = cls(lhs) === "LeanArgsSpaceSeparated" ? lhs.args?.[0] : lhs;
-  return cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === "sup";
+  return cls(head) === "LeanGet" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === "sup";
 }
 function isBddAboveSup(node) {
   const u = unwrapParen(node);
@@ -2977,7 +2973,7 @@ export function holeRegexLanguageTokens(reSource, opts = {}) {
 }
 
 function isGetElemColonSlice(node) {
-  if (cls(node) !== "LeanGetElem") return false;
+  if (cls(node) !== "LeanGet") return false;
   const headTok = cls(node.args?.[0]) === "LeanToken" ? (node.args[0].text || "") : "";
   const BIG = new Set(["𝔼", "ℙ", "𝕍𝕒𝕣", "∇", "max", "min", "sup", "inf", "max⁻¹", "min⁻¹"]);
   if (BIG.has(headTok)) return false;
@@ -2998,7 +2994,7 @@ function isGetElemColonSlice(node) {
 }
 
 function getElemHoleRegexFrag(node, opts) {
-  if (cls(node) !== "LeanGetElem") return null;
+  if (cls(node) !== "LeanGet") return null;
   const headTok = cls(node.args?.[0]) === "LeanToken" ? (node.args[0].text || "") : "";
   if (headTok === "ℙ" || headTok === "∇" || headTok === "Var" || headTok === "variance") return undefined;
   if (isGetElemColonSlice(node)) return "GetSlice__";
@@ -3281,7 +3277,7 @@ function decompImplyStruct(node, opts, binders) {
     return "Append" + storedHoleOpt(L) + storedHoleOpt(R);
   }
 
-  if (c === "LeanGetElem") {
+  if (c === "LeanGet") {
     let idx = u.rhs ?? u.args?.[1];
     for (let i = 0; i < 8 && idx; i++) {
       const ic = cls(idx);
@@ -3585,7 +3581,7 @@ function isSimpleGetObservation(node) {
   const u = peelHoleExpr(node);
   if (!u) return false;
   const c = cls(u);
-  if (c === "LeanGetElem") {
+  if (c === "LeanGet") {
     let idx = u.rhs ?? u.args?.[1];
     for (let i = 0; i < 8 && idx; i++) {
       const ic = cls(idx);
@@ -3621,7 +3617,7 @@ function matchProbCommaCondScope(sc0) {
   const sc = peelHoleExpr(sc0);
   if (cls(sc) === "LeanArgsCommaSeparated") {
     const args = (sc.args || []).map((a) => unwrapParen(a));
-    if (args.length >= 2 && cls(args[0]) === "LeanBitOr") {
+    if (args.length >= 2 && cls(args[0]) === "LeanCond") {
       const bit = args[0];
       return {
         event: unwrapParen(bit.lhs ?? bit.args?.[0]),
@@ -3629,7 +3625,7 @@ function matchProbCommaCondScope(sc0) {
       };
     }
   }
-  if (cls(sc) === "LeanBitOr") {
+  if (cls(sc) === "LeanCond") {
     const R = unwrapParen(sc.rhs ?? sc.args?.[1]);
     if (cls(R) === "LeanArgsCommaSeparated" && (R.args || []).length >= 1) {
       return {
@@ -3662,7 +3658,7 @@ function getRvCondHoleFrag(node) {
   const u = peelHoleExpr(node);
   if (!u) return "";
   if (isGetElemColonSlice(u)) return "GetSlice__";
-  if (isSimpleGetObservation(u) || cls(u) === "LeanGetElem") return "Get__";
+  if (isSimpleGetObservation(u) || cls(u) === "LeanGet") return "Get__";
   return "";
 }
 
@@ -3718,7 +3714,7 @@ function condProbHoleRegexFromFrags(ev, cd) {
 
 function probSideHoleFrag(node, opts) {
   const u = peelHoleExpr(node);
-  if (cls(u) === "LeanGetElem") {
+  if (cls(u) === "LeanGet") {
     const frag = getElemHoleRegexFrag(u, opts);
     return frag || "Get__";
   }
@@ -3731,7 +3727,7 @@ function probCondGetHoleRegex(node, opts) {
   const comma = commaCondProbHoleRegex(u);
   if (comma) return comma;
   const sc = peelHoleExpr(u.scope);
-  if (cls(sc) !== "LeanBitOr" || cls(unwrapParen(sc.args?.[0])) === "Lean_perp") return null;
+  if (cls(sc) !== "LeanCond" || cls(unwrapParen(sc.args?.[0])) === "Lean_perp") return null;
   const L = unwrapParen(sc.lhs ?? sc.args?.[0]);
   const R = unwrapParen(sc.rhs ?? sc.args?.[1]);
   if (isSimpleGetObservation(L) && isSimpleGetObservation(R))
@@ -3909,7 +3905,7 @@ function measurableGetHoleRegex(node, opts) {
   const headName = nameToken(head.text || "");
   if (!MEASURABLE_RV_HEADS.has(headName)) return null;
   const rv = unwrapParen(args[1]);
-  if (cls(rv) !== "LeanGetElem") return null;
+  if (cls(rv) !== "LeanGet") return null;
   let out = headName + (isGetElemColonSlice(rv) ? "(GetSlice__)" : "(Get__)");
   for (let i = 2; i < args.length; i++) {
     const a = args[i];
@@ -3966,7 +3962,7 @@ function predicateAppHoleRegex(node, opts) {
   const headName = nameToken(head.text || "");
   if (!PREDICATE_APP_HEADS.has(headName)) return null;
   const last = unwrapParen(args[args.length - 1]);
-  if (cls(last) === "LeanGetElem") return null;
+  if (cls(last) === "LeanGet") return null;
   if (typeof isMeasurableJointArg === "function" && isMeasurableJointArg(last)) return null;
   const frags = [];
   for (let i = 1; i < args.length; i++) {
@@ -4022,7 +4018,7 @@ function independencePerp(node) {
 
 function condIndepBits(node) {
   const u = stripIndepWrap(node);
-  if (cls(u) !== "LeanBitOr") return null;
+  if (cls(u) !== "LeanCond") return null;
   const perp = independencePerp(u.lhs ?? u.args?.[0]);
   if (!perp) return null;
   return { perp, cond: u.rhs ?? u.args?.[1], bitor: u };
@@ -4070,7 +4066,7 @@ function rvOperandHoleFrag(node, opts) {
     return jointHoleFrag(frags) || "Joint__";
   }
   if (isGetElemColonSlice(u)) return "GetSlice__";
-  if (cls(u) === "LeanGetElem") {
+  if (cls(u) === "LeanGet") {
     const ge = getElemHoleRegexFrag(u, opts);
     if (ge && ge !== "_" && ge !== "") return ge;
     return "Get__";
@@ -4135,7 +4131,7 @@ function holeRegexExprWalk(node, opts) {
     const cond = probCondGetHoleRegex(u, opts);
     if (cond) return cond;
     const ev = peelHoleExpr(u.scope);
-    const frag = cls(ev) === "LeanGetElem" ? getElemHoleRegexFrag(ev, opts) : null;
+    const frag = cls(ev) === "LeanGet" ? getElemHoleRegexFrag(ev, opts) : null;
     if (frag) return u.pathToken + "_" + storedHoleOpt(frag);
   }
 
@@ -4200,7 +4196,7 @@ function holeRegexExprWalk(node, opts) {
         if (ire) return ire;
       }
       if (cls(n) === "LeanIte") return iteHoleRegex(n, opts);
-      if (cls(n) === "LeanGetElem") {
+      if (cls(n) === "LeanGet") {
         const ge = getElemHoleRegexFrag(n, opts);
         if (ge !== undefined) return ge;
       }
@@ -4208,7 +4204,7 @@ function holeRegexExprWalk(node, opts) {
         const dec = decompImplyStruct(n, opts);
         if (dec) return dec;
       }
-      if (cls(n) === "LeanBitOr" && cls(unwrapParen(n.args?.[0])) !== "Lean_perp") {
+      if (cls(n) === "LeanCond" && cls(unwrapParen(n.args?.[0])) !== "Lean_perp") {
         let p = n.parent;
         while (p && (cls(p) === "LeanParenthesis" || cls(p) === "LeanColon")) p = p.parent;
         if (cls(p) === "Lean_Expect") {
@@ -5043,7 +5039,7 @@ function holeFillStems(node, opts = {}) {
     ]);
   }
 
-  if (c === "LeanGetElem") {
+  if (c === "LeanGet") {
     const headTok = cls(u.args?.[0]) === "LeanToken" ? (u.args[0].text || "") : "";
     if (headTok === "ℙ" || headTok === "∇" || headTok === "Var" || headTok === "variance") {
       const frozen = nameExpr(u, opts);
@@ -5070,7 +5066,7 @@ function holeFillStems(node, opts = {}) {
     return uniq([...joined, ""]);
   }
 
-  if (c === "LeanBitOr" && condIndepBits(u)) {
+  if (c === "LeanCond" && condIndepBits(u)) {
     const T = u.pathToken;
     const bits = condIndepBits(u);
     const indeps = holeFillStems(bits.perp, opts);
@@ -5448,7 +5444,7 @@ function isExpectAppNode(node) {
 
 function isArgMaxMinGetElem(node) {
   const u = unwrapParen(node);
-  if (cls(u) !== "LeanGetElem" || cls(u.args?.[0]) !== "LeanToken") return false;
+  if (cls(u) !== "LeanGet" || cls(u.args?.[0]) !== "LeanToken") return false;
   const t = u.args[0].text || "";
   return t === "max⁻¹" || t === "min⁻¹";
 }
@@ -5459,7 +5455,7 @@ function argMaxMinTokenName(node) {
   if (cls(u) === "LeanArgsSpaceSeparated" && isArgMaxMinGetElem(u.args?.[0])) {
     return argMaxMinTokenName(u.args[0]);
   }
-  const t = cls(u) === "LeanGetElem" ? u.args?.[0]?.text : "";
+  const t = cls(u) === "LeanGet" ? u.args?.[0]?.text : "";
   return t === "max⁻¹" ? "ArgMax" : t === "min⁻¹" ? "ArgMin" : "";
 }
 function isArgMaxMinApp(node) {
@@ -5562,7 +5558,7 @@ function gradientBody(node) {
   const head = u.args[0];
   const nabla = "∇";
   const isGradHead =
-    (cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === nabla) ||
+    (cls(head) === "LeanGet" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === nabla) ||
     (cls(head) === "LeanToken" && head.text === nabla);
   if (!isGradHead) return null;
   const rest = u.args.slice(1);
@@ -5658,18 +5654,18 @@ function preAlts(node, opts, canon) {
       if (!canon) for (const s of S) out.push("Image_" + s);
       return out.length ? uniq(out) : ["Image"];
     }
-    if (cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === "𝔼" && args.length === 2) {
+    if (cls(head) === "LeanGet" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === "𝔼" && args.length === 2) {
       const body = expectCondBody(args[1]);
       if (body) {
         const x = A(body);
-        const cond = x.length ? x.map((y) => EXPECT_COND + y) : [EXPECT_COND];
-        return canon ? cond.slice(0, 1) : uniq([...cond.slice(0, 2), EXPECT_COND, "Expect", ...cond]);
+        const cond = x.length ? x.map((y) => "ExpectCond" + y) : ["ExpectCond"];
+        return canon ? cond.slice(0, 1) : uniq([...cond.slice(0, 2), "ExpectCond", "Expect", ...cond]);
       }
       const b = A(args[1]);
       const fuseExpect = (y) => y === "Mul" ? ["Expect_Mul"] : ["Expect" + y];
       return b.length ? uniq(b.flatMap(fuseExpect)) : ["Expect"];
     }
-    if (cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === "𝕍𝕒𝕣" && args.length === 2) {
+    if (cls(head) === "LeanGet" && cls(head.args?.[0]) === "LeanToken" && head.args[0].text === "𝕍𝕒𝕣" && args.length === 2) {
       const b = A(args[1]);
       return b.length ? uniq(b.map((y) => "Var" + y)) : ["Var"];
     }
@@ -5688,8 +5684,8 @@ function preAlts(node, opts, canon) {
     const body = expectCondBody(node.scope);
     if (body) {
       const x = A(body);
-      const cond = x.length ? x.map((y) => EXPECT_COND + y) : [EXPECT_COND];
-      return canon ? cond.slice(0, 1) : uniq([...cond.slice(0, 2), EXPECT_COND, T, ...cond]);
+      const cond = x.length ? x.map((y) => "ExpectCond" + y) : ["ExpectCond"];
+      return canon ? cond.slice(0, 1) : uniq([...cond.slice(0, 2), "ExpectCond", T, ...cond]);
     }
     const b = A(node.scope);
     const fuseExpect = (y) => y === "Mul" ? [T + "_Mul"] : [T + "_" + y];
@@ -5759,7 +5755,7 @@ function preAlts(node, opts, canon) {
     if (!b.length) return uniq(a.map((x) => node.pathToken + x));
     return uniq(a.flatMap((x) => b.flatMap((y) => [node.pathToken + x + "_" + y, node.pathToken + x + y])));
   }
-  if (c === "LeanGetElem") {
+  if (c === "LeanGet") {
     const h = args[0];
     const idx = args[1];
     const cx = condExpArg(node);
@@ -5859,7 +5855,7 @@ function stripIndepWrap(n) {
 function indepAtom(node) {
   const u = stripIndepWrap(node);
   if (cls(u) === "Lean_perp") return u.pathToken;
-  if (cls(u) === "LeanBitOr" && cls(stripIndepWrap(u.args?.[0])) === "Lean_perp") return "CondIndep";
+  if (cls(u) === "LeanCond" && cls(stripIndepWrap(u.args?.[0])) === "Lean_perp") return "CondIndep";
   return "";
 }
 function indepCanon(node, opts = {}) {
@@ -5870,7 +5866,7 @@ function indepCanon(node, opts = {}) {
     const T = u.pathToken;
     const isSlice = (n) => {
       const x = unwrapParen(n);
-      return cls(x) === "LeanGetElem" && cls(x.args?.[1]) === "LeanColon";
+      return cls(x) === "LeanGet" && cls(x.args?.[1]) === "LeanColon";
     };
     const L = isSlice(u.args?.[0]);
     const R = isSlice(u.args?.[1]);
@@ -5884,7 +5880,7 @@ function indepCanon(node, opts = {}) {
     if (L) return T + "GetSlice";
     return T;
   }
-  if (cls(u) === "LeanBitOr" && cls(stripIndepWrap(u.args?.[0])) === "Lean_perp") return "CondIndep";
+  if (cls(u) === "LeanCond" && cls(stripIndepWrap(u.args?.[0])) === "Lean_perp") return "CondIndep";
   return "";
 }
 function indepAlts(node, opts = {}) {
@@ -5902,7 +5898,7 @@ function indepAlts(node, opts = {}) {
     if (!ch.includes(u.pathToken)) ch.push(u.pathToken);
     return ch;
   }
-  if (cls(u) === "LeanBitOr" && cls(stripIndepWrap(u.args?.[0])) === "Lean_perp") {
+  if (cls(u) === "LeanCond" && cls(stripIndepWrap(u.args?.[0])) === "Lean_perp") {
     return joint && joint !== "CondIndep" ? [joint, "CondIndep"] : ["CondIndep"];
   }
   return [];
@@ -6051,7 +6047,7 @@ function eventHasAnd(node) {
   const n = cls(node);
   if (n === "Lean_land") return true;
   if (n === "LeanParenthesis") return eventHasAnd(node.args?.[0]);
-  if (n === "LeanBitOr") return false;
+  if (n === "LeanCond") return false;
 
   if (Array.isArray(node.args)) return node.args.some(eventHasAnd);
   return false;
@@ -6164,13 +6160,13 @@ function commaParts(node) {
 
 function expectCondBody(arg) {
   const u = unwrapParen(arg);
-  if (cls(u) === "LeanBitOr" && (u.args || []).length === 2 && cls(unwrapParen(u.args[0])) !== "Lean_perp") {
+  if (cls(u) === "LeanCond" && (u.args || []).length === 2 && cls(unwrapParen(u.args[0])) !== "Lean_perp") {
     return u.args[0];
   }
   const parts = commaParts(u);
   if (!parts) return null;
   const head = unwrapParen(parts[0]);
-  if (cls(head) === "LeanBitOr" && (head.args || []).length === 2 && cls(unwrapParen(head.args[0])) !== "Lean_perp") {
+  if (cls(head) === "LeanCond" && (head.args || []).length === 2 && cls(unwrapParen(head.args[0])) !== "Lean_perp") {
     return head.args[0];
   }
   return null;
@@ -6197,12 +6193,12 @@ function isRvTerm(node) {
   if (commaParts(u) || jrsParts(u)) return isJointRvTuple(u);
   const c = cls(u);
   if (c === "LeanToken") return RV_NAMES.has(u.text);
-  if (c === "LeanGetElem") return isRvTerm(u.args?.[0]);
+  if (c === "LeanGet") return isRvTerm(u.args?.[0]);
 
   if (c === "LeanArgsSpaceSeparated") {
     const h = u.args?.[0];
     if (cls(h) === "LeanToken") return RV_NAMES.has(h.text);
-    if (cls(h) === "LeanGetElem") return isRvTerm(h);
+    if (cls(h) === "LeanGet") return isRvTerm(h);
     return false;
   }
   return false;
@@ -6228,7 +6224,7 @@ function measurableJointName(node) {
   const head = u.args[0];
   let text = "";
   if (cls(head) === "LeanToken") text = head.text || "";
-  else if (cls(head) === "LeanGetElem" && cls(head.args?.[0]) === "LeanToken") text = head.args[0].text || "";
+  else if (cls(head) === "LeanGet" && cls(head.args?.[0]) === "LeanToken") text = head.args[0].text || "";
   if (!/^(AE)?(Strongly)?Measurable$/.test(text)) return "";
   if (!isMeasurableJointArg(u.args[u.args.length - 1])) return "";
   return nameToken(text) + "Joint";
@@ -6246,7 +6242,7 @@ function isSingleVarSide(node) {
   if (!u || isCdotSection(u) || commaParts(u) || jrsParts(u)) return false;
   const ident = (t) => typeof t === "string" && t !== "·" && !/^-?\d+$/.test(t) && (/^[A-Za-z_]/.test(t) || /^[^\x00-\x7F]/.test(t));
   if (cls(u) === "LeanToken") return ident(u.text);
-  if (cls(u) === "LeanGetElem") return isSingleVarSide(u.args?.[0]);
+  if (cls(u) === "LeanGet") return isSingleVarSide(u.args?.[0]);
   if (cls(u) === "LeanArgsSpaceSeparated" && cls(u.args?.[0]) === "LeanToken") return ident(u.args[0].text);
   return false;
 }
@@ -6270,7 +6266,7 @@ function indepJointAlt(node) {
   const u = strip(node);
   let perp = null, cond = null, base = "";
   if (cls(u) === "Lean_perp") { perp = u; base = u.pathToken; }
-  else if (cls(u) === "LeanBitOr" && cls(strip(u.args?.[0])) === "Lean_perp") {
+  else if (cls(u) === "LeanCond" && cls(strip(u.args?.[0])) === "Lean_perp") {
     perp = strip(u.args[0]); cond = u.args?.[1]; base = "CondIndep";
   } else return "";
   const left = isJointRvTuple(perp.args?.[0]);
@@ -6286,15 +6282,15 @@ function indepJointAlt(node) {
 function probEventName(event, tuples) {
   const joint = (n) => eventHasAnd(n) || (tuples && isJointRvTuple(n));
   const e = unwrapParen(event);
-  if (cls(e) === "LeanBitOr") {
+  if (cls(e) === "LeanCond") {
     const left = unwrapParen(e.args?.[0]);
     const right = unwrapParen(e.args?.[1]);
     const leftAnd = joint(left);
     const rightAnd = joint(right);
-    if (leftAnd && !rightAnd) return PROB_COND + "Joint";
-    if (rightAnd && !leftAnd) return PROB_COND + "_Joint";
-    if (leftAnd && rightAnd) return PROB_COND + "Joint_Joint";
-    return PROB_COND;
+    if (leftAnd && !rightAnd) return "ProbCondJoint";
+    if (rightAnd && !leftAnd) return "ProbCond_Joint";
+    if (leftAnd && rightAnd) return "ProbCondJoint_Joint";
+    return "ProbCond";
   }
   if (joint(e)) return "ProbS";
   return "Prob";
@@ -6302,8 +6298,8 @@ function probEventName(event, tuples) {
 
 function divProbEventName(ln, rn) {
   if (!ln.startsWith("Prob") || !rn.startsWith("Prob")) return "";
-  const joint = (n) => n === "ProbS" || new RegExp("^" + PROB_COND + "_?Joint(_Joint)?$").test(n);
-  const cond = (n) => n === PROB_COND || new RegExp("^" + PROB_COND + "_?Joint$").test(n);
+  const joint = (n) => n === "ProbS" || new RegExp("^ProbCond_?Joint(_Joint)?$").test(n);
+  const cond = (n) => n === "ProbCond" || new RegExp("^ProbCond_?Joint$").test(n);
   if ((joint(ln) && cond(rn)) || (joint(ln) && joint(rn))) return "DivProbSCond";
   if (joint(ln) && rn === "Prob") return "DivProbS";
   return "Div" + ln + rn;
@@ -6320,7 +6316,7 @@ function matchProbApp(node) {
   const n = unwrapParen(node);
   if (cls(n) !== "LeanArgsSpaceSeparated") return null;
   const head = n.args?.[0];
-  if (cls(head) !== "LeanGetElem") return null;
+  if (cls(head) !== "LeanGet") return null;
   if (cls(head.args?.[0]) !== "LeanToken" || head.args[0].text !== "ℙ") return null;
   for (let i = 1; i < (n.args || []).length; i++) {
     const a = n.args[i];
@@ -6347,7 +6343,7 @@ function isBvarSliceJointEvent(event) {
     else conj.push(u);
   };
   flat(event);
-  const isSlice = (n) => cls(n) === "LeanGetElem" && cls(n.args?.[1]) === "LeanColon";
+  const isSlice = (n) => cls(n) === "LeanGet" && cls(n.args?.[1]) === "LeanColon";
   return conj.length >= 2 && conj.every((c) => {
     if (cls(c) !== "LeanEq" || (c.args || []).length !== 2) return false;
     const [l, r] = c.args.map(unwrapParen);
@@ -6363,7 +6359,7 @@ function isBvarPointSliceJointEvent(event) {
   };
   flat(event);
   if (conj.length < 2) return false;
-  const isSlice = (n) => cls(n) === "LeanGetElem" && cls(n.args?.[1]) === "LeanColon";
+  const isSlice = (n) => cls(n) === "LeanGet" && cls(n.args?.[1]) === "LeanColon";
   let points = 0, slices = 0;
   for (const c of conj) {
     if (cls(c) !== "LeanEq" || (c.args || []).length !== 2) return false;
@@ -6430,7 +6426,7 @@ function isHmmNegLogCondShape(implyStmts) {
   (function walk(n) {
     if (!n || typeof n !== "object" || cond) return;
     const ev = matchProbApp(n);
-    if (ev) { cond = nameProbEvent(ev) === PROB_COND; return; }
+    if (ev) { cond = nameProbEvent(ev) === "ProbCond"; return; }
     for (const a of n.args || []) walk(a);
   })(lg.args[0]);
   return cond;
@@ -6518,7 +6514,7 @@ function isBvarJointEvent(event) {
     else conj.push(u);
   };
   flat(event);
-  const isSlice = (n) => cls(n) === "LeanGetElem" && cls(n.args?.[1]) === "LeanColon";
+  const isSlice = (n) => cls(n) === "LeanGet" && cls(n.args?.[1]) === "LeanColon";
   return conj.length >= 2 && conj.every((c) => {
     if (cls(c) !== "LeanEq" || (c.args || []).length !== 2) return false;
     const [l, r] = c.args.map(unwrapParen);
@@ -6537,7 +6533,7 @@ function maxBvarOperands(node) {
   }
   if (cls(n) !== "LeanArgsSpaceSeparated") return null;
   const head = n.args?.[0];
-  if (cls(head) !== "LeanGetElem" || cls(head.args?.[0]) !== "LeanToken" || head.args[0].text !== "max") return null;
+  if (cls(head) !== "LeanGet" || cls(head.args?.[0]) !== "LeanToken" || head.args[0].text !== "max") return null;
   const bind = head.args?.[1];
   if (cls(bind) !== "LeanColon" || !isBvarQuotation(bind.args?.[0])) return null;
   return n.args.slice(1);
@@ -6656,7 +6652,7 @@ function guardRestConjunct(node) {
 function quantBinderNames(head, out = new Set()) {
   const c = cls(head);
   if (c === "LeanToken") { if (head.text && head.text !== "_") out.add(head.text); }
-  else if (c === "LeanColon" || c === "LeanBitOr" || GUARD_REL.has(c)) quantBinderNames(head.args?.[0], out);
+  else if (c === "LeanColon" || c === "LeanCond" || GUARD_REL.has(c)) quantBinderNames(head.args?.[0], out);
   else if (c === "LeanParenthesis" || c === "LeanArgsSpaceSeparated") for (const a of head.args || []) quantBinderNames(a, out);
   return out;
 }
@@ -7100,7 +7096,7 @@ if (name === "LeanToken") {
       if (headName && argNames.length === 0) {
         if (headName === "Measurable") {
           const last = unwrapParen(args[args.length - 1]);
-          if (cls(last) === "LeanGetElem" && !isGetElemColonSlice(last))
+          if (cls(last) === "LeanGet" && !isGetElemColonSlice(last))
             return "MeasurableGet";
         }
         return headName;
@@ -7198,7 +7194,7 @@ if (name === "LeanToken") {
     const body = expectCondBody(node.scope);
     if (body) {
       const x = nameExpr(body, opts);
-      return x ? EXPECT_COND + x : EXPECT_COND;
+      return x ? "ExpectCond" + x : "ExpectCond";
     }
     const b = nameExpr(node.scope, opts);
     if (!b) return node.pathToken + "__";
@@ -7225,7 +7221,7 @@ if (name === "LeanToken") {
       return limitsBigOpFuseName(tok, b);
     }
   }
-  if (name === "LeanGetElem") {
+  if (name === "LeanGet") {
     if (cls(node.args?.[0]) === "LeanToken" && node.args[0].text === "ℙ") return "Prob";
     if (cls(node.args?.[0]) === "LeanToken" && node.args[0].text === "∇") return "Grad";
     if (cls(node.args?.[0]) === "LeanToken" && (node.args[0].text === "Var" || node.args[0].text === "variance")) {
@@ -7244,7 +7240,7 @@ if (name === "LeanToken") {
       return head || "Get";
     }
   }
-  if (name === "LeanBitOr") {
+  if (name === "LeanCond") {
     return "";
   }
   if (Array.isArray(node.args)) {
@@ -7932,7 +7928,7 @@ if (name === "Lean_partial") {
     }
     return [];
   }
-  if (name === "LeanGetElem") {
+  if (name === "LeanGet") {
     if (cls(node.args?.[0]) === "LeanToken" && node.args[0].text === "ℙ") return ["Prob"];
     if (cls(node.args?.[0]) === "LeanToken" && node.args[0].text === "∇") return ["Grad"];
     if (isGetElemColonSlice(node)) return ["GetSlice"];
@@ -7947,7 +7943,7 @@ if (name === "Lean_partial") {
       return headAlts.length ? headAlts : ["Get"];
     }
   }
-  if (name === "LeanBitOr") return [];
+  if (name === "LeanCond") return [];
 
   if (Array.isArray(node.args)) {
     const childAlts = node.args.map(a => nameExprAlts(a, opts)).filter(a => a.length);
@@ -7967,8 +7963,8 @@ function classChain(node, out = []) {
     for (const a of node.args || []) classChain(a, out);
     return out;
   }
-  if (name === "LeanBitOr" && condIndepBits(node)) {
-    out.push("LeanBitOr");
+  if (name === "LeanCond" && condIndepBits(node)) {
+    out.push("LeanCond");
     for (const a of node.args || []) classChain(a, out);
     return out;
   }

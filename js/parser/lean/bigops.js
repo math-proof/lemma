@@ -13,7 +13,7 @@
 import { strStmt } from './utility.js';
 import { pathUniqKeepEmpty, pathStripTrailingHoles } from './pathChoices.js';
 import { LeanArgs } from './abstract.js';
-import { Lean } from './base.js';
+import { Lean, jsonHead } from './base.js';
 
 const L = Lean.classes;
 
@@ -272,9 +272,25 @@ export class LeanBigOperator extends LeanArgs {
         return super.latexArgs(syntax);
     }
 
+    /** JSON head name; quantifiers override it with their path token (`All`, `Any`). */
+    get jsonHeadName() {
+        return jsonHead(this.func);
+    }
+
+    /**
+     * `[bound, scope]`, except a typed or boolean-binary binder (`∀ k : ℕ, P`,
+     * `∑ x ∈ X, f`) keeps only its right side: `[ℕ, P]` / `[X, f]`.
+     * Logic binders (`∧`/`∨`) keep the whole bound.
+     */
     toJSON() {
+        const bound = this.bound;
+        const first = bound instanceof L.LeanColon ||
+            (bound instanceof L.LeanBinaryBoolean && !(bound instanceof L.LeanLogic))
+            ? bound.rhs
+            : bound;
+        const args = [first, this.scope].filter(Boolean).map((a) => a.toJSON());
         return {
-            [this.func]: super.toJSON(),
+            [this.jsonHeadName]: args,
         };
     }
 
@@ -455,7 +471,7 @@ export class Lean_sum extends LeanBigOperator {
             keyApp = strStmt(bnd).trim(); // `«\sf{y}» t`
             keyGet = `${strStmt(bnd.args[0]).trim()}[${strStmt(bnd.args[1]).trim()}]`; // `«\sf{y}»[t]`
         } else if (
-            bnd instanceof L.LeanGetElem &&
+            bnd instanceof L.LeanGet &&
             bnd.args[0] instanceof L.LeanDoubleAngleQuotation
         ) {
             quote = bnd.args[0];
@@ -475,7 +491,7 @@ export class Lean_sum extends LeanBigOperator {
                             let l = n.lhs;
                             while (l instanceof L.LeanParenthesis) l = l.arg;
                             if (l instanceof L.LeanArgsSpaceSeparated) l = l.args[0];
-                            if (l instanceof L.LeanGetElem) l = l.args[0];
+                            if (l instanceof L.LeanGet) l = l.args[0];
                             if (l instanceof L.LeanToken && l.text === base.text) l.kwargs.neverRed = true;
                         }
                     }
@@ -1191,7 +1207,7 @@ export class LeanRandomBigOp extends LeanBigOperator {
         if (ix instanceof L.LeanColon) {
             let ty = ix.rhs;
             if (ty instanceof L.LeanParenthesis) ty = ty.arg;
-            if (ty instanceof L.LeanBitOr) {
+            if (ty instanceof L.LeanCond) {
                 return `{${ix.lhs.toLatex(syntax)}} : {${ty.lhs.toLatex(syntax)}}`;
             }
         }
@@ -1220,7 +1236,7 @@ export class LeanRandomBigOp extends LeanBigOperator {
         const i = p.args.indexOf(bodyDelim);
         if (i <= 0) return null;
         const head = p.args[i - 1];
-        if (!(head instanceof L.LeanGetElem)) return null;
+        if (!(head instanceof L.LeanGet)) return null;
         const base = head.lhs ?? head.args?.[0];
         if (!(base instanceof L.LeanToken)) return null;
         let Ctor = null;
@@ -1344,7 +1360,7 @@ export class LeanLimitsBigOp extends LeanBigOperator {
     }
 
     static isLimitsGetElem(head) {
-        if (!(head instanceof L.LeanGetElem)) return null;
+        if (!(head instanceof L.LeanGet)) return null;
         const base = head.lhs ?? head.args?.[0];
         if (!(base instanceof L.LeanToken)) return null;
         const Ctor = LeanLimitsBigOp.limitsCtorFor(base.text);
@@ -1399,7 +1415,7 @@ export class LeanLimitsBigOp extends LeanBigOperator {
     }
 
     binderLatex(syntax) {
-        return L.LeanGetElem.expectBinderIndexLatex(this.bound, syntax);
+        return L.LeanGet.expectBinderIndexLatex(this.bound, syntax);
     }
 
     latexArgs(syntax) {

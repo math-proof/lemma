@@ -6,7 +6,7 @@
  * call time, so the import graph follows the inheritance tree.
  */
 import { LeanUnary } from './abstract.js';
-import { Lean } from './base.js';
+import { Lean, jsonHead } from './base.js';
 
 const L = Lean.classes;
 
@@ -26,7 +26,7 @@ export class Lean_fun extends LeanUnary {
         return parent instanceof L.LeanArgsNewLineSeparated || parent instanceof L.LeanStatements;
     }
     toJSON() {
-        return { [this.operator]: this.arg.toJSON() };
+        return { [jsonHead(this.operator)]: this.arg.toJSON() };
     }
 
     /** `fun k => f k i` is one ternary `Ext`, not a nested `Fun`. */

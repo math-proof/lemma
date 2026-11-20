@@ -16,7 +16,7 @@ import {
 } from './utility.js';
 import { LeanArgs, LeanBinary } from './abstract.js';
 import { Lean } from './base.js';
-import { pathStripTrailingHoles, pathUniqKeepEmpty, wrapHoleOpt, HOLE_RE_TRIG_FN, holeRegexDefaultNameToken, holeRegexCombineBinom } from './pathChoices.js';
+import { wrapHoleOpt, HOLE_RE_TRIG_FN, holeRegexDefaultNameToken, holeRegexCombineBinom } from './pathChoices.js';
 
 const L = Lean.classes;
 
@@ -32,6 +32,30 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
     construct_prefix_tree() {
         const tokens = this.tokens_space_separated();
         return leanEvalPrefix(tokens, (arg) => arg.operand_count());
+    }
+
+    /**
+     * `obj.attribute a b` → `{Attribute: [obj?, a, b]}` (a capitalised object is a
+     * namespace and is dropped); `F a b` → `{F: [a, b]}` for a capitalised token
+     * head. Lowercase heads (`f x`) and all other heads are anonymous: `"_"`.
+     */
+    toJSON() {
+        const head = this.args[0];
+        const rest = () => this.args.slice(1).map((arg) => arg.toJSON());
+        if (head instanceof L.LeanProperty) {
+            const name = head.jsonHeadName;
+            if (name) {
+                const obj = head.jsonAppObjectArg;
+                return { [name]: obj !== null ? [obj, ...rest()] : rest() };
+            }
+            return "_";
+        }
+        if (head instanceof L.LeanToken) {
+            const raw = head.text || "";
+            if (raw && !/^[\p{Ll}_]/u.test(raw))
+                return { [raw.charAt(0).toUpperCase() + raw.slice(1)]: rest() };
+        }
+        return "_";
     }
 
     /** `(M).updateCol i v`. A hole index or column is `_`, not a second `__`. */
@@ -63,11 +87,11 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             return 17;
         if (
             this.parent instanceof LeanArgsCommaSeparated &&
-            this.parent.parent instanceof L.LeanGetElem
+            this.parent.parent instanceof L.LeanGet
         )
             return 18;
         if (
-            this.parent instanceof L.LeanGetElem ||
+            this.parent instanceof L.LeanGet ||
             this.parent instanceof L.LeanGetElemQue ||
             this.parent instanceof L.LeanGetElemQuote
         )
@@ -262,7 +286,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         if (!(func instanceof L.LeanToken) || func.text !== 'Subst') return null;
         if (!(paren instanceof L.LeanParenthesis)) return null;
         const inner = paren.arg;
-        if (!(inner instanceof L.LeanBitOr)) return null;
+        if (!(inner instanceof L.LeanCond)) return null;
         const bindings = [];
         const split = (n) => {
             if (n instanceof L.LeanEq && n.lhs instanceof L.LeanToken) return {name: n.lhs, value: n.rhs};
@@ -566,7 +590,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
     static isProbBinderHead(node) {
         if (node instanceof L.Lean_Prob) return true;
         return (
-            node instanceof L.LeanGetElem &&
+            node instanceof L.LeanGet &&
             node.args[0] instanceof L.LeanToken &&
             node.args[0].text === 'ℙ'
         );
@@ -609,7 +633,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                 markRV(peel(n.lhs));
                 return;
             }
-            if (n instanceof L.LeanBitOr) {
+            if (n instanceof L.LeanCond) {
                 markFactor(n.lhs);
                 // `s = «\sf{s}»` elides to `s`, and that conditioner is the random
                 // variable (red), not a random argument.
@@ -630,7 +654,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             const isRATerm = (x) => {
                 x = peel(x);
                 if (x instanceof L.LeanToken) return true;
-                if (x instanceof L.LeanGetElem) return isRATerm(x.args[0]);
+                if (x instanceof L.LeanGet) return isRATerm(x.args[0]);
                 if (x instanceof LeanArgsSpaceSeparated && x.args[0] instanceof L.LeanToken)
                     return true;
                 if (x instanceof LeanArgsCommaSeparated)
@@ -669,7 +693,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         if (
             !(
                 lhs instanceof L.LeanToken ||
-                (lhs instanceof L.LeanGetElem && lhs.args[0] instanceof L.LeanToken) ||
+                (lhs instanceof L.LeanGet && lhs.args[0] instanceof L.LeanToken) ||
                 (lhs instanceof LeanArgsSpaceSeparated && lhs.args[0] instanceof L.LeanToken)
             )
         )
@@ -718,7 +742,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
     static isExpectBinderHead(node) {
         if (node instanceof L.Lean_Expect) return true;
         return (
-            node instanceof L.LeanGetElem &&
+            node instanceof L.LeanGet &&
             node.args[0] instanceof L.LeanToken &&
             node.args[0].text === '𝔼'
         );
@@ -743,10 +767,10 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         if (ix instanceof L.LeanColon) {
             addTok(ix.lhs, bound);
             let ty = peel(ix.rhs);
-            if (ty instanceof L.LeanBitOr) {
+            if (ty instanceof L.LeanCond) {
                 addTok(ty.rhs, free);
             }
-        } else if (ix instanceof L.LeanBitOr) {
+        } else if (ix instanceof L.LeanCond) {
             // rare: bare `x | y` without colon
             addTok(ix.lhs, bound);
             addTok(ix.rhs, free);
@@ -791,7 +815,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         const peelTop = (x) => (x instanceof L.LeanParenthesis ? x.arg : x);
         // `(body | t₁, t₂, …)` parses as `[(body | t₁), t₂, …]` (`,` binds looser than `|`).
         const top = peelTop(body);
-        if (top instanceof LeanArgsCommaSeparated && top.args[0] instanceof L.LeanBitOr) {
+        if (top instanceof LeanArgsCommaSeparated && top.args[0] instanceof L.LeanCond) {
             const terms = [top.args[0].rhs, ...top.args.slice(1)];
             if (!terms.some((t) => LeanArgsSpaceSeparated.containsEq(t))) {
                 LeanArgsSpaceSeparated.markExpectBodyColors(top.args[0].lhs, bound, free);
@@ -807,7 +831,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                 return;
             }
             // Body `(expr | y)`: the RHS of BitOr is the condition (observations or conditioner terms).
-            if (n instanceof L.LeanBitOr) {
+            if (n instanceof L.LeanCond) {
                 walk(n.lhs);
                 const peel = (x) => (x instanceof L.LeanParenthesis ? x.arg : x);
                 let rhs = peel(n.rhs);
@@ -816,7 +840,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                     for (const t of condRVs) {
                         // `s`, a slice `s[:t + 1]`, or an indexed variable `s t`: colour the sequence name
                         const head = t instanceof L.LeanToken ? t
-                            : (t instanceof L.LeanGetElem || t instanceof LeanArgsSpaceSeparated) ? t.args[0] : null;
+                            : (t instanceof L.LeanGet || t instanceof LeanArgsSpaceSeparated) ? t.args[0] : null;
                         if (head instanceof L.LeanToken) head.kwargs.isRandomVariable = true;
                     }
                     return;
@@ -866,7 +890,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         const peel = (n) => (n instanceof L.LeanParenthesis ? n.arg : n);
         while (body instanceof L.LeanProperty) body = body.args[0]; // `𝔼[…](…).toReal`
         const b = peel(body);
-        if (b instanceof L.LeanBitOr) {
+        if (b instanceof L.LeanCond) {
             const addTok = (n) => {
                 n = peel(n);
                 if (n instanceof L.LeanToken) free.add(n.text);
@@ -1700,7 +1724,7 @@ export class LeanArgsCommaSeparated extends LeanArgs {
 
     /**
      * Under LeanBar: LeanColon input priority; else one less so `:` binds in the right place.
-     * GetElem index uses parent `LeanGetElem*` stack_priority, not this.
+     * GetElem index uses parent `LeanGet*` stack_priority, not this.
      */
     get stack_priority() {
         if (this.parent instanceof L.LeanBar) return L.LeanColon.input_priority;

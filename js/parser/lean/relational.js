@@ -296,7 +296,7 @@ export class LeanEq extends LeanRelational {
 /**
  * `x ⟂ᵢ[π] y` / `x ⟂ᵢ[π] (y, z)` — independence (`\perp` from the class name).
  * Optional unicode `subscript` (e.g. `ᵢ`) and bracketed `modifier` measure (echo only).
- * Conditional form `x ⟂ᵢ[π] y | z` is `(x ⟂ᵢ[π] y) | z` via `LeanBitOr` (priority 33).
+ * Conditional form `x ⟂ᵢ[π] y | z` is `(x ⟂ᵢ[π] y) | z` via `LeanCond` (priority 33).
  */
 export class Lean_perp extends LeanRelational {
     static { this.register(); }

@@ -97,7 +97,7 @@ export { Lean_in, Lean_notin, Lean_leftrightarrow } from './lean/membership.js';
 export { Lean_lazy } from './lean/lazy.js';
 export { LeanMethodChaining } from './lean/pipeline.js';
 export {
-    LeanGetElem,
+    LeanGet,
     LeanGetWhiteSquareBracket,
     LeanGetElemQue,
     LeanGetElemQuote,
@@ -167,7 +167,7 @@ export {
     LeanBitAnd,
     LeanBitwiseAnd,
     LeanBitwiseXor,
-    LeanBitOr,
+    LeanCond,
     LeanBitwiseOr,
     LeanPow,
     Lean_lll,
