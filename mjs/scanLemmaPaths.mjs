@@ -20,7 +20,7 @@
 import fs from 'fs';
 import path from 'path';
 import { REPO_ROOT } from './lean/modulePath.mjs';
-import { suggest } from './lemmaPath.mjs';
+import { checkExpressionPath } from './lemmaPath.mjs';
 
 const LEMMA_ROOT = path.join(REPO_ROOT, 'Lemma');
 
@@ -77,17 +77,16 @@ function relLemma(abs) {
   return `Lemma/${path.relative(LEMMA_ROOT, abs).replace(/\\/g, '/')}`;
 }
 
-/** lean.js AST check (offline, ~0.4 ms/file). */
+/** Check the existing file name against the Lean statement. */
 function checkOffline(abs) {
-  const r = suggest(abs);
-  const c = r.consistent || {};
+  const r = checkExpressionPath(abs, abs);
   return {
     file: relLemma(abs),
     method: 'lean.js',
-    current: `Lemma/${r.currentPath}`,
-    want: r.suggestions && r.suggestions[0] ? `Lemma/${r.suggestions[0]}` : "",
-    ok: !!c.ok,
-    reason: c.reason || '',
+    current: relLemma(abs),
+    want: `Lemma/${r.path.replaceAll('.', '/')}.lean`,
+    ok: r.ok,
+    reason: r.rows.filter(row => !row.ok).map(row => row.part).join(', '),
   };
 }
 
@@ -188,7 +187,7 @@ async function main() {
       `${results.length - bad.length - unreadable.length} consistent, ` +
       `${bad.length} inconsistent, ${unreadable.length} unreadable`,
   );
-  console.log('inspect one file: node mjs/lemmaPath.mjs [--json] <file>');
+  console.log('inspect one file: node mjs/lemmaPath.mjs --table <file>');
 
   if (bad.length || unreadable.length) process.exitCode = 1;
 }

@@ -1,8 +1,7 @@
 /**
  * Imply/given consistency markdown table for a Lemma path.
  *
- * Uses lemmaPath.suggest() for hole-regex + suggested token[], and the path
- * itself for the imply / first-of stems. When the candidate path is missing on
+ * Uses the same checker as lemmaPath.mjs --check. When the candidate is missing on
  * disk, loads the Lean statement from --from / options.from, or from a
  * same-section live leaf that shares the `/of/…` tail.
  *
@@ -13,14 +12,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath, pathToFileURL } from "url";
-import {
-  suggest,
-  matchImplyHoleRegex,
-  implyStemFromRelPath,
-  ofStemsFromRelPath,
-  holeRegexTrailingPad,
-  holeRegexLanguageTokens,
-} from "./lemmaPath.mjs";
+import { checkExpressionPath } from "./lemmaPath.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(__dirname, "..");
@@ -29,13 +21,13 @@ const LEMMA_ROOT = path.join(REPO, "Lemma");
 /** Normalize a Lemma path to `Section/.../.lean` (no `Lemma/` prefix). */
 function normalizeLemmaRel(lemmaPath) {
   let s = String(lemmaPath || "").replace(/\\/g, "/");
-  if (s.startsWith("Lemma/")) s = s.slice("Lemma/".length);
-  if (!s.endsWith(".lean")) s += ".lean";
-  return s;
+  if (path.isAbsolute(s)) s = path.relative(LEMMA_ROOT, s);
+  s = s.replace(/^Lemma[./]/, "").replace(/\.lean$/, "");
+  return (s.includes("/") ? s : s.replaceAll(".", "/")) + ".lean";
 }
 
 /**
- * Resolve the on-disk Lean file whose *statement* feeds suggest() for a table.
+ * Resolve the on-disk Lean file whose statement feeds the checker.
  * Tokens always come from `lemmaPath`; the statement may come from elsewhere when
  * the candidate path is not on disk yet (rename / CoeGet-style proposals).
  *
@@ -53,8 +45,10 @@ export function resolveStatementFile(lemmaPath, options = {}) {
   const rel = normalizeLemmaRel(lemmaPath);
   const abs = path.join(LEMMA_ROOT, rel);
   if (fs.existsSync(abs)) return abs;
-  const ofSegs = ofStemsFromRelPath(rel);
-  const section = rel.split("/").filter(Boolean)[0];
+  const segments = rel.replace(/\.lean$/, "").split("/");
+  const of = segments.indexOf("of");
+  const ofSegs = of < 0 ? [] : segments.slice(of + 1);
+  const section = segments[0];
   if (!section || !ofSegs.length) {
     throw new Error("lemma path missing on disk and no /of/ tail to locate a statement: Lemma/" + rel);
   }
@@ -87,269 +81,10 @@ export function resolveStatementFile(lemmaPath, options = {}) {
   return found[0];
 }
 
-/**
- * Markdown table: path imply/given stems vs hole-regex + suggested token[].
- * Columns: token | regex | consistent | suggested.
- *
- * A normal path is header + one imply row + one row per `of/` stem.
- * A house `/eq/` or `/ae/` path is header + LHS imply + RHS imply + one row
- * per `of/` stem.
- * A conjunction path (imply tokens joined by `/`, not `/eq/` or `/ae/`) is
- * header + one row per imply token + one row per `of/` stem — e.g. two
- * identical tokens plus one of-stem is three data rows.
- * `Add_Expect_Cond/eq/Expect_CondAdd` is two imply tokens, not one combined stem.
- * `All_EqProb_Cond/All_EqProb_Cond` is likewise two imply tokens (they may be identical).
- * The slash-form regex `(LHS)/eq/(RHS)` is split the same way: the LHS token is
- * matched against the LHS alternative and the RHS token against the RHS alternative.
- * A conjunction regex `A/B` (or `(A)/(B)`) is split the same way on `/`.
- * The regex column prints the stored form `(Fill)`. Matching still expands `(_|Fill)`.
- *
- * - token: imply side / each `of/` stem from `lemmaPath` (after Lemma/<Section>/)
- * - regex: hole-regex alternative that admits that token (consistent and suggested),
- *   otherwise the first alternative (for a house side, that side of the `/eq/` regex;
- *   for a conjunction, that side of the `/` regex)
- * - consistent: yes/no — matchImplyHoleRegex(regex, token)
- * - suggested: yes/no — token is among that alternative's token[]
- *
- * Imply may publish two optional regexes (expanded `Append(T(GetSlice__))(T(GetSlice__))`
- * and compact `AppendTSGetSlice__` / `AppendGetSliceS__`). The row shows the one that admits the path token.
- *
- * @param {string} lemmaPath
- * @param {{ from?: string, lemma?: string }} [options]
- * @returns {string}
- */
-function altList(entryOrList) {
-  if (!entryOrList) return [];
-  if (Array.isArray(entryOrList)) return entryOrList.filter((e) => e && typeof e === "object");
-  return [entryOrList];
-}
-
-/**
- * Pick the hole-regex alternative that admits `tok`.
- * Prefer consistent and suggested, then consistent, then the first alternative.
- * @param {object|object[]|null|undefined} entryOrList
- * @param {string} tok
- * @returns {{ regex: string, pad: number, consistent: boolean, suggested: boolean }}
- */
-function pickMatchingAlt(entryOrList, tok, fallback) {
-  const list = altList(entryOrList);
-  const scored = list.map((e) => {
-    const regex = String(e.regex || "_");
-    const pad = e.pad;
-    const consistent = !!(tok && matchImplyHoleRegex({ regex, pad }, tok));
-    const toks = Array.isArray(e.token) ? e.token.map(String) : [String(e.token ?? "")];
-    const suggested = !!(tok && toks.includes(String(tok)));
-    return { regex, pad, consistent, suggested };
-  });
-  const hit =
-    scored.find((s) => s.consistent && s.suggested) ||
-    scored.find((s) => s.consistent) ||
-    scored[0];
-  if (hit) return hit;
-  const regex = String(fallback?.regex || "_");
-  return {
-    regex,
-    pad: fallback?.pad ?? 0,
-    consistent: !!(tok && matchImplyHoleRegex({ regex, pad: fallback?.pad }, tok)),
-    suggested: false,
-  };
-}
-
-function topLevelDelimIndex(s, needle) {
-  const t = String(s || "");
-  let depth = 0;
-  for (let i = 0; i <= t.length - needle.length; i++) {
-    const ch = t[i];
-    if (ch === "(") depth++;
-    else if (ch === ")") depth = Math.max(0, depth - 1);
-    else if (depth === 0 && t.startsWith(needle, i)) return i;
-  }
-  return -1;
-}
-
-/** `Add_Expect_Cond/eq/Expect_CondAdd` or `Prob_Cond/ae/Prod_…` → both sides; no house delim → null. */
-function houseStemSides(stem) {
-  const s = String(stem || "");
-  for (const delim of ["/ae/", "/eq/"]) {
-    const i = topLevelDelimIndex(s, delim);
-    if (i < 0) continue;
-    const lhs = s.slice(0, i);
-    const rhs = s.slice(i + delim.length);
-    if (!lhs || !rhs || topLevelDelimIndex(rhs, delim) >= 0) continue;
-    return { lhs, rhs, delim };
-  }
-  return null;
-}
-
-/** `(LHS)/eq/(RHS)` or `(LHS)/ae/(RHS)` → both alternatives. */
-function houseRegexSides(regex) {
-  const s = String(regex || "");
-  for (const delim of ["/ae/", "/eq/"]) {
-    const i = topLevelDelimIndex(s, delim);
-    if (i < 0) continue;
-    const lhs = s.slice(0, i);
-    const rhs = s.slice(i + delim.length);
-    if (!lhs || !rhs) continue;
-    return { lhs, rhs, delim };
-  }
-  return null;
-}
-
-/**
- * Match one house side against its half of a `/eq/` regex.
- * The side's own trailing-`_` pad is used (the whole-regex pad only sees the RHS).
- * @param {string} sideRe
- * @param {string} tok
- */
-function scoreHouseSide(sideRe, tok) {
-  const regex = String(sideRe || "_");
-  const tokens = holeRegexLanguageTokens(regex);
-  const consistent = !!(tok && matchImplyHoleRegex(regex, tok));
-  const suggested = !!(tok && tokens.includes(String(tok)));
-  return { regex, consistent, suggested };
-}
-
-/**
- * House regex whose two sides best admit `lhs` / `rhs`.
- * @param {object[]|undefined} imply
- * @param {string} lhs
- * @param {string} rhs
- */
-function pickHouseRegex(imply, lhs, rhs) {
-  let best = null;
-  let bestScore = -1;
-  for (const e of altList(imply)) {
-    const sides = houseRegexSides(e.regex);
-    if (!sides) continue;
-    const L = scoreHouseSide(sides.lhs, lhs);
-    const R = scoreHouseSide(sides.rhs, rhs);
-    const score = (L.consistent ? 2 : 0) + (R.consistent ? 2 : 0) + (L.suggested ? 1 : 0) + (R.suggested ? 1 : 0);
-    if (score > bestScore) {
-      bestScore = score;
-      best = { L, R };
-    }
-  }
-  return best;
-}
-
-/**
- * Split `s` on `sep` only when not inside parentheses.
- * @param {string} s
- * @param {string} sep
- * @returns {string[]}
- */
-function splitTopLevel(s, sep) {
-  const out = [];
-  let depth = 0;
-  let start = 0;
-  for (let i = 0; i < s.length; i++) {
-    const ch = s[i];
-    if (ch === "(") depth++;
-    else if (ch === ")") depth = Math.max(0, depth - 1);
-    else if (depth === 0 && s.startsWith(sep, i)) {
-      out.push(s.slice(start, i));
-      i += sep.length - 1;
-      start = i + 1;
-    }
-  }
-  out.push(s.slice(start));
-  return out;
-}
-
-/** `All_EqProb_Cond/All_EqProb_Cond` → tokens; no `/`, or a `/eq/` house, → null. */
-function conjStemSides(stem) {
-  const s = String(stem || "");
-  if (!s || s.includes("/eq/") || s.includes("/ae/")) return null;
-  const sides = splitTopLevel(s, "/").filter(Boolean);
-  if (sides.length < 2) return null;
-  return sides;
-}
-
-/** `AeAll_EqProbCond_Prob/AeAll_EqProbCond_Prob` or `(LHS)/(RHS)` → sides. */
-function conjRegexSides(regex) {
-  const s = String(regex || "");
-  if (!s || s.includes("/eq/") || s.includes("/ae/")) return null;
-  const sides = splitTopLevel(s, "/");
-  if (sides.length < 2 || sides.some((x) => !x)) return null;
-  return sides;
-}
-
-/**
- * Conjunction regex whose sides best admit `sides`.
- * @param {object[]|undefined} imply
- * @param {string[]} sides
- */
-function pickConjRegex(imply, sides) {
-  let best = null;
-  let bestScore = -1;
-  for (const e of altList(imply)) {
-    const rsides = conjRegexSides(e.regex);
-    if (!rsides || rsides.length !== sides.length) continue;
-    const scored = rsides.map((re, i) => scoreHouseSide(re, sides[i]));
-    const score = scored.reduce((n, x) => n + (x.consistent ? 2 : 0) + (x.suggested ? 1 : 0), 0);
-    if (score > bestScore) {
-      bestScore = score;
-      best = scored;
-    }
-  }
-  return best;
-}
-
-/** Printed hole regex is stored `(Fill)`. `(_|Fill)` is match-time only. */
-function storedRegexDisplay(regex) {
-  return String(regex || "_").replace(/\(_\|/g, "(").replace(/\(_\)/g, "_");
-}
-
-function row(tok, pick) {
-  const yn = (b) => (b ? "yes" : "no");
-  return "| " + tok + " | " + storedRegexDisplay(pick.regex) + " | " + yn(pick.consistent) + " | " + yn(pick.suggested) + " |";
-}
-
+/** Print the expression-path match table for a candidate. */
 export function implyGivenConsistencyTable(lemmaPath, options = {}) {
-  const rel = normalizeLemmaRel(lemmaPath);
-  const statementAbs = resolveStatementFile(rel, options);
-  const r = suggest(statementAbs, options.lemma, options);
-  const implyTok = implyStemFromRelPath(rel);
-  const givenToks = ofStemsFromRelPath(rel);
-  const house = houseStemSides(implyTok);
-  const conj = !house && conjStemSides(implyTok);
-  const lines = ["| token | regex | consistent | suggested |"];
-  if (house) {
-    const picked = pickHouseRegex(r.imply, house.lhs, house.rhs);
-    const L = picked?.L || { regex: "_", consistent: false, suggested: false };
-    const R = picked?.R || { regex: "_", consistent: false, suggested: false };
-    lines.push(row(house.lhs, L));
-    lines.push(row(house.rhs, R));
-  } else if (conj) {
-    const picked = pickConjRegex(r.imply, conj);
-    if (picked) {
-      // Split on `/` only when imply published a conjunction regex.
-      // A slash-style stem like Eq/WithDensity_Pdf is one token, not two.
-      for (let i = 0; i < conj.length; i++) {
-        const side = picked[i] || { regex: "_", consistent: false, suggested: false };
-        lines.push(row(conj[i], side));
-      }
-    } else {
-      const implyPick = pickMatchingAlt(r.imply, implyTok, {
-        regex: r.implyHoleRegex || "_",
-        pad: holeRegexTrailingPad(r.implyHoleRegex || "_"),
-      });
-      lines.push(row(implyTok, implyPick));
-    }
-  } else {
-    const implyPick = pickMatchingAlt(r.imply, implyTok, {
-      regex: r.implyHoleRegex || "_",
-      pad: holeRegexTrailingPad(r.implyHoleRegex || "_"),
-    });
-    lines.push(row(implyTok, implyPick));
-  }
-  for (let i = 0; i < givenToks.length; i++) {
-    const givenTok = givenToks[i];
-    const givenEntry = Array.isArray(r.givens) ? r.givens[i] : null;
-    const givenPick = pickMatchingAlt(givenEntry, givenTok, { regex: "_", pad: 0 });
-    lines.push(row(givenTok, givenPick));
-  }
-  return lines.join("\n");
+  const statement = resolveStatementFile(lemmaPath, options);
+  return checkExpressionPath(statement, lemmaPath, options.lemma, options).table;
 }
 
 function cli() {
@@ -365,7 +100,10 @@ function cli() {
     process.exit(1);
   }
   try {
-    console.log(implyGivenConsistencyTable(file, { from: fromPath || undefined, lemma: lemmaName || undefined }));
+    const statement = resolveStatementFile(file, { from: fromPath });
+    const report = checkExpressionPath(statement, file, lemmaName);
+    console.log(report.table);
+    if (!report.ok) process.exitCode = 1;
   } catch (e) {
     console.error(e.message || e);
     process.exit(1);

@@ -135,7 +135,7 @@ Lemma naming is intentionally two-phase; both call ``mjs/lemmaPath.mjs``:
    skeleton source proposes a provisional ``Lemma/…`` path *before* a
    finished proof.  Used when scaffolding (falls back to :func:`key_to_path`
    on failure).
-2. **Finalize** — ``node mjs/lemmaPath.mjs --json`` re-checks an existing
+2. **Finalize** — ``node mjs/lemmaPath.mjs --json --check`` re-checks an existing
    ``Lemma/…`` path against the statement AST.  Used by ``--finalize``.
 
 Usage
@@ -297,7 +297,7 @@ def fallback_path_for(
     return key_to_path(main_name, ported_root)
 
 
-def _run_node_json(script: Path, *args: str) -> dict:
+def _run_node_json(script: Path, *args: str, allow_mismatch: bool = False) -> dict:
     """Run ``node <script> --json …`` and parse stdout as JSON."""
     cmd = ["node", str(script), "--json", *args]
     proc = subprocess.run(
@@ -308,7 +308,8 @@ def _run_node_json(script: Path, *args: str) -> dict:
         encoding="utf-8",
         errors="replace",
     )
-    if proc.returncode != 0:
+    mismatch = allow_mismatch and proc.returncode == 1 and not proc.stderr.strip()
+    if proc.returncode != 0 and not mismatch:
         err = (proc.stderr or proc.stdout or "").strip()
         raise RuntimeError(err or f"node exited {proc.returncode}")
     # lemmaPath.mjs prints ``import py.js`` before the JSON object.
@@ -316,7 +317,10 @@ def _run_node_json(script: Path, *args: str) -> dict:
     brace = out.find("{")
     if brace > 0:
         out = out[brace:]
-    return json.loads(out)
+    result = json.loads(out)
+    if mismatch and result.get("ok") is not False:
+        raise RuntimeError(f"node exited {proc.returncode}")
+    return result
 
 
 # Canonical FLT solution-file parser (lean.js AST).  For ``S_<key>.lean``
@@ -390,11 +394,16 @@ def _rough_path_sane(rel: str) -> bool:
     return True
 
 
+def _suggested_lean_path(result: dict) -> str:
+    dotted = result.get("path")
+    return dotted.replace(".", "/") + ".lean" if dotted else ""
+
+
 def rough_path_from_source(source: str, ported_root: Path) -> Path | None:
     """Phase 1: lean.js rough path from skeleton source text.
 
     Writes ``source`` to a temp ``.lean`` file, runs
-    ``mjs/lemmaPath.mjs --json``, and maps ``suggestions[0]`` under
+    ``mjs/lemmaPath.mjs --json``, and maps the suggested path under
     ``ported_root``.  Returns ``None`` on any failure (caller falls back to
     :func:`key_to_path`).
     """
@@ -411,10 +420,8 @@ def rough_path_from_source(source: str, ported_root: Path) -> Path | None:
             fh.write(source)
             tmp = Path(fh.name)
         data = _run_node_json(SUGGEST_LEMMAPATH, str(tmp))
-        rel = str((data.get("suggestions") or [""])[0] or "").replace(chr(92), "/").lstrip("/")
-        if rel.startswith("Lemma/"):
-            rel = rel[len("Lemma/") :]
-        if not rel.endswith(".lean"):
+        rel = _suggested_lean_path(data)
+        if not rel:
             return None
         if not _rough_path_sane(rel):
             print(f"  (rough suggest rejected: {rel})", file=sys.stderr)
@@ -431,28 +438,11 @@ def rough_path_from_source(source: str, ported_root: Path) -> Path | None:
                 pass
 
 
-def precise_suggest(lean_file: Path) -> dict:
-    """Phase 2: path check via ``mjs/lemmaPath.mjs --json``."""
-    return _run_node_json(SUGGEST_LEMMAPATH, str(lean_file))
-
-
-def _consistent_ok(result: dict) -> bool:
-    c = result.get("consistent")
-    if isinstance(c, dict):
-        return bool(c.get("ok"))
-    return bool(c)
-
-
-def best_precise_target(result: dict, ported_root: Path) -> str | None:
-    """Pick rename target: current path if consistent, else the first free suggestion."""
-    if _consistent_ok(result):
-        return result.get("currentPath")
-    candidates = list(result.get("suggestions") or [])
-    for alt in candidates:
-        abs_path = ported_root / Path(alt)
-        if not abs_path.exists():
-            return alt
-    return candidates[0] if candidates else None
+def precise_suggest(lean_file: Path, candidate: str) -> dict:
+    """Check a proposed name against the Lean statement."""
+    return _run_node_json(
+        SUGGEST_LEMMAPATH, "--check", candidate, str(lean_file), allow_mismatch=True
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -1453,7 +1443,7 @@ def main() -> int:
     ap.add_argument(
         "--finalize",
         action="store_true",
-        help="Phase 2: run mjs/lemmaPath.mjs --json on existing .lean paths.",
+        help="Phase 2: check existing .lean paths with mjs/lemmaPath.mjs.",
     )
     ap.add_argument(
         "--apply-rename",
@@ -1470,6 +1460,8 @@ def main() -> int:
     ported_root = Path(args.ported_root)
 
     if args.finalize:
+        if args.source is not None:
+            args.paths.insert(0, args.source)
         return _cmd_finalize(args, ported_root)
 
     if args.source is None:
@@ -1606,6 +1598,7 @@ def _cmd_finalize(args: argparse.Namespace, ported_root: Path) -> int:
     print()
 
     rc = 0
+    root = ported_root.resolve()
     for raw in args.paths:
         lean = Path(raw)
         if not lean.is_absolute():
@@ -1616,15 +1609,17 @@ def _cmd_finalize(args: argparse.Namespace, ported_root: Path) -> int:
             rc = 1
             continue
         try:
-            result = precise_suggest(lean)
+            absolute = lean.resolve()
+            current = absolute.relative_to(root) if absolute.is_relative_to(root) else absolute
+            cur = current.as_posix()
+            result = precise_suggest(absolute, cur)
         except Exception as exc:  # noqa: BLE001
             print(f"FAIL {lean}: {exc}")
             rc = 1
             continue
 
-        cur = result.get("currentPath") or ""
-        ok = _consistent_ok(result)
-        target = best_precise_target(result, ported_root)
+        ok = bool(result["ok"])
+        target = _suggested_lean_path(result)
         status = "consistent" if ok else "inconsistent"
         print(f"{status}: Lemma/{cur}")
         if target and not ok:
@@ -1640,7 +1635,7 @@ def _cmd_finalize(args: argparse.Namespace, ported_root: Path) -> int:
             elif args.apply_rename and args.dry_run:
                 print(f"  dry-run rename -> Lemma/{target}")
         elif ok:
-            print("  (exact match among alts)")
+            print("  (matches the statement)")
     return rc
 
 

@@ -288,19 +288,24 @@ export function json2plural(node) {
     return [...new Set(pluralTrees(node).map((tree) => json2regex(tree)))];
 }
 
+/** Generate one validated path token per base or plural pattern. */
+export function json2pathPatterns(node) {
+    return [json2regex(node), ...json2plural(node)].map((regex, index) => {
+        const path = dag2suggession(index === 0 ? json2dag(node) : regex2dag(regex));
+        return { regex, token: suggestionMatches(regex, path) ? path : "" };
+    });
+}
+
 /** Return the shortest generated path token for a Lean expression. */
 export function lean2path(expression) {
     const module = compile(`private lemma main : ${expression} := by\n  sorry\n`);
     const signature = module.args[0]?.assignment?.lhs;
     if (!(signature instanceof LeanColon)) return "";
 
-    const json = signature.rhs.toJSON();
-    const base = dag2suggession(json2dag(json));
-    let shortest = suggestionMatches(json2regex(json), base) ? base : "";
-    for (const regex of json2plural(json)) {
-        const candidate = dag2suggession(regex2dag(regex));
-        if ((!shortest || candidate.length < shortest.length) && suggestionMatches(regex, candidate)) {
-            shortest = candidate;
+    let shortest = "";
+    for (const { token } of json2pathPatterns(signature.rhs.toJSON())) {
+        if (token && (!shortest || token.length < shortest.length)) {
+            shortest = token;
         }
     }
     return shortest;
