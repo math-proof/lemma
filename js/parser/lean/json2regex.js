@@ -65,28 +65,32 @@ const argsOf = (node) => {
     return Array.isArray(value) ? value : [value];
 };
 
+/** Keep matching subtrees and replace divergent positions with holes. */
+function commonShape(nodes) {
+    const first = nodes[0];
+    const key = canon(first);
+    if (nodes.every((node) => canon(node) === key)) return first;
+
+    const head = headOf(first);
+    if (!head || !nodes.every((node) => headOf(node) === head)) return "_";
+
+    const children = nodes.map(argsOf);
+    if (!children.every((args) => args.length === children[0].length)) return "_";
+    return { [head]: children[0].map((_, i) => commonShape(children.map((args) => args[i]))) };
+}
+
 /**
- * JSON trees with one S-plural collapse applied.
+ * JSON trees with one or more S-plural collapses applied.
  *
  * A node whose arguments all share one head collapses into a single head that
  * absorbs the repeated one: `Cond[Get…, Get…]` → `CondGetS`, `Lt[Abs…, Abs…]` →
- * `LtAbsS`. Identical arguments contribute one shared copy of their own
- * arguments (`Lt[Abs(s), Abs(s)]` → `LtAbsS[s]`); differing arguments leave one
- * hole each (`Cond[Get…, Get…]` → `CondGetS__`).
+ * `LtAbsS`. The collapsed head retains the common shape of the repeated
+ * arguments. If they differ and share no child structure, it leaves one hole
+ * per original argument.
  */
 function pluralTrees(node) {
     if (node == null || typeof node !== "object") return [];
-    if (Array.isArray(node)) {
-        const out = [];
-        node.forEach((item, i) => {
-            for (const v of pluralTrees(item)) {
-                const copy = node.slice();
-                copy[i] = v;
-                out.push(copy);
-            }
-        });
-        return out;
-    }
+    if (Array.isArray(node)) return pluralChildren(node);
     const head = headOf(node);
     if (!head) return [];
     const args = argsOf(node);
@@ -95,22 +99,36 @@ function pluralTrees(node) {
     const heads = args.map(headOf);
     if (args.length >= 2 && heads.every((h) => h && h === heads[0])) {
         const shared = heads[0];
-        const identical = args.every((a) => canon(a) === canon(args[0]));
-        out.push({ [head + shared + "S"]: identical ? argsOf(args[0]) : args.map(() => "_") });
+        const shape = commonShape(args);
+        const children = headOf(shape) ? argsOf(shape) : [];
+        const identical = args.every((arg) => canon(arg) === canon(args[0]));
+        const collapsed = identical || children.some((child) => !isHole(child) && child !== "")
+            ? children
+            : args.map(() => "_");
+        const collapsedTree = { [head + shared + "S"]: collapsed };
+        out.push(collapsedTree);
+        if (collapsed.length >= 2 && collapsed.every((child) => canon(child) === canon(collapsed[0]))) {
+            out.push(...pluralTrees(collapsedTree));
+        }
     }
 
-    args.forEach((arg, i) => {
-        for (const v of pluralTrees(arg)) {
-            const copy = args.slice();
-            copy[i] = v;
-            out.push({ [head]: copy });
-        }
-    });
+    for (const children of pluralChildren(args)) out.push({ [head]: children });
     return out;
 }
 
+function pluralChildren(children) {
+    let combinations = [[]];
+    for (const child of children) {
+        const choices = [child, ...pluralTrees(child)];
+        combinations = combinations.flatMap((prefix) => choices.map((choice) => [...prefix, choice]));
+    }
+    // The first combination uses the original child at every position.
+    return combinations.slice(1);
+}
+
 /**
- * S-plural hole regexes for a `toJSON()` tree, one per collapsible node.
+ * S-plural hole regexes for a `toJSON()` tree, including successive collapses
+ * and sibling combinations.
  * @param {object|string} node result of `LeanNode.toJSON()`
  * @returns {string[]} e.g. `Prob_(Cond(Get_(Add_(1)))(Get__))` → `Prob_(CondGetS__)`
  */
