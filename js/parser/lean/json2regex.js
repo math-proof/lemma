@@ -16,27 +16,33 @@
 
 const isHole = (node) => node == null || node === "_";
 
+const regexFormat = {
+    literal: (value) => value,
+    group: (value) => "(" + value + ")",
+    join: (parts) => parts.join(""),
+};
+
 /** @returns {string|null} regex fragment; null = hole `_`, "" = empty slot. */
-function convert(node) {
+function convert(node, format = regexFormat) {
     if (node === "") return "";
     if (isHole(node)) return null;
-    if (typeof node === "string") return node;
+    if (typeof node === "string") return format.literal(node);
     if (Array.isArray(node)) {
-        const parts = node.map(convert).filter((s) => s != null && s !== "");
-        return parts.length ? parts.join("") : null;
+        const parts = node.map((item) => convert(item, format)).filter((s) => s != null && s !== "");
+        return parts.length ? format.join(parts) : null;
     }
     const entries = Object.entries(node);
     if (entries.length !== 1) return null;
     const [head, args0] = entries[0];
     const args = Array.isArray(args0) ? args0 : [args0];
 
-    let out = head;
+    const parts = [format.literal(head)];
     for (const arg of args) {
-        const frag = convert(arg);
+        const frag = convert(arg, format);
         if (frag === "") continue;
-        out += frag == null ? "_" : "(" + frag + ")";
+        parts.push(frag == null ? format.literal("_") : format.group(frag));
     }
-    return out;
+    return format.join(parts);
 }
 
 /**
@@ -64,40 +70,128 @@ export function suggestionMatches(regex, suggestion) {
         matchImplyHoleRegex(regex, suggestion);
 }
 
-/** Walk the stored groups and return the longest valid suggestion. */
-export function regex2suggestion(regex) {
-    const tokens = regex.match(/[()]|_+|[^()_]+/g) ?? [];
-    let index = 0;
+function dagBuilder() {
+    const nodes = [];
+    const ids = new Map();
 
-    function keepLongest(states, pending, path) {
-        if (path.length > (states.get(pending)?.length ?? -1)) states.set(pending, path);
+    function intern(node) {
+        const key = JSON.stringify(node);
+        if (!ids.has(key)) {
+            ids.set(key, nodes.length);
+            nodes.push(node);
+        }
+        return ids.get(key);
     }
 
-    // Keep the best prefix for each run of pending underscores. A run may
-    // exceed two only while it can still become trailing padding.
-    function walk(states) {
+    return { nodes, intern };
+}
+
+/** Build the hole-regex DAG directly from a Lean node's JSON tree. */
+export function json2dag(node) {
+    const format = {
+        literal: (token) => [token],
+        group: (parts) => [{ group: parts }],
+        join: (parts) => parts.flat(),
+    };
+    const { nodes, intern } = dagBuilder();
+
+    function walk(parts) {
+        const children = [];
+        let text = "";
+        function flush() {
+            for (const token of text.match(/_|[^_]+/g) ?? []) children.push(intern({ token }));
+            text = "";
+        }
+        for (const part of parts) {
+            if (typeof part === "string") {
+                text += part;
+            } else {
+                flush();
+                children.push(intern({ group: walk(part.group) }));
+            }
+        }
+        flush();
+        return children;
+    }
+
+    const parts = convert(node, format) ?? ["_"];
+    intern({ sequence: walk(parts) });
+    return nodes;
+}
+
+/** Intern identical regex subtrees in postorder, with the root last. */
+export function regex2dag(regex) {
+    const tokens = regex.match(/[()_]|[^()_]+/g) ?? [];
+    const { nodes, intern } = dagBuilder();
+    let index = 0;
+
+    function walk(kind) {
+        const children = [];
         while (index < tokens.length && tokens[index] !== ")") {
             const token = tokens[index++];
-            const next = new Map();
-            if (token === "(") {
-                for (const [pending, path] of walk(states)) keepLongest(next, pending, path);
-                index++;
-                for (const [pending, path] of states) keepLongest(next, pending + 1, path);
-            } else if (token.startsWith("_")) {
-                for (const [pending, path] of states) keepLongest(next, pending + token.length, path);
-            } else {
-                for (const [pending, path] of states) {
-                    if (pending <= 2) keepLongest(next, 0, path + "_".repeat(pending) + token);
-                }
-            }
-            states = next;
+            children.push(token === "(" ? walk("group") : intern({ token }));
         }
-        return states;
+        if (kind === "group" && tokens[index++] !== ")") {
+            throw new Error("Unclosed regex group");
+        }
+        return intern({ [kind]: children });
+    }
+
+    walk("sequence");
+    if (index !== tokens.length) throw new Error("Unexpected closing regex parenthesis");
+    return nodes;
+}
+
+/** Compute a longest valid suggestion that expands each named subtree at most once. */
+export function dag2suggession(dag) {
+    // State 3 represents any run of at least three pending underscores.
+    // Such runs can be discarded as trailing padding, but cannot precede text.
+    const pendingCounts = [0, 1, 2, 3];
+    const results = [];
+
+    function keepLongest(paths, candidate) {
+        const { pending, used, text } = candidate;
+        const key = (used << 2n) | BigInt(pending);
+        if (text.length > (paths.get(key)?.text.length ?? -1)) paths.set(key, candidate);
+    }
+
+    for (const [id, node] of dag.entries()) {
+        const transitions = pendingCounts.map((incoming) => {
+            const omitted = { pending: Math.min(incoming + 1, 3), used: 0n, text: "" };
+            if (node.token === "_") return [omitted];
+            if (node.token !== undefined) {
+                return incoming < 3
+                    ? [{ pending: 0, used: 0n, text: "_".repeat(incoming) + node.token }]
+                    : [];
+            }
+
+            const children = node.group ?? node.sequence;
+            const head = dag[children[0]]?.token;
+            const used = head && head !== "_" ? 1n << BigInt(id) : 0n;
+            let paths = [{ pending: incoming, used, text: "" }];
+            for (const child of children) {
+                const next = new Map();
+                for (const prefix of paths) {
+                    for (const suffix of results[child][prefix.pending]) {
+                        if ((prefix.used & suffix.used) !== 0n) continue;
+                        keepLongest(next, {
+                            pending: suffix.pending,
+                            used: prefix.used | suffix.used,
+                            text: prefix.text + suffix.text,
+                        });
+                    }
+                }
+                paths = [...next.values()];
+            }
+            if (node.group) paths.push(omitted);
+            return paths;
+        });
+        results.push(transitions);
     }
 
     let suggestion = "";
-    for (const path of walk(new Map([[0, ""]])).values()) {
-        if (path.length > suggestion.length && suggestionMatches(regex, path)) suggestion = path;
+    for (const { text } of results.at(-1)?.[0] ?? []) {
+        if (text.length > suggestion.length) suggestion = text;
     }
     return suggestion;
 }

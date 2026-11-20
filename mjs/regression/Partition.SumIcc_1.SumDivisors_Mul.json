@@ -1,9 +1,32 @@
 {
   "lean": "∑ k ∈ Finset.Icc 1 n, ∑ d ∈ k.divisors, (d : ℤ) * (n - k).partitionCount",
-  "regex": "Sum(And(Divisors_)(Icc(1)_))(Mul_(PartitionCount(Sub__)))",
-  "plural": [],
-  "suggestion": "SumAndDivisors_Icc__Mul_PartitionCountSub",
-  "pluralSuggestion": [],
+  "regex": [
+    "Sum(And(Divisors_)(Icc(1)_))(Mul_(PartitionCount(Sub__)))"
+  ],
+  "suggestion": [
+    "SumAndDivisors_Icc1_Mul_PartitionCountSub"
+  ],
+  "dag": [
+    [
+      {"token":"Sum"},
+      {"token":"And"},
+      {"token":"Divisors"},
+      {"token":"_"},
+      {"group":[2,3]},
+      {"token":"Icc"},
+      {"token":"1"},
+      {"group":[6]},
+      {"group":[5,7,3]},
+      {"group":[1,4,8]},
+      {"token":"Mul"},
+      {"token":"PartitionCount"},
+      {"token":"Sub"},
+      {"group":[12,3,3]},
+      {"group":[11,13]},
+      {"group":[10,3,14]},
+      {"sequence":[0,9,15]}
+    ]
+  ],
   "json": {
     "Sum": [
       {

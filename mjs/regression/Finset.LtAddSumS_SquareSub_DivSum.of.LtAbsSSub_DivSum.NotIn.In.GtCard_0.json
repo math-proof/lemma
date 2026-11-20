@@ -1,12 +1,46 @@
 {
   "lean": "|a[y'] - (∑ x ∈ X, a[x]) / (X.card : ℝ)| < |a[y'] - (∑ y ∈ Y, a[y]) / (Y.card : ℝ)|",
-  "regex": "Lt(Abs(Sub(Get__)(Div(Sum_(Get__))(Card_))))(Abs(Sub(Get__)(Div(Sum_(Get__))(Card_))))",
-  "plural": [
+  "regex": [
+    "Lt(Abs(Sub(Get__)(Div(Sum_(Get__))(Card_))))(Abs(Sub(Get__)(Div(Sum_(Get__))(Card_))))",
     "LtAbsS(Sub(Get__)(Div(Sum_(Get__))(Card_)))"
   ],
-  "suggestion": "LtAbsSubGet__DivSum_Get__Card_AbsSubGet__DivSum_Get__Card",
-  "pluralSuggestion": [
-    "LtAbsSSubGet__DivSum_Get__Card"
+  "suggestion": [
+    "Lt_AbsSubGet__DivSum__Card",
+    "LtAbsSSubGet__DivSum__Card"
+  ],
+  "dag": [
+    [
+      {"token":"Lt"},
+      {"token":"Abs"},
+      {"token":"Sub"},
+      {"token":"Get"},
+      {"token":"_"},
+      {"group":[3,4,4]},
+      {"token":"Div"},
+      {"token":"Sum"},
+      {"group":[7,4,5]},
+      {"token":"Card"},
+      {"group":[9,4]},
+      {"group":[6,8,10]},
+      {"group":[2,5,11]},
+      {"group":[1,12]},
+      {"sequence":[0,13,13]}
+    ],
+    [
+      {"token":"LtAbsS"},
+      {"token":"Sub"},
+      {"token":"Get"},
+      {"token":"_"},
+      {"group":[2,3,3]},
+      {"token":"Div"},
+      {"token":"Sum"},
+      {"group":[6,3,4]},
+      {"token":"Card"},
+      {"group":[8,3]},
+      {"group":[5,7,9]},
+      {"group":[1,4,10]},
+      {"sequence":[0,11]}
+    ]
   ],
   "json": {
     "Lt": [

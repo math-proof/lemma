@@ -1,10 +1,11 @@
 /**
  * regression.mjs — JSON / hole-regex regression over `mjs/regression/*.json`.
  *
- * Each fixture is `{ "lean": <Lean type expression>, "regex": <hole regex>,
- * "plural": [...], "json": <LeanNode.toJSON()> }`.
+ * Fixtures can use parallel `regex`, `suggestion`, and `dag` arrays.
+ * Index 0 is the base pattern and subsequent indices are plural variants.
+ * Legacy fixtures store the base and plural values in separate fields.
  *
- * Five read-only checks per fixture:
+ * Read-only checks per fixture:
  *   1. `json`  — parse `lean`, locate the statement node, and require its
  *      `toJSON()` to deep-equal the stored `json` field (key order ignored).
  *   2. `regex` — require `json2regex(stored json)` to equal `regex`.
@@ -13,6 +14,8 @@
  *   4. `suggestion` — match the stored path against `regex`.
  *   5. `pluralSuggestion` — match each stored path against its paired `plural`
  *      regex in fixture order.
+ *   6. `dag` — check each indexed graph and compare the base DAG from JSON
+ *      with the base DAG from the regex string.
  *
  * The runner never writes to the fixtures; regenerating them is a separate,
  * deliberate step.
@@ -24,7 +27,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { compile } from "../js/parser/lean.js";
 import { strStmt } from "../js/parser/lean/utility.js";
-import { json2regex, json2plural, suggestionMatches } from "../js/parser/lean/json2regex.js";
+import { dag2suggession, json2dag, json2regex, json2plural, regex2dag, suggestionMatches } from "../js/parser/lean/json2regex.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -73,7 +76,7 @@ function canon(value) {
 
 const show = (value) => {
   const text = typeof value === "string" ? value : canon(value);
-  return text.length > 220 ? text.slice(0, 220) + "…" : text;
+  return text?.length > 220 ? text.slice(0, 220) + "…" : text;
 };
 
 let failures = 0;
@@ -90,12 +93,21 @@ for (const name of files) {
     console.log(`FAIL ${name}\n  invalid JSON: ${e.message}`);
     continue;
   }
-  if (!doc || typeof doc.lean !== "string" || typeof doc.regex !== "string" || doc.json == null) {
+  if (!doc || typeof doc.lean !== "string" || doc.json == null) {
     console.log(`skip ${name} (not a fixture)`);
     continue;
   }
   checked++;
   const problems = [];
+  const indexed = Array.isArray(doc.regex);
+  const regexes = indexed ? doc.regex : [doc.regex, ...(Array.isArray(doc.plural) ? doc.plural : [])];
+  const suggestions = indexed ? doc.suggestion :
+    [doc.suggestion, ...(Array.isArray(doc.pluralSuggestion) ? doc.pluralSuggestion : [])];
+  const [baseRegex, ...wantPlural] = regexes;
+  if (!regexes.length || !regexes.every((regex) => typeof regex === "string") ||
+      (!indexed && !Array.isArray(doc.plural))) {
+    problems.push("expected a base regex and an array of plural regex strings");
+  }
 
   // Check 2 needs no parser: the stored JSON must render to the stored regex.
   let rendered = null;
@@ -104,15 +116,11 @@ for (const name of files) {
   } catch (e) {
     problems.push(`json2regex error: ${e.message}`);
   }
-  if (rendered !== null && rendered !== doc.regex) {
-    problems.push(`regex mismatch\n  got:  ${show(rendered)}\n  want: ${show(doc.regex)}`);
+  if (rendered !== null && rendered !== baseRegex) {
+    problems.push(`regex mismatch\n  got:  ${show(rendered)}\n  want: ${show(baseRegex)}`);
   }
 
   // Check 3: S-plural variants, compared as a set (order is not significant).
-  const wantPlural = Array.isArray(doc.plural) ? doc.plural : [];
-  if (!Array.isArray(doc.plural) || !wantPlural.every((regex) => typeof regex === "string")) {
-    problems.push("plural must be an array of regex strings");
-  }
   let plurals = null;
   try {
     plurals = [...new Set(json2plural(doc.json))].sort();
@@ -126,18 +134,38 @@ for (const name of files) {
     }
   }
 
-  if (!suggestionMatches(doc.regex, doc.suggestion)) {
-    problems.push(`suggestion mismatch\n  path:  ${show(doc.suggestion)}\n  regex: ${show(doc.regex)}`);
-  }
-  if (!Array.isArray(doc.pluralSuggestion) || doc.pluralSuggestion.length !== wantPlural.length) {
-    problems.push(`pluralSuggestion must contain one path for each of the ${wantPlural.length} plural regexes`);
+  if (!Array.isArray(suggestions) || suggestions.length !== regexes.length ||
+      (!indexed && !Array.isArray(doc.pluralSuggestion))) {
+    problems.push(`expected one suggestion for each of the ${regexes.length} regexes`);
   } else {
-    wantPlural.forEach((regex, i) => {
-      const suggestion = doc.pluralSuggestion[i];
+    regexes.forEach((regex, i) => {
+      const suggestion = suggestions[i];
       if (!suggestionMatches(regex, suggestion)) {
-        problems.push(`pluralSuggestion[${i}] mismatch\n  path:  ${show(suggestion)}\n  regex: ${show(regex)}`);
+        problems.push(`suggestion[${i}] mismatch\n  path:  ${show(suggestion)}\n  regex: ${show(regex)}`);
       }
     });
+  }
+
+  if (indexed) {
+    if (!Array.isArray(doc.dag) || doc.dag.length !== regexes.length) {
+      problems.push(`dag must contain one graph for each of the ${regexes.length} regexes`);
+    } else {
+      regexes.forEach((regex, i) => {
+        if (typeof regex !== "string") return;
+        try {
+          const graph = i === 0 ? json2dag(doc.json) : regex2dag(regex);
+          if (canon(doc.dag[i]) !== canon(graph)) problems.push(`dag[${i}] mismatch`);
+          if (i === 0 && canon(graph) !== canon(regex2dag(regex))) {
+            problems.push("dag[0] differs between the JSON node and the regex string");
+          }
+          if (!suggestionMatches(regex, dag2suggession(graph))) {
+            problems.push(`dag[${i}] did not generate a matching suggestion`);
+          }
+        } catch (e) {
+          problems.push(`dag[${i}] error: ${e.message}`);
+        }
+      });
+    }
   }
 
   let node = null;
