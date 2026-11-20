@@ -55,14 +55,12 @@ Small-letter binary infix operators are short name for Capital-letter operator n
 | `X.as.Y` | `≃` | `SEq` | -- |
 | `X.ae.Y` | `=ᵐ` | `MEq` | Equal |
 | `X.ou.Y` | `∨` | `Or` | Or |
+| `X.ll.Y` | `≪` | `AbsolutelyContinuous` | -- |
+| `X.gg.Y` | `≫` | `CategoryStruct.comp` | -- |
 | -- | `∧` | `And` | And |
-| `X.at.Y` | `≈` | `XEq` | -- |
-| `X.to.Y` | `→` | `·.stdPart = ·` | -- |
 | -- | `\|` | `Dvd` | -- |
 | -- | `⊆` | `Subset` | Subset |
 | -- | `⊇` | `Superset` | Supset |
-| `X.ll.Y` | `≪` | `AbsolutelyContinuous` | -- |
-| `X.gg.Y` | `≫` | `CategoryStruct.comp` | -- |
 
 `=ᵐ` (`MEq`, sympy `Equal`) is named inline like `Eq`, which is the preferred form:
 `MEqCondExp_Integral` (both sides named), `MEq_CondExp` (hole / lambda left side),

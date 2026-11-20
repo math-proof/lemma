@@ -14,6 +14,9 @@
  * or membership binder); every domain present in the JSON is rendered.
  */
 
+import { compile } from "../lean.js";
+import { LeanColon } from "./colon.js";
+
 const isHole = (node) => node == null || node === "_";
 
 const regexFormat = {
@@ -283,4 +286,22 @@ function pluralChildren(children) {
  */
 export function json2plural(node) {
     return [...new Set(pluralTrees(node).map((tree) => json2regex(tree)))];
+}
+
+/** Return the shortest generated path token for a Lean expression. */
+export function lean2path(expression) {
+    const module = compile(`private lemma main : ${expression} := by\n  sorry\n`);
+    const signature = module.args[0]?.assignment?.lhs;
+    if (!(signature instanceof LeanColon)) return "";
+
+    const json = signature.rhs.toJSON();
+    const base = dag2suggession(json2dag(json));
+    let shortest = suggestionMatches(json2regex(json), base) ? base : "";
+    for (const regex of json2plural(json)) {
+        const candidate = dag2suggession(regex2dag(regex));
+        if ((!shortest || candidate.length < shortest.length) && suggestionMatches(regex, candidate)) {
+            shortest = candidate;
+        }
+    }
+    return shortest;
 }
