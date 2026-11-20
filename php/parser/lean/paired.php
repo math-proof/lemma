@@ -450,7 +450,6 @@ class LeanParenthesis extends LeanPairedGroup
         return false;
     }
 
-
     public function peelLatexCoe()
     {
         $inner = $this->arg->peelLatexCoe();
@@ -497,13 +496,6 @@ class LeanParenthesis extends LeanPairedGroup
         return "\\colorbox{#{$r}{$g}{$b}}{\$\\mathord{\\left(%s\\right)}\$}";
         // for mathjax:
         // return "\\bbox[#{$r}{$g}{$b}]{\\left(%s\\right)}";
-    }
-
-
-    public function holeRegex($opts = [])
-    {
-        $arg = $this->arg;
-        return $arg ? $arg->holeRegex($opts) : null;
     }
 
 }

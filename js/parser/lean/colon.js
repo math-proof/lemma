@@ -212,21 +212,6 @@ export class LeanColon extends LeanBinary {
         return `${first}${this.operator}${sep}%s`;
     }
 
-    /**
-     * Path choices: ascription `a : T` — walk the value (lhs), ignore type.
-     * @param {object} [opts]
-     * @returns {string[]}
-     */
-
-    /**
-     * Hole-regex: walk ascription subject (lhs).
-     * @param {object} [opts]
-     * @returns {string|null}
-     */
-    holeRegex(opts = {}) {
-        return this.lhs?.holeRegex?.(opts) ?? null;
-    }
-
     pathChoices(opts = {}) {
         return this.lhs?.pathChoices?.(opts) ?? [""];
     }

@@ -80,7 +80,6 @@ $token2classname = [
 preg_match_all("/'(\w+)'/", file_get_contents(dirname(__FILE__) . '/../../js/codemirror-lean-tactics.js'), $tactics);
 [, $tactics] = $tactics;
 
-require_once dirname(__FILE__) . '/lean/holeRegex.php';
 require_once dirname(__FILE__) . '/lean/base.php';
 
 require_once dirname(__FILE__) . '/lean/atomic.php';

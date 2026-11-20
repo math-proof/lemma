@@ -7,7 +7,6 @@
  */
 import { LeanBinary } from './abstract.js';
 import { Lean } from './base.js';
-import { escapeHoleReLit, wrapHoleOpt, HOLE_RE_TRIG_FN, holeRegexDefaultNameToken } from './pathChoices.js';
 
 const L = Lean.classes;
 
@@ -28,25 +27,14 @@ export class LeanProperty extends LeanBinary {
         return '.';
     }
 
-    /** Alternatives walk only; `.card` is Card. */
-    get holeRegexAltTag() {
-        const prop = this.rhs;
-        const raw = prop instanceof L.LeanToken ? (prop.text || "") : "";
-        if (raw === "card") return "Card";
-        return null;
-    }
-
-    holeRegexAltOperands() {
-        if (this.holeRegexAltTag === "Card") return [this.lhs];
-        return [this.lhs, this.rhs];
-    }
-
-
-    /** Title-cased attribute of `obj.attribute`; null when it is not a plain name. */
-    get jsonHeadName() {
+    get fieldName() {
         const attr = this.rhs;
-        const raw = attr instanceof L.LeanToken ? (attr.text || "") : "";
-        return raw ? raw.charAt(0).toUpperCase() + raw.slice(1) : null;
+        return attr instanceof L.LeanToken ? attr.text || "" : "";
+    }
+
+    get pathToken() {
+        const field = this.fieldName;
+        return field ? field.charAt(0).toUpperCase() + field.slice(1) : super.pathToken;
     }
 
     /** In an application head, a capitalised object (`Finset.range`) is a namespace, not an argument. */
@@ -63,12 +51,11 @@ export class LeanProperty extends LeanBinary {
      * (`obj.attribute a b`).
      */
     toJSON() {
-        const head = this.jsonHeadName;
-        if (!head) return super.toJSON();
+        if (!this.fieldName) return super.toJSON();
         const parent = this.parent;
         if (parent instanceof L.LeanArgsSpaceSeparated && parent.args[0] === this)
             return parent.toJSON();
-        return { [head]: [this.lhs.toJSON()] };
+        return { [this.pathToken]: [this.lhs.toJSON()] };
     }
 
     equals(other) {
@@ -414,34 +401,6 @@ export class LeanProperty extends LeanBinary {
             rhs = rhs.args[1];
         }
         return [this.lhs, rhs];
-    }
-
-    /**
-     * Path choices: `.sqrt` → Sqrt_ (+ omit); else walk lhs.
-     * @param {object} [opts]
-     * @returns {string[]}
-     */
-
-    /**
-     * Hole-regex: trig props Sin(_|...) / Arctan(_|...); else prop + object.
-     * @param {object} [opts]
-     * @returns {string|null}
-     */
-    holeRegex(opts = {}) {
-        const obj = this.lhs;
-        const prop = this.rhs;
-        const rawProp = prop instanceof L.LeanToken ? (prop.text || "") : "";
-        const nameToken = opts.nameToken || holeRegexDefaultNameToken;
-        const propTok = rawProp ? nameToken(rawProp) : "";
-        if (propTok && HOLE_RE_TRIG_FN.test(rawProp)) {
-            const inner = obj?.holeRegex?.({ ...opts, inTrigProp: true }) ?? null;
-            if (inner == null || inner === "") return propTok + "_";
-            return propTok + wrapHoleOpt(inner);
-        }
-        const inner = obj?.holeRegex?.(opts) ?? null;
-        if (propTok && (inner == null || inner === "")) return escapeHoleReLit(propTok);
-        if (propTok && inner) return escapeHoleReLit(propTok) + wrapHoleOpt(inner);
-        return inner;
     }
 
     pathChoices(opts = {}) {

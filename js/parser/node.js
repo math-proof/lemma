@@ -87,53 +87,6 @@ export class Node {
         return [""];
     }
 
-    /**
-     * Imply/given hole-regex fragment for this subtree (Body t366).
-     * null / empty = hole contribution (parent inserts _).
-     * Override on Lean* nodes; default uses opts.frozen(this) when provided
-     * (lemmaPath passes nameExpr escaped), else null.
-     * @param {object} [opts]
-     * @param {(node: object) => (string|null|undefined)} [opts.frozen]
-     * @param {(text: string) => string} [opts.nameToken]
-     * @param {(text: string) => boolean} [opts.isLeaf]
-     * @param {(node: object) => object} [opts.peelGuards]
-     * @param {boolean} [opts.mulBothHolesBare]
-     * @param {boolean} [opts.inTrigProp]
-     * @returns {string|null}
-     */
-    holeRegex(opts = {}) {
-        if (typeof opts.frozen === "function") {
-            const f = opts.frozen(this);
-            return (f == null || f === "") ? null : f;
-        }
-        return null;
-    }
-
-    /**
-     * Alternative hole-regex spellings for this subtree (primary + same-head
-     * collapses). Lean nodes override; the default is the single holeRegex
-     * fragment when one exists.
-     * @param {object} [opts]
-     * @returns {string[]}
-     */
-    holeRegexAlternatives(opts = {}) {
-        const frag = this.holeRegex(opts);
-        if (frag == null || frag === "" || frag === "_") return [];
-        return [String(frag).replace(/\(_\|/g, "(")];
-    }
-
-    /**
-     * Stored hole-regex for this node: groups are `(Fill)`, not `(_|Fill)`.
-     * null means this node does not spell a stored group.
-     * Subclasses override. Recurse with `opts.decomp(child, binders)`.
-     * @param {object} [_opts]
-     * @param {Set<string>} [_binders]
-     * @returns {string|null}
-     */
-    storedHoleRegex(_opts = {}, _binders = null) {
-        return null;
-    }
-
     get previousElementSibling() {
         if (!this.parent) return null;
         const index = this.parent.args.indexOf(this);

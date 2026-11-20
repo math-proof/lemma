@@ -11,7 +11,6 @@
 import { Closable } from '../node.js';
 import { LeanUnary } from './abstract.js';
 import { Lean } from './base.js';
-import { collectHoleRegexAlternatives } from './holeRegexAlternatives.js';
 
 const L = Lean.classes;
 
@@ -253,19 +252,6 @@ export class LeanParenthesis extends LeanPairedGroup {
         return '()';
     }
 
-    /**
-     * Parentheses are display only; alternatives come from the inner node.
-     * @param {object} [opts]
-     * @returns {string[]}
-     */
-    holeRegexAlternatives(opts = {}) {
-        const inner = this.arg ?? this.args?.[0];
-        if (inner && typeof inner.holeRegexAlternatives === "function") {
-            return inner.holeRegexAlternatives(opts);
-        }
-        return collectHoleRegexAlternatives(inner ?? this, opts);
-    }
-
     argFormat() {
         const arg = this.arg;
         if (arg instanceof L.LeanBy) {
@@ -447,7 +433,6 @@ export class LeanParenthesis extends LeanPairedGroup {
     }
 
     static middleBar = '\\,\\middle|\\,';
-
 
     /**
      * Nested grouping `((e))` / `(((e)))`: peel until the content is not itself a
@@ -933,21 +918,6 @@ export class LeanParenthesis extends LeanPairedGroup {
         return `\\mathord{\\left({\\colorbox{#${r}${g}${b}}{$%s$}}\\right)}`;
     }
 
-    /**
-     * Path choices: unwrap paren and walk the inner arg.
-     * @param {object} [opts]
-     * @returns {string[]}
-     */
-
-    /**
-     * Hole-regex: unwrap paren.
-     * @param {object} [opts]
-     * @returns {string|null}
-     */
-    holeRegex(opts = {}) {
-        return this.arg?.holeRegex?.(opts) ?? null;
-    }
-
     pathChoices(opts = {}) {
         return this.arg?.pathChoices?.(opts) ?? [""];
     }
@@ -1165,36 +1135,10 @@ export class LeanBrace extends LeanPairedGroup {
      */
     toJSON() {
         const inner = this.arg ?? this.args?.[0];
-        if (!inner) return { Brace: [] };
+        if (!inner) return { [this.pathToken]: [] };
         const parts = inner instanceof L.LeanArgsCommaSeparated ? inner.args : [inner];
-        return { Brace: parts.map((a) => a.toJSON()).filter((s) => s !== "") };
+        return { [this.pathToken]: parts.map((a) => a.toJSON()).filter((s) => s !== "") };
     }
-
-    /** Alternatives walk only: `{y'}` → Brace_, `{a, b}` → Brace__, `{x | P}` → Brace(Cond__). */
-    get holeRegexAltTag() {
-        if (this.inline) return null;
-        const a = this.arg ?? this.args?.[0];
-        if (!a) return null;
-        const c = a.constructor?.name || "";
-        if (c === "LeanStatements" || c === "LeanAssign" || c === "LeanWith") return null;
-        if (typeof LeanBrace.isStructInstField === "function" && LeanBrace.isStructInstField(a)) return null;
-        return "Brace";
-    }
-
-    holeRegexAltOperands() {
-        if (this.holeRegexAltTag !== "Brace")
-            return this.arg != null ? [this.arg] : (this.args || []);
-        const peel = (n) => {
-            while (n && (n.constructor?.name || "") === "LeanParenthesis")
-                n = n.arg ?? n.args?.[0];
-            return n;
-        };
-        const a = peel(this.arg ?? this.args?.[0]);
-        if (!a) return [];
-        if ((a.constructor?.name || "") === "LeanArgsCommaSeparated") return a.args || [];
-        return [a];
-    }
-
 
     /**
      * Structure-instance literal written with its first field on the `{` line and the other fields on
@@ -1362,7 +1306,7 @@ export class LeanAbs extends LeanPairedGroup {
     /** `|x|` keeps its head: `{Abs: [x]}` instead of unwrapping to `x`. */
     toJSON() {
         const inner = this.arg ?? this.args?.[0];
-        return { Abs: [inner ? inner.toJSON() : ""] };
+        return { [this.pathToken]: [inner ? inner.toJSON() : ""] };
     }
 
     get operator() {

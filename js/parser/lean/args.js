@@ -16,7 +16,6 @@ import {
 } from './utility.js';
 import { LeanArgs, LeanBinary } from './abstract.js';
 import { Lean } from './base.js';
-import { wrapHoleOpt, HOLE_RE_TRIG_FN, holeRegexDefaultNameToken, holeRegexCombineBinom } from './pathChoices.js';
 
 const L = Lean.classes;
 
@@ -43,10 +42,9 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         const head = this.args[0];
         const rest = () => this.args.slice(1).map((arg) => arg.toJSON());
         if (head instanceof L.LeanProperty) {
-            const name = head.jsonHeadName;
-            if (name) {
+            if (head.fieldName) {
                 const obj = head.jsonAppObjectArg;
-                return { [name]: obj !== null ? [obj, ...rest()] : rest() };
+                return { [head.pathToken]: obj !== null ? [obj, ...rest()] : rest() };
             }
             return "_";
         }
@@ -56,30 +54,6 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                 return { [raw.charAt(0).toUpperCase() + raw.slice(1)]: rest() };
         }
         return "_";
-    }
-
-    /** `(M).updateCol i v`. A hole index or column is `_`, not a second `__`. */
-    storedHoleRegex(opts, binders) {
-        if (typeof opts.updateColParts !== "function" || typeof opts.decomp !== "function" || typeof opts.isHole !== "function")
-            return null;
-        const uc = opts.updateColParts(this);
-        if (!uc) return null;
-        const M = opts.decomp(uc.matrix, binders);
-        if (!M) return null;
-        let s = "UpdateCol(" + M + ")";
-        if (opts.isHole(uc.index, opts, binders)) s += "_";
-        else {
-            const I = opts.decomp(uc.index, binders);
-            if (!I) return null;
-            s += "(" + I + ")";
-        }
-        if (opts.isHole(uc.col, opts, binders)) s += "_";
-        else {
-            const C = opts.decomp(uc.col, binders);
-            if (!C) return null;
-            s += "(" + C + ")";
-        }
-        return s;
     }
 
     get stack_priority() {
@@ -101,54 +75,6 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
 
     peelGroup() {
         return this.args.length === 1 ? this.args[0].peelGroup() : this;
-    }
-
-    /**
-     * `𝔼[…](body)` path choices. A product body keeps Mul's holes:
-     * `Expect(_)(Mul(_)(_))` is `Expect_Mul__` (stripped to `Expect_Mul` at an Eq root).
-     * The body may be omitted (`Expect`); the whole expectation may be omitted (`""`).
-     * @param {object} [opts]
-     * @returns {string[]}
-     */
-
-    /**
-     * Hole-regex: sin/cos/... apps decompose args; else freeze via default.
-     * @param {object} [opts]
-     * @returns {string|null}
-     */
-    holeRegex(opts = {}) {
-        const head = this.args?.[0];
-        const rawHead = head instanceof L.LeanToken ? (head.text || "") : "";
-        const nameToken = opts.nameToken || holeRegexDefaultNameToken;
-        const headTok = rawHead ? nameToken(rawHead) : "";
-        if (headTok && HOLE_RE_TRIG_FN.test(rawHead)) {
-            let inner = null;
-            for (let i = 1; i < (this.args || []).length; i++) {
-                const frag = this.args[i]?.holeRegex?.(opts) ?? null;
-                if (frag != null && frag !== "") { inner = frag; break; }
-            }
-            if (inner == null || inner === "") return headTok + "_";
-            return headTok + wrapHoleOpt(inner);
-        }
-        // Nat.choose / d.choose — binary Binom((left)_) (Body / Cosmos).
-        {
-            const prop = head instanceof L.LeanProperty && head.rhs instanceof L.LeanToken && head.rhs.text === "choose";
-            const tok = head instanceof L.LeanToken && /^(?:Nat\.)?choose$/.test(head.text || "");
-            const args = this.args || [];
-            let nNode = null;
-            let kNode = null;
-            if (prop && args.length === 2) {
-                nNode = head.lhs;
-                kNode = args[1];
-            } else if ((prop || tok) && args.length === 3) {
-                nNode = args[1];
-                kNode = args[2];
-            }
-            if (nNode != null || kNode != null) {
-                return holeRegexCombineBinom(nNode, kNode, opts);
-            }
-        }
-        return super.holeRegex?.(opts) ?? null;
     }
 
     pathChoices(opts = {}) {
@@ -309,7 +235,6 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         if (!collect(inner.rhs)) return null;
         return {body: inner.lhs, bindings};
     }
-
 
     is_Tendsto() {
         const args = this.args;
@@ -1528,8 +1453,6 @@ export class LeanArgsNewLineSeparated extends LeanMultipleLine(LeanArgs) {
         return Array(this.args.length).fill('%s').join('\n');
     }
 }
-
-
 
 export class LeanArgsIndented extends LeanBinary {
     static { this.register(); }

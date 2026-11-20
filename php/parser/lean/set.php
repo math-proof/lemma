@@ -76,11 +76,6 @@ class Lean_subseteq extends LeanBinaryBoolean
         }
     }
 
-    public function holeRegexTag()
-    {
-        return "Subset";
-    }
-
 }
 
 class Lean_subset extends LeanBinaryBoolean

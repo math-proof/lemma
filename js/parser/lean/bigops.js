@@ -125,7 +125,6 @@ export class LeanBigOperator extends LeanArgs {
         return [bound.lhs, peel(set.args[1])];
     }
 
-
     /**
      * `∑/∏ i ∈ Finset.range (e + 1), f` / `∑/∏ i ∈ range (e + 1), f` → `[i, e]`,
      * rendered as `\sum_{i=0}^{e}` (same closed-interval style as `icoClosedBound`).
@@ -272,8 +271,7 @@ export class LeanBigOperator extends LeanArgs {
         return super.latexArgs(syntax);
     }
 
-    /** JSON head name; quantifiers override it with their path token (`All`, `Any`). */
-    get jsonHeadName() {
+    get pathToken() {
         return jsonHead(this.func);
     }
 
@@ -307,7 +305,7 @@ export class LeanBigOperator extends LeanArgs {
                 if (domains.length > 1) args.push({ And: domains.reverse() });
                 else if (domains.length === 1) args.push(domains[0]);
                 if (scope) args.push(scope.toJSON());
-                return { [this.jsonHeadName]: args };
+                return { [this.pathToken]: args };
             }
             node = scope;
         }
@@ -385,25 +383,6 @@ export class Lean_sum extends LeanBigOperator {
     }
     get baseOperator() {
         return '∑';
-    }
-
-    /** Alternatives walk only; does not set `holeRegexTag`. */
-    get holeRegexAltTag() {
-        return "Sum";
-    }
-
-    /** Binder is a hole; operands are the domain (from `x ∈ s`) and the scope. */
-    holeRegexAltOperands() {
-        const peel = (n) => {
-            while (n && (n.constructor?.name || "") === "LeanParenthesis")
-                n = n.arg ?? n.args?.[0];
-            return n;
-        };
-        const bound = peel(this.bound);
-        const scope = this.scope;
-        if (bound && (bound.constructor?.name || "") === "Lean_in" && bound.rhs != null && scope != null)
-            return [bound.rhs, scope];
-        return scope != null ? [scope] : [];
     }
 
     /** Peel `(∑ …)` so nested display stacking still sees the inner sum. */
@@ -958,21 +937,6 @@ export class Lean_partial extends LeanBigOperator {
         return '\\left. ' + partial + ' \\right|_{{%s} = {%s}}';
     }
 
-    /** Path token Deriv (Body t350); bound/scope are holes like ∑. */
-
-    /**
-     * Hole-regex: Deriv_ when bound/scope present (Body t350/t351).
-     * @param {object} [_opts]
-     * @returns {string|null}
-     */
-    holeRegex(opts = {}) {
-        if (this.bound == null && this.scope == null) return null;
-        // Hole scope (d[x] u / d[t,t] u): Deriv_. Structured integrand: Deriv_(scopeFrag).
-        const scopeFrag = this.scope?.holeRegex?.(opts) ?? null;
-        if (scopeFrag == null || scopeFrag === "" || scopeFrag === "_") return "Deriv_";
-        return "Deriv_(" + scopeFrag + ")";
-    }
-
     pathChoices(opts = {}) {
         const kid = this.scope ?? this.bound;
         const kids = kid?.pathChoices?.(opts) ?? [''];
@@ -1091,16 +1055,6 @@ export class Lean_nabla extends LeanBigOperator {
         return `\\left. ${nabla} \\right|_{{%s} = {%s}}`;
     }
 
-
-    /**
-     * Hole-regex: Grad_ when bound/scope present.
-     * @param {object} [_opts]
-     * @returns {string|null}
-     */
-    holeRegex(_opts = {}) {
-        return (this.bound != null || this.scope != null) ? "Grad_" : null;
-    }
-
     pathChoices(opts = {}) {
         const kid = this.scope ?? this.bound;
         const kids = kid?.pathChoices?.(opts) ?? [''];
@@ -1109,8 +1063,6 @@ export class Lean_nabla extends LeanBigOperator {
         return pathUniqKeepEmpty(out);
     }
 }
-
-
 
 /**
  * Random big-ops: `𝔼[binder](body)`, `ℙ[π](event)` / `ℙ[π]{event}`, `𝕍𝕒𝕣[binder](body)`.
@@ -1186,21 +1138,6 @@ export class LeanRandomBigOp extends LeanBigOperator {
 
     get pathToken() {
         return 'Expect';
-    }
-
-    /**
-     * Hole-regex: binder Expect/Prob/Var are binary (bound + scope).
-     * Both holes -> Name__; bound hole + filled scope -> Name_(scopeFrag)
-     * (same shape as Deriv_(scope) / Binom__). Mathlib Var[Y] stays GetElem.
-     * @param {object} [opts]
-     * @returns {string|null}
-     */
-    holeRegex(opts = {}) {
-        if (this.bound == null && this.scope == null) return null;
-        const tok = this.pathToken;
-        const scopeFrag = this.scope?.holeRegex?.(opts) ?? null;
-        if (scopeFrag == null || scopeFrag === "" || scopeFrag === "_") return `${tok}__`;
-        return `${tok}_(${scopeFrag})`;
     }
 
     pathChoices(opts = {}) {
@@ -1314,21 +1251,6 @@ export class Lean_Prob extends LeanRandomBigOp {
         return '{{{ℙ}}_{%s}}\\ {%s}';
     }
 
-
-    /**
-     * Observation events `x = «\\sf{x}»` (and ∧ of them) are elided in latex to
-     * `ℙ[π](x)` via collectProbEventRVs — hole-regex must be Prob__ (both holes),
-     * never Prob_(Eq). Same rule as the RA form `ℙ[π](x)`.
-     * @param {object} [opts]
-     * @returns {string|null}
-     */
-    holeRegex(opts = {}) {
-        if (this.bound == null && this.scope == null) return null;
-        if (this.scope && L.LeanArgsSpaceSeparated.collectProbEventRVs(this.scope))
-            return "Prob__";
-        return super.holeRegex(opts);
-    }
-
     /**
      * Observation events path like RA `ℙ[π](x)`: Prob__ / Prob, not Prob_Eq.
      * @param {object} [opts]
@@ -1358,7 +1280,6 @@ export class Lean_Var extends LeanRandomBigOp {
         return '{{{𝕍𝕒𝕣}}_{%s}}\\ {%s}';
     }
 }
-
 
 /**
  * Limits-style GetElem sugars: `max[i] body`, `min[…]`, `sup[…]`, `inf[…]`,
@@ -1412,10 +1333,6 @@ export class LeanLimitsBigOp extends LeanBigOperator {
 
     get pathToken() {
         return 'Max';
-    }
-
-    holeRegex(_opts = {}) {
-        return (this.bound != null || this.scope != null) ? `${this.pathToken}_` : null;
     }
 
     pathChoices(opts = {}) {
@@ -1578,7 +1495,6 @@ LeanLimitsBigOp.LIMITS_CTOR = {
     'max⁻¹': Lean_argmax,
     'min⁻¹': Lean_argmin,
 };
-
 
 export class Lean_bigcap extends LeanBigOperator {
     static { this.register(); }

@@ -145,13 +145,6 @@ class LeanColon extends LeanBinary
         return "$first$this->operator$sep%s";
     }
 
-
-    public function holeRegex($opts = [])
-    {
-        $lhs = $this->lhs;
-        return $lhs ? $lhs->holeRegex($opts) : null;
-    }
-
 }
 
 // END OF colon family (LeanParser stays in lean.php)

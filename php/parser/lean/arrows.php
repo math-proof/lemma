@@ -147,13 +147,6 @@ class LeanRightarrow extends LeanBinary
         return "$lhs$this->operator$sep%s";
     }
 
-
-    public function holeRegex($opts = [])
-    {
-        $rhs = $this->rhs;
-        return $rhs ? $rhs->holeRegex($opts) : null;
-    }
-
 }
 
 class Lean_rightarrow extends LeanBinary
@@ -212,13 +205,6 @@ class Lean_rightarrow extends LeanBinary
     {
         $sep = $this->sep();
         return "%s $this->operator$sep%s";
-    }
-
-
-    public function holeRegex($opts = [])
-    {
-        $rhs = $this->rhs;
-        return $rhs ? $rhs->holeRegex($opts) : null;
     }
 
 }

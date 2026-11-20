@@ -6,8 +6,8 @@
  * call time, so the import graph follows the inheritance tree.
  */
 import { LeanBinaryBoolean } from './boolean.js';
-import { Lean, jsonHead } from './base.js';
-import { pathAndInfixChoices, storedHoleOpt } from './pathChoices.js';
+import { Lean } from './base.js';
+import { pathAndInfixChoices } from './pathChoices.js';
 import { strStmt } from './utility.js';
 
 const L = Lean.classes;
@@ -56,7 +56,7 @@ export class LeanLogicAnd extends LeanLogic {
     toJSON() {
         const lhs = this.lhs.toJSON();
         const rhs = this.rhs.toJSON();
-        const f = jsonHead(this.func);
+        const f = this.pathToken;
         const rec = lhs && typeof lhs === 'object' ? lhs : null;
         if (this.lhs instanceof LeanLogicAnd && rec && Array.isArray(rec[f])) {
             return { [f]: [.../** @type {unknown[]} */ (rec[f]), rhs] };
@@ -89,7 +89,7 @@ export class LeanLogicOr extends LeanLogic {
     toJSON() {
         const lhs = this.lhs.toJSON();
         const rhs = this.rhs.toJSON();
-        const f = jsonHead(this.func);
+        const f = this.pathToken;
         const rec = lhs && typeof lhs === 'object' ? lhs : null;
         if (this.lhs instanceof LeanLogicOr && rec && Array.isArray(rec[f])) {
             return { [f]: [.../** @type {unknown[]} */ (rec[f]), rhs] };
@@ -150,12 +150,7 @@ export class Lean_lor extends LeanLogic {
         }
         return super.insert_newline(caret, newline_count, indent, next);
     }
-
-    toJSON() {
-        return { [jsonHead(this.func)]: [this.lhs.toJSON(), this.rhs.toJSON()] };
-    }
 }
-
 
 /**
  * Display-only: flatten nested `∧` of plain `=` into an eq chain when sides connect
@@ -230,15 +225,6 @@ export class Lean_land extends LeanLogic {
         return "And";
     }
 
-    /** `P ∧ Q` stored as `And(P)(Q)`. */
-    storedHoleRegex(opts, binders) {
-        if (typeof opts.decomp !== "function") return null;
-        const L = opts.decomp(this.lhs ?? this.args?.[0], binders);
-        const R = opts.decomp(this.rhs ?? this.args?.[1], binders);
-        if (!L || !R) return null;
-        return "And" + storedHoleOpt(L) + storedHoleOpt(R);
-    }
-
     /**
      * Display latex: collapse connected plain-eq ∧-chains (py And._latex).
      * @param {object} [syntax]
@@ -272,9 +258,5 @@ export class Lean_land extends LeanLogic {
             }
         }
         return super.insert_newline(caret, newline_count, indent, next);
-    }
-
-    toJSON() {
-        return { [jsonHead(this.func)]: [this.lhs.toJSON(), this.rhs.toJSON()] };
     }
 }

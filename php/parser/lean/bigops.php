@@ -512,11 +512,6 @@ class Lean_partial extends LeanBigOperator
         return "\\left. " . $partial . " \\right|_{{%s} = {%s}}";
     }
 
-    public function holeRegex($opts = [])
-    {
-        return ($this->bound !== null || $this->scope !== null) ? "Deriv_" : null;
-    }
-
 }
 
 /**
@@ -642,14 +637,7 @@ class Lean_nabla extends LeanBigOperator
         return "\\left. " . $nabla . " \\right|_{{%s} = {%s}}";
     }
 
-    public function holeRegex($opts = [])
-    {
-        return ($this->bound !== null || $this->scope !== null) ? "Grad_" : null;
-    }
-
 }
-
-
 
 /**
  * Random big-ops: `𝔼[binder](body)`, `ℙ[π](event)` / `ℙ[π]{event}`, `𝕍𝕒𝕣[binder](body)`.
@@ -832,7 +820,6 @@ class Lean_Var extends LeanRandomBigOp
         return '{{{𝕍𝕒𝕣}}_{%s}}\\ {%s}';
     }
 }
-
 
 /**
  * Limits-style GetElem sugars: max/min/sup/inf/max⁻¹/min⁻¹[binder] body.
@@ -1139,7 +1126,6 @@ LeanLimitsBigOp::$LIMITS_CTOR = [
     'max⁻¹' => Lean_argmax::class,
     'min⁻¹' => Lean_argmin::class,
 ];
-
 
 class Lean_bigcap extends LeanBigOperator
 {

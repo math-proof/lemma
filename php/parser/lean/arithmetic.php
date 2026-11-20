@@ -40,22 +40,7 @@ abstract class LeanArithmetic extends LeanBinary
         );
     }
 
-
-    public function holeRegexTag()
-    {
-        return null;
-    }
-
-    public function holeRegex($opts = [])
-    {
-        $tag = $this->holeRegexTag();
-        if (!$tag) return parent::holeRegex($opts);
-        $mul = ($tag === "Mul") ? ["isMul" => true, "subscript" => $this->subscript ?? ""] : null;
-        return holeRegexCombineArith($tag, $this->lhs, $this->rhs, $opts, $mul);
-    }
-
 }
-
 
 class LeanAdd extends LeanArithmetic
 {
@@ -69,11 +54,6 @@ class LeanAdd extends LeanArithmetic
             default:
                 return parent::__get($vname);
         }
-    }
-
-    public function holeRegexTag()
-    {
-        return "Add";
     }
 
 }
@@ -93,13 +73,7 @@ class LeanSub extends LeanArithmetic
         }
     }
 
-    public function holeRegexTag()
-    {
-        return "Sub";
-    }
-
 }
-
 
 class LeanMul extends LeanArithmetic
 {
@@ -169,13 +143,7 @@ class LeanMul extends LeanArithmetic
         return "%s $this->command %s";
     }
 
-    public function holeRegexTag()
-    {
-        return "Mul";
-    }
-
 }
-
 
 class Lean_times extends LeanArithmetic
 {
@@ -211,11 +179,6 @@ class LeanMatMul extends LeanArithmetic
     public function isMatMulContext()
     {
         return true;
-    }
-
-    public function holeRegexTag()
-    {
-        return "Dot";
     }
 
 }
@@ -264,7 +227,6 @@ class Lean_otimes extends LeanArithmetic
         }
     }
 }
-
 
 class Lean_oplus extends LeanArithmetic
 {
@@ -336,11 +298,6 @@ class LeanDiv extends LeanArithmetic
             return '\left. {%s} \right/ {%s}';
         }
         return '\frac {%s} {%s}';
-    }
-
-    public function holeRegexTag()
-    {
-        return "Div";
     }
 
 }
@@ -526,7 +483,6 @@ class LeanBitwiseOr extends LeanArithmetic
     }
 }
 
-
 class LeanPow extends LeanArithmetic
 {
     public static $input_priority = 80;
@@ -563,13 +519,7 @@ class LeanPow extends LeanArithmetic
         return [$lhsLatex, $rhs->toLatex($syntax)];
     }
 
-    public function holeRegexTag()
-    {
-        return "Pow";
-    }
-
 }
-
 
 class Lean_ll extends LeanArithmetic
 {
@@ -867,12 +817,6 @@ class LeanNeg extends LeanUnaryArithmeticPre
         return "$this->operator$sep%s";
     }
 
-
-    public function holeRegex($opts = [])
-    {
-        return holeRegexCombineUnary("Neg", $this->arg, $opts);
-    }
-
 }
 
 class LeanPlus extends LeanUnaryArithmeticPre
@@ -924,11 +868,6 @@ class LeanInv extends LeanUnaryArithmeticPost
     public function strFormat()
     {
         return "%s$this->operator";
-    }
-
-    public function holeRegex($opts = [])
-    {
-        return holeRegexCombineUnary("Inv", $this->arg, $opts);
     }
 
 }
@@ -1036,12 +975,6 @@ class Lean_sqrt extends LeanUnaryArithmeticPre
     public function strFormat()
     {
         return "$this->operator%s";
-    }
-
-
-    public function holeRegex($opts = [])
-    {
-        return holeRegexCombineUnary("Sqrt", $this->arg, $opts);
     }
 
 }

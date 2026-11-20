@@ -24,6 +24,10 @@ export class Lean_def extends LeanArgs {
         return 'def';
     }
 
+    get pathToken() {
+        return jsonHead(this.operator);
+    }
+
     /**
      * @param {string|Lean} accessibility
      * @param {Lean|number} name
@@ -88,7 +92,7 @@ export class Lean_def extends LeanArgs {
 
     toJSON() {
         const json = {
-            [jsonHead(this.operator)]: super.toJSON(),
+            [this.pathToken]: super.toJSON(),
             accessibility: this.accessibility,
         };
         if (this.attribute) json.attribute = this.attribute.toJSON();
@@ -428,7 +432,7 @@ export class Lean_let extends LeanSyntax {
 
     toJSON() {
         return {
-            [jsonHead(this.operator)]: this.args[0].toJSON(),
+            [this.pathToken]: this.args[0].toJSON(),
         };
     }
 
@@ -635,7 +639,7 @@ export class Lean_show extends LeanSyntax {
 
     toJSON() {
         return {
-            [jsonHead(this.operator)]: super.toJSON(),
+            [this.pathToken]: super.toJSON(),
         };
     }
 

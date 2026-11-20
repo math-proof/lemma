@@ -699,27 +699,6 @@ class LeanArgsSpaceSeparated extends LeanArgs
         }
     }
 
-
-    public function holeRegex($opts = [])
-    {
-        $head = $this->args[0] ?? null;
-        $rawHead = ($head instanceof LeanToken) ? ($head->text ?? "") : "";
-        $nameToken = $opts["nameToken"] ?? null;
-        $headTok = $rawHead ? (is_callable($nameToken) ? $nameToken($rawHead) : holeRegexDefaultNameToken($rawHead)) : "";
-        static $trig = null;
-        if ($trig === null) $trig = '/^(sin|cos|tan|cot|arctan|log|exp)$/i';
-        if ($headTok && preg_match($trig, $rawHead)) {
-            $inner = null;
-            foreach (array_slice($this->args, 1) as $arg) {
-                $frag = $arg ? $arg->holeRegex($opts) : null;
-                if ($frag !== null && $frag !== "") { $inner = $frag; break; }
-            }
-            if ($inner === null || $inner === "") return $headTok . "_";
-            return $headTok . wrapHoleOpt($inner);
-        }
-        return parent::holeRegex($opts);
-    }
-
 }
 
 class LeanArgsNewLineSeparated extends LeanArgs
@@ -1145,7 +1124,6 @@ class LeanArgsCommaNewLineSeparated extends LeanArgs
         $this->replace($caret, new LeanArgsCommaSeparated([$caret, $c2], $caret->indent, $caret->level));
         return $c2;
     }
-
 
     public function insert_newline($caret, $newline_count, $indent, $next)
     {

@@ -81,16 +81,6 @@ abstract class Node implements JsonSerializable {
         return (string)$this;
     }
 
-
-    public function holeRegex($opts = [])
-    {
-        if (isset($opts["frozen"]) && is_callable($opts["frozen"])) {
-            $f = $opts["frozen"]($this);
-            return ($f === null || $f === "") ? null : $f;
-        }
-        return null;
-    }
-
     public function getPreviousElementSibling() {
         if (!$this->parent) return null;
         $index = array_search($this, $this->parent->args, true);
@@ -242,7 +232,6 @@ abstract class IndentedNode extends Node {
         parent::__construct(['indent' => $indent], $parent);
     }
 }
-
 
 #[Attribute(Attribute::TARGET_METHOD)]
 class MatchCase implements DecoratorAttribute {

@@ -24,10 +24,6 @@ export class LeanSetOperator extends LeanBinary {
         return `%s ${this.operator} %s`;
     }
 
-    /** JSON head is the path token: `SDiff`, `Union`, `Inter`. */
-    toJSON() {
-        return { [this.pathToken]: [this.lhs.toJSON(), this.rhs.toJSON()] };
-    }
 }
 
 export class Lean_setminus extends LeanSetOperator {
@@ -43,11 +39,7 @@ export class Lean_setminus extends LeanSetOperator {
         return "SDiff";
     }
 
-    get holeRegexAltTag() {
-        return "SDiff";
-    }
 }
-
 
 export class Lean_cup extends LeanSetOperator {
     static { this.register(); }
@@ -62,11 +54,7 @@ export class Lean_cup extends LeanSetOperator {
         return "Union";
     }
 
-    get holeRegexAltTag() {
-        return "Union";
-    }
 }
-
 
 export class Lean_cap extends LeanSetOperator {
     static { this.register(); }
@@ -81,11 +69,7 @@ export class Lean_cap extends LeanSetOperator {
         return "Inter";
     }
 
-    get holeRegexAltTag() {
-        return "Inter";
-    }
 }
-
 
 /** `⊆`. */
 export class Lean_subseteq extends LeanBinaryBoolean {
@@ -98,10 +82,6 @@ export class Lean_subseteq extends LeanBinaryBoolean {
     }
 
     get pathToken() {
-        return "Subset";
-    }
-
-    get holeRegexTag() {
         return "Subset";
     }
 

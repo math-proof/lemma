@@ -331,29 +331,6 @@ class LeanProperty extends LeanBinary
         return "%s$this->operator%s";
     }
 
-
-    public function holeRegex($opts = [])
-    {
-        $obj = $this->lhs;
-        $prop = $this->rhs;
-        $rawProp = ($prop instanceof LeanToken) ? ($prop->text ?? "") : "";
-        $nameToken = $opts["nameToken"] ?? null;
-        $propTok = $rawProp ? (is_callable($nameToken) ? $nameToken($rawProp) : holeRegexDefaultNameToken($rawProp)) : "";
-        static $trig = null;
-        if ($trig === null) $trig = '/^(sin|cos|tan|cot|arctan|log|exp)$/i';
-        if ($propTok && preg_match($trig, $rawProp)) {
-            $innerOpts = $opts;
-            $innerOpts["inTrigProp"] = true;
-            $inner = $obj ? $obj->holeRegex($innerOpts) : null;
-            if ($inner === null || $inner === "") return $propTok . "_";
-            return $propTok . wrapHoleOpt($inner);
-        }
-        $inner = $obj ? $obj->holeRegex($opts) : null;
-        if ($propTok && ($inner === null || $inner === "")) return escapeHoleReLit($propTok);
-        if ($propTok && $inner) return escapeHoleReLit($propTok) . wrapHoleOpt($inner);
-        return $inner;
-    }
-
 }
 
 // END OF property family (LeanParser stays in lean.php)

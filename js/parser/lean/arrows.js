@@ -8,7 +8,7 @@
  */
 import { LeanBinary, LeanUnary } from './abstract.js';
 import { Lean } from './base.js';
-import { holeRegexCombineRel, pathImpInfixChoices } from './pathChoices.js';
+import { pathImpInfixChoices } from './pathChoices.js';
 
 const L = Lean.classes;
 
@@ -20,16 +20,6 @@ export class LeanRightarrow extends LeanBinary {
     get operator() {
         return '=>';
     }
-
-    /**
-     * Hole-regex: drop guard; path follows conclusion (rhs).
-     * @param {object} [opts]
-     * @returns {string|null}
-     */
-    holeRegex(opts = {}) {
-        return this.rhs?.holeRegex?.(opts) ?? null;
-    }
-
 
     echo() {
         const token = [];
@@ -177,17 +167,6 @@ export class Lean_rightarrow extends LeanBinary {
     }
 
     /**
-     * Hole-regex: binary Imp (antecedent + consequent), like Eq/Iff/And.
-     * Do not peel to rhs — that flattens P -> Q into Q and drops Imp
-     * (e.g. All_EqProb_Eq0 instead of All_...Imp...).
-     * @param {object} [opts]
-     * @returns {string|null}
-     */
-    holeRegex(opts = {}) {
-        return holeRegexCombineRel("Imp", this.lhs, this.rhs, opts);
-    }
-
-    /**
      * Imp as a binary path op (like And): LHS/imp/RHS and Imp(LHS)(RHS).
      * @param {object} [opts]
      * @returns {string[]}
@@ -198,7 +177,6 @@ export class Lean_rightarrow extends LeanBinary {
             this.rhs?.pathChoices?.(opts) ?? [""],
         ).stems;
     }
-
 
     /** `→ₗ` or `→L` rendered with the subscript attached (for echo / str). */
     arrowStr() {
@@ -329,7 +307,6 @@ export class Lean_mapsto extends LeanBinary {
         return `%s ${this.operator}${sep}%s`;
     }
 }
-
 
 export class Lean_rightharpoonup extends LeanBinary {
     static { this.register(); }

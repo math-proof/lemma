@@ -9,7 +9,6 @@
  */
 import { leanSubtreeContains, token2classname } from './utility.js';
 import { Lean, jsonHead } from './base.js';
-import { collectHoleRegexAlternatives } from './holeRegexAlternatives.js';
 
 const L = Lean.classes;
 
@@ -198,14 +197,6 @@ export class LeanUnary extends LeanArgs {
         this.arg = newNode;
     }
 
-    /**
-     * Hole-regex alternatives for this unary operator or function.
-     * @param {object} [opts]
-     * @returns {string[]}
-     */
-    holeRegexAlternatives(opts = {}) {
-        return collectHoleRegexAlternatives(this, opts);
-    }
 }
 
 // Paired delimiters live in ./lean/paired.js and register themselves in `Lean.classes`.
@@ -214,6 +205,10 @@ export class LeanBinary extends LeanArgs {
     static { this.register(); }
 
     static input_priority = 47;
+
+    get pathToken() {
+        return jsonHead(this.func);
+    }
 
     /**
      * @param {Lean} lhs
@@ -264,18 +259,7 @@ export class LeanBinary extends LeanArgs {
     }
 
     toJSON() {
-        return { [jsonHead(this.func)]: [this.lhs.toJSON(), this.rhs.toJSON()] };
-    }
-
-    /**
-     * Hole-regex alternatives: the fully expanded tree, plus same-head
-     * collapses (e.g. two Adds under Mul → MulAddS…). Any operator
-     * or function with a holeRegexTag uses this walk.
-     * @param {object} [opts]
-     * @returns {string[]}
-     */
-    holeRegexAlternatives(opts = {}) {
-        return collectHoleRegexAlternatives(this, opts);
+        return { [this.pathToken]: [this.lhs.toJSON(), this.rhs.toJSON()] };
     }
 
     latexFormat() {

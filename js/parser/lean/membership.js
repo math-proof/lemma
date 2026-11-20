@@ -81,8 +81,4 @@ export class Lean_leftrightarrow extends LeanBinaryBoolean {
         return "Iff";
     }
 
-    get holeRegexTag() {
-        return "Iff";
-    }
-
 }

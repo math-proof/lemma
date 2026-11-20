@@ -13,7 +13,7 @@
 import { escapeSpecialsForLatex } from './utility.js';
 import { LeanBinaryBoolean } from './boolean.js';
 import { Lean } from './base.js';
-import { pathEqCombineChoices, pathCombineIndepChoices, pathEqInfixChoices, pathStripTrailingHoles, storedHoleOpt } from './pathChoices.js';
+import { pathEqCombineChoices, pathCombineIndepChoices, pathEqInfixChoices, pathStripTrailingHoles } from './pathChoices.js';
 
 const L = Lean.classes;
 
@@ -67,32 +67,6 @@ export class LeanRelational extends LeanBinaryBoolean {
         return [lhs.toLatex(syntax), rhs.toLatex(syntax)];
     }
 
-    /**
-     * `0 < _` is `Lt(0)_`. Both holes are `Lt__`. A filled right is `Lt_(R)`.
-     * @returns {string|null}
-     */
-    storedHoleRegex(opts, binders) {
-        const tag = this.holeRegexTag;
-        if (!/^(?:Lt|Gt|Le|Ge)$/.test(tag || "")) return null;
-        if (typeof opts.isHole !== "function" || typeof opts.decomp !== "function") return null;
-        const lhs = this.lhs ?? this.args?.[0];
-        const rhs = this.rhs ?? this.args?.[1];
-        const lHole = opts.isHole(lhs, opts, binders);
-        const rHole = opts.isHole(rhs, opts, binders);
-        if (lHole && rHole) return tag + "__";
-        if (lHole) {
-            const R = opts.decomp(rhs, binders);
-            return R ? tag + "_" + storedHoleOpt(R) : null;
-        }
-        if (rHole) {
-            const L = opts.decomp(lhs, binders);
-            return L ? tag + storedHoleOpt(L) + "_" : null;
-        }
-        const L = opts.decomp(lhs, binders);
-        const R = opts.decomp(rhs, binders);
-        if (!L || !R) return null;
-        return tag + storedHoleOpt(L) + storedHoleOpt(R);
-    }
 }
 
 /** Relational / equality binary nodes (`>`, `≥`, `=`, `≃`, `∣`, …). */
@@ -101,10 +75,6 @@ export class Lean_gt extends LeanRelational {
 
     get operator() {
         return '>';
-    }
-
-    get holeRegexTag() {
-        return "Gt";
     }
 
 }
@@ -155,10 +125,6 @@ export class Lean_ge extends LeanFilterRelational(LeanRelational) {
         return '≥';
     }
 
-    get holeRegexTag() {
-        return "Ge";
-    }
-
 }
 export class Lean_lt extends LeanRelational {
     static { this.register(); }
@@ -167,20 +133,12 @@ export class Lean_lt extends LeanRelational {
         return '<';
     }
 
-    get holeRegexTag() {
-        return "Lt";
-    }
-
 }
 export class Lean_le extends LeanFilterRelational(LeanRelational) {
     static { this.register(); }
 
     get operator() {
         return '≤';
-    }
-
-    get holeRegexTag() {
-        return "Le";
     }
 
 }
@@ -200,24 +158,6 @@ export class LeanEq extends LeanRelational {
     get operator() {
         return '=';
     }
-
-    get holeRegexTag() {
-        return "Eq";
-    }
-
-    /** Left must itself be a group. A hole right is `Eq(L)_`. */
-    storedHoleRegex(opts, binders) {
-        if (typeof opts.isHole !== "function" || typeof opts.decomp !== "function") return null;
-        const lhs = this.lhs ?? this.args?.[0];
-        const rhs = this.rhs ?? this.args?.[1];
-        const L = opts.decomp(lhs, binders);
-        if (!L) return null;
-        if (opts.isHole(rhs, opts, binders)) return "Eq" + storedHoleOpt(L) + "_";
-        const R = opts.decomp(rhs, binders);
-        if (!R) return null;
-        return "Eq" + storedHoleOpt(L) + storedHoleOpt(R);
-    }
-
 
     /** Echo operator: `=` + superscript + optional `[modifier]`. */
     opStr() {
@@ -473,10 +413,6 @@ export class Lean_ne extends LeanRelational {
         return '≠';
     }
 
-    get holeRegexTag() {
-        return "Ne";
-    }
-
 }
 export class Lean_equiv extends LeanRelational {
     static { this.register(); }
@@ -605,10 +541,6 @@ export class LeanDvd extends LeanRelational {
 
     get operator() {
         return '∣';
-    }
-
-    get holeRegexTag() {
-        return "Dvd";
     }
 
 }

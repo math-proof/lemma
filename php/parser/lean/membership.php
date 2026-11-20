@@ -74,9 +74,4 @@ class Lean_leftrightarrow extends LeanBinaryBoolean
         }
     }
 
-    public function holeRegexTag()
-    {
-        return "Iff";
-    }
-
 }
