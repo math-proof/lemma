@@ -8,6 +8,14 @@
     "Le(AddSumS_(Square(Sub(Get__)(Div(Sum_(Get__))_))))(AddSumS_(Square(Sub(Get__)(Div(Sum_(Get__))(Card_)))))",
     "LeAddSSumS_(Square(Sub(Get__)(Div(Sum_(Get__))_)))"
   ],
+  "suggestion": "LeAddSum_SquareSub_DivSum_Get__AddCard__SumSDiff_Brace_SquareSubGet__DivSumSDiff_Brace_Get__SubCard_1",
+  "pluralSuggestion": [
+    "LeAddSSum_SquareSubGet__Div__Sum_SquareSubGet__DivSum_Get",
+    "LeAddSumS_SquareSubGet__Div__AddSum_SquareSubGet__DivSum_Get__Card_Sum_SquareSubGet__DivSum_Get__Card",
+    "LeAddSum_SquareSub_DivSum_Get__AddCard__SumSDiff_Brace_SquareSubGet__DivSumSDiff_Brace_Get__SubCard_1",
+    "LeAddSumS_SquareSubGet__Div__AddSumS_SquareSubGet__DivSum_Get__Card",
+    "LeAddSSumS_SquareSubGet__DivSum_Get"
+  ],
   "json": {
     "Le": [
       {

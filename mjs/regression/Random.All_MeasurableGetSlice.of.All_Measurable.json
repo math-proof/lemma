@@ -2,6 +2,8 @@
   "lean": "∀ k : ℕ, Measurable s[:k]",
   "regex": "All_(Measurable(Get_(Slice_)))",
   "plural": [],
+  "suggestion": "All_MeasurableGet_Slice",
+  "pluralSuggestion": [],
   "json": {
     "All": [
       "_",

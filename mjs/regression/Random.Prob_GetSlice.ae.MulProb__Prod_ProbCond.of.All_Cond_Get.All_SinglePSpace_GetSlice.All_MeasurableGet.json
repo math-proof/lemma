@@ -4,6 +4,10 @@
   "plural": [
     "Mul(Prob_(Get_(0)))(Prod(Range_)(Prob_(CondGetS__)))"
   ],
+  "suggestion": "MulProb_Get_0ProdRange_Prob_CondGet_Add_1Get",
+  "pluralSuggestion": [
+    "MulProb_Get_0ProdRange_Prob_CondGetS"
+  ],
   "json": {
     "Mul": [
       {

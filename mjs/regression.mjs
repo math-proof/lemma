@@ -4,12 +4,15 @@
  * Each fixture is `{ "lean": <Lean type expression>, "regex": <hole regex>,
  * "plural": [...], "json": <LeanNode.toJSON()> }`.
  *
- * Three independent, read-only checks per fixture:
+ * Five read-only checks per fixture:
  *   1. `json`  — parse `lean`, locate the statement node, and require its
  *      `toJSON()` to deep-equal the stored `json` field (key order ignored).
  *   2. `regex` — require `json2regex(stored json)` to equal `regex`.
  *   3. `plural`— require `json2plural(stored json)` to equal `plural`
  *      (as a set; order is not significant).
+ *   4. `suggestion` — match the stored path against `regex`.
+ *   5. `pluralSuggestion` — match each stored path against its paired `plural`
+ *      regex in fixture order.
  *
  * The runner never writes to the fixtures; regenerating them is a separate,
  * deliberate step.
@@ -21,7 +24,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { compile } from "../js/parser/lean.js";
 import { strStmt } from "../js/parser/lean/utility.js";
-import { json2regex, json2plural } from "../js/parser/lean/json2regex.js";
+import { json2regex, json2plural, suggestionMatches } from "../js/parser/lean/json2regex.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -107,6 +110,9 @@ for (const name of files) {
 
   // Check 3: S-plural variants, compared as a set (order is not significant).
   const wantPlural = Array.isArray(doc.plural) ? doc.plural : [];
+  if (!Array.isArray(doc.plural) || !wantPlural.every((regex) => typeof regex === "string")) {
+    problems.push("plural must be an array of regex strings");
+  }
   let plurals = null;
   try {
     plurals = [...new Set(json2plural(doc.json))].sort();
@@ -118,6 +124,20 @@ for (const name of files) {
     if (JSON.stringify(plurals) !== JSON.stringify(want)) {
       problems.push(`plural mismatch\n  got:  ${show(plurals)}\n  want: ${show(want)}`);
     }
+  }
+
+  if (!suggestionMatches(doc.regex, doc.suggestion)) {
+    problems.push(`suggestion mismatch\n  path:  ${show(doc.suggestion)}\n  regex: ${show(doc.regex)}`);
+  }
+  if (!Array.isArray(doc.pluralSuggestion) || doc.pluralSuggestion.length !== wantPlural.length) {
+    problems.push(`pluralSuggestion must contain one path for each of the ${wantPlural.length} plural regexes`);
+  } else {
+    wantPlural.forEach((regex, i) => {
+      const suggestion = doc.pluralSuggestion[i];
+      if (!suggestionMatches(regex, suggestion)) {
+        problems.push(`pluralSuggestion[${i}] mismatch\n  path:  ${show(suggestion)}\n  regex: ${show(regex)}`);
+      }
+    });
   }
 
   let node = null;

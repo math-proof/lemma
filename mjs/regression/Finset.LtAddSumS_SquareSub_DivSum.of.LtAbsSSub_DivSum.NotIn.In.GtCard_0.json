@@ -4,6 +4,10 @@
   "plural": [
     "LtAbsS(Sub(Get__)(Div(Sum_(Get__))(Card_)))"
   ],
+  "suggestion": "LtAbsSubGet__DivSum_Get__Card_AbsSubGet__DivSum_Get__Card",
+  "pluralSuggestion": [
+    "LtAbsSSubGet__DivSum_Get__Card"
+  ],
   "json": {
     "Lt": [
       {

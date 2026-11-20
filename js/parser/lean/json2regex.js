@@ -47,6 +47,61 @@ export function json2regex(node) {
     return convert(node) ?? "_";
 }
 
+function matchImplyHoleRegex(regex, suggestion) {
+    const pattern = new RegExp("^" + regex.replaceAll("(", "(_|") + "$");
+    // Each explicit hole or omitted group can contribute one padding character.
+    const maxPadding = regex.match(/[_\(]/g)?.length ?? 0;
+    for (let padding = 0; padding <= maxPadding; padding++) {
+        if (pattern.test(suggestion + "_".repeat(padding))) return true;
+    }
+    return false;
+}
+
+/** Check a path suggestion against a stored hole-regex. */
+export function suggestionMatches(regex, suggestion) {
+    return typeof regex === "string" && typeof suggestion === "string" &&
+        suggestion.length > 0 && !/_{3,}|_$/.test(suggestion) &&
+        matchImplyHoleRegex(regex, suggestion);
+}
+
+/** Walk the stored groups and return the longest valid suggestion. */
+export function regex2suggestion(regex) {
+    const tokens = regex.match(/[()]|_+|[^()_]+/g) ?? [];
+    let index = 0;
+
+    function keepLongest(states, pending, path) {
+        if (path.length > (states.get(pending)?.length ?? -1)) states.set(pending, path);
+    }
+
+    // Keep the best prefix for each run of pending underscores. A run may
+    // exceed two only while it can still become trailing padding.
+    function walk(states) {
+        while (index < tokens.length && tokens[index] !== ")") {
+            const token = tokens[index++];
+            const next = new Map();
+            if (token === "(") {
+                for (const [pending, path] of walk(states)) keepLongest(next, pending, path);
+                index++;
+                for (const [pending, path] of states) keepLongest(next, pending + 1, path);
+            } else if (token.startsWith("_")) {
+                for (const [pending, path] of states) keepLongest(next, pending + token.length, path);
+            } else {
+                for (const [pending, path] of states) {
+                    if (pending <= 2) keepLongest(next, 0, path + "_".repeat(pending) + token);
+                }
+            }
+            states = next;
+        }
+        return states;
+    }
+
+    let suggestion = "";
+    for (const path of walk(new Map([[0, ""]])).values()) {
+        if (path.length > suggestion.length && suggestionMatches(regex, path)) suggestion = path;
+    }
+    return suggestion;
+}
+
 /** Canonical text, used only to decide whether two arguments are identical. */
 function canon(node) {
     if (Array.isArray(node)) return `[${node.map(canon).join(",")}]`;
