@@ -278,17 +278,43 @@ export class LeanBigOperator extends LeanArgs {
     }
 
     /**
-     * `[bound, scope]`, except a typed or boolean-binary binder (`∀ k : ℕ, P`,
-     * `∑ x ∈ X, f`) keeps only its right side: `[ℕ, P]` / `[X, f]`.
-     * Logic binders (`∧`/`∨`) keep the whole bound.
+     * Domain operand for JSON: `[bound, scope]`, except a typed or
+     * boolean-binary binder (`∀ k : ℕ, P`, `∑ x ∈ X, f`) keeps only its right
+     * side: `[ℕ, P]` / `[X, f]`. Logic binders (`∧`/`∨`) keep the whole bound.
      */
-    toJSON() {
+    get jsonDomain() {
         const bound = this.bound;
-        const first = bound instanceof L.LeanColon ||
+        return bound instanceof L.LeanColon ||
             (bound instanceof L.LeanBinaryBoolean && !(bound instanceof L.LeanLogic))
             ? bound.rhs
             : bound;
-        const args = [first, this.scope].filter(Boolean).map((a) => a.toJSON());
+    }
+
+    /**
+     * Stacked big operators: does `node` contain an operator of this class whose
+     * JSON domain stringifies to `want`? Each operator is compared through its
+     * own unholed `jsonDomain`, so the answer does not depend on nesting depth.
+     */
+    static jsonNestedSameDomain(node, want) {
+        if (!node || typeof node !== "object") return false;
+        if (node instanceof this) {
+            const domain = node.jsonDomain;
+            if (domain && JSON.stringify(domain.toJSON()) === want) return true;
+        }
+        for (const arg of node.args ?? []) {
+            if (this.jsonNestedSameDomain(arg, want)) return true;
+        }
+        return false;
+    }
+
+    toJSON() {
+        const args = [this.jsonDomain, this.scope].filter(Boolean).map((a) => a.toJSON());
+        // Stacked big operators: an outer domain that a nested same-class
+        // operator already states is redundant, so it serialises as a hole.
+        if (args.length === 2 && args[0] !== "_" &&
+            this.constructor.jsonNestedSameDomain(this.scope, JSON.stringify(args[0]))) {
+            args[0] = "_";
+        }
         return {
             [this.jsonHeadName]: args,
         };
