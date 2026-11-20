@@ -4,10 +4,12 @@
  * Each fixture is `{ "lean": <Lean type expression>, "regex": <hole regex>,
  * "plural": [...], "json": <LeanNode.toJSON()> }`.
  *
- * Two independent, read-only checks per fixture:
+ * Three independent, read-only checks per fixture:
  *   1. `json`  — parse `lean`, locate the statement node, and require its
  *      `toJSON()` to deep-equal the stored `json` field (key order ignored).
  *   2. `regex` — require `json2regex(stored json)` to equal `regex`.
+ *   3. `plural`— require `json2plural(stored json)` to equal `plural`
+ *      (as a set; order is not significant).
  *
  * The runner never writes to the fixtures; regenerating them is a separate,
  * deliberate step.
@@ -19,7 +21,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { compile } from "../js/parser/lean.js";
 import { strStmt } from "../js/parser/lean/utility.js";
-import { json2regex } from "../js/parser/lean/json2regex.js";
+import { json2regex, json2plural } from "../js/parser/lean/json2regex.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -101,6 +103,21 @@ for (const name of files) {
   }
   if (rendered !== null && rendered !== doc.regex) {
     problems.push(`regex mismatch\n  got:  ${show(rendered)}\n  want: ${show(doc.regex)}`);
+  }
+
+  // Check 3: S-plural variants, compared as a set (order is not significant).
+  const wantPlural = Array.isArray(doc.plural) ? doc.plural : [];
+  let plurals = null;
+  try {
+    plurals = [...new Set(json2plural(doc.json))].sort();
+  } catch (e) {
+    problems.push(`json2plural error: ${e.message}`);
+  }
+  if (plurals !== null) {
+    const want = [...new Set(wantPlural)].sort();
+    if (JSON.stringify(plurals) !== JSON.stringify(want)) {
+      problems.push(`plural mismatch\n  got:  ${show(plurals)}\n  want: ${show(want)}`);
+    }
   }
 
   let node = null;
