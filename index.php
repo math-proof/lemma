@@ -239,6 +239,27 @@ if (isset($_GET['lemma']) && is_string($_GET['lemma']) && trim($_GET['lemma']) !
     }
 }
 
+/**
+ * Legacy `?module=<Lemma-relative module>`: without a top-level prefix the module
+ * resolves under `Lemma/`, so it is a lemma address — canonicalise it to `?lemma=`.
+ * Setting `$declParam` early also keeps the normalising redirects below on `?lemma=`,
+ * so the user sees one hop.
+ */
+$fromModuleParam = isset($_GET['module']) && $declParam === 'module';
+$moduleFrag = '';
+if ($fromModuleParam) {
+    $normalized = str_replace('/', '.', trim($module));
+    $hash = strpos($normalized, '#');
+    if ($hash !== false) {
+        $moduleFrag = substr($normalized, $hash + 1);
+        $normalized = substr($normalized, 0, $hash);
+    }
+    if (!is_top_level_folder(explode('.', $normalized)[0])) {
+        $declParam = 'lemma';
+        $module = $normalized;
+    }
+}
+
 if (str_ends_with($module, '.lean')) {
     $module = lean_to_module($module);
     redirect_module($module, $declParam);
@@ -524,6 +545,10 @@ if (! str_ends_with($path_info, '/')) {
         }
     }
 }
+
+/** Legacy `?module=` lemma address: emit the single `?lemma=` hop instead of rendering. */
+if ($fromModuleParam && $declParam === 'lemma')
+    redirect_decl_param('lemma', $module, $moduleFrag);
 
 $php = $leanFile ? 'lemma' : 'package';
 require_once  "php/$php.php";
