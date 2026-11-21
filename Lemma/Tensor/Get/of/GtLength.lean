@@ -1,4 +1,4 @@
-import Instance.Data.Tensor.Tensor.Part2
+import Instance.Data.Tensor.Tensor
 
 
 @[path]
@@ -10,7 +10,8 @@ private lemma main
 -- imply
   X[i] = X.get ⟨i, h⟩ := by
 -- proof
-  simp [GetElem.getElem]
+  rfl
 
 
 -- created on 2025-07-10
+-- updated on 2026-11-20

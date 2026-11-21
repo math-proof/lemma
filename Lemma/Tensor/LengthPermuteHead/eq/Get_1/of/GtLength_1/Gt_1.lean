@@ -1,6 +1,4 @@
-import Lemma.List.GetRotate.eq.Ite.of.GeLength.GtLength
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Def.Data.Tensor.Defs.Part4
 import Notation.Data.Tensor.Permute
 open List Tensor
 
@@ -14,31 +12,16 @@ private lemma main
 -- imply
   (X.permuteHead d).length = s[1] := by
 -- proof
+  have h_min := lt_min h_d h
+  have h_take : 1 < (s.take d).length := by simpa using h_min
   rw [Length.eq.Get_0.of.GtLength_0]
   ·
-    rw [GetAppend.eq.Get.of.GtLength]
-    ·
-      rw [GetRotate.eq.Ite.of.GeLength.GtLength]
-      ·
-        split_ifs with h_pos
-        ·
-          simp
-        ·
-          simp at h_pos
-          grind
-      ·
-        simp
-        omega
-      ·
-        simp
-        omega
-    ·
-      simp
-      omega
+    rw [List.getElem_append_left (by simpa using Nat.zero_lt_of_lt h_take), List.getElem_rotate]
+    simp [Nat.mod_eq_of_lt h_min]
   ·
     simp
-    left
     omega
 
 
 -- created on 2025-11-03
+-- updated on 2026-11-20

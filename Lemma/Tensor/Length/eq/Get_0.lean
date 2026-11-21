@@ -1,5 +1,5 @@
-import Lemma.Nat.Gt_0
-import Lemma.Tensor.GtLength_0.of.GtLength_0
+import Theorem.Nat.Gt_0
+import Theorem.Tensor.GtLength_0.of.GtLength_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 open Nat Tensor
 
@@ -14,7 +14,6 @@ private lemma main
 -- proof
   Length.eq.Get_0.of.GtLength_0 _ X
 
-
 @[path]
 private lemma list
 -- given
@@ -27,3 +26,4 @@ private lemma list
 
 
 -- created on 2026-07-12
+-- updated on 2026-11-20

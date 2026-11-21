@@ -1,12 +1,13 @@
-import Lemma.Bool.Cast.of.SEq.Eq
-import Def.Data.Tensor.Prod
-import Lemma.Vector.SEqRepeat_Div
-import Def.Data.Tensor.Defs.Part4
-import Def.Data.Tensor.Reshape
 import Def.Data.Tensor.Unsqueeze
-open Bool List Vector
+open List
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.Unsqueeze.eq.Reshape |
+| comm | Tensor.Reshape.eq.Unsqueeze |
+-/
 @[path, comm]
 private lemma main
   {s : List ℕ}
@@ -14,9 +15,10 @@ private lemma main
   (X : Tensor α s)
   (d : ℕ) :
 -- imply
-  X.unsqueeze d = X.reshape (s.insertIdx d 1) (by simp [Prod.eq.ProdInsertIdx s d]) := by
+  X.unsqueeze d = X.reshape (s.insertIdx d 1) (by simp [ProdInsertIdx.eq.Prod s d]) := by
 -- proof
-  simp [Tensor.unsqueeze]
+  rfl
 
 
 -- created on 2026-07-12
+-- updated on 2026-11-20

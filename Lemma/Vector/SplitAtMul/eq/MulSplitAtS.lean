@@ -1,5 +1,5 @@
 import Lemma.Vector.GetMul.eq.MulGet
-import Lemma.Vector.GetMul.eq.MulGetS
+import Theorem.Vector.GetMul.eq.MulGetS
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 open Vector
 
@@ -21,3 +21,4 @@ private lemma main
 
 
 -- created on 2025-12-03
+-- updated on 2026-11-20

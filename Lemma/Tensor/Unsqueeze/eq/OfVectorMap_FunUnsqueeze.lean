@@ -1,8 +1,8 @@
+import Theorem.Fin.Any_Eq_AddMul.of.Lt_Mul
+import Def.Data.Tensor.Defs.Part2
 import Lemma.Bool.EqCast.of.HEq
-import Def.Data.Tensor.Unsqueeze
-import Def.Data.Tensor.Prod
 import Lemma.Fin.HEqFinS.of.Eq.Eq.Lt
-import Lemma.Nat.EqDivMul.of.Ne_0
+import Theorem.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.EqValCast.of.Lt.Eq
 import Lemma.Tensor.Unsqueeze.eq.TensorMap_FunGetData
 import Lemma.Vector.MapMap.eq.Map_Comp
@@ -47,7 +47,8 @@ private lemma main
     grind
   have h_bound : X.length / n ≤ n * s.prod - ↑(List.Vector.range n)[i] * (X.length / n) := by
     simp [GetElem.getElem, EqGetRange.fin i]
-    simpa only [← h_prod] using! Le_SubMulS.of.Lt i.isLt (X.length / n)
+    apply (Le_SubMulS.of.Lt i.isLt (X.length / n)).trans_eq
+    apply congrArg (fun k => n * k - i.val * (X.length / n)) h_prod
   have h_get := GetCast_Map.eq.UFnGet.of.Eq.Lt.fin (i := i) (n := ((n :: s).take 1).prod) (n' := (n :: s).headD 1) (by simp_all) (by simp_all) (X.splitAt 1) (fun X ↦ (⟨X⟩ : Tensor α s))
   have h_split := GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop.fin (s := n :: s) (d := 1) (i := i) (j := (cast h_eq (List.Vector.range (s.insertIdx d 1).prod)[j]).val)
     (by simp_all) (by simp_all) X
@@ -72,4 +73,4 @@ private lemma main
 
 
 -- created on 2025-07-13
--- updated on 2026-10-26
+-- updated on 2026-11-21

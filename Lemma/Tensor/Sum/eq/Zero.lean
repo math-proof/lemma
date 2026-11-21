@@ -1,7 +1,7 @@
 import Lemma.Tensor.DataSum_0.eq.SumSplitAtData
 import Def.Data.Tensor.Sum
-import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Tensor.EqData0'0
+import Theorem.Tensor.Eq.is.EqDataS
+import Theorem.Tensor.EqData0'0
 open Tensor Vector
 
 
@@ -23,4 +23,4 @@ private lemma main
 
 
 -- created on 2025-09-04
--- updated on 2026-10-26
+-- updated on 2026-11-21

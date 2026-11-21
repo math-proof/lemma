@@ -1,5 +1,5 @@
 import Lemma.Vector.GetCast.eq.Get.of.Eq
-import Lemma.Vector.GetMul.eq.MulGetS
+import Theorem.Vector.GetMul.eq.MulGetS
 open Vector
 
 
@@ -20,3 +20,4 @@ private lemma main
 
 
 -- created on 2025-12-01
+-- updated on 2026-11-20

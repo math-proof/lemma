@@ -1,3 +1,4 @@
+import Def.Data.Vector.Basic
 import Lemma.Vector.EqGet0_0
 import Lemma.Vector.Zero.eq.Replicate
 open Vector
@@ -18,3 +19,4 @@ private lemma main
 
 
 -- created on 2026-09-16
+-- updated on 2026-11-20

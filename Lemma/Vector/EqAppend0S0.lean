@@ -1,4 +1,4 @@
-import Lemma.Vector.EqGet0_0
+import Theorem.Vector.EqGet0_0
 import Lemma.Vector.GetAppend.eq.Get.of.Lt
 import Lemma.Vector.GetAppend.eq.Get_Sub.of.Lt_Add.Ge
 open Vector
@@ -22,3 +22,4 @@ private lemma main
 
 
 -- created on 2026-07-12
+-- updated on 2026-11-20

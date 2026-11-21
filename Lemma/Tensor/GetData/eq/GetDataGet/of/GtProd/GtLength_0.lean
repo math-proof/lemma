@@ -1,3 +1,4 @@
+import Instance.Data.Tensor.Tensor
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.List.GtProdTail_0.of.GtProd_0
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflattenCast
@@ -5,6 +6,12 @@ import Instance.Data.Tensor.Tensor.Part2
 open Vector List Tensor Nat
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.GetData.eq.GetDataGet.of.GtProd.GtLength_0 |
+| fin | Tensor.GetData.eq.GetDataGet.of.GtProd.GtLength_0.fin |
+-/
 @[path, fin]
 private lemma main
 -- given
@@ -16,10 +23,10 @@ private lemma main
   have h_i_div : i / s.tail.prod < s[0] := by
     rw [h_prod] at h_i
     apply LtDiv.of.Lt_Mul h_i
-  have h_i_div : i / s.tail.prod < X.length := by
+  have : i / s.tail.prod < X.length := by
     rwa [← Length.eq.Get_0.of.GtLength_0 h_s X] at h_i_div
   have h_pos : s.tail.prod > 0 := GtProdTail_0.of.GtProd_0 (by grind)
-  have h_i_mod := LtMod.of.Gt_0 h_pos i
+  have := LtMod.of.Gt_0 h_pos i
   X.data[i]'(by simpa) = X[i / s.tail.prod].data[i % s.tail.prod] := by
 -- proof
   intro h_prod
@@ -48,3 +55,4 @@ private lemma main
 
 
 -- created on 2026-04-08
+-- updated on 2026-11-21

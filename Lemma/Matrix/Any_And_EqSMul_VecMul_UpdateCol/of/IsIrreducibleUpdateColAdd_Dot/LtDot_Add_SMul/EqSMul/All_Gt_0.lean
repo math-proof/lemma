@@ -1,7 +1,7 @@
 import Mathlib.LinearAlgebra.Matrix.Irreducible.Defs
 import Lemma.Matrix.Any_Gt_0AndAny_All_Gt_0AndEqVecMulSMul.of.All_Any_GtGetPow_0.All_Ge_0
 import Lemma.Matrix.Lt.of.EqMulVec__SMul.LtDotS_Fun.All_Eq.EqSMul.Gt_Neg1.Gt_Neg1.All_Gt_0
-import Theorem.Data.Vector.Basic.Part2
+import Theorem.Data.Vector.Basic
 open Matrix
 open scoped Matrix
 

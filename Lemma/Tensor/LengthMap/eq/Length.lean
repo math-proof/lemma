@@ -1,3 +1,4 @@
+import Def.Data.Tensor.Defs
 import Def.Data.Tensor.Defs.Part4
 
 
@@ -14,3 +15,4 @@ private lemma main
 
 
 -- created on 2025-12-23
+-- updated on 2026-11-20

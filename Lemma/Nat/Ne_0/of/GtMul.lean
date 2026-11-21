@@ -1,4 +1,5 @@
-import Lemma.Nat.Gt_0.of.GtMul
+import Theorem.Nat.Gt_0.of.GtMul
+import Initialize.Tactic.Attr.Basic
 open Nat
 
 
@@ -13,7 +14,6 @@ private lemma left
   have := Gt_0.of.GtMul.left h
   omega
 
-
 @[path]
 private lemma main
   {k n m : ℕ}
@@ -27,3 +27,4 @@ private lemma main
 
 
 -- created on 2026-07-13
+-- updated on 2026-11-21

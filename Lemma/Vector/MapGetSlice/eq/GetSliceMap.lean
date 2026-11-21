@@ -1,4 +1,5 @@
-import Theorem.Data.Vector.Basic.Part2
+import Def.Data.Vector.Basic
+import Theorem.Data.Vector.Basic
 
 
 /--
@@ -9,7 +10,6 @@ import Theorem.Data.Vector.Basic.Part2
 -/
 @[path, comm]
 private lemma main
-  {β : Type*}
 -- given
   (v : List.Vector α n)
   (f : α → β)
@@ -23,3 +23,4 @@ private lemma main
 
 
 -- created on 2026-08-15
+-- updated on 2026-11-20

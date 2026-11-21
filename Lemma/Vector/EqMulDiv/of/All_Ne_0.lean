@@ -1,10 +1,16 @@
-import Lemma.Rat.EqMulDiv.of.Ne_0
-import Lemma.Vector.GetDiv.eq.DivGetS
+import Theorem.Rat.EqMulDiv.of.Ne_0
+import Theorem.Vector.GetDiv.eq.DivGetS
 import Lemma.Vector.Eq.is.All_EqGetS
-import Lemma.Vector.GetMul.eq.MulGetS
+import Theorem.Vector.GetMul.eq.MulGetS
 open Vector Rat
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Vector.EqMulDiv.of.All_Ne_0 |
+| fin 1 | Vector.EqMulDiv.of.All_Ne_0.fin |
+-/
 @[path, fin 1]
 private lemma main
   [GroupWithZero α]
@@ -23,3 +29,4 @@ private lemma main
 
 
 -- created on 2025-12-30
+-- updated on 2026-11-20

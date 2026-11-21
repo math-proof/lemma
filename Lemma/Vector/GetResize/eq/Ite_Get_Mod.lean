@@ -1,5 +1,4 @@
-import Lemma.Nat.LtMod.of.Lt_Mul
-import Lemma.Vector.EqGet0_0
+import Theorem.Vector.EqGet0_0
 import Lemma.Vector.GetAppend.eq.Get.of.Lt
 import Lemma.Vector.GetAppend.eq.Get_Sub.of.Lt_Add.Ge
 import Lemma.Vector.GetCast.eq.Get.of.Eq
@@ -7,6 +6,12 @@ import Lemma.Vector.GetRepeat.eq.Get_Mod
 open Nat Vector
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Vector.GetResize.eq.Ite_Get_Mod |
+| fin | Vector.GetResize.eq.Ite_Get_Mod.fin |
+-/
 @[path, fin]
 private lemma main
   [Zero α]
@@ -16,7 +21,7 @@ private lemma main
   (i : Fin n) :
 -- imply
   (v.resize n)[i] = if h : i < n / m * m then
-    v[i % m]'(LtMod.of.Lt_Mul h)
+    v[i % m]'(Nat.mod_lt _ (Nat.pos_of_ne_zero (by rintro rfl; simp at h)))
   else
     0 := by
 -- proof
@@ -33,3 +38,4 @@ private lemma main
 
 
 -- created on 2026-07-13
+-- updated on 2026-11-20

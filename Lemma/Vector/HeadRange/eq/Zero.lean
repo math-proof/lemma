@@ -1,3 +1,4 @@
+import Def.Data.Vector.Basic
 import Instance.Data.Vector.Vector
 import Lemma.Vector.Head.eq.Get_0
 open Vector
@@ -15,3 +16,4 @@ private lemma main
 
 
 -- created on 2025-07-11
+-- updated on 2026-11-20

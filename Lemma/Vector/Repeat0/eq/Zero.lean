@@ -1,5 +1,5 @@
 import Lemma.Vector.RepeatReplicate.eq.Replicate
-import Lemma.Vector.Zero.eq.Replicate
+import Theorem.Vector.Zero.eq.Replicate
 open Vector
 
 
@@ -16,3 +16,4 @@ private lemma main
 
 
 -- created on 2025-11-30
+-- updated on 2026-11-20

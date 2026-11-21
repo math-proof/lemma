@@ -1,7 +1,7 @@
 import Def.Data.Tensor.Reshape
 import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Vector.Repeat0.eq.Zero
+import Theorem.Vector.Zero.eq.Replicate
 import Lemma.Vector.EqCast_0'0.of.Eq
 open Tensor Vector
 
@@ -16,8 +16,16 @@ private lemma main
   (0 : Tensor α s).reshape s' h = 0 := by
 -- proof
   apply Eq.of.EqDataS
-  simp only [Tensor.reshape, EqData0'0, Repeat0.eq.Zero]
+  have h_repeat : (0 : List.Vector α s.prod).repeat (s'.prod / s.prod) = 0 := by
+    simp only [Zero.eq.Replicate]
+    apply Subtype.ext
+    change ((List.replicate (s'.prod / s.prod) (List.Vector.replicate s.prod (0 : α))).map
+      List.Vector.toList).flatten = List.replicate _ 0
+    rw [List.map_replicate]
+    apply List.flatten_replicate_replicate
+  simp only [Tensor.reshape, EqData0'0, h_repeat]
   rw [EqCast_0'0.of.Eq (Nat.EqMulDiv.of.Dvd h)]
 
 
 -- created on 2026-09-16
+-- updated on 2026-11-20

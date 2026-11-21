@@ -1,3 +1,4 @@
+import Instance.Data.Tensor.Defs.Part2
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.Eq.is.All_EqGetS
 open Tensor Vector
@@ -28,3 +29,4 @@ private lemma main
 
 
 -- created on 2026-08-17
+-- updated on 2026-11-20

@@ -128,6 +128,8 @@ export const RULES = {
     'paren-redundant-pow': null,
     // not an AGENTS.md rule (user request via Hyperreal / Body): needless arith operand parens
     'paren-redundant-arith': null,
+    // not an AGENTS.md rule (user request via Real / Softmax): `((e) : T)` -> `(e : T)`
+    'paren-redundant-ascription': null,
     'have-inline-once': Q.haveOnce,
     // not an AGENTS.md rule (Body via Tensor): lean.js/linter warning; message carries the reason
     'have-underscore': null,
@@ -204,7 +206,7 @@ export function lintLean(source, opts = {}) {
         astCovered: new Set(),
         astCursor: 0,
         /** AST rules: quote the statement (`stmt`), find its line in the source when possible */
-        warnAst(rule, node, msg, maxLines = 2, follow = null) {
+        warnAst(rule, node, msg, maxLines = 2, follow = null, extra = null) {
             const stmt = quote(node, 120, maxLines);
             // another node with the same text as the previous finding: it is further down
             const last = ctx.astLast;
@@ -216,7 +218,7 @@ export function lintLean(source, opts = {}) {
             if (line == null && rule === 'paren-redundant-arith') return;
             if (line != null) ctx.astCursor = line - 1;
             ctx.astLast = { node, stmt, line };
-            ctx.warn(rule, line, null, msg, { stmt });
+            ctx.warn(rule, line, null, msg, { stmt, ...(extra ?? {}) });
         },
         warn(rule, line, col, msg, extra = {}) {
             if (only ? !only.has(rule) : DISABLED.has(rule)) return;
@@ -451,4 +453,79 @@ export function lintLeanFile(source, leanAbsPath, opts = {}) {
     const root = k >= 0 ? norm.slice(0, k) : undefined;
     const file = k >= 0 ? norm.slice(k + 1) : path.basename(norm);
     return lintLean(source, { file, root, isNew: isNewInGit(leanAbsPath), ...opts });
+}
+
+/** Whitespace-free text. */
+const squash = (s) => String(s ?? '').replace(/\s+/g, '');
+
+/** Index of the `)` matching the `(` at `open`, or -1. */
+function matchParen(s, open) {
+    let depth = 0;
+    for (let i = open; i < s.length; i++) {
+        if (s[i] === '(') depth++;
+        else if (s[i] === ')' && --depth === 0) return i;
+    }
+    return -1;
+}
+
+/**
+ * `((e) : T)` → `(e : T)`: drop the inner paren pair of an ascription, repeatedly for
+ * `(((e)) : T)`. Returns null when the text is not of that shape.
+ */
+function dropInnerParens(span) {
+    let out = span;
+    while (out.startsWith('((')) {
+        const close = matchParen(out, 1);
+        if (close < 0) return null;
+        // the inner group must be the ascription's value: `((… ) : T)`
+        if (!/^\s*:/.test(out.slice(close + 1))) return null;
+        out = out.slice(0, 1) + out.slice(2, close) + out.slice(close + 1);
+    }
+    return out === span ? null : out;
+}
+
+/** Apply one `fix` to its source line: locate `fixText` by whitespace-free match, then drop the parens. */
+function fixLine(raw, fixText) {
+    const want = squash(fixText);
+    if (!want) return null;
+    let col = '';
+    const at = [];
+    for (let i = 0; i < raw.length; i++) {
+        if (/\s/.test(raw[i])) continue;
+        col += raw[i];
+        at.push(i);
+    }
+    const idx = col.indexOf(want);
+    if (idx < 0) return null;
+    const start = at[idx];
+    const end = at[idx + want.length - 1] + 1;
+    const fixed = dropInnerParens(raw.slice(start, end));
+    if (fixed == null) return null;
+    return raw.slice(0, start) + fixed + raw.slice(end);
+}
+
+/**
+ * Apply the lint rules' auto-fixes in memory (no file writes): re-lint and rewrite until stable.
+ * Only warnings that carry `fix.text` and a located line can be fixed; others stay untouched.
+ * @returns {{source: string, applied: Array<{rule: string, line: number}>}}
+ */
+export function applyLintFixes(source, opts = {}) {
+    let text = String(source ?? '');
+    const applied = [];
+    for (let round = 0; round < 5; round++) {
+        const warnings = lintLean(text, { ...opts, rules: opts.rules ?? ['paren-redundant-ascription'] });
+        const lines = text.split('\n');
+        let changed = 0;
+        for (const w of warnings) {
+            if (!w.fix?.text || w.line == null) continue;
+            const fixed = fixLine(lines[w.line - 1] ?? '', w.fix.text);
+            if (fixed == null || fixed === lines[w.line - 1]) continue;
+            lines[w.line - 1] = fixed;
+            applied.push({ rule: w.rule, line: w.line });
+            changed++;
+        }
+        if (!changed) break;
+        text = lines.join('\n');
+    }
+    return { source: text, applied };
 }

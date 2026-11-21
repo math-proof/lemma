@@ -1,4 +1,6 @@
-import Lemma.Nat.EqMulDiv.of.Dvd
+import Theorem.Nat.EqMulDiv.of.Dvd
+import Instance.Data.Int.Integers
+import Initialize.Tactic.Attr.Basic
 open Nat
 
 
@@ -14,3 +16,4 @@ private lemma main
 
 
 -- created on 2026-01-10
+-- updated on 2026-11-21

@@ -1,4 +1,4 @@
-import Lemma.Finset.LeAddSumS_SquareSub_DivSum.of.LeAbsSSub_DivSum.NotIn.In.GtCard_0
+import Lemma.Finset.LeAddSSumS_SquareSub_DivSum.of.LeAbsSSub_DivSum.NotIn.In.GtCard_0
 import Lemma.Finset.Sum_SquareSub_DivSum.eq.Sub_DivSquareSum
 open Finset
 
@@ -29,7 +29,7 @@ private lemma main
       ∑ y ∈ Y, (a[y] - (∑ y ∈ Y, a[y]) / (Y.card : ℝ)) ^ 2 := by
 -- proof
   apply lt_of_le_of_ne
-    (LeAddSumS_SquareSub_DivSum.of.LeAbsSSub_DivSum.NotIn.In.GtCard_0 h₀ h₁ h₂ (le_of_lt h₃))
+    (LeAddSSumS_SquareSub_DivSum.of.LeAbsSSub_DivSum.NotIn.In.GtCard_0 h₀ h₁ h₂ (le_of_lt h₃))
   intro heq
   have hge : 2 ≤ Y.card := by
     have hne1 : Y.card ≠ 1 := by

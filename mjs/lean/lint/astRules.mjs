@@ -9,7 +9,31 @@ import '../../../js/py.js';
 import { compile, Lean, LeanModule } from '../../../js/parser/lean.js';
 
 /** rule ids implemented here; their text-scan versions only run when the AST is unavailable */
-export const AST_RULES = new Set(['have-inline-once', 'have-underscore', 'given-prop-first', 'given-prop-consecutive', 'given-implicit-dep', 'tactic-haveI', 'tactic-letI', 'calc-after-assign', 'decl-keyword-dir', 'paren-getelem', 'fin-index-val', 'paren-apparg', 'paren-redundant-type', 'paren-redundant-sum-sub', 'paren-redundant-pow', 'paren-redundant-arith', 'prefer-unicode-type', 'prefer-unicode-pow']);
+export const AST_RULES = new Set(['have-inline-once', 'have-underscore', 'given-prop-first', 'given-prop-consecutive', 'given-implicit-dep', 'tactic-haveI', 'tactic-letI', 'calc-after-assign', 'decl-keyword-dir', 'paren-getelem', 'fin-index-val', 'paren-apparg', 'paren-redundant-type', 'paren-redundant-sum-sub', 'paren-redundant-pow', 'paren-redundant-arith', 'paren-redundant-ascription', 'prefer-unicode-type', 'prefer-unicode-pow']);
+
+/**
+ * Term forms whose parentheses are load-bearing inside an ascription: `(fun y => F y : T)`
+ * rebinds the colon into the lambda, `(a, b : α × β)` is no longer a tuple, and so on.
+ * Even when the reprint happens to re-parse the same way, these stay parenthesized.
+ */
+const ASCRIPTION_KEEP_PARENS = new Set([
+    'Lean_fun', 'LeanIte', 'LeanBy', 'LeanBrace', 'LeanAngleBracket', 'LeanColon',
+    'LeanArgsCommaSeparated', 'Lean_match', 'Lean_let', 'Lean_do', 'Lean_calc',
+    'Lean_have', 'Lean_suffices', 'Lean_show', 'LeanLambda',
+]);
+
+/** Parse one term in isolation (as a `have` value) and return the term node, or null. */
+function parseTermNode(text) {
+    try {
+        const tree = compile(`private lemma __lint__ : True := by\n  have __h__ := ${text}\n  trivial\n`);
+        for (const n of walk(tree)) {
+            if (n?.constructor?.name === 'Lean_have') return n.args?.[0]?.rhs ?? null;
+        }
+    } catch {
+        // unparseable wrapper: no suggestion
+    }
+    return null;
+}
 
 /** parse `source`, or null when the parser throws / does not return a module */
 export function parseAst(source) {
@@ -817,6 +841,39 @@ function parenRedundantArith(ctx, node) {
         1);
 }
 
+/**
+ * `((expr) : Type)` → `(expr : Type)`: the ascribed value is already parenthesized by the
+ * ascription, so the inner pair is redundant. Conservative: the parens are only dropped when
+ * re-parsing `(value : type)` reproduces the very same ascription, and the value is not a form
+ * whose parens are load-bearing (lambda, `if`, `by`, tuple, structure literal, nested ascription,
+ * match, `let`, `do`, `calc`, …). `(((e)) : T)` drops every inner pair. Not an AGENTS.md rule
+ * (user request via Real / Softmax).
+ */
+function parenRedundantAscription(ctx, node) {
+    const { LeanParenthesis, LeanColon } = Lean.classes;
+    if (!(node instanceof LeanParenthesis)) return;
+    const colon = node.arg;
+    if (!(colon instanceof LeanColon)) return;
+    const inner = colon.lhs;
+    if (!(inner instanceof LeanParenthesis)) return;
+    if (typeof inner.latexParenRequired === 'function' && inner.latexParenRequired()) return;
+    const value = unwrapParens(inner);
+    if (!value) return;
+    if (ASCRIPTION_KEEP_PARENS.has(value.constructor?.name || '')) return;
+    // re-parse the shortened spelling: it must still be the same ascription
+    const type = String(colon.rhs);
+    const parsed = unwrapParens(parseTermNode(`(${String(value)} : ${type})`));
+    if (!(parsed instanceof LeanColon)) return;
+    if (collapse(String(parsed.lhs)) !== collapse(String(value))) return;
+    if (collapse(String(parsed.rhs)) !== collapse(type)) return;
+    const before = `(${String(inner)} : ${type})`;
+    const after = `(${String(value)} : ${type})`;
+    const show = (s) => (s.length > 60 ? `${s.slice(0, 57)}…` : s);
+    ctx.warnAst('paren-redundant-ascription', node,
+        `\`${show(before)}\` → \`${show(after)}\`: the ascribed value is already inside the ascription's parentheses`,
+        1, null, null, { fix: { text: String(node) } });
+}
+
 /** is the repo-relative path a `Lemma/…` file? */
 export function isLemmaPath(file) {
     return /(^|\/)Lemma\//.test(String(file ?? '').replace(/\\/g, '/'));
@@ -869,7 +926,7 @@ export function astRules(ctx, tree) {
     const found = [];
     const lemmaFile = ctx.astCovered.has('decl-keyword-dir') && isLemmaPath(ctx.file);
     // `quoteAs`: text to quote instead of the node's own reprint (the node still fixes the source order)
-    const sink = { warnAst: (rule, node, msg, maxLines, follow, quoteAs) => found.push({ rule, node, msg, maxLines, follow, quoteAs }) };
+    const sink = { warnAst: (rule, node, msg, maxLines, follow, quoteAs, extra) => found.push({ rule, node, msg, maxLines, follow, quoteAs, extra }) };
     for (const node of walk(tree)) {
         order.set(node, order.size);
         if (node instanceof Lean_lemma || node instanceof Lean_theorem || node instanceof Lean_def) found.push({ anchor: declName(node), node });
@@ -894,13 +951,14 @@ export function astRules(ctx, tree) {
             parenRedundantSumSub(sink, node);
             parenRedundantPow(sink, node);
             parenRedundantArith(sink, node);
+            parenRedundantAscription(sink, node);
             preferUnicodeType(sink, node);
             preferUnicodePow(sink, node);
         }
     }
     found.sort((a, b) => order.get(a.node) - order.get(b.node));
     for (const f of found) {
-        if (!('anchor' in f)) ctx.warnAst(f.rule, f.quoteAs != null ? { toString: () => f.quoteAs } : f.node, f.msg, f.maxLines, f.follow);
+        if (!('anchor' in f)) ctx.warnAst(f.rule, f.quoteAs != null ? { toString: () => f.quoteAs } : f.node, f.msg, f.maxLines, f.follow, f.extra);
         else {
             // a declaration: restart the search at its line (from the text scanner) so repeated binders resolve per lemma
             const d = ctx.decls.find((x) => x.name === f.anchor && x.line >= ctx.astCursor);

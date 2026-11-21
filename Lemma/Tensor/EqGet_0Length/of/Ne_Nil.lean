@@ -1,5 +1,5 @@
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-open Tensor List
+open Tensor
 
 
 @[path]
@@ -8,7 +8,7 @@ private lemma main
   (h : s ≠ [])
   (X : Tensor α s) :
 -- imply
-  have := GtLength_0.of.Ne_Nil h
+  have := List.length_pos_iff.mpr h
   s[0] = X.length := by
 -- proof
   intro h_length
@@ -16,3 +16,4 @@ private lemma main
 
 
 -- created on 2025-06-29
+-- updated on 2026-11-20

@@ -1,6 +1,7 @@
+import Def.Data.Vector.Basic.Part2
 import Lemma.Vector.EqFlattenUnflatten
 import Lemma.Bool.SEqCast.of.Eq
-import Lemma.List.Prod.eq.MulProdS
+import Theorem.List.Prod.eq.MulProdS
 open List Vector Bool
 
 
@@ -20,3 +21,4 @@ private lemma main
 
 
 -- created on 2025-07-08
+-- updated on 2026-11-20

@@ -1,5 +1,5 @@
 import Instance.Data.Tensor.Tensor.Part2
-import Instance.Data.Vector.Functions.Part2
+import Instance.Data.Vector.Functions
 import Theorem.Nat.Lt_Sub.of.LtAdd
 import Theorem.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.List.ProdTake.ne.Zero.of.NeProd_0

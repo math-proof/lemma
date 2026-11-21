@@ -1,11 +1,5 @@
 import Instance.Data.Tensor.Tensor.Part2
-import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.Gt_0.EqVal_0
-import Lemma.List.ProdPermute.eq.MulProd_ProdAppend.of.Gt_0
-import Lemma.List.Permute.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1.Le_0
-import Lemma.List.ProdPermute.eq.MulProd_ProdDrop.of.Le_0
 import Lemma.Bool.Cast.of.SEq.Eq
-import Lemma.Int.ToNatSubOfNat_NegSucc.eq.AddAdd1
-import Lemma.Nat.Min.eq.Add_1
 open List Bool Int Nat
 
 
@@ -21,15 +15,30 @@ private lemma main
       cast (by simp_all [EqPermute]) X
     else if h_k : d > 0 then
       if h_d : i.val = 0 then
-        cast (by rw [Permute.eq.AppendRotateTake___Drop.of.Gt_0.EqVal_0 h_d h_k]) (X.permuteHead (d + 1).toNat)
+        cast (by
+          have h_nat : (d.toNat : ℤ) = d := by omega
+          have h_size : d.toNat + 1 = (d + 1).toNat := by omega
+          simpa only [h_nat, h_size] using congrArg (Tensor α)
+            (Permute.eq.AppendRotateTake___Drop.of.EqVal_0 h_d d.toNat).symm) (X.permuteHead (d + 1).toNat)
       else
-        ⟨cast (by rw [ProdPermute.eq.MulProd_ProdAppend.of.Gt_0 h_k i]) ((X.data.splitAt i).map fun data => ((⟨data⟩ : Tensor α (s.drop i)).permuteHead (d + 1).toNat).data).flatten⟩
+        ⟨cast (by
+          have h_nat : (d.toNat : ℤ) = d := by omega
+          have h_size : d.toNat + 1 = (d + 1).toNat := by omega
+          simpa only [h_nat, h_size] using congrArg (List.Vector α)
+            (ProdPermute.eq.MulProd_ProdAppend i d.toNat).symm) ((X.data.splitAt i).map fun data => ((⟨data⟩ : Tensor α (s.drop i)).permuteHead (d + 1).toNat).data).flatten⟩
     else
-      have h_k := Le.of.NotGt h_k
       if h_d : i.val = s.length - 1 then
-        cast (by rw [Permute.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1.Le_0 h_k h_d]) ((X.permuteTail (1 - d).toNat))
+        cast (by
+          have h_nat : -(↑(-d).toNat : ℤ) = d := by omega
+          have h_size : (-d).toNat + 1 = (1 - d).toNat := by omega
+          simpa only [h_nat, h_size] using congrArg (Tensor α)
+            (Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1 h_d (-d).toNat).symm) ((X.permuteTail (1 - d).toNat))
       else
-        ⟨cast (by rw [ProdPermute.eq.MulProd_ProdDrop.of.Le_0 h_k]) ((⟨X.data.splitAt (i + 1)⟩ : Tensor (List.Vector α (s.drop (i + 1)).prod) (s.take (i + 1))).permuteTail (1 - d).toNat).data.flatten⟩ := by
+        ⟨cast (by
+          have h_nat : -(↑(-d).toNat : ℤ) = d := by omega
+          have h_size : (-d).toNat + 1 = (1 - d).toNat := by omega
+          simpa only [h_nat, h_size] using congrArg (List.Vector α)
+            (ProdPermute__Neg.eq.MulProd_ProdDrop i (-d).toNat).symm) ((⟨X.data.splitAt (i + 1)⟩ : Tensor (List.Vector α (s.drop (i + 1)).prod) (s.take (i + 1))).permuteTail (1 - d).toNat).data.flatten⟩ := by
 -- proof
   unfold Tensor.permute
   match d with
@@ -49,6 +58,7 @@ private lemma main
       ·
         congr
   | Int.negSucc offset =>
+    have h_size : (1 - Int.negSucc offset).toNat = offset + 2 := by omega
     simp
     split_ifs with h_d
     ·
@@ -57,24 +67,20 @@ private lemma main
         rw [NegSucc.eq.NegCoeAdd_1]
         rwa [Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1]
       ·
-        rw [ToNatSubOfNat_NegSucc.eq.AddAdd1]
-        simp
-        rw [Add.comm]
+        rw [h_size]
     ·
       simp
       apply Cast.of.SEq.Eq.left (n := (s.permute i (-↑(offset + 1))).prod)
       ·
         rw [Permute__Neg.eq.Append_AppendRotateDropTake]
         simp
-        rw [Mul_Mul.eq.MulMul]
-        apply Mul.of.Eq
+        rw [Nat.mul_assoc]
+        congr 1
         have h_rot : (offset + 2) ⊓ (i.val + 1) - 1 = (offset + 1) ⊓ i.val := by omega
         simp [h_rot]
       ·
-        rw [ToNatSubOfNat_NegSucc.eq.AddAdd1]
-        simp
-        rw [Add.comm (a := 2)]
+        rw [h_size]
 
 
 -- created on 2025-07-14
--- updated on 2026-10-26
+-- updated on 2026-11-20

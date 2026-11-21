@@ -1,3 +1,4 @@
+import Def.Data.Vector.Basic
 import Lemma.Vector.Val.of.SEq
 open Vector
 
@@ -20,3 +21,4 @@ private lemma main
 
 
 -- created on 2026-04-24
+-- updated on 2026-11-20

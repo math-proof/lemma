@@ -1,3 +1,4 @@
+import Instance.Data.Vector.Basic
 import Instance.Data.Vector.Vector
 
 
@@ -5,11 +6,12 @@ import Instance.Data.Vector.Vector
 private lemma main
   {s : List.Vector α n}
 -- given
-  (h: s.val is constant) :
+  (h : s.val is constant) :
 -- imply
-  s is constant := by
+  s is constant :=
 -- proof
-  exact h
+  h
 
 
 -- created on 2024-07-01
+-- updated on 2026-11-20

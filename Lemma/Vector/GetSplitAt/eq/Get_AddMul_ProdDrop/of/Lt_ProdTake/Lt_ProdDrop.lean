@@ -2,6 +2,12 @@ import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 open Vector List
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop |
+| fin | Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop.fin |
+-/
 @[path, fin]
 private lemma main
   {s : List ℕ}
@@ -11,7 +17,9 @@ private lemma main
   (h_j : j < (s.drop d).prod)
   (v : List.Vector α s.prod) :
 -- imply
-  (v.splitAt d)[i, j] = v[i * (s.drop d).prod + j]'(AddMul_ProdDrop.lt.Prod.of.Lt_ProdTake.Lt_ProdDrop h_i h_j) := by
+  (v.splitAt d)[i, j] = v[i * (s.drop d).prod + j]'(by
+    rw [Prod.eq.MulProdS s d]
+    apply Nat.AddMul.lt.Mul ⟨i, h_i⟩ ⟨j, h_j⟩) := by
 -- proof
   let i' : Fin (s.take d).prod := ⟨i, h_i⟩
   let j' : Fin (s.drop d).prod := ⟨j, h_j⟩
@@ -22,3 +30,4 @@ private lemma main
 
 
 -- created on 2025-07-08
+-- updated on 2026-11-20

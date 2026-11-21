@@ -1,6 +1,4 @@
-import Lemma.Nat.LeMin
-import Lemma.Nat.Lt.of.Lt.Le
-open Nat
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -12,8 +10,8 @@ private lemma main
 -- imply
   x < b := by
 -- proof
-  have h_le := LeMin a b
-  apply Lt.of.Lt.Le h h_le
+  apply lt_of_lt_of_le h (min_le_right a b)
 
 
 -- created on 2020-01-11
+-- updated on 2026-11-21

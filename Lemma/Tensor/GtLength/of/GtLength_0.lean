@@ -1,4 +1,4 @@
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
+import Theorem.Tensor.Length.eq.Get_0.of.GtLength_0
 open Tensor
 
 
@@ -17,3 +17,4 @@ private lemma main
 
 
 -- created on 2025-11-01
+-- updated on 2026-11-20

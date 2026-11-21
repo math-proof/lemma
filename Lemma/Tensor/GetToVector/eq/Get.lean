@@ -1,4 +1,4 @@
-import Instance.Data.Tensor.Tensor.Part2
+import Instance.Data.Tensor.Tensor
 import Lemma.Tensor.Lt_HeadD
 open Tensor
 
@@ -11,11 +11,14 @@ private lemma cons
 -- imply
   X.toVector[i] = X[i] := by
 -- proof
-  simp [GetElem.getElem]
-  simp [Tensor.get]
-  simp [GetElem.getElem]
+  rfl
 
-
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.GetToVector.eq.Get |
+| fin | Tensor.GetToVector.eq.Get.fin |
+-/
 @[path, fin]
 private lemma main
 -- given
@@ -33,4 +36,4 @@ private lemma main
 
 
 -- created on 2025-05-23
--- updated on 2026-10-26
+-- updated on 2026-11-20

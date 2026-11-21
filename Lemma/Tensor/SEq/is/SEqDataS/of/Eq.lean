@@ -6,10 +6,10 @@ open Tensor Bool
 /--
 | attributes | lemma |
 | :---: | :---: |
-| path | Bool.SEq.is.SEqDataS.of.Eq |
-| comm | Bool.SEqDataS.is.SEq.of.Eq |
-| mp   | Bool.SEqDataS.of.SEq.Eq |
-| mpr  | Bool.SEq.of.SEqDataS.Eq |
+| path | Tensor.SEq.is.SEqDataS.of.Eq |
+| comm | Tensor.SEqDataS.is.SEq.of.Eq |
+| mp | Tensor.SEqDataS.of.SEq.Eq |
+| mpr | Tensor.SEq.of.SEqDataS.Eq |
 -/
 @[path, comm, mp, mpr]
 private lemma main
@@ -22,7 +22,10 @@ private lemma main
 -- proof
   subst h_s
   repeat rw [SEq.is.Eq]
-  apply Tensor.Eq.is.EqDataS
+  cases A
+  cases B
+  simp
 
 
 -- created on 2025-06-29
+-- updated on 2026-11-20

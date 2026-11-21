@@ -1,6 +1,6 @@
-import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
-import Lemma.Tensor.GtLength_0.of.GtLength_0
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
+import Theorem.List.HeadD.eq.Get_0.of.GtLength_0
+import Theorem.Tensor.GtLength_0.of.GtLength_0
+import Theorem.Tensor.Length.eq.Get_0.of.GtLength_0
 open List Tensor
 
 
@@ -18,3 +18,4 @@ private lemma main
 
 
 -- created on 2025-10-12
+-- updated on 2026-11-20

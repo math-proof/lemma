@@ -1,6 +1,6 @@
 import Lemma.Int.Le0Mul.of.Ge_0.Ge_0
-import Lemma.Vector.EqGet0_0
-import Lemma.Vector.GetMul.eq.MulGetS
+import Theorem.Vector.EqGet0_0
+import Theorem.Vector.GetMul.eq.MulGetS
 open Int Vector
 
 
@@ -22,3 +22,4 @@ private lemma main
 
 
 -- created on 2026-07-27
+-- updated on 2026-11-20

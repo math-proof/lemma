@@ -1,25 +1,6 @@
-import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.GtLength
-import Lemma.List.ProdAppend.eq.MulProdS
-import Lemma.List.ProdCons.eq.Mul_Prod
-import Lemma.Nat.Mul.of.Eq
-import Lemma.Nat.MulMul.eq.Mul_Mul
-open List Nat
-
-
-@[path, comm]
-private lemma main
-  [Monoid α]
-  {s : List α}
--- given
-  (h : s.length > i)
-  (a : α) :
--- imply
-  (s.set i a).prod = (s.take i).prod * (a * (s.drop (i + 1)).prod) := by
--- proof
-  rw [Set.eq.AppendTake__Cons_Drop.of.GtLength h]
-  rw [ProdAppend.eq.MulProdS]
-  apply Mul.of.Eq.left
-  rw [ProdCons.eq.Mul_Prod]
+import Theorem.List.ProdSet.eq.MulProd_Mul_Prod.of.GtLength
+import Initialize.Tactic.Attr.Basic
 
 
 -- created on 2025-07-12
+-- updated on 2026-11-20

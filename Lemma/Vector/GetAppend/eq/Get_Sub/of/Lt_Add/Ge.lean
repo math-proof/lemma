@@ -1,8 +1,14 @@
 import Lemma.Vector.ValAppend.eq.AppendValS
-import Lemma.List.GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength
+import Theorem.List.GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength
 open List Vector
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Vector.GetAppend.eq.Get_Sub.of.Lt_Add.Ge |
+| fin | Vector.GetAppend.eq.Get_Sub.of.Lt_Add.Ge.fin |
+-/
 @[path, fin]
 private lemma main
 -- given
@@ -16,8 +22,9 @@ private lemma main
   simp [GetElem.getElem]
   simp [List.Vector.get]
   simp [ValAppend.eq.AppendValS]
-  rw [GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength (by simp_all) (by simp_all)]
+  rw [GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength (by simpa using h₀) (by simpa using h₁)]
   simp_all
 
 
 -- created on 2025-05-31
+-- updated on 2026-11-20

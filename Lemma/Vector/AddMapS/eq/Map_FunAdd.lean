@@ -1,6 +1,6 @@
 import Lemma.Vector.EqGetRange
-import Lemma.Nat.Add
-open Vector Nat
+import Instance.Data.Vector.Basic.Arithmetic
+open Vector
 
 
 @[path]
@@ -19,3 +19,4 @@ private lemma main
 
 
 -- created on 2025-07-20
+-- updated on 2026-11-20

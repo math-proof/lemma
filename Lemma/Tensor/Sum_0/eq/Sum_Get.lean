@@ -1,13 +1,20 @@
+import Instance.Data.Tensor.Tensor
 import Lemma.Fin.HEq.of.All_Eq.Eq
 import Def.Data.Tensor.Sum
 import Lemma.Tensor.DataSum.eq.Sum_Data
 import Lemma.Tensor.DataSum_0.eq.SumSplitAtData
-import Lemma.Tensor.Eq.is.EqDataS
+import Theorem.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Vector.Sum.eq.Sum_Get
 open Fin Tensor Vector Set
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.Sum_0.eq.Sum_Get |
+| fin | Tensor.Sum_0.eq.Sum_Get.fin |
+-/
 @[path, fin]
 private lemma main
   [AddCommMonoid α]
@@ -26,9 +33,9 @@ private lemma main
   apply HEq.of.All_Eq.Eq (by simp)
   intro i
   simp [GetElem.getElem, Tensor.get, Tensor.toVector]
-  erw [GetCast_Map.eq.UFnGet.of.Eq.Lt.fin (by exact i.isLt) (by simp)]
+  erw [GetCast_Map.eq.UFnGet.of.Eq.Lt.fin (by apply i.isLt) (by simp)]
   rfl
 
 
 -- created on 2025-07-13
--- updated on 2026-10-26
+-- updated on 2026-11-21

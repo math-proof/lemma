@@ -1,9 +1,15 @@
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import Lemma.Vector.GetDiv.eq.DivGetS
+import Theorem.Vector.GetDiv.eq.DivGetS
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 open Vector
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Vector.DivCastS.as.Div.of.Eq |
+| cast | Vector.DivCastS.eq.Cast_Div.of.Eq |
+-/
 @[path, cast]
 private lemma main
   [Div α]
@@ -23,3 +29,4 @@ private lemma main
 
 
 -- created on 2025-10-08
+-- updated on 2026-11-20

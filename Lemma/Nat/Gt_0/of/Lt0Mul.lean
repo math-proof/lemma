@@ -1,5 +1,5 @@
-import Lemma.Nat.Ne_0.of.Lt0Mul
-import Lemma.Nat.Gt_0.of.Ne_0
+import Theorem.Nat.Ne_0.of.Lt0Mul
+import Initialize.Tactic.Attr.Basic
 open Nat
 
 
@@ -12,8 +12,7 @@ private lemma left
   a > 0 := by
 -- proof
   have := Ne_0.of.Lt0Mul.left h
-  apply Gt_0.of.Ne_0 this
-
+  apply Nat.pos_of_ne_zero this
 
 @[path]
 private lemma main
@@ -24,7 +23,8 @@ private lemma main
   b > 0 := by
 -- proof
   have := Ne_0.of.Lt0Mul h
-  apply Gt_0.of.Ne_0 this
+  apply Nat.pos_of_ne_zero this
 
 
 -- created on 2025-06-13
+-- updated on 2026-11-21

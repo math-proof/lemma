@@ -1,19 +1,6 @@
+import Theorem.Nat.EqAddMul_Div
 import Initialize.Tactic.Attr.Basic
-import Instance.Data.Int.Integers
-
-
-/--
-the division algorithm for any integers n and d
--/
-@[path]
-private lemma main
-  [IntegerRing Z]
--- given
-  (n d : Z) :
--- imply
-  d * (n / d) + n % d = n :=
--- proof
-  IntegerRing.div_add_mod n d
 
 
 -- created on 2025-11-16
+-- updated on 2026-11-20

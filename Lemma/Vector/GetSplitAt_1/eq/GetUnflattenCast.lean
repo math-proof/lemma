@@ -1,10 +1,18 @@
-import Lemma.List.Prod.eq.MulProdS
+import Theorem.List.Prod.eq.MulProdS
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 open List Vector
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Vector.GetSplitAt_1.eq.GetUnflattenCast |
+| comm | Vector.GetUnflattenCast.eq.GetSplitAt_1 |
+| fin | Vector.GetSplitAt_1.eq.GetUnflattenCast.fin |
+| fin.comm | Vector.GetUnflattenCast.eq.GetSplitAt_1.fin |
+-/
 @[path, comm, fin, fin.comm]
 private lemma main
   {s : List ℕ}
@@ -23,3 +31,4 @@ private lemma main
 
 
 -- created on 2025-10-08
+-- updated on 2026-11-20

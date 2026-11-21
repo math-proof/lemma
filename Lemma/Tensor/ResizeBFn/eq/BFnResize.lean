@@ -24,7 +24,7 @@ private lemma main
   unfold Tensor.resize Tensor.map
   let b := B.data[0]
   let r := n * (s.drop dim.succ).prod
-  have h_prod := MulProd_Mul_Prod.eq.ProdSet.of.GtLength dim.isLt n
+  have h_prod := (ProdSet.eq.MulProd_Mul_Prod.of.GtLength dim.isLt n).symm
   rw [MapCast.eq.Cast_Map.of.Eq h_prod]
   apply congrArg (cast (congrArg (List.Vector α) h_prod))
   rw [SplitAtMap.eq.MapSplitAt]
@@ -43,3 +43,4 @@ private lemma main
 
 
 -- created on 2026-08-15
+-- updated on 2026-11-21

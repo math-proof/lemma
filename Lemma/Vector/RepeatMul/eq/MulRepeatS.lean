@@ -1,4 +1,4 @@
-import Lemma.Vector.GetMul.eq.MulGetS
+import Theorem.Vector.GetMul.eq.MulGetS
 import Lemma.Vector.GetRepeat.eq.Get_Mod.of.Lt_Mul
 open Vector
 
@@ -19,3 +19,4 @@ private lemma main
 
 
 -- created on 2025-12-04
+-- updated on 2026-11-20

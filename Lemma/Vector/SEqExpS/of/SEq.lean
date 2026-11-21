@@ -1,5 +1,5 @@
 import Lemma.Bool.SEqUFnS.of.SEq
-import Instance.Data.Vector.Functions.Part2
+import Instance.Data.Vector.Functions
 open Bool Exp
 
 

@@ -1,4 +1,4 @@
-import Lemma.List.Rotate.eq.AppendDrop__Take
+import Theorem.List.Rotate.eq.AppendDrop__Take
 open List
 
 
@@ -13,3 +13,4 @@ private lemma main
 
 
 -- created on 2025-10-19
+-- updated on 2026-11-20

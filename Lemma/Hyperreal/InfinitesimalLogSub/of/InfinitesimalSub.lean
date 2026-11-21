@@ -1,4 +1,4 @@
-import Instance.Analysis.SpecialFunctions.Exponential.Part5
+import Instance.Analysis.SpecialFunctions.Logarithm
 import Lemma.Hyperreal.IsSt.is.Le0Mk.EqStdPart
 open Hyperreal ArchimedeanClass
 

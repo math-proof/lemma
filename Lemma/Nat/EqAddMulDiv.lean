@@ -1,18 +1,6 @@
-import Lemma.Nat.EqAddMul_Div
-open Nat
-
-
-@[path, comm]
-private lemma main
-  [IntegerRing Z]
--- given
-  (n d : Z) :
--- imply
-  n / d * d + n % d = n := by
--- proof
-  have := EqAddMul_Div n d
-  grind
+import Theorem.Nat.EqAddMulDiv
+import Initialize.Tactic.Attr.Basic
 
 
 -- created on 2025-03-15
--- updated on 2025-11-16
+-- updated on 2026-11-20

@@ -1,4 +1,4 @@
-import Def.Data.Tensor.Defs.Part4
+import Instance.Data.Tensor.Defs.Part2
 
 
 @[path]
@@ -14,3 +14,4 @@ private lemma main
 
 
 -- created on 2025-11-30
+-- updated on 2026-11-20

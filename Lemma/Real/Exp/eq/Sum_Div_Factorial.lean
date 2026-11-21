@@ -1,6 +1,7 @@
 import Mathlib.Analysis.SpecialFunctions.Exponential
 import Def.Data.Nat.Factorial.Factorials
-import Instance.Analysis.SpecialFunctions.Exponential.Part5
+import Initialize.Tactic.Attr.Basic
+import Instance.Analysis.SpecialFunctions.Exponential
 import Def.Analysis.Real.Limits.Basic
 import Theorem.Data.Set.Sets
 open Exp

@@ -1,10 +1,12 @@
-import Lemma.Tensor.DataCast.as.Data.of.Eq
-import Lemma.Tensor.DataMul.eq.MulDataS
-import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Vector.Cast_Mul.eq.MulCastS.of.Eq
-open Vector Tensor
+import Instance.Data.Tensor.Defs.Part2
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.Cast_Mul.eq.MulCastS.of.Eq |
+| comm | Tensor.MulCastS.eq.Cast_Mul.of.Eq |
+-/
 @[path, comm]
 private lemma main
   [Mul α]
@@ -15,12 +17,9 @@ private lemma main
   have h := congrArg (Tensor α) h
   cast h (A * B) = cast h A * cast h B := by
 -- proof
-  apply Eq.of.EqDataS
-  rw [DataMul.eq.MulDataS]
-  simp [DataCast.eq.Cast_Data.of.Eq h]
-  simp [DataMul.eq.MulDataS]
-  rw [Cast_Mul.eq.MulCastS.of.Eq]
-  rw [h]
+  subst s'
+  rfl
 
 
 -- created on 2025-12-01
+-- updated on 2026-11-20

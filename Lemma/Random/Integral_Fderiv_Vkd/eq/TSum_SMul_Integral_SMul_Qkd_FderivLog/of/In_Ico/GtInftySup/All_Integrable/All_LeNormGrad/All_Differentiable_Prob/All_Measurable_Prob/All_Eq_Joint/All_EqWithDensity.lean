@@ -1,4 +1,4 @@
-import Def.Analysis.Calculus.Gradient.Operators.Part2
+import Def.Analysis.Calculus.Gradient.Operators
 import Lemma.Random.Integral_Fderiv_Vkd.eq.Add_SMul_Integral_SMul_FderivLog.of.All_Eq_Joint.All_EqWithDensity
 import Lemma.Random.NormQkd.le.AddAbs_RMulInvSub1Abs_R.of.In_Ico
 import Lemma.Random.Map.eq.Init.of.All_Eq_Joint.All_EqWithDensity

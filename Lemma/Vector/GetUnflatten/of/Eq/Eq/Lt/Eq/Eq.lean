@@ -1,8 +1,8 @@
 import Lemma.Vector.EqGetMapRange.of.Lt
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Vector.SEqArraySliceS.of.SEq.Eq.Eq
-import Lemma.Nat.EqMin.of.Le
-import Lemma.Nat.Le_SubMulS.of.Lt
+import Theorem.Nat.EqMin.of.Le
+import Theorem.Nat.Le_SubMulS.of.Lt
 open Vector Bool Nat
 
 
@@ -20,8 +20,9 @@ private lemma main
 -- imply
   v.unflatten[i] ≃ v'.unflatten[i'] := by
 -- proof
+  subst h₀ h₁ h₃
   unfold List.Vector.unflatten
-  repeat rw [EqGetMapRange.of.Lt (by simp_all)]
+  repeat rw [EqGetMapRange.of.Lt h₂]
   simp
   apply SEqCastS.of.SEq.Eq.Eq
   repeat {
@@ -31,7 +32,8 @@ private lemma main
   }
   ·
     apply SEqArraySliceS.of.SEq.Eq.Eq
-    repeat simp_all
+    all_goals first | rfl | apply h₄
 
 
 -- created on 2025-07-15
+-- updated on 2026-11-20

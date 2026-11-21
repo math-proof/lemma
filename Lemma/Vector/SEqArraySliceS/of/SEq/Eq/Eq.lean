@@ -1,3 +1,4 @@
+import Def.Data.Vector.Basic
 import Theorem.Logic.SEq
 import Instance.Data.Vector.Vector
 
@@ -14,8 +15,10 @@ private lemma main
 -- imply
   v.array_slice i s ≃ v'.array_slice i' s' := by
 -- proof
-  simp [SEq] at *
+  subst h₀ h₁
+  simp [SEq] at h₂ ⊢
   aesop
 
 
 -- created on 2025-05-31
+-- updated on 2026-11-20

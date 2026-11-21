@@ -1,9 +1,15 @@
 import Lemma.Nat.EqMul0_0
-import Lemma.Vector.EqGet0_0
+import Theorem.Vector.EqGet0_0
 import Lemma.Vector.GetMul.eq.MulGet
 open Vector Nat
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Vector.EqMul0_0 |
+| subst 0 | Vector.EqMul0_0.of.Eq_0 |
+-/
 @[path, subst 0]
 private lemma main
   [MulZeroClass α]
@@ -20,3 +26,4 @@ private lemma main
 
 
 -- created on 2025-12-08
+-- updated on 2026-11-20

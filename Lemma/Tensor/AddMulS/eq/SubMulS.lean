@@ -1,6 +1,5 @@
-import Lemma.Tensor.NegMul.eq.MulNeg
-import Lemma.Tensor.Sub.eq.Add_Neg
-import Def.Data.Tensor.Stack.Part2
+import Lemma.Tensor.Mul
+import Lemma.Tensor.Sub
 open Tensor
 
 
@@ -11,10 +10,18 @@ private lemma main
 -- imply
   Add.add (c * x0) ((-s) * x1) = x0 * c - x1 * s := by
 -- proof
-  rw [Sub.eq.Add_Neg.nil]
+  rw [Tensor.Sub]
+  simp only [Tensor.Mul]
+  change Add.add (Mul.mul c x0) (Mul.mul (-s) x1) =
+    Sub.sub (Mul.mul x0 c) (Mul.mul x1 s)
+  apply Eq.trans _ (sub_eq_add_neg (Mul.mul x0 c) (Mul.mul x1 s)).symm
   congr 1
-  · apply Tensor.Mul.hComm
-  · rw [MulNeg.eq.NegMul.nil, Tensor.Mul.hComm]
+  ·
+    apply _root_.mul_comm
+  ·
+    apply (neg_mul s x1).trans
+    apply congrArg Neg.neg (_root_.mul_comm s x1)
 
 
 -- created on 2026-09-17
+-- updated on 2026-11-20

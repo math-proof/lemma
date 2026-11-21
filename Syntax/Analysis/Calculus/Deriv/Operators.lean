@@ -2,7 +2,6 @@ module
 
 public meta import Lean.Elab.Term
 public import Mathlib.Analysis.Calculus.Deriv.Basic
-public import Notation.Analysis.Calculus.Deriv.Operators
 public meta import Def.Analysis.Calculus.Gradient.Operators
 
 public meta section

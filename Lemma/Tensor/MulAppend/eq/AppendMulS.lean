@@ -3,10 +3,23 @@ import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.DataMul.eq.MulData
 import Lemma.Tensor.DataAppend.as.AppendDataS
 import Lemma.Tensor.Mul.eq.Mul_GetData_0
-import Lemma.Vector.MulAppend.eq.AppendMulS
 import Lemma.Vector.SEqMulS.of.SEq
 open Bool Tensor Vector
 
+
+private lemma mulAppendData
+  [Mul α]
+-- given
+  (a : List.Vector α n)
+  (b : List.Vector α m)
+  (c : α) :
+-- imply
+  (a ++ b) * c = a * c ++ b * c := by
+-- proof
+  apply Subtype.ext
+  obtain ⟨a, ha⟩ := a
+  obtain ⟨b, hb⟩ := b
+  apply List.map_append
 
 @[path]
 private lemma scalar
@@ -16,7 +29,7 @@ private lemma scalar
   (B : Tensor α (m :: s))
   (c : α) :
 -- imply
-  (A ++ B) * c = (A * c) ++ (B * c) := by
+  (A ++ B) * c = A * c ++ B * c := by
 -- proof
   apply Eq.of.EqDataS
   apply Eq.of.SEq
@@ -25,10 +38,9 @@ private lemma scalar
     rw [DataMul.eq.MulData]
     exact SEqMulS.of.SEq (DataAppend.as.AppendDataS A B) c
   ·
-    rw [MulAppend.eq.AppendMulS]
+    rw [mulAppendData]
     rw [← DataMul.eq.MulData, ← DataMul.eq.MulData]
     exact DataAppend.as.AppendDataS (A * c) (B * c)
-
 
 @[path]
 private lemma main
@@ -38,7 +50,7 @@ private lemma main
   (B : Tensor α (m :: s))
   (C : Tensor α []) :
 -- imply
-  (A ++ B) * C = (A * C) ++ (B * C) := by
+  (A ++ B) * C = A * C ++ B * C := by
 -- proof
   rw [Mul.eq.Mul_GetData_0]
   rw [Mul.eq.Mul_GetData_0 (X := A)]
@@ -47,4 +59,4 @@ private lemma main
 
 
 -- created on 2021-12-30
--- updated on 2026-08-24
+-- updated on 2026-11-20

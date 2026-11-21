@@ -1,5 +1,5 @@
 import Lemma.Real.GeExp_0
-import Instance.Data.Vector.Functions.Part2
+import Instance.Data.Vector.Functions
 open Real Vector Exp
 
 

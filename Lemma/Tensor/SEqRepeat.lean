@@ -8,6 +8,13 @@ import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool Fin Tensor Vector Nat Set
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.SEqRepeat |
+| cast | Tensor.Repeat.eq.Cast |
+| subst 1 | Tensor.SEqRepeat.of.Eq_1 |
+-/
 @[path, cast, subst 1]
 private lemma main
 -- given
@@ -36,11 +43,11 @@ private lemma main
         simp [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
         have h_r := r.isLt
         conv_rhs at h_r => simp
-        simp [EqMod.of.Lt h_r]
+        simp [Nat.mod_eq_of_lt h_r]
         simp [h_qr]
       ·
         simp
 
 
 -- created on 2026-01-13
--- updated on 2026-10-26
+-- updated on 2026-11-21

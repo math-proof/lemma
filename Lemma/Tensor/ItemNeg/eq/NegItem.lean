@@ -1,6 +1,6 @@
 import Def.Data.Tensor.Defs.Part4
 import Def.Data.Tensor.Item
-import Lemma.Tensor.DataNeg.eq.NegData
+import Theorem.Tensor.DataNeg.eq.NegData
 open Tensor Vector
 
 
@@ -24,3 +24,4 @@ private lemma main
 
 
 -- created on 2026-09-07
+-- updated on 2026-11-20

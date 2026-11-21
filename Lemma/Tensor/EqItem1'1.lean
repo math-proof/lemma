@@ -1,4 +1,4 @@
-import Def.Data.Tensor.Defs.Part4
+import Instance.Data.Tensor.Defs.Part2
 import Def.Data.Tensor.Item
 open Vector
 
@@ -13,3 +13,4 @@ private lemma main
 
 
 -- created on 2026-09-07
+-- updated on 2026-11-20

@@ -1,6 +1,13 @@
-import Theorem.Data.Vector.Basic.Part2
+import Instance.Data.Vector.Basic.Arithmetic
+import Theorem.Data.Vector.Basic
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Vector.Zero.eq.Replicate |
+| comm | Vector.Replicate.eq.Zero |
+-/
 @[path, comm]
 private lemma main
   [Zero α] :
@@ -11,3 +18,4 @@ private lemma main
 
 
 -- created on 2025-06-22
+-- updated on 2026-11-20

@@ -5,15 +5,18 @@ import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.Mul.eq.Mul_GetData_0
 import Lemma.Vector.EqDivMul.of.Ne_0
-import Lemma.Vector.EqGet0_0
+import Theorem.Vector.EqGet0_0
 open Tensor Vector
 
 
 private lemma NeGetData_0.of.Ne_0
   [Zero α]
   {A : Tensor α []}
+-- given
   (h : A ≠ 0) :
+-- imply
   A.data[0] ≠ 0 := by
+-- proof
   intro h0
   apply h
   apply Eq.of.EqDataS
@@ -26,9 +29,7 @@ private lemma NeGetData_0.of.Ne_0
   have hi' : i = ⟨0, by simp [List.prod_nil]⟩ := Fin.eq_of_val_eq hi
   subst hi'
   rw [EqData0'0]
-  rw [EqGet0_0.fin]
-  exact h0
-
+  rwa [EqGet0_0.fin]
 
 @[path]
 private lemma left
@@ -47,7 +48,6 @@ private lemma left
   rw [DataDiv.eq.DivData]
   rw [DataMul.eq.Mul_Data]
   rw [Vector.EqDivMul.of.Ne_0.left ha]
-
 
 @[path]
 private lemma main
@@ -70,3 +70,4 @@ private lemma main
 
 
 -- created on 2026-08-16
+-- updated on 2026-11-20

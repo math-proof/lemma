@@ -1,7 +1,7 @@
 import Lemma.Tensor.Eq.is.EqDataS
 import Def.Data.Tensor.Prod
 import Lemma.Vector.Map₂.eq.Map.of.Eq_1
-import Def.Data.Tensor.Defs.Part4
+import Instance.Data.Tensor.Defs.Part2
 open Tensor Vector
 
 
@@ -26,3 +26,4 @@ private lemma main
 
 
 -- created on 2026-09-02
+-- updated on 2026-11-20

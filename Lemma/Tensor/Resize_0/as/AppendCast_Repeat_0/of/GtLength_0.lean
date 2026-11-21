@@ -19,6 +19,12 @@ import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool List Nat Tensor Vector
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.Resize_0.as.AppendCast_Repeat_0.of.GtLength_0 |
+| cast | Tensor.Resize_0.eq.Cast_AppendCast_Repeat_0.of.GtLength_0 |
+-/
 @[path, cast]
 private lemma main
   [Zero α]
@@ -28,7 +34,7 @@ private lemma main
   (X : Tensor α s)
   (n : ℕ) :
 -- imply
-  X.resize ⟨0, by grind⟩ n ≃ ((cast (congrArg (Tensor α) (by simp [Set_0.eq.Cons_Tail.of.GtLength_0 h])) (X.repeat ⟨0, h⟩ (n / s[0]))) : Tensor α ((n / s[0]) * s[0] :: s.tail)) ++ (0 : Tensor α (n % s[0] :: s.tail)) := by
+  X.resize ⟨0, by grind⟩ n ≃ (cast (congrArg (Tensor α) (by simp [Set_0.eq.Cons_Tail.of.GtLength_0 h])) (X.repeat ⟨0, h⟩ (n / s[0])) : Tensor α (n / s[0] * s[0] :: s.tail)) ++ (0 : Tensor α (n % s[0] :: s.tail)) := by
 -- proof
   unfold Tensor.resize
   simp
@@ -66,6 +72,7 @@ private lemma main
             simp
             rw [GetFlatten.eq.Get.of.Lt_Mul (by simpa)]
             erw [GetMap.eq.UFnGet.fin]
+            erw [List.Vector.get_map]
             simp [GetRepeat.eq.Get_Mod.fin]
             erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
             congr 1
@@ -75,11 +82,11 @@ private lemma main
             grind
         ·
           rw [DivMulS.eq.Div.of.Ne_0 (by grind)] at h_lt
-          erw [GetAppend.eq.Get_Sub.of.Lt_Add.Ge.fin (by grind) (by simpa [AddMulS.eq.MulAdd, EqAddMulDiv])]
+          erw [GetAppend.eq.Get_Sub.of.Lt_Add.Ge.fin (by grind) (by simpa [← Nat.add_mul, EqAddMulDiv])]
           rw [EqGet0_0.fin]
       ·
-        simp [AddMulS.eq.MulAdd, EqAddMulDiv]
+        simp [← Nat.add_mul, EqAddMulDiv]
 
 
 -- created on 2026-07-09
--- updated on 2026-10-26
+-- updated on 2026-11-21

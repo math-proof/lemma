@@ -1,3 +1,4 @@
+import Instance.Data.Tensor.Defs.Part2
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.GetMap.eq.UFnGet
@@ -13,7 +14,7 @@ private lemma main
   (A C : Tensor α s)
   (B : Tensor α []) :
 -- imply
-  (A / B) * C = (A * C) / B := by
+  A / B * C = A * C / B := by
 -- proof
   apply Eq.of.EqDataS
   apply Vector.Eq.of.All_EqGetS.fin
@@ -25,7 +26,6 @@ private lemma main
   erw [GetMap₂.eq.BFnGetS.fin]
   apply div_mul_eq_mul_div
 
-
 /-- `(a / B) * C = (a * C) / B` for scalar left factor. -/
 @[path]
 private lemma left
@@ -34,7 +34,7 @@ private lemma left
   (a B : α)
   (C : Tensor α s) :
 -- imply
-  (a / B) * C = (a * C) / B := by
+  a / B * C = a * C / B := by
 -- proof
   apply Eq.of.EqDataS
   apply Vector.Eq.of.All_EqGetS.fin
@@ -45,7 +45,6 @@ private lemma left
   erw [GetMap.eq.UFnGet.fin (i := i)]
   apply div_mul_eq_mul_div
 
-
 /-- `(A / B) * b = (A * b) / B` for scalar right factor. -/
 @[path]
 private lemma right
@@ -54,7 +53,7 @@ private lemma right
   (A : Tensor α s)
   (b B : α) :
 -- imply
-  (A / B) * b = (A * b) / B := by
+  A / B * b = A * b / B := by
 -- proof
   apply Eq.of.EqDataS
   apply Vector.Eq.of.All_EqGetS.fin
@@ -68,3 +67,4 @@ private lemma right
 
 
 -- created on 2026-08-12
+-- updated on 2026-11-20

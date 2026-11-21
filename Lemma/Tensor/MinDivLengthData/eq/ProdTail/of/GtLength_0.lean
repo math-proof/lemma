@@ -1,6 +1,5 @@
 import Lemma.Tensor.LengthData.eq.Mul_Prod.of.GtLength_0
-import Def.Data.Tensor.Prod
-import Lemma.Nat.EqDivMul.of.Ne_0
+import Theorem.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.Ne_0
 open Tensor List Nat
 
@@ -26,3 +25,4 @@ private lemma main
 
 
 -- created on 2025-06-29
+-- updated on 2026-11-20

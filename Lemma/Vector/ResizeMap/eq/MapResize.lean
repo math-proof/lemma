@@ -4,6 +4,12 @@ import Lemma.Vector.GetResize.eq.Ite_Get_Mod
 open Nat Vector
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Vector.ResizeMap.eq.MapResize |
+| comm | Vector.MapResize.eq.ResizeMap |
+-/
 @[path, comm]
 private lemma main
   [Zero α] [Zero β]
@@ -17,9 +23,9 @@ private lemma main
 -- proof
   apply Eq.of.All_EqGetS.fin
   intro i
-  have hL : ((v.map f).resize m)[i] = if h : ↑i < m / n * n then (v.map f)[↑i % n]'(LtMod.of.Lt_Mul h) else 0 :=
+  have hL : ((v.map f).resize m)[i] = if h : ↑i < m / n * n then (v.map f)[↑i % n]'(Nat.mod_lt _ (Nat.pos_of_ne_zero (by rintro rfl; simp at h))) else 0 :=
     GetResize.eq.Ite_Get_Mod.fin (v.map f) m i
-  have hR : (v.resize m)[i] = if h : ↑i < m / n * n then v[↑i % n]'(LtMod.of.Lt_Mul h) else 0 :=
+  have hR : (v.resize m)[i] = if h : ↑i < m / n * n then v[↑i % n]'(Nat.mod_lt _ (Nat.pos_of_ne_zero (by rintro rfl; simp at h))) else 0 :=
     GetResize.eq.Ite_Get_Mod.fin v m i
   change ((v.map f).resize m)[i] = ((v.resize m).map f)[i]
   rw [hL]
@@ -32,3 +38,4 @@ private lemma main
 
 
 -- created on 2026-08-12
+-- updated on 2026-11-20

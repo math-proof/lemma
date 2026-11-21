@@ -1,26 +1,5 @@
-import Lemma.Bool.EqCast.of.HEq
-import Lemma.Bool.HEq.of.All_Eq_Cast.Eq.Eq
-open Bool
-
-
-@[path]
-private lemma main
-  {f : α → β}
-  {g : α' → β'}
--- given
-  (h₀ : β = β')
-  (h₁ : ∀ (a : α), HEq (f a) (g (cast h a))) :
--- imply
-  HEq f g := by
--- proof
-  apply HEq.of.All_Eq_Cast.Eq.Eq
-  ·
-    intro a
-    apply Eq_Cast.of.HEq
-    specialize h₁ a
-    assumption
-  ·
-    assumption
+import Theorem.Bool.HEq.of.All_HEq.Eq
 
 
 -- created on 2025-07-16
+-- updated on 2026-11-20

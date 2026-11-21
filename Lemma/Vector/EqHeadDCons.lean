@@ -1,3 +1,4 @@
+import Def.Data.Vector.Basic
 import Instance.Data.Vector.Vector
 
 
@@ -5,8 +6,7 @@ import Instance.Data.Vector.Vector
 private lemma main
 -- given
   (s : List.Vector α n)
-  (a : α)
-  (default : α) :
+  (a default : α) :
 -- imply
   (a ::ᵥ s).headD default = a :=
 -- proof
@@ -14,3 +14,4 @@ private lemma main
 
 
 -- created on 2024-07-01
+-- updated on 2026-11-20

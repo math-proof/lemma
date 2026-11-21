@@ -1,10 +1,16 @@
-import Lemma.Int.MulSub.eq.SubMulS
+import Theorem.Int.MulSub.eq.SubMulS
 import Lemma.Vector.GetSub.eq.SubGetS
 import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.GetMul.eq.MulGet
 open Vector Int
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Vector.MulSub.eq.SubMulS |
+| comm | Vector.SubMulS.eq.MulSub |
+-/
 @[path, comm]
 private lemma main
   [NonUnitalNonAssocRing α]
@@ -23,3 +29,4 @@ private lemma main
 
 
 -- created on 2025-12-29
+-- updated on 2026-11-20

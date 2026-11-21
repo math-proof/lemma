@@ -1,4 +1,4 @@
-import Lemma.Nat.OfNat.eq.Cast
+import Theorem.Nat.OfNat.eq.Cast
 import Lemma.Int.Div.eq.FloorDiv.of.Gt_0
 open Int Nat
 
@@ -12,8 +12,9 @@ private lemma main
 -- imply
   n / d = ⌊n / (d : α)⌋ := by
 -- proof
-  simp [Div.eq.FloorDiv.of.Gt_0 (α := α) (by simpa) (d := d)]
+  have hd : (d : ℤ) > 0 := by exact_mod_cast h
+  simp [Div.eq.FloorDiv.of.Gt_0 (α := α) hd]
 
 
 -- created on 2025-03-17
--- updated on 2025-10-08
+-- updated on 2026-11-20

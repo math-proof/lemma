@@ -1,4 +1,4 @@
-import Lemma.Nat.Ne.of.Lt
+import Theorem.Nat.Ne.of.Lt
 import Lemma.Rat.Div.eq.One.of.Ne_0
 open Rat Nat
 
@@ -17,3 +17,4 @@ private lemma main
 
 
 -- created on 2024-11-25
+-- updated on 2026-11-20

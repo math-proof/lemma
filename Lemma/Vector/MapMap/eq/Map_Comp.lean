@@ -1,4 +1,4 @@
-import Theorem.Data.Vector.Basic.Part2
+import Theorem.Data.Vector.Basic
 
 
 @[path, comm]

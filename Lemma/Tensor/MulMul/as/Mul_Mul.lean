@@ -1,6 +1,5 @@
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Def.Data.Tensor.Prod
-import Lemma.Vector.Eq.of.Val
 import Lemma.Tensor.MulShape.assoc
 import Lemma.Vector.GetVal.eq.Get.of.Lt.Lt
 import Lemma.Tensor.ValDataMul.eq.Nil.of.EqProdMulShape_0
@@ -34,21 +33,19 @@ private lemma main
     exact congrArg List.prod (MulShape.assoc s s' s'')
   ·
     have hn :
-        (mul_shape (mul_shape s s') s'').prod =
+      (mul_shape (mul_shape s s') s'').prod =
           (mul_shape s (mul_shape s' s'')).prod :=
       congrArg List.prod (MulShape.assoc s s' s'')
-    have heq :
-        ((A.mul B).mul C).data =
-          cast (congrArg (List.Vector α) hn.symm)
-            (A.mul (B.mul C)).data := by
-      apply Eq.of.Val
+    apply HEq.trans (b := cast (congrArg (List.Vector α) hn.symm) (A.mul (B.mul C)).data)
+    ·
+      apply heq_of_eq
+      apply Subtype.ext
       rw [ValCast.eq.Val.of.Eq hn.symm]
-      by_cases hz : (mul_shape (mul_shape s s') s'').prod = 0
-      ·
+      if hz : (mul_shape (mul_shape s s') s'').prod = 0 then
         rw [ValDataMul.eq.Nil.of.EqProdMulShape_0 (A.mul B) C hz,
           ValDataMul.eq.Nil.of.EqProdMulShape_0 A (B.mul C)
             (by rwa [← MulShape.assoc])]
-      ·
+      else
         have hz' : (mul_shape s (mul_shape s' s'')).prod ≠ 0 := by
           rwa [← MulShape.assoc]
         have hAB : (mul_shape s s').prod ≠ 0 := by
@@ -69,83 +66,73 @@ private lemma main
         ·
           intro i hi₁ hi₂
           have hi : i < (mul_shape (mul_shape s s') s'').prod := by
-            rw [← ((A.mul B).mul C).data.property]
-            exact hi₁
+            rwa [← ((A.mul B).mul C).data.property]
           have hi' : i < (mul_shape s (mul_shape s' s'')).prod := by
-            rw [← (A.mul (B.mul C)).data.property]
-            exact hi₂
+            rwa [← (A.mul (B.mul C)).data.property]
           rw [GetVal.eq.Get.of.Lt.Lt ((A.mul B).mul C).data hi hi₁,
             GetVal.eq.Get.of.Lt.Lt (A.mul (B.mul C)).data hi' hi₂,
             get_mul (A.mul B) C hz ⟨i, hi⟩,
             get_mul A (B.mul C) hz' ⟨i, hi'⟩]
           have jL :
-              wrapFlat
-                  (pad1 (mul_shape s s')
-                    ((mul_shape s s').length ⊔ s''.length))
-                  (mul_shape (mul_shape s s') s'') i <
+            wrapFlat
+              (pad1 (mul_shape s s')
+                ((mul_shape s s').length ⊔ s''.length))
+                (mul_shape (mul_shape s s') s'') i <
                 (mul_shape s s').prod := by
             have := wrapFlat_lt
               (pad1 (mul_shape s s')
                 ((mul_shape s s').length ⊔ s''.length))
               (mul_shape (mul_shape s s') s'')
-              (by
-                rw [pad1_length _ _ (by
-                    rw [mul_shape_length]
-                    exact le_sup_left)]
-                exact (mul_shape_length _ _).symm)
+              (by rw [pad1_length _ _ le_sup_left, mul_shape_length (mul_shape s s') s''])
               (by rwa [pad1_prod]) i
             rwa [pad1_prod] at this
           have jR :
-              wrapFlat
-                  (pad1 (mul_shape s' s'')
-                    (s.length ⊔ (mul_shape s' s'').length))
-                  (mul_shape s (mul_shape s' s'')) i <
+            wrapFlat
+              (pad1 (mul_shape s' s'')
+                (s.length ⊔ (mul_shape s' s'').length))
+                (mul_shape s (mul_shape s' s'')) i <
                 (mul_shape s' s'').prod := by
             have := wrapFlat_lt
               (pad1 (mul_shape s' s'')
                 (s.length ⊔ (mul_shape s' s'').length))
               (mul_shape s (mul_shape s' s''))
-              (by
-                rw [pad1_length _ _ (by
-                    rw [mul_shape_length]
-                    exact le_sup_right)]
-                exact (mul_shape_length _ _).symm)
+              (by rw [pad1_length _ _ le_sup_right, mul_shape_length s (mul_shape s' s'')])
               (by rwa [pad1_prod]) i
             rwa [pad1_prod] at this
           rw [get_mul A B hAB ⟨_, jL⟩, get_mul B C hBC ⟨_, jR⟩]
           rw [_root_.mul_assoc]
           have hA :
-              wrapFlat (pad1 s (s.length ⊔ s'.length)) (mul_shape s s')
-                  (wrapFlat
-                    (pad1 (mul_shape s s')
-                      ((mul_shape s s').length ⊔ s''.length))
-                    (mul_shape (mul_shape s s') s'') i) =
+            wrapFlat (pad1 s (s.length ⊔ s'.length)) (mul_shape s s')
+              (wrapFlat
+                (pad1 (mul_shape s s')
+                  ((mul_shape s s').length ⊔ s''.length))
+                  (mul_shape (mul_shape s s') s'') i) =
                 wrapFlat (pad1 s (s.length ⊔ (mul_shape s' s'').length))
-                  (mul_shape s (mul_shape s' s'')) i := by
+                (mul_shape s (mul_shape s' s'')) i := by
             rw [WrapFlatPad1LeftWrapFlat.eq.WrapFlatPad1.of.NeProdMulShapeMulShape_0.NeProdMulShape_0 s s' s'' i hAB hz,
               WrapFlatPad1Max_LengthMulShape.eq.WrapFlatPad1MaxMax, MulShape.assoc]
           have hB :
-              wrapFlat (pad1 s' (s.length ⊔ s'.length)) (mul_shape s s')
-                  (wrapFlat
-                    (pad1 (mul_shape s s')
-                      ((mul_shape s s').length ⊔ s''.length))
-                    (mul_shape (mul_shape s s') s'') i) =
+            wrapFlat (pad1 s' (s.length ⊔ s'.length)) (mul_shape s s')
+              (wrapFlat
+                (pad1 (mul_shape s s')
+                  ((mul_shape s s').length ⊔ s''.length))
+                  (mul_shape (mul_shape s s') s'') i) =
                 wrapFlat (pad1 s' (s'.length ⊔ s''.length)) (mul_shape s' s'')
-                  (wrapFlat
-                    (pad1 (mul_shape s' s'')
-                      (s.length ⊔ (mul_shape s' s'').length))
-                    (mul_shape s (mul_shape s' s'')) i) := by
+                (wrapFlat
+                  (pad1 (mul_shape s' s'')
+                    (s.length ⊔ (mul_shape s' s'').length))
+                  (mul_shape s (mul_shape s' s'')) i) := by
             rw [WrapFlatPad1RightWrapFlat.eq.WrapFlatPad1.of.NeProdMulShapeMulShape_0.NeProdMulShape_0 s s' s'' i hAB hz,
               WrapFlatPad1LeftWrapFlat.eq.WrapFlatPad1.of.NeProdMulShape_MulShape_0.NeProdMulShape_0 s s' s'' i hBC hz',
               MulShape.assoc]
           have hC :
-              wrapFlat (pad1 s'' ((mul_shape s s').length ⊔ s''.length))
-                  (mul_shape (mul_shape s s') s'') i =
+            wrapFlat (pad1 s'' ((mul_shape s s').length ⊔ s''.length))
+              (mul_shape (mul_shape s s') s'') i =
                 wrapFlat (pad1 s'' (s'.length ⊔ s''.length)) (mul_shape s' s'')
-                  (wrapFlat
-                    (pad1 (mul_shape s' s'')
-                      (s.length ⊔ (mul_shape s' s'').length))
-                    (mul_shape s (mul_shape s' s'')) i) := by
+                (wrapFlat
+                  (pad1 (mul_shape s' s'')
+                    (s.length ⊔ (mul_shape s' s'').length))
+                  (mul_shape s (mul_shape s' s'')) i) := by
             rw [WrapFlatPad1MaxLengthMulShape.eq.WrapFlatPad1MaxMax,
               WrapFlatPad1RightWrapFlat.eq.WrapFlatPad1.of.NeProdMulShape_MulShape_0.NeProdMulShape_0 s s' s'' i hBC hz',
               MulShape.assoc]
@@ -159,9 +146,9 @@ private lemma main
           ·
             apply congrArg
             exact Fin.eq_of_val_eq hC
-    exact heq ▸ (cast_heq (congrArg (List.Vector α) hn.symm)
-      (A.mul (B.mul C)).data)
+    ·
+      apply cast_heq
 
 
 -- created on 2026-09-06
--- updated on 2026-10-26
+-- updated on 2026-11-20

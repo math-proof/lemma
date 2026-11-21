@@ -1,8 +1,13 @@
-import Def.Data.Tensor.Defs.Part4
-import Lemma.Tensor.Length.eq.Get_0.of.Ne_Nil
-open Tensor List
+import Theorem.Tensor.Length.eq.Get_0.of.Ne_Nil
+open Tensor
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.Length.eq.Get_0.of.GtLength_0 |
+| comm | Tensor.Get_0.eq.Length.of.GtLength_0 |
+-/
 @[path, comm]
 private lemma main
 -- given
@@ -11,8 +16,8 @@ private lemma main
 -- imply
   X.length = s[0] := by
 -- proof
-  simp [Length.eq.Get_0.of.Ne_Nil (Ne_Nil.of.GtLength_0 h)]
+  simp [Length.eq.Get_0.of.Ne_Nil (List.length_pos_iff.mp h)]
 
 
 -- created on 2025-06-14
--- updated on 2026-10-26
+-- updated on 2026-11-20

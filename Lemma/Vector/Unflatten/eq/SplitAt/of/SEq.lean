@@ -1,3 +1,4 @@
+import Def.Data.Vector.Basic.Part2
 import Instance.Data.Vector.Vector
 import Lemma.Bool.EqCast.of.SEq
 open Bool
@@ -17,8 +18,8 @@ private lemma main
   unfold List.Vector.splitAt
   simp
   congr
-  apply Eq_Cast.of.SEq
-  assumption
+  apply Eq_Cast.of.SEq h
 
 
 -- created on 2025-07-08
+-- updated on 2026-11-20

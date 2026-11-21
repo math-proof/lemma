@@ -1,4 +1,4 @@
-import Theorem.Algebra.Power.Part2
+import Notation.Algebra.Power
 import Instance.Data.Tensor.Tensor.Part2
 import Lemma.Tensor.ItemMul.eq.MulItemS
 open Tensor
@@ -18,3 +18,4 @@ private lemma main
 
 
 -- created on 2026-09-07
+-- updated on 2026-11-20

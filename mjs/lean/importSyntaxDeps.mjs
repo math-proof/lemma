@@ -152,7 +152,7 @@ const PRUNABLE_SYNTAX_IMPORTS = [
   'Instance.Data.Int.Integers',
   'Def.Analysis.SpecialFunctions.TensorFunctions',
   'Def.Data.Tensor.BandPart',
-  'Instance.Data.Vector.Functions.Part2',
+  'Instance.Data.Vector.Functions',
   'Theorem.Data.Tensor.Functions',
 ];
 

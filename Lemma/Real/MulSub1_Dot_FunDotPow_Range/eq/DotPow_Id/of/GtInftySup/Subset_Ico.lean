@@ -1,7 +1,6 @@
 import Mathlib.Analysis.SpecificLimits.Normed
 import Mathlib.Analysis.Normed.Ring.InfiniteSum
 import Theorem.Data.Vector.Basic
-import Theorem.Data.Vector.Basic.Part2
 import Syntax.Order.Sup
 import Theorem.Function
 import Instance.Data.Vector.Basic.Dot

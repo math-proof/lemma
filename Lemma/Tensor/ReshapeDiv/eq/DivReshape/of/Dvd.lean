@@ -1,6 +1,5 @@
+import Instance.Data.Tensor.Defs.Part2
 import Lemma.Tensor.ReshapeBFn.eq.BFnReshape.of.Dvd
-import Def.Data.Tensor.Reshape
-import Def.Data.Tensor.Prod
 open Tensor
 
 
@@ -19,4 +18,4 @@ private lemma main
 
 
 -- created on 2026-08-12
--- updated on 2026-10-26
+-- updated on 2026-11-21

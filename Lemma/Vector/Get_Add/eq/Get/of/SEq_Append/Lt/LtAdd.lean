@@ -13,10 +13,11 @@ private lemma main
   (h₁ : i < n)
   (h₂ : a ≃ b ++ c) :
 -- imply
-  a[m + i] = c[i] := by
+  getElem a (m + i) h₀ = getElem c i h₁ := by
 -- proof
   apply Get_Add.eq.Get.of.Val.eq.ValAppend.Lt.LtAdd h₀ h₁
   apply Val.of.SEq h₂
 
 
 -- created on 2025-06-04
+-- updated on 2026-11-20

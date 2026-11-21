@@ -1,4 +1,4 @@
-import Theorem.Data.Vector.Basic.Part2
+import Theorem.Data.Vector.Basic
 import Instance.Data.Vector.Basic.Dot
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Initialize.Tactic.Attr.Basic

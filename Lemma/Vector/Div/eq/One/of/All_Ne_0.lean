@@ -1,7 +1,14 @@
+import Instance.Data.Vector.Basic.Arithmetic
 import Lemma.Vector.Eq.is.All_EqGetS
 open Vector
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Vector.Div.eq.One.of.All_Ne_0 |
+| fin 1 | Vector.Div.eq.One.of.All_Ne_0.fin |
+-/
 @[path, fin 1]
 private lemma main
   [GroupWithZero α]
@@ -15,8 +22,8 @@ private lemma main
   intro i
   rw [EqGet1_1]
   rw [GetDiv.eq.DivGetS]
-  rw [Rat.Div.eq.One.of.Ne_0]
-  apply h i
+  apply div_self (h i)
 
 
 -- created on 2025-11-28
+-- updated on 2026-11-20

@@ -1,9 +1,15 @@
-import Lemma.Nat.Any_Eq_AddMul
+import Theorem.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Vector.GetFlatten_AddMul.eq.Get
 import Lemma.Vector.GetVal.eq.Get.of.Lt
 open Nat Vector
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Vector.FlattenMap.eq.MapFlatten |
+| comm | Vector.MapFlatten.eq.FlattenMap |
+-/
 @[path, comm]
 private lemma main
   {f : α → β}
@@ -13,7 +19,7 @@ private lemma main
   (v.map (·.map f)).flatten = v.flatten.map f := by
 -- proof
   ext k
-  obtain ⟨i, j, h_eq⟩ := Any_Eq_AddMul k
+  obtain ⟨i, j, h_eq⟩ := Fin.Any_Eq_AddMul.of.Lt_Mul k.isLt
   have hk := k.isLt
   simp [List.Vector.get]
   rw [GetVal.eq.Get.of.Lt hk]
@@ -23,3 +29,4 @@ private lemma main
 
 
 -- created on 2026-08-07
+-- updated on 2026-11-20

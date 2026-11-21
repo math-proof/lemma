@@ -1,12 +1,17 @@
+import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Bool.SEq.is.EqCast.of.Eq
-import Def.Data.Tensor.Unsqueeze
-import Def.Data.Tensor.Prod
 import Lemma.Nat.Cast.eq.Fin.of.Lt.Eq
 import Lemma.Tensor.DataUnsqueeze.as.Data
 import Lemma.Vector.EqGetRange
 open Bool List Nat Tensor Vector
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.DataUnsqueeze.eq.Map_FunGetData |
+| fin | Tensor.DataUnsqueeze.eq.Map_FunGetData.fin |
+-/
 @[path, fin]
 private lemma main
   {s : List ℕ}
@@ -29,4 +34,4 @@ private lemma main
 
 
 -- created on 2025-11-27
--- updated on 2026-10-26
+-- updated on 2026-11-20

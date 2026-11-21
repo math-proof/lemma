@@ -1,7 +1,5 @@
-import Lemma.List.Ne_Nil.is.GtLength_0
 import Lemma.Tensor.GtLength_0.of.GtLength
-import Def.Data.Tensor.Defs.Part4
-open Tensor List
+open Tensor
 
 
 @[path]
@@ -12,8 +10,8 @@ private lemma main
 -- imply
   s ≠ [] := by
 -- proof
-  have h := GtLength_0.of.GtLength h
-  apply Ne_Nil.of.GtLength_0 h
+  apply List.length_pos_iff.mp (GtLength_0.of.GtLength h)
 
 
 -- created on 2025-06-29
+-- updated on 2026-11-20

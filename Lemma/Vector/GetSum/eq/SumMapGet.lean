@@ -1,9 +1,16 @@
-import Lemma.Vector.EqGet0_0
-import Lemma.Vector.GetAdd.eq.AddGetS
+import Theorem.Vector.EqGet0_0
+import Theorem.Vector.GetAdd.eq.AddGetS
 import Lemma.Vector.SumCons.eq.Add_Sum
 open Vector
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Vector.GetSum.eq.SumMapGet |
+| fin | Vector.GetSum.eq.SumMapGet.fin |
+| val | Vector.GetSum.eq.SumMapGet.val |
+-/
 @[path, fin, val]
 private lemma main
   [Add α] [Zero α]
@@ -23,4 +30,4 @@ private lemma main
 
 
 -- created on 2025-10-11
--- updated on 2026-07-11
+-- updated on 2026-11-20

@@ -1,3 +1,4 @@
+import Instance.Data.Tensor.Tensor
 import Instance.Data.Tensor.Tensor.Part2
 import Lemma.Tensor.ProdTake_1.eq.Length.of.GtLength
 import Lemma.Vector.GetMap.eq.UFnGet.of.Lt
@@ -8,6 +9,12 @@ import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Tensor Vector Bool List
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.EqGet0_0 |
+| fin | Tensor.EqGet0_0.fin |
+-/
 @[path, fin]
 private lemma main
   [Zero α]
@@ -44,3 +51,4 @@ private lemma main
 
 
 -- created on 2025-10-12
+-- updated on 2026-11-21

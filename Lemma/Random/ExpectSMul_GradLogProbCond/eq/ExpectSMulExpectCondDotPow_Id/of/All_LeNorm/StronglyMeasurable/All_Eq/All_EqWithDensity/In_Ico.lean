@@ -1,7 +1,7 @@
 import Lemma.Random.ExpectSMul.eq.ExpectSMulExpectCond.of.All_LeNorm.StronglyMeasurable.All_Eq.All_EqWithDensity.In_Ico
 import Lemma.Random.PSpace_Path.of.All_PSpace
 import Mathlib.Analysis.Calculus.Gradient.Basic
-import Def.Analysis.Calculus.Gradient.Operators.Part2
+import Def.Analysis.Calculus.Gradient.Operators
 import Instance.Analysis.Real.Numbers
 import Instance.Dynamics.PolicyTrajectory
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Filter Topology Measure

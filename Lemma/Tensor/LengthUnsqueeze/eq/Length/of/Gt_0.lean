@@ -1,9 +1,8 @@
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Def.Data.Tensor.Unsqueeze
-import Lemma.List.LengthInsertIdx.eq.Add1Length.of.GeLength
+import Theorem.List.LengthInsertIdx.eq.Add1Length.of.GeLength
 import Lemma.List.LengthInsertIdx.eq.Length.of.LtLength
 import Lemma.List.InsertIdxCons.eq.Cons_InsertIdx.of.Gt_0
-import Lemma.Nat.Ge_1.of.Gt_0
 open Tensor List Bool Nat
 
 
@@ -47,3 +46,4 @@ private lemma main
 
 
 -- created on 2025-07-12
+-- updated on 2026-11-20

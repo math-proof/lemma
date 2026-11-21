@@ -1,3 +1,4 @@
+import Lemma.Bool.SEq.is.Eq
 import Lemma.Tensor.DataUnsqueeze.as.Data
 import Instance.Data.Tensor.Tensor.Part2
 open Bool Tensor
@@ -17,3 +18,4 @@ private lemma main
 
 
 -- created on 2026-07-30
+-- updated on 2026-11-20

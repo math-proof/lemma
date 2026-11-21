@@ -1,8 +1,15 @@
+import Instance.Data.Tensor.Defs.Part2
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.MapDiv.eq.DivMap.of.All_Eq_Div
 open Tensor Vector
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.MapDiv.eq.DivMap.of.All_Eq_Div |
+| comm | Tensor.DivMap.eq.MapDiv.of.All_Eq_Div |
+-/
 @[path, comm]
 private lemma main
   [Div α]
@@ -21,3 +28,4 @@ private lemma main
 
 
 -- created on 2026-08-16
+-- updated on 2026-11-20

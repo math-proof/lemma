@@ -1,4 +1,5 @@
-import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
+import Def.Data.Vector.Basic.Part2
+import Theorem.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Fin.Eq_Fin.of.EqVal
 import Lemma.Vector.EqGetReplicate
 import Lemma.Vector.GetFlatten_AddMul.eq.Get
@@ -6,6 +7,13 @@ import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Fin Vector
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Vector.SEqRepeat_1 |
+| cast | Vector.Repeat_1.eq.Cast |
+| subst 1 | Vector.SEqRepeat_1.of.Eq_1 |
+-/
 @[path, cast, subst 1]
 private lemma main
 -- given
@@ -29,4 +37,4 @@ private lemma main
 
 
 -- created on 2026-01-10
--- updated on 2026-07-19
+-- updated on 2026-11-20

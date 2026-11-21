@@ -1,4 +1,4 @@
-import Instance.Data.Vector.Functions.Part2
+import Instance.Data.Vector.Functions
 import Lemma.Vector.Sum.eq.Sum_Get
 import Lemma.Finset.Lt0Sum.of.All_Gt_0.Ne_Empty
 open Exp Vector Finset

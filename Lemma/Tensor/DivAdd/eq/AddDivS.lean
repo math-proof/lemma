@@ -1,12 +1,18 @@
 import Lemma.Tensor.DataAdd.eq.AddDataS
 import Lemma.Tensor.DataDiv.eq.DivDataS
 import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Vector.GetAdd.eq.AddGetS
-import Lemma.Vector.GetDiv.eq.DivGetS
+import Theorem.Vector.GetAdd.eq.AddGetS
+import Theorem.Vector.GetDiv.eq.DivGetS
 import Lemma.Vector.Eq.is.All_EqGetS
 open Tensor Vector
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.DivAdd.eq.AddDivS |
+| comm | Tensor.AddDivS.eq.DivAdd |
+-/
 @[path, comm]
 private lemma main
   [DivisionSemiring α]
@@ -26,3 +32,4 @@ private lemma main
 
 
 -- created on 2026-08-15
+-- updated on 2026-11-20

@@ -1,7 +1,7 @@
 import Lemma.Vector.Sum.eq.Sum_Get
 import Lemma.Vector.GetDiv.eq.DivGet
-import Lemma.Finset.DivSum.eq.Sum_Div
-open Vector Finset
+import Mathlib.Algebra.BigOperators.Ring.Finset
+open Vector
 
 
 @[path]
@@ -15,8 +15,9 @@ private lemma main
 -- proof
   repeat rw [Sum.eq.Sum_Get]
   simp only [GetDiv.eq.DivGet]
-  rw [Sum_Div.eq.DivSum]
+  simp only [div_eq_mul_inv]
+  rw [Finset.sum_mul]
 
 
 -- created on 2025-09-22
--- updated on 2025-09-23
+-- updated on 2026-11-20

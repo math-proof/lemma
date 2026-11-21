@@ -1,15 +1,20 @@
-import Def.Data.Tensor.Defs.Part4
-import Lemma.List.Ne_Nil.is.GtLength_0
-open List
+import Def.Data.Tensor.Defs
+import Initialize.Tactic.Attr.Basic
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.Length.eq.Get_0.of.Ne_Nil |
+| comm | Tensor.Get_0.eq.Length.of.Ne_Nil |
+-/
 @[path, comm]
 private lemma main
 -- given
   (h : s ≠ [])
   (X : Tensor α s) :
 -- imply
-  X.length = s.get ⟨0, GtLength_0.of.Ne_Nil h⟩ := by
+  X.length = s.get ⟨0, List.length_pos_iff.mpr h⟩ := by
 -- proof
   simp [Tensor.length]
   cases s
@@ -21,3 +26,4 @@ private lemma main
 
 
 -- created on 2025-10-10
+-- updated on 2026-11-20

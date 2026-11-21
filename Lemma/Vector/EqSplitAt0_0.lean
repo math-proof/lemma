@@ -1,3 +1,4 @@
+import Def.Data.Vector.Basic.Part2
 import Lemma.Vector.EqCast_0'0.of.Eq
 import Lemma.Vector.Unflatten0.eq.Zero
 open Vector
@@ -19,3 +20,4 @@ private lemma main
 
 
 -- created on 2026-06-11
+-- updated on 2026-11-20

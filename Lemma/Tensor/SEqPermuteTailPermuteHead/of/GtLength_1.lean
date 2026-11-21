@@ -1,3 +1,4 @@
+import Theorem.Nat.AddMul.lt.Mul.of.Lt.Lt
 import Notation.Data.Tensor.Permute
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
@@ -29,7 +30,7 @@ private lemma main
   simp
   apply SEq.of.SEqDataS.Eq
   ·
-    simp [show 1 + (s.length - 1) = s.length from by omega]
+    simp [show 1 + (s.length - 1) = s.length by omega]
   ·
     simp
     apply SEqCast.of.SEq.Eq
@@ -119,7 +120,8 @@ private lemma main
           rw [MulProdS.eq.ProdAppend]
           rw [← Rotate.eq.AppendDrop__Take]
       ·
-        simp [show 1 + (s.length - 1) = s.length from by omega]
+        simp [show 1 + (s.length - 1) = s.length by omega]
 
 
 -- created on 2025-10-20
+-- updated on 2026-11-21

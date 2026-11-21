@@ -1,7 +1,14 @@
+import Def.Data.Vector.Basic.Part2
 import Instance.Data.Vector.Vector
 open List
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Vector.SplitAt.eq.UnflattenCast |
+| comm | Vector.UnflattenCast.eq.SplitAt |
+-/
 @[path, comm]
 private lemma main
   {s : List ℕ}
@@ -15,3 +22,4 @@ private lemma main
 
 
 -- created on 2025-07-12
+-- updated on 2026-11-20

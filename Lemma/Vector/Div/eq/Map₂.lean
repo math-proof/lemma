@@ -1,4 +1,6 @@
-import Theorem.Data.Vector.Basic.Part2
+import Instance.Data.Vector.Basic.Arithmetic
+import Theorem.Data.Vector.Basic
+
 
 @[path]
 private lemma main
@@ -10,4 +12,6 @@ private lemma main
 -- proof
   rfl
 
+
 -- created on 2025-09-23
+-- updated on 2026-11-20

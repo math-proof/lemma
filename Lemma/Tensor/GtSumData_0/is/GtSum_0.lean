@@ -1,8 +1,7 @@
 import Lemma.Tensor.Lt.is.LtDataS
 import Lemma.Tensor.Sum.eq.MkListSumData
-import Lemma.Tensor.EqData0'0
+import Theorem.Tensor.EqData0'0
 import Lemma.Vector.Lt.is.All_Lt
-import Def.Data.Tensor.Sum
 open Tensor Vector
 
 
@@ -25,15 +24,18 @@ private lemma main
 -- proof
   rw [Sum.eq.MkListSumData (X := X)]
   constructor
-  · intro h
+  ·
+    intro h
     rw [gt_iff_lt, Lt.is.LtDataS, Lt.is.All_Lt]
     intro i
     fin_cases i
     simpa [GetElem.getElem, EqData0'0]
-  · intro h
+  ·
+    intro h
     rw [gt_iff_lt, Lt.is.LtDataS, Lt.is.All_Lt] at h
     have := h ⟨0, by simp⟩
     rwa [GetElem.getElem, EqData0'0] at this
 
 
 -- created on 2026-07-29
+-- updated on 2026-11-21

@@ -1,6 +1,6 @@
 import Lemma.Rat.EqDiv_0'0
 import Lemma.Vector.Eq.is.All_EqGetS
-import Lemma.Vector.EqGet0_0
+import Theorem.Vector.EqGet0_0
 open Vector Rat
 
 
@@ -23,3 +23,4 @@ private lemma main
 
 
 -- created on 2025-11-30
+-- updated on 2026-11-20

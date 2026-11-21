@@ -1,5 +1,5 @@
 import Lemma.Tensor.LengthData.eq.Mul_Prod.of.GtLength_0
-import Lemma.Nat.EqDivMul.of.Ne_0
+import Theorem.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.Ne_0
 import Lemma.Tensor.DataGet.as.ArraySliceData_Mul_ProdTail.of.GtLength_0
 open Tensor Nat
@@ -25,3 +25,4 @@ private lemma main
 
 
 -- created on 2025-06-29
+-- updated on 2026-11-21

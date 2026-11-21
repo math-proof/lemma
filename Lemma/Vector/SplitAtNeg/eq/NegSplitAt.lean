@@ -1,4 +1,4 @@
-import Lemma.Vector.GetNeg.eq.NegGet
+import Theorem.Vector.GetNeg.eq.NegGet
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 open Vector
 
@@ -19,3 +19,4 @@ private lemma main
 
 
 -- created on 2025-12-04
+-- updated on 2026-11-20

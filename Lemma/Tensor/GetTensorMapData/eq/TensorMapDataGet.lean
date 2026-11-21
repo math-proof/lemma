@@ -1,6 +1,5 @@
 import Lemma.Tensor.LengthTensorMapData.eq.Length
-import Def.Data.Tensor.Prod
-import Lemma.Tensor.Eq.is.EqDataS
+import Theorem.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.ProdTake_1.eq.Length.of.GtLength_0
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflattenCast
@@ -43,3 +42,4 @@ private lemma main
 
 
 -- created on 2025-10-08
+-- updated on 2026-11-21

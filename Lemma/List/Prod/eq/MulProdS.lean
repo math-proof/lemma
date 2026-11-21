@@ -1,30 +1,6 @@
-import Lemma.Nat.Mul
-open Nat
-
-
-@[path, comm]
-private lemma main
-  [Monoid α]
--- given
-  (s : List α)
-  (i : ℕ) :
--- imply
-  s.prod = (s.take i).prod * (s.drop i).prod := by
--- proof
-  simp
-
-
-@[path, comm]
-private lemma Comm
-  [CommMonoid α]
--- given
-  (s : List α)
-  (i : ℕ) :
--- imply
-  s.prod = (s.drop i).prod * (s.take i).prod := by
--- proof
-  rw [main s i]
-  apply Mul.comm
+import Theorem.List.Prod.eq.MulProdS
+import Initialize.Tactic.Attr.Basic
 
 
 -- created on 2025-06-08
+-- updated on 2026-11-20

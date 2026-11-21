@@ -1,5 +1,5 @@
 import Lemma.Fin.Eq_Fin.of.EqVal
-import Lemma.Nat.Any_Eq_AddMul
+import Theorem.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Vector.GetFlatten_AddMul.eq.Get
 import Lemma.Vector.GetPow.eq.PowGetS
 open Vector Nat Fin
@@ -15,7 +15,7 @@ private lemma main
   (a ^ b).flatten = a.flatten ^ b.flatten := by
 -- proof
   ext k
-  obtain ⟨i, j, h_eq⟩ := Any_Eq_AddMul k
+  obtain ⟨i, j, h_eq⟩ := Fin.Any_Eq_AddMul.of.Lt_Mul k.isLt
   rw [Eq_Fin.of.EqVal h_eq]
   rw [GetPow.eq.PowGetS.fin]
   simp [GetFlatten_AddMul.eq.Get.fin]
@@ -23,4 +23,4 @@ private lemma main
 
 
 -- created on 2026-08-23
--- updated on 2026-08-24
+-- updated on 2026-11-20

@@ -1,5 +1,5 @@
 import Instance.Data.Tensor.Tensor.Part2
-import Instance.Data.Vector.Functions.Part2
+import Instance.Data.Vector.Functions
 open Tensor
 
 

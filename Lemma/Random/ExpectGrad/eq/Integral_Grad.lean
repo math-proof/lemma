@@ -1,6 +1,6 @@
 import Lemma.Random.OfRV.eq.Integral.of.AEStronglyMeasurable_Map
 import Def.Dynamics.PolicyTrajectory.ContinuousAction
-import Def.Analysis.Calculus.Gradient.Operators.Part2
+import Def.Analysis.Calculus.Gradient.Operators
 import Class.Dynamics.MarkovDecisionProcess
 import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic

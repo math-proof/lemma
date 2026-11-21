@@ -1,3 +1,4 @@
+import Instance.Data.Vector.Basic
 import Instance.Data.Vector.Vector
 import Lemma.List.IsConstantMap.of.IsConstant
 open List
@@ -16,3 +17,4 @@ private lemma main
 
 
 -- created on 2025-10-03
+-- updated on 2026-11-20

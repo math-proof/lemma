@@ -1,4 +1,4 @@
-import Def.Analysis.Calculus.Gradient.Operators.Part2
+import Def.Analysis.Calculus.Gradient.Operators
 import Lemma.Random.ProbCond.eq.OfRealPol.of.NeDens_0.All_EqWithDensity.All_Eq_JointDens
 import Mathlib.Analysis.Calculus.Gradient.Basic
 import Class.Dynamics.MarkovDecisionProcess

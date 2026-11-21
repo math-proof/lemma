@@ -1,3 +1,4 @@
+import Instance.Data.Tensor.Defs.Part2
 import Def.Data.Tensor.Defs.Part4
 import Def.Data.Tensor.Reshape
 import Lemma.Vector.GetCast.eq.Get.of.Eq
@@ -6,6 +7,12 @@ import Lemma.Nat.EqMod_1'0
 open Vector Nat
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.Div.eq.Div_Reshape |
+| comm | Tensor.Div_Reshape.eq.Div |
+-/
 @[path, comm]
 private lemma main
   [Div α]
@@ -38,3 +45,4 @@ private lemma main
 
 
 -- created on 2025-09-24
+-- updated on 2026-11-21

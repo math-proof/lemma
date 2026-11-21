@@ -1,5 +1,5 @@
 import Lemma.Vector.MapGetSlice.eq.GetSliceMap
-import Instance.Data.Vector.Functions.Part2
+import Instance.Data.Vector.Functions
 open Vector Exp
 
 

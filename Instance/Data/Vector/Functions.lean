@@ -1,7 +1,7 @@
+import Abbrev.Analysis.Real.Relational
 import Instance.Data.Vector.Vector
-import Instance.Analysis.SpecialFunctions.Exponential.Part5
+import Instance.Analysis.SpecialFunctions.Logarithm
 import Def.Analysis.SpecialFunctions.Trigonometric.Part2
-import Theorem.Analysis.Real.Relational
 import Def.Data.Vector.Functions
 open Vector
 
@@ -40,12 +40,11 @@ instance [Exp α] : Exp (Vector α n) where
 
 instance [NeZero n] [ExpNeZero α] : ExpNeZero (Vector α n) where
   exp_ne_zero x := by
-    simp [Exp.exp]
     intro h_eq
-    have h_head := Get.of.Eq.fin h_eq ⟨0, NeZero.pos n⟩
-    simp at h_head
-    simp [Zero.eq.Replicate] at h_head
-    simp [ExpNeZero.exp_ne_zero] at h_head
+    let i : Fin n := ⟨0, NeZero.pos n⟩
+    apply ExpNeZero.exp_ne_zero (x.get i)
+    simpa [Exp.exp, Zero.eq.Replicate, List.Vector.get_replicate] using
+      congrArg (fun v : Vector α n => v.get i) h_eq
 
 
 instance [Log α] : Log (Vector α n) where
@@ -66,3 +65,12 @@ instance [Log α] : Log (Vector α n) where
     apply Log.log_div_self
 
 end List.Vector
+
+instance [XEq α] : XEq (List.Vector α n) where
+  r a b := ∀ i : Fin n, a[i] ≈ b[i]
+  iseqv :=
+    {
+      refl a i := Setoid.refl a[i]
+      symm h i := Setoid.symm (h i)
+      trans h_ab h_bc i := Setoid.trans (h_ab i) (h_bc i)
+    }

@@ -1,8 +1,14 @@
-import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
+import Theorem.Nat.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.Vector.GetFlatten_AddMul.eq.Get
 open Vector Nat
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Vector.GetFlatten_AddMul.eq.Get.of.Lt.Lt |
+| fin | Vector.GetFlatten_AddMul.eq.Get.of.Lt.Lt.fin |
+-/
 @[path, fin]
 private lemma main
 -- given
@@ -16,3 +22,4 @@ private lemma main
 
 
 -- created on 2025-07-09
+-- updated on 2026-11-20

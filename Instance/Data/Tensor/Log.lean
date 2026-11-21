@@ -1,6 +1,6 @@
 import Instance.Data.Tensor.Tensor.Part2
-import Instance.Data.Vector.Functions.Part2
-import Instance.Analysis.SpecialFunctions.Exponential.Part5
+import Instance.Data.Vector.Functions
+import Instance.Analysis.SpecialFunctions.Logarithm
 open Tensor
 
 

@@ -1,4 +1,6 @@
-import Lemma.Bool.UFn.of.Eq
+import Initialize.Tactic.Attr.Basic
+import Mathlib.Data.Vector.Basic
+import Theorem.Bool.UFn.of.Eq
 open Bool
 
 
@@ -11,7 +13,6 @@ private lemma main
   a = b :=
 -- proof
   List.Vector.eq a b h
-
 
 @[path]
 private lemma nat
@@ -28,3 +29,4 @@ private lemma nat
 
 
 -- created on 2025-10-03
+-- updated on 2026-11-20

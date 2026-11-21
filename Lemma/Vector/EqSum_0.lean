@@ -1,6 +1,6 @@
 import Lemma.Nat.EqAdd0
 import Lemma.Vector.EqCons_Tail
-import Lemma.Vector.EqGet0_0
+import Theorem.Vector.EqGet0_0
 import Lemma.Vector.SumCons.eq.Add_Sum
 open Nat Vector
 
@@ -26,3 +26,4 @@ private lemma main
 
 
 -- created on 2026-07-23
+-- updated on 2026-11-20

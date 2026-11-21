@@ -1,9 +1,5 @@
-import Lemma.Bool.HEq.of.Eq_Cast
-import Lemma.Bool.EqCast.of.HEq
-import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Bool.UFn.of.Eq
-import Lemma.Tensor.DataCast.as.Data.of.Eq
-open Tensor Bool
+import Structure.Data.Tensor.Defs
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -17,10 +13,13 @@ private lemma main
 -- imply
   HEq A B := by
 -- proof
-  apply HEq.of.Eq_Cast ∘ Eq.of.EqDataS
-  rw [Eq_Cast.of.HEq h]
-  symm
-  apply DataCast.eq.Cast_Data.of.Eq h_s.symm
+  subst h_s
+  apply heq_of_eq
+  cases A
+  cases B
+  congr
+  apply eq_of_heq h
 
 
 -- created on 2025-07-24
+-- updated on 2026-11-20

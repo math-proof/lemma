@@ -1,5 +1,5 @@
 import Instance.Data.Vector.Vector
-import Lemma.List.EqAppendTake__Drop
+import Theorem.List.EqAppendTake__Drop
 open List
 
 
@@ -17,3 +17,4 @@ private lemma main
 
 
 -- created on 2025-05-09
+-- updated on 2026-11-20

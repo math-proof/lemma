@@ -1,6 +1,15 @@
-import Theorem.Data.Vector.Basic.Part2
+import Instance.Data.Vector.Basic.Arithmetic
+import Theorem.Data.Vector.Basic
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Vector.GetNeg.eq.NegGet |
+| comm | Vector.NegGet.eq.GetNeg |
+| fin | Vector.GetNeg.eq.NegGet.fin |
+| fin.comm | Vector.NegGet.eq.GetNeg.fin |
+-/
 @[path, comm, fin, fin.comm]
 private lemma main
   [Neg α]
@@ -14,3 +23,4 @@ private lemma main
 
 
 -- created on 2025-10-04
+-- updated on 2026-11-20

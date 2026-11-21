@@ -1,5 +1,5 @@
+import Instance.Data.Tensor.Defs.Part2
 import Lemma.Tensor.UnsqueezeBFn.eq.BFnUnsqueeze
-import Def.Data.Tensor.Unsqueeze
 open Tensor
 
 
@@ -17,4 +17,4 @@ private lemma main
 
 
 -- created on 2026-08-15
--- updated on 2026-10-26
+-- updated on 2026-11-21

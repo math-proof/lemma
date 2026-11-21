@@ -1,11 +1,5 @@
-import Lemma.List.Eq_Nil.is.EqLength_0
-import Lemma.List.LengthCons.eq.Add1Length
-import Lemma.Nat.Add.is.Eq
-import Lemma.List.MapCons.eq.Cons_Map
-import Lemma.List.FlattenCons.eq.Append_Flatten
-import Lemma.List.Eq.of.Append.Length
-import Lemma.Vector.Eq.is.ToList
-open List Vector Nat
+import Mathlib.Data.Vector.MapLemmas
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -19,25 +13,18 @@ private lemma main
 -- proof
   induction a generalizing b with
   | nil =>
-    simp at h₀
-    have hb := Eq_Nil.of.EqLength_0 h₀.symm
-    exact hb.symm
+    cases b <;> simp_all
   | cons a₀ a ih =>
-    match b with
-    | [] =>
-      contradiction
-    | b₀ :: b =>
-      rw [LengthCons.eq.Add1Length, LengthCons.eq.Add1Length] at h₀
-      have h₀ := Eq.of.Add.left h₀
-      rw [MapCons.eq.Cons_Map, MapCons.eq.Cons_Map] at h₁
-      rw [FlattenCons.eq.Append_Flatten, FlattenCons.eq.Append_Flatten] at h₁
-      have h_head_length : a₀.toList.length = b₀.toList.length := by
-        simp
-      have h_head := Eq.of.Append.Length h_head_length h₁
-      have h_head := Eq.of.ToList h_head
-      have h₁ := Eq.of.Append.Length.drop h_head_length h₁
-      have ih := ih (b := b) h₀ h₁
-      aesop
+    cases b with
+    | nil => simp at h₀
+    | cons b₀ b =>
+      simp only [List.length_cons, Nat.succ.injEq] at h₀
+      simp only [List.map_cons, List.flatten_cons] at h₁
+      obtain ⟨h_head, h_tail⟩ := List.append_inj h₁ (by simp)
+      congr
+      · apply Subtype.ext h_head
+      · apply ih h₀ h_tail
 
 
 -- created on 2025-05-11
+-- updated on 2026-11-20

@@ -1,7 +1,7 @@
 import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.Lt.is.LtDataS
 import Lemma.Tensor.MapData.eq.DataMap
-import Lemma.Vector.EqGet0_0
+import Theorem.Vector.EqGet0_0
 import Lemma.Vector.Lt.is.All_Lt
 open Tensor Vector
 
@@ -18,7 +18,7 @@ private lemma main
   X.map f > 0 := by
 -- proof
   rw [gt_iff_lt, Lt.is.LtDataS, EqData0'0]
-  rw [← MapData.eq.DataMap]
+  rw [DataMap.eq.MapData]
   rw [Lt.is.All_Lt]
   intro i
   simp [GetElem.getElem, EqGet0_0.fin]
@@ -29,3 +29,4 @@ private lemma main
 
 
 -- created on 2026-08-16
+-- updated on 2026-11-20

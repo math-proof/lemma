@@ -1,3 +1,4 @@
+import Instance.Data.Tensor.Tensor
 import Def.Data.Tensor.Stack.Part2
 import Lemma.Vector.FlattenMul.eq.MulFlattenS
 import Lemma.Vector.MulMapS.eq.Map_FunMul
@@ -28,10 +29,10 @@ private lemma main
   let b := (List.Vector.range s₀).map fun x => (B.get x).data
   repeat erw [MapMap.eq.Map_Comp]
   show a.flatten * b.flatten = ((List.Vector.range s₀).map fun x => (A.get x).data * (B.get x).data).flatten
-  rw [← FlattenMul.eq.MulFlattenS]
+  rw [MulFlattenS.eq.FlattenMul]
   congr
   apply MulMapS.eq.Map_FunMul
 
 
 -- created on 2025-07-03
--- updated on 2026-10-26
+-- updated on 2026-11-21

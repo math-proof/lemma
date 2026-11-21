@@ -1,5 +1,4 @@
-import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
-import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
+import Theorem.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 open Nat Vector Fin
 
@@ -20,3 +19,4 @@ private lemma main
 
 
 -- created on 2025-11-30
+-- updated on 2026-11-20

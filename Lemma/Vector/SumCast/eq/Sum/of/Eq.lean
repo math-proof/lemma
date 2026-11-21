@@ -1,4 +1,5 @@
-import Theorem.Data.Vector.Basic.Part2
+import Def.Data.Vector.Basic
+import Theorem.Data.Vector.Basic
 
 
 @[path]
@@ -15,3 +16,4 @@ private lemma main
 
 
 -- created on 2025-11-01
+-- updated on 2026-11-20

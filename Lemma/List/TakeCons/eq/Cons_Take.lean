@@ -1,4 +1,5 @@
-import Lemma.List.TakeCons.eq.Cons_Take.of.Gt_0
+import Theorem.List.TakeCons.eq.Cons_Take.of.Gt_0
+import Initialize.Tactic.Attr.Basic
 open List
 
 
@@ -15,4 +16,4 @@ private lemma main
 
 
 -- created on 2025-06-14
--- updated on 2026-07-22
+-- updated on 2026-11-21

@@ -1,10 +1,18 @@
+import Def.Data.Vector.Basic.Part2
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
-import Lemma.List.AddMul_ProdDrop.lt.Prod
+import Theorem.List.Prod.eq.MulProdS
 import Lemma.Bool.HEq.of.SEq
 import Lemma.Vector.Eq.of.Eq_Cast.Eq
 open Vector List Bool
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Vector.GetSplitAt.eq.Get_AddMul_ProdDrop |
+| fin | Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.fin |
+| val | Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.val |
+-/
 @[path, fin, val]
 private lemma main
   {s : List ℕ}
@@ -14,7 +22,9 @@ private lemma main
   (i : Fin (s.take d).prod)
   (j : Fin (s.drop d).prod) :
 -- imply
-  have := AddMul_ProdDrop.lt.Prod i j
+  have : i * (s.drop d).prod + j < s.prod := by
+    rw [Prod.eq.MulProdS s d]
+    apply Nat.AddMul.lt.Mul i j
   (v.splitAt d)[i, j] = v[i * (s.drop d).prod + j] := by
 -- proof
   intro h_lt
@@ -39,4 +49,4 @@ private lemma main
 
 
 -- created on 2025-07-08
--- updated on 2025-07-09
+-- updated on 2026-11-20

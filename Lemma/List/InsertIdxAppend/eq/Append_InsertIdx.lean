@@ -1,18 +1,6 @@
-import Lemma.Nat.AddAdd
-open Nat
-
-
-@[path]
-private lemma main
--- given
-  (a b : List α)
-  (i : ℕ)
-  (x : α) :
--- imply
-  (a ++ b).insertIdx (a.length + i) x = a ++ b.insertIdx i x := by
--- proof
-  induction a <;>
-    simp_all [AddAdd.comm]
+import Theorem.List.InsertIdxAppend.eq.Append_InsertIdx
+import Initialize.Tactic.Attr.Basic
 
 
 -- created on 2025-06-09
+-- updated on 2026-11-21

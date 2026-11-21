@@ -1,5 +1,6 @@
 import Lemma.Nat.EqAddSub.of.Ge
-import Lemma.Nat.Ge.of.Gt
+import Theorem.Nat.Ge.of.Gt
+import Initialize.Tactic.Attr.Basic
 open Nat
 
 
@@ -17,3 +18,4 @@ private lemma main
 
 
 -- created on 2025-06-18
+-- updated on 2026-11-20

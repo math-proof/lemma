@@ -1,9 +1,16 @@
 import Lemma.Vector.GetSplitAt_1.as.ArraySlice.of.GtGet_0.GtLength_0
 import Lemma.Bool.SEq.of.SEq.SEq
-import Lemma.Nat.Mul.of.Eq
+import Theorem.Nat.Mul.of.Eq
 open Vector List Bool Nat
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Vector.ArraySlice.as.GetCast_SplitAt_1.of.GtGet_0.GtLength_0.Eq_ProdTail.Eq_Prod |
+| comm | Vector.GetCast_SplitAt_1.as.ArraySlice.of.GtGet_0.GtLength_0.Eq_ProdTail.Eq_Prod |
+| cast | Vector.ArraySlice.eq.Cast_GetCast_SplitAt_1.of.GtGet_0.GtLength_0.Eq_ProdTail.Eq_Prod |
+-/
 @[path, comm, cast]
 private lemma main
   {s : List ℕ}
@@ -31,3 +38,4 @@ private lemma main
 
 
 -- created on 2025-07-11
+-- updated on 2026-11-21

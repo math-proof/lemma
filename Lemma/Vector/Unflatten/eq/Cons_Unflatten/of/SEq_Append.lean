@@ -1,8 +1,6 @@
-import Lemma.Nat.Add_Mul.eq.MulAdd_1
-import Lemma.Nat.AddMul.eq.MulAdd_1
-import Lemma.Nat.AddAdd
-import Lemma.Nat.LtAddS.is.Lt
-import Lemma.Nat.Lt.of.AddMul.lt.Mul
+import Theorem.Nat.AddMul.eq.MulAdd_1
+import Theorem.Nat.AddAdd
+import Lemma.Vector.Get_AddMul.eq.GetUnflatten.of.Lt
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Vector.Get.of.SEq_Append.Lt.Lt
 import Lemma.Vector.Get_Add.eq.Get.of.SEq_Append.Lt.LtAdd
@@ -38,16 +36,16 @@ private lemma main
     have := Get.of.SEq_Append.Lt.Lt hj hj' h
     aesop
   | i + 1 =>
-    simp [MulAdd_1.eq.Add_Mul]
+    simp [Nat.succ_mul, Nat.add_comm (i * n) n]
     simp [AddAdd.eq.Add_Add]
     simp [← h_eq_i] at hij
     rw [MulAdd_1.eq.AddMul, MulAdd_1.eq.AddMul] at hij
     rw [AddAdd.comm] at hij
-    have hij := Lt.of.LtAddS hij
+    have hij : i * n + j < m * n := by omega
     have h_eq := Get_Add.eq.Get.of.SEq_Append.Lt.LtAdd (show n + (i * n + j) < (m + 1) * n by linarith) hij h
     erw [GetUnflatten.eq.Get_AddMul tail ⟨i, by grind⟩]
     aesop
 
 
 -- created on 2025-05-31
--- updated on 2026-08-24
+-- updated on 2026-11-20

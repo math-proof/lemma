@@ -1,3 +1,4 @@
+import Instance.Data.Tensor.Tensor
 import Instance.Data.Tensor.Tensor.Part2
 import Lemma.Nat.Lt_Add
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
@@ -8,6 +9,12 @@ import Lemma.List.Prod.eq.Foldr
 open Vector List Bool Nat
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.GetAppend.eq.Get |
+| fin | Tensor.GetAppend.eq.Get.fin |
+-/
 @[path, fin]
 private lemma main
 -- given
@@ -43,7 +50,7 @@ private lemma main
         apply SEqCast.of.SEq.Eq
         simp
         apply SEqCast.of.SEq.Eq
-        simp [AddMulS.eq.MulAdd]
+        simp [Nat.add_mul]
         rfl
     ·
       apply GetUnflatten.as.ArraySliceAppend
@@ -59,4 +66,4 @@ private lemma main
 
 
 -- created on 2025-05-31
--- updated on 2026-10-26
+-- updated on 2026-11-21

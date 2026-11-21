@@ -1,5 +1,5 @@
+import Instance.Data.Tensor.Defs.Part2
 import Lemma.Tensor.RepeatBFn.eq.BFnRepeat
-import Def.Data.Tensor.Repeat
 open Tensor
 
 
@@ -18,4 +18,4 @@ private lemma main
 
 
 -- created on 2026-08-12
--- updated on 2026-10-26
+-- updated on 2026-11-21

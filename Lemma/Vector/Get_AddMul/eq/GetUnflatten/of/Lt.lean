@@ -1,4 +1,4 @@
-import Lemma.Nat.AddMul.lt.Mul.of.Lt
+import Theorem.Nat.AddMul.lt.Mul.of.Lt
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 open Vector Nat
 
@@ -20,4 +20,4 @@ private lemma main
 
 
 -- created on 2025-05-31
--- updated on 2025-07-09
+-- updated on 2026-11-20

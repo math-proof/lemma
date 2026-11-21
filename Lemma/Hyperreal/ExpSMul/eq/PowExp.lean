@@ -1,4 +1,6 @@
-import Instance.Analysis.SpecialFunctions.Exponential.Part5
+import Def.Analysis.SpecialFunctions.Exponential.Part2
+import Initialize.Tactic.Attr.Basic
+import Instance.Analysis.SpecialFunctions.Exponential
 
 
 @[path, comm]

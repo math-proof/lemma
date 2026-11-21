@@ -1,3 +1,5 @@
+import Def.Data.Vector.Basic
+import Instance.Data.Vector.Basic.Arithmetic
 import Lemma.Vector.Drop0.eq.Zero
 import Lemma.Vector.Take0.eq.Zero
 open Vector
@@ -18,3 +20,4 @@ private lemma main
 
 
 -- created on 2025-11-30
+-- updated on 2026-11-20

@@ -1,7 +1,5 @@
-import Def.Data.Tensor.Unsqueeze
-import Def.Data.Tensor.Prod
 import Lemma.Tensor.DataUnsqueeze.eq.Map_FunGetData
-import Lemma.Tensor.Eq.is.EqDataS
+import Theorem.Tensor.Eq.is.EqDataS
 open List Tensor
 
 
@@ -20,3 +18,4 @@ private lemma main
 
 
 -- created on 2025-11-30
+-- updated on 2026-11-21

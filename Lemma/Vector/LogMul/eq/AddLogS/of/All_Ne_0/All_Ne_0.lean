@@ -1,5 +1,5 @@
 import Lemma.Real.LogMul.eq.AddLogS.of.Ne_0.Ne_0
-import Instance.Data.Vector.Functions.Part2
+import Instance.Data.Vector.Functions
 open Real Vector Log
 
 

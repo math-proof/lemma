@@ -1,9 +1,12 @@
-import Def.Data.Tensor.Defs.Part4
-import Lemma.Rat.Div.eq.DivDivS.of.Ne_0
-import Lemma.Nat.Div.eq.HDiv
-open Vector Nat Rat
+import Instance.Data.Tensor.Defs.Part2
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.Div.eq.DivDivS.of.Ne_0 |
+| comm | Tensor.DivDivS.eq.Div.of.Ne_0 |
+-/
 @[path, comm]
 private lemma main
   [CommGroupWithZero α]
@@ -16,9 +19,9 @@ private lemma main
 -- proof
   simp [HDiv.hDiv, Div.div]
   ext i
-  repeat rw [GetDiv.eq.DivGetS.fin]
-  simp [Div.eq.HDiv]
-  rw [DivDivS.eq.Div.of.Ne_0 h]
+  simp only [List.Vector.get_map₂]
+  apply (div_div_div_cancel_right₀ h _ _).symm
 
 
 -- created on 2025-09-26
+-- updated on 2026-11-20

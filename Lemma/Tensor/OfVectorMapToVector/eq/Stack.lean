@@ -1,3 +1,4 @@
+import Instance.Data.Tensor.Tensor
 import Def.Data.Tensor.Stack.Part2
 import Lemma.Vector.EqGetRange
 import Lemma.Vector.GetMap.eq.UFnGet
@@ -26,3 +27,4 @@ private lemma main
 
 
 -- created on 2025-07-13
+-- updated on 2026-11-20

@@ -1,7 +1,15 @@
+import Def.Data.Vector.Basic.Part2
 import Lemma.Vector.EqGetRange.of.Lt
 open Vector
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Vector.GetTranspose.eq.Get |
+| fin | Vector.GetTranspose.eq.Get.fin |
+| val | Vector.GetTranspose.eq.Get.val |
+-/
 @[path, fin, val]
 private lemma main
 -- given
@@ -16,3 +24,4 @@ private lemma main
 
 
 -- created on 2025-06-15
+-- updated on 2026-11-20

@@ -1,6 +1,6 @@
 import Lemma.Nat.EqAddMulDiv
 import Lemma.Nat.Div.of.Eq
-import Lemma.Nat.Coe.is.Eq
+import Theorem.Nat.Coe.is.Eq
 import Lemma.Nat.Div.eq.FloorDiv
 import Lemma.Rat.DivAdd.eq.AddDivS
 import Lemma.Nat.Ne_0
@@ -24,7 +24,7 @@ private lemma main
   have := EqAddMulDiv k n
   have := h_eq.symm.trans this.symm
   have h_div := Div.of.Eq this n
-  have h_div := Coe.of.Eq (R := ℤ) h_div
+  have h_div := (Nat.Coe.is.Eq (R := ℤ)).mpr h_div
   repeat rw [Div.eq.FloorDiv (α := ℚ)] at h_div
   simp at h_div
   rw [DivAdd.eq.AddDivS] at h_div
@@ -43,3 +43,4 @@ private lemma main
 
 
 -- created on 2025-07-07
+-- updated on 2026-11-21

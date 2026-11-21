@@ -1,8 +1,6 @@
-import Lemma.List.EraseIdxPermute.eq.EraseIdx.of.Ge
-import Lemma.Nat.Le_Sub_1
 import Lemma.Tensor.EqData1'1
 import Lemma.Tensor.HEq.of.SEqDataS.Eq
-open List Nat Tensor
+open Tensor
 
 
 @[path]
@@ -23,3 +21,4 @@ private lemma main
 
 
 -- created on 2025-10-31
+-- updated on 2026-11-20

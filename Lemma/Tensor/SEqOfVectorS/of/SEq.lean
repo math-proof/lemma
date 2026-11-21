@@ -1,3 +1,4 @@
+import Def.Data.Tensor.Defs.Part3
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 open Tensor Bool
 
@@ -22,3 +23,4 @@ private lemma main
 
 
 -- created on 2026-01-11
+-- updated on 2026-11-21

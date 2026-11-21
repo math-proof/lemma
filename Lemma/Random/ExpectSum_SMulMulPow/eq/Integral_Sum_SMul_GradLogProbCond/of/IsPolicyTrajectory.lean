@@ -2,7 +2,7 @@ import Lemma.Random.OfRV.eq.Integral.of.AEStronglyMeasurable_Map
 import Lemma.Random.PSpace_Path.of.All_PSpace
 import Instance.Probability.Moments.Variance
 import Class.Dynamics.PolicyTrajectory
-import Def.Analysis.Calculus.Gradient.Operators.Part2
+import Def.Analysis.Calculus.Gradient.Operators
 import Mathlib.Analysis.Calculus.Gradient.Basic
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Class.Dynamics.MarkovDecisionProcess

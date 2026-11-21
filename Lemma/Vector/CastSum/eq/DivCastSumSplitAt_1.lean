@@ -1,11 +1,12 @@
+import Def.Data.Vector.Basic.Part2
 import Lemma.Vector.CastDiv.eq.DivCast.of.Eq
-import Lemma.List.Prod.eq.MulProdS
+import Theorem.List.Prod.eq.MulProdS
 import Lemma.Vector.Div.eq.Mul_Inv
 import Lemma.Vector.UnflattenDiv.eq.DivUnflatten_Replicate
 import Lemma.Vector.SumMul.eq.MulSum
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.List.EraseIdx_0.eq.Drop_1
-import Lemma.Vector.GetMul.eq.MulGetS
+import Theorem.Vector.GetMul.eq.MulGetS
 import Lemma.Vector.InvReplicate.eq.ReplicateInv
 open Vector List Bool Rat
 
@@ -41,4 +42,4 @@ private lemma main
 
 
 -- created on 2025-09-21
--- updated on 2025-09-24
+-- updated on 2026-11-20

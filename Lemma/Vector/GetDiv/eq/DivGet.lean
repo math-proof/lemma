@@ -1,6 +1,13 @@
-import Theorem.Data.Vector.Basic.Part2
+import Instance.Data.Vector.Basic.Arithmetic
+import Theorem.Data.Vector.Basic
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Vector.GetDiv.eq.DivGet |
+| fin | Vector.GetDiv.eq.DivGet.fin |
+-/
 @[path, fin]
 private lemma main
   [Div α]
@@ -15,4 +22,4 @@ private lemma main
 
 
 -- created on 2025-09-22
--- updated on 2026-10-26
+-- updated on 2026-11-20

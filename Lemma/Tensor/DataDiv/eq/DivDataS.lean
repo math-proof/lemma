@@ -1,4 +1,4 @@
-import Def.Data.Tensor.Defs.Part4
+import Instance.Data.Tensor.Defs.Part2
 
 
 @[path]

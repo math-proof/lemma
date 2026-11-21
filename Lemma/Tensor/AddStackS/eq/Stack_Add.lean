@@ -1,3 +1,4 @@
+import Instance.Data.Tensor.Tensor
 import Def.Data.Tensor.Stack.Part2
 import Lemma.Vector.AddFlattenS.eq.FlattenAdd
 import Lemma.Vector.AddMapS.eq.Map_FunAdd
@@ -28,4 +29,4 @@ private lemma main
 
 
 -- created on 2025-07-20
--- updated on 2026-10-26
+-- updated on 2026-11-21

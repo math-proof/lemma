@@ -1,9 +1,8 @@
+import Def.Data.Vector.Basic
 import Lemma.Vector.EqCons_Tail
-import Lemma.Nat.Add_Mul.eq.MulAdd_1
 import Lemma.List.DropDrop.eq.Drop_Add
-import Lemma.Bool.UFn.of.Eq
-import Lemma.Vector.GetCons__Add_1.eq.Get.of.Lt_Mul
-open Vector List Bool Nat
+import Theorem.Bool.UFn.of.Eq
+open Vector List Bool
 
 
 @[path]
@@ -46,11 +45,8 @@ private lemma main
       let i' : Fin m := ⟨i, hi⟩
       have ih := ih v.tail i' (by simp)
       simp
-      have h_Cons := GetCons__Add_1.eq.Get.of.Lt_Mul hi v[0] v.tail
-      have h_val_length : v.val.length = m + 1 := by
-        simp
-      have h_tail_length : v.tail.val.length = m := by
-        simp
+      have h_val_length : v.val.length = m + 1 := by simp
+      have h_tail_length : v.tail.val.length = m := by simp
       have h_Cons : v.val[i + 1].val = v.tail.val[i].val := by
         simp
       rw [h_Cons]
@@ -60,11 +56,11 @@ private lemma main
       simp only [GetElem.getElem] at ih ⊢
       rw [ih]
       simp
-      rw [MulAdd_1.eq.Add_Mul]
+      rw [Nat.succ_mul, Nat.add_comm (i * n) n]
       rw [Drop_Add.eq.DropDrop]
       rw [h_v]
       simp [List.Vector.toList_cons, List.map_cons, List.flatten_cons, i']
 
 
 -- created on 2025-05-08
--- updated on 2026-08-24
+-- updated on 2026-11-20

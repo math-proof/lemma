@@ -1,19 +1,6 @@
-import Lemma.Nat.Ne.of.Gt
-import Lemma.List.HeadD.eq.Get_0.of.NeLength_0
-open List Nat
-
-
-@[path]
-private lemma main
-  {s : List α}
--- given
-  (h : s.length > 0)
-  (default : α) :
--- imply
-  s.headD default = s[0] := by
--- proof
-  have := Ne.of.Gt h
-  apply HeadD.eq.Get_0.of.NeLength_0 this
+import Theorem.List.HeadD.eq.Get_0.of.GtLength_0
+import Initialize.Tactic.Attr.Basic
 
 
 -- created on 2025-05-04
+-- updated on 2026-11-20

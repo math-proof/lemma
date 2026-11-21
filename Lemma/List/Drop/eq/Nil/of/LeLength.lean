@@ -1,14 +1,6 @@
+import Theorem.List.Drop.eq.Nil.of.LeLength
 import Initialize.Tactic.Attr.Basic
-import Def.Data.List.List.Basic
-@[path]
-private lemma main
-  {s : List α}
--- given
-  (h : s.length ≤ i) :
--- imply
-  s.drop i = [] := by
--- proof
-  simp_all
 
 
 -- created on 2025-06-07
+-- updated on 2026-11-21

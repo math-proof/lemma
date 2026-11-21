@@ -1,8 +1,14 @@
-import Lemma.Int.Sub.eq.Add_Neg
+import Theorem.Int.Sub.eq.Add_Neg
 import Lemma.Int.EqNegNeg
 open Int
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Int.Add.eq.Sub_Neg |
+| comm | Int.Sub_Neg.eq.Add |
+-/
 @[path, comm]
 private lemma main
   [AddGroup α]
@@ -16,3 +22,4 @@ private lemma main
 
 
 -- created on 2025-03-16
+-- updated on 2026-11-21

@@ -1,4 +1,4 @@
-import Instance.Data.Tensor.Tensor.Part2
+import Instance.Data.Tensor.Tensor
 import Lemma.Tensor.SEqDataS.of.SEq
 open Tensor
 
@@ -19,3 +19,4 @@ private lemma main
 
 
 -- created on 2025-05-29
+-- updated on 2026-11-20

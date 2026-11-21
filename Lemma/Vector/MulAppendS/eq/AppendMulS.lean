@@ -1,4 +1,4 @@
-import Lemma.Vector.GetMul.eq.MulGetS
+import Theorem.Vector.GetMul.eq.MulGetS
 import Lemma.Vector.GetAppend.eq.Get.of.Lt
 import Lemma.Vector.GetAppend.eq.Get_Sub.of.Lt_Add.Ge
 open Vector
@@ -11,7 +11,7 @@ private lemma main
   (a c : List.Vector α n)
   (b d : List.Vector α m) :
 -- imply
-  (a ++ b) * (c ++ d) = (a * c) ++ (b * d) := by
+  (a ++ b) * (c ++ d) = a * c ++ b * d := by
 -- proof
   ext i
   if h_i : n > i then
@@ -25,3 +25,4 @@ private lemma main
 
 
 -- created on 2026-08-23
+-- updated on 2026-11-20

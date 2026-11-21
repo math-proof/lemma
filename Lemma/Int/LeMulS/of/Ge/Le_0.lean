@@ -1,8 +1,9 @@
-import Lemma.Nat.LeMulS.of.Le.Ge_0
+import Theorem.Nat.LeMulS.of.Le.Ge_0
 import Lemma.Int.GeNeg_0.of.Le_0
 import Lemma.Int.Mul_Neg.eq.NegMul
 import Lemma.Int.Le.of.GeNegS
 open Int Nat
+
 
 /--
 using comm 2 instead of comm 1 since conditions of the lemma is arranged according to the constructor order of multiplication
@@ -22,10 +23,10 @@ private lemma main
   a * x ≤ b * x := by
 -- proof
   have := GeNeg_0.of.Le_0 h₁
-  have := GeMulS.of.Ge.Ge_0 h₀ this
+  have := LeMulS.of.Le.Ge_0 h₀ this
   repeat rw [Mul_Neg.eq.NegMul] at this
   apply Le.of.GeNegS this
 
 
 -- created on 2025-03-23
--- updated on 2025-03-30
+-- updated on 2026-11-20

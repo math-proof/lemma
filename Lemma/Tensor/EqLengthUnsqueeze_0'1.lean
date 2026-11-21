@@ -1,6 +1,6 @@
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
+import Theorem.Tensor.Length.eq.Get_0.of.GtLength_0
 import Def.Data.Tensor.Unsqueeze
-import Lemma.List.LengthInsertIdx.eq.Add1Length.of.GeLength
+import Theorem.List.LengthInsertIdx.eq.Add1Length.of.GeLength
 import Lemma.List.LengthInsertIdx.eq.Length.of.LtLength
 open Tensor List
 
@@ -17,3 +17,4 @@ private lemma main
 
 
 -- created on 2025-10-10
+-- updated on 2026-11-20

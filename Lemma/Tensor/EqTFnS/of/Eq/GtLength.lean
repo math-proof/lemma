@@ -1,8 +1,6 @@
 import Def.Data.Tensor.Defs.Part4
-import Lemma.Vector.HEq.of.Val
 import Lemma.Tensor.Length.of.SEq
-import Lemma.Bool.HEq.of.Cond.Cond
-open Tensor Vector Bool
+open Tensor
 
 
 @[path]
@@ -30,7 +28,6 @@ private lemma main
     congr
     aesop
 
-
 @[path]
 private lemma tensor
   {A : Tensor α s}
@@ -41,7 +38,7 @@ private lemma tensor
   (g : List ℕ → List ℕ)
   (f : (s : List ℕ) → (X : Tensor α s) → (i : Fin X.length) → Tensor α (g s)) :
 -- imply
-  f s A ⟨i, h_i⟩ ≃ f s' B ⟨i, by rwa [← Tensor.Length.of.SEq h]⟩ := by
+  f s A ⟨i, h_i⟩ ≃ f s' B ⟨i, by rwa [← Length.of.SEq h]⟩ := by
 -- proof
   simp [SEq] at h ⊢
   let ⟨h_s, h⟩ := h
@@ -56,3 +53,4 @@ private lemma tensor
 
 
 -- created on 2025-07-13
+-- updated on 2026-11-20

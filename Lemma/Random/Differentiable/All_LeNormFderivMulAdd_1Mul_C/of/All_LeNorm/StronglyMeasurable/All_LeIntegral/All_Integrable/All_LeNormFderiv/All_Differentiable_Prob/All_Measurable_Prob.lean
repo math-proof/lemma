@@ -1,4 +1,4 @@
-import Def.Analysis.Calculus.Gradient.Operators.Part2
+import Def.Analysis.Calculus.Gradient.Operators
 import Mathlib.Analysis.Calculus.ParametricIntegral
 import Mathlib.Probability.Kernel.MeasurableIntegral
 import Lemma.Random.Integral.eq.Integral_SMul.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity

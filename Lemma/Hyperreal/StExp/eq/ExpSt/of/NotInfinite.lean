@@ -1,4 +1,5 @@
-import Instance.Analysis.SpecialFunctions.Exponential.Part5
+import Initialize.Tactic.Attr.Basic
+import Instance.Analysis.SpecialFunctions.Exponential
 import Def.Analysis.Real.Limits.Basic
 open ArchimedeanClass
 

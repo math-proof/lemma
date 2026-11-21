@@ -1,11 +1,17 @@
 import Lemma.Tensor.DataSum_0.eq.SumSplitAtData
 import Def.Data.Tensor.Sum
-import Lemma.Tensor.Eq.is.EqDataS
+import Theorem.Tensor.Eq.is.EqDataS
 import Lemma.Vector.Sum.of.SEq
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 open Tensor Vector
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.HeadDataSum.eq.SumData |
+| comm | Tensor.SumData.eq.HeadDataSum |
+-/
 @[path, comm]
 private lemma main
   [Add α] [Zero α]
@@ -34,4 +40,4 @@ private lemma main
 
 
 -- created on 2026-04-24
--- updated on 2026-10-26
+-- updated on 2026-11-21

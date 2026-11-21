@@ -1,4 +1,4 @@
-import Lemma.Vector.GetAdd.eq.AddGetS
+import Theorem.Vector.GetAdd.eq.AddGetS
 open Vector
 
 
@@ -18,3 +18,4 @@ private lemma main
 
 
 -- created on 2025-07-20
+-- updated on 2026-11-20

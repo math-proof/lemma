@@ -1,4 +1,4 @@
-import Instance.Analysis.SpecialFunctions.Exponential.Part5
+import Instance.Analysis.SpecialFunctions.Exponential
 import Lemma.Int.Sub.eq.Add_Neg
 import Lemma.Rat.Div.eq.Mul_Inv
 open Int Rat

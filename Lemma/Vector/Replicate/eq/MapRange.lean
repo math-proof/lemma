@@ -1,3 +1,4 @@
+import Def.Data.Vector.Basic
 import Instance.Data.Vector.Vector
 
 
@@ -14,3 +15,4 @@ private lemma main
 
 
 -- created on 2025-11-30
+-- updated on 2026-11-20

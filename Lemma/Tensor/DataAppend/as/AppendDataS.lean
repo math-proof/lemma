@@ -1,8 +1,15 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
-import Def.Data.Tensor.Defs.Part4
+import Instance.Data.Tensor.Defs.Part2
 open Bool
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.DataAppend.as.AppendDataS |
+| comm | Tensor.AppendDataS.as.DataAppend |
+| cast | Tensor.DataAppend.eq.Cast_AppendDataS |
+-/
 @[path, comm, cast]
 private lemma main
 -- given
@@ -19,3 +26,4 @@ private lemma main
 
 
 -- created on 2026-01-10
+-- updated on 2026-11-20

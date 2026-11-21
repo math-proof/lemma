@@ -1,5 +1,5 @@
 import Theorem.Logic.SEq
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
+import Theorem.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.List.LengthCons.gt.Zero
 open Tensor List
 
@@ -29,3 +29,4 @@ private lemma main
 
 
 -- created on 2025-07-24
+-- updated on 2026-11-20

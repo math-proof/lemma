@@ -1,6 +1,13 @@
-import Theorem.Data.Vector.Basic.Part2
+import Instance.Data.Vector.Basic.Arithmetic
+import Theorem.Data.Vector.Basic
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Vector.GetPow.eq.PowGetS |
+| fin | Vector.GetPow.eq.PowGetS.fin |
+-/
 @[path, fin]
 private lemma main
   [HPow α β α]
@@ -15,3 +22,4 @@ private lemma main
 
 
 -- created on 2026-08-23
+-- updated on 2026-11-20

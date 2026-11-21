@@ -1,7 +1,7 @@
 import Def.Data.Tensor.Prod
-import Lemma.Tensor.Eq.is.EqDataS
+import Theorem.Tensor.Eq.is.EqDataS
 import Lemma.Vector.Map₂.eq.Map.of.Eq_1
-import Def.Data.Tensor.Defs.Part4
+import Instance.Data.Tensor.Defs.Part2
 open Tensor Vector
 
 
@@ -18,7 +18,6 @@ private lemma main
   erw [Map₂.eq.Map.of.Eq_1 (n := [].prod) (by rfl)]
   rfl
 
-
 @[path]
 private lemma Comm
   [CommMagma α]
@@ -34,7 +33,6 @@ private lemma Comm
   erw [GetMul.eq.MulGetS.fin (a := Y.data) (b := X.data) (i := i)]
   rw [Nat.Mul.comm]
 
-
 @[path]
 private lemma hComm
 -- given
@@ -44,7 +42,6 @@ private lemma hComm
 -- proof
   rw [main, main (X := Y) (Y := X)]
   apply Comm
-
 
 @[path, comm]
 private lemma nat
@@ -69,4 +66,4 @@ private lemma nat
 
 
 -- created on 2026-09-02
--- updated on 2026-10-26
+-- updated on 2026-11-20

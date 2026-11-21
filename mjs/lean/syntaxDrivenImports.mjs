@@ -100,7 +100,7 @@ export async function mergeSyntaxDrivenImports(imports, leanSource) {
         await maybeUnshift('Def.Data.Tensor.Softmax');
         break;
       case 'sigmoid':
-        await maybeUnshift('Instance.Data.Vector.Functions.Part2');
+        await maybeUnshift('Instance.Data.Vector.Functions');
         break;
       default:
         break;

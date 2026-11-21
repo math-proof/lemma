@@ -1,5 +1,6 @@
+import Instance.Data.Vector.Basic.Arithmetic
 import Lemma.Bool.SEqUFnS.of.SEq
-import Theorem.Data.Vector.Basic.Part2
+import Theorem.Data.Vector.Basic
 open Bool
 
 
@@ -17,3 +18,4 @@ private lemma main
 
 
 -- created on 2025-12-04
+-- updated on 2026-11-20

@@ -1,35 +1,6 @@
+import Theorem.Nat.Mul
 import Initialize.Tactic.Attr.Basic
 
 
-@[path]
-private lemma Comm
-  [CommMagma α]
--- given
-  (a b : α) :
--- imply
-  a * b = b * a :=
--- proof
-  mul_comm a b
-
-
-@[path]
-private lemma scale
-  {a b c d : ℝ} :
--- imply
-  (a / 2 + b / 2 - c) * d = (a + b - 2 * c) * d / 2 := by
--- proof
-  ring
-
-
-@[path]
-private lemma distribute
-  [Field α]
-  {a b c d r : α} :
--- imply
-  -r * (a - b - c) / d = (-r * a + r * b + r * c) / d := by
--- proof
-  ring
-
-
 -- created on 2018-08-19
--- updated on 2026-10-26
+-- updated on 2026-11-20

@@ -1,5 +1,4 @@
-import Lemma.Tensor.GtLength_0.of.GtLength_0
-import Def.Data.Tensor.Prod
+import Theorem.Tensor.GtLength_0.of.GtLength_0
 import Lemma.Tensor.LengthData.eq.Prod
 open Tensor List
 
@@ -13,8 +12,7 @@ private lemma main
   X.data.length = s[0] * s.tail.prod := by
 -- proof
   rw [LengthData.eq.Prod]
-  rw [Prod.eq.Mul_ProdTail.of.GtLength_0]
-
+  rw [Prod.eq.Mul_ProdTail.of.GtLength_0 h]
 
 @[path]
 private lemma tensor
@@ -30,3 +28,4 @@ private lemma tensor
 
 
 -- created on 2025-06-29
+-- updated on 2026-11-20

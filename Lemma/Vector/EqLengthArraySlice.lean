@@ -1,3 +1,4 @@
+import Def.Data.Vector.Basic
 import Instance.Data.Vector.Vector
 import Lemma.Nat.EqMin.of.Le
 open Nat
@@ -20,3 +21,4 @@ private lemma main
 
 
 -- created on 2025-05-07
+-- updated on 2026-11-20

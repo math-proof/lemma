@@ -2,6 +2,12 @@ import Lemma.Vector.GetRepeat.eq.Get_Mod
 open Vector Nat
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Vector.GetRepeat_AddMul.eq.Get.of.Eq_AddMul |
+| fin | Vector.GetRepeat_AddMul.eq.Get.of.Eq_AddMul.fin |
+-/
 @[path, fin]
 private lemma main
   {i : Fin m}
@@ -15,7 +21,8 @@ private lemma main
   simp [GetElem.getElem]
   simp [GetRepeat.eq.Get_Mod.fin]
   simp [h_t]
-  simp [EqMod]
+  simp [Nat.mod_eq_of_lt j.isLt]
 
 
 -- created on 2025-09-24
+-- updated on 2026-11-20

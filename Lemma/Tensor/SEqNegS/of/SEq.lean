@@ -1,5 +1,5 @@
 import Lemma.Bool.SEqUFnS.of.SEq
-import Def.Data.Tensor.Defs.Part4
+import Instance.Data.Tensor.Defs.Part2
 open Bool
 
 
@@ -17,3 +17,4 @@ private lemma main
 
 
 -- created on 2025-12-04
+-- updated on 2026-11-20

@@ -1,3 +1,4 @@
+import Instance.Data.Tensor.Defs.Part3
 import Instance.Data.Tensor.Tensor.Part2
 
 
@@ -9,7 +10,6 @@ private lemma main
   (x : Tensor α []).data.head = x := by
 -- proof
   rfl
-
 
 @[path]
 private lemma nat
@@ -23,3 +23,4 @@ private lemma nat
 
 
 -- created on 2025-12-30
+-- updated on 2026-11-20

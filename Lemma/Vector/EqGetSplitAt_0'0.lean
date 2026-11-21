@@ -1,5 +1,6 @@
+import Def.Data.Vector.Basic.Part2
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import Lemma.Nat.EqMin.of.Le
+import Theorem.Nat.EqMin.of.Le
 import Lemma.Vector.EqGetRange.of.Lt
 import Lemma.Vector.GetTake.eq.Get.of.Lt_Min
 import Lemma.Vector.GetDrop.eq.Get_Add.of.Lt_Sub
@@ -8,6 +9,12 @@ import Lemma.Bool.EqCast.of.SEq
 open Vector Bool Nat
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Vector.EqGetSplitAt_0'0 |
+| fin | Vector.EqGetSplitAt_0'0.fin |
+-/
 @[path, fin]
 private lemma main
   {s : List ℕ}
@@ -38,4 +45,4 @@ private lemma main
 
 
 -- created on 2025-07-12
--- updated on 2026-08-24
+-- updated on 2026-11-21

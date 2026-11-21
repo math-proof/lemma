@@ -1,6 +1,4 @@
-import Def.Data.Tensor.Defs.Part4
-import Lemma.Rat.DivDiv
-open Rat
+import Instance.Data.Tensor.Defs.Part2
 
 
 @[path]
@@ -13,13 +11,14 @@ private lemma main
   X / a / b = X / b / a := by
 -- proof
   simp [HDiv.hDiv]
-  have h_fun : (fun x ↦ Div.div (Div.div x a) b) = (fun x ↦ (x / a) / b) := by
+  have h_fun : (fun x ↦ Div.div (Div.div x a) b) = (fun x ↦ x / a / b) := by
     simp [HDiv.hDiv]
   simp [h_fun]
-  have h_fun : (fun x ↦ Div.div (Div.div x b) a) = (fun x ↦ (x / b) / a) := by
+  have h_fun : (fun x ↦ Div.div (Div.div x b) a) = (fun x ↦ x / b / a) := by
     simp [HDiv.hDiv]
   simp [h_fun]
-  simp [DivDiv]
+  simp [div_div, mul_comm a b]
 
 
 -- created on 2025-09-26
+-- updated on 2026-11-20

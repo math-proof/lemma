@@ -5,6 +5,12 @@ import Lemma.Bool.HEq.of.SEq
 open Vector Bool Nat
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Vector.EqFlattenUnflatten |
+| comm | Vector.Eq_FlattenUnflatten |
+-/
 @[path, comm]
 private lemma main
 -- given
@@ -69,9 +75,10 @@ private lemma main
     rw [h_unflatten]
     congr
     ·
-      simp [Add_Mul.eq.MulAdd_1]
+      simp [Nat.succ_mul, Nat.add_comm]
     ·
       apply HEq.of.SEq h_v_append.symm
 
 
 -- created on 2025-05-31
+-- updated on 2026-11-20

@@ -1,6 +1,5 @@
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Def.Data.Tensor.Prod
-import Lemma.Vector.Eq.of.Val
 import Lemma.Tensor.MulShape.comm
 import Lemma.Vector.GetVal.eq.Get.of.Lt.Lt
 import Lemma.Tensor.ValDataMul.eq.Nil.of.EqProdMulShape_0
@@ -22,18 +21,17 @@ private lemma main
     exact congrArg List.prod (MulShape.comm s s')
   ·
     have hn :
-        (mul_shape s s').prod = (mul_shape s' s).prod :=
+      (mul_shape s s').prod = (mul_shape s' s).prod :=
       congrArg List.prod (MulShape.comm s s')
-    have heq :
-        (A.mul B).data =
-          cast (congrArg (List.Vector α) hn.symm) (B.mul A).data := by
-      apply Eq.of.Val
+    apply HEq.trans (b := cast (congrArg (List.Vector α) hn.symm) (B.mul A).data)
+    ·
+      apply heq_of_eq
+      apply Subtype.ext
       rw [ValCast.eq.Val.of.Eq hn.symm]
-      by_cases hz : (mul_shape s s').prod = 0
-      ·
+      if hz : (mul_shape s s').prod = 0 then
         rw [ValDataMul.eq.Nil.of.EqProdMulShape_0 A B hz,
           ValDataMul.eq.Nil.of.EqProdMulShape_0 B A (by rwa [← MulShape.comm])]
-      ·
+      else
         have hz' : (mul_shape s' s).prod ≠ 0 := by
           rwa [← MulShape.comm]
         apply List.ext_getElem
@@ -46,11 +44,9 @@ private lemma main
         ·
           intro i hi₁ hi₂
           have hi : i < (mul_shape s s').prod := by
-            rw [← (A.mul B).data.property]
-            exact hi₁
+            rwa [← (A.mul B).data.property]
           have hi' : i < (mul_shape s' s).prod := by
-            rw [← (B.mul A).data.property]
-            exact hi₂
+            rwa [← (B.mul A).data.property]
           rw [GetVal.eq.Get.of.Lt.Lt (A.mul B).data hi hi₁,
             GetVal.eq.Get.of.Lt.Lt (B.mul A).data hi' hi₂,
             get_mul A B hz ⟨i, hi⟩,
@@ -60,8 +56,9 @@ private lemma main
             MulShape.comm s s'
           simp [hmax, hout]
           exact _root_.mul_comm _ _
-    exact heq ▸ (cast_heq (congrArg (List.Vector α) hn.symm) (B.mul A).data)
+    ·
+      apply cast_heq
 
 
 -- created on 2026-09-06
--- updated on 2026-10-26
+-- updated on 2026-11-20

@@ -14,6 +14,7 @@ import { fileURLToPath } from 'url';
 import mysql from 'mysql2/promise';
 import '../js/py.js';
 import { echo2vueFromSource } from './lean/compiler/index.mjs';
+import { applyLintFixes } from './lean/lint/index.mjs';
 import {
   REPO_ROOT,
   leanPathToModule,
@@ -124,14 +125,34 @@ async function promptLeanInput() {
 async function main() {
   const args = process.argv.slice(2).filter((a) => a !== '--');
   if (args.includes('-h') || args.includes('--help')) {
-    console.error('usage: node mjs/run.mjs <lean-file-or-module>');
+    console.error('usage: node mjs/run.mjs [--fix] <lean-file-or-module>');
     process.exit(0);
   }
+  const fix = args.includes('--fix');
 
-  const leanInput = args[0] || (await promptLeanInput());
+  const leanInput = args.find((a) => !a.startsWith('-')) || (await promptLeanInput());
   if (!leanInput) {
-    console.error('usage: node mjs/run.mjs <lean-file-or-module>');
+    console.error('usage: node mjs/run.mjs [--fix] <lean-file-or-module>');
     process.exit(2);
+  }
+
+  // `--fix`: apply the lint rules' auto-fixes in place and stop (no compile, no MySQL write)
+  if (fix) {
+    const { abs, module } = resolveLeanFile(leanInput);
+    if (!fileExists(abs)) throw new Error(`file not found: ${abs}`);
+    const source = fs.readFileSync(abs, 'utf8');
+    const { source: fixed, applied } = applyLintFixes(source, { file: module });
+    console.log(abs);
+    if (fixed === source) {
+      console.log('no fixes');
+      return;
+    }
+    fs.writeFileSync(abs, fixed);
+    const rules = [...new Set(applied.map((a) => a.rule))].join(', ');
+    console.log(`fixed ${applied.length} occurrence(s): ${rules}`);
+    const left = applyLintFixes(fixed, { file: module });
+    if (left.source !== fixed) console.log(`note: ${left.applied.length} further occurrence(s) need a re-run`);
+    return;
   }
 
   const { module, abs, code } = await runLeanFile(leanInput);

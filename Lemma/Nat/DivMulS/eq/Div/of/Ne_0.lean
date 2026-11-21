@@ -1,5 +1,5 @@
 import Lemma.Nat.DivDiv.eq.Div_Mul
-import Lemma.Nat.EqDivMul.of.Ne_0
+import Theorem.Nat.EqDivMul.of.Ne_0
 open Nat
 
 
@@ -9,12 +9,11 @@ private lemma main
 -- given
   (h : a ≠ 0) :
 -- imply
-  (n * a) / (d * a) = n / d := by
+  n * a / (d * a) = n / d := by
 -- proof
   rw [Mul.comm d a]
   rw [Div_Mul.eq.DivDiv]
   rw [EqDivMul.of.Ne_0 h]
-
 
 @[path]
 private lemma left
@@ -22,10 +21,11 @@ private lemma left
 -- given
   (h : a ≠ 0) :
 -- imply
-  (a * n) / (a * d) = n / d := by
+  a * n / (a * d) = n / d := by
 -- proof
   repeat rw [Mul.comm (a := a)]
   apply main h
 
 
 -- created on 2026-07-12
+-- updated on 2026-11-21

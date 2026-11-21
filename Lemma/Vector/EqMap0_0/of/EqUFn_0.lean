@@ -1,4 +1,4 @@
-import Lemma.Vector.Zero.eq.Replicate
+import Theorem.Vector.Zero.eq.Replicate
 
 
 @[path]
@@ -10,10 +10,11 @@ private lemma main
   (0 : List.Vector γ n).map f = 0 := by
 -- proof
   have hmap : (0 : List.Vector γ n).map f = List.Vector.replicate n (f 0) := by
-    rw [← Vector.Replicate.eq.Zero]
+    rw [Vector.Zero.eq.Replicate]
     apply Subtype.ext
     simp [List.Vector.map, List.Vector.replicate, List.map_replicate]
-  rw [hmap, hf, Vector.Replicate.eq.Zero]
+  rw [hmap, hf, ← Vector.Zero.eq.Replicate]
 
 
 -- created on 2026-09-15
+-- updated on 2026-11-20

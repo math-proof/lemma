@@ -1,5 +1,5 @@
 import Lemma.Nat.EqAddMulDiv
-import Lemma.Nat.Coe.is.Eq
+import Theorem.Nat.Coe.is.Eq
 import Lemma.Nat.Mod.of.Eq
 import Lemma.Nat.EqMod
 open Nat
@@ -18,10 +18,11 @@ private lemma main
   have := EqAddMulDiv k n
   have := h_eq.symm.trans this.symm
   have h_mod := Mod.of.Eq this n
-  have h_mod := Coe.of.Eq (R := ℤ) h_mod
+  have h_mod := (Coe.is.Eq (R := ℤ)).mpr h_mod
   simp at h_mod
   norm_cast at h_mod
   rwa [EqMod] at h_mod
 
 
 -- created on 2025-07-07
+-- updated on 2026-11-21

@@ -1,6 +1,4 @@
-import Lemma.Nat.Gt_0.of.Ne_0
-import Lemma.Nat.LtMod.of.Gt_0
-open Nat
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -12,8 +10,8 @@ private lemma main
 -- imply
   n % d < d := by
 -- proof
-  apply LtMod.of.Gt_0
-  apply Gt_0.of.Ne_0 h
+  apply Nat.mod_lt n (Nat.pos_of_ne_zero h)
 
 
 -- created on 2025-07-07
+-- updated on 2026-11-20

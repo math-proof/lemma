@@ -1,6 +1,6 @@
 import Lemma.Real.LogDiv.eq.SubLogS.of.Ne_0.Ne_0
 import Lemma.Vector.GetSub.eq.SubGetS
-import Instance.Data.Vector.Functions.Part2
+import Instance.Data.Vector.Functions
 open Vector Real Log
 
 

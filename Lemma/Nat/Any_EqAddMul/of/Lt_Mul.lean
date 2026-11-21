@@ -1,7 +1,4 @@
 import Lemma.Nat.EqAddMulDiv
-import Lemma.Nat.LtDiv.of.Lt_Mul
-import Lemma.Nat.LtMod.of.Gt_0
-import Lemma.Nat.Gt_0.of.GtMul
 open Nat
 
 
@@ -13,11 +10,12 @@ private lemma left
 -- imply
   ∃ (i : Fin m) (j : Fin n), i * n + j = k := by
 -- proof
-  have hn := Gt_0.of.GtMul.left h
-  have h_lt := LtMod.of.Gt_0 hn k
-  use ⟨k / n, LtDiv.of.Lt_Mul.left h⟩, ⟨k % n, h_lt⟩
+  have hn : 0 < n := by
+    apply Nat.pos_of_ne_zero
+    intro hn
+    simp [hn] at h
+  use ⟨k / n, Nat.div_lt_of_lt_mul h⟩, ⟨k % n, Nat.mod_lt k hn⟩
   apply EqAddMulDiv
-
 
 @[path]
 private lemma main
@@ -27,8 +25,9 @@ private lemma main
 -- imply
   ∃ (i : Fin m) (j : Fin n), i * n + j = k := by
 -- proof
-  rw [Mul.comm] at h
+  rw [Nat.mul_comm] at h
   apply left h
 
 
 -- created on 2025-05-29
+-- updated on 2026-11-21

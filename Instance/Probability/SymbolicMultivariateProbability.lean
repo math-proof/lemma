@@ -1,6 +1,6 @@
 import Def.Probability.SymbolicProbability
 import Class.Probability.SymbolicProbability
-import Theorem.Data.Vector.Basic.Part2
+import Theorem.Data.Vector.Basic
 import Def.Data.Tensor.Defs.Part4
 open MeasureTheory
 

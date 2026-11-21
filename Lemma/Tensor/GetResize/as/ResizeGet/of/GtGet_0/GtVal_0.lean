@@ -1,8 +1,8 @@
+import Instance.Data.Tensor.Tensor
 import Lemma.Nat.Ne_0.of.GtMul
 import Lemma.List.ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength
-import Lemma.List.ProdTail.eq.MulProdTakeTail
 import Lemma.Nat.DivAdd.eq.AddDivS.of.Dvd
-import Lemma.Nat.EqDivMul.of.Ne_0
+import Theorem.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.ModAddMul.eq.Mod
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.DropTail.eq.Drop
@@ -11,11 +11,10 @@ import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 import Lemma.List.ProdSet.eq.MulProd_Mul_Prod.of.GtLength
 import Lemma.List.ProdTake.eq.Mul_ProdTakeTail.of.Gt_0.GtLength_0
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
-import Lemma.List.ProdTake_1.eq.HeadD_1
+import Theorem.List.ProdTake_1.eq.HeadD_1
 import Lemma.List.TailSet.eq.SetTail.of.Gt_0
-import Lemma.Nat.Ge_1.of.Gt_0
-import Lemma.Nat.Gt_0
-import Lemma.Nat.MulMul
+import Theorem.Nat.Gt_0
+import Theorem.Nat.MulMul
 import Lemma.Nat.Mul_Mul
 import Lemma.Tensor.GtLength.of.GtLength_0
 import Lemma.Tensor.LengthResize.eq.Length.of.GtVal_0
@@ -26,8 +25,14 @@ import Lemma.Vector.GetResize.eq.Ite_Get_Mod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool List Nat Tensor Vector
-set_option maxHeartbeats 500000
+set_option maxHeartbeats 990000
 
+
+private lemma prodTail (s : List ℕ) (d : ℕ) :
+  s.tail.prod = (s.tail.take d).prod * (s.drop (d + 1)).prod := by
+  cases s
+  · simp
+  · simp [← List.prod_append, List.take_append_drop]
 
 @[path, fin, cast, cast.fin]
 private lemma main
@@ -49,7 +54,7 @@ private lemma main
   simp [Tensor.toVector]
   obtain ⟨X⟩ := X
   have h_s := Gt_0 d
-  have h_d := Ge_1.of.Gt_0 h_d
+  have h_d := Nat.succ_le_of_lt h_d
   simp only [GetElem.getElem]
   rw [GetCast.eq.Get.of.Eq.fin]
   ·
@@ -96,7 +101,7 @@ private lemma main
                   rw [EqAddSub.of.Ge (by grind)]
                   simp at h_prodset
                   simp [h_prodset] at *
-                  rw [ProdTail.eq.MulProdTakeTail (d := d - 1)]
+                  rw [prodTail _ (d - 1)]
                   rw [EqAddSub.of.Ge (by grind)]
                   rw [ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength d.isLt]
                   conv_lhs =>

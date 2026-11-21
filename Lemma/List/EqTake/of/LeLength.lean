@@ -1,15 +1,6 @@
+import Theorem.List.EqTake.of.LeLength
 import Initialize.Tactic.Attr.Basic
 
 
-@[path, comm]
-private lemma main
-  {s : List α}
--- given
-  (h : s.length ≤ n):
--- imply
-  s.take n = s := by
--- proof
-  aesop
-
-
 -- created on 2025-06-16
+-- updated on 2026-11-21

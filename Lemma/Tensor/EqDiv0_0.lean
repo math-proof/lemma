@@ -1,7 +1,7 @@
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqData0'0
 import Lemma.Vector.EqDiv0_0
-import Lemma.Rat.EqDiv0_0
+import Theorem.Rat.EqDiv0_0
 open Tensor Vector Rat
 
 
@@ -9,7 +9,7 @@ open Tensor Vector Rat
 private lemma main
   [GroupWithZero α]
 -- given
-  (X : Tensor α s):
+  (X : Tensor α s) :
 -- imply
   0 / X = 0 := by
 -- proof
@@ -19,7 +19,6 @@ private lemma main
   simp [Div.div]
   rw [EqData0'0]
   apply EqDiv0_0 X.data
-
 
 @[path]
 private lemma scalar
@@ -41,4 +40,4 @@ private lemma scalar
 
 
 -- created on 2025-09-04
--- updated on 2025-09-26
+-- updated on 2026-11-20

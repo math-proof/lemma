@@ -1,5 +1,5 @@
 import Def.Data.Tensor.Defs.Part4
-import Lemma.Tensor.GtLength_0.of.GtLength_0
+import Theorem.Tensor.GtLength_0.of.GtLength_0
 open Tensor Nat
 
 
@@ -7,7 +7,7 @@ open Tensor Nat
 private lemma main
   {X : Tensor α s}
 -- given
-  (i : Fin X.length):
+  (i : Fin X.length) :
 -- imply
   s.length > 0 := by
 -- proof
@@ -16,3 +16,4 @@ private lemma main
 
 
 -- created on 2025-10-06
+-- updated on 2026-11-20

@@ -1,6 +1,14 @@
-import Def.Data.Tensor.Defs.Part4
+import Instance.Data.Tensor.Defs.Part2
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.Coe.is.Eq |
+| comm | Tensor.Eq.is.Coe |
+| mp | Tensor.Eq.of.Coe |
+| mpr | Tensor.Coe.of.Eq |
+-/
 @[path, comm, mp, mpr]
 private lemma main
   [Semiring α] [CharZero α]
@@ -26,3 +34,4 @@ private lemma main
 
 
 -- created on 2026-09-10
+-- updated on 2026-11-20

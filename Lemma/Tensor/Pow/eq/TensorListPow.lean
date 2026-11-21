@@ -1,3 +1,4 @@
+import Instance.Data.Tensor.Defs.Part3
 import Instance.Data.Tensor.Tensor.Part2
 open Tensor
 
@@ -29,15 +30,14 @@ private lemma main
         simp
         have hxs' : xs = [a ^ m] := by
           have := ih
-          rw [hL] at this
-          exact this
+          rwa [hL] at this
         have hys' : ys = [a] := by
           have : a0.data.val = [a] := rfl
-          rw [hR] at this
-          exact this
+          rwa [hR] at this
         simp [hxs', hys']
         simp [List.Vector.map₂, List.zipWith]
         exact (pow_succ a m).symm
 
 
 -- created on 2026-09-07
+-- updated on 2026-11-20

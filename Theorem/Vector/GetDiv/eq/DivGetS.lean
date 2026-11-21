@@ -1,7 +1,7 @@
 module
 
 public import Initialize.Tactic.Attr.Basic
-public import Theorem.Data.Vector.Basic.Part2
+public import Theorem.Data.Vector.Basic
 public import Instance.Data.Vector.Basic.Arithmetic
 public import Theorem.Vector.Div.eq.Map₂
 

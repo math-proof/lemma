@@ -1,4 +1,4 @@
-import Lemma.Nat.Ge.of.Gt
+import Theorem.Nat.Ge.of.Gt
 import Lemma.Rat.LeDivS.of.Le.Ge_0
 open Nat Rat
 
@@ -28,4 +28,4 @@ private lemma main
 
 
 -- created on 2024-11-25
--- updated on 2025-12-11
+-- updated on 2026-11-20

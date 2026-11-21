@@ -1,4 +1,5 @@
-import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.GtLength
+import Theorem.List.Set.eq.AppendTake__Cons_Drop.of.GtLength
+import Initialize.Tactic.Attr.Basic
 open List
 
 
@@ -16,3 +17,4 @@ private lemma main
 
 
 -- created on 2025-07-12
+-- updated on 2026-11-20

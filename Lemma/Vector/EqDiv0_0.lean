@@ -1,5 +1,5 @@
 import Lemma.Vector.Eq.is.All_EqGetS
-import Lemma.Vector.EqGet0_0
+import Theorem.Vector.EqGet0_0
 open Vector
 
 
@@ -22,3 +22,4 @@ private lemma main
 
 
 -- created on 2025-09-04
+-- updated on 2026-11-20

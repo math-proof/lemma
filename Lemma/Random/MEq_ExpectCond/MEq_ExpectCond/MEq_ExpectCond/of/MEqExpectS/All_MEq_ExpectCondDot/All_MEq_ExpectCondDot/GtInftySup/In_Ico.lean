@@ -1,6 +1,6 @@
 import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
 import Lemma.Random.MeasurableJoint.is.Measurable.Measurable
-import Theorem.Data.Vector.Basic.Part2
+import Theorem.Data.Vector.Basic
 import Instance.Data.Vector.Basic.Dot
 import Syntax.Order.Sup
 import Initialize.Tactic.Attr.Basic

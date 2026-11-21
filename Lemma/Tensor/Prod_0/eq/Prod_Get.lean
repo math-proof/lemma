@@ -1,13 +1,22 @@
+import Instance.Data.Tensor.Tensor
 import Lemma.Fin.HEq.of.All_Eq.Eq
 import Def.Data.Tensor.Prod
 import Lemma.Tensor.DataProd.eq.Prod_Data
 import Lemma.Tensor.DataProd_0.eq.ProdSplitAtData
-import Lemma.Tensor.Eq.is.EqDataS
+import Theorem.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Vector.Prod.eq.Prod_Get
 open Fin Tensor Vector Set
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.Prod_0.eq.Prod_Get |
+| fin | Tensor.Prod_0.eq.Prod_Get.fin |
+| comm | Tensor.Prod_Get.eq.Prod_0 |
+| fin.comm | Tensor.Prod_Get.eq.Prod_0.fin |
+-/
 @[path, fin, comm, fin.comm]
 private lemma main
   [CommMonoid α]
@@ -26,8 +35,9 @@ private lemma main
   apply HEq.of.All_Eq.Eq (by simp)
   intro i
   simp [GetElem.getElem, Tensor.get, Tensor.toVector]
-  erw [GetCast_Map.eq.UFnGet.of.Eq.Lt.fin (by exact i.isLt) (by simp)]
+  erw [GetCast_Map.eq.UFnGet.of.Eq.Lt.fin (by apply i.isLt) (by simp)]
   rfl
 
 
 -- created on 2026-09-06
+-- updated on 2026-11-21

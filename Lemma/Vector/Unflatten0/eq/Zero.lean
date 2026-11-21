@@ -1,8 +1,14 @@
 import Lemma.Vector.UnflattenReplicate.eq.ReplicateReplicate
-import Lemma.Vector.Zero.eq.Replicate
+import Theorem.Vector.Zero.eq.Replicate
 open Vector
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Vector.Unflatten0.eq.Zero |
+| comm | Vector.Zero.eq.Unflatten0 |
+-/
 @[path, comm]
 private lemma main
   [Zero α]
@@ -16,3 +22,4 @@ private lemma main
 
 
 -- created on 2025-11-30
+-- updated on 2026-11-20

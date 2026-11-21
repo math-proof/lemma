@@ -1,3 +1,4 @@
+import Instance.Data.Tensor.Defs.Part2
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 open Tensor
 
@@ -15,3 +16,4 @@ private lemma main
 
 
 -- created on 2026-07-04
+-- updated on 2026-11-20

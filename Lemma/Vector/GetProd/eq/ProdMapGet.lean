@@ -1,9 +1,16 @@
-import Lemma.Vector.EqGet1_1
-import Lemma.Vector.GetMul.eq.MulGetS
+import Theorem.Vector.EqGet1_1
+import Theorem.Vector.GetMul.eq.MulGetS
 import Lemma.Vector.ProdCons.eq.Mul_Prod
 open Vector
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Vector.GetProd.eq.ProdMapGet |
+| fin | Vector.GetProd.eq.ProdMapGet.fin |
+| val | Vector.GetProd.eq.ProdMapGet.val |
+-/
 @[path, fin, val]
 private lemma main
   [Mul α] [One α]
@@ -23,3 +30,4 @@ private lemma main
 
 
 -- created on 2026-09-06
+-- updated on 2026-11-20

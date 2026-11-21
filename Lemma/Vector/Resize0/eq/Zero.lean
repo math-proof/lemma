@@ -12,8 +12,10 @@ private lemma main
 -- imply
   (0 : List.Vector α n).resize n' = 0 := by
 -- proof
-  simp [List.Vector.resize, Repeat0.eq.Zero, EqAppend0S0]
-  rw [EqCast_0'0.of.Eq (Nat.EqAddMulDiv n' n)]
+  simp only [List.Vector.resize, Repeat0.eq.Zero]
+  change cast _ ((0 : List.Vector α (n' / n * n)) ++ (0 : List.Vector α (n' % n))) = 0
+  rw [EqAppend0S0, EqCast_0'0.of.Eq (Nat.EqAddMulDiv n' n)]
 
 
 -- created on 2026-09-16
+-- updated on 2026-11-20

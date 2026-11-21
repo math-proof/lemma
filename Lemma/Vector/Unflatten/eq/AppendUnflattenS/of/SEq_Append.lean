@@ -1,12 +1,11 @@
 import Lemma.Vector.GetVal.eq.Get.of.Lt
-import Lemma.Nat.NotLt.is.Ge
+import Theorem.Nat.NotLt.is.Ge
 import Lemma.Vector.GetAppend.eq.Get.of.Lt
 import Lemma.Vector.Get_AddMul.eq.GetUnflatten.of.Lt
 import Lemma.Vector.GetAppend.eq.Get_Sub.of.Lt_Add.Ge
 import Lemma.Vector.Get.of.SEq.Lt
-import Lemma.Nat.LtSub.is.Lt_Add.of.Ge
-import Lemma.Nat.MulAdd.eq.AddMulS
-import Lemma.Nat.SubAdd.eq.AddSub.of.Ge
+import Theorem.Nat.LtSub.is.Lt_Add.of.Ge
+import Theorem.Nat.MulAdd.eq.AddMulS
 open Vector Nat
 
 
@@ -73,8 +72,9 @@ private lemma main
     rw [MulAdd.eq.AddMulS] at hij
     have hij := LtSub.of.Lt_Add.Ge (by linarith) hij
     have h_eq : i * k + j - m * k = (i - m) * k + j := by
-      rw [SubAdd.eq.AddSub.of.Ge (by nlinarith)]
-      rw [SubMulS.eq.MulSub]
+      have : m * k ≤ i * k := Nat.mul_le_mul_right k hi
+      rw [Nat.sub_mul]
+      omega
     rw [h_eq] at hij
     have := Get_AddMul.eq.GetUnflatten.of.Lt h_i b
     simp [GetElem.getElem] at this
@@ -84,4 +84,4 @@ private lemma main
 
 
 -- created on 2025-05-31
--- updated on 2026-08-24
+-- updated on 2026-11-20

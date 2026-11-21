@@ -1,4 +1,4 @@
-import Def.Analysis.Calculus.Gradient.Operators.Part2
+import Def.Analysis.Calculus.Gradient.Operators
 import Lemma.Random.RealPreimageS.eq.Sum_MulRealPn.of.All_EqWithDensity
 import Lemma.Random.Differentiable.All_LeNormFderivMulAdd_1Mul_C.of.All_LeNorm.StronglyMeasurable.All_LeIntegral.All_Integrable.All_LeNormFderiv.All_Differentiable_Prob.All_Measurable_Prob
 import Lemma.Real.StronglyMeasurable_Eq12

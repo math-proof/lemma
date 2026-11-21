@@ -1,7 +1,14 @@
+import Instance.Data.Tensor.Tensor
 import Lemma.Tensor.EqTFnS.of.Eq.GtLength
 open Tensor
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.SEqGetS.of.SEq.GtLength |
+| fin | Tensor.SEqGetS.of.SEq.GtLength.fin |
+-/
 @[path, fin]
 private lemma main
   {A : Tensor α s}
@@ -17,4 +24,4 @@ private lemma main
 
 
 -- created on 2025-06-29
--- updated on 2025-07-13
+-- updated on 2026-11-20

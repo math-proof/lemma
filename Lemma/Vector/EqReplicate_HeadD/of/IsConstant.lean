@@ -1,9 +1,17 @@
+import Instance.Data.Vector.Basic
+import Def.Data.Vector.Basic
 import Lemma.Vector.Eq.of.Val
 import Lemma.List.EqReplicate_HeadD.of.IsConstant
-import Theorem.Data.Vector.Basic.Part2
+import Theorem.Data.Vector.Basic
 open Vector List
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Vector.EqReplicate_HeadD.of.IsConstant |
+| comm | Vector.Eq_Replicate_HeadD.of.IsConstant |
+-/
 @[path, comm]
 private lemma main
   {s : List.Vector α n}
@@ -35,3 +43,4 @@ private lemma main
 
 
 -- created on 2025-10-03
+-- updated on 2026-11-20

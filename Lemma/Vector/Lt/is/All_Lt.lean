@@ -1,4 +1,5 @@
-import Theorem.Data.Vector.Basic.Part2
+import Instance.Data.Vector.Basic.Arithmetic
+import Theorem.Data.Vector.Basic
 
 
 /--
@@ -21,3 +22,4 @@ private lemma main
 
 
 -- created on 2026-07-27
+-- updated on 2026-11-20

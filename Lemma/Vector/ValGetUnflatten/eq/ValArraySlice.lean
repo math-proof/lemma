@@ -1,3 +1,4 @@
+import Def.Data.Vector.Basic
 import Instance.Data.Vector.Vector
 open Nat
 
@@ -22,3 +23,4 @@ private lemma main
 
 
 -- created on 2025-05-10
+-- updated on 2026-11-20

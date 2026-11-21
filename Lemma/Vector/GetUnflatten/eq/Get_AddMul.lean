@@ -1,11 +1,19 @@
 import Lemma.Vector.GetUnflatten.as.ArraySlice
 import Lemma.Vector.All_EqGetS.of.SEq
-import Lemma.Nat.Lt_Sub.of.LtAdd
+import Theorem.Nat.Lt_Sub.of.LtAdd
 import Lemma.Vector.GetArraySlice.eq.Get_Add.of.Lt_Min_Sub
-import Lemma.Nat.AddMul.lt.Mul
+import Theorem.Nat.AddMul.lt.Mul
 open Vector Nat
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Vector.GetUnflatten.eq.Get_AddMul |
+| comm | Vector.Get_AddMul.eq.GetUnflatten |
+| fin | Vector.GetUnflatten.eq.Get_AddMul.fin |
+| fin.comm | Vector.Get_AddMul.eq.GetUnflatten.fin |
+-/
 @[path, comm, fin, fin.comm]
 private lemma main
 -- given
@@ -22,4 +30,4 @@ private lemma main
 
 
 -- created on 2025-05-31
--- updated on 2025-07-09
+-- updated on 2026-11-20

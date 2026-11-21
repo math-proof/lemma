@@ -29,3 +29,21 @@ noncomputable instance : Exp ℝ* where
   exp_zero := Hyperreal.exp_zero
   exp_neg := Hyperreal.exp_neg
 
+noncomputable instance : ExpNeZero ℝ where
+  exp_ne_zero := Real.exp_ne_zero
+
+noncomputable instance : ExpNeZero ℂ where
+  exp_ne_zero := Complex.exp_ne_zero
+
+noncomputable instance : ExpNeZero ℝ* where
+  exp_ne_zero := Hyperreal.exp_ne_zero
+
+noncomputable instance : ExpPos ℝ where
+  exp_pos := Real.exp_pos
+  exp_eq_exp := Real.exp_eq_exp
+  exp_lt_exp := Real.exp_lt_exp
+
+noncomputable instance : ExpPos ℝ* where
+  exp_pos := Hyperreal.exp_pos
+  exp_eq_exp := Hyperreal.exp_eq_exp
+  exp_lt_exp := Hyperreal.exp_strictMono.lt_iff_lt

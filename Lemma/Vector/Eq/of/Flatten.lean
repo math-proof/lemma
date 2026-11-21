@@ -1,5 +1,6 @@
+import Def.Data.Vector.Basic
 import Lemma.Vector.Eq.of.FlattenMap.Length
-open Vector Bool
+open Vector
 
 
 @[path]
@@ -10,16 +11,10 @@ private lemma main
 -- imply
   a = b := by
 -- proof
-  simp [List.Vector.flatten] at h
-  simp [List.Vector.toList] at h
-  let ⟨a, ha_length⟩ := a
-  let ⟨b, hb_length⟩ := b
-  congr
-  have h := UFn.of.Eq h fun t => t.val
-  simp at h
-  have h_length : a.length = b.length := by
-    aesop
-  apply Eq.of.FlattenMap.Length h_length h
+  apply Subtype.ext
+  apply Eq.of.FlattenMap.Length (by simp)
+  apply congrArg Subtype.val h
 
 
 -- created on 2025-05-11
+-- updated on 2026-11-20

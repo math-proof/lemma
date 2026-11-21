@@ -1,4 +1,4 @@
-import Def.Data.Tensor.Defs.Part4
+import Instance.Data.Tensor.Defs.Part2
 
 
 @[path]
@@ -11,7 +11,6 @@ private lemma main
   (X * a).data = X.data * a :=
 -- proof
   rfl
-
 
 @[path]
 private lemma head
@@ -26,3 +25,4 @@ private lemma head
 
 
 -- created on 2025-12-01
+-- updated on 2026-11-20

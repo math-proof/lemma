@@ -1,7 +1,7 @@
 import Theorem.Logic.SEq
 import Lemma.Vector.ValGet.eq.ValArraySliceFlatten
 import Lemma.Vector.HEq.of.Val
-import Lemma.Nat.Le_SubMulS
+import Theorem.Nat.Le_SubMulS
 open Vector Nat
 
 
@@ -23,3 +23,4 @@ private lemma main
 
 
 -- created on 2025-05-31
+-- updated on 2026-11-20

@@ -44,22 +44,23 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
 - `Syntax/` holds user-defined `syntax`, its `macro_rules` expansions (a `macro_rules` expands some `syntax` and must not stand alone in another folder), and related elaborator declarations. Do not put those in `Lemma/` or `Macro/`.
 - Decl libraries (siblings of `Syntax/`): `Def/` (`def`), `Initialize/` (`initialize`), `Abbrev/` (`abbrev`), `Class/` (`class`), `Structure/` (`structure`), `Inductive/` (`inductive`), `Instance/` (`instance`), `Notation/` (`notation` / infix-family), `Macro/` (`macro` only — not `macro_rules`; those stay with their `syntax` in `Syntax/`), `Theorem/` (`theorem`).
 - `Theorem/` holds utility `theorem`s with attributes **other than** `@[main]` (helpers / internal API; not public rendered lemmas). Do not put `@[main]` results or `lemma`s here — those stay in `Lemma/`.
-- Prefer `Theorem/` for utility theorems with non-`@[main]` attributes. Never put a `lemma` or user-defined syntax in a decl library.
+- Prefer `Theorem/` for utility theorems with non-`@[main]` attributes. Never put a `lemma` in a decl library.
 - Scratch/temp files (probes, bisect scripts, ad-hoc `tmp_*` / `probe_*` / `test_*` files) live in the gitignored `tmp/` folder, not at the repo root.
 
 
 ## Sub-agents
 - Work on https://github.com/math-proof/lemma.
 - Grok bots may use a Remote Control Agent as Self-Hosted Worker on `main` (WSL `~/github/lean`), via [AgentName](https://cursor.com/agents/bc-UUID); never launch Cursor cloud agents unless deliberately demanded.
-- Modify only files in your assigned folder (agent name = folder name, e.g. Tensor → `Lemma/Tensor`).
-- To modify another folder, send the task to the agent named after that folder (see Inter-agent communication).
-- If that agent does not exist, ask `md` (primary) for help.
+- Each agent is assigned a folder (agent name = folder name, e.g. Nat → `Lemma/Nat` or `Theorem/Nat`), and is subordinate to its parent agents, thus the hierarchy of agents form a Directed Acyclic Graph.
+- To modify another folder, send the task to the agent named by that folder (see Inter-agent communication).
+- If multiple colleague agents should work cooperatively, ask its parent agent for help. 
+- If an agent required does not exist, ask the primary agent `md` for help.
 
 ## Inter-agent communication
 - Inter-agent communication should forward necessary context to avoid misunderstanding.
 This copy-paste path is for **Cursor-like** agents, who cannot talk to other agents. Do not claim you dispatched a job, and do not wait for a colleague that never receives the message.
 
-**Grok** bots can talk to colleagues. They skip this section: send the job to @AgentName directly (do not give the user a paste prompt).
+**Grok** bots/Codex agents can talk to colleagues. They skip this section: send the job to @AgentName directly (do not give the user a paste prompt).
 
 When the user says to send this issue / problem / bug / job / task to **@AgentName** (or “send to AgentName”):
 - Write a **self-contained prompt** for that agent (assignee, goal, paths, errors, constraints, follow this `AGENTS.md`).
@@ -77,7 +78,7 @@ When the user says to send this issue / problem / bug / job / task to **@AgentNa
 - print logging info via `Syntax.Tactic.Echo` by creating *.echo.lean tracing files for debugging.
 - Confirm the file compiles with `lake build <Module.Name>` or `lake env lean <path/to/file.lean>`.
 
-## Git
+## Edit Privilege
 - Stay on `main`. Do not switch to any other branch; merge changes into `main` instead.
-- Work only in `~/github/lean`. Never edit or commit in `E:\github\lean` / `/mnt/e/github/lean`; the only git command allowed there is `git pull`.
-- Never edit `~/github/lean/lean-toolchain` yourself. That file can only be edited by `sh/setup.sh`.
+- Work only in `~/github/lean`.
+- Never edit `~/github/lean/lean-toolchain` or `~/github/lean/lakefile.toml` manually.

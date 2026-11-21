@@ -1,3 +1,4 @@
+import Instance.Data.Tensor.Defs.Part2
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.GetMap.eq.UFnGet
@@ -13,7 +14,7 @@ private lemma Comm
   (A C : Tensor α s)
   (B : Tensor α []) :
 -- imply
-  (A * B) * C = (A * C) * B := by
+  A * B * C = A * C * B := by
 -- proof
   apply Eq.of.EqDataS
   apply Vector.Eq.of.All_EqGetS.fin
@@ -25,7 +26,6 @@ private lemma Comm
   erw [GetMap₂.eq.BFnGetS.fin]
   apply mul_right_comm
 
-
 /-- `(a * B) * C = (a * C) * B` for scalar left factor. -/
 @[path]
 private lemma comm.left
@@ -34,7 +34,7 @@ private lemma comm.left
   (a B : α)
   (C : Tensor α s) :
 -- imply
-  (a * B) * C = (a * C) * B := by
+  a * B * C = a * C * B := by
 -- proof
   apply Eq.of.EqDataS
   apply Vector.Eq.of.All_EqGetS.fin
@@ -45,7 +45,6 @@ private lemma comm.left
   erw [GetMap.eq.UFnGet.fin (i := i)]
   apply mul_right_comm
 
-
 /-- `(A * B) * b = (A * b) * B` for scalar right factor. -/
 @[path]
 private lemma comm.right
@@ -54,7 +53,7 @@ private lemma comm.right
   (A : Tensor α s)
   (b B : α) :
 -- imply
-  (A * B) * b = (A * b) * B := by
+  A * B * b = A * b * B := by
 -- proof
   apply Eq.of.EqDataS
   apply Vector.Eq.of.All_EqGetS.fin
@@ -68,3 +67,4 @@ private lemma comm.right
 
 
 -- created on 2026-08-15
+-- updated on 2026-11-20

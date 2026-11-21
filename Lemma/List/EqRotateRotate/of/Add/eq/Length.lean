@@ -1,4 +1,4 @@
-import Lemma.Nat.EqSub.of.EqAdd
+import Theorem.Nat.EqSub.of.EqAdd
 import Lemma.List.EqRotateRotate.of.GeLength.Eq_Length
 open Nat List
 
@@ -11,9 +11,9 @@ private lemma main
 -- imply
   (s.rotate i).rotate j = s := by
 -- proof
-  have h := Eq_Sub.of.EqAdd.left h
-  rw [h]
+  rw [← EqSub.of.EqAdd.left h]
   apply EqRotateRotate.of.GeLength.Eq_Length rfl (by omega)
 
 
 -- created on 2025-10-15
+-- updated on 2026-11-20

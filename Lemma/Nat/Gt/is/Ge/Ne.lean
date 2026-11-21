@@ -1,4 +1,4 @@
-import Lemma.Nat.Lt.is.Le.Ne
+import Theorem.Nat.Lt.is.Le.Ne
 open Nat
 
 
@@ -22,4 +22,4 @@ private lemma main
 
 
 -- created on 2025-04-18
--- updated on 2025-11-13
+-- updated on 2026-11-21

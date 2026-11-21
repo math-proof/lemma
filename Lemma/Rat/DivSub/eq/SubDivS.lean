@@ -1,8 +1,14 @@
 import Lemma.Rat.Div.eq.Mul_Inv
-import Lemma.Int.MulSub.eq.SubMulS
+import Theorem.Int.MulSub.eq.SubMulS
 open Int Rat
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Rat.DivSub.eq.SubDivS |
+| comm | Rat.SubDivS.eq.DivSub |
+-/
 @[path, comm]
 private lemma main
   [DivisionRing α]
@@ -15,3 +21,4 @@ private lemma main
 
 
 -- created on 2025-03-02
+-- updated on 2026-11-21

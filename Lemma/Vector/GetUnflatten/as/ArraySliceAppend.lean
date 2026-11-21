@@ -17,7 +17,7 @@ private lemma main
 -- imply
   a.unflatten[i] ≃ (a ++ b).array_slice (i * k) k := by
 -- proof
-  have h_prod := AddMulS.eq.MulAdd m n k
+  have h_prod := (Nat.add_mul m n k).symm
   let ab : List.Vector α ((m + n) * k) := cast (by simp_all) (a ++ b)
   have h_ab : ab ≃ a ++ b := by
     simp [ab]
@@ -36,3 +36,4 @@ private lemma main
 
 
 -- created on 2025-07-15
+-- updated on 2026-11-20

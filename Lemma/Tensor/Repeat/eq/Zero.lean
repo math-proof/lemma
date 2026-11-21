@@ -1,13 +1,15 @@
-import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Def.Data.Tensor.Repeat
-import Lemma.List.ProdSet__Mul_Get.eq.Mul_Prod
+import Instance.Data.Tensor.Defs.Part2
 import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Tensor.EqData0'0
-import Lemma.Vector.EqRepeat_0'0
-import Lemma.Vector.SEq.of.All_EqGetS.Eq
-open Bool Fin List Tensor Vector
+open Tensor
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.Repeat.eq.Zero |
+| subst 0 | Tensor.Repeat.eq.Zero.of.Eq_0 |
+-/
 @[path, subst 0]
 private lemma main
   [Zero α]
@@ -17,22 +19,15 @@ private lemma main
 -- imply
   X.repeat d 0 = 0 := by
 -- proof
+  have h_prod : (s.set d (0 * s[d])).prod = 0 := by
+    simpa only [Nat.zero_mul, Nat.mul_zero] using
+      List.ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength d.isLt 0
+  have h_empty (Y : Tensor α (s.set d (0 * s[d]))) : Y.data.val = [] :=
+    List.length_eq_zero_iff.mp (Y.data.property.trans h_prod)
   apply Eq.of.EqDataS
-  unfold Tensor.repeat
-  simp [EqData0'0]
-  apply EqCast.of.SEq.Eq (by erw [ProdSet__Mul_Get.eq.Mul_Prod d 0]; simp)
-  apply SEq.of.All_EqGetS.Eq.fin
-  ·
-    intro t
-    have h_t := t.isLt
-    let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
-    simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
-    rw [EqRepeat_0'0]
-    simp [EqGet0_0.fin]
-  ·
-    erw [ProdSet__Mul_Get.eq.Mul_Prod d 0]
-    simp
+  apply Subtype.ext
+  simp only [h_empty]
 
 
 -- created on 2026-07-12
--- updated on 2026-10-26
+-- updated on 2026-11-20

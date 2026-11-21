@@ -1,8 +1,15 @@
+import Instance.Data.Tensor.Defs.Part2
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Def.Data.Tensor.Prod
-import Def.Data.Tensor.Defs.Part4
 open Bool
 
+
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.DataAppend.as.FlattenMap₂_CastS_SplitAtData |
+| cast | Tensor.DataAppend.eq.Cast_FlattenMap₂_CastS_SplitAtData |
+-/
 @[path, cast]
 private lemma main
   {b_z : List ℕ}
@@ -20,5 +27,6 @@ private lemma main
   .
     grind
 
+
 -- created on 2026-04-25
--- updated on 2026-10-26
+-- updated on 2026-11-20

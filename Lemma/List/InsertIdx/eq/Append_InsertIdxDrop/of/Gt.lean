@@ -1,14 +1,13 @@
 import Lemma.List.EqAppendTake__Drop
 import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx.of.LeLength
 import Lemma.List.LengthTake.eq.Min_Length
-import Lemma.Nat.EqMin.of.Le
+import Theorem.Nat.EqMin.of.Le
 import Lemma.List.EqInsertIdx.of.LtLength
 import Lemma.List.EqTake.of.LeLength
 import Lemma.List.Drop.eq.Nil.of.LeLength
-import Lemma.Nat.Ge.of.Gt
 import Lemma.Nat.Gt.of.Gt.Gt
 import Lemma.Nat.Ge_Min.of.Ge
-import Lemma.Nat.Sub.gt.Zero.is.Gt
+import Theorem.Nat.Sub.gt.Zero.is.Gt
 open List Nat
 
 
@@ -28,13 +27,13 @@ private lemma main
     ·
       rwa [EqMin.of.Le]
     ·
-      apply Ge_Min.of.Ge ∘ Ge.of.Gt
+      apply Ge_Min.of.Ge ∘ le_of_lt
       assumption
   else
     simp at h_j
     have h_i := Gt.of.Gt.Gt h h_j
     rw [EqInsertIdx.of.LtLength h_i]
-    have h_j := Ge.of.Gt h_j
+    have h_j := le_of_lt h_j
     rw [EqTake.of.LeLength h_j]
     rw [Drop.eq.Nil.of.LeLength h_j]
     simp
@@ -43,3 +42,4 @@ private lemma main
 
 
 -- created on 2025-10-03
+-- updated on 2026-11-21

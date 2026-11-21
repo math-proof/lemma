@@ -1,9 +1,9 @@
 import Def.Data.Tensor.Prod
 import Lemma.List.TakeCons.eq.Cons_Take
-import Lemma.Tensor.DataAdd.eq.AddDataS
+import Theorem.Tensor.DataAdd.eq.AddDataS
 import Lemma.Tensor.DataAppend.as.AppendDataS
 import Lemma.Tensor.DataSum_0.eq.SumSplitAtData
-import Lemma.Tensor.Eq.is.EqDataS
+import Theorem.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetAppend.eq.Get.of.Lt
 import Lemma.Vector.GetAppend.eq.Get_Sub.of.Lt_Add.Ge
 import Lemma.Vector.GetCast.eq.Get.of.Eq
@@ -64,3 +64,4 @@ private lemma main
 
 
 -- created on 2026-07-22
+-- updated on 2026-11-21

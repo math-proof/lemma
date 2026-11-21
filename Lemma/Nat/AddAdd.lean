@@ -1,4 +1,4 @@
-import Lemma.Nat.AddAdd.eq.Add_Add
+import Theorem.Nat.AddAdd.eq.Add_Add
 open Nat
 
 
@@ -13,7 +13,6 @@ private lemma Comm
   repeat rw [Add.comm (b := c)]
   rw [Add_Add.eq.AddAdd]
 
-
 @[path, comm]
 private lemma rotate
   [AddCommSemigroup α]
@@ -24,7 +23,6 @@ private lemma rotate
 -- proof
   rw [AddAdd.eq.Add_Add]
   rw [Add.comm]
-
 
 @[path, comm]
 private lemma swap
@@ -38,3 +36,4 @@ private lemma swap
 
 
 -- created on 2025-06-06
+-- updated on 2026-11-21

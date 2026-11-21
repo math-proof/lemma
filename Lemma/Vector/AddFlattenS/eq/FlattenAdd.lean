@@ -1,4 +1,4 @@
-import Lemma.Nat.Any_Eq_AddMul
+import Theorem.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Vector.GetFlatten_AddMul.eq.Get
 import Lemma.Vector.GetVal.eq.Get.of.Lt
 import Lemma.Vector.GetAdd.eq.AddGetS.of.GtLength
@@ -14,7 +14,7 @@ private lemma main
   a.flatten + b.flatten = (a + b).flatten := by
 -- proof
   ext k
-  obtain ⟨i, j, h_eq⟩ := Any_Eq_AddMul k
+  obtain ⟨i, j, h_eq⟩ := Fin.Any_Eq_AddMul.of.Lt_Mul k.isLt
   have hk := k.isLt
   simp [List.Vector.get]
   rw [GetVal.eq.Get.of.Lt hk]
@@ -26,4 +26,4 @@ private lemma main
 
 
 -- created on 2025-07-20
--- updated on 2025-09-24
+-- updated on 2026-11-20

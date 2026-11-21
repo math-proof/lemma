@@ -1,9 +1,6 @@
-import Lemma.Nat.MulMul.eq.Mul_Mul
-import Lemma.Nat.MulMul
-import Lemma.Nat.Mul.of.Eq
 import Lemma.List.ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength
 import Lemma.List.Prod.eq.MulProdS
-open List Nat
+open List
 
 
 @[path]
@@ -18,12 +15,9 @@ private lemma main
 -- proof
   rw [List.prod_set]
   simp
-  rw [MulMul.eq.Mul_Mul]
-  rw [MulMul.comm]
-  rw [Mul_Mul.eq.MulMul]
-  apply Mul.of.Eq
-  rw [Mul_ProdDrop_Add_1.eq.ProdDrop.of.GtLength]
-  rw [← Prod.eq.MulProdS]
+  rw [Prod.eq.MulProdS s i, ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength i.isLt]
+  ac_rfl
 
 
 -- created on 2025-06-08
+-- updated on 2026-11-20

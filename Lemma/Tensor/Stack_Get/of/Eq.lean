@@ -1,4 +1,4 @@
-import Def.Data.Tensor.Defs.Part4
+import Instance.Data.Tensor.Tensor
 import Def.Data.Tensor.Stack.Part2
 
 
@@ -15,3 +15,4 @@ private lemma main
 
 
 -- created on 2021-08-26
+-- updated on 2026-11-20

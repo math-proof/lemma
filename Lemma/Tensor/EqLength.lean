@@ -1,4 +1,4 @@
-import Def.Data.Tensor.Defs.Part4
+import Def.Data.Tensor.Defs
 
 
 @[path, grind =]
@@ -12,3 +12,4 @@ private lemma main
 
 
 -- created on 2025-12-08
+-- updated on 2026-11-20

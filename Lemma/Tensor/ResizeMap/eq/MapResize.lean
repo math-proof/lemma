@@ -7,6 +7,12 @@ import Instance.Data.Tensor.Tensor.Part2
 open List Tensor Vector
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.ResizeMap.eq.MapResize |
+| comm | Tensor.MapResize.eq.ResizeMap |
+-/
 @[path, comm]
 private lemma main
   [Zero α] [Zero β]
@@ -22,19 +28,19 @@ private lemma main
   apply Eq.of.EqDataS
   unfold Tensor.resize Tensor.map
   let r := n * (s.drop dim.succ).prod
-  have h_prod := MulProd_Mul_Prod.eq.ProdSet.of.GtLength dim.isLt n
+  have h_prod := (ProdSet.eq.MulProd_Mul_Prod.of.GtLength dim.isLt n).symm
   rw [MapCast.eq.Cast_Map.of.Eq h_prod]
   apply congrArg (cast (congrArg (List.Vector β) h_prod))
   rw [SplitAtMap.eq.MapSplitAt]
   rw [MapMap.eq.Map_Comp]
   have h_inner :
-      ((X.data.splitAt ↑dim).map fun v => List.Vector.resize (v.map f) r) =
+    ((X.data.splitAt ↑dim).map fun v => List.Vector.resize (v.map f) r) =
         ((X.data.splitAt ↑dim).map fun v => (List.Vector.resize v r).map f) := by
     congr 1
     funext v
     apply ResizeMap.eq.MapResize h0
   change
-      ((X.data.splitAt ↑dim).map fun v => List.Vector.resize (v.map f) r).flatten =
+    ((X.data.splitAt ↑dim).map fun v => List.Vector.resize (v.map f) r).flatten =
         ((((X.data.splitAt ↑dim).map (List.Vector.resize · r)).flatten).map f)
   rw [h_inner]
   conv_lhs =>
@@ -45,3 +51,4 @@ private lemma main
 
 
 -- created on 2026-08-17
+-- updated on 2026-11-21

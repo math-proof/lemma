@@ -1,6 +1,5 @@
-import Lemma.List.Sum.eq.Add_SumDrop
-import Instance.Data.Vector.Vector
-open List
+import Def.Data.Vector.Basic
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -12,10 +11,13 @@ private lemma main
 -- imply
   s.sum = s[0] + (s.drop 1).sum := by
 -- proof
-  have h_len : s.val.length > 0 := by grind
-  rw [show s.sum = s.val.sum by rfl]
-  rw [Sum.eq.Add_SumDrop (s := s.val) h_len]
-  congr
+  obtain ⟨_ | ⟨head, tail⟩, hs⟩ := s
+  ·
+    simp at hs
+    apply (Nat.ne_of_gt h).elim
+    omega
+  · rfl
 
 
 -- created on 2026-07-11
+-- updated on 2026-11-20

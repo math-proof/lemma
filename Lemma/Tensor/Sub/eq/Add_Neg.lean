@@ -3,10 +3,16 @@ import Lemma.Tensor.DataAdd.eq.AddData
 import Lemma.Tensor.DataAdd.eq.AddDataS
 import Lemma.Tensor.DataNeg.eq.NegData
 import Lemma.Tensor.DataSub.eq.SubData
-import Lemma.Tensor.Eq.is.EqDataS
+import Theorem.Tensor.Eq.is.EqDataS
 open Vector Tensor
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.Sub.eq.Add_Neg |
+| comm | Tensor.Add_Neg.eq.Sub |
+-/
 @[path, comm]
 private lemma main
   [SubNegMonoid α]
@@ -21,10 +27,13 @@ private lemma main
   rw [DataSub.eq.SubData]
   rw [Sub.eq.Add_Neg]
 
-
 @[path, comm]
 private lemma nil
-    (X Y : Tensor ℝ []) : X - Y = Add.add X (-Y) := by
+-- given
+  (X Y : Tensor ℝ []) :
+-- imply
+  X - Y = Add.add X (-Y) := by
+-- proof
   apply Eq.of.EqDataS
   ext i
   have hi : (i : ℕ) = 0 := Nat.lt_one_iff.mp i.isLt
@@ -34,7 +43,7 @@ private lemma nil
   erw [DataNeg.eq.NegData Y]
   erw [Vector.GetAdd.eq.AddGetS.fin (a := X.data) (b := -Y.data) (i := i)]
   erw [Vector.GetNeg.eq.NegGet.fin (x := Y.data) (i := i)]
-  rw [sub_eq_add_neg (X.data.get i) (Y.data[0])]
+  rw [sub_eq_add_neg (X.data.get i) Y.data[0]]
   apply congrArg (fun t => X.data.get i + -t)
   apply congrArg Y.data.get
   apply Fin.ext
@@ -42,3 +51,4 @@ private lemma nil
 
 
 -- created on 2025-12-04
+-- updated on 2026-11-20

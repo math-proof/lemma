@@ -1,5 +1,5 @@
+import Instance.Data.Tensor.Tensor
 import Lemma.Tensor.GtLength.of.GtLength_0
-import Def.Data.Tensor.Prod
 import Lemma.Tensor.DataGetToVector.as.ArraySliceData
 import Lemma.Tensor.SEqArraySliceSData.of.Eq
 import Lemma.Tensor.ValDataGetToVector.eq.ValArraySliceData.of.GtGet_0.GtLength_0
@@ -31,3 +31,4 @@ private lemma main
 
 
 -- created on 2025-06-29
+-- updated on 2026-11-21

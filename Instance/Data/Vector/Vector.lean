@@ -1,6 +1,6 @@
 module
 
-public import Theorem.Data.Vector.Basic.Part2
+public import Theorem.Data.Vector.Basic
 public import Theorem.Vector.Zero.eq.Replicate
 public import Theorem.Vector.One.eq.Replicate
 public import Theorem.Vector.Add.eq.Map₂

@@ -1,7 +1,5 @@
 import Theorem.Logic.SEq
 import Def.Data.Tensor.Defs.Part4
-import Lemma.Vector.HEq.of.Val
-open Vector Bool
 
 
 @[path]
@@ -10,8 +8,7 @@ private lemma main
   {B : Tensor α s'}
 -- given
   (h : A ≃ B)
-  (i : ℕ)
-  (n : ℕ) :
+  (i n : ℕ) :
 -- imply
   A.data.array_slice i n ≃ B.data.array_slice i n := by
 -- proof
@@ -23,3 +20,4 @@ private lemma main
 
 
 -- created on 2025-06-29
+-- updated on 2026-11-20

@@ -1,5 +1,5 @@
 import Theorem.Logic.SEq
-import Instance.Data.Tensor.Tensor.Part2
+import Instance.Data.Tensor.Tensor
 import Lemma.Tensor.GtLength.of.GtLength_0
 open Tensor
 
@@ -28,7 +28,6 @@ private lemma main
 -- proof
   aesop
 
-
 @[path, fin, cast, cast.fin]
 private lemma right
   {s : List ℕ}
@@ -47,4 +46,4 @@ private lemma right
 
 
 -- created on 2025-07-04
--- updated on 2026-10-26
+-- updated on 2026-11-20

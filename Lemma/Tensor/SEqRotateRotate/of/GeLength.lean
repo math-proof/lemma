@@ -1,5 +1,4 @@
 import Def.Data.Tensor.Prod
-import Notation.Data.Tensor.Permute
 import Lemma.List.EqRotateRotate.of.GeLength
 import Lemma.List.ProdRotate.eq.Prod
 import Lemma.Nat.Sub_Mod.eq.ModSub
@@ -42,7 +41,7 @@ private lemma main
       apply SEqCast.of.SEq.Eq
       ·
         rw [MulProdS.eq.ProdAppend]
-        rw [AppendDrop__Take.eq.Rotate]
+        rw [← Rotate.eq.AppendDrop__Take]
       ·
         apply SEq.of.All_EqGetS.Eq
         ·
@@ -65,7 +64,7 @@ private lemma main
             have h_r := r.isLt
             simp at h_r
             have h_take := TakeRotate.eq.Drop s i
-            have h_mod := EqMod.of.Lt h_i
+            have h_mod := Nat.mod_eq_of_lt h_i
             rw [h_mod] at h_take
             rw [h_take] at h_r
             have h_q := q.isLt
@@ -88,12 +87,12 @@ private lemma main
               rw [h_mod]
           ·
             rw [MulProdS.eq.ProdAppend]
-            rw [AppendDrop__Take.eq.Rotate]
+            rw [← Rotate.eq.AppendDrop__Take]
         ·
           rw [MulProdS.eq.ProdAppend]
-          rw [AppendDrop__Take.eq.Rotate]
+          rw [← Rotate.eq.AppendDrop__Take]
           rw [EqRotateRotate.of.GeLength h]
 
 
 -- created on 2025-10-18
--- updated on 2026-10-26
+-- updated on 2026-11-21

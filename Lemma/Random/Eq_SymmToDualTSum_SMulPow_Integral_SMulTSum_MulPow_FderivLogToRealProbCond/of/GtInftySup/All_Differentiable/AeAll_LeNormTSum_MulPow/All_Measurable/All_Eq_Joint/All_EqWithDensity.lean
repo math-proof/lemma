@@ -1,6 +1,6 @@
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
-import Def.Analysis.Calculus.Gradient.Operators.Part2
+import Def.Analysis.Calculus.Gradient.Operators
 import Def.Dynamics.PolicyTrajectory.ContinuousAction
 import Theorem.Probability.SymbolicProbability
 import Lemma.Random.PSpace_Path.of.All_PSpace

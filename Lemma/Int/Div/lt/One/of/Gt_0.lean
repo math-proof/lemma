@@ -1,4 +1,5 @@
-import Lemma.Nat.LtMod.of.Gt_0
+import Theorem.Nat.LtMod.of.Gt_0
+import Instance.Data.Int.Integers
 import Lemma.Rat.LtDivS.of.Lt.Gt_0
 import Lemma.Rat.Div.eq.One.of.Gt_0
 open Nat Rat
@@ -14,11 +15,11 @@ private lemma main
   (n % d : ℤ) / (d : α) < 1 := by
 -- proof
   have := LtMod.of.Gt_0 h n
-  have : ((n % d) : ℤ) < (d : α) := by simp [this]
+  have : (n % d : ℤ) < (d : α) := by simp [this]
   have h : (d : α) > 0 := by simp [h]
   have := LtDivS.of.Lt.Gt_0 this h
   rwa [Div.eq.One.of.Gt_0 h] at this
 
 
 -- created on 2025-03-20
--- updated on 2025-03-29
+-- updated on 2026-11-20
