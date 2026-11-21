@@ -610,7 +610,7 @@ async function resolveTheoremPath(input) {
     // (`Lemma.…`, `Theorem.…`) is used as written.
     const head = cleaned.split('.')[0];
     const explicitDir = dirExists(path.join(REPO_ROOT, head));
-    const candidates = explicitDir ? [cleaned] : [`Theorem.${cleaned}`, cleaned];
+    const candidates = explicitDir ? [cleaned] : [`Theorem.${cleaned}`];
     for (const module of candidates) {
       const absModule = moduleToRepoLeanPath(module);
       if (absModule && fileExists(absModule)) return absModule;

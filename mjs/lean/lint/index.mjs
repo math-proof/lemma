@@ -102,6 +102,9 @@ export const RULES = {
     'blank-sublemmas': null,
     // not an AGENTS.md rule yet: namespaces/sections/variables/universes within Lemma/ are not allowed (standing Body rule)
     'lemma-namespace': null,
+    // not an AGENTS.md rule (user request): `public section` is not used in `Theorem/` files, which
+    // publish through `@[path] theorem main`; warn only (deleting it can make bare declarations private)
+    'public-section': null,
     'proof-binop-newline': Q.binop,
     'bullet-newline': Q.bullet,
     'tactic-rcases': Q.swap,
@@ -529,22 +532,39 @@ function fixLine(raw, fixText, mode = 'inner') {
 
 /**
  * Apply the lint rules' auto-fixes in memory (no file writes): re-lint and rewrite until stable.
- * Only warnings that carry `fix.text` and a located line can be fixed; others stay untouched.
+ * Only warnings that carry `fix.text` (in-line rewrite) or `fix.blankLines` (normalize the run of blank
+ * lines starting at the warning) and a located line can be fixed; others stay untouched.
  * @returns {{source: string, applied: Array<{rule: string, line: number}>}}
  */
 export function applyLintFixes(source, opts = {}) {
     let text = String(source ?? '');
     const applied = [];
     for (let round = 0; round < 5; round++) {
-        const warnings = lintLean(text, { ...opts, rules: opts.rules ?? ['paren-redundant-ascription', 'paren-redundant-arith'] });
+        const warnings = lintLean(text, { ...opts, rules: opts.rules ?? ['header-spacing', 'paren-redundant-ascription', 'paren-redundant-arith'] });
         const lines = text.split('\n');
+        const blankOps = new Map(); // blank-run start line → { rule, want } (run rewritten to `want` lines)
         let changed = 0;
         for (const w of warnings) {
-            if (!w.fix?.text || w.line == null) continue;
+            if (!w.fix || w.line == null) continue;
+            if (w.fix.blankLines != null) {
+                blankOps.set(w.fix.at ?? w.line, { rule: w.rule, want: w.fix.blankLines });
+                continue;
+            }
+            if (!w.fix.text) continue;
             const fixed = fixLine(lines[w.line - 1] ?? '', w.fix.text, w.fix.mode);
             if (fixed == null || fixed === lines[w.line - 1]) continue;
             lines[w.line - 1] = fixed;
             applied.push({ rule: w.rule, line: w.line });
+            changed++;
+        }
+        // from the bottom up, so the earlier line numbers stay valid
+        for (const [line, { rule, want }] of [...blankOps].sort((a, b) => b[0] - a[0])) {
+            const start = line - 1;
+            let end = start;
+            while (end < lines.length && /^\s*$/.test(lines[end])) end++;
+            if (end - start === want) continue;
+            lines.splice(start, end - start, ...Array(want).fill(''));
+            applied.push({ rule, line });
             changed++;
         }
         if (!changed) break;

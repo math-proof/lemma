@@ -369,6 +369,8 @@ const self = new Vue({
             if (pathname.match(/\/lean\/(index\.php)?/)) {
                 pathname = '/py/';
                 search = search.replace(/(?<=[.\/\\])(in|is)(?=[.\/\\])/g, m => m.capitalize());
+                // The py project has no lemma/theorem distinction: both routes are `?module=`.
+                search = search.replace(/^\?(lemma|theorem)=/, '?module=');
             }
 			return `${protocol}\/\/${host}${pathname}${search}${hash}`;
         },
@@ -467,7 +469,10 @@ where
             var {module} = this;
             if (!module)
                 module = getParameterByName('module');
-            return `Lemma/${module.replace(/[.]/g, '/')}.lean`;
+            var path = module.replace(/[.]/g, '/');
+            // `?lemma=` / `?theorem=` payloads already carry the `Lemma.` / `Theorem.` decl-library
+            // prefix; only Lemma-relative modules (`?module=Vector.…`) need it prepended.
+            return /^(Lemma|Theorem)\//.test(path) ? `${path}.lean` : `Lemma/${path}.lean`;
         },
 
         lemmaName(index) {

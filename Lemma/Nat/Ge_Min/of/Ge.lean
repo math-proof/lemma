@@ -1,6 +1,4 @@
-import Lemma.Nat.LeMin
-import Lemma.Nat.Ge.of.Ge.Ge
-open Nat
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -12,8 +10,8 @@ private lemma main
 -- imply
   c ≥ a ⊓ b := by
 -- proof
-  have := LeMin.left a b
-  apply Ge.of.Ge.Ge h this
+  apply le_trans (min_le_left a b) h
 
 
 -- created on 2025-05-14
+-- updated on 2026-11-21

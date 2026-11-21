@@ -1,6 +1,6 @@
 项目工件：<https://github.com/math-proof/lemma>
 
-相对：[softmax](http://www.lemma.cn/lean/?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)，配对：[内积](http://www.lemma.cn/lean/?module=Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub)，布局：[共轭](http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix%27.eq.DotDot_RotaryMatrix)，实现：[kernel](http://www.lemma.cn/lean/?module=Tensor.DotRotaryMatrix.eq.AddMulS)，加法：[群律](http://www.lemma.cn/lean/?module=Tensor.DotRotaryMatrixS.eq.RotaryMatrixAdd)，正交：[单位阵](http://www.lemma.cn/lean/?module=Tensor.DotT_RotaryMatrix.eq.Eye)
+相对：[softmax](http://www.lemma.cn/lean/?module=Matrix.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)，配对：[内积](http://www.lemma.cn/lean/?module=Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub)，布局：[共轭](http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix%27.eq.DotDot_RotaryMatrix)，实现：[kernel](http://www.lemma.cn/lean/?module=Tensor.DotRotaryMatrix.eq.AddMulS)，加法：[群律](http://www.lemma.cn/lean/?module=Tensor.DotRotaryMatrixS.eq.RotaryMatrixAdd)，正交：[单位阵](http://www.lemma.cn/lean/?module=Tensor.DotT_RotaryMatrix.eq.Eye)
 
 # 摘要
 
@@ -46,7 +46,7 @@ Transformer 需要次序的表示[[5]](https://arxiv.org/abs/1706.03762)。旋�
 3. **正交。** [DotT_RotaryMatrix.eq.Eye](http://www.lemma.cn/lean/?module=Tensor.DotT_RotaryMatrix.eq.Eye)：\(\mathrm{R}(\alpha)^{\top}\mathrm{R}(\alpha)=I_{d+d}\)，以及 \(\mathrm{R}(-\alpha)=\mathrm{R}(\alpha)^{\top}\) 与 \(\mathrm{R}(-\alpha)\mathrm{R}(\alpha)=I_{d+d}\)。
 4. **可加。** [DotRotaryMatrixS.eq.RotaryMatrixAdd](http://www.lemma.cn/lean/?module=Tensor.DotRotaryMatrixS.eq.RotaryMatrixAdd)：\(\mathrm{R}(\alpha)\mathrm{R}(\beta)=\mathrm{R}(\alpha+\beta)\)，对任意角向量，不限于整数 token 下标。
 5. **配对。** [DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub](http://www.lemma.cn/lean/?module=Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub)：自由角上的 RoFormer 配对。RoFormer 布局上同样的转置积是 [DotT.eq.RotaryMatrix%27Sub](http://www.lemma.cn/lean/?module=Tensor.DotT.eq.RotaryMatrix%27Sub)：\(\mathrm{R}'(\alpha)^{\top}\mathrm{R}'(\beta)=\mathrm{R}'(\beta-\alpha)\)。
-6. **相对注意力。** [DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul](http://www.lemma.cn/lean/?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)：对每个 query、key 作用 \(\mathrm{R}(\theta_{i})\) 后，未归一化权重依赖 \(\mathrm{R}(\theta_{k}-\theta_{i})\)；在 \(\theta_{i}=i\,\tau\) 下该矩阵为 \(\mathrm{R}(\theta_{k-i})\) 或 \(\mathrm{R}(\theta_{i-k})^{\top}\)。
+6. **相对注意力。** [DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul](http://www.lemma.cn/lean/?module=Matrix.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)：对每个 query、key 作用 \(\mathrm{R}(\theta_{i})\) 后，未归一化权重依赖 \(\mathrm{R}(\theta_{k}-\theta_{i})\)；在 \(\theta_{i}=i\,\tau\) 下该矩阵为 \(\mathrm{R}(\theta_{k-i})\) 或 \(\mathrm{R}(\theta_{i-k})^{\top}\)。
 
 数学并不新。这里打包的是一对形式对象——RoFormer 矩阵与 Hugging Face 矩阵——二者之间已检验的共轭、不强于下标线性的频率假设，以及从 Hugging Face 定义到 softmax 恒等式的完整链条。
 
@@ -398,7 +398,7 @@ Q^{R}_{i} = R(i)\,@\,Q_{i},\quad
 K^{R}_{i} = R(i)\,@\,K_{i}.
 \]
 
-**定理 8.4**（相对 softmax，[DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul](http://www.lemma.cn/lean/?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)）。在定义 8.2 下，上式等于
+**定理 8.4**（相对 softmax，[DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul](http://www.lemma.cn/lean/?module=Matrix.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)）。在定义 8.2 下，上式等于
 
 \[
 \Biggl[
@@ -439,13 +439,13 @@ R(i-k)^{\top} & \text{若 }k<i,
 
 两点簿记与 Lean 陈述完全对齐。第一，\(\mathrm{Rel}\) 用 \(R\) 绑定，不再第二次写出 `rotaryMatrix`，故相对矩阵定义上就是旋转矩阵或其转置。第二，配分函数不用 \(\mathrm{Rel}\) 改写：它仍是 \(\sum\exp\bigl((R(i)@Q_{i})@(K^{R})^{\top}/\sqrt{d+d}\bigr)\)。两种形式由同一配对相等，但已认证的恒等式只改写乘 \(V\) 的那些权重。
 
-这就是「RoPE 是相对位置编码」的含义：旋转作用之后，每个未归一化权重是未旋转 query 与只依赖 \(k-i\) 的矩阵所旋转的 key 的普通内积。交错布局上同一归约处处由共轭得到（[DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul](http://www.lemma.cn/lean/?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)，[RotaryMatrix'.eq.DotDot_RotaryMatrix](http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix%27.eq.DotDot_RotaryMatrix)）。
+这就是「RoPE 是相对位置编码」的含义：旋转作用之后，每个未归一化权重是未旋转 query 与只依赖 \(k-i\) 的矩阵所旋转的 key 的普通内积。交错布局上同一归约处处由共轭得到（[DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul](http://www.lemma.cn/lean/?module=Matrix.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)，[RotaryMatrix'.eq.DotDot_RotaryMatrix](http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix%27.eq.DotDot_RotaryMatrix)）。
 
 # 9 形式化工件
 
 已完成陈述的交互可视化：
 
-- 相对 softmax：[DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul](http://www.lemma.cn/lean/?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)
+- 相对 softmax：[DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul](http://www.lemma.cn/lean/?module=Matrix.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)
 - RoFormer 配对：[DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub](http://www.lemma.cn/lean/?module=Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub)
 - 共轭 \(R'=P^{\top}RP\)：[RotaryMatrix%27.eq.DotDot_RotaryMatrix](http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix%27.eq.DotDot_RotaryMatrix)
 - Hugging Face 矩阵：[RotaryMatrix.eq.AppendHstackSMulSEye](http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix.eq.AppendHstackSMulSEye)
@@ -462,7 +462,7 @@ R(i-k)^{\top} & \text{若 }k<i,
 
 下列为标题引理所 import 的主要模块。链接指向 Lean 4 页。前缀 `Tensor.` 省略。
 
-- [DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul](http://www.lemma.cn/lean/?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul) — 相对 softmax
+- [DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul](http://www.lemma.cn/lean/?module=Matrix.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul) — 相对 softmax
   - [DotSoftmaxDivDot_T.eq.Stack_Div_SumExp](http://www.lemma.cn/lean/?module=Tensor.DotSoftmaxDivDot_T.eq.Stack_Div_SumExp)
   - [DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub](http://www.lemma.cn/lean/?module=Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub) — 配对
     - [DotT.eq.RotaryMatrixSub](http://www.lemma.cn/lean/?module=Tensor.DotT.eq.RotaryMatrixSub)
@@ -492,7 +492,7 @@ R(i-k)^{\top} & \text{若 }k<i,
 
 **检验了什么，没检验什么。** 我们认证的是张量相等，不是近似质量、长度外推，也不是 RoPE 与训练权重的相互作用。定理 8.4 对每一 \(Q,K,V\) 与每一线性 \(\theta\) 都是恒等式；它不说训练模型在推理时以某种特定方式使用相对矩阵，也不说注意力随距离衰减[[9]](https://arxiv.org/abs/2410.06205)。
 
-**布局。** 两种配对都形式化了（[RotaryMatrix.eq.AppendHstackSMulSEye](http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix.eq.AppendHstackSMulSEye)，[RotaryMatrix'.eq.Stack_Ite_IteS](http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix%27.eq.Stack_Ite_IteS)）；置换引理为 [RotaryMatrix'.eq.DotDot_RotaryMatrix](http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix%27.eq.DotDot_RotaryMatrix)。Kernel 实现（[DotRotaryMatrix.eq.AddMulS](http://www.lemma.cn/lean/?module=Tensor.DotRotaryMatrix.eq.AddMulS)）与配对（[DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub](http://www.lemma.cn/lean/?module=Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub)）写在 Hugging Face 布局上；交错版本（[DotRotaryMatrix'.eq.Stack_IteEven_SubMulS](http://www.lemma.cn/lean/?module=Tensor.DotRotaryMatrix%27.eq.Stack_IteEven_SubMulS)，[DotDotSRotaryMatrix'.eq.Dot_DotRotaryMatrix'Sub](http://www.lemma.cn/lean/?module=Tensor.DotDotSRotaryMatrix%27.eq.Dot_DotRotaryMatrix%27Sub)，[DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul](http://www.lemma.cn/lean/?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)）由共轭直接得到。RoFormer 布局上匹配的矩阵恒等式为 [DotT.eq.RotaryMatrix'Sub](http://www.lemma.cn/lean/?module=Tensor.DotT.eq.RotaryMatrix%27Sub)。
+**布局。** 两种配对都形式化了（[RotaryMatrix.eq.AppendHstackSMulSEye](http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix.eq.AppendHstackSMulSEye)，[RotaryMatrix'.eq.Stack_Ite_IteS](http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix%27.eq.Stack_Ite_IteS)）；置换引理为 [RotaryMatrix'.eq.DotDot_RotaryMatrix](http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix%27.eq.DotDot_RotaryMatrix)。Kernel 实现（[DotRotaryMatrix.eq.AddMulS](http://www.lemma.cn/lean/?module=Tensor.DotRotaryMatrix.eq.AddMulS)）与配对（[DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub](http://www.lemma.cn/lean/?module=Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub)）写在 Hugging Face 布局上；交错版本（[DotRotaryMatrix'.eq.Stack_IteEven_SubMulS](http://www.lemma.cn/lean/?module=Tensor.DotRotaryMatrix%27.eq.Stack_IteEven_SubMulS)，[DotDotSRotaryMatrix'.eq.Dot_DotRotaryMatrix'Sub](http://www.lemma.cn/lean/?module=Tensor.DotDotSRotaryMatrix%27.eq.Dot_DotRotaryMatrix%27Sub)，[DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul](http://www.lemma.cn/lean/?module=Matrix.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)）由共轭直接得到。RoFormer 布局上匹配的矩阵恒等式为 [DotT.eq.RotaryMatrix'Sub](http://www.lemma.cn/lean/?module=Tensor.DotT.eq.RotaryMatrix%27Sub)。
 
 **频率。** 定义 8.2 对引理 8.3 充分，且严格弱于古典几何表。它并非必要：任何满足 \(\theta_{k}-\theta_{t}\equiv\theta_{k-t}\pmod{2\pi}\) 的 \(\theta\) 给出同一 \(\mathrm{R}\)。
 

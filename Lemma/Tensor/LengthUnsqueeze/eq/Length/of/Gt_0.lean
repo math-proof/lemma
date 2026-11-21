@@ -1,4 +1,4 @@
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
+import Theorem.Tensor.Length.eq.Get_0.of.GtLength_0
 import Def.Data.Tensor.Unsqueeze
 import Theorem.List.LengthInsertIdx.eq.Add1Length.of.GeLength
 import Lemma.List.LengthInsertIdx.eq.Length.of.LtLength
@@ -46,4 +46,4 @@ private lemma main
 
 
 -- created on 2025-07-12
--- updated on 2026-11-20
+-- updated on 2026-11-21

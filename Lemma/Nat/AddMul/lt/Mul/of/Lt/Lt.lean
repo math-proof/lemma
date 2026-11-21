@@ -1,4 +1,4 @@
-import Lemma.Nat.AddMul.lt.Mul.of.Lt
+import Theorem.Nat.AddMul.lt.Mul.of.Lt
 open Nat
 
 
@@ -7,7 +7,7 @@ private lemma main
   {m n : ℕ}
 -- given
   (h₀ : i < m)
-  (h₁ : j  < n) :
+  (h₁ : j < n) :
 -- imply
   i * n + j < m * n := by
 -- proof
@@ -18,3 +18,4 @@ private lemma main
 
 
 -- created on 2025-06-14
+-- updated on 2026-11-21

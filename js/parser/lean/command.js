@@ -191,20 +191,21 @@ export class Lean_section extends LeanCommand {
      * @param {import('../node.js').Node | null} [parent]
      */
     constructor(accessibility, arg, indent, level, parent = null) {
-        // append: new Ctor(caret, indent, level)
+        // append: new Ctor(caret, indent, level) — plain `section`, no explicit modifier
         // push_accessibility: new Ctor(accessibility, caret, indent, level)
         if (level === null || level === undefined) {
             indent = arg;
             arg = accessibility;
-            accessibility = 'public';
+            accessibility = undefined;
             level = arg instanceof L.Lean ? arg.level : 0;
         }
         super(arg, indent, level, parent);
         this.kwargs.accessibility = accessibility;
     }
 
+    /** `public` is the semantic default for a section, explicit or not. */
     get accessibility() {
-        return this.kwargs.accessibility;
+        return this.kwargs.accessibility ?? 'public';
     }
 
     set accessibility(v) {
@@ -220,7 +221,7 @@ export class Lean_section extends LeanCommand {
     }
 
     strFormat() {
-        const acc = this.accessibility === 'public' ? '' : `${this.accessibility} `;
+        const acc = this.kwargs.accessibility == null ? '' : `${this.kwargs.accessibility} `;
         return `${acc}${this.operator} %s`;
     }
 

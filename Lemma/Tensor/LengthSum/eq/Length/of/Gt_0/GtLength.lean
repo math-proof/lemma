@@ -1,9 +1,5 @@
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Def.Data.Tensor.Sum
-import Lemma.Tensor.EqLength_0.of.Eq_Nil
-import Lemma.Tensor.LengthSum.eq.Length.of.LeLength
-import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
-open Tensor List
+import Def.Data.Tensor.Defs
 
 
 @[path]
@@ -17,17 +13,16 @@ private lemma main
 -- imply
   (X.sum d).length = X.length := by
 -- proof
-  if h : s.length > 0 then
-    repeat rw [Length.eq.Get_0.of.GtLength_0 (by assumption)]
-    repeat rw [Length.eq.Get_0.of.GtLength_0 (by grind)]
-    rw [GetEraseIdx.eq.Get.of.Gt.GtLength (by assumption) (by assumption)]
-  else
-    simp at h
-    repeat rw [EqLength_0.of.Eq_Nil]
-    ·
-      assumption
-    ·
-      simp_all
+  cases s with
+  | nil =>
+    simp at h_s
+  | cons m s =>
+    cases d with
+    | zero =>
+      exact (Nat.not_lt_zero 0 h).elim
+    | succ d =>
+      rfl
 
 
 -- created on 2025-06-24
+-- updated on 2026-11-21

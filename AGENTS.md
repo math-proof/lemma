@@ -6,6 +6,7 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
 - Agents form a DAG that mirrors the folder tree. An agent follows the `AGENTS.md` in its own folder **and** in every parent folder up to this root one; the nearest file wins on conflict.
 - An agent whose folder has no `AGENTS.md` follows its nearest ancestor's, so it still inherits this file.
 - A child file never restates a parent rule; it references the parent file instead.
+- To formalize a mathematical statement from a pdf paper, handle it to [Lemma](Lemma/AGENTS.md) agent who will create a lemma path for this statement, visualize it with latex rendering via [vue](vue/AGENTS.md) agent and deploy via [mjs](mjs/AGENTS.md) agent using node.js .
 
 ## Sub-agents
 - Work on https://github.com/math-proof/lemma.

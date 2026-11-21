@@ -1,6 +1,6 @@
 # arXiv paper rules
 
-Shared rules for every folder under `website/arxiv/<paper>/`.
+Shared rules for every folder under `php/arxiv/<paper>/`.
 There is no per-paper `SUBMIT.md`. Title, Chinese filename, and lemma.cn links live in that folder’s `main.tex` and Zhihu `*.md`.
 
 ## Files

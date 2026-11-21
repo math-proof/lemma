@@ -9,7 +9,7 @@ import '../../../js/py.js';
 import { compile, Lean, LeanModule } from '../../../js/parser/lean.js';
 
 /** rule ids implemented here; their text-scan versions only run when the AST is unavailable */
-export const AST_RULES = new Set(['have-inline-once', 'have-underscore', 'given-prop-first', 'given-prop-consecutive', 'given-implicit-dep', 'tactic-haveI', 'tactic-letI', 'calc-after-assign', 'decl-keyword-dir', 'paren-getelem', 'fin-index-val', 'paren-apparg', 'paren-redundant-type', 'paren-redundant-sum-sub', 'paren-redundant-pow', 'paren-redundant-arith', 'paren-redundant-ascription', 'prefer-unicode-type', 'prefer-unicode-pow']);
+export const AST_RULES = new Set(['have-inline-once', 'have-underscore', 'given-prop-first', 'given-prop-consecutive', 'given-implicit-dep', 'tactic-haveI', 'tactic-letI', 'calc-after-assign', 'decl-keyword-dir', 'public-section', 'paren-getelem', 'fin-index-val', 'paren-apparg', 'paren-redundant-type', 'paren-redundant-sum-sub', 'paren-redundant-pow', 'paren-redundant-arith', 'paren-redundant-ascription', 'prefer-unicode-type', 'prefer-unicode-pow']);
 
 /**
  * Term forms whose parentheses are load-bearing inside an ascription: `(fun y => F y : T)`
@@ -940,6 +940,21 @@ function declKeywordDir(ctx, decl) {
 }
 
 /**
+ * `public-section`: `public section` is not used in `Theorem/`. The tree keeps the modifier only when it was
+ * written (`kwargs.accessibility` is undefined for a plain `section`), so this never fires on plain sections,
+ * nor on `noncomputable section` / `private section`. Warn only; no text fallback (AST only).
+ */
+function publicSection(ctx, node, inTheorem) {
+    const { Lean_section } = Lean.classes;
+    if (!(node instanceof Lean_section) || !inTheorem) return;
+    const acc = node.kwargs?.accessibility;
+    if (typeof acc !== 'string' || !/^public\b/.test(acc)) return;
+    ctx.warnAst('public-section', node,
+        '`public section` is not used in `Theorem/`: declare `@[path] theorem main` at the top level instead',
+        1, null, null, { col: 1 });
+}
+
+/**
  * Number of distinct `lemma` / `theorem` declarations in the tree. `lintLean` compares it with the text scan
  * (`ctx.decls`) and leaves `decl-keyword-dir` to the text fallback when they disagree (a mis-parse).
  */
@@ -951,12 +966,13 @@ export function countLemmaTheoremNodes(tree) {
 }
 
 export function astRules(ctx, tree) {
-    const { LeanStatements, LeanArgsNewLineSeparated, Lean_lemma, Lean_theorem, Lean_def, Lean_let } = Lean.classes;
+    const { LeanStatements, LeanArgsNewLineSeparated, Lean_lemma, Lean_theorem, Lean_def, Lean_let, Lean_section } = Lean.classes;
     // findings are emitted in source order (pre-order index of the quoted node) so that `ctx.warnAst` can locate
     // each statement with a forward-moving cursor
     const order = new Map();
     const found = [];
     const lemmaFile = ctx.astCovered.has('decl-keyword-dir') && isLemmaPath(ctx.file);
+    const inTheorem = /(^|\/)Theorem\//.test(String(ctx.file ?? '').replace(/\\/g, '/'));
     // `quoteAs`: text to quote instead of the node's own reprint (the node still fixes the source order)
     const sink = { warnAst: (rule, node, msg, maxLines, follow, quoteAs, extra) => found.push({ rule, node, msg, maxLines, follow, quoteAs, extra }) };
     for (const node of walk(tree)) {
@@ -975,6 +991,7 @@ export function astRules(ctx, tree) {
             calcAfterAssign(sink, node);
             haveUnderscore(sink, node);
         }
+        else if (node instanceof Lean_section) publicSection(sink, node, inTheorem);
         else {
             parenGetElem(sink, node);
             finIndexVal(sink, node);

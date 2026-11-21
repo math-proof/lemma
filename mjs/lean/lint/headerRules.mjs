@@ -64,12 +64,14 @@ export function scanImportsAndOpens(P) {
 }
 
 /**
- * `header-spacing`: top-level `import` / `open` / `set_option` form one contiguous preamble
- * (no blank lines inside), then exactly two blank lines before the rest of the file
+ * `header-spacing`: in a `module` file the `module` header is immediately followed by its imports (no
+ * blank line); the `module` line and the top-level `import` / `open` / `set_option` commands form one
+ * contiguous preamble (no blank lines inside), then exactly two blank lines before the rest of the file
  * (`/--`, `@[…]`, `namespace`, the lemma, …).
  *
  * ```
- * import …          -- contiguous
+ * module            -- no blank after it
+ * public import …   -- contiguous
  * open …            -- no blank between import and open
  *
  *                   -- exactly two blanks
@@ -78,13 +80,19 @@ export function scanImportsAndOpens(P) {
  */
 export function headerSpacing(ctx) {
     const { raw } = ctx.P;
-    const isCmd = (s) => /^(import|open|set_option)\b/.test(s);
+    const isModule = (s) => /^module\b/.test(s);
+    const isCmd = (s) => /^(?:(?:public|private)\s+)?import\b/.test(s) || /^(open|set_option)\b/.test(s);
     const isCont = (s) => /^\s+\S/.test(s); // indented continuation of a multi-line `open`
     // preamble = leading run of cmds / blanks / open-continuations, stopped by any other non-blank
     let i = 0;
     const cmds = []; // 0-based line indices of preamble commands (and their continuations)
     while (i < raw.length) {
         const s = raw[i];
+        if (i === 0 && isModule(s)) {
+            cmds.push(i);
+            i++;
+            continue;
+        }
         if (isCmd(s)) {
             cmds.push(i);
             i++;
@@ -106,11 +114,16 @@ export function headerSpacing(ctx) {
     // blank line(s) between preamble commands
     for (let k = first; k < last; k++) {
         if (/^\s*$/.test(raw[k]) && !cmds.includes(k)) {
+            // `module` + blank + import: a pure line deletion, so `--fix` can take it
+            const afterModule = k === 1 && isModule(raw[0]);
             ctx.warn(
                 'header-spacing',
                 k + 1,
                 1,
-                'no blank line between `import` / `open` / `set_option`; keep the preamble contiguous',
+                afterModule
+                    ? 'no blank line after `module`: the `module` header and its imports are one contiguous preamble'
+                    : 'no blank line between `import` / `open` / `set_option`; keep the preamble contiguous',
+                afterModule ? { fix: { blankLines: 0 } } : {},
             );
             break; // one finding for the internal gap
         }
@@ -125,11 +138,14 @@ export function headerSpacing(ctx) {
     // no body after the preamble (empty / preamble-only file): skip the trailer check
     if (j >= raw.length) return;
     if (blanks !== 2) {
+        const isModuleFile = isModule(raw[0]);
         ctx.warn(
             'header-spacing',
-            last + 1,
+            // module files point at the blank run (the fix's anchor); non-module output is unchanged
+            isModuleFile ? last + 2 : last + 1,
             1,
             `exactly two blank lines after the preamble before the rest of the file (got ${blanks})`,
+            isModuleFile ? { fix: { blankLines: 2, at: last + 2 } } : {},
         );
     }
 }

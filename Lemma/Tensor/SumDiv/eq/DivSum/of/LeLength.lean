@@ -1,7 +1,6 @@
 import Lemma.Nat.NotLt.of.Ge
 import Lemma.Tensor.CastDiv.eq.DivCast.of.Eq
 import Lemma.Tensor.SEqSum.of.LeLength
-import Def.Data.Tensor.Sum
 open List Nat Tensor
 
 
@@ -18,8 +17,8 @@ private lemma main
   rw [Sum.eq.Cast.of.LeLength (by grind)]
   conv_rhs => rw [Sum.eq.Cast.of.LeLength (by grind)]
   rw [CastDiv.eq.DivCast.of.Eq]
-  apply Eq_EraseIdx.of.LeLength h
+  apply (List.eraseIdx_of_length_le h).symm
 
 
 -- created on 2025-09-25
--- updated on 2026-10-26
+-- updated on 2026-11-21
