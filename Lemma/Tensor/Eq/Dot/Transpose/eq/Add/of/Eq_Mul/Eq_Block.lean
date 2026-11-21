@@ -22,7 +22,7 @@ private lemma position_representation_rotary
 -- proof
   subst h₁
   funext a
-  rcases a with k | k <;>
+  cases a <;>
     simp [Matrix.fromBlocks_transpose, Matrix.fromBlocks_mulVec, Matrix.mulVec_diagonal] <;>
     ring
 

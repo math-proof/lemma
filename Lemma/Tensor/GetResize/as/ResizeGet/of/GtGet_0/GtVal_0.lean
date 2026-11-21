@@ -14,8 +14,6 @@ import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Theorem.List.ProdTake_1.eq.HeadD_1
 import Lemma.List.TailSet.eq.SetTail.of.Gt_0
 import Theorem.Nat.Gt_0
-import Theorem.Nat.MulMul
-import Lemma.Nat.Mul_Mul
 import Lemma.Tensor.GtLength.of.GtLength_0
 import Lemma.Tensor.LengthResize.eq.Length.of.GtVal_0
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
@@ -25,7 +23,6 @@ import Lemma.Vector.GetResize.eq.Ite_Get_Mod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool List Nat Tensor Vector
-set_option maxHeartbeats 990000
 
 
 private lemma prodTail (s : List ℕ) (d : ℕ) :
@@ -34,6 +31,15 @@ private lemma prodTail (s : List ℕ) (d : ℕ) :
   · simp
   · simp [← List.prod_append, List.take_append_drop]
 
+
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.GetResize.as.ResizeGet.of.GtGet_0.GtVal_0 |
+| fin | Tensor.GetResize.as.ResizeGet.of.GtGet_0.GtVal_0.fin |
+| cast | Tensor.GetResize.eq.Cast_ResizeGet.of.GtGet_0.GtVal_0 |
+| cast.fin | Tensor.GetResize.eq.Cast_ResizeGet.of.GtGet_0.GtVal_0.fin |
+-/
 @[path, fin, cast, cast.fin]
 private lemma main
   [Zero α]
@@ -89,13 +95,13 @@ private lemma main
               repeat rw [GetFlatten.eq.Get.of.Lt_Mul]
               ·
                 simp
-                repeat rw [GetResize.eq.Ite_Get_Mod.fin]
+                simp only [GetResize.eq.Ite_Get_Mod.fin]
                 simp
                 split_ifs with h? h_lt h_lt'
                 ·
-                  repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-                  rw [GetCast.eq.Get.of.Eq.fin (by simp)]
-                  rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+                  simp only [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+                  refine Eq.trans ?_ (GetCast.eq.Get.of.Eq.fin (by simp) ((X.splitAt 1).get ⟨i, by rwa [ProdTake_1.eq.Get_0.of.GtLength_0 h_s]⟩) _).symm
+                  refine Eq.trans ?_ (GetSplitAt.eq.Get_AddMul_ProdDrop.fin (d := 1) X ⟨i, by rwa [ProdTake_1.eq.Get_0.of.GtLength_0 h_s]⟩ _).symm
                   congr 1
                   simp
                   rw [EqAddSub.of.Ge (by grind)]
@@ -106,21 +112,20 @@ private lemma main
                   rw [ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength d.isLt]
                   conv_lhs =>
                     pattern (_ * (_ * _) + _) % _
-                    rw [Mul_Mul.eq.MulMul]
+                    rw [← _root_.mul_assoc]
                     rw [Nat.ModAddMul.eq.Mod]
                   conv_lhs =>
                     pattern (_ * (_ * _) + _) / _
-                    rw [Mul_Mul.eq.MulMul]
+                    rw [← _root_.mul_assoc]
                     rw [DivAdd.eq.AddDivS.of.Dvd (by simp)]
-                    simp
                     rw [Nat.EqDivMul.of.Ne_0 (Nat.Ne_0.of.GtMul h_t)]
                   grind
                 ·
-                  rw [h_prodset, Mul_Mul.eq.MulMul] at h?
+                  rw [h_prodset, ← _root_.mul_assoc] at h?
                   simp at h?
                   grind
                 ·
-                  rw [h_prodset, Mul_Mul.eq.MulMul] at h?
+                  rw [h_prodset, ← _root_.mul_assoc] at h?
                   simp at h?
                   grind
                 ·
@@ -135,7 +140,7 @@ private lemma main
                 simp
                 rw [Drop.eq.DropTail s d]
                 rw [ProdTake.eq.Mul_ProdTakeTail.of.Gt_0.GtLength_0 h_s h_d]
-                rw [MulMul.eq.Mul_Mul]
+                rw [_root_.mul_assoc]
                 rw [TailSet.eq.SetTail.of.Gt_0 (by grind)]
                 rw [← h_prodset]
                 rw [SetTail.eq.TailSet.of.Gt_0 (by grind)]
@@ -158,4 +163,4 @@ private lemma main
 
 
 -- created on 2026-07-12
--- updated on 2026-07-13
+-- updated on 2026-11-21

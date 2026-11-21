@@ -1,8 +1,14 @@
-import Lemma.List.EqCons_Tail.of.GtLength_0
-import Lemma.List.ProdCons.eq.Mul_Prod
+import Theorem.List.EqCons_Tail.of.GtLength_0
+import Theorem.List.ProdCons.eq.Mul_Prod
 open List
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | List.Prod.eq.Mul_ProdTail.of.GtLength_0 |
+| comm | List.Mul_ProdTail.eq.Prod.of.GtLength_0 |
+-/
 @[path, comm]
 private lemma main
   [Mul α] [One α]
@@ -17,3 +23,4 @@ private lemma main
 
 
 -- created on 2025-06-09
+-- updated on 2026-11-21

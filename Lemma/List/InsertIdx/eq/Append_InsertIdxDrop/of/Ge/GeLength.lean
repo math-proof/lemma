@@ -1,6 +1,6 @@
 import Lemma.List.InsertIdx.eq.Append_InsertIdxDrop.of.Gt
-import Lemma.Nat.Gt.is.Ge.Ne
-import Lemma.Nat.LtSubS.of.Lt.Le
+import Theorem.Nat.Gt.is.Ge.Ne
+import Theorem.Nat.LtSubS.of.Lt.Le
 open List Nat
 
 
@@ -38,4 +38,4 @@ private lemma main
 
 
 -- created on 2025-10-03
--- updated on 2025-11-27
+-- updated on 2026-11-21

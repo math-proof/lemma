@@ -11,7 +11,6 @@ private lemma doit_inner
   funext j i
   fin_cases i <;> rfl
 
-
 @[path]
 private lemma limits_swap_subst
   [Mul α]
@@ -22,7 +21,6 @@ private lemma limits_swap_subst
   (fun (j i : Fin n) => h i * g i j) = fun (i j : Fin n) => h j * g j i :=
 -- proof
   rfl
-
 
 @[path]
 private lemma limits_subst_offset

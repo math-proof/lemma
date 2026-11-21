@@ -27,7 +27,6 @@ private lemma adam
     field_simp
     ring
 
-
 @[path]
 private lemma exponential_moving_average
   {β : ℝ}
@@ -60,7 +59,6 @@ private lemma exponential_moving_average
   rw [key n, hd, Finset.sum_range_sub θ n]
   ring
 
-
 @[path]
 private lemma fastformer
   {n d : ℕ}
@@ -77,7 +75,6 @@ private lemma fastformer
   congr 1
   refine Finset.sum_congr rfl fun r _ => ?_
   ring
-
 
 @[path]
 private lemma long_short_term_memory
@@ -101,10 +98,9 @@ private lemma long_short_term_memory
   rw [Nat.add_sub_cancel, h₀ (s + 1), h₀ s, h₁ s]
   rfl
 
-
 @[path]
 private lemma kmeans_nonoverlapping
-  {M k d : ℕ} [NeZero k]
+  {M d : ℕ} [NeZero (k : ℕ)]
   {w w' : Fin k → Finset ℕ}
   {x : ℕ → EuclideanSpace ℝ (Fin d)}
 -- given
@@ -119,14 +115,18 @@ private lemma kmeans_nonoverlapping
     ⟨_, fun _ => rfl⟩
   simp only [ha] at h₂
   constructor
-  · simp only [h₂]
+  ·
+    simp only [h₂]
     rw [← Finset.card_eq_sum_card_fiberwise (fun j _ => Finset.mem_univ (a j)), Finset.card_range]
-  · ext j
+  ·
+    ext j
     simp only [Finset.mem_biUnion, Finset.mem_univ, true_and, h₂, Finset.mem_filter]
     constructor
-    · rintro ⟨i, hj, _⟩
+    ·
+      rintro ⟨i, hj, _⟩
       exact hj
-    · intro hj
+    ·
+      intro hj
       exact ⟨a j, hj, rfl⟩
 
 

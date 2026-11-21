@@ -1,4 +1,4 @@
-import Instance.Data.Tensor.Tensor.Part2
+import Instance.Data.Tensor.Tensor
 import Lemma.Tensor.LengthRepeat.eq.Mul_Get_0.of.GtLength_0
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
@@ -32,7 +32,7 @@ private lemma main
   (X : Tensor α s) :
 -- imply
   have h_i : i < (X.repeat ⟨0, h_s⟩ n).length := by rwa [LengthRepeat.eq.Mul_Get_0.of.GtLength_0]
-  have h_mod : i % s[0] < X.length := by
+  have : i % s[0] < X.length := by
     rw [Length.eq.Get_0.of.GtLength_0 h_s]
     apply LtMod.of.Gt_0 ∘ Gt_0.of.GtMul
     assumption
@@ -40,7 +40,7 @@ private lemma main
 -- proof
   intros
   obtain ⟨q, r, h_qr⟩ := Fin.Any_Eq_AddMul.of.Lt_Mul h_i
-  simp [h_qr, EqMod]
+  simp [h_qr, Nat.mod_eq_of_lt r.isLt]
   unfold Tensor.repeat
   simp
   simp only [GetElem.getElem]
@@ -88,14 +88,14 @@ private lemma main
                 conv_lhs => rw [Get]
                 erw [GetRepeat.eq.Get_Mod.of.Lt_Mul h_lt_add]
                 simp [Get]
-                congr
+                congr 1
                 rw [MulAdd.eq.AddMulS]
-                rw [MulMul.eq.Mul_Mul]
+                rw [_root_.mul_assoc]
                 have h_prod := Prod.eq.Mul_ProdTail.of.GtLength_0 h_s
                 rw [← h_prod]
                 rw [AddAdd.eq.Add_Add]
                 rw [ModAddMul.eq.Mod]
-                apply EqMod.of.Lt
+                apply Nat.mod_eq_of_lt
                 have := AddMul.lt.Mul.of.Lt.Lt r.isLt h_k
                 rw [TailSet_0.eq.Tail] at this
                 convert this
@@ -119,4 +119,4 @@ private lemma main
 
 
 -- created on 2025-07-10
--- updated on 2026-10-26
+-- updated on 2026-11-21

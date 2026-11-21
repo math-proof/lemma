@@ -32,7 +32,6 @@ private lemma independence_vector
   rw [Finset.sum_eq_single k (fun j _ hj => ite_eq_right (fun e => hj (Fin.ext e.symm))) (fun hk => absurd (Finset.mem_univ k) hk), ite_eq_left rfl] at hc
   exact sub_eq_zero.mp hc
 
-
 @[path]
 private lemma independence_matrix
   {n m : ℕ}

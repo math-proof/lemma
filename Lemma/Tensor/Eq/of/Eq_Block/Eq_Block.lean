@@ -14,10 +14,9 @@ private lemma relative_distance_upper_triangle
 -- imply
   ∀ i j, i < n → i ≤ j → j < n → j < i + u → V i j = V' i (j - i) := by
 -- proof
-  intro i j _hi hij hj _hu
+  intro i j _ hij hj _
   have hmin : min (n - 1) (i + (j - i)) = j := by omega
   rw [h₀, h₁, hmin]
-
 
 @[path]
 private lemma relative_distance_lower_triangle

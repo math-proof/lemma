@@ -1,6 +1,6 @@
 import Lemma.Rat.FloorDiv.eq.Zero.of.Lt
-import Lemma.Nat.Gt_0
-open Nat Rat Int
+import Theorem.Nat.Gt_0
+open Rat
 
 
 @[path]
@@ -13,8 +13,9 @@ private lemma main
 -- imply
   ⌊((j : ℕ) : α) / n⌋ = 0 := by
 -- proof
-  apply Rat.FloorDiv.eq.Zero.of.Lt
+  apply FloorDiv.eq.Zero.of.Lt
   simp
 
 
 -- created on 2025-07-06
+-- updated on 2026-11-21

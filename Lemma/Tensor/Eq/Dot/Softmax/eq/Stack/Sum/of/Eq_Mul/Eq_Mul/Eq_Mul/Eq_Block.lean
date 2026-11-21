@@ -1,6 +1,6 @@
 import Lemma.Tensor.Dot.eq.Add.of.Eq_Mul.Eq_Mul.Eq_Mul.Eq_Block
 import Lemma.Tensor.EqDot.of.Eq_Mul.Eq_Mul.Eq_Mul.Eq_Block
-open Matrix
+open Matrix Tensor
 
 
 /--
@@ -26,7 +26,7 @@ private lemma space
   (h₂ : ∀ k h, θz k h = lz * k / bz ^ ((h : ℝ) / mz))
   (h₃ : ∀ i j k, R i j k = Matrix.fromBlocks (Matrix.diagonal fun q => Real.cos (Fin.append (Fin.append (θr i) (θc j)) (θz k) q)) (-Matrix.diagonal fun q => Real.sin (Fin.append (Fin.append (θr i) (θc j)) (θz k) q)) (Matrix.diagonal fun q => Real.sin (Fin.append (Fin.append (θr i) (θc j)) (θz k) q)) (Matrix.diagonal fun q => Real.cos (Fin.append (Fin.append (θr i) (θc j)) (θz k) q))) :
 -- imply
-  let S (i t : Fin n) : ℝ := ((R (r i) (c i) (z i) *ᵥ Q i) ⬝ᵥ (R (r t) (c t) (z t) *ᵥ K t)) / Real.sqrt (2 * (mr + mc + mz))
+  let S (i t : Fin n) : ℝ := (R (r i) (c i) (z i) *ᵥ Q i) ⬝ᵥ (R (r t) (c t) (z t) *ᵥ K t) / Real.sqrt (2 * (mr + mc + mz))
   let θ (i t : Fin n) : Fin (mr + mc + mz) → ℝ := Fin.append (Fin.append (θr (r t - r i)) (θc (c t - c i))) (θz (z t - z i))
   (Matrix.of fun i t => Real.exp (S i t) / ∑ s, Real.exp (S i s)) * Matrix.of V =
     Matrix.of fun i j => (∑ t, V t j * Real.exp ((∑ a, ((K t (Sum.inl a) * Q i (Sum.inl a) + K t (Sum.inr a) * Q i (Sum.inr a)) * Real.cos (θ i t a) + (K t (Sum.inl a) * Q i (Sum.inr a) - K t (Sum.inr a) * Q i (Sum.inl a)) * Real.sin (θ i t a))) / Real.sqrt (2 * (mr + mc + mz)))) / ∑ s, Real.exp (S i s) := by

@@ -1,3 +1,4 @@
+import Notation.Algebra.Power
 import Mathlib.Algebra.Group.ForwardDiff
 import Mathlib.Data.Matrix.ColumnRowPartitioned
 import Mathlib.LinearAlgebra.Vandermonde
@@ -12,11 +13,11 @@ private lemma vandermonde_n3
   (_h : n > 0) :
 -- imply
   (Matrix.of (Matrix.vecCons (fun j : Fin (n + 3) => r ^ (j : ℕ)) (Matrix.vecCons (fun j : Fin (n + 3) => (j : ℝ) * r ^ (j : ℕ))
-      (Matrix.vecCons (fun j : Fin (n + 3) => (j : ℝ) ^ 2 * r ^ (j : ℕ))
+      (Matrix.vecCons (fun j : Fin (n + 3) => (j : ℝ)² * r ^ (j : ℕ))
       (fun (i : Fin n) (j : Fin (n + 3)) => (j : ℝ) ^ (i : ℕ)))))).det =
-    2 * r ^ 3 * (1 - r) ^ (3 * n) * ∏ i ∈ Finset.range n, (i ! : ℝ) := by
+    2 * r³ * (1 - r) ^ (3 * n) * ∏ i ∈ Finset.range n, (i ! : ℝ) :=
 -- proof
-  exact DetOfVecCons3_FunPow.eq.MulMulMul2Pow3PowSub1Prod
+  DetOfVecCons3_FunPow.eq.MulMulMul2Pow3PowSub1Prod
 
 
 -- created on 2026-09-27

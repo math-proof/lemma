@@ -28,7 +28,7 @@ private lemma Comm
 
 /-- `(a * B) * C = (a * C) * B` for scalar left factor. -/
 @[path]
-private lemma comm.left
+private lemma comm_left
   [CommSemigroup α]
 -- given
   (a B : α)
@@ -47,7 +47,7 @@ private lemma comm.left
 
 /-- `(A * B) * b = (A * b) * B` for scalar right factor. -/
 @[path]
-private lemma comm.right
+private lemma comm_right
   [CommSemigroup α]
 -- given
   (A : Tensor α s)
@@ -67,4 +67,4 @@ private lemma comm.right
 
 
 -- created on 2026-08-15
--- updated on 2026-11-20
+-- updated on 2026-11-21

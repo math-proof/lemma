@@ -18,7 +18,7 @@ private lemma position_representation_sinusoidal
     intro r
     rw [mul_comm, Complex.exp_mul_I, ← Complex.ofReal_cos, ← Complex.ofReal_sin]
   rw [h₂, h₀, h₁, key]
-  rcases Nat.mod_two_eq_zero_or_one j with hj | hj
+  obtain hj | hj := Nat.mod_two_eq_zero_or_one j
   ·
     have e : 2 * (j / 2) = j := by omega
     have r : Real.pi / 2 * (2 - ((j % 2 : ℕ) : ℝ)) - (i : ℝ) / (b : ℝ) ^ (((2 * (j / 2) : ℕ) : ℝ) / d) = Real.pi - (i : ℝ) / (b : ℝ) ^ ((j : ℝ) / d) := by

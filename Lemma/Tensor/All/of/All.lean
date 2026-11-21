@@ -16,7 +16,6 @@ private lemma limits_merge
   have hm := h (Fin.init z) (fun i _ => hz i.castSucc (Set.mem_univ _)) (z (Fin.last n)) (hz _ (Set.mem_univ _))
   rwa [Fin.snoc_init_self] at hm
 
-
 @[path]
 private lemma limits_split
   {n : ℕ}
@@ -34,7 +33,6 @@ private lemma limits_split
   · simpa using hy
   · simpa using hx j (Set.mem_univ _)
 
-
 @[path]
 private lemma limits_merge_given
   {n : ℕ}
@@ -51,7 +49,6 @@ private lemma limits_merge_given
   refine Fin.lastCases ?_ (fun j => ?_) i
   · simpa using hy
   · simpa using hx j (Set.mem_univ _)
-
 
 @[path]
 private lemma limits_split_given

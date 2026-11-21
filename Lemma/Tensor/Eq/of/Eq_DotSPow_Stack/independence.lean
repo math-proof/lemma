@@ -1,5 +1,5 @@
 import Lemma.Tensor.Eq.of.DotStack_Pow
-open Matrix
+open Matrix Tensor
 
 
 @[path]

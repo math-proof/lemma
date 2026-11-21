@@ -6,7 +6,7 @@ import Initialize.Tactic.Attr.Basic
 
 @[path]
 private lemma kmeans_w_quote
-  {M k d : ℕ} [NeZero k]
+  {M d : ℕ} [NeZero (k : ℕ)]
   {w w' : ℕ → Finset ℕ}
   {x : ℕ → EuclideanSpace ℝ (Fin d)}
   {i j : ℕ}

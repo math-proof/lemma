@@ -1,4 +1,4 @@
-import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
+import Theorem.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.List.EqGetSet.of.GtLength
 open List
 
@@ -18,3 +18,4 @@ private lemma main
 
 
 -- created on 2025-07-18
+-- updated on 2026-11-21

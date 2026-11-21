@@ -1,7 +1,6 @@
 import Theorem.Nat.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.List.TailSet_0.eq.Tail
-import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
-import Lemma.Nat.MulMul.eq.Mul_Mul
+import Theorem.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 open List Nat
 
 
@@ -18,7 +17,7 @@ private lemma main
 -- proof
   have h_add_mul := AddMul.lt.Mul.of.Lt.Lt h_j h_i
   have := AddMul.lt.Mul.of.Lt.Lt h_add_mul h_k
-  rw [MulMul.eq.Mul_Mul] at this
+  rw [mul_assoc] at this
   rw [TailSet_0.eq.Tail] at this
   convert this
   apply Prod.eq.Mul_ProdTail.of.GtLength_0 h_s

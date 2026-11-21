@@ -11,9 +11,9 @@ private lemma vandermonde_col_transformation
 -- imply
   (Matrix.of fun (i : Fin d) (j : Fin m) => x ^ (j : ℕ) * ((j : ℝ) + δ) ^ (i : ℕ)) *
     (Matrix.of fun (i : Fin m) (j : Fin (m - d)) =>
-      (-x) ^ ((d : ℤ) + (j : ℕ) - (i : ℕ)) * (if (j : ℕ) ≤ i then (d.choose ((i : ℕ) - j) : ℝ) else 0)) = 0 := by
+      (-x) ^ ((d : ℤ) + (j : ℕ) - (i : ℕ)) * (if (j : ℕ) ≤ i then (d.choose ((i : ℕ) - j) : ℝ) else 0)) = 0 :=
 -- proof
-  exact MulOfPowAddOfPowNegChoose.eq.Zero
+  MulOfPowAddOfPowNegChoose.eq.Zero
 
 
 -- created on 2026-09-27

@@ -16,8 +16,8 @@ private lemma main
   (A * B) ⬝ᵥ C = A ⬝ᵥ C * B :=
 -- proof
   DotMap.eq.MapDot.of.All_Eq_Map.All_EqMulMap.All_EqBFn0.All_EqSumMap.All_EqMapS (f := (· * · : α → α → α))
-    MulMul.comm SumMul.eq.MulSum (zero_mul ·) MulMul.comm.right MulMul.comm.left A B C
+    MulMul.comm SumMul.eq.MulSum (zero_mul ·) MulMul.comm_right MulMul.comm_left A B C
 
 
 -- created on 2026-08-15
--- updated on 2026-08-16
+-- updated on 2026-11-21

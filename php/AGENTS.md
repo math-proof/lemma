@@ -18,15 +18,13 @@ git -C /mnt/e/github/lean pull --ff-only
 If the GitHub fetch is slow or aborts (`fatal: early EOF`, `git-remote-https died of signal 15`), rsync instead:
 
 ```bash
-# whole repo incl. .git (mirror; incremental, only changed files are copied)
-rsync -avzP --no-group --no-times --delete --exclude=.lake --exclude=node_modules /home/cosmos/github/lean/ /mnt/e/github/lean/
+rsync -aP --delete --filter=':- .gitignore' ~/github/lean/ /mnt/e/github/lean/
 ```
 
 If the fast-forward is refused because the copy has unrelated local modifications, install only the router (same disk, no network):
 
 ```bash
-git -C /mnt/e/github/lean fetch /home/cosmos/github/lean main
-git -C /mnt/e/github/lean checkout FETCH_HEAD -- index.php
+git -C /mnt/e/github/lean fetch ~/github/lean main
 ```
 
 The copy needs no build step: `git pull` or `rsync` is enough. If the agent sandbox refuses writes under `/mnt/e`, run these lines in a normal shell.
@@ -34,6 +32,6 @@ The copy needs no build step: `git pull` or `rsync` is enough. If the agent sand
 Invariant — both commands must print nothing:
 
 ```bash
-diff <(git -C /home/cosmos/github/lean status --porcelain | sort) \
+diff <(git -C ~/github/lean status --porcelain | sort) \
      <(git -C /mnt/e/github/lean status --porcelain | sort)
 ```

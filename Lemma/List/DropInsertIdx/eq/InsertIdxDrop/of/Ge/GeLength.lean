@@ -1,4 +1,4 @@
-import Lemma.List.DropAppend.eq.AppendDrop.of.GeLength
+import Theorem.List.DropAppend.eq.AppendDrop.of.GeLength
 import Lemma.List.InsertIdx.eq.Append_InsertIdxDrop.of.Ge.GeLength
 open List
 
@@ -13,7 +13,7 @@ private lemma main
 -- imply
   (s.insertIdx i x).drop j = (s.drop j).insertIdx (i - j) x := by
 -- proof
-  rw [InsertIdx.eq.Append_InsertIdxDrop.of.Ge.GeLength (by omega) h_j]
+  rw [InsertIdx.eq.Append_InsertIdxDrop.of.Ge.GeLength h_i h_j]
   rw [DropAppend.eq.AppendDrop.of.GeLength]
   ·
     simp
@@ -23,3 +23,4 @@ private lemma main
 
 
 -- created on 2025-11-26
+-- updated on 2026-11-21

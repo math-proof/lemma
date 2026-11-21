@@ -15,7 +15,6 @@ private lemma simp
     intro i _ _
     simp [List.getElem_range', Nat.add_comm, Nat.mul_comm]
 
-
 @[path]
 private lemma retain_step
   {start step k : ℕ}

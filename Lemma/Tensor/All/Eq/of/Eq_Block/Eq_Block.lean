@@ -16,7 +16,6 @@ private lemma relative_distance_upper_triangle_upper_part
   intro i hi j hj
   rw [h₀, h₁, show min (j + i) (n - 1) = i + j by omega]
 
-
 @[path]
 private lemma relative_distance_upper_triangle_lower_part
   {n u k : ℕ}
@@ -33,7 +32,6 @@ private lemma relative_distance_upper_triangle_lower_part
   intro i hi j hj
   rw [h₀, h₁, show min (j + (i + n - u)) (n - 1) = i + n - u + j by omega]
 
-
 @[path]
 private lemma relative_distance_lower_triangle_lower_part
   {n u k : ℕ}
@@ -48,7 +46,6 @@ private lemma relative_distance_lower_triangle_lower_part
 -- proof
   intro i hi j hj
   rw [h₀, h₁, show min (j + (i + u + 1 - u)) (n - 1) = i + 1 + j by omega]
-
 
 @[path]
 private lemma relative_distance_lower_triangle_upper_part
@@ -66,7 +63,6 @@ private lemma relative_distance_lower_triangle_upper_part
   intro i hi j hj
   rw [h₀, h₁, show min (j + (i + 1 - u)) (n - 1) = j by omega]
 
-
 @[path]
 private lemma relative_distance_lower_triangle_lower_part_tf
   {n u k : ℕ}
@@ -83,7 +79,6 @@ private lemma relative_distance_lower_triangle_lower_part_tf
 -- proof
   intro i hi j hj
   rw [h₀, h₁, show min (j + (i + u - 1 + 1 - u)) (n - 1) = i + j by omega]
-
 
 @[path]
 private lemma relative_distance_lower_triangle_upper_part_tf

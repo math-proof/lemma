@@ -1,15 +1,5 @@
-import Initialize.Tactic.Attr.Basic
-
-
-@[path]
-private lemma main
-  [GroupWithZero α]
--- given
-  (a : α) :
--- imply
-  0 / a = 0 := by
--- proof
-  apply zero_div
+import Theorem.Rat.EqDiv0_0
 
 
 -- created on 2025-01-14
+-- updated on 2026-11-21

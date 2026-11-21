@@ -1,19 +1,5 @@
-import Lemma.Rat.EqMulDiv.of.Ne_0
-import Lemma.Nat.Mul
-open Nat Rat
-
-
-@[path]
-private lemma main
-  [CommGroupWithZero α]
--- given
-  (h : a ≠ 0)
-  (b : α) :
--- imply
-  a * (b / a) = b := by
--- proof
-  rw [Mul.comm]
-  apply EqMulDiv.of.Ne_0 h
+import Theorem.Rat.EqMul_Div.of.Ne_0
 
 
 -- created on 2025-04-02
+-- updated on 2026-11-21

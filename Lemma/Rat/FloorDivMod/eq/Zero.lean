@@ -1,5 +1,5 @@
 import Lemma.Rat.FloorDiv.eq.Zero.of.Lt
-import Lemma.Nat.LtCoeS.is.Lt
+import Theorem.Nat.LtCoeS.is.Lt
 import Lemma.Nat.LtMod.of.Ne_0
 open Nat Rat
 
@@ -23,3 +23,4 @@ private lemma main
 
 
 -- created on 2025-07-07
+-- updated on 2026-11-21

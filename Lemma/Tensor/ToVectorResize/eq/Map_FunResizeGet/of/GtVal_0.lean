@@ -1,12 +1,12 @@
 import Lemma.Nat.LtVal
-import Lemma.Nat.LtSubS.of.Lt.Le
+import Theorem.Nat.LtSubS.of.Lt.Le
 import Lemma.List.GetSet.eq.Get.of.Gt.GtLength
 import Lemma.Tensor.GetToVector.eq.Get.of.GtLength_0
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Tensor.GetResize.as.ResizeGet.of.GtGet_0.GtVal_0
 import Lemma.Bool.SEqCast.of.Eq
 import Lemma.Bool.SEqCast.of.Eq.Eq
-import Lemma.List.GetTail.eq.Get_Add_1.of.Lt_SubLength_1
+import Theorem.List.GetTail.eq.Get_Add_1.of.Lt_SubLength_1
 import Lemma.Vector.EqGetRange
 open Tensor List Vector Bool Nat
 
@@ -32,7 +32,7 @@ private lemma main
     apply LtSubS.of.Lt.Le (by linarith) (by simp)
   (X.resize d n).toVector = (List.Vector.range s₀).map fun i =>
     have hi := LtVal i
-    have h_len : i < (X.resize d n).length := by
+    have : i < (X.resize d n).length := by
       rw [LengthResize.eq.Length.of.GtVal_0 h X n, Length.eq.Get_0.of.GtLength_0 h_s]
       rwa [← h_head, ← h_s₀]
     have hi' : i < X.length := by
@@ -65,3 +65,4 @@ private lemma main
 
 
 -- created on 2026-07-30
+-- updated on 2026-11-21
