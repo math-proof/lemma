@@ -38,10 +38,14 @@ initialize registerBuiltinAttribute {
   descr := "An attribute that exports a private lemma under a file-path-based public name"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
+    let suffix := declName.suffix
+    let name := (← getEnv).module.lemmaName declName
+    if suffix.components.length > 1 then
+      throwErrorAt stx m!"invalid @[path] declaration '{declName}': the suffix '{suffix}' contains '.'; rename the declaration to 'main' (or a single identifier) so @[path] publishes '{name}'"
     let decl ← withoutExporting do getConstInfo declName
     let levelParams := decl.levelParams
     addDecl <| .defnDecl {
-      name := (← getEnv).module.lemmaName declName
+      name := name
       levelParams := levelParams
       type := decl.type
       value := .const declName (levelParams.map .param)

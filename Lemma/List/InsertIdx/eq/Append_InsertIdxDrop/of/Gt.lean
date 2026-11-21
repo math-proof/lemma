@@ -1,6 +1,6 @@
 import Lemma.List.EqAppendTake__Drop
 import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx.of.LeLength
-import Lemma.List.LengthTake.eq.Min_Length
+import Theorem.List.LengthTake.eq.Min_Length
 import Theorem.Nat.EqMin.of.Le
 import Lemma.List.EqInsertIdx.of.LtLength
 import Lemma.List.EqTake.of.LeLength

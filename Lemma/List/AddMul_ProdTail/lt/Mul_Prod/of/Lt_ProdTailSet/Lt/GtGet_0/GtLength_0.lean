@@ -1,4 +1,4 @@
-import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
+import Theorem.Nat.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.List.TailSet_0.eq.Tail
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.Nat.MulMul.eq.Mul_Mul
@@ -25,3 +25,4 @@ private lemma main
 
 
 -- created on 2025-07-18
+-- updated on 2026-11-21

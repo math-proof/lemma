@@ -1,8 +1,7 @@
-import Lemma.Tensor.LengthBmm.eq.Length
+import Lemma.Bool.SEq.is.Eq
+import Def.Data.Tensor.Bmm
 import Lemma.Bool.SEqUFnS.of.SEq
 import Lemma.List.Eq.of.Append.Length
-import Def.Data.Tensor.Defs.Part4
-import Def.Data.Tensor.Bmm
 open Bool List
 
 
@@ -37,3 +36,4 @@ private lemma main
 
 
 -- created on 2026-07-04
+-- updated on 2026-11-21

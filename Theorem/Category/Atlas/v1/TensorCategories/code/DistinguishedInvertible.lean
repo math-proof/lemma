@@ -66,3 +66,6 @@ public theorem rightDualTensorIso
     (λ_ ((Yᘁ : C) ⊗ (Xᘁ : C)))⟩
 
 end CategoryTheory.HasDistinguishedInvertible
+
+
+-- created on 2026-10-23

@@ -1,23 +1,19 @@
 module
-
 public import Initialize.Tactic.Attr.Basic
 public import Theorem.Data.Vector.Basic
 public import Instance.Data.Vector.Basic.Arithmetic
 
-public section
-
 
 @[path, comm, fin, fin.comm]
-public theorem Vector.GetInv.eq.InvGet
+private theorem main
   [Inv α]
+-- given
   (x : List.Vector α n)
   (i : Fin n) :
+-- imply
   x⁻¹[i] = x[i]⁻¹ := by
+-- proof
   simp [Inv.inv]
 
-public theorem Vector.GetInv.eq.InvGet.fin
-  [Inv α]
-  (x : List.Vector α n)
-  (i : Fin n) :
-  x⁻¹.get i = (x.get i)⁻¹ := by
-  simpa [GetElem.getElem] using Vector.GetInv.eq.InvGet x i
+
+-- created on 2025-09-23

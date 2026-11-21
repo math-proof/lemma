@@ -1,15 +1,18 @@
 module
-
 public import Initialize.Tactic.Attr.Basic
 public import Theorem.Data.Vector.Basic
 public import Instance.Data.Vector.Basic.Arithmetic
 
-public section
-
 
 @[path]
-public theorem Vector.Add.eq.Map₂
+private theorem main
   [Add α]
+-- given
   (a b : List.Vector α n) :
+-- imply
   a + b = a.map₂ HAdd.hAdd b :=
+-- proof
   rfl
+
+
+-- created on 2025-06-22
