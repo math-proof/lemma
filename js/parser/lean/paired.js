@@ -124,6 +124,9 @@ export class LeanPairedGroup extends Closable(LeanUnary) {
      * so tokens like `hsec_y` after `«\sf{y}»` are not swallowed.
      */
     append($new, _func) {
+        // A declaration keyword right after `@[…]` completes the attribute
+        // (`LeanAttribute.push_accessibility`); it is not another juxtaposed argument.
+        if (_func === 'delspec') return this.parent.append($new, _func);
         const {indent, level} = this;
         const caret = new L.LeanCaret(indent, level);
         if (typeof $new === 'string') {

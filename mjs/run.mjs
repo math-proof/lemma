@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Compile a Lemma/*.lean file (echo tactics → lake env lean → proof LaTeX)
- * and REPLACE the row in axiom.lemma.
+ * and REPLACE the row in axiom.lemma. Compile Theorem/ files directly.
  *
  *   node mjs/run.mjs Lemma/Real/GtSqrt_0/of/Gt_0.lean
  *   node mjs/run.mjs Real.GtSqrt_0.of.Gt_0
@@ -14,7 +14,8 @@ import { fileURLToPath } from 'url';
 import mysql from 'mysql2/promise';
 import '../js/py.js';
 import { echo2vueFromSource } from './lean/compiler/index.mjs';
-import { applyLintFixes } from './lean/lint/index.mjs';
+import { applyLintFixes, lintLeanFile } from './lean/lint/index.mjs';
+import { get_lake_path, get_lean_env, spawnLakeLean } from './lean/echo2vue.mjs';
 import {
   REPO_ROOT,
   leanPathToModule,
@@ -67,11 +68,21 @@ function resolveLeanFile(input) {
       : path.normalize(path.join(process.cwd(), raw));
     const fromRoot = path.normalize(path.join(REPO_ROOT, raw));
     const chosen = fileExists(abs) ? abs : fileExists(fromRoot) ? fromRoot : abs;
+    const rel = path.relative(REPO_ROOT, chosen);
+    if (rel.startsWith('Theorem' + path.sep) && chosen.endsWith('.lean')) {
+      return { abs: chosen, module: rel.slice(0, -5).split(path.sep).join('.'), theorem: true };
+    }
     const module = leanPathToModule(chosen, REPO_ROOT);
-    if (!module) throw new Error(`not under Lemma/: ${chosen}`);
+    if (!module) throw new Error(`not under Lemma/ or Theorem/: ${chosen}`);
     return { abs: chosen, module };
   }
 
+  if (raw.startsWith('Theorem.')) {
+    const parts = raw.split('.');
+    if (parts.some((part) => !part)) throw new Error(`bad module: ${raw}`);
+    const abs = path.join(REPO_ROOT, ...parts) + '.lean';
+    return { abs, module: raw, theorem: true };
+  }
   const abs = moduleToLeanPath(raw);
   if (!abs) throw new Error(`bad module: ${raw}`);
   return { abs, module: raw };
@@ -100,9 +111,18 @@ async function replaceLemmaRow(conn, module, code) {
 }
 
 export async function runLeanFile(leanInput) {
-  const { abs, module } = resolveLeanFile(leanInput);
+  const { abs, module, theorem } = resolveLeanFile(leanInput);
   if (!fileExists(abs)) throw new Error(`file not found: ${abs}`);
   const source = fs.readFileSync(abs, 'utf8');
+  if (theorem) {
+    const compilation = await spawnLakeLean(get_lake_path(), ['env', 'lean', abs], {
+      cwd: REPO_ROOT,
+      env: get_lean_env(REPO_ROOT),
+    });
+    if (compilation.error) throw compilation.error;
+    const warning = lintLeanFile(source, abs, { file: path.relative(REPO_ROOT, abs), root: REPO_ROOT });
+    return { module, abs, code: { warning }, compilation };
+  }
   const code = await echo2vueFromSource(source, { leanAbsPath: abs, module });
   const conn = await connectMysql();
   try {
@@ -155,7 +175,7 @@ async function main() {
     return;
   }
 
-  const { module, abs, code } = await runLeanFile(leanInput);
+  const { module, abs, code, compilation } = await runLeanFile(leanInput);
   console.log(abs);
 
   // lint warnings (`code.warning`: AGENTS.md style rules, mjs/lean/lint/): printed only — not Lean errors, not saved,
@@ -169,6 +189,14 @@ async function main() {
   }
   if (warnings.length) {
     console.warn(`${warnings.length} style warning(s): fix them and re-run \`node mjs/run.mjs ${leanInput}\` until none remain`);
+  }
+
+  if (compilation) {
+    if (compilation.stdout) process.stdout.write(compilation.stdout);
+    if (compilation.stderr) process.stderr.write(compilation.stderr);
+    if (compilation.status === 0) console.log(`OK: compiled ${module}`);
+    else process.exitCode = compilation.status || 1;
+    return;
   }
 
   // MySQL REPLACE is persistence, not success — Lean errors decide the exit status.

@@ -104,7 +104,9 @@ export class Lean extends IndentedNode {
     }
 
     append($new, type) {
-        if (this.parent) return this.parent.append(this, $new, type);
+        // Bubble the incoming argument unchanged (as the PHP reference does). Passing `this`
+        // here made `@[attr] theorem …` hand the whole attribute to the keyword handler.
+        if (this.parent) return this.parent.append($new, type);
     }
 
     /** `hstack` rows stacked with `++` → rectangular block cells. */

@@ -81,6 +81,44 @@ export function titleFromModule(module) {
   return module.replace(/\./g, '/');
 }
 
+/**
+ * Dotted module of any `.lean` file under the repo, not only `Lemma/`:
+ * `/repo/Theorem/Rat/DivMulS/eq/Div/of/Ne_0.lean` → `Theorem.Rat.DivMulS.eq.Div.of.Ne_0`.
+ * Returns `null` for paths outside the repo or not ending in `.lean`.
+ */
+export function leanFilePathToModule(absPath, repoRoot = REPO_ROOT) {
+  const abs = path.resolve(String(absPath));
+  const rel = path.relative(path.resolve(repoRoot), abs);
+  if (!rel || rel.startsWith('..') || path.isAbsolute(rel)) return null;
+  const parts = rel.split(/[/\\]/).filter(Boolean);
+  const last = parts[parts.length - 1];
+  if (!last || !last.endsWith('.lean')) return null;
+  parts[parts.length - 1] = last.slice(0, -'.lean'.length);
+  return parts.join('.');
+}
+
+/**
+ * Like `moduleToLeanPath`, but also resolves modules whose first segment is another
+ * top-level repo folder (`Theorem`, …): `Theorem.Rat…` → `<repo>/Theorem/Rat….lean`.
+ * The `Lemma/` mapping wins, so existing URLs are unchanged.
+ */
+export function moduleToRepoLeanPath(module) {
+  if (!module || typeof module !== 'string') return null;
+  const lemma = moduleToLeanPath(module);
+  if (lemma && fileExists(lemma)) return lemma;
+  let m = module.trim();
+  if (!m) return null;
+  if (m.endsWith('.lean')) m = m.slice(0, -4).replace(/\//g, '.');
+  if (m.includes('#')) return null;
+  const parts = m.split('.').filter(Boolean);
+  if (parts.length < 2 || parts.some((p) => p === '..' || p === '.')) return null;
+  if (!dirExists(path.join(REPO_ROOT, parts[0]))) return null;
+  const abs = path.join(REPO_ROOT, ...parts) + '.lean';
+  const rel = path.relative(path.resolve(REPO_ROOT), abs);
+  if (!rel || rel.startsWith('..') || path.isAbsolute(rel)) return null;
+  return fileExists(abs) ? abs : null;
+}
+
 export function readLeanFile(absPath) {
   return fs.readFileSync(absPath, 'utf8');
 }

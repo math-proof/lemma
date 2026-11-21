@@ -17,8 +17,32 @@ const L = Lean.classes;
 export class LeanCommand extends LeanUnary {
     static { this.register(); }
 
+    /**
+     * @param {string|Lean} arg command body, or the accessibility when built by
+     *   `push_accessibility` (`public import` → `('public', caret, indent, level)`).
+     */
+    constructor(arg, indent, level, parent = null) {
+        if (typeof arg === 'string') {
+            const accessibility = arg;
+            arg = indent;
+            indent = level;
+            level = arg instanceof L.Lean ? arg.level : 0;
+            super(arg, indent, level, parent);
+            this.kwargs.accessibility = accessibility;
+            return;
+        }
+        super(arg, indent, level, parent);
+        this.kwargs.accessibility = 'public';
+    }
+
+    get accessibility() {
+        return this.kwargs.accessibility ?? 'public';
+    }
+
     get command() {
-        return this.operator;
+        return this.accessibility === 'public'
+            ? this.operator
+            : `${this.accessibility} ${this.operator}`;
     }
 
     is_indented() {
@@ -34,11 +58,11 @@ export class LeanCommand extends LeanUnary {
     }
 
     strFormat() {
-        return `${this.operator} %s`;
+        return `${this.command} %s`;
     }
 }
 
-/** `import %s`. */
+/** `import %s` (`public import %s` when the accessibility is not `public`). */
 export class Lean_import extends LeanCommand {
     static { this.register(); }
 

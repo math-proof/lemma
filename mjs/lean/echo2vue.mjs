@@ -210,7 +210,7 @@ const SPAWN_MAX_BUFFER = 64 * 1024 * 1024;
  * @param {string} command
  * @param {string[]} args
  * @param {{ cwd: string; env: NodeJS.ProcessEnv; windowsHide?: boolean }}
- * @returns {Promise<{ stdout: string; stderr: string; error: Error | null }>}
+ * @returns {Promise<{ stdout: string; stderr: string; error: Error | null; status?: number | null }>}
  */
 export function spawnLakeLean(command, args, { cwd, env, windowsHide = true }) {
   return new Promise((resolve) => {
@@ -238,7 +238,7 @@ export function spawnLakeLean(command, args, { cwd, env, windowsHide = true }) {
       }
     }
 
-    /** @param {{ stdout: string; stderr: string; error: Error | null }} result */
+    /** @param {{ stdout: string; stderr: string; error: Error | null; status?: number | null }} result */
     function finish(result) {
       if (settled) return;
       settled = true;
@@ -259,8 +259,8 @@ export function spawnLakeLean(command, args, { cwd, env, windowsHide = true }) {
       console.warn('[echo2vue] spawn lean:', err.message);
       finish({ stdout, stderr, error: err });
     });
-    child.on('close', () => {
-      finish({ stdout, stderr, error: null });
+    child.on('close', (status) => {
+      finish({ stdout, stderr, error: null, status });
     });
   });
 }

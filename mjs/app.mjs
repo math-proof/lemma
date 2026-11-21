@@ -8,6 +8,8 @@ import fs from 'fs/promises';
 import {
   REPO_ROOT,
   moduleToLeanPath,
+  moduleToRepoLeanPath,
+  leanFilePathToModule,
   moduleToLemmaPackageDir,
   leanPathToModule,
   titleFromModule,
@@ -436,7 +438,7 @@ app.post('/:userSegment/php/request/echo.php', ensureProjectUser, async (req, re
       res.status(400).json({ error: 'missing module' });
       return;
     }
-    const abs = moduleToLeanPath(module);
+    const abs = moduleToRepoLeanPath(module);
     if (!abs || !fileExists(abs)) {
       res.status(404).json({ error: 'not found', module });
       return;
@@ -532,7 +534,7 @@ async function renderLemmaPage(res, module, userSegment) {
     return;
   }
 
-  const abs = moduleToLeanPath(module);
+  const abs = moduleToRepoLeanPath(module);
   const leanMissing = !abs || !fileExists(abs);
   if (leanMissing) {
     /** Same as PHP `index.php`: folder `Lemma/<module path>/` → `php/package.php` + `axiomContents`. */
@@ -580,10 +582,61 @@ async function renderLemmaPage(res, module, userSegment) {
     code.module = module;
   }
 
+  renderLemmaCode(res, code, module, userSegment);
+}
+
+function renderLemmaCode(res, code, module, userSegment) {
   const title = titleFromModule(module);
   const codeJson = jsonForScriptEmbed(normalizeCodeMeta(code));
   res.set('Content-Type', 'text/html; charset=utf-8');
   res.render('lemma', { title, codeJson, userSegment });
+}
+
+/**
+ * `?theorem=<abs path>`: render any `.lean` file under the repo (e.g. `Theorem/…`) from its
+ * filesystem path. Symlinks are resolved and the real path must stay inside the repo.
+ */
+async function resolveTheoremPath(input) {
+  const raw = String(input ?? '').trim();
+  if (!raw || !raw.endsWith('.lean')) return null;
+  const candidate = path.isAbsolute(raw) ? raw : path.join(REPO_ROOT, raw);
+  let abs;
+  let root;
+  try {
+    [abs, root] = await Promise.all([fs.realpath(candidate), fs.realpath(REPO_ROOT)]);
+  } catch {
+    return null;
+  }
+  if (!abs.endsWith('.lean')) return null;
+  const rel = path.relative(root, abs);
+  if (!rel || rel.startsWith('..') || path.isAbsolute(rel)) return null;
+  return abs;
+}
+
+async function renderTheoremPage(res, abs, userSegment) {
+  const module = leanFilePathToModule(abs);
+  if (!module) {
+    res.status(404).type('html').send(
+      `<!DOCTYPE html><meta charset="utf-8"><title>Not found</title>
+      <p>Cannot derive a module name for <code>${escapeHtml(abs)}</code></p>`
+    );
+    return;
+  }
+  const echoAbs = leanEchoPath(abs);
+  let code = null;
+  if (shouldLoadLemmaFromMysql(abs, echoAbs)) {
+    try {
+      const row = await fetchLemmaRowFromMysql(PROJECT_USER, module);
+      if (row) code = codeFromMysqlRow(row, module, PROJECT_USER);
+    } catch (e) {
+      console.warn('[lean mysql]', e.message);
+    }
+  }
+  if (!code) {
+    code = render2vueFromSource(readLeanFile(abs), { user: PROJECT_USER });
+    code.module = module;
+  }
+  renderLemmaCode(res, code, module, userSegment);
 }
 
 function escapeHtml(s) {
@@ -835,6 +888,30 @@ async function renderNewTheoremPage(res, module, userSegment) {
 
 async function handleLeanGet(req, res) {
   const userSeg = req.params.userSegment || PROJECT_USER;
+
+  /** `?theorem=/abs/path/to/Ne_0.lean` — render any repo `.lean` file, not only `Lemma/`. */
+  if (req.query.theorem != null && String(req.query.theorem).trim() !== '') {
+    try {
+      const abs = await resolveTheoremPath(req.query.theorem);
+      if (!abs) {
+        res.status(404).type('html').send(
+          `<!DOCTYPE html><meta charset="utf-8"><title>Not found</title>
+          <p>Not a readable <code>.lean</code> file inside the repository:
+          <code>${escapeHtml(String(req.query.theorem))}</code></p>`
+        );
+        return;
+      }
+      await renderTheoremPage(res, abs, userSeg);
+    } catch (err) {
+      console.error('[theorem]', err);
+      res.status(500).type('html').send(
+        `<!DOCTYPE html><meta charset="utf-8"><title>Server error</title>
+        <p>${escapeHtml(String(err?.message || err))}</p>`
+      );
+    }
+    return;
+  }
+
   const raw = req.query.module;
   if (leanGetWantsSearch(req.query, raw)) {
     await renderSearchPage(res, req.query, userSeg);
