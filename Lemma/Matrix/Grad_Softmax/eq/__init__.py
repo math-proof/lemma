@@ -1,1 +1,1 @@
-from . import SMulSoftmax_SubGrad
+from . import SMulSoftmax_Sub_Mul
