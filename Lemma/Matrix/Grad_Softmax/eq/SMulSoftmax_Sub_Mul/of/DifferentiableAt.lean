@@ -1,5 +1,6 @@
 import Def.Data.Vector.Functions
 import Instance.Analysis.InnerProductSpace.EuclideanVec
+import Instance.Data.Pi.Sub
 import Instance.LinearAlgebra.Matrix.EuclideanVec
 import Lemma.Real.Grad.eq.Stack
 import Lemma.Real.Grad.Softmax.eq.Mul.Softmax
@@ -26,7 +27,7 @@ private lemma main
 -- imply
   ∇[x] (F x).softmax =
     (F x).softmax •
-      ((∇[x] F x) - (F x).softmax ᵥ* (∇[x] F x : Matrix (Fin n) (Fin n) ℝ)) := by
+      (∇[x] F x - (F x).softmax ᵥ* (∇[x] F x : Matrix (Fin n) (Fin n) ℝ)) := by
 -- proof
   have hM : (∇[x] F x : Matrix (Fin n) (Fin n) ℝ) =
     Matrix.of (fun i : Fin n => WithLp.ofLp (∇[x] F x i)) := rfl
@@ -36,9 +37,9 @@ private lemma main
   ext k
   have hR :
     ((F x).softmax •
-        ((∇[x] F x) - (F x).softmax ᵥ* Matrix.of (fun i : Fin n => WithLp.ofLp (∇[x] F x i)))) j =
+        (∇[x] F x - (F x).softmax ᵥ* Matrix.of (fun i : Fin n => WithLp.ofLp (∇[x] F x i)))) j =
       (F x).softmax j •
-        ((∇[x] F x j) -
+        (∇[x] F x j -
           WithLp.toLp 2 ((F x).softmax ᵥ* Matrix.of (fun i : Fin n => WithLp.ofLp (∇[x] F x i)))) :=
     rfl
   rw [hR]
@@ -63,29 +64,6 @@ private lemma main
     (_ - (∑ i : Fin n, (F x i).exp * fderiv ℝ (fun y => F y i) x (EuclideanSpace.single k 1)) / S x) / S x
   field_simp [hS.ne']
   ring
-
-/--
-The gradient of softmax with respect to a scalar input. The gradient of
-output component `j` is its softmax weight times the difference between the
-derivative of logit `j` and the softmax-weighted sum of the logit derivatives.
--/
-@[path]
-private lemma scalar
-  {n : ℕ}
-  {F : ℝ → (Fin n → ℝ)}
-  {x : ℝ}
--- given
-  (h₀ : DifferentiableAt ℝ F x) :
--- imply
-  (fun j => ∂[x] (F x).softmax j) =
-    (F x).softmax • ((fun i => ∂[x] F x i) - (∑ i : Fin n, (F x).softmax i * ∂[x] F x i) • 1) := by
--- proof
-  have h := differentiableAt_pi.mp h₀
-  have hexp (z : ℝ) : Exp.exp z = z.exp := rfl
-  funext j
-  simp only [hexp, Function.softmax, Pi.mul_apply, Pi.sub_apply, Pi.smul_apply,
-    Pi.one_apply, smul_eq_mul, mul_one]
-  exact stack (F := fun i y => F y i) h j
 
 
 -- created on 2023-03-18

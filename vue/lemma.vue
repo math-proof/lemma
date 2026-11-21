@@ -25,7 +25,7 @@
             <option v-for="value of accessibilities" :value=value>{{value}}</option>
         </select>
 
-        <span v-clipboard class=blue :data-clipboard-text=leanSourceCode>lemma</span> <input class=orange :name="`lemma[${index}][name]`" :value=name :size="name.length + 1" @keydown=keydown_input :title=leanSourceCode />
+        <span v-clipboard class=blue :data-clipboard-text=leanSourceCode>{{ theorem ? 'theorem' : 'lemma' }}</span> <input class=orange :name="`lemma[${index}][name]`" :value=name :size="name.length + 1" @keydown=keydown_input :title=leanSourceCode />
         {{ instImplicit || strictImplicit || implicit || given || explicit? '': ':'}}
         <renderLean v-if=instImplicit :text="given || explicit || strictImplicit || implicit? instImplicit: instImplicit + ' :'" :index="[index, 'instImplicit']"></renderLean>
         <renderLean v-if=strictImplicit :text="given || explicit || implicit? strictImplicit: strictImplicit + ' :'" :index="[index, 'strictImplicit']"></renderLean>
@@ -115,6 +115,10 @@ const self = new Vue({
 
     module() {
       return this.$parent.module;
+    },
+
+    theorem() {
+      return Boolean(getParameterByName('theorem'));
     },
 
     sections() {
@@ -735,6 +739,7 @@ const {
   comment_rows,
   comment_cols,
   module,
+  theorem,
   refresh,
   class_imply,
   class_comment,

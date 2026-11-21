@@ -19,6 +19,9 @@ import { Lean } from './base.js';
 
 const L = Lean.classes;
 
+/** A single letter (ASCII or Greek) is a variable, never a global function head. */
+const isVariableHead = (text) => [...text].length === 1 && /\p{L}/u.test(text);
+
 export class LeanArgsSpaceSeparated extends LeanArgs {
     static { this.register(); }
 
@@ -35,8 +38,9 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
 
     /**
      * `obj.attribute a b` → `{Attribute: [obj?, a, b]}` (a capitalised object is a
-     * namespace and is dropped); `F a b` → `{F: [a, b]}` for a capitalised token
-     * head. Lowercase heads (`f x`) and all other heads are anonymous: `"_"`.
+     * namespace and is dropped); `Finset.range n` → `{Range: [n]}` for a capitalised
+     * token head. Lowercase heads (`f x`), single-letter heads (`F x`, `Δ x`) — they
+     * are variables, not global functions — and all other heads are anonymous: `"_"`.
      */
     toJSON() {
         const head = this.args[0];
@@ -50,7 +54,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         }
         if (head instanceof L.LeanToken) {
             const raw = head.text || "";
-            if (raw && !/^[\p{Ll}_]/u.test(raw))
+            if (raw && !/^[\p{Ll}_]/u.test(raw) && !isVariableHead(raw))
                 return { [raw.charAt(0).toUpperCase() + raw.slice(1)]: rest() };
         }
         return "_";

@@ -39,7 +39,8 @@ export class Lean_def extends LeanArgs {
         if (level === null || level === undefined) {
             indent = name;
             name = accessibility;
-            accessibility = 'public';
+            // No modifier: `accessibility` resolves from the file context (see the getter).
+            accessibility = null;
             level = name instanceof L.Lean ? name.level : 0;
         }
         super([name], indent, level, parent);
@@ -47,8 +48,16 @@ export class Lean_def extends LeanArgs {
         this.kwargs.accessibility = accessibility;
     }
 
+    /**
+     * Explicit modifier when written (`private lemma`, `public theorem`), otherwise the
+     * file default: declarations in a Lean 4.9 `module` file are module-private unless
+     * marked `public`; plain files default to `public`.
+     */
     get accessibility() {
-        return this.kwargs.accessibility;
+        const accessibility = this.kwargs.accessibility;
+        if (accessibility != null) return accessibility;
+        const { root } = this;
+        return root instanceof L.LeanModule && root.is_module_file ? 'private' : 'public';
     }
 
     set accessibility(v) {
@@ -155,7 +164,43 @@ export class Lean_def extends LeanArgs {
     }
 }
 
-export class Lean_theorem extends Lean_def {
+export class Lean_lemma extends Lean_def {
+    static { this.register(); }
+
+    echo() {
+        this.assignment.echo();
+        const asn = this.assignment;
+        if (asn instanceof L.LeanAssign && asn.rhs instanceof L.LeanBy) {
+            const statement = asn.rhs.arg;
+            if (statement instanceof L.LeanStatements) {
+                const stmts = statement.args;
+                for (let i = stmts.length - 1; i >= 0; i--) {
+                    const stmt = stmts[i];
+                    if (stmt.is_comment()) continue;
+                    if (stmt instanceof L.LeanTactic || stmt instanceof Lean_let) {
+                        const token = stmt.get_echo_token();
+                        // try echo ⊢
+                        if (token) {
+                            const {indent, level} = statement;
+                            statement.push(
+                                new L.LeanTactic(
+                                    'try',
+                                    new L.LeanTactic('echo', token, indent, level),
+                                    indent,
+                                    level,
+                                ),
+                            );
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/** A `theorem` is rendered (and echoed) exactly like a `lemma`. */
+export class Lean_theorem extends Lean_lemma {
     static { this.register(); }
 }
 
@@ -209,41 +254,6 @@ export class Lean_macro extends Lean_def {
 
 export class Lean_syntax extends Lean_def {
     static { this.register(); }
-}
-
-export class Lean_lemma extends Lean_def {
-    static { this.register(); }
-
-    echo() {
-        this.assignment.echo();
-        const asn = this.assignment;
-        if (asn instanceof L.LeanAssign && asn.rhs instanceof L.LeanBy) {
-            const statement = asn.rhs.arg;
-            if (statement instanceof L.LeanStatements) {
-                const stmts = statement.args;
-                for (let i = stmts.length - 1; i >= 0; i--) {
-                    const stmt = stmts[i];
-                    if (stmt.is_comment()) continue;
-                    if (stmt instanceof L.LeanTactic || stmt instanceof Lean_let) {
-                        const token = stmt.get_echo_token();
-                        // try echo ⊢
-                        if (token) {
-                            const {indent, level} = statement;
-                            statement.push(
-                                new L.LeanTactic(
-                                    'try',
-                                    new L.LeanTactic('echo', token, indent, level),
-                                    indent,
-                                    level,
-                                ),
-                            );
-                        }
-                        break;
-                    }
-                }
-            }
-        }
-    }
 }
 
 // binding tactic

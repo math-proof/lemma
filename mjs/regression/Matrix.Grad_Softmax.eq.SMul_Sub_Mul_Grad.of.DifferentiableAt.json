@@ -1,0 +1,58 @@
+{
+  "lean": "(F x).softmax • ((∇[x] F x) - (F x).softmax ᵥ* (∇[x] F x : Matrix (Fin n) (Fin n) ℝ))",
+  "regex": [
+    "SMul(Softmax_)(Sub(Grad__)(Mul(Softmax_)(Grad__)))"
+  ],
+  "suggestion": [
+    "SMulSoftmax_SubGrad__Mul"
+  ],
+  "dag": [
+    [
+      {"token":"SMul"},
+      {"token":"Softmax"},
+      {"token":"_"},
+      {"group":[1,2]},
+      {"token":"Sub"},
+      {"token":"Grad"},
+      {"group":[5,2,2]},
+      {"token":"Mul"},
+      {"group":[7,3,6]},
+      {"group":[4,6,8]},
+      {"sequence":[0,3,9]}
+    ]
+  ],
+  "json": {
+    "SMul": [
+      {
+        "Softmax": [
+          "_"
+        ]
+      },
+      {
+        "Sub": [
+          {
+            "Grad": [
+              "_",
+              "_"
+            ]
+          },
+          {
+            "Mul": [
+              {
+                "Softmax": [
+                  "_"
+                ]
+              },
+              {
+                "Grad": [
+                  "_",
+                  "_"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

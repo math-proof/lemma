@@ -9,7 +9,7 @@ import { exec, spawn } from 'child_process';
 import { promisify } from 'util';
 import { REPO_ROOT } from './modulePath.mjs';
 import { leanEchoPath } from './fetchLemmaMysql.mjs';
-import { LeanModule, LeanTactic } from '../../js/parser/lean.js';
+import { LeanModule, LeanTactic, LeanToken } from '../../js/parser/lean.js';
 import { completeAxiomMessage, extractBareAxiomReports, splitAxiomReports } from './lint/axiomRules.mjs';
 
 const execAsync = promisify(exec);
@@ -282,6 +282,17 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
   tree.relocate_last_comment();
   tree.echo();
 
+  // Lean 4.9 `module` files may only import `module` files, and `Syntax.Tactic.Echo` is not one.
+  // Echo the same declarations as a plain file: drop the header and the `public` modifiers.
+  const [header] = tree.args;
+  if (header instanceof LeanToken && header.text === 'module') {
+    tree.kwargs.moduleFile = true;
+    tree.args.shift();
+    for (const stmt of tree.args) {
+      if (isLeanImport(stmt)) stmt.kwargs.accessibility = undefined;
+    }
+  }
+
   if (!fs.existsSync(leanEchoFile)) {
     fs.mkdirSync(path.dirname(leanEchoFile), { recursive: true });
     fs.writeFileSync(leanEchoFile, '', 'utf8');
@@ -479,7 +490,13 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
     error.splice(i, 1);
   }
 
-  tree.args.shift();
+  // Drop the synthetic `import Syntax.Tactic.Echo` from the rendered payload: index 0 for a plain
+  // file, right after the `module` header in a Lean 4.9 module file.
+  const echoImportIdx = tree.args.findIndex(
+    (a) => isLeanImport(a) && importPackageString(a) === 'Syntax.Tactic.Echo',
+  );
+  if (echoImportIdx >= 0) tree.args.splice(echoImportIdx, 1);
+  else tree.args.shift();
   tree.restoreMaxHeartbeats();
 
   const modify = { value: false };

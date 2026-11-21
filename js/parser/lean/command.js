@@ -32,7 +32,8 @@ export class LeanCommand extends LeanUnary {
             return;
         }
         super(arg, indent, level, parent);
-        this.kwargs.accessibility = 'public';
+        // A command keyword (plain `import`, `open`, …) has no explicit accessibility modifier;
+        // `accessibility` still reads `public` as the semantic default.
     }
 
     get accessibility() {
@@ -40,9 +41,8 @@ export class LeanCommand extends LeanUnary {
     }
 
     get command() {
-        return this.accessibility === 'public'
-            ? this.operator
-            : `${this.accessibility} ${this.operator}`;
+        const accessibility = this.kwargs.accessibility;
+        return accessibility == null ? this.operator : `${accessibility} ${this.operator}`;
     }
 
     is_indented() {

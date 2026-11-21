@@ -11,9 +11,16 @@ import Lemma.Vector.ArraySlice.as.GetCast_SplitAt_1.of.GtGet_0.GtLength_0.Eq_Pro
 import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.EqGetMapRange
 import Lemma.Vector.GetCast.eq.Get.of.Eq
+import Lemma.Vector.GetArraySlice.eq.Get_Add.of.Lt_Min_Sub
 open Bool Nat Vector Tensor
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.EqGetUnsqueeze_0 |
+| fin | Tensor.EqGetUnsqueeze_0.fin |
+-/
 @[path, fin]
 private lemma main
 -- given
@@ -50,7 +57,6 @@ private lemma main
   apply EqCast.of.Eq
   repeat simp
 
-
 @[path, fin]
 private lemma nat
 -- given
@@ -67,5 +73,6 @@ private lemma nat
   have := main X
   aesop
 
+
 -- created on 2025-07-11
--- updated on 2026-10-26
+-- updated on 2026-11-21

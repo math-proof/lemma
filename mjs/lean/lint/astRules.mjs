@@ -783,23 +783,48 @@ function rightSpineEndsWithFun(node) {
     return false;
 }
 
+/**
+ * Structural equality of two parse trees, ignoring `LeanParenthesis` wrappers (parentheses never
+ * change the shape of the parse; they only record that the source had them).
+ */
+function sameShape(a, b) {
+    const { LeanParenthesis, LeanToken } = Lean.classes;
+    let x = a;
+    let y = b;
+    while (x instanceof LeanParenthesis) x = x.arg;
+    while (y instanceof LeanParenthesis) y = y.arg;
+    if (x === y) return true;
+    if (!x || !y || typeof x !== 'object' || typeof y !== 'object') return false;
+    if (x.constructor?.name !== y.constructor?.name) return false;
+    if (x instanceof LeanToken) return x.text === y.text;
+    // scalar flags that change the printed operator (`ᵥ*`, `×ₖ`, `⊗ₘ`, …)
+    for (const k of ['subscript', 'superscript', 'modifier', 'isLeftSubscript'])
+        if ((x[k] ?? null) !== (y[k] ?? null)) return false;
+    const ax = Array.isArray(x.args) ? x.args : [];
+    const ay = Array.isArray(y.args) ? y.args : [];
+    if (ax.length !== ay.length) return false;
+    for (let i = 0; i < ax.length; i++) if (!sameShape(ax[i], ay[i])) return false;
+    return true;
+}
+
 function parenRedundantArith(ctx, node) {
-    const {
-        LeanParenthesis, LeanArithmetic, LeanMul, LeanDiv, LeanPow, LeanColon,
-        Lean_partial, LeanArgsSpaceSeparated,
-    } = Lean.classes;
+    const { LeanParenthesis, LeanArithmetic, LeanBigOperator, LeanDiv, LeanColon } = Lean.classes;
     if (!(node instanceof LeanParenthesis)) return;
     if (typeof node.latexParenRequired === 'function' && node.latexParenRequired()) return;
     const arg = node.arg;
     // `(μ : ℝ*)` ascriptions stay
     if (arg instanceof LeanColon) return;
+    // `if` / `fun` / `let` / `match` / `by` / tuples: the extent of these forms is not captured by
+    // the parser's arithmetic insert below, so keep the parens (also covers `(fun y => f y) - g`).
+    const head = unwrapParens(arg);
+    if (head && ASCRIPTION_KEEP_PARENS.has(head.constructor?.name || '')) return;
     const parent = node.parent;
     if (!(parent instanceof LeanArithmetic)) return;
-    // `⬝ᵥ` is this repo's `Dot.dot` (`pathDotV` / `infixl:72 (priority := 2000)`), not `*`/`+`.
-    // Parens around a `⬝ᵥ` term, or around a `^` term that is its left operand, change the Lean parse:
-    // a trailing `fun` swallows following `=`, `|`, `:=`, and `γ ^ range (k + 1) ⬝ᵥ v`
-    // takes `range (k + 1)` as the `Dot.dot` argument.
-    if (isDotV(parent) || isDotV(arg)) return;
+    // `⬝ᵥ` is this repo's `Dot.dot` (`pathDotV` / `infixl:72`), not `*`/`+`. Parens around a
+    // `⬝ᵥ` parent stay: a trailing `fun` in its RHS swallows following `=`, `|`, `:=`, and
+    // `γ ^ range (k + 1) ⬝ᵥ v` takes `range (k + 1)` as the `Dot.dot` argument.
+    // (A `⬝ᵥ` *operand* is handled by the `stack_priority` guard below plus the re-parse.)
+    if (isDotV(parent)) return;
     if (rightSpineEndsWithFun(arg)) return;
     // Big-operator binder commas (`∑ x ∈ s, …`, `∑'`, `∏`) swallow following `+` / `-`.
     // The AST reprint often parenthesizes each sum (`((∑ …) - (∑ …))`) even when the source
@@ -816,29 +841,36 @@ function parenRedundantArith(ctx, node) {
     // (Random / importance_sampling), even though `•` is priority 73 and `/` is 70.
     if (parent instanceof LeanDiv && onLhs && isSMul(arg)) return;
 
-    const parentPri = parent.input_priority ?? parent.constructor.input_priority ?? 0;
-    let ok = false;
-    if (arg instanceof LeanArithmetic) {
-        const childPri = arg.input_priority ?? arg.constructor.input_priority ?? 0;
-        if (childPri > parentPri) ok = true;
-        else if (childPri === parentPri) {
-            const rightAssoc = arg instanceof LeanPow || parent instanceof LeanPow;
-            ok = rightAssoc ? onRhs : onLhs;
-        }
-    } else if (arg instanceof Lean_partial) {
-        // only RHS of * / — LHS absorbs `*`/`/` into the partial body
-        ok = onRhs && (parent instanceof LeanMul || parent instanceof LeanDiv);
-    } else if (arg instanceof LeanArgsSpaceSeparated) {
-        // juxtaposition app binds tighter than * /; both sides OK
-        ok = parent instanceof LeanMul || parent instanceof LeanDiv;
+    // `∇[x] …` / `∂[t] …` / `∫ …` / `𝔼 …` term macros parse their body at a fixed precedence
+    // (`term:67`), and `⬝ᵥ` is `infixl:72`: a following operator that binds tighter is swallowed
+    // into them. This parser models that extent as `stack_priority`; keep the parens when the
+    // operator (or, on the RHS, an ancestor that takes the parent as its LHS) outranks it.
+    if (isDotV(head) || (LeanBigOperator && head instanceof LeanBigOperator)) {
+        const sNode = head.stack_priority ?? head.constructor.input_priority ?? 100;
+        const pOp = parent.constructor.input_priority ?? 0;
+        if (pOp > sNode) return;
+        const up = parent.parent;
+        if (onRhs && up instanceof LeanArithmetic && up.lhs === parent && (up.constructor.input_priority ?? 0) > sNode) return;
     }
-    if (!ok) return;
 
-    const text = String(arg).replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');
+    // Re-parse the parent with and without this paren pair: redundant iff the trees coincide.
+    // This covers repo term macros (`∇[x] …`, `∂[x] …`, `∑ …`), applications, and nested binary
+    // chains without a precedence table, and stays conservative for lambdas / `if` / `let` / `match`.
+    const op = parent.operator;
+    if (typeof op !== 'string' || !op) return;
+    const inner = String(arg).replace(/^\s+|\s+$/g, '');
+    const lhsWith = onLhs ? `(${inner})` : String(parent.lhs);
+    const rhsWith = onRhs ? `(${inner})` : String(parent.rhs);
+    const parsedWith = parseTermNode(`${lhsWith} ${op} ${rhsWith}`);
+    const parsedWithout = parseTermNode(`${onLhs ? inner : lhsWith} ${op} ${onRhs ? inner : rhsWith}`);
+    if (!parsedWith || !parsedWithout) return;
+    if (!sameShape(parsedWith, parsedWithout)) return;
+
+    const text = inner.replace(/\s+/g, ' ');
     const show = (s) => (s.length > 60 ? `${s.slice(0, 57)}…` : s);
     ctx.warnAst('paren-redundant-arith', node,
         `\`(${show(text)})\` → \`${show(text)}\`: parentheses are redundant here`,
-        1);
+        1, null, null, { fix: { text: String(node), mode: 'outer' } });
 }
 
 /**

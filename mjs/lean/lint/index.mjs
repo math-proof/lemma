@@ -471,8 +471,14 @@ function matchParen(s, open) {
 /**
  * `((e) : T)` → `(e : T)`: drop the inner paren pair of an ascription, repeatedly for
  * `(((e)) : T)`. Returns null when the text is not of that shape.
+ * With `mode: 'outer'`, the span is itself one parenthesized operand (`(e)` / `((e))`) and the
+ * outermost pair is dropped instead.
  */
-function dropInnerParens(span) {
+function dropInnerParens(span, mode = 'inner') {
+    if (mode === 'outer') {
+        if (!span.startsWith('(') || matchParen(span, 0) !== span.length - 1) return null;
+        return span.slice(1, -1);
+    }
     let out = span;
     while (out.startsWith('((')) {
         const close = matchParen(out, 1);
@@ -485,7 +491,7 @@ function dropInnerParens(span) {
 }
 
 /** Apply one `fix` to its source line: locate `fixText` by whitespace-free match, then drop the parens. */
-function fixLine(raw, fixText) {
+function fixLine(raw, fixText, mode = 'inner') {
     const want = squash(fixText);
     if (!want) return null;
     let col = '';
@@ -496,10 +502,27 @@ function fixLine(raw, fixText) {
         at.push(i);
     }
     const idx = col.indexOf(want);
-    if (idx < 0) return null;
-    const start = at[idx];
-    const end = at[idx + want.length - 1] + 1;
-    const fixed = dropInnerParens(raw.slice(start, end));
+    let start;
+    let end;
+    if (idx >= 0) {
+        start = at[idx];
+        end = at[idx + want.length - 1] + 1;
+    } else if (mode === 'outer') {
+        // The reprint may add parens the source does not have (`⬝ᵥ (∂[x] F x)`), so the full
+        // text does not match; locate the operand by a shorter prefix and take its balanced pair.
+        for (const n of [40, 24, 12]) {
+            if (n >= want.length) continue;
+            const k = col.indexOf(want.slice(0, n));
+            if (k < 0 || raw[at[k]] !== '(') continue;
+            const close = matchParen(raw, at[k]);
+            if (close < 0) continue;
+            start = at[k];
+            end = close + 1;
+            break;
+        }
+        if (start == null) return null;
+    } else return null;
+    const fixed = dropInnerParens(raw.slice(start, end), mode);
     if (fixed == null) return null;
     return raw.slice(0, start) + fixed + raw.slice(end);
 }
@@ -513,12 +536,12 @@ export function applyLintFixes(source, opts = {}) {
     let text = String(source ?? '');
     const applied = [];
     for (let round = 0; round < 5; round++) {
-        const warnings = lintLean(text, { ...opts, rules: opts.rules ?? ['paren-redundant-ascription'] });
+        const warnings = lintLean(text, { ...opts, rules: opts.rules ?? ['paren-redundant-ascription', 'paren-redundant-arith'] });
         const lines = text.split('\n');
         let changed = 0;
         for (const w of warnings) {
             if (!w.fix?.text || w.line == null) continue;
-            const fixed = fixLine(lines[w.line - 1] ?? '', w.fix.text);
+            const fixed = fixLine(lines[w.line - 1] ?? '', w.fix.text, w.fix.mode);
             if (fixed == null || fixed === lines[w.line - 1]) continue;
             lines[w.line - 1] = fixed;
             applied.push({ rule: w.rule, line: w.line });

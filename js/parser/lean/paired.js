@@ -684,6 +684,9 @@ export class LeanParenthesis extends LeanPairedGroup {
                 arg instanceof L.LeanGetElemQuote
             );
         }
+        // `e[i]'(p)`: only the index is folded into the subscript; the proof term keeps
+        // its parentheses, otherwise `'by …` no longer reads as `'(by …)`.
+        if (p instanceof L.LeanGetElemQuote && p.args[2] === this) return false;
         return true;
     }
 

@@ -13,6 +13,29 @@ Check a proposed dotted path or filename with
 prints a Markdown match table with `token`, `regex`, and `consistent` columns for each prefix path token
 and exits with status 1 on a mismatch.
 
+To evaluate a *proposed* path against the statement's semantic units, use
+`node mjs/lemmaPath.mjs --table --path=<dotted-path> <path-to.lean>`. It prints
+one row per top-level unit — the conclusion LHS, the conclusion RHS, and every
+given — with `token`, `regex`, `correct`, and `lean` columns:
+
+    node mjs/lemmaPath.mjs --table \
+        --path=Real.Deriv_Softmax.eq.SMulSoftmax_Sub_Dot.of.DifferentiableAt \
+        Lemma/Real/Deriv_Softmax/eq/SMulSoftmax_Sub_Dot/of/DifferentiableAt.lean
+
+The first segment is the root/namespace and `eq` / `of` are connective markers:
+none of them is a row. A unit is `√` only when its segment matches one of the
+regexes the Lean expression yields as a whole; the `correct` column is `√` / `×`
+only, and the `--json` rows carry `mode` (`whole` / `no` / `missing` / `surplus`)
+with `detail` on the missing/surplus rows. The `regex` cell is the single regex of
+that row's Lean expression (e.g.
+`SMul(Softmax_)(Sub(Deriv__)(Dot(Softmax_)(Deriv__)))`). A unit missing from the
+proposal prints a `(missing)` row; a surplus token prints an
+`(unexpected segment)` row.
+Without `--path`, `--table` checks the file's own current path and prints the
+same four-column table (`token` / `regex` / `correct` / `lean`). The section and
+the `eq` / `of` markers are not rows but still count in the verdict; when one of
+them disagrees, a single `× …` line is printed under the table.
+
 procedures of lemmaPath.mjs, given a lean file:
 - determine the section domain of the lean file, say, $section
 - the path tokens for its given assumptions, say, $givens, imploded with \`.\`

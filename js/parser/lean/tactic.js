@@ -1907,7 +1907,9 @@ export class LeanAttribute extends LeanUnary {
 
     append($new, type) {
         const declType = typeof $new === 'string' ? $new : type;
-        return this.push_accessibility(declType, 'public');
+        // No modifier written: keep it implicit so the declaration's context decides
+        // (`module` files default to `private`, plain files to `public`).
+        return this.push_accessibility(declType, null);
     }
 
     insert_newline(caret, newline_count, indent, next) {

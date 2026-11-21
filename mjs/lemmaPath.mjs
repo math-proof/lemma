@@ -1337,7 +1337,7 @@ function expressionPathPart(node) {
     const candidate = pattern.token;
     if (validModuleComponentBasic(candidate) && (!token || candidate.length < token.length)) token = candidate;
   }
-  return { token, patterns };
+  return { node: expr, token, patterns };
 }
 
 /** Suggest a dotted lemma path using the base and plural expression DAGs. */
@@ -1381,6 +1381,17 @@ function expressionPathSegments(candidate) {
   return relative.replace(/\.lean$/, "").replace(/^Lemma[./]/, "").split(/[./]/);
 }
 
+/** Render `{ token, regex, ok, lean }` rows as the four-column markdown table. */
+function renderTable(rows) {
+  const cell = (value) => String(value ?? "—").replace(/\|/g, "\\|").replace(/[\r\n]+/g, " ");
+  return [
+    "| token | regex | verdict | lean |",
+    "| --- | --- | --- | --- |",
+    ...rows.map(({ token, regex, ok, lean }) =>
+      `| ${cell(token)} | ${cell(regex)} | ${ok ? "√" : "×"} | ${cell(lean)} |`),
+  ].join("\n");
+}
+
 /** Check a dotted or filesystem lemma path against the parsed statement. */
 export function checkExpressionPath(filePath, candidate, lemmaName, options = {}) {
   const suggestion = suggestExpressionPath(filePath, lemmaName, options);
@@ -1389,42 +1400,102 @@ export function checkExpressionPath(filePath, candidate, lemmaName, options = {}
   const imply = of < 0 ? parts : parts.slice(0, of);
   const givens = of < 0 ? [] : parts.slice(of + 1);
   const rows = [];
-  const row = (part, token, expected, ok) => rows.push({ part, token, expected, ok });
-  const exact = (part, token, expected) => {
-    const literal = expected.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    row(part, token, "^" + literal + "$", token === expected);
-  };
+  const lean = (node) => String(node ?? "").replace(/\s+/g, " ").trim();
+  const row = (part, token, regex, ok, node) => rows.push({ part, token, regex, ok, lean: lean(node) });
   const match = (part, token, expression) => {
     const patterns = expression?.patterns ?? [];
     const hit = patterns.find(({ regex }) => suggestionMatches(regex, token));
-    row(part, token, (hit ?? patterns[0])?.regex, !!hit);
+    row(part, token, (hit ?? patterns[0])?.regex, !!hit, expression?.node);
   };
-  exact("Section", section, suggestion.section);
+  // The section and the `eq` / `of` markers are part of the path but not rows;
+  // they still take part in the verdict (reported below the table when wrong).
+  const notes = [];
+  let ok = section === suggestion.section;
+  if (!ok) notes.push(`section "${section}" ≠ "${suggestion.section}"`);
   let index = 0;
   suggestion.implyParts.forEach(({ flat, relation, left, right }, i) => {
     const label = `Conclusion ${i + 1}`;
     if (relation && EXPRESSION_RELATION_TOKENS.has(imply[index + 1])) {
       match(label + " LHS", imply[index++], left);
-      exact(label + " relation", imply[index++], relation);
+      const got = imply[index++];
+      if (got !== relation) { ok = false; notes.push(`relation "${got}" ≠ "${relation}"`); }
       match(label + " RHS", imply[index++], right);
     } else {
       match(label, imply[index++], flat);
     }
   });
   for (const token of imply.slice(index)) row("Extra conclusion", token, undefined, false);
-  if (suggestion.givenParts.length) exact("Given separator", of >= 0 ? "of" : undefined, "of");
-  else if (of >= 0) row("Unexpected separator", "of", undefined, false);
+  if (suggestion.givenParts.length ? of < 0 : of >= 0) {
+    ok = false;
+    notes.push(suggestion.givenParts.length ? 'missing "of"' : 'unexpected "of"');
+  }
   for (let i = 0; i < Math.max(givens.length, suggestion.givenParts.length); i++) {
     const expected = suggestion.givenParts[i];
     match(expected ? `Given ${i + 1} (${expected.name})` : "Extra given", givens[i], expected);
   }
-  const cell = (value) => String(value ?? "—").replace(/\|/g, "\\|").replace(/[\r\n]+/g, " ");
   const table = [
-    "| token | regex | consistent |",
-    "| --- | --- | --- |",
-    ...rows.map(({ token, expected, ok }) =>
-      `| ${cell(token)} | ${cell(expected)} | ${ok ? "yes" : "no"} |`),
+    renderTable(rows),
+    ...(notes.length ? ["", `× ${notes.join("; ")}`] : []),
   ].join("\n");
+  return { ok: ok && rows.every((entry) => entry.ok), path: suggestion.path, rows, notes, table };
+}
+
+/**
+ * Check a *proposed* dotted path against each top-level semantic unit (conclusion
+ * LHS / RHS and every given) of the parsed statement.
+ *
+ * The first segment is the root/namespace and `eq` / `of` are connective markers:
+ * none of them is a row. A unit is consistent only when its segment matches one of
+ * the regexes its Lean expression yields as a whole.
+ */
+export function checkProposedPath(filePath, candidate, lemmaName, options = {}) {
+  const suggestion = suggestExpressionPath(filePath, lemmaName, options);
+  const [, ...proposed] = expressionPathSegments(candidate);
+  const of = proposed.indexOf("of");
+  const implySegments = of < 0 ? proposed : proposed.slice(0, of);
+  const givenSegments = of < 0 ? [] : proposed.slice(of + 1);
+  const rows = [];
+  let index = 0;
+  const lean = (part) => String(part?.node ?? "").replace(/\s+/g, " ").trim();
+
+  const addRow = (segment, part, label) => {
+    const patterns = part?.patterns ?? [];
+    if (!segment) {
+      rows.push({
+        token: "(missing)", lean: lean(part), regex: patterns[0]?.regex, ok: false,
+        mode: "missing", detail: `missing ${label} segment`,
+      });
+      return;
+    }
+    const whole = patterns.find(({ regex }) => suggestionMatches(regex, segment));
+    if (whole) {
+      rows.push({ token: segment, lean: lean(part), regex: whole.regex, ok: true, mode: "whole" });
+      return;
+    }
+    rows.push({ token: segment, lean: lean(part), regex: patterns[0]?.regex, ok: false, mode: "no" });
+  };
+  const surplus = (segment) => {
+    rows.push({ token: segment, lean: "(unexpected segment)", regex: undefined, ok: false, mode: "surplus", detail: "surplus segment" });
+  };
+
+  suggestion.implyParts.forEach(({ flat, relation, left, right }, i) => {
+    const label = `conclusion ${i + 1}`;
+    if (relation && EXPRESSION_RELATION_TOKENS.has(implySegments[index + 1])) {
+      addRow(implySegments[index++], left, label + " LHS");
+      index++; // the relation marker (`eq`, `is`, …) is not a row
+      addRow(implySegments[index++], right, label + " RHS");
+    } else {
+      addRow(implySegments[index++], flat, label);
+    }
+  });
+  for (const segment of implySegments.slice(index)) surplus(segment);
+  for (let i = 0; i < Math.max(givenSegments.length, suggestion.givenParts.length); i++) {
+    const part = suggestion.givenParts[i];
+    if (part) addRow(givenSegments[i], part, `given ${i + 1} (${part.name})`);
+    else surplus(givenSegments[i]);
+  }
+
+  const table = renderTable(rows);
   return { ok: rows.every((entry) => entry.ok), path: suggestion.path, rows, table };
 }
 
@@ -1436,16 +1507,31 @@ async function cli() {
     for (let i = 0; i < argv.length; i++) {
       const arg = argv[i];
       if (arg === "--json" || arg === "--table") options.set(arg, true);
-      else if (arg === "--lemma" || arg === "--check" || arg === "--from") {
+      else if (arg.startsWith("--path=")) {
+        const value = arg.slice("--path=".length);
+        if (!value) throw new Error("--path requires a value");
+        options.set("--path", value);
+      } else if (arg === "--lemma" || arg === "--check" || arg === "--from" || arg === "--path") {
         const value = argv[++i];
         if (!value || value.startsWith("-")) throw new Error(`${arg} requires a value`);
         options.set(arg, value);
       } else if (arg.startsWith("-") || file) throw new Error(`Unexpected argument: ${arg}`);
       else file = arg;
     }
-    if (!file) throw new Error("Usage: node mjs/lemmaPath.mjs [--json] [--lemma <name>] [--check <candidate>] <file.lean>");
+    if (!file) throw new Error("Usage: node mjs/lemmaPath.mjs [--json] [--lemma <name>] [--check <candidate>] [--table [--from <file>] [--path=<proposal>]] <file.lean>");
     const json = options.has("--json");
     const lemmaName = options.get("--lemma");
+    if (options.has("--path")) {
+      let statement = file;
+      if (options.get("--from")) {
+        const { resolveStatementFile } = await import("./implyGivenConsistencyTable.mjs");
+        statement = resolveStatementFile(file, { from: options.get("--from") });
+      }
+      const report = checkProposedPath(statement, options.get("--path"), lemmaName);
+      console.log(json ? JSON.stringify(report, null, 2) : report.table);
+      if (!report.ok) process.exitCode = 1;
+      return;
+    }
     if (options.has("--check") || options.has("--table")) {
       let statement = file;
       let candidate = options.get("--check");

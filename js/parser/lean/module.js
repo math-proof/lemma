@@ -1358,6 +1358,17 @@ export class LeanModule extends LeanStatements {
         return this;
     }
 
+    /**
+     * Lean 4.9 `module` file (header is the first statement). Its declarations are
+     * module-private unless marked `public`, and all imports are `public import`.
+     * The echo writes a plain file and drops the header, so it marks `kwargs.moduleFile`.
+     */
+    get is_module_file() {
+        if (this.kwargs.moduleFile === true) return true;
+        const [first] = this.args;
+        return first instanceof L.LeanToken && first.text === 'module';
+    }
+
     get stack_priority() {
         return -3;
     }
@@ -1426,7 +1437,18 @@ export class LeanModule extends LeanStatements {
     }
 
     import(module) {
-        this.args.unshift(new L.Lean_import(this.create_property(module), 0, 0));
+        const node = new L.Lean_import(this.create_property(module), 0, 0);
+        const first = this.args[0];
+        if (!(first instanceof L.LeanToken && first.text === 'module')) {
+            this.args.unshift(node);
+            return;
+        }
+        // Lean 4.9 module file: `module` must stay the first line, and every import after it
+        // is `public import`. Insert the echo import right after the header (and its blank line).
+        node.kwargs.accessibility = 'public';
+        let index = 1;
+        if (this.args[index] instanceof L.LeanCaret) index++;
+        this.args.splice(index, 0, node);
     }
 
     /**

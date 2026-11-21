@@ -522,9 +522,11 @@ async function renderLemmaPage(res, module, userSegment) {
       );
       return;
     }
-    const pkgDir = moduleToLemmaPackageDir(pkgMod);
+    /** `moduleToLemmaPackageDir` is Lemma-relative: `Lemma.Nat` → `Nat` → `Lemma/Nat`. */
+    const relPkgMod = pkgMod.startsWith('Lemma.') ? pkgMod.slice('Lemma.'.length) : pkgMod;
+    const pkgDir = moduleToLemmaPackageDir(relPkgMod);
     if (pkgDir && dirExists(pkgDir)) {
-      renderPackageBrowserPage(res, pkgMod, userSegment);
+      renderPackageBrowserPage(res, relPkgMod, userSegment);
       return;
     }
     res.status(404).type('html').send(
@@ -538,9 +540,10 @@ async function renderLemmaPage(res, module, userSegment) {
   const leanMissing = !abs || !fileExists(abs);
   if (leanMissing) {
     /** Same as PHP `index.php`: folder `Lemma/<module path>/` → `php/package.php` + `axiomContents`. */
-    const pkgDir = moduleToLemmaPackageDir(module);
+    const relPkgMod = module.startsWith('Lemma.') ? module.slice('Lemma.'.length) : module;
+    const pkgDir = moduleToLemmaPackageDir(relPkgMod);
     if (pkgDir && dirExists(pkgDir)) {
-      renderPackageBrowserPage(res, module, userSegment);
+      renderPackageBrowserPage(res, relPkgMod, userSegment);
       return;
     }
     const underscored = resolveUnderscoreModuleAlias(module);
@@ -593,13 +596,28 @@ function renderLemmaCode(res, code, module, userSegment) {
 }
 
 /**
- * `?theorem=<abs path>`: render any `.lean` file under the repo (e.g. `Theorem/…`) from its
- * filesystem path. Symlinks are resolved and the real path must stay inside the repo.
+ * `?theorem=<abs path | repo path | dotted module>`: resolve any `.lean` file under the repo.
+ * Dotted addresses default to the `Theorem/` decl library (`Rat.DivMulS.eq.Div.of.Ne_0` →
+ * `Theorem/Rat/DivMulS/eq/Div/of/Ne_0.lean`); a full module (`Theorem.…`, `Lemma.…`) is used as written.
+ * Symlinks are resolved and the real path must stay inside the repo.
  */
 async function resolveTheoremPath(input) {
   const raw = String(input ?? '').trim();
-  if (!raw || !raw.endsWith('.lean')) return null;
-  const candidate = path.isAbsolute(raw) ? raw : path.join(REPO_ROOT, raw);
+  if (!raw) return null;
+  const cleaned = raw.replace(/[\\/]+$/, '');
+  if (!cleaned.endsWith('.lean')) {
+    // A bare dotted address is a `Theorem/` module; an explicit top-level folder
+    // (`Lemma.…`, `Theorem.…`) is used as written.
+    const head = cleaned.split('.')[0];
+    const explicitDir = dirExists(path.join(REPO_ROOT, head));
+    const candidates = explicitDir ? [cleaned] : [`Theorem.${cleaned}`, cleaned];
+    for (const module of candidates) {
+      const absModule = moduleToRepoLeanPath(module);
+      if (absModule && fileExists(absModule)) return absModule;
+    }
+    return null;
+  }
+  const candidate = path.isAbsolute(cleaned) ? cleaned : path.join(REPO_ROOT, cleaned);
   let abs;
   let root;
   try {
@@ -613,6 +631,13 @@ async function resolveTheoremPath(input) {
   return abs;
 }
 
+/** Canonical `?theorem=` address for a file: its dotted module, with the `Theorem.` prefix dropped. */
+function theoremCanonicalModule(abs) {
+  const module = leanFilePathToModule(abs);
+  if (!module) return null;
+  return module.startsWith('Theorem.') ? module.slice('Theorem.'.length) : module;
+}
+
 async function renderTheoremPage(res, abs, userSegment) {
   const module = leanFilePathToModule(abs);
   if (!module) {
@@ -622,12 +647,17 @@ async function renderTheoremPage(res, abs, userSegment) {
     );
     return;
   }
+  // Same cache logic as `?module=` (`renderLemmaPage`): serve the MySQL row while the
+  // echo file is stale/missing, otherwise parse-only; the client's echo POST fills proof LaTeX.
   const echoAbs = leanEchoPath(abs);
   let code = null;
   if (shouldLoadLemmaFromMysql(abs, echoAbs)) {
     try {
       const row = await fetchLemmaRowFromMysql(PROJECT_USER, module);
-      if (row) code = codeFromMysqlRow(row, module, PROJECT_USER);
+      if (row) {
+        code = codeFromMysqlRow(row, module, PROJECT_USER);
+        if (code && !fileExists(echoAbs)) ensureEmptyEchoFile(echoAbs);
+      }
     } catch (e) {
       console.warn('[lean mysql]', e.message);
     }
@@ -654,13 +684,36 @@ function escapeHtml(s) {
 function redirectToModule(res, userSegment, module) {
   const seg = userSegment || PROJECT_USER;
   const hashIdx = module.indexOf('#');
-  if (hashIdx !== -1) {
-    const base = module.slice(0, hashIdx);
-    const frag = module.slice(hashIdx + 1);
-    res.redirect(302, `/${seg}/?module=${encodeURIComponent(base)}#${frag}`);
-    return;
-  }
-  res.redirect(302, `/${seg}/?module=${encodeURIComponent(module)}`);
+  const base = hashIdx === -1 ? module : module.slice(0, hashIdx);
+  const frag = hashIdx === -1 ? '' : `#${module.slice(hashIdx + 1)}`;
+  const canonical = canonicalDeclParam(base);
+  const query = canonical
+    ? `${canonical.param}=${encodeURIComponent(canonical.value)}`
+    : `module=${encodeURIComponent(base)}`;
+  res.redirect(302, `/${seg}/?${query}${frag}`);
+}
+
+/** `Lemma.X` → `{param:'lemma', value:'X'}`, `Theorem.X` → `{param:'theorem', value:'X'}`. */
+function canonicalDeclParam(module) {
+  const match = /^(Lemma|Theorem)\.(.+)$/.exec(module);
+  if (!match) return null;
+  return { param: match[1] === 'Lemma' ? 'lemma' : 'theorem', value: match[2] };
+}
+
+/** PHP `index.php` `is_top_level_folder`: an existing capitalised repo directory (`Lemma`, `Def`, …). */
+function isTopLevelFolder(head) {
+  return /^[A-Z][A-Za-z0-9]*$/.test(head) && dirExists(path.join(REPO_ROOT, head));
+}
+
+/** `?lemma=Nat.Mul…` → `Lemma.Nat.Mul…`; an explicit top-level folder (`Def.…`) is kept. */
+function lemmaParamToModule(input) {
+  let module = String(input ?? '').trim().replace(/\//g, '.');
+  const hash = module.indexOf('#');
+  if (hash !== -1) module = module.slice(0, hash);
+  if (!module) return null;
+  const head = module.split('.')[0];
+  if (isTopLevelFolder(head)) return module;
+  return `Lemma.${module}`;
 }
 
 /** PHP `lean.php/website` → marketing/docs shell (`website/index.php`). */
@@ -889,21 +942,53 @@ async function renderNewTheoremPage(res, module, userSegment) {
 async function handleLeanGet(req, res) {
   const userSeg = req.params.userSegment || PROJECT_USER;
 
-  /** `?theorem=/abs/path/to/Ne_0.lean` — render any repo `.lean` file, not only `Lemma/`. */
+  /** `?theorem=<path | module>` — render any repo `.lean` file, not only `Lemma/`. */
   if (req.query.theorem != null && String(req.query.theorem).trim() !== '') {
     try {
-      const abs = await resolveTheoremPath(req.query.theorem);
+      const raw = String(req.query.theorem).trim();
+      const abs = await resolveTheoremPath(raw);
       if (!abs) {
         res.status(404).type('html').send(
           `<!DOCTYPE html><meta charset="utf-8"><title>Not found</title>
           <p>Not a readable <code>.lean</code> file inside the repository:
-          <code>${escapeHtml(String(req.query.theorem))}</code></p>`
+          <code>${escapeHtml(raw)}</code></p>`
         );
         return;
+      }
+      // A filesystem path canonicalises to the dotted address (`…/Theorem/Rat/…/Ne_0.lean`
+      // → `?theorem=Rat.…Ne_0`).
+      if (raw.replace(/[\\/]+$/, '').endsWith('.lean')) {
+        const canonical = theoremCanonicalModule(abs);
+        if (canonical) {
+          res.redirect(302, `/${userSeg}/?theorem=${canonical}`);
+          return;
+        }
       }
       await renderTheoremPage(res, abs, userSeg);
     } catch (err) {
       console.error('[theorem]', err);
+      res.status(500).type('html').send(
+        `<!DOCTYPE html><meta charset="utf-8"><title>Server error</title>
+        <p>${escapeHtml(String(err?.message || err))}</p>`
+      );
+    }
+    return;
+  }
+
+  /** `?lemma=<Lemma-relative module>` — where `?module=Lemma.…` redirects to. */
+  if (req.query.lemma != null && String(req.query.lemma).trim() !== '') {
+    try {
+      const module = lemmaParamToModule(req.query.lemma);
+      if (!module) {
+        res.status(404).type('html').send(
+          `<!DOCTYPE html><meta charset="utf-8"><title>Not found</title>
+          <p>Not a module: <code>${escapeHtml(String(req.query.lemma))}</code></p>`
+        );
+        return;
+      }
+      await renderLemmaPage(res, module, userSeg);
+    } catch (err) {
+      console.error('[lemma]', err);
       res.status(500).type('html').send(
         `<!DOCTYPE html><meta charset="utf-8"><title>Server error</title>
         <p>${escapeHtml(String(err?.message || err))}</p>`
@@ -1028,6 +1113,21 @@ async function handleLeanGet(req, res) {
   const hashInQuery = module.indexOf('#');
   if (hashInQuery !== -1) {
     module = module.slice(0, hashInQuery);
+  }
+  /** `?module=Lemma.…` → `?lemma=…`, `?module=Theorem.…` → `?theorem=…`. */
+  const canonical = canonicalDeclParam(module);
+  if (canonical) {
+    res.redirect(302, `/${userSeg}/?${canonical.param}=${encodeURIComponent(canonical.value)}`);
+    return;
+  }
+  /**
+   * Legacy `?module=<Lemma-relative module>`: without a top-level prefix the module
+   * resolves under `Lemma/`, so it is a lemma address — canonicalise it to `?lemma=`
+   * (same as `index.php`), e.g. `?module=Matrix.Grad_Softmax.…` → `?lemma=Matrix.Grad_Softmax.…`.
+   */
+  if (!isTopLevelFolder(module.split('.')[0])) {
+    res.redirect(302, `/${userSeg}/?lemma=${encodeURIComponent(module)}`);
+    return;
   }
   renderLemmaPage(res, module, userSeg).catch((err) => {
     console.error('[lean]', err);
