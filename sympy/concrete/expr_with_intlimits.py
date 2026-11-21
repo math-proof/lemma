@@ -306,7 +306,7 @@ class ExprWithIntLimits(ExprWithLimits):
                 else:
                     x, a, b = limit
                     if a.is_Zero and x.is_integer and b.is_symbol:
-                        tex += r"\limits_{%s:%s}" % tuple([p._print(s) for s in (x, b)])
+                        tex += r"\limits_{%s \lt %s}" % tuple([p._print(s) for s in (x, b)])
                     else:
                         b -= 1
                         tex += r"\limits_{%s=%s}^{%s} " % tuple([p._print(i) for i in (x, a, b)])

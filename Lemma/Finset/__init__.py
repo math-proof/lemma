@@ -112,6 +112,6 @@ from . import EqSwapMatrix
 from . import All_GeRootSDivSigma
 from . import Add_Min
 from . import Mod
-from . import LeAddSumS_SquareSub_Div_Sum
 from . import Sum_SquareSub_DivSum
 from . import Eq_DivBinomMul2
+from . import LeAddSSumS_SquareSub_DivSum

@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(eq, Q_def, V_def, n=None):
-    from Lemma.Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico import extract_QVA
+    from Lemma.Random.Eq_Expect.Eq_Expect.MEq_Expect.of.All_Eq_Expect.All_MEq_Expect.CondIndep.All_Measurable.GtInftySup.All_MeasurableJoint.In_Ico import extract_QVA
     s, a, _, [π], γ, t, Q_st_var, V_st_var = extract_QVA(eq, Q_def, V_def)
     assert n >= 0
     return Equal(Derivative[π](V_st_var._subs(s[t].bvar, s[0].bvar)),
@@ -29,7 +29,7 @@ def prove(Eq):
                 Equal((Q[π] ^ γ)(s[t].bvar, a[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t] & a[t])),
                 Equal((V[π] ^ γ)(s[t].bvar), γ ** Stack[t](t) @ Expectation[r[t:], a:π](r[t:] | s[t])), n)
 
-    Eq.recursion = Random.Grad.eq.Add_SMul_Sum_SMul.of.Ne0Real_Preimage.GtInftySup.All_Differentiable_Prob.All_Eq_Expect.All_Eq_Expect.EqMeasureCount.EqMeasureCount.In_Ico.apply(*Eq[:3])
+    Eq.recursion = Random.GradV.eq.AddIntegral_SMulSMul.of.Ne0Real_Preimage.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.All_Measurable_Prob.In_Ico.apply(*Eq[:3])
 
     Eq.induct = Eq.hypothesis.subs(n, n + 1)
 

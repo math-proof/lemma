@@ -15,7 +15,7 @@
 		<input tabindex=-1 type=checkbox name=regularExpression :checked=regularExpression>Rege<u>x</u>
 		
 		<input tabindex=-1 type=checkbox name=latex :checked=latex><u>L</u>aTex<br>
-		limit: <input tabindex=1 name=limit :value=limit placeholder='100' @input=input />
+		limit: <input tabindex=1 name=limit :value=limit placeholder='100' @input=input /> offset: <input tabindex=1 name=offset :value=offset placeholder='0' @input=input />
 		<input id=submit_query type=submit value=query style="display: none;" />
 	</form>
 </template>
@@ -23,7 +23,7 @@
 <script>
 console.log('import searchForm.vue');
 export default {
-	props : ['keyword', 'caseSensitive', 'wholeWord', 'regularExpression', 'latex', 'replacement', 'limit'],
+	props : ['keyword', 'caseSensitive', 'wholeWord', 'regularExpression', 'latex', 'replacement', 'limit', 'offset'],
 
 	computed: {
 		user(){

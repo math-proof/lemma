@@ -1,1 +1,1 @@
-from . import All_Eq_TSum_MulPowIntegral
+from . import All_Eq_ExpectCond

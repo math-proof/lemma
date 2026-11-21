@@ -1,8 +1,8 @@
 <template>
-	<searchForm :keyword=latex :latex=true :regularExpression=false :wholeWord=false :caseSensitive=false></searchForm>
+	<searchForm :keyword=latex :latex=true :regularExpression=false :wholeWord=false :caseSensitive=false :limit=limit :offset=offset></searchForm>
 	latex in search:
 	<p v-text="`\\[${latex}\\]`"></p>
-	search results:
+	<a :href=href>search</a> results:
 	<br>
 	in all, there are {{list.length}} hits:
 	<br>
@@ -22,7 +22,7 @@ import searchForm from "./searchForm.vue"
 export default {
 	components: {searchForm},
 
-	props : ['list', 'latex'],
+	props : ['list', 'latex', 'limit', 'offset'],
 
 	async created() {
 		console.log(this.list);
@@ -35,6 +35,18 @@ export default {
 	},
 
 	computed: {
+		href() {
+			var {latex, limit, offset} = this;
+			var kwargs = {};
+			if (latex)
+				kwargs.keyword = latex.encodeURI();
+			kwargs.latex = 'on';
+			if (limit)
+				kwargs.limit = limit;
+			if (offset)
+				kwargs.offset = offset;
+			return '?' + get_url(kwargs);
+		},
 	},
 
 	methods: {

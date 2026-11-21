@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(eq, Q_def, V_def, A_def, lt):
-    from Lemma.Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico import extract_QVA
+    from Lemma.Random.Eq_Expect.Eq_Expect.MEq_Expect.of.All_Eq_Expect.All_MEq_Expect.CondIndep.All_Measurable.GtInftySup.All_MeasurableJoint.In_Ico import extract_QVA
     s, a, r, [π], γ, t, Q_st_var, V_st_var, A_st_var = extract_QVA(eq, Q_def, V_def, A_def, lt)
     return Equal(γ ** Stack[t](t) @ Derivative[π](Expectation[r, a:π](r)),
                  γ ** Stack[t](t) @ Stack[t](Expectation[a:π, s](Derivative[π](log(Pr[a:π](a[t].random_argument | s[t].random_argument))) * A_st_var._subs(s[t].bvar, s[t])._subs(a[t].bvar, a[t]))))
@@ -29,7 +29,7 @@ def prove(Eq):
                 Equal((A[π] ^ γ)(s[t].bvar, a[t].bvar), (Q[π] ^ γ)(s[t].bvar, a[t].bvar) - (V[π] ^ γ)(s[t].bvar)),
                 Less(Sup[s[t].bvar, t](Abs(Derivative[π]((V[π] ^ γ)(s[t].bvar)))), oo))
 
-    Eq << Random.GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Eq_ExpectCondDot.All_Eq_ExpectCondDot.EqMeasureCount.EqMeasureCount.All_Eq_Joint.In_Ico.apply(*Eq[:3], Eq[4])
+    Eq << Random.GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_ExpectCondDot.All_Eq_ExpectCondDot.All_Eq_Joint.All_EqWithDensity.In_Ico.apply(*Eq[:3], Eq[4])
 
     Eq << Eq[-1].this.rhs.find(Expectation).simplify()
 

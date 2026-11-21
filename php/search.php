@@ -7,6 +7,8 @@ require_once 'utility.php';
 require_once 'mysql.php';
 require_once 'std.php';
 $dict = empty($_POST) ? $_GET : $_POST;
+$latex = null;
+$state = null;
 
 // if (! $dict) {
 //     // https://www.php.net/manual/en/function.getopt.php
@@ -20,7 +22,7 @@ $dict = empty($_POST) ? $_GET : $_POST;
 // }
 
 if (array_key_exists("keyword", $dict)) {
-    if ($dict["latex"] == 'on') {
+    if (($dict["latex"] ?? null) == 'on') {
         $latex = $dict["keyword"];
     }
 }
@@ -49,6 +51,13 @@ $regularExpression = array_key_exists("regularExpression", $dict) ? true : false
 $limit = $dict["limit"]?? 100;
 if (!$limit)
     $limit = 100;
+$offset = $dict["offset"]?? 0;
+if (!$offset)
+    $offset = 0;
+$limit = (int)$limit;
+$offset = (int)$offset;
+if ($offset < 0)
+    $offset = 0;
 // error_log("wholeWord = $wholeWord");
 // error_log("caseSensitive = $caseSensitive");
 // error_log("regularExpression = $regularExpression");
@@ -71,18 +80,20 @@ if ($latex){
     // include "include/tmpfile.inc.php";    
     //error_log('$latex = '.$latex);
     $list = std\json_post('http://localhost:5000/latex/similarity', ['latex' => $latex]);
+    if (is_array($list))
+        $list = array_slice($list, $offset, $limit);
 }
 else  {
     require_once 'init.php';
     $user = get_user();
     if ($like) {
         if ($regex == null) {
-            $list = select_axiom_by_state($user, $state, $limit);
+            $list = select_axiom_by_state($user, $state, $limit, $offset);
         } else {
-            $list = select_axiom_by_like($user, $regex, $caseSensitive, $limit);
+            $list = select_axiom_by_like($user, $regex, $caseSensitive, $limit, $offset);
         }
     } else {
-        $list = select_axiom_by_regex($user, $regex, $caseSensitive, $limit);
+        $list = select_axiom_by_regex($user, $regex, $caseSensitive, $limit, $offset);
     }
     
     $replacement = array_key_exists("replacement", $dict) ? $dict["replacement"] : null;
@@ -123,7 +134,9 @@ var list = <?php echo $list?>;
 if (latex) {
     createApp('searchLatexResult', {
         list,
-	    latex,
+        latex,
+        limit: <?php echo $limit?>,
+        offset: <?php echo $offset?>,
     });
 }
 else {
@@ -131,12 +144,14 @@ else {
         list,
         user: <?php echo std\encode($user)?>,
         keyword: <?php echo std\encode($keyword)?>,
+        state: <?php echo std\encode($state)?>,
         regularExpression: <?php echo std\encode($regularExpression)?>,
         wholeWord: <?php echo std\encode($wholeWord)?>,
         caseSensitive: <?php echo std\encode($caseSensitive)?>,
         latex: <?php echo std\encode($latex)?>,
         replacement: <?php echo std\encode($replacement)?>,
         limit: <?php echo $limit?>,
+        offset: <?php echo $offset?>,
     });
 }
 </script>

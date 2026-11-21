@@ -904,9 +904,9 @@ function axiom_directory()
     return dirname(dirname(__file__)) . "/Lemma/";
 }
 
-function select_axiom_by_state($user, $state, $limit=100)
+function select_axiom_by_state($user, $state, $limit=100, $offset=0)
 {
-    $result = get_rows("select axiom from axiom where user = '$user' and state = '$state' order by axiom limit $limit", MYSQLI_NUM);
+    $result = get_rows("select axiom from axiom where user = '$user' and state = '$state' order by axiom limit $limit offset $offset", MYSQLI_NUM);
     $array = [];
     foreach ($result as &$value) {
         $array[] = $value[0];
@@ -914,14 +914,14 @@ function select_axiom_by_state($user, $state, $limit=100)
     return $array;
 }
 
-function select_axiom_by_regex($user, $regex, $binary = false, $limit=100)
+function select_axiom_by_regex($user, $regex, $binary = false, $limit=100, $offset=0)
 {
     if ($binary)
         $binary = 'COLLATE utf8mb4_bin';
     else
         $binary = "";
 
-    $sql = "select axiom from axiom where user = '$user' and axiom regexp '$regex' $binary limit $limit";
+    $sql = "select axiom from axiom where user = '$user' and axiom regexp '$regex' $binary limit $limit offset $offset";
     error_log('sql = '.$sql);
 
     $result = get_rows($sql, MYSQLI_NUM);
@@ -932,7 +932,7 @@ function select_axiom_by_regex($user, $regex, $binary = false, $limit=100)
     return $array;
 }
 
-function select_axiom_by_like($user, $keyword, $binary = false, $limit=100)
+function select_axiom_by_like($user, $keyword, $binary = false, $limit=100, $offset=0)
 {
     if ($binary) {
         $binary = " binary ";
@@ -941,7 +941,7 @@ function select_axiom_by_like($user, $keyword, $binary = false, $limit=100)
     }
 
     $keyword = str_replace('_', '\_', $keyword);
-    $sql = "select axiom from axiom where user = '$user' and axiom like$binary'%$keyword%' limit $limit";
+    $sql = "select axiom from axiom where user = '$user' and axiom like$binary'%$keyword%' limit $limit offset $offset";
     // echo $sql . "<br>";
 
     $result = get_rows($sql, MYSQLI_NUM);

@@ -38,7 +38,7 @@ def prove(Eq):
         Equal(r[t] | s[:t] & a[:t], r[t]), # history-irrelevant conditional independence assumption for rewards based on states and actions
         γ, k)
 
-    Eq << Random.TSum_MulPow_IntegralInterPreimage_Preimage.eq.IntegralAddMul_Integral_TSum_MulPow.of.All_Eq_Joint.In_Ico1.apply(Eq[0], γ)
+    Eq << Random.TSum_MulPow_IntegralInterPreimage_Preimage.eq.IntegralAddMul_V0.of.All_Eq_Joint.All_EqWithDensity.In_Ico1.apply(Eq[0], γ)
 
     Eq << Eq[-1] * (1 - γ)
 

@@ -22,7 +22,6 @@ from . import Sum
 from . import Var
 from . import Eq_0
 from . import Imp
-from . import Add
 from . import Grad
 from . import ReducedSum
 from . import Dot
@@ -72,7 +71,6 @@ from . import ProbJoint
 from . import All_Eq_AddLogSumExpAdd
 from . import All_Eq_Add_MaxAdd
 from . import Eq_Expect
-from . import GradVk
 from . import CondIndep
 from . import ExpectSMul_GradLogProbCond
 from . import TSum_MulPow_IntegralInterPreimage_Preimage
@@ -101,3 +99,6 @@ from . import EqDot
 from . import Prob_Cond
 from . import Prod_Prob_Cond_Joint
 from . import Prob_GetSlice
+from . import AddExpectS
+from . import GradVkd
+from . import GradV

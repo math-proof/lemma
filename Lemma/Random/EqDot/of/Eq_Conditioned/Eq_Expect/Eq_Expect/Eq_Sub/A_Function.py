@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(eq, Q_def, V_def, A_def, π_quote=None):
-    from Lemma.Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico import extract_QVA
+    from Lemma.Random.Eq_Expect.Eq_Expect.MEq_Expect.of.All_Eq_Expect.All_MEq_Expect.CondIndep.All_Measurable.GtInftySup.All_MeasurableJoint.In_Ico import extract_QVA
     s, a, r, [π], γ, t, Q_st_var, V_st_var, A_st_var = extract_QVA(eq, Q_def, V_def, A_def)
     assert π_quote.shape == π.shape
     return Equal(γ ** Stack[t](t) @ (Expectation[r, a:π_quote](r) - Expectation[r, a:π](r)),

@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1].subs(k, 1), Eq[-1].subs(k, k + 1)
 
-    Eq << Random.Prob_GetSlice.ae.Mul_Prod_ProbCond.of.All_SinglePSpaceJointGet_Add_1_Get.All_SinglePSpace.All_SinglePSpace.All_CondIndep.All_Measurable.apply(Eq[0], k)
+    Eq << Random.Prob_GetSlice.ae.Mul_Prod_Prob_CondGetS.of.All_CondIndep.All_SinglePSpace.All_Measurable.apply(Eq[0], k)
 
     Eq << Eq[1].subs(Eq[-1])
 
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Finset.Mul.eq.Prod.limits.push)
 
-    Eq << Random.Prob_GetSlice.ae.Mul_Prod_ProbCond.of.All_SinglePSpaceJointGet_Add_1_Get.All_SinglePSpace.All_SinglePSpace.All_CondIndep.All_Measurable.apply(Eq[0], k + 1)
+    Eq << Random.Prob_GetSlice.ae.Mul_Prod_Prob_CondGetS.of.All_CondIndep.All_SinglePSpace.All_Measurable.apply(Eq[0], k + 1)
 
     Eq << Eq[-1].reversed
 

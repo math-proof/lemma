@@ -16,3 +16,4 @@ from . import EqDot_DotShiftMatrix
 from . import DetDotMatPowShiftMatrix
 from . import XEq_Append_MulSoftmaxDivMul_AppendTSGetSlice
 from . import DotSoftmaxDivDot_Stack_TDot
+from . import Grad_Softmax

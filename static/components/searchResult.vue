@@ -1,6 +1,6 @@
 <template>
-	<searchForm ref=searchForm :keyword=keyword :regularExpression=regularExpression :wholeWord=wholeWord :caseSensitive=caseSensitive :replacement=replacement :limit=limit @keydown=keydown></searchForm>
-	search results:
+	<searchForm ref=searchForm :keyword=keyword :regularExpression=regularExpression :wholeWord=wholeWord :caseSensitive=caseSensitive :replacement=replacement :limit=limit :offset=offset @keydown=keydown></searchForm>
+	<a :href=href>search</a> results:
 	<br>
 	in all, there are {{list.length}} hits:
 	<br>
@@ -19,7 +19,7 @@ import searchLink from "./searchLink.vue"
 export default {
 	components: {searchForm, searchLink},
 
-	props : ['list', 'keyword', 'caseSensitive', 'wholeWord', 'regularExpression', 'replacement', 'limit'],
+	props : ['list', 'keyword', 'state', 'caseSensitive', 'wholeWord', 'regularExpression', 'latex', 'replacement', 'limit', 'offset'],
 
 	data(){
 		return {
@@ -28,6 +28,29 @@ export default {
 	},
 
 	computed: {
+		href() {
+			var {keyword, state, replacement, limit, offset} = this;
+			var kwargs = {};
+			if (keyword != null)
+				kwargs.keyword = keyword.encodeURI();
+			else if (state != null)
+				kwargs.state = state.encodeURI();
+			if (this.caseSensitive)
+				kwargs.caseSensitive = 'on';
+			if (this.wholeWord)
+				kwargs.wholeWord = 'on';
+			if (this.regularExpression)
+				kwargs.regularExpression = 'on';
+			if (this.latex)
+				kwargs.latex = 'on';
+			if (replacement)
+				kwargs.replacement = replacement.encodeURI();
+			if (limit)
+				kwargs.limit = limit;
+			if (offset)
+				kwargs.offset = offset;
+			return '?' + get_url(kwargs);
+		},
 	},
 
 	methods: {

@@ -59,9 +59,14 @@ switch (count($key)) {
         }
         break;
     case 2:
-        $module = $_GET['module'];
-        break;
+        $module = $_GET['module']?? null;
+        if ($module)
+            break;
     default:
+        if (array_key_exists('keyword', $_GET) || array_key_exists('latex', $_GET) || array_key_exists('state', $_GET)) {
+            require_once 'php/search.php';
+            exit();
+        }
         break;
 }
 

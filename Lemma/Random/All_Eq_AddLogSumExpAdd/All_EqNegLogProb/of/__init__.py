@@ -1,1 +1,1 @@
-from . import All_Eq_Sum_Exp
+from . import All_Eq_LogProbCond

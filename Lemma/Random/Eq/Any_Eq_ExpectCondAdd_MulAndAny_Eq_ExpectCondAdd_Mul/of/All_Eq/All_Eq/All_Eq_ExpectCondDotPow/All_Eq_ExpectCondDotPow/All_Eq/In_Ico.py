@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(eq, Q_def, V_def, Q_star_def, V_star_def):
-    from Lemma.Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico import extract_QVA
+    from Lemma.Random.Eq_Expect.Eq_Expect.MEq_Expect.of.All_Eq_Expect.All_MEq_Expect.CondIndep.All_Measurable.GtInftySup.All_MeasurableJoint.In_Ico import extract_QVA
     s, a, r, [π], γ, t, Q_st_var, V_st_var = extract_QVA(eq, Q_def, V_def)
 
     (S[Q_st_var], [S[π]]), Q_star_st_var = Q_star_def.of(Equal[Maxima])
@@ -37,7 +37,7 @@ def prove(Eq):
                 Equal((Q_star ^ γ)(s[t].bvar, a[t].bvar), Maxima[π]((Q[π] ^ γ)(s[t].bvar, a[t].bvar))),
                 Equal((V_star ^ γ)(s[t].bvar), Maxima[π]((V[π] ^ γ)(s[t].bvar))))
 
-    Eq << Random.Eq_Expect.Eq_Expect.Eq_Expect.of.All_Eq_Expect.All_Eq_Expect.In_Ico.apply(*Eq[:3])
+    Eq << Random.Eq_Expect.Eq_Expect.MEq_Expect.of.All_Eq_Expect.All_MEq_Expect.CondIndep.All_Measurable.GtInftySup.All_MeasurableJoint.In_Ico.apply(*Eq[:3])
 
     Eq << Eq[3].subs(Eq[-1])
 
