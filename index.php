@@ -7,6 +7,125 @@ require_once 'php/utility.php';
 require_once 'php/mysql.php';
 require_once 'php/parser/lean.php';
 
+/** True when `$head` names an existing top-level repo folder (`Lemma`, `Theorem`, …). */
+function is_top_level_folder(string $head): bool
+{
+    return preg_match('/^[A-Z][A-Za-z0-9]*$/', $head)
+        && is_dir(project_directory() . $head);
+}
+
+/** `?lemma=` → full module: keep an explicit top-level prefix, else add `Lemma.`. */
+function lemma_param_to_module(string $input): ?string
+{
+    $module = str_replace('/', '.', trim($input));
+    $hash = strpos($module, '#');
+    if ($hash !== false)
+        $module = substr($module, 0, $hash);
+    if (str_ends_with($module, '.lean'))
+        $module = substr($module, 0, -strlen('.lean'));
+    if ($module === '')
+        return null;
+    $head = explode('.', $module)[0];
+    return is_top_level_folder($head) ? $module : "Lemma.$module";
+}
+
+/** `Lemma.X` → `['lemma', 'X']`, `Theorem.X` → `['theorem', 'X']`; null otherwise. */
+function canonical_decl_param(string $module): ?array
+{
+    if (preg_match('/^(Lemma|Theorem)\.(.+)$/s', $module, $matches))
+        return [$matches[1] === 'Lemma' ? 'lemma' : 'theorem', $matches[2]];
+    return null;
+}
+
+/** 302 to `/<userSegment>/?<param>=<value>`, keeping `#fragment` outside the query value. */
+function redirect_decl_param(string $param, string $value, string $fragment = ''): void
+{
+    $location = '/' . get_project_name() . '/?' . $param . '=' . rawurlencode($value);
+    if ($fragment !== '')
+        $location .= '#' . $fragment;
+    header("location:$location", true, 302);
+    exit();
+}
+
+/**
+ * Redirect a dotted module to its canonical address. `$declParam` is `lemma` when the
+ * request already used `?lemma=`, so a normalising redirect never chains back through
+ * `?module=` (one hop from the user's point of view).
+ */
+function redirect_module(string $module, string $declParam = 'module'): void
+{
+    $fragment = '';
+    $hash = strpos($module, '#');
+    if ($hash !== false) {
+        $fragment = substr($module, $hash + 1);
+        $module = substr($module, 0, $hash);
+    }
+    $canonical = canonical_decl_param($module);
+    if ($canonical)
+        redirect_decl_param($canonical[0], $canonical[1], $fragment);
+    if ($declParam === 'lemma')
+        redirect_decl_param('lemma', $module, $fragment);
+    $location = '?module=' . $module;
+    if ($fragment !== '')
+        $location .= '#' . $fragment;
+    header("location:$location");
+    exit();
+}
+
+/** Repo `.lean` path → full dotted module (`Theorem.Rat.…Ne_0`); null outside the repo. */
+function repo_lean_path_to_module(string $path): ?string
+{
+    $root = realpath(project_directory());
+    $abs = realpath($path);
+    if ($root === false || $abs === false || !str_ends_with($abs, '.lean'))
+        return null;
+    $rel = substr($abs, strlen($root) + 1);
+    if ($rel === '' || str_starts_with($rel, '..'))
+        return null;
+    return str_replace(['/', '\\'], '.', substr($rel, 0, -strlen('.lean')));
+}
+
+/** Absolute path on either platform (`/…`, `C:\…`, `C:/…`, `\\server\…`). */
+function is_absolute_path(string $path): bool
+{
+    return str_starts_with($path, '/')
+        || (bool) preg_match('#^[A-Za-z]:[\\\\/]#', $path)
+        || str_starts_with($path, '\\\\');
+}
+
+/** Canonical `?theorem=` value for a file: its dotted module without the `Theorem.` prefix. */
+function theorem_canonical_module(string $path): ?string
+{
+    $module = repo_lean_path_to_module($path);
+    if ($module === null)
+        return null;
+    return str_starts_with($module, 'Theorem.')
+        ? substr($module, strlen('Theorem.'))
+        : $module;
+}
+
+/**
+ * `?theorem=` → `.lean` path: a bare dotted name is a `Theorem/` module, an explicit
+ * top-level prefix (`Lemma.…`, `Theorem.…`, `Def.…`) is used as written.
+ */
+function theorem_param_to_lean(string $input): ?string
+{
+    $raw = rtrim(trim($input), "/\\");
+    if ($raw === '')
+        return null;
+    if (str_ends_with($raw, '.lean')) {
+        $path = is_absolute_path($raw) ? $raw : project_directory() . $raw;
+        return is_file($path) ? $path : null;
+    }
+    $head = explode('.', $raw)[0];
+    foreach (is_top_level_folder($head) ? [$raw] : ["Theorem.$raw", $raw] as $module) {
+        $path = project_directory() . str_replace('.', '/', $module) . '.lean';
+        if (is_file($path))
+            return $path;
+    }
+    return null;
+}
+
 $key = array_keys($_GET);
 switch (count($key)) {
     case 0:
@@ -59,7 +178,7 @@ switch (count($key)) {
         if ($module)
             break;
     default:
-        if ($_GET['q']?? null || $_GET['type']?? null) {
+        if (($_GET['q']?? null) || ($_GET['type']?? null)) {
             require_once 'php/search.php';
             exit();
         }
@@ -70,13 +189,75 @@ switch (count($key)) {
         break;
 }
 
-if (str_ends_with($module, '.lean')) {
-    $module = lean_to_module($module);
-    header("location:?module=$module");
+$declParam = 'module';
+$module = $module ?? '';
+
+/** `?theorem=<repo path | module>` — render any repo `.lean` file, not only `Lemma/`. */
+if (isset($_GET['theorem']) && is_string($_GET['theorem']) && trim($_GET['theorem']) !== '') {
+    $raw = trim($_GET['theorem']);
+    if (str_ends_with(rtrim($raw, "/\\"), '.lean')) {
+        $path = is_absolute_path($raw) ? $raw : project_directory() . $raw;
+        $canonical = is_file($path) ? theorem_canonical_module($path) : null;
+        if ($canonical === null) {
+            http_response_code(404);
+            exit();
+        }
+        redirect_decl_param('theorem', $canonical);
+    }
+    $leanFile = theorem_param_to_lean($raw);
+    $module = $leanFile === null ? null : repo_lean_path_to_module($leanFile);
+    if ($module === null) {
+        http_response_code(404);
+        exit();
+    }
+    $title = str_replace('.', '/', $module);
+    $path_info = substr($leanFile, 0, -strlen('.lean'));
+    require 'php/lemma.php';
     exit();
 }
 
-$module = str_replace('/', '.', $module);
+/** `?lemma=<Lemma-relative module>` — where `?module=Lemma.…` redirects to. */
+if (isset($_GET['lemma']) && is_string($_GET['lemma']) && trim($_GET['lemma']) !== '') {
+    $module = lemma_param_to_module(trim($_GET['lemma']));
+    if ($module === null) {
+        http_response_code(404);
+        exit();
+    }
+    if (str_starts_with($module, 'Lemma.')) {
+        $module = substr($module, strlen('Lemma.'));
+        $declParam = 'lemma';
+    } else {
+        $leanFile = project_directory() . str_replace('.', '/', $module) . '.lean';
+        if (!is_file($leanFile)) {
+            http_response_code(404);
+            exit();
+        }
+        $title = str_replace('.', '/', $module);
+        $path_info = substr($leanFile, 0, -strlen('.lean'));
+        require 'php/lemma.php';
+        exit();
+    }
+}
+
+if (str_ends_with($module, '.lean')) {
+    $module = lean_to_module($module);
+    redirect_module($module, $declParam);
+}
+
+$module = str_replace('/', '.', trim($module));
+
+/** `?module=Lemma.…` → `?lemma=…`, `?module=Theorem.…` → `?theorem=…`. */
+$base = $module;
+$fragment = '';
+$hash = strpos($base, '#');
+if ($hash !== false) {
+    $fragment = substr($base, $hash + 1);
+    $base = substr($base, 0, $hash);
+}
+$canonical = canonical_decl_param($base);
+if ($canonical)
+    redirect_decl_param($canonical[0], $canonical[1], $fragment);
+
 $title = str_replace('.', '/', $module);
 
 $path_info = substr(__FILE__, 0, -9) . "Lemma/" . $title;
@@ -91,7 +272,7 @@ if (! str_ends_with($path_info, '/')) {
         elseif (file_exists($dirname = dirname($leanFile) . '.lean')) {
             $lastDotPosition = strrpos($module, '.');
             $module = substr($module, 0, $lastDotPosition) . '#' . substr($module, $lastDotPosition + 1);
-            header("location:?module=$module");
+            redirect_module($module, $declParam);
             exit();
         }
         else {
@@ -110,7 +291,7 @@ if (! str_ends_with($path_info, '/')) {
                                 $module = implode('.', $tokens_);
                                 $path = module_to_lean($module);
                                 if (file_exists($path)) {
-                                    header("location:?module=$module");
+                                    redirect_module($module, $declParam);
                                     exit();
                                 }
                                 $tokens = array_merge([$tokens[0]], array_slice($tokens, 3), ['is'], [$tokens[1]]);
@@ -151,7 +332,7 @@ if (! str_ends_with($path_info, '/')) {
                                         $module = implode('.', $tokens_);
                                         $path = module_to_lean($module);
                                         if (file_exists($path)) {
-                                            header("location:?module=$module");
+                                            redirect_module($module, $declParam);
                                             exit();
                                         }
                                     }
@@ -171,7 +352,7 @@ if (! str_ends_with($path_info, '/')) {
                                     if (! $hit) {
                                         $alt = try_of_is_of_file_rewrite($tokens);
                                         if ($alt !== null) {
-                                            header("location:?module=$alt");
+                                            redirect_module($alt, $declParam);
                                             exit();
                                         }
                                         $segment[1][0] = 'is';
@@ -220,7 +401,7 @@ if (! str_ends_with($path_info, '/')) {
                                 $module = tokens_to_module($segment, $section);
                                 $path = module_to_lean($module);
                                 if (file_exists($path)) {
-                                    header("location:?module=$module");
+                                    redirect_module($module, $declParam);
                                     exit();
                                 }
                                 $tokens = array_merge([$tokens[0]], array_slice($tokens, 3), ['is'], [$tokens[1]]);
@@ -260,7 +441,7 @@ if (! str_ends_with($path_info, '/')) {
                                     $module = implode('.', $tokens_);
                                     $path = module_to_lean($module);
                                     if (file_exists($path)) {
-                                        header("location:?module=$module");
+                                        redirect_module($module, $declParam);
                                         exit();
                                     }
                                 }
@@ -333,11 +514,11 @@ if (! str_ends_with($path_info, '/')) {
             if ($leanFile) {
                 $alt = try_of_is_of_file_rewrite(explode('.', $module));
                 if ($alt !== null) {
-                    header("location:?module=$alt");
+                    redirect_module($alt, $declParam);
                     exit();
                 }
                 $module = tokens_to_module($segment, $section);
-                header("location:?module=$module");
+                redirect_module($module, $declParam);
                 exit();
             }
         }
