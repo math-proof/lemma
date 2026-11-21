@@ -2,7 +2,7 @@ import Initialize.Tactic.Attr.Basic
 
 
 @[path]
-private lemma relative_distance.upper_triangle
+private lemma relative_distance_upper_triangle
   {n u : ℕ}
   {k : ℤ}
   {w : ℤ → ℝ}
@@ -20,7 +20,7 @@ private lemma relative_distance.upper_triangle
 
 
 @[path]
-private lemma relative_distance.lower_triangle
+private lemma relative_distance_lower_triangle
   {n l : ℕ}
   {k : ℤ}
   {w : ℤ → ℝ}
@@ -38,3 +38,4 @@ private lemma relative_distance.lower_triangle
 
 
 -- created on 2026-09-27
+-- updated on 2026-11-21

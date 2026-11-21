@@ -2,7 +2,7 @@ import Initialize.Tactic.Attr.Basic
 
 
 @[path]
-private lemma limits.concat
+private lemma limits_concat
   [Fintype β] [AddCommMonoid γ]
   {m : ℕ}
   {f : (Fin (m + 1) → β) → γ} :
@@ -14,3 +14,4 @@ private lemma limits.concat
 
 
 -- created on 2026-09-27
+-- updated on 2026-11-21

@@ -6,7 +6,7 @@ open Matrix
 
 
 @[path]
-private lemma position_representation.plane
+private lemma position_representation_plane
   {mr mc : ℕ}
   {br bc lr lc : ℝ}
   {θr : ℤ → Fin mr → ℝ}
@@ -29,3 +29,4 @@ private lemma position_representation.plane
 
 
 -- created on 2026-09-27
+-- updated on 2026-11-21

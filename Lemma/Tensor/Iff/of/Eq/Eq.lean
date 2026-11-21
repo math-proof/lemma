@@ -5,7 +5,7 @@ import Initialize.Tactic.Attr.Basic
 
 
 @[path]
-private lemma kmeans.w_quote
+private lemma kmeans_w_quote
   {M k d : ℕ} [NeZero k]
   {w w' : ℕ → Finset ℕ}
   {x : ℕ → EuclideanSpace ℝ (Fin d)}
@@ -29,3 +29,4 @@ private lemma kmeans.w_quote
 
 
 -- created on 2026-09-27
+-- updated on 2026-11-21

@@ -5,7 +5,7 @@ import Initialize.Tactic.Attr.Basic
 
 
 @[path]
-private lemma independence.vector
+private lemma independence_vector
   {n : ℕ}
   {x y : Fin n → ℂ}
 -- given
@@ -34,7 +34,7 @@ private lemma independence.vector
 
 
 @[path]
-private lemma independence.matrix
+private lemma independence_matrix
   {n m : ℕ}
   {x y : Fin n → Fin m → ℂ}
 -- given
@@ -43,7 +43,8 @@ private lemma independence.matrix
   x = y := by
 -- proof
   funext k j
-  exact congrFun (independence.vector (x := fun k => x k j) (y := fun k => y k j) (fun p hp => h p hp j)) k
+  exact congrFun (independence_vector (x := fun k => x k j) (y := fun k => y k j) (fun p hp => h p hp j)) k
 
 
 -- created on 2026-09-27
+-- updated on 2026-11-21

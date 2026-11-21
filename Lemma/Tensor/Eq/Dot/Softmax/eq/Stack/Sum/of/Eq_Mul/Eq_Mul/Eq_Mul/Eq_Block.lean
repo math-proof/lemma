@@ -38,8 +38,8 @@ private lemma space
   apply Finset.sum_congr rfl
   intro t _
   have h_rel : ∀ i' j' k' i j k : ℤ, (R i' j' k')ᵀ * R i j k = R (i - i') (j - j') (k - k') :=
-    fun i' j' k' i j k => Tensor.EqDot.of.Eq_Mul.Eq_Mul.Eq_Mul.Eq_Block.position_representation.space h₀ h₁ h₂ h₃
-  have h_mul := Tensor.Dot.eq.Add.of.Eq_Mul.Eq_Mul.Eq_Mul.Eq_Block.position_representation.space (r := fun _ => r t - r i) (c := fun _ => c t - c i) (z := fun _ => z t - z i) (t := 0) h₀ h₁ h₂ h₃ (x := K t)
+    fun i' j' k' i j k => Tensor.EqDot.of.Eq_Mul.Eq_Mul.Eq_Mul.Eq_Block.position_representation_space h₀ h₁ h₂ h₃
+  have h_mul := Tensor.Dot.eq.Add.of.Eq_Mul.Eq_Mul.Eq_Mul.Eq_Block.position_representation_space (r := fun _ => r t - r i) (c := fun _ => c t - c i) (z := fun _ => z t - z i) (t := 0) h₀ h₁ h₂ h₃ (x := K t)
   have h_dot : ((R (r i) (c i) (z i) *ᵥ Q i) ⬝ᵥ (R (r t) (c t) (z t) *ᵥ K t)) = ∑ a, ((K t (Sum.inl a) * Q i (Sum.inl a) + K t (Sum.inr a) * Q i (Sum.inr a)) * Real.cos (θ i t a) + (K t (Sum.inl a) * Q i (Sum.inr a) - K t (Sum.inr a) * Q i (Sum.inl a)) * Real.sin (θ i t a)) := by
     rw [dotProduct_comm, Matrix.dotProduct_mulVec, ← Matrix.mulVec_transpose, Matrix.mulVec_mulVec, h_rel, h_mul]
     simp only [dotProduct, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr, ← Finset.sum_add_distrib]
@@ -54,3 +54,4 @@ private lemma space
 
 
 -- created on 2023-09-20
+-- updated on 2026-11-21

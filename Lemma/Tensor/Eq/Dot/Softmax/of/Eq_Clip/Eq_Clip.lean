@@ -2,7 +2,7 @@ import Initialize.Tactic.Attr.Basic
 
 
 @[path]
-private lemma position_representation.relative.indexed
+private lemma position_representation_relative_indexed
   {n d_z : ℕ}
   {Q K V : Fin n → Fin d_z → ℝ}
   {K' V' : Fin n → Fin n → Fin d_z → ℝ}
@@ -21,3 +21,4 @@ private lemma position_representation.relative.indexed
 
 
 -- created on 2026-09-27
+-- updated on 2026-11-21

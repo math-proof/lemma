@@ -3,7 +3,7 @@ import Initialize.Tactic.Attr.Basic
 
 
 @[path]
-private lemma limits.merge
+private lemma limits_merge
   {n : ℕ}
   {a b : ℝ}
   {f : (Fin (n + 1) → ℝ) → ℝ}
@@ -18,7 +18,7 @@ private lemma limits.merge
 
 
 @[path]
-private lemma limits.split
+private lemma limits_split
   {n : ℕ}
   {a b : ℝ}
   {f : (Fin (n + 1) → ℝ) → ℝ}
@@ -36,7 +36,7 @@ private lemma limits.split
 
 
 @[path]
-private lemma limits.merge.given
+private lemma limits_merge_given
   {n : ℕ}
   {a b : ℝ}
   {f : (Fin (n + 1) → ℝ) → ℝ}
@@ -54,7 +54,7 @@ private lemma limits.merge.given
 
 
 @[path]
-private lemma limits.split.given
+private lemma limits_split_given
   {n : ℕ}
   {a b : ℝ}
   {f : (Fin (n + 1) → ℝ) → ℝ}
@@ -69,3 +69,4 @@ private lemma limits.split.given
 
 
 -- created on 2026-09-27
+-- updated on 2026-11-21

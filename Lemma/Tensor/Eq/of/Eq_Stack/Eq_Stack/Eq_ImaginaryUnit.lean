@@ -2,7 +2,7 @@ import Initialize.Tactic.Attr.Basic
 
 
 @[path]
-private lemma position_representation.sinusoidal
+private lemma position_representation_sinusoidal
   {d b : ℕ}
   {PE PE' : ℕ → ℕ → ℝ}
   {Z : ℕ → ℕ → ℂ}
@@ -41,3 +41,4 @@ private lemma position_representation.sinusoidal
 
 
 -- created on 2026-09-27
+-- updated on 2026-11-21

@@ -103,7 +103,7 @@ private lemma long_short_term_memory
 
 
 @[path]
-private lemma kmeans.nonoverlapping
+private lemma kmeans_nonoverlapping
   {M k d : ℕ} [NeZero k]
   {w w' : Fin k → Finset ℕ}
   {x : ℕ → EuclideanSpace ℝ (Fin d)}
@@ -131,3 +131,4 @@ private lemma kmeans.nonoverlapping
 
 
 -- created on 2020-12-22
+-- updated on 2026-11-21

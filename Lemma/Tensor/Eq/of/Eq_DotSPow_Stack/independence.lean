@@ -12,10 +12,10 @@ private lemma main
 -- imply
   x = y := by
 -- proof
-  apply Tensor.Eq.of.DotStack_Pow.independence.matrix
+  apply Tensor.Eq.of.DotStack_Pow.independence_matrix
   intro p hp j
   simpa [Matrix.vecMul, dotProduct] using congrFun (h p hp) j
 
 
 -- created on 2023-04-08
--- updated on 2023-04-09
+-- updated on 2026-11-21

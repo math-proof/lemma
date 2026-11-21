@@ -36,8 +36,8 @@ private lemma plane
   apply Finset.sum_congr rfl
   intro t _
   have h_rel : ∀ i' j' i j : ℤ, (R i' j')ᵀ * R i j = R (i - i') (j - j') :=
-    fun i' j' i j => Tensor.EqDot.of.Eq_Mul.Eq_Mul.Eq_Block.position_representation.plane h₀ h₁ h₂
-  have h_mul := Tensor.Dot.eq.Add.of.Eq_Mul.Eq_Mul.Eq_Block.position_representation.plane (r := fun _ => r t - r i) (c := fun _ => c t - c i) (t := 0) h₀ h₁ h₂ (x := K t)
+    fun i' j' i j => Tensor.EqDot.of.Eq_Mul.Eq_Mul.Eq_Block.position_representation_plane h₀ h₁ h₂
+  have h_mul := Tensor.Dot.eq.Add.of.Eq_Mul.Eq_Mul.Eq_Block.position_representation_plane (r := fun _ => r t - r i) (c := fun _ => c t - c i) (t := 0) h₀ h₁ h₂ (x := K t)
   have h_dot : ((R (r i) (c i) *ᵥ Q i) ⬝ᵥ (R (r t) (c t) *ᵥ K t)) = ∑ a, ((K t (Sum.inl a) * Q i (Sum.inl a) + K t (Sum.inr a) * Q i (Sum.inr a)) * Real.cos (θ i t a) + (K t (Sum.inl a) * Q i (Sum.inr a) - K t (Sum.inr a) * Q i (Sum.inl a)) * Real.sin (θ i t a)) := by
     rw [dotProduct_comm, Matrix.dotProduct_mulVec, ← Matrix.mulVec_transpose, Matrix.mulVec_mulVec, h_rel, h_mul]
     simp only [dotProduct, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr, ← Finset.sum_add_distrib]
@@ -52,4 +52,4 @@ private lemma plane
 
 
 -- created on 2023-09-18
--- updated on 2023-09-20
+-- updated on 2026-11-21

@@ -6,7 +6,7 @@ open Matrix Finset Nat
 
 
 @[path]
-private lemma vandermonde.n4
+private lemma vandermonde_n4
   {n : ℕ} {r : ℝ}
 -- given
   (_h : n > 0) :
@@ -20,3 +20,4 @@ private lemma vandermonde.n4
 
 
 -- created on 2026-09-27
+-- updated on 2026-11-21

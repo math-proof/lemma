@@ -2,7 +2,7 @@ import Initialize.Tactic.Attr.Basic
 
 
 @[path]
-private lemma doit.inner
+private lemma doit_inner
   {n : ℕ}
   {x : Fin 2 → Fin n → α} :
 -- imply
@@ -13,7 +13,7 @@ private lemma doit.inner
 
 
 @[path]
-private lemma limits.swap.subst
+private lemma limits_swap_subst
   [Mul α]
   {n : ℕ}
   {h : Fin n → α}
@@ -25,7 +25,7 @@ private lemma limits.swap.subst
 
 
 @[path]
-private lemma limits.subst.offset
+private lemma limits_subst_offset
   {a b d : ℤ}
   {f : ℤ → α} :
 -- imply
@@ -37,3 +37,4 @@ private lemma limits.subst.offset
 
 
 -- created on 2026-09-27
+-- updated on 2026-11-21

@@ -6,7 +6,7 @@ open Matrix
 
 
 @[path]
-private lemma vandermonde.col_transform
+private lemma vandermonde_col_transform
   {n m d : ℕ} {δ l : ℝ} :
 -- imply
   (Matrix.of fun (i : Fin n) (j : Fin m) => ((j : ℝ) + δ) ^ (i : ℕ)) *
@@ -20,3 +20,4 @@ private lemma vandermonde.col_transform
 
 
 -- created on 2026-09-27
+-- updated on 2026-11-21

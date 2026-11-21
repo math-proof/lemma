@@ -6,7 +6,7 @@ open Matrix Finset Nat
 
 
 @[path]
-private lemma vandermonde.n2
+private lemma vandermonde_n2
   {n : ℕ}
   {r : ℝ}
 -- given
@@ -22,3 +22,4 @@ private lemma vandermonde.n2
 
 
 -- created on 2026-09-27
+-- updated on 2026-11-21

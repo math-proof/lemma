@@ -2,7 +2,7 @@ import Initialize.Tactic.Attr.Basic
 
 
 @[path]
-private lemma relative_distance.upper_triangle.upper_part
+private lemma relative_distance_upper_triangle_upper_part
   {n u k : ℕ}
   {r : ℕ → ℤ}
   {w : ℤ → α}
@@ -18,7 +18,7 @@ private lemma relative_distance.upper_triangle.upper_part
 
 
 @[path]
-private lemma relative_distance.upper_triangle.lower_part
+private lemma relative_distance_upper_triangle_lower_part
   {n u k : ℕ}
   {r : ℕ → ℤ}
   {w : ℤ → α}
@@ -35,7 +35,7 @@ private lemma relative_distance.upper_triangle.lower_part
 
 
 @[path]
-private lemma relative_distance.lower_triangle.lower_part
+private lemma relative_distance_lower_triangle_lower_part
   {n u k : ℕ}
   {r : ℕ → ℤ}
   {w : ℤ → α}
@@ -51,7 +51,7 @@ private lemma relative_distance.lower_triangle.lower_part
 
 
 @[path]
-private lemma relative_distance.lower_triangle.upper_part
+private lemma relative_distance_lower_triangle_upper_part
   {n u k : ℕ}
   {r : ℕ → ℤ}
   {w : ℤ → α}
@@ -68,7 +68,7 @@ private lemma relative_distance.lower_triangle.upper_part
 
 
 @[path]
-private lemma relative_distance.lower_triangle.lower_part.tf
+private lemma relative_distance_lower_triangle_lower_part_tf
   {n u k : ℕ}
   {r : ℕ → ℤ}
   {w : ℤ → α}
@@ -86,7 +86,7 @@ private lemma relative_distance.lower_triangle.lower_part.tf
 
 
 @[path]
-private lemma relative_distance.lower_triangle.upper_part.tf
+private lemma relative_distance_lower_triangle_upper_part_tf
   {n u k : ℕ}
   {r : ℕ → ℤ}
   {w : ℤ → α}
@@ -103,3 +103,4 @@ private lemma relative_distance.lower_triangle.upper_part.tf
 
 
 -- created on 2026-09-27
+-- updated on 2026-11-21

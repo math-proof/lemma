@@ -17,7 +17,7 @@ private lemma simp
 
 
 @[path]
-private lemma retain.step
+private lemma retain_step
   {start step k : ℕ}
   {g : ℕ → α}
 -- given
@@ -34,3 +34,4 @@ private lemma retain.step
 
 
 -- created on 2021-12-27
+-- updated on 2026-11-21

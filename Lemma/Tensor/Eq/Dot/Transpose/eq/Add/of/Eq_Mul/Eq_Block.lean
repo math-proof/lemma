@@ -6,7 +6,7 @@ open Matrix
 
 
 @[path]
-private lemma position_representation.rotary
+private lemma position_representation_rotary
   {h : ℕ}
   {b t : ℝ}
   {θ : Fin h → ℝ}
@@ -28,3 +28,4 @@ private lemma position_representation.rotary
 
 
 -- created on 2026-09-27
+-- updated on 2026-11-21

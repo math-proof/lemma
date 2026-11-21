@@ -6,7 +6,7 @@ open Matrix
 
 
 @[path]
-private lemma position_representation.space
+private lemma position_representation_space
   {mr mc mz : ℕ}
   {br bc bz lr lc lz : ℝ}
   {θr : ℤ → Fin mr → ℝ}
@@ -45,3 +45,4 @@ private lemma position_representation.space
 
 
 -- created on 2026-09-27
+-- updated on 2026-11-21
