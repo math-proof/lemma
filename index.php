@@ -261,7 +261,7 @@ if ($fromModuleParam) {
 }
 
 if (str_ends_with($module, '.lean')) {
-    $module = lean_to_module($module);
+    $module = str_replace('/', '.', substr($module, 0, -strlen('.lean')));
     redirect_module($module, $declParam);
 }
 
