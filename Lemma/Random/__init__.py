@@ -48,7 +48,6 @@ from . import KLProbSConditioned
 from . import ProbGeAbs
 from . import ExpectGradLogProb
 from . import Indep
-from . import All_Eq_DivProbS
 from . import All_EqIntegral_ProbJoint
 from . import Integral_Prod
 from . import All_Eq_Integral_ProbJoint
@@ -102,3 +101,4 @@ from . import Prob_GetSlice
 from . import AddExpectS
 from . import GradVkd
 from . import GradV
+from . import All_EqProb_Cond__DivProbS

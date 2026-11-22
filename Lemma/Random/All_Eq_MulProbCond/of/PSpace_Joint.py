@@ -29,7 +29,7 @@ def prove(Eq):
     x, y = Symbol(real=True, random=True)
     Eq << apply(Unequal(Pr(y), 0), x)
 
-    Eq << Eq[-1].this.find(Pr[Conditioned]).apply(Random.All_Eq_DivProbS)
+    Eq << Eq[-1].this.find(Pr[Conditioned]).apply(Random.All_EqProb_Cond__DivProbS.of.SinglePSpace)
 
 
 if __name__ == '__main__':

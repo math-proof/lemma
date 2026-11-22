@@ -110,7 +110,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Integral]).apply(Real.Mul_Integral.eq.Integral_Mul)
 
-    Eq << Eq[-1].this.find(Pr[Conditioned]).apply(Random.All_Eq_DivProbS)
+    Eq << Eq[-1].this.find(Pr[Conditioned]).apply(Random.All_EqProb_Cond__DivProbS.of.SinglePSpace)
 
     Eq << Eq[-1].this.lhs.apply(Random.Integral.eq.Expect)
 
