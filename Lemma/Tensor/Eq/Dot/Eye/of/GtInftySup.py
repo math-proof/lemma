@@ -19,7 +19,7 @@ def prove(Eq):
     λ, γ = Symbol(domain=Interval(0, 1, right_open=True)) # Discount factor: penalty to uncertainty of future rewards; myopic for γ = 0; and far-sighted for γ = 1
     Eq << apply(Less(Sup[t](Abs(δ[t])), oo), γ, λ, k, i)
 
-    Eq << Real.MulSub1_Dot_FunDotPow_Range.eq.DotPow_Id.of.GtInftySup.Subset_Ico.apply(Eq[0], γ, λ, k, i)
+    Eq << Real.MulSub1_DotPow__Fun_DotPow_RangeAdd__Get_Slice.eq.DotPow__Get_Slice.of.Lt.SubsetBrace__Ico01.apply(Eq[0], γ, λ, k, i)
 
     Eq << Eq[-1].this.rhs.find(Pow).apply(Tensor.Pow.eq.Dot, reverse=True)
 

@@ -215,10 +215,10 @@ from . import Any_Le
 from . import LimMul
 from . import Deriv
 from . import Eq_Lim
-from . import MulSub1_Dot_FunDotPow_Range
 from . import AddSquareCosSquareSin
 from . import MulCscSin
 from . import MulSecCos
 from . import MulCotTan
 from . import Ceil
 from . import LeSum_Mul
+from . import MulSub1_DotPow__Fun_DotPow_RangeAdd__Get_Slice

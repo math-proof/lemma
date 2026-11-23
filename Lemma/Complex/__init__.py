@@ -50,3 +50,4 @@ from . import In_Ite_FinsetSSubS__SubS
 from . import Sign
 from . import ArgExpMulI
 from . import ArgAdd
+from . import SquareNormSum_Get
