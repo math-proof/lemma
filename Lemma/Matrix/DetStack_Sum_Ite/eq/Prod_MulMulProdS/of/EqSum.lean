@@ -9,7 +9,6 @@ import Lemma.Matrix.DetMulStackS_MulPow.eq.Mul_Prod_Factorial.of.Le
 import Lemma.Matrix.MulOfMulPowOfPowNegChoose.eq.MulOfChooseSumOf
 import Lemma.Matrix.MulOfPowAddOfPowNegChoose.eq.Zero
 import Syntax.LinearAlgebra.Matrix.Notation
-import Theorem.Function
 open scoped Matrix
 open Matrix Finset Nat
 set_option maxHeartbeats 999999

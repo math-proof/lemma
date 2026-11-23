@@ -5,7 +5,6 @@ import Mathlib.Algebra.Polynomial.RingDivision
 import Mathlib.Analysis.Complex.Polynomial.Basic
 import Mathlib.FieldTheory.IsAlgClosed.Basic
 import Notation.Fun
-import Syntax.Fun
 import Initialize.Tactic.Attr.Basic
 open Polynomial
 

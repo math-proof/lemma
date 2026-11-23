@@ -33,8 +33,7 @@ private lemma main
     intro i
     have hi := h i
     dsimp [GetElem.getElem] at hi ⊢
-    rw [EqGet0_0.fin (α := α)]
-    exact hi
+    rwa [EqGet0_0.fin (α := α)]
 
 
 -- created on 2026-07-27

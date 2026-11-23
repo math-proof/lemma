@@ -9,7 +9,7 @@ private lemma main
   min x y = y - relu (-x + y) := by
 -- proof
   unfold relu
-  rcases le_total x y with h | h
+  obtain h | h := le_total x y
   ·
     rw [min_eq_left h, max_eq_left (by linarith)]
     ring

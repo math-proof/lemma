@@ -4,7 +4,7 @@ import Instance.Data.Nat.Fun
 import Theorem.Data.List.List
 import Theorem.Data.Vector.Basic
 import Syntax.Order.Sup
-import Theorem.Function
+import Def.Data.List.List.Basic
 import Instance.Data.Vector.Basic.Dot
 open Finset
 

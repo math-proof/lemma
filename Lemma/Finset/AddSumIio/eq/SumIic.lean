@@ -2,7 +2,6 @@ import Instance.Data.Fin.Fun
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Order.Interval.Finset.Fin
 import Notation.Fun
-import Syntax.Fun
 import Initialize.Tactic.Attr.Basic
 
 

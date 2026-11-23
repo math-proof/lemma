@@ -1,7 +1,8 @@
 module
-
 public import Mathlib.Data.Finset.Basic
+public import Notation.Algebra.Power
 public import Structure.Algebra.Power
+
 
 @[expose] public section
 
@@ -17,4 +18,4 @@ public instance [HPow α ℕ α] : HPow α (Finset ℕ) (FinsetPow α) where
 
 @[simp]
 public theorem FinsetPow.coe_apply [HPow α ℕ α] (γ : α) (s : Finset ℕ) (i : ℕ) :
-    (γ ^ s : FinsetPow α) i = γ ^ i := rfl
+  (γ ^ s : FinsetPow α) i = γ ^ i := rfl

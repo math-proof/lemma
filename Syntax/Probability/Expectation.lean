@@ -9,7 +9,6 @@ public import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
 public import Mathlib.Probability.Independence.Basic
 public import Mathlib.Probability.Independence.Conditional
 public import Def.Probability.SymbolicProbability
-public meta import Theorem.Function
 public import Def.Probability.JointRv
 public import Def.Probability.Expectation
 public meta import Syntax.Probability.Probability.LiftRV
@@ -285,31 +284,28 @@ partial def Expectation.Macro.substIdent (y : Name) (val : Syntax) (stx : Syntax
   else
     stx.setArgs (stx.getArgs.map (Expectation.Macro.substIdent y val))
 
-/-- Unpack a right-nested product by substituting each binder in `body`
-(`y ↦ Fun.mk nest.1` or `y ↦ nest.1`), so the elaborated expectation term has no `let`.
-`rebind[i] = false` skips that binder (the body keeps the outer local).
-`asFun[i] = true` wraps the value path as `Fun.mk`, so `y[t]` stays `Fun` indexing. -/
+/-- Unpack a right-nested product by substituting each binder in `body` (`y ↦ nest.1`),
+so the elaborated expectation term has no `let`.
+`rebind[i] = false` skips that binder (the body keeps the outer local). -/
 partial def Expectation.Macro.unpackRest
-    (ys : Array Syntax) (nest : Term) (body : Term) (rebind : Array Bool) (asFun : Array Bool) : MacroM Term := do
-  let bind (y : Ident) (rhs : Term) (funProcess : Bool) (body : Term) : MacroM Term := do
-    let val : Term ← if funProcess then `(Fun.mk $rhs) else pure rhs
-    pure ⟨Expectation.Macro.substIdent y.getId val body⟩
-  match ys.toList, rebind.toList, asFun.toList with
-  | [], _, _ => pure body
-  | [y], r :: _, f :: _ =>
+    (ys : Array Syntax) (nest : Term) (body : Term) (rebind : Array Bool) : MacroM Term := do
+  let bind (y : Ident) (rhs : Term) (body : Term) : MacroM Term :=
+    pure ⟨Expectation.Macro.substIdent y.getId rhs body⟩
+  match ys.toList, rebind.toList with
+  | [], _ => pure body
+  | [y], r :: _ =>
     if r then
-      bind ⟨y⟩ nest f body
+      bind ⟨y⟩ nest body
     else
       pure body
-  | y :: rest, r :: rs, f :: fs =>
+  | y :: rest, r :: rs =>
     let nest2 ← `(Prod.snd $nest)
-    let body' ← Expectation.Macro.unpackRest rest.toArray nest2 body rs.toArray fs.toArray
+    let body' ← Expectation.Macro.unpackRest rest.toArray nest2 body rs.toArray
     if r then
-      bind ⟨y⟩ (← `(Prod.fst $nest)) f body'
+      bind ⟨y⟩ (← `(Prod.fst $nest)) body'
     else
       pure body'
-  | _, [], _ => Macro.throwError "𝔼 binder unpack: rebind mask shorter than the binder list"
-  | _, _, [] => Macro.throwError "𝔼 binder unpack: Fun mask shorter than the binder list"
+  | _, [] => Macro.throwError "𝔼 binder unpack: rebind mask shorter than the binder list"
 
 /-- The measure term of an `expectMeasure` slot: `f a b` ↦ the application `f a b`. -/
 def Expectation.Macro.measure (π : TSyntax `expectMeasure) : MacroM Term :=

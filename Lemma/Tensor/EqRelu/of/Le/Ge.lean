@@ -20,7 +20,7 @@ private lemma main
     have hk : k = n := by
       have hkn : n ≤ k := by
         simpa [min_eq_right hnm] using h₁
-      linarith
+      exact le_antisymm h₀ hkn
     rw [min_eq_right hnm, hk]
     have hkm : n - m ≤ 0 := by
       linarith

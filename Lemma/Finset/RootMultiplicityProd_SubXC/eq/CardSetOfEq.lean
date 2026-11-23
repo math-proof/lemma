@@ -4,7 +4,6 @@ import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.Polynomial.FieldDivision
 import Mathlib.Algebra.Polynomial.RingDivision
 import Notation.Fun
-import Syntax.Fun
 import Initialize.Tactic.Attr.Basic
 open Polynomial Finset
 

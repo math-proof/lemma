@@ -6,7 +6,6 @@ import Mathlib.FieldTheory.IsAlgClosed.Basic
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.LinearAlgebra.Vandermonde
-import Theorem.Function
 import Initialize.Tactic.Attr.Basic
 open Polynomial
 set_option maxHeartbeats 800000

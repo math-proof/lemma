@@ -9,7 +9,6 @@ public import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
 public import Mathlib.Probability.Independence.Basic
 public import Mathlib.Probability.Independence.Conditional
 public import Def.Probability.SymbolicProbability
-public meta import Theorem.Function
 
 public meta section
 

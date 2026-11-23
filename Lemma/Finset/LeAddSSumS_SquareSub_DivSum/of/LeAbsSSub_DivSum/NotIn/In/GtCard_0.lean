@@ -1,6 +1,5 @@
 import Instance.Data.Fin.Fun
 import Instance.Data.Nat.Fun
-import Theorem.Function
 import Notation.Algebra.Power
 import Lemma.Finset.Sum_SquareSub_DivSum.eq.Sub_DivSquareSum
 open Finset

@@ -8,7 +8,7 @@ public import Mathlib.MeasureTheory.MeasurableSpace.Constructions
 public import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
 public import Mathlib.Probability.Independence.Basic
 public import Mathlib.Probability.Independence.Conditional
-public import Theorem.Function
+public import Def.Data.List.List.Basic
 public section
 
 open MeasureTheory
@@ -32,9 +32,9 @@ Interpret a binder as an `Ω → α` random variable.
 
 * `Ω → α` — identity (ordinary RV);
 * `ℕ → Ω → α` — flip to the path `ω ↦ (t ↦ X t ω)` (process / infinite family of coordinates);
-* `Fun ℕ (Ω → α)` — same flip via `toFun` (trajectory maps with `r[t]` / `r[t:]` sugar).
+* `ℕ → Ω → α` — same flip (trajectory maps with `r[t]` / `r[t:]` sugar).
 
-The process / Fun instances are higher priority so they win on the overlap
+The process instances are higher priority so they win on the overlap
 `ℕ → Ω → α = (ℕ → (Ω → α))`, which also matches the identity instance with domain `ℕ`.
 -/
 class AsPathRV (X : Type*) (Ω : outParam Type*) (α : outParam Type*) where

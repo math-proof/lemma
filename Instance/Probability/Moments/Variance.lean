@@ -2,7 +2,6 @@ module
 
 public import Mathlib.Probability.Independence.Integration
 public import Syntax.Probability.Expectation.Elab
-public import Theorem.Function
 
 open MeasureTheory
 

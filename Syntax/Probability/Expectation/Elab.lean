@@ -9,7 +9,6 @@ public import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
 public import Mathlib.Probability.Independence.Basic
 public import Mathlib.Probability.Independence.Conditional
 public import Def.Probability.SymbolicProbability
-public meta import Theorem.Function
 public import Def.Probability.Expectation
 public import Theorem.Probability.JointRv.AsRV
 public meta import Syntax.Probability.Expectation
@@ -227,13 +226,6 @@ def Expectation.Macro.rebindMask (xs : Array Syntax) (body : Syntax) : TermElabM
     else
       Lean.Elab.liftMacroM <| Expectation.Macro.bodyValueUse body x.getId
 
-open Lean Meta Lean.Elab.Term in
-/-- `true` when binder `x` is a local `Fun ℕ (· → ·)`, so the value path is re-wrapped with `Fun.mk`. -/
-def Expectation.Macro.funBinderMask (xs : Array Syntax) : TermElabM (Array Bool) :=
-  xs.mapM fun x => do
-    let some ld := (← getLCtx).findFromUserName? x.getId | return false
-    LiftRV.isFunProcess (← instantiateMVars (← inferType ld.toExpr))
-
 open Lean.Elab.Term in
 /-- Fresh `x₀`-style aliases for integrated binders that are already locals (outer processes). -/
 def Expectation.Macro.mkOuterAliases (xs : Array Syntax) : TermElabM (List (Name × Ident)) := do
@@ -285,9 +277,8 @@ def Expectation.Macro.elabExpect (xs : Array Syntax) (body : Syntax)
   let aliases ← Expectation.Macro.mkOuterAliases xs
   let body' ← Lean.Elab.liftMacroM <| Expectation.Macro.desugarProbRA aliases body
   let mask ← Expectation.Macro.rebindMask xs body'
-  let asFun ← Expectation.Macro.funBinderMask xs
   let nest := Expectation.Macro.nestBinder xs `«integ»
-  let unpacked ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest xs nest ⟨body'⟩ mask asFun
+  let unpacked ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest xs nest ⟨body'⟩ mask
   let lam ← if mask.any id then
       `(fun $nest ↦ $unpacked)
     else
@@ -297,16 +288,9 @@ def Expectation.Macro.elabExpect (xs : Array Syntax) (body : Syntax)
   Lean.Elab.Term.elabTerm wrapped none
 
 open Lean Meta in
-/-- Codomain `α` of a `Fun ℕ (Ω → α)` or bare `ℕ → Ω → α` (also `Fin n → Ω → α`) process,
-if `ty` is one. -/
+/-- Codomain `α` of a bare `ℕ → Ω → α` (also `Fin n → Ω → α`) process, if `ty` is one. -/
 def Expectation.Macro.funProcessCodomain (ty : Expr) : MetaM (Option Expr) := do
   match ← whnf ty with
-  | .app (.app (.const n _) _) α =>
-    unless n == ``Fun do return none
-    match ← whnf α with
-    | .forallE _ _ b _ =>
-      if b.hasLooseBVars then return none else return some b
-    | _ => return none
   | .forallE _ d b _ =>
     let d ← whnf d
     unless d.isConstOf ``Nat || d.isAppOfArity ``Fin 1 do return none
@@ -439,7 +423,7 @@ def Expectation.Macro.elabKernelExpect (x : Ident) (π : Term) (body : Term) :
   let body' ← Lean.Elab.liftMacroM <| Expectation.Macro.desugarProbRA aliases bodyPre
   let bodyTerm : Term := ⟨body'⟩
   let u := mkIdent `«act»
-  let lam ← `(fun $u => let $x := Fun.mk (fun _ : ℕ => $u); $bodyTerm)
+  let lam ← `(fun $u => let $x := fun _ : ℕ => $u; $bodyTerm)
   let idRV ← `((id : $αStx → $αStx))
   let core ← `(Expectation.ofRV $π $idRV $lam)
   let wrapped ← Lean.Elab.liftMacroM <| Expectation.Macro.wrapAliases own core
@@ -478,17 +462,16 @@ def Expectation.Macro.elabLiftedExpect (π : Term) (ys : Array Syntax) (stx : Te
   unless μty.isAppOfArity ``MeasureTheory.Measure 2 do
     throwError "𝔼: {μe} is not a measure"
   let Ω := μty.appFn!.appArg!
-  let mut binds : Array (Ident × Bool × Bool) := #[]
+  let mut binds : Array (Ident × Bool) := #[]
   for y in ys do
     let some (fv, []) ← resolveLocalName y.getId | continue
     let ty ← instantiateMVars (← inferType fv)
     let some proc := (← LiftRV.kind Ω ty) | continue
-    binds := binds.push (⟨y⟩, proc, ← LiftRV.isFunProcess ty)
+    binds := binds.push (⟨y⟩, proc)
   if binds.isEmpty then throwError "𝔼: no free random variable to sample in {stx}"
   let mut body : Term := stx
-  for (id, proc, funProcess) in binds.reverse do
-    body ← if funProcess then `(let $id := Fun.mk (fun k ↦ $id k ω); $body)
-      else if proc then `(let $id := fun k ↦ $id k ω; $body)
+  for (id, proc) in binds.reverse do
+    body ← if proc then `(let $id := fun k ↦ $id k ω; $body)
       else `(let $id := $id ω; $body)
   let e ← Lean.Elab.Term.elabTerm (← `(fun (ω : $(← exprToSyntax Ω)) ↦ $body)) none
   synthesizeSyntheticMVarsNoPostponing
@@ -580,14 +563,12 @@ elab_rules : term
       let body' ← Lean.Elab.liftMacroM <| Expectation.Macro.desugarProbRA aliases body
       let maskX ← Expectation.Macro.rebindMask xs body'
       let maskY ← Expectation.Macro.rebindMask ys body'
-      let funX ← Expectation.Macro.funBinderMask xs
-      let funY ← Expectation.Macro.funBinderMask ys
       let integ ← Lean.Elab.liftMacroM <| Expectation.Macro.mkRestJoint xs
       let free ← Lean.Elab.liftMacroM <| Expectation.Macro.mkRestJoint ys
       let nestX := Expectation.Macro.nestBinder xs `«integ»
       let nestY := Expectation.Macro.nestBinder ys `«rest»
-      let bodyY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest ys nestY ⟨body'⟩ maskY funY
-      let bodyXY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest xs nestX bodyY maskX funX
+      let bodyY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest ys nestY ⟨body'⟩ maskY
+      let bodyXY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest xs nestX bodyY maskX
       let lam ← if maskX.any id then
           if maskY.any id then `(fun $nestX $nestY ↦ $bodyXY) else `(fun $nestX _ ↦ $bodyXY)
         else
@@ -603,14 +584,12 @@ elab_rules : term
       let body' ← Lean.Elab.liftMacroM <| Expectation.Macro.desugarProbRA aliases body
       let maskX ← Expectation.Macro.rebindMask xs body'
       let maskY ← Expectation.Macro.rebindMask ys body'
-      let funX ← Expectation.Macro.funBinderMask xs
-      let funY ← Expectation.Macro.funBinderMask ys
       let integ ← Lean.Elab.liftMacroM <| Expectation.Macro.mkRestJoint xs
       let free ← Lean.Elab.liftMacroM <| Expectation.Macro.mkRestJoint ys
       let nestX := Expectation.Macro.nestBinder xs `«integ»
       let nestY := Expectation.Macro.nestBinder ys `«rest»
-      let bodyY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest ys nestY ⟨body'⟩ maskY funY
-      let bodyXY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest xs nestX bodyY maskX funX
+      let bodyY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest ys nestY ⟨body'⟩ maskY
+      let bodyXY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest xs nestX bodyY maskX
       let lam ← if maskX.any id then
           if maskY.any id then `(fun $nestX $nestY ↦ $bodyXY) else `(fun $nestX _ ↦ $bodyXY)
         else

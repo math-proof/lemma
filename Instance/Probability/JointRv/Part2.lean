@@ -8,7 +8,6 @@ public import Mathlib.MeasureTheory.MeasurableSpace.Constructions
 public import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
 public import Mathlib.Probability.Independence.Basic
 public import Mathlib.Probability.Independence.Conditional
-public import Theorem.Function
 public import Class.Probability.JointRv
 
 @[expose] public section

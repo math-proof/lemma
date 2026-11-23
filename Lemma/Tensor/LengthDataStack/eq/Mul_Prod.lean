@@ -12,7 +12,6 @@ private lemma main
 -- proof
   simp
 
-
 @[path]
 private lemma fin
   {n : ℕ}
@@ -23,4 +22,6 @@ private lemma fin
 -- proof
   simp
 
+
 -- created on 2025-05-23
+-- updated on 2026-11-23

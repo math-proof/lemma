@@ -11,7 +11,6 @@ public import Mathlib.Probability.Independence.Conditional
 public import Mathlib.Probability.Kernel.CondDistrib
 public import Def.Probability.SymbolicProbability
 public import Class.Probability.SymbolicProbability
-public import Theorem.Function
 public import Instance.Probability.JointRv
 public import Theorem.Probability.JointRv
 

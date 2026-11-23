@@ -2,7 +2,6 @@ module
 
 public import Def.Data.List.List
 public import Def.Data.List.Slice
-public import Structure.Fun
 public import Notation.Fun
 public import Syntax.Data.List.List
 
@@ -29,12 +28,6 @@ meta def Slice.elabGetSliceFrom : TermElab := fun stx expectedType? =>
     saved.restore
     if let some ty := ty? then
       if ty.isMVar then tryPostpone
-    let isFun := match ty? with
-      | some (.app (.app (.const n _) d) _) =>
-          n == ``Fun && d.isConstOf ``Nat
-      | _ => false
-    -- Yield to Fun.elabGetSliceFrom for Fun N _.
-    if isFun then throwUnsupportedSyntax
     let isSeq := match ty? with
       | some (.forallE _ d b _) => d.isConstOf ``Nat && !b.hasLooseBVars
       | _ => false

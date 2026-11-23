@@ -206,7 +206,7 @@ def Expr.collectGetElemChain : Expr → Expr × List Expr
   | e =>
     (e, [])
 
-/-- True when `e` is a `*.toFun` structure projection / method head (`Fun.toFun`, …). -/
+/-- True when `e` is a `*.toFun` structure projection / method head (`UniformFun.toFun`, …). -/
 def Expr.isToFunHead : Expr → Bool
   | Basic (.ExprWithAttr (.LeanMethod name _)) _ _
   | Basic (.ExprWithAttr (.LeanProperty name)) _ _ =>
@@ -216,7 +216,7 @@ def Expr.isToFunHead : Expr → Bool
   | _ => false
 
 /-- Object + trailing index args of a `*.toFun` application, after method-idx swap.
-`Fun.toFun x i` → `some (x, [i])`; bare `x.toFun` → `none`. -/
+`UniformFun.toFun x i` → `some (x, [i])`; bare `x.toFun` → `none`. -/
 def Expr.asToFunApp? : Expr → Option (Expr × List Expr)
   | Basic (.ExprWithAttr (.LeanMethod _ idx)) args _ =>
     if args.length ≤ idx then none
@@ -277,46 +277,9 @@ partial def Expr.collectToFunChain : Expr → Expr × List Expr
 def Expr.is_ToFunSubscript (e : Expr) : Bool :=
   !(e.collectToFunChain).2.isEmpty
 
-/-- True when `ty` is the `Fun ι α` structure (operator-name / typeclass / function head).
-Bare arrow types `α → β` (`Lean_forall`) are not Fun. -/
-def Expr.is_FunType : Expr → Bool
-  | Basic (.ExprWithAttr attr) _ _ =>
-    match attr with
-    | .Lean_operatorname name
-    | .Lean_typeclass name
-    | .Lean_function name =>
-      name == `Fun || name.getLast == `Fun
-    | _ => false
-  | _ => false
-
-/-- Index suitable for a tight subscript (token / get / toFun-subscript / nat literal). -/
-def Expr.is_SimpleIndex : Expr → Bool
-  | Symbol ..
-  | const _ => true
-  | e => e.is_GetElem || e.is_GetElem? || e.is_ToFunSubscript
-
-/--
-Base of a juxta index app that may print as `a_i`.
-Only Fun-typed symbols. GetElem / `*.toFun` already have their own subscript arms;
-juxta on a residual after GetElem is a normal call (Fun docstring), and ordinary
-arrow apps (`g : α → β`) must stay juxtaposition — not `g_x` / `g_{x, x}`.
--/
-def Expr.is_SubscriptBase : Expr → Bool
-  | Symbol _ ty => ty.is_FunType
-  | _ => false
-
-/--
-Plain application `a i` / `a i j` of a Fun-typed symbol to simple indices.
-Latex prints these like GetElem (`a_i`), so pow must not wrap them as `(a_i)^2`.
--/
-def Expr.is_JuxtaIndexApp : Expr → Bool
-  | Basic (.Special ⟨.anonymous⟩) (base :: indices@( _ :: _)) _ =>
-    base.is_SubscriptBase && indices.all (·.is_SimpleIndex)
-  | _ => false
-
-/-- GetElem / toFun-subscript / juxta-index — already a simple subscript atom in latex. -/
+/-- GetElem / toFun-subscript — already a simple subscript atom in latex. -/
 def Expr.is_SubscriptAtom (e : Expr) : Bool :=
-  e.is_GetElem || e.is_GetElem? || e.is_ToFunSubscript || e.is_JuxtaIndexApp
+  e.is_GetElem || e.is_GetElem? || e.is_ToFunSubscript
 
 def Expr.is_LeanProperty : Expr → Bool
   | Basic (.ExprWithAttr (.LeanProperty name)) .. => name != `IsConstant.is_constant
@@ -594,10 +557,10 @@ partial def Expr.markAsRandomVariable : Expr → Expr
         -- known RV heads (a t) without breaking asRV/joint.
         Basic (.ExprWithAttr (.Lean_operatorname `RandomVariable)) [e] level
       else
-        -- Fun.getSlice / Function.getSlice / getSliceFrom are ExprWithAttr apps;
+        -- getSlice / getSliceFrom are ExprWithAttr apps;
         -- the catch-all Basic f (x :: rest) arm below never runs for them, so mark
         -- the slice base here. Same for JointRandomSymbol and bare *.toFun
-        -- (Fun.getSlice unfolds to Function.getSlice y.toFun s).
+        -- (getSlice unfolds to Function.getSlice y.toFun s).
         match e.asNamedApp? with
         | some ("getSlice", _)
         | some ("getSliceFrom", _) =>

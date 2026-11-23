@@ -821,7 +821,7 @@ private lemma main
   have hcd_S : condDistrib Y Sn μ =ᵐ[μ.map Sn] κ :=
     condDistrib_ae_eq_of_measure_eq_compProd (by fun_prop) hY.aemeasurable hSY
   apply CondIndepFun.symm
-  dsimp only [JointRandomSymbol, Function.getSlice, Fun.getSlice, getElem]
+  dsimp only [JointRandomSymbol, Function.getSlice, getElem]
   change Z ⟂ᵢ[Sn, hSn; μ] Y
   rw [condIndepFun_iff_condDistrib_prod_ae_eq_prodMkRight hY hZ hSn]
   refine hcd_SZ.trans ?_

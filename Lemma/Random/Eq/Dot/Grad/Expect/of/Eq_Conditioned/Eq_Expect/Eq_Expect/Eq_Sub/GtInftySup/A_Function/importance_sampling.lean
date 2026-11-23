@@ -258,7 +258,6 @@ private lemma integral_kernel
   refine integral_congr_ae (Filter.Eventually.of_forall fun u => ?_)
   simp [Policy.pdf]
   erw [ENNReal.toReal_ofReal (hStoch.nonneg θ sₜ u)]
-  rfl
 
 /-- Importance weight `π' • (c • (∇π / π'))` equals the on-policy score `π • (c • ∇ log π)`. -/
 private lemma is_weight_eq_score
@@ -425,7 +424,6 @@ private lemma kernel_pdf
   simp only [Measure.prob]
   rw [hu, Policy.pdf]
   erw [ENNReal.toReal_ofReal (hStoch.nonneg θ' sₜ u)]
-  rfl
 
 /-- Along almost every trajectory, `|Q_t(s_t, a_t)|` is bounded by the discounted reward envelope. -/
 private lemma ae_bound_Q
@@ -1049,7 +1047,6 @@ private lemma main
         funext aₜ
         simp [Policy.pdf]
         erw [ENNReal.toReal_ofReal (hStoch.nonneg θ y aₜ)]
-        rfl
       have hprodint : Integrable
         (fun u => M.π θ y u *
           (if |A θ t y u| ≤ 2 * BG then (0 : ℝ) else 1))

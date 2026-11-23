@@ -20,7 +20,6 @@ import Mathlib.LinearAlgebra.Matrix.Block
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.Order.Interval.Finset.Fin
-import Theorem.Function
 import Theorem.Data.Fin.Dot.Part2
 import Notation.Data.Dot
 open Polynomial Matrix Finset

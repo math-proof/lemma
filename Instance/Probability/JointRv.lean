@@ -9,7 +9,6 @@ public import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
 public import Mathlib.Probability.Independence.Basic
 public import Mathlib.Probability.Independence.Conditional
 public import Def.Probability.SymbolicProbability
-public import Theorem.Function
 public import Def.Probability.JointRv
 
 @[expose] public section

@@ -12,7 +12,7 @@ private lemma main
   (X : Tensor α s) :
 -- imply
   have h := congrArg (Tensor α) h₁
-  have := GtLength.of.GtLength_0 h₀ X ⟨i, by grind⟩
+  have := GtLength.of.GtLength_0 h₀ X ⟨i, h_i⟩
   have := GtLength.of.GtLength_0 (h₁ ▸ h₀) (cast h X) ⟨i, by grind⟩
   (cast h X)[i] ≃ X[i] := by
 -- proof

@@ -11,7 +11,7 @@ Textbook sum over the *value* of a bound sequence at a fixed index.  In probabil
 
 * `∑ «\sf{y}»[t], body` (preferred) is the plain finite sum `∑ c, body'` (over `Finset.univ` of the
   state type, inferred from `body` and needing `[Fintype _]`), where `body'` is `body` with every
-  `«\sf{y}»[t]` (Fun / `GetElem`) or application `«\sf{y}» t` replaced by the bound variable `c`.
+  `«\sf{y}»[t]` (`GetElem`) or application `«\sf{y}» t` replaced by the bound variable `c`.
 * `∑ «\sf{y}» t, body` is the same macro with juxtaposition instead of brackets (kept for older lemmas).
 
 It is purely syntactic: the index `t` may be any term, and an occurrence is replaced when its index /

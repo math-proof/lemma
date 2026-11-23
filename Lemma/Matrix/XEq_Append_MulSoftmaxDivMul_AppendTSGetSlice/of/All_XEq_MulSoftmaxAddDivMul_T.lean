@@ -1,6 +1,5 @@
 import Instance.Data.Fin.Fun
 import Instance.Data.Nat.Fun
-import Syntax.Fun
 import Syntax.LinearAlgebra.Matrix.Ones
 import Syntax.LinearAlgebra.Matrix.Pow
 import Notation.Fun
@@ -232,8 +231,7 @@ private lemma main
       rw [Matrix.mul_apply]
       refine Finset.sum_congr rfl fun b _ => ?_
       rw [Matrix.transpose_apply]
-      simp [Matrix.ofFunSlicePrefix, Matrix.of_apply, Fun.getSlice,
-        Function.getSlice, FunSlice.slice]
+      simp [Matrix.ofFunSlicePrefix, Matrix.of_apply, Function.getSlice, FunSlice.slice]
     have hS (j : Fin k) :
       S i j =
         ↑(raw (i : ℕ) (j : ℕ)) +
@@ -299,8 +297,7 @@ private lemma main
     have hV (j : Fin k) :
       ((V[:k] : ℝ ^ [k, d_z]) : ℝ* ^ [k, d_z]) j a =
         (V[(j : ℕ)][a] : ℝ*) := by
-      simp [Matrix.ofFunSlicePrefix, Matrix.of_apply, Fun.getSlice,
-        Function.getSlice, FunSlice.slice]
+      simp [Matrix.ofFunSlicePrefix, Matrix.of_apply, Function.getSlice, FunSlice.slice]
     have hmul (j : Fin k) :
       Exp.exp (S i j) / (∑ j' : Fin k, Exp.exp (S i j')) *
           ((V[:k] : ℝ ^ [k, d_z]) : ℝ* ^ [k, d_z]) j a ≈
@@ -472,7 +469,7 @@ private lemma main
         rw [← hidx, append_col_left]
         simp only [KT, Matrix.transpose_apply]
         conv_lhs =>
-          simp [Matrix.of_apply, Matrix.ofFunSlice, Fun.getSlice, Function.getSlice, FunSlice.slice]
+          simp [Matrix.of_apply, Matrix.ofFunSlice, Function.getSlice, FunSlice.slice]
         refine congrArg (fun j => (K[j][b] : ℝ*)) ?_
         omega
       else
@@ -485,7 +482,7 @@ private lemma main
         rw [← hidx, append_col_right]
         simp only [kT, Matrix.transpose_apply]
         conv_lhs =>
-          simp [Matrix.of_apply, Matrix.ofFunSlice, Fun.getSlice, Function.getSlice, FunSlice.slice]
+          simp [Matrix.of_apply, Matrix.ofFunSlice, Function.getSlice, FunSlice.slice]
         refine congrArg (fun j => (K[j][b] : ℝ*)) ?_
         omega
     have hscore (t : Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat + (((n : ℤ) + 1).toNat - (n : ℤ).toNat))) :
@@ -496,7 +493,7 @@ private lemma main
           (Q[n][b] : ℝ*) := by
         simp only [Matrix.of_apply]
         rw [fin_matrix_cast_apply (Matrix.funSlice_singleton_length n)]
-        simp [Matrix.ofFunSlice, Fun.getSlice, Function.getSlice, FunSlice.slice]
+        simp [Matrix.ofFunSlice, Function.getSlice, FunSlice.slice]
       simp only [Matrix.mul_apply, Matrix.div_apply, hkey t, raw, hq]
       exact score_coe (fun b => Q[n][b]) (fun b => K[n + 1 - l + (t : ℕ)][b])
     have hexpScore (t : Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat + (((n : ℤ) + 1).toNat - (n : ℤ).toNat))) :
@@ -539,7 +536,7 @@ private lemma main
           ((V[n:n + 1] : ℝ ^ [((n : ℤ) + 1).toNat - (n : ℤ).toNat, d_z]) : ℝ* ^ [((n : ℤ) + 1).toNat - (n : ℤ).toNat, d_z]) ⟨(t : ℕ), ht⟩
         have hentry := congrFun (hidx ▸ hL) a
         conv_rhs at hentry =>
-          simp [Matrix.ofFunSlice, Matrix.of_apply, Fun.getSlice, Function.getSlice, FunSlice.slice]
+          simp [Matrix.ofFunSlice, Matrix.of_apply, Function.getSlice, FunSlice.slice]
         refine hentry.trans (congrArg (fun j => (V[j][a] : ℝ*)) ?_)
         omega
       else
@@ -556,7 +553,7 @@ private lemma main
           ((V[n:n + 1] : ℝ ^ [((n : ℤ) + 1).toNat - (n : ℤ).toNat, d_z]) : ℝ* ^ [((n : ℤ) + 1).toNat - (n : ℤ).toNat, d_z]) (⟨0, by omega⟩ : Fin (((n : ℤ) + 1).toNat - (n : ℤ).toNat))
         have hentry := congrFun (hidx ▸ hR) a
         conv_rhs at hentry =>
-          simp [Matrix.ofFunSlice, Matrix.of_apply, Fun.getSlice, Function.getSlice, FunSlice.slice]
+          simp [Matrix.ofFunSlice, Matrix.of_apply, Function.getSlice, FunSlice.slice]
         refine hentry.trans (congrArg (fun j => (V[j][a] : ℝ*)) ?_)
         omega
     have hewin (t : Fin ((n : ℤ).toNat - ((n : ℤ) + 1 - (l : ℤ)).toNat + (((n : ℤ) + 1).toNat - (n : ℤ).toNat))) :

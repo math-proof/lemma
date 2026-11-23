@@ -1,35 +1,10 @@
 module
 
-public import Structure.Fun
 public import Structure.Data.List.Slice
 
 public section
 
 open Lean
-
-namespace Fun
-
-instance : CoeFun (Fun ι α) (fun _ => ι → α) where
-  coe := toFun
-
-instance : GetElem (Fun ι α) ι α (fun _ _ => True) where
-  getElem f i _ := f.toFun i
-
-/-- Infoview: print `f.toFun i` as GetElem notation `f[i]`.
-Over-application (e.g. a residual call after the index) pretty-prints as `f[i] x`.
-Takes priority over field notation, which would otherwise show `f.toFun i`. -/
-@[app_unexpander Fun.toFun]
-meta def toFun.unexpand : PrettyPrinter.Unexpander
-  | `($_ $f $i) => `($f[$i])
-  | _ => throw ()
-
-/-- Open-ended path slice: `r[t:]` for `r : Fun ℕ α` is `k ↦ r.toFun (t + k)`,
-same shape as `Function.getSliceFrom` on bare sequences (so `⬝ᵥ` / Dot keep working). -/
-@[expose]
-def getSliceFrom (f : Fun ℕ α) (t : ℕ) : ℕ → α :=
-  fun k ↦ f.toFun (t + k)
-
-end Fun
 
 /-- Open-ended `x[t:]` (elaborator-owned). Avoids importing cyclic
 `Syntax.Data.List` ↔ `Def.Data.List.List`. `Syntax.Data.List` should drop its duplicate of
@@ -37,36 +12,10 @@ this one form; closed-slice syntax stays there. -/
 syntax:max term noWs "[" withoutPosition(term:60) ":]" : term
 
 open Elab Term Meta in
-/-- `r[t:]` when `r : Fun ℕ _` → `Fun.getSliceFrom r t`.
-Otherwise `throwUnsupportedSyntax` so other elaborators handle bare `ℕ → α` / lists. -/
+/-- `r[t:]` on a bare `ℕ → α` or a list is elaborated by `Syntax.Data.List`; this elaborator
+only declines, so that elaborator runs. -/
 @[term_elab «term__[_:]»]
-meta def Fun.elabGetSliceFrom : TermElab := fun stx expectedType? =>
-  match stx with
-  | `($x[$start :]) => do
-    let saved ← saveState
-    let ty? ← try
-        let e ← withoutErrToSorry <| elabTerm x none
-        pure (some (← whnfR (← instantiateMVars (← inferType e))))
-      catch _ => pure none
-    saved.restore
-    let isFun := match ty? with
-      | some (.app (.app (.const n _) d) _) =>
-          n == ``Fun && d.isConstOf ``Nat
-      | _ => false
-    unless isFun do throwUnsupportedSyntax
-    elabTerm (← `(Fun.getSliceFrom $x ($start))) expectedType?
-  | _ => throwUnsupportedSyntax
-
-namespace Fun
-
-/-- Infoview: print `Fun.getSliceFrom r t` as `r[t:]`. -/
-@[app_unexpander getSliceFrom]
-meta def getSliceFrom.unexpand : PrettyPrinter.Unexpander
-  | `($_ $f $t) => `($f[$t :])
-  | `($_ $f $t $k) => `($f[$t :] $k)
-  | _ => throw ()
-
-end Fun
+meta def Fun.elabGetSliceFrom : TermElab := fun _ _ => throwUnsupportedSyntax
 
 /-- Slicing of a function `ℕ → β`, dispatched on its value type `β`. The random-variable
 instance stays in `Def.Probability.Process.HiddenMarkovSequence.Part2`. -/
@@ -89,23 +38,6 @@ cycle-free. Prefer importing that module at use sites that care about `f[a:b]` p
 meta def Function.getSlice.unexpand : PrettyPrinter.Unexpander
   | _ => throw ()
 
-namespace Fun
-
-/-- Closed slices on `Fun ℕ α` (`f[:n]`, `f[a:b]`). Reducible so coercions see the bare slice. -/
-abbrev getSlice {α : Type*} [FunSlice α] (f : Fun ℕ α) (s : Slice) : FunSlice.Out α s :=
-  Function.getSlice f.toFun s
-
-@[app_unexpander Fun.getSlice]
-meta def getSlice.unexpand : PrettyPrinter.Unexpander
-  | _ => throw ()
-
-/-- NumPy-style top-left block: `y[:i, :j]` for `y : Fun ℕ (Fun ℕ α)`. -/
-def getSlice2 {α : Type*} (y : Fun ℕ (Fun ℕ α)) (rows cols : ℕ) :
-    Fin rows → Fin cols → α :=
-  fun i j => (y.toFun i).toFun j
-
-end Fun
-
 /-- NumPy-style top-left block: `y[:i, :j]` for `y : ℕ → ℕ → α`. -/
 def Function.getSlice2 {α : Type*} (y : ℕ → ℕ → α) (rows cols : ℕ) :
     Fin rows → Fin cols → α :=
@@ -117,40 +49,12 @@ which is not the 2D top-left block — prefer `x[:i, :j]` or `getSlice2`. -/
 syntax:max term noWs "[:" withoutPosition(term:60) "," ":" withoutPosition(term:60) "]" : term
 
 open Elab Term Meta in
-/-- `y[:i, :j]` → `Fun.getSlice2` when `y : Fun ℕ (Fun ℕ _)`, else `Function.getSlice2`. -/
+/-- `y[:i, :j]` → `Function.getSlice2`. -/
 @[term_elab «term__[:_,:_]»]
 meta def Fun.elabGetSlice2 : TermElab := fun stx expectedType? =>
   match stx with
-  | `($x[:$rows, :$cols]) => do
-    let saved ← saveState
-    let ty? ← try
-        let e ← withoutErrToSorry <| elabTerm x none
-        pure (some (← whnfR (← instantiateMVars (← inferType e))))
-      catch _ => pure none
-    saved.restore
-    let isFun2 := match ty? with
-      | some (.app (.app (.const n _) d) c) =>
-          n == ``Fun && d.isConstOf ``Nat &&
-            (match c with
-             | .app (.app (.const n2 _) d2) _ =>
-                 n2 == ``Fun && d2.isConstOf ``Nat
-             | _ => false)
-      | _ => false
-    if isFun2 then
-      elabTerm (← `(Fun.getSlice2 $x $rows $cols)) expectedType?
-    else
-      elabTerm (← `(Function.getSlice2 $x $rows $cols)) expectedType?
+  | `($x[:$rows, :$cols]) => do elabTerm (← `(Function.getSlice2 $x $rows $cols)) expectedType?
   | _ => throwUnsupportedSyntax
-
-/-- `y[:n]` / `y[a:b]` for `y : ℕ → Fun ℕ β`, keeping the inner `Fun` so
-`y[:i][:j]` elaborates. Overrides the low-priority default `FunSlice` (which would
-give `Fin _ → Fun ℕ β` and block nesting). With `FunSlice (Ω → α)` from
-`Instance.Probability.Process.HiddenMarkovSequence`, this specializes to
-`Fun ℕ (Ω → Fin _ → α)` — row-prefix × column Fun of RVs. -/
-instance (priority := high) {β : Type*} [FunSlice β] : FunSlice (Fun ℕ β) where
-  Out s := Fun ℕ (FunSlice.Out β s)
-  slice (y : ℕ → Fun ℕ β) s :=
-    ⟨fun j => FunSlice.slice (fun i => (y i).toFun j) s⟩
 
 /-- Flip `y[:i, :j] : Fin i → Fin j → Ω → α` to an `Ω`-first random matrix
 (so it can sit next to `y[i][:j] : Ω → Fin j → α` as an IndepFun operand). -/

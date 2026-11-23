@@ -6,7 +6,6 @@ import Mathlib.Data.Nat.Factorial.Basic
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.Order.Interval.Finset.Fin
 import Syntax.LinearAlgebra.Matrix.Notation
-import Theorem.Function
 open scoped Matrix
 open Matrix Finset
 

@@ -8,7 +8,7 @@ private lemma main
 -- given
   (c s x0 x1 : Tensor ℝ []) :
 -- imply
-  Add.add (c * x0) ((-s) * x1) = x0 * c - x1 * s := by
+  Add.add (c * x0) (-s * x1) = x0 * c - x1 * s := by
 -- proof
   rw [Tensor.Sub]
   simp only [Tensor.Mul]

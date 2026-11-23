@@ -10,7 +10,8 @@ private lemma main
   relu (i + 1 - l) = 0 := by
 -- proof
   unfold relu
-  exact max_eq_right (by omega)
+  apply max_eq_right
+  linarith [h]
 
 
 -- created on 2022-04-01

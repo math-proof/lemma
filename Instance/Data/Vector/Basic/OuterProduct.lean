@@ -8,7 +8,6 @@ public import Theorem.Nat.EqMin_SubMulS
 public import Theorem.Nat.EqAddMulDiv
 public import Theorem.List.Prod.eq.MulProdS
 public import Theorem.Algebra.Power.Part2
-public import Theorem.Function
 public import Class.Data.Vector.Basic.Part2
 
 open Nat Lean

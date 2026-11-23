@@ -1,7 +1,7 @@
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
 import Mathlib.Analysis.LocallyConvex.SeparatingDual
-import Theorem.Function
+import Def.Data.List.List.Basic
 import Lemma.Kernel.Integral.eq.Integral_Integral.of.Integrable_Bind
 import Lemma.Random.All_EqIntegral_MulGIntegral_MulGKf.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Lemma.Random.All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity

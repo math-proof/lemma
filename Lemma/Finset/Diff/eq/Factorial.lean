@@ -1,4 +1,4 @@
-import Theorem.Function
+import Abbrev.Difference
 import Initialize.Tactic.Attr.Basic
 open Nat
 

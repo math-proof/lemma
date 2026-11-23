@@ -599,16 +599,6 @@ def Expr.latexFormat : Expr → String
           let fns := fns.map fun arg =>
             (0 : Nat).toColor ((arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix) && !arg.is_JointRandomSymbol)
           "\\ ".intercalate (obj :: fns)
-        else if e.is_JuxtaIndexApp then
-          -- Fun-typed juxta index app only; plain arrow apps stay juxtaposition
-          match args with
-          | base :: indices =>
-            let baseFmt := level.toColor (
-              base.priority > func.priority || base.is_EnclosedGroup || base.is_LeanProperty ||
-                base.is_Eye || base.is_SubscriptAtom)
-            baseFmt ++ "_{" ++ ", ".intercalate (["%s"].repeat indices.length) ++ "}"
-          | _ =>
-            opStr
         else
           let args := args.zipIdx.map fun ⟨arg, i⟩ =>
             level.toColor (((i == 0 || arg.priority > func.priority) && (i > 0 || arg.priority ≥ func.priority) || arg.is_Div || arg.is_BlockMatrix) && !arg.is_JointRandomSymbol)

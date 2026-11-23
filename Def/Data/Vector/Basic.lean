@@ -2,7 +2,6 @@ module
 
 public import Mathlib.Data.Vector.MapLemmas
 public import Theorem.List.LengthRange.eq.Length
-public import Theorem.Function
 public import Def.Data.List.List.Basic
 
 @[expose] public section

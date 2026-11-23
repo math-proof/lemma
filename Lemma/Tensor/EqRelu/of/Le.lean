@@ -14,8 +14,7 @@ private lemma main
     simp [min_eq_left hmn]
   else
     have hnm : n ≤ m := le_of_not_ge hmn
-    have hk : k - n ≤ 0 := by
-      linarith
+    have hk : k - n ≤ 0 := sub_nonpos.mpr h₀
     have hkm : k - m ≤ 0 := by
       linarith
     simp [min_eq_right hnm, max_eq_right hk, max_eq_right hkm]

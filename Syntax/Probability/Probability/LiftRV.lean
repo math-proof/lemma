@@ -9,7 +9,6 @@ public import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
 public import Mathlib.Probability.Independence.Basic
 public import Mathlib.Probability.Independence.Conditional
 public import Def.Probability.SymbolicProbability
-public meta import Theorem.Function
 
 public meta section
 
@@ -26,23 +25,9 @@ partial def LiftRV.idents (stx : Syntax) (acc : Array Ident := #[]) : Array Iden
     stx.getArgs.foldl (fun acc a => LiftRV.idents a acc) acc
 
 open Lean Meta in
-/-- `Fun ℕ (β → γ)` (a `Fun` process such as `Fun ℕ (Ω → S)`). The value path is re-wrapped with
-`Fun.mk`, so `s[t]` stays `Fun` indexing and does not need `GetElem` on bare functions. -/
-def LiftRV.isFunProcess (ty : Expr) : MetaM Bool := do
-  match ← whnf ty with
-  | .app (.app (.const n _) ι) α =>
-    let ι ← whnf ι
-    unless n == ``Fun && ι.isConstOf ``Nat do return false
-    match ← whnf α with
-    | .forallE _ _ b _ => return !b.hasLooseBVars
-    | _ => return false
-  | _ => return false
-
-open Lean Meta in
 /-- `some false` if `ty` is `Ω → α` (a random variable on `Ω`), `some true` if it is an indexed family
-`ℕ → Ω → α`, `Fin n → Ω → α`, or `Fun ℕ (Ω → α)` (a process), `none` otherwise.
-A bare process is lifted by `let s := fun k ↦ s k ω` (`s t` beta-reduces to `s t ω`).
-A `Fun` process is lifted by `let s := Fun.mk (fun k ↦ s k ω)`, so `s[t]` is `Fun` indexing. -/
+`ℕ → Ω → α` or `Fin n → Ω → α` (a process), `none` otherwise.
+A process is lifted by `let s := fun k ↦ s k ω` (`s t` beta-reduces to `s t ω`). -/
 def LiftRV.kind (Ω ty : Expr) : MetaM (Option Bool) := withNewMCtxDepth do
   match ← whnf ty with
   | .forallE _ d b _ =>
@@ -53,13 +38,6 @@ def LiftRV.kind (Ω ty : Expr) : MetaM (Option Bool) := withNewMCtxDepth do
     match ← whnf b with
     | .forallE _ d' b' _ =>
       if !b'.hasLooseBVars && (← isDefEq d' Ω) then return some true else return none
-    | _ => return none
-  | .app (.app (.const n _) ι) α =>
-    let ι ← whnf ι
-    unless n == ``Fun && ι.isConstOf ``Nat do return none
-    match ← whnf α with
-    | .forallE _ d b _ =>
-      if !b.hasLooseBVars && (← isDefEq d Ω) then return some true else return none
     | _ => return none
   | _ => return none
 
@@ -73,18 +51,17 @@ def LiftRV.lift (μ x : Term) (expectedType? : Option Expr) : TermElabM Expr := 
   let μty ← whnf (← instantiateMVars (← inferType μe))
   unless μty.isAppOfArity ``MeasureTheory.Measure 2 do throwError "rv%: {μe} is not a measure"
   let Ω := μty.appFn!.appArg!
-  -- `(proc, funProcess)`: `proc` is a time-indexed family; `funProcess` is `Fun ℕ (· → ·)`.
-  let mut binds : Array (Ident × Bool × Bool) := #[]
+  -- `proc` marks a time-indexed family.
+  let mut binds : Array (Ident × Bool) := #[]
   for id in LiftRV.idents x do
     let some (fv, []) ← resolveLocalName id.getId | continue
     let ty ← instantiateMVars (← inferType fv)
     if let some proc ← LiftRV.kind Ω ty then
-      binds := binds.push (id, proc, ← LiftRV.isFunProcess ty)
+      binds := binds.push (id, proc)
   if binds.isEmpty then throwError "rv%: no random variable on {Ω} to lift in {x}"
   let mut body : Term := x
-  for (id, proc, funProcess) in binds.reverse do
-    body ← if funProcess then `(let $id := Fun.mk (fun k ↦ $id k ω); $body)
-      else if proc then `(let $id := fun k ↦ $id k ω; $body)
+  for (id, proc) in binds.reverse do
+    body ← if proc then `(let $id := fun k ↦ $id k ω; $body)
       else `(let $id := $id ω; $body)
   let e ← Lean.Elab.Term.elabTerm (← `(fun (ω : $(← exprToSyntax Ω)) ↦ $body)) expectedType?
   synthesizeSyntheticMVarsNoPostponing
@@ -106,13 +83,13 @@ def LiftRV.lift (μ x : Term) (expectedType? : Option Expr) : TermElabM Expr := 
 random variables pointwise:
 
 * `rv%[π] (V t (s t))` ↦ `fun ω ↦ V t (s t ω)` (`V t : S → ℝ`, `s : ℕ → Ω → S`);
-* `rv%[π] (V t s[t])` ↦ `fun ω ↦ V t (s[t] ω)` (`s : Fun ℕ (Ω → S)`, rebound with `Fun.mk`);
+* `rv%[π] (V t s[t])` ↦ `fun ω ↦ V t (s[t] ω)` (`s : ℕ → Ω → S`);
 * `rv%[π] (Q t (s t) (a t))` ↦ `fun ω ↦ Q t (s t ω) (a t ω)`;
 * `rv%[π] (u X)` ↦ `fun ω ↦ u (X ω)` (`X : Ω → α`).
 
 `x` is first elaborated as is (normal elaboration order, postponement passed through); only if that
-throws an error are the local names of type `Ω → α`, `ℕ → Ω → α`, `Fin n → Ω → α`, or
-`Fun ℕ (Ω → α)` occurring in `x` rebound to their values at `ω`. If that fails too, the original
+throws an error are the local names of type `Ω → α`, `ℕ → Ω → α`, or `Fin n → Ω → α` occurring in
+`x` rebound to their values at `ω`. If that fails too, the original
 error is rethrown. So every `x` that already elaborates (e.g. `fun ω ↦ V t (s t ω)`,
 `𝔼[r: π](… | s t)`, `0`) is unchanged.
 It is applied to both sides of `=ᵐ[μ]` (see the `macro_rules` below), e.g.

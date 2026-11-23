@@ -3,7 +3,6 @@ import Instance.Data.Nat.Fun
 import Initialize.Tactic.Attr.Basic
 import Mathlib.Analysis.Convex.Deriv
 import Mathlib.Analysis.Convex.Jensen
-import Theorem.Function
 
 
 /--
