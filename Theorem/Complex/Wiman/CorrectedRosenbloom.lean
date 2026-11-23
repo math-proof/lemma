@@ -1,6 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.Analysis.Complex.Wiman.CorrectedRosenbloom
+module
+
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.Analysis.Complex.Wiman.CorrectedRosenbloom
+
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory Set
 open Complex
 

@@ -1,6 +1,10 @@
-import Lemma.ResidueField.FullLevelSemistableCovering
-import Theorem.Submodule.Repartitions
-import Class.AlgebraicCurve_IsCurveOver
+module
+
+public import Theorem.ResidueField.FullLevelSemistableCovering
+public import Theorem.Submodule.Repartitions
+public import Class.AlgebraicCurve_IsCurveOver
+
+@[expose] public section
 
 set_option autoImplicit false
 

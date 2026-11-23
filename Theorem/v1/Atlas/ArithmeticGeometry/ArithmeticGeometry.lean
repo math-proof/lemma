@@ -16,7 +16,7 @@ import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.AdeleQuotientDim
 import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.AffineCurve
 import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.AffineVarieties
 import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.AlgebraicGeometryBasics
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.BoundedHeightFinite
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.BoundedHeightFinite
 import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.CanonicalDivisors
 import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.ClosedPointMorphism
 import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.CompleteVarieties
@@ -47,14 +47,14 @@ import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Hilbert2Adic
 import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Hilbert2AdicCore
 import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertBilinear
 import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertFormulaOdd
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertPrimitiveSolutions
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertPrimitiveSolutions
 import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertProductFormula
 import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertSymbol
 import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertSymbol2Adic
 import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.IdealNorm
 import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Isogenies
 import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.IsogenyKernelAut
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.JInvariant
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.JInvariant
 import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.JInvariantInK
 import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.JInvariantTwist
 import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Lemma2112

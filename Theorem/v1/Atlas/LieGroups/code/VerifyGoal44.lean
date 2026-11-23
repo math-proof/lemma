@@ -9,6 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.LieGroups.code.Globalization
-import Lemma.Submodule.Any_And_Le_Aleph0.of.IsIrreducibleGKModule
+import Theorem.Submodule.Any_And_Le_Aleph0.of.IsIrreducibleGKModule
 
 

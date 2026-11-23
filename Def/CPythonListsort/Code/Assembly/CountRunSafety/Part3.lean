@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/CountRunSafety.lean -/
 
-import Def.CPythonListsort.Code.Assembly.ReverseSliceSafety.Part2
-import Def.CPythonListsort.Code.Transcription.CountRun.Part4
-import Theorem.CPythonListsort.Code.Assembly.CountRunSafety.Part7
+module
+
+public import Def.CPythonListsort.Code.Assembly.ReverseSliceSafety.Part2
+public import Def.CPythonListsort.Code.Transcription.CountRun.Part4
+public import Theorem.CPythonListsort.Code.Assembly.CountRunSafety.Part7
+
+@[expose] public section
+
 /-!
 # `count_run` safety
 

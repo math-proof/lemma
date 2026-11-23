@@ -1,7 +1,11 @@
-import Mathlib
-import Def.ModularCurve_TateVeluRing
-import Def.WeierstrassCurve_VeluOrderTwo
-import Lemma.WeierstrassCurve.VeluPointMap2
+module
+
+public import Mathlib
+public import Def.ModularCurve_TateVeluRing
+public import Def.WeierstrassCurve_VeluOrderTwo
+public import Theorem.WeierstrassCurve.VeluPointMap2
+
+@[expose] public section
 
 set_option autoImplicit false
 

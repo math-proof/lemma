@@ -8,12 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.BooleanFunctions.code.Influence
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Influence
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Monotone
-import Def.v1.Atlas.BooleanFunctions.code.Monotone
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Tactic
+module
+
+public import Def.v1.Atlas.BooleanFunctions.code.Influence
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Influence
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Monotone
+public import Def.v1.Atlas.BooleanFunctions.code.Monotone
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Tactic
+
+@[expose] public section
+
 open Finset Real
 
 

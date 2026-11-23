@@ -1,8 +1,13 @@
-import Mathlib.Algebra.Polynomial.Laurent
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
-import Def.Analysis.Polynomial.MultivariableMahlerMeasure.Part4
+module
+
+public import Mathlib.Algebra.Polynomial.Laurent
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+public import Def.Analysis.Polynomial.MultivariableMahlerMeasure.Part4
+
+@[expose] public section
+
 open Complex MeasureTheory Finset
 open scoped Real
 

@@ -1,12 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/RelativePDerivation.lean -/
 
+module
 
-import Instance.RingTheory.RelativePDerivation
-import Theorem.Int.RelativePDerivation
-import Mathlib.Data.Nat.Choose.Dvd
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Tactic.Ring
-import Theorem.MathlibExtTest.RingTheory.RelativePDerivation
+public import Instance.RingTheory.RelativePDerivation
+public import Theorem.Int.RelativePDerivation
+public import Mathlib.Data.Nat.Choose.Dvd
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Tactic.Ring
+public import Theorem.MathlibExtTest.RingTheory.RelativePDerivation
+
+@[expose] public section
+
 open MetaMathlibExt
 
 

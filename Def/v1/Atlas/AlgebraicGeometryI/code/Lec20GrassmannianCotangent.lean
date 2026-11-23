@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec20GrassmannianTangent.Part3
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec20GrassmannianTangent
+module
+
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec20GrassmannianTangent.Part3
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec20GrassmannianTangent
+
+@[expose] public section
+
 open Module
 
 

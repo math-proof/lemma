@@ -8,7 +8,7 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_6
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_6
 import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Cor_2_8
 import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Cor_2_9
 

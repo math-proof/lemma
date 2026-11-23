@@ -1,10 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/ArakelovDivisor.lean -/
 
-import Mathlib.Algebra.Order.Positive.Field
-import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
-import Mathlib.RingTheory.ClassGroup.Basic
-import Mathlib.RingTheory.FractionalIdeal.Norm
-import Theorem.NumberTheory.NumberField.ArakelovDivisor.Part2
+module
+
+public import Mathlib.Algebra.Order.Positive.Field
+public import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
+public import Mathlib.RingTheory.ClassGroup.Basic
+public import Mathlib.RingTheory.FractionalIdeal.Norm
+public import Theorem.NumberTheory.NumberField.ArakelovDivisor.Part2
+
+@[expose] public section
+
 open scoped NumberField nonZeroDivisors
 
 /-!

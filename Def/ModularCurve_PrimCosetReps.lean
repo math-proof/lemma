@@ -1,5 +1,9 @@
-import Mathlib
-import Instance.ModularCurve_PhiGen
+module
+
+public import Mathlib
+public import Instance.ModularCurve_PhiGen
+
+@[expose] public section
 
 set_option autoImplicit false
 

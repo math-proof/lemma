@@ -1,8 +1,12 @@
-import Def.HaarQuotient
-import Lemma.Matrix.CubicInduction_Structure
-import Def.NumberField_TateGlobalZeta
-import Instance.M4aHerbrand_AdeleTopologyFacts
-import Instance.LanglandsTunnell_CubicInduction_WhittakerBlock
+module
+
+public import Def.HaarQuotient
+public import Theorem.Matrix.CubicInduction_Structure
+public import Def.NumberField_TateGlobalZeta
+public import Instance.M4aHerbrand_AdeleTopologyFacts
+public import Instance.LanglandsTunnell_CubicInduction_WhittakerBlock
+
+@[expose] public section
 
 set_option autoImplicit false
 

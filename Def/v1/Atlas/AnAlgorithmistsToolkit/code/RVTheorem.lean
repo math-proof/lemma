@@ -8,12 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.AnAlgorithmistsToolkit.code.ConvexGeometry.Part2
-import Lemma.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.ConvexGeometry
-import Mathlib.Analysis.Matrix.Normed
-import Mathlib.Probability.Independence.Basic
-import Mathlib.LinearAlgebra.Matrix.Trace
-import Mathlib.LinearAlgebra.Matrix.PosDef
+module
+
+public import Def.v1.Atlas.AnAlgorithmistsToolkit.code.ConvexGeometry.Part2
+public import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.ConvexGeometry
+public import Mathlib.Analysis.Matrix.Normed
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.LinearAlgebra.Matrix.Trace
+public import Mathlib.LinearAlgebra.Matrix.PosDef
+
+@[expose] public section
+
 open Set
 
 open scoped Matrix.Norms.Frobenius

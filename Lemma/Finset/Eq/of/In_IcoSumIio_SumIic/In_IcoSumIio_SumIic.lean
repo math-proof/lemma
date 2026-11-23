@@ -1,3 +1,4 @@
+import Instance.Data.Fin.Fun
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Order.Interval.Finset.Fin
 import Notation.Fun
@@ -11,7 +12,7 @@ Each position belongs to at most one block of a partition of `Fin n`.
 @[path]
 private lemma main
   {n : ℕ}
-  {d : Fin n ⇀ ℕ}
+  {d : Fin n → ℕ}
   {t : ℕ}
   {k₁ k₂ : Fin n}
 -- given

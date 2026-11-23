@@ -5,10 +5,16 @@ All rights reserved.
 /-
 Copyright (c) 2025. All rights reserved.
 -/
-import Mathlib
-import Def.GroupTheory.Perm.Inversions1
-import Instance.GroupTheory.Perm.Basics.Part2
-import Theorem.GroupTheory.Perm.Inversions2
+
+module
+
+public import Mathlib
+public import Def.GroupTheory.Perm.Inversions1
+public import Instance.GroupTheory.Perm.Basics.Part2
+public import Theorem.GroupTheory.Perm.Inversions2
+
+@[expose] public section
+
 /-!
 # More about lengths and simples
 

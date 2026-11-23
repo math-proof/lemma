@@ -1,9 +1,11 @@
-import Mathlib
-import Instance.AlgebraicCurve_TwoChartIntegralModel
+module
+
+public import Mathlib
+public import Instance.AlgebraicCurve_TwoChartIntegralModel
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 universe u
 

@@ -1,3 +1,5 @@
+import Instance.Data.Fin.Fun
+import Instance.Data.Nat.Fun
 import Syntax.Fun
 import Syntax.LinearAlgebra.Matrix.Ones
 import Syntax.LinearAlgebra.Matrix.Pow
@@ -176,8 +178,8 @@ private lemma fin_matrix_cast_apply
 private lemma main
   [NeZero (l : ℕ)]
   {n d_z : ℕ}
-  {Z : (k : ℕ) ⇀ ℝ ^ [k, d_z]}
-  {Q K V : ℕ ⇀ Fin d_z ⇀ ℝ}
+  {Z : (k : ℕ) → ℝ ^ [k, d_z]}
+  {Q K V : ℕ → Fin d_z → ℝ}
 -- given
   (h : ∀ n,
     (Z[n] : ℝ* ^ [n, d_z]) ≈

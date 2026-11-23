@@ -8,15 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.BooleanFunctions.code.FourierExpansion
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Parseval
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.TwoPointInequality
-import Def.v1.Atlas.BooleanFunctions.code.Definitions
-import Def.v1.Atlas.BooleanFunctions.code.Parseval
-import Def.v1.Atlas.BooleanFunctions.code.TwoPointInequality
-import Mathlib.Tactic.Positivity
-import Mathlib.Analysis.MeanInequalitiesPow
+module
+
+public import Def.v1.Atlas.BooleanFunctions.code.FourierExpansion
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Parseval
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.TwoPointInequality
+public import Def.v1.Atlas.BooleanFunctions.code.Definitions
+public import Def.v1.Atlas.BooleanFunctions.code.Parseval
+public import Def.v1.Atlas.BooleanFunctions.code.TwoPointInequality
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Analysis.MeanInequalitiesPow
+
+@[expose] public section
+
 open Finset BigOperators Real
 
 

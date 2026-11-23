@@ -4,16 +4,19 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Data.Nat.Totient
-import Mathlib.NumberTheory.ArithmeticFunction.Moebius
-import Def.NumberTheory.PrimeCounting.SquarefreeTotient.Part2
-import Lemma.Nat.PrimeCounting.SquarefreeTotient
-import Mathlib.Analysis.Complex.ExponentialBounds
-import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
-import Mathlib.NumberTheory.AbelSummation
-import Mathlib.Tactic
+module
 
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Data.Nat.Totient
+public import Mathlib.NumberTheory.ArithmeticFunction.Moebius
+public import Def.NumberTheory.PrimeCounting.SquarefreeTotient.Part2
+public import Theorem.Nat.PrimeCounting.SquarefreeTotient
+public import Mathlib.Analysis.Complex.ExponentialBounds
+public import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
+public import Mathlib.NumberTheory.AbelSummation
+public import Mathlib.Tactic
+
+@[expose] public section
 
 namespace MathlibExt.NumberTheory.PrimeCounting
 

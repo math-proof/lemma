@@ -1,9 +1,13 @@
-import Mathlib.RepresentationTheory.Basic
-import Mathlib.NumberTheory.NumberField.Basic
-import Mathlib.FieldTheory.Galois.Basic
-import Def.FLTPrelim_ModularRep
-import Theorem.WeierstrassCurve.FreyPackage
-import Instance.EllipticCurve_FrobeniusTrace
+module
+
+public import Mathlib.RepresentationTheory.Basic
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Mathlib.FieldTheory.Galois.Basic
+public import Def.FLTPrelim_ModularRep
+public import Theorem.WeierstrassCurve.FreyPackage
+public import Instance.EllipticCurve_FrobeniusTrace
+
+@[expose] public section
 
 set_option autoImplicit false
 

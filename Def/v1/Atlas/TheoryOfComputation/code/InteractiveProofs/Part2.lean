@@ -8,11 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TheoryOfComputation.code.BPP.Part3
-import Def.v1.Atlas.TheoryOfComputation.code.SpaceComplexity.Part7
-import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.SpaceComplexity
-import Structure.v1.Atlas.TheoryOfComputation.code.InteractiveProofs
+module
 
+public import Def.v1.Atlas.TheoryOfComputation.code.BPP.Part3
+public import Def.v1.Atlas.TheoryOfComputation.code.SpaceComplexity.Part7
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.SpaceComplexity
+public import Structure.v1.Atlas.TheoryOfComputation.code.InteractiveProofs
+
+@[expose] public section
 
 namespace InteractiveProofs
 

@@ -1,6 +1,10 @@
-import Def.AdelicDock_LocalEmbedding
-import Def.AutomorphicForm_AdelicTracePushforward
-import Def.NumberField_TateGlobalZeta
+module
+
+public import Def.AdelicDock_LocalEmbedding
+public import Def.AutomorphicForm_AdelicTracePushforward
+public import Def.NumberField_TateGlobalZeta
+
+@[expose] public section
 
 set_option autoImplicit false
 

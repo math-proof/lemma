@@ -1,5 +1,9 @@
-import Instance.FLTPrelim_GaloisRep
-import Instance.EllipticCurve_FrobeniusTrace
+module
+
+public import Instance.FLTPrelim_GaloisRep
+public import Instance.EllipticCurve_FrobeniusTrace
+
+@[expose] public section
 
 open WeierstrassCurve WeierstrassCurve.Affine WeierstrassCurve.Affine.Point
 

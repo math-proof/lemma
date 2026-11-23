@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.DifferentialAnalysis.code.SobolevEmbedding.Part5
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SobolevEmbedding
+module
+
+public import Def.v1.Atlas.DifferentialAnalysis.code.SobolevEmbedding.Part5
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SobolevEmbedding
+
+@[expose] public section
+
 open scoped ZeroAtInfty
 open MeasureTheory Filter Topology
 

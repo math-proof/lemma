@@ -2,8 +2,14 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.Combinatorics.Enumerative.QBinomialBasic.Part4
+
+module
+
+public import Mathlib
+public import Def.Combinatorics.Enumerative.QBinomialBasic.Part4
+
+@[expose] public section
+
 /-!
 # q-Binomial Coefficients: Basic Definitions and Properties
 

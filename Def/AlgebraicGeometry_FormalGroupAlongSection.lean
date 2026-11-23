@@ -1,7 +1,11 @@
-import Class.MvFormalGroup_BasicV2
-import Lemma.Scheme.RelativeGroupLaw
-import Def.CerednikDrinfeld_SchemeNilpPoints
-import Abbrev.AlgebraicGeometry_FormalGroupAlongSection
+module
+
+public import Class.MvFormalGroup_BasicV2
+public import Theorem.Scheme.RelativeGroupLaw
+public import Def.CerednikDrinfeld_SchemeNilpPoints
+public import Abbrev.AlgebraicGeometry_FormalGroupAlongSection
+
+@[expose] public section
 
 set_option autoImplicit false
 

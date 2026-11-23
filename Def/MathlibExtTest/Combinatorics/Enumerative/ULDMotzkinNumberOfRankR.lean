@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/ULDMotzkinNumberOfRankR.lean -/
 
+module
 
-import Def.Combinatorics.Enumerative.ULDMotzkinNumberOfRankR.Part2
-import Lemma.Finset.Enumerative.ULDMotzkinNumberOfRankR
+public import Def.Combinatorics.Enumerative.ULDMotzkinNumberOfRankR.Part2
+public import Theorem.Finset.Enumerative.ULDMotzkinNumberOfRankR
 
+@[expose] public section
 
 namespace MetaMathlibExt.ULDMotzkin
 

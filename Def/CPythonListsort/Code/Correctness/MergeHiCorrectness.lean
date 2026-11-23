@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/MergeHiCorrectness.lean -/
 
-import Def.CPythonListsort.Code.Correctness.EntrySnapshotPermutation
-import Theorem.CPythonListsort.Code.Correctness.MergeHiInvariant
-import Structure.CPythonListsort.Code.Correctness.MergeHiCorrectness
+module
+
+public import Def.CPythonListsort.Code.Correctness.EntrySnapshotPermutation
+public import Theorem.CPythonListsort.Code.Correctness.MergeHiInvariant
+public import Structure.CPythonListsort.Code.Correctness.MergeHiCorrectness
+
+@[expose] public section
+
 /-!
 # Public functional postcondition for `merge_hi`
 

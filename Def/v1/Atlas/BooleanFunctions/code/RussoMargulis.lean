@@ -8,13 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Calculus.Deriv.Add
-import Mathlib.Analysis.Calculus.Deriv.Mul
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Real.Basic
-import Def.v1.Atlas.BooleanFunctions.code.Monotone
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Monotone
+module
 
+public import Mathlib.Analysis.Calculus.Deriv.Add
+public import Mathlib.Analysis.Calculus.Deriv.Mul
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Data.Real.Basic
+public import Def.v1.Atlas.BooleanFunctions.code.Monotone
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Monotone
+
+@[expose] public section
 
 namespace BooleanFourier
 

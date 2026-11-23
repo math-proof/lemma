@@ -1,4 +1,8 @@
-import Def.AutomorphicForm_WhittakerModelLocal
+module
+
+public import Def.AutomorphicForm_WhittakerModelLocal
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,9 +1,13 @@
-import Class.CerednikDrinfeld_MumfordPeriod
-import Def.CerednikDrinfeld_JPrimeTorsionDatum
-import Instance.ValuationSubring_CompletionDecompositionAction
-import Instance.EllipticCurve_FrobeniusTrace
-import Def.FLTPrelim_Ramification
-import Instance.Compat_Mathlib430
+module
+
+public import Class.CerednikDrinfeld_MumfordPeriod
+public import Def.CerednikDrinfeld_JPrimeTorsionDatum
+public import Instance.ValuationSubring_CompletionDecompositionAction
+public import Instance.EllipticCurve_FrobeniusTrace
+public import Def.FLTPrelim_Ramification
+public import Instance.Compat_Mathlib430
+
+@[expose] public section
 
 set_option autoImplicit false
 

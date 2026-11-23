@@ -1,7 +1,11 @@
-import Mathlib
-import Def.ModularCurve_ProlongationTuple
-import Lemma.MvPolynomial.Main
-import Abbrev.MDivRepresents
+module
+
+public import Mathlib
+public import Def.ModularCurve_ProlongationTuple
+public import Theorem.MvPolynomial.Main
+public import Abbrev.MDivRepresents
+
+@[expose] public section
 
 set_option autoImplicit false
 

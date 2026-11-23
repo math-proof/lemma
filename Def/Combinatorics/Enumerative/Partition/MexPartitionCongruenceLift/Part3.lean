@@ -4,9 +4,14 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Combinatorics.Enumerative.Partition.Basic
-import Mathlib.Tactic.Ring
-import Theorem.Combinatorics.Enumerative.Partition.MexPartitionCongruenceLift.Part3
+module
+
+public import Mathlib.Combinatorics.Enumerative.Partition.Basic
+public import Mathlib.Tactic.Ring
+public import Theorem.Combinatorics.Enumerative.Partition.MexPartitionCongruenceLift.Part3
+
+@[expose] public section
+
 /-!
 # Lifting partition congruences to mex partition functions
 

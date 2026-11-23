@@ -2,17 +2,22 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Topology.Algebra.InfiniteSum.Defs
-import Mathlib.Topology.MetricSpace.Pseudo.Defs
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Algebra.Ring.IsFormallyReal
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Analysis.RCLike.Lemmas
-import Mathlib.Data.Int.Star
-import Mathlib.NumberTheory.TsumDivisorsAntidiagonal
-import Mathlib.Topology.GDelta.MetrizableSpace
-import Mathlib.Topology.Separation.CompletelyRegular
-import Theorem.Analysis.SpecialFunctions.Part1Ch6Entry13Ramanujanfactorial.Part3
+module
+
+public import Mathlib.Topology.Algebra.InfiniteSum.Defs
+public import Mathlib.Topology.MetricSpace.Pseudo.Defs
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Algebra.Ring.IsFormallyReal
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.RCLike.Lemmas
+public import Mathlib.Data.Int.Star
+public import Mathlib.NumberTheory.TsumDivisorsAntidiagonal
+public import Mathlib.Topology.GDelta.MetrizableSpace
+public import Mathlib.Topology.Separation.CompletelyRegular
+public import Theorem.Analysis.SpecialFunctions.Part1Ch6Entry13Ramanujanfactorial.Part3
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 6, Entry 13
 

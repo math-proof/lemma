@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/EntrySnapshotPermutation.lean -/
 
-import Def.CPythonListsort.Code.Correctness.ScanRemainder.Part3
+module
+
+public import Def.CPythonListsort.Code.Correctness.ScanRemainder.Part3
+
+@[expose] public section
+
 /-!
 # Persistent whole-entry input snapshot
 

@@ -15,7 +15,7 @@ import Theorem.Category.Atlas.v1.TensorCategories.code.BasicMonoidalDefs
 import Theorem.Category.Atlas.v1.TensorCategories.code.Bimodule
 import Lemma.Category.Atlas.v1.TensorCategories.code.Ch1Theorems
 import Theorem.Category.Atlas.v1.TensorCategories.code.ChevalleyProperty
-import Lemma.Category.Atlas.v1.TensorCategories.code.CoalgebraBialgebra
+import Theorem.Category.Atlas.v1.TensorCategories.code.CoalgebraBialgebra
 import Theorem.Category.Atlas.v1.TensorCategories.code.ComoduleDuals
 import Theorem.Category.Atlas.v1.TensorCategories.code.CoradicalFiltration
 import Theorem.Category.Atlas.v1.TensorCategories.code.Corollary_1_13_7
@@ -32,7 +32,7 @@ import Theorem.Category.Atlas.v1.TensorCategories.code.FiberFunctor
 import Theorem.Category.Atlas.v1.TensorCategories.code.FiberFunctorEnd
 import Theorem.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
 import Theorem.Category.Atlas.v1.TensorCategories.code.FittingAlgebraLocalRing
-import Lemma.Category.Atlas.v1.TensorCategories.code.FittingLemmaInstance
+import Theorem.Category.Atlas.v1.TensorCategories.code.FittingLemmaInstance
 import Theorem.Category.Atlas.v1.TensorCategories.code.FittingLemmaLocalEnd
 import Theorem.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
 import Theorem.Category.Atlas.v1.TensorCategories.code.GradedVec
@@ -52,7 +52,7 @@ import Theorem.Category.Atlas.v1.TensorCategories.code.Lemma_1_30_2
 import Theorem.Category.Atlas.v1.TensorCategories.code.MacLaneCoherence
 import Theorem.Category.Atlas.v1.TensorCategories.code.MacLaneStrictness
 import Theorem.Category.Atlas.v1.TensorCategories.code.ModuleFunctorDefs
-import Lemma.Category.Atlas.v1.TensorCategories.code.ModuleRigidityCompat
+import Theorem.Category.Atlas.v1.TensorCategories.code.ModuleRigidityCompat
 import Lemma.Category.Atlas.v1.TensorCategories.code.MonoidalFunctorProps
 import Theorem.Category.Atlas.v1.TensorCategories.code.MonoidalFunctorsCohomology
 import Lemma.Category.Atlas.v1.TensorCategories.code.MonoidalStructuresGraded
@@ -90,7 +90,7 @@ import Lemma.Category.Atlas.v1.TensorCategories.code.UnitSemisimplicity.Monoidal
 import Theorem.Category.Atlas.v1.TensorCategories.code.UnitSemisimplicity.TensorExactness
 import Theorem.Category.Atlas.v1.TensorCategories.code.UnitSemisimplicity.UnitSimple
 import Lemma.Category.Atlas.v1.TensorCategories.code.VecCategoricalFusionData
-import Lemma.Category.Atlas.v1.TensorCategories.code.VecDualMapBridge
+import Theorem.Category.Atlas.v1.TensorCategories.code.VecDualMapBridge
 import Theorem.Category.Atlas.v1.TensorCategories.code.VecInstances
 import Lemma.Category.Atlas.v1.TensorCategories.code.VecPivotal.SphericalInstance
 import Lemma.Category.Atlas.v1.TensorCategories.code.VecPivotalConcrete
@@ -115,7 +115,7 @@ import Class.v1.Atlas.TensorCategories.code.Corollary_1_13_7
 import Theorem.v1.Atlas.TensorCategories.code.Corollary_1_15_2
 import Theorem.v1.Atlas.TensorCategories.code.Corollary_1_15_9
 import Instance.v1.Atlas.TensorCategories.code.Corollary_1_22_6
-import Lemma.Category.Atlas.v1.TensorCategories.code.Corollary_1_29_5
+import Theorem.Category.Atlas.v1.TensorCategories.code.Corollary_1_29_5
 import Theorem.Category.Atlas.v1.TensorCategories.code.Corollary_1_45_11
 import Theorem.Category.Atlas.v1.TensorCategories.code.Corollary_1_45_16
 import Theorem.Category.Atlas.v1.TensorCategories.code.Corollary_2_7_2

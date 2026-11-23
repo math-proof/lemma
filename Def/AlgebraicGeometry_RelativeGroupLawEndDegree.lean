@@ -1,9 +1,13 @@
-import Mathlib
-import Def.AlgebraicGeometry_RelativeGroupLaw
-import Def.GoodReductionJacobian_RelativeGroupLawKernel
-import Theorem.Scheme.NeronModelEndomorphismExtension
-import Instance.AlgebraicGeometry_RelativeGroupLawEndDegree
-import Abbrev.AlgebraicGeometry_RelativeGroupLawEndDegree
+module
+
+public import Mathlib
+public import Def.AlgebraicGeometry_RelativeGroupLaw
+public import Def.GoodReductionJacobian_RelativeGroupLawKernel
+public import Theorem.Scheme.NeronModelEndomorphismExtension
+public import Instance.AlgebraicGeometry_RelativeGroupLawEndDegree
+public import Abbrev.AlgebraicGeometry_RelativeGroupLawEndDegree
+
+@[expose] public section
 
 set_option autoImplicit false
 

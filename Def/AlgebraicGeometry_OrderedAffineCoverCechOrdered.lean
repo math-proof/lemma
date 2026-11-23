@@ -1,6 +1,10 @@
-import Def.AlgebraicGeometry_OrderedAffineCoverCech
-import Def.AlgebraicGeometry_OrderedAffineCoverCechCup
-import Def.AlgebraicGeometry_OrderedAffineCoverCochainPullback
+module
+
+public import Def.AlgebraicGeometry_OrderedAffineCoverCech
+public import Def.AlgebraicGeometry_OrderedAffineCoverCechCup
+public import Def.AlgebraicGeometry_OrderedAffineCoverCochainPullback
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.CombinatorialOptimization.code.Matching.ForestCharacterization
-import Lemma.Finset.Atlas.v1.CombinatorialOptimization.code.Matching.ForestCharacterization
+module
+
+public import Def.v1.Atlas.CombinatorialOptimization.code.Matching.ForestCharacterization
+public import Theorem.Finset.Atlas.v1.CombinatorialOptimization.code.Matching.ForestCharacterization
+
+@[expose] public section
+
 open SimpleGraph Set
 
 

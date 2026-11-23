@@ -1,5 +1,9 @@
-import Def.AlgebraicGeometry_FormalGroupAlongSection
-import Def.CerednikDrinfeld_QMModuli
+module
+
+public import Def.AlgebraicGeometry_FormalGroupAlongSection
+public import Def.CerednikDrinfeld_QMModuli
+
+@[expose] public section
 
 set_option autoImplicit false
 

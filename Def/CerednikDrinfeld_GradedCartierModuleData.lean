@@ -1,6 +1,10 @@
-import Mathlib
-import Def.CerednikDrinfeld_SpecialFormalModule
-import Structure.CerednikDrinfeld_GradedCartierModuleData
+module
+
+public import Mathlib
+public import Def.CerednikDrinfeld_SpecialFormalModule
+public import Structure.CerednikDrinfeld_GradedCartierModuleData
+
+@[expose] public section
 
 set_option autoImplicit false
 

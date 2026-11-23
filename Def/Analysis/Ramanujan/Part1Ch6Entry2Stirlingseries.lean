@@ -4,24 +4,29 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.NumberTheory.Harmonic.EulerMascheroni
-import Mathlib.Analysis.Calculus.SmoothSeries
-import Mathlib.Analysis.Complex.LocallyUniformLimit
-import Def.Analysis.SpecialFunctions.Gamma.Digamma
-import Theorem.Complex.Digamma
-import Lemma.Real.Digamma
-import Mathlib.NumberTheory.ZetaValues
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Push
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Set
+module
+
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+public import Mathlib.NumberTheory.Harmonic.EulerMascheroni
+public import Mathlib.Analysis.Calculus.SmoothSeries
+public import Mathlib.Analysis.Complex.LocallyUniformLimit
+public import Def.Analysis.SpecialFunctions.Gamma.Digamma
+public import Theorem.Complex.Digamma
+public import Theorem.Real.Digamma
+public import Mathlib.NumberTheory.ZetaValues
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Push
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.Set
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 6, Entry 2
 

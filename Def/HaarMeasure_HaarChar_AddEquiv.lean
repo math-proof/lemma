@@ -1,7 +1,11 @@
-import Mathlib
-import Theorem.Measure.IsHaarMeasure_Comap.of.IsOpenEmbedding
-import Instance.Mathlib_Topology_Algebra_RestrictedProduct_TopologicalSpace
-import Instance.Mathlib_MeasureTheory_Constructions_BorelSpace_RestrictedProduct
+module
+
+public import Mathlib
+public import Theorem.Measure.IsHaarMeasure_Comap.of.IsOpenEmbedding
+public import Instance.Mathlib_Topology_Algebra_RestrictedProduct_TopologicalSpace
+public import Instance.Mathlib_MeasureTheory_Constructions_BorelSpace_RestrictedProduct
+
+@[expose] public section
 
 section
 

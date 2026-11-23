@@ -8,15 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Nat.Log
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Fintype.Prod
-import Mathlib.Data.Set.Card
-import Mathlib.Tactic.Ring
-import Def.v1.Atlas.TheoryOfComputation.code.SpaceComplexity.Part7
-import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.SpaceComplexity
-import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.Complexity
-import Def.v1.Atlas.TheoryOfComputation.code.Complexity.Part2
+module
+
+public import Mathlib.Data.Nat.Log
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Data.Fintype.Prod
+public import Mathlib.Data.Set.Card
+public import Mathlib.Tactic.Ring
+public import Def.v1.Atlas.TheoryOfComputation.code.SpaceComplexity.Part7
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.SpaceComplexity
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.Complexity
+public import Def.v1.Atlas.TheoryOfComputation.code.Complexity.Part2
+
+@[expose] public section
+
 open SpaceComplexity
 open TuringMachine
 

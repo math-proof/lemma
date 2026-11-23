@@ -1,9 +1,11 @@
-import Mathlib
-import Instance.GaloisRep_CompletionBridge
+module
+
+public import Mathlib
+public import Instance.GaloisRep_CompletionBridge
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 open UniformSpace
 

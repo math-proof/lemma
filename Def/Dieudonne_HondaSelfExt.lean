@@ -1,6 +1,10 @@
-import Mathlib
-import Lemma.LinearMap.DatumAndHonda
-import Instance.Dieudonne_HondaSelfExt
+module
+
+public import Mathlib
+public import Theorem.LinearMap.DatumAndHonda
+public import Instance.Dieudonne_HondaSelfExt
+
+@[expose] public section
 
 set_option autoImplicit false
 

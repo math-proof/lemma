@@ -1,0 +1,33 @@
+module
+
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.WordSigmaInvariance
+
+@[expose] public section
+
+open Finset BigOperators CoxeterGroup
+
+
+/--
+[wordSigma_eq_of_wordProd_eq](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/WordSigmaInvariance.lean)
+-/
+@[path]
+private theorem main
+  [DecidableEq B]
+  [Fintype B]
+  [Group W]
+  {M : CoxeterMatrix B}
+  {cs : CoxeterSystem M W}
+  {word1 word2 : List B}
+  {v : B → ℝ}
+-- given
+  (h : cs.wordProd word1 = cs.wordProd word2) :
+-- imply
+  wordSigma M word1 v = wordSigma M word2 v := by
+-- proof
+  apply CoxeterGroup.wordSigma_eq_of_wordProd_eq M cs word1 word2 h v
+
+
+-- created on 2026-10-23
+-- updated on 2026-10-26

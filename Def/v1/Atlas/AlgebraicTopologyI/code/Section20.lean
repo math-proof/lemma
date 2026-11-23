@@ -8,15 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.BilinearMap
-import Mathlib.LinearAlgebra.TensorProduct.Basic
-import Mathlib.LinearAlgebra.TensorProduct.RightExactness
-import Mathlib.LinearAlgebra.DirectSum.TensorProduct
-import Mathlib.RingTheory.Flat.Basic
-import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section11
-import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section11
-import Abbrev.v1.Atlas.AlgebraicTopologyI.code.Section20
+module
 
+public import Mathlib.LinearAlgebra.BilinearMap
+public import Mathlib.LinearAlgebra.TensorProduct.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.RightExactness
+public import Mathlib.LinearAlgebra.DirectSum.TensorProduct
+public import Mathlib.RingTheory.Flat.Basic
+public import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section11
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section11
+public import Abbrev.v1.Atlas.AlgebraicTopologyI.code.Section20
+
+@[expose] public section
 
 namespace TensorProduct
 

@@ -1,7 +1,7 @@
 import Mathlib
 import Theorem.Ideal.RegularLocalRingQuotientRegular
 import Theorems.Thm_IsRegularLocalRing_isDomain
-import Lemma.Ideal.RegularLocalRingRegularSequenceAscent
+import Theorem.Ideal.RegularLocalRingRegularSequenceAscent
 import Def.Mathlib_RingTheory_RegularLocalRingFlatLocalAscent
 set_option autoImplicit false
 set_option maxHeartbeats 800000

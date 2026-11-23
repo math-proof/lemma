@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Abbrev.v1.Atlas.TensorCategories.code.QuasiTensorFunctor.Part5
-import Theorem.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctor
-import Abbrev.v1.Atlas.TensorCategories.code.QuasiBialgebra
-import Theorem.v1.Atlas.TensorCategories.code.Proposition_1_36_4.Part2
+module
+
+public import Abbrev.v1.Atlas.TensorCategories.code.QuasiTensorFunctor.Part5
+public import Theorem.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctor
+public import Abbrev.v1.Atlas.TensorCategories.code.QuasiBialgebra
+public import Theorem.v1.Atlas.TensorCategories.code.Proposition_1_36_4.Part2
+
+@[expose] public section
+
 open scoped TensorProduct
 open CategoryTheory
 

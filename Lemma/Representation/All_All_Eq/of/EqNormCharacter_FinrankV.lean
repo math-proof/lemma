@@ -9,7 +9,6 @@ namespace BurnsidePaqb
 /--
 [all_roots_eq_of_norm_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/ScalarCenter.lean)
 -/
-@[path]
 lemma all_roots_eq_of_norm_eq
   [Group G] [Fintype G] [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V] [Nontrivial V] [Finite G]
   {ρ : Representation ℂ G V} [Representation.IsIrreducible ρ]
@@ -22,9 +21,9 @@ lemma all_roots_eq_of_norm_eq
   by_contra hcon
   push Not at hcon
   obtain ⟨μ₁, hμ₁, μ₂, hμ₂, hne⟩ := hcon
-  have hlt := abs_multiset_sum_lt _ (fun μ hμ => charpoly_root_norm_eq_one ρ g μ hμ)
+  have hlt := abs_multiset_sum_lt (G := G) (fun μ hμ => charpoly_root_norm_eq_one (ρ := ρ) (g := g) (μ := μ) hμ)
     ⟨μ₁, hμ₁, μ₂, hμ₂, hne⟩
-  rw [← character_eq_sum_roots ρ g, charpoly_roots_card ρ g] at hlt
+  rw [← character_eq_sum_roots (ρ := ρ) (g := g), charpoly_roots_card (ρ := ρ) (g := g)] at hlt
   rw [h] at hlt
   exact (lt_irrefl _) hlt
 
@@ -35,7 +34,6 @@ namespace BurnsidePaqb
 /--
 [eq_smul_one_of_all_roots_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/ScalarCenter.lean)
 -/
-@[path]
 lemma eq_smul_one_of_all_roots_eq
   [Group G] [Fintype G] [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V] [Nontrivial V] [Finite G]
   {ρ : Representation ℂ G V}
@@ -62,7 +60,7 @@ lemma eq_smul_one_of_all_roots_eq
   have hmap : (ρ g).charpoly.roots.map (fun μ => Polynomial.X - Polynomial.C μ)
     = Multiset.replicate (Module.finrank ℂ V)
       (Polynomial.X - Polynomial.C μ₀) := by
-    have hcard := charpoly_roots_card ρ g
+    have hcard := charpoly_roots_card (ρ := ρ) (g := g)
     rw [← hcard, ← Multiset.map_const]
     apply Multiset.map_congr rfl
     intro μ hμ
@@ -122,7 +120,6 @@ namespace BurnsidePaqb
 /--
 [mem_charCenter_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/ScalarCenter.lean)
 -/
-@[path]
 lemma mem_charCenter_iff
   [Group G] [Fintype G] [AddCommGroup V] [Module ℂ V] [Nontrivial V]
   {ρ : Representation ℂ G V}
@@ -139,7 +136,6 @@ namespace BurnsidePaqb
 /--
 [mem_charCenter_of_eq_smul](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/ScalarCenter.lean)
 -/
-@[path]
 lemma mem_charCenter_of_eq_smul
   [Group G] [Fintype G] [AddCommGroup V] [Module ℂ V] [Nontrivial V]
   {ρ : Representation ℂ G V}
@@ -159,7 +155,6 @@ namespace BurnsidePaqb
 /--
 [exists_eq_smul_of_mem_charCenter](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/ScalarCenter.lean)
 -/
-@[path]
 lemma exists_eq_smul_of_mem_charCenter
   [Group G] [Fintype G] [AddCommGroup V] [Module ℂ V] [Nontrivial V]
   {ρ : Representation ℂ G V}
@@ -178,7 +173,6 @@ namespace BurnsidePaqb
 /--
 [charCenter_proper_of_nonlinear](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/ScalarCenter.lean)
 -/
-@[path]
 lemma charCenter_proper_of_nonlinear
   [Group G] [Fintype G] [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V] [Nontrivial V]
   {ρ : Representation ℂ G V} [Representation.IsIrreducible ρ]
@@ -230,7 +224,6 @@ namespace BurnsidePaqb
 /--
 [norm_eq_of_mem_charCenter](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/ScalarCenter.lean)
 -/
-@[path]
 lemma norm_eq_of_mem_charCenter
   [Group G] [Fintype G] [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V] [Nontrivial V] [Finite G]
   {ρ : Representation ℂ G V}

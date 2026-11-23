@@ -1,4 +1,8 @@
-import Def.LanglandsTunnell_JLConverse
+module
+
+public import Def.LanglandsTunnell_JLConverse
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -31,7 +31,7 @@ import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.EuclideanDFS
 import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.EuclideanSymplectic
 import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.FourManifoldsSW
 import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.GaugeAction
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.HamiltonianVectorFields
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.HamiltonianVectorFields
 import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.HodgeRepresentative
 import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.HodgeTheory
 import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.HodgeTheoryMathlib
@@ -43,7 +43,7 @@ import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.ManifoldIntegration
 import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.MatrixGroupIntersections
 import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.MoserDarboux
 import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.NijenhuisGoals
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.PolynomialDFS
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.PolynomialDFS
 import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.PontrjaginObstructions
 import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SWModuliGoal62
 import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SWModuliQuotient

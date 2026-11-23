@@ -1,4 +1,8 @@
-import Lemma.Measure.IdeleProductMeasure
+module
+
+public import Theorem.Measure.IdeleProductMeasure
+
+@[expose] public section
 
 set_option autoImplicit false
 

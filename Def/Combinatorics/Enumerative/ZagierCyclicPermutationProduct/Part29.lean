@@ -4,13 +4,18 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Combinatorics.Enumerative.Stirling
-import Mathlib.GroupTheory.Perm.Cycle.Type
-import Mathlib.Algebra.Polynomial.Taylor
-import Mathlib.GroupTheory.Perm.Fin
-import Def.Combinatorics.Enumerative.Stirling.Part4
-import Theorem.Finset.Enumerative.Stirling
-import Structure.Combinatorics.Enumerative.ZagierCyclicPermutationProduct.Part7
+module
+
+public import Mathlib.Combinatorics.Enumerative.Stirling
+public import Mathlib.GroupTheory.Perm.Cycle.Type
+public import Mathlib.Algebra.Polynomial.Taylor
+public import Mathlib.GroupTheory.Perm.Fin
+public import Def.Combinatorics.Enumerative.Stirling.Part4
+public import Theorem.Finset.Enumerative.Stirling
+public import Structure.Combinatorics.Enumerative.ZagierCyclicPermutationProduct.Part7
+
+@[expose] public section
+
 /-!
 # Products of two cyclic permutations
 

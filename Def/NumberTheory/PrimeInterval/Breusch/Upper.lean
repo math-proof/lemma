@@ -1,26 +1,31 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Upper.lean -/
 
-import Def.NumberTheory.PrimeInterval.Breusch.Grid
-import Theorem.Nat.PrimeInterval.Breusch.Grid
-import Lemma.Nat.PrimeInterval.Breusch.Lower
-import Theorem.Nat.PrimeInterval.Breusch.Theta
-import Def.NumberTheory.PrimeInterval.Breusch.Lower
-import Def.NumberTheory.PrimeInterval.Breusch.Theta
-import Mathlib.Algebra.Order.Floor.Semiring
-import Mathlib.RingTheory.UniqueFactorizationDomain.Finsupp
-import Mathlib.Data.Nat.Choose.Factorization
-import Mathlib.Data.Nat.Factorization.Basic
-import Mathlib.NumberTheory.PrimeCounting
-import Mathlib.Data.Nat.Prime.Factorial
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.NumberTheory.Primorial
-import Mathlib.Computability.Reduce
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.GCongr
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+module
+
+public import Def.NumberTheory.PrimeInterval.Breusch.Grid
+public import Theorem.Nat.PrimeInterval.Breusch.Grid
+public import Theorem.Nat.PrimeInterval.Breusch.Lower
+public import Theorem.Nat.PrimeInterval.Breusch.Theta
+public import Def.NumberTheory.PrimeInterval.Breusch.Lower
+public import Def.NumberTheory.PrimeInterval.Breusch.Theta
+public import Mathlib.Algebra.Order.Floor.Semiring
+public import Mathlib.RingTheory.UniqueFactorizationDomain.Finsupp
+public import Mathlib.Data.Nat.Choose.Factorization
+public import Mathlib.Data.Nat.Factorization.Basic
+public import Mathlib.NumberTheory.PrimeCounting
+public import Mathlib.Data.Nat.Prime.Factorial
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.NumberTheory.Primorial
+public import Mathlib.Computability.Reduce
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.GCongr
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 /-!
 # Breusch upper bound via the continuous `G`-function
 

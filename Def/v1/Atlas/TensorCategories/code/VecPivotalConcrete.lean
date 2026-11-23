@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Structure.v1.Atlas.TensorCategories.code.PivotalSpherical.Part3
-import Theorem.Category.Atlas.v1.TensorCategories.code.PivotalSpherical
-import Theorem.Category.Atlas.v1.TensorCategories.code.VecInstances
-import Lemma.Category.Atlas.v1.TensorCategories.code.VecDualMapBridge
-import Abbrev.v1.Atlas.TensorCategories.code.VecInstances.Part2
-import Theorem.v1.Atlas.TensorCategories.code.VecDualMapBridge
+module
+
+public import Mathlib
+public import Structure.v1.Atlas.TensorCategories.code.PivotalSpherical.Part3
+public import Theorem.Category.Atlas.v1.TensorCategories.code.PivotalSpherical
+public import Theorem.Category.Atlas.v1.TensorCategories.code.VecInstances
+public import Theorem.Category.Atlas.v1.TensorCategories.code.VecDualMapBridge
+public import Abbrev.v1.Atlas.TensorCategories.code.VecInstances.Part2
+public import Theorem.v1.Atlas.TensorCategories.code.VecDualMapBridge
+
+@[expose] public section
+
 open CategoryTheory MonoidalCategory Module Category TensorCategories
 
 universe u

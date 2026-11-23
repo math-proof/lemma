@@ -12,7 +12,6 @@ namespace BurnsidePaqb
 /--
 [conjClass_card_mul_stabilizer_card](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqbReduction.lean)
 -/
-@[path]
 private lemma conjClass_card_mul_stabilizer_card_eq
   [Group G] [Fintype G]
   {g : G} :
@@ -31,7 +30,6 @@ namespace BurnsidePaqb
 /--
 [centralizer_card_eq_stabilizer_card](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqbReduction.lean)
 -/
-@[path]
 private lemma centralizer_card_eq_stabilizer_card_eq
   [Group G] [Fintype G]
   {g : G} :
@@ -48,7 +46,6 @@ namespace BurnsidePaqb
 /--
 [conjClass_card_mul_centralizer_card](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqbReduction.lean)
 -/
-@[path]
 private lemma conjClass_card_mul_centralizer_card_eq
   [Group G] [Fintype G]
   {g : G} :
@@ -65,7 +62,6 @@ namespace BurnsidePaqb
 /--
 [exists_ne_one_class_prime_pow](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqbReduction.lean)
 -/
-@[path]
 private lemma exists_ne_one_class_prime_pow_eq
   [Group G] [Fintype G]
   {p q a b : ℕ}

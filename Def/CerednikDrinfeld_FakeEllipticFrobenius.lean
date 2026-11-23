@@ -1,6 +1,10 @@
-import Mathlib.Algebra.CharP.Frobenius
-import Def.CerednikDrinfeld_QMModuliProps
-import Structure.CerednikDrinfeld_FakeEllipticFrobenius
+module
+
+public import Mathlib.Algebra.CharP.Frobenius
+public import Def.CerednikDrinfeld_QMModuliProps
+public import Structure.CerednikDrinfeld_FakeEllipticFrobenius
+
+@[expose] public section
 
 set_option autoImplicit false
 

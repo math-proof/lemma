@@ -4,10 +4,15 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
 
-import Mathlib.Analysis.Normed.Module.DoubleDual
-import Mathlib.Data.List.Sublists
-import Mathlib.Data.Nat.Nth
-import Def.Analysis.FunctionalAnalysis.RosenthalL1.Part10
+module
+
+public import Mathlib.Analysis.Normed.Module.DoubleDual
+public import Mathlib.Data.List.Sublists
+public import Mathlib.Data.Nat.Nth
+public import Def.Analysis.FunctionalAnalysis.RosenthalL1.Part10
+
+@[expose] public section
+
 /-!
 # Rosenthal's `ℓ¹` theorem
 

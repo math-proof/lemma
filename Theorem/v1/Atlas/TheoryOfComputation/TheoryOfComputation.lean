@@ -40,7 +40,7 @@ import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.SelfReference
 import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.SharpSATCoNPHard
 import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.SharpSATInIP
 import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.SpaceComplexity
-import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.TMCodingInstance
+import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.TMCodingInstance
 import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.TMComposition
 import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.TuringMachines
 import Def.v1.Atlas.TheoryOfComputation.code.CFLInterRegular

@@ -2,7 +2,7 @@
 
 import Mathlib.Algebra.Group.ConjFinite
 import Mathlib.Algebra.MonoidAlgebra.Basic
-import Mathlib.Data.Complex.Basic
+import Mathlib.Basic.Complex.Basic
 import Theorem.GroupTheory.BurnsidePaqbReduction.Part2
 import Def.GroupTheory.BurnsidePaqb.ClassSum.Part3
 /-!

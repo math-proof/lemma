@@ -8,22 +8,27 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.MeasureTheory.Group.Measure
-import Mathlib.Algebra.Group.Pointwise.Set.Basic
-import Mathlib.Analysis.Convex.Function
-import Mathlib.Analysis.Normed.Module.Basic
-import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
-import Mathlib.MeasureTheory.Constructions.Pi
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Algebra.Order.Ring.Pow
-import Mathlib.Analysis.MeanInequalities
-import Mathlib.MeasureTheory.Integral.Bochner.Set
-import Mathlib.Topology.MetricSpace.Thickening
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.MeasureTheory.Constructions.HaarToSphere
-import Def.v1.Atlas.AnAlgorithmistsToolkit.code.ConvexGeometry.Part2
-import Lemma.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.ConvexGeometry
+module
+
+public import Mathlib.MeasureTheory.Group.Measure
+public import Mathlib.Algebra.Group.Pointwise.Set.Basic
+public import Mathlib.Analysis.Convex.Function
+public import Mathlib.Analysis.Normed.Module.Basic
+public import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
+public import Mathlib.MeasureTheory.Constructions.Pi
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Algebra.Order.Ring.Pow
+public import Mathlib.Analysis.MeanInequalities
+public import Mathlib.MeasureTheory.Integral.Bochner.Set
+public import Mathlib.Topology.MetricSpace.Thickening
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.MeasureTheory.Constructions.HaarToSphere
+public import Def.v1.Atlas.AnAlgorithmistsToolkit.code.ConvexGeometry.Part2
+public import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.ConvexGeometry
+
+@[expose] public section
+
 open Pointwise
 
 

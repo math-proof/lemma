@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/Partition/Overpartition.lean -/
 
+module
 
-import Def.Combinatorics.Enumerative.Partition.Overpartition
-import Theorem.Nat.Enumerative.Partition.Overpartition
-import Theorem.MathlibExtTest.Combinatorics.Enumerative.Partition.Overpartition
+public import Def.Combinatorics.Enumerative.Partition.Overpartition
+public import Theorem.Nat.Enumerative.Partition.Overpartition
+public import Theorem.MathlibExtTest.Combinatorics.Enumerative.Partition.Overpartition
 
+@[expose] public section
 
 namespace Nat.Overpartition
 

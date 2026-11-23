@@ -8,11 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
-import Mathlib.Topology.Order.Compact
-import Mathlib.Analysis.Normed.Group.Bounded
+module
 
+public import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
+public import Mathlib.Topology.Order.Compact
+public import Mathlib.Analysis.Normed.Group.Bounded
+
+@[expose] public section
 
 noncomputable section
 

@@ -2,25 +2,30 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Combinatorics.Enumerative.Catalan.Basic
-import Mathlib.NumberTheory.Bernoulli
-import Mathlib.Analysis.Analytic.Binomial
-import Mathlib.Analysis.PSeries
-import Mathlib.Analysis.SumIntegralComparisons
-import Mathlib.Analysis.SpecialFunctions.Complex.Analytic
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Mathlib.Analysis.SpecialFunctions.Stirling
-import Mathlib.Algebra.BigOperators.Pi
-import Mathlib.NumberTheory.BernoulliPolynomials
-import Mathlib.NumberTheory.ZetaValues
-import Mathlib.Order.Filter.AtTopBot.Basic
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Theorem.Analysis.Asymptotics.CatalanAsymptoticExpansion.Part3
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Combinatorics.Enumerative.Catalan.Basic
+public import Mathlib.NumberTheory.Bernoulli
+public import Mathlib.Analysis.Analytic.Binomial
+public import Mathlib.Analysis.PSeries
+public import Mathlib.Analysis.SumIntegralComparisons
+public import Mathlib.Analysis.SpecialFunctions.Complex.Analytic
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+public import Mathlib.Analysis.SpecialFunctions.Stirling
+public import Mathlib.Algebra.BigOperators.Pi
+public import Mathlib.NumberTheory.BernoulliPolynomials
+public import Mathlib.NumberTheory.ZetaValues
+public import Mathlib.Order.Filter.AtTopBot.Basic
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Theorem.Analysis.Asymptotics.CatalanAsymptoticExpansion.Part3
+
+@[expose] public section
+
 /-!
 # Stirling-type asymptotic expansions of Catalan numbers
 

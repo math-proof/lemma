@@ -1,9 +1,13 @@
-import Mathlib
-import Def.ModularCurve_HeckeOperator
-import Def.AlgebraicCurve_DifferentialPushPull
-import Def.AlgebraicCurve_RegularDifferentials
-import Instance.ModularCurve_HeckeDifferential
-import Abbrev.ModularCurve_HeckeDifferential
+module
+
+public import Mathlib
+public import Def.ModularCurve_HeckeOperator
+public import Def.AlgebraicCurve_DifferentialPushPull
+public import Def.AlgebraicCurve_RegularDifferentials
+public import Instance.ModularCurve_HeckeDifferential
+public import Abbrev.ModularCurve_HeckeDifferential
+
+@[expose] public section
 
 set_option autoImplicit false
 

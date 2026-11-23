@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TheoryOfComputation.code.Complexity.Part2
-import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.Complexity
-import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.SpaceComplexity
-import Def.v1.Atlas.TheoryOfComputation.code.SpaceComplexity.Part7
+module
+
+public import Def.v1.Atlas.TheoryOfComputation.code.Complexity.Part2
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.Complexity
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.SpaceComplexity
+public import Def.v1.Atlas.TheoryOfComputation.code.SpaceComplexity.Part7
+
+@[expose] public section
+
 open TuringMachine SpaceComplexity Direction
 
 

@@ -1,5 +1,9 @@
-import Theorem.ZMod.Inst
-import Abbrev.CohCarrier_HeckeDiamondRing
+module
+
+public import Theorem.ZMod.Inst
+public import Abbrev.CohCarrier_HeckeDiamondRing
+
+@[expose] public section
 
 set_option autoImplicit false
 

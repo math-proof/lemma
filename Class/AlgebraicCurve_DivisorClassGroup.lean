@@ -2,7 +2,7 @@ module
 
 public import Abbrev.AlgebraicCurve_DivisorClassGroup
 
-public section
+@[expose] public section
 
 /-!
 Full Divisor / degZero / Pic0 / HasPrincipalDivisors API.

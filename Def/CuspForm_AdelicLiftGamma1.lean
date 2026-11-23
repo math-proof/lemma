@@ -1,5 +1,9 @@
-import Def.LanglandsTunnell_DeltaLift
-import Def.AdelicDock_LocalEmbedding
+module
+
+public import Def.LanglandsTunnell_DeltaLift
+public import Def.AdelicDock_LocalEmbedding
+
+@[expose] public section
 
 set_option autoImplicit false
 

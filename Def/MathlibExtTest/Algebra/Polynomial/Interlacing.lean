@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/Polynomial/Interlacing.lean -/
 
-import Def.Algebra.Polynomial.Interlacing
-import Lemma.Polynomial.Interlacing
+module
+
+public import Def.Algebra.Polynomial.Interlacing
+public import Theorem.Polynomial.Interlacing
+
+@[expose] public section
+
 open scoped BigOperators ComplexOrder
 
 

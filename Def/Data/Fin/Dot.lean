@@ -1,8 +1,11 @@
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Matrix.Mul
-import Notation.Fun
-import Theorem.Data.Fin.Dot
+module
 
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Matrix.Mul
+public import Notation.Fun
+public import Theorem.Data.Fin.Dot
+
+@[expose] public section
 
 /-- Tile `x` up to `n' / n` copies and pad the rest with `0`, as in `List.Vector.resize`. -/
 def Fin.resize [Zero α] {n : ℕ} (x : Fin n → α) (n' : ℕ) : Fin n' → α :=

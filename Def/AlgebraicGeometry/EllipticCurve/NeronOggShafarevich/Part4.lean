@@ -2,14 +2,19 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.AlgebraicGeometry.EllipticCurve.Reduction
-import Mathlib.RingTheory.Valuation.RamificationGroup
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Ring
-import Mathlib.RingTheory.Valuation.LocalSubring
-import Theorem.AlgebraicGeometry.EllipticCurve.NeronOggShafarevich.Part4
+module
+
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Reduction
+public import Mathlib.RingTheory.Valuation.RamificationGroup
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Ring
+public import Mathlib.RingTheory.Valuation.LocalSubring
+public import Theorem.AlgebraicGeometry.EllipticCurve.NeronOggShafarevich.Part4
+
+@[expose] public section
+
 /-!
 # The easy direction of the Néron–Ogg–Shafarevich criterion
 

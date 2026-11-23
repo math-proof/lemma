@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Instance.v1.Atlas.Probability.code.MarkovChainConstruction.Part2
-import Lemma.Measure.Atlas.v1.Probability.code.MarkovChainConstruction
+module
+
+public import Instance.v1.Atlas.Probability.code.MarkovChainConstruction.Part2
+public import Theorem.Measure.Atlas.v1.Probability.code.MarkovChainConstruction
+
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory
 
 variable {Ω S : Type*} {m : MeasurableSpace Ω} [MeasurableSpace S]

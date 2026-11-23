@@ -1,5 +1,9 @@
-import Lemma.Scheme.QMRigidification
-import Def.CerednikDrinfeld_FormalUpperHalfPlaneDatum
+module
+
+public import Theorem.Scheme.QMRigidification
+public import Def.CerednikDrinfeld_FormalUpperHalfPlaneDatum
+
+@[expose] public section
 
 set_option autoImplicit false
 

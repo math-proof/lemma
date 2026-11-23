@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.AlgebraicCombinatorics.code.SpernerProperty.Part2
-import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.SpernerProperty
-import Mathlib.Combinatorics.Hall.Finite
-import Mathlib.Combinatorics.Enumerative.DoubleCounting
-import Mathlib.Combinatorics.SetFamily.Shadow
+module
+
+public import Def.v1.Atlas.AlgebraicCombinatorics.code.SpernerProperty.Part2
+public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.SpernerProperty
+public import Mathlib.Combinatorics.Hall.Finite
+public import Mathlib.Combinatorics.Enumerative.DoubleCounting
+public import Mathlib.Combinatorics.SetFamily.Shadow
+
+@[expose] public section
+
 open Finset SpernerProperty
 open scoped FinsetFamily
 

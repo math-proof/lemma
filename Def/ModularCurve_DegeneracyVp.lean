@@ -1,5 +1,9 @@
-import Def.ModularCurve_HeckeSeam
-import Lemma.Submodule.ToricDescentData
+module
+
+public import Def.ModularCurve_HeckeSeam
+public import Theorem.Submodule.ToricDescentData
+
+@[expose] public section
 
 set_option autoImplicit false
 

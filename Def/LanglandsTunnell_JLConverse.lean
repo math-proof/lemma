@@ -1,7 +1,11 @@
-import Def.LanglandsTunnell_JLData
-import Def.LanglandsTunnell_ArchEpsilon
-import Def.UnramifiedWhittaker_HeckeRecursion
-import Structure.LanglandsTunnell_JLConverse
+module
+
+public import Def.LanglandsTunnell_JLData
+public import Def.LanglandsTunnell_ArchEpsilon
+public import Def.UnramifiedWhittaker_HeckeRecursion
+public import Structure.LanglandsTunnell_JLConverse
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,11 +1,13 @@
-import Abbrev.AutomorphicForm_UnipotentQuotient
-import Def.AutomorphicForm_SmoothAutomorphicFnAt
-import Def.NumberField_TateGlobalZeta
-import Def.AutomorphicForm_WeylIntertwining
+module
+
+public import Abbrev.AutomorphicForm_UnipotentQuotient
+public import Def.AutomorphicForm_SmoothAutomorphicFnAt
+public import Def.NumberField_TateGlobalZeta
+public import Def.AutomorphicForm_WeylIntertwining
 
 open MeasureTheory NumberField AutomorphicForm Matrix
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace RSCarrier
 

@@ -10,7 +10,6 @@ namespace BurnsidePaqb
 /--
 [centralScalar_trace](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/CentralCharacter.lean)
 -/
-@[path]
 lemma centralScalar_trace
   [Group G] [Fintype G] [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V]
   {ρ : Representation ℂ G V} [Representation.IsIrreducible ρ]
@@ -49,7 +48,6 @@ namespace BurnsidePaqb
 /--
 [scalarSubalg_fg](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/CentralCharacter.lean)
 -/
-@[path]
 lemma scalarSubalg_fg
   [Group G] [Fintype G] [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V]
   {ρ : Representation ℂ G V} [Representation.IsIrreducible ρ] :
@@ -69,7 +67,6 @@ namespace BurnsidePaqb
 /--
 [centralScalar_isIntegral](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/CentralCharacter.lean)
 -/
-@[path]
 lemma centralScalar_isIntegral
   [Group G] [Fintype G] [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V]
   {ρ : Representation ℂ G V} [Representation.IsIrreducible ρ]
@@ -87,7 +84,6 @@ namespace BurnsidePaqb
 /--
 [classSum_centralScalar_isIntegral](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/CentralCharacter.lean)
 -/
-@[path]
 lemma classSum_centralScalar_isIntegral
   [Group G] [Fintype G] [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V]
   {ρ : Representation ℂ G V} [Representation.IsIrreducible ρ]
@@ -126,7 +122,7 @@ lemma classSum_centralScalar_isIntegral
           Finset.sum_congr rfl (fun x hx => hchar x hx)
         _ = (conjClass g).card * ρ.character g := by
           rw [Finset.sum_const, nsmul_eq_mul]
-    have htrace := centralScalar_trace ρ (ConjClasses.mk g)
+    have htrace := centralScalar_trace (ρ := ρ) (l := ConjClasses.mk g)
     rw [hcarry, hsum] at htrace
     rwa [Representation.char_one]
   rw [← hdiv]

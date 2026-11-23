@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.IntersectionDimension
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.IntersectionDimension
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.IntersectionDimension
 import Mathlib.RingTheory.KrullDimension.NonZeroDivisors
 import Mathlib.RingTheory.Localization.Away.Basic
 set_option maxHeartbeats 800000

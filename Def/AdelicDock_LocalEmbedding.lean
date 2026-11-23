@@ -1,5 +1,9 @@
-import Lemma.Matrix.AdelicLevel
-import Mathlib.NumberTheory.Padics.HeightOneSpectrum
+module
+
+public import Theorem.Matrix.AdelicLevel
+public import Mathlib.NumberTheory.Padics.HeightOneSpectrum
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,3 +1,4 @@
+import Instance.Data.Fin.Fun
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Order.Interval.Finset.Fin
 import Notation.Fun
@@ -12,7 +13,7 @@ The sum up to `k` is the sum strictly below `k`, plus the value at `k`.
 private lemma main
   {n : ℕ}
 -- given
-  (d : Fin n ⇀ ℕ)
+  (d : Fin n → ℕ)
   (k : Fin n) :
 -- imply
   (∑ t ∈ Finset.Iio k, d[t]) + d[k] =

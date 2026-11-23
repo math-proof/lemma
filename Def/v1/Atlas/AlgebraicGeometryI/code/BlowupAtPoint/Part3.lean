@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.ReesAlgebra
-import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Proper
-import Mathlib.RingTheory.GradedAlgebra.Basic
-import Instance.v1.Atlas.AlgebraicGeometryI.code.BlowupAtPoint.Part2
+module
+
+public import Mathlib.RingTheory.ReesAlgebra
+public import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Proper
+public import Mathlib.RingTheory.GradedAlgebra.Basic
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.BlowupAtPoint.Part2
+
+@[expose] public section
+
 open Polynomial AlgebraicGeometry
 
 

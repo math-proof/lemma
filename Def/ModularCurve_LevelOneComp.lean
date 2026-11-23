@@ -1,7 +1,11 @@
-import Mathlib
-import Instance.ModularCurve_JZeroSemistableSpecialization
-import Theorem.HahnSeries.ModularUnit
-import Instance.ModularCurve_LevelOneComp
+module
+
+public import Mathlib
+public import Instance.ModularCurve_JZeroSemistableSpecialization
+public import Theorem.HahnSeries.ModularUnit
+public import Instance.ModularCurve_LevelOneComp
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.Building.IwahoriGLnDefs
-import Mathlib.LinearAlgebra.Matrix.Transvection
-import Mathlib.LinearAlgebra.Matrix.Reindex
+module
+
+public import Def.v1.Atlas.Buildings.code.Building.IwahoriGLnDefs
+public import Mathlib.LinearAlgebra.Matrix.Transvection
+public import Mathlib.LinearAlgebra.Matrix.Reindex
+
+@[expose] public section
+
 set_option maxHeartbeats 200000
 
 open Matrix

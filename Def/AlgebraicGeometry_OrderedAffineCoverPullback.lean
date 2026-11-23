@@ -1,8 +1,12 @@
-import Def.AlgebraicGeometry_OrderedAffineCoverComap
-import Lemma.Scheme.OrderedAffineCoverCech
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Mathlib.AlgebraicGeometry.Morphisms.Affine
-import Abbrev.AlgebraicGeometry_TwoAffineOpenCover
+module
+
+public import Def.AlgebraicGeometry_OrderedAffineCoverComap
+public import Theorem.Scheme.OrderedAffineCoverCech
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Mathlib.AlgebraicGeometry.Morphisms.Affine
+public import Abbrev.AlgebraicGeometry_TwoAffineOpenCover
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.NoetherNormalization
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.NoetherNormalization
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NoetherNormalization
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NakayamaApplications
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.NakayamaApplications
 

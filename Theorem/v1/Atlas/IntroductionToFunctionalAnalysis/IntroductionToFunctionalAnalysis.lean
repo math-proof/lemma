@@ -8,25 +8,28 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.BaireCategory
-import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.BanachSpace
-import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.BoundedOperators
-import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.ClosedGraph
-import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.Integration
-import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.MeasureTheory
-import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.UniformBoundedness
-import Abbrev.v1.Atlas.IntroductionToFunctionalAnalysis.code.DualSpace
-import Def.v1.Atlas.IntroductionToFunctionalAnalysis.code.FourierSeries
-import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.FourierSeries
-import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.HahnBanach
-import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.HilbertSpace
-import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.LpSpaces
-import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.OpenMapping
-import Lemma.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.SpectralTheory
-import Def.v1.Atlas.IntroductionToFunctionalAnalysis.code.HahnBanach
-import Def.v1.Atlas.IntroductionToFunctionalAnalysis.code.HilbertSpace
-import Instance.v1.Atlas.IntroductionToFunctionalAnalysis.code.LpSpaces
-import Def.v1.Atlas.IntroductionToFunctionalAnalysis.code.OpenMapping
-import Def.v1.Atlas.IntroductionToFunctionalAnalysis.code.SpectralTheory.Part2
+module
 
+public import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.BaireCategory
+public import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.BanachSpace
+public import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.BoundedOperators
+public import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.ClosedGraph
+public import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.Integration
+public import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.MeasureTheory
+public import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.UniformBoundedness
+public import Abbrev.v1.Atlas.IntroductionToFunctionalAnalysis.code.DualSpace
+public import Def.v1.Atlas.IntroductionToFunctionalAnalysis.code.FourierSeries
+public import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.FourierSeries
+public import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.HahnBanach
+public import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.HilbertSpace
+public import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.LpSpaces
+public import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.OpenMapping
+public import Theorem.Real.Atlas.v1.IntroductionToFunctionalAnalysis.code.SpectralTheory
+public import Def.v1.Atlas.IntroductionToFunctionalAnalysis.code.HahnBanach
+public import Def.v1.Atlas.IntroductionToFunctionalAnalysis.code.HilbertSpace
+public import Instance.v1.Atlas.IntroductionToFunctionalAnalysis.code.LpSpaces
+public import Def.v1.Atlas.IntroductionToFunctionalAnalysis.code.OpenMapping
+public import Def.v1.Atlas.IntroductionToFunctionalAnalysis.code.SpectralTheory.Part2
+
+@[expose] public section
 

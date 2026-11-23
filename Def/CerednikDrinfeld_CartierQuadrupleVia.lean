@@ -1,12 +1,16 @@
-import Mathlib
-import Instance.MvFormalGroup_NegV2
-import Lemma.MvPowerSeries.SpecialFormalModule
-import Def.CerednikDrinfeld_FormalUpperHalfPlaneDatum
-import Def.CerednikDrinfeld_DrinfeldQuadruple
-import Lemma.Fin.GradedCartierModuleData
-import Instance.CerednikDrinfeld_GradedCartierNModule
-import Lemma.FormalGroup.CartierModuleModel
-import Abbrev.CerednikDrinfeld_CartierQuadruple
+module
+
+public import Mathlib
+public import Instance.MvFormalGroup_NegV2
+public import Theorem.MvPowerSeries.SpecialFormalModule
+public import Def.CerednikDrinfeld_FormalUpperHalfPlaneDatum
+public import Def.CerednikDrinfeld_DrinfeldQuadruple
+public import Theorem.Fin.GradedCartierModuleData
+public import Instance.CerednikDrinfeld_GradedCartierNModule
+public import Theorem.FormalGroup.CartierModuleModel
+public import Abbrev.CerednikDrinfeld_CartierQuadruple
+
+@[expose] public section
 
 set_option autoImplicit false
 

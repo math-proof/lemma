@@ -1,8 +1,12 @@
-import Mathlib
-import Theorem.MvPowerSeries.TateSlots
-import Def.ModularCurve_PhiGen
-import Def.ModularCurve_KatzLevelP
-import Abbrev.ModularCurve_KatzLevelPCusps
+module
+
+public import Mathlib
+public import Theorem.MvPowerSeries.TateSlots
+public import Def.ModularCurve_PhiGen
+public import Def.ModularCurve_KatzLevelP
+public import Abbrev.ModularCurve_KatzLevelPCusps
+
+@[expose] public section
 
 set_option autoImplicit false
 

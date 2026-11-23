@@ -1,6 +1,10 @@
-import Def.FreyPackage_LevelRaising
-import Instance.FLTPrelim_GaloisRep
-import Instance.CuspForm_Newforms
+module
+
+public import Def.FreyPackage_LevelRaising
+public import Instance.FLTPrelim_GaloisRep
+public import Instance.CuspForm_Newforms
+
+@[expose] public section
 
 set_option autoImplicit false
 

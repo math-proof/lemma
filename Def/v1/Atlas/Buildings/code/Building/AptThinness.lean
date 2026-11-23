@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.Building.AptIsCoxeterProof
-import Theorem.Set.ApartmentsToApartmentSystem.eq.Apartments.of.IsThick
-import Theorem.v1.Atlas.Buildings.code.Building.AptThinness
+module
+
+public import Def.v1.Atlas.Buildings.code.Building.AptIsCoxeterProof
+public import Theorem.Set.ApartmentsToApartmentSystem.eq.Apartments.of.IsThick
+public import Theorem.v1.Atlas.Buildings.code.Building.AptThinness
+
+@[expose] public section
+
 open ChamberComplex
 
 variable {V : Type*} [DecidableEq V]

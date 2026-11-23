@@ -1,16 +1,20 @@
-import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
-import Mathlib.AlgebraicGeometry.Morphisms.Finite
-import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
-import Mathlib.AlgebraicGeometry.Morphisms.FlatRank
-import Mathlib.AlgebraicGeometry.FunctionField
-import Mathlib.Topology.KrullDimension
-import Mathlib.Algebra.DualNumber
-import Mathlib.LinearAlgebra.Trace
-import Structure.JacJ1Iface
-import Lemma.Scheme.RelativeGroupLaw
-import Lemma.MvPolynomial.ShimuraCurve
-import Structure.CerednikDrinfeld_QMModuli
-import Abbrev.CerednikDrinfeld_QMModuli
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
+public import Mathlib.AlgebraicGeometry.Morphisms.Finite
+public import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
+public import Mathlib.AlgebraicGeometry.Morphisms.FlatRank
+public import Mathlib.AlgebraicGeometry.FunctionField
+public import Mathlib.Topology.KrullDimension
+public import Mathlib.Algebra.DualNumber
+public import Mathlib.LinearAlgebra.Trace
+public import Structure.JacJ1Iface
+public import Theorem.Scheme.RelativeGroupLaw
+public import Theorem.MvPolynomial.ShimuraCurve
+public import Structure.CerednikDrinfeld_QMModuli
+public import Abbrev.CerednikDrinfeld_QMModuli
+
+@[expose] public section
 
 set_option autoImplicit false
 

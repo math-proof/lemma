@@ -1,5 +1,9 @@
-import Lemma.AlgEquiv.InfiniteAdeleRing_BaseChangeData
-import Instance.M4aHerbrand_ArchSemilocal
+module
+
+public import Theorem.AlgEquiv.InfiniteAdeleRing_BaseChangeData
+public import Instance.M4aHerbrand_ArchSemilocal
+
+@[expose] public section
 
 namespace M4aHerbrand.ArchSemilocal
 

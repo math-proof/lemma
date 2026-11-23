@@ -1,7 +1,10 @@
-import Initialize.Lean.Meta.CtorName
-import Def.Data.String.String.Part2
-import Instance.Lean.ConstantInfo.Part3
+module
 
+public import Initialize.Lean.Meta.CtorName
+public import Def.Data.String.String.Part2
+public import Instance.Lean.ConstantInfo.Part3
+
+@[expose] public section
 
 def Lean.RecursorVal.toString : Lean.RecursorVal → String
   | ⟨constantVal, all, numParams, numIndices, numMotives, numMinors, rules, k, isUnsafe⟩ =>

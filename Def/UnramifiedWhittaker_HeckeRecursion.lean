@@ -1,4 +1,8 @@
-import Def.AdelicDock_LocalEmbedding
+module
+
+public import Def.AdelicDock_LocalEmbedding
+
+@[expose] public section
 
 set_option autoImplicit false
 

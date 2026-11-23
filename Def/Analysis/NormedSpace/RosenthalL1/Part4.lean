@@ -1,10 +1,16 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
-import Mathlib.Analysis.Normed.Module.DoubleDual
-import Mathlib.Data.List.Sublists
-import Mathlib.Data.Nat.Nth
-import Theorem.Analysis.NormedSpace.RosenthalL1.Part3
+
+module
+
+public import Mathlib.Analysis.Normed.Module.DoubleDual
+public import Mathlib.Data.List.Sublists
+public import Mathlib.Data.Nat.Nth
+public import Theorem.Analysis.NormedSpace.RosenthalL1.Part3
+
+@[expose] public section
+
 /-!
 # Rosenthal's `ℓ¹` theorem
 

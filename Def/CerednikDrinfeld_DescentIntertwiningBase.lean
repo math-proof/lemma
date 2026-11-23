@@ -1,9 +1,13 @@
-import Abbrev.CerednikDrinfeld_HeckeTower
-import Instance.CerednikDrinfeld_MumfordQuotient
-import Instance.CerednikDrinfeld_DrinfeldHolomorphic
-import Def.ValuationSubring_CompletionRatClosure
-import Instance.ValuationSubring_CompletionDecompositionAction
-import Instance.EllipticCurve_FrobeniusTrace
+module
+
+public import Abbrev.CerednikDrinfeld_HeckeTower
+public import Instance.CerednikDrinfeld_MumfordQuotient
+public import Instance.CerednikDrinfeld_DrinfeldHolomorphic
+public import Def.ValuationSubring_CompletionRatClosure
+public import Instance.ValuationSubring_CompletionDecompositionAction
+public import Instance.EllipticCurve_FrobeniusTrace
+
+@[expose] public section
 
 set_option autoImplicit false
 

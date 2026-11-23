@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.LieGroups.code.VermaModules.Part7
-import Theorem.Int.WeightSubspace.eq.ToSubmoduleWeightSpace
+module
 
+public import Def.v1.Atlas.LieGroups.code.VermaModules.Part7
+public import Theorem.Int.WeightSubspace.eq.ToSubmoduleWeightSpace
+
+@[expose] public section
 
 noncomputable section
 

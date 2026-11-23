@@ -1,6 +1,10 @@
-import Mathlib
-import Def.AlgebraicGeometry_TwoChartCechCupProduct
-import Lemma.HahnSeries.TwoChartCechLaurentChart
+module
+
+public import Mathlib
+public import Def.AlgebraicGeometry_TwoChartCechCupProduct
+public import Theorem.HahnSeries.TwoChartCechLaurentChart
+
+@[expose] public section
 
 set_option autoImplicit false
 

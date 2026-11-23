@@ -1,5 +1,9 @@
-import Def.AutomorphicForm_RowIsometryInvariance
-import Abbrev.AutomorphicForm_ArchType
+module
+
+public import Def.AutomorphicForm_RowIsometryInvariance
+public import Abbrev.AutomorphicForm_ArchType
+
+@[expose] public section
 
 open AutomorphicForm AutomorphicForm.WindowedSiegel NumberField AdelicLevel IsDedekindDomain Matrix
 

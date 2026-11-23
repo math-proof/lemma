@@ -294,6 +294,10 @@ export class Lean_let extends LeanSyntax {
         if (node instanceof L.LeanBy && node.arg instanceof L.LeanStatements) {
             return { by: node, stmts: node.arg };
         }
+        // Never descend into a paired group: a structure literal `{ … }` holds field
+        // values (`left_inv := by …`), not the `funext fun om ↦ by …` the caller wants.
+        // Parentheses stay transparent (`(funext fun om ↦ by …)`).
+        if (node instanceof L.LeanPairedGroup && !(node instanceof L.LeanParenthesis)) return null;
         if (Array.isArray(node.args)) {
             for (const a of node.args) {
                 const found = Lean_let.findNestedByStatements(a, seen);

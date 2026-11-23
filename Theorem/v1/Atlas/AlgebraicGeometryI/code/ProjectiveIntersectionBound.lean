@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.AlgebraicGeometryI.code.ProjectiveIntersection
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.ProjectiveIntersection
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.IntersectionDimension
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.IntersectionDimension
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.IntersectionDimension
 
 

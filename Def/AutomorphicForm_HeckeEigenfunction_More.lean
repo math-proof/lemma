@@ -1,10 +1,14 @@
-import Lemma.Measure.CarrierPins
-import Def.AutomorphicForm_HeckeEigensystem
-import Lemma.Matrix.AdelicLevel
-import Instance.AbstractHeckeOperator
-import Def.AbstractHeckeOperator_Main
-import Theorem.AbstractHeckeOperator_Main
-import Abbrev.AutomorphicForm_HeckeEigenfunction
+module
+
+public import Theorem.Measure.CarrierPins
+public import Def.AutomorphicForm_HeckeEigensystem
+public import Theorem.Matrix.AdelicLevel
+public import Instance.AbstractHeckeOperator
+public import Def.AbstractHeckeOperator_Main
+public import Theorem.AbstractHeckeOperator_Main
+public import Abbrev.AutomorphicForm_HeckeEigenfunction
+
+@[expose] public section
 
 set_option autoImplicit false
 

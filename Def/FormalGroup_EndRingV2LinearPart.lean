@@ -4,9 +4,13 @@
 -- Instance.MvFormalGroup_BasicV2 ↔ Def addMv cycle) or
 -- Instance.MvFormalGroup_EndRingV2.
 
-import Def.FormalGroup_EndRingV2
-import Def.MvFormalGroup_BasicV2
-import Instance.MvFormalGroup_EndRingV2
+module
+
+public import Def.FormalGroup_EndRingV2
+public import Def.MvFormalGroup_BasicV2
+public import Instance.MvFormalGroup_EndRingV2
+
+@[expose] public section
 
 set_option autoImplicit false
 

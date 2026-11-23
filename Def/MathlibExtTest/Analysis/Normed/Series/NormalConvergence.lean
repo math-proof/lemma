@@ -1,10 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Normed/Series/NormalConvergence.lean -/
 
+module
 
-import Def.Analysis.Normed.Series.NormalConvergence
-import Theorem.Real.NormalConvergence
-import Mathlib.Analysis.Normed.Field.Basic
-import Theorem.MathlibExtTest.Analysis.Normed.Series.NormalConvergence
+public import Def.Analysis.Normed.Series.NormalConvergence
+public import Theorem.Real.NormalConvergence
+public import Mathlib.Analysis.Normed.Field.Basic
+public import Theorem.MathlibExtTest.Analysis.Normed.Series.NormalConvergence
+
+@[expose] public section
+
 open Topology
 open scoped ENNReal
 

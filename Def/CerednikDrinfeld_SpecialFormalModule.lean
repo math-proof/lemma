@@ -1,10 +1,14 @@
-import Mathlib
-import Def.FormalGroup_NegV2
-import Structure.CerednikDrinfeld_SpecialFormalModule
-import Def.MvFormalGroup_BasicV2
-import Instance.MvFormalGroup_EndRingV2
-import Instance.MvFormalGroup_NegV2
-import Abbrev.CerednikDrinfeld_SpecialFormalModule
+module
+
+public import Mathlib
+public import Def.FormalGroup_NegV2
+public import Structure.CerednikDrinfeld_SpecialFormalModule
+public import Def.MvFormalGroup_BasicV2
+public import Instance.MvFormalGroup_EndRingV2
+public import Instance.MvFormalGroup_NegV2
+public import Abbrev.CerednikDrinfeld_SpecialFormalModule
+
+@[expose] public section
 
 set_option autoImplicit false
 
@@ -86,7 +90,7 @@ def varpiEnd (X : FormalODModule p B) : MvFormalGroup.End X.F := X.isLawHom_varp
 
 def actRingHom (X : FormalODModule p B) : Zp2 p →+* MvFormalGroup.End X.F where
   toFun := X.actEnd
-  map_one' := MvFormalGroup.Hom.ext (X.act_one)
+  map_one' := MvFormalGroup.Hom.ext X.act_one
   map_mul' a b := MvFormalGroup.Hom.ext (X.act_mul a b)
   map_zero' := by
     have h : X.actEnd 0 + X.actEnd 0 = X.actEnd 0 :=

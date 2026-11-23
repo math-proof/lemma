@@ -1,7 +1,12 @@
-import Mathlib
-import Def.ModularCurve_LevelOneProlongationPair
-import Theorem.Submodule.Repartitions
-import Theorem.Finset.SupersingularNodes
+module
+
+public import Mathlib
+public import Def.ModularCurve_LevelOneProlongationPair
+public import Theorem.Submodule.Repartitions
+public import Theorem.Finset.SupersingularNodes
+
+@[expose] public section
+
 set_option synthInstance.maxHeartbeats 400000
 set_option maxHeartbeats 800000
 

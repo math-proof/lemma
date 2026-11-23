@@ -1,11 +1,17 @@
 /-
 Author: Muse Spark 1.3
 -/
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Data.Set.Card
-import Mathlib.Order.Filter.AtTopBot.Basic
-import Theorem.Analysis.InnerProductSpace.DiscreteSpectrum.Part2
+
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Data.Set.Card
+public import Mathlib.Order.Filter.AtTopBot.Basic
+public import Theorem.Analysis.InnerProductSpace.DiscreteSpectrum.Part2
+
+@[expose] public section
+
 open scoped BigOperators
 
 

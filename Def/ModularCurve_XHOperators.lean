@@ -1,4 +1,8 @@
-import Lemma.LaurentSeries.XHHeckeOperator
+module
+
+public import Theorem.LaurentSeries.XHHeckeOperator
+
+@[expose] public section
 
 set_option autoImplicit false
 

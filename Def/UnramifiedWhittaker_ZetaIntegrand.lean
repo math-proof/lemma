@@ -1,7 +1,11 @@
-import Def.AdelicDock_LocalEmbedding
-import Def.NumberField_TateGlobalZeta
-import Theorem.Set.HeckeEigenfunction
-import Def.NumberField_IdeleBox
+module
+
+public import Def.AdelicDock_LocalEmbedding
+public import Def.NumberField_TateGlobalZeta
+public import Theorem.Set.HeckeEigenfunction
+public import Def.NumberField_IdeleBox
+
+@[expose] public section
 
 set_option autoImplicit false
 

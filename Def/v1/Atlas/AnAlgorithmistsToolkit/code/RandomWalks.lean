@@ -8,22 +8,25 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.LapMatrix
-import Mathlib.LinearAlgebra.Eigenspace.Basic
-import Mathlib.LinearAlgebra.Matrix.ToLin
-import Mathlib.Data.Real.Basic
-import Def.v1.Atlas.AnAlgorithmistsToolkit.code.Cheeger
-import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.Cheeger
-import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.Expanders
-import Lemma.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.HallTheorem
-import Lemma.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.LovaszSimonovits
-import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.CanonicalPaths
-import Abbrev.v1.Atlas.AnAlgorithmistsToolkit.code.Expanders.Part2
-import Def.v1.Atlas.AnAlgorithmistsToolkit.code.HallTheorem.Part2
-import Def.v1.Atlas.AnAlgorithmistsToolkit.code.LovaszSimonovits
-import Def.v1.Atlas.AnAlgorithmistsToolkit.code.CanonicalPaths
-import Mathlib.Analysis.Matrix.Spectrum
+module
 
+public import Mathlib.Combinatorics.SimpleGraph.LapMatrix
+public import Mathlib.LinearAlgebra.Eigenspace.Basic
+public import Mathlib.LinearAlgebra.Matrix.ToLin
+public import Mathlib.Data.Real.Basic
+public import Def.v1.Atlas.AnAlgorithmistsToolkit.code.Cheeger
+public import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.Cheeger
+public import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.Expanders
+public import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.HallTheorem
+public import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.LovaszSimonovits
+public import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.CanonicalPaths
+public import Abbrev.v1.Atlas.AnAlgorithmistsToolkit.code.Expanders.Part2
+public import Def.v1.Atlas.AnAlgorithmistsToolkit.code.HallTheorem.Part2
+public import Def.v1.Atlas.AnAlgorithmistsToolkit.code.LovaszSimonovits
+public import Def.v1.Atlas.AnAlgorithmistsToolkit.code.CanonicalPaths
+public import Mathlib.Analysis.Matrix.Spectrum
+
+@[expose] public section
 
 namespace RandomWalks
 

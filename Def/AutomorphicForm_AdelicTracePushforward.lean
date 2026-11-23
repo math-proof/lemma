@@ -1,7 +1,11 @@
-import Lemma.Measure.TwistedOrbital
-import Def.M4aHerbrand_GenuineBeta
-import Instance.NumberField_AdelicHaar
-import Def.M4aHerbrand_IdeleClassVocab
+module
+
+public import Theorem.Measure.TwistedOrbital
+public import Def.M4aHerbrand_GenuineBeta
+public import Instance.NumberField_AdelicHaar
+public import Def.M4aHerbrand_IdeleClassVocab
+
+@[expose] public section
 
 set_option autoImplicit false
 

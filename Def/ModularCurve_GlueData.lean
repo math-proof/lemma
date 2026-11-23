@@ -1,5 +1,9 @@
-import Instance.ModularCurve_JZeroSemistableSpecialization
-import Structure.ModularCurve_PlaceSpecialization
+module
+
+public import Instance.ModularCurve_JZeroSemistableSpecialization
+public import Structure.ModularCurve_PlaceSpecialization
+
+@[expose] public section
 
 set_option autoImplicit false
 

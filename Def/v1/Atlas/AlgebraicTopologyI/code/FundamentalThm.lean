@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Abelian.Projective.Resolution
-import Theorem.v1.Atlas.AlgebraicTopologyI.code.FundamentalThm
+module
 
+public import Mathlib.CategoryTheory.Abelian.Projective.Resolution
+public import Theorem.v1.Atlas.AlgebraicTopologyI.code.FundamentalThm
+
+@[expose] public section
 
 noncomputable section
 

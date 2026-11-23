@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ImaginaryQuadraticDiscriminant.lean -/
 
-import Def.NumberTheory.DirichletCharacter.Quadratic
-import Theorem.Nat.DirichletCharacter.Quadratic
-import Theorem.NumberTheory.ImaginaryQuadraticDiscriminant
+module
+
+public import Def.NumberTheory.DirichletCharacter.Quadratic
+public import Theorem.Nat.DirichletCharacter.Quadratic
+public import Theorem.NumberTheory.ImaginaryQuadraticDiscriminant
+
+@[expose] public section
+
 set_option autoImplicit false
 
 /-!

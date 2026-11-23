@@ -5,8 +5,14 @@ All rights reserved.
 /-
 Copyright (c) 2025. All rights reserved.
 -/
-import Mathlib
-import Theorem.Combinatorics.Enumerative.QBinomialBasic.Part4
+
+module
+
+public import Mathlib
+public import Theorem.Combinatorics.Enumerative.QBinomialBasic.Part4
+
+@[expose] public section
+
 /-!
 # Cancellations in Alternating Sums
 

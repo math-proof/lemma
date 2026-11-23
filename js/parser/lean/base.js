@@ -660,6 +660,7 @@ export class Lean extends IndentedNode {
                     tokens[self.start_idx + k + 1] !== '>'
                 ) {
                     caret = L.LeanWith.findAlternativeCaret(this.parent, indent);
+                    caret ??= L.Lean_fun.findAlternativeCaret(this.parent, indent, newline_count);
                 }
                 if (!caret && tokens[self.start_idx + k] === '∂' && indent > 0)
                     caret = L.Lean_int.continueMeasure(this, indent);
@@ -1095,6 +1096,10 @@ export class Lean extends IndentedNode {
                     parent.replace(this, bar);
                     bar.parent = parent;
                     return this;
+                }
+                if (!(this.parent instanceof L.Lean_fun)) {
+                    const matchFun = L.Lean_fun.enclosingMatchLambda(this);
+                    if (matchFun) return matchFun.appendArm(this);
                 }
                 return this.parent.insert_bar(this, self.start_idx ? tokens[self.start_idx - 1] : '', next);
             }
@@ -1796,6 +1801,25 @@ export class Lean extends IndentedNode {
         const parent = this.parent;
         if (!parent) return undefined;
         if (parent instanceof L.LeanStatements) return parent.push_binary(Ctor, skipBraceShortcut);
+        // `fun x : T ↦ e` — the arrow wraps the whole typed binder, exactly like the
+        // parenthesized form `fun (x : T) ↦ e`, instead of becoming the colon's rhs
+        // (`fun (x : (T ↦ e))`), which broke `Lean.headTokens`.
+        if (Ctor === L.Lean_mapsto) {
+            let node = this;
+            while (node.parent && !(node.parent instanceof L.Lean_fun)) {
+                if (node.parent instanceof L.LeanStatements || node.parent instanceof L.LeanModule) {
+                    node = null;
+                    break;
+                }
+                node = node.parent;
+            }
+            if (node instanceof L.LeanColon && node.parent instanceof L.Lean_fun) {
+                const level = this.level;
+                const caret = new L.LeanCaret(this.indent, level);
+                node.parent.replace(node, new Ctor(node, caret, node.indent, level));
+                return caret;
+            }
+        }
         if (Ctor.input_priority > parent.stack_priority) {
             const level = this.level;
             const caret = new L.LeanCaret(this.indent, level);

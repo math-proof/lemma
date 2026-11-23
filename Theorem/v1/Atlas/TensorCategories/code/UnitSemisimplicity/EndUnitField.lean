@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Structure.v1.Atlas.TensorCategories.code.UnitSemisimplicity.UnitSimple
 import Theorem.Category.Atlas.v1.TensorCategories.code.UnitSemisimplicity.UnitSimple
-import Lemma.Category.Atlas.v1.TensorCategories.code.FittingLemmaInstance
+import Theorem.Category.Atlas.v1.TensorCategories.code.FittingLemmaInstance
 import Instance.v1.Atlas.TensorCategories.code.FittingLemmaInstance
 
 

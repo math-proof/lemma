@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Class.v1.Atlas.GeometryOfManifolds.code.AdvancedKahler.Part11
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.AdvancedKahler
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.ManifoldDFS
-import Def.v1.Atlas.GeometryOfManifolds.code.ManifoldDFS.Part2
+module
+
+public import Class.v1.Atlas.GeometryOfManifolds.code.AdvancedKahler.Part11
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.AdvancedKahler
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.ManifoldDFS
+public import Def.v1.Atlas.GeometryOfManifolds.code.ManifoldDFS.Part2
+
+@[expose] public section
+
 set_option autoImplicit false
 
 open scoped Manifold ContDiff

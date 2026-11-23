@@ -1,3 +1,5 @@
+import Instance.Data.Fin.Fun
+import Instance.Data.Nat.Fun
 import Lemma.Matrix.DetStack_Sum_In_Ico.eq.Prod_MulProdS.of.EqSum
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Data.Nat.Factorial.Basic
@@ -15,8 +17,8 @@ The stacked falling-factorial matrix on pairwise distinct values has nonzero det
 @[path]
 private lemma main
   {r n : ℕ}
-  {x : Fin r ⇀ ℂ}
-  {d : Fin r ⇀ ℕ}
+  {x : Fin r → ℂ}
+  {d : Fin r → ℕ}
 -- given
   (hdist : ∀ i j : Fin r, i ≠ j → x[i] ≠ x[j])
   (hsum : ∑ k : Fin r, d[k] = n) :

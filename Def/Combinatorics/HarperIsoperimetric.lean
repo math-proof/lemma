@@ -4,15 +4,18 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
 
-import Def.InformationTheory.HammingExpansion
-import Lemma.Real.HammingExpansion
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Data.Fin.Tuple.Basic
-import Mathlib.Data.Nat.Choose.Sum
-import Mathlib.Data.Nat.Find
-import Mathlib.InformationTheory.Hamming
-import Mathlib.Tactic.LinearCombination
+module
 
+public import Def.InformationTheory.HammingExpansion
+public import Theorem.Real.HammingExpansion
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Data.Fin.Tuple.Basic
+public import Mathlib.Data.Nat.Choose.Sum
+public import Mathlib.Data.Nat.Find
+public import Mathlib.InformationTheory.Hamming
+public import Mathlib.Tactic.LinearCombination
+
+@[expose] public section
 
 section
 

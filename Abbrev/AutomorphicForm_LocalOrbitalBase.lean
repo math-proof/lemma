@@ -1,10 +1,12 @@
-import Def.AutomorphicForm_FactorizableTestFn
+module
+
+public import Def.AutomorphicForm_FactorizableTestFn
 
 set_option autoImplicit false
 
 open NumberField IsDedekindDomain MeasureTheory TopologicalSpace
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace AutomorphicForm
 

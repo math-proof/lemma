@@ -16,19 +16,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.LinearAlgebra.Orientation
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Geometry.Euclidean.Angle.Oriented.Affine
-import Mathlib.Geometry.Euclidean.Triangle
-import Mathlib.Data.Set.Card
-import Mathlib.Analysis.Convex.Independent
-import Mathlib.Geometry.Euclidean.Sphere.Basic
-import Def.Geometry.Metric.Part2
-import Lemma.Set.Metric
-import Theorem.Set.Triplewise
-import Mathlib.Logic.Equiv.Fin.Rotate
-import Def.Data.Set.Triplewise
-import Instance.Geometry.TwoD
+module
+
+public import Mathlib.LinearAlgebra.Orientation
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Geometry.Euclidean.Angle.Oriented.Affine
+public import Mathlib.Geometry.Euclidean.Triangle
+public import Mathlib.Data.Set.Card
+public import Mathlib.Analysis.Convex.Independent
+public import Mathlib.Geometry.Euclidean.Sphere.Basic
+public import Def.Geometry.Metric.Part2
+public import Theorem.Set.Metric
+public import Theorem.Set.Triplewise
+public import Mathlib.Logic.Equiv.Fin.Rotate
+public import Def.Data.Set.Triplewise
+public import Instance.Geometry.TwoD
+
+@[expose] public section
+
 open scoped EuclideanGeometry Finset
 
 open scoped EuclideanSpace EuclideanGeometry

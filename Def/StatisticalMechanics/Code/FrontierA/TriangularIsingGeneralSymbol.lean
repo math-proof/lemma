@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.StatisticalMechanics.Code.FrontierA.LogNonnegativeSinusoid
-import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingSymbol.Part2
-import Mathlib.Analysis.SpecialFunctions.Artanh
+module
+
+public import Theorem.StatisticalMechanics.Code.FrontierA.LogNonnegativeSinusoid
+public import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingSymbol.Part2
+public import Mathlib.Analysis.SpecialFunctions.Artanh
+
+@[expose] public section
+
 open MeasureTheory
 
 

@@ -4,21 +4,26 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
 
-import Def.Analysis.CStarAlgebra.KadisonSinger.MixedCharPoly
-import Lemma.Real.CStarAlgebra.KadisonSinger.MixedCharPoly
-import Lemma.MvPolynomial.Stable
-import Def.Algebra.MvPolynomial.Stable
-import Mathlib.Analysis.Matrix.Order
-import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
-import Mathlib.Algebra.MvPolynomial.CommRing
-import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.Analysis.Polynomial.CauchyBound
-import Mathlib.Analysis.Polynomial.MahlerMeasure
-import Mathlib.Algebra.Polynomial.Reverse
-import Mathlib.Algebra.Polynomial.Taylor
-import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
-import Mathlib.Data.List.OfFn
-import Mathlib.Topology.MetricSpace.Sequences
+module
+
+public import Def.Analysis.CStarAlgebra.KadisonSinger.MixedCharPoly
+public import Theorem.Real.CStarAlgebra.KadisonSinger.MixedCharPoly
+public import Theorem.MvPolynomial.Stable
+public import Def.Algebra.MvPolynomial.Stable
+public import Mathlib.Analysis.Matrix.Order
+public import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
+public import Mathlib.Algebra.MvPolynomial.CommRing
+public import Mathlib.Analysis.Complex.Polynomial.Basic
+public import Mathlib.Analysis.Polynomial.CauchyBound
+public import Mathlib.Analysis.Polynomial.MahlerMeasure
+public import Mathlib.Algebra.Polynomial.Reverse
+public import Mathlib.Algebra.Polynomial.Taylor
+public import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
+public import Mathlib.Data.List.OfFn
+public import Mathlib.Topology.MetricSpace.Sequences
+
+@[expose] public section
+
 open scoped BigOperators ComplexOrder
 
 /-!

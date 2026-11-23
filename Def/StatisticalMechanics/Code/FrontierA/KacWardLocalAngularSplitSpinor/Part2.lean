@@ -26,11 +26,11 @@ noncomputable def kwLocalAngularSplitSpinorDirection
     {G : SimpleGraph V} [DecidableRel G.Adj]
     (data : KWLocalAngularData G)
     (d : (kwOrderedDartPortSplitGraph G
-      (data.order)).Dart) : Complex :=
+      data.order).Dart) : Complex :=
   if kwDartOfPort G d.snd = (kwDartOfPort G d.fst).symm then
     (data.root d.fst) ^ 2
-  else if kwOrderedPortRank (data.order) d.fst <
-      kwOrderedPortRank (data.order) d.snd then
+  else if kwOrderedPortRank data.order d.fst <
+      kwOrderedPortRank data.order d.snd then
     -1
   else 1
 

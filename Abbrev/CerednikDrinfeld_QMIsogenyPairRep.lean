@@ -1,5 +1,9 @@
-import Def.CerednikDrinfeld_QMIsogeny
-import Structure.CerednikDrinfeld_QMRigidification
+module
+
+public import Def.CerednikDrinfeld_QMIsogeny
+public import Structure.CerednikDrinfeld_QMRigidification
+
+@[expose] public section
 
 set_option autoImplicit false
 

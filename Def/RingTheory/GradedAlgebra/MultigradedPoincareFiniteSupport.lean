@@ -4,8 +4,13 @@
   Author: Muse Code powered by Meta Muse Spark
 -/
 
-import Def.RingTheory.GradedAlgebra.MultigradedPoincareCoefficients
-import Lemma.Int.GradedAlgebra.MultigradedPoincareCoefficients
+module
+
+public import Def.RingTheory.GradedAlgebra.MultigradedPoincareCoefficients
+public import Theorem.Int.GradedAlgebra.MultigradedPoincareCoefficients
+
+@[expose] public section
+
 /-!
 # Finite support of multigraded Poincaré coefficients
 

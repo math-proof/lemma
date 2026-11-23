@@ -1,7 +1,11 @@
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Lemma.Scheme.RelativeGroupLaw
-import Structure.JacJ1Iface
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Theorem.Scheme.RelativeGroupLaw
+public import Structure.JacJ1Iface
+
+@[expose] public section
 
 set_option autoImplicit false
 

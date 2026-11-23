@@ -1,5 +1,9 @@
-import Lemma.Matrix.LocalOrbitalBase
-import Lemma.Submodule.IsotypicCuspSpace
+module
+
+public import Theorem.Matrix.LocalOrbitalBase
+public import Theorem.Submodule.IsotypicCuspSpace
+
+@[expose] public section
 
 set_option autoImplicit false
 

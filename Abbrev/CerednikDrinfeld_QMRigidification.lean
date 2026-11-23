@@ -1,8 +1,12 @@
-import Structure.CerednikDrinfeld_QMFineModuli
-import Def.CerednikDrinfeld_QMIsogeny
-import Structure.CerednikDrinfeld_QMFormalModuleOf
-import Structure.CerednikDrinfeld_QMModuliProps
-import Structure.CerednikDrinfeld_QMRigidification
+module
+
+public import Structure.CerednikDrinfeld_QMFineModuli
+public import Def.CerednikDrinfeld_QMIsogeny
+public import Structure.CerednikDrinfeld_QMFormalModuleOf
+public import Structure.CerednikDrinfeld_QMModuliProps
+public import Structure.CerednikDrinfeld_QMRigidification
+
+@[expose] public section
 
 set_option autoImplicit false
 

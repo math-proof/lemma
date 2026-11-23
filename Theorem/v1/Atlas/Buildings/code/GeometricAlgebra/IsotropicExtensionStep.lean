@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.GeometricAlgebra.ExtendingIsometries
-import Theorem.Submodule.OfEq.eq.M.of.Eq
-import Lemma.Fin.Eq.of.Ne_0.All_Eq
-import Def.v1.Atlas.Buildings.code.GeometricAlgebra.WittTheorem.Part2
+module
+
+public import Def.v1.Atlas.Buildings.code.GeometricAlgebra.ExtendingIsometries
+public import Theorem.Submodule.OfEq.eq.M.of.Eq
+public import Theorem.Fin.Eq.of.Ne_0.All_Eq
+public import Def.v1.Atlas.Buildings.code.GeometricAlgebra.WittTheorem.Part2
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 

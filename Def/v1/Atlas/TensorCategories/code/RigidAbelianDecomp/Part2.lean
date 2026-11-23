@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.TensorCategories.code.FrobeniusPerron
-import Structure.v1.Atlas.TensorCategories.code.GrothendieckRing
-import Structure.v1.Atlas.TensorCategories.code.GrothendieckRing.Part2
-import Def.v1.Atlas.TensorCategories.code.GrothendieckRing.Part3
+module
+
+public import Structure.v1.Atlas.TensorCategories.code.FrobeniusPerron
+public import Structure.v1.Atlas.TensorCategories.code.GrothendieckRing
+public import Structure.v1.Atlas.TensorCategories.code.GrothendieckRing.Part2
+public import Def.v1.Atlas.TensorCategories.code.GrothendieckRing.Part3
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open CategoryTheory MonoidalCategory

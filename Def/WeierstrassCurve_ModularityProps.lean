@@ -1,10 +1,14 @@
-import Mathlib.NumberTheory.FLT.Basic
-import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
-import Mathlib.Algebra.Algebra.Basic
-import Instance.EllipticCurve_FrobeniusTrace
-import Instance.FLTPrelim_GaloisRep
-import Def.FLTPrelim_ModularRep
-import Instance.FLTPrelim_Modularity
+module
+
+public import Mathlib.NumberTheory.FLT.Basic
+public import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
+public import Mathlib.Algebra.Algebra.Basic
+public import Instance.EllipticCurve_FrobeniusTrace
+public import Instance.FLTPrelim_GaloisRep
+public import Def.FLTPrelim_ModularRep
+public import Instance.FLTPrelim_Modularity
+
+@[expose] public section
 
 set_option autoImplicit false
 

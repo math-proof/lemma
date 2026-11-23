@@ -8,11 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.LieGroups.code.VermaModules.Part7
-import Theorem.Int.WeightSubspace.eq.ToSubmoduleWeightSpace
-import Mathlib.Algebra.Lie.Sl2
-import Structure.v1.Atlas.LieGroups.code.HighestWeightModules
+module
 
+public import Def.v1.Atlas.LieGroups.code.VermaModules.Part7
+public import Theorem.Int.WeightSubspace.eq.ToSubmoduleWeightSpace
+public import Mathlib.Algebra.Lie.Sl2
+public import Structure.v1.Atlas.LieGroups.code.HighestWeightModules
+
+@[expose] public section
 
 noncomputable section
 

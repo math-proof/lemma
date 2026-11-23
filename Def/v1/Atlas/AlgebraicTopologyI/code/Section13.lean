@@ -8,14 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section11
-import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section11
-import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section12
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section12.Part2
-import Mathlib.Topology.MetricSpace.Pseudo.Lemmas
-import Mathlib.Analysis.Convex.Combination
-import Mathlib.Topology.MetricSpace.Bounded
-import Mathlib.Analysis.Normed.Module.Convex
+module
+
+public import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section11
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section11
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section12
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section12.Part2
+public import Mathlib.Topology.MetricSpace.Pseudo.Lemmas
+public import Mathlib.Analysis.Convex.Combination
+public import Mathlib.Topology.MetricSpace.Bounded
+public import Mathlib.Analysis.Normed.Module.Convex
+
+@[expose] public section
+
 open Finset BigOperators Set Metric
 
 

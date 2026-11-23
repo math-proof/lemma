@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.TensorCategories.code.GradedVec.Part6
-import Theorem.Category.Atlas.v1.TensorCategories.code.GradedVec
-import Mathlib.GroupTheory.GroupAction.Basic
-import Structure.v1.Atlas.TensorCategories.code.MonoidalFunctorsCohomology
+module
+
+public import Theorem.v1.Atlas.TensorCategories.code.GradedVec.Part6
+public import Theorem.Category.Atlas.v1.TensorCategories.code.GradedVec
+public import Mathlib.GroupTheory.GroupAction.Basic
+public import Structure.v1.Atlas.TensorCategories.code.MonoidalFunctorsCohomology
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open CategoryTheory

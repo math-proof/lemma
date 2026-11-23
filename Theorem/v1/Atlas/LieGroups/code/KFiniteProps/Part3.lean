@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 import Def.v1.Atlas.LieGroups.code.KFinite.Part3
 import Theorem.Complex.IsKFinite0
 import Theorem.Fin.Any_Eq_SMul.of.All_ToMonoidHom.IsIrreducible
-import Lemma.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
+import Theorem.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
 import Def.v1.Atlas.LieGroups.code.SchurLemma
 import Def.v1.Atlas.LieGroups.code.Admissible.Part3
 import Mathlib.MeasureTheory.Integral.Bochner.Basic

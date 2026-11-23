@@ -1,8 +1,12 @@
-import Mathlib
-import Theorem.WeierstrassCurve.FreyPackage
-import Theorem.MvPolynomial.HeckeModule
-import Abbrev.ModularCurve_AttachmentConcrete
-import Def.ModularCurve_HeckeInputsAll
+module
+
+public import Mathlib
+public import Theorem.WeierstrassCurve.FreyPackage
+public import Theorem.MvPolynomial.HeckeModule
+public import Abbrev.ModularCurve_AttachmentConcrete
+public import Def.ModularCurve_HeckeInputsAll
+
+@[expose] public section
 
 set_option autoImplicit false
 

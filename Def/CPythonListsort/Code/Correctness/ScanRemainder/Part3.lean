@@ -1,11 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/ScanRemainder.lean -/
 
-import Def.CPythonListsort.Code.Correctness.PendingRunCorrectness
-import Def.CPythonListsort.Code.Correctness.SortSliceRange
-import Def.CPythonListsort.Code.Assembly.ListSortInputMode
-import Theorem.CPythonListsort.Code.Transcription.ListSortImpl
-import Mathlib
-import Structure.CPythonListsort.Code.Correctness.ScanRemainder
+module
+
+public import Def.CPythonListsort.Code.Correctness.PendingRunCorrectness
+public import Def.CPythonListsort.Code.Correctness.SortSliceRange
+public import Def.CPythonListsort.Code.Assembly.ListSortInputMode
+public import Theorem.CPythonListsort.Code.Transcription.ListSortImpl
+public import Mathlib
+public import Structure.CPythonListsort.Code.Correctness.ScanRemainder
+
+@[expose] public section
+
 /-!
 # Unscanned-snapshot correctness
 

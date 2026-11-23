@@ -1,9 +1,14 @@
-import Mathlib
-import Mathlib.SetTheory.ZFC.PSet
-import Mathlib.SetTheory.ZFC.Basic
-import Theorem.Analysis.Tools.ExistsUnique.Part2
-import Abbrev.Analysis.Section_3_1_api
-import Theorem.Analysis.Section_3_epilogue
+module
+
+public import Mathlib
+public import Mathlib.SetTheory.ZFC.PSet
+public import Mathlib.SetTheory.ZFC.Basic
+public import Theorem.Analysis.Tools.ExistsUnique.Part2
+public import Abbrev.Analysis.Section_3_1_api
+public import Theorem.Analysis.Section_3_epilogue
+
+@[expose] public section
+
 set_option doc.verso.suggestions false
 set_option backward.isDefEq.respectTransparency false
 

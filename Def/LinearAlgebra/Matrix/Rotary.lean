@@ -38,7 +38,7 @@ noncomputable def Matrix.rotary {d : ℕ} (θ : Fin d → ℝ) : Matrix (Fin (d 
 Su et al. interleaved rotary matrix: planes are `(2t, 2t + 1)`.
 -/
 noncomputable def Matrix.rotary' {d : ℕ} (θ : Fin d → ℝ) : Matrix (Fin (d + d)) (Fin (d + d)) ℝ :=
-  Matrix.rotaryOn (Fin.ropeEven d) (Fin.ropeOdd d) θ
+  Matrix.rotaryOn Fin.ropeEven Fin.ropeOdd θ
 
 namespace Function
 

@@ -1,7 +1,11 @@
-import Def.AdelicDock_LocalEmbedding
-import Structure.AdelicDock_LocalEmbedding
-import Lemma.Matrix.AdelicLevel
-import Mathlib.NumberTheory.Padics.HeightOneSpectrum
+module
+
+public import Def.AdelicDock_LocalEmbedding
+public import Structure.AdelicDock_LocalEmbedding
+public import Theorem.Matrix.AdelicLevel
+public import Mathlib.NumberTheory.Padics.HeightOneSpectrum
+
+@[expose] public section
 
 set_option autoImplicit false
 

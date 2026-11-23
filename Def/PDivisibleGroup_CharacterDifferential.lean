@@ -1,5 +1,9 @@
-import Mathlib
-import Lemma.Nat.CartierDuality
+module
+
+public import Mathlib
+public import Theorem.Nat.CartierDuality
+
+@[expose] public section
 
 set_option autoImplicit false
 

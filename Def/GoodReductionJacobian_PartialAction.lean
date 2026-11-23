@@ -1,8 +1,12 @@
-import Mathlib
-import Lemma.Scheme.RelativeGroupLaw
-import Theorem.Scheme.NeronModelEndomorphismExtension
-import Structure.GoodReductionJacobian_PartialAction
-import Abbrev.GoodReductionJacobian_PartialAction
+module
+
+public import Mathlib
+public import Theorem.Scheme.RelativeGroupLaw
+public import Theorem.Scheme.NeronModelEndomorphismExtension
+public import Structure.GoodReductionJacobian_PartialAction
+public import Abbrev.GoodReductionJacobian_PartialAction
+
+@[expose] public section
 
 set_option autoImplicit false
 

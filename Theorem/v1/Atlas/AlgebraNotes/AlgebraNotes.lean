@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Theorem.ZMod.Any_Nonempty_ZModPow
 import Theorem.Ideal.Any_And_Le.of.Ne_Top
-import Lemma.Fin.Any_EqToBilin'AndIsSymm.is.IsSymmToMatrix'
+import Theorem.Fin.Any_EqToBilin'AndIsSymm.is.IsSymmToMatrix'
 import Theorem.Nat.IsPGroupG.is.CardG.eq.Pow
 import Theorem.Set.SMul.of.In_SMul
 import Theorem.Int.OrderOf.eq.ZeroAndInjectiveOrOrderOf.Gt_0AndCard.eq.OrderOf

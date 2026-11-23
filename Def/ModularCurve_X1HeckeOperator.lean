@@ -1,5 +1,9 @@
-import Def.AlgebraicCurve_Correspondence
-import Def.ModularCurve_X1
+module
+
+public import Def.AlgebraicCurve_Correspondence
+public import Def.ModularCurve_X1
+
+@[expose] public section
 
 set_option autoImplicit false
 

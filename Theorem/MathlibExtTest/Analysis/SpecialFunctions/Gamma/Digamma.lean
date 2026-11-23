@@ -3,7 +3,7 @@
 
 import Def.Analysis.SpecialFunctions.Gamma.Digamma
 import Theorem.Complex.Digamma
-import Lemma.Real.Digamma
+import Theorem.Real.Digamma
 
 
 example (x : ℝ) (hx : 0 < x) :

@@ -1,4 +1,8 @@
-import Def.LocalLanglands_LocalHeckeInstance
+module
+
+public import Def.LocalLanglands_LocalHeckeInstance
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,5 +1,9 @@
-import Lemma.Scheme.TwoAffineOpenCover
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
+module
+
+public import Theorem.Scheme.TwoAffineOpenCover
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+
+@[expose] public section
 
 set_option autoImplicit false
 

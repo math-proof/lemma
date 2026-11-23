@@ -1,5 +1,9 @@
-import Lemma.Matrix.CubicInduction_PrincipalSeries3
-import Def.LanglandsTunnell_StandardLocalConstantsAt
+module
+
+public import Theorem.Matrix.CubicInduction_PrincipalSeries3
+public import Def.LanglandsTunnell_StandardLocalConstantsAt
+
+@[expose] public section
 
 set_option autoImplicit false
 

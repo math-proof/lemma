@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section11
-import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section11
-import Structure.v1.Atlas.AlgebraicTopologyI.code.MayerVietoris
+module
+
+public import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section11
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section11
+public import Structure.v1.Atlas.AlgebraicTopologyI.code.MayerVietoris
+
+@[expose] public section
+
 open Set Topology EilenbergSteenrod Function
 
 universe u

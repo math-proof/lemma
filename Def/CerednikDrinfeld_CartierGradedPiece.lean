@@ -1,8 +1,12 @@
-import Mathlib
-import Instance.MvFormalGroup_NegV2
-import Instance.MvFormalGroup_CartierModule
-import Theorem.PowerSeries.CartierModuleHomothety
-import Lemma.MvPowerSeries.SpecialFormalModule
+module
+
+public import Mathlib
+public import Instance.MvFormalGroup_NegV2
+public import Instance.MvFormalGroup_CartierModule
+public import Theorem.PowerSeries.CartierModuleHomothety
+public import Theorem.MvPowerSeries.SpecialFormalModule
+
+@[expose] public section
 
 set_option autoImplicit false
 

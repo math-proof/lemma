@@ -1,5 +1,9 @@
-import Def.CerednikDrinfeld_QMModuli
-import Structure.CerednikDrinfeld_QMLatticeAction
+module
+
+public import Def.CerednikDrinfeld_QMModuli
+public import Structure.CerednikDrinfeld_QMLatticeAction
+
+@[expose] public section
 
 set_option autoImplicit false
 

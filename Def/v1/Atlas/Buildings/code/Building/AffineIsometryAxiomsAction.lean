@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.Buildings.code.Building.AffineIsometry
-import Structure.v1.Atlas.Buildings.code.Building.GroupApplicationsCh17
-import Theorem.Set.ConjSet.eq.Image
+module
+
+public import Theorem.v1.Atlas.Buildings.code.Building.AffineIsometry
+public import Structure.v1.Atlas.Buildings.code.Building.GroupApplicationsCh17
+public import Theorem.Set.ConjSet.eq.Image
+
+@[expose] public section
+
 set_option linter.unusedSectionVars false
 set_option linter.unusedVariables false
 

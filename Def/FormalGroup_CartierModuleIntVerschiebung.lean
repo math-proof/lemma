@@ -1,8 +1,12 @@
-import Mathlib
-import Def.FormalGroup_NegV2
-import Def.FormalGroup_CartierModule
-import Def.PowerSeries_CartierModuleHomothety
-import Def.FormalGroup_CartierModuleWittAction
+module
+
+public import Mathlib
+public import Def.FormalGroup_NegV2
+public import Def.FormalGroup_CartierModule
+public import Def.PowerSeries_CartierModuleHomothety
+public import Def.FormalGroup_CartierModuleWittAction
+
+@[expose] public section
 
 set_option autoImplicit false
 

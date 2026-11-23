@@ -1,7 +1,11 @@
-import Def.HeckeGalois_EichlerShimura
-import Theorem.LaurentSeries.HeckeOperator
-import Theorem.Finsupp.CuspidalClass
-import Instance.ModularCurve_ArithmeticGalois
+module
+
+public import Def.HeckeGalois_EichlerShimura
+public import Theorem.LaurentSeries.HeckeOperator
+public import Theorem.Finsupp.CuspidalClass
+public import Instance.ModularCurve_ArithmeticGalois
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -8,12 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RepresentationTheory.Homological.GroupCohomology.LowDegree
-import Mathlib.Topology.Algebra.MulAction
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.FieldTheory.KrullTopology
-import Mathlib.FieldTheory.SeparableClosure
-import Theorem.v1.Atlas.ArithmeticGeometry.code.GaloisCohomology
+module
+
+public import Mathlib.RepresentationTheory.Homological.GroupCohomology.LowDegree
+public import Mathlib.Topology.Algebra.MulAction
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.FieldTheory.KrullTopology
+public import Mathlib.FieldTheory.SeparableClosure
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.GaloisCohomology
+
+@[expose] public section
+
 open groupCohomology
 
 

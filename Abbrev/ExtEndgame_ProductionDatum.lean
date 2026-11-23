@@ -1,8 +1,12 @@
-import Mathlib
-import Structure.ExtEndgame_ChainAdm
-import Instance.GaloisRep_ComplexConjugation
-import Instance.GaloisRep_CompletionBridge
-import Theorem.ClassGroup.GaloisAction
+module
+
+public import Mathlib
+public import Structure.ExtEndgame_ChainAdm
+public import Instance.GaloisRep_ComplexConjugation
+public import Instance.GaloisRep_CompletionBridge
+public import Theorem.ClassGroup.GaloisAction
+
+@[expose] public section
 
 set_option autoImplicit false
 

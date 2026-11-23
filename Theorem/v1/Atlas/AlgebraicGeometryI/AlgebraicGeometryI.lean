@@ -48,7 +48,7 @@ import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SmoothSubvarietyChar
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.AdjunctionSheaf
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.AdjunctionSheaf
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.AdjustedResolutions
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.AffineVarietyCharacterization
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.AffineVarietyCharacterization
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.AffineVarietyDef
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.AffineVarietySpec
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.AlgebraicEquivalence
@@ -132,8 +132,8 @@ import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckRiemannRoch
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.H0GlobalSections
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.HilbertFunctionGrowth
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.HomSheafCoherent
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.HypersurfaceDim
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.IntersectionDimension
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.HypersurfaceDim
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.IntersectionDimension
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.IrreducibleComponentDef
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.IsFiniteTypeOfCoversTop
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.JacobianCriterion
@@ -155,7 +155,7 @@ import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec20ConormalSequence
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec20EulerSequence
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec20GrassmannianCotangent
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec20GrassmannianTangent
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec20NormalCodim2
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec20NormalCodim2
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec20SmoothClosedSubvariety
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec20TangentCone
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec21Chevalley
@@ -166,14 +166,14 @@ import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec23DeltaFunctorDefs
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec23DerivedFunctors
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec24RiemannRochSerre
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec2AffineVarieties
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec2AffineVarietySpec
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec2AffineVarietySpec
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec2OpenSubvariety
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec2ProjectiveSpace
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec3Isomorphism
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec3Morphisms
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec3OpenImmersion
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec3ProjectiveNoether
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec3Thm1
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec3Thm1
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec4AffineMorphism
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec4Dimension
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec4FiniteMorphisms
@@ -202,7 +202,7 @@ import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.MorphismDefinitions
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.MorphismReconstruction
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.MultiplicityDef
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NakayamaApplications
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.NoetherNormalization
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NoetherNormalization
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.NoetherNullstellensatzChain
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NoetherianTopological
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NormalExtension

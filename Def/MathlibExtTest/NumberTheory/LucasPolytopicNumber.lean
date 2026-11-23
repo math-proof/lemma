@@ -1,11 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/LucasPolytopicNumber.lean -/
 
+module
 
-import Def.NumberTheory.LucasPolytopicNumber.Part2
-import Theorem.Nat.LucasPolytopicNumber
-import Mathlib.Tactic
-import Theorem.MathlibExtTest.NumberTheory.LucasPolytopicNumber
+public import Def.NumberTheory.LucasPolytopicNumber.Part2
+public import Theorem.Nat.LucasPolytopicNumber
+public import Mathlib.Tactic
+public import Theorem.MathlibExtTest.NumberTheory.LucasPolytopicNumber
 
+@[expose] public section
 
 namespace MetaMathlibExt
 

@@ -8,13 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.LieGroups.code.ContinuousRep.Part3
-import Theorem.Complex.IsStronglyContinuousToMonoidHom
-import Mathlib.Topology.Algebra.Module.FiniteDimension
-import Mathlib.Topology.Algebra.Group.Basic
-import Mathlib.LinearAlgebra.Dimension.Finite
-import Theorem.v1.Atlas.LieGroups.code.KFinite
+module
 
+public import Def.v1.Atlas.LieGroups.code.ContinuousRep.Part3
+public import Theorem.Complex.IsStronglyContinuousToMonoidHom
+public import Mathlib.Topology.Algebra.Module.FiniteDimension
+public import Mathlib.Topology.Algebra.Group.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finite
+public import Theorem.v1.Atlas.LieGroups.code.KFinite
+
+@[expose] public section
 
 noncomputable section
 

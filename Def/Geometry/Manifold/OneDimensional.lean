@@ -142,7 +142,7 @@ def omb_interiorModelHomeomorph :
     (PartialHomeomorph.mk
       { toFun := Subtype.val
         invFun := (𝓡∂ 1).symm
-        source := {y | 0 < (y.val) 0}
+        source := {y | 0 < y.val 0}
         target := {y | 0 < y 0}
         map_source' := fun _ hy => hy
         map_target' := by
@@ -163,7 +163,7 @@ def omb_interiorModelHomeomorph :
             exact hle
           have h := ModelWithCorners.right_inv (𝓡∂ 1) hmem
           simpa using h }
-      (continuous_subtype_val.continuousOn)
+      continuous_subtype_val.continuousOn
       ((ModelWithCorners.continuous_symm (𝓡∂ 1)).continuousOn))
     ((PiLp.continuous_apply 2 _ 0 |>.comp continuous_subtype_val).isOpen_preimage _
       isOpen_Ioi)

@@ -1,13 +1,15 @@
-import Mathlib
-import Class.AlgebraicCurve_DivisorClassGroup
-import Class.AlgebraicCurve_DivisorPushPull
-import Class.ModularCurve_CanonicalDivisor
-import Theorem.Scheme.CanonicalDivisorUniformizer
-import Class.AlgebraicCurve_CanonicalDivisor
-import Structure.AlgebraicCurve_AdelicIndex
-import Class.AlgebraicCurve_LocalResidue
-import Instance.DedekindDomain_AdicValuation_InlineSpecific
-import Instance.AlgebraicCurve_PlaceCompletion
+module
+
+public import Mathlib
+public import Class.AlgebraicCurve_DivisorClassGroup
+public import Class.AlgebraicCurve_DivisorPushPull
+public import Class.ModularCurve_CanonicalDivisor
+public import Theorem.Scheme.CanonicalDivisorUniformizer
+public import Class.AlgebraicCurve_CanonicalDivisor
+public import Structure.AlgebraicCurve_AdelicIndex
+public import Class.AlgebraicCurve_LocalResidue
+public import Instance.DedekindDomain_AdicValuation_InlineSpecific
+public import Instance.AlgebraicCurve_PlaceCompletion
 
 set_option autoImplicit false
 
@@ -17,7 +19,7 @@ set_option linter.unusedSectionVars false
 
 open LinearMap Submodule
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace ModularCurve.KwF4gRRTate
 

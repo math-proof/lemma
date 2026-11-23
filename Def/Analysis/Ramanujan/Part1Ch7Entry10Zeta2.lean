@@ -4,18 +4,23 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.Meromorphic.Basic
-import Mathlib.NumberTheory.LSeries.RiemannZeta
-import Def.Analysis.Ramanujan.Part1Ch7Entry10ZetaSide
-import Lemma.Real.Ramanujan.Part1Ch7Entry10ZetaSide
-import Theorem.Complex.Part1Ch7PowerDifference
-import Def.Analysis.Ramanujan.Part1Ch7PowerDifference
-import Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected
-import Mathlib.Analysis.Convex.Contractible
-import Mathlib.Analysis.Meromorphic.Complex
-import Mathlib.NumberTheory.LSeries.Dirichlet
-import Mathlib.Topology.Separation.CompletelyRegular
+module
+
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Meromorphic.Basic
+public import Mathlib.NumberTheory.LSeries.RiemannZeta
+public import Def.Analysis.Ramanujan.Part1Ch7Entry10ZetaSide
+public import Theorem.Real.Ramanujan.Part1Ch7Entry10ZetaSide
+public import Theorem.Complex.Part1Ch7PowerDifference
+public import Def.Analysis.Ramanujan.Part1Ch7PowerDifference
+public import Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected
+public import Mathlib.Analysis.Convex.Contractible
+public import Mathlib.Analysis.Meromorphic.Complex
+public import Mathlib.NumberTheory.LSeries.Dirichlet
+public import Mathlib.Topology.Separation.CompletelyRegular
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 7, Entry 10
 

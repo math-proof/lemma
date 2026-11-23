@@ -1,5 +1,9 @@
-import Mathlib
-import Instance.AlgebraicCurve_PlaceCompletion
+module
+
+public import Mathlib
+public import Instance.AlgebraicCurve_PlaceCompletion
+
+@[expose] public section
 
 @[simps!]
 def Units.mapₜ {M N : Type*} [Monoid M] [Monoid N] [TopologicalSpace M] [TopologicalSpace N]

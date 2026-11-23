@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/PowerSortPolicyCost.lean -/
 
-import Def.CPythonListsort.Code.Assembly.MergePolicyReplay.Part4
-import Def.CPythonListsort.Code.Assembly.PowerTreeEntropy
-import Def.CPythonListsort.Code.Policy.BoundaryPowerGeometry
+module
+
+public import Def.CPythonListsort.Code.Assembly.MergePolicyReplay.Part4
+public import Def.CPythonListsort.Code.Assembly.PowerTreeEntropy
+public import Def.CPythonListsort.Code.Policy.BoundaryPowerGeometry
+
+@[expose] public section
+
 /-!
 # PowerSort policy and cost bridge
 

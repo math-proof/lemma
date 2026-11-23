@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/QuotientToRayClass.lean -/
 
 import Theorem.NumberTheory.NumberField.RayClass.IntegralUnits.Part4
-import Lemma.Nat.NumberField.RayClass.IntegralUnits
+import Theorem.Nat.NumberField.RayClass.IntegralUnits
 import Lemma.Nat.NumberField.RayClass.PrincipalIdeal
 import Theorem.Nat.NumberField.RayClass.Group
 import Theorem.NumberTheory.NumberField.RayClass.PrincipalIdeal

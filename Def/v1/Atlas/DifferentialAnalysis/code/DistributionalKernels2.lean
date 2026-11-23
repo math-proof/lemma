@@ -8,14 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.MvPolynomial.Basic
-import Def.v1.Atlas.DifferentialAnalysis.code.TemperedDistributions
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TemperedDistributions
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TestFunctions
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SobolevEmbedding
-import Instance.v1.Atlas.DifferentialAnalysis.code.TestFunctions
-import Def.v1.Atlas.DifferentialAnalysis.code.SobolevEmbedding.Part5
+module
 
+public import Mathlib.RingTheory.MvPolynomial.Basic
+public import Def.v1.Atlas.DifferentialAnalysis.code.TemperedDistributions
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TemperedDistributions
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TestFunctions
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SobolevEmbedding
+public import Instance.v1.Atlas.DifferentialAnalysis.code.TestFunctions
+public import Def.v1.Atlas.DifferentialAnalysis.code.SobolevEmbedding.Part5
+
+@[expose] public section
 
 noncomputable section
 

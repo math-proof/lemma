@@ -47,7 +47,7 @@ theorem _root_.ValuationSubring.not_isField_of_ne_top {A : ValuationSubring F} (
       exact inv_ne_zero hx0
     obtain ⟨b, hb⟩ := hf.mul_inv_cancel hxi0
     have hb' : x⁻¹ * (b : F) = 1 := by
-      have h := congrArg (Subtype.val) hb
+      have h := congrArg Subtype.val hb
       simpa using h
     have hbx : (b : F) = x := by
       field_simp at hb'

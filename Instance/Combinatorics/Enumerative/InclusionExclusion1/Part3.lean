@@ -2,9 +2,10 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.Combinatorics.Enumerative.InclusionExclusion1.Part2
-open Finset BigOperators Nat
+module
+
+public import Mathlib
+public import Def.Combinatorics.Enumerative.InclusionExclusion1.Part2
 
 /-!
 # The Principles of Inclusion and Exclusion
@@ -38,6 +39,11 @@ This is already available in Mathlib as `Finset.inclusion_exclusion_sum_inf_comp
 * Section `sec.sign.pie` of the Algebraic Combinatorics notes
 * Mathlib's `Mathlib.Combinatorics.Enumerative.InclusionExclusion`
 -/
+
+@[expose] public section
+
+open Finset BigOperators Nat
+
 
 
 namespace AlgebraicCombinatorics.InclusionExclusion

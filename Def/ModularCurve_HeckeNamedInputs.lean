@@ -1,5 +1,9 @@
-import Theorem.LaurentSeries.HeckeOperator
-import Lemma.AlgHom.DegeneracyTower
+module
+
+public import Theorem.LaurentSeries.HeckeOperator
+public import Theorem.AlgHom.DegeneracyTower
+
+@[expose] public section
 
 set_option autoImplicit false
 

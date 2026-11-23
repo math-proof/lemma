@@ -1,14 +1,19 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Words/CobhamUniformMorphism.lean -/
 
-import Mathlib.Data.Fintype.Basic
-import Mathlib.Data.Fintype.EquivFin
-import Def.Combinatorics.InfiniteWord.MorphicWord
-import Lemma.Finset.InfiniteWord.MorphicWord
-import Mathlib.Algebra.Ring.Nat
-import Mathlib.Data.Fintype.Option
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Data.List.GetD
-import Mathlib.Logic.Function.CompTypeclasses
+module
+
+public import Mathlib.Data.Fintype.Basic
+public import Mathlib.Data.Fintype.EquivFin
+public import Def.Combinatorics.InfiniteWord.MorphicWord
+public import Theorem.Finset.InfiniteWord.MorphicWord
+public import Mathlib.Algebra.Ring.Nat
+public import Mathlib.Data.Fintype.Option
+public import Mathlib.Data.Fintype.Pi
+public import Mathlib.Data.List.GetD
+public import Mathlib.Logic.Function.CompTypeclasses
+
+@[expose] public section
+
 /-!
 # Cobham: `k`-automatic sequences are codings of prolongable `k`-uniform fixed points
 

@@ -8,14 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.BooleanFunctions.code.Influence
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Influence
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Parseval
-import Def.v1.Atlas.BooleanFunctions.code.FourierExpansion
-import Def.v1.Atlas.BooleanFunctions.code.Parseval
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Data.Finset.SymmDiff
+module
+
+public import Def.v1.Atlas.BooleanFunctions.code.Influence
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Influence
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Parseval
+public import Def.v1.Atlas.BooleanFunctions.code.FourierExpansion
+public import Def.v1.Atlas.BooleanFunctions.code.Parseval
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Data.Finset.SymmDiff
+
+@[expose] public section
+
 open Finset BigOperators
 
 

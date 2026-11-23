@@ -1,6 +1,10 @@
-import Mathlib
-import Theorem.WeierstrassCurve.FreyPackage
-import Instance.ModularCurve_ArithmeticGalois
+module
+
+public import Mathlib
+public import Theorem.WeierstrassCurve.FreyPackage
+public import Instance.ModularCurve_ArithmeticGalois
+
+@[expose] public section
 
 set_option autoImplicit false
 

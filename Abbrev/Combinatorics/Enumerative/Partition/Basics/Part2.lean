@@ -6,8 +6,12 @@ All rights reserved.
 Copyright (c) 2025 AlgebraicCombinatorics contributors. All rights reserved.
 Authors: AlgebraicCombinatorics contributors
 -/
-import Mathlib
-import Def.Combinatorics.Enumerative.Partition.Basics.Part3
+module
+
+public import Mathlib
+public import Def.Combinatorics.Enumerative.Partition.Basics.Part3
+@[expose] public section
+
 open Nat Finset BigOperators PowerSeries
 open scoped PowerSeries.WithPiTopology
 /-!

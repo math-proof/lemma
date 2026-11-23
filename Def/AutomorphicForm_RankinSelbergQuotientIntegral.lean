@@ -1,6 +1,10 @@
-import Abbrev.AutomorphicForm_RationalCentreUnipotentQuotient
-import Def.AutomorphicForm_WhittakerCoefficient
-import Def.NumberField_TateGlobalZeta
+module
+
+public import Abbrev.AutomorphicForm_RationalCentreUnipotentQuotient
+public import Def.AutomorphicForm_WhittakerCoefficient
+public import Def.NumberField_TateGlobalZeta
+
+@[expose] public section
 
 open MeasureTheory NumberField NumberField.AdelicHaar NumberField.AdelicBox IsDedekindDomain
 

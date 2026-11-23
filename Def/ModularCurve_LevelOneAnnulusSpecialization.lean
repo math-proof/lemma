@@ -1,9 +1,14 @@
-import Def.ModularCurve_LevelOneGlueData
-import Theorem.ResidueField.GluedPic0
-import Def.ModularCurve_NodeDepth
-import Lemma.IntermediateField.NodeLocalizedPlaces
-import Def.ModularCurve_ProlongationTuple
-import Structure.ModularCurve_LevelOneAnnulusSpecialization
+module
+
+public import Def.ModularCurve_LevelOneGlueData
+public import Theorem.ResidueField.GluedPic0
+public import Def.ModularCurve_NodeDepth
+public import Theorem.IntermediateField.NodeLocalizedPlaces
+public import Def.ModularCurve_ProlongationTuple
+public import Structure.ModularCurve_LevelOneAnnulusSpecialization
+
+@[expose] public section
+
 set_option autoImplicit false
 
 noncomputable section

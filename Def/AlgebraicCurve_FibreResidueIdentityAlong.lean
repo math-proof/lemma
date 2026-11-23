@@ -1,7 +1,11 @@
-import Mathlib
-import Class.AlgebraicCurve_LocalResidue
-import Def.AlgebraicCurve_DifferentialPushPull
-import Lemma.Submodule.CechH1PushPull
+module
+
+public import Mathlib
+public import Class.AlgebraicCurve_LocalResidue
+public import Def.AlgebraicCurve_DifferentialPushPull
+public import Theorem.Submodule.CechH1PushPull
+
+@[expose] public section
 
 set_option autoImplicit false
 

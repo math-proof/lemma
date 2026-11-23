@@ -1,5 +1,9 @@
-import Def.AutomorphicForm_ProductionPinsCompact
-import Theorem.Ideal.ArithCuspRealization
+module
+
+public import Def.AutomorphicForm_ProductionPinsCompact
+public import Theorem.Ideal.ArithCuspRealization
+
+@[expose] public section
 
 set_option autoImplicit false
 

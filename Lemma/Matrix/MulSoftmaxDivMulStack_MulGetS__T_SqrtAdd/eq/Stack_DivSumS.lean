@@ -16,7 +16,7 @@ import Lemma.Matrix.InvRotary'.eq.TRotary'
 import Lemma.Matrix.InvRotaryOn.eq.TRotaryOn.of.All_EqSum__Add.All_OrAnyS_Eq.All_Ne.Injective.Injective
 import Lemma.Matrix.MulSoftmaxDivMulStack_MulGetS__T_SqrtAdd.eq.StackAnd__DivSumSFin.of.Eq_1.All_Eq_Inv.All_EqDotS_Mul
 import Lemma.Matrix.MulT_RotaryOn.eq.RotaryOn__Sub.of.All_EqSum__Add.All_OrAnyS_Eq.All_Ne.Injective.Injective
-import Lemma.Real.Sum.eq.AddSumS
+import Lemma.Fin.Sum.eq.AddSumS
 open Fin Matrix Real
 open scoped Matrix
 set_option maxHeartbeats 800000
@@ -222,7 +222,7 @@ private lemma rotary'_dot
         obtain h | h := by simpa only [Set.mem_insert_iff, Set.mem_singleton_iff] using ht
         · exact Or.inl ⟨t, h.symm⟩
         · exact Or.inr ⟨t, h.symm⟩)
-      (Sum.eq.AddSumS d) α β q k
+      Sum.eq.AddSumS α β q k
 
 private lemma rotary'_neg
   {d : ℕ}
@@ -231,7 +231,7 @@ private lemma rotary'_neg
 -- imply
   Matrix.rotary' (-φ) = (Matrix.rotary' φ)ᵀ := by
 -- proof
-  simpa [Matrix.rotary'] using rotaryOn_neg (u := ropeEven d) (v := ropeOdd d) φ
+  simpa [Matrix.rotary'] using rotaryOn_neg (u := ropeEven) (v := ropeOdd) φ
 
 private lemma rotary'_zero
   {d : ℕ} :

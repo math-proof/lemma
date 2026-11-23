@@ -20,14 +20,14 @@ def IsLimitPreserving (F : ModuliPackage.{0, 0} p O) : Prop :=
     (∀ x : F.obj B (algebraMap O B) hB,
       ∃ (B₀ : Type) (_ : CommRing B₀) (_ : Algebra O B₀) (_ : Algebra.FinitePresentation O B₀)
         (hB₀ : IsNilpotent (p : B₀)) (g : B₀ →ₐ[O] B) (x₀ : F.obj B₀ (algebraMap O B₀) hB₀),
-        F.map hB₀ hB (g : B₀ →+* B) (g.comp_algebraMap) x₀ = x) ∧
+        F.map hB₀ hB (g : B₀ →+* B) g.comp_algebraMap x₀ = x) ∧
     (∀ (B₀ : Type) [CommRing B₀] [Algebra O B₀] [Algebra.FinitePresentation O B₀]
       (hB₀ : IsNilpotent (p : B₀)) (g : B₀ →ₐ[O] B) (x₀ x₀' : F.obj B₀ (algebraMap O B₀) hB₀),
-      F.map hB₀ hB (g : B₀ →+* B) (g.comp_algebraMap) x₀ = F.map hB₀ hB (g : B₀ →+* B) (g.comp_algebraMap) x₀' →
+      F.map hB₀ hB (g : B₀ →+* B) g.comp_algebraMap x₀ = F.map hB₀ hB (g : B₀ →+* B) g.comp_algebraMap x₀' →
       ∃ (B₁ : Type) (_ : CommRing B₁) (_ : Algebra O B₁) (_ : Algebra.FinitePresentation O B₁)
         (hB₁ : IsNilpotent (p : B₁)) (g₁ : B₀ →ₐ[O] B₁) (h : B₁ →ₐ[O] B) (_ : h.comp g₁ = g),
-        F.map hB₀ hB₁ (g₁ : B₀ →+* B₁) (g₁.comp_algebraMap) x₀ =
-          F.map hB₀ hB₁ (g₁ : B₀ →+* B₁) (g₁.comp_algebraMap) x₀')
+        F.map hB₀ hB₁ (g₁ : B₀ →+* B₁) g₁.comp_algebraMap x₀ =
+          F.map hB₀ hB₁ (g₁ : B₀ →+* B₁) g₁.comp_algebraMap x₀')
 
 def IsEffective (F : ModuliPackage.{0, 0} p O) : Prop :=
   ∀ (A : Type) [CommRing A] [IsLocalRing A] [IsNoetherianRing A]

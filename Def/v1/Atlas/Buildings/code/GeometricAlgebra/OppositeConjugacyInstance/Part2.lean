@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Instance.v1.Atlas.Buildings.code.GeometricAlgebra.FlagEquivalenceInstance
-import Theorem.Submodule.Any_EqMapToLinearMap.of.FinrankK
-import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.OppositeConjugacyInstance
+module
 
+public import Instance.v1.Atlas.Buildings.code.GeometricAlgebra.FlagEquivalenceInstance
+public import Theorem.Submodule.Any_EqMapToLinearMap.of.FinrankK
+public import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.OppositeConjugacyInstance
+
+@[expose] public section
 
 namespace GeometricAlgebra
 

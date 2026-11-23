@@ -1,6 +1,11 @@
-import Mathlib
-import Abbrev.Analysis.Appendix_B_1.Part6
-import Structure.Analysis.Appendix_B_2
+module
+
+public import Mathlib
+public import Abbrev.Analysis.Appendix_B_1.Part6
+public import Structure.Analysis.Appendix_B_2
+
+@[expose] public section
+
 /-!
 # Analysis I, Appendix B.2: The decimal representation of real numbers
 

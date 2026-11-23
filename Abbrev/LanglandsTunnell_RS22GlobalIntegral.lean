@@ -1,15 +1,17 @@
-import Def.AutomorphicForm_GodementSection
-import Def.AutomorphicForm_WeylIntertwining
-import Abbrev.AutomorphicForm_UnipotentQuotient
-import Def.AutomorphicForm_WindowedSiegelSet
-import Def.LanglandsTunnell_TateLocalZeta
+module
+
+public import Def.AutomorphicForm_GodementSection
+public import Def.AutomorphicForm_WeylIntertwining
+public import Abbrev.AutomorphicForm_UnipotentQuotient
+public import Def.AutomorphicForm_WindowedSiegelSet
+public import Def.LanglandsTunnell_TateLocalZeta
 
 set_option autoImplicit false
 
 open MeasureTheory NumberField NumberField.AdelicHaar NumberField.AdelicLevel IsDedekindDomain
 open AutomorphicForm AutomorphicForm.WindowedSiegel
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace LanglandsTunnell.RankinSelberg
 

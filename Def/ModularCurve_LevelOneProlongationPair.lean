@@ -1,12 +1,16 @@
-import Mathlib
-import Def.ModularCurve_LevelOneGlueData
-import Theorem.Finset.SupersingularNodes
-import Def.ModularCurve_SupersingularModuli
-import Lemma.Scheme.RegularProlongation
-import Theorem.LaurentSeries.CharPReduction
-import Theorem.Finsupp.CuspidalClass
-import Def.ModularCurve_X0ModL
-import Structure.ModularCurve_LevelOneProlongationPair
+module
+
+public import Mathlib
+public import Def.ModularCurve_LevelOneGlueData
+public import Theorem.Finset.SupersingularNodes
+public import Def.ModularCurve_SupersingularModuli
+public import Theorem.Scheme.RegularProlongation
+public import Theorem.LaurentSeries.CharPReduction
+public import Theorem.Finsupp.CuspidalClass
+public import Def.ModularCurve_X0ModL
+public import Structure.ModularCurve_LevelOneProlongationPair
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option synthInstance.maxHeartbeats 400000

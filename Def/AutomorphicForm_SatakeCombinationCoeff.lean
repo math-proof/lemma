@@ -1,5 +1,9 @@
-import Def.AutomorphicForm_HeckeEigensystem
-import Lemma.Ideal.IntegralClosure
+module
+
+public import Def.AutomorphicForm_HeckeEigensystem
+public import Theorem.Ideal.IntegralClosure
+
+@[expose] public section
 
 set_option autoImplicit false
 

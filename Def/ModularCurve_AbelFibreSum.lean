@@ -1,5 +1,9 @@
-import Mathlib
-import Lemma.CuspForm.PeriodLattice
+module
+
+public import Mathlib
+public import Theorem.CuspForm.PeriodLattice
+
+@[expose] public section
 
 open UpperHalfPlane
 open scoped MatrixGroups

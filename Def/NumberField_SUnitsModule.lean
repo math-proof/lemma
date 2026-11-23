@@ -1,7 +1,11 @@
-import Mathlib
-import Theorem.Matrix.PlaceAbove
-import Def.NumberField_PlaceDecompositionAction
-import Abbrev.NumberField_SUnitsModule
+module
+
+public import Mathlib
+public import Theorem.Matrix.PlaceAbove
+public import Def.NumberField_PlaceDecompositionAction
+public import Abbrev.NumberField_SUnitsModule
+
+@[expose] public section
 
 set_option autoImplicit false
 

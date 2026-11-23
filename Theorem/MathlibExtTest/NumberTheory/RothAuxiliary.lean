@@ -12,7 +12,7 @@ import Theorem.Polynomial.Map_AlgebraMapRothLastSlice.eq.MulCCoeff.of.EqRothLast
 import Lemma.MvPolynomial.RothKronecker.eq.Monomial
 import Theorem.Fin.RothMvHasse_RothMvHasse.eq.SMul_RothMvHasse.of.RothMvIndex
 import Lemma.Fin.CardRothLowIndex.Gt_0.of.Lt_Div1'2.Gt_0.Gt_0
-import Lemma.Fin.Sum_SquareRothCenteredSum.le.DivMul_CardRothBox4.of.All_Gt_0
+import Theorem.Fin.Sum_SquareRothCenteredSum.le.DivMul_CardRothBox4.of.All_Gt_0
 import Theorem.Fin.RothDegreeBound_Sum.of.All_RothDegreeBound
 import Lemma.MvPolynomial.EvalAlgebraMap.eq.Eval_AlgebraMapFun
 import Theorem.Fin.RothMvHasse_Single1.eq.Pderiv
@@ -29,13 +29,13 @@ import Theorem.Fin.RothMvVanishesBelow.of.Le_0
 import Theorem.Polynomial.LtDegreeMulC.of.LtDegree
 import Lemma.Finset.Prod_Pow_RothRidoutExponent.dvd.Prod_MulPowNumPowDenSub.of.RothMvIndex.All_DvdProd_Pow_Den.All_DvdProd_PowNum
 import Lemma.Fin.Pow_RothRidoutExponent.eq.Prod_MulPowPowPowPowSub.of.RothMvIndex
-import Lemma.Fin.RothMvL1'1.eq.One
+import Theorem.Fin.RothMvL1'1.eq.One
 import Lemma.MvPolynomial.Eval.eq.RothHasseEval.of.RothBox.RothCoeff
 import Theorem.Fin.NatAbsCoeff.le.RothMvL1.of.RothMvIndex
 import Lemma.MvPolynomial.All_EqRothTranslateC
 import Theorem.Nat.RothMvOrderAdd.eq.AddRothSMvOrder.of.RothMvIndex
 import Theorem.Real.FiniteSetOfLtAbsSub_Div1RpowDenAndLeDen.of.Gt_0
-import Lemma.Fin.SquareRothCentered.le.Div1'4.of.RothBox.All_Gt_0
+import Theorem.Fin.SquareRothCentered.le.Div1'4.of.RothBox.All_Gt_0
 import Theorem.Fin.RothMvL1.le.MulPowS
 import Theorem.Polynomial.Any_Eq_SMul.of.EqWronskian_0.Ne_0
 import Theorem.Fin.GetRothFlip.eq.Sub.of.RothBox
@@ -55,7 +55,7 @@ import Lemma.Submodule.RothPolyWronskianRow.in.Span_XRothPolyJetRows1
 import Lemma.Real.RothCoordinateBase.Gt_0
 import Lemma.Fin.RothRidoutAuxMatrix_CastSuccLastNatDegreeRothIntegralPolynomial.eq.Eq_1.of.RothBox
 import Theorem.Fin.MapRothHasseDet.eq.RothHasseDet_Map
-import Lemma.Polynomial.RothPolyL1_RothPowerCoordAdd_1.le.MulAddRothPolyL1'1RothPolyL1_RothPowerCoord
+import Theorem.Polynomial.RothPolyL1_RothPowerCoordAdd_1.le.MulAddRothPolyL1'1RothPolyL1_RothPowerCoord
 import Lemma.Polynomial.Eval.eq.PowMulLeadingCoeffRothIntPolynomial.of.IsAlgebraic
 import Theorem.Fin.RothDegreeBound.of.All_RothDegreeBound
 import Theorem.Fin.LeNatDegreeRothLastSlice.of.RothMvIndex
@@ -121,7 +121,7 @@ import Lemma.Fin.Nonempty_RothDeterminantData.of.Ne_0
 import Lemma.Finset.Prod_Pow_RothRidoutExponent.eq.Prod_MulPowProd_PowPowProd_PowSub.of.RothMvIndex
 import Theorem.Fin.RothHasseEval0.eq.RothEval.of.RothCoeff
 import Theorem.Fin.Sum_MulRothSCentered.eq.Zero.of.Ne.All_Gt_0
-import Lemma.Fin.Mul2CardRothLowIndex.le.CardRothBox.of.Le_MulMul2Square.Gt_0.Gt_0.All_Gt_0
+import Theorem.Fin.Mul2CardRothLowIndex.le.CardRothBox.of.Le_MulMul2Square.Gt_0.Gt_0.All_Gt_0
 import Theorem.Int.RothFinsuppL1Neg.eq.RothFinsuppL1
 import Lemma.MvPolynomial.RothMvHasse.eq.Monomial.of.RothMvIndex
 import Theorem.Fin.RothCentered_RothFlip.eq.NegRothCentered.of.RothBox.All_Gt_0
@@ -135,7 +135,7 @@ import Theorem.Real.RpowDivMul.le.PowRpow.of.Le_Pow.Ge_0.Gt_0.Gt_0.Gt_0
 import Lemma.Submodule.RothPolyRowDerivative.in.Span_XRothKronHasseJetRowsAdd_1.of.In_Span_XRothKronHasseJetRows
 import Lemma.MvPolynomial.RothMvVanishesBelow_Map_AlgebraMapRothMvOfCoeff
 import Lemma.Submodule.RothPolyRowDerivative.in.Span_XRothPolyJetRowsAdd_1.of.In_Span_XRothPolyJetRows
-import Lemma.Polynomial.RothPolyL1_RothPowerCoord.le.PowAddRothPolyL1'1
+import Theorem.Polynomial.RothPolyL1_RothPowerCoord.le.PowAddRothPolyL1'1
 import Lemma.MvPolynomial.RothMvVanishesBelow_MapAlgebraMap.of.All_EqEval_AlgebraMapFunRothMvHasse_0
 import Theorem.Polynomial.IsPrimitiveSubMulCDenXCNum
 import Theorem.Polynomial.Any_LtDivAndNeEvalHasseDeriv_MapAlgebraMap_0.of.Le_Rpow.Ne_0.GeDen_2.Gt_0.Gt_0
@@ -225,7 +225,7 @@ import Theorem.Real.MulPowS.le.RpowMulMulAdd_Mul.of.Le_MulMul.Le_RpowMul.Le_Rpow
 import Theorem.Fin.RothLastSlice0.ne.Zero.of.Ne_0
 import Theorem.Fin.RothMvVanishesBelowSMul
 import Theorem.Fin.RothMvWeightAdd.eq.AddRothSMvWeight.of.RothMvIndex
-import Lemma.Fin.Sum_SquareRothCentered.le.DivCardRothBox4.of.All_Gt_0
+import Theorem.Fin.Sum_SquareRothCentered.le.DivCardRothBox4.of.All_Gt_0
 import Lemma.Fin.Div_RothDenProduct.le.AbsEval.of.NeEval_AlgebraMapFun_0
 import Theorem.Fin.Eq.of.EqRothKroneckerEncode.All_Lt.All_Lt.Gt_1
 import Theorem.Real.Any_Lt_Den.of.Infinite.Subset_SetOfLtAbsSub_Div1RpowDen.Gt_0
@@ -250,7 +250,7 @@ import Theorem.Fin.RothMvVanishesBelow_Sub.of.RothMvIndex
 import Lemma.Polynomial.Eval_MapRothIntPolynomialAlgebraMap.eq.Zero
 import Theorem.Real.AbsSub.le.RpowDivNeg.of.LtAbsSub_Div1RpowDen.Le_PowDen.Gt_0.Ge_0.Gt_0
 import Theorem.Polynomial.DvdPowSubXC.of.All_EqEvalHasseDeriv_0
-import Lemma.Fin.CardRothLowIndex.lt.CardRothBox.of.Lt_MulMul4Square.Gt_0.Gt_0.All_Gt_0
+import Theorem.Fin.CardRothLowIndex.lt.CardRothBox.of.Lt_MulMul4Square.Gt_0.Gt_0.All_Gt_0
 import Theorem.Real.Abs.le.AddAbs1.of.LtAbsSub_Div1RpowDen.Gt_0
 import Lemma.Real.All_Eval_AlgebraMapFunRothMvHasse.eq.Zero.of.LeRothMvWeight.Mul_MulMulPow8SumRothMvL1Prod_PowMax.lt.Rpow.All_Any_LeRpowAndDvd_RothClearEval_RothMvHasse.All_LeProd_PowAbsSub_RpowMulNegRothMvWeight.Gt_1.Ge_0.All_Gt_0.RothMvIndex
 import Theorem.Fin.RothMvHasse_Sum.eq.Sum_RothMvHasse.of.RothMvIndex

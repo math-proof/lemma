@@ -1,7 +1,11 @@
-import Lemma.UpperHalfPlane.PeriodMap
-import Mathlib.Analysis.Complex.UpperHalfPlane.FunctionsBoundedAtInfty
-import Mathlib.NumberTheory.ModularForms.Basic
-import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
+module
+
+public import Theorem.UpperHalfPlane.PeriodMap
+public import Mathlib.Analysis.Complex.UpperHalfPlane.FunctionsBoundedAtInfty
+public import Mathlib.NumberTheory.ModularForms.Basic
+public import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
+
+@[expose] public section
 
 namespace ModularCurve
 

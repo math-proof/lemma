@@ -1,8 +1,12 @@
-import Mathlib
-import Lemma.Rep.RepPi
-import Def.NumberField_PlaceAbove
-import Instance.NumberField_PlaceDecompositionAction
-import Abbrev.NumberField_FiniteSIdeleModule
+module
+
+public import Mathlib
+public import Theorem.Rep.RepPi
+public import Def.NumberField_PlaceAbove
+public import Instance.NumberField_PlaceDecompositionAction
+public import Abbrev.NumberField_FiniteSIdeleModule
+
+@[expose] public section
 
 set_option autoImplicit false
 

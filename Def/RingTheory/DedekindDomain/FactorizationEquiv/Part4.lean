@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/FactorizationEquiv.lean -/
 
-import Mathlib.RingTheory.DedekindDomain.Factorization
-import Theorem.RingTheory.DedekindDomain.FactorizationEquiv.Part3
+module
+
+public import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Theorem.RingTheory.DedekindDomain.FactorizationEquiv.Part3
+
+@[expose] public section
+
 open scoped nonZeroDivisors
 
 open IsDedekindDomain

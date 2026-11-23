@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
+module
 
-import Theorem.StatisticalMechanics.Code.Inequalities.FKG
+public import Theorem.StatisticalMechanics.Code.Inequalities.FKG
+
+@[expose] public section
+
 open Finset
 
 

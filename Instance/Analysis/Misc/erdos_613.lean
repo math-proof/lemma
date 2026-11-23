@@ -1,5 +1,9 @@
-import Mathlib
-import Def.Analysis.Misc.erdos_613.Part5
+module
+
+public import Mathlib
+public import Def.Analysis.Misc.erdos_613.Part5
+@[expose] public section
+
 open Classical
 open scoped BigOperators
 

@@ -1,6 +1,10 @@
-import Lemma.WeierstrassCurve.ProjModel_ThirdAddFormulas
-import Lemma.WeierstrassCurve.ProjModel_GroupLawVocabulary
-import Notation.WeierstrassCurve_ProjModel_ThirdLawCharts
+module
+
+public import Theorem.WeierstrassCurve.ProjModel_ThirdAddFormulas
+public import Theorem.WeierstrassCurve.ProjModel_GroupLawVocabulary
+public import Notation.WeierstrassCurve_ProjModel_ThirdLawCharts
+
+@[expose] public section
 
 set_option Elab.async false
 

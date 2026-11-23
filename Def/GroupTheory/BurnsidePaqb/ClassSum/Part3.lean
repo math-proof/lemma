@@ -1,10 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/ClassSum.lean -/
 
-import Mathlib.Algebra.Group.ConjFinite
-import Mathlib.Algebra.MonoidAlgebra.Basic
-import Mathlib.Data.Complex.Basic
-import Theorem.GroupTheory.BurnsidePaqbReduction.Part2
-import Theorem.GroupTheory.BurnsidePaqb.ClassSum.Part2
+module
+
+public import Mathlib.Algebra.Group.ConjFinite
+public import Mathlib.Algebra.MonoidAlgebra.Basic
+public import Mathlib.Data.Complex.Basic
+public import Theorem.GroupTheory.BurnsidePaqbReduction.Part2
+public import Theorem.GroupTheory.BurnsidePaqb.ClassSum.Part2
+
+@[expose] public section
+
 /-!
 Conjugacy-class-algebra stage of the complete Burnside proof.
 

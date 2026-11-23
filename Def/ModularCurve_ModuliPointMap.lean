@@ -1,6 +1,10 @@
-import Mathlib
-import Lemma.WeierstrassCurve.ModuliPoint
-import Lemma.WeierstrassCurve.MapPoint
+module
+
+public import Mathlib
+public import Theorem.WeierstrassCurve.ModuliPoint
+public import Theorem.WeierstrassCurve.MapPoint
+
+@[expose] public section
 
 noncomputable section
 

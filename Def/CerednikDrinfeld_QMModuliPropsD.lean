@@ -1,6 +1,10 @@
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Def.CerednikDrinfeld_QMModuliWitnessD
-import Def.CerednikDrinfeld_QMModuliProps
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Def.CerednikDrinfeld_QMModuliWitnessD
+public import Def.CerednikDrinfeld_QMModuliProps
+
+@[expose] public section
 
 set_option autoImplicit false
 

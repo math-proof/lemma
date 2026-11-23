@@ -1,4 +1,8 @@
-import Lemma.Ideal.SmoothCuspRealization
+module
+
+public import Theorem.Ideal.SmoothCuspRealization
+
+@[expose] public section
 
 set_option autoImplicit false
 

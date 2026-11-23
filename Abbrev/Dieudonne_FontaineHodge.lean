@@ -1,7 +1,11 @@
-import Mathlib
-import Structure.Dieudonne_DatumAndHonda
-import Instance.Dieudonne_WittVectorHom
-import Instance.Dieudonne_WittHomColimit
+module
+
+public import Mathlib
+public import Structure.Dieudonne_DatumAndHonda
+public import Instance.Dieudonne_WittVectorHom
+public import Instance.Dieudonne_WittHomColimit
+
+@[expose] public section
 
 set_option autoImplicit false
 

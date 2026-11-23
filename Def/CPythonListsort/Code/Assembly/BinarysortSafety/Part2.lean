@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/BinarysortSafety.lean -/
 
-import Structure.CPythonListsort.Code.Assembly.SortSliceSafety
-import Def.CPythonListsort.Code.Transcription.Binarysort.Part3
-import Mathlib
-import Theorem.CPythonListsort.Code.Assembly.BinarysortSafety.Part5
+module
+
+public import Structure.CPythonListsort.Code.Assembly.SortSliceSafety
+public import Def.CPythonListsort.Code.Transcription.Binarysort.Part3
+public import Mathlib
+public import Theorem.CPythonListsort.Code.Assembly.BinarysortSafety.Part5
+
+@[expose] public section
+
 /-!
 # `binarysort` safety
 

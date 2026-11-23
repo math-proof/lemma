@@ -1,4 +1,8 @@
-import Lemma.Matrix.WindowedSiegelSet
+module
+
+public import Theorem.Matrix.WindowedSiegelSet
+
+@[expose] public section
 
 open IsDedekindDomain NumberField Matrix
 

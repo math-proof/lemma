@@ -1,6 +1,10 @@
-import Mathlib
-import Def.GaloisRep_ComplexConjugation
-import Lemma.PadicAlgCl.CompletionBridge
+module
+
+public import Mathlib
+public import Def.GaloisRep_ComplexConjugation
+public import Theorem.PadicAlgCl.CompletionBridge
+
+@[expose] public section
 
 set_option autoImplicit false
 

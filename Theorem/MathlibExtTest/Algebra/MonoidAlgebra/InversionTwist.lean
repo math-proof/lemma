@@ -1,7 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/MonoidAlgebra/InversionTwist.lean -/
 
+module
 
-import Def.Algebra.MonoidAlgebra.InversionTwist.Part3
+public import Def.Algebra.MonoidAlgebra.InversionTwist.Part3
+
+@[expose] public section
+
 open GroupRing
 
 variable (R G : Type*) [CommRing R] [CommGroup G]

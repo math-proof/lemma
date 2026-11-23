@@ -1,6 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.Analysis.Complex.Wiman.MaximumTermLeModulus
+module
+
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.Analysis.Complex.Wiman.MaximumTermLeModulus
+
+@[expose] public section
+
 open Set
 open Complex
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Def.LanglandsTunnell_RealizationDictionary
-import Def.LanglandsTunnell_TunnellExistenceCarriers
+module
+
+public import Mathlib
+public import Def.LanglandsTunnell_RealizationDictionary
+public import Def.LanglandsTunnell_TunnellExistenceCarriers
+
+@[expose] public section
 
 set_option autoImplicit false
 

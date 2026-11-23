@@ -9,7 +9,7 @@ import Lemma.Random.NormClip.le.Abs_R
 import Lemma.Random.Integral_V0.eq.Integral_V0.of.In_Ico
 import Instance.Dynamics.PolicyTrajectory
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Kernel Finset
-set_option maxHeartbeats 800000
+set_option maxHeartbeats 4000000
 
 
 attribute [local instance] Classical.propDecidable
@@ -140,13 +140,13 @@ private lemma main
         simp [B, s, a, hω, Set.indicator, Set.mem_preimage, Set.mem_inter_iff,
           Set.mem_singleton_iff]
     -- `∫ r[t] ∂cond(B) = rkd x u`
-    have htraj : Model.IsPolicyTrajectory M ⟨r⟩ ⟨s⟩ ⟨a⟩ :=
+    have htraj : Model.IsPolicyTrajectory M r s a :=
       ⟨h₁⟩
     have hP : (M θ).real ((fun ω => (s t ω, a t ω)) ⁻¹' {(sₜ, aₜ)}) ≠ 0 :=
       hpre ▸ hQA
     have hrkd :=
       Rkd.eq.Expect_Cond.of.Ne0Real_Joint.IsPolicyTrajectory
-        (M := M) (r := ⟨r⟩) (s := ⟨s⟩) (a := ⟨a⟩) htraj hP hR
+        (M := M) (r := r) (s := s) (a := a) htraj hP hR
     have hf_r : Measurable (fun integ : ℕ → ℝ ↦ integ t) := measurable_pi_apply t
     have hr : ∫ ω, r t ω ∂(M θ)[|B] = M.rkd R sₜ aₜ := by
       apply Eq.symm

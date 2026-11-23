@@ -1,11 +1,15 @@
-import Theorem.Matrix.DrinfeldUpperHalfPlane
-import Def.CerednikDrinfeld_MumfordQuotient
-import Mathlib.Topology.Algebra.Valued.ValuationTopology
-import Mathlib.Topology.UniformSpace.UniformConvergence
-import Mathlib.Algebra.Polynomial.Eval.Defs
-import Structure.CerednikDrinfeld_DrinfeldHolomorphic
-import Abbrev.CerednikDrinfeld_DrinfeldHolomorphic
-import Notation.CerednikDrinfeld_DrinfeldHolomorphic
+module
+
+public import Theorem.Matrix.DrinfeldUpperHalfPlane
+public import Def.CerednikDrinfeld_MumfordQuotient
+public import Mathlib.Topology.Algebra.Valued.ValuationTopology
+public import Mathlib.Topology.UniformSpace.UniformConvergence
+public import Mathlib.Algebra.Polynomial.Eval.Defs
+public import Structure.CerednikDrinfeld_DrinfeldHolomorphic
+public import Abbrev.CerednikDrinfeld_DrinfeldHolomorphic
+public import Notation.CerednikDrinfeld_DrinfeldHolomorphic
+
+@[expose] public section
 
 set_option autoImplicit false
 

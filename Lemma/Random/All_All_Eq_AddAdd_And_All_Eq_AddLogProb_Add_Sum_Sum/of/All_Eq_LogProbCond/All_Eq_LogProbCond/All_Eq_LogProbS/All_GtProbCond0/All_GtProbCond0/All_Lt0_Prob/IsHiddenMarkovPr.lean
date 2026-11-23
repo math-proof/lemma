@@ -5,7 +5,7 @@ open scoped ENNReal.ToRealCoe
 
 
 @[path]
-private lemma crf.logits
+private lemma main
   {Ω Y X : Type*} [MeasurableSpace Ω]
   [ReferenceMeasure Y] [ReferenceMeasure X]
   [Countable Y] [MeasurableSingletonClass Y] [Countable X] [MeasurableSingletonClass X]

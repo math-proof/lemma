@@ -1,7 +1,12 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.Analysis.Complex.Wiman.CoefficientExponentialFamily
-import Theorem.Complex.Wiman.RadialMajorant
+module
+
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.Analysis.Complex.Wiman.CoefficientExponentialFamily
+public import Theorem.Complex.Wiman.RadialMajorant
+
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory
 open scoped ENNReal
 open Complex

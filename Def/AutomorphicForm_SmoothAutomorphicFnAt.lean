@@ -1,7 +1,11 @@
-import Def.AutomorphicForm_AutomorphicFnAt
-import Instance.RepTheory_SmoothVectors
-import Lemma.Matrix.AdelicLevel
-import Lemma.Set.SmoothVectors
+module
+
+public import Def.AutomorphicForm_AutomorphicFnAt
+public import Instance.RepTheory_SmoothVectors
+public import Theorem.Matrix.AdelicLevel
+public import Theorem.Set.SmoothVectors
+
+@[expose] public section
 
 open IsDedekindDomain NumberField MeasureTheory Matrix
 open FLT.SmoothVectors

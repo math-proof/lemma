@@ -1,15 +1,17 @@
-import Mathlib
-import Instance.GroupCohomology_RelationModule
-import Theorem.Rep.RelationModuleRes
-import Abbrev.GroupCohomology_RepCokernel
-import Abbrev.GroupCohomology_RepImage
-import Theorem.Rep.RelationHomDefect
+module
+
+public import Mathlib
+public import Instance.GroupCohomology_RelationModule
+public import Theorem.Rep.RelationModuleRes
+public import Abbrev.GroupCohomology_RepCokernel
+public import Abbrev.GroupCohomology_RepImage
+public import Theorem.Rep.RelationHomDefect
 
 set_option autoImplicit false
 
 open CategoryTheory
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace Rep
 

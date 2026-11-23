@@ -1,6 +1,10 @@
-import Mathlib
-import Lemma.Scheme.MazurRapoportAppendixPicNeronCarriers
-import Abbrev.ModularCurve_X0MqResolvedTable
+module
+
+public import Mathlib
+public import Theorem.Scheme.MazurRapoportAppendixPicNeronCarriers
+public import Abbrev.ModularCurve_X0MqResolvedTable
+
+@[expose] public section
 
 set_option autoImplicit false
 

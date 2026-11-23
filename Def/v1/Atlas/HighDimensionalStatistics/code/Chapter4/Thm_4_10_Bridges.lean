@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Thm_4_6
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Thm_4_6
-import Mathlib.Analysis.InnerProductSpace.PiL2
+module
+
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Thm_4_6
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Thm_4_6
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory Matrix Real Finset BigOperators
 
 

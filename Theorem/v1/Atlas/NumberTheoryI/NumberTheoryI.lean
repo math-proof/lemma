@@ -85,7 +85,7 @@ import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Lem2326
 import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Lemma188
 import Theorem.Nat.Atlas.v1.NumberTheoryI.code.LocalCFT
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.LocalExtensions
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.LocalFields
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.LocalFields
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.LocalGlobal
 import Theorem.Nat.Atlas.v1.NumberTheoryI.code.LocalizationDedekind
 import Theorem.Nat.Atlas.v1.NumberTheoryI.code.PNT

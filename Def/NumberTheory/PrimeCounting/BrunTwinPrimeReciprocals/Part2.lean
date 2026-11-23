@@ -1,41 +1,46 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeCounting/BrunTwinPrimeReciprocals.lean -/
 
-import Mathlib.Data.Nat.Prime.Defs
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Topology.Instances.Real.Lemmas
-import Mathlib.Algebra.BigOperators.Associated
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
-import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
-import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Algebra.Squarefree.Basic
-import Mathlib.Analysis.Normed.Group.Real
-import Mathlib.Analysis.PSeries
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecificLimits.Basic
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Finset.Prod
-import Mathlib.Data.Int.CardIntervalMod
-import Mathlib.Data.Nat.Factorization.Defs
-import Mathlib.Data.Nat.GCD.Basic
-import Mathlib.Data.Nat.ModEq
-import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.NumberTheory.ArithmeticFunction.Misc
-import Mathlib.NumberTheory.Divisors
-import Mathlib.NumberTheory.EulerProduct.Basic
-import Mathlib.NumberTheory.Harmonic.Bounds
-import Def.NumberTheory.SelbergSieve
-import Theorem.Nat.SelbergSieve
-import Mathlib.NumberTheory.SmoothNumbers
-import Mathlib.Topology.Algebra.InfiniteSum.NatInt
-import Mathlib.Topology.Algebra.InfiniteSum.Order
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Theorem.NumberTheory.PrimeCounting.BrunTwinPrimeReciprocals
+module
+
+public import Mathlib.Data.Nat.Prime.Defs
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Topology.Instances.Real.Lemmas
+public import Mathlib.Algebra.BigOperators.Associated
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
+public import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
+public import Mathlib.Algebra.BigOperators.Ring.Finset
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Algebra.Squarefree.Basic
+public import Mathlib.Analysis.Normed.Group.Real
+public import Mathlib.Analysis.PSeries
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Finset.Prod
+public import Mathlib.Data.Int.CardIntervalMod
+public import Mathlib.Data.Nat.Factorization.Defs
+public import Mathlib.Data.Nat.GCD.Basic
+public import Mathlib.Data.Nat.ModEq
+public import Mathlib.Data.Nat.Prime.Basic
+public import Mathlib.NumberTheory.ArithmeticFunction.Misc
+public import Mathlib.NumberTheory.Divisors
+public import Mathlib.NumberTheory.EulerProduct.Basic
+public import Mathlib.NumberTheory.Harmonic.Bounds
+public import Def.NumberTheory.SelbergSieve
+public import Theorem.Nat.SelbergSieve
+public import Mathlib.NumberTheory.SmoothNumbers
+public import Mathlib.Topology.Algebra.InfiniteSum.NatInt
+public import Mathlib.Topology.Algebra.InfiniteSum.Order
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Theorem.NumberTheory.PrimeCounting.BrunTwinPrimeReciprocals
+
+@[expose] public section
+
 /-!
 # Brun's theorem on twin-prime reciprocals
 

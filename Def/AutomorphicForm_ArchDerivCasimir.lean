@@ -1,8 +1,12 @@
-import Inductive.LanglandsTunnell_RealArchParam
-import Lemma.Matrix.ArchType
-import Lemma.Matrix.ArchWeightCharTransport
-import Def.AutomorphicForm_ConstantTerm
-import Inductive.AutomorphicForm_ArchDir
+module
+
+public import Inductive.LanglandsTunnell_RealArchParam
+public import Theorem.Matrix.ArchType
+public import Theorem.Matrix.ArchWeightCharTransport
+public import Def.AutomorphicForm_ConstantTerm
+public import Inductive.AutomorphicForm_ArchDir
+
+@[expose] public section
 
 set_option autoImplicit false
 

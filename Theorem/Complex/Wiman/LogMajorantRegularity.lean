@@ -1,6 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.Analysis.Complex.Wiman.LogMajorantRegularity
+module
+
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.Analysis.Complex.Wiman.LogMajorantRegularity
+
+@[expose] public section
+
 open Filter MeasureTheory Set
 open Complex
 

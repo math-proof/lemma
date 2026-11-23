@@ -1,6 +1,10 @@
-import Mathlib.NumberTheory.ModularForms.Basic
-import Def.CohCarrier_Inst
-import Theorem.ModularForm.HeckeOperator
+module
+
+public import Mathlib.NumberTheory.ModularForms.Basic
+public import Def.CohCarrier_Inst
+public import Theorem.ModularForm.HeckeOperator
+
+@[expose] public section
 
 set_option autoImplicit false
 

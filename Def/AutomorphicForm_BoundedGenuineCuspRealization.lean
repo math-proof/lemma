@@ -1,5 +1,9 @@
-import Def.AutomorphicForm_WhittakerCoefficient
-import Lemma.Filter.AdelicTraceFin
+module
+
+public import Def.AutomorphicForm_WhittakerCoefficient
+public import Theorem.Filter.AdelicTraceFin
+
+@[expose] public section
 
 set_option autoImplicit false
 

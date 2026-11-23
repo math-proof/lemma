@@ -1,7 +1,11 @@
-import Mathlib
-import Def.LanglandsTunnell_OctahedralDatum
-import Def.LanglandsTunnell_IsGaloisAttachmentOf
-import Def.GaloisRep_ModThreeCyclotomic
+module
+
+public import Mathlib
+public import Def.LanglandsTunnell_OctahedralDatum
+public import Def.LanglandsTunnell_IsGaloisAttachmentOf
+public import Def.GaloisRep_ModThreeCyclotomic
+
+@[expose] public section
 
 set_option autoImplicit false
 

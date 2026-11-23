@@ -1,5 +1,10 @@
-import Mathlib
-import Def.ModularCurve_LevelOneProlongationPairSplit
+module
+
+public import Mathlib
+public import Def.ModularCurve_LevelOneProlongationPairSplit
+
+@[expose] public section
+
 set_option synthInstance.maxHeartbeats 400000
 set_option maxHeartbeats 800000
 

@@ -1,9 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/IsogenyVolcano.lean -/
 
+module
 
-import Instance.Combinatorics.IsogenyVolcano.Part2
-import Lemma.Finset.IsogenyVolcano
-import Mathlib.Tactic.FinCases
+public import Instance.Combinatorics.IsogenyVolcano.Part2
+public import Theorem.Finset.IsogenyVolcano
+public import Mathlib.Tactic.FinCases
+
+@[expose] public section
+
 set_option autoImplicit false
 
 

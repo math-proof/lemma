@@ -1,5 +1,10 @@
-import Mathlib
-import Abbrev.Analysis.Section_8_1.Part3
+module
+
+public import Mathlib
+public import Abbrev.Analysis.Section_8_1.Part3
+
+@[expose] public section
+
 /-!
 # Analysis I, Section 8.1: Countability
 

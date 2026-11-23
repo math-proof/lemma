@@ -8,15 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SobolevEmbedding
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.FourierInversion
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SobolevDerivatives
-import Def.v1.Atlas.DifferentialAnalysis.code.SobolevEmbedding.Part5
-import Def.v1.Atlas.DifferentialAnalysis.code.FourierInversion.Part7
-import Def.v1.Atlas.DifferentialAnalysis.code.SobolevDerivatives
-import Mathlib.Algebra.MvPolynomial.Degrees
+module
+
+public import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SobolevEmbedding
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.FourierInversion
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SobolevDerivatives
+public import Def.v1.Atlas.DifferentialAnalysis.code.SobolevEmbedding.Part5
+public import Def.v1.Atlas.DifferentialAnalysis.code.FourierInversion.Part7
+public import Def.v1.Atlas.DifferentialAnalysis.code.SobolevDerivatives
+public import Mathlib.Algebra.MvPolynomial.Degrees
+
+@[expose] public section
+
 open scoped SchwartzMap ContDiff FourierTransform
 open DifferentialOperators SobolevEmbedding SobolevSpace MvPolynomial Filter Topology MeasureTheory
 

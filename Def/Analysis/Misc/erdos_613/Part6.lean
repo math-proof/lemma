@@ -1,5 +1,10 @@
-import Mathlib
-import Instance.Analysis.Misc.erdos_613
+module
+
+public import Mathlib
+public import Instance.Analysis.Misc.erdos_613
+
+@[expose] public section
+
 open Classical
 open scoped BigOperators
 

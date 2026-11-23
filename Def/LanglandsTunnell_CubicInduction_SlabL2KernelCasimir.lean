@@ -1,6 +1,10 @@
-import Lemma.Set.CubicInduction_SlabL2Cusp
-import Def.LanglandsTunnell_CubicInduction_ArchCentre3
-import Mathlib.Analysis.Calculus.FDeriv.Basic
+module
+
+public import Theorem.Set.CubicInduction_SlabL2Cusp
+public import Def.LanglandsTunnell_CubicInduction_ArchCentre3
+public import Mathlib.Analysis.Calculus.FDeriv.Basic
+
+@[expose] public section
 
 set_option autoImplicit false
 

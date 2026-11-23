@@ -1,14 +1,18 @@
-import Mathlib
-import Instance.MvFormalGroup_NegV2
-import Instance.MvFormalGroup_CartierModule
-import Theorem.PowerSeries.CartierModuleHomothety
-import Lemma.MvPowerSeries.SpecialFormalModule
-import Instance.MvFormalGroup_CartierModuleWittAction
-import Instance.MvFormalGroup_CartierModuleBaseChange
-import Def.CerednikDrinfeld_CartierGradedPiece
-import Theorem.FormalGroup.CriticalIndexChart
-import Theorem.Int.CartierNModule
-import Abbrev.CerednikDrinfeld_CartierLMapFibre
+module
+
+public import Mathlib
+public import Instance.MvFormalGroup_NegV2
+public import Instance.MvFormalGroup_CartierModule
+public import Theorem.PowerSeries.CartierModuleHomothety
+public import Theorem.MvPowerSeries.SpecialFormalModule
+public import Instance.MvFormalGroup_CartierModuleWittAction
+public import Instance.MvFormalGroup_CartierModuleBaseChange
+public import Def.CerednikDrinfeld_CartierGradedPiece
+public import Theorem.FormalGroup.CriticalIndexChart
+public import Theorem.Int.CartierNModule
+public import Abbrev.CerednikDrinfeld_CartierLMapFibre
+
+@[expose] public section
 
 set_option autoImplicit false
 

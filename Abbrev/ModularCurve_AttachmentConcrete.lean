@@ -1,9 +1,11 @@
-import Structure.HeckeGalois_EichlerShimura
-import Instance.ModularCurve_ArithmeticGalois
+module
+
+public import Structure.HeckeGalois_EichlerShimura
+public import Instance.ModularCurve_ArithmeticGalois
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace ModularCurve
 

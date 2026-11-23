@@ -1,11 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/MaximumTermLeModulus.lean -/
 
-import Theorem.Analysis.Complex.Wiman.MaximumModulusAttained
-import Theorem.Complex.Wiman.MaximumModulusAttained
-import Theorem.Complex.Wiman.MaximumTermAttained
-import Theorem.Analysis.Complex.Wiman.MaximumTermAttained
-import Mathlib.Analysis.Complex.Liouville
+module
 
+public import Theorem.Analysis.Complex.Wiman.MaximumModulusAttained
+public import Theorem.Complex.Wiman.MaximumModulusAttained
+public import Theorem.Complex.Wiman.MaximumTermAttained
+public import Theorem.Analysis.Complex.Wiman.MaximumTermAttained
+public import Mathlib.Analysis.Complex.Liouville
+
+@[expose] public section
 
 noncomputable section
 

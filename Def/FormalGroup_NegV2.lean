@@ -28,7 +28,7 @@ def neg [IsComm G] (φ : Hom F G) : Hom F G where
   subst_eq := by
     intro i
     have hφ : ∀ j, (φ.toPowerSeries j).constantCoeff = 0 := φ.constantCoeff_eq_zero
-    have hbF : ∀ s, ((F.toPowerSeries) s).constantCoeff = 0 := F.constantCoeff_eq_zero
+    have hbF : ∀ s, (F.toPowerSeries s).constantCoeff = 0 := F.constantCoeff_eq_zero
     have hXl0 : ∀ l : Fin g,
         ((X (Sum.inl l) : MvPowerSeries (Fin g ⊕ Fin g) R)).constantCoeff = 0 :=
       fun l => constantCoeff_X _

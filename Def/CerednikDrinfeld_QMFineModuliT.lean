@@ -1,5 +1,9 @@
-import Structure.CerednikDrinfeld_QMFineModuli
-import Def.CerednikDrinfeld_QMFormalModuleOf
+module
+
+public import Structure.CerednikDrinfeld_QMFineModuli
+public import Def.CerednikDrinfeld_QMFormalModuleOf
+
+@[expose] public section
 
 set_option autoImplicit false
 

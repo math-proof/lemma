@@ -8,19 +8,22 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.ZMod.Basic
-import Mathlib.FieldTheory.Finite.GaloisField
-import Mathlib.FieldTheory.Separable
-import Mathlib.FieldTheory.Perfect
-import Mathlib.RingTheory.IntegralDomain
-import Mathlib.RingTheory.AdjoinRoot
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Mathlib.GroupTheory.SpecificGroups.Cyclic
-import Mathlib.FieldTheory.Minpoly.Field
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
-import Mathlib.Data.Nat.Prime.Basic
-import Instance.v1.Atlas.EllipticCurves.code.FiniteFields.Part2
+module
 
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.FieldTheory.Finite.GaloisField
+public import Mathlib.FieldTheory.Separable
+public import Mathlib.FieldTheory.Perfect
+public import Mathlib.RingTheory.IntegralDomain
+public import Mathlib.RingTheory.AdjoinRoot
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic
+public import Mathlib.FieldTheory.Minpoly.Field
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+public import Mathlib.Data.Nat.Prime.Basic
+public import Instance.v1.Atlas.EllipticCurves.code.FiniteFields.Part2
+
+@[expose] public section
 
 section Definition_3_14
 

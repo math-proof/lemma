@@ -8,49 +8,52 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Nakayama
-import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
-import Mathlib.RingTheory.Noetherian.Basic
-import Mathlib.RingTheory.Ideal.Maps
-import Mathlib.RingTheory.AdjoinRoot
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Mathlib.RingTheory.Adjoin.Basic
-import Mathlib.FieldTheory.PrimitiveElement
-import Mathlib.FieldTheory.Separable
-import Mathlib.RingTheory.Polynomial.Basic
-import Mathlib.Order.Hom.Lattice
-import Mathlib.RingTheory.LocalRing.ResidueField.Defs
-import Mathlib.RingTheory.LocalRing.ResidueField.Basic
-import Mathlib.FieldTheory.IntermediateField.Basic
-import Mathlib.RingTheory.PrincipalIdealDomain
-import Mathlib.RingTheory.Unramified.Basic
-import Mathlib.RingTheory.Unramified.Field
-import Mathlib.RingTheory.Unramified.LocalRing
-import Mathlib.FieldTheory.SeparableClosure
-import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
-import Mathlib.Algebra.GCDMonoid.IntegrallyClosed
-import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.NumberTheory.Cyclotomic.Basic
-import Mathlib.Data.ZMod.Basic
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.Data.Nat.GCD.Basic
-import Mathlib.NumberTheory.RamificationInertia.Ramification
-import Mathlib.NumberTheory.RamificationInertia.Basic
-import Mathlib.RingTheory.AdicCompletion.Basic
-import Mathlib.RingTheory.AdicCompletion.Algebra
-import Mathlib.RingTheory.AdicCompletion.Functoriality
-import Mathlib.RingTheory.AdicCompletion.AsTensorProduct
-import Mathlib.RingTheory.DiscreteValuationRing.TFAE
-import Mathlib.RingTheory.Ideal.Pointwise
-import Mathlib.RingTheory.Henselian
-import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
-import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
-import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
-import Mathlib.RingTheory.Ideal.IntegralClosure
-import Theorem.v1.Atlas.NumberTheoryI.code.HenselFactorization
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.HenselFactorization
+module
 
+public import Mathlib.RingTheory.Nakayama
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Mathlib.RingTheory.Ideal.Maps
+public import Mathlib.RingTheory.AdjoinRoot
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Mathlib.RingTheory.Adjoin.Basic
+public import Mathlib.FieldTheory.PrimitiveElement
+public import Mathlib.FieldTheory.Separable
+public import Mathlib.RingTheory.Polynomial.Basic
+public import Mathlib.Order.Hom.Lattice
+public import Mathlib.RingTheory.LocalRing.ResidueField.Defs
+public import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+public import Mathlib.FieldTheory.IntermediateField.Basic
+public import Mathlib.RingTheory.PrincipalIdealDomain
+public import Mathlib.RingTheory.Unramified.Basic
+public import Mathlib.RingTheory.Unramified.Field
+public import Mathlib.RingTheory.Unramified.LocalRing
+public import Mathlib.FieldTheory.SeparableClosure
+public import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
+public import Mathlib.Algebra.GCDMonoid.IntegrallyClosed
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.NumberTheory.Cyclotomic.Basic
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.Data.Nat.GCD.Basic
+public import Mathlib.NumberTheory.RamificationInertia.Ramification
+public import Mathlib.NumberTheory.RamificationInertia.Basic
+public import Mathlib.RingTheory.AdicCompletion.Basic
+public import Mathlib.RingTheory.AdicCompletion.Algebra
+public import Mathlib.RingTheory.AdicCompletion.Functoriality
+public import Mathlib.RingTheory.AdicCompletion.AsTensorProduct
+public import Mathlib.RingTheory.DiscreteValuationRing.TFAE
+public import Mathlib.RingTheory.Ideal.Pointwise
+public import Mathlib.RingTheory.Henselian
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
+public import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
+public import Mathlib.RingTheory.Ideal.IntegralClosure
+public import Theorem.v1.Atlas.NumberTheoryI.code.HenselFactorization
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.HenselFactorization
+
+@[expose] public section
 
 noncomputable section
 

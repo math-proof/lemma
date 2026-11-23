@@ -1,3 +1,6 @@
+import Instance.Data.Fin.Fun
+import Instance.Data.Nat.Fun
+import Initialize.Tactic.Attr.Basic
 import Mathlib.Analysis.Convex.Deriv
 import Mathlib.Analysis.Convex.Jensen
 import Theorem.Function
@@ -12,13 +15,13 @@ Jensen's inequality (concave form): if `f` is continuous on `[a, b]` and `f'' < 
 private lemma main
   {a b : ℝ}
   {f : ℝ → ℝ}
-  {w x : ℕ ⇀ ℝ}
+  {w x : ℕ → ℝ}
   {n : ℕ}
 -- given
   (h₀ : ContinuousOn f (Set.Icc a b))
   (h₁ : ∀ y ∈ Set.Ioo a b, deriv^[2] f y < 0)
-  (h₂ : ∀ i, x[i] ∈ Set.Icc a b)
-  (h₃ : ∀ i, 0 ≤ w[i])
+  (h₂ : ∀ i : ℕ, x[i] ∈ Set.Icc a b)
+  (h₃ : ∀ i : ℕ, 0 ≤ w[i])
   (h₄ : ∑ i ∈ Finset.range n, w[i] = 1) :
 -- imply
   ∑ i ∈ Finset.range n, w[i] * f x[i] ≤ f (∑ i ∈ Finset.range n, w[i] * x[i]) := by

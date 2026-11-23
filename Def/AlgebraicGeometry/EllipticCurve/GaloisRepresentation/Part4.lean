@@ -1,7 +1,12 @@
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.FieldTheory.AbsoluteGaloisGroup
-import Mathlib.Algebra.Module.Torsion.Basic
-import Theorem.AlgebraicGeometry.EllipticCurve.GaloisRepresentation.Part3
+module
+
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.FieldTheory.AbsoluteGaloisGroup
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Theorem.AlgebraicGeometry.EllipticCurve.GaloisRepresentation.Part3
+
+@[expose] public section
+
 attribute [local instance] Classical.decEq
 
 /-!

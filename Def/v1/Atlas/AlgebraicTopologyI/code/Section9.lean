@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.FiveLemma
-import Mathlib.Algebra.Homology.HomologySequence
-import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section11
-import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section11
+module
+
+public import Mathlib.Algebra.FiveLemma
+public import Mathlib.Algebra.Homology.HomologySequence
+public import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section11
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section11
+
+@[expose] public section
+
 open CategoryTheory
 
 

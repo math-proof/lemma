@@ -1586,7 +1586,7 @@ lemma coeff_jacobi_product_eq_card_partition_aux (n : ℕ) :
     letI := PowerSeries.WithPiTopology.instTopologicalSpace (R := ℤ)
     letI := PowerSeries.WithPiTopology.instTopologicalSpace (R := LaurentPolynomial ℤ)
     PowerSeries.coeff (2 * n) (∏' k : ℕ, ((1 : JacobiRing) + ∑' j : ℕ, (PowerSeries.X : JacobiRing) ^ (2 * (k + 1) * (j + 1)))) =
-    Nat.card (n.Partition) := by
+    Nat.card n.Partition := by
   letI : TopologicalSpace ℤ := ⊥
   haveI : DiscreteTopology ℤ := ⟨rfl⟩
   letI : TopologicalSpace (LaurentPolynomial ℤ) := ⊥
@@ -1764,7 +1764,7 @@ lemma partitionGenFunJacobi_mul_QProduct_eq_one :
     -- LHS: ∑' p, coeff (2*n) (X^(2*p.1)) = Nat.card (n.Partition)
     simp only [PowerSeries.coeff_X_pow]
     have h_lhs : (∑' (p : Σ m, Nat.Partition m), if 2 * n = 2 * p.1 then (1 : LaurentPolynomial ℤ) else 0) =
-                 Nat.card (n.Partition) := by
+                 Nat.card n.Partition := by
       have h_eq' : (fun (p : Σ m, Nat.Partition m) => if 2 * n = 2 * p.1 then (1 : LaurentPolynomial ℤ) else 0) =
                   (fun (p : Σ m, Nat.Partition m) => if p.1 = n then 1 else 0) := by
         ext ⟨m, p⟩
@@ -1798,7 +1798,7 @@ lemma partitionGenFunJacobi_mul_QProduct_eq_one :
     -- With expand 2, coeff (2*n) = coeff n of the original
     -- So RHS = Nat.card (n.Partition)
     have h_rhs : PowerSeries.coeff (2 * n) (∏' k : ℕ, ((1 : JacobiRing) + ∑' j : ℕ, (PowerSeries.X : JacobiRing) ^ (2 * (k + 1) * (j + 1)))) =
-                 Nat.card (n.Partition) := coeff_jacobi_product_eq_card_partition_aux n
+                 Nat.card n.Partition := coeff_jacobi_product_eq_card_partition_aux n
     rw [h_rhs]
   · -- d is odd
     -- LHS: ∑' p, coeff d (X^(2*p.1)) = 0 since 2*p.1 is always even
@@ -3562,7 +3562,7 @@ This shows that the Mathlib partition generating function with character `f(i,j)
 has coefficient `p(n) * u^(2n)` at degree `n`, where `p(n)` is the partition count. -/
 lemma coeff_genFun_u_power (u : ℚ) (n : ℕ) :
     (Nat.Partition.genFun (fun i j => u^(2*i*j))).coeff n =
-    Nat.card (n.Partition) * u^(2*n) := by
+    Nat.card n.Partition * u^(2*n) := by
   rw [Nat.Partition.coeff_genFun]
   simp_rw [partition_prod_formula]
   rw [Finset.sum_const]
@@ -4135,7 +4135,7 @@ lemma partitionGenFunEval_mul_eulerProductParam (a : ℤ) (u : ℚ) (ha : a > 0)
       rw [PowerSeries.coeff_expand_mul, Nat.Partition.coeff_genFun]
       have h_lhs : (∑' p : Σ m, Nat.Partition m,
           if e * n = (2 * a * p.1).toNat then u^(2*p.1) else 0) =
-          Nat.card (n.Partition) * u^(2*n) := by
+          Nat.card n.Partition * u^(2*n) := by
         have h_equiv : ∀ p : Σ m, Nat.Partition m,
             (e * n = (2 * a * p.1).toNat) ↔ p.1 = n := by
           intro p
@@ -4161,7 +4161,7 @@ lemma partitionGenFunEval_mul_eulerProductParam (a : ℤ) (u : ℚ) (ha : a > 0)
         rw [h1]
         -- Simplify the tsum over sigma type to a sum over partitions of n
         have h2 : (∑' p : Σ m, Nat.Partition m, if p.1 = n then u^(2*n) else 0) =
-            Nat.card (n.Partition) * u^(2*n) := by
+            Nat.card n.Partition * u^(2*n) := by
           -- The only nonzero terms are those with p.1 = n
           have hsum : Summable (fun p : Σ m, Nat.Partition m => if p.1 = n then u^(2*n) else 0) :=
             summable_of_finite_support (by
@@ -4191,7 +4191,7 @@ lemma partitionGenFunEval_mul_eulerProductParam (a : ℤ) (u : ℚ) (ha : a > 0)
             · rfl
         exact h2
       have h_rhs : (∑ p : n.Partition, p.parts.toFinsupp.prod f) =
-          Nat.card (n.Partition) * u^(2*n) := by
+          Nat.card n.Partition * u^(2*n) := by
         conv_lhs =>
           arg 2
           ext p
@@ -9549,7 +9549,7 @@ lemma jacobiRHS_eq_stateGenFun_aux (a b : ℤ) (u v : ℚ) (_ha : a > 0) (_hab :
     ∀ (ℓ : ℤ) (n : ℕ) (mu : Nat.Partition n),
       let S := State.excitedState ℓ mu
       (u^((ℓ^2).natAbs + 2*n) * v^ℓ : ℚ) • (PowerSeries.X : ℚ⟦X⟧) ^ (a * (ℓ^2 + 2*n) + b * ℓ).toNat =
-      (u^(S.energy) * v^(S.parnum) : ℚ) • (PowerSeries.X : ℚ⟦X⟧) ^ (a * S.energy + b * S.parnum).toNat := by
+      (u^S.energy * v^S.parnum : ℚ) • (PowerSeries.X : ℚ⟦X⟧) ^ (a * S.energy + b * S.parnum).toNat := by
   intro ℓ n mu
   -- Use the energy and parnum formulas for excited states
   have h_energy := State.excitedState_energy ℓ mu

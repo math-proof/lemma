@@ -8,11 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
+module
 
-import Theorem.StatisticalMechanics.Code.Walls.bc16menger.Part4
-import Mathlib.Combinatorics.SimpleGraph.DeleteEdges
-import Mathlib.Combinatorics.SimpleGraph.Walk.Maps
+public import Theorem.StatisticalMechanics.Code.Walls.bc16menger.Part4
+public import Mathlib.Combinatorics.SimpleGraph.DeleteEdges
+public import Mathlib.Combinatorics.SimpleGraph.Walk.Maps
 
+@[expose] public section
 
 namespace StatMech.Walls
 

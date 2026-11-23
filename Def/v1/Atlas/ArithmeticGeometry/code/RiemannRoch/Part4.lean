@@ -8,18 +8,23 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Set.Algebra.RestrictedProduct.Basic
-import Mathlib.RingTheory.Valuation.ValuationSubring
-import Mathlib.LinearAlgebra.Dual.Defs
-import Mathlib.LinearAlgebra.Dual.Lemmas
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.Dimension.StrongRankCondition
-import Mathlib.LinearAlgebra.Dimension.Finite
-import Def.v1.Atlas.ArithmeticGeometry.code.EffectiveDivisors
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.EffectiveDivisors
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.CanonicalDivisors
-import Def.v1.Atlas.ArithmeticGeometry.code.CanonicalDivisors.Part2
-import Theorem.v1.Atlas.ArithmeticGeometry.code.RiemannRoch.Part3
+module
+
+public import Mathlib.Set.Algebra.RestrictedProduct.Basic
+public import Mathlib.RingTheory.Valuation.ValuationSubring
+public import Mathlib.LinearAlgebra.Dual.Defs
+public import Mathlib.LinearAlgebra.Dual.Lemmas
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.Dimension.StrongRankCondition
+public import Mathlib.LinearAlgebra.Dimension.Finite
+public import Def.v1.Atlas.ArithmeticGeometry.code.EffectiveDivisors
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.EffectiveDivisors
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.CanonicalDivisors
+public import Def.v1.Atlas.ArithmeticGeometry.code.CanonicalDivisors.Part2
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.RiemannRoch.Part3
+
+@[expose] public section
+
 open scoped RestrictedProduct
 
 variable {F : Type*} [Field F] {P : Type*} {O : P → ValuationSubring F}

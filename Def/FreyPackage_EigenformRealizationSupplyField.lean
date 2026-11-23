@@ -1,7 +1,11 @@
-import Def.ModularCurve_ResidualRealization
-import Structure.ModularCurve_ResidualRealization
-import Instance.ModularCurve_ArithmeticGalois
-import Def.FLTPrelim_ModularRep
+module
+
+public import Def.ModularCurve_ResidualRealization
+public import Structure.ModularCurve_ResidualRealization
+public import Instance.ModularCurve_ArithmeticGalois
+public import Def.FLTPrelim_ModularRep
+
+@[expose] public section
 
 set_option autoImplicit false
 

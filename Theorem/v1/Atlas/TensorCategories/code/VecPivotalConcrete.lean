@@ -12,7 +12,7 @@ import Mathlib
 import Structure.v1.Atlas.TensorCategories.code.PivotalSpherical.Part3
 import Theorem.Category.Atlas.v1.TensorCategories.code.PivotalSpherical
 import Theorem.Category.Atlas.v1.TensorCategories.code.VecInstances
-import Lemma.Category.Atlas.v1.TensorCategories.code.VecDualMapBridge
+import Theorem.Category.Atlas.v1.TensorCategories.code.VecDualMapBridge
 import Abbrev.v1.Atlas.TensorCategories.code.VecInstances.Part2
 import Theorem.v1.Atlas.TensorCategories.code.VecDualMapBridge
 import Def.v1.Atlas.TensorCategories.code.VecPivotalConcrete

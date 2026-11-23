@@ -1,10 +1,15 @@
-import Mathlib.Topology.ContinuousMap.Bounded.Basic
-import Mathlib.Topology.ContinuousMap.Bounded.Normed
-import Mathlib.Analysis.Convex.Cone.Extension
-import Mathlib.Topology.Algebra.Order.LiminfLimsup
-import Mathlib.Analysis.Asymptotics.SpecificAsymptotics
-import Mathlib.Analysis.SpecificLimits.Basic
-import Def.Analysis.NormedSpace.BanachLimit.Part4
+module
+
+public import Mathlib.Topology.ContinuousMap.Bounded.Basic
+public import Mathlib.Topology.ContinuousMap.Bounded.Normed
+public import Mathlib.Analysis.Convex.Cone.Extension
+public import Mathlib.Topology.Algebra.Order.LiminfLimsup
+public import Mathlib.Analysis.Asymptotics.SpecificAsymptotics
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Def.Analysis.NormedSpace.BanachLimit.Part4
+
+@[expose] public section
+
 /-!
 # Banach limits on bounded real sequences
 

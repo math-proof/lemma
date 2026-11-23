@@ -1,5 +1,9 @@
-import Mathlib
-import Lemma.Submodule.ToricDescentData
+module
+
+public import Mathlib
+public import Theorem.Submodule.ToricDescentData
+
+@[expose] public section
 
 set_option autoImplicit false
 

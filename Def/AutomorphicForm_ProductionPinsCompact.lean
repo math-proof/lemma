@@ -1,5 +1,9 @@
-import Def.AutomorphicForm_ProductionPins
-import Def.AutomorphicForm_SmoothAutomorphicFnAt
+module
+
+public import Def.AutomorphicForm_ProductionPins
+public import Def.AutomorphicForm_SmoothAutomorphicFnAt
+
+@[expose] public section
 
 open IsDedekindDomain NumberField MeasureTheory Matrix
 open NumberField.AdelicHaar NumberField.AdelicLevel NumberField.AdelicBox

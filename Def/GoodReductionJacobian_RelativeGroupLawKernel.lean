@@ -1,6 +1,10 @@
-import Lemma.Scheme.RelativeGroupLaw
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Abbrev.GoodReductionJacobian_RelativeGroupLawKernel
+module
+
+public import Theorem.Scheme.RelativeGroupLaw
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Abbrev.GoodReductionJacobian_RelativeGroupLawKernel
+
+@[expose] public section
 
 set_option autoImplicit false
 noncomputable section

@@ -1,3 +1,4 @@
+import Instance.Data.Fin.Fun
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Order.Interval.Finset.Fin
 import Notation.Fun
@@ -10,7 +11,7 @@ Every index lies in some block of a partition of `Fin n`.
 @[path]
 private lemma main
   {n m : ℕ}
-  {d : Fin n ⇀ ℕ}
+  {d : Fin n → ℕ}
 -- given
   (hsum : ∑ k : Fin n, d[k] = m)
   (i : Fin m) :

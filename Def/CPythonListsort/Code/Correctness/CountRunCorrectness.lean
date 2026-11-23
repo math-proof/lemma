@@ -1,13 +1,18 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/CountRunCorrectness.lean -/
 
-import Def.CPythonListsort.Code.Assembly.CountRunSafety.Part3
-import Def.CPythonListsort.Code.Assembly.Order.Part4
-import Structure.CPythonListsort.Code.Correctness.ReverseSliceCorrectness
-import Def.CPythonListsort.Code.Correctness.SortSliceRange
-import Def.CPythonListsort.Code.Correctness.DescendingRunNormalization
-import Def.CPythonListsort.Code.Correctness.DescendingRunInvariant.Part2
-import Theorem.List.Atlas.CPythonListsort.Code.Correctness.ReverseRangeSupport
-import Def.CPythonListsort.Code.Correctness.ScanRemainder.Part3
+module
+
+public import Def.CPythonListsort.Code.Assembly.CountRunSafety.Part3
+public import Def.CPythonListsort.Code.Assembly.Order.Part4
+public import Structure.CPythonListsort.Code.Correctness.ReverseSliceCorrectness
+public import Def.CPythonListsort.Code.Correctness.SortSliceRange
+public import Def.CPythonListsort.Code.Correctness.DescendingRunNormalization
+public import Def.CPythonListsort.Code.Correctness.DescendingRunInvariant.Part2
+public import Theorem.List.Atlas.CPythonListsort.Code.Correctness.ReverseRangeSupport
+public import Def.CPythonListsort.Code.Correctness.ScanRemainder.Part3
+
+@[expose] public section
+
 /-!
 # Functional correctness of `count_run`
 

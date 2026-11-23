@@ -1,6 +1,10 @@
-import Lemma.ClassGroup.GaloisAction
-import Def.Stickelberger_Basic
-import Instance.ExtCitation_CyclotomicUnits
+module
+
+public import Theorem.ClassGroup.GaloisAction
+public import Def.Stickelberger_Basic
+public import Instance.ExtCitation_CyclotomicUnits
+
+@[expose] public section
 
 set_option autoImplicit false
 

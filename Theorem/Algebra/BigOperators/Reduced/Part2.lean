@@ -1,10 +1,13 @@
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Defs
-import Mathlib.Data.Fintype.Basic
-import Mathlib.Data.Fintype.Lattice
-import Mathlib.Data.Finset.Max
-import Def.Algebra.BigOperators.Reduced.Part2
+module
 
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Data.Fintype.Basic
+public import Mathlib.Data.Fintype.Lattice
+public import Mathlib.Data.Finset.Max
+public import Def.Algebra.BigOperators.Reduced.Part2
+
+@[expose] public section
 
 theorem ReducedArgMax.le {α : Type*} [LinearOrder α] [Fintype α] [Nonempty α] (v : α → ℝ) (j : α) :
     v j ≤ v (ReducedArgMax v) := by

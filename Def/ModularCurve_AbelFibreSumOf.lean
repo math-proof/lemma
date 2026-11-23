@@ -1,6 +1,10 @@
-import Mathlib
-import Lemma.UpperHalfPlane.PeriodOf
-import Def.ModularCurve_AbelFibreSum
+module
+
+public import Mathlib
+public import Theorem.UpperHalfPlane.PeriodOf
+public import Def.ModularCurve_AbelFibreSum
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,4 +1,8 @@
-import Def.AutomorphicForm_ArchWeightChar
+module
+
+public import Def.AutomorphicForm_ArchWeightChar
+
+@[expose] public section
 
 open AutomorphicForm AutomorphicForm.WindowedSiegel NumberField IsDedekindDomain Matrix
 open NumberField.InfinitePlace NumberField.InfinitePlace.Completion

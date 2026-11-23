@@ -1,6 +1,10 @@
-import Lemma.Matrix.Primes
-import Mathlib
-import Structure.TaylorWiles_CyclotomicChar
+module
+
+public import Theorem.Matrix.Primes
+public import Mathlib
+public import Structure.TaylorWiles_CyclotomicChar
+
+@[expose] public section
 
 set_option autoImplicit false
 

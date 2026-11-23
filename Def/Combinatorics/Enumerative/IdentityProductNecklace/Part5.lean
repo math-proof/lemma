@@ -1,16 +1,19 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/IdentityProductNecklace.lean -/
 
-import Mathlib.Data.Nat.Totient
-import Mathlib.NumberTheory.Divisors
-import Mathlib.Data.Set.Card
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Fintype.Card
-import Mathlib.Algebra.Torsor.Defs
-import Mathlib.GroupTheory.SpecificGroups.Cyclic
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Ring
-import Theorem.Combinatorics.Enumerative.IdentityProductNecklace.Part3
+module
 
+public import Mathlib.Data.Nat.Totient
+public import Mathlib.NumberTheory.Divisors
+public import Mathlib.Data.Set.Card
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Algebra.Torsor.Defs
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Ring
+public import Theorem.Combinatorics.Enumerative.IdentityProductNecklace.Part3
+
+@[expose] public section
 
 section
 

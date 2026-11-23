@@ -8,15 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.MeasureTheory.Measure.Content
-import Mathlib.MeasureTheory.OuterMeasure.Induced
-import Mathlib.Topology.ContinuousMap.ZeroAtInfty
-import Mathlib.Topology.Order
-import Def.v1.Atlas.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras.Part3
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ContinuousFunctions
-import Def.v1.Atlas.DifferentialAnalysis.code.ContinuousFunctions.Part2
+module
 
+public import Mathlib.MeasureTheory.Measure.Content
+public import Mathlib.MeasureTheory.OuterMeasure.Induced
+public import Mathlib.Topology.ContinuousMap.ZeroAtInfty
+public import Mathlib.Topology.Order
+public import Def.v1.Atlas.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras.Part3
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ContinuousFunctions
+public import Def.v1.Atlas.DifferentialAnalysis.code.ContinuousFunctions.Part2
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Def.CerednikDrinfeld_QMIsogeny
-import Lemma.Scheme.QMRigidification
-import Abbrev.CerednikDrinfeld_QMIsogenyPairRep
+module
+
+public import Def.CerednikDrinfeld_QMIsogeny
+public import Theorem.Scheme.QMRigidification
+public import Abbrev.CerednikDrinfeld_QMIsogenyPairRep
+
+@[expose] public section
 
 set_option autoImplicit false
 

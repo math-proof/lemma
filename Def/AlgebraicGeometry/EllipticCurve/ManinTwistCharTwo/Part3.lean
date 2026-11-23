@@ -4,22 +4,27 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
 
-import Def.AlgebraicGeometry.EllipticCurve.ManinSequence
-import Theorem.Int.EllipticCurve.ManinSequence
-import Theorem.Polynomial.PrimitiveTripleManinProjectiveDegreeEllipticCurve.of.All_False.Ne_0
-import Lemma.Nat.FrobeniusTrace.eq.SubAddCardF1CardPoint.of.AffineF
-import Mathlib.AlgebraicGeometry.EllipticCurve.NormalForms
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Def.AlgebraicGeometry.EllipticCurve.ManinProjectiveDegree
-import Def.AlgebraicGeometry.EllipticCurve.PointCount
-import Mathlib.Data.Nat.Log
-import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.FieldTheory.RatFunc.Degree
-import Mathlib.Tactic.ComputeDegree
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Ring
-import Theorem.AlgebraicGeometry.EllipticCurve.ManinTwistCharTwo.Part2
+module
+
+public import Def.AlgebraicGeometry.EllipticCurve.ManinSequence
+public import Theorem.Int.EllipticCurve.ManinSequence
+public import Theorem.Polynomial.PrimitiveTripleManinProjectiveDegreeEllipticCurve.of.All_False.Ne_0
+public import Theorem.Nat.FrobeniusTrace.eq.SubAddCardF1CardPoint.of.AffineF
+public import Mathlib.AlgebraicGeometry.EllipticCurve.NormalForms
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Def.AlgebraicGeometry.EllipticCurve.ManinProjectiveDegree
+public import Def.AlgebraicGeometry.EllipticCurve.PointCount
+public import Mathlib.Data.Nat.Log
+public import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.FieldTheory.RatFunc.Degree
+public import Mathlib.Tactic.ComputeDegree
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Ring
+public import Theorem.AlgebraicGeometry.EllipticCurve.ManinTwistCharTwo.Part2
+
+@[expose] public section
+
 /-!
 # Manin's elementary proof in characteristic two
 

@@ -2,10 +2,15 @@
 
 -- MathlibExtTest/Combinatorics/SimpleGraph/CenteredColoring.lean
 
-import Mathlib.Combinatorics.SimpleGraph.Coloring.Constructions
-import Def.Combinatorics.SimpleGraph.CenteredColoring
-import Theorem.SimpleGraph.CenteredColoring
-import Theorem.MathlibExtTest.Combinatorics.SimpleGraph.CenteredColoring
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Coloring.Constructions
+public import Def.Combinatorics.SimpleGraph.CenteredColoring
+public import Theorem.SimpleGraph.CenteredColoring
+public import Theorem.MathlibExtTest.Combinatorics.SimpleGraph.CenteredColoring
+
+@[expose] public section
+
 open SimpleGraph
 
 

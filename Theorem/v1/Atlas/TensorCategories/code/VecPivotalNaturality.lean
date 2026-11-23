@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Mathlib
 import Theorem.v1.Atlas.TensorCategories.code.VecDualMapBridge
-import Lemma.Category.Atlas.v1.TensorCategories.code.VecDualMapBridge
+import Theorem.Category.Atlas.v1.TensorCategories.code.VecDualMapBridge
 import Instance.v1.Atlas.TensorCategories.code.VecPivotal
 open CategoryTheory MonoidalCategory Module
 

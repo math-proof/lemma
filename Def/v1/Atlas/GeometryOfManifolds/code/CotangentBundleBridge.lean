@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.GeometryOfManifolds.code.ManifoldDFS.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.ManifoldDFS
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
-import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
+module
+
+public import Def.v1.Atlas.GeometryOfManifolds.code.ManifoldDFS.Part2
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.ManifoldDFS
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
+public import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
+
+@[expose] public section
+
 set_option autoImplicit false
 set_option maxHeartbeats 800000
 

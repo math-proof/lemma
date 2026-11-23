@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Calculus/ArcsinDivSinIntegral.lean -/
 
+module
 
-import Theorem.Analysis.Calculus.ArcsinDivSinIntegral.Part4
+public import Theorem.Analysis.Calculus.ArcsinDivSinIntegral.Part4
 
+@[expose] public section
 
 namespace MathlibExtTest.Analysis.Calculus.ArcsinDivSinIntegral
 

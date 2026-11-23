@@ -1,8 +1,12 @@
-import Lemma.Rat.Normalizer
-import Mathlib.NumberTheory.Padics.RingHoms
-import Mathlib.NumberTheory.DirichletCharacter.Bounds
-import Mathlib.NumberTheory.NumberField.Basic
-import Mathlib.NumberTheory.NumberField.AdeleRing
+module
+
+public import Theorem.Rat.Normalizer
+public import Mathlib.NumberTheory.Padics.RingHoms
+public import Mathlib.NumberTheory.DirichletCharacter.Bounds
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Mathlib.NumberTheory.NumberField.AdeleRing
+
+@[expose] public section
 
 set_option autoImplicit false
 

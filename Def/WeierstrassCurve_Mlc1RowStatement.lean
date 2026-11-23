@@ -1,4 +1,8 @@
-import Def.WeierstrassCurve_ModularityProps
+module
+
+public import Def.WeierstrassCurve_ModularityProps
+
+@[expose] public section
 
 set_option autoImplicit false
 

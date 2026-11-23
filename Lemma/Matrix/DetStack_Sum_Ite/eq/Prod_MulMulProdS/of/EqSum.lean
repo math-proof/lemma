@@ -1,3 +1,4 @@
+import Instance.Data.Fin.Fun
 import Mathlib.LinearAlgebra.Matrix.Block
 import Mathlib.Order.Interval.Finset.Fin
 import Lemma.Finset.AddSumIio.eq.SumIic
@@ -14,11 +15,19 @@ open Matrix Finset Nat
 set_option maxHeartbeats 999999
 
 
+local instance (priority := high) {n : ℕ} {α : Type*} :
+    GetElem (Fin n → α) (Fin n) α (fun _ _ => True) where
+  getElem f i _ := f i
+
+@[simp] private theorem getElem_fin_val {n : ℕ} {α : Type*} (f : Fin n → α) (i : Fin n) :
+    f[i] = f i := rfl
+
+
 private lemma pair_prod_succ
   [Field R]
   {n : ℕ}
-  {x : Fin (n + 1) ⇀ R}
-  {d : Fin (n + 1) ⇀ ℕ} :
+  {x : Fin (n + 1) → R}
+  {d : Fin (n + 1) → ℕ} :
 -- imply
   (∏ ℓ : Fin (n + 1), ∏ k ∈ Finset.Iio ℓ, (x[ℓ] - x[k]) ^ (d[ℓ] * d[k])) =
     (∏ k : Fin n, (x[k.succ] - x[0]) ^ (d[k.succ] * d[0])) *
@@ -53,10 +62,10 @@ private lemma pair_prod_succ
 private lemma main
   [Field R] [CharZero R]
   {n m : ℕ}
-  {x : Fin n ⇀ R}
-  {d : Fin n ⇀ ℕ}
+  {x : Fin n → R}
+  {d : Fin n → ℕ}
 -- given
-  (h : ∑ k, d[k] = m) :
+  (h : ∑ k : Fin n, d[k] = m) :
 -- imply
   ([i < m][j < m]
     ∑ k : Fin n,
@@ -90,8 +99,8 @@ private lemma main
   | succ n ih =>
     set d0 := d[0] with hd0
     set x0 := x[0] with hx0
-    set d' : Fin n ⇀ ℕ := ⟨fun k => d[k.succ]⟩ with hd'
-    set x' : Fin n ⇀ R := ⟨fun k => x[k.succ]⟩ with hx'
+    set d' : Fin n → ℕ := fun k => d[k.succ] with hd'
+    set x' : Fin n → R := fun k => x[k.succ] with hx'
     have hsum_succ : d0 + ∑ k : Fin n, d'[k] = m := by
       simpa [Fin.sum_univ_succ, d0, d'] using h
     have hsum' : ∑ k : Fin n, d'[k] = m - d0 := by omega

@@ -8,14 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.ProjectionTheory.code.HighFreqMultConv
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.HighFreqMultConv
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.BKTLemma2
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.BKTLemma3
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.MultConvProjection
-import Def.v1.Atlas.ProjectionTheory.code.BKTLemma2
-import Def.v1.Atlas.ProjectionTheory.code.BKTLemma3
-import Def.v1.Atlas.ProjectionTheory.code.MultConvProjection
+module
+
+public import Def.v1.Atlas.ProjectionTheory.code.HighFreqMultConv
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.HighFreqMultConv
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.BKTLemma2
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.BKTLemma3
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.MultConvProjection
+public import Def.v1.Atlas.ProjectionTheory.code.BKTLemma2
+public import Def.v1.Atlas.ProjectionTheory.code.BKTLemma3
+public import Def.v1.Atlas.ProjectionTheory.code.MultConvProjection
+
+@[expose] public section
+
 open Finset Complex BigOperators
 
 

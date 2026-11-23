@@ -1,6 +1,10 @@
-import Mathlib
-import Def.CerednikDrinfeld_FormalUpperHalfPlaneCharts
-import Abbrev.CerednikDrinfeld_SchemeNilpPoints
+module
+
+public import Mathlib
+public import Def.CerednikDrinfeld_FormalUpperHalfPlaneCharts
+public import Abbrev.CerednikDrinfeld_SchemeNilpPoints
+
+@[expose] public section
 
 set_option autoImplicit false
 

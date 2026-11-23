@@ -1,7 +1,11 @@
-import Mathlib
-import Lemma.Submodule.AdelicIndex
-import Class.AlgebraicCurve_CanonicalDivisor
-import Instance.AlgebraicCurve_IsCurveOver
+module
+
+public import Mathlib
+public import Theorem.Submodule.AdelicIndex
+public import Class.AlgebraicCurve_CanonicalDivisor
+public import Instance.AlgebraicCurve_IsCurveOver
+
+@[expose] public section
 
 set_option autoImplicit false
 

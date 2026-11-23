@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
+module
 
-import Theorem.StatisticalMechanics.Code.Probability.ContinuousFKG.Part3
+public import Theorem.StatisticalMechanics.Code.Probability.ContinuousFKG.Part3
+
+@[expose] public section
+
 open MeasureTheory
 open scoped BigOperators ENNReal
 

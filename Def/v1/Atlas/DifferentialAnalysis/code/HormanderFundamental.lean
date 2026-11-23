@@ -8,16 +8,21 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Distribution.Support
-import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TemperedDistributions
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzPartition
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SmoothingOperators
-import Def.v1.Atlas.DifferentialAnalysis.code.TemperedDistributions
-import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzPartition
-import Def.v1.Atlas.DifferentialAnalysis.code.SmoothingOperators
-import Theorem.v1.Atlas.DifferentialAnalysis.code.HormanderFundamental
+module
+
+public import Mathlib.Analysis.Distribution.Support
+public import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TemperedDistributions
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzPartition
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SmoothingOperators
+public import Def.v1.Atlas.DifferentialAnalysis.code.TemperedDistributions
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzPartition
+public import Def.v1.Atlas.DifferentialAnalysis.code.SmoothingOperators
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.HormanderFundamental
+
+@[expose] public section
+
 open scoped SchwartzMap LineDeriv Pointwise Manifold
 open Distribution
 

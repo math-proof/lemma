@@ -1,7 +1,11 @@
-import Theorem.Ideal.ArithCuspRealization
-import Def.AutomorphicForm_ProductionPinsCompact
-import Lemma.Matrix.ArchWeightCharTransport
-import Def.ModularForm_EisensteinChiNegThree
+module
+
+public import Theorem.Ideal.ArithCuspRealization
+public import Def.AutomorphicForm_ProductionPinsCompact
+public import Theorem.Matrix.ArchWeightCharTransport
+public import Def.ModularForm_EisensteinChiNegThree
+
+@[expose] public section
 
 set_option autoImplicit false
 

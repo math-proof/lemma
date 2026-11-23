@@ -4,9 +4,14 @@
 Author: Muse Code
 -/
 
-import Mathlib.RingTheory.Trace.Defs
-import Def.RingTheory.DiscreteValuationRing.MaximalIdealGradedPiece
-import Lemma.Int.DiscreteValuationRing.MaximalIdealGradedPiece
+module
+
+public import Mathlib.RingTheory.Trace.Defs
+public import Def.RingTheory.DiscreteValuationRing.MaximalIdealGradedPiece
+public import Theorem.Int.DiscreteValuationRing.MaximalIdealGradedPiece
+
+@[expose] public section
+
 /-!
 # Residue-field multiplication on maximal-ideal graded pieces
 

@@ -1,21 +1,24 @@
-import Mathlib.Topology.Instances.Real.Lemmas
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
-import Mathlib.Data.Int.Star
-import Mathlib.Order.CompletePartialOrder
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.Algebra.Module.Cardinality
-import Mathlib.Topology.Algebra.Module.ModuleTopology
-import Mathlib.Topology.Baire.LocallyCompactRegular
-import Mathlib.Topology.GDelta.MetrizableSpace
-import Mathlib.Topology.UniformSpace.Uniformizable
-import Def.Analysis.Calculus.Blumberg.Part3
+module
 
+public import Mathlib.Topology.Instances.Real.Lemmas
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+public import Mathlib.Data.Int.Star
+public import Mathlib.Order.CompletePartialOrder
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.Algebra.Module.Cardinality
+public import Mathlib.Topology.Algebra.Module.ModuleTopology
+public import Mathlib.Topology.Baire.LocallyCompactRegular
+public import Mathlib.Topology.GDelta.MetrizableSpace
+public import Mathlib.Topology.UniformSpace.Uniformizable
+public import Def.Analysis.Calculus.Blumberg.Part3
+
+@[expose] public section
 
 section
 

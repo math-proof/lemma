@@ -1,5 +1,9 @@
-import Def.AutomorphicForm_AdelicLsXi
-import Lemma.Matrix.AdelicLevel
+module
+
+public import Def.AutomorphicForm_AdelicLsXi
+public import Theorem.Matrix.AdelicLevel
+
+@[expose] public section
 
 open IsDedekindDomain NumberField Matrix MeasureTheory
 

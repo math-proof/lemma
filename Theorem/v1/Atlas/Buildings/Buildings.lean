@@ -16,7 +16,7 @@ import Theorem.Real.IsWInvariantEuclideanDist
 import Lemma.Matrix.Any_Gt_0AndAll_EqEuclideanDist_Mul_EuclideanDistAndEqChamberDiameter_Mul_ChamberDiameter.of.All_Eq_VertexMap
 import Lemma.Real.Zero.notin.AffineHyperplane.of.All_Gt_0
 import Lemma.Real.BilinForm.eq.One.of.In_Standardpos
-import Lemma.Real.QF.eq.BF
+import Theorem.Real.QF.eq.BF
 import Theorem.Real.NormalSubgroupOfTranslationSubgroupGroup
 import Theorem.Real.DualSigma.eq.Neg
 import Lemma.List.All_All_All_All_All_Any_All_Ge_0AndLeLengthAndEq_WordAction
@@ -64,7 +64,7 @@ import Structure.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.ThreeCha
 import Def.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.ThreeChamber
 import Theorem.Set.BNPairBoundedPredicate_SetMul.of.BNPairBoundedPredicate.BNPairBoundedPredicate
 import Theorem.List.Any.of.Not.In_A.IsChainA
-import Lemma.Fin.Simple
+import Theorem.Fin.Simple
 import Lemma.Fin.EqDiagBlockEmbedMatrix
 import Lemma.Finset.InjOnMap.of.In_FacesToSimplicialComplexToChamberComplex
 import Theorem.Set.NonemptyOrbitSetSetGt
@@ -74,7 +74,7 @@ import Lemma.Set.Functional.ge.Zero
 import Lemma.Finset.Any_In_ApartmentsAndIn_FacesAndAny_And_SetInApartmentVertices.of.IsMaximalToSimplicialComplex
 import Lemma.Finset.IsMaximal_ImageToFun.of.IsMaximal.In_Faces.In_Apartments.In_Apartments
 import Lemma.Fin.SameDirection.of.Parallel
-import Lemma.Fin.All_All_Any_And_InAndAll_In_Vertices
+import Theorem.Fin.All_All_Any_And_InAndAll_In_Vertices
 import Theorem.Set.PointsAtInfinity.of.Vertices
 import Theorem.Fin.OriginPushforwardRay.eq.ToFunOrigin
 import Lemma.Fin.One.in.IwahoriGLn
@@ -150,7 +150,7 @@ import Theorem.Fin.All_EqGetLift1
 import Lemma.Fin.PermCoxeterMulEquiv_AdjTransposition.eq.Simple_A
 import Theorem.List.Any_And_IsReduced_EraseIdx.of.LtLengthMulWordProdSimple_Length_WordProd.IsReduced
 import Lemma.List.ProdMap.eq.PowMul.of.All_EqGet_GetAdd_2.Ge_1.EqLength_Mul2
-import Lemma.List.EqWordSSigma.of.WordProd
+import Theorem.List.EqWordSSigma.of.WordProd
 import Theorem.Fin.Any_And_Eq_0AndEq_1.of.Eq_0.Ne_0.IsSymm.Nondegenerate
 import Theorem.Fin.IsFormPreserving1
 import Theorem.Fin.Eq1AndEq0AndEq1.of.Eq0.Ne0.IsSymm.Nondegenerate
@@ -163,11 +163,11 @@ import Theorem.Submodule.Any_LeAndDisjointAndEq.of.Le
 import Theorem.Submodule.NondegenerateRestrict.is.IsCompl_OrthogonalBilinForm.of.IsRefl
 import Theorem.Fin.SwapCompositionInvariant
 import Lemma.Submodule.EqSwapComplement.of.In.IsCompl.IsCompl
-import Lemma.Fin.Len
+import Theorem.Fin.Len
 import Theorem.Fin.IsCompl
-import Lemma.Submodule.Any_All_EqMapSpacesSpacesAndAll_EqMapSpacesSpacesAndAll_EqMapSpacesSpacesAndAll_All_InSubToLinearMapBotAndToLinearMap.of.All_EqMapSpacesToLinearMap_Spaces.EqSpacesSubLen1_Top.GtLen0.All_EqSpaces_TopAndEqSpaces_Bot.Len
-import Lemma.Fin.IsFormedSpaceIso_ExtractEquiv.of.All_Eq_0.IsFormedSpaceIso.IsNondegenerate'
-import Lemma.Fin.Eq.of.Ne_0.All_Eq
+import Theorem.Submodule.Any_All_EqMapSpacesSpacesAndAll_EqMapSpacesSpacesAndAll_EqMapSpacesSpacesAndAll_All_InSubToLinearMapBotAndToLinearMap.of.All_EqMapSpacesToLinearMap_Spaces.EqSpacesSubLen1_Top.GtLen0.All_EqSpaces_TopAndEqSpaces_Bot.Len
+import Theorem.Fin.IsFormedSpaceIso_ExtractEquiv.of.All_Eq_0.IsFormedSpaceIso.IsNondegenerate'
+import Theorem.Fin.Eq.of.Ne_0.All_Eq
 import Theorem.Nat.BorelInLabelPreserving
 import Theorem.Int.LengthMulMulSimpleSimple.gt.LengthMulSimple.of.GtLengthMul_Simple_Length.LtLengthMulSimple_Length
 import Theorem.Int.Basis.of.Basis
@@ -201,9 +201,9 @@ import Theorem.Set.Simplices.of.In_StandardApartments.In_StandardApartments
 import Lemma.Fin.JhLine.in.SpacesAddVal1.of.IsStrictFlag.IsStrictFlag
 import Lemma.Fin.LeFinrank.of.Le.GtVal_0
 import Theorem.Matrix.Det.eq.MulDetS.of.ProdMap
-import Lemma.Fin.SquareDetV'.eq.One.of.All_Eq.Nondegenerate
+import Theorem.Fin.SquareDetV'.eq.One.of.All_Eq.Nondegenerate
 import Lemma.Fin.GapVector.in.Spaces.of.LtVal_Val.IsStrictFlag
-import Lemma.Fin.FinrankKSpacesValAdd1.of.IsStrictFlag
+import Theorem.Fin.FinrankKSpacesValAdd1.of.IsStrictFlag
 import Lemma.Fin.SpacesVal.lt.SpacesAddVal1.of.IsStrictFlag
 import Theorem.Fin.SquareDetV.eq.One.of.All_Eq.Nondegenerate
 import Theorem.Fin.SchreierCell_0.eq.SpacesSubVal1.of.GtVal_0
@@ -221,7 +221,7 @@ import Def.v1.Atlas.Buildings.code.AffineCoxeter.FiniteProperParabolicsInstance
 import Def.v1.Atlas.Buildings.code.AffineCoxeter.GeometricRealization.Part2
 import Theorem.Set.Finite.of.All_All_Any_Eq.All_Le.All_All_Ge_0.All_LeMul_Sum_Square.Gt_0
 import Lemma.Real.Pairing_AddMulSub1Mul.Gt_0.of.GtPairing_0.GtPairing_0.Le_1.Ge_0
-import Lemma.Fin.QF
+import Theorem.Fin.QF
 import Lemma.Real.Continuous_Pairing
 import Theorem.Nat.All_Any_In_BruhatCell
 import Lemma.Set.ImageImage.eq.Image
@@ -265,10 +265,10 @@ import Theorem.Fin.Nondegenerate.of.EqOrthogonalBilinFormTop_Bot.IsRefl
 import Theorem.Fin.Eq_Neg.of.IsAlt
 import Theorem.Submodule.Finrank.eq.SubFinrankS
 import Theorem.Matrix.Det.eq.OneOrDet.eq.Neg1.of.EqMulMulTranspose.NeDet_0
-import Lemma.Int.IsNondegenerate'
+import Theorem.Int.IsNondegenerate'
 import Theorem.Fin.Nondegenerate
 import Theorem.Submodule.LeOrthogonal.of.Finrank.le.Mul2Finrank.All_All_Eq_0.Nondegenerate
-import Lemma.Fin.WittCancellationProp.of.EqOrthogonalBilinFormTop_Bot.All_Eq
+import Theorem.Fin.WittCancellationProp.of.EqOrthogonalBilinFormTop_Bot.All_Eq
 import Theorem.Submodule.Any_EqAndAll_Eq_V.of.IsSubspaceIsometry.EqOrthogonalBilinFormTop
 import Theorem.Int.All_EqMul_Basis1AndAll_EqMul_Basis1AndAll_Mul_MulAndAll_All_Eq_Mul
 import Theorem.Submodule.Any_EqAndAll_Eq_V.of.IsSubspaceIsometry.EqOrthogonalBilinFormTop_Bot.All_Eq

@@ -17,7 +17,7 @@ import Theorem.Complex.Atlas.v1.EllipticCurves.code.CMFieldOfDefinition
 import Theorem.Complex.Atlas.v1.EllipticCurves.code.CMTorsor
 import Theorem.Complex.Atlas.v1.EllipticCurves.code.ComplexAnalysis
 import Theorem.Complex.Atlas.v1.EllipticCurves.code.ComplexMultiplication
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.ComplexTorus
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.ComplexTorus
 import Theorem.Complex.Atlas.v1.EllipticCurves.code.CurveMorphism
 import Theorem.Complex.Atlas.v1.EllipticCurves.code.CyclicSublattices
 import Theorem.Complex.Atlas.v1.EllipticCurves.code.DiscreteValuation
@@ -30,12 +30,12 @@ import Theorem.Complex.Atlas.v1.EllipticCurves.code.EisensteinSeries
 import Lemma.Complex.Atlas.v1.EllipticCurves.code.EllipticFunction
 import Theorem.Complex.Atlas.v1.EllipticCurves.code.EndAlgClassification
 import Lemma.Complex.Atlas.v1.EllipticCurves.code.EndAlgebra
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.EndomorphismAlgebra
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.EndomorphismAlgebra
 import Lemma.Complex.Atlas.v1.EllipticCurves.code.EndomorphismNorm
 import Theorem.Complex.Atlas.v1.EllipticCurves.code.FastEuclidDiv
 import Theorem.Complex.Atlas.v1.EllipticCurves.code.FermatsLastTheorem
 import Theorem.Complex.Atlas.v1.EllipticCurves.code.FiniteFieldArith
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.FiniteFields
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.FiniteFields
 import Lemma.Complex.Atlas.v1.EllipticCurves.code.FrobeniusEndomorphism
 import Theorem.Complex.Atlas.v1.EllipticCurves.code.HilbertClassPolynomial
 import Lemma.Complex.Atlas.v1.EllipticCurves.code.IdealEquivalence
@@ -46,7 +46,7 @@ import Theorem.Complex.Atlas.v1.EllipticCurves.code.IsogenyKernels
 import Theorem.Complex.Atlas.v1.EllipticCurves.code.IsogenyVolcano
 import Theorem.Complex.Atlas.v1.EllipticCurves.code.JInvariant
 import Theorem.Complex.Atlas.v1.EllipticCurves.code.JInvariantDef
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.Lattice
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.Lattice
 import Theorem.Complex.Atlas.v1.EllipticCurves.code.LocalRingAtPoint
 import Theorem.Complex.Atlas.v1.EllipticCurves.code.ModularCurves
 import Lemma.Complex.Atlas.v1.EllipticCurves.code.ModularForms
@@ -66,7 +66,7 @@ import Lemma.Complex.Atlas.v1.EllipticCurves.code.Theorem136
 import Theorem.Complex.Atlas.v1.EllipticCurves.code.Theorem151
 import Theorem.Complex.Atlas.v1.EllipticCurves.code.Theorem161
 import Theorem.Complex.Atlas.v1.EllipticCurves.code.TorsionEndomorphism
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.Uniformization
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.Uniformization
 import Lemma.Complex.Atlas.v1.EllipticCurves.code.WeierstrassP
 import Lemma.Complex.Atlas.v1.EllipticCurves.code.WeierstrassPOrder
 import Lemma.Complex.Atlas.v1.EllipticCurves.code.WeilPairing

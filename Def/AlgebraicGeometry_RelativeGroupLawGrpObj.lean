@@ -1,4 +1,8 @@
-import Lemma.Scheme.RelativeGroupLaw
+module
+
+public import Theorem.Scheme.RelativeGroupLaw
+
+@[expose] public section
 
 set_option autoImplicit false
 

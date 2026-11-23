@@ -1,5 +1,9 @@
-import Lemma.Matrix.AdelicLevel
-import Notation.LanglandsTunnell_CubicInduction_AdelicEpstein
+module
+
+public import Theorem.Matrix.AdelicLevel
+public import Notation.LanglandsTunnell_CubicInduction_AdelicEpstein
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -12,7 +12,6 @@ namespace BurnsidePaqb
 /--
 [conjClass_eq_of_isConj](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/ClassSum.lean)
 -/
-@[path]
 private lemma conjClass_eq_of_isConj
   [Group G] [Fintype G]
   {g1 g2 : G}

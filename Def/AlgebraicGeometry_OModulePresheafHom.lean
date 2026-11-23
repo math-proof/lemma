@@ -1,8 +1,11 @@
-import Mathlib
+module
 
-import Lemma.Scheme.OrderedAffineCoverCech
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Structure.AlgebraicGeometry_OModulePresheafHom
+public import Mathlib
+public import Theorem.Scheme.OrderedAffineCoverCech
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Structure.AlgebraicGeometry_OModulePresheafHom
+
+@[expose] public section
 
 set_option autoImplicit false
 

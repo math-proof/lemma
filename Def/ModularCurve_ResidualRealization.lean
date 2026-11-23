@@ -1,7 +1,11 @@
-import Def.HeckeGalois_EichlerShimura
-import Def.FLTPrelim_Ramification
-import Instance.EllipticCurve_FrobeniusTrace
-import Mathlib.LinearAlgebra.Determinant
+module
+
+public import Def.HeckeGalois_EichlerShimura
+public import Def.FLTPrelim_Ramification
+public import Instance.EllipticCurve_FrobeniusTrace
+public import Mathlib.LinearAlgebra.Determinant
+
+@[expose] public section
 
 set_option autoImplicit false
 

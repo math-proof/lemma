@@ -1,5 +1,10 @@
-import Mathlib
-import Theorem.Algebra.AdicCompletion.PolynomialCompletion.Part3
+module
+
+public import Mathlib
+public import Theorem.Algebra.AdicCompletion.PolynomialCompletion.Part3
+
+@[expose] public section
+
 set_option autoImplicit false
 
 

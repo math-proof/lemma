@@ -1,4 +1,8 @@
-import Lemma.Scheme.UniversalDivisor
+module
+
+public import Theorem.Scheme.UniversalDivisor
+
+@[expose] public section
 
 open CategoryTheory CategoryTheory.Limits TopologicalSpace Opposite
 

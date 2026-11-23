@@ -1,7 +1,11 @@
-import Lemma.MvPolynomial.ProjSpace
-import Lemma.Scheme.OrderedAffineCoverCech
-import Mathlib.AlgebraicGeometry.Morphisms.Affine
-import Notation.AlgebraicGeometry_ProjSpaceCover
+module
+
+public import Theorem.MvPolynomial.ProjSpace
+public import Theorem.Scheme.OrderedAffineCoverCech
+public import Mathlib.AlgebraicGeometry.Morphisms.Affine
+public import Notation.AlgebraicGeometry_ProjSpaceCover
+
+@[expose] public section
 
 set_option autoImplicit false
 

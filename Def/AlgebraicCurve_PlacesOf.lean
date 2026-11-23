@@ -1,6 +1,10 @@
-import Mathlib.AlgebraicGeometry.FunctionField
-import Class.AlgebraicCurve_DivisorClassGroup
-import Lemma.Scheme.CurveModel
+module
+
+public import Mathlib.AlgebraicGeometry.FunctionField
+public import Class.AlgebraicCurve_DivisorClassGroup
+public import Theorem.Scheme.CurveModel
+
+@[expose] public section
 
 set_option autoImplicit false
 

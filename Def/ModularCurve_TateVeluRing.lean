@@ -1,10 +1,14 @@
-import Mathlib
-import Instance.ModularCurve_TateSlots
-import Def.ModularCurve_LaurentCoeff
-import Lemma.LaurentSeries.KatzLevelPCusps
-import Def.WeierstrassCurve_Velu
-import Macro.WeierstrassCurve_VeluPointMap
-import Def.WeierstrassCurve_VariableChangePointEquiv
+module
+
+public import Mathlib
+public import Instance.ModularCurve_TateSlots
+public import Def.ModularCurve_LaurentCoeff
+public import Theorem.LaurentSeries.KatzLevelPCusps
+public import Def.WeierstrassCurve_Velu
+public import Macro.WeierstrassCurve_VeluPointMap
+public import Def.WeierstrassCurve_VariableChangePointEquiv
+
+@[expose] public section
 
 set_option autoImplicit false
 

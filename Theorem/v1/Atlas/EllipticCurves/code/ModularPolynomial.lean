@@ -22,7 +22,7 @@ import Mathlib.Algebra.Polynomial.EraseLead
 import Mathlib.Algebra.CharP.Defs
 import Def.v1.Atlas.EllipticCurves.code.ModularCurves.Part3
 import Theorem.Complex.Atlas.v1.EllipticCurves.code.ModularCurves
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.Uniformization
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.Uniformization
 import Def.v1.Atlas.EllipticCurves.code.Uniformization
 import Def.v1.Atlas.EllipticCurves.code.ModularPolynomial.Part2
 open scoped MatrixGroups UpperHalfPlane

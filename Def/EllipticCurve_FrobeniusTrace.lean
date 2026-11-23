@@ -1,8 +1,12 @@
-import Mathlib.LinearAlgebra.Trace
-import Mathlib.RingTheory.Valuation.RamificationGroup
-import Instance.FLTPrelim_GaloisRep
-import Def.FLTPrelim_Ramification
-import Instance.EllipticCurve_FrobeniusTrace
+module
+
+public import Mathlib.LinearAlgebra.Trace
+public import Mathlib.RingTheory.Valuation.RamificationGroup
+public import Instance.FLTPrelim_GaloisRep
+public import Def.FLTPrelim_Ramification
+public import Instance.EllipticCurve_FrobeniusTrace
+
+@[expose] public section
 
 noncomputable section
 

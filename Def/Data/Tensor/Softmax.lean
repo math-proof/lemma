@@ -1,6 +1,11 @@
-import Instance.Data.Tensor.Exp
-import Def.Data.Tensor.Sum
-import Def.Data.Tensor.Utils
+module
+
+public import Instance.Data.Tensor.Exp
+public import Def.Data.Tensor.Sum
+public import Def.Data.Tensor.Utils
+
+@[expose] public section
+
 open Tensor
 
 

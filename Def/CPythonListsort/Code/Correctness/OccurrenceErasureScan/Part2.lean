@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/OccurrenceErasureScan.lean -/
 
-import Theorem.CPythonListsort.Code.Correctness.OccurrenceErasureMerges.Part2
-import Theorem.CPythonListsort.Code.Correctness.OccurrenceErasureScan
+module
+
+public import Theorem.CPythonListsort.Code.Correctness.OccurrenceErasureMerges.Part2
+public import Theorem.CPythonListsort.Code.Correctness.OccurrenceErasureScan
+
+@[expose] public section
+
 /-!
 # Occurrence erasure through merge policy and the top-level scan
 

@@ -114,7 +114,7 @@ variable (M : Model Θ 𝒮 𝒜)
 noncomputable def transK [HasMeasurableEnv M] : Kernel (𝒮 × 𝒜) 𝒮 :=
   Kernel.mk (fun p => (M.trans p : Measure 𝒮)) HasMeasurableEnv.measurable_trans
 
-instance instIsMarkovKernel_transK [HasMeasurableEnv M] : IsMarkovKernel (M.transK) where
+instance instIsMarkovKernel_transK [HasMeasurableEnv M] : IsMarkovKernel M.transK where
   isProbabilityMeasure p := by
     change IsProbabilityMeasure (M.trans p : Measure 𝒮)
     infer_instance
@@ -123,7 +123,7 @@ instance instIsMarkovKernel_transK [HasMeasurableEnv M] : IsMarkovKernel (M.tran
 noncomputable def rewardK [HasMeasurableEnv M] : Kernel (𝒮 × 𝒜) ℝ :=
   Kernel.mk (fun p => (M.reward p : Measure ℝ)) HasMeasurableEnv.measurable_reward
 
-instance instIsMarkovKernel_rewardK [HasMeasurableEnv M] : IsMarkovKernel (M.rewardK) where
+instance instIsMarkovKernel_rewardK [HasMeasurableEnv M] : IsMarkovKernel M.rewardK where
   isProbabilityMeasure p := by
     change IsProbabilityMeasure (M.reward p : Measure ℝ)
     infer_instance

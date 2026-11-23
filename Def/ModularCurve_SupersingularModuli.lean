@@ -1,4 +1,8 @@
-import Lemma.WeierstrassCurve.ModuliPoint
+module
+
+public import Theorem.WeierstrassCurve.ModuliPoint
+
+@[expose] public section
 
 set_option autoImplicit false
 

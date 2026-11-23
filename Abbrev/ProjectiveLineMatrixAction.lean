@@ -1,5 +1,9 @@
-import Mathlib
-import Instance.ModularCurve_ProjectiveLine
+module
+
+public import Mathlib
+public import Instance.ModularCurve_ProjectiveLine
+
+@[expose] public section
 
 namespace ModularCurve.ProjectiveLine
 

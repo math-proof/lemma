@@ -1,4 +1,8 @@
-import Lemma.Set.CubicInduction_SlabL2Cusp
+module
+
+public import Theorem.Set.CubicInduction_SlabL2Cusp
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Matrix
 open scoped InnerProductSpace

@@ -1,7 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Convex/LinearProgrammingDuality.lean -/
 
+module
 
-import Theorem.Analysis.Convex.LinearProgrammingDuality.Part3
+public import Theorem.Analysis.Convex.LinearProgrammingDuality.Part3
+
+@[expose] public section
+
 /-!
 # Tests for strong linear programming duality
 

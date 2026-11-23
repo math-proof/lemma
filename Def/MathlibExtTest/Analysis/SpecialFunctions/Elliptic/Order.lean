@@ -1,9 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/Elliptic/Order.lean -/
 
+module
 
-import Def.Analysis.SpecialFunctions.Elliptic.Order
-import Lemma.Real.SpecialFunctions.Elliptic.Order
-import Theorem.MathlibExtTest.Analysis.SpecialFunctions.Elliptic.Order
+public import Def.Analysis.SpecialFunctions.Elliptic.Order
+public import Theorem.Real.SpecialFunctions.Elliptic.Order
+public import Theorem.MathlibExtTest.Analysis.SpecialFunctions.Elliptic.Order
+
+@[expose] public section
+
 open scoped Topology
 
 /-!

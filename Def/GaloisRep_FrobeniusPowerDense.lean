@@ -1,6 +1,10 @@
-import Mathlib
-import Instance.EllipticCurve_FrobeniusTrace
-import Def.FLTPrelim_Ramification
+module
+
+public import Mathlib
+public import Instance.EllipticCurve_FrobeniusTrace
+public import Def.FLTPrelim_Ramification
+
+@[expose] public section
 
 set_option autoImplicit false
 

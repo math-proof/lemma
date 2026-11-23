@@ -1,10 +1,14 @@
-import Mathlib
-import Def.FreyPackage_ModMCarrier_LatticeRed
-import Abbrev.FreyPackage_ModMCarrier_Rescale
-import Def.CuspForm_IntegralStructure
-import Lemma.ModularForm.AtkinLehnerDatum
-import Instance.FreyPackage_ModMCarrier_OldSublattice
-import Abbrev.FreyPackage_ModMCarrier_OldSublattice
+module
+
+public import Mathlib
+public import Def.FreyPackage_ModMCarrier_LatticeRed
+public import Abbrev.FreyPackage_ModMCarrier_Rescale
+public import Def.CuspForm_IntegralStructure
+public import Theorem.ModularForm.AtkinLehnerDatum
+public import Instance.FreyPackage_ModMCarrier_OldSublattice
+public import Abbrev.FreyPackage_ModMCarrier_OldSublattice
+
+@[expose] public section
 
 set_option autoImplicit false
 noncomputable section

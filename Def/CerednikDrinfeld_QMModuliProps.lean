@@ -1,7 +1,11 @@
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Def.CerednikDrinfeld_QMModuli
-import Structure.CerednikDrinfeld_QMModuliProps
-import Abbrev.CerednikDrinfeld_QMModuliProps
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Def.CerednikDrinfeld_QMModuli
+public import Structure.CerednikDrinfeld_QMModuliProps
+public import Abbrev.CerednikDrinfeld_QMModuliProps
+
+@[expose] public section
 
 set_option autoImplicit false
 

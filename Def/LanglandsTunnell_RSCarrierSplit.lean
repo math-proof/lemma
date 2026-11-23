@@ -1,6 +1,10 @@
-import Def.AutomorphicForm_SmoothAutomorphicFnAt
-import Def.AutomorphicForm_ArchDerivCasimir
-import Def.LanglandsTunnell_DeltaLift
+module
+
+public import Def.AutomorphicForm_SmoothAutomorphicFnAt
+public import Def.AutomorphicForm_ArchDerivCasimir
+public import Def.LanglandsTunnell_DeltaLift
+
+@[expose] public section
 
 open MeasureTheory NumberField AutomorphicForm
 

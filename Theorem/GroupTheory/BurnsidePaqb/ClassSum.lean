@@ -3,7 +3,7 @@ module
 
 public import Mathlib.Algebra.Group.ConjFinite
 public import Mathlib.Algebra.MonoidAlgebra.Basic
-public import Mathlib.Data.Complex.Basic
+public import Mathlib.Basic.Complex.Basic
 public import Theorem.GroupTheory.BurnsidePaqbReduction.Part2
 public import Def.GroupTheory.BurnsidePaqb.ClassSum
 

@@ -1,6 +1,10 @@
-import Def.AutomorphicForm_WhittakerCoefficient
-import Def.AdelicDock_LocalEmbedding
-import Lemma.Matrix.SiegelVolume
+module
+
+public import Def.AutomorphicForm_WhittakerCoefficient
+public import Def.AdelicDock_LocalEmbedding
+public import Theorem.Matrix.SiegelVolume
+
+@[expose] public section
 
 set_option autoImplicit false
 

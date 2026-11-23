@@ -1,7 +1,11 @@
-import Mathlib
-import Instance.Deformations_ContinuousSMulDiscrete
-import Instance.RepTheory_SmoothVectors
-import Def.FLTPrelim_RightTranslationFn
+module
+
+public import Mathlib
+public import Instance.Deformations_ContinuousSMulDiscrete
+public import Instance.RepTheory_SmoothVectors
+public import Def.FLTPrelim_RightTranslationFn
+
+@[expose] public section
 
 set_option autoImplicit false
 

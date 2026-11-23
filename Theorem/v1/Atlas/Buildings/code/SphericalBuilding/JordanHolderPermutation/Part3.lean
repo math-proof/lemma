@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.RefinementDimJumps
-import Lemma.Fin.FinrankKSpacesValAdd1.of.IsStrictFlag
+import Theorem.Fin.FinrankKSpacesValAdd1.of.IsStrictFlag
 import Def.v1.Atlas.Buildings.code.SphericalBuilding.JordanHolderPermutation.Part2
 set_option maxHeartbeats 800000
 

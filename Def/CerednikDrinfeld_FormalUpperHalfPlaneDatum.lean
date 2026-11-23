@@ -1,9 +1,13 @@
-import Mathlib
-import Lemma.Matrix.LatticeTreeOrbital
-import Instance.CerednikDrinfeld_BruhatTitsTree
-import Def.CerednikDrinfeld_FormalUpperHalfPlaneCharts
-import Structure.CerednikDrinfeld_FormalUpperHalfPlaneDatum
-import Abbrev.CerednikDrinfeld_FormalUpperHalfPlaneDatum
+module
+
+public import Mathlib
+public import Theorem.Matrix.LatticeTreeOrbital
+public import Instance.CerednikDrinfeld_BruhatTitsTree
+public import Def.CerednikDrinfeld_FormalUpperHalfPlaneCharts
+public import Structure.CerednikDrinfeld_FormalUpperHalfPlaneDatum
+public import Abbrev.CerednikDrinfeld_FormalUpperHalfPlaneDatum
+
+@[expose] public section
 
 set_option autoImplicit false
 

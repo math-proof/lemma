@@ -1,12 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Matrix/Toeplitz.lean -/
 
+module
 
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Order
-import Def.LinearAlgebra.Matrix.Toeplitz
-import Theorem.Matrix.Toeplitz
-import Theorem.MathlibExtTest.LinearAlgebra.Matrix.Toeplitz
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Order
+public import Def.LinearAlgebra.Matrix.Toeplitz
+public import Theorem.Matrix.Toeplitz
+public import Theorem.MathlibExtTest.LinearAlgebra.Matrix.Toeplitz
+
+@[expose] public section
+
 open MetaMathlibExt
 
 

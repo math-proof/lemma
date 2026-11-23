@@ -28,13 +28,13 @@ import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_14
 import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_15
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_18
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_2
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_6
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_6
 import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Prop_3_12
 import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_6
 import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.TrigOrtho
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Prop_5_6
 import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Cor_1_7
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Cor_1_7
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Cor_1_7
 import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Def_1_17
 import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Def_1_2
 import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_18
@@ -50,7 +50,7 @@ import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_19
 import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_6
 import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter16.Props
 import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Def_2_12
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.EpsilonNetBridge
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.EpsilonNetBridge
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Lemma_2_17
 import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Problem_2_4
 import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Prop_2_1
@@ -94,7 +94,7 @@ import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Cor_5_15
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Cor_5_16
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.DefProp_5_4_Helpers
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Def_5_5
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.InfoTheory
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.InfoTheory
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Lemma_5_12
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Lemma_5_14
 import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Lemma_5_3_5_4_5_8

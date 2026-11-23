@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.ExteriorAlgebra.Basic
-import Mathlib.LinearAlgebra.ExteriorPower.Basis
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec4Grassmannian
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec4Grassmannian
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrassmannianProjective
-import Def.v1.Atlas.AlgebraicGeometryI.code.GrassmannianProjective.Part2
+module
+
+public import Mathlib.LinearAlgebra.ExteriorAlgebra.Basic
+public import Mathlib.LinearAlgebra.ExteriorPower.Basis
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec4Grassmannian
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec4Grassmannian
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrassmannianProjective
+public import Def.v1.Atlas.AlgebraicGeometryI.code.GrassmannianProjective.Part2
+
+@[expose] public section
+
 open ExteriorAlgebra
 
 

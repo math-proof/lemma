@@ -8,16 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.DifferentialAnalysis.code.SobolevEmbedding.Part5
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SobolevEmbedding
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.HilbertSpace
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.FourierInversion
-import Class.v1.Atlas.DifferentialAnalysis.code.HilbertSpace
-import Def.v1.Atlas.DifferentialAnalysis.code.FourierInversion.Part7
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Analysis.Distribution.SchwartzSpace.Fourier
-import Mathlib.Analysis.Normed.Affine.MazurUlam
+module
 
+public import Def.v1.Atlas.DifferentialAnalysis.code.SobolevEmbedding.Part5
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SobolevEmbedding
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.HilbertSpace
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.FourierInversion
+public import Class.v1.Atlas.DifferentialAnalysis.code.HilbertSpace
+public import Def.v1.Atlas.DifferentialAnalysis.code.FourierInversion.Part7
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Analysis.Distribution.SchwartzSpace.Fourier
+public import Mathlib.Analysis.Normed.Affine.MazurUlam
+
+@[expose] public section
 
 noncomputable section
 

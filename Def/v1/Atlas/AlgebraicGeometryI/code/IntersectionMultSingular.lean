@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec5BezoutPascal.Part5
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec5BezoutPascal
+module
 
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec5BezoutPascal.Part5
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec5BezoutPascal
+
+@[expose] public section
 
 noncomputable section
 

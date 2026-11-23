@@ -1,14 +1,17 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GameTheory/SocialChoice/Arrow.lean -/
 
-import Mathlib.Data.Fintype.Basic
-import Instance.Order.StrictTotalOrder
-import Theorem.Set.StrictTotalOrder
-import Mathlib.Algebra.Order.Ring.Nat
-import Mathlib.Data.Fintype.EquivFin
-import Mathlib.Data.Nat.Cast.Order.Basic
-import Mathlib.Data.Nat.SuccPred
-import Theorem.GameTheory.SocialChoice.Arrow
+module
 
+public import Mathlib.Data.Fintype.Basic
+public import Instance.Order.StrictTotalOrder
+public import Theorem.Set.StrictTotalOrder
+public import Mathlib.Algebra.Order.Ring.Nat
+public import Mathlib.Data.Fintype.EquivFin
+public import Mathlib.Data.Nat.Cast.Order.Basic
+public import Mathlib.Data.Nat.SuccPred
+public import Theorem.GameTheory.SocialChoice.Arrow
+
+@[expose] public section
 
 section
 

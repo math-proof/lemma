@@ -6,8 +6,14 @@ All rights reserved.
 Copyright (c) 2025 AlgebraicCombinatorics contributors. All rights reserved.
 Authors: AlgebraicCombinatorics contributors
 -/
-import Mathlib
-import Theorem.Combinatorics.Enumerative.SubtractiveMethods
+
+module
+
+public import Mathlib
+public import Theorem.Combinatorics.Enumerative.SubtractiveMethods
+
+@[expose] public section
+
 open Finset BigOperators
 
 /-!

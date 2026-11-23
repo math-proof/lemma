@@ -1,5 +1,9 @@
-import Theorem.ZMod.Inst
-import Lemma.UpperHalfPlane.PeriodMap
+module
+
+public import Theorem.ZMod.Inst
+public import Theorem.UpperHalfPlane.PeriodMap
+
+@[expose] public section
 
 set_option autoImplicit false
 

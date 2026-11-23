@@ -1,12 +1,16 @@
-import Mathlib
-import Instance.GroupCohomology_LevelSubgroup
-import Lemma.Finset.ContinuousUnramified
-import Lemma.Submodule.ContinuousUnramifiedLevel
-import Lemma.Rep.ContinuousUnramifiedLevelInflation
-import Lemma.Rep.ContinuousH2Inflation
-import Def.NumberField_SUnitsMax
-import Instance.NumberField_LevelArithmeticModP
-import Def.NumberField_IdeleLocalInvariant
+module
+
+public import Mathlib
+public import Instance.GroupCohomology_LevelSubgroup
+public import Theorem.Finset.ContinuousUnramified
+public import Theorem.Submodule.ContinuousUnramifiedLevel
+public import Theorem.Rep.ContinuousUnramifiedLevelInflation
+public import Theorem.Rep.ContinuousH2Inflation
+public import Def.NumberField_SUnitsMax
+public import Instance.NumberField_LevelArithmeticModP
+public import Def.NumberField_IdeleLocalInvariant
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option synthInstance.maxHeartbeats 400000

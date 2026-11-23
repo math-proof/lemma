@@ -1,9 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/LSeries/AbelContinuation.lean -/
 
+module
 
-import Def.NumberTheory.LSeries.AbelContinuation
-import Theorem.Nat.LSeries.AbelContinuation
-import Theorem.MathlibExtTest.NumberTheory.LSeries.AbelContinuation
+public import Def.NumberTheory.LSeries.AbelContinuation
+public import Theorem.Nat.LSeries.AbelContinuation
+public import Theorem.MathlibExtTest.NumberTheory.LSeries.AbelContinuation
+
+@[expose] public section
+
 /-!
 # Tests for the Abel continuation
 

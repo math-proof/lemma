@@ -1,14 +1,18 @@
-import Mathlib
-import Class.AlgebraicCurve_DivisorClassGroup
-import Class.AlgebraicCurve_DivisorPushPull
-import Class.ModularCurve_CanonicalDivisor
-import Theorem.Scheme.CanonicalDivisorUniformizer
-import Class.AlgebraicCurve_CanonicalDivisor
-import Lemma.Submodule.AdelicIndex
-import Class.AlgebraicCurve_LocalResidue
-import Instance.DedekindDomain_AdicValuation_InlineSpecific
-import Lemma.Valuation.PlaceCompletion
-import Abbrev.AlgebraicCurve_TateResidueCurrency
+module
+
+public import Mathlib
+public import Class.AlgebraicCurve_DivisorClassGroup
+public import Class.AlgebraicCurve_DivisorPushPull
+public import Class.ModularCurve_CanonicalDivisor
+public import Theorem.Scheme.CanonicalDivisorUniformizer
+public import Class.AlgebraicCurve_CanonicalDivisor
+public import Theorem.Submodule.AdelicIndex
+public import Class.AlgebraicCurve_LocalResidue
+public import Instance.DedekindDomain_AdicValuation_InlineSpecific
+public import Theorem.Valuation.PlaceCompletion
+public import Abbrev.AlgebraicCurve_TateResidueCurrency
+
+@[expose] public section
 
 set_option autoImplicit false
 

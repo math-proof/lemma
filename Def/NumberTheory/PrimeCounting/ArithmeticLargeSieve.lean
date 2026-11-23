@@ -4,14 +4,19 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Basic.Real.Basic
-import Mathlib.Data.Nat.Totient
-import Mathlib.NumberTheory.ArithmeticFunction.Moebius
-import Def.NumberTheory.PrimeCounting.WeightedLargeSieve
-import Lemma.Nat.PrimeCounting.WeightedLargeSieve
-import Mathlib.Analysis.Fourier.ZMod
-import Mathlib.Algebra.Order.Chebyshev
-import Mathlib.Tactic
+module
+
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Data.Nat.Totient
+public import Mathlib.NumberTheory.ArithmeticFunction.Moebius
+public import Def.NumberTheory.PrimeCounting.WeightedLargeSieve
+public import Theorem.Nat.PrimeCounting.WeightedLargeSieve
+public import Mathlib.Analysis.Fourier.ZMod
+public import Mathlib.Algebra.Order.Chebyshev
+public import Mathlib.Tactic
+
+@[expose] public section
+
 open scoped BigOperators
 
 

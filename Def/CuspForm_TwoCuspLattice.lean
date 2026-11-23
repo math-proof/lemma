@@ -1,8 +1,12 @@
-import Mathlib
-import Def.CohCarrier_Inst
-import Def.CuspForm_HeckeOperatorFormsGammaH
-import Def.ModularForm_AtkinLehnerDatum
-import Def.FLTPrelim_Modularity
+module
+
+public import Mathlib
+public import Def.CohCarrier_Inst
+public import Def.CuspForm_HeckeOperatorFormsGammaH
+public import Def.ModularForm_AtkinLehnerDatum
+public import Def.FLTPrelim_Modularity
+
+@[expose] public section
 
 set_option autoImplicit false
 

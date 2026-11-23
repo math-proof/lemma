@@ -1,5 +1,9 @@
-import Def.AutomorphicForm_ViaCompactCuspNotion
-import Theorem.ClassGroup.ProductionPinsGeneral
+module
+
+public import Def.AutomorphicForm_ViaCompactCuspNotion
+public import Theorem.ClassGroup.ProductionPinsGeneral
+
+@[expose] public section
 
 set_option autoImplicit false
 

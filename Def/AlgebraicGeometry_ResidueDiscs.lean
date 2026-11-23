@@ -1,5 +1,9 @@
-import Lemma.Scheme.RegularProlongation
-import Def.AlgebraicCurve_SemistableChartsComap
+module
+
+public import Theorem.Scheme.RegularProlongation
+public import Def.AlgebraicCurve_SemistableChartsComap
+
+@[expose] public section
 
 set_option autoImplicit false
 

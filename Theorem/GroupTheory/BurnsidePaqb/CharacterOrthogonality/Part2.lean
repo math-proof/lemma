@@ -9,7 +9,7 @@ import Mathlib.LinearAlgebra.Trace
 import Mathlib.LinearAlgebra.Matrix.Trace
 import Mathlib.LinearAlgebra.FiniteDimensional.Defs
 import Mathlib.GroupTheory.SpecificGroups.Cyclic
-import Mathlib.Data.Complex.Basic
+import Mathlib.Basic.Complex.Basic
 import Mathlib.RepresentationTheory.FinGroupCharZero
 import Mathlib.Analysis.Complex.Polynomial.Basic
 import Mathlib.LinearAlgebra.Eigenspace.Triangularizable

@@ -1,6 +1,10 @@
-import Def.UnramifiedWhittaker_ZetaIntegrand
-import Theorem.AdelicDock_LocalEmbedding
-import Theorem.Set.IdeleBox
+module
+
+public import Def.UnramifiedWhittaker_ZetaIntegrand
+public import Theorem.AdelicDock_LocalEmbedding
+public import Theorem.Set.IdeleBox
+
+@[expose] public section
 
 set_option autoImplicit false
 

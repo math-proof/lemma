@@ -1,4 +1,8 @@
-import Def.LanglandsTunnell_CubicInduction_GlobalZeta31
+module
+
+public import Def.LanglandsTunnell_CubicInduction_GlobalZeta31
+
+@[expose] public section
 
 set_option autoImplicit false
 

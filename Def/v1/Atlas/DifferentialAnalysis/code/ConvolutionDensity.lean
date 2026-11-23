@@ -8,24 +8,29 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.DifferentialAnalysis.code.ConvolutionDensityFix
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.ConvolutionDensityFix
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TestFunctions
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzCutoffConvergence
-import Instance.v1.Atlas.DifferentialAnalysis.code.TestFunctions
-import Def.v1.Atlas.DifferentialAnalysis.code.SchwartzCutoffConvergence
-import Mathlib.Analysis.Convolution
-import Mathlib.Analysis.Calculus.ContDiff.Convolution
-import Mathlib.Analysis.Calculus.BumpFunction.Normed
-import Mathlib.Topology.ContinuousMap.ZeroAtInfty
-import Mathlib.MeasureTheory.Function.LpSpace.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
-import Mathlib.Analysis.Distribution.SchwartzSpace.Fourier
-import Mathlib.Analysis.Fourier.LpSpace
-import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
-import Mathlib.Analysis.Calculus.BumpFunction.SmoothApprox
-import Instance.v1.Atlas.DifferentialAnalysis.code.ConvolutionDensity
+module
+
+public import Def.v1.Atlas.DifferentialAnalysis.code.ConvolutionDensityFix
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ConvolutionDensityFix
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TestFunctions
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzCutoffConvergence
+public import Instance.v1.Atlas.DifferentialAnalysis.code.TestFunctions
+public import Def.v1.Atlas.DifferentialAnalysis.code.SchwartzCutoffConvergence
+public import Mathlib.Analysis.Convolution
+public import Mathlib.Analysis.Calculus.ContDiff.Convolution
+public import Mathlib.Analysis.Calculus.BumpFunction.Normed
+public import Mathlib.Topology.ContinuousMap.ZeroAtInfty
+public import Mathlib.MeasureTheory.Function.LpSpace.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
+public import Mathlib.Analysis.Distribution.SchwartzSpace.Fourier
+public import Mathlib.Analysis.Fourier.LpSpace
+public import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
+public import Mathlib.Analysis.Calculus.BumpFunction.SmoothApprox
+public import Instance.v1.Atlas.DifferentialAnalysis.code.ConvolutionDensity
+
+@[expose] public section
+
 open scoped ZeroAtInfty Convolution
 open MeasureTheory Filter Topology Function Set TestFunctions
 

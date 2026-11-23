@@ -4,7 +4,7 @@ import Initialize.Tactic.Attr.Basic
 
 
 @[path]
-private lemma crf.markov.logits
+private lemma main
   {Y : Type*}
   {P : ℕ → (ℕ → Y) → ℝ}
   {π : Y → ℝ}

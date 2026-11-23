@@ -11,7 +11,6 @@ namespace BurnsidePaqb
 /--
 [eq_prime_pow_mul_of_dvd](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/SolvableInduction.lean)
 -/
-@[path]
 private lemma eq_prime_pow_mul_of_dvd
   {G : Type u} [Group G] [Fintype G]
   {p q a b d : ℕ}
@@ -70,7 +69,6 @@ namespace BurnsidePaqb
 /--
 [isSolvable_of_prime_card](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/SolvableInduction.lean)
 -/
-@[path]
 private lemma isSolvable_of_prime_card
   {G : Type u} [Group G] [Fintype G]
   {r : ℕ}
@@ -156,7 +154,6 @@ namespace BurnsidePaqb
 /--
 [burnside_paqb_of_simple_prime](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/SolvableInduction.lean)
 -/
-@[path]
 private lemma burnside_paqb_of_simple_prime
   {G : Type u} [Group G] [Fintype G]
   {p q a b : ℕ}

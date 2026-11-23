@@ -1,8 +1,12 @@
-import Mathlib
-import Class.AlgebraicCurve_DivisorPushPull
-import Lemma.Submodule.AdelicIndex
-import Structure.AlgebraicCurve_PoleDivisorPackage
-import Abbrev.AlgebraicCurve_PoleDivisorPackage
+module
+
+public import Mathlib
+public import Class.AlgebraicCurve_DivisorPushPull
+public import Theorem.Submodule.AdelicIndex
+public import Structure.AlgebraicCurve_PoleDivisorPackage
+public import Abbrev.AlgebraicCurve_PoleDivisorPackage
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Lemma.Finset.ContinuousUnramified
+module
+
+public import Mathlib
+public import Theorem.Finset.ContinuousUnramified
+
+@[expose] public section
 
 set_option autoImplicit false
 

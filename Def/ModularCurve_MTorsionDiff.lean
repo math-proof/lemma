@@ -1,10 +1,14 @@
-import Mathlib
-import Instance.Module_CommFamilyAnnPart
-import Lemma.LaurentSeries.HeckeU
-import Lemma.LaurentSeries.HeckeV
-import Def.ModularCurve_QExpansionDiff
-import Def.ModularCurve_JqCoeff
-import Def.AlgebraicCurve_RegularDifferentials
+module
+
+public import Mathlib
+public import Instance.Module_CommFamilyAnnPart
+public import Theorem.LaurentSeries.HeckeU
+public import Theorem.LaurentSeries.HeckeV
+public import Def.ModularCurve_QExpansionDiff
+public import Def.ModularCurve_JqCoeff
+public import Def.AlgebraicCurve_RegularDifferentials
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option synthInstance.maxHeartbeats 400000

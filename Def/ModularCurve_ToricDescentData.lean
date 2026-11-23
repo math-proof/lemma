@@ -1,9 +1,13 @@
-import Mathlib
-import Theorem.MvPolynomial.MazurPrincipleCore
-import Def.ModularCurve_DeligneRapoport
-import Def.ModularCurve_HeckeOperator
-import Def.AlgebraicCurve_ConditionalCurrency
-import Structure.ModularCurve_ToricDescentData
+module
+
+public import Mathlib
+public import Theorem.MvPolynomial.MazurPrincipleCore
+public import Def.ModularCurve_DeligneRapoport
+public import Def.ModularCurve_HeckeOperator
+public import Def.AlgebraicCurve_ConditionalCurrency
+public import Structure.ModularCurve_ToricDescentData
+
+@[expose] public section
 
 set_option autoImplicit false
 

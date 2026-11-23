@@ -1,10 +1,14 @@
-import Mathlib
-import Def.Rep_RepPi
-import Theorem.Matrix.PlaceAbove
-import Def.NumberField_PlaceDecompositionAction
-import Abbrev.NumberField_FiniteSIdeleModule
-import Def.NumberField_SUnitsModule
-import Def.GroupCohomology_RepCokernel
+module
+
+public import Mathlib
+public import Def.Rep_RepPi
+public import Theorem.Matrix.PlaceAbove
+public import Def.NumberField_PlaceDecompositionAction
+public import Abbrev.NumberField_FiniteSIdeleModule
+public import Def.NumberField_SUnitsModule
+public import Def.GroupCohomology_RepCokernel
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Theorem.v1.Atlas.TensorCategories.code.VecDualMapBridge
-import Lemma.Category.Atlas.v1.TensorCategories.code.VecDualMapBridge
+module
+
+public import Mathlib
+public import Theorem.v1.Atlas.TensorCategories.code.VecDualMapBridge
+public import Theorem.Category.Atlas.v1.TensorCategories.code.VecDualMapBridge
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open CategoryTheory MonoidalCategory Module Category

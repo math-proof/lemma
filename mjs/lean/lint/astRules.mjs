@@ -9,7 +9,7 @@ import '../../../js/py.js';
 import { compile, Lean, LeanModule } from '../../../js/parser/lean.js';
 
 /** rule ids implemented here; their text-scan versions only run when the AST is unavailable */
-export const AST_RULES = new Set(['have-inline-once', 'have-underscore', 'given-prop-first', 'given-prop-consecutive', 'given-implicit-dep', 'tactic-haveI', 'tactic-letI', 'calc-after-assign', 'decl-keyword-dir', 'public-section', 'paren-getelem', 'fin-index-val', 'paren-apparg', 'paren-redundant-type', 'paren-redundant-sum-sub', 'paren-redundant-pow', 'paren-redundant-arith', 'paren-redundant-ascription', 'prefer-unicode-type', 'prefer-unicode-pow', 'literal-left-comparison']);
+export const AST_RULES = new Set(['have-inline-once', 'have-underscore', 'given-prop-first', 'given-prop-consecutive', 'given-implicit-dep', 'tactic-haveI', 'tactic-letI', 'calc-after-assign', 'decl-keyword-dir', 'public-section', 'paren-getelem', 'fin-index-val', 'paren-apparg', 'paren-redundant-type', 'paren-redundant-sum-sub', 'paren-redundant-pow', 'paren-redundant-arith', 'paren-redundant-ascription', 'prefer-unicode-type', 'prefer-unicode-pow', 'literal-left-comparison', 'dot-notation']);
 
 /**
  * Term forms whose parentheses are load-bearing inside an ascription: `(fun y => F y : T)`
@@ -247,14 +247,25 @@ function binderParts(b) {
     return { names, outside };
 }
 
-/** does `node` mention `name` free (not re-bound by `∀ name, …` / `∑ name ∈ s, …` / `fun name => …`)? */
+/** does `node` mention `name` free (not re-bound by `∀ name, …` / `∑ name ∈ s, …` / `fun name => …` / a match-lambda arm)? */
 function mentions(node, name) {
-    const { LeanToken, LeanBigOperator, Lean_fun, LeanRightarrow } = Lean.classes;
+    const { LeanToken, LeanBigOperator, Lean_fun, LeanRightarrow, Lean_mapsto } = Lean.classes;
     if (!node || typeof node !== 'object') return false;
     if (node instanceof LeanToken) return node.text === name;
+    // `fun | p => e | q => e`: each arm binds its own pattern, and a name bound by one arm is not bound in another.
+    // Must run before any `node.arg instanceof …` check: on a match lambda `.arg` is a `LeanBar`.
+    if (node instanceof Lean_fun && node.is_match_lambda) {
+        return node.args.some((bar) => {
+            const arrow = bar?.arg;
+            if (!arrow || arrow.lhs == null || arrow.rhs == null) return mentions(bar, name);
+            const { names, outside } = binderParts(arrow.lhs);
+            if (outside.some((o) => mentions(o, name))) return true;
+            return names.includes(name) ? false : mentions(arrow.rhs, name);
+        });
+    }
     let scope = null;
     if (node instanceof LeanBigOperator && node.args?.length === 2) scope = [node.args[0], node.args[1]];
-    else if (node instanceof Lean_fun && node.arg instanceof LeanRightarrow) scope = [node.arg.lhs, node.arg.rhs];
+    else if (node instanceof Lean_fun && (node.arg instanceof LeanRightarrow || node.arg instanceof Lean_mapsto)) scope = [node.arg.lhs, node.arg.rhs];
     if (scope) {
         const { names, outside } = binderParts(scope[0]);
         if (outside.some((o) => mentions(o, name))) return true;
@@ -998,6 +1009,222 @@ export function isLemmaPath(file) {
     return /(^|\/)Lemma\//.test(String(file ?? '').replace(/\\/g, '/'));
 }
 
+// ---------------------------------------------------------------------------------------------------------------
+// `dot-notation`: `N.f x` → `x.f` when `x`'s declared type head is `N`.
+
+/** binder body of a `(…)` / `{…}` / `[…]` group (a one-element wrapper is transparent) */
+function binderInner(node) {
+    const { LeanParenthesis, LeanBrace, LeanBracket, LeanArgsSpaceSeparated } = Lean.classes;
+    let n = node;
+    for (;;) {
+        if (n instanceof LeanParenthesis || n instanceof LeanBrace || n instanceof LeanBracket) n = n.arg ?? n.args?.[0];
+        else if (n instanceof LeanArgsSpaceSeparated && n.args.length === 1) n = n.args[0];
+        else return n;
+    }
+}
+
+/**
+ * `(a b : T)` / `{d : ℕ}` / `(i : Fin n)` → `[{ name, type }]`; an unannotated binder
+ * (`∑ t, …`, `fun t => …`) gives `type: null` — unknown types are never guessed.
+ */
+function typedBinders(node) {
+    const { LeanColon, LeanToken, LeanArgsSpaceSeparated } = Lean.classes;
+    const body = binderInner(node);
+    if (body instanceof LeanColon) {
+        const lhs = body.lhs instanceof LeanArgsSpaceSeparated ? body.lhs.args : [body.lhs];
+        if (!lhs.length || !lhs.every((n) => n instanceof LeanToken)) return [];
+        return lhs.map((n) => ({ name: n.text, type: body.rhs }));
+    }
+    if (body instanceof LeanToken) return [{ name: body.text, type: null }];
+    return [];
+}
+
+/** identifier head of a type node: `Fin d` → `Fin`, `EuclideanSpace ℝ (Fin n)` → `EuclideanSpace` */
+function typeHeadName(type) {
+    const { LeanParenthesis, LeanArgsSpaceSeparated, LeanToken } = Lean.classes;
+    let n = type;
+    for (;;) {
+        if (n instanceof LeanParenthesis) n = n.arg ?? n.args?.[0];
+        else if (n instanceof LeanArgsSpaceSeparated) n = n.args[0];
+        else break;
+    }
+    return n instanceof LeanToken ? n.text : null;
+}
+
+/** statement / binder containers whose items run in source order */
+const DOT_SEQUENCES = new Set(['LeanStatements', 'LeanArgsNewLineSeparated']);
+
+/**
+ * The two operand types of `A ⊕ B` → `[A, B]`. The grammar nests `A ⊕ B ≃ C` as
+ * `A ⊕ (B ≃ C)` (the `≃` lands in the `⊕` right operand), so that shape is normalized
+ * back to `A ⊕ B` — the `toFun` of the enclosing equivalence then has scrutinee `A ⊕ B`.
+ */
+function sumOperands(type) {
+    const { LeanParenthesis, Lean_oplus, Lean_simeq } = Lean.classes;
+    let n = type;
+    while (n instanceof LeanParenthesis) n = n.arg ?? n.args?.[0];
+    if (!(n instanceof Lean_oplus) || n.args?.length !== 2) return null;
+    const [left, right] = n.args;
+    return [left, right instanceof Lean_simeq ? right.args?.[0] : right];
+}
+
+/**
+ * `fun | Sum.inl t => … | Sum.inr t => …` over a scrutinee `A ⊕ B`: bind `t` to `A`
+ * (left) or `B` (right). Names bound to different heads in the two alternatives stay unknown.
+ */
+function sumPatternBindings(value, type) {
+    const parts = sumOperands(type);
+    if (!parts) return null;
+    const { LeanArgsSpaceSeparated, LeanProperty, LeanToken } = Lean.classes;
+    const bound = new Map();
+    const conflicting = new Set();
+    const scan = (n) => {
+        if (!n || typeof n !== 'object') return;
+        if (n instanceof LeanArgsSpaceSeparated && n.args?.length === 2) {
+            const [head, arg] = n.args;
+            if (head instanceof LeanProperty && head.lhs instanceof LeanToken && head.lhs.text === 'Sum' &&
+                head.rhs instanceof LeanToken && (head.rhs.text === 'inl' || head.rhs.text === 'inr') &&
+                arg instanceof LeanToken && arg.text) {
+                const component = head.rhs.text === 'inl' ? parts[0] : parts[1];
+                if (!bound.has(arg.text)) bound.set(arg.text, component);
+                else if (typeHeadName(bound.get(arg.text)) !== typeHeadName(component)) conflicting.add(arg.text);
+            }
+        }
+        for (const a of n.args || []) scan(a);
+    };
+    scan(value);
+    for (const name of conflicting) bound.delete(name);
+    return bound;
+}
+
+/**
+ * `Fin.ropeEven t` → `t.ropeEven` when `t` is a bare identifier whose declared type head is `Fin`.
+ *
+ * A scoped environment of local binders → type node is kept in source order (declaration binders,
+ * `∑` / `∏` / `∀` / `∃` binder lists, `fun` parameters, typed `let` / `have`); the nearest binding
+ * wins (shadowing). Unannotated binders stay unknown, so a pattern binder never warns. Only the
+ * declared type *head* is compared (no elaboration); `simp [Fin.ropeEven]` has no argument and is
+ * therefore never flagged. Not an AGENTS.md rule (user request).
+ */
+function dotNotation(ctx, decl) {
+    if (/\.echo\.lean$/.test(String(ctx.file ?? ''))) return; // generated by run.mjs
+    const {
+        LeanAssign, LeanColon, LeanArgsSpaceSeparated, LeanProperty, LeanToken,
+        LeanBigOperator, Lean_forall, Lean_exists, Lean_fun, Lean_let, Lean_have, LeanRightarrow,
+    } = Lean.classes;
+    const env = new Map();
+
+    const checkApplication = (node, scope) => {
+        if (node.args?.length !== 2) return;
+        const [head, arg] = node.args;
+        // two-component dotted constant applied to a bare identifier
+        if (!(head instanceof LeanProperty) || !(head.lhs instanceof LeanToken) || !(head.rhs instanceof LeanToken)) return;
+        if (!(arg instanceof LeanToken) || !arg.text || arg.text === '_') return;
+        const ns = head.lhs.text;
+        const field = head.rhs.text;
+        if (!ns || !field) return;
+        const type = scope.get(arg.text);
+        if (type == null || typeHeadName(type) !== ns) return;
+        const shown = String(node).replace(/\s+/g, ' ').trim();
+        // `sequential`: the same reprint may occur earlier in the file (`Fin.ropeEven t` at 13 and 17)
+        ctx.warnAst('dot-notation', node, `\`${shown}\` can be written \`${arg.text}.${field}\``, 1, null, shown, null, true);
+    };
+
+    /** bindings a statement introduces for the statements after it (`let t : Fin d := …`) */
+    const introducedBinders = (item) => {
+        if (!(item instanceof Lean_let) && !(item instanceof Lean_have)) return [];
+        const head = item.args?.[0];
+        return typedBinders(head instanceof LeanAssign ? head.lhs : head);
+    };
+
+    const walkSequence = (node, scope) => {
+        const saved = [];
+        for (const item of node.args || []) {
+            walkTerm(item, scope);
+            for (const b of introducedBinders(item)) {
+                if (!b.type) continue;
+                saved.push([b.name, scope.has(b.name), scope.get(b.name)]);
+                scope.set(b.name, b.type);
+            }
+        }
+        for (let i = saved.length - 1; i >= 0; i--) {
+            const [name, had, value] = saved[i];
+            if (had) scope.set(name, value);
+            else scope.delete(name);
+        }
+    };
+
+    const walkTerm = (node, scope) => {
+        if (!node || typeof node !== 'object') return;
+        if (node instanceof LeanArgsSpaceSeparated) {
+            checkApplication(node, scope);
+            for (const a of node.args || []) walkTerm(a, scope);
+            return;
+        }
+        if (DOT_SEQUENCES.has(node.constructor?.name)) {
+            walkSequence(node, scope);
+            return;
+        }
+        // `let e : A ⊕ B ≃ C := { toFun := fun | Sum.inl t => … }`: pattern binders
+        if (node instanceof Lean_let || node instanceof Lean_have) {
+            const head = node.args?.[0];
+            if (head instanceof LeanAssign && head.lhs instanceof LeanColon) {
+                const patterns = sumPatternBindings(head.rhs, head.lhs.rhs);
+                if (patterns?.size) {
+                    walkTerm(head.lhs, scope);
+                    const inner = new Map(scope);
+                    for (const [name, type] of patterns) inner.set(name, type);
+                    walkTerm(head.rhs, inner);
+                    return;
+                }
+            }
+        }
+        if (node instanceof LeanBigOperator || node instanceof Lean_forall || node instanceof Lean_exists) {
+            const binder = node.args?.[0];
+            const body = node.args?.[1];
+            if (binder != null && body != null) {
+                walkTerm(binder, scope); // the annotation is outside the binder's scope
+                const inner = new Map(scope);
+                for (const b of typedBinders(binder)) if (b.type) inner.set(b.name, b.type);
+                walkTerm(body, inner);
+                return;
+            }
+        }
+        if (node instanceof Lean_fun) {
+            const arrow = node.arg ?? node.args?.[0];
+            if (arrow instanceof LeanRightarrow) {
+                walkTerm(arrow.lhs, scope);
+                const inner = new Map(scope);
+                for (const b of typedBinders(arrow.lhs)) if (b.type) inner.set(b.name, b.type);
+                walkTerm(arrow.rhs, inner);
+                return;
+            }
+        }
+        for (const a of node.args || []) walkTerm(a, scope);
+    };
+
+    // declaration binders, in order; a binder's type is checked with the binders before it
+    const seedSignature = (node) => {
+        if (!node || typeof node !== 'object') return;
+        if (node instanceof LeanToken) return; // the declaration's own name
+        const binders = typedBinders(node);
+        if (binders.length) {
+            for (const b of binders) if (b.type) walkTerm(b.type, env);
+            for (const b of binders) if (b.type) env.set(b.name, b.type);
+            return;
+        }
+        for (const a of node.args || []) seedSignature(a);
+    };
+
+    const assign = decl.assignment ?? decl.args?.find((a) => a instanceof LeanAssign);
+    const colon = assign instanceof LeanAssign ? assign.lhs : null;
+    if (colon instanceof LeanColon) {
+        if (colon.lhs) seedSignature(colon.lhs);
+        if (colon.rhs) walkTerm(colon.rhs, env);
+    }
+    if (assign?.rhs) walkTerm(assign.rhs, env);
+}
+
 /**
  * `decl-keyword-dir`: a `theorem` in a `Lemma/` file (AGENTS.md: `Lemma/` holds only `lemma`s). The keyword is the
  * node class (`Lean_theorem`), so modifiers (`private`, `noncomputable`, `@[…]`), comments, strings and names like
@@ -1061,7 +1288,7 @@ export function astRules(ctx, tree) {
     const lemmaFile = ctx.astCovered.has('decl-keyword-dir') && isLemmaPath(ctx.file);
     const inTheorem = /(^|\/)Theorem\//.test(String(ctx.file ?? '').replace(/\\/g, '/'));
     // `quoteAs`: text to quote instead of the node's own reprint (the node still fixes the source order)
-    const sink = { warnAst: (rule, node, msg, maxLines, follow, quoteAs, extra) => found.push({ rule, node, msg, maxLines, follow, quoteAs, extra }) };
+    const sink = { warnAst: (rule, node, msg, maxLines, follow, quoteAs, extra, sequential = false) => found.push({ rule, node, msg, maxLines, follow, quoteAs, extra, sequential }) };
     for (const node of walk(tree)) {
         order.set(node, order.size);
         if (node instanceof Lean_lemma || node instanceof Lean_theorem || node instanceof Lean_def) found.push({ anchor: declName(node), node });
@@ -1074,6 +1301,7 @@ export function astRules(ctx, tree) {
             // comparisons are style, so only the signature (given hypotheses + conclusion) is checked; proof
             // bodies (`have`, `show`, `rw`, `simp`, `exact`, …) may legitimately compare against a literal
             for (const signatureNode of walk(node.assignment?.lhs)) literalLeftComparison(sink, signatureNode);
+            dotNotation(sink, node);
         }
         else if (node instanceof LeanStatements || node instanceof LeanArgsNewLineSeparated) haveInlineOnce(sink, node);
         else if (node instanceof Lean_let) {
@@ -1096,7 +1324,34 @@ export function astRules(ctx, tree) {
         }
     }
     found.sort((a, b) => order.get(a.node) - order.get(b.node));
+    // Identical reprints (`Fin.ropeEven t` at lines 13 and 17) need their own lines: the
+    // n-th `sequential` finding with a given text lands on the n-th exact source occurrence.
+    const seqState = new Map();
     for (const f of found) {
+        if (f.sequential) {
+            const text = f.quoteAs ?? quote(f.node, 120, 1);
+            const key = collapse(text.split('\n')[0]);
+            // resume at the character offset just past the previous hit, so a repeated reprint on the
+            // same line still finds its own occurrence (`Fin.ropeEven t = Fin.ropeEven t`)
+            const state = seqState.get(text) ?? { from: 0, offset: 0, lastLine: null };
+            let line = null;
+            for (let i = state.from; i < ctx.P.raw.length; i++) {
+                const hay = collapse(ctx.P.raw[i]);
+                const at = hay.indexOf(key, i === state.from ? state.offset : 0);
+                if (at < 0) continue;
+                line = i + 1;
+                state.from = i;
+                state.offset = at + key.length;
+                break;
+            }
+            // reprint no longer locatable: stay on the previous hit's line rather than emitting `null`
+            if (line == null) line = state.lastLine;
+            else state.lastLine = line;
+            seqState.set(text, state);
+            if (line != null) ctx.astCursor = line - 1;
+            ctx.warn(f.rule, line, null, f.msg, { stmt: text });
+            continue;
+        }
         if (!('anchor' in f)) ctx.warnAst(f.rule, f.quoteAs != null ? { toString: () => f.quoteAs } : f.node, f.msg, f.maxLines, f.follow, f.extra);
         else {
             // a declaration: restart the search at its line (from the text scanner) so repeated binders resolve per lemma

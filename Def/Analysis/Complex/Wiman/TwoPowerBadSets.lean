@@ -1,9 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/TwoPowerBadSets.lean -/
 
-import Theorem.Analysis.Complex.Wiman.LogMajorantRegularity
-import Theorem.Real.Calculus.PowerGrowthBadSet
-import Def.Analysis.Calculus.PowerGrowthBadSet
+module
 
+public import Theorem.Analysis.Complex.Wiman.LogMajorantRegularity
+public import Theorem.Real.Calculus.PowerGrowthBadSet
+public import Def.Analysis.Calculus.PowerGrowthBadSet
+
+@[expose] public section
 
 namespace Complex
 

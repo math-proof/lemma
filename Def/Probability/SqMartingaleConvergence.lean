@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.Martingale.Convergence
-import Mathlib.Probability.Martingale.Basic
-import Mathlib.Probability.Martingale.BorelCantelli
-import Mathlib.MeasureTheory.Function.LpSeminorm.CompareExp
-import Theorem.v1.Atlas.Probability.code.MartingaleOrthogonality
-import Theorem.Measure.Atlas.v1.Probability.code.MartingaleOrthogonality
-import Theorem.v1.Atlas.Probability.code.MartingaleLpConvergence
+module
+
+public import Mathlib.Probability.Martingale.Convergence
+public import Mathlib.Probability.Martingale.Basic
+public import Mathlib.Probability.Martingale.BorelCantelli
+public import Mathlib.MeasureTheory.Function.LpSeminorm.CompareExp
+public import Theorem.v1.Atlas.Probability.code.MartingaleOrthogonality
+public import Theorem.Measure.Atlas.v1.Probability.code.MartingaleOrthogonality
+public import Theorem.v1.Atlas.Probability.code.MartingaleLpConvergence
+
+@[expose] public section
+
 open MeasureTheory Filter Topology
 
 

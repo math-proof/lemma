@@ -1,5 +1,9 @@
-import Def.AutomorphicForm_ArchDerivCasimir
-import Inductive.AutomorphicForm_ArchDirComplex
+module
+
+public import Def.AutomorphicForm_ArchDerivCasimir
+public import Inductive.AutomorphicForm_ArchDirComplex
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -8,15 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.TensorCategories.code.HopfAlgebra.Part3
-import Theorem.Category.Atlas.v1.TensorCategories.code.HopfAlgebra
-import Lemma.Category.Atlas.v1.TensorCategories.code.CoradicalFiltration
-import Def.v1.Atlas.TensorCategories.code.CoradicalFiltration.Part8
-import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.RingTheory.Adjoin.Basic
-import Mathlib.Algebra.Lie.UniversalEnveloping
-import Class.v1.Atlas.TensorCategories.code.HopfAlgebraExamples.Part2
+module
+
+public import Theorem.v1.Atlas.TensorCategories.code.HopfAlgebra.Part3
+public import Theorem.Category.Atlas.v1.TensorCategories.code.HopfAlgebra
+public import Theorem.Category.Atlas.v1.TensorCategories.code.CoradicalFiltration
+public import Def.v1.Atlas.TensorCategories.code.CoradicalFiltration.Part8
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.RingTheory.Adjoin.Basic
+public import Mathlib.Algebra.Lie.UniversalEnveloping
+public import Class.v1.Atlas.TensorCategories.code.HopfAlgebraExamples.Part2
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open Coalgebra HopfAlgebra

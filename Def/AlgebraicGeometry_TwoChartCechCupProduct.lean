@@ -1,5 +1,9 @@
-import Mathlib
-import Lemma.LinearMap.TwoChartCech
+module
+
+public import Mathlib
+public import Theorem.LinearMap.TwoChartCech
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -8,12 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
-import Mathlib.Topology.MetricSpace.ProperSpace
-import Mathlib.Topology.Order.Compact
-import Mathlib.Topology.Algebra.MvPolynomial
-import Mathlib.Analysis.Normed.Module.RCLike.Real
+module
+
+public import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
+public import Mathlib.Topology.MetricSpace.ProperSpace
+public import Mathlib.Topology.Order.Compact
+public import Mathlib.Topology.Algebra.MvPolynomial
+public import Mathlib.Analysis.Normed.Module.RCLike.Real
+
+@[expose] public section
+
 open scoped SchwartzMap
 open TemperedDistribution MvPolynomial Metric
 

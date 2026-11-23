@@ -4,23 +4,28 @@
 Author: Muse Spark 1.3
 -/
 
-import Mathlib.Algebra.Algebra.Rat
-import Mathlib.Algebra.ContinuedFractions.Computation.TerminatesIffRat
-import Mathlib.Algebra.Order.Archimedean.Real.Basic
-import Mathlib.FieldTheory.Minpoly.Basic
-import Abbrev.Dynamics.EventuallyPeriodicSequence
-import Theorem.Set.EventuallyPeriodicSequence
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Algebra.Ring.IsFormallyReal
-import Mathlib.Analysis.RCLike.Basic
-import Mathlib.Data.Int.Star
-import Mathlib.NumberTheory.Real.Irrational
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Ring
-import Theorem.NumberTheory.ContinuedFractions.LagrangePeriodic
+module
+
+public import Mathlib.Algebra.Algebra.Rat
+public import Mathlib.Algebra.ContinuedFractions.Computation.TerminatesIffRat
+public import Mathlib.Algebra.Order.Archimedean.Real.Basic
+public import Mathlib.FieldTheory.Minpoly.Basic
+public import Abbrev.Dynamics.EventuallyPeriodicSequence
+public import Theorem.Set.EventuallyPeriodicSequence
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Algebra.Ring.IsFormallyReal
+public import Mathlib.Analysis.RCLike.Basic
+public import Mathlib.Data.Int.Star
+public import Mathlib.NumberTheory.Real.Irrational
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Ring
+public import Theorem.NumberTheory.ContinuedFractions.LagrangePeriodic
+
+@[expose] public section
+
 /-!
 # Euler–Lagrange theorem on eventually periodic continued fractions
 

@@ -1,7 +1,11 @@
-import Mathlib
-import Instance.AbstractHeckeOperator
-import Instance.LocalLanglands_HeckePair
-import Def.Set_HeckeAlgebra
+module
+
+public import Mathlib
+public import Instance.AbstractHeckeOperator
+public import Instance.LocalLanglands_HeckePair
+public import Def.Set_HeckeAlgebra
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TheoryOfComputation.code.CFLInterRegular
-import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.CFLInterRegular
-import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.RegularLanguages
-import Def.v1.Atlas.TheoryOfComputation.code.RegularLanguages
+module
+
+public import Def.v1.Atlas.TheoryOfComputation.code.CFLInterRegular
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.CFLInterRegular
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.RegularLanguages
+public import Def.v1.Atlas.TheoryOfComputation.code.RegularLanguages
+
+@[expose] public section
+
 universe u
 
 

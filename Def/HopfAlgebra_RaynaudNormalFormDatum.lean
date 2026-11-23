@@ -1,9 +1,13 @@
-import Mathlib
-import Lemma.AlgHom.FVectStructure
-import Class.HopfAlgebra_HopfTower
-import Lemma.Ideal.Mathlib430
-import Structure.HopfAlgebra_RaynaudNormalFormDatum
-import Abbrev.HopfAlgebra_RaynaudNormalFormDatum
+module
+
+public import Mathlib
+public import Theorem.AlgHom.FVectStructure
+public import Class.HopfAlgebra_HopfTower
+public import Theorem.Ideal.Mathlib430
+public import Structure.HopfAlgebra_RaynaudNormalFormDatum
+public import Abbrev.HopfAlgebra_RaynaudNormalFormDatum
+
+@[expose] public section
 
 set_option autoImplicit false
 

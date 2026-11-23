@@ -1,7 +1,11 @@
-import Mathlib
-import Lemma.Ideal.FormalUpperHalfPlanePoints
-import Structure.CerednikDrinfeld_DrinfeldQuadruple
-import Abbrev.CerednikDrinfeld_DrinfeldQuadruple
+module
+
+public import Mathlib
+public import Theorem.Ideal.FormalUpperHalfPlanePoints
+public import Structure.CerednikDrinfeld_DrinfeldQuadruple
+public import Abbrev.CerednikDrinfeld_DrinfeldQuadruple
+
+@[expose] public section
 
 set_option autoImplicit false
 

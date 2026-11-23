@@ -1,5 +1,9 @@
-import Def.LanglandsTunnell_CubicInduction_Carrier
-import Instance.LanglandsTunnell_CubicInduction_IotaTorus
+module
+
+public import Def.LanglandsTunnell_CubicInduction_Carrier
+public import Instance.LanglandsTunnell_CubicInduction_IotaTorus
+
+@[expose] public section
 
 set_option autoImplicit false
 

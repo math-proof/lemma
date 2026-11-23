@@ -4,10 +4,15 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Combinatorics.Enumerative.Stirling
-import Mathlib.GroupTheory.Perm.Cycle.Type
-import Mathlib.GroupTheory.Perm.Fin
-import Theorem.Combinatorics.Enumerative.Stirling.Part3
+module
+
+public import Mathlib.Combinatorics.Enumerative.Stirling
+public import Mathlib.GroupTheory.Perm.Cycle.Type
+public import Mathlib.GroupTheory.Perm.Fin
+public import Theorem.Combinatorics.Enumerative.Stirling.Part3
+
+@[expose] public section
+
 /-!
 # Permutations and unsigned Stirling numbers
 

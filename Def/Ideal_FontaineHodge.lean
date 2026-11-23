@@ -1,8 +1,12 @@
-import Mathlib
-import Def.LinearMap_DatumAndHonda
-import Def.RingHom_WittVectorHom
-import Def.Int_WittHomColimit
-import Abbrev.Dieudonne_FontaineHodge
+module
+
+public import Mathlib
+public import Def.LinearMap_DatumAndHonda
+public import Def.RingHom_WittVectorHom
+public import Def.Int_WittHomColimit
+public import Abbrev.Dieudonne_FontaineHodge
+
+@[expose] public section
 
 set_option autoImplicit false
 

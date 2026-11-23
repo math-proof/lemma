@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/ListSortCorrectness.lean -/
 
-import Structure.CPythonListsort.Code.Correctness.ScanLoopCorrectness
-import Structure.CPythonListsort.Code.Correctness.ReverseModeCorrectness
-import Def.CPythonListsort.Code.Correctness.OccurrenceErasureScan.Part2
-import Structure.CPythonListsort.Code.Correctness.ListSortCorrectness
+module
+
+public import Structure.CPythonListsort.Code.Correctness.ScanLoopCorrectness
+public import Structure.CPythonListsort.Code.Correctness.ReverseModeCorrectness
+public import Def.CPythonListsort.Code.Correctness.OccurrenceErasureScan.Part2
+public import Structure.CPythonListsort.Code.Correctness.ListSortCorrectness
+
+@[expose] public section
+
 /-!
 # Public functional correctness of listsort
 

@@ -1,11 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Cyclotomic/IntermediateField.lean -/
 
-import Mathlib.NumberTheory.NumberField.Cyclotomic.Galois
-import Mathlib.Order.ModularLattice
-import Mathlib.RingTheory.ZMod.UnitsCyclic
-import Theorem.FieldTheory.Galois.Abelian
-import Theorem.Rat.Galois.Abelian
-import Theorem.NumberTheory.Cyclotomic.IntermediateField
+module
+
+public import Mathlib.NumberTheory.NumberField.Cyclotomic.Galois
+public import Mathlib.Order.ModularLattice
+public import Mathlib.RingTheory.ZMod.UnitsCyclic
+public import Theorem.FieldTheory.Galois.Abelian
+public import Theorem.Rat.Galois.Abelian
+public import Theorem.NumberTheory.Cyclotomic.IntermediateField
+
+@[expose] public section
+
 open scoped IntermediateField IsMulCommutative
 
 /-!

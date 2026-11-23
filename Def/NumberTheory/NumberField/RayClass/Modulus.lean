@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/Modulus.lean -/
 
-import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
-import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
-import Instance.NumberTheory.NumberField.RayClass.Modulus.Part2
+module
+
+public import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
+public import Instance.NumberTheory.NumberField.RayClass.Modulus.Part2
+
+@[expose] public section
+
 @[expose] noncomputable section
 
 open scoped nonZeroDivisors

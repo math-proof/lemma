@@ -1,5 +1,9 @@
-import Lemma.Matrix.CubicInduction_Structure
-import Def.UnramifiedWhittaker_HeckeRecursion
+module
+
+public import Theorem.Matrix.CubicInduction_Structure
+public import Def.UnramifiedWhittaker_HeckeRecursion
+
+@[expose] public section
 
 set_option autoImplicit false
 

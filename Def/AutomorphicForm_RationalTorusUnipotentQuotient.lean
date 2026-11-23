@@ -1,6 +1,10 @@
-import Abbrev.AutomorphicForm_RationalCentreUnipotentQuotient
-import Lemma.Matrix.AdelicLevel
-import Abbrev.AutomorphicForm_RationalTorusUnipotentQuotient
+module
+
+public import Abbrev.AutomorphicForm_RationalCentreUnipotentQuotient
+public import Theorem.Matrix.AdelicLevel
+public import Abbrev.AutomorphicForm_RationalTorusUnipotentQuotient
+
+@[expose] public section
 
 set_option autoImplicit false
 

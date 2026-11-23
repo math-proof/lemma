@@ -1,5 +1,9 @@
-import Mathlib
-import Def.AutomorphicForm_ViaCompactCuspNotion
+module
+
+public import Mathlib
+public import Def.AutomorphicForm_ViaCompactCuspNotion
+
+@[expose] public section
 
 set_option autoImplicit false
 

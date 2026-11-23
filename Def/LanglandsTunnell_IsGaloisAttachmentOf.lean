@@ -1,8 +1,12 @@
-import Mathlib
-import Def.LanglandsTunnell_OctahedralDatum
-import Def.LanglandsTunnell_ExplicitLift
-import Def.LanglandsTunnell_RealizationDictionary
-import Instance.EllipticCurve_FrobeniusTrace
+module
+
+public import Mathlib
+public import Def.LanglandsTunnell_OctahedralDatum
+public import Def.LanglandsTunnell_ExplicitLift
+public import Def.LanglandsTunnell_RealizationDictionary
+public import Instance.EllipticCurve_FrobeniusTrace
+
+@[expose] public section
 
 set_option autoImplicit false
 

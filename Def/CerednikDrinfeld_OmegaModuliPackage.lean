@@ -1,8 +1,12 @@
-import Mathlib
-import Instance.MvFormalGroup_NegV2
-import Lemma.MvPowerSeries.SpecialFormalModule
-import Def.CerednikDrinfeld_FormalUpperHalfPlaneDatum
-import Theorem.Submodule.FormalUpperHalfPlaneFunctor
+module
+
+public import Mathlib
+public import Instance.MvFormalGroup_NegV2
+public import Theorem.MvPowerSeries.SpecialFormalModule
+public import Def.CerednikDrinfeld_FormalUpperHalfPlaneDatum
+public import Theorem.Submodule.FormalUpperHalfPlaneFunctor
+
+@[expose] public section
 
 set_option autoImplicit false
 

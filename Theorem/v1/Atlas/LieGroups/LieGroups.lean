@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.LieGroups.code.Admissible.Part3
-import Lemma.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
+import Theorem.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
 import Lemma.Submodule.Any_And_All_Eq_GetToMonoidHomAndAll_In_Span.of.IsMaximalCompactSubgroup.IsSemisimpleLieGroupG
 import Theorem.Int.All_Eq_0.of.EqCompositionLengthO_0.IsCategoryO
 import Lemma.Int.ExtVanishesCategoryO1.of.IsCategoryO.IsProjectiveInO.IsCategoryO
@@ -31,15 +31,15 @@ import Theorem.Int.FGUeaIotaRange
 import Lemma.Int.IsFreeOverNMinus.of.IsProjectiveInO.IsCategoryO
 import Lemma.Matrix.All_Eq_0AndNonempty_R.of.All_Any_All_EqQ_S.EqWeightSpace_Bot.All_IffEqP_0_Any_EqI.SurjectiveP.InjectiveI.IsCategoryO.IsCategoryO.IsVermaModule.IsCategoryO
 import Lemma.Int.GetVermaHomBackwardHighestWeightVec.eq.Val.of.IsVermaModule
-import Lemma.Submodule.Any_And_Le_Aleph0.of.IsIrreducibleGKModule
+import Theorem.Submodule.Any_And_Le_Aleph0.of.IsIrreducibleGKModule
 import Lemma.Nat.CoeffKazhdanLusztigPoly.ge.Zero
 import Lemma.Finset.Zero.le.Form.of.In_PosRoots
-import Lemma.Fin.All_Eq.of.All_Eq.All_Eq_RightAction.All_Eq_RightAction.All_Any_Eq_Sum_RightAction
+import Theorem.Fin.All_Eq.of.All_Eq.All_Eq_RightAction.All_Eq_RightAction.All_Any_Eq_Sum_RightAction
 import Theorem.Complex.Any_Any_And_All_Eq_AdjointAction.All_Finite.of.IsHarishChandraBimodule.IsIrreducible
 import Theorem.Set.Dense_KFiniteSubspace.of.IsAdmissible
 import Lemma.Int.Any_All_Eq.of.LeKer_Ker.Surjective
 import Theorem.Finset.EqMul_Mul.of.In_SimpleReflections
-import Lemma.Fin.Any_Eq.of.Ne_0
+import Theorem.Fin.Any_Eq.of.Ne_0
 import Theorem.Int.IsIntegral
 import Lemma.Complex.DenseRange_ι
 import Theorem.Submodule.All_NormSubtype.of.All_EqinnerS
@@ -95,7 +95,7 @@ import Def.v1.Atlas.LieGroups.code.CompositionSeries
 import Def.v1.Atlas.LieGroups.code.ContinuousRep.Part3
 import Theorem.Fin.All_AreNatIsoOnGenInfCharAndAll_Any_And_All_EqObjAndIsDirectSumDecompAndAll_Any_And_AreNatIsoTheta
 import Theorem.RingHom.Any_EqLengthAndAsIdealLast.of.EqLength.Ker.eq.Bot
-import Lemma.Fin.UFnSub.of.IsSemisimpleEnd
+import Theorem.Fin.UFnSub.of.IsSemisimpleEnd
 import Structure.v1.Atlas.LieGroups.code.Corollary30_20
 import Structure.v1.Atlas.LieGroups.code.CoxeterTheory.Part2
 import Structure.v1.Atlas.LieGroups.code.DModuleApplications.Part5

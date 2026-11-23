@@ -1,5 +1,9 @@
-import Mathlib
-import Lemma.Scheme.CurveModel
+module
+
+public import Mathlib
+public import Theorem.Scheme.CurveModel
+
+@[expose] public section
 
 set_option autoImplicit false
 

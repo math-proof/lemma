@@ -1,16 +1,18 @@
-import Mathlib
-import Instance.MvFormalGroup_NegV2
-import Instance.MvFormalGroup_CartierModule
-import Theorem.PowerSeries.CartierModuleHomothety
-import Instance.MvFormalGroup_CartierModuleWittAction
-import Instance.MvFormalGroup_CartierModuleBaseChange
-import Structure.CerednikDrinfeld_SpecialFormalModule
-import Def.CerednikDrinfeld_CartierGradedPiece
-import Theorem.MvPolynomial.CartierStructureConstants
+module
+
+public import Mathlib
+public import Instance.MvFormalGroup_NegV2
+public import Instance.MvFormalGroup_CartierModule
+public import Theorem.PowerSeries.CartierModuleHomothety
+public import Instance.MvFormalGroup_CartierModuleWittAction
+public import Instance.MvFormalGroup_CartierModuleBaseChange
+public import Structure.CerednikDrinfeld_SpecialFormalModule
+public import Def.CerednikDrinfeld_CartierGradedPiece
+public import Theorem.MvPolynomial.CartierStructureConstants
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 universe u v w
 

@@ -1,4 +1,8 @@
-import Def.AutomorphicForm_WindowedSiegelSet
+module
+
+public import Def.AutomorphicForm_WindowedSiegelSet
+
+@[expose] public section
 
 open NumberField Matrix
 

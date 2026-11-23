@@ -1,9 +1,13 @@
-import Theorem.HahnSeries.QAdicPlace
-import Instance.ModularCurve_ArithmeticGalois
-import Def.ModularCurve_QExpansionDiff
-import Theorem.NumberTheory.ModularCurve.ThetaCoeff
-import Theorem.NumberTheory.ModularCurve.CoeffMap
-import Mathlib.NumberTheory.ModularForms.QExpansion
+module
+
+public import Theorem.HahnSeries.QAdicPlace
+public import Instance.ModularCurve_ArithmeticGalois
+public import Def.ModularCurve_QExpansionDiff
+public import Theorem.NumberTheory.ModularCurve.ThetaCoeff
+public import Theorem.NumberTheory.ModularCurve.CoeffMap
+public import Mathlib.NumberTheory.ModularForms.QExpansion
+
+@[expose] public section
 
 set_option autoImplicit false
 

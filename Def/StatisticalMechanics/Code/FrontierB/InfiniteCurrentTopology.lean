@@ -8,11 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
+module
 
-import Theorem.StatisticalMechanics.Code.Foundations.Ergodicity.Part2
-import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
-import Mathlib.MeasureTheory.Measure.FiniteMeasureProd
-import Abbrev.StatisticalMechanics.Code.FrontierB.InfiniteCurrentTopology
+public import Theorem.StatisticalMechanics.Code.Foundations.Ergodicity.Part2
+public import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
+public import Mathlib.MeasureTheory.Measure.FiniteMeasureProd
+public import Abbrev.StatisticalMechanics.Code.FrontierB.InfiniteCurrentTopology
+
+@[expose] public section
+
 open Filter MeasureTheory Topology
 
 

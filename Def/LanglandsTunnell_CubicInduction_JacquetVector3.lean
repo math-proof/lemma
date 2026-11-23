@@ -1,5 +1,9 @@
-import Def.LanglandsTunnell_JLConverse
-import Theorem.Matrix.SmoothingKernel
+module
+
+public import Def.LanglandsTunnell_JLConverse
+public import Theorem.Matrix.SmoothingKernel
+
+@[expose] public section
 
 set_option autoImplicit false
 

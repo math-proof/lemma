@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/ClassSum.lean -/
+module
 
-import Mathlib.Algebra.Group.ConjFinite
-import Mathlib.Algebra.MonoidAlgebra.Basic
-import Mathlib.Data.Complex.Basic
-import Theorem.GroupTheory.BurnsidePaqbReduction.Part2
-import Def.GroupTheory.BurnsidePaqb.ClassSum.Part2
+public import Mathlib.Algebra.Group.ConjFinite
+public import Mathlib.Algebra.MonoidAlgebra.Basic
+public import Mathlib.Basic.Complex.Basic
+public import Theorem.GroupTheory.BurnsidePaqbReduction.Part2
+public import Def.GroupTheory.BurnsidePaqb.ClassSum.Part2
 /-!
 Conjugacy-class-algebra stage of the complete Burnside proof.
 
@@ -22,13 +23,13 @@ namespace BurnsidePaqb
 variable {G : Type*} [Group G] [Fintype G]
 
 omit [Fintype G] in
-theorem classRep_spec (l : ConjClasses G) : ConjClasses.mk (classRep l) = l :=
-  Classical.choose_spec (ConjClasses.mk_surjective l)
+public theorem classRep_spec (l : ConjClasses G) : ConjClasses.mk (classRep l) = l :=
+  Classical.choose_spec l.mk_surjective
 
 open Classical in
 /-- The carrier finset of a class is the conjugacy class of its representative. -/
-theorem carrier_toFinset (l : ConjClasses G) :
-    (ConjClasses.carrier l).toFinset = conjClass (classRep l) := by
+public theorem carrier_toFinset (l : ConjClasses G) :
+  l.carrier.toFinset = conjClass (classRep l) := by
   rw [conjClass, Set.toFinset_inj, ConjAct.orbit_eq_carrier_conjClasses,
     classRep_spec l]
 

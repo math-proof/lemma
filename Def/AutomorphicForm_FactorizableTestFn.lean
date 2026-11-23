@@ -1,6 +1,10 @@
-import Lemma.Matrix.AdelicLevel
-import Mathlib.Analysis.Calculus.ContDiff.Defs
-import Mathlib.Topology.LocallyConstant.Basic
+module
+
+public import Theorem.Matrix.AdelicLevel
+public import Mathlib.Analysis.Calculus.ContDiff.Defs
+public import Mathlib.Topology.LocallyConstant.Basic
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 

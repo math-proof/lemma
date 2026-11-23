@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
+module
 
-import Theorem.StatisticalMechanics.Code.Sharpness.Switching.Part3
-import Structure.StatisticalMechanics.Code.FrontierA.GrahamLemmaOneFourColor
+public import Theorem.StatisticalMechanics.Code.Sharpness.Switching.Part3
+public import Structure.StatisticalMechanics.Code.FrontierA.GrahamLemmaOneFourColor
+
+@[expose] public section
+
 open Finset SimpleGraph
 open scoped symmDiff
 open Classical

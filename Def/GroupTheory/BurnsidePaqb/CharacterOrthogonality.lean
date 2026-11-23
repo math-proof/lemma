@@ -1,19 +1,24 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/CharacterOrthogonality.lean -/
 
-import Theorem.GroupTheory.BurnsidePaqbReduction.Part2
-import Mathlib.RepresentationTheory.FDRep
-import Mathlib.RepresentationTheory.Character
-import Mathlib.Algebra.MonoidAlgebra.Basic
-import Mathlib.Algebra.MonoidAlgebra.Support
-import Mathlib.LinearAlgebra.Trace
-import Mathlib.LinearAlgebra.Matrix.Trace
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Mathlib.GroupTheory.SpecificGroups.Cyclic
-import Mathlib.Data.Complex.Basic
-import Mathlib.RepresentationTheory.FinGroupCharZero
-import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
-import Theorem.GroupTheory.BurnsidePaqb.CharacterOrthogonality
+module
+
+public import Theorem.GroupTheory.BurnsidePaqbReduction.Part2
+public import Mathlib.RepresentationTheory.FDRep
+public import Mathlib.RepresentationTheory.Character
+public import Mathlib.Algebra.MonoidAlgebra.Basic
+public import Mathlib.Algebra.MonoidAlgebra.Support
+public import Mathlib.LinearAlgebra.Trace
+public import Mathlib.LinearAlgebra.Matrix.Trace
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.RepresentationTheory.FinGroupCharZero
+public import Mathlib.Analysis.Complex.Polynomial.Basic
+public import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
+public import Theorem.GroupTheory.BurnsidePaqb.CharacterOrthogonality
+
+@[expose] public section
+
 open CategoryTheory
 
 /-!

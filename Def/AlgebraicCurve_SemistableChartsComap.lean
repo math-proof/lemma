@@ -1,4 +1,8 @@
-import Lemma.ValuationSubring.SemistableCharts
+module
+
+public import Theorem.ValuationSubring.SemistableCharts
+
+@[expose] public section
 
 set_option maxHeartbeats 200000
 set_option synthInstance.maxHeartbeats 20000

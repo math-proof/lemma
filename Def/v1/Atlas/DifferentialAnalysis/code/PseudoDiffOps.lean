@@ -8,14 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ConvolutionTheorem
-import Def.v1.Atlas.DifferentialAnalysis.code.ConvolutionTheorem
-import Mathlib.Topology.Algebra.Monoid
-import Mathlib.Geometry.Manifold.PartitionOfUnity
-import Mathlib.Topology.Compactness.LocallyCompact
+module
 
+public import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ConvolutionTheorem
+public import Def.v1.Atlas.DifferentialAnalysis.code.ConvolutionTheorem
+public import Mathlib.Topology.Algebra.Monoid
+public import Mathlib.Geometry.Manifold.PartitionOfUnity
+public import Mathlib.Topology.Compactness.LocallyCompact
+
+@[expose] public section
 
 noncomputable section
 

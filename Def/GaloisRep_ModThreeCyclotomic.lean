@@ -1,5 +1,9 @@
-import Mathlib
-import Instance.FreyPackage_DetCyclotomic
+module
+
+public import Mathlib
+public import Instance.FreyPackage_DetCyclotomic
+
+@[expose] public section
 
 set_option autoImplicit false
 

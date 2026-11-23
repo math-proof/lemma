@@ -1,6 +1,10 @@
-import Mathlib
-import Instance.Analysis.Section_2_2_api
-import Instance.Analysis.Section_2_3
+module
+
+public import Mathlib
+public import Instance.Analysis.Section_2_2_api
+public import Instance.Analysis.Section_2_3
+@[expose] public section
+
 /-!
 # Analysis I, Section 2.3: Multiplication
 

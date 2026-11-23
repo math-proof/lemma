@@ -1,6 +1,10 @@
-import Lemma.Matrix.SylowH
-import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.NumberTheory.NumberField.Basic
+module
+
+public import Theorem.Matrix.SylowH
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.NumberTheory.NumberField.Basic
+
+@[expose] public section
 
 set_option autoImplicit false
 

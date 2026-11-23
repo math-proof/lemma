@@ -1,5 +1,9 @@
-import Lemma.QuaternionAlgebra.ClassSetHecke
-import Def.CerednikDrinfeld_Ribbon
+module
+
+public import Theorem.QuaternionAlgebra.ClassSetHecke
+public import Def.CerednikDrinfeld_Ribbon
+
+@[expose] public section
 
 set_option autoImplicit false
 

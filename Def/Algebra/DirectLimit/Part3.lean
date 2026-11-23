@@ -1,6 +1,9 @@
-import Mathlib
-import Theorem.Algebra.DirectLimit.Part3
+module
 
+public import Mathlib
+public import Theorem.Algebra.DirectLimit.Part3
+
+@[expose] public section
 
 namespace IsDirectLimit
 

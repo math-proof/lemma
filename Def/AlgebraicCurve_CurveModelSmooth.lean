@@ -1,22 +1,26 @@
-import Lemma.Scheme.CurveModel
-import Instance.JacJ1_ChartAlgebra
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Etale
-import Mathlib.RingTheory.Extension.Presentation.Submersive
-import Mathlib.RingTheory.Smooth.StandardSmoothOfFree
-import Mathlib.RingTheory.Smooth.StandardSmoothCotangent
-import Mathlib.RingTheory.Smooth.Field
-import Mathlib.RingTheory.Smooth.Locus
-import Mathlib.RingTheory.RingHom.LocallyStandardSmooth
-import Mathlib.RingTheory.Etale.Kaehler
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
-import Mathlib.RingTheory.AlgebraicIndependent.Transcendental
-import Mathlib.RingTheory.Smooth.Fiber
-import Mathlib.RingTheory.Unramified.LocalRing
-import Mathlib.RingTheory.LocalRing.ResidueField.Instances
-import Mathlib.RingTheory.DedekindDomain.Dvr
-import Mathlib.RingTheory.Flat.TorsionFree
-import Instance.AlgebraicCurve_CurveModelSmooth
+module
+
+public import Theorem.Scheme.CurveModel
+public import Instance.JacJ1_ChartAlgebra
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Etale
+public import Mathlib.RingTheory.Extension.Presentation.Submersive
+public import Mathlib.RingTheory.Smooth.StandardSmoothOfFree
+public import Mathlib.RingTheory.Smooth.StandardSmoothCotangent
+public import Mathlib.RingTheory.Smooth.Field
+public import Mathlib.RingTheory.Smooth.Locus
+public import Mathlib.RingTheory.RingHom.LocallyStandardSmooth
+public import Mathlib.RingTheory.Etale.Kaehler
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
+public import Mathlib.RingTheory.AlgebraicIndependent.Transcendental
+public import Mathlib.RingTheory.Smooth.Fiber
+public import Mathlib.RingTheory.Unramified.LocalRing
+public import Mathlib.RingTheory.LocalRing.ResidueField.Instances
+public import Mathlib.RingTheory.DedekindDomain.Dvr
+public import Mathlib.RingTheory.Flat.TorsionFree
+public import Instance.AlgebraicCurve_CurveModelSmooth
+
+@[expose] public section
 
 set_option autoImplicit false
 

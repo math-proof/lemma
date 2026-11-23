@@ -1,3 +1,5 @@
+import Instance.Data.Fin.Fun
+import Instance.Data.Nat.Fun
 import Lemma.Finset.AddSumIio.eq.SumIic
 import Lemma.Finset.Any_In_IcoSumIio_SumIic.of.Eq_Sum
 import Lemma.Finset.Eq.of.In_IcoSumIio_SumIic.In_IcoSumIio_SumIic
@@ -34,12 +36,12 @@ frees the initial values.
 @[path]
 private lemma main
   {n : ℕ}
-  {h : ℕ ⇀ ℂ}
-  {c : Fin n ⇀ ℂ}
+  {h : ℕ → ℂ}
+  {c : Fin n → ℂ}
 -- given
   (hrec : ∀ k : ℕ, h[k + n] = c ⬝ᵥ h[k: k + n]) :
 -- imply
-  ∃ (e : Fin n ⇀ ℕ) (r : Fin n ⇀ ℂ) (A : Fin n ⇀ ℂ), ∀ t : ℕ,
+  ∃ (e : Fin n → ℕ) (r : Fin n → ℂ) (A : Fin n → ℂ), ∀ t : ℕ,
     h[t] = A ⬝ᵥ fun i => t.descFactorial e[i] * r[i] ^ (t - e[i]) := by
 -- proof
   classical

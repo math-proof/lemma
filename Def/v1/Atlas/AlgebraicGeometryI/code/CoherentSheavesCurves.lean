@@ -8,19 +8,24 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.AlgebraicGeometryI.code.DegreeAdditivity
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DegreeAdditivity
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckGroup
-import Def.v1.Atlas.AlgebraicGeometryI.code.GrothendieckGroup.Part3
-import Mathlib.RingTheory.DedekindDomain.Basic
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.Algebra.Module.Torsion.Free
-import Mathlib.LinearAlgebra.FreeModule.PID
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.LinearAlgebra.TensorProduct.RightExactness
-import Mathlib.RingTheory.Length
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.RingTheory.Flat.Localization
+module
+
+public import Structure.v1.Atlas.AlgebraicGeometryI.code.DegreeAdditivity
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DegreeAdditivity
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckGroup
+public import Def.v1.Atlas.AlgebraicGeometryI.code.GrothendieckGroup.Part3
+public import Mathlib.RingTheory.DedekindDomain.Basic
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.Algebra.Module.Torsion.Free
+public import Mathlib.LinearAlgebra.FreeModule.PID
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.LinearAlgebra.TensorProduct.RightExactness
+public import Mathlib.RingTheory.Length
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.RingTheory.Flat.Localization
+
+@[expose] public section
+
 open scoped TensorProduct
 
 

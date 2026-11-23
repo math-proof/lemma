@@ -1,16 +1,21 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/DickmanDeBruijnExistsUnique.lean -/
 
-import Def.Analysis.SpecialFunctions.DickmanDeBruijn
-import Theorem.Real.DickmanDeBruijn
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.Calculus.Deriv.MeanValue
-import Mathlib.Analysis.Calculus.MeanValue
-import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Theorem.Analysis.SpecialFunctions.DickmanDeBruijnExistsUnique
+module
+
+public import Def.Analysis.SpecialFunctions.DickmanDeBruijn
+public import Theorem.Real.DickmanDeBruijn
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Analysis.Calculus.Deriv.MeanValue
+public import Mathlib.Analysis.Calculus.MeanValue
+public import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+public import Theorem.Analysis.SpecialFunctions.DickmanDeBruijnExistsUnique
+
+@[expose] public section
+
 /-!
 # Existence and uniqueness of the Dickman–de Bruijn function
 -/

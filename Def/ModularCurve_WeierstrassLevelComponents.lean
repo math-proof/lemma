@@ -1,7 +1,11 @@
-import Mathlib
-import Def.ModularCurve_WeierstrassLevelModuliDatum
-import Lemma.WeierstrassCurve.KatzLevelP
-import Structure.ModularCurve_WeierstrassLevelComponents
+module
+
+public import Mathlib
+public import Def.ModularCurve_WeierstrassLevelModuliDatum
+public import Theorem.WeierstrassCurve.KatzLevelP
+public import Structure.ModularCurve_WeierstrassLevelComponents
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,8 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/IntegerComplexity.lean -/
 
+module
 
-import Def.NumberTheory.IntegerComplexity.Part3
-import Lemma.Nat.IntegerComplexity
+public import Def.NumberTheory.IntegerComplexity.Part3
+public import Theorem.Nat.IntegerComplexity
+
+@[expose] public section
+
 open IntegerComplexity
 open IntegerComplexity.Expr
 

@@ -4,9 +4,14 @@
 Author: @toskua, Avocado
 -/
 
-import Mathlib.NumberTheory.NumberField.AdeleRing
-import Mathlib.Topology.Algebra.Group.Units
-import Instance.NumberTheory.NumberField.Idele.Part2
+module
+
+public import Mathlib.NumberTheory.NumberField.AdeleRing
+public import Mathlib.Topology.Algebra.Group.Units
+public import Instance.NumberTheory.NumberField.Idele.Part2
+
+@[expose] public section
+
 /-!
 # Ideles of a number field
 

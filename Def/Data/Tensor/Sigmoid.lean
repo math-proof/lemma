@@ -1,5 +1,10 @@
-import Instance.Data.Tensor.Tensor.Part2
-import Instance.Data.Vector.Functions
+module
+
+public import Instance.Data.Tensor.Tensor.Part2
+public import Instance.Data.Vector.Functions
+
+@[expose] public section
+
 open Tensor
 
 

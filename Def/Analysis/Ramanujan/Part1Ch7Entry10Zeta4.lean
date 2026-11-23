@@ -4,13 +4,18 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.Meromorphic.Basic
-import Mathlib.NumberTheory.LSeries.RiemannZeta
-import Def.Analysis.Ramanujan.Part1Ch7Entry10ZetaSide
-import Lemma.Real.Ramanujan.Part1Ch7Entry10ZetaSide
-import Mathlib.Analysis.Meromorphic.Complex
-import Theorem.Nat.LSeries.RiemannZeta
+module
+
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Meromorphic.Basic
+public import Mathlib.NumberTheory.LSeries.RiemannZeta
+public import Def.Analysis.Ramanujan.Part1Ch7Entry10ZetaSide
+public import Theorem.Real.Ramanujan.Part1Ch7Entry10ZetaSide
+public import Mathlib.Analysis.Meromorphic.Complex
+public import Theorem.Nat.LSeries.RiemannZeta
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 7, Entry 10
 

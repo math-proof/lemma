@@ -9,7 +9,6 @@ namespace BurnsidePaqb
 /--
 [character_eq_sum_roots](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/KillingLemma.lean)
 -/
-@[path]
 lemma character_eq_sum_roots
   [Group G] [Fintype G] [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V]
   {ρ : Representation ℂ G V}
@@ -27,7 +26,6 @@ namespace BurnsidePaqb
 /--
 [charpoly_root_pow_orderOf](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/KillingLemma.lean)
 -/
-@[path]
 lemma charpoly_root_pow_orderOf
   [Group G] [Fintype G] [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V]
   {ρ : Representation ℂ G V}
@@ -64,7 +62,6 @@ namespace BurnsidePaqb
 /--
 [charpoly_root_norm_eq_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/KillingLemma.lean)
 -/
-@[path]
 lemma charpoly_root_norm_eq_one
   [Group G] [Fintype G] [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V] [Finite G]
   {ρ : Representation ℂ G V}
@@ -75,7 +72,7 @@ lemma charpoly_root_norm_eq_one
 -- imply
   ‖μ‖ = 1 := by
 -- proof
-  have hpow := charpoly_root_pow_orderOf ρ g μ hμ
+  have hpow := charpoly_root_pow_orderOf (ρ := ρ) (g := g) (μ := μ) hμ
   have hm : orderOf g ≠ 0 := ne_of_gt (orderOf_pos g)
   have hnorm : ‖μ‖ ^ orderOf g = 1 := by
     rw [← norm_pow, hpow, norm_one]
@@ -86,9 +83,8 @@ end BurnsidePaqb
 namespace BurnsidePaqb
 
 /--
-[re_mul_conj](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/KillingLemma.lean)
+[re_mul_conj (G := G)](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/KillingLemma.lean)
 -/
-@[path]
 lemma re_mul_conj
   [Group G] [Fintype G]
   {a b : ℂ} :
@@ -105,7 +101,6 @@ namespace BurnsidePaqb
 /--
 [norm_mul_conj_eq_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/KillingLemma.lean)
 -/
-@[path]
 lemma norm_mul_conj_eq_one
   [Group G] [Fintype G]
   {a b : ℂ}
@@ -124,7 +119,6 @@ namespace BurnsidePaqb
 /--
 [eq_of_mul_conj_eq_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/KillingLemma.lean)
 -/
-@[path]
 lemma eq_of_mul_conj_eq_one
   [Group G] [Fintype G]
   {a b : ℂ}
@@ -147,7 +141,6 @@ namespace BurnsidePaqb
 /--
 [re_lt_one_of_ne_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/KillingLemma.lean)
 -/
-@[path]
 lemma re_lt_one_of_ne_one
   [Group G] [Fintype G]
   {w : ℂ}
@@ -180,7 +173,6 @@ namespace BurnsidePaqb
 /--
 [abs_sum_roots_of_unity_lt](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/KillingLemma.lean)
 -/
-@[path]
 lemma abs_sum_roots_of_unity_lt
   [Group G] [Fintype G]
   {n : ℕ}
@@ -213,18 +205,18 @@ lemma abs_sum_roots_of_unity_lt
     refine Finset.sum_lt_sum ?_ ?_
     · intro p _
       change (μ p.1).re * (μ p.2).re + (μ p.1).im * (μ p.2).im ≤ 1
-      rw [re_mul_conj]
+      rw [re_mul_conj (G := G)]
       calc (μ p.1 * starRingEnd ℂ (μ p.2)).re
         ≤ ‖μ p.1 * starRingEnd ℂ (μ p.2)‖ := Complex.re_le_norm _
-        _ = 1 := norm_mul_conj_eq_one _ _ (hmod _) (hmod _)
+        _ = 1 := norm_mul_conj_eq_one (G := G) (hmod _) (hmod _)
     · obtain ⟨i, j, hij⟩ := hne
       refine ⟨(i, j), Finset.mem_product.mpr ⟨Finset.mem_univ i, Finset.mem_univ j⟩, ?_⟩
       change (μ i).re * (μ j).re + (μ i).im * (μ j).im < 1
-      rw [re_mul_conj]
-      apply re_lt_one_of_ne_one
-      · exact norm_mul_conj_eq_one _ _ (hmod _) (hmod _)
+      rw [re_mul_conj (G := G)]
+      apply re_lt_one_of_ne_one (G := G)
+      · exact norm_mul_conj_eq_one (G := G) (hmod _) (hmod _)
       · intro hw
-        exact hij (eq_of_mul_conj_eq_one _ _ (hmod _) hw)
+        exact hij (eq_of_mul_conj_eq_one (G := G) (hmod _) hw)
   have hnn : (0 : ℝ) ≤ ‖∑ i, μ i‖ := norm_nonneg _
   have hlt := abs_lt_of_sq_lt_sq hsq (Nat.cast_nonneg n)
   rwa [abs_of_nonneg hnn] at hlt
@@ -236,7 +228,6 @@ namespace BurnsidePaqb
 /--
 [character_isIntegral](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/KillingLemma.lean)
 -/
-@[path]
 lemma character_isIntegral
   [Group G] [Fintype G] [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V] [Finite G]
   {ρ : Representation ℂ G V}
@@ -244,10 +235,11 @@ lemma character_isIntegral
 -- imply
   IsIntegral ℤ (ρ.character g) := by
 -- proof
-  rw [character_eq_sum_roots ρ g]
+  rw [character_eq_sum_roots (ρ := ρ) (g := g)]
   refine IsIntegral.multiset_sum (fun μ hμ => ?_)
   apply IsIntegral.of_pow (orderOf_pos g)
-  rwa [charpoly_root_pow_orderOf ρ g μ hμ]
+  rw [charpoly_root_pow_orderOf (ρ := ρ) (g := g) (μ := μ) hμ]
+  apply isIntegral_one
 
 end BurnsidePaqb
 
@@ -256,7 +248,6 @@ namespace BurnsidePaqb
 /--
 [charDivDeg_isIntegral_of_coprime](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/KillingLemma.lean)
 -/
-@[path]
 lemma charDivDeg_isIntegral_of_coprime
   [Group G] [Fintype G] [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V] [Nontrivial V]
   {ρ : Representation ℂ G V} [Representation.IsIrreducible ρ]
@@ -271,8 +262,8 @@ lemma charDivDeg_isIntegral_of_coprime
   have hχ1ne : ρ.character 1 ≠ 0 := by
     rw [hχ1]
     exact_mod_cast ne_of_gt hpos
-  have hω := classSum_centralScalar_isIntegral ρ g
-  have hχ := character_isIntegral ρ g
+  have hω := classSum_centralScalar_isIntegral (ρ := ρ) (g := g)
+  have hχ := character_isIntegral (ρ := ρ) (g := g)
   obtain ⟨a, b, hab⟩ := hcop.symm.isCoprime
   have habC : (a : ℂ) * Module.finrank ℂ V + (b : ℂ) * (conjClass g).card = 1 := by
     exact_mod_cast hab
@@ -298,7 +289,6 @@ namespace BurnsidePaqb
 /--
 [abs_add_two_ne_unit_lt_two](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/KillingLemma.lean)
 -/
-@[path]
 lemma abs_add_two_ne_unit_lt_two
   [Group G] [Fintype G]
   {a b : ℂ}
@@ -319,12 +309,12 @@ lemma abs_add_two_ne_unit_lt_two
       rw [Complex.sq_norm, Complex.normSq_apply, one_pow] at h
       simpa [pow_two] using h
     rw [Complex.sq_norm, Complex.normSq_apply, Complex.add_re, Complex.add_im,
-      ← re_mul_conj]
+      ← re_mul_conj (G := G)]
     linear_combination na + nb
   have hre : (a * starRingEnd ℂ b).re < 1 := by
-    apply re_lt_one_of_ne_one _ (norm_mul_conj_eq_one _ _ ha hb)
+    apply re_lt_one_of_ne_one (G := G) (norm_mul_conj_eq_one (G := G) ha hb)
     intro hw
-    exact hne (eq_of_mul_conj_eq_one _ _ hb hw)
+    exact hne (eq_of_mul_conj_eq_one (G := G) hb hw)
   have hsq : ‖a + b‖ ^ 2 < (2 : ℝ) ^ 2 := by
     rw [e]
     nlinarith [hre]
@@ -339,7 +329,6 @@ namespace BurnsidePaqb
 /--
 [abs_multiset_sum_lt](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/KillingLemma.lean)
 -/
-@[path]
 lemma abs_multiset_sum_lt
   [Group G] [Fintype G]
   {s : Multiset ℂ}
@@ -364,7 +353,7 @@ lemma abs_multiset_sum_lt
     hunit' μ (Multiset.mem_cons_of_mem (Multiset.mem_cons_of_mem hm))
   rw [Multiset.sum_cons, Multiset.sum_cons, Multiset.card_cons,
     Multiset.card_cons]
-  have h1 : ‖a + b‖ < 2 := abs_add_two_ne_unit_lt_two ha1 hb1' hab
+  have h1 : ‖a + b‖ < 2 := abs_add_two_ne_unit_lt_two (G := G) ha1 hb1' hab
   have h2 : ‖t.sum‖ ≤ (t.card : ℝ) := by
     apply (norm_multiset_sum_le t).trans
     simpa using Multiset.sum_le_card_nsmul (t.map fun μ => ‖μ‖) 1 (fun r hr => by
@@ -385,7 +374,6 @@ namespace BurnsidePaqb
 /--
 [charpoly_roots_card](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/KillingLemma.lean)
 -/
-@[path]
 lemma charpoly_roots_card
   [Group G] [Fintype G] [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V]
   {ρ : Representation ℂ G V}
@@ -404,7 +392,6 @@ namespace BurnsidePaqb
 /--
 [char_roots_not_all_equal](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/KillingLemma.lean)
 -/
-@[path]
 lemma char_roots_not_all_equal
   [Group G] [Fintype G] [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V] [Nontrivial V] [Finite G]
   {ρ : Representation ℂ G V}
@@ -417,7 +404,7 @@ lemma char_roots_not_all_equal
   by_contra hcon
   push Not at hcon
   have hpos : 0 < Module.finrank ℂ V := Module.finrank_pos
-  have hcard := charpoly_roots_card ρ g
+  have hcard := charpoly_roots_card (ρ := ρ) (g := g)
   have hne0 : (ρ g).charpoly.roots ≠ 0 := by
     intro hz
     rw [hz] at hcard
@@ -430,7 +417,7 @@ lemma char_roots_not_all_equal
     rw [Multiset.eq_replicate_card.mpr hall, Multiset.sum_replicate, Multiset.card_replicate]
   have hχ : ρ.character g = (ρ g).charpoly.roots.card • μ₀ := by
     rw [character_eq_sum_roots, hsum]
-  have hμunit : ‖μ₀‖ = 1 := charpoly_root_norm_eq_one ρ g μ₀ hμ₀
+  have hμunit : ‖μ₀‖ = 1 := charpoly_root_norm_eq_one (ρ := ρ) (g := g) (μ := μ₀) hμ₀
   rw [hχ, hcard, nsmul_eq_mul, norm_mul, hμunit, Complex.norm_natCast,
     mul_one] at hlt
   exact lt_irrefl _ hlt
@@ -442,7 +429,6 @@ namespace BurnsidePaqb
 /--
 [char_mem_cycSubfield](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/KillingLemma.lean)
 -/
-@[path]
 lemma char_mem_cycSubfield
   [Group G] [Fintype G] [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V]
   {ρ : Representation ℂ G V}
@@ -452,10 +438,10 @@ lemma char_mem_cycSubfield
 -- imply
   ρ.character g ∈ cycSubfield (orderOf g) := by
 -- proof
-  rw [character_eq_sum_roots ρ g]
+  rw [character_eq_sum_roots (ρ := ρ) (g := g)]
   exact IntermediateField.multiset_sum_mem _ _ (fun μ hμ =>
     mem_cycSubfield_of_pow_eq_one _ hm μ
-      (charpoly_root_pow_orderOf ρ g μ hμ))
+      (charpoly_root_pow_orderOf (ρ := ρ) (g := g) (μ := μ) hμ))
 
 end BurnsidePaqb
 
@@ -464,7 +450,6 @@ namespace BurnsidePaqb
 /--
 [embedding_char_eq_conj_sum](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/KillingLemma.lean)
 -/
-@[path]
 lemma embedding_char_eq_conj_sum
   [Group G] [Fintype G] [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V]
   {m : ℕ}
@@ -494,7 +479,7 @@ lemma embedding_char_eq_conj_sum
         exact IntermediateField.val_mk _ _
       rw [hcomp]
     rw [hmap, Multiset.attach_map_val]
-    exact (character_eq_sum_roots ρ g).symm
+    exact (character_eq_sum_roots (ρ := ρ) (g := g)).symm
   have key : (⟨ρ.character g, hχ⟩ : cycSubfield m)
     = (((ρ g).charpoly.roots.attach.map
       (conjRootElem m hm ρ g hmg)).sum) := by
@@ -513,7 +498,6 @@ namespace BurnsidePaqb
 /--
 [char_eq_zero_of_coprime_of_norm_lt](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/KillingLemma.lean)
 -/
-@[path]
 lemma char_eq_zero_of_coprime_of_norm_lt
   [Group G] [Fintype G] [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V] [Nontrivial V]
   {ρ : Representation ℂ G V} [Representation.IsIrreducible ρ]
@@ -534,7 +518,7 @@ lemma char_eq_zero_of_coprime_of_norm_lt
   have : IsScalarTower ℤ ℚ K := IsScalarTower.of_algebraMap_eq fun x => by simp
   have : IsScalarTower ℤ K ℂ := IsScalarTower.of_algebraMap_eq fun x => by simp
   have : Algebra.IsSeparable ℚ K := (isGalois_iff.mp inferInstance).1
-  have hχmem : ρ.character g ∈ K := char_mem_cycSubfield ρ g hm
+  have hχmem : ρ.character g ∈ K := char_mem_cycSubfield (ρ := ρ) (g := g) hm
   have hdKne : ((Module.finrank ℂ V : ℕ) : K) ≠ 0 := by
     intro hz
     apply hdCne
@@ -548,7 +532,7 @@ lemma char_eq_zero_of_coprime_of_norm_lt
   have hαint : IsIntegral ℤ α := by
     have hαintC : IsIntegral ℤ (α : ℂ) := by
       rw [hαC]
-      exact charDivDeg_isIntegral_of_coprime ρ g hcop
+      exact charDivDeg_isIntegral_of_coprime (ρ := ρ) (g := g) hcop
     have hiff := isIntegral_algebraMap_iff (R := ℤ) (A := K) (B := ℂ) (x := α)
     rw [IntermediateField.algebraMap_apply] at hiff
     exact hiff.mp hαintC
@@ -557,7 +541,7 @@ lemma char_eq_zero_of_coprime_of_norm_lt
   have hNprod : algebraMap ℚ ℂ N = ∏ σ : K →ₐ[ℚ] ℂ, σ α :=
     Algebra.norm_eq_prod_embeddings ℚ ℂ α
   have hmg : ∀ μ ∈ (ρ g).charpoly.roots, μ ^ m = 1 :=
-    fun μ hμ => charpoly_root_pow_orderOf ρ g μ hμ
+    fun μ hμ => charpoly_root_pow_orderOf (ρ := ρ) (g := g) (μ := μ) hμ
   have hle : ∀ σ : K →ₐ[ℚ] ℂ, ‖σ α‖ ≤ 1 := by
     intro σ
     have hσd : σ (Module.finrank ℂ V : K) = (Module.finrank ℂ V : ℂ) :=
@@ -567,7 +551,7 @@ lemma char_eq_zero_of_coprime_of_norm_lt
       / (Module.finrank ℂ V : ℂ) := by
       rw [hαdef, map_div₀ _ _ _, hσd]
       congr 1
-      exact embedding_char_eq_conj_sum m hm ρ g hmg hχmem σ
+      exact embedding_char_eq_conj_sum (m := m) (ρ := ρ) (g := g) (σ := σ) hm hmg hχmem
     have hcard : (((ρ g).charpoly.roots.attach.map
       (fun x => σ (conjRootElem m hm ρ g hmg x))).card)
       = Module.finrank ℂ V := by
@@ -646,7 +630,6 @@ namespace BurnsidePaqb
 /--
 [burnside_coprime_vanish](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/KillingLemma.lean)
 -/
-@[path]
 lemma burnside_coprime_vanish
   [Group G] [Fintype G] [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V] [Nontrivial V]
   {ρ : Representation ℂ G V} [Representation.IsIrreducible ρ]
@@ -664,10 +647,10 @@ lemma burnside_coprime_vanish
         (fun r hr => by
           rw [Multiset.mem_map] at hr
           obtain ⟨μ, hμ, rfl⟩ := hr
-          exact (charpoly_root_norm_eq_one ρ g μ hμ).le)
+          exact (charpoly_root_norm_eq_one (ρ := ρ) (g := g) (μ := μ) hμ).le)
   by_cases h : ‖ρ.character g‖ = Module.finrank ℂ V
   · exact Or.inl h
-  · exact Or.inr (char_eq_zero_of_coprime_of_norm_lt ρ g hcop
+  · exact Or.inr (char_eq_zero_of_coprime_of_norm_lt (ρ := ρ) (g := g) hcop
     (lt_of_le_of_ne hle h))
 
 end BurnsidePaqb

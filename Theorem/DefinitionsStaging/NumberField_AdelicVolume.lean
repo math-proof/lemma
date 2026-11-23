@@ -1,5 +1,5 @@
 import Lemma.Definitions.Def_MeasureTheory_ScalingDichotomy
-import Lemma.Matrix.WindowedSiegelTopology
+import Theorem.Matrix.WindowedSiegelTopology
 import Instance.NumberField_AdelicCentre
 import Def.NumberField_AdelicVolume
 open MeasureTheory Set IsDedekindDomain NumberField MeasureTheory.ScalingDichotomy

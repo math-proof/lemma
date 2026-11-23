@@ -4,9 +4,14 @@
 Author: Muse Spark 1.3
 -/
 
-import Theorem.Matrix.HadamardDeterminant
-import Mathlib.Tactic.NormNum
-import Theorem.MathlibExtTest.LinearAlgebra.Matrix.HadamardDeterminant
+module
+
+public import Theorem.Matrix.HadamardDeterminant
+public import Mathlib.Tactic.NormNum
+public import Theorem.MathlibExtTest.LinearAlgebra.Matrix.HadamardDeterminant
+
+@[expose] public section
+
 open MathlibExt.LinearAlgebra.Matrix.HadamardDeterminant
 
 #check @hadamard_determinant_inequality

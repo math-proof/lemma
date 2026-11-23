@@ -29,6 +29,6 @@ def ons_blockCirculant (n d : ℕ) (v : ZMod n → Matrix (Fin d) (Fin d) ℂ) :
 noncomputable def ons_blockSymbol (n d : ℕ) [NeZero n] (ω : ℂ)
     (v : ZMod n → Matrix (Fin d) (Fin d) ℂ)
     (j : ZMod n) : Matrix (Fin d) (Fin d) ℂ :=
-  ∑ k : ZMod n, ω ^ ((k.val) * (j.val)) • v k
+  ∑ k : ZMod n, ω ^ (k.val * j.val) • v k
 
 end StatMech.Onsager

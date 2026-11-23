@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Class.v1.Atlas.NumberTheoryI.code.ProductFormula
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.ProductFormula
-import Instance.v1.Atlas.NumberTheoryI.code.DirichletSeries.Part2
+module
 
+public import Class.v1.Atlas.NumberTheoryI.code.ProductFormula
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.ProductFormula
+public import Instance.v1.Atlas.NumberTheoryI.code.DirichletSeries.Part2
+
+@[expose] public section
 
 noncomputable section
 

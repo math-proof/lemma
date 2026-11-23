@@ -1,7 +1,11 @@
-import Structure.JacJ1Iface
-import Lemma.Scheme.RelativeGroupLaw
-import Def.AlgebraicGeometry_FormalGroupAlongSection
-import Structure.GoodReductionJacobian_BareDeformation
+module
+
+public import Structure.JacJ1Iface
+public import Theorem.Scheme.RelativeGroupLaw
+public import Def.AlgebraicGeometry_FormalGroupAlongSection
+public import Structure.GoodReductionJacobian_BareDeformation
+
+@[expose] public section
 
 set_option autoImplicit false
 

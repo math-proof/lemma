@@ -60,7 +60,7 @@ theorem omb_halfCurve_maps_fwd (p : M) (ε : ℝ)
     Set.MapsTo (ombHalfCurve M p) (Set.Ioo 0 ε)
       ((chartAt (EuclideanHalfSpace 1) p).source ∩
         (chartAt (EuclideanHalfSpace 1) p) ⁻¹'
-          {y : EuclideanHalfSpace 1 | 0 < (y.val) 0 ∧ (y.val) 0 < ε}) := by
+          {y : EuclideanHalfSpace 1 | 0 < y.val 0 ∧ y.val 0 < ε}) := by
   intro t ht
   rw [Set.mem_Ioo] at ht
   have htabs : |t| < ε := by
@@ -106,7 +106,7 @@ omit [IsManifold (𝓡∂ 1) ∞ M] in
 theorem omb_halfCurve_right_inv (p : M) (ε : ℝ)
     (y : M) (hy : y ∈ (chartAt (EuclideanHalfSpace 1) p).source ∩
       (chartAt (EuclideanHalfSpace 1) p) ⁻¹'
-        {y : EuclideanHalfSpace 1 | 0 < (y.val) 0 ∧ (y.val) 0 < ε}) :
+        {y : EuclideanHalfSpace 1 | 0 < y.val 0 ∧ y.val 0 < ε}) :
     ombHalfCurve M p (ombHalfCurveInv M p y) = y := by
   obtain ⟨hxsrc, hxmem⟩ := hy
   simp only [Set.mem_preimage, Set.mem_ofPred_eq] at hxmem
@@ -138,7 +138,7 @@ theorem omb_halfCurveInv_maps (p : M) (ε : ℝ) :
     Set.MapsTo (ombHalfCurveInv M p)
       ((chartAt (EuclideanHalfSpace 1) p).source ∩
         (chartAt (EuclideanHalfSpace 1) p) ⁻¹'
-          {y : EuclideanHalfSpace 1 | 0 < (y.val) 0 ∧ (y.val) 0 < ε})
+          {y : EuclideanHalfSpace 1 | 0 < y.val 0 ∧ y.val 0 < ε})
       (Set.Ioo 0 ε) := by
   intro y hy
   obtain ⟨-, hxmem⟩ := hy
@@ -204,7 +204,7 @@ theorem omb_isLocalDiffeomorphAt_halfCurve (p : M) (ε t : ℝ)
       (Set.Ioo 0 ε)
       ((chartAt (EuclideanHalfSpace 1) p).source ∩
         (chartAt (EuclideanHalfSpace 1) p) ⁻¹'
-          {y : EuclideanHalfSpace 1 | 0 < (y.val) 0 ∧ (y.val) 0 < ε}) := by
+          {y : EuclideanHalfSpace 1 | 0 < y.val 0 ∧ y.val 0 < ε}) := by
     refine ⟨?_, ?_⟩
     · intro s hs
       exact omb_halfCurve_left_inv M p ε hε s hs

@@ -1,6 +1,10 @@
-import Mathlib
-import Instance.LocalLanglands_HeckePair
-import Def.LocalLanglands_CartanDecomposition
+module
+
+public import Mathlib
+public import Instance.LocalLanglands_HeckePair
+public import Def.LocalLanglands_CartanDecomposition
+
+@[expose] public section
 
 set_option autoImplicit false
 

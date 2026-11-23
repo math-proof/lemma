@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.DifferentialAnalysis.code.FourierInversion.Part7
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.FourierInversion
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TemperedDistributions
-import Def.v1.Atlas.DifferentialAnalysis.code.TemperedDistributions
+module
+
+public import Def.v1.Atlas.DifferentialAnalysis.code.FourierInversion.Part7
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.FourierInversion
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TemperedDistributions
+public import Def.v1.Atlas.DifferentialAnalysis.code.TemperedDistributions
+
+@[expose] public section
+
 open scoped SchwartzMap FourierTransform
 open SobolevSpace TemperedDistributions TestFunctions MeasureTheory
 

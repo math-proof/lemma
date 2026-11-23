@@ -1,6 +1,10 @@
-import Mathlib
-import Def.CerednikDrinfeld_DrinfeldQuadruple
-import Structure.CerednikDrinfeld_DrinfeldQuadrupleRelations
+module
+
+public import Mathlib
+public import Def.CerednikDrinfeld_DrinfeldQuadruple
+public import Structure.CerednikDrinfeld_DrinfeldQuadrupleRelations
+
+@[expose] public section
 
 set_option autoImplicit false
 

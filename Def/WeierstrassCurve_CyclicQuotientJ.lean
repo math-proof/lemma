@@ -1,9 +1,13 @@
-import Mathlib
-import Theorem.WeierstrassCurve.Velu
-import Theorem.WeierstrassCurve.VeluOrderTwo
-import Lemma.WeierstrassCurve.VeluPointMap2
-import Theorem.WeierstrassCurve.OddOrderSummingSet
-import Abbrev.WeierstrassCurve_CyclicQuotientJ
+module
+
+public import Mathlib
+public import Theorem.WeierstrassCurve.Velu
+public import Theorem.WeierstrassCurve.VeluOrderTwo
+public import Theorem.WeierstrassCurve.VeluPointMap2
+public import Theorem.WeierstrassCurve.OddOrderSummingSet
+public import Abbrev.WeierstrassCurve_CyclicQuotientJ
+
+@[expose] public section
 
 set_option autoImplicit false
 

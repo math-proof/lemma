@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/ConductorIdeal.lean -/
 
+module
 
-import Def.RingTheory.ConductorIdeal
-import Theorem.Int.ConductorIdeal
-import Theorem.MathlibExtTest.RingTheory.ConductorIdeal
+public import Def.RingTheory.ConductorIdeal
+public import Theorem.Int.ConductorIdeal
+public import Theorem.MathlibExtTest.RingTheory.ConductorIdeal
 
+@[expose] public section
 
 /-- The diagonal subalgebra of `ℤ × ℤ`. -/
 def diagSubalgebra : Subalgebra ℤ (ℤ × ℤ) where

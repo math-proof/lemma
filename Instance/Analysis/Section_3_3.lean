@@ -1,8 +1,9 @@
-import Mathlib
-import Abbrev.Analysis.Section_3_1_api
-import Theorem.Analysis.Tools.ExistsUnique.Part2
-import Def.Analysis.Section_3_3
-set_option doc.verso.suggestions false
+module
+
+public import Mathlib
+public import Abbrev.Analysis.Section_3_1_api
+public import Theorem.Analysis.Tools.ExistsUnique.Part2
+public import Def.Analysis.Section_3_3
 
 /-!
 # Analysis I, Section 3.3: Functions
@@ -38,6 +39,11 @@ Users of the companion who have completed the exercises in this section are welc
 - (Add tip here)
 
 -/
+
+@[expose] public section
+
+set_option doc.verso.suggestions false
+
 
 
 namespace Chapter3

@@ -1,6 +1,10 @@
-import Def.LanglandsTunnell_CubicInduction_GlobalZeta31
-import Def.AdelicDock_LocalEmbedding
-import Structure.LanglandsTunnell_CubicInduction_AutomorphyDatum31
+module
+
+public import Def.LanglandsTunnell_CubicInduction_GlobalZeta31
+public import Def.AdelicDock_LocalEmbedding
+public import Structure.LanglandsTunnell_CubicInduction_AutomorphyDatum31
+
+@[expose] public section
 
 set_option autoImplicit false
 

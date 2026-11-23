@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/AlgebraicGeometry/EllipticCurve/VariableChangePoint.lean -/
 
-import Def.AlgebraicGeometry.EllipticCurve.VariableChangePoint.Part3
-import Theorem.Scheme.EllipticCurve.VariableChangePoint
-import Mathlib.Algebra.Field.ZMod
-import Mathlib.Tactic.NormNum
+module
 
+public import Def.AlgebraicGeometry.EllipticCurve.VariableChangePoint.Part3
+public import Theorem.Scheme.EllipticCurve.VariableChangePoint
+public import Mathlib.Algebra.Field.ZMod
+public import Mathlib.Tactic.NormNum
+@[expose] public section
 
 namespace MathlibExtTest.AlgebraicGeometry.EllipticCurve.VariableChangePoint
 

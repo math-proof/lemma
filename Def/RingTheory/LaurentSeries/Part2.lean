@@ -6,10 +6,16 @@ All rights reserved.
 Copyright (c) 2024 AlgebraicCombinatorics contributors. All rights reserved.
 Authors: AlgebraicCombinatorics contributors
 -/
-import Mathlib
-import Theorem.PowerSeries.InfiniteProducts2
-import Theorem.Partition.NPartition
-import Theorem.RingTheory.LaurentSeries
+
+module
+
+public import Mathlib
+public import Theorem.PowerSeries.InfiniteProducts2
+public import Theorem.Partition.NPartition
+public import Theorem.RingTheory.LaurentSeries
+
+@[expose] public section
+
 open scoped LaurentPolynomial
 
 /-!

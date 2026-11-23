@@ -143,6 +143,7 @@ private lemma kernel_pdf
   simp only [Policy.pdf]
   rw [ENNReal.toReal_ofReal hnn]
 
+set_option linter.unusedVariables false in
 /--
 Importance-sampled generalized advantage estimation (Schulman et al., arXiv 1506.02438,
 Eq. (16) with the importance-sampled score of Proposition 1) for continuous actions.
@@ -225,7 +226,7 @@ private lemma main
         Â t s[t] a[t] • ((∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ)) /
           (ℙ[M[s[t]] θ'](a[t] | s[t]) : ℝ)))) := by
 -- proof
-  intro
+  intro hPas _ _ _ _ _ _ Â s₀
   have hGAE := GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.Any_And_All_Integrable_Measure.GtInftySup.All_Differentiable_Prob.All_NeDens_0.All_Eq_JointDens.AbsContJointAS.AbsContStateMarginal.IsPolicyTrajectory.Subset_Ico
     (M := M) (θ := θ) (γ := γ) (ℓ := ℓ) (r := r) (s := s) (a := a)
     h₀ hfactor h₁ h₂ hBdd hIntg hφ hMs hVm hR

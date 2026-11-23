@@ -1,7 +1,11 @@
-import Mathlib
-import Def.FormalGroup_NegV2
-import Def.CerednikDrinfeld_SpecialFormalModule
-import Notation.CerednikDrinfeld_LubinTateModule
+module
+
+public import Mathlib
+public import Def.FormalGroup_NegV2
+public import Def.CerednikDrinfeld_SpecialFormalModule
+public import Notation.CerednikDrinfeld_LubinTateModule
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option linter.unusedSectionVars false

@@ -1,4 +1,8 @@
-import Instance.CerednikDrinfeld_DrinfeldHolomorphic
+module
+
+public import Instance.CerednikDrinfeld_DrinfeldHolomorphic
+
+@[expose] public section
 
 set_option autoImplicit false
 

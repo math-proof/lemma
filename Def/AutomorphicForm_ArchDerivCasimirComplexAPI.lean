@@ -1,4 +1,8 @@
-import Def.AutomorphicForm_ArchDerivCasimirComplex
+module
+
+public import Def.AutomorphicForm_ArchDerivCasimirComplex
+
+@[expose] public section
 
 set_option autoImplicit false
 

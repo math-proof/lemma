@@ -1,4 +1,8 @@
-import Lemma.Matrix.AdelicLevel
+module
+
+public import Theorem.Matrix.AdelicLevel
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Lemma.Scheme.TwoAffineOpenCover
+module
+
+public import Mathlib
+public import Theorem.Scheme.TwoAffineOpenCover
+
+@[expose] public section
 
 set_option autoImplicit false
 

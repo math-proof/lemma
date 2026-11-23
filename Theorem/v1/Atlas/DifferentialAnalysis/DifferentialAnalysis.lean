@@ -44,7 +44,7 @@ import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.Integration
 import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.JordanDecomposition
 import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.Lemma11_5
 import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.Lemma71
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras
 import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.MicrolocalRegularity
 import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.OuterMeasureFromFunctional
 import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.Parametrix

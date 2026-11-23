@@ -1,6 +1,10 @@
-import Def.CohCarrier_Level
-import Lemma.MvPolynomial.HeckeData
-import Inductive.CohCarrier_Gen
+module
+
+public import Def.CohCarrier_Level
+public import Theorem.MvPolynomial.HeckeData
+public import Inductive.CohCarrier_Gen
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -8,14 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.GeometryOfManifolds.code.CompatibleComplexStructures
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.CompatibleComplexStructures
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.ConnectionsCurvature
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
-import Structure.v1.Atlas.GeometryOfManifolds.code.ConnectionsCurvature.Part7
-import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
-import Mathlib.Geometry.Manifold.VectorBundle.CovariantDerivative.Basic
-import Mathlib.LinearAlgebra.Orientation
+module
+
+public import Theorem.v1.Atlas.GeometryOfManifolds.code.CompatibleComplexStructures
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.CompatibleComplexStructures
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.ConnectionsCurvature
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
+public import Structure.v1.Atlas.GeometryOfManifolds.code.ConnectionsCurvature.Part7
+public import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
+public import Mathlib.Geometry.Manifold.VectorBundle.CovariantDerivative.Basic
+public import Mathlib.LinearAlgebra.Orientation
+
+@[expose] public section
+
 set_option autoImplicit false
 
 open SymplecticLinearAlgebra

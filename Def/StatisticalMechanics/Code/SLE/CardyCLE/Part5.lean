@@ -8,11 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
+module
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.SLE.Defs.Part9
-import Theorem.StatisticalMechanics.Code.SLE.Cardy.Part8
-import Theorem.StatisticalMechanics.Code.SLE.CardyCLE.Part4
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.SLE.Defs.Part9
+public import Theorem.StatisticalMechanics.Code.SLE.Cardy.Part8
+public import Theorem.StatisticalMechanics.Code.SLE.CardyCLE.Part4
+
+@[expose] public section
+
 open scoped UpperHalfPlane NNReal
 open Complex Filter Topology
 

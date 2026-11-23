@@ -308,7 +308,7 @@ public theorem ord_nonneg_of_mem_placeCompletionAux {K F : Type*} [Field K] [Fie
     IsDiscreteValuationRing.eq_unit_mul_pow_irreducible
       (x := (⟨f, hf⟩ : v.toValuationSubring)) (by simpa [Subtype.ext_iff] using hf0) hπ
   have hcoe : f = ((u : v.toValuationSubring) : F) * ((π : F) ^ (n : ℤ)) := by
-    have h := congrArg (Subtype.val) hu
+    have h := congrArg Subtype.val hu
     push_cast at h
     rw [zpow_natCast]
     exact h

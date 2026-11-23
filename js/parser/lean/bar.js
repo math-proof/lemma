@@ -58,7 +58,11 @@ export class LeanBar extends LeanUnary {
     }
 
     is_indented() {
-        return !(this.parent instanceof L.LeanTactic);
+        if (this.parent instanceof L.LeanTactic) return false;
+        // An inline arm (`fun | p => e | q => e`) shares the `fun` line, so it must not
+        // re-emit the stored indent; block arms start their own line and do.
+        if (this.parent instanceof L.Lean_fun && (this.newlineCount ?? 0) === 0) return false;
+        return true;
     }
 
     latexFormat() {

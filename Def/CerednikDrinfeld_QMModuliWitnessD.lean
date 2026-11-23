@@ -1,5 +1,9 @@
-import Def.CerednikDrinfeld_QMModuli
-import Structure.CerednikDrinfeld_QMModuliWitnessD
+module
+
+public import Def.CerednikDrinfeld_QMModuli
+public import Structure.CerednikDrinfeld_QMModuliWitnessD
+
+@[expose] public section
 
 set_option autoImplicit false
 

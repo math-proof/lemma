@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.AlgebraicTopologyI.code.Section6
-import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section6
-import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.CrossProductExistence
-import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section8
-import Def.v1.Atlas.AlgebraicTopologyI.code.CrossProductExistence.Part3
-import Instance.v1.Atlas.AlgebraicTopologyI.code.Section8.Part3
-import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section7
+module
+
+public import Structure.v1.Atlas.AlgebraicTopologyI.code.Section6
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section6
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.CrossProductExistence
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section8
+public import Def.v1.Atlas.AlgebraicTopologyI.code.CrossProductExistence.Part3
+public import Instance.v1.Atlas.AlgebraicTopologyI.code.Section8.Part3
+public import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section7
+
+@[expose] public section
+
 open ExactSequence
 
 

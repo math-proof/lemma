@@ -1,5 +1,9 @@
-import Mathlib
-import Abbrev.Analysis.Section_3_1_api
+module
+
+public import Mathlib
+public import Abbrev.Analysis.Section_3_1_api
+@[expose] public section
+
 /-!
 # Analysis I, Section 3.2: Russell's paradox
 

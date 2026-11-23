@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/RayClassToClassGroup.lean -/
 
 import Theorem.NumberTheory.NumberField.RayClass.QuotientToRayClass.Part3
-import Lemma.Nat.NumberField.RayClass.QuotientToRayClass
+import Theorem.Nat.NumberField.RayClass.QuotientToRayClass
 import Mathlib.Algebra.Exact.Basic
 import Def.NumberTheory.NumberField.RayClass.RayClassToClassGroup.Part2
 @[expose] noncomputable section

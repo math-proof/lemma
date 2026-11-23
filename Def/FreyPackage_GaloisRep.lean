@@ -1,8 +1,12 @@
-import Theorem.WeierstrassCurve.FreyPackage
-import Instance.FLTPrelim_GaloisRep
-import Instance.EllipticCurve_FrobeniusTrace
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Instance.FreyPackage_GaloisRep
+module
+
+public import Theorem.WeierstrassCurve.FreyPackage
+public import Instance.FLTPrelim_GaloisRep
+public import Instance.EllipticCurve_FrobeniusTrace
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Instance.FreyPackage_GaloisRep
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,9 +1,13 @@
-import Mathlib
-import Instance.MvFormalGroup_NegV2
-import Instance.MvFormalGroup_CartierModule
-import Theorem.PowerSeries.CartierModuleHomothety
-import Lemma.MvPowerSeries.SpecialFormalModule
-import Def.CerednikDrinfeld_CartierGradedPiece
+module
+
+public import Mathlib
+public import Instance.MvFormalGroup_NegV2
+public import Instance.MvFormalGroup_CartierModule
+public import Theorem.PowerSeries.CartierModuleHomothety
+public import Theorem.MvPowerSeries.SpecialFormalModule
+public import Def.CerednikDrinfeld_CartierGradedPiece
+
+@[expose] public section
 
 set_option autoImplicit false
 

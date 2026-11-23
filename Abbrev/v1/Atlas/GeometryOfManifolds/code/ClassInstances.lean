@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Instance.v1.Atlas.GeometryOfManifolds.code.PolynomialDFS.Part3
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.PolynomialDFS
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.PolynomialDFS
 import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.TwoDimDFS
 import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.AlmostComplexManifolds
 import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.MoserDarboux

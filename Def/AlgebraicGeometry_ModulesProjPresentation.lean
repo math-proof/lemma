@@ -1,6 +1,10 @@
-import Mathlib
-import Lemma.MvPolynomial.ProjSpace
-import Structure.AlgebraicGeometry_ModulesProjPresentation
+module
+
+public import Mathlib
+public import Theorem.MvPolynomial.ProjSpace
+public import Structure.AlgebraicGeometry_ModulesProjPresentation
+
+@[expose] public section
 
 set_option autoImplicit false
 

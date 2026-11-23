@@ -1,6 +1,10 @@
-import Mathlib
-import Lemma.Scheme.ResolvedModelGlueFibre
-import Abbrev.AlgebraicGeometry_ResolvedModelGlueComponents
+module
+
+public import Mathlib
+public import Theorem.Scheme.ResolvedModelGlueFibre
+public import Abbrev.AlgebraicGeometry_ResolvedModelGlueComponents
+
+@[expose] public section
 
 set_option maxHeartbeats 200000
 

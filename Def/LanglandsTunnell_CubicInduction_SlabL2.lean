@@ -1,6 +1,10 @@
-import Def.LanglandsTunnell_CubicInduction_Carrier
-import Theorem.Measure.TateGlobalZeta
-import Mathlib.MeasureTheory.Function.L2Space
+module
+
+public import Def.LanglandsTunnell_CubicInduction_Carrier
+public import Theorem.Measure.TateGlobalZeta
+public import Mathlib.MeasureTheory.Function.L2Space
+
+@[expose] public section
 
 set_option autoImplicit false
 

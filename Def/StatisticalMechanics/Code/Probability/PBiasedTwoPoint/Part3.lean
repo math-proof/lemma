@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
+module
 
-import Theorem.StatisticalMechanics.Code.Probability.BonamiTwoPoint
-import Theorem.StatisticalMechanics.Code.Probability.PBiasedTwoPoint.Part2
+public import Theorem.StatisticalMechanics.Code.Probability.BonamiTwoPoint
+public import Theorem.StatisticalMechanics.Code.Probability.PBiasedTwoPoint.Part2
+
+@[expose] public section
+
 open Real Set
 
 set_option linter.style.longLine false

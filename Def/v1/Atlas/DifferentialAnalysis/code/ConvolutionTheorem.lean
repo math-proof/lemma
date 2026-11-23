@@ -8,18 +8,23 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzTranslation
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.HormanderFundamental
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DistributionSupport
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SobolevDerivatives
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SobolevEmbedding
-import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzTranslation
-import Def.v1.Atlas.DifferentialAnalysis.code.HormanderFundamental
-import Theorem.v1.Atlas.DifferentialAnalysis.code.DistributionSupport
-import Def.v1.Atlas.DifferentialAnalysis.code.SobolevDerivatives
-import Def.v1.Atlas.DifferentialAnalysis.code.SobolevEmbedding.Part5
+module
+
+public import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzTranslation
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.HormanderFundamental
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DistributionSupport
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SobolevDerivatives
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SobolevEmbedding
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzTranslation
+public import Def.v1.Atlas.DifferentialAnalysis.code.HormanderFundamental
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.DistributionSupport
+public import Def.v1.Atlas.DifferentialAnalysis.code.SobolevDerivatives
+public import Def.v1.Atlas.DifferentialAnalysis.code.SobolevEmbedding.Part5
+
+@[expose] public section
+
 open scoped SchwartzMap LineDeriv Pointwise
 open TemperedDistribution SchwartzMap DifferentialOperators Distribution
      SobolevSpace SchwartzRepresentation

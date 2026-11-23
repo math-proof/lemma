@@ -1,5 +1,9 @@
-import Instance.M4aHerbrand_ArchSemilocal
-import Lemma.Filter.FiniteConorm
+module
+
+public import Instance.M4aHerbrand_ArchSemilocal
+public import Theorem.Filter.FiniteConorm
+
+@[expose] public section
 
 noncomputable section
 

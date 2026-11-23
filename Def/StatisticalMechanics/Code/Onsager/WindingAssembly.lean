@@ -8,12 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
+module
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Onsager.GroundUpWinding.Part4
-import Theorem.StatisticalMechanics.Code.Onsager.SplitConstruction
-import Theorem.StatisticalMechanics.Code.Onsager.PolygonWalk.Part3
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Onsager.GroundUpWinding.Part4
+public import Theorem.StatisticalMechanics.Code.Onsager.SplitConstruction
+public import Theorem.StatisticalMechanics.Code.Onsager.PolygonWalk.Part3
 
+@[expose] public section
 
 namespace StatMech.Onsager.WindingAssembly
 

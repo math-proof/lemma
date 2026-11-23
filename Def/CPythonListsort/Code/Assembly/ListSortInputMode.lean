@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/ListSortInputMode.lean -/
 
-import Structure.CPythonListsort.Code.Assembly.SortSliceSafety
-import Theorem.CPythonListsort.Code.Transcription.ListSortImpl
-import Structure.CPythonListsort.Code.Assembly.ListSortInputMode
+module
+
+public import Structure.CPythonListsort.Code.Assembly.SortSliceSafety
+public import Theorem.CPythonListsort.Code.Transcription.ListSortImpl
+public import Structure.CPythonListsort.Code.Assembly.ListSortInputMode
+
+@[expose] public section
+
 /-!
 # Valid top-level listsort inputs
 

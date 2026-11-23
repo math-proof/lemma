@@ -8,24 +8,27 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.UniformSpace.Completion
-import Mathlib.Topology.UniformSpace.AbstractCompletion
-import Mathlib.Topology.Algebra.UniformField
-import Mathlib.Topology.Algebra.UniformRing
-import Mathlib.Topology.Algebra.Group.Defs
-import Mathlib.Topology.Algebra.Ring.Basic
-import Mathlib.Topology.Algebra.Field
-import Mathlib.Topology.MetricSpace.Basic
-import Mathlib.Analysis.Normed.Ring.WithAbs
-import Mathlib.Analysis.AbsoluteValue.Equivalence
-import Mathlib.NumberTheory.RamificationInertia.Ramification
-import Mathlib.RingTheory.DedekindDomain.AdicValuation
-import Mathlib.RingTheory.Ideal.IntegralClosure
-import Mathlib.RingTheory.Ideal.Over
-import Def.v1.Atlas.NumberTheoryI.code.Chapter1.AbsoluteValues.Part2
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Chapter1.AbsoluteValues
-import Theorem.v1.Atlas.NumberTheoryI.code.CompleteFields
+module
 
+public import Mathlib.Topology.UniformSpace.Completion
+public import Mathlib.Topology.UniformSpace.AbstractCompletion
+public import Mathlib.Topology.Algebra.UniformField
+public import Mathlib.Topology.Algebra.UniformRing
+public import Mathlib.Topology.Algebra.Group.Defs
+public import Mathlib.Topology.Algebra.Ring.Basic
+public import Mathlib.Topology.Algebra.Field
+public import Mathlib.Topology.MetricSpace.Basic
+public import Mathlib.Analysis.Normed.Ring.WithAbs
+public import Mathlib.Analysis.AbsoluteValue.Equivalence
+public import Mathlib.NumberTheory.RamificationInertia.Ramification
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation
+public import Mathlib.RingTheory.Ideal.IntegralClosure
+public import Mathlib.RingTheory.Ideal.Over
+public import Def.v1.Atlas.NumberTheoryI.code.Chapter1.AbsoluteValues.Part2
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Chapter1.AbsoluteValues
+public import Theorem.v1.Atlas.NumberTheoryI.code.CompleteFields
+
+@[expose] public section
 
 noncomputable section
 

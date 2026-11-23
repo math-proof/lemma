@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRochGeneral
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochGeneral
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckGroup
-import Def.v1.Atlas.AlgebraicGeometryI.code.GrothendieckGroup.Part3
-import Mathlib.RingTheory.DedekindDomain.Ideal.Basic
-import Mathlib.RingTheory.Kaehler.Polynomial
-import Mathlib.LinearAlgebra.Dimension.Finrank
+module
+
+public import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRochGeneral
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochGeneral
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckGroup
+public import Def.v1.Atlas.AlgebraicGeometryI.code.GrothendieckGroup.Part3
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Basic
+public import Mathlib.RingTheory.Kaehler.Polynomial
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+
+@[expose] public section
+
 open scoped TensorProduct
 open nonZeroDivisors
 

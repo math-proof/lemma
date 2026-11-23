@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
-import Theorem.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
-import Def.v1.Atlas.Buildings.code.Building.RetractionDef
+module
+
+public import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
+public import Theorem.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
+public import Def.v1.Atlas.Buildings.code.Building.RetractionDef
+
+@[expose] public section
+
 open scoped Classical
 
 variable {V : Type*} [DecidableEq V]

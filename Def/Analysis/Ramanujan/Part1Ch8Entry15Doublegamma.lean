@@ -4,15 +4,20 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @akiezun, Avocado, Codex
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Analysis.Asymptotics.Lemmas
-import Mathlib.Analysis.PSeries
-import Mathlib.Analysis.SpecialFunctions.Exp
-import Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Def.Analysis.SpecialFunctions.Gamma.Digamma
-import Theorem.Complex.Digamma
-import Lemma.Real.Digamma
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+public import Mathlib.Analysis.Asymptotics.Lemmas
+public import Mathlib.Analysis.PSeries
+public import Mathlib.Analysis.SpecialFunctions.Exp
+public import Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+public import Def.Analysis.SpecialFunctions.Gamma.Digamma
+public import Theorem.Complex.Digamma
+public import Theorem.Real.Digamma
+
+@[expose] public section
+
 /-!
 # Ramanujan's centered digamma asymptotic
 

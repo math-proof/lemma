@@ -4,17 +4,20 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Combinatorics.Enumerative.Bell
-import Mathlib.Data.Fintype.Perm
-import Mathlib.Data.ZMod.Defs
-import Mathlib.Tactic.Bound
-import Mathlib.Order.Partition.Finpartition
-import Mathlib.Data.Finset.Powerset
-import Mathlib.Data.Finset.Sort
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Finset.Card
-import Theorem.Combinatorics.BellWeakExcedance.Part3
+module
 
+public import Mathlib.Combinatorics.Enumerative.Bell
+public import Mathlib.Data.Fintype.Perm
+public import Mathlib.Data.ZMod.Defs
+public import Mathlib.Tactic.Bound
+public import Mathlib.Order.Partition.Finpartition
+public import Mathlib.Data.Finset.Powerset
+public import Mathlib.Data.Finset.Sort
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Finset.Card
+public import Theorem.Combinatorics.BellWeakExcedance.Part3
+
+@[expose] public section
 
 section
 

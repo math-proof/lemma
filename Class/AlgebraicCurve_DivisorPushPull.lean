@@ -42,7 +42,7 @@ private theorem ord_nonneg_of_mem {f : F} (hf : f ∈ v.toValuationSubring) : 0 
     IsDiscreteValuationRing.eq_unit_mul_pow_irreducible
       (x := (⟨f, hf⟩ : v.toValuationSubring)) (by simpa [Subtype.ext_iff] using hf0) hπ
   have hcoe : f = ((u : v.toValuationSubring) : F) * ((π : F) ^ (n : ℤ)) := by
-    have h := congrArg (Subtype.val) hu
+    have h := congrArg Subtype.val hu
     push_cast at h
     rw [zpow_natCast]
     exact h
@@ -80,7 +80,7 @@ private theorem algebraMap_ne_zero {f : F} (hf : f ≠ 0) : algebraMap F F' f �
 
 variable (w : Place K F')
 
-private theorem comap_algebraMap_ne_top [Algebra.IsIntegral F F'] :
+theorem comap_algebraMap_ne_top [Algebra.IsIntegral F F'] :
     w.toValuationSubring.comap (algebraMap F F') ≠ ⊤ := by
   intro htop
   apply w.ne_top'
@@ -238,7 +238,7 @@ theorem irreducible_mk_comap {g : F} (hg0 : g ≠ 0)
     have h2 := w.ramificationIndex_le_ord (F := F) hb0 hbpos
     omega
 
-private theorem isPrincipalIdealRing_comap :
+theorem isPrincipalIdealRing_comap :
     IsPrincipalIdealRing (w.toValuationSubring.comap (algebraMap F F')) := by
   obtain ⟨g, hg0, hge⟩ := w.exists_ord_eq_ramificationIndex (F := F)
   have hepos : 0 < ramificationIndex (F := F) w := w.ramificationIndex_pos (F := F)
@@ -289,7 +289,7 @@ variable [Algebra K F] [IsScalarTower K F F']
 
 variable (F) in
 
-def restrict : Place K F where
+@[expose] def restrict : Place K F where
   toValuationSubring := w.toValuationSubring.comap (algebraMap F F')
   algebraMap_mem' a := by
     rw [ValuationSubring.mem_comap, ← IsScalarTower.algebraMap_apply]
@@ -382,7 +382,7 @@ variable (w : Place K F')
 
 variable (F) in
 
-def restrictInclusion : (w.restrict F).toValuationSubring →+* w.toValuationSubring where
+@[expose] def restrictInclusion : (w.restrict F).toValuationSubring →+* w.toValuationSubring where
   toFun a := ⟨algebraMap F F' (a : F), ValuationSubring.mem_comap.mp a.2⟩
   map_one' := Subtype.ext (map_one (algebraMap F F'))
   map_mul' a b := Subtype.ext (map_mul (algebraMap F F') (a : F) (b : F))
@@ -545,7 +545,7 @@ namespace Divisor
 
 variable (F') in
 
-def pullbackSingleHom (v : Place K F) : ℤ →+ Divisor K F' where
+@[expose] def pullbackSingleHom (v : Place K F) : ℤ →+ Divisor K F' where
   toFun n := ∑ w ∈ v.fiber F', Finsupp.single w (n * w.ramificationIndex F)
   map_zero' := by simp
   map_add' m n := by
@@ -675,7 +675,7 @@ namespace Pic0
 
 variable (F') in
 
-def pullbackDegZeroHom [FundamentalIdentity K F F'] :
+@[expose] def pullbackDegZeroHom [FundamentalIdentity K F F'] :
     Divisor.degZero (K := K) (F := F) →+ Divisor.degZero (K := K) (F := F') :=
   ((Divisor.pullback F').domRestrict (Divisor.degZero (K := K) (F := F))).codRestrict _
     fun D => Divisor.pullback_mem_degZero D.2
@@ -687,7 +687,7 @@ theorem coe_pullbackDegZeroHom [FundamentalIdentity K F F']
 
 variable (F') in
 
-def pullbackHom [FundamentalIdentity K F F'] : Pic0 K F →+ Pic0 K F' :=
+@[expose] def pullbackHom [FundamentalIdentity K F F'] : Pic0 K F →+ Pic0 K F' :=
   QuotientAddGroup.map _ _ (pullbackDegZeroHom F') (by
     rintro ⟨D, hD0⟩ hD
     simp only [AddSubgroup.mem_addSubgroupOf] at hD ⊢
@@ -699,7 +699,7 @@ theorem pullbackHom_mk [FundamentalIdentity K F F']
 
 variable (F) in
 
-def pushforwardDegZeroHom :
+@[expose] def pushforwardDegZeroHom :
     Divisor.degZero (K := K) (F := F') →+ Divisor.degZero (K := K) (F := F) :=
   ((Divisor.pushforward F).domRestrict (Divisor.degZero (K := K) (F := F'))).codRestrict _
     fun D => Divisor.pushforward_mem_degZero D.2
@@ -711,7 +711,7 @@ theorem coe_pushforwardDegZeroHom (D : Divisor.degZero (K := K) (F := F')) :
 
 variable (K F F') in
 
-def pushforwardHom [Module.Finite F F'] (H : Divisor.PushforwardNormFormula K F F') :
+@[expose] def pushforwardHom [Module.Finite F F'] (H : Divisor.PushforwardNormFormula K F F') :
     Pic0 K F' →+ Pic0 K F :=
   QuotientAddGroup.map _ _ (pushforwardDegZeroHom F) (by
     rintro ⟨D, hD0⟩ hD

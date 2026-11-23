@@ -1,3 +1,5 @@
+import Instance.Data.Fin.Fun
+import Instance.Data.Nat.Fun
 import Lemma.Finset.AddSumIio.eq.SumIic
 import Lemma.Finset.Any_In_IcoSumIio_SumIic.of.Eq_Sum
 import Lemma.Finset.Eq.of.In_IcoSumIio_SumIic.In_IcoSumIio_SumIic
@@ -372,16 +374,16 @@ private lemma falling_det_mul_Q
           dsimp only [GetElem.getElem]
           apply hi
       simp [hnot]
-  have hsumF : ∑ k : Fin r, (⟨d⟩ : Fin r ⇀ ℕ)[k] = n := by
+  have hsumF : ∑ k : Fin r, (⟨d⟩ : Fin r → ℕ)[k] = n := by
     simpa [Fun.getElem_eq] using hsum
   have hlem :=
     DetStack_Sum_Ite.eq.Prod_MulMulProdS.of.EqSum (x := ⟨x⟩) (d := ⟨d⟩) hsumF
   have hsplit :
     (∏ i : Fin r,
-        (∏ j ∈ Finset.Iio i, ((⟨x⟩ : Fin r ⇀ ℂ)[i] - (⟨x⟩ : Fin r ⇀ ℂ)[j]) ^
-          ((⟨d⟩ : Fin r ⇀ ℕ)[i] * (⟨d⟩ : Fin r ⇀ ℕ)[j])) *
-        (∏ j ∈ Finset.range (⟨d⟩ : Fin r ⇀ ℕ)[i], ((Nat.factorial j) : ℂ)) *
-        (⟨x⟩ : Fin r ⇀ ℂ)[i] ^ (⟨d⟩ : Fin r ⇀ ℕ)[i].choose 2) =
+        (∏ j ∈ Finset.Iio i, ((⟨x⟩ : Fin r → ℂ)[i] - (⟨x⟩ : Fin r → ℂ)[j]) ^
+          ((⟨d⟩ : Fin r → ℕ)[i] * (⟨d⟩ : Fin r → ℕ)[j])) *
+        (∏ j ∈ Finset.range (⟨d⟩ : Fin r → ℕ)[i], ((Nat.factorial j) : ℂ)) *
+        (⟨x⟩ : Fin r → ℂ)[i] ^ (⟨d⟩ : Fin r → ℕ)[i].choose 2) =
       Vand * Fact * Q := by
     simp only [Vand, Fact, Q]
     simp_rw [mul_assoc]
@@ -392,10 +394,10 @@ private lemma falling_det_mul_Q
           [i < n][j < n]
             ∑ k : Fin r,
               if (i : ℕ) ∈ Finset.Ico
-                (∑ t ∈ Finset.Iio k, (⟨d⟩ : Fin r ⇀ ℕ)[t])
-                  (∑ t ∈ Finset.Iic k, (⟨d⟩ : Fin r ⇀ ℕ)[t]) then
-                (j : ℂ) ^ (i - ∑ t ∈ Finset.Iio k, (⟨d⟩ : Fin r ⇀ ℕ)[t]) *
-                  (⟨x⟩ : Fin r ⇀ ℂ)[k] ^ (j : ℕ)
+                (∑ t ∈ Finset.Iio k, (⟨d⟩ : Fin r → ℕ)[t])
+                  (∑ t ∈ Finset.Iic k, (⟨d⟩ : Fin r → ℕ)[t]) then
+                (j : ℂ) ^ (i - ∑ t ∈ Finset.Iio k, (⟨d⟩ : Fin r → ℕ)[t]) *
+                  (⟨x⟩ : Fin r → ℂ)[k] ^ (j : ℕ)
               else 0 := by
       ext i j
       simp [Mmono]

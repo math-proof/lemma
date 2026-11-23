@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/RayClass/QuotientToRayClass.lean -/
 
 import Theorem.NumberTheory.NumberField.RayClass.QuotientToRayClass.Part3
-import Lemma.Nat.NumberField.RayClass.QuotientToRayClass
+import Theorem.Nat.NumberField.RayClass.QuotientToRayClass
 @[expose] public noncomputable section
 
 open scoped nonZeroDivisors

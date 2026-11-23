@@ -1,18 +1,20 @@
-import Mathlib
-import Class.AlgebraicCurve_LocalResidue
-import Instance.AlgebraicCurve_IsCurveOver
-import Class.AlgebraicCurve_DivisorPushPull
-import Instance.AlgebraicCurve_PlaceCompletion
-import Def.AlgebraicCurve_WeilOfKaehler
-import Structure.AlgebraicCurve_CanonicalLocalResidueInstanceV2
-import Instance.AlgebraicCurve_CanonicalLocalResidueInstanceV2
+module
+
+public import Mathlib
+public import Class.AlgebraicCurve_LocalResidue
+public import Instance.AlgebraicCurve_IsCurveOver
+public import Class.AlgebraicCurve_DivisorPushPull
+public import Instance.AlgebraicCurve_PlaceCompletion
+public import Def.AlgebraicCurve_WeilOfKaehler
+public import Structure.AlgebraicCurve_CanonicalLocalResidueInstanceV2
+public import Instance.AlgebraicCurve_CanonicalLocalResidueInstanceV2
 
 set_option autoImplicit false
 set_option maxHeartbeats 1600000
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace AlgebraicCurve
 

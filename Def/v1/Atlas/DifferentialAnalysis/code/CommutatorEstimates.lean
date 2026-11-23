@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.DifferentialAnalysis.code.EllipticLowerBound
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.EllipticLowerBound
-import Structure.v1.Atlas.DifferentialAnalysis.code.CommutatorEstimates
+module
+
+public import Def.v1.Atlas.DifferentialAnalysis.code.EllipticLowerBound
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.EllipticLowerBound
+public import Structure.v1.Atlas.DifferentialAnalysis.code.CommutatorEstimates
+
+@[expose] public section
+
 open scoped SchwartzMap
 open TemperedDistribution MvPolynomial
 

@@ -2,10 +2,14 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.Combinatorics.Enumerative.Partition.NPartition.Part9
-import Theorem.LaurentSeries.LaurentSeries
-import Theorem.Partition.NPartition
+module
+
+public import Mathlib
+public import Def.Combinatorics.Enumerative.Partition.NPartition.Part9
+public import Theorem.LaurentSeries.LaurentSeries
+public import Theorem.Partition.NPartition
+@[expose] public section
+
 open scoped Polynomial
 open MvPolynomial Finset Equiv
 

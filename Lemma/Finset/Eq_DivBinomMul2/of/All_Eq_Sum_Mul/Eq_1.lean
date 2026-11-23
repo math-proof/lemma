@@ -1,3 +1,5 @@
+import Instance.Data.Fin.Fun
+import Instance.Data.Nat.Fun
 import Mathlib.Combinatorics.Enumerative.Catalan.Basic
 import Notation.Fun
 import Initialize.Tactic.Attr.Basic
@@ -14,7 +16,7 @@ Closed form of the Catalan recurrence: if `C` satisfies `C[0] = 1` and
 -/
 @[path, Fun]
 private lemma main
-  {C : ℕ ⇀ ℤ}
+  {C : ℕ → ℤ}
   {n : ℕ}
 -- given
   (h₀ : C[0] = 1)

@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec23DerivedFunctors.Part3
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec23DerivedFunctors
+module
+
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec23DerivedFunctors.Part3
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec23DerivedFunctors
+
+@[expose] public section
+
 open CategoryTheory Category Limits
 
 

@@ -1,5 +1,9 @@
-import Lemma.Scheme.CharLSpecialFibrePic0ForallMBridge
-import Instance.ModularCurve_SpecializationWitness
+module
+
+public import Theorem.Scheme.CharLSpecialFibrePic0ForallMBridge
+public import Instance.ModularCurve_SpecializationWitness
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option synthInstance.maxHeartbeats 400000

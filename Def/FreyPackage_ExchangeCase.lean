@@ -1,12 +1,16 @@
-import Theorem.WeierstrassCurve.FreyPackage
-import Instance.FLTPrelim_GaloisRep
-import Def.FLTPrelim_ModularRep
-import Instance.FLTPrelim_Modularity
-import Def.FLTPrelim_Ramification
-import Instance.FreyPackage_GaloisRep
-import Def.FreyPackage_LevelRaising
-import Def.GaloisRep_GlobalUnramifiedAt
-import Instance.FreyPackage_ExchangeCase
+module
+
+public import Theorem.WeierstrassCurve.FreyPackage
+public import Instance.FLTPrelim_GaloisRep
+public import Def.FLTPrelim_ModularRep
+public import Instance.FLTPrelim_Modularity
+public import Def.FLTPrelim_Ramification
+public import Instance.FreyPackage_GaloisRep
+public import Def.FreyPackage_LevelRaising
+public import Def.GaloisRep_GlobalUnramifiedAt
+public import Instance.FreyPackage_ExchangeCase
+
+@[expose] public section
 
 set_option autoImplicit false
 

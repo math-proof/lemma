@@ -1,4 +1,8 @@
-import Def.LanglandsTunnell_DeltaLift
+module
+
+public import Def.LanglandsTunnell_DeltaLift
+
+@[expose] public section
 
 set_option autoImplicit false
 

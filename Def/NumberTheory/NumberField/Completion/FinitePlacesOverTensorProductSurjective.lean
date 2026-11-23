@@ -1,10 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FinitePlacesOverTensorProductSurjective.lean -/
 
-import Def.NumberTheory.NumberField.Completion.FinitePlacesOverTensorProduct
-import Lemma.Nat.NumberField.Completion.FinitePlacesOverTensorProduct
-import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
-import Mathlib.Analysis.AbsoluteValue.Equivalence
-import Mathlib.Topology.Algebra.Module.FiniteDimension
+module
+
+public import Def.NumberTheory.NumberField.Completion.FinitePlacesOverTensorProduct
+public import Theorem.Nat.NumberField.Completion.FinitePlacesOverTensorProduct
+public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
+public import Mathlib.Analysis.AbsoluteValue.Equivalence
+public import Mathlib.Topology.Algebra.Module.FiniteDimension
+
+@[expose] public section
+
 /-!
 # Surjectivity of the finite-place completion tensor product map
 

@@ -1,7 +1,11 @@
-import Mathlib
-import Instance.M4aHerbrand_SIdeleClassGroup
-import Instance.NumberField_PlaceDecompositionAction
-import Def.ExtCitation_LocalLevel_FundamentalClass
+module
+
+public import Mathlib
+public import Instance.M4aHerbrand_SIdeleClassGroup
+public import Instance.NumberField_PlaceDecompositionAction
+public import Def.ExtCitation_LocalLevel_FundamentalClass
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option synthInstance.maxHeartbeats 400000

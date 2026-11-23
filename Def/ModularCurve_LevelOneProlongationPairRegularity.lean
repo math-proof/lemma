@@ -1,5 +1,9 @@
-import Mathlib
-import Def.ModularCurve_LevelOneProlongationPair
+module
+
+public import Mathlib
+public import Def.ModularCurve_LevelOneProlongationPair
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option synthInstance.maxHeartbeats 400000

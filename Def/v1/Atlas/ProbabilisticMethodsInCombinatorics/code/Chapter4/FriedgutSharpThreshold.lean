@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter4.ThresholdDef
-import Lemma.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter4.ThresholdDef
+module
+
+public import Mathlib
+public import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter4.ThresholdDef
+public import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter4.ThresholdDef
+
+@[expose] public section
+
 open Filter Finset Asymptotics
 
 

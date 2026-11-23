@@ -1,7 +1,11 @@
-import Mathlib
-import Abbrev.GroupCohomology_TateCohomology
-import Lemma.Representation.EqIndBotMk
-import Abbrev.GroupCohomology_TateDimensionShiftMaps
+module
+
+public import Mathlib
+public import Abbrev.GroupCohomology_TateCohomology
+public import Theorem.Representation.EqIndBotMk
+public import Abbrev.GroupCohomology_TateDimensionShiftMaps
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,3 +1,5 @@
+import Instance.Data.Fin.Fun
+import Instance.Data.Nat.Fun
 import Mathlib.MeasureTheory.MeasurableSpace.Basic
 import Notation.Fun
 import Initialize.Tactic.Attr.Basic
@@ -17,7 +19,7 @@ private lemma main
   ∃ σ : Set (Set α),
     (∅ ∈ σ ∧
       (∀ s : Set α, s ∈ σ → sᶜ ∈ σ) ∧
-      (∀ f : ℕ ⇀ Set α, (∀ i : ℕ, f[i] ∈ σ) → (⋃ i : ℕ, f[i]) ∈ σ)) ∧
+      (∀ f : ℕ → Set α, (∀ i : ℕ, f[i] ∈ σ) → (⋃ i : ℕ, f[i]) ∈ σ)) ∧
     S ∈ σ :=
 -- proof
   ⟨{s | MeasurableSet s},

@@ -1,5 +1,9 @@
-import Class.AlgebraicCurve_ConstantFieldPullback
-import Def.ModularCurve_DegeneracyVp
+module
+
+public import Class.AlgebraicCurve_ConstantFieldPullback
+public import Def.ModularCurve_DegeneracyVp
+
+@[expose] public section
 
 set_option autoImplicit false
 

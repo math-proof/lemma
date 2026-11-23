@@ -1,4 +1,8 @@
-import Def.CerednikDrinfeld_FormalUpperHalfPlaneCharts
+module
+
+public import Def.CerednikDrinfeld_FormalUpperHalfPlaneCharts
+
+@[expose] public section
 
 set_option autoImplicit false
 

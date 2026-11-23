@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.Valuation.IwahoriDecomp
-import Lemma.Fin.EqValMkGL2.of.DetMatrix.ne.Zero
+module
+
+public import Def.v1.Atlas.Buildings.code.Valuation.IwahoriDecomp
+public import Theorem.Fin.EqValMkGL2.of.DetMatrix.ne.Zero
+
+@[expose] public section
+
 open Matrix
 
 

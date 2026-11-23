@@ -8,11 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.RefinementDimJumps
-import Lemma.Fin.FinrankKSpacesValAdd1.of.IsStrictFlag
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Mathlib.LinearAlgebra.Dimension.Finrank
+module
 
+public import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.RefinementDimJumps
+public import Theorem.Fin.FinrankKSpacesValAdd1.of.IsStrictFlag
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+
+@[expose] public section
 
 namespace GLnBuilding
 

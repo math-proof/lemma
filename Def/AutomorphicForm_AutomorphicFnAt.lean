@@ -1,5 +1,9 @@
-import Lemma.Measure.CarrierPins
-import Def.AutomorphicForm_ConstantTerm
+module
+
+public import Theorem.Measure.CarrierPins
+public import Def.AutomorphicForm_ConstantTerm
+
+@[expose] public section
 
 set_option autoImplicit false
 

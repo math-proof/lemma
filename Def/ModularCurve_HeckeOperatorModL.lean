@@ -1,5 +1,9 @@
-import Mathlib
-import Lemma.LaurentSeries.FrobeniusModL
+module
+
+public import Mathlib
+public import Theorem.LaurentSeries.FrobeniusModL
+
+@[expose] public section
 
 set_option autoImplicit false
 

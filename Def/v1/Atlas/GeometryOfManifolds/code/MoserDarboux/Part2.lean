@@ -8,14 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra.Part3
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticLinearAlgebra
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticStandardBasis
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.HamiltonianVectorFields
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticEvenDim
-import Theorem.v1.Atlas.GeometryOfManifolds.code.SymplecticStandardBasis
-import Def.v1.Atlas.GeometryOfManifolds.code.HamiltonianVectorFields.Part3
-import Class.v1.Atlas.GeometryOfManifolds.code.MoserDarboux
+module
+
+public import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra.Part3
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticLinearAlgebra
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticStandardBasis
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.HamiltonianVectorFields
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticEvenDim
+public import Theorem.v1.Atlas.GeometryOfManifolds.code.SymplecticStandardBasis
+public import Def.v1.Atlas.GeometryOfManifolds.code.HamiltonianVectorFields.Part3
+public import Class.v1.Atlas.GeometryOfManifolds.code.MoserDarboux
+
+@[expose] public section
+
 set_option autoImplicit false
 
 universe u_chart v_chart

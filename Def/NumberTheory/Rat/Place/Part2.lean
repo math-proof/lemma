@@ -43,7 +43,7 @@ noncomputable def embedding : (v : Place) → ℚ →+* CompletedField v
 `embedding v` to serve as the underlying hom and as the bridge for the norm
 identity. -/
 noncomputable def withAbsEmbedding (v : Place) :
-    WithAbs (v.absoluteValue) →+* CompletedField v :=
+    WithAbs v.absoluteValue →+* CompletedField v :=
   (embedding v).comp (WithAbs.equiv (v.absoluteValue)).toRingHom
 
 end Place

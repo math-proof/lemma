@@ -1,10 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/BinarysortCorrectness.lean -/
 
-import Def.CPythonListsort.Code.Assembly.BinarysortSafety.Part2
-import Def.CPythonListsort.Code.Assembly.Order.Part4
-import Def.CPythonListsort.Code.Correctness.SortSliceRange
-import Mathlib.Data.List.InsertIdx
-import Structure.CPythonListsort.Code.Correctness.BinarysortCorrectness
+module
+
+public import Def.CPythonListsort.Code.Assembly.BinarysortSafety.Part2
+public import Def.CPythonListsort.Code.Assembly.Order.Part4
+public import Def.CPythonListsort.Code.Correctness.SortSliceRange
+public import Mathlib.Data.List.InsertIdx
+public import Structure.CPythonListsort.Code.Correctness.BinarysortCorrectness
+
+@[expose] public section
+
 /-!
 # Functional correctness of `binarysort`
 

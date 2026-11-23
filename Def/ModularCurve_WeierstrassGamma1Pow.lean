@@ -1,6 +1,10 @@
-import Mathlib
-import Lemma.WeierstrassCurve.WeierstrassGamma0Pow
-import Structure.ModularCurve_WeierstrassGamma1Pow
+module
+
+public import Mathlib
+public import Theorem.WeierstrassCurve.WeierstrassGamma0Pow
+public import Structure.ModularCurve_WeierstrassGamma1Pow
+
+@[expose] public section
 
 set_option autoImplicit false
 

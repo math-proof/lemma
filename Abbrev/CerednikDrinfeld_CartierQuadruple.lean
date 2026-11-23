@@ -1,13 +1,15 @@
-import Mathlib
-import Instance.MvFormalGroup_CartierModuleBaseChange
-import Theorem.MvPolynomial.CartierStructureConstants
-import Theorem.FormalGroup.CartierModuleModel
-import Instance.CerednikDrinfeld_GradedCartierNModule
-import Structure.CerednikDrinfeld_DrinfeldQuadruple
+module
+
+public import Mathlib
+public import Instance.MvFormalGroup_CartierModuleBaseChange
+public import Theorem.MvPolynomial.CartierStructureConstants
+public import Theorem.FormalGroup.CartierModuleModel
+public import Instance.CerednikDrinfeld_GradedCartierNModule
+public import Structure.CerednikDrinfeld_DrinfeldQuadruple
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 open scoped TensorProduct
 

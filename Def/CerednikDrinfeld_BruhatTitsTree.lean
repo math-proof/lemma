@@ -1,7 +1,11 @@
-import Lemma.Matrix.LatticeTreeOrbital
-import Class.CerednikDrinfeld_MumfordPeriod
-import Mathlib.Combinatorics.SimpleGraph.Basic
-import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Projective
+module
+
+public import Theorem.Matrix.LatticeTreeOrbital
+public import Class.CerednikDrinfeld_MumfordPeriod
+public import Mathlib.Combinatorics.SimpleGraph.Basic
+public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Projective
+
+@[expose] public section
 
 set_option autoImplicit false
 noncomputable section

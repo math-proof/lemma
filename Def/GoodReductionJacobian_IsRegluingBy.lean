@@ -1,5 +1,9 @@
-import Def.GoodReductionJacobian_BareDeformation
-import Instance.AlgebraicGeometry_OrderedAffineCoverCech
+module
+
+public import Def.GoodReductionJacobian_BareDeformation
+public import Instance.AlgebraicGeometry_OrderedAffineCoverCech
+
+@[expose] public section
 
 set_option autoImplicit false
 

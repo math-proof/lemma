@@ -1,7 +1,11 @@
-import Def.ModularCurve_ProlongationTuple
-import Def.ModularCurve_FibreModel
-import Mathlib.Algebra.Polynomial.Derivative
-import Structure.ModularCurve_ChartSemicontinuity
+module
+
+public import Def.ModularCurve_ProlongationTuple
+public import Def.ModularCurve_FibreModel
+public import Mathlib.Algebra.Polynomial.Derivative
+public import Structure.ModularCurve_ChartSemicontinuity
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option synthInstance.maxHeartbeats 400000

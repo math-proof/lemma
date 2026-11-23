@@ -4,6 +4,10 @@ Suggest `Lemma/` path from `lean.js` AST + README naming.
 
 Usage: `node mjs/lemmaPath.mjs [--json] <path-to.lean>`
 
+Section classification lives in `mjs/lemmaSection.mjs` (`pickSection`, the
+`TYPE_TO_SECTION` / `DATA_TYPE_SECTIONS` tables and their evidence collectors);
+this file imports it and assembles `section.imply.of.givens`.
+
 The command prints one dotted path from the expression DAGs. Each top-level
 conjunct gets its own path component. A conclusion that is a binary relation is
 written infix (`<Lhs>.eq.<Rhs>`, and likewise `<Lhs>.le.<Rhs>`,
