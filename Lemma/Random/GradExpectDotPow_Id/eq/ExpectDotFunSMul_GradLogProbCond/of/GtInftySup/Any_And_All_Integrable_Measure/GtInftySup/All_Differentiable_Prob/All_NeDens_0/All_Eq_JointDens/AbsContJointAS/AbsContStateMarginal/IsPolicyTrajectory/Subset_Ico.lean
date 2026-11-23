@@ -1,5 +1,5 @@
 import Lemma.Random.GradExpectDotPow_Id.eq.ExpectDot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity.In_Icc.In_Ico
-import Lemma.Real.MulSub1_Dot_FunDotPow_Range.eq.DotPow_Id.of.GtInftySup.Subset_Ico
+import Lemma.Real.MulSub1_DotPow__Fun_DotPow_RangeAdd__Get_Slice.eq.DotPow__Get_Slice.of.Lt.SubsetBrace__Ico01
 import Lemma.Random.MEq_Clip.of.All_Eq.All_EqWithDensity
 import Lemma.Random.NormClip.le.Abs_R
 import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
@@ -23,7 +23,7 @@ of the conditional expected return,
 path-value `V_δ[t] δ k = M.V θ γ (t + k) (δ k)`. With TD residuals
 `δ[j] = r[j] + γ * M.V θ γ (j + 1) s[j + 1] - M.V θ γ j s[j]` and `{γ, ℓ} ⊆ Ico 0 1`, the exponentially
 weighted average `(1 - ℓ) * ((ℓ ^ id) ⬝ᵥ fun k ↦ (γ ^ range(k+1)) ⬝ᵥ δ)` equals the closed
-form, via `Real.MulSub1_Dot_FunDotPow_Range.…Subset_Ico`, applying the continuous closed-form GAE.
+form, via [the closed-form GAE](?module=Real.MulSub1_DotPow__Fun_DotPow_RangeAdd__Get_Slice.eq.DotPow__Get_Slice.of.Lt.SubsetBrace__Ico01), applying the continuous closed-form GAE.
 -/
 @[path]
 private lemma main
@@ -240,8 +240,8 @@ private lemma main
     (γ * ℓ) ^ (id : ℕ → ℕ) ⬝ᵥ
       (fun k : ℕ => r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) - M.V θ γ (t + k) (s (t + k) ω)) := by
     filter_upwards [hbdd] with ω hb t
-    exact MulSub1_Dot_FunDotPow_Range.eq.DotPow_Id.of.GtInftySup.Subset_Ico
-      (δ := ⟨fun j => r j ω + γ * M.V θ γ (j + 1) (s (j + 1) ω) - M.V θ γ j (s j ω)⟩) (t := t) h₀ hb
+    exact MulSub1_DotPow__Fun_DotPow_RangeAdd__Get_Slice.eq.DotPow__Get_Slice.of.Lt.SubsetBrace__Ico01
+      (δ := fun j => r j ω + γ * M.V θ γ (j + 1) (s (j + 1) ω) - M.V θ γ j (s j ω)) (t := t) h₀ hb
   have hexp : ∀ F : ℕ → (ℕ → 𝒮) → (ℕ → 𝒜) → (ℕ → ℝ) → ℝ,
     (∀ t, Measurable fun ω : ℕ → ℝ × 𝒮 × 𝒜 => F t (fun j => s j ω) (fun j => a j ω) (fun j => r j ω)) →
     𝔼[r, s, a : M θ](

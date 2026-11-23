@@ -10,7 +10,7 @@ import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Mathlib.Analysis.Calculus.LocalExtr.Basic
 import Mathlib.Probability.Kernel.WithDensity
 import Mathlib.Probability.Kernel.MeasurableIntegral
-import Lemma.Real.MulSub1_Dot_FunDotPow_Range.eq.DotPow_Id.of.GtInftySup.Subset_Ico
+import Lemma.Real.MulSub1_DotPow__Fun_DotPow_RangeAdd__Get_Slice.eq.DotPow__Get_Slice.of.Lt.SubsetBrace__Ico01
 import Lemma.Random.MEq_Clip.of.All_Eq.All_EqWithDensity
 import Lemma.Random.NormClip.le.Abs_R
 import Lemma.Random.PSpace_Path.of.All_PSpace
@@ -500,8 +500,8 @@ private lemma main
       (fun k : ℕ => r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) -
         M.V θ γ (t + k) (s (t + k) ω)) := by
     filter_upwards [hbdd] with ω hb t
-    exact MulSub1_Dot_FunDotPow_Range.eq.DotPow_Id.of.GtInftySup.Subset_Ico
-      (δ := ⟨fun j => r j ω + γ * M.V θ γ (j + 1) (s (j + 1) ω) - M.V θ γ j (s j ω)⟩) (t := t) h₀ hb
+    exact MulSub1_DotPow__Fun_DotPow_RangeAdd__Get_Slice.eq.DotPow__Get_Slice.of.Lt.SubsetBrace__Ico01
+      (δ := fun j => r j ω + γ * M.V θ γ (j + 1) (s (j + 1) ω) - M.V θ γ j (s j ω)) (t := t) h₀ hb
   have hδbd : ∀ᵐ ω ∂(M θ), ∀ j,
       |r j ω + γ * M.V θ γ (j + 1) (s (j + 1) ω) - M.V θ γ j (s j ω)| ≤
         2 / (1 - γ) * |R| := by

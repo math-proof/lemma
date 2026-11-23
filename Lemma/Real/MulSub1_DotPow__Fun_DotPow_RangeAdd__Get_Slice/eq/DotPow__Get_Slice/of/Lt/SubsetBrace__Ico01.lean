@@ -1,5 +1,7 @@
 import Mathlib.Analysis.SpecificLimits.Normed
 import Mathlib.Analysis.Normed.Ring.InfiniteSum
+import Instance.Data.Nat.Fun
+import Theorem.Data.List.List
 import Theorem.Data.Vector.Basic
 import Syntax.Order.Sup
 import Theorem.Function
@@ -19,19 +21,19 @@ generalized_advantage_estimate of the policy gradient.
 @[path]
 private lemma main
   {γ ℓ : ℝ}
-  {δ : Fun ℕ ℝ}
+  {δ : ℕ → ℝ}
   {t : ℕ}
 -- given
-  (h₀ : ({γ, ℓ} : Set ℝ) ⊆ Set.Ico 0 1)
-  (h₁ : sup[t] |δ[t]| < ∞) :
+  (h₀ : {γ, ℓ} ⊆ Set.Ico 0 1)
+  (h₁ : sup[t : ℕ] |δ[t]| < ∞) :
 -- imply
   (1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) ⬝ᵥ fun k ↦ (γ ^ range (k + 1)) ⬝ᵥ δ[t:]) =
-    ((γ * ℓ) ^ (id : ℕ → ℕ)) ⬝ᵥ δ[t:] := by
+    (γ * ℓ) ^ (id : ℕ → ℕ) ⬝ᵥ δ[t:] := by
 -- proof
   obtain ⟨hγ0, hγ1⟩ : γ ∈ Set.Ico 0 1 := h₀ (by simp)
   obtain ⟨hℓ0, hℓ1⟩ : ℓ ∈ Set.Ico 0 1 := h₀ (by simp)
   obtain ⟨B, hB⟩ := h₁
-  have hB' : ∀ n, |δ[n]| ≤ B := fun n => hB ⟨n, rfl⟩
+  have hB' : ∀ n : ℕ, |δ[n]| ≤ B := fun n => hB ⟨n, rfl⟩
   have hB0 : 0 ≤ B := (abs_nonneg _).trans (hB' 0)
   have hc0 : 0 ≤ γ * ℓ := mul_nonneg hγ0 hℓ0
   have hc1 : γ * ℓ < 1 := (mul_le_of_le_one_left hℓ0 hγ1.le).trans_lt hℓ1
@@ -43,7 +45,7 @@ private lemma main
   have hg : Summable fun j : ℕ => ‖ℓ ^ j‖ := by
     simpa [norm_pow, Real.norm_of_nonneg hℓ0] using summable_geometric_of_lt_one hℓ0 hℓ1
   have key := tsum_mul_tsum_eq_tsum_sum_antidiagonal_of_summable_norm hf hg
-  have e1 : ∀ k, ∑ ij ∈ antidiagonal k, ((γ * ℓ) ^ ij.1 * δ[t + ij.1]) * ℓ ^ ij.2 =
+  have e1 : ∀ k, ∑ ij ∈ antidiagonal k, (γ * ℓ) ^ ij.1 * δ[t + ij.1] * ℓ ^ ij.2 =
       ℓ ^ k * ∑ i ∈ range (k + 1), γ ^ i * δ[t + i] := by
     intro k
     rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk, Finset.mul_sum]
@@ -55,14 +57,14 @@ private lemma main
   simp only [e1] at key
   rw [tsum_geometric_of_lt_one hℓ0 hℓ1] at key
   have hL :
-      (ℓ ^ (id : ℕ → ℕ)) ⬝ᵥ (fun k ↦ (γ ^ range (k + 1)) ⬝ᵥ δ[t:]) =
-        ∑' k, ℓ ^ k * ∑ i ∈ range (k + 1), γ ^ i * δ[t + i] := by
+    (ℓ ^ (id : ℕ → ℕ)) ⬝ᵥ (fun k ↦ (γ ^ range (k + 1)) ⬝ᵥ δ[t:]) =
+      ∑' k, ℓ ^ k * ∑ i ∈ range (k + 1), γ ^ i * δ[t + i] := by
     simp_rw [FinsetPow.dot_eq]
-    simp [Dot.dot, Function.hPow_apply, Fun.getSliceFrom_apply]
+    simp [Dot.dot, Function.hPow_apply, Function.getSliceFrom_apply]
   have hR :
-      ((γ * ℓ) ^ (id : ℕ → ℕ)) ⬝ᵥ δ[t:] =
-        ∑' i, (γ * ℓ) ^ i * δ[t + i] := by
-    simp [Dot.dot, Function.hPow_apply, Fun.getSliceFrom_apply]
+    (γ * ℓ) ^ (id : ℕ → ℕ) ⬝ᵥ δ[t:] =
+      ∑' i, (γ * ℓ) ^ i * δ[t + i] := by
+    simp [Dot.dot, Function.hPow_apply, Function.getSliceFrom_apply]
   rw [hL, hR, ← key]
   have : (1 - ℓ) ≠ 0 := (sub_pos.mpr hℓ1).ne'
   field_simp
